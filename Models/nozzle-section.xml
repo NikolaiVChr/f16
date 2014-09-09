@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>nozzle-section.ac</path>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>us1</object-name>
+  <property>engines/engine/nozzle-pos-norm</property>
+  <offset-deg>-5</offset-deg>
+  <factor>10</factor>
+  <center>
+   <x-m>0.0</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.49</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>-1.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>ls1</object-name>
+  <property>engines/engine/nozzle-pos-norm</property>
+  <offset-deg>-5</offset-deg>
+  <factor>10</factor>
+  <center>
+   <x-m>0.0</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.45</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>-1.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>ls2</object-name>
+  <property>engines/engine/nozzle-pos-norm</property>
+  <offset-deg>-5</offset-deg>
+  <factor>10</factor>
+  <center>
+   <x-m>0.0</x-m>
+   <y-m>-0.115</y-m>
+   <z-m>0.435</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>-0.948683</y>
+   <z>-0.316228</z>
+  </axis>
+ </animation>
+
+</PropertyList>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>US_threat_warning_prime.ac</path>
+
+ <animation>
+  <object-name>rect</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+   <red>0.45</red>
+   <green>0.34</green>
+   <blue>0.18</blue>
+  </emission>
+ </animation>
+
+</PropertyList>

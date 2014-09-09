@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>flare.ac</path>
+
+ <animation>
+  <type>billboard</type>
+  <spherical>true</spherical>
+ </animation>
+
+ <animation>
+  <type>dist-scale</type>
+  <object-name>flare</object-name>
+  <interpolation>
+   <entry><ind>0</ind><dep>0.5</dep></entry>
+   <entry><ind>500</ind><dep>2.0</dep></entry>
+  </interpolation>
+ </animation>
+
+ <animation>
+  <type>material</type>
+  <object-name>flare</object-name>
+  <emission>
+   <factor-prop>sim/time/elapsed-sec</factor-prop>
+   <offset>1.0</offset>
+   <red>-0.2</red>
+   <green>-0.2</green>
+   <blue>-0.2</blue>
+  </emission>
+ </animation>
+
+ <model>
+  <name>flare_trail</name>
+  <path>Aircraft/f16/Models/Effects/flare-trail.xml</path>
+  <offsets>
+   <x-m>0.0</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.0</z-m>
+  </offsets>
+ </model>
+
+ <model>
+  <name>flare_smoke</name>
+  <path>Aircraft/f16/Models/Effects/flare-smoke.xml</path>
+  <offsets>
+   <x-m>0.0</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.0</z-m>
+  </offsets>
+ </model>
+
+</PropertyList>

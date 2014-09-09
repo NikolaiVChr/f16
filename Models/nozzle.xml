@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>nozzle.ac</path>
+
+ <model>
+  <name>sect1</name>
+  <path>Aircraft/f16/Models/nozzle-section.xml</path>
+  <offsets>
+   <roll-deg>0.0</roll-deg>
+  </offsets>
+ </model>
+
+  <model>
+  <name>sect2</name>
+  <path>Aircraft/f16/Models/nozzle-section.xml</path>
+  <offsets>
+   <roll-deg>22.5</roll-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>sect3</name>
+  <path>Aircraft/f16/Models/nozzle-section.xml</path>
+  <offsets>
+   <roll-deg>45</roll-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>sect4</name>
+  <path>Aircraft/f16/Models/nozzle-section.xml</path>
+  <offsets>
+   <roll-deg>67.5</roll-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>sect5</name>
+  <path>Aircraft/f16/Models/nozzle-section.xml</path>
+  <offsets>
+   <roll-deg>90</roll-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>sect6</name>
+  <path>Aircraft/f16/Models/nozzle-section.xml</path>
+  <offsets>
+   <roll-deg>112.5</roll-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>sect7</name>
+  <path>Aircraft/f16/Models/nozzle-section.xml</path>
+  <offsets>
+   <roll-deg>135.0</roll-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>sect8</name>
+  <path>Aircraft/f16/Models/nozzle-section.xml</path>
+  <offsets>
+   <roll-deg>157.5</roll-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>sect9</name>
+  <path>Aircraft/f16/Models/nozzle-section.xml</path>
+  <offsets>
+   <roll-deg>180.0</roll-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>sect10</name>
+  <path>Aircraft/f16/Models/nozzle-section.xml</path>
+  <offsets>
+   <roll-deg>-157.5</roll-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>sect11</name>
+  <path>Aircraft/f16/Models/nozzle-section.xml</path>
+  <offsets>
+   <roll-deg>-135.0</roll-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>sect11</name>
+  <path>Aircraft/f16/Models/nozzle-section.xml</path>
+  <offsets>
+   <roll-deg>-112.5</roll-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>sect13</name>
+  <path>Aircraft/f16/Models/nozzle-section.xml</path>
+  <offsets>
+   <roll-deg>-90.0</roll-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>sect14</name>
+  <path>Aircraft/f16/Models/nozzle-section.xml</path>
+  <offsets>
+   <roll-deg>-67.5</roll-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>sect15</name>
+  <path>Aircraft/f16/Models/nozzle-section.xml</path>
+  <offsets>
+   <roll-deg>-45</roll-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>sect16</name>
+  <path>Aircraft/f16/Models/nozzle-section.xml</path>
+  <offsets>
+   <roll-deg>-22.5</roll-deg>
+  </offsets>
+ </model>
+
+ <animation>
+  <type>range</type>
+  <object-name>sect1</object-name>
+  <object-name>sect2</object-name>
+  <object-name>sect3</object-name>
+  <object-name>sect4</object-name>
+  <object-name>sect5</object-name>
+  <object-name>sect6</object-name>
+  <object-name>sect7</object-name>
+  <object-name>sect8</object-name>
+  <object-name>sect9</object-name>
+  <object-name>sect10</object-name>
+  <object-name>sect11</object-name>
+  <object-name>sect12</object-name>
+  <object-name>sect13</object-name>
+  <object-name>sect14</object-name>
+  <object-name>sect15</object-name>
+  <object-name>sect16</object-name>
+  <min-m>0</min-m>
+  <max-m>300</max-m>
+ </animation>
+
+ <animation>
+  <type>range</type>
+  <object-name>nozzle</object-name>
+  <min-m>300</min-m>
+  <max-m>50000</max-m>
+ </animation>
+
+</PropertyList>

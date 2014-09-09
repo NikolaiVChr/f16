@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ 
+ <path>acesII.ac</path>
+
+
+<!-- PICK ANIMATIONS -->
+
+ <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>ejection-safety-lever</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.toggleEjectionSafetyLever();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+
+<!-- SWITCH ANIMATIONS -->
+
+ <animation>
+  <type>rotate</type>
+  <object-name>ejection-safety-lever</object-name>
+  <property>controls/seat/ejection-safety-lever</property>
+  <factor>120</factor>
+  <offset-deg>-120</offset-deg>
+  <center>
+   <x-m>-4.523</x-m>
+   <y-m>-0.24</y-m>
+   <z-m>0.215</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+
+</PropertyList>
+

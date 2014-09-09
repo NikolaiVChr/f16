@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>fuel.ac</path>
+  <texture-path>../Panels/Textures</texture-path>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>drum5</object-name>
+  <property>consumables/fuel/total-fuel-lbs</property>
+  <factor>3.6</factor>
+  <center>
+   <x-m>-0.006</x-m>
+   <y-m>-0.0</y-m>
+   <z-m>-0.0122</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>drum4</object-name>
+  <property>consumables/fuel/total-fuel-lbs</property>
+  <factor>0.36</factor>
+  <center>
+   <x-m>-0.006</x-m>
+   <y-m>-0.0</y-m>
+   <z-m>-0.0122</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>drum3</object-name>
+  <property>consumables/fuel/total-fuel-lbs</property>
+  <factor>0.036</factor>
+  <center>
+   <x-m>-0.006</x-m>
+   <y-m>-0.0</y-m>
+   <z-m>-0.0122</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>drum2</object-name>
+  <property>consumables/fuel/total-fuel-lbs</property>
+  <factor>0.0036</factor>
+  <center>
+   <x-m>-0.006</x-m>
+   <y-m>-0.0</y-m>
+   <z-m>-0.0122</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>drum1</object-name>
+  <property>consumables/fuel/total-fuel-lbs</property>
+  <factor>0.00036</factor>
+  <center>
+   <x-m>-0.006</x-m>
+   <y-m>-0.0</y-m>
+   <z-m>-0.0122</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>FR_needle</object-name>
+  <property>/consumables/fuel/tank[0]/level-lbs</property>
+  <factor>0.06</factor>
+  <max-deg>240.0</max-deg>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>AL_needle</object-name>
+  <property>/consumables/fuel/tank[1]/level-lbs</property>
+  <factor>0.06</factor>
+  <max-deg>240.0</max-deg>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <!-- lighting -->
+ <animation>
+  <object-name>rpm_disk</object-name>
+  <object-name>drum1</object-name>
+  <object-name>drum2</object-name>
+  <object-name>drum3</object-name>
+  <object-name>drum4</object-name>
+  <object-name>drum5</object-name>
+  <object-name>AL_needle</object-name>
+  <object-name>FR_needle</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/instruments-norm</factor-prop>
+   <red>0.55</red>
+   <green>0.24</green>
+   <blue>0.10</blue>
+  </emission>
+ </animation>
+
+</PropertyList>

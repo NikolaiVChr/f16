@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>strobe.ac</path>
+
+ <animation>
+  <type>noshadow</type>
+  <object-name>strobe</object-name>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>strobe</object-name>
+  <condition>
+   <property>sim/model/lighting/strobe/state</property>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>material</type>
+  <object-name>strobe</object-name>
+  <threshold>0.001</threshold>
+ </animation>
+
+ <animation>
+  <type>billboard</type>
+  <object-name>strobe</object-name>
+ </animation>
+
+ <animation>
+  <type>scale</type>
+  <object-name>strobe</object-name>
+  <property>/sim/time/sun-angle-rad</property>
+  <offset>-1.4</offset>
+  <x-min>1</x-min>
+  <y-min>1</y-min>
+  <z-min>1</z-min>
+  <x-factor>12</x-factor>
+  <y-factor>12</y-factor>
+  <z-factor>12</z-factor>
+ </animation>
+
+</PropertyList>

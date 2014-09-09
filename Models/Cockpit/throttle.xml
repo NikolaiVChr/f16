@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>throttle.ac</path>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>handle</object-name>
+  <object-name>carrier</object-name>
+  <property>/controls/engines/engine/throttle</property>
+  <offset-deg>45</offset-deg>
+  <factor>-75</factor>
+  <center>
+   <x-m>0.0</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.0</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>1.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>handle</object-name>
+  <property>/controls/engines/engine/augmentation</property>
+  <factor>7</factor>
+  <center>
+   <x-m>0.0</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.0</z-m>
+  </center>
+  <axis>
+   <x>1.0</x>
+   <y>0.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+</PropertyList>

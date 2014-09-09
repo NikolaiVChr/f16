@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>panels_blck50_left-console.ac</path>
+
+ <!-- PICK ANIMATIONS -->
+
+  <!-- External Lighting Panel -->
+ 
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_MASTER_NORM</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                print("EPIC01, call func");
+                f16_lighting.toggleMaster();
+      </script>
+     </binding>
+    </action>
+   </animation>
+   
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_ANTI_COLLISION</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_lighting.toggleAntiCollision();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_POS_LIGHTS</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_lighting.togglePosLightsFlash();
+      </script>
+     </binding>
+    </action>
+   </animation>
+   
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_WING-TAIL_UP</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_lighting.toggleWingTailUp();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_WING-TAIL_DN</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_lighting.toggleWingTailDn();
+      </script>
+     </binding>
+    </action>
+   </animation>
+ 
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_FUSELAGE_UP</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_lighting.toggleFuselageUp();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_FUSELAGE_DN</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_lighting.toggleFuselageDn();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+</PropertyList>

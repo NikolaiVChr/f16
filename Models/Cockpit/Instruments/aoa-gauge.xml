@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<PropertyList>
+
+ <path>aoa-gauge.ac</path>
+
+ <animation>
+  <type>select</type>
+  <object-name>AOA_off-flag</object-name>
+  <condition>
+   <equals>
+    <property type="bool">systems/static/serviceable</property>
+    <value>false</value>
+   </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>textranslate</type>
+  <object-name>AOA_tape</object-name>
+  <property>orientation/alpha-deg</property>
+  <factor>0.0235</factor>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+  </axis>
+ </animation>
+
+
+ <!-- lighting -->
+ <animation>
+  <object-name>AOA_mount</object-name>
+  <object-name>AOA_knob</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+   <red>0.45</red>
+   <green>0.34</green>
+   <blue>0.18</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>AOA_mask</object-name>
+  <object-name>AOA_off-flag</object-name>
+  <object-name>AOA_tape</object-name>
+  <type>material</type>
+  <emission> 
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.55</red>
+   <green>0.24</green>
+   <blue>0.10</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <type>range</type>
+  <min-m>0</min-m>
+  <max-m>5</max-m>
+ </animation>
+
+</PropertyList>

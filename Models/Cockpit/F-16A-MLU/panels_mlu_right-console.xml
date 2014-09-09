@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>panels_mlu_right-console.ac</path>
+
+ <!-- PICK ANIMATIONS -->
+
+  <!-- Lighting Panel -->
+
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_PRI_INST_PNL_UP</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.togglePriInstPnlUp();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_PRI_INST_PNL_DN</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.togglePriInstPnlDn();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_FLOOD_INST_PNL_UP</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.toggleFloodInstPnlUp();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_FLOOD_INST_PNL_DN</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.toggleFloodInstPnlDn();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+</PropertyList>

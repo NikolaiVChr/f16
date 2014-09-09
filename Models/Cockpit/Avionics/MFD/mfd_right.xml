@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>mfd.ac</path>
+
+ <animation>
+  <type>select</type>
+  <object-name>radar_screen</object-name>
+  <object-name>scan_marker</object-name>
+  <object-name>radar-markers</object-name>
+  <object-name>horizon</object-name>
+  <condition>
+   <equals>
+    <property type="bool">tmp/radar_select</property>
+    <value>true</value>
+   </equals>
+  </condition>
+ </animation>
+
+</PropertyList>

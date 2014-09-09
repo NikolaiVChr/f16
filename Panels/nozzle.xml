@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<!--
+Oil Pressure indicator instrument.
+-->
+
+<PropertyList>
+
+ <name>Nozzle position Indicator</name>
+ 
+   <w-base>128</w-base>
+   <h-base>128</h-base>
+   
+   <layers>
+    <layer>
+     <name>gauge face</name>
+     <texture>   
+     <path>Aircraft/f16/Panels/Textures/misc1.rgb</path>
+     <x1>0.63</x1>
+     <y1>0.0</y1>
+     <x2>1.0</x2>
+     <y2>0.36</y2>
+     </texture>
+     <w>120</w>
+     <h>120</h>
+    </layer>
+
+    <layer>
+     <name>gauge border</name>
+     <texture>
+     <path>Aircraft/f16/Panels/Textures/misc1.rgb</path>
+     <x1>0.0</x1>
+     <y1>0.0</y1>
+     <x2>0.53</x2>
+     <y2>0.53</y2>
+     </texture>
+     <w>127</w>
+     <h>127</h>
+    </layer>
+  </layers>
+</PropertyList>

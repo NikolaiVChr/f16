@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>instr.ac</path>
+
+ <!-- Mode knob -->
+ <animation>
+  <type>rotate</type>
+  <object-name>INSTR_mode-knob</object-name>
+  <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
+  <factor>40</factor>
+  <center>
+   <x-m>0</x-m>
+   <y-m>0</y-m>
+   <z-m>0.0188</z-m>
+  </center>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <!-- Mode knob - pick animation-->
+ <animation>
+  <name>mode-left</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>INSTR_mode-knob-left</object-name>
+  <action>
+   <button>0</button>
+   <repeatable>false</repeatable>
+   <binding>
+    <command>property-adjust</command>
+    <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
+    <step>-1</step>
+    <min>0</min>
+    <max>3</max>
+    <wrap>false</wrap>
+   </binding>
+  </action>
+ </animation>
+
+ <animation>
+  <name>mode-right</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>INSTR_mode-knob-right</object-name>
+  <action>
+   <button>0</button>
+   <repeatable>false</repeatable>
+   <binding>
+    <command>property-adjust</command>
+    <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
+    <step>1</step>
+    <min>0</min>
+    <max>3</max>
+    <wrap>false</wrap>
+   </binding>
+  </action>
+ </animation>
+
+ <!-- HDG knob - pick animation-->
+
+ <!-- Set the INS heading to a known magnetic heading in the event of an INS
+      failure (indicated by the AUX flag on the ADI). --> 
+
+  <!-- <animation>
+  <name>heading-ccw</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>INSTR_hdg-knob-left</object-name>
+  <action>
+   <button>0</button>
+   <repeatable>true</repeatable>
+   <interval-sec>0.2</interval-sec>
+   <binding>
+    <command>property-adjust</command>
+    <property>instrumentation/heading-indicator-fg/offset-deg</property> FIXME !!!
+    <step>-1</step>
+    <min>-180</min>
+    <max>180</max>
+    <wrap>true</wrap>
+   </binding>
+  </action>
+ </animation>
+
+ <animation>
+  <name>heading-cw</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>INSTR_hdg-knob-right</object-name>
+  <action>
+   <button>0</button>
+   <repeatable>true</repeatable>
+   <interval-sec>0.2</interval-sec>
+   <binding>
+    <command>property-adjust</command>
+    <property>instrumentation/heading-indicator-fg/offset-deg</property> FIXME !!!
+    <step>1</step>
+    <min>-180</min>
+    <max>180</max>
+    <wrap>true</wrap>
+   </binding>
+  </action>
+ </animation> -->
+
+ <!-- lighting -->
+ <animation>
+  <object-name>INSTR_mount</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+   <red>0.45</red>
+   <green>0.34</green>
+   <blue>0.18</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>INSTR_mode-knob</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+   <red>0.45</red>
+   <green>0.34</green>
+   <blue>0.18</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>INSTR_hdg-knob</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+   <red>0.45</red>
+   <green>0.34</green>
+   <blue>0.18</blue>
+  </emission>
+ </animation>
+
+</PropertyList>

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<!--
+Oil Pressure indicator instrument.
+-->
+
+<PropertyList>
+
+ <name>Oil Pressure Indicator</name>
+ 
+   <w-base>64</w-base>
+   <h-base>64</h-base>
+   
+   <layers>
+    <layer>
+     <name>gauge face</name>
+     <texture>   
+     <path>Aircraft/f16/Models/Cockpit/Textures/faces1.rgb</path>
+     <x1>0.75</x1>
+     <y1>0.0</y1>
+     <x2>1.0</x2>
+     <y2>0.25</y2>
+     </texture>
+     <w>62</w>
+     <h>62</h>
+    </layer>
+
+    <layer>
+     <name>gauge border</name>
+     <texture>
+     <path>Aircraft/f16/Models/Cockpit/Textures/misc1.rgb</path>
+     <x1>0.0</x1>
+     <y1>0.0</y1>
+     <x2>0.53</x2>
+     <y2>0.53</y2>
+     </texture>
+     <w>63</w>
+     <h>63</h>
+    </layer>
+   </layers>
+</PropertyList>

@@ -1,0 +1,308 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>panels_mlu_left-console.ac</path>
+
+ <!-- PICK ANIMATIONS -->
+
+  <!-- External Lighting Panel -->
+ 
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_MASTER_NORM</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                print("EPIC01, call func");
+                f16_switches.toggleMaster();
+      </script>
+     </binding>
+    </action>
+   </animation>
+   
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_ANTI_COLLISION</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.toggleAntiCollision();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_POS_LIGHTS</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.togglePosLightsFlash();
+      </script>
+     </binding>
+    </action>
+   </animation>
+   
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_WING-TAIL_UP</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.toggleWingTailUp();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_WING-TAIL_DN</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.toggleWingTailDn();
+      </script>
+     </binding>
+    </action>
+   </animation>
+ 
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_FUSELAGE_UP</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.toggleFuselageUp();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_FUSELAGE_DN</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.toggleFuselageDn();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_FORM-KNOB_UP</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.toggleFormationUp();
+      </script>
+     </binding>
+    </action>
+   </animation>
+   
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_FORM-KNOB_DN</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.toggleFormationDn();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_AR-KNOB_UP</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.toggleAerialRefuelingUp();
+      </script>
+     </binding>
+    </action>
+   </animation>
+   
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_AR-KNOB_DN</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.toggleAerialRefuelingDn();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+
+  <!-- Test Panel -->
+
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_MAL_IND_LTS</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.toggleMalIndLts();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+ 
+
+
+ <!-- SWITCH ANIMATIONS -->
+
+  <!-- External Lighting Panel -->
+
+ <animation>
+  <type>rotate</type>
+  <object-name>SW_MASTER</object-name>
+  <property>controls/lighting/ext-lighting-panel/master</property>
+  <factor>40</factor>
+  <offset-deg>-20</offset-deg>
+  <center>
+   <x-m>0.66</x-m>
+   <y-m>-0.32</y-m>
+   <z-m>0.0</z-m>
+  </center>
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>SW_ANTI_COLLISION</object-name>
+  <property>controls/lighting/ext-lighting-panel/anti-collision</property>
+  <factor>40</factor>
+  <offset-deg>-20</offset-deg>
+  <center>
+   <x-m>0.71</x-m>
+   <y-m>-0.37</y-m>
+   <z-m>0.0</z-m>
+  </center>
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>SW_POS_LIGHTS</object-name>
+  <property>controls/lighting/ext-lighting-panel/pos-lights-flash</property>
+  <factor>40</factor>
+  <offset-deg>-20</offset-deg>
+  <center>
+   <x-m>0.67</x-m>
+   <y-m>-0.37</y-m>
+   <z-m>0.0</z-m>
+  </center>
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+ 
+ <animation>
+  <type>rotate</type>
+  <object-name>SW_WING-TAIL</object-name>
+  <property>controls/lighting/ext-lighting-panel/wing-tail</property>
+  <factor>20</factor>
+  <offset-deg>-20</offset-deg>
+  <center>
+   <x-m>0.65</x-m>
+   <y-m>-0.36</y-m>
+   <z-m>0.0</z-m>
+  </center>
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+ 
+ <animation>
+  <type>rotate</type>
+  <object-name>SW_FUSELAGE</object-name>
+  <property>controls/lighting/ext-lighting-panel/wing-tail</property>
+  <factor>20</factor>
+  <offset-deg>-20</offset-deg>
+  <center>
+   <x-m>0.61</x-m>
+   <y-m>-0.36</y-m>
+   <z-m>0.0</z-m>
+  </center>
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+
+  <!-- Test Panel -->
+  <!-- FIXME -->
+
+</PropertyList>

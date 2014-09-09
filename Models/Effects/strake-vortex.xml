@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<PropertyList>
+
+<particlesystem>
+  <name>flare-smoke</name>
+  <texture>puff.png</texture>
+  <emissive>false</emissive>
+  <lighting>false</lighting>
+  
+  <offsets>
+   <x-m>0</x-m>
+   <y-m>0</y-m>
+   <z-m>0</z-m>
+  </offsets>
+
+  <condition>
+   <and>
+    <greater-than>
+     <property>orientation/alpha-deg</property>
+     <value>9.0</value>
+    </greater-than>
+    <greater-than>
+     <property>velocities/airspeed-kt</property>
+     <value>200</value>
+    </greater-than>
+   </and>
+  </condition>
+
+  <attach>world</attach>
+
+  <placer>
+   <type>point</type>
+  </placer>
+  
+  <shooter>
+   <theta-min-deg>-5</theta-min-deg>
+   <theta-max-deg>10</theta-max-deg>
+   <phi-min-deg>-10</phi-min-deg>
+   <phi-max-deg>10</phi-max-deg>
+   <speed-mps>
+    <value>-75</value>
+    <spread>10</spread>
+   </speed-mps>
+   <rotation-speed>
+    <x-max-deg-sec>75</x-max-deg-sec>
+    <x-min-deg-sec>-75</x-min-deg-sec>
+    <y-max-deg-sec>75</y-max-deg-sec>
+    <y-min-deg-sec>-75</y-min-deg-sec>
+    <z-max-deg-sec>75</z-max-deg-sec>
+    <z-min-deg-sec>-75</z-min-deg-sec>
+   </rotation-speed>
+  </shooter>
+  
+  <counter>
+   <particles-per-sec>
+    <property>velocities/airspeed-kt</property>
+    <factor>10.0</factor>
+    <spread>5</spread>
+   </particles-per-sec>
+  </counter>
+  
+  <align>billboard</align>
+  
+  <particle>
+   <start>
+    <color>
+     <red>
+      <value>0.8</value>
+     </red>
+     <green>
+      <value>0.8</value>
+     </green>
+     <blue>
+      <value>0.8</value>
+     </blue>
+     <alpha>
+      <value>0.25</value>
+     </alpha>
+    </color>
+    <size>
+     <value>0.15</value>
+    </size>
+   </start>
+   <end>
+    <color>
+     <red>
+      <value>1</value>
+     </red>
+     <green>
+      <value>1</value>
+     </green>
+     <blue>
+      <value>1</value>
+     </blue>
+     <alpha>
+      <value>0.2</value>
+     </alpha>
+    </color>
+    <size>
+     <value>0.8</value>
+    </size>
+   </end>
+   <life-sec>
+    <value>0.045</value>
+   </life-sec>
+   <mass-kg>0.025</mass-kg>
+   <radius-m>0.175</radius-m>
+  </particle>
+  
+  <program>
+   <fluid>air</fluid>
+   <gravity type="bool">true</gravity>
+   <wind type="bool">false</wind>
+  </program>
+  
+</particlesystem>
+
+</PropertyList>
+

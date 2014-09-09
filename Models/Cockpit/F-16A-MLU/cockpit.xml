@@ -1,0 +1,491 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>cockpit.ac</path>
+  <offsets>
+   <x-m></x-m>
+   <y-m></y-m>
+   <z-m>0.0</z-m>
+  </offsets>
+
+ <model>
+  <name>AcesII</name>
+  <path>Aircraft/f16/Models/Cockpit/AcesII/acesII.xml</path>
+ </model>
+ 
+ <model>
+  <name>Pilot_ext</name>
+  <path>Aircraft/f16/Models/Pilots/pilot_externalview.xml</path>
+ </model>
+
+<!--
+ <model>
+  <name>Pilot_int</name>
+  <path>Aircraft/f16/Models/Pilots/pilot_internalview.xml</path>
+ </model>
+-->
+
+ <animation>
+  <type>range</type>
+  <!-- object-name>Pilot_int</object-name -->
+  <object-name>Pilot_ext</object-name>
+  <min-m>0</min-m>
+  <max-m>5000</max-m>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Pilot_ext</object-name>
+  <condition>
+   <not><property>sim/current-view/internal</property></not>
+  </condition>
+ </animation>
+
+<!--
+ <animation>
+  <type>select</type>
+  <object-name>Pilot_int</object-name>
+  <condition>
+   <property>sim/current-view/internal</property>
+  </condition>
+ </animation>
+-->
+
+ <animation>
+  <type>translate</type>
+  <object-name>AcesII</object-name>
+  <!-- object-name>Pilot_int</object-name -->
+  <object-name>Pilot_ext</object-name>
+  <property>controls/seat/vertical-adjust</property>
+  <value>1</value>
+  <axis>
+   <x>0.33</x>
+   <y>0</y>
+   <z>1</z>
+  </axis>
+ </animation>
+
+ <model>
+  <name>RudderPedals</name>
+  <path>Aircraft/f16/Models/Cockpit/rudder_pedals.xml</path>
+  <offsets>
+   <x-m>-5.05</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.14</z-m>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Throttle</name>
+  <path>Aircraft/f16/Models/Cockpit/throttle.xml</path>
+  <offsets>
+   <x-m>-4.29</x-m>
+   <y-m>-0.49</y-m>
+   <z-m>0.12</z-m> 
+  </offsets>
+ </model>
+
+ <animation>
+  <type>range</type>
+  <object-name>RudderPedals</object-name>
+  <object-name>Throttle</object-name>
+  <min-m>0</min-m>
+  <max-m>100</max-m>
+ </animation>
+
+
+<!-- ======= START CONSOLES ======= -->
+ <model>
+  <name>LeftConsole</name>
+  <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/panels_mlu_left-console.xml</path>
+  <offsets>
+   <x-m>-4.54</x-m>
+   <y-m>-0.005</y-m>
+   <z-m>0.04</z-m> 
+   <roll-deg>-10</roll-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>LeftAuxConsole</name>
+  <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/panels_mlu_left-aux-console.xml</path>
+  <offsets>
+   <x-m>-4.563</x-m>
+   <y-m>-0.005</y-m>
+   <z-m>0.101</z-m>
+   <pitch-deg>45</pitch-deg>
+   <roll-deg>-10</roll-deg>
+   <heading-deg>7.3</heading-deg> 
+  </offsets>
+ </model>
+
+ <model>
+  <name>MISC</name>
+  <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/misc.xml</path>
+  <offsets>
+   <x-m>-4.665</x-m>
+   <y-m>0.018</y-m>
+   <z-m>0.045</z-m>
+   <pitch-deg>80</pitch-deg>
+  </offsets>
+ </model>
+ 
+
+<!-- center console 1st row -->
+ <model>
+  <name>ASI</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/asi.xml</path>
+  <offsets>
+   <x-m>-4.727</x-m>
+   <y-m>-0.0423</y-m>
+   <z-m>0.443</z-m>
+   <pitch-deg>-20</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>altitude</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/altimeter.xml</path>
+  <offsets>
+   <x-m>-4.727</x-m>
+   <y-m>0.041</y-m>
+   <z-m>0.443</z-m>
+   <pitch-deg>-20</pitch-deg>
+  </offsets>
+ </model>
+
+
+<!-- center console 2nd row -->
+ <model>
+  <name>aoa-gauge</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/aoa-gauge.xml</path>
+  <offsets>
+   <x-m>-4.696</x-m>
+   <y-m>-0.0608</y-m>
+   <z-m>0.363</z-m>
+   <pitch-deg>-20</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>adi</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/adi.xml</path>
+  <offsets>
+   <x-m>-4.696</x-m>
+   <y-m>0</y-m>
+   <z-m>0.363</z-m>
+   <pitch-deg>-20</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>vsi</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/vsi.xml</path>
+  <offsets>
+   <x-m>-4.696</x-m>
+   <y-m>0.0608</y-m>
+   <z-m>0.363</z-m>
+   <pitch-deg>-20</pitch-deg>
+  </offsets>
+ </model>
+
+
+<!-- center console 3rd row -->
+ <model>
+  <name>Instrument Mode</name>
+  <path>Aircraft/f16/Models/Cockpit/Panels/instr.xml</path>
+  <offsets>
+   <x-m>-4.643</x-m>
+   <y-m>-0.0614</y-m>
+   <z-m>0.2915</z-m>
+   <pitch-deg>-53</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>HSI</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/hsi.xml</path>
+  <offsets>
+   <x-m>-4.643</x-m>
+   <y-m>0</y-m>
+   <z-m>0.2915</z-m>
+   <pitch-deg>-53</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Fuel Quantity Sel</name>
+  <path>Aircraft/f16/Models/Cockpit/Panels/fuel-qty-sel.xml</path>
+  <offsets>
+   <x-m>-4.628</x-m>
+   <y-m>0.0537</y-m>
+   <z-m>0.2815</z-m>
+   <pitch-deg>-53</pitch-deg>
+  </offsets>
+ </model>
+
+
+ <model>
+  <name>RightAuxConsole</name>
+  <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/panels_mlu_right-aux-console.xml</path>
+  <offsets>
+   <x-m>-4.563</x-m>
+   <y-m>-0.0</y-m>
+   <z-m>0.101</z-m>
+   <pitch-deg>45</pitch-deg>
+   <roll-deg>10</roll-deg>
+   <heading-deg>-7.3</heading-deg> 
+  </offsets>
+ </model>
+
+
+ <model>
+  <name>RightConsole</name>
+  <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/panels_mlu_right-console.xml</path>
+  <offsets>
+   <x-m>-4.54</x-m>
+   <y-m>-0.0</y-m>
+   <z-m>0.04</z-m>
+   <roll-deg>10</roll-deg>
+  </offsets>
+ </model>
+<!-- ======= END CONSOLES ======= -->
+
+
+<!-- ======= START INSTRUMENTS ======= -->
+ <model>
+  <name>FUELFLOW</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/fuelflow.xml</path>
+  <offsets>
+   <x-m>-4.79</x-m>
+   <y-m>0.20</y-m>
+   <z-m>0.565</z-m>
+   <pitch-deg>-15</pitch-deg><!-- needs verification! -->
+  </offsets>
+ </model>
+
+ <model>
+  <name>AI</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/stdby-adi.xml</path>
+  <offsets>
+   <x-m>-4.795</x-m>
+   <y-m>0.145</y-m>
+   <z-m>0.575</z-m>
+   <pitch-deg>-15</pitch-deg><!-- needs verification! -->
+  </offsets>
+ </model>
+ 
+ <model>
+  <name>ENGINE</name>
+  <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/engine.xml</path>
+  <offsets>
+   <x-m>-4.555</x-m>
+   <y-m>-0.0175</y-m>
+   <z-m>0.082</z-m>
+   <pitch-deg>65</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>COMPASS</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/mag-compass.xml</path>
+  <offsets>
+   <x-m>-4.68</x-m>
+   <y-m>0.281</y-m>
+   <z-m>0.332</z-m>
+  </offsets>
+ </model>
+<!-- ======= END INSTRUMENTS ======= -->
+
+
+<!-- ======= START INDICATORS ======= -->
+ <model>
+  <name>EYEBROW_RIGHT</name>
+  <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/eyebrow_right.xml</path>
+ </model>
+
+ <model>
+  <name>EYEBROW_LEFT</name>
+  <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/eyebrow_left.xml</path>
+ </model>
+
+ <model>
+  <name>THREAT</name>
+  <path>Aircraft/f16/Models/Cockpit/Avionics/EWS/MLU_threat_warning_prime.xml</path>
+  <offsets>
+   <x-m>-4.786</x-m>
+   <y-m>-0.203</y-m>
+   <z-m>0.578</z-m>
+   <pitch-deg>-15</pitch-deg><!-- needs verification! -->
+  </offsets>
+ </model>
+ 
+<!-- AOA indexer animations -->
+ <animation>
+  <type>select</type>
+  <object-name>down</object-name>
+  <condition>
+    <or>
+    <and>
+    <property>controls/gear/gear-down</property>
+    <greater-than>
+     <property>orientation/alpha-deg</property>
+     <value>15.0</value>
+    </greater-than>
+    </and>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>steady</object-name>
+  <condition>
+    <or>
+    <and>
+    <property>controls/gear/gear-down</property>
+    <greater-than>
+     <property>orientation/alpha-deg</property>
+     <value>11.0</value>
+    </greater-than>
+    <less-than>
+     <property>orientation/alpha-deg</property>
+     <value>15.0</value>
+    </less-than>
+    </and>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>up</object-name>
+  <condition>
+    <or>
+    <and>
+    <property>controls/gear/gear-down</property>
+    <less-than>
+     <property>orientation/alpha-deg</property>
+     <value>11.0</value>
+    </less-than>
+    </and>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </condition>
+ </animation>
+ 
+<!-- AAR info animations -->
+ <animation>
+  <type>select</type>
+  <object-name>rdy</object-name>
+   <condition>
+    <or>
+    <property>/systems/refuel/serviceable</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>ar_nws</object-name>
+  <condition>
+    <or>
+    <property>/systems/refuel/contact</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>disc</object-name>
+  <condition>
+    <or>
+    <not><property>/systems/refuel/contact</property></not>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+ </animation>
+<!-- ======= END INDICATORS ======= -->
+
+
+<!-- ======= START AVIONICS ======= -->
+ <model>
+  <name>DED</name>
+  <path>Aircraft/f16/Models/Cockpit/Avionics/DED/ded.xml</path>
+ </model>
+
+ <model>
+  <name>IFF</name>
+  <path>Aircraft/f16/Models/Cockpit/Avionics/EWS/rwr.xml</path>
+  <offsets>
+   <x-m>-4.77</x-m>
+   <y-m>-0.125</y-m>
+   <z-m>0.595</z-m>
+   <pitch-deg>-13.8</pitch-deg>
+  </offsets>
+ </model>
+
+<model>
+  <name>MFD1</name>
+  <path>Aircraft/f16/Models/Cockpit/Avionics/MFD/mfd_left.xml</path>
+  <offsets>
+   <x-m>-4.755</x-m>
+   <y-m>-0.156</y-m>
+   <z-m>0.48</z-m>
+   <pitch-deg>-13.8</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>MFD2</name>
+  <path>Aircraft/f16/Models/Cockpit/Avionics/MFD/mfd_right.xml</path>
+  <offsets>
+   <x-m>-4.755</x-m>
+   <y-m>0.158</y-m>
+   <z-m>0.48</z-m>
+   <pitch-deg>-13.8</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>RADAR_SCREEN</name>
+  <path>Aircraft/Instruments-3d/radar2/radar-screen.xml</path>
+  <offsets>
+   <x-m>-4.760</x-m>
+   <y-m>-0.158</y-m>
+   <z-m>0.4793</z-m>
+   <pitch-deg>-13.8</pitch-deg>
+  </offsets>
+ </model>
+<!-- ======= END AVIONICS ======= -->
+
+
+ <model>
+  <name>ICP</name>
+  <path>Aircraft/f16/Models/Cockpit/Panels/icp.xml</path>
+  <offsets>
+   <x-m>-4.555</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.65</z-m>
+  </offsets>
+ </model>
+
+
+ <model>
+  <!-- Just a diamond displayed in the HUD above the nearest target -->
+  <name>HUD_ADDS</name>
+  <path>Aircraft/Instruments-3d/radar2/hud.xml</path>
+  <offsets>
+   <x-m>-4.7061</x-m>
+   <y-m>0</y-m>
+   <z-m>0.803</z-m>
+   <pitch-deg>-5</pitch-deg>
+  </offsets>
+ </model>
+
+</PropertyList>

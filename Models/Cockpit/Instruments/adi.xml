@@ -1,0 +1,460 @@
+<?xml version="1.0"?>
+<PropertyList>
+
+ <path>adi.ac</path>
+
+ <!-- Flags -->
+ <animation>
+  <type>select</type>
+  <object-name>ADI_gs-flag</object-name>
+  <condition>
+   <less-than>
+    <property>systems/electrical/outputs/adi</property>
+    <value>24</value>
+   </less-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>ADI_loc-flag</object-name>
+  <condition>
+   <less-than>
+    <property>systems/electrical/outputs/adi</property>
+     <value>24</value>
+    </less-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>ADI_off-flag</object-name>
+  <condition>
+   <less-than>
+    <property>systems/electrical/outputs/adi</property>
+    <value>24</value>
+   </less-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>ADI_aux-flag</object-name>
+  <condition>
+   <less-than>
+    <property>systems/electrical/outputs/adi</property>
+     <value>24</value>
+    </less-than>
+  </condition>
+ </animation>
+
+ <!-- slip-ball-->
+ <animation>
+  <type>rotate</type>
+  <object-name>ADI_slip-ball</object-name>
+  <property>instrumentation/slip-skid-ball/indicated-slip-skid</property>
+  <factor>2</factor>
+  <min-deg>-2</min-deg>
+  <max-deg>2</max-deg>
+  <center>
+   <x-m>0</x-m>
+   <y-m>0</y-m>
+   <z-m>0.18</z-m>
+  </center>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <!-- Artificial Horizon -->
+ <animation>
+  <type>rotate</type>
+  <object-name>ADI_sphere</object-name>
+  <property>orientation/roll-deg</property>
+  <center>
+   <x-m>-0.0291</x-m>
+   <y-m>0</y-m>
+   <z-m>0</z-m>
+  </center>
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>ADI_sphere</object-name>
+  <property>orientation/pitch-deg</property>
+  <center>
+   <x-m>-0.0291</x-m>
+   <y-m>0</y-m>
+   <z-m>0</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <!-- Turn indicator -->
+ <animation>
+  <type>translate</type>
+  <object-name>ADI_turn-indicator</object-name>
+  <property>/instrumentation/turn-indicator/indicated-turn-rate</property>
+  <!-- midle: ~ 1,3 G turn, full 2 G turn at mach 0.8 ??? -->
+  <factor>0.0073</factor>
+  <min>-0.0111</min>
+  <max>0.0111</max>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <!-- arrow knob -->
+ 
+  <animation>
+   <type>rotate</type>
+   <object-name>ADI_arrow-knob-cw</object-name>
+  <!--<property> ? </property>-->
+   <center>
+    <x-m>0</x-m>
+    <y-m>0</y-m>
+    <z-m>0</z-m>
+   </center>
+   <axis><x>-1</x></axis>
+  </animation>
+
+  <!-- arrow  knob - pick animation-->
+
+  <animation>
+   <name>heading-cw</name>
+   <type>pick</type>
+   <visible>true</visible>
+   <object-name>ADI_arrow-knob-cw</object-name>
+   <action>
+    <button>0</button>
+    <repeatable>true</repeatable>
+    <interval-sec>0.2</interval-sec>
+    <binding>
+     <command>property-adjust</command>
+ <!--<property> ? </property>-->
+     <step>1</step>
+     <min>-180</min>
+     <max>180</max>
+     <wrap>true</wrap>
+    </binding>
+   </action>
+  </animation>
+
+
+  <animation>
+   <name>heading-ccw</name>
+   <type>pick</type>
+   <visible>true</visible>
+   <object-name>ADI_arrow-knob-ccw</object-name>
+   <action>
+    <button>0</button>
+    <repeatable>true</repeatable>
+    <interval-sec>0.2</interval-sec>
+    <binding>
+     <command>property-adjust</command>
+ <!--<property> ? </property>-->
+     <step>-1</step>
+     <min>-180</min>
+     <max>180</max>
+     <wrap>true</wrap>
+    </binding>
+   </action>
+  </animation>
+
+ <!-- ILS mode -->
+
+ <!-- Glide slope index -->
+ <animation>
+  <type>select</type>
+  <object-name>ADI_glide-slope-index</object-name>
+  <condition>
+   <greater-than>
+    <property>systems/electrical/outputs/adi</property>
+    <value>23</value>
+   </greater-than>
+   <or>
+    <equals>
+     <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
+     <value>0</value>
+    </equals>
+    <equals>
+     <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
+     <value>3</value>
+    </equals>
+   </or>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>translate</type>
+  <object-name>ADI_glide-slope-index</object-name>
+  <property>instrumentation/nav[0]/gs-needle-deflection</property>
+  <interpolation>
+   <entry>
+    <ind>-2.5</ind>
+    <dep>-0.036</dep>
+   </entry>
+   <entry>
+    <ind>0</ind>
+    <dep>0</dep>
+   </entry>
+   <entry>
+    <ind>2.5</ind>
+    <dep>0.036</dep>
+   </entry>
+  </interpolation>
+  <axis>
+   <x>-0.087</x>
+   <y>0</y>
+   <z>1</z>
+  </axis>
+ </animation>
+ 
+ <!-- Bank index -->
+ <animation>
+  <type>rotate</type>
+  <object-name>ADI_bank-index</object-name>
+  <property>orientation/roll-deg</property>
+  <center>
+   <x-m>0</x-m>
+   <y-m>0</y-m>
+   <z-m>0</z-m>
+  </center>
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <!-- ADI bars in homing mode (ILS/TCN && ILS/NAV -->
+
+ <!-- Yaw Steering Bar -->
+
+ <animation>
+  <type>select</type>
+  <object-name>ADI_yaw-steering-bar</object-name>
+  <condition>
+   <or>
+    <equals>
+     <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property> 
+     <value>0</value>
+    </equals>
+    <equals>
+     <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property> 
+     <value>3</value>
+    </equals>
+   </or>
+   <equals>
+    <property>instrumentation/nav[0]/in-range</property>
+    <value>true</value>
+   </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>translate</type>
+  <object-name>ADI_yaw-steering-bar</object-name>
+  <property>/instrumentation/nav/heading-needle-deflection</property>
+  <factor>0.006</factor>
+  <min-m>-0.018</min-m>
+  <max-m>0.018</max-m>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <!-- Pitch Steering Bar -->
+
+ <animation>
+  <type>select</type>
+  <object-name>ADI_pitch-strg-bar</object-name>
+  <condition>
+   <or>
+    <equals>
+     <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property> 
+     <value>0</value>
+    </equals>
+    <equals>
+     <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property> 
+     <value>3</value>
+    </equals>
+   </or>
+   <equals>
+    <property>instrumentation/nav[0]/in-range</property>
+    <value>true</value>
+   </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>translate</type>
+  <object-name>ADI_pitch-strg-bar</object-name>
+  <property>/instrumentation/nav[0]/gs-needle-deflection</property>
+  <factor>0.0025</factor>
+  <min-m>-0.015</min-m>
+  <max-m>0.015</max-m>
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>1</z>
+  </axis>
+ </animation>
+ 
+ <!-- lighting -->
+
+ <animation>
+  <object-name>ADI_mount</object-name>
+  <object-name>ADI_knob</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+   <red>0.45</red>
+   <green>0.34</green>
+   <blue>0.18</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>ADI_sphere</object-name>
+  <type>material</type>
+  <emission> 
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+ <animation>
+  <object-name>ADI_pitch-strg-bar</object-name>
+  <type>material</type>
+  <emission> 
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+ <animation>
+  <object-name>ADI_yaw-steering-bar</object-name>
+  <type>material</type>
+  <emission> 
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+ <animation>
+  <object-name>ADI_turn-indicator</object-name>
+  <type>material</type>
+  <emission> 
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+ <animation>
+  <object-name>ADI_bank-index</object-name>
+  <type>material</type>
+  <emission> 
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+ <animation>
+  <object-name>ADI_reticle</object-name>
+  <type>material</type>
+  <emission> 
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+ <animation>
+  <object-name>ADI_glide-slope-index</object-name>
+  <type>material</type>
+  <emission> 
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+ <animation>
+  <object-name>ADI_face</object-name>
+  <type>material</type>
+  <emission> 
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+ <animation>
+  <object-name>ADI_off-flag</object-name>
+  <type>material</type>
+  <emission> 
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+ <animation>
+  <object-name>ADI_aux-flag</object-name>
+  <type>material</type>
+  <emission> 
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+ <animation>
+  <object-name>ADI_gs-flag</object-name>
+  <type>material</type>
+  <emission> 
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+ <animation>
+  <object-name>ADI_loc-flag</object-name>
+  <type>material</type>
+  <emission> 
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <type>range</type>
+  <min-m>0</min-m>
+  <max-m>5</max-m>
+ </animation>
+
+</PropertyList>

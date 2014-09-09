@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>fuelflow.ac</path>
+  <texture-path>../Panels/Textures</texture-path>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>drum5</object-name>
+  <property>/engines/engine[0]/fuel-flow_pph</property>
+  <factor>3.6</factor>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>drum4</object-name>
+  <property>/engines/engine[0]/fuel-flow_pph</property>
+  <factor>0.36</factor>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>drum3</object-name>
+  <property>/engines/engine[0]/fuel-flow_pph</property>
+  <factor>0.036</factor>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>drum2</object-name>
+  <property>/engines/engine[0]/fuel-flow_pph</property>
+  <factor>0.0036</factor>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>drum1</object-name>
+  <property>/engines/engine[0]/fuel-flow_pph</property>
+  <factor>0.00036</factor>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <!-- lighting -->
+ <animation>
+  <object-name>housing</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+   <red>0.45</red>
+   <green>0.34</green>
+   <blue>0.18</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>drum1</object-name>
+  <object-name>drum2</object-name>
+  <object-name>drum3</object-name>
+  <object-name>drum4</object-name>
+  <object-name>drum5</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.55</red>
+   <green>0.24</green>
+   <blue>0.10</blue>
+  </emission>
+ </animation>
+
+</PropertyList>

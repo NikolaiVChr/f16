@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>engine.ac</path>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>oil_needle</object-name>
+  <property>engines/engine[0]/oil-pressure-psi</property>
+  <factor>3.3</factor>
+  <center>
+   <x-m> 0.0</x-m>
+   <y-m>-0.0038</y-m>
+   <z-m> 0.0627</z-m>
+  </center>
+  <axis>
+   <x>-1.0</x>
+   <y>0.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>rpm_needle</object-name>
+  <property>engines/engine[0]/n1</property>
+  <interpolation>
+   <entry>
+    <ind>0.0</ind>
+    <dep>0.0</dep>
+   </entry>
+   <entry>
+    <ind>60.0</ind>
+    <dep>122.0</dep>
+   </entry>
+   <entry>
+    <ind>100.0</ind>
+    <dep>328.0</dep>
+   </entry>
+  </interpolation>
+  <center>
+   <x-m> 0.0</x-m>
+   <y-m> 0.0056</y-m>
+   <z-m>-0.00033</z-m>
+  </center>
+  <axis>
+   <x>-1.0</x>
+   <y>0.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>nozzle_needle</object-name>
+  <property>engines/engine[0]/nozzle-pos-norm</property>
+  <factor>250.0</factor>
+  <center>
+   <x-m> 0.0</x-m>
+   <y-m> 0.00</y-m>
+   <z-m> 0.034</z-m>
+  </center>
+  <axis>
+   <x>-1.0</x>
+   <y>0.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type> <!-- 2192 --> <!-- 17.5 graden -->
+  <object-name>ftit_needle</object-name>
+  <property>engines/engine[0]/egt-degf</property>
+  <interpolation>
+   <entry>
+    <ind>0.0</ind>
+    <dep>0.0</dep>
+   </entry>
+   <entry>
+    <ind>1292</ind>
+    <dep>103.5</dep>
+   </entry>
+   <entry>
+    <ind>1832</ind>
+    <dep>257.5</dep>
+   </entry>
+   <entry>
+    <ind>2192</ind>
+    <dep>322.5</dep>
+   </entry>
+  </interpolation>
+  <center>
+   <x-m> 0.0</x-m>
+   <y-m> 0.0114</y-m>
+   <z-m>-0.0398</z-m>
+  </center>
+  <axis>
+   <x>-1.0</x>
+   <y>0.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+ <!-- lighting -->
+ <animation>
+  <object-name>oil_disk</object-name>
+  <object-name>oil_needle</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/instruments-norm</factor-prop>
+   <red>0.55</red>
+   <green>0.24</green>
+   <blue>0.10</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>nozzle_disk</object-name>
+  <object-name>nozzle_needle</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/instruments-norm</factor-prop>
+   <red>0.55</red>
+   <green>0.24</green>
+   <blue>0.10</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>rpm_disk</object-name>
+  <object-name>rpm_needle</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/instruments-norm</factor-prop>
+   <red>0.55</red>
+   <green>0.24</green>
+   <blue>0.10</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>ftit_disk</object-name>
+  <object-name>ftit_needle</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/instruments-norm</factor-prop>
+   <red>0.55</red>
+   <green>0.24</green>
+   <blue>0.10</blue>
+  </emission>
+ </animation>
+
+</PropertyList>

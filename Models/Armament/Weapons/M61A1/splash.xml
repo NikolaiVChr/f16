@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<path>splash.ac</path>
+
+	<animation>
+		<type>blend</type>
+		<object-name>splash</object-name>
+		<property>sim/time/elapsed-sec</property>
+		<factor>0.2</factor>
+		<min>0</min>
+		<max>1</max>
+	</animation>
+
+</PropertyList>

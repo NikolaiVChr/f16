@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<PropertyList>
+
+	<path>/Aircraft/Instruments-3d/standby-adi/stdby-adi.ac</path>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>drum</object-name>
+		<property>orientation/roll-deg</property>
+		<center>
+			<x-m>-0.0113</x-m>
+			<y-m>0.0</y-m>
+			<z-m>0.0</z-m>
+		</center>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>bkg</object-name>
+		<property>orientation/roll-deg</property>
+		<center>
+			<x-m>0.0</x-m>
+			<y-m>0.0</y-m>
+			<z-m>0.0</z-m>
+		</center>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>drum</object-name>
+		<property>orientation/pitch-deg</property>
+		<factor>1.5</factor>
+		<center>
+			<x-m>-0.0117</x-m>
+			<y-m>0.0</y-m>
+			<z-m>0.0</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>bank-index</object-name>
+		<property>orientation/roll-deg</property>
+		<center>
+			<x-m>0</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+		</center>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+
+	<!-- lighting -->
+
+	<animation>
+		<object-name>mount</object-name>
+		<type>material</type>
+		<emission>
+			<factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+			<red>0.45</red>
+			<green>0.34</green>
+			<blue>0.18</blue>
+		</emission>
+	</animation>
+
+	<animation>
+		<object-name>button</object-name>
+		<type>material</type>
+		<emission>
+			<factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+			<red>0.45</red>
+			<green>0.34</green>
+			<blue>0.18</blue>
+		</emission>
+	</animation>
+
+	<animation>
+		<object-name>scale</object-name>
+		<type>material</type>
+		<emission>
+			<factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+			<red>0.45</red>
+			<green>0.34</green>
+			<blue>0.18</blue>
+		</emission>
+	</animation>
+
+	<animation>
+		<object-name>bank-index</object-name>
+		<type>material</type>
+		<emission>
+			<factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+			<red>0.55</red>
+			<green>0.24</green>
+			<blue>0.10</blue>
+		</emission>
+	</animation>
+
+	<animation>
+		<object-name>ring</object-name>
+		<type>material</type>
+		<emission> 
+			<factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+			<red>0.55</red>
+			<green>0.24</green>
+			<blue>0.10</blue>
+		</emission>
+	</animation>
+
+	<animation>
+		<object-name>bkg</object-name>
+		<type>material</type>
+		<emission>
+		<factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+				<red>0.55</red>
+				<green>0.24</green>
+				<blue>0.10</blue>
+		</emission>
+	</animation>
+
+	<animation>
+		<object-name>drum</object-name>
+		<type>material</type>
+		<emission>
+			<factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+			<red>0.55</red>
+			<green>0.24</green>
+			<blue>0.10</blue>
+		</emission>
+	</animation>
+
+	<animation>
+		<object-name>plane</object-name>
+		<type>material</type>
+		<emission>
+			<factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+			<red>0.55</red>
+			<green>0.24</green>
+			<blue>0.10</blue>
+		</emission>
+	</animation>
+
+	<animation>
+		<type>range</type>
+		<min-m>0</min-m>
+		<max-m>50</max-m>
+	</animation>
+
+</PropertyList>

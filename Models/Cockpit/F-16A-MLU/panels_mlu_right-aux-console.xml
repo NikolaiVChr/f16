@@ -1,0 +1,880 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>panels_mlu_right-aux-console.ac</path>
+
+
+ <!-- START FUEL GAUGE -->
+ <animation>
+  <type>rotate</type>
+  <object-name>FUEL_drum5</object-name>
+  <property>consumables/fuel/total-fuel-lbs</property>
+  <!--<factor>3.6</factor>-->
+  <factor>36</factor>
+  <center>
+   <x-m>-0.245</x-m>
+   <y-m>0.377</y-m>
+   <z-m>-0.004</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>FUEL_drum4</object-name>
+  <property>consumables/fuel/total-fuel-lbs</property>
+  <factor>3.6</factor>
+  <center>
+   <x-m>-0.245</x-m>
+   <y-m>0.373</y-m>
+   <z-m>-0.004</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>FUEL_drum3</object-name>
+  <property>consumables/fuel/total-fuel-lbs</property>
+  <factor>0.36</factor>
+  <center>
+   <x-m>-0.245</x-m>
+   <y-m>0.37</y-m>
+   <z-m>-0.004</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>FUEL_drum2</object-name>
+  <property>consumables/fuel/total-fuel-lbs</property>
+  <factor>0.036</factor>
+  <center>
+   <x-m>-0.245</x-m>
+   <y-m>0.366</y-m>
+   <z-m>-0.004</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>FUEL_drum1</object-name>
+  <property>consumables/fuel/total-fuel-lbs</property>
+  <factor>0.0036</factor>
+  <center>
+   <x-m>-0.245</x-m>
+   <y-m>0.363</y-m>
+   <z-m>-0.004</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>FUEL_FR_needle</object-name>
+<!--  <property>/consumables/fuel/tank[0]/level-lbs</property> -->
+<!--  <factor>0.06</factor>-->
+  <property>consumables/fuel/tank[0]/level-gal_us</property>
+  <factor>0.3881</factor>
+  <max-deg>205</max-deg>
+  <center>
+   <x-m>-0.26</x-m>
+   <y-m> 0.37</y-m>
+   <z-m> 0.0</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>0.0</y>
+   <z>-1.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>FUEL_AL_needle</object-name>
+<!--  <property>/consumables/fuel/tank[1]/level-lbs</property> -->
+<!--  <factor>0.06</factor>-->
+  <property>consumables/fuel/tank[1]/level-gal_us</property>
+  <factor>0.3881</factor>
+  <max-deg>205</max-deg>
+  <center>
+   <x-m>-0.26</x-m>
+   <y-m> 0.37</y-m>
+   <z-m> 0.0</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>0.0</y>
+   <z>-1.0</z>
+  </axis>
+ </animation>
+ <!-- END FUEL GAUGE -->
+
+ <!-- START CLOCK -->
+        <animation>
+                <type>rotate</type>
+                <object-name>HourHand</object-name>
+                <property>instrumentation/clock/indicated-sec</property>
+                <factor>0.00833333333333333</factor>
+                <center>
+                 <x-m>-0.002</x-m>
+                 <y-m>0.466</y-m>
+                 <z-m>0</z-m>
+                </center>
+                <axis>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>-1</z>
+                </axis>
+        </animation>
+
+        <animation>
+                <type>rotate</type>
+                <object-name>MinuteHand</object-name>
+                <property>instrumentation/clock/indicated-sec</property>
+                <factor>0.1</factor>
+                <center>
+                 <x-m>-0.002</x-m>
+                 <y-m>0.466</y-m>
+                 <z-m>0</z-m>
+                </center>
+                <axis>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>-1</z>
+                </axis>
+        </animation>
+
+        <animation>
+                <type>rotate</type>
+                <object-name>SecondHand</object-name>
+                <property>instrumentation/clock/elapsed-sec</property>
+                <factor>6</factor>
+                <center>
+                 <x-m>-0.002</x-m>
+                 <y-m>0.466</y-m>
+                 <z-m>0</z-m>
+                </center>
+                <axis>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>-1</z>
+                </axis>
+        </animation>
+        <animation>
+                <type>rotate</type>
+                <object-name>ElapsedMinutesHand</object-name>
+                <property>instrumentation/clock/elapsed-sec</property>
+                <factor>0.1</factor>
+                <center>
+                 <x-m>-0.002</x-m>
+                 <y-m>0.466</y-m>
+                 <z-m>0</z-m>
+                </center>
+                <axis>
+                        <x>0</x>
+                        <y>0</y>
+                        <z>-1</z>
+                </axis>
+        </animation>
+
+      <!-- Clock Setting Knob -->
+        <animation>
+                <name>time-offset-left-fine</name>
+                <type>pick</type>
+                <visible>true</visible>
+                <object-name>time-offset-left</object-name>
+                <action>
+                        <button>0</button>
+                        <repeatable>true</repeatable>
+                        <interval-sec>0.2</interval-sec>
+                        <binding>
+                                <command>property-adjust</command>
+                                <property>instrumentation/clock/offset-sec</property>
+                                <step>-60</step>
+                        </binding>
+                </action>
+        </animation>
+        <animation>
+                <name>time-offset-left-hours</name>
+                <type>pick</type>
+                <visible>true</visible>
+                <object-name>time-offset-left</object-name>
+                <action>
+                        <button>1</button>
+                        <repeatable>true</repeatable>
+                        <interval-sec>0.2</interval-sec>
+                        <binding>
+                                <command>property-adjust</command>
+                                <property>instrumentation/clock/offset-sec</property>
+                                <step>-3600</step>
+                        </binding>
+                </action>
+        </animation>
+        <animation>
+                <name>time-offset-right-fine</name>
+                <type>pick</type>
+                <visible>true</visible>
+                <object-name>time-offset-right</object-name>
+                <action>
+                        <button>0</button>
+                        <repeatable>true</repeatable>
+                        <interval-sec>0.2</interval-sec>
+                        <binding>
+                                <command>property-adjust</command>
+                                <property>instrumentation/clock/offset-sec</property>
+                                <step>60</step>
+                        </binding>
+                </action>
+        </animation>
+        <animation>
+                <name>time-offset-right-hours</name>
+                <type>pick</type>
+                <visible>true</visible>
+                <object-name>time-offset-right</object-name>
+                <action>
+                        <button>1</button>
+                        <repeatable>true</repeatable>
+                        <interval-sec>0.2</interval-sec>
+                        <binding>
+                                <command>property-adjust</command>
+                                <property>instrumentation/clock/offset-sec</property>
+                                <step>3600</step>
+                        </binding>
+                </action>
+        </animation>
+
+        <!-- Chronometer Start Stop Button -->
+        <animation>
+                <name>start-stop-reset</name>
+                <type>pick</type>
+                <visible>true</visible>
+                <object-name>chronometer-button</object-name>
+                <action>
+                        <button>0</button>
+                        <repeatable>false</repeatable>
+                        <binding>
+                                <command>nasal</command>
+                                <script>f16_chronograph.click()</script>
+                        </binding>
+                </action>
+        </animation>
+
+
+ <!-- END CLOCK -->
+ 
+
+ <!-- START CAUTION PANEL -->
+
+ <!-- light OFF -->
+ <!-- unlit condition uses AND logic -->
+ <!-- lit condition uses OR logic -->
+
+ <animation>
+  <type>select</type>
+  <object-name>----.001_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>----.002_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>----.003_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>ADC_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>AFT_FUEL_LOW_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <greater-than> 
+    <property>consumables/fuel/tank[1]/level-gal_us</property>
+    <value>75.759</value>
+   </greater-than> 
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>AFT_NOT_ENGAGED_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>ANTI_SKID_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>AVIONICS_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>BUC_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>CABIN_PRESS_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>C_ADC_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>ECM_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>EEC_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>ELEC_SYS_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>ENGINE_FAULT_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>EQUIP_HOT_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>FLT_CONT_SYS_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>FUEL_OIL_HOT_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>FWD_FUEL_LOW_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <greater-than> 
+    <property>consumables/fuel/tank/level-gal_us</property>
+    <value>75.759</value>
+   </greater-than> 
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>HOOK_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not><property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>IFF_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>INLET_ICING_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>LE_FLAPS_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>NUCLEAR_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>NWS_FAIL_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>OVERHEAT_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>OXY_LOW_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>PROBE_HEAT_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>RADAR_ALT_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>SEAT_NOT_ARMED_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <property>controls/seat/ejection-safety-lever</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>SEC_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>STORES_CONFIG_unlit</object-name>
+  <condition>
+   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+  </condition>
+ </animation> 
+
+ <!-- light ON -->
+ <!-- unlit condition uses AND logic -->
+ <!-- lit condition uses OR logic -->
+
+ <animation>
+  <type>select</type>
+  <object-name>----.001_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>----.002_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>----.003_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>ADC_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>AFT_FUEL_LOW_lit</object-name>
+  <condition>
+   <or>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+   <less-than> 
+    <property>consumables/fuel/tank[1]/level-gal_us</property>
+    <value>75.759</value>
+   </less-than> 
+   </or>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>AFT_NOT_ENGAGED_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>ANTI_SKID_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>AVIONICS_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>BUC_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>CABIN_PRESS_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>C_ADC_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>ECM_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>EEC_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>ELEC_SYS_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>ENGINE_FAULT_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>EQUIP_HOT_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>FLT_CONT_SYS_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>FUEL_OIL_HOT_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>FWD_FUEL_LOW_lit</object-name>
+  <condition>
+   <or>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+   <less-than> 
+    <property>consumables/fuel/tank/level-gal_us</property>
+    <value>75.759</value>
+   </less-than> 
+   </or>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>HOOK_lit</object-name>
+  <condition>
+   <or>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+   <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+   </or>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>IFF_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>INLET_ICING_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>LE_FLAPS_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>NUCLEAR_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>NWS_FAIL_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>OVERHEAT_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>OXY_LOW_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>PROBE_HEAT_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>RADAR_ALT_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>SEAT_NOT_ARMED_lit</object-name>
+  <condition>
+   <or>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+   <not><property>controls/seat/ejection-safety-lever</property></not>
+   </or>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>SEC_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <animation>
+  <type>select</type>
+  <object-name>STORES_CONFIG_lit</object-name>
+  <condition>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+  </condition>
+ </animation> 
+
+ <!-- END CAUTION PANEL -->
+
+
+ <!-- lighting -->
+ <animation>
+  <object-name>FUEL_rpm_disk</object-name>
+  <object-name>FUEL_drum1</object-name>
+  <object-name>FUEL_drum2</object-name>
+  <object-name>FUEL_drum3</object-name>
+  <object-name>FUEL_drum4</object-name>
+  <object-name>FUEL_drum5</object-name>
+  <object-name>FUEL_AL_needle</object-name>
+  <object-name>FUEL_FR_needle</object-name>
+
+  <object-name>CAB_PRESS_face</object-name>
+  <object-name>CAB_PRESS_needle</object-name>
+
+  <object-name>CLOCK_face</object-name>
+  <object-name>CLOCK_needles</object-name>
+
+  <object-name>EPU_FUEL_disk</object-name>
+  <object-name>EPU_FUEL_needle</object-name>
+
+  <object-name>HYD_PRESS_A_disk</object-name>
+  <object-name>HYD_PRESS_A_needle</object-name>
+  <object-name>HYD_PRESS_B_disk</object-name>
+  <object-name>HYD_PRESS_B_needle</object-name>
+  
+  <object-name>LIQ_OXY_disk</object-name>
+  <object-name>LIQ_OXY_needle</object-name>
+
+ <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.55</red>
+   <green>0.24</green>
+   <blue>0.10</blue>
+  </emission>
+ </animation>
+
+</PropertyList>

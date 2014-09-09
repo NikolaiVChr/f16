@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<PropertyList>
+
+<particlesystem>
+  <name>exhaust-heath</name>
+  <texture>exhaustheath.png</texture>
+  <emissive>false</emissive>
+  <lighting>true</lighting>
+  
+  <offsets>
+   <x-m>0</x-m>
+   <y-m>0</y-m>
+   <z-m>0</z-m>
+   <pitch-deg>90</pitch-deg>
+   <roll-deg>90</roll-deg>
+  </offsets>
+
+ <condition>
+   <less-than-equals>
+    <property>velocities/airspeed-kt</property>
+    <value>40</value>
+   </less-than-equals>
+ </condition>
+   
+  <attach>world</attach>
+
+  <placer>
+   <type>point</type>
+  </placer>
+  
+  <shooter>
+   <theta-min-deg>-15</theta-min-deg>
+   <theta-max-deg>15</theta-max-deg>
+   <phi-min-deg>-15</phi-min-deg>
+   <phi-max-deg>15</phi-max-deg>
+   <speed-mps>
+    <property>engines/engine/thrust_lb</property>
+    <spread>20</spread>
+   </speed-mps>
+   <rotation-speed>
+    <x-min-deg-sec>5</x-min-deg-sec>
+    <y-min-deg-sec>5</y-min-deg-sec>
+    <z-min-deg-sec>5</z-min-deg-sec>
+    <x-max-deg-sec>100</x-max-deg-sec>
+    <y-max-deg-sec>100</y-max-deg-sec>
+    <z-max-deg-sec>100</z-max-deg-sec>
+   </rotation-speed>
+  </shooter>
+  
+  <counter>
+   <particles-per-sec>
+    <value>8</value>
+    <spread>5</spread>
+   </particles-per-sec>
+  </counter>
+  
+  <align>billboard</align>
+  
+  <particle>
+   <start>
+    <color>
+     <red>
+      <value>0.6</value>
+     </red>
+     <green>
+      <value>0.8</value>
+     </green>
+     <blue>
+      <value>1</value>
+     </blue>
+     <alpha>
+      <value>0.12</value>
+     </alpha>
+    </color>
+    <size>
+     <value>0.8</value>
+    </size>
+   </start>
+   <end>
+    <color>
+     <red>
+      <value>0.6</value>
+     </red>
+     <green>
+      <value>0.8</value>
+     </green>
+     <blue>
+      <value>1</value>
+     </blue>
+     <alpha>
+      <value>0.008</value>
+     </alpha>
+    </color>
+    <size>
+     <value>8</value>
+    </size>
+   </end>
+   <life-sec>
+    <value>5.0</value>
+   </life-sec>
+   <mass-kg>0.00001</mass-kg>
+   <radius-m>0.015</radius-m>
+  </particle>
+  
+  <program>
+   <fluid>air</fluid>
+   <gravity type="bool">true</gravity>
+   <wind type="bool">true</wind>
+  </program>
+  
+</particlesystem>
+
+</PropertyList>
+

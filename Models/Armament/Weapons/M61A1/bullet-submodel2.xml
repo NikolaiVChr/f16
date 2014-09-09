@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+	<submodel>
+		<name>bullet splash</name>
+		<model>Aircraft/f16/Models/Armament/Weapons/M61A1/splash.xml</model>
+		<speed>0</speed>
+		<repeat>false</repeat>
+		<delay>0</delay>
+		<count>1</count>
+		<x-offset>0</x-offset>
+		<y-offset>0</y-offset>
+		<z-offset>0</z-offset>
+		<yaw-offset>0</yaw-offset>
+		<pitch-offset>0</pitch-offset>
+		<eda>100</eda>
+		<wind>false</wind>
+		<buoyancy>32.1</buoyancy>
+                <aero-stabilised>false</aero-stabilised>
+                <fuse-range>0</fuse-range>
+		<life>3</life>
+	</submodel> 
+
+
+</PropertyList>

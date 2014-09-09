@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>eyebrow_left.ac</path>
+
+ <animation>
+  <type>select</type>
+  <object-name>master_caution</object-name>
+  <object-name>unused1</object-name>
+  <object-name>unused2</object-name>
+  <object-name>none</object-name>
+  <object-name>tf_fail</object-name>
+  <condition>
+    <or>
+    <property type="bool">/tmp/nill</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+ </animation>
+
+</PropertyList>

@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+<!--CHOCKS -->
+<animation>
+ <type>select</type>
+ <object-name>chocks</object-name>
+ <condition>
+   <property>controls/gear/brake-parking</property>
+   <not><property>controls/lighting/ext-lighting-panel/anti-collision</property></not>
+ </condition>
+</animation>
+ 
+<!-- NOSE CHOCKS -->
+<model>
+ <name>chocks</name>
+ <path>Aircraft/f16/Models/chock.ac</path>
+ <offsets> 
+  <x-m>-3.27</x-m>
+  <y-m>-0.05</y-m>
+  <z-m>-1.85</z-m>
+  <heading-deg>90</heading-deg>
+ </offsets>
+</model>
+ 
+<model>
+ <name>chocks</name>
+ <path>Aircraft/f16/Models/chock.ac</path>
+ <offsets> 
+  <x-m> -2.77</x-m>
+  <y-m> 0.00</y-m>
+  <z-m>-1.85</z-m>
+  <heading-deg>90</heading-deg>
+ </offsets>
+</model>
+ 
+<!-- MAIN LEFT CHOCKS -->
+<model>
+ <name>chocks</name>
+ <path>Aircraft/f16/Models/chock.ac</path>
+ <offsets> 
+  <x-m> 0.27</x-m>
+  <y-m>-1.20</y-m>
+  <z-m>-1.82</z-m>
+  <heading-deg>90</heading-deg>
+ </offsets>
+</model>
+ 
+<model>
+ <name>chocks</name>
+ <path>Aircraft/f16/Models/chock.ac</path>
+ <offsets> 
+  <x-m> 0.85</x-m>
+  <y-m>-1.20</y-m>
+  <z-m>-1.82</z-m>
+  <heading-deg>90</heading-deg>
+ </offsets>
+</model>
+ 
+<!-- MAIN RIGHT CHOCKS -->
+<model>
+ <name>chocks</name>
+ <path>Aircraft/f16/Models/chock.ac</path>
+ <offsets> 
+  <x-m> 0.27</x-m>
+  <y-m> 1.20</y-m>
+  <z-m>-1.82</z-m>
+  <heading-deg>90</heading-deg>
+ </offsets>
+</model>
+ 
+<model>
+ <name>chocks</name>
+ <path>Aircraft/f16/Models/chock.ac</path>
+ <offsets> 
+  <x-m> 0.85</x-m>
+  <y-m> 1.20</y-m>
+  <z-m>-1.82</z-m>
+  <heading-deg>90</heading-deg>
+ </offsets>
+</model>
+
+</PropertyList>

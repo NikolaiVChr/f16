@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<!-- Flack burst (cannon impact), by Dave Culp -->
+
+<PropertyList>
+
+ <path>flack.ac</path>
+
+ <animation>
+  <type>billboard</type>
+  <spherical>true</spherical>
+ </animation>
+
+</PropertyList>

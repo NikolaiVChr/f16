@@ -1,0 +1,1464 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>f16.ac</path>
+ <offsets>
+  <z-m>0.08</z-m>
+  <pitch-deg>0.7</pitch-deg>
+ </offsets>
+
+ <nasal>
+  <load>
+   var livery_update = aircraft.livery_update.new(
+        "Aircraft/f16/Models/Liveries", 10);
+  </load>
+  <unload>
+   livery_update.stop();
+  </unload>
+ </nasal>
+
+<!-- disable shadows for these objects -->
+
+<!-- start submodels -->
+ <!-- decide which cockpit we select based upon selected livery -->
+ <model>
+  <name>Cockpit</name>
+  <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/cockpit.xml</path>
+  <condition>
+   <equals>
+    <property>sim/model/livery/actype</property>
+    <value>F-16A-MLU</value>
+   </equals>
+  </condition>
+ </model>
+
+ <model>
+  <name>Cockpit</name>
+  <path>Aircraft/f16/Models/Cockpit/F-16C-40/cockpit.xml</path>
+  <condition>
+   <or>
+    <equals>
+     <property>sim/model/livery/actype</property>
+     <value>F-16C-40</value>
+    </equals>
+    <equals> 
+     <property>sim/model/livery/actype</property>
+     <value>F-16C-42</value>
+    </equals>
+   </or>
+  </condition>
+ </model>
+
+ <model>
+  <name>Cockpit</name>
+  <path>Aircraft/f16/Models/Cockpit/F-16C-50/cockpit.xml</path>
+  <condition>
+   <or>
+    <equals>
+     <property>sim/model/livery/actype</property>
+     <value>F-16C-50</value>
+    </equals>
+    <equals> 
+     <property>sim/model/livery/actype</property>
+     <value>F-16C-52</value>
+    </equals>
+   </or>
+  </condition>
+ </model>
+
+ <model>
+  <name>new_nozzle</name>
+  <path>Aircraft/f16/Models/nozzle.xml</path>
+  <offsets>
+   <x-m>4.617</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.0</z-m>
+  </offsets>
+ </model>
+
+
+<!-- ===================== START ARMAMENT =========================== -->
+<!-- The armament section should probably be placed in a seperate file -->
+
+<!-- Station 5 -->
+ <model>
+  <name>VentralTank</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/300G.ac</path>
+  <offsets>
+   <x-m>0</x-m>
+   <y-m>0</y-m>
+   <z-m>-1.15</z-m>
+   <pitch-deg>-2</pitch-deg>
+  </offsets>
+ </model>
+
+<!-- Station 4 -->
+ <model>
+  <name>LExtTank</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/370G.ac</path>
+  <offsets>
+   <x-m>-0.50</x-m>
+   <y-m>-1.65</y-m>
+   <z-m>-0.55</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+<!-- Station 6 -->
+ <model>
+  <name>RExtTank</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/370G.ac</path>
+  <offsets>
+   <x-m>-0.50</x-m>
+   <y-m>1.65</y-m>
+   <z-m>-0.55</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+<!-- Station 1 -->
+ <model>
+  <name>Station1_AIM-9L</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L.ac</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>-4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station1_AIM-9L_dummy</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L_dummy.ac</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>-4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station1_AIM-9_smokewinder</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9_smokewinder.ac</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>-4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station1_AIM-120C5_amraam</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/AIM-120C5.ac</path>
+  <offsets>
+   <x-m>0.5</x-m>
+   <y-m>-4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+<!-- Station 9 -->
+ <model>
+  <name>Station9_AIM-9L</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L.ac</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station9_AIM-9L_dummy</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L_dummy.ac</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station9_AIM-9_smokewinder</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9_smokewinder.ac</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station9_AIM-120C5_amraam</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/AIM-120C5.ac</path>
+  <offsets>
+   <x-m>0.5</x-m>
+   <y-m>4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+<!-- ======================= END ARMAMENT =========================== -->
+
+
+ <!-- start effects -->
+ <model>
+  <name>exhaust_smoke</name>
+  <path>Aircraft/f16/Models/Effects/exhaust.xml</path>
+  <offsets>
+   <x-m>4.6</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.0</z-m>
+  </offsets>
+ </model>
+
+ <!-- smokepods -->
+ <model>
+  <name>Station1_AIM-9_smokewinder_smoke</name>
+  <path>Aircraft/f16/Models/Effects/smoke.xml</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station9_AIM-9_smokewinder_smoke</name>
+  <path>Aircraft/f16/Models/Effects/smoke.xml</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>-4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>left-strake-vortex</name>
+  <path>Aircraft/f16/Models/Effects/strake-vortex.xml</path>
+  <offsets>
+   <x-m>-2.5</x-m>
+   <y-m>-1.0</y-m>
+   <z-m>0.5</z-m>
+  </offsets>
+ </model>
+
+ <model>
+  <name>right-strake-vortex</name>
+  <path>Aircraft/f16/Models/Effects/strake-vortex.xml</path>
+  <offsets>
+   <x-m>-2.5</x-m>
+   <y-m>1.0</y-m>
+   <z-m>0.5</z-m>
+  </offsets>
+ </model>
+
+ <model>
+  <path>Aircraft/Generic/Effects/tyre-smoke-nose.xml</path>
+  <name>tyre-smoke-n</name>
+  <offsets>
+   <x-m>-2.97</x-m>
+   <y-m>0.0</y-m>
+   <z-m>-2.0</z-m>
+  </offsets>
+ </model>
+
+  <model>
+   <path>Aircraft/Generic/Effects/tyre-smoke-port.xml</path>
+   <name>tyre-smoke-p</name>
+   <offsets>
+    <x-m>0.0</x-m>
+    <y-m>-1.21</y-m>
+    <z-m>-2.0</z-m>
+   </offsets>
+  </model>
+
+  <model>
+   <path>Aircraft/Generic/Effects/tyre-smoke-stbd.xml</path>
+   <name>tyre-smoke-s</name>
+   <offsets>
+   <x-m>0.0</x-m>
+    <y-m>1.21</y-m>
+    <z-m>-2.0</z-m>
+   </offsets>
+  </model>
+ <!-- end effects -->
+
+ <model>
+  <name>Chocks</name>
+  <path>Aircraft/f16/Models/chocks.xml</path>
+ </model>
+
+<!-- end submodels -->
+
+
+<!-- ===================== START LIGHTING =========================== -->
+
+<!-- start position lights -->
+ 
+ <animation>
+  <name>pos_lights_lit</name>
+  <object-name>GreenPosLight1</object-name>
+  <object-name>RedPosLight1</object-name>
+  <object-name>WingRedPosLight</object-name>
+  <object-name>WingGreenPosLight</object-name>
+ </animation>
+ 
+ <animation>
+  <name>pos_lights_unlit</name>
+  <object-name>GreenPosLight2</object-name>
+  <object-name>RedPosLight2</object-name>
+ </animation>
+
+ <animation>
+  <name>pos_lights_flash</name>
+  <type>timed</type>
+  <object-name>pos_lights_unlit</object-name>
+  <object-name>pos_lights_lit</object-name>
+  <branch-duration-sec>1.0</branch-duration-sec>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>pos_lights_flash</object-name>
+  <condition>
+   <property>controls/lighting/ext-lighting-panel/pos-lights-flash</property>
+   <or>
+   <equals>
+    <property>controls/lighting/ext-lighting-panel/wing-tail</property>
+    <value>2</value>
+   </equals>
+   <equals>
+    <property>controls/lighting/ext-lighting-panel/wing-tail</property>
+    <value>0.0</value>
+   </equals>
+   </or>
+   <property>controls/lighting/ext-lighting-panel/master</property>
+  </condition>
+ </animation>
+<!-- flash causes this not to work, since flash is what we use during flight
+     we'll disable steady/off for now
+ <animation>
+  <type>select</type>
+  <object-name>pos_lights_lit</object-name>
+  <condition>
+   <not><property>controls/lighting/ext-lighting-panel/pos-lights-flash</property></not>
+   <or>
+   <equals>
+    <property>controls/lighting/ext-lighting-panel/wing-tail</property>
+    <value>2.0</value>
+   </equals>
+   <equals>
+    <property>controls/lighting/ext-lighting-panel/wing-tail</property>
+    <value>0.0</value>
+   </equals>
+   </or>
+   <property>controls/lighting/ext-lighting-panel/master</property>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>pos_lights_unlit</object-name>
+  <condition>
+   <or>
+    <equals>
+     <property>controls/lighting/ext-lighting-panel/wing-tail</property>
+     <value>1.0</value>
+    </equals> 
+    <not><property>controls/lighting/ext-lighting-panel/master</property></not>
+   </or>
+  </condition>
+ </animation>
+-->
+<!-- end position lights -->
+
+
+<!-- start formation lights -->
+ <animation>
+  <name>F-16A-MLU-rnlaf_formation_lights</name>
+  <type>select</type>
+  <object-name>LowFormationLight</object-name>
+  <object-name>FwdFormationLight</object-name>
+  <object-name>AftPosLight2</object-name>
+  <condition>
+    <equals>
+     <property>sim/model/livery/actype</property>
+     <value>F-16A-MLU</value>
+    </equals>
+     <property>controls/lighting/ext-lighting-panel/master</property>
+    <equals>
+     <property>controls/lighting/ext-lighting-panel/form-knob</property>
+     <value>1</value>
+    </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <name>F-16C_formation_lights</name>
+  <type>select</type>
+  <object-name>LowFormationLight</object-name>
+  <object-name>FwdFormationLight</object-name>
+  <object-name>AftPosLight1</object-name>
+  <condition>
+    <equals>
+     <property>sim/model/livery/actype</property>
+     <value>F-16C-40</value>
+    </equals>
+     <property>controls/lighting/ext-lighting-panel/master</property>
+    <equals>
+     <property>controls/lighting/ext-lighting-panel/form-knob</property>
+     <value>1</value>
+    </equals>
+  </condition>
+ </animation>
+<!-- end formation lights -->
+
+ <model>
+  <name>strobe</name>
+  <path>Aircraft/f16/Models/strobe.xml</path>
+  <offsets>
+   <x-m>5.3</x-m>
+   <y-m>0.0</y-m>
+   <z-m>3.2</z-m>
+  </offsets>
+ </model>
+
+<!-- ===================== END LIGHTING =========================== -->
+
+ <animation>
+  <type>select</type>
+  <object-name>LhoCondensCone</object-name>
+  <object-name>RhoCondensCone</object-name>
+  <property>null</property>
+ </animation>
+
+<!-- fuselage animations -->
+ <animation>
+  <type>rotate</type>
+  <object-name>CanopyBackOutside</object-name>
+  <object-name>CanopyFrame</object-name>
+  <object-name>CanopyGlassFwd</object-name>
+ <property>fdm/jsbsim/fcs/canopy-pos-norm</property>
+  <factor>30.0</factor>
+  <center>
+   <x-m>-3.30</x-m>
+   <y-m>0</y-m>
+   <z-m>0.6</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>1.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>ArresterHook</object-name>
+  <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+  <factor>45.0</factor>
+  <center>
+   <x-m>2.58</x-m>
+   <y-m>0</y-m>
+   <z-m>-0.73</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>1.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Fan</object-name>
+  <condition>
+   <less-than>
+    <property>engines/engine[0]/n1</property>
+    <value>1</value>
+   </less-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>FanSpinning</object-name>
+  <condition>
+   <greater-than>
+    <property>engines/engine[0]/n1</property>
+    <value>1</value>
+   </greater-than>
+  </condition>
+ </animation>
+
+<!--
+ <animation>
+  <type>rotate</type>
+  <object-name>fan</object-name>
+  <object-name>fan_spinning</object-name>
+  <property>engines/engine[0]/n1</property>
+  <factor>27</factor>
+  <center>
+   <x-m>0.596828</x-m>
+   <y-m>0.00300605</y-m>
+   <z-m>0.0184392</z-m>
+  </center>
+  <axis>
+   <x>1.0</x>
+   <y>0.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+-->
+
+ <animation>
+  <type>select</type>
+  <object-name>InternalFlame</object-name>
+  <condition>
+   <property>engines/engine[0]/augmentation</property>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>ExternalFlame</object-name>
+  <condition>
+   <property>engines/engine[0]/augmentation</property>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>translate</type>
+  <object-name>ExternalFlame</object-name>
+  <property>engines/engine[0]/nozzle-pos-norm</property>
+  <offset-m>-4.0</offset-m>
+  <factor>4.0</factor>
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>RightUpperAileron</object-name>
+  <object-name>RightLowerAileron</object-name>
+  <property>surface-positions/left-aileron-pos-norm</property>
+  <factor>-21.5</factor>
+  <center>
+   <x-m>1.815</x-m>
+   <y-m>4.11</y-m>
+   <z-m>0.05</z-m>
+  </center>
+  <axis>
+   <x>0.167465</x>
+   <y>0.985090</y>
+   <z>-0.039404</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>LeftUpperAileron</object-name>
+  <object-name>LeftLowerAileron</object-name>
+  <property>surface-positions/left-aileron-pos-norm</property>
+  <factor>-21.5</factor>
+  <center>
+   <x-m>1.815</x-m>
+   <y-m>-4.11</y-m>
+   <z-m>0.05</z-m>
+  </center>
+  <axis>
+   <x>0.167465</x>
+   <y>-0.985090</y>
+   <z>-0.039404</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>RightUpperFlap</object-name>
+  <object-name>RightLowerFlap</object-name>
+  <property>fdm/jsbsim/fcs/right-flaperon-norm</property>
+  <factor>20.0</factor>
+  <center>
+   <x-m>1.54</x-m>
+   <y-m>2.35</y-m>
+   <z-m>0.12</z-m>
+  </center>
+  <axis>
+   <x>0.150157</x>
+   <y>0.987872</y>
+   <z>-0.039515</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>LeftUpperFlap</object-name>
+  <object-name>LeftLowerFlap</object-name>
+  <property>fdm/jsbsim/fcs/left-flaperon-norm</property>
+  <factor>20.0</factor>
+  <center>
+   <x-m>1.54</x-m>
+   <y-m>-2.35</y-m>
+   <z-m>0.12</z-m>
+  </center>
+  <axis>
+   <x>0.150157</x>
+   <y>-0.987872</y>
+   <z>-0.039515</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>RightUpperLef</object-name>
+  <object-name>RightLowerLef</object-name>
+  <property>fdm/jsbsim/fcs/lef-pos-deg</property>
+  <factor>-1</factor>
+  <center>
+   <x-m>0.24</x-m>
+   <y-m>3.0</y-m>
+   <z-m>0.035</z-m>
+  </center>
+  <axis>
+   <x>0.550908</x>
+   <y>0.834232</y>
+   <z>-0.023610</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>LeftUpperLef</object-name>
+  <object-name>LeftLowerLef</object-name>
+  <property>fdm/jsbsim/fcs/lef-pos-deg</property>
+  <center>
+   <x-m>0.24</x-m>
+   <y-m>-3.0</y-m>
+   <z-m>0.035</z-m>
+  </center>
+  <axis>
+   <x>0.549345</x>
+   <y>-0.834983</y>
+   <z>-0.031988</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Rudder</object-name>
+  <object-name>Rudder.001</object-name>
+  <object-name>Rudder.002</object-name>
+  <object-name>Rudder.003</object-name>
+  <object-name>Rudder.004</object-name>
+  <object-name>Rudder.005</object-name>
+  <object-name>Rudder.006</object-name>  
+  <object-name>VstabBandLeftAft</object-name>
+  <object-name>VstabBandRightAft</object-name>
+  <property>surface-positions/rudder-pos-norm</property>
+  <factor>30</factor>
+  <center>
+   <x-m>4.915</x-m>
+   <y-m>0.0</y-m>
+   <z-m>2.095</z-m>
+  </center>
+  <axis>
+   <x>0.547371</x>
+   <y>0.0</y>
+   <z>0.836890</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>RightUpperHorizonTail</object-name>
+  <object-name>RightLowerHorizonTail</object-name>
+  <property>fdm/jsbsim/fcs/dht-right-pos-rad</property>
+  <factor>57.3</factor>
+  <center>
+   <x-m>4.36</x-m>
+   <y-m>1.965</y-m>
+   <z-m>-0.1</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>0.981645</y>
+   <z>-0.190720</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>LeftUpperHorizonTail</object-name>
+  <object-name>LeftLowerHorizonTail</object-name>
+  <property>fdm/jsbsim/fcs/dht-left-pos-rad</property>
+  <factor>57.3</factor>
+  <center>
+   <x-m>4.36</x-m>
+   <y-m>-1.965</y-m>
+   <z-m>-0.1</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>-0.981645</y>
+   <z>-0.190720</z>
+  </axis>
+ </animation>
+
+<!-- ============== START GEAR ================== -->
+
+ <!-- front -->
+ 
+ <animation>
+  <type>rotate</type>
+  <object-name>InternalFrontGearDoor</object-name>
+  <object-name>ExternalFrontGearDoor</object-name>
+  <property>gear/gear[0]/position-norm</property>
+  <factor>420</factor>
+  <offset-deg>-100</offset-deg>
+  <min-deg>-91</min-deg>
+  <max-deg>0</max-deg>
+  <center>
+   <x-m>-2.5</x-m>
+   <y-m>0.28</y-m>
+   <z-m>-0.805</z-m>
+  </center>
+  <axis>
+   <x>0.999843</x>
+   <y>0.015871</y>
+   <z>0.007935</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>translate</type>
+  <object-name>FrontTire</object-name>
+  <object-name>FrontLowerStrut</object-name>
+  <property>gear/gear/compression-norm</property>
+  <factor>0.25</factor>
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>1</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>FrontTire</object-name>
+  <object-name>FrontLowerStrut</object-name>
+  <property>gear/gear[0]/steering-norm</property>
+  <factor>-80</factor>
+  <center>
+   <x-m>-2.97</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.0</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>1</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>FrontTire</object-name>
+  <object-name>FrontLowerStrut</object-name>
+  <object-name>FrontUpperStrut</object-name>
+  <object-name>FrontAftStrut</object-name>
+  <property>gear/gear[0]/position-norm</property>
+  <factor>92</factor>
+  <offset-deg>-92</offset-deg>
+  <center>
+   <x-m>-2.97</x-m>
+   <y-m>0.0</y-m>
+   <z-m>-0.805</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>FrontAftStrut</object-name>
+  <property>gear/gear[0]/position-norm</property>
+  <factor>-120</factor>
+  <offset-deg>120</offset-deg>
+  <center>
+   <x-m>-2.97</x-m>
+   <y-m>0.0</y-m>
+   <z-m>-1.17</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>FrontTire</object-name>
+  <object-name>FrontLowerStrut</object-name>
+  <property>gear/gear[0]/position-norm</property>
+  <factor>90</factor>
+  <offset-deg>-90</offset-deg>
+  <center>
+   <x-m>-2.97</x-m>
+   <y-m>0.0</y-m>
+   <z-m>-0.805</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>1</z>
+  </axis>
+ </animation>
+
+
+ <!-- right gear -->
+
+ <animation>
+  <type>rotate</type>
+  <object-name>InternalRightMainDoor</object-name>
+  <object-name>ExternalRightMainDoor</object-name>
+  <property>gear/gear[2]/position-norm</property>
+  <factor>460</factor>
+  <min-deg>0</min-deg>
+  <max-deg>95</max-deg>
+  <center>
+   <x-m>-0.755</x-m>
+   <y-m>0.76</y-m>
+   <z-m>-0.43</z-m>
+  </center>
+  <axis>
+   <x>1.0</x>
+   <y>0.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>RightOuterLowerStrut</object-name>
+  <object-name>RightOuterUpperStrut</object-name>
+  <property>gear/gear[1]/compression-norm</property>
+  <factor>-10</factor>
+  <center>
+   <x-m>0.56</x-m>
+   <y-m>1.10</y-m>
+   <z-m>-1.42</z-m>
+  </center>
+  <axis>
+   <x>0.995037</x>
+   <y>0.099504</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>translate</type>
+  <object-name>RightOuterUpperStrut</object-name>
+  <property>gear/gear[1]/compression-norm</property>
+  <factor>0.2</factor>
+  <center>
+   <x-m>0.59</x-m>
+   <y-m>0.28</y-m>
+   <z-m>-0.75</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>-0.457</y>
+   <z>1.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>RightMainTire</object-name>
+  <object-name>RightMainStrut</object-name>
+  <object-name>RightUpperMainStrut</object-name>
+  <object-name>RightLowerMainStrut</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <factor>95</factor>
+  <offset-deg>-95</offset-deg>
+  <center>
+   <x-m>0.64</x-m>
+   <y-m>0.44</y-m>
+   <z-m>-0.66</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>-0.868243</y>
+   <z>-0.496139</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>RightUpperMainStrut</object-name>
+  <object-name>RightLowerMainStrut</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <factor>55</factor>
+  <offset-deg>-55</offset-deg>
+  <center>
+   <x-m>0.62</x-m>
+   <y-m>0.92</y-m>
+   <z-m>-1.34</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>-0.868243</y>
+   <z>-0.496139</z>
+  </axis>
+ </animation>
+ 
+ <animation>
+  <type>rotate</type>
+  <object-name>RightUpperMainStrut</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <factor>-205</factor>
+  <offset-deg>205</offset-deg>
+  <max-deg>180</max-deg>
+  <center>
+   <x-m>0.005</x-m>
+   <y-m>0.61</y-m>
+   <z-m>-1.055</z-m>
+  </center>
+  <axis>
+   <x>0.147442</x>
+   <y>-0.884651</y>
+   <z>-0.442327</z>
+  </axis>
+ </animation>
+
+
+ <animation>
+  <type>rotate</type>
+  <object-name>RightMainTire</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <factor>90</factor>
+  <offset-deg>-90</offset-deg>
+  <center>
+   <x-m>0.62</x-m>
+   <y-m>1.12</y-m>
+   <z-m>0.0</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>0.0</y>
+   <z>-1.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>RightMainTire</object-name>
+  <object-name>RightInnerStrut</object-name>
+  <object-name>RightOuterLowerStrut</object-name>
+  <object-name>RightOuterUpperStrut</object-name>
+  <object-name>RightUpperMainStrut</object-name>
+  <object-name>RightLowerMainStrut</object-name>
+  <property>gear/gear[1]/compression-norm</property>
+  <factor>20</factor>
+  <center>
+   <x-m>0.0</x-m>
+   <y-m>0.41</y-m>
+   <z-m>-0.57</z-m>
+  </center>
+  <axis>
+   <x>0.943612</x>
+   <y>0.262974</y>
+   <z>0.201098</z>
+  </axis>
+ </animation>
+
+
+ <!-- left gear -->
+ 
+ <animation>
+  <type>rotate</type>
+  <object-name>InternalLeftMainDoor</object-name>
+  <object-name>ExternalLeftMainDoor</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <factor>460</factor>
+  <min-deg>0</min-deg>
+  <max-deg>95</max-deg>
+  <center>
+   <x-m>-0.755</x-m>
+   <y-m>-0.76</y-m>
+   <z-m>-0.43</z-m>
+  </center>
+  <axis>
+   <x>-1.0</x>
+   <y>0.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>LeftOuterLowerStrut</object-name>
+  <object-name>LeftOuterUpperStrut</object-name>
+  <property>gear/gear[2]/compression-norm</property>
+  <factor>10</factor>
+  <center>
+   <x-m>0.56</x-m>
+   <y-m>-1.10</y-m>
+   <z-m>-1.42</z-m>
+  </center>
+  <axis>
+   <x>0.995037</x>
+   <y>-0.099504</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>translate</type>
+  <object-name>LeftOuterUpperStrut</object-name>
+  <property>gear/gear[2]/compression-norm</property>
+  <factor>0.2</factor>
+  <center>
+   <x-m>0.59</x-m>
+   <y-m>-0.28</y-m>
+   <z-m>-0.75</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>0.457</y>
+   <z>1.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>LeftMainTire</object-name>
+  <object-name>LeftMainStrut</object-name>
+  <object-name>LeftUpperMainStrut</object-name>
+  <object-name>LeftLowerMainStrut</object-name>
+  <property>gear/gear[2]/position-norm</property>
+  <factor>-95</factor>
+  <offset-deg>95</offset-deg>
+  <center>
+   <x-m>0.64</x-m>
+   <y-m>-0.44</y-m>
+   <z-m>-0.66</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>0.868243</y>
+   <z>-0.496139</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>LeftUpperMainStrut</object-name>
+  <object-name>LeftLowerMainStrut</object-name>
+  <property>gear/gear[2]/position-norm</property>
+  <factor>-55</factor>
+  <offset-deg>55</offset-deg>
+  <center>
+   <x-m>0.62</x-m>
+   <y-m>-0.92</y-m>
+   <z-m>-1.34</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>0.868243</y>
+   <z>-0.496139</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>LeftMainTire</object-name>
+  <property>gear/gear[2]/position-norm</property>
+  <factor>-90</factor>
+  <offset-deg>90</offset-deg>
+  <center>
+   <x-m>0.62</x-m>
+   <y-m>-1.12</y-m>
+   <z-m>0.0</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>0.0</y>
+   <z>-1.0</z>
+  </axis>
+ </animation>
+ 
+ <animation>
+  <type>rotate</type>
+  <object-name>LeftMainTire</object-name>
+  <object-name>LeftInnerStrut</object-name>
+  <object-name>LeftOuterLowerStrut</object-name>
+  <object-name>LeftOuterUpperStrut</object-name>
+  <object-name>LeftUpperMainStrut</object-name>
+  <object-name>LeftLowerMainStrut</object-name>
+  <property>gear/gear[2]/compression-norm</property>
+  <factor>-20</factor>
+  <center>
+   <x-m>0.0</x-m>
+   <y-m>-0.41</y-m>
+   <z-m>-0.57</z-m>
+  </center>
+  <axis>
+   <x>0.943612</x>
+   <y>-0.262974</y>
+   <z>0.201098</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>LeftUpperMainStrut</object-name>
+  <property>gear/gear[2]/position-norm</property>
+  <factor>205</factor>
+  <offset-deg>-205</offset-deg>
+  <min-deg>-180</min-deg>
+  <center>
+   <x-m>0.005</x-m>
+   <y-m>-0.61</y-m>
+   <z-m>-1.055</z-m>
+  </center>
+  <axis>
+   <x>0.147442</x>
+   <y>0.884651</y>
+   <z>-0.442327</z>
+  </axis>
+ </animation>
+
+
+
+<!-- ============== END GEAR ================== -->
+
+ <animation>
+  <type>rotate</type>
+  <object-name>RightUpperSpeedbrake</object-name>
+  <property>surface-positions/speedbrake-pos-norm</property>
+  <factor>-60</factor>
+  <center>
+   <x-m>4.55</x-m>
+   <y-m>-0.88</y-m>
+   <z-m>0.15</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>1.0</y>
+   <z>-0.04545</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>RightLowerSpeedbrake</object-name>
+  <property>surface-positions/speedbrake-pos-norm</property>
+  <factor>60</factor>
+  <center>
+   <x-m>4.55</x-m>
+   <y-m>-0.88</y-m>
+   <z-m>0.08</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>1.0</y>
+   <z>-0.0454</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>LeftUpperSpeedbrake</object-name>
+  <property>surface-positions/speedbrake-pos-norm</property>
+  <factor>-60</factor>
+  <center>
+   <x-m>4.55</x-m>
+   <y-m>0.88</y-m>
+   <z-m>0.15</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>1.0</y>
+   <z>0.0454</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>LeftLowerSpeedbrake</object-name>
+  <property>surface-positions/speedbrake-pos-norm</property>
+  <factor>60</factor>
+  <center>
+   <x-m>4.55</x-m>
+   <y-m>0.88</y-m>
+   <z-m>0.08</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>1.0</y>
+   <z>0.0454</z>
+  </axis>
+ </animation>
+
+
+ <animation>
+  <type>select</type>
+  <object-name>FrontTire</object-name>
+  <object-name>FrontLowerStrut</object-name>
+  <object-name>FrontUpperStrut</object-name>
+  <object-name>FrontAftStrut</object-name>
+  <object-name>InternalFrontGearDoor</object-name>
+  <condition>
+   <not>
+   <equals>
+    <property>gear/gear[0]/position-norm</property>
+    <value>0</value>
+   </equals>
+   </not>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>LeftMainTire</object-name>
+  <object-name>LeftMainStrut</object-name>
+  <object-name>LeftUpperMainStrut</object-name>
+  <object-name>LeftLowerMainStrut</object-name>
+  <object-name>InternalLeftMainDoor</object-name>
+  <condition>
+   <not>
+   <equals>
+    <property>gear/gear[2]/position-norm</property>
+    <value>0</value>
+   </equals>
+   </not>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>RightMainTire</object-name>
+  <object-name>RightMainStrut</object-name>
+  <object-name>RightUpperMainStrut</object-name>
+  <object-name>RightLowerMainStrut</object-name>
+  <object-name>InternalRightMainDoor</object-name>
+  <condition>
+   <not>
+   <equals>
+    <property>gear/gear[1]/position-norm</property>
+    <value>0</value>
+   </equals>
+   </not>
+  </condition>
+ </animation>
+
+ <!-- layout selection -->
+ <animation>
+  <type>select</type>
+  <object-name>USAF_Tailroot</object-name>
+  <condition>
+   <not>
+    <property>sim/model/f16/dragchute</property>
+   </not>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>RNLAF_Tailroot</object-name>
+  <condition>
+   <property>sim/model/f16/dragchute</property>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Link16Antennas</object-name>
+  <condition>
+   <property>sim/model/f16/link16</property>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>LWStation1</object-name>
+  <object-name>LWStation2</object-name>
+  <object-name>RWStation1</object-name>
+  <object-name>RWStation2</object-name>
+  <condition>
+   <property>sim/model/f16/wingmounts</property>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>VentralTank</object-name>
+  <condition>
+   <property>sim/model/f16/ventraltank</property>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>LExtTank</object-name>
+  <object-name>RExtTank</object-name>
+  <condition>
+   <property>sim/model/f16/wingtanks</property>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station1_AIM-9L</object-name>
+  <object-name>Station9_AIM-9L</object-name>
+  <condition>
+   <property>sim/model/f16/AIM-9L</property>
+  </condition>
+ </animation>
+
+<!-- in peacetime we don't carry live ammunition -->
+<!-- however for aerodynamic reasons we carry dummy missiles -->
+ <animation>
+  <type>select</type>
+  <object-name>Station1_AIM-9L_dummy</object-name>
+  <object-name>Station9_AIM-9L_dummy</object-name>
+  <condition>
+   <property>sim/model/f16/AIM-9L_dummy</property>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station1_AIM-9_smokewinder</object-name>
+  <object-name>Station9_AIM-9_smokewinder</object-name>
+  <object-name>Station1_AIM-9_smokewinder_smoke</object-name>
+  <object-name>Station9_AIM-9_smokewinder_smoke</object-name>
+  <condition>
+   <property>sim/model/f16/AIM-9_smokewinders</property>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station1_AIM-120C5_amraam</object-name>
+  <object-name>Station9_AIM-120C5_amraam</object-name>
+  <condition>
+   <property>sim/model/f16/AIM-120C5</property>
+  </condition>
+ </animation>
+
+ <!-- livery selection -->
+ <animation>
+  <type>material</type>
+  <object-name>LeftUpperHorizonTail</object-name>
+  <object-name>RightUpperHorizonTail</object-name>
+  <object-name>LeftLowerHorizonTail</object-name>
+  <object-name>RightLowerHorizonTail</object-name>
+  <object-name>LeftUpperAileron</object-name>
+  <object-name>RightUpperAileron</object-name>
+  <object-name>LeftLowerAileron</object-name>
+  <object-name>RightLowerAileron</object-name>
+  <object-name>LeftUpperFlap</object-name>
+  <object-name>RightUpperFlap</object-name>
+  <object-name>LeftLowerFlap</object-name>
+  <object-name>RightLowerFlap</object-name>
+  <object-name>LeftUpperSpeedbrake</object-name>
+  <object-name>RightUpperSpeedbrake</object-name>
+  <object-name>LeftLowerSpeedbrake</object-name>
+  <object-name>RightLowerSpeedbrake</object-name>
+  <object-name>LeftLowerLef</object-name>
+  <object-name>RightLowerLef</object-name>
+  <object-name>LeftUpperLef</object-name>
+  <object-name>RightUpperLef</object-name>
+  <object-name>Tail</object-name>
+  <object-name>VentralFins</object-name>
+  <object-name>ExternalFrontGearDoor</object-name>
+  <object-name>ExternalLeftMainDoor</object-name>
+  <object-name>ExternalRightMainDoor</object-name>
+  <object-name>VentralFins</object-name>
+  <object-name>LWStation1</object-name>
+  <object-name>LWStation2</object-name>
+  <object-name>RWStation1</object-name>
+  <object-name>RWStation1</object-name>
+  <object-name>WingTips</object-name>
+  <object-name>Rudder</object-name>
+  <object-name>Rudder.001</object-name>
+  <object-name>Rudder.002</object-name>
+  <object-name>Rudder.003</object-name>
+  <object-name>Rudder.004</object-name>
+  <object-name>Rudder.005</object-name>
+  <object-name>Rudder.006</object-name>
+  <object-name>FuselageTop</object-name>
+  <object-name>FuselageBottom</object-name>
+  <object-name>CanopyFrame</object-name>
+  <object-name>RadarDomeTop</object-name>
+  <object-name>RadarDomeBottom</object-name>
+  <object-name>RNLAF_Tailroot</object-name>
+  <object-name>USAF_Tailroot</object-name>
+  <object-name>FuelTank</object-name>
+  <object-name>ArresterHook</object-name>
+  <property-base>sim/model/livery</property-base>
+  <texture-prop>texture</texture-prop>
+  <texture>f16.rgb</texture>
+ </animation>
+
+
+ <animation>
+  <type>material</type>
+  <object-name>WinglogoRightTop</object-name>
+  <object-name>FuselageLogoLeft</object-name>
+  <object-name>FuselageLogoRight</object-name>
+  <object-name>VstabLogoRightTop</object-name>
+  <object-name>VstabLogoLeftTop</object-name>
+  <object-name>VstabLogoRightBottom</object-name>
+  <object-name>VstabLogoLeftBottom</object-name>
+  <object-name>WinglogoLeftTop</object-name>
+  <object-name>WinglogoRightBottom</object-name>
+  <object-name>VstabBandLeftFront</object-name>
+  <object-name>VstabBandLeftAft</object-name>
+  <object-name>VstabBandRightFront</object-name>
+  <object-name>VstabBandRightAft</object-name>
+  <property-base>sim/model/livery-logo</property-base>
+  <texture-prop>texture</texture-prop>
+  <texture>f16trans.rgb</texture>
+ </animation>
+
+<model>
+ <name>Pushback</name>
+ <path>Models/Airport/Pushback/Military.xml</path>
+ <offsets>
+  <x-m>-2.98081</x-m>
+  <y-m>0</y-m>
+  <z-m>-1.9683</z-m>
+ </offsets>
+</model>
+
+<!-- Visible up to 10km (6 miles) -->
+ <animation>
+  <type>range</type>
+  <min-m>0</min-m>
+  <max-m>10000</max-m>
+ </animation>
+
+</PropertyList>

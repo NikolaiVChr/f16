@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>mag-compass.ac</path>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>ring</object-name>
+  <property>/instrumentation/magnetic-compass/indicated-heading-deg</property>
+  <axis>
+   <x>0.0</x>
+   <y>0.0</y>
+   <z>1.0</z>
+  </axis>
+ </animation>
+
+ <!-- lighting -->
+ <animation>
+  <object-name>ring</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.55</red>
+   <green>0.24</green>
+   <blue>0.10</blue>
+  </emission>
+ </animation>
+
+</PropertyList>

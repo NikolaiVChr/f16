@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>panels_mlu_left-aux-console.ac</path>
+
+ <animation>
+  <type>select</type>
+  <object-name>nose_gear_light</object-name>
+  <condition>
+   <equals>
+    <property>/gear/gear[0]/position-norm</property>
+    <value>1.0</value>
+   </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>left_gear_light</object-name>
+  <condition>
+   <equals>
+    <property>/gear/gear[1]/position-norm</property>
+    <value>1.0</value>
+   </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>right_gear_light</object-name>
+  <condition>
+   <equals>
+    <property>/gear/gear[2]/position-norm</property>
+    <value>1.0</value>
+   </equals>
+  </condition>
+ </animation>
+
+
+<!-- PICK ANIMATIONS -->
+
+  <!-- Landing Gear Panel -->
+
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_HOOK</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.toggleHook();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>gear_lever</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.toggleLandingGear();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_LANDING_LIGHTS</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.toggleLandingLightsUp();
+      </script>
+     </binding>
+    </action>
+   </animation>
+   
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_LANDING_LIGHTS</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.toggleLandingLightsDn();
+      </script>
+     </binding>
+    </action>
+   </animation>
+<!-- FIXME should be 3-way switch -->  
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>HS_PARKING_BRAKE</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16_switches.toggleParkingBrake();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
+
+<!-- SWITCH ANIMATIONS -->
+
+<animation>
+  <type>rotate</type>
+  <object-name>gear_lever</object-name>
+  <property>controls/gear/gear-down</property>
+  <factor>90</factor>
+  <offset-deg>-45</offset-deg>
+  <roll-deg>-10</roll-deg>
+  <heading-deg>7.3</heading-deg> 
+  <center>
+   <x-m>-0.18</x-m>
+   <y-m>-0.28</y-m>
+   <z-m>0.0</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>SW_PARKING_BRAKE</object-name>
+  <property>controls/gear/brake-parking</property>
+  <factor>40</factor>
+  <center>
+   <x-m>-0.19</x-m>
+   <y-m>-0.35</y-m>
+   <z-m>0.0</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>SPEED_BRAKE_drum</object-name>
+  <property>surface-positions/speedbrake-pos-norm</property>
+  <factor>95</factor>
+  <center>
+   <x-m>-0.094</x-m>
+   <y-m>-0.424</y-m>
+   <z-m>0.001</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+
+</PropertyList>

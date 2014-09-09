@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <path>tracer.ac</path>
+
+  <animation>
+    <type>dist-scale</type>
+    <name>7.62 tracer</name>
+    <object-name>trace</object-name>
+    <interpolation>
+	<entry>
+		<ind>0</ind>
+		<dep>0.2</dep>
+	</entry>
+	<entry>
+		<ind>400</ind>
+		<dep>10</dep>
+	</entry>
+	<entry>
+		<ind>1000</ind>
+		<dep>0</dep>
+	</entry>
+    </interpolation>
+  </animation>
+</PropertyList>

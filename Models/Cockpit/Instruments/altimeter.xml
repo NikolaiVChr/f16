@@ -1,0 +1,312 @@
+<?xml version="1.0"?>
+
+
+
+<PropertyList>
+ <path>/Aircraft/Instruments-3d/altimeter/altimeter.ac</path>
+
+ <animation>
+  <type>select</type>
+  <object-name>altimeter</object-name>
+  <condition>
+   <equals>
+    <property>sim/current-view/name</property>
+    <value>Cockpit View</value>
+   </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>needle</object-name>
+  <property>instrumentation/altimeter/indicated-altitude-ft</property>
+  <factor>0.36</factor>  
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+	<!-- altimeter drum counter -->
+	<animation>
+		<type>textranslate</type>
+		<object-name>drum-1</object-name>
+		<property>instrumentation/altimeter/indicated-altitude-ft</property>
+		<factor>0.001</factor>
+		<offset>-100</offset>
+		<step>100</step>
+		<scroll>10</scroll>
+		<axis>
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+
+	<animation>
+		<type>textranslate</type>
+		<object-name>drum-2</object-name>
+		<property>instrumentation/altimeter/indicated-altitude-ft</property>
+		<factor>0.0001</factor>
+		<offset>-1000</offset>
+		<step>1000</step>
+		<scroll>25</scroll>
+		<axis>
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+
+	<animation>
+		<type>textranslate</type>
+		<object-name>drum-3</object-name>
+		<property>instrumentation/altimeter/indicated-altitude-ft</property>
+		<factor>0.00001</factor>
+		<offset>-10000</offset>
+		<step>10000</step>
+		<scroll>25</scroll>
+		<axis>
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>negativ-flag</object-name>
+		<condition>
+			<less-than>
+				<property>instrumentation/altimeter/indicated-altitude-ft</property>
+				<value>0</value>
+			</less-than>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>below-1000-flag</object-name>
+		<condition>
+			<less-than>
+				<property>instrumentation/altimeter/indicated-altitude-ft</property>
+				<value>1000</value>
+			</less-than>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>below-10000-flag</object-name>
+		<condition>
+			<less-than>
+				<property>instrumentation/altimeter/indicated-altitude-ft</property>
+				<value>10000</value>
+			</less-than>
+		</condition>
+	</animation>
+
+ <!-- barometer drum counter -->
+ <animation>
+  <type>textranslate</type>
+  <object-name>drum-inhg-1</object-name>
+  <property>instrumentation/altimeter/setting-inhg</property>
+  <factor>10</factor>
+  <offset>-0.01</offset>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>textranslate</type>
+  <object-name>drum-inhg-2</object-name>
+  <property>instrumentation/altimeter/setting-inhg</property>
+  <factor>1</factor>
+  <offset>-0.1</offset>
+  <step>0.1</step>
+  <scroll>0.01</scroll>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>textranslate</type>
+  <object-name>drum-inhg-3</object-name>
+  <property>instrumentation/altimeter/setting-inhg</property>
+  <factor>0.1</factor>
+  <offset>-1</offset>
+  <step>1</step>
+  <scroll>0.01</scroll>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>textranslate</type>
+  <object-name>drum-inhg-4</object-name>
+  <property>instrumentation/altimeter/setting-inhg</property>
+  <factor>0.01</factor>
+  <offset>-10</offset>
+  <step>10</step>
+  <scroll>0.01</scroll>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <!-- Altimeter Ingh Setting Knob -->
+ <animation>
+  <name>ingh-knob-left-fine</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>ingh-knob-left</object-name>
+  <action>
+   <button>0</button>
+   <repeatable>true</repeatable>
+   <interval-sec>0.2</interval-sec>
+   <binding>
+    <command>property-adjust</command>
+    <property>instrumentation/altimeter/setting-inhg</property>
+    <step>-0.005</step>
+    <min>26.0</min>
+    <max>33.0</max>
+    <wrap>false</wrap>
+   </binding>
+  </action>
+ </animation>
+
+ <animation>
+  <name>ingh-knob-left-coarse</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>ingh-knob-left</object-name>
+  <action>
+   <button>1</button>
+   <repeatable>true</repeatable>
+   <interval-sec>0.2</interval-sec>
+   <binding>
+    <command>property-adjust</command>
+    <property>instrumentation/altimeter/setting-inhg</property>
+    <step>-0.025</step>
+    <min>26.0</min>
+    <max>33.0</max>
+    <wrap>false</wrap>
+   </binding>
+  </action>
+ </animation>
+
+ <animation>
+  <name>ingh-knob-right-fine</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>ingh-knob-right</object-name>
+  <action>
+   <button>0</button>
+   <repeatable>true</repeatable>
+   <interval-sec>0.2</interval-sec>
+   <binding>
+    <command>property-adjust</command>
+    <property>instrumentation/altimeter/setting-inhg</property>
+    <step>0.005</step>
+    <min>26.0</min>
+    <max>33.0</max>
+    <wrap>false</wrap>
+   </binding>
+  </action>
+ </animation>
+
+ <animation>
+  <name>ingh-knob-right-coarse</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>ingh-knob-right</object-name>
+  <action>
+   <button>1</button>
+   <repeatable>true</repeatable>
+   <interval-sec>0.2</interval-sec>
+   <binding>
+    <command>property-adjust</command>
+    <property>instrumentation/altimeter/setting-inhg</property>
+    <step>0.025</step>
+    <min>26.0</min>
+    <max>33.0</max>
+    <wrap>false</wrap>
+   </binding>
+  </action>
+ </animation>
+
+ <!-- lighting -->
+ <animation>
+  <object-name>mount</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+   <red>0.45</red>
+   <green>0.34</green>
+   <blue>0.18</blue>
+  </emission>
+ </animation>
+
+ <animation> 
+  <object-name>knobs</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+   <red>0.45</red>
+   <green>0.34</green>
+   <blue>0.18</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>face</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>drums</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>needle-w</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <type>range</type>
+  <min-m>0</min-m>
+  <max-m>50</max-m>
+ </animation>
+
+</PropertyList>

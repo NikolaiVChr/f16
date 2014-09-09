@@ -1,0 +1,27 @@
+AC3Db
+MATERIAL "ac3dmat1" rgb 1 1 1  amb 1 1 1  emis 1 1 1  spec 0 0 0  shi 0  trans 0
+OBJECT world
+kids 1
+OBJECT poly
+name "flare"
+loc -2.84189e-05 -1.39698e-09 -6.12284e-05
+texture "flare.png"
+numvert 4
+0.25 0.25 0
+-0.25 0.25 0
+0.25 -0.25 0
+-0.25 -0.25 0
+numsurf 2
+SURF 0x0
+mat 0
+refs 3
+2 1.00001 1.00385
+1 -0.00769991 -0.00386167
+3 1.00001 -0.00386155
+SURF 0x0
+mat 0
+refs 3
+1 -0.00769991 -0.00386167
+2 1.00001 1.00385
+0 -0.00769999 1.00385
+kids 0

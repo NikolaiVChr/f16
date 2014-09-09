@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <name>ICP</name>
+
+   <w-base>128</w-base>
+   <h-base>128</h-base>
+
+   <layers>
+    <layer>
+     <texture>
+      <path>Aircraft/f16/Models/Cockpit/Textures/icp_2D.rgb</path>
+      <x1>0.0</x1>
+      <y1>0.0</y1>
+      <x2>1.0</x2>
+      <y2>1.0</y2>
+     </texture>
+     <w>250</w>
+     <h>201</h>
+    </layer>
+   </layers>
+<!--
+   <model>
+    <path>Aircraft/f16/Models/Cockpit/Panels/wheel.xml</path>
+    <offsets>
+     <x-m>0.0</x-m>
+     <y-m>0.0</y-m>
+     <z-m>0.0</z-m>
+    </offsets>
+   </model>
+
+   <model>
+    <path>Aircraft/f16/Models/Cockpit/Panels/wheel.xml</path>
+    <offsets>
+     <x-m>-3.25</x-m>
+     <y-m> -0.058</y-m>
+     <z-m> 0.54</z-m>
+    </offsets>
+   </model>
+
+   <model>
+    <path>Aircraft/f16/Models/Cockpit/Panels/wheel.xml</path>
+    <offsets>
+     <x-m>-3.25</x-m>
+     <y-m> -0.058</y-m>
+     <z-m> 0.54</z-m>
+    </offsets>
+   </model>
+
+   <model>
+    <path>Aircraft/f16/Models/Cockpit/Panels/wheel.xml</path>
+    <offsets>
+     <x-m>-3.25</x-m>
+     <y-m> -0.058</y-m>
+     <z-m> 0.54</z-m>
+    </offsets>
+   </model>
+-->
+</PropertyList>

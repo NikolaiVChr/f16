@@ -1,0 +1,363 @@
+<?xml version="1.0"?>
+<!DOCTYPE PropertyList SYSTEM "panel.dtd">
+
+<PropertyList>
+
+ <name>Data Entry Display Panel</name>
+ <background>Aircraft/f16/Models/Cockpit/Textures/trans.rgb</background>
+ <w>1024</w>
+ <h>768</h>
+
+ <x-offset>0</x-offset>
+ <y-offset>0</y-offset>
+ <z-offset>0</z-offset>
+
+
+ <instruments>
+  <instrument>
+   <name>Data Entry Display</name>
+   <w-base>85</w-base>
+   <h-base>28</h-base>
+   <x>512</x>
+   <y>512</y>
+   <w>924</w>
+   <h>768</h>
+
+
+ <layers>
+ <!-- ================== 1st row ================= -->
+
+ <!-- disabled as you can't see this row from pilots p.o.v. -->
+ <!-- FIXME needs condition statement -->
+
+    <layer>
+     <name>UHF</name>
+     <type>text</type>
+     <font>default</font>
+     <point-size>4.56</point-size>
+     <color>
+      <red>0.63</red>
+      <green>1.0</green>
+      <blue>0.0</blue>
+     </color>
+     <chunks>
+      <chunk>
+       <type>literal</type>
+       <text>UHF </text>
+      </chunk>
+      <chunk>
+       <type>number-value</type>
+       <property>/instrumentation/comm/frequencies/selected-mhz</property>
+       <format>%3.3f</format>
+      </chunk>
+     </chunks>
+     <transformations>
+      <transformation>
+       <type>x-shift</type>
+       <offset>-37</offset>
+      </transformation>
+      <transformation>
+       <type>y-shift</type>
+       <offset>2.8</offset>
+      </transformation>
+     </transformations>
+    </layer>
+
+    <layer>
+     <name>STPT</name>
+     <type>text</type>
+     <font>default</font>
+     <point-size>4.56</point-size>
+     <color>
+      <red>0.63</red>
+      <green>1.0</green>
+      <blue>0.0</blue>
+     </color>
+     <chunks>
+      <chunk>
+       <type>literal</type>
+       <text>STPT</text>
+      </chunk>
+     </chunks>
+     <transformations>
+      <transformation>
+       <type>x-shift</type>
+       <offset>6</offset>
+      </transformation>
+      <transformation>
+       <type>y-shift</type>
+       <offset>2.8</offset>
+      </transformation>
+     </transformations>
+    </layer>
+-->
+
+ <!-- ================== 2nd row ================= -->
+
+<!-- right -->
+
+    <layer>
+     <name>wind</name>
+     <type>text</type>
+     <font>default</font>
+     <point-size>4.56</point-size>
+     <color>
+      <red>0.63</red>
+      <green>1.0</green>
+      <blue>0.0</blue>
+     </color>
+     <chunks>
+      <chunk>
+       <type>number-value</type>
+       <property>/environment/wind-from-heading-deg</property>
+       <format>%03.0f</format>
+      </chunk>
+      <chunk>
+       <type>literal</type>
+       <text> </text>
+      </chunk>
+      <chunk>
+       <type>number-value</type>
+       <property>/environment/wind-speed-kt</property>
+       <format>%03.0f</format>
+      </chunk>
+     </chunks>
+     <transformations>
+      <transformation>
+       <type>x-shift</type>
+       <offset>13.0</offset>
+      </transformation>
+      <transformation>
+       <type>y-shift</type>
+       <offset>0.8</offset>
+      </transformation>
+     </transformations>
+    </layer>
+
+ <!-- ================== 3rd row ================= -->
+<!-- left> -->
+    <layer>
+     <name>VHF</name>
+     <type>text</type>
+     <font>default</font>
+     <point-size>4.56</point-size>
+     <color>
+      <red>0.63</red>
+      <green>1.0</green>
+      <blue>0.0</blue>
+     </color>
+     <chunks>
+      <chunk>
+       <type>literal</type>
+       <text>VHF </text>
+      </chunk>
+      <chunk>
+       <type>number-value</type>
+       <property>/instrumentation/comm[1]/frequencies/selected-mhz</property>
+       <format>%3.3f</format>
+      </chunk>
+     </chunks>
+     <transformations>
+      <transformation>
+       <type>x-shift</type>
+       <offset>-37</offset>
+      </transformation>
+      <transformation>
+       <type>y-shift</type>
+       <offset>-1.2</offset>
+      </transformation>
+     </transformations>
+    </layer>
+
+<!-- right -->
+    <layer>
+     <name>system time</name>
+     <type>text</type>
+     <font>default</font>
+     <point-size>4.56</point-size>
+     <color>
+      <red>0.63</red>
+      <green>1.0</green>
+      <blue>0.0</blue>
+     </color>
+     <chunks>
+      <chunk>
+       <type>text-value</type>
+       <property>/sim/time/gmt-string</property>
+      </chunk>
+     </chunks>
+     <transformations>
+      <transformation>
+       <type>x-shift</type>
+       <offset>10</offset>
+      </transformation>
+      <transformation>
+       <type>y-shift</type>
+       <offset>-1.5</offset>
+      </transformation>
+     </transformations>
+    </layer>
+
+ <!-- ================== 4th row ================= -->
+
+
+ <!-- ================== 5th row ================= -->
+
+<!--
+    <layer>
+     <name>hack time</name>
+     <type>text</type>
+     <font>default</font>
+     <point-size>4.56</point-size>
+     <color>
+      <red>0.63</red>
+      <green>1.0</green>
+      <blue>0.0</blue>
+     </color>
+     <chunks>
+      <chunk>
+       <type>text-value</type>
+       <property>/sim/time/gmt-string</property>
+      </chunk>
+     </chunks>
+     <transformations>
+      <transformation>
+       <type>x-shift</type>
+       <offset>10</offset>
+      </transformation>
+      <transformation>
+       <type>y-shift</type>
+       <offset>-3.5</offset>
+      </transformation>
+     </transformations>
+    </layer>
+-->
+
+    <layer>
+     <name>IFF mode</name>
+     <type>text</type>
+     <font>default</font>
+     <point-size>4.56</point-size>
+     <color>
+      <red>0.63</red>
+      <green>1.0</green>
+      <blue>0.0</blue>
+     </color>
+     <chunks>
+      <chunk>
+       <type>literal</type>
+       <text>M    C</text>
+      </chunk>
+     </chunks>
+     <transformations>
+      <transformation>
+       <type>x-shift</type>
+       <offset>-37</offset>
+      </transformation>
+      <transformation>
+       <type>y-shift</type>
+       <offset>-5.5</offset>
+      </transformation>
+     </transformations>
+    </layer>
+
+    <layer>
+     <name>MAN</name>
+     <type>text</type>
+     <font>default</font>
+     <point-size>4.56</point-size>
+     <color>
+      <red>0.63</red>
+      <green>1.0</green>
+      <blue>0.0</blue>
+     </color>
+     <chunks>
+      <chunk>
+       <type>literal</type>
+       <text>MAN</text>
+      </chunk>
+     </chunks>
+     <transformations>
+      <transformation>
+       <type>x-shift</type>
+       <offset>8</offset>
+      </transformation>
+      <transformation>
+       <type>y-shift</type>
+       <offset>-5.5</offset>
+      </transformation>
+     </transformations>
+    </layer>
+
+    <layer>
+     <name>TACAN</name>
+     <type>text</type>
+     <font>default</font>
+     <point-size>4.56</point-size>
+     <color>
+      <red>0.63</red>
+      <green>1.0</green>
+      <blue>0.0</blue>
+     </color>
+     <chunks>
+      <chunk>
+       <type>literal</type>
+       <text>T</text>
+      </chunk>
+      <chunk>
+       <type>number-value</type>
+       <property>/instrumentation/tacan/frequencies/selected-channel</property>
+       <format>%3.0f</format>
+      </chunk>
+      <chunk>
+       <type>text-value</type>
+       <property>/instrumentation/tacan/frequencies/selected-channel[4]</property>
+      </chunk>
+     </chunks>
+     <transformations>
+      <transformation>
+       <type>x-shift</type>
+       <offset>23</offset>
+      </transformation>
+      <transformation>
+       <type>y-shift</type>
+       <offset>-5.5</offset>
+      </transformation>
+     </transformations>
+    </layer>
+
+    <layer>
+     <name>mode 3 code</name>
+     <type>text</type>
+     <font>default</font>
+     <point-size>4.56</point-size>
+     <color>
+      <red>0.63</red>
+      <green>1.0</green>
+      <blue>0.0</blue>
+     </color>
+     <chunks>
+      <chunk>
+       <type>literal</type>
+       <text>7500</text>
+      </chunk>
+     </chunks>
+     <transformations>
+      <transformation>
+       <type>x-shift</type>
+       <offset>-17</offset>
+      </transformation>
+      <transformation>
+       <type>y-shift</type>
+       <offset>-5.5</offset>
+      </transformation>
+     </transformations>
+    </layer>
+
+<!-- ===================== END OF DED ========================== -->
+
+   </layers>
+  </instrument>
+ </instruments>
+
+</PropertyList>

@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+  <submodel>
+    <name>flares</name>
+    <model>Aircraft/f16/Models/Effects/flare.xml</model>
+    <trigger>ai/submodels/submodel[0]/flare-release</trigger>
+    <speed>100.0</speed>   <!-- ft/sec -->
+    <repeat>true</repeat>
+    <delay>0.75</delay>
+    <count>40</count>
+    <x-offset>5.0</x-offset>
+    <y-offset>2.0</y-offset>
+    <z-offset>0.1</z-offset>
+    <yaw-offset>90.0</yaw-offset>
+    <life>5</life>
+    <buoyancy>8</buoyancy>
+    <eda>1.0</eda>
+  </submodel>
+
+  <submodel>
+    <name>gun-pod</name>
+    <model>Aircraft/f16/Models/Armament/Weapons/M61A1/tracer.xml</model>
+    <trigger>controls/armament/trigger</trigger>
+    <speed>2041.0</speed>
+    <repeat>true</repeat>
+    <delay>0.15</delay>
+    <count>-1</count>
+    <x-offset>  3.0</x-offset>
+    <y-offset> -2.5</y-offset>
+    <z-offset>  1.2</z-offset>
+    <pitch-offset>0</pitch-offset>
+    <life>2.0</life>
+    <wind>false</wind>
+    <weight>0.1</weight>
+    <cd>0.193</cd>
+    <eda>0.00136354</eda>
+  </submodel>
+
+  <submodel>
+    <name>gun-bullet</name>
+    <model>Models/Geometry/null.ac</model>
+    <trigger>controls/armament/trigger</trigger>
+    <speed>2041.0</speed>
+    <repeat>true</repeat>
+    <delay>0</delay>
+    <count>-1</count>
+    <x-offset>  3.0</x-offset>
+    <y-offset> -2.5</y-offset>
+    <z-offset>  1.2</z-offset>
+    <pitch-offset>0</pitch-offset>
+    <life>10.0</life>
+    <wind>false</wind>
+    <weight>0.1069</weight>
+    <cd>0.193</cd>
+    <eda>0.00136354</eda>
+    <collision>true</collision>
+    <collision-report>sim/ai/aircraft/collision/bullet</collision-report>
+    <impact>true</impact>
+    <impact-report>sim/ai/aircraft/impact/bullet</impact-report>
+    <submodel-path>Aircraft/f16/Models/Armament/Weapons/M61A1/bullet-submodel.xml</submodel-path>
+  </submodel>
+
+
+  <submodel>
+    <name>gunsmoke</name>
+    <model>Aircraft/f16/Models/Armament/Weapons/M61A1/smoke.xml</model>
+    <trigger>controls/armament/trigger</trigger>
+    <speed>10</speed>
+    <repeat>true</repeat>
+    <delay>0.01</delay>
+    <count>-1</count>
+    <x-offset>  3.0</x-offset>
+    <y-offset> -2.5</y-offset>
+    <z-offset>  1.2</z-offset>
+    <yaw-offset>0.0</yaw-offset>
+    <pitch-offset>0.0</pitch-offset>
+    <eda>10</eda>
+    <wind>true</wind>
+    <buoyancy>33</buoyancy>
+    <life>1</life>
+  </submodel>
+</PropertyList>

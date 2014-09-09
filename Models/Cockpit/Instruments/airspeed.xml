@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>airspeed.ac</path>
+ <texture-path>../Panels/Textures</texture-path>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>mach_scale</object-name>
+  <property>velocities/mach</property>
+  <factor>-200.0</factor>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>needle</object-name>
+  <object-name>mach_scale</object-name>
+  <property>instrumentation/airspeed-indicator/indicated-speed-kt</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>40</ind><dep>16</dep></entry>
+   <entry><ind>75</ind><dep>31</dep></entry>
+   <entry><ind>100</ind><dep>45</dep></entry>
+   <entry><ind>117</ind><dep>61</dep></entry>
+   <entry><ind>135</ind><dep>75</dep></entry>
+   <entry><ind>150</ind><dep>90</dep></entry>
+   <entry><ind>170</ind><dep>104</dep></entry>
+   <entry><ind>185</ind><dep>120</dep></entry>
+   <entry><ind>200</ind><dep>134</dep></entry>
+   <entry><ind>250</ind><dep>156</dep></entry>
+   <entry><ind>300</ind><dep>180</dep></entry>
+   <entry><ind>350</ind><dep>204</dep></entry>
+   <entry><ind>400</ind><dep>224</dep></entry>
+   <entry><ind>500</ind><dep>251</dep></entry>
+   <entry><ind>600</ind><dep>280</dep></entry>
+   <entry><ind>700</ind><dep>305</dep></entry>
+   <entry><ind>800</ind><dep>332</dep></entry>
+   <entry><ind>850</ind><dep>345</dep></entry>
+  </interpolation>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis> 
+ </animation>
+
+</PropertyList>

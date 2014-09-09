@@ -1,0 +1,501 @@
+<PropertyList>
+
+ <!-- Horizontal Situation Indicator -->
+ <name>HSI</name>
+ <path>hsi.ac</path>
+
+ <animation>
+  <type>select</type>
+  <object-name>hsi</object-name>
+  <condition>
+   <equals>
+    <property>sim/current-view/name</property>
+    <value>Cockpit View</value>
+   </equals>
+  </condition>
+ </animation>
+
+ <!-- off-flag -->
+ <!-- TODO: using simple electrical scheme for now -->
+ <animation>
+  <type>select</type>
+  <object-name>HSI_off-flag</object-name>
+  <condition>
+   <less-than>
+    <property>systems/electrical/outputs/adi</property>
+    <value>24</value>
+   </less-than> 
+  </condition>
+ </animation>
+
+<!-- Compass Card -->
+ <animation>
+  <type>rotate</type>
+  <object-name>HSI_compass-card</object-name>
+  <property>orientation/heading-magnetic-deg</property>
+  <center>
+   <x-m>0</x-m>
+   <y-m>0</y-m>
+   <z-m>-0.0043</z-m>
+  </center>
+  <axis>
+   <x>1</x>
+  </axis>
+ </animation>
+
+ <!-- TACAN mode -->
+ <animation>
+  <type>select</type>
+  <object-name>HSI_brg-tcn-needle-on</object-name>
+  <condition>
+   <property>instrumentation/tacan/in-range</property>
+  </condition>
+ </animation>
+ <animation>
+  <type>rotate</type>
+  <object-name>HSI_brg-tcn-needle-on</object-name>
+  <property>orientation/heading-magnetic-deg</property>
+  <center>
+   <x-m>0</x-m>
+   <y-m>0</y-m>
+   <z-m>-0.0043</z-m>
+  </center>
+  <axis>
+   <x>1</x>
+  </axis>
+ </animation>
+ <animation>
+  <type>rotate</type>
+  <object-name>HSI_brg-tcn-needle-on</object-name>
+  <property>instrumentation/tacan/indicated-bearing-true-deg</property>
+  <!-- Note: TCN should provide magnetic-degs, as do the HSI -->
+  <center>
+   <x-m>0</x-m>
+   <y-m>0</y-m>
+   <z-m>-0.0043</z-m>
+  </center>
+  <axis>
+   <x>-1</x>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>HSI_brg-needle-off</object-name>
+  <condition>
+   <not>
+    <property>instrumentation/tacan/in-range</property>
+   </not>
+  </condition>
+ </animation>
+ <animation>
+  <type>rotate</type>
+  <object-name>HSI_brg-needle-off</object-name>
+  <property>orientation/heading-magnetic-deg</property>
+  <center>
+   <x-m>0</x-m>
+   <y-m>0</y-m>
+   <z-m>-0.0043</z-m>
+  </center>
+  <axis>
+   <x>1</x>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>HSI_cdi</object-name>
+  <property>orientation/heading-magnetic-deg</property>
+  <center>
+   <x-m>0</x-m>
+   <y-m>0</y-m>
+   <z-m>-0.0043</z-m>
+  </center>
+  <axis><x>1</x></axis>
+ </animation>
+ <animation>
+  <type>rotate</type>
+  <object-name>HSI_cdi</object-name>
+  <property>instrumentation/nav[1]/radials/selected-deg</property>
+  <center>
+   <x-m>0</x-m>
+   <y-m>0</y-m>
+   <z-m>-0.0043</z-m>
+  </center>
+  <axis><x>-1</x></axis>
+ </animation>
+
+
+ <!-- HDG knob -->
+ <animation>
+  <type>rotate</type>
+  <object-name>HSI_hdg-knob</object-name>
+  <property>instrumentation/heading-indicator-fg/offset-deg</property>
+  <center>
+   <x-m>0</x-m>
+   <y-m>-0.0318</y-m>
+   <z-m>-0.0320</z-m>
+  </center>
+  <axis><x>-1</x></axis>
+ </animation>
+
+
+ <!-- HDG knob - pick animation-->
+ <animation>
+  <name>heading-ccw</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>HSI_hdg-knob-left</object-name>
+  <action>
+   <button>0</button>
+   <repeatable>true</repeatable>
+   <interval-sec>0.2</interval-sec>
+   <binding>
+    <command>property-adjust</command>
+    <property>instrumentation/heading-indicator-fg/offset-deg</property>
+    <step>-1</step>
+    <min>-180</min>
+    <max>180</max>
+    <wrap>true</wrap>
+   </binding>
+  </action>
+ </animation>
+
+ <animation>
+  <name>heading-ccw-fast</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>HSI_hdg-knob-left</object-name>
+  <action>
+   <button>2</button>
+   <repeatable>true</repeatable>
+   <interval-sec>0.2</interval-sec>
+   <binding>
+    <command>property-adjust</command>
+    <property>instrumentation/heading-indicator-fg/offset-deg</property>
+    <step>-5</step>
+    <min>-180</min>
+    <max>180</max>
+    <wrap>true</wrap>
+   </binding>
+  </action>
+ </animation>
+
+ <animation>
+  <name>heading-cw</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>HSI_hdg-knob-right</object-name>
+  <action>
+   <button>0</button>
+   <repeatable>true</repeatable>
+   <interval-sec>0.2</interval-sec>
+   <binding>
+    <command>property-adjust</command>
+    <property>instrumentation/heading-indicator-fg/offset-deg</property>
+    <step>1</step>
+    <min>-180</min>
+    <max>180</max>
+    <wrap>true</wrap>
+   </binding>
+  </action>
+ </animation>
+
+ <animation>
+  <name>heading-cw-fast</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>HSI_hdg-knob-right</object-name>
+  <action>
+   <button>2</button>
+   <repeatable>true</repeatable>
+   <interval-sec>0.2</interval-sec>
+   <binding>
+    <command>property-adjust</command>
+    <property>instrumentation/heading-indicator-fg/offset-deg</property>
+    <step>5</step>
+    <min>-180</min>
+    <max>180</max>
+    <wrap>true</wrap>
+   </binding>
+  </action>
+ </animation>
+
+
+ <!-- COURSE Knob -->
+ <animation>
+  <type>rotate</type>
+  <object-name>HSI_course-knob</object-name>
+  <property>instrumentation/nav[1]/radials/selected-deg</property>
+  <center>
+   <x-m>0</x-m>
+   <y-m>0.0315</y-m>
+   <z-m>-0.0320</z-m>
+  </center>
+  <axis><x>-1</x></axis>
+ </animation>
+
+ <!-- COURSE Knob - pick animation -->
+ <animation>
+  <name>course-ccw</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>HSI_course-knob-left</object-name>
+  <action>
+   <button>1</button>
+   <repeatable>true</repeatable>
+   <interval-sec>0.5</interval-sec>
+   <binding>
+    <command>property-adjust</command>
+    <property>instrumentation/nav[1]/radials/selected-deg</property>
+    <step>-1</step>
+    <min>0</min>
+    <max>360</max>
+    <wrap>true</wrap>
+   </binding>
+  </action>
+ </animation>
+
+ <animation>
+  <name>course-ccw-fast</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>HSI_course-knob-left</object-name>
+  <action>
+   <button>0</button>
+   <repeatable>true</repeatable>
+   <interval-sec>0.5</interval-sec>
+   <binding>
+    <command>property-adjust</command>
+    <property>instrumentation/nav[1]/radials/selected-deg</property>
+    <step>-5</step>
+    <min>0</min>
+    <max>360</max>
+    <wrap>true</wrap>
+   </binding>
+  </action>
+ </animation>
+
+ <animation>
+  <name>course-cw</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>HSI_course-knob-right</object-name>
+  <action>
+   <button>1</button>
+   <repeatable>true</repeatable>
+   <interval-sec>0.5</interval-sec>
+   <binding>
+    <command>property-adjust</command>
+    <property>instrumentation/nav[1]/radials/selected-deg</property>
+    <step>1</step>
+    <min>0</min>
+    <max>360</max>
+    <wrap>true</wrap>
+   </binding>
+  </action>
+ </animation>
+
+ <animation>
+  <name>course-cw-fast</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>HSI_course-knob-right</object-name>
+  <action>
+   <button>0</button>
+   <repeatable>true</repeatable>
+   <interval-sec>0.5</interval-sec>
+   <binding>
+    <command>property-adjust</command>
+    <property>instrumentation/nav[1]/radials/selected-deg</property>
+    <step>5</step>
+    <min>0</min>
+    <max>360</max>
+    <wrap>true</wrap>
+   </binding>
+  </action>
+ </animation>
+
+
+ <!-- TACAN Distance Digital Display -->
+ <animation>
+  <type>select</type>
+  <object-name>HSI_out-of-range-flag</object-name>
+  <condition>
+   <not>
+    <property>instrumentation/tacan/in-range</property>
+   </not>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>textranslate</type>
+  <object-name>HSI_miles-drum-1</object-name>
+  <property>instrumentation/tacan/indicated-distance-nm</property>
+  <factor>0.1</factor>
+  <offset>-1</offset>
+  <axis><y>-1</y></axis>
+ </animation>
+ <animation>
+  <type>textranslate</type>
+  <object-name>HSI_miles-drum-2</object-name>
+  <property>instrumentation/tacan/indicated-distance-nm</property>
+  <factor>0.01</factor>
+  <offset>-10</offset>
+  <step>10</step>
+  <scroll>0.5</scroll>
+  <axis><y>-1</y></axis>
+ </animation>
+ <animation>
+  <type>textranslate</type>
+  <object-name>HSI_miles-drum-3</object-name>
+  <property>instrumentation/tacan/indicated-distance-nm</property>
+  <factor>0.001</factor>
+  <offset>-100</offset>
+  <step>100</step>
+  <scroll>0.5</scroll>
+  <axis><y>-1</y></axis>
+ </animation>
+
+<!-- Course Digital Display -->
+ <animation>
+  <type>textranslate</type>
+  <object-name>HSI_course-drum-1</object-name>
+  <property>instrumentation/nav[1]/radials/selected-deg</property>
+  <factor>0.1</factor>
+  <offset>-1</offset>
+  <axis><y>-1</y></axis>
+ </animation>
+ <animation>
+  <type>textranslate</type>
+  <object-name>HSI_course-drum-2</object-name>
+  <property>instrumentation/nav[1]/radials/selected-deg</property>
+  <factor>0.01</factor>
+  <offset>-10</offset>
+  <step>10</step>
+  <scroll>0.5</scroll>
+  <axis><y>-1</y></axis>
+ </animation>
+ <animation>
+  <type>textranslate</type>
+  <object-name>HSI_course-drum-3</object-name>
+  <property>instrumentation/nav[1]/radials/selected-deg</property>
+  <factor>0.001</factor>
+  <offset>-100</offset>
+  <step>100</step>
+  <scroll>0.5</scroll>
+  <axis><y>-1</y></axis>
+ </animation>
+
+ <!-- For now, hide everything else -->
+ <animation>
+  <object-name>HSI_tcn-tofrom-to</object-name>
+  <object-name>HSI_tcn-tofrom-from</object-name>
+  <object-name>HSI_vor-tofrom-to</object-name>
+  <object-name>HSI_vor-tofrom-from</object-name>
+  <object-name>HSI_tcn-cdi-on</object-name>
+  <object-name>HSI_vor-cdi-off</object-name>
+  <object-name>HSI_brg-vor-needle-on</object-name>
+  <object-name>HSI_brg-validity-flag</object-name>
+
+  <type>select</type>
+  <condition>
+   <equals>
+    <property>sim/model/f16/instrumentation/nav-development-stage</property>
+    <value>advanced</value>
+   </equals>
+  </condition>
+  </animation>
+
+
+
+ <!-- lighting -->
+ <animation>
+  <object-name>HSI_mount</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+   <red>0.45</red>
+   <green>0.34</green>
+   <blue>0.18</blue>
+  </emission>
+ </animation>
+ <animation>
+  <object-name>HSI_knobs</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+   <red>0.45</red>
+   <green>0.34</green>
+   <blue>0.18</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>HSI_needles</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+ <animation>
+  <object-name>HSI_cdi</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+ <animation>
+  <object-name>HSI_drums</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+ <animation>
+  <object-name>HSI_compass-card</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+ <animation>
+  <object-name>HSI_aircraft-symbol</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+ <animation>
+  <object-name>HSI_off-flag</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <type>range</type>
+  <min-m>0</min-m>
+  <max-m>10</max-m>
+ </animation>
+
+</PropertyList>

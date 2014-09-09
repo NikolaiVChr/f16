@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+
+<!--
+F-16 panel. 16 Feb 2003
+Based on F-16 panel art by Erik Hofman, erik@ehofman.com
+David Culp, davidculp2@attbi.com
+_______________________________________________________________________
+-->
+
+<PropertyList>
+
+ <name>F16 Panel</name>
+ <background>Aircraft/f16/Panels/Textures/f16panel-00.rgb</background>
+ <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-00.rgb</multibackground>
+ <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-01.rgb</multibackground>
+ <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-06.rgb</multibackground>
+ <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-02.rgb</multibackground>
+ <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-07.rgb</multibackground>
+ <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-03.rgb</multibackground>
+ <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-00.rgb</multibackground>
+ <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-04.rgb</multibackground>
+ <w>1024</w>
+ <h>768</h>
+ <y-offset>0</y-offset>
+ <view-height>1024</view-height>
+
+ <instruments>
+
+  <instrument include="oil-2d.xml">
+   <name>Oil pressure Indicator</name>
+   <x>845</x>
+   <y>158</y>
+   <w>43</w>
+   <h>41</h>
+  </instrument>
+
+  <instrument include="nozzle-2d.xml">
+   <name>Nozzle position Indicator</name>
+   <x>856</x>
+   <y>108</y>
+   <w>64</w>
+   <h>62</h>
+  </instrument>
+
+  <instrument include="rpm-2d.xml">
+   <name>RPM Indicator</name>
+   <x>870</x>
+   <y>40</y>
+   <w>85</w>
+   <h>80</h>
+  </instrument>
+
+  <instrument include="kias-2d.xml">
+   <name>KIAS Indicator</name>
+   <x>448</x>
+   <y>58</y>
+   <w>120</w>
+   <h>120</h>
+  </instrument>
+
+  <instrument include="alt.xml">
+   <name>Altitude Indicator</name>
+   <x>572</x>
+   <y>59</y>
+   <w>120</w>
+   <h>120</h>
+  </instrument>
+
+  <instrument include="icp-2d.xml">
+   <name>ICP</name>
+   <x>504</x>
+   <y>241</y>
+   <w>120</w>
+   <h>120</h>
+  </instrument>
+
+  <instrument include="aoa.xml">
+   <name>ICP</name>
+   <x>342</x>
+   <y>352</y>
+   <w>12</w>
+   <h>12</h>
+  </instrument>
+
+  <instrument include="ded-2d.xml">
+   <name>DED</name>
+   <x>729</x>
+   <y>286</y>
+   <w>120</w>
+   <h>120</h>
+  </instrument>
+
+ </instruments>
+
+</PropertyList>

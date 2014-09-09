@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>icp.ac</path>
+
+ <!--lighting -->
+ <animation>
+  <object-name>com1</object-name>
+  <object-name>com2</object-name>
+  <object-name>iff</object-name>
+  <object-name>list</object-name>
+  <object-name>a-a</object-name>
+  <object-name>a-g</object-name>
+
+  <object-name>1</object-name>
+  <object-name>2</object-name>
+  <object-name>3</object-name>
+  <object-name>4</object-name>
+  <object-name>5</object-name>
+  <object-name>6</object-name>
+  <object-name>7</object-name>
+  <object-name>8</object-name>
+  <object-name>9</object-name>
+  <object-name>0</object-name>
+  
+  <object-name>rcl</object-name>
+  <object-name>entr</object-name>
+  
+  <object-name>wx</object-name>
+  <object-name>flir_ud</object-name>
+
+  <object-name>rtn_seq</object-name>
+
+ <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.0</red>
+   <green>1.0</green>
+   <blue>0.40</blue>
+  </emission>
+ </animation>
+
+</PropertyList>

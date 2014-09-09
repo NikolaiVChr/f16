@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>fuel-qty-sel.ac</path>
+
+ <animation>
+  <type>select</type>
+  <object-name>FQS_marker-beacon-on</object-name>
+  <condition><!-- FIXME -->
+   <or>
+    <property>instrumentation/marker-beacon/outer</property>
+    <property>instrumentation/marker-beacon/outer</property>
+    <property>instrumentation/marker-beacon/outer</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
+  </condition>
+ </animation>
+
+
+ <!-- Mode knob -->
+ <animation>
+  <type>rotate</type>
+  <object-name>FQS_sel-knob</object-name>
+  <property>controls/fuel/qty-selector</property>
+  <factor>45</factor>
+  <center>
+   <x-m>0</x-m>
+   <y-m>0.0094</y-m>
+   <z-m>0.0208</z-m>
+  </center>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+
+ <animation>
+  <name>sel-knob-left</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>FQS_sel-knob-left</object-name>
+  <action>
+   <button>0</button>
+   <repeatable>false</repeatable>
+   <binding>
+    <command>property-adjust</command>
+    <property>controls/fuel/qty-selector</property>
+    <step>-1</step>
+    <min>0</min>
+    <max>5</max>
+    <wrap>false</wrap>
+   </binding>
+  </action>
+ </animation>
+
+ <animation>
+  <name>sel-knob-right</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>FQS_sel-knob-right</object-name>
+  <action>
+   <button>0</button>
+   <repeatable>false</repeatable>
+   <binding>
+    <command>property-adjust</command>
+    <property>controls/fuel/qty-selector</property>
+    <step>1</step>
+    <min>0</min>
+    <max>5</max>
+    <wrap>false</wrap>
+   </binding>
+  </action>
+ </animation>
+
+
+ <!-- Ext Fuel Trans Switch -->
+ <animation>
+  <object-name>FQS_fuel-trans-switch</object-name>
+  <type>rotate</type>
+  <property>controls/fuel/external-transfer</property>
+  <factor>50</factor>
+  <center>
+   <x-m>0.0059</x-m>
+   <y-m>0.0083</y-m>
+   <z-m>-0.0298</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>-1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <name>ext-trans-toggle</name>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>FQS_ext-trans-toggle</object-name>
+  <action>
+   <button>0</button>
+   <binding>
+    <command>property-toggle</command>
+    <property>controls/fuel/external-transfer</property>
+   </binding>
+  </action>
+ </animation>
+
+ <!--lighting -->
+ <animation>
+  <object-name>FQS_mount</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+   <red>0.45</red>
+   <green>0.34</green>
+   <blue>0.18</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>FQS_marker-beacon</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+   <red>0.45</red>
+   <green>0.34</green>
+   <blue>0.18</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>FQS_marker-beacon-on</object-name>
+  <type>material</type>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>FQS_sel-knob</object-name> 
+  <type>material</type>
+  <emission> 
+   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+   <red>0.45</red>
+   <green>0.34</green>
+   <blue>0.18</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <object-name>FQS_fuel-trans-switch</object-name> 
+  <type>material</type>
+  <emission> 
+   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+   <red>0.45</red>
+   <green>0.34</green>
+   <blue>0.18</blue>
+  </emission>
+ </animation>
+
+ <animation>
+  <type>range</type>
+  <min-m>0</min-m>
+  <max-m>35</max-m>
+ </animation>
+
+</PropertyList>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>eyebrow_right.ac</path>
+
+ <animation>
+  <type>select</type>
+  <object-name>canopy</object-name>
+  <condition>
+   <greater-than>
+    <property>fdm/jsbsim/fcs/canopy-pos-norm</property>
+    <value>0.0</value>
+   </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>engine</object-name>
+  <object-name>eng_fire</object-name>
+  <object-name>hyd_oil_press</object-name>
+  <object-name>flcs</object-name>
+  <object-name>dbu_on</object-name>
+  <object-name>to_ldg_config</object-name>
+  <object-name>unused</object-name>
+  <condition>
+    <property>/tmp/nill</property>
+  </condition>
+ </animation>
+
+</PropertyList>

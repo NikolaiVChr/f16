@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <name>Angle of Attack Indexer</name>
+ <w-base>8.0</w-base>
+ <h-base>8.0</h-base>
+
+ <layers>
+
+  <layer>
+   <name>too high</name>
+   <w>11</w>
+   <h>11</h>
+   <texture>
+    <path>Aircraft/f16/Models/Cockpit/Textures/misc1.rgb</path>
+    <x1>0.578</x1>
+    <y1>0.402</y1>
+    <x2>0.672</x2>
+    <y2>0.484</y2>
+   </texture>
+   <condition>
+    <property>/controls/gear/gear-down</property>
+    <greater-than>
+     <property>/velocities/glideslope</property>
+     <value>-0.192</value>
+    </greater-than>
+   </condition>
+   <transformations>
+    <transformation>
+     <type>y-shift</type>
+     <offset>24.0</offset>
+    </transformation>
+   </transformations>
+  </layer>
+
+  <layer>
+   <name>good</name>
+   <w>9</w>
+   <h>9</h>
+   <texture>
+    <path>Aircraft/f16/Models/Cockpit/Textures/misc1.rgb</path>
+    <x1>0.703</x1>
+    <y1>0.391</y1>
+    <x2>0.797</x2>
+    <y2>0.496</y2>
+   </texture>
+   <condition>
+    <property>/controls/gear/gear-down</property>
+    <greater-than>
+     <property>/velocities/glideslope</property>
+     <value>-0.2618</value>
+    </greater-than>
+    <less-than>
+     <property>/velocities/glideslope</property>
+     <value>-0.192</value>
+    </less-than>
+   </condition>
+   <transformations>
+    <transformation>
+     <type>y-shift</type>
+     <offset>11.5</offset>
+    </transformation>
+   </transformations>
+  </layer>
+
+  <layer>
+   <name>too low</name>
+   <w>10</w>
+   <h>10</h>
+   <texture>
+    <path>Aircraft/f16/Models/Cockpit/Textures/misc1.rgb</path>
+    <x1>0.824</x1>
+    <y1>0.402</y1>
+    <x2>0.914</x2>
+    <y2>0.484</y2>
+   </texture>
+   <condition>
+    <property>/controls/gear/gear-down</property>
+    <less-than>
+     <property>/velocities/glideslope</property>
+     <value>-0.2618</value>
+    </less-than>
+   </condition>
+  </layer>
+
+ </layers>
+</PropertyList>
