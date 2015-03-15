@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PropertyList>
+  <inherits-from>Effects/glass</inherits-from>
+  <object-name>CanopyGlassFwd</object-name>
+  <parameters>
+   <!-- functional masks -->
+   <texture n="2">
+    <image>Effects/glass/canopy.png</image>
+    <type>2d</type>
+    <filter>linear-mipmap-linear</filter>
+    <wrap-s>clamp</wrap-s>
+    <wrap-t>clamp</wrap-t>
+    <internal-format>normalized</internal-format>
+   </texture>
+   <use-mask type="int">1</use-mask>
+ 
+   <!-- internal cockpit reflection -->
+   <texture n="3">
+    <type>cubemap</type>
+    <images>
+     <positive-x>Effects/glass/cockpit-cube-back.png</positive-x>
+     <negative-x>Effects/glass/cockpit-cube-front.png</negative-x>
+     <positive-y>Effects/glass/cockpit-cube-left.png</positive-y>
+     <negative-y>Effects/glass/cockpit-cube-right.png</negative-y>
+     <positive-z>Effects/glass/cockpit-cube-up.png</positive-z>
+     <negative-z>Effects/glass/cockpit-cube-down.png</negative-z>
+    </images>
+    </texture>
+    <use-reflection type="int">1</use-reflection>
+  </parameters>
+</PropertyList>

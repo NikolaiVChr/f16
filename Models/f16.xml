@@ -209,6 +209,8 @@
 
 <!-- ======================= END ARMAMENT =========================== -->
 
+ <!-- glass effects -->
+ <effect include="Aircraft/f16/Models/Effects/glass/glass.xml"/>
 
  <!-- start effects -->
  <model>
