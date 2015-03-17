@@ -466,6 +466,7 @@
   </axis>
  </animation>
 
+
  <animation>
   <type>rotate</type>
   <object-name>ArresterHook</object-name>
@@ -1222,7 +1223,6 @@
    <z>0.0454</z>
   </axis>
  </animation>
-
 
  <animation>
   <type>select</type>
