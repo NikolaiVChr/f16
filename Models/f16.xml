@@ -210,7 +210,13 @@
 <!-- ======================= END ARMAMENT =========================== -->
 
  <!-- glass effects -->
- <effect include="Aircraft/f16/Models/Effects/glass/glass.xml"/>
+ <effect>
+  <inherits-from>Aircraft/f16/Models/Effects/glass/glass</inherits-from>
+  <object-name>CanopyGlassFwd</object-name>
+  <object-name>CanopyBackOutside</object-name>
+  <object-name>cylinder.007</object-name>       <!-- HUD -->
+  <object-name>cylinder.008</object-name>
+ </effect>
 
  <!-- start effects -->
  <model>

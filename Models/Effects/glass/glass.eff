@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PropertyList>
+  <name>canopy-refelctions</name>
   <inherits-from>Effects/glass</inherits-from>
-  <object-name>CanopyGlassFwd</object-name>
-  <object-name>CanopyBackOutside</object-name>
-  <object-name>cylinder.007</object-name>	<!-- HUD -->
-  <object-name>cylinder.008</object-name>
+
   <parameters>
    <!-- functional masks -->
    <texture n="2">
@@ -16,9 +14,7 @@
     <internal-format>normalized</internal-format>
    </texture>
    <use-mask type="int">1</use-mask>
-<!--
    <overlay-color type="vec3d" n="0">1.0 1.0 1.0</overlay-color>
--->
  
    <!-- internal cockpit reflection -->
    <texture n="3">
