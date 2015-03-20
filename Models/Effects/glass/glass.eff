@@ -20,8 +20,8 @@
    <texture n="3">
     <type>cubemap</type>
     <images>
-     <positive-x>Effects/glass/cockpit-cube-back.png</positive-x>
-     <negative-x>Effects/glass/cockpit-cube-front.png</negative-x>
+     <positive-x>Effects/glass/cockpit-cube-front.png</positive-x>
+     <negative-x>Effects/glass/cockpit-cube-back.png</negative-x>
      <positive-y>Effects/glass/cockpit-cube-left.png</positive-y>
      <negative-y>Effects/glass/cockpit-cube-right.png</negative-y>
      <positive-z>Effects/glass/cockpit-cube-up.png</positive-z>
@@ -29,6 +29,6 @@
     </images>
     </texture>
     <use-reflection type="int">1</use-reflection>
-    <reflection-strength type="float">1.0</reflection-strength>
+    <reflection-strength type="float">0.7</reflection-strength>
   </parameters>
 </PropertyList>

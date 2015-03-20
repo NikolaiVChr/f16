@@ -577,6 +577,15 @@
   </ecm>
  </instrumentation>
 
+ <environment>
+  <aircraft-effects>
+   <fog-level>0.7</fog-level>
+   <overlay-alpha>0.5</overlay-alpha>
+   <use-overlay>1</use-overlay>
+   <use-wipers>1</use-wipers>
+  </aircraft-effects>
+ </environment>
+
  <limits>
   <max-gear-extension-speed>300</max-gear-extension-speed>
  </limits>
