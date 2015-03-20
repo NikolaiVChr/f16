@@ -212,10 +212,45 @@
  <!-- glass effects -->
  <effect>
   <inherits-from>Aircraft/f16/Models/Effects/glass/glass</inherits-from>
-  <object-name>CanopyGlassFwd</object-name>
+  <object-name>CanopyForwardInside</object-name>
+  <object-name>CanopyBackInside</object-name>
+  <object-name>cylinder.008</object-name>       <!-- HUD -->
+ </effect>
+
+ <effect>
+  <inherits-from>Effects/model-combined-transparent</inherits-from>
+  <parameters>
+    <normalmap-enabled type="int">0</normalmap-enabled>
+    <lightmap-enabled type="int">0</lightmap-enabled>
+    <reflection-enabled type="int">1</reflection-enabled>
+    <reflection-correction type="float">0.5</reflection-correction>
+    <reflect-map-enabled type="int">1</reflect-map-enabled>
+    <reflection-fresnel type="float">0.5</reflection-fresnel>
+    <reflection-rainbow type="float">0.6</reflection-rainbow>
+    <reflection-noise type="float">0.0</reflection-noise>
+    <reflection-dynamic type="int">1</reflection-dynamic>
+      <texture n= "5" >
+        <type>cubemap</type>
+        <images>
+          <positive-x>Aircraft/Generic/Effects/fgfs-sky2/1.png</positive-x>
+          <negative-x>Aircraft/Generic/Effects/fgfs-sky2/4.png</negative-x>
+          <positive-y>Aircraft/Generic/Effects/fgfs-sky2/2.png</positive-y>
+          <negative-y>Aircraft/Generic/Effects/fgfs-sky2/3.png</negative-y>
+          <positive-z>Aircraft/Generic/Effects/fgfs-sky2/6.png</positive-z>
+          <negative-z>Aircraft/Generic/Effects/fgfs-sky2/5.png</negative-z>
+        </images>
+      </texture>
+    <ambient-correction type="float">0.2</ambient-correction>
+    <rendering-hint>transparent</rendering-hint>
+    <transparent>true</transparent>
+    <render-bin>
+      <bin-number>10</bin-number>
+      <bin-name>DepthSortedBin</bin-name>
+    </render-bin>
+  </parameters>
+  <object-name>CanopyForwardOutside</object-name>
   <object-name>CanopyBackOutside</object-name>
   <object-name>cylinder.007</object-name>       <!-- HUD -->
-  <object-name>cylinder.008</object-name>
  </effect>
 
  <!-- start effects -->
@@ -455,9 +490,13 @@
 <!-- fuselage animations -->
  <animation>
   <type>rotate</type>
+<!--
+  <object-name>CanopyBackInside</object-name>
   <object-name>CanopyBackOutside</object-name>
+-->
   <object-name>CanopyFrame</object-name>
-  <object-name>CanopyGlassFwd</object-name>
+  <object-name>CanopyForwardInside</object-name>
+  <object-name>CanopyForwardOutside</object-name>
  <property>fdm/jsbsim/fcs/canopy-pos-norm</property>
   <factor>30.0</factor>
   <center>
