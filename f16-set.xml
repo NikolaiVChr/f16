@@ -579,10 +579,11 @@
 
  <environment>
   <aircraft-effects>
-   <fog-level>0.7</fog-level>
-   <overlay-alpha>0.5</overlay-alpha>
-   <use-overlay>1</use-overlay>
-   <use-wipers>1</use-wipers>
+   <fog-level type="float">0.7</fog-level>
+   <overlay-alpha type="float">>0.5</overlay-alpha>
+   <use-overlay type="int">>1</use-overlay>
+   <use-wipers type="int">>1</use-wipers>
+   <rain-enabled type="int">1</rain-enabled>
   </aircraft-effects>
  </environment>
 
