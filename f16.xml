@@ -683,10 +683,17 @@
 
         <channel name="Yaw">
             <!-- Calculate the normalized yaw-rate -->
-            <pure_gain name="fcs/yaw-rate-norm">
+            <scheduled_gain name="fcs/yaw-rate-norm">
                 <input>velocities/r-aero-rad_sec</input>
-                <gain>100</gain>
-            </pure_gain>
+                <table>
+                    <independentVar>velocities/vg-fps</independentVar>
+                    <tableData>
+                        10.0        0.0
+                        50.0        15.0
+                        100.0       100.0
+                    </tableData>
+                </table>
+            </scheduled_gain>
 
             <!-- Calculate the normalized yaw-load -->
             <pure_gain name="fcs/yaw-load-norm">
@@ -730,10 +737,10 @@
             </pid>
 
             <summer name="fcs/yaw-scheduler">
-                <input>fcs/rudder-cmd-norm</input>
-                <input>fcs/yaw-trim-cmd-norm</input>
-                <input>fcs/yaw-load-pid</input>
-                <clipto>
+              <input>fcs/rudder-cmd-norm</input>
+              <input>fcs/yaw-trim-cmd-norm</input>
+              <input>fcs/yaw-load-pid</input>
+              <clipto>
                 <min>-1</min>
                 <max>1</max>
               </clipto>
