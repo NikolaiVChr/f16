@@ -579,7 +579,7 @@
 
  <environment>
   <aircraft-effects>
-   <fog-level type="float">0.7</fog-level>
+   <fog-level type="float">0.5</fog-level>
    <overlay-alpha type="float">>0.5</overlay-alpha>
    <use-overlay type="int">>1</use-overlay>
    <use-wipers type="int">>1</use-wipers>
@@ -600,6 +600,7 @@
    <file>Aircraft/f16/Nasal/f16.nas</file>
    <file>Aircraft/f16/Nasal/liveries.nas</file>
    <file>Aircraft/f16/Nasal/tyresmoke.nas</file>
+   <file>Aircraft/f16/Nasal/rain.nas</file>
   </f16>
 
   <f16_chronograph>  
