@@ -290,6 +290,51 @@
  <model>
   <name>left-strake-vortex</name>
   <path>Aircraft/f16/Models/Effects/strake-vortex.xml</path>
+  <condition>
+   <and>
+    <greater-than>
+     <property>orientation/alpha-deg</property>
+     <value>9.0</value>
+    </greater-than>
+    <greater-than>
+     <property>velocities/airspeed-kt</property>
+     <value>200</value>
+    </greater-than>
+   </and>
+  </condition>
+  <offsets>
+   <x-m>-2.5</x-m>
+   <y-m>-1.0</y-m>
+   <z-m>-0.1</z-m>
+  </offsets>
+ </model>
+
+ <model>
+  <name>right-strake-vortex</name>
+  <path>Aircraft/f16/Models/Effects/strake-vortex.xml</path>
+  <condition>
+   <and>
+    <greater-than>
+     <property>orientation/alpha-deg</property>
+     <value>9.0</value>
+    </greater-than>
+    <greater-than>
+     <property>velocities/airspeed-kt</property>
+     <value>200</value>
+    </greater-than>
+   </and>
+  </condition>
+  <offsets>
+   <x-m>-2.5</x-m>
+   <y-m>1.0</y-m>
+   <z-m>-0.1</z-m>
+  </offsets>
+ </model>
+
+<!--
+ <model>
+  <name>left-strake-vortex</name>
+  <path>Aircraft/f16/Models/Effects/strake-vortex.xml</path>
   <offsets>
    <x-m>-2.5</x-m>
    <y-m>-1.0</y-m>
@@ -306,6 +351,7 @@
    <z-m>0.5</z-m>
   </offsets>
  </model>
+-->
 
  <model>
   <path>Aircraft/Generic/Effects/tyre-smoke-nose.xml</path>
@@ -581,7 +627,7 @@
 
  <model>
   <name>AB_Flame</name>
-  <path>Aircraft/f16/Models/afterburner.xml</path>
+  <path>Aircraft/f16/Models/Effects/afterburner.xml</path>
   <condition>
    <property>engines/engine[0]/augmentation</property>
   </condition>

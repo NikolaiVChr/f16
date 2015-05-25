@@ -1,0 +1,61 @@
+AC3Db
+MATERIAL "Material" rgb 0.8 0.8 0.8  amb 1 1 1  emis 0 0 0  spec 0.5 0.5 0.5  shi 50  trans 0.5
+OBJECT world
+kids 1
+OBJECT poly
+name "Strake_Vortex"
+loc -0.149202 0.0223886 0
+crease 90.000000
+numvert 8
+6.40165 -1.66473 -1
+6.40165 -1.66473 1
+-0.0445925 -0.425066 0.496904
+-0.0445925 -0.425066 -0.504644
+6.40165 1.23204 -1
+6.40165 1.23204 1
+-0.0445926 0.580381 0.496904
+-0.0445926 0.580381 -0.504644
+numsurf 6
+SURF 0x20
+mat 0
+refs 4
+0 0 0
+1 0 0
+2 0 0
+3 0 0
+SURF 0x20
+mat 0
+refs 4
+4 0 0
+7 0 0
+6 0 0
+5 0 0
+SURF 0x20
+mat 0
+refs 4
+0 0 0
+4 0 0
+5 0 0
+1 0 0
+SURF 0x20
+mat 0
+refs 4
+1 0 0
+5 0 0
+6 0 0
+2 0 0
+SURF 0x20
+mat 0
+refs 4
+2 0 0
+6 0 0
+7 0 0
+3 0 0
+SURF 0x20
+mat 0
+refs 4
+4 0 0
+0 0 0
+3 0 0
+7 0 0
+kids 0
