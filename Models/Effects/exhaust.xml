@@ -5,7 +5,7 @@
   <name>exhaust-heath</name>
   <texture>exhaustheath.png</texture>
   <emissive>false</emissive>
-  <lighting>true</lighting>
+  <lighting>false</lighting>
   
   <offsets>
    <x-m>0</x-m>
