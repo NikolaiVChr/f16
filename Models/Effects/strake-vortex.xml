@@ -11,14 +11,26 @@
  </effect>
 
  <animation>
+  <type>scale</type>
+  <object-name>Strake_Vortex</object-name>
+  <property>orientation/alpha-deg</property>
+  <x-min>1.0</x-min>
+  <y-min>0.4</y-min>
+  <z-min>0.4</z-min>
+  <x-factor>0.0</x-factor>
+  <y-factor>0.1</y-factor>
+  <z-factor>0.1</z-factor>
+ </animation>
+
+ <animation>
   <type>rotate</type> 
   <object-name>Strake_Vortex</object-name>
   <property>orientation/alpha-deg</property>
-  <factor>-1.6</factor>
+  <factor>-1.4</factor>
   <center>
-   <x-m>0</x-m>
+   <x-m>0.</x-m>
    <y-m>0</y-m>
-   <z-m>0</z-m>
+   <z-m>0.</z-m>
   </center>
   <axis>
    <x>0.0</x>
