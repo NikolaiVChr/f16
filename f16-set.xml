@@ -160,6 +160,8 @@
      <blue>1.0</blue>
     </color>
    </smoke>
+
+   <strake-color type="float">1.0</strake-color>
   </f16>
 
    <livery>
@@ -601,6 +603,7 @@
    <file>Aircraft/f16/Nasal/liveries.nas</file>
    <file>Aircraft/f16/Nasal/tyresmoke.nas</file>
    <file>Aircraft/f16/Nasal/rain.nas</file>
+   <file>Aircraft/f16/Nasal/vapor-lighting.nas</file>
   </f16>
 
   <f16_chronograph>  
