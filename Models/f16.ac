@@ -18614,7 +18614,7 @@ refs 3
 7 0.749807 0.430523
 kids 0
 OBJECT poly
-name "LeftLowerHorizonTail"
+name "RightLowerHorizonTail"
 data 8
 Mesh.024
 texture "f16.rgb"

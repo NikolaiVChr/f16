@@ -14,7 +14,7 @@
     <use_noise type="int">1</use_noise>
     <thrust_collimation type="float">0.4</thrust_collimation>   
     <thrust_density type="float">0.5</thrust_density>
-    <base_flame_density type="float">0.1</base_flame_density>
+    <base_flame_density type="float">0.01</base_flame_density>
     <noise_strength type="float">0.5</noise_strength>
     <noise_scale type="float">0.5</noise_scale>
     <deflection_coeff type="float">-0.05</deflection_coeff>

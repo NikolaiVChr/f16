@@ -327,31 +327,57 @@
   <offsets>
    <x-m>-2.5</x-m>
    <y-m>1.0</y-m>
-   <z-m>0.1</z-m>
-  </offsets>
- </model>
-
-<!--
- <model>
-  <name>left-strake-vortex</name>
-  <path>Aircraft/f16/Models/Effects/strake-vortex.xml</path>
-  <offsets>
-   <x-m>-2.5</x-m>
-   <y-m>-1.0</y-m>
-   <z-m>0.5</z-m>
+   <z-m>0.0</z-m>
   </offsets>
  </model>
 
  <model>
-  <name>right-strake-vortex</name>
-  <path>Aircraft/f16/Models/Effects/strake-vortex.xml</path>
+  <name>g-vortex</name>
+  <path>Aircraft/f16/Models/Effects/g-vortex.xml</path>
+  <condition>
+   <and>
+    <greater-than>
+     <property>orientation/alpha-deg</property>
+     <value>12.0</value>
+    </greater-than>
+    <greater-than>
+     <property>velocities/airspeed-kt</property>
+     <value>200</value>
+    </greater-than>
+   </and>
+  </condition>
   <offsets>
-   <x-m>-2.5</x-m>
-   <y-m>1.0</y-m>
-   <z-m>0.5</z-m>
+   <x-m>-0.8</x-m>
+   <y-m>0.5</y-m>
+   <z-m>0.0</z-m>
+   <heading-deg>15</heading-deg>
+   <roll-deg>-10</roll-deg>
   </offsets>
  </model>
--->
+
+ <model>
+  <name>g-vortex</name>
+  <path>Aircraft/f16/Models/Effects/g-vortex.xml</path>
+  <condition>
+   <and>
+    <greater-than>
+     <property>orientation/alpha-deg</property>
+     <value>12.0</value>
+    </greater-than>
+    <greater-than>
+     <property>velocities/airspeed-kt</property>
+     <value>200</value>
+    </greater-than>
+   </and>
+  </condition>
+  <offsets>
+   <x-m>-0.8</x-m>
+   <y-m>-0.5</y-m>
+   <z-m>0.0</z-m>
+   <heading-deg>-15</heading-deg>
+   <roll-deg>10</roll-deg>
+  </offsets>
+ </model>
 
  <model>
   <path>Aircraft/Generic/Effects/tyre-smoke-nose.xml</path>
@@ -632,7 +658,7 @@
    <property>engines/engine[0]/augmentation</property>
   </condition>
   <offsets>
-   <x-m>5.3</x-m>
+   <x-m>5.44</x-m>
    <y-m>0.0</y-m>
    <z-m>0.0</z-m>
   </offsets>
