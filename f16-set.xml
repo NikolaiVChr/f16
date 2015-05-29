@@ -161,7 +161,11 @@
     </color>
    </smoke>
 
-   <strake-color type="float">1.0</strake-color>
+   <vapor>
+    <red  type="float">1.0</red>
+    <green  type="float">1.0</green>
+    <blue  type="float">1.0</blue>
+   </vapor>
   </f16>
 
    <livery>
