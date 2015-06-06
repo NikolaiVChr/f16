@@ -15,18 +15,19 @@
   <object-name>Bounding_box</object-name>
   <property>orientation/alpha-deg</property>
   <x-min>0.8</x-min>
-  <y-min>5.0</y-min>
+  <y-min>4.5</y-min>
   <z-min>0.2</z-min>
-  <x-factor>0.04</x-factor>
+  <x-factor>0.0</x-factor>
   <y-factor>0.0</y-factor>
-  <z-factor>0.15</z-factor>
+  <z-factor>0.07</z-factor>
  </animation>
 
  <animation>
   <type>rotate</type>
   <object-name>Bounding_box</object-name>
   <property>orientation/alpha-deg</property>
-  <factor>-0.9</factor>
+  <offset-deg>-10</offset-deg>
+  <factor>-0.2</factor>
   <center>
    <x-m>0.</x-m>
    <y-m>0</y-m>
