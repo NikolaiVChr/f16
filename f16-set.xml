@@ -40,12 +40,12 @@
       <tag>retractable-gear</tag>
       <tag>ifr</tag>
   </tags>
-  
+
   <submodels>
    <serviceable type="bool">1</serviceable>
    <path>Aircraft/f16/f16-submodels.xml</path>
   </submodels>
-  
+
   <sound>
    <path>Aircraft/f16/f16-sound.xml</path>
   </sound>
@@ -96,10 +96,10 @@
   <model>
    <path archive="y">Aircraft/f16/Models/f16.xml</path>
    <f16>
-    
+
     <controls>
      <navigation>
-     
+
       <!-- INSTRUMENT MODE PANEL -->
       <instrument-mode-panel>
        <mode>
@@ -108,16 +108,16 @@
        <hdg>
         <!-- if true than knob is pushed and compass can be calibrated -->
         <rotary-push-knob type="bool">false</rotary-push-knob>
-       </hdg>    
+       </hdg>
       </instrument-mode-panel>
 
      </navigation>
     </controls>
-   
+
     <instrumentation>
     <vhf>
-     <selector type="int">0</selector>               
-     <mode type="int">0</mode>                       
+     <selector type="int">0</selector>
+     <mode type="int">0</mode>
      <selected-preset type="int">1</selected-preset>
      <load-state type="int">0</load-state>
      <presets>
@@ -361,7 +361,7 @@
     </key>
     <key n="101">
      <name>e</name>
-     <desc>Gun Trigger</desc> 
+     <desc>Gun Trigger</desc>
      <binding>
       <command>property-assign</command>
       <property>controls/armament/trigger</property>
@@ -372,7 +372,7 @@
        <command>property-assign</command>
        <property>controls/armament/trigger</property>
        <value>false</value>
-      </binding> 
+      </binding>
      </mod-up>
     </key>
     <key n="113">
@@ -461,13 +461,13 @@
     </key>
    </keyboard>
   </input>
- 
+
  <controls>
   <fuel>
    <qty-selector type="int">1</qty-selector>
    <external-transfer type="bool">true</external-transfer>
   </fuel>
-  
+
   <gear>
    <brake-parking type="bool">true</brake-parking>
   </gear>
@@ -486,7 +486,7 @@
     <form-knob type="double">1</form-knob>
     <ar-knob type="double">1</ar-knob>
    </ext-lighting-panel>
- 
+
    <lighting-panel>
     <pri-inst-pnl type="double">0</pri-inst-pnl>
     <flood-inst-pnl type="double">0</flood-inst-pnl>
@@ -539,7 +539,7 @@
    </systems>
   </jsbsim>
  </fdm>
- 
+
  <systems>
   <electrical>
    <outputs>
@@ -587,8 +587,8 @@
   <aircraft-effects>
    <fog-level type="float">0.5</fog-level>
    <overlay-alpha type="float">>0.5</overlay-alpha>
-   <use-overlay type="int">>1</use-overlay>
-   <use-wipers type="int">>1</use-wipers>
+   <use-overlay type="int">1</use-overlay>
+   <use-wipers type="int">1</use-wipers>
    <rain-enabled type="int">1</rain-enabled>
   </aircraft-effects>
  </environment>
@@ -601,7 +601,7 @@
   <aar>
    <file>Aircraft/Generic/aar.nas</file>
   </aar>
-  
+
   <f16>
    <file>Aircraft/f16/Nasal/f16.nas</file>
    <file>Aircraft/f16/Nasal/liveries.nas</file>
@@ -610,9 +610,9 @@
    <file>Aircraft/f16/Nasal/vapor-lighting.nas</file>
   </f16>
 
-  <f16_chronograph>  
+  <f16_chronograph>
    <file>Aircraft/f16/Nasal/chronograph.nas</file>
-  </f16_chronograph>  
+  </f16_chronograph>
 
   <f16_fuel>
    <file>Aircraft/f16/Nasal/fuel.nas</file>
@@ -621,7 +621,7 @@
   <f16_switches>
    <file>Aircraft/f16/Nasal/switches.nas</file>
   </f16_switches>
-  
+
   <radar>
    <file>Aircraft/Instruments-3d/radar2/radar2.nas</file>
   </radar>
