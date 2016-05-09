@@ -342,7 +342,7 @@
     </greater-than>
     <greater-than>
      <property>velocities/airspeed-kt</property>
-     <value>200</value>
+     <value>300</value>
     </greater-than>
    </and>
   </condition>
@@ -366,7 +366,7 @@
     </greater-than>
     <greater-than>
      <property>velocities/airspeed-kt</property>
-     <value>200</value>
+     <value>300</value>
     </greater-than>
    </and>
   </condition>
@@ -1587,10 +1587,12 @@
 </model>
 
 <!-- Visible up to 10km (6 miles) -->
+<!--
  <animation>
   <type>range</type>
   <min-m>0</min-m>
   <max-m>10000</max-m>
  </animation>
+-->
 
 </PropertyList>

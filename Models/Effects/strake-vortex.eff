@@ -4,12 +4,12 @@
   <name>Strake_Vortex</name>
   <inherits-from>Effects/thrust-flame</inherits-from>
   <parameters>
-    <flame_color_low_r><use>/sim/model/f16/vapour/red</use></flame_color_low_r>
-    <flame_color_low_g><use>/sim/model/f16/vapour/green</use></flame_color_low_g>
-    <flame_color_low_b><use>/sim/model/f16/vapour/blue</use></flame_color_low_b>
-    <flame_color_high_r><use>/sim/model/f16/vapour/red</use></flame_color_high_r>
-    <flame_color_high_g><use>/sim/model/f16/vapour/green</use></flame_color_high_g>
-    <flame_color_high_b><use>/sim/model/f16/vapour/blue</use></flame_color_high_b>
+    <flame_color_low_r><use>/sim/model/f16/vapor/blue</use></flame_color_low_r>
+    <flame_color_low_g><use>/sim/model/f16/vapor/blue</use></flame_color_low_g>
+    <flame_color_low_b><use>/sim/model/f16/vapor/blue</use></flame_color_low_b>
+    <flame_color_high_r><use>/sim/model/f16/vapor/green</use></flame_color_high_r>
+    <flame_color_high_g><use>/sim/model/f16/vapor/green</use></flame_color_high_g>
+    <flame_color_high_b><use>/sim/model/f16/vapor/green</use></flame_color_high_b>
     <use_shocks type="int">0</use_shocks>
     <use_noise type="int">1</use_noise>
     <thrust_collimation type="float">0.4</thrust_collimation>   
