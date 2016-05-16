@@ -2,17 +2,17 @@
 
 <PropertyList>
 
- <path>Aircraft/Generic/Effects/Thruster/thrust_flame.ac</path>
+ <path>Aircraft/f16/Models/Effects/g-vortex.ac</path>
  <nopreview/>
 
  <effect>
   <inherits-from>Aircraft/f16/Models/Effects/strake-vortex</inherits-from>
-  <object-name>Bounding_box</object-name>
+  <object-name>Bounding_box1</object-name>
  </effect>
 
  <animation>
   <type>scale</type>
-  <object-name>Bounding_box</object-name>
+  <object-name>Bounding_box1</object-name>
   <property>orientation/alpha-deg</property>
   <x-min>0.8</x-min>
   <y-min>4.5</y-min>
@@ -24,7 +24,7 @@
 
  <animation>
   <type>rotate</type>
-  <object-name>Bounding_box</object-name>
+  <object-name>Bounding_box1</object-name>
   <property>orientation/alpha-deg</property>
   <offset-deg>-10</offset-deg>
   <factor>-0.2</factor>
