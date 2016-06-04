@@ -4,7 +4,7 @@
 
  <sim>
   <description>General Dynamics F-16 (3d cockpit)</description>
-  <author>Erik Hofman, Pensacola (skin textures), Martin "Pegasus" Schmitt (panel textures)</author>
+  <author>Erik Hofman, Pensacola (skin textures), Martin "Pegasus" Schmitt (panel textures), Richard Harrison (MFD, HUD)</author>
   <status>production</status>
   <rating>
     <FDM type="int">5</FDM>
@@ -608,6 +608,8 @@
    <file>Aircraft/f16/Nasal/tyresmoke.nas</file>
    <file>Aircraft/f16/Nasal/rain.nas</file>
    <file>Aircraft/f16/Nasal/vapor-lighting.nas</file>
+   <file>Nasal/HUD/HUD_main.nas</file>
+   <file>Nasal/MPCD/MPCD_main.nas</file>
   </f16>
 
   <f16_chronograph>
