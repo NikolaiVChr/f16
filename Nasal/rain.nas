@@ -21,23 +21,22 @@ var rtimer = maketimer(1.0, func {
    var airspeed = getprop("/velocities/airspeed-kt");
    var airspeed_max = 120;
    if (airspeed > airspeed_max) {
-           airspeed = airspeed_max;
+      airspeed = airspeed_max;
    }
    airspeed = math.sqrt(airspeed/airspeed_max);
 
    var splash_x = -0.1 - 2.0 * airspeed;
-   var splash_y = 0.0;
    var splash_z = 1.0 - 1.35 * airspeed;;
 
-   setprop("/environment/aircraft-effects/splash-vector-x", splash_x);
-   setprop("/environment/aircraft-effects/splash-vector-y", splash_y);
-   setprop("/environment/aircraft-effects/splash-vector-z", splash_z);
-   }
+   setprop("/environment/aircraft-effects/splash-vector-x", -splash_x);
+   setprop("/environment/aircraft-effects/splash-vector-y", 0.0);
+   setprop("/environment/aircraft-effects/splash-vector-z", -splash_z);
 
-   setprop("environment/aircraft-effects/frost-level", getprop("/fdm/jsbsim/systems/ecs/windscreen-frost-amount"));
+#   setprop("environment/aircraft-effects/frost-level", getprop("/fdm/jsbsim/systems/ecs/windscreen-frost-amount"));
 
-   f16.updateMPCD();
-   f16.updateVSD();
+#   f16.updateMPCD();
+#   f16.updateVSD();
 #  f16.updateHUD();
+   }
 );
 rtimer.start();
