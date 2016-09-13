@@ -1,7 +1,7 @@
 AC3Db
 MATERIAL "ac3dmat14.005" rgb 0.651 0.651 0.651  amb 0.651 0.651 0.651  emis 0 0 0  spec 0.349 0.349 0.349  shi 80  trans 0
 MATERIAL "ac3dmat0.005" rgb 0 0 0  amb 0.1 0.1 0.1  emis 0 0 0  spec 0 0 0  shi 99  trans 0
-MATERIAL "ac3dmat1.007" rgb 1 1 1  amb 1 1 1  emis 1 1 1  spec 0 0 0  shi 0  trans 0
+MATERIAL "ac3dmat1" rgb 1 1 1  amb 1 1 1  emis 1 1 1  spec 0 0 0  shi 0  trans 0
 MATERIAL "ac3dmat3.001" rgb 1 0 0  amb 1 0 0  emis 0 0 0  spec 1 0 0  shi 10  trans 0
 MATERIAL "ac3dmat0.006" rgb 0.156863 0.156863 0.156863  amb 0.157 0.157 0.157  emis 0 0 0  spec 0.102 0.102 0.102  shi 5  trans 0
 MATERIAL "ac3dmat13.008" rgb 0.533333 0.533333 0.533333  amb 0.533333 0.533333 0.533333  emis 0 0 0  spec 0.5 0.5 0.5  shi 10  trans 0
@@ -15,8 +15,28 @@ MATERIAL "ac3dmat14.007" rgb 0.651 0.651 0.651  amb 0.651 0.651 0.651  emis 0 0 
 MATERIAL "ac3dmat13.009" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0 0 0  shi 0  trans 0
 MATERIAL "ac3dmat0.004" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0.043 0.043 0.043  shi 3  trans 0
 MATERIAL "ac3dmat12.008" rgb 0.6 0.611765 0.647059  amb 0.05 0.05 0.05  emis 0 0 0  spec 0.6 0.611765 0.647059  shi 15  trans 0
+MATERIAL "Glass" rgb 0 0 0  amb 0 0 0  emis 0.501961 1 0.501961  spec 0 0 0  shi 0  trans 0
 OBJECT world
-kids 1
+kids 2
+OBJECT poly
+name "HUDImage2"
+loc -4.66516 0.750449 5.31352e-005
+texture "tranbg.png"
+crease 45.000000
+numvert 4
+-0.0581536 -0.0767437 -0.0855713
+-0.0581536 -0.0767437 0.0829132
+0.100001 0.0956986 -0.0855713
+0.100001 0.0956986 0.0829132
+numsurf 1
+SURF 0x0
+mat 16
+refs 4
+1 0.000646 0.001737
+0 0.794971 0.001737
+2 0.794971 0.998565
+3 0.000645 0.998565
+kids 0
 OBJECT group
 name "COCKPIT"
 kids 31
@@ -2968,7 +2988,7 @@ mat 9
 refs 3
 2 0.997642 0.945119
 5 1 0
-4 1 4.04622e-07
+4 1 4.04622e-007
 SURF 0x0
 mat 9
 refs 3
@@ -2980,7 +3000,7 @@ mat 9
 refs 3
 7 0.00434325 0
 0 0 0.945119
-6 0.00434325 4.04622e-07
+6 0.00434325 4.04622e-007
 SURF 0x0
 mat 9
 refs 3

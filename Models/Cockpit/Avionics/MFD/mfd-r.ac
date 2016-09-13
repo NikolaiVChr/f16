@@ -6,12 +6,11 @@ MATERIAL "TopBottom1.3" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0 0 0  shi 0  tra
 OBJECT world
 kids 26
 OBJECT group
-name "MFDL"
+name "MFDR"
 loc -2.2509 0.16878 0.204049
-folded
 kids 1
 OBJECT poly
-name "MFDimage1"
+name "MFDimage2"
 loc 2.25248 -0.120706 -0.199358
 texture "tranbg.png"
 crease 45.000000
