@@ -40,13 +40,12 @@ var MFD_Station =
                         obj.update();
                     });
 
-        obj.update();
         return obj;
     },
 
-    update: func
+    update: func(notification)
     {
-        var weapon_mode = getprop("sim/model/f16/controls/armament/weapon-selector");
+        var weapon_mode = notification.weapon_mode;
         var na = getprop(me.prop~"/selected");
         var sel = 0;
         var mode = "STBY";
@@ -183,18 +182,17 @@ var PFD_VSD =
         obj.ondisplay = func
         {
         };
-        #
-        # most updates performed by the canvas nav display directly.
-        obj.update = func
+
+        obj.update = func(notification)
         {
         if(!me.vsd_on)
             return;
 
-        var pitch = getprop("orientation/pitch-deg");
-        var roll = getprop("orientation/roll-deg");
-        var alt = getprop("position/altitude-ft");
+        var pitch = notification.pitch;
+        var roll = notification.roll;
+        var alt = notification.altitude_ft;
         var roll_rad = -roll*3.14159/180.0;
-        var heading = getprop("orientation/heading-deg");
+        var heading = notification.heading;
         var pitch_offset = 12;
         var pitch_factor = 1.98;
 
@@ -202,7 +200,7 @@ var PFD_VSD =
         me.horizon_line.setTranslation (0.0, pitch * pitch_factor+pitch_offset);                                           
         me.horizon_line.setRotation (roll_rad);
 
-        if (getprop("sim/model/f15/instrumentation/radar-awg-9/hud/target-display"))
+        if (notification.target_display)
         {   
 #       window3.setText (sprintf("%s: %3.1f", getprop("sim/model/f15/instrumentation/radar-awg-9/hud/target"), getprop("sim/model/f15/instrumentation/radar-awg-9/hud/distance")));
             me.nofire_cross.setVisible(1);
@@ -217,9 +215,9 @@ var PFD_VSD =
         var w1 = "     VS BST   MEM  ";
 
         var target_idx=1;
-        me.window4.setText (sprintf("%3d", getprop("instrumentation/radar/radar2-range")));
+        me.window4.setText (sprintf("%3d", notification.radar_range));
         var w3_22="";
-        var w3_7 = sprintf("T %d",getprop("fdm/jsbsim/velocities/vc-kts"));
+        var w3_7 = sprintf("T %d",notification.vc_kts);
         var w2 = "";
         var designated = 0;
         foreach( u; awg_9.tgts_list ) 
@@ -277,7 +275,7 @@ var PFD_VSD =
         me.window2.setText(w2);
 #    window3.setText(sprintf("G%3.0f %3s-%4s%s %s %s",
         me.window3.setText(sprintf("G%3.0f %s %s",
-                                   getprop("velocities/groundspeed-kt"),
+                                   notification.groundspeed_kt,
                                    w3_7 , 
                                    w3_22));
         for(var nv = target_idx; nv < me.max_symbols;nv += 1)
@@ -340,7 +338,7 @@ var MFD_Device =
     {
         me.p1_1 = me.PFD.addPage("Aircraft Menu", "p1_1");
 
-        me.p1_1.update = func
+        me.p1_1.update = func(notification)
         {
             var sec = getprop("instrumentation/clock/indicated-sec");
             me.page1_1.time.setText(getprop("sim/time/gmt-string")~"Z");
@@ -402,11 +400,10 @@ var MFD_Device =
 
         #
         # Page 1 is the time display
-        me.p1_1.update = func
+        me.p1_1.update = func(notification)
         {
-            var sec = getprop("instrumentation/clock/indicated-sec");
-            me.time.setText(getprop("sim/time/gmt-string")~"Z");
-            var cdt = getprop("sim/time/gmt");
+            me.time.setText(notification.gmt_string~"Z");
+            var cdt = notification.gmt;
 
             if (cdt != nil)
                 me.date.setText(substr(cdt,5,2)~"/"~substr(cdt,8,2)~"/"~substr(cdt,2,2)~"Z");
@@ -461,18 +458,19 @@ var MFD_Device =
 
 #
 # Connect the radar range to the nav display range. 
-var range_val = getprop("instrumentation/radar/radar2-range");
-if (range_val == nil)
-range_val=50;
-setprop("instrumentation/mfd-sit/inputs/range-nm", range_val);
-setlistener("instrumentation/radar/radar2-range", 
+        var range_val = getprop("instrumentation/radar/radar2-range");
+        if (range_val == nil)
+          range_val=50;
+
+        setprop("instrumentation/mfd-sit/inputs/range-nm", range_val);
+        setlistener("instrumentation/radar/radar2-range", 
             func(v)
             {
                 setprop("instrumentation/mfd-sit/inputs/range-nm", v.getValue());
             });
 #
 # Mode switch is day/night/off. we just do on/off
-setlistener("controls/MFD["~me.model_index~"]/mode", func(v)
+        setlistener("controls/MFD["~me.model_index~"]/mode", func(v)
             {
                 if (v != nil)
                 {
@@ -510,6 +508,7 @@ setlistener("controls/MFD["~me.model_index~"]/mode", func(v)
         me.p1_1.addMenuItem(3, "WPN", me.p1_2);
         me.p1_1.addMenuItem(4, "DTM", me.p1_2);
 
+        me.p1_2.addMenuItem(0, "VSD", me.p_VSD);
         me.p1_2.addMenuItem(1, "A/A", me.p1_3);
         me.p1_2.addMenuItem(2, "A/G", me.p1_3);
         me.p1_2.addMenuItem(3, "CBT JETT", me.p1_3);
@@ -527,6 +526,9 @@ setlistener("controls/MFD["~me.model_index~"]/mode", func(v)
         me.p1_3.addMenuItem(15, "MODE S", me.p1_3);
 
         me.pjitds_1.addMenuItem(9, "M", me.p1_1);
+        me.pjitds_1.addMenuItem(0, "ARMT", me.p1_2);
+        me.pjitds_1.addMenuItem(1, "VSD", me.p_VSD);
+
         me.p_VSD.addMenuItem(0, "ARMT", me.p1_2);
         me.p_VSD.addMenuItem(1, "SIT", me.pjitds_1);
         me.p_VSD.addMenuItem(4, "M", me.p1_1);
@@ -562,7 +564,7 @@ setlistener("controls/MFD["~me.model_index~"]/mode", func(v)
 #         }
 
         if (me.mfd_device_status)
-            me.PFD.update();
+            me.PFD.update(notification);
     },
 };
 
@@ -596,6 +598,15 @@ var F16MfdRecipient =
         return new_class;
     },
 };
+#
+#
+# temporary code (2016.3.x) until MFD_Generic.nas is updated in FGData (2016.4.x)
+PFD_Device.update = func(notification=nil)
+    {
+        if (me.current_page != nil)
+            me.current_page.update(notification);
+    };
+
 #F16MfdRecipient.new("BAe-F16b-MFD");
 f16_mfd = F16MfdRecipient.new("F16-MFD");
 #UpperMFD = f16_mfd.UpperMFD;

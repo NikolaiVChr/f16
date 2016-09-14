@@ -1,490 +1,492 @@
 <?xml version="1.0"?>
 
-<!-- Based on F-15 MPCD by Richard Harrison; rjh@zaretto.com  -->
+<!-- Using MFD_Generic.nas, based on F-15 MPCD and BAe Hawk T2 MFD Richard Harrison; rjh@zaretto.com  -->
 
 <PropertyList>
     <path>mfd-r.ac</path>
 
-        <!--<animation>
+    <!-- used to turn the display off when no power, or device powered down-->
+    <animation>
         <type>select</type>
         <object-name>MFDimage2</object-name>
         <condition>
             <property>controls/MFD[1]/mode</property>
-            -->
-        <!--<greater-than>
+
+            <!-- electrics main bus needed-->
+            <!--<greater-than>
                 <property>fdm/jsbsim/systems/electrics/ac-left-main-bus</property>
                 <value>0</value>
             </greater-than>-->
-        <!--
+
         </condition>
-    </animation>-->
-        <animation>
-            <type>translate</type>
-            <object-name>MFDButtonL1</object-name>
-            <condition>
-                <or>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>1</value>
-                    </equals>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>0</value>
-                    </equals>
-                </or>
-            </condition>
-            <property>controls/MFD[1]/button-pressed</property>
-            <factor>-0.002</factor>
-            <axis>
-                <x>1</x>
-                <y>0</y>
-                <z>0</z>
-            </axis>
-
-        </animation>
-        <animation>
-            <type>knob</type>
-            <object-name>MFDButtonL1</object-name>
-
-            <action>
-                <binding>
-                    <command>property-assign</command>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonL1</object-name>
+        <condition>
+            <or>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
                     <value>1</value>
-                </binding>
-            </action>
-
-            <release>
-                <binding>
-                    <command>property-adjust</command>
+                </equals>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
-                    <step>0</step>
-                    <min>0</min>
-                    <max>0</max>
-                </binding>
-            </release>
-        </animation>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[1]/button-pressed</property>
+        <factor>-0.002</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
 
-        <animation>
-            <type>translate</type>
-            <object-name>MFDButtonL2</object-name>
-            <condition>
-                <or>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>2</value>
-                    </equals>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>0</value>
-                    </equals>
-                </or>
-            </condition>
-            <property>controls/MFD[1]/button-pressed</property>
-            <factor>-0.002</factor>
-            <axis>
-                <x>1</x>
-                <y>0</y>
-                <z>0</z>
-            </axis>
+    </animation>
+    <animation>
+        <type>knob</type>
+        <object-name>MFDButtonL1</object-name>
 
-        </animation>
+        <action>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <value>1</value>
+            </binding>
+        </action>
 
-        <animation>
-            <type>knob</type>
-            <object-name>MFDButtonL2</object-name>
-            <action>
-                <binding>
-                    <command>property-assign</command>
+        <release>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <step>0</step>
+                <min>0</min>
+                <max>0</max>
+            </binding>
+        </release>
+    </animation>
+
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonL2</object-name>
+        <condition>
+            <or>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
                     <value>2</value>
-                </binding>
-            </action>
-
-            <release>
-                <binding>
-                    <command>property-adjust</command>
+                </equals>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
-                    <step>0</step>
-                    <min>0</min>
-                    <max>0</max>
-                </binding>
-            </release>
-        </animation>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[1]/button-pressed</property>
+        <factor>-0.002</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
 
-        <animation>
-            <type>translate</type>
-            <object-name>MFDButtonL3</object-name>
-            <condition>
-                <or>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>3</value>
-                    </equals>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>0</value>
-                    </equals>
-                </or>
-            </condition>
-            <property>controls/MFD[1]/button-pressed</property>
-            <factor>-0.002</factor>
-            <axis>
-                <x>1</x>
-                <y>0</y>
-                <z>0</z>
-            </axis>
+    </animation>
 
-        </animation>
-        <animation>
-            <type>knob</type>
-            <object-name>MFDButtonL3</object-name>
+    <animation>
+        <type>knob</type>
+        <object-name>MFDButtonL2</object-name>
+        <action>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <value>2</value>
+            </binding>
+        </action>
 
-            <action>
-                <binding>
-                    <command>property-assign</command>
+        <release>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <step>0</step>
+                <min>0</min>
+                <max>0</max>
+            </binding>
+        </release>
+    </animation>
+
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonL3</object-name>
+        <condition>
+            <or>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
                     <value>3</value>
-                </binding>
-            </action>
-
-            <release>
-                <binding>
-                    <command>property-adjust</command>
+                </equals>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
-                    <step>0</step>
-                    <min>0</min>
-                    <max>0</max>
-                </binding>
-            </release>
-        </animation>
-        <animation>
-            <type>translate</type>
-            <object-name>MFDButtonL4</object-name>
-            <condition>
-                <or>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>4</value>
-                    </equals>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>0</value>
-                    </equals>
-                </or>
-            </condition>
-            <property>controls/MFD[1]/button-pressed</property>
-            <factor>-0.002</factor>
-            <axis>
-                <x>1</x>
-                <y>0</y>
-                <z>0</z>
-            </axis>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[1]/button-pressed</property>
+        <factor>-0.002</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
 
-        </animation>
-        <animation>
-            <type>knob</type>
-            <object-name>MFDButtonL4</object-name>
+    </animation>
+    <animation>
+        <type>knob</type>
+        <object-name>MFDButtonL3</object-name>
 
-            <action>
-                <binding>
-                    <command>property-assign</command>
+        <action>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <value>3</value>
+            </binding>
+        </action>
+
+        <release>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <step>0</step>
+                <min>0</min>
+                <max>0</max>
+            </binding>
+        </release>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonL4</object-name>
+        <condition>
+            <or>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
                     <value>4</value>
-                </binding>
-            </action>
-
-            <release>
-                <binding>
-                    <command>property-adjust</command>
+                </equals>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
-                    <step>0</step>
-                    <min>0</min>
-                    <max>0</max>
-                </binding>
-            </release>
-        </animation>
-        <animation>
-            <type>translate</type>
-            <object-name>MFDButtonL5</object-name>
-            <condition>
-                <or>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>5</value>
-                    </equals>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>0</value>
-                    </equals>
-                </or>
-            </condition>
-            <property>controls/MFD[1]/button-pressed</property>
-            <factor>-0.002</factor>
-            <axis>
-                <x>1</x>
-                <y>0</y>
-                <z>0</z>
-            </axis>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[1]/button-pressed</property>
+        <factor>-0.002</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
 
-        </animation>
-        <animation>
-            <type>knob</type>
-            <object-name>MFDButtonL5</object-name>
+    </animation>
+    <animation>
+        <type>knob</type>
+        <object-name>MFDButtonL4</object-name>
 
-            <action>
-                <binding>
-                    <command>property-assign</command>
+        <action>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <value>4</value>
+            </binding>
+        </action>
+
+        <release>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <step>0</step>
+                <min>0</min>
+                <max>0</max>
+            </binding>
+        </release>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonL5</object-name>
+        <condition>
+            <or>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
                     <value>5</value>
-                </binding>
-            </action>
-
-            <release>
-                <binding>
-                    <command>property-adjust</command>
+                </equals>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
-                    <step>0</step>
-                    <min>0</min>
-                    <max>0</max>
-                </binding>
-            </release>
-        </animation>
-        <!-- right buttons -->
-        <animation>
-            <type>translate</type>
-            <object-name>MFDButtonR1</object-name>
-            <condition>
-                <or>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>6</value>
-                    </equals>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>0</value>
-                    </equals>
-                </or>
-            </condition>
-            <property>controls/MFD[1]/button-pressed</property>
-            <factor>-0.002</factor>
-            <axis>
-                <x>1</x>
-                <y>0</y>
-                <z>0</z>
-            </axis>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[1]/button-pressed</property>
+        <factor>-0.002</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
 
-        </animation>
-        <animation>
-            <type>knob</type>
-            <object-name>MFDButtonR1</object-name>
+    </animation>
+    <animation>
+        <type>knob</type>
+        <object-name>MFDButtonL5</object-name>
 
-            <action>
-                <binding>
-                    <command>property-assign</command>
+        <action>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <value>5</value>
+            </binding>
+        </action>
+
+        <release>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <step>0</step>
+                <min>0</min>
+                <max>0</max>
+            </binding>
+        </release>
+    </animation>
+    <!-- right buttons -->
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonR1</object-name>
+        <condition>
+            <or>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
                     <value>6</value>
-                </binding>
-            </action>
-
-            <release>
-                <binding>
-                    <command>property-adjust</command>
+                </equals>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
-                    <step>0</step>
-                    <min>0</min>
-                    <max>0</max>
-                </binding>
-            </release>
-        </animation>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[1]/button-pressed</property>
+        <factor>-0.002</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
 
-        <animation>
-            <type>translate</type>
-            <object-name>MFDButtonR2</object-name>
-            <condition>
-                <or>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>7</value>
-                    </equals>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>0</value>
-                    </equals>
-                </or>
-            </condition>
-            <property>controls/MFD[1]/button-pressed</property>
-            <factor>-0.002</factor>
-            <axis>
-                <x>1</x>
-                <y>0</y>
-                <z>0</z>
-            </axis>
+    </animation>
+    <animation>
+        <type>knob</type>
+        <object-name>MFDButtonR1</object-name>
 
-        </animation>
+        <action>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <value>6</value>
+            </binding>
+        </action>
 
-        <animation>
-            <type>knob</type>
-            <object-name>MFDButtonR2</object-name>
-            <action>
-                <binding>
-                    <command>property-assign</command>
+        <release>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <step>0</step>
+                <min>0</min>
+                <max>0</max>
+            </binding>
+        </release>
+    </animation>
+
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonR2</object-name>
+        <condition>
+            <or>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
                     <value>7</value>
-                </binding>
-            </action>
-
-            <release>
-                <binding>
-                    <command>property-adjust</command>
+                </equals>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
-                    <step>0</step>
-                    <min>0</min>
-                    <max>0</max>
-                </binding>
-            </release>
-        </animation>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[1]/button-pressed</property>
+        <factor>-0.002</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
 
-        <animation>
-            <type>translate</type>
-            <object-name>MFDButtonR3</object-name>
-            <condition>
-                <or>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>8</value>
-                    </equals>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>0</value>
-                    </equals>
-                </or>
-            </condition>
-            <property>controls/MFD[1]/button-pressed</property>
-            <factor>-0.002</factor>
-            <axis>
-                <x>1</x>
-                <y>0</y>
-                <z>0</z>
-            </axis>
+    </animation>
 
-        </animation>
-        <animation>
-            <type>knob</type>
-            <object-name>MFDButtonR3</object-name>
+    <animation>
+        <type>knob</type>
+        <object-name>MFDButtonR2</object-name>
+        <action>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <value>7</value>
+            </binding>
+        </action>
 
-            <action>
-                <binding>
-                    <command>property-assign</command>
+        <release>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <step>0</step>
+                <min>0</min>
+                <max>0</max>
+            </binding>
+        </release>
+    </animation>
+
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonR3</object-name>
+        <condition>
+            <or>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
                     <value>8</value>
-                </binding>
-            </action>
-
-            <release>
-                <binding>
-                    <command>property-adjust</command>
+                </equals>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
-                    <step>0</step>
-                    <min>0</min>
-                    <max>0</max>
-                </binding>
-            </release>
-        </animation>
-        <animation>
-            <type>translate</type>
-            <object-name>MFDButtonR4</object-name>
-            <condition>
-                <or>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>9</value>
-                    </equals>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>0</value>
-                    </equals>
-                </or>
-            </condition>
-            <property>controls/MFD[1]/button-pressed</property>
-            <factor>-0.002</factor>
-            <axis>
-                <x>1</x>
-                <y>0</y>
-                <z>0</z>
-            </axis>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[1]/button-pressed</property>
+        <factor>-0.002</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
 
-        </animation>
-        <animation>
-            <type>knob</type>
-            <object-name>MFDButtonR4</object-name>
+    </animation>
+    <animation>
+        <type>knob</type>
+        <object-name>MFDButtonR3</object-name>
 
-            <action>
-                <binding>
-                    <command>property-assign</command>
+        <action>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <value>8</value>
+            </binding>
+        </action>
+
+        <release>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <step>0</step>
+                <min>0</min>
+                <max>0</max>
+            </binding>
+        </release>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonR4</object-name>
+        <condition>
+            <or>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
                     <value>9</value>
-                </binding>
-            </action>
-
-            <release>
-                <binding>
-                    <command>property-adjust</command>
+                </equals>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
-                    <step>0</step>
-                    <min>0</min>
-                    <max>0</max>
-                </binding>
-            </release>
-        </animation>
-        <animation>
-            <type>translate</type>
-            <object-name>MFDButtonR5</object-name>
-            <condition>
-                <or>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>10</value>
-                    </equals>
-                    <equals>
-                        <property>controls/MFD[1]/button-pressed</property>
-                        <value>0</value>
-                    </equals>
-                </or>
-            </condition>
-            <property>controls/MFD[1]/button-pressed</property>
-            <factor>-0.002</factor>
-            <axis>
-                <x>1</x>
-                <y>0</y>
-                <z>0</z>
-            </axis>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[1]/button-pressed</property>
+        <factor>-0.002</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
 
-        </animation>
-        <animation>
-            <type>knob</type>
-            <object-name>MFDButtonR5</object-name>
+    </animation>
+    <animation>
+        <type>knob</type>
+        <object-name>MFDButtonR4</object-name>
 
-            <action>
-                <binding>
-                    <command>property-assign</command>
+        <action>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <value>9</value>
+            </binding>
+        </action>
+
+        <release>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <step>0</step>
+                <min>0</min>
+                <max>0</max>
+            </binding>
+        </release>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>MFDButtonR5</object-name>
+        <condition>
+            <or>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
                     <value>10</value>
-                </binding>
-            </action>
-
-            <release>
-                <binding>
-                    <command>property-adjust</command>
+                </equals>
+                <equals>
                     <property>controls/MFD[1]/button-pressed</property>
-                    <step>0</step>
-                    <min>0</min>
-                    <max>0</max>
-                </binding>
-            </release>
-        </animation>
-        <!-- Lighting -->
-        <!--<animation>
+                    <value>0</value>
+                </equals>
+            </or>
+        </condition>
+        <property>controls/MFD[1]/button-pressed</property>
+        <factor>-0.002</factor>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+
+    </animation>
+    <animation>
+        <type>knob</type>
+        <object-name>MFDButtonR5</object-name>
+
+        <action>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <value>10</value>
+            </binding>
+        </action>
+
+        <release>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <step>0</step>
+                <min>0</min>
+                <max>0</max>
+            </binding>
+        </release>
+    </animation>
+    <!-- Lighting -->
+    <!--<animation>
         <object-name>mount</object-name>
         <type>material</type>
         <condition>
@@ -506,16 +508,14 @@
             <blue-prop>controls/lighting/panel-blue</blue-prop>
         </emission>
     </animation>-->
-        <!--<animation>
-        <object-name>MFDimage1</object-name>
+    <animation>
+        <object-name>MFDimage2</object-name>
         <type>material</type>
         <condition>
-            -->
-        <!--<greater-than>
+            <!--<greater-than>
                 <property>fdm/jsbsim/systems/electrics/ac-essential-bus1</property>
                 <value>0</value>
             </greater-than>-->
-        <!--
             <not>
                 <property>/sim/rendering/rembrandt/enabled</property>
             </not>
@@ -526,6 +526,5 @@
             <green>0.5</green>
             <blue> 0.5</blue>
         </emission>
-    </animation>-->
-
+    </animation>
 </PropertyList>

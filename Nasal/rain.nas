@@ -34,9 +34,6 @@ var rtimer = maketimer(1.0, func {
 
 #   setprop("environment/aircraft-effects/frost-level", getprop("/fdm/jsbsim/systems/ecs/windscreen-frost-amount"));
 
-#   f16.updateMPCD();
-#   f16.updateVSD();
-#  f16.updateHUD();
    }
 );
 rtimer.start();

@@ -3,7 +3,6 @@
 # ---------------------------
 # RWR (Radar Warning Receiver) is computed in the radar loop for better performance
 # AWG-9 Radar computes the nearest target for AIM-9.
-# Provides the 'tuned carrier' tacan channel support for ARA-63 emulation
 # ---------------------------
 # Richard Harrison (rjh@zaretto.com) 2014-11-23. Based on F-14b by xii
 # - 2015-07 : Modified to have target selection - nearest_u is retained
@@ -13,7 +12,7 @@
 # 
 
 var ElapsedSec        = props.globals.getNode("sim/time/elapsed-sec");
-var SwpFac            = props.globals.getNode("sim/model/f16/instrumentation/awg-9/sweep-factor", 1);
+var SwpFac            = props.globals.getNode("sim/model/f16/instrumentation/radar-awg-9/sweep-factor", 1);
 var DisplayRdr        = props.globals.getNode("sim/model/f16/instrumentation/radar-awg-9/display-rdr",1);
 var HudTgtHDisplay    = props.globals.getNode("sim/model/f16/instrumentation/radar-awg-9/hud/target-display", 1);
 var HudTgt            = props.globals.getNode("sim/model/f16/instrumentation/radar-awg-9/hud/target", 1);
@@ -89,24 +88,6 @@ our_ac_name = "f16c";
 #	if (our_ac_name == "f16-bs") { we_are_bs = 1; }
 	}
 
-# Main loop ###############
-# Done each 0.05 sec. Called from instruments.nas
-var rdr_loop = func() {
-	var display_rdr = DisplayRdr.getBoolValue();
-	if ( display_rdr ) {
-		az_scan();
-		our_radar_stanby = RadarStandby.getValue();
-#print ("Display radar ",our_radar_stanby, we_are_bs);
-		if ( we_are_bs == 0) {
-#			RadarStandbyMP.setIntValue(our_radar_stanby); # Tell over MP if
-			# our radar is scaning or is in stanby. Don't if we are a back-seater.
-		}
-	} elsif ( size(tgts_list) > 0 ) {
-		foreach( u; tgts_list ) {
-			u.set_display(0);
-		}
-	}
-}
 
 var az_scan = func() {
 
@@ -157,7 +138,6 @@ var az_scan = func() {
 
 		tgts_list = [];
 		var raw_list = Mp.getChildren();
-        var carrier_located = 0;
 
 if (active_u == nil or active_u.Callsign == nil or active_u.Callsign.getValue() == nil or active_u.Callsign.getValue() != active_u_callsign)
 {
@@ -180,56 +160,6 @@ active_u = nil;
 			}
 			var HaveRadarNode = c.getNode("radar");
 
-            #
-            # ARA 63 (Carrier ILS) support.
-            # if this node has a tacan channel and we are
-            # tuned to it then get the position as it will be
-            # used in the ARA 63 calculations for glideslope and localizer.
-
-            var tchan = c.getNode("navaids/tacan/channel-ID");
-            if (tchan != nil and !we_are_bs)
-            {
-                tchan = tchan.getValue();
-                if (tchan == getprop("instrumentation/tacan/display/channel"))
-                {
-                    # Tuned into this carrier (node) so use the offset.
-                    # Get the position of the glideslope; this is offset from the carrier position by
-                    # a smidgen. This is measured and is a point slightly in front of the TDZ where the
-                    # deck is marked with previous tyre marks (which seems as good a place as any to 
-                    # aim for).
-                    if (c.getNode("position/global-x") != nil)
-                    {
-                        var x = c.getNode("position/global-x").getValue() + 88.7713542;
-                        var y = c.getNode("position/global-y").getValue() + 18.74631309;
-                        var z = c.getNode("position/global-z").getValue() + 115.6574875;
-
-                        aircraft.carrier_ara_63_position = geo.Coord.new().set_xyz(x, y, z);
-
-                        var carrier_heading = c.getNode("orientation/true-heading-deg");
-                        if (carrier_heading != nil)
-                        {
-                            # relative offset of the course to the tdz
-                            # according to my measurements the Nimitz class is 8.1362114 degrees (measured 178 vs carrier 200 allowing for local magvar -13.8637886)
-                            # (i.e. this value is from tuning rather than calculation)
-                            aircraft.carrier_heading = carrier_heading.getValue();
-                            aircraft.carrier_ara_63_heading = carrier_heading.getValue() - 8.1362114;
-                        }
-                        else
-                        {
-                            aircraft.carrier_ara_63_heading = 0;
-                            print("Carrier heading invalid");
-                        }
-                        carrier_located = 1;
-                        aircraft.tuned_carrier_name = c.getNode("name").getValue();
-                        setprop("sim/model/f16/tuned-carrier",aircraft.tuned_carrier_name);
-                    }
-                    else
-                    {
-                        # tuned tacan isn't carrier.
-                        aircraft.carrier_ara_63_heading = 0;
-                    }
-                }
-            }
             if (!radar_active)
               continue;
 
@@ -252,28 +182,7 @@ active_u = nil;
                 if (their_radar_node != nil and their_radar_node.getValue() != nil)
                   their_radar_mode = their_radar_node.getValue();
 
-#
-# if their radar isn't transmitting and our radar isn't transmitting they will not be visible unless TEWS
-# has already picked up an emission (transponder)
-#radar modes:
-# high	0
-# on	1
-# standby	2
-# off	3
-#if (their_radar_mode >= 2 and radar_mode >= 2)
-#visible = 0;
-                var their_transponder_id = -9999;
-                var tews_target = 0;
-                if (c.getNode("instrumentation/transponder/") != nil and c.getNode("instrumentation/transponder/transmitted-id") != nil and c.getNode("instrumentation/transponder/").getValue() != nil)
-                  their_transponder_id = c.getNode("instrumentation/transponder/").getValue();
-
-#                print("Their transponder ",their_transponder_id,":");
-                if (their_transponder_id >= 0) # TEWS will pick this up
-                {
-                    visible = 1;
-                    tews_target = 1;
-                }
-                else if (radar_mode < 2 or their_radar_mode == nil or their_radar_mode < 2) # either radar on and they're visible
+                if (radar_mode < 2 or their_radar_mode == nil or their_radar_mode < 2) # either radar on and they're visible
                     visible = 1;
                 else if (radar_mode == 2 and (their_radar_mode == nil or their_radar_mode < 2)) # in standby we still see them if their radar is one
                     visible = 1;
@@ -288,7 +197,7 @@ active_u = nil;
 
                 u.get_deviation(our_true_heading);
 
-                if (tews_target or (u.deviation > l_az_fld  and  u.deviation < r_az_fld )) 
+                if (u.deviation > l_az_fld  and  u.deviation < r_az_fld )
                 {
                     u.set_display(1);
                 } 
@@ -314,10 +223,6 @@ active_u = nil;
                 u.set_display(0);
             }
 		}
-        #
-        # we do this after the loop to keep the old value valid whilst figuring out the new one.
-        if (!carrier_located and !we_are_bs) 
-            aircraft.carrier_ara_63_heading = nil;
 
 		# Summarize ECM alerts.
 		if ( ecm_alert1 == 0 and ecm_alert1_last == 0 ) { EcmAlert1.setBoolValue(0) }
@@ -552,6 +457,9 @@ var containsV = func (vector, content) {
 # The following 1 methods is from Mirage 2000-5
 #
 var isVisibleByTerrain = func(node) {
+#
+# This is quite a performance hit; so let's disable for now. 
+    return 1; 
     if (node.getNode("callsign").getValue() == "")
       return 0;
 
@@ -1207,3 +1115,56 @@ else
 
 # HUD field of view = 2 * math.atan2( 0.0764, 0.7186) * globals.R2D; # ~ 12.1375°
 # where 0.071 : virtual screen half width, 0.7186 : distance eye -> screen
+
+#
+# This is the emesary recipient that will update the Radar when a FrameNotification is
+# received.
+
+var F16RadarRecipient = 
+{
+    new: func(_ident)
+    {
+        var new_class = emesary.Recipient.new(_ident~".RADAR");
+
+        new_class.Receive = func(notification)
+        {
+            if (notification == nil)
+            {
+                print("bad notification nil");
+                return emesary.Transmitter.ReceiptStatus_NotProcessed;
+            }
+
+            if (notification.NotificationType == "FrameNotification")
+            {
+                # Main loop ###############
+                # Done each 0.05 sec. Called from instruments.nas
+                var display_rdr = DisplayRdr.getBoolValue();
+                if ( display_rdr )
+                {
+                    az_scan();
+                    our_radar_stanby = RadarStandby.getValue();
+                    #print ("Display radar ",our_radar_stanby, we_are_bs);
+                    if ( we_are_bs == 0)
+                    {
+                        # RadarStandbyMP.setIntValue(our_radar_stanby); # Tell over MP if
+                        # our radar is scaning or is in stanby. Don't if we are a back-seater.
+                    }
+                }
+                elsif ( size(tgts_list) > 0 )
+                {
+                    foreach ( u; tgts_list )
+                      {
+                        u.set_display(0);
+                    }
+                }
+                return emesary.Transmitter.ReceiptStatus_OK;
+            }
+            return emesary.Transmitter.ReceiptStatus_NotProcessed;
+        };
+        return new_class;
+    },
+};
+
+f16_radar = F16RadarRecipient.new("F16-RADAR");
+
+emesary.GlobalTransmitter.Register(f16_radar);

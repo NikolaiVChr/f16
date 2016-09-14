@@ -1,22 +1,27 @@
 <?xml version="1.0"?>
 
-<!-- Based on F-15 MPCD Richard Harrison; rjh@zaretto.com  -->
+<!-- Using MFD_Generic.nas, based on F-15 MPCD and BAe Hawk T2 MFD Richard Harrison; rjh@zaretto.com  -->
 
 <PropertyList>
 
     <path>mfd.ac</path>
 
-    <!--<animation>
+    <!-- used to turn the display off when no power, or device powered down-->
+    <animation>
         <type>select</type>
         <object-name>MFDimage1</object-name>
         <condition>
             <property>controls/MFD[0]/mode</property>
-            --><!--<greater-than>
+
+            <!-- electrics main bus needed-->
+            <!--<greater-than>
                 <property>fdm/jsbsim/systems/electrics/ac-left-main-bus</property>
                 <value>0</value>
-            </greater-than>--><!--
+            </greater-than>-->
+
         </condition>
-    </animation>-->
+    </animation>
+
     <animation>
         <type>translate</type>
         <object-name>MFDButtonL1</object-name>
@@ -505,24 +510,24 @@
             <blue-prop>controls/lighting/panel-blue</blue-prop>
         </emission>
     </animation>-->
-    <!--<animation>
+    <animation>
         <object-name>MFDimage1</object-name>
         <type>material</type>
         <condition>
-            --><!--<greater-than>
+            <!--<greater-than>
                 <property>fdm/jsbsim/systems/electrics/ac-essential-bus1</property>
                 <value>0</value>
-            </greater-than>--><!--
+            </greater-than>-->
             <not>
                 <property>/sim/rendering/rembrandt/enabled</property>
             </not>
         </condition>
         <emission>
-            <factor-prop>controls/MFD[0]/mode</factor-prop>
+            <factor-prop>controls/MFD[1]/mode</factor-prop>
             <red>  0.5</red>
             <green>0.5</green>
             <blue> 0.5</blue>
         </emission>
-    </animation>-->
+    </animation>
 
 </PropertyList>

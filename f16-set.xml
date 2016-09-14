@@ -88,6 +88,24 @@
     </controls>
 
     <instrumentation>
+    <radar-awg-9>
+        <display-rdr type="bool">true</display-rdr>
+        <display-ir type="bool">false</display-ir>
+        <display-iff type="bool">false</display-iff>
+        <ant-trk-light type="bool">false</ant-trk-light>
+        <rd-rot-light type="bool">false</rd-rot-light>
+        <jat-light type="bool">false</jat-light>
+        <irot-light type="bool">false</irot-light>
+        <wcs-mode>
+            <pd-stt type="bool">false</pd-stt>
+            <pulse-stt type="bool">false</pulse-stt>
+            <pd-srch type="bool">false</pd-srch>
+            <rws type="bool">false</rws>
+            <tws-auto type="bool">false</tws-auto>
+            <tws-man type="bool">false</tws-man>
+            <pulse-srch type="bool">true</pulse-srch>
+        </wcs-mode>
+    </radar-awg-9>
     <vhf>
      <selector type="int">0</selector>
      <mode type="int">0</mode>
@@ -452,7 +470,9 @@
     <mode type="int">1</mode>
     <brightness type="float">1</brightness>
   </MFD>
-
+  <HUD>
+    <sym-rej type="int">0</sym-rej> <!-- declutter -->
+  </HUD>
   <indicators>
   </indicators>
 

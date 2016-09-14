@@ -107,10 +107,47 @@ var F16_HUD = {
         return el;
     },
 
+    develev_to_devroll : func(notification, dev_rad, elev_rad)
+    {
+        var eye_hud_m          = 0.5123;
+        var hud_position = 5.66824; # really -5.6 but avoiding more complex equations by being optimal with the signs.
+        var hud_radius_m       = 0.08429;
+        var clamped = 0;
+
+        eye_hud_m = hud_position + getprop("sim/current-view/z-offset-m"); # optimised for signs so we get a positive distance.
+# Deviation length on the HUD (at level flight),
+        var h_dev = eye_hud_m / ( math.sin(dev_rad) / math.cos(dev_rad) );
+        var v_dev = eye_hud_m / ( math.sin(elev_rad) / math.cos(elev_rad) );
+# Angle between HUD center/top <-> HUD center/symbol position.
+        # -90° left, 0° up, 90° right, +/- 180° down. 
+        var dev_deg =  math.atan2( h_dev, v_dev ) * R2D;
+# Correction with own a/c roll.
+        var combined_dev_deg = dev_deg - notification.roll;
+# Lenght HUD center <-> symbol pos on the HUD:
+        var combined_dev_length = math.sqrt((h_dev*h_dev)+(v_dev*v_dev));
+
+# clamping
+        var abs_combined_dev_deg = math.abs( combined_dev_deg );
+        var clamp = hud_radius_m;
+
+# squeeze the top of the display area for egg shaped HUD limits.
+#	if ( abs_combined_dev_deg >= 0 and abs_combined_dev_deg < 90 ) {
+#		var coef = ( 90 - abs_combined_dev_deg ) * 0.00075;
+#		if ( coef > 0.050 ) { coef = 0.050 }
+#		clamp -= coef; 
+        #	}
+        if ( combined_dev_length > clamp ) {
+            combined_dev_length = clamp;
+            clamped = 1;
+        }
+        var v = [combined_dev_deg, combined_dev_length, clamped];
+        return(v);
+    },
 #
 #
 # Get an element from the SVG; handle errors; and apply clip rectangle
 # if found (by naming convention : addition of _clip to object name).
+
     get_element : func(id) {
         var el = me.svg.getElementById(id);
         if (el == nil)
@@ -158,6 +195,46 @@ var F16_HUD = {
 # IAS
         me.ias_range.setTranslation(0, hdp.IAS * ias_range_factor);
      
+        if(getprop("sim/model/f15/controls/armament/master-arm-switch"))
+        {
+            var w_s = getprop("sim/model/f15/controls/armament/weapon-selector");
+            me.window2.setVisible(1);
+            var txt = "";
+            if (w_s == 0)
+            {
+                txt = sprintf("%3d",getprop("sim/model/f15/systems/gun/rounds"));
+            }
+            else if (w_s == 1)
+            {
+                txt = sprintf("S%dL", getprop("sim/model/f15/systems/armament/aim9/count"));
+            }
+            else if (w_s == 2)
+            {
+                txt = sprintf("M%dF", getprop("sim/model/f15/systems/armament/aim120/count")+getprop("sim/model/f15/systems/armament/aim7/count"));
+            }
+            me.window2.setText(txt);
+            if (awg_9.active_u != nil)
+            {
+                if (awg_9.active_u.Callsign != nil)
+                    me.window3.setText(awg_9.active_u.Callsign.getValue());
+                var model = "XX";
+                if (awg_9.active_u.ModelType != "")
+                    model = awg_9.active_u.ModelType;
+
+#        var w2 = sprintf("%-4d", awg_9.active_u.get_closure_rate());
+#        w3_22 = sprintf("%3d-%1.1f %.5s %.4s",awg_9.active_u.get_bearing(), awg_9.active_u.get_range(), callsign, model);
+#
+#
+#these labels aren't correct - but we don't have a full simulation of the targetting and missiles so 
+#have no real idea on the details of how this works.
+                me.window4.setText(sprintf("RNG %3.1f", awg_9.active_u.get_range()));
+                me.window5.setText(sprintf("CLO %-3d", awg_9.active_u.get_closure_rate()));
+                me.window6.setText(model);
+                me.window6.setVisible(1); # SRM UNCAGE / TARGET ASPECT
+            }
+        }
+        else
+        {
         me.window2.setVisible(0);
         me.window3.setText("NAV");
         if (hdp.nav_range != "")
@@ -165,8 +242,9 @@ var F16_HUD = {
         else
           me.window3.setText("");
         me.window4.setText(hdp.nav_range);
-#        me.window5.setText(hdp.hud_window5);
+            me.window5.setText(hdp.hud_window5);
         me.window6.setVisible(0); # SRM UNCAGE / TARGET ASPECT
+        }
 
         if (hdp.range_rate != nil)
         {
@@ -176,7 +254,7 @@ var F16_HUD = {
         else
             me.window1.setVisible(0);
   
-        me.window8.setText(sprintf("%02d", hdp.Nz*10));
+        me.window8.setText(sprintf("%3.1f", hdp.Nz));
 
         if (hdp.heading < 180)
             me.heading_tape_position = -hdp.heading*54/10;
@@ -185,6 +263,72 @@ var F16_HUD = {
      
         me.heading_tape.setTranslation (me.heading_tape_position,0);
         me.roll_pointer.setRotation (roll_rad);
+
+        var target_idx = 0;
+        var designated = 0;
+        me.target_locked.setVisible(0);
+        foreach( u; awg_9.tgts_list ) 
+        {
+            var callsign = "XX";
+            if(u.get_display())
+            {
+                if (u.Callsign != nil)
+                    callsign = u.Callsign.getValue();
+                var model = "XX";
+
+                if (u.ModelType != "")
+                    model = u.ModelType;
+
+                if (target_idx < me.max_symbols)
+                {
+                    tgt = me.tgt_symbols[target_idx];
+                    if (tgt != nil)
+                    {
+                        tgt.setVisible(u.get_display());
+                        var u_dev_rad = (90-u.get_deviation(hdp.heading))  * D2R;
+                        var u_elev_rad = (90-u.get_total_elevation( hdp.pitch))  * D2R;
+                        var devs = me.develev_to_devroll(hdp, u_dev_rad, u_elev_rad);
+                        var combined_dev_deg = devs[0];
+                        var combined_dev_length =  devs[1];
+                        var clamped = devs[2];
+                        var yc  = ht_yco + (ht_ycf * combined_dev_length * math.cos(combined_dev_deg*D2R));
+                        var xc = ht_xco + (ht_xcf * combined_dev_length * math.sin(combined_dev_deg*D2R));
+                        if(devs[2])
+                            tgt.setVisible(getprop("sim/model/f16/lighting/hud-diamond-switch/state"));
+                        else
+                            tgt.setVisible(1);
+
+                        if (awg_9.active_u != nil and awg_9.active_u.Callsign != nil and u.Callsign != nil and u.Callsign.getValue() == awg_9.active_u.Callsign.getValue())
+                        {
+                            me.target_locked.setVisible(1);
+                            me.target_locked.setTranslation (xc, yc);
+                        }
+                        else
+                        {
+                            #
+                            # if in symbol reject mode then only show the active target.
+                            if(hdp.symbol_reject)
+                                tgt.setVisible(0);
+                        }
+                        tgt.setTranslation (xc, yc);
+
+                        if (ht_debug)
+                            printf("%-10s %f,%f [%f,%f,%f] :: %f,%f",callsign,xc,yc, devs[0], devs[1], devs[2], u_dev_rad*D2R, u_elev_rad*D2R); 
+                    }
+                }
+                target_idx = target_idx+1;
+            }
+        }
+        for(var nv = target_idx; nv < me.max_symbols;nv += 1)
+        {
+            tgt = me.tgt_symbols[nv];
+            if (tgt != nil)
+            {
+                tgt.setVisible(0);
+            }
+        }
+
+
         if(hdp.brake_parking)
           {
             me.window7.setVisible(1);
@@ -197,7 +341,8 @@ var F16_HUD = {
               if (hdp.gear_down)
                 gd = " G";
               me.window7.setText(sprintf("F %d %s",hdp.flap_pos_deg,gd));
-          } else
+        }
+        else
             me.window7.setVisible(0);
         #
 #
@@ -224,7 +369,7 @@ var F16HudRecipient =
     new: func(_ident)
     {
         var new_class = emesary.Recipient.new(_ident~".HUD");
-        new_class.HUDobj = F16_HUD.new("Nasal/HUD/HUD.svg", "HUDImage2", 260, 216, 0,0);
+        new_class.HUDobj = F16_HUD.new("Nasal/HUD/HUD.svg", "HUDImage2", 340,260, 0,0);
 
         new_class.Receive = func(notification)
         {

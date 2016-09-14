@@ -40,7 +40,7 @@ var rtExec_loop = func
     frameNotification.view_internal = getprop("sim/current-view/internal");
     frameNotification.mach = getprop("instrumentation/airspeed-indicator/indicated-mach");
     frameNotification.IAS = getprop("velocities/airspeed-kt");
-    frameNotification.Nz = getprop("accelerations/pilot/z-accel-fps_sec");
+    frameNotification.Nz = getprop("accelerations/pilot/z-accel-fps_sec")/32.0;
     frameNotification.WOW = getprop ("gear/gear[1]/wow") or getprop ("gear/gear[2]/wow");
 #    frameNotification.alpha = getprop("orientation/alpha-indicated-deg");
     frameNotification.alpha = getprop("fdm/jsbsim/aero/alpha-deg");
@@ -59,6 +59,16 @@ var rtExec_loop = func
     frameNotification.v = getprop("fdm/jsbsim/velocities/v-fps");
     frameNotification.w = getprop("fdm/jsbsim/velocities/w-fps");
     frameNotification.range_rate = "0";
+    frameNotification.target_display = getprop("sim/model/f16/instrumentation/radar-awg-9/hud/target-display");
+    frameNotification.radar_range = getprop("instrumentation/radar/radar2-range");
+    frameNotification.vc_kts = getprop("fdm/jsbsim/velocities/vc-kts");
+    frameNotification.weapon_mode = getprop("sim/model/f16/controls/armament/weapon-selector");
+    frameNotification.groundspeed_kt = getprop("velocities/groundspeed-kt");
+    frameNotification.gmt_string = getprop("sim/time/gmt-string");
+    frameNotification.gmt = getprop("sim/time/gmt");
+    frameNotification.gun_rounds = getprop("sim/model/f16/systems/gun/rounds");
+    frameNotification.symbol_reject = getprop("controls/HUD/sym-rej");
+
     if (getprop("autopilot/route-manager/active")) {
         var rng = getprop("autopilot/route-manager/wp/dist");
         var eta_s = getprop("autopilot/route-manager/wp/eta-seconds");
