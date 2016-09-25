@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+
+  <model>
+<name>triple rack</name>
+<path>Aircraft/F-16C/Models/Armament/triplerack/trirack.xml</path>
+<offsets>
+<x-m>0</x-m>
+<y-m>0</y-m>
+<z-m>0</z-m>
+<pitch-deg>0</pitch-deg>
+</offsets>
+</model>	
+
+ <model>
+<name>bottom agm65</name>
+<path>Aircraft/FGUK-weapons/Air-Ground/agm65/AGM-65.xml</path>
+<offsets>
+<x-m>0</x-m>
+<y-m>0</y-m>
+<z-m>-0.5</z-m>
+<pitch-deg>0</pitch-deg>
+</offsets>
+</model>	
+
+<model>
+<name>left agm65</name>
+<path>Aircraft/FGUK-weapons/Air-Ground/agm65/AGM-65.xml</path>
+<offsets>
+<x-m>0</x-m>
+<y-m>-0.43</y-m>
+<z-m>-0.17</z-m>
+<pitch-deg>0</pitch-deg>
+</offsets>
+</model>	
+
+<model>
+<name>right agm65</name>
+<path>Aircraft/FGUK-weapons/Air-Ground/agm65/AGM-65.xml</path>
+<offsets>
+<x-m>0</x-m>
+<y-m>0.43</y-m>
+<z-m>-0.17</z-m>
+<pitch-deg>0</pitch-deg>
+</offsets>
+</model>	
+
+
+</PropertyList>

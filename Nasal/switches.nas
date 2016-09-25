@@ -23,12 +23,9 @@ var aerialRefueling = props.globals.getNode("controls/lighting/ext-lighting-pane
 # Switches
 # ========
  var toggleMaster = func {
-        print("EPIC01, in toggleMaster");
         if(master.getBoolValue()) { 
-                        print("master is true");
                         master.setBoolValue(0);
         } else {
-                        print("master is false");
                         master.setBoolValue(1);
         }
  }
@@ -129,7 +126,6 @@ var aerialRefueling = props.globals.getNode("controls/lighting/ext-lighting-pane
 
 var malIndLts = props.globals.getNode("controls/test/test-panel/mal-ind-lts");
 
-
  var toggleMalIndLts = func {
         if(!malIndLts.getBoolValue()) {
                 malIndLts.setBoolValue(1);
@@ -138,6 +134,126 @@ var malIndLts = props.globals.getNode("controls/test/test-panel/mal-ind-lts");
         }
  }
 
+# =========================
+# E/J Start Panel (left console)
+# =========================
+
+# FIXME: the JFS is more complex in reality 
+# (F-16 A/B dash-1 (pdf page 36) (PW220 Engine info starts at pdf page 31)
+
+var jfs = props.globals.getNode("controls/engines/engine/starter");
+
+ var toggleJFS = func {
+        if(!jfs.getBoolValue()) {
+                jfs.setBoolValue(1);
+        } else {
+                jfs.setBoolValue(0);
+        }
+ }
+
+# =========================
+# UHF Panel (left console)
+# =========================
+
+# Use UHF channel preset mode
+ var getPresetUHF = func {
+    var ch = props.globals.getNode("sim/model/f16/instrumentation/uhf/selected-preset");
+    var getCH = ch.getValue();
+
+    var uhfPreset = props.globals.getNode("sim/model/f16/instrumentation/uhf/presets/preset["~getCH~"]");
+    var getPreset = uhfPreset.getValue();
+
+    setprop("instrumentation/comm/frequencies/selected-mhz", getPreset);
+ }
+
+getPresetUHF();
+
+# Display active selected UHF frequency
+
+ var getSelectedUHF = func {
+    var uhfSelectedFreq = props.globals.getNode("instrumentation/comm/frequencies/selected-mhz");
+    var uhfFreq = int(uhfSelectedFreq.getValue() * 1000);
+
+    var toString = ""~uhfFreq~"";
+
+    var altSelMhz100000 = substr(toString, 0, 1);
+    var altSelMhz010000 = substr(toString, 1, 1);
+    var altSelMhz001000 = substr(toString, 2, 1);
+    var altSelMhz000100 = substr(toString, 3, 1);
+    var altSelMhz000011 = substr(toString, 4, 2);
+
+    #counter some wrong roundings (should always be 00, 25, 50 or 75)
+    if (altSelMhz000011 > 00 and altSelMhz000011 <= 25) {
+      altSelMhz000011 = 25;
+    } else if (altSelMhz000011 > 25 and altSelMhz000011 <= 50) {
+      altSelMhz000011 = 50;
+    } else if (altSelMhz000011 > 50 and altSelMhz000011 <= 75) {
+      altSelMhz000011 = 75;
+    } else if (altSelMhz000011 == 99) {
+      #frequencies like 100.800 could get rounded to 100.799
+      altSelMhz000011 = 00;
+      altSelMhz000100 = altSelMhz000100 + 1;
+    } else {
+      altSelMhz000011 = 00;
+    }
+
+    setprop("sim/model/f16/instrumentation/uhf/frequencies/alt-selected-mhz-100000", altSelMhz100000);
+    setprop("sim/model/f16/instrumentation/uhf/frequencies/alt-selected-mhz-010000", altSelMhz010000);
+    setprop("sim/model/f16/instrumentation/uhf/frequencies/alt-selected-mhz-001000", altSelMhz001000);
+    setprop("sim/model/f16/instrumentation/uhf/frequencies/alt-selected-mhz-000100", altSelMhz000100);
+    setprop("sim/model/f16/instrumentation/uhf/frequencies/alt-selected-mhz-000011", altSelMhz000011);
+ }
+
+getSelectedUHF();
+
+# Manually tune UHF frequency or set GUARD frequency
+  
+ var setSelectedUHF = func {
+    var inputSelect = props.globals.getNode("sim/model/f16/instrumentation/uhf/selector");
+    inputSelect = inputSelect.getValue();
+    var guardFreq = props.globals.getNode("sim/model/f16/instrumentation/uhf/guard-frequency");
+    guardFreq = guardFreq.getValue();
+
+    if(inputSelect == 3) {
+      setprop("instrumentation/comm/frequencies/selected-mhz", guardFreq);
+    } else if(inputSelect == 2) {
+
+      getPresetUHF();
+
+      var altSelMhz100000 = props.globals.getNode("sim/model/f16/instrumentation/uhf/frequencies/alt-selected-mhz-100000");
+      var tempAltSelMhz100000 = altSelMhz100000.getValue();
+      var altSelMhz010000 = props.globals.getNode("sim/model/f16/instrumentation/uhf/frequencies/alt-selected-mhz-010000");
+      var tempAltSelMhz010000 = altSelMhz010000.getValue();
+      var altSelMhz001000 = props.globals.getNode("sim/model/f16/instrumentation/uhf/frequencies/alt-selected-mhz-001000");
+      var tempAltSelMhz001000 = altSelMhz001000.getValue();
+      var altSelMhz000100 = props.globals.getNode("sim/model/f16/instrumentation/uhf/frequencies/alt-selected-mhz-000100");
+      var tempAltSelMhz000100 = altSelMhz000100.getValue();
+      var altSelMhz000011 = props.globals.getNode("sim/model/f16/instrumentation/uhf/frequencies/alt-selected-mhz-000011");
+      var tempAltSelMhz000011 = altSelMhz000011.getValue();
+
+      var selUHFmhz = tempAltSelMhz100000~tempAltSelMhz010000~tempAltSelMhz001000~"."~tempAltSelMhz000100~tempAltSelMhz000011;
+
+      setprop("instrumentation/comm/frequencies/selected-mhz", selUHFmhz);
+
+      } else {
+      var altSelMhz100000 = props.globals.getNode("sim/model/f16/instrumentation/uhf/frequencies/alt-selected-mhz-100000");
+      var tempAltSelMhz100000 = altSelMhz100000.getValue();
+      var altSelMhz010000 = props.globals.getNode("sim/model/f16/instrumentation/uhf/frequencies/alt-selected-mhz-010000");
+      var tempAltSelMhz010000 = altSelMhz010000.getValue();
+      var altSelMhz001000 = props.globals.getNode("sim/model/f16/instrumentation/uhf/frequencies/alt-selected-mhz-001000");
+      var tempAltSelMhz001000 = altSelMhz001000.getValue();
+      var altSelMhz000100 = props.globals.getNode("sim/model/f16/instrumentation/uhf/frequencies/alt-selected-mhz-000100");
+      var tempAltSelMhz000100 = altSelMhz000100.getValue();
+      var altSelMhz000011 = props.globals.getNode("sim/model/f16/instrumentation/uhf/frequencies/alt-selected-mhz-000011");
+      var tempAltSelMhz000011 = altSelMhz000011.getValue();
+
+      var selUHFmhz = tempAltSelMhz100000~tempAltSelMhz010000~tempAltSelMhz001000~"."~tempAltSelMhz000100~tempAltSelMhz000011;
+
+      setprop("instrumentation/comm/frequencies/selected-mhz", selUHFmhz);
+    }
+ }
+
+setlistener("instrumentation/comm/frequencies/selected-mhz", getSelectedUHF);
 
 # =====================================
 # Landing Gear Panel (left aux console)
@@ -225,6 +341,19 @@ var floodInstPnl = props.globals.getNode("controls/lighting/lighting-panel/flood
         }
  }
 
+# =====================
+# Throttle
+# =====================
+
+var cutoff = props.globals.getNode("controls/engines/engine/cutoff");
+
+ var toggleCutOff = func {
+        if(!cutoff.getBoolValue()) {
+                cutoff.setBoolValue(1);
+        } else {
+                cutoff.setBoolValue(0);
+        }
+ }
 
 # =====================
 # Aces II Ejection seat
