@@ -176,11 +176,11 @@ getPresetUHF();
 
     var toString = ""~uhfFreq~"";
 
-    var altSelMhz100000 = substr(toString, 0, 1);
-    var altSelMhz010000 = substr(toString, 1, 1);
-    var altSelMhz001000 = substr(toString, 2, 1);
-    var altSelMhz000100 = substr(toString, 3, 1);
-    var altSelMhz000011 = substr(toString, 4, 2);
+    var altSelMhz100000 = substr(toString, 0, 1) or 0;
+    var altSelMhz010000 = substr(toString, 1, 1) or 0;
+    var altSelMhz001000 = substr(toString, 2, 1) or 0;
+    var altSelMhz000100 = substr(toString, 3, 1) or 0;
+    var altSelMhz000011 = substr(toString, 4, 2) or 0;
 
     #counter some wrong roundings (should always be 00, 25, 50 or 75)
     if (altSelMhz000011 > 00 and altSelMhz000011 <= 25) {

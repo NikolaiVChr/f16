@@ -50,7 +50,8 @@
         <enable-dive-bar-angle>false</enable-dive-bar-angle>
         <enable-dynamic-origin>false</enable-dynamic-origin>
         <enable-fuselage-ref-line>false</enable-fuselage-ref-line>
-        <enable-target-spot>false</enable-target-spot>
+        <enable-target-spot>true</enable-target-spot>
+        <enable-target-markers>true</enable-target-markers>
         <enable-velocity-vector>true</enable-velocity-vector>
         <enable-drift-marker>false</enable-drift-marker>
         <enable-alpha-bracket>false</enable-alpha-bracket>
@@ -207,6 +208,31 @@
         <option>left</option>
     </label>
 
+    <label>
+        <name>AGL</name>
+        <x>41</x>
+        <y>-45</y>
+        <width>24</width>
+        <height>8</height>
+        <condition>
+            <less-than>
+                <property>/position/altitude-agl-ft</property>
+                <value>2000</value>
+            </less-than>
+            <greater-than-equals>
+                <property>/velocities/groundspeed-kt</property>
+                <value>50</value>
+            </greater-than-equals>
+        </condition>
+        <input>
+            <property>/position/altitude-agl-ft</property>
+        </input>
+        <format>%4.0f</format>
+        <halign>right</halign>
+        <box>false</box>
+        <option>left</option>
+    </label>
+
 
     <label>
         <name>MACH Number</name>
@@ -220,6 +246,21 @@
         <format>M%4.1f</format>
         <halign>left</halign>
     </label>
+
+    <!--
+    <label>
+        <width>20</width>
+        <height>10</height>
+        <x>-60</x>
+        <y>-60</y>
+        <box>false</box>
+        <format>COMM</format>
+        <halign>center</halign>
+        <condition>
+             <property>/instrumentation/comm/ptt</property>
+        </condition>
+    </label>
+    -->
 
 
 </PropertyList>

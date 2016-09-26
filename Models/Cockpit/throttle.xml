@@ -6,8 +6,11 @@
 
  <animation>
   <type>rotate</type>
-  <object-name>handle</object-name>
-  <object-name>carrier</object-name>
+  <object-name>BASE</object-name>
+  <object-name>THROTTLE</object-name>
+  <object-name>PINKY_SWITCH</object-name>
+  <object-name>PINKY_SWITCH_HANDLE</object-name>
+  <object-name>PINKY_SWITCH_LB</object-name>
   <property>/controls/engines/engine/throttle</property>
   <offset-deg>45</offset-deg>
   <factor>-75</factor>
@@ -25,7 +28,7 @@
 
  <animation>
   <type>rotate</type>
-  <object-name>handle</object-name>
+  <object-name>BASE</object-name>
   <property>/controls/engines/engine/augmentation</property>
   <factor>7</factor>
   <center>
@@ -38,6 +41,22 @@
    <y>0.0</y>
    <z>0.0</z>
   </axis>
+ </animation>
+
+ <animation>
+  <type>pick</type>
+  <visible>true</visible>
+  <object-name>PINKY_SWITCH_HANDLE</object-name>
+  <action>
+   <button>0</button>
+   <repeatable>false</repeatable>
+   <binding>
+    <command>nasal</command>
+    <script>
+     f16_switches.toggleCutOff();
+    </script>
+   </binding>
+  </action>
  </animation>
 
 </PropertyList>

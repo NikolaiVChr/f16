@@ -61,6 +61,7 @@
 
   <hud>
    <visibility n="1">false</visibility>
+<!--
    <path n="1">Aircraft/f16/Models/Cockpit/hud.xml</path>
    <visibility n="1">true</visibility>
    <palette>
@@ -86,9 +87,10 @@
    <clipping>
     <left type="double">-70</left>
     <right type="double">70</right>
-    <top type="double">33</top><!-- 20 -->
-    <bottom type="double">-88</bottom><!-- -102 -->
+    <top type="double">33</top>
+    <bottom type="double">-88</bottom>
    </clipping>
+-->
   </hud>
 
   <instrumentation>
