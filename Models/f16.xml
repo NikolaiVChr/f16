@@ -689,8 +689,8 @@
   <type>rotate</type>
   <object-name>RightUpperAileron</object-name>
   <object-name>RightLowerAileron</object-name>
-  <property>surface-positions/left-aileron-pos-norm</property>
-  <factor>-21.5</factor>
+  <property>surface-positions/right-aileron-pos-norm</property>
+  <factor>21.5</factor>
   <center>
    <x-m>1.815</x-m>
    <y-m>4.11</y-m>

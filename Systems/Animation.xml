@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PropertyList>
+
+  <filter>
+   <type>gain</type>
+   <gain>1.07</gain>
+   <input>fdm/jsbsim/fcs/fly-by-wire/roll/flaperon-right-pos-norm</input>
+   <output>surface-positions/right-aileron-pos-norm</output>
+  </filter>
+
+  <filter>
+   <type>gain</type>
+   <gain>1.07</gain>
+   <input>fdm/jsbsim/fcs/fly-by-wire/roll/flaperon-left-pos-norm</input>
+   <output>surface-positions/left-aileron-pos-norm</output>
+  </filter>
+
+  <filter>
+   <type>gain</type>
+   <gain>0.05</gain>
+   <input>fdm/jsbsim/fcs/fly-by-wire/roll/flaperon-right-deflection-deg</input>
+   <output>fdm/jsbsim/fcs/right-flaperon-norm</output>
+  </filter>
+
+  <filter>
+   <type>gain</type>
+   <gain>-0.05</gain>
+   <input>fdm/jsbsim/fcs/fly-by-wire/roll/flaperon-left-deflection-deg</input>
+   <output>fdm/jsbsim/fcs/left-flaperon-norm</output>
+  </filter>
+
+  <filter>
+   <type>gain</type>
+   <gain>1.0</gain>
+   <input>fdm/jsbsim/fcs/fly-by-wire/lef/lef-pos-deg</input>
+   <output>fdm/jsbsim/fcs/lef-pos-deg</output>
+  </filter>
+
+  <filter>
+   <type>gain</type>
+   <gain>-0.03333</gain>
+   <input>fdm/jsbsim/fcs/fly-by-wire/yaw/rudder-deflection-deg</input>
+   <output>surface-positions/rudder-pos-norm</output>
+  </filter>
+
+  <filter>
+   <type>gain</type>
+   <gain>0.01745</gain>
+   <input>fdm/jsbsim/fcs/fly-by-wire/pitch/horz-tail-right-deflection-deg</input>
+   <output>fdm/jsbsim/fcs/dht-right-pos-rad</output>
+  </filter>
+  
+  <filter>
+   <type>gain</type>
+   <gain>-0.01745</gain>
+   <input>fdm/jsbsim/fcs/fly-by-wire/pitch/horz-tail-left-deflection-deg</input>
+   <output>fdm/jsbsim/fcs/dht-left-pos-rad</output>
+  </filter>
+
+  <filter>
+   <type>gain</type>
+   <gain></gain>
+   <input></input>
+   <output></output>
+  </filter>
+
+</PropertyList>

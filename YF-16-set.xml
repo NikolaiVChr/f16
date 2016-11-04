@@ -313,6 +313,13 @@
    </generic>
   </multiplay>
 
+  <systems>
+   <property-rule n="100">
+    <name>animation</name>
+    <path>Systems/Animation.xml</path>
+   </property-rule>
+  </systems>
+
   <help>
    <title>General Dynamics F-16</title>
    <key>
