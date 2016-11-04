@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="http://jsbsim.sourceforge.net/JSBSim.xsl"?>
-<fdm_config name="General Dynamics F-16A" version="2.0" release="PRODUCTION"
+<fdm_config name="General Dynamics YF-16" version="2.0" release="ALPHA"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 
  <fileheader>
-  <author> Erik Hofman </author>
+  <author> Erik Hofman, Nikolai V. Chr. </author>
   <filecreationdate> 2001-12-28 </filecreationdate>
   <version> $Revision: 1.93 $ </version>
   <license>
    <licenseName>GPL (General Public License)</licenseName>
    <licenseURL>http://www.gnu.org/licenses/gpl.html</licenseURL>
   </license>
-  <description> Models an F-16A Block-32 (Basic US configuration) </description>
+  <description> Models an YF-16 </description>
   <note>
    This model was created using data that is, or has been, publically
    available by means of technical reports, textbooks, image graphs or
@@ -27,7 +27,15 @@
    merchantability and fitness for a particular purpose are disclaimed.
   </note>
   <reference refID="ISBN 0-7232-3458-2" author="William Green" title="General Dynamics F-16 Dash-1" date="1987"/>
-  <reference refID="NASA TP-1538" author="" title="wind tunnel data" date="12/1979"/>
+  <reference refID="NASA TP-1538" author="Nguyen, L. T.; Ogburn, M. E.; Gilbert, W. P.; Kibler, K. S.; Brown, P. W.; Deal, P. L."
+    title="Simulator study of stall/post-stall characteristics of a fighter airplane with relaxed longitudinal static stability." date="12/1979"/>
+  <reference refID="YF-16 FCS Diagram" author="General Dynamics" title="F-16 Flight Control System Functional Block Diagram" date="1975"/>
+  <reference refID="NASA TN-D-8176" author="Gilbert, W. P.; Nguyen, L. T.; Vangunst, R. W."
+    title="Simulator study of the effectiveness of an automatic control system designed to improve the high-angle-of-attack characteristics of a fighter airplane" date="1976"/>
+  <reference refID="PW-100 Engine" author="Elodie Roux" title="Turbofan and Turbojet Engines: Database Handbook" date="2007"/>
+  <reference refID="Manual" author="Lockheed Martin" title="F-16C/D Block 50 Flight Manual" date="2 December 1996"/>
+  <reference refID="Youtube video showing speed brake actuation time (2 secs)" author="MultiplyLeadership's channel"
+    title="Air-to-air chase video of F-16 AB light off FTT" date="Oct 20, 2010"/>
   <reference refID="None" author="Richard Murray" title="http://www.cds.caltech.edu/~murray/projects/afosr95-vehicles/models/f16/" date="n/a"/>
   <reference refID="H-1999" author="NASA" title="Dynamic ground effects flight test of an F-15 aircraft" date="n/a"/>
   <reference refID="H-2177" author="NASA" title="Dynamic ground effect for a Cranked Arrow Wing Airplane" date="n/a"/>
@@ -243,7 +251,7 @@
  </external_reactions>
 
  <propulsion>
-  <engine file="gen">
+  <engine file="F100-PW-200">
    <location unit="IN">
     <x> 0 </x>
     <y> 0 </y>
@@ -2044,6 +2052,61 @@
         </pure_gain>
 
     </channel>
+<!--                                                                             disabled since Erik made some mappings for it
+    <channel name="YF-16 Fly-by-wire mappings to model">
+
+        <pure_gain name="fcs/fly-by-wire/model/rudder-pos-norm">
+            <description>One to one</description>
+            <input>fcs/fly-by-wire/yaw/rudder-pos-norm</input>
+            <gain>1</gain>
+            <output>fcs/rudder-pos-norm</output>
+        </pure_gain>
+
+        <pure_gain name="fcs/dht-right-pos-rad">
+            <description>Degrees to radians</description>
+            <input>fcs/fly-by-wire/pitch/horz-tail-right-deflection-deg</input>
+            <gain>0.017453</gain>
+        </pure_gain>
+
+        <pure_gain name="fcs/dht-left-pos-rad">
+            <description>Degrees to -radians</description>
+            <input>fcs/fly-by-wire/pitch/horz-tail-left-deflection-deg</input>
+            <gain>-0.017453</gain>
+        </pure_gain>
+
+        <pure_gain name="fcs/fly-by-wire/model/left-aileron-pos-norm">
+            <description>Degrees to 21.5 degrees</description>
+            <input>fcs/fly-by-wire/roll/flaperon-left-deflection-deg</input>
+            <gain>0.0465</gain>
+            <output>fcs/left-aileron-pos-norm</output>
+        </pure_gain>
+
+        <pure_gain name="fcs/fly-by-wire/model/right-aileron-pos-norm">
+            <description>Degrees to -21.5 degrees. Model uses left instad of this..</description>
+            <input>fcs/fly-by-wire/roll/flaperon-right-deflection-deg</input>
+            <gain>-0.0465</gain>
+            <output>fcs/right-aileron-pos-norm</output>
+        </pure_gain>
+
+        <pure_gain name="fcs/left-flaperon-norm">
+            <description>Degrees to -20 degrees</description>
+            <input>fcs/fly-by-wire/roll/flaperon-left-deflection-deg</input>
+            <gain>-0.05</gain>
+        </pure_gain>
+
+        <pure_gain name="fcs/right-flaperon-norm">
+            <description>Degrees to 20 degrees</description>
+            <input>fcs/fly-by-wire/roll/flaperon-right-deflection-deg</input>
+            <gain>0.05</gain>
+        </pure_gain>
+
+        <pure_gain name="fcs/lef-pos-deg">
+            <description>One to one</description>
+            <input>fcs/fly-by-wire/lef/lef-pos-deg</input>
+            <gain>1</gain>
+        </pure_gain>
+
+    </channel>-->
 <!-- end: control system by Nikolai V. Chr. -->
 
 
