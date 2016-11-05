@@ -99,7 +99,7 @@
   </instrumentation>
 
   <model>
-   <path archive="y">Aircraft/f16/Models/f16.xml</path>
+   <path archive="y">Aircraft/f16/Models/F-16.xml</path>
    <f16>
 
     <controls>
@@ -312,13 +312,6 @@
     <int n="2" type="int">0</int>    <!-- radar-standby -->
    </generic>
   </multiplay>
-
-  <systems>
-   <property-rule n="100">
-    <name>animation</name>
-    <path>Systems/Animation.xml</path>
-   </property-rule>
-  </systems>
 
   <help>
    <title>General Dynamics F-16</title>
