@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <f16>
+    <dragchute type="bool">false</dragchute>
+    <link16 type="bool">false</link16>
+    <wingmounts type="bool">true</wingmounts>
+
+<!-- note: only one option can be true per stationset at a time for obvious reasons -->
+
+ <!-- Station 5 -->
+    <ventraltank type="bool">false</ventraltank>
+
+ <!-- Station 4 and 6 -->
+    <wingtanks type="bool">true</wingtanks>
+
+ <!-- Station 1 and 9 -->
+    <AIM-9L type="bool">true</AIM-9L>
+    <AIM-9L_dummy type="bool">false</AIM-9L_dummy>
+    <AIM-9_smokewinders type="bool">false</AIM-9_smokewinders>
+
+<!-- FIXME the above system should be improved -->
+
+   </f16>
+   <livery>
+    <name type="string">USAF 22nd FS Stingers</name>
+    <texture>Liveries/sp/SPplane.png</texture>
+    <actype type="string">F-16C-40</actype>
+    <owner type="string">USAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/sp/SP.png</texture>
+   </livery-logo>
+  </model>
+ </sim>
+</PropertyList>
