@@ -151,7 +151,12 @@
    <name>afterburner</name>
    <path>Sounds/exhaust_loop.wav</path>
    <mode>looped</mode>
-   <property>engines/engine/augmentation</property>
+   <condition>
+    <not>
+     <property>sim/current-view/internal</property>
+    </not>
+    <property>engines/engine/augmentation</property>
+   </condition>
    <reference-dist>5000</reference-dist>
    <max-dist>30000</max-dist>
    <position>
@@ -171,6 +176,36 @@
     <property>engines/engine/nozzle-pos-norm</property>
     <offset>0.05</offset>
     <factor>0.95</factor>
+   </volume>
+  </afterburner>
+
+  <afterburner>
+   <name>afterburner</name>
+   <path>Sounds/exhaust_loop.wav</path>
+   <mode>looped</mode>
+   <condition>
+    <property>sim/current-view/internal</property>
+    <property>engines/engine/augmentation</property>
+   </condition>
+   <reference-dist>5000</reference-dist>
+   <max-dist>30000</max-dist>
+   <position>
+    <x>4.6</x>
+    <y>0.0</y>
+    <z>0.0</z>
+   </position>
+   <orientation>
+    <x>1.0</x>
+    <y>0.0</y>
+    <z>0.0</z>
+    <inner-angle>200.0</inner-angle>
+    <outer-angle>360.0</outer-angle>
+    <outer-gain>0.2</outer-gain>
+   </orientation>
+   <volume>
+    <property>engines/engine/nozzle-pos-norm</property>
+    <offset>0.05</offset>
+    <factor>0.35</factor>
    </volume>
   </afterburner>
 
@@ -243,17 +278,15 @@
    <mode>looped</mode>
    <type>avionics</type>
    <condition>
-    <and>
-     <property>sim/alarms/stall-warning</property>
-     <less-than>
-      <property>velocities/airspeed-kt</property>
-      <value>130.0</value>
-     </less-than>
+    <property>sim/current-view/internal</property>
+    <greater-than>
+        <property>fdm/jsbsim/aero/stall-hyst-norm</property>
+        <value>0</value>
+    </greater-than>
      <not>
       <property>gear/gear[1]/wow</property>
       <property>gear/gear[2]/wow</property>
      </not>
-    </and>
    </condition>
   </stall>
 
@@ -268,6 +301,120 @@
     <z>0.0</z>
    </position>
   </cannon>
+
+  <voice>
+      <name>Geforce-breath-vox</name>
+      <path>Aircraft/f16/Sounds/Geforce.wav</path>
+      <type>avionics</type>
+      <condition>
+          <greater-than>
+              <property>/accelerations/pilot/z-accel-fps_sec</property>
+              <value>-161</value>
+          </greater-than>
+      </condition>
+      <reference-dist>2</reference-dist>
+      <max-dist>4</max-dist>
+      <volume>
+          <property>sim/current-view/internal</property>
+          <factor>0.9</factor>
+      </volume>
+  </voice>
+
+  <voice>
+      <name>Geforce-vox</name>
+      <path>Aircraft/f16/Sounds/geforce1.wav</path>
+      <type>avionics</type>
+      <condition>
+          <less-than>
+              <property>/accelerations/pilot/z-accel-fps_sec</property>
+              <value>-225</value>
+          </less-than>
+      </condition>
+      <reference-dist>2</reference-dist>
+      <max-dist>4</max-dist>
+      <volume>
+          <property>sim/current-view/internal</property>
+          <factor>0.9</factor>
+      </volume>
+  </voice>
+
+  <rain>
+      <name>rain</name>
+      <mode>looped</mode>
+      <path>Aircraft/f16/Sounds/rain.wav</path>
+      <type>avionics</type>
+      <condition>
+          <greater-than>
+              <property>/environment/rain-norm</property>
+              <value>0</value>
+          </greater-than>
+      </condition>
+      <volume>
+          <property>/environment/rain-norm</property>
+          <factor>0.175</factor>
+      </volume>
+  </rain>
+
+  <rain-windshield>
+      <name>rain-windshield</name>
+      <mode>looped</mode>
+      <path>Aircraft/f16/Sounds/rain-windshield.wav</path>
+      <type>avionics</type>
+      <condition>
+              <property>sim/current-view/internal</property>
+              <greater-than>
+                  <property>/environment/rain-norm</property>
+                  <value>0</value>
+              </greater-than>
+      </condition>
+      <volume>
+          <property>velocities/airspeed-kt</property>
+          <factor>0.0075</factor>
+          <min>0.03</min>
+          <max>0.40</max>
+      </volume>
+  </rain-windshield>
+
+  <squeal>
+        <name>touchdown squeal</name>
+        <path>Sounds/squeal.wav</path>
+        <condition>
+            <and>
+                <or>
+                    <property>fdm/jsbsim/gear/unit[0]/WOW</property>
+                    <property>fdm/jsbsim/gear/unit[1]/WOW</property>
+                    <property>fdm/jsbsim/gear/unit[2]/WOW</property>
+                </or>
+                <less-than>
+                    <property>velocities/vertical-speed-fps</property>
+                    <value>-0.05</value>
+                </less-than>
+            </and>
+        </condition>
+        <reference-dist>150</reference-dist>
+        <max-dist>500</max-dist>
+        <position>
+            <x>2.64670</x>
+            <y>0.01</y>
+            <z>-2.1</z>
+        </position>
+        <volume>
+            <property>velocities/groundspeed-kt</property>
+            <factor>0.01</factor>
+            <max>1.0</max>
+        </volume>
+        <volume>
+            <internal>dt_stop</internal>
+            <factor>0.1</factor>
+            <max>1.0</max>
+        </volume>
+        <pitch>
+            <property>velocities/groundspeed-kt</property>
+            <factor>0.0025</factor>
+            <offset>1.2</offset>
+        </pitch>
+    </squeal>
+
 </fx>
  
 </PropertyList>

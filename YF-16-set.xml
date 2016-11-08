@@ -6,7 +6,7 @@
   <description>General Dynamics YF-16</description>
   <long-description>The YF-16 is a 1975 prototype of a 4th generation fighter aircraft with a fly by wire system.</long-description>
   <author>Erik Hofman, Pensacola (skin textures), Martin "Pegasus" Schmitt (panel textures), Richard Harrison (MFD, HUD), Nikolai V. Chr. (YF-16 Aero and FCS)</author>
-  <status>Beta</status>
+  <status>production</status>
   <rating>
     <FDM type="int">5</FDM>
     <systems type="int">3</systems>
@@ -21,20 +21,289 @@
    <splash-texture>Aircraft/f16/yf16-splash.png</splash-texture>
   </startup>
 
+  <!-- enable "parkpos=AVAILABLE" option for the F-16 -->
+  <dimensions>
+   <radius-m type="double">10.0</radius-m>
+   <parkpos-offset-m type="double">0.0</parkpos-offset-m>
+  </dimensions>
+  <aircraft-class type="string">mil-fighter</aircraft-class>
+  <aircraft-operator></aircraft-operator>
+  <aircraft-data>
+   <path>/sim/dimensions/radius-m</path>
+   <path>/sim/dimensions/parkpos-offset-m</path>
+   <path>/sim/aircraft-class</path>
+   <path>/sim/aircraft-operator</path>
+  </aircraft-data>
+
+  <tags>
+      <tag>fighter</tag>
+      <tag>jet</tag>
+      <tag>single-engine</tag>
+      <tag>retractable-gear</tag>
+      <tag>ifr</tag>
+  </tags>
+
+  <submodels>
+   <serviceable type="bool">1</serviceable>
+   <path>Aircraft/f16/f16-submodels.xml</path>
+   <path>Aircraft/f16/Models/Armament/loads.xml</path>
+  </submodels>
+
+  <sound>
+   <path>Aircraft/f16/f16-sound.xml</path>
+  </sound>
+
+  <virtual-cockpit archive="y">true</virtual-cockpit>
+  <panel>
+   <visibility archive="y">false</visibility>
+  </panel>
+  <panel_2>
+   <visibility>false</visibility>
+  </panel_2>
+
+  <hud>
+   <visibility n="1">false</visibility>
+<!--
+   <path n="1">Aircraft/f16/Models/Cockpit/hud.xml</path>
+   <visibility n="1">true</visibility>
+   <palette>
+    <color n="0">
+     <alpha type="float">0.85</alpha>
+     <antialiased type="bool">true</antialiased>
+     <brightness type="float">0.85</brightness>
+     <transparent type="bool">true</transparent>
+     <red type="float">0.38</red>
+     <green type="float">1.0</green>
+     <blue type="float">0.22</blue>
+    </color>
+    <color n="1">
+     <alpha type="float">0.85</alpha>
+     <antialiased type="bool">true</antialiased>
+     <brightness type="float">0.85</brightness>
+     <transparent type="bool">true</transparent>
+     <red type="float">1.0</red>
+     <green type="float">0.2</green>
+     <blue type="float">0.0</blue>
+    </color>
+   </palette>
+   <clipping>
+    <left type="double">-70</left>
+    <right type="double">70</right>
+    <top type="double">33</top>
+    <bottom type="double">-88</bottom>
+   </clipping>
+-->
+  </hud>
+
+  <instrumentation>
+   <path>Aircraft/f16/Systems/instrumentation.xml</path>
+  </instrumentation>
+
   <model>
+   <path archive="y">Aircraft/f16/Models/YF-16.xml</path>
+   <f16>
+
+    <controls>
+     <navigation>
+
+      <!-- INSTRUMENT MODE PANEL -->
+      <instrument-mode-panel>
+       <mode>
+        <rotary-switch-knob type="int">0</rotary-switch-knob>
+       </mode>
+       <hdg>
+        <!-- if true than knob is pushed and compass can be calibrated -->
+        <rotary-push-knob type="bool">false</rotary-push-knob>
+       </hdg>
+      </instrument-mode-panel>
+
+     </navigation>
+    </controls>
+
+    <instrumentation>
+    <radar-awg-9>
+        <display-rdr type="bool">true</display-rdr>
+        <display-ir type="bool">false</display-ir>
+        <display-iff type="bool">false</display-iff>
+        <ant-trk-light type="bool">false</ant-trk-light>
+        <rd-rot-light type="bool">false</rd-rot-light>
+        <jat-light type="bool">false</jat-light>
+        <irot-light type="bool">false</irot-light>
+        <wcs-mode>
+            <pd-stt type="bool">false</pd-stt>
+            <pulse-stt type="bool">false</pulse-stt>
+            <pd-srch type="bool">false</pd-srch>
+            <rws type="bool">false</rws>
+            <tws-auto type="bool">false</tws-auto>
+            <tws-man type="bool">false</tws-man>
+            <pulse-srch type="bool">true</pulse-srch>
+        </wcs-mode>
+    </radar-awg-9>
+    <vhf> 
+     <selector type="int">0</selector>
+     <mode type="int">0</mode>
+     <selected-preset type="int">1</selected-preset>
+     <load-state type="int">0</load-state>
+     <presets>
+      <preset n="1" type="float">0</preset>
+      <preset n="2" type="float">0</preset>
+      <preset n="3" type="float">0</preset>
+      <preset n="4" type="float">0</preset>
+      <preset n="5" type="float">0</preset>
+      <preset n="6" type="float">0</preset>
+      <preset n="7" type="float">0</preset>
+      <preset n="8" type="float">0</preset>
+      <preset n="9" type="float">0</preset>
+      <preset n="10" type="float">0</preset>
+      <preset n="11" type="float">0</preset>
+      <preset n="12" type="float">0</preset>
+      <preset n="13" type="float">0</preset>
+      <preset n="14" type="float">0</preset>
+      <preset n="15" type="float">0</preset>
+      <preset n="16" type="float">0</preset>
+      <preset n="17" type="float">0</preset>
+      <preset n="18" type="float">0</preset>
+      <preset n="19" type="float">0</preset>
+      <preset n="20" type="float">0</preset>
+     </presets>
+     <frequencies>
+      <alt-selected-mhz-100000 type="int">0</alt-selected-mhz-100000>
+      <alt-selected-mhz-010000 type="int">0</alt-selected-mhz-010000>
+      <alt-selected-mhz-001000 type="int">0</alt-selected-mhz-001000>
+      <alt-selected-mhz-000100 type="int">0</alt-selected-mhz-000100>
+      <alt-selected-mhz-000011 type="int">0</alt-selected-mhz-000011>
+     </frequencies>
+    </vhf>
+    <uhf>
+     <selector type="int">2</selector>               
+     <mode type="int">0</mode>
+     <selected-preset type="int">1</selected-preset>
+     <load-state type="int">0</load-state>
+     <guard-frequency>243.000</guard-frequency><!-- standard UHF guard frequency (MHz) -->
+     <presets>
+      <preset n="1"  type="float">0</preset>
+      <preset n="2"  type="float">0</preset>
+      <preset n="3"  type="float">0</preset>
+      <preset n="4"  type="float">0</preset>
+      <preset n="5"  type="float">0</preset>
+      <preset n="6"  type="float">0</preset>
+      <preset n="7"  type="float">0</preset>
+      <preset n="8"  type="float">0</preset>
+      <preset n="9"  type="float">0</preset>
+      <preset n="10" type="float">0</preset>
+      <preset n="11" type="float">0</preset>
+      <preset n="12" type="float">0</preset>
+      <preset n="13" type="float">0</preset>
+      <preset n="14" type="float">0</preset>
+      <preset n="15" type="float">0</preset>
+      <preset n="16" type="float">0</preset>
+      <preset n="17" type="float">0</preset>
+      <preset n="18" type="float">0</preset>
+      <preset n="19" type="float">0</preset>
+      <preset n="20" type="float">0</preset>
+     </presets>
+
+     <frequencies>
+      <alt-selected-mhz-100000 type="int">0</alt-selected-mhz-100000>
+      <alt-selected-mhz-010000 type="int">0</alt-selected-mhz-010000>
+      <alt-selected-mhz-001000 type="int">0</alt-selected-mhz-001000>
+      <alt-selected-mhz-000100 type="int">0</alt-selected-mhz-000100>
+      <alt-selected-mhz-000011 type="int">0</alt-selected-mhz-000011>
+      <!--alt-selected-mhz-000001 type="int">0</alt-selected-mhz-000001>< only for cosmetic use (needed on UHF panel) -->
+     </frequencies>
+    </uhf>
+   </instrumentation>
+
+   <smoke>
+    <color>
+     <red>1.0</red>
+     <green>1.0</green>
+     <blue>1.0</blue>
+    </color>
+   </smoke>
+
+   <vapor>
+    <red  type="float">1.0</red>
+    <green  type="float">1.0</green>
+    <blue  type="float">1.0</blue>
+   </vapor>
+  </f16>
+
    <livery>
-    <file type="string">rdaf.xml</file>
-    <name type="string">Royal Danish Airforce</name>
-    <texture>Liveries/rdaf/E-602.png</texture>
+    <file type="string">yf.xml</file>
+    <name type="string">YF-16 Prototype</name>
+    <texture>Liveries/yf/yf.png</texture>
     <actype type="string">F-16A-MLU</actype>
-    <owner type="string">RDAF</owner>
+    <owner type="string">USAF</owner>
    </livery>
+   <pushback>
+    <kp type="double">100</kp>
+    <ki type="double">25</ki>
+    <kd type="double">0</kd>
+    <position-norm type="double">0</position-norm>
+   </pushback>
   </model>
+
+  <chase-distance-m type="double" archive="y">-35.0</chase-distance-m>
+
+<!-- original settings
+  <view>
+   <internal archive="y">true</internal>
+   <config>
+     <pitch-offset-deg>-10.0</pitch-offset-deg>
+     <x-offset-m archive="y">0.0</x-offset-m>
+     <y-offset-m archive="y">0.93</y-offset-m>
+     <z-offset-m archive="y">-4.15</z-offset-m>
+     <default-field-of-view-deg>55</default-field-of-view-deg>
+   </config>
+  </view>
+-->
+
+  <view>
+   <internal archive="y">true</internal>
+   <config>
+     <pitch-offset-deg>-5</pitch-offset-deg>
+     <x-offset-m archive="y">0</x-offset-m>
+     <y-offset-m archive="y">0.94</y-offset-m>
+     <z-offset-m archive="y">-3.94</z-offset-m>
+     <default-field-of-view-deg>55</default-field-of-view-deg>
+   </config>
+  </view>
+
+  <rendering>
+   <redout>
+    <parameters>
+     <blackout-complete-g>9.0</blackout-complete-g>
+     <blackout-onset-g>7.5</blackout-onset-g>
+    </parameters>
+   </redout>
+  </rendering>
 
   <menubar>
    <default>
     <menu n="100">
      <label>YF-16</label>
+     <enabled type="bool">true</enabled>
+     <item>
+      <label>Select Livery</label>
+      <binding>
+       <command>nasal</command>
+       <script>
+        aircraft.livery.dialog.toggle();
+       </script>
+      </binding>
+     </item>
+    </menu>
+    <menu n="5">
+     <item n="10">
+      <label>Pushback</label>
+      <enabled type="bool">true</enabled>
+      <name>pushback</name>
+      <binding>
+       <command>dialog-show</command>
+       <dialog-name>pushback</dialog-name>
+      </binding>
+     </item>
     </menu>
    </default>
   </menubar>
@@ -69,7 +338,7 @@
    </key>
    <key>
     <name>Delete</name>
-    <desc>Toggle FBW override</desc>
+    <desc>Toggle refuel door</desc>
    </key>
    <key>
     <name>Ctrl-n</name>
@@ -178,10 +447,10 @@
     </key>
     <key n="127">
      <name>Delete</name>
-     <desc>FBW override</desc>
+     <desc>Toggle refuel door</desc>
      <binding>
       <command>property-toggle</command>
-      <property>/fdm/jsbsim/fcs/fbw-override</property>
+      <property>systems/refuel/serviceable</property>
      </binding>
     </key>
     <key n="85">
@@ -357,7 +626,7 @@
   </electrical>
   <refuel>
    <type>boom</type>
-   <serviceable type="bool">true</serviceable>
+   <serviceable type="bool">false</serviceable>
   </refuel>
  </systems>
 
