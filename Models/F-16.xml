@@ -1559,6 +1559,7 @@
  <animation>
   <type>material</type>
   <object-name>WinglogoRightTop</object-name>
+  <object-name>Rect</object-name>
   <object-name>FuselageLogoLeft</object-name>
   <object-name>FuselageLogoRight</object-name>
   <object-name>VstabLogoRightTop</object-name>
