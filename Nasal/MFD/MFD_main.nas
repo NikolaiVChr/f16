@@ -31,10 +31,10 @@ var MFD_Station =
         obj.prop = "payload/weight["~ident~"]";
         obj.ident = ident;
 
-        setlistener(obj.prop~"/selected", func(v)
-                    {
-                        obj.update();
-                    });
+#        setlistener(obj.prop~"/selected", func(v)
+#                    {
+    #                    obj.update();
+#                    });
         setlistener("sim/model/f16/controls/armament/weapons-updated", func
                     {
                         obj.update();

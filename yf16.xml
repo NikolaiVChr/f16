@@ -3821,6 +3821,40 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
         </function>
 
+        <function name="aero/coefficient/dCm_tef">
+            <description>
+               Cm due TEF coefficient.
+
+               Page 180 of TP-1538
+            </description>
+            <product>
+                <property>aero/qbar-psf</property>
+                <property>metrics/Sw-sqft</property>
+                <property>metrics/cbarw-ft</property>
+                <property>fcs/fly-by-wire/tef/tef-pos-norm</property>
+                <table name="table/dCm_tef">
+                    <independentVar lookup="row">aero/alpha-deg</independentVar>
+                    <tableData>
+ 00 -0.01
+ 05  0.02
+ 10  0.015
+ 15  0.002
+ 20  0.009
+ 25  0.014
+ 30 -0.016
+ 35 -0.028
+ 40 -0.0362
+ 45 -0.0333
+ 50 -0.0362
+ 55 -0.014
+ 60 -0.0169
+ 70 -0.034
+ 90 0.0
+                     </tableData>
+                </table>
+            </product>
+        </function>
+
         <function name="aero/coefficient/dCm_alpha">
             <description>
                Cm due to alpha coefficient.

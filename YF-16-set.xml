@@ -696,7 +696,7 @@
       <file>Nasal/exec.nas</file>
       <file>Nasal/canvas/MFD_Generic.nas</file>
    <file>Nasal/HUD/HUD_main.nas</file>
-   <!--<file>Nasal/MFD/MFD_main.nas</file>        this breaks the fuel dialog, so for now disabled -->
+   <file>Nasal/MFD/MFD_main.nas</file>
    <file>Nasal/blackout.nas</file>
   </f16>
 

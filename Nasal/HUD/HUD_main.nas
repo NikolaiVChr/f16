@@ -7,12 +7,11 @@
 # Richard Harrison (rjh@zaretto.com) 2016-07-01  - based on F-15 HUD
 # ---------------------------
 
-var ht_xcf = 1024;
-var ht_ycf = -1024;
-var ht_xco = 0;
+var ht_xcf =  1750;# 340pixels / 0.15m = 2267 texels/meter (in an ideal world where canvas is UV mapped to edges of texture)
+var ht_ycf = -1614;# 260pixels / 0.16m
+var ht_xco = 15;
 var ht_yco = -30;
 var ht_debug = 0;
-
 
 var pitch_offset = 12;
 var pitch_factor = 19.8;
@@ -28,8 +27,10 @@ var F16_HUD = {
                 "name": "F16 HUD",
                     "size": [1024,1024], 
                     "view": [sx,sy],
-                    "mipmapping": 1     
-                    });                          
+                    "mipmapping": 0 # mipmapping will make the HUD text blurry on smaller screens     
+                    });  
+
+        obj.sy = sy;                        
                           
         obj.canvas.addPlacement({"node": canvas_item});
         obj.canvas.setColorBackground(0.36, 1, 0.3, 0.00);
@@ -50,6 +51,10 @@ var F16_HUD = {
         obj.svg.setTranslation (tran_x,tran_y);
 
         obj.ladder = obj.get_element("ladder");
+
+        var cent = obj.ladder.getCenter();
+        obj.ladder_center = cent;
+
         obj.VV = obj.get_element("VelocityVector");
         obj.heading_tape = obj.get_element("heading-scale");
         obj.roll_pointer = obj.get_element("roll-pointer");
@@ -88,6 +93,7 @@ var F16_HUD = {
             if (tgt != nil)
             {
                 obj.tgt_symbols[i] = tgt;
+                tgt.updateCenter();
                 tgt.setVisible(0);
 #                print("HUD: loaded ",name);
             }
@@ -110,7 +116,7 @@ var F16_HUD = {
     develev_to_devroll : func(notification, dev_rad, elev_rad)
     {
         var eye_hud_m          = 0.5123;
-        var hud_position = 5.66824; # really -5.6 but avoiding more complex equations by being optimal with the signs.
+        var hud_position = 4.65415;#5.66824; # really -5.6 but avoiding more complex equations by being optimal with the signs.
         var hud_radius_m       = 0.08429;
         var clamped = 0;
 
@@ -180,10 +186,27 @@ var F16_HUD = {
 #
     update : func(hdp) {
         var  roll_rad = -hdp.roll*3.14159/180.0;
-  
+
+
+        # calc of pitch_offset (compensates for AC3D model translated and rotated when loaded. Also semi compensates for HUD being at an angle.)
+        var Hz_b =    0.80643; # HUD position inside ac model after it is loaded translated and rotated.
+        var Hz_t =    0.96749;
+        var Vz   =    getprop("sim/current-view/y-offset-m"); # view Z position (0.94 meter per default)
+
+        var bore_over_bottom = Vz - Hz_b;
+        var Hz_height        = Hz_t-Hz_b;
+        var hozizon_line_offset_from_middle_in_svg = 0.137; #fraction up from middle
+        var frac_up_the_hud = bore_over_bottom / Hz_height - hozizon_line_offset_from_middle_in_svg;
+        var texels_up_into_hud = frac_up_the_hud * me.sy;#sy default is 260
+        var texels_over_middle = texels_up_into_hud - me.sy/2;
+
+
+        pitch_offset = -texels_over_middle;
+        ht_yco = pitch_offset;
 #pitch ladder
+        
         me.ladder.setTranslation (0.0, hdp.pitch * pitch_factor+pitch_offset);                                           
-        me.ladder.setCenter (118,830 - hdp.pitch * pitch_factor-pitch_offset);
+        me.ladder.setCenter (me.ladder_center[0], me.ladder_center[1] - hdp.pitch * pitch_factor);
         me.ladder.setRotation (roll_rad);
   
 # velocity vector
@@ -294,7 +317,7 @@ var F16_HUD = {
                         var yc  = ht_yco + (ht_ycf * combined_dev_length * math.cos(combined_dev_deg*D2R));
                         var xc = ht_xco + (ht_xcf * combined_dev_length * math.sin(combined_dev_deg*D2R));
                         if(devs[2])
-                            tgt.setVisible(getprop("sim/model/f16/lighting/hud-diamond-switch/state"));
+                            tgt.setVisible(1);#getprop("sim/model/f16/lighting/hud-diamond-switch/state"));
                         else
                             tgt.setVisible(1);
 

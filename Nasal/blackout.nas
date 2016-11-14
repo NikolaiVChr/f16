@@ -4,7 +4,7 @@
 ##                                                                               ##
 ## Author: Nikolai V. Chr.                                                       ##
 ##                                                                               ##
-## Version 1.0             License: GPL 2.0                                      ##
+## Version 1.01            License: GPL 2.0                                      ##
 ##                                                                               ##
 ###################################################################################
 
@@ -20,7 +20,7 @@ var invert = func (acc) {
 #
 # Customize the values according to the quality of the G-suit the pilot is wearing. The times are in seconds.
 #
-# According to NASA (1979), this should be the blackout values for generic:
+# According to NASA (1979), this should be the blackout values for F-16:
 #
 # blackout_onset      =   5;
 # blackout_fast       =   9;
@@ -69,7 +69,7 @@ var blackout_loop = func {
 	var g = 0;
 	if (fdm == "jsb") {
 		# JSBSim
-		g = getprop("fdm/jsbsim/accelerations/Nz");
+		g = -getprop("accelerations/pilot/z-accel-fps_sec")/getprop("fdm/jsbsim/accelerations/gravity-ft_sec2");
 	} else {
 		# Yasim
 		g = getprop("/accelerations/pilot-g[0]");
