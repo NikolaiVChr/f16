@@ -414,22 +414,16 @@
 
 <!-- begin: control system by Nikolai V. Chr. -->
     <property value="2">fcs/fly-by-wire/K_A</property><!-- should be 2000, but JSB cannot handle that -->
-    <property value="1">fcs/fly-by-wire/washout</property>
     <property value="1">fcs/fly-by-wire/enable-q</property>
     <property value="1">fcs/fly-by-wire/enable-nz</property>
     <property value="1">fcs/fly-by-wire/enable-int</property>
     <property value="1">fcs/fly-by-wire/enable-fake</property>
     <property value="1">fcs/fly-by-wire/enable-alpha</property>
-    <property value="1">fcs/fly-by-wire/enable-q-washout</property>
-    <property value="-25">fcs/fly-by-wire/deadzone-amp-neg</property>
-    <property value="25">fcs/fly-by-wire/deadzone-amp-pos</property>
-    <property value="-25">fcs/fly-by-wire/deadzone-feedback-neg</property>
-    <property value="25">fcs/fly-by-wire/deadzone-feedback-pos</property>
 
     <property value="0">fcs/fly-by-wire/pitch/alpha-indicated-lagged</property>
     <property value="0">fcs/fly-by-wire/pitch/pitch-loop-ground-product</property>
 
-    <channel execrate="1" name="FCS Lookup Ref">
+    <channel execrate="1" name="FCS Lookup">
 
         <fcs_function name="fcs/fly-by-wire/q_c">
             <function>
@@ -465,49 +459,12 @@
             </test>
         </switch>
 
-        <switch name="fcs/fly-by-wire/alpha-limit">
-            <description>
-                The 0.75 value will limit AoA to around 28 in normal flight.
-                The 0.5 value will give pilot more elevator control in deep stall.
-
-                Todo: Make into pure gain with just 0.5, as the issue that caused this test to be needed is solved.
-            </description>
-            <default value="0.5"/>
-            <test logic="AND" value="0.5">
-                aero/alpha-deg ge 50 
-                velocities/v-fps le 25
-                fcs/fly-by-wire/MLG-GND == 0
-            </test>
-        </switch>
-
         <fcs_function name="fcs/fly-by-wire/qcps-ratio">
             <function>
                 <quotient>
                     <p>fcs/fly-by-wire/q_c</p>
                     <p>fcs/fly-by-wire/P_s</p>
                 </quotient>
-            </function>
-        </fcs_function>
-
-        <fcs_function name="fcs/fly-by-wire/integrator">
-            <description>
-                This is to prevent the integrator from oscillation due to plane reacting very fast to its value at low mass.
-                Can probably be bypassed by running at 240 Hz.
-
-                Todo: Make into pure gain, as it is now stable at all weights.
-            </description>
-            <function>
-                <table>
-                    <independentVar lookup="row">inertia/weight-lbs</independentVar>
-                    <tableData>
-                        <!--17400 1.75
-                        20000 1.90
-                        23000 3.00-->
-                        17400 5.00
-                        20000 5.00
-                        23000 5.00
-                    </tableData>
-                </table>
             </function>
         </fcs_function>
 
@@ -612,7 +569,7 @@
 
 
 
-    <channel execrate="1" name="Yaw Ref">
+    <channel execrate="1" name="Yaw">
 
         <kinematic name="fcs/fly-by-wire/yaw/rudder-cmd-norm-kinematic">
             <description>
@@ -799,7 +756,7 @@
 
 
 
-    <channel execrate="1" name="Roll Ref">
+    <channel execrate="1" name="Roll">
 
         <fcs_function name="fcs/fly-by-wire/roll/stick-force-lbf">
             <function>
@@ -1155,7 +1112,7 @@
 
 
 
-    <channel execrate="1" name="ARI Ref">
+    <channel execrate="1" name="Aileron-Rudder-Interconnect">
 
         <fcs_function name="fcs/fly-by-wire/ari/inverter-norm">
             <function>
@@ -1205,7 +1162,7 @@
 
 
 
-    <channel execrate="1" name="Pitch Ref">
+    <channel execrate="1" name="Pitch">
 
         <fcs_function name="fcs/fly-by-wire/pitch/stick-force-lbf">
             <function>
@@ -1219,41 +1176,6 @@
                 </table>
             </function>
         </fcs_function>
-
-        <!--<lag_filter name="fcs/fly-by-wire/pitch/stick-force-N-lagged">
-            <input> fcs/fly-by-wire/pitch/stick-force-N </input>
-            <c1> 60 </c1>
-        </lag_filter>-->
-
-        <!--
-        <fcs_function name="fcs/fly-by-wire/pitch/stick-force-N">
-            <function>
-                <table>
-                    <independentVar lookup="row">fcs/elevator-cmd-norm</independentVar>
-                    <tableData>
-                       -1  180
-                        0    0
-                        1  -80
-                    </tableData>
-                </table>
-            </function>
-        </fcs_function>
-
-        <fcs_function name="fcs/fly-by-wire/pitch/command-g">
-            <function>
-                <table>
-                    <independentVar lookup="row">fcs/fly-by-wire/pitch/stick-force-N</independentVar>
-                    <tableData>
-                        -80  -4.0
-                        -35  -0.5
-                         -8   0.0
-                          8   0.0
-                         35   0.5 
-                        180  11.0
-                    </tableData>
-                </table>
-            </function>
-        </fcs_function>-->
 
         <fcs_function name="fcs/fly-by-wire/pitch/command-g">
             <function>
@@ -1310,35 +1232,12 @@
             </test>
         </switch>
 
-
-        <!--<summer name="fcs/fly-by-wire/pitch/g-limit-pos">
-            <description>This deviates slightly from the diagram, but I think this is how its intended.</description>
-            <input>fcs/fly-by-wire/pitch/command-sum</input>
-            <clipto>
-                <min>fcs/fly-by-wire/pitch/negative-g-limit</min>
-                <max>8.0</max>
-            </clipto>
-        </summer>-->
-
-        <!--<summer name="fcs/fly-by-wire/pitch/g-limit-pos">
-            <input>fcs/fly-by-wire/pitch/command-sum</input>
-            <clipto>
-                <min>-10000</min>
-                <max>8.0</max>
-            </clipto>
-        </summer>-->
-
-        <summer name="fcs/fly-by-wire/pitch/g-limit-neg">
+        <summer name="fcs/fly-by-wire/pitch/g-limit">
             <input>fcs/fly-by-wire/pitch/command-sum</input>
             <clipto>
                 <min>fcs/fly-by-wire/pitch/negative-g-limit-final</min>
                 <max>8.0</max>
             </clipto>
-        </summer>
-
-        <summer name="fcs/fly-by-wire/pitch/g-limit">
-            <input>fcs/fly-by-wire/pitch/g-limit-neg</input>
-            <!--<input>fcs/fly-by-wire/pitch/g-limit-pos</input>-->
         </summer>
 
         <switch name="fcs/fly-by-wire/pitch/g-limit-product">
@@ -1442,13 +1341,9 @@
         </fcs_function>
 
         <pure_gain name="fcs/fly-by-wire/pitch/alpha-indicated-gain">
-            <description>
-                This is 0.5 on diagram, but needs to be higher
-                to be able to recover from sustained turn at low speeds.
-                At 1.0 it will limit alpha to 25-30 degs and prevent a deep stall.
-            </description>
+            <description></description>
             <input>fcs/fly-by-wire/pitch/alpha-indicated-sum</input>
-            <gain> fcs/fly-by-wire/alpha-limit </gain>
+            <gain> 0.5 </gain>
             <clipto>
                 <min> 0 </min>
                 <max>10000</max>
@@ -1495,8 +1390,7 @@
 
         <integrator name="fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int">
             <input> fcs/fly-by-wire/pitch/pitch-loop-gain-sum-extra </input>
-            <!--<trigger> gear/gear-pos-norm </trigger>-->
-            <c1> fcs/fly-by-wire/integrator </c1>
+            <c1> 5 </c1>
         </integrator>
 
         <pure_gain name="fcs/fly-by-wire/pitch/pitch-loop-ground-product">
@@ -1509,7 +1403,7 @@
             <function>
                 <difference>
                     <property> fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int </property>
-                    <p> fcs/fly-by-wire/deadzone-amp-neg </p>
+                    <v> -25 </v>
                 </difference>
             </function>
         </fcs_function>
@@ -1518,7 +1412,7 @@
             <function>
                 <difference>
                     <property> fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int </property>
-                    <p> fcs/fly-by-wire/deadzone-amp-pos </p>
+                    <v> 25 </v>
                 </difference>
             </function>
         </fcs_function>
@@ -1526,10 +1420,10 @@
         <switch name="fcs/fly-by-wire/pitch/amp-deadzone">
             <default value="0"/>
             <test logic="AND" value="fcs/fly-by-wire/pitch/amp-deadzone-pos">
-                fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int gt  fcs/fly-by-wire/deadzone-amp-pos
+                fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int gt  25
             </test>
             <test logic="AND" value="fcs/fly-by-wire/pitch/amp-deadzone-neg">
-                fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int lt  fcs/fly-by-wire/deadzone-amp-neg
+                fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int lt  -25
             </test>
         </switch>
 
@@ -1568,7 +1462,7 @@
             <function>
                 <difference>
                     <property> fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int-sum-sum </property>
-                    <p> fcs/fly-by-wire/deadzone-feedback-neg </p>
+                    <v> -25 </v>
                 </difference>
             </function>
         </fcs_function>
@@ -1577,7 +1471,7 @@
             <function>
                 <difference>
                     <property> fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int-sum-sum </property>
-                    <p> fcs/fly-by-wire/deadzone-feedback-pos </p>
+                    <v> 25 </v>
                 </difference>
             </function>
         </fcs_function>
@@ -1585,10 +1479,10 @@
         <switch name="fcs/fly-by-wire/pitch/pitch-loop-gain-feedback-deadzone">
             <default value="0"/>
             <test logic="AND" value="fcs/fly-by-wire/pitch/pitch-loop-gain-feedback-deadzone-pos">
-                fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int-sum-sum gt  fcs/fly-by-wire/deadzone-feedback-pos
+                fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int-sum-sum gt  25
             </test>
             <test logic="AND" value="fcs/fly-by-wire/pitch/pitch-loop-gain-feedback-deadzone-neg">
-                fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int-sum-sum lt  fcs/fly-by-wire/deadzone-feedback-neg
+                fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int-sum-sum lt  -25
             </test>
         </switch>
 
@@ -1619,18 +1513,11 @@
 
         <washout_filter name="fcs/fly-by-wire/pitch/q-washout">
           <input> velocities/q-aero-deg_sec </input>
-          <c1> fcs/fly-by-wire/washout </c1>
+          <c1> 1 </c1>
         </washout_filter>
 
-        <switch name="fcs/fly-by-wire/pitch/q-switch">
-            <default value="fcs/fly-by-wire/pitch/q-washout"/>
-            <test logic="AND" value="velocities/q-aero-deg_sec">
-                fcs/fly-by-wire/enable-q-washout == 0
-            </test>
-        </switch>
-
         <pure_gain name="fcs/fly-by-wire/pitch/q-gain-1">
-            <input>fcs/fly-by-wire/pitch/q-switch</input>
+            <input>fcs/fly-by-wire/pitch/q-washout</input>
             <gain> 0.7 </gain>
         </pure_gain>
 
@@ -1735,28 +1622,6 @@
             <input> fcs/fly-by-wire/pitch/pitch-rate-gain-2-sum </input>
         </summer>
 
-        <fcs_function name="velocities/V-fps">
-            <description>Page 42: Not used.</description>
-            <function>
-                <sqrt>
-                    <sum>
-                        <pow>
-                            <property> velocities/u-fps </property>
-                            <v>2</v>
-                        </pow>
-                        <pow>
-                            <property> velocities/v-fps </property>
-                            <v>2</v>
-                        </pow>
-                        <pow>
-                            <property> velocities/w-fps </property>
-                            <v>2</v>
-                        </pow>
-                    </sum>
-                </sqrt>
-            </function>
-        </fcs_function>
-
         <fcs_function name="accelerations/a_n">
             <description>
                 Page 43: Calc of G-force.
@@ -1815,40 +1680,6 @@
             </test>
         </switch>
 
-        <!--<lag_filter name="fcs/fly-by-wire/pitch/normal-lagged">
-            <description>Bypassing this sim lag as its close to 120 Hz timestep.</description>
-            <input> fcs/fly-by-wire/pitch/normal-1-special </input>
-            <c1> 50 </c1>
-        </lag_filter>-->
-
-        <!--<pure_gain name="fcs/fly-by-wire/pitch/normal-gain1">
-            <input>fcs/fly-by-wire/pitch/normal-1-special</input>
-            <gain> fcs/fly-by-wire/normal-gain </gain>
-        </pure_gain>-->
-
-        <!--<fcs_function name="fcs/fly-by-wire/pitch/normal-gain">
-            <description>
-                9.43G is maximum commanded G.
-                To make sure the feedback at 1G is 0, it has to return 0 at 1G.
-                To not be able to pull 10.43G it has to return 9.43 when its
-                8.43 since 1 has already been subtracted from a_n.
-                Due to trim the gradient is not lineary rising,
-                but has a break at |2.4G|.
-            </description>
-            <function>
-                <table>
-                    <independentVar lookup="row">fcs/fly-by-wire/pitch/normal-1-special</independentVar>
-                    <tableData>
-                      -50.00 -49.00
-                       -5.00  -4.00
-                        0.00   0.00
-                        8.43   9.43
-                       50.00  51.00
-                    </tableData>
-                </table>
-            </function>
-        </fcs_function>-->
-
         <pure_gain name="fcs/fly-by-wire/pitch/normal-gain">
             <input>fcs/fly-by-wire/pitch/normal-1-special</input>
             <gain> 0.5 </gain>
@@ -1867,7 +1698,7 @@
         </switch>
 
         <pure_gain name="fcs/fly-by-wire/pitch/q-gain-2">
-            <input>fcs/fly-by-wire/pitch/q-switch</input>
+            <input>fcs/fly-by-wire/pitch/q-washout</input>
             <gain> fcs/fly-by-wire/pitch/q-product </gain>
         </pure_gain>
 
@@ -1880,7 +1711,7 @@
         </lead_lag_filter>
 
         <second_order_filter name="fcs/fly-by-wire/pitch/pitch-rate-lead-2nd">
-          <description>on old diagram looks to be 2.5, not 2 or 25</description>
+          <description>on old diagram looks to be 2.5, not 2 nor 25</description>
           <input> fcs/fly-by-wire/pitch/pitch-rate-lead </input>
           <c1> 2.5 </c1>
           <c2> 20 </c2>
@@ -1890,13 +1721,45 @@
           <c6> 3500 </c6>
         </second_order_filter>
 
+        <fcs_function name="fcs/elevator-cmd-deg">
+            <description>
+                Not sure if it should be full 25 deg deflection, but can be adjusted as needed.
+                The deadband represent 1.75 lbf stick force as per diagram.
+            </description>
+            <function>
+                <table>
+                    <independentVar lookup="row">fcs/elevator-cmd-norm</independentVar>
+                    <tableData>
+                     -1.0     -25.0
+                     -0.04375   0.0
+                      0.0       0.0
+                      0.04375   0.0
+                      1.0      25.0
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+
+        <switch name="fcs/fly-by-wire/pitch/final-cmd">
+            <description>
+                Manual Pitch Override.
+                For getting out of deep stall by pitch rocking.
+                This is for F-16, not YF-16.
+                It simulates using MPO switch.
+            </description>
+            <default value="fcs/fly-by-wire/pitch/pitch-loop-gain-final"/>
+            <test logic="AND" value="fcs/elevator-cmd-deg">
+                fcs/fbw-override == 1
+            </test>
+        </switch>
+
         <summer name="fcs/fly-by-wire/pitch/tp-left-sum">
-            <input> fcs/fly-by-wire/pitch/pitch-loop-gain-final </input>
+            <input> fcs/fly-by-wire/pitch/final-cmd </input>
             <input> fcs/fly-by-wire/roll/inter-schedule </input> 
         </summer>
 
         <summer name="fcs/fly-by-wire/pitch/bt-left-sum">
-            <input> fcs/fly-by-wire/pitch/pitch-loop-gain-final </input>
+            <input> fcs/fly-by-wire/pitch/final-cmd </input>
             <input> -fcs/fly-by-wire/roll/inter-schedule </input>
         </summer>
 
@@ -2025,6 +1888,14 @@
         </fcs_function>
 
     </channel>
+
+
+
+
+
+
+
+
 
     <channel execrate="1" name="Leading edge flaps">
 
@@ -2266,6 +2137,8 @@
             <input>fcs/fly-by-wire/lef/lef-pos-deg</input>
             <gain>1</gain>
         </pure_gain>
+
+        <!-- the below components rounds flaps position in degrees to zero decimal points: -->
 
         <fcs_function name="fcs/fly-by-wire/model/flap-pos-deg-with-frac">
             <function>
