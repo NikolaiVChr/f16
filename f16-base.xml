@@ -83,7 +83,6 @@
   </instrumentation>
 
   <model>
-   <path archive="y">Aircraft/f16/Models/F-16.xml</path>
    <f16>
 
     <controls>
@@ -258,7 +257,6 @@
   <menubar>
    <default>
     <menu n="100">
-     <label>F-16</label>
      <enabled type="bool">true</enabled>
      <item>
       <label>Select Livery</label>
@@ -291,7 +289,6 @@
   </multiplay>
 
   <help>
-   <title>General Dynamics F-16</title>
    <key>
     <name>Ctrl-b</name>
     <desc>toggle speed brake</desc>
@@ -314,7 +311,8 @@
    </key>
    <key>
     <name>Delete</name>
-    <desc>Toggle FBW override</desc>
+<!-- <desc>Toggle FBW override</desc> -->
+    <desc>Toggle refuel door</desc>
    </key>
    <key>
     <name>Ctrl-n</name>
@@ -423,10 +421,12 @@
     </key>
     <key n="127">
      <name>Delete</name>
-     <desc>FBW override</desc>
+<!-- <desc>FBW override</desc> -->
+     <desc>Toggle refuel door</desc>
      <binding>
       <command>property-toggle</command>
-      <property>/fdm/jsbsim/fcs/fbw-override</property>
+<!--  <property>/fdm/jsbsim/fcs/fbw-override</property> -->
+      <property>systems/refuel/serviceable</property>
      </binding>
     </key>
     <key n="85">
@@ -560,19 +560,25 @@
  <consumables>
   <fuel>
    <tank n="0">
-    <level-gal_us archive="y">500</level-gal_us>
+    <name>Fuselage FWD Tank</name>
    </tank>
    <tank n="1">
-    <level-gal_us archive="y">500</level-gal_us>
+    <name>Fuselage AFT Tank</name>
    </tank>
    <tank n="2">
-    <level-gal_us archive="y">370</level-gal_us>
+    <name>Right Drop Tank</name>
    </tank>
    <tank n="3">
-    <level-gal_us archive="y">370</level-gal_us>
+    <name>Left Drop Tank</name>
    </tank>
    <tank n="4">
-    <level-gal_us archive="y">300</level-gal_us>
+    <name>Center Drop Tank</name>
+   </tank>
+   <tank n="5">
+    <name>Right Wing Tank</name>
+   </tank>
+   <tank n="6">
+    <name>Left Wing Tank</name>
    </tank>
   </fuel>
  </consumables>
@@ -596,7 +602,7 @@
   </electrical>
   <refuel>
    <type>boom</type>
-   <serviceable type="bool">true</serviceable>
+   <serviceable type="bool">false</serviceable>
   </refuel>
  </systems>
 
@@ -667,6 +673,7 @@
       <file>Nasal/canvas/MFD_Generic.nas</file>
    <file>Nasal/HUD/HUD_main.nas</file>
    <file>Nasal/MFD/MFD_main.nas</file>
+   <file>Nasal/blackout.nas</file>
   </f16>
 
   <f16_chronograph>

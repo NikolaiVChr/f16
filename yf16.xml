@@ -49,7 +49,7 @@
   <wingarea unit="FT2"> 300 </wingarea>
   <wingspan unit="FT"> 30 </wingspan>
   <chord unit="FT"> 11.32 </chord>
-  <htailarea unit="FT2"> 63.7 </htailarea>
+  <htailarea unit="FT2"> 60.0 </htailarea>
   <htailarm unit="FT"> 16.46 </htailarm>
   <vtailarea unit="FT2"> 54.75 </vtailarea>
   <vtailarm unit="FT"> 0 </vtailarm>
