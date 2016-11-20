@@ -3,17 +3,18 @@
 <PropertyList include="f16-base.xml">
 
  <sim>
-  <description>General Dynamics F-16 (3d cockpit)</description>
+  <description>General Dynamics F-16 (Simplified FDM)</description>
   <author>Erik Hofman, Pensacola (skin textures), Martin "Pegasus" Schmitt (panel textures), Richard Harrison (MFD, HUD)</author>
   <status>production</status>
   <rating>
-    <FDM type="int">5</FDM>
+    <FDM type="int">3</FDM>
     <systems type="int">3</systems>
-    <cockpit type="int">3</cockpit>
+    <cockpit type="int">4</cockpit>
     <model type="int">5</model>
   </rating>
   <flight-model>jsb</flight-model>
   <aero>f16-simplified</aero>
+  <variant-of>f16</variant-of>
 
   <startup>
    <splash-texture>Aircraft/f16/f16-splash.rgb</splash-texture>

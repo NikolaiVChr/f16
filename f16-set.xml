@@ -9,7 +9,7 @@
   <rating>
     <FDM type="int">5</FDM>
     <systems type="int">3</systems>
-    <cockpit type="int">3</cockpit>
+    <cockpit type="int">4</cockpit>
     <model type="int">5</model>
   </rating>
   <flight-model>jsb</flight-model>
@@ -42,5 +42,15 @@
   </help>
 
  </sim>
+
+ <fdm>
+  <jsbsim>
+   <fcs>
+    <fly-by-wire>
+      <prototype type="bool">false</prototype>
+    </fly-by-wire>
+   </fcs>
+  </jsbsim>
+ </fdm>
 
 </PropertyList>

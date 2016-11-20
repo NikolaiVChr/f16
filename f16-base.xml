@@ -311,7 +311,10 @@
    </key>
    <key>
     <name>Delete</name>
-<!-- <desc>Toggle FBW override</desc> -->
+    <desc>Toggle Manual Pitch Override</desc>
+   </key>
+   <key>
+    <name>r</name>
     <desc>Toggle refuel door</desc>
    </key>
    <key>
@@ -421,11 +424,17 @@
     </key>
     <key n="127">
      <name>Delete</name>
-<!-- <desc>FBW override</desc> -->
+     <desc>Manual Pitch Override</desc>
+     <binding>
+      <command>property-toggle</command>
+      <property>/fdm/jsbsim/fcs/fbw-override</property>
+     </binding>
+    </key>
+    <key n="114">
+     <name>r</name>
      <desc>Toggle refuel door</desc>
      <binding>
       <command>property-toggle</command>
-<!--  <property>/fdm/jsbsim/fcs/fbw-override</property> -->
       <property>systems/refuel/serviceable</property>
      </binding>
     </key>
