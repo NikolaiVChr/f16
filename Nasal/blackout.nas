@@ -4,7 +4,7 @@
 ##                                                                               ##
 ## Author: Nikolai V. Chr.                                                       ##
 ##                                                                               ##
-## Version 1.03            License: GPL 2.0                                      ##
+## Version 1.05            License: GPL 2.0                                      ##
 ##                                                                               ##
 ###################################################################################
 
@@ -151,8 +151,11 @@ var blackout_loop = func {
 
 var blackout_init = func {
 	fdm = getprop("/sim/flight-model");
-	var timer = maketimer(0, func blackout_loop() );
-	timer.start();
+
+	if (getprop("sim/rendering/redout/internal/log/g-force") == nil) {
+		var timer = maketimer(0, func blackout_loop() );
+		timer.start();
+	}
 }
 
 

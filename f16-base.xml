@@ -247,11 +247,20 @@
 
   <rendering>
    <redout>
-    <parameters>
-     <blackout-complete-g>9.0</blackout-complete-g>
-     <blackout-onset-g>7.5</blackout-onset-g>
-    </parameters>
-   </redout>
+      <enabled type="bool" userarchive="y">true</enabled>
+      <parameters>
+          <blackout-onset-g type="double">5</blackout-onset-g>
+          <blackout-complete-g type="double">9</blackout-complete-g>
+          <onset-blackout-sec type="double">300</onset-blackout-sec>
+          <fast-blackout-sec type="double">10</fast-blackout-sec>
+          <redout-onset-g type="double">-2</redout-onset-g>
+          <redout-complete-g type="double">-4</redout-complete-g>
+          <onset-redout-sec type="double">45</onset-redout-sec>
+          <fast-redout-sec type="double">7.5</fast-redout-sec>
+          <recover-fast-sec type="double">7</recover-fast-sec>
+          <recover-slow-sec type="double">15</recover-slow-sec>
+      </parameters>
+  </redout>
   </rendering>
 
   <menubar>

@@ -1391,7 +1391,7 @@
                             <property> velocities/v-fps </property>
                         </product>
                         <product>
-                            <property> accelerations/gravity-ft_sec2 </property>
+                            <v> 32.174 </v>
                             <cos>
                                 <property> attitude/theta-rad </property>
                             </cos>
@@ -1404,7 +1404,7 @@
                             <property> accelerations/wdot-ft_sec2 </property>
                         </product>
                     </sum>
-                    <property> accelerations/gravity-ft_sec2 </property>
+                    <v> 32.174 </v>
                 </quotient>
             </function>
         </fcs_function>
