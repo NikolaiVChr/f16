@@ -10,6 +10,11 @@
   </offsets>
 
  <model>
+  <name>HUD</name>
+  <path>Aircraft/f16/Models/Cockpit/hud.xml</path>
+ </model>
+
+ <model>
   <name>AcesII</name>
   <path>Aircraft/f16/Models/Cockpit/AcesII/acesII.xml</path>
  </model>

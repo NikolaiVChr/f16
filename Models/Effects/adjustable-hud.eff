@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PropertyList>
+  <name>HUD adjustements</name>
+  <inherits-from>Effects/hud</inherits-from>
+
+<!--
+ </animation>
+  <parameters>
+   <brightness>1.0</brightness>
+   <sample-res>0.0006</sample-res>
+   <sample-far>2.5</sample-far>
+  </parameters>
+-->
+</PropertyList>

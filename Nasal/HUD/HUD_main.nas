@@ -218,22 +218,22 @@ var F16_HUD = {
 # IAS
         me.ias_range.setTranslation(0, hdp.IAS * ias_range_factor);
      
-        if(getprop("sim/model/f15/controls/armament/master-arm-switch"))
+        if(getprop("sim/model/f16/controls/armament/master-arm-switch"))
         {
-            var w_s = getprop("sim/model/f15/controls/armament/weapon-selector");
+            var w_s = getprop("sim/model/f16/controls/armament/weapon-selector");
             me.window2.setVisible(1);
             var txt = "";
             if (w_s == 0)
             {
-                txt = sprintf("%3d",getprop("sim/model/f15/systems/gun/rounds"));
+                txt = sprintf("%3d",getprop("sim/model/f16/systems/gun/rounds"));
             }
             else if (w_s == 1)
             {
-                txt = sprintf("S%dL", getprop("sim/model/f15/systems/armament/aim9/count"));
+                txt = sprintf("S%dL", getprop("sim/model/f16/systems/armament/aim9/count"));
             }
             else if (w_s == 2)
             {
-                txt = sprintf("M%dF", getprop("sim/model/f15/systems/armament/aim120/count")+getprop("sim/model/f15/systems/armament/aim7/count"));
+                txt = sprintf("M%dF", getprop("sim/model/f16/systems/armament/aim120/count")+getprop("sim/model/f16/systems/armament/aim7/count"));
             }
             me.window2.setText(txt);
             if (awg_9.active_u != nil)
