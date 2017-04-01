@@ -14,6 +14,23 @@
   </rating>
   <flight-model>jsb</flight-model>
   <aero>f16</aero>
+  <tags>
+      <tag>general-dynamics</tag>
+      <tag>1970s</tag>
+      <tag>1980s</tag>
+      <tag>1990s</tag>
+      <tag>2000s</tag>
+      <tag>yf-16</tag>
+      <tag>low-wing</tag>
+      <tag>tricycle</tag>
+      <tag>retractable-gear</tag>
+      <tag>single-engine</tag>
+      <tag>fighter</tag>
+      <tag>hud</tag>
+      <tag>refuel</tag>
+      <tag>supersonic</tag>
+      <tag>tail-hook</tag>
+    </tags>
 
   <startup>
    <splash-texture>Aircraft/f16/f16-splash.rgb</splash-texture>

@@ -16,6 +16,20 @@
   <flight-model>jsb</flight-model>
   <aero>yf16</aero>
   <variant-of>f16</variant-of>
+  <tags>
+      <tag>general-dynamics</tag>
+      <tag>1970s</tag>
+      <tag>yf-16</tag>
+      <tag>low-wing</tag>
+      <tag>tricycle</tag>
+      <tag>retractable-gear</tag>
+      <tag>single-engine</tag>
+      <tag>fighter</tag>
+      <tag>hud</tag>
+      <tag>refuel</tag>
+      <tag>supersonic</tag>
+      <tag>prototype</tag>
+    </tags>
 
   <startup>
    <splash-texture>Aircraft/f16/yf16-splash.png</splash-texture>
