@@ -4,11 +4,9 @@
 
  <path>hud.ac</path>
 
-<!--
  <effect>
-  <inherits-from>Effects/adjustable-hud</inherits-from>
+  <inherits-from>Aircraft/f16/Models/Effects/adjustable-hud</inherits-from>
   <object-name>HUDImage2</object-name>
  </effect>
--->
 
 </PropertyList>
