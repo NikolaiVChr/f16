@@ -552,13 +552,6 @@
 
 <!-- ===================== END LIGHTING =========================== -->
 
- <animation>
-  <type>select</type>
-  <object-name>LhoCondensCone</object-name>
-  <object-name>RhoCondensCone</object-name>
-  <property>null</property>
- </animation>
-
 <!-- fuselage animations -->
  <animation>
   <type>rotate</type>
@@ -1503,53 +1496,7 @@
  <!-- livery selection -->
  <animation>
   <type>material</type>
-  <object-name>LeftUpperHorizonTail</object-name>
-  <object-name>RightUpperHorizonTail</object-name>
-  <object-name>LeftLowerHorizonTail</object-name>
-  <object-name>RightLowerHorizonTail</object-name>
-  <object-name>LeftUpperAileron</object-name>
-  <object-name>RightUpperAileron</object-name>
-  <object-name>LeftLowerAileron</object-name>
-  <object-name>RightLowerAileron</object-name>
-  <object-name>LeftUpperFlap</object-name>
-  <object-name>RightUpperFlap</object-name>
-  <object-name>LeftLowerFlap</object-name>
-  <object-name>RightLowerFlap</object-name>
-  <object-name>LeftUpperSpeedbrake</object-name>
-  <object-name>RightUpperSpeedbrake</object-name>
-  <object-name>LeftLowerSpeedbrake</object-name>
-  <object-name>RightLowerSpeedbrake</object-name>
-  <object-name>LeftLowerLef</object-name>
-  <object-name>RightLowerLef</object-name>
-  <object-name>LeftUpperLef</object-name>
-  <object-name>RightUpperLef</object-name>
-  <object-name>Tail</object-name>
-  <object-name>VentralFins</object-name>
-  <object-name>ExternalFrontGearDoor</object-name>
-  <object-name>ExternalLeftMainDoor</object-name>
-  <object-name>ExternalRightMainDoor</object-name>
-  <object-name>VentralFins</object-name>
-  <object-name>LWStation1</object-name>
-  <object-name>LWStation2</object-name>
-  <object-name>RWStation1</object-name>
-  <object-name>RWStation1</object-name>
-  <object-name>WingTips</object-name>
-  <object-name>Rudder</object-name>
-  <object-name>Rudder.001</object-name>
-  <object-name>Rudder.002</object-name>
-  <object-name>Rudder.003</object-name>
-  <object-name>Rudder.004</object-name>
-  <object-name>Rudder.005</object-name>
-  <object-name>Rudder.006</object-name>
-  <object-name>FuselageTop</object-name>
-  <object-name>FuselageBottom</object-name>
-  <object-name>CanopyFrame</object-name>
-  <object-name>RadarDomeTop</object-name>
-  <object-name>RadarDomeBottom</object-name>
-  <object-name>RNLAF_Tailroot</object-name>
-  <object-name>USAF_Tailroot</object-name>
-  <object-name>FuelTank</object-name>
-  <object-name>ArresterHook</object-name>
+  <object-name>Fuselage</object-name>
   <property-base>sim/model/livery</property-base>
   <texture-prop>texture</texture-prop>
   <texture>f16.rgb</texture>
@@ -1558,20 +1505,7 @@
 
  <animation>
   <type>material</type>
-  <object-name>WinglogoRightTop</object-name>
-  <object-name>Rect</object-name>
-  <object-name>FuselageLogoLeft</object-name>
-  <object-name>FuselageLogoRight</object-name>
-  <object-name>VstabLogoRightTop</object-name>
-  <object-name>VstabLogoLeftTop</object-name>
-  <object-name>VstabLogoRightBottom</object-name>
-  <object-name>VstabLogoLeftBottom</object-name>
-  <object-name>WinglogoLeftTop</object-name>
-  <object-name>WinglogoRightBottom</object-name>
-  <object-name>VstabBandLeftFront</object-name>
-  <object-name>VstabBandLeftAft</object-name>
-  <object-name>VstabBandRightFront</object-name>
-  <object-name>VstabBandRightAft</object-name>
+  <object-name>Logos</object-name>
   <property-base>sim/model/livery-logo</property-base>
   <texture-prop>texture</texture-prop>
   <texture>f16trans.rgb</texture>
