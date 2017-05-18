@@ -26,7 +26,7 @@ kids 3
 OBJECT group
 name "Fuselage"
 loc 0.324147 0.0693572 -0.000470335
-kids 63
+kids 59
 OBJECT poly
 name "AirIntake"
 loc -0.324147 -0.0693572 0.000470335
@@ -6196,90 +6196,6 @@ refs 3
 5 0.586415 0.697886
 9 0.660344 0.653708
 7 0.663671 0.706201
-kids 0
-OBJECT poly
-name "VstabBandLeftAft"
-loc -0.324147 -0.0693572 0.000470335
-data 8
-Mesh.102
-texture "f16trans.rgb"
-crease 80.000000
-numvert 4
-5.85471 3.03423 0.001601
-5.2784 3.03423 0.01947
-5.19639 2.86421 0.01947
-5.78344 2.86421 0.001601
-numsurf 1
-SURF 0x10
-mat 15
-refs 4
-0 0.47 0.875
-1 0.251143 0.875
-2 0.22 0.835
-3 0.442937 0.835
-kids 0
-OBJECT poly
-name "VstabBandLeftFront"
-loc -0.324147 -0.0693572 0.000470335
-data 8
-Mesh.101
-texture "f16trans.rgb"
-crease 80.000000
-numvert 4
-5.2784 3.03423 0.01947
-4.68137 3.03423 0.001601
-4.50968 2.86421 0.001601
-5.19639 2.86421 0.01947
-numsurf 1
-SURF 0x10
-mat 15
-refs 4
-0 0.25 0.875
-1 0.0558365 0.875
-2 0 0.835
-3 0.22333 0.835
-kids 0
-OBJECT poly
-name "VstabBandRightAft"
-loc -0.324147 -0.0693572 0.000470335
-data 8
-Mesh.104
-texture "f16trans.rgb"
-crease 80.000000
-numvert 4
-5.85434 3.03317 -0.009489
-5.27803 3.03317 -0.027358
-5.19602 2.86315 -0.027358
-5.78307 2.86315 -0.009489
-numsurf 1
-SURF 0x10
-mat 15
-refs 4
-1 -0.251143 0.875
-0 -0.47 0.875
-3 -0.442937 0.835
-2 -0.22 0.835
-kids 0
-OBJECT poly
-name "VstabBandRightFront"
-loc -0.324147 -0.0693572 0.000470335
-data 8
-Mesh.103
-texture "f16trans.rgb"
-crease 80.000000
-numvert 4
-5.27803 3.03317 -0.027358
-4.681 3.03317 -0.009489
-4.50931 2.86315 -0.009489
-5.19602 2.86315 -0.027358
-numsurf 1
-SURF 0x10
-mat 15
-refs 4
-1 -0.0558365 0.875
-0 -0.25 0.875
-3 -0.22333 0.835
-2 0 0.835
 kids 0
 OBJECT poly
 name "WingTips"
@@ -31373,7 +31289,87 @@ kids 0
 OBJECT group
 name "Logos"
 loc 0.873431 -0.0188622 0.00301817
-kids 10
+kids 14
+OBJECT poly
+name "VstabBandRightFront"
+data 8
+Mesh.103
+texture "f16trans.rgb"
+crease 80.000000
+numvert 4
+5.27803 3.03317 -0.027358
+4.681 3.03317 -0.009489
+4.50931 2.86315 -0.009489
+5.19602 2.86315 -0.027358
+numsurf 1
+SURF 0x10
+mat 15
+refs 4
+1 -0.0558365 0.875
+0 -0.25 0.875
+3 -0.22333 0.835
+2 0 0.835
+kids 0
+OBJECT poly
+name "VstabBandRightAft"
+data 8
+Mesh.104
+texture "f16trans.rgb"
+crease 80.000000
+numvert 4
+5.85434 3.03317 -0.009489
+5.27803 3.03317 -0.027358
+5.19602 2.86315 -0.027358
+5.78307 2.86315 -0.009489
+numsurf 1
+SURF 0x10
+mat 15
+refs 4
+1 -0.251143 0.875
+0 -0.47 0.875
+3 -0.442937 0.835
+2 -0.22 0.835
+kids 0
+OBJECT poly
+name "VstabBandLeftFront"
+data 8
+Mesh.101
+texture "f16trans.rgb"
+crease 80.000000
+numvert 4
+5.2784 3.03423 0.01947
+4.68137 3.03423 0.001601
+4.50968 2.86421 0.001601
+5.19639 2.86421 0.01947
+numsurf 1
+SURF 0x10
+mat 15
+refs 4
+0 0.25 0.875
+1 0.0558365 0.875
+2 0 0.835
+3 0.22333 0.835
+kids 0
+OBJECT poly
+name "VstabBandLeftAft"
+data 8
+Mesh.102
+texture "f16trans.rgb"
+crease 80.000000
+numvert 4
+5.85471 3.03423 0.001601
+5.2784 3.03423 0.01947
+5.19639 2.86421 0.01947
+5.78344 2.86421 0.001601
+numsurf 1
+SURF 0x10
+mat 15
+refs 4
+0 0.47 0.875
+1 0.251143 0.875
+2 0.22 0.835
+3 0.442937 0.835
+kids 0
 OBJECT poly
 name "WinglogoLeftTop"
 data 8
