@@ -146,7 +146,7 @@ if (active_u != nil)
 #print("active_u ",active_u);
 #print("active_u_callsign ",active_u_callsign);
 #print("Active callsign becomes inactive");
-active_u = nil;
+active_u = nil;armament.contact = active_u;
 }
 
 		foreach( var c; raw_list )
@@ -283,7 +283,7 @@ active_u = nil;
                 {
                     if (active_u_callsign != nil and u.Callsign != nil and u.Callsign.getValue() == active_u_callsign)
                     {
-                        active_u = u;
+                        active_u = u;armament.contact = active_u;
 #                        printf("%2d: found active_u %s %d",idx, callsign, u_rng);
                     }
                 }
@@ -373,7 +373,7 @@ active_u = nil;
 
         if (prv != nil)
         {
-            active_u = nearest_u = tmp_nearest_u = prv;
+            active_u = nearest_u = tmp_nearest_u = prv;armament.contact = active_u;
             if (tmp_nearest_u.Callsign != nil)
                 active_u_callsign = tmp_nearest_u.Callsign.getValue();
             else
@@ -417,7 +417,7 @@ if(size(sorted_dist)>0)
 
         if (nxt != nil)
         {
-            active_u = nearest_u = tmp_nearest_u = nxt;
+            active_u = nearest_u = tmp_nearest_u = nxt;armament.contact = active_u;
             if (tmp_nearest_u.Callsign != nil)
                 active_u_callsign = tmp_nearest_u.Callsign.getValue();
             else
@@ -434,7 +434,7 @@ if(size(sorted_dist)>0)
     cnt += 0.05;
 
     if (!containsV(tgts_list, active_u)) {
-        active_u = nil;
+        active_u = nil;armament.contact = active_u;
         #active_u_callsign = nil;
     }
 }
@@ -798,6 +798,8 @@ var Target = {
 		var obj = { parents : [Target]};
 		obj.RdrProp = c.getNode("radar");
 		obj.Heading = c.getNode("orientation/true-heading-deg");
+        obj.ptch = c.getNode("orientation/pitch-deg");
+        obj.rll = c.getNode("orientation/roll-deg");
 		obj.Alt = c.getNode("position/altitude-ft");
 		obj.AcType = c.getNode("sim/model/ac-type");
 		obj.type = c.getName();
@@ -932,6 +934,17 @@ else
 
 		return obj;
 	},
+    isValid: func{return me.Valid.getValue();},
+    getUnique: func{return me.get_Callsign();},
+    get_Callsign: func{return me.Callsign.getValue();},
+    getElevation: func{return me.Elevation.getValue();},
+    getFlareNode: func{return nil;},
+    getChaffNode: func{return nil;},
+    get_type: func{return 0;},
+    isPainted: func{return 1;},
+    get_Pitch: func{return me.ptch.getValue();},
+    get_Roll: func{return me.rll.getValue();},
+    get_Speed: func{return me.get_TAS();},
 	get_heading : func {
 		var n = me.Heading.getValue();
         if (n != nil)

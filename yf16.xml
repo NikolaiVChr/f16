@@ -55,7 +55,7 @@
   <vtailarea unit="FT2"> 54.75 </vtailarea>
   <vtailarm unit="FT"> 0 </vtailarm>
   <location name="AERORP" unit="IN">
-   <x> -198.4336 </x><!-- -198.4336 = static margin of -0.04 -->
+   <x> -198.4336 </x><!-- -198.4336 = static margin of -4% MAC -->
    <y> 0 </y>
    <z> 0 </z>
   </location>
@@ -65,7 +65,7 @@
    <z> 29.5 </z>
   </location>
   <location name="VRP" unit="IN">
-   <x> -180 </x>
+   <x> -180 </x><!-- -4.572 meter -->
    <y> 0 </y>
    <z> 0 </z>
   </location>
@@ -92,6 +92,88 @@
     <z> 0 </z>
    </location>
   </pointmass>
+
+  <pointmass name="pylon1">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -4.9 </x>
+    <y> -4.79412 </y>
+    <z> 0.01109 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon2">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -4.9 </x>
+    <y> -3.95167 </y>
+    <z> -0.25696 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon3">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -4.9 </x>
+    <y> -2.88034 </y>
+    <z> -0.25696 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon4">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -4.9 </x>
+    <y> -1.62889 </y>
+    <z> -0.25696 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon5">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -4.9 </x>
+    <y> 0 </y>
+    <z> -0.83778 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon6">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -4.9 </x>
+    <y> 1.62889 </y>
+    <z> -0.25696 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon7">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -4.9 </x>
+    <y> 2.88034 </y>
+    <z> -0.25696 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon8">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -4.9 </x>
+    <y> 3.95167 </y>
+    <z> -0.25696 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon9">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -4.9 </x>
+    <y> 4.79412 </y>
+    <z> 0.01109 </z>
+   </location>
+  </pointmass>
+
  </mass_balance>
 
  <ground_reactions>
