@@ -209,6 +209,60 @@
 
 <!-- ======================= END ARMAMENT =========================== -->
 
+  <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.00</ambient-factor>
+          <rain-enabled type="int">2</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <object-name>RadarDomeTop</object-name>
+      <object-name>Tail</object-name>
+      <object-name>LeftLowerSpeedbrake</object-name>
+      <object-name>RightLowerSpeedbrake</object-name>
+      <object-name>RightUpperSpeedbrake</object-name>
+      <object-name>LeftUpperSpeedbrake</object-name>
+      <object-name>LeftUpperHorizonTail</object-name>
+      <object-name>LeftLowerHorizonTail</object-name>
+      <object-name>RightUpperHorizonTail</object-name>
+      <object-name>RightLowerHorizonTail</object-name>
+      <object-name>RNLAF_Tailroot</object-name>
+      <object-name>WingTips</object-name>
+      <object-name>LeftUpperFlap</object-name>
+      <object-name>LeftLowerFlap</object-name>
+      <object-name>RightUpperFlap</object-name>
+      <object-name>RightLowerFlap</object-name>
+      <object-name>LeftUpperAileron</object-name>
+      <object-name>LeftLowerAileron</object-name>
+      <object-name>RightUpperAileron</object-name>
+      <object-name>RightLowerAileron</object-name>
+      <object-name>LeftLowerLef</object-name>
+      <object-name>LeftUpperLef</object-name>
+      <object-name>RightUpperLef</object-name>
+      <object-name>RightLowerLef</object-name>
+      <object-name>CanopyFrame</object-name>
+      <object-name>Rudder.001</object-name>
+      <object-name>Rudder.003</object-name>
+      <object-name>Rudder.004</object-name>
+      <object-name>Rudder.005</object-name>
+      <object-name>Rudder.006</object-name>
+      <object-name>Rudder</object-name>
+      <object-name>VentralFins</object-name>
+      <object-name>InternalFrontGearDoor</object-name>
+      <object-name>InternalRightMainDoor</object-name>
+      <object-name>InternalLeftMainDoor</object-name>
+      <object-name>ExternalFrontGearDoor</object-name>
+      <object-name>ExternalRightMainDoor</object-name>
+      <object-name>ExternalLeftMainDoor</object-name>
+      <object-name>RWStation1</object-name>
+      <object-name>RWStation2</object-name>
+      <object-name>LWStation1</object-name>
+      <object-name>LWStation2</object-name>
+      <object-name>ArresterHook</object-name>
+ </effect>
+
  <!-- glass effects -->
  <effect>
   <inherits-from>Aircraft/f16/Models/Effects/glass/glass</inherits-from>

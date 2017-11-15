@@ -2,11 +2,11 @@
 
 <flight_control name="F-16 FC">
 
-  	<!-- Declare some interface properties -->
-  	<property>fcs/alpha-norm</property>
-  	<property>fcs/hook-engage</property>
-  	<property>fcs/canopy-engage</property>
-  	<property>fcs/fbw-override</property>
+    <!-- Declare some interface properties -->
+    <property>fcs/alpha-norm</property>
+    <property>fcs/hook-engage</property>
+    <property>fcs/canopy-engage</property>
+    <property>fcs/fbw-override</property>
 
 
 <!-- begin: control system by Nikolai V. Chr. -->
@@ -1097,7 +1097,12 @@
         </summer>
 
         <switch name="fcs/fly-by-wire/pitch/main-gain">
-            <default value="3"/>
+            <description>
+                Is 3.0 in tp1538, and 1.5 in the older control digram, which the YF16 uses.
+                Since Erik made the elevator effects much larger due to block 5+ larger htail,
+                it needs to be lower than 3 to avoid oscillation at high speed. So for now set to 2.0.
+            </description>
+            <default value="2.0"/>
             <test logic="AND" value="1.5">
                 fcs/fly-by-wire/prototype == 0
             </test>

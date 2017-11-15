@@ -519,6 +519,15 @@
        <max type="double">-3.96</max>
      </binding>
     </key>
+    <key n="121">
+                <name>y</name>
+                <desc>Next target select</desc>
+                <binding>
+                    <command>property-assign</command>
+                    <property>sim/model/f16/instrumentation/radar-awg-9/select-target</property>
+                    <value>1</value>
+                </binding>
+            </key>
    </keyboard>
   </input>
 
@@ -607,6 +616,17 @@
 
  <fdm>
   <jsbsim>
+    <inertia>
+      <pointmass-dragarea-sqft type="double" n="1">0</pointmass-dragarea-sqft>
+      <pointmass-dragarea-sqft type="double" n="2">0</pointmass-dragarea-sqft>
+      <pointmass-dragarea-sqft type="double" n="3">0</pointmass-dragarea-sqft>
+      <pointmass-dragarea-sqft type="double" n="4">0</pointmass-dragarea-sqft>
+      <pointmass-dragarea-sqft type="double" n="5">0</pointmass-dragarea-sqft>
+      <pointmass-dragarea-sqft type="double" n="6">0</pointmass-dragarea-sqft>
+      <pointmass-dragarea-sqft type="double" n="7">0</pointmass-dragarea-sqft>
+      <pointmass-dragarea-sqft type="double" n="8">0</pointmass-dragarea-sqft>
+      <pointmass-dragarea-sqft type="double" n="9">0</pointmass-dragarea-sqft>
+   </inertia>
    <systems>
     <hook>
      <tailhook-cmd-norm type="bool">false</tailhook-cmd-norm>
@@ -676,6 +696,168 @@
   <max-gear-extension-speed>300</max-gear-extension-speed>
  </limits>
 
+  <payload>
+
+        <armament>
+            <models type="string">Aircraft/F-15/Models/Stores/</models>
+            <modelsUseCase type="bool">true</modelsUseCase>
+            <modelsUpperCase type="bool">true</modelsUpperCase>
+            <msg type="bool">false</msg>
+            <pylon-offset type="int">0</pylon-offset>
+            <pylon-stations>sim/model/f15/systems/external-loads</pylon-stations>
+            <station-name type="string">station</station-name>
+            <hit-interpolation type="bool">true</hit-interpolation>
+            <MP-lat type="string">rotors/main/blade[0]/flap-deg</MP-lat>
+            <MP-lon type="string">rotors/main/blade[1]/flap-deg</MP-lon>
+            <MP-alt type="string">rotors/main/blade[2]/flap-deg</MP-alt>
+            <aim-9>
+                <guidance type="string">heat</guidance>
+                <navigation type="string">APN</navigation>
+                <class type="string">A</class>
+                <vol-search type="double">0.075</vol-search>
+                <vol-track type="double">0.25</vol-track>
+                <vol-track-weak type="double">0.175</vol-track-weak>
+                <max-fire-range-nm type="int">9.7</max-fire-range-nm><!--FIXME: up to 10-16 MN with best conditions-->
+                <min-fire-range-nm type="double">0.2</min-fire-range-nm>
+                <FCS-field-deg type="int">55</FCS-field-deg>
+                <seeker-field-deg type="int">82</seeker-field-deg>                 <!-- source: 40 deg gyro + 1 deg searcher-beam-width -->
+                <max-g type="int">32</max-g><!-- In turn -->
+                <thrust-lbf-stage-1 type="double">2660</thrust-lbf-stage-1><!-- guess -->
+                <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>    <!-- authentic -->
+                <stage-1-duration-sec type="double">5.23</stage-1-duration-sec><!-- guess -->
+                <stage-2-duration-sec type="double">0.0</stage-2-duration-sec><!-- Aim-9L -->
+                <self-destruct-time-sec type="double">43</self-destruct-time-sec><!-- guess --><!-- Mk.36 Mod.7,8 -->
+                <weight-launch-lbs>186.2</weight-launch-lbs>
+                <weight-warhead-lbs>20.8</weight-warhead-lbs>
+                <weight-fuel-lbm>60.4</weight-fuel-lbm>
+                <drag-coeff type="double">0.55</drag-coeff><!-- guess -->
+                <cross-section-sqft type="double">0.143</cross-section-sqft><!-- sq ft -->
+                <seeker-angular-speed-dps>30</seeker-angular-speed-dps><!-- deg/sec guess-->
+                <loft-altitude>0</loft-altitude><!-- in stage 1 it will attempt to climb to this altitude -->
+                <min-speed-for-guiding-mach type="double">0.8</min-speed-for-guiding-mach>
+                <arming-time-sec type="double">1.4</arming-time-sec>
+                <rail type="bool">true</rail>
+                <rail-length-m type="double">2.667</rail-length-m><!-- 16S210 AIM-9 Missile Launcher -->
+                <rail-point-forward type="bool">true</rail-point-forward>
+                <max-report-distance type="double">65</max-report-distance>
+                <lock-on-sun-deg type="double">5</lock-on-sun-deg> <!-- source -->
+                <fire-msg type="string">Fox 2</fire-msg>
+                <telemetry type="bool">false</telemetry>
+                <DLZ type="bool">true</DLZ>
+                <DLZ-optimal-alt-feet type="double">25000</DLZ-optimal-alt-feet>
+                <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
+            </aim-9>
+            <aim-120>
+                <!--Based on values from Fabien's loading_missiles:
+                AIM 120 max range 72 km for actual version. ->39 nm.. at mach 4 it's about 53 sec. I put a life of 115, and thurst duration oo 3/4 the travel time.-->
+                <guidance type="string">radar</guidance>
+                <vol-search type="double">0.00</vol-search>
+                <vol-track type="double">0.15</vol-track>
+                <vol-track-weak type="double">0.1</vol-track-weak>
+                <max-fire-range-nm type="int">38.8</max-fire-range-nm>
+                <min-fire-range-nm type="double">0.35</min-fire-range-nm>
+                <FCS-field-deg type="int">30</FCS-field-deg>
+                <seeker-field-deg type="int">135</seeker-field-deg>
+                <max-g type="int">30</max-g>
+                <thrust-lbf-stage-1 type="double">2700</thrust-lbf-stage-1><!-- guess -->
+                <thrust-lbf-stage-2 type="double">280</thrust-lbf-stage-2>    <!-- guess -->
+                <stage-1-duration-sec type="double">10.0</stage-1-duration-sec><!-- guess -->
+                <stage-2-duration-sec type="double">18.0</stage-2-duration-sec><!-- guess -->
+                <self-destruct-time-sec type="double">110</self-destruct-time-sec><!-- guess -->
+                <weight-launch-lbs>291</weight-launch-lbs>
+                <weight-warhead-lbs>44</weight-warhead-lbs>
+                <weight-fuel-lbm type="double">130</weight-fuel-lbm>
+                <drag-coeff type="double">0.2</drag-coeff>
+                <cross-section-sqft type="double">0.2739</cross-section-sqft>
+                <loft-altitude>50000</loft-altitude><!-- in stage 1 it will attempt to climb to this altitude -->
+                <min-speed-for-guiding-mach type="double">0.7</min-speed-for-guiding-mach>
+                <max-report-distance type="double">65</max-report-distance>
+                <arming-time-sec type="double">1.6</arming-time-sec>
+                <rail type="bool">false</rail>
+                <navigation type="string">APN</navigation>
+                <class type="string">A</class>
+                <fire-msg type="string">Fox 3</fire-msg>
+                <telemetry type="bool">false</telemetry><!-- enable for aim 120 to see datalink info -->
+                <DLZ type="bool">true</DLZ>
+                <DLZ-optimal-alt-feet type="double">30000</DLZ-optimal-alt-feet>
+                <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
+            </aim-120>
+            <aim-7>
+                <guidance type="string">semi-radar</guidance>
+                <vol-search type="double">0.00</vol-search>
+                <vol-track type="double">0.15</vol-track>
+                <vol-track-weak type="double">0.1</vol-track-weak>
+                <max-fire-range-nm type="int">22</max-fire-range-nm><!-- authentic 21.5 for 2m2 RCS -->
+                <min-fire-range-nm type="double">0.16</min-fire-range-nm>
+                <FCS-field-deg type="int">25</FCS-field-deg>
+                <seeker-field-deg type="int">110</seeker-field-deg>
+                <max-g type="int">20</max-g>
+                <thrust-lbf-stage-1 type="double">5750</thrust-lbf-stage-1><!-- authentic -->
+                <thrust-lbf-stage-2 type="double">1018</thrust-lbf-stage-2>    <!-- authentic -->
+                <stage-1-duration-sec type="double">4.5</stage-1-duration-sec><!-- authentic -->
+                <stage-2-duration-sec type="double">11</stage-2-duration-sec><!-- authentic -->
+                <self-destruct-time-sec type="double">75</self-destruct-time-sec><!-- authentic -->
+                <weight-launch-lbs type="double">510</weight-launch-lbs>                       <!-- authentic -->
+                <weight-warhead-lbs type="double">88</weight-warhead-lbs>
+                <weight-fuel-lbm type="double">135</weight-fuel-lbm>
+                <drag-coeff type="double">0.25</drag-coeff>
+                <cross-section-sqft type="double">0.3382</cross-section-sqft>
+                <loft-altitude type="int">30000</loft-altitude><!-- in stage 1 it will attempt to climb to this altitude -->
+                <min-speed-for-guiding-mach type="double">0.7</min-speed-for-guiding-mach>
+                <arming-time-sec type="double">2.5</arming-time-sec>             <!-- authentic -->
+                <max-report-distance type="double">65</max-report-distance>
+                <navigation type="string">APN</navigation>
+                <rail type="bool">false</rail>
+                <class type="string">A</class>
+                <fire-msg>Fox 1</fire-msg>
+                <telemetry type="bool">false</telemetry>
+                <DLZ type="bool">true</DLZ>
+                <DLZ-optimal-alt-feet type="double">30000</DLZ-optimal-alt-feet>
+                <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
+            </aim-7>
+            <gbu-12>       <!-- GBU 16 -->
+              <fire-msg type="string">Bombs away</fire-msg>
+              <class type="string">GM</class>
+              <max-fire-range-nm type="double"> 14 </max-fire-range-nm>
+              <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
+              <guidance type="string">laser</guidance>
+              <navigation type="string">direct</navigation>
+              <loft-altitude type="int"> 0 </loft-altitude>
+              <terrain-follow type="bool">false</terrain-follow>
+              <FCS-field-deg type="int"> 180 </FCS-field-deg>
+              <seeker-field-deg type="int"> 200 </seeker-field-deg>
+              <max-g type="double"> 1.5 </max-g>
+              <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
+              <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
+              <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
+              <stage-2-duration-sec type="double"> 0 </stage-2-duration-sec>
+              <weight-launch-lbs type="double"> 550 </weight-launch-lbs>
+              <weight-warhead-lbs type="double"> 450 </weight-warhead-lbs>
+              <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
+              <drag-coeff type="double"> 0.1 </drag-coeff>
+              <cross-section-sqft type="double"> 0.195 </cross-section-sqft>
+              <arming-time-sec type="double"> 3 </arming-time-sec>
+              <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
+              <self-destruct-time-sec type="double"> 10000 </self-destruct-time-sec>
+              <all-aspect type="bool">true</all-aspect>
+              <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
+              <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
+              <rail type="bool">false</rail>
+              <rail-length-m type="double"> 2.667 </rail-length-m>
+              <rail-point-forward type="bool">true</rail-point-forward>
+              <rail-pitch-deg type="double"> 0 </rail-pitch-deg>
+              <max-report-distance type="double"> 40 </max-report-distance>
+              <sound-on-off type="bool">false</sound-on-off>
+              <sound-fire-on-off type="bool">false</sound-fire-on-off>
+              <sound-volume type="double"> 0.0 </sound-volume>
+              <vol-search type="double"> 0.075 </vol-search>
+              <vol-track type="double"> 0.25 </vol-track>
+              <vol-track-weak type="double"> 0.175 </vol-track-weak>
+            </gbu-12>
+        </armament>
+
+    </payload>
+
  <nasal>
   <aar>
    <file>Aircraft/Generic/aar.nas</file>
@@ -716,6 +898,21 @@
   <radardist>
    <file>Aircraft/Instruments-3d/radardist/radardist.nas</file>
   </radardist>
+ 
+
+ <vector>
+   <file>Aircraft/f16/Nasal/vector.nas</file>
+ </vector>
+ <armament>
+   <file>Aircraft/f16/Nasal/missile-code.nas</file>
+ </armament>
+ <stations>
+   <file>Aircraft/f16/Nasal/station-manager.nas</file>
+ </stations>
+ <pylons>
+   <file>Aircraft/f16/Nasal/pylons.nas</file>
+ </pylons>
+
  </nasal>
 
 </PropertyList>
