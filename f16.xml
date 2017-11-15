@@ -54,7 +54,7 @@
   <vtailarea unit="FT2"> 54.75 </vtailarea>
   <vtailarm unit="FT"> 0 </vtailarm>
   <location name="AERORP" unit="IN">
-   <x> -198.4336 </x><!-- -198.4336 = static margin of -0.04 -->
+   <x> -178.4336 </x><!-- -198.4336 = static margin of -0.04 -->
    <y> 0 </y>
    <z> 0 </z>
   </location>
@@ -79,7 +79,7 @@
   <iyz unit="SLUG*FT2"> 0 </iyz>
   <emptywt unit="LBS"> 17400 </emptywt>
   <location name="CG" unit="IN">
-   <x> -193 </x>
+   <x> -173 </x>
    <y> 0 </y>
    <z> 0 </z>
   </location>
@@ -91,6 +91,88 @@
     <z> 0 </z>
    </location>
   </pointmass>
+
+  <pointmass name="pylon1">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -4.40 </x>
+    <y> -4.79412 </y>
+    <z> 0.01109 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon2">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -4.40 </x>
+    <y> -3.95167 </y>
+    <z> -0.25696 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon3">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -4.40 </x>
+    <y> -2.88034 </y>
+    <z> -0.25696 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon4">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -4.40 </x>
+    <y> -1.62889 </y>
+    <z> -0.25696 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon5">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -4.40 </x>
+    <y> 0 </y>
+    <z> -0.83778 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon6">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -4.40 </x>
+    <y> 1.62889 </y>
+    <z> -0.25696 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon7">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -4.40 </x>
+    <y> 2.88034 </y>
+    <z> -0.25696 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon8">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -4.40 </x>
+    <y> 3.95167 </y>
+    <z> -0.25696 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon9">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -4.40 </x>
+    <y> 4.79412 </y>
+    <z> 0.01109 </z>
+   </location>
+  </pointmass>
+
  </mass_balance>
 
  <ground_reactions>
@@ -296,7 +378,7 @@
   -->
   <tank type="FUEL"> <!-- FWD Tank -->
    <location unit="IN">
-    <x> -225 </x>
+    <x> -205 </x>
    <y> 0 </y>
    <z> 0 </z>
    </location>
@@ -307,7 +389,7 @@
   </tank>
   <tank type="FUEL"> <!-- AFT Tank -->
    <location unit="IN">
-    <x> -153 </x>
+    <x> -133 </x>
    <y> 0 </y>
    <z> 0 </z>
    </location>
@@ -318,7 +400,7 @@
   </tank>
   <tank type="FUEL"> <!-- Right External Tank -->
    <location unit="IN">
-    <x> -213 </x>
+    <x> -193 </x>
    <y> 80 </y>
    <z> -40 </z>
    </location>
@@ -329,7 +411,7 @@
   </tank>
   <tank type="FUEL"> <!-- Left External Tank -->
    <location unit="IN">
-    <x> -213 </x>
+    <x> -193 </x>
    <y> -80 </y>
    <z> -40 </z>
    </location>
@@ -340,7 +422,7 @@
   </tank>
   <tank type="FUEL"> <!-- Center External Tank -->
    <location unit="IN">
-    <x> -213 </x>
+    <x> -193 </x>
    <y>   0 </y>
    <z> -50 </z>
    </location>
@@ -351,7 +433,7 @@
   </tank>
   <tank type="FUEL"> <!-- Right wing tank -->
    <location unit="IN">
-    <x> -193 </x>
+    <x> -173 </x>
    <y>  80 </y>
    <z>   0 </z>
    </location>
@@ -362,7 +444,7 @@
   </tank>
   <tank type="FUEL"> <!-- Left wing tank -->
    <location unit="IN">
-    <x> -193 </x>
+    <x> -173 </x>
    <y> -80 </y>
    <z>   0 </z>
    </location>
