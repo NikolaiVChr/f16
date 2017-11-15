@@ -912,6 +912,9 @@
  <pylons>
    <file>Aircraft/f16/Nasal/pylons.nas</file>
  </pylons>
+ <crash>
+   <file>Aircraft/f16/Nasal/crash-and-stress.nas</file>
+ </crash>
 
  </nasal>
 
