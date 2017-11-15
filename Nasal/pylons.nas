@@ -1,9 +1,9 @@
 var pylonSets = {
 	empty: {name: "Empty", content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
-	g: {name: "1 x AIM-9", content: ["AIM-9"], fireOrder: [0], launcherDragArea: 0.25, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
-	h: {name: "1 x AIM-120", content: ["AIM-120"], fireOrder: [0], launcherDragArea: 0.25, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
-	i: {name: "3 x GBU-12", content: ["GBU-12","GBU-12", "GBU-12"], fireOrder: [0,1,2], launcherDragArea: 0.25, launcherMass: 10, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0},
-	j: {name: "2 x GBU-12", content: ["GBU-12", "GBU-12"], fireOrder: [0,1], launcherDragArea: 0.25, launcherMass: 10, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0},
+	g: {name: "1 x AIM-9", content: ["AIM-9"], fireOrder: [0], launcherDragArea: 0.05, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
+	h: {name: "1 x AIM-120", content: ["AIM-120"], fireOrder: [0], launcherDragArea: 0.05, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
+	i: {name: "3 x GBU-12", content: ["GBU-12","GBU-12", "GBU-12"], fireOrder: [0,1,2], launcherDragArea: 0.05, launcherMass: 10, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0},
+	j: {name: "2 x GBU-12", content: ["GBU-12", "GBU-12"], fireOrder: [0,1], launcherDragArea: 0.05, launcherMass: 10, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0},
 };
 
 # sets
