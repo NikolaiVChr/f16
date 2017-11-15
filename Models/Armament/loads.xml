@@ -21,6 +21,17 @@
 <z-m>0</z-m>
 <pitch-deg>-3</pitch-deg>
 </offsets>
+<effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.00</ambient-factor>
+          <rain-enabled type="int">2</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <object-name>AIM-9L_dummy</object-name>
+<effect>
 </model>	
   
 <animation>
@@ -316,6 +327,17 @@
 <pitch-deg>-5</pitch-deg>
 
 </offsets>
+<effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.00</ambient-factor>
+          <rain-enabled type="int">2</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <object-name>AIM-fuel_tank</object-name>
+<effect>
 </model>	
   
 <animation>
@@ -409,6 +431,17 @@
 <pitch-deg>-2</pitch-deg>
 
 </offsets>
+<effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.00</ambient-factor>
+          <rain-enabled type="int">2</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <object-name>AIM-fuel_tank</object-name>
+<effect>
 </model>	
   
 <animation>
@@ -445,6 +478,17 @@
 <pitch-deg>-5</pitch-deg>
 
 </offsets>
+<effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.00</ambient-factor>
+          <rain-enabled type="int">2</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <object-name>AIM-fuel_tank</object-name>
+<effect>
 </model>	
   
 <animation>
@@ -729,6 +773,17 @@
 <pitch-deg>-3</pitch-deg>
 
 </offsets>
+<effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.00</ambient-factor>
+          <rain-enabled type="int">2</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <object-name>AIM-9L_dummy</object-name>
+<effect>
 </model>	
   
 <animation>
