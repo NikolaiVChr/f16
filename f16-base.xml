@@ -617,7 +617,6 @@
  <fdm>
   <jsbsim>
     <inertia>
-      <pointmass-dragarea-sqft type="double" n="0">0</pointmass-dragarea-sqft>
       <pointmass-dragarea-sqft type="double" n="1">0</pointmass-dragarea-sqft>
       <pointmass-dragarea-sqft type="double" n="2">0</pointmass-dragarea-sqft>
       <pointmass-dragarea-sqft type="double" n="3">0</pointmass-dragarea-sqft>
@@ -626,6 +625,7 @@
       <pointmass-dragarea-sqft type="double" n="6">0</pointmass-dragarea-sqft>
       <pointmass-dragarea-sqft type="double" n="7">0</pointmass-dragarea-sqft>
       <pointmass-dragarea-sqft type="double" n="8">0</pointmass-dragarea-sqft>
+      <pointmass-dragarea-sqft type="double" n="9">0</pointmass-dragarea-sqft>
    </inertia>
    <systems>
     <hook>

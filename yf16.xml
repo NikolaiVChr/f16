@@ -682,10 +682,12 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
     </function>
 
     <function name="aero/coefficient/CDpylon1">
-        <description>drag for pylon</description>
+        <description>drag for pylon
+                     TODO: add wave drag
+            </description>
             <product>
                 <property>aero/qbar-psf</property>
-                <property>inertia/pointmass-dragarea-sqft[0]</property>
+                <property>inertia/pointmass-dragarea-sqft[1]</property>
             </product>
     </function>
 
@@ -693,7 +695,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         <description>drag for pylon</description>
             <product>
                 <property>aero/qbar-psf</property>
-                <property>inertia/pointmass-dragarea-sqft[1]</property>
+                <property>inertia/pointmass-dragarea-sqft[2]</property>
             </product>
     </function>
 
@@ -701,7 +703,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         <description>drag for pylon</description>
             <product>
                 <property>aero/qbar-psf</property>
-                <property>inertia/pointmass-dragarea-sqft[2]</property>
+                <property>inertia/pointmass-dragarea-sqft[3]</property>
             </product>
     </function>
 
@@ -709,7 +711,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         <description>drag for pylon</description>
             <product>
                 <property>aero/qbar-psf</property>
-                <property>inertia/pointmass-dragarea-sqft[3]</property>
+                <property>inertia/pointmass-dragarea-sqft[4]</property>
             </product>
     </function>
 
@@ -717,7 +719,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         <description>drag for pylon</description>
             <product>
                 <property>aero/qbar-psf</property>
-                <property>inertia/pointmass-dragarea-sqft[4]</property>
+                <property>inertia/pointmass-dragarea-sqft[5]</property>
             </product>
     </function>
 
@@ -725,7 +727,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         <description>drag for pylon</description>
             <product>
                 <property>aero/qbar-psf</property>
-                <property>inertia/pointmass-dragarea-sqft[5]</property>
+                <property>inertia/pointmass-dragarea-sqft[6]</property>
             </product>
     </function>
 
@@ -733,7 +735,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         <description>drag for pylon</description>
             <product>
                 <property>aero/qbar-psf</property>
-                <property>inertia/pointmass-dragarea-sqft[6]</property>
+                <property>inertia/pointmass-dragarea-sqft[7]</property>
             </product>
     </function>
 
@@ -741,7 +743,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         <description>drag for pylon</description>
             <product>
                 <property>aero/qbar-psf</property>
-                <property>inertia/pointmass-dragarea-sqft[7]</property>
+                <property>inertia/pointmass-dragarea-sqft[8]</property>
             </product>
     </function>
 
@@ -749,7 +751,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         <description>drag for pylon</description>
             <product>
                 <property>aero/qbar-psf</property>
-                <property>inertia/pointmass-dragarea-sqft[8]</property>
+                <property>inertia/pointmass-dragarea-sqft[9]</property>
             </product>
     </function>
 

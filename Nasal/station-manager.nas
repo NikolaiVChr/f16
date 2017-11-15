@@ -257,8 +257,8 @@ var Pylon = {
 			if (me.weapon != nil) {
 				me.weapon.eject();
 			}
-			me.jettisonLauncher();
 		}
+		me.jettisonLauncher();
 		me.weapons = [];
 		me.calculateMass();
 		me.calculateFDM();
