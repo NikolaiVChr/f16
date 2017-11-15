@@ -1,6 +1,6 @@
 var Station = {
 # pylon or fixed mounted weapon on the aircraft
-	new: func (name, id, position, sets, guiID, pointmassNode, dragareaNode, operableFunction = nil) {
+	new: func (name, id, position, sets, guiID, pointmassNode, operableFunction = nil) {
 		var p = {parents:[Station]};
 		p.id = id;
 		p.name = name;
@@ -8,7 +8,6 @@ var Station = {
 		p.sets = sets;
 		p.guiID = guiID;
 		p.node_pointMass = pointmassNode;
-		p.node_dragaera = dragareaNode;
 		p.operableFunction = operableFunction;
 		p.weapons = [];
 		p.changingGui = 0;
@@ -27,11 +26,11 @@ var Station = {
 		}
 		me.weapons = [];
 		if (set != nil) {
-			printf("Pylon %d loading set %s", me.id, set.name);
+			#printf("Pylon %d loading set %s", me.id, set.name);
 			for(me.i = 0; me.i < size(set.content);me.i+=1) {
 				me.weaponName = set.content[me.i];
 				if (typeof(me.weaponName) == "scalar") {
-					print("attempting to create weapon id="~(me.id*100+me.i));
+					#print("attempting to create weapon id="~(me.id*100+me.i));
 					me.aim = armament.AIM.new(me.id*100+me.i, me.weaponName, "", nil, me.position);
 					if (me.aim == -1) {
 						print("Pylon could not create "~me.weaponName);
@@ -39,26 +38,29 @@ var Station = {
 					}
 					append(me.weapons, me.aim);
 				} else {
-					print("Added submodel or fuel tank to Pylon");
+					#print("Added submodel or fuel tank to Pylon");
 					me.weaponName.mount();
 					append(me.weapons, me.weaponName);
 				}
 			}
 			me.launcherMass = set.launcherMass;
-			me.launcherDA   = set.launcherDragArea;
 			me.launcherJettisonable = set.launcherJettisonable;
 			me.currentSet   = set;
 		} else {
 			me.launcherMass = 0;
-			me.launcherDA   = 0;
 			me.launcherJettisonable = 0;
 			me.currentSet = nil;
 		}
-		me.calculate();
+		me.loadingSet(set);
+		me.calculateMass();
+		me.calculateFDM();
 		me.setGUI();
 	},
 
-	calculate: func {
+	loadingSet: func (set) {
+	},
+
+	calculateMass: func {
 		# do mass
 		me.totalMass = 0;
 		foreach(me.weapon;me.weapons) {
@@ -68,18 +70,12 @@ var Station = {
 		}
 		me.totalMass += me.launcherMass;
 		me.node_pointMass.setDoubleValue(me.totalMass);
-		# do dragarea
-		me.totalDA = 0;
-		foreach(me.weapon;me.weapons) {
-			if (me.weapon != nil) {
-				me.totalDA += me.weapon.Cd_base*me.weapon.ref_area_sqft;
-			}
-		}
-		me.totalDA += me.launcherDA;
-		me.node_dragaera.setDoubleValue(me.totalDA);
 	},
 
-		getWeapons: func {
+	calculateFDM: func {
+	},
+
+	getWeapons: func {
 		return me.weapons;
 	},
 
@@ -94,7 +90,8 @@ var Station = {
 			me.bye = me.weapons[index];
 			me.bye.release();
 			me.weapons[index] = nil;
-			me.calculate();
+			me.calculateMass();
+			me.calculateFDM();
 			me.setGUI();
 			return me.bye;
 		} else {
@@ -137,7 +134,7 @@ var Station = {
 		return -1;
 	},
 
-	setGUI: func {print("no gui");},
+	setGUI: func {},
 	initGUI: func {},
 	jettisonAll: func {},
 	jettisonLauncher: func {},
@@ -146,9 +143,13 @@ var Station = {
 var InternalStation = {
 # simulates a fixed station, for example a cannon mounted inside the aircraft
 # inherits from Station
-	new: func (name, id, sets, pointmassNode, dragareaNode, operableFunction = nil) {
-		var s = Station.new(name, id, [0,0,0], sets, nil, pointmassNode, dragareaNode, operableFunction);
-		s.parents = append([InternalStation],s.parents[0]);
+	new: func (name, id, sets, pointmassNode, operableFunction = nil) {
+		var s = Station.new(name, id, [0,0,0], sets, nil, pointmassNode, operableFunction);
+		s.parents = [InternalStation, Station];
+
+		# these should not be called in parent.new(), as they are empty there.
+		s.initGUI();
+		s.loadSet(sets[0]);
 		return s;
 	}
 };
@@ -172,8 +173,9 @@ var Pylon = {
 #   shared position for 3D release (from xml?)
 #   possible sets that can be loaded ("2 x AIM9L", "1 x GBU-82") At loadtime, this can be many, so store in Nasal :(
 	new: func (name, id, position, sets, guiID, pointmassNode, dragareaNode, operableFunction = nil) {
-		var p = Station.new(name, id, position, sets, guiID, pointmassNode, dragareaNode, operableFunction);
+		var p = Station.new(name, id, position, sets, guiID, pointmassNode, operableFunction);
 		p.parents = [Pylon, Station];
+		p.node_dragaera = dragareaNode;
 
 		# these should not be called in parent.new(), as they are empty there.
 		p.initGUI();
@@ -188,17 +190,16 @@ var Pylon = {
 			if (me.desiredSet != me.currentName) {
 				me.set = me.findSetFromName(me.desiredSet);
 				if (me.set != nil) {
-					print("GUI wants set: "~me.set.name);
+					#print("GUI wants set: "~me.set.name);
 					me.loadSet(me.set);
 				} else {
-					print("GUI wants unknown set. Thats okay.");
+					#print("GUI wants unknown set. Thats okay.");
 				}
 			}
 		}
 	},
 
 	initGUI: func {
-		print("init gui");
 		if (me.guiListener != nil) {
 			removelistener(me.guiListener);
 		}
@@ -259,7 +260,8 @@ var Pylon = {
 			me.jettisonLauncher();
 		}
 		me.weapons = [];
-		me.calculate();
+		me.calculateMass();
+		me.calculateFDM();
 		me.setGUI();
 	},
 
@@ -269,6 +271,29 @@ var Pylon = {
 			me.launcherDA   = 0;
 		}
 	},
+
+	loadingSet: func (set) {
+		# override this method to set custom attributes, before calculateFDM is ran after a set is loaded.
+		if (set != nil) {
+			me.launcherDA   = set.launcherDragArea;
+		} else {
+			me.launcherDA   = 0;
+		}
+	},
+
+	calculateFDM: func {
+		# override this method to set custom FDM attributes.
+		# do dragarea
+		me.totalDA = 0;
+		foreach(me.weapon;me.weapons) {
+			if (me.weapon != nil) {
+				me.totalDA += me.weapon.Cd_base*me.weapon.ref_area_sqft;
+			}
+		}
+		me.totalDA += me.launcherDA;
+		me.node_dragaera.setDoubleValue(me.totalDA);
+	},
+
 };
 
 var SubModelWeapon = {

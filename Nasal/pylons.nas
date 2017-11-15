@@ -1,26 +1,18 @@
-var cannon = stations.SubModelWeapon.new("20mm Cannon", 0.5, 500, 0, [1], props.globals.getNode("alpha/cannonTrigger",1), 0, nil);
-var fuelTankA = stations.FuelTank.new("500 Ton Fuel tank", 5, 500);
 var pylonSets = {
 	empty: {name: "Empty", content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
-	a: {name: "2 x AIM-9", content: ["AIM-9","AIM-9"], fireOrder: [0,1], launcherDragArea: 0.25, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
-	b: {name: "2 x AIM-120", content: ["AIM-120","AIM-120"], fireOrder: [0,1], launcherDragArea: 0.25, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
-	c: {name: "1 x AIM-7", content: ["AIM-7"], fireOrder: [0], launcherDragArea: 0.25, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
-	d: {name: "1 x GBU-16", content: ["GBU-16"], fireOrder: [0], launcherDragArea: 0.25, launcherMass: 10, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0},
-	e: {name: "20mm Cannon", content: [cannon], fireOrder: [0], launcherDragArea: 0.25, launcherMass: 50, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1},
-	f: {name: "500 Ton Fuel tank", content: [fuelTankA], fireOrder: [0], launcherDragArea: 0.25, launcherMass: 200, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1},
 	g: {name: "1 x AIM-9", content: ["AIM-9"], fireOrder: [0], launcherDragArea: 0.25, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
 	h: {name: "1 x AIM-120", content: ["AIM-120"], fireOrder: [0], launcherDragArea: 0.25, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
 	i: {name: "3 x GBU-12", content: ["GBU-12","GBU-12", "GBU-12"], fireOrder: [0,1,2], launcherDragArea: 0.25, launcherMass: 10, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0},
 	j: {name: "2 x GBU-12", content: ["GBU-12", "GBU-12"], fireOrder: [0,1], launcherDragArea: 0.25, launcherMass: 10, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0},
 };
 
-#example sets
+# sets
 var pylon120set   = [pylonSets.empty, pylonSets.g, pylonSets.h];
 var pylon9set = [pylonSets.empty, pylonSets.g];
 var pylon9mix = [pylonSets.empty, pylonSets.g,pylonSets.i];
 var pylon12set = [pylonSets.empty, pylonSets.j];
 
-#example pylons
+# pylons
 var pylon1 = stations.Pylon.new("Left Wingtip Pylon", 0, [0,0,0], pylon9set, 0, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[1]",1),props.globals.getNode("alpha/dragareaL",1));
 var pylon2 = stations.Pylon.new("Left Outer Wing Pylon", 1, [0,0,0], pylon120set, 1, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[2]",1),props.globals.getNode("alpha/dragareaL",1));
 var pylon3 = stations.Pylon.new("Left Wing Pylon", 2, [0,0,0], pylon9mix, 2, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[3]",1),props.globals.getNode("alpha/dragareaL",1));
