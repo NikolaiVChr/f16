@@ -1,3 +1,15 @@
+###############################################
+#
+# Station management system
+#
+# Design authors: Richard, 5H1N0B1, Leto, Pinto
+#
+# Initial implementation: Leto
+#
+# License: GPL 2
+#
+###############################################
+
 var Station = {
 # pylon or fixed mounted weapon on the aircraft
 	new: func (name, id, position, sets, guiID, pointmassNode, operableFunction = nil) {
