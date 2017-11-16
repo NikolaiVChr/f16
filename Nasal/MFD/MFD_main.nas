@@ -334,10 +334,78 @@ var MFD_Device =
         return obj;
     },
 
+    setupRadar: func (svg) {
+        svg.p_RDR = me.canvas.createGroup()
+                .setTranslation(276,482);#552,482
+        
+        svg.blep = setsize([],200);
+        for (var i = 0;i<200;i+=1) {
+            svg.blep[i] = svg.p_RDR.createChild("path")
+                    .moveTo(0,0)
+                    .vert(4)
+                    .setStrokeLineWidth(4)
+                    .hide();
+        }
+        svg.lock = setsize([],200);
+        for (var i = 0;i<200;i+=1) {
+            svg.lock[i] = svg.p_RDR.createChild("path")
+                        .moveTo(-10,-10)
+                            .vert(20)
+                            .horiz(20)
+                            .vert(-20)
+                            .horiz(-20)
+                            .moveTo(0,-10)
+                            .vert(-10)
+                            .setStrokeLineWidth(2)
+                    .hide();
+        }
+    },
+
     addRadar: func {
-        me.p_RDR = RadarPage.new(me.num_menu_buttons, "MI_", me.canvas);
-        me.p_RDR.addPage();
-        me.PFD.addPage("Radar", "p_RDR");
+        var svg = {getElementById: func (id) {return me[id]},};
+        me.setupRadar(svg);
+        me.PFD.addRadarPage = func(svg, title, layer_id) {   
+            var np = PFD_Page.new(svg, title, layer_id, me);
+            append(me.pages, np);
+            me.page_index[layer_id] = np;
+            np.setVisible(0);
+            return np;
+        };        
+        me.p_RDR = me.PFD.addRadarPage(svg, "Radar", "p_RDR");
+        me.p_RDR.root = svg;
+        me.p_RDR.update = func {
+            me.i=0;
+            foreach(contact; awg_9.tgts_list) {
+                me.distPixels = contact.get_range()*(482/awg_9.range_radar2);
+
+                me.root.blep[me.i].setColor(1,1,1);
+                me.root.blep[me.i].setTranslation(276*geo.normdeg180(contact.get_bearing())/60,-me.distPixels);
+                me.root.blep[me.i].show();
+                me.root.blep[me.i].update();
+                if (contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType)) {
+                    me.rot = contact.get_heading();
+                    if (me.rot == nil) {
+                        #can happen in transition between TWS to RWS
+                        me.root.lock[me.i].hide();
+                    } else {
+                        me.rot = me.rot-getprop("orientation/heading-deg")-geo.normdeg180(contact.get_bearing());
+                        me.root.lock[me.i].setRotation(me.rot*D2R);
+                        me.root.lock[me.i].setColor([1,1,0]);
+                        me.root.lock[me.i].setTranslation(276*geo.normdeg180(contact.get_bearing())/60,-me.distPixels);
+                        me.root.lock[me.i].show();
+                        me.root.lock[me.i].update();
+                    }
+                } else {
+                    me.root.lock[me.i].hide();
+                }
+                me.i += 1;
+                if (me.i > 199) break;
+            }
+            for (;me.i<200;me.i+=1) {
+                me.root.blep[me.i].hide();
+                me.root.lock[me.i].hide();
+            }
+        };
     },
 
     addPages : func
@@ -516,12 +584,16 @@ var MFD_Device =
         me.p1_1.addMenuItem(4, "DTM", me.p1_2);
         me.p1_1.addMenuItem(10, "RDR", me.p_RDR);
 
+        me.p_RDR.addMenuItem(10, "TIM", me.p1_1);
+
         me.p1_2.addMenuItem(0, "VSD", me.p_VSD);
         me.p1_2.addMenuItem(1, "A/A", me.p1_3);
         me.p1_2.addMenuItem(2, "A/G", me.p1_3);
         me.p1_2.addMenuItem(3, "CBT JETT", me.p1_3);
         me.p1_2.addMenuItem(4, "WPN LOAD", me.p1_3);
         me.p1_2.addMenuItem(9, "M", me.p1_1);
+        me.p1_2.addMenuItem(10, "RDR", me.p_RDR);
+
 
         me.p1_3.addMenuItem(2, "SIT", me.pjitds_1);
         me.p1_3.addMenuItem(3, "A/G", me.p1_3);
@@ -532,15 +604,18 @@ var MFD_Device =
         me.p1_3.addMenuItem(12, "FUEL", me.p1_3);
         me.p1_3.addMenuItem(14, "PYLON", me.p1_3);
         me.p1_3.addMenuItem(15, "MODE S", me.p1_3);
+        me.p1_3.addMenuItem(10, "RDR", me.p_RDR);
 
         me.pjitds_1.addMenuItem(9, "M", me.p1_1);
         me.pjitds_1.addMenuItem(0, "ARMT", me.p1_2);
         me.pjitds_1.addMenuItem(1, "VSD", me.p_VSD);
+        me.pjitds_1.addMenuItem(10, "RDR", me.p_RDR);
 
         me.p_VSD.addMenuItem(0, "ARMT", me.p1_2);
         me.p_VSD.addMenuItem(1, "SIT", me.pjitds_1);
         me.p_VSD.addMenuItem(4, "M", me.p1_1);
         me.p_VSD.addMenuItem(9, "M", me.p1_1);
+        me.p_VSD.addMenuItem(10, "RDR", me.p_RDR);
     },
 
     update : func(notification)
@@ -576,187 +651,6 @@ var MFD_Device =
     },
 };
 
-
-var RadarPage =
-{
-# - svg is the page elements from the svg.
-# - num_menu_buttons is the Number of menu buttons; starting from the bottom left then right, then top, then left.
-# - button prefix (e.g MI_) is the prefix of the labels in the SVG for the menu boxes.
-# - _canvas is the canvas group.
-#NOTE:
-# This does not actually create the canvas elements, or parse the SVG, that would typically be done in 
-# a higher level class that contains an instance of this class.
-# see: http://wiki.flightgear.org/Canvas_MFD_Framework
-    new : func(num_menu_buttons, button_prefix, _canvas)
-    {
-        var obj = {parents : [RadarPage] };
-        obj.canvas = _canvas;
-        obj.current_page = nil;
-        obj.pages = [];
-        obj.page_index = {};
-        obj.buttons = setsize([], num_menu_buttons);
-        obj.root = _canvas.createGroup();
-        for(var idx = 0; idx < num_menu_buttons; idx += 1)
-        {
-            var label_name = sprintf(button_prefix~"%d",idx);
-            var msvg = obj.root.createChild("text");
-            if (msvg == nil)
-                printf("PFD_Device: Failed to load  %s",label_name);
-            else
-            {
-                obj.buttons[idx] = msvg;
-                obj.buttons[idx].setText(sprintf("M",idx));
-            }
-        }
-
-        return obj;
-    },
-
-    setupRadar: func {
-        me.rootCenterBleps = root.createChild("group")
-                .setTranslation(276,482);#552,482
-        
-        me.blep = setsize([],200);
-        for (var i = 0;i<200;i+=1) {
-            me.blep[i] = me.rootCenterBleps.createChild("path")
-                    .moveTo(0,0)
-                    .vert(2)
-                    .setStrokeLineWidth(2)
-                    .hide();
-        }
-        me.lock = setsize([],200);
-        for (var i = 0;i<200;i+=1) {
-            me.lock[i] = me.rootCenterBleps.createChild("path")
-                        .moveTo(-5,-5)
-                            .vert(10)
-                            .horiz(10)
-                            .vert(-10)
-                            .horiz(-10)
-                            .moveTo(0,-5)
-                            .vert(-5)
-                            .setStrokeLineWidth(1)
-                    .hide();
-        }
-    },
-
-    #
-    # called when a button is pushed - connecting the property to this method is implemented in the outer class
-    notifyButton : func(button_id)
-    {
-        #
-        # by convention the buttons we have are 0 based; however externally 0 is used
-        # to indicate no button pushed.
-        if (button_id > 0)
-        {
-            button_id = button_id - 1;
-            if (me.current_page != nil)
-            {
-                me.current_page.notifyButton(button_id);
-            }
-            else
-                printf("PFD_Device: Could not locate page for button ",button_id);
-        }
-    },
-    #
-    #
-    # add a page to the device.
-    # - page title.
-    # - svg element id
-    addPage : func()
-    {   
-        var np = me.root;
-        np.notifyButton = func (bt) {
-            print("button press: "~bt);
-        };
-        append(me.pages, np);
-        me.page_index[0] = np;
-        np.setVisible(0);
-        return np;
-    },
-    #
-    # manage the update of the currently selected page
-    update : func(notification=nil)
-    {
-        if (me.current_page != nil)
-            #me.current_page.update(notification);
-return;
-        me.i=0;
-        foreach(contact; exampleRadar.vector_aicontacts_bleps) {
-            if (me.elapsed - contact.blepTime < 5) {
-                me.distPixels = contact.getRangeFrozen()*(256/exampleRadar.forDist_m);
-
-                me.blep[me.i].setColor(1-(me.elapsed - contact.blepTime)/time_to_fadeout_bleps,1-(me.elapsed - contact.blepTime)/time_to_fadeout_bleps,1-(me.elapsed - contact.blepTime)/time_to_fadeout_bleps);
-                me.blep[me.i].setTranslation(128*contact.getDeviationHeadingFrozen()/60,-me.distPixels);
-                me.blep[me.i].show();
-                me.blep[me.i].update();
-                if (exampleRadar.containsVector(exampleRadar.locks, contact)) {
-                    me.rot = contact.getHeadingFrozen();
-                    if (me.rot == nil) {
-                        #can happen in transition between TWS to RWS
-                        me.lock[me.i].hide();
-                    } else {
-                        me.rot = me.rot-getprop("orientation/heading-deg")-contact.getDeviationHeadingFrozen();
-                        me.lock[me.i].setRotation(me.rot*D2R);
-                        me.lock[me.i].setColor(exampleRadar.lock == HARD?[1,0,0]:[1,1,0]);
-                        me.lock[me.i].setTranslation(128*contact.getDeviationHeadingFrozen()/60,-me.distPixels);
-                        me.lock[me.i].show();
-                        me.lock[me.i].update();
-                    }
-                } else {
-                    me.lock[me.i].hide();
-                }
-                me.i += 1;
-                if (me.i > 199) break;
-            }
-        }
-        for (;me.i<200;me.i+=1) {
-            me.blep[me.i].hide();
-            me.lock[me.i].hide();
-        }
-    },
-    #
-    # Change to display the selected page.
-    # - the page object method controls the visibility
-    selectPage : func(p)
-    {
-        if (me.current_page != nil)
-            me.current_page.setVisible(0);
-        if (me.buttons != nil)
-        {
-            foreach(var mb ; me.buttons)
-                if (mb != nil)
-                    mb.setVisible(0);
-
-            foreach(var mi ; p.menus)
-            {
-                if (me.buttons[mi.menu_id] != nil)
-                {
-                    me.buttons[mi.menu_id].setText(mi.title);
-                    me.buttons[mi.menu_id].setVisible(1);
-                }
-                else
-                    printf("PFD_device: Menu for button not found. Menu ID '%s'",mi.menu_id);
-            }
-        }
-        p.setVisible(1);
-        me.current_page = p;
-    },
-    #
-    # ensure that the menus are display correctly for the current page.
-    updateMenus : func
-    {
-        foreach(var mi ; me.current_page.menus)
-        {
-            if (me.buttons[mi.menu_id] != nil)
-            {
-                me.buttons[mi.menu_id].setText(mi.title);
-                me.buttons[mi.menu_id].setVisible(1);
-            }
-            else
-                printf("No corresponding item '%s'",mi.menu_id);
-        }
-    },
-};
 
 
 

@@ -77,7 +77,7 @@
             <binding>
                 <command>property-assign</command>
                 <property>controls/MFD[0]/button-pressed</property>
-                <value>10</value>
+                <value>11</value>
             </binding>
         </action>
 
