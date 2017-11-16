@@ -68,6 +68,29 @@
     </animation>
 
     <animation>
+        <type>knob</type>
+        <object-name>MFDButtonT1</object-name>
+
+        <action>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <value>11</value>
+            </binding>
+        </action>
+
+        <release>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <step>0</step>
+                <min>0</min>
+                <max>0</max>
+            </binding>
+        </release>
+    </animation>
+
+    <animation>
         <type>translate</type>
         <object-name>MFDButtonL2</object-name>
         <condition>

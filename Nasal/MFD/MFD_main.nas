@@ -334,8 +334,83 @@ var MFD_Device =
         return obj;
     },
 
+    setupRadar: func (svg) {
+        svg.p_RDR = me.canvas.createGroup()
+                .setTranslation(276,482);#552,482
+        
+        svg.blep = setsize([],200);
+        for (var i = 0;i<200;i+=1) {
+            svg.blep[i] = svg.p_RDR.createChild("path")
+                    .moveTo(0,0)
+                    .vert(4)
+                    .setStrokeLineWidth(4)
+                    .hide();
+        }
+        svg.lock = setsize([],200);
+        for (var i = 0;i<200;i+=1) {
+            svg.lock[i] = svg.p_RDR.createChild("path")
+                        .moveTo(-10,-10)
+                            .vert(20)
+                            .horiz(20)
+                            .vert(-20)
+                            .horiz(-20)
+                            .moveTo(0,-10)
+                            .vert(-10)
+                            .setStrokeLineWidth(2)
+                    .hide();
+        }
+    },
+
+    addRadar: func {
+        var svg = {getElementById: func (id) {return me[id]},};
+        me.setupRadar(svg);
+        me.PFD.addRadarPage = func(svg, title, layer_id) {   
+            var np = PFD_Page.new(svg, title, layer_id, me);
+            append(me.pages, np);
+            me.page_index[layer_id] = np;
+            np.setVisible(0);
+            return np;
+        };        
+        me.p_RDR = me.PFD.addRadarPage(svg, "Radar", "p_RDR");
+        me.p_RDR.root = svg;
+        me.p_RDR.update = func {
+            me.i=0;
+            foreach(contact; awg_9.tgts_list) {
+                me.distPixels = contact.get_range()*(482/awg_9.range_radar2);
+
+                me.root.blep[me.i].setColor(1,1,1);
+                me.root.blep[me.i].setTranslation(276*geo.normdeg180(contact.get_bearing())/60,-me.distPixels);
+                me.root.blep[me.i].show();
+                me.root.blep[me.i].update();
+                if (contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType)) {
+                    me.rot = contact.get_heading();
+                    if (me.rot == nil) {
+                        #can happen in transition between TWS to RWS
+                        me.root.lock[me.i].hide();
+                    } else {
+                        me.rot = me.rot-getprop("orientation/heading-deg")-geo.normdeg180(contact.get_bearing());
+                        me.root.lock[me.i].setRotation(me.rot*D2R);
+                        me.root.lock[me.i].setColor([1,1,0]);
+                        me.root.lock[me.i].setTranslation(276*geo.normdeg180(contact.get_bearing())/60,-me.distPixels);
+                        me.root.lock[me.i].show();
+                        me.root.lock[me.i].update();
+                    }
+                } else {
+                    me.root.lock[me.i].hide();
+                }
+                me.i += 1;
+                if (me.i > 199) break;
+            }
+            for (;me.i<200;me.i+=1) {
+                me.root.blep[me.i].hide();
+                me.root.lock[me.i].hide();
+            }
+        };
+    },
+
     addPages : func
-    {
+    {   
+        me.addRadar();
         me.p1_1 = me.PFD.addPage("Aircraft Menu", "p1_1");
 
         me.p1_1.update = func(notification)
@@ -507,6 +582,9 @@ var MFD_Device =
         me.p1_1.addMenuItem(2, "SIT", me.pjitds_1);
         me.p1_1.addMenuItem(3, "WPN", me.p1_2);
         me.p1_1.addMenuItem(4, "DTM", me.p1_2);
+        me.p1_1.addMenuItem(10, "RDR", me.p_RDR);
+
+        me.p_RDR.addMenuItem(10, "TIM", me.p1_1);
 
         me.p1_2.addMenuItem(0, "VSD", me.p_VSD);
         me.p1_2.addMenuItem(1, "A/A", me.p1_3);
@@ -514,6 +592,8 @@ var MFD_Device =
         me.p1_2.addMenuItem(3, "CBT JETT", me.p1_3);
         me.p1_2.addMenuItem(4, "WPN LOAD", me.p1_3);
         me.p1_2.addMenuItem(9, "M", me.p1_1);
+        me.p1_2.addMenuItem(10, "RDR", me.p_RDR);
+
 
         me.p1_3.addMenuItem(2, "SIT", me.pjitds_1);
         me.p1_3.addMenuItem(3, "A/G", me.p1_3);
@@ -524,15 +604,18 @@ var MFD_Device =
         me.p1_3.addMenuItem(12, "FUEL", me.p1_3);
         me.p1_3.addMenuItem(14, "PYLON", me.p1_3);
         me.p1_3.addMenuItem(15, "MODE S", me.p1_3);
+        me.p1_3.addMenuItem(10, "RDR", me.p_RDR);
 
         me.pjitds_1.addMenuItem(9, "M", me.p1_1);
         me.pjitds_1.addMenuItem(0, "ARMT", me.p1_2);
         me.pjitds_1.addMenuItem(1, "VSD", me.p_VSD);
+        me.pjitds_1.addMenuItem(10, "RDR", me.p_RDR);
 
         me.p_VSD.addMenuItem(0, "ARMT", me.p1_2);
         me.p_VSD.addMenuItem(1, "SIT", me.pjitds_1);
         me.p_VSD.addMenuItem(4, "M", me.p1_1);
         me.p_VSD.addMenuItem(9, "M", me.p1_1);
+        me.p_VSD.addMenuItem(10, "RDR", me.p_RDR);
     },
 
     update : func(notification)

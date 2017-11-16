@@ -387,14 +387,14 @@
       <script>radar.radar_mode_toggle()</script>
      </binding>
     </key>
-    <key n="69">
+    <!--<key n="69">
      <name>E</name>
      <desc>Decrease Radar Range</desc>
      <binding>
       <command>nasal</command>
       <script>radar.radar_range_control(-1);</script>
      </binding>
-    </key>
+    </key>-->
     <key n="67">
      <name>C</name>
      <desc>Toggle canopy</desc>
@@ -403,14 +403,14 @@
       <property>/fdm/jsbsim/fcs/canopy-engage</property>
      </binding>
     </key>
-    <key n="82">
+    <!--<key n="82">
      <name>R</name>
      <desc>Increase Radar Range</desc>
      <binding>
       <command>nasal</command>
       <script>radar.radar_range_control(1);</script>
      </binding>
-    </key>
+    </key>-->
     <key n="101">
      <name>e</name>
      <desc>Gun Trigger</desc>
@@ -528,6 +528,22 @@
                     <value>1</value>
                 </binding>
             </key>
+      <key n="82">
+          <name>R</name>
+          <desc>Increase Radar Range</desc>
+          <binding>
+              <command>nasal</command>
+              <script>awg_9.range_control(1);</script>
+          </binding>
+      </key>
+      <key n="69">
+          <name>E</name>
+          <desc>Decrease Radar Range</desc>
+          <binding>
+              <command>nasal</command>
+              <script>awg_9.range_control(-1);</script>
+          </binding>
+      </key>
    </keyboard>
   </input>
 
