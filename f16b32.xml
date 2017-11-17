@@ -12,7 +12,7 @@
    <licenseName>GPL (General Public License)</licenseName>
    <licenseURL>http://www.gnu.org/licenses/gpl.html</licenseURL>
   </license>
-  <description> Models an YF-16 </description>
+  <description> Models an F-16 </description>
   <note>
    This model was created using data that is, or has been, publically
    available by means of technical reports, textbooks, image graphs or
@@ -43,6 +43,7 @@
   <reference refID="H-1999" author="NASA" title="Dynamic ground effects flight test of an F-15 aircraft" date="n/a"/>
   <reference refID="H-2177" author="NASA" title="Dynamic ground effect for a Cranked Arrow Wing Airplane" date="n/a"/>
   <reference refID="None" author="n/a" title="http://www.codeonemagazine.com/archives/1991/articles/jul_91/july2a_91.html" date="n/a"/>
+  <reference refID="F16i post stall" author="Moshe Medina" title="Post stall characteristics of highly augmented fighter aircraft" date="n/a"/>
  </fileheader>
 
  <metrics>
@@ -64,7 +65,7 @@
    <z> 29.5 </z>
   </location>
   <location name="VRP" unit="IN">
-   <x> -180 </x>
+   <x> -180 </x><!-- -4.572 meter -->
    <y> 0 </y>
    <z> 0 </z>
   </location>
@@ -335,8 +336,6 @@
    </force>
  </external_reactions>
 
-
-
  <system file="pushback">
    <property>/sim/model/pushback/kp</property>
    <property>/sim/model/pushback/ki</property>
@@ -344,10 +343,34 @@
  </system>
  <system file="hook"/>
  <flight_control file="Systems/jsb-controls"/>
- <propulsion file="Systems/jsb-propulsion-block52"/>
+ <propulsion file="Systems/jsb-propulsion-block32"/>
  <aerodynamics file="Systems/jsb-aerodynamics-block15.xml"/>
 
 
+<!--
+<output name="c:/users/nikolai/documents/f16_datalog.csv" type="CSV" rate="120">
+ <property> fcs/fly-by-wire/pitch/q-washout </property>
+ <property> velocities/q-aero-deg_sec </property>-->
+ <!--<property> attitude/phi-rad </property>
+ <property> position/h-sl-ft </property>
+ <property> velocities/vc-kts </property>
+ <property> fcs/throttle-cmd-norm </property>
+ <property> fcs/elevator-cmd-norm </property>
+ <property> fcs/pitch-trim-cmd-norm </property>
+ <property> propulsion/total-fuel-lbs </property>
+ <property> flight-path/gamma-rad </property>
+ <property> accelerations/n-pilot-z-norm </property>
+ <rates> ON </rates>
+ <velocities> ON </velocities>
+ <forces> ON </forces>
+ <moments> ON </moments>
+ <position> ON </position>
+ <fcs> ON </fcs>
+ <propulsion> OFF </propulsion>
+ <aerosurfaces> ON </aerosurfaces>
+ <fcs> ON </fcs>
+ <ground_reactions> ON </ground_reactions>-->
+<!--</output>-->
 
-
+</fdm_config>
 
