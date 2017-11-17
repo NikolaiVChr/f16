@@ -3,7 +3,7 @@
 <PropertyList include="f16-base.xml">
 
  <sim>
-  <description>General Dynamics F-16</description>
+  <description>General Dynamics F-16 block 10</description>
   <author>Erik Hofman, Pensacola (skin textures), Martin "Pegasus" Schmitt (panel textures), Richard Harrison (MFD, HUD), Nikolai V. Chr. (YF-16 Aero and FCS)</author>
   <status>production</status>
   <rating>
@@ -13,14 +13,12 @@
     <model type="int">5</model>
   </rating>
   <flight-model>jsb</flight-model>
-  <aero>f16</aero>
+  <aero>yf16</aero>
+  <variant-of>f16</variant-of>
   <tags>
       <tag>general-dynamics</tag>
       <tag>1970s</tag>
-      <tag>1980s</tag>
-      <tag>1990s</tag>
-      <tag>2000s</tag>
-      <tag>yf-16</tag>
+      <tag>f-16</tag>
       <tag>low-wing</tag>
       <tag>tricycle</tag>
       <tag>retractable-gear</tag>
@@ -29,12 +27,21 @@
       <tag>hud</tag>
       <tag>refuel</tag>
       <tag>supersonic</tag>
-      <tag>tail-hook</tag>
+      <tag>prototype</tag>
     </tags>
 
   <startup>
-   <splash-texture>Aircraft/f16/f16-splash.rgb</splash-texture>
+   <splash-texture>Aircraft/f16/f16-splash.png</splash-texture>
   </startup>
+
+  <!--<previews>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>gui/splash/yf16-1.png</path>
+            </preview>
+  </previews>-->
+
 
   <model>
    <path archive="y">Aircraft/f16/Models/F-16.xml</path>
