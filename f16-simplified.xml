@@ -315,6 +315,7 @@
    <property>/sim/model/pushback/kd</property>
  </system>
  <system file="hook"/>
+ <system file="f16-hydraulics"/>
 
  <flight_control name="F-16 FC">
 

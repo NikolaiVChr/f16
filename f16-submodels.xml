@@ -22,7 +22,7 @@
   <submodel>
     <name>gun-pod</name>
     <model>Aircraft/f16/Models/Armament/Weapons/M61A1/tracer.xml</model>
-    <trigger>controls/armament/trigger</trigger>
+    <trigger>fcs/guntrigger</trigger>
     <speed>2041.0</speed>
     <repeat>true</repeat>
     <delay>0.15</delay>
@@ -41,7 +41,7 @@
   <submodel>
     <name>gun-bullet</name>
     <model>Models/Geometry/null.ac</model>
-    <trigger>controls/armament/trigger</trigger>
+    <trigger>fcs/guntrigger</trigger>
     <speed>2041.0</speed>
     <repeat>true</repeat>
     <delay>0</delay>
@@ -66,7 +66,7 @@
   <submodel>
     <name>gunsmoke</name>
     <model>Aircraft/f16/Models/Armament/Weapons/M61A1/smoke.xml</model>
-    <trigger>controls/armament/trigger</trigger>
+    <trigger>fcs/guntrigger</trigger>
     <speed>10</speed>
     <repeat>true</repeat>
     <delay>0.01</delay>
