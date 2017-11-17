@@ -2071,7 +2071,7 @@
           <test  logic="OR" value="gear/gear-cmd-norm">
 			systems/hydraulics/sysb-psi ge 2000
           </test>
-	      <test  logic="OR" value="0">
+	      <test  logic="OR" value="gear/gear-cmd-norm">
 		    systems/hydraulics/sysb-psi lt 2000
           </test>
    </switch>

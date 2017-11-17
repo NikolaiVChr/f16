@@ -3087,5 +3087,3 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  <ground_reactions> ON </ground_reactions>-->
 <!--</output>-->
 
-</fdm_config>
-
