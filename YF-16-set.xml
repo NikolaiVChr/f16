@@ -35,6 +35,15 @@
    <splash-texture>Aircraft/f16/yf16-splash.png</splash-texture>
   </startup>
 
+  <previews>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>gui/splash/yf16-1.png</path>
+            </preview>
+  </previews>
+
+
   <model>
    <path archive="y">Aircraft/f16/Models/YF-16.xml</path>
    <livery>
