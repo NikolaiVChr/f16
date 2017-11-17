@@ -3,7 +3,7 @@
 <PropertyList include="f16-base.xml">
 
  <sim>
-  <description>General Dynamics F-16 (3d cockpit)</description>
+  <description>General Dynamics F-16 block 52</description>
   <author>Erik Hofman, Pensacola (skin textures), Martin "Pegasus" Schmitt (panel textures), Richard Harrison (MFD, HUD), Nikolai V. Chr. (YF-16 Aero and FCS)</author>
   <status>production</status>
   <rating>

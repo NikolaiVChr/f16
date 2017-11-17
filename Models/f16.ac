@@ -6,7 +6,7 @@ MATERIAL "ac3dmat6" rgb 0.227 0.38 0  amb 0.227 0.38 0  emis 0.451 0.827 0  spec
 MATERIAL "ac3dmat3" rgb 0.702 0.039 0  amb 0.702 0.039 0  emis 1 0.137 0  spec 0.227 0.227 0.227  shi 17  trans 0
 MATERIAL "ac3dmat6" rgb 0.227 0.38 0  amb 0.227 0.38 0  emis 0 0 0  spec 0.227 0.227 0.227  shi 17  trans 0
 MATERIAL "ac3dmat3" rgb 0.702 0.039 0  amb 0.702 0.039 0  emis 0 0 0  spec 0.227 0.227 0.227  shi 17  trans 0
-MATERIAL "ac3dmat1.008" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.5 0.5 0.5  shi 10  trans 0
+MATERIAL "engineMat" rgb 0.8 0.8 0.8  amb 0.8 0.8 0.8  emis 0 0 0  spec 0.5 0.5 0.5  shi 10  trans 0
 MATERIAL "ac3dmat13.004" rgb 0.533 0.533 0.533  amb 0.353 0.353 0.353  emis 0 0 0  spec 0.2 0.2 0.208  shi 100  trans 0
 MATERIAL "ac3dmat13" rgb 0.533 0.533 0.533  amb 0.353 0.353 0.353  emis 0 0 0  spec 1 1 1  shi 20  trans 0
 MATERIAL "ac3dmat1.007" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.502 0.502 0.502  shi 10  trans 0.365

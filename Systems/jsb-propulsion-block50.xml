@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+
+ <propulsion>
+  <engine file="F110-GE-129">
+   <location unit="IN">
+    <x> 0 </x>
+    <y> 0 </y>
+    <z> 0 </z>
+   </location>
+   <orient unit="DEG">
+    <roll> 0.0 </roll>
+    <pitch> 0 </pitch>
+    <yaw> 0 </yaw>
+   </orient>
+   <feed>0</feed>
+   <feed>1</feed>
+   <feed>2</feed>
+   <feed>3</feed>
+   <feed>4</feed>
+   <feed>5</feed>
+   <feed>6</feed>
+   <thruster file="direct">
+    <location unit="IN">
+     <x> 500 </x>
+     <y> 0 </y>
+     <z> 0 </z>
+    </location>
+    <orient unit="DEG">
+     <roll> 0.0 </roll>
+     <pitch> 0.0 </pitch>
+     <yaw> 0.0 </yaw>
+    </orient>
+   </thruster>
+  </engine>
+  <!--
+          This is a pseudo fuel system.
+          As can be read in manual it should have 12 tanks,
+          including possibility for 3 droptanks.
+          And engine only draws fuel from 2 of them.
+
+          Total internal JP-4 should be: 6625
+          Total external JP-4 should be: 9300 (the big tanks, there is 2 sizes)
+  -->
+  <tank type="FUEL"> <!-- FWD Tank -->
+   <location unit="IN">
+    <x> -208.5 </x>
+   <y> 0 </y>
+   <z> 0 </z>
+   </location>
+   <capacity unit="LBS"> 2812.5 </capacity>
+   <contents unit="LBS"> 2812.5 </contents>
+   <type>JP-4</type>
+   <priority> 3 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- AFT Tank -->
+   <location unit="IN">
+    <x> -136.5 </x>
+   <y> 0 </y>
+   <z> 0 </z>
+   </location>
+   <capacity unit="LBS"> 2812.5 </capacity>
+   <contents unit="LBS"> 2812.5 </contents>
+   <type>JP-4</type>
+   <priority> 3 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- Right External Tank -->
+   <location unit="IN">
+    <x> -196.5 </x>
+   <y> 80 </y>
+   <z> -40 </z>
+   </location>
+   <capacity unit="LBS"> 2991 </capacity>
+   <contents unit="LBS"> 0 </contents>
+   <type>JP-4</type>
+   <priority> 1 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- Left External Tank -->
+   <location unit="IN">
+    <x> -196.5 </x>
+   <y> -80 </y>
+   <z> -40 </z>
+   </location>
+   <capacity unit="LBS"> 2991 </capacity>
+   <contents unit="LBS"> 0 </contents>
+   <type>JP-4</type>
+   <priority> 1 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- Center External Tank -->
+   <location unit="IN">
+    <x> -196.5 </x>
+   <y>   0 </y>
+   <z> -50 </z>
+   </location>
+   <capacity unit="LBS"> 2425 </capacity>
+   <contents unit="LBS"> 0 </contents>
+   <type>JP-4</type>
+   <priority> 1 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- Right wing tank -->
+   <location unit="IN">
+    <x> -176.5 </x>
+   <y>  80 </y>
+   <z>   0 </z>
+   </location>
+   <capacity unit="LBS"> 500 </capacity>
+   <contents unit="LBS"> 500 </contents>
+   <type>JP-4</type>
+   <priority> 2 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- Left wing tank -->
+   <location unit="IN">
+    <x> -176.5 </x>
+   <y> -80 </y>
+   <z>   0 </z>
+   </location>
+   <capacity unit="LBS"> 500 </capacity>
+   <contents unit="LBS"> 500 </contents>
+   <type>JP-4</type>
+   <priority> 2 </priority>
+  </tank>
+ </propulsion>
