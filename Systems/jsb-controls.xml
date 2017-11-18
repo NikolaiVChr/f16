@@ -424,8 +424,16 @@
             </function>
         </fcs_function>
 
+        <switch name="fcs/fly-by-wire/roll/mech-bias-hyd-right">
+          <default value="0"/>
+          <test  logic="OR" value="fcs/fly-by-wire/roll/mech-bias-right">
+            systems/hydraulics/sysa-psi ge 2000
+            systems/hydraulics/sysb-psi ge 2000
+          </test>
+         </switch>
+
         <kinematic name="fcs/fly-by-wire/roll/flaperon-right-deflection-deg">
-            <input>fcs/fly-by-wire/roll/mech-bias-right</input>
+            <input>fcs/fly-by-wire/roll/mech-bias-hyd-right</input>
             <noscale/>
             <traverse>
                 <setting>
@@ -470,9 +478,17 @@
                 </sum>
             </function>
         </fcs_function>
+        
+         <switch name="fcs/fly-by-wire/roll/mech-bias-hyd-left">
+          <default value="0"/>
+          <test  logic="OR" value="fcs/fly-by-wire/roll/mech-bias-left">
+            systems/hydraulics/sysa-psi ge 2000
+            systems/hydraulics/sysb-psi ge 2000
+          </test>
+         </switch>
 
         <kinematic name="fcs/fly-by-wire/roll/flaperon-left-deflection-deg">
-            <input>fcs/fly-by-wire/roll/mech-bias-left</input>
+            <input>fcs/fly-by-wire/roll/mech-bias-hyd-left</input>
             <noscale/>
             <traverse>
                 <setting>
@@ -522,21 +538,9 @@
             <input>-fcs/fly-by-wire/roll/flaperon-left-deflection-deg</input>
             <input>fcs/fly-by-wire/roll/flaperon-right-deflection-deg</input>
         </summer>
-		
-		 <switch name="fcs/fly-by-wire/aileron-hyd">
-		  <default value="0"/>
-          <test  logic="OR" value="fcs/fly-by-wire/roll/aileron-pos-deg">
-	        systems/hydraulics/sysa-psi ge 2000
-			systems/hydraulics/sysb-psi ge 2000
-          </test>
-	      <test  logic="OR" value="0">
-            systems/hydraulics/sysa-psi lt 2000
-		    systems/hydraulics/sysb-psi lt 2000
-         </test>
-         </switch>
 
         <aerosurface_scale name="fcs/fly-by-wire/roll/aileron-pos-norm">
-            <input>fcs/fly-by-wire/aileron-hyd</input>
+            <input>fcs/fly-by-wire/roll/aileron-pos-deg</input>
             <zero_centered> true </zero_centered>
             <domain>
                 <min> -43 </min>
@@ -813,8 +817,16 @@
             <!-- defl. limit = 30, rate limit = 120 deg/s -->
         </lag_filter>
 
+        <switch name="fcs/fly-by-wire/yaw/hyd">
+          <default value="0"/>
+          <test  logic="OR" value="fcs/fly-by-wire/yaw/rudder-lag">
+            systems/hydraulics/sysa-psi ge 2000
+            systems/hydraulics/sysb-psi ge 2000
+          </test>
+         </switch>
+
         <kinematic name="fcs/fly-by-wire/yaw/rudder-deflection-deg">
-            <input>fcs/fly-by-wire/yaw/rudder-lag</input>
+            <input>fcs/fly-by-wire/yaw/hyd</input>
             <noscale/>
             <traverse>
                 <setting>
@@ -831,21 +843,9 @@
                 <max>  30 </max>
             </clipto>
         </kinematic>
-		
-		<switch name="fcs/fly-by-wire/rudder-hyd">
-		  <default value="0"/>
-          <test  logic="OR" value="fcs/fly-by-wire/yaw/rudder-deflection-deg">
-	        systems/hydraulics/sysa-psi ge 2000
-			systems/hydraulics/sysb-psi ge 2000
-          </test>
-	      <test  logic="OR" value="0">
-            systems/hydraulics/sysa-psi lt 2000
-		    systems/hydraulics/sysb-psi lt 2000
-         </test>
-         </switch>
 		 
         <aerosurface_scale name="fcs/fly-by-wire/yaw/rudder-pos-norm">
-            <input>fcs/fly-by-wire/rudder-hyd</input>
+            <input>fcs/fly-by-wire/yaw/rudder-deflection-deg</input>
             <zero_centered> true </zero_centered>
             <domain>
                 <min> -30.0 </min>
@@ -1562,8 +1562,24 @@
             <gain> 0.5 </gain>
         </pure_gain>
 
+        <switch name="fcs/fly-by-wire/pitch/horz-tail-hyd">
+          <default value="0"/>
+          <test  logic="OR" value="fcs/fly-by-wire/pitch/horz-tail-deflection">
+            systems/hydraulics/sysa-psi ge 2000
+            systems/hydraulics/sysb-psi ge 2000
+          </test>
+         </switch>
+
+        <switch name="fcs/fly-by-wire/pitch/horz-tail-diff-hyd">
+          <default value="0"/>
+          <test  logic="OR" value="fcs/fly-by-wire/pitch/horz-tail-diff-deflection">
+            systems/hydraulics/sysa-psi ge 2000
+            systems/hydraulics/sysb-psi ge 2000
+          </test>
+         </switch>
+
         <kinematic name="fcs/fly-by-wire/pitch/horz-tail-deflection-deg">
-            <input>fcs/fly-by-wire/pitch/horz-tail-deflection</input>
+            <input>fcs/fly-by-wire/pitch/horz-tail-hyd</input>
             <noscale/>
             <traverse>
                 <setting>
@@ -1580,21 +1596,9 @@
                 <max>  25 </max>
             </clipto>
         </kinematic>
-		
-		<switch name="fcs/fly-by-wire/horz-tail-hyd">
-		  <default value="0"/>
-          <test  logic="OR" value="fcs/fly-by-wire/pitch/horz-tail-deflection-deg">
-	        systems/hydraulics/sysa-psi ge 2000
-			systems/hydraulics/sysb-psi ge 2000
-          </test>
-	      <test  logic="OR" value="0">
-            systems/hydraulics/sysa-psi lt 2000
-		    systems/hydraulics/sysb-psi lt 2000
-         </test>
-         </switch>
 
         <aerosurface_scale name="fcs/fly-by-wire/pitch/horz-tail-deflection-norm">
-          <input>fcs/fly-by-wire/horz-tail-hyd</input>
+          <input>fcs/fly-by-wire/pitch/horz-tail-deflection-deg</input>
           <domain>
             <min>-25</min>
             <max>25</max>
@@ -1624,7 +1628,7 @@
         </fcs_function>
 
         <kinematic name="fcs/fly-by-wire/pitch/horz-tail-diff-deflection-deg">
-            <input>fcs/fly-by-wire/pitch/horz-tail-diff-deflection</input>
+            <input>fcs/fly-by-wire/pitch/horz-tail-diff-hyd</input>
             <noscale/>
             <traverse>
                 <setting>
@@ -1738,8 +1742,16 @@
             <c1> 0.136 </c1>
         </lag_filter>
 
+        <switch name="fcs/fly-by-wire/lef/pos-hyd">
+          <default value="0"/>
+          <test  logic="OR" value="fcs/fly-by-wire/lef/pos-direct">
+            systems/hydraulics/sysa-psi ge 2000
+            systems/hydraulics/sysb-psi ge 2000
+          </test>
+         </switch>
+
         <kinematic name="fcs/fly-by-wire/lef/lef-pos-deg">
-            <input>fcs/fly-by-wire/lef/pos-direct</input>
+            <input>fcs/fly-by-wire/lef/pos-hyd</input>
             <noscale/>
             <traverse>
                 <setting>
@@ -1760,22 +1772,10 @@
         <pure_gain name="fcs/fly-by-wire/lef/lef-pos-rad">
             <input>fcs/fly-by-wire/lef/lef-pos-deg</input>
             <gain>0.017453</gain>
-        </pure_gain>
-		
-		<switch name="fcs/fly-by-wire/lef-hyd">
-		  <default value="0"/>
-          <test  logic="OR" value="fcs/fly-by-wire/lef/lef-pos-deg">
-	        systems/hydraulics/sysa-psi ge 2000
-			systems/hydraulics/sysb-psi ge 2000
-          </test>
-	      <test  logic="OR" value="0">
-            systems/hydraulics/sysa-psi lt 2000
-		    systems/hydraulics/sysb-psi lt 2000
-         </test>
-         </switch>
+        </pure_gain>		
 
         <aerosurface_scale name="fcs/fly-by-wire/lef/lef-pos-norm">
-            <input>fcs/fly-by-wire/lef-hyd</input>
+            <input>fcs/fly-by-wire/lef/lef-pos-deg</input>
             <zero_centered> true </zero_centered>
             <domain>
                 <min> 0 </min>
@@ -1788,6 +1788,7 @@
         </aerosurface_scale>
 
         <fcs_function name="fcs/fly-by-wire/lef/lef-pos-r-norm">
+            <description>Inversed normalized LEF. Used in aero.</description>
             <function>
                 <difference>
                     <v>1</v>
@@ -1864,30 +1865,26 @@
             <c1> 8 </c1>
         </integrator>
 
+        <switch name="fcs/fly-by-wire/tef/hyd">
+          <default value="0"/>
+          <test  logic="OR" value="fcs/fly-by-wire/tef/int">
+            systems/hydraulics/sysa-psi ge 2000
+            systems/hydraulics/sysb-psi ge 2000
+          </test>
+         </switch>
+
         <fcs_function name="fcs/fly-by-wire/tef/tef-pos-deg">
             <function>
                 <sum>
-                    <property> fcs/fly-by-wire/tef/int </property>
+                    <property> fcs/fly-by-wire/tef/hyd </property>
                     <value> 1.5 </value>
                 </sum>
             </function>
         </fcs_function>
-		
-		<switch name="fcs/fly-by-wire/tef-hyd">
-		  <default value="0"/>
-          <test  logic="OR" value="fcs/fly-by-wire/tef/int">
-	        systems/hydraulics/sysa-psi ge 2000
-			systems/hydraulics/sysb-psi ge 2000
-          </test>
-	      <test  logic="OR" value="0">
-            systems/hydraulics/sysa-psi lt 2000
-		    systems/hydraulics/sysb-psi lt 2000
-         </test>
-         </switch>
 
         <pure_gain name="fcs/fly-by-wire/tef/tef-pos-norm">
             <description>Using integrator output as mechanical bias should not be feed into aerodynamics</description>
-            <input>fcs/fly-by-wire/tef-hyd</input>
+            <input>fcs/fly-by-wire/tef/hyd</input>
             <gain>0.05</gain>
         </pure_gain>
 
@@ -2067,13 +2064,10 @@
    </switch>
 
    <switch name="fcs/gear-hyd">
-		  <default value="0"/>
-          <test  logic="OR" value="gear/gear-cmd-norm">
-			systems/hydraulics/sysb-psi ge 2000
-          </test>
-	      <test  logic="OR" value="gear/gear-cmd-norm">
-		    systems/hydraulics/sysb-psi lt 2000
-          </test>
+	  <default value="fcs/gear-control"/>
+      <test  logic="OR" value="gear/gear-cmd-norm">
+		systems/hydraulics/sysb-psi ge 2000
+      </test>
    </switch>
 		 
    <kinematic name="fcs/gear-control">
@@ -2150,8 +2144,15 @@
     <!-- <output>fcs/speedbrake-pos-norm</output> -->
    </scheduled_gain>
 
+   <switch name="fcs/speedbrake-hyd">
+     <default value="0"/>
+     <test  logic="AND" value="fcs/speedbrake-scheduler">
+       systems/hydraulics/sysa-psi ge 2000
+     </test>
+    </switch>
+
    <kinematic name="fcs/speedbrake-control">
-    <input>fcs/speedbrake-scheduler</input>
+    <input>fcs/speedbrake-hyd</input>
     <traverse>
      <setting>
       <position>0</position>
@@ -2164,26 +2165,16 @@
     </traverse>
     <output>fcs/speedbrake-pos-deg</output>
    </kinematic>
-   
-    <switch name="fcs/speedbrake-hyd">
-     <default value="0"/>
-     <test  logic="AND" value="fcs/speedbrake-control">
-	   systems/hydraulics/sysa-psi ge 2000
-     </test>
-	 <test  logic="AND" value="0">
-       systems/hydraulics/sysa-psi lt 2000
-     </test>
-    </switch>
 
      <aerosurface_scale name="fcs/speedbrake-position-normalizer">
-     <input>fcs/speedbrake-hyd</input>
+     <input>fcs/speedbrake-control</input>
      <domain>
-    <min>0</min>
-    <max>60</max>
+        <min>0</min>
+        <max>60</max>
      </domain>
      <range>
-    <min>0</min>
-    <max>1</max>
+        <min>0</min>
+        <max>1</max>
      </range>
      <output>fcs/speedbrake-pos-norm</output>
    </aerosurface_scale>
@@ -2239,12 +2230,8 @@
 	<switch name="fcs/guntrigger">
 	<default value="0"/>
     <test logic="AND" value="1">
-     controls/armament/trigger eq 1
-	 systems/hydraulics/sysb-psi ge 2000
-    </test>
-	 <test logic="AND" value="0">
-     controls/armament/trigger eq 0
-	 systems/hydraulics/sysb-psi lt 2000
+         controls/armament/trigger eq 1
+    	 systems/hydraulics/sysb-psi ge 2000
     </test>
 	</switch>
   </channel>
