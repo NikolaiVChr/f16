@@ -1,3 +1,8 @@
+#
+# TODO list for F16.
+#
+
+
 Hydraulics
 ----------
 Make it depend on a failurable serviceable property.
@@ -9,11 +14,13 @@ Make electrical system
 
 Engine
 ------
-Make manual start/stop
+Make manual/auto start/stop
 
 Stores
 ------
-Mkae fuel tank selectable in payload dialog
+Make ext. fuel tanks selectable in payload dialog
+Model conformal fuel tanks.
+Find real positions of payloads, is only approx. positions now.
 
 Damage
 ------
@@ -25,5 +32,19 @@ Add doppler and rcs.
 
 Cockpit
 -------
-Make center mount, less deep, so pilot get good view of MFDs.
+Make center mount less deep, so pilot get good view of MFDs.
 Make warning lights and master warning work.
+Some of the cockpit have some strange untextured panels going on, fix.
+
+Sound
+-----
+Crash, and break sounds.
+Weapons sounds.
+
+HUD
+---
+Make tons of features.
+
+MFDs
+----
+Add tons of pages

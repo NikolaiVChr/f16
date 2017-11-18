@@ -1,0 +1,32 @@
+#
+# Authors of Flightgear F-16
+#
+
+
+Erik Hofman
+- Main author
+- Simplified FDM
+- F16 block 15+ FDM
+
+Pensacola
+- Liveries
+
+Martin "Pegasus" Schmitt
+- Cockpit textures
+
+Nikolai V. Chr.
+- F16 block 10 and YF-16 FDM
+- Danish and prototype livery
+- Various changes to radar, MFD, HUD
+- Added Pylon and missile code
+
+Richard Harrison
+- Radar
+- MFDs
+- HUD
+
+Jonathan Redpath
+- Hydraulics
+
+Justin Nicholson
+- Splashes

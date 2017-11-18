@@ -343,6 +343,8 @@
    <property>/sim/model/pushback/kd</property>
  </system>
  <system file="hook"/>
+ <system file="f16-hydraulics"/>
+ 
  <flight_control file="Systems/jsb-controls"/>
  <propulsion file="Systems/jsb-propulsion-block52"/>
  <aerodynamics file="Systems/jsb-aerodynamics-block15.xml"/>
