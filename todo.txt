@@ -1,0 +1,16 @@
+Hydraulics
+----------
+Make it depend on a failurable serviceable property.
+If there is cockpit controls for it, make them work.
+
+Engine
+------
+Make manual start/stop
+
+Weapons
+-------
+Add damage.nas
+
+Radar
+-----
+Add doppler and rcs.
