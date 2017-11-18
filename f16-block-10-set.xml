@@ -34,13 +34,13 @@
    <splash-texture>Aircraft/f16/f16-splash.png</splash-texture>
   </startup>
 
-  <!--<previews>
+  <previews>
             <preview>
                 <type>exterior</type>
                 <splash type="bool">true</splash>
-                <path>gui/splash/yf16-1.png</path>
+                <path>gui/splash/f16-1.png</path>
             </preview>
-  </previews>-->
+  </previews>
 
 
   <model>

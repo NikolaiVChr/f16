@@ -3,14 +3,27 @@ Hydraulics
 Make it depend on a failurable serviceable property.
 If there is cockpit controls for it, make them work.
 
+Electrical
+----------
+Make electrical system
+
 Engine
 ------
 Make manual start/stop
 
-Weapons
--------
+Stores
+------
+Mkae fuel tank selectable in payload dialog
+
+Damage
+------
 Add damage.nas
 
 Radar
 -----
 Add doppler and rcs.
+
+Cockpit
+-------
+Make center mount, less deep, so pilot get good view of MFDs.
+Make warning lights and master warning work.
