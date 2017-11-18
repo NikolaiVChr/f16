@@ -23,7 +23,7 @@ MATERIAL "Material.007" rgb 0.8 0.8 0.8 amb 0.5 0.5 0.5 emis 0 0 0 spec 1 1 1 sh
 OBJECT world
 kids 1
 OBJECT group
-name "RIGHT_AUX_CONSOLE"
+name "RIGHT_AUX_CONSOLE_GRP"
 kids 18
 OBJECT poly
 name "RIGHT_AUX_CONSOLE"
@@ -394,7 +394,7 @@ OBJECT poly
 name "CAB_PRESS_face"
 data 17
 EPU_FUEL_disk.001
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -2181,7 +2181,7 @@ OBJECT poly
 name "CAUTION_PANEL_1"
 data 13
 CAUTION_PANEL
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 32
@@ -2478,7 +2478,7 @@ OBJECT poly
 name "----.001_lit"
 data 12
 ----.001_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -2499,7 +2499,7 @@ OBJECT poly
 name "----.001_unlit"
 data 14
 ----.001_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -2599,7 +2599,7 @@ OBJECT poly
 name "----.002_lit"
 data 12
 ----.002_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -2620,7 +2620,7 @@ OBJECT poly
 name "----.002_unlit"
 data 14
 ----.002_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -2720,7 +2720,7 @@ OBJECT poly
 name "----.003_lit"
 data 12
 ----.003_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -2741,7 +2741,7 @@ OBJECT poly
 name "----.003_unlit"
 data 14
 ----.003_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -2841,7 +2841,7 @@ OBJECT poly
 name "ADC_lit"
 data 7
 ADC_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -2862,7 +2862,7 @@ OBJECT poly
 name "ADC_unlit"
 data 9
 ADC_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -2962,7 +2962,7 @@ OBJECT poly
 name "AFT_FUEL_LOW_lit"
 data 16
 AFT_FUEL_LOW_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -2983,7 +2983,7 @@ OBJECT poly
 name "AFT_FUEL_LOW_unlit"
 data 18
 AFT_FUEL_LOW_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -3083,7 +3083,7 @@ OBJECT poly
 name "AFT_NOT_ENGAGED_lit"
 data 19
 AFT_NOT_ENGAGED_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -3104,7 +3104,7 @@ OBJECT poly
 name "AFT_NOT_ENGAGED_unlit"
 data 21
 AFT_NOT_ENGAGED_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -3204,7 +3204,7 @@ OBJECT poly
 name "ANTI_SKID_lit"
 data 13
 ANTI_SKID_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -3225,7 +3225,7 @@ OBJECT poly
 name "ANTI_SKID_unlit"
 data 15
 ANTI_SKID_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -3325,7 +3325,7 @@ OBJECT poly
 name "AVIONICS_lit"
 data 12
 AVIONICS_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -3346,7 +3346,7 @@ OBJECT poly
 name "AVIONICS_unlit"
 data 14
 AVIONICS_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -3446,7 +3446,7 @@ OBJECT poly
 name "BUC_lit"
 data 7
 BUC_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -3467,7 +3467,7 @@ OBJECT poly
 name "BUC_unlit"
 data 9
 BUC_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -3567,7 +3567,7 @@ OBJECT poly
 name "CABIN_PRESS_lit"
 data 15
 CABIN_PRESS_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -3588,7 +3588,7 @@ OBJECT poly
 name "CABIN_PRESS_unlit"
 data 17
 CABIN_PRESS_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -3688,7 +3688,7 @@ OBJECT poly
 name "C_ADC_lit"
 data 9
 C_ADC_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -3709,7 +3709,7 @@ OBJECT poly
 name "C_ADC_unlit"
 data 11
 C_ADC_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -3809,7 +3809,7 @@ OBJECT poly
 name "ECM_lit"
 data 7
 ECM_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -3830,7 +3830,7 @@ OBJECT poly
 name "ECM_unlit"
 data 9
 ECM_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -3930,7 +3930,7 @@ OBJECT poly
 name "EEC_lit"
 data 7
 EEC_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -3951,7 +3951,7 @@ OBJECT poly
 name "EEC_unlit"
 data 9
 EEC_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -4051,7 +4051,7 @@ OBJECT poly
 name "ELEC_SYS_lit"
 data 12
 ELEC_SYS_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -4072,7 +4072,7 @@ OBJECT poly
 name "ELEC_SYS_unlit"
 data 14
 ELEC_SYS_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -4172,7 +4172,7 @@ OBJECT poly
 name "ENGINE_FAULT_lit"
 data 16
 ENGINE_FAULT_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -4193,7 +4193,7 @@ OBJECT poly
 name "ENGINE_FAULT_unlit"
 data 18
 ENGINE_FAULT_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -4293,7 +4293,7 @@ OBJECT poly
 name "EQUIP_HOT_lit"
 data 13
 EQUIP_HOT_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -4314,7 +4314,7 @@ OBJECT poly
 name "EQUIP_HOT_unlit"
 data 15
 EQUIP_HOT_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -4414,7 +4414,7 @@ OBJECT poly
 name "FLT_CONT_SYS_lit"
 data 16
 FLT_CONT_SYS_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -4435,7 +4435,7 @@ OBJECT poly
 name "FLT_CONT_SYS_unlit"
 data 18
 FLT_CONT_SYS_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -4535,7 +4535,7 @@ OBJECT poly
 name "FUEL_OIL_HOT_lit"
 data 16
 FUEL_OIL_HOT_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -4556,7 +4556,7 @@ OBJECT poly
 name "FUEL_OIL_HOT_unlit"
 data 18
 FUEL_OIL_HOT_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -4656,7 +4656,7 @@ OBJECT poly
 name "FWD_FUEL_LOW_lit"
 data 16
 FWD_FUEL_LOW_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -4677,7 +4677,7 @@ OBJECT poly
 name "FWD_FUEL_LOW_unlit"
 data 18
 FWD_FUEL_LOW_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -4777,7 +4777,7 @@ OBJECT poly
 name "HOOK_lit"
 data 8
 HOOK_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -4798,7 +4798,7 @@ OBJECT poly
 name "HOOK_unlit"
 data 10
 HOOK_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -4898,7 +4898,7 @@ OBJECT poly
 name "IFF_lit"
 data 7
 IFF_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -4919,7 +4919,7 @@ OBJECT poly
 name "IFF_unlit"
 data 9
 IFF_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -5019,7 +5019,7 @@ OBJECT poly
 name "INLET_ICING_lit"
 data 15
 INLET_ICING_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -5040,7 +5040,7 @@ OBJECT poly
 name "INLET_ICING_unlit"
 data 17
 INLET_ICING_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -5140,7 +5140,7 @@ OBJECT poly
 name "LE_FLAPS_lit"
 data 12
 LE_FLAPS_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -5161,7 +5161,7 @@ OBJECT poly
 name "LE_FLAPS_unlit"
 data 14
 LE_FLAPS_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -5261,7 +5261,7 @@ OBJECT poly
 name "NUCLEAR_lit"
 data 11
 NUCLEAR_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -5282,7 +5282,7 @@ OBJECT poly
 name "NUCLEAR_unlit"
 data 13
 NUCLEAR_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -5382,7 +5382,7 @@ OBJECT poly
 name "NWS_FAIL_lit"
 data 12
 NWS_FAIL_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -5403,7 +5403,7 @@ OBJECT poly
 name "NWS_FAIL_unlit"
 data 14
 NWS_FAIL_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -5503,7 +5503,7 @@ OBJECT poly
 name "OVERHEAT_lit"
 data 12
 OVERHEAT_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -5524,7 +5524,7 @@ OBJECT poly
 name "OVERHEAT_unlit"
 data 14
 OVERHEAT_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -5624,7 +5624,7 @@ OBJECT poly
 name "OXY_LOW_lit"
 data 11
 OXY_LOW_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -5645,7 +5645,7 @@ OBJECT poly
 name "OXY_LOW_unlit"
 data 13
 OXY_LOW_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -5745,7 +5745,7 @@ OBJECT poly
 name "PROBE_HEAT_lit"
 data 14
 PROBE_HEAT_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -5766,7 +5766,7 @@ OBJECT poly
 name "PROBE_HEAT_unlit"
 data 16
 PROBE_HEAT_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -5866,7 +5866,7 @@ OBJECT poly
 name "RADAR_ALT_lit"
 data 13
 RADAR_ALT_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -5887,7 +5887,7 @@ OBJECT poly
 name "RADAR_ALT_unlit"
 data 15
 RADAR_ALT_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -5987,7 +5987,7 @@ OBJECT poly
 name "SEAT_NOT_ARMED_lit"
 data 18
 SEAT_NOT_ARMED_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -6008,7 +6008,7 @@ OBJECT poly
 name "SEAT_NOT_ARMED_unlit"
 data 20
 SEAT_NOT_ARMED_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -6108,7 +6108,7 @@ OBJECT poly
 name "SEC_lit"
 data 7
 SEC_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -6129,7 +6129,7 @@ OBJECT poly
 name "SEC_unlit"
 data 9
 SEC_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -6229,7 +6229,7 @@ OBJECT poly
 name "STORES_CONFIG_lit"
 data 17
 STORES_CONFIG_lit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -6250,7 +6250,7 @@ OBJECT poly
 name "STORES_CONFIG_unlit"
 data 19
 STORES_CONFIG_unlit
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -7559,7 +7559,7 @@ OBJECT poly
 name "EPU_FUEL_disk"
 data 13
 EPU_FUEL_disk
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -10248,7 +10248,7 @@ OBJECT poly
 name "HYD_PRESS_1"
 data 9
 HYD_PRESS
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 9
@@ -11592,7 +11592,7 @@ OBJECT poly
 name "HYD_PRESS_A_disk"
 data 16
 HYD_PRESS_A_disk
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -13276,7 +13276,7 @@ OBJECT poly
 name "HYD_PRESS_B_disk"
 data 16
 HYD_PRESS_B_disk
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -14960,7 +14960,7 @@ OBJECT poly
 name "LIQ_OXY_disk"
 data 12
 LIQ_OXY_disk
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 16

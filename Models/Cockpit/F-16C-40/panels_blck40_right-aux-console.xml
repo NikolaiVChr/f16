@@ -4,7 +4,43 @@
 
  <path>panels_blck40_right-aux-console.ac</path>
 
+ <!-- START HYDR GAUGE -->
+<animation>
+  <type>rotate</type>
+  <object-name>HYD_PRESS_A_needle</object-name>
+  <property>fdm/jsbsim/systems/hydraulics/sysa-psi</property>
+  <factor>0.08</factor>
+  <offset-deg>21</offset-deg>
+  <center>
+   <x-m>-0.17667</x-m>
+   <y-m>0.40053</y-m>
+   <z-m>0.00423</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>-1</z>
+  </axis>
+ </animation>
 
+ <animation>
+  <type>rotate</type>
+  <object-name>HYD_PRESS_B_needle</object-name>
+  <property>fdm/jsbsim/systems/hydraulics/sysb-psi</property>
+  <factor>0.08</factor>
+  <offset-deg>21</offset-deg>
+  <center>
+   <x-m>-0.15391</x-m>
+   <y-m>0.42249</y-m>
+   <z-m>0.00423</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>-1</z>
+  </axis>
+ </animation>
+ 
  <!-- START FUEL GAUGE -->
  <animation>
   <type>rotate</type>

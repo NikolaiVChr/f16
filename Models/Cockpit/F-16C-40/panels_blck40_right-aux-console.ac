@@ -394,7 +394,7 @@ OBJECT poly
 name "CAB_PRESS_face"
 data 17
 EPU_FUEL_disk.001
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -2167,7 +2167,7 @@ OBJECT poly
 name "CAUTION_PANEL_1"
 data 13
 CAUTION_PANEL
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 32
@@ -3680,7 +3680,7 @@ OBJECT poly
 name "EPU_FUEL_disk"
 data 13
 EPU_FUEL_disk
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -6369,7 +6369,7 @@ OBJECT poly
 name "HYD_PRESS_1"
 data 9
 HYD_PRESS
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 9
@@ -7713,7 +7713,7 @@ OBJECT poly
 name "HYD_PRESS_A_disk"
 data 16
 HYD_PRESS_A_disk
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -9397,7 +9397,7 @@ OBJECT poly
 name "HYD_PRESS_B_disk"
 data 16
 HYD_PRESS_B_disk
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -11081,7 +11081,7 @@ OBJECT poly
 name "LIQ_OXY_disk"
 data 12
 LIQ_OXY_disk
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 16

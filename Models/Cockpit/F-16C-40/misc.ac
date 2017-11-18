@@ -143,7 +143,7 @@ OBJECT poly
 name "MISC_1"
 data 4
 MISC
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 14

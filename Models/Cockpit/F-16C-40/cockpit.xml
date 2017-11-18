@@ -3,11 +3,6 @@
 <PropertyList>
 
  <path>cockpit.ac</path>
-  <offsets>
-   <x-m></x-m>
-   <y-m></y-m>
-   <z-m>0.0</z-m>
-  </offsets>
 
  <model>
   <name>HUD</name>
@@ -16,13 +11,7 @@
 
  <model>
   <name>AcesII</name>
-  <path>Aircraft/f16/Models/Cockpit/AcesII/acesII.xml</path>
-  <offsets>
-   <x-m></x-m>
-   <y-m></y-m>
-   <z-m></z-m>
-  </offsets>
- 
+  <path>Aircraft/f16/Models/Cockpit/AcesII/acesII.xml</path> 
  </model>
  
  <model>

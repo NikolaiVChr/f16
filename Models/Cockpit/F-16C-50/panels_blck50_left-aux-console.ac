@@ -297,7 +297,7 @@ OBJECT poly
 name "ALT_GEAR_1"
 data 8
 ALT_GEAR
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 11
@@ -406,7 +406,7 @@ OBJECT poly
 name "EW_LEFT_1"
 data 7
 EW_LEFT
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -481,7 +481,7 @@ OBJECT poly
 name "EW_RIGHT_1"
 data 8
 EW_RIGHT
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -505,7 +505,7 @@ OBJECT poly
 name "GEAR"
 data 4
 GEAR
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 30
@@ -1461,7 +1461,7 @@ OBJECT poly
 name "HMD_1"
 data 3
 HMD
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -1536,7 +1536,7 @@ OBJECT poly
 name "SPEED_BRAKE_1"
 data 11
 SPEED_BRAKE
-texture "../Textures/panels-MLU-left_right-aux-consoles.rgb"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 texrep 1 1
 crease 30.000000
 numvert 4
