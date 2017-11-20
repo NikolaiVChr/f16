@@ -8,6 +8,13 @@ Modifications author: Nikolai V. Chr.
 	<parameters>
 		<metallic type="float">0.75</metallic><!-- 0-1 -->
 		<ambient-factor type="float">0.75</ambient-factor><!-- 0-1 -->
+		<texture n="6">
+            <image>Aircraft/f16/Models/Effects/fuselage/ao.png</image>
+            <filter>linear</filter>
+            <wrap-s>clamp</wrap-s>
+            <wrap-t>clamp</wrap-t>
+            <internal-format>normalized</internal-format>
+          </texture>
 	</parameters>
 	<!--
 		Textures:
