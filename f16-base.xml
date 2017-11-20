@@ -966,6 +966,9 @@
  <stations>
    <file>Aircraft/f16/Nasal/station-manager.nas</file>
  </stations>
+ <fc>
+   <file>Aircraft/f16/Nasal/fire-control.nas</file>
+ </fc>
  <pylons>
    <file>Aircraft/f16/Nasal/pylons.nas</file>
  </pylons>
