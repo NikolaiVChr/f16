@@ -3,7 +3,11 @@
 <PropertyList include="f16-base.xml">
 
  <sim>
-  <description>General Dynamics F-16 block 50</description>
+  <description>General Dynamics F-16CJ block 50</description>
+  <long-description>
+   The General Dynamics F-16CJ Fighting Falcon is a single-engine supersonic multirole fighter aircraft originally developed by General Dynamics (now Lockheed Martin) for the United States Air Force (USAF). Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
+   The Fighting Falcon has key features including a frameless bubble canopy for better visibility, side-mounted control stick to ease control while maneuvering, a seat reclined 30 degrees to reduce the effect of g-forces on the pilot, and the first use of a relaxed static stability/fly-by-wire flight control system which helps to make it a nimble aircraft.
+  </long-description>
   <author>Erik Hofman, Pensacola (skin textures), Martin "Pegasus" Schmitt (panel textures), Richard Harrison (MFD, HUD), Nikolai V. Chr. (YF-16 Aero and FCS)</author>
   <status>production</status>
   <rating>
@@ -14,7 +18,7 @@
   </rating>
   <flight-model>jsb</flight-model>
   <aero>f16b50</aero>
-  <variant-of>f16</variant-of>
+  <variant-of>f16-block-52</variant-of>
   <tags>
       <tag>general-dynamics</tag>
       <tag>1970s</tag>
