@@ -734,6 +734,7 @@ var range_control = func(n) {
 	elsif (n == 100 ) { range_radar = 100 }
 	elsif (n == 200 ) { range_radar = 200 }
 	RangeRadar2.setValue(range_radar);
+    screen.log.write("Radar range "~range_radar~" NM", 0.5, 0.5, 0.5);
 }
 
 wcs_mode_sel = func(mode) {
