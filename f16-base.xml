@@ -8,6 +8,8 @@
    The Fighting Falcon has key features including a frameless bubble canopy for better visibility, side-mounted control stick to ease control while maneuvering, a seat reclined 30 degrees to reduce the effect of g-forces on the pilot, and the first use of a relaxed static stability/fly-by-wire flight control system which helps to make it a nimble aircraft.
   </long-description>
 
+  <minimum-fg-version>2017.3.1</minimum-fg-version>
+
   <!-- enable "parkpos=AVAILABLE" option for the F-16 -->
   <dimensions>
    <radius-m type="double">10.0</radius-m>
@@ -272,6 +274,13 @@
     <menu n="100">
      <enabled type="bool">true</enabled>
      <item>
+        <label>Repair</label>
+        <binding>
+            <command>nasal</command>
+            <script>crash.repair();</script>
+        </binding>
+    </item>
+     <item>
       <label>Select Livery</label>
       <binding>
        <command>nasal</command>
@@ -320,7 +329,7 @@
    </key>
    <key>
     <name>e (lower case 'e')</name>
-    <desc>fire the cannon</desc>
+    <desc>trigger</desc>
    </key>
    <key>
     <name>Delete</name>
@@ -349,6 +358,18 @@
    <key>
     <name>u/U</name>
     <desc>seat up/down</desc>
+   </key>
+   <key>
+    <name>m</name>
+    <desc>masterarm</desc>
+   </key>
+   <key>
+    <name>w</name>
+    <desc>Select weapon type</desc>
+   </key>
+   <key>
+    <name>y</name>
+    <desc>Select next radar contact</desc>
    </key>
   </help>
  </sim>
@@ -417,13 +438,13 @@
      <binding>
       <command>property-assign</command>
       <property>controls/armament/trigger</property>
-      <value>true</value>
+      <value>1</value>
      </binding>
      <mod-up>
       <binding>
        <command>property-assign</command>
        <property>controls/armament/trigger</property>
-       <value>false</value>
+       <value>0</value>
       </binding>
      </mod-up>
     </key>
@@ -520,14 +541,14 @@
      </binding>
     </key>
     <key n="121">
-                <name>y</name>
-                <desc>Next target select</desc>
-                <binding>
-                    <command>property-assign</command>
-                    <property>sim/model/f16/instrumentation/radar-awg-9/select-target</property>
-                    <value>1</value>
-                </binding>
-            </key>
+          <name>y</name>
+          <desc>Next target select</desc>
+          <binding>
+              <command>property-assign</command>
+              <property>sim/model/f16/instrumentation/radar-awg-9/select-target</property>
+              <value>1</value>
+          </binding>
+      </key>
       <key n="82">
           <name>R</name>
           <desc>Increase Radar Range</desc>
@@ -542,6 +563,26 @@
           <binding>
               <command>nasal</command>
               <script>awg_9.range_control(-1);</script>
+          </binding>
+      </key>
+      <key n="119">
+          <name>w</name>
+          <desc>Cycle Weapon Type</desc>
+          <binding>
+              <command>nasal</command>
+              <script>pylons.fcs.cycleWeapon();</script>
+          </binding>
+      </key>
+      <key n="109">
+        <name>m</name>
+        <desc>Masterarm</desc>
+          <binding>
+              <command>property-toggle</command>
+              <property>controls/armament/master-arm</property>
+          </binding>
+          <binding>
+              <command>nasal</command>
+              <script>screen.log.write("Master-arm "~(getprop("controls/armament/master-arm")==0?"OFF":"ON"), 0.5, 0.5, 0.5);</script>
           </binding>
       </key>
    </keyboard>
@@ -613,13 +654,13 @@
     <name>Fuselage AFT Tank</name>
    </tank>
    <tank n="2">
-    <name>Right Drop Tank</name>
+    <name>Not attached</name>
    </tank>
    <tank n="3">
-    <name>Left Drop Tank</name>
+    <name>Not attached</name>
    </tank>
    <tank n="4">
-    <name>Center Drop Tank</name>
+    <name>Not attached</name>
    </tank>
    <tank n="5">
     <name>Right Wing Tank</name>

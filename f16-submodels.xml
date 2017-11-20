@@ -22,10 +22,10 @@
   <submodel>
     <name>gun-pod</name>
     <model>Aircraft/f16/Models/Armament/Weapons/M61A1/tracer.xml</model>
-    <trigger>fcs/guntrigger</trigger>
+    <trigger>fdm/jsbsim/fcs/guntrigger</trigger>
     <speed>2041.0</speed>
     <repeat>true</repeat>
-    <delay>0.15</delay>
+    <delay>0.3</delay>
     <count>-1</count>
     <x-offset>  3.0</x-offset>
     <y-offset> -2.5</y-offset>
@@ -41,10 +41,10 @@
   <submodel>
     <name>gun-bullet</name>
     <model>Models/Geometry/null.ac</model>
-    <trigger>fcs/guntrigger</trigger>
+    <trigger>fdm/jsbsim/fcs/guntrigger</trigger>
     <speed>2041.0</speed>
     <repeat>true</repeat>
-    <delay>0</delay>
+    <delay>0.01</delay><!-- 6000 per min -->
     <count>-1</count>
     <x-offset>  3.0</x-offset>
     <y-offset> -2.5</y-offset>
@@ -66,7 +66,7 @@
   <submodel>
     <name>gunsmoke</name>
     <model>Aircraft/f16/Models/Armament/Weapons/M61A1/smoke.xml</model>
-    <trigger>fcs/guntrigger</trigger>
+    <trigger>fdm/jsbsim/fcs/guntrigger</trigger>
     <speed>10</speed>
     <repeat>true</repeat>
     <delay>0.01</delay>

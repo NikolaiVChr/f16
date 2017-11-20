@@ -8,7 +8,6 @@
     <property>fcs/canopy-engage</property>
     <property>fcs/fbw-override</property>
 	<property>fcs/gear-wow</property>
-	<property>controls/armament/trigger</property>
 
 <!-- begin: control system by Nikolai V. Chr. -->
     <property value="2">fcs/fly-by-wire/K_A</property><!-- should be 2000, but JSB cannot handle that -->
@@ -2226,14 +2225,14 @@
 
   </channel>
   
-  <channel name="Gun">
+  <!--<channel name="Gun">
 	<switch name="fcs/guntrigger">
 	<default value="0"/>
     <test logic="AND" value="1">
-         controls/armament/trigger eq 1
+         /controls/armament/trigger eq 1
     	 systems/hydraulics/sysb-psi ge 2000
     </test>
 	</switch>
-  </channel>
+  </channel>-->
 
  </flight_control>

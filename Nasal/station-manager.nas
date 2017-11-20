@@ -27,6 +27,7 @@ var Station = {
 		p.launcherMass=0;
 		p.guiListener = nil;
 		p.currentName = nil;	
+		p.currentSet = nil;
 		return p;
 	},
 
@@ -341,7 +342,7 @@ var SubModelWeapon = {
 	},
 
 	loop: func {
-		me.ammo = me.getAmmo();
+		me.ammo = me.getAmmo();#print("ammo "~me.ammo);
 		for(me.i = 0;me.i<size(me.tracerSubModelNumbers);me.i+=1) {
 			setprop("ai/submodels/submodel["~me.tracerSubModelNumbers[me.i]~"]/count",me.ammo>0?-1:0);
 		}
@@ -349,11 +350,12 @@ var SubModelWeapon = {
 
 		#not sure how smart it is to do this all the time, but..:
 		if (me.operableFunction != nil and !me.operableFunction()) {
+			#print("gun missing hydraulics");
 			me.trigger.unalias();
 			me.trigger.setBoolValue(0);
 		} else {
 			if (me.active) {
-				me.trigger.alias(triggerNode);
+				me.trigger.alias(me.triggerNode);
 			} else {
 				me.trigger.unalias();
 				me.trigger.setBoolValue(0);
@@ -361,13 +363,18 @@ var SubModelWeapon = {
 		}
 	},
 
-	setActive: func (triggerNode) {
+	start: func (triggerNode = nil) {
+		print("starting gun");
+		if (triggerNode==nil) {
+			triggerNode=props.globals.getNode("controls/armament/trigger");
+		}
 		# not sure if this is smart
 		me.active = 1;
 		me.triggerNode = triggerNode;
 	},
 
-	setInactive: func {
+	stop: func {
+		print("stopping gun");
 		# not sure if this is smart
 		me.active = 0;
 	},
@@ -407,10 +414,11 @@ var FuelTank = {
 #
 # Attributes:
 #  fuel tank number
-	new: func (name, fuelTankNumber, capacity) {
+	new: func (name, fuelTankNumber, capacity_gal) {
 		var s = {parents:[FuelTank]};
 		s.type = name;
 		s.typeLong = name;
+		s.capacity = capacity_gal;
 		s.fuelTankNumber = fuelTankNumber;
 
 		# these 3 needs to be here and be 0
@@ -422,13 +430,15 @@ var FuelTank = {
 
 	mount: func {
 		# set capacity in fuel tank
-		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/level-norm", 100);
+		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/capacity-gal_us", me.capacity);
+		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/level-gal_us", me.capacity);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/selected", 1);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", me.type);
 	},
 
 	eject: func {
 		# spill out all the fuel?
+		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/capacity-gal_us", 0);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/level-norm", 0);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/selected", 0);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", "Not attached");
@@ -436,6 +446,7 @@ var FuelTank = {
 
 	del: func {
 		# delete all the fuel
+		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/capacity-gal_us", 0);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/level-norm", 0);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/selected", 0);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", "Not attached");

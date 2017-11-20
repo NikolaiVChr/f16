@@ -69,9 +69,9 @@
    <y> 80 </y>
    <z> -40 </z>
    </location>
-   <capacity unit="LBS"> 2991 </capacity>
+   <capacity unit="LBS"> 3996 </capacity>
    <contents unit="LBS"> 0 </contents>
-   <type>JP-4</type>
+   <type>JP-8</type>
    <priority> 1 </priority>
   </tank>
   <tank type="FUEL"> <!-- Left External Tank -->
@@ -80,9 +80,9 @@
    <y> -80 </y>
    <z> -40 </z>
    </location>
-   <capacity unit="LBS"> 2991 </capacity>
+   <capacity unit="LBS"> 3996 </capacity>
    <contents unit="LBS"> 0 </contents>
-   <type>JP-4</type>
+   <type>JP-8</type>
    <priority> 1 </priority>
   </tank>
   <tank type="FUEL"> <!-- Center External Tank -->
@@ -91,14 +91,14 @@
    <y>   0 </y>
    <z> -50 </z>
    </location>
-   <capacity unit="LBS"> 2425 </capacity>
+   <capacity unit="LBS"> 2040 </capacity>
    <contents unit="LBS"> 0 </contents>
-   <type>JP-4</type>
+   <type>JP-8</type>
    <priority> 1 </priority>
   </tank>
   <tank type="FUEL"> <!-- Right wing tank -->
    <location unit="IN">
-    <x> -176.5 </x>
+    <x> -193 </x>
    <y>  80 </y>
    <z>   0 </z>
    </location>
@@ -109,7 +109,7 @@
   </tank>
   <tank type="FUEL"> <!-- Left wing tank -->
    <location unit="IN">
-    <x> -176.5 </x>
+    <x> -193 </x>
    <y> -80 </y>
    <z>   0 </z>
    </location>
