@@ -1,26 +1,26 @@
 AC3Db
-MATERIAL "ac3dmat1" rgb 1 1 1  amb 0.2 0.2 0.2  emis 0 0 0  spec 0.2 0.2 0.2  shi 128  trans 0
-MATERIAL "ac3dmat12" rgb 0.266667 0.266667 0.266667  amb 0.266667 0.266667 0.266667  emis 0 0 0  spec 0.5 0.5 0.5  shi 10  trans 0
-MATERIAL "ac3dmat1" rgb 0.914 0.961 1  amb 0.929 0.957 1  emis 0.835 0.914 1  spec 0 0 0  shi 0  trans 0
-MATERIAL "ac3dmat6" rgb 0.227 0.38 0  amb 0.227 0.38 0  emis 0.451 0.827 0  spec 0.227 0.227 0.227  shi 17  trans 0
-MATERIAL "ac3dmat3" rgb 0.702 0.039 0  amb 0.702 0.039 0  emis 1 0.137 0  spec 0.227 0.227 0.227  shi 17  trans 0
-MATERIAL "ac3dmat6" rgb 0.227 0.38 0  amb 0.227 0.38 0  emis 0 0 0  spec 0.227 0.227 0.227  shi 17  trans 0
-MATERIAL "ac3dmat3" rgb 0.702 0.039 0  amb 0.702 0.039 0  emis 0 0 0  spec 0.227 0.227 0.227  shi 17  trans 0
+MATERIAL "fuselage1Mat" rgb 1 1 1  amb 0.2 0.2 0.2  emis 0 0 0  spec 0.2 0.2 0.2  shi 128  trans 0
+MATERIAL "unknownMat" rgb 0.266667 0.266667 0.266667  amb 0.266667 0.266667 0.266667  emis 0 0 0  spec 0.5 0.5 0.5  shi 10  trans 0
+MATERIAL "hookMat" rgb 0.914 0.961 1  amb 0.929 0.957 1  emis 0.835 0.914 1  spec 0 0 0  shi 0  trans 0
+MATERIAL "lightGreen1Mat" rgb 0.227 0.38 0  amb 0.227 0.38 0  emis 0.451 0.827 0  spec 0.227 0.227 0.227  shi 17  trans 0
+MATERIAL "lightRed1Mat" rgb 0.702 0.039 0  amb 0.702 0.039 0  emis 1 0.137 0  spec 0.227 0.227 0.227  shi 17  trans 0
+MATERIAL "lightGreen2Mat" rgb 0.227 0.38 0  amb 0.227 0.38 0  emis 0 0 0  spec 0.227 0.227 0.227  shi 17  trans 0
+MATERIAL "lightRed2Mat" rgb 0.702 0.039 0  amb 0.702 0.039 0  emis 0 0 0  spec 0.227 0.227 0.227  shi 17  trans 0
 MATERIAL "engineMat" rgb 0.8 0.8 0.8  amb 0.8 0.8 0.8  emis 0 0 0  spec 0.5 0.5 0.5  shi 10  trans 0
-MATERIAL "ac3dmat13.004" rgb 0.533 0.533 0.533  amb 0.353 0.353 0.353  emis 0 0 0  spec 0.2 0.2 0.208  shi 100  trans 0
-MATERIAL "ac3dmat13" rgb 0.533 0.533 0.533  amb 0.353 0.353 0.353  emis 0 0 0  spec 1 1 1  shi 20  trans 0
-MATERIAL "ac3dmat1.007" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.502 0.502 0.502  shi 10  trans 0.365
-MATERIAL "ac3dmat1.005" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.502 0.502 0.502  shi 10  trans 0.408
-MATERIAL "ac3dmat1.001" rgb 0.914 0.961 1  amb 0.958333 0.958333 0.958333  emis 0.916333 0.916333 0.916333  spec 0 0 0  shi 0  trans 0
-MATERIAL "ac3dmat3.001" rgb 0.631 0.047 0  amb 0.226 0.226 0.226  emis 0 0 0  spec 0.027 0.027 0.027  shi 0  trans 0
-MATERIAL "ac3dmat1.012" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.735 0.815 0.835  shi 60  trans 0
-MATERIAL "ac3dmat1.013" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.502 0.502 0.502  shi 10  trans 0.008
-MATERIAL "ac3dmat1.004" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.735 0.815 0.835  shi 50  trans 0
-MATERIAL "ac3dmat0" rgb 0.114 0.059 0.067  amb 0.08 0.08 0.08  emis 0 0 0  spec 0.102 0.102 0.102  shi 5  trans 0
-MATERIAL "ac3dmat14" rgb 0.8 0.8 0.8  amb 0.8 0.8 0.8  emis 0 0 0  spec 0.5 0.5 0.5  shi 10  trans 0
-MATERIAL "ac3dmat13.003" rgb 1 1 1  amb 0.063 0.071 0  emis 0 0 0  spec 1 1 1  shi 33  trans 0.929
-MATERIAL "ac3dmat1.002" rgb 0 0 0  amb 0 0 0  emis 0.976667 0.976667 0.976667  spec 0 0 0  shi 0  trans 0.737
-MATERIAL "ac3dmat13.003" rgb 1 0.878 0.482  amb 0 0 0  emis 0 0 0  spec 0 0 0  shi 33  trans 0.812
+MATERIAL "oleo1Mat" rgb 0.533 0.533 0.533  amb 0.353 0.353 0.353  emis 0 0 0  spec 0.2 0.2 0.208  shi 100  trans 0
+MATERIAL "oleo2Mat" rgb 0.533 0.533 0.533  amb 0.353 0.353 0.353  emis 0 0 0  spec 1 1 1  shi 20  trans 0
+MATERIAL "logoMat" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.502 0.502 0.502  shi 10  trans 0.365
+MATERIAL "flameMat" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.502 0.502 0.502  shi 10  trans 0.408
+MATERIAL "emissiveMat" rgb 0.914 0.961 1  amb 0.958333 0.958333 0.958333  emis 0.916333 0.916333 0.916333  spec 0 0 0  shi 0  trans 0
+MATERIAL "chuteMat" rgb 0.631 0.047 0  amb 0.226 0.226 0.226  emis 0 0 0  spec 0.027 0.027 0.027  shi 0  trans 0
+MATERIAL "fuselage2Mat" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.735 0.815 0.835  shi 60  trans 0
+MATERIAL "strut1Mat" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.502 0.502 0.502  shi 10  trans 0.008
+MATERIAL "gearwellMat" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.735 0.815 0.835  shi 50  trans 0
+MATERIAL "fuselage3Mat" rgb 0.114 0.059 0.067  amb 0.08 0.08 0.08  emis 0 0 0  spec 0.102 0.102 0.102  shi 5  trans 0
+MATERIAL "strut2Mat" rgb 0.8 0.8 0.8  amb 0.8 0.8 0.8  emis 0 0 0  spec 0.5 0.5 0.5  shi 10  trans 0
+MATERIAL "glassInsideMat" rgb 1 1 1  amb 0.063 0.071 0  emis 0 0 0  spec 1 1 1  shi 33  trans 0.929
+MATERIAL "lightWhiteMat" rgb 0 0 0  amb 0 0 0  emis 0.976667 0.976667 0.976667  spec 0 0 0  shi 0  trans 0.737
+MATERIAL "glassOutsideMat" rgb 1 0.878 0.482  amb 0 0 0  emis 0 0 0  spec 0 0 0  shi 33  trans 0.812
 OBJECT world
 kids 3
 OBJECT group
