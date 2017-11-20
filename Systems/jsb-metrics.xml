@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+ <metrics>
+  <wingarea unit="FT2"> 300 </wingarea>
+  <wingspan unit="FT"> 30 </wingspan>
+  <chord unit="FT"> 11.32 </chord>
+  <htailarea unit="FT2"> 63.7 </htailarea>
+  <htailarm unit="FT"> 16.46 </htailarm>
+  <vtailarea unit="FT2"> 54.75 </vtailarea>
+  <vtailarm unit="FT"> 0 </vtailarm>
+  <location name="AERORP" unit="IN">
+   <x> -181.9336 </x><!-- -180.4336 = static margin of -4%mac -->
+   <y> 0 </y>
+   <z> 0 </z>
+  </location>
+  <location name="EYEPOINT" unit="IN">
+   <x> -336.2 </x>
+   <y> 0 </y>
+   <z> 29.5 </z>
+  </location>
+  <location name="VRP" unit="IN">
+   <x> -180 </x><!-- -4.572 meter -->
+   <y> 0 </y>
+   <z> 0 </z>
+  </location>
+ </metrics>
