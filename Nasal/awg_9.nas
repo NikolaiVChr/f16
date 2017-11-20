@@ -964,6 +964,7 @@ else
 		me.RelBearing.setValue(n);
 	},
 	get_relative_bearing : func() {
+        return me.get_bearing()-getprop("orientation/heading-deg");
 		return me.RelBearing.getValue();
 	},
 	get_reciprocal_bearing : func {

@@ -336,7 +336,7 @@ var MFD_Device =
 
     setupRadar: func (svg) {
         svg.p_RDR = me.canvas.createGroup()
-                .setTranslation(276,482);#552,482
+                .setTranslation(276*0.795,512);#552,482 , 0.795 is for UV map
         
         svg.blep = setsize([],200);
         for (var i = 0;i<200;i+=1) {
@@ -379,7 +379,7 @@ var MFD_Device =
                 me.distPixels = contact.get_range()*(482/awg_9.range_radar2);
 
                 me.root.blep[me.i].setColor(1,1,1);
-                me.root.blep[me.i].setTranslation(276*geo.normdeg180(contact.get_bearing())/60,-me.distPixels);
+                me.root.blep[me.i].setTranslation(276*0.795*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels);
                 me.root.blep[me.i].show();
                 me.root.blep[me.i].update();
                 if (contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType)) {
@@ -388,10 +388,10 @@ var MFD_Device =
                         #can happen in transition between TWS to RWS
                         me.root.lock[me.i].hide();
                     } else {
-                        me.rot = me.rot-getprop("orientation/heading-deg")-geo.normdeg180(contact.get_bearing());
+                        me.rot = me.rot-getprop("orientation/heading-deg")-geo.normdeg180(contact.get_relative_bearing());
                         me.root.lock[me.i].setRotation(me.rot*D2R);
                         me.root.lock[me.i].setColor([1,1,0]);
-                        me.root.lock[me.i].setTranslation(276*geo.normdeg180(contact.get_bearing())/60,-me.distPixels);
+                        me.root.lock[me.i].setTranslation(276*0.795*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels);
                         me.root.lock[me.i].show();
                         me.root.lock[me.i].update();
                     }

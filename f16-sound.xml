@@ -415,6 +415,107 @@
         </pitch>
     </squeal>
 
+
+    <aircraft-explode>
+            <name>aircraft-explode</name>
+            <path>Aircraft/f16/Sounds/aircraft-explode.wav</path>
+            <mode>once</mode>
+            <condition>
+                <equals>
+                    <property>damage/sounds/explode-on</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <position>
+                <x>0.01</x>
+                <y>0.01</y>
+                <z>0.01</z>
+            </position>
+            <volume>
+                <factor>3</factor>
+                <max>3</max>
+            </volume>
+        </aircraft-explode>
+
+        <aircraft-crash>
+            <name>aircraft-impact</name>
+            <path>Aircraft/f16/Sounds/aircraft-crash.wav</path>
+            <mode>once</mode>
+            <condition>
+                <equals>
+                    <property>damage/sounds/crash-on</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <position>
+                <x>0.01</x>
+                <y>0.01</y>
+                <z>0.01</z>
+            </position>
+            <volume>
+                <factor>1</factor>
+            </volume>
+        </aircraft-crash>
+
+        <aircraft-water-crash>
+            <name>aircraft-water-crash</name>
+            <path>Aircraft/f16/Sounds/aircraft-water-crash.wav</path>
+            <mode>once</mode>
+            <condition>
+                <equals>
+                    <property>damage/sounds/water-crash-on</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <position>
+                <x>0.01</x>
+                <y>0.01</y>
+                <z>0.01</z>
+            </position>
+            <volume>
+                <factor>1</factor>
+            </volume>
+        </aircraft-water-crash>
+
+        <aim-9-signal>
+            <name>aim-9-signal</name>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/aim-9-growl.wav</path>
+            <condition>
+                <property>sim/current-view/internal</property>
+                <property>payload/armament/aim-9/sound-on-off</property>
+            </condition>
+            <pitch>
+                <property>payload/armament/aim-9/sound-volume</property>
+                <factor>1.00</factor>
+                <offset>1.60</offset>
+                <min>0</min>
+                <max>1</max>
+            </pitch>
+            <volume>
+                <property>payload/armament/aim-9/sound-volume</property>
+            </volume>
+        </aim-9-signal>
+    
+        <aim-120-signal>
+            <name>aim-120-signal</name>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/115hz-square.wav</path>
+            <condition>
+                <property>sim/current-view/internal</property>
+                <property>payload/armament/aim-120/sound-on-off</property>
+            </condition>
+            <pitch>
+                <factor>1.8</factor><!-- changes it to beep -->
+                <max>2</max>
+            </pitch>
+            <volume>
+                <property>payload/armament/aim-120/sound-volume</property>
+            </volume>
+        </aim-120-signal>
+
 </fx>
  
 </PropertyList>
