@@ -40,11 +40,17 @@
    <splash-texture>Aircraft/f16/f16-splash.rgb</splash-texture>
   </startup>
 
+
+
   <model>
+    <f16>
+    <dragchute type="bool">true</dragchute>
+    <link16 type="bool">true</link16>
+  </f16>
    <path archive="y">Aircraft/f16/Models/F-16.xml</path>
    <livery>
     <file type="string"/>
-    <actype type="string">F-16C-40</actype>
+    <actype type="string">F-16C-52</actype>
     <name type="string">USAF 89-2029/AV 510FS</name>
     <owner type="string">USAF</owner>
    </livery>

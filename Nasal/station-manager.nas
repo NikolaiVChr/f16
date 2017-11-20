@@ -414,12 +414,13 @@ var FuelTank = {
 #
 # Attributes:
 #  fuel tank number
-	new: func (name, fuelTankNumber, capacity_gal) {
+	new: func (name, fuelTankNumber, capacity_gal, model_path) {
 		var s = {parents:[FuelTank]};
 		s.type = name;
 		s.typeLong = name;
 		s.capacity = capacity_gal;
 		s.fuelTankNumber = fuelTankNumber;
+		s.modelPath = model_path;
 
 		# these 3 needs to be here and be 0
 		s.Cd_base = 0;
@@ -434,6 +435,7 @@ var FuelTank = {
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/level-gal_us", me.capacity);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/selected", 1);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", me.type);
+		setprop(me.modelPath, 1);
 	},
 
 	eject: func {
@@ -442,6 +444,7 @@ var FuelTank = {
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/level-norm", 0);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/selected", 0);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", "Not attached");
+		setprop(me.modelPath, 0);
 	},
 
 	del: func {
@@ -450,6 +453,7 @@ var FuelTank = {
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/level-norm", 0);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/selected", 0);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", "Not attached");
+		setprop(me.modelPath, 0);
 	},
 
 	getAmmo: func {

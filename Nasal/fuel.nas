@@ -34,4 +34,4 @@ var initExtTankFuel = func {
         }
 }
 
-initExtTankFuel();
+#initExtTankFuel();

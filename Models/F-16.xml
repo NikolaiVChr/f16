@@ -1500,10 +1500,17 @@
 
  <animation>
   <type>select</type>
-  <object-name>LExtTank</object-name>
   <object-name>RExtTank</object-name>
   <condition>
-   <property>sim/model/f16/wingtanks</property>
+   <property>sim/model/f16/wingtankR</property>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>LExtTank</object-name>
+  <condition>
+   <property>sim/model/f16/wingtankL</property>
   </condition>
  </animation>
 

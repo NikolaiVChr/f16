@@ -1,9 +1,9 @@
 var cannon = stations.SubModelWeapon.new("20mm Cannon", 0.5, 500, 2, [1,3], props.globals.getNode("fdm/jsbsim/fcs/guntrigger",1), 0, func{return getprop("fdm/jsbsim/systems/hydraulics/sysb-psi")>=2000;});
-var fuelTankCenter = stations.FuelTank.new("Center 300 Gal Tank", 4, 300);
-var fuelTank370Left = stations.FuelTank.new("Left 370 Gal Tank", 3, 370);
-var fuelTank370Right = stations.FuelTank.new("Right 370 Gal Tank", 2, 370);
-var fuelTank600Left = stations.FuelTank.new("Left 600 Gal Tank", 3, 600);
-var fuelTank600Right = stations.FuelTank.new("Right 600 Gal Tank", 2, 600);
+var fuelTankCenter = stations.FuelTank.new("Center 300 Gal Tank", 4, 300, "sim/model/f16/ventraltank");
+var fuelTank370Left = stations.FuelTank.new("Left 370 Gal Tank", 3, 370, "sim/model/f16/wingtankL");
+var fuelTank370Right = stations.FuelTank.new("Right 370 Gal Tank", 2, 370, "sim/model/f16/wingtankR");
+var fuelTank600Left = stations.FuelTank.new("Left 600 Gal Tank", 3, 600, "sim/model/f16/wingtankL");
+var fuelTank600Right = stations.FuelTank.new("Right 600 Gal Tank", 2, 600, "sim/model/f16/wingtankR");
 var pylonSets = {
 	empty: {name: "Empty", content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
 	e: {name: "20mm Cannon", content: [cannon], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1},

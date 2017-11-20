@@ -90,7 +90,14 @@
 
   <model>
    <f16>
-
+    <AIM-9L type="bool">false</AIM-9L>
+    <AIM-9L_dummy type="bool">false</AIM-9L_dummy>
+    <AIM-9_smokewinders type="bool">true</AIM-9_smokewinders>
+    <AIM-120C5 type="bool">false</AIM-120C5>
+    <wingmounts type="bool">true</wingmounts>
+    <ventraltank type="bool">false</ventraltank>
+    <wingtankL type="bool">false</wingtankL>
+    <wingtankR type="bool">false</wingtankR>
     <controls>
      <navigation>
 

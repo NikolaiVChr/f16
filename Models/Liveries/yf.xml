@@ -3,32 +3,10 @@
 <PropertyList>
  <sim>
   <model>
-   <f16>
-    <dragchute type="bool">true</dragchute>
-    <link16 type="bool">true</link16>
-    <wingmounts type="bool">false</wingmounts>
-
-<!-- note: only one option can be true per stationset at a time for obvious reasons -->
-
- <!-- Station 5 -->
-    <ventraltank type="bool">false</ventraltank>
-
- <!-- Station 4 and 6 -->
-    <wingtanks type="bool">false</wingtanks>
-
- <!-- Station 1 and 9 -->
-    <AIM-9L type="bool">false</AIM-9L>
-    <AIM-9L_dummy type="bool">true</AIM-9L_dummy>
-    <AIM-9_smokewinders type="bool">false</AIM-9_smokewinders>
-    <AIM-120C5 type="bool">false</AIM-120C5>
-
-<!-- FIXME the above system should be improved -->
-
-   </f16>
    <livery>
     <name type="string">YF-16 Prototype</name>
     <texture>Liveries/yf/yf16.png</texture>
-    <actype type="string">F-16A-MLU</actype>
+    
     <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
