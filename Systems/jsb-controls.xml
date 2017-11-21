@@ -146,6 +146,80 @@
             </function>
         </fcs_function>
 
+        <fcs_function name="accelerations/a_n">
+            <description>
+                Page 43: Calc of G-force.
+
+                I had some trouble using the Nz, but don't remember what it was.
+            </description>
+            <function>
+                <quotient>
+                    <sum>
+                        <product>
+                            <property> velocities/q-rad_sec </property>
+                            <property> velocities/u-fps </property>
+                        </product>
+                        <product>
+                            <v>-1</v>
+                            <property> velocities/p-rad_sec </property>
+                            <property> velocities/v-fps </property>
+                        </product>
+                        <product>
+                            <v> 32.174 </v>
+                            <cos>
+                                <property> attitude/theta-rad </property>
+                            </cos>
+                            <cos>
+                                <property> attitude/phi-rad </property>
+                            </cos>
+                        </product>
+                        <product>
+                            <v>-1</v>
+                            <property> accelerations/wdot-ft_sec2 </property>
+                        </product>
+                    </sum>
+                    <v> 32.174 </v>
+                </quotient>
+            </function>
+        </fcs_function>
+
+        <fcs_function name="accelerations/a_y">
+            <description>
+                Page 43: Calc of lateral G-force.
+
+                I had some trouble using the Ny.
+            </description>
+            <function>
+                <quotient>
+                    <sum>
+                        <product>
+                            <property> velocities/p-rad_sec </property>
+                            <property> velocities/w-fps </property>
+                            <v>-1</v>
+                        </product>
+                        <product>
+                            <property> velocities/r-rad_sec </property>
+                            <property> velocities/u-fps </property>
+                        </product>
+                        <product>
+                            <v>-1</v>
+                            <v> 32.174 </v>
+                            <cos>
+                                <property> attitude/theta-rad </property>
+                            </cos>
+                            <sin>
+                                <property> attitude/phi-rad </property>
+                            </sin>
+                        </product>
+                        <product>                            
+                            <property> accelerations/vdot-ft_sec2 </property>
+                        </product>
+                    </sum>
+                    <v> 32.174 </v>
+                </quotient>
+            </function>
+        </fcs_function>
+
     </channel>
 
 
@@ -732,7 +806,7 @@
         </summer>
 
         <pure_gain name="fcs/fly-by-wire/yaw/g-gain">
-            <input>accelerations/Ny</input>
+            <input>accelerations/a_y</input>
             <gain> 19.32 </gain>
         </pure_gain>
 
@@ -743,7 +817,7 @@
 
         <pure_gain name="fcs/fly-by-wire/yaw/cross-gain">
             <input>fcs/fly-by-wire/roll/lead-exit</input>
-            <gain> 0.01745 </gain>
+            <gain> 0.01745 </gain><!-- deg/sec to rad/sec -->
         </pure_gain>
 
         <pure_gain name="fcs/fly-by-wire/yaw/cross-multiplier">
@@ -800,7 +874,7 @@
             <input>fcs/fly-by-wire/yaw/command-sum-ari</input>
         </summer>
 
-        <second_order_filter name="fcs/fly-by-wire/yaw/final-filter">
+        <second_order_filter name="fcs/fly-by-wire/yaw/struct-filter">
           <input> fcs/fly-by-wire/yaw/rudder-sum </input>
           <c1> 1 </c1>
           <c2> 0 </c2>
@@ -811,7 +885,7 @@
         </second_order_filter>
 
         <lag_filter name="fcs/fly-by-wire/yaw/rudder-lag">
-            <input> fcs/fly-by-wire/yaw/final-filter </input>
+            <input> fcs/fly-by-wire/yaw/struct-filter </input>
             <c1> 20 </c1>
             <!-- defl. limit = 30, rate limit = 120 deg/s -->
         </lag_filter>
@@ -1400,43 +1474,6 @@
             <input> fcs/fly-by-wire/pitch/pitch-rate-lower-gain </input>
             <input> fcs/fly-by-wire/pitch/pitch-rate-gain-2-sum </input>
         </summer>
-
-        <fcs_function name="accelerations/a_n">
-            <description>
-                Page 43: Calc of G-force.
-
-                I had some trouble using the Nz, but don't remember what it was.
-            </description>
-            <function>
-                <quotient>
-                    <sum>
-                        <product>
-                            <property> velocities/q-rad_sec </property>
-                            <property> velocities/u-fps </property>
-                        </product>
-                        <product>
-                            <v>-1</v>
-                            <property> velocities/p-rad_sec </property>
-                            <property> velocities/v-fps </property>
-                        </product>
-                        <product>
-                            <v> 32.174 </v>
-                            <cos>
-                                <property> attitude/theta-rad </property>
-                            </cos>
-                            <cos>
-                                <property> attitude/phi-rad </property>
-                            </cos>
-                        </product>
-                        <product>
-                            <v>-1</v>
-                            <property> accelerations/wdot-ft_sec2 </property>
-                        </product>
-                    </sum>
-                    <v> 32.174 </v>
-                </quotient>
-            </function>
-        </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/pitch/normal-1">
             <function>

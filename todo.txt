@@ -51,4 +51,9 @@ Add tons of pages
 Aero
 ----
 Redo drag due to mach
-At very high speeds at low altitude, yaw can start oscillate.
+
+Flight controls
+---------------
+At very high speeds at low altitude, yaw can start oscillate. (might be fixed)
+Make CAT I, II and III.
+Make standby gains.
