@@ -392,7 +392,7 @@
         <switch name="fcs/fly-by-wire/roll/switch">
             <default value="fcs/fly-by-wire/roll/loop-sum-end"/>
             <test logic="AND" value="fcs/fly-by-wire/roll/yaw-rate-input">
-                aero/alpha-deg ge 29
+                fcs/fly-by-wire/pitch/a_f ge 29
                 fcs/fly-by-wire/prototype == 0
             </test>
         </switch>
@@ -626,7 +626,7 @@
         <fcs_function name="fcs/fly-by-wire/ari/inverter-norm">
             <function>
                 <table>
-                    <independentVar lookup="row">fcs/fly-by-wire/pitch/alpha-indicated-lagged</independentVar>
+                    <independentVar lookup="row">fcs/fly-by-wire/pitch/a_f</independentVar>
                     <tableData>
                         -10   0.0
                           0   1.0
@@ -661,7 +661,7 @@
         </switch>
 
         <pure_gain name="fcs/fly-by-wire/ari/gain">
-            <input>fcs/fly-by-wire/pitch/alpha-indicated-lagged</input>
+            <input>fcs/fly-by-wire/pitch/a_f</input>
             <gain> fcs/fly-by-wire/ari/gain-value </gain>
         </pure_gain>
 
@@ -758,7 +758,7 @@
             <function>
                 <product>
                     <table>
-                        <independentVar lookup="row">fcs/fly-by-wire/pitch/alpha-indicated-lagged</independentVar>
+                        <independentVar lookup="row">fcs/fly-by-wire/pitch/a_f</independentVar>
                         <tableData>
                             20   1.0
                             30   0.0
@@ -772,7 +772,7 @@
         <switch name="fcs/fly-by-wire/yaw/ari-input">
             <default value="fcs/fly-by-wire/ari/final"/>
             <test logic="AND" value="0">
-                aero/alpha-deg ge 29
+                fcs/fly-by-wire/pitch/a_f ge 29
                 fcs/fly-by-wire/prototype == 0
             </test>
         </switch>
@@ -805,7 +805,7 @@
         </pure_gain>
 
         <pure_gain name="fcs/fly-by-wire/yaw/cross-multiplier">
-            <input>fcs/fly-by-wire/pitch/alpha-indicated-lagged</input>
+            <input>fcs/fly-by-wire/pitch/a_f</input>
             <gain> fcs/fly-by-wire/yaw/cross-gain </gain>
         </pure_gain>
 
@@ -848,7 +848,7 @@
         <switch name="fcs/fly-by-wire/yaw/schedule-final">
             <default value="fcs/fly-by-wire/yaw/schedule"/>
             <test logic="AND" value="fcs/fly-by-wire/yaw/alt-schedule">
-                aero/alpha-deg ge 29
+                fcs/fly-by-wire/pitch/a_f ge 29
                 fcs/fly-by-wire/prototype == 0
             </test>
         </switch>
@@ -1112,7 +1112,7 @@
             <gain> fcs/fly-by-wire/enable-fake </gain>
         </pure_gain>
 
-        <lag_filter name="fcs/fly-by-wire/pitch/alpha-indicated-lagged">
+        <lag_filter name="fcs/fly-by-wire/pitch/a_f">
             <input> fcs/fly-by-wire/pitch/alpha-indicated-switch </input>
             <c1> 10 </c1>
         </lag_filter>
@@ -1123,7 +1123,7 @@
         </lag_filter>
 
         <summer name="fcs/fly-by-wire/pitch/alpha-sum">
-            <input> fcs/fly-by-wire/pitch/alpha-indicated-lagged </input>
+            <input> fcs/fly-by-wire/pitch/a_f </input>
             <input> fcs/fly-by-wire/pitch/fake-alpha-lagged </input>
         </summer>
 
@@ -1322,7 +1322,7 @@
         </pure_gain>
 
         <pure_gain name="fcs/fly-by-wire/pitch/alpha-feedback">
-            <input>fcs/fly-by-wire/pitch/alpha-indicated-lagged</input>
+            <input>fcs/fly-by-wire/pitch/a_f</input>
             <gain> fcs/fly-by-wire/pitch/F2 </gain>
         </pure_gain>
 
@@ -1399,7 +1399,7 @@
         <summer name="fcs/fly-by-wire/pitch/pitch-rate-gain-sum">
             <input> fcs/fly-by-wire/pitch/pitch-rate-gain </input>
             <input> -fcs/fly-by-wire/pitch/bias2 </input>
-            <input> fcs/fly-by-wire/pitch/alpha-indicated-lagged </input>
+            <input> fcs/fly-by-wire/pitch/a_f </input>
         </summer>
 
         <switch name="fcs/fly-by-wire/pitch/pitch-gain">
