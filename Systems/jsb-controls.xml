@@ -376,7 +376,7 @@
         </pure_gain>
 
         <pure_gain name="velocities/p-aero-deg_sec">
-            <input>velocities/p-aero-rad_sec</input>
+            <input>velocities/p-rad_sec</input>
             <gain> 57.2957795 </gain>
         </pure_gain>
 
@@ -811,7 +811,7 @@
         </pure_gain>
 
         <pure_gain name="velocities/r-aero-deg_sec">
-            <input>velocities/r-aero-rad_sec</input>
+            <input>velocities/r-rad_sec</input>
             <gain> 57.2957795 </gain>
         </pure_gain>
 
@@ -1094,7 +1094,7 @@
             <function>
                 <abs>
                     <product>
-                        <property> velocities/p-aero-rad_sec </property>
+                        <property> velocities/p-rad_sec </property>
                         <v> 57.29577951308233 </v>
                     </product>
                 </abs>
@@ -1348,7 +1348,7 @@
         </summer>
 
         <pure_gain name="fcs/fly-by-wire/pitch/q">
-            <input>velocities/q-aero-rad_sec</input>
+            <input>velocities/q-rad_sec</input>
             <gain> fcs/fly-by-wire/enable-q </gain>
         </pure_gain>
 
