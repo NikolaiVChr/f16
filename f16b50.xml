@@ -48,10 +48,10 @@
 
  <ground_reactions file="Systems/jsb-ground-reactions"/>
  <external_reactions file="Systems/jsb-external-reactions"/>
- <system file="pushback"/> 
+ <system file="jsb-pushback"/> 
  <metrics file="Systems/jsb-metrics"/>
  <mass_balance file="Systems/jsb-mass"/>
- <system file="hook"/>
+ <system file="jsb-hook"/>
  <system file="f16-hydraulics"/>
  <flight_control file="Systems/jsb-controls"/>
  <propulsion file="Systems/jsb-propulsion-block50"/>

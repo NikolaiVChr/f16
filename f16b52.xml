@@ -45,11 +45,11 @@
   <reference refID="None" author="n/a" title="http://www.codeonemagazine.com/archives/1991/articles/jul_91/july2a_91.html" date="n/a"/>
  </fileheader>
 
- <system file="hook"/>
+ <system file="jsb-hook"/>
  <system file="f16-hydraulics"/>
  <ground_reactions file="Systems/jsb-ground-reactions"/>
  <external_reactions file="Systems/jsb-external-reactions"/>
- <system file="pushback"/> 
+ <system file="jsb-pushback"/> 
  <metrics file="Systems/jsb-metrics"/>
  <mass_balance file="Systems/jsb-mass"/> 
  <flight_control file="Systems/jsb-controls"/>
