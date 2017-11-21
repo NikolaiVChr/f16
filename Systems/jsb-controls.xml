@@ -2,23 +2,7 @@
 
 <flight_control name="F-16 FC">
 
-    <!-- Declare some interface properties -->
-    <property>fcs/alpha-norm</property>
-    <property>fcs/hook-engage</property>
-    <property>fcs/canopy-engage</property>
-    <property>fcs/fbw-override</property>
-	<property>fcs/gear-wow</property>
-
 <!-- begin: control system by Nikolai V. Chr. -->
-    <property value="2">fcs/fly-by-wire/K_A</property><!-- should be 2000, but JSB cannot handle that -->
-    <property value="1">fcs/fly-by-wire/enable-q</property>
-    <property value="1">fcs/fly-by-wire/enable-nz</property>
-    <property value="1">fcs/fly-by-wire/enable-int</property>
-    <property value="1">fcs/fly-by-wire/enable-fake</property>
-    <property value="1">fcs/fly-by-wire/enable-alpha</property>
-    
-    <property value="0">fcs/fly-by-wire/pitch/alpha-indicated-lagged</property>
-    <property value="0">fcs/fly-by-wire/pitch/pitch-loop-ground-product</property>
 
     <channel execrate="1" name="FCS Lookup">
 
@@ -187,7 +171,7 @@
             <description>
                 Page 43: Calc of lateral G-force.
 
-                I had some trouble using the Ny.
+                I had some trouble using the Ny. Its feedback made rudder oscillate at very high speeds.
             </description>
             <function>
                 <quotient>
@@ -2136,7 +2120,7 @@
      <tableData>
       10.0  32.0
       50.0   5.0
-      150.0  2.0
+      150.0  1.5
       300.0  0.5
      </tableData>
     </table>

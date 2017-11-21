@@ -229,6 +229,7 @@
     <ki type="double">25</ki>
     <kd type="double">0</kd>
     <position-norm type="double">0</position-norm>
+    <target-speed-fps type="double">0</target-speed-fps>
    </pushback>
   </model>
 
@@ -694,8 +695,37 @@
    <systems>
     <hook>
      <tailhook-cmd-norm type="bool">false</tailhook-cmd-norm>
+     <tailhook-length-ft type="double">4.537</tailhook-length-ft>
+     <tailhook-pos-min-deg type="double">-3.806</tailhook-pos-min-deg>
+     <tailhook-pos-max-deg type="double">53.369</tailhook-pos-max-deg>
+     <tailhook-offset-x-in type="double">100.669</tailhook-offset-x-in>
+     <tailhook-offset-y-in type="double">0.0</tailhook-offset-y-in>
+     <tailhook-offset-z-in type="double">-28.818</tailhook-offset-z-in>
+     <tailhook-pos-deg type="double">-3.806</tailhook-pos-deg>
     </hook>
+    <hydraulics>
+    </hydraulics>
    </systems>
+   <fcs>
+    <fly-by-wire>
+     <K_A type="double">2</K_A><!-- should be 2000, but JSB cannot handle that -->
+     <enable-q type="bool">true</enable-q>
+     <enable-nz type="bool">true</enable-nz>
+     <enable-int type="bool">true</enable-int>
+     <enable-fake type="bool">true</enable-fake>
+     <enable-alpha type="bool">true</enable-alpha>
+     <pitch>
+       <alpha-indicated-lagged type="double">0</alpha-indicated-lagged>
+       <pitch-loop-ground-product type="double">0</pitch-loop-ground-product>
+     </pitch>
+    </fly-by-wire>
+     <gear-control type="double">1</gear-control>
+     <gear-wow type="bool">true</gear-wow>
+     <fbw-override type="bool">false</fbw-override>
+     <canopy-engage type="bool">false</canopy-engage>
+     <hook-engage type="bool">false</hook-engage>
+     <alpha-norm type="double">0</alpha-norm>
+   </fcs>
   </jsbsim>
  </fdm>
 

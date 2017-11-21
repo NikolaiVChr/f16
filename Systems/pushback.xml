@@ -1,9 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <system name="pushback">
- <property>/sim/model/pushback/target-speed-fps</property>
- <property>/sim/model/pushback/kp</property>
- <property>/sim/model/pushback/ki</property>
- <property>/sim/model/pushback/kd</property>
  <channel name="Pushback">
 
    <switch name="systems/pushback/linked">

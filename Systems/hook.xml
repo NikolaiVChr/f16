@@ -2,15 +2,6 @@
 
 <system name="hook">
 
-  <!-- property>systems/hook/tailhook-cmd-norm</property -->
-  <property value="4.537">systems/hook/tailhook-length-ft</property>
-  <property value="-3.806">systems/hook/tailhook-pos-min-deg</property>
-  <property value="53.369">systems/hook/tailhook-pos-max-deg</property>
-  <property value="100.669">systems/hook/tailhook-offset-x-in</property>
-  <property value=  "0.0">systems/hook/tailhook-offset-y-in</property>
-  <property value="-28.818">systems/hook/tailhook-offset-z-in</property>
-  <property value="-3.806">systems/hook/tailhook-pos-deg</property>
-
   <channel name="Hook">
 
      <kinematic name="systems/hook/tailhook-control">
