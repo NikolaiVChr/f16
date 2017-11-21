@@ -15,6 +15,14 @@
   <augmethod>         2 </augmethod>
   <injected>          0 </injected>
 
+  <!--
+      The engine used for block 50.
+
+      Sources:
+              Turbofan and Turbojet Engines: Database Handbook by Elodie Roux
+              AeromatiC++
+  -->
+
   <function name="IdleThrust">
    <table>
     <independentVar lookup="row">velocities/mach</independentVar>

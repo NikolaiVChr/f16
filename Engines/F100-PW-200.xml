@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
 
-<!-- The engine used for YF-16 -->
-
 <turbine_engine name="F100-PW-200">
   <milthrust>   14670.0 </milthrust>
   <maxthrust>   23830.0 </maxthrust>
@@ -17,6 +15,8 @@
   <injected>          0 </injected>
 
   <!--
+      The engine used for YF-16 and block 10.
+
       Sources:
               TP-1538
               Turbofan and Turbojet Engines: Database Handbook by Elodie Roux
@@ -31,6 +31,7 @@
       <independentVar lookup="column">atmosphere/density-altitude</independentVar>
       <tableData>
                0 10000 20000 30000 40000 50000 60000
+       0.0   716   775  1018  1319  1735  2152     0 <!-- this row is from AeromatiC++ -->
        0.2   635   425   690  1010  1330  1700     0
        0.4    60    25   345   755  1130  1525     0
        0.6 -1020  -710  -300   350   910  1360     0
@@ -49,14 +50,14 @@
     <independentVar lookup="column">atmosphere/density-altitude</independentVar>
     <tableData>
              0   10000 20000 30000 40000 50000 60000
-     0.0   14670 10856  7834  5457  3535  2186     0 <!-- this line from AeromatiC++ -->
+     0.0   14670 10856  7834  5457  3535  2186     0 <!-- this row is from AeromatiC++ -->
      0.2   12680  9150  6313  4040  2470  1400     0
      0.4   12610  9312  6610  4290  2600  1560     0
      0.6   12640  9839  7090  4660  2840  1660     0
      0.8   12390 10176  7750  5320  3250  1930     0
      1.0   11680  9848  8050  6100  3800  2310     0
-     1.2   16353 12962  9891  7245  4840  2991     0 <!-- this line from AeromatiC++ -->
-     1.4   17509 14190 11041  8205  5539  3435     0 <!-- this line from AeromatiC++ -->
+     1.2   16353 12962  9891  7245  4840  2991     0 <!-- this row is from AeromatiC++ -->
+     1.4   17509 14190 11041  8205  5539  3435     0 <!-- this row is from AeromatiC++ -->
     </tableData>
    </table>
    </product>
@@ -70,14 +71,14 @@
     <independentVar lookup="column">atmosphere/density-altitude</independentVar>
     <tableData>
                 0 10000 20000 30000 40000 50000 60000
-     0.0    23830 19502 15792 12582  8950  5545     0 <!-- this line from AeromatiC++ -->
+     0.0    23830 19502 15792 12582  8950  5545     0 <!-- this row is from AeromatiC++ -->
      0.2    21420 15700 11225  7323  4435  2600     0
      0.4    22700 16860 12250  8154  5000  2835     0
      0.6    24240 18910 13760  9285  5700  3215     0
      0.8    26070 21075 15975 11115  6860  3950     0
      1.0    28886 23319 18300 13484  8642  5057     0
-     1.4    28951 23670 19114 15155 10744  6658     0 <!-- this line from AeromatiC++ -->
-     2.0    37413 31184 24959 19578 13788  8543     0 <!-- this line from AeromatiC++ -->
+     1.4    28951 23670 19114 15155 10744  6658     0 <!-- this row is from AeromatiC++ -->
+     2.0    37413 31184 24959 19578 13788  8543     0 <!-- this row is from AeromatiC++ -->
     </tableData>
    </table>
    </product>

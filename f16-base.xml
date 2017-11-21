@@ -44,7 +44,8 @@
 
   <virtual-cockpit archive="y">true</virtual-cockpit>
   <panel>
-   <visibility archive="y">false</visibility>
+    <!--<path>Aircraft/f16/Panels/f16-2d-panel.xml</path> had to test this out, was curious..old-style -->
+    <visibility archive="y">false</visibility>
   </panel>
   <panel_2>
    <visibility>false</visibility>
