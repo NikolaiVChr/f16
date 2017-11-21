@@ -7,6 +7,7 @@ Hydraulics
 ----------
 Make it depend on a failurable serviceable property.
 If there is cockpit controls for it, make them work.
+There is a hydraulic indicator on the edge of the frontpanel upper right. It should be tied to hydr systems.
 
 Electrical
 ----------
@@ -18,7 +19,6 @@ Make manual/auto start/stop
 
 Stores
 ------
-Make ext. fuel tanks selectable in payload dialog
 Model conformal fuel tanks.
 Find real positions of payloads, is only approx. positions now.
 
@@ -38,8 +38,7 @@ Some of the cockpit have some strange untextured panels going on, fix.
 
 Sound
 -----
-Crash, and break sounds.
-Weapons sounds.
+Weapons release sounds.
 
 HUD
 ---
@@ -48,3 +47,8 @@ Make tons of features.
 MFDs
 ----
 Add tons of pages
+
+Aero
+----
+Redo drag due to mach
+At very high speeds at low altitude, yaw can start oscillate.

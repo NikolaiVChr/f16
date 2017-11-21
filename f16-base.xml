@@ -757,7 +757,8 @@
  </environment>
 
  <limits>
-  <max-gear-extension-speed>300</max-gear-extension-speed>
+      <max-gear-extension-speed>300</max-gear-extension-speed>
+      <vne>800</vne><!--(KIAS) source: T.O. GR1F-16CJ-1  page 1-32 -->
  </limits>
 
   <payload>

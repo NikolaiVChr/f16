@@ -1087,8 +1087,8 @@ else
                 var bearing = 0;
                 if(myCoord.is_defined())
                 {
-                    bearing = aircraft.ownship_pos.course_to(myCoord);
-                    bearing_ = myCoord.course_to(aircraft.ownship_pos);
+                    bearing = geo.aircraft_position().course_to(myCoord);
+                    bearing_ = myCoord.course_to(geo.aircraft_position());
                 }
                 var vtrue_kts = getprop("fdm/jsbsim/velocities/vtrue-kts");
                 if (vtrue_kts != nil)
