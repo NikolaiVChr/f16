@@ -13,6 +13,10 @@ Electrical
 ----------
 Make electrical system
 
+Fuel
+----
+Make fuel system
+
 Engine
 ------
 Make manual/auto start/stop
@@ -35,6 +39,7 @@ Cockpit
 Make center mount less deep, so pilot get good view of MFDs.
 Make warning lights and master warning work.
 Some of the cockpit have some strange untextured panels going on, fix.
+Convert flat 2D panels into 3D.
 
 Sound
 -----
@@ -55,5 +60,9 @@ Redo drag due to mach
 Flight controls
 ---------------
 At very high speeds at low altitude, yaw can start oscillate. (might be fixed)
-Make CAT I, II and III.
+Make CAT I, II and III. (block 50 manual page 106)
 Make standby gains.
+
+A/P
+---
+Make auto-pilot system.

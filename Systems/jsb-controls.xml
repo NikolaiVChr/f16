@@ -2099,9 +2099,17 @@
     </test>
    </switch>
 
+   <switch name="fcs/gear-wow-cmd-norm">
+        <!-- prevent gear up command while wheels on ground. Block 50 manual page 1-70 -->
+      <default value="gear/gear-cmd-norm"/>
+      <test  logic="OR" value="1">
+        fcs/gear-wow == 1
+      </test>
+   </switch>
+
    <switch name="fcs/gear-hyd">
 	  <default value="fcs/gear-control"/>
-      <test  logic="OR" value="gear/gear-cmd-norm">
+      <test  logic="OR" value="fcs/gear-wow-cmd-norm">
 		systems/hydraulics/sysb-psi ge 2000
       </test>
    </switch>

@@ -293,7 +293,7 @@
   <cannon>
    <name>cannon</name>
    <path>Sounds/gatling.wav</path>
-   <property>fcs/guntrigger</property>
+   <property>fdm/jsbsim/fcs/guntrigger</property>
    <mode>looped</mode>
    <position>
     <x>-1.0</x>

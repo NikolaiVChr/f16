@@ -93,14 +93,14 @@ tyresmoke();
 
 
 #============================ Rain ===================================
-aircraft.rain.init();
+#aircraft.rain.init();
 
-var rain = func {
-	aircraft.rain.update();
-	settimer(rain, 0);
-}
+#var rain = func {
+#	aircraft.rain.update();
+#	settimer(rain, 0);
+#}
 
 # == fire it up ===
-rain()
+#rain()
 
 # end 
