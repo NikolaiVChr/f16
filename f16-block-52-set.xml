@@ -40,7 +40,13 @@
    <splash-texture>Aircraft/f16/f16-splash.rgb</splash-texture>
   </startup>
 
-
+  <previews>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>gui/splash/f16-3.png</path>
+            </preview>
+  </previews>
 
   <model>
     <f16>
