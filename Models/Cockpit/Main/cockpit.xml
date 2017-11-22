@@ -103,7 +103,7 @@
 <!-- ======= START CONSOLES ======= -->
  <model>
   <name>LeftConsole</name>
-  <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/panels_mlu_left-console.xml</path>
+  <path>Aircraft/f16/Models/Cockpit/Main/panels_mlu_left-console.xml</path>
   <offsets>
    <x-m>-4.54</x-m>
    <y-m>-0.005</y-m>
@@ -114,7 +114,7 @@
 
  <model>
   <name>LeftAuxConsole</name>
-  <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/panels_mlu_left-aux-console.xml</path>
+  <path>Aircraft/f16/Models/Cockpit/Main/panels_mlu_left-aux-console.xml</path>
   <offsets>
    <x-m>-4.563</x-m>
    <y-m>-0.005</y-m>
@@ -127,7 +127,7 @@
 
  <model>
   <name>MISC</name>
-  <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/misc.xml</path>
+  <path>Aircraft/f16/Models/Cockpit/Main/misc.xml</path>
   <offsets>
    <x-m>-4.665</x-m>
    <y-m>0.018</y-m>
@@ -233,7 +233,7 @@
 
  <model>
   <name>RightAuxConsole</name>
-  <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/panels_mlu_right-aux-console.xml</path>
+  <path>Aircraft/f16/Models/Cockpit/Main/panels_mlu_right-aux-console.xml</path>
   <offsets>
    <x-m>-4.563</x-m>
    <y-m>-0.0</y-m>
@@ -247,7 +247,7 @@
 
  <model>
   <name>RightConsole</name>
-  <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/panels_mlu_right-console.xml</path>
+  <path>Aircraft/f16/Models/Cockpit/Main/panels_mlu_right-console.xml</path>
   <offsets>
    <x-m>-4.54</x-m>
    <y-m>-0.0</y-m>
@@ -283,7 +283,7 @@
  
  <model>
   <name>ENGINE</name>
-  <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/engine.xml</path>
+  <path>Aircraft/f16/Models/Cockpit/Main/engine.xml</path>
   <offsets>
    <x-m>-4.555</x-m>
    <y-m>-0.0175</y-m>
@@ -307,12 +307,12 @@
 <!-- ======= START INDICATORS ======= -->
  <model>
   <name>EYEBROW_RIGHT</name>
-  <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/eyebrow_right.xml</path>
+  <path>Aircraft/f16/Models/Cockpit/Main/eyebrow_right.xml</path>
  </model>
 
  <model>
   <name>EYEBROW_LEFT</name>
-  <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/eyebrow_left.xml</path>
+  <path>Aircraft/f16/Models/Cockpit/Main/eyebrow_left.xml</path>
  </model>
 
  <model>

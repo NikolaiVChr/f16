@@ -10,7 +10,7 @@ kids 3
 OBJECT poly
 name "HUDImage2"
 loc -4.68016 0.743053 0.00069037
-texture "F-16A-MLU/tranbg.png"
+texture "Main/tranbg.png"
 crease 45.000000
 numvert 7
 0.122366 0.0957666 -0.046153
@@ -488,7 +488,7 @@ name "hud_glass_front"
 loc 0.045866 -0.00225318 -0.0012366
 data 8
 Mesh.083
-texture "F-16A-MLU/../Textures/f16trans_misc.rgb"
+texture "Main/../Textures/f16trans_misc.rgb"
 crease 45.000000
 numvert 10
 -4.79616 0.666851 -0.077148
@@ -556,7 +556,7 @@ name "hud_glass_back"
 loc 0 -0.000412166 -0.0012366
 data 8
 Mesh.083
-texture "F-16A-MLU/../Textures/f16trans_misc.rgb"
+texture "Main/../Textures/f16trans_misc.rgb"
 crease 45.000000
 numvert 10
 -4.78487 0.669269 -0.077148
@@ -624,7 +624,7 @@ name "hud_glass_front"
 loc 0.045866 -0.00225318 -0.0012366
 data 8
 Mesh.083
-texture "F-16A-MLU/../Textures/f16trans_misc.rgb"
+texture "Main/../Textures/f16trans_misc.rgb"
 crease 45.000000
 numvert 10
 -4.61105 0.835941 0.080892
