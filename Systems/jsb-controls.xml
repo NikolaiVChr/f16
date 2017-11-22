@@ -385,8 +385,11 @@
         </second_order_filter>
 
         <pure_gain name="fcs/fly-by-wire/roll/yaw-rate-input">
+            <description>
+                Is positive in diagram, but must be negative to really work as spin protection.
+            </description>
             <input> velocities/r-aero-deg_sec </input>
-            <gain> 8.34 </gain>
+            <gain> -8.34 </gain>
         </pure_gain>
 
         <switch name="fcs/fly-by-wire/roll/switch">
