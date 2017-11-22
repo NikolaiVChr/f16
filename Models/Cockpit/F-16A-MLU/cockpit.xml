@@ -19,21 +19,21 @@
   <path>Aircraft/f16/Models/Cockpit/AcesII/acesII.xml</path>
  </model>
  
- <model>
+<!-- <model>
   <name>Pilot_ext</name>
   <path>Aircraft/f16/Models/Pilots/pilot_externalview.xml</path>
  </model>
-
+-->
 <!--
  <model>
   <name>Pilot_int</name>
   <path>Aircraft/f16/Models/Pilots/pilot_internalview.xml</path>
  </model>
 -->
-
+<!--
  <animation>
   <type>range</type>
-  <!-- object-name>Pilot_int</object-name -->
+  object-name>Pilot_int</object-name
   <object-name>Pilot_ext</object-name>
   <min-m>0</min-m>
   <max-m>5000</max-m>
@@ -46,7 +46,7 @@
    <not><property>sim/current-view/internal</property></not>
   </condition>
  </animation>
-
+-->
 <!--
  <animation>
   <type>select</type>
@@ -91,13 +91,13 @@
   </offsets>
  </model>
 
- <animation>
+ <!--<animation>
   <type>range</type>
   <object-name>RudderPedals</object-name>
   <object-name>Throttle</object-name>
   <min-m>0</min-m>
   <max-m>100</max-m>
- </animation>
+ </animation>-->
 
 
 <!-- ======= START CONSOLES ======= -->
@@ -324,6 +324,31 @@
    <z-m>0.578</z-m>
    <pitch-deg>-15</pitch-deg><!-- needs verification! -->
   </offsets>
+  <condition>
+   <equals>
+    <property>sim/model/livery/actype</property>
+    <value>F-16A-MLU</value>
+   </equals>
+  </condition>
+ </model>
+
+  <model>
+  <name>THREAT</name>
+  <path>Aircraft/f16/Models/Cockpit/Avionics/EWS/US_threat_warning_prime.xml</path>
+  <offsets>
+   <x-m>-4.786</x-m>
+   <y-m>-0.203</y-m>
+   <z-m>0.578</z-m>
+   <pitch-deg>-15</pitch-deg><!-- needs verification! -->
+  </offsets>
+  <condition>
+    <not>
+   <equals>
+    <property>sim/model/livery/actype</property>
+    <value>F-16A-MLU</value>
+   </equals>
+ </not>
+  </condition>
  </model>
  
 <!-- AOA indexer animations -->

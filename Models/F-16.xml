@@ -23,17 +23,25 @@
 <!-- start submodels -->
  <!-- decide which cockpit we select based upon selected livery -->
  <model>
-  <name>Cockpit</name>
+  <name>interior</name>
+  <usage>interior</usage>
   <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/cockpit.xml</path>
-  <condition>
-   <equals>
-    <property>sim/model/livery/actype</property>
-    <value>F-16A-MLU</value>
-   </equals>
-  </condition>
+</model>
+
+<model>
+  <name>Pilot_ext</name>
+  <path>Aircraft/f16/Models/Pilots/pilot_externalview.xml</path>
  </model>
 
- <model>
+ <animation>
+  <type>select</type>
+  <object-name>Pilot_ext</object-name>
+  <condition>
+   <not><property>sim/current-view/internal</property></not>
+  </condition>
+ </animation>
+
+ <!--<model>
   <name>Cockpit</name>
   <path>Aircraft/f16/Models/Cockpit/F-16C-40/cockpit.xml</path>
   <condition>
@@ -65,7 +73,7 @@
     </equals>
    </or>
   </condition>
- </model>
+ </model>-->
 
  <model>
   <name>new_nozzle</name>
