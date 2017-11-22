@@ -127,6 +127,18 @@ var Station = {
 		return me.ammo;
 	},
 
+	getAmmo: func (type) {
+		me.ammo = 0;
+		foreach(me.weapon ; me.getWeapons()) {
+			if (me.weapon != nil and me.weapon.parents[0] == armament.AIM and me.weapon.type == type) {
+				me.ammo += 1;
+			} elsif (me.weapon != nil and me.weapon.parents[0] == SubModelWeapon and me.weapon.type == type) {
+				me.ammo += me.weapon.getAmmo();
+			}
+		}
+		return me.ammo;
+	},
+
 	findSetFromName: func (name) {
 		foreach (me.set; me.sets) {
 			if (me.set.name == name) {

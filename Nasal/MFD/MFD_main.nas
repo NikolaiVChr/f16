@@ -319,7 +319,7 @@ var MFD_Device =
         obj.PFDsvg = dev_canvas.createGroup();
         var pres = canvas.parsesvg(obj.PFDsvg, "Nasal/MFD/MFD.svg");
 # Parse an SVG file and add the parsed elements to the given group
-        printf("MFD : %s Load SVG %s",designation,pres);
+        #printf("MFD : %s Load SVG %s",designation,pres);
         obj.PFDsvg.setTranslation (-20.0, 0);
 #
 # create the object that will control all of this

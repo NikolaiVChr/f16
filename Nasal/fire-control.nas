@@ -96,6 +96,13 @@ var FireControl = {
 		return me.pylons[me.selected[0]].getWeapons()[me.selected[1]];
 	},
 
+	getSelectedPylon: func {
+		if (me.selected == nil) {
+			return nil;
+		}
+		return me.pylons[me.selected[0]];
+	},
+
 	trigger: func {
 		printf("trigger called %d %d %d",getprop("controls/armament/master-arm"),getprop("controls/armament/trigger"),me.selected != nil);
 		if (getprop("controls/armament/master-arm") == 1 and getprop("controls/armament/trigger") > 0 and me.selected != nil) {
@@ -183,6 +190,14 @@ var FireControl = {
 		}
 		#printf("  %d %d %d",pylon.currentSet != nil,pylon.currentSet["fireOrder"] != nil,size(pylon.currentSet.fireOrder) > 0);
 		return -1;
+	},
+
+	getAmmo: func {
+		me.count = 0;
+		foreach (p;me.pylons) {
+			me.count += p.getAmmo(me.selectedType);
+		}
+		return me.count;
 	},
 
 	vectorIndex: func (vec, item) {

@@ -39,7 +39,9 @@ var F16_HUD = {
         obj.svg = obj.canvas.createGroup();
  
 # Parse an SVG file and add the parsed elements to the given group
-        print("HUD Parse SVG ",canvas.parsesvg(obj.svg, svgname));
+        #print("HUD Parse SVG ",
+            canvas.parsesvg(obj.svg, svgname);
+            #);
 
         obj.canvas._node.setValues({
                 "name": "F16 HUD",
@@ -218,28 +220,53 @@ var F16_HUD = {
 # IAS
         me.ias_range.setTranslation(0, hdp.IAS * ias_range_factor);
      
-        if(getprop("sim/model/f16/controls/armament/master-arm-switch"))
-        {
-            var w_s = getprop("sim/model/f16/controls/armament/weapon-selector");
+        if(hdp.brake_parking)
+          {
             me.window2.setVisible(1);
+            me.window2.setText("BRAKES");
+        }
+        else if (hdp.flap_pos_deg > 0 or hdp.gear_down)
+          {
+            me.window2.setVisible(1);
+              var gd = "";
+              if (hdp.gear_down)
+                gd = " G";
+              me.window6.setText(sprintf("F %d %s",hdp.flap_pos_deg,gd));
+        } elsif (getprop("controls/armament/master-arm")) {
+            me.window2.setText("ARM");
+            me.window2.setVisible(1);
+        } else {
+            me.window2.setText("NAV");
+            me.window2.setVisible(1);
+        }
+
+        if(getprop("controls/armament/master-arm"))
+        {
+            var weap = pylons.fcs.selectedType;
+            me.window7.setVisible(1);
+            
             var txt = "";
-            if (w_s == 0)
+            if (weap != nil)
             {
-                txt = sprintf("%3d",getprop("sim/model/f16/systems/gun/rounds"));
+                if (weap == "20mm Cannon") {
+                    txt = sprintf("%3d", pylons.fcs.getAmmo());
+                } elsif (weap == "AIM-9") {
+                    txt = sprintf("S%dL", pylons.fcs.getAmmo());
+                } elsif (weap == "AIM-120") {
+                    txt = sprintf("M%dL", pylons.fcs.getAmmo());
+                } elsif (weap == "GBU-12") {
+                    txt = sprintf("GBU%d", pylons.fcs.getAmmo());
+                }
             }
-            else if (w_s == 1)
-            {
-                txt = sprintf("S%dL", getprop("sim/model/f16/systems/armament/aim9/count"));
-            }
-            else if (w_s == 2)
-            {
-                txt = sprintf("M%dF", getprop("sim/model/f16/systems/armament/aim120/count")+getprop("sim/model/f16/systems/armament/aim7/count"));
-            }
-            me.window2.setText(txt);
+            me.window7.setText(txt);
             if (awg_9.active_u != nil)
             {
-                if (awg_9.active_u.Callsign != nil)
+                if (awg_9.active_u.Callsign != nil) {
                     me.window3.setText(awg_9.active_u.Callsign.getValue());
+                    me.window3.show();
+                } else {
+                    me.window3.hide();
+                }
                 var model = "XX";
                 if (awg_9.active_u.ModelType != "")
                     model = awg_9.active_u.ModelType;
@@ -255,18 +282,22 @@ var F16_HUD = {
                 me.window6.setText(model);
                 me.window6.setVisible(1); # SRM UNCAGE / TARGET ASPECT
             }
+            else {
+                me.window3.hide();
+            }
         }
         else
         {
-        me.window2.setVisible(0);
-        me.window3.setText("NAV");
-        if (hdp.nav_range != "")
-          me.window3.setText("NAV");
-        else
-          me.window3.setText("");
-        me.window4.setText(hdp.nav_range);
+            me.window7.setVisible(0);
+            #me.window3.setText("NAV");
+            #if (hdp.nav_range != "")
+            #  me.window3.setText("NAV");
+            #else
+            #  me.window3.setText("");
+            me.window3.hide();
+            me.window4.setText(hdp.nav_range);
             me.window5.setText(hdp.hud_window5);
-        me.window6.setVisible(0); # SRM UNCAGE / TARGET ASPECT
+            me.window6.setVisible(0); # SRM UNCAGE / TARGET ASPECT
         }
 
         if (hdp.range_rate != nil)
@@ -352,21 +383,7 @@ var F16_HUD = {
         }
 
 
-        if(hdp.brake_parking)
-          {
-            me.window7.setVisible(1);
-            me.window7.setText("BRAKES");
-        }
-        else if (hdp.flap_pos_deg > 0 or hdp.gear_down)
-          {
-            me.window7.setVisible(1);
-              var gd = "";
-              if (hdp.gear_down)
-                gd = " G";
-              me.window7.setText(sprintf("F %d %s",hdp.flap_pos_deg,gd));
-        }
-        else
-            me.window7.setVisible(0);
+        
         #
 #
 #               1 
