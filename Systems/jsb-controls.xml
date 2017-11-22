@@ -1665,14 +1665,16 @@
                 Block-15 and above had the horizontal tail surface enlarged
                 by 25% for better control. This data does not factor that in
                 so do it ourselves.
+
+                Basically larger value will make the deep stall worse.
             </description>
             <function>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/pitch/horz-tail-deflection-deg</independentVar>
                     <tableData>
-                     -25.0      1.25
+                     -25.0      1.20
                       0.0       1.0
-                      25.0      1.25
+                      25.0      1.20
                     </tableData>
                 </table>
             </function>
