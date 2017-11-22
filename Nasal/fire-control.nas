@@ -19,7 +19,7 @@ var FireControl = {
 		fc.selectedType = nil;
 		fc.WeaponNotification = VectorNotification.new("WeaponNotification");
 		fc.setupMFDObservers();
-		setlistener("controls/armament/trigger",func{fc.trigger()});
+		setlistener("controls/armament/trigger",func{fc.trigger();fc.updateCurrent()});
 		setlistener("controls/armament/master-arm",func{fc.updateCurrent()});
 		return fc;
 	},
@@ -123,6 +123,10 @@ var FireControl = {
 			me.getSelectedWeapon().stop();
 		}
 		print("FC: Masterarm "~getprop("controls/armament/master-arm"));
+		if (me.selected == nil) {
+			return;
+		}
+		me.pylons[me.selected[0]].calculateMass();#kind of a hack to get cannon ammo changed.
 	},
 
 	nextWeapon: func (type) {

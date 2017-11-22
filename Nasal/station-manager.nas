@@ -338,6 +338,7 @@ var SubModelWeapon = {
 		# these 2 needs to be here and be 0
 		s.Cd_base = 0;
 		s.ref_area_sqft = 0;
+
 		return s;
 	},
 
@@ -382,6 +383,7 @@ var SubModelWeapon = {
 	mount: func {
 		me.reloadAmmo();
 		me.timer.start();
+		me.loop();
 	},
 
 	eject: func {

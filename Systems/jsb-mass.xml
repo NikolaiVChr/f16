@@ -103,4 +103,13 @@
    </location>
   </pointmass>
 
+  <pointmass name="Cannon ammo">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="IN">
+   <x> -176.5 </x>
+   <y> 0 </y>
+   <z> 0 </z>
+   </location>
+  </pointmass>
+
  </mass_balance>
