@@ -1179,12 +1179,9 @@
         </summer>
 
         <switch name="fcs/fly-by-wire/pitch/main-gain">
-            <description>
-                Is 3.0 in tp1538, and 1.5 in the older control digram, which the YF16 uses.
-                Since Erik made the elevator effects much larger due to block 5+ larger htail,
-                it needs to be lower than 3 to avoid oscillation at high speed. So for now set to 2.0.
+            <description>                
             </description>
-            <default value="2.0"/>
+            <default value="3.0"/>
             <test logic="AND" value="1.5">
                 fcs/fly-by-wire/prototype == 0
             </test>
@@ -1382,8 +1379,11 @@
         </lag_filter>
 
         <lag_filter name="fcs/fly-by-wire/pitch/bias-bottom-lag">
+            <description>
+                diagram say 0.125
+            </description>
             <input> fcs/fly-by-wire/pitch/bias-bottom </input>
-            <c1> 0.125 </c1>
+            <c1> 12.5 </c1>
         </lag_filter>
 
         <summer name="fcs/fly-by-wire/pitch/bias1">
@@ -1391,14 +1391,17 @@
             <input> fcs/fly-by-wire/pitch/bias-middle </input>
         </summer>
 
-        <summer name="fcs/fly-by-wire/pitch/bias2">
+        <summer name="fcs/fly-by-wire/pitch/bias-final">
+            <description>
+                This is fixed 15 in TP-1538
+            </description>
             <input> fcs/fly-by-wire/pitch/bias-top-lag </input>
             <input> fcs/fly-by-wire/pitch/bias1 </input>
         </summer>
 
         <summer name="fcs/fly-by-wire/pitch/pitch-rate-gain-sum">
             <input> fcs/fly-by-wire/pitch/pitch-rate-gain </input>
-            <input> -fcs/fly-by-wire/pitch/bias2 </input>
+            <input> -fcs/fly-by-wire/pitch/bias-final </input>
             <input> fcs/fly-by-wire/pitch/a_f </input>
         </summer>
 
@@ -1443,7 +1446,9 @@
         </switch>
 
         <lag_filter name="fcs/fly-by-wire/pitch/pitch-rate-lower-lag">
-            <description>diagram say 0.125, but that does a pitch up for too long after takeoff</description>
+            <description>
+                diagram say 0.125, but that does a pitch up for too long after takeoff
+            </description>
             <input> fcs/fly-by-wire/pitch/pitch-rate-lower-switch </input>
             <c1> 12.5 </c1>
         </lag_filter>
