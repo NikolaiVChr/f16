@@ -42,4 +42,4 @@ var pylonI = stations.InternalStation.new("Internal gun mount", 9, [pylonSets.e]
 
 var pylons = [pylon1,pylon2,pylon3,pylon4,pylon5,pylon6,pylon7,pylon8,pylon9,pylonI];
 var fcs = fc.FireControl.new(pylons, [9,0,8,1,7,2,6,3,5,4], ["20mm Cannon","AIM-9","AIM-120","GBU-12"]);
-print("** Pylon & fire control system started. **");
+#print("** Pylon & fire control system started. **");

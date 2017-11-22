@@ -225,13 +225,13 @@ var F16_HUD = {
             me.window2.setVisible(1);
             me.window2.setText("BRAKES");
         }
-        else if (hdp.flap_pos_deg > 0 or hdp.gear_down)
-          {
+        elsif (hdp.flap_pos_deg > 0 or hdp.gear_down)
+        {
             me.window2.setVisible(1);
-              var gd = "";
-              if (hdp.gear_down)
+            var gd = "";
+            if (hdp.gear_down)
                 gd = " G";
-              me.window6.setText(sprintf("F %d %s",hdp.flap_pos_deg,gd));
+            me.window2.setText(sprintf("F %d %s",hdp.flap_pos_deg,gd));
         } elsif (getprop("controls/armament/master-arm")) {
             me.window2.setText("ARM");
             me.window2.setVisible(1);
