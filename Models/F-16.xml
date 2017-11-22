@@ -25,7 +25,7 @@
  <model>
   <name>interior</name>
   <usage>interior</usage>
-  <path>Aircraft/f16/Models/Cockpit/F-16A-MLU/cockpit.xml</path>
+  <path>Aircraft/f16/Models/Cockpit/Main/cockpit.xml</path>
 </model>
 
 <model>
