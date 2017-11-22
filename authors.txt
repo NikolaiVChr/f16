@@ -6,7 +6,7 @@
 Erik Hofman
 - Main author
 - Simplified FDM
-- F16 block 15+ FDM
+- F16 block 15+ aerodynamics
 
 Pensacola
 - Liveries
@@ -15,7 +15,8 @@ Martin "Pegasus" Schmitt
 - Cockpit textures
 
 Nikolai V. Chr.
-- F16 block 10 and YF-16 FDM
+- F16 block 10 and YF-16 aerodynamics
+- Flight control system for all variants except simplified.
 - Danish and prototype livery
 - Various changes to radar, MFD, HUD
 - Added Pylon and missile code

@@ -934,7 +934,6 @@
 
 
 
-
     <channel execrate="1" name="Pitch">
 
         <fcs_function name="fcs/fly-by-wire/pitch/stick-force-lbf">
@@ -1190,49 +1189,53 @@
             </test>
         </switch>
 
-        <pure_gain name="fcs/fly-by-wire/pitch/command-sum-limit-alpha-pitch-gain">
+        <pure_gain name="fcs/fly-by-wire/pitch/main-gain-result">
             <input>fcs/fly-by-wire/pitch/command-sum-limit-alpha-pitch</input>
             <gain> fcs/fly-by-wire/pitch/main-gain </gain>
         </pure_gain>
 
-        <pure_gain name="fcs/fly-by-wire/pitch/pitch-loop-gain">
-            <input>fcs/fly-by-wire/pitch/command-sum-limit-alpha-pitch-gain</input>
+        <pure_gain name="fcs/fly-by-wire/pitch/main-gain-schedule">
+            <description>                
+            </description>
+            <input>fcs/fly-by-wire/pitch/main-gain-result</input>
             <gain> fcs/fly-by-wire/pitch/F3 </gain>
         </pure_gain>
 
-        <summer name="fcs/fly-by-wire/pitch/pitch-loop-gain-sum">
-            <input> fcs/fly-by-wire/pitch/pitch-loop-gain </input>
-            <input> -fcs/fly-by-wire/pitch/pitch-loop-gain-feedback-gain </input>
+        <summer name="fcs/fly-by-wire/pitch/integrator-feedback">
+            <input> fcs/fly-by-wire/pitch/main-gain-schedule </input>
+            <input> -fcs/fly-by-wire/pitch/integrator-feedback-gain </input>
         </summer>
 
-        <switch name="fcs/fly-by-wire/pitch/pitch-loop-gain-switch">
-            <default value="fcs/fly-by-wire/pitch/pitch-loop-gain-sum"/>
-            <test logic="AND" value="fcs/fly-by-wire/pitch/pitch-loop-ground-product">
+        <switch name="fcs/fly-by-wire/pitch/integrator-feedback-mlg">
+            <default value="fcs/fly-by-wire/pitch/integrator-feedback"/>
+            <test logic="AND" value="fcs/fly-by-wire/pitch/ground-input">
                 fcs/fly-by-wire/MLG-GND == 1
             </test>
         </switch>
 
-        <summer name="fcs/fly-by-wire/pitch/pitch-loop-gain-sum-extra">
-            <input> fcs/fly-by-wire/pitch/pitch-loop-gain-switch </input>
+        <summer name="fcs/fly-by-wire/pitch/integrator-pre">
+            <input> fcs/fly-by-wire/pitch/integrator-feedback-mlg </input>
             <input> -fcs/fly-by-wire/pitch/amplifier </input>
             <input> -fcs/fly-by-wire/pitch/int-balance </input>
         </summer>
 
-        <integrator name="fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int">
-            <input> fcs/fly-by-wire/pitch/pitch-loop-gain-sum-extra </input>
+        <integrator name="fcs/fly-by-wire/pitch/integrator">
+            <input> fcs/fly-by-wire/pitch/integrator-pre </input>
             <c1> 5 </c1>
         </integrator>
 
-        <pure_gain name="fcs/fly-by-wire/pitch/pitch-loop-ground-product">
-            <description>diagram say 0.5, but negative makes more sense</description>
-            <input>fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int</input>
+        <pure_gain name="fcs/fly-by-wire/pitch/ground-input">
+            <description>
+                diagram say 0.5, but negative makes more sense
+            </description>
+            <input>fcs/fly-by-wire/pitch/integrator</input>
             <gain> -0.5 </gain>
         </pure_gain>
 
-        <fcs_function name="fcs/fly-by-wire/pitch/amp-deadzone-neg">
+        <!--<fcs_function name="fcs/fly-by-wire/pitch/amp-deadzone-neg">
             <function>
                 <difference>
-                    <property> fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int </property>
+                    <property> fcs/fly-by-wire/pitch/integrator </property>
                     <v> -25 </v>
                 </difference>
             </function>
@@ -1241,7 +1244,7 @@
         <fcs_function name="fcs/fly-by-wire/pitch/amp-deadzone-pos">
             <function>
                 <difference>
-                    <property> fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int </property>
+                    <property> fcs/fly-by-wire/pitch/integrator </property>
                     <v> 25 </v>
                 </difference>
             </function>
@@ -1250,32 +1253,42 @@
         <switch name="fcs/fly-by-wire/pitch/amp-deadzone">
             <default value="0"/>
             <test logic="AND" value="fcs/fly-by-wire/pitch/amp-deadzone-pos">
-                fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int gt  25
+                fcs/fly-by-wire/pitch/integrator gt  25
             </test>
             <test logic="AND" value="fcs/fly-by-wire/pitch/amp-deadzone-neg">
-                fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int lt  -25
+                fcs/fly-by-wire/pitch/integrator lt  -25
             </test>
-        </switch>
+        </switch>-->
+
+        <deadband name="fcs/fly-by-wire/pitch/amp-deadzone">
+          <input> fcs/fly-by-wire/pitch/integrator </input>
+          <width> 50 </width>
+        </deadband>
 
         <pure_gain name="fcs/fly-by-wire/pitch/amplifier">
             <input>fcs/fly-by-wire/pitch/amp-deadzone</input>
             <gain> fcs/fly-by-wire/K_A </gain>
         </pure_gain>
 
-        <pure_gain name="fcs/fly-by-wire/pitch/integrator">
+        <!--<pure_gain name="fcs/fly-by-wire/pitch/integrator">
             <input>fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int</input>
             <gain> fcs/fly-by-wire/enable-int </gain>
-        </pure_gain>
+        </pure_gain>-->
 
-        <summer name="fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int-sum">
+        <summer name="fcs/fly-by-wire/pitch/integrator-post">
             <input> fcs/fly-by-wire/pitch/integrator </input>
-            <input> fcs/fly-by-wire/pitch/pitch-loop-gain </input>
+            <input> fcs/fly-by-wire/pitch/main-gain-schedule </input>
         </summer>
 
+        <pure_gain name="fcs/fly-by-wire/pitch/integrator-selftest">
+            <input>fcs/fly-by-wire/pitch/integrator-post</input>
+            <gain> fcs/fly-by-wire/integrator-selftest-value </gain>
+        </pure_gain>
+        
         <summer name="fcs/fly-by-wire/pitch/int-balance-summer">
-            <description>test system not made, so is 0</description>
-            <input> fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int-sum </input>
-            <input> -fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int-sum </input>
+            <description></description>
+            <input> fcs/fly-by-wire/pitch/integrator-post </input>
+            <input> -fcs/fly-by-wire/pitch/integrator-selftest </input>
         </summer>
 
         <pure_gain name="fcs/fly-by-wire/pitch/int-balance">
@@ -1283,15 +1296,15 @@
             <gain> 0.5 </gain>
         </pure_gain>
 
-        <summer name="fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int-sum-sum">
-            <input> fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int-sum </input>
+        <!--<summer name="fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int-sum-sum">
+            <input> fcs/fly-by-wire/pitch/integrator-post </input>
             <input> fcs/fly-by-wire/pitch/alpha-feedback </input>
-        </summer>
+        </summer>-->
         
-        <fcs_function name="fcs/fly-by-wire/pitch/pitch-loop-gain-feedback-deadzone-neg">
+        <!--<fcs_function name="fcs/fly-by-wire/pitch/pitch-loop-gain-feedback-deadzone-neg">
             <function>
                 <difference>
-                    <property> fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int-sum-sum </property>
+                    <property> fcs/fly-by-wire/pitch/integrator-almost-final </property>
                     <v> -25 </v>
                 </difference>
             </function>
@@ -1300,24 +1313,29 @@
         <fcs_function name="fcs/fly-by-wire/pitch/pitch-loop-gain-feedback-deadzone-pos">
             <function>
                 <difference>
-                    <property> fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int-sum-sum </property>
+                    <property> fcs/fly-by-wire/pitch/integrator-almost-final </property>
                     <v> 25 </v>
                 </difference>
             </function>
         </fcs_function>
 
-        <switch name="fcs/fly-by-wire/pitch/pitch-loop-gain-feedback-deadzone">
+        <switch name="fcs/fly-by-wire/pitch/integrator-feedback-deadzone">
             <default value="0"/>
             <test logic="AND" value="fcs/fly-by-wire/pitch/pitch-loop-gain-feedback-deadzone-pos">
-                fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int-sum-sum gt  25
+                fcs/fly-by-wire/pitch/integrator-almost-final gt  25
             </test>
             <test logic="AND" value="fcs/fly-by-wire/pitch/pitch-loop-gain-feedback-deadzone-neg">
-                fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int-sum-sum lt  -25
+                fcs/fly-by-wire/pitch/integrator-almost-final lt  -25
             </test>
-        </switch>
+        </switch>-->
 
-        <pure_gain name="fcs/fly-by-wire/pitch/pitch-loop-gain-feedback-gain">
-            <input>fcs/fly-by-wire/pitch/pitch-loop-gain-feedback-deadzone</input>
+        <deadband name="fcs/fly-by-wire/pitch/integrator-feedback-deadzone">
+          <input> fcs/fly-by-wire/pitch/integrator-almost-final </input>
+          <width> 50 </width>
+        </deadband>
+
+        <pure_gain name="fcs/fly-by-wire/pitch/integrator-feedback-gain">
+            <input>fcs/fly-by-wire/pitch/integrator-feedback-deadzone</input>
             <gain> 5 </gain>
         </pure_gain>
 
@@ -1326,9 +1344,14 @@
             <gain> fcs/fly-by-wire/pitch/F2 </gain>
         </pure_gain>
 
-        <summer name="fcs/fly-by-wire/pitch/pitch-loop-gain-final">
-            <input> fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int-sum </input>
+        <summer name="fcs/fly-by-wire/pitch/integrator-almost-final">
+            <input> fcs/fly-by-wire/pitch/integrator-post </input>
             <input> fcs/fly-by-wire/pitch/alpha-feedback </input>
+        </summer>
+
+        <summer name="fcs/fly-by-wire/pitch/integrator-final">
+            <input> fcs/fly-by-wire/pitch/alpha-feedback </input>
+            <input> fcs/fly-by-wire/pitch/integrator-selftest </input>
         </summer>
 
         <pure_gain name="fcs/fly-by-wire/pitch/q">
@@ -1549,12 +1572,12 @@
         </second_order_filter>
 
         <summer name="fcs/fly-by-wire/pitch/tp-left-sum">
-            <input> fcs/fly-by-wire/pitch/pitch-loop-gain-final </input>
+            <input> fcs/fly-by-wire/pitch/integrator-final </input>
             <input> fcs/fly-by-wire/roll/inter-schedule </input> 
         </summer>
 
         <summer name="fcs/fly-by-wire/pitch/bt-left-sum">
-            <input> fcs/fly-by-wire/pitch/pitch-loop-gain-final </input>
+            <input> fcs/fly-by-wire/pitch/integrator-final </input>
             <input> -fcs/fly-by-wire/roll/inter-schedule </input>
         </summer>
 

@@ -717,7 +717,7 @@
      <enable-alpha type="bool">true</enable-alpha>
      <pitch>
        <a_f type="double">0</a_f>
-       <pitch-loop-ground-product type="double">0</pitch-loop-ground-product>
+       <ground-input type="double">0</ground-input>
      </pitch>
     </fly-by-wire>
      <gear-control type="double">1</gear-control>
@@ -726,6 +726,7 @@
      <canopy-engage type="bool">false</canopy-engage>
      <hook-engage type="bool">false</hook-engage>
      <alpha-norm type="double">0</alpha-norm>
+     <integrator-selftest-value type="double">0</integrator-selftest-value>
    </fcs>
   </jsbsim>
  </fdm>
@@ -785,6 +786,9 @@
    <use-wipers type="int">1</use-wipers>
    <rain-enabled type="int">1</rain-enabled>
   </aircraft-effects>
+  <precipitation-control>
+    <clip-distance type="double">2.0</clip-distance>
+  </precipitation-control>
  </environment>
 
  <limits>
