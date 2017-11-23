@@ -3,7 +3,7 @@ License: GPL v2
 Author: Nikolai V. Chr.
 -->
 <PropertyList>
-	<name>Aircraft/JA37/Models/Effects/displays/lcd</name>
+	<name>Aircraft/f16/Models/Effects/displays/lcd</name>
 	<parameters>
 		<inner-angle type="float">35</inner-angle><!-- 0-90, use 90 for LED or plasma display-->
 		<outer-angle type="float">60</outer-angle><!-- 0-90, but greater than inner -->
@@ -236,8 +236,8 @@ Author: Nikolai V. Chr.
 		   		<use>vertex-program-two-side</use>
 			</vertex-program-two-side>
 			<program>
-				<vertex-shader n="0">Aircraft/JA37/Models/Effects/displays/lcd.vert</vertex-shader>
-				<fragment-shader n="0">Aircraft/JA37/Models/Effects/displays/lcd.frag</fragment-shader>
+				<vertex-shader n="0">Aircraft/f16/Models/Effects/displays/lcd.vert</vertex-shader>
+				<fragment-shader n="0">Aircraft/f16/Models/Effects/displays/lcd.frag</fragment-shader>
 				<fragment-shader n="1">Shaders/noise.frag</fragment-shader>
 				<fragment-shader n="2">Shaders/filters-ALS.frag</fragment-shader>
 			</program>

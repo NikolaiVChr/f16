@@ -3,7 +3,7 @@ The fuselage effect is a modified version of model-combined-deffered.
 Modifications author: Nikolai V. Chr.
 -->
 <PropertyList>
-	<name>Aircraft/JA37/Models/Effects/fuselage/model-combined-fuselage</name>
+	<name>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</name>
 	<inherits-from>Effects/model-combined-deferred</inherits-from>
 	<parameters>
 		<metallic type="float">0.75</metallic><!-- 0-1 -->
@@ -270,8 +270,8 @@ Modifications author: Nikolai V. Chr.
 			   </vertex-program-two-side>
 			   
 			   <program>
-				<vertex-shader n="0">Aircraft/JA37/Models/Effects/fuselage/model-combined-fuselage-ALS.vert</vertex-shader>
-			 	<fragment-shader n="0">Aircraft/JA37/Models/Effects/fuselage/model-combined-fuselage-ALS.frag</fragment-shader>
+				<vertex-shader n="0">Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage-ALS.vert</vertex-shader>
+			 	<fragment-shader n="0">Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage-ALS.frag</fragment-shader>
 				<fragment-shader n="1">Shaders/cloud-shadowfunc.frag</fragment-shader>
 				<fragment-shader n="2">Shaders/hazes.frag</fragment-shader>
 				<fragment-shader n="3">Shaders/secondary_lights.frag</fragment-shader>
@@ -1336,9 +1336,9 @@ Modifications author: Nikolai V. Chr.
 		  </vertex-program-two-side>
 
 		  <program n="0">
-			  <vertex-shader n="0">Aircraft/JA37/Models/Effects/fuselage/model-combined-fuselage.vert</vertex-shader>
+			  <vertex-shader n="0">Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage.vert</vertex-shader>
 			  <fragment-shader n="0">Shaders/include_fog.frag</fragment-shader>
-			  <fragment-shader n="1">Aircraft/JA37/Models/Effects/fuselage/model-combined-fuselage.frag</fragment-shader>
+			  <fragment-shader n="1">Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage.frag</fragment-shader>
 		  </program>
 
 		  <uniform>
