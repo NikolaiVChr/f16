@@ -647,7 +647,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
         </function>
 
-        <function name="aero/coefficient/force/Xpylons">
+        <function name="aero/coefficient/force/Xpylons-lbf">
             <description>drag for pylon</description>
                 <product>
                     <sum>
@@ -668,7 +668,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                 </product>
         </function>
 
-        <function name="aero/coefficient/force/CDx">
+        <function name="aero/coefficient/force/CDx-lbf">
             <description>Drag</description>
             <product>
                 <property>aero/qbar-psf</property>
@@ -685,7 +685,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
         </function>        
 
-        <function name="aero/coefficient/force/CLx">
+        <function name="aero/coefficient/force/CLx-lbf">
             <description>Lift</description>
             <product>
                 <property>aero/qbar-psf</property>
@@ -1105,7 +1105,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
         </function>         
 
-        <function name="aero/coefficient/force/Zpylons">
+        <function name="aero/coefficient/force/Zpylons-lbf">
             <description>Z for pylon</description>
                 <product>
                     <sum>
@@ -1363,9 +1363,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cm due to CoG shift, page 44 of TP 1538
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/cbarw-ft</property>
                 <difference>
                     <v>0.35</v>
                     <p>aero/CG-pos-c</p>
@@ -1590,7 +1587,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
 
     <axis name="PITCH">
 
-        <function name="aero/coefficient/force/Cm_t-lbf">
+        <function name="aero/coefficient/moment/Cm_t-lbf_ft">
             <description>Total pitch moment</description>
             <product>
                 <property>aero/qbar-psf</property>
@@ -2007,6 +2004,14 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
 
 
 
+
+
+
+
+
+
+
+
     <function name="aero/coefficient/Cn_dh0">
         <description>
             coefficient
@@ -2158,18 +2163,16 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 0.0089 0.0077 0.0068 0.0014 -.0036 -.0044 -.0057 -.0010 -.0009 -.0024 -.0042 -.0047 -.0054 -.0058 -.0057 -.0109 -.0157 -.0170 -.0181
             </tableData>
         </table>
-    </function>         
+    </function>
 
-    <axis name="YAW">
+
+
 
         <function name="aero/coefficient/Cn">
             <description>
                Cn coefficient
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
                 <table name="table/Cn">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <independentVar lookup="column">aero/beta-deg</independentVar>
@@ -2247,51 +2250,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
         </function>
 
-        <function name="aero/coefficient/dCn_lef">
-            <description>
-               Cn due to leading edge flaps coefficient.
-            </description>
-            <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
-                <property>fcs/fly-by-wire/lef/lef-pos-r-norm</property>
-                <difference>
-                    <p>aero/coefficient/Cn_lef</p>
-                    <p>aero/coefficient/Cn_dh0</p>
-                </difference>
-            </product>
-        </function>
-
-        <function name="aero/coefficient/dCn_da-lef">
-            <description>
-               Cn due to aileron coefficient
-            </description>
-            <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
-                <p>fcs/fly-by-wire/roll/aileron-pos-norm</p><!-- 1 = 20 degs -->
-                <sum>
-                    <difference>
-                        <p>aero/coefficient/Cn_da</p>
-                        <p>aero/coefficient/Cn_dh0</p>
-                    </difference>
-                    <product>
-                        <p>fcs/fly-by-wire/lef/lef-pos-r-norm</p>
-                        <difference>
-                            <p>aero/coefficient/Cn_da-lef</p>
-                            <p>aero/coefficient/Cn_lef</p>                            
-                            <difference>
-                                <p>aero/coefficient/Cn_da</p>
-                                <p>aero/coefficient/Cn_dh0</p>
-                            </difference>
-                        </difference>
-                    </product>
-                </sum>
-            </product>
-        </function>
-
         <!--<function name="aero/coefficient/Cn_cg">
             <description>
                Cn due to CoG shift, page 45 of TP 1538
@@ -2313,30 +2271,11 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
         </function>-->
 
-        <function name="aero/coefficient/dCn_dr">
-            <description>
-               Cn due to rudder coefficient
-            </description>
-            <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
-                <p>fcs/fly-by-wire/yaw/rudder-pos-norm</p><!-- 1 = 30 degs -->
-                <difference>
-                    <p>aero/coefficient/Cn_dr</p>
-                    <p>aero/coefficient/Cn_dh0</p>
-                </difference>
-            </product>
-        </function>   
-
         <function name="aero/coefficient/Cn_r">
             <description>
                Cn due to yaw rate coefficient.
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
                 <property>aero/bi2vel</property>
                 <property>velocities/r-rad_sec</property>
                 <table name="table/Cn_r">
@@ -2372,9 +2311,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cn due to beta coefficient.
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
                 <property>aero/beta-deg</property>
                 <table name="table/dCn_b">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
@@ -2412,9 +2348,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </description>
             <product>
                 <v>0</v>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
                 <property>fcs/aileron-pos-rad</property>
                 <table name="table/dCn_da">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
@@ -2449,9 +2382,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cn due to yaw rate due to leading edge flaps coefficient.
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
                 <property>aero/bi2vel</property>
                 <property>velocities/r-rad_sec</property>
                 <property>fcs/fly-by-wire/lef/lef-pos-r-norm</property>
@@ -2472,7 +2402,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  35 -.437
  40 .167
  45 .084
-
  50 0.00
                      </tableData>
                 </table>
@@ -2484,9 +2413,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cn due to roll rate coefficient.
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
                 <property>aero/bi2vel</property>
                 <property>velocities/p-rad_sec</property>
                 <table name="table/Cn_p">
@@ -2524,9 +2450,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Source for alpha 50+: TN-D-8176
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
                 <property>aero/bi2vel</property>
                 <property>velocities/p-rad_sec</property>
                 <property>fcs/fly-by-wire/lef/lef-pos-r-norm</property>
@@ -2556,9 +2479,92 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                      </tableData>
                 </table>
             </product>
+        </function>    
+
+        <function name="aero/coefficient/dCn_lef">
+            <description>
+               Cn due to leading edge flaps coefficient.
+            </description>
+            <product>
+                <property>fcs/fly-by-wire/lef/lef-pos-r-norm</property>
+                <difference>
+                    <p>aero/coefficient/Cn_lef</p>
+                    <p>aero/coefficient/Cn_dh0</p>
+                </difference>
+            </product>
         </function>
 
-        <function name="aero/coefficient/CnPylons">
+        <function name="aero/coefficient/dCn_da-lef">
+            <description>
+               Cn due to aileron coefficient
+            </description>
+            <product>
+                <p>fcs/fly-by-wire/roll/aileron-pos-norm</p><!-- 1 = 20 degs -->
+                <sum>
+                    <difference>
+                        <p>aero/coefficient/Cn_da</p>
+                        <p>aero/coefficient/Cn_dh0</p>
+                    </difference>
+                    <product>
+                        <p>fcs/fly-by-wire/lef/lef-pos-r-norm</p>
+                        <difference>
+                            <p>aero/coefficient/Cn_da-lef</p>
+                            <p>aero/coefficient/Cn_lef</p>                            
+                            <difference>
+                                <p>aero/coefficient/Cn_da</p>
+                                <p>aero/coefficient/Cn_dh0</p>
+                            </difference>
+                        </difference>
+                    </product>
+                </sum>
+            </product>
+        </function>
+
+        <function name="aero/coefficient/dCn_dr">
+            <description>
+               Cn due to rudder coefficient
+            </description>
+            <product>
+                <p>fcs/fly-by-wire/yaw/rudder-pos-norm</p><!-- 1 = 30 degs -->
+                <difference>
+                    <p>aero/coefficient/Cn_dr</p>
+                    <p>aero/coefficient/Cn_dh0</p>
+                </difference>
+            </product>
+        </function>
+
+    <function name="aero/coefficient/Cn_t">
+        <description>
+           Total Cn Coefficient
+        </description>
+        <product>
+            <sum>
+                <p>aero/coefficient/Cn</p>
+                <p>aero/coefficient/Cn_r</p>
+                <p>aero/coefficient/dCn_b</p>
+                <p>aero/coefficient/dCn_r-lef</p>
+                <p>aero/coefficient/Cn_p</p>
+                <p>aero/coefficient/dCn_p-lef</p>
+                <p>aero/coefficient/dCn_lef</p>
+                <p>aero/coefficient/dCn_da-lef</p>
+                <p>aero/coefficient/dCn_dr</p>
+            </sum>
+        </product>
+    </function>
+
+    <axis name="YAW">
+
+        <function name="aero/coefficient/moment/Cn_t-lbf_ft">
+            <description>Total yaw moment</description>
+            <product>
+                <property>aero/qbar-psf</property>
+                <property>metrics/Sw-sqft</property>
+                <property>metrics/bw-ft</property>             
+                <property>aero/coefficient/Cn_t</property>
+            </product>
+        </function>
+
+        <function name="aero/coefficient/moment/CnPylons-lbf_ft">
             <description>
                       Yaw due asymmetric stores on wing pylons
 
