@@ -12,17 +12,16 @@ Where nothing else is mentioned the aerodynamics come from TP 1538
 
  Todo:
 ======
-Make all coefficients functions (like Cy and Cz is)
 Put in engine gyroscopic effect (160 slugs-ft2/sec)
 
 
  Missing wind-tunnel data:
 ==========================
 +Gear dynamics
- Ground effect
++Ground effect
 +Wave drag
 +Trailing edge flaps dynamics
- Stores dynamics
++Stores dynamics
  Canopy dynamics
  Dynamics of high speed
 
@@ -2780,17 +2779,12 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </tableData>
         </table>
     </function>
-                    
-    <axis name="ROLL">
 
         <function name="aero/coefficient/Cl">
             <description>
                Cl coefficient
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
                 <table name="table/Cl">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <independentVar lookup="column">aero/beta-deg</independentVar>
@@ -2873,9 +2867,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cl due to leading edge flaps coefficient.
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
                 <property>fcs/fly-by-wire/lef/lef-pos-r-norm</property>
                 <difference>
                     <p>aero/coefficient/Cl_lef</p>
@@ -2889,9 +2880,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cl due to aileron coefficient
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
                 <p>fcs/fly-by-wire/roll/aileron-pos-norm</p>
                 <difference>
                     <p>aero/coefficient/Cl_da</p>
@@ -2905,9 +2893,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cl due to aileron coefficient
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
                 <p>fcs/fly-by-wire/roll/aileron-pos-norm</p>
                 <p>fcs/fly-by-wire/lef/lef-pos-r-norm</p>
                 <difference>
@@ -2926,9 +2911,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cl due to rudder coefficient
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
                 <p>fcs/fly-by-wire/yaw/rudder-pos-norm</p>
                 <difference>
                     <p>aero/coefficient/Cl_dr</p>
@@ -2942,9 +2924,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cl due to yaw rate coefficient.
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
                 <property>aero/bi2vel</property>
                 <property>velocities/r-rad_sec</property>
                 <table name="table/Cl_r">
@@ -2980,9 +2959,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cl due to beta coefficient.
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
                 <property>aero/beta-deg</property>
                 <table name="table/dCl_b">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
@@ -3017,9 +2993,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cl due to yaw rate due to leading edge flaps coefficient.
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
                 <property>aero/bi2vel</property>
                 <property>velocities/r-rad_sec</property>
                 <property>fcs/fly-by-wire/lef/lef-pos-r-norm</property>
@@ -3050,9 +3023,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cl due to roll rate coefficient.
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
                 <property>aero/bi2vel</property>
                 <property>velocities/p-rad_sec</property>
                 <table name="table/Cl_p">
@@ -3090,9 +3060,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Source for alpha 50+: TN-D-8176
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
                 <property>aero/bi2vel</property>
                 <property>velocities/p-rad_sec</property>
                 <property>fcs/fly-by-wire/lef/lef-pos-r-norm</property>
@@ -3121,6 +3088,38 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 0.000
                     </tableData>
                 </table>
+            </product>
+        </function>
+
+    <function name="aero/coefficient/Cl_t">
+        <description>
+           Total Cl Coefficient
+        </description>
+        <product>
+            <sum>
+                <p>aero/coefficient/Cl</p>
+                <p>aero/coefficient/dCl_lef</p>
+                <p>aero/coefficient/dCl_da</p>
+                <p>aero/coefficient/dCl_da-lef</p>
+                <p>aero/coefficient/dCl_dr</p>
+                <p>aero/coefficient/Cl_r</p>
+                <p>aero/coefficient/dCl_b</p>
+                <p>aero/coefficient/dCl_r-lef</p>
+                <p>aero/coefficient/Cl_p</p>
+                <p>aero/coefficient/dCl_p-lef</p>
+            </sum>
+        </product>
+    </function>
+
+    <axis name="ROLL">
+
+        <function name="aero/coefficient/moment/Cl_t-lbf_ft">
+            <description>Total roll moment</description>
+            <product>
+                <property>aero/qbar-psf</property>
+                <property>metrics/Sw-sqft</property>
+                <property>metrics/bw-ft</property>
+                <property>aero/coefficient/Cl_t</property>
             </product>
         </function>                        
 
