@@ -99,17 +99,25 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
               <table name="table/CDwave">
                   <independentVar>velocities/mach</independentVar>
                   <tableData>
-                      0.000  0.000
-                      0.810  0.000
-                      1.100  0.028
-                      1.800  0.020
+                    0.0000 0.0000
+                    0.8000 0.0000
+                    0.9000 0.0115
+                    1.0082 0.0351
+                    1.0664 0.0303
+                    1.1500 0.0275
+                    1.2522 0.0246
+                    1.3642 0.0221
+                    1.5143 0.0200
+                    1.6824 0.0185
+                    1.8416 0.0175
+                    2.0000 0.0170
                   </tableData>
               </table>
               <table name="table/CDwave_sb">
                   <independentVar>fcs/speedbrake-pos-norm</independentVar>
                   <tableData>
                       0  1.0
-                      1  1.5
+                      1  1.25
                   </tableData>
               </table>              
         </product>

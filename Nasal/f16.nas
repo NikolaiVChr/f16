@@ -5,17 +5,24 @@ var strobe_switch = props.globals.getNode("controls/lighting/ext-lighting-panel/
 aircraft.light.new("sim/model/lighting/strobe", [0.03, 1.9+rand()/5], strobe_switch);
 
 var checkVNE = func {
-  if (getprop("/sim/freeze/replay-state"))
+  if (getprop("/sim/freeze/replay-state")) {
+    settimer(checkVNE, 1);
     return;
+  }
 
   var msg = "";
 
   # Now check VNE
-  var airspeed = getprop("velocities/mach");
-  var vne      = getprop("limits/mach");
+  var airspeedM= getprop("instrumentation/airspeed-indicator/indicated-mach");
+  var vneM     = getprop("limits-custom/mach");
+  var airspeed = getprop("instrumentation/airspeed-indicator/indicated-speed-kt");
+  var vne      = getprop("limits-custom/vne");
+  
 
   if ((airspeed != nil) and (vne != nil) and (airspeed > vne))
   {
+    msg = "Airspeed exceeds Vne!";
+  } elsif ((airspeedM != nil) and (vneM != nil) and (airspeedM > vneM)) {
     msg = "Airspeed exceeds Vne!";
   }
 

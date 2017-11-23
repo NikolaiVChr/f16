@@ -755,9 +755,11 @@
     </environment>
     <limits>
         <max-gear-extension-speed>300</max-gear-extension-speed>
+    </limits>
+    <limits-custom>
         <vne>800</vne>   <!--(KIAS) source: T.O. GR1F-16CJ-1  page 1-32     also limited by mach 2.05-->
         <mach>2.05</mach>
-    </limits>
+    </limits-custom>
     <payload>
         <armament>
             <models type="string">Aircraft/F-15/Models/Stores/</models>
