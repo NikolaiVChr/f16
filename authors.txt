@@ -16,7 +16,7 @@ Martin "Pegasus" Schmitt
 
 Nikolai V. Chr.
 - F16 block 10 and YF-16 aerodynamics
-- Flight control system for all variants except simplified.
+- Fly-by-wire system for all variants except simplified.
 - Danish and prototype livery
 - Various changes to radar, MFD, HUD
 - Added Pylon and missile code

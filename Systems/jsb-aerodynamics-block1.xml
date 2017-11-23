@@ -203,7 +203,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         </sum>
     </function>
 
-    <function name="aero/coefficient/CDpylon1">
+    <function name="aero/coefficient/force/CDpylon1">
         <description>drag for pylon
                      TODO: add wave drag
             </description>
@@ -213,7 +213,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
     </function>
 
-    <function name="aero/coefficient/CDpylon2">
+    <function name="aero/coefficient/force/CDpylon2">
         <description>drag for pylon</description>
             <product>
                 <property>aero/qbar-psf</property>
@@ -221,7 +221,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
     </function>
 
-    <function name="aero/coefficient/CDpylon3">
+    <function name="aero/coefficient/force/CDpylon3">
         <description>drag for pylon</description>
             <product>
                 <property>aero/qbar-psf</property>
@@ -229,7 +229,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
     </function>
 
-    <function name="aero/coefficient/CDpylon4">
+    <function name="aero/coefficient/force/CDpylon4">
         <description>drag for pylon</description>
             <product>
                 <property>aero/qbar-psf</property>
@@ -237,7 +237,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
     </function>
 
-    <function name="aero/coefficient/CDpylon5">
+    <function name="aero/coefficient/force/CDpylon5">
         <description>drag for pylon</description>
             <product>
                 <property>aero/qbar-psf</property>
@@ -245,7 +245,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
     </function>
 
-    <function name="aero/coefficient/CDpylon6">
+    <function name="aero/coefficient/force/CDpylon6">
         <description>drag for pylon</description>
             <product>
                 <property>aero/qbar-psf</property>
@@ -253,7 +253,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
     </function>
 
-    <function name="aero/coefficient/CDpylon7">
+    <function name="aero/coefficient/force/CDpylon7">
         <description>drag for pylon</description>
             <product>
                 <property>aero/qbar-psf</property>
@@ -261,7 +261,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
     </function>
 
-    <function name="aero/coefficient/CDpylon8">
+    <function name="aero/coefficient/force/CDpylon8">
         <description>drag for pylon</description>
             <product>
                 <property>aero/qbar-psf</property>
@@ -269,7 +269,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
     </function>
 
-    <function name="aero/coefficient/CDpylon9">
+    <function name="aero/coefficient/force/CDpylon9">
         <description>drag for pylon</description>
             <product>
                 <property>aero/qbar-psf</property>
@@ -277,67 +277,11 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
     </function>
 
-    <axis name="X">
-
-        <function name="aero/coefficient/Xpylons">
-            <description>drag for pylon</description>
-                <product>
-                    <sum>
-                        <property>aero/coefficient/CDpylon1</property>
-                        <property>aero/coefficient/CDpylon2</property>
-                        <property>aero/coefficient/CDpylon3</property>
-                        <property>aero/coefficient/CDpylon4</property>
-                        <property>aero/coefficient/CDpylon5</property>
-                        <property>aero/coefficient/CDpylon6</property>
-                        <property>aero/coefficient/CDpylon7</property>
-                        <property>aero/coefficient/CDpylon8</property>
-                        <property>aero/coefficient/CDpylon9</property>
-                    </sum>
-                    <cos>
-                      <property>aero/alpha-rad</property>
-                    </cos>
-                    <v>-1</v>
-                </product>
-        </function>
-
-        <function name="aero/coefficient/CDx">
-            <description>Drag</description>
-            <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>              
-                <sum>
-                    <property>aero/coefficient/CDgear</property>
-                    <property>aero/coefficient/CDtef</property>
-                    <property>aero/coefficient/CDwave</property>
-                </sum>
-                <cos>
-                  <property>aero/alpha-rad</property>
-                </cos>
-                <v>-1</v>
-            </product>
-        </function>        
-
-        <function name="aero/coefficient/CLx">
-            <description>Lift</description>
-            <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>              
-                <sum>
-                    <property>aero/coefficient/CLtef</property>
-                </sum>
-                <sin>
-                  <property>aero/alpha-rad</property>
-                </sin>
-            </product>
-        </function>
-
-        <function name="aero/coefficient/Cx">
+    <function name="aero/coefficient/Cx">
             <description>
                Cx coefficient in body coordinate system.
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
                 <p>aero/coefficient/Cx_g</p>
                 <table name="table/Cx">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
@@ -462,15 +406,10 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
         </function>
 
-        <function name="aero/coefficient/dCx_lef">
+        <function name="aero/coefficient/Cx_lef">
             <description>
                Cx due to leading edge flaps coefficient.
             </description>
-            <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>fcs/fly-by-wire/lef/lef-pos-r-norm</property>
-                <difference>
                     <table name="table/Cx_lef">
                         <independentVar lookup="row">aero/alpha-deg</independentVar>
                         <independentVar lookup="column">aero/beta-deg</independentVar>
@@ -492,6 +431,12 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  45 0.0257 0.0274 0.0266 0.0236 0.0266 0.0283 0.0236 0.0298 0.0268 0.0309 0.0307 0.0280 0.0238 0.0284 0.0254 0.0224 0.0254 0.0262 0.0245
                         </tableData>
                     </table>
+        </function>
+
+        <function name="aero/coefficient/Cx_dh0">
+            <description>
+               Cx due to leading edge flaps coefficient.
+            </description>
                     <table name="table/Cx_dh0">
                         <independentVar lookup="row">aero/alpha-deg</independentVar>
                         <independentVar lookup="column">aero/beta-deg</independentVar>
@@ -519,6 +464,17 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 0.0847 0.0813 0.0798 0.0824 0.0843 0.0843 0.0853 0.0841 0.0858 0.0864 0.0857 0.0828 0.0817 0.0857 0.0816 0.0797 0.0771 0.0786 0.0820
                         </tableData>
                     </table>
+        </function>
+
+        <function name="aero/coefficient/dCx_lef">
+            <description>
+               Cx due to leading edge flaps coefficient.
+            </description>
+            <product>
+                <property>fcs/fly-by-wire/lef/lef-pos-r-norm</property>
+                <difference>
+                    <p>aero/coefficient/Cx_lef</p>
+                    <p>aero/coefficient/Cx_dh0</p>
                 </difference>
             </product>
         </function>
@@ -530,8 +486,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                These values are wrong. Mistake in TP 1538.
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
                 <property>fcs/speedbrake-pos-norm</property>
                 <table name="table/dCx_sb">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
@@ -568,8 +522,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Source: TN-D-8176
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <!--<property>metrics/Sw-sqft</property>--><v>280</v>
+                <v>0.9333</v><!-- ref area is different -->
                 <property>fcs/speedbrake-pos-norm</property>
                 <table name="table/dCx_sb">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
@@ -602,8 +555,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cx due to pitch rate coefficient.
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
                 <property>aero/ci2vel</property>
                 <property>velocities/q-rad_sec</property>
                 <table name="table/Cx_q">
@@ -641,8 +592,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Source for alpha 50+: TN-D-8176
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
                 <property>aero/ci2vel</property>
                 <property>velocities/q-rad_sec</property>
                 <property>fcs/fly-by-wire/lef/lef-pos-r-norm</property>
@@ -672,7 +621,83 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                      </tableData>
                 </table>
             </product>
+        </function>
+
+    <function name="aero/coefficient/CX_t">
+        <description>Total X coefficient</description>
+        <product>
+            <sum>                
+                <p>aero/coefficient/Cx</p>
+                <p>aero/coefficient/dCx_lef</p>  
+                <p>aero/coefficient/dCx_sb</p>             
+                <p>aero/coefficient/Cx_q</p>
+                <p>aero/coefficient/dCx_q-lef</p>
+            </sum>
+        </product>
+    </function>
+
+    <axis name="X">
+
+        <function name="aero/coefficient/force/X_t-lbf">
+            <description>Total X</description>
+            <product>
+                <property>aero/qbar-psf</property>
+                <property>metrics/Sw-sqft</property>
+                <property>aero/coefficient/CX_t</property>
+            </product>
+        </function>
+
+        <function name="aero/coefficient/force/Xpylons">
+            <description>drag for pylon</description>
+                <product>
+                    <sum>
+                        <property>aero/coefficient/force/CDpylon1</property>
+                        <property>aero/coefficient/force/CDpylon2</property>
+                        <property>aero/coefficient/force/CDpylon3</property>
+                        <property>aero/coefficient/force/CDpylon4</property>
+                        <property>aero/coefficient/force/CDpylon5</property>
+                        <property>aero/coefficient/force/CDpylon6</property>
+                        <property>aero/coefficient/force/CDpylon7</property>
+                        <property>aero/coefficient/force/CDpylon8</property>
+                        <property>aero/coefficient/force/CDpylon9</property>
+                    </sum>
+                    <cos>
+                      <property>aero/alpha-rad</property>
+                    </cos>
+                    <v>-1</v>
+                </product>
+        </function>
+
+        <function name="aero/coefficient/force/CDx">
+            <description>Drag</description>
+            <product>
+                <property>aero/qbar-psf</property>
+                <property>metrics/Sw-sqft</property>              
+                <sum>
+                    <property>aero/coefficient/CDgear</property>
+                    <property>aero/coefficient/CDtef</property>
+                    <property>aero/coefficient/CDwave</property>
+                </sum>
+                <cos>
+                  <property>aero/alpha-rad</property>
+                </cos>
+                <v>-1</v>
+            </product>
         </function>        
+
+        <function name="aero/coefficient/force/CLx">
+            <description>Lift</description>
+            <product>
+                <property>aero/qbar-psf</property>
+                <property>metrics/Sw-sqft</property>              
+                <sum>
+                    <property>aero/coefficient/CLtef</property>
+                </sum>
+                <sin>
+                  <property>aero/alpha-rad</property>
+                </sin>
+            </product>
+        </function>
 
     </axis>
 
@@ -1071,7 +1096,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
 
     <axis name="Z">
 
-        <function name="aero/coefficient/Z_t-lbf">
+        <function name="aero/coefficient/force/Z_t-lbf">
             <description>Total Z force</description>
             <product>
                 <property>aero/qbar-psf</property>
@@ -1080,19 +1105,19 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
         </function>         
 
-        <function name="aero/coefficient/Zpylons">
+        <function name="aero/coefficient/force/Zpylons">
             <description>Z for pylon</description>
                 <product>
                     <sum>
-                        <property>aero/coefficient/CDpylon1</property>
-                        <property>aero/coefficient/CDpylon2</property>
-                        <property>aero/coefficient/CDpylon3</property>
-                        <property>aero/coefficient/CDpylon4</property>
-                        <property>aero/coefficient/CDpylon5</property>
-                        <property>aero/coefficient/CDpylon6</property>
-                        <property>aero/coefficient/CDpylon7</property>
-                        <property>aero/coefficient/CDpylon8</property>
-                        <property>aero/coefficient/CDpylon9</property>
+                        <property>aero/coefficient/force/CDpylon1</property>
+                        <property>aero/coefficient/force/CDpylon2</property>
+                        <property>aero/coefficient/force/CDpylon3</property>
+                        <property>aero/coefficient/force/CDpylon4</property>
+                        <property>aero/coefficient/force/CDpylon5</property>
+                        <property>aero/coefficient/force/CDpylon6</property>
+                        <property>aero/coefficient/force/CDpylon7</property>
+                        <property>aero/coefficient/force/CDpylon8</property>
+                        <property>aero/coefficient/force/CDpylon9</property>
                     </sum>
                     <sin>
                       <property>aero/alpha-rad</property>
@@ -1939,7 +1964,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
 
     <axis name="Y">
 
-        <function name="aero/coefficient/Y_t-lbf">
+        <function name="aero/coefficient/force/Y_t-lbf">
             <description>
                Side Force
             </description>
@@ -2517,39 +2542,39 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             <product>
                 <sum>
                     <product>
-                        <property>aero/coefficient/CDpylon1</property>
+                        <property>aero/coefficient/force/CDpylon1</property>
                         <value>-4.79412</value>
                     </product>
                     <product>
-                        <property>aero/coefficient/CDpylon2</property>
+                        <property>aero/coefficient/force/CDpylon2</property>
                         <value>-3.95167</value>
                     </product>
                     <product>
-                        <property>aero/coefficient/CDpylon3</property>
+                        <property>aero/coefficient/force/CDpylon3</property>
                         <value>-2.88034</value>
                     </product>
                     <product>
-                        <property>aero/coefficient/CDpylon4</property>
+                        <property>aero/coefficient/force/CDpylon4</property>
                         <value>-1.62889</value>
                     </product>
                     <product>
-                        <property>aero/coefficient/CDpylon5</property>
+                        <property>aero/coefficient/force/CDpylon5</property>
                         <value>0</value>
                     </product>
                     <product>
-                        <property>aero/coefficient/CDpylon6</property>
+                        <property>aero/coefficient/force/CDpylon6</property>
                         <value>1.62889</value>
                     </product>
                     <product>
-                        <property>aero/coefficient/CDpylon7</property>
+                        <property>aero/coefficient/force/CDpylon7</property>
                         <value>2.88034</value>
                     </product>
                     <product>
-                        <property>aero/coefficient/CDpylon8</property>
+                        <property>aero/coefficient/force/CDpylon8</property>
                         <value>3.95167</value>
                     </product>
                     <product>
-                        <property>aero/coefficient/CDpylon9</property>
+                        <property>aero/coefficient/force/CDpylon9</property>
                         <value>4.79412</value>
                     </product>
                 </sum>
