@@ -1273,7 +1273,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                 <property>metrics/cbarw-ft</property>
                 <property>fcs/fly-by-wire/lef/lef-pos-r-norm</property>
                 <difference>
-                    <table name="table/dCm_lef">
+                    <table name="table/Cm_lef">
                         <independentVar lookup="row">aero/alpha-deg</independentVar>
                         <independentVar lookup="column">aero/beta-deg</independentVar>
                         <tableData>

@@ -1156,16 +1156,11 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         </product>
     </function>
 
-    <axis name="PITCH">
-
-        <function name="aero/coefficient/Cm">
+    <function name="aero/coefficient/Cm">
             <description>
                Cm coefficient
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/cbarw-ft</property>
                 <p>aero/function/n_dh</p>
                 <table name="table/Cm">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
@@ -1290,17 +1285,11 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
         </function>
 
-        <function name="aero/coefficient/dCm_lef">
+        <function name="aero/coefficient/Cm_lef">
             <description>
                Cm due to leading edge flaps coefficient.
             </description>
-            <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/cbarw-ft</property>
-                <property>fcs/fly-by-wire/lef/lef-pos-r-norm</property>
-                <difference>
-                    <table name="table/dCm_lef">
+                    <table name="table/Cm_lef">
                         <independentVar lookup="row">aero/alpha-deg</independentVar>
                         <independentVar lookup="column">aero/beta-deg</independentVar>
                         <tableData>
@@ -1321,6 +1310,12 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  45 -.0023 -.0164 -.0417 -.0987 -.0985 -.0975 -.1278 -.1042 -.1156 -.0979 -.1122 -.1225 -.1444 -.1340 -.1461 -.1463 -.0893 -.0640 -.0499
                          </tableData>
                     </table>
+        </function>
+
+        <function name="aero/coefficient/Cm_dh0">
+            <description>
+               Cm due to leading edge flaps coefficient.
+            </description>
                     <table name="table/Cm_dh0">
                         <independentVar lookup="row">aero/alpha-deg</independentVar>
                         <independentVar lookup="column">aero/beta-deg</independentVar>
@@ -1348,6 +1343,17 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 -.6330 -.6300 -.6160 -.6160 -.6067 -.6366 -.6053 -.6281 -.6217 -.6184 -.6163 -.6022 -.6073 -.6281 -.6115 -.6209 -.6210 -.6351 -.6381
                         </tableData>
                     </table>
+        </function>
+
+        <function name="aero/coefficient/dCm_lef">
+            <description>
+               Cm due to leading edge flaps coefficient.
+            </description>
+            <product>
+                <property>fcs/fly-by-wire/lef/lef-pos-r-norm</property>
+                <difference>
+                    <p>aero/coefficient/Cm_lef</p>
+                    <p>aero/coefficient/Cm_dh0</p>
                 </difference>
             </product>
         </function>
@@ -1373,9 +1379,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cm due speed brake coefficient.
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/cbarw-ft</property>
                 <property>fcs/speedbrake-pos-norm</property>
                 <table name="table/dCm_sb">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
@@ -1412,9 +1415,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Page 180 of TP-1538
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/cbarw-ft</property>
                 <property>fcs/fly-by-wire/tef/tef-pos-norm</property>
                 <table name="table/dCm_tef">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
@@ -1444,9 +1444,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cm due to alpha coefficient.
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/cbarw-ft</property>
                 <table name="table/dCm_alpha">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <tableData>
@@ -1480,9 +1477,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cm due to pitch rate coefficient.
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/cbarw-ft</property>
                 <property>aero/ci2vel</property>
                 <property>velocities/q-rad_sec</property>
                 <table name="table/Cm_q">
@@ -1520,9 +1514,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Source for alpha 50+: TN-D-8176
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/cbarw-ft</property>
                 <property>aero/ci2vel</property>
                 <property>velocities/q-rad_sec</property>
                 <property>fcs/fly-by-wire/lef/lef-pos-r-norm</property>
@@ -1559,9 +1550,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cm due to deep stall coefficient
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/cbarw-ft</property>
                 <table name="table/dCm_ds">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <independentVar lookup="column">fcs/fly-by-wire/pitch/horz-tail-deflection-deg</independentVar>
@@ -1581,8 +1569,45 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                 </table>
             </product>
         </function>
+    
+    <function name="aero/coefficient/Cm_t">
+        <description>
+           Total Cm Coefficient
+        </description>
+        <product>
+            <sum>
+                <p>aero/coefficient/Cm</p>
+                <p>aero/coefficient/dCm_lef</p>
+                <p>aero/coefficient/dCm_sb</p>
+                <p>aero/coefficient/dCm_tef</p>
+                <p>aero/coefficient/dCm_alpha</p>
+                <p>aero/coefficient/Cm_q</p>
+                <p>aero/coefficient/dCm_q-lef</p>
+                <p>aero/coefficient/dCm_ds</p>
+            </sum>
+        </product>
+    </function>
+
+    <axis name="PITCH">
+
+        <function name="aero/coefficient/force/Cm_t-lbf">
+            <description>Total pitch moment</description>
+            <product>
+                <property>aero/qbar-psf</property>
+                <property>metrics/Sw-sqft</property>
+                <property>metrics/cbarw-ft</property>             
+                <property>aero/coefficient/Cm_t</property>
+            </product>
+        </function>
 
     </axis>
+
+
+
+
+
+
+
 
 
 
@@ -1942,7 +1967,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                 <p>aero/coefficient/Cy</p>
             </difference>
         </product>
-    </function>        
+    </function>
 
     <function name="aero/coefficient/Cy_t">
         <description>
