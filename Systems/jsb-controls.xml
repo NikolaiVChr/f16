@@ -530,7 +530,8 @@
 
         <pure_gain name="fcs/fly-by-wire/roll/yaw-rate-input">
             <description>
-                Is positive in diagram, but must be negative to really work as flat spin protection.
+                Is +8.34 in diagram, but must be negative to really work as flat spin protection.
+                And for slow flat spins it was way too small.
             </description>
             <input> velocities/r-aero-deg_sec </input>
             <gain> -8.34 </gain>
@@ -1005,8 +1006,11 @@
         </pure_gain>
 
         <pure_gain name="fcs/fly-by-wire/yaw/alt-schedule">
+            <description>
+                Is +0.75 in diagram.
+            </description>
             <input> velocities/r-aero-deg_sec </input>
-            <gain> 0.75 </gain>
+            <gain> -0.75 </gain>
         </pure_gain>
 
         <switch name="fcs/fly-by-wire/yaw/schedule-final">
@@ -1352,7 +1356,7 @@
             <description>                
             </description>
             <default value="fcs/fly-by-wire/pitch/F3"/>
-            <test logic="AND" value="fcs/fly-by-wire/pitch/F3-alt">
+            <test logic="AND" value="fcs/fly-by-wire/pitch/F3"><!-- alt -->
                 fcs/fly-by-wire/prototype == 0
             </test>
         </switch>
@@ -1541,7 +1545,7 @@
             <description>                
             </description>
             <default value="fcs/fly-by-wire/pitch/F3"/>
-            <test logic="AND" value="fcs/fly-by-wire/pitch/F3-alt2">
+            <test logic="AND" value="fcs/fly-by-wire/pitch/F3"><!-- alt2 -->
                 fcs/fly-by-wire/prototype == 0
             </test>
         </switch>
