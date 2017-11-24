@@ -78,6 +78,7 @@
         <instrumentation>
             <path>Aircraft/f16/Systems/instrumentation.xml</path>
         </instrumentation>
+        <flight-recorder include="Systems/f16-flight-recorder.xml"/>
         <model>
             <f16>
                 <AIM-9L type="bool">true</AIM-9L>

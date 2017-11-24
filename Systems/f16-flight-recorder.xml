@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<PropertyList>
+    <replay-config type="int">0</replay-config>
+    <config n="0">
+        <name type="string">F-16 Flight Recorder</name>
+        <!-- Custom properties -->
+        <signals include="/Aircraft/Generic/flightrecorder/components/environment.xml"/>
+        <signals include="/Aircraft/Generic/flightrecorder/components/position.xml"/>
+        <signals include="/Aircraft/Generic/flightrecorder/components/controls.xml"/>
+        <signals include="/Aircraft/Generic/flightrecorder/components/engine-jet.xml">
+            <count type="int">1</count>
+        </signals>
+        <signals include="/Aircraft/Generic/flightrecorder/components/faults-engines.xml">
+            <count type="int">1</count>
+        </signals>
+        <signals include="/Aircraft/Generic/flightrecorder/components/tanks.xml">
+            <count type="int">7</count>
+        </signals>
+        <signals include="/Aircraft/Generic/flightrecorder/components/gear-retractable.xml">
+            <count type="int">3</count>
+        </signals>
+        <!-- <signal>
+          <type>float</type>
+          <property type="string">/controls/gear/nosegear-steering-cmd-norm</property>
+          <interpolation>linear</interpolation>
+        </signal> -->
+
+
+        <!-- custom signals here -->
+
+
+
+
+        <!-- control surfaces -->
+
+        <signal>
+            <type>float</type>
+            <property type="string">surface-positions/right-aileron-pos-norm</property>
+            <interpolation>angular-deg</interpolation>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">surface-positions/left-aileron-pos-norm</property>
+            <interpolation>linear</interpolation>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">fdm/jsbsim/fcs/right-flaperon-norm</property>
+            <interpolation>linear</interpolation>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">fdm/jsbsim/fcs/left-flaperon-norm</property>
+            <interpolation>linear</interpolation>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">fdm/jsbsim/fcs/lef-pos-deg</property>
+            <interpolation>angular-deg</interpolation>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">surface-positions/rudder-pos-norm</property>
+            <interpolation>linear</interpolation>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">fdm/jsbsim/fcs/dht-right-pos-rad</property>
+            <interpolation>angular-rad</interpolation>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">fdm/jsbsim/fcs/dht-left-pos-rad</property>
+            <interpolation>angular-rad</interpolation>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">surface-positions/speedbrake-pos-norm</property>
+            <interpolation>linear</interpolation>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">engines/engine[0]/nozzle-pos-norm</property>
+            <interpolation>linear</interpolation>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">engines/engine[0]/augmentation1</property>
+            <interpolation>linear</interpolation>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">engines/engine[0]/augmentation</property>
+            <interpolation>linear</interpolation>
+        </signal>
+
+        <!-- Sound -->
+
+        <signal>
+            <type>bool</type>
+            <property type="string">damage/sounds/explode-on</property>
+        </signal>
+        <signal>
+            <type>bool</type>
+            <property type="string">damage/sounds/crash-on</property>
+        </signal>
+        <signal>
+            <type>bool</type>
+            <property type="string">damage/sounds/water-crash-on</property>
+        </signal>
+        <signal>
+            <type>bool</type>
+            <property type="string">damage/sounds/crack-on</property>
+        </signal>
+        <signal>
+            <type>bool</type>
+            <property type="string">damage/sounds/creaking-on</property>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">damage/sounds/crack-volume</property>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">damage/sounds/creaking-volume</property>
+        </signal>
+
+    </config>
+    <!-- 
+    - double: 8 byte/sample
+    - float:  4 byte/sample (default)
+    - int:    4 byte/sample, integer
+    - int16:  2 byte/sample, integer
+    - int8:   1 byte/sample, integer
+    - bool:   1 bit/sample (yes, 1 bit. 8 bools per byte).
+    -->
+    <!-- remember string types are unsupported -->
+    <!-- if recording a jsb generated property,
+         make sure in jsb its set as output, not name -->
+</PropertyList>

@@ -2137,16 +2137,18 @@
             <output>fcs/rudder-pos-norm</output>
         </pure_gain>
 
-        <pure_gain name="fcs/dht-right-pos-rad">
+        <pure_gain name="fcs/fly-by-wire/model/dht-right-pos-rad">
             <description>Degrees to radians</description>
             <input>fcs/fly-by-wire/pitch/horz-tail-right-deflection-deg</input>
             <gain>0.017453</gain>
+            <output>fcs/dht-right-pos-rad</output>
         </pure_gain>
 
-        <pure_gain name="fcs/dht-left-pos-rad">
+        <pure_gain name="fcs/fly-by-wire/model/dht-left-pos-rad">
             <description>Degrees to -radians</description>
             <input>fcs/fly-by-wire/pitch/horz-tail-left-deflection-deg</input>
             <gain>-0.017453</gain>
+            <output>fcs/dht-left-pos-rad</output>
         </pure_gain>
 
         <pure_gain name="fcs/fly-by-wire/model/left-aileron-pos-norm">
@@ -2163,22 +2165,25 @@
             <output>fcs/right-aileron-pos-norm</output>
         </pure_gain>
 
-        <pure_gain name="fcs/left-flaperon-norm">
+        <pure_gain name="fcs/fly-by-wire/model/left-flaperon-norm">
             <description>Degrees to -20 degrees</description>
             <input>fcs/fly-by-wire/roll/flaperon-left-deflection-deg</input>
             <gain>-0.05</gain>
+            <output>fcs/left-flaperon-norm</output>
         </pure_gain>
 
-        <pure_gain name="fcs/right-flaperon-norm">
+        <pure_gain name="fcs/fly-by-wire/model/right-flaperon-norm">
             <description>Degrees to 20 degrees</description>
             <input>fcs/fly-by-wire/roll/flaperon-right-deflection-deg</input>
             <gain>0.05</gain>
+            <output>fcs/right-flaperon-norm</output>
         </pure_gain>
 
-        <pure_gain name="fcs/lef-pos-deg">
+        <pure_gain name="fcs/fly-by-wire/model/lef-pos-deg">
             <description>One to one</description>
             <input>fcs/fly-by-wire/lef/lef-pos-deg</input>
             <gain>1</gain>
+            <output>fcs/lef-pos-deg</output>
         </pure_gain>
 
         <!-- the below components rounds flaps position in degrees to zero decimal points: -->
