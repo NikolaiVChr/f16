@@ -13,6 +13,16 @@
             </function>
         </fcs_function>
 
+        <fcs_function name="fcs/fly-by-wire/q_c_Nsqm">
+            <function>
+                <!--<v>1400</v> standby gain-->
+                <product>
+                    <p>aero/qbar-psf</p>
+                    <v>47.880258889</v>
+                </product>
+            </function>
+        </fcs_function>
+        
         <fcs_function name="fcs/fly-by-wire/P_s">
             <function>
                 <p>atmosphere/P-psf</p>
@@ -71,6 +81,32 @@
                         300 1
                         800 0.533
                         3000 0.083
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+
+        <fcs_function name="fcs/fly-by-wire/pitch/F3-alt">
+            <function>
+                <table>
+                    <independentVar lookup="row">fcs/fly-by-wire/q_c_Nsqm</independentVar>
+                    <tableData>
+                        0.0   1.0
+                        13000 1.0
+                        43000 0.4
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+
+        <fcs_function name="fcs/fly-by-wire/pitch/F3-alt2">
+            <function>
+                <table>
+                    <independentVar lookup="row">fcs/fly-by-wire/q_c_Nsqm</independentVar>
+                    <tableData>
+                        0.0   1.0
+                        5500  1.0
+                        15500 0.3
                     </tableData>
                 </table>
             </function>
@@ -251,6 +287,107 @@
             </function>
         </fcs_function>
 
+        <fcs_function name="fcs/fly-by-wire/roll/control-c/pressure-input">
+            <function>
+                <product>
+                    <min>
+                        <sum>
+                            <product>
+                                <!-- Notice:
+                                     TP 1538 uses Newton/meter^2
+                                     as unit for qbar.
+                                -->
+                                <v>47.880258889</v>
+                                <p>aero/qbar-psf</p>
+                            </product>
+                            <v>-10500</v>
+                        </sum>
+                        <v>0</v>
+                    </min>
+                    <v>-0.0115</v>
+                </product>
+            </function>
+        </fcs_function>
+
+        <fcs_function name="fcs/fly-by-wire/roll/control-c/alpha-input">
+            <function>
+                <product>
+                    <max>
+                        <sum>
+                            <p>fcs/fly-by-wire/pitch/a_f</p>
+                            <v>-15</v>
+                        </sum>
+                        <v>0</v>
+                    </max>
+                    <v>4</v>
+                </product>
+            </function>
+        </fcs_function>
+
+        <fcs_function name="fcs/fly-by-wire/roll/control-c/elevator-cmd-input">
+            <function>
+                <product>
+                    <max>
+                        <sum>
+                            <p>fcs/fly-by-wire/pitch/integrator-final</p>
+                            <v>-5</v>
+                        </sum>
+                        <v>0</v>
+                    </max>
+                    <v>4</v>
+                </product>
+            </function>
+        </fcs_function>
+
+        <summer name="fcs/fly-by-wire/roll/control-c/input-sum">
+            <input>fcs/fly-by-wire/roll/control-c/pressure-input</input>
+            <input>fcs/fly-by-wire/roll/control-c/alpha-input</input>
+            <input>fcs/fly-by-wire/roll/control-c/elevator-cmd-input</input>
+        </summer>
+
+        <fcs_function name="fcs/fly-by-wire/roll/control-c/scheduled-gain-limited">
+            <function>
+                <min>
+                    <v>228</v>
+                    <product>
+                        <table>
+                            <independentVar lookup="row">fcs/fly-by-wire/pitch/control-c/roll-rate-abs</independentVar>
+                            <tableData>
+                                30 0
+                                50 1
+                            </tableData>
+                        </table>
+                        <p>fcs/fly-by-wire/roll/control-c/input-sum</p>
+                    </product>
+                </min>
+            </function>
+        </fcs_function>
+
+        <fcs_function name="fcs/fly-by-wire/roll/control-c/max-cmd-roll-rate">
+            <function>
+                <difference>
+                    <v>308</v>
+                    <p>fcs/fly-by-wire/roll/control-c/scheduled-gain-limited</p>
+                </difference>
+            </function>
+        </fcs_function>
+
+        <switch name="fcs/fly-by-wire/roll/max-cmd-roll-rate">
+            <default value="308"/>
+            <test logic="OR" value="fcs/fly-by-wire/roll/control-c/max-cmd-roll-rate">
+                fcs/fly-by-wire/enable-control-c == 1
+            </test>
+        </switch>
+
+        <fcs_function name="fcs/fly-by-wire/roll/min-cmd-roll-rate">
+            <function>
+                <product>
+                    <p>fcs/fly-by-wire/roll/max-cmd-roll-rate</p>
+                    <v>-1</v>
+                </product>
+            </function>
+        </fcs_function>
+
         <fcs_function name="fcs/fly-by-wire/roll/command-deg_s">
             <function>
                 <table>
@@ -270,6 +407,10 @@
                     </tableData>
                 </table>
             </function>
+            <clipto>
+                <min> fcs/fly-by-wire/roll/min-cmd-roll-rate </min>
+                <max> fcs/fly-by-wire/roll/max-cmd-roll-rate </max>
+            </clipto>
         </fcs_function>
 
         <aerosurface_scale name="fcs/fly-by-wire/roll/trim-scaled">
@@ -386,7 +527,7 @@
 
         <pure_gain name="fcs/fly-by-wire/roll/yaw-rate-input">
             <description>
-                Is positive in diagram, but must be negative to really work as spin protection.
+                Is positive in diagram, but must be negative to really work as flat spin protection.
             </description>
             <input> velocities/r-aero-deg_sec </input>
             <gain> -8.34 </gain>
@@ -772,6 +913,23 @@
             </function>
         </fcs_function>
 
+        <fcs_function name="fcs/fly-by-wire/yaw/control-c/command-schedule">
+            <function>
+                <product>
+                    <table>
+                        <independentVar lookup="row">fcs/fly-by-wire/pitch/control-c/roll-rate-abs</independentVar>
+                        <independentVar lookup="column">fcs/fly-by-wire/enable-control-c</independentVar>
+                        <tableData>
+                                   0  1
+                            20   1.0 1.0
+                            40   1.0 0.0
+                        </tableData>
+                    </table>
+                    <p>fcs/fly-by-wire/yaw/command-schedule</p>
+                </product>
+            </function>
+        </fcs_function>
+
         <switch name="fcs/fly-by-wire/yaw/ari-input">
             <default value="fcs/fly-by-wire/ari/final"/>
             <test logic="AND" value="0">
@@ -782,7 +940,7 @@
 
         <switch name="fcs/fly-by-wire/yaw/command-switch">
             <default value="fcs/fly-by-wire/yaw/command-sum"/>
-            <test logic="AND" value="fcs/fly-by-wire/yaw/command-schedule">
+            <test logic="AND" value="fcs/fly-by-wire/yaw/control-c/command-schedule">
                 fcs/fly-by-wire/prototype == 0
             </test>
         </switch>
@@ -1076,7 +1234,7 @@
             </test>
         </switch>
 
-        <fcs_function name="fcs/fly-by-wire/pitch/roll-rate-abs">
+        <fcs_function name="fcs/fly-by-wire/pitch/control-c/roll-rate-abs">
             <function>
                 <abs>
                     <product>
@@ -1087,31 +1245,31 @@
             </function>
         </fcs_function>
 
-        <pure_gain name="fcs/fly-by-wire/pitch/roll-rate-gain">
-            <input>fcs/fly-by-wire/pitch/roll-rate-abs</input>
+        <pure_gain name="fcs/fly-by-wire/pitch/control-c/roll-rate-gain">
+            <input>fcs/fly-by-wire/pitch/control-c/roll-rate-abs</input>
             <gain> 0.15 </gain>
         </pure_gain>
 
-        <lag_filter name="fcs/fly-by-wire/pitch/roll-rate-lagged">
-            <input> fcs/fly-by-wire/pitch/roll-rate-gain </input>
+        <lag_filter name="fcs/fly-by-wire/pitch/control-c/roll-rate-lagged">
+            <input> fcs/fly-by-wire/pitch/control-c/roll-rate-gain </input>
             <c1> 0.67 </c1>
         </lag_filter>
 
-        <fcs_function name="fcs/fly-by-wire/pitch/roll-rate-schedule">
+        <fcs_function name="fcs/fly-by-wire/pitch/control-c/roll-rate-schedule">
             <function>
                 <table>
-                    <independentVar lookup="row">fcs/fly-by-wire/pitch/roll-rate-lagged</independentVar>
+                    <independentVar lookup="row">fcs/fly-by-wire/pitch/control-c/roll-rate-lagged</independentVar>
                     <tableData>
-                        20      0
-                        54    5.4
+                          3      0
+                        8.4    5.4
                     </tableData>
                 </table>
             </function>
         </fcs_function>
 
-        <pure_gain name="fcs/fly-by-wire/pitch/fake-alpha">
-            <input> fcs/fly-by-wire/pitch/roll-rate-schedule </input>
-            <gain> fcs/fly-by-wire/enable-fake </gain>
+        <pure_gain name="fcs/fly-by-wire/pitch/control-c/da_p">
+            <input> fcs/fly-by-wire/pitch/control-c/roll-rate-schedule </input>
+            <gain> fcs/fly-by-wire/enable-control-c </gain>
         </pure_gain>
 
         <lag_filter name="fcs/fly-by-wire/pitch/a_f">
@@ -1119,22 +1277,15 @@
             <c1> 10 </c1>
         </lag_filter>
 
-        <lag_filter name="fcs/fly-by-wire/pitch/fake-alpha-lagged">
-            <input> fcs/fly-by-wire/pitch/fake-alpha </input>
-            <c1> 10 </c1>
-        </lag_filter>
-
         <summer name="fcs/fly-by-wire/pitch/alpha-sum">
             <input> fcs/fly-by-wire/pitch/a_f </input>
-            <input> fcs/fly-by-wire/pitch/fake-alpha-lagged </input>
+            <input> fcs/fly-by-wire/pitch/control-c/da_p </input>
         </summer>
 
         <switch name="fcs/fly-by-wire/pitch/alpha-indicated-mpo">
             <description>
                 The test is for MPO switch enabled.
                 Source: The Israeli document.
-
-                Should fake alpha be allowed through? (probably not, the pilot wants full control of elevator even when rolling)
             </description>
             <default value="fcs/fly-by-wire/pitch/alpha-sum"/>
             <test logic="AND" value="0"><!-- consider to lag this 0 -->
@@ -1194,11 +1345,20 @@
             <gain> fcs/fly-by-wire/pitch/main-gain </gain>
         </pure_gain>
 
+        <switch name="fcs/fly-by-wire/pitch/loop-schedule">
+            <description>                
+            </description>
+            <default value="fcs/fly-by-wire/pitch/F3"/>
+            <test logic="AND" value="fcs/fly-by-wire/pitch/F3-alt">
+                fcs/fly-by-wire/prototype == 0
+            </test>
+        </switch>
+
         <pure_gain name="fcs/fly-by-wire/pitch/main-gain-schedule">
             <description>                
             </description>
             <input>fcs/fly-by-wire/pitch/main-gain-result</input>
-            <gain> fcs/fly-by-wire/pitch/F3 </gain>
+            <gain> fcs/fly-by-wire/pitch/loop-schedule </gain>
         </pure_gain>
 
         <summer name="fcs/fly-by-wire/pitch/integrator-feedback">
@@ -1374,9 +1534,18 @@
             <gain> 0.7 </gain>
         </pure_gain>
 
+        <switch name="fcs/fly-by-wire/pitch/q-schedule">
+            <description>                
+            </description>
+            <default value="fcs/fly-by-wire/pitch/F3"/>
+            <test logic="AND" value="fcs/fly-by-wire/pitch/F3-alt2">
+                fcs/fly-by-wire/prototype == 0
+            </test>
+        </switch>
+
         <pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-gain">
             <input>fcs/fly-by-wire/pitch/q-gain-1</input>
-            <gain> fcs/fly-by-wire/pitch/F3 </gain>
+            <gain> fcs/fly-by-wire/pitch/q-schedule </gain>
         </pure_gain>
 
         <switch name="fcs/fly-by-wire/pitch/bias-top">

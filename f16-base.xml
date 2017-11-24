@@ -678,11 +678,13 @@
                     <integrator-selftest-value type="double">1</integrator-selftest-value>
                     <enable-q type="bool">true</enable-q>
                     <enable-nz type="bool">true</enable-nz>
-                    <enable-int type="bool">true</enable-int>
-                    <enable-fake type="bool">true</enable-fake>
                     <enable-alpha type="bool">true</enable-alpha>
+                    <enable-control-c type="bool">true</enable-control-c>
                     <pitch>
                         <a_f type="double">0</a_f>
+                        <control-c>
+                            <roll-rate-abs type="double">0</roll-rate-abs>
+                        </control-c>
                         <ground-input type="double">0</ground-input>
                     </pitch>
                 </fly-by-wire>

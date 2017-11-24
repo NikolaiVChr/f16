@@ -84,6 +84,7 @@
    <fcs>
     <fly-by-wire>
       <prototype type="bool">true</prototype>
+      <enable-control-c type="bool">false</enable-control-c>
     </fly-by-wire>
    </fcs>
   </jsbsim>
