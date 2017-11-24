@@ -68,7 +68,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                 <product>
                     <difference>
                         <p>inertia/cg-x-in</p>
-                        <v>-193</v><!-- X_CG-ref (inches) -->
+                        <v>-176.5</v><!-- X_CG-ref (inches) -->
                     </difference>
                     <v>0.083333</v><!-- in to ft -->
                 </product>
@@ -2254,9 +2254,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cn due to CoG shift, page 45 of TP 1538
             </description>
             <product>
-                <property>aero/qbar-psf</property>
-                <property>metrics/Sw-sqft</property>
-                <property>metrics/bw-ft</property>
                 <v>-1</v>
                 <difference>
                     <v>0.35</v>
