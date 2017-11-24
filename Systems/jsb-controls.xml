@@ -329,7 +329,10 @@
                 <product>
                     <max>
                         <sum>
-                            <p>fcs/fly-by-wire/pitch/integrator-final</p>
+                            <product>
+                                <p>fcs/fly-by-wire/pitch/integrator-final</p>
+                                <v>-1</v><!-- this -1 is cause diagram expects elevator-command to be positive for pitch up cmd. -->
+                            </product>
                             <v>-5</v>
                         </sum>
                         <v>0</v>
