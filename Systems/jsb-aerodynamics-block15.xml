@@ -156,7 +156,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
              0.0000  0.2290
              0.2000  0.1240
              0.3000  0.1160
-             0.4000  0.1240
+             0.4000  0.1105
              0.6000  0.1050
              0.8000  0.0410
              1.0000  0.0340
@@ -168,13 +168,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
              2.2000  0.0000
               </tableData>
           </table>
-          <cos>
-              <!-- Less lift due to ground effect when flying inverted-->
-              <product>
-                  <p>/orientation/roll-deg</p>
-                  <v>0.017453</v>
-              </product>
-          </cos>
        </product>
       </function>
 
@@ -182,23 +175,52 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         <sum>
             <v>1</v>
             <product>
+                <!-- negative contribution to parasitic drag -->
+                <v>-1</v>
                 <property>aero/coefficient/CL_g</property>
-                <sin>
+                <cos>
                     <property>aero/alpha-rad</property>
-                </sin>
+                </cos>
             </product>
         </sum>
     </function>
 
     <function name="aero/coefficient/Cz_g">
+        <description>
+            Change in Z due to ground effect
+
+            This is bad hack, GE should really be a addition, not a factor
+        </description>
         <sum>
             <v>1</v>
             <product>
+                <!-- positive contribution to lift -->
                 <property>aero/coefficient/CL_g</property>
-                <v>-1</v>
+                <cos>
+                  <!-- Less lift due to ground effect when flying inverted-->
+                  <product>
+                      <p>/orientation/roll-deg</p>
+                      <v>0.017453</v>
+                  </product>
+                </cos>
                 <cos>
                     <property>aero/alpha-rad</property>
                 </cos>
+            </product>
+            <product>
+                <!-- negative contribution to induced drag -->
+                <v>-1</v>
+                <property>aero/coefficient/CL_g</property>
+                <cos>
+                  <!-- Less lift due to ground effect when flying inverted-->
+                  <product>
+                      <p>/orientation/roll-deg</p>
+                      <v>0.017453</v>
+                  </product>
+                </cos>
+                <sin>
+                    <property>aero/alpha-rad</property>
+                </sin>
             </product>
         </sum>
     </function>

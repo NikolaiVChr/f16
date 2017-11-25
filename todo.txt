@@ -55,11 +55,12 @@ Add tons of pages
 
 Aero
 ----
-
+Add wave drag to stores
+Convert groundeffect to be an addition instead of a factor.
 
 Flight controls
 ---------------
-Make CAT I and III. (block 50 manual page 106)
+Make CAT III. (block 50 manual page 106)
 
 A/P
 ---

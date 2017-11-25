@@ -13,7 +13,7 @@
                     <p>fcs/fly-by-wire/enable-standby-gains</p>
                 </difference>
             </function>
-        </fcs_function>        
+        </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/q_c">
             <function>
