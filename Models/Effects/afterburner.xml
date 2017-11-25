@@ -7,7 +7,7 @@
  <animation>
   <type>scale</type>
   <object-name>Bounding_box</object-name>
-  <property>engines/engine[0]/nozzle-pos-norm</property>
+  <property>sim/multiplay/generic/float[0]</property>
   <x-factor>1.2</x-factor>
   <y-factor>0.6</y-factor>
   <z-factor>0.6</z-factor>

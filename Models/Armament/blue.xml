@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	
+	<path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9_smokewinder.ac</path>
+
+	<model>
+		<name>sr</name>
+		<path>Aircraft/f16/Models/Effects/smokeB.xml</path>
+			<offsets>
+				<x-m>0</x-m>
+			    <y-m>0</y-m>
+			    <z-m>0.0</z-m>
+				<pitch-deg>0</pitch-deg>
+			</offsets>
+	</model>	
+
+</PropertyList>

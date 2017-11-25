@@ -148,9 +148,9 @@
   </offsets>
  </model>
 
- <model>
-  <name>Station1_AIM-9_smokewinder</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9_smokewinder.ac</path>
+  <model>
+  <name>Station_AIM-9_smokewinderR1</name>
+  <path>Aircraft/f16/Models/Armament/red.xml</path>
   <offsets>
    <x-m>1.5</x-m>
    <y-m>-4.87</y-m>
@@ -158,6 +158,112 @@
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
+
+ <model>
+  <name>Station_AIM-9_smokewinderR9</name>
+  <path>Aircraft/f16/Models/Armament/red.xml</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <animation>
+  <type>select</type>
+  <object-name>Station_AIM-9_smokewinderR1</object-name>
+  <condition>
+    <equals>
+   <property>sim/multiplay/generic/int[11]</property>
+   <value>1</value>
+ </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station_AIM-9_smokewinderR9</object-name>
+  <condition>
+   <property>sim/multiplay/generic/int[12]</property>
+  </condition>
+ </animation>
+
+  <model>
+  <name>Station_AIM-9_smokewinderG1</name>
+  <path>Aircraft/f16/Models/Armament/green.xml</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>-4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station_AIM-9_smokewinderG9</name>
+  <path>Aircraft/f16/Models/Armament/green.xml</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <animation>
+  <type>select</type>
+  <object-name>Station_AIM-9_smokewinderG1</object-name>
+  <condition>
+   <property>sim/multiplay/generic/int[13]</property>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station_AIM-9_smokewinderG9</object-name>
+  <condition>
+   <property>sim/multiplay/generic/int[14]</property>
+  </condition>
+ </animation>
+
+  <model>
+  <name>Station_AIM-9_smokewinderB1</name>
+  <path>Aircraft/f16/Models/Armament/blue.xml</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>-4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station_AIM-9_smokewinderB9</name>
+  <path>Aircraft/f16/Models/Armament/blue.xml</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <animation>
+  <type>select</type>
+  <object-name>Station_AIM-9_smokewinderB1</object-name>
+  <condition>
+   <property>sim/multiplay/generic/int[15]</property>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station_AIM-9_smokewinderB9</object-name>
+  <condition>
+   <property>sim/multiplay/generic/int[16]</property>
+  </condition>
+ </animation>
 
  <model>
   <name>Station1_AIM-120C5_amraam</name>
@@ -185,17 +291,6 @@
  <model>
   <name>Station9_AIM-9L_dummy</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L_dummy.ac</path>
-  <offsets>
-   <x-m>1.5</x-m>
-   <y-m>4.87</y-m>
-   <z-m>0.0</z-m>
-   <pitch-deg>-4.5</pitch-deg>
-  </offsets>
- </model>
-
- <model>
-  <name>Station9_AIM-9_smokewinder</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9_smokewinder.ac</path>
   <offsets>
    <x-m>1.5</x-m>
    <y-m>4.87</y-m>
@@ -327,27 +422,7 @@
  </model>
 
  <!-- smokepods -->
- <model>
-  <name>Station1_AIM-9_smokewinder_smoke</name>
-  <path>Aircraft/f16/Models/Effects/smoke.xml</path>
-  <offsets>
-   <x-m>1.5</x-m>
-   <y-m>4.87</y-m>
-   <z-m>0.0</z-m>
-   <pitch-deg>-4.5</pitch-deg>
-  </offsets>
- </model>
 
- <model>
-  <name>Station9_AIM-9_smokewinder_smoke</name>
-  <path>Aircraft/f16/Models/Effects/smoke.xml</path>
-  <offsets>
-   <x-m>1.5</x-m>
-   <y-m>-4.87</y-m>
-   <z-m>0.0</z-m>
-   <pitch-deg>-4.5</pitch-deg>
-  </offsets>
- </model>
 
  <model>
   <name>left-strake-vortex</name>
@@ -702,7 +777,7 @@
   <type>select</type>
   <object-name>InternalFlame</object-name>
   <condition>
-   <property>engines/engine[0]/augmentation</property>
+   <property>sim/multiplay/generic/float[1]</property>
   </condition>
  </animation>
 
@@ -710,7 +785,7 @@
   <name>AB_Flame</name>
   <path>Aircraft/f16/Models/Effects/afterburner.xml</path>
   <condition>
-   <property>engines/engine[0]/augmentation</property>
+   <property>sim/multiplay/generic/float[1]</property>
   </condition>
   <offsets>
    <x-m>5.44</x-m>
@@ -723,7 +798,7 @@
   <type>select</type>
   <object-name>ExternalFlame</object-name>
   <condition>
-   <property>engines/engine[0]/augmentation1</property>
+   <property>sim/multiplay/generic/float[2]</property>
   </condition>
  </animation>
 
@@ -1541,17 +1616,6 @@
   <object-name>Station9_AIM-9L_dummy</object-name>
   <condition>
    <property>sim/model/f16/AIM-9L_dummy</property>
-  </condition>
- </animation>
-
- <animation>
-  <type>select</type>
-  <object-name>Station1_AIM-9_smokewinder</object-name>
-  <object-name>Station9_AIM-9_smokewinder</object-name>
-  <object-name>Station1_AIM-9_smokewinder_smoke</object-name>
-  <object-name>Station9_AIM-9_smokewinder_smoke</object-name>
-  <condition>
-   <property>sim/model/f16/AIM-9_smokewinders</property>
   </condition>
  </animation>
 

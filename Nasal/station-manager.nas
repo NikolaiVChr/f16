@@ -475,3 +475,43 @@ var FuelTank = {
 		return 0;
 	},
 };
+
+var Smoker = {
+# Implements a external fuel tank.
+#  no loop, but lots of listeners.
+#
+# Attributes:
+#  fuel tank number
+	new: func (name, model_path) {
+		var s = {parents:[Smoker]};
+		s.type = name;
+		s.typeLong = name;
+		s.modelPath = model_path;
+
+		# these 3 needs to be here and be 0
+		s.Cd_base = 0;
+		s.ref_area_sqft = 0;
+		s.weight_launch_lbm = 0;
+		return s;
+	},
+
+	mount: func {
+		# set capacity in fuel tank
+		setprop(me.modelPath, 1);
+	},
+
+	eject: func {
+		# spill out all the fuel?
+		setprop(me.modelPath, 0);
+	},
+
+	del: func {
+		# delete all the fuel
+		setprop(me.modelPath, 0);
+	},
+
+	getAmmo: func {
+		# return 0
+		return 0;
+	},
+};

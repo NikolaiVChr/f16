@@ -7,7 +7,7 @@
  <animation>
   <type>rotate</type>
   <object-name>us1</object-name>
-  <property>engines/engine/nozzle-pos-norm</property>
+  <property>sim/multiplay/generic/float[0]</property>
   <offset-deg>-5</offset-deg>
   <factor>10</factor>
   <center>
@@ -25,7 +25,7 @@
  <animation>
   <type>rotate</type>
   <object-name>ls1</object-name>
-  <property>engines/engine/nozzle-pos-norm</property>
+  <property>sim/multiplay/generic/float[0]</property>
   <offset-deg>-5</offset-deg>
   <factor>10</factor>
   <center>
@@ -43,7 +43,7 @@
  <animation>
   <type>rotate</type>
   <object-name>ls2</object-name>
-  <property>engines/engine/nozzle-pos-norm</property>
+  <property>sim/multiplay/generic/float[0]</property>
   <offset-deg>-5</offset-deg>
   <factor>10</factor>
   <center>

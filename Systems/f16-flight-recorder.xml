@@ -36,7 +36,7 @@
         <signal>
             <type>float</type>
             <property type="string">surface-positions/right-aileron-pos-norm</property>
-            <interpolation>angular-deg</interpolation>
+            <interpolation>linear</interpolation>
         </signal>
         <signal>
             <type>float</type>

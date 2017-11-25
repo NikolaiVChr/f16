@@ -5,7 +5,7 @@
   <name>smoke</name>
   <texture>smokepuff.png</texture>
   <emissive>false</emissive>
-  <lighting>true</lighting>
+  <lighting>false</lighting>
   
   <offsets>
    <x-m>0</x-m>
@@ -13,9 +13,6 @@
    <z-m>0</z-m>
   </offsets>
 
-  <condition>
-    <property>sim/model/f16/AIM-9_smokewinders</property>
-  </condition>
    
   <attach>world</attach>
 
@@ -55,32 +52,32 @@
    <start>
     <color>
      <red>
-      <property>sim/model/f16/smoke/color/red</property>
+      0
      </red>
      <green>
-      <property>sim/model/f16/smoke/color/green</property>
+      <value>1</value>
      </green>
      <blue>
-      <property>sim/model/f16/smoke/color/blue</property>
+      0
      </blue>
      <alpha>
       <value>1.0</value>
      </alpha>
     </color>
     <size>
-     <value>0.15</value>
+     <value>0.5</value>
     </size>
    </start>
    <end>
     <color>
      <red>
-      <property>sim/model/f16/smoke/color/red</property>
+      0
      </red>
      <green>
-      <property>sim/model/f16/smoke/color/green</property>
+      <value>1</value>
      </green>
      <blue>
-      <property>sim/model/f16/smoke/color/blue</property>
+      0
      </blue>
      <alpha>
       <value>0.4</value>
