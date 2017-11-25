@@ -13,6 +13,9 @@
    <z-m>0</z-m>
   </offsets>
 
+  <condition>
+   <property>sim/multiplay/generic/int[10]</property>
+  </condition>
    
   <attach>world</attach>
 
@@ -39,12 +42,13 @@
       </rotation-speed>
     </shooter>
   
-  <counter>
+  <counter><!-- 125 -->
       <particles-per-sec>
-        <value>125</value>
-        <spread>0</spread>
+        <property>sim/multiplay/generic/float[3]</property>
+        <factor>0.5</factor>
+        <spread>0.0</spread>
       </particles-per-sec>
-    </counter>
+  </counter>
   
   <align>billboard</align>
   
@@ -88,7 +92,7 @@
     </size>
    </end>
    <life-sec>
-    <value>50.0</value>
+    <value>30.0</value>
    </life-sec>
    <mass-kg>0.000001</mass-kg>
    <radius-m>0.010</radius-m>

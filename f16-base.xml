@@ -299,16 +299,18 @@
             <generic>
                 <int n="2" type="int">0</int>
                 <!-- radar-standby -->
+                <int n="10" type="int" alias="/controls/smoke"/>
                 <int n="11" type="int" alias="/sim/model/f16/smokewinderR1"/>
                 <int n="12" type="int" alias="/sim/model/f16/smokewinderR9"/>
                 <int n="13" type="int" alias="/sim/model/f16/smokewinderG1"/>
                 <int n="14" type="int" alias="/sim/model/f16/smokewinderG9"/>
                 <int n="15" type="int" alias="/sim/model/f16/smokewinderB1"/>
                 <int n="16" type="int" alias="/sim/model/f16/smokewinderB9"/>
+
                 <float n="0" type="double" alias="/engines/engine[0]/nozzle-pos-norm"/>
                 <float n="1" type="double" alias="/engines/engine[0]/augmentation"/>
                 <float n="2" type="double" alias="/engines/engine[0]/augmentation1"/>
-                
+                <float n="3" type="double" alias="/velocities/airspeed-kt"/>
             </generic>
         </multiplay>
         <help>
@@ -371,6 +373,10 @@
             <key>
                 <name>y</name>
                 <desc>Select next radar contact</desc>
+            </key>
+            <key>
+                <name>S</name>
+                <desc>Toggle smoke if installed</desc>
             </key>
         </help>
     </sim>
@@ -585,6 +591,18 @@
                     <script>screen.log.write("Master-arm "~(getprop("controls/armament/master-arm")==0?"OFF":"ON"), 0.5, 0.5, 0.5);</script>
                 </binding>
             </key>
+            <key n="83">
+                <name>S</name>
+                <desc>smoke</desc>
+                <binding>
+                    <command>property-toggle</command>
+                    <property>controls/smoke</property>
+                </binding>
+                <binding>
+                    <command>nasal</command>
+                    <script>screen.log.write("Smoke "~(getprop("controls/smoke")==0?"OFF":"ON"), 0.5, 0.5, 0.5);</script>
+                </binding>
+            </key>
         </keyboard>
     </input>
     <controls>
@@ -631,6 +649,7 @@
                 <mal-ind-lts type="bool">false</mal-ind-lts>
             </test-panel>
         </test>
+        <smoke type="bool">false</smoke>
     </controls>
     <engines>
         <engine n="0">
