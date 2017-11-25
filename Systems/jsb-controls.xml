@@ -6,18 +6,34 @@
 
     <channel execrate="1" name="FCS Lookup">
 
+        <fcs_function name="fcs/fly-by-wire/enable-standby-gains-inv">
+            <function>
+                <difference>
+                    <v>1</v>
+                    <p>fcs/fly-by-wire/enable-standby-gains</p>
+                </difference>
+            </function>
+        </fcs_function>        
+
         <fcs_function name="fcs/fly-by-wire/q_c">
             <function>
-                <!--<v>1400</v> standby gain-->
-                <p>aero/qbar-psf</p>
+                <sum>
+                    <product>
+                        <v>1400</v><!-- standby gain-->
+                        <p>fcs/fly-by-wire/enable-standby-gains</p>
+                    </product>
+                    <product>
+                        <p>aero/qbar-psf</p>
+                        <p>fcs/fly-by-wire/enable-standby-gains-inv</p>
+                    </product>
+                </sum>
             </function>
         </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/q_c_Nsqm">
             <function>
-                <!--<v>1400</v> standby gain-->
                 <product>
-                    <p>aero/qbar-psf</p>
+                    <p>fcs/fly-by-wire/q_c</p>
                     <v>47.880258889</v>
                 </product>
             </function>
@@ -25,8 +41,16 @@
         
         <fcs_function name="fcs/fly-by-wire/P_s">
             <function>
-                <p>atmosphere/P-psf</p>
-                <!--<v>2116</v> standby gain-->
+                <sum>
+                    <product>
+                        <v>2116</v><!-- standby gain-->
+                        <p>fcs/fly-by-wire/enable-standby-gains</p>
+                    </product>
+                    <product>
+                        <p>atmosphere/P-psf</p>
+                        <p>fcs/fly-by-wire/enable-standby-gains-inv</p>
+                    </product>
+                </sum>
             </function>
         </fcs_function>
 
@@ -292,14 +316,7 @@
                 <product>
                     <min>
                         <sum>
-                            <product>
-                                <!-- Notice:
-                                     TP 1538 uses Newton/meter^2
-                                     as unit for qbar.
-                                -->
-                                <v>47.880258889</v>
-                                <p>aero/qbar-psf</p>
-                            </product>
+                            <p>fcs/fly-by-wire/q_c_Nsqm</p>
                             <v>-10500</v>
                         </sum>
                         <v>0</v>
@@ -1151,7 +1168,7 @@
         <fcs_function name="fcs/fly-by-wire/pitch/negative-g-limit">
             <function>
                 <table>
-                    <independentVar lookup="row">aero/qbar-psf</independentVar>
+                    <independentVar lookup="row">fcs/fly-by-wire/q_c</independentVar>
                     <tableData>
                         0.0      -1
                         31.32815 -1
@@ -1955,10 +1972,7 @@
                     <sum>
                         <product>
                             <value>9.05</value>
-                            <quotient>
-                                <p>aero/qbar-psf</p><!-- dynamic pressure -->
-                                <p>atmosphere/P-psf</p><!-- static pressure -->
-                            </quotient>
+                            <p>fcs/fly-by-wire/qcps-ratio</p>
                         </product>
                         <v>1.45</v>
                     </sum>

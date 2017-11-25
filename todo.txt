@@ -55,13 +55,11 @@ Add tons of pages
 
 Aero
 ----
-Redo drag due to mach
+
 
 Flight controls
 ---------------
-At very high speeds at low altitude, yaw can start to oscillate. (likely fixed, more testing needed)
 Make CAT I and III. (block 50 manual page 106)
-Make standby gains.
 
 A/P
 ---
