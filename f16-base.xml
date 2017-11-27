@@ -715,6 +715,7 @@
                     <integrator-selftest-value type="double">1</integrator-selftest-value>
                     <enable-standby-gains type="bool">false</enable-standby-gains>
                     <enable-q type="bool">true</enable-q>
+                    <enable-cat-III type="bool">false</enable-cat-III>
                     <enable-nz type="bool">true</enable-nz>
                     <enable-alpha type="bool">true</enable-alpha>
                     <enable-control-c type="bool">true</enable-control-c>

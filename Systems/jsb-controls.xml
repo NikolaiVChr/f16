@@ -419,18 +419,16 @@
             <function>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/roll/stick-force-lbf</independentVar>
-                    <independentVar lookup="column">gear/gear-pos-norm</independentVar>
                     <tableData>
-                                 0    1
-                         -17  -308 -167
-                         -11   -80  -43.38
-                          -6   -20   11
-                          -1     0    0
-                           0     0    0
-                           1     0    0
-                           6    20   11
-                          11    80   43.38
-                          17   308  167
+                         -17  -308 
+                         -11   -80 
+                          -6   -20  
+                          -1     0  
+                           0     0  
+                           1     0  
+                           6    20  
+                          11    80  
+                          17   308  
                     </tableData>
                 </table>
             </function>
@@ -438,6 +436,28 @@
                 <min> fcs/fly-by-wire/roll/min-cmd-roll-rate </min>
                 <max> fcs/fly-by-wire/roll/max-cmd-roll-rate </max>
             </clipto>
+        </fcs_function>
+
+        <fcs_function name="fcs/fly-by-wire/roll/command-limited-deg_s">
+            <function>
+                <product>
+                    <table>
+                        <independentVar lookup="row">fcs/fly-by-wire/enable-cat-III</independentVar>
+                        <tableData>
+                             0  1
+                             1  0.6
+                        </tableData>
+                    </table>
+                    <!--<table>  this is already done in fcs/fly-by-wire/roll/gain-switch
+                        <independentVar lookup="row">gear/gear-pos-norm</independentVar>
+                        <tableData>
+                             0  1
+                             1  0.542208
+                        </tableData>
+                    </table>-->
+                    <p>fcs/fly-by-wire/roll/command-deg_s</p>
+                </product>
+            </function>
         </fcs_function>
 
         <aerosurface_scale name="fcs/fly-by-wire/roll/trim-scaled">
@@ -461,7 +481,7 @@
         </switch>
 
         <pure_gain name="fcs/fly-by-wire/roll/ground-gain">
-            <input>fcs/fly-by-wire/roll/command-deg_s</input>
+            <input>fcs/fly-by-wire/roll/command-limited-deg_s</input>
             <gain> fcs/fly-by-wire/roll/gain-switch </gain>
         </pure_gain>
 
@@ -927,13 +947,21 @@
         </summer>
 
         <fcs_function name="fcs/fly-by-wire/yaw/command-schedule">
+            <description>
+                In Cat I old documents say 20-30, but modern flight manual say 14-26.
+                Here I have implemented modern values.
+            </description>
             <function>
                 <product>
                     <table>
                         <independentVar lookup="row">fcs/fly-by-wire/pitch/a_f</independentVar>
+                        <independentVar lookup="column">fcs/fly-by-wire/enable-cat-III</independentVar>
                         <tableData>
-                            20   1.0
-                            30   0.0
+                                   0           1
+                             3   1.0         1.0
+                            14   1.0         0.08333
+                            15   0.91666     0.0
+                            26   0.0         0.0
                         </tableData>
                     </table>
                     <p>fcs/fly-by-wire/yaw/command-sum</p>
@@ -1325,11 +1353,25 @@
             </test>
         </switch>
 
+        <fcs_function name="fcs/fly-by-wire/pitch/alpha-reduction">
+            <function>
+                <table>
+                    <independentVar lookup="row">fcs/fly-by-wire/enable-cat-III</independentVar>
+                    <independentVar lookup="column">inertia/weight-lbs</independentVar>
+                    <tableData>
+                                25000 30000 35000
+                          0     -20.4 -20.4 -20.4
+                          1     -11.6 -12.4 -13.4
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+ 
         <fcs_function name="fcs/fly-by-wire/pitch/alpha-indicated-sum">
             <function>
                 <sum>
                     <property> fcs/fly-by-wire/pitch/alpha-indicated-mpo </property>
-                    <value> -20.4 </value>
+                    <p> fcs/fly-by-wire/pitch/alpha-reduction </p>
                     <property> fcs/fly-by-wire/pitch/pitch-rate-gain </property>
                 </sum>
             </function>
@@ -1586,15 +1628,23 @@
             </test>
         </switch>
 
-        <fcs_function name="fcs/fly-by-wire/pitch/bias-middle">
+        <fcs_function name="fcs/fly-by-wire/pitch/bias-number">
             <function>
-                <v> 9 </v>
+                <table>
+                    <independentVar lookup="row">fcs/fly-by-wire/enable-cat-III</independentVar>
+                    <independentVar lookup="column">velocities/vc-kts</independentVar>
+                    <tableData>
+                          100 420
+                        0   9   9
+                        1   1   9
+                    </tableData>
+                </table>
             </function>
         </fcs_function>
 
         <switch name="fcs/fly-by-wire/pitch/bias-bottom">
             <default value="0"/>
-            <test logic="AND" value="9">
+            <test logic="AND" value="fcs/fly-by-wire/pitch/bias-number">
                 fcs/fly-by-wire/condition-a == 1
             </test>
         </switch>
@@ -1614,7 +1664,7 @@
 
         <summer name="fcs/fly-by-wire/pitch/bias1">
             <input> -fcs/fly-by-wire/pitch/bias-bottom-lag </input>
-            <input> fcs/fly-by-wire/pitch/bias-middle </input>
+            <input> fcs/fly-by-wire/pitch/bias-number </input>
         </summer>
 
         <summer name="fcs/fly-by-wire/pitch/bias-final">
@@ -1753,22 +1803,24 @@
         </pure_gain>
 
         <lead_lag_filter name="fcs/fly-by-wire/pitch/pitch-rate-lead">
-          <input> fcs/fly-by-wire/pitch/pitch-rate-gain-sum-gain-sum </input>
-          <c1> 3 </c1>
-          <c2> 12 </c2>
-          <c3> 1 </c3>
-          <c4> 12 </c4>
+            <input> fcs/fly-by-wire/pitch/pitch-rate-gain-sum-gain-sum </input>
+            <c1> 3 </c1>
+            <c2> 12 </c2>
+            <c3> 1 </c3>
+            <c4> 12 </c4>
         </lead_lag_filter>
 
         <second_order_filter name="fcs/fly-by-wire/pitch/pitch-rate-lead-2nd">
-          <description>on old diagram looks to be 2.5, not 2 nor 25</description>
-          <input> fcs/fly-by-wire/pitch/pitch-rate-lead </input>
-          <c1> 2.5 </c1>
-          <c2> 20 </c2>
-          <c3> 3500 </c3>
-          <c4> 1 </c4>
-          <c5> 40 </c5>
-          <c6> 3500 </c6>
+            <description>
+                on old diagram looks to be 2.5, not 2 nor 25
+            </description>
+            <input> fcs/fly-by-wire/pitch/pitch-rate-lead </input>
+            <c1> 2.5 </c1>
+            <c2> 20 </c2>
+            <c3> 3500 </c3>
+            <c4> 1 </c4>
+            <c5> 40 </c5>
+            <c6> 3500 </c6>
         </second_order_filter>
 
         <summer name="fcs/fly-by-wire/pitch/right-sum">
@@ -1803,7 +1855,7 @@
             <description>
                 Ref.: TN D-8176
 
-                Disabled to to too slow to react to changes.
+                Disabled due to too slow to react to changes.
             </description>
             <input> fcs/fly-by-wire/pitch/right-hyd </input>
             <c1> 0 </c1>
@@ -1812,7 +1864,6 @@
             <c4> 1 </c4>
             <c5> 72.8 </c5>
             <c6> 2704 </c6>
-            <!-- defl. limit = 25, rate limit = 60 deg/s -->
         </second_order_filter>
 
         <second_order_filter name="fcs/fly-by-wire/pitch/left-servo">
@@ -1823,22 +1874,22 @@
             <c4> 1 </c4>
             <c5> 72.8 </c5>
             <c6> 2704 </c6>
-            <!-- defl. limit = 25, rate limit = 60 deg/s -->
         </second_order_filter>
 
         <lag_filter name="fcs/fly-by-wire/pitch/right-lag">
             <input> fcs/fly-by-wire/pitch/right-hyd </input>
             <c1> 20 </c1>
-            <!-- defl. limit = 25, rate limit = 60 deg/s -->
         </lag_filter>
 
         <lag_filter name="fcs/fly-by-wire/pitch/left-lag">
             <input> fcs/fly-by-wire/pitch/left-hyd </input>
             <c1> 20 </c1>
-            <!-- defl. limit = 25, rate limit = 60 deg/s -->
         </lag_filter>
 
         <kinematic name="fcs/fly-by-wire/pitch/horz-tail-right-deflection-deg">
+            <description>
+                defl. limit = 25, rate limit = 60 deg/s
+            </description>
             <input>fcs/fly-by-wire/pitch/right-lag</input>
             <noscale/>
             <traverse>

@@ -40,6 +40,7 @@ Make center mount less deep, so pilot get good view of MFDs.
 Make warning lights and master warning work.
 Some of the cockpit have some strange untextured panels going on, fix.
 Convert flat 2D panels into 3D.
+Make controls work for STORES CONFIG and STANDBY GAINS.
 
 Sound
 -----
@@ -60,7 +61,7 @@ Convert groundeffect to be an addition instead of a factor.
 
 Flight controls
 ---------------
-Make CAT III. (block 50 manual page 106)
+
 
 A/P
 ---
