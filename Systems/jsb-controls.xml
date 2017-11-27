@@ -6,6 +6,26 @@
 
     <channel execrate="1" name="FCS Lookup">
 
+        <switch name="fcs/fly-by-wire/MLG-GND">
+            <default value="0"/>
+            <test logic="AND" value="1">
+                gear/unit[1]/WOW eq 1
+                gear/unit[2]/WOW eq 1
+            </test>
+        </switch>
+
+        <switch name="fcs/fly-by-wire/condition-a">
+            <default value="0"/>
+            <test logic="OR" value="1">
+                gear/gear-cmd-norm == 1
+                /controls/flight/flaps gt 0
+            </test>
+            <test logic="AND" value="1">
+                /systems/refuel/serviceable == 1
+                fcs/fly-by-wire/q_c lt 646
+            </test>
+        </switch>
+
         <fcs_function name="fcs/fly-by-wire/enable-standby-gains-inv">
             <function>
                 <difference>
@@ -15,11 +35,18 @@
             </function>
         </fcs_function>
 
+        <switch name="fcs/fly-by-wire/q_c_standby">
+            <default value="1400"/>
+            <test logic="AND" value="200">
+                fcs/fly-by-wire/condition-a == 1
+            </test>
+        </switch>
+
         <fcs_function name="fcs/fly-by-wire/q_c">
             <function>
                 <sum>
                     <product>
-                        <v>1400</v><!-- standby gain-->
+                        <p>fcs/fly-by-wire/q_c_standby</p><!-- standby gain-->
                         <p>fcs/fly-by-wire/enable-standby-gains</p>
                     </product>
                     <product>
@@ -53,26 +80,6 @@
                 </sum>
             </function>
         </fcs_function>
-
-        <switch name="fcs/fly-by-wire/MLG-GND">
-            <default value="0"/>
-            <test logic="AND" value="1">
-                gear/unit[1]/WOW eq 1
-                gear/unit[2]/WOW eq 1
-            </test>
-        </switch>
-
-        <switch name="fcs/fly-by-wire/condition-a">
-            <default value="0"/>
-            <test logic="OR" value="1">
-                gear/gear-cmd-norm == 1
-                /controls/flight/flaps gt 0
-            </test>
-            <test logic="AND" value="1">
-                /systems/refuel/serviceable == 1
-                fcs/fly-by-wire/q_c lt 646
-            </test>
-        </switch>
 
         <fcs_function name="fcs/fly-by-wire/qcps-ratio">
             <function>
@@ -1764,66 +1771,75 @@
           <c6> 3500 </c6>
         </second_order_filter>
 
-        <summer name="fcs/fly-by-wire/pitch/tp-left-sum">
+        <summer name="fcs/fly-by-wire/pitch/right-sum">
             <input> fcs/fly-by-wire/pitch/integrator-final </input>
             <input> fcs/fly-by-wire/roll/inter-schedule </input> 
         </summer>
 
-        <summer name="fcs/fly-by-wire/pitch/bt-left-sum">
+        <summer name="fcs/fly-by-wire/pitch/left-sum">
             <input> fcs/fly-by-wire/pitch/integrator-final </input>
             <input> -fcs/fly-by-wire/roll/inter-schedule </input>
         </summer>
 
-        <lag_filter name="fcs/fly-by-wire/pitch/tp-lag">
-            <input> fcs/fly-by-wire/pitch/tp-left-sum </input>
-            <c1> 20.2 </c1>
-            <!-- defl. limit = 25, rate limit = 60 deg/s -->
-        </lag_filter>
-
-        <lag_filter name="fcs/fly-by-wire/pitch/bt-lag">
-            <input> fcs/fly-by-wire/pitch/bt-left-sum </input>
-            <c1> 20.2 </c1>
-            <!-- defl. limit = 25, rate limit = 60 deg/s -->
-        </lag_filter>
-
-        <summer name="fcs/fly-by-wire/pitch/tp-right-sum">
-            <input> fcs/fly-by-wire/pitch/tp-lag </input>
-            <input> fcs/fly-by-wire/pitch/bt-lag </input>
-        </summer>
-
-        <summer name="fcs/fly-by-wire/pitch/bt-right-sum">
-            <input> fcs/fly-by-wire/pitch/tp-lag </input>
-            <input> -fcs/fly-by-wire/pitch/bt-lag </input>
-        </summer>
-
-        <pure_gain name="fcs/fly-by-wire/pitch/horz-tail-deflection">
-            <input>fcs/fly-by-wire/pitch/tp-right-sum</input>
-            <gain> 0.5 </gain>
-        </pure_gain>
-
-        <pure_gain name="fcs/fly-by-wire/pitch/horz-tail-diff-deflection">
-            <input>fcs/fly-by-wire/pitch/bt-right-sum</input>
-            <gain> 0.5 </gain>
-        </pure_gain>
-
-        <switch name="fcs/fly-by-wire/pitch/horz-tail-hyd">
+        <switch name="fcs/fly-by-wire/pitch/right-hyd">
           <default value="0"/>
-          <test  logic="OR" value="fcs/fly-by-wire/pitch/horz-tail-deflection">
+          <test  logic="OR" value="fcs/fly-by-wire/pitch/right-sum">
             systems/hydraulics/sysa-psi ge 2000
             systems/hydraulics/sysb-psi ge 2000
           </test>
          </switch>
 
-        <switch name="fcs/fly-by-wire/pitch/horz-tail-diff-hyd">
+         <switch name="fcs/fly-by-wire/pitch/left-hyd">
           <default value="0"/>
-          <test  logic="OR" value="fcs/fly-by-wire/pitch/horz-tail-diff-deflection">
+          <test  logic="OR" value="fcs/fly-by-wire/pitch/left-sum">
             systems/hydraulics/sysa-psi ge 2000
             systems/hydraulics/sysb-psi ge 2000
           </test>
          </switch>
 
-        <kinematic name="fcs/fly-by-wire/pitch/horz-tail-deflection-deg">
-            <input>fcs/fly-by-wire/pitch/horz-tail-hyd</input>
+        <!-- servos -->
+
+        <second_order_filter name="fcs/fly-by-wire/pitch/right-servo">
+            <description>
+                Ref.: TN D-8176
+
+                Disabled to to too slow to react to changes.
+            </description>
+            <input> fcs/fly-by-wire/pitch/right-hyd </input>
+            <c1> 0 </c1>
+            <c2> 0 </c2>
+            <c3> 2704 </c3>
+            <c4> 1 </c4>
+            <c5> 72.8 </c5>
+            <c6> 2704 </c6>
+            <!-- defl. limit = 25, rate limit = 60 deg/s -->
+        </second_order_filter>
+
+        <second_order_filter name="fcs/fly-by-wire/pitch/left-servo">
+            <input> fcs/fly-by-wire/pitch/left-hyd </input>
+            <c1> 0 </c1>
+            <c2> 0 </c2>
+            <c3> 2704 </c3>
+            <c4> 1 </c4>
+            <c5> 72.8 </c5>
+            <c6> 2704 </c6>
+            <!-- defl. limit = 25, rate limit = 60 deg/s -->
+        </second_order_filter>
+
+        <lag_filter name="fcs/fly-by-wire/pitch/right-lag">
+            <input> fcs/fly-by-wire/pitch/right-hyd </input>
+            <c1> 20 </c1>
+            <!-- defl. limit = 25, rate limit = 60 deg/s -->
+        </lag_filter>
+
+        <lag_filter name="fcs/fly-by-wire/pitch/left-lag">
+            <input> fcs/fly-by-wire/pitch/left-hyd </input>
+            <c1> 20 </c1>
+            <!-- defl. limit = 25, rate limit = 60 deg/s -->
+        </lag_filter>
+
+        <kinematic name="fcs/fly-by-wire/pitch/horz-tail-right-deflection-deg">
+            <input>fcs/fly-by-wire/pitch/right-lag</input>
             <noscale/>
             <traverse>
                 <setting>
@@ -1840,6 +1856,37 @@
                 <max>  25 </max>
             </clipto>
         </kinematic>
+
+        <kinematic name="fcs/fly-by-wire/pitch/horz-tail-left-deflection-deg">
+            <input>fcs/fly-by-wire/pitch/left-lag</input>
+            <noscale/>
+            <traverse>
+                <setting>
+                    <position> -25.0 </position>
+                    <time>      0.0 </time>
+                </setting>
+                <setting>
+                    <position>  25.0 </position>
+                    <time>      0.8333 </time>
+                </setting>
+            </traverse>
+            <clipto>
+                <min> -25 </min>
+                <max>  25 </max>
+            </clipto>
+        </kinematic>
+
+        <!-- resulting deflection for aerodynamics -->
+
+        <summer name="fcs/fly-by-wire/pitch/horz-tail-deflection-combined-deg">
+            <input> fcs/fly-by-wire/pitch/horz-tail-left-deflection-deg </input>
+            <input> fcs/fly-by-wire/pitch/horz-tail-right-deflection-deg </input>
+        </summer>
+
+        <pure_gain name="fcs/fly-by-wire/pitch/horz-tail-deflection-deg">
+            <input>fcs/fly-by-wire/pitch/horz-tail-deflection-combined-deg</input>
+            <gain> 0.5 </gain>
+        </pure_gain>
 
         <aerosurface_scale name="fcs/fly-by-wire/pitch/horz-tail-deflection-norm">
           <input>fcs/fly-by-wire/pitch/horz-tail-deflection-deg</input>
@@ -1865,42 +1912,13 @@
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/pitch/horz-tail-deflection-deg</independentVar>
                     <tableData>
-                     -25.0      1.20
+                     -25.0      1.25
                       0.0       1.0
-                      25.0      1.20
+                      25.0      1.25
                     </tableData>
                 </table>
             </function>
         </fcs_function>
-
-        <kinematic name="fcs/fly-by-wire/pitch/horz-tail-diff-deflection-deg">
-            <input>fcs/fly-by-wire/pitch/horz-tail-diff-hyd</input>
-            <noscale/>
-            <traverse>
-                <setting>
-                    <position> -25.0 </position>
-                    <time>      0.0 </time>
-                </setting>
-                <setting>
-                    <position>  25.0 </position>
-                    <time>      0.8333 </time>
-                </setting>
-            </traverse>
-            <clipto>
-                <min> -25 </min>
-                <max>  25 </max>
-            </clipto>
-        </kinematic>
-
-        <summer name="fcs/fly-by-wire/pitch/horz-tail-left-deflection-deg">
-            <input> fcs/fly-by-wire/pitch/horz-tail-deflection-deg </input>
-            <input> -fcs/fly-by-wire/pitch/horz-tail-diff-deflection-deg </input>
-        </summer>
-
-        <summer name="fcs/fly-by-wire/pitch/horz-tail-right-deflection-deg">
-            <input> fcs/fly-by-wire/pitch/horz-tail-deflection-deg </input>
-            <input> fcs/fly-by-wire/pitch/horz-tail-diff-deflection-deg </input>
-        </summer>
 
     </channel>
 
@@ -1946,14 +1964,12 @@
 
     <channel execrate="1" name="Leading edge flaps">
 
-        <fcs_function name="fcs/fly-by-wire/lef/input-factor">
-            <function>
-                <value>1.38</value>
-            </function>
-        </fcs_function>
+        <!-- TN D-8176 has an alternative LEF schedule, consider trying it, even though it older than TP-1538,
+             simply cause TP-1538 is a simplified schedule.
+             ADA189675 has the real schedule, but its unreadable, sadly. -->
 
         <lead_lag_filter name="fcs/fly-by-wire/lef/lead-lag">
-          <input> fcs/fly-by-wire/lef/input-factor </input>
+          <input> aero/alpha-deg </input>
           <c1> 2 </c1>
           <c2> 7.25 </c2>
           <c3> 1 </c3>
@@ -1962,32 +1978,34 @@
 
         <pure_gain name="fcs/fly-by-wire/lef/alpha-gain">
             <input>fcs/fly-by-wire/lef/lead-lag</input>
-            <gain>aero/alpha-deg</gain>
+            <gain>1.38</gain>
         </pure_gain>
 
         <fcs_function name="fcs/fly-by-wire/lef/cmd-pos">
             <function>
-                <difference>
+                <sum>
                     <p>fcs/fly-by-wire/lef/alpha-gain</p>
-                    <sum>
-                        <product>
-                            <value>9.05</value>
-                            <p>fcs/fly-by-wire/qcps-ratio</p>
-                        </product>
-                        <v>1.45</v>
-                    </sum>
-                </difference>
+                    <product>
+                        <value>-9.05</value>
+                        <p>fcs/fly-by-wire/qcps-ratio</p>
+                    </product>
+                    <v>1.45</v>
+                </sum>
             </function>
+            <clipto>
+                <min>0</min>
+                <max>25</max>
+            </clipto>
         </fcs_function>
 
-        <lag_filter name="fcs/fly-by-wire/lef/pos-direct">
+        <lag_filter name="fcs/fly-by-wire/lef/servo">
             <input> fcs/fly-by-wire/lef/cmd-pos </input>
             <c1> 0.136 </c1>
         </lag_filter>
 
         <switch name="fcs/fly-by-wire/lef/pos-hyd">
           <default value="0"/>
-          <test  logic="OR" value="fcs/fly-by-wire/lef/pos-direct">
+          <test  logic="OR" value="fcs/fly-by-wire/lef/servo">
             systems/hydraulics/sysa-psi ge 2000
             systems/hydraulics/sysb-psi ge 2000
           </test>

@@ -710,6 +710,7 @@
             <fcs>
                 <fly-by-wire>
                     <K_A type="double">2</K_A>
+                    <q_c type="double">0</q_c>
                     <!-- should be 2000, but JSB cannot handle that -->
                     <integrator-selftest-value type="double">1</integrator-selftest-value>
                     <enable-standby-gains type="bool">false</enable-standby-gains>
