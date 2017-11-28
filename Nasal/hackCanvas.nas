@@ -12,6 +12,10 @@
 #
 # Notice: Might not be forward compatible.
 
+if(getprop("sim/version/flightgear")=="3.2.0") {
+    setprop("old",1);
+}
+
 canvas.Text._lastText = canvas.Text["_lastText"];
 canvas.Text.setText = func (text)
   {

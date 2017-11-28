@@ -2034,19 +2034,21 @@
 
         <fcs_function name="fcs/fly-by-wire/lef/cmd-pos">
             <function>
-                <sum>
-                    <p>fcs/fly-by-wire/lef/alpha-gain</p>
-                    <product>
-                        <value>-9.05</value>
-                        <p>fcs/fly-by-wire/qcps-ratio</p>
-                    </product>
-                    <v>1.45</v>
-                </sum>
+                <min>
+                    <v>25</v>
+                    <max>
+                        <v>0</v>
+                        <sum>
+                            <p>fcs/fly-by-wire/lef/alpha-gain</p>
+                            <product>
+                                <value>-9.05</value>
+                                <p>fcs/fly-by-wire/qcps-ratio</p>
+                            </product>
+                            <v>1.45</v>
+                        </sum>
+                    </max>
+                </min>
             </function>
-            <clipto>
-                <min>0</min>
-                <max>25</max>
-            </clipto>
         </fcs_function>
 
         <lag_filter name="fcs/fly-by-wire/lef/servo">

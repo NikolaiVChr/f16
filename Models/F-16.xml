@@ -332,6 +332,7 @@
       <object-name>RightUpperHorizonTail</object-name>
       <object-name>RightLowerHorizonTail</object-name>
       <object-name>RNLAF_Tailroot</object-name>
+      <object-name>USAF_Tailroot</object-name>
       <object-name>WingTips</object-name>
       <object-name>LeftUpperFlap</object-name>
       <object-name>LeftLowerFlap</object-name>
@@ -366,12 +367,11 @@
       <object-name>ArresterHook</object-name>
  </effect>
 
- <!-- glass effects -->
+ <!-- glass effects, Cylinder.008 removed as HUD is factored out. -->
  <effect>
   <inherits-from>Aircraft/f16/Models/Effects/glass/glass</inherits-from>
   <object-name>CanopyForwardInside</object-name>
   <object-name>CanopyBackInside</object-name>
-  <object-name>cylinder.008</object-name>       <!-- HUD -->
  </effect>
 
  <effect>
