@@ -831,7 +831,7 @@
         <switch name="fcs/fly-by-wire/ari/schedule-gain">
             <default value="0.65"/>
             <test logic="AND" value="1">
-                fcs/fly-by-wire/prototype == 0
+                fcs/fly-by-wire/prototype == 0 <!-- too much ARI from tp-1538, maybe use tp-2857 values? -->
             </test>
         </switch>
 
@@ -848,7 +848,7 @@
         <switch name="fcs/fly-by-wire/ari/gain-value">
             <default value="0.0375"/>
             <test logic="AND" value="0.0750">
-                fcs/fly-by-wire/prototype == 0
+                fcs/fly-by-wire/prototype == 0 <!-- too much ARI from tp-1538, maybe use tp-2857 values? -->
             </test>
         </switch>
 
@@ -864,7 +864,8 @@
 
         <pure_gain name="fcs/fly-by-wire/ari/final">
             <input>fcs/fly-by-wire/ari/sum</input>
-            <gain> fcs/fly-by-wire/roll/inter-gain </gain>
+            <!--<gain> fcs/fly-by-wire/roll/inter-gain </gain>-->
+            <gain> fcs/fly-by-wire/enable-ari </gain>
         </pure_gain>
 
     </channel>
@@ -1273,13 +1274,13 @@
             <c1> 8.3 </c1>
         </lag_filter>
 
-        <pure_gain name="fcs/fly-by-wire/pitch/alpha">
+        <!--<pure_gain name="fcs/fly-by-wire/pitch/alpha">
             <input>aero/alpha-deg</input>
             <gain> fcs/fly-by-wire/enable-alpha </gain>
-        </pure_gain>
+        </pure_gain>-->
 
         <summer name="fcs/fly-by-wire/pitch/alpha-indicated-clamp">
-            <input>fcs/fly-by-wire/pitch/alpha</input><!-- should really be indicated -->
+            <input>aero/alpha-deg</input><!-- should really be indicated -->
             <clipto>
                 <min>-5</min>
                 <max>30</max>
@@ -1587,13 +1588,13 @@
             <input> fcs/fly-by-wire/pitch/integrator-selftest </input>
         </summer>
 
-        <pure_gain name="fcs/fly-by-wire/pitch/q">
+        <!--<pure_gain name="fcs/fly-by-wire/pitch/q">
             <input>velocities/q-rad_sec</input>
             <gain> fcs/fly-by-wire/enable-q </gain>
-        </pure_gain>
+        </pure_gain>-->
 
         <pure_gain name="velocities/q-aero-deg_sec">
-            <input>fcs/fly-by-wire/pitch/q</input>
+            <input>velocities/q-rad_sec</input>
             <gain> 57.2957795 </gain>
         </pure_gain>
 
@@ -1743,7 +1744,7 @@
         <fcs_function name="fcs/fly-by-wire/pitch/normal-1">
             <function>
                 <product>
-                    <p>fcs/fly-by-wire/enable-nz</p>
+                    <!--<p>fcs/fly-by-wire/enable-nz</p>-->
                     <difference>
                         <property> accelerations/a_n </property>
                         <value> 1 </value>
