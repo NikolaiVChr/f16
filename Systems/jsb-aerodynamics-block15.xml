@@ -2,12 +2,13 @@
 
 <aerodynamics>
 
-<!-- begin: aerodynamics by Nikolai V. Chr.
+<!-- begin: aerodynamics by Nikolai V. Chr. with elevator modifications by Erik Hofman
 
  Note:
 ======
 In all aero tables that do not have author listed, the numbers was typed in by Nikolai V. Chr.
 Where nothing else is mentioned the aerodynamics come from TP 1538
+This aerodynamics differ from block1, in that all elevator effects have been 25% enlarged due to enlarged hstab.
 
 
  Todo:
@@ -303,7 +304,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cx coefficient in body coordinate system.
             </description>
             <product>
-                <p>aero/coefficient/Cx_g</p>
                 <table name="table/Cx">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <independentVar lookup="column">aero/beta-deg</independentVar>
@@ -666,6 +666,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         <function name="aero/coefficient/force/X_t-lbf">
             <description>Total X</description>
             <product>
+                <p>aero/coefficient/Cx_g</p>
                 <property>aero/qbar-psf</property>
                 <property>metrics/Sw-sqft</property>
                 <property>aero/coefficient/CX_t</property>
@@ -774,7 +775,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
            Cz coefficient
         </description>
         <product>
-            <p>aero/coefficient/Cz_g</p>
             <table name="table/Cz">
                 <independentVar lookup="row">aero/alpha-deg</independentVar>
                 <independentVar lookup="column">aero/beta-deg</independentVar>
@@ -1146,6 +1146,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         <function name="aero/coefficient/force/Z_t-lbf">
             <description>Total Z force</description>
             <product>
+                <p>aero/coefficient/Cz_g</p>
                 <property>aero/qbar-psf</property>
                 <property>metrics/Sw-sqft</property>              
                 <property>aero/coefficient/CZ_t</property>
