@@ -649,7 +649,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
             <product>
                 <property>aero/ci2vel</property>
-                <property>velocities/q-rad_sec</property>
+                <property>velocities/q-aero-rad_sec</property>
                 <sum>
                     <p>aero/coefficient/Cx_q</p>
                     <product>
@@ -1127,7 +1127,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                 </product>
                 <product>
                     <p>aero/ci2vel</p>
-                    <p>velocities/q-rad_sec</p>
+                    <p>velocities/q-aero-rad_sec</p>
                     <sum>
                         <p>aero/coefficient/CZ_q</p>
                         <product>
@@ -1626,7 +1626,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             </product>
             <product>
                 <p>aero/ci2vel</p>
-                <p>velocities/q-rad_sec</p>
+                <p>velocities/q-aero-rad_sec</p>
                 <sum>
                     <p>aero/coefficient/Cm_q</p>
                     <product>
@@ -2043,7 +2043,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                                 <p>fcs/fly-by-wire/lef/lef-pos-r-norm</p>
                             </product>
                         </sum>
-                        <p>velocities/r-rad_sec</p>
+                        <p>velocities/r-aero-rad_sec</p>
                     </product>
                     <product>
                         <sum>
@@ -2053,7 +2053,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                                 <p>fcs/fly-by-wire/lef/lef-pos-r-norm</p>
                             </product>
                         </sum>
-                        <p>velocities/p-rad_sec</p>
+                        <p>velocities/p-aero-rad_sec</p>
                     </product>
                 </sum>
             </product>
@@ -2623,7 +2623,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                                     <p>fcs/fly-by-wire/lef/lef-pos-r-norm</p>
                                 </product>
                             </sum>
-                            <p>velocities/r-rad_sec</p>
+                            <p>velocities/r-aero-rad_sec</p>
                         </product>
                         <product>
                             <sum>
@@ -2633,7 +2633,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                                     <p>fcs/fly-by-wire/lef/lef-pos-r-norm</p>
                                 </product>
                             </sum>
-                            <p>velocities/p-rad_sec</p>
+                            <p>velocities/p-aero-rad_sec</p>
                         </product>
                     </sum>
                 </product>
@@ -3187,7 +3187,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                                     <p>fcs/fly-by-wire/lef/lef-pos-r-norm</p>
                                 </product>
                             </sum>
-                            <p>velocities/r-rad_sec</p>
+                            <p>velocities/r-aero-rad_sec</p>
                         </product>
                         <product>
                             <sum>
@@ -3197,7 +3197,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                                     <p>fcs/fly-by-wire/lef/lef-pos-r-norm</p>
                                 </product>
                             </sum>
-                            <p>velocities/p-rad_sec</p>
+                            <p>velocities/p-aero-rad_sec</p>
                         </product>
                     </sum>
                 </product>
