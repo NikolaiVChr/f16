@@ -1191,8 +1191,8 @@
                 <max>  1.0 </max>
             </domain>
             <range>
-                <min> -2.4 </min>
-                <max>  2.4 </max>
+                <min>  2.4 </min>
+                <max> -2.4 </max>
             </range>
         </aerosurface_scale>
 

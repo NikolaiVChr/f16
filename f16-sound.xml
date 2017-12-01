@@ -278,15 +278,25 @@
    <mode>looped</mode>
    <type>avionics</type>
    <condition>
-    <property>sim/current-view/internal</property>
-    <greater-than>
-        <property>fdm/jsbsim/aero/stall-hyst-norm</property>
-        <value>0</value>
-    </greater-than>
-     <not>
-      <property>gear/gear[1]/wow</property>
-      <property>gear/gear[2]/wow</property>
-     </not>
+      <and>
+        <property>sim/current-view/internal</property>
+        <or>
+          <greater-than>
+              <property>fdm/jsbsim/aero/stall-hyst-norm</property>
+              <value>0</value>
+          </greater-than>
+          <less-than>
+              <property>fdm/jsbsim/aero/alpha-deg</property>
+              <value>-15</value>
+          </less-than>
+        </or>
+        <not>
+          <or>
+            <property>gear/gear[1]/wow</property>
+            <property>gear/gear[2]/wow</property>
+          </or>
+        </not>
+      </and>
    </condition>
   </stall>
 
