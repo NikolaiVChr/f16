@@ -32,6 +32,7 @@ name "AirIntake"
 loc -0.324147 -0.0693572 0.000470335
 data 8
 Mesh.080
+texture "intake.png"
 crease 80.000000
 numvert 93
 -3.25977 -0.830605 -0.018227
@@ -1190,6 +1191,7 @@ name "Box"
 loc -0.324147 -0.0693572 0.000470335
 data 8
 Mesh.012
+texture "intake.png"
 crease 80.000000
 numvert 13
 -3.12926 -0.792842 -0.274214
@@ -1314,6 +1316,7 @@ name "BoxLeft"
 loc -0.324147 -0.0693572 0.000470335
 data 8
 Mesh.014
+texture "intake.png"
 crease 80.000000
 numvert 12
 -0.660103 -0.414191 0.76249
@@ -1425,6 +1428,7 @@ name "BoxRight"
 loc -0.324147 -0.0693572 0.000470335
 data 8
 Mesh.013
+texture "intake.png"
 crease 80.000000
 numvert 12
 -0.660009 -0.414191 -0.763429
