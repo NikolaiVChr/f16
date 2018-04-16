@@ -4,8 +4,8 @@
  <sim>
   <model>
    <livery>
-    <name type="string">USAF 31FW, #001</name>
-    <texture>Liveries/31FW/31FW.jpg</texture>
+    <name type="string">USAF 31FW, 510FS</name>
+    <texture>Liveries/31FW/510FS.jpg</texture>
     
     <owner type="string">USAF</owner>
    </livery>
