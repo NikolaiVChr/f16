@@ -5,7 +5,7 @@
   <model>
    <livery>
     <name type="string">USAF 31FW, 510FS</name>
-    <texture>Liveries/31fw/510FS.jpg</texture>
+    <texture>Liveries/31-FW/510FS.jpg</texture>
     
     <owner type="string">USAF</owner>
    </livery>
