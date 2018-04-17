@@ -3,6 +3,8 @@
 *.nas text eol=lf
 *.eff text eol=lf
 *.txt text eol=crlf
+*.md text eol=crlf
+LICENSE text eol=crlf
 
 # Denote all files that are truly binary and should not be modified.
 *.png binary
