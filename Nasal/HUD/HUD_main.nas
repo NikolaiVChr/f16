@@ -26,7 +26,7 @@ var F16_HUD = {
         obj.canvas= canvas.new({
                 "name": "F16 HUD",
                     "size": [1024,1024], 
-                    "view": [sx,sy],
+                    "view": [sx,sy],#340,260
                     "mipmapping": 0 # mipmapping will make the HUD text blurry on smaller screens     
                     });  
 
@@ -193,7 +193,9 @@ var F16_HUD = {
         # calc of pitch_offset (compensates for AC3D model translated and rotated when loaded. Also semi compensates for HUD being at an angle.)
         var Hz_b =    0.80643; # HUD position inside ac model after it is loaded translated and rotated.
         var Hz_t =    0.96749;
+        var Hx_m =   -4.61428;# HUD median X pos
         var Vz   =    getprop("sim/current-view/y-offset-m"); # view Z position (0.94 meter per default)
+        var Vx   =    getprop("sim/current-view/z-offset-m"); # view X position (0.94 meter per default)
 
         var bore_over_bottom = Vz - Hz_b;
         var Hz_height        = Hz_t-Hz_b;
@@ -212,7 +214,17 @@ var F16_HUD = {
         me.ladder.setRotation (roll_rad);
   
 # velocity vector
-        me.VV.setTranslation (hdp.VV_x, hdp.VV_y+pitch_offset);
+        #340,260
+        # 0.078135*2 = width of HUD  = 0.15627m
+        var pixelPerMeterX = (340*0.695633)/0.15627;
+        var pixelPerMeterY = 260/(Hz_t-Hz_b);
+        # UV mapped to x: 0-0.695633
+        var averageDegX = math.atan2(0.078135*0.5, Vx-Hx_m)*R2D;
+        var averageDegY = math.atan2((Hz_t-Hz_b)*0.25, Vx-Hx_m)*R2D;
+        var texelPerDegreeX = pixelPerMeterX*(((Vx-Hx_m)*math.tan(averageDegX*D2R))/averageDegX);
+        var texelPerDegreeY = pixelPerMeterY*(((Vx-Hx_m)*math.tan(averageDegY*D2R))/averageDegY);
+        # the Y position is still not accurate due to HUD being at an angle, but will have to do.
+        me.VV.setTranslation (hdp.VV_x*0.1*texelPerDegreeX, hdp.VV_y*0.1*texelPerDegreeY+pitch_offset);# the 0.1 is to cancel out the factor applied in exec.nas
 
 #Altitude
         me.alt_range.setTranslation(0, hdp.measured_altitude * alt_range_factor);
