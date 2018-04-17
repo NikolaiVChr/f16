@@ -31,7 +31,7 @@
     <use-reflection type="int">1</use-reflection>
     <reflection-strength type="float">0.7</reflection-strength>
   </parameters>
-  <technique n="1">
+<!--  <technique n="1">
       <predicate>
       <and>
         <equal>
@@ -109,19 +109,10 @@
         <wrap-t>
         <use>texture[0]/wrap-t</use>
         </wrap-t>
-        <!--
-        <internal-format>
-          <use>texture[0]/internal-format</use>
-        </internal-format>
-        -->
           <environment>
           <mode>modulate</mode>
           </environment>
         </texture-unit>
-        <!-- A two-sided lighting model is set by default near the root
-        of the scene graph. Perhaps that ought to be set in this
-        effect?
-          -->
         </pass>
-  </technique>
+  </technique>-->
 </PropertyList>

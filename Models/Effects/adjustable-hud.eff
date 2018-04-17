@@ -10,7 +10,7 @@
    <sample-res>0.0006</sample-res>
    <sample-far>2.5</sample-far>
   </parameters>
--->
+
   <technique n="1">
 		  <predicate>
 			<and>
@@ -89,19 +89,10 @@
 			  <wrap-t>
 				<use>texture[0]/wrap-t</use>
 			  </wrap-t>
-			  <!--
-				<internal-format>
-				  <use>texture[0]/internal-format</use>
-				</internal-format>
-				-->
-				  <environment>
+			  	  <environment>
 					<mode>modulate</mode>
 				  </environment>
 				</texture-unit>
-				<!-- A two-sided lighting model is set by default near the root
-				of the scene graph. Perhaps that ought to be set in this
-				effect?
-				  -->
 				</pass>
-	</technique>
+	</technique>-->
 </PropertyList>
