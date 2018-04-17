@@ -149,7 +149,7 @@
 
   <afterburner>
    <name>afterburner</name>
-   <path>Sounds/exhaust_loop.wav</path>
+   <path>Aircraft/f16/Sounds/exhaust_loop.wav</path>
    <mode>looped</mode>
    <condition>
     <not>
