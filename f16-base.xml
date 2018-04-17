@@ -934,7 +934,7 @@
             <file>Aircraft/Generic/aar.nas</file>
         </aar>
         <awg_9>
-            <file>Nasal/awg_9.nas</file>
+            <file>Aircraft/f16/Nasal/awg_9.nas</file>
         </awg_9>
         <f16>
             <file>Aircraft/f16/Nasal/f16.nas</file>
@@ -942,11 +942,11 @@
             <file>Aircraft/f16/Nasal/tyresmoke.nas</file>
             <file>Aircraft/f16/Nasal/rain.nas</file>
             <file>Aircraft/f16/Nasal/vapor-lighting.nas</file>
-            <file>Nasal/exec.nas</file>
+            <file>Aircraft/f16/Nasal/exec.nas</file>
             <file>Nasal/canvas/MFD_Generic.nas</file>
-            <file>Nasal/HUD/HUD_main.nas</file>
-            <file>Nasal/MFD/MFD_main.nas</file>
-            <file>Nasal/blackout.nas</file>
+            <file>Aircraft/f16/Nasal/HUD/HUD_main.nas</file>
+            <file>Aircraft/f16/Nasal/MFD/MFD_main.nas</file>
+            <file>Aircraft/f16/Nasal/blackout.nas</file>
         </f16>
         <f16_chronograph>
             <file>Aircraft/f16/Nasal/chronograph.nas</file>
