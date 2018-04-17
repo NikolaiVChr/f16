@@ -1,0 +1,14 @@
+*.ac text eol=lf
+*.xml text eol=lf
+*.nas text eol=lf
+*.eff text eol=lf
+*.txt text eol=crlf
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
+*.xcf binary
+*.rgb binary
+*.dds binary
+*.wav binary
+*.blend binary
