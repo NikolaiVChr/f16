@@ -936,7 +936,7 @@
         <awg_9>
             <file>Aircraft/f16/Nasal/awg_9.nas</file>
         </awg_9>
-        <f16>
+        <f16> 
             <file>Aircraft/f16/Nasal/f16.nas</file>
             <file>Aircraft/f16/Nasal/liveries.nas</file>
             <file>Aircraft/f16/Nasal/tyresmoke.nas</file>

@@ -3,7 +3,7 @@
 <PropertyList>
  <sim>
   <model>
-   <livery>
+   <livery> 
     <name type="string">RNLAF J-008 311 Squadron</name>
     <texture>Liveries/rnlaf/f16klu.rgb</texture>
     <owner type="string">RNLAF</owner>

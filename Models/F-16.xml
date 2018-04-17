@@ -26,7 +26,7 @@
   <name>interior</name>
   <usage>interior</usage>
   <path>Aircraft/f16/Models/Cockpit/Main/cockpit.xml</path>
-</model>
+</model> 
 
 <model>
   <name>Pilot_ext</name>

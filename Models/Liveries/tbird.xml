@@ -3,7 +3,7 @@
 <PropertyList>
  <sim>
   <model>
-   <livery>
+   <livery> 
     <name type="string">USAF Thunderbirds</name>
     <texture>Liveries/tbird/tbird.jpg</texture>
     

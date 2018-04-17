@@ -3,7 +3,7 @@
 <PropertyList>
  <sim>
   <model>
-   <livery>
+   <livery> 
     <name type="string">FACH 853 3rd Aviation Group</name>
     <texture>Liveries/fach/f16-fach.png</texture>
     <owner type="string">FACH</owner>

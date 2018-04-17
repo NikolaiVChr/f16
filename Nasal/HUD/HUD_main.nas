@@ -206,7 +206,7 @@ var F16_HUD = {
 
 
         pitch_offset = -texels_over_middle;
-        ht_yco = pitch_offset;
+        ht_yco = pitch_offset; 
 #pitch ladder
         
         me.ladder.setTranslation (0.0, hdp.pitch * pitch_factor+pitch_offset);                                           

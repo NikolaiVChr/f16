@@ -2,7 +2,7 @@
 
 <PropertyList>
  <sim>
-  <model>
+  <model> 
    <livery>
     <name type="string">AK-298 Blue Bandit</name>
     <texture>Liveries/bb/AK-298.png</texture>

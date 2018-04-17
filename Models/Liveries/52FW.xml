@@ -2,7 +2,7 @@
 
 <PropertyList>
  <sim>
-  <model>
+  <model> 
    <livery>
     <name type="string">USAF 52FW, 480FS</name>
     <texture>Liveries/52FW/52FW.jpg</texture>
