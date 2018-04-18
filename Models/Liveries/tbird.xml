@@ -5,7 +5,7 @@
   <model>
    <livery> 
     <name type="string">USAF Thunderbirds</name>
-    <texture>Liveries/tbird/tbird.jpg</texture>
+    <texture>Liveries/tbird/tbird.png</texture>
     
     <owner type="string">USAF</owner>
    </livery>
