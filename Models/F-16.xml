@@ -781,6 +781,40 @@
   </condition>
  </animation>
 
+  <animation>
+  <type>material</type>
+  <condition>
+    <equals>
+      <property>/sim/rendering/rembrandt/enabled</property>
+      <value>0</value>
+    </equals>
+  </condition>
+  <object-name>Turbine</object-name>
+  <emission>
+   <red>  0.0100</red>
+   <green>0.0050</green>
+   <blue> 0.0039</blue>
+   <factor-prop>engines/engine[0]/n1</factor-prop>
+  </emission>
+ </animation>
+
+   <animation>
+  <type>material</type>
+  <condition>
+    <equals>
+      <property>/sim/rendering/rembrandt/enabled</property>
+      <value>0</value>
+    </equals>
+  </condition>
+  <object-name>InternalFlame</object-name>
+  <emission>
+   <red>0.01</red>
+   <green>0.01</green>
+   <blue>0.01</blue>
+   <factor-prop>engines/engine[0]/n1</factor-prop>
+  </emission>
+ </animation>
+
  <model>
   <name>AB_Flame</name>
   <path>Aircraft/f16/Models/Effects/afterburner.xml</path>
