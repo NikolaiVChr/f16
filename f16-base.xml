@@ -588,7 +588,7 @@
                 </binding>
                 <binding>
                     <command>nasal</command>
-                    <script>screen.log.write("Master-arm "~(getprop("controls/armament/master-arm")==0?"OFF":"ON"), 0.5, 0.5, 0.5);</script>
+                    <script>screen.log.write("Master-arm "~(getprop("controls/armament/master-arm")==0?"OFF":"ON"), 0.5, 0.5, 1);</script>
                 </binding>
             </key>
             <key n="83">
@@ -600,7 +600,7 @@
                 </binding>
                 <binding>
                     <command>nasal</command>
-                    <script>screen.log.write("Smoke "~(getprop("controls/smoke")==0?"OFF":"ON"), 0.5, 0.5, 0.5);</script>
+                    <script>screen.log.write("Smoke "~(getprop("controls/smoke")==0?"OFF":"ON"), 0.5, 0.5, 1);</script>
                 </binding>
             </key>
         </keyboard>

@@ -86,7 +86,7 @@ var FireControl = {
 				printf("FC: Selected next weapon type: %s, but none is loaded.", me.selectedType);
 			}
 		}
-		screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 0.5);
+		screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 	},
 
 	getSelectedWeapon: func {
