@@ -1497,7 +1497,7 @@
         <property>gear/gear[2]/wow</property>
     </condition>
     <property>gear/gear[2]/rollspeed-ms</property><!-- gear/gear[0]/rollspeed-ms -->
-    <factor>33.0666</factor>
+    <factor>-33.0666</factor>
     <axis>   
      <x1-m>0.563844</x1-m>
      <y1-m>-1.27316</y1-m>
