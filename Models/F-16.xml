@@ -1008,6 +1008,8 @@
   </axis>
  </animation>
 
+
+
  <animation>
   <type>translate</type>
   <object-name>FrontTire</object-name>
@@ -1020,6 +1022,8 @@
    <z>1</z>
   </axis>
  </animation>
+
+
 
  <animation>
   <type>rotate</type>
@@ -1038,6 +1042,33 @@
    <z>1</z>
   </axis>
  </animation>
+
+  <!-- spinning wheel calc
+
+     radius = 1.91735 - 1.68517 = 0.23218
+     circum = 2*pi*radius = 1.4588
+     factor = 1/circum * 60 = 0.6318 * 60 = 41.1288
+
+     -->
+<animation>
+    <type>spin</type>
+    <object-name>FrontTire</object-name>
+    <condition>
+        <property>gear/gear[0]/wow</property>
+    </condition>
+    <property>gear/gear[0]/rollspeed-ms</property><!-- gear/gear[0]/rollspeed-ms -->
+    <factor>41.1288</factor>
+    <center>
+        <x-m>-3.02035</x-m>
+        <y-m>-0.029114</y-m>
+        <z-m>-1.68664</z-m>
+    </center>
+    <axis>
+        <x>0</x>
+        <y>-1</y>
+        <z>0</z>
+    </axis>
+</animation>
 
  <animation>
   <type>rotate</type>
@@ -1255,6 +1286,33 @@
   </axis>
  </animation>
 
+   <!-- spinning wheel calc
+
+     radius = 1.80323 - 1.51444 = 0.28879
+     circum = 2*pi*radius = 1.8145
+     factor = 1/circum * 60 = 0.6318 * 60 = 33.0666
+
+     -->
+<animation>
+    <type>spin</type>
+    <object-name>RightMainTire</object-name>
+    <condition>
+        <property>gear/gear[1]/wow</property>
+    </condition>
+    <property>gear/gear[1]/rollspeed-ms</property><!-- gear/gear[0]/rollspeed-ms -->
+    <factor>33.0666</factor>
+    <center>
+        <x-m>0.561746</x-m>
+        <y-m>1.24357</y-m>
+        <z-m>-1.50656</z-m>
+    </center>
+    <axis>
+        <x>0</x>
+        <y>-1</y>
+        <z>0</z>
+    </axis>
+</animation>
+
 
  <!-- left gear -->
  
@@ -1392,6 +1450,33 @@
    <z>0.201098</z>
   </axis>
  </animation>
+
+  <!-- spinning wheel calc
+
+     radius = 1.80323 - 1.51444 = 0.28879
+     circum = 2*pi*radius = 1.8145
+     factor = 1/circum * 60 = 0.6318 * 60 = 33.0666
+
+     -->
+<animation>
+    <type>spin</type>
+    <object-name>LeftMainTire</object-name>
+    <condition>
+        <property>gear/gear[2]/wow</property>
+    </condition>
+    <property>gear/gear[2]/rollspeed-ms</property><!-- gear/gear[0]/rollspeed-ms -->
+    <factor>33.0666</factor>
+    <center>
+        <x-m>0.561746</x-m>
+        <y-m>-1.24357</y-m>
+        <z-m>-1.50656</z-m>
+    </center>
+    <axis>
+        <x>0</x>
+        <y>-1</y>
+        <z>0</z>
+    </axis>
+</animation>
 
  <animation>
   <type>rotate</type>
