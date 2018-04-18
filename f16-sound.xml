@@ -76,6 +76,7 @@
     <factor>0.3</factor>
    </volume>
   </engine_fan>
+
   <engine_fan>
    <name>external fan</name>
    <path>Aircraft/f16/Sounds/turbojet_fan.wav</path>
@@ -87,14 +88,14 @@
     </not>
     <less-than>
       <property>engines/engine/n1</property>
-      <value>85.0</value>
+      <value>100.0</value>
     </less-than>
    </condition>
-   <reference-dist>800</reference-dist>
-   <max-dist>3000</max-dist>
+   <reference-dist>100</reference-dist>
+   <max-dist>4000</max-dist>
    <position>
     <x>0.6</x>
-    <y>0.0</y>
+    <y>0.01</y>
     <z>-0.37</z>
    </position>
    <orientation>
@@ -103,30 +104,31 @@
     <z>-0.17</z>
     <inner-angle>60.0</inner-angle>
     <outer-angle>200.0</outer-angle>
-    <outer-gain>0.0</outer-gain>
+    <outer-gain>0.75</outer-gain>
    </orientation>
    <pitch>
     <property>engines/engine/n1</property>
-    <ofset>0.8</ofset>
-    <factor>.003</factor>
+    <ofset>1.0</ofset>
+    <factor>0.004</factor>
    </pitch>
    <volume>
     <property>engines/engine/n1</property>
-    <offset>1.0</offset>
-    <factor>-0.0002</factor>
+    <offset>1.30</offset>
+    <factor>-0.01</factor>
    </volume>
   </engine_fan>
+
   <exhaust>
    <name>turbine</name>
    <path>Sounds/jet.wav</path>
    <mode>looped</mode>
    <property>engines/engine/running</property>
-   <reference-dist>2000</reference-dist>
-   <max-dist>10000</max-dist>
+   <reference-dist>250</reference-dist>
+   <max-dist>12500</max-dist>
    <position>
     <x>4.6</x>
-    <y>0.0</y>
-    <z>0.0</z>
+    <y>0.01</y>
+    <z>0.01</z>
    </position>
    <orientation>
     <x>1.0</x>
@@ -134,15 +136,21 @@
     <z>0.0</z>
     <inner-angle>200.0</inner-angle>
     <outer-angle>360.0</outer-angle>
-    <outer-gain>0.2</outer-gain>
+    <outer-gain>0.25</outer-gain>
    </orientation>
    <volume>
     <property>engines/engine/thrust_lb</property>
+    <offset>0</offset>
     <factor>0.000044944</factor>
    </volume>
+   <!--<volume>
+    <property>sim/current-view/internal</property>
+    <offset>1</offset>
+    <factor>-0.5</factor>
+   </volume>-->
    <pitch>
     <property>engines/engine/n1</property>
-    <offset>0.3</offset>
+    <offset>0.25</offset>
     <factor>0.01</factor>
    </pitch>
   </exhaust>
@@ -157,12 +165,12 @@
     </not>
     <property>engines/engine/augmentation</property>
    </condition>
-   <reference-dist>5000</reference-dist>
-   <max-dist>30000</max-dist>
+   <reference-dist>500</reference-dist>
+   <max-dist>15000</max-dist>
    <position>
     <x>4.6</x>
-    <y>0.0</y>
-    <z>0.0</z>
+    <y>0.01</y>
+    <z>0.01</z>
    </position>
    <orientation>
     <x>1.0</x>
