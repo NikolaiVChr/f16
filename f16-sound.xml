@@ -78,7 +78,7 @@
   </engine_fan>
   <engine_fan>
    <name>external fan</name>
-   <path>Sounds/turbojet_fan.wav</path>
+   <path>Aircraft/f16/Sounds/turbojet_fan.wav</path>
    <mode>looped</mode>
    <condition>
     <property>engines/engine/running</property>
@@ -112,7 +112,7 @@
    </pitch>
    <volume>
     <property>engines/engine/n1</property>
-    <offset>0.02</offset>
+    <offset>1.0</offset>
     <factor>-0.0002</factor>
    </volume>
   </engine_fan>
