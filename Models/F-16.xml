@@ -1301,16 +1301,14 @@
     </condition>
     <property>gear/gear[1]/rollspeed-ms</property><!-- gear/gear[0]/rollspeed-ms -->
     <factor>33.0666</factor>
-    <center>
-        <x-m>0.561746</x-m>
-        <y-m>1.24357</y-m>
-        <z-m>-1.50656</z-m>
-    </center>
-    <axis>
-        <x>0</x>
-        <y>-1</y>
-        <z>0</z>
-    </axis>
+    <axis>   
+     <x1-m>0.563844</x1-m>
+     <y1-m> 1.27316</y1-m>
+     <z1-m>-1.51444</z1-m>
+     <x2-m>  0.562878 </x2-m>
+     <y2-m>  1.1289 </y2-m>
+     <z2-m> -1.48814 </z2-m>
+  </axis>
 </animation>
 
 
@@ -1466,16 +1464,14 @@
     </condition>
     <property>gear/gear[2]/rollspeed-ms</property><!-- gear/gear[0]/rollspeed-ms -->
     <factor>33.0666</factor>
-    <center>
-        <x-m>0.561746</x-m>
-        <y-m>-1.24357</y-m>
-        <z-m>-1.50656</z-m>
-    </center>
-    <axis>
-        <x>0</x>
-        <y>-1</y>
-        <z>0</z>
-    </axis>
+    <axis>   
+     <x1-m>0.563844</x1-m>
+     <y1-m>-1.27316</y1-m>
+     <z1-m>-1.51444</z1-m>
+     <x2-m>  0.562878 </x2-m>
+     <y2-m> -1.1289 </y2-m>
+     <z2-m> -1.48814 </z2-m>
+  </axis>
 </animation>
 
  <animation>
