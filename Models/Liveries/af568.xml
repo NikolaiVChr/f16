@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+    <sim>
+        <model>
+            <livery>
+                <name type="string">USAF 568 Ghost Gray</name>
+                <texture>Liveries/ghost/af568.png</texture> 
+                <owner type="string">USAF</owner>
+            </livery>
+            <livery-logo>
+                <texture>Liveries/yf/yf16-transp.png</texture>
+            </livery-logo>
+        </model>
+    </sim>
+</PropertyList>
