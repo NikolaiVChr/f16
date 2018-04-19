@@ -13,10 +13,9 @@ print("*** LOADING f16_controls.nas ... ***");
 # decelerate without put hand of the stick and search the keyboard.
 
 # AirBrake handling.
-var fullAirBrakeTime = 0;
 var applyAirBrakes = func(v)
 {
-    interpolate("/controls/flight/speedbrake", v, fullAirBrakeTime);
+    setprop("/controls/flight/speedbrake", v);
 }
 
 # Brake handling.
@@ -34,9 +33,5 @@ var applyBrakes = func(v, which = 0)
             interpolate("/controls/gear/brake-right", v, fullBrakeTime);
         }
     }
-    else
-    {
-        controls.applyAirBrakes(v);
-    }
+    controls.applyAirBrakes(v);#also deploy speedbrakes when gears is down.
 }
-
