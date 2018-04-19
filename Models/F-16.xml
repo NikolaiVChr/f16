@@ -1793,6 +1793,7 @@
   <object-name>Poly.001</object-name>
   <object-name>Poly.002</object-name>
   <object-name>Turbine</object-name>
+  <object-name>LandingGear</object-name>
   <property-base>sim/model/livery</property-base>
   <texture-prop>texture</texture-prop>
   <texture>f16.rgb</texture>
