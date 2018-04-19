@@ -355,8 +355,6 @@
       <object-name>Rudder</object-name>
       <object-name>VentralFins</object-name>
       <object-name>InternalFrontGearDoor</object-name>
-      <object-name>InternalRightMainDoor</object-name>
-      <object-name>InternalLeftMainDoor</object-name>
       <object-name>ExternalFrontGearDoor</object-name>
       <object-name>ExternalRightMainDoor</object-name>
       <object-name>ExternalLeftMainDoor</object-name>
@@ -1077,33 +1075,6 @@
   </axis>
  </animation>
 
-  <!-- spinning wheel calc
-
-     radius = 1.91735 - 1.68517 = 0.23218
-     circum = 2*pi*radius = 1.4588
-     factor = 1/circum * 60 = 0.6318 * 60 = 41.1288
-
-     -->
-<animation>
-    <type>spin</type>
-    <object-name>FrontTire</object-name>
-    <condition>
-        <property>gear/gear[0]/wow</property>
-    </condition>
-    <property>gear/gear[0]/rollspeed-ms</property><!-- gear/gear[0]/rollspeed-ms -->
-    <factor>41.1288</factor>
-    <center>
-        <x-m>-3.02035</x-m>
-        <y-m>-0.029114</y-m>
-        <z-m>-1.68664</z-m>
-    </center>
-    <axis>
-        <x>0</x>
-        <y>-1</y>
-        <z>0</z>
-    </axis>
-</animation>
-
  <animation>
   <type>rotate</type>
   <object-name>FrontTire</object-name>
@@ -1162,12 +1133,38 @@
   </axis>
  </animation>
 
+   <!-- spinning wheel calc
+
+     radius = 1.91735 - 1.68517 = 0.23218
+     circum = 2*pi*radius = 1.4588
+     factor = 1/circum * 60 = 0.6318 * 60 = 41.1288
+
+     -->
+<animation>
+    <type>spin</type>
+    <object-name>FrontTire</object-name>
+    <condition>
+        <property>gear/gear[0]/wow</property>
+    </condition>
+    <property>gear/gear[0]/rollspeed-ms</property><!-- gear/gear[0]/rollspeed-ms -->
+    <factor>41.1288</factor>
+    <center>
+        <x-m>-3.02035</x-m>
+        <y-m>-0.029114</y-m>
+        <z-m>-1.68664</z-m>
+    </center>
+    <axis>
+        <x>0</x>
+        <y>-1</y>
+        <z>0</z>
+    </axis>
+</animation>
+
 
  <!-- right gear -->
 
  <animation>
   <type>rotate</type>
-  <object-name>InternalRightMainDoor</object-name>
   <object-name>ExternalRightMainDoor</object-name>
   <property>gear/gear[2]/position-norm</property>
   <factor>460</factor>
@@ -1350,7 +1347,6 @@
  
  <animation>
   <type>rotate</type>
-  <object-name>InternalLeftMainDoor</object-name>
   <object-name>ExternalLeftMainDoor</object-name>
   <property>gear/gear[1]/position-norm</property>
   <factor>460</factor>
@@ -1622,7 +1618,6 @@
   <object-name>LeftMainStrut</object-name>
   <object-name>LeftUpperMainStrut</object-name>
   <object-name>LeftLowerMainStrut</object-name>
-  <object-name>InternalLeftMainDoor</object-name>
   <condition>
    <not>
    <equals>
@@ -1639,7 +1634,6 @@
   <object-name>RightMainStrut</object-name>
   <object-name>RightUpperMainStrut</object-name>
   <object-name>RightLowerMainStrut</object-name>
-  <object-name>InternalRightMainDoor</object-name>
   <condition>
    <not>
    <equals>
@@ -1752,8 +1746,6 @@
   <object-name>ExternalLeftMainDoor</object-name>
   <object-name>ExternalRightMainDoor</object-name>
   <object-name>InternalFrontGearDoor</object-name>
-  <object-name>InternalLeftMainDoor</object-name>
-  <object-name>InternalRightMainDoor</object-name>
   <object-name>LeftLowerAileron</object-name>
   <object-name>LeftLowerFlap</object-name>
   <object-name>LeftLowerHorizonTail</object-name>
