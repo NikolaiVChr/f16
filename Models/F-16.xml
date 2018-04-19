@@ -697,7 +697,7 @@
   <object-name>CanopyFrame</object-name>
   <object-name>CanopyForwardInside</object-name>
   <object-name>CanopyForwardOutside</object-name>
- <property>fdm/jsbsim/fcs/canopy-pos-norm</property>
+ <property>canopy/position-norm</property>
   <factor>30.0</factor>
   <center>
    <x-m>-3.30</x-m>
@@ -887,7 +887,7 @@
   <type>rotate</type>
   <object-name>RightUpperFlap</object-name>
   <object-name>RightLowerFlap</object-name>
-  <property>fdm/jsbsim/fcs/right-flaperon-norm</property>
+  <property>sim/multiplay/generic/float[6]</property>
   <factor>20.0</factor>
   <center>
    <x-m>1.54</x-m>
@@ -905,7 +905,7 @@
   <type>rotate</type>
   <object-name>LeftUpperFlap</object-name>
   <object-name>LeftLowerFlap</object-name>
-  <property>fdm/jsbsim/fcs/left-flaperon-norm</property>
+  <property>sim/multiplay/generic/float[5]</property>
   <factor>20.0</factor>
   <center>
    <x-m>1.54</x-m>
@@ -923,7 +923,7 @@
   <type>rotate</type>
   <object-name>RightUpperLef</object-name>
   <object-name>RightLowerLef</object-name>
-  <property>fdm/jsbsim/fcs/lef-pos-deg</property>
+  <property>surface-positions/flap-pos-norm</property>
   <factor>-1</factor>
   <center>
    <x-m>0.24</x-m>
@@ -941,7 +941,7 @@
   <type>rotate</type>
   <object-name>LeftUpperLef</object-name>
   <object-name>LeftLowerLef</object-name>
-  <property>fdm/jsbsim/fcs/lef-pos-deg</property>
+  <property>surface-positions/flap-pos-norm</property>
   <center>
    <x-m>0.24</x-m>
    <y-m>-3.0</y-m>
@@ -983,7 +983,7 @@
   <type>rotate</type>
   <object-name>RightUpperHorizonTail</object-name>
   <object-name>RightLowerHorizonTail</object-name>
-  <property>fdm/jsbsim/fcs/dht-right-pos-rad</property>
+  <property>sim/multiplay/generic/float[4]</property>
   <factor>57.3</factor>
   <center>
    <x-m>4.36</x-m>
@@ -1001,7 +1001,7 @@
   <type>rotate</type>
   <object-name>LeftUpperHorizonTail</object-name>
   <object-name>LeftLowerHorizonTail</object-name>
-  <property>fdm/jsbsim/fcs/dht-left-pos-rad</property>
+  <property>surface-positions/elevator-pos-norm</property>
   <factor>57.3</factor>
   <center>
    <x-m>4.36</x-m>
@@ -1061,7 +1061,7 @@
   <type>rotate</type>
   <object-name>FrontTire</object-name>
   <object-name>FrontLowerStrut</object-name>
-  <property>gear/gear[0]/steering-norm</property>
+  <property>sim/multiplay/generic/float[7]</property> 
   <factor>-80</factor>
   <center>
    <x-m>-2.97</x-m>

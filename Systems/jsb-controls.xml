@@ -1121,7 +1121,7 @@
                 <max>  30 </max>
             </clipto>
         </kinematic>
-		 
+         
         <aerosurface_scale name="fcs/fly-by-wire/yaw/rudder-pos-norm">
             <input>fcs/fly-by-wire/yaw/rudder-deflection-deg</input>
             <zero_centered> true </zero_centered>
@@ -2087,7 +2087,7 @@
         <pure_gain name="fcs/fly-by-wire/lef/lef-pos-rad">
             <input>fcs/fly-by-wire/lef/lef-pos-deg</input>
             <gain>0.017453</gain>
-        </pure_gain>		
+        </pure_gain>        
 
         <aerosurface_scale name="fcs/fly-by-wire/lef/lef-pos-norm">
             <input>fcs/fly-by-wire/lef/lef-pos-deg</input>
@@ -2239,6 +2239,7 @@
             <input>fcs/fly-by-wire/pitch/horz-tail-left-deflection-deg</input>
             <gain>-0.017453</gain>
             <output>fcs/dht-left-pos-rad</output>
+            <output>fcs/elevator-pos-norm</output>
         </pure_gain>
 
         <pure_gain name="fcs/fly-by-wire/model/left-aileron-pos-norm">
@@ -2274,6 +2275,7 @@
             <input>fcs/fly-by-wire/lef/lef-pos-deg</input>
             <gain>1</gain>
             <output>fcs/lef-pos-deg</output>
+            <output>/surface-positions/flap-pos-norm</output>
         </pure_gain>
 
         <!-- the below components rounds flaps position in degrees to zero decimal points: -->
@@ -2392,12 +2394,12 @@
    </switch>
 
    <switch name="fcs/gear-hyd">
-	  <default value="fcs/gear-control"/>
+      <default value="fcs/gear-control"/>
       <test  logic="OR" value="fcs/gear-wow-cmd-norm">
-		systems/hydraulics/sysb-psi ge 2000
+        systems/hydraulics/sysb-psi ge 2000
       </test>
    </switch>
-		 
+         
    <kinematic name="fcs/gear-control">
     <input>fcs/gear-hyd</input>
     <traverse>
@@ -2550,18 +2552,19 @@
      </setting>
     </traverse>
     <output>fcs/canopy-pos-norm</output>
+    <output>/canopy/position-norm</output>
    </kinematic>
 
   </channel>
   
   <!--<channel name="Gun">
-	<switch name="fcs/guntrigger">
-	<default value="0"/>
+    <switch name="fcs/guntrigger">
+    <default value="0"/>
     <test logic="AND" value="1">
          /controls/armament/trigger eq 1
-    	 systems/hydraulics/sysb-psi ge 2000
+         systems/hydraulics/sysb-psi ge 2000
     </test>
-	</switch>
+    </switch>
   </channel>-->
 
  </flight_control>
