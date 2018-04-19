@@ -936,6 +936,9 @@
         <awg_9>
             <file>Aircraft/f16/Nasal/awg_9.nas</file>
         </awg_9>
+        <controls>
+            <file>Aircraft/f16/Nasal/f16_controls.nas</file>
+        </controls>
         <f16> 
             <file>Aircraft/f16/Nasal/f16.nas</file>
             <file>Aircraft/f16/Nasal/liveries.nas</file>
