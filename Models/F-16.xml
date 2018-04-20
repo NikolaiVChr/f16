@@ -128,12 +128,34 @@
 <!-- Station 1 -->
  <model>
   <name>Station1_AIM-9L</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.ac</path>
   <offsets>
-   <x-m>1.5</x-m>
+   <x-m>1.16</x-m>
    <y-m>-4.87</y-m>
-   <z-m>0.0</z-m>
-   <pitch-deg>-4.5</pitch-deg>
+   <z-m>0.00</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <model>
+  <name>Station2_AIM-9L</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.ac</path>
+  <offsets>
+   <x-m>0.85</x-m>
+   <y-m>-3.7</y-m>
+   <z-m>-0.32</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station3_AIM-9L</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.ac</path>
+  <offsets>
+   <x-m>0.513785</x-m>
+   <y-m>-2.88606</y-m>
+   <z-m>-0.330157</z-m>
+   <pitch-deg>-3.5</pitch-deg>
   </offsets>
  </model>
 
@@ -267,24 +289,68 @@
 
  <model>
   <name>Station1_AIM-120C5_amraam</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/AIM-120C5.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.ac</path>
   <offsets>
-   <x-m>0.5</x-m>
-   <y-m>-4.87</y-m>
+   <x-m>1.15374</x-m>
+   <y-m>-4.89183</y-m>
    <z-m>0.0</z-m>
-   <pitch-deg>-4.5</pitch-deg>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+   <model>
+  <name>Station2_AIM-120C5_amraam</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.ac</path>
+  <offsets>
+   <x-m>1.15374</x-m>
+   <y-m>-3.7</y-m>
+   <z-m>-0.32</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <model>
+  <name>Station3_AIM-120C5_amraam</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.ac</path>
+  <offsets>
+   <x-m>0.785874</x-m>
+   <y-m>-2.8762</y-m>
+   <z-m>-0.32201</z-m>
+   <pitch-deg>-3.5</pitch-deg>
   </offsets>
  </model>
 
 <!-- Station 9 -->
  <model>
   <name>Station9_AIM-9L</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.ac</path>
   <offsets>
-   <x-m>1.5</x-m>
+   <x-m>1.16</x-m>
    <y-m>4.87</y-m>
-   <z-m>0.0</z-m>
-   <pitch-deg>-4.5</pitch-deg>
+   <z-m>0.00</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station8_AIM-9L</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.ac</path>
+  <offsets>
+   <x-m>0.85</x-m>
+   <y-m>3.7</y-m>
+   <z-m>-0.32</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station7_AIM-9L</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.ac</path>
+  <offsets>
+   <x-m>0.513785</x-m>
+   <y-m>2.88606</y-m>
+   <z-m>-0.330157</z-m>
+   <pitch-deg>-3.5</pitch-deg>
   </offsets>
  </model>
 
@@ -301,12 +367,34 @@
 
  <model>
   <name>Station9_AIM-120C5_amraam</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/AIM-120C5.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.ac</path>
   <offsets>
-   <x-m>0.5</x-m>
-   <y-m>4.87</y-m>
+   <x-m>1.15374</x-m>
+   <y-m>4.89183</y-m>
    <z-m>0.0</z-m>
-   <pitch-deg>-4.5</pitch-deg>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <model>
+  <name>Station8_AIM-120C5_amraam</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.ac</path>
+  <offsets>
+   <x-m>1.15374</x-m>
+   <y-m>3.7</y-m>
+   <z-m>-0.32</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <model>
+  <name>Station7_AIM-120C5_amraam</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.ac</path>
+  <offsets>
+   <x-m>0.785874</x-m>
+   <y-m>2.8762</y-m>
+   <z-m>-0.32201</z-m>
+   <pitch-deg>-3.5</pitch-deg>
   </offsets>
  </model>
 
@@ -1710,10 +1798,91 @@
 
  <animation>
   <type>select</type>
-  <object-name>Station1_AIM-9L</object-name>
   <object-name>Station9_AIM-9L</object-name>
   <condition>
-   <property>sim/model/f16/AIM-9L</property>
+    <equals>
+      <property>payload/armament/station/id-8-type</property>
+      <value>AIM-9</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-8-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+  <animation>
+  <type>select</type>
+  <object-name>Station8_AIM-9L</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-7-type</property>
+      <value>AIM-9</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-7-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station7_AIM-9L</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-6-type</property>
+      <value>AIM-9</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-6-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+  <animation>
+  <type>select</type>
+  <object-name>Station1_AIM-9L</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-0-type</property>
+      <value>AIM-9</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-0-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+   <animation>
+  <type>select</type>
+  <object-name>Station2_AIM-9L</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-1-type</property>
+      <value>AIM-9</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-1-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station3_AIM-9L</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-2-type</property>
+      <value>AIM-9</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-2-count</property>
+      <value>0</value>
+    </greater-than>
   </condition>
  </animation>
 
@@ -1721,19 +1890,113 @@
 <!-- however for aerodynamic reasons we carry dummy missiles -->
  <animation>
   <type>select</type>
-  <object-name>Station1_AIM-9L_dummy</object-name>
   <object-name>Station9_AIM-9L_dummy</object-name>
   <condition>
-   <property>sim/model/f16/AIM-9L_dummy</property>
+    <equals>
+      <property>payload/armament/station/id-8-type</property>
+      <value>AN-T-17</value>
+    </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station1_AIM-9L_dummy</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-0-type</property>
+      <value>AN-T-17</value>
+    </equals>
   </condition>
  </animation>
 
  <animation>
   <type>select</type>
   <object-name>Station1_AIM-120C5_amraam</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-0-type</property>
+      <value>AIM-120</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-0-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+  <animation>
+  <type>select</type>
+  <object-name>Station2_AIM-120C5_amraam</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-1-type</property>
+      <value>AIM-120</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-1-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+  <animation>
+  <type>select</type>
+  <object-name>Station3_AIM-120C5_amraam</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-2-type</property>
+      <value>AIM-120</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-2-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+  <animation>
+  <type>select</type>
+  <object-name>Station7_AIM-120C5_amraam</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-6-type</property>
+      <value>AIM-120</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-6-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+  <animation>
+  <type>select</type>
+  <object-name>Station8_AIM-120C5_amraam</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-7-type</property>
+      <value>AIM-120</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-7-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+  <animation>
+  <type>select</type>
   <object-name>Station9_AIM-120C5_amraam</object-name>
   <condition>
-   <property>sim/model/f16/AIM-120C5</property>
+    <equals>
+      <property>payload/armament/station/id-8-type</property>
+      <value>AIM-120</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-8-count</property>
+      <value>0</value>
+    </greater-than>
   </condition>
  </animation>
 
