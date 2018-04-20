@@ -450,6 +450,8 @@
       <object-name>RWStation2</object-name>
       <object-name>LWStation1</object-name>
       <object-name>LWStation2</object-name>
+      <object-name>RWStation3</object-name>
+      <object-name>LWStation3</object-name>
       <object-name>ArresterHook</object-name>
  </effect>
 
@@ -1767,6 +1769,8 @@
   <object-name>LWStation2</object-name>
   <object-name>RWStation1</object-name>
   <object-name>RWStation2</object-name>
+  <object-name>LWStation3</object-name>
+  <object-name>RWStation3</object-name>
   <condition>
    <property>sim/model/f16/wingmounts</property>
   </condition>
@@ -2021,6 +2025,7 @@
   <object-name>LeftUpperSpeedbrake</object-name>
   <object-name>LWStation1</object-name>
   <object-name>LWStation2</object-name>
+  <object-name>LWStation3</object-name>
   <object-name>RadarDomeTop</object-name>
   <object-name>RightLowerAileron</object-name>
   <object-name>RightLowerFlap</object-name>
@@ -2041,6 +2046,7 @@
   <object-name>Rudder.006</object-name>
   <object-name>RWStation1</object-name>
   <object-name>RWStation2</object-name>
+  <object-name>RWStation3</object-name>
   <object-name>Tail</object-name>
   <object-name>USAF_Tailroot</object-name>
   <object-name>VentralFins</object-name>
