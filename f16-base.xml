@@ -319,28 +319,32 @@
         </multiplay>
         <help>
             <key>
-                <name>Ctrl-b</name>
-                <desc>toggle speed brake</desc>
-            </key>
-            <key>
                 <name>Ctrl-f</name>
                 <desc>trigger flare release</desc>
             </key>
             <key>
                 <name>Ctrl-h</name>
-                <desc>toggle arrester hook</desc>
+                <desc>Toggle arrester hook</desc>
             </key>
             <key>
                 <name>C</name>
                 <desc>Toggle canopy</desc>
             </key>
             <key>
-                <name>e (lower case 'e')</name>
-                <desc>trigger</desc>
+                <name>e</name>
+                <desc>Trigger</desc>
+            </key>
+            <key>
+                <name>Ctrl-b</name>
+                <desc>Toggle speedbrakes</desc>
+            </key>
+            <key>
+                <name>b</name>
+                <desc>Hold to deploy brakes/speedbrakes</desc>
             </key>
             <key>
                 <name>Delete</name>
-                <desc>Toggle Manual Pitch Override</desc>
+                <desc>Toggle Manual Pitch Override (MPO)</desc>
             </key>
             <key>
                 <name>r</name>
@@ -363,12 +367,20 @@
                 <desc>Toggles Radar Standby Mode</desc>
             </key>
             <key>
+                <name>Q</name>
+                <desc>Reset view</desc>
+            </key>
+            <key>
+                <name>Ctrl-q</name>
+                <desc>Look down on displays</desc>
+            </key>
+            <key>
                 <name>u/U</name>
-                <desc>seat up/down</desc>
+                <desc>Seat up/down</desc>
             </key>
             <key>
                 <name>m</name>
-                <desc>masterarm</desc>
+                <desc>Masterarm</desc>
             </key>
             <key>
                 <name>w</name>
@@ -386,6 +398,23 @@
     </sim>
     <input>
         <keyboard>
+            <key n="81">
+                <name>Q</name>
+                <desc>Reset view</desc>
+                <binding>
+                    <command>nasal</command>
+                    <script>f16.resetView();</script>
+                </binding>
+            </key>
+            <key n="17">
+                <name>CTRL-Q</name>
+                <desc>View head-down-displays</desc>
+                <repeatable>false</repeatable>
+                <binding>
+                    <command>nasal</command>
+                    <script>f16.HDDView();</script>
+                </binding>
+            </key>
             <key n="6">
                 <name>Ctrl-F</name>
                 <desc>Trigger flare release</desc>

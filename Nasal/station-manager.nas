@@ -105,7 +105,7 @@ var Station = {
 		if (index >= size(me.weapons) or index < 0) {
 			print("Pylon recieved illegal fire operation. No such weapon.");
 		} elsif (me.weapons[index] == nil) {
-			print("Pylon recieved illegal fire operation. Already fired.");
+			print("Pylon received illegal fire operation. Already fired.");
 		} elsif (me.operableFunction != nil and !me.operableFunction()) {
 			print("Pylon could not fire weapon, its inoperable.");
 		} elsif (me.weapons[index].parents[0] == armament.AIM) {
