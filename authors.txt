@@ -20,6 +20,7 @@ Nikolai V. Chr.
 - Danish, Ghost Gray, Blue Bandit and prototype livery
 - Various changes to radar, MFD, HUD
 - Added Pylon and missile code
+- Splashes
 
 Richard Harrison
 - Radar
@@ -28,6 +29,7 @@ Richard Harrison
 
 Jonathan Redpath
 - Hydraulics
+- Splash
 
 Justin Nicholson
 - Splashes
