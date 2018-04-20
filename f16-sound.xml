@@ -534,6 +534,17 @@
             </volume>
         </aim-120-signal>
 
+        <avionics>
+            <path>Sounds/avionics-400Hz.wav</path>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <property>engines/engine/running</property>
+            <volume>
+              <property>/sim/current-view/internal</property>
+                <factor>0.085</factor>
+            </volume>
+        </avionics>
+
     </fx>
  
 </PropertyList>
