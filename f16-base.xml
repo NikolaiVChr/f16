@@ -982,7 +982,7 @@
             <file>Nasal/canvas/MFD_Generic.nas</file>
             <file>Aircraft/f16/Nasal/HUD/HUD_main.nas</file>
             <file>Aircraft/f16/Nasal/MFD/MFD_main.nas</file>
-            <file>Aircraft/f16/Nasal/blackout.nas</file>
+            <!--<file>Aircraft/f16/Nasal/blackout.nas</file>-->
         </f16>
         <f16_chronograph>
             <file>Aircraft/f16/Nasal/chronograph.nas</file>

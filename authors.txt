@@ -6,7 +6,7 @@
 Erik Hofman
 - Main author
 - Simplified FDM
-- F16 block 15+ aerodynamics
+- F16 block 15+ aerodynamics modifications
 
 Pensacola
 - Liveries
@@ -17,7 +17,7 @@ Martin "Pegasus" Schmitt
 Nikolai V. Chr.
 - F16 block 10 and YF-16 aerodynamics
 - Fly-by-wire system for all variants except simplified.
-- Danish and prototype livery
+- Danish, Ghost Gray, Blue Bandit and prototype livery
 - Various changes to radar, MFD, HUD
 - Added Pylon and missile code
 
@@ -32,6 +32,11 @@ Jonathan Redpath
 Justin Nicholson
 - Splashes
 - AIM-9 growl sound
+- AIM-9 and AIM-120 models
+
+JMaverick 16
+- Adapted and added liveries
+- Sound editing
 
 Alan Teeder
 - FDM consulting

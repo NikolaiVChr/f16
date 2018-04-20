@@ -59,7 +59,6 @@ Aero
 ----
 Add wave drag to stores
 Convert groundeffect to be an addition instead of a factor.
-For rotation rates switch to using -aero- properties for rad_sec. To better be affected by turbulence.
 
 Flight controls
 ---------------
