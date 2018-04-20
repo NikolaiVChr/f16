@@ -76,13 +76,22 @@ var Station = {
 	calculateMass: func {
 		# do mass
 		me.totalMass = 0;
+		me.singleName = "";#this is hack to show stores locally
 		foreach(me.weapon;me.weapons) {
 			if (me.weapon != nil) {
 				me.totalMass += me.weapon.weight_launch_lbm;
+				me.singleName = me.weapon.type;#this is hack to show stores locally
 			}
 		}
 		me.totalMass += me.launcherMass;
 		me.node_pointMass.setDoubleValue(me.totalMass);
+
+		#this is hack to show stores locally:
+		if (me.singleName == "" and me.currentSet != nil and me.currentSet["name"] == "1 x AN-T-17") {
+			me.singleName = "AN-T-17";
+		}
+		setprop("payload/armament/station/id-"~me.id~"-type", me.singleName);
+		setprop("payload/armament/station/id-"~me.id~"-count", size(me.weapons));
 	},
 
 	calculateFDM: func {
