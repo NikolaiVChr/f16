@@ -931,7 +931,40 @@
                 <DLZ type="bool">true</DLZ>
                 <DLZ-optimal-alt-feet type="double">30000</DLZ-optimal-alt-feet>
                 <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
-            </aim-120>            
+            </aim-120>
+            <aim-7>
+                <guidance type="string">semi-radar</guidance>
+                <vol-search type="double">0.00</vol-search>
+                <vol-track type="double">0.15</vol-track>
+                <vol-track-weak type="double">0.1</vol-track-weak>
+                <max-fire-range-nm type="int">22</max-fire-range-nm><!-- authentic 21.5 for 2m2 RCS -->
+                <min-fire-range-nm type="double">0.16</min-fire-range-nm>
+                <FCS-field-deg type="int">25</FCS-field-deg>
+                <seeker-field-deg type="int">110</seeker-field-deg>
+                <max-g type="int">20</max-g>
+                <thrust-lbf-stage-1 type="double">5750</thrust-lbf-stage-1><!-- authentic -->
+                <thrust-lbf-stage-2 type="double">1018</thrust-lbf-stage-2>    <!-- authentic -->
+                <stage-1-duration-sec type="double">4.5</stage-1-duration-sec><!-- authentic -->
+                <stage-2-duration-sec type="double">11</stage-2-duration-sec><!-- authentic -->
+                <self-destruct-time-sec type="double">75</self-destruct-time-sec><!-- authentic -->
+                <weight-launch-lbs type="double">510</weight-launch-lbs>                       <!-- authentic -->
+                <weight-warhead-lbs type="double">88</weight-warhead-lbs>
+                <weight-fuel-lbm type="double">135</weight-fuel-lbm>
+                <drag-coeff type="double">0.25</drag-coeff>
+                <cross-section-sqft type="double">0.3382</cross-section-sqft>
+                <loft-altitude type="int">30000</loft-altitude><!-- in stage 1 it will attempt to climb to this altitude -->
+                <min-speed-for-guiding-mach type="double">0.7</min-speed-for-guiding-mach>
+                <arming-time-sec type="double">2.5</arming-time-sec>             <!-- authentic -->
+                <max-report-distance type="double">65</max-report-distance>
+                <navigation type="string">APN</navigation>
+                <rail type="bool">false</rail>
+                <class type="string">A</class>
+                <fire-msg>Fox 1</fire-msg>
+                <telemetry type="bool">false</telemetry>
+                <DLZ type="bool">true</DLZ>
+                <DLZ-optimal-alt-feet type="double">30000</DLZ-optimal-alt-feet>
+                <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
+            </aim-7>      
             <gbu-12>       <!-- GBU 12 -->
                 <fire-msg type="string">Bombs away</fire-msg>
                 <class type="string">GM</class>

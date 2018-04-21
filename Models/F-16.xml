@@ -160,6 +160,17 @@
  </model>
 
  <model>
+  <name>Station3_AIM-7</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-7/aim-7.ac</path>
+  <offsets>
+   <x-m>0.513785</x-m>
+   <y-m>-2.88606</y-m>
+   <z-m>-0.330157</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
   <name>Station1_AIM-9L_dummy</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L_dummy.ac</path>
   <offsets>
@@ -384,6 +395,17 @@
  <model>
   <name>Station7_AIM-9L</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.ac</path>
+  <offsets>
+   <x-m>0.513785</x-m>
+   <y-m>2.88606</y-m>
+   <z-m>-0.330157</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <model>
+  <name>Station7_AIM-7</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-7/aim-7.ac</path>
   <offsets>
    <x-m>0.513785</x-m>
    <y-m>2.88606</y-m>
@@ -1885,6 +1907,21 @@
 
   <animation>
   <type>select</type>
+  <object-name>Station7_AIM-7</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-6-type</property>
+      <value>AIM-7</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-6-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+  <animation>
+  <type>select</type>
   <object-name>Station1_AIM-9L</object-name>
   <condition>
     <equals>
@@ -1920,6 +1957,21 @@
     <equals>
       <property>payload/armament/station/id-2-type</property>
       <value>AIM-9</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-2-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station3_AIM-7</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-2-type</property>
+      <value>AIM-7</value>
     </equals>
     <greater-than>
       <property>payload/armament/station/id-2-count</property>
