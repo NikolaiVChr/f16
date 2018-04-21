@@ -169,7 +169,7 @@ active_u = nil;armament.contact = active_u;
             u_radar_standby   = 0;
             u_ecm_type_num    = 0;
             var u_rng = u.get_range();
-            if (u_rng != nil and (u_rng < range_radar2  and u.not_acting == 0 ))
+            if (u_rng != nil and (u_rng < range_radar2  and u.not_acting == 0 ) and rcs.inRadarRange(u, 75, 3.2))#APG68
             {
 #
 # Decide if this mp item is a valid return (and within range).
@@ -933,6 +933,24 @@ else
 
 		obj.deviation = nil;
 
+        obj.Model = c.getNode("model-short");
+        var model_short = c.getNode("sim/model/path");
+        if(model_short != nil)
+        {
+            var model_short_val = model_short.getValue();
+            if (model_short_val != nil and model_short_val != "")
+            {
+                var u = split("/", model_short_val); # give array
+                var s = size(u); # how many elements in array
+                var o = u[s-1];  # the last element
+                var m = size(o); # how long is this string in the last element
+                var e = m - 4;   # - 4 chars .xml
+                obj.ModelType = substr(o, 0, e); # the string without .xml
+            }
+            else
+                obj.ModelType = "";
+        }
+
 		return obj;
 	},
     isValid: func{return me.Valid.getValue();},
@@ -951,6 +969,9 @@ else
     get_Pitch: func{return me.ptch.getValue();},
     get_Roll: func{return me.rll.getValue();},
     get_Speed: func{return me.get_TAS();},
+    get_model: func {
+        return me.ModelType;
+    },
 	get_heading : func {
 		var n = me.Heading.getValue();
         if (n != nil)

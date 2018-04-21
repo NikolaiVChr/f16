@@ -981,6 +981,9 @@
         <damage>
             <file>Aircraft/f16/Nasal/damage.nas</file>
         </damage>
+        <rcs>
+            <file>Aircraft/f16/Nasal/rcs.nas</file>
+        </rcs>
         <awg_9>
             <file>Aircraft/f16/Nasal/awg_9.nas</file>
         </awg_9>
