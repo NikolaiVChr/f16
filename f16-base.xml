@@ -281,6 +281,14 @@
                             <script>aircraft.livery.dialog.toggle();</script>
                         </binding>
                     </item>
+                    <item>
+                        <label>Config</label>
+                        <name>f16config</name>
+                        <binding>
+                          <command>dialog-show</command>
+                          <dialog-name>f16config</dialog-name>
+                        </binding>
+                      </item>
                 </menu>
                 <menu n="5">
                     <item n="10">

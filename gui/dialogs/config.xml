@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<PropertyList>
+  
+  <name>f16config</name>
+  <modal type="bool">false</modal>
+  <layout>vbox</layout>
+  
+  <group>
+    <layout>hbox</layout>
+    <empty>
+      <stretch>1</stretch>
+    </empty>
+    
+    <text>
+      <label>Configuration</label>
+    </text>
+    
+    <empty>
+      <stretch>1</stretch>
+    </empty>
+    
+    <button>
+      <pref-width>16</pref-width>
+      <pref-height>16</pref-height>
+      <legend></legend>
+      
+      <default>1</default>
+      <keynum>27</keynum>
+      <border>2</border>
+      <binding>
+        <command>dialog-close</command>
+      </binding>
+      <binding>
+        <command>dialog-apply</command>
+      </binding>
+    </button>
+  </group>
+
+  <hrule/>
+
+  <group>
+    <layout>hbox</layout>
+    <text><label>MP discharge messages</label></text>
+    <checkbox>
+      <property>payload/armament/msg</property>
+      <live>true</live>
+      <binding>
+          <command>property-toggle</command>
+          <property>payload/armament/msg</property>
+      </binding>
+    </checkbox>
+  </group>
+  <text><label>Enable this to let your missile and</label></text>
+  <text><label>cannon fire messages be visible over MP</label></text>
+
+  <hrule/>
+
+  <group>
+    <layout>hbox</layout>
+    <text><label>Standby gains</label></text>
+    <checkbox>
+      <property>fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains</property>
+      <live>true</live>
+        <binding>
+          <command>property-toggle</command>
+          <property>fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains</property>
+        </binding>
+    </checkbox>
+  </group>
+  <text><label>Enable this when you don't trust the systems is</label></text>
+  <text><label>working properly to collect air data.</label></text>
+  <text><label>Then it will use fixed gains instead.</label></text>
+
+  <hrule/>
+
+  <group>
+    <layout>hbox</layout>
+    <text><label>CAT III</label></text>
+    <checkbox>
+      <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+      <live>true</live>
+        <binding>
+          <command>property-toggle</command>
+          <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+        </binding>
+    </checkbox>
+  </group>
+  <text><label>Enable this to use CAT III instead of CAT I</label></text>
+
+  <hrule />
+
+  <group>
+    <layout>hbox</layout>
+    <text><label>Aileron Rudder Interconnect (ARI)</label></text>
+    <checkbox>
+      <property>fdm/jsbsim/fcs/fly-by-wire/enable-ari</property>
+      <live>true</live>
+        <binding>
+          <command>property-toggle</command>
+          <property>fdm/jsbsim/fcs/fly-by-wire/enable-ari</property>
+        </binding>
+    </checkbox>
+  </group>
+  <text><label>Disable this to stop the the FBW from</label></text>
+  <text><label>appliying some rudder when deploying ailerons.</label></text>
+
+  <hrule />
+
+  <group>
+    <layout>hbox</layout>
+    <text><label>Refuel door open</label></text>
+    <checkbox>
+      <property>systems/refuel/serviceable</property>
+      <live>true</live>
+        <binding>
+          <command>property-toggle</command>
+          <property>systems/refuel/serviceable</property>
+        </binding>
+    </checkbox>
+  </group>
+  <text><label>Enable this to open refuel door in order to enable</label></text>
+  <text><label>refueling in air. Notice that this will also</label></text>
+  <text><label>change how the fly-by-wire reacts to your inputs.</label></text>
+
+</PropertyList>
