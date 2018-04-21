@@ -848,12 +848,12 @@
     </limits-custom>
     <payload>
         <armament>
-            <models type="string">Aircraft/F-15/Models/Stores/</models>
+            <models type="string">Aircraft/f16/Models/Armament/Weapons/</models>
             <modelsUseCase type="bool">true</modelsUseCase>
             <modelsUpperCase type="bool">true</modelsUpperCase>
             <msg type="bool">false</msg>
             <pylon-offset type="int">0</pylon-offset>
-            <pylon-stations>sim/model/f15/systems/external-loads</pylon-stations>
+            <pylon-stations>payload</pylon-stations>
             <station-name type="string">station</station-name>
             <hit-interpolation type="bool">true</hit-interpolation>
             <MP-lat type="string">rotors/main/blade[0]/flap-deg</MP-lat>
