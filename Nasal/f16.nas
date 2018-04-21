@@ -125,6 +125,11 @@ var loop_flare = func {
         setprop("ai/submodels/submodel[0]/flare-release", FALSE);
         flareCount = -1;
     }
+
+    if (getprop("payload/armament/msg") == TRUE) {
+      setprop("sim/rendering/redout/enabled", TRUE);
+    }
+
     settimer(loop_flare, 0.05);
 };
 loop_flare();
