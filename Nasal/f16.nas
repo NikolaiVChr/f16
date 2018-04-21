@@ -128,6 +128,10 @@ var loop_flare = func {
 
     if (getprop("payload/armament/msg") == TRUE) {
       setprop("sim/rendering/redout/enabled", TRUE);
+      setprop("sim/rendering/redout/parameters/blackout-onset-g", 5);
+      setprop("sim/rendering/redout/parameters/blackout-complete-g", 9);
+      setprop("sim/rendering/redout/parameters/redout-onset-g", -2);
+      setprop("sim/rendering/redout/parameters/redout-complete-g", -4);
     }
 
     settimer(loop_flare, 0.05);
