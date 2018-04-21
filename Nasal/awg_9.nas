@@ -843,10 +843,20 @@ else
 		obj.shortstring = obj.type ~ "[" ~ obj.index ~ "]";
         obj.propNode = c;
         obj.TgTCoord  = geo.Coord.new();
-        if (c.getNode("position/latitude-deg") != nil)
+        if (c.getNode("position/latitude-deg") != nil and c.getNode("position/longitude-deg") != nil) {
             obj.lat = c.getNode("position/latitude-deg");
-        if (c.getNode("position/longitude-deg") != nil)
             obj.lon = c.getNode("position/longitude-deg");
+        } else {
+            obj.lat = nil;
+            if (c.getNode("position/global-x") != nil)
+            {
+                obj.x = me.propNode.getNode("position/global-x");
+                obj.y = me.propNode.getNode("position/global-y");
+                obj.z = me.propNode.getNode("position/global-z");
+            } else {
+                obj.x = nil;
+            }
+        }
  
         if (obj.type == "multiplayer" or obj.type == "tanker" or obj.type == "aircraft" and obj.RdrProp != nil) 
             obj.airbone = 1;
@@ -955,7 +965,12 @@ else
 	},
     isValid: func{return me.Valid.getValue();},
     getUnique: func{return me.get_Callsign();},
-    get_Callsign: func{return me.Callsign.getValue();},
+    get_Callsign: func{
+        if (me.Callsign == nil) {
+            return me.get_model();
+        }
+        return me.Callsign.getValue();
+    },
     getElevation: func{return me.Elevation.getValue();},
     getFlareNode: func () {
       return me.propNode.getNode("rotors/main/blade[3]/flap-deg");
@@ -1096,8 +1111,21 @@ else
         return 0;
     },
     get_Coord: func(){
-        me.TgTCoord.set_latlon(me.lat.getValue(), me.lon.getValue(), me.Alt.getValue() * FT2M);
-        return me.TgTCoord;
+        if (me.lat != nil) {
+            me.TgTCoord.set_latlon(me.lat.getValue(), me.lon.getValue(), me.Alt.getValue() * FT2M);
+        } else {
+            if (me.x != nil)
+            {
+                var x = me.x.getValue();
+                var y = me.y.getValue();
+                var z = me.z.getValue();
+
+                me.TgTCoord.set_xyz(x, y, z);
+            } else {
+                return nil;#hopefully wont happen
+            }
+        }
+        return geo.Coord.new(me.TgTCoord);#best to pass a copy
     },
 
 	get_closure_rate : func() {

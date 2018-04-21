@@ -35,6 +35,7 @@ Justin Nicholson
 - Splashes
 - AIM-9 growl sound
 - AIM-9 and AIM-120 models
+- Radar RCS system
 
 J Maverick 16
 - Adapted and added liveries by Gary Brown

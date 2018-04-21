@@ -307,8 +307,7 @@
         </menubar>
         <multiplay>
             <generic>
-                <int n="2" type="int">0</int>
-                <!-- radar-standby -->
+                <int n="2" type="int">1</int><!-- radar-standby -->
                 <int n="10" type="int" alias="/controls/smoke"/>
                 <int n="11" type="int" alias="/sim/model/f16/smokewinderR1"/>
                 <int n="12" type="int" alias="/sim/model/f16/smokewinderR9"/>
@@ -431,14 +430,14 @@
                 <name>Ctrl-F</name>
                 <desc>Trigger flare release</desc>
                 <binding>
-                    <command>property-toggle</command>
-                    <property>/ai/submodels/submodel[0]/flare-release</property>
+                    <command>property-assign</command>
+                    <property>/ai/submodels/submodel[0]/flare-release-cmd</property>
                     <value type="bool">true</value>
                 </binding>
                 <mod-up>
                     <binding>
                         <command>property-assign</command>
-                        <property>/ai/submodels/submodel[0]/flare-release</property>
+                        <property>/ai/submodels/submodel[0]/flare-release-cmd</property>
                         <value type="bool">false</value>
                     </binding>
                 </mod-up>
@@ -971,9 +970,48 @@
             </gbu-12>
         </armament>
     </payload>
+
+        <rotors>
+        <main>
+            <!--<rpm alias="/engines/engine/nozzle-pos-norm"/>-->
+            <blade n="0">
+                <position-deg alias="/gear/gear[0]/rollspeed-ms"/>
+            </blade>
+            <blade n="1">
+                <position-deg alias="/gear/gear[1]/rollspeed-ms"/>
+            </blade>
+            <blade n="2">
+                <position-deg alias="/gear/gear[2]/rollspeed-ms"/>
+            </blade>
+            <blade n="3">
+                <flap-deg type="double">0</flap-deg>        <!-- used for releasing flares -->
+                <position-deg type="double">0</position-deg><!-- used for releasing chaff  -->
+            </blade>
+        </main>
+        <tail>
+            <!--<rpm alias="/orientation/alpha-deg"/>-->
+            <!-- for future MP transmit
+            <blade n="0">
+                <position-deg type="double">0</position-deg>
+            </blade>
+            <blade n="1">
+                <position-deg type="double">0</position-deg>
+            </blade>-->
+        </tail>
+    </rotors>
+
+    <ai>
+        <submodels>
+            <submodel n="0">
+                <flare-release-cmd type="bool">false</flare-release-cmd>
+                <flare-release type="bool">false</flare-release>
+            </submodel>
+        </submodels>
+    </ai>
+
     <nasal>
         <hack>
-            <file>Aircraft/f16/Nasal/hackCanvas.nas</file>
+            <file>Aircraft/f16/Nasal/hackCanvas.nas</file><!-- must be first -->
         </hack>
         <aar>
             <file>Aircraft/Generic/aar.nas</file>
@@ -981,8 +1019,11 @@
         <damage>
             <file>Aircraft/f16/Nasal/damage.nas</file>
         </damage>
+        <vector>
+            <file>Aircraft/f16/Nasal/vector.nas</file><!-- must be before RCS and radar -->
+        </vector>
         <rcs>
-            <file>Aircraft/f16/Nasal/rcs.nas</file>
+            <file>Aircraft/f16/Nasal/rcs.nas</file><!-- must be before radar -->
         </rcs>
         <awg_9>
             <file>Aircraft/f16/Nasal/awg_9.nas</file>
@@ -1017,14 +1058,11 @@
         <radardist>
             <file>Aircraft/Instruments-3d/radardist/radardist.nas</file>
         </radardist>
-        <vector>
-            <file>Aircraft/f16/Nasal/vector.nas</file>
-        </vector>
         <armament>
-            <file>Aircraft/f16/Nasal/missile-code.nas</file>
+            <file>Aircraft/f16/Nasal/missile-code.nas</file><!-- must be before station-manager -->
         </armament>
         <stations>
-            <file>Aircraft/f16/Nasal/station-manager.nas</file>
+            <file>Aircraft/f16/Nasal/station-manager.nas</file><!-- must be before fire-control and pylons -->
         </stations>
         <fc>
             <file>Aircraft/f16/Nasal/fire-control.nas</file>

@@ -52,7 +52,8 @@
     </checkbox>
   </group>
   <text><label>Enable this to let your missile and</label></text>
-  <text><label>cannon fire messages be visible over MP</label></text>
+  <text><label>cannon fire messages be visible over MP.</label></text>
+  <text><label>Warning this will also allow others to damage you.</label></text>
 
   <hrule/>
 

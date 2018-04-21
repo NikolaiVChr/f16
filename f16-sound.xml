@@ -545,6 +545,35 @@
             </volume>
         </avionics>
 
+        <flare>
+            <name>flare</name>
+            <mode>once</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/flare.wav</path>
+            <condition>
+                <property>ai/submodels/submodel[0]/flare-release-snd</property>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <factor>1</factor>
+                <max>1</max>
+            </volume>
+        </flare>
+
+        <flare>
+            <name>flareOut</name>
+            <mode>once</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/flareOut.wav</path>
+            <condition>
+                <property>ai/submodels/submodel[0]/flare-release-out-snd</property>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <factor>1</factor>
+                <max>1</max>
+            </volume>
+        </flare>        
     </fx>
  
 </PropertyList>

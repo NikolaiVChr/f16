@@ -9,7 +9,7 @@
     <speed>100.0</speed>   <!-- ft/sec -->
     <repeat>true</repeat>
     <delay>0.75</delay>
-    <count>40</count>
+    <count>100</count>
     <x-offset>5.0</x-offset>
     <y-offset>2.0</y-offset>
     <z-offset>0.1</z-offset>
