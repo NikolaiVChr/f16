@@ -111,7 +111,7 @@ var FireControl = {
 			#printf(" to %d",me.aim != nil);
 			if (me.aim != nil and me.aim.parents[0] == armament.AIM) {
 				me.aim = me.pylons[me.selected[0]].fireWeapon(me.selected[1]);
-				me.aim.sendMessage(me.aim.brevity);# non-oprf message for now
+				me.aim.sendMessage(me.aim.brevity~" at: "~me.aim.callsign);
 				me.aimNext = me.nextWeapon(me.selectedType);
 				if (me.aimNext != nil) {
 					me.aimNext.start();
