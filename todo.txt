@@ -1,5 +1,5 @@
 #
-# TODO list for F16.
+# TODO list for F-16.
 #
 
 
@@ -28,11 +28,10 @@ Find real positions of payloads, is only approx. positions now.
 
 Damage
 ------
-Add damage.nas
 
 Radar
 -----
-Add doppler and rcs.
+Add doppler.
 
 Cockpit
 -------
@@ -45,7 +44,7 @@ Enable masterarm, jettison, trims, ALT FLAPS and MFD contrast/brightness.
 
 Sound
 -----
-Weapons release sounds.
+Weapons hit sounds dont seem to work.
 
 HUD
 ---
