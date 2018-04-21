@@ -573,7 +573,283 @@
                 <factor>1</factor>
                 <max>1</max>
             </volume>
-        </flare>        
+        </flare>    
+
+        <throttle>
+            <name>Bottom detent 1</name>
+            <path>Aircraft/f16/Sounds/throttle-idle.wav</path>
+            <mode>once</mode>
+            <type>fx</type>
+            <reference-dist>0</reference-dist>
+            <max-dist>2</max-dist>
+            <condition>
+                    <equals>
+                        <property>controls/engines/engine[0]/throttle</property>
+                        <value>0.0</value>
+                    </equals>
+            </condition>
+            <position>
+                <x>-3.75</x>
+                <y>0.50</y><!-- minus means right, plus means left -->
+                <z>0.015</z>
+            </position>
+            <volume>
+                <factor>0.5</factor>
+            </volume>
+        </throttle>
+
+        <throttle>
+            <name>Bottom detent 2</name>
+            <path>Aircraft/f16/Sounds/throttle-idle.wav</path>
+            <mode>once</mode>
+            <type>fx</type>
+            <reference-dist>0</reference-dist>
+            <max-dist>2</max-dist>
+            <condition>
+                    <greater-than>
+                        <property>controls/engines/engine[0]/throttle</property>
+                        <value>0</value>
+                    </greater-than>
+            </condition>
+            <position>
+                <x>-3.75</x>
+                <y>0.50</y><!-- minus means right, plus means left -->
+                <z>0.015</z>
+            </position>
+            <volume>
+                <factor>0.5</factor>
+            </volume>
+        </throttle>
+
+        <throttle>
+            <name>AB1 detent</name>
+            <path>Aircraft/f16/Sounds/throttle-detent.wav</path>
+            <mode>once</mode>
+            <reference-dist>0</reference-dist>
+            <max-dist>2</max-dist>
+            <condition>
+                    <greater-than-equals>
+                        <property>controls/engines/engine[0]/throttle</property>
+                        <value>0.77</value>
+                    </greater-than-equals>
+            </condition>
+            <position>
+                <x>-3.50</x>
+                <y>0.50</y>
+                <z>0.015</z>
+            </position>
+            <volume>
+                <factor>0.15</factor>
+            </volume>
+        </throttle>
+
+        <throttle>
+            <name>AB2 detent</name>
+            <path>Aircraft/f16/Sounds/throttle-detent.wav</path>
+            <mode>once</mode>
+            <reference-dist>0</reference-dist>
+            <max-dist>2</max-dist>
+            <condition>
+                    <less-than>
+                        <property>controls/engines/engine[0]/throttle</property>
+                        <value>0.77</value>
+                    </less-than>
+            </condition>
+            <position>
+                <x>-3.50</x>
+                <y>0.50</y>
+                <z>0.015</z>
+            </position>
+            <volume>
+                <factor>0.15</factor>
+            </volume>
+        </throttle>
+
+        <missile1>
+            <name>missile0</name>
+            <path>Aircraft/f16/Sounds/missile.wav</path>
+            <mode>once</mode>
+            <condition>
+                <property>payload/armament/aim-7/sound-fire-on-off</property>
+            </condition>
+            <reference-dist>25</reference-dist>
+            <max-dist>10000</max-dist>
+            <position>
+                <x> 3.15986 </x>
+                <y> -2.70311 </y>
+                <z> -0.67645 </z>
+            </position>
+            <volume>
+                <factor>0.75</factor>
+                <max>1</max>
+            </volume>
+        </missile1>
+        <missile1>
+            <name>missile1</name>
+            <path>Aircraft/f16/Sounds/missile.wav</path>
+            <mode>once</mode>
+            <condition>
+                <property>payload/armament/aim-120/sound-fire-on-off</property>
+            </condition>
+            <reference-dist>25</reference-dist>
+            <max-dist>10000</max-dist>
+            <position>
+                <x> 3.15986 </x>
+                <y> -2.70311 </y>
+                <z> -0.67645 </z>
+            </position>
+            <volume>
+                <factor>0.75</factor>
+                <max>1</max>
+            </volume>
+        </missile1>
+        <missile1>
+            <name>missile2</name>
+            <path>Aircraft/f16/Sounds/missile.wav</path>
+            <mode>once</mode>
+            <condition>
+                <property>payload/armament/aim-9/sound-fire-on-off</property>
+            </condition>
+            <reference-dist>25</reference-dist>
+            <max-dist>10000</max-dist>
+            <position>
+                <x> 3.15986 </x>
+                <y> -2.70311 </y>
+                <z> -0.67645 </z>
+            </position>
+            <volume>
+                <factor>0.75</factor>
+                <max>1</max>
+            </volume>
+        </missile1>
+
+        <missile-hit>
+            <!-- multiple of these so the sound can be played over each other -->
+            <name>missile-hit1</name>
+            <path>Aircraft/f16/Sounds/missile-explosion.wav</path>
+            <mode>once</mode>
+            <condition>
+                <equals>
+                    <property>payload/armament/flags/explode-sound-on-0</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <position>
+                <x>-4.0</x>
+                <y>0.01</y>
+                <z>0.01</z>
+            </position>
+            <volume>
+                <property>payload/armament/flags/explode-sound-vol-0</property>
+                <factor>1</factor>
+            </volume>
+        </missile-hit>
+        <missile-hit>
+            <!-- multiple of these so the sound can be played over each other -->
+            <name>missile-hit2</name>
+            <path>Aircraft/f16/Sounds/missile-explosion.wav</path>
+            <mode>once</mode>
+            <condition>
+                <equals>
+                    <property>payload/armament/flags/explode-sound-on-1</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <position>
+                <x>-4.0</x>
+                <y>0.01</y>
+                <z>0.01</z>
+            </position>
+            <volume>
+                <property>payload/armament/flags/explode-sound-vol-1</property>
+                <factor>1</factor>
+            </volume>
+        </missile-hit>
+        <missile-hit>
+            <!-- multiple of these so the sound can be played over each other -->
+            <name>missile-hit3</name>
+            <path>Aircraft/f16/Sounds/missile-explosion.wav</path>
+            <mode>once</mode>
+            <condition>
+                <equals>
+                    <property>payload/armament/flags/explode-sound-on-2</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <position>
+                <x>-4.0</x>
+                <y>0.01</y>
+                <z>0.01</z>
+            </position>
+            <volume>
+                <property>payload/armament/flags/explode-sound-vol-2</property>
+                <factor>1</factor>
+            </volume>
+        </missile-hit>
+        <missile-hit>
+            <!-- multiple of these so the sound can be played over each other -->
+            <name>missile-hit7</name>
+            <path>Aircraft/f16/Sounds/missile-explosion.wav</path>
+            <mode>once</mode>
+            <condition>
+                <equals>
+                    <property>payload/armament/flags/explode-sound-on-6</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <position>
+                <x>-4.0</x>
+                <y>0.01</y>
+                <z>0.01</z>
+            </position>
+            <volume>
+                <property>payload/armament/flags/explode-sound-vol-6</property>
+                <factor>1</factor>
+            </volume>
+        </missile-hit>
+        <missile-hit>
+            <!-- multiple of these so the sound can be played over each other -->
+            <name>missile-hit8</name>
+            <path>Aircraft/f16/Sounds/missile-explosion.wav</path>
+            <mode>once</mode>
+            <condition>
+                <equals>
+                    <property>payload/armament/flags/explode-sound-on-7</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <position>
+                <x>-4.0</x>
+                <y>0.01</y>
+                <z>0.01</z>
+            </position>
+            <volume>
+                <property>payload/armament/flags/explode-sound-vol-7</property>
+                <factor>1</factor>
+            </volume>
+        </missile-hit>
+        <missile-hit>
+            <!-- multiple of these so the sound can be played over each other -->
+            <name>missile-hit9</name>
+            <path>Aircraft/f16/Sounds/missile-explosion.wav</path>
+            <mode>once</mode>
+            <condition>
+                <equals>
+                    <property>payload/armament/flags/explode-sound-on-8</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <position>
+                <x>-4.0</x>
+                <y>0.01</y>
+                <z>0.01</z>
+            </position>
+            <volume>
+                <property>payload/armament/flags/explode-sound-vol-8</property>
+                <factor>1</factor>
+            </volume>
+        </missile-hit>
+
     </fx>
  
 </PropertyList>
