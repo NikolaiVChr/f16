@@ -10,6 +10,8 @@ var smokewinderBlue1 = stations.Smoker.new("Smokewinder Blue", "sim/model/f16/sm
 var smokewinderRed9 = stations.Smoker.new("Smokewinder Red", "sim/model/f16/smokewinderR9");
 var smokewinderGreen9 = stations.Smoker.new("Smokewinder Green", "sim/model/f16/smokewinderG9");
 var smokewinderBlue9 = stations.Smoker.new("Smokewinder Blue", "sim/model/f16/smokewinderB9");
+var smokewinderWhite1 = stations.Smoker.new("Smokewinder White", "sim/model/f16/smokewinderW1");
+var smokewinderWhite9 = stations.Smoker.new("Smokewinder White", "sim/model/f16/smokewinderW9");
 var pylonSets = {
 	empty: {name: "Empty", content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
 	e: {name: "20mm Cannon", content: [cannon], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1},
@@ -31,14 +33,16 @@ var pylonSets = {
 	v: {name: "1 x Smokewinder Red", content: [smokewinderRed9], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
 	w: {name: "1 x Smokewinder Green", content: [smokewinderGreen9], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
 	x: {name: "1 x Smokewinder Blue", content: [smokewinderBlue9], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
+	w1: {name: "1 x Smokewinder White", content: [smokewinderWhite1], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
+	w9: {name: "1 x Smokewinder White", content: [smokewinderWhite9], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
 };
 
 # source for fuel tanks content, fuel type, jettisonable and drag: TO. GR1F-16CJ-1-1
 
 # sets
 var pylon120set = [pylonSets.empty, pylonSets.q, pylonSets.h];
-var wingtipSet1  = [pylonSets.k,     pylonSets.g, pylonSets.r,pylonSets.s,pylonSets.t,pylonSets.u];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
-var wingtipSet9  = [pylonSets.k,     pylonSets.g, pylonSets.r,pylonSets.v,pylonSets.w,pylonSets.x];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
+var wingtipSet1  = [pylonSets.k,     pylonSets.g, pylonSets.r,pylonSets.s,pylonSets.t,pylonSets.u,pylonSets.w1];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
+var wingtipSet9  = [pylonSets.k,     pylonSets.g, pylonSets.r,pylonSets.v,pylonSets.w,pylonSets.x,pylonSets.w9];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
 var pylon9mix   = [pylonSets.empty, pylonSets.q, pylonSets.i, pylonSets.h];
 var pylon12setL = [pylonSets.empty, pylonSets.j, pylonSets.l, pylonSets.o];
 var pylon12setR = [pylonSets.empty, pylonSets.j, pylonSets.m, pylonSets.p];

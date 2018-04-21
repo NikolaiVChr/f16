@@ -90,6 +90,8 @@
                 <smokewinderG9 type="int">0</smokewinderG9>
                 <smokewinderB1 type="int">0</smokewinderB1>
                 <smokewinderB9 type="int">0</smokewinderB9>
+                <smokewinderW1 type="int">0</smokewinderW1>
+                <smokewinderW9 type="int">0</smokewinderW9>
                 <AIM-120C5 type="bool">false</AIM-120C5>
                 <wingmounts type="bool">true</wingmounts>
                 <ventraltank type="bool">false</ventraltank>
@@ -314,6 +316,8 @@
                 <int n="14" type="int" alias="/sim/model/f16/smokewinderG9"/>
                 <int n="15" type="int" alias="/sim/model/f16/smokewinderB1"/>
                 <int n="16" type="int" alias="/sim/model/f16/smokewinderB9"/>
+                <int n="17" type="int" alias="/sim/model/f16/smokewinderW1"/>
+                <int n="18" type="int" alias="/sim/model/f16/smokewinderW9"/>
 
                 <float n="0" type="double" alias="/engines/engine[0]/nozzle-pos-norm"/>
                 <float n="1" type="double" alias="/engines/engine[0]/augmentation"/>

@@ -287,6 +287,44 @@
   </condition>
  </animation>
 
+   <model>
+  <name>Station_AIM-9_smokewinderW1</name>
+  <path>Aircraft/f16/Models/Armament/white.xml</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>-4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station_AIM-9_smokewinderW9</name>
+  <path>Aircraft/f16/Models/Armament/white.xml</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <animation>
+  <type>select</type>
+  <object-name>Station_AIM-9_smokewinderW1</object-name>
+  <condition>
+   <property>sim/multiplay/generic/int[17]</property>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station_AIM-9_smokewinderW9</object-name>
+  <condition>
+   <property>sim/multiplay/generic/int[18]</property>
+  </condition>
+ </animation>
+
  <model>
   <name>Station1_AIM-120C5_amraam</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.ac</path>

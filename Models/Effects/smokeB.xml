@@ -55,12 +55,8 @@
   <particle>
    <start>
     <color>
-     <red>
-      0
-     </red>
-     <green>
-      0
-     </green>
+     <red><value>0.4</value></red>
+     <green><value>0.4</value></green>
      <blue>
       <value>1</value>
      </blue>
@@ -74,12 +70,8 @@
    </start>
    <end>
     <color>
-     <red>
-      0
-     </red>
-     <green>
-      0
-     </green>
+     <red><value>0.4</value></red>
+     <green><value>0.4</value></green>
      <blue>
       <value>1</value>
      </blue>

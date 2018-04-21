@@ -58,12 +58,8 @@
      <red>
       <value>1</value>
      </red>
-     <green>
-      0
-     </green>
-     <blue>
-      0
-     </blue>
+     <green><value>0.4</value></green>
+     <blue><value>0.4</value></blue>
      <alpha>
       <value>1.0</value>
      </alpha>
@@ -77,12 +73,8 @@
      <red>
       <value>1</value>
      </red>
-     <green>
-      0
-     </green>
-     <blue>
-      0
-     </blue>
+     <green><value>0.4</value></green>
+     <blue><value>0.4</value></blue>
      <alpha>
       <value>0.4</value>
      </alpha>
