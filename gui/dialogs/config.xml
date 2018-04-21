@@ -88,7 +88,7 @@
   </group>
   <text><label>Enable this to use CAT III instead of CAT I</label></text>
 
-  <hrule />
+  <hrule/>
 
   <group>
     <layout>hbox</layout>
@@ -105,7 +105,7 @@
   <text><label>Disable this to stop the the FBW from</label></text>
   <text><label>appliying some rudder when deploying ailerons.</label></text>
 
-  <hrule />
+  <hrule/>
 
   <group>
     <layout>hbox</layout>
@@ -121,6 +121,8 @@
   </group>
   <text><label>Enable this to open refuel door in order to enable</label></text>
   <text><label>refueling in air. Notice that this will also</label></text>
-  <text><label>change how the fly-by-wire reacts to your inputs.</label></text>
+  <text><label>change how the fly-by-wire reacts to your stick inputs,</label></text>
+  <text><label>so that you easier can make minute corrections</label></text>
+  <text><label>when close to the tanker.</label></text>
 
 </PropertyList>
