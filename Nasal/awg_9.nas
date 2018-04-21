@@ -939,8 +939,13 @@ else
     getUnique: func{return me.get_Callsign();},
     get_Callsign: func{return me.Callsign.getValue();},
     getElevation: func{return me.Elevation.getValue();},
-    getFlareNode: func{return nil;},
-    getChaffNode: func{return nil;},
+    getFlareNode: func () {
+      return me.propNode.getNode("rotors/main/blade[3]/flap-deg");
+    },
+
+    getChaffNode: func () {
+      return me.propNode.getNode("rotors/main/blade[3]/position-deg");
+    },
     get_type: func{return 0;},
     isPainted: func{return 1;},
     get_Pitch: func{return me.ptch.getValue();},
