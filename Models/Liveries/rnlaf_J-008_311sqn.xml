@@ -5,11 +5,11 @@
   <model>
    <livery> 
     <name type="string">RNLAF J-008 311 Squadron</name>
-    <texture>Liveries/rnlaf/f16klu.rgb</texture>
+    <texture>Liveries/rnlaf/f16klu.jpg</texture>
     <owner type="string">RNLAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/rnlaf/J-008_311sqn.rgb</texture>
+    <texture>Liveries/rnlaf/J-008_311sqn.png</texture>
    </livery-logo>
   </model>
  </sim>

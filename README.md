@@ -1,7 +1,7 @@
-# F-16
+# F-16 Fighting Falcon
 General Dynamics F-16 for Flightgear flight simulator
 
-Includes the following Aircraft:
+Includes the following Aircraft variants:
 
 - F-16CJ block 52
 - F-16CJ block 50

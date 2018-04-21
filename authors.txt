@@ -36,8 +36,8 @@ Justin Nicholson
 - AIM-9 growl sound
 - AIM-9 and AIM-120 models
 
-JMaverick 16
-- Adapted and added liveries
+J Maverick 16
+- Adapted and added liveries by Gary Brown
 - Sound editing
 
 Alan Teeder
