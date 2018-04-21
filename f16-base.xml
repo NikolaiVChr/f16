@@ -978,6 +978,9 @@
         <aar>
             <file>Aircraft/Generic/aar.nas</file>
         </aar>
+        <damage>
+            <file>Aircraft/f16/Nasal/damage.nas</file>
+        </damage>
         <awg_9>
             <file>Aircraft/f16/Nasal/awg_9.nas</file>
         </awg_9>
