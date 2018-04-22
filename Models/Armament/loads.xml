@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<PropertyList include="loads_models.xml">
+<!--<PropertyList include="loads_models.xml">-->
+  
+  <PropertyList> 
+     <model>
+      <path>Aircraft/f16/Models/Armament/loads_models.xml</path>
+    </model>
+    
   
   <animation>
   <type>select</type>
