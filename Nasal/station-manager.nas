@@ -87,9 +87,6 @@ var Station = {
 		me.node_pointMass.setDoubleValue(me.totalMass);
 
 		#this is hack to show stores locally:
-		if (me.singleName == "" and me.currentSet != nil and me.currentSet["name"] == "1 x AN-T-17") {
-			me.singleName = "AN-T-17";
-		}
 		setprop("payload/armament/station/id-"~me.id~"-type", me.singleName);
 		setprop("payload/armament/station/id-"~me.id~"-count", size(me.weapons));
 	},
@@ -517,6 +514,41 @@ var Smoker = {
 	del: func {
 		# delete all the fuel
 		setprop(me.modelPath, 0);
+	},
+
+	getAmmo: func {
+		# return 0
+		return 0;
+	},
+};
+
+var Dummy = {
+# Implements a non functional item.
+#
+	new: func (name) {
+		var s = {parents:[Dummy]};
+		s.type = name;
+		s.typeLong = name;
+
+		# these 3 needs to be here and be 0
+		s.Cd_base = 0;
+		s.ref_area_sqft = 0;
+		s.weight_launch_lbm = 0;
+		return s;
+	},
+
+	mount: func {
+		
+	},
+
+	eject: func {
+		# spill out all the fuel?
+		
+	},
+
+	del: func {
+		# delete all the fuel
+		
 	},
 
 	getAmmo: func {
