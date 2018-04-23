@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+<!--
+Type Air-to-surface missile 
+Place of origin  United States 
+Weight 462-670lb
+Length 8 feet 2 inches (2.49 m) 
+Diameter 12 in (30.5 cm)
+-->
+
+	<path>AGM-65.ac</path>
+	
+	<animation>
+        <type>range</type>
+        <min-m>0</min-m>
+        <max-m>12000</max-m>
+    </animation>
+	
+</PropertyList>

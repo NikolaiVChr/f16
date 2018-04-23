@@ -4,7 +4,7 @@
 
   <model>
 <name>triple rack</name>
-<path>Aircraft/F-16C/Models/Armament/triplerack/trirack.xml</path>
+<path>Aircraft/f16/Models/Armament/Triplerack/trirack.xml</path>
 <offsets>
 <x-m>0</x-m>
 <y-m>0</y-m>
@@ -15,7 +15,7 @@
 
  <model>
 <name>bottom agm65</name>
-<path>Aircraft/FGUK-weapons/Air-Ground/agm65/AGM-65.xml</path>
+<path>Aircraft/f16/Models/Armament/Weapons/AGM65/AGM-65.xml</path>
 <offsets>
 <x-m>0</x-m>
 <y-m>0</y-m>
@@ -26,7 +26,7 @@
 
 <model>
 <name>left agm65</name>
-<path>Aircraft/FGUK-weapons/Air-Ground/agm65/AGM-65.xml</path>
+<path>Aircraft/f16/Models/Armament/Weapons/AGM65/AGM-65.xml</path>
 <offsets>
 <x-m>0</x-m>
 <y-m>-0.43</y-m>
@@ -37,7 +37,7 @@
 
 <model>
 <name>right agm65</name>
-<path>Aircraft/FGUK-weapons/Air-Ground/agm65/AGM-65.xml</path>
+<path>Aircraft/f16/Models/Armament/Weapons/AGM65/AGM-65.xml</path>
 <offsets>
 <x-m>0</x-m>
 <y-m>0.43</y-m>
