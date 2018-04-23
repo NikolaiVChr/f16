@@ -10,6 +10,8 @@
 #             should be the same as nearest_u - but use active_u instead in 
 #             most of the code. nearest_u is kept for compatibility.
 # 
+var TRUE =1;
+var FALSE=0;
 
 var ElapsedSec        = props.globals.getNode("sim/time/elapsed-sec");
 var SwpFac            = props.globals.getNode("sim/model/f16/instrumentation/radar-awg-9/sweep-factor", 1);
@@ -137,6 +139,7 @@ var az_scan = func() {
 		tmp_nearest_u = nil;
 
 		tgts_list = [];
+        rwrList = [];
 		var raw_list = Mp.getChildren();
 
 if (active_u == nil or active_u.Callsign == nil or active_u.Callsign.getValue() == nil or active_u.Callsign.getValue() != active_u_callsign)
@@ -162,13 +165,20 @@ active_u = nil;armament.contact = active_u;
 
             if (!radar_active)
               continue;
-
+            if(!isVisibleByTerrain.do(c)) {
+                continue;
+            }
             var u = Target.new(c);
             u_ecm_signal      = 0;
             u_ecm_signal_norm = 0;
             u_radar_standby   = 0;
             u_ecm_type_num    = 0;
             var u_rng = u.get_range();
+
+            if (u_rng != nil and u_rng < 150 and (type == "multiplayer" or type == "tanker" or type == "aircraft" or type=="carrier" or type=="groundvehicle" or type=="ship")) 
+            {
+                rwrNew(u);
+            }
             if (u_rng != nil and (u_rng < range_radar2  and u.not_acting == 0 ) and rcs.inRadarRange(u, 75, 3.2))#APG68
             {
 #
@@ -192,7 +202,7 @@ active_u = nil;armament.contact = active_u;
                 if (!visible)
                     continue;
 
-                if (c.getNode("callsign") == nil or !isVisibleByTerrain(c))
+                if (c.getNode("callsign") == nil)
                     continue;
 
                 u.get_deviation(our_true_heading);
@@ -218,6 +228,7 @@ active_u = nil;armament.contact = active_u;
 #printf(" ** RWR on ",c.getNode("callsign"), " =",their_radar_mode);
                         rwr(u);	# TODO: override display when alert.
                     }
+                    rwrNew(u);
                 }
             } else {
                 u.set_display(0);
@@ -437,6 +448,9 @@ if(size(sorted_dist)>0)
         active_u = nil;armament.contact = active_u;
         #active_u_callsign = nil;
     }
+    if(rwrs.rwr != nil) {
+        rwrs.rwr.update(rwrList);
+    }
 }
 
 setprop("sim/mul"~"tiplay/gen"~"eric/strin"~"g[14]", "op"~"r"~"f16");
@@ -456,119 +470,55 @@ var containsV = func (vector, content) {
 #
 # The following 1 methods is from Mirage 2000-5
 #
-var isVisibleByTerrain = func(node) {
-#
-# This is quite a performance hit; so let's disable for now. 
-    return 1; 
-    if (node.getNode("callsign").getValue() == "")
-      return 0;
+var isVisibleByTerrain = {
+    do: func(node) {
+        #
+        # This is quite a performance hit; so let's disable for now. 
 
-    var SelectCoord = geo.Coord.new();
-    var x = nil;
-    var y = nil;
-    var z = nil;
-    call(func {
-        x = node.getNode("position/global-x").getValue();
-        y = node.getNode("position/global-y").getValue();
-        z = node.getNode("position/global-z").getValue(); },
-        nil, var err = []);
-    if(x == nil or y == nil or z == nil) {
-        return 1;
-    }
-    var SelectCoord = geo.Coord.new().set_xyz(x, y, z);
-
-    var isVisible = 0;
-    var MyCoord = geo.aircraft_position();
-    
-    # Because there is no terrain on earth that can be between these 2
-    if(MyCoord.alt() < 8900 and SelectCoord.alt() < 8900)
-    {
-        # Temporary variable
-        # A (our plane) coord in meters
-        var a = MyCoord.x();
-        var b = MyCoord.y();
-        var c = MyCoord.z();
-        # B (target) coord in meters
-        var d = SelectCoord.x();
-        var e = SelectCoord.y();
-        var f = SelectCoord.z();
-        var x = 0;
-        var y = 0;
-        var z = 0;
-        var RecalculatedL = 0;
-        var difa = d - a;
-        var difb = e - b;
-        var difc = f - c;
-        # direct Distance in meters
-        var myDistance = SelectCoord.direct_distance_to(MyCoord);
-        var Aprime = geo.Coord.new();
-        
-        # Here is to limit FPS drop on very long distance
-        var L = 1000;
-        if(myDistance > 50000)
-        {
-            L = myDistance / 15;
-        }
-        var step = L;
-        var maxLoops = int(myDistance / L);
-        
-        isVisible = 1;
-        # This loop will make travel a point between us and the target and check if there is terrain
-        for(var i = 0 ; i < maxLoops; i += 1)
-        {
-            L = i * step;
-            var K = (L * L) / (1 + (-1 / difa) * (-1 / difa) * (difb * difb + difc * difc));
-            var DELTA = (-2 * a) * (-2 * a) - 4 * (a * a - K);
-            
-            if(DELTA >= 0)
-            {
-                # So 2 solutions or 0 (1 if DELTA = 0 but that 's just 2 solution in 1)
-                var x1 = (-(-2 * a) + math.sqrt(DELTA)) / 2;
-                var x2 = (-(-2 * a) - math.sqrt(DELTA)) / 2;
-                # So 2 y points here
-                var y1 = b + (x1 - a) * (difb) / (difa);
-                var y2 = b + (x2 - a) * (difb) / (difa);
-                # So 2 z points here
-                var z1 = c + (x1 - a) * (difc) / (difa);
-                var z2 = c + (x2 - a) * (difc) / (difa);
-                # Creation Of 2 points
-                var Aprime1  = geo.Coord.new();
-                Aprime1.set_xyz(x1, y1, z1);
-                
-                var Aprime2  = geo.Coord.new();
-                Aprime2.set_xyz(x2, y2, z2);
-                
-                # Here is where we choose the good
-                if(math.round((myDistance - L), 2) == math.round(Aprime1.direct_distance_to(SelectCoord), 2))
-                {
-                    Aprime.set_xyz(x1, y1, z1);
-                }
-                else
-                {
-                    Aprime.set_xyz(x2, y2, z2);
-                }
-                var AprimeLat = Aprime.lat();
-                var Aprimelon = Aprime.lon();
-                var AprimeTerrainAlt = geo.elevation(AprimeLat, Aprimelon);
-                if(AprimeTerrainAlt == nil)
-                {
-                    AprimeTerrainAlt = 0;
-                }
-                
-                if(AprimeTerrainAlt > Aprime.alt())
-                {
-                    # This will prevent the rest of the loop to run if a masking high point is found:
-                    return 0;
-                }
+            var SelectCoord = geo.Coord.new();
+            var x = nil;
+            var y = nil;
+            var z = nil;
+            call(func {
+                x = node.getNode("position/global-x").getValue();
+                y = node.getNode("position/global-y").getValue();
+                z = node.getNode("position/global-z").getValue(); },
+                nil, var err = []);
+            if(x == nil or y == nil or z == nil) {
+                return 1;
             }
-        }
-    }
-    else
-    {
-        isVisible = 1;
-    }
-    return isVisible;
-}
+            var SelectCoord = geo.Coord.new().set_xyz(x, y, z);
+
+            me.myOwnPos = geo.aircraft_position();
+            if(me.myOwnPos.alt() > 8900 and SelectCoord.alt() > 8900) {
+              # both higher than mt. everest, so not need to check.
+              return TRUE;
+            }
+              me.xyz = {"x":me.myOwnPos.x(),                  "y":me.myOwnPos.y(),                 "z":me.myOwnPos.z()};
+              me.dir = {"x":SelectCoord.x()-me.myOwnPos.x(),  "y":SelectCoord.y()-me.myOwnPos.y(), "z":SelectCoord.z()-me.myOwnPos.z()};
+
+              # Check for terrain between own aircraft and other:
+              me.v = get_cart_ground_intersection(me.xyz, me.dir);
+              if (me.v == nil) {
+                return TRUE;
+                #printf("No terrain, planes has clear view of each other");
+              } else {
+               me.terrain = geo.Coord.new();
+               me.terrain.set_latlon(me.v.lat, me.v.lon, me.v.elevation);
+               me.maxDist = me.myOwnPos.direct_distance_to(SelectCoord)-1;
+               me.terrainDist = me.myOwnPos.direct_distance_to(me.terrain);
+               if (me.terrainDist < me.maxDist) {
+                 #print("terrain found between the planes");
+                 return FALSE;
+               } else {
+                  return TRUE;
+                  #print("The planes has clear view of each other");
+               }
+              }
+            
+            return TRUE;
+    },
+};
 
 
 var hud_nearest_tgt = func() {
@@ -823,19 +773,20 @@ var Target = {
             var model_short_val = model_short.getValue();
             if (model_short_val != nil and model_short_val != "")
             {
-            var u = split("/", model_short_val); # give array
-            var s = size(u); # how many elements in array
-            var o = u[s-1];	 # the last element
-            var m = size(o); # how long is this string in the last element
-            var e = m - 4;   # - 4 chars .xml
-            obj.ModelType = substr(o, 0, e); # the string without .xml
-}
-else
-            obj.ModelType = "";
-        }
-else
-{
-            obj.ModelType = "";
+                var u = split("/", model_short_val); # give array
+                var s = size(u); # how many elements in array
+                var o = u[s-1];	 # the last element
+                var m = size(o); # how long is this string in the last element
+                var e = m - 4;   # - 4 chars .xml
+                obj.ModelType = substr(o, 0, e); # the string without .xml
+            }
+            else
+                obj.ModelType = "";
+            }
+        else
+        {
+            obj.ModelType = c.getNode("type").getValue();
+            if (obj.ModelType == nil) {obj.ModelType = "";}
         }
 
 		obj.index = c.getIndex();
@@ -992,16 +943,25 @@ else
         if (n != nil)
 		    me.BHeading.setValue(n);
 		return n;	},
-	get_bearing : func {
-        if (me.Bearing == nil)
-            return 0;
-		var n = me.Bearing.getValue();
-        if (n != nil)
-        {
-    		me.BBearing.setValue(n);
+	get_bearing: func(){
+        var n = nil;
+        if (me.Bearing != nil) {
+            n = me.Bearing.getValue();
         }
-		return n;
-	},
+        if(n == nil) {
+            # AI/MP has no radar properties
+            n = me.get_bearing_from_Coord(geo.aircraft_position());
+        }
+        return n;
+    },
+    get_bearing_from_Coord: func(MyAircraftCoord){
+        me.get_Coord();
+        var myBearing = 0;
+        if(me.coord.is_defined()) {
+            myBearing = MyAircraftCoord.course_to(me.coord);
+        }
+        return myBearing;
+    },
 	set_relative_bearing : func(n) {
 		me.RelBearing.setValue(n);
 	},
@@ -1237,3 +1197,39 @@ var F16RadarRecipient =
 f16_radar = F16RadarRecipient.new("F16-RADAR");
 
 emesary.GlobalTransmitter.Register(f16_radar);
+
+rwrList = [];
+
+var rwrNew = func (u) {
+    var bearing = geo.aircraft_position().course_to(u.get_Coord());
+    var trAct = u.propNode.getNode("instrumentation/transponder/transmitted-id");
+    var show = 0;
+    var dev = 180;
+    if (trAct != nil and trAct.getValue() != -9999) {#hmm kinda of a hack
+      # transponder on
+      show = 1;
+    } else {
+      var heading = u.get_heading();  
+      var inv_bearing =  bearing+180;
+      var deviation = inv_bearing - heading;
+      var rdrAct = u.propNode.getNode("sim/multiplay/generic/int[2]");
+      if (((rdrAct != nil and rdrAct.getValue()!=0) or rdrAct == nil) and math.abs(geo.normdeg180(deviation)) < 60) {
+          # we detect its radar is pointed at us and active
+          show = 1;
+          dev = math.abs(geo.normdeg180(deviation));
+      }
+    }
+    if (show == 1) {
+        var threat = 0;
+        if (u.get_model != "missile_frigate" and u.get_model != "buk-m2") {
+            threat += ((180-dev)/180)*0.25;
+        } elsif (u.get_model == "missile_frigate") {
+            threat += 0.25;
+        } else {
+            threat += 0.25;
+        }
+        var danger = u.get_model == "missile_frigate"?60:(u.get_model == "buk-m2"?30:50);
+        threat += ((danger-u.get_range())/danger)*1.5>0?((danger-u.get_range())/danger)*0.75:0;
+        append(rwrList,[u,threat]);
+    }
+}

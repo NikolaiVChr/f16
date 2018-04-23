@@ -386,6 +386,10 @@
                 <desc>Look down on displays</desc>
             </key>
             <key>
+                <name>Ctrl-s</name>
+                <desc>Look down on RWR</desc>
+            </key>
+            <key>
                 <name>u/U</name>
                 <desc>Seat up/down</desc>
             </key>
@@ -424,6 +428,15 @@
                 <binding>
                     <command>nasal</command>
                     <script>f16.HDDView();</script>
+                </binding>
+            </key>
+            <key n="19">
+                <name>CTRL-S</name>
+                <desc>View RWR</desc>
+                <repeatable>false</repeatable>
+                <binding>
+                    <command>nasal</command>
+                    <script>f16.RWRView();</script>
                 </binding>
             </key>
             <key n="6">
@@ -1058,6 +1071,9 @@
         <rcs>
             <file>Aircraft/f16/Nasal/rcs.nas</file><!-- must be before radar -->
         </rcs>
+        <rwrs>
+            <file>Aircraft/f16/Nasal/rwr.nas</file>
+        </rwrs>
         <awg_9>
             <file>Aircraft/f16/Nasal/awg_9.nas</file>
         </awg_9>
