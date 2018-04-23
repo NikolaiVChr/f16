@@ -179,7 +179,7 @@ RWRCanvas = {
             } else {
                 continue;
             }
-            me.dev = -contact[0].get_bearing()+90;
+            me.dev = -geo.normdeg180(contact[0].get_bearing()-getprop("orientation/heading-deg"))+90;
             me.x = math.cos(me.dev*D2R)*me.threat;
             me.y = -math.sin(me.dev*D2R)*me.threat;
             me.texts[me.i].setTranslation(me.x,me.y);
