@@ -5,6 +5,21 @@
   <!-- ===================== START ARMAMENT =========================== -->
 <!-- The armament section should probably be placed in a seperate file -->
 
+  
+<!-- Station 5 -->
+ <model>
+  <name>AN-ALQ-131</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/an-alq-131.ac</path>
+  <offsets>
+   <x-m>0</x-m>
+   <y-m>0</y-m>
+   <z-m>-1.46</z-m>
+   <!--<z-m>-1.15</z-m>-->
+   <pitch-deg>0</pitch-deg>
+  </offsets>
+ </model>
+  
+  
 <!-- Station 5 -->
  <model>
   <name>VentralTank</name>

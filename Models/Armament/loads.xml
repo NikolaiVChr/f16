@@ -8,91 +8,13 @@
     </model>
     
   
-  <animation>
-  <type>select</type>
-  <object-name>VentralTank</object-name>
-  <condition>
-   <property>sim/model/f16/ventraltank</property>
-  </condition>
- </animation>
 
- <animation>
-  <type>select</type>
-  <object-name>RExtTank</object-name>
-  <condition>
-   <property>sim/model/f16/wingtankR</property>
-  </condition>
- </animation>
 
- <animation>
-  <type>select</type>
-  <object-name>LExtTank</object-name>
-  <condition>
-   <property>sim/model/f16/wingtankL</property>
-  </condition>
- </animation>
 
- <animation>
-  <type>select</type>
-  <object-name>Station9_AIM-9L</object-name>
-  <condition>
-    <equals>
-      <property>payload/armament/station/id-8-type</property>
-      <value>AIM-9</value>
-    </equals>
-    <greater-than>
-      <property>payload/armament/station/id-8-count</property>
-      <value>0</value>
-    </greater-than>
-  </condition>
- </animation>
-
-  <animation>
-  <type>select</type>
-  <object-name>Station8_AIM-9L</object-name>
-  <condition>
-    <equals>
-      <property>payload/armament/station/id-7-type</property>
-      <value>AIM-9</value>
-    </equals>
-    <greater-than>
-      <property>payload/armament/station/id-7-count</property>
-      <value>0</value>
-    </greater-than>
-  </condition>
- </animation>
-
- <animation>
-  <type>select</type>
-  <object-name>Station7_AIM-9L</object-name>
-  <condition>
-    <equals>
-      <property>payload/armament/station/id-6-type</property>
-      <value>AIM-9</value>
-    </equals>
-    <greater-than>
-      <property>payload/armament/station/id-6-count</property>
-      <value>0</value>
-    </greater-than>
-  </condition>
- </animation>
-
-  <animation>
-  <type>select</type>
-  <object-name>Station7_AIM-7</object-name>
-  <condition>
-    <equals>
-      <property>payload/armament/station/id-6-type</property>
-      <value>AIM-7</value>
-    </equals>
-    <greater-than>
-      <property>payload/armament/station/id-6-count</property>
-      <value>0</value>
-    </greater-than>
-  </condition>
- </animation>
-
-  <animation>
+ <!--  ===========================================================================================================-->
+ <!--  ================================================= id-0   ==================================================-->
+ <!--  ===========================================================================================================-->
+   <animation>
   <type>select</type>
   <object-name>Station1_AIM-9L</object-name>
   <condition>
@@ -106,8 +28,53 @@
     </greater-than>
   </condition>
  </animation>
-
+ 
+ <!-- in peacetime we don't carry live ammunition -->
+<!-- however for aerodynamic reasons we carry dummy missiles --> 
+  <animation>
+  <type>select</type>
+  <object-name>Station1_AIM-9L_dummy</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-0-type</property>
+      <value>AN-T-17</value>
+    </equals>
+  </condition>
+ </animation>
+ 
+  <animation>
+  <type>select</type>
+  <object-name>Station1_AIM-120C5_amraam</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-0-type</property>
+      <value>AIM-120</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-0-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+ 
+ <!-- in peacetime we don't carry live ammunition -->
+<!-- however for aerodynamic reasons we carry dummy missiles -->
    <animation>
+  <type>select</type>
+  <object-name>Station1_AIM-9L_dummy2</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-0-type</property>
+      <value>CATM-9L</value>
+    </equals>
+  </condition>
+ </animation>
+ 
+ <!--  ===========================================================================================================-->
+ <!--  ================================================= id-1   ==================================================-->
+ <!--  ===========================================================================================================-->
+ 
+  <animation>
   <type>select</type>
   <object-name>Station2_AIM-9L</object-name>
   <condition>
@@ -121,7 +88,25 @@
     </greater-than>
   </condition>
  </animation>
-
+ 
+  <animation>
+  <type>select</type>
+  <object-name>Station2_AIM-120C5_amraam</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-1-type</property>
+      <value>AIM-120</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-1-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+ 
+<!--  ===========================================================================================================-->
+<!--  ================================================= id-2   ==================================================-->
+<!--  ===========================================================================================================-->
  <animation>
   <type>select</type>
   <object-name>Station3_AIM-9L</object-name>
@@ -136,8 +121,8 @@
     </greater-than>
   </condition>
  </animation>
-
- <animation>
+ 
+  <animation>
   <type>select</type>
   <object-name>Station3_AIM-7</object-name>
   <condition>
@@ -147,6 +132,230 @@
     </equals>
     <greater-than>
       <property>payload/armament/station/id-2-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+ 
+   <animation>
+  <type>select</type>
+  <object-name>Station3_AIM-120C5_amraam</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-2-type</property>
+      <value>AIM-120</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-2-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+ 
+<!--  ===========================================================================================================-->
+<!--  ================================================= id-3   ==================================================-->
+<!--  ===========================================================================================================-->
+ 
+<!--  <animation>
+  <type>select</type>
+  <object-name>RExtTank</object-name>
+  <condition>
+   <property>sim/model/f16/wingtankR</property>
+  </condition>
+ </animation>-->
+<animation>
+  <type>select</type>
+  <object-name>LExtTank</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-3-type</property>
+      <value>Left 370 Gal Tank</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-3-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+ 
+ 
+ 
+<!--  ===========================================================================================================-->
+<!--  ================================================= id-4   ==================================================-->
+<!--  ===========================================================================================================-->
+ 
+ 
+<!-- Models/Armament/External-stores/an-alq-131.ac
+to center pylon when it has "AN/ALQ-131 ECM Pod" active..
+ location: (0,0,-.046)--> 
+ 
+<!-- <animation>
+  <type>select</type>
+  <object-name>VentralTank</object-name>
+  <condition>
+   <property>sim/model/f16/ventraltank</property>
+  </condition>
+ </animation>-->
+<animation>
+  <type>select</type>
+  <object-name>AN-ALQ-131</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-4-type</property>
+      <value>AN/ALQ-131 ECM Pod</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-4-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+ 
+ 
+  <animation>
+  <type>select</type>
+  <object-name>VentralTank</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-4-type</property>
+      <value>Center 300 Gal Tank</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-4-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+ 
+ 
+ 
+ 
+ 
+ 
+<!--  ===========================================================================================================-->
+<!--  ================================================= id-5   ==================================================-->
+<!--  ===========================================================================================================-->
+ 
+<!-- <animation>
+  <type>select</type>
+  <object-name>LExtTank</object-name>
+  <condition>
+   <property>sim/model/f16/wingtankL</property>
+  </condition>
+ </animation>--> 
+ 
+  <animation>
+  <type>select</type>
+  <object-name>RExtTank</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-5-type</property>
+      <value>Right 370 Gal Tank</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-5-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+ 
+ 
+<!--  ===========================================================================================================-->
+<!--  ================================================= id-6   ==================================================-->
+<!--  ===========================================================================================================-->
+ <animation>
+  <type>select</type>
+  <object-name>Station7_AIM-9L</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-6-type</property>
+      <value>AIM-9</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-6-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>Station7_AIM-7</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-6-type</property>
+      <value>AIM-7</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-6-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>Station7_AIM-120C5_amraam</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-6-type</property>
+      <value>AIM-120</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-6-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+ 
+<!--  ===========================================================================================================-->
+<!--  ================================================= id-7   ==================================================-->
+<!--  ===========================================================================================================--> 
+ <animation>
+  <type>select</type>
+  <object-name>Station8_AIM-9L</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-7-type</property>
+      <value>AIM-9</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-7-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+ 
+   <animation>
+  <type>select</type>
+  <object-name>Station8_AIM-120C5_amraam</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-7-type</property>
+      <value>AIM-120</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-7-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+ 
+ 
+<!--  ===========================================================================================================-->
+<!--  ================================================= id-8   ==================================================-->
+<!--  ===========================================================================================================--> 
+ 
+ <animation>
+  <type>select</type>
+  <object-name>Station9_AIM-9L</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-8-type</property>
+      <value>AIM-9</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-8-count</property>
       <value>0</value>
     </greater-than>
   </condition>
@@ -165,28 +374,8 @@
   </condition>
  </animation>
 
- <animation>
-  <type>select</type>
-  <object-name>Station1_AIM-9L_dummy</object-name>
-  <condition>
-    <equals>
-      <property>payload/armament/station/id-0-type</property>
-      <value>AN-T-17</value>
-    </equals>
-  </condition>
- </animation>
-
-  <animation>
-  <type>select</type>
-  <object-name>Station1_AIM-9L_dummy2</object-name>
-  <condition>
-    <equals>
-      <property>payload/armament/station/id-0-type</property>
-      <value>CATM-9L</value>
-    </equals>
-  </condition>
- </animation>
-
+ <!-- in peacetime we don't carry live ammunition -->
+<!-- however for aerodynamic reasons we carry dummy missiles --> 
  <animation>
   <type>select</type>
   <object-name>Station9_AIM-9L_dummy2</object-name>
@@ -195,81 +384,6 @@
       <property>payload/armament/station/id-8-type</property>
       <value>CATM-9L</value>
     </equals>
-  </condition>
- </animation>
-
- <animation>
-  <type>select</type>
-  <object-name>Station1_AIM-120C5_amraam</object-name>
-  <condition>
-    <equals>
-      <property>payload/armament/station/id-0-type</property>
-      <value>AIM-120</value>
-    </equals>
-    <greater-than>
-      <property>payload/armament/station/id-0-count</property>
-      <value>0</value>
-    </greater-than>
-  </condition>
- </animation>
-
-  <animation>
-  <type>select</type>
-  <object-name>Station2_AIM-120C5_amraam</object-name>
-  <condition>
-    <equals>
-      <property>payload/armament/station/id-1-type</property>
-      <value>AIM-120</value>
-    </equals>
-    <greater-than>
-      <property>payload/armament/station/id-1-count</property>
-      <value>0</value>
-    </greater-than>
-  </condition>
- </animation>
-
-  <animation>
-  <type>select</type>
-  <object-name>Station3_AIM-120C5_amraam</object-name>
-  <condition>
-    <equals>
-      <property>payload/armament/station/id-2-type</property>
-      <value>AIM-120</value>
-    </equals>
-    <greater-than>
-      <property>payload/armament/station/id-2-count</property>
-      <value>0</value>
-    </greater-than>
-  </condition>
- </animation>
-
-  <animation>
-  <type>select</type>
-  <object-name>Station7_AIM-120C5_amraam</object-name>
-  <condition>
-    <equals>
-      <property>payload/armament/station/id-6-type</property>
-      <value>AIM-120</value>
-    </equals>
-    <greater-than>
-      <property>payload/armament/station/id-6-count</property>
-      <value>0</value>
-    </greater-than>
-  </condition>
- </animation>
-
-  <animation>
-  <type>select</type>
-  <object-name>Station8_AIM-120C5_amraam</object-name>
-  <condition>
-    <equals>
-      <property>payload/armament/station/id-7-type</property>
-      <value>AIM-120</value>
-    </equals>
-    <greater-than>
-      <property>payload/armament/station/id-7-count</property>
-      <value>0</value>
-    </greater-than>
   </condition>
  </animation>
 
