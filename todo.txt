@@ -25,6 +25,9 @@ Stores
 ------
 Model conformal fuel tanks.
 Find real positions of payloads, is only approx. positions now.
+Make fired weapons visible including engine smoke.
+Prevent firing without lock?
+Make cannon do damage
 
 Damage
 ------
@@ -32,10 +35,12 @@ Damage
 Radar
 -----
 Add doppler.
+Make RWR work.
+Make it 'see' difference between air,ground, arms and sea targets.
 
 Cockpit
 -------
-Make center mount less deep, so pilot get good view of MFDs.
+Make center mount less deep, so pilot get good view of MFDs and RWR.
 Make warning lights and master warning work.
 Convert flat 2D panels into 3D.
 Make controls work for STORES CONFIG and STANDBY GAINS.
@@ -66,3 +71,11 @@ Flight controls
 A/P
 ---
 Make auto-pilot system.
+
+F-16D
+-----
+UV map
+Texture
+Animate
+Put cockpit into model
+Add pjedved to authors

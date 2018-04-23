@@ -206,7 +206,7 @@ active_u = nil;armament.contact = active_u;
                     u.set_display(0);
                 }
 #                if (type == "multiplayer" or type == "tanker" or type == "aircraft" and HaveRadarNode != nil) 
-                if (type == "multiplayer" or type == "tanker" or type == "aircraft") 
+                if (type == "multiplayer" or type == "tanker" or type == "aircraft" or type="carrier" or type="groundvehicle" or type="ship") 
                 {
                     append(tgts_list, u);
                     ecm_on = EcmOn.getValue();
@@ -439,7 +439,7 @@ if(size(sorted_dist)>0)
     }
 }
 
-setprop("sim/mul"~"tiplay/gen"~"eric/strin"~"g[14]", "op"~"r"~"f");
+setprop("sim/mul"~"tiplay/gen"~"eric/strin"~"g[14]", "op"~"r"~"f16");
 
 var containsV = func (vector, content) {
     if (content == nil) {
