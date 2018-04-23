@@ -64,6 +64,10 @@ Aero
 Add wave drag to stores
 Convert groundeffect to be an addition instead of a factor.
 
+Effects
+-------
+Better aircraft lighting system: cockpit, taxi/landing, anti-collision, formation, navigation, beacon, tail flood, etc.
+
 Flight controls
 ---------------
 
