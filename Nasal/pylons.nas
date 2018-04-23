@@ -16,6 +16,7 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 	var smokewinderWhite1 = stations.Smoker.new("Smokewinder White", "sim/model/f16/smokewinderW1");
 	var smokewinderWhite9 = stations.Smoker.new("Smokewinder White", "sim/model/f16/smokewinderW9");
 	var dummy = stations.Dummy.new("AN-T-17");
+	var dummy2 = stations.Dummy.new("CATM-9L");
 	var pylonSets = {
 		empty: {name: "Empty", content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
 		e: {name: "20mm Cannon", content: [cannon], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1},
@@ -25,6 +26,7 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 		i: {name: "3 x GBU-12", content: ["GBU-12","GBU-12", "GBU-12"], fireOrder: [0,1,2], launcherDragArea: -0.025, launcherMass: 10, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0},
 		j: {name: "2 x GBU-12", content: ["GBU-12", "GBU-12"], fireOrder: [0,1], launcherDragArea: -0.025, launcherMass: 10, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0},
 		k: {name: "1 x AN-T-17", content: [dummy], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
+		k2: {name: "1 x CATM-9L", content: [dummy2], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
 		l: {name: "370 Gal Fuel tank", content: [fuelTank370Left], fireOrder: [0], launcherDragArea: 0.35, launcherMass: 531, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1},
 		m: {name: "370 Gal Fuel tank", content: [fuelTank370Right], fireOrder: [0], launcherDragArea: 0.35, launcherMass: 531, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1},
 		o: {name: "600 Gal Fuel tank", content: [fuelTank600Left], fireOrder: [0], launcherDragArea: 0.30, launcherMass: 399, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1},
@@ -46,8 +48,8 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 
 	# sets
 	var pylon120set = [pylonSets.empty, pylonSets.q, pylonSets.h];
-	var wingtipSet1  = [pylonSets.k,     pylonSets.g, pylonSets.r,pylonSets.s,pylonSets.t,pylonSets.u,pylonSets.w1];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
-	var wingtipSet9  = [pylonSets.k,     pylonSets.g, pylonSets.r,pylonSets.v,pylonSets.w,pylonSets.x,pylonSets.w9];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
+	var wingtipSet1  = [pylonSets.k,pylonSets.k2,     pylonSets.g, pylonSets.r,pylonSets.s,pylonSets.t,pylonSets.u,pylonSets.w1];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
+	var wingtipSet9  = [pylonSets.k,pylonSets.k2,     pylonSets.g, pylonSets.r,pylonSets.v,pylonSets.w,pylonSets.x,pylonSets.w9];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
 	var pylon9mix   = [pylonSets.empty, pylonSets.q, pylonSets.i, pylonSets.h, pylonSets.q7];
 	var pylon12setL = [pylonSets.empty, pylonSets.j, pylonSets.l, pylonSets.o];
 	var pylon12setR = [pylonSets.empty, pylonSets.j, pylonSets.m, pylonSets.p];
@@ -71,13 +73,15 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 } else {
 	# YF-16 only get wingtip aim9 dummies:
 	var dummy = stations.Dummy.new("AN-T-17");
+	var dummy2 = stations.Dummy.new("CATM-9L");
 	var pylonSets = {
 		k: {name: "1 x AN-T-17", content: [dummy], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
+		k2: {name: "1 x CATM-9L", content: [dummy2], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0},
 	};
 
 	# sets
-	var wingtipSet1  = [pylonSets.k];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
-	var wingtipSet9  = [pylonSets.k];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
+	var wingtipSet1  = [pylonSets.k,pylonSets.k2];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
+	var wingtipSet9  = [pylonSets.k,pylonSets.k2];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
 
 	# pylons
 	var pylon1 = stations.Pylon.new("Left Wingtip Pylon", 0, [0,0,0], wingtipSet1, 0, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[1]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[1]",1));

@@ -98,6 +98,17 @@
  </model>
 
   <model>
+  <name>Station1_AIM-9L_dummy2</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L_dummy-yellow.ac</path>
+  <offsets>
+   <x-m>1.16</x-m>
+   <y-m>-4.87</y-m>
+   <z-m>0.00</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <model>
   <name>Station_AIM-9_smokewinderR1</name>
   <path>Aircraft/f16/Models/Armament/red.xml</path>
   <offsets>
@@ -333,6 +344,17 @@
  <model>
   <name>Station9_AIM-9L_dummy</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L_dummy.ac</path>
+  <offsets>
+   <x-m>1.16</x-m>
+   <y-m>4.87</y-m>
+   <z-m>0.00</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <model>
+  <name>Station9_AIM-9L_dummy2</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L_dummy-yellow.ac</path>
   <offsets>
    <x-m>1.16</x-m>
    <y-m>4.87</y-m>
