@@ -82,6 +82,23 @@ var HDDView = func () {
   }
 }
 
+var RWRView = func () {
+  if (getprop("sim/current-view/view-number") == 0) {
+    var hd = getprop("sim/current-view/heading-offset-deg");
+    var hd_t = 360;
+    if (hd < 180) {
+      hd_t = hd_t - 360;
+    }
+    interpolate("sim/current-view/field-of-view", 35, 0.66);
+    interpolate("sim/current-view/heading-offset-deg", hd_t,0.66);
+    interpolate("sim/current-view/pitch-offset-deg", 5,0.66);
+    interpolate("sim/current-view/roll-offset-deg", 0,0.66);
+    interpolate("sim/current-view/x-offset-m", -0.1166, 1); 
+    interpolate("sim/current-view/y-offset-m", 0.6282, 1); 
+    interpolate("sim/current-view/z-offset-m", -3.94, 1);
+  }
+}
+
 # to prevent dynamic view to act like helicopter due to defining <rotors>:
 dynamic_view.register(func {me.default_plane();});
 
