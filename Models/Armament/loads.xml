@@ -227,7 +227,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   </condition>
  </animation>
  
- 
+
  
  
  
@@ -400,6 +400,18 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
       <value>0</value>
     </greater-than>
   </condition>
+ </animation>
+
+ <!-- livery selection -->
+
+ <animation>
+  <type>material</type>
+  <object-name>VentralTank</object-name>
+  <object-name>RExtTank</object-name>
+  <object-name>LExtTank</object-name>
+  <property-base>sim/model/livery</property-base>
+  <texture-prop>texture</texture-prop>
+  <texture>f16.rgb</texture>
  </animation>
  
 </PropertyList>
