@@ -163,6 +163,8 @@ RWRCanvas = {
         me.hat = 0;
         me.newt = 0;
         me.prio = 0;
+        me.launch = 0;
+        var newsound = 0;
         foreach(contact; sortedlist) {
             me.typ=me.lookupType[contact[0].get_model()];
             if (me.i > me.max_icons-1) {
@@ -195,8 +197,12 @@ RWRCanvas = {
             if (!(me.typ == me.AIRCRAFT_BUK or me.typ == me.AIRCRAFT_FRIGATE or me.typ == me.AIRCRAFT_AI)) {
                 me.symbol_hat[me.hat].setTranslation(me.x,me.y);
                 me.symbol_hat[me.hat].show();
-                me.symbol_hat[me.hat].update();
                 me.hat += 1;
+            }
+            if (contact[0].get_Callsign()==getprop("sound/rwr-launch") and 10*(me.elapsed-int(me.elapsed))>5) {#blink 2Hz
+                me.symbol_launch[me.launch].setTranslation(me.x,me.y);
+                me.symbol_launch[me.launch].show();
+                me.launch += 1;
             }
             var popup = me.elapsed;
             foreach(var old; me.shownList) {
@@ -204,6 +210,9 @@ RWRCanvas = {
                     popup = old[1];
                     break;
                 }
+            }
+            if (popup == me.elapsed) {
+                newsound = 1;
             }
             if (popup > me.elapsed-me.fadeTime) {
                 me.symbol_new[me.newt].setTranslation(me.x,me.y);
@@ -216,6 +225,7 @@ RWRCanvas = {
             me.i += 1;
         }
         me.shownList = newList;
+        if (newsound == 1) setprop("sound/rwr-new", !getprop("sound/rwr-new"));
         for (;me.i<me.max_icons;me.i+=1) {
             me.texts[me.i].hide();
         }
@@ -224,6 +234,9 @@ RWRCanvas = {
         }
         for (;me.newt<me.max_icons;me.newt+=1) {
             me.symbol_new[me.newt].hide();
+        }
+        for (;me.launch<me.max_icons;me.launch+=1) {
+            me.symbol_launch[me.launch].hide();
         }
         if (me.prio == 0) {
             me.symbol_priority.hide();

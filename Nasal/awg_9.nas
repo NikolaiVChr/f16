@@ -90,9 +90,11 @@ our_ac_name = "f16c";
 #	if (our_ac_name == "f16-bs") { we_are_bs = 1; }
 	}
 
-
+var counting = 1;
 var az_scan = func() {
-    var doRWR = rand()>0.75;
+    counting += 1;
+    if (counting == 5) counting = 1;
+    var doRWR = counting == 1;
 	# Antena az scan. Angular speed is constant but angle covered varies (120 or 60 deg ATM).
 	var fld_frac = az_fld / 120;                    # the screen (and the max scan angle) covers 120 deg, but we may use less (az_fld).
 	var fswp_spd = swp_spd / fld_frac;              # So the duration (fswp_spd) of a complete scan will depend on the fraction we use.

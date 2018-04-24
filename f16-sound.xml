@@ -850,6 +850,65 @@
             </volume>
         </missile-hit>
 
+        <rwr>
+            <name>rwr-new1</name>
+            <path>Aircraft/f16/Sounds/rwr-new.wav</path>
+            <mode>once</mode>
+            <type>avionics</type>
+            <condition>
+              <and>
+                <property>/sim/current-view/internal</property>
+                <equals>
+                    <property>sound/rwr-new</property>
+                    <value>1</value>
+                </equals>
+              </and>
+            </condition>
+            <volume>
+                <factor>1</factor>
+            </volume>
+        </rwr>
+
+        <rwr>
+            <name>rwr-new2</name>
+            <path>Aircraft/f16/Sounds/rwr-new.wav</path>
+            <mode>once</mode>
+            <type>avionics</type>
+            <condition>
+              <and>
+                <property>/sim/current-view/internal</property>
+                <equals>
+                    <property>sound/rwr-new</property>
+                    <value>0</value>
+                </equals>
+              </and>
+            </condition>
+            <volume>
+                <factor>1</factor>
+            </volume>
+        </rwr>
+
+        <rwr>
+            <name>rwr-launch</name>
+            <path>Aircraft/f16/Sounds/rwr-launch.wav</path>
+            <mode>once</mode>
+            <type>avionics</type>
+            <condition>
+              <and>
+                <property>/sim/current-view/internal</property>
+                <not>
+                  <equals>
+                      <property>sound/rwr-launch</property>
+                      <value type="string"></value>
+                  </equals>
+                </not>
+              </and>
+            </condition>
+            <volume>
+                <factor>1</factor>
+            </volume>
+        </rwr>
+
     </fx>
  
 </PropertyList>

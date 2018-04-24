@@ -1068,6 +1068,10 @@
         <wingman-2 type="string"></wingman-2>
         <wingman-3 type="string"></wingman-3>
     </link16>
+    <sound>
+        <rwr-new type="bool">false</rwr-new>
+        <rwr-launch type="string"></rwr-launch>
+    </sound>
 
     <nasal>
         <hack>

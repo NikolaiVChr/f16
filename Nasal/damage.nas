@@ -172,6 +172,7 @@ var incoming_listener = func {
                 } else {
                   playIncomingSound("");
                 }
+                setLaunch(enemy);
                 return;
               }
             }
@@ -293,6 +294,15 @@ var playIncomingSound = func (clock) {
 
 var stopIncomingSound = func (clock) {
   setprop("sound/incoming"~clock, 0);
+}
+
+var setLaunch = func (e) {
+  setprop("sound/rwr-launch", e);
+  settimer(func {stopLaunch();},7);
+}
+
+var stopLaunch = func () {
+  setprop("sound/rwr-launch", "");
 }
 
 var callsign_struct = {};
