@@ -315,7 +315,7 @@
         </menubar>
         <multiplay>
             <generic>
-                <int n="2" type="int">1</int><!-- radar-standby -->
+                <int n="2" type="int">0</int><!-- radar-standby -->
                 <int n="10" type="int" alias="/controls/smoke"/>
                 <int n="11" type="int" alias="/sim/model/f16/smokewinderR1"/>
                 <int n="12" type="int" alias="/sim/model/f16/smokewinderR9"/>
@@ -525,7 +525,11 @@
                 <desc>Toggle radar standby mode</desc>
                 <binding>
                     <command>property-toggle</command>
-                    <property>instrumentation/radar/radar-standby</property>
+                    <property>sim/multiplay/generic/int[2]</property>
+                </binding>
+                <binding>
+                    <command>nasal</command>
+                    <script>screen.log.write("Radar "~(getprop("sim/multiplay/generic/int[2]")==1?"SILENT":"ACTIVE"), 0.5, 0.5, 1);</script>
                 </binding>
             </key>
             <key n="127">
@@ -1119,12 +1123,12 @@
         <f16_switches>
             <file>Aircraft/f16/Nasal/switches.nas</file>
         </f16_switches>
-        <radar>
+        <!--<radar>
             <file>Aircraft/Instruments-3d/radar2/radar2.nas</file>
         </radar>
         <radardist>
             <file>Aircraft/Instruments-3d/radardist/radardist.nas</file>
-        </radardist>
+        </radardist>-->
         <armament>
             <file>Aircraft/f16/Nasal/missile-code.nas</file><!-- must be before station-manager -->
         </armament>

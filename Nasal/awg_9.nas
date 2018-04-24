@@ -110,7 +110,7 @@ var az_scan = func() {
 
 	our_true_heading = OurHdg.getValue();
 	our_alt = OurAlt.getValue();
-    var radar_active = 1;
+    var radar_active = !getprop("sim/multiplay/generic/int[2]");
     var radar_mode = getprop("sim/multiplay/generic/int[17]");
     if (radar_mode == nil)
       radar_mode = 0;
@@ -144,15 +144,21 @@ var az_scan = func() {
         rwrList = [];
 		var raw_list = Mp.getChildren();
 
-if (active_u == nil or active_u.Callsign == nil or active_u.Callsign.getValue() == nil or active_u.Callsign.getValue() != active_u_callsign)
-{
-if (active_u != nil)
-#print("active_u callsign ",active_u.Callsign.getValue());
-#print("active_u ",active_u);
-#print("active_u_callsign ",active_u_callsign);
-#print("Active callsign becomes inactive");
-active_u = nil;armament.contact = active_u;
-}
+        if (active_u == nil or active_u.Callsign == nil or active_u.Callsign.getValue() == nil or active_u.Callsign.getValue() != active_u_callsign)
+        {
+            if (active_u != nil) {
+                #print("active_u callsign ",active_u.Callsign.getValue());
+                #print("active_u ",active_u);
+                #print("active_u_callsign ",active_u_callsign);
+                #print("Active callsign becomes inactive");
+                active_u = nil;
+                armament.contact = active_u;
+            }
+        }
+        if (radar_active == 0) {
+            active_u = nil;
+            armament.contact = active_u;
+        }
 		foreach( var c; raw_list )
         {
 			# FIXME: At that time a multiplayer node may have been deleted while still
@@ -164,8 +170,7 @@ active_u = nil;armament.contact = active_u;
 			}
 			var HaveRadarNode = c.getNode("radar");
 
-            if (!radar_active)
-              continue;
+            
             if(!isVisibleByTerrain.do(c)) {
                 continue;
             }
@@ -180,6 +185,8 @@ active_u = nil;armament.contact = active_u;
             {
                 rwrNew(u);
             }
+            if (!radar_active)
+              continue;
             if (u_rng != nil and (u_rng < range_radar2  and u.not_acting == 0 ) and rcs.inRadarRange(u, 75, 3.2))#APG68
             {
 #
@@ -227,7 +234,7 @@ active_u = nil;armament.contact = active_u;
                     if (their_radar_mode < 2 or (ecm_on and u.get_rdr_standby() == 0))
                       {
 #printf(" ** RWR on ",c.getNode("callsign"), " =",their_radar_mode);
-                        rwr(u);	# TODO: override display when alert.
+                        #rwr(u);	# TODO: override display when alert.
                     }
                 }
             } else {
@@ -259,10 +266,10 @@ active_u = nil;armament.contact = active_u;
         {
 			u.get_bearing();
 			u.get_heading();
-			var horizon = u.get_horizon( our_alt );
+			#var horizon = u.get_horizon( our_alt );
 			var u_rng = u.get_range();
 
-			if ( u_rng < horizon and radardist.radis(u.string, my_radarcorr))
+			if (1==1 or (u_rng < horizon and radardist.radis(u.string, my_radarcorr)))
             {
 
 # Compute mp position in our DDD display. (Bearing/horizontal + Range/Vertical).
@@ -1107,8 +1114,8 @@ var Target = {
                     #
                     # Closure rate is a doppler thing. see figure 4 http://www.tscm.com/doppler.pdf
                     # closing velocity = OwnshipVelocity * cos(target_bearing) + TargetVelocity*cos(ownship_bearing);
-                    var vec_ownship = vtrue_kts * math.cos( (bearing - our_hdg) / 57.29577950560105);
-                    var vec_target = tas * math.cos( (bearing_ - me.get_bearing()) / 57.29577950560105);
+                    var vec_ownship = vtrue_kts * math.cos( -(bearing - our_hdg) * D2R);
+                    var vec_target = tas * math.cos( -(bearing_ - me.get_heading()) * D2R);
                     return vec_ownship+vec_target;
                 }
             }
@@ -1215,7 +1222,7 @@ var rwrNew = func (u) {
       show = 1;
     } else {
       var rdrAct = u.propNode.getNode("sim/multiplay/generic/int[2]");
-      if (((rdrAct != nil and rdrAct.getValue()!=0) or rdrAct == nil) and math.abs(geo.normdeg180(deviation)) < 60) {
+      if (((rdrAct != nil and rdrAct.getValue()!=1) or rdrAct == nil) and math.abs(geo.normdeg180(deviation)) < 60) {
           # we detect its radar is pointed at us and active
           show = 1;
       }
