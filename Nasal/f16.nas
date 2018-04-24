@@ -149,12 +149,45 @@ var loop_flare = func {
     setprop("instrumentation/mfd-sit/inputs/wpt", 0);
     if (getprop("payload/armament/msg") == TRUE) {
       setprop("sim/rendering/redout/enabled", TRUE);
-      setprop("sim/rendering/redout/parameters/blackout-onset-g", 5);
-      setprop("sim/rendering/redout/parameters/blackout-complete-g", 9);
-      setprop("sim/rendering/redout/parameters/redout-onset-g", -2);
-      setprop("sim/rendering/redout/parameters/redout-complete-g", -4);
+      if (getprop("sim/rendering/redout/new")) {
+        newsuit();
+      } else {
+        oldsuit();
+      }
     }
 
     settimer(loop_flare, 0.10);
 };
+
+var oldsuit = func {
+  setprop("sim/rendering/redout/parameters/blackout-onset-g", 5);
+  setprop("sim/rendering/redout/parameters/blackout-complete-g", 9);
+  setprop("sim/rendering/redout/parameters/redout-onset-g", -1.5);
+  setprop("sim/rendering/redout/parameters/redout-complete-g", -4);
+  setprop("sim/rendering/redout/parameters/onset-blackout-sec", 300);
+  setprop("sim/rendering/redout/parameters/fast-blackout-sec", 10);
+  setprop("sim/rendering/redout/parameters/onset-redout-sec", 45);
+  setprop("sim/rendering/redout/parameters/fast-redout-sec", 3.5);
+  setprop("sim/rendering/redout/parameters/recover-fast-sec", 7);
+  setprop("sim/rendering/redout/parameters/recover-slow-sec", 15);
+}
+var newsuit = func {
+  setprop("sim/rendering/redout/parameters/blackout-onset-g", 5);
+  setprop("sim/rendering/redout/parameters/blackout-complete-g", 8);
+  setprop("sim/rendering/redout/parameters/redout-onset-g", -1.5);
+  setprop("sim/rendering/redout/parameters/redout-complete-g", -4);
+  setprop("sim/rendering/redout/parameters/onset-blackout-sec", 300);
+  setprop("sim/rendering/redout/parameters/fast-blackout-sec", 30);
+  setprop("sim/rendering/redout/parameters/onset-redout-sec", 45);
+  setprop("sim/rendering/redout/parameters/fast-redout-sec", 3.5);
+  setprop("sim/rendering/redout/parameters/recover-fast-sec", 7);
+  setprop("sim/rendering/redout/parameters/recover-slow-sec", 15);
+}
 loop_flare();
+setlistener("sim/rendering/redout/new", func {
+      if (getprop("sim/rendering/redout/new")) {
+        newsuit();
+      } else {
+        oldsuit();
+      }
+});

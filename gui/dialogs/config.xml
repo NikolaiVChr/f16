@@ -56,6 +56,21 @@
   <text><label>Warning this will also allow others to damage you.</label></text>
   <text><label>Note this will force blackout to be enabled.</label></text>
 
+  <group>
+    <layout>hbox</layout>
+    <text><label>1997 G-suit</label></text>
+    <checkbox>
+      <property>sim/rendering/redout/new</property>
+      <live>true</live>
+        <binding>
+          <command>property-toggle</command>
+          <property>sim/rendering/redout/new</property>
+        </binding>
+    </checkbox>
+  </group>
+  <text><label>Enable this to use a newer more capable G-suit.</label></text>
+  <text><label>Disabled means G-suit anno 1979.</label></text>
+
   <hrule/>
 
   <group>
