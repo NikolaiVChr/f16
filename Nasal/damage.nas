@@ -172,7 +172,7 @@ var incoming_listener = func {
                 } else {
                   playIncomingSound("");
                 }
-                setLaunch(enemy);
+                setLaunch(author);
                 return;
               }
             }
