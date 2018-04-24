@@ -23,7 +23,7 @@
 <!-- Station 5 -->
  <model>
   <name>VentralTank</name>
-  <path>Aircraft/f16/Models/Armament/External-stores/300G.ac</path>
+  <path>Aircraft/f16/Models/Armament/External-stores/300G.xml</path>
   <offsets>
    <x-m>0</x-m>
    <y-m>0</y-m>
@@ -35,7 +35,7 @@
 <!-- Station 4 -->
  <model>
   <name>LExtTank</name>
-  <path>Aircraft/f16/Models/Armament/External-stores/370G.ac</path>
+  <path>Aircraft/f16/Models/Armament/External-stores/370G.xml</path>
   <offsets>
    <x-m>-0.50</x-m>
    <y-m>-1.65</y-m>
@@ -47,7 +47,7 @@
 <!-- Station 6 -->
  <model>
   <name>RExtTank</name>
-  <path>Aircraft/f16/Models/Armament/External-stores/370G.ac</path>
+  <path>Aircraft/f16/Models/Armament/External-stores/370G.xml</path>
   <offsets>
    <x-m>-0.50</x-m>
    <y-m>1.65</y-m>

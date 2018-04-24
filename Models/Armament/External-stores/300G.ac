@@ -1,9 +1,9 @@
 AC3Db
-MATERIAL "ac3dmat1" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.835 0.835 0.835  shi 90  trans 0
+MATERIAL "fuselage2Mat" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.735 0.815 0.835  shi 60  trans 0
 OBJECT world
 kids 1
 OBJECT poly
-name "fuel_tank"
+name "fuel_tank300"
 loc 0.130988 -0.0394056 -0.000795722
 texture "../../f16.rgb"
 texrep 0.385 0.064
