@@ -143,6 +143,10 @@ var loop_flare = func {
         flareCount = -1;
     }
 
+    setprop("instrumentation/mfd-sit/inputs/tfc", 0);
+    setprop("instrumentation/mfd-sit/inputs/lh-vor-adf", 0);
+    setprop("instrumentation/mfd-sit/inputs/rh-vor-adf", 0);
+    setprop("instrumentation/mfd-sit/inputs/wpt", 0);
     if (getprop("payload/armament/msg") == TRUE) {
       setprop("sim/rendering/redout/enabled", TRUE);
       setprop("sim/rendering/redout/parameters/blackout-onset-g", 5);
