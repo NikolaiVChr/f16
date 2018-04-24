@@ -92,7 +92,7 @@ our_ac_name = "f16c";
 
 
 var az_scan = func() {
-
+    var doRWR = rand()>0.75;
 	# Antena az scan. Angular speed is constant but angle covered varies (120 or 60 deg ATM).
 	var fld_frac = az_fld / 120;                    # the screen (and the max scan angle) covers 120 deg, but we may use less (az_fld).
 	var fswp_spd = swp_spd / fld_frac;              # So the duration (fswp_spd) of a complete scan will depend on the fraction we use.
@@ -151,7 +151,6 @@ if (active_u != nil)
 #print("Active callsign becomes inactive");
 active_u = nil;armament.contact = active_u;
 }
-
 		foreach( var c; raw_list )
         {
 			# FIXME: At that time a multiplayer node may have been deleted while still
@@ -175,7 +174,7 @@ active_u = nil;armament.contact = active_u;
             u_ecm_type_num    = 0;
             var u_rng = u.get_range();
 
-            if (u_rng != nil and u_rng < 150 and (type == "multiplayer" or type == "tanker" or type == "aircraft" or type=="carrier" or type=="groundvehicle" or type=="ship")) 
+            if (doRWR == 1 and u_rng != nil and u_rng < 150 and (type == "multiplayer" or type == "tanker" or type == "aircraft" or type=="carrier" or type=="groundvehicle" or type=="ship")) 
             {
                 rwrNew(u);
             }
@@ -228,7 +227,6 @@ active_u = nil;armament.contact = active_u;
 #printf(" ** RWR on ",c.getNode("callsign"), " =",their_radar_mode);
                         rwr(u);	# TODO: override display when alert.
                     }
-                    rwrNew(u);
                 }
             } else {
                 u.set_display(0);
@@ -448,7 +446,7 @@ if(size(sorted_dist)>0)
         active_u = nil;armament.contact = active_u;
         #active_u_callsign = nil;
     }
-    if(rwrs.rwr != nil) {
+    if(rwrs.rwr != nil and doRWR == 1) {
         rwrs.rwr.update(rwrList);
     }
 }
@@ -1204,32 +1202,36 @@ var rwrNew = func (u) {
     var bearing = geo.aircraft_position().course_to(u.get_Coord());
     var trAct = u.propNode.getNode("instrumentation/transponder/transmitted-id");
     var show = 0;
-    var dev = 180;
-    if (trAct != nil and trAct.getValue() != -9999) {#hmm kinda of a hack
+    var heading = u.get_heading();  
+    var inv_bearing =  bearing+180;
+    var deviation = inv_bearing - heading;
+    var dev = math.abs(geo.normdeg180(deviation));
+    if(u.get_model()=="AI") {
+        show = 1;#non MP always has transponder on.
+    } elsif (trAct != nil and trAct.getValue() != -9999) {#hmm kinda of a hack
       # transponder on
       show = 1;
     } else {
-      var heading = u.get_heading();  
-      var inv_bearing =  bearing+180;
-      var deviation = inv_bearing - heading;
       var rdrAct = u.propNode.getNode("sim/multiplay/generic/int[2]");
       if (((rdrAct != nil and rdrAct.getValue()!=0) or rdrAct == nil) and math.abs(geo.normdeg180(deviation)) < 60) {
           # we detect its radar is pointed at us and active
           show = 1;
-          dev = math.abs(geo.normdeg180(deviation));
       }
     }
     if (show == 1) {
         var threat = 0;
-        if (u.get_model != "missile_frigate" and u.get_model != "buk-m2") {
+        if (u.get_model() != "missile_frigate" and u.get_model() != "buk-m2") {
             threat += ((180-dev)/180)*0.25;
         } elsif (u.get_model == "missile_frigate") {
             threat += 0.25;
         } else {
             threat += 0.25;
         }
-        var danger = u.get_model == "missile_frigate"?60:(u.get_model == "buk-m2"?30:50);
-        threat += ((danger-u.get_range())/danger)*1.5>0?((danger-u.get_range())/danger)*0.75:0;
+        var danger = u.get_model() == "missile_frigate"?60:(u.get_model() == "buk-m2"?30:50);
+        threat += ((danger-u.get_range())/danger)>0?((danger-u.get_range())/danger)*0.75:0;
+        #printf("%s threat:%.2f range:%d dev:%d", u.get_Callsign(),threat,u.get_range(),dev);
         append(rwrList,[u,threat]);
+    } else {
+        #printf("%s ----", u.get_Callsign());
     }
 }

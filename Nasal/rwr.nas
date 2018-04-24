@@ -146,6 +146,7 @@ RWRCanvas = {
         return rwr;
     },
     update: func (list) {
+        #printf("list %d", size(list));
         me.elapsed = getprop("sim/time/elapsed-sec");
         var sorter = func(a, b) {
             if(a[1] > b[1]){
@@ -161,6 +162,7 @@ RWRCanvas = {
         me.i = 0;
         me.hat = 0;
         me.newt = 0;
+        me.prio = 0;
         foreach(contact; sortedlist) {
             me.typ=me.lookupType[contact[0].get_model()];
             if (me.i > me.max_icons-1) {
@@ -185,9 +187,10 @@ RWRCanvas = {
             me.texts[me.i].setTranslation(me.x,me.y);
             me.texts[me.i].setText(me.typ);
             me.texts[me.i].show();
-            if (me.i == 0 and me.typ != me.AIRCRAFT_AI) {# 
+            if (me.prio == 0 and me.typ != me.AIRCRAFT_AI) {# 
                 me.symbol_priority.setTranslation(me.x,me.y);
                 me.symbol_priority.show();
+                me.prio = 1;
             }
             if (!(me.typ == me.AIRCRAFT_BUK or me.typ == me.AIRCRAFT_FRIGATE or me.typ == me.AIRCRAFT_AI)) {
                 me.symbol_hat[me.hat].setTranslation(me.x,me.y);
@@ -208,6 +211,7 @@ RWRCanvas = {
                 me.symbol_new[me.newt].update();
                 me.newt += 1;
             }
+            #printf("display %s %d",contact[0].get_Callsign(), me.threat);
             append(newList, [contact[0],popup]);
             me.i += 1;
         }
@@ -220,6 +224,9 @@ RWRCanvas = {
         }
         for (;me.newt<me.max_icons;me.newt+=1) {
             me.symbol_new[me.newt].hide();
+        }
+        if (me.prio == 0) {
+            me.symbol_priority.hide();
         }
     },
 };
