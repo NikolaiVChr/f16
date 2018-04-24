@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+
+<PropertyList include="f16-base.xml">
+
+ <sim>
+  <description>General Dynamics F-16C block 42</description>
+  <long-description>
+   The General Dynamics F-16C Fighting Falcon is a single-engine supersonic multirole fighter aircraft originally developed by General Dynamics (now Lockheed Martin) for the United States Air Force (USAF). Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
+   The Fighting Falcon has key features including a frameless bubble canopy for better visibility, side-mounted control stick to ease control while maneuvering, a seat reclined 30 degrees to reduce the effect of g-forces on the pilot, and the first use of a relaxed static stability/fly-by-wire flight control system which helps to make it a nimble aircraft.
+  </long-description>
+  <author>Erik Hofman, Pensacola, Martin "Pegasus" Schmitt, Richard Harrison, Nikolai V. Chr., J Maverick 16, Gary Brown, Jonathan Redpath</author>
+  <status>production</status>
+  <rating>
+    <FDM type="int">5</FDM>
+    <systems type="int">3</systems>
+    <cockpit type="int">4</cockpit>
+    <model type="int">5</model>
+  </rating>
+  <flight-model>jsb</flight-model>
+  <aero>f16b42</aero>
+  <variant-of>f16-block-52</variant-of>
+  <tags>
+      <tag>general-dynamics</tag>
+      <tag>1970s</tag>
+      <tag>f-16</tag>
+      <tag>low-wing</tag>
+      <tag>tricycle</tag>
+      <tag>retractable-gear</tag>
+      <tag>single-engine</tag>
+      <tag>fighter</tag>
+      <tag>hud</tag>
+      <tag>refuel</tag>
+      <tag>supersonic</tag>
+      <tag>prototype</tag>
+    </tags>
+
+  <startup>
+   <splash-texture>Aircraft/f16/f16-splash.png</splash-texture>
+  </startup>
+
+  <previews>
+  </previews>
+
+
+
+
+  <model>
+    <f16>
+    <dragchute type="bool">true</dragchute>
+    <link16 type="bool">true</link16>
+  </f16>
+   <path archive="y">Aircraft/f16/Models/F-16.xml</path>
+   <livery>
+    <file type="string"/>
+    <actype type="string">F-16C-52</actype>
+    <name type="string">USAF 89-2029/AV 510FS</name>
+    <owner type="string">USAF</owner>
+    <base type="string">Aircraft/f16/Models/Liveries/b30</base>
+   </livery>
+  </model>
+
+  <menubar>
+   <default>
+    <menu n="100">
+     <label>F-16</label>
+    </menu>
+   </default>
+  </menubar>
+
+  <help>
+   <title>General Dynamics F-16</title>
+  </help>
+
+ </sim>
+
+ <fdm>
+  <jsbsim>
+   <fcs>
+    <fly-by-wire>
+      <prototype type="bool">false</prototype>
+    </fly-by-wire>
+   </fcs>
+  </jsbsim>
+ </fdm>
+
+</PropertyList>
