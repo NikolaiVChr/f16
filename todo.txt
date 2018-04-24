@@ -35,7 +35,6 @@ Damage
 Radar
 -----
 Add doppler.
-Make RWR work.
 Make it 'see' difference between air,ground, arms and sea targets.
 
 Cockpit

@@ -155,6 +155,6 @@ var loop_flare = func {
       setprop("sim/rendering/redout/parameters/redout-complete-g", -4);
     }
 
-    settimer(loop_flare, 0.05);
+    settimer(loop_flare, 0.10);
 };
 loop_flare();

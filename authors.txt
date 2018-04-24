@@ -15,11 +15,12 @@ Martin "Pegasus" Schmitt
 - Cockpit textures
 
 Nikolai V. Chr.
-- F16 block 10 and YF-16 aerodynamics
+- F16 block 10, 20 and YF-16 aerodynamics
 - Fly-by-wire system for all variants except simplified.
 - Danish, Ghost Gray, Blue Bandit and prototype livery
-- Various changes to radar, MFD, HUD
-- Added Pylon and missile code
+- Various changes to radar, MFD, HUD, RWR
+- Added Pylon, counter-measures and missile code
+- Crash and stress code.
 - Splashes
 
 Richard Harrison
@@ -40,6 +41,9 @@ Justin Nicholson
 J Maverick 16
 - Adapted and added liveries by Gary Brown
 - Sound editing
+
+Fabien Barbier
+- Work on stores
 
 Alan Teeder
 - FDM consulting

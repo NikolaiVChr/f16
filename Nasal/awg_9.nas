@@ -777,14 +777,14 @@ var Target = {
                 var m = size(o); # how long is this string in the last element
                 var e = m - 4;   # - 4 chars .xml
                 obj.ModelType = substr(o, 0, e); # the string without .xml
-            }
-            else
+            } else {
                 obj.ModelType = "";
             }
-        else
-        {
+        } elsif (c.getNode("type") != nil) {
             obj.ModelType = c.getNode("type").getValue();
             if (obj.ModelType == nil) {obj.ModelType = "";}
+        } else {
+            obj.ModelType = "";
         }
 
 		obj.index = c.getIndex();
