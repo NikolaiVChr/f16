@@ -666,25 +666,22 @@ var range_control = func(n) {
 	if ( pilot_lock and ! we_are_bs ) { return }
 	var range_radar = RangeRadar2.getValue();
 	if ( n == 1 ) {
-		if ( range_radar == 5 ) { range_radar = 10 }
-		elsif ( range_radar == 10 ) { range_radar = 20 }
-		elsif ( range_radar == 20 ) { range_radar = 50 }
-		elsif ( range_radar == 50 ) { range_radar = 100 }
-		else { range_radar = 200 }
+		if ( range_radar == 10 ) { range_radar = 20 }
+		elsif ( range_radar == 20 ) { range_radar = 40 }
+		elsif ( range_radar == 40 ) { range_radar = 80 }
+		elsif ( range_radar == 80 ) { range_radar = 160 }
 	} elsif (n == -1 ) {
-		if ( range_radar == 200 ) { range_radar = 100 }
-		elsif ( range_radar == 100 ) { range_radar = 50 }
-		elsif ( range_radar == 50 ) { range_radar = 20 }
+		if ( range_radar == 160 ) { range_radar = 80 }
+		elsif ( range_radar == 80 ) { range_radar = 40 }
+		elsif ( range_radar == 40 ) { range_radar = 20 }
 		elsif ( range_radar == 20 ) { range_radar = 10 }
-		else { range_radar = 5  }
-	} elsif (n == 5 ) { range_radar = 5 }
-	elsif (n == 10 ) { range_radar = 10 }
+	} elsif (n == 10 ) { range_radar = 10 }
 	elsif (n == 20 ) { range_radar = 20 }
-	elsif (n == 50 ) { range_radar = 50 }
-	elsif (n == 100 ) { range_radar = 100 }
-	elsif (n == 200 ) { range_radar = 200 }
+	elsif (n == 40 ) { range_radar = 40 }
+	elsif (n == 80 ) { range_radar = 80 }
+	elsif (n == 160 ) { range_radar = 160 }
 	RangeRadar2.setValue(range_radar);
-    screen.log.write("Radar range "~range_radar~" NM", 0.5, 0.5, 0.5);
+    screen.log.write("Radar range "~range_radar~" NM", 0.5, 0.5, 1);
 }
 
 wcs_mode_sel = func(mode) {
