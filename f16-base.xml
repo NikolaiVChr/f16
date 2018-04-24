@@ -291,6 +291,14 @@
                           <dialog-name>f16config</dialog-name>
                         </binding>
                       </item>
+                    <item>
+                        <label>Link 16</label>
+                        <name>link16</name>
+                        <binding>
+                          <command>dialog-show</command>
+                          <dialog-name>link16</dialog-name>
+                        </binding>
+                    </item>
                 </menu>
                 <menu n="5">
                     <item n="10">
@@ -1055,6 +1063,11 @@
             </submodel>
         </submodels>
     </ai>
+    <link16>
+        <wingman-1 type="string"></wingman-1>
+        <wingman-2 type="string"></wingman-2>
+        <wingman-3 type="string"></wingman-3>
+    </link16>
 
     <nasal>
         <hack>
