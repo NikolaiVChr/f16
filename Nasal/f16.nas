@@ -196,6 +196,14 @@ var loop_flare = func {
 loop_flare();
 
 var repair = func {
+  if (getprop("payload/armament/msg")==1 and !getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+    screen.log.write("If you need to repair now, then use Menu-Location-SelectAirport instead.");
+  } else {
+    repair2();
+  }
+}
+
+var repair2 = func {
   screen.log.write("Repairing, standby..");
   crash.repair();
   if (getprop("engines/engine[0]/running")!=1) {
@@ -205,7 +213,7 @@ var repair = func {
   }
 }
 
-var repair2 = func {
+var repair3 = func {
   setprop("controls/engines/engine[0]/cutoff", 0);
   screen.log.write("Attempting engine restart, standby..");
 }
@@ -214,5 +222,5 @@ var re_init_listener = setlistener("/sim/signals/reinit", func {
   if (getprop("/consumables/fuel/tank[0]/level-norm")<0.5) {
     setprop("/consumables/fuel/tank[0]/level-norm", 0.55);
   }
-  repair();
+  repair2();
  }, 0, 0);
