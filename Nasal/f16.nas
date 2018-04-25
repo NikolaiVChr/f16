@@ -187,7 +187,10 @@ var loop_flare = func {
       } else {
         oldsuit();
       }
-      call(fgcommand('dialog-close', multiplayer.dialog.dialog.prop()),nil,var err= []);# props.Node.new({"dialog-name": "location-in-air"}));
+      call(func{fgcommand('dialog-close', multiplayer.dialog.dialog.prop())},nil,var err= []);# props.Node.new({"dialog-name": "location-in-air"}));
+      if (!getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+        call(func{fgcommand('dialog-close', props.Node.new({"dialog-name": "WeightAndFuel"}))},nil,var err2 = []);          
+      }      
     }
 
     settimer(loop_flare, 0.10);
