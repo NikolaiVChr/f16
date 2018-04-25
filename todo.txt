@@ -3,6 +3,10 @@
 #
 
 
+Model
+-----
+Fix canopy.png
+
 Hydraulics
 ----------
 Make it depend on a failurable serviceable property.
@@ -71,6 +75,9 @@ Better aircraft lighting system: cockpit, taxi/landing, anti-collision, formatio
 Flight controls
 ---------------
 
+GUI
+---
+GUI text when MPO
 
 A/P
 ---

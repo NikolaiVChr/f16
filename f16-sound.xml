@@ -288,6 +288,10 @@
    <condition>
       <and>
         <property>sim/current-view/internal</property>
+        <greater-than>
+              <property>fdm/jsbsim/velocities/vtrue-kts</property>
+              <value>20</value>
+          </greater-than>
         <or>
           <greater-than>
               <property>fdm/jsbsim/aero/stall-hyst-norm</property>
