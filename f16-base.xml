@@ -224,6 +224,9 @@
                 <position-norm type="double">0</position-norm>
                 <target-speed-fps type="double">0</target-speed-fps>
             </pushback>
+            <livery>
+                <folder type="string">Aircraft/f16/Models/Liveries</folder>
+           </livery>
         </model>
         <chase-distance-m type="double" archive="y">-35.0</chase-distance-m>
         <!-- original settings
@@ -317,6 +320,7 @@
         <multiplay>
             <generic>
                 <int n="2" type="int">0</int><!-- radar-standby -->
+                <int n="9" type="int" alias="/sim/variant-id"/>
                 <int n="10" type="int" alias="/controls/smoke"/>
                 <int n="11" type="int" alias="/sim/model/f16/smokewinderR1"/>
                 <int n="12" type="int" alias="/sim/model/f16/smokewinderR9"/>
@@ -1054,7 +1058,7 @@
         </armament>
     </payload>
 
-        <rotors>
+    <rotors>
         <main>
             <!--<rpm alias="/engines/engine/nozzle-pos-norm"/>-->
             <blade n="0">

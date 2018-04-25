@@ -10,8 +10,13 @@
 
  <nasal>
   <load>
-   var livery_update = aircraft.livery_update.new(
-        "Aircraft/f16/Models/Liveries", 10);
+    var self = cmdarg();
+    var id = self.getNode("sim/multiplay/generic/int[9]");
+    var folder = "Aircraft/f16/Models/Liveries";
+    if (id != nil and id.getValue() == 3) {
+      folder = "Aircraft/f16/Models/Liveries/Block30"
+    }
+   var livery_update = aircraft.livery_update.new(folder, 10);
   </load>
   <unload>
    livery_update.stop();
