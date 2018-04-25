@@ -440,6 +440,21 @@
                     <script>f16.HDDView();</script>
                 </binding>
             </key>
+             <key n="21">
+              <name>Ctrl-U</name>
+              <desc>[Cheat] Add 1000ft of emergency altitude</desc>
+              <binding>
+                    <command>nasal</command>
+                    <script>
+                        if (getprop("payload/armament/msg")==1) {
+                            screen.log.write("CTRL-U disabled at the moment.");
+                        } else {
+                            setprop("position/altitude-ft", getprop("position/altitude-ft")+1000);
+                            setprop("sim/startup/onground", 0);
+                        }
+                    </script>
+                </binding>
+             </key>
             <key n="19">
                 <name>CTRL-S</name>
                 <desc>View RWR</desc>
