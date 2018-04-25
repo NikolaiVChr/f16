@@ -1475,7 +1475,7 @@
  <!-- livery selection -->
  <animation>
   <type>material</type>
-  <object-name>ArresterHook</object-name>
+  <!--<object-name>ArresterHook</object-name>
   <object-name>CanopyFrame</object-name>
   <object-name>ExternalFrontGearDoor</object-name>
   <object-name>ExternalLeftMainDoor</object-name>
@@ -1529,7 +1529,8 @@
   <object-name>Poly</object-name>
   <object-name>Poly.001</object-name>
   <object-name>Poly.002</object-name>
-  <object-name>Turbine</object-name>
+  <object-name>Turbine</object-name>-->
+  <object-name>Fuselage</object-name>
   <object-name>LandingGear</object-name>
   <property-base>sim/model/livery</property-base>
   <texture-prop>texture</texture-prop>

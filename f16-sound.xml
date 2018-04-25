@@ -856,15 +856,13 @@
             <mode>once</mode>
             <type>avionics</type>
             <condition>
-              <and>
-                <property>/sim/current-view/internal</property>
                 <equals>
                     <property>sound/rwr-new</property>
                     <value>1</value>
                 </equals>
-              </and>
             </condition>
             <volume>
+                <property>/sim/current-view/internal</property>
                 <factor>1</factor>
             </volume>
         </rwr>
@@ -875,15 +873,13 @@
             <mode>once</mode>
             <type>avionics</type>
             <condition>
-              <and>
-                <property>/sim/current-view/internal</property>
                 <equals>
                     <property>sound/rwr-new</property>
                     <value>0</value>
                 </equals>
-              </and>
             </condition>
             <volume>
+                <property>/sim/current-view/internal</property>
                 <factor>1</factor>
             </volume>
         </rwr>
@@ -894,17 +890,15 @@
             <mode>once</mode>
             <type>avionics</type>
             <condition>
-              <and>
-                <property>/sim/current-view/internal</property>
                 <not>
                   <equals>
                       <property>sound/rwr-launch</property>
                       <value type="string"></value>
                   </equals>
                 </not>
-              </and>
             </condition>
             <volume>
+                <property>/sim/current-view/internal</property>
                 <factor>1</factor>
             </volume>
         </rwr>
