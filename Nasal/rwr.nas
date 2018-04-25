@@ -141,6 +141,8 @@ RWRCanvas = {
                 "buk-m2":                   rwr.AIRCRAFT_BUK,      #estimated with blender
                 "missile_frigate":          rwr.AIRCRAFT_FRIGATE,    #estimated with blender
                 "AI":                       rwr.AIRCRAFT_AI,
+                #misc aircraft:
+                "MiG-29":                   "29";
         };
         rwr.shownList = [];
         return rwr;
@@ -171,7 +173,7 @@ RWRCanvas = {
                 break;
             }
             if (me.typ == nil) {
-                continue;
+                me.typ = rwr.AIRCRAFT_UNKNOWN;
             }
             #print("show "~me.i~" "~me.typ~" "~contact[0].get_model()~"  "~contact[1]);
             me.threat = contact[1];#print(me.threat);
