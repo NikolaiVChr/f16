@@ -203,7 +203,8 @@ RWRCanvas = {
                 me.symbol_priority.show();
                 me.prio = 1;
             }
-            if (!(me.typ == me.AIRCRAFT_BUK or me.typ == me.AIRCRAFT_FRIGATE or me.typ == me.AIRCRAFT_AI)) {
+            if (!(me.typ == me.AIRCRAFT_BUK or me.typ == me.AIRCRAFT_FRIGATE) and contact[0].get_Speed()>60) {
+                #air-borne
                 me.symbol_hat[me.hat].setTranslation(me.x,me.y);
                 me.symbol_hat[me.hat].show();
                 me.hat += 1;
