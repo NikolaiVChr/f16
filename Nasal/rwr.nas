@@ -142,7 +142,8 @@ RWRCanvas = {
                 "missile_frigate":          rwr.AIRCRAFT_FRIGATE,    #estimated with blender
                 "AI":                       rwr.AIRCRAFT_AI,
                 #misc aircraft:
-                "MiG-29":                   "29";
+                "MiG-29":                   "29",
+                "ch53e":"53",
         };
         rwr.shownList = [];
         return rwr;
