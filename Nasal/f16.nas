@@ -187,6 +187,7 @@ var loop_flare = func {
       } else {
         oldsuit();
       }
+      call(fgcommand('dialog-close', multiplayer.dialog.dialog.prop()),nil,var err= []);# props.Node.new({"dialog-name": "location-in-air"}));
     }
 
     settimer(loop_flare, 0.10);

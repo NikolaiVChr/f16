@@ -55,6 +55,7 @@
   <text><label>cannon fire messages be visible over MP.</label></text>
   <text><label>Warning this will also allow others to damage you.</label></text>
   <text><label>Note this will force blackout to be enabled.</label></text>
+  <text><label>It will also remove the MP pilot-list.</label></text>
 
   <hrule/>
 
