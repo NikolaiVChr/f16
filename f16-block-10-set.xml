@@ -18,6 +18,7 @@
   </rating>
   <flight-model>jsb</flight-model>
   <aero>f16b10</aero>
+  <variant-id type="int">1</variant-id>
   <variant-of>f16-block-52</variant-of>
   <tags>
       <tag>general-dynamics</tag>

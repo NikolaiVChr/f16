@@ -16,7 +16,7 @@
     if (id != nil and id.getValue() == 3) {
       folder = "Aircraft/f16/Models/Liveries/Block30"
     }
-   var livery_update = aircraft.livery_update.new(folder, 10);
+    var livery_update = aircraft.livery_update.new(folder, 10);
   </load>
   <unload>
    livery_update.stop();

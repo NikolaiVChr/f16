@@ -18,6 +18,7 @@
   </rating>
   <flight-model>jsb</flight-model>
   <aero>f16b52</aero>
+  <variant-id type="int">5</variant-id>
   <tags>
       <tag>general-dynamics</tag>
       <tag>1970s</tag>
