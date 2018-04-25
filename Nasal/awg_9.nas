@@ -1238,14 +1238,17 @@ var rwrNew = func (u) {
     if (show == 1) {
         var threat = 0;
         if (u.get_model() != "missile_frigate" and u.get_model() != "buk-m2") {
-            threat += ((180-dev)/180)*0.25;
+            threat += ((180-dev)/180)*0.30;
         } elsif (u.get_model == "missile_frigate") {
-            threat += 0.25;
+            threat += 0.30;
         } else {
-            threat += 0.25;
+            threat += 0.30;
         }
-        var danger = u.get_model() == "missile_frigate"?60:(u.get_model() == "buk-m2"?30:50);
-        threat += ((danger-u.get_range())/danger)>0?((danger-u.get_range())/danger)*0.75:0;
+        var danger = u.get_model() == "missile_frigate"?75:(u.get_model() == "buk-m2"?35:50);
+        threat += ((danger-u.get_range())/danger)>0?((danger-u.get_range())/danger)*0.60:0;
+        var clo = u.get_closure_rate();
+        threat += clo>0?(clo/500)*0.10:0;
+        if (threat > 1) threat = 1;
         #printf("%s threat:%.2f range:%d dev:%d", u.get_Callsign(),threat,u.get_range(),dev);
         append(rwrList,[u,threat]);
     } else {
