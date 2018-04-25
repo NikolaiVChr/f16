@@ -45,6 +45,7 @@ Convert flat 2D panels into 3D.
 Make controls work for STORES CONFIG and STANDBY GAINS.
 Make warning light if having cat II or III stores while in cat I setting, or opposite.
 Enable masterarm, jettison, trims, ALT FLAPS and MFD contrast/brightness.
+Enable the intensity knob on RWR.
 
 Sound
 -----

@@ -369,7 +369,7 @@ var az_scan = func() {
         foreach (var u; sorted_dist) 
         {
 #            printf("TGT:: %5.2f (%5.2f) : %s ",u.get_range(), dist, u.Callsign.getValue());
-            if(u.Callsign.getValue() == active_u_callsign)
+            if(u.Callsign.getValue() == active_u_callsign and prv != nil)
             {
 #                if (prv != nil)
 #                    print("Located prev: ",prv.Callsign.getValue(), prv.get_range());
@@ -377,9 +377,12 @@ var az_scan = func() {
 #                    print("first in list");
                 break;
             }
+            if(u.get_display() == 0) {
+                continue;
+            }
             prv = u;
         }
-        if (prv == nil)
+        if (prv == nil and 1==0)
         {
             var idx = size(sorted_dist)-1;
             if (idx > 0)
@@ -391,7 +394,8 @@ var az_scan = func() {
 
         if (prv != nil)
         {
-            active_u = nearest_u = tmp_nearest_u = prv;armament.contact = active_u;
+            active_u = nearest_u = tmp_nearest_u = prv;
+            armament.contact = active_u;
             if (tmp_nearest_u.Callsign != nil)
                 active_u_callsign = tmp_nearest_u.Callsign.getValue();
             else
@@ -415,22 +419,25 @@ var az_scan = func() {
         foreach (var u; sorted_dist) 
         {
 #            printf("TGT:: %5.2f (%5.2f) : %s ",u.get_range(), dist, u.Callsign.getValue());
+            if(nxt == nil and u.get_display()) {
+                nxt = u;
+            }
             if(u.Callsign.getValue() == active_u_callsign)
             {
 #                print("Skipping active target ",active_u_callsign);
                 continue;
 }
-            if(u.get_range() > dist)
+            if(u.get_range() > dist and u.get_display())
             {
                 nxt = u;
 #                print("Located next ",nxt.Callsign.getValue(), nxt.get_range());
                 break;
             }
         }
-        if (nxt == nil)
+        if (nxt == nil and 1==0)
         {
-if(size(sorted_dist)>0)
-            nxt = sorted_dist[0];
+            if(size(sorted_dist)>0)
+                nxt = sorted_dist[0];
         }
 
         if (nxt != nil)
@@ -452,7 +459,8 @@ if(size(sorted_dist)>0)
     cnt += 0.05;
 
     if (!containsV(tgts_list, active_u)) {
-        active_u = nil;armament.contact = active_u;
+        active_u = nil;
+        armament.contact = active_u;
         #active_u_callsign = nil;
     }
     if(rwrs.rwr != nil and doRWR == 1) {
