@@ -274,7 +274,7 @@
                         <label>Repair</label>
                         <binding>
                             <command>nasal</command>
-                            <script>crash.repair();</script>
+                            <script>f16.repair();</script>
                         </binding>
                     </item>
                     <item>
@@ -540,6 +540,10 @@
                     <command>property-toggle</command>
                     <property>/fdm/jsbsim/fcs/fbw-override</property>
                 </binding>
+                <binding>
+                    <command>nasal</command>
+                    <script>screen.log.write("MPO "~(getprop("fdm/jsbsim/fcs/fbw-override")==1?"ON":"OFF"), 0.5, 0.5, 1);</script>
+                </binding>
             </key>
             <key n="114">
                 <name>r</name>
@@ -547,6 +551,10 @@
                 <binding>
                     <command>property-toggle</command>
                     <property>systems/refuel/serviceable</property>
+                </binding>
+                <binding>
+                    <command>nasal</command>
+                    <script>screen.log.write("Refuel door "~(getprop("systems/refuel/serviceable")==1?"OPEN":"CLOSED"), 0.5, 0.5, 1);</script>
                 </binding>
             </key>
             <key n="85">

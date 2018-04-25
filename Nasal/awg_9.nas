@@ -187,7 +187,7 @@ var az_scan = func() {
             }
             if (!radar_active)
               continue;
-            if (u_rng != nil and (u_rng < range_radar2  and u.not_acting == 0 ) and rcs.inRadarRange(u, 75, 3.2))#APG68
+            if (u_rng != nil and (u_rng < range_radar2  and u.not_acting == 0 ) and rcs.inRadarRange(u, 70, 3.2))#APG68/66
             {
 #
 # Decide if this mp item is a valid return (and within range).

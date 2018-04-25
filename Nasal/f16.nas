@@ -193,3 +193,25 @@ var loop_flare = func {
 };
 
 loop_flare();
+
+var repair = func {
+  screen.log.write("Repairing, standby..");
+  crash.repair();
+  if (getprop("engines/engine[0]/running")!=1) {
+    setprop("controls/engines/engine[0]/cutoff", 1);
+    setprop("controls/engines/engine[0]/starter", 1);
+    settimer(repair2, 10);
+  }
+}
+
+var repair2 = func {
+  setprop("controls/engines/engine[0]/cutoff", 0);
+  screen.log.write("Attempting engine restart, standby..");
+}
+
+var re_init_listener = setlistener("/sim/signals/reinit", func {
+  if (getprop("/consumables/fuel/tank[0]/level-norm")<0.5) {
+    setprop("/consumables/fuel/tank[0]/level-norm", 0.55);
+  }
+  repair();
+ }, 0, 0);
