@@ -220,17 +220,25 @@ var PFD_VSD =
         var w3_7 = sprintf("T %d",notification.vc_kts);
         var w2 = "";
         var designated = 0;
+        var has_seen_active = 0;
         foreach( u; awg_9.tgts_list ) 
         {
+            designated = 0;
+            if (u.get_display() == 0) {
+                continue;
+            }
             var callsign = "XX";
             if (u.Callsign != nil)
                 callsign = u.Callsign.getValue();
             var model = "XX";
             if (u.ModelType != "")
                 model = u.ModelType;
-            if (target_idx < me.max_symbols)
+            if (target_idx < me.max_symbols or has_seen_active == 0)
             {
-                tgt = me.tgt_symbols[target_idx];
+                if (target_idx < me.max_symbols)
+                    tgt = me.tgt_symbols[target_idx];
+                else
+                    tgt = me.tgt_symbols[0];
                 if (tgt != nil)
                 {
 #                    if (u.airbone and !designated)
@@ -239,19 +247,22 @@ var PFD_VSD =
                     if (awg_9.active_u != nil and awg_9.active_u.Callsign != nil and u.Callsign.getValue() == awg_9.active_u.Callsign.getValue())
 #if (u == awg_9.active_u)
                     {
+                        has_seen_active = 1;
                         designated = 1;
-                        tgt.setVisible(0);
+                        #tgt.setVisible(0);
                         tgt = me.tgt_symbols[0];
 #                    w2 = sprintf("%-4d", u.get_closure_rate());
 #                    w3_22 = sprintf("%3d-%1.1f %.5s %.4s",u.get_bearing(), u.get_range(), callsign, model);
 #                    var aspect = u.get_reciprocal_bearing()/10;
 #                   w1 = sprintf("%4d %2d%s %2d %d", u.get_TAS(), aspect, aspect < 180 ? "r" : "l", u.get_heading(), u.get_altitude());
+                    } elsif (target_idx >= me.max_symbols) {
+                        continue;
                     }
-                    tgt.setVisible(u.get_display());
+                    #tgt.setVisible(u.get_display());
                     var xc = u.get_deviation(heading);
                     var yc = -u.get_total_elevation(pitch);
                     tgt.setVisible(1);
-                    tgt.setTranslation (xc, yc);
+                    tgt.setTranslation (xc*1.55, yc*1.85);
                 }
             }
             if (!designated)
@@ -286,6 +297,8 @@ var PFD_VSD =
                 tgt.setVisible(0);
             }
         }
+        if(!has_seen_active)
+            me.tgt_symbols[0].hide();
         };        
         return obj;
     },
@@ -376,6 +389,9 @@ var MFD_Device =
         me.p_RDR.update = func {
             me.i=0;
             foreach(contact; awg_9.tgts_list) {
+                if (contact.get_display() == 0) {
+                    continue;
+                }
                 me.distPixels = contact.get_range()*(482/awg_9.range_radar2);
 
                 me.root.blep[me.i].setColor(1,1,1);
@@ -559,7 +575,11 @@ var MFD_Device =
 
         me.mfd_button_pushed = 0;
         me.setupMenus();
-        me.PFD.selectPage(me.p1_1);
+        if (me.model_element == "MFDimage1") {
+            me.PFD.selectPage(me.p_RDR);
+        } else {
+            me.PFD.selectPage(me.p_VSD);
+        }
     },
 
     # Add the menus to each page. 
