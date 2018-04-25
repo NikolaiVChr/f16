@@ -251,6 +251,7 @@
         <rendering>
             <redout>
                 <enabled type="bool" userarchive="y">true</enabled>
+                <new type="bool">false</new>
                 <parameters>
                     <blackout-onset-g type="double">5</blackout-onset-g>
                     <blackout-complete-g type="double">9</blackout-complete-g>
