@@ -123,7 +123,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_MIRAGE = "20";
         rwr.AIRCRAFT_FALCON = "16";
         rwr.AIRCRAFT_FRIGATE = "SH";
-        rwr.AIRCRAFT_UNKNOWN = "00";
+        rwr.AIRCRAFT_UNKNOWN = "UK";
         rwr.AIRCRAFT_AI = "AI";
         rwr.lookupType = {
                 "f-14b":                    rwr.AIRCRAFT_TOMCAT,     #guess
@@ -141,9 +141,15 @@ RWRCanvas = {
                 "buk-m2":                   rwr.AIRCRAFT_BUK,      #estimated with blender
                 "missile_frigate":          rwr.AIRCRAFT_FRIGATE,    #estimated with blender
                 "AI":                       rwr.AIRCRAFT_AI,
-                #misc aircraft:
-                "MiG-29":                   "29",
+                #misc threatening aircraft:
+                "MiG-29":"29",
                 "ch53e":"53",
+                "MQ-9":"9",
+                "QF-4E":"F4",
+                "B1-B":"B1",
+                "A-10":"10",
+                "Typhoon":"EF",
+                "f16":"16",
         };
         rwr.shownList = [];
         return rwr;
@@ -179,7 +185,7 @@ RWRCanvas = {
             #print("show "~me.i~" "~me.typ~" "~contact[0].get_model()~"  "~contact[1]);
             me.threat = contact[1];#print(me.threat);
             
-            if (me.threat > 0.5) {
+            if (me.threat > 0.5 and me.typ != me.AIRCRAFT_UNKNOWN) {
                 me.threat = me.inner_radius;# inner circle
             } elsif (me.threat > 0) {
                 me.threat = me.outer_radius;# outer circle
@@ -192,7 +198,7 @@ RWRCanvas = {
             me.texts[me.i].setTranslation(me.x,me.y);
             me.texts[me.i].setText(me.typ);
             me.texts[me.i].show();
-            if (me.prio == 0 and me.typ != me.AIRCRAFT_AI) {# 
+            if (me.prio == 0 and me.typ != me.AIRCRAFT_AI and me.typ != me.AIRCRAFT_UNKNOWN) {# 
                 me.symbol_priority.setTranslation(me.x,me.y);
                 me.symbol_priority.show();
                 me.prio = 1;
