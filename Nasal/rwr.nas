@@ -123,7 +123,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_MIRAGE = "20";
         rwr.AIRCRAFT_FALCON = "16";
         rwr.AIRCRAFT_FRIGATE = "SH";
-        rwr.AIRCRAFT_UNKNOWN = "UK";
+        rwr.AIRCRAFT_UNKNOWN = "U";
         rwr.AIRCRAFT_AI = "AI";
         rwr.lookupType = {
                 "f-14b":                    rwr.AIRCRAFT_TOMCAT,     #guess
@@ -166,15 +166,15 @@ RWRCanvas = {
                 return 1; # A should after b in the returned vector
             }
         }
-        var sortedlist = sort(list, sorter);
-        var newList = [];
+        me.sortedlist = sort(list, sorter);
+        me.newList = [];
         me.i = 0;
         me.hat = 0;
         me.newt = 0;
         me.prio = 0;
         me.launch = 0;
-        var newsound = 0;
-        foreach(contact; sortedlist) {
+        me.newsound = 0;
+        foreach(contact; me.sortedlist) {
             me.typ=me.lookupType[contact[0].get_model()];
             if (me.i > me.max_icons-1) {
                 break;
@@ -185,7 +185,7 @@ RWRCanvas = {
             #print("show "~me.i~" "~me.typ~" "~contact[0].get_model()~"  "~contact[1]);
             me.threat = contact[1];#print(me.threat);
             
-            if (me.threat > 0.5 and me.typ != me.AIRCRAFT_UNKNOWN) {
+            if (me.threat > 0.5 and me.typ != me.AIRCRAFT_UNKNOWN and me.typ != me.AIRCRAFT_AI) {
                 me.threat = me.inner_radius;# inner circle
             } elsif (me.threat > 0) {
                 me.threat = me.outer_radius;# outer circle
@@ -222,7 +222,7 @@ RWRCanvas = {
                 }
             }
             if (popup == me.elapsed) {
-                newsound = 1;
+                me.newsound = 1;
             }
             if (popup > me.elapsed-me.fadeTime) {
                 me.symbol_new[me.newt].setTranslation(me.x,me.y);
@@ -231,11 +231,11 @@ RWRCanvas = {
                 me.newt += 1;
             }
             #printf("display %s %d",contact[0].get_Callsign(), me.threat);
-            append(newList, [contact[0],popup]);
+            append(me.newList, [contact[0],popup]);
             me.i += 1;
         }
-        me.shownList = newList;
-        if (newsound == 1) setprop("sound/rwr-new", !getprop("sound/rwr-new"));
+        me.shownList = me.newList;
+        if (me.newsound == 1) setprop("sound/rwr-new", !getprop("sound/rwr-new"));
         for (;me.i<me.max_icons;me.i+=1) {
             me.texts[me.i].hide();
         }
