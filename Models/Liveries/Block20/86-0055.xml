@@ -2,14 +2,14 @@
 
 <PropertyList>
  <sim>
-  <model>
+  <model> 
    <livery>
-    <name type="string">RNLAF J-015 Demo</name>
-    <texture>Liveries/rnlaf/OrangeLion.jpg</texture>
+    <name type="string">RNLAF, J-055 "Demo Scheme"</name>
+    <texture>Liveries/Block20/86-0055.png</texture>
     <owner type="string">RNLAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/yf/yf16-transp.png</texture>
+    <texture>Liveries/rdaf/E-602_trans.png</texture>
    </livery-logo>
   </model>
  </sim>

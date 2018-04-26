@@ -4,12 +4,12 @@
  <sim>
   <model>
    <livery> 
-    <name type="string">RNLAF J-008 311 Squadron</name>
-    <texture>Liveries/rnlaf/f16klu.png</texture>
+    <name type="string">RNLAF 311 Sqn, J-008</name>
+    <texture>Liveries/Block20/88-0008.png</texture>
     <owner type="string">RNLAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/rnlaf/J-008_311sqn.png</texture>
+    <texture>Liveries/Block20/J-008.png</texture>
    </livery-logo>
   </model>
  </sim>
