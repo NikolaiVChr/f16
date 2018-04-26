@@ -2,8 +2,13 @@ RWRCanvas = {
     new: func (root, center, diameter) {
         var rwr = {parents: [RWRCanvas]};
         rwr.max_icons = 12;
-        rwr.inner_radius = diameter/6;
-        rwr.outer_radius = diameter/3;
+        var radius = diameter/2;
+        rwr.inner_radius = radius*0.30;
+        rwr.outer_radius = radius*0.75;
+        rwr.circle_radius_big = radius*0.5;
+        rwr.circle_radius_small = radius*0.125;
+        var tick_long = radius*0.25;
+        var tick_short = tick_long*0.5;
         var font = int(0.08*diameter);
         var colorG = [0.3,1,0.3];
         var colorLG = [0,0.5,0];
@@ -11,22 +16,60 @@ RWRCanvas = {
         rwr.rootCenter = root.createChild("group")
                 .setTranslation(center[0],center[1]);
         
+#        root.createChild("path")
+#           .moveTo(0, diameter/2)
+#           .arcSmallCW(diameter/2, diameter/2, 0, diameter, 0)
+#           .arcSmallCW(diameter/2, diameter/2, 0, -diameter, 0)
+#           .setStrokeLineWidth(1)
+#           .setColor(1, 1, 1);
         root.createChild("path")
-           .moveTo(0, diameter/2)
-           .arcSmallCW(diameter/2, diameter/2, 0, diameter, 0)
-           .arcSmallCW(diameter/2, diameter/2, 0, -diameter, 0)
-           .setStrokeLineWidth(1)
-           .setColor(1, 1, 1);
-        root.createChild("path")
-           .moveTo(diameter/2-rwr.inner_radius, diameter/2)
-           .arcSmallCW(rwr.inner_radius, rwr.inner_radius, 0, rwr.inner_radius*2, 0)
-           .arcSmallCW(rwr.inner_radius, rwr.inner_radius, 0, -rwr.inner_radius*2, 0)
+           .moveTo(diameter/2-rwr.circle_radius_small, diameter/2)
+           .arcSmallCW(rwr.circle_radius_small, rwr.circle_radius_small, 0, rwr.circle_radius_small*2, 0)
+           .arcSmallCW(rwr.circle_radius_small, rwr.circle_radius_small, 0, -rwr.circle_radius_small*2, 0)
            .setStrokeLineWidth(1)
            .setColor(colorLG);
         root.createChild("path")
-           .moveTo(diameter/2-rwr.outer_radius, diameter/2)
-           .arcSmallCW(rwr.outer_radius, rwr.outer_radius, 0, rwr.outer_radius*2, 0)
-           .arcSmallCW(rwr.outer_radius, rwr.outer_radius, 0, -rwr.outer_radius*2, 0)
+           .moveTo(diameter/2-rwr.circle_radius_big, diameter/2)
+           .arcSmallCW(rwr.circle_radius_big, rwr.circle_radius_big, 0, rwr.circle_radius_big*2, 0)
+           .arcSmallCW(rwr.circle_radius_big, rwr.circle_radius_big, 0, -rwr.circle_radius_big*2, 0)
+           .setStrokeLineWidth(1)
+           .setColor(colorLG);
+        root.createChild("path")
+           .moveTo(diameter/2-rwr.circle_radius_small/2, diameter/2)
+           .lineTo(diameter/2+rwr.circle_radius_small/2, diameter/2)
+           .moveTo(diameter/2, diameter/2-rwr.circle_radius_small/2)
+           .lineTo(diameter/2, diameter/2+rwr.circle_radius_small/2)
+           .setStrokeLineWidth(1)
+           .setColor(colorLG);
+        root.createChild("path")
+           .moveTo(0,diameter*0.5)
+           .horiz(tick_long)
+           .moveTo(diameter,diameter*0.5)
+           .horiz(-tick_long)
+           .moveTo(diameter*0.5,0)
+           .vert(tick_long)
+           .moveTo(diameter*0.5,diameter)
+           .vert(-tick_long)
+           .setStrokeLineWidth(1)
+           .setColor(colorLG);
+        rwr.rootCenter.createChild("path")
+           .moveTo(radius*math.cos(30*D2R),radius*math.sin(-30*D2R))
+           .lineTo((radius-tick_short)*math.cos(30*D2R),(radius-tick_short)*math.sin(-30*D2R))
+           .moveTo(radius*math.cos(60*D2R),radius*math.sin(-60*D2R))
+           .lineTo((radius-tick_short)*math.cos(60*D2R),(radius-tick_short)*math.sin(-60*D2R))
+           .moveTo(radius*math.cos(30*D2R),radius*math.sin(30*D2R))
+           .lineTo((radius-tick_short)*math.cos(30*D2R),(radius-tick_short)*math.sin(30*D2R))
+           .moveTo(radius*math.cos(60*D2R),radius*math.sin(60*D2R))
+           .lineTo((radius-tick_short)*math.cos(60*D2R),(radius-tick_short)*math.sin(60*D2R))
+
+           .moveTo(-radius*math.cos(30*D2R),radius*math.sin(-30*D2R))
+           .lineTo(-(radius-tick_short)*math.cos(30*D2R),(radius-tick_short)*math.sin(-30*D2R))
+           .moveTo(-radius*math.cos(60*D2R),radius*math.sin(-60*D2R))
+           .lineTo(-(radius-tick_short)*math.cos(60*D2R),(radius-tick_short)*math.sin(-60*D2R))
+           .moveTo(-radius*math.cos(30*D2R),radius*math.sin(30*D2R))
+           .lineTo(-(radius-tick_short)*math.cos(30*D2R),(radius-tick_short)*math.sin(30*D2R))
+           .moveTo(-radius*math.cos(60*D2R),radius*math.sin(60*D2R))
+           .lineTo(-(radius-tick_short)*math.cos(60*D2R),(radius-tick_short)*math.sin(60*D2R))
            .setStrokeLineWidth(1)
            .setColor(colorLG);
         rwr.texts = setsize([],rwr.max_icons);
