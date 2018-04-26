@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model> 
+   <livery>
+    <name type="string">IAF 140 Sqn, "Golden Eagles"</name>
+    <texture>Liveries/Block10/78-0351.png</texture>
+    <owner type="string">IAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/rdaf/E-602_trans.png</texture>
+   </livery-logo>
+  </model>
+ </sim>
+</PropertyList>

@@ -4,8 +4,8 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">USAF 354FW, 18AS AK "Blue Bandit"</name>
-    <texture>Liveries/Block30/AF86-0298.png</texture>
+    <name type="string">USAF 57FW, 64AS WA "Aggressor"</name>
+    <texture>Liveries/Block30/86-0269.png</texture>
     <owner type="string">USAF</owner>
    </livery>
    <livery-logo>

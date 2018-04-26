@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model> 
+   <livery>
+    <name type="string">USAF 354FW, 18AS AK "Blue Bandit"</name>
+    <texture>Liveries/Block30/86-0298.png</texture>
+    <owner type="string">USAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/rdaf/E-602_trans.png</texture>
+   </livery-logo>
+  </model>
+ </sim>
+</PropertyList>
