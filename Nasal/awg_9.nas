@@ -1223,9 +1223,9 @@ var rwrNew = func (u) {
     var inv_bearing =  bearing+180;
     var deviation = inv_bearing - heading;
     var dev = math.abs(geo.normdeg180(deviation));
-    if(u.get_model()=="AI") {
+    if(u.get_model()=="AI" and u.get_range() < 55) {
         show = 1;#non MP always has transponder on.
-    } elsif (trAct != nil and trAct.getValue() != -9999) {#hmm kinda of a hack
+    } elsif (trAct != nil and trAct.getValue() != -9999 and u.get_range() < 55) {
       # transponder on
       show = 1;
     } else {
