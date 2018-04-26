@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model> 
+   <livery>
+    <name type="string">USAF 86TFW, 512TFS RS "Dragons"</name>
+    <texture>Liveries/Block30/85-1412.png</texture>
+    <owner type="string">USAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/rdaf/E-602_trans.png</texture>
+   </livery-logo>
+  </model>
+ </sim>
+</PropertyList>
