@@ -459,6 +459,34 @@
                     </script>
                 </binding>
              </key>
+             <key n="97">
+              <name>a</name>
+              <desc>Increase speed-up</desc>
+                <binding>
+                    <command>nasal</command>
+                    <script>
+                        if (getprop("payload/armament/msg")==1) {
+                            screen.log.write("Speed-up disabled at the moment.");
+                        } else {
+                            controls.speedup(1);
+                        }
+                    </script>
+                </binding>
+             </key>
+              <key n="65">
+              <name>A</name>
+              <desc>Decrease speed-up</desc>
+                <binding>
+                    <command>nasal</command>
+                    <script>
+                        if (getprop("payload/armament/msg")==1) {
+                            screen.log.write("Speed-down disabled at the moment.");
+                        } else {
+                            controls.speedup(-1);
+                        }
+                    </script>
+                </binding>
+             </key>
             <key n="19">
                 <name>CTRL-S</name>
                 <desc>View RWR</desc>
