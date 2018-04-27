@@ -202,9 +202,10 @@ loop_flare();
 
 var medium = {
   loop: func {
-    if (getprop("velocities/speed-east-fps") != 0 or getprop("velocities/speed-north-fps") != 0 and getprop("fdm/jsbsim/gear/unit[0]/WOW") != 1 and (
-         (getprop("fdm/jsbsim/gear/gear-pos-norm")!=1)
-      or (getprop("fdm/jsbsim/gear/gear-pos-norm")==1 and getprop("/position/altitude-agl-ft") > 164)
+    if ((getprop("velocities/speed-east-fps") != 0 or getprop("velocities/speed-north-fps") != 0) and getprop("fdm/jsbsim/gear/unit[0]/WOW") != 1 and
+          getprop("fdm/jsbsim/gear/unit[1]/WOW") != 1 and (
+         (getprop("fdm/jsbsim/gear/gear-pos-norm")<1)
+      or (getprop("fdm/jsbsim/gear/gear-pos-norm")>0.99 and getprop("/position/altitude-agl-ft") > 164)
       )) {
       me.start = geo.aircraft_position();
 
