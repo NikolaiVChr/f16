@@ -312,6 +312,29 @@
    </condition>
   </stall>
 
+  <impact>
+   <name>pullUp</name>
+   <path>Aircraft/f16/Sounds/warning.wav</path>
+   <mode>looped</mode>
+   <type>avionics</type>
+   <condition>
+      <and>
+          <greater-than>
+              <property>instrumentation/radar/time-till-crash</property>
+              <value>0</value>
+          </greater-than>
+          <less-than>
+              <property>instrumentation/radar/time-till-crash</property>
+              <value>10</value>
+          </less-than>
+      </and>
+   </condition>
+   <volume>
+        <property>sim/current-view/internal</property>
+        <factor>1</factor>
+    </volume>
+  </impact>
+
   <cannon>
    <name>cannon</name>
    <path>Sounds/gatling.wav</path>

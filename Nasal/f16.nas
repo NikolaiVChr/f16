@@ -200,6 +200,57 @@ var loop_flare = func {
 
 loop_flare();
 
+var medium = {
+  loop: func {
+    if (getprop("velocities/speed-east-fps") != 0 or getprop("velocities/speed-north-fps") != 0 and getprop("fdm/jsbsim/gear/unit[0]/WOW") != 1 and (
+         (getprop("fdm/jsbsim/gear/gear-pos-norm")!=1)
+      or (getprop("fdm/jsbsim/gear/gear-pos-norm")==1 and getprop("/position/altitude-agl-ft") > 164)
+      )) {
+      me.start = geo.aircraft_position();
+
+      me.speed_down_fps  = getprop("velocities/speed-down-fps");
+      me.speed_east_fps  = getprop("velocities/speed-east-fps");
+      me.speed_north_fps = getprop("velocities/speed-north-fps");
+      me.speed_horz_fps  = math.sqrt((me.speed_east_fps*me.speed_east_fps)+(me.speed_north_fps*me.speed_north_fps));
+      me.speed_fps       = math.sqrt((me.speed_horz_fps*me.speed_horz_fps)+(me.speed_down_fps*me.speed_down_fps));
+      me.heading = 0;
+      if (me.speed_north_fps >= 0) {
+        me.heading -= math.acos(me.speed_east_fps/me.speed_horz_fps)*R2D - 90;
+      } else {
+        me.heading -= -math.acos(me.speed_east_fps/me.speed_horz_fps)*R2D - 90;
+      }
+      me.heading = geo.normdeg(me.heading);
+      #cos(90-heading)*horz = east
+      #acos(east/horz) - 90 = -head
+
+      me.end = geo.Coord.new(me.start);
+      me.end.apply_course_distance(me.heading, me.speed_horz_fps*FT2M);
+      me.end.set_alt(me.end.alt()-me.speed_down_fps*FT2M);
+
+      me.dir_x = me.end.x()-me.start.x();
+      me.dir_y = me.end.y()-me.start.y();
+      me.dir_z = me.end.z()-me.start.z();
+      me.xyz = {"x":me.start.x(),  "y":me.start.y(),  "z":me.start.z()};
+      me.dir = {"x":me.dir_x,      "y":me.dir_y,      "z":me.dir_z};
+
+      me.geod = get_cart_ground_intersection(me.xyz, me.dir);
+      if (me.geod != nil) {
+        me.end.set_latlon(me.geod.lat, me.geod.lon, me.geod.elevation);
+        me.dist = me.start.direct_distance_to(me.end)*M2FT;
+        me.time = me.dist / me.speed_fps;
+        setprop("instrumentation/radar/time-till-crash", me.time);
+      } else {
+        setprop("instrumentation/radar/time-till-crash", 15);
+      }
+    } else {
+      setprop("instrumentation/radar/time-till-crash", 15);
+    }
+    settimer(func {me.loop()},0.5);
+  },
+};
+
+medium.loop();
+
 var repair = func {
   if (getprop("payload/armament/msg")==1 and !getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
     screen.log.write("If you need to repair now, then use Menu-Location-SelectAirport instead.");
