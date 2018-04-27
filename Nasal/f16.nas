@@ -279,7 +279,7 @@ var repair3 = func {
 }
 
 var re_init_listener = setlistener("/sim/signals/reinit", func {
-  getprop("/controls/gear/gear-down",1);
+  setprop("/controls/gear/gear-down",1);
   if (getprop("/consumables/fuel/tank[0]/level-norm")<0.5) {
     setprop("/consumables/fuel/tank[0]/level-norm", 0.55);
   }
