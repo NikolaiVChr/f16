@@ -102,8 +102,16 @@ var rtExec_loop = func
     emesary.GlobalTransmitter.NotifyAll(frameNotification);
     #    
     frameNotification.FrameCount = frameNotification.FrameCount + 1;
-    #    
-    execTimer.restart(0);
+    #
+    if (frame_rate < 5) {
+        execTimer.restart(0.35);
+    } elsif (frame_rate < 10) {
+        execTimer.restart(0.20);
+    } elsif (frame_rate < 15) {
+        execTimer.restart(0.10);
+    } else {
+        execTimer.restart(0.05);
+    }
 }
 
 var execTimer = maketimer(1, rtExec_loop);
