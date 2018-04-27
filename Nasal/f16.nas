@@ -266,7 +266,7 @@ var repair2 = func {
   if (getprop("engines/engine[0]/running")!=1) {
     setprop("controls/engines/engine[0]/cutoff", 1);
     setprop("controls/engines/engine[0]/starter", 1);
-    settimer(repair2, 10);
+    settimer(repair3, 10);
   } else {
     screen.log.write("Done.");
   }
