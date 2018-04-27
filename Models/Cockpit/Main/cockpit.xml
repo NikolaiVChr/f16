@@ -325,10 +325,10 @@
    <pitch-deg>-15</pitch-deg><!-- needs verification! -->
   </offsets>
   <condition>
-   <equals>
+   <less-than>
     <property>sim/variant-id</property>
-    <value>2</value>
-   </equals>
+    <value>3</value>
+   </less-than>
   </condition>
  </model>
 
@@ -343,10 +343,10 @@
   </offsets>
   <condition>
     <not>
-   <equals>
+   <less-than>
     <property>sim/variant-id</property>
-    <value>2</value>
-   </equals>
+    <value>3</value>
+   </less-than>
  </not>
   </condition>
  </model>
