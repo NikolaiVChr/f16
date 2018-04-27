@@ -103,6 +103,15 @@ var F16_HUD = {
                 print("HUD: could not locate ",name);
         }
 
+        obj.custom = obj.canvas.createGroup();
+        obj.flyup = obj.svg.createChild("text")
+                .setText("FLYUP")
+                .setTranslation(sx*0.5*0.695633,sy*0.333)
+                .setAlignment("center-center")
+                .setColor(0,1,0)
+                .setFontSize(15, 1.0)
+                .hide();
+
 		return obj;
 	},
 #
@@ -212,6 +221,12 @@ var F16_HUD = {
         me.ladder.setTranslation (0.0, hdp.pitch * pitch_factor+pitch_offset);                                           
         me.ladder.setCenter (me.ladder_center[0], me.ladder_center[1] - hdp.pitch * pitch_factor);
         me.ladder.setRotation (roll_rad);
+        me.ttc = getprop("instrumentation/radar/time-till-crash");
+        if (me.ttc != nil and me.ttc>0 and me.ttc<10) {
+            me.flyup.show();
+        } else {
+            me.flyup.hide();
+        }
   
 # velocity vector
         #340,260
