@@ -942,39 +942,41 @@
             <MP-lon type="string">rotors/main/blade[1]/flap-deg</MP-lon>
             <MP-alt type="string">rotors/main/blade[2]/flap-deg</MP-alt>
             <aim-9>
-                <guidance type="string">heat</guidance>
-                <navigation type="string">APN</navigation>
-                <class type="string">A</class>
+                <sound-on-off type="bool">false</sound-on-off>
+                <sound-fire-on-off type="bool">false</sound-fire-on-off>
+                <sound-volume type="double">0.0</sound-volume>
                 <vol-search type="double">0.075</vol-search>
                 <vol-track type="double">0.25</vol-track>
                 <vol-track-weak type="double">0.175</vol-track-weak>
-                <max-fire-range-nm type="int">9.7</max-fire-range-nm>                <!--FIXME: up to 10-16 MN with best conditions-->
+                <guidance type="string">heat</guidance>                       <!-- heat, radar or semi-radar -->
+                <navigation type="string">APN</navigation>
+                <all-aspect type="bool">true</all-aspect>                     <!-- all or rear-only -->
+                <max-fire-range-nm type="double">9.7</max-fire-range-nm> <!-- source -->
+                <FCS-field-deg type="int">55</FCS-field-deg>                              <!-- source -->
+                <seeker-field-deg type="int">82</seeker-field-deg>                 <!-- source: 40 deg gyro + 1 deg searcher-beam-width -->
+                <max-g type="int">32</max-g>                                  <!-- source, another say 35 -->
+                <thrust-lbf-stage-1 type="double">2660</thrust-lbf-stage-1><!-- authentic -->
+                <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>    <!-- authentic -->
+                <stage-1-duration-sec type="double">5.23</stage-1-duration-sec><!-- authentic -->
+                <stage-2-duration-sec type="double">0.0</stage-2-duration-sec><!-- authentic -->
+                <weight-launch-lbs type="double">186.2</weight-launch-lbs>      <!-- authentic -->
+                <weight-warhead-lbs type="double">20.8</weight-warhead-lbs>   <!-- authentic -->
+                <weight-fuel-lbm type="double">60.4</weight-fuel-lbm>           <!-- guess -->
+                <drag-coeff type="double">0.55</drag-coeff>                   <!-- guesstimate -->
+                <cross-section-sqft type="double">0.143</cross-section-sqft>                    <!-- sq ft -->
+                <arming-time-sec type="double">1.4</arming-time-sec>          <!-- guess -->
+                <min-speed-for-guiding-mach type="double">0.8</min-speed-for-guiding-mach><!-- guess -->
+                <self-destruct-time-sec type="double">43</self-destruct-time-sec>         <!-- guess -->
+                <seeker-angular-speed-dps type="double">30</seeker-angular-speed-dps><!-- deg/sec guess-->
+                <lock-on-sun-deg type="double">5</lock-on-sun-deg>
+                <loft-altitude type="int">0</loft-altitude>
                 <min-fire-range-nm type="double">0.2</min-fire-range-nm>
-                <FCS-field-deg type="int">55</FCS-field-deg>
-                <seeker-field-deg type="int">82</seeker-field-deg>                <!-- source: 40 deg gyro + 1 deg searcher-beam-width -->
-                <max-g type="int">32</max-g>                <!-- In turn -->
-                <thrust-lbf-stage-1 type="double">2660</thrust-lbf-stage-1>                <!-- guess -->
-                <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>                <!-- authentic -->
-                <stage-1-duration-sec type="double">5.23</stage-1-duration-sec>                <!-- guess -->
-                <stage-2-duration-sec type="double">0.0</stage-2-duration-sec>                <!-- Aim-9L -->
-                <self-destruct-time-sec type="double">43</self-destruct-time-sec>                <!-- guess -->
-                <!-- Mk.36 Mod.7,8 -->
-                <weight-launch-lbs>186.2</weight-launch-lbs>
-                <weight-warhead-lbs>20.8</weight-warhead-lbs>
-                <weight-fuel-lbm>60.4</weight-fuel-lbm>
-                <drag-coeff type="double">0.55</drag-coeff>                <!-- guess -->
-                <cross-section-sqft type="double">0.143</cross-section-sqft>                <!-- sq ft -->
-                <seeker-angular-speed-dps>30</seeker-angular-speed-dps>                <!-- deg/sec guess-->
-                <loft-altitude>0</loft-altitude>                <!-- in stage 1 it will attempt to climb to this altitude -->
-                <min-speed-for-guiding-mach type="double">0.8</min-speed-for-guiding-mach>
-                <arming-time-sec type="double">1.4</arming-time-sec>
                 <rail type="bool">true</rail>
-                <rail-length-m type="double">2.667</rail-length-m>                <!-- 16S210 AIM-9 Missile Launcher -->
+                <rail-length-m type="double">2.667</rail-length-m><!-- 16S210 AIM-9 Missile Launcher -->
                 <rail-point-forward type="bool">true</rail-point-forward>
                 <max-report-distance type="double">65</max-report-distance>
-                <lock-on-sun-deg type="double">5</lock-on-sun-deg>                <!-- source -->
+                <class type="string">A</class>
                 <fire-msg type="string">Fox 2</fire-msg>
-                <telemetry type="bool">false</telemetry>
                 <DLZ type="bool">true</DLZ>
                 <DLZ-optimal-alt-feet type="double">25000</DLZ-optimal-alt-feet>
                 <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
