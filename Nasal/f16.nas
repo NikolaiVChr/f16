@@ -262,6 +262,7 @@ var repair = func {
 
 var repair2 = func {
   screen.log.write("Repairing, standby..");
+  setprop("ai/submodels/submodel[0]/count",100);
   crash.repair();
   if (getprop("engines/engine[0]/running")!=1) {
     setprop("controls/engines/engine[0]/cutoff", 1);
@@ -278,6 +279,7 @@ var repair3 = func {
 }
 
 var re_init_listener = setlistener("/sim/signals/reinit", func {
+  setprop("/controls/gear/gear-down",1);
   if (getprop("/consumables/fuel/tank[0]/level-norm")<0.5) {
     setprop("/consumables/fuel/tank[0]/level-norm", 0.55);
   }
