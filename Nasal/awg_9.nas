@@ -182,6 +182,7 @@ var az_scan = func() {
             #{
             #    rwrNew(u);
             #}
+            append(completeList,u);
             if (!radar_active)
               continue;
             if (u_rng != nil and (u_rng < range_radar2  and u.not_acting == 0 ) and rcs.inRadarRange(u, 70, 3.2))#APG68/66
@@ -238,7 +239,6 @@ var az_scan = func() {
             } else {
                 u.set_display(0);
             }
-            append(completeList,u);
 		}
         
 		# Summarize ECM alerts.
