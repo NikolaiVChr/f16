@@ -58,11 +58,8 @@
     </f16>
    <path archive="y">Aircraft/f16/Models/YF-16.xml</path>
    <livery>
-    <file type="string">yf.xml</file>
+    <file type="string"/>
     <name type="string">YF-16 Prototype</name>
-    <texture>Liveries/yf/yf.png</texture>
-    <actype type="string">F-16A-MLU</actype>
-    <owner type="string">USAF</owner>
    </livery>
   </model>
 
