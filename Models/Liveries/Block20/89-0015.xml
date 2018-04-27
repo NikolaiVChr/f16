@@ -4,8 +4,8 @@
  <sim>
   <model>
    <livery>
-    <name type="string">RNLAF J-015 Demo</name>
-    <texture>Liveries/rnlaf/OrangeLion.jpg</texture>
+    <name type="string">RNLAF 311 Sqn, J-015 "Orange Lion"</name>
+    <texture>Liveries/Block20/89-0015.png</texture>
     <owner type="string">RNLAF</owner>
    </livery>
    <livery-logo>

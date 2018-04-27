@@ -4,8 +4,8 @@
  <sim>
   <model>
    <livery> 
-    <name type="string">USAF Thunderbirds</name>
-    <texture>Liveries/tbird/tbird.png</texture>
+    <name type="string">USAF, Thunderbirds No. 1</name>
+    <texture>Liveries/Block50/92-3898.png</texture>
     
     <owner type="string">USAF</owner>
    </livery>

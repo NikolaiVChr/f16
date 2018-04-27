@@ -4,9 +4,9 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">IAF 140 Sqn, "Golden Eagles"</name>
-    <texture>Liveries/Block10/78-0351.png</texture>
-    <owner type="string">IAF</owner>
+    <name type="string">USAF 86TFW, 512TFS RS "Dragons"</name>
+    <texture>Liveries/Block30/85-1412.png</texture>
+    <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
     <texture>Liveries/yf/yf16_trans.png</texture>

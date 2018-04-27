@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model> 
+   <livery>
+    <name type="string">RNLAF, J-055 "Demo Scheme"</name>
+    <texture>Liveries/Block20/86-0055.png</texture>
+    <owner type="string">RNLAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/Block20/E-602.png</texture>
+   </livery-logo>
+  </model>
+ </sim>
+</PropertyList>
