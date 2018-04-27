@@ -262,6 +262,7 @@ var repair = func {
 
 var repair2 = func {
   screen.log.write("Repairing, standby..");
+  setprop("ai/submodels/submodel[0]/count",100);
   crash.repair();
   if (getprop("engines/engine[0]/running")!=1) {
     setprop("controls/engines/engine[0]/cutoff", 1);
