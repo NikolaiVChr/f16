@@ -196,7 +196,7 @@ var F16_HUD = {
 #
 #
     update : func(hdp) {
-        var  roll_rad = -hdp.roll*math.pi/180.0;
+        var  roll_rad = -hdp.roll*D2R;
 
 
         # calc of pitch_offset (compensates for AC3D model translated and rotated when loaded. Also semi compensates for HUD being at an angle.)
@@ -304,9 +304,14 @@ var F16_HUD = {
 #
 #these labels aren't correct - but we don't have a full simulation of the targetting and missiles so 
 #have no real idea on the details of how this works.
-                me.window4.setText(sprintf("RNG %3.1f", awg_9.active_u.get_range()));
+                if (awg_9.active_u.get_display() == 0) {
+                    me.window4.setText("");
+                    me.window5.setText("");
+                } else {
+                    me.window4.setText(sprintf("RNG %3.1f", awg_9.active_u.get_range()));
+                    me.window5.setText(sprintf("CLO %-3d", awg_9.active_u.get_closure_rate()));
+                }
                 me.window4.show();
-                me.window5.setText(sprintf("CLO %-3d", awg_9.active_u.get_closure_rate()));
                 win5 = 1;
                 me.window6.setText(model);
                 me.window6.show(); # SRM UNCAGE / TARGET ASPECT

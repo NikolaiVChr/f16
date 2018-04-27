@@ -268,7 +268,7 @@ var PFD_VSD =
             if (!designated)
                 target_idx = target_idx+1;
         }
-        if (awg_9.active_u != nil)
+        if (awg_9.active_u != nil and awg_9.active_u.get_display()==1)
         {
             if (awg_9.active_u.Callsign != nil)
                 callsign = awg_9.active_u.Callsign.getValue();

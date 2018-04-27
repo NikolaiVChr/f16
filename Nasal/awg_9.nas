@@ -95,23 +95,13 @@ var az_scan = func() {
     counting += 1;
     if (counting == 5) counting = 1;
     var doRWR = counting == 1;
-	# Antena az scan. Angular speed is constant but angle covered varies (120 or 60 deg ATM).
-	var fld_frac = az_fld / 120;                    # the screen (and the max scan angle) covers 120 deg, but we may use less (az_fld).
-	var fswp_spd = swp_spd / fld_frac;              # So the duration (fswp_spd) of a complete scan will depend on the fraction we use.
-	swp_fac = math.sin(cnt * fswp_spd) * fld_frac;  # Build a sinusoude, each step based on a counter incremented by the main UPDATE_PERIOD
-	SwpFac.setValue(swp_fac);                       # Update this value on the property tree so we can use it for the sweep line animation.
-	swp_deg = az_fld / 2 * swp_fac;                 # Now get the actual deviation of the antenae in deg,
-	swp_dir = swp_deg < swp_deg_last ? 0 : 1;       # and the direction.
-	#if ( az_fld == nil ) { az_fld = 74 } # commented 20110911 if really needed it shouls had been on top of the func.
-	l_az_fld = - az_fld / 2;
-	r_az_fld = az_fld / 2;
 
-	var fading_speed = 0.015;   # Used for the screen animation, dots get bright when the sweep line goes over, then fade.
-
+    l_az_fld = - az_fld / 2;
+    r_az_fld = az_fld / 2;
 	our_true_heading = OurHdg.getValue();
 	our_alt = OurAlt.getValue();
     var radar_active = !getprop("sim/multiplay/generic/int[2]");
-    var radar_mode = getprop("sim/multiplay/generic/int[17]");
+    var radar_mode = nil;#getprop("sim/multiplay/generic/int[17]");
     if (radar_mode == nil)
       radar_mode = 0;
     if (radar_mode >= 3)
@@ -124,13 +114,12 @@ var az_scan = func() {
 # be ok; the values (distance etc) will be read from the target list so these will be accurate
 # which isn't quite how radar works but it will be good enough for us.
 
-    if (1==1 or swp_dir != swp_dir_last)
+    if (1==1)
     {
 #print("Sweep ",active_u, active_u_callsign);
 		# Antena scan direction change (at max: more or less every 2 seconds). Reads the whole MP_list.
 		# TODO: Visual glitch on the screen: the sweep line jumps when changing az scan field.
 
-		az_fld = AzField.getValue();
 		range_radar2 = RangeRadar2.getValue();
 		if ( range_radar2 == 0 ) { range_radar2 = 0.00000001 }
 
@@ -176,6 +165,13 @@ var az_scan = func() {
                 continue;
             }
             var u = Target.new(c);
+
+            if (active_u != nil and u.get_Callsign() == active_u.get_Callsign()) {
+                # replace selection with new, so it can be proper checked for still being visible to radar
+                active_u = u;
+                armament.contact = active_u;
+            }
+
             u_ecm_signal      = 0;
             u_ecm_signal_norm = 0;
             u_radar_standby   = 0;
@@ -198,7 +194,7 @@ var az_scan = func() {
 
                 var visible = 0;
                 var their_radar_mode = 0;
-                var their_radar_node = c.getNode("multiplay/generic/int[17]");
+                var their_radar_node = nil;#c.getNode("multiplay/generic/int[17]");
                 if (their_radar_node != nil and their_radar_node.getValue() != nil)
                   their_radar_mode = their_radar_node.getValue();
 
@@ -220,7 +216,7 @@ var az_scan = func() {
                 if (u.deviation > l_az_fld  and  u.deviation < r_az_fld )
                 {
                     u.set_display(1);
-                } 
+                }
                 else
                 {
                     u.set_display(0);
@@ -362,9 +358,6 @@ var az_scan = func() {
         }
         awg_9.sel_next_target =0;
     }
-
-	swp_deg_last = swp_deg;
-	swp_dir_last = swp_dir;
 
     cnt += 0.05;
 
