@@ -350,9 +350,9 @@ var MFD_Device =
     setupRadar: func (svg) {
         svg.p_RDR = me.canvas.createGroup()
                 .setTranslation(276*0.795,482);#552,482 , 0.795 is for UV map
-        
-        svg.blep = setsize([],200);
-        for (var i = 0;i<200;i+=1) {
+        svg.maxB = 16;
+        svg.blep = setsize([],svg.maxB);
+        for (var i = 0;i<svg.maxB;i+=1) {
             svg.blep[i] = svg.p_RDR.createChild("path")
                     .moveTo(0,0)
                     .vert(4)
@@ -412,8 +412,8 @@ var MFD_Device =
                     .vert(-20)
                     .setStrokeLineWidth(1)
                     .setColor(0.5,0.5,1);
-        svg.lock = setsize([],200);
-        for (var i = 0;i<200;i+=1) {
+        svg.lock = setsize([],svg.maxB);
+        for (var i = 0;i<svg.maxB;i+=1) {
             svg.lock[i] = svg.p_RDR.createChild("path")
                         .moveTo(-10,-10)
                             .vert(20)
@@ -471,10 +471,6 @@ var MFD_Device =
             }
         }
         me.p_RDR.update = func (noti) {
-            if (noti != nil) {
-                #print("not");
-                #debug.dump(noti);
-            }
             me.i=0;
             me.root.rang.setText(sprintf("%d",getprop("instrumentation/radar/radar2-range")));
             me.time = getprop("sim/time/elapsed-sec");
@@ -513,9 +509,9 @@ var MFD_Device =
                     me.root.lock[me.i].hide();
                 }
                 me.i += 1;
-                if (me.i > 199) break;
+                if (me.i > me.root.maxB-1) break;
             }
-            for (;me.i<200;me.i+=1) {
+            for (;me.i<me.root.maxB;me.i+=1) {
                 me.root.blep[me.i].hide();
                 me.root.lock[me.i].hide();
             }

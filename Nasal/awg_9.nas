@@ -1155,6 +1155,8 @@ var rwrNew = func () {
             var threat = 0;
             if (u.get_model() != "missile_frigate" and u.get_model() != "buk-m2") {
                 threat += ((180-dev)/180)*0.30;
+                var spd = (60-u.get_Speed())/60;
+                threat -= spd>0?spd:0;
             } elsif (u.get_model == "missile_frigate") {
                 threat += 0.30;
             } else {
