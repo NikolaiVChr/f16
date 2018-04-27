@@ -457,12 +457,16 @@ var MFD_Device =
         me.p_RDR.wdt = 552*0.795;
         me.p_RDR.fwd = 0;
         me.p_RDR.plc = 0;
+        me.p_RDR.ppp = me.PFD;
+        me.p_RDR.my = me;
         me.p_RDR.notifyButton = func (eventi) {
             if (eventi != nil) {
                 if (eventi == 0) {
                     awg_9.range_control(1);
                 } elsif (eventi == 1) {
                     awg_9.range_control(-1);
+                } elsif (eventi == 10) {
+                    me.ppp.selectPage(me.my.p1_1);
                 }
             }
         }
