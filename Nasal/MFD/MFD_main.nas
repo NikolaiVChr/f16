@@ -220,17 +220,25 @@ var PFD_VSD =
         var w3_7 = sprintf("T %d",notification.vc_kts);
         var w2 = "";
         var designated = 0;
+        var has_seen_active = 0;
         foreach( u; awg_9.tgts_list ) 
         {
+            designated = 0;
+            if (u.get_display() == 0) {
+                continue;
+            }
             var callsign = "XX";
             if (u.Callsign != nil)
                 callsign = u.Callsign.getValue();
             var model = "XX";
             if (u.ModelType != "")
                 model = u.ModelType;
-            if (target_idx < me.max_symbols)
+            if (target_idx < me.max_symbols or has_seen_active == 0)
             {
-                tgt = me.tgt_symbols[target_idx];
+                if (target_idx < me.max_symbols)
+                    tgt = me.tgt_symbols[target_idx];
+                else
+                    tgt = me.tgt_symbols[0];
                 if (tgt != nil)
                 {
 #                    if (u.airbone and !designated)
@@ -239,25 +247,28 @@ var PFD_VSD =
                     if (awg_9.active_u != nil and awg_9.active_u.Callsign != nil and u.Callsign.getValue() == awg_9.active_u.Callsign.getValue())
 #if (u == awg_9.active_u)
                     {
+                        has_seen_active = 1;
                         designated = 1;
-                        tgt.setVisible(0);
+                        #tgt.setVisible(0);
                         tgt = me.tgt_symbols[0];
 #                    w2 = sprintf("%-4d", u.get_closure_rate());
 #                    w3_22 = sprintf("%3d-%1.1f %.5s %.4s",u.get_bearing(), u.get_range(), callsign, model);
 #                    var aspect = u.get_reciprocal_bearing()/10;
 #                   w1 = sprintf("%4d %2d%s %2d %d", u.get_TAS(), aspect, aspect < 180 ? "r" : "l", u.get_heading(), u.get_altitude());
+                    } elsif (target_idx >= me.max_symbols) {
+                        continue;
                     }
-                    tgt.setVisible(u.get_display());
+                    #tgt.setVisible(u.get_display());
                     var xc = u.get_deviation(heading);
                     var yc = -u.get_total_elevation(pitch);
                     tgt.setVisible(1);
-                    tgt.setTranslation (xc, yc);
+                    tgt.setTranslation (xc*1.55, yc*1.85);
                 }
             }
             if (!designated)
                 target_idx = target_idx+1;
         }
-        if (awg_9.active_u != nil)
+        if (awg_9.active_u != nil and awg_9.active_u.get_display()==1)
         {
             if (awg_9.active_u.Callsign != nil)
                 callsign = awg_9.active_u.Callsign.getValue();
@@ -286,6 +297,8 @@ var PFD_VSD =
                 tgt.setVisible(0);
             }
         }
+        if(!has_seen_active)
+            me.tgt_symbols[0].hide();
         };        
         return obj;
     },
@@ -336,18 +349,71 @@ var MFD_Device =
 
     setupRadar: func (svg) {
         svg.p_RDR = me.canvas.createGroup()
-                .setTranslation(276*0.795,512);#552,482 , 0.795 is for UV map
-        
-        svg.blep = setsize([],200);
-        for (var i = 0;i<200;i+=1) {
+                .setTranslation(276*0.795,482);#552,482 , 0.795 is for UV map
+        svg.maxB = 16;
+        svg.blep = setsize([],svg.maxB);
+        for (var i = 0;i<svg.maxB;i+=1) {
             svg.blep[i] = svg.p_RDR.createChild("path")
                     .moveTo(0,0)
                     .vert(4)
                     .setStrokeLineWidth(4)
                     .hide();
         }
-        svg.lock = setsize([],200);
-        for (var i = 0;i<200;i+=1) {
+        svg.rangUp = svg.p_RDR.createChild("path")
+                    .moveTo(-276*0.795,-482*0.5-105-27.5)
+                    .horiz(30)
+                    .lineTo(-276*0.795+15,-482*0.5-105-27.5-15)
+                    .lineTo(-276*0.795,-482*0.5-105-27.5)
+                    .setStrokeLineWidth(2)
+                    .setColor(1,1,1);
+        svg.rang = svg.p_RDR.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5-105)
+                .setAlignment("left-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.rangDown = svg.p_RDR.createChild("path")
+                    .moveTo(-276*0.795,-482*0.5-105+27.5)
+                    .horiz(30)
+                    .lineTo(-276*0.795+15,-482*0.5-105+27.5+15)
+                    .lineTo(-276*0.795,-482*0.5-105+27.5)
+                    .setStrokeLineWidth(2)
+                    .setColor(1,1,1);
+        svg.az = svg.p_RDR.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5-5)
+                .setText("A4")
+                .setAlignment("left-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.bars = svg.p_RDR.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5+60)
+                .setText("8B")
+                .setAlignment("left-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.ant_bottom = svg.p_RDR.createChild("path")
+                    .moveTo(-276*0.795,0)
+                    .vert(-10)
+                    .moveTo(-276*0.795-10,-10)
+                    .horiz(20)
+                    .setStrokeLineWidth(1)
+                    .setColor(0.5,0.5,1);
+        svg.distl = svg.p_RDR.createChild("path")
+                    .moveTo(-276*0.795+40,-482*0.25)
+                    .horiz(20)
+                    .moveTo(-276*0.795+40,-482*0.5)
+                    .horiz(30)
+                    .moveTo(-276*0.795+40,-482*0.75)
+                    .horiz(20)
+                    .moveTo(-276*0.795*0.5,0)
+                    .vert(-20)
+                    .moveTo(0,0)
+                    .vert(-30)
+                    .moveTo(276*0.795*0.5,0)
+                    .vert(-20)
+                    .setStrokeLineWidth(1)
+                    .setColor(0.5,0.5,1);
+        svg.lock = setsize([],svg.maxB);
+        for (var i = 0;i<svg.maxB;i+=1) {
             svg.lock[i] = svg.p_RDR.createChild("path")
                         .moveTo(-10,-10)
                             .vert(20)
@@ -359,6 +425,21 @@ var MFD_Device =
                             .setStrokeLineWidth(2)
                     .hide();
         }
+        svg.dlzX      = 276*0.795*0.75;
+        svg.dlzY      =-482*0.25;
+        svg.dlzWidth  =  20;
+        svg.dlzHeight = 482*0.5;
+        svg.dlzLW     =   2;
+        svg.dlz      = svg.p_RDR.createChild("group")
+                        .setTranslation(svg.dlzX, svg.dlzY);
+        svg.dlz2     = svg.dlz.createChild("group");
+        svg.dlzArrow = svg.dlz.createChild("path")
+           .moveTo(0, 0)
+           .lineTo( -10, 8)
+           .moveTo(0, 0)
+           .lineTo( -10, -8)
+           .setColor(1,1,1)
+           .setStrokeLineWidth(svg.dlzLW);
     },
 
     addRadar: func {
@@ -370,16 +451,45 @@ var MFD_Device =
             me.page_index[layer_id] = np;
             np.setVisible(0);
             return np;
-        };        
+        };
         me.p_RDR = me.PFD.addRadarPage(svg, "Radar", "p_RDR");
         me.p_RDR.root = svg;
-        me.p_RDR.update = func {
+        me.p_RDR.wdt = 552*0.795;
+        me.p_RDR.fwd = 0;
+        me.p_RDR.plc = 0;
+        me.p_RDR.ppp = me.PFD;
+        me.p_RDR.my = me;
+        me.p_RDR.notifyButton = func (eventi) {
+            if (eventi != nil) {
+                if (eventi == 0) {
+                    awg_9.range_control(1);
+                } elsif (eventi == 1) {
+                    awg_9.range_control(-1);
+                } elsif (eventi == 10) {
+                    me.ppp.selectPage(me.my.p1_1);
+                }
+            }
+        }
+        me.p_RDR.update = func (noti) {
             me.i=0;
+            me.root.rang.setText(sprintf("%d",getprop("instrumentation/radar/radar2-range")));
+            me.time = getprop("sim/time/elapsed-sec");
+            if (getprop("sim/multiplay/generic/int[2]")!=1) {
+                var plc = me.time*0.5-int(me.time*0.5);
+                if (plc<me.plc) {
+                    me.fwd = !me.fwd;
+                }
+                me.plc = plc;
+                me.root.ant_bottom.setTranslation(me.wdt*math.abs(me.fwd-me.plc),0);
+            }
             foreach(contact; awg_9.tgts_list) {
+                if (contact.get_display() == 0) {
+                    continue;
+                }
                 me.distPixels = contact.get_range()*(482/awg_9.range_radar2);
 
                 me.root.blep[me.i].setColor(1,1,1);
-                me.root.blep[me.i].setTranslation(276*0.795*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels);
+                me.root.blep[me.i].setTranslation(me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels);
                 me.root.blep[me.i].show();
                 me.root.blep[me.i].update();
                 if (contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType)) {
@@ -399,11 +509,36 @@ var MFD_Device =
                     me.root.lock[me.i].hide();
                 }
                 me.i += 1;
-                if (me.i > 199) break;
+                if (me.i > me.root.maxB-1) break;
             }
-            for (;me.i<200;me.i+=1) {
+            for (;me.i<me.root.maxB;me.i+=1) {
                 me.root.blep[me.i].hide();
                 me.root.lock[me.i].hide();
+            }
+            me.root.dlzArray = pylons.getDLZ();
+            #me.dlzArray =[10,8,6,2,9];#test
+            if (me.root.dlzArray == nil or size(me.root.dlzArray) == 0) {
+                    me.root.dlz.hide();
+            } else {
+                #printf("%d %d %d %d %d",me.root.dlzArray[0],me.root.dlzArray[1],me.root.dlzArray[2],me.root.dlzArray[3],me.root.dlzArray[4]);
+                me.root.dlz2.removeAllChildren();
+                me.root.dlzArrow.setTranslation(0,-me.root.dlzArray[4]/me.root.dlzArray[0]*me.root.dlzHeight);
+                me.root.dlzGeom = me.root.dlz2.createChild("path")
+                        .moveTo(0, -me.root.dlzArray[3]/me.root.dlzArray[0]*me.root.dlzHeight)
+                        .lineTo(0, -me.root.dlzArray[2]/me.root.dlzArray[0]*me.root.dlzHeight)
+                        .lineTo(me.root.dlzWidth, -me.root.dlzArray[2]/me.root.dlzArray[0]*me.root.dlzHeight)
+                        .lineTo(me.root.dlzWidth, -me.root.dlzArray[3]/me.root.dlzArray[0]*me.root.dlzHeight)
+                        .lineTo(0, -me.root.dlzArray[3]/me.root.dlzArray[0]*me.root.dlzHeight)
+                        .lineTo(0, -me.root.dlzArray[1]/me.root.dlzArray[0]*me.root.dlzHeight)
+                        .lineTo(me.root.dlzWidth, -me.root.dlzArray[1]/me.root.dlzArray[0]*me.root.dlzHeight)
+                        .moveTo(0, -me.root.dlzHeight)
+                        .lineTo(me.root.dlzWidth, -me.root.dlzHeight-3)
+                        .lineTo(me.root.dlzWidth, -me.root.dlzHeight+3)
+                        .lineTo(0, -me.root.dlzHeight)
+                        .setStrokeLineWidth(me.root.dlzLW)
+                        .setColor(1,1,1);
+                me.root.dlz2.update();
+                me.root.dlz.show();
             }
         };
     },
@@ -559,7 +694,11 @@ var MFD_Device =
 
         me.mfd_button_pushed = 0;
         me.setupMenus();
-        me.PFD.selectPage(me.p1_1);
+        if (me.model_element == "MFDimage1") {
+            me.PFD.selectPage(me.p_RDR);
+        } else {
+            me.PFD.selectPage(me.p_VSD);
+        }
     },
 
     # Add the menus to each page. 

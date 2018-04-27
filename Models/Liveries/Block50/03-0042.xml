@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim> 
+  <model>
+   <livery>
+    <name type="string">PolAF 3.ELT, #4042</name>
+    <texture>Liveries/Block50/03-0042.jpg</texture>
+    
+    <owner type="string">PolAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/yf/yf16-transp.png</texture>
+   </livery-logo>
+  </model>
+ </sim>
+</PropertyList>

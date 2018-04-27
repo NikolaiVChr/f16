@@ -53,6 +53,6 @@ var update_chrono = func {
 ### FIXME
 var chrono_loop = func {
 	update_chrono();
-        settimer(chrono_loop, 0.1);
+        settimer(chrono_loop, 0.5);
 }
 settimer(chrono_loop, 0.5);

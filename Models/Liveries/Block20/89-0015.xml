@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">RNLAF 311 Sqn, J-015 "Orange Lion"</name>
+    <texture>Liveries/Block20/89-0015.png</texture>
+    <owner type="string">RNLAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/yf/yf16-transp.png</texture>
+   </livery-logo>
+  </model>
+ </sim>
+</PropertyList>

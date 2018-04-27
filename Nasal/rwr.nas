@@ -2,8 +2,13 @@ RWRCanvas = {
     new: func (root, center, diameter) {
         var rwr = {parents: [RWRCanvas]};
         rwr.max_icons = 12;
-        rwr.inner_radius = diameter/6;
-        rwr.outer_radius = diameter/3;
+        var radius = diameter/2;
+        rwr.inner_radius = radius*0.30;
+        rwr.outer_radius = radius*0.75;
+        rwr.circle_radius_big = radius*0.5;
+        rwr.circle_radius_small = radius*0.125;
+        var tick_long = radius*0.25;
+        var tick_short = tick_long*0.5;
         var font = int(0.08*diameter);
         var colorG = [0.3,1,0.3];
         var colorLG = [0,0.5,0];
@@ -11,22 +16,60 @@ RWRCanvas = {
         rwr.rootCenter = root.createChild("group")
                 .setTranslation(center[0],center[1]);
         
+#        root.createChild("path")
+#           .moveTo(0, diameter/2)
+#           .arcSmallCW(diameter/2, diameter/2, 0, diameter, 0)
+#           .arcSmallCW(diameter/2, diameter/2, 0, -diameter, 0)
+#           .setStrokeLineWidth(1)
+#           .setColor(1, 1, 1);
         root.createChild("path")
-           .moveTo(0, diameter/2)
-           .arcSmallCW(diameter/2, diameter/2, 0, diameter, 0)
-           .arcSmallCW(diameter/2, diameter/2, 0, -diameter, 0)
-           .setStrokeLineWidth(1)
-           .setColor(1, 1, 1);
-        root.createChild("path")
-           .moveTo(diameter/2-rwr.inner_radius, diameter/2)
-           .arcSmallCW(rwr.inner_radius, rwr.inner_radius, 0, rwr.inner_radius*2, 0)
-           .arcSmallCW(rwr.inner_radius, rwr.inner_radius, 0, -rwr.inner_radius*2, 0)
+           .moveTo(diameter/2-rwr.circle_radius_small, diameter/2)
+           .arcSmallCW(rwr.circle_radius_small, rwr.circle_radius_small, 0, rwr.circle_radius_small*2, 0)
+           .arcSmallCW(rwr.circle_radius_small, rwr.circle_radius_small, 0, -rwr.circle_radius_small*2, 0)
            .setStrokeLineWidth(1)
            .setColor(colorLG);
         root.createChild("path")
-           .moveTo(diameter/2-rwr.outer_radius, diameter/2)
-           .arcSmallCW(rwr.outer_radius, rwr.outer_radius, 0, rwr.outer_radius*2, 0)
-           .arcSmallCW(rwr.outer_radius, rwr.outer_radius, 0, -rwr.outer_radius*2, 0)
+           .moveTo(diameter/2-rwr.circle_radius_big, diameter/2)
+           .arcSmallCW(rwr.circle_radius_big, rwr.circle_radius_big, 0, rwr.circle_radius_big*2, 0)
+           .arcSmallCW(rwr.circle_radius_big, rwr.circle_radius_big, 0, -rwr.circle_radius_big*2, 0)
+           .setStrokeLineWidth(1)
+           .setColor(colorLG);
+        root.createChild("path")
+           .moveTo(diameter/2-rwr.circle_radius_small/2, diameter/2)
+           .lineTo(diameter/2+rwr.circle_radius_small/2, diameter/2)
+           .moveTo(diameter/2, diameter/2-rwr.circle_radius_small/2)
+           .lineTo(diameter/2, diameter/2+rwr.circle_radius_small/2)
+           .setStrokeLineWidth(1)
+           .setColor(colorLG);
+        root.createChild("path")
+           .moveTo(0,diameter*0.5)
+           .horiz(tick_long)
+           .moveTo(diameter,diameter*0.5)
+           .horiz(-tick_long)
+           .moveTo(diameter*0.5,0)
+           .vert(tick_long)
+           .moveTo(diameter*0.5,diameter)
+           .vert(-tick_long)
+           .setStrokeLineWidth(1)
+           .setColor(colorLG);
+        rwr.rootCenter.createChild("path")
+           .moveTo(radius*math.cos(30*D2R),radius*math.sin(-30*D2R))
+           .lineTo((radius-tick_short)*math.cos(30*D2R),(radius-tick_short)*math.sin(-30*D2R))
+           .moveTo(radius*math.cos(60*D2R),radius*math.sin(-60*D2R))
+           .lineTo((radius-tick_short)*math.cos(60*D2R),(radius-tick_short)*math.sin(-60*D2R))
+           .moveTo(radius*math.cos(30*D2R),radius*math.sin(30*D2R))
+           .lineTo((radius-tick_short)*math.cos(30*D2R),(radius-tick_short)*math.sin(30*D2R))
+           .moveTo(radius*math.cos(60*D2R),radius*math.sin(60*D2R))
+           .lineTo((radius-tick_short)*math.cos(60*D2R),(radius-tick_short)*math.sin(60*D2R))
+
+           .moveTo(-radius*math.cos(30*D2R),radius*math.sin(-30*D2R))
+           .lineTo(-(radius-tick_short)*math.cos(30*D2R),(radius-tick_short)*math.sin(-30*D2R))
+           .moveTo(-radius*math.cos(60*D2R),radius*math.sin(-60*D2R))
+           .lineTo(-(radius-tick_short)*math.cos(60*D2R),(radius-tick_short)*math.sin(-60*D2R))
+           .moveTo(-radius*math.cos(30*D2R),radius*math.sin(30*D2R))
+           .lineTo(-(radius-tick_short)*math.cos(30*D2R),(radius-tick_short)*math.sin(30*D2R))
+           .moveTo(-radius*math.cos(60*D2R),radius*math.sin(60*D2R))
+           .lineTo(-(radius-tick_short)*math.cos(60*D2R),(radius-tick_short)*math.sin(60*D2R))
            .setStrokeLineWidth(1)
            .setColor(colorLG);
         rwr.texts = setsize([],rwr.max_icons);
@@ -123,7 +166,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_MIRAGE = "20";
         rwr.AIRCRAFT_FALCON = "16";
         rwr.AIRCRAFT_FRIGATE = "SH";
-        rwr.AIRCRAFT_UNKNOWN = "00";
+        rwr.AIRCRAFT_UNKNOWN = "U";
         rwr.AIRCRAFT_AI = "AI";
         rwr.lookupType = {
                 "f-14b":                    rwr.AIRCRAFT_TOMCAT,     #guess
@@ -141,6 +184,15 @@ RWRCanvas = {
                 "buk-m2":                   rwr.AIRCRAFT_BUK,      #estimated with blender
                 "missile_frigate":          rwr.AIRCRAFT_FRIGATE,    #estimated with blender
                 "AI":                       rwr.AIRCRAFT_AI,
+                #misc threatening aircraft:
+                "MiG-29":"29",
+                "ch53e":"53",
+                "MQ-9":"9",
+                "QF-4E":"F4",
+                "B1-B":"B1",
+                "A-10":"10",
+                "Typhoon":"EF",
+                "f16":"16",
         };
         rwr.shownList = [];
         return rwr;
@@ -157,26 +209,28 @@ RWRCanvas = {
                 return 1; # A should after b in the returned vector
             }
         }
-        var sortedlist = sort(list, sorter);
-        var newList = [];
+        me.sortedlist = sort(list, sorter);
+        me.newList = [];
         me.i = 0;
         me.hat = 0;
         me.newt = 0;
         me.prio = 0;
         me.launch = 0;
-        var newsound = 0;
-        foreach(contact; sortedlist) {
+        me.newsound = 0;
+        me.unk = 0;
+        foreach(contact; me.sortedlist) {
             me.typ=me.lookupType[contact[0].get_model()];
             if (me.i > me.max_icons-1) {
                 break;
             }
             if (me.typ == nil) {
-                continue;
+                me.typ = rwr.AIRCRAFT_UNKNOWN;
+                me.unk = 1;
             }
             #print("show "~me.i~" "~me.typ~" "~contact[0].get_model()~"  "~contact[1]);
             me.threat = contact[1];#print(me.threat);
             
-            if (me.threat > 0.5) {
+            if (me.threat > 0.5 and me.typ != me.AIRCRAFT_UNKNOWN and me.typ != me.AIRCRAFT_AI) {
                 me.threat = me.inner_radius;# inner circle
             } elsif (me.threat > 0) {
                 me.threat = me.outer_radius;# outer circle
@@ -189,12 +243,13 @@ RWRCanvas = {
             me.texts[me.i].setTranslation(me.x,me.y);
             me.texts[me.i].setText(me.typ);
             me.texts[me.i].show();
-            if (me.prio == 0 and me.typ != me.AIRCRAFT_AI) {# 
+            if (me.prio == 0 and me.typ != me.AIRCRAFT_AI and me.typ != me.AIRCRAFT_UNKNOWN) {# 
                 me.symbol_priority.setTranslation(me.x,me.y);
                 me.symbol_priority.show();
                 me.prio = 1;
             }
-            if (!(me.typ == me.AIRCRAFT_BUK or me.typ == me.AIRCRAFT_FRIGATE or me.typ == me.AIRCRAFT_AI)) {
+            if (!(me.typ == me.AIRCRAFT_BUK or me.typ == me.AIRCRAFT_FRIGATE) and contact[0].get_Speed()>60) {
+                #air-borne
                 me.symbol_hat[me.hat].setTranslation(me.x,me.y);
                 me.symbol_hat[me.hat].show();
                 me.hat += 1;
@@ -212,7 +267,7 @@ RWRCanvas = {
                 }
             }
             if (popup == me.elapsed) {
-                newsound = 1;
+                me.newsound = 1;
             }
             if (popup > me.elapsed-me.fadeTime) {
                 me.symbol_new[me.newt].setTranslation(me.x,me.y);
@@ -221,11 +276,11 @@ RWRCanvas = {
                 me.newt += 1;
             }
             #printf("display %s %d",contact[0].get_Callsign(), me.threat);
-            append(newList, [contact[0],popup]);
+            append(me.newList, [contact[0],popup]);
             me.i += 1;
         }
-        me.shownList = newList;
-        if (newsound == 1) setprop("sound/rwr-new", !getprop("sound/rwr-new"));
+        me.shownList = me.newList;
+        if (me.newsound == 1) setprop("sound/rwr-new", !getprop("sound/rwr-new"));
         for (;me.i<me.max_icons;me.i+=1) {
             me.texts[me.i].hide();
         }
@@ -241,6 +296,8 @@ RWRCanvas = {
         if (me.prio == 0) {
             me.symbol_priority.hide();
         }
+        setprop("sound/rwr-pri", me.prio);
+        setprop("sound/rwr-unk", me.unk);
     },
 };
 

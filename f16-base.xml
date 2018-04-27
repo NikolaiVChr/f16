@@ -224,6 +224,9 @@
                 <position-norm type="double">0</position-norm>
                 <target-speed-fps type="double">0</target-speed-fps>
             </pushback>
+            <livery>
+                <folder type="string">Aircraft/f16/Models/Liveries</folder>
+           </livery>
         </model>
         <chase-distance-m type="double" archive="y">-35.0</chase-distance-m>
         <!-- original settings
@@ -251,6 +254,7 @@
         <rendering>
             <redout>
                 <enabled type="bool" userarchive="y">true</enabled>
+                <new type="bool">false</new>
                 <parameters>
                     <blackout-onset-g type="double">5</blackout-onset-g>
                     <blackout-complete-g type="double">9</blackout-complete-g>
@@ -273,7 +277,7 @@
                         <label>Repair</label>
                         <binding>
                             <command>nasal</command>
-                            <script>crash.repair();</script>
+                            <script>f16.repair();</script>
                         </binding>
                     </item>
                     <item>
@@ -315,7 +319,8 @@
         </menubar>
         <multiplay>
             <generic>
-                <int n="2" type="int">1</int><!-- radar-standby -->
+                <int n="2" type="int">0</int><!-- radar-standby -->
+                <int n="9" type="int" alias="/sim/variant-id"/>
                 <int n="10" type="int" alias="/controls/smoke"/>
                 <int n="11" type="int" alias="/sim/model/f16/smokewinderR1"/>
                 <int n="12" type="int" alias="/sim/model/f16/smokewinderR9"/>
@@ -339,7 +344,7 @@
         </multiplay>
         <help>
             <key>
-                <name>Ctrl-f</name>
+                <name>q</name>
                 <desc>trigger flare release</desc>
             </key>
             <key>
@@ -367,7 +372,7 @@
                 <desc>Toggle Manual Pitch Override (MPO)</desc>
             </key>
             <key>
-                <name>r</name>
+                <name>f</name>
                 <desc>Toggle refuel door</desc>
             </key>
             <key>
@@ -383,7 +388,7 @@
                 <desc>Increase Radar Range</desc>
             </key>
             <key>
-                <name>q</name>
+                <name>r</name>
                 <desc>Toggles Radar Standby Mode</desc>
             </key>
             <key>
@@ -439,6 +444,49 @@
                     <script>f16.HDDView();</script>
                 </binding>
             </key>
+             <key n="21">
+              <name>Ctrl-U</name>
+              <desc>[Cheat] Add 1000ft of emergency altitude</desc>
+              <binding>
+                    <command>nasal</command>
+                    <script>
+                        if (getprop("payload/armament/msg")==1) {
+                            screen.log.write("CTRL-U disabled at the moment.");
+                        } else {
+                            setprop("position/altitude-ft", getprop("position/altitude-ft")+1000);
+                            setprop("sim/startup/onground", 0);
+                        }
+                    </script>
+                </binding>
+             </key>
+             <key n="97">
+              <name>a</name>
+              <desc>Increase speed-up</desc>
+                <binding>
+                    <command>nasal</command>
+                    <script>
+                        if (getprop("payload/armament/msg")==1) {
+                            screen.log.write("Speed-up disabled at the moment.");
+                        } else {
+                            controls.speedup(1);
+                        }
+                    </script>
+                </binding>
+             </key>
+              <key n="65">
+              <name>A</name>
+              <desc>Decrease speed-up</desc>
+                <binding>
+                    <command>nasal</command>
+                    <script>
+                        if (getprop("payload/armament/msg")==1) {
+                            screen.log.write("Speed-down disabled at the moment.");
+                        } else {
+                            controls.speedup(-1);
+                        }
+                    </script>
+                </binding>
+             </key>
             <key n="19">
                 <name>CTRL-S</name>
                 <desc>View RWR</desc>
@@ -448,8 +496,8 @@
                     <script>f16.RWRView();</script>
                 </binding>
             </key>
-            <key n="6">
-                <name>Ctrl-F</name>
+            <key n="113">
+                <name>q</name>
                 <desc>Trigger flare release</desc>
                 <binding>
                     <command>property-assign</command>
@@ -520,12 +568,16 @@
                     </binding>
                 </mod-up>
             </key>
-            <key n="113">
-                <name>q</name>
+            <key n="114">
+                <name>r</name>
                 <desc>Toggle radar standby mode</desc>
                 <binding>
                     <command>property-toggle</command>
-                    <property>instrumentation/radar/radar-standby</property>
+                    <property>sim/multiplay/generic/int[2]</property>
+                </binding>
+                <binding>
+                    <command>nasal</command>
+                    <script>screen.log.write("Radar "~(getprop("sim/multiplay/generic/int[2]")==1?"SILENT":"ACTIVE"), 0.5, 0.5, 1);</script>
                 </binding>
             </key>
             <key n="127">
@@ -535,13 +587,21 @@
                     <command>property-toggle</command>
                     <property>/fdm/jsbsim/fcs/fbw-override</property>
                 </binding>
+                <binding>
+                    <command>nasal</command>
+                    <script>screen.log.write("MPO "~(getprop("fdm/jsbsim/fcs/fbw-override")==1?"ON":"OFF"), 0.5, 0.5, 1);</script>
+                </binding>
             </key>
-            <key n="114">
-                <name>r</name>
+            <key n="102">
+                <name>f</name>
                 <desc>Toggle refuel door</desc>
                 <binding>
                     <command>property-toggle</command>
                     <property>systems/refuel/serviceable</property>
+                </binding>
+                <binding>
+                    <command>nasal</command>
+                    <script>screen.log.write("Refuel door "~(getprop("systems/refuel/serviceable")==1?"OPEN":"CLOSED"), 0.5, 0.5, 1);</script>
                 </binding>
             </key>
             <key n="85">
@@ -1023,10 +1083,45 @@
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
             </gbu-12>
+            <agm-65>                    
+                    <!-- AGM-65B Maverick -->
+                    <sound-on-off type="bool">false</sound-on-off>
+                    <sound-fire-on-off type="bool">false</sound-fire-on-off>
+                    <sound-volume type="double">0.0</sound-volume>
+                    <vol-search type="double">0.00</vol-search>
+                    <vol-track type="double">0.15</vol-track>
+                    <vol-track-weak type="double">0.1</vol-track-weak>
+                    <guidance type="string">vision</guidance>
+                    <navigation type="string">direct</navigation>                           
+                    <all-aspect type="bool">true</all-aspect>
+                    <max-fire-range-nm type="double">12</max-fire-range-nm>              <!-- source -->
+                    <FCS-field-deg type="int">25</FCS-field-deg>            
+                    <seeker-field-deg type="int">180</seeker-field-deg>     
+                    <seeker-angular-speed-dps type="double">30</seeker-angular-speed-dps><!-- deg/sec guess-->
+                    <max-g type="int">25</max-g>
+                    <max-launch-g type="int">7</max-launch-g>               
+                    <thrust-lbf-stage-1 type="double">1200</thrust-lbf-stage-1>
+                    <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>
+                    <stage-1-duration-sec type="double">40</stage-1-duration-sec>
+                    <stage-2-duration-sec type="double">0.0</stage-2-duration-sec>
+                    <weight-launch-lbs type="double">462</weight-launch-lbs>              <!-- source -->
+                    <weight-warhead-lbs type="double">126</weight-warhead-lbs>            <!-- source -->
+                    <drag-coeff type="double">0.06</drag-coeff>
+                    <cross-section-sqft type="double">3.14</cross-section-sqft>                             <!-- source -->
+                    <arming-time-sec type="double">1.0</arming-time-sec>          
+                    <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>
+                    <self-destruct-time-sec type="double">55</self-destruct-time-sec>  
+                    <loft-altitude type="int">0</loft-altitude>
+                    <min-fire-range-nm type="double">0.2</min-fire-range-nm>
+                    <rail type="bool">false</rail>
+                    <max-report-distance type="double">65</max-report-distance>
+                    <class type="string">GM</class>
+                    <fire-msg type="string">Rifle</fire-msg>
+                </agm-65>
         </armament>
     </payload>
 
-        <rotors>
+    <rotors>
         <main>
             <!--<rpm alias="/engines/engine/nozzle-pos-norm"/>-->
             <blade n="0">
@@ -1071,6 +1166,8 @@
     <sound>
         <rwr-new type="bool">false</rwr-new>
         <rwr-launch type="string"></rwr-launch>
+        <rwr-pri type="bool">false</rwr-pri>
+        <rwr-unk type="bool">false</rwr-unk>
     </sound>
 
     <nasal>
@@ -1119,12 +1216,12 @@
         <f16_switches>
             <file>Aircraft/f16/Nasal/switches.nas</file>
         </f16_switches>
-        <radar>
+        <!--<radar>
             <file>Aircraft/Instruments-3d/radar2/radar2.nas</file>
         </radar>
         <radardist>
             <file>Aircraft/Instruments-3d/radardist/radardist.nas</file>
-        </radardist>
+        </radardist>-->
         <armament>
             <file>Aircraft/f16/Nasal/missile-code.nas</file><!-- must be before station-manager -->
         </armament>

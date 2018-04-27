@@ -46,8 +46,12 @@
       <property>payload/armament/msg</property>
       <live>true</live>
       <binding>
-          <command>property-toggle</command>
-          <property>payload/armament/msg</property>
+          <command>nasal</command>
+          <script>
+            if(getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+              setprop("payload/armament/msg", !getprop("payload/armament/msg"));
+            }
+          </script>
       </binding>
     </checkbox>
   </group>
@@ -55,6 +59,9 @@
   <text><label>cannon fire messages be visible over MP.</label></text>
   <text><label>Warning this will also allow others to damage you.</label></text>
   <text><label>Note this will force blackout to be enabled.</label></text>
+  <text><label>Simulation speed will be set to normal.</label></text>
+  <text><label>It will also remove the payload window in air and MP pilot-list.</label></text>
+  <text><label>Cannot be toggled in-air.</label></text>
 
   <hrule/>
 

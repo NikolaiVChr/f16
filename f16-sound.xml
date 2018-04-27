@@ -288,6 +288,10 @@
    <condition>
       <and>
         <property>sim/current-view/internal</property>
+        <greater-than>
+              <property>fdm/jsbsim/velocities/vtrue-kts</property>
+              <value>20</value>
+          </greater-than>
         <or>
           <greater-than>
               <property>fdm/jsbsim/aero/stall-hyst-norm</property>
@@ -307,6 +311,29 @@
       </and>
    </condition>
   </stall>
+
+  <impact>
+   <name>pullUp</name>
+   <path>Aircraft/f16/Sounds/warning.wav</path>
+   <mode>looped</mode>
+   <type>avionics</type>
+   <condition>
+      <and>
+          <greater-than>
+              <property>instrumentation/radar/time-till-crash</property>
+              <value>0</value>
+          </greater-than>
+          <less-than>
+              <property>instrumentation/radar/time-till-crash</property>
+              <value>10</value>
+          </less-than>
+      </and>
+   </condition>
+   <volume>
+        <property>sim/current-view/internal</property>
+        <factor>1</factor>
+    </volume>
+  </impact>
 
   <cannon>
    <name>cannon</name>
@@ -856,15 +883,13 @@
             <mode>once</mode>
             <type>avionics</type>
             <condition>
-              <and>
-                <property>/sim/current-view/internal</property>
                 <equals>
                     <property>sound/rwr-new</property>
                     <value>1</value>
                 </equals>
-              </and>
             </condition>
             <volume>
+                <property>/sim/current-view/internal</property>
                 <factor>1</factor>
             </volume>
         </rwr>
@@ -875,15 +900,13 @@
             <mode>once</mode>
             <type>avionics</type>
             <condition>
-              <and>
-                <property>/sim/current-view/internal</property>
                 <equals>
                     <property>sound/rwr-new</property>
                     <value>0</value>
                 </equals>
-              </and>
             </condition>
             <volume>
+                <property>/sim/current-view/internal</property>
                 <factor>1</factor>
             </volume>
         </rwr>
@@ -894,17 +917,15 @@
             <mode>once</mode>
             <type>avionics</type>
             <condition>
-              <and>
-                <property>/sim/current-view/internal</property>
                 <not>
                   <equals>
                       <property>sound/rwr-launch</property>
                       <value type="string"></value>
                   </equals>
                 </not>
-              </and>
             </condition>
             <volume>
+                <property>/sim/current-view/internal</property>
                 <factor>1</factor>
             </volume>
         </rwr>

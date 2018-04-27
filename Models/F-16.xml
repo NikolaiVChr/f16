@@ -10,8 +10,21 @@
 
  <nasal>
   <load>
-   var livery_update = aircraft.livery_update.new(
-        "Aircraft/f16/Models/Liveries", 10);
+    var self = cmdarg();
+    var id = self.getNode("sim/multiplay/generic/int[9]");
+    var folder = "Aircraft/f16/Models/Liveries";
+    if (id != nil and id.getValue() == 3) {
+      folder = "Aircraft/f16/Models/Liveries/Block30"
+    } elsif (id != nil and id.getValue() == 1) {
+      folder = "Aircraft/f16/Models/Liveries/Block10"
+    } elsif (id != nil and id.getValue() == 2) {
+      folder = "Aircraft/f16/Models/Liveries/Block20"
+    } elsif (id != nil and id.getValue() == 5) {
+      folder = "Aircraft/f16/Models/Liveries/Block50"
+    } elsif (id != nil and id.getValue() == 4) {
+      folder = "Aircraft/f16/Models/Liveries/Block40"
+    }
+    var livery_update = aircraft.livery_update.new(folder, 10);
   </load>
   <unload>
    livery_update.stop();
@@ -1475,7 +1488,7 @@
  <!-- livery selection -->
  <animation>
   <type>material</type>
-  <object-name>ArresterHook</object-name>
+  <!--<object-name>ArresterHook</object-name>
   <object-name>CanopyFrame</object-name>
   <object-name>ExternalFrontGearDoor</object-name>
   <object-name>ExternalLeftMainDoor</object-name>
@@ -1529,7 +1542,8 @@
   <object-name>Poly</object-name>
   <object-name>Poly.001</object-name>
   <object-name>Poly.002</object-name>
-  <object-name>Turbine</object-name>
+  <object-name>Turbine</object-name>-->
+  <object-name>Fuselage</object-name>
   <object-name>LandingGear</object-name>
   <property-base>sim/model/livery</property-base>
   <texture-prop>texture</texture-prop>

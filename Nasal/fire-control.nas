@@ -109,7 +109,7 @@ var FireControl = {
 			print("trigger propagating");
 			me.aim = me.getSelectedWeapon();
 			#printf(" to %d",me.aim != nil);
-			if (me.aim != nil and me.aim.parents[0] == armament.AIM) {
+			if (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.status == armament.MISSILE_LOCK) {
 				me.aim = me.pylons[me.selected[0]].fireWeapon(me.selected[1]);
 				me.aim.sendMessage(me.aim.brevity~" at: "~me.aim.callsign);
 				me.aimNext = me.nextWeapon(me.selectedType);
@@ -143,7 +143,7 @@ var FireControl = {
 			me.pylon = me.selected[0];
 		}
 		print();
-		printf("Start find next wepon of type %s, starting from pylon %d", type, me.pylon);
+		printf("Start find next weapon of type %s, starting from pylon %d", type, me.pylon);
 		me.indexWeapon = -1;
 		me.index = me.vectorIndex(me.pylonOrder, me.pylon);
 		for(me.i=0;me.i<size(me.pylonOrder);me.i+=1) {
@@ -225,3 +225,4 @@ var FireControl = {
 		print("FC: nothing selected");
 	},
 };
+

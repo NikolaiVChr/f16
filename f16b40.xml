@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="http://jsbsim.sourceforge.net/JSBSim.xsl"?>
+<fdm_config name="General Dynamics YF-16" version="2.0" release="ALPHA"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
+
+ <fileheader>
+  <author> Erik Hofman, Nikolai V. Chr. </author>
+  <filecreationdate> 2001-12-28 </filecreationdate>
+  <version> $Revision: 1.93 $ </version>
+  <license>
+   <licenseName>GPL (General Public License)</licenseName>
+   <licenseURL>http://www.gnu.org/licenses/gpl.html</licenseURL>
+  </license>
+  <description> Models an F-16 </description>
+  <note>
+   This model was created using data that is, or has been, publically
+   available by means of technical reports, textbooks, image graphs or
+   published code. This aircraft description file is in no way related 
+   to the manufacturer of the real aircraft.
+   Neither the name of (any of) the authors nor the names of (any of) the
+   manufacturers may be used to endorse or promote products derived from
+   this file.
+ 
+   The data is provided ''as is'' and any express or implied
+   warranties, including, but not limitted to the implied warranties of
+   merchantability and fitness for a particular purpose are disclaimed.
+  </note>
+  <reference refID="ISBN 0-7232-3458-2" author="William Green" title="General Dynamics F-16 Dash-1" date="1987"/>
+  <reference refID="NASA TP-1538" author="Nguyen, L. T.; Ogburn, M. E.; Gilbert, W. P.; Kibler, K. S.; Brown, P. W.; Deal, P. L."
+    title="Simulator study of stall/post-stall characteristics of a fighter airplane with relaxed longitudinal static stability." date="12/1979"/>
+  <reference refID="AD A 055417" author="Marchand,Michael A" title="Pitch Rate Flight Control for the F-16 Aircraft to Improve Air-To-Air Combat" date="Dec 1977"/>
+  <reference refID="AD A 189675" author="Kassan, Mark W" title="F-16 Simulator for Man-in-the-Loop Testing of Aircraft Control Systems (SIMTACS)" date="Dec 1987"/>
+  <reference refID="AFD-070827-032" author="Goddard and Lemm" title="Simulation of the F-16 Lantirn Automatic Terrain Avoidance System" date="Aug 1986"/>
+  <reference refID="NASA TN-D-8176" author="Gilbert, W. P.; Nguyen, L. T.; Vangunst, R. W."
+    title="Simulator study of the effectiveness of an automatic control system designed to improve the high-angle-of-attack characteristics of a fighter airplane" date="1976"/>
+  <reference refID="NASA TP-2857" author="Dale A. Mackall" title="Development and flight test experiences with a flight-crucial digital control system" date="1988"/>
+  <reference refID="PW-100 Engine" author="Elodie Roux" title="Turbofan and Turbojet Engines: Database Handbook" date="2007"/>
+  <reference refID="Manual" author="Lockheed Martin" title="F-16C/D Block 50 Flight Manual" date="2 December 1996"/>
+  <reference refID="Youtube video showing speed brake actuation time (2 secs)" author="MultiplyLeadership's channel"
+    title="Air-to-air chase video of F-16 AB light off FTT" date="Oct 20, 2010"/>
+  <reference refID="None" author="Richard Murray" title="http://www.cds.caltech.edu/~murray/projects/afosr95-vehicles/models/f16/" date="n/a"/>
+  <reference refID="H-1999" author="NASA" title="Dynamic ground effects flight test of an F-15 aircraft" date="n/a"/>
+  <reference refID="H-2177" author="NASA" title="Dynamic ground effect for a Cranked Arrow Wing Airplane" date="n/a"/>
+  <reference refID="None" author="n/a" title="http://www.codeonemagazine.com/archives/1991/articles/jul_91/july2a_91.html" date="n/a"/>
+  <reference refID="F16i post stall" author="Moshe Medina" title="Post stall characteristics of highly augmented fighter aircraft" date="n/a"/>
+ </fileheader>
+
+ <ground_reactions file="Systems/jsb-ground-reactions"/>
+ <external_reactions file="Systems/jsb-external-reactions"/>
+ <system file="jsb-pushback"/> 
+ <metrics file="Systems/jsb-metrics"/>
+ <mass_balance file="Systems/jsb-mass"/>
+ <system file="jsb-hook"/>
+ <system file="f16-hydraulics"/>
+ <flight_control file="Systems/jsb-controls"/>
+ <propulsion file="Systems/jsb-propulsion-block30"/>
+ <aerodynamics file="Systems/jsb-aerodynamics-block15.xml"/>
+
+
+<!--
+<output name="c:/users/nikolai/documents/f16_datalog.csv" type="CSV" rate="120">
+ <property> fcs/fly-by-wire/pitch/q-washout </property>
+ <property> velocities/q-aero-deg_sec </property>-->
+ <!--<property> attitude/phi-rad </property>
+ <property> position/h-sl-ft </property>
+ <property> velocities/vc-kts </property>
+ <property> fcs/throttle-cmd-norm </property>
+ <property> fcs/elevator-cmd-norm </property>
+ <property> fcs/pitch-trim-cmd-norm </property>
+ <property> propulsion/total-fuel-lbs </property>
+ <property> flight-path/gamma-rad </property>
+ <property> accelerations/n-pilot-z-norm </property>
+ <rates> ON </rates>
+ <velocities> ON </velocities>
+ <forces> ON </forces>
+ <moments> ON </moments>
+ <position> ON </position>
+ <fcs> ON </fcs>
+ <propulsion> OFF </propulsion>
+ <aerosurfaces> ON </aerosurfaces>
+ <fcs> ON </fcs>
+ <ground_reactions> ON </ground_reactions>-->
+<!--</output>-->
+
+</fdm_config>
+

@@ -103,6 +103,15 @@ var F16_HUD = {
                 print("HUD: could not locate ",name);
         }
 
+        obj.custom = obj.canvas.createGroup();
+        obj.flyup = obj.svg.createChild("text")
+                .setText("FLYUP")
+                .setTranslation(sx*0.5*0.695633,sy*0.25)
+                .setAlignment("center-center")
+                .setColor(0,1,0)
+                .setFontSize(15, 1.0)
+                .hide();
+
 		return obj;
 	},
 #
@@ -187,7 +196,7 @@ var F16_HUD = {
 #
 #
     update : func(hdp) {
-        var  roll_rad = -hdp.roll*3.14159/180.0;
+        var  roll_rad = -hdp.roll*D2R;
 
 
         # calc of pitch_offset (compensates for AC3D model translated and rotated when loaded. Also semi compensates for HUD being at an angle.)
@@ -212,6 +221,12 @@ var F16_HUD = {
         me.ladder.setTranslation (0.0, hdp.pitch * pitch_factor+pitch_offset);                                           
         me.ladder.setCenter (me.ladder_center[0], me.ladder_center[1] - hdp.pitch * pitch_factor);
         me.ladder.setRotation (roll_rad);
+        me.ttc = getprop("instrumentation/radar/time-till-crash");
+        if (me.ttc != nil and me.ttc>0 and me.ttc<10) {
+            me.flyup.show();
+        } else {
+            me.flyup.hide();
+        }
   
 # velocity vector
         #340,260
@@ -251,7 +266,7 @@ var F16_HUD = {
             me.window2.setText("NAV");
             me.window2.setVisible(1);
         }
-
+        var win5 = 0;
         if(getprop("controls/armament/master-arm"))
         {
             var weap = pylons.fcs.selectedType;
@@ -289,13 +304,22 @@ var F16_HUD = {
 #
 #these labels aren't correct - but we don't have a full simulation of the targetting and missiles so 
 #have no real idea on the details of how this works.
-                me.window4.setText(sprintf("RNG %3.1f", awg_9.active_u.get_range()));
-                me.window5.setText(sprintf("CLO %-3d", awg_9.active_u.get_closure_rate()));
+                if (awg_9.active_u.get_display() == 0) {
+                    me.window4.setText("");
+                    me.window5.setText("");
+                } else {
+                    me.window4.setText(sprintf("RNG %3.1f", awg_9.active_u.get_range()));
+                    me.window5.setText(sprintf("CLO %-3d", awg_9.active_u.get_closure_rate()));
+                }
+                me.window4.show();
+                win5 = 1;
                 me.window6.setText(model);
-                me.window6.setVisible(1); # SRM UNCAGE / TARGET ASPECT
+                me.window6.show(); # SRM UNCAGE / TARGET ASPECT
             }
             else {
                 me.window3.hide();
+                me.window4.hide();
+                me.window6.hide();
             }
         }
         else
@@ -308,8 +332,9 @@ var F16_HUD = {
             #  me.window3.setText("");
             me.window3.hide();
             me.window4.setText(hdp.nav_range);
+            me.window4.show();
             me.window5.setText(hdp.hud_window5);
-            me.window6.setVisible(0); # SRM UNCAGE / TARGET ASPECT
+            me.window6.hide(); # SRM UNCAGE / TARGET ASPECT
         }
 
         if (hdp.range_rate != nil)
@@ -409,7 +434,9 @@ var F16_HUD = {
 # 8                 5
 # 9                 6
         me.window9.setText(sprintf("AOA %d",hdp.alpha));
-        me.window5.setText(sprintf("M %1.3f",hdp.mach));
+        if(win5 == 0) {
+            me.window5.setText(sprintf("M %1.3f",hdp.mach));
+        }
 
         me.roll_rad = 0.0;
 

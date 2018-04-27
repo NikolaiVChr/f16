@@ -187,9 +187,153 @@ var loop_flare = func {
       } else {
         oldsuit();
       }
+      call(func{fgcommand('dialog-close', multiplayer.dialog.dialog.prop())},nil,var err= []);# props.Node.new({"dialog-name": "location-in-air"}));
+      if (!getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+        call(func{fgcommand('dialog-close', props.Node.new({"dialog-name": "WeightAndFuel"}))},nil,var err2 = []);          
+      }      
+      setprop("/sim/speed-up", 1);
+      setprop("/sim/rendering/als-filters/use-filtering", 1);
     }
 
     settimer(loop_flare, 0.10);
 };
 
 loop_flare();
+
+var medium = {
+  loop: func {
+    if ((getprop("velocities/speed-east-fps") != 0 or getprop("velocities/speed-north-fps") != 0) and getprop("fdm/jsbsim/gear/unit[0]/WOW") != 1 and
+          getprop("fdm/jsbsim/gear/unit[1]/WOW") != 1 and (
+         (getprop("fdm/jsbsim/gear/gear-pos-norm")<1)
+      or (getprop("fdm/jsbsim/gear/gear-pos-norm")>0.99 and getprop("/position/altitude-agl-ft") > 164)
+      )) {
+      me.start = geo.aircraft_position();
+
+      me.speed_down_fps  = getprop("velocities/speed-down-fps");
+      me.speed_east_fps  = getprop("velocities/speed-east-fps");
+      me.speed_north_fps = getprop("velocities/speed-north-fps");
+      me.speed_horz_fps  = math.sqrt((me.speed_east_fps*me.speed_east_fps)+(me.speed_north_fps*me.speed_north_fps));
+      me.speed_fps       = math.sqrt((me.speed_horz_fps*me.speed_horz_fps)+(me.speed_down_fps*me.speed_down_fps));
+      me.heading = 0;
+      if (me.speed_north_fps >= 0) {
+        me.heading -= math.acos(me.speed_east_fps/me.speed_horz_fps)*R2D - 90;
+      } else {
+        me.heading -= -math.acos(me.speed_east_fps/me.speed_horz_fps)*R2D - 90;
+      }
+      me.heading = geo.normdeg(me.heading);
+      #cos(90-heading)*horz = east
+      #acos(east/horz) - 90 = -head
+
+      me.end = geo.Coord.new(me.start);
+      me.end.apply_course_distance(me.heading, me.speed_horz_fps*FT2M);
+      me.end.set_alt(me.end.alt()-me.speed_down_fps*FT2M);
+
+      me.dir_x = me.end.x()-me.start.x();
+      me.dir_y = me.end.y()-me.start.y();
+      me.dir_z = me.end.z()-me.start.z();
+      me.xyz = {"x":me.start.x(),  "y":me.start.y(),  "z":me.start.z()};
+      me.dir = {"x":me.dir_x,      "y":me.dir_y,      "z":me.dir_z};
+
+      me.geod = get_cart_ground_intersection(me.xyz, me.dir);
+      if (me.geod != nil) {
+        me.end.set_latlon(me.geod.lat, me.geod.lon, me.geod.elevation);
+        me.dist = me.start.direct_distance_to(me.end)*M2FT;
+        me.time = me.dist / me.speed_fps;
+        setprop("instrumentation/radar/time-till-crash", me.time);
+      } else {
+        setprop("instrumentation/radar/time-till-crash", 15);
+      }
+    } else {
+      setprop("instrumentation/radar/time-till-crash", 15);
+    }
+    settimer(func {me.loop()},0.5);
+  },
+};
+
+medium.loop();
+
+var repair = func {
+  if (getprop("payload/armament/msg")==1 and !getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+    screen.log.write("If you need to repair now, then use Menu-Location-SelectAirport instead.");
+  } else {
+    repair2();
+  }
+}
+
+var repair2 = func {
+  screen.log.write("Repairing, standby..");
+  crash.repair();
+  if (getprop("engines/engine[0]/running")!=1) {
+    setprop("controls/engines/engine[0]/cutoff", 1);
+    setprop("controls/engines/engine[0]/starter", 1);
+    settimer(repair3, 10);
+  } else {
+    screen.log.write("Done.");
+  }
+}
+
+var repair3 = func {
+  setprop("controls/engines/engine[0]/cutoff", 0);
+  screen.log.write("Attempting engine restart, standby for engine..");
+}
+
+var re_init_listener = setlistener("/sim/signals/reinit", func {
+  if (getprop("/consumables/fuel/tank[0]/level-norm")<0.5) {
+    setprop("/consumables/fuel/tank[0]/level-norm", 0.55);
+  }
+  repair2();
+ }, 0, 0);
+
+############ Cannon impact messages #####################
+
+var hits_count = 0;
+var hit_timer  = FALSE;
+var hit_callsign = "";
+
+var impact_listener = func {
+  if (awg_9.active_u != nil) {
+    var ballistic_name = props.globals.getNode("/ai/models/model-impact").getValue();
+    var ballistic = props.globals.getNode(ballistic_name, 0);
+    if (ballistic != nil and ballistic.getName() != "munition") {
+      var typeNode = ballistic.getNode("impact/type");
+      if (typeNode != nil and typeNode.getValue() != "terrain") {
+        var lat = ballistic.getNode("impact/latitude-deg").getValue();
+        var lon = ballistic.getNode("impact/longitude-deg").getValue();
+        var impactPos = geo.Coord.new().set_latlon(lat, lon);
+
+        var selectionPos = awg_9.active_u.get_Coord();
+
+        var distance = impactPos.distance_to(selectionPos);
+        if (distance < 75) {
+          var typeOrd = ballistic.getNode("name").getValue();
+          hits_count += 1;
+          if ( hit_timer == FALSE ) {
+            hit_timer = TRUE;
+            hit_callsign = awg_9.active_u.get_Callsign();
+            settimer(func{hitmessage(typeOrd);},1);
+          }
+        }
+      }
+    }
+  }
+}
+
+var hitmessage = func(typeOrd) {
+  #print("inside hitmessage");
+  var phrase = typeOrd ~ " hit: " ~ hit_callsign ~ ": " ~ hits_count ~ " hits";
+  if (getprop("payload/armament/msg") == TRUE) {
+    armament.defeatSpamFilter(phrase);
+  } else {
+    setprop("/sim/messages/atc", phrase);
+  }
+  hit_callsign = "";
+  hit_timer = 0;
+  hits_count = 0;
+}
+
+# setup impact listener
+setlistener("/ai/models/model-impact", impact_listener, 0, 0);
+
+var prop = "payload/armament/fire-control";
+var actuator_fc = compat_failure_modes.set_unserviceable(prop);
+FailureMgr.add_failure_mode(prop, "Fire control", actuator_fc);

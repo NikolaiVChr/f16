@@ -15,6 +15,7 @@
   </rating>
   <flight-model>jsb</flight-model>
   <aero>yf16</aero>
+  <variant-id type="int">0</variant-id>
   <variant-of>f16-block-52</variant-of>
   <tags>
       <tag>general-dynamics</tag>
@@ -57,11 +58,8 @@
     </f16>
    <path archive="y">Aircraft/f16/Models/YF-16.xml</path>
    <livery>
-    <file type="string">yf.xml</file>
+    <file type="string"/>
     <name type="string">YF-16 Prototype</name>
-    <texture>Liveries/yf/yf.png</texture>
-    <actype type="string">F-16A-MLU</actype>
-    <owner type="string">USAF</owner>
    </livery>
   </model>
 

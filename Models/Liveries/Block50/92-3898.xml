@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery> 
+    <name type="string">USAF, Thunderbirds No. 1</name>
+    <texture>Liveries/Block50/92-3898.png</texture>
+    
+    <owner type="string">USAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/yf/yf16-transp.png</texture>
+   </livery-logo>
+  </model>
+ </sim>
+</PropertyList>

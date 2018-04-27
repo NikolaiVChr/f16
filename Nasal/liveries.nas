@@ -1,1 +1,1 @@
-aircraft.livery.init("Aircraft/f16/Models/Liveries");
+aircraft.livery.init(getprop("sim/model/livery/folder"));

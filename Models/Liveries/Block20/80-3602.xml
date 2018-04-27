@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">RDAF Esk 730, E-602</name>
+    <texture>Liveries/Block20/80-3602.png</texture>
+    <owner type="string">RDAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/Block20/E-602.png</texture>
+   </livery-logo>
+  </model>
+ </sim>
+</PropertyList>
