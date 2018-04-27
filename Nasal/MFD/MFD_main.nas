@@ -349,7 +349,7 @@ var MFD_Device =
 
     setupRadar: func (svg) {
         svg.p_RDR = me.canvas.createGroup()
-                .setTranslation(276*0.795,512);#552,482 , 0.795 is for UV map
+                .setTranslation(276*0.795,482);#552,482 , 0.795 is for UV map
         
         svg.blep = setsize([],200);
         for (var i = 0;i<200;i+=1) {
@@ -359,6 +359,59 @@ var MFD_Device =
                     .setStrokeLineWidth(4)
                     .hide();
         }
+        svg.rangUp = svg.p_RDR.createChild("path")
+                    .moveTo(-276*0.795,-482*0.5-105-27.5)
+                    .horiz(30)
+                    .lineTo(-276*0.795+15,-482*0.5-105-27.5-15)
+                    .lineTo(-276*0.795,-482*0.5-105-27.5)
+                    .setStrokeLineWidth(2)
+                    .setColor(1,1,1);
+        svg.rang = svg.p_RDR.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5-105)
+                .setAlignment("left-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.rangDown = svg.p_RDR.createChild("path")
+                    .moveTo(-276*0.795,-482*0.5-105+27.5)
+                    .horiz(30)
+                    .lineTo(-276*0.795+15,-482*0.5-105+27.5+15)
+                    .lineTo(-276*0.795,-482*0.5-105+27.5)
+                    .setStrokeLineWidth(2)
+                    .setColor(1,1,1);
+        svg.az = svg.p_RDR.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5-5)
+                .setText("A4")
+                .setAlignment("left-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.bars = svg.p_RDR.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5+60)
+                .setText("8B")
+                .setAlignment("left-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.ant_bottom = svg.p_RDR.createChild("path")
+                    .moveTo(-276*0.795,0)
+                    .vert(-10)
+                    .moveTo(-276*0.795-10,-10)
+                    .horiz(20)
+                    .setStrokeLineWidth(1)
+                    .setColor(0.5,0.5,1);
+        svg.distl = svg.p_RDR.createChild("path")
+                    .moveTo(-276*0.795+40,-482*0.25)
+                    .horiz(20)
+                    .moveTo(-276*0.795+40,-482*0.5)
+                    .horiz(30)
+                    .moveTo(-276*0.795+40,-482*0.75)
+                    .horiz(20)
+                    .moveTo(-276*0.795*0.5,0)
+                    .vert(-20)
+                    .moveTo(0,0)
+                    .vert(-30)
+                    .moveTo(276*0.795*0.5,0)
+                    .vert(-20)
+                    .setStrokeLineWidth(1)
+                    .setColor(0.5,0.5,1);
         svg.lock = setsize([],200);
         for (var i = 0;i<200;i+=1) {
             svg.lock[i] = svg.p_RDR.createChild("path")
@@ -372,6 +425,21 @@ var MFD_Device =
                             .setStrokeLineWidth(2)
                     .hide();
         }
+        svg.dlzX      = 276*0.795*0.75;
+        svg.dlzY      =-482*0.25;
+        svg.dlzWidth  =  20;
+        svg.dlzHeight = 482*0.5;
+        svg.dlzLW     =   2;
+        svg.dlz      = svg.p_RDR.createChild("group")
+                        .setTranslation(svg.dlzX, svg.dlzY);
+        svg.dlz2     = svg.dlz.createChild("group");
+        svg.dlzArrow = svg.dlz.createChild("path")
+           .moveTo(0, 0)
+           .lineTo( -10, 8)
+           .moveTo(0, 0)
+           .lineTo( -10, -8)
+           .setColor(1,1,1)
+           .setStrokeLineWidth(svg.dlzLW);
     },
 
     addRadar: func {
@@ -383,11 +451,37 @@ var MFD_Device =
             me.page_index[layer_id] = np;
             np.setVisible(0);
             return np;
-        };        
+        };
         me.p_RDR = me.PFD.addRadarPage(svg, "Radar", "p_RDR");
         me.p_RDR.root = svg;
-        me.p_RDR.update = func {
+        me.p_RDR.wdt = 552*0.795;
+        me.p_RDR.fwd = 0;
+        me.p_RDR.plc = 0;
+        me.p_RDR.notifyButton = func (eventi) {
+            if (eventi != nil) {
+                if (eventi == 0) {
+                    awg_9.range_control(1);
+                } elsif (eventi == 1) {
+                    awg_9.range_control(-1);
+                }
+            }
+        }
+        me.p_RDR.update = func (noti) {
+            if (noti != nil) {
+                #print("not");
+                #debug.dump(noti);
+            }
             me.i=0;
+            me.root.rang.setText(sprintf("%d",getprop("instrumentation/radar/radar2-range")));
+            me.time = getprop("sim/time/elapsed-sec");
+            if (getprop("sim/multiplay/generic/int[2]")!=1) {
+                var plc = me.time*0.5-int(me.time*0.5);
+                if (plc<me.plc) {
+                    me.fwd = !me.fwd;
+                }
+                me.plc = plc;
+                me.root.ant_bottom.setTranslation(me.wdt*math.abs(me.fwd-me.plc),0);
+            }
             foreach(contact; awg_9.tgts_list) {
                 if (contact.get_display() == 0) {
                     continue;
@@ -395,7 +489,7 @@ var MFD_Device =
                 me.distPixels = contact.get_range()*(482/awg_9.range_radar2);
 
                 me.root.blep[me.i].setColor(1,1,1);
-                me.root.blep[me.i].setTranslation(276*0.795*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels);
+                me.root.blep[me.i].setTranslation(me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels);
                 me.root.blep[me.i].show();
                 me.root.blep[me.i].update();
                 if (contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType)) {
@@ -420,6 +514,31 @@ var MFD_Device =
             for (;me.i<200;me.i+=1) {
                 me.root.blep[me.i].hide();
                 me.root.lock[me.i].hide();
+            }
+            me.root.dlzArray = pylons.getDLZ();
+            #me.dlzArray =[10,8,6,2,9];#test
+            if (me.root.dlzArray == nil or size(me.root.dlzArray) == 0) {
+                    me.root.dlz.hide();
+            } else {
+                #printf("%d %d %d %d %d",me.root.dlzArray[0],me.root.dlzArray[1],me.root.dlzArray[2],me.root.dlzArray[3],me.root.dlzArray[4]);
+                me.root.dlz2.removeAllChildren();
+                me.root.dlzArrow.setTranslation(0,-me.root.dlzArray[4]/me.root.dlzArray[0]*me.root.dlzHeight);
+                me.root.dlzGeom = me.root.dlz2.createChild("path")
+                        .moveTo(0, -me.root.dlzArray[3]/me.root.dlzArray[0]*me.root.dlzHeight)
+                        .lineTo(0, -me.root.dlzArray[2]/me.root.dlzArray[0]*me.root.dlzHeight)
+                        .lineTo(me.root.dlzWidth, -me.root.dlzArray[2]/me.root.dlzArray[0]*me.root.dlzHeight)
+                        .lineTo(me.root.dlzWidth, -me.root.dlzArray[3]/me.root.dlzArray[0]*me.root.dlzHeight)
+                        .lineTo(0, -me.root.dlzArray[3]/me.root.dlzArray[0]*me.root.dlzHeight)
+                        .lineTo(0, -me.root.dlzArray[1]/me.root.dlzArray[0]*me.root.dlzHeight)
+                        .lineTo(me.root.dlzWidth, -me.root.dlzArray[1]/me.root.dlzArray[0]*me.root.dlzHeight)
+                        .moveTo(0, -me.root.dlzHeight)
+                        .lineTo(me.root.dlzWidth, -me.root.dlzHeight-3)
+                        .lineTo(me.root.dlzWidth, -me.root.dlzHeight+3)
+                        .lineTo(0, -me.root.dlzHeight)
+                        .setStrokeLineWidth(me.root.dlzLW)
+                        .setColor(1,1,1);
+                me.root.dlz2.update();
+                me.root.dlz.show();
             }
         };
     },

@@ -1,3 +1,4 @@
+var fcs = nil;
 if (getprop("sim/model/f16/wingmounts") != 0) {
 	# all variants except YF-16 gets store options:
 
@@ -70,7 +71,8 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 
 	var pylons = [pylon1,pylon2,pylon3,pylon4,pylon5,pylon6,pylon7,pylon8,pylon9,pylonI];
 
-	var fcs = fc.FireControl.new(pylons, [9,0,8,1,7,2,6,3,5,4], ["20mm Cannon","AIM-9","AIM-120","AIM-7","GBU-12"]);
+	fcs = fc.FireControl.new(pylons, [9,0,8,1,7,2,6,3,5,4], ["20mm Cannon","AIM-9","AIM-120","AIM-7","GBU-12"]);
+
 
 } else {
 	# YF-16 only get wingtip aim9 dummies:
@@ -90,3 +92,12 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 	var pylon9 = stations.Pylon.new("Right Wingtip Pylon", 8, [0,0,0], wingtipSet9, 1, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[9]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[9]",1));
 }
 #print("** Pylon & fire control system started. **");
+var getDLZ = func {
+    if (fcs != nil and getprop("controls/armament/master-arm") == 1) {
+        var w = fcs.getSelectedWeapon();
+        if (w!=nil and w.parents[0] == armament.AIM) {
+        	return w.getDLZ();
+        }
+    }
+    return nil;
+}

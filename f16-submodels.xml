@@ -39,7 +39,7 @@
   </submodel>
 
   <submodel>
-    <name>gun-bullet</name>
+    <name>M61A1 shell</name>
     <model>Models/Geometry/null.ac</model>
     <trigger>fdm/jsbsim/fcs/guntrigger</trigger>
     <speed>2041.0</speed>
@@ -58,7 +58,7 @@
     <collision>true</collision>
     <collision-report>sim/ai/aircraft/collision/bullet</collision-report>
     <impact>true</impact>
-    <impact-report>sim/ai/aircraft/impact/bullet</impact-report>
+    <impact-reports>/ai/models/model-impact</impact-reports>
     <submodel-path>Aircraft/f16/Models/Armament/Weapons/M61A1/bullet-submodel.xml</submodel-path>
   </submodel>
 

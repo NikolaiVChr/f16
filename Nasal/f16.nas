@@ -229,3 +229,53 @@ var re_init_listener = setlistener("/sim/signals/reinit", func {
   }
   repair2();
  }, 0, 0);
+
+############ Cannon impact messages #####################
+
+var hits_count = 0;
+var hit_timer  = FALSE;
+var hit_callsign = "";
+
+var impact_listener = func {
+  if (awg_9.active_u != nil) {
+    var ballistic_name = props.globals.getNode("/ai/models/model-impact").getValue();
+    var ballistic = props.globals.getNode(ballistic_name, 0);
+    if (ballistic != nil and ballistic.getName() != "munition") {
+      var typeNode = ballistic.getNode("impact/type");
+      if (typeNode != nil and typeNode.getValue() != "terrain") {
+        var lat = ballistic.getNode("impact/latitude-deg").getValue();
+        var lon = ballistic.getNode("impact/longitude-deg").getValue();
+        var impactPos = geo.Coord.new().set_latlon(lat, lon);
+
+        var selectionPos = awg_9.active_u.get_Coord();
+
+        var distance = impactPos.distance_to(selectionPos);
+        if (distance < 75) {
+          var typeOrd = ballistic.getNode("name").getValue();
+          hits_count += 1;
+          if ( hit_timer == FALSE ) {
+            hit_timer = TRUE;
+            hit_callsign = awg_9.active_u.get_Callsign();
+            settimer(func{hitmessage(typeOrd);},1);
+          }
+        }
+      }
+    }
+  }
+}
+
+var hitmessage = func(typeOrd) {
+  #print("inside hitmessage");
+  var phrase = typeOrd ~ " hit: " ~ hit_callsign ~ ": " ~ hits_count ~ " hits";
+  if (getprop("payload/armament/msg") == TRUE) {
+    armament.defeatSpamFilter(phrase);
+  } else {
+    setprop("/sim/messages/atc", phrase);
+  }
+  hit_callsign = "";
+  hit_timer = 0;
+  hits_count = 0;
+}
+
+# setup impact listener
+setlistener("/ai/models/model-impact", impact_listener, 0, 0);

@@ -159,13 +159,14 @@ var az_scan = func() {
             active_u = nil;
             armament.contact = active_u;
         }
+        completeList = [];
 		foreach( var c; raw_list )
         {
 			# FIXME: At that time a multiplayer node may have been deleted while still
 			# existing as a displayable target in the radar targets nodes.
 			var type = c.getName();
 
-            if (c.getNode("valid") == nil or !c.getNode("valid").getValue()) {
+            if (c.getNode("valid") == nil or !c.getNode("valid").getValue() or c.getNode("position") == nil) {#position check is to avoid cannon impacts
 				continue;
 			}
 			var HaveRadarNode = c.getNode("radar");
@@ -181,10 +182,10 @@ var az_scan = func() {
             u_ecm_type_num    = 0;
             var u_rng = u.get_range();
 
-            if (doRWR == 1 and u_rng != nil and u_rng < 150 and (type == "multiplayer" or type == "tanker" or type == "aircraft" or type=="carrier" or type=="groundvehicle" or type=="ship")) 
-            {
-                rwrNew(u);
-            }
+            #if (doRWR == 1 and u_rng != nil and u_rng < 150 and (type == "multiplayer" or type == "tanker" or type == "aircraft" or type=="carrier" or type=="groundvehicle" or type=="ship")) 
+            #{
+            #    rwrNew(u);
+            #}
             if (!radar_active)
               continue;
             if (u_rng != nil and (u_rng < range_radar2  and u.not_acting == 0 ) and rcs.inRadarRange(u, 70, 3.2))#APG68/66
@@ -194,6 +195,7 @@ var az_scan = func() {
 # - our radar switched on
 # - their radar switched on
 # - their transponder switched on 
+
                 var visible = 0;
                 var their_radar_mode = 0;
                 var their_radar_node = c.getNode("multiplay/generic/int[17]");
@@ -240,8 +242,9 @@ var az_scan = func() {
             } else {
                 u.set_display(0);
             }
+            append(completeList,u);
 		}
-
+        
 		# Summarize ECM alerts.
 		if ( ecm_alert1 == 0 and ecm_alert1_last == 0 ) { EcmAlert1.setBoolValue(0) }
 		if ( ecm_alert2 == 0 and ecm_alert1_last == 0 ) { EcmAlert2.setBoolValue(0) }
@@ -251,99 +254,6 @@ var az_scan = func() {
 		ecm_alert2 = 0;
 	}
 
-    var idx = 0;
-
-	foreach( u; tgts_list )
-    {
-		var u_display = 0;
-		var u_fading = u.get_fading() - fading_speed;
-
-
-		if ( u_fading < 0 ) { u_fading = 0 }
-
-		if (( swp_dir and swp_deg_last < u.deviation and u.deviation <= swp_deg )
-			or ( ! swp_dir and swp_deg <= u.deviation and u.deviation < swp_deg_last ))
-        {
-			u.get_bearing();
-			u.get_heading();
-			#var horizon = u.get_horizon( our_alt );
-			var u_rng = u.get_range();
-
-			if (1==1 or (u_rng < horizon and radardist.radis(u.string, my_radarcorr)))
-            {
-
-# Compute mp position in our DDD display. (Bearing/horizontal + Range/Vertical).
-				u.set_relative_bearing( ddd_screen_width / az_fld * u.deviation );
-				var factor_range_radar = 0.0657 / range_radar2; # 0.0657m : length of the distance range on the DDD screen.
-				u.set_ddd_draw_range_nm( factor_range_radar * u_rng );
-				u_fading = 1;
-				u_display = 1;
-
-# Compute mp position in our TID display. (PPI like display, normaly targets are displayed only when locked.)
-				factor_range_radar = 0.15 / range_radar2; # 0.15m : length of the radius range on the TID screen.
-				u.set_tid_draw_range_nm( factor_range_radar * u_rng );
-
-# Compute first digit of mp altitude rounded to nearest thousand. (labels).
-				u.set_rounded_alt( rounding1000( u.get_altitude() ) / 1000 );
-
-# Compute closure rate in Kts.
-				u.get_closure_rate();
-
-                #
-# ensure that the currently selected target
-# remains the active one.
-                var callsign="**";
-
-                if (u.Callsign != nil)
-                    callsign=u.Callsign.getValue();
-
-                if (u.airbone)
-                {
-                    if (active_u_callsign != nil and u.Callsign != nil and u.Callsign.getValue() == active_u_callsign)
-                    {
-                        active_u = u;armament.contact = active_u;
-#                        printf("%2d: found active_u %s %d",idx, callsign, u_rng);
-                    }
-                }
-                idx=idx+1;
-# Check if u = nearest echo.
-				if ( u_rng != 0 and (tmp_nearest_rng == nil or u_rng < tmp_nearest_rng))
-                {
-                    if(u.airbone)
-                    {
-					    tmp_nearest_u = u;
-    					tmp_nearest_rng = u_rng;
-                    }
-				}
-			}
-			u.set_display(u_display);
-		}
-		u.set_fading(u_fading);
-        #
-        #
-        #
-
-        if (active_u != nil)
-        {
-            tmp_nearest_u = active_u;
-#            print("1:nearest u active ",active_u.Callsign.getValue()," ", active_u_callsign);
-        }
-        else
-        {
-            if (nearest_u != nil)
-            {
-#                active_u_callsign = nearest_u.Callsign.getValue();
-            }
-            if (tmp_nearest_u != nil)
-            {
-#                if (tmp_nearest_u.Callsign != nil)
-#                    active_u_callsign = tmp_nearest_u.Callsign.getValue();
-#                else
-#                    active_u_callsign = nil;
-
-            }
-        }
-	}
 #    print("2:nearest u set  ",active_u_callsign);
     var tgt_cmd = getprop("sim/model/f16/instrumentation/radar-awg-9/select-target");
     setprop("sim/model/f16/instrumentation/radar-awg-9/select-target",0);
@@ -464,6 +374,7 @@ var az_scan = func() {
         #active_u_callsign = nil;
     }
     if(rwrs.rwr != nil and doRWR == 1) {
+        rwrNew();
         rwrs.rwr.update(rwrList);
     }
 }
@@ -889,6 +800,7 @@ var Target = {
             obj.EcmSignalNorm  = obj.TgtsFiles.getNode("ecm-signal-norm", 1);
             obj.EcmTypeNum     = obj.TgtsFiles.getNode("ecm_type_num", 1);
             obj.Display        = obj.TgtsFiles.getNode("display", 1);
+            obj.Display.setValue(0);
             obj.Fading         = obj.TgtsFiles.getNode("ddd-echo-fading", 1);
             obj.DddDrawRangeNm = obj.TgtsFiles.getNode("ddd-draw-range-nm", 1);
             obj.TidDrawRangeNm = obj.TgtsFiles.getNode("tid-draw-range-nm", 1);
@@ -1210,48 +1122,53 @@ f16_radar = F16RadarRecipient.new("F16-RADAR");
 
 emesary.GlobalTransmitter.Register(f16_radar);
 
+completeList = [];
 rwrList = [];
 
-var rwrNew = func (u) {
-    if (getprop("link16/wingman-1")==u.get_Callsign() or getprop("link16/wingman-2")==u.get_Callsign() or getprop("link16/wingman-3")==u.get_Callsign()) {
-        return;
-    }
-    var bearing = geo.aircraft_position().course_to(u.get_Coord());
-    var trAct = u.propNode.getNode("instrumentation/transponder/transmitted-id");
-    var show = 0;
-    var heading = u.get_heading();  
-    var inv_bearing =  bearing+180;
-    var deviation = inv_bearing - heading;
-    var dev = math.abs(geo.normdeg180(deviation));
-    if(u.get_model()=="AI" and u.get_range() < 55) {
-        show = 1;#non MP always has transponder on.
-    } elsif (trAct != nil and trAct.getValue() != -9999 and u.get_range() < 55) {
-      # transponder on
-      show = 1;
-    } else {
-      var rdrAct = u.propNode.getNode("sim/multiplay/generic/int[2]");
-      if (((rdrAct != nil and rdrAct.getValue()!=1) or rdrAct == nil) and math.abs(geo.normdeg180(deviation)) < 60) {
-          # we detect its radar is pointed at us and active
-          show = 1;
-      }
-    }
-    if (show == 1) {
-        var threat = 0;
-        if (u.get_model() != "missile_frigate" and u.get_model() != "buk-m2") {
-            threat += ((180-dev)/180)*0.30;
-        } elsif (u.get_model == "missile_frigate") {
-            threat += 0.30;
-        } else {
-            threat += 0.30;
+var rwrNew = func () {
+    foreach(u;completeList) {
+        if (getprop("link16/wingman-1")==u.get_Callsign() or getprop("link16/wingman-2")==u.get_Callsign() or getprop("link16/wingman-3")==u.get_Callsign()) {
+            return;
         }
-        var danger = u.get_model() == "missile_frigate"?75:(u.get_model() == "buk-m2"?35:50);
-        threat += ((danger-u.get_range())/danger)>0?((danger-u.get_range())/danger)*0.60:0;
-        var clo = u.get_closure_rate();
-        threat += clo>0?(clo/500)*0.10:0;
-        if (threat > 1) threat = 1;
-        #printf("%s threat:%.2f range:%d dev:%d", u.get_Callsign(),threat,u.get_range(),dev);
-        append(rwrList,[u,threat]);
-    } else {
-        #printf("%s ----", u.get_Callsign());
+        var bearing = geo.aircraft_position().course_to(u.get_Coord());
+        var trAct = u.propNode.getNode("instrumentation/transponder/transmitted-id");
+        var show = 0;
+        var heading = u.get_heading();  
+        var inv_bearing =  bearing+180;
+        var deviation = inv_bearing - heading;
+        var dev = math.abs(geo.normdeg180(deviation));
+        if (u.get_display()) {
+            show = 1;#in radar cone
+        } elsif(u.get_model()=="AI" and u.get_range() < 55) {
+            show = 1;#non MP always has transponder on.
+        } elsif (trAct != nil and trAct.getValue() != -9999 and u.get_range() < 55) {
+          # transponder on
+          show = 1;
+        } else {
+          var rdrAct = u.propNode.getNode("sim/multiplay/generic/int[2]");
+          if (((rdrAct != nil and rdrAct.getValue()!=1) or rdrAct == nil) and math.abs(geo.normdeg180(deviation)) < 60) {
+              # we detect its radar is pointed at us and active
+              show = 1;
+          }
+        }
+        if (show == 1) {
+            var threat = 0;
+            if (u.get_model() != "missile_frigate" and u.get_model() != "buk-m2") {
+                threat += ((180-dev)/180)*0.30;
+            } elsif (u.get_model == "missile_frigate") {
+                threat += 0.30;
+            } else {
+                threat += 0.30;
+            }
+            var danger = u.get_model() == "missile_frigate"?75:(u.get_model() == "buk-m2"?35:50);
+            threat += ((danger-u.get_range())/danger)>0?((danger-u.get_range())/danger)*0.60:0;
+            var clo = u.get_closure_rate();
+            threat += clo>0?(clo/500)*0.10:0;
+            if (threat > 1) threat = 1;
+            #printf("%s threat:%.2f range:%d dev:%d", u.get_Callsign(),threat,u.get_range(),dev);
+            append(rwrList,[u,threat]);
+        } else {
+            #printf("%s ----", u.get_Callsign());
+        }
     }
 }
