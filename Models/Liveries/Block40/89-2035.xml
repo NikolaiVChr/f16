@@ -4,10 +4,10 @@
  <sim> 
   <model>
    <livery>
-    <name type="string">Israeli Air Force</name>
-    <texture>Liveries/IDF/IDF.jpg</texture>
+    <name type="string">USAF 31FW, 555FS AV "Unit Markings"</name>
+    <texture>Liveries/Block40/89-2035.png</texture>
     
-    <owner type="string">IDF</owner>
+    <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>

@@ -2,10 +2,10 @@
 
 <PropertyList>
  <sim>
-  <model> 
-   <livery>
-    <name type="string">USAF 52FW, 480FS</name>
-    <texture>Liveries/52FW/52FW.jpg</texture>
+  <model>
+   <livery> 
+    <name type="string">USAF 52FW, 480FS SP</name>
+    <texture>Liveries/Block50/96-0080.png</texture>
     
     <owner type="string">USAF</owner>
    </livery>
