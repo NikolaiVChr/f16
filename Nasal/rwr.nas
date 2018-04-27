@@ -217,6 +217,7 @@ RWRCanvas = {
         me.prio = 0;
         me.launch = 0;
         me.newsound = 0;
+        me.unk = 0;
         foreach(contact; me.sortedlist) {
             me.typ=me.lookupType[contact[0].get_model()];
             if (me.i > me.max_icons-1) {
@@ -224,6 +225,7 @@ RWRCanvas = {
             }
             if (me.typ == nil) {
                 me.typ = rwr.AIRCRAFT_UNKNOWN;
+                me.unk = 1;
             }
             #print("show "~me.i~" "~me.typ~" "~contact[0].get_model()~"  "~contact[1]);
             me.threat = contact[1];#print(me.threat);
@@ -294,6 +296,8 @@ RWRCanvas = {
         if (me.prio == 0) {
             me.symbol_priority.hide();
         }
+        setprop("sound/rwr-pri", me.prio);
+        setprop("sound/rwr-unk", me.unk);
     },
 };
 

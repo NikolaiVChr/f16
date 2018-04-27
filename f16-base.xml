@@ -1166,6 +1166,8 @@
     <sound>
         <rwr-new type="bool">false</rwr-new>
         <rwr-launch type="string"></rwr-launch>
+        <rwr-pri type="bool">false</rwr-pri>
+        <rwr-unk type="bool">false</rwr-unk>
     </sound>
 
     <nasal>
