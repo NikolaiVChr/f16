@@ -859,7 +859,7 @@
   <object-name>FrontTire</object-name>
   <object-name>FrontLowerStrut</object-name>
   <property>sim/multiplay/generic/float[7]</property> 
-  <factor>-80</factor>
+  <factor>-32</factor>
   <center>
    <x-m>-2.97</x-m>
    <y-m>0.0</y-m>

@@ -40,6 +40,7 @@ Radar
 Add doppler.
 Make it 'see' difference between air,ground, arms and sea targets.
 Update to latest F15 radar.
+Make RWR use framenotification
 
 Cockpit
 -------
