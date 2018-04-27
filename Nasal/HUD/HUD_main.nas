@@ -106,7 +106,7 @@ var F16_HUD = {
         obj.custom = obj.canvas.createGroup();
         obj.flyup = obj.svg.createChild("text")
                 .setText("FLYUP")
-                .setTranslation(sx*0.5*0.695633,sy*0.333)
+                .setTranslation(sx*0.5*0.695633,sy*0.25)
                 .setAlignment("center-center")
                 .setColor(0,1,0)
                 .setFontSize(15, 1.0)
@@ -196,7 +196,7 @@ var F16_HUD = {
 #
 #
     update : func(hdp) {
-        var  roll_rad = -hdp.roll*3.14159/180.0;
+        var  roll_rad = -hdp.roll*math.pi/180.0;
 
 
         # calc of pitch_offset (compensates for AC3D model translated and rotated when loaded. Also semi compensates for HUD being at an angle.)
