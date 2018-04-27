@@ -15,4 +15,22 @@
   </emission>
  </animation>
 
+ <animation>
+  <object-name>launch</object-name>
+  <type>material</type>
+  <condition>
+	    <not>
+	      <equals>
+	          <property>sound/rwr-launch</property>
+	          <value type="string"></value>
+	      </equals>
+	    </not>
+	</condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
+
 </PropertyList>

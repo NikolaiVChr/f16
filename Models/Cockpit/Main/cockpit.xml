@@ -326,8 +326,8 @@
   </offsets>
   <condition>
    <equals>
-    <property>sim/model/livery/actype</property>
-    <value>F-16A-MLU</value>
+    <property>sim/variant-id</property>
+    <value>2</value>
    </equals>
   </condition>
  </model>
@@ -344,8 +344,8 @@
   <condition>
     <not>
    <equals>
-    <property>sim/model/livery/actype</property>
-    <value>F-16A-MLU</value>
+    <property>sim/variant-id</property>
+    <value>2</value>
    </equals>
  </not>
   </condition>
