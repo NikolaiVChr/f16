@@ -185,6 +185,23 @@
   </condition>
  </animation>
  
+ 
+<animation>
+  <type>select</type>
+  <object-name>Station3_left-mk82-pos-1</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-2-type</property>
+      <value>GBU-12</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-2-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+ 
+ 
 <!--  ===========================================================================================================-->
 <!--  ================================================= id-3   ==================================================-->
 <!--  ===========================================================================================================-->
@@ -333,6 +350,21 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
     <equals>
       <property>payload/armament/station/id-6-type</property>
       <value>AIM-120</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-6-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>Station7_right-mk82-pos-1</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-6-type</property>
+      <value>GBU-12</value>
     </equals>
     <greater-than>
       <property>payload/armament/station/id-6-count</property>
