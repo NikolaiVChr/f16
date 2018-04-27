@@ -6,7 +6,7 @@
 Erik Hofman
 - Main author
 - Simplified FDM
-- F16 block 15+ aerodynamics modifications
+- F16 block 30+ aerodynamics modifications
 
 Pensacola
 - Liveries

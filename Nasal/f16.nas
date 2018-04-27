@@ -267,12 +267,14 @@ var repair2 = func {
     setprop("controls/engines/engine[0]/cutoff", 1);
     setprop("controls/engines/engine[0]/starter", 1);
     settimer(repair2, 10);
+  } else {
+    screen.log.write("Done.");
   }
 }
 
 var repair3 = func {
   setprop("controls/engines/engine[0]/cutoff", 0);
-  screen.log.write("Attempting engine restart, standby..");
+  screen.log.write("Attempting engine restart, standby for engine..");
 }
 
 var re_init_listener = setlistener("/sim/signals/reinit", func {
@@ -331,3 +333,7 @@ var hitmessage = func(typeOrd) {
 
 # setup impact listener
 setlistener("/ai/models/model-impact", impact_listener, 0, 0);
+
+var prop = "payload/armament/fire-control";
+var actuator_fc = compat_failure_modes.set_unserviceable(prop);
+FailureMgr.add_failure_mode(prop, "Fire control", actuator_fc);
