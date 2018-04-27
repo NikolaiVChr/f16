@@ -6,10 +6,6 @@
      <model>
       <path>Aircraft/f16/Models/Armament/loads_models.xml</path>
     </model>
-    
-  
-
-
 
  <!--  ===========================================================================================================-->
  <!--  ================================================= id-0   ==================================================-->
@@ -67,6 +63,43 @@
       <property>payload/armament/station/id-0-type</property>
       <value>CATM-9L</value>
     </equals>
+  </condition>
+ </animation>
+ 
+ <!-- Animations of the smoke on station 1, id0, in multiplayer   -->
+ 
+  <animation>
+  <type>select</type>
+  <object-name>Station_AIM-9_smokewinderR1</object-name>
+  <condition>
+    <equals>
+   <property>sim/multiplay/generic/int[11]</property>
+   <value>1</value>
+ </equals>
+  </condition>
+ </animation>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>Station_AIM-9_smokewinderG1</object-name>
+  <condition>
+   <property>sim/multiplay/generic/int[13]</property>
+  </condition>
+ </animation>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>Station_AIM-9_smokewinderB1</object-name>
+  <condition>
+   <property>sim/multiplay/generic/int[15]</property>
+  </condition>
+ </animation>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>Station_AIM-9_smokewinderW1</object-name>
+  <condition>
+   <property>sim/multiplay/generic/int[17]</property>
   </condition>
  </animation>
  
@@ -399,6 +432,38 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
       <property>payload/armament/station/id-8-count</property>
       <value>0</value>
     </greater-than>
+  </condition>
+ </animation>
+ 
+  <animation>
+  <type>select</type>
+  <object-name>Station_AIM-9_smokewinderR9</object-name>
+  <condition>
+   <property>sim/multiplay/generic/int[12]</property>
+  </condition>
+ </animation>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>Station_AIM-9_smokewinderG9</object-name>
+  <condition>
+   <property>sim/multiplay/generic/int[14]</property>
+  </condition>
+ </animation>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>Station_AIM-9_smokewinderB9</object-name>
+  <condition>
+   <property>sim/multiplay/generic/int[16]</property>
+  </condition>
+ </animation>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>Station_AIM-9_smokewinderW9</object-name>
+  <condition>
+   <property>sim/multiplay/generic/int[18]</property>
   </condition>
  </animation>
 
