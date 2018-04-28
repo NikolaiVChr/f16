@@ -69,7 +69,7 @@
    </orientation>
    <pitch>
     <property>engines/engine/n1</property>
-    <ofset>0.5</ofset>
+    <ofset>0.2</ofset>
     <factor>.00075</factor>
    </pitch>
    <volume>
@@ -188,7 +188,7 @@
   </afterburner>
 
   <afterburner>
-   <name>afterburner</name>
+   <name>afterburner internal</name>
    <path>Sounds/exhaust_loop.wav</path>
    <mode>looped</mode>
    <condition>
@@ -213,7 +213,7 @@
    <volume>
     <property>engines/engine/nozzle-pos-norm</property>
     <offset>0.05</offset>
-    <factor>0.35</factor>
+    <factor>0.30</factor>
    </volume>
   </afterburner>
 
