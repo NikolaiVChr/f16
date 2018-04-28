@@ -113,11 +113,11 @@ var rtExec_loop = func
     if (frame_rate_worst < 5) {
         execTimer.restart(0.25);#3.3
     } elsif (frame_rate_worst < 10) {
-        execTimer.restart(0.14);#6.6
+        execTimer.restart(0.125);#6.6
     } elsif (frame_rate_worst < 15) {
-        execTimer.restart(0.11);#8.3
+        execTimer.restart(0.10);#8.3
     } elsif (frame_rate_worst < 20) {
-        execTimer.restart(0.08);#12.5
+        execTimer.restart(0.075);#12.5
     } elsif (frame_rate_worst < 25) {
         execTimer.restart(0.05);#14.3
     } else {
