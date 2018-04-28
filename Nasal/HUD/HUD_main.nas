@@ -263,7 +263,7 @@ var F16_HUD = {
         
         me.agl=getprop("position/altitude-agl-ft");
         if(me.agl < 13000) {
-            me.ralt.setText(sprintf("R %05d ",));
+            me.ralt.setText(sprintf("R %05d ",me.agl));
             me.ralt.show();
             me.raltFrame.show();
         } else {
