@@ -94,8 +94,8 @@ our_ac_name = "f16c";
 var az_scan = func(fcount) {
 #    counting += 1;
 #    if (counting == 5) counting = 1;
-    var doRWR = fcount == 2;#counting == 1;
-    if (fcount == 1 or fcount == 3) {
+    var doRWR = 1;#fcount == 2;#counting == 1;
+    if (fcount != 0) {
         return;
     }
 

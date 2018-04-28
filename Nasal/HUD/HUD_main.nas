@@ -263,7 +263,7 @@ var F16_HUD = {
 
 # IAS
         me.ias_range.setTranslation(0, hdp.IAS * ias_range_factor);
-        if (hdp.FrameCount == 0 or me.initUpdate == 1) {
+        if (hdp.FrameCount == 2 or me.initUpdate == 1) {
             me.agl=getprop("position/altitude-agl-ft");
             if(me.agl < 13000) {
                 me.ralt.setText(sprintf("R %05d ",me.agl));
@@ -385,7 +385,7 @@ var F16_HUD = {
          
         me.heading_tape.setTranslation (me.heading_tape_position,0);
         me.roll_pointer.setRotation (me.roll_rad);
-        if (hdp.FrameCount == 1 or hdp.FrameCount == 3 or me.initUpdate == 1) {
+#        if (hdp.FrameCount == 1 or hdp.FrameCount == 3 or me.initUpdate == 1) {
             me.target_idx = 0;
             me.designated = 0;
             ht_yco = pitch_offset;
@@ -454,7 +454,7 @@ var F16_HUD = {
                     me.tgt.setVisible(0);
                 }
             }
-        }
+ #       }
 
         
 #

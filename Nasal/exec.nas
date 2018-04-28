@@ -105,21 +105,21 @@ var rtExec_loop = func
     frameNotification.FrameCount = frameNotification.FrameCount + 1;
     #
     # framecount
-    # 0: HUD text, Radar, VSD
-    # 1: HUD targets, RDR
-    # 2: HUD trig, Radar, RWR
+    # 0: HUD targets, Radar, RWR
+    # 1: HUD targets, RDR, VSD
+    # 2: HUD targets, HUD trig, HUD text
     # 3: HUD targets, VSD, RDR
     # 
     if (frame_rate_worst < 5) {
-        execTimer.restart(0.30);#3.3
+        execTimer.restart(0.25);#3.3
     } elsif (frame_rate_worst < 10) {
-        execTimer.restart(0.15);#6.6
+        execTimer.restart(0.14);#6.6
     } elsif (frame_rate_worst < 15) {
-        execTimer.restart(0.12);#8.3
+        execTimer.restart(0.11);#8.3
     } elsif (frame_rate_worst < 20) {
         execTimer.restart(0.08);#12.5
     } elsif (frame_rate_worst < 25) {
-        execTimer.restart(0.07);#14.3
+        execTimer.restart(0.05);#14.3
     } else {
         execTimer.restart(0.05);#20.0
     }
