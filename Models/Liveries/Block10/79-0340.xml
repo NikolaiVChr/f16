@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model> 
+   <livery>
+    <name type="string">USAF 31FW, 31 MOS AV</name>
+    <texture>Liveries/Block10/79-0340.png</texture>
+    <owner type="string">IAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/yf/yf16_trans.png</texture>
+   </livery-logo>
+  </model>
+ </sim>
+</PropertyList>
