@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+
+
+<PropertyList>
+
+	<name>aim-9</name>
+	<path>aim-9.ac</path>
+
+	<animation>
+		<type>select</type>
+		<object-name>aim-9</object-name>
+		<condition>
+			<property>payload/armament/aim-9/flags/msl-id-0</property>
+		</condition>
+	</animation>
+
+<!--	<model>
+		<path>Aircraft/JA37/Models/Armament/Weapons/RB-74/motor-smoke-0.xml</path>
+		<offsets>
+			<x-m>1.44</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+		</offsets>
+	</model>
+
+	<model>
+		<name>explosion</name>
+		<path>Aircraft/JA37/Models/Armament/Weapons/RB-74/explosion-0.xml</path>
+		<offsets>
+			<x-m>0</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+		</offsets>
+	</model>-->
+
+	<animation>
+  		<object-name>aim-9</object-name>
+  		<enable-hot type="bool">false</enable-hot>
+ 	</animation>
+
+</PropertyList>
