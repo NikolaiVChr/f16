@@ -9,7 +9,7 @@
     <owner type="string">RNLAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/yf/yf16_trans.png</texture>
+    <texture>Liveries/yf/yf16-trans.png</texture>
    </livery-logo>
   </model>
  </sim>
