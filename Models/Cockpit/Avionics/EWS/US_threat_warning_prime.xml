@@ -19,12 +19,15 @@
   <object-name>launch</object-name>
   <type>material</type>
   <condition>
+	    <and>
+  		<property>f16/avionics/cockpit_blinker/state</property>
 	    <not>
 	      <equals>
 	          <property>sound/rwr-launch</property>
 	          <value type="string"></value>
 	      </equals>
 	    </not>
+	</and>
 	</condition>
   <emission>
    <red>1</red>

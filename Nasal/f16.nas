@@ -7,6 +7,10 @@ var FALSE = 0;
 var strobe_switch = props.globals.getNode("controls/lighting/ext-lighting-panel/anti-collision", 1);
 aircraft.light.new("sim/model/lighting/strobe", [0.03, 1.9+rand()/5], strobe_switch);
 
+var cockpit_blink = props.globals.getNode("f16/avionics/cockpit_blink", 1);
+aircraft.light.new("f16/avionics/cockpit_blinker", [0.25, 0.25], cockpit_blink);
+setprop("f16/avionics/cockpit_blink", 1);
+
 var checkVNE = func {
   if (getprop("/sim/freeze/replay-state")) {
     settimer(checkVNE, 1);
