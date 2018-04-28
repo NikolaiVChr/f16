@@ -185,7 +185,7 @@ var PFD_VSD =
 
         obj.update = func(notification)
         {
-        if(!me.vsd_on)
+        if(!me.vsd_on or notification.FrameCount != 3)
             return;
 
         var pitch = notification.pitch;
@@ -471,6 +471,8 @@ var MFD_Device =
             }
         }
         me.p_RDR.update = func (noti) {
+            if (noti.FrameCount != 1 and noti.FrameCount != 3)
+                return;
             me.i=0;
             me.root.rang.setText(sprintf("%d",getprop("instrumentation/radar/radar2-range")));
             me.time = getprop("sim/time/elapsed-sec");
@@ -509,7 +511,9 @@ var MFD_Device =
                     me.root.lock[me.i].hide();
                 }
                 me.i += 1;
-                if (me.i > me.root.maxB-1) break;
+                if (me.i > (me.root.maxB-1)) {
+                    break;
+                }
             }
             for (;me.i<me.root.maxB;me.i+=1) {
                 me.root.blep[me.i].hide();

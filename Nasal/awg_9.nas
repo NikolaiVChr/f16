@@ -90,11 +90,14 @@ our_ac_name = "f16c";
 #	if (our_ac_name == "f16-bs") { we_are_bs = 1; }
 	}
 
-var counting = 1;
-var az_scan = func() {
-    counting += 1;
-    if (counting == 5) counting = 1;
-    var doRWR = counting == 1;
+#var counting = 1;
+var az_scan = func(fcount) {
+#    counting += 1;
+#    if (counting == 5) counting = 1;
+    var doRWR = fcount == 2;#counting == 1;
+    if (fcount == 1 or fcount == 3) {
+        return;
+    }
 
     l_az_fld = - az_fld / 2;
     r_az_fld = az_fld / 2;
@@ -1087,7 +1090,7 @@ var F16RadarRecipient =
                 var display_rdr = DisplayRdr.getBoolValue();
                 if ( display_rdr )
                 {
-                    az_scan();
+                    az_scan(notification.FrameCount);
                     our_radar_stanby = RadarStandby.getValue();
                     #print ("Display radar ",our_radar_stanby, we_are_bs);
                     if ( we_are_bs == 0)

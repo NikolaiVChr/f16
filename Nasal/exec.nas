@@ -17,6 +17,7 @@ var frameNotification = FrameNotification.new(1);
 var rtExec_loop = func
 {
     var frame_rate = getprop("/sim/frame-rate");
+    var frame_rate_worst = getprop("/sim/frame-rate-worst");
     var elapsed_seconds = getprop("/sim/time/elapsed-sec");
     #
     # you can put commonly accessed properties inside the message to improve performance.
@@ -103,14 +104,24 @@ var rtExec_loop = func
     #    
     frameNotification.FrameCount = frameNotification.FrameCount + 1;
     #
-    if (frame_rate < 5) {
-        execTimer.restart(0.35);
-    } elsif (frame_rate < 10) {
-        execTimer.restart(0.20);
-    } elsif (frame_rate < 15) {
-        execTimer.restart(0.10);
+    # framecount
+    # 0: HUD text, Radar, VSD
+    # 1: HUD targets, RDR
+    # 2: HUD trig, Radar, RWR
+    # 3: HUD targets, VSD, RDR
+    # 
+    if (frame_rate_worst < 5) {
+        execTimer.restart(0.30);#3.3
+    } elsif (frame_rate_worst < 10) {
+        execTimer.restart(0.15);#6.6
+    } elsif (frame_rate_worst < 15) {
+        execTimer.restart(0.12);#8.3
+    } elsif (frame_rate_worst < 20) {
+        execTimer.restart(0.08);#12.5
+    } elsif (frame_rate_worst < 25) {
+        execTimer.restart(0.07);#14.3
     } else {
-        execTimer.restart(0.05);
+        execTimer.restart(0.05);#20.0
     }
 }
 

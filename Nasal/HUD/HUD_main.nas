@@ -125,7 +125,7 @@ var F16_HUD = {
                 .vert(10)
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
-
+        obj.initUpdate =1;
 		return obj;
 	},
 #
@@ -212,29 +212,31 @@ var F16_HUD = {
     update : func(hdp) {
         me.roll_rad = -hdp.roll*D2R;
 
+        if (hdp.FrameCount == 2 or me.initUpdate == 1) {
+            # calc of pitch_offset (compensates for AC3D model translated and rotated when loaded. Also semi compensates for HUD being at an angle.)
+            me.Hz_b =    0.801701;# HUD position inside ac model after it is loaded, translated (0.08m) and rotated (0.7d).
+            me.Hz_t =    0.976668;
+            me.Hx_m =   -4.6429;# HUD median X pos
+            me.Vz   =    getprop("sim/current-view/y-offset-m"); # view Z position (0.94 meter per default)
+            me.Vx   =    getprop("sim/current-view/z-offset-m"); # view X position (0.94 meter per default)
 
-        # calc of pitch_offset (compensates for AC3D model translated and rotated when loaded. Also semi compensates for HUD being at an angle.)
-        me.Hz_b =    0.801701;# HUD position inside ac model after it is loaded, translated (0.08m) and rotated (0.7d).
-        me.Hz_t =    0.976668;
-        me.Hx_m =   -4.6429;# HUD median X pos
-        me.Vz   =    getprop("sim/current-view/y-offset-m"); # view Z position (0.94 meter per default)
-        me.Vx   =    getprop("sim/current-view/z-offset-m"); # view X position (0.94 meter per default)
-
-        me.bore_over_bottom = me.Vz - me.Hz_b;
-        me.Hz_height        = me.Hz_t-me.Hz_b;
-        me.hozizon_line_offset_from_middle_in_svg = 0.137; #horizline and radar echoes fraction up from middle
-        me.frac_up_the_hud = me.bore_over_bottom / me.Hz_height;
-        me.texels_up_into_hud = me.frac_up_the_hud * me.sy;#sy default is 260
-        me.texels_over_middle = me.texels_up_into_hud - me.sy/2;
+            me.bore_over_bottom = me.Vz - me.Hz_b;
+            me.Hz_height        = me.Hz_t-me.Hz_b;
+            me.hozizon_line_offset_from_middle_in_svg = 0.137; #horizline and radar echoes fraction up from middle
+            me.frac_up_the_hud = me.bore_over_bottom / me.Hz_height;
+            me.texels_up_into_hud = me.frac_up_the_hud * me.sy;#sy default is 260
+            me.texels_over_middle = me.texels_up_into_hud - me.sy/2;
 
 
-        pitch_offset = -me.texels_over_middle + me.hozizon_line_offset_from_middle_in_svg*me.sy;
+            pitch_offset = -me.texels_over_middle + me.hozizon_line_offset_from_middle_in_svg*me.sy;
+        }
 
 #pitch ladder
         
         me.ladder.setTranslation (0.0, hdp.pitch * pitch_factor+pitch_offset);                                           
         me.ladder.setCenter (me.ladder_center[0], me.ladder_center[1] - hdp.pitch * pitch_factor);
         me.ladder.setRotation (me.roll_rad);
+        me.ladder.update();
         me.ttc = getprop("instrumentation/radar/time-till-crash");
         if (me.ttc != nil and me.ttc>0 and me.ttc<10) {
             me.flyup.show();
@@ -254,202 +256,207 @@ var F16_HUD = {
         me.texelPerDegreeY = me.pixelPerMeterY*(((me.Vx-me.Hx_m)*math.tan(me.averageDegY*D2R))/me.averageDegY);
         # the Y position is still not accurate due to HUD being at an angle, but will have to do.
         me.VV.setTranslation (hdp.VV_x*0.1*me.texelPerDegreeX, hdp.VV_y*0.1*me.texelPerDegreeY+pitch_offset);# the 0.1 is to cancel out the factor applied in exec.nas
+        me.VV.update();
 
 #Altitude
         me.alt_range.setTranslation(0, hdp.measured_altitude * alt_range_factor);
 
 # IAS
         me.ias_range.setTranslation(0, hdp.IAS * ias_range_factor);
-        
-        me.agl=getprop("position/altitude-agl-ft");
-        if(me.agl < 13000) {
-            me.ralt.setText(sprintf("R %05d ",me.agl));
-            me.ralt.show();
-            me.raltFrame.show();
-        } else {
-            me.ralt.hide();
-            me.raltFrame.hide();
-        }
-
-        if(hdp.brake_parking)
-          {
-            me.window2.setVisible(1);
-            me.window2.setText("BRAKES");
-        }
-        elsif (hdp.flap_pos_deg > 0 or hdp.gear_down)
-        {
-            me.window2.setVisible(1);
-            me.gd = "";
-            if (hdp.gear_down)
-                me.gd = " G";
-            me.window2.setText(sprintf("F %d %s",hdp.flap_pos_deg,me.gd));
-        } elsif (getprop("controls/armament/master-arm")) {
-            me.window2.setText("ARM");
-            me.window2.setVisible(1);
-        } else {
-            me.window2.setText("NAV");
-            me.window2.setVisible(1);
-        }
-        me.win5 = 0;
-        if(getprop("controls/armament/master-arm"))
-        {
-            me.weap = pylons.fcs.selectedType;
-            me.window7.setVisible(1);
-            
-            me.txt = "";
-            if (me.weap != nil)
-            {
-                if (me.weap == "20mm Cannon") {
-                    me.txt = sprintf("%3d", pylons.fcs.getAmmo());
-                } elsif (me.weap == "AIM-9") {
-                    me.txt = sprintf("S%dL", pylons.fcs.getAmmo());
-                } elsif (me.weap == "AIM-120") {
-                    me.txt = sprintf("M%dL", pylons.fcs.getAmmo());
-                } elsif (me.weap == "GBU-12") {
-                    me.txt = sprintf("GBU%d", pylons.fcs.getAmmo());
-                }
+        if (hdp.FrameCount == 0 or me.initUpdate == 1) {
+            me.agl=getprop("position/altitude-agl-ft");
+            if(me.agl < 13000) {
+                me.ralt.setText(sprintf("R %05d ",me.agl));
+                me.ralt.show();
+                me.raltFrame.show();
+            } else {
+                me.ralt.hide();
+                me.raltFrame.hide();
             }
-            me.window7.setText(me.txt);
-            if (awg_9.active_u != nil)
+
+            if(hdp.brake_parking)
+              {
+                me.window2.setVisible(1);
+                me.window2.setText("BRAKES");
+            }
+            elsif (hdp.flap_pos_deg > 0 or hdp.gear_down)
             {
-                if (awg_9.active_u.Callsign != nil) {
-                    me.window3.setText(awg_9.active_u.Callsign.getValue());
-                    me.window3.show();
-                } else {
+                me.window2.setVisible(1);
+                me.gd = "";
+                if (hdp.gear_down)
+                    me.gd = " G";
+                me.window2.setText(sprintf("F %d %s",hdp.flap_pos_deg,me.gd));
+            } elsif (getprop("controls/armament/master-arm")) {
+                me.window2.setText("ARM");
+                me.window2.setVisible(1);
+            } else {
+                me.window2.setText("NAV");
+                me.window2.setVisible(1);
+            }
+            me.win5 = 0;
+            if(getprop("controls/armament/master-arm"))
+            {
+                me.weap = pylons.fcs.selectedType;
+                me.window7.setVisible(1);
+                
+                me.txt = "";
+                if (me.weap != nil)
+                {
+                    if (me.weap == "20mm Cannon") {
+                        me.txt = sprintf("%3d", pylons.fcs.getAmmo());
+                    } elsif (me.weap == "AIM-9") {
+                        me.txt = sprintf("S%dL", pylons.fcs.getAmmo());
+                    } elsif (me.weap == "AIM-120") {
+                        me.txt = sprintf("M%dL", pylons.fcs.getAmmo());
+                    } elsif (me.weap == "GBU-12") {
+                        me.txt = sprintf("GBU%d", pylons.fcs.getAmmo());
+                    }
+                }
+                me.window7.setText(me.txt);
+                if (awg_9.active_u != nil)
+                {
+                    if (awg_9.active_u.Callsign != nil) {
+                        me.window3.setText(awg_9.active_u.Callsign.getValue());
+                        me.window3.show();
+                    } else {
+                        me.window3.hide();
+                    }
+                    me.model = "XX";
+                    if (awg_9.active_u.ModelType != "")
+                        me.model = awg_9.active_u.ModelType;
+
+    #        var w2 = sprintf("%-4d", awg_9.active_u.get_closure_rate());
+    #        w3_22 = sprintf("%3d-%1.1f %.5s %.4s",awg_9.active_u.get_bearing(), awg_9.active_u.get_range(), callsign, model);
+    #
+    #
+    #these labels aren't correct - but we don't have a full simulation of the targetting and missiles so 
+    #have no real idea on the details of how this works.
+                    if (awg_9.active_u.get_display() == 0) {
+                        me.window4.setText("");
+                        me.window5.setText("");
+                    } else {
+                        me.window4.setText(sprintf("RNG %3.1f", awg_9.active_u.get_range()));
+                        me.window5.setText(sprintf("CLO %-3d", awg_9.active_u.get_closure_rate()));
+                    }
+                    me.window4.show();
+                    me.win5 = 1;
+                    me.window6.setText(me.model);
+                    me.window6.show(); # SRM UNCAGE / TARGET ASPECT
+                }
+                else {
                     me.window3.hide();
+                    me.window4.hide();
+                    me.window6.hide();
                 }
-                me.model = "XX";
-                if (awg_9.active_u.ModelType != "")
-                    me.model = awg_9.active_u.ModelType;
-
-#        var w2 = sprintf("%-4d", awg_9.active_u.get_closure_rate());
-#        w3_22 = sprintf("%3d-%1.1f %.5s %.4s",awg_9.active_u.get_bearing(), awg_9.active_u.get_range(), callsign, model);
-#
-#
-#these labels aren't correct - but we don't have a full simulation of the targetting and missiles so 
-#have no real idea on the details of how this works.
-                if (awg_9.active_u.get_display() == 0) {
-                    me.window4.setText("");
-                    me.window5.setText("");
-                } else {
-                    me.window4.setText(sprintf("RNG %3.1f", awg_9.active_u.get_range()));
-                    me.window5.setText(sprintf("CLO %-3d", awg_9.active_u.get_closure_rate()));
-                }
-                me.window4.show();
-                me.win5 = 1;
-                me.window6.setText(me.model);
-                me.window6.show(); # SRM UNCAGE / TARGET ASPECT
             }
-            else {
+            else
+            {
+                me.window7.setVisible(0);
+                #me.window3.setText("NAV");
+                #if (hdp.nav_range != "")
+                #  me.window3.setText("NAV");
+                #else
+                #  me.window3.setText("");
                 me.window3.hide();
-                me.window4.hide();
-                me.window6.hide();
+                me.window4.setText(hdp.nav_range);
+                me.window4.show();
+                me.window5.setText(hdp.hud_window5);
+                me.window6.hide(); # SRM UNCAGE / TARGET ASPECT
+            }
+
+            if (hdp.range_rate != nil)
+            {
+                me.window1.setVisible(1);
+                me.window1.setText("");
+            }
+            else
+                me.window1.setVisible(0);
+      
+            me.window8.setText(sprintf("%3.1f", hdp.Nz));
+            me.window9.setText(sprintf("AOA %d",hdp.alpha));
+            if(me.win5 == 0) {
+                me.window5.setText(sprintf("M %1.3f",hdp.mach));
             }
         }
-        else
-        {
-            me.window7.setVisible(0);
-            #me.window3.setText("NAV");
-            #if (hdp.nav_range != "")
-            #  me.window3.setText("NAV");
-            #else
-            #  me.window3.setText("");
-            me.window3.hide();
-            me.window4.setText(hdp.nav_range);
-            me.window4.show();
-            me.window5.setText(hdp.hud_window5);
-            me.window6.hide(); # SRM UNCAGE / TARGET ASPECT
-        }
-
-        if (hdp.range_rate != nil)
-        {
-            me.window1.setVisible(1);
-            me.window1.setText("");
-        }
-        else
-            me.window1.setVisible(0);
-  
-        me.window8.setText(sprintf("%3.1f", hdp.Nz));
-
         if (hdp.heading < 180)
             me.heading_tape_position = -hdp.heading*54/10;
         else
             me.heading_tape_position = (360-hdp.heading)*54/10;
-     
+         
         me.heading_tape.setTranslation (me.heading_tape_position,0);
         me.roll_pointer.setRotation (me.roll_rad);
+        if (hdp.FrameCount == 1 or hdp.FrameCount == 3 or me.initUpdate == 1) {
+            me.target_idx = 0;
+            me.designated = 0;
+            ht_yco = pitch_offset;
+            ht_xco = 0;
+            ht_xcf = me.pixelPerMeterX;
+            ht_ycf = -me.pixelPerMeterY;
 
-        me.target_idx = 0;
-        me.designated = 0;
-        ht_yco = pitch_offset;
-        ht_xco = 0;
-        ht_xcf = me.pixelPerMeterX;
-        ht_ycf = -me.pixelPerMeterY;
-
-        me.target_locked.setVisible(0);
-        foreach( me.u; awg_9.tgts_list ) 
-        {
-            me.callsign = "XX";
-            if(me.u.get_display())
+            me.target_locked.setVisible(0);
+            foreach( me.u; awg_9.tgts_list ) 
             {
-                if (me.u.Callsign != nil)
-                    me.callsign = me.u.Callsign.getValue();
-                me.model = "XX";
-
-                if (me.u.ModelType != "")
-                    me.model = me.u.ModelType;
-
-                if (me.target_idx < me.max_symbols)
+                me.callsign = "XX";
+                if(me.u.get_display())
                 {
-                    me.tgt = me.tgt_symbols[me.target_idx];
-                    if (me.tgt != nil)
+                    if (me.u.Callsign != nil)
+                        me.callsign = me.u.Callsign.getValue();
+                    me.model = "XX";
+
+                    if (me.u.ModelType != "")
+                        me.model = me.u.ModelType;
+
+                    if (me.target_idx < me.max_symbols)
                     {
-                        me.tgt.setVisible(me.u.get_display());
-                        me.u_dev_rad = (90-me.u.get_deviation(hdp.heading))  * D2R;
-                        me.u_elev_rad = (90-me.u.get_total_elevation( hdp.pitch))  * D2R;
-                        me.devs = me.develev_to_devroll(hdp, me.u_dev_rad, me.u_elev_rad);
-                        me.combined_dev_deg = me.devs[0];
-                        me.combined_dev_length =  me.devs[1];
-                        me.clamped = me.devs[2];
-                        me.yc = ht_yco + (ht_ycf * me.combined_dev_length * math.cos(me.combined_dev_deg*D2R));
-                        me.xc = ht_xco + (ht_xcf * me.combined_dev_length * math.sin(me.combined_dev_deg*D2R));
-                        if(me.devs[2])
-                            me.tgt.setVisible(1);#getprop("sim/model/f16/lighting/hud-diamond-switch/state"));
-                        else
-                            me.tgt.setVisible(1);
-
-                        if (awg_9.active_u != nil and awg_9.active_u.Callsign != nil and me.u.Callsign != nil and me.u.Callsign.getValue() == awg_9.active_u.Callsign.getValue())
+                        me.tgt = me.tgt_symbols[me.target_idx];
+                        if (me.tgt != nil)
                         {
-                            me.target_locked.setVisible(1);
-                            me.target_locked.setTranslation (me.xc, me.yc);
-                        }
-                        else
-                        {
-                            #
-                            # if in symbol reject mode then only show the active target.
-                            if(hdp.symbol_reject)
-                                me.tgt.setVisible(0);
-                        }
-                        me.tgt.setTranslation (me.xc, me.yc);
+                            me.tgt.setVisible(me.u.get_display());
+                            me.u_dev_rad = (90-me.u.get_deviation(hdp.heading))  * D2R;
+                            me.u_elev_rad = (90-me.u.get_total_elevation( hdp.pitch))  * D2R;
+                            me.devs = me.develev_to_devroll(hdp, me.u_dev_rad, me.u_elev_rad);
+                            me.combined_dev_deg = me.devs[0];
+                            me.combined_dev_length =  me.devs[1];
+                            me.clamped = me.devs[2];
+                            me.yc = ht_yco + (ht_ycf * me.combined_dev_length * math.cos(me.combined_dev_deg*D2R));
+                            me.xc = ht_xco + (ht_xcf * me.combined_dev_length * math.sin(me.combined_dev_deg*D2R));
+                            if(me.devs[2])
+                                me.tgt.setVisible(1);#getprop("sim/model/f16/lighting/hud-diamond-switch/state"));
+                            else
+                                me.tgt.setVisible(1);
 
-                        if (ht_debug)
-                            printf("%-10s %f,%f [%f,%f,%f] :: %f,%f",me.callsign,me.xc,me.yc, me.devs[0], me.devs[1], me.devs[2], me.u_dev_rad*D2R, me.u_elev_rad*D2R); 
+                            if (awg_9.active_u != nil and awg_9.active_u.Callsign != nil and me.u.Callsign != nil and me.u.Callsign.getValue() == awg_9.active_u.Callsign.getValue())
+                            {
+                                me.target_locked.setVisible(1);
+                                me.target_locked.setTranslation (me.xc, me.yc);
+                            }
+                            else
+                            {
+                                #
+                                # if in symbol reject mode then only show the active target.
+                                if(hdp.symbol_reject)
+                                    me.tgt.setVisible(0);
+                            }
+                            me.tgt.setTranslation (me.xc, me.yc);
+                            me.tgt.update();
+                            if (ht_debug)
+                                printf("%-10s %f,%f [%f,%f,%f] :: %f,%f",me.callsign,me.xc,me.yc, me.devs[0], me.devs[1], me.devs[2], me.u_dev_rad*D2R, me.u_elev_rad*D2R); 
+                        }
                     }
+                    me.target_idx += 1;
                 }
-                me.target_idx += 1;
             }
-        }
-        for(me.nv = me.target_idx; me.nv < me.max_symbols;me.nv += 1)
-        {
-            me.tgt = me.tgt_symbols[me.nv];
-            if (me.tgt != nil)
+            for(me.nv = me.target_idx; me.nv < me.max_symbols;me.nv += 1)
             {
-                me.tgt.setVisible(0);
+                me.tgt = me.tgt_symbols[me.nv];
+                if (me.tgt != nil)
+                {
+                    me.tgt.setVisible(0);
+                }
             }
         }
 
         
-        #
 #
 #               1 
 #
@@ -457,16 +464,8 @@ var F16_HUD = {
 # 7                 4
 # 8                 5
 # 9                 6
-        me.window9.setText(sprintf("AOA %d",hdp.alpha));
-        if(me.win5 == 0) {
-            me.window5.setText(sprintf("M %1.3f",hdp.mach));
-        }
-
-        me.roll_rad = 0.0;
-
-        me.VV_x = hdp.beta*10; # adjust for view
-        me.VV_y = hdp.alpha*10; # adjust for view
-
+        me.initUpdate = 0;
+ 
     },
     list: [],
 };
