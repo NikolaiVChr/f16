@@ -288,13 +288,12 @@
                         </binding>
                     </item>
                     <item>
-                        <label>Config</label>
-                        <name>f16config</name>
+                        <label>Standard Air to Air loadout</label>
                         <binding>
-                          <command>dialog-show</command>
-                          <dialog-name>f16config</dialog-name>
+                            <command>nasal</command>
+                            <script>f16.a2a_standard();</script>
                         </binding>
-                      </item>
+                    </item>
                     <item>
                         <label>Link 16</label>
                         <name>link16</name>
@@ -303,6 +302,14 @@
                           <dialog-name>link16</dialog-name>
                         </binding>
                     </item>
+                    <item>
+                        <label>Config</label>
+                        <name>f16config</name>
+                        <binding>
+                          <command>dialog-show</command>
+                          <dialog-name>f16config</dialog-name>
+                        </binding>
+                      </item>                    
                 </menu>
                 <menu n="5">
                     <item n="10">
