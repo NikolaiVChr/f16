@@ -5,6 +5,7 @@
 
 Model
 -----
+Make under cockpit floating texture livery
 
 Hydraulics
 ----------
@@ -31,16 +32,17 @@ Find real positions of payloads, is only approx. positions now.
 Make fired weapons visible including engine smoke.
 Prevent firing without lock?
 Make cannon do damage
+Add LOAL for AIM120
 
 Damage
 ------
+Add LOAL detection apability
 
 Radar
 -----
 Add doppler.
 Make it 'see' difference between air,ground, arms and sea targets.
 Update to latest F15 radar.
-Make RWR use framenotification
 
 Cockpit
 -------
@@ -82,7 +84,7 @@ GUI text when MPO
 
 A/P
 ---
-Make auto-pilot system.
+Make auto-pilot system. [In progress by it0chpods]
 
 Nasal
 -----
