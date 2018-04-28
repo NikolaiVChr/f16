@@ -185,7 +185,7 @@ var PFD_VSD =
 
         obj.update = func(notification)
         {
-        if(!me.vsd_on or notification.FrameCount != 3)
+        if(!me.vsd_on or notification.FrameCount == 0  or notification.FrameCount == 2)
             return;
 
         var pitch = notification.pitch;
