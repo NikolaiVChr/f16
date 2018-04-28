@@ -15,7 +15,7 @@ var ht_debug = 0;
 
 var pitch_offset = 12;
 var pitch_factor = 19.8;
-var pitch_factor_2 = pitch_factor * 180.0 / 3.14159;
+var pitch_factor_2 = pitch_factor * 180.0 / math.pi;
 var alt_range_factor = (9317-191) / 100000; # alt tape size and max value.
 var ias_range_factor = (694-191) / 1100;
 
@@ -111,6 +111,20 @@ var F16_HUD = {
                 .setColor(0,1,0)
                 .setFontSize(15, 1.0)
                 .hide();
+        obj.ralt = obj.svg.createChild("text")
+                .setText("R 00000 ")
+                .setTranslation(sx*1*0.695633-5,sy*0.45)
+                .setAlignment("right-center")
+                .setColor(0,1,0)
+                .setFontSize(10, 1.0);
+        obj.raltFrame = obj.svg.createChild("path")
+                .moveTo(sx*1*0.695633-10,sy*0.45+5)
+                .horiz(-40)
+                .vert(-10)
+                .horiz(40)
+                .vert(10)
+                .setStrokeLineWidth(1)
+                .setColor(0,1,0);
 
 		return obj;
 	},
@@ -196,31 +210,31 @@ var F16_HUD = {
 #
 #
     update : func(hdp) {
-        var  roll_rad = -hdp.roll*D2R;
+        me.roll_rad = -hdp.roll*D2R;
 
 
         # calc of pitch_offset (compensates for AC3D model translated and rotated when loaded. Also semi compensates for HUD being at an angle.)
-        var Hz_b =    0.801701;# HUD position inside ac model after it is loaded, translated (0.08m) and rotated (0.7d).
-        var Hz_t =    0.976668;
-        var Hx_m =   -4.6429;# HUD median X pos
-        var Vz   =    getprop("sim/current-view/y-offset-m"); # view Z position (0.94 meter per default)
-        var Vx   =    getprop("sim/current-view/z-offset-m"); # view X position (0.94 meter per default)
+        me.Hz_b =    0.801701;# HUD position inside ac model after it is loaded, translated (0.08m) and rotated (0.7d).
+        me.Hz_t =    0.976668;
+        me.Hx_m =   -4.6429;# HUD median X pos
+        me.Vz   =    getprop("sim/current-view/y-offset-m"); # view Z position (0.94 meter per default)
+        me.Vx   =    getprop("sim/current-view/z-offset-m"); # view X position (0.94 meter per default)
 
-        var bore_over_bottom = Vz - Hz_b;
-        var Hz_height        = Hz_t-Hz_b;
-        var hozizon_line_offset_from_middle_in_svg = 0.137; #horizline and radar echoes fraction up from middle
-        var frac_up_the_hud = bore_over_bottom / Hz_height;
-        var texels_up_into_hud = frac_up_the_hud * me.sy;#sy default is 260
-        var texels_over_middle = texels_up_into_hud - me.sy/2;
+        me.bore_over_bottom = me.Vz - me.Hz_b;
+        me.Hz_height        = me.Hz_t-me.Hz_b;
+        me.hozizon_line_offset_from_middle_in_svg = 0.137; #horizline and radar echoes fraction up from middle
+        me.frac_up_the_hud = me.bore_over_bottom / me.Hz_height;
+        me.texels_up_into_hud = me.frac_up_the_hud * me.sy;#sy default is 260
+        me.texels_over_middle = me.texels_up_into_hud - me.sy/2;
 
 
-        pitch_offset = -texels_over_middle + hozizon_line_offset_from_middle_in_svg*me.sy;
+        pitch_offset = -me.texels_over_middle + me.hozizon_line_offset_from_middle_in_svg*me.sy;
 
 #pitch ladder
         
         me.ladder.setTranslation (0.0, hdp.pitch * pitch_factor+pitch_offset);                                           
         me.ladder.setCenter (me.ladder_center[0], me.ladder_center[1] - hdp.pitch * pitch_factor);
-        me.ladder.setRotation (roll_rad);
+        me.ladder.setRotation (me.roll_rad);
         me.ttc = getprop("instrumentation/radar/time-till-crash");
         if (me.ttc != nil and me.ttc>0 and me.ttc<10) {
             me.flyup.show();
@@ -231,22 +245,32 @@ var F16_HUD = {
 # velocity vector
         #340,260
         # 0.078135*2 = width of HUD  = 0.15627m
-        var pixelPerMeterX = (340*0.695633)/0.15627;
-        var pixelPerMeterY = 260/(Hz_t-Hz_b);
+        me.pixelPerMeterX = (340*0.695633)/0.15627;
+        me.pixelPerMeterY = 260/(me.Hz_t-me.Hz_b);
         # UV mapped to x: 0-0.695633
-        var averageDegX = math.atan2(0.078135*0.5, Vx-Hx_m)*R2D;
-        var averageDegY = math.atan2((Hz_t-Hz_b)*0.25, Vx-Hx_m)*R2D;
-        var texelPerDegreeX = pixelPerMeterX*(((Vx-Hx_m)*math.tan(averageDegX*D2R))/averageDegX);
-        var texelPerDegreeY = pixelPerMeterY*(((Vx-Hx_m)*math.tan(averageDegY*D2R))/averageDegY);
+        me.averageDegX = math.atan2(0.078135*0.5, me.Vx-me.Hx_m)*R2D;
+        me.averageDegY = math.atan2((me.Hz_t-me.Hz_b)*0.25, me.Vx-me.Hx_m)*R2D;
+        me.texelPerDegreeX = me.pixelPerMeterX*(((me.Vx-me.Hx_m)*math.tan(me.averageDegX*D2R))/me.averageDegX);
+        me.texelPerDegreeY = me.pixelPerMeterY*(((me.Vx-me.Hx_m)*math.tan(me.averageDegY*D2R))/me.averageDegY);
         # the Y position is still not accurate due to HUD being at an angle, but will have to do.
-        me.VV.setTranslation (hdp.VV_x*0.1*texelPerDegreeX, hdp.VV_y*0.1*texelPerDegreeY+pitch_offset);# the 0.1 is to cancel out the factor applied in exec.nas
+        me.VV.setTranslation (hdp.VV_x*0.1*me.texelPerDegreeX, hdp.VV_y*0.1*me.texelPerDegreeY+pitch_offset);# the 0.1 is to cancel out the factor applied in exec.nas
 
 #Altitude
         me.alt_range.setTranslation(0, hdp.measured_altitude * alt_range_factor);
 
 # IAS
         me.ias_range.setTranslation(0, hdp.IAS * ias_range_factor);
-     
+        
+        me.agl=getprop("position/altitude-agl-ft");
+        if(me.agl < 13000) {
+            me.ralt.setText(sprintf("R %05d ",));
+            me.ralt.show();
+            me.raltFrame.show();
+        } else {
+            me.ralt.hide();
+            me.raltFrame.hide();
+        }
+
         if(hdp.brake_parking)
           {
             me.window2.setVisible(1);
@@ -255,10 +279,10 @@ var F16_HUD = {
         elsif (hdp.flap_pos_deg > 0 or hdp.gear_down)
         {
             me.window2.setVisible(1);
-            var gd = "";
+            me.gd = "";
             if (hdp.gear_down)
-                gd = " G";
-            me.window2.setText(sprintf("F %d %s",hdp.flap_pos_deg,gd));
+                me.gd = " G";
+            me.window2.setText(sprintf("F %d %s",hdp.flap_pos_deg,me.gd));
         } elsif (getprop("controls/armament/master-arm")) {
             me.window2.setText("ARM");
             me.window2.setVisible(1);
@@ -266,26 +290,26 @@ var F16_HUD = {
             me.window2.setText("NAV");
             me.window2.setVisible(1);
         }
-        var win5 = 0;
+        me.win5 = 0;
         if(getprop("controls/armament/master-arm"))
         {
-            var weap = pylons.fcs.selectedType;
+            me.weap = pylons.fcs.selectedType;
             me.window7.setVisible(1);
             
-            var txt = "";
-            if (weap != nil)
+            me.txt = "";
+            if (me.weap != nil)
             {
-                if (weap == "20mm Cannon") {
-                    txt = sprintf("%3d", pylons.fcs.getAmmo());
-                } elsif (weap == "AIM-9") {
-                    txt = sprintf("S%dL", pylons.fcs.getAmmo());
-                } elsif (weap == "AIM-120") {
-                    txt = sprintf("M%dL", pylons.fcs.getAmmo());
-                } elsif (weap == "GBU-12") {
-                    txt = sprintf("GBU%d", pylons.fcs.getAmmo());
+                if (me.weap == "20mm Cannon") {
+                    me.txt = sprintf("%3d", pylons.fcs.getAmmo());
+                } elsif (me.weap == "AIM-9") {
+                    me.txt = sprintf("S%dL", pylons.fcs.getAmmo());
+                } elsif (me.weap == "AIM-120") {
+                    me.txt = sprintf("M%dL", pylons.fcs.getAmmo());
+                } elsif (me.weap == "GBU-12") {
+                    me.txt = sprintf("GBU%d", pylons.fcs.getAmmo());
                 }
             }
-            me.window7.setText(txt);
+            me.window7.setText(me.txt);
             if (awg_9.active_u != nil)
             {
                 if (awg_9.active_u.Callsign != nil) {
@@ -294,9 +318,9 @@ var F16_HUD = {
                 } else {
                     me.window3.hide();
                 }
-                var model = "XX";
+                me.model = "XX";
                 if (awg_9.active_u.ModelType != "")
-                    model = awg_9.active_u.ModelType;
+                    me.model = awg_9.active_u.ModelType;
 
 #        var w2 = sprintf("%-4d", awg_9.active_u.get_closure_rate());
 #        w3_22 = sprintf("%3d-%1.1f %.5s %.4s",awg_9.active_u.get_bearing(), awg_9.active_u.get_range(), callsign, model);
@@ -312,8 +336,8 @@ var F16_HUD = {
                     me.window5.setText(sprintf("CLO %-3d", awg_9.active_u.get_closure_rate()));
                 }
                 me.window4.show();
-                win5 = 1;
-                me.window6.setText(model);
+                me.win5 = 1;
+                me.window6.setText(me.model);
                 me.window6.show(); # SRM UNCAGE / TARGET ASPECT
             }
             else {
@@ -353,74 +377,74 @@ var F16_HUD = {
             me.heading_tape_position = (360-hdp.heading)*54/10;
      
         me.heading_tape.setTranslation (me.heading_tape_position,0);
-        me.roll_pointer.setRotation (roll_rad);
+        me.roll_pointer.setRotation (me.roll_rad);
 
-        var target_idx = 0;
-        var designated = 0;
+        me.target_idx = 0;
+        me.designated = 0;
         ht_yco = pitch_offset;
         ht_xco = 0;
-        ht_xcf = pixelPerMeterX;
-        ht_ycf = -pixelPerMeterY;
+        ht_xcf = me.pixelPerMeterX;
+        ht_ycf = -me.pixelPerMeterY;
 
         me.target_locked.setVisible(0);
-        foreach( u; awg_9.tgts_list ) 
+        foreach( me.u; awg_9.tgts_list ) 
         {
-            var callsign = "XX";
-            if(u.get_display())
+            me.callsign = "XX";
+            if(me.u.get_display())
             {
-                if (u.Callsign != nil)
-                    callsign = u.Callsign.getValue();
-                var model = "XX";
+                if (me.u.Callsign != nil)
+                    me.callsign = me.u.Callsign.getValue();
+                me.model = "XX";
 
-                if (u.ModelType != "")
-                    model = u.ModelType;
+                if (me.u.ModelType != "")
+                    me.model = me.u.ModelType;
 
-                if (target_idx < me.max_symbols)
+                if (me.target_idx < me.max_symbols)
                 {
-                    tgt = me.tgt_symbols[target_idx];
-                    if (tgt != nil)
+                    me.tgt = me.tgt_symbols[me.target_idx];
+                    if (me.tgt != nil)
                     {
-                        tgt.setVisible(u.get_display());
-                        var u_dev_rad = (90-u.get_deviation(hdp.heading))  * D2R;
-                        var u_elev_rad = (90-u.get_total_elevation( hdp.pitch))  * D2R;
-                        var devs = me.develev_to_devroll(hdp, u_dev_rad, u_elev_rad);
-                        var combined_dev_deg = devs[0];
-                        var combined_dev_length =  devs[1];
-                        var clamped = devs[2];
-                        var yc = ht_yco + (ht_ycf * combined_dev_length * math.cos(combined_dev_deg*D2R));
-                        var xc = ht_xco + (ht_xcf * combined_dev_length * math.sin(combined_dev_deg*D2R));
-                        if(devs[2])
-                            tgt.setVisible(1);#getprop("sim/model/f16/lighting/hud-diamond-switch/state"));
+                        me.tgt.setVisible(me.u.get_display());
+                        me.u_dev_rad = (90-me.u.get_deviation(hdp.heading))  * D2R;
+                        me.u_elev_rad = (90-me.u.get_total_elevation( hdp.pitch))  * D2R;
+                        me.devs = me.develev_to_devroll(hdp, me.u_dev_rad, me.u_elev_rad);
+                        me.combined_dev_deg = me.devs[0];
+                        me.combined_dev_length =  me.devs[1];
+                        me.clamped = me.devs[2];
+                        me.yc = ht_yco + (ht_ycf * me.combined_dev_length * math.cos(me.combined_dev_deg*D2R));
+                        me.xc = ht_xco + (ht_xcf * me.combined_dev_length * math.sin(me.combined_dev_deg*D2R));
+                        if(me.devs[2])
+                            me.tgt.setVisible(1);#getprop("sim/model/f16/lighting/hud-diamond-switch/state"));
                         else
-                            tgt.setVisible(1);
+                            me.tgt.setVisible(1);
 
-                        if (awg_9.active_u != nil and awg_9.active_u.Callsign != nil and u.Callsign != nil and u.Callsign.getValue() == awg_9.active_u.Callsign.getValue())
+                        if (awg_9.active_u != nil and awg_9.active_u.Callsign != nil and me.u.Callsign != nil and me.u.Callsign.getValue() == awg_9.active_u.Callsign.getValue())
                         {
                             me.target_locked.setVisible(1);
-                            me.target_locked.setTranslation (xc, yc);
+                            me.target_locked.setTranslation (me.xc, me.yc);
                         }
                         else
                         {
                             #
                             # if in symbol reject mode then only show the active target.
                             if(hdp.symbol_reject)
-                                tgt.setVisible(0);
+                                me.tgt.setVisible(0);
                         }
-                        tgt.setTranslation (xc, yc);
+                        me.tgt.setTranslation (me.xc, me.yc);
 
                         if (ht_debug)
-                            printf("%-10s %f,%f [%f,%f,%f] :: %f,%f",callsign,xc,yc, devs[0], devs[1], devs[2], u_dev_rad*D2R, u_elev_rad*D2R); 
+                            printf("%-10s %f,%f [%f,%f,%f] :: %f,%f",me.callsign,me.xc,me.yc, me.devs[0], me.devs[1], me.devs[2], me.u_dev_rad*D2R, me.u_elev_rad*D2R); 
                     }
                 }
-                target_idx = target_idx+1;
+                me.target_idx += 1;
             }
         }
-        for(var nv = target_idx; nv < me.max_symbols;nv += 1)
+        for(me.nv = me.target_idx; me.nv < me.max_symbols;me.nv += 1)
         {
-            tgt = me.tgt_symbols[nv];
-            if (tgt != nil)
+            me.tgt = me.tgt_symbols[me.nv];
+            if (me.tgt != nil)
             {
-                tgt.setVisible(0);
+                me.tgt.setVisible(0);
             }
         }
 
@@ -434,7 +458,7 @@ var F16_HUD = {
 # 8                 5
 # 9                 6
         me.window9.setText(sprintf("AOA %d",hdp.alpha));
-        if(win5 == 0) {
+        if(me.win5 == 0) {
             me.window5.setText(sprintf("M %1.3f",hdp.mach));
         }
 

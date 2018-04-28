@@ -641,7 +641,7 @@ var MFD_Device =
                             if (v.getValue())
                                 me.mfd_button_pushed = v.getValue();
                             else {
-                                printf("%s: Button %d",me.designation, me.mfd_button_pushed);
+                                #printf("%s: Button %d",me.designation, me.mfd_button_pushed);
                                 me.PFD.notifyButton(me.mfd_button_pushed);
                                 me.mfd_button_pushed = 0;
                             }
