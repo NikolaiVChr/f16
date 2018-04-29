@@ -5,9 +5,8 @@
 
 <system name="autoflight">
 	
-	<property value="1">autoflight/roll/can-engage</property> <!-- This will be on a switch for no power, failure, etc -->
-	<property value="0">f16/fcs/switch-roll</property> <!-- -1 = STRG SEL, 0 = ATT HOLD, 1 = HDG SEL -->
-	<property value="0">f16/fcs/switch-pitch</property> <!-- -1 = ATT HOLD, 0 = A/P OFF, 1 = ALT HOLD -->
+	<property value="0">/f16/fcs/switch-roll</property> <!-- -1 = STRG SEL, 0 = ATT HOLD, 1 = HDG SEL -->
+	<property value="0">/f16/fcs/switch-pitch</property> <!-- -1 = ATT HOLD, 0 = A/P OFF, 1 = ALT HOLD -->
 	<property value="0">autoflight/roll/altitude-5-sec-ahead</property> <!-- autoflight-rules.xml -->
 	<property value="0">autoflight/roll/heading/pi</property>
 	<property value="0">autoflight/roll/target-roll-deg</property>
@@ -19,6 +18,15 @@
 	<property value="-0.15">autoflight/roll/d-gain-att</property>
 	
 	<channel name="Autoflight: Logic">
+		
+		<switch name="autoflight/can-engage">
+			<default value="1"/>
+			<test logic="OR" value="0"> <!-- Add conditions where AP fails here -->
+				position/wow eq 1
+				attitude/roll-rad gt 1.0472
+				attitude/roll-rad lt -1.0472
+			</test>
+		</switch>
 		
 		<switch name="position/wow">
 			<default value="0"/>
@@ -95,9 +103,9 @@
 		
 		<switch name="autoflight/output/roll-master">
 			<default value="0"/>
-			<test logic="AND" value="1"> <!-- f16/fcs/switch-pitch is not a typo -->
-				f16/fcs/switch-pitch ne 0
-				autoflight/roll/can-engage eq 1
+			<test logic="AND" value="1"> <!-- /f16/fcs/switch-pitch is not a typo -->
+				/f16/fcs/switch-pitch ne 0
+				autoflight/can-engage eq 1
 				autoflight/ss/roll-force eq 0
 				position/wow eq 0
 			</test>
@@ -106,8 +114,8 @@
 		<switch name="autoflight/output/pitch-master">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				f16/fcs/switch-pitch ne 0
-				autoflight/roll/can-engage eq 1
+				/f16/fcs/switch-pitch ne 0
+				autoflight/can-engage eq 1
 				autoflight/ss/pitch-force eq 0
 				position/wow eq 0
 			</test>
@@ -130,7 +138,7 @@
 									<value>1</value>
 								</eq>
 								<eq>
-									<property>f16/fcs/switch-roll</property>
+									<property>/f16/fcs/switch-roll</property>
 									<value>1</value>
 								</eq>
 							</and>
@@ -147,7 +155,7 @@
 			<default value="1"/>
 			<test logic="AND" value="0">
 				autoflight/output/roll-master eq 1
-				f16/fcs/switch-roll ne 0
+				/f16/fcs/switch-roll ne 0
 				position/wow eq 0
 			</test>
 		</switch>
@@ -210,7 +218,7 @@
 							<value>1</value>
 						</eq>
 						<eq>
-							<property>f16/fcs/switch-roll</property>
+							<property>/f16/fcs/switch-roll</property>
 							<value>0</value>
 						</eq>
 						<eq>
@@ -228,7 +236,7 @@
 			<default value="/orientation/roll-deg"/>
 			<test logic="AND" value="autoflight/roll/heading/pi">
 				autoflight/output/roll-master eq 1
-				f16/fcs/switch-roll ne 0
+				/f16/fcs/switch-roll ne 0
 			</test>
 		</switch>
 		
@@ -241,7 +249,7 @@
 							<value>1</value>
 						</eq>
 						<nq>
-							<property>f16/fcs/switch-roll</property>
+							<property>/f16/fcs/switch-roll</property>
 							<value>0</value>
 						</nq>
 					</and>
@@ -257,11 +265,11 @@
 			<default value="0"/>
 			<test logic="AND" value="autoflight/roll/roll-hld-target">
 				autoflight/output/roll-master eq 1
-				f16/fcs/switch-roll eq 0
+				/f16/fcs/switch-roll eq 0
 			</test>
 			<test logic="AND" value="autoflight/roll/roll-cmd-target">
 				autoflight/output/roll-master eq 1
-				f16/fcs/switch-roll ne 0
+				/f16/fcs/switch-roll ne 0
 			</test>
 		</switch>
 		

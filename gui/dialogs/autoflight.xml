@@ -59,7 +59,7 @@
 				
 				<slider>
 					<halign>left</halign>
-					<property>/fdm/jsbsim/f16/fcs/switch-roll</property>
+					<property>/f16/fcs/switch-roll</property>
 					<min>-1</min>
 					<max>1</max>
 					<step>1</step>
@@ -104,7 +104,7 @@
 				
 				<slider>
 					<halign>left</halign>
-					<property>/fdm/jsbsim/f16/fcs/switch-pitch</property>
+					<property>/f16/fcs/switch-pitch</property>
 					<min>-1</min>
 					<max>1</max>
 					<step>1</step>
