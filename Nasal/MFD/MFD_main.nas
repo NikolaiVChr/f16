@@ -518,13 +518,22 @@ var MFD_Device =
         }
         me.p_RDR.update = func (noti) {
             me.root.horiz.setRotation(-getprop("orientation/roll-deg")*D2R);
+            me.time = getprop("sim/time/elapsed-sec");
+            me.az = getprop("instrumentation/radar/az-field");
+            if (getprop("sim/multiplay/generic/int[2]")!=1) {
+                var plc = me.time*0.5/(me.az/120)-int(me.time*0.5/(me.az/120));
+                if (plc<me.plc) {
+                    me.fwd = !me.fwd;
+                }
+                me.plc = plc;
+                me.root.ant_bottom.setTranslation(me.wdt*0.5-(me.az/120)*me.wdt*0.5+(me.az/120)*me.wdt*math.abs(me.fwd-me.plc),0);
+            }
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
             me.i=0;
             me.root.rang.setText(sprintf("%d",getprop("instrumentation/radar/radar2-range")));
-            me.time = getprop("sim/time/elapsed-sec");
             me.ho = getprop("instrumentation/radar/ho-field");
-            me.az = getprop("instrumentation/radar/az-field");
+            
             me.azt = "";
             me.hot = "";
             if (me.az==15) {
@@ -549,14 +558,7 @@ var MFD_Device =
             me.root.bars.setText(me.hot);
             me.root.az1.setTranslation(-(me.az/120)*me.wdt*0.5,0);
             me.root.az2.setTranslation((me.az/120)*me.wdt*0.5,0);
-            if (getprop("sim/multiplay/generic/int[2]")!=1) {
-                var plc = me.time*0.5/(me.az/120)-int(me.time*0.5/(me.az/120));
-                if (plc<me.plc) {
-                    me.fwd = !me.fwd;
-                }
-                me.plc = plc;
-                me.root.ant_bottom.setTranslation(me.wdt*0.5-(me.az/120)*me.wdt*0.5+(me.az/120)*me.wdt*math.abs(me.fwd-me.plc),0);
-            }
+            
             foreach(contact; awg_9.tgts_list) {
                 if (contact.get_display() == 0) {
                     continue;
