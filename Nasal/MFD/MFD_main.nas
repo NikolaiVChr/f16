@@ -440,6 +440,16 @@ var MFD_Device =
            .lineTo( -10, -8)
            .setColor(1,1,1)
            .setStrokeLineWidth(svg.dlzLW);
+        svg.az1 = svg.p_RDR.createChild("path")
+           .moveTo(0, 0)
+           .lineTo(0, -482)
+           .setColor(0.5,0.5,1)
+           .setStrokeLineWidth(1);
+        svg.az2 = svg.p_RDR.createChild("path")
+           .moveTo(0, 0)
+           .lineTo(0, -482)
+           .setColor(0.5,0.5,1)
+           .setStrokeLineWidth(1);
     },
 
     addRadar: func {
@@ -467,6 +477,28 @@ var MFD_Device =
                     awg_9.range_control(-1);
                 } elsif (eventi == 10) {
                     me.ppp.selectPage(me.my.p1_1);
+                } elsif (eventi == 2) {
+                    var az = getprop("instrumentation/radar/az-field");
+                    if(az==120)
+                        az = 15;
+                    elsif(az==15)
+                        az = 30;
+                    elsif(az==30)
+                        az = 60;
+                    elsif(az==60)
+                        az = 120;
+                    setprop("instrumentation/radar/az-field", az);
+                } elsif (eventi == 3) {
+                    var ho = getprop("instrumentation/radar/ho-field");
+                    if(ho==120)
+                        ho = 15;
+                    elsif(ho==15)
+                        ho = 30;
+                    elsif(ho==30)
+                        ho = 60;
+                    elsif(ho==60)
+                        ho = 120;
+                    setprop("instrumentation/radar/ho-field", ho);
                 }
             }
         }
@@ -476,13 +508,39 @@ var MFD_Device =
             me.i=0;
             me.root.rang.setText(sprintf("%d",getprop("instrumentation/radar/radar2-range")));
             me.time = getprop("sim/time/elapsed-sec");
+            me.ho = getprop("instrumentation/radar/ho-field");
+            me.az = getprop("instrumentation/radar/az-field");
+            me.azt = "";
+            me.hot = "";
+            if (me.az==15) {
+                me.azt = "A1";
+            } elsif (me.az==30) {
+                me.azt = "A2";
+            } elsif (me.az==60) {
+                me.azt = "A3";
+            } elsif (me.az==120) {
+                me.azt = "A4";
+            }
+            me.root.az.setText(me.azt);
+            if (me.ho==15) {
+                me.hot = "2B";
+            } elsif (me.ho==30) {
+                me.hot = "4B";
+            } elsif (me.ho==60) {
+                me.hot = "6B";
+            } elsif (me.ho==120) {
+                me.hot = "8B";
+            }
+            me.root.bars.setText(me.hot);
+            me.root.az1.setTranslation(-(me.az/120)*me.wdt*0.5,0);
+            me.root.az2.setTranslation((me.az/120)*me.wdt*0.5,0);
             if (getprop("sim/multiplay/generic/int[2]")!=1) {
-                var plc = me.time*0.5-int(me.time*0.5);
+                var plc = me.time*0.5/(me.az/120)-int(me.time*0.5/(me.az/120));
                 if (plc<me.plc) {
                     me.fwd = !me.fwd;
                 }
                 me.plc = plc;
-                me.root.ant_bottom.setTranslation(me.wdt*math.abs(me.fwd-me.plc),0);
+                me.root.ant_bottom.setTranslation(me.wdt*0.5-(me.az/120)*me.wdt*0.5+(me.az/120)*me.wdt*math.abs(me.fwd-me.plc),0);
             }
             foreach(contact; awg_9.tgts_list) {
                 if (contact.get_display() == 0) {

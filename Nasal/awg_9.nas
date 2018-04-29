@@ -23,6 +23,7 @@ var HudTgtTDeg        = props.globals.getNode("sim/model/f16/instrumentation/rad
 var HudTgtClosureRate = props.globals.getNode("sim/model/f16/instrumentation/radar-awg-9/hud/closure-rate", 1);
 var HudTgtDistance = props.globals.getNode("sim/model/f16/instrumentation/radar-awg-9/hud/distance", 1);
 var AzField           = props.globals.getNode("instrumentation/radar/az-field", 1);
+var HoField           = props.globals.getNode("instrumentation/radar/ho-field", 1);
 var RangeRadar2       = props.globals.getNode("instrumentation/radar/radar2-range",1);
 var RadarStandby      = props.globals.getNode("sim/multiplay/generic/int[17]",1);
 var OurAlt            = props.globals.getNode("position/altitude-ft",1);
@@ -34,7 +35,7 @@ var WcsMode           = props.globals.getNode("sim/model/f16/instrumentation/rad
 var SWTgtRange        = props.globals.getNode("sim/model/f16/systems/armament/aim9/target-range-nm",1);
 
 
-var az_fld            = AzField.getValue();
+
 var l_az_fld          = 0;
 var r_az_fld          = 0;
 var swp_fac           = nil;    # Scan azimuth deviation, normalized (-1 --> 1).
@@ -98,7 +99,7 @@ var az_scan = func(fcount) {
     if (fcount != 0) {
         return;
     }
-
+    var az_fld            = AzField.getValue();
     l_az_fld = - az_fld / 2;
     r_az_fld = az_fld / 2;
 	our_true_heading = OurHdg.getValue();
@@ -215,9 +216,10 @@ var az_scan = func(fcount) {
                 if (c.getNode("callsign") == nil)
                     continue;
 
-                u.get_deviation(our_true_heading);
-
-                if (u.deviation > l_az_fld  and  u.deviation < r_az_fld )
+                var dv = u.get_deviation(our_true_heading);
+                var ele = u.get_total_elevation(OurPitch.getValue());
+                
+                if (math.abs(dv) < az_fld/2 and math.abs(ele) < HoField.getValue()/2)
                 {
                     u.set_display(1);
                 }
@@ -559,10 +561,9 @@ rwr = func(u) {
 
 # Utilities.
 var deviation_normdeg = func(our_heading, target_bearing) {
-	var dev_norm = our_heading - target_bearing;
-	while (dev_norm < -180) dev_norm += 360;
-	while (dev_norm > 180) dev_norm -= 360;
-	return(dev_norm);
+	var dev_norm = target_bearing-our_heading;
+    dev_norm=geo.normdeg180(dev_norm);
+	return dev_norm;
 }
 
 
@@ -886,21 +887,20 @@ var Target = {
 		me.RelBearing.setValue(n);
 	},
 	get_relative_bearing : func() {
-        return me.get_bearing()-getprop("orientation/heading-deg");
-		return me.RelBearing.getValue();
+        return geo.normdeg180(me.get_bearing()-getprop("orientation/heading-deg"));
 	},
 	get_reciprocal_bearing : func {
 		return geo.normdeg(me.get_bearing() + 180);
 	},
 	get_deviation : func(true_heading_ref) {
-		me.deviation =  - deviation_normdeg(true_heading_ref, me.get_bearing());
+		me.deviation =  deviation_normdeg(true_heading_ref, me.get_bearing());
 		return me.deviation;
 	},
 	get_altitude : func {
 		return me.Alt.getValue();
 	},
 	get_total_elevation : func(own_pitch) {
-		me.deviation =  - deviation_normdeg(own_pitch, me.Elevation.getValue());
+		me.deviation =  deviation_normdeg(own_pitch, me.Elevation.getValue());
 		me.TotalElevation.setValue(me.deviation);
 		return me.deviation;
 	},
