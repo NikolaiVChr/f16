@@ -12,17 +12,36 @@
  <animation>
   <object-name>HUDImage2</object-name>
   <type>material</type>
+<!--  <condition>
+      <not>
+      	<property>sim/rendering/shaders/skydome</property>
+      </not>
+  </condition>-->
   <emission>
   	<factor-prop>f16/avionics/hud-brt</factor-prop>
    <red>1</red>
    <green>1</green>
    <blue>1</blue>
   </emission>
+ </animation>
+  
+  <!--<animation>
+  <object-name>HUDImage2</object-name>
+  <type>material</type>
+  <condition>
+        <property>sim/rendering/shaders/skydome</property>
+  </condition>
   <transparency>
    <factor-prop>f16/avionics/hud-brt</factor-prop>
    <factor>1</factor>
    <offset>0</offset>
   </transparency>
- </animation>
+  <emission>
+  	<factor-prop>f16/avionics/hud-brt</factor-prop>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>-->
 
 </PropertyList>

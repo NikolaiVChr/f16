@@ -4,7 +4,7 @@ MATERIAL "ac3dmat0.005" rgb 0 0 0  amb 0.1 0.1 0.1  emis 0 0 0  spec 0 0 0  shi 
 MATERIAL "ac3dmat1.009" rgb 0.325 0.251 0.075  amb 0.217 0.217 0.217  emis 0.563333 0.563333 0.563333  spec 0 0 0  shi 0  trans 0.043
 MATERIAL "ac3dmat1.010" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.502 0.502 0.502  shi 10  trans 0.737
 MATERIAL "ac3dmat13.012" rgb 0.325 0.251 0.075  amb 0.217 0.217 0.217  emis 0 0 0  spec 0.145 0.145 0.145  shi 3  trans 0.482
-MATERIAL "Glass" rgb 0 0 0  amb 0 0 0  emis 0.501961 1 0.501961  spec 0 0 0  shi 0  trans 0.9
+MATERIAL "Glass" rgb 0.00 0.00 0.00  amb 0.00 0.00 0.00  emis 0.00 0.00 0.00  spec 0.00 0.00 0.00  shi  50 trans 0.10
 OBJECT world
 kids 3
 OBJECT poly

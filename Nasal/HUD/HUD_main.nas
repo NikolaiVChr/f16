@@ -127,6 +127,7 @@ var F16_HUD = {
                 .setColor(0,1,0);
         obj.initUpdate =1;
         obj.svg.setColor(0.3,1,0.3);
+        obj.alpha = getprop("f16/avionics/hud-brt");
 		return obj;
 	},
 #
@@ -214,6 +215,11 @@ var F16_HUD = {
         me.roll_rad = -hdp.roll*D2R;
 
         if (hdp.FrameCount == 2 or me.initUpdate == 1) {
+            var alpha = getprop("f16/avionics/hud-brt");
+            if (alpha != me.alpha) {
+                me.alpha = alpha;
+                me.svg.setColor(0.3,1,0.3,alpha);
+            }
             # calc of pitch_offset (compensates for AC3D model translated and rotated when loaded. Also semi compensates for HUD being at an angle.)
             me.Hz_b =    0.801701;# HUD position inside ac model after it is loaded, translated (0.08m) and rotated (0.7d).
             me.Hz_t =    0.976668;
