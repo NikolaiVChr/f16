@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+
+<!-- General Dynamics F-16 Autoflight System -->
+<!-- (c) 2018 Joshua Davidson (it0uchpods) -->
+
+<PropertyList>
+	
+	<filter>
+		<name>DRIFT ANGLE</name>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>/orientation/track-magnetic-deg</input>
+		<reference>/orientation/heading-magnetic-deg</reference>
+		<output>/fdm/jsbsim/autoflight/roll/drift-angle</output>
+		<period>
+			<min>-180</min>
+			<max>180</max>
+		</period>
+	</filter>
+	
+	<filter>
+		<name>HEADING ERROR DEG</name>
+		<debug>false</debug>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<condition>
+				<equals>
+					<property>/fdm/jsbsim/f16/fcs/switch-roll</property>
+					<value>-1</value>
+				</equals>
+			</condition>
+			<expression>
+				<sum>
+					<property>/autopilot/route-manager/wp[0]/true-bearing-deg</property>
+					<product>
+						<property>/fdm/jsbsim/autoflight/roll/drift-angle</property>
+						<value>-1</value>
+					</product>
+					<product>
+						<property>/orientation/heading-deg</property>
+						<value>-1</value>
+					</product>
+				</sum>
+			</expression>
+		</input>
+		<input>
+			<property>/fdm/jsbsim/autoflight/roll/hdg-hld-target</property>
+			<offset>
+				<property>/orientation/heading-deg</property>
+				<scale>-1.0</scale>
+			</offset>
+		</input>
+		<output>/fdm/jsbsim/autoflight/roll/heading-error-deg</output>
+		<period>
+			<min>-180</min>
+			<max>180</max>
+		</period>
+	</filter>
+	
+	<predict-simple>
+		<name>ALTITUDE 5 SECONDS AHEAD</name>
+		<debug>false</debug>
+		<input>/instrumentation/altimeter/indicated-altitude-ft</input>
+		<output>/fdm/jsbsim/autoflight/roll/altitude-5-sec-ahead</output>
+		<seconds>5.0</seconds>
+		<filter-gain>0.0</filter-gain>
+	</predict-simple>
+
+</PropertyList>

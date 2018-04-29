@@ -54,6 +54,7 @@
  <system file="jsb-hook"/>
  <system file="f16-hydraulics"/>
  <flight_control file="Systems/jsb-controls"/>
+ <system file="autoflight"/>
  <propulsion file="Systems/jsb-propulsion-block32"/>
  <aerodynamics file="Systems/jsb-aerodynamics-block1.xml"/>
 

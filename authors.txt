@@ -47,3 +47,6 @@ Fabien Barbier
 
 Alan Teeder
 - FDM consulting
+
+Joshua Davidson (it0uchpods)
+- Autopilot

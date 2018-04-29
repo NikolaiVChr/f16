@@ -540,6 +540,7 @@
             <input>-fcs/fly-by-wire/roll/loop-lag</input>
             <input>-fcs/fly-by-wire/roll/trim-gain</input>
             <input>fcs/fly-by-wire/roll/roll-filter</input>
+            <input>autoflight/roll/roll-rate-demand</input>
         </summer>
 
         <pure_gain name="fcs/fly-by-wire/roll/trim-gain">
