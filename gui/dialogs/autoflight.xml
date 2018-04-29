@@ -8,23 +8,23 @@
 	<name>autopilot</name>
 	<layout>vbox</layout>
 
-    <group>
-        <layout>hbox</layout>
-        <text>
-            <halign>left</halign>
-            <label>F-16 Autoflight System</label>
-        </text>
-        <button>
-            <halign>right</halign>
-            <pref-width>20</pref-width>
-            <pref-height>20</pref-height>
-            <legend>X</legend>
-            <key>Esc</key>
-            <binding>
-                <command>dialog-close</command>
-            </binding>
-        </button>
-    </group>
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>F-16 Autoflight System</label>
+		</text>
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
 	
 	<hrule/>
 	
@@ -33,63 +33,91 @@
 		
 		<group>
 			<layout>vbox</layout>
-			<halign>left</halign>
 			
 			<text>
-				<label>HDG SEL</label>
-			</text>
-			<text>
-				<label>ATT HOLD</label>
-			</text>
-			<text>
-				<label>STRG SEL</label>
+				<label>ROLL      </label>
 			</text>
 			
-		</group>
+			<group>
+				<layout>hbox</layout>
+			
+				<group>
+					<layout>vbox</layout>
+					<halign>left</halign>
+					
+					<text>
+						<label>HDG SEL</label>
+					</text>
+					<text>
+						<label>ATT HOLD</label>
+					</text>
+					<text>
+						<label>STRG SEL</label>
+					</text>
+					
+				</group>
+				
+				<slider>
+					<halign>left</halign>
+					<property>/fdm/jsbsim/f16/fcs/switch-roll</property>
+					<min>-1</min>
+					<max>1</max>
+					<step>1</step>
+					<live>true</live>
+					<vertical>true</vertical>
+					<binding>
+						<command>dialog-apply</command>
+					</binding>
+				</slider>
+				
+			</group>
 		
-		<slider>
-			<halign>left</halign>
-			<property>/fdm/jsbsim/f16/fcs/switch-roll</property>
-			<min>-1</min>
-			<max>1</max>
-			<step>1</step>
-			<live>true</live>
-			<vertical>true</vertical>
-			<binding>
-				<command>dialog-apply</command>
-			</binding>
-		</slider>
+		</group>
 		
 		<vrule/>
 		
 		<group>
 			<layout>vbox</layout>
-			<halign>left</halign>
 			
 			<text>
-				<label>ALT HOLD</label>
-			</text>
-			<text>
-				<label>A/P OFF</label>
-			</text>
-			<text>
-				<label>ATT HOLD</label>
+				<label>PITCH      </label>
 			</text>
 			
-		</group>
+			<group>
+				<layout>hbox</layout>
 		
-		<slider>
-			<halign>left</halign>
-			<property>/fdm/jsbsim/f16/fcs/switch-pitch</property>
-			<min>-1</min>
-			<max>1</max>
-			<step>1</step>
-			<live>true</live>
-			<vertical>true</vertical>
-			<binding>
-				<command>dialog-apply</command>
-			</binding>
-		</slider>
+				<group>
+					<layout>vbox</layout>
+					<halign>left</halign>
+					
+					<text>
+						<label>ALT HOLD</label>
+					</text>
+					<text>
+						<label>A/P OFF</label>
+					</text>
+					<text>
+						<label>ATT HOLD</label>
+					</text>
+					
+				</group>
+				
+				<slider>
+					<halign>left</halign>
+					<property>/fdm/jsbsim/f16/fcs/switch-pitch</property>
+					<min>-1</min>
+					<max>1</max>
+					<step>1</step>
+					<live>true</live>
+					<vertical>true</vertical>
+					<binding>
+						<command>dialog-apply</command>
+					</binding>
+				</slider>
+				
+			</group>
+		
+		</group>
 		
 	</group>
 

@@ -25,10 +25,16 @@
 		<gain>1.0</gain>
 		<input>
 			<condition>
-				<equals>
-					<property>/fdm/jsbsim/f16/fcs/switch-roll</property>
-					<value>-1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/fdm/jsbsim/f16/fcs/switch-roll</property>
+						<value>-1</value>
+					</equals>
+					<equals>
+						<property>/autopilot/route-manager/active</property>
+						<value>1</value>
+					</equals>
+				</and>
 			</condition>
 			<expression>
 				<sum>
@@ -43,6 +49,21 @@
 					</product>
 				</sum>
 			</expression>
+		</input>
+		<input>
+			<condition>
+				<and>
+					<equals>
+						<property>/fdm/jsbsim/f16/fcs/switch-roll</property>
+						<value>-1</value>
+					</equals>
+					<not-equals>
+						<property>/autopilot/route-manager/active</property>
+						<value>0</value>
+					</not-equals>
+				</and>
+			</condition>
+			<value>0</value>
 		</input>
 		<input>
 			<property>/fdm/jsbsim/autoflight/roll/hdg-hld-target</property>
