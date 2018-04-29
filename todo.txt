@@ -86,6 +86,7 @@ Sort splashes so they match liveries.
 A/P
 ---
 Make auto-pilot system. [In progress by it0chpods]
+ctrl-s overrides autothrottle.
 
 Nasal
 -----

@@ -5,7 +5,7 @@
   <model>
    <livery>
     <name type="string">PolAF 3.ELT, #4042</name>
-    <texture>Liveries/Block50/03-0042.jpg</texture>
+    <texture>Liveries/Block50/03-0042.png</texture>
     
     <owner type="string">PolAF</owner>
    </livery>
