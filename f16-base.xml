@@ -407,7 +407,7 @@
                 <desc>Look down on displays</desc>
             </key>
             <key>
-                <name>Ctrl-w</name>
+                <name>W</name>
                 <desc>Look down on RWR</desc>
             </key>
             <key>
@@ -494,14 +494,14 @@
                     </script>
                 </binding>
              </key>
-            <key n="23">
-                <name>CTRL-W</name>
+            <key n="87">
+                <name>SHIFT-W</name>
                 <desc>View RWR</desc>
                 <repeatable>false</repeatable>
-                <binding>
-                    <command>nasal</command>
-                    <script>f16.RWRView();</script>
-                </binding>
+                    <binding>
+                        <command>nasal</command>
+                        <script>f16.RWRView();</script>
+                    </binding>
             </key>
             <key n="113">
                 <name>q</name>
