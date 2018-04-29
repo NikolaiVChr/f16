@@ -407,7 +407,7 @@
                 <desc>Look down on displays</desc>
             </key>
             <key>
-                <name>Ctrl-s</name>
+                <name>Ctrl-w</name>
                 <desc>Look down on RWR</desc>
             </key>
             <key>
@@ -494,8 +494,8 @@
                     </script>
                 </binding>
              </key>
-            <key n="19">
-                <name>CTRL-S</name>
+            <key n="23">
+                <name>CTRL-W</name>
                 <desc>View RWR</desc>
                 <repeatable>false</repeatable>
                 <binding>
