@@ -499,6 +499,12 @@
     <output>fcs/right-aileron-pos-rad</output>
    </aerosurface_scale>
 
+   <pure_gain name="fcs/right-aileron-control-norm">
+    <input>fcs/right-aileron-control</input>
+    <gain>2.6649</gain>
+    <output>fcs/right-aileron-pos-norm</output>
+   </pure_gain>
+
   </channel>
 
   <channel name="Pitch">
@@ -650,11 +656,11 @@
       <time>0.3</time>
      </setting>
     </traverse>
-    <output>fcs/elevator-pos-norm</output>
+    <!--<output>fcs/elevator-pos-norm</output>-->
    </kinematic>
 
    <aerosurface_scale name="fcs/elevator-position">
-     <input>fcs/elevator-pos-norm</input>
+     <input>fcs/elevator-position-normalized</input>
      <range>
     <min>-0.436</min>
     <max>0.436</max>
@@ -669,6 +675,7 @@
     <min>-0.436</min>
     <max>0.436</max>
      </clipto>
+     <output>fcs/elevator-pos-norm</output>
     </summer>
 
     <summer name="fcs/dht-right-pos-rad">
@@ -678,6 +685,7 @@
     <min>-0.436</min>
     <max>0.436</max>
      </clipto>
+     <output>/sim/multiplay/generic/float[4]</output>
     </summer>
 
   </channel>
@@ -988,6 +996,7 @@
      </setting>
     </traverse>
     <output>fcs/canopy-pos-norm</output>
+    <output>/canopy/position-norm</output>
    </kinematic>
 
   </channel>
