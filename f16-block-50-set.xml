@@ -68,7 +68,7 @@
    <path archive="y">Aircraft/f16/Models/F-16.xml</path>
    <livery>
     <file type="string"/>
-    <name type="string">USAF 89-2029/AV 510FS</name>
+    <name type="string">USAF 52FW, 480FS SP</name>
     <folder type="string">Aircraft/f16/Models/Liveries/Block50</folder>
    </livery>
   </model>

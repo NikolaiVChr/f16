@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+    <sim>
+        <model> 
+            <livery>
+                <name type="string">UAE 3012</name>
+                <texture type="string">Liveries/Block60/uae2.png</texture>
+                <owner type="string">UAE</owner>
+            </livery>
+            <livery-logo>
+                <texture type="string">Liveries/yf/yf16-transp.png</texture>
+            </livery-logo>
+        </model>
+    </sim>
+</PropertyList>

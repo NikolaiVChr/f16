@@ -31,6 +31,10 @@ var Station = {
 		return p;
 	},
 
+	getCurrentName: func {
+		return me.currentName;
+	},
+
 	loadSet: func (set) {
 		foreach(me.weapon ; me.weapons) {
 			if (me.weapon != nil) {
@@ -169,6 +173,7 @@ var Station = {
 	initGUI: func {},
 	jettisonAll: func {},
 	jettisonLauncher: func {},
+	getCurrentShortName: func {},
 };
 
 var InternalStation = {
@@ -282,6 +287,40 @@ var Pylon = {
 		me.changingGui = 0;
 	},
 
+	getCurrentShortName: func {
+		me.nameS = "";
+		if (me.currentSet.showLongTypeInsteadOfCount) {
+			if (size(me.weapons) > 0) {
+				me.nameS = me.weapons[0].typeShort;
+			}
+		} else {
+			me.calcName = {};
+			foreach(me.weapon;me.weapons) {
+				if(me.weapon != nil) {
+					me.type = me.weapon.typeShort;
+					if (me.calcName[me.type]==nil) {
+						me.calcName[me.type]=1;
+					} else {
+						me.calcName[me.type] += 1;
+					}
+				}
+			}
+			foreach(key;keys(me.calcName)) {
+				me.nameS = me.nameS~", "~me.calcName[key]~"x"~key;
+			}
+			me.nameS = right(me.nameS, size(me.nameS)-2);#remove initial comma
+		}
+		if(me.nameS == "" and me.currentSet != nil and size(me.currentSet.content)!=0) {
+			me.nameS = nil;
+		} elsif (me.nameS == "" and me.currentSet != nil and size(me.currentSet.content)==0) {
+			me.nameS = me.currentSet.name;
+		}
+		if(me.nameS == "" or me.nameS == "Empty") {
+			me.nameS = nil;
+		}
+		return me.nameS;
+	},
+
 	jettisonAll: func {
 		# drops everything.
 		foreach(me.weapon ; me.getWeapons()) {
@@ -340,6 +379,7 @@ var SubModelWeapon = {
 		var s = {parents:[SubModelWeapon]};
 		s.type = name;
 		s.typeLong = name;
+		s.typeShort = name;
 		s.submodelNumber = submodelNumber;
 		s.tracerSubModelNumbers = tracerSubModelNumbers;
 		s.operableFunction = operableFunction;
@@ -434,10 +474,11 @@ var FuelTank = {
 #
 # Attributes:
 #  fuel tank number
-	new: func (name, fuelTankNumber, capacity_gal, model_path) {
+	new: func (name, short, fuelTankNumber, capacity_gal, model_path) {
 		var s = {parents:[FuelTank]};
 		s.type = name;
 		s.typeLong = name;
+		s.typeShort = short;
 		s.capacity = capacity_gal;
 		s.fuelTankNumber = fuelTankNumber;
 		s.modelPath = model_path;
@@ -454,7 +495,7 @@ var FuelTank = {
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/capacity-gal_us", me.capacity);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/level-gal_us", me.capacity);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/selected", 1);
-		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", me.type);
+		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", me.typeLong);
 		setprop(me.modelPath, 1);
 	},
 
@@ -480,6 +521,9 @@ var FuelTank = {
 		# return 0
 		return 0;
 	},
+
+	start: func {},
+	stop: func {},
 };
 
 var Smoker = {
@@ -488,10 +532,11 @@ var Smoker = {
 #
 # Attributes:
 #  fuel tank number
-	new: func (name, model_path) {
+	new: func (name, short, model_path) {
 		var s = {parents:[Smoker]};
 		s.type = name;
 		s.typeLong = name;
+		s.typeShort = short;
 		s.modelPath = model_path;
 
 		# these 3 needs to be here and be 0
@@ -520,15 +565,19 @@ var Smoker = {
 		# return 0
 		return 0;
 	},
+
+	start: func {},
+	stop: func {},
 };
 
 var Dummy = {
 # Implements a non functional item.
 #
-	new: func (name) {
+	new: func (name, short) {
 		var s = {parents:[Dummy]};
 		s.type = name;
 		s.typeLong = name;
+		s.typeShort = short;
 
 		# these 3 needs to be here and be 0
 		s.Cd_base = 0;
@@ -555,4 +604,7 @@ var Dummy = {
 		# return 0
 		return 0;
 	},
+
+	start: func {},
+	stop: func {},
 };
