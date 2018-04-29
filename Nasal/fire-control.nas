@@ -103,6 +103,37 @@ var FireControl = {
 		return me.pylons[me.selected[0]];
 	},
 
+	getSelectedPylonNumber: func {
+		if (me.selected == nil) {
+			return nil;
+		}
+		return me.selected[0];
+	},
+
+	selectPylon: func (p, w=nil) {
+		if (size(me.pylons) > p) {
+			me.ws = me.pylons[p].getWeapons();
+			if (me.ws != nil and w != nil and size(me.ws) > w and me.ws[w] != nil) {
+				me.stopCurrent();
+				me.selected = [p, w];
+				me.updateCurrent();
+				return;
+			} elsif (me.ws != nil and w == nil and size(me.ws) > 0) {
+				w = 0;
+				foreach(me.wp;me.ws) {
+					if (me.wp != nil) {
+						me.stopCurrent();
+						me.selected = [p, w];
+						me.updateCurrent();
+						return;
+					}
+					w+=1;
+				}
+			}
+		}
+		print("manually select pylon failed");
+	},
+
 	trigger: func {
 		printf("trigger called %d %d %d",getprop("controls/armament/master-arm"),getprop("controls/armament/trigger"),me.selected != nil);
 		if (getprop("controls/armament/master-arm") == 1 and getprop("controls/armament/trigger") > 0 and me.selected != nil) {

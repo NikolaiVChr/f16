@@ -950,6 +950,7 @@
             <MP-lon type="string">rotors/main/blade[1]/flap-deg</MP-lon>
             <MP-alt type="string">rotors/main/blade[2]/flap-deg</MP-alt>
             <aim-9>
+                <short-name type="string">AIM-9</short-name>
                 <sound-on-off type="bool">false</sound-on-off>
                 <sound-fire-on-off type="bool">false</sound-fire-on-off>
                 <sound-volume type="double">0.0</sound-volume>
@@ -990,8 +991,7 @@
                 <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
             </aim-9>
             <aim-120>
-                <!--Based on values from Fabien's loading_missiles:
-                AIM 120 max range 72 km for actual version. ->39 nm.. at mach 4 it's about 53 sec. I put a life of 115, and thurst duration oo 3/4 the travel time.-->
+                <short-name type="string">AIM-120</short-name>
                 <guidance type="string">radar</guidance>
                 <vol-search type="double">0.00</vol-search>
                 <vol-track type="double">0.15</vol-track>
@@ -1025,6 +1025,7 @@
                 <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
             </aim-120>
             <aim-7>
+                <short-name type="string">AIM-7</short-name>
                 <guidance type="string">semi-radar</guidance>
                 <vol-search type="double">0.00</vol-search>
                 <vol-track type="double">0.15</vol-track>
@@ -1058,6 +1059,7 @@
                 <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
             </aim-7>      
             <gbu-12>       <!-- GBU 12 -->
+                <short-name type="string">GBU12</short-name>
                 <fire-msg type="string">Bombs away</fire-msg>
                 <class type="string">GM</class>
                 <max-fire-range-nm type="double"> 14 </max-fire-range-nm>
@@ -1095,6 +1097,7 @@
             </gbu-12>
             <agm-65>                    
                     <!-- AGM-65B Maverick -->
+                    <short-name type="string">AGM65</short-name>
                     <sound-on-off type="bool">false</sound-on-off>
                     <sound-fire-on-off type="bool">false</sound-fire-on-off>
                     <sound-volume type="double">0.0</sound-volume>

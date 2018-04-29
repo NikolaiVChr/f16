@@ -489,6 +489,8 @@ var MFD_Device =
                     awg_9.range_control(-1);
                 } elsif (eventi == 10) {
                     me.ppp.selectPage(me.my.p1_1);
+                } elsif (eventi == 11) {
+                    me.ppp.selectPage(me.my.p_SMS);
                 } elsif (eventi == 2) {
                     var az = getprop("instrumentation/radar/az-field");
                     if(az==120)
@@ -618,9 +620,264 @@ var MFD_Device =
         };
     },
 
+    setupSMS: func (svg) {
+        svg.p_SMS = me.canvas.createGroup()
+                .setTranslation(276*0.795,482);#552,482 , 0.795 is for UV map
+
+        svg.p6 = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.55, -482*0.5-135)
+                .setText("--------")
+                .setAlignment("right-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.p7 = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.7, -482*0.5-70)
+                .setText("--------")
+                .setAlignment("right-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.p8 = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.85, -482*0.5-5)
+                .setText("--------")
+                .setAlignment("right-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.p9 = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795, -482*0.5+60)
+                .setText("--------")
+                .setAlignment("right-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.p5 = svg.p_SMS.createChild("text")
+                .setTranslation(0.0, -482*0.5-200)
+                .setText("--------")
+                .setAlignment("center-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.p4 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.55, -482*0.5-135)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.p3 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.7, -482*0.5-70)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.p2 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.85, -482*0.5-5)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.p1 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5+60)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.p1f = svg.p_SMS.createChild("path")
+           .moveTo(-276*0.795, -482*0.5+75)
+           .vert(-30)
+           .horiz(130)
+           .vert(30)
+           .horiz(-130)
+           .setColor(1,1,1)
+           .setStrokeLineWidth(1);
+        svg.p2f = svg.p_SMS.createChild("path")
+           .moveTo(-276*0.795*0.85, -482*0.5+10)
+           .vert(-30)
+           .horiz(130)
+           .vert(30)
+           .horiz(-130)
+           .setColor(1,1,1)
+           .setStrokeLineWidth(1);
+        svg.p3f = svg.p_SMS.createChild("path")
+           .moveTo(-276*0.795*0.7, -482*0.5-55)
+           .vert(-30)
+           .horiz(130)
+           .vert(30)
+           .horiz(-130)
+           .setColor(1,1,1)
+           .setStrokeLineWidth(1);
+        svg.p4f = svg.p_SMS.createChild("path")
+           .moveTo(-276*0.795*0.55, -482*0.5-120)
+           .vert(-30)
+           .horiz(130)
+           .vert(30)
+           .horiz(-130)
+           .setColor(1,1,1)
+           .setStrokeLineWidth(1);
+        svg.p5f = svg.p_SMS.createChild("path")
+           .moveTo(-75, -482*0.5-185)
+           .vert(-30)
+           .horiz(130)
+           .vert(30)
+           .horiz(-130)
+           .setColor(1,1,1)
+           .setStrokeLineWidth(1);
+        svg.p6f = svg.p_SMS.createChild("path")
+           .moveTo(276*0.795*0.55, -482*0.5-120)
+           .vert(-30)
+           .horiz(-130)
+           .vert(30)
+           .horiz(130)
+           .setColor(1,1,1)
+           .setStrokeLineWidth(1);
+        svg.p7f = svg.p_SMS.createChild("path")
+           .moveTo(276*0.795*0.7, -482*0.5-55)
+           .vert(-30)
+           .horiz(-130)
+           .vert(30)
+           .horiz(130)
+           .setColor(1,1,1)
+           .setStrokeLineWidth(1);
+        svg.p8f = svg.p_SMS.createChild("path")
+           .moveTo(276*0.795*0.85, -482*0.5+10)
+           .vert(-30)
+           .horiz(-130)
+           .vert(30)
+           .horiz(130)
+           .setColor(1,1,1)
+           .setStrokeLineWidth(1);
+        svg.p9f = svg.p_SMS.createChild("path")
+           .moveTo(276*0.795, -482*0.5+75)
+           .vert(-30)
+           .horiz(-130)
+           .vert(30)
+           .horiz(130)
+           .setColor(1,1,1)
+           .setStrokeLineWidth(1);
+    },
+
+    addSMS: func {
+        var svg = {getElementById: func (id) {return me[id]},};
+        me.setupSMS(svg);
+        me.PFD.addSMSPage = func(svg, title, layer_id) {   
+            var np = PFD_Page.new(svg, title, layer_id, me);
+            append(me.pages, np);
+            me.page_index[layer_id] = np;
+            np.setVisible(0);
+            return np;
+        };
+        me.p_SMS = me.PFD.addSMSPage(svg, "SMS", "p_SMS");
+        me.p_SMS.root = svg;
+        me.p_SMS.wdt = 552*0.795;
+        me.p_SMS.fwd = 0;
+        me.p_SMS.plc = 0;
+        me.p_SMS.ppp = me.PFD;
+        me.p_SMS.my = me;
+        me.p_SMS.notifyButton = func (eventi) {
+            if (eventi != nil) {
+                if (eventi == 10) {
+                    me.ppp.selectPage(me.my.p_RDR);
+                } elsif (eventi == 0) {
+                    pylons.fcs.selectPylon(3);
+                } elsif (eventi == 1) {
+                    pylons.fcs.selectPylon(2);
+                } elsif (eventi == 2) {
+                    pylons.fcs.selectPylon(1);
+                } elsif (eventi == 3) {
+                    pylons.fcs.selectPylon(0);
+                } elsif (eventi == 5) {
+                    pylons.fcs.selectPylon(5);
+                } elsif (eventi == 6) {
+                    pylons.fcs.selectPylon(6);
+                } elsif (eventi == 7) {
+                    pylons.fcs.selectPylon(7);
+                } elsif (eventi == 8) {
+                    pylons.fcs.selectPylon(8);
+                } elsif (eventi == 12) {
+                    pylons.fcs.selectPylon(4);
+                }
+            }
+        };
+        me.p_SMS.update = func (noti) {
+            if (noti.FrameCount != 3)
+                return;
+
+            var sel = pylons.fcs.getSelectedPylonNumber();
+            me.root.p1f.setVisible(sel==0);
+            me.root.p2f.setVisible(sel==1);
+            me.root.p3f.setVisible(sel==2);
+            me.root.p4f.setVisible(sel==3);
+            me.root.p5f.setVisible(sel==4);
+            me.root.p6f.setVisible(sel==5);
+            me.root.p7f.setVisible(sel==6);
+            me.root.p8f.setVisible(sel==7);
+            me.root.p9f.setVisible(sel==8);
+
+            var pT = "--------";
+            if (pylons.pylon1 != nil) {
+                var nm = pylons.pylon1.getCurrentShortName();
+                if (nm != nil) pT = nm;
+            }
+            me.root.p1.setText(pT);
+
+            pT = "--------";
+            if (pylons.pylon2 != nil) {
+                var nm = pylons.pylon2.getCurrentShortName();
+                if (nm != nil) pT = nm;
+            }
+            me.root.p2.setText(pT);
+
+            pT = "--------";
+            if (pylons.pylon3 != nil) {
+                var nm = pylons.pylon3.getCurrentShortName();
+                if (nm != nil) pT = nm;
+            }
+            me.root.p3.setText(pT);
+
+            pT = "--------";
+            if (pylons.pylon4 != nil) {
+                var nm = pylons.pylon4.getCurrentShortName();
+                if (nm != nil) pT = nm;
+            }
+            me.root.p4.setText(pT);
+
+            pT = "--------";
+            if (pylons.pylon5 != nil) {
+                var nm = pylons.pylon5.getCurrentShortName();
+                if (nm != nil) pT = nm;
+            }
+            me.root.p5.setText(pT);
+
+            pT = "--------";
+            if (pylons.pylon6 != nil) {
+                var nm = pylons.pylon6.getCurrentShortName();
+                if (nm != nil) pT = nm;
+            }
+            me.root.p6.setText(pT);
+
+            pT = "--------";
+            if (pylons.pylon7 != nil) {
+                var nm = pylons.pylon7.getCurrentShortName();
+                if (nm != nil) pT = nm;
+            }
+            me.root.p7.setText(pT);
+
+            pT = "--------";
+            if (pylons.pylon8 != nil) {
+                var nm = pylons.pylon8.getCurrentShortName();
+                if (nm != nil) pT = nm;
+            }
+            me.root.p8.setText(pT);
+
+            pT = "--------";
+            if (pylons.pylon9 != nil) {
+                var nm = pylons.pylon9.getCurrentShortName();
+                if (nm != nil) pT = nm;
+            }
+            me.root.p9.setText(pT);
+        };
+    },
+
     addPages : func
     {   
         me.addRadar();
+        me.addSMS();
         me.p1_1 = me.PFD.addPage("Aircraft Menu", "p1_1");
 
         me.p1_1.update = func(notification)
@@ -772,7 +1029,7 @@ var MFD_Device =
         if (me.model_element == "MFDimage1") {
             me.PFD.selectPage(me.p_RDR);
         } else {
-            me.PFD.selectPage(me.p_VSD);
+            me.PFD.selectPage(me.p_SMS);
         }
     },
 
@@ -797,8 +1054,11 @@ var MFD_Device =
         me.p1_1.addMenuItem(3, "WPN", me.p1_2);
         me.p1_1.addMenuItem(4, "DTM", me.p1_2);
         me.p1_1.addMenuItem(10, "RDR", me.p_RDR);
+        me.p1_1.addMenuItem(11, "SMS", me.p_SMS);
 
         me.p_RDR.addMenuItem(10, "TIM", me.p1_1);
+        me.p_RDR.addMenuItem(11, "SMS", me.p_SMS);
+        me.p_SMS.addMenuItem(10, "RDR", me.p_RDR);
 
         me.p1_2.addMenuItem(0, "VSD", me.p_VSD);
         me.p1_2.addMenuItem(1, "A/A", me.p1_3);
@@ -830,6 +1090,7 @@ var MFD_Device =
         me.p_VSD.addMenuItem(4, "M", me.p1_1);
         me.p_VSD.addMenuItem(9, "M", me.p1_1);
         me.p_VSD.addMenuItem(10, "RDR", me.p_RDR);
+        me.p_VSD.addMenuItem(11, "SMS", me.p_SMS);
     },
 
     update : func(notification)
