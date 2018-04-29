@@ -450,6 +450,18 @@ var MFD_Device =
            .lineTo(0, -482)
            .setColor(0.5,0.5,1)
            .setStrokeLineWidth(1);
+        svg.horiz = svg.p_RDR.createChild("path")
+           .moveTo(-276*0.795*0.5, -482*0.5)
+           .vert(10)
+           .moveTo(-276*0.795*0.5, -482*0.5)
+           .horiz(276*0.795*0.4)
+           .moveTo(276*0.795*0.5, -482*0.5)
+           .vert(10)
+           .moveTo(276*0.795*0.5, -482*0.5)
+           .horiz(-276*0.795*0.4)
+           .setCenter(0, -482*0.5)
+           .setColor(0.5,0.5,1)
+           .setStrokeLineWidth(1);
     },
 
     addRadar: func {
@@ -503,6 +515,7 @@ var MFD_Device =
             }
         }
         me.p_RDR.update = func (noti) {
+            me.root.horiz.setRotation(-getprop("orientation/roll-deg")*D2R);
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
             me.i=0;
