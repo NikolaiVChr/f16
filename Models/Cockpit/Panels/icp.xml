@@ -41,4 +41,44 @@
   </emission>
  </animation>
 
+ <animation>
+        <type>knob</type>
+        <object-name>brt</object-name>
+        <property>f16/avionics/hud-brt</property>
+        <factor>150</factor>
+        <offset-deg>0</offset-deg>
+        <center>
+            <x-m>  -0.0062 </x-m>
+            <y-m>  -0.074119 </y-m>
+            <z-m>  -0.023917 </z-m>
+        </center>
+        <axis>
+            <x> 0.0 </x>
+            <y> 1.0 </y>
+            <z> 0.0 </z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hud-brt</property>
+                <factor>1</factor>
+                <step>-0.1</step>
+                <min>0</min>
+                <max>1</max>           
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hud-brt</property>
+                <factor>1</factor>
+                <step>0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </decrease>
+    </animation>
+
 </PropertyList>

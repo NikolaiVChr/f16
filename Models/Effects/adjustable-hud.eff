@@ -3,10 +3,14 @@
   <name>HUD adjustements</name>
   <inherits-from>Effects/hud</inherits-from>
 
+  <parameters>
+   <hud-brightness><use>f16/avionics/hud-brt</use></hud-brightness>
+  </parameters>
+
 <!--
  </animation>
   <parameters>
-   <brightness>1.0</brightness>
+   <brightness><use>f16/avionics/hud-brt</use></brightness>
    <sample-res>0.0006</sample-res>
    <sample-far>2.5</sample-far>
   </parameters>

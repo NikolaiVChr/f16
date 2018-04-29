@@ -33,7 +33,7 @@ var F16_HUD = {
         obj.sy = sy;                        
                           
         obj.canvas.addPlacement({"node": canvas_item});
-        obj.canvas.setColorBackground(0.36, 1, 0.3, 0.00);
+        obj.canvas.setColorBackground(0.30, 1, 0.3, 0.00);
 
 # Create a group for the parsed elements
         obj.svg = obj.canvas.createGroup();
@@ -126,6 +126,7 @@ var F16_HUD = {
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
         obj.initUpdate =1;
+        obj.svg.setColor(0.3,1,0.3);
 		return obj;
 	},
 #

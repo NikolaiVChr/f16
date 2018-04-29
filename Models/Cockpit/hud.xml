@@ -9,4 +9,20 @@
   <object-name>HUDImage2</object-name>
  </effect>
 
+ <animation>
+  <object-name>HUDImage2</object-name>
+  <type>material</type>
+  <emission>
+  	<factor-prop>f16/avionics/hud-brt</factor-prop>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+  <transparency>
+   <factor-prop>f16/avionics/hud-brt</factor-prop>
+   <factor>1</factor>
+   <offset>0</offset>
+  </transparency>
+ </animation>
+
 </PropertyList>

@@ -1182,6 +1182,11 @@
         <rwr-pri type="bool">false</rwr-pri>
         <rwr-unk type="bool">false</rwr-unk>
     </sound>
+    <f16>
+        <avionics>
+            <hud-brt type="double">1.0</hud-brt>
+        </avionics>
+    </f16>
 
     <nasal>
         <hack>
