@@ -16,8 +16,8 @@
 	</animation>
 
 	<model>
-		<name>smoke1</smoke>
-		<path>Aircraft/JA37/Models/Armament/Weapons/RB-74/motor-smoke.xml</path>
+		<name>smoke1</name>
+		<path>Aircraft/f16/Models/Armament/Weapons/AIM-9/motor-smoke.xml</path>
 		<offsets>
 			<x-m>1.44</x-m>
 			<y-m>0</y-m>
@@ -31,9 +31,10 @@
 			<property>payload/armament/aim-9/flags/smoke-id-0</property>
 		</condition>
 	</animation>
-		<model>
-		<name>smoke2</smoke>
-		<path>Aircraft/JA37/Models/Armament/Weapons/RB-74/motor-smoke.xml</path>
+
+	<model>
+		<name>smoke9</name>
+		<path>Aircraft/f16/Models/Armament/Weapons/AIM-9/motor-smoke.xml</path>
 		<offsets>
 			<x-m>1.44</x-m>
 			<y-m>0</y-m>
@@ -42,9 +43,9 @@
 	</model>
 	<animation>
 		<type>select</type>
-		<object-name>smoke2</object-name>
+		<object-name>smoke9</object-name>
 		<condition>
-			<property>payload/armament/aim-9/flags/smoke-id-1</property>
+			<property>payload/armament/aim-9/flags/smoke-id-8</property>
 		</condition>
 	</animation>
 
