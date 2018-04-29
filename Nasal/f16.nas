@@ -347,3 +347,14 @@ setlistener("/ai/models/model-impact", impact_listener, 0, 0);
 var prop = "payload/armament/fire-control";
 var actuator_fc = compat_failure_modes.set_unserviceable(prop);
 FailureMgr.add_failure_mode(prop, "Fire control", actuator_fc);
+
+var a2a_standard = func {
+    if (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+        setprop("payload/weight[0]/selected", "1 x AIM-9");
+        setprop("payload/weight[8]/selected", "1 x AIM-9");
+        setprop("payload/weight[1]/selected", "1 x AIM-120");
+        setprop("payload/weight[7]/selected", "1 x AIM-120");
+        setprop("payload/weight[2]/selected", "1 x AIM-7");
+        setprop("payload/weight[6]/selected", "1 x AIM-7");
+    }
+}

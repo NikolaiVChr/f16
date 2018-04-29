@@ -31,7 +31,6 @@ Model conformal fuel tanks.
 Find real positions of payloads, is only approx. positions now.
 Make fired weapons visible including engine smoke.
 Prevent firing without lock?
-Make cannon do damage
 Add LOAL for AIM120
 
 Damage

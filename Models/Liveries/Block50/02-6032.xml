@@ -9,7 +9,7 @@
     <owner type="string">FACh</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/yf/yf16_transp.png</texture>
+    <texture>Liveries/yf/yf16-transp.png</texture>
    </livery-logo>
   </model>
  </sim>
