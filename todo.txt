@@ -6,6 +6,7 @@
 Model
 -----
 Make under cockpit floating texture livery
+Set proper default livery for all blocks.
 
 Hydraulics
 ----------
@@ -80,6 +81,7 @@ Flight controls
 GUI
 ---
 GUI text when MPO
+Sort splashes so they match liveries.
 
 A/P
 ---

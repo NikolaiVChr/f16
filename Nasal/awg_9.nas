@@ -218,7 +218,7 @@ var az_scan = func(fcount) {
 
                 var dv = u.get_deviation(our_true_heading);
                 var ele = u.get_total_elevation(OurPitch.getValue());
-                
+
                 if (math.abs(dv) < az_fld/2 and math.abs(ele) < HoField.getValue()/2)
                 {
                     u.set_display(1);
@@ -1123,7 +1123,7 @@ rwrList = [];
 
 var rwrNew = func () {
     foreach(u;completeList) {
-        if (getprop("link16/wingman-1")==u.get_Callsign() or getprop("link16/wingman-2")==u.get_Callsign() or getprop("link16/wingman-3")==u.get_Callsign()) {
+        if (getprop("link16/wingman-1")==u.get_Callsign() or getprop("link16/wingman-2")==u.get_Callsign() or getprop("link16/wingman-3")==u.get_Callsign() or u.get_range() > 150) {
             return;
         }
         var bearing = geo.aircraft_position().course_to(u.get_Coord());
