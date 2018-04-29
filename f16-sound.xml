@@ -69,11 +69,11 @@
    </orientation>
    <pitch>
     <property>engines/engine/n1</property>
-    <ofset>0.2</ofset>
+    <offset>0.4</offset>
     <factor>.00075</factor>
    </pitch>
    <volume>
-    <factor>0.3</factor>
+    <factor>0.15</factor>
    </volume>
   </engine_fan>
 
@@ -108,7 +108,7 @@
    </orientation>
    <pitch>
     <property>engines/engine/n1</property>
-    <ofset>1.0</ofset>
+    <offset>1.0</offset>
     <factor>0.004</factor>
    </pitch>
    <volume>
