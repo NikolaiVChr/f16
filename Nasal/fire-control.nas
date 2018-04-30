@@ -128,6 +128,22 @@ var FireControl = {
 		return me.pylons[me.selected[0]];
 	},
 
+	jettisonSelectedPylonContent: func {
+		if (me.selected == nil) {
+			print("Nothing to jettison");
+			return nil;
+		}
+		me.pylons[me.selected[0]].jettisonAll();
+		me.selected = nil;
+		me.selectedType = nil;
+	},
+
+	jettisonAll: func {
+		foreach (pyl;me.pylons) {
+			pyl.jettisonAll();
+		}
+	},
+
 	getSelectedPylonNumber: func {
 		if (me.selected == nil) {
 			return nil;

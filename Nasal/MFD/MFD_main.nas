@@ -758,6 +758,12 @@ var MFD_Device =
            .horiz(130)
            .setColor(1,1,1)
            .setStrokeLineWidth(1);
+        svg.jett = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795, -482*0.5+125)
+                .setText("J-S")
+                .setAlignment("right-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
     },
 
     addSMS: func {
@@ -797,6 +803,8 @@ var MFD_Device =
                     pylons.fcs.selectPylon(7);
                 } elsif (eventi == 8) {
                     pylons.fcs.selectPylon(8);
+                } elsif (eventi == 9) {
+                    pylons.fcs.jettisonSelectedPylonContent();
                 } elsif (eventi == 12) {
                     pylons.fcs.selectPylon(4);
                 }
