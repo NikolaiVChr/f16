@@ -34,10 +34,11 @@ Find real positions of payloads, is only approx. positions now.
 Make fired weapons visible including engine smoke.
 Prevent firing without lock?
 Add LOAL for AIM120
+Jettison
 
 Damage
 ------
-Add LOAL detection apability
+Add LOAL detection capability
 
 Radar
 -----
