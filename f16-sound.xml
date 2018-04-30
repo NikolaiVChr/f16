@@ -47,9 +47,18 @@
    </volume>
   </canopy>
 
-  <engine_fan>
-   <name>internal fan</name>
-   <path>Sounds/whine.wav</path>
+
+
+
+
+
+<!-- GROUND IDLE -->
+
+  <!-- internal -->
+
+  <engine_fan_left>
+   <name>internal fan left</name>
+   <path>Aircraft/f16/Sounds/ground_idle/interior_ground_left.wav</path>
    <mode>looped</mode>
    <condition>
     <property>sim/current-view/internal</property>
@@ -58,15 +67,10 @@
    <reference-dist>30</reference-dist>
    <max-dist>100</max-dist>
    <position>
-    <x>-0.6</x>
-    <y>0.0</y>
-    <z>-0.37</z>
-   </position>
-   <orientation>
-    <x>-0.98</x>
-    <y>0.0</y>
+    <x>-1.0</x>
+    <y>-1.0</y>
     <z>0.0</z>
-   </orientation>
+   </position>
    <pitch>
     <property>engines/engine/n1</property>
     <offset>0.6</offset>
@@ -75,11 +79,38 @@
    <volume>
     <factor>0.15</factor>
    </volume>
-  </engine_fan>
+  </engine_fan_left>
+
+  <engine_fan_right>
+   <name>internal fan right</name>
+   <path>Aircraft/f16/Sounds/ground_idle/interior_ground_right.wav</path>
+   <mode>looped</mode>
+   <condition>
+    <property>sim/current-view/internal</property>
+    <property>engines/engine/running</property>
+   </condition>
+   <reference-dist>30</reference-dist>
+   <max-dist>100</max-dist>
+   <position>
+    <x>-1.0</x>
+    <y>1.0</y>
+    <z>0.0</z>
+   </position>
+   <pitch>
+    <property>engines/engine/n1</property>
+    <offset>0.6</offset>
+    <factor>.00075</factor>
+   </pitch>
+   <volume>
+    <factor>0.15</factor>
+   </volume>
+  </engine_fan_right>
+
+  <!-- external -->
 
   <engine_fan>
    <name>external fan</name>
-   <path>Aircraft/f16/Sounds/turbojet_fan.wav</path>
+   <path>Aircraft/f16/Sounds/ground_idle/exterior_ground_idle_loop_mono.wav</path>
    <mode>looped</mode>
    <condition>
     <property>engines/engine/running</property>
@@ -102,25 +133,20 @@
     <x>-0.98</x>
     <y>0.0</y>
     <z>-0.17</z>
-    <inner-angle>60.0</inner-angle>
-    <outer-angle>200.0</outer-angle>
-    <outer-gain>0.65</outer-gain>
+    <inner-angle>30.0</inner-angle>
+    <outer-angle>130.0</outer-angle>
+    <outer-gain>0.35</outer-gain>
    </orientation>
    <pitch>
     <property>engines/engine/n1</property>
     <offset>1.0</offset>
     <factor>0.004</factor>
    </pitch>
-   <volume>
-    <property>engines/engine/n1</property>
-    <offset>1.30</offset>
-    <factor>-0.01</factor>
-   </volume>
   </engine_fan>
 
   <exhaust>
    <name>turbine</name>
-   <path>Sounds/jet.wav</path>
+   <path>Aircraft/f16/Sounds/ground_idle/exterior_ground_idle_aft_loop_mono.wav</path>
    <mode>looped</mode>
    <property>engines/engine/running</property>
    <reference-dist>250</reference-dist>
@@ -140,24 +166,84 @@
    </orientation>
    <volume>
     <property>engines/engine/thrust_lb</property>
-    <offset>0</offset>
+    <offset>1.3</offset>
     <factor>0.000044944</factor>
    </volume>
-   <!--<volume>
-    <property>sim/current-view/internal</property>
-    <offset>1</offset>
-    <factor>-0.5</factor>
-   </volume>-->
+   <volume>
+    <property>engines/engine/thrust_lb</property>
+    <offset>10</offset>
+    <factor>-0.0008</factor>
+   </volume>
    <pitch>
     <property>engines/engine/n1</property>
-    <offset>0.25</offset>
-    <factor>0.01</factor>
+    <offset>1</offset>
+    <factor>0.0013</factor>
    </pitch>
   </exhaust>
 
+
+<!-- MIL THRUST -->
+
+<!-- 
+     idle thrust: 850		N1: 30		N2: 60
+     50% throttle: 7600		N1: 75		N2: 86
+     max thrust: 16000		N1: 99		N2: 99
+     AB thrust: 28000		N1: 100		N2: 100
+
+     N1 = 75
+     1/75 = 0.013
+     v += - abs(-0.0013) * 1/(75)
+-->
+
+
+  <!-- external -->
+
+  <exhaust_mil>
+   <name>turbine_exhaust_mil_thrust</name>
+   <path>Aircraft/f16/Sounds/full_mil/full_mil_aft_mono.wav</path>
+   <mode>looped</mode>
+   <reference-dist>250</reference-dist>
+   <max-dist>12500</max-dist>
+   <condition>
+   	<and>
+	    <property>engines/engine/running</property>
+	    <not>
+	     <property>sim/current-view/internal</property>
+	    </not>
+    </and>
+   </condition>
+   <position>
+    <x>4.6</x>
+    <y>0.01</y>
+    <z>0.01</z>
+   </position>
+   <orientation>
+    <x>1.0</x>
+    <y>0.0</y>
+    <z>0.0</z>
+    <inner-angle>200.0</inner-angle>
+    <outer-angle>360.0</outer-angle>
+    <outer-gain>0.35</outer-gain>
+   </orientation>
+   <volume>
+    <property>engines/engine/thrust_lb</property>
+    <offset>-1.0</offset>
+    <factor>0.00013</factor>
+   </volume>
+   <volume>
+    <factor>2</factor>
+   </volume>
+  </exhaust_mil>
+
+
+
+
+
+<!-- AFTERBURNER -->
+
   <afterburner>
    <name>afterburner</name>
-   <path>Aircraft/f16/Sounds/exhaust_loop.wav</path>
+   <path>Aircraft/f16/Sounds/afterburner/afterburner_exterior.wav</path>
    <mode>looped</mode>
    <condition>
     <not>
@@ -189,33 +275,36 @@
 
   <afterburner>
    <name>afterburner internal</name>
-   <path>Sounds/exhaust_loop.wav</path>
+   <path>Aircraft/f16/Sounds/afterburner/afterburner_interior.wav</path>
    <mode>looped</mode>
    <condition>
     <property>sim/current-view/internal</property>
     <property>engines/engine/augmentation</property>
    </condition>
-   <reference-dist>5000</reference-dist>
-   <max-dist>30000</max-dist>
    <position>
     <x>4.6</x>
     <y>0.0</y>
     <z>0.0</z>
    </position>
-   <orientation>
-    <x>1.0</x>
-    <y>0.0</y>
-    <z>0.0</z>
-    <inner-angle>200.0</inner-angle>
-    <outer-angle>360.0</outer-angle>
-    <outer-gain>0.2</outer-gain>
-   </orientation>
    <volume>
     <property>engines/engine/nozzle-pos-norm</property>
     <offset>0.05</offset>
-    <factor>0.30</factor>
+    <factor>0.80</factor>
    </volume>
   </afterburner>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   <rumble>
    <name>gear rumble</name>
