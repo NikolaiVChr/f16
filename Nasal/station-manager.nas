@@ -338,13 +338,15 @@ var Pylon = {
 
 	jettisonAll: func {
 		# drops everything.
+		me.tempWeapons = [];
 		foreach(me.weapon ; me.getWeapons()) {
 			if (me.weapon != nil) {
 				me.weapon.eject();
 			}
+			append(me.tempWeapons, nil);
 		}
 		me.jettisonLauncher();
-		me.weapons = [];
+		me.weapons = me.tempWeapons;
 		me.calculateMass();
 		me.calculateFDM();
 		me.setGUI();

@@ -76,10 +76,9 @@ var FireControl = {
 		me.selWeapType = me.selectedType;
 		if (me.selWeapType == nil) {
 			me.selectedType = me.typeOrder[0];
-			if (me.nextWeapon(me.typeOrder[0]) != nil) {			
+			if (me.nextWeapon(me.typeOrder[0]) != nil) {
 				printf("FC: Selected first weapon: %s on pylon %d position %d",me.selectedType,me.selected[0],me.selected[1]);
 			} else {
-				screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 				printf("FC: Selected first weapon: %s, but none is loaded.", me.selectedType);
 			}
 		} else {
@@ -95,12 +94,12 @@ var FireControl = {
 			printf(" Now selecting %s",me.selType);
 			me.wp = me.nextWeapon(me.selType);
 			if (me.wp != nil) {			
-				screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 				printf("FC: Selected next weapon type: %s on pylon %d position %d",me.selectedType,me.selected[0],me.selected[1]);
 			} else {
 				printf("FC: Selected next weapon type: %s, but none is loaded.", me.selectedType);
 			}
 		}
+		screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 	},
 
 	updateAll: func {
@@ -136,7 +135,9 @@ var FireControl = {
 		}
 		me.pylons[me.selected[0]].jettisonAll();
 		me.selected = nil;
-		me.selectedType = nil;
+		if (me.selectedType != nil) {
+			me.nextWeapon(me.selectedType);
+		}
 	},
 
 	jettisonAll: func {
@@ -235,13 +236,13 @@ var FireControl = {
 				print(" Next weapon found");
 				me.updateCurrent();#TODO: think a bit more about this
 				me.wap = me.pylons[me.pylon].getWeapons()[me.indexWeapon];
-				me.selectedType = me.wap.type;
+				#me.selectedType = me.wap.type;
 				return me.wap;
 			}
 		}
 		print(" Next weapon not found");
 		me.selected = nil;
-		me.selectedType = nil;
+		#me.selectedType = nil;
 		return nil;
 	},
 
