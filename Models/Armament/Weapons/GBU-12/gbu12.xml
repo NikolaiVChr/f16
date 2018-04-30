@@ -10,13 +10,5 @@ Range: More than 8 NM (14.8 km)
 
   <path>gbu12.ac</path>
 
-  <animation>
-    <object-name>gbu12</object-name>
-	  <attach>world</attach>
-
-  <placer>
-   <type>point</type>
-  </placer>
-  </animation>
 
 </PropertyList>

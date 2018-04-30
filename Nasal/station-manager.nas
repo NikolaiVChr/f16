@@ -21,7 +21,7 @@ var Station = {
 		p.guiID = guiID;
 		p.node_pointMass = pointmassNode;
 		p.operableFunction = operableFunction;
-		p.weapons = [];
+		p.weapons = [];#when weapons are fired/jettisoned, they turn to nil, the vector size must stay same as fire-order dictates.
 		p.changingGui = 0;
 		p.launcherDA=0;
 		p.launcherMass=0;
@@ -109,6 +109,11 @@ var Station = {
 		#this is hack to show stores locally:
 		setprop("payload/armament/station/id-"~me.id~"-type", me.singleName);
 		setprop("payload/armament/station/id-"~me.id~"-count", size(me.weapons));
+		if (me.currentSet != nil) {
+			setprop("payload/armament/station/id-"~me.id~"-set", me.currentSet.name);
+		} else {
+			setprop("payload/armament/station/id-"~me.id~"-set", "Empty");
+		}
 	},
 
 	calculateFDM: func {

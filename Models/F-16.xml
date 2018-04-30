@@ -1474,16 +1474,119 @@
 
  <animation>
   <type>select</type>
-  <object-name>LWStation1</object-name>
-  <object-name>LWStation2</object-name>
-  <object-name>RWStation1</object-name>
-  <object-name>RWStation2</object-name>
   <object-name>LWStation3</object-name>
-  <object-name>RWStation3</object-name>
   <condition>
-   <property>sim/model/f16/wingmounts</property>
+    <and>
+    <not>
+     <equals>
+        <property>payload/armament/station/id-1-set</property>
+        <value>Empty</value>
+      </equals>
+    </not>
+  </and>
   </condition>
  </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>RWStation3</object-name>
+  <condition>
+    <and>
+    <not>
+     <equals>
+        <property>payload/armament/station/id-7-set</property>
+        <value>Empty</value>
+      </equals>
+    </not>
+  </and>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>LWStation2</object-name>
+  <condition>
+    <and>
+    <not>
+     <equals>
+        <property>payload/armament/station/id-2-set</property>
+        <value>Empty</value>
+      </equals>
+    </not>
+    <not>
+     <equals>
+        <property>payload/armament/station/id-2-set</property>
+        <value>3 x GBU-12</value>
+      </equals>
+    </not>
+  </and>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>LWStation1</object-name>
+  <condition>
+    <and>
+    <not>
+     <equals>
+        <property>payload/armament/station/id-3-set</property>
+        <value>Empty</value>
+      </equals>
+    </not>
+    <not>
+     <equals>
+        <property>payload/armament/station/id-3-set</property>
+        <value>2 x GBU-12</value>
+      </equals>
+    </not>
+  </and>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>RWStation1</object-name>
+  <condition>
+    <and>
+    <not>
+     <equals>
+        <property>payload/armament/station/id-5-set</property>
+        <value>Empty</value>
+      </equals>
+    </not>
+    <not>
+     <equals>
+        <property>payload/armament/station/id-5-set</property>
+        <value>2 x GBU-12</value>
+      </equals>
+    </not>
+  </and>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>RWStation2</object-name>
+  <condition>
+    <and>
+    <not>
+     <equals>
+        <property>payload/armament/station/id-6-set</property>
+        <value>Empty</value>
+      </equals>
+    </not>
+    <not>
+     <equals>
+        <property>payload/armament/station/id-6-set</property>
+        <value>3 x GBU-12</value>
+      </equals>
+    </not>
+  </and>
+  </condition>
+ </animation>
+
+ 
 
  
 

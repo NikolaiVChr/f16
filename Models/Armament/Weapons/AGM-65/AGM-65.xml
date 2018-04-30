@@ -11,10 +11,5 @@ Diameter 12 in (30.5 cm)
 
 	<path>AGM-65.ac</path>
 	
-	<animation>
-        <type>range</type>
-        <min-m>0</min-m>
-        <max-m>12000</max-m>
-    </animation>
 	
 </PropertyList>
