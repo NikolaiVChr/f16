@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">AMI 18 Gruppo, "1000 flight hours"</name>
+    <texture>Liveries/Block20/81-0722.png</texture>
+    <owner type="string">AMI</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/yf/yf16-transp.png</texture>
+   </livery-logo>
+  </model>
+ </sim>
+</PropertyList>
