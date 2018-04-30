@@ -990,6 +990,7 @@
         <gbu-release>
             <name>gbu-release</name>
             <mode>once</mode>
+            <type>avionics</type>
             <path>Aircraft/f16/Sounds/gbu_release.wav</path>
             <condition>
                 <property>payload/armament/gbu-12/sound-fire-on-off</property>
