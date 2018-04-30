@@ -1100,9 +1100,6 @@
             <agm-65>                    
                     <short-name type="string">AGM65</short-name>
                     <long-name type="string">AGM-65B Maverick</long-name>
-                    <sound-on-off type="bool">false</sound-on-off>
-                    <sound-fire-on-off type="bool">false</sound-fire-on-off>
-                    <sound-volume type="double">0.0</sound-volume>
                     <vol-search type="double">0.00</vol-search>
                     <vol-track type="double">0.15</vol-track>
                     <vol-track-weak type="double">0.1</vol-track-weak>

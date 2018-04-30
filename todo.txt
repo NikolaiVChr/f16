@@ -7,6 +7,7 @@ Model
 -----
 Make under cockpit floating texture livery
 Set proper default livery for all blocks.
+Make liveries for Belgium and Norway.
 
 Hydraulics
 ----------
@@ -41,7 +42,6 @@ Add LOAL detection apability
 Radar
 -----
 Add doppler.
-Make it 'see' difference between air,ground, arms and sea targets.
 Update to latest F15 radar.
 
 Cockpit
