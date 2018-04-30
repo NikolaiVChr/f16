@@ -1062,7 +1062,7 @@
                 <DLZ-optimal-alt-feet type="double">30000</DLZ-optimal-alt-feet>
                 <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
             </aim-7>      
-            <gbu-12>       <!-- GBU 12 -->
+            <gbu-12> 
                 <short-name type="string">GBU12</short-name>
                 <long-name type="string">GBU-12 Paveway II</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
@@ -1098,7 +1098,6 @@
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
             </gbu-12>
             <agm-65>                    
-                    <!-- AGM-65B Maverick -->
                     <short-name type="string">AGM65</short-name>
                     <long-name type="string">AGM-65B Maverick</long-name>
                     <sound-on-off type="bool">false</sound-on-off>
