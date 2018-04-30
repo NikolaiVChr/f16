@@ -80,10 +80,10 @@
 	</filter>
 	
 	<predict-simple>
-		<name>ALTITUDE 5 SECONDS AHEAD</name>
+		<name>ALTITUDE 2 SECONDS AHEAD</name>
 		<debug>false</debug>
 		<input>/instrumentation/altimeter/indicated-altitude-ft</input>
-		<output>/fdm/jsbsim/autoflight/roll/altitude-5-sec-ahead</output>
+		<output>/fdm/jsbsim/autoflight/pitch/altitude-2-sec-ahead</output>
 		<seconds>5.0</seconds>
 		<filter-gain>0.0</filter-gain>
 	</predict-simple>
