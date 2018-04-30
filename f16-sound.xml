@@ -241,6 +241,43 @@
    </volume>
   </rumble>
 
+  <gear>
+		<name>gear</name>
+		<mode>in-transit</mode>
+		<path>Sounds/gear-transit.wav</path>
+		<property>/gear/gear/position-norm</property>
+		<volume>
+			<factor>0.9</factor>
+		</volume>
+		<pitch>
+			<internal>dt_play</internal>
+			<offset>1.0</offset>
+			<factor>-0.001</factor>
+		</pitch>
+	</gear>
+
+	<gear>
+		<name>gear-lock</name>
+		<path>Sounds/gear-lock.wav</path>
+		<condition>
+			<equals>
+				<property>/gear/gear/position-norm</property>
+				<value>0</value>
+			</equals>
+		</condition>
+	</gear>
+
+	<gear>
+		<name>gear-open</name>
+		<path>Sounds/gear-open.wav</path>
+		<condition>
+			<equals>
+				<property>/gear/gear/position-norm</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</gear>
+
   <squeal>
    <name>squeal</name>
    <path>Sounds/squeal.wav</path>
