@@ -34,7 +34,11 @@ var Station = {
 
 	getCategory: func {
 		if (me.currentSet != nil and me.currentSet["category"] != nil) {
-			return me.currentSet["category"];
+			foreach(me.weapon ; me.weapons) {
+				if (me.weapon != nil) {
+					return me.currentSet["category"];
+				}
+			}			
 		}
 		return 1;
 	},
