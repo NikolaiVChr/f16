@@ -128,6 +128,17 @@
   </offsets>
  </model>
 
+ <model>
+  <name>Station2_AIM-9L_dummy</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L_dummy.ac</path>
+  <offsets>
+   <x-m>0.85</x-m>
+   <y-m>-3.7</y-m>
+   <z-m>-0.32</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
   
  <!-- =============================================================================================================  --> 
  <!-- =========================================== Station 3 =======================================================  -->
@@ -321,6 +332,17 @@
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.ac</path>
   <offsets>
    <x-m>1.15374</x-m>
+   <y-m>3.7</y-m>
+   <z-m>-0.32</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station8_AIM-9L_dummy</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L_dummy.ac</path>
+  <offsets>
+   <x-m>0.85</x-m>
    <y-m>3.7</y-m>
    <z-m>-0.32</z-m>
    <pitch-deg>-3.5</pitch-deg>

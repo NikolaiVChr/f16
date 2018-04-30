@@ -61,7 +61,7 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 	# source for fuel tanks content, fuel type, jettisonable and drag: TO. GR1F-16CJ-1-1
 
 	# sets
-	var pylon120set = [pylonSets.empty, pylonSets.q, pylonSets.h];
+	var pylon120set = [pylonSets.empty, pylonSets.q, pylonSets.h, pylonSets.k];
 	var wingtipSet1  = [pylonSets.k,pylonSets.k2,     pylonSets.g, pylonSets.r,pylonSets.s,pylonSets.t,pylonSets.u,pylonSets.w1];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
 	var wingtipSet9  = [pylonSets.k,pylonSets.k2,     pylonSets.g, pylonSets.r,pylonSets.v,pylonSets.w,pylonSets.x,pylonSets.w9];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
 	var pylon9mix   = [pylonSets.empty, pylonSets.q, pylonSets.i, pylonSets.h, pylonSets.q7, pylonSets.a];
