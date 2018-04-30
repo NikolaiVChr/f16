@@ -251,6 +251,13 @@
                 <default-field-of-view-deg>55</default-field-of-view-deg>
             </config>
         </view>
+        
+        <view n="101">
+          <name>Missile view</name>
+            <type>lookat</type>
+            <heading-offset-deg>180</heading-offset-deg>
+            <pitch-offset-deg>10</pitch-offset-deg>
+          </view>
         <rendering>
             <redout>
                 <enabled type="bool" userarchive="y">true</enabled>
@@ -743,6 +750,10 @@
         </keyboard>
     </input>
     <controls>
+          <armament>
+            <automissileview type="bool">true</automissileview>
+          </armament>
+      
         <fuel>
             <qty-selector type="int">1</qty-selector>
             <external-transfer type="bool">true</external-transfer>
@@ -1243,6 +1254,12 @@
         <radardist>
             <file>Aircraft/Instruments-3d/radardist/radardist.nas</file>
         </radardist>-->
+        <ai>
+          <file>Aircraft/f16/Nasal/AI_list.nas</file>
+        </ai>
+        <view>
+          <file>Aircraft/f16/Nasal/MissileView.nas</file>
+        </view>
         <armament>
             <file>Aircraft/f16/Nasal/missile-code.nas</file><!-- must be before station-manager -->
         </armament>
