@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+<!--
+Type Anti-ship missile 
+Place of origin  United States 
+
+Weight 1,523 lb (691 kg) with booster 
+Length Air launched: 12.6 ft (3.8 m); Surface and submarine launched: 15 ft (4.6 m) 
+Diameter 1.1 ft (0.34 m) 
+
+Launch
+platform multi-platform: 
+-->
+
+	<path>agm84.ac</path>
+	
+	
+	
+</PropertyList>
