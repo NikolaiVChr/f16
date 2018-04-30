@@ -13,6 +13,27 @@
 var TRUE =1;
 var FALSE=0;
 
+var AIR = 0;
+var MARINE = 1;
+var SURFACE = 2;
+var ORDNANCE = 3;
+
+var knownShips = {
+    "missile_frigate":       nil,
+    "frigate":       nil,
+    "USS-LakeChamplain":     nil,
+    "USS-NORMANDY":     nil,
+    "USS-OliverPerry":     nil,
+    "USS-SanAntonio":     nil,
+};
+
+var knownSurface = {
+    "buk-m2":       nil,
+    "depot":       nil,
+    "truck":     nil,
+    "tower":     nil,
+};
+
 var ElapsedSec        = props.globals.getNode("sim/time/elapsed-sec");
 var SwpFac            = props.globals.getNode("sim/model/f16/instrumentation/radar-awg-9/sweep-factor", 1);
 var DisplayRdr        = props.globals.getNode("sim/model/f16/instrumentation/radar-awg-9/display-rdr",1);
@@ -162,6 +183,10 @@ var az_scan = func(fcount) {
             if (c.getNode("valid") == nil or !c.getNode("valid").getValue() or c.getNode("position") == nil) {#position check is to avoid cannon impacts
 				continue;
 			}
+            if (!(type == "multiplayer" or type == "tanker" or type == "aircraft" or type=="carrier" or type=="groundvehicle" or type=="ship")) 
+            {
+                continue;
+            }
 			var HaveRadarNode = c.getNode("radar");
 
             
@@ -221,6 +246,25 @@ var az_scan = func(fcount) {
 
                 if (math.abs(dv) < az_fld/2 and math.abs(ele) < HoField.getValue()/2)
                 {
+                    if (type == "tanker" or type == "aircraft") {
+                        u.setClass(AIR);
+                    } elsif (type=="carrier" or type=="ship") {
+                        u.setClass(MARINE);
+                    } elsif (type=="groundvehicle") {
+                        u.setClass(SURFACE);
+                    } else {
+                        # multiplayer:
+                        var mdl = u.get_model();
+                        if (contains(knownSurface,mdl)) {
+                            u.setClass(SURFACE);
+                        } elsif (contains(knownShips,mdl)) {
+                            u.setClass(MARINE);
+                        } elsif (u.get_altitude() < 5) {
+                            u.setClass(MARINE);
+                        } elsif (u.get_Speed() < 60) {
+                            u.setClass(SURFACE);
+                        }
+                    }
                     u.set_display(1);
                 }
                 else
@@ -228,8 +272,7 @@ var az_scan = func(fcount) {
                     u.set_display(0);
                 }
 #                if (type == "multiplayer" or type == "tanker" or type == "aircraft" and HaveRadarNode != nil) 
-                if (type == "multiplayer" or type == "tanker" or type == "aircraft" or type=="carrier" or type=="groundvehicle" or type=="ship") 
-                {
+                
                     append(tgts_list, u);
                     ecm_on = EcmOn.getValue();
                     # Test if target has a radar. Compute if we are illuminated. This propery used by ECM
@@ -240,7 +283,7 @@ var az_scan = func(fcount) {
 #printf(" ** RWR on ",c.getNode("callsign"), " =",their_radar_mode);
                         #rwr(u);	# TODO: override display when alert.
                     }
-                }
+                
             } else {
                 u.set_display(0);
             }
@@ -832,7 +875,7 @@ var Target = {
             else
                 obj.ModelType = "";
         }
-
+        obj.class = AIR;
 		return obj;
 	},
     isValid: func{return me.Valid.getValue();},
@@ -851,7 +894,8 @@ var Target = {
     getChaffNode: func () {
       return me.propNode.getNode("rotors/main/blade[3]/position-deg");
     },
-    get_type: func{return 0;},
+    setClass: func(cl){me.class=cl},
+    get_type: func{me.class},
     isPainted: func{return 1;},
     get_Pitch: func{return me.ptch.getValue();},
     get_Roll: func{return me.rll.getValue();},
