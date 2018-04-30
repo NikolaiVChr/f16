@@ -348,13 +348,66 @@ var prop = "payload/armament/fire-control";
 var actuator_fc = compat_failure_modes.set_unserviceable(prop);
 FailureMgr.add_failure_mode(prop, "Fire control", actuator_fc);
 
-var a2a_standard = func {
+var a2a_patrol = func {
     if (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         setprop("payload/weight[0]/selected", "1 x AIM-9");
-        setprop("payload/weight[8]/selected", "1 x AIM-9");
         setprop("payload/weight[1]/selected", "1 x AIM-120");
-        setprop("payload/weight[7]/selected", "1 x AIM-120");
         setprop("payload/weight[2]/selected", "1 x AIM-7");
+        setprop("payload/weight[3]/selected", "Empty");
+        setprop("payload/weight[4]/selected", "300 Gal Fuel Tank");
+        setprop("payload/weight[5]/selected", "Empty");
         setprop("payload/weight[6]/selected", "1 x AIM-7");
+        setprop("payload/weight[7]/selected", "1 x AIM-120");
+        setprop("payload/weight[8]/selected", "1 x AIM-9");
+    } else {
+      screen.log.write("Please land before changing payload.");
+    }
+}
+
+var a2a_super = func {
+    if (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+        setprop("payload/weight[0]/selected", "1 x AIM-9");
+        setprop("payload/weight[1]/selected", "1 x AIM-120");
+        setprop("payload/weight[2]/selected", "1 x AIM-120");
+        setprop("payload/weight[3]/selected", "Empty");
+        setprop("payload/weight[4]/selected", "300 Gal Fuel Tank");
+        setprop("payload/weight[5]/selected", "Empty");
+        setprop("payload/weight[6]/selected", "1 x AIM-120");
+        setprop("payload/weight[7]/selected", "1 x AIM-120");
+        setprop("payload/weight[8]/selected", "1 x AIM-7");
+    } else {
+      screen.log.write("Please land before changing payload.");
+    }
+}
+
+var a2a_standoff = func {
+    if (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+        setprop("payload/weight[0]/selected", "1 x AIM-120");
+        setprop("payload/weight[1]/selected", "1 x AIM-9");
+        setprop("payload/weight[2]/selected", "Empty");
+        setprop("payload/weight[3]/selected", "370 Gal Fuel Tank");
+        setprop("payload/weight[4]/selected", "AN/ALQ-131 ECM Pod");
+        setprop("payload/weight[5]/selected", "370 Gal Fuel Tank");
+        setprop("payload/weight[6]/selected", "Empty");
+        setprop("payload/weight[7]/selected", "1 x AIM-9");
+        setprop("payload/weight[8]/selected", "1 x AIM-120");
+    } else {
+      screen.log.write("Please land before changing payload.");
+    }
+}
+
+var a2g_standard = func {
+    if (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+        setprop("payload/weight[0]/selected", "1 x AIM-9");
+        setprop("payload/weight[1]/selected", "1 x AIM-120");
+        setprop("payload/weight[2]/selected", "1 x AGM-65");
+        setprop("payload/weight[3]/selected", "2 x GBU-12");
+        setprop("payload/weight[4]/selected", "Empty");
+        setprop("payload/weight[5]/selected", "2 x GBU-12");
+        setprop("payload/weight[6]/selected", "1 x AGM-65");
+        setprop("payload/weight[7]/selected", "1 x AIM-120");
+        setprop("payload/weight[8]/selected", "1 x AIM-9");
+    } else {
+      screen.log.write("Please land before changing payload.");
     }
 }
