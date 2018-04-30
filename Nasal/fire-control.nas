@@ -27,6 +27,16 @@ var FireControl = {
 		return fc;
 	},
 
+	getCategory: func {
+		me.cat = 1;
+		foreach (pyl;me.pylons) {
+			if (pyl.getCategory()>me.cat) {
+				me.cat = pyl.getCategory();
+			}
+		}
+		return me.cat;
+	},
+
 	setupMFDObservers: func {
 		me.FireControlRecipient = emesary.Recipient.new("FireControlRecipient");
 		me.FireControlRecipient.Receive = func(notification) {

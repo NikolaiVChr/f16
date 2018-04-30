@@ -32,6 +32,13 @@ var Station = {
 		return p;
 	},
 
+	getCategory: func {
+		if (me.currentSet != nil and me.currentSet["category"] != nil) {
+			return me.currentSet["category"];
+		}
+		return 1;
+	},
+
 	getCurrentName: func {
 		return me.currentName;
 	},
