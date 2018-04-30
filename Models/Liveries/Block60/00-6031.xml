@@ -4,8 +4,8 @@
     <sim>
         <model> 
             <livery>
-                <name type="string">UAE 3012</name>
-                <texture type="string">Liveries/Block60/uae2.png</texture>
+                <name type="string">UAE 1 Sqn, #3056</name>
+                <texture type="string">Liveries/Block60/00-6031.png</texture>
                 <owner type="string">UAE</owner>
             </livery>
             <livery-logo>

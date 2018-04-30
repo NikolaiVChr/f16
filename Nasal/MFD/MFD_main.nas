@@ -626,6 +626,12 @@ var MFD_Device =
         svg.p_SMS = me.canvas.createGroup()
                 .setTranslation(276*0.795,482);#552,482 , 0.795 is for UV map
 
+        svg.cat = svg.p_SMS.createChild("text")
+                .setTranslation(0, -482*0.5+100)
+                .setText("CAT I")
+                .setAlignment("center-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
         svg.p6 = svg.p_SMS.createChild("text")
                 .setTranslation(276*0.795*0.55, -482*0.5-135)
                 .setText("--------")
@@ -752,6 +758,12 @@ var MFD_Device =
            .horiz(130)
            .setColor(1,1,1)
            .setStrokeLineWidth(1);
+        svg.jett = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795, -482*0.5+125)
+                .setText("J-S")
+                .setAlignment("right-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
     },
 
     addSMS: func {
@@ -791,6 +803,8 @@ var MFD_Device =
                     pylons.fcs.selectPylon(7);
                 } elsif (eventi == 8) {
                     pylons.fcs.selectPylon(8);
+                } elsif (eventi == 9) {
+                    pylons.fcs.jettisonSelectedPylonContent();
                 } elsif (eventi == 12) {
                     pylons.fcs.selectPylon(4);
                 }
@@ -799,6 +813,8 @@ var MFD_Device =
         me.p_SMS.update = func (noti) {
             if (noti.FrameCount != 3)
                 return;
+            me.cat = pylons.fcs.getCategory();
+            me.root.cat.setText(sprintf("CAT %s", me.cat==1?"I":(me.cat==2?"II":"III")));
 
             var sel = pylons.fcs.getSelectedPylonNumber();
             me.root.p1f.setVisible(sel==0);

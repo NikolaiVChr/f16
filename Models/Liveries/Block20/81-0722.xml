@@ -4,10 +4,9 @@
  <sim>
   <model>
    <livery>
-    <name type="string">USAF 31FW, 31OG Italy</name> 
-    <texture>Liveries/31-FW/31OG2.jpg</texture>
-    
-    <owner type="string">USAF</owner>
+    <name type="string">AMI 18 Gruppo, "1000 flight hours"</name>
+    <texture>Liveries/Block20/81-0722.png</texture>
+    <owner type="string">AMI</owner>
    </livery>
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>

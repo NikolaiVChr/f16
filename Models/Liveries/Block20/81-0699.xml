@@ -2,11 +2,11 @@
 
 <PropertyList>
  <sim>
-  <model> 
+  <model>
    <livery>
-    <name type="string">IAF 140 Sqn, "Golden Eagles"</name>
-    <texture>Liveries/Block10/78-0351.png</texture>
-    <owner type="string">IAF</owner>
+    <name type="string">AMI 10 Gruppo, "1000 flight hours"</name>
+    <texture>Liveries/Block20/81-0699.png</texture>
+    <owner type="string">AMI</owner>
    </livery>
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>

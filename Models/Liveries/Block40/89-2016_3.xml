@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 
 <PropertyList>
- <sim>
+ <sim> 
   <model>
    <livery>
-    <name type="string">USAF 31FW, 31OSS</name> 
-    <texture>Liveries/31-FW/31OSS.jpg</texture>
+    <name type="string">USAF 31FW, 555FS AV "16th Air Force"</name>
+    <texture>Liveries/Block40/89-2016_3.png</texture>
     
     <owner type="string">USAF</owner>
    </livery>

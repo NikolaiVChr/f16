@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<PropertyList>
+  
+  <name>payload</name>
+  <modal type="bool">false</modal>
+  <layout>vbox</layout>
+  
+  <group>
+    <layout>hbox</layout>
+    <empty>
+      <stretch>1</stretch>
+    </empty>
+    
+    <text>
+      <label>Payload quick setup</label>
+    </text>
+    
+    <empty>
+      <stretch>1</stretch>
+    </empty>
+    
+    <button>
+      <pref-width>16</pref-width>
+      <pref-height>16</pref-height>
+      <legend></legend>
+      
+      <default>1</default>
+      <keynum>27</keynum>
+      <border>2</border>
+      <binding>
+        <command>dialog-close</command>
+      </binding>
+      <binding>
+        <command>dialog-apply</command>
+      </binding>
+    </button>
+  </group>
+
+  <hrule/>
+
+  <group>
+    <layout>hbox</layout>
+    <text><label>Air patrol</label></text>
+    <button>
+      <legend>Mount</legend>
+      <binding>
+          <command>nasal</command>
+          <script>f16.a2a_patrol();</script>
+      </binding>
+    </button>
+  </group>
+
+  <hrule/>
+
+  <group>
+    <layout>hbox</layout>
+    <text><label>Air superority</label></text>
+    <button>
+      <legend>Mount</legend>
+      <binding>
+          <command>nasal</command>
+          <script>f16.a2a_super();</script>
+      </binding>
+    </button>
+  </group>
+
+    <hrule/>
+
+  <group>
+    <layout>hbox</layout>
+    <text><label>Standoff</label></text>
+    <button>
+      <legend>Mount</legend>
+      <binding>
+          <command>nasal</command>
+          <script>f16.a2a_standoff();</script>
+      </binding>
+    </button>
+  </group>
+
+    <hrule/>
+
+  <group>
+    <layout>hbox</layout>
+    <text><label>Air to ground</label></text>
+    <button>
+      <legend>Mount</legend>
+      <binding>
+          <command>nasal</command>
+          <script>f16.a2g_standard();</script>
+      </binding>
+    </button>
+  </group>
+
+</PropertyList>

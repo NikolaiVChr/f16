@@ -58,10 +58,11 @@ var warhead_lbs = {
     "GBU16":               450.00,
     "Sea Eagle":           505.00,
     "SeaEagle":            505.00,
-    "AGM65":               200.00,
     "RB-04E":              661.00,
     "RB-05A":              353.00,
     "RB-75":               126.00,
+    "AGM-65":              126.00,
+    "AGM65":               200.00,
     "M90":                 500.00,
     "M71":                 200.00,
     "M71R":                200.00,
@@ -354,4 +355,4 @@ var re_init = func {
   }
 }
 
-setlistener("/sim/signals/reinit", re_init, 0, 0);
+#setlistener("/sim/signals/reinit", re_init, 0, 0);

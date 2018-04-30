@@ -19,7 +19,6 @@
   <type>select</type>
   <object-name>engine</object-name>
   <object-name>eng_fire</object-name>
-  <object-name>hyd_oil_press</object-name>
   <object-name>flcs</object-name>
   <object-name>dbu_on</object-name>
   <object-name>to_ldg_config</object-name>
@@ -27,6 +26,25 @@
   <condition>
     <or>
     <property>/tmp/nill</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+ </animation>
+
+  <animation>
+  <type>select</type>
+  <object-name>hyd_oil_press</object-name>
+  <condition>
+    <or>
+    <property>/tmp/nill</property>
+    <less-than>
+    <property>fdm/jsbsim/systems/hydraulics/sysa-psi</property>
+    <value>2000</value>
+    </less-than>
+      <less-than>
+    <property>fdm/jsbsim/systems/hydraulics/sysb-psi</property>
+    <value>2000</value>
+  </less-than>
     <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>

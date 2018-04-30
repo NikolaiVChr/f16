@@ -13,6 +13,9 @@ var FireControl = {
 	new: func (pylons, pylonOrder, typeOrder) {
 		var fc = {parents:[FireControl]};
 		fc.pylons = pylons;
+		foreach(pyl;pylons) {
+			pyl.setPylonListener(fc);
+		}
 		fc.selected = nil;
 		fc.pylonOrder=pylonOrder;
 		fc.typeOrder=typeOrder;
@@ -22,6 +25,16 @@ var FireControl = {
 		setlistener("controls/armament/trigger",func{fc.trigger();fc.updateCurrent()});
 		setlistener("controls/armament/master-arm",func{fc.updateCurrent()});
 		return fc;
+	},
+
+	getCategory: func {
+		me.cat = 1;
+		foreach (pyl;me.pylons) {
+			if (pyl.getCategory()>me.cat) {
+				me.cat = pyl.getCategory();
+			}
+		}
+		return me.cat;
 	},
 
 	setupMFDObservers: func {
@@ -89,8 +102,20 @@ var FireControl = {
 		screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 	},
 
+	updateAll: func {
+		# called from the stations when they change.
+		if (me.selectedType != nil) {
+			screen.log.write("Fire-control: deselecting "~me.selectedType, 0.5, 0.5, 1);
+			me.selectedType = nil;
+			me.selected = nil;
+		}
+	},
+
 	getSelectedWeapon: func {
 		if (me.selected == nil) {
+			return nil;
+		}
+		if (me.selected[1] > size(me.pylons[me.selected[0]].getWeapons())-1) {
 			return nil;
 		}
 		return me.pylons[me.selected[0]].getWeapons()[me.selected[1]];
@@ -101,6 +126,22 @@ var FireControl = {
 			return nil;
 		}
 		return me.pylons[me.selected[0]];
+	},
+
+	jettisonSelectedPylonContent: func {
+		if (me.selected == nil) {
+			print("Nothing to jettison");
+			return nil;
+		}
+		me.pylons[me.selected[0]].jettisonAll();
+		me.selected = nil;
+		me.selectedType = nil;
+	},
+
+	jettisonAll: func {
+		foreach (pyl;me.pylons) {
+			pyl.jettisonAll();
+		}
 	},
 
 	getSelectedPylonNumber: func {
@@ -116,6 +157,7 @@ var FireControl = {
 			if (me.ws != nil and w != nil and size(me.ws) > w and me.ws[w] != nil) {
 				me.stopCurrent();
 				me.selected = [p, w];
+				me.selectedType = me.ws[w].type;
 				me.updateCurrent();
 				return;
 			} elsif (me.ws != nil and w == nil and size(me.ws) > 0) {
@@ -124,6 +166,7 @@ var FireControl = {
 					if (me.wp != nil) {
 						me.stopCurrent();
 						me.selected = [p, w];
+						me.selectedType = me.ws[w].type;
 						me.updateCurrent();
 						return;
 					}
@@ -190,11 +233,14 @@ var FireControl = {
 				me.selected = [me.pylon, me.indexWeapon];
 				print(" Next weapon found");
 				me.updateCurrent();#TODO: think a bit more about this
-				return me.pylons[me.pylon].getWeapons()[me.indexWeapon];
+				me.wap = me.pylons[me.pylon].getWeapons()[me.indexWeapon];
+				me.selectedType = wap.type;
+				return me.wap;
 			}
 		}
 		print(" Next weapon not found");
 		me.selected = nil;
+		me.selectedType = nil;
 		return nil;
 	},
 

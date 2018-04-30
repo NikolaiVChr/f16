@@ -312,13 +312,15 @@ var F16_HUD = {
                     if (me.weap == "20mm Cannon") {
                         me.txt = sprintf("%3d", pylons.fcs.getAmmo());
                     } elsif (me.weap == "AIM-9") {
-                        me.txt = sprintf("S%dL", pylons.fcs.getAmmo());
+                        me.txt = sprintf("%dSRM", pylons.fcs.getAmmo());
                     } elsif (me.weap == "AIM-120") {
-                        me.txt = sprintf("M%dL", pylons.fcs.getAmmo());
+                        me.txt = sprintf("%dLRM", pylons.fcs.getAmmo());
                     } elsif (me.weap == "AIM-7") {
-                        me.txt = sprintf("M%dS", pylons.fcs.getAmmo());
+                        me.txt = sprintf("%dMRM", pylons.fcs.getAmmo());
                     } elsif (me.weap == "GBU-12") {
-                        me.txt = sprintf("GBU%d", pylons.fcs.getAmmo());
+                        me.txt = sprintf("%dGBU", pylons.fcs.getAmmo());
+                    } elsif (me.weap == "AGM-65") {
+                        me.txt = sprintf("%dAGM", pylons.fcs.getAmmo());
                     }
                 }
                 me.window7.setText(me.txt);
