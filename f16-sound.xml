@@ -985,6 +985,24 @@
             </volume>
         </rwr>
 
+
+
+        <gbu-release>
+            <name>gbu-release</name>
+            <mode>once</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/gbu_release.wav</path>
+            <condition>
+                <property>payload/armament/gbu-12/sound-fire-on-off</property>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <factor>1</factor>
+                <max>1</max>
+            </volume>
+        </gbu-release>
+
+
     </fx>
  
 </PropertyList>
