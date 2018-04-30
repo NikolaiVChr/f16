@@ -45,5 +45,9 @@ J Maverick 16
 Fabien Barbier
 - Work on stores
 
+Carsten Brueggmann
+- Sound creation and editing.
+
 Alan Teeder
 - FDM consulting
+- Fixed wrong aero data for speedbrake

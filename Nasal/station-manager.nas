@@ -28,6 +28,7 @@ var Station = {
 		p.guiListener = nil;
 		p.currentName = nil;	
 		p.currentSet = nil;
+		p.myListener = nil;
 		return p;
 	},
 
@@ -75,6 +76,10 @@ var Station = {
 	},
 
 	loadingSet: func (set) {
+	},
+
+	setPylonListener: func (ml) {
+		me.myListener = ml;
 	},
 
 	calculateMass: func {
@@ -231,6 +236,9 @@ var Pylon = {
 				} else {
 					#print("GUI wants unknown set. Thats okay.");
 				}
+			}
+			if(me.myListener != nil) {
+				me.myListener.updateAll();
 			}
 		}
 	},
