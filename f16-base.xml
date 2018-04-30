@@ -951,7 +951,8 @@
             <MP-lon type="string">rotors/main/blade[1]/flap-deg</MP-lon>
             <MP-alt type="string">rotors/main/blade[2]/flap-deg</MP-alt>
             <aim-9>
-                <short-name type="string">AIM-9</short-name>
+                <short-name type="string">AIM9</short-name>
+                <long-name type="string">AIM-9L Sidewinder</long-name>
                 <sound-on-off type="bool">false</sound-on-off>
                 <sound-fire-on-off type="bool">false</sound-fire-on-off>
                 <sound-volume type="double">0.0</sound-volume>
@@ -992,7 +993,8 @@
                 <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
             </aim-9>
             <aim-120>
-                <short-name type="string">AIM-120</short-name>
+                <short-name type="string">AIM120</short-name>
+                <long-name type="string">AIM-120B Amraam</long-name>
                 <guidance type="string">radar</guidance>
                 <vol-search type="double">0.00</vol-search>
                 <vol-track type="double">0.15</vol-track>
@@ -1026,7 +1028,8 @@
                 <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
             </aim-120>
             <aim-7>
-                <short-name type="string">AIM-7</short-name>
+                <short-name type="string">AIM7</short-name>
+                <long-name type="string">AIM-7F Sparrow</long-name>
                 <guidance type="string">semi-radar</guidance>
                 <vol-search type="double">0.00</vol-search>
                 <vol-track type="double">0.15</vol-track>
@@ -1061,6 +1064,7 @@
             </aim-7>      
             <gbu-12>       <!-- GBU 12 -->
                 <short-name type="string">GBU12</short-name>
+                <long-name type="string">GBU-12 Paveway II</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
                 <class type="string">GM</class>
                 <max-fire-range-nm type="double"> 14 </max-fire-range-nm>
@@ -1088,9 +1092,6 @@
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <rail-length-m type="double"> 2.667 </rail-length-m>
-                <rail-point-forward type="bool">true</rail-point-forward>
-                <rail-pitch-deg type="double"> 0 </rail-pitch-deg>
                 <max-report-distance type="double"> 40 </max-report-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
@@ -1099,6 +1100,7 @@
             <agm-65>                    
                     <!-- AGM-65B Maverick -->
                     <short-name type="string">AGM65</short-name>
+                    <long-name type="string">AGM-65B Maverick</long-name>
                     <sound-on-off type="bool">false</sound-on-off>
                     <sound-fire-on-off type="bool">false</sound-fire-on-off>
                     <sound-volume type="double">0.0</sound-volume>
