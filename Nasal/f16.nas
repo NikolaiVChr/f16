@@ -203,8 +203,6 @@ var loop_flare = func {
     settimer(loop_flare, 0.10);
 };
 
-loop_flare();
-
 var medium = {
   loop: func {
     if ((getprop("velocities/speed-east-fps") != 0 or getprop("velocities/speed-north-fps") != 0) and getprop("fdm/jsbsim/gear/unit[0]/WOW") != 1 and
@@ -251,11 +249,23 @@ var medium = {
     } else {
       setprop("instrumentation/radar/time-till-crash", 15);
     }
+    if (pylons.fcs != nil) {
+      setprop("f16/stores-cat", pylons.fcs.getCategory());
+      } else {
+        setprop("f16/stores-cat", 1);
+      }
     settimer(func {me.loop()},0.5);
   },
 };
 
-medium.loop();
+var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
+  if (getprop("sim/signals/fdm-initialized") == 1) {
+    removelistener(main_init_listener);
+   loop_flare();
+   medium.loop();   
+  }
+ }, 0, 0);
+
 
 var repair = func {
   if (getprop("payload/armament/msg")==1 and !getprop("fdm/jsbsim/gear/unit[0]/WOW")) {

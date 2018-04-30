@@ -355,4 +355,4 @@ var re_init = func {
   }
 }
 
-setlistener("/sim/signals/reinit", re_init, 0, 0);
+#setlistener("/sim/signals/reinit", re_init, 0, 0);

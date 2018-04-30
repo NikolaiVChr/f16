@@ -591,7 +591,19 @@
   <type>select</type>
   <object-name>STORES_CONFIG_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not><or>
+     <and>
+        <greater-than>
+          <property>f16/stores-cat</property>
+          <value>1</value>
+        </greater-than>
+        <less-than>
+          <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+          <value>1</value>
+        </less-than>
+      </and>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+   </or></not>
   </condition>
  </animation> 
 
@@ -869,9 +881,41 @@
   <type>select</type>
   <object-name>STORES_CONFIG_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+    <or>
+     <and>
+        <greater-than>
+          <property>f16/stores-cat</property>
+          <value>1</value>
+        </greater-than>
+        <less-than>
+          <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+          <value>1</value>
+        </less-than>
+      </and>
+      <and>
+        <equals>
+          <property>f16/stores-cat</property>
+          <value>1</value>
+        </equals>
+        <equals>
+          <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+          <value>1</value>
+        </equals>
+      </and>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+   </or>
   </condition>
  </animation> 
+
+  <animation>
+  <object-name>STORES_CONFIG_lit</object-name>
+  <type>material</type>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
 
  <!-- END CAUTION PANEL -->
 

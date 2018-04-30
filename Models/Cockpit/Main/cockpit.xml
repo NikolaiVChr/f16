@@ -58,6 +58,29 @@
 -->
 
  <animation>
+  <type>rotate</type>
+  <object-name>side_stick</object-name>
+  <object-name>cylinder.004</object-name>
+  <object-name>cylinder.002</object-name>
+  <object-name>cylinder.003</object-name>
+  <object-name>box</object-name>
+  <object-name>disk.002</object-name>
+  <object-name>side_stick</object-name>
+  <property>sim/current-view/internal</property>
+  <factor>15.0</factor>
+  <center>
+   <x-m>-4.43221</x-m>
+   <y-m>0.274842</y-m>
+   <z-m>0.180894</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>1.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+ <animation>
   <type>translate</type>
   <object-name>AcesII</object-name>
   <!-- object-name>Pilot_int</object-name -->
