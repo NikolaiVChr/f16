@@ -248,7 +248,7 @@
                 <x-offset-m archive="y">0</x-offset-m>
                 <y-offset-m archive="y">0.94</y-offset-m>
                 <z-offset-m archive="y">-3.94</z-offset-m>
-                <default-field-of-view-deg>55</default-field-of-view-deg>
+                <default-field-of-view-deg>60</default-field-of-view-deg>
             </config>
         </view>
         <rendering>
