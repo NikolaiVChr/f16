@@ -586,7 +586,7 @@
             <property>engines/engine/running</property>
             <volume>
               <property>/sim/current-view/internal</property>
-                <factor>0.085</factor>
+                <factor>0.072</factor>
             </volume>
         </avionics>
 
