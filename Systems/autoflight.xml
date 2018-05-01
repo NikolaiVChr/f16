@@ -21,9 +21,6 @@
 	<property value="0">autoflight/pitch/p-gain-att</property> <!-- This gain is dynamic -->
 	<property value="-1">autoflight/pitch/i-gain-att</property>
 	<property value="-5">autoflight/pitch/d-gain-att</property>
-	<property value="0">autoflight/pitch/vs/p-gain</property> <!-- This gain is dynamic -->
-	<property value="0">autoflight/pitch/vs/i-gain</property>
-	<property value="0">autoflight/pitch/vs/d-gain</property>
 	
 	<channel name="Autoflight: Logic">
 		
@@ -255,75 +252,8 @@
 		
 		<pure_gain name="autoflight/pitch/vs/target">
 			<input>autoflight/pitch/alt/error</input>
-			<gain>-5</gain>
+			<gain>-4</gain>
 		</pure_gain>
-		
-		<fcs_function name="autoflight/pitch/vs/error">
-			<function>
-				<difference>
-					<property>/instrumentation/gps/indicated-vertical-speed</property>
-					<property>autoflight/pitch/vs/target</property>
-				</difference>
-			</function>
-		</fcs_function>
-		
-		<switch name="autoflight/pitch/gain-switch">
-			<default value="1"/>
-			<test logic="AND" value="0">
-				autoflight/output/pitch-master eq 1
-				/f16/fcs/switch-pitch eq 1
-			</test>
-		</switch>
-		
-		<fcs_function name="autoflight/pitch/vs/p-gain">
-			<function>
-				<table>
-					<independentVar lookup="row">velocities/mach</independentVar>
-					<independentVar lookup="column">autoflight/pitch/gain-switch</independentVar>
-					<tableData>
-						     0       1  
-						0.2 -0.0021  0.0000
-						1.4 -0.0008  0.0000
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
-		
-		<switch name="autoflight/pitch/vs/i-gain">
-			<default value="0"/>
-			<test value="-0.00075">
-				autoflight/pitch/gain-switch eq 0
-			</test>
-		</switch>
-		
-		<switch name="autoflight/pitch/vs/d-gain">
-			<default value="0"/>
-			<test value="-0.0001">
-				autoflight/pitch/gain-switch eq 0
-			</test>
-		</switch>
-		
-		<switch name="autoflight/pitch/vs/trigger">
-			<default value="0"/>
-			<test logic="OR" value="1">
-				autoflight/pitch/gain-switch eq 1
-				autoflight/pitch/vs/pid le -14.99
-				autoflight/pitch/vs/pid ge 29.99
-			</test>
-		</switch>
-		
-		<pid name="autoflight/pitch/vs/pid-v">
-			<input>autoflight/pitch/vs/error</input>
-			<kp>autoflight/pitch/vs/p-gain</kp>
-			<ki>autoflight/pitch/vs/i-gain</ki>
-			<kd>autoflight/pitch/vs/d-gain</kd>
-			<trigger>autoflight/pitch/vs/trigger</trigger>
-			<clipto>
-				<min>-15.0</min>
-				<max>30.0</max>
-			</clipto>
-			<output>autoflight/pitch/vs/pid</output>
-		</pid>
 	
 	</channel>
 	
@@ -652,14 +582,10 @@
 			<output>autoflight/pitch/master-pid</output>
 		</pid>
 		
-		<fcs_function name="autoflight/pitch/g-demand-inverted"> <!-- Invert the G command -->
-			<function>
-				<product>
-					<property>autoflight/pitch/master-pid</property>
-					<value>-1</value>
-				</product>
-			</function>
-		</fcs_function>
+		<pure_gain name="autoflight/pitch/g-demand-inverted"> <!-- Invert the G command -->
+			<input>autoflight/pitch/master-pid</input>
+			<gain>-1.0</gain>
+		</pure_gain>
 		
 		<switch name="autoflight/pitch/g-demand-switched">
 			<default value="0"/>

@@ -4,10 +4,12 @@
 var max_bank_limit = 30;
 setprop("/autopilot/route-manager/advance", 1);
 
+# Every time the waypoint changes, update the stored time
 setlistener("/autopilot/route-manager/current-wp", func {
 	setprop("/autopilot/internal/wp-change-time", getprop("/sim/time/elapsed-sec"));
 });
 
+# Calculates the optimum distance from waypoint to begin turning to next waypoint
 var apLoop = maketimer(1, func {
 	if (getprop("/autopilot/route-manager/route/num") > 0 and getprop("/autopilot/route-manager/active") == 1) {
 		if ((getprop("/autopilot/route-manager/current-wp") + 1) < getprop("/autopilot/route-manager/route/num")) {
@@ -52,6 +54,7 @@ var apLoop = maketimer(1, func {
 	}
 });
 
+# Burn Baby Burn
 setlistener("/sim/signals/fdm-initialized", func {
 	apLoop.start();
 });
