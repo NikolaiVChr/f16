@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<PropertyList>
+  <name>missile-view</name>
+  <x>5</x>
+  <y>3</y>
+  <layout>hbox</layout>
+  <default-padding>0</default-padding>
+
+  <color>
+    <enabled>false</enabled>
+    <red>0</red>
+    <green>0</green>
+    <blue>0</blue>
+    <alpha>0</alpha>
+  </color>
+
+  <button>
+    <legend>&lt;</legend>
+    <pref-width>20</pref-width>
+    <pref-height>20</pref-height>
+    <color>
+      <red>0.5</red>
+      <green>0.5</green>
+      <blue>0.5</blue>
+      <alpha>0.3</alpha>
+    </color>
+    <binding>
+      <command>nasal</command>
+      <script>view.missile_view_handler.next(-1)</script>
+    </binding>
+  </button>
+
+  <button>
+    <legend>&gt;</legend>
+    <pref-width>20</pref-width>
+    <pref-height>20</pref-height>
+    <color>
+      <red>0.5</red>
+      <green>0.5</green>
+      <blue>0.5</blue>
+      <alpha>0.3</alpha>
+    </color>
+    <binding>
+      <command>nasal</command>
+      <script>view.missile_view_handler.next(1)</script>
+    </binding>
+  </button>
+
+  <whatever>
+    <pref-width>6</pref-width>
+  </whatever>
+
+  <text>
+    <pref-width>0</pref-width>
+    <live>1</live>
+    <property>/sim/current-view/missile-view</property>
+    <color>
+      <red>1</red>
+      <green>1</green>
+      <blue>1</blue>
+      <alpha>1</alpha>
+    </color>
+    <font>
+      <name>HELVETICA_14</name>
+    </font>
+  </text>
+
+  <button>
+    <legend />
+    <pref-width>200</pref-width>
+    <border>0</border>
+    <color>
+      <red>1</red>
+      <green>1</green>
+      <blue>1</blue>
+      <alpha>0</alpha>
+    </color>
+    <binding>
+      <command>nasal</command>
+      <script>
+if (size(view.missile_view_handler.list) &lt;= 1)
+    return;
+var isopen = !!getprop("sim/gui/dialogs/missile-view-select/open");
+var toggle = isopen ? "dialog-close" : "dialog-show";
+fgcommand(toggle, props.Node.new({ "dialog-name": "missile-view-select" }));
+      </script>
+    </binding>
+  </button>
+</PropertyList>
