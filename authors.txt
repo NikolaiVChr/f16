@@ -54,3 +54,6 @@ FGUK
 Alan Teeder
 - FDM consulting
 - Fixed wrong aero data for speedbrake
+
+Joshua Davidson (it0uchpods)
+- Autopilot
