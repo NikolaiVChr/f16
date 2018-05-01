@@ -15,8 +15,8 @@
  </model>
 
  <model>
-  <name>AcesII</name>
-  <path>Aircraft/f16/Models/Cockpit/AcesII/acesII.xml</path>
+  <name>chair</name>
+  <path>Aircraft/f16/Models/Cockpit/chair/chair.xml</path>
  </model>
  
 <!-- <model>
@@ -82,7 +82,7 @@
 
  <animation>
   <type>translate</type>
-  <object-name>AcesII</object-name>
+  <object-name>chair</object-name>
   <!-- object-name>Pilot_int</object-name -->
   <object-name>Pilot_ext</object-name>
   <property>controls/seat/vertical-adjust</property>

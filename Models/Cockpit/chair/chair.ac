@@ -29,7 +29,7 @@ MATERIAL "ac3dmat7.004" rgb 0.478 0.502 0.31 amb 0.478 0.502 0.31 emis 0 0 0 spe
 OBJECT world
 kids 1
 OBJECT group
-name "aces2"
+name "chair"
 kids 9
 OBJECT group
 name "controls"
@@ -37088,7 +37088,7 @@ OBJECT poly
 name "head-rest"
 data 8
 Mesh.014
-texture "aces2.png"
+texture "texture.png"
 texrep 1 1
 crease 45.000000
 numvert 80
@@ -38398,7 +38398,7 @@ OBJECT poly
 name "pitot-tubes"
 data 8
 Mesh.015
-texture "aces2.png"
+texture "texture.png"
 texrep 1 1
 crease 45.000000
 numvert 148
@@ -39720,7 +39720,7 @@ OBJECT poly
 name "rocket-catapult"
 data 8
 Mesh.011
-texture "aces2.png"
+texture "texture.png"
 texrep 1 1
 crease 45.000000
 numvert 36
@@ -39994,7 +39994,7 @@ OBJECT poly
 name "screws"
 data 8
 Mesh.018
-texture "aces2.png"
+texture "texture.png"
 texrep 1 1
 crease 45.000000
 numvert 100
@@ -40744,7 +40744,7 @@ OBJECT poly
 name "back-structure"
 data 8
 Mesh.004
-texture "aces2.png"
+texture "texture.png"
 texrep 1 1
 crease 70.000000
 numvert 877
@@ -47924,7 +47924,7 @@ OBJECT poly
 name "bucket-structure"
 data 8
 Mesh.001
-texture "aces2.png"
+texture "texture.png"
 texrep 1 1
 crease 45.000000
 numvert 669
@@ -54151,7 +54151,7 @@ OBJECT poly
 name "main-chute-container"
 data 8
 Mesh.002
-texture "aces2.png"
+texture "texture.png"
 texrep 1 1
 crease 45.000000
 numvert 304
@@ -58838,7 +58838,7 @@ OBJECT poly
 name "rails"
 data 8
 Mesh.005
-texture "aces2.png"
+texture "texture.png"
 texrep 1 1
 crease 45.000000
 numvert 122
@@ -59759,7 +59759,7 @@ OBJECT poly
 name "survival-kit-containe"
 data 8
 Mesh.023
-texture "aces2.png"
+texture "texture.png"
 texrep 1 1
 crease 45.000000
 numvert 100
