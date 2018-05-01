@@ -14,7 +14,7 @@
  <!-- =============================================================================================================  --> 
  <model>
   <name>Station1_AIM-9L</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.xml</path>
   <offsets>
    <x-m>1.16</x-m>
    <y-m>-4.87</y-m>
@@ -47,7 +47,7 @@
  
   <model>
   <name>Station1_AIM-120C5_amraam</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.xml</path>
   <offsets>
    <x-m>1.15374</x-m>
    <y-m>-4.89183</y-m>
@@ -108,7 +108,7 @@
  
   <model>
   <name>Station2_AIM-9L</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.xml</path>
   <offsets>
    <x-m>0.85</x-m>
    <y-m>-3.7</y-m>
@@ -119,7 +119,7 @@
  
 <model>
   <name>Station2_AIM-120C5_amraam</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.xml</path>
   <offsets>
    <x-m>1.15374</x-m>
    <y-m>-3.7</y-m>
@@ -147,7 +147,7 @@
  
  <model>
   <name>Station3_AIM-9L</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.xml</path>
   <offsets>
    <x-m>0.513785</x-m>
    <y-m>-2.88606</y-m>
@@ -158,7 +158,7 @@
 
  <model>
   <name>Station3_AIM-7</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-7/aim-7.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-7/aim-7.xml</path>
   <offsets>
    <x-m>0.513785</x-m>
    <y-m>-2.88606</y-m>
@@ -169,7 +169,7 @@
  
   <model>
   <name>Station3_AIM-120C5_amraam</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.xml</path>
   <offsets>
    <x-m>0.785874</x-m>
    <y-m>-2.8762</y-m>
@@ -292,7 +292,7 @@
  
    <model>
   <name>Station7_AIM-120C5_amraam</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.xml</path>
   <offsets>
    <x-m>0.785874</x-m>
    <y-m>2.8762</y-m>
@@ -303,7 +303,7 @@
  
    <model>
   <name>Station7_AIM-120C5_amraam</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.xml</path>
   <offsets>
    <x-m>0.785874</x-m>
    <y-m>2.8762</y-m>
@@ -314,7 +314,7 @@
  
   <model>
   <name>Station7_AIM-9L</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.xml</path>
   <offsets>
    <x-m>0.513785</x-m>
    <y-m>2.88606</y-m>
@@ -325,7 +325,7 @@
 
   <model>
   <name>Station7_AIM-7</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-7/aim-7.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-7/aim-7.xml</path>
   <offsets>
    <x-m>0.513785</x-m>
    <y-m>2.88606</y-m>
@@ -362,7 +362,7 @@
  
   <model>
   <name>Station8_AIM-9L</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.xml</path>
   <offsets>
    <x-m>0.85</x-m>
    <y-m>3.7</y-m>
@@ -373,7 +373,7 @@
 
   <model>
   <name>Station8_AIM-120C5_amraam</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.xml</path>
   <offsets>
    <x-m>1.15374</x-m>
    <y-m>3.7</y-m>
@@ -401,7 +401,7 @@
 <!-- =============================================================================================================  -->  
   <model>
   <name>Station9_AIM-9L</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/aim-9.xml</path>
   <offsets>
    <x-m>1.16</x-m>
    <y-m>4.87</y-m>
@@ -434,7 +434,7 @@
 
  <model>
   <name>Station9_AIM-120C5_amraam</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.ac</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/aim-120.xml</path>
   <offsets>
    <x-m>1.15374</x-m>
    <y-m>4.89183</y-m>
