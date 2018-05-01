@@ -1,0 +1,603 @@
+<?xml version="1.0"?>
+
+<!-- General Dynamics F-16 Autoflight System -->
+<!-- (c) 2018 Joshua Davidson (it0uchpods) -->
+
+<system name="autoflight">
+	
+	<property value="0">/f16/fcs/switch-roll</property> <!-- -1 = STRG SEL, 0 = ATT HOLD, 1 = HDG SEL -->
+	<property value="0">/f16/fcs/switch-pitch</property> <!-- -1 = ATT HOLD, 0 = A/P OFF, 1 = ALT HOLD -->
+	<property value="0">autoflight/pitch/altitude-2-sec-ahead</property> <!-- autoflight-rules.xml -->
+	<property value="0">autoflight/roll/heading/pi</property>
+	<property value="0">autoflight/roll/target-roll-deg</property>
+	<property value="0">autoflight/roll/master-pid</property>
+	<property value="0">autoflight/pitch/master-pid</property>
+	<property value="0">autoflight/pitch/vs/pid</property>
+	
+	<property value="0.35">autoflight/ss/delay</property>
+	<property value="-3.8">autoflight/roll/p-gain-att</property>
+	<property value="-6.4">autoflight/roll/i-gain-att</property>
+	<property value="-0.2">autoflight/roll/d-gain-att</property>
+	<property value="0">autoflight/pitch/p-gain-att</property> <!-- This gain is dynamic -->
+	<property value="-1">autoflight/pitch/i-gain-att</property>
+	<property value="-5">autoflight/pitch/d-gain-att</property>
+	
+	<channel name="Autoflight: Logic">
+		
+		<switch name="position/wow">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				gear/unit[0]/WOW eq 1
+				gear/unit[1]/WOW eq 1
+				gear/unit[2]/WOW eq 1
+			</test>
+		</switch>
+		
+		<switch name="autoflight/can-engage">
+			<default value="1"/>
+			<test logic="OR" value="0"> <!-- Add conditions where AP fails here -->
+				position/wow eq 1
+				attitude/roll-rad gt 1.0472
+				attitude/roll-rad lt -1.0472
+			</test>
+		</switch>
+		
+		<lag_filter name="autoflight/ss/roll-input">
+			<input>fcs/fly-by-wire/roll/stick-force-lbf</input>
+			<c1>25.6</c1>
+		</lag_filter>
+		
+		<switch name="autoflight/ss/roll-force">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				autoflight/ss/roll-input gt 1
+				autoflight/ss/roll-input lt -1
+			</test>
+		</switch>
+		
+		<switch name="autoflight/ss/roll-reset-time">
+			<default value="/sim/time/elapsed-sec"/>
+			<test value="autoflight/ss/roll-reset-time">
+				autoflight/ss/roll-force eq 0
+			</test>
+		</switch>
+		
+		<summer name="autoflight/ss/roll-reset-time-delay">
+			<input>autoflight/ss/roll-reset-time</input>
+			<input>autoflight/ss/delay</input>
+		</summer>
+		
+		<switch name="autoflight/ss/roll-active">
+			<default value="0"/>
+			<test value="1">
+				/sim/time/elapsed-sec lt autoflight/ss/roll-reset-time-delay
+			</test>
+		</switch>
+		
+		<lag_filter name="autoflight/ss/pitch-input">
+			<input>fcs/fly-by-wire/pitch/stick-force-lbf</input>
+			<c1>25.6</c1>
+		</lag_filter>
+		
+		<switch name="autoflight/ss/pitch-force">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				autoflight/ss/pitch-input gt 1
+				autoflight/ss/pitch-input lt -1
+			</test>
+		</switch>
+		
+		<switch name="autoflight/ss/pitch-reset-time">
+			<default value="/sim/time/elapsed-sec"/>
+			<test value="autoflight/ss/pitch-reset-time">
+				autoflight/ss/pitch-force eq 0
+			</test>
+		</switch>
+		
+		<summer name="autoflight/ss/pitch-reset-time-delay">
+			<input>autoflight/ss/pitch-reset-time</input>
+			<input>autoflight/ss/delay</input>
+		</summer>
+		
+		<switch name="autoflight/ss/pitch-active">
+			<default value="0"/>
+			<test value="1">
+				/sim/time/elapsed-sec lt autoflight/ss/pitch-reset-time-delay
+			</test>
+		</switch>
+		
+		<switch name="autoflight/output/roll-master">
+			<default value="0"/>
+			<test logic="AND" value="1"> <!-- /f16/fcs/switch-pitch is not a typo -->
+				/f16/fcs/switch-pitch ne 0
+				autoflight/can-engage eq 1
+				autoflight/ss/roll-force eq 0
+				position/wow eq 0
+			</test>
+		</switch>
+		
+		<switch name="autoflight/output/pitch-master">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/f16/fcs/switch-pitch ne 0
+				autoflight/can-engage eq 1
+				autoflight/ss/pitch-force eq 0
+				position/wow eq 0
+			</test>
+		</switch>
+	
+	</channel>
+	
+	<channel name="Autoflight: Drivers">
+		
+		<!-- HDG SEL / STRG SEL -->
+		
+		<fcs_function name="autoflight/roll/hdg-hld-target">
+			<function>
+				<integer>
+					<sum>
+						<ifthen>
+							<and>
+								<eq>
+									<property>autoflight/output/roll-master</property>
+									<value>1</value>
+								</eq>
+								<eq>
+									<property>/f16/fcs/switch-roll</property>
+									<value>1</value>
+								</eq>
+							</and>
+							<property>autoflight/roll/hdg-hld-target</property>
+							<property>/orientation/heading-deg</property>
+						</ifthen>
+						<value>0.5</value> <!-- Make the integer rounded correctly -->
+					</sum>
+				</integer>
+			</function>
+		</fcs_function>
+		
+		<switch name="autoflight/roll/gain-switch">
+			<default value="1"/>
+			<test logic="AND" value="0">
+				autoflight/output/roll-master eq 1
+				/f16/fcs/switch-roll ne 0
+			</test>
+		</switch>
+		
+		<fcs_function name="autoflight/roll/heading/p-gain">
+			<function>
+				<table>
+					<independentVar lookup="row">velocities/mach</independentVar>
+					<independentVar lookup="column">autoflight/roll/gain-switch</independentVar>
+					<tableData>
+						     0    1  
+						0.2  1.8  0.0
+						1.0  3.7  0.0
+						1.5  3.9  0.0
+						2.1  2.1  0.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<switch name="autoflight/roll/heading/i-gain">
+			<default value="0"/>
+			<test value="0.01">
+				autoflight/roll/gain-switch eq 0
+			</test>
+		</switch>
+		
+		<switch name="autoflight/roll/heading/trigger">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				autoflight/roll/gain-switch eq 1
+				autoflight/roll/heading/pi le -29.99
+				autoflight/roll/heading/pi ge 29.99
+			</test>
+		</switch>
+		
+		<pid name="autoflight/roll/heading/pi-v">
+			<input>autoflight/roll/heading-error-deg</input>
+			<kp>autoflight/roll/heading/p-gain</kp>
+			<ki>autoflight/roll/heading/i-gain</ki>
+			<kd>0.0</kd>
+			<trigger>autoflight/roll/heading/trigger</trigger>
+			<clipto>
+				<min>-30.0</min>
+				<max>30.0</max>
+			</clipto>
+			<output>autoflight/roll/heading/pi</output>
+		</pid>
+		
+		<!-- ALT HOLD -->
+		
+		<fcs_function name="autoflight/pitch/alt/target">
+			<function>
+				<product>
+					<integer>
+						<quotient>
+							<sum>
+								<ifthen>
+									<and>
+										<eq>
+											<property>autoflight/output/pitch-master</property>
+											<value>1</value>
+										</eq>
+										<eq>
+											<property>/f16/fcs/switch-pitch</property>
+											<value>1</value>
+										</eq>
+									</and>
+									<property>autoflight/pitch/alt/target</property>
+									<property>autoflight/pitch/altitude-2-sec-ahead</property>
+								</ifthen>
+								<value>50</value> <!-- Make the integer rounded correctly -->
+							</sum>
+							<value>100</value>
+						</quotient>
+					</integer>
+					<value>100</value>
+				</product>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="autoflight/pitch/alt/error">
+			<function>
+				<difference>
+					<property>autoflight/pitch/altitude-2-sec-ahead</property>
+					<property>autoflight/pitch/alt/target</property>
+				</difference>
+			</function>
+		</fcs_function>
+		
+		<pure_gain name="autoflight/pitch/vs/target">
+			<input>autoflight/pitch/alt/error</input>
+			<gain>-4</gain>
+		</pure_gain>
+	
+	</channel>
+	
+	<channel name="Autoflight: Roll Channel">
+		
+		<fcs_function name="autoflight/roll/roll-hld-target">
+			<function>
+				<ifthen>
+					<and>
+						<eq>
+							<property>autoflight/output/roll-master</property>
+							<value>1</value>
+						</eq>
+						<eq>
+							<property>/f16/fcs/switch-roll</property>
+							<value>0</value>
+						</eq>
+						<eq>
+							<property>autoflight/ss/roll-active</property>
+							<value>0</value>
+						</eq>
+					</and>
+					<property>autoflight/roll/roll-hld-target</property>
+					<property>attitude/roll-rad</property>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<switch name="autoflight/roll/target-roll-deg">
+			<default value="/orientation/roll-deg"/>
+			<test logic="AND" value="autoflight/roll/heading/pi">
+				autoflight/output/roll-master eq 1
+				/f16/fcs/switch-roll ne 0
+			</test>
+		</switch>
+		
+		<fcs_function name="autoflight/roll/roll-cmd-target">
+			<function>
+				<ifthen>
+					<and>
+						<eq>
+							<property>autoflight/output/roll-master</property>
+							<value>1</value>
+						</eq>
+						<nq>
+							<property>/f16/fcs/switch-roll</property>
+							<value>0</value>
+						</nq>
+					</and>
+					<toradians> <!-- It's easier to tune for target degree than target radian -->
+						<property>autoflight/roll/target-roll-deg</property>
+					</toradians>
+					<property>attitude/roll-rad</property>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<switch name="autoflight/roll/roll-rad-input">
+			<default value="0"/>
+			<test logic="AND" value="autoflight/roll/roll-hld-target">
+				autoflight/output/roll-master eq 1
+				/f16/fcs/switch-roll eq 0
+			</test>
+			<test logic="AND" value="autoflight/roll/roll-cmd-target">
+				autoflight/output/roll-master eq 1
+				/f16/fcs/switch-roll ne 0
+			</test>
+		</switch>
+		
+		<fcs_function name="autoflight/roll/roll-rad-error">
+			<function>
+				<difference>
+					<property>attitude/roll-rad</property>
+					<property>autoflight/roll/roll-rad-input</property>
+				</difference>
+			</function>
+		</fcs_function>
+		
+		<pure_gain name="autoflight/roll/roll-rate-p"> <!-- Calculate optimum roll rate -->
+			<input>autoflight/roll/roll-rad-error</input>
+			<gain>-2.5</gain>
+			<clipto>
+				<min>-0.349066</min>
+				<max>0.349066</max>
+			</clipto>
+		</pure_gain>
+		
+		<fcs_function name="autoflight/roll/p-rad_sec">
+			<function>
+				<toradians>
+					<property>/orientation/roll-rate-degps</property>
+				</toradians>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="autoflight/roll/roll-rate-error">
+			<function>
+				<difference>
+					<property>autoflight/roll/p-rad_sec</property>
+					<property>autoflight/roll/roll-rate-p</property>
+				</difference>
+			</function>
+		</fcs_function>
+		
+		<switch name="autoflight/roll/p-gain">
+			<default value="0"/>
+			<test logic="AND" value="autoflight/roll/p-gain-att">
+				autoflight/output/roll-master eq 1
+			</test>
+		</switch>
+		
+		<switch name="autoflight/roll/i-gain"> 
+			<default value="0"/>
+			<test logic="AND" value="autoflight/roll/i-gain-att">
+				autoflight/output/roll-master eq 1
+			</test>
+		</switch>
+		
+		<switch name="autoflight/roll/d-gain">
+			<default value="0"/>
+			<test logic="AND" value="autoflight/roll/d-gain-att">
+				autoflight/output/roll-master eq 1
+			</test>
+		</switch>
+		
+		<switch name="autoflight/roll/trigger">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				autoflight/output/roll-master ne 1
+				autoflight/roll/master-pid le -0.348556
+				autoflight/roll/master-pid ge 0.348556
+			</test>
+		</switch>
+		
+		<pid name="autoflight/roll/master-pid-v"> <!-- Drive the FBW Rate to acheive optimum roll rate -->
+			<input>autoflight/roll/roll-rate-error</input> <!-- Using PID because 0 rate-demand doesn't always equal 0 roll rate in the F-16 -->
+			<kp>autoflight/roll/p-gain</kp>
+			<ki>autoflight/roll/i-gain</ki>
+			<kd>autoflight/roll/d-gain</kd>
+			<trigger>autoflight/roll/trigger</trigger>
+			<clipto>
+				<min>-0.349066</min>
+				<max>0.349066</max>
+			</clipto>
+			<output>autoflight/roll/master-pid</output>
+		</pid>
+		
+		<fcs_function name="autoflight/roll/roll-rate-deg">
+			<function>
+				<product>
+					<todegrees>
+						<property>autoflight/roll/master-pid</property>
+					</todegrees>
+					<value>-1</value> <!-- Rate for some reason is inverted -->
+				</product>
+			</function>
+		</fcs_function>
+		
+		<switch name="autoflight/roll/roll-rate-demand">
+			<default value="0"/>
+			<test logic="AND" value="autoflight/roll/roll-rate-deg">
+				autoflight/output/roll-master eq 1
+			</test>
+			<clipto>
+				<min>-20</min>
+				<max>20</max>
+			</clipto>
+		</switch>
+	
+	</channel>
+	
+	<channel name="Autoflight: Pitch Channel">
+		
+		<fcs_function name="autoflight/pitch/pitch-hld-target">
+			<function>
+				<ifthen>
+					<and>
+						<eq>
+							<property>autoflight/output/pitch-master</property>
+							<value>1</value>
+						</eq>
+						<eq>
+							<property>/f16/fcs/switch-pitch</property>
+							<value>-1</value>
+						</eq>
+						<eq>
+							<property>autoflight/ss/pitch-active</property>
+							<value>0</value>
+						</eq>
+					</and>
+					<property>autoflight/pitch/pitch-hld-target</property>
+					<property>attitude/pitch-rad</property>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<switch name="autoflight/pitch/target-pitch-deg">
+			<default value="/orientation/pitch-deg"/>
+			<test logic="AND" value="autoflight/pitch/vs/pid">
+				autoflight/output/pitch-master eq 1
+				/f16/fcs/switch-pitch eq 1
+			</test>
+		</switch>
+		
+		<fcs_function name="autoflight/pitch/pitch-cmd-target">
+			<function>
+				<ifthen>
+					<and>
+						<eq>
+							<property>autoflight/output/pitch-master</property>
+							<value>1</value>
+						</eq>
+						<eq>
+							<property>/f16/fcs/switch-pitch</property>
+							<value>1</value>
+						</eq>
+					</and>
+					<toradians> <!-- It's easier to tune for target degree than target radian -->
+						<property>autoflight/pitch/target-pitch-deg</property>
+					</toradians>
+					<property>attitude/pitch-rad</property>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+		<switch name="autoflight/pitch/pitch-rad-input">
+			<default value="0"/>
+			<test logic="AND" value="autoflight/pitch/pitch-hld-target">
+				autoflight/output/pitch-master eq 1
+				/f16/fcs/switch-pitch eq -1
+			</test>
+			<test logic="AND" value="autoflight/pitch/pitch-cmd-target">
+				autoflight/output/pitch-master eq 1
+				/f16/fcs/switch-pitch eq 1
+			</test>
+		</switch>
+		
+		<fcs_function name="autoflight/pitch/pitch-rad-error">
+			<function>
+				<difference>
+					<property>attitude/pitch-rad</property>
+					<property>autoflight/pitch/pitch-rad-input</property>
+				</difference>
+			</function>
+		</fcs_function>
+		
+		<pure_gain name="autoflight/pitch/pitch-rate-p"> <!-- Calculate optimum pitch rate -->
+			<input>autoflight/pitch/pitch-rad-error</input>
+			<gain>-1.5</gain>
+			<clipto>
+				<min>-0.174533</min>
+				<max>0.174533</max>
+			</clipto>
+		</pure_gain>
+		
+		<fcs_function name="autoflight/pitch/thetadot-rad_sec">
+			<function>
+				<toradians>
+					<property>/orientation/pitch-rate-degps</property>
+				</toradians>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="autoflight/pitch/pitch-rate-error">
+			<function>
+				<difference>
+					<property>autoflight/pitch/thetadot-rad_sec</property>
+					<property>autoflight/pitch/pitch-rate-p</property>
+				</difference>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="autoflight/pitch/p-gain-att">
+			<function>
+				<table>
+					<independentVar lookup="row">velocities/mach</independentVar>
+					<tableData>
+						0.2 -33
+						1.0 -55
+						2.0 -65
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<switch name="autoflight/pitch/p-gain">
+			<default value="0"/>
+			<test logic="AND" value="autoflight/pitch/p-gain-att">
+				autoflight/output/pitch-master eq 1
+			</test>
+		</switch>
+		
+		<switch name="autoflight/pitch/i-gain"> 
+			<default value="0"/>
+			<test logic="AND" value="autoflight/pitch/i-gain-att">
+				autoflight/output/pitch-master eq 1
+			</test>
+		</switch>
+		
+		<switch name="autoflight/pitch/d-gain">
+			<default value="0"/>
+			<test logic="AND" value="autoflight/pitch/d-gain-att">
+				autoflight/output/pitch-master eq 1
+			</test>
+		</switch>
+		
+		<switch name="autoflight/pitch/trigger">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				autoflight/output/pitch-master ne 1
+				autoflight/pitch/master-pid le -0.499
+				autoflight/pitch/master-pid ge 0.999
+			</test>
+		</switch>
+		
+		<pid name="autoflight/pitch/master-pid-v"> <!-- Drive the FBW G to null pitch error -->
+			<input>autoflight/pitch/pitch-rate-error</input>
+			<kp>autoflight/pitch/p-gain</kp>
+			<ki>autoflight/pitch/i-gain</ki>
+			<kd>autoflight/pitch/d-gain</kd>
+			<trigger>autoflight/pitch/trigger</trigger>
+			<clipto>
+				<min>-0.5</min> <!-- 0.5 G -->
+				<max>1.0</max> <!-- 2.0 G -->
+			</clipto>
+			<output>autoflight/pitch/master-pid</output>
+		</pid>
+		
+		<pure_gain name="autoflight/pitch/g-demand-inverted"> <!-- Invert the G command -->
+			<input>autoflight/pitch/master-pid</input>
+			<gain>-1.0</gain>
+		</pure_gain>
+		
+		<switch name="autoflight/pitch/g-demand-switched">
+			<default value="0"/>
+			<test logic="AND" value="autoflight/pitch/g-demand-inverted">
+				autoflight/output/pitch-master eq 1
+			</test>
+			<clipto>
+				<min>-1.0</min>
+				<max>0.5</max>
+			</clipto>
+		</switch>
+	
+	</channel>
+
+</system>

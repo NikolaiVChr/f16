@@ -38,10 +38,10 @@ This file selects the instrumentation modules that should be available.
 		<suction>/systems/vacuum/suction-inhg</suction>
 	</attitude-indicator>
 
-        <clock>
-        	<name>clock</name>
-        	<number>0</number>
-        </clock>
+	<clock>
+		<name>clock</name>
+		<number>0</number>
+	</clock>
 
 	<dme>
 		<name>dme</name>
@@ -115,5 +115,10 @@ This file selects the instrumentation modules that should be available.
 		<name>master-reference-gyro</name>
 		<number>0</number>
 	</master-reference-gyro>
+	
+	<gps> <!-- Used for accurate V/S indication -->
+		<name>gps</name>
+		<number>0</number>
+	</gps>
 
 </PropertyList>

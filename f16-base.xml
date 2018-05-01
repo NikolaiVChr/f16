@@ -442,6 +442,11 @@
                 <desc>Toggle smoke if installed</desc>
             </key>
         </help>
+        <systems n="0">
+            <autopilot n="0">
+                <path>Aircraft/f16/Systems/autoflight-rules.xml</path>
+            </autopilot>
+        </systems>
     </sim>
     <input>
         <keyboard>
@@ -1227,6 +1232,9 @@
         <controls>
             <file>Aircraft/f16/Nasal/f16_controls.nas</file>
         </controls>
+        <autoflight>
+            <file>Aircraft/f16/Nasal/autoflight.nas</file>
+        </autoflight>
         <f16> 
             <file>Aircraft/f16/Nasal/f16.nas</file>
             <file>Aircraft/f16/Nasal/liveries.nas</file>
