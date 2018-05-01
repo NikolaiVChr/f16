@@ -499,7 +499,7 @@ var MFD_Device =
                         az = 30;
                     elsif(az==30)
                         az = 60;
-                    elsif(az==60)
+                    else
                         az = 120;
                     setprop("instrumentation/radar/az-field", az);
                 } elsif (eventi == 3) {
@@ -510,7 +510,7 @@ var MFD_Device =
                         ho = 30;
                     elsif(ho==30)
                         ho = 60;
-                    elsif(ho==60)
+                    else
                         ho = 120;
                     setprop("instrumentation/radar/ho-field", ho);
                 }
@@ -542,7 +542,7 @@ var MFD_Device =
                 me.azt = "A2";
             } elsif (me.az==60) {
                 me.azt = "A3";
-            } elsif (me.az==120) {
+            } else {
                 me.azt = "A4";
             }
             me.root.az.setText(me.azt);
@@ -552,7 +552,7 @@ var MFD_Device =
                 me.hot = "4B";
             } elsif (me.ho==60) {
                 me.hot = "6B";
-            } elsif (me.ho==120) {
+            } else {
                 me.hot = "8B";
             }
             me.root.bars.setText(me.hot);

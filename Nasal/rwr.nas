@@ -212,23 +212,20 @@ RWRCanvas = {
         me.sortedlist = sort(list, sorter);
         me.newList = [];
         me.i = 0;
-        me.hat = 0;
-        me.newt = 0;
         me.prio = 0;
-        me.launch = 0;
         me.newsound = 0;
         me.unk = 0;
-        foreach(contact; me.sortedlist) {
-            me.typ=me.lookupType[contact[0].get_model()];
+        foreach(me.contact; me.sortedlist) {
+            me.typ=me.lookupType[me.contact[0].get_model()];
             if (me.i > me.max_icons-1) {
                 break;
             }
             if (me.typ == nil) {
-                me.typ = rwr.AIRCRAFT_UNKNOWN;
+                me.typ = me.AIRCRAFT_UNKNOWN;
                 me.unk = 1;
             }
             #print("show "~me.i~" "~me.typ~" "~contact[0].get_model()~"  "~contact[1]);
-            me.threat = contact[1];#print(me.threat);
+            me.threat = me.contact[1];#print(me.threat);
             
             if (me.threat > 0.5 and me.typ != me.AIRCRAFT_UNKNOWN and me.typ != me.AIRCRAFT_AI) {
                 me.threat = me.inner_radius;# inner circle
@@ -237,7 +234,7 @@ RWRCanvas = {
             } else {
                 continue;
             }
-            me.dev = -geo.normdeg180(contact[0].get_bearing()-getprop("orientation/heading-deg"))+90;
+            me.dev = -geo.normdeg180(me.contact[0].get_bearing()-getprop("orientation/heading-deg"))+90;
             me.x = math.cos(me.dev*D2R)*me.threat;
             me.y = -math.sin(me.dev*D2R)*me.threat;
             me.texts[me.i].setTranslation(me.x,me.y);
@@ -248,50 +245,47 @@ RWRCanvas = {
                 me.symbol_priority.show();
                 me.prio = 1;
             }
-            if (!(me.typ == me.AIRCRAFT_BUK or me.typ == me.AIRCRAFT_FRIGATE) and contact[0].get_Speed()>60) {
+            if (!(me.typ == me.AIRCRAFT_BUK or me.typ == me.AIRCRAFT_FRIGATE) and me.contact[0].get_Speed()>60) {
                 #air-borne
-                me.symbol_hat[me.hat].setTranslation(me.x,me.y);
-                me.symbol_hat[me.hat].show();
-                me.hat += 1;
+                me.symbol_hat[me.i].setTranslation(me.x,me.y);
+                me.symbol_hat[me.i].show();
+            } else {
+                me.symbol_hat[me.i].hide();
             }
-            if (contact[0].get_Callsign()==getprop("sound/rwr-launch") and 10*(me.elapsed-int(me.elapsed))>5) {#blink 2Hz
-                me.symbol_launch[me.launch].setTranslation(me.x,me.y);
-                me.symbol_launch[me.launch].show();
-                me.launch += 1;
+            if (me.contact[0].get_Callsign()==getprop("sound/rwr-launch") and 10*(me.elapsed-int(me.elapsed))>5) {#blink 2Hz
+                me.symbol_launch[me.i].setTranslation(me.x,me.y);
+                me.symbol_launch[me.i].show();
+            } else {
+                me.symbol_launch[me.i].hide();
             }
-            var popup = me.elapsed;
-            foreach(var old; me.shownList) {
-                if(old[0].getUnique()==contact[0].getUnique()) {
-                    popup = old[1];
+            me.popupNew = me.elapsed;
+            foreach(me.old; me.shownList) {
+                if(me.old[0].getUnique()==me.contact[0].getUnique()) {
+                    me.popupNew = me.old[1];
                     break;
                 }
             }
-            if (popup == me.elapsed) {
+            if (me.popupNew == me.elapsed) {
                 me.newsound = 1;
             }
-            if (popup > me.elapsed-me.fadeTime) {
-                me.symbol_new[me.newt].setTranslation(me.x,me.y);
-                me.symbol_new[me.newt].show();
-                me.symbol_new[me.newt].update();
-                me.newt += 1;
+            if (me.popupNew > me.elapsed-me.fadeTime) {
+                me.symbol_new[me.i].setTranslation(me.x,me.y);
+                me.symbol_new[me.i].show();
+                me.symbol_new[me.i].update();
+            } else {
+                me.symbol_new[me.i].hide();
             }
             #printf("display %s %d",contact[0].get_Callsign(), me.threat);
-            append(me.newList, [contact[0],popup]);
+            append(me.newList, [me.contact[0],me.popupNew]);
             me.i += 1;
         }
         me.shownList = me.newList;
         if (me.newsound == 1) setprop("sound/rwr-new", !getprop("sound/rwr-new"));
         for (;me.i<me.max_icons;me.i+=1) {
             me.texts[me.i].hide();
-        }
-        for (;me.hat<me.max_icons;me.hat+=1) {
-            me.symbol_hat[me.hat].hide();
-        }
-        for (;me.newt<me.max_icons;me.newt+=1) {
-            me.symbol_new[me.newt].hide();
-        }
-        for (;me.launch<me.max_icons;me.launch+=1) {
-            me.symbol_launch[me.launch].hide();
+            me.symbol_hat[me.i].hide();
+            me.symbol_new[me.i].hide();
+            me.symbol_launch[me.i].hide();
         }
         if (me.prio == 0) {
             me.symbol_priority.hide();
