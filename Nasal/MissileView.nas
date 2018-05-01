@@ -1,4 +1,4 @@
-print("*** LOADING MissileView.nas ... ***");
+#print("*** LOADING MissileView.nas ... ***");
 var missile_view_handler = {
   init: func(node) {
     me.viewN = node;
