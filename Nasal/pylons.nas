@@ -84,6 +84,22 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 
 	fcs = fc.FireControl.new(pylons, [9,0,8,1,7,2,6,3,5,4], ["20mm Cannon","AIM-9","AIM-120","AIM-7","AGM-65","GBU-12"]);
 
+	var aimListener = func (obj) {
+		#If auto focus on missile is activated the we call the function
+        if(getprop("/controls/armament/automissileview"))# and !getprop("payload/armament/msg")
+        {
+          view.view_firing_missile(obj);
+        } 
+    };
+    pylon1.setAIMListener(aimListener);
+    pylon2.setAIMListener(aimListener);
+    pylon3.setAIMListener(aimListener);
+    pylon4.setAIMListener(aimListener);
+    pylon5.setAIMListener(aimListener);
+    pylon6.setAIMListener(aimListener);
+    pylon7.setAIMListener(aimListener);
+    pylon8.setAIMListener(aimListener);
+    pylon9.setAIMListener(aimListener);
 
 } else {
 	# YF-16 only get wingtip aim9 dummies:

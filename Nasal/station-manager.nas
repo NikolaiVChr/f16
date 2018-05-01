@@ -29,7 +29,12 @@ var Station = {
 		p.currentName = nil;	
 		p.currentSet = nil;
 		p.myListener = nil;
+		p.AIMListener = nil;
 		return p;
+	},
+
+	setAIMListener: func (f) {
+		me.AIMListener = f;
 	},
 
 	getCategory: func {
@@ -137,6 +142,9 @@ var Station = {
 			me.calculateMass();
 			me.calculateFDM();
 			me.setGUI();
+			if (me.AIMListener != nil) {
+				me.AIMListener(me.bye);
+			}
 			return me.bye;
 		} else {
 			print("Pylon could not fire weapon, its a submodel or fuel tank, use another method.");

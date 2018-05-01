@@ -1,4 +1,4 @@
-print("*** LOADING AI_list.nas ... ***");
+#print("*** LOADING AI_list.nas ... ***");
 # Autonomous singleton class that monitors AI object,
 # maintains data in various structures, and raises signal
 # "/sim/signals/ai-updated" whenever an aircraft
@@ -51,7 +51,7 @@ var AImodel = {
         {
             #print(n.getName());
             
-            if((var valid = n.getNode("valid")) == nil or (!valid.getValue()))
+            if((var valid = n.getNode("valid")) == nil or (!valid.getValue()) or n.getNode("missile") == nil or n.getNode("missile").getValue() != 1)
             {
                 continue;
             }
