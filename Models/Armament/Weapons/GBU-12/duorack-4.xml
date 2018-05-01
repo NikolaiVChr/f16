@@ -2,7 +2,7 @@
   
 <PropertyList> 
 
-    <path>Aircraft/f16/Models/Armament/TripleRack/duorack.ac</path>
+    <path>Aircraft/f16/Models/Armament/Triplerack/duorack.ac</path>
 
     <model>
       <name>Station4_GBU12_left</name>
