@@ -55,6 +55,7 @@ var apLoop = maketimer(1, func {
 });
 
 # Burn Baby Burn
-setlistener("/sim/signals/fdm-initialized", func {
+var start = setlistener("/sim/signals/fdm-initialized", func {
 	apLoop.start();
+	removelistener(start);
 });
