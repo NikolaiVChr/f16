@@ -27,7 +27,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/fdm/jsbsim/f16/fcs/switch-roll</property>
+						<property>/f16/fcs/switch-roll</property>
 						<value>-1</value>
 					</equals>
 					<equals>
@@ -54,7 +54,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/fdm/jsbsim/f16/fcs/switch-roll</property>
+						<property>/f16/fcs/switch-roll</property>
 						<value>-1</value>
 					</equals>
 					<not-equals>
