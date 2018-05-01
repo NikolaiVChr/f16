@@ -6,7 +6,7 @@
 
 	<name>aim-120</name>
 	<path>aim-120.ac</path>
-
+<!--
 	<animation>
 		<type>select</type>
 		<object-name>aim120</object-name>
@@ -25,7 +25,7 @@
 		<object-name>mountBack</object-name>
 		<object-name>mountFront</object-name>
 		<object-name>tail</object-name>
-	</animation>
+	</animation>-->
 
 <!--	<model>
 		<path>Aircraft/JA37/Models/Armament/Weapons/RB-74/motor-smoke-0.xml</path>

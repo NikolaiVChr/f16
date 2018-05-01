@@ -11,9 +11,8 @@ Diameter 12 in (30.5 cm)
 
 	<path>AGM-65.ac</path>
 	
-	<name>hmmm</name>
 	<animation>
-  		<object-name>hmmm</object-name>
+  		<object-name>AGM-65</object-name>
   		<enable-hot type="bool">false</enable-hot>
  	</animation>
 	

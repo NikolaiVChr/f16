@@ -4,10 +4,8 @@
 
 	<path>aim-7.ac</path>
 
-	<nopreview/>
-	<name>hmmm</name>
 	<animation>
-  		<object-name>hmmm</object-name>
+  		<object-name>aim-7</object-name>
   		<enable-hot type="bool">false</enable-hot>
  	</animation>
 
