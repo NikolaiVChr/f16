@@ -6,7 +6,7 @@
   <parameters>
    <!-- functional masks -->
    <texture n="2">
-    <image>Effects/glass/canopy.png</image>
+    <image>Aircraft/f16/Models/Effects/glass/canopy.png</image>
     <type>2d</type>
     <filter>linear-mipmap-linear</filter>
     <wrap-s>clamp</wrap-s>
@@ -20,12 +20,12 @@
    <texture n="3">
     <type>cubemap</type>
     <images>
-     <positive-x>Effects/glass/cockpit-cube-front.png</positive-x>
-     <negative-x>Effects/glass/cockpit-cube-back.png</negative-x>
-     <positive-y>Effects/glass/cockpit-cube-left.png</positive-y>
-     <negative-y>Effects/glass/cockpit-cube-right.png</negative-y>
-     <positive-z>Effects/glass/cockpit-cube-up.png</positive-z>
-     <negative-z>Effects/glass/cockpit-cube-down.png</negative-z>
+     <positive-x>Aircraft/f16/Models/Effects/glass/cockpit-cube-front.png</positive-x>
+     <negative-x>Aircraft/f16/Models/Effects/glass/cockpit-cube-back.png</negative-x>
+     <positive-y>Aircraft/f16/Models/Effects/glass/cockpit-cube-left.png</positive-y>
+     <negative-y>Aircraft/f16/Models/Effects/glass/cockpit-cube-right.png</negative-y>
+     <positive-z>Aircraft/f16/Models/Effects/glass/cockpit-cube-up.png</positive-z>
+     <negative-z>Aircraft/f16/Models/Effects/glass/cockpit-cube-down.png</negative-z>
     </images>
     </texture>
     <use-reflection type="int">1</use-reflection>

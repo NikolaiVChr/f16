@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<PropertyList>
+
+  <name>glass</name>
+  <inherits-from>Effects/model-combined-transparent</inherits-from>
+  <parameters>
+    <normalmap-enabled type="int">0</normalmap-enabled>
+    <lightmap-enabled type="int">0</lightmap-enabled>
+    <reflection-enabled type="int">1</reflection-enabled>
+    <reflection-correction type="float">0.5</reflection-correction>
+    <reflect-map-enabled type="int">0</reflect-map-enabled>
+    <reflection-fresnel type="float">0.5</reflection-fresnel>
+    <reflection-rainbow type="float">0.3</reflection-rainbow>
+    <reflection-noise type="float">0.0</reflection-noise>
+    <reflection-dynamic type="int">1</reflection-dynamic>
+      <texture n= "5" >
+        <type>cubemap</type>
+        <images>
+          <positive-x>Aircraft/Generic/Effects/fgfs-sky2/1.png</positive-x>
+          <negative-x>Aircraft/Generic/Effects/fgfs-sky2/4.png</negative-x>
+          <positive-y>Aircraft/Generic/Effects/fgfs-sky2/2.png</positive-y>
+          <negative-y>Aircraft/Generic/Effects/fgfs-sky2/3.png</negative-y>
+          <positive-z>Aircraft/Generic/Effects/fgfs-sky2/6.png</positive-z>
+          <negative-z>Aircraft/Generic/Effects/fgfs-sky2/5.png</negative-z>
+        </images>
+      </texture>
+    <ambient-correction type="float">0.2</ambient-correction>
+    <rendering-hint>transparent</rendering-hint>
+    <transparent>true</transparent>
+    <render-bin>
+      <bin-number>10</bin-number>
+      <bin-name>DepthSortedBin</bin-name>
+    </render-bin>
+  </parameters>
+
+</PropertyList>
