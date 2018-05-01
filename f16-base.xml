@@ -750,9 +750,9 @@
         </keyboard>
     </input>
     <controls>
-          <armament>
-            <automissileview type="bool">true</automissileview>
-          </armament>
+        <armament>
+            <automissileview type="bool">false</automissileview><!-- for now it has to be enabled, as its not a realistic feature -->
+        </armament>
       
         <fuel>
             <qty-selector type="int">1</qty-selector>
