@@ -11,7 +11,9 @@ Range: More than 8 NM (14.8 km)
   <path>gbu12.ac</path>
 
   <animation>
-  		<object-name>hmmm</object-name>
+  		<object-name>green</object-name>
+  		<object-name>yellow</object-name>
+  		<object-name>grey</object-name>
   		<enable-hot type="bool">false</enable-hot>
  	</animation>
 
