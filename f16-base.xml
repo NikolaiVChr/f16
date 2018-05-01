@@ -228,7 +228,7 @@
                 <folder type="string">Aircraft/f16/Models/Liveries</folder>
            </livery>
         </model>
-        <chase-distance-m type="double" archive="y">-35.0</chase-distance-m>
+        <chase-distance-m type="double" archive="y">-25.0</chase-distance-m>
         <!-- original settings
           <view>
            <internal archive="y">true</internal>
@@ -1256,12 +1256,6 @@
         <f16_switches>
             <file>Aircraft/f16/Nasal/switches.nas</file>
         </f16_switches>
-        <!--<radar>
-            <file>Aircraft/Instruments-3d/radar2/radar2.nas</file>
-        </radar>
-        <radardist>
-            <file>Aircraft/Instruments-3d/radardist/radardist.nas</file>
-        </radardist>-->
         <ai>
           <file>Aircraft/f16/Nasal/AI_list.nas</file>
         </ai>
