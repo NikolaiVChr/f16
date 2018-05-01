@@ -46,9 +46,6 @@ Fabien Barbier
 - Work on stores
 - Missile view
 
-Joshua Davidson
-- Autopilot
-
 Carsten Brueggmann
 - Sound creation and editing.
 
