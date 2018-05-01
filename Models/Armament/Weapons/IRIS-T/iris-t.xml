@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+
+<!--
+Type Air-to-air missile 
+Place of origin multinational with Germany as lead 
+
+Weight 87.4 kg 
+Length 2936 mm 
+Diameter 127 mm 
+
+Launch
+platform Users: 
+ Germany: Typhoon, Tornado, F-4 
+ Greece: F-16, F-4 
+ Italy: Typhoon 
+ Norway: F-16, NASAMS 
+ Sweden: Gripen 
+ Austria: Typhoon 
+ Spain: F-18, Typhoon 
+ South Africa: Gripen 
+ Saudi Arabia: Typhoon, Tornado 
+ Thailand: Gripen, F-16 
+ -->
+
+
+  <path>iris-t.ac</path>
+
+  <animation>
+    <object-name>iris-t</object-name>
+  </animation>
+  
+ 
+
+</PropertyList>

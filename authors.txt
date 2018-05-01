@@ -48,6 +48,9 @@ Fabien Barbier
 Carsten Brueggmann
 - Sound creation and editing.
 
+FGUK
+- Used some of their GPL weapon models
+
 Alan Teeder
 - FDM consulting
 - Fixed wrong aero data for speedbrake

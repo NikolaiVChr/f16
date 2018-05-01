@@ -151,4 +151,19 @@
   <text><label>so that you easier can make minute corrections</label></text>
   <text><label>when close to the tanker.</label></text>
 
+  <hrule/>
+  
+    <group>
+    <layout>hbox</layout>
+    <text><label>Activate Auto missile view</label></text>
+    <checkbox>
+      <property>/controls/armament/automissileview</property>
+      <live>true</live>
+        <binding>
+          <command>property-toggle</command>
+          <property>/controls/armament/automissileview</property>
+        </binding>
+    </checkbox>
+  </group>
+
 </PropertyList>

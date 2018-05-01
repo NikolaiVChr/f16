@@ -21,7 +21,7 @@ var Station = {
 		p.guiID = guiID;
 		p.node_pointMass = pointmassNode;
 		p.operableFunction = operableFunction;
-		p.weapons = [];
+		p.weapons = [];#when weapons are fired/jettisoned, they turn to nil, the vector size must stay same as fire-order dictates.
 		p.changingGui = 0;
 		p.launcherDA=0;
 		p.launcherMass=0;
@@ -29,12 +29,21 @@ var Station = {
 		p.currentName = nil;	
 		p.currentSet = nil;
 		p.myListener = nil;
+		p.AIMListener = nil;
 		return p;
+	},
+
+	setAIMListener: func (f) {
+		me.AIMListener = f;
 	},
 
 	getCategory: func {
 		if (me.currentSet != nil and me.currentSet["category"] != nil) {
-			return me.currentSet["category"];
+			foreach(me.weapon ; me.weapons) {
+				if (me.weapon != nil) {
+					return me.currentSet["category"];
+				}
+			}			
 		}
 		return 1;
 	},
@@ -105,6 +114,11 @@ var Station = {
 		#this is hack to show stores locally:
 		setprop("payload/armament/station/id-"~me.id~"-type", me.singleName);
 		setprop("payload/armament/station/id-"~me.id~"-count", size(me.weapons));
+		if (me.currentSet != nil) {
+			setprop("payload/armament/station/id-"~me.id~"-set", me.currentSet.name);
+		} else {
+			setprop("payload/armament/station/id-"~me.id~"-set", "Empty");
+		}
 	},
 
 	calculateFDM: func {
@@ -128,6 +142,9 @@ var Station = {
 			me.calculateMass();
 			me.calculateFDM();
 			me.setGUI();
+			if (me.AIMListener != nil) {
+				me.AIMListener(me.bye);
+			}
 			return me.bye;
 		} else {
 			print("Pylon could not fire weapon, its a submodel or fuel tank, use another method.");
@@ -338,13 +355,15 @@ var Pylon = {
 
 	jettisonAll: func {
 		# drops everything.
+		me.tempWeapons = [];
 		foreach(me.weapon ; me.getWeapons()) {
 			if (me.weapon != nil) {
 				me.weapon.eject();
 			}
+			append(me.tempWeapons, nil);
 		}
 		me.jettisonLauncher();
-		me.weapons = [];
+		me.weapons = me.tempWeapons;
 		me.calculateMass();
 		me.calculateFDM();
 		me.setGUI();

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<PropertyList>
+  <name>missile-view-select</name>
+  <dialog-name>missile-view-select</dialog-name>
+  <x>46</x>
+  <y>33</y>
+  <layout>hbox</layout>
+  <default-padding>0</default-padding>
+
+  <nasal>
+    <open>
+      var self = cmdarg();
+      var dlg = props.globals.getNode("sim/gui/dialogs/missile-view-select", 1);
+      dlg.getNode("open", 1).setBoolValue(1);
+      var maxh = getprop("sim/startup/ysize") - 50;
+      var gui = getprop("sim/gui/current-style");
+      var baseline = getprop("/sim/gui/style[" ~ gui ~ "]/fonts/gui/baseline-height") or 21;
+      var list = cmdarg().getNode("list");
+
+      var data = view.missile_view_handler.list;
+      var height = size(data) * baseline;
+      if (height > maxh)
+        height = maxh;
+      list.getNode("pref-height").setValue(height);
+      list.removeChildren("value");
+
+      var entries = {};
+      forindex (var i; data) {
+        if (i == 0) {
+          var ident = var myself = '[' ~ data[i].callsign ~ ']';
+          list.getChild("value", size(data), 1).setValue(ident);
+        } else {
+          var ident = '"' ~ data[i].callsign ~ '"';
+          list.getChild("value", i - 1, 1).setValue(ident);
+        }
+        entries[ident] = data[i].callsign;
+      }
+
+      var select = func {
+        var e = dlg.initNode("choice", "").getValue();
+        if (e == myself or contains(view.myModel.callsign, entries[e]))
+          view.missile_view_handler.select(which: entries[e], by_callsign: 1);
+        else
+          settimer(func fgcommand("dialog-show", self), 0);
+      }
+    </open>
+
+    <close>
+      dlg.getNode("open").setValue(0);
+    </close>
+  </nasal>
+
+  <list>
+    <legend />
+    <pref-height>100</pref-height>
+    <pref-width>250</pref-width>
+    <border>0</border>
+    <property>/sim/gui/dialogs/missile-view-select/choice</property>
+    <binding>
+      <command>dialog-apply</command>
+    </binding>
+    <binding>
+      <command>nasal</command>
+      <script>select()</script>
+    </binding>
+    <binding>
+      <command>dialog-close</command>
+    </binding>
+  </list>
+
+</PropertyList>
