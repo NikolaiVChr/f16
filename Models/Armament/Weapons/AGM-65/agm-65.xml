@@ -30,6 +30,7 @@ Diameter 12 in (30.5 cm)
 
 	<animation>
   		<object-name>AGM-65</object-name>
+      <object-name>AGM-65Nose</object-name>
   		<enable-hot type="bool">false</enable-hot>
  	</animation>
 	
