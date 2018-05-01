@@ -358,6 +358,9 @@ var prop = "payload/armament/fire-control";
 var actuator_fc = compat_failure_modes.set_unserviceable(prop);
 FailureMgr.add_failure_mode(prop, "Fire control", actuator_fc);
 
+#To reload : Aircraft have to be on ground and Armament MP message have to be un-check
+
+#Air patrol configuration
 var a2a_patrol = func {
     if (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         setprop("payload/weight[0]/selected", "1 x AIM-9");
@@ -374,6 +377,7 @@ var a2a_patrol = func {
     }
 }
 
+# Air superiority configuration
 var a2a_super = func {
     if (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         setprop("payload/weight[0]/selected", "1 x AIM-9");
@@ -384,12 +388,13 @@ var a2a_super = func {
         setprop("payload/weight[5]/selected", "Empty");
         setprop("payload/weight[6]/selected", "1 x AIM-120");
         setprop("payload/weight[7]/selected", "1 x AIM-120");
-        setprop("payload/weight[8]/selected", "1 x AIM-7");
+        setprop("payload/weight[8]/selected", "1 x AIM-9");
     } else {
       screen.log.write("Please land before changing payload.");
     }
 }
 
+# Standoff configuration
 var a2a_standoff = func {
     if (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         setprop("payload/weight[0]/selected", "1 x AIM-120");
@@ -405,7 +410,7 @@ var a2a_standoff = func {
       screen.log.write("Please land before changing payload.");
     }
 }
-
+# Standart configuration for bombing : 2 2XGBU and 2 AGM65
 var a2g_standard = func {
     if (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         setprop("payload/weight[0]/selected", "1 x AIM-9");
