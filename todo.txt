@@ -14,7 +14,6 @@ Hydraulics
 ----------
 Make it depend on a failurable serviceable property.
 If there is cockpit controls for it, make them work.
-There is a hydraulic indicator on the edge of the frontpanel upper right. It should be tied to hydr systems.
 
 Electrical
 ----------
