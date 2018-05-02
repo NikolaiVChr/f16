@@ -1087,7 +1087,7 @@
                 <long-name type="string">GBU-12 Paveway II</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
                 <class type="string">GM</class>
-                <max-fire-range-nm type="double"> 14 </max-fire-range-nm>
+                <max-fire-range-nm type="double"> 8 </max-fire-range-nm>
                 <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
                 <guidance type="string">laser</guidance>
                 <navigation type="string">direct</navigation>
@@ -1103,8 +1103,8 @@
                 <weight-launch-lbs type="double"> 610 </weight-launch-lbs>
                 <weight-warhead-lbs type="double"> 190 </weight-warhead-lbs>
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
-                <drag-coeff type="double"> 0.1 </drag-coeff>
-                <cross-section-sqft type="double"> 0.19 </cross-section-sqft>
+                <drag-coeff type="double"> 0.012 </drag-coeff>
+                <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
                 <arming-time-sec type="double"> 3 </arming-time-sec>
                 <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
                 <self-destruct-time-sec type="double"> 10000 </self-destruct-time-sec>
