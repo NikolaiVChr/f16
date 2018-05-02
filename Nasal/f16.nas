@@ -367,7 +367,7 @@ var a2a_patrol = func {
         setprop("payload/weight[1]/selected", "1 x AIM-120");
         setprop("payload/weight[2]/selected", "1 x AIM-7");
         setprop("payload/weight[3]/selected", "Empty");
-        setprop("payload/weight[4]/selected", "300 Gal Fuel Tank");
+        setprop("payload/weight[4]/selected", "300 Gal Fuel tank");
         setprop("payload/weight[5]/selected", "Empty");
         setprop("payload/weight[6]/selected", "1 x AIM-7");
         setprop("payload/weight[7]/selected", "1 x AIM-120");
@@ -384,7 +384,7 @@ var a2a_super = func {
         setprop("payload/weight[1]/selected", "1 x AIM-120");
         setprop("payload/weight[2]/selected", "1 x AIM-120");
         setprop("payload/weight[3]/selected", "Empty");
-        setprop("payload/weight[4]/selected", "300 Gal Fuel Tank");
+        setprop("payload/weight[4]/selected", "300 Gal Fuel tank");
         setprop("payload/weight[5]/selected", "Empty");
         setprop("payload/weight[6]/selected", "1 x AIM-120");
         setprop("payload/weight[7]/selected", "1 x AIM-120");
@@ -400,9 +400,9 @@ var a2a_standoff = func {
         setprop("payload/weight[0]/selected", "1 x AIM-120");
         setprop("payload/weight[1]/selected", "1 x AIM-9");
         setprop("payload/weight[2]/selected", "Empty");
-        setprop("payload/weight[3]/selected", "370 Gal Fuel Tank");
+        setprop("payload/weight[3]/selected", "370 Gal Fuel tank");
         setprop("payload/weight[4]/selected", "AN/ALQ-131 ECM Pod");
-        setprop("payload/weight[5]/selected", "370 Gal Fuel Tank");
+        setprop("payload/weight[5]/selected", "370 Gal Fuel tank");
         setprop("payload/weight[6]/selected", "Empty");
         setprop("payload/weight[7]/selected", "1 x AIM-9");
         setprop("payload/weight[8]/selected", "1 x AIM-120");
