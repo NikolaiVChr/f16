@@ -23,6 +23,10 @@ Fuel
 ----
 Make fuel system
 
+JSBSim
+------
+Stop all msgs when reinit
+
 Engine
 ------
 Make manual/auto start/stop

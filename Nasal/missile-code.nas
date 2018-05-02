@@ -303,6 +303,7 @@ var AIM = {
 		m.max_g                 = getprop(m.nodeString~"max-g");                      # max G-force the missile can pull at sealevel
 		m.min_speed_for_guiding = getprop(m.nodeString~"min-speed-for-guiding-mach"); # minimum speed before the missile steers, before it reaches this speed it will fly ballistic.
 		m.intoBore              = getprop(m.nodeString~"ignore-wind-at-release");     # Boolean. If true dropped weapons will ignore sideslip and AOA and start flying in aircraft bore direction.
+		m.lateralSpeed          = getprop(m.nodeString~"lateral-dps");                # Lateral speed in degrees per second. This is mostly for cosmetics.
 		# detonation
 		m.weight_whead_lbm      = getprop(m.nodeString~"weight-warhead-lbs");         # warhead weight
 		m.arming_time           = getprop(m.nodeString~"arming-time-sec");            # time for weapon to arm
@@ -374,6 +375,10 @@ var AIM = {
         }
         if (m.intoBore == nil) {
         	m.intoBore = FALSE;
+        }
+
+        if (m.lateralSpeed == nil) {
+        	m.lateralSpeed = 0;
         }
         
         # three variables used for trigonometry hit calc:
@@ -1358,6 +1363,7 @@ var AIM = {
 		me.altN.setDoubleValue(me.alt_ft);
 		me.pitchN.setDoubleValue(me.pitch);
 		me.hdgN.setDoubleValue(me.hdg);
+		me.rollN.setDoubleValue(me.rollN.getValue()+me.lateralSpeed*me.dt);
 
 		# log missiles to unicsv for visualizing flightpath in Google Earth
 		#

@@ -1118,6 +1118,7 @@
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
                 <drop-time type="bool">3</drop-time>
                 <deploy-time type="bool">3</deploy-time>
+                <lateral-dps type="double"> 10 </lateral-dps>
             </gbu-12>
             <agm-65>                    
                     <short-name type="string">AGM65</short-name>
