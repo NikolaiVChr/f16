@@ -491,6 +491,10 @@ var MFD_Device =
                     me.ppp.selectPage(me.my.p1_1);
                 } elsif (eventi == 11) {
                     me.ppp.selectPage(me.my.p_SMS);
+                } elsif (eventi == 12) {
+                    me.ppp.selectPage(me.my.p_VSD);
+                } elsif (eventi == 5) {
+                    me.ppp.selectPage(me.my.pjitds_1);
                 } elsif (eventi == 2) {
                     var az = getprop("instrumentation/radar/az-field");
                     if(az==120)
@@ -807,6 +811,12 @@ var MFD_Device =
                     pylons.fcs.jettisonSelectedPylonContent();
                 } elsif (eventi == 12) {
                     pylons.fcs.selectPylon(4);
+                } elsif (eventi == 4) {
+                    me.ppp.selectPage(me.my.p_VSD);
+                } elsif (eventi == 15) {
+                    me.ppp.selectPage(me.my.pjitds_1);
+                } elsif (eventi == 16) {
+                    me.ppp.selectPage(me.my.p1_1);
                 }
             }
         };
@@ -1066,44 +1076,50 @@ var MFD_Device =
 # Bot: 15 16 17 18 19
         me.mfd_spin_reset_time = 0;
 
-        me.p1_1.addMenuItem(0, "ARMT", me.p1_2);
+        #me.p1_1.addMenuItem(0, "ARMT", me.p1_2);
         me.p1_1.addMenuItem(1, "VSD", me.p_VSD);
         me.p1_1.addMenuItem(2, "SIT", me.pjitds_1);
-        me.p1_1.addMenuItem(3, "WPN", me.p1_2);
-        me.p1_1.addMenuItem(4, "DTM", me.p1_2);
+        #me.p1_1.addMenuItem(3, "WPN", me.p1_2);
+        #me.p1_1.addMenuItem(4, "DTM", me.p1_2);
         me.p1_1.addMenuItem(10, "RDR", me.p_RDR);
         me.p1_1.addMenuItem(11, "SMS", me.p_SMS);
 
         me.p_RDR.addMenuItem(10, "TIM", me.p1_1);
         me.p_RDR.addMenuItem(11, "SMS", me.p_SMS);
+        me.p_RDR.addMenuItem(12, "VSD", me.p_VSD);
+        me.p_RDR.addMenuItem(5, "SIT", me.pjitds_1);
+
+        me.p_SMS.addMenuItem(15, "SIT", me.pjitds_1);
         me.p_SMS.addMenuItem(10, "RDR", me.p_RDR);
+        me.p_SMS.addMenuItem(4, "VSD", me.p_VSD);
+        me.p_SMS.addMenuItem(16, "TIM", me.p1_1);
 
         me.p1_2.addMenuItem(0, "VSD", me.p_VSD);
-        me.p1_2.addMenuItem(1, "A/A", me.p1_3);
-        me.p1_2.addMenuItem(2, "A/G", me.p1_3);
-        me.p1_2.addMenuItem(3, "CBT JETT", me.p1_3);
-        me.p1_2.addMenuItem(4, "WPN LOAD", me.p1_3);
+        #me.p1_2.addMenuItem(1, "A/A", me.p1_3);
+        #me.p1_2.addMenuItem(2, "A/G", me.p1_3);
+        #me.p1_2.addMenuItem(3, "CBT JETT", me.p1_3);
+        #me.p1_2.addMenuItem(4, "WPN LOAD", me.p1_3);
         me.p1_2.addMenuItem(9, "M", me.p1_1);
         me.p1_2.addMenuItem(10, "RDR", me.p_RDR);
 
 
         me.p1_3.addMenuItem(2, "SIT", me.pjitds_1);
-        me.p1_3.addMenuItem(3, "A/G", me.p1_3);
-        me.p1_3.addMenuItem(4, "2/2", me.p1_3);
-        me.p1_3.addMenuItem(8, "TM\nPWR", me.p1_3);
+        #me.p1_3.addMenuItem(3, "A/G", me.p1_3);
+        #me.p1_3.addMenuItem(4, "2/2", me.p1_3);
+        #me.p1_3.addMenuItem(8, "TM\nPWR", me.p1_3);
         me.p1_3.addMenuItem(9, "M", me.p1_1);
-        me.p1_3.addMenuItem(10, "PYLON", me.p1_3);
-        me.p1_3.addMenuItem(12, "FUEL", me.p1_3);
-        me.p1_3.addMenuItem(14, "PYLON", me.p1_3);
-        me.p1_3.addMenuItem(15, "MODE S", me.p1_3);
+        #me.p1_3.addMenuItem(10, "PYLON", me.p1_3);
+        #me.p1_3.addMenuItem(12, "FUEL", me.p1_3);
+        #me.p1_3.addMenuItem(14, "PYLON", me.p1_3);
+        #me.p1_3.addMenuItem(15, "MODE S", me.p1_3);
         me.p1_3.addMenuItem(10, "RDR", me.p_RDR);
 
         me.pjitds_1.addMenuItem(9, "M", me.p1_1);
-        me.pjitds_1.addMenuItem(0, "ARMT", me.p1_2);
+        #me.pjitds_1.addMenuItem(0, "ARMT", me.p1_2);
         me.pjitds_1.addMenuItem(1, "VSD", me.p_VSD);
         me.pjitds_1.addMenuItem(10, "RDR", me.p_RDR);
 
-        me.p_VSD.addMenuItem(0, "ARMT", me.p1_2);
+        #me.p_VSD.addMenuItem(0, "ARMT", me.p1_2);
         me.p_VSD.addMenuItem(1, "SIT", me.pjitds_1);
         me.p_VSD.addMenuItem(4, "M", me.p1_1);
         me.p_VSD.addMenuItem(9, "M", me.p1_1);
