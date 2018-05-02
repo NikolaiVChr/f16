@@ -16,5 +16,6 @@ Includes the following Aircraft variants:
 - F-16 Simplified  (a simpler FDM, yet still complex)
 
 The liveries you get available depends on which variant you choose to fly.
+Notice that the quality of liveries differ.
 
 Beside from that, the variants also differ in engine, FBW system and aerodynamics.

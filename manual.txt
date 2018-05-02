@@ -25,3 +25,10 @@ Notice that the RWR can sometimes pick up threat much further away than your rad
 LIVERIES
 
 The liveries you get available depends on which variant you fly.
+
+MFD
+
+page SMS: J-S will jettison the selected station. Clicking on button next to a station will select it. If CAT is greater than 1, then you should set the flightcontrols to CAT III in config menu.
+page RDR: B-scope radar display. Horizontal is relative bearing to targets, vertical is distance.
+page VSD: Vertical situation display.
+page SIT: A overview for navigation, shows route and other stuff. Once this has been shown, it will eat some framerate of your simulation.
