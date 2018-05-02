@@ -31,14 +31,15 @@ Stores
 ------
 Model conformal fuel tanks.
 Find real positions of payloads, is only approx. positions now.
-Make fired weapons visible including engine smoke.
 Prevent firing without lock?
 Add LOAL for AIM120
-Jettison
+Jettison all
+Make id-0 be id-000
 
 Damage
 ------
 Add LOAL detection capability
+Enable damage in-air but not disable. Already fired missiles should not broadcast.
 
 Radar
 -----
@@ -51,17 +52,20 @@ Make center mount less deep, so pilot get good view of MFDs and RWR.
 Make warning lights and master warning work.
 Convert flat 2D panels into 3D.
 Make controls work for STORES CONFIG and STANDBY GAINS.
-Make warning light if having cat II or III stores while in cat I setting, or opposite.
 Enable masterarm, jettison, trims, ALT FLAPS and MFD contrast/brightness.
 Enable the intensity knob on RWR.
+Enable knob for HUD focus. (above BRT knob)
 
 Sound
 -----
 Weapons hit sounds dont seem to work.
+Add remaining sounds for weapons.
+Fix that sometimes sounds randomly loop, even when they should be off. (AB and gear retract) Is missile view to blame?
 
 HUD
 ---
 Make tons of features.
+CCIP for MK82
 
 MFDs
 ----
@@ -86,8 +90,6 @@ Sort splashes so they match liveries.
 
 A/P
 ---
-Make auto-pilot system. [In progress by it0chpods]
-ctrl-s overrides autothrottle.
 
 Nasal
 -----
