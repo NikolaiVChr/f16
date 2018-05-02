@@ -966,7 +966,7 @@
             <pylon-stations>payload</pylon-stations>
             <station-name type="string">station</station-name>
             <hit-interpolation type="bool">true</hit-interpolation>
-            <one-xml-per-type type="bool">true</one-xml-per-type>            
+            <one-xml-per-type type="bool">false</one-xml-per-type>            
             <MP-lat type="string">rotors/main/blade[0]/flap-deg</MP-lat>
             <MP-lon type="string">rotors/main/blade[1]/flap-deg</MP-lon>
             <MP-alt type="string">rotors/main/blade[2]/flap-deg</MP-alt>
@@ -1116,6 +1116,8 @@
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
+                <drop-time type="bool">3</drop-time>
+                <deploy-time type="bool">3</deploy-time>
             </gbu-12>
             <agm-65>                    
                     <short-name type="string">AGM65</short-name>

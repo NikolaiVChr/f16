@@ -4,14 +4,14 @@
 
 <PropertyList>
 
-	<name>aim-9</name>
-	<path>aim-9.ac</path>
+	<name>aim-7</name>
+	<path>aim-7.ac</path>
 
 	<animation>
 		<type>select</type>
-		<object-name>aim-9</object-name>
+		<object-name>aim-7</object-name>
 		<condition>
-			<property>payload/armament/aim-9/flags/msl-id-0</property>
+			<property>payload/armament/aim-7/flags/msl-id-200</property>
 		</condition>
 	</animation>
 
@@ -23,7 +23,7 @@
 	   <lighting type="bool">false</lighting>
 
 	   <condition>
-	         <property>payload/armament/aim-9/flags/smoke-id-0</property>
+	         <property>payload/armament/aim-7/flags/smoke-id-200</property>
 	   </condition>
 
 	   <attach>world</attach>
@@ -33,10 +33,10 @@
 	   </placer>
 
 	   <offsets>
-	      <x-m>8.44</x-m>
-	      <y-m>0</y-m>
-	      <z-m>0</z-m>
-	   </offsets>
+			<x-m>8.81707</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+		</offsets>
 
 	   <shooter>
 	     <theta-min-deg>-1.5</theta-min-deg>
@@ -107,7 +107,7 @@
 
 	 </particlesystem>
 
-	 <particlesystem>
+	<particlesystem>
 	   <name>exhaust</name>
 	   <texture>../smoke.png</texture>
 
@@ -115,7 +115,7 @@
 	   <lighting type="bool">false</lighting>
 
 	   <condition>
-	         <property>payload/armament/aim-9/flags/smoke-id-0</property>
+	         <property>payload/armament/aim-7/flags/smoke-id-200</property>
 	   </condition>
 
 	   <attach>world</attach>
@@ -125,10 +125,10 @@
 	   </placer>
 
 	   <offsets>
-	      <x-m>1.44</x-m>
-	      <y-m>0</y-m>
-	      <z-m>0</z-m>
-	   </offsets>
+			<x-m>1.81707</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+		</offsets>
 
 	   <shooter>
 	     <theta-min-deg>-1.5</theta-min-deg>
@@ -197,7 +197,7 @@
 	     <wind typ="bool">     true </wind>
 	   </program>
 
-	</particlesystem>
+	 </particlesystem>
 
 	<particlesystem>
 	   <name>explosion</name>
@@ -207,7 +207,7 @@
 	   <lighting type="bool">false</lighting>
 
 	   <condition>
-	         <property>payload/armament/aim-9/flags/explode-id-0</property>
+	         <property>payload/armament/aim-7/flags/explode-id-200</property>
 	   </condition>
 
 	   <attach>world</attach>
@@ -265,7 +265,7 @@
 	         <alpha><value> 0.1 </value></alpha>
 	       </color>
 	       <size>
-	         <value>45</value>
+	         <value>65</value>
 	       </size>
 	     </end>
 
@@ -285,12 +285,6 @@
 
 	 </particlesystem>
 
-
-
-
-
-
-
 	<particlesystem>
 	   <name>explosion-smoke</name>
 	   <texture>../smoke.png</texture>
@@ -299,7 +293,7 @@
 	   <lighting type="bool">false</lighting>
 
 	   <condition>
-	         <property>payload/armament/aim-9/flags/explode-smoke-id-0</property>
+	         <property>payload/armament/aim-7/flags/explode-smoke-id-200</property>
 	   </condition>
 
 	   <attach>world</attach>
@@ -378,7 +372,7 @@
 	 </particlesystem>
 
 	<animation>
-  		<object-name>aim-9</object-name>
+  		<object-name>aim-7</object-name>
   		<enable-hot type="bool">false</enable-hot>
  	</animation>
 

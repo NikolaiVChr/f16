@@ -8,11 +8,11 @@
       <name>Station4_GBU12_left</name>
       <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/gbu12.xml</path>
       <offsets>
-        <x-m>0.0</x-m>
-        <y-m>-0.438727</y-m>
-        <z-m>-0.273185</z-m>
+        <x-m>-0.35</x-m>
+        <y-m>-0.432802</y-m>
+        <z-m>-0.231045</z-m>
         <pitch-deg>0</pitch-deg>
-        <roll-deg>0</roll-deg>
+        <roll-deg>00</roll-deg>
       </offsets>
     </model>
 
@@ -20,11 +20,11 @@
       <name>Station4_GBU12_right</name>
       <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/gbu12.xml</path>
       <offsets>
-        <x-m>0.0</x-m>
-        <y-m>0.438727</y-m>
-        <z-m>-0.273185</z-m>
+        <x-m>-0.35</x-m>
+        <y-m>0.432802</y-m>
+        <z-m>-0.231045</z-m>
         <pitch-deg>0</pitch-deg>
-        <roll-deg>0</roll-deg>
+        <roll-deg>00</roll-deg>
       </offsets>
     </model>
 

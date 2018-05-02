@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 
+<!-- this is the static non fired model on the aircraft -->
+
 <PropertyList>
 
 	<path>aim-7.ac</path>
