@@ -59,6 +59,7 @@ Make controls work for STORES CONFIG and STANDBY GAINS.
 Enable masterarm, jettison, trims, ALT FLAPS and MFD contrast/brightness.
 Enable the intensity knob on RWR.
 Enable knob for HUD focus. (above BRT knob)
+Needle RPM and nozzle sometimes hard to read, needs fixing.
 
 Sound
 -----
