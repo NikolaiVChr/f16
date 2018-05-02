@@ -559,6 +559,30 @@
             </volume>
         </aircraft-water-crash>
 
+        <nearby-explode>
+            <name>nearby-explode</name>
+            <path>Aircraft/f16/Sounds/aircraft-explode.wav</path>
+            <mode>once</mode>
+            <condition>
+                <equals>
+                    <property>damage/sounds/nearby-explode-on</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <position>
+                <x>0.01</x>
+                <y>0.01</y>
+                <z>0.01</z>
+            </position>
+            <pitch>
+                <factor>1.05</factor>
+            </pitch>
+            <volume>
+                <factor>1</factor>
+                <max>1</max>
+            </volume>
+        </nearby-explode>
+
         <aim-9-signal>
             <name>aim-9-signal</name>
             <mode>looped</mode>
@@ -615,6 +639,24 @@
                 <property>payload/armament/aim-120/sound-volume</property>
             </volume>
         </aim-120-signal>
+
+        <agm-65-signal>
+            <name>agm-65-signal</name>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/115hz-square.wav</path>
+            <condition>
+                <property>sim/current-view/internal</property>
+                <property>payload/armament/agm-65/sound-on-off</property>
+            </condition>
+            <pitch>
+                <factor>1.4</factor><!-- changes it to deep beep -->
+                <max>2</max>
+            </pitch>
+            <volume>
+                <property>payload/armament/agm-65/sound-volume</property>
+            </volume>
+        </agm-65-signal>
 
         <avionics>
             <path>Sounds/avionics-400Hz.wav</path>
