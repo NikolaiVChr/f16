@@ -4,8 +4,8 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">HRZ 140</name>
-    <texture>Liveries/Block30/CroatiaDigital.png</texture>
+    <name type="string">HRZ #140, (concept)</name>
+    <texture>Liveries/Block30/HRZ.png</texture>
     <owner type="string">HRZ</owner>
    </livery>
    <livery-logo>
