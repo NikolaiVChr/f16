@@ -112,8 +112,14 @@ var Station = {
 		me.node_pointMass.setDoubleValue(me.totalMass);
 
 		#this is hack to show stores locally:
+		me.counter = 0;
+		foreach(me.actuals;me.weapons) {
+			if (me.actual != nil) {
+				me.counter += 1;
+			}
+		}
 		setprop("payload/armament/station/id-"~me.id~"-type", me.singleName);
-		setprop("payload/armament/station/id-"~me.id~"-count", size(me.weapons));
+		setprop("payload/armament/station/id-"~me.id~"-count", me.counter);
 		if (me.currentSet != nil) {
 			setprop("payload/armament/station/id-"~me.id~"-set", me.currentSet.name);
 		} else {
