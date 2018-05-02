@@ -10,9 +10,9 @@
   <property>engines/engine[0]/oil-pressure-psi</property>
   <factor>3.3</factor>
   <center>
-   <x-m>-0.488</x-m>
-   <y-m> 0.267</y-m>
-   <z-m> 0.0</z-m>
+   <x-m>-0.48824</x-m>
+   <y-m>0.26706</y-m>
+   <z-m>0.0</z-m>
   </center>
   <axis>
    <x>0.0</x>
@@ -27,9 +27,9 @@
   <property>engines/engine[0]/nozzle-pos-norm</property>
   <factor>250.0</factor>
   <center>
-   <x-m>-0.4505</x-m>
-   <y-m> 0.2718</y-m>
-   <z-m> 0.01</z-m>
+   <x-m>-0.44984</x-m>
+   <y-m>0.27188</y-m>
+   <z-m>0.0</z-m>
   </center>
   <axis>
    <x>0.0</x>
@@ -57,9 +57,9 @@
    </entry>
   </interpolation>
   <center>
-   <x-m>-0.40</x-m>
-   <y-m> 0.275</y-m>
-   <z-m>0.01</z-m>
+   <x-m>-0.39945</x-m>
+   <y-m>0.27593</y-m>
+   <z-m>0.0</z-m>
   </center>
   <axis>
    <x>0.0</x>
@@ -92,9 +92,9 @@
    </entry>
   </interpolation>
   <center>
-   <x-m>-0.3425</x-m>
-   <y-m> 0.29</y-m>
-   <z-m>0</z-m>
+   <x-m>-0.3431</x-m>
+   <y-m>0.29056</y-m>
+   <z-m>0.0</z-m>
   </center>
   <axis>
    <x>0.0</x>
