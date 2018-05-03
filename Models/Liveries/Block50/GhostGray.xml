@@ -4,8 +4,8 @@
     <sim>
         <model>
             <livery>
-                <name type="string">USAF 568 Ghost Gray</name>
-                <texture>Liveries/Block50/af568.png</texture> 
+                <name type="string">USAF #568 "Ghost Gray" (concept)</name>
+                <texture>Liveries/Block50/GhostGray.png</texture> 
                 <owner type="string">USAF</owner>
             </livery>
             <livery-logo>

@@ -4,12 +4,12 @@
  <sim>
   <model>
    <livery>
-    <name type="string">USAF 31FW, 510FS #029</name>
-    <texture>Liveries/Block50/f16usaf.png</texture>
+    <name type="string">USAF 31FW, 510FS AV #029 "Friends of Aviano"</name>
+    <texture>Liveries/Block40/89-2029.png</texture>
     <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/Block50/890029_AV_510FS.rgb</texture>
+    <texture>Liveries/Block40/89-2029.rgb</texture>
    </livery-logo>
   </model>
  </sim>
