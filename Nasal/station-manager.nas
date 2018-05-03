@@ -114,7 +114,7 @@ var Station = {
 		#this is hack to show stores locally:
 		me.counter = 0;
 		foreach(me.actuals;me.weapons) {
-			if (me.actual != nil) {
+			if (me.actuals != nil) {
 				me.counter += 1;
 			}
 		}
