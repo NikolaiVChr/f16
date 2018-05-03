@@ -103,6 +103,7 @@ This file selects the instrumentation modules that should be available.
 
 	<radar>
 		<name>radar</name>
+		<debug-mode type="bool">true</debug-mode>
 		<number>0</number>
 	</radar>
 
