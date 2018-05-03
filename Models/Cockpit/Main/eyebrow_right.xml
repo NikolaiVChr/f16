@@ -8,16 +8,18 @@
   <type>select</type>
   <object-name>canopy</object-name>
   <condition>
+    <or>
    <greater-than>
     <property>fdm/jsbsim/fcs/canopy-pos-norm</property>
     <value>0.0</value>
    </greater-than>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
   </condition>
  </animation>
 
  <animation>
   <type>select</type>
-  <object-name>engine</object-name>
   <object-name>eng_fire</object-name>
   <object-name>flcs</object-name>
   <object-name>dbu_on</object-name>
@@ -26,6 +28,17 @@
   <condition>
     <or>
     <property>/tmp/nill</property>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+ </animation>
+
+  <animation>
+  <type>select</type>
+  <object-name>engine</object-name>
+  <condition>
+    <or>
+    <not><property>engines/engine[0]/running</property></not>
     <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
