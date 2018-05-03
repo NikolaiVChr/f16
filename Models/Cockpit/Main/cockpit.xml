@@ -447,7 +447,7 @@
   <object-name>ar_nws</object-name>
   <condition>
     <or>
-    </and>    
+    <and>    
       <property>/systems/refuel/contact</property>
       <property>/systems/refuel/serviceable</property>
     </and>
