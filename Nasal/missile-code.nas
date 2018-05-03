@@ -3446,49 +3446,49 @@ var AIM = {
 
 	printFlight: func {
 		if (DEBUG_FLIGHT) {
-			call(sprintf,arg);
+			call(printf,arg, var err = []);
 		}
 	},
 
 	printFlightDetails: func {
 		if (DEBUG_FLIGHT_DETAILS) {
-			call(sprintf,arg);
+			call(printf,arg);
 		}
 	},
 
 	printStats: func {
 		if (DEBUG_STATS) {
-			call(sprintf,arg);
+			call(printf,arg, var err = []);
 		}
 	},
 
 	printStatsDetails: func {
 		if (DEBUG_STATS_DETAILS) {
-			call(sprintf,arg);
+			call(printf,arg);
 		}
 	},
 
 	printGuide: func {
 		if (DEBUG_GUIDANCE) {
-			call(sprintf,arg);
+			call(printf,arg);
 		}
 	},
 
 	printGuideDetails: func {
 		if (DEBUG_GUIDANCE_DETAILS) {
-			call(sprintf,arg);
+			call(printf,arg);
 		}
 	},
 
 	printCode: func {
 		if (DEBUG_CODE) {
-			call(sprintf,arg);
+			call(printf,arg);
 		}
 	},
 
 	printSearch: func {
 		if (DEBUG_SEARCH) {
-			call(sprintf,arg);
+			call(printf,arg);
 		}
 	},
 
