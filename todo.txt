@@ -43,7 +43,7 @@ Make id-0 be id-000, hmm not sure this is smart, not backwards compatible.
 Damage
 ------
 Add LOAL detection capability
-Enable damage in-air but not disable. Already fired missiles should not broadcast.
+Enable damage in-air but not disable. Already fired missiles should not broadcast. Problem people can suddenly turn it on and as surprise begin firing.
 
 Radar
 -----
@@ -59,13 +59,11 @@ Make controls work for STORES CONFIG and STANDBY GAINS.
 Enable masterarm, jettison, trims, ALT FLAPS and MFD contrast/brightness.
 Enable the intensity knob on RWR.
 Enable knob for HUD focus. (above BRT knob)
-Needle RPM and nozzle sometimes hard to read, needs fixing.
 
 Sound
 -----
-Weapons hit sounds might not to work.
+Weapons hit sounds might not work.
 Add remaining sounds for weapons.
-Fix that sometimes sounds randomly loop, even when they should be off. (AB and gear retract) Is missile view to blame?
 
 HUD
 ---
