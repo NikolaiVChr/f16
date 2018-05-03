@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- General Dynamics F-16 Autoflight System -->
+<!-- (c) 2018 Joshua Davidson (it0uchpods) -->
+
+<PropertyList>
+
+	<name>autopilot-help</name>
+	<layout>vbox</layout>
+
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>F-16 Autoflight System Help</label>
+		</text>
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+	
+	<hrule/>
+	
+	<group>
+		<layout>vbox</layout>
+		
+		<text>
+			<halign>left</halign>
+			<label>How to use the F-16 Autoflight System</label>
+		</text>
+		
+		<hrule/>
+		
+		<text>
+			<halign>left</halign>
+			<label>General:</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>Both the roll and pitch axis in the autopilot are enabled when</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>the pitch switch is out of the A/P OFF position.</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>If the stick is moved, the entire autopilot will disconnect,</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>and connect again when the stick is returned to neutral.</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>This ensures that the pilot can override the autopilot if needed.</label>
+		</text>
+		
+		<hrule/>
+		
+		<text>
+			<halign>left</halign>
+			<label>Roll:</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>HDG SEL: Holds the current heading</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>ATT HOLD: Holds the current roll</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>STRG SEL: Follow Route Manager</label>
+		</text>
+		
+		<hrule/>
+		
+		<text>
+			<halign>left</halign>
+			<label>Pitch:</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>ALT HOLD: Holds the current altitude</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>A/P OFF: Switch the autopilot off</label>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>ATT HOLD: Holds the current pitch</label>
+		</text>
+		
+	</group>
+
+</PropertyList>
