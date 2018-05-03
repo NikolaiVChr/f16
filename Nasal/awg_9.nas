@@ -918,7 +918,7 @@ var Target = {
 		return n;	},
 	get_bearing: func(){
         var n = nil;
-        if (me.Bearing != nil) {
+        if (me.Bearing != nil and me.Bearing.getValue() != 0) {# will always be 0 for AI carriers
             n = me.Bearing.getValue();
         }
         if(n == nil) {
@@ -928,10 +928,9 @@ var Target = {
         return n;
     },
     get_bearing_from_Coord: func(MyAircraftCoord){
-        me.get_Coord();
         var myBearing = 0;
-        if(me.coord.is_defined()) {
-            myBearing = MyAircraftCoord.course_to(me.coord);
+        if(me.get_Coord().is_defined()) {
+            myBearing = MyAircraftCoord.course_to(me.get_Coord());
         }
         return myBearing;
     },
@@ -969,7 +968,7 @@ var Target = {
 
                 var tgt_pos = geo.Coord.new().set_xyz(x, y, z);
 #                print("Recalc range - ",tgt_pos.distance_to(geo.aircraft_position()));
-                return tgt_pos.distance_to(geo.aircraft_position()) * 0.000539957; # distance in NM
+                return tgt_pos.distance_to(geo.aircraft_position()) * M2NM; # distance in NM
             }
             if (me.Range != nil)
                 return me.Range.getValue();
