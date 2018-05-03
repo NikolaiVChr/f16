@@ -1,20 +1,21 @@
 <?xml version="1.0"?>
 
 <PropertyList>
-<!--
-Type Anti-ship missile 
-Place of origin  United States 
 
-Weight 1,523 lb (691 kg) with booster 
-Length Air launched: 12.6 ft (3.8 m); Surface and submarine launched: 15 ft (4.6 m) 
-Diameter 1.1 ft (0.34 m) 
-
-Launch
-platform multi-platform: 
--->
+<!-- this is the static non fired model on the aircraft -->
 
 	<path>agm84.ac</path>
 	
-	
+	<effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.0</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <object-name>Obj_000001_mat0</object-name>
+  </effect>
 	
 </PropertyList>

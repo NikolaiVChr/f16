@@ -1,10 +1,11 @@
 AC3Db
 MATERIAL "DefaultWhite" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.5 0.5 0.5  shi 64  trans 0
-MATERIAL "mat0" rgb 1 1 1 amb 0.5 0.5 0.5 emis 0 0 0 spec 1 1 1 shi 32 trans 0
+MATERIAL "mat0" rgb 1 1 1 amb 0.9 0.9 0.9 emis 0 0 0 spec 0.5 0.5 0.5 shi 64 trans 0
 OBJECT world
 kids 1
 OBJECT poly
 name "Obj_000001_mat0"
+texture "agm84.png"
 data 15
 Obj_000001_mat0
 crease 30.000000
