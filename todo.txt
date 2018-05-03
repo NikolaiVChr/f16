@@ -39,6 +39,8 @@ Prevent firing without lock?
 Add LOAL for AIM120
 Jettison all
 Make id-0 be id-000, hmm not sure this is smart, not backwards compatible.
+Make sure jettison works on fuel
+Make sure quick select, fill up fuel in droptanks
 
 Damage
 ------

@@ -46,7 +46,7 @@
       <legend>Mount</legend>
       <binding>
           <command>nasal</command>
-          <script>f16.a2a_patrol();</script>
+          <script>pylons.a2a_patrol();</script>
       </binding>
     </button>
   </group>
@@ -60,7 +60,7 @@
       <legend>Mount</legend>
       <binding>
           <command>nasal</command>
-          <script>f16.a2a_super();</script>
+          <script>pylons.a2a_super();</script>
       </binding>
     </button>
   </group>
@@ -74,7 +74,7 @@
       <legend>Mount</legend>
       <binding>
           <command>nasal</command>
-          <script>f16.a2a_standoff();</script>
+          <script>pylons.a2a_standoff();</script>
       </binding>
     </button>
   </group>
@@ -88,7 +88,7 @@
       <legend>Mount</legend>
       <binding>
           <command>nasal</command>
-          <script>f16.a2g_standard();</script>
+          <script>pylons.a2g_standard();</script>
       </binding>
     </button>
   </group>
