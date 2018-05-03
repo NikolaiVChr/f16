@@ -38,7 +38,7 @@ Find real positions of payloads, is only approx. positions now.
 Prevent firing without lock?
 Add LOAL for AIM120
 Jettison all
-Make id-0 be id-000
+Make id-0 be id-000, hmm not sure this is smart, not backwards compatible.
 
 Damage
 ------
@@ -63,7 +63,7 @@ Needle RPM and nozzle sometimes hard to read, needs fixing.
 
 Sound
 -----
-Weapons hit sounds dont seem to work.
+Weapons hit sounds might not to work.
 Add remaining sounds for weapons.
 Fix that sometimes sounds randomly loop, even when they should be off. (AB and gear retract) Is missile view to blame?
 
@@ -90,7 +90,6 @@ Flight controls
 
 GUI
 ---
-GUI text when MPO
 Sort splashes so they match liveries.
 
 A/P

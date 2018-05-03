@@ -2,6 +2,8 @@ LANDING
 
 No fixed landing speed, however keep a AoA of 11 to 13 in final.
 
+
+
 RWR
 
 The round display above left MFD display is a Radar Warning Reciever.
@@ -22,9 +24,13 @@ For something to show up in the RWR at all these conditions must be met:
 
 Notice that the RWR can sometimes pick up threat much further away than your radar is capable off.
 
+
+
 LIVERIES
 
 The liveries you get available depends on which variant you fly.
+
+
 
 MFD
 
@@ -32,3 +38,18 @@ page SMS: J-S will jettison the selected station. Clicking on button next to a s
 page RDR: B-scope radar display. Horizontal is relative bearing to targets, vertical is distance.
 page VSD: Vertical situation display.
 page SIT: A overview for navigation, shows route and other stuff. Once this has been shown, it will eat some framerate of your simulation.
+
+
+
+AUTOPILOT
+
+Notice that even when A/P is enabled you can control the airplane with the stick. When you let go of stick A/P will recalculate current from current situation.
+
+The controls:
+
+pitch A/P OFF:  Disable autopilot for both roll and pitch.
+      ALT HOLD: Keep current altitude.
+      ATT HOLD: Keep current pitch attitude.
+roll  HDG SEL:  Keep current heading
+      ATT HOLD: Keep current bank angle
+      STRG SEL: Follow route from route-manager.      
