@@ -47,11 +47,18 @@
 			<c1>25.6</c1>
 		</lag_filter>
 		
-		<switch name="autoflight/ss/roll-force">
+		<lag_filter name="autoflight/ss/pitch-input">
+			<input>fcs/fly-by-wire/pitch/stick-force-lbf</input>
+			<c1>25.6</c1>
+		</lag_filter>
+		
+		<switch name="autoflight/ss/roll-force"> <!-- Because we think both axis disconnect at once -->
 			<default value="0"/>
 			<test logic="OR" value="1">
 				autoflight/ss/roll-input gt 1
 				autoflight/ss/roll-input lt -1
+				autoflight/ss/pitch-input gt 1
+				autoflight/ss/pitch-input lt -1
 			</test>
 		</switch>
 		
@@ -74,14 +81,11 @@
 			</test>
 		</switch>
 		
-		<lag_filter name="autoflight/ss/pitch-input">
-			<input>fcs/fly-by-wire/pitch/stick-force-lbf</input>
-			<c1>25.6</c1>
-		</lag_filter>
-		
-		<switch name="autoflight/ss/pitch-force">
+		<switch name="autoflight/ss/pitch-force"> <!-- Because we think both axis disconnect at once -->
 			<default value="0"/>
 			<test logic="OR" value="1">
+				autoflight/ss/roll-input gt 1
+				autoflight/ss/roll-input lt -1
 				autoflight/ss/pitch-input gt 1
 				autoflight/ss/pitch-input lt -1
 			</test>
