@@ -447,7 +447,10 @@
   <object-name>ar_nws</object-name>
   <condition>
     <or>
-    <property>/systems/refuel/contact</property>
+    </and>    
+      <property>/systems/refuel/contact</property>
+      <property>/systems/refuel/serviceable</property>
+    </and>
     <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
@@ -458,8 +461,11 @@
   <object-name>disc</object-name>
   <condition>
     <or>
-    <not><property>/systems/refuel/contact</property></not>
-    <property>controls/test/test-panel/mal-ind-lts</property>
+      <and>
+        <not><property>/systems/refuel/contact</property></not>
+        <property>/systems/refuel/serviceable</property>
+      </and>
+      <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
  </animation>
