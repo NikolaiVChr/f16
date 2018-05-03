@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- General Dynamics F-16 Autoflight System -->
+<!-- (c) 2018 Joshua Davidson (it0uchpods) -->
+
+<PropertyList>
+
+	<name>controlPanel</name>
+	<layout>vbox</layout>
+
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>F-16 Control Panel</label>
+		</text>
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+	
+	<hrule/>
+	
+	<group>
+		<layout>vbox</layout>
+		
+		<text>
+			<label>A/P</label>
+		</text>
+		<group>
+			<layout>hbox</layout>
+			
+			<group>
+				<layout>vbox</layout>
+				
+				<text>
+					<label>ROLL      </label>
+				</text>
+				
+				<group>
+					<layout>hbox</layout>
+				
+					<group>
+						<layout>vbox</layout>
+						<halign>left</halign>
+						
+						<text>
+							<label>HDG SEL</label>
+						</text>
+						<text>
+							<label>ATT HOLD</label>
+						</text>
+						<text>
+							<label>STRG SEL</label>
+						</text>
+						
+					</group>
+					
+					<slider>
+						<halign>left</halign>
+						<property>/f16/fcs/switch-roll</property>
+						<min>-1</min>
+						<max>1</max>
+						<step>1</step>
+						<live>true</live>
+						<vertical>true</vertical>
+						<binding>
+							<command>dialog-apply</command>
+						</binding>
+					</slider>
+					
+				</group>
+			
+			</group>
+			
+			<vrule/>
+			
+			<group>
+				<layout>vbox</layout>
+				
+				<text>
+					<label>PITCH      </label>
+				</text>
+				
+				<group>
+					<layout>hbox</layout>
+			
+					<group>
+						<layout>vbox</layout>
+						<halign>left</halign>
+						
+						<text>
+							<label>ALT HOLD</label>
+						</text>
+						<text>
+							<label>A/P OFF</label>
+						</text>
+						<text>
+							<label>ATT HOLD</label>
+						</text>
+						
+					</group>
+					
+					<slider>
+						<halign>left</halign>
+						<property>/f16/fcs/switch-pitch</property>
+						<min>-1</min>
+						<max>1</max>
+						<step>1</step>
+						<live>true</live>
+						<vertical>true</vertical>
+						<binding>
+							<command>dialog-apply</command>
+						</binding>
+					</slider>
+					
+				</group>
+			
+			</group>
+
+		</group>
+
+		<vrule/>
+
+		<group>
+			<layout>vbox</layout>
+			
+			<text>
+				<label>INSTR LIGHTS</label>
+			</text>
+			
+			<group>
+				<layout>hbox</layout>
+		
+				<group>
+					<layout>vbox</layout>
+					<halign>left</halign>
+					
+					<text>
+						<label>FULL</label>
+					</text>
+					<text>
+						<label>OFF</label>
+					</text>
+					
+				</group>
+				
+				<slider>
+					<halign>left</halign>
+					<property>controls/lighting/lighting-panel/pri-inst-pnl</property>
+					<min>0</min>
+					<max>1</max>
+					<step>0.1</step>
+					<live>true</live>
+					<vertical>true</vertical>
+					<binding>
+						<command>dialog-apply</command>
+					</binding>
+				</slider>
+				
+			</group>
+		
+		</group>
+
+		<vrule/>
+
+		<group>
+			<layout>vbox</layout>
+			
+			<text>
+				<label>EXT LIGHTS</label>
+			</text>
+			
+<!--			<group>
+				<layout>hbox</layout>
+		
+				<group>
+					<layout>vbox</layout>
+					<halign>left</halign>
+					
+					<text>
+						<label>FORM ON</label>
+					</text>
+					<text>
+						<label>FORM OFF</label>
+					</text>
+					
+				</group>
+				
+				<slider>
+					<halign>left</halign>
+					<property>controls/lighting/ext-lighting-panel/form-knob</property>
+					<min>0</min>
+					<max>1</max>
+					<step>0.1</step>
+					<live>true</live>
+					<vertical>true</vertical>
+					<binding>
+						<command>dialog-apply</command>
+					</binding>
+				</slider>
+				
+			</group>
+			
+			<group>
+				<layout>hbox</layout>
+		
+				<group>
+					<layout>vbox</layout>
+					<halign>left</halign>
+					
+					<text>
+						<label>AR ON</label>
+					</text>
+					<text>
+						<label>AR OFF</label>
+					</text>
+					
+				</group>
+				
+				<slider>
+					<halign>left</halign>
+					<property>controls/lighting/ext-lighting-panel/ar-knob</property>
+					<min>0</min>
+					<max>1</max>
+					<step>0.1</step>
+					<live>true</live>
+					<vertical>true</vertical>
+					<binding>
+						<command>dialog-apply</command>
+					</binding>
+				</slider>
+				
+			</group>-->
+
+			<group>
+			    <layout>vbox</layout>
+
+				<group>
+				    <layout>hbox</layout>
+				    <checkbox>
+					    <property>controls/lighting/ext-lighting-panel/master</property>
+					    <live>true</live>
+					    <binding>
+							<command>nasal</command>
+							<script>
+							f16_switches.toggleMaster();
+							</script>
+				      	</binding>
+				    </checkbox>
+				    <text><label>MASTER</label></text>
+				</group>
+<!--				<group>
+				    <layout>hbox</layout>
+				    <checkbox>
+					    <property>controls/lighting/ext-lighting-panel/anti-collision</property>
+					    <live>true</live>
+					    <binding>
+							<command>nasal</command>
+							<script>
+							f16.toggleAntiCollision();
+							</script>
+				      	</binding>
+				    </checkbox>
+				    <text><label>ANTI COL</label></text>
+				</group>
+				<group>
+				    <layout>hbox</layout>
+				    <checkbox>
+					    <property>controls/lighting/ext-lighting-panel/pos-lights-flash</property>
+					    <live>true</live>
+					    <binding>
+							<command>nasal</command>
+							<script>
+							f16.togglePosLightsFlash();
+							</script>
+				      	</binding>
+				    </checkbox>
+				    <text><label>POS FLASH</label></text>
+				</group>
+				<group>
+				    <layout>hbox</layout>
+				    <checkbox>
+					    <property>controls/lighting/ext-lighting-panel/wing-tail</property>
+					    <live>true</live>
+					    <binding>
+							<command>nasal</command>
+							<script>
+							f16.toggleWingTailUp();
+							</script>
+				      	</binding>
+				    </checkbox>
+				    <text><label>WING-TAIL</label></text>
+				</group>
+				<group>
+				    <layout>hbox</layout>
+				    <checkbox>
+					    <property>controls/lighting/ext-lighting-panel/fuselage</property>
+					    <live>true</live>
+					    <binding>
+							<command>nasal</command>
+							<script>
+							setprop("controls/lighting/ext-lighting-panel/fuselage", !getprop("controls/lighting/ext-lighting-panel/fuselage"));
+							</script>
+				      	</binding>
+				    </checkbox>
+				    <text><label>FUSELAGE</label></text>
+				</group>-->
+
+			</group>
+
+		</group>
+		
+	</group>
+
+	<group>
+		<layout>vbox</layout>
+
+		<text><label>FLIGHT</label></text>
+
+		<group>
+		    <layout>hbox</layout>
+		    <checkbox>
+			    <property>controls/flight/flaps</property>
+			    <live>true</live>
+			    <binding>
+					<command>nasal</command>
+					<script>
+						setprop("controls/flight/flaps", !getprop("controls/flight/flaps"));
+					</script>
+		      	</binding>
+		    </checkbox>
+		    <text><label>ALT FLAPS</label></text>
+		</group>
+
+		<!--<group>
+		    <layout>hbox</layout>
+		    <checkbox>
+			    <property>controls/flight/flaps</property>
+			    <live>true</live>
+			    <binding>
+					<command>nasal</command>
+					<script>
+						setprop("controls/flight/flaps", !getprop("controls/flight/flaps"));
+					</script>
+		      	</binding>
+		    </checkbox>
+		    <text><label>MPO</label></text>
+		</group>-->
+
+	</group>
+
+</PropertyList>

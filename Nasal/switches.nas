@@ -356,7 +356,7 @@ var cutoff = props.globals.getNode("controls/engines/engine/cutoff");
  }
 
 # =====================
-# Aces II Ejection seat
+# F16 Ejection seat
 # =====================
 
 var ejectionSafetyLever = props.globals.getNode("controls/seat/ejection-safety-lever");

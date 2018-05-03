@@ -4,7 +4,7 @@ var TRUE = 1;
 var FALSE = 0;
 
 # strobes ===========================================================
-var strobe_switch = props.globals.getNode("controls/lighting/ext-lighting-panel/anti-collision", 1);
+var strobe_switch = props.globals.getNode("controls/lighting/ext-lighting-panel/anti-collision2", 1);
 aircraft.light.new("sim/model/lighting/strobe", [0.03, 1.9+rand()/5], strobe_switch);
 
 var cockpit_blink = props.globals.getNode("f16/avionics/cockpit_blink", 1);
@@ -254,6 +254,12 @@ var medium = {
       } else {
         setprop("f16/stores-cat", 1);
       }
+
+    if (getprop("controls/lighting/ext-lighting-panel/anti-collision") == 1 and getprop("controls/lighting/ext-lighting-panel/master") == 1) {
+      setprop("controls/lighting/ext-lighting-panel/anti-collision2",1);
+    } else {
+      setprop("controls/lighting/ext-lighting-panel/anti-collision2",0);
+    }
     settimer(func {me.loop()},0.5);
   },
 };

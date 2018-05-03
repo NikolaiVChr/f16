@@ -314,6 +314,14 @@
                         </binding>
                     </item>
                     <item>
+                        <label>Controlpanel</label>
+                        <name>controlPanel</name>
+                        <binding>
+                          <command>dialog-show</command>
+                          <dialog-name>controlPanel</dialog-name>
+                        </binding>
+                      </item>
+                    <item>
                         <label>Config</label>
                         <name>f16config</name>
                         <binding>
@@ -783,6 +791,7 @@
             <ext-lighting-panel>
                 <master type="bool">true</master>
                 <anti-collision type="bool">true</anti-collision>
+                <anti-collision2 type="bool">true</anti-collision2>
                 <pos-lights-flash type="bool">true</pos-lights-flash>
                 <wing-tail type="int">2</wing-tail>
                 <fuselage type="int">2</fuselage>
@@ -790,7 +799,7 @@
                 <ar-knob type="double">1</ar-knob>
             </ext-lighting-panel>
             <lighting-panel>
-                <pri-inst-pnl type="double">0</pri-inst-pnl>
+                <pri-inst-pnl type="double">0.2</pri-inst-pnl>
                 <flood-inst-pnl type="double">0</flood-inst-pnl>
             </lighting-panel>
         </lighting>
