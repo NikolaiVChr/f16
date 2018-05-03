@@ -39,8 +39,7 @@ Prevent firing without lock?
 Add LOAL for AIM120
 Jettison all
 Make id-0 be id-000, hmm not sure this is smart, not backwards compatible.
-Make sure jettison works on fuel
-Make sure quick select, fill up fuel in droptanks
+Should auto missile view work for jettisoned stores as well?
 
 Damage
 ------
@@ -94,6 +93,11 @@ Sort splashes so they match liveries.
 
 A/P
 ---
+
+Walker
+------
+It can only walk backwards
+Other issues as well
 
 Nasal
 -----

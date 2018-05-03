@@ -128,6 +128,14 @@ var FireControl = {
 		return me.pylons[me.selected[0]];
 	},
 
+	isLock: func {
+		me.wpn = me.getSelectedWeapon();
+		if (me.wpn != nil and me.wpn.parents[0] == armament.AIM and me.wpn.status==armament.MISSILE_LOCK) {
+			return 1;
+		}
+		return 0;
+	},
+
 	jettisonSelectedPylonContent: func {
 		if (me.selected == nil) {
 			print("Nothing to jettison");

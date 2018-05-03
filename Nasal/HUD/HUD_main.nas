@@ -440,6 +440,11 @@ var F16_HUD = {
                             {
                                 me.target_locked.setVisible(1);
                                 me.target_locked.setTranslation (me.xc, me.yc);
+                                if (pylons.fcs.isLock()) {
+                                    me.target_locked.setRotation(45*D2R);
+                                } else {
+                                    me.target_locked.setRotation(0);
+                                }
                             }
                             else
                             {
