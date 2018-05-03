@@ -121,7 +121,10 @@ var az_scan = func(fcount) {
     if (rwrs.rwr != nil) {
             rwrs.rwr.update(rwrList);
     }
-    if (doRWR) return;
+    if (doRWR) {
+        selectCheck();# for it to be responsive have to do this more often than running radar code.
+        return;
+    }
     var az_fld            = AzField.getValue();
     l_az_fld = - az_fld / 2;
     r_az_fld = az_fld / 2;
@@ -303,6 +306,19 @@ var az_scan = func(fcount) {
 	}
 
 #    print("2:nearest u set  ",active_u_callsign);
+    selectCheck();
+
+    cnt += 0.05;
+
+    if (!containsV(tgts_list, active_u)) {
+        active_u = nil;
+        armament.contact = active_u;
+        #active_u_callsign = nil;
+    }
+    RWR_APG.run();
+}
+
+var selectCheck = func {
     var tgt_cmd = getprop("sim/model/f16/instrumentation/radar-awg-9/select-target");
     setprop("sim/model/f16/instrumentation/radar-awg-9/select-target",0);
     if (tgt_cmd != nil)
@@ -410,15 +426,6 @@ var az_scan = func(fcount) {
         }
         awg_9.sel_next_target =0;
     }
-
-    cnt += 0.05;
-
-    if (!containsV(tgts_list, active_u)) {
-        active_u = nil;
-        armament.contact = active_u;
-        #active_u_callsign = nil;
-    }
-    RWR_APG.run();
 }
 
 setprop("sim/mul"~"tiplay/gen"~"eric/strin"~"g[14]", "op"~"r"~"f16");
