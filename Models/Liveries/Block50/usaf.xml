@@ -5,11 +5,11 @@
   <model>
    <livery>
     <name type="string">USAF 31FW, 510FS #029</name>
-    <texture>Liveries/usaf/f16usaf.png</texture>
+    <texture>Liveries/Block50/f16usaf.png</texture>
     <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/usaf/890029_AV_510FS.rgb</texture>
+    <texture>Liveries/Block50/890029_AV_510FS.rgb</texture>
    </livery-logo>
   </model>
  </sim>

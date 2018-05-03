@@ -5,7 +5,7 @@
         <model>
             <livery>
                 <name type="string">USAF 568 Ghost Gray</name>
-                <texture>Liveries/ghost/af568.png</texture> 
+                <texture>Liveries/Block50/af568.png</texture> 
                 <owner type="string">USAF</owner>
             </livery>
             <livery-logo>
