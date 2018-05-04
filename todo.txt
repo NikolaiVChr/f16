@@ -22,6 +22,7 @@ Make electrical system
 Fuel
 ----
 Make fuel system
+Check priorities.
 
 JSBSim
 ------
@@ -40,6 +41,7 @@ Add LOAL for AIM120
 Jettison all
 Make id-0 be id-000, hmm not sure this is smart, not backwards compatible.
 Should auto missile view work for jettisoned stores as well?
+More gun tracers.
 
 Damage
 ------

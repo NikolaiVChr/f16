@@ -328,8 +328,10 @@ var Pylon = {
 	getCurrentShortName: func {
 		me.nameS = "";
 		if (me.currentSet.showLongTypeInsteadOfCount) {
-			if (size(me.weapons) > 0) {
-				me.nameS = me.weapons[0].typeShort;
+			foreach(me.wapny;me.weapons) {
+				if (me.wapny != nil) {
+					me.nameS = me.wapny.typeShort;
+				}
 			}
 		} else {
 			me.calcName = {};
