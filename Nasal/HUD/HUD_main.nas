@@ -445,13 +445,11 @@ var F16_HUD = {
                             me.devs = me.develev_to_devroll(hdp, me.u_dev_rad, me.u_elev_rad);
                             me.combined_dev_deg = me.devs[0];
                             me.combined_dev_length =  me.devs[1];
-                            me.clamped = me.devs[2];
+                            #me.clamped = me.devs[2];
                             me.yc = ht_yco + (ht_ycf * me.combined_dev_length * math.cos(me.combined_dev_deg*D2R));
                             me.xc = ht_xco + (ht_xcf * me.combined_dev_length * math.sin(me.combined_dev_deg*D2R));
-                            if(me.devs[2])
-                                me.tgt.setVisible(1);#getprop("sim/model/f16/lighting/hud-diamond-switch/state"));
-                            else
-                                me.tgt.setVisible(1);
+
+                            me.clamped = me.yc > me.sy*0.5 or me.yc < -me.sy*0.5 or me.xc > me.sx *0.5 or me.xc < -me.sx*0.5;# outside HUD
 
                             if (awg_9.active_u != nil and awg_9.active_u.Callsign != nil and me.u.Callsign != nil and me.u.Callsign.getValue() == awg_9.active_u.Callsign.getValue())
                             {
