@@ -102,6 +102,197 @@ var FireControl = {
 		screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 	},
 
+	_isSelectedWeapon: func {
+		# tests if current selection is a fireable weapon
+		if (me.selectedType != nil) {
+			if (find(" ", me.selectedType) != -1) {
+				return 0;
+			}
+			me.first = left(me.selectedType,1);
+			if (me.first == "0" or me.first == "1" or me.first == "2" or me.first == "3" or me.first == "4" or me.first == "5" or me.first == "6" or me.first == "7" or me.first == "8" or me.first == "9") {
+				return 0;
+			}
+			if (getprop("payload/armament/"~string.lc(me.selectedType)~"/class") != nil) {
+				return 1;
+			}
+		}
+		return 0;
+	},
+
+	cycleAG: func {
+		me.stopCurrent();
+		if (!me._isSelectedWeapon()) {
+			me.selected = nil;
+			me.selectedType = nil;
+		}
+		if (me.selectedType == nil) {
+			foreach (me.typeTest;me.typeOrder) {
+				me.first = left(me.typeTest,1);
+				if (me.first == "0" or me.first == "1" or me.first == "2" or me.first == "3" or me.first == "4" or me.first == "5" or me.first == "6" or me.first == "7" or me.first == "8" or me.first == "9") {
+					continue;
+				}
+				me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
+				if (me.class != nil) {
+					me.isAG = find("G", me.class)!=-1 or find("M", me.class)!=-1;
+					if (me.isAG) {
+						me.selType = me.nextWeapon(me.typeTest);
+						if (me.selType != nil) {
+							me.selectedType = me.selType.type;
+							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+							return;
+						}
+					}
+				}
+			}
+		} else {
+			me.hasSeen = 0;
+			foreach (me.typeTest;me.typeOrder) {
+				me.first = left(me.typeTest,1);
+				if (me.first == "0" or me.first == "1" or me.first == "2" or me.first == "3" or me.first == "4" or me.first == "5" or me.first == "6" or me.first == "7" or me.first == "8" or me.first == "9") {
+					continue;
+				}
+				if (!me.hasSeen) {
+					if (me.typeTest == me.selectedType) {
+						me.hasSeen = 1;
+					} 
+					continue;
+				}
+				me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
+				if (me.class != nil) {
+					me.isAG = find("G", me.class)!=-1 or find("M", me.class)!=-1;
+					if (me.isAG) {
+						me.selType = me.nextWeapon(me.typeTest);
+						if (me.selType != nil) {
+							me.selectedType = me.selType.type;
+							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+							return;
+						}
+					}
+				}
+			}
+			if (me.hasSeen) {
+				foreach (me.typeTest;me.typeOrder) {
+					me.first = left(me.typeTest,1);
+					if (me.first == "0" or me.first == "1" or me.first == "2" or me.first == "3" or me.first == "4" or me.first == "5" or me.first == "6" or me.first == "7" or me.first == "8" or me.first == "9") {
+						continue;
+					}
+					if (me.typeTest == me.selectedType) {
+						me.updateCurrent();
+						screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+						return;
+						#break;
+					}
+					me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
+					if (me.class != nil) {
+						me.isAG = find("G", me.class)!=-1 or find("M", me.class)!=-1;
+						if (me.isAG) {
+							me.selType = me.nextWeapon(me.typeTest);
+							if (me.selType != nil) {
+								me.selectedType = me.selType.type;
+								screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+								return;
+							}
+						}
+					}
+				}
+			}
+		}
+		if (me.selectedType != nil) {
+			screen.log.write("Deselected "~me.selectedType, 0.5, 0.5, 1);
+		} else {
+			screen.log.write("Selected nothing", 0.5, 0.5, 1);
+		}
+		me.selectedType = nil;
+		me.selected = nil;
+	},
+
+	cycleAA: func {
+		me.stopCurrent();
+		if (!me._isSelectedWeapon()) {
+			me.selected = nil;
+			me.selectedType = nil;
+		}
+		if (me.selectedType == nil) {
+			foreach (me.typeTest;me.typeOrder) {
+				me.first = left(me.typeTest,1);
+				if (me.first == "0" or me.first == "1" or me.first == "2" or me.first == "3" or me.first == "4" or me.first == "5" or me.first == "6" or me.first == "7" or me.first == "8" or me.first == "9") {
+					continue;
+				}
+				me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
+				if (me.class != nil) {
+					me.isAG = find("A", me.class)!=-1;
+					if (me.isAG) {
+						me.selType = me.nextWeapon(me.typeTest);
+						if (me.selType != nil) {
+							me.selectedType = me.selType.type;
+							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+							return;
+						}
+					}
+				}
+			}
+		} else {
+			me.hasSeen = 0;
+			foreach (me.typeTest;me.typeOrder) {
+				me.first = left(me.typeTest,1);
+				if (me.first == "0" or me.first == "1" or me.first == "2" or me.first == "3" or me.first == "4" or me.first == "5" or me.first == "6" or me.first == "7" or me.first == "8" or me.first == "9") {
+					continue;
+				}
+				if (!me.hasSeen) {
+					if (me.typeTest == me.selectedType) {
+						me.hasSeen = 1;
+					} 
+					continue;
+				}
+				me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
+				if (me.class != nil) {
+					me.isAG = find("A", me.class)!=-1;
+					if (me.isAG) {
+						me.selType = me.nextWeapon(me.typeTest);
+						if (me.selType != nil) {
+							me.selectedType = me.selType.type;
+							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+							return;
+						}
+					}
+				}
+			}
+			if (me.hasSeen) {
+				foreach (me.typeTest;me.typeOrder) {
+					me.first = left(me.typeTest,1);
+					if (me.first == "0" or me.first == "1" or me.first == "2" or me.first == "3" or me.first == "4" or me.first == "5" or me.first == "6" or me.first == "7" or me.first == "8" or me.first == "9") {
+						continue;
+					}
+					if (me.typeTest == me.selectedType) {
+						me.updateCurrent();
+						screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+						return;
+						#break;
+					}
+					me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
+					if (me.class != nil) {
+						me.isAG = find("A", me.class)!=-1;
+						if (me.isAG) {
+							me.selType = me.nextWeapon(me.typeTest);
+							if (me.selType != nil) {
+								me.selectedType = me.selType.type;
+								screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+								return;
+							}
+						}
+					}
+				}
+			}
+		}
+		if (me.selectedType != nil) {
+			screen.log.write("Deselected "~me.selectedType, 0.5, 0.5, 1);
+		} else {
+			screen.log.write("Selected nothing", 0.5, 0.5, 1);
+		}
+		me.selectedType = nil;
+		me.selected = nil;
+	},
+
 	updateAll: func {
 		# called from the stations when they change.
 		if (me.selectedType != nil) {

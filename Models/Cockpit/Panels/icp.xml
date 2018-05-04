@@ -81,4 +81,42 @@
         </decrease>
     </animation>
 
+    <animation>
+        <type>pick</type>
+        <object-name>a-g</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>if (pylons.fcs!=nil) pylons.fcs.cycleAG();</script>
+            </binding>
+        </action>
+        <!--<hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-droptank</tooltip-id>
+                <label>Jettison drop-tank</label>
+            </binding>
+        </hovered>-->
+    </animation>
+    
+    <animation>
+        <type>pick</type>
+        <object-name>a-a</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>if (pylons.fcs!=nil) pylons.fcs.cycleAA();</script>
+            </binding>
+        </action>
+        <!--<hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-droptank</tooltip-id>
+                <label>Jettison drop-tank</label>
+            </binding>
+        </hovered>-->
+    </animation>
+
 </PropertyList>
