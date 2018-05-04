@@ -141,7 +141,7 @@ var a2a_patrol = func {
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
     } else {
-      screen.log.write("Please land before changing payload.");
+      screen.log.write(f16.msgB);
     }
 }
 
@@ -158,7 +158,7 @@ var a2a_super = func {
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
     } else {
-      screen.log.write("Please land before changing payload.");
+      screen.log.write(f16.msgB);
     }
 }
 
@@ -167,15 +167,15 @@ var a2a_standoff = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         pylon1.loadSet(pylonSets.g);
         pylon2.loadSet(pylonSets.h);
-        setprop("payload/weight[2]/selected", "Empty");
+        pylon3.loadSet(pylonSets.empty);
         pylon4.loadSet(pylonSets.l);
-        setprop("payload/weight[4]/selected", "AN/ALQ-131 ECM Pod");
+        pylon5.loadSet(pylonSets.f2);
         pylon6.loadSet(pylonSets.m);
-        setprop("payload/weight[6]/selected", "Empty");
+        pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
     } else {
-      screen.log.write("Please land before changing payload.");
+      screen.log.write(f16.msgB);
     }
 }
 # Standart configuration for bombing : 2 2XGBU and 2 AGM65
@@ -191,7 +191,7 @@ var a2g_standard = func {
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
     } else {
-      screen.log.write("Please land before changing payload.");
+      screen.log.write(f16.msgB);
     }
 }
 
@@ -208,6 +208,6 @@ var a2m_standard = func {
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
     } else {
-      screen.log.write("Please land before changing payload.");
+      screen.log.write(f16.msgB);
     }
 }

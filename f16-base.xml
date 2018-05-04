@@ -1125,9 +1125,10 @@
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
-                <drop-time type="bool">4</drop-time>
-                <deploy-time type="bool">3</deploy-time>
+                <drop-time type="double">2</drop-time>
+                <deploy-time type="double">2.5</deploy-time>
                 <lateral-dps type="double"> 10 </lateral-dps>
+                <max-pitch-deg type="double">-30</max-pitch-deg>
             </gbu-12>
             <agm-65>                    
                     <short-name type="string">AGM65</short-name>

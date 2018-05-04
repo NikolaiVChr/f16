@@ -6,7 +6,8 @@ var FALSE = 0;
 # strobes ===========================================================
 var strobe_switch = props.globals.getNode("controls/lighting/ext-lighting-panel/anti-collision2", 1);
 aircraft.light.new("sim/model/lighting/strobe", [0.03, 1.9+rand()/5], strobe_switch);
-
+var msgA = "If you need to repair now, then use Menu-Location-SelectAirport instead.";
+var msgB = "Please land before changing payload.";
 var cockpit_blink = props.globals.getNode("f16/avionics/cockpit_blink", 1);
 aircraft.light.new("f16/avionics/cockpit_blinker", [0.25, 0.25], cockpit_blink);
 setprop("f16/avionics/cockpit_blink", 1);
@@ -73,7 +74,6 @@ var newsuit = func {
   setprop("sim/rendering/redout/parameters/recover-fast-sec", 7);
   setprop("sim/rendering/redout/parameters/recover-slow-sec", 15);
 }
-
 setlistener("sim/rendering/redout/new", func {
       if (getprop("sim/rendering/redout/new")) {
         newsuit();
@@ -275,7 +275,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
 
 var repair = func {
   if (getprop("payload/armament/msg")==1 and !getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
-    screen.log.write("If you need to repair now, then use Menu-Location-SelectAirport instead.");
+    screen.log.write(msgA);
   } else {
     repair2();
   }
@@ -363,6 +363,4 @@ setlistener("/ai/models/model-impact", impact_listener, 0, 0);
 var prop = "payload/armament/fire-control";
 var actuator_fc = compat_failure_modes.set_unserviceable(prop);
 FailureMgr.add_failure_mode(prop, "Fire control", actuator_fc);
-
-#To reload : Aircraft have to be on ground and Armament MP message have to be un-check
 

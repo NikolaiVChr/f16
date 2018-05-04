@@ -289,6 +289,7 @@ var AIM = {
 		m.loft_alt              = getprop(m.nodeString~"loft-altitude");              # if 0 then no snap up. Below 10000 then cruise altitude above ground. Above 10000 max altitude it will snap up to.
         m.follow                = getprop(m.nodeString~"terrain-follow");             # bool. used for anti-ship missiles that should be able to terrain follow instead of purely sea skimming.
         m.reaquire              = getprop(m.nodeString~"reaquire");                   # bool. If weapon will try to reaquire lock after losing it. [optional]
+        m.maxPitch              = getprop(m.nodeString~"max-pitch-deg");              # After propulsion it will not be able to steer up more than this. [optional]
 		# engine
 		m.force_lbf_1           = getprop(m.nodeString~"thrust-lbf-stage-1");         # stage 1 thrust [optional]
 		m.force_lbf_2           = getprop(m.nodeString~"thrust-lbf-stage-2");         # stage 2 thrust [optional]
@@ -379,6 +380,10 @@ var AIM = {
 
         if (m.lateralSpeed == nil) {
         	m.lateralSpeed = 0;
+        }
+
+        if(m.maxPitch == nil) {
+        	m.maxPitch = 90;
         }
         
         # three variables used for trigonometry hit calc:
@@ -1004,13 +1009,13 @@ var AIM = {
 		# find the fuel consumption - lbm/sec
 		var impulse1 = me.force_lbf_1 * me.stage_1_duration; # lbf*s
 		var impulse2 = me.force_lbf_2 * me.stage_2_duration; # lbf*s
-		var impulseT = impulse1 + impulse2;                  # lbf*s
-		var fuel_per_impulse = me.weight_fuel_lbm / impulseT;# lbm/(lbf*s)
-		me.fuel_per_sec_1  = (fuel_per_impulse * impulse1) / me.stage_1_duration;# lbm/s
-		me.fuel_per_sec_2  = (fuel_per_impulse * impulse2) / me.stage_2_duration;# lbm/s
+		me.impulseT = impulse1 + impulse2;                  # lbf*s
+		me.fuel_per_impulse = me.weight_fuel_lbm / me.impulseT;# lbm/(lbf*s)
+		me.fuel_per_sec_1  = (me.fuel_per_impulse * impulse1) / me.stage_1_duration;# lbm/s
+		me.fuel_per_sec_2  = (me.fuel_per_impulse * impulse2) / me.stage_2_duration;# lbm/s
 
-		# see how much energy/fuel the missile have. For solid fuel rockets, it is normally 200-280. Lower for smokeless, higher for smoke.
-		me.printFlight("Specific Impulse: %s has %.2f (lbf*s)/lbm. Total impulse: %.2f lbf*s.", me.type, 1/fuel_per_impulse, impulseT);
+		me.printExtendedStats();
+
 
 		# find the sun:
 		var sun_x = getprop("ephemeris/sun/local/x");
@@ -1042,6 +1047,198 @@ var AIM = {
 	},
 
 	################################################## DO NOT EXTERNALLY CALL ANYTHING BELOW THIS LINE ###################################
+
+	printExtendedStats: func {
+		if (!DEBUG_STATS) return;
+
+		var classes = "";
+		if (me.target_air) {
+			classes = classes~"Airborne"
+		}
+		if (me.target_gnd) {
+			classes = classes~" Ground"
+		}
+		if (me.target_sea) {
+			classes = classes~" Ship"
+		}
+		var cooling = me.coolable?"YES":"NO";
+		var rea = me.reaquire?"YES":"NO";
+		var asp = "";
+		if (me.guidance=="heat") {
+			if (!me.all_aspect) {
+				asp = "Rear aspect only.";
+			} else {
+				asp = "All aspect.";
+			}
+		}
+		var nav = "";
+		var nav2 = "";
+		if (me.guidanceLaw == "direct") {
+			nav = "Pure pursuit."
+		} elsif (me.guidanceLaw == "PN") {
+			nav = "Proportional navigation. Proportionality constant is "~me.pro_constant;
+		} elsif (me.guidanceLaw == "APN") {
+			nav = "Augmented proportional navigation. Proportionality constant is "~me.pro_constant;
+		} elsif (left(me.guidanceLaw,2) == "PN") {
+			nav = "Proportional navigation. Proportionality constant is "~me.pro_constant;
+			var xxyy = right(me.guidanceLaw,4);
+			var yy = right(xxyy,2);
+			var xx = left(xxyy,2);
+			nav2 = sprintf("Before PN it will aim %d degrees above target for %d seconds.",xx,yy);
+		} elsif (left(me.guidanceLaw,3) == "APN") {
+			nav = "Augmented proportional navigation. Proportionality constant is "~me.pro_constant;
+			var xxyy = right(me.guidanceLaw,4);
+			var yy = right(xxyy,2);
+			var xx = left(xxyy,2);
+			nav2 = sprintf("Before APN it will aim %d degrees above target for %d seconds.",xx,yy);
+		}
+		var stages = 0;
+		if (me.force_lbf_1 > 0 and me.stage_1_duration > 0 and me.force_lbf_2 > 0 and me.stage_2_duration > 0) {
+			stages = 2;
+		} elsif (me.force_lbf_1 > 0 and me.stage_1_duration > 0) {
+			stages = 1;
+		}
+		var vector = "No vectored thrust.";
+		if (me.vector_thrust) {
+			vector = "Vectored thrust."
+		}
+
+		
+		me.printStats("****************************************************");
+		me.printStats("Stats for %s", me.typeLong);
+		me.printStats("DETECTION AND FIRING:");
+		me.printStats("Fire range %.1f-%.1f NM", me.min_fire_range_nm, me.max_fire_range_nm);
+		me.printStats("Can be fired againts %s targets", classes);
+		me.printStats("Pilot will call out %s when firing.",me.brevity);
+		me.printStats("Launch platform detection field of view is +-%d degrees.",me.fcs_fov);
+		if (me.guidance =="heat") {
+			me.printStats("Seekerhead beam width is %.1f degrees diameter.",me.beam_width_deg);
+		}
+		me.printStats("Weapons takes %.1f seconds to get ready.",me.ready_time);
+		me.printStats("Cooling supported: %s",cooling);
+		if (me.coolable) {
+			me.printStats("Time to cool %.1f seconds. Can be kept cool for %d seconds.",me.cool_time,me.cool_duration);
+			me.printStats("Max detect range when warm is %.1f NM, when cold %.1f NM.",me.warm_detect_range_nm, me.detect_range_nm);
+		}
+		me.printStats("NAVIGATION AND GUIDANCE:");
+		me.printStats("Weapon field of view is +-%d degrees.",me.max_seeker_dev);
+		me.printStats("Is %s guided. %s",me.guidance,asp);
+		me.printStats("Guidance law: %s",nav);
+		if (nav2 != "") {
+			me.printStats(nav2);
+		}
+		me.printStats("Will attempt to reaquire target if its lost: %s",rea);
+		if (me.guidance=="heat" or me.guidance=="vision") {
+			me.printStats("Seeker is able to track targets moving in its FoV at %.1f degrees per second.",me.angular_speed);
+		}
+		if (me.guidance=="heat") {
+			me.printStats("Seeker will lock on sun if it is within %.1f degrees.",me.sun_lock);
+		}
+		if (me.loft_alt>10000) {
+			me.printStats("Weapon will max snap up to %d feet altitude.",me.loft_alt);
+		} elsif (me.loft_alt<10000 and me.loft_alt!=0) {
+			if (me.target_sea) {
+				if (me.follow) {
+					me.printStats("Weapon will follow terrain keeping %d AGL feet.",me.loft_alt);
+				} else {
+					me.printStats("Weapon will sea skim at %d AGL feet.",me.loft_alt);
+				}
+			} else {
+				me.printStats("Weapon will follow terrain keeping %d AGL feet.",me.loft_alt);
+			}
+		} else {
+			me.printStats("Weapon will not snap up, follow terrain or sea skim.");
+		}
+		if (stages > 0) {
+			me.printStats("PROPULSION:");
+			me.printStats("Stage 1: %d lbf for %.1f seconds.", me.force_lbf_1, me.stage_1_duration);
+			if (stages > 1) {
+				me.printStats("Stage 2: %d lbf for %.1f seconds.", me.force_lbf_2, me.stage_2_duration);
+			}
+			me.printStats("%s",vector);
+			if (!me.weight_fuel_lbm) {
+				me.printStats("Fuel system not simulated.");
+			} else {
+				me.printStats("Total fuel %d lbm.",me.weight_fuel_lbm);
+				me.printStats("Specific Impulse is %.2f (lbf*s)/lbm. Total impulse: %.2f lbf*s.", 1/me.fuel_per_impulse, me.impulseT);
+				# see how much energy/fuel the missile have. For solid fuel rockets, it is normally 200-280. Lower for smokeless, higher for smoke.
+				if (me.weight_fuel_lbm > me.weight_launch_lbm) {
+					me.printStats("ERROR: More fuel mass than entire weapon, please correct.");
+				} else {
+					me.printStats("Fuel is %.1f%% of weapons mass.", 100*me.weight_fuel_lbm/me.weight_launch_lbm);
+				}
+				if (1/me.fuel_per_impulse > 400) {
+					me.printStats("WARNING: If this is rocket engine, it has way too much thrust.");
+				} elsif (1/me.fuel_per_impulse > 350) {
+					me.printStats("WARNING: If this is rocket engine, it most likely has too much thrust per fuel.");
+				} elsif (1/me.fuel_per_impulse > 280) {
+					me.printStats("If this is rocket engine, it has a very high thrust.");
+				} elsif (1/me.fuel_per_impulse > 240) {
+					me.printStats("If this is rocket engine, it is probably not smokeless.");
+				} elsif (1/me.fuel_per_impulse > 200) {
+					me.printStats("If this is rocket engine, it is probably smokeless.");
+				} else {
+					me.printStats("WARNING: If this is rocket engine, it probably has too little thrust.");
+				}
+			}
+		}
+		me.printStats("AERODYNAMICS:");
+		me.printStats("Full weight is %d lbm.", me.weight_launch_lbm);
+		me.printStats("Drag coefficient is %.2f. Reference area is %.2f square feet.", me.Cd_base,me.ref_area_sqft);
+		me.printStats("Total drag-area is %.3f. Use this number to compare with other weapons for drag estimation.",me.Cd_base*me.ref_area_sqft);
+		me.printStats("Maximum structural g-force is %.1f",me.max_g);
+		me.printStats("Minimum speed for steering is %.1f mach.",me.min_speed_for_guiding);
+		me.printStats("WARHEAD:");
+		me.printStats("Warhead total weight is %.1f lbm.",me.weight_whead_lbm);
+		me.printStats("Arming time is %.1f seconds.",me.arming_time);
+		me.printStats("Will selfdestruct after %d seconds.",me.selfdestruct_time);
+		me.printStats("After propulsion end will max steer up to %d degree pitch.",me.maxPitch);
+		me.printStats("Weapon will roll clockwise with %.1f degrees per second.", me.lateralSpeed);
+		if (me.destruct_when_free) {
+			me.printStats("Will selfdestruct if loses lock.");
+		}
+		if (me.useHitInterpolation) {
+			me.printStats("Will not explode if more than %d meters of target.",me.reportDist);
+		} else {
+			me.printStats("Will explode as soon as within %d meters of target.",me.reportDist);
+		}
+		me.printStats("LAUNCH CONDITIONS:");
+		if (me.rail) {
+			me.printStats("Weapon is fired from rail/tube of length %.1f meters.",me.rail_dist_m);
+			if (me.rail_forward) {
+				me.printStats("Launch direction is forward.");
+			} else {
+				me.printStats("Launch direction is %d degrees upward.", me.rail_pitch_deg);
+			}
+		} else {
+			me.printStats("Weapon is dropped from launcher. Dropping for %.1f seconds.",me.drop_time);#todo
+			me.printStats("After drop it takes %.1f seconds to deploy wings.",me.deploy_time);#todo
+		}
+		if (me.guidance == "heat" or me.guidance == "radar" or me.guidance == "semi-radar") {
+			me.printStats("COUNTER-MEASURES:");
+			if (me.guidance == "radar" or me.guidance == "semi-radar") {
+				me.printStats("Resistance to chaff is %d%%.",me.chaffResistance*100);
+			} elsif (me.guidance == "heat") {
+				me.printStats("Resistance to flares is %d%%.",me.flareResistance*100);
+			}
+		}
+		if (me.intoBore) {
+			me.printStats("Weapon will be unaffected by wind when released.");
+		} else {
+			me.printStats("Weapon will be turn into airstream when released.");
+		}
+		me.printStats("MISC:");
+		if (me.data) {
+			me.printStats("Will transmit telemetry data back to launch platform.");
+		} else {
+			me.printStats("Has no data connection to launch platform when launched.");
+		}
+		if (me.dlz_enabled) {
+			me.printStats("Dynamic launch zone support enabled.");
+			me.printStats("Missile will likely hit when fired at max range when closing speed is %.2f mach at %d feet.", me.dlz_opt_mach, me.dlz_opt_alt);
+		}
+		me.printStats("****************************************************");
+	},
 
 	flight: func {#GCD
 
@@ -1080,16 +1277,16 @@ var AIM = {
                                         });
 			if (me.settings["guidance"] != nil) {
 				me.guidance = me.settings.guidance;
-				#me.printGuide("Guidance switched to "~me.guidance);
+				me.printStats("Guidance switched to %s",me.guidance);
 			}
 			if (me.settings["guidanceLaw"] != nil) {
 				me.guidanceLaw = me.settings.guidanceLaw;
-				#me.printGuide("Guidance law switched to "~me.guidanceLaw);
+				me.printStats("Guidance law switched to %s", me.guidanceLaw);
 			}
 			if (me.settings["target"] != nil) {
 				me.Tgt = me.settings.target;
 				me.callsign = me.Tgt.get_Callsign();
-				#me.printGuide("Target switched");
+				me.printStats("Target switched to %s",me.callsign);
 			}
 		}
 		if (me.prevGuidance != me.guidance) {
@@ -1216,7 +1413,9 @@ var AIM = {
 				}
 				me.limitG();
 				
-	            me.pitch      += me.track_signal_e;
+				if (!(me.pitch <= me.maxPitch and me.pitch+me.track_signal_e > me.maxPitch and me.thrust_lbf==0)) {# super hack
+	            	me.pitch      += me.track_signal_e;
+	            }
             	me.hdg        += me.track_signal_h;
 	            me.printGuideDetails("%04.1f deg elevation command done, new pitch: %04.1f deg", me.track_signal_e, me.pitch);
 	            me.printGuideDetails("%05.1f deg bearing command done, new heading: %05.1f", me.last_track_h, me.hdg);
