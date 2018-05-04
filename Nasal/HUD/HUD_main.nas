@@ -31,6 +31,7 @@ var F16_HUD = {
                     });  
 
         obj.sy = sy;                        
+        obj.sx = sx*0.695633;
                           
         obj.canvas.addPlacement({"node": canvas_item});
         obj.canvas.setColorBackground(0.30, 1, 0.3, 0.00);
@@ -62,7 +63,7 @@ var F16_HUD = {
         obj.roll_pointer = obj.get_element("roll-pointer");
         obj.alt_range = obj.get_element("alt_range");
         obj.ias_range = obj.get_element("ias_range");
-
+        obj.oldBore = obj.get_element("path4530-6");
         obj.target_locked = obj.get_element("target_locked");
         obj.target_locked.setVisible(0);
 
@@ -125,6 +126,19 @@ var F16_HUD = {
                 .vert(10)
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
+        obj.boreSymbol = obj.svg.createChild("path")
+                .moveTo(-5,0)
+                .horiz(10)
+                .moveTo(0,-5)
+                .vert(10)
+                .setStrokeLineWidth(1)
+                .setColor(0,1,0);
+        obj.trackLine = obj.svg.createChild("path")
+                .moveTo(0,0)
+                #.horiz(10)
+                .vert(-30)
+                .setStrokeLineWidth(1)
+                .setColor(0,1,0);
         obj.initUpdate =1;
         obj.svg.setColor(0.3,1,0.3);
         obj.alpha = getprop("f16/avionics/hud-brt");
@@ -170,7 +184,7 @@ var F16_HUD = {
 #		clamp -= coef; 
         #	}
         if ( combined_dev_length > clamp ) {
-            combined_dev_length = clamp;
+            #combined_dev_length = clamp;
             clamped = 1;
         }
         var v = [combined_dev_deg, combined_dev_length, clamped];
@@ -236,6 +250,8 @@ var F16_HUD = {
 
 
             pitch_offset = -me.texels_over_middle + me.hozizon_line_offset_from_middle_in_svg*me.sy;
+            me.boreSymbol.setTranslation(me.sx/2,me.sy-me.texels_up_into_hud);
+            me.oldBore.hide();
         }
 
 #pitch ladder
@@ -396,6 +412,7 @@ var F16_HUD = {
          
         me.heading_tape.setTranslation (me.heading_tape_position,0);
         me.roll_pointer.setRotation (me.roll_rad);
+        me.trackLineShow = 0;
 #        if (hdp.FrameCount == 1 or hdp.FrameCount == 3 or me.initUpdate == 1) {
             me.target_idx = 0;
             me.designated = 0;
@@ -403,7 +420,7 @@ var F16_HUD = {
             ht_xco = 0;
             ht_xcf = me.pixelPerMeterX;
             ht_ycf = -me.pixelPerMeterY;
-
+            
             me.target_locked.setVisible(0);
             foreach( me.u; awg_9.tgts_list ) 
             {
@@ -445,6 +462,11 @@ var F16_HUD = {
                                 } else {
                                     me.target_locked.setRotation(0);
                                 }
+                                if (me.clamped) {
+                                    me.trackLine.setTranslation(me.sx/2,me.sy-me.texels_up_into_hud);
+                                    me.trackLine.setRotation(me.combined_dev_deg*D2R);
+                                    me.trackLineShow = 1;
+                                }
                             }
                             else
                             {
@@ -462,6 +484,7 @@ var F16_HUD = {
                     me.target_idx += 1;
                 }
             }
+
             for(me.nv = me.target_idx; me.nv < me.max_symbols;me.nv += 1)
             {
                 me.tgt = me.tgt_symbols[me.nv];
@@ -471,6 +494,7 @@ var F16_HUD = {
                 }
             }
  #       }
+        me.trackLine.setVisible(me.trackLineShow);
 
         
 #
