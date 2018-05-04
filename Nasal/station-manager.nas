@@ -293,8 +293,10 @@ var Pylon = {
 	setGUI: func {
 		me.nameGUI = "";
 		if (me.currentSet.showLongTypeInsteadOfCount) {
-			if (size(me.weapons) > 0) {
-				me.nameGUI = me.weapons[0].typeLong;
+			foreach(me.wapny;me.weapons) {
+				if (me.wapny != nil) {
+					me.nameGUI = me.wapny.typeLong;
+				}
 			}
 		} else {
 			me.calcName = {};
