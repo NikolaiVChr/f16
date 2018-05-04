@@ -93,4 +93,18 @@
     </button>
   </group>
 
+    <hrule/>
+
+  <group>
+    <layout>hbox</layout>
+    <text><label>Air to sea</label></text>
+    <button>
+      <legend>Mount</legend>
+      <binding>
+          <command>nasal</command>
+          <script>pylons.a2m_standard();</script>
+      </binding>
+    </button>
+  </group>
+
 </PropertyList>

@@ -130,7 +130,7 @@ var getDLZ = func {
 
 #Air patrol configuration
 var a2a_patrol = func {
-    if (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+    if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         pylon1.loadSet(pylonSets.g);
         pylon2.loadSet(pylonSets.h);
         pylon3.loadSet(pylonSets.q7);
@@ -147,7 +147,7 @@ var a2a_patrol = func {
 
 # Air superiority configuration
 var a2a_super = func {
-    if (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+    if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
     	pylon1.loadSet(pylonSets.g);
         pylon2.loadSet(pylonSets.h);
         pylon3.loadSet(pylonSets.h);
@@ -164,32 +164,49 @@ var a2a_super = func {
 
 # Standoff configuration
 var a2a_standoff = func {
-    if (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
-        setprop("payload/weight[0]/selected", "1 x AIM-120");
-        setprop("payload/weight[1]/selected", "1 x AIM-9");
+    if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+        pylon1.loadSet(pylonSets.g);
+        pylon2.loadSet(pylonSets.h);
         setprop("payload/weight[2]/selected", "Empty");
         pylon4.loadSet(pylonSets.l);
         setprop("payload/weight[4]/selected", "AN/ALQ-131 ECM Pod");
         pylon6.loadSet(pylonSets.m);
         setprop("payload/weight[6]/selected", "Empty");
-        setprop("payload/weight[7]/selected", "1 x AIM-9");
-        setprop("payload/weight[8]/selected", "1 x AIM-120");
+        pylon8.loadSet(pylonSets.h);
+        pylon9.loadSet(pylonSets.g);
     } else {
       screen.log.write("Please land before changing payload.");
     }
 }
 # Standart configuration for bombing : 2 2XGBU and 2 AGM65
 var a2g_standard = func {
-    if (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
-        setprop("payload/weight[0]/selected", "1 x AIM-9");
-        setprop("payload/weight[1]/selected", "1 x AIM-120");
-        setprop("payload/weight[2]/selected", "1 x AGM-65");
-        setprop("payload/weight[3]/selected", "2 x GBU-12");
-        setprop("payload/weight[4]/selected", "Empty");
-        setprop("payload/weight[5]/selected", "2 x GBU-12");
-        setprop("payload/weight[6]/selected", "1 x AGM-65");
-        setprop("payload/weight[7]/selected", "1 x AIM-120");
-        setprop("payload/weight[8]/selected", "1 x AIM-9");
+    if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+        pylon1.loadSet(pylonSets.g);
+        pylon2.loadSet(pylonSets.h);
+        pylon3.loadSet(pylonSets.a);
+        pylon4.loadSet(pylonSets.j);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.j);
+        pylon7.loadSet(pylonSets.a);
+        pylon8.loadSet(pylonSets.h);
+        pylon9.loadSet(pylonSets.g);
+    } else {
+      screen.log.write("Please land before changing payload.");
+    }
+}
+
+# Standart configuration for bombing : 2 2XGBU and 2 AGM65
+var a2m_standard = func {
+    if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+        pylon1.loadSet(pylonSets.g);
+        pylon2.loadSet(pylonSets.h);
+        pylon3.loadSet(pylonSets.b);
+        pylon4.loadSet(pylonSets.j);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.j);
+        pylon7.loadSet(pylonSets.b);
+        pylon8.loadSet(pylonSets.h);
+        pylon9.loadSet(pylonSets.g);
     } else {
       screen.log.write("Please land before changing payload.");
     }

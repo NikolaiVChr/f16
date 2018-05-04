@@ -2113,12 +2113,12 @@ var AIM = {
                 me.Daground = me.nextGroundElevation * M2FT;
             }
             me.loft_alt_curr = me.loft_alt;
-            if (me.dist_curr < me.old_speed_fps * 4 * FT2M and me.dist_curr > me.old_speed_fps * 2.5 * FT2M) {
+            if (me.dist_curr < me.old_speed_fps * 6 * FT2M and me.dist_curr > me.old_speed_fps * 4 * FT2M) {
             	# the missile lofts a bit at the end to avoid APN to slam it into ground before target is reached.
             	# end here is between 2.5-4 seconds
             	me.loft_alt_curr = me.loft_alt*2;
             }
-            if (me.dist_curr > me.old_speed_fps * 2.5 * FT2M) {# need to give the missile time to do final navigation
+            if (me.dist_curr > me.old_speed_fps * 4 * FT2M) {# need to give the missile time to do final navigation
                 # it's 1 or 2 seconds for this kinds of missiles...
                 me.t_alt_delta_ft = (me.loft_alt_curr + me.Daground - me.alt_ft);
                 me.printGuideDetails("var t_alt_delta_m : "~me.t_alt_delta_ft*FT2M);
@@ -2130,7 +2130,7 @@ var AIM = {
                     # that means a dive angle of 22.5° (a bit less 
                     # coz me.alt is in feet) (I let this alt in feet on purpose (more this figure is low, more the future pitch is high)
                     me.printGuideDetails("Moving down");
-                    me.slope = me.clamp(me.t_alt_delta_ft / 300, -5, 0);# the lower the desired alt is, the steeper the slope.
+                    me.slope = me.clamp(me.t_alt_delta_ft / 300, -7.5, 0);# the lower the desired alt is, the steeper the slope.
                     me.raw_steer_signal_elev = -me.pitch + me.clamp(math.atan2(me.t_alt_delta_ft, me.old_speed_fps * me.dt * 5) * R2D, me.slope, 0);
                 }
                 me.cruise_or_loft = TRUE;
