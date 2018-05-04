@@ -177,8 +177,14 @@ var FireControl = {
 						continue;
 					}
 					if (me.typeTest == me.selectedType) {
-						me.updateCurrent();
-						screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+						if (me.getSelectedWeapon() != nil and me.getSelectedWeapon().parents[0] == armament.AIM and (find("G", me.getSelectedWeapon().class)!=-1 or find("M", me.me.getSelectedWeapon().class)!=-1)) {
+							me.updateCurrent();
+							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+						} else {
+							me.selectedType = nil;
+							me.selected = nil;
+							screen.log.write("Selected nothing", 0.5, 0.5, 1);
+						}
 						return;
 						#break;
 					}
@@ -264,8 +270,14 @@ var FireControl = {
 						continue;
 					}
 					if (me.typeTest == me.selectedType) {
-						me.updateCurrent();
-						screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+						if (me.getSelectedWeapon() != nil and me.getSelectedWeapon().parents[0] == armament.AIM and find("A", me.getSelectedWeapon().class)!=-1) {
+							me.updateCurrent();
+							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+						} else {
+							me.selectedType = nil;
+							me.selected = nil;
+							screen.log.write("Selected nothing", 0.5, 0.5, 1);
+						}		
 						return;
 						#break;
 					}
