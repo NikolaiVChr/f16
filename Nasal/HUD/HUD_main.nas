@@ -334,11 +334,11 @@ var F16_HUD = {
                     } elsif (me.weap == "AIM-7") {
                         me.txt = sprintf("%dMRM", pylons.fcs.getAmmo());
                     } elsif (me.weap == "GBU-12") {
-                        me.txt = sprintf("%dGBU", pylons.fcs.getAmmo());
+                        me.txt = sprintf("%dB12", pylons.fcs.getAmmo());
                     } elsif (me.weap == "AGM-65") {
-                        me.txt = sprintf("%dG65", pylons.fcs.getAmmo());
+                        me.txt = sprintf("%dM65", pylons.fcs.getAmmo());
                     } elsif (me.weap == "AGM-84") {
-                        me.txt = sprintf("%dG84", pylons.fcs.getAmmo());
+                        me.txt = sprintf("%dM84", pylons.fcs.getAmmo());
                     }
                 }
                 me.window7.setText(me.txt);
