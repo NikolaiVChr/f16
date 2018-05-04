@@ -136,14 +136,14 @@ var SURFACE = 2;
 var ORDNANCE = 3;
 
 # set these to print stuff to console:
-var DEBUG_STATS            = FALSE;#most basic stuff
-var DEBUG_FLIGHT           = FALSE;#for creating missiles sometimes good to have this on to see how it flies.
+var DEBUG_STATS            = 0;#most basic stuff
+var DEBUG_FLIGHT           = 0;#for creating missiles sometimes good to have this on to see how it flies.
 
 # set these to debug the code:
 var DEBUG_STATS_DETAILS    = FALSE;
 var DEBUG_GUIDANCE         = FALSE;
 var DEBUG_GUIDANCE_DETAILS = FALSE;
-var DEBUG_FLIGHT_DETAILS   = FALSE;
+var DEBUG_FLIGHT_DETAILS   = 0;
 var DEBUG_SEARCH           = FALSE;
 var DEBUG_CODE             = FALSE;
 
@@ -1413,7 +1413,9 @@ var AIM = {
 				}
 				me.limitG();
 				
-				if (!(me.pitch <= me.maxPitch and me.pitch+me.track_signal_e > me.maxPitch and me.thrust_lbf==0)) {# super hack
+				if (me.track_signal_e > 0 and me.pitch+me.track_signal_e > me.maxPitch and me.thrust_lbf==0) {# super hack
+	            	me.printFlight("Prevented to pitch up to %.2f degs.", me.pitch+me.track_signal_e);
+	            } else {
 	            	me.pitch      += me.track_signal_e;
 	            }
             	me.hdg        += me.track_signal_h;
@@ -1556,6 +1558,8 @@ var AIM = {
 		#setprop("logging/missile/thrust-lbf", thrust_lbf);
 
 		me.setFirst();
+
+		me.printFlight("Pitch %.2f degs.", me.pitch);
 
 		me.latN.setDoubleValue(me.coord.lat());
 		me.lonN.setDoubleValue(me.coord.lon());

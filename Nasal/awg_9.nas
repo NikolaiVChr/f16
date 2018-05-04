@@ -894,7 +894,12 @@ var Target = {
         }
         return me.Callsign.getValue();
     },
-    getElevation: func{return me.Elevation.getValue();},
+    getElevation: func{
+        #if (me.Elevation != nil and me.Elevation.getValue() != 0) {
+        #    return me.Elevation.getValue();
+        #}
+        return vector.Math.getPitch(geo.aircraft_position(), me.get_Coord());
+    },
     getFlareNode: func () {
       return me.propNode.getNode("rotors/main/blade[3]/flap-deg");
     },
