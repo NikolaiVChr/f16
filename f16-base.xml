@@ -1128,7 +1128,7 @@
                 <drop-time type="double">2</drop-time>
                 <deploy-time type="double">2</deploy-time>
                 <lateral-dps type="double"> 10 </lateral-dps>
-                <max-pitch-deg type="double">-30</max-pitch-deg>
+                <max-pitch-deg type="double">-40</max-pitch-deg>
             </gbu-12>
             <agm-65>                    
                     <short-name type="string">AGM65</short-name>
