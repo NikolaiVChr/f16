@@ -186,7 +186,7 @@
 		
 		<switch name="autoflight/roll/heading/i-gain">
 			<default value="0"/>
-			<test value="0.01">
+			<test value="1.2">
 				autoflight/roll/gain-switch eq 0
 			</test>
 		</switch>
