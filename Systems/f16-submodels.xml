@@ -25,7 +25,7 @@
     <trigger>fdm/jsbsim/fcs/guntrigger</trigger>
     <speed>2041.0</speed>
     <repeat>true</repeat>
-    <delay>0.3</delay>
+    <delay>0.15</delay>
     <count>-1</count>
     <x-offset>  3.0</x-offset>
     <y-offset> -2.5</y-offset>
