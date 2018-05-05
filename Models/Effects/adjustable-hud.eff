@@ -4,6 +4,7 @@
   <inherits-from>Effects/hud</inherits-from>
 
   <parameters>
+   <use-overlay>0</use-overlay>
    <hud-brightness><use>f16/avionics/hud-brt</use></hud-brightness>
   </parameters>
 
