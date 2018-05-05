@@ -244,7 +244,7 @@
         <view>
             <internal archive="y">true</internal>
             <config>
-                <pitch-offset-deg>-8</pitch-offset-deg>
+                <pitch-offset-deg>-8.7</pitch-offset-deg>
                 <x-offset-m archive="y">0</x-offset-m>
                 <y-offset-m archive="y">0.7975</y-offset-m>
                 <z-offset-m archive="y">-3.94</z-offset-m>
