@@ -1121,14 +1121,14 @@
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double"> 40 </max-report-distance>
+                <max-report-distance type="double"> 75 </max-report-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
                 <drop-time type="double">2</drop-time>
                 <deploy-time type="double">2</deploy-time>
                 <lateral-dps type="double"> 10 </lateral-dps>
-                <max-pitch-deg type="double">-40</max-pitch-deg>
+                <max-pitch-deg type="double">-45</max-pitch-deg>
             </gbu-12>
             <agm-65>                    
                     <short-name type="string">AGM65</short-name>
