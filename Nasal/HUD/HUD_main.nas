@@ -156,8 +156,8 @@ var F16_HUD = {
 
     develev_to_devroll : func(notification, dev_rad, elev_rad)
     {
-        var eye_hud_m          = 0.5123;
-        var hud_position       = 4.6429;#4.61428;#4.65415;#5.66824; # really -5.6 but avoiding more complex equations by being optimal with the signs.
+        var eye_hud_m          = me.Vx-me.Hx_m;
+        var hud_position       = 4.65453;#4.6429;#4.61428;#4.65415;#5.66824; # really -5.6 but avoiding more complex equations by being optimal with the signs.
         var hud_radius_m       = 0.08429;
         var clamped = 0;
 
@@ -235,15 +235,15 @@ var F16_HUD = {
                 me.svg.setColor(0.3,1,0.3,alpha);
             }
             # calc of pitch_offset (compensates for AC3D model translated and rotated when loaded. Also semi compensates for HUD being at an angle.)
-            me.Hz_b =    0.801701;# HUD position inside ac model after it is loaded, translated (0.08m) and rotated (0.7d).
-            me.Hz_t =    0.976668;
-            me.Hx_m =   -4.6429;# HUD median X pos
+            me.Hz_b =    0.663711;#0.801701;# HUD position inside ac model after it is loaded, translated (0.08m) and rotated (0.7d).
+            me.Hz_t =    0.841082;#0.976668;
+            me.Hx_m =   -4.65453;#-4.6429;# HUD median X pos
             me.Vz   =    getprop("sim/current-view/y-offset-m"); # view Z position (0.94 meter per default)
             me.Vx   =    getprop("sim/current-view/z-offset-m"); # view X position (0.94 meter per default)
 
             me.bore_over_bottom = me.Vz - me.Hz_b;
             me.Hz_height        = me.Hz_t-me.Hz_b;
-            me.hozizon_line_offset_from_middle_in_svg = 0.137; #horizline and radar echoes fraction up from middle
+            me.hozizon_line_offset_from_middle_in_svg = 0.1346; #horizline and radar echoes fraction up from middle
             me.frac_up_the_hud = me.bore_over_bottom / me.Hz_height;
             me.texels_up_into_hud = me.frac_up_the_hud * me.sy;#sy default is 260
             me.texels_over_middle = me.texels_up_into_hud - me.sy/2;
@@ -451,7 +451,7 @@ var F16_HUD = {
                             me.yc = ht_yco + (ht_ycf * me.combined_dev_length * math.cos(me.combined_dev_deg*D2R));
                             me.xc = ht_xco + (ht_xcf * me.combined_dev_length * math.sin(me.combined_dev_deg*D2R));
 
-                            me.clamped = me.yc > me.sy*0.5 or me.yc < -me.sy*0.5 or me.xc > me.sx *0.5 or me.xc < -me.sx*0.5;# outside HUD
+                            me.clamped = me.yc > me.sy*0.5 or me.yc < -me.sy*0.5+me.hozizon_line_offset_from_middle_in_svg*me.sy or me.xc > me.sx *0.5 or me.xc < -me.sx*0.5;# outside HUD
 
                             if (awg_9.active_u != nil and awg_9.active_u.Callsign != nil and me.u.Callsign != nil and me.u.Callsign.getValue() == awg_9.active_u.Callsign.getValue())
                             {

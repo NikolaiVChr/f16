@@ -3,9 +3,9 @@
 <PropertyList>
 
  <path>f16.ac</path>
- <offsets>
+ <offsets><!--
   <z-m>0.08</z-m>
-  <pitch-deg>0.7</pitch-deg>
+  <pitch-deg>0.7</pitch-deg>-->
  </offsets>
 
  <nasal>

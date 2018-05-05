@@ -20,8 +20,8 @@
    <feed>5</feed>
    <feed>6</feed>
    <thruster file="direct">
-    <location unit="IN">
-     <x> 500 </x>
+    <location unit="M">
+     <x> 4.2077 </x>
      <y> 0 </y>
      <z> 0 </z>
     </location>
@@ -43,7 +43,7 @@
   -->
   <tank type="FUEL"> <!-- FWD Tank -->
    <location unit="IN">
-    <x> -208.5 </x>
+    <x> -128.5 </x>
    <y> 0 </y>
    <z> 0 </z>
    </location>
@@ -54,7 +54,7 @@
   </tank>
   <tank type="FUEL"> <!-- AFT Tank -->
    <location unit="IN">
-    <x> -136.5 </x>
+    <x> 56.5 </x>
    <y> 0 </y>
    <z> 0 </z>
    </location>
@@ -65,7 +65,7 @@
   </tank>
   <tank type="FUEL"> <!-- Right External Tank -->
    <location unit="IN">
-    <x> -196.5 </x>
+    <x> -16.5 </x>
    <y> 80 </y>
    <z> -40 </z>
    </location>
@@ -76,7 +76,7 @@
   </tank>
   <tank type="FUEL"> <!-- Left External Tank -->
    <location unit="IN">
-    <x> -196.5 </x>
+    <x> -16.5 </x>
    <y> -80 </y>
    <z> -40 </z>
    </location>
@@ -87,7 +87,7 @@
   </tank>
   <tank type="FUEL"> <!-- Center External Tank -->
    <location unit="IN">
-    <x> -196.5 </x>
+    <x> -16.5 </x>
    <y>   0 </y>
    <z> -50 </z>
    </location>
@@ -98,7 +98,7 @@
   </tank>
   <tank type="FUEL"> <!-- Right wing tank -->
    <location unit="IN">
-    <x> -193 </x>
+    <x> 16.5 </x>
    <y>  80 </y>
    <z>   0 </z>
    </location>
@@ -109,7 +109,7 @@
   </tank>
   <tank type="FUEL"> <!-- Left wing tank -->
    <location unit="IN">
-    <x> -193 </x>
+    <x> 16.5 </x>
    <y> -80 </y>
    <z>   0 </z>
    </location>

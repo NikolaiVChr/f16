@@ -2,10 +2,10 @@
 
  <ground_reactions>
   <contact type="BOGEY" name="NOSE_LG">
-   <location unit="IN">
-    <x> -299.6 </x>
-    <y> 0 </y>
-    <z> -72 </z>
+   <location unit="M">
+    <x> -3.02153 </x>
+    <y> -0.03405 </y>
+    <z> -1.91735 </z>
    </location>
    <static_friction> 0.8 </static_friction>
    <dynamic_friction> 0.5 </dynamic_friction>
@@ -17,10 +17,10 @@
    <retractable>1</retractable>
   </contact>
   <contact type="BOGEY" name="LEFT_MLG">
-   <location unit="IN">
-    <x> -158.6 </x>
-    <y> -48 </y>
-    <z> -71.6 </z>
+   <location unit="M">
+    <x> 0.56097 </x>
+    <y> -1.16952 </y>
+    <z> -1.79705 </z>
    </location>
    <static_friction> 0.8 </static_friction>
    <dynamic_friction> 0.5 </dynamic_friction>
@@ -32,10 +32,10 @@
    <retractable>1</retractable>
   </contact>
   <contact type="BOGEY" name="RIGHT_MLG">
-   <location unit="IN">
-    <x> -158.6 </x>
-    <y> 48 </y>
-    <z> -71.6 </z>
+   <location unit="M">
+    <x> 0.56097 </x>
+    <y> 1.18118 </y>
+    <z> -1.79705 </z>
    </location>
    <static_friction> 0.8 </static_friction>
    <dynamic_friction> 0.5 </dynamic_friction>
@@ -48,7 +48,7 @@
   </contact>
   <contact type="STRUCTURE" name="LEFT_WT">
    <location unit="IN">
-    <x> -121.3 </x>
+    <x> 58.7 </x>
     <y> -189 </y>
     <z> 0 </z>
    </location>
@@ -60,7 +60,7 @@
   </contact>
   <contact type="STRUCTURE" name="RIGHT_WT">
    <location unit="IN">
-    <x> -121.3 </x>
+    <x> 58.7 </x>
     <y> 189 </y>
     <z> 0 </z>
    </location>
@@ -72,7 +72,7 @@
   </contact>
   <contact type="STRUCTURE" name="TOP_VS">
    <location unit="IN">
-    <x> -27.2 </x>
+    <x> 152.8 </x>
     <y> 0 </y>
     <z> 123.2 </z>
    </location>
@@ -84,7 +84,7 @@
   </contact>
   <contact type="STRUCTURE" name="LEFT_VFT">
    <location unit="IN">
-    <x> -97.6 </x>
+    <x> 82.4 </x>
     <y> -24.8 </y>
     <z> -52 </z>
    </location>
@@ -96,7 +96,7 @@
   </contact>
   <contact type="STRUCTURE" name="RIGHT_VFT">
    <location unit="IN">
-    <x> -97.6 </x>
+    <x> 82.4 </x>
     <y> 24.8 </y>
     <z> -52 </z>
    </location>
@@ -108,7 +108,7 @@
   </contact>
   <contact type="STRUCTURE" name="INTAKE">
    <location unit="IN">
-    <x> -322.4 </x>
+    <x> -142.4 </x>
     <y> 0 </y>
     <z> -36.6 </z>
    </location>
@@ -120,7 +120,7 @@
   </contact>
   <contact type="STRUCTURE" name="RADOME">
    <location unit="IN">
-    <x> -486.6 </x>
+    <x> -306.6 </x>
     <y> 0 </y>
     <z> -8.7 </z>
    </location>

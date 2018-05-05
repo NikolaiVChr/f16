@@ -9,17 +9,17 @@
   <vtailarea unit="FT2"> 54.75 </vtailarea>
   <vtailarm unit="FT"> 0 </vtailarm>
   <location name="AERORP" unit="IN">
-   <x> -181.9336 </x><!-- -180.4336 = static margin of -4%mac -->
+   <x> -1.9336 </x><!-- -180.4336 = static margin of -4%mac -->
    <y> 0 </y>
    <z> 0 </z>
   </location>
   <location name="EYEPOINT" unit="IN">
-   <x> -336.2 </x>
+   <x> -156.2 </x>
    <y> 0 </y>
    <z> 29.5 </z>
   </location>
   <location name="VRP" unit="IN">
-   <x> -180 </x><!-- -4.572 meter -->
+   <x> 0 </x><!-- -180 inch is -4.572 meter -->
    <y> 0 </y>
    <z> 0 </z>
   </location>

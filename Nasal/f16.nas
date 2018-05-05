@@ -95,7 +95,7 @@ var resetView = func () {
   
   if (getprop("sim/current-view/view-number") == 0) {
     interpolate("sim/current-view/x-offset-m", 0, 1); 
-    interpolate("sim/current-view/y-offset-m", 0.94, 1); 
+    interpolate("sim/current-view/y-offset-m", 0.7975, 1); 
     interpolate("sim/current-view/z-offset-m", -3.94, 1);
   } else {
     interpolate("sim/current-view/x-offset-m", 0, 1);
@@ -111,7 +111,7 @@ var HDDView = func () {
     }
     interpolate("sim/current-view/field-of-view", 41, 0.66);
     interpolate("sim/current-view/heading-offset-deg", hd_t,0.66);
-    interpolate("sim/current-view/pitch-offset-deg", -5,0.66);
+    interpolate("sim/current-view/pitch-offset-deg", -10.85,0.66);
     interpolate("sim/current-view/roll-offset-deg", 0,0.66);
     interpolate("sim/current-view/x-offset-m", 0.1166, 1); 
     interpolate("sim/current-view/y-offset-m", 0.6282, 1); 
@@ -128,7 +128,7 @@ var RWRView = func () {
     }
     interpolate("sim/current-view/field-of-view", 28, 0.66);
     interpolate("sim/current-view/heading-offset-deg", hd_t,0.66);
-    interpolate("sim/current-view/pitch-offset-deg", 2,0.66);
+    interpolate("sim/current-view/pitch-offset-deg", -6.9,0.66);
     interpolate("sim/current-view/roll-offset-deg", 0,0.66);
     interpolate("sim/current-view/x-offset-m", -0.1166, 1); 
     interpolate("sim/current-view/y-offset-m", 0.6282, 1); 
