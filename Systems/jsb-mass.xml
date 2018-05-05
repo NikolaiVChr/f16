@@ -5,7 +5,7 @@
   <iyy unit="SLUG*FT2"> 55814 </iyy>
   <izz unit="SLUG*FT2"> 63100 </izz>
   <ixy unit="SLUG*FT2"> 0 </ixy>
-  <ixz unit="SLUG*FT2"> 982 </ixz>
+  <ixz unit="SLUG*FT2"> 982 </ixz><!-- why is this negated when flying???? -->
   <iyz unit="SLUG*FT2"> 0 </iyz>
   <emptywt unit="LBS"> 17400 </emptywt>
   <location name="CG" unit="IN">

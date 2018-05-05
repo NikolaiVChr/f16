@@ -73,7 +73,6 @@ HUD
 ---
 Make tons of features.
 CCIP for MK82
-Trackline goes on too slow when in upper view.
 
 MFDs
 ----

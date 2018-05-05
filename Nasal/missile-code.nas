@@ -1052,14 +1052,17 @@ var AIM = {
 		if (!DEBUG_STATS) return;
 
 		var classes = "";
+		var classesSep = "";
 		if (me.target_air) {
-			classes = classes~"Airborne"
+			classes = classes~"Airborne";
+			classesSep = ", ";
 		}
 		if (me.target_gnd) {
-			classes = classes~" Ground"
+			classes = classes~classesSep~"Ground";
+			classesSep = ", ";
 		}
 		if (me.target_sea) {
-			classes = classes~" Ship"
+			classes = classes~classesSep~"Ship";
 		}
 		var cooling = me.coolable?"YES":"NO";
 		var rea = me.reaquire?"YES":"NO";
