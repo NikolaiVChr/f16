@@ -139,6 +139,22 @@ var F16_HUD = {
                 .vert(-30)
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
+        obj.bombFallLine = obj.svg.createChild("path")
+                .moveTo(sx*0.5*0.695633,0)
+                #.horiz(10)
+                .vert(400)
+                .setStrokeLineWidth(1)
+                .setColor(0,1,0);
+        obj.solutionCue = obj.svg.createChild("path")
+                .moveTo(sx*0.5*0.695633-5,0)
+                .horiz(10)
+                .setStrokeLineWidth(1)
+                .setColor(0,1,0);
+        obj.ccrpMarker = obj.svg.createChild("path")
+                .moveTo(sx*0.5*0.695633-10,sy*0.5)
+                .horiz(20)
+                .setStrokeLineWidth(1)
+                .setColor(0,1,0);
         obj.initUpdate =1;
         obj.svg.setColor(0.3,1,0.3);
         obj.alpha = getprop("f16/avionics/hud-brt");
@@ -222,9 +238,109 @@ var F16_HUD = {
         return el;
     },
 
-#
-#
-#
+    CCRP: func {
+        if (pylons.fcs != nil and pylons.fcs.getSelectedWeapon() != nil and (pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="GBU-12") and awg_9.active_u != nil and getprop("controls/armament/master-arm")==1 and pylons.fcs.getSelectedWeapon().status == armament.MISSILE_LOCK) {
+            me.agl = (getprop("position/altitude-ft")-awg_9.active_u.get_altitude())*FT2M;
+            #me.agl = getprop("position/altitude-agl-ft")*FT2M;
+            me.alti = getprop("position/altitude-ft")*FT2M;
+            me.roll = getprop("orientation/roll-deg");
+            me.vel = getprop("velocities/groundspeed-kt")*0.5144;#m/s
+            me.dens = getprop("fdm/jsbsim/atmosphere/density-altitude");
+            me.mach = getprop("velocities/mach");
+            me.speed_down_fps = getprop("velocities/speed-down-fps");
+            me.speed_east_fps = getprop("velocities/speed-east-fps");
+            me.speed_north_fps = getprop("velocities/speed-north-fps");
+
+            me.t = 0.0;
+            me.dt = me.agl*0.00005;#3000 ft = ~0.1
+            if (me.dt < 0.1) me.dt = 0.1;
+            me.altC = me.agl;
+            me.vel_z = -me.speed_down_fps*FT2M;#positive upwards
+            me.fps_z = -me.speed_down_fps;
+            me.vel_x = math.sqrt(me.speed_east_fps*me.speed_east_fps+me.speed_north_fps*me.speed_north_fps)*FT2M;
+            me.fps_x = me.vel_x * M2FT;
+            me.bomb = pylons.fcs.getSelectedWeapon();
+
+            me.rs = me.bomb.rho_sndspeed(me.dens-(me.agl/2)*M2FT);
+            me.rho = me.rs[0];
+            me.Cd = me.bomb.drag(me.mach);
+            me.mass = me.bomb.weight_launch_lbm / armament.slugs_to_lbm;
+            me.q = 0.5 * me.rho * me.fps_z * me.fps_z;
+            me.deacc = (me.Cd * me.q * me.bomb.ref_area_sqft) / me.mass;
+
+            while (me.altC > 0 and me.t <= 32) {#16 secs is max fall time according to manual
+              me.t += me.dt;
+              me.acc = -9.81 + me.deacc * FT2M;
+              me.vel_z += me.acc * me.dt;
+              me.altC = me.altC + me.vel_z*me.dt+0.5*me.acc*me.dt*me.dt;
+            }
+            #printf("predict fall time=%0.1f", t);
+
+            if (me.t >= 32) {
+              me.solutionCue.hide();
+              me.ccrpMarker.hide();
+              me.bombFallLine.hide();
+              return 0;
+            }
+            #t -= 0.75 * math.cos(pitch*D2R);            # fudge factor
+
+            me.q = 0.5 * me.rho * me.fps_x * me.fps_x;
+            me.deacc = (me.Cd * me.q * me.bomb.ref_area_sqft) / me.mass;
+            me.acc = -me.deacc * FT2M;
+            
+            me.fps_x_final = me.t*me.acc+me.fps_x;# calc final horz speed
+            me.fps_x_average = (me.fps_x-(me.fps_x-me.fps_x_final)*0.5);
+            me.mach_average = me.fps_x_average / me.rs[1];
+            
+            me.Cd = me.bomb.drag(me.mach_average);
+            me.q = 0.5 * me.rho * me.fps_x_average * me.fps_x_average;
+            me.deacc = (me.Cd * me.q * me.bomb.ref_area_sqft) / me.mass;
+            me.acc = -me.deacc * FT2M;
+            me.dist = me.vel_x*me.t+0.5*me.acc*me.t*me.t;
+
+            me.ac = geo.aircraft_position();
+            me.ccipPos = geo.Coord.new(me.ac);
+
+            # we calc heading from composite speeds, due to alpha and beta might influence direction bombs will fall:
+            me.vectorMag = math.sqrt(me.speed_east_fps*me.speed_east_fps+me.speed_north_fps*me.speed_north_fps);
+            if (me.vectorMag == 0) {
+                me.vectorMag = 0.0001;
+            }
+            me.heading = -math.asin(me.speed_north_fps/me.vectorMag)*R2D+90;#divide by vector mag, to get normalized unit vector length
+            if (me.speed_east_fps/me.vectorMag < 0) {
+              me.heading = -me.heading;
+              while (me.heading > 360) {
+                me.heading -= 360;
+              }
+              while (me.heading < 0) {
+                me.heading += 360;
+              }
+            }
+            me.ccipPos.apply_course_distance(me.heading, me.dist);
+            #var elev = geo.elevation(ac.lat(), ac.lon());
+            #print(dist);
+            me.elev = me.alti-me.agl;#faster
+            me.ccipPos.set_alt(me.elev);
+            
+            me.distCCRP = me.ccipPos.distance_to(awg_9.active_u.get_Coord())/4000;
+            if (me.distCCRP > 0.75) {
+                me.distCCRP = 0.75;
+            }
+            me.bombFallLine.setTranslation(awg_9.active_u.get_relative_bearing()*me.texelPerDegreeX,0);
+            me.ccrpMarker.setTranslation(awg_9.active_u.get_relative_bearing()*me.texelPerDegreeX,0);
+            me.solutionCue.setTranslation(awg_9.active_u.get_relative_bearing()*me.texelPerDegreeX,me.sy*0.5-me.sy*0.5*me.distCCRP);
+            me.bombFallLine.show();
+            me.ccrpMarker.show();
+            me.solutionCue.show();
+            return 1;
+        } else {
+            me.solutionCue.hide();
+            me.ccrpMarker.hide();
+            me.bombFallLine.hide();
+            return 0;
+        }
+    },
+
     update : func(hdp) {
         me.roll_rad = -hdp.roll*D2R;
 
@@ -283,10 +399,11 @@ var F16_HUD = {
 
 #Altitude
         me.alt_range.setTranslation(0, hdp.measured_altitude * alt_range_factor);
-
+        me.isItON = me.CCRP();
 # IAS
         me.ias_range.setTranslation(0, hdp.IAS * ias_range_factor);
         if (hdp.FrameCount == 2 or me.initUpdate == 1) {
+            
             me.agl=getprop("position/altitude-agl-ft");
             if(me.agl < 13000) {
                 me.ralt.setText(sprintf("R %05d ",me.agl));
@@ -310,7 +427,11 @@ var F16_HUD = {
                     me.gd = " G";
                 me.window2.setText(sprintf("F %d %s",hdp.flap_pos_deg,me.gd));
             } elsif (getprop("controls/armament/master-arm")) {
-                me.window2.setText("ARM");
+                if (me.isItON) {
+                    me.window2.setText("ARM CCRP");
+                } else {
+                    me.window2.setText("ARM");
+                }
                 me.window2.setVisible(1);
             } else {
                 me.window2.setText("NAV");
@@ -339,6 +460,8 @@ var F16_HUD = {
                         me.txt = sprintf("%dM65", pylons.fcs.getAmmo());
                     } elsif (me.weap == "AGM-84") {
                         me.txt = sprintf("%dM84", pylons.fcs.getAmmo());
+                    } elsif (me.weap == "MK-82") {
+                        me.txt = sprintf("%dB82", pylons.fcs.getAmmo());
                     }
                 }
                 me.window7.setText(me.txt);
