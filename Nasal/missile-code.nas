@@ -1418,6 +1418,9 @@ var AIM = {
 				
 				if (me.track_signal_e > 0 and me.pitch+me.track_signal_e > me.maxPitch and me.thrust_lbf==0) {# super hack
 	            	me.printFlight("Prevented to pitch up to %.2f degs.", me.pitch+me.track_signal_e);
+	            	me.adjst = 1-(me.pitch+me.track_signal_e - me.maxPitch)/45;
+	            	if (me.adjst < 0) me.adjst = 0;
+	            	me.pitch      += me.track_signal_e*me.adjst;
 	            } else {
 	            	me.pitch      += me.track_signal_e;
 	            }
