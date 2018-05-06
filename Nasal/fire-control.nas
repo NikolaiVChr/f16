@@ -120,6 +120,7 @@ var FireControl = {
 	},
 
 	cycleAG: func {
+		# will stop current weapon and select next A-A weapon and start it.
 		me.stopCurrent();
 		if (!me._isSelectedWeapon()) {
 			me.selected = nil;
@@ -219,6 +220,7 @@ var FireControl = {
 	},
 
 	cycleAA: func {
+		# will stop current weapon and select next A-A weapon and start it.
 		me.stopCurrent();
 		if (!me._isSelectedWeapon()) {
 			me.selected = nil;
@@ -326,6 +328,7 @@ var FireControl = {
 	},
 
 	getSelectedWeapon: func {
+		# return selected weapon or nil
 		if (me.selected == nil) {
 			return nil;
 		}
@@ -336,6 +339,7 @@ var FireControl = {
 	},
 
 	getSelectedPylon: func {
+		# return selected pylon or nil
 		if (me.selected == nil) {
 			return nil;
 		}
@@ -343,6 +347,7 @@ var FireControl = {
 	},
 
 	isLock: func {
+		# returns if current weapon has lock
 		me.wpn = me.getSelectedWeapon();
 		if (me.wpn != nil and me.wpn.parents[0] == armament.AIM and me.wpn.status==armament.MISSILE_LOCK) {
 			return 1;
@@ -351,6 +356,7 @@ var FireControl = {
 	},
 
 	jettisonSelectedPylonContent: func {
+		# jettison selected pylon
 		if (me.selected == nil) {
 			printDebug("Nothing to jettison");
 			return nil;
@@ -363,12 +369,14 @@ var FireControl = {
 	},
 
 	jettisonAll: func {
+		# jettison all stations
 		foreach (pyl;me.pylons) {
 			pyl.jettisonAll();
 		}
 	},
 
 	getSelectedPylonNumber: func {
+		# return selected pylon index or nil
 		if (me.selected == nil) {
 			return nil;
 		}
@@ -376,6 +384,8 @@ var FireControl = {
 	},
 
 	selectPylon: func (p, w=nil) {
+		# select a specified pylon
+		# will stop previous weapon, will start next.
 		if (size(me.pylons) > p) {
 			me.ws = me.pylons[p].getWeapons();
 			if (me.ws != nil and w != nil and size(me.ws) > w and me.ws[w] != nil) {
@@ -402,6 +412,8 @@ var FireControl = {
 	},
 
 	trigger: func {
+		# trigger pressed down should go here, this will fire weapon
+		# cannon is fired in another way, but this method will print the brevity.
 		printfDebug("trigger called %d %d %d",getprop("controls/armament/master-arm"),getprop("controls/armament/trigger"),me.selected != nil);
 		if (getprop("controls/armament/master-arm") == 1 and getprop("controls/armament/trigger") > 0 and me.selected != nil) {
 			printDebug("trigger propagating");
@@ -422,6 +434,8 @@ var FireControl = {
 	},
 
 	updateCurrent: func {
+		# will start/sop current weapon depending on masterarm
+		# will also update mass (for cannon mainly)
 		if (getprop("controls/armament/master-arm")==1 and me.selected != nil) {
 			me.getSelectedWeapon().start();
 		} elsif (getprop("controls/armament/master-arm")==0 and me.selected != nil) {
@@ -436,6 +450,9 @@ var FireControl = {
 	},
 
 	nextWeapon: func (type) {
+		# find next weapon of type. Will select and start it.
+		# will NOT stop previous weapon
+		# will NOT set selectedType
 		if (me.selected == nil) {
 			me.pylon = me.pylonOrder[size(me.pylonOrder)-1];
 		} else {
@@ -471,6 +488,8 @@ var FireControl = {
 
 	_getNextWeapon: func (pylon, type, current) {
 		# get next weapon on a specific pylon.
+		# will return the index of the weapon inside pylon.
+		# returns -1 when not found
 		if (pylon.currentSet != nil and pylon.currentSet["fireOrder"] != nil and size(pylon.currentSet.fireOrder) > 0) {
 			printDebug("  getting next weapon");
 			if (current == nil) {
@@ -495,6 +514,7 @@ var FireControl = {
 	},
 
 	getAmmo: func {
+		# return ammo count of currently selected type
 		me.count = 0;
 		foreach (p;me.pylons) {
 			me.count += p.getAmmo(me.selectedType);
@@ -503,6 +523,7 @@ var FireControl = {
 	},
 
 	vectorIndex: func (vec, item) {
+		# returns index of item in vector, -1 if nothing.
 		me.m = 0;
 		foreach(test; vec) {
 			if (test == item) {
@@ -514,6 +535,7 @@ var FireControl = {
 	},
 
 	stopCurrent: func {
+		# stops current weapon, but does not deselect it.
 		me.selWeap = me.getSelectedWeapon();
 		if (me.selWeap != nil) {
 			me.selWeap.stop();
@@ -521,6 +543,7 @@ var FireControl = {
 	},
 
 	noWeapon: func {
+		# deselects
 		me.stopCurrent();
 		me.selected = nil;
 		me.selectedType = nil;
