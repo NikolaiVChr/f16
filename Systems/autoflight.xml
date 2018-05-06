@@ -52,61 +52,39 @@
 			<c1>25.6</c1>
 		</lag_filter>
 		
-		<switch name="autoflight/ss/roll-force"> <!-- Because we think both axis disconnect at once -->
+		<lag_filter name="autoflight/ss/yaw-input">
+			<input>fcs/fly-by-wire/yaw/pedal-force-lbf</input>
+			<c1>25.6</c1>
+		</lag_filter>
+		
+		<switch name="autoflight/ss/force">
 			<default value="0"/>
 			<test logic="OR" value="1">
 				autoflight/ss/roll-input gt 1
 				autoflight/ss/roll-input lt -1
-				autoflight/ss/pitch-input gt 1
-				autoflight/ss/pitch-input lt -1
+				autoflight/ss/pitch-input gt 1.5
+				autoflight/ss/pitch-input lt -1.5
+				autoflight/ss/yaw-input gt 8
+				autoflight/ss/yaw-input lt -8
 			</test>
 		</switch>
 		
-		<switch name="autoflight/ss/roll-reset-time">
+		<switch name="autoflight/ss/reset-time">
 			<default value="/sim/time/elapsed-sec"/>
-			<test value="autoflight/ss/roll-reset-time">
-				autoflight/ss/roll-force eq 0
+			<test value="autoflight/ss/reset-time">
+				autoflight/ss/force eq 0
 			</test>
 		</switch>
 		
-		<summer name="autoflight/ss/roll-reset-time-delay">
-			<input>autoflight/ss/roll-reset-time</input>
+		<summer name="autoflight/ss/reset-time-delay">
+			<input>autoflight/ss/reset-time</input>
 			<input>autoflight/ss/delay</input>
 		</summer>
 		
-		<switch name="autoflight/ss/roll-active">
+		<switch name="autoflight/ss/active">
 			<default value="0"/>
 			<test value="1">
-				/sim/time/elapsed-sec lt autoflight/ss/roll-reset-time-delay
-			</test>
-		</switch>
-		
-		<switch name="autoflight/ss/pitch-force"> <!-- Because we think both axis disconnect at once -->
-			<default value="0"/>
-			<test logic="OR" value="1">
-				autoflight/ss/roll-input gt 1
-				autoflight/ss/roll-input lt -1
-				autoflight/ss/pitch-input gt 1
-				autoflight/ss/pitch-input lt -1
-			</test>
-		</switch>
-		
-		<switch name="autoflight/ss/pitch-reset-time">
-			<default value="/sim/time/elapsed-sec"/>
-			<test value="autoflight/ss/pitch-reset-time">
-				autoflight/ss/pitch-force eq 0
-			</test>
-		</switch>
-		
-		<summer name="autoflight/ss/pitch-reset-time-delay">
-			<input>autoflight/ss/pitch-reset-time</input>
-			<input>autoflight/ss/delay</input>
-		</summer>
-		
-		<switch name="autoflight/ss/pitch-active">
-			<default value="0"/>
-			<test value="1">
-				/sim/time/elapsed-sec lt autoflight/ss/pitch-reset-time-delay
+				/sim/time/elapsed-sec lt autoflight/ss/reset-time-delay
 			</test>
 		</switch>
 		
@@ -115,7 +93,7 @@
 			<test logic="AND" value="1"> <!-- /f16/fcs/switch-pitch is not a typo -->
 				/f16/fcs/switch-pitch ne 0
 				autoflight/can-engage eq 1
-				autoflight/ss/roll-force eq 0
+				autoflight/ss/force eq 0
 				position/wow eq 0
 			</test>
 		</switch>
@@ -125,7 +103,7 @@
 			<test logic="AND" value="1">
 				/f16/fcs/switch-pitch ne 0
 				autoflight/can-engage eq 1
-				autoflight/ss/pitch-force eq 0
+				autoflight/ss/force eq 0
 				position/wow eq 0
 			</test>
 		</switch>
@@ -276,7 +254,7 @@
 							<value>0</value>
 						</eq>
 						<eq>
-							<property>autoflight/ss/roll-active</property>
+							<property>autoflight/ss/active</property>
 							<value>0</value>
 						</eq>
 					</and>
@@ -444,7 +422,7 @@
 							<value>-1</value>
 						</eq>
 						<eq>
-							<property>autoflight/ss/pitch-active</property>
+							<property>autoflight/ss/active</property>
 							<value>0</value>
 						</eq>
 					</and>
