@@ -434,7 +434,7 @@ var FireControl = {
 	},
 
 	updateCurrent: func {
-		# will start/sop current weapon depending on masterarm
+		# will start/stop current weapon depending on masterarm
 		# will also update mass (for cannon mainly)
 		if (getprop("controls/armament/master-arm")==1 and me.selected != nil) {
 			me.getSelectedWeapon().start();
