@@ -137,6 +137,7 @@ var FireControl = {
 					if (me.isAG) {
 						me.selType = me.nextWeapon(me.typeTest);
 						if (me.selType != nil) {
+							me.updateCurrent();
 							me.selectedType = me.selType.type;
 							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 							return;
@@ -163,6 +164,7 @@ var FireControl = {
 					if (me.isAG) {
 						me.selType = me.nextWeapon(me.typeTest);
 						if (me.selType != nil) {
+							me.updateCurrent();
 							me.selectedType = me.selType.type;
 							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 							return;
@@ -177,16 +179,18 @@ var FireControl = {
 						continue;
 					}
 					if (me.typeTest == me.selectedType) {
-						if (me.getSelectedWeapon() != nil and me.getSelectedWeapon().parents[0] == armament.AIM and (find("G", me.getSelectedWeapon().class)!=-1 or find("M", me.me.getSelectedWeapon().class)!=-1)) {
+						me.selType = me.nextWeapon(me.typeTest);
+						if (me.selType != nil and me.selType.parents[0] == armament.AIM and (me.selType.target_gnd == 1 or me.selType.target_sea==1)) {
 							me.updateCurrent();
+							me.selectedType = me.selType.type;
 							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+							return;
 						} else {
 							me.selectedType = nil;
 							me.selected = nil;
 							screen.log.write("Selected nothing", 0.5, 0.5, 1);
 						}
 						return;
-						#break;
 					}
 					me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
 					if (me.class != nil) {
@@ -195,6 +199,7 @@ var FireControl = {
 							me.selType = me.nextWeapon(me.typeTest);
 							if (me.selType != nil) {
 								me.selectedType = me.selType.type;
+								me.updateCurrent();
 								screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 								return;
 							}
@@ -210,6 +215,7 @@ var FireControl = {
 		}
 		me.selectedType = nil;
 		me.selected = nil;
+		me.updateCurrent();
 	},
 
 	cycleAA: func {
@@ -231,6 +237,7 @@ var FireControl = {
 						me.selType = me.nextWeapon(me.typeTest);
 						if (me.selType != nil) {
 							me.selectedType = me.selType.type;
+							me.updateCurrent();
 							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 							return;
 						}
@@ -257,6 +264,7 @@ var FireControl = {
 						me.selType = me.nextWeapon(me.typeTest);
 						if (me.selType != nil) {
 							me.selectedType = me.selType.type;
+							me.updateCurrent();
 							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 							return;
 						}
@@ -270,16 +278,18 @@ var FireControl = {
 						continue;
 					}
 					if (me.typeTest == me.selectedType) {
-						if (me.getSelectedWeapon() != nil and me.getSelectedWeapon().parents[0] == armament.AIM and find("A", me.getSelectedWeapon().class)!=-1) {
+						me.selType = me.nextWeapon(me.typeTest);
+						if (me.selType != nil and me.selType.parents[0] == armament.AIM and me.selType.target_air==1) {
 							me.updateCurrent();
+							me.selectedType = me.selType.type;
 							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+							return;
 						} else {
 							me.selectedType = nil;
 							me.selected = nil;
 							screen.log.write("Selected nothing", 0.5, 0.5, 1);
-						}		
+						}
 						return;
-						#break;
 					}
 					me.class = getprop("payload/armament/"~string.lc(me.typeTest)~"/class");
 					if (me.class != nil) {
@@ -288,6 +298,7 @@ var FireControl = {
 							me.selType = me.nextWeapon(me.typeTest);
 							if (me.selType != nil) {
 								me.selectedType = me.selType.type;
+								me.updateCurrent();
 								screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 								return;
 							}
@@ -416,10 +427,11 @@ var FireControl = {
 		} elsif (getprop("controls/armament/master-arm")==0 and me.selected != nil) {
 			me.getSelectedWeapon().stop();
 		}
-		print("FC: Masterarm "~getprop("controls/armament/master-arm"));
 		if (me.selected == nil) {
 			return;
 		}
+		print("FC: Masterarm "~getprop("controls/armament/master-arm"));
+		
 		me.pylons[me.selected[0]].calculateMass();#kind of a hack to get cannon ammo changed.
 	},
 
