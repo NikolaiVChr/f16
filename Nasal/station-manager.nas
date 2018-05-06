@@ -28,8 +28,8 @@ var Station = {
 		p.guiListener = nil;
 		p.currentName = nil;	
 		p.currentSet = nil;
-		p.myListener = nil;
-		p.AIMListener = nil;
+		p.myListener = nil;#will be called when a stations loadout changes from outside.
+		p.AIMListener = nil;#will be called when a weapon is fired. argument=the weapon
 		return p;
 	},
 
@@ -89,6 +89,9 @@ var Station = {
 		me.calculateMass();
 		me.calculateFDM();
 		me.setGUI();
+		if(me.myListener != nil) {
+			me.myListener.updateAll();
+		}
 	},
 
 	loadingSet: func (set) {

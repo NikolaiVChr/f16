@@ -41,14 +41,14 @@ var FireControl = {
 		me.FireControlRecipient = emesary.Recipient.new("FireControlRecipient");
 		me.FireControlRecipient.Receive = func(notification) {
 	        if (notification.NotificationType == "WeaponRequestNotification") {
-	        	#printf("FireControlRecipient recv: %s", notification.NotificationType);
+	        	#printfDebug("FireControlRecipient recv: %s", notification.NotificationType);
 	        	if (me.selected != nil) {
 					me.WeaponNotification.updateV(me.pylons[me.selected[0]].getWeapons()[me.selected[1]]);
 					emesary.GlobalTransmitter.NotifyAll(me.WeaponNotification);
 				}
 	            return emesary.Transmitter.ReceiptStatus_OK;
 	        } elsif (notification.NotificationType == "WeaponCommandNotification") {
-	        	#printf("FireControlRecipient recv: %s", notification.NotificationType);
+	        	#printfDebug("FireControlRecipient recv: %s", notification.NotificationType);
 	            if (notification.cooling == 1) {
 	    		    #toggle all heatseekers to cool
 	    	    }
@@ -61,7 +61,7 @@ var FireControl = {
 	    	    # etc etc
 	            return emesary.Transmitter.ReceiptStatus_OK;
 	        } elsif (notification.NotificationType == "CycleWeaponNotification") {
-	        	#printf("FireControlRecipient recv: %s", notification.NotificationType);
+	        	#printfDebug("FireControlRecipient recv: %s", notification.NotificationType);
 	        	me.cycleWeapon();
 	            return emesary.Transmitter.ReceiptStatus_OK;
 	        }
@@ -77,13 +77,13 @@ var FireControl = {
 		if (me.selWeapType == nil) {
 			me.selectedType = me.typeOrder[0];
 			if (me.nextWeapon(me.typeOrder[0]) != nil) {
-				printf("FC: Selected first weapon: %s on pylon %d position %d",me.selectedType,me.selected[0],me.selected[1]);
+				printfDebug("FC: Selected first weapon: %s on pylon %d position %d",me.selectedType,me.selected[0],me.selected[1]);
 			} else {
-				printf("FC: Selected first weapon: %s, but none is loaded.", me.selectedType);
+				printfDebug("FC: Selected first weapon: %s, but none is loaded.", me.selectedType);
 			}
 		} else {
 			me.selType = me.selectedType;
-			printf("Already selected %s",me.selType);
+			printfDebug("Already selected %s",me.selType);
 			me.selTypeIndex = me.vectorIndex(me.typeOrder, me.selType);
 			me.selTypeIndex += 1;
 			if (me.selTypeIndex >= size(me.typeOrder)) {
@@ -91,12 +91,12 @@ var FireControl = {
 			}
 			me.selectedType = me.typeOrder[me.selTypeIndex];
 			me.selType = me.selectedType;
-			printf(" Now selecting %s",me.selType);
+			printfDebug(" Now selecting %s",me.selType);
 			me.wp = me.nextWeapon(me.selType);
 			if (me.wp != nil) {			
-				printf("FC: Selected next weapon type: %s on pylon %d position %d",me.selectedType,me.selected[0],me.selected[1]);
+				printfDebug("FC: Selected next weapon type: %s on pylon %d position %d",me.selectedType,me.selected[0],me.selected[1]);
 			} else {
-				printf("FC: Selected next weapon type: %s, but none is loaded.", me.selectedType);
+				printfDebug("FC: Selected next weapon type: %s, but none is loaded.", me.selectedType);
 			}
 		}
 		screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
@@ -137,7 +137,7 @@ var FireControl = {
 					if (me.isAG) {
 						me.selType = me.nextWeapon(me.typeTest);
 						if (me.selType != nil) {
-							me.updateCurrent();
+							#me.updateCurrent();
 							me.selectedType = me.selType.type;
 							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 							return;
@@ -164,7 +164,7 @@ var FireControl = {
 					if (me.isAG) {
 						me.selType = me.nextWeapon(me.typeTest);
 						if (me.selType != nil) {
-							me.updateCurrent();
+							#me.updateCurrent();
 							me.selectedType = me.selType.type;
 							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 							return;
@@ -181,7 +181,7 @@ var FireControl = {
 					if (me.typeTest == me.selectedType) {
 						me.selType = me.nextWeapon(me.typeTest);
 						if (me.selType != nil and me.selType.parents[0] == armament.AIM and (me.selType.target_gnd == 1 or me.selType.target_sea==1)) {
-							me.updateCurrent();
+							#me.updateCurrent();
 							me.selectedType = me.selType.type;
 							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 							return;
@@ -199,7 +199,7 @@ var FireControl = {
 							me.selType = me.nextWeapon(me.typeTest);
 							if (me.selType != nil) {
 								me.selectedType = me.selType.type;
-								me.updateCurrent();
+								#me.updateCurrent();
 								screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 								return;
 							}
@@ -237,7 +237,7 @@ var FireControl = {
 						me.selType = me.nextWeapon(me.typeTest);
 						if (me.selType != nil) {
 							me.selectedType = me.selType.type;
-							me.updateCurrent();
+							#me.updateCurrent();
 							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 							return;
 						}
@@ -264,7 +264,7 @@ var FireControl = {
 						me.selType = me.nextWeapon(me.typeTest);
 						if (me.selType != nil) {
 							me.selectedType = me.selType.type;
-							me.updateCurrent();
+							#me.updateCurrent();
 							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 							return;
 						}
@@ -280,7 +280,7 @@ var FireControl = {
 					if (me.typeTest == me.selectedType) {
 						me.selType = me.nextWeapon(me.typeTest);
 						if (me.selType != nil and me.selType.parents[0] == armament.AIM and me.selType.target_air==1) {
-							me.updateCurrent();
+							#me.updateCurrent();
 							me.selectedType = me.selType.type;
 							screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 							return;
@@ -298,7 +298,7 @@ var FireControl = {
 							me.selType = me.nextWeapon(me.typeTest);
 							if (me.selType != nil) {
 								me.selectedType = me.selType.type;
-								me.updateCurrent();
+								#me.updateCurrent();
 								screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
 								return;
 							}
@@ -352,7 +352,7 @@ var FireControl = {
 
 	jettisonSelectedPylonContent: func {
 		if (me.selected == nil) {
-			print("Nothing to jettison");
+			printDebug("Nothing to jettison");
 			return nil;
 		}
 		me.pylons[me.selected[0]].jettisonAll();
@@ -398,15 +398,15 @@ var FireControl = {
 				}
 			}
 		}
-		print("manually select pylon failed");
+		printDebug("manually select pylon failed");
 	},
 
 	trigger: func {
-		printf("trigger called %d %d %d",getprop("controls/armament/master-arm"),getprop("controls/armament/trigger"),me.selected != nil);
+		printfDebug("trigger called %d %d %d",getprop("controls/armament/master-arm"),getprop("controls/armament/trigger"),me.selected != nil);
 		if (getprop("controls/armament/master-arm") == 1 and getprop("controls/armament/trigger") > 0 and me.selected != nil) {
-			print("trigger propagating");
+			printDebug("trigger propagating");
 			me.aim = me.getSelectedWeapon();
-			#printf(" to %d",me.aim != nil);
+			#printfDebug(" to %d",me.aim != nil);
 			if (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.status == armament.MISSILE_LOCK) {
 				me.aim = me.pylons[me.selected[0]].fireWeapon(me.selected[1]);      
 				me.aim.sendMessage(me.aim.brevity~" at: "~me.aim.callsign);
@@ -430,7 +430,7 @@ var FireControl = {
 		if (me.selected == nil) {
 			return;
 		}
-		print("FC: Masterarm "~getprop("controls/armament/master-arm"));
+		printDebug("FC: Masterarm "~getprop("controls/armament/master-arm"));
 		
 		me.pylons[me.selected[0]].calculateMass();#kind of a hack to get cannon ammo changed.
 	},
@@ -441,29 +441,29 @@ var FireControl = {
 		} else {
 			me.pylon = me.selected[0];
 		}
-		print();
-		printf("Start find next weapon of type %s, starting from pylon %d", type, me.pylon);
+		printDebug("");
+		printfDebug("Start find next weapon of type %s, starting from pylon %d", type, me.pylon);
 		me.indexWeapon = -1;
 		me.index = me.vectorIndex(me.pylonOrder, me.pylon);
 		for(me.i=0;me.i<size(me.pylonOrder);me.i+=1) {
-			#print("me.i="~me.i);
+			#printDebug("me.i="~me.i);
 			me.index += 1;
 			if (me.index >= size(me.pylonOrder)) {
 				me.index = 0;
 			}
 			me.pylon = me.pylonOrder[me.index];
-			printf(" Testing pylon %d", me.pylon);
+			printfDebug(" Testing pylon %d", me.pylon);
 			me.indexWeapon = me._getNextWeapon(me.pylons[me.pylon], type, nil);
 			if (me.indexWeapon != -1) {
 				me.selected = [me.pylon, me.indexWeapon];
-				print(" Next weapon found");
+				printDebug(" Next weapon found");
 				me.updateCurrent();#TODO: think a bit more about this
 				me.wap = me.pylons[me.pylon].getWeapons()[me.indexWeapon];
 				#me.selectedType = me.wap.type;
 				return me.wap;
 			}
 		}
-		print(" Next weapon not found");
+		printDebug(" Next weapon not found");
 		me.selected = nil;
 		#me.selectedType = nil;
 		return nil;
@@ -472,13 +472,13 @@ var FireControl = {
 	_getNextWeapon: func (pylon, type, current) {
 		# get next weapon on a specific pylon.
 		if (pylon.currentSet != nil and pylon.currentSet["fireOrder"] != nil and size(pylon.currentSet.fireOrder) > 0) {
-			print("  getting next weapon");
+			printDebug("  getting next weapon");
 			if (current == nil) {
 				current = pylon.currentSet.fireOrder[size(pylon.currentSet.fireOrder)-1];
 			}
 			me.fireIndex = me.vectorIndex(pylon.currentSet.fireOrder, current);
 			for(me.j=0;me.j<size(pylon.currentSet.fireOrder);me.j+=1) {
-				#print("me.j="~me.j);
+				#printDebug("me.j="~me.j);
 				me.fireIndex += 1;
 				if (me.fireIndex >= size(pylon.currentSet.fireOrder)) {
 					me.fireIndex = 0;
@@ -490,7 +490,7 @@ var FireControl = {
 				}
 			}
 		}
-		#printf("  %d %d %d",pylon.currentSet != nil,pylon.currentSet["fireOrder"] != nil,size(pylon.currentSet.fireOrder) > 0);
+		#printfDebug("  %d %d %d",pylon.currentSet != nil,pylon.currentSet["fireOrder"] != nil,size(pylon.currentSet.fireOrder) > 0);
 		return -1;
 	},
 
@@ -524,7 +524,10 @@ var FireControl = {
 		me.stopCurrent();
 		me.selected = nil;
 		me.selectedType = nil;
-		print("FC: nothing selected");
+		printDebug("FC: nothing selected");
 	},
 };
 
+var debug = 0;
+var printDebug = func (msg) {if (debug == 1) print(msg);};
+var printfDebug = func {if (debug == 1) call(printf,arg);};
