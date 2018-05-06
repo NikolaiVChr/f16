@@ -95,6 +95,20 @@
 
     <hrule/>
 
+      <group>
+    <layout>hbox</layout>
+    <text><label>Bomb mission</label></text>
+    <button>
+      <legend>Mount</legend>
+      <binding>
+          <command>nasal</command>
+          <script>pylons.a2g_bombs();</script>
+      </binding>
+    </button>
+  </group>
+
+    <hrule/>
+
   <group>
     <layout>hbox</layout>
     <text><label>Air to sea</label></text>
