@@ -386,9 +386,15 @@ var F16_HUD = {
         me.ladder.update();
         me.ttc = getprop("instrumentation/radar/time-till-crash");
         if (me.ttc != nil and me.ttc>0 and me.ttc<10) {
+            me.flyup.setText("FLYUP");
             me.flyup.show();
         } else {
-            me.flyup.hide();
+            if (getprop("f16/vne")) {
+                me.flyup.setText("LIMIT");
+                me.flyup.show();
+            } else {
+                me.flyup.hide();
+            }
         }
   
 # velocity vector

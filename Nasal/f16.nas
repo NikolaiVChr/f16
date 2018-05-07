@@ -30,8 +30,12 @@ var checkVNE = func {
   if ((airspeed != nil) and (vne != nil) and (airspeed > vne))
   {
     msg = "Airspeed exceeds Vne!";
+    setprop("f16/vne",1);
   } elsif ((airspeedM != nil) and (vneM != nil) and (airspeedM > vneM)) {
     msg = "Airspeed exceeds Vne!";
+    setprop("f16/vne",1);
+  }  else {
+    setprop("f16/vne",0);
   }
 
   if (msg != "")
