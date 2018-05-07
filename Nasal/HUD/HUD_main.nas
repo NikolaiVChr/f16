@@ -107,7 +107,7 @@ var F16_HUD = {
         obj.custom = obj.canvas.createGroup();
         obj.flyup = obj.svg.createChild("text")
                 .setText("FLYUP")
-                .setTranslation(sx*0.5*0.695633,sy*0.25)
+                .setTranslation(sx*0.5*0.695633,sy*0.30)
                 .setAlignment("center-center")
                 .setColor(0,1,0)
                 .setFontSize(15, 1.0)
