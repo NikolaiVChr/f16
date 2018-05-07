@@ -412,19 +412,43 @@ var MFD_Device =
                     .vert(-20)
                     .setStrokeLineWidth(1)
                     .setColor(0.5,0.5,1);
-        svg.lock = setsize([],svg.maxB);
-        for (var i = 0;i<svg.maxB;i+=1) {
-            svg.lock[i] = svg.p_RDR.createChild("path")
-                        .moveTo(-10,-10)
+        #svg.lock = setsize([],svg.maxB);
+        #for (var i = 0;i<svg.maxB;i+=1) {
+            svg.lock = svg.p_RDR.createChild("group");
+            svg.lockRot = svg.lock.createChild("path")
+                            .moveTo(10,10)
+                            .lineTo(0,-10)
+                            .lineTo(-10,10)
+                            .lineTo(10,10)
+                            .moveTo(0,-10)
+                            .vert(-10)
+                            .setColor(1,1,0)
+                            .setStrokeLineWidth(2);
+            svg.lockAlt = svg.lock.createChild("text")
+                .setTranslation(0, 25)
+                .setText("20")
+                .setAlignment("center-top")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.lockInfo = svg.p_RDR.createChild("text")
+                .setTranslation(276*0.795*0.8, -482*0.9)
+                .setAlignment("right-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        #}
+        #svg.lockF = setsize([],3);
+        #for (var i = 0;i<3;i+=1) {
+            svg.lockFRot = svg.lock.createChild("path")
+                            .moveTo(-10,-10)
                             .vert(20)
                             .horiz(20)
                             .vert(-20)
                             .horiz(-20)
                             .moveTo(0,-10)
                             .vert(-10)
-                            .setStrokeLineWidth(2)
-                    .hide();
-        }
+                            .setColor(0.5,1,0.5)
+                            .setStrokeLineWidth(2);
+        #}
         svg.dlzX      = 276*0.795*0.75;
         svg.dlzY      =-482*0.25;
         svg.dlzWidth  =  20;
@@ -562,7 +586,8 @@ var MFD_Device =
             me.root.bars.setText(me.hot);
             me.root.az1.setTranslation(-(me.az/120)*me.wdt*0.5,0);
             me.root.az2.setTranslation((me.az/120)*me.wdt*0.5,0);
-            
+            me.root.lock.hide();
+            me.root.lockInfo.hide();
             foreach(contact; awg_9.tgts_list) {
                 if (contact.get_display() == 0) {
                     continue;
@@ -577,17 +602,31 @@ var MFD_Device =
                     me.rot = contact.get_heading();
                     if (me.rot == nil) {
                         #can happen in transition between TWS to RWS
-                        me.root.lock[me.i].hide();
+                        #me.root.lock.hide();
                     } else {
+                        me.lockAlt = sprintf("%02d", contact.get_altitude()*0.001);
+                        me.root.lockAlt.setText(me.lockAlt);
+                        me.lockInfo = sprintf("%4d   %+4d", contact.get_Speed(), contact.get_closure_rate());
+                        me.root.lockInfo.setText(me.lockInfo);
+                        me.root.lockInfo.show();
                         me.rot = me.rot-getprop("orientation/heading-deg")-geo.normdeg180(contact.get_relative_bearing());
-                        me.root.lock[me.i].setRotation(me.rot*D2R);
-                        me.root.lock[me.i].setColor([1,1,0]);
-                        me.root.lock[me.i].setTranslation(276*0.795*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels);
-                        me.root.lock[me.i].show();
-                        me.root.lock[me.i].update();
+                        me.root.lock.setTranslation(276*0.795*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels);
+                        me.cs = contact.get_Callsign();
+                        if (getprop("link16/wingman-1")==me.cs or getprop("link16/wingman-2")==me.cs or getprop("link16/wingman-3")==me.cs) {
+                            me.root.lockFRot.setRotation(me.rot*D2R);
+                            me.root.lockFRot.show();
+                            me.root.lockRot.hide();
+                            me.root.lockFRot.update();
+                        } else {
+                            me.root.lockRot.setRotation(me.rot*D2R);
+                            me.root.lockRot.show();
+                            me.root.lockFRot.hide();
+                            me.root.lockRot.update();
+                        }
+                        me.root.lock.show();
+                        me.root.lock.update();
+                        me.root.blep[me.i].hide();
                     }
-                } else {
-                    me.root.lock[me.i].hide();
                 }
                 me.i += 1;
                 if (me.i > (me.root.maxB-1)) {
@@ -596,7 +635,7 @@ var MFD_Device =
             }
             for (;me.i<me.root.maxB;me.i+=1) {
                 me.root.blep[me.i].hide();
-                me.root.lock[me.i].hide();
+                #me.root.lock[me.i].hide();
             }
             me.root.dlzArray = pylons.getDLZ();
             #me.dlzArray =[10,8,6,2,9];#test
