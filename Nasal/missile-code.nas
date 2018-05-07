@@ -1239,6 +1239,8 @@ var AIM = {
 		if (me.dlz_enabled) {
 			me.printStats("Dynamic launch zone support enabled.");
 			me.printStats("Missile will likely hit when fired at max range when closing speed is %.2f mach at %d feet.", me.dlz_opt_mach, me.dlz_opt_alt);
+		} else {
+			me.printStats("Dynamic launch zone support disabled.");
 		}
 		me.printStats("****************************************************");
 	},
@@ -1281,6 +1283,7 @@ var AIM = {
 			if (me.settings["guidance"] != nil) {
 				me.guidance = me.settings.guidance;
 				me.printStats("Guidance switched to %s",me.guidance);
+				me.printExtendedStats();
 			}
 			if (me.settings["guidanceLaw"] != nil) {
 				me.guidanceLaw = me.settings.guidanceLaw;
