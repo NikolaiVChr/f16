@@ -137,7 +137,7 @@ var Station = {
 		return me.weapons;
 	},
 
-	fireWeapon: func (index) {
+	fireWeapon: func (index, contacts=nil) {
 		if (index >= size(me.weapons) or index < 0) {
 			print("Pylon recieved illegal fire operation. No such weapon.");
 		} elsif (me.weapons[index] == nil) {
@@ -146,7 +146,7 @@ var Station = {
 			print("Pylon could not fire weapon, its inoperable.");
 		} elsif (me.weapons[index].parents[0] == armament.AIM) {
 			me.bye = me.weapons[index];
-			me.bye.release();
+			me.bye.release(contacts);
 			me.weapons[index] = nil;
 			me.calculateMass();
 			me.calculateFDM();

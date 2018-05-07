@@ -2,6 +2,10 @@
 # TODO list for F-16.
 #
 
+Bugs
+----
+nasal:3:C:\Jenkins\workspace\Windows-release\flightgear\src\Scripting\NasalModelData.cxx:93:New model with attached script(s) (branch = 0000013D9F339CF0, path = /'')
+
 
 Model
 -----
@@ -46,7 +50,6 @@ A-A and A-G button cycle cannon also?
 
 Damage
 ------
-Add LOAL detection capability
 Enable damage in-air but not disable. Already fired missiles should not broadcast. Problem people can suddenly turn it on and as surprise begin firing.
 
 Radar
@@ -77,6 +80,7 @@ CCIP for MK82
 MFDs
 ----
 Add tons of pages
+Make sit not crash the entire MFD.
 
 Aero
 ----

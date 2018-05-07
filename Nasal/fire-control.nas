@@ -121,6 +121,7 @@ var FireControl = {
 
 	cycleAG: func {
 		# will stop current weapon and select next A-A weapon and start it.
+		# horrible programming though, but since its called seldom and in no loop, it will do for now.
 		me.stopCurrent();
 		if (!me._isSelectedWeapon()) {
 			me.selected = nil;
@@ -419,9 +420,14 @@ var FireControl = {
 			printDebug("trigger propagating");
 			me.aim = me.getSelectedWeapon();
 			#printfDebug(" to %d",me.aim != nil);
-			if (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.status == armament.MISSILE_LOCK) {
-				me.aim = me.pylons[me.selected[0]].fireWeapon(me.selected[1]);      
-				me.aim.sendMessage(me.aim.brevity~" at: "~me.aim.callsign);
+			if (me.aim != nil and me.aim.parents[0] == armament.AIM and (me.aim.status == armament.MISSILE_LOCK or me.aim.loal)) {
+				me.aimStatus = me.aim.status;
+				me.aim = me.pylons[me.selected[0]].fireWeapon(me.selected[1], awg_9.completeList);
+				if (me.aimStatus == armament.MISSILE_LOCK) {
+					me.aim.sendMessage(me.aim.brevity~" at: "~me.aim.callsign);
+				} else {
+					me.aim.sendMessage(me.aim.brevity~" Maddog released");
+				}
 				me.aimNext = me.nextWeapon(me.selectedType);
 				if (me.aimNext != nil) {
 					me.aimNext.start();

@@ -146,6 +146,8 @@ var incoming_listener = func {
       if (find(" at " ~ callsign ~ ". Release ", last_vector[1]) != -1) {
         # a m2000 is firing at us
         m2000 = TRUE;
+      } elsif (find(" Maddog released", last_vector[1]) != -1) {
+        m2000 = TRUE;
       }
       if (contains(fireMsgs, last_vector[1]) or m2000 == TRUE) {
         # air2air being fired

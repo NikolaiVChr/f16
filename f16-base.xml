@@ -1020,6 +1020,12 @@
                 <DLZ type="bool">true</DLZ>
                 <DLZ-optimal-alt-feet type="double">25000</DLZ-optimal-alt-feet>
                 <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
+
+                <reaquire type="bool">true</reaquire>
+                <lock-on-after-launch type="bool">true</lock-on-after-launch>
+                <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed>
+                <prowl-flight type="string">gyro-pitch</prowl-flight>
+                <switch-time-sec type="double">5</switch-time-sec>
             </aim-9>
             <aim-120>
                 <short-name type="string">AIM120</short-name>
@@ -1055,6 +1061,12 @@
                 <DLZ type="bool">true</DLZ>
                 <DLZ-optimal-alt-feet type="double">30000</DLZ-optimal-alt-feet>
                 <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
+
+                <reaquire type="bool">true</reaquire>
+                <lock-on-after-launch type="bool">true</lock-on-after-launch>
+                <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed>
+                <prowl-flight type="string">gyro-pitch</prowl-flight>
+                <switch-time-sec type="double">5</switch-time-sec>
             </aim-120>
             <aim-7>
                 <short-name type="string">AIM7</short-name>
@@ -1090,8 +1102,11 @@
                 <DLZ type="bool">true</DLZ>
                 <DLZ-optimal-alt-feet type="double">30000</DLZ-optimal-alt-feet>
                 <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
-            </aim-7>      
-            <gbu-12> 
+                <reaquire type="bool">true</reaquire>
+                <lock-on-after-launch type="bool">false</lock-on-after-launch>
+                <auto-switch-target-allowed type="bool">false</auto-switch-target-allowed>
+            </aim-7>
+            <gbu-12>
                 <short-name type="string">GBU12</short-name>
                 <long-name type="string">GBU-12 Paveway II</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
@@ -1106,11 +1121,6 @@
                 <seeker-field-deg type="int"> 32 </seeker-field-deg>
                 <reaquire type="bool">true</reaquire>
                 <max-g type="double"> 1.35 </max-g><!-- real is 2.8, but here its limited for technical reasons -->
-                <release-limit-mach type="double"> 1.2 </release-limit-mach>
-                <release-limit-altitude type="double"> 16000 </release-limit-altitude>
-                <release-limit-g type="double"> 0 </release-limit-g><!-- no info on this -->
-                <release-limit-roll type="double"> 90 </release-limit-roll>
-                <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
                 <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
@@ -1135,8 +1145,15 @@
                 <deploy-time type="double">2</deploy-time>
                 <lateral-dps type="double"> 10 </lateral-dps>
                 <max-pitch-deg type="double">-45</max-pitch-deg>
+                <!-- the following 6 properties not used yet: -->
+                <release-limit-mach type="double"> 1.2 </release-limit-mach>
+                <release-limit-altitude type="double"> 16000 </release-limit-altitude>
+                <release-limit-g type="double"> 0 </release-limit-g><!-- no info on this -->
+                <release-limit-roll type="double"> 90 </release-limit-roll>
+                <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
+                <require-lock-to-fire type="bool">false</require-lock-to-fire>
             </gbu-12>
-            <agm-65>                    
+            <agm-65>
                 <short-name type="string">AGM65</short-name>
                 <long-name type="string">AGM-65B Maverick</long-name>
                 <vol-search type="double">0.00</vol-search>
