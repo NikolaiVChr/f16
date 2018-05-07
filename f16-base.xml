@@ -1096,15 +1096,15 @@
                 <long-name type="string">GBU-12 Paveway II</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
                 <class type="string">GM</class>
-                <max-fire-range-nm type="double"> 8 </max-fire-range-nm>
+                <max-fire-range-nm type="double">12 </max-fire-range-nm>
                 <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
                 <guidance type="string">laser</guidance>
-                <navigation type="string">APN</navigation>
+                <navigation type="string">PN</navigation>
                 <loft-altitude type="int"> 0 </loft-altitude>
                 <terrain-follow type="bool">false</terrain-follow>
                 <FCS-field-deg type="int"> 240 </FCS-field-deg>
                 <seeker-field-deg type="int"> 360 </seeker-field-deg>
-                <max-g type="double"> 1.5 </max-g>
+                <max-g type="double"> 1.35 </max-g>
                 <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
@@ -1121,7 +1121,7 @@
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double"> 75 </max-report-distance>
+                <max-report-distance type="double"> 275 </max-report-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>

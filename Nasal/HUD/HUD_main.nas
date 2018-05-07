@@ -251,9 +251,17 @@ var F16_HUD = {
             me.speed_east_fps = getprop("velocities/speed-east-fps");
             me.speed_north_fps = getprop("velocities/speed-north-fps");
 
+            if (pylons.fcs.getSelectedWeapon().type=="MK-82") {
+                me.dt = 0.1;
+                me.maxFallTime = 20;
+            } else {
+                me.dt = me.agl*0.000025;#4000 ft = ~0.1
+                if (me.dt < 0.1) me.dt = 0.1;
+                me.maxFallTime = 45;
+            }
+
             me.t = 0.0;
-            me.dt = me.agl*0.00005;#3000 ft = ~0.1
-            if (me.dt < 0.1) me.dt = 0.1;
+            
             me.altC = me.agl;
             me.vel_z = -me.speed_down_fps*FT2M;#positive upwards
             me.fps_z = -me.speed_down_fps;
@@ -268,15 +276,15 @@ var F16_HUD = {
             me.q = 0.5 * me.rho * me.fps_z * me.fps_z;
             me.deacc = (me.Cd * me.q * me.bomb.ref_area_sqft) / me.mass;
 
-            while (me.altC > 0 and me.t <= 32) {#16 secs is max fall time according to manual
+            while (me.altC > 0 and me.t <= me.maxFallTime) {#16 secs is max fall time according to manual
               me.t += me.dt;
               me.acc = -9.81 + me.deacc * FT2M;
               me.vel_z += me.acc * me.dt;
               me.altC = me.altC + me.vel_z*me.dt+0.5*me.acc*me.dt*me.dt;
             }
-            #printf("predict fall time=%0.1f", t);
+            #printf("predict fall time=%0.1f", me.t);
 
-            if (me.t >= 32) {
+            if (me.t >= me.maxFallTime) {
               me.solutionCue.hide();
               me.ccrpMarker.hide();
               me.bombFallLine.hide();
@@ -318,7 +326,7 @@ var F16_HUD = {
             }
             me.ccipPos.apply_course_distance(me.heading, me.dist);
             #var elev = geo.elevation(ac.lat(), ac.lon());
-            #print(dist);
+            #printf("Will fall %0.1f NM ahead of aircraft.", me.dist*M2NM);
             me.elev = me.alti-me.agl;#faster
             me.ccipPos.set_alt(me.elev);
             
