@@ -20,6 +20,7 @@ var FireControl = {
 		fc.pylonOrder=pylonOrder;
 		fc.typeOrder=typeOrder;
 		fc.selectedType = nil;
+		fc.triggerTime = 0;
 		fc.WeaponNotification = VectorNotification.new("WeaponNotification");
 		fc.setupMFDObservers();
 		setlistener("controls/armament/trigger",func{fc.trigger();fc.updateCurrent()});
@@ -72,6 +73,7 @@ var FireControl = {
 
 	cycleWeapon: func {
 		# it will cycle to next weapon type, even if that one is empty. (maybe add option if it should skip empty types)
+		me.triggerTime = 0;
 		me.stopCurrent();
 		me.selWeapType = me.selectedType;
 		if (me.selWeapType == nil) {
@@ -387,6 +389,7 @@ var FireControl = {
 	selectPylon: func (p, w=nil) {
 		# select a specified pylon
 		# will stop previous weapon, will start next.
+		me.triggerTime = 0;
 		if (size(me.pylons) > p) {
 			me.ws = me.pylons[p].getWeapons();
 			if (me.ws != nil and w != nil and size(me.ws) > w and me.ws[w] != nil) {
@@ -420,23 +423,36 @@ var FireControl = {
 			printDebug("trigger propagating");
 			me.aim = me.getSelectedWeapon();
 			#printfDebug(" to %d",me.aim != nil);
-			if (me.aim != nil and me.aim.parents[0] == armament.AIM and (me.aim.status == armament.MISSILE_LOCK or me.aim.loal)) {
-				me.aimStatus = me.aim.status;
+			if (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.status == armament.MISSILE_LOCK) {
 				me.aim = me.pylons[me.selected[0]].fireWeapon(me.selected[1], awg_9.completeList);
-				if (me.aimStatus == armament.MISSILE_LOCK) {
-					me.aim.sendMessage(me.aim.brevity~" at: "~me.aim.callsign);
-				} else {
-					me.aim.sendMessage(me.aim.brevity~" Maddog released");
-				}
+				me.aim.sendMessage(me.aim.brevity~" at: "~me.aim.callsign);
 				me.aimNext = me.nextWeapon(me.selectedType);
 				if (me.aimNext != nil) {
 					me.aimNext.start();
 				}
-				return;
+				me.triggerTime = 0;
+			} elsif (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.loal) {
+				me.triggerTime = getprop("sim/time/elapsed-sec");
+				settimer(func me.triggerHold(me.aim), 1.5);
 			} elsif (me.aim != nil and me.aim.parents[0] == stations.SubModelWeapon) {
 				armament.AIM.sendMessage("Guns guns");
 			}
+		} elsif (getprop("controls/armament/trigger") < 1) {
+			me.triggerTime = 0;
 		}
+	},
+
+	triggerHold: func (aimer) {
+		if (me.triggerTime == 0 or me.getSelectedWeapon() == nil or me.getSelectedWeapon().parents[0] != armament.AIM) {
+			return;
+		}
+		aimer = me.pylons[me.selected[0]].fireWeapon(me.selected[1], awg_9.completeList);
+		aimer.sendMessage(aimer.brevity~" Maddog released");
+		me.aimNext = me.nextWeapon(me.selectedType);
+		if (me.aimNext != nil) {
+			me.aimNext.start();
+		}
+		return;
 	},
 
 	updateCurrent: func {
