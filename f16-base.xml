@@ -1152,6 +1152,7 @@
                 <release-limit-roll type="double"> 90 </release-limit-roll>
                 <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
+                <hit-everything-nearby type="bool">true</hit-everything-nearby>
             </gbu-12>
             <agm-65>
                 <short-name type="string">AGM65</short-name>
@@ -1258,6 +1259,7 @@
                 <deploy-time type="double">0</deploy-time>
                 <lateral-dps type="double"> -10 </lateral-dps>
                 <max-pitch-deg type="double">-90</max-pitch-deg>
+                <hit-everything-nearby type="bool">true</hit-everything-nearby>
             </mk-82>
         </armament>
     </payload>

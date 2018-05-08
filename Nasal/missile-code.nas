@@ -84,7 +84,6 @@
 # Sub munitions that have their own guidance/FDM. (advanced)
 # GPS guided munitions could have waypoints added.
 # Specify terminal manouvres and preferred impact aspect.
-# Limit guiding if needed so that the missile don't lose sight of target?
 # Consider to average the closing speed in proportional navigation. So get it between second last positions and current, instead of last to current.
 # Drag coeff reduction due to exhaust plume.
 # Proportional navigation should use vector math instead decomposition horizontal/vertical navigation.
@@ -316,6 +315,7 @@ var AIM = {
 		m.selfdestruct_time     = getprop(m.nodeString~"self-destruct-time-sec");     # time before selfdestruct
 		m.destruct_when_free    = getprop(m.nodeString~"self-destruct-at-lock-lost"); # selfdestruct if lose target
 		m.reportDist            = getprop(m.nodeString~"max-report-distance");        # Interpolation hit: max distance from target it report it exploded, not passed. Trig hit: Distance where it will trigger.
+		m.multiHit				= getprop(m.nodeString~"hit-everything-nearby");      # bool. Only works well for slow moving targets. Needs you to pass contacts to release().
 		# avionics sounds
 		m.vol_search            = getprop(m.nodeString~"vol-search");                 # sound volume when searcing
 		m.vol_track             = getprop(m.nodeString~"vol-track");                  # sound volume when having lock
@@ -466,6 +466,9 @@ var AIM = {
 		}
 		if(m.switchTime == nil) {
 			m.switchTime = m.beam_width_deg*m.max_seeker_dev*0.05;
+		}
+		if(m.multiHit == nil) {
+			m.multiHit = FALSE;
 		}
 
         m.useModelCase          = getprop("payload/armament/modelsUseCase");
@@ -1260,12 +1263,17 @@ var AIM = {
 		me.printStats("Total drag-area is %.3f. Use this number to compare with other weapons for drag estimation.",me.Cd_base*me.ref_area_sqft);
 		me.printStats("Maximum structural g-force is %.1f",me.max_g);
 		me.printStats("Minimum speed for steering is %.1f mach.",me.min_speed_for_guiding);
+		me.printStats("Weapon will roll clockwise with %.1f degrees per second.", me.lateralSpeed);
 		me.printStats("WARHEAD:");
 		me.printStats("Warhead total weight is %.1f lbm.",me.weight_whead_lbm);
 		me.printStats("Arming time is %.1f seconds.",me.arming_time);
 		me.printStats("Will selfdestruct after %d seconds.",me.selfdestruct_time);
 		me.printStats("After propulsion end will max steer up to %d degree pitch.",me.maxPitch);
-		me.printStats("Weapon will roll clockwise with %.1f degrees per second.", me.lateralSpeed);
+		if (me.multiHit) {
+			me.printStats("When detonating, will hit everything nearby.");
+		} else {
+			me.printStats("When detonating, will only hit single target.");
+		}
 		if (me.destruct_when_free) {
 			me.printStats("Will selfdestruct if loses lock.");
 		}
@@ -2926,6 +2934,9 @@ var AIM = {
 			me.printStats("%s  Reason: %s time %.1f", phrase, reason, me.life_time);
 			me.sendMessage(phrase);
 		}
+		if (me.multiHit) {
+			me.multiExplosion(me.coord, event);
+		}
 		
 		me.ai.getNode("valid", 1).setBoolValue(0);
 		if (event == "exploded") {
@@ -2964,6 +2975,9 @@ var AIM = {
 			me.printStats("%s  Reason: %s time %.1f", phrase, reason, me.life_time);
 			me.sendMessage(phrase);
 		}
+		if (me.multiHit) {
+			me.multiExplosion(me.t_coord, event);
+		}
 		
 		me.ai.getNode("valid", 1).setBoolValue(0);
 		if (event == "exploded") {
@@ -2974,6 +2988,17 @@ var AIM = {
 			me.explodeSound = FALSE;
 		}
 		me.Tgt = nil;
+	},
+
+	multiExplosion: func (explode_coord, event) {
+		foreach (me.testMe;me.contacts) {
+			var min_distance = me.testMe.get_Coord().direct_distance_to(explode_coord);
+			if (min_distance < me.reportDist and me.testMe.getUnique() != me.Tgt.getUnique()) {
+				var phrase = sprintf("%s %s: %.1f meters from: %s", me.type,event, min_distance, me.testMe.get_Callsign());
+				me.printStats(phrase);
+				me.sendMessage(phrase);
+			}
+		}
 	},
 
 	sendMessage: func (str) {#GCD
@@ -3563,7 +3588,7 @@ var AIM = {
 	},
 
 	is_painted: func (target) {#GCD
-		if(target != nil}
+		if(target != nil) {
 			me.hasPaint = target.isPainted();
 			if(me.hasPaint != nil and me.hasPaint == TRUE) {
 				return TRUE;
@@ -3573,7 +3598,7 @@ var AIM = {
 	},
 
 	is_laser_painted: func (target) {#GCD
-		if(target != nil}
+		if(target != nil) {
 			me.hasPaint = target.isLaserPainted();
 			if(me.hasPaint != nil and me.hasPaint == TRUE) {
 				return TRUE;
