@@ -294,7 +294,7 @@
 		</fcs_function>
 		
 		<switch name="autoflight/roll/roll-rad-input">
-			<default value="0"/>
+			<default value="attitude/roll-rad"/>
 			<test logic="AND" value="autoflight/roll/roll-hld-target">
 				autoflight/output/roll-master eq 1
 				/f16/fcs/switch-roll eq 0
@@ -462,7 +462,7 @@
 		</fcs_function>
 		
 		<switch name="autoflight/pitch/pitch-rad-input">
-			<default value="0"/>
+			<default value="attitude/pitch-rad"/>
 			<test logic="AND" value="autoflight/pitch/pitch-hld-target">
 				autoflight/output/pitch-master eq 1
 				/f16/fcs/switch-pitch eq -1
