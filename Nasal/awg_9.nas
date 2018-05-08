@@ -909,7 +909,20 @@ var Target = {
     },
     setClass: func(cl){me.class=cl},
     get_type: func{me.class},
-    isPainted: func{return 1;},
+    isPainted: func{
+        if (active_u != nil and active_u.getUnique() == me.getUnique() and me.get_display() == 1) {
+            return 1;
+        } else {
+            return 0;
+        }
+    },
+    isLaserPainted: func{
+        if (active_u != nil and active_u.getUnique() == me.getUnique()) {
+            return 1;
+        } else {
+            return 0;
+        }
+    },
     get_Pitch: func{return me.ptch.getValue();},
     get_Roll: func{return me.rll.getValue();},
     get_Speed: func{return me.get_TAS();},

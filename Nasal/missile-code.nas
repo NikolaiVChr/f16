@@ -201,7 +201,8 @@ var contact = nil;
 # get_heading()
 # getFlareNode()  - Used for flares.
 # getChaffNode()  - Used for chaff.
-# isPainted()     - Tells if this target is still being tracked by the launch platform, only used in semi-radar and laser guided missiles.
+# isPainted()     - Tells if this target is still being tracked by the launch platform, only used in semi-radar guided missiles.
+# isLaserPainted()     - Tells if this target is still being tracked by the launch platform, only used laser guided missiles.
 # isRadiating(coord) - Tell if anti-radiation missile is hit by radiation from target. coord is the weapon position.
 
 var AIM = {
@@ -2298,7 +2299,7 @@ var AIM = {
 				me.printStats(me.type~": Not guiding (too low speed)");
 			}
 			me.tooLowSpeed = TRUE;
-		} elsif ((me.guidance == "semi-radar" or me.guidance =="laser") and me.is_painted(me.Tgt) == FALSE) {
+		} elsif ((me.guidance == "semi-radar" and me.is_painted(me.Tgt) == FALSE) or (me.guidance =="laser" and me.is_laser_painted(me.Tgt) == FALSE) ) {
 			# if its semi-radar guided and the target is no longer painted
 			me.guiding = FALSE;
 			if (me.reaquire == TRUE) {
@@ -3077,7 +3078,7 @@ var AIM = {
 	},
 
 	checkForLock: func {
-		if ((me.class!="A" or me.tagt.get_Speed()>15) and ((me.guidance != "semi-radar" and me.guidance != "laser") or me.is_painted(me.tagt) == TRUE)
+		if ((me.class!="A" or me.tagt.get_Speed()>15) and ((me.guidance != "semi-radar" or me.is_painted(me.Tgt) != FALSE) and (me.guidance =="laser" or me.is_laser_painted(me.Tgt) != FALSE))
 						and (me.guidance != "radiation" or me.is_radiating_aircraft(me.tagt) == TRUE)
 					    and me.rng < me.max_fire_range_nm and me.rng > me.min_fire_range_nm and me.FOV_check(me.total_horiz, me.total_elev, me.fcs_fov)
 					    and (me.rng < me.detect_range_curr_nm or (me.guidance != "radar" and me.guidance != "semi-radar" and me.guidance != "heat" and me.guidance != "vision" and me.guidance != "heat"))
@@ -3562,8 +3563,21 @@ var AIM = {
 	},
 
 	is_painted: func (target) {#GCD
-		if(target != nil and target.isPainted() != nil and target.isPainted() == TRUE) {
-			return TRUE;
+		if(target != nil}
+			me.hasPaint = target.isPainted();
+			if(me.hasPaint != nil and me.hasPaint == TRUE) {
+				return TRUE;
+			}
+		}
+		return FALSE;
+	},
+
+	is_laser_painted: func (target) {#GCD
+		if(target != nil}
+			me.hasPaint = target.isLaserPainted();
+			if(me.hasPaint != nil and me.hasPaint == TRUE) {
+				return TRUE;
+			}
 		}
 		return FALSE;
 	},
