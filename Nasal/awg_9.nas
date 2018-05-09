@@ -1129,10 +1129,14 @@ var Target = {
 	},
     isRadiating: func (coord) {
         me.rn = me.get_range();
-        me.bearingR = coord.course_to(me.get_Coord());
-        me.headingR = me.get_heading();
-        me.inv_bearingR =  me.bearingR+180;
-        me.deviationR = me.inv_bearingR - me.headingR;
+        if (me.get_model() != "buk-m2" and me.get_model() != "missile_frigate") {
+            me.bearingR = coord.course_to(me.get_Coord());
+            me.headingR = me.get_heading();
+            me.inv_bearingR =  me.bearingR+180;
+            me.deviationR = me.inv_bearingR - me.headingR;
+        } else {
+            me.deviationR = 0;
+        }
         me.rdrAct = me.propNode.getNode("sim/multiplay/generic/int[2]");
         if (me.rn < 70 and ((me.rdrAct != nil and me.rdrAct.getValue()!=1) or me.rdrAct == nil) and math.abs(geo.normdeg180(me.deviationR)) < 60) {
             # our radar is active and pointed at coord.

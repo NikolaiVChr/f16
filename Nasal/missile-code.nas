@@ -1401,6 +1401,11 @@ var AIM = {
 				me.semiLostLock = FALSE;
 				me.heatLostLock = FALSE;
 				me.hasGuided = FALSE;
+				if (!me.checkForClassInFlight(me.Tgt)) {
+					me.Tgt = nil;
+					me.callsign = "Unknown";
+					me.newTargetAssigned = FALSE;
+				}
 			}
 		}
 
@@ -3132,6 +3137,16 @@ var AIM = {
 					(  (me.slaveContact.get_type() == SURFACE and me.target_gnd == TRUE)
 	                or (me.slaveContact.get_type() == AIR and me.target_air == TRUE)
 	                or (me.slaveContact.get_type() == MARINE and me.target_sea == TRUE))) {
+			return TRUE;
+		}
+		return FALSE;
+	},
+
+	checkForClassInFlight: func (tact) {
+		if(tact != nil and tact.isValid() == TRUE and
+					(  (tact.get_type() == SURFACE and me.target_gnd == TRUE)
+	                or (tact.get_type() == AIR and me.target_air == TRUE)
+	                or (tact.get_type() == MARINE and me.target_sea == TRUE))) {
 			return TRUE;
 		}
 		return FALSE;

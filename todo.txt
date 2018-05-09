@@ -4,7 +4,6 @@
 
 Bugs
 ----
-nasal:3:C:\Jenkins\workspace\Windows-release\flightgear\src\Scripting\NasalModelData.cxx:93:New model with attached script(s) (branch = 0000013D9F339CF0, path = /'')
 
 
 Model
