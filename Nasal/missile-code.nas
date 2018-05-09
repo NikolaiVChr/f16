@@ -663,6 +663,7 @@ var AIM = {
 		m.fovLost = FALSE;
 		m.maddog = FALSE;
 		m.nextFovCheck = m.switchTime;
+		m.observing = m.guidance;
 
 		m.SwSoundOnOff.setBoolValue(FALSE);
 		#m.SwSoundFireOnOff.setBoolValue(FALSE);
@@ -1379,6 +1380,7 @@ var AIM = {
 			me.maddog = FALSE;
 			me.printStats("Maddog stage over, guided at "~me.callsign);
 		}
+		
 		if (me.arming_time != 5000 and me.free == FALSE and !me.newTargetAssigned and (me.canSwitch or (me.loal and me.maddog)) and size(me.contacts) > 0 and (me.dist_curr_direct==-1 or me.dist_curr_direct>me.reportDist)) {
 			# me.reaquire must also be enabled for me.canSwitch to work
 			
@@ -1399,6 +1401,7 @@ var AIM = {
 				me.radLostLock = FALSE;
 				me.semiLostLock = FALSE;
 				me.heatLostLock = FALSE;
+				me.hasGuided = FALSE;
 			}
 		}
 
@@ -1540,6 +1543,9 @@ var AIM = {
 	    } elsif (me.guidance != "unguided" and (me.rail == FALSE or me.rail_passed == TRUE) and me.arming_time != 5000 and me.free == FALSE and me.t_coord == nil
 	    		and (me.newTargetAssigned or (me.canSwitch and (me.fovLost or me.lostLOS or me.radLostLock or me.semiLostLock or me.heatLostLock) or (me.loal and me.maddog)))) {
 	    	# check for too low speed not performed on purpuse, difference between flying straight on A/P and making manouvres.
+	    	if (me.observing != me.standbyFlight) {
+            	me.keepPitch = me.pitch;
+            }
 	    	if (me.standbyFlight == "level") {
 				me.level();
 			} elsif (me.standbyFlight == "gyro-pitch") {
@@ -2991,6 +2997,7 @@ var AIM = {
 	},
 
 	multiExplosion: func (explode_coord, event) {
+		# hit everything that is nearby except for target itself.
 		foreach (me.testMe;me.contacts) {
 			var min_distance = me.testMe.get_Coord().direct_distance_to(explode_coord);
 			if (min_distance < me.reportDist and me.testMe.getUnique() != me.Tgt.getUnique()) {
