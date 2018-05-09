@@ -4,7 +4,7 @@
 
 Bugs
 ----
-
+masterarm off while aim9 in lock..bad stuuff [cant reproduce]
 
 Model
 -----

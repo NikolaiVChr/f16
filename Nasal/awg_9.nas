@@ -764,18 +764,16 @@ var Target = {
         if (c.getNode("position/latitude-deg") != nil and c.getNode("position/longitude-deg") != nil) {
             obj.lat = c.getNode("position/latitude-deg");
             obj.lon = c.getNode("position/longitude-deg");
-        } else {
-            obj.lat = nil;
-            if (c.getNode("position/global-x") != nil)
-            {
-                obj.x = me.propNode.getNode("position/global-x");
-                obj.y = me.propNode.getNode("position/global-y");
-                obj.z = me.propNode.getNode("position/global-z");
-            } else {
-                obj.x = nil;
-            }
         }
- 
+        if (c.getNode("position/global-x") != nil)
+        {
+            obj.x = c.getNode("position/global-x");
+            obj.y = c.getNode("position/global-y");
+            obj.z = c.getNode("position/global-z");
+        } else {
+            obj.x = nil;
+        }
+         
         if (obj.type == "multiplayer" or obj.type == "tanker" or obj.type == "aircraft" and obj.RdrProp != nil) 
             obj.airbone = 1;
         else
@@ -885,7 +883,7 @@ var Target = {
     isValid: func{return me.Valid.getValue();},
     getUnique: func{return me.get_Callsign();},
     get_Callsign: func{
-        if (me.Callsign == nil) {
+        if (me.Callsign == nil or me.Callsign.getValue() == "") {
             return me.get_model();
         }
         return me.Callsign.getValue();
@@ -966,8 +964,7 @@ var Target = {
 		return me.Alt.getValue();
 	},
 	get_total_elevation : func(own_pitch) {
-		me.deviation =  deviation_normdeg(own_pitch, me.Elevation.getValue());
-		me.TotalElevation.setValue(me.deviation);
+		me.deviation =  deviation_normdeg(own_pitch, me.getElevation());
 		return me.deviation;
 	},
 	get_range : func {
@@ -1057,19 +1054,17 @@ var Target = {
         return 0;
     },
     get_Coord: func(){
-        if (me.lat != nil) {
+        if (me.x != nil)
+        {
+            var x = me.x.getValue();
+            var y = me.y.getValue();
+            var z = me.z.getValue();
+
+            me.TgTCoord.set_xyz(x, y, z);
+        } elsif (me.lat != nil) {
             me.TgTCoord.set_latlon(me.lat.getValue(), me.lon.getValue(), me.Alt.getValue() * FT2M);
         } else {
-            if (me.x != nil)
-            {
-                var x = me.x.getValue();
-                var y = me.y.getValue();
-                var z = me.z.getValue();
-
-                me.TgTCoord.set_xyz(x, y, z);
-            } else {
-                return nil;#hopefully wont happen
-            }
+            return nil;#hopefully wont happen
         }
         return geo.Coord.new(me.TgTCoord);#best to pass a copy
     },
@@ -1125,7 +1120,7 @@ var Target = {
 	},
     isRadiating: func (coord) {
         me.rn = me.get_range();
-        if (me.get_model() != "buk-m2" and me.get_model() != "missile_frigate") {
+        if (me.get_model() != "buk-m2" and me.get_model() != "missile_frigate" or me.get_type()==MARINE) {
             me.bearingR = coord.course_to(me.get_Coord());
             me.headingR = me.get_heading();
             me.inv_bearingR =  me.bearingR+180;
