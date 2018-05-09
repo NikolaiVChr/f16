@@ -60,6 +60,7 @@ var F16_HUD = {
 
         obj.VV = obj.get_element("VelocityVector");
         obj.heading_tape = obj.get_element("heading-scale");
+        obj.heading_tape_pointer = obj.get_element("path3419");
         obj.roll_pointer = obj.get_element("roll-pointer");
         obj.alt_range = obj.get_element("alt_range");
         obj.ias_range = obj.get_element("ias_range");
@@ -551,7 +552,8 @@ var F16_HUD = {
         else
             me.heading_tape_position = (360-hdp.heading)*54/10;
          
-        me.heading_tape.setTranslation (me.heading_tape_position,0);
+        me.heading_tape.setTranslation (me.heading_tape_position,-10);
+        me.heading_tape_pointer.setTranslation (0,-10);
         me.roll_pointer.setRotation (me.roll_rad);
         me.trackLineShow = 0;
 #        if (hdp.FrameCount == 1 or hdp.FrameCount == 3 or me.initUpdate == 1) {
