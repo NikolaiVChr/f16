@@ -1394,7 +1394,7 @@ var AIM = {
 				}
 				me.Tgt = me.contacts[me.switchIndex];
 				me.callsign = me.Tgt.get_Callsign();
-				me.newTargetAssigned = TRUE;#rename
+				me.newTargetAssigned = TRUE;
 				me.t_coord = nil;
 				me.fovLost = FALSE;
 				me.lostLOS = FALSE;
@@ -1409,10 +1409,15 @@ var AIM = {
 			me.keepPitch = me.pitch;
 		}
 		if (me.Tgt != nil and me.Tgt.isValid() == FALSE) {#TODO: verify that the following threaded code can handle invalid contact. As its read from property-tree, not mutex protected.
-			me.printStats(me.type~": Target went away, deleting missile.");
-			me.sendMessage(me.type~" missed "~me.callsign~": Target logged off.");
-			settimer(func me.del(),0);
-			return;
+			if (me.newTargetAssigned) {
+				me.Tgt=nil;
+				me.t_coord=nil;
+			} else {
+				me.printStats(me.type~": Target went away, deleting missile.");
+				me.sendMessage(me.type~" missed "~me.callsign~": Target logged off.");
+				settimer(func me.del(),0);
+				return;
+			}
 		}
 		me.dt = deltaSec.getValue();#TODO: time since last time nasal timers were called
 		if (me.dt == 0) {
@@ -2999,6 +3004,9 @@ var AIM = {
 	multiExplosion: func (explode_coord, event) {
 		# hit everything that is nearby except for target itself.
 		foreach (me.testMe;me.contacts) {
+			if (!me.testMe.isValid()) {
+				continue;
+			}
 			var min_distance = me.testMe.get_Coord().direct_distance_to(explode_coord);
 			if (min_distance < me.reportDist and me.testMe.getUnique() != me.Tgt.getUnique()) {
 				var phrase = sprintf("%s %s: %.1f meters from: %s", me.type,event, min_distance, me.testMe.get_Callsign());
