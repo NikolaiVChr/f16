@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+<!-- this is the static non fired model on the aircraft -->
+
+	<path>agm88.ac</path>
+	
+	<effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.0</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <object-name>ID18.003_ID30</object-name>
+  </effect>
+	
+</PropertyList>

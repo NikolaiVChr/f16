@@ -431,6 +431,14 @@ var FireControl = {
 					me.aimNext.start();
 				}
 				me.triggerTime = 0;
+			} elsif (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.type=="MK-82") {#not generic, fix.
+				me.aim = me.pylons[me.selected[0]].fireWeapon(me.selected[1], awg_9.completeList);
+				me.aim.sendMessage(me.aim.brevity);
+				me.aimNext = me.nextWeapon(me.selectedType);
+				if (me.aimNext != nil) {
+					me.aimNext.start();
+				}
+				me.triggerTime = 0;
 			} elsif (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.loal) {
 				me.triggerTime = getprop("sim/time/elapsed-sec");
 				settimer(func me.triggerHold(me.aim), 1.5);
