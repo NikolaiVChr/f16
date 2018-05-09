@@ -120,6 +120,7 @@ var fireMsgs = {
     " Bombs away at": nil, # bombs
     " Bruiser at":    nil, # anti-ship
     " Rifle at":      nil, # TV guided
+    " Sniper at":     nil, # anti-radiation
 
     # SAM and missile frigate
     " Bird away at":  nil, # G/A

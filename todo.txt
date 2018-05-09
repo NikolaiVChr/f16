@@ -66,7 +66,6 @@ Enable knob for HUD focus. (above BRT knob)
 
 Sound
 -----
-Weapons hit sounds might not work.
 Add remaining sounds for weapons.
 
 HUD
