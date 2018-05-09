@@ -214,10 +214,25 @@ var az_scan = func(fcount) {
             u_ecm_type_num    = 0;
             var u_rng = u.get_range();
 
-            #if (doRWR == 1 and u_rng != nil and u_rng < 150 and (type == "multiplayer" or type == "tanker" or type == "aircraft" or type=="carrier" or type=="groundvehicle" or type=="ship")) 
-            #{
-            #    rwrNew(u);
-            #}
+            if (type == "tanker" or type == "aircraft") {
+                u.setClass(AIR);
+            } elsif (type=="carrier" or type=="ship") {
+                u.setClass(MARINE);
+            } elsif (type=="groundvehicle") {
+                u.setClass(SURFACE);
+            } else {
+                # multiplayer:
+                var mdl = u.get_model();
+                if (contains(knownSurface,mdl)) {
+                    u.setClass(SURFACE);
+                } elsif (contains(knownShips,mdl)) {
+                    u.setClass(MARINE);
+                } elsif (u.get_altitude() < 5) {
+                    u.setClass(MARINE);
+                } elsif (u.get_Speed() < 60) {
+                    u.setClass(SURFACE);
+                }
+            }
             append(completeList,u);
             if (!radar_active)
               continue;
@@ -253,25 +268,6 @@ var az_scan = func(fcount) {
 
                 if (math.abs(dv) < az_fld/2 and math.abs(ele) < HoField.getValue()/2)
                 {
-                    if (type == "tanker" or type == "aircraft") {
-                        u.setClass(AIR);
-                    } elsif (type=="carrier" or type=="ship") {
-                        u.setClass(MARINE);
-                    } elsif (type=="groundvehicle") {
-                        u.setClass(SURFACE);
-                    } else {
-                        # multiplayer:
-                        var mdl = u.get_model();
-                        if (contains(knownSurface,mdl)) {
-                            u.setClass(SURFACE);
-                        } elsif (contains(knownShips,mdl)) {
-                            u.setClass(MARINE);
-                        } elsif (u.get_altitude() < 5) {
-                            u.setClass(MARINE);
-                        } elsif (u.get_Speed() < 60) {
-                            u.setClass(SURFACE);
-                        }
-                    }
                     u.set_display(1);
                 }
                 else
