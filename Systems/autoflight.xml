@@ -172,12 +172,19 @@
 			</function>
 		</fcs_function>
 		
-		<switch name="autoflight/roll/heading/i-gain">
-			<default value="0"/>
-			<test value="1.2">
-				autoflight/roll/gain-switch eq 0
-			</test>
-		</switch>
+		<fcs_function name="autoflight/roll/heading/i-gain">
+			<function>
+				<table>
+					<independentVar lookup="row">velocities/mach</independentVar>
+					<independentVar lookup="column">autoflight/roll/gain-switch</independentVar>
+					<tableData>
+						     0      1  
+						0.4  0.005  0.000
+						1.0  1.100  0.000
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
 		
 		<switch name="autoflight/roll/heading/trigger">
 			<default value="0"/>
