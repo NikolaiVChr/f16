@@ -910,7 +910,8 @@ var Target = {
     setClass: func(cl){me.class=cl},
     get_type: func{me.class},
     isPainted: func{
-        if (active_u != nil and active_u.getUnique() == me.getUnique() and me.get_display() == 1) {
+        #if (active_u !=nil) printf("%s %s %d", active_u.getUnique(), me.getUnique(), me.get_display());
+        if (active_u != nil and active_u.getUnique() == me.getUnique() and me.get_display() == 1) {            
             return 1;
         } else {
             return 0;
