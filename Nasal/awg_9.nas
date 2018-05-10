@@ -972,23 +972,9 @@ var Target = {
         # range on carriers (and possibly other items) is always 0 so recalc.
         if (me.Range == nil or me.Range.getValue() == 0)
         {
-            if (me.propNode.getNode("position/global-x") != nil)
-            {
-                var x = me.propNode.getNode("position/global-x").getValue();
-                var y = me.propNode.getNode("position/global-y").getValue();
-                var z = me.propNode.getNode("position/global-z").getValue();
-
-                var tgt_pos = geo.Coord.new().set_xyz(x, y, z);
-#                print("Recalc range - ",tgt_pos.distance_to(geo.aircraft_position()));
-                return tgt_pos.distance_to(geo.aircraft_position()) * M2NM; # distance in NM
-            }
-            if (me.Range != nil)
-                return me.Range.getValue();
+            return me.get_Coord().distance_to(geo.aircraft_position()) * M2NM; # distance in NM
         }
-        if (me.Range == nil)
-            return 0;
-        else
-            return me.Range.getValue();
+        return me.Range.getValue();
 	},
 	get_horizon : func(own_alt) {
 		var tgt_alt = me.get_altitude();

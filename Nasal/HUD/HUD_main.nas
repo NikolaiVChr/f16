@@ -404,8 +404,8 @@ var F16_HUD = {
         me.pixelPerMeterX = (340*0.695633)/0.15627;
         me.pixelPerMeterY = 260/(me.Hz_t-me.Hz_b);
         # UV mapped to x: 0-0.695633
-        me.averageDegX = math.atan2(0.078135*0.5, me.Vx-me.Hx_m)*R2D;
-        me.averageDegY = math.atan2((me.Hz_t-me.Hz_b)*0.25, me.Vx-me.Hx_m)*R2D;
+        me.averageDegX = math.atan2(0.078135*1.0, me.Vx-me.Hx_m)*R2D;
+        me.averageDegY = math.atan2((me.Hz_t-me.Hz_b)*0.5, me.Vx-me.Hx_m)*R2D;
         me.texelPerDegreeX = me.pixelPerMeterX*(((me.Vx-me.Hx_m)*math.tan(me.averageDegX*D2R))/me.averageDegX);
         me.texelPerDegreeY = me.pixelPerMeterY*(((me.Vx-me.Hx_m)*math.tan(me.averageDegY*D2R))/me.averageDegY);
         # the Y position is still not accurate due to HUD being at an angle, but will have to do.
