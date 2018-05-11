@@ -264,6 +264,17 @@ var medium = {
     } else {
       setprop("controls/lighting/ext-lighting-panel/anti-collision2",0);
     }
+    var fuel = getprop("/consumables/fuel/total-fuel-lbs");
+    setprop("/consumables/fuel/total-fuel-lbs-1",     int(fuel       )     -int(fuel*0.1)*10);
+    setprop("/consumables/fuel/total-fuel-lbs-10",    int(fuel*0.1   )*10  -int(fuel*0.01)*100);
+    setprop("/consumables/fuel/total-fuel-lbs-100",   int(fuel*0.01  )*100 -int(fuel*0.001)*1000);
+    setprop("/consumables/fuel/total-fuel-lbs-1000",  int(fuel*0.001 )*1000-int(fuel*0.0001)*10000);
+    setprop("/consumables/fuel/total-fuel-lbs-10000", int(fuel*0.0001)*10000);
+    if (fuel<500) {
+      setprop("f16/avionics/bingo", 1);
+    } else {
+      setprop("f16/avionics/bingo", 0);
+    }
     settimer(func {me.loop()},0.5);
   },
 };

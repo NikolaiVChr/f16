@@ -418,7 +418,7 @@ var F16_HUD = {
 # IAS
         me.ias_range.setTranslation(0, hdp.IAS * ias_range_factor);
         if (hdp.FrameCount == 2 or me.initUpdate == 1) {
-            
+            me.fuel = getprop("/consumables/fuel/total-fuel-lbs");
             me.agl=getprop("position/altitude-agl-ft");
             if(me.agl < 13000) {
                 me.ralt.setText(sprintf("R %05d ",me.agl));
@@ -521,12 +521,13 @@ var F16_HUD = {
             else
             {
                 me.window7.setVisible(0);
-                #me.window3.setText("NAV");
+                me.fuelText = me.fuel>500?"":"FUEL";
+                me.window3.setText(me.fuelText);
                 #if (hdp.nav_range != "")
                 #  me.window3.setText("NAV");
                 #else
                 #  me.window3.setText("");
-                me.window3.hide();
+                #me.window3.hide();
                 me.window4.setText(hdp.nav_range);
                 me.window4.show();
                 me.window5.setText(hdp.hud_window5);

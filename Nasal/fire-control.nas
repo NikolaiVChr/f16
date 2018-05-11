@@ -444,6 +444,7 @@ var FireControl = {
 				settimer(func me.triggerHold(me.aim), 1.5);
 			} elsif (me.aim != nil and me.aim.parents[0] == stations.SubModelWeapon) {
 				armament.AIM.sendMessage("Guns guns");
+				me.triggerTime = 0;
 			}
 		} elsif (getprop("controls/armament/trigger") < 1) {
 			me.triggerTime = 0;

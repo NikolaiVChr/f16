@@ -63,6 +63,8 @@ Make controls work for STORES CONFIG and STANDBY GAINS.
 Enable masterarm, jettison, trims, ALT FLAPS and MFD contrast/brightness.
 Enable the intensity knob on RWR.
 Enable knob for HUD focus. (above BRT knob)
+Fuel dial strange (not really, one needle shows frw tank, one shows aft tank), but should be configurable.
+Flood light.
 
 Sound
 -----
@@ -89,6 +91,7 @@ Better aircraft lighting system: cockpit, taxi/landing, anti-collision, formatio
 
 Flight controls
 ---------------
+wheel brakes too weak?
 
 GUI
 ---

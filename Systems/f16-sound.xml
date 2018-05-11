@@ -372,6 +372,22 @@
     </volume>
   </impact>
 
+
+  <bingo>
+   <name>bingo</name>
+   <path>Aircraft/f16/Sounds/bingo.wav</path>
+   <mode>once</mode>
+   <type>avionics</type>
+   <condition>
+        <property>f16/avionics/bingo</property>
+    </condition>
+   <volume>
+        <property>sim/current-view/internal</property>
+        <factor>1</factor>
+    </volume>
+  </bingo>
+  
+
   <cannon>
    <name>cannon</name>
    <path>Sounds/gatling.wav</path>

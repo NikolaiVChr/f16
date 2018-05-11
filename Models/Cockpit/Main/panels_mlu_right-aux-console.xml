@@ -45,7 +45,7 @@
  <animation>
   <type>rotate</type>
   <object-name>FUEL_drum5</object-name>
-  <property>consumables/fuel/total-fuel-lbs</property>
+  <property>consumables/fuel/total-fuel-lbs-1</property>
   <!--<factor>3.6</factor>-->
   <factor>36</factor>
   <center>
@@ -63,7 +63,7 @@
  <animation>
   <type>rotate</type>
   <object-name>FUEL_drum4</object-name>
-  <property>consumables/fuel/total-fuel-lbs</property>
+  <property>consumables/fuel/total-fuel-lbs-10</property>
   <factor>3.6</factor>
   <center>
    <x-m>-0.245</x-m>
@@ -80,7 +80,7 @@
  <animation>
   <type>rotate</type>
   <object-name>FUEL_drum3</object-name>
-  <property>consumables/fuel/total-fuel-lbs</property>
+  <property>consumables/fuel/total-fuel-lbs-100</property>
   <factor>0.36</factor>
   <center>
    <x-m>-0.245</x-m>
@@ -97,7 +97,7 @@
  <animation>
   <type>rotate</type>
   <object-name>FUEL_drum2</object-name>
-  <property>consumables/fuel/total-fuel-lbs</property>
+  <property>consumables/fuel/total-fuel-lbs-1000</property>
   <factor>0.036</factor>
   <center>
    <x-m>-0.245</x-m>
@@ -114,7 +114,7 @@
  <animation>
   <type>rotate</type>
   <object-name>FUEL_drum1</object-name>
-  <property>consumables/fuel/total-fuel-lbs</property>
+  <property>consumables/fuel/total-fuel-lbs-10000</property>
   <factor>0.0036</factor>
   <center>
    <x-m>-0.245</x-m>
@@ -367,8 +367,8 @@
   <condition>
    <not><property>controls/test/test-panel/mal-ind-lts</property></not>
    <greater-than> 
-    <property>consumables/fuel/tank[1]/level-gal_us</property>
-    <value>75.759</value>
+    <property>consumables/fuel/tank[1]/level-lbs</property>
+    <value>400</value>
    </greater-than> 
   </condition>
  </animation> 
@@ -483,8 +483,8 @@
   <condition>
    <not><property>controls/test/test-panel/mal-ind-lts</property></not>
    <greater-than> 
-    <property>consumables/fuel/tank/level-gal_us</property>
-    <value>75.759</value>
+    <property>consumables/fuel/tank/level-lbs</property>
+    <value>400</value>
    </greater-than> 
   </condition>
  </animation> 
@@ -650,8 +650,8 @@
    <or>
    <property>controls/test/test-panel/mal-ind-lts</property>
    <less-than> 
-    <property>consumables/fuel/tank[1]/level-gal_us</property>
-    <value>75.759</value>
+    <property>consumables/fuel/tank[1]/level-lbs</property>
+    <value>400</value>
    </less-than> 
    </or>
   </condition>
@@ -768,8 +768,8 @@
    <or>
    <property>controls/test/test-panel/mal-ind-lts</property>
    <less-than> 
-    <property>consumables/fuel/tank/level-gal_us</property>
-    <value>75.759</value>
+    <property>consumables/fuel/tank[0]/level-lbs</property>
+    <value>400</value>
    </less-than> 
    </or>
   </condition>
