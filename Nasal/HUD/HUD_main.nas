@@ -156,6 +156,15 @@ var F16_HUD = {
                 .horiz(20)
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
+        obj.thing = obj.svg.createChild("path")
+            .moveTo(-3,0)
+            .arcSmallCW(3,3, 0, 3*2, 0)
+            .arcSmallCW(3,3, 0, -3*2, 0)
+            .moveTo(0,-3)
+            .vert(-6)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0)
+            .hide();
         obj.initUpdate =1;
         obj.svg.setColor(0.3,1,0.3);
         obj.alpha = getprop("f16/avionics/hud-brt");
@@ -411,7 +420,27 @@ var F16_HUD = {
         # the Y position is still not accurate due to HUD being at an angle, but will have to do.
         me.VV.setTranslation (hdp.VV_x*0.1*me.texelPerDegreeX, hdp.VV_y*0.1*me.texelPerDegreeY+pitch_offset);# the 0.1 is to cancel out the factor applied in exec.nas
         me.VV.update();
+        if (getprop("autopilot/route-manager/active")) {
+            me.wpbear = getprop("autopilot/route-manager/wp/bearing-deg");
+            if (me.wpbear!=nil){
+                                
+                me.wpbear=geo.normdeg180(me.wpbear-getprop("orientation/heading-deg"));
+                me.thingX = me.sx*0.5+me.wpbear*me.texelPerDegreeX;
 
+                if (me.thingX>me.sx*0.66) {
+                    me.thingX=me.sx*0.66;
+                }elsif(me.thingX<me.sx*0.33) {
+                    me.thingX=me.sx*0.33;
+                }
+                me.thing.setTranslation(me.thingX,me.sy-me.texels_up_into_hud+15);
+                me.thing.setRotation(me.wpbear*D2R);
+                me.thing.show();
+            }else {
+                me.thing.hide();
+            }
+        }else{
+            me.thing.hide();
+        }
 #Altitude
         me.alt_range.setTranslation(0, hdp.measured_altitude * alt_range_factor);
         me.isItON = me.CCRP();
