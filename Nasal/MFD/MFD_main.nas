@@ -1221,8 +1221,10 @@ var MFD_Device =
                     me.prevY = nil;
                     for (me.j = 0; me.j < me.planSize;me.j+=1) {
                         me.wp = me.plan.getWP(me.j);
-                        me.legBearing = me.wp.leg_bearing-getprop("orientation/heading-deg");#relative
-                        me.legDistance = me.wp.leg_distance;
+                        me.wpC = geo.Coord.new();
+                        me.wpC.set_latlon(me.wp.lat,me.wp.lon);
+                        me.legBearing = geo.aircraft_position().course_to(me.wpC)-getprop("orientation/heading-deg");#relative
+                        me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
                         if (me.root.centered) {
                             me.legRangePixels = me.root.mediumRadius*(me.legDistance/me.root.range_cen);;
                         } else {
