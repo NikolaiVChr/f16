@@ -519,6 +519,8 @@ var MFD_Device =
                     me.ppp.selectPage(me.my.p_VSD);
                 } elsif (eventi == 5) {
                     me.ppp.selectPage(me.my.pjitds_1);
+                } elsif (eventi == 6) {
+                    me.ppp.selectPage(me.my.p_HSD);
                 } elsif (eventi == 2) {
                     var az = getprop("instrumentation/radar/az-field");
                     if(az==120)
@@ -856,6 +858,8 @@ var MFD_Device =
                     me.ppp.selectPage(me.my.pjitds_1);
                 } elsif (eventi == 16) {
                     me.ppp.selectPage(me.my.p1_1);
+                } elsif (eventi == 17) {
+                    me.ppp.selectPage(me.my.p_HSD);
                 }
             }
         };
@@ -941,10 +945,373 @@ var MFD_Device =
         };
     },
 
+    setupHSD: func (svg) {
+        svg.p_HSD = me.canvas.createGroup();
+        svg.buttonView = svg.p_HSD.createChild("group")
+                .setTranslation(276*0.795,482);
+        svg.p_HSDc = svg.p_HSD.createChild("group")
+                .setTranslation(276*0.795,482*0.75);#552,482 , 0.795 is for UV map
+        svg.cone = svg.p_HSDc.createChild("group")
+            .set("z-index",5);#radar cone
+
+        svg.width  = 276*0.795*2;
+        svg.height = 482;
+
+        svg.outerRadius  = svg.height*0.75;
+        svg.mediumRadius = svg.outerRadius*0.6666;
+        svg.innerRadius  = svg.outerRadius*0.3333;
+        #var innerTick    = 0.85*innerRadius*math.cos(45*D2R);
+        #var outerTick    = 1.15*innerRadius*math.cos(45*D2R);
+
+        svg.conc = svg.p_HSDc.createChild("path")
+            .moveTo(svg.innerRadius,0)
+            .arcSmallCW(svg.innerRadius,svg.innerRadius, 0, -svg.innerRadius*2, 0)
+            .arcSmallCW(svg.innerRadius,svg.innerRadius, 0,  svg.innerRadius*2, 0)
+            .moveTo(svg.mediumRadius,0)
+            .arcSmallCW(svg.mediumRadius,svg.mediumRadius, 0, -svg.mediumRadius*2, 0)
+            .arcSmallCW(svg.mediumRadius,svg.mediumRadius, 0,  svg.mediumRadius*2, 0)
+            .moveTo(svg.outerRadius,0)
+            .arcSmallCW(svg.outerRadius,svg.outerRadius, 0, -svg.outerRadius*2, 0)
+            .arcSmallCW(svg.outerRadius,svg.outerRadius, 0,  svg.outerRadius*2, 0)
+            .moveTo(0,-svg.innerRadius)#north
+            .vert(-15)
+            .moveTo(-2.5,-svg.innerRadius-15)
+            .horiz(5)
+            .moveTo(0,svg.innerRadius-15)#south
+            .vert(30)
+            .moveTo(-svg.innerRadius,0)#west
+            .horiz(-15)
+            .moveTo(svg.innerRadius,0)#east
+            .horiz(15)
+            .setStrokeLineWidth(1)
+            .set("z-index",2)
+            .setColor(1,1,1);
+
+
+
+
+
+        svg.maxB = 16;
+        svg.blep = setsize([],svg.maxB);
+        for (var i = 0;i<svg.maxB;i+=1) {
+            svg.blep[i] = svg.p_HSDc.createChild("path")
+                    .moveTo(0,0)
+                    .vert(4)
+                    .setStrokeLineWidth(4)
+                    .hide();
+        }
+        svg.rangUp = svg.buttonView.createChild("path")
+                    .moveTo(-276*0.795,-482*0.5-105-27.5)
+                    .horiz(30)
+                    .lineTo(-276*0.795+15,-482*0.5-105-27.5-15)
+                    .lineTo(-276*0.795,-482*0.5-105-27.5)
+                    .setStrokeLineWidth(2)
+                    .setColor(1,1,1);
+        svg.rang = svg.buttonView.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5-105)
+                .setAlignment("left-center")
+                .setText("8")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.rangDown = svg.buttonView.createChild("path")
+                    .moveTo(-276*0.795,-482*0.5-105+27.5)
+                    .horiz(30)
+                    .lineTo(-276*0.795+15,-482*0.5-105+27.5+15)
+                    .lineTo(-276*0.795,-482*0.5-105+27.5)
+                    .setStrokeLineWidth(2)
+                    .setColor(1,1,1);
+
+        svg.depcen = svg.buttonView.createChild("text")#DEP/CEN
+                .setTranslation(-276*0.795, -482*0.5-5)
+                .setText("DEP")
+                .setAlignment("left-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+#        svg.bars = svg.p_HSDc.createChild("text")#
+#                .setTranslation(-276*0.795, -482*0.5+60)
+#                .setText("8B")
+#                .setAlignment("left-center")
+#                .setColor(1,1,1)
+#                .setFontSize(20, 1.0);
+
+        svg.lock = svg.p_HSDc.createChild("group")
+                .hide();
+        svg.lockRot = svg.lock.createChild("path")
+                            .moveTo(10,10)
+                            .lineTo(0,-10)
+                            .lineTo(-10,10)
+                            .lineTo(10,10)
+                            .moveTo(0,-10)
+                            .vert(-10)
+                            .setColor(1,1,0)
+                            .setStrokeLineWidth(2);
+        svg.lockAlt = svg.lock.createChild("text")
+                .setTranslation(0, 25)
+                .setText("20")
+                .setAlignment("center-top")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.lockInfo = svg.p_HSDc.createChild("text")
+                .setTranslation(276*0.795*0.8, -482*0.9)
+                .setAlignment("right-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        svg.lockFRot = svg.lock.createChild("path")
+                            .moveTo(-10,-10)
+                            .vert(20)
+                            .horiz(20)
+                            .vert(-20)
+                            .horiz(-20)
+                            .moveTo(0,-10)
+                            .vert(-10)
+                            .setColor(0.5,1,0.5)
+                            .setStrokeLineWidth(2);
+
+        svg.myself = svg.p_HSDc.createChild("path")#own ship
+           .moveTo(0, 0)
+           .vert(30)
+           .moveTo(-10, 10)
+           .horiz(20)
+           .moveTo(-5, 20)
+           .horiz(10)
+           .setColor(0.5,0.5,1)
+           .setStrokeLineWidth(1);
+#        svg.az2 = svg.p_HSDc.createChild("path")
+#           .moveTo(0, 0)
+#           .lineTo(0, -482)
+#           .setColor(0.5,0.5,1)
+#           .setStrokeLineWidth(1);
+        svg.centered = 0;
+        svg.range_cen = 40;
+        svg.range_dep = 32;
+    },
+
+    addHSD: func {
+        var svg = {getElementById: func (id) {return me[id]},};
+        me.setupHSD(svg);
+        me.PFD.addHSDPage = func(svg, title, layer_id) {   
+            var np = PFD_Page.new(svg, title, layer_id, me);
+            append(me.pages, np);
+            me.page_index[layer_id] = np;
+            np.setVisible(0);
+            return np;
+        };
+        me.p_HSD = me.PFD.addHSDPage(svg, "HSD", "p_HSD");
+        me.p_HSD.root = svg;
+        me.p_HSD.wdt = 552*0.795;
+        me.p_HSD.fwd = 0;
+        me.p_HSD.plc = 0;
+        me.p_HSD.ppp = me.PFD;
+        me.p_HSD.my = me;
+        me.p_HSD.notifyButton = func (eventi) {
+            if (eventi != nil) {
+                if (eventi == 0) {
+                    if (me.root.centered) {
+                        if (me.root.range_cen == 5)
+                            me.root.range_cen =10
+                        elsif (me.root.range_cen == 10)
+                            me.root.range_cen =20
+                        elsif (me.root.range_cen == 20)
+                            me.root.range_cen =40
+                        elsif (me.root.range_cen == 40)
+                            me.root.range_cen =80
+                        elsif (me.root.range_cen == 80)
+                            me.root.range_cen =160
+                        else
+                            me.root.range_cen = 160;
+                    } elsif (!me.root.centered) {
+                        if (me.root.range_dep == 8)
+                            me.root.range_dep =16
+                        elsif (me.root.range_dep == 16)
+                            me.root.range_dep =32
+                        elsif (me.root.range_dep == 32)
+                            me.root.range_dep =64
+                        elsif (me.root.range_dep == 64)
+                            me.root.range_dep =128
+                        elsif (me.root.range_dep == 128)
+                            me.root.range_dep =256
+                        else
+                            me.root.range_dep = 256;
+                    }
+                } elsif (eventi == 1) {
+                    if (me.root.centered) {
+                        if (me.root.range_cen == 160)
+                            me.root.range_cen =80
+                        elsif (me.root.range_cen == 80)
+                            me.root.range_cen =40
+                        elsif (me.root.range_cen == 40)
+                            me.root.range_cen =20
+                        elsif (me.root.range_cen == 20)
+                            me.root.range_cen =10
+                        elsif (me.root.range_cen == 10)
+                            me.root.range_cen =5
+                        else
+                            me.root.range_cen = 5;
+                    } elsif (!me.root.centered) {
+                        if (me.root.range_dep == 256)
+                            me.root.range_dep =128
+                        elsif (me.root.range_dep == 128)
+                            me.root.range_dep =64
+                        elsif (me.root.range_dep == 64)
+                            me.root.range_dep =32
+                        elsif (me.root.range_dep == 32)
+                            me.root.range_dep =16
+                        elsif (me.root.range_dep == 16)
+                            me.root.range_dep =8
+                        else
+                            me.root.range_dep = 8;
+                    }
+                } elsif (eventi == 10) {
+                    me.ppp.selectPage(me.my.p1_1);
+                } elsif (eventi == 11) {
+                    me.ppp.selectPage(me.my.p_SMS);
+                } elsif (eventi == 12) {
+                    me.ppp.selectPage(me.my.p_VSD);
+                } elsif (eventi == 5) {
+                    me.ppp.selectPage(me.my.pjitds_1);
+                } elsif (eventi == 7) {
+                    me.ppp.selectPage(me.my.p_RDR);
+                } elsif (eventi == 2) {
+                    me.root.centered = !me.root.centered;
+                    me.root.depcen.setText(me.root.centered==1?"CEN":"DEP");
+                }
+            }
+        }
+        me.p_HSD.update = func (noti) {
+            me.root.conc.setRotation(-getprop("orientation/heading-deg")*D2R);
+            if (noti.FrameCount != 1 and noti.FrameCount != 3)
+                return;
+            if (me.root.centered) {
+                me.root.p_HSDc.setTranslation(276*0.795,482*0.50);
+                me.root.rang.setText(""~me.root.range_cen);
+            } else {
+                me.root.p_HSDc.setTranslation(276*0.795,482*0.75);
+                me.root.rang.setText(""~me.root.range_dep);
+            }
+            
+            me.i=0;
+            me.root.lock.hide();
+            me.root.lockInfo.hide();
+            if (me.root.centered) {
+                me.rdrRangePixels = me.root.mediumRadius*(awg_9.range_radar2/me.root.range_cen);
+            } else {
+                me.rdrRangePixels = me.root.outerRadius*(awg_9.range_radar2/me.root.range_dep);
+            }
+            me.az = getprop("instrumentation/radar/az-field");
+            if (noti.FrameCount == 1) {
+                me.root.cone.removeAllChildren();
+                if (getprop("sim/multiplay/generic/int[2]") != 1) {
+                    me.radarX = me.rdrRangePixels*math.cos((90-me.az*0.5)*D2R);
+                    me.radarY = -me.rdrRangePixels*math.sin((90-me.az*0.5)*D2R);
+                    me.cone = me.root.cone.createChild("path")
+                        .moveTo(0,0)
+                        .lineTo(me.radarX,me.radarY)
+                        .moveTo(0,0)
+                        .lineTo(-me.radarX,me.radarY)
+                        .arcSmallCW(me.rdrRangePixels,me.rdrRangePixels, 0, me.radarX*2, 0)
+                        .setStrokeLineWidth(1)
+                        .set("z-index",5)
+                        .setColor(0.5,0.5,1)
+                        .update();
+                }
+                if (getprop("autopilot/route-manager/active")) {
+                    me.plan = flightplan();
+                    me.planSize = me.plan.getPlanSize();
+                    me.prevX = nil;
+                    me.prevY = nil;
+                    for (me.j = 0; me.j < me.planSize;me.j+=1) {
+                        me.wp = me.plan.getWP(me.j);
+                        me.legBearing = me.wp.leg_bearing-getprop("orientation/heading-deg");#relative
+                        me.legDistance = me.wp.leg_distance;
+                        if (me.root.centered) {
+                            me.legRangePixels = me.root.mediumRadius*(me.legDistance/me.root.range_cen);;
+                        } else {
+                            me.legRangePixels = me.root.outerRadius*(me.legDistance/me.root.range_dep);;
+                        }
+                        me.legX = me.legRangePixels*math.sin(me.legBearing*D2R);
+                        me.legY = -me.legRangePixels*math.cos(me.legBearing*D2R);
+                        me.wp = me.root.cone.createChild("path")
+                            .moveTo(me.legX-5,me.legY)
+                            .arcSmallCW(5,5, 0, 5*2, 0)
+                            .arcSmallCW(5,5, 0,-5*2, 0)
+                            .setStrokeLineWidth(1)
+                            .set("z-index",4)
+                            .setColor(1,1,1)
+                            .update();
+                        if (me.plan.current == me.j) {
+                            me.wp.setColorFill(1,1,1);
+                        }
+                        if (me.prevX != nil) {
+                            me.root.cone.createChild("path")
+                                .moveTo(me.legX,me.legY)
+                                .lineTo(me.prevX,me.prevY)
+                                .setStrokeLineWidth(1)
+                                .set("z-index",4)
+                                .setColor(1,1,1)
+                                .update();
+                        }
+                        me.prevX = me.legX;
+                        me.prevY = me.legY;
+                    }
+                }
+                me.root.cone.update();
+            }
+            foreach(contact; awg_9.tgts_list) {
+                if (contact.get_display() == 0) {
+                    continue;
+                }
+                me.distPixels = (contact.get_range()/awg_9.range_radar2)*me.rdrRangePixels;
+
+                me.root.blep[me.i].setColor(1,1,1);
+                me.root.blep[me.i].setTranslation(me.distPixels*math.sin(contact.get_relative_bearing()*D2R),-me.distPixels*math.cos(contact.get_relative_bearing()*D2R));
+                me.root.blep[me.i].show();
+                me.root.blep[me.i].update();
+                if (contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType)) {
+                    me.rot = contact.get_heading();
+                    if (me.rot == nil) {
+                        #can happen in transition between TWS to RWS
+                        #me.root.lock.hide();
+                    } else {
+                        me.lockAlt = sprintf("%02d", contact.get_altitude()*0.001);
+                        me.root.lockAlt.setText(me.lockAlt);
+                        me.lockInfo = sprintf("%4d   %+4d", contact.get_Speed(), contact.get_closure_rate());
+                        me.root.lockInfo.setText(me.lockInfo);
+                        me.root.lockInfo.show();
+                        me.rot = me.rot-getprop("orientation/heading-deg");
+                        me.root.lock.setTranslation(me.distPixels*math.sin(contact.get_relative_bearing()*D2R),-me.distPixels*math.cos(contact.get_relative_bearing()*D2R));
+                        me.cs = contact.get_Callsign();
+                        if (getprop("link16/wingman-1")==me.cs or getprop("link16/wingman-2")==me.cs or getprop("link16/wingman-3")==me.cs) {
+                            me.root.lockFRot.setRotation(me.rot*D2R);
+                            me.root.lockFRot.show();
+                            me.root.lockRot.hide();
+                            me.root.lockFRot.update();
+                        } else {
+                            me.root.lockRot.setRotation(me.rot*D2R);
+                            me.root.lockRot.show();
+                            me.root.lockFRot.hide();
+                            me.root.lockRot.update();
+                        }
+                        me.root.lock.show();
+                        me.root.lock.update();
+                        me.root.blep[me.i].hide();
+                    }
+                }
+                me.i += 1;
+                if (me.i > (me.root.maxB-1)) {
+                    break;
+                }
+            }
+            for (;me.i<me.root.maxB;me.i+=1) {
+                me.root.blep[me.i].hide();
+            }
+        };
+    },
+
     addPages : func
     {   
         me.addRadar();
         me.addSMS();
+        me.addHSD();
         me.p1_1 = me.PFD.addPage("Aircraft Menu", "p1_1");
 
         me.p1_1.update = func(notification)
@@ -1120,17 +1487,27 @@ var MFD_Device =
         me.p1_1.addMenuItem(2, "SIT", me.pjitds_1);
         #me.p1_1.addMenuItem(3, "WPN", me.p1_2);
         #me.p1_1.addMenuItem(4, "DTM", me.p1_2);
-        me.p1_1.addMenuItem(10, "RDR", me.p_RDR);
+        me.p1_1.addMenuItem(10, "CRM", me.p_RDR);
         me.p1_1.addMenuItem(11, "SMS", me.p_SMS);
+        me.p1_1.addMenuItem(12, "HSD", me.p_HSD);
 
         me.p_RDR.addMenuItem(10, "TIM", me.p1_1);
         me.p_RDR.addMenuItem(11, "SMS", me.p_SMS);
         me.p_RDR.addMenuItem(12, "VSD", me.p_VSD);
         me.p_RDR.addMenuItem(5, "SIT", me.pjitds_1);
+        me.p_RDR.addMenuItem(6, "HSD", me.p_HSD);
+
+        me.p_HSD.addMenuItem(10, "TIM", me.p1_1);
+        me.p_HSD.addMenuItem(11, "SMS", me.p_SMS);
+        me.p_HSD.addMenuItem(12, "VSD", me.p_VSD);
+        me.p_HSD.addMenuItem(5, "SIT", me.pjitds_1);
+        #me.p_HSD.addMenuItem(6, "SIT", me.pjitds_1);
+        me.p_HSD.addMenuItem(7, "CRM", me.p_RDR);
 
         me.p_SMS.addMenuItem(15, "SIT", me.pjitds_1);
-        me.p_SMS.addMenuItem(10, "RDR", me.p_RDR);
+        me.p_SMS.addMenuItem(10, "CRM", me.p_RDR);
         me.p_SMS.addMenuItem(4, "VSD", me.p_VSD);
+        me.p_SMS.addMenuItem(17, "HSD", me.p_HSD);
         me.p_SMS.addMenuItem(16, "TIM", me.p1_1);
 
         me.p1_2.addMenuItem(0, "VSD", me.p_VSD);
@@ -1139,7 +1516,8 @@ var MFD_Device =
         #me.p1_2.addMenuItem(3, "CBT JETT", me.p1_3);
         #me.p1_2.addMenuItem(4, "WPN LOAD", me.p1_3);
         me.p1_2.addMenuItem(9, "M", me.p1_1);
-        me.p1_2.addMenuItem(10, "RDR", me.p_RDR);
+        me.p1_2.addMenuItem(10, "CRM", me.p_RDR);
+        me.p1_2.addMenuItem(12, "HSD", me.p_HSD);
 
 
         me.p1_3.addMenuItem(2, "SIT", me.pjitds_1);
@@ -1151,19 +1529,22 @@ var MFD_Device =
         #me.p1_3.addMenuItem(12, "FUEL", me.p1_3);
         #me.p1_3.addMenuItem(14, "PYLON", me.p1_3);
         #me.p1_3.addMenuItem(15, "MODE S", me.p1_3);
-        me.p1_3.addMenuItem(10, "RDR", me.p_RDR);
+        me.p1_3.addMenuItem(10, "CRM", me.p_RDR);
+        me.p1_3.addMenuItem(12, "HSD", me.p_HSD);
 
         me.pjitds_1.addMenuItem(9, "M", me.p1_1);
         #me.pjitds_1.addMenuItem(0, "ARMT", me.p1_2);
         me.pjitds_1.addMenuItem(1, "VSD", me.p_VSD);
-        me.pjitds_1.addMenuItem(10, "RDR", me.p_RDR);
+        me.pjitds_1.addMenuItem(10, "CRM", me.p_RDR);
+        me.pjitds_1.addMenuItem(12, "HSD", me.p_HSD);
 
         #me.p_VSD.addMenuItem(0, "ARMT", me.p1_2);
         me.p_VSD.addMenuItem(1, "SIT", me.pjitds_1);
         me.p_VSD.addMenuItem(4, "M", me.p1_1);
         me.p_VSD.addMenuItem(9, "M", me.p1_1);
-        me.p_VSD.addMenuItem(10, "RDR", me.p_RDR);
+        me.p_VSD.addMenuItem(10, "CRM", me.p_RDR);
         me.p_VSD.addMenuItem(11, "SMS", me.p_SMS);
+        me.p_VSD.addMenuItem(12, "HSD", me.p_HSD);
     },
 
     update : func(notification)
