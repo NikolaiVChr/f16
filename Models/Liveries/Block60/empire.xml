@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+    <sim>
+        <model> 
+            <livery>
+                <name type="string">USAF Raider1 (Fictional)</name>
+                <texture type="string">Liveries/Block60/empire.png</texture>
+                <owner type="string">USAF</owner>
+            </livery>
+            <livery-logo>
+                <texture type="string">Liveries/yf/yf16-transp.png</texture>
+            </livery-logo>
+        </model>
+    </sim>
+</PropertyList>
