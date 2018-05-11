@@ -8,12 +8,12 @@
     <z> -1.91735 </z>
    </location>
    <static_friction> 0.8 </static_friction>
-   <dynamic_friction> 0.5 </dynamic_friction>
+   <dynamic_friction> 0.375 </dynamic_friction>
    <rolling_friction> 0.02 </rolling_friction>
    <spring_coeff unit="LBS/FT"> 17250 </spring_coeff>
    <damping_coeff unit="LBS/FT/SEC"> 4250 </damping_coeff>
    <max_steer unit="DEG"> 32 </max_steer><!-- as per manual -->
-   <brake_group> NOSE </brake_group>
+   <brake_group> LEFT </brake_group>
    <retractable>1</retractable>
   </contact>
   <contact type="BOGEY" name="LEFT_MLG">
