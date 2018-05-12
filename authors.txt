@@ -58,3 +58,4 @@ Alan Teeder
 
 Joshua Davidson (it0uchpods)
 - Autopilot
+- Electrical System

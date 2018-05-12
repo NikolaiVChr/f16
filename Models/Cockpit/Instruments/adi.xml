@@ -9,8 +9,8 @@
   <object-name>ADI_gs-flag</object-name>
   <condition>
    <less-than>
-    <property>systems/electrical/outputs/adi</property>
-    <value>24</value>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
    </less-than>
   </condition>
  </animation>
@@ -20,8 +20,8 @@
   <object-name>ADI_loc-flag</object-name>
   <condition>
    <less-than>
-    <property>systems/electrical/outputs/adi</property>
-     <value>24</value>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+     <value>110</value>
     </less-than>
   </condition>
  </animation>
@@ -31,8 +31,8 @@
   <object-name>ADI_off-flag</object-name>
   <condition>
    <less-than>
-    <property>systems/electrical/outputs/adi</property>
-    <value>24</value>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
    </less-than>
   </condition>
  </animation>
@@ -42,8 +42,8 @@
   <object-name>ADI_aux-flag</object-name>
   <condition>
    <less-than>
-    <property>systems/electrical/outputs/adi</property>
-     <value>24</value>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+     <value>110</value>
     </less-than>
   </condition>
  </animation>
@@ -73,6 +73,12 @@
   <type>rotate</type>
   <object-name>ADI_sphere</object-name>
   <property>orientation/roll-deg</property>
+  <condition>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
+   </greater-than-equals>
+  </condition>
   <center>
    <x-m>-0.0291</x-m>
    <y-m>0</y-m>
@@ -89,6 +95,12 @@
   <type>rotate</type>
   <object-name>ADI_sphere</object-name>
   <property>orientation/pitch-deg</property>
+  <condition>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
+   </greater-than-equals>
+  </condition>
   <center>
    <x-m>-0.0291</x-m>
    <y-m>0</y-m>
@@ -181,10 +193,10 @@
   <type>select</type>
   <object-name>ADI_glide-slope-index</object-name>
   <condition>
-   <greater-than>
-    <property>systems/electrical/outputs/adi</property>
-    <value>23</value>
-   </greater-than>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
+   </greater-than-equals>
    <or>
     <equals>
      <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>

@@ -1,0 +1,438 @@
+<?xml version="1.0"?>
+
+<!-- General Dynamics F-16 Electrical System -->
+<!-- (c) 2018 Joshua Davidson (it0uchpods) -->
+
+<system name="electrical">
+	
+	<channel name="Sources">
+		
+		<pure_gain name="elec/sources/battery-volt">
+			<input>elec/sources/battery-volt-feed</input>
+			<gain>elec/failures/battery/serviceable</gain>
+		</pure_gain>
+		
+		<fcs_function name="elec/sources/adg-percent-rpm">
+			<function>
+				<table>
+					<independentVar lookup="row">/engines/engine[0]/n2</independentVar>
+					<tableData>
+						  0    0
+						 55   50
+						105  100
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="elec/sources/adg-kva">
+			<function>
+				<table>
+					<independentVar lookup="row">elec/sources/adg-percent-rpm</independentVar>
+					<tableData>
+						 0   0
+						36   0
+						48  60
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="elec/sources/main-gen-volt">
+			<function>
+				<table>
+					<independentVar lookup="row">elec/sources/adg-kva</independentVar>
+					<independentVar lookup="column">elec/switches/main-pwr</independentVar>
+					<independentVar lookup="table">elec/failures/main-gen/serviceable</independentVar>
+					<tableData breakPoint="0">
+						    0  1  2
+						 0  0  0  0
+						50  0  0  0
+						51  0  0  0
+						58  0  0  0
+					</tableData>
+					<tableData breakPoint="1">
+						    0  1    2
+						 0  0  0    0
+						50  0  0    0
+						51  0  0  110
+						58  0  0  115
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+
+		<pure_gain name="elec/sources/stby-kva">
+			<input>elec/sources/adg-kva</input>
+			<gain>1.0</gain>
+			<clipto>
+				<min>0</min>
+				<max>10</max>
+			</clipto>
+		</pure_gain>
+		
+		<fcs_function name="elec/sources/stby-gen-volt">
+			<function>
+				<table>
+					<independentVar lookup="row">elec/sources/stby-kva</independentVar>
+					<independentVar lookup="column">elec/switches/main-pwr</independentVar>
+					<independentVar lookup="table">elec/failures/stby-gen/serviceable</independentVar>
+					<tableData breakPoint="0">
+						   0  1  2
+						0  0  0  0
+						5  0  0  0
+						6  0  0  0
+						8  0  0  0
+					</tableData>
+					<tableData breakPoint="1">
+						   0  1    2
+						0  0  0    0
+						5  0  0    0
+						6  0  0  110
+						8  0  0  115
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<pure_gain name="elec/sources/stby-gen-volt-dc">
+			<input>elec/sources/stby-gen-volt</input>
+			<gain>0.24347826086956523</gain> <!-- AC to DC converter -->
+		</pure_gain>
+		
+		<pure_gain name="elec/sources/external-pwr-volt">
+			<input>elec/sources/external-pwr-plugged-in</input>
+			<gain>115.0</gain>
+		</pure_gain>
+		
+		<pure_gain name="elec/sources/epu-kva">
+			<input>elec/sources/epu-on</input>
+			<gain>5.0</gain>
+		</pure_gain>
+		
+		<fcs_function name="elec/sources/epu-gen-volt">
+			<function>
+				<table>
+					<independentVar lookup="row">elec/sources/epu-kva</independentVar>
+					<tableData>
+						0    0
+						2    0
+						3  110
+						5  115
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<pure_gain name="elec/sources/epu-gen-volt-dc">
+			<input>elec/sources/epu-gen-volt</input>
+			<gain>0.24347826086956523</gain> <!-- AC to DC converter -->
+		</pure_gain>
+	
+	</channel>
+	
+	<channel name="Contactors">
+		
+		<switch name="elec/contactors/battery">
+			<default value="0"/>
+			<test logic="OR" value="elec/sources/battery-volt">
+				elec/switches/main-pwr gt 0
+				fcs/gear-wow eq 0
+			</test>
+		</switch>
+		
+		<switch name="elec/contactors/main-contactors-1">
+			<default value="0"/>
+			<test value="elec/sources/main-gen-volt">
+				elec/sources/main-gen-volt ge 110
+			</test>
+			<test value="elec/sources/external-pwr-volt">
+				elec/switches/main-pwr eq 2
+				elec/sources/external-pwr-volt ge 110
+			</test>
+		</switch>
+		
+		<switch name="elec/contactors/main-contactors-2">
+			<default value="0"/>
+			<test value="elec/sources/main-gen-volt">
+				elec/sources/main-gen-volt ge 110
+			</test>
+			<test value="elec/sources/external-pwr-volt">
+				elec/switches/main-pwr eq 2
+				elec/sources/external-pwr-volt ge 110
+			</test>
+		</switch>
+		
+		<pure_gain name="elec/contactors/ocs-contactors-fwd"> <!-- They don't work yet, I don't know the current limits -->
+			<input>elec/contactors/main-contactors-1</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<pure_gain name="elec/contactors/ocs-contactors-nacelle"> <!-- They don't work yet, I don't know the current limits -->
+			<input>elec/contactors/main-contactors-2</input>
+			<gain>1.0</gain>
+		</pure_gain>
+	
+	</channel>
+	
+	<channel name="Buses">
+		
+		<!-- AC -->
+		<pure_gain name="elec/bus/noness-ac-1">
+			<input>elec/contactors/ocs-contactors-fwd</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<switch name="elec/bus/switch/noness-ac-1-stby">
+			<default value="elec/sources/stby-gen-volt"/>
+			<test value="elec/bus/noness-ac-1"> <!-- Means STBY must power it -->
+				elec/bus/noness-ac-1 ge 110
+			</test>
+		</switch>
+		
+		<switch name="elec/bus/switch/stby-epu">
+			<default value="elec/bus/switch/noness-ac-1-stby"/>
+			<test logic="AND" value="elec/sources/epu-gen-volt">
+				elec/sources/main-gen-volt lt 110
+				elec/sources/stby-gen-volt lt 110
+				elec/sources/epu-gen-volt ge 110
+				fcs/gear-wow eq 0
+			</test>
+		</switch>
+		
+		<pure_gain name="elec/bus/emergency-ac-1">
+			<input>elec/bus/switch/stby-epu</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<pure_gain name="elec/bus/noness-ac-2">
+			<input>elec/contactors/main-contactors-2</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<switch name="elec/bus/switch/noness-ac-2-stby">
+			<default value="elec/sources/stby-gen-volt"/>
+			<test value="elec/bus/noness-ac-2"> <!-- Means STBY must power it -->
+				elec/bus/noness-ac-2 ge 110
+			</test>
+		</switch>
+		
+		<pure_gain name="elec/bus/ess-ac">
+			<input>elec/bus/switch/noness-ac-2-stby</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<switch name="elec/bus/switch/ess-ac-epu">
+			<default value="elec/bus/ess-ac"/>
+			<test logic="AND" value="elec/sources/epu-gen-volt">
+				elec/sources/main-gen-volt lt 110
+				elec/sources/stby-gen-volt lt 110
+				elec/sources/epu-gen-volt ge 110
+				fcs/gear-wow eq 0
+			</test>
+		</switch>
+		
+		<pure_gain name="elec/bus/emergency-ac-2">
+			<input>elec/bus/switch/ess-ac-epu</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<pure_gain name="elec/bus/nacelle-noness-ac">
+			<input>elec/contactors/ocs-contactors-nacelle</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<switch name="elec/bus/switch/nacelle-noness-ac-ess-ac">
+			<default value="elec/bus/ess-ac"/>
+			<test value="elec/bus/nacelle-noness-ac"> <!-- Means ESS AC must power it -->
+				elec/bus/nacelle-noness-ac ge 110
+			</test>
+		</switch>
+		
+		<pure_gain name="elec/bus/nacelle-ess-ac">
+			<input>elec/bus/switch/nacelle-noness-ac-ess-ac</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<!-- DC -->
+		<pure_gain name="elec/bus/emergency-dc-1">
+			<input>elec/bus/emergency-ac-1</input>
+			<gain>0.24347826086956523</gain> <!-- AC to DC converter -->
+		</pure_gain>
+		
+		<switch name="elec/bus/switch/emergency-dc-1-epu-stby">
+			<default value="elec/bus/emergency-dc-1"/>
+			<test logic="AND" value="0"> <!-- Means EPU or STBY must power it -->
+				elec/sources/main-gen-volt lt 110
+				elec/sources/external-pwr-volt lt 110
+			</test>
+		</switch>
+		
+		<pure_gain name="elec/bus/noness-dc">
+			<input>elec/bus/switch/emergency-dc-1-epu-stby</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<pure_gain name="elec/bus/emergency-dc-2">
+			<input>elec/bus/emergency-ac-2</input>
+			<gain>0.24347826086956523</gain> <!-- AC to DC converter -->
+		</pure_gain>
+		
+		<switch name="elec/bus/switch/emergency-dc-2-epu">
+			<default value="elec/bus/emergency-dc-2"/>
+			<test logic="AND" value="0"> <!-- Means EPU must power it -->
+				elec/sources/main-gen-volt lt 110
+				elec/sources/stby-gen-volt lt 110
+				elec/sources/external-pwr-volt lt 110
+			</test>
+		</switch>
+		
+		<pure_gain name="elec/bus/ess-dc">
+			<input>elec/bus/switch/emergency-dc-2-epu</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<summer name="elec/bus/batt-1">
+			<input>elec/bus/emergency-dc-1</input>
+			<input>elec/bus/emergency-dc-2</input>
+			<input>elec/contactors/battery</input>
+			<clipto>
+				<min>0</min>
+				<max>28</max>
+			</clipto>
+		</summer>
+		
+		<summer name="elec/bus/batt-2">
+			<input>elec/bus/emergency-dc-1</input>
+			<input>elec/bus/emergency-dc-2</input>
+			<input>elec/contactors/battery</input>
+			<clipto>
+				<min>0</min>
+				<max>28</max>
+			</clipto>
+		</summer>
+		
+		<pure_gain name="elec/bus/nacelle-noness-dc-1">
+			<input>elec/bus/noness-dc</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<pure_gain name="elec/bus/nacelle-noness-dc-2">
+			<input>elec/bus/noness-dc</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<switch name="elec/bus/flcc/ab-regulator">
+			<default value="0">0</default>
+			<test logic="AND" value="elec/sources/stby-gen-volt-dc">
+				elec/sources/stby-gen-volt-dc ge elec/sources/epu-gen-volt-dc
+				elec/sources/stby-gen-volt-dc ge elec/bus/emergency-dc-1
+				elec/sources/stby-gen-volt-dc ge elec/sources/battery-volt
+			</test>
+			<test logic="AND" value="elec/sources/epu-gen-volt-dc">
+				elec/sources/epu-gen-volt-dc ge elec/sources/stby-gen-volt-dc
+				elec/sources/epu-gen-volt-dc ge elec/bus/emergency-dc-1
+				elec/sources/epu-gen-volt-dc ge elec/sources/battery-volt
+			</test>
+			<test logic="AND" value="elec/bus/emergency-dc-1">
+				elec/bus/emergency-dc-1 ge elec/sources/stby-gen-volt-dc
+				elec/bus/emergency-dc-1 ge elec/sources/epu-gen-volt-dc
+				elec/bus/emergency-dc-1 ge elec/sources/battery-volt
+			</test>
+			<test logic="AND" value="elec/sources/battery-volt">
+				elec/sources/battery-volt ge elec/sources/stby-gen-volt-dc
+				elec/sources/battery-volt ge elec/sources/epu-gen-volt-dc
+				elec/sources/battery-volt ge elec/bus/emergency-dc-1
+			</test>
+		</switch>
+		
+		<switch name="elec/bus/flcc/cd-regulator">
+			<default value="0">0</default>
+			<test logic="AND" value="elec/sources/stby-gen-volt-dc">
+				elec/sources/stby-gen-volt-dc ge elec/sources/epu-gen-volt-dc
+				elec/sources/stby-gen-volt-dc ge elec/bus/emergency-dc-2
+				elec/sources/stby-gen-volt-dc ge elec/sources/battery-volt
+			</test>
+			<test logic="AND" value="elec/sources/epu-gen-volt-dc">
+				elec/sources/epu-gen-volt-dc ge elec/sources/stby-gen-volt-dc
+				elec/sources/epu-gen-volt-dc ge elec/bus/emergency-dc-2
+				elec/sources/epu-gen-volt-dc ge elec/sources/battery-volt
+			</test>
+			<test logic="AND" value="elec/bus/emergency-dc-2">
+				elec/bus/emergency-dc-2 ge elec/sources/stby-gen-volt-dc
+				elec/bus/emergency-dc-2 ge elec/sources/epu-gen-volt-dc
+				elec/bus/emergency-dc-2 ge elec/sources/battery-volt
+			</test>
+			<test logic="AND" value="elec/sources/battery-volt">
+				elec/sources/battery-volt ge elec/sources/stby-gen-volt-dc
+				elec/sources/battery-volt ge elec/sources/epu-gen-volt-dc
+				elec/sources/battery-volt ge elec/bus/emergency-dc-2
+			</test>
+		</switch>
+		
+		<pure_gain name="elec/bus/flcc/a">
+			<input>elec/bus/flcc/ab-regulator</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<pure_gain name="elec/bus/flcc/b">
+			<input>elec/bus/flcc/ab-regulator</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<pure_gain name="elec/bus/flcc/c">
+			<input>elec/bus/flcc/cd-regulator</input>
+			<gain>1.0</gain>
+		</pure_gain>
+		
+		<pure_gain name="elec/bus/flcc/d">
+			<input>elec/bus/flcc/cd-regulator</input>
+			<gain>1.0</gain>
+		</pure_gain>
+	
+	</channel>
+	
+	<channel name="Various">
+		
+		<switch name="elec/sources/batt-bus">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				elec/bus/batt-1 ge 20
+				elec/bus/batt-2 ge 20
+			</test>
+		</switch>
+		
+		<switch name="elec/sources/epu-elec">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				elec/sources/main-gen-volt lt 110
+				elec/sources/stby-gen-volt lt 110
+				elec/sources/external-pwr-volt lt 110
+			</test>
+		</switch>
+		
+		<switch name="elec/sources/epu-hyd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				systems/hydraulics/edpa-pump-psi lt 1000
+				systems/hydraulics/edpb-pump-psi lt 1000
+			</test>
+		</switch>
+		
+		<switch name="elec/sources/epu-on">
+			<default value="0"/>
+			<test logic="OR" value="0"> <!-- Parsed in order, so this will keep it at 0 -->
+				elec/failures/epu/serviceable eq 1
+				elec/sources/batt-bus ne 1
+			</test>
+			<test logic="OR" value="1">
+				elec/switches/epu eq 1
+				elec/sources/epu-elec eq 1
+				elec/sources/epu-hyd eq 1
+			</test>
+			<output>systems/hydraulics/emerg-pump-on</output> <!-- Also output to hydraulic system -->
+		</switch>
+	
+	</channel>
+
+</system>
