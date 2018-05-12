@@ -10,7 +10,7 @@
   <condition>
    <less-than>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>110</value>
+    <value>100</value>
    </less-than>
   </condition>
  </animation>
@@ -21,7 +21,7 @@
   <condition>
    <less-than>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-     <value>110</value>
+     <value>100</value>
     </less-than>
   </condition>
  </animation>
@@ -32,7 +32,7 @@
   <condition>
    <less-than>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>110</value>
+    <value>100</value>
    </less-than>
   </condition>
  </animation>
@@ -43,7 +43,7 @@
   <condition>
    <less-than>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-     <value>110</value>
+     <value>100</value>
     </less-than>
   </condition>
  </animation>
@@ -76,7 +76,7 @@
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>110</value>
+    <value>100</value>
    </greater-than-equals>
   </condition>
   <center>
@@ -98,7 +98,7 @@
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>110</value>
+    <value>100</value>
    </greater-than-equals>
   </condition>
   <center>
@@ -195,7 +195,7 @@
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>110</value>
+    <value>100</value>
    </greater-than-equals>
    <or>
     <equals>
