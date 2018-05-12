@@ -5,25 +5,11 @@
 
 <system name="electrical">
 	
-	<property value="0">elec/unused</property>
-	<property value="0">elec/sources/external-pwr-plugged-in</property>
-	
-	<!-- Switches -->
-	<property value="2">elec/switches/main-pwr</property>
-	<property value="0">elec/switches/epu</property>
-	
 	<channel name="Sources">
 		
-		<switch name="elec/failures/battery/serviceable-int">
-			<default value="0"/>
-			<test value="1">
-				elec/failures/battery/serviceable eq 1
-			</test>
-		</switch>
-		
 		<pure_gain name="elec/sources/battery-volt">
-			<input>elec/failures/battery/serviceable-int</input>
-			<gain>28</gain> <!-- Set to the voltage once charging/dischaging works -->
+			<input>elec/sources/battery-volt-feed</input>
+			<gain>elec/failures/battery/serviceable</gain>
 		</pure_gain>
 		
 		<fcs_function name="elec/sources/adg-percent-rpm">

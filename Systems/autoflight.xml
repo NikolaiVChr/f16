@@ -5,21 +5,6 @@
 
 <system name="autoflight">
 	
-	<property value="0">/f16/fcs/switch-roll</property> <!-- -1 = STRG SEL, 0 = ATT HOLD, 1 = HDG SEL -->
-	<property value="0">/f16/fcs/switch-pitch</property> <!-- -1 = ATT HOLD, 0 = A/P OFF, 1 = ALT HOLD -->
-	<property value="0">autoflight/pitch/altitude-2-sec-ahead</property> <!-- autoflight-rules.xml -->
-	<property value="0">autoflight/roll/heading/pi</property>
-	<property value="0">autoflight/roll/master-pid</property>
-	<property value="0">autoflight/pitch/master-pid</property>
-	<property value="0">autoflight/pitch/vs/pid</property>
-	
-	<property value="-3.8">autoflight/roll/p-gain-att</property>
-	<property value="-6.4">autoflight/roll/i-gain-att</property>
-	<property value="-0.2">autoflight/roll/d-gain-att</property>
-	<property value="0">autoflight/pitch/p-gain-att</property> <!-- This gain is dynamic -->
-	<property value="-1">autoflight/pitch/i-gain-att</property>
-	<property value="-5">autoflight/pitch/d-gain-att</property>
-	
 	<channel name="Autoflight: Logic">
 		
 		<switch name="position/wow">
