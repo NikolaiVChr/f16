@@ -5,6 +5,7 @@
 Bugs
 ----
 masterarm off while aim9 in lock..bad stuuff [cant reproduce]
+maddog fired up with anything infront, at some point halts for a long while. And crashes sim.
 
 Model
 -----

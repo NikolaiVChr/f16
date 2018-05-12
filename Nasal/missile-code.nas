@@ -2892,6 +2892,9 @@ var AIM = {
 				}
 			}
 			me.direct_dist_m = me.cur_dir_dist_m;
+		} elsif (me.life_time > me.selfdestruct_time) {
+			me.explode("Selfdestructed.");
+		    return TRUE;
 		}
 		return FALSE;
 	},
