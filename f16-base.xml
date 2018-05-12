@@ -845,6 +845,52 @@
     </consumables>
     <fdm>
         <jsbsim>
+			<autoflight>
+				<pitch>
+					<d-gain-att type="double">-5</d-gain-att>
+					<i-gain-att type="double">-1</i-gain-att>
+					<altitude-2-sec-ahead type="double">0</altitude-2-sec-ahead> <!-- autoflight-rules.xml -->
+					<master-pid type="double">0</master-pid>
+					<p-gain-att type="double">0</p-gain-att> <!-- This gain is dynamic -->
+					<vs>
+						<pid type="double">0</pid>
+					</vs>
+				</pitch>
+				<roll>
+					<d-gain-att type="double">-0.2</d-gain-att>
+					<i-gain-att type="double">-6.4</i-gain-att>
+					<heading>
+						<pi type="double">0</pi>
+					</heading>
+					<master-pid type="double">0</master-pid>
+					<p-gain-att type="double">-3.8</p-gain-att>
+				</roll>
+			</autoflight>
+			<elec>
+				<failures>
+					<battery>
+						<serviceable type="bool">1</serviceable>
+					</battery>
+					<epu>
+						<serviceable type="bool">1</serviceable>
+					</epu>
+					<main-gen>
+						<serviceable type="bool">1</serviceable>
+					</main-gen>
+					<stby-gen>
+						<serviceable type="bool">1</serviceable>
+					</stby-gen>
+				</failures>
+				<sources>
+					<battery-volt-feed type="int">24</battery-volt-feed> <!-- Remove once charging and discharging works -->
+					<external-pwr-plugged-in type="int">0</external-pwr-plugged-in>
+				</sources>
+				<switches>
+					<epu type="int">2</epu>
+					<main-pwr type="int">2</main-pwr>
+				</switches>
+				<unused type="int">0</unused>
+			</elec>
             <inertia>
                 <pointmass-dragarea-sqft type="double" n="1">0</pointmass-dragarea-sqft>
                 <pointmass-dragarea-sqft type="double" n="2">0</pointmass-dragarea-sqft>
@@ -1353,6 +1399,10 @@
         <avionics>
             <hud-brt type="double">1.0</hud-brt>
         </avionics>
+		<fcs>
+			<switch-pitch type="int">0</switch-pitch>
+			<switch-roll type="int">0</switch-roll>
+		</fcs>
     </f16>
 
     <nasal>

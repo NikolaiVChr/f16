@@ -13,11 +13,10 @@
         <condition>
             <property>controls/MFD[0]/mode</property>
 
-            <!-- electrics main bus needed-->
-            <!--<greater-than>
-                <property>fdm/jsbsim/systems/electrics/ac-left-main-bus</property>
-                <value>0</value>
-            </greater-than>-->
+            <greater-than-equals>
+                <property>fdm/jsbsim/elec/bus/ess-ac</property>
+                <value>110</value>
+            </greater-than-equals>
 
         </condition>
     </animation>

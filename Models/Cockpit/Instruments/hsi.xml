@@ -22,8 +22,8 @@
   <object-name>HSI_off-flag</object-name>
   <condition>
    <less-than>
-    <property>systems/electrical/outputs/adi</property>
-    <value>24</value>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
    </less-than> 
   </condition>
  </animation>
@@ -33,6 +33,12 @@
   <type>rotate</type>
   <object-name>HSI_compass-card</object-name>
   <property>orientation/heading-magnetic-deg</property>
+  <condition>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
+   </greater-than-equals>
+  </condition>
   <center>
    <x-m>0</x-m>
    <y-m>0</y-m>
@@ -48,13 +54,25 @@
   <type>select</type>
   <object-name>HSI_brg-tcn-needle-on</object-name>
   <condition>
+   <and>
    <property>instrumentation/tacan/in-range</property>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
+   </greater-than-equals>
+   </and>
   </condition>
  </animation>
  <animation>
   <type>rotate</type>
   <object-name>HSI_brg-tcn-needle-on</object-name>
   <property>orientation/heading-magnetic-deg</property>
+  <condition>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
+   </greater-than-equals>
+  </condition>
   <center>
    <x-m>0</x-m>
    <y-m>0</y-m>
@@ -68,6 +86,12 @@
   <type>rotate</type>
   <object-name>HSI_brg-tcn-needle-on</object-name>
   <property>instrumentation/tacan/indicated-bearing-true-deg</property>
+  <condition>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
+   </greater-than-equals>
+  </condition>
   <!-- Note: TCN should provide magnetic-degs, as do the HSI -->
   <center>
    <x-m>0</x-m>
@@ -83,15 +107,27 @@
   <type>select</type>
   <object-name>HSI_brg-needle-off</object-name>
   <condition>
+   <and>
    <not>
     <property>instrumentation/tacan/in-range</property>
    </not>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
+   </greater-than-equals>
+   </and>
   </condition>
  </animation>
  <animation>
   <type>rotate</type>
   <object-name>HSI_brg-needle-off</object-name>
   <property>orientation/heading-magnetic-deg</property>
+  <condition>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
+   </greater-than-equals>
+  </condition>
   <center>
    <x-m>0</x-m>
    <y-m>0</y-m>
@@ -106,6 +142,12 @@
   <type>rotate</type>
   <object-name>HSI_cdi</object-name>
   <property>orientation/heading-magnetic-deg</property>
+  <condition>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
+   </greater-than-equals>
+  </condition>
   <center>
    <x-m>0</x-m>
    <y-m>0</y-m>
@@ -322,9 +364,15 @@
   <type>select</type>
   <object-name>HSI_out-of-range-flag</object-name>
   <condition>
+   <and>
    <not>
     <property>instrumentation/tacan/in-range</property>
    </not>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
+   </greater-than-equals>
+   </and>
   </condition>
  </animation>
 
@@ -332,6 +380,12 @@
   <type>textranslate</type>
   <object-name>HSI_miles-drum-1</object-name>
   <property>instrumentation/tacan/indicated-distance-nm</property>
+  <condition>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
+   </greater-than-equals>
+  </condition>
   <factor>0.1</factor>
   <offset>-1</offset>
   <axis><y>-1</y></axis>
@@ -340,6 +394,12 @@
   <type>textranslate</type>
   <object-name>HSI_miles-drum-2</object-name>
   <property>instrumentation/tacan/indicated-distance-nm</property>
+  <condition>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
+   </greater-than-equals>
+  </condition>
   <factor>0.01</factor>
   <offset>-10</offset>
   <step>10</step>
@@ -350,6 +410,12 @@
   <type>textranslate</type>
   <object-name>HSI_miles-drum-3</object-name>
   <property>instrumentation/tacan/indicated-distance-nm</property>
+  <condition>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
+   </greater-than-equals>
+  </condition>
   <factor>0.001</factor>
   <offset>-100</offset>
   <step>100</step>
@@ -362,6 +428,12 @@
   <type>textranslate</type>
   <object-name>HSI_course-drum-1</object-name>
   <property>instrumentation/nav[1]/radials/selected-deg</property>
+  <condition>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
+   </greater-than-equals>
+  </condition>
   <factor>0.1</factor>
   <offset>-1</offset>
   <axis><y>-1</y></axis>
@@ -370,6 +442,12 @@
   <type>textranslate</type>
   <object-name>HSI_course-drum-2</object-name>
   <property>instrumentation/nav[1]/radials/selected-deg</property>
+  <condition>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
+   </greater-than-equals>
+  </condition>
   <factor>0.01</factor>
   <offset>-10</offset>
   <step>10</step>
@@ -380,6 +458,12 @@
   <type>textranslate</type>
   <object-name>HSI_course-drum-3</object-name>
   <property>instrumentation/nav[1]/radials/selected-deg</property>
+  <condition>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>110</value>
+   </greater-than-equals>
+  </condition>
   <factor>0.001</factor>
   <offset>-100</offset>
   <step>100</step>

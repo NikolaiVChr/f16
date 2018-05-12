@@ -53,6 +53,7 @@
  <mass_balance file="Systems/jsb-mass"/>
  <system file="jsb-hook"/>
  <system file="f16-hydraulics"/>
+ <system file="f16-electrical"/>
  <flight_control file="Systems/jsb-controls"/>
  <system file="autoflight"/>
  <propulsion file="Systems/jsb-propulsion-block30"/>

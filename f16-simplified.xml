@@ -316,6 +316,7 @@
  </system>
  <system file="jsb-hook"/>
  <system file="f16-hydraulics"/>
+ <system file="f16-electrical"/>
 
  <flight_control name="F-16 FC">
 
