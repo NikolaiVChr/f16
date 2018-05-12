@@ -741,7 +741,7 @@ var F16_HUD = {
                     .lineTo(me.dlzWidth, -me.dlzHeight+3)
                     .lineTo(0, -me.dlzHeight)
                     .setStrokeLineWidth(me.dlzLW)
-                    .setColor(0,1,0);
+                    .setColor(0.3,1,0.3);
             me.dlz2.update();
             me.dlz.show();
         }
