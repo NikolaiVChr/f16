@@ -1,198 +1,174 @@
 <?xml version="1.0"?>
 <!--
-        Description: F16 hydraulics system, modified from F-15 by Richard
-        Original Notes: Supports engine and emergency pumps, with bidi transfer
-               (1) no electrical modelling so will always have hyd pressure
-               (2) Flight controls require hyds and will not function if no pressure
-               (3) pump failure supported (no pressure depending on pump/configuration of other pumps)
-               (4) Has utility system which has psi and accumulators and powers JFS		
-        Author: Richard Harrison (rjh@zaretto.com)
+		Description: F16 hydraulics system, modified from F-15 by Richard
+		Original Notes: Supports engine and emergency pumps, with bidi transfer
+			   (1) no electrical modelling so will always have hyd pressure
+			   (2) Flight controls require hyds and will not function if no pressure
+			   (3) pump failure supported (no pressure depending on pump/configuration of other pumps)
+			   (4) Has utility system which has psi and accumulators and powers JFS		
+		Author: Richard Harrison (rjh@zaretto.com)
 		Modifier: Jonathan Redpath (legoboyvdlp@gmail.com)
-        References: T.O. GR1F-16CJ-1 p113 - 114, Figure 1-33
-    -->
+		References: T.O. GR1F-16CJ-1 p113 - 114, Figure 1-33
+	-->
 
 <system name="hydraulic">
 
-    <property value="3000">systems/hydraulics/normal-pressure</property>
-    <!-- the min pressure is really for when no hydraulic fluid and the pressure has been at that level
-     for more than 10 seconds, so for now we will not model this as there is no way for fluid to be depleted -->
-    <property value="25">systems/hydraulics/reservoir-quantity</property>
-    <property value="1000">systems/hydraulics/emerg-pump-activation-psi</property>
-    <property value="0">systems/hydraulics/emerg-pump-failed</property>
-    <property value="0">systems/hydraulics/emerg-pump-switch</property>
-    <property value="0">systems/hydraulics/edpa-pump-failed</property>
-    <property value="0">systems/hydraulics/edpb-pump-failed</property>
-    <property value="0">systems/engines/jfs-running</property>
-    <property value="0">systems/hydraulics/jfs-bleed</property>
-    <!-- This is used to ensure the sim starts with util hyds by setting to -ve number -->
-    <property value="0">systems/hydraulics/util-system-preload-input</property>
+	<property value="3000">systems/hydraulics/normal-pressure</property>
+	<!-- the min pressure is really for when no hydraulic fluid and the pressure has been at that level
+	for more than 10 seconds, so for now we will not model this as there is no way for fluid to be depleted -->
+	<property value="25">systems/hydraulics/reservoir-quantity</property>
+	<property value="1000">systems/hydraulics/emerg-pump-activation-psi</property>
+	<property value="0">systems/hydraulics/emerg-pump-failed</property>
+	<property value="0">systems/hydraulics/emerg-pump-switch</property>
+	<property value="0">systems/hydraulics/edpa-pump-failed</property>
+	<property value="0">systems/hydraulics/edpb-pump-failed</property>
+	<property value="0">systems/engines/jfs-running</property>
+	<property value="0">systems/hydraulics/jfs-bleed</property>
+	<!-- This is used to ensure the sim starts with util hyds by setting to -ve number -->
+	<property value="0">systems/hydraulics/util-system-preload-input</property>
+	<property value="0">systems/hydraulics/emerg-pump-on</property> <!-- Set by electrical system -->
 	
 	 <channel name="sysB" execrate="4"> <!-- Channel B is above Channel A to avoid getNode failure -->
-        
+		
 		<scheduled_gain name="systems/hydraulics/edpb-pump-psi">
-            <input>propulsion/engine[0]/n1</input>
-            <table>
-                <independentVar lookup="row">propulsion/engine[0]/n2</independentVar>
-                <independentVar lookup="column">systems/hydraulics/edpb-pump-failed</independentVar>
-                <tableData>
-                    0      1
-                    0       0      0
-                    12    130      0
-                </tableData>
-            </table>
-            <clipto>
-                <min> 0 </min>
-                <max>
-                    <property>systems/hydraulics/normal-pressure</property>
-                </max>
-            </clipto>
-        </scheduled_gain>
+			<input>propulsion/engine[0]/n1</input>
+			<table>
+				<independentVar lookup="row">propulsion/engine[0]/n2</independentVar>
+				<independentVar lookup="column">systems/hydraulics/edpb-pump-failed</independentVar>
+				<tableData>
+					0      1
+					0       0      0
+					12    130      0
+				</tableData>
+			</table>
+			<clipto>
+				<min> 0 </min>
+				<max>
+					<property>systems/hydraulics/normal-pressure</property>
+				</max>
+			</clipto>
+		</scheduled_gain>
 		
-        <summer name="systems/hydraulics/sysb-psi">
-            <input>systems/hydraulics/edpb-pump-psi</input>
-            <clipto>
-                <min> 0 </min>
-                <max>
-                    <property>systems/hydraulics/normal-pressure</property>
-                </max>
-            </clipto>
-        </summer>
-    </channel>
+		<summer name="systems/hydraulics/sysb-psi">
+			<input>systems/hydraulics/edpb-pump-psi</input>
+			<clipto>
+				<min> 0 </min>
+				<max>
+					<property>systems/hydraulics/normal-pressure</property>
+				</max>
+			</clipto>
+		</summer>
+	</channel>
 	
-    <channel name="sysa" execrate="4">
-        <!-- 
-No information about minimum engine N1 for hydraulics. 
-For JFS accumulator charging 12 PSI is required. Will use that figure meantime
--->
+	<channel name="sysa" execrate="4">
+		<!-- 
+		No information about minimum engine N1 for hydraulics. 
+		For JFS accumulator charging 12 PSI is required. Will use that figure meantime
+		-->
 
-        <scheduled_gain name="systems/hydraulics/edpa-pump-psi">
-            <input>propulsion/engine[0]/n1</input>
-            <table>
-                <independentVar lookup="row">propulsion/engine[0]/n2</independentVar>
-                <independentVar lookup="column">systems/hydraulics/edpa-pump-failed</independentVar>
-                <tableData>
-                    0      1 <!-- remember that this column has no row ID so the 1 is really for the third column -->
-                    0       0      0
-                    12    130      0
-                </tableData>
-            </table>
-            <clipto>
-                <min> 0 </min>
-                <max>
-                    <property>systems/hydraulics/normal-pressure</property>
-                </max>
-            </clipto>
-        </scheduled_gain>
+		<scheduled_gain name="systems/hydraulics/edpa-pump-psi">
+			<input>propulsion/engine[0]/n1</input>
+			<table>
+				<independentVar lookup="row">propulsion/engine[0]/n2</independentVar>
+				<independentVar lookup="column">systems/hydraulics/edpa-pump-failed</independentVar>
+				<tableData>
+					        0      1
+					0       0      0
+					12    130      0
+				</tableData>
+			</table>
+			<clipto>
+				<min> 0 </min>
+				<max>
+					<property>systems/hydraulics/normal-pressure</property>
+				</max>
+			</clipto>
+		</scheduled_gain>
 
-        <switch name="systems/hydraulics/emerg-pump-on">
-            <default value="0"/>
-            <test  logic="AND" value="1">
-                systems/hydraulics/emerg-pump-switch eq 2
-				systems/hydraulics/emerg-pump-failed eq 0
-            </test>
-            <test  logic="AND" value="1">
-               systems/hydraulics/emerg-pump-switch eq 1
-			   fcs/gear-wow eq 0
-			   systems/hydraulics/edpa-pump-psi lt systems/hydraulics/emerg-pump-activation-psi
-			   systems/hydraulics/edpa-pump-psi lt systems/hydraulics/emerg-pump-activation-psi
-			   systems/hydraulics/emerg-pump-failed eq 0
-            </test>
-			<!-- when elec is simulated add generators dropping offline -->
-            <test  logic="OR" value="0">
-                systems/hydraulics/emerg-pump-switch eq 0 <!-- elec not simulated yet, so OFF logic will be done later -->
-				systems/hydraulics/emerg-pump-failed eq 1
-            </test>
+		<switch name="systems/hydraulics/emerg-pump-psi">
+			<default value="0"/>
+			<test  logic="AND" value="2500">
+				systems/hydraulics/emerg-pump-on eq 1
+			</test>
 			<test  logic="AND" value="0">
-               systems/hydraulics/emerg-pump-switch eq 1
-			   systems/hydraulics/edpa-pump-psi gt systems/hydraulics/emerg-pump-activation-psi
-			   systems/hydraulics/edpa-pump-psi gt systems/hydraulics/emerg-pump-activation-psi
-            </test>
-        </switch>
-		
-		 <switch name="systems/hydraulics/emerg-pump-psi">
-            <default value="0"/>
-            <test  logic="AND" value="2500">
-                systems/hydraulics/emerg-pump-on eq 1
-            </test>
-			<test  logic="AND" value="0">
-                systems/hydraulics/emerg-pump-on eq 0
-            </test>
-        </switch>
+				systems/hydraulics/emerg-pump-on eq 0
+			</test>
+		</switch>
 
-        <summer name="systems/hydraulics/sysa-psi">
-            <input>systems/hydraulics/emerg-pump-psi</input>
-            <input>systems/hydraulics/edpa-pump-psi</input>
-            <clipto>
-                <min> 0 </min>
-                <max>
-                    <property>systems/hydraulics/normal-pressure</property>
-                </max>
-            </clipto>
-        </summer>
-    </channel>
+		<summer name="systems/hydraulics/sysa-psi">
+			<input>systems/hydraulics/emerg-pump-psi</input>
+			<input>systems/hydraulics/edpa-pump-psi</input>
+			<clipto>
+				<min> 0 </min>
+				<max>
+					<property>systems/hydraulics/normal-pressure</property>
+				</max>
+			</clipto>
+		</summer>
+	</channel>
 	
-    <channel name="bleed" execrate="4">
-        <summer name="systems/hydraulics/elevator-bleed">
-            <input>-fcs/elevator-cmd-norm</input>
-        </summer>
+	<channel name="bleed" execrate="4">
+		<summer name="systems/hydraulics/elevator-bleed">
+			<input>-fcs/elevator-cmd-norm</input>
+		</summer>
 
-        <summer name="systems/hydraulics/flight-system-bleed-basic">
-            <input>systems/hydraulics/elevator-bleed</input>
-        </summer>
+		<summer name="systems/hydraulics/flight-system-bleed-basic">
+			<input>systems/hydraulics/elevator-bleed</input>
+		</summer>
 
-        <!-- the basic bleed load is different depending on which pump is supplying the flow; the emergency
-     pump has less power and we model this simply by a factor that is the correlation between the flow
-     and the pressure - based on the emergency pump psi
--->
-        <scheduled_gain name="systems/hydraulics/flight-system-bleed">
-            <input>systems/hydraulics/flight-system-bleed-basic</input>
-            <table>
-                <independentVar lookup="row">systems/hydraulics/emerg-pump-psi</independentVar>
-                <tableData>
-                    0      30
-                    2001     100
-                </tableData>
-            </table>
-            <clipto>
-                <min> 0 </min>
-                <max>300</max>
-            </clipto>
-        </scheduled_gain>
+		<!-- the basic bleed load is different depending on which pump is supplying the flow; the emergency
+		pump has less power and we model this simply by a factor that is the correlation between the flow
+		and the pressure - based on the emergency pump psi
+		-->
+		<scheduled_gain name="systems/hydraulics/flight-system-bleed">
+			<input>systems/hydraulics/flight-system-bleed-basic</input>
+			<table>
+				<independentVar lookup="row">systems/hydraulics/emerg-pump-psi</independentVar>
+				<tableData>
+					0      30
+					2001     100
+				</tableData>
+			</table>
+			<clipto>
+				<min> 0 </min>
+				<max>300</max>
+			</clipto>
+		</scheduled_gain>
 
-    </channel>
-    <channel name="Util" execrate="4">
-        <switch name="systems/hydraulics/util-system-feedin">
-            <default value="0"/>
-            <test value="systems/hydraulics/sysa-psi">
-                systems/hydraulics/sysa-psi gt 2000
-            </test>
-            <test value="systems/hydraulics/sysb-psi">
-                systems/hydraulics/sysb-psi gt 2000
-            </test>
-        </switch>
-        <summer name="systems/hydraulics/util-system-bleed">
-           <!-- <input>systems/hydraulics/emerg-gear-bleed</input>
-            <input>systems/hydraulics/jfs-bleed</input>-->
-            <input>systems/hydraulics/util-system-feedin</input>
-            <input>systems/hydraulics/util-system-preload-input</input>
-        </summer>
-        <summer name="systems/hydraulics/util-system-psi">
-            <input>systems/hydraulics/sysa-psi</input>
-            <input>systems/hydraulics/sysb-psi</input>
-            <clipto>
-                <min>0</min>
-                <max>3000</max>
-            </clipto>
-        </summer>
-        <actuator name="systems/hydraulics/util-system-accumulator">
-            <input>systems/hydraulics/util-system-psi</input>
-            <rate_limit>systems/hydraulics/util-system-bleed</rate_limit>
-            <output>systems/hydraulics/util-system-accumulator-psi</output>
-            <clipto>
-                <min>0</min>
-                <max>4000</max>
-            </clipto>
-        </actuator>
-    </channel>
+	</channel>
+	<channel name="Util" execrate="4">
+		<switch name="systems/hydraulics/util-system-feedin">
+			<default value="0"/>
+			<test value="systems/hydraulics/sysa-psi">
+				systems/hydraulics/sysa-psi gt 2000
+			</test>
+			<test value="systems/hydraulics/sysb-psi">
+				systems/hydraulics/sysb-psi gt 2000
+			</test>
+		</switch>
+		<summer name="systems/hydraulics/util-system-bleed">
+			<!-- <input>systems/hydraulics/emerg-gear-bleed</input>
+			<input>systems/hydraulics/jfs-bleed</input>-->
+			<input>systems/hydraulics/util-system-feedin</input>
+			<input>systems/hydraulics/util-system-preload-input</input>
+		</summer>
+		<summer name="systems/hydraulics/util-system-psi">
+			<input>systems/hydraulics/sysa-psi</input>
+			<input>systems/hydraulics/sysb-psi</input>
+			<clipto>
+				<min>0</min>
+				<max>3000</max>
+			</clipto>
+		</summer>
+		<actuator name="systems/hydraulics/util-system-accumulator">
+			<input>systems/hydraulics/util-system-psi</input>
+			<rate_limit>systems/hydraulics/util-system-bleed</rate_limit>
+			<output>systems/hydraulics/util-system-accumulator-psi</output>
+			<clipto>
+				<min>0</min>
+				<max>4000</max>
+			</clipto>
+		</actuator>
+	</channel>
 
 </system>
