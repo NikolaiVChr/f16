@@ -441,10 +441,17 @@
   <type>select</type>
   <object-name>ELEC_SYS_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not>
+    <or>
+    <not><property>fdm/jsbsim/elec/failures/battery/serviceable</property></not>
+    <not><property>fdm/jsbsim/elec/failures/epu/serviceable</property></not>
+    <not><property>fdm/jsbsim/elec/failures/main-gen/serviceable</property></not>
+    <not><property>fdm/jsbsim/elec/failures/stby-gen/serviceable</property></not>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+  </or>
+  </not>
   </condition>
  </animation> 
-
  <animation>
   <type>select</type>
   <object-name>ENGINE_FAULT_unlit</object-name>
@@ -725,7 +732,13 @@
   <type>select</type>
   <object-name>ELEC_SYS_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+    <or>
+    <not><property>fdm/jsbsim/elec/failures/battery/serviceable</property></not>
+    <not><property>fdm/jsbsim/elec/failures/epu/serviceable</property></not>
+    <not><property>fdm/jsbsim/elec/failures/main-gen/serviceable</property></not>
+    <not><property>fdm/jsbsim/elec/failures/stby-gen/serviceable</property></not>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+  </or>
   </condition>
  </animation> 
 

@@ -20,7 +20,7 @@ If there is cockpit controls for it, make them work.
 
 Electrical
 ----------
-Make electrical system
+Make stuff depend on electrical system
 
 Fuel
 ----
