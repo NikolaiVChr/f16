@@ -173,8 +173,26 @@ var F16_HUD = {
             .setColor(0,1,0)
             .hide();
         obj.initUpdate =1;
-        obj.svg.setColor(0.3,1,0.3);
+        
         obj.alpha = getprop("f16/avionics/hud-brt");
+
+        obj.dlzX      = sx*0.695633*0.75-6;
+        obj.dlzY      = sy*0.4;
+        obj.dlzWidth  =  10;
+        obj.dlzHeight = sy*0.25;
+        obj.dlzLW     =   1;
+        obj.dlz      = obj.svg.createChild("group")
+                        .setTranslation(obj.dlzX, obj.dlzY);
+        obj.dlz2     = obj.dlz.createChild("group");
+        obj.dlzArrow = obj.dlz.createChild("path")
+           .moveTo(0, 0)
+           .lineTo( -obj.dlzWidth*0.5, obj.dlzWidth*0.4)
+           .moveTo(0, 0)
+           .lineTo( -obj.dlzWidth*0.5, -obj.dlzWidth*0.4)
+           .setColor(1,1,1)
+           .setStrokeLineWidth(obj.dlzLW);
+
+        obj.svg.setColor(0.3,1,0.3);
 		return obj;
 	},
 #
@@ -701,6 +719,33 @@ var F16_HUD = {
 # 7 mach            4
 # 8 g               5
 # 9 weap/aoa        6
+
+        me.dlzArray = pylons.getDLZ();
+        #me.dlzArray =[10,8,6,2,9];#test
+        if (me.dlzArray == nil or size(me.dlzArray) == 0) {
+                me.dlz.hide();
+        } else {
+            #printf("%d %d %d %d %d",me.dlzArray[0],me.dlzArray[1],me.dlzArray[2],me.dlzArray[3],me.dlzArray[4]);
+            me.dlz2.removeAllChildren();
+            me.dlzArrow.setTranslation(0,-me.dlzArray[4]/me.dlzArray[0]*me.dlzHeight);
+            me.dlzGeom = me.dlz2.createChild("path")
+                    .moveTo(0, -me.dlzArray[3]/me.dlzArray[0]*me.dlzHeight)
+                    .lineTo(0, -me.dlzArray[2]/me.dlzArray[0]*me.dlzHeight)
+                    .lineTo(me.dlzWidth, -me.dlzArray[2]/me.dlzArray[0]*me.dlzHeight)
+                    .lineTo(me.dlzWidth, -me.dlzArray[3]/me.dlzArray[0]*me.dlzHeight)
+                    .lineTo(0, -me.dlzArray[3]/me.dlzArray[0]*me.dlzHeight)
+                    .lineTo(0, -me.dlzArray[1]/me.dlzArray[0]*me.dlzHeight)
+                    .lineTo(me.dlzWidth, -me.dlzArray[1]/me.dlzArray[0]*me.dlzHeight)
+                    .moveTo(0, -me.dlzHeight)
+                    .lineTo(me.dlzWidth, -me.dlzHeight-3)
+                    .lineTo(me.dlzWidth, -me.dlzHeight+3)
+                    .lineTo(0, -me.dlzHeight)
+                    .setStrokeLineWidth(me.dlzLW)
+                    .setColor(0,1,0);
+            me.dlz2.update();
+            me.dlz.show();
+        }
+
         me.initUpdate = 0;
  
     },
