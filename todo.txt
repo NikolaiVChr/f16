@@ -74,6 +74,15 @@ HUD
 ---
 Make tons of features.
 CCIP for MK82
+ILS (page 1-159 of block50 manual)
+
+DED (little display right-down from HUD)
+---
+Canvas (page 1-137 of b50 manual)
+
+Oxygen system
+-------------
+page 1-131 of b50 manual
 
 MFDs
 ----
@@ -88,6 +97,7 @@ Convert groundeffect to be an addition instead of a factor.
 Effects
 -------
 Better aircraft lighting system: cockpit, taxi/landing, anti-collision, formation, navigation, beacon, tail flood, etc.
+page 1-111 of b50 manual
 
 Flight controls
 ---------------
