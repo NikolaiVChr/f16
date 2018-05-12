@@ -856,6 +856,22 @@
                 <pointmass-dragarea-sqft type="double" n="8">0</pointmass-dragarea-sqft>
                 <pointmass-dragarea-sqft type="double" n="9">0</pointmass-dragarea-sqft>
             </inertia>
+			<elec>
+				<failures>
+					<battery>
+						<serviceable type="bool">1</serviceable>
+					</battery>
+					<epu>
+						<serviceable type="bool">1</serviceable>
+					</epu>
+					<main-gen>
+						<serviceable type="bool">1</serviceable>
+					</main-gen>
+					<stby-gen>
+						<serviceable type="bool">1</serviceable>
+					</stby-gen>
+				</failures>
+			</elec>
             <systems>
                 <hook>
                     <tailhook-cmd-norm type="bool">false</tailhook-cmd-norm>

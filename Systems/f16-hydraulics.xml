@@ -18,8 +18,6 @@
 	for more than 10 seconds, so for now we will not model this as there is no way for fluid to be depleted -->
 	<property value="25">systems/hydraulics/reservoir-quantity</property>
 	<property value="1000">systems/hydraulics/emerg-pump-activation-psi</property>
-	<property value="0">systems/hydraulics/emerg-pump-failed</property>
-	<property value="0">systems/hydraulics/emerg-pump-switch</property>
 	<property value="0">systems/hydraulics/edpa-pump-failed</property>
 	<property value="0">systems/hydraulics/edpb-pump-failed</property>
 	<property value="0">systems/engines/jfs-running</property>

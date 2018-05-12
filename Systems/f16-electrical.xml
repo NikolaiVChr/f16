@@ -6,13 +6,25 @@
 <system name="electrical">
 	
 	<property value="0">elec/unused</property>
-	<property value="28">elec/sources/battery-volt</property> <!-- Doesn't charge or discharge yet -->
 	<property value="0">elec/sources/external-pwr-plugged-in</property>
 	
 	<!-- Switches -->
 	<property value="2">elec/switches/main-pwr</property>
+	<property value="0">elec/switches/epu</property>
 	
 	<channel name="Sources">
+		
+		<switch name="elec/failures/battery/serviceable-int">
+			<default value="0"/>
+			<test value="1">
+				elec/failures/battery/serviceable eq 1
+			</test>
+		</switch>
+		
+		<pure_gain name="elec/sources/battery-volt">
+			<input>elec/failures/battery/serviceable-int</input>
+			<gain>28</gain> <!-- Set to the voltage once charging/dischaging works -->
+		</pure_gain>
 		
 		<fcs_function name="elec/sources/adg-percent-rpm">
 			<function>
@@ -45,7 +57,15 @@
 				<table>
 					<independentVar lookup="row">elec/sources/adg-kva</independentVar>
 					<independentVar lookup="column">elec/switches/main-pwr</independentVar>
-					<tableData>
+					<independentVar lookup="table">elec/failures/main-gen/serviceable</independentVar>
+					<tableData breakPoint="0">
+						    0  1  2
+						 0  0  0  0
+						50  0  0  0
+						51  0  0  0
+						58  0  0  0
+					</tableData>
+					<tableData breakPoint="1">
 						    0  1    2
 						 0  0  0    0
 						50  0  0    0
@@ -70,7 +90,15 @@
 				<table>
 					<independentVar lookup="row">elec/sources/stby-kva</independentVar>
 					<independentVar lookup="column">elec/switches/main-pwr</independentVar>
-					<tableData>
+					<independentVar lookup="table">elec/failures/stby-gen/serviceable</independentVar>
+					<tableData breakPoint="0">
+						   0  1  2
+						0  0  0  0
+						5  0  0  0
+						6  0  0  0
+						8  0  0  0
+					</tableData>
+					<tableData breakPoint="1">
 						   0  1    2
 						0  0  0    0
 						5  0  0    0
@@ -408,11 +436,11 @@
 		<switch name="elec/sources/epu-on">
 			<default value="0"/>
 			<test logic="OR" value="0"> <!-- Parsed in order, so this will keep it at 0 -->
-				systems/hydraulics/emerg-pump-failed eq 1
+				elec/failures/epu/serviceable eq 1
 				elec/sources/batt-bus ne 1
 			</test>
 			<test logic="OR" value="1">
-				systems/hydraulics/emerg-pump-switch eq 1
+				elec/switches/epu eq 1
 				elec/sources/epu-elec eq 1
 				elec/sources/epu-hyd eq 1
 			</test>

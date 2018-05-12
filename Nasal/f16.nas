@@ -379,3 +379,14 @@ var prop = "payload/armament/fire-control";
 var actuator_fc = compat_failure_modes.set_unserviceable(prop);
 FailureMgr.add_failure_mode(prop, "Fire control", actuator_fc);
 
+var battery_fc = compat_failure_modes.set_unserviceable("fdm/jsbsim/elec/failures/battery");
+FailureMgr.add_failure_mode("/fdm/jsbsim/elec/failures/battery", "Battery", battery_fc);
+
+var epu_fc = compat_failure_modes.set_unserviceable("fdm/jsbsim/elec/failures/epu");
+FailureMgr.add_failure_mode("/fdm/jsbsim/elec/failures/epu", "EPU", epu_fc);
+
+var maingen_fc = compat_failure_modes.set_unserviceable("fdm/jsbsim/elec/failures/main-gen");
+FailureMgr.add_failure_mode("/fdm/jsbsim/elec/failures/main-gen", "Main Generator", maingen_fc);
+
+var stbygen_fc = compat_failure_modes.set_unserviceable("fdm/jsbsim/elec/failures/stby-gen");
+FailureMgr.add_failure_mode("/fdm/jsbsim/elec/failures/stby-gen", "Stby Generator", stbygen_fc);
