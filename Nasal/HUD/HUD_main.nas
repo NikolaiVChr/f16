@@ -77,7 +77,14 @@ var F16_HUD = {
         obj.window7 = obj.get_text("window7", "condensed.txf",9,1.4);
         obj.window8 = obj.get_text("window8", "condensed.txf",9,1.4);
         obj.window9 = obj.get_text("window9", "condensed.txf",9,1.4);
-
+        obj.window2.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
+        obj.window3.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
+        obj.window4.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
+        obj.window5.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
+        obj.window6.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
+        obj.window7.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
+        obj.window8.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
+        obj.window9.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
 
 # A 2D 3x2 matrix with six parameters a, b, c, d, e and f is equivalent to the matrix:
 # a  c  0 e 
@@ -469,7 +476,7 @@ var F16_HUD = {
                 me.gd = "";
                 if (hdp.gear_down)
                     me.gd = " G";
-                me.window2.setText(sprintf("F %d %s",hdp.flap_pos_deg,me.gd));
+                me.window2.setText(sprintf("F %d%s",hdp.flap_pos_deg,me.gd));
             } elsif (getprop("controls/armament/master-arm")) {
                 if (me.isItON) {
                     me.window2.setText("ARM CCRP");
@@ -481,11 +488,11 @@ var F16_HUD = {
                 me.window2.setText("NAV");
                 me.window2.setVisible(1);
             }
-            me.win5 = 0;
+            me.win9 = 0;
             if(getprop("controls/armament/master-arm"))
             {
                 me.weap = pylons.fcs.selectedType;
-                me.window7.setVisible(1);
+                me.window9.setVisible(1);
                 
                 me.txt = "";
                 if (me.weap != nil)
@@ -509,8 +516,9 @@ var F16_HUD = {
                     } elsif (me.weap == "AGM-88") {
                         me.txt = sprintf("%dM88", pylons.fcs.getAmmo());
                     }
+                    me.win9 = 1;
                 }
-                me.window7.setText(me.txt);
+                me.window9.setText(me.txt);
                 if (awg_9.active_u != nil)
                 {
                     if (awg_9.active_u.Callsign != nil) {
@@ -530,36 +538,51 @@ var F16_HUD = {
     #these labels aren't correct - but we don't have a full simulation of the targetting and missiles so 
     #have no real idea on the details of how this works.
                     if (awg_9.active_u.get_display() == 0) {
-                        me.window4.setText("");
-                        me.window5.setText("");
+                        me.window4.hide();
+                        me.window5.hide();
                     } else {
                         me.window4.setText(sprintf("RNG %3.1f", awg_9.active_u.get_range()));
                         me.window5.setText(sprintf("CLO %-3d", awg_9.active_u.get_closure_rate()));
+                        me.window4.show();
+                        me.window5.show();
                     }
-                    me.window4.show();
-                    me.win5 = 1;
+                    
                     me.window6.setText(me.model);
                     me.window6.show(); # SRM UNCAGE / TARGET ASPECT
                 }
                 else {
                     me.window3.hide();
                     me.window4.hide();
+                    me.window5.hide();
                     me.window6.hide();
                 }
             }
             else
             {
-                me.window7.setVisible(0);
+                #me.window7.setVisible(0);
                 me.fuelText = me.fuel>500?"":"FUEL";
                 me.window3.setText(me.fuelText);
-                #if (hdp.nav_range != "")
-                #  me.window3.setText("NAV");
-                #else
-                #  me.window3.setText("");
-                #me.window3.hide();
-                me.window4.setText(hdp.nav_range);
-                me.window4.show();
-                me.window5.setText(hdp.hud_window5);
+                me.window3.show();
+
+                if (hdp.nav_range != nil) {
+                    me.plan = flightplan();
+                    me.planSize = me.plan.getPlanSize();
+                    if (me.plan.current != nil and me.plan.current >= 0 and me.plan.current < me.planSize) {
+                        me.window5.setText(sprintf("%d>%d", hdp.nav_range, me.plan.current+1));
+                        me.window5.show();
+                    } else {
+                        me.window5.hide();
+                    }
+                } else {
+                    me.window5.hide();
+                }
+                me.eta = getprop("autopilot/route-manager/wp[0]/eta");
+                if (me.eta != nil and me.eta != "") {
+                    me.window4.setText(me.eta);
+                    me.window4.show();
+                } else {
+                    me.window4.hide();
+                }
                 me.window6.hide(); # SRM UNCAGE / TARGET ASPECT
             }
 
@@ -571,11 +594,14 @@ var F16_HUD = {
             else
                 me.window1.setVisible(0);
       
-            me.window8.setText(sprintf("%3.1f", hdp.Nz));
-            me.window9.setText(sprintf("AOA %d",hdp.alpha));
-            if(me.win5 == 0) {
-                me.window5.setText(sprintf("M %1.3f",hdp.mach));
+            me.window8.setText(sprintf("%.1f", hdp.Nz));
+            me.window8.show();
+            if (me.win9==0) {
+                me.window9.setText(sprintf("AOA %d",hdp.alpha));
+                me.window9.show();
             }
+            me.window7.setText(sprintf("%.2f",hdp.mach));
+            me.window7.show();
         }
         if (hdp.heading < 180)
             me.heading_tape_position = -hdp.heading*54/10;
@@ -671,10 +697,10 @@ var F16_HUD = {
 #
 #               1 
 #
-# 2                 3
-# 7                 4
-# 8                 5
-# 9                 6
+# 2 nav/arm         3
+# 7 mach            4
+# 8 g               5
+# 9 weap/aoa        6
         me.initUpdate = 0;
  
     },

@@ -75,10 +75,10 @@ var rtExec_loop = func
         var eta_s = getprop("autopilot/route-manager/wp/eta-seconds");
         if (rng != nil) {
             frameNotification.hud_window5 = sprintf("%2d MIN",rng);
-            frameNotification.nav_range = sprintf("N %4.1f", rng);
+            frameNotification.nav_range = rng;
         } else {
             frameNotification.hud_window5 = "XXX";
-            frameNotification.nav_range = "N XXX";
+            frameNotification.nav_range = rng;
         }
 
         if (eta_s != nil)
@@ -86,7 +86,7 @@ var rtExec_loop = func
         else
           frameNotification.hud_window5 = "XX MIN";
     } else {
-        frameNotification.nav_range = "";
+        frameNotification.nav_range = nil;
         frameNotification.hud_window5 = "";
     }
 
