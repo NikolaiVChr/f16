@@ -7,7 +7,7 @@
     <y> -0.03405 </y>
     <z> -1.91735 </z>
    </location>
-   <static_friction> 0.8 </static_friction>
+   <static_friction> 0.6 </static_friction>
    <dynamic_friction> 0.375 </dynamic_friction>
    <rolling_friction> 0.02 </rolling_friction>
    <spring_coeff unit="LBS/FT"> 17250 </spring_coeff>

@@ -419,11 +419,12 @@ var PFD_NavDisplay =
                     me.group.setTranslation(45,0);
                 }
                 call(me.NDCpt.newMFD, [me.group, pfd_device.canvas], me.NDCpt,me.NDCpt,var err = []);
+                me.NDCpt.setTimerInterval(0.5);
                 if (size(err)>0) {
                     print(err[0]);
                     me.nd_error = 1;
                 } else {
-                    me.NDCpt.setTimerInterval(0.5);
+                    
                     me.nd_initialised = 1;
                     me.nd_error = 0;
                 }
