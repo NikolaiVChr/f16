@@ -2952,7 +2952,7 @@ var AIM = {
 			me.printStats("%s  Reason: %s time %.1f", phrase, reason, me.life_time);
 			me.sendMessage(phrase);
 		}
-		if (me.multiHit) {
+		if (me.multiHit and me.arming_time != 5000) {
 			me.multiExplosion(me.coord, event);
 		}
 		
@@ -2993,7 +2993,7 @@ var AIM = {
 			me.printStats("%s  Reason: %s time %.1f", phrase, reason, me.life_time);
 			me.sendMessage(phrase);
 		}
-		if (me.multiHit) {
+		if (me.multiHit and me.arming_time != 5000) {
 			me.multiExplosion(me.t_coord, event);
 		}
 		

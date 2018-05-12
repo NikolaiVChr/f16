@@ -45,6 +45,7 @@ Make id-0 be id-000, hmm not sure this is smart, not backwards compatible.
 Should auto missile view work for jettisoned stores as well?
 More gun tracers?
 A-A and A-G button cycle cannon also?
+Missile view start behind weapon?
 
 Damage
 ------
