@@ -400,7 +400,6 @@ var PFD_NavDisplay =
             };
 
         obj.nd_initialised = 0;
-        obj.nd_error = 0;
         obj.nd_placeholder_ident = nd_group_ident;
         obj.nd_ident = instrument_ident;
         obj.pfd_device = pfd_device;
@@ -410,28 +409,19 @@ var PFD_NavDisplay =
             me.ND = canvas.NavDisplay;
             if (!me.nd_initialised)
             {
-                
-                if (me.nd_error == 0) {
-                    me.NDCpt = me.ND.new("instrumentation/"~me.nd_ident, me.switches,map_style);
+                me.NDCpt = me.ND.new("instrumentation/"~me.nd_ident, me.switches,map_style);
 
-                    me.group = me.pfd_device.svg.getElementById(me.nd_placeholder_ident);
-                    me.group.setScale(0.39,0.45);
-                    me.group.setTranslation(45,0);
-                }
+                me.group = me.pfd_device.svg.getElementById(me.nd_placeholder_ident);
+                me.group.setScale(0.39,0.45);
+                me.group.setTranslation(45,0);
                 call(me.NDCpt.newMFD, [me.group, pfd_device.canvas], me.NDCpt,me.NDCpt,var err = []);
                 me.NDCpt.setTimerInterval(0.5);
                 if (size(err)>0) {
                     print(err[0]);
-                    me.nd_error = 1;
-                } else {
-                    
-                    me.nd_initialised = 1;
-                    me.nd_error = 0;
                 }
+                me.nd_initialised = 1;
             }
-            if (me.nd_error == 0) {
-                me.NDCpt.update();
-            }
+            me.NDCpt.update();
         };
         #
         # Method overrides

@@ -511,15 +511,13 @@ var MFD_Device =
                     awg_9.range_control(1);
                 } elsif (eventi == 1) {
                     awg_9.range_control(-1);
-                } elsif (eventi == 10) {
-                    me.ppp.selectPage(me.my.p1_1);
-                } elsif (eventi == 11) {
+                } elsif (eventi == 17) {
                     me.ppp.selectPage(me.my.p_SMS);
-                } elsif (eventi == 12) {
+                } elsif (eventi == 15) {
                     me.ppp.selectPage(me.my.p_VSD);
-                } elsif (eventi == 5) {
+                } elsif (eventi == 18) {
                     me.ppp.selectPage(me.my.pjitds_1);
-                } elsif (eventi == 6) {
+                } elsif (eventi == 16) {
                     me.ppp.selectPage(me.my.p_HSD);
                 } elsif (eventi == 2) {
                     var az = getprop("instrumentation/radar/az-field");
@@ -545,7 +543,18 @@ var MFD_Device =
                     setprop("instrumentation/radar/ho-field", ho);
                 }
             }
-        }
+
+# Menu Id's
+#  CRM
+#   10  11  12  13  14
+# 0                    5            
+# 1                    6            
+# 2                    7            
+# 3                    8            
+# 4                    9            
+#   15  16  17  18  19
+#  VSD HSD SMS SIT
+        };
         me.p_RDR.update = func (noti) {
             me.root.horiz.setRotation(-getprop("orientation/roll-deg")*D2R);
             me.time = getprop("sim/time/elapsed-sec");
@@ -852,15 +861,23 @@ var MFD_Device =
                     pylons.fcs.jettisonSelectedPylonContent();
                 } elsif (eventi == 12) {
                     pylons.fcs.selectPylon(4);
-                } elsif (eventi == 4) {
-                    me.ppp.selectPage(me.my.p_VSD);
                 } elsif (eventi == 15) {
+                    me.ppp.selectPage(me.my.p_VSD);
+                } elsif (eventi == 18) {
                     me.ppp.selectPage(me.my.pjitds_1);
                 } elsif (eventi == 16) {
-                    me.ppp.selectPage(me.my.p1_1);
-                } elsif (eventi == 17) {
                     me.ppp.selectPage(me.my.p_HSD);
                 }
+# Menu Id's
+#  CRM
+#   10  11  12  13  14
+# 0                    5            
+# 1                    6            
+# 2                    7            
+# 3                    8            
+# 4                    9            
+#   15  16  17  18  19
+#  VSD HSD SMS SIT
             }
         };
         me.p_SMS.update = func (noti) {
@@ -1161,22 +1178,31 @@ var MFD_Device =
                         else
                             me.root.range_dep = 8;
                     }
-                } elsif (eventi == 10) {
-                    me.ppp.selectPage(me.my.p1_1);
-                } elsif (eventi == 11) {
+                } elsif (eventi == 17) {
                     me.ppp.selectPage(me.my.p_SMS);
-                } elsif (eventi == 12) {
+                } elsif (eventi == 15) {
                     me.ppp.selectPage(me.my.p_VSD);
-                } elsif (eventi == 5) {
+                } elsif (eventi == 18) {
                     me.ppp.selectPage(me.my.pjitds_1);
-                } elsif (eventi == 7) {
+                } elsif (eventi == 10) {
                     me.ppp.selectPage(me.my.p_RDR);
                 } elsif (eventi == 2) {
                     me.root.centered = !me.root.centered;
                     me.root.depcen.setText(me.root.centered==1?"CEN":"DEP");
                 }
             }
-        }
+
+# Menu Id's
+#  CRM
+#   10  11  12  13  14
+# 0                    5            
+# 1                    6            
+# 2                    7            
+# 3                    8            
+# 4                    9            
+#   15  16  17  18  19
+#  VSD HSD SMS SIT
+        };
         me.p_HSD.update = func (noti) {
             me.root.conc.setRotation(-getprop("orientation/heading-deg")*D2R);
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
@@ -1474,79 +1500,79 @@ var MFD_Device =
     {
 #
 # Menu Id's
-# 0           5            
-# 1           6            
-# 2           7            
-# 3           8            
-# 4           9            
-#
-# Top: 10 11 12 13 14 
-# Bot: 15 16 17 18 19
+#  CRM
+#   10  11  12  13  14
+# 0                    5            
+# 1                    6            
+# 2                    7            
+# 3                    8            
+# 4                    9            
+#   15  16  17  18  19
+#  VSD HSD SMS SIT
+
         me.mfd_spin_reset_time = 0;
 
         #me.p1_1.addMenuItem(0, "ARMT", me.p1_2);
-        me.p1_1.addMenuItem(1, "VSD", me.p_VSD);
-        me.p1_1.addMenuItem(2, "SIT", me.pjitds_1);
+#        me.p1_1.addMenuItem(1, "VSD", me.p_VSD);
+#        me.p1_1.addMenuItem(2, "SIT", me.pjitds_1);
         #me.p1_1.addMenuItem(3, "WPN", me.p1_2);
         #me.p1_1.addMenuItem(4, "DTM", me.p1_2);
-        me.p1_1.addMenuItem(10, "CRM", me.p_RDR);
-        me.p1_1.addMenuItem(11, "SMS", me.p_SMS);
-        me.p1_1.addMenuItem(12, "HSD", me.p_HSD);
+#        me.p1_1.addMenuItem(10, "CRM", me.p_RDR);
+#        me.p1_1.addMenuItem(11, "SMS", me.p_SMS);
+#        me.p1_1.addMenuItem(12, "HSD", me.p_HSD);
 
-        me.p_RDR.addMenuItem(10, "TIM", me.p1_1);
-        me.p_RDR.addMenuItem(11, "SMS", me.p_SMS);
-        me.p_RDR.addMenuItem(12, "VSD", me.p_VSD);
-        me.p_RDR.addMenuItem(5, "SIT", me.pjitds_1);
-        me.p_RDR.addMenuItem(6, "HSD", me.p_HSD);
+        me.p_RDR.addMenuItem(17, "SMS", me.p_SMS);
+        me.p_RDR.addMenuItem(15, "VSD", me.p_VSD);
+        me.p_RDR.addMenuItem(18, "SIT", me.pjitds_1);
+        me.p_RDR.addMenuItem(16, "HSD", me.p_HSD);
 
-        me.p_HSD.addMenuItem(10, "TIM", me.p1_1);
-        me.p_HSD.addMenuItem(11, "SMS", me.p_SMS);
-        me.p_HSD.addMenuItem(12, "VSD", me.p_VSD);
-        me.p_HSD.addMenuItem(5, "SIT", me.pjitds_1);
-        #me.p_HSD.addMenuItem(6, "SIT", me.pjitds_1);
-        me.p_HSD.addMenuItem(7, "CRM", me.p_RDR);
+        me.p_HSD.addMenuItem(17, "SMS", me.p_SMS);
+        me.p_HSD.addMenuItem(15, "VSD", me.p_VSD);
+        me.p_HSD.addMenuItem(18, "SIT", me.pjitds_1);
+        me.p_HSD.addMenuItem(10, "CRM", me.p_RDR);
 
-        me.p_SMS.addMenuItem(15, "SIT", me.pjitds_1);
+        me.p_SMS.addMenuItem(18, "SIT", me.pjitds_1);
         me.p_SMS.addMenuItem(10, "CRM", me.p_RDR);
-        me.p_SMS.addMenuItem(4, "VSD", me.p_VSD);
-        me.p_SMS.addMenuItem(17, "HSD", me.p_HSD);
-        me.p_SMS.addMenuItem(16, "TIM", me.p1_1);
+        me.p_SMS.addMenuItem(15, "VSD", me.p_VSD);
+        me.p_SMS.addMenuItem(16, "HSD", me.p_HSD);
+#        me.p_SMS.addMenuItem(16, "TIM", me.p1_1);
 
-        me.p1_2.addMenuItem(0, "VSD", me.p_VSD);
+#        me.p1_2.addMenuItem(0, "VSD", me.p_VSD);
         #me.p1_2.addMenuItem(1, "A/A", me.p1_3);
         #me.p1_2.addMenuItem(2, "A/G", me.p1_3);
         #me.p1_2.addMenuItem(3, "CBT JETT", me.p1_3);
         #me.p1_2.addMenuItem(4, "WPN LOAD", me.p1_3);
-        me.p1_2.addMenuItem(9, "M", me.p1_1);
-        me.p1_2.addMenuItem(10, "CRM", me.p_RDR);
-        me.p1_2.addMenuItem(12, "HSD", me.p_HSD);
+#        me.p1_2.addMenuItem(9, "M", me.p1_1);
+#        me.p1_2.addMenuItem(10, "CRM", me.p_RDR);
+#        me.p1_2.addMenuItem(12, "HSD", me.p_HSD);
 
 
-        me.p1_3.addMenuItem(2, "SIT", me.pjitds_1);
+ #       me.p1_3.addMenuItem(2, "SIT", me.pjitds_1);
         #me.p1_3.addMenuItem(3, "A/G", me.p1_3);
         #me.p1_3.addMenuItem(4, "2/2", me.p1_3);
         #me.p1_3.addMenuItem(8, "TM\nPWR", me.p1_3);
-        me.p1_3.addMenuItem(9, "M", me.p1_1);
+#        me.p1_3.addMenuItem(9, "M", me.p1_1);
         #me.p1_3.addMenuItem(10, "PYLON", me.p1_3);
         #me.p1_3.addMenuItem(12, "FUEL", me.p1_3);
         #me.p1_3.addMenuItem(14, "PYLON", me.p1_3);
         #me.p1_3.addMenuItem(15, "MODE S", me.p1_3);
-        me.p1_3.addMenuItem(10, "CRM", me.p_RDR);
-        me.p1_3.addMenuItem(12, "HSD", me.p_HSD);
+ #       me.p1_3.addMenuItem(10, "CRM", me.p_RDR);
+ #       me.p1_3.addMenuItem(12, "HSD", me.p_HSD);
 
-        me.pjitds_1.addMenuItem(9, "M", me.p1_1);
+#        me.pjitds_1.addMenuItem(9, "M", me.p1_1);
         #me.pjitds_1.addMenuItem(0, "ARMT", me.p1_2);
-        me.pjitds_1.addMenuItem(1, "VSD", me.p_VSD);
+        me.pjitds_1.addMenuItem(15, "VSD", me.p_VSD);
         me.pjitds_1.addMenuItem(10, "CRM", me.p_RDR);
-        me.pjitds_1.addMenuItem(12, "HSD", me.p_HSD);
+        me.pjitds_1.addMenuItem(16, "HSD", me.p_HSD);
+        me.pjitds_1.addMenuItem(17, "SMS", me.p_SMS);
 
         #me.p_VSD.addMenuItem(0, "ARMT", me.p1_2);
-        me.p_VSD.addMenuItem(1, "SIT", me.pjitds_1);
-        me.p_VSD.addMenuItem(4, "M", me.p1_1);
-        me.p_VSD.addMenuItem(9, "M", me.p1_1);
+        me.p_VSD.addMenuItem(18, "SIT", me.pjitds_1);
+#        me.p_VSD.addMenuItem(4, "M", me.p1_1);
+#        me.p_VSD.addMenuItem(9, "M", me.p1_1);
         me.p_VSD.addMenuItem(10, "CRM", me.p_RDR);
-        me.p_VSD.addMenuItem(11, "SMS", me.p_SMS);
-        me.p_VSD.addMenuItem(12, "HSD", me.p_HSD);
+        me.p_VSD.addMenuItem(17, "SMS", me.p_SMS);
+        me.p_VSD.addMenuItem(16, "HSD", me.p_HSD);
     },
 
     update : func(notification)

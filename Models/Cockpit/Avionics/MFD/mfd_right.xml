@@ -112,7 +112,7 @@
         </release>
     </animation>
 
-        <animation>
+    <animation>
         <type>knob</type>
         <object-name>MFDButtonT3</object-name>
 
@@ -121,6 +121,52 @@
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>13</value>
+            </binding>
+        </action>
+
+        <release>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <step>0</step>
+                <min>0</min>
+                <max>0</max>
+            </binding>
+        </release>
+    </animation>
+
+    <animation>
+        <type>knob</type>
+        <object-name>MFDButtonT4</object-name>
+
+        <action>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <value>14</value>
+            </binding>
+        </action>
+
+        <release>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <step>0</step>
+                <min>0</min>
+                <max>0</max>
+            </binding>
+        </release>
+    </animation>
+
+    <animation>
+        <type>knob</type>
+        <object-name>MFDButtonT5</object-name>
+
+        <action>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <value>15</value>
             </binding>
         </action>
 
@@ -190,6 +236,52 @@
                 <command>property-assign</command>
                 <property>controls/MFD[1]/button-pressed</property>
                 <value>18</value>
+            </binding>
+        </action>
+
+        <release>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <step>0</step>
+                <min>0</min>
+                <max>0</max>
+            </binding>
+        </release>
+    </animation>
+
+    <animation>
+        <type>knob</type>
+        <object-name>MFDButtonB4</object-name>
+
+        <action>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <value>19</value>
+            </binding>
+        </action>
+
+        <release>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <step>0</step>
+                <min>0</min>
+                <max>0</max>
+            </binding>
+        </release>
+    </animation>
+
+    <animation>
+        <type>knob</type>
+        <object-name>MFDButtonB5</object-name>
+
+        <action>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/MFD[1]/button-pressed</property>
+                <value>20</value>
             </binding>
         </action>
 
