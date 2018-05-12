@@ -886,7 +886,7 @@
 					<external-pwr-plugged-in type="int">0</external-pwr-plugged-in>
 				</sources>
 				<switches>
-					<epu type="int">2</epu>
+					<epu type="int">0</epu>
 					<main-pwr type="int">2</main-pwr>
 				</switches>
 				<unused type="int">0</unused>
