@@ -397,8 +397,8 @@
 		<switch name="elec/sources/batt-bus">
 			<default value="0"/>
 			<test logic="OR" value="1">
-				elec/bus/batt-1 ge 25
-				elec/bus/batt-2 ge 25
+				elec/bus/batt-1 ge 20
+				elec/bus/batt-2 ge 20
 			</test>
 		</switch>
 		

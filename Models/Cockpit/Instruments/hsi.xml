@@ -23,7 +23,7 @@
   <condition>
    <less-than>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>25</value>
+    <value>110</value>
    </less-than> 
   </condition>
  </animation>
@@ -36,7 +36,7 @@
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>25</value>
+    <value>110</value>
    </greater-than-equals>
   </condition>
   <center>
@@ -58,7 +58,7 @@
    <property>instrumentation/tacan/in-range</property>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>25</value>
+    <value>110</value>
    </greater-than-equals>
    </and>
   </condition>
@@ -70,7 +70,7 @@
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>25</value>
+    <value>110</value>
    </greater-than-equals>
   </condition>
   <center>
@@ -89,7 +89,7 @@
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>25</value>
+    <value>110</value>
    </greater-than-equals>
   </condition>
   <!-- Note: TCN should provide magnetic-degs, as do the HSI -->
@@ -113,7 +113,7 @@
    </not>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>25</value>
+    <value>110</value>
    </greater-than-equals>
    </and>
   </condition>
@@ -125,7 +125,7 @@
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>25</value>
+    <value>110</value>
    </greater-than-equals>
   </condition>
   <center>
@@ -145,7 +145,7 @@
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>25</value>
+    <value>110</value>
    </greater-than-equals>
   </condition>
   <center>
@@ -370,7 +370,7 @@
    </not>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>25</value>
+    <value>110</value>
    </greater-than-equals>
    </and>
   </condition>
@@ -383,7 +383,7 @@
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>25</value>
+    <value>110</value>
    </greater-than-equals>
   </condition>
   <factor>0.1</factor>
@@ -397,7 +397,7 @@
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>25</value>
+    <value>110</value>
    </greater-than-equals>
   </condition>
   <factor>0.01</factor>
@@ -413,7 +413,7 @@
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>25</value>
+    <value>110</value>
    </greater-than-equals>
   </condition>
   <factor>0.001</factor>
@@ -431,7 +431,7 @@
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>25</value>
+    <value>110</value>
    </greater-than-equals>
   </condition>
   <factor>0.1</factor>
@@ -445,7 +445,7 @@
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>25</value>
+    <value>110</value>
    </greater-than-equals>
   </condition>
   <factor>0.01</factor>
@@ -461,7 +461,7 @@
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>25</value>
+    <value>110</value>
    </greater-than-equals>
   </condition>
   <factor>0.001</factor>

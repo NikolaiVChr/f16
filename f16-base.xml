@@ -882,7 +882,7 @@
 					</stby-gen>
 				</failures>
 				<sources>
-					<battery-volt-feed type="int">28</battery-volt-feed> <!-- Remove once charging and discharging works -->
+					<battery-volt-feed type="int">24</battery-volt-feed> <!-- Remove once charging and discharging works -->
 					<external-pwr-plugged-in type="int">0</external-pwr-plugged-in>
 				</sources>
 				<switches>
