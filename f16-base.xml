@@ -345,6 +345,9 @@
         </menubar>
         <multiplay>
             <generic>
+                <bool n="0" type="bool" alias="/damage/sounds/explode-on"/>
+                <bool n="1" type="bool" alias="/damage/fire/serviceable"/>
+
                 <int n="2" type="int">0</int><!-- radar-standby -->
                 <int n="9" type="int" alias="/sim/variant-id"/>
                 <int n="10" type="int" alias="/controls/smoke"/>
@@ -1404,6 +1407,14 @@
 			<switch-roll type="int">0</switch-roll>
 		</fcs>
     </f16>
+    <damage>
+        <sound>
+            <explode-on type="bool">false</explode-on>
+        </sound>
+        <fire>
+            <serviceable type="bool">true</serviceable>
+        </fire>
+    </damage>
 
     <nasal>
         <hack>

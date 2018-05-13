@@ -56,6 +56,16 @@
   </condition>
  </animation>
 
+ <model>
+  <name>ex</name>
+  <path>Aircraft/f16/Models/Effects/explosion.xml</path>
+ </model>
+
+ <model>
+  <name>smoking</name>
+  <path>Aircraft/f16/Models/Effects/damage-smoke.xml</path>
+ </model>
+
  <!--<model>
   <name>Cockpit</name>
   <path>Aircraft/f16/Models/Cockpit/F-16C-40/cockpit.xml</path>

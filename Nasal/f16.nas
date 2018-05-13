@@ -390,3 +390,6 @@ FailureMgr.add_failure_mode("fdm/jsbsim/elec/failures/main-gen", "Main Generator
 
 var stbygen_fc = compat_failure_modes.set_unserviceable("fdm/jsbsim/elec/failures/stby-gen");
 FailureMgr.add_failure_mode("fdm/jsbsim/elec/failures/stby-gen", "Stby Generator", stbygen_fc);
+
+var fire_fc = compat_failure_modes.set_unserviceable("damage/fire");
+FailureMgr.add_failure_mode("damage/fire", "Fire", fire_fc);
