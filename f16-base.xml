@@ -916,7 +916,20 @@
                     <tailhook-offset-z-in type="double">-28.818</tailhook-offset-z-in>
                     <tailhook-pos-deg type="double">-3.806</tailhook-pos-deg>
                 </hook>
-                <hydraulics />
+                <hydraulics>
+                    <normal-pressure type="double">3000</normal-pressure>
+                    <!-- the min pressure is really for when no hydraulic fluid and the pressure has been at that level
+                        for more than 10 seconds, so for now we will not model this as there is no way for fluid to be depleted -->
+                    <reservoir-quantity type="double">25</reservoir-quantity>
+                    <emerg-pump-activation-psi type="double">1000</emerg-pump-activation-psi>
+                    <edpa-pump-failed type="bool">false</edpa-pump-failed>
+                    <edpb-pump-failed type="bool">false</edpb-pump-failed>
+                    <jfs-running type="double">0</jfs-running>
+                    <jfs-bleed type="double">0</jfs-bleed>
+                    <!-- This is used to ensure the sim starts with util hyds by setting to -ve number -->
+                    <util-system-preload-input type="double">0</util-system-preload-input>
+                    <emerg-pump-on type="bool">false</emerg-pump-on><!-- Set by electrical system -->
+                </hydraulics>
             </systems>
             <fcs>
                 <fly-by-wire>

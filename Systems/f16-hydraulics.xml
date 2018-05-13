@@ -12,19 +12,6 @@
 	-->
 
 <system name="hydraulic">
-
-	<property value="3000">systems/hydraulics/normal-pressure</property>
-	<!-- the min pressure is really for when no hydraulic fluid and the pressure has been at that level
-	for more than 10 seconds, so for now we will not model this as there is no way for fluid to be depleted -->
-	<property value="25">systems/hydraulics/reservoir-quantity</property>
-	<property value="1000">systems/hydraulics/emerg-pump-activation-psi</property>
-	<property value="0">systems/hydraulics/edpa-pump-failed</property>
-	<property value="0">systems/hydraulics/edpb-pump-failed</property>
-	<property value="0">systems/engines/jfs-running</property>
-	<property value="0">systems/hydraulics/jfs-bleed</property>
-	<!-- This is used to ensure the sim starts with util hyds by setting to -ve number -->
-	<property value="0">systems/hydraulics/util-system-preload-input</property>
-	<property value="0">systems/hydraulics/emerg-pump-on</property> <!-- Set by electrical system -->
 	
 	 <channel name="sysB" execrate="4"> <!-- Channel B is above Channel A to avoid getNode failure -->
 		
@@ -87,9 +74,6 @@
 			<default value="0"/>
 			<test  logic="AND" value="2500">
 				systems/hydraulics/emerg-pump-on eq 1
-			</test>
-			<test  logic="AND" value="0">
-				systems/hydraulics/emerg-pump-on eq 0
 			</test>
 		</switch>
 

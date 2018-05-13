@@ -10,7 +10,7 @@ Model
 -----
 Make under cockpit floating texture livery
 Set proper default livery for all blocks.
-Make liveries for Belgium and Norway.
+Make block 20 MLU liveries for Belgium and Norway.
 Make loads.xml not be a submodel.
 
 Hydraulics
@@ -29,7 +29,6 @@ Check priorities.
 
 JSBSim
 ------
-Stop all msgs when reinit
 
 Engine
 ------
@@ -65,7 +64,7 @@ Enable masterarm, jettison, trims, ALT FLAPS and MFD contrast/brightness.
 Enable the intensity knob on RWR.
 Enable knob for HUD focus. (above BRT knob)
 Fuel dial strange (not really, one needle shows frw tank, one shows aft tank), but should be configurable.
-Flood light.
+Real flood light instead of emission.
 
 Sound
 -----
