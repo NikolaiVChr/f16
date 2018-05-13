@@ -129,44 +129,94 @@
 
 		<vrule/>
 
+		<text>
+			<label>INTERIOR LIGHTS</label>
+		</text>
+
 		<group>
-			<layout>vbox</layout>
-			
-			<text>
-				<label>INSTR LIGHTS</label>
-			</text>
-			
+			<layout>hbox</layout>
+
 			<group>
-				<layout>hbox</layout>
-		
+				<layout>vbox</layout>
+				
+				<text>
+					<label>INSTR</label>
+				</text>
+				
 				<group>
-					<layout>vbox</layout>
-					<halign>left</halign>
+					<layout>hbox</layout>
+			
+					<group>
+						<layout>vbox</layout>
+						<halign>left</halign>
+						
+						<text>
+							<label>FULL</label>
+						</text>
+						<text>
+							<label>OFF</label>
+						</text>
+						
+					</group>
 					
-					<text>
-						<label>FULL</label>
-					</text>
-					<text>
-						<label>OFF</label>
-					</text>
+					<slider>
+						<halign>left</halign>
+						<property>controls/lighting/lighting-panel/pri-inst-pnl</property>
+						<min>0</min>
+						<max>1</max>
+						<step>0.1</step>
+						<live>true</live>
+						<vertical>true</vertical>
+						<binding>
+							<command>dialog-apply</command>
+						</binding>
+					</slider>
 					
 				</group>
-				
-				<slider>
-					<halign>left</halign>
-					<property>controls/lighting/lighting-panel/pri-inst-pnl</property>
-					<min>0</min>
-					<max>1</max>
-					<step>0.1</step>
-					<live>true</live>
-					<vertical>true</vertical>
-					<binding>
-						<command>dialog-apply</command>
-					</binding>
-				</slider>
-				
+			
 			</group>
-		
+
+			<group>
+				<layout>vbox</layout>
+				
+				<text>
+					<label>FLOOD</label>
+				</text>
+				
+				<group>
+					<layout>hbox</layout>
+			
+					<group>
+						<layout>vbox</layout>
+						<halign>left</halign>
+						
+						<text>
+							<label>FULL</label>
+						</text>
+						<text>
+							<label>OFF</label>
+						</text>
+						
+					</group>
+					
+					<slider>
+						<halign>left</halign>
+						<property>controls/lighting/lighting-panel/flood-inst-pnl</property>
+						<min>0</min>
+						<max>1</max>
+						<step>0.1</step>
+						<live>true</live>
+						<vertical>true</vertical>
+						<binding>
+							<command>dialog-apply</command>
+						</binding>
+					</slider>
+					
+				</group>
+			
+			</group>
+
+
 		</group>
 
 		<vrule/>

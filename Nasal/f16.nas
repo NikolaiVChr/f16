@@ -209,6 +209,7 @@ var loop_flare = func {
 
 var medium = {
   loop: func {
+    # Terrain warning:
     if ((getprop("velocities/speed-east-fps") != 0 or getprop("velocities/speed-north-fps") != 0) and getprop("fdm/jsbsim/gear/unit[0]/WOW") != 1 and
           getprop("fdm/jsbsim/gear/unit[1]/WOW") != 1 and (
          (getprop("fdm/jsbsim/gear/gear-pos-norm")<1)
@@ -253,17 +254,19 @@ var medium = {
     } else {
       setprop("instrumentation/radar/time-till-crash", 15);
     }
+    # Store CAT:
     if (pylons.fcs != nil) {
       setprop("f16/stores-cat", pylons.fcs.getCategory());
       } else {
         setprop("f16/stores-cat", 1);
       }
-
+    # strobe light:
     if (getprop("controls/lighting/ext-lighting-panel/anti-collision") == 1 and getprop("controls/lighting/ext-lighting-panel/master") == 1) {
       setprop("controls/lighting/ext-lighting-panel/anti-collision2",1);
     } else {
       setprop("controls/lighting/ext-lighting-panel/anti-collision2",0);
     }
+    # Fuel:
     var fuel = getprop("/consumables/fuel/total-fuel-lbs");
     setprop("/consumables/fuel/total-fuel-lbs-1",     int(fuel       )     -int(fuel*0.1)*10);
     setprop("/consumables/fuel/total-fuel-lbs-10",    int(fuel*0.1   )*10  -int(fuel*0.01)*100);
@@ -275,6 +278,7 @@ var medium = {
     } else {
       setprop("f16/avionics/bingo", 0);
     }
+    # HUD power:
     if (getprop("fdm/jsbsim/elec/bus/emergency-ac-2")>100 or getprop("fdm/jsbsim/elec/bus/emergency-dc-2")>20) {
       setprop("f16/avionics/hud-power",1);
     } else {

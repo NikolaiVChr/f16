@@ -4,4 +4,16 @@
 
  <path>misc.ac</path>
 
+ <animation>
+  <object-name>MISC_0</object-name>
+  <object-name>MISC_1</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+   <red>0.45</red>
+   <green>0.34</green>
+   <blue>0.18</blue>
+  </emission>
+ </animation>
+
 </PropertyList>

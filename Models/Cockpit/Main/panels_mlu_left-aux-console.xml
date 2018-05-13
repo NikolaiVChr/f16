@@ -4,6 +4,17 @@
 
  <path>panels_mlu_left-aux-console.ac</path>
 
+  <animation>
+  <object-name>LEFT_AUX_CONSOLE</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+   <red>0.45</red>
+   <green>0.34</green>
+   <blue>0.18</blue>
+  </emission>
+ </animation>
+
  <animation>
   <type>select</type>
   <object-name>nose_gear_light</object-name>
