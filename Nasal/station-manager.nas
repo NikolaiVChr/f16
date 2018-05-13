@@ -470,7 +470,7 @@ var SubModelWeapon = {
 	},
 
 	start: func (triggerNode = nil) {
-		print("starting gun");
+		#print("starting gun");
 		if (triggerNode==nil) {
 			triggerNode=props.globals.getNode("controls/armament/trigger");
 		}
@@ -480,7 +480,7 @@ var SubModelWeapon = {
 	},
 
 	stop: func {
-		print("stopping gun");
+		#print("stopping gun");
 		# not sure if this is smart
 		me.active = 0;
 	},

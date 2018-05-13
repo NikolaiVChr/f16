@@ -19,9 +19,9 @@
   </condition>-->
   <emission>
   	<factor-prop>f16/avionics/hud-brt</factor-prop>
-   <red>1</red>
-   <green>1</green>
-   <blue>1</blue>
+   <red-prop>f16/avionics/hud-power</red-prop>
+   <green-prop>f16/avionics/hud-power</green-prop>
+   <blue-prop>f16/avionics/hud-power</blue-prop>
   </emission>
  </animation>
   

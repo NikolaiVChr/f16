@@ -175,6 +175,7 @@ var F16_HUD = {
         obj.initUpdate =1;
         
         obj.alpha = getprop("f16/avionics/hud-brt");
+        obj.power = getprop("f16/avionics/hud-power");
 
         obj.dlzX      = sx*0.695633*0.75-6;
         obj.dlzY      = sy*0.4;
@@ -389,9 +390,11 @@ var F16_HUD = {
 
         if (hdp.FrameCount == 2 or me.initUpdate == 1) {
             var alpha = getprop("f16/avionics/hud-brt");
-            if (alpha != me.alpha) {
+            var power = getprop("f16/avionics/hud-power");
+            if (alpha != me.alpha or power!=me.power) {# if power is dropping/rising this will cause stutter, find a better way of doing this.
                 me.alpha = alpha;
-                me.svg.setColor(0.3,1,0.3,alpha);
+                me.power = power;
+                me.svg.setColor(0.3,1,0.3,alpha*power);
             }
             # calc of pitch_offset (compensates for AC3D model translated and rotated when loaded. Also semi compensates for HUD being at an angle.)
             me.Hz_b =    0.663711;#0.801701;# HUD position inside ac model after it is loaded, translated (0.08m) and rotated (0.7d).

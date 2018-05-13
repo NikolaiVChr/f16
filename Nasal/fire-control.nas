@@ -431,7 +431,7 @@ var FireControl = {
 					me.aimNext.start();
 				}
 				me.triggerTime = 0;
-			} elsif (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.type=="MK-82") {#not generic, fix.
+			} elsif (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.guidance=="unguided") {
 				me.aim = me.pylons[me.selected[0]].fireWeapon(me.selected[1], awg_9.completeList);
 				me.aim.sendMessage(me.aim.brevity);
 				me.aimNext = me.nextWeapon(me.selectedType);

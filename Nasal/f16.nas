@@ -275,6 +275,20 @@ var medium = {
     } else {
       setprop("f16/avionics/bingo", 0);
     }
+    if (getprop("fdm/jsbsim/elec/bus/emergency-ac-2")>100 or getprop("fdm/jsbsim/elec/bus/emergency-dc-2")>20) {
+      setprop("f16/avionics/hud-power",1);
+    } else {
+      var ac = getprop("fdm/jsbsim/elec/bus/emergency-ac-2")/100;
+      var dc = getprop("fdm/jsbsim/elec/bus/emergency-dc-2")/20;
+      var power = ac;
+      if (ac < dc) {
+        power=dc;
+      }
+      if (power<0.5) {
+        power=0;
+      }
+      setprop("f16/avionics/hud-power",power);
+    }
     settimer(func {me.loop()},0.5);
   },
 };
