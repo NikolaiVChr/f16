@@ -5,7 +5,12 @@
  <path>panels_mlu_left-aux-console.ac</path>
 
   <animation>
-  <object-name>LEFT_AUX_CONSOLE</object-name>
+  <object-name>EW_LEFT_1</object-name>
+  <object-name>HMD_1</object-name>
+  <object-name>EW_RIGHT_1</object-name>
+  <object-name>GEAR</object-name>
+  <object-name>ALT_GEAR_1</object-name>
+  <object-name>SPEED_BRAKE_drum</object-name>
   <type>material</type>
   <emission>
    <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>

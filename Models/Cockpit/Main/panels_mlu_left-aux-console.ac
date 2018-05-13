@@ -501,7 +501,7 @@ refs 4
 0 0.553693056107 0.557609260082
 kids 0
 OBJECT group
-name "GEAR"
+name "GEARgroup"
 kids 10
 OBJECT poly
 name "GEAR"
