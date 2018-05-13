@@ -5,6 +5,18 @@
  <path>icp.ac</path>
 
  <!--lighting -->
+
+ <animation>
+  <object-name>poly.001</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+   <red>0.45</red>
+   <green>0.34</green>
+   <blue>0.18</blue>
+  </emission>
+ </animation>
+
  <animation>
   <object-name>com1</object-name>
   <object-name>com2</object-name>
