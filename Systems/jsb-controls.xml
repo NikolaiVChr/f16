@@ -590,8 +590,17 @@
             </test>
         </switch>
 
+        <switch name="fcs/fly-by-wire/roll/switch-elec">
+            <description>                
+            </description>
+            <default value="fcs/fly-by-wire/roll/switch"/>
+            <test logic="AND" value="fcs/fly-by-wire/roll/switch-elec">
+                elec/bus/flcc/b lt 20
+            </test>
+        </switch>
+
         <pure_gain name="fcs/fly-by-wire/roll/final">
-            <input>fcs/fly-by-wire/roll/switch</input>
+            <input>fcs/fly-by-wire/roll/switch-elec</input>
             <gain> 0.12 </gain>
             <clipto>
                 <min> -21.5 </min>
@@ -1080,8 +1089,17 @@
             <input>fcs/fly-by-wire/yaw/command-sum-ari</input>
         </summer>
 
+        <switch name="fcs/fly-by-wire/yaw/rudder-sum-elec">
+            <description>                
+            </description>
+            <default value="fcs/fly-by-wire/yaw/rudder-sum"/>
+            <test logic="AND" value="fcs/fly-by-wire/yaw/rudder-sum-elec">
+                elec/bus/flcc/c lt 20
+            </test>
+        </switch>
+
         <second_order_filter name="fcs/fly-by-wire/yaw/struct-filter">
-          <input> fcs/fly-by-wire/yaw/rudder-sum </input>
+          <input> fcs/fly-by-wire/yaw/rudder-sum-elec </input>
           <c1> 1 </c1>
           <c2> 0 </c2>
           <c3> 1225 </c3>
@@ -1590,6 +1608,15 @@
             <input> fcs/fly-by-wire/pitch/integrator-selftest </input>
         </summer>
 
+        <switch name="fcs/fly-by-wire/pitch/integrator-final-elec">
+            <description>                
+            </description>
+            <default value="fcs/fly-by-wire/pitch/integrator-final"/>
+            <test logic="AND" value="fcs/fly-by-wire/pitch/integrator-final-elec">
+                elec/bus/flcc/a lt 20
+            </test>
+        </switch>
+
         <!--<pure_gain name="fcs/fly-by-wire/pitch/q">
             <input>velocities/q-rad_sec</input>
             <gain> fcs/fly-by-wire/enable-q </gain>
@@ -1827,12 +1854,12 @@
         </second_order_filter>
 
         <summer name="fcs/fly-by-wire/pitch/right-sum">
-            <input> fcs/fly-by-wire/pitch/integrator-final </input>
+            <input> fcs/fly-by-wire/pitch/integrator-final-elec </input>
             <input> fcs/fly-by-wire/roll/inter-schedule </input> 
         </summer>
 
         <summer name="fcs/fly-by-wire/pitch/left-sum">
-            <input> fcs/fly-by-wire/pitch/integrator-final </input>
+            <input> fcs/fly-by-wire/pitch/integrator-final-elec </input>
             <input> -fcs/fly-by-wire/roll/inter-schedule </input>
         </summer>
 
@@ -2054,8 +2081,17 @@
             </function>
         </fcs_function>
 
+        <switch name="fcs/fly-by-wire/lef/cmd-pos-elec">
+            <description>                
+            </description>
+            <default value="fcs/fly-by-wire/lef/cmd-pos"/>
+            <test logic="AND" value="fcs/fly-by-wire/lef/cmd-pos-elec">
+                elec/bus/flcc/d lt 20
+            </test>
+        </switch>
+
         <lag_filter name="fcs/fly-by-wire/lef/servo">
-            <input> fcs/fly-by-wire/lef/cmd-pos </input>
+            <input> fcs/fly-by-wire/lef/cmd-pos-elec </input>
             <c1> 0.136 </c1>
         </lag_filter>
 
@@ -2182,9 +2218,18 @@
             <c1> 8 </c1>
         </integrator>
 
+        <switch name="fcs/fly-by-wire/tef/int-elec">
+            <description>                
+            </description>
+            <default value="fcs/fly-by-wire/tef/int"/>
+            <test logic="AND" value="fcs/fly-by-wire/tef/int-elec">
+                elec/bus/flcc/d lt 20
+            </test>
+        </switch>
+
         <switch name="fcs/fly-by-wire/tef/hyd">
           <default value="0"/>
-          <test  logic="OR" value="fcs/fly-by-wire/tef/int">
+          <test  logic="OR" value="fcs/fly-by-wire/tef/int-elec">
             systems/hydraulics/sysa-psi ge 2000
             systems/hydraulics/sysb-psi ge 2000
           </test>
