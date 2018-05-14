@@ -431,3 +431,9 @@ FailureMgr.add_failure_mode("fdm/jsbsim/elec/failures/stby-gen", "Stby Generator
 
 var fire_fc = compat_failure_modes.set_unserviceable("damage/fire");
 FailureMgr.add_failure_mode("damage/fire", "Fire", fire_fc);
+
+var hyda_fc = compat_failure_modes.set_unserviceable("systems/hydraulics/edpa-pump");
+FailureMgr.add_failure_mode("systems/hydraulics/edpa-pump", "Hydr. pump A", hyda_fc);
+
+var hydb_fc = compat_failure_modes.set_unserviceable("systems/hydraulics/edpb-pump");
+FailureMgr.add_failure_mode("systems/hydraulics/edpb-pump", "Hydr. pump B", hydb_fc);

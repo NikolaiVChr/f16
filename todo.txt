@@ -15,12 +15,11 @@ Make loads.xml not be a submodel.
 
 Hydraulics
 ----------
-Make it depend on a failurable serviceable property.
 If there is cockpit controls for it, make them work.
 
 Electrical
 ----------
-Make stuff depend on electrical system
+Make more stuff depend on electrical system
 
 Fuel
 ----

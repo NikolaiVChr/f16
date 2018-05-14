@@ -19,11 +19,11 @@
 			<input>propulsion/engine[0]/n1</input>
 			<table>
 				<independentVar lookup="row">propulsion/engine[0]/n2</independentVar>
-				<independentVar lookup="column">systems/hydraulics/edpb-pump-failed</independentVar>
+				<independentVar lookup="column">systems/hydraulics/edpb-pump/serviceable</independentVar>
 				<tableData>
 					0      1
 					0       0      0
-					12    130      0
+					12      0    130
 				</tableData>
 			</table>
 			<clipto>
@@ -55,11 +55,11 @@
 			<input>propulsion/engine[0]/n1</input>
 			<table>
 				<independentVar lookup="row">propulsion/engine[0]/n2</independentVar>
-				<independentVar lookup="column">systems/hydraulics/edpa-pump-failed</independentVar>
+				<independentVar lookup="column">systems/hydraulics/edpa-pump/serviceable</independentVar>
 				<tableData>
 					        0      1
 					0       0      0
-					12    130      0
+					12      0    130
 				</tableData>
 			</table>
 			<clipto>
