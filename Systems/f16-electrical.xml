@@ -25,31 +25,27 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="elec/sources/csd-gearbox-rpm"> <!-- Goal is 75% RPM -->
+		<fcs_function name="elec/sources/csd-gearbox-ratio"> <!-- Goal is 75% RPM -->
 			<function>
-				<quotient>
-					<integer> <!-- We don't want it to be perfect -->
-						<product>
-							<difference>
-								<value>75</value>
-								<property>elec/sources/adg-percent-rpm</property>
-							</difference>
-							<value>10</value>
-						</product>
-					</integer>
-					<value>10</value>
-				</quotient>
+				<table>
+					<independentVar lookup="row">elec/sources/adg-percent-rpm</independentVar>
+					<tableData>
+						 50  1.50000000000
+						 60  1.25000000000
+						 70  1.07142857140
+						 75  1.00000000000
+						 80  0.93750000000
+						 90  0.83333333333
+						100  0.75000000000
+					</tableData>
+				</table>
 			</function>
-			<clipto>
-				<min>-25</min>
-				<max>25</max>
-			</clipto>
 		</fcs_function>
 		
-		<summer name="elec/sources/csd-percent-rpm"> <!-- Simple, but it works -->
+		<pure_gain name="elec/sources/csd-percent-rpm">
 			<input>elec/sources/adg-percent-rpm</input>
-			<input>elec/sources/csd-gearbox-rpm</input>
-		</summer>
+			<gain>elec/sources/csd-gearbox-ratio</gain>
+		</pure_gain>
 		
 		<fcs_function name="elec/sources/adg-kva">
 			<function>
@@ -57,7 +53,7 @@
 					<independentVar lookup="row">elec/sources/csd-percent-rpm</independentVar>
 					<tableData>
 						 0   0
-						58   0
+						38   0
 						75  60
 					</tableData>
 				</table>
@@ -92,15 +88,11 @@
 					<independentVar lookup="row">elec/sources/adg-percent-rpm</independentVar>
 					<tableData>
 						 0   0
-						58   0
-						75  60
+						28   0
+						42  10
 					</tableData>
 				</table>
 			</function>
-			<clipto>
-				<min>0</min>
-				<max>10</max>
-			</clipto>
 		</fcs_function>
 		
 		<fcs_function name="elec/sources/stby-gen-volt">
@@ -451,14 +443,22 @@
 		
 		<switch name="elec/sources/epu-on">
 			<default value="0"/>
-			<test logic="OR" value="0"> <!-- Parsed in order, so this will keep it at 0 -->
+			<test logic="AND" value="1">
+				elec/switches/epu ne 0
+				elec/sources/batt-bus eq 1
 				elec/failures/epu/serviceable eq 1
-				elec/sources/batt-bus ne 1
-			</test>
-			<test logic="OR" value="1">
-				elec/switches/epu eq 1
 				elec/sources/epu-elec eq 1
+			</test>
+			<test logic="AND" value="1">
+				elec/switches/epu ne 0
+				elec/sources/batt-bus eq 1
+				elec/failures/epu/serviceable eq 1
 				elec/sources/epu-hyd eq 1
+			</test>
+			<test logic="AND" value="1">
+				elec/switches/epu eq 2
+				elec/sources/batt-bus eq 1
+				elec/failures/epu/serviceable eq 1
 			</test>
 			<output>systems/hydraulics/emerg-pump-on</output> <!-- Also output to hydraulic system -->
 		</switch>
