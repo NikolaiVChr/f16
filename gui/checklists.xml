@@ -5,14 +5,89 @@
     <checklist>
         <title>Start from cold and dark</title>
         <item>
+            <name>ENG FEED</name>
+            <value>NORM</value>
+            <condition>
+                <equals>
+                    <property>f16/engine/feed</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/engine/feed</property>
+                <value>1</value>
+            </binding>
+        </item>
+        <item>
+            <name>EPU</name>
+            <value>NORM</value>
+            <condition>
+                <equals>
+                    <property>fdm/jsbsim/elec/switches/epu</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <binding>
+                <command>property-assign</command>
+                <property>fdm/jsbsim/elec/switches/epu</property>
+                <value>1</value>
+            </binding>
+        </item>
+        <item>
             <name>ELEC</name>
-            <value>MAIN PWR</value>
+            <value>BATT</value>
             <!--<marker>
                 <x-m>-3.9554</x-m>
                 <y-m>-0.0595</y-m>
                 <z-m>0.0686</z-m>
                 <scale>2.4711</scale>
             </marker>-->
+            <condition>
+                <equals>
+                    <property>fdm/jsbsim/elec/switches/main-pwr</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <binding>
+                <command>property-assign</command>
+                <property>fdm/jsbsim/elec/switches/main-pwr</property>
+                <value>1</value>
+            </binding>
+        </item>
+        <item>
+            <name>MAL and IND LTS</name>
+            <value>ON</value>
+            <condition>
+                <equals>
+                    <property>controls/test/test-panel/mal-ind-lts</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/test/test-panel/mal-ind-lts</property>
+                <value>1</value>
+            </binding>
+        </item>
+        <item>
+            <name>MAL and IND LTS</name>
+            <value>OFF</value>
+            <condition>
+                <equals>
+                    <property>controls/test/test-panel/mal-ind-lts</property>
+                    <value>0</value>
+                </equals>
+            </condition>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/test/test-panel/mal-ind-lts</property>
+                <value>0</value>
+            </binding>
+        </item>
+        <item>
+            <name>ELEC</name>
+            <value>MAIN PWR</value>
             <condition>
                 <equals>
                     <property>fdm/jsbsim/elec/switches/main-pwr</property>
@@ -41,33 +116,18 @@
             </binding>
         </item>
         <item>
-            <name>ENG FEED</name>
-            <value>NORM</value>
+            <name>JET FUEL</name>
+            <value>START 2</value>
             <condition>
                 <equals>
-                    <property>f16/engine/feed</property>
+                    <property>f16/engine/jet-fuel</property>
                     <value>1</value>
                 </equals>
             </condition>
             <binding>
                 <command>property-assign</command>
-                <property>f16/engine/feed</property>
-                <value>1</value>
-            </binding>
-        </item>
-        <item>
-            <name>JET FUEL</name>
-            <value>START 1</value>
-            <condition>
-                <equals>
-                    <property>f16/engine/jet-fuel</property>
-                    <value>-1</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
                 <property>f16/engine/jet-fuel</property>
-                <value>-1</value>
+                <value>1</value>
             </binding>
         </item>
         <item>
