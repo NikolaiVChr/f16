@@ -10,6 +10,7 @@
                 <elec>
                     <switches>
                         <main-pwr type="int">0</main-pwr>
+                        <epu type="int">0</epu>
                     </switches>
                 </elec>
             </jsbsim>

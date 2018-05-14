@@ -316,7 +316,7 @@
                         </binding>
                     </item>
                     <item>
-                        <label>Controlpanel</label>
+                        <label>Control Panel</label>
                         <name>controlPanel</name>
                         <binding>
                           <command>dialog-show</command>

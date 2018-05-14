@@ -130,7 +130,7 @@
 
 			</group>
 
-			<vrule/>
+			<hrule/>
 
 			<text>
 				<label>INTERIOR LIGHTS</label>
@@ -222,7 +222,7 @@
 
 			</group>
 
-			<vrule/>
+			<hrule/>
 
 			<group>
 				<layout>vbox</layout>
@@ -378,47 +378,97 @@
 		<group>
 			<layout>vbox</layout>
 
+			<text>
+				<label>ELECTRIC</label>
+			</text>
+
 			<group>
-				<layout>vbox</layout>
-				
-				<text>
-					<label>ELECTRIC</label>
-				</text>
-				
+				<layout>hbox</layout>
+
 				<group>
-					<layout>hbox</layout>
-			
+					<layout>vbox</layout>
+										
 					<group>
-						<layout>vbox</layout>
-						<halign>left</halign>
+						<layout>hbox</layout>
+				
+						<group>
+							<layout>vbox</layout>
+							<halign>left</halign>
+							
+							<text>
+								<label>MAIN PWR</label>
+							</text>
+							<text>
+								<label>BATT</label>
+							</text>
+							<text>
+								<label>OFF</label>
+							</text>
+							
+						</group>
 						
-						<text>
-							<label>MAIN PWR</label>
-						</text>
-						<text>
-							<label>BATT</label>
-						</text>
-						<text>
-							<label>OFF</label>
-						</text>
+						<slider>
+							<halign>left</halign>
+							<property>fdm/jsbsim/elec/switches/main-pwr</property>
+							<min>0</min>
+							<max>2</max>
+							<step>1</step>
+							<live>true</live>
+							<vertical>true</vertical>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+						</slider>
 						
 					</group>
-					
-					<slider>
-						<halign>left</halign>
-						<property>fdm/jsbsim/elec/switches/main-pwr</property>
-						<min>0</min>
-						<max>2</max>
-						<step>1</step>
-						<live>true</live>
-						<vertical>true</vertical>
-						<binding>
-							<command>dialog-apply</command>
-						</binding>
-					</slider>
-					
+				
 				</group>
-			
+
+				<vrule/>
+
+				<group>
+					<layout>vbox</layout>
+					
+					<text>
+						<label>EPU</label>
+					</text>
+					
+					<group>
+						<layout>hbox</layout>
+				
+						<group>
+							<layout>vbox</layout>
+							<halign>left</halign>
+							
+							<text>
+								<label>ON</label>
+							</text>
+							<text>
+								<label>NORM</label>
+							</text>
+							<text>
+								<label>OFF</label>
+							</text>
+							
+						</group>
+						
+						<slider>
+							<halign>left</halign>
+							<property>fdm/jsbsim/elec/switches/epu</property>
+							<min>0</min>
+							<max>2</max>
+							<step>1</step>
+							<live>true</live>
+							<vertical>true</vertical>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+						</slider>
+						
+					</group>
+				
+				</group>
+
 			</group>
 
 			<hrule/>
@@ -516,6 +566,24 @@
 			      	</binding>
 			    </checkbox>
 			    <text><label>ALT FLAPS</label></text>
+			</group>
+
+			<hrule/>
+
+			<group>
+			    <layout>hbox</layout>
+			    <button>
+			    	<legend>Execute</legend>
+				    <binding>
+						<command>nasal</command>
+						<script>
+							if (pylons.fcs != nil) {
+								pylons.fcs.jettisonFuelAndAG();
+							}
+						</script>
+			      	</binding>
+			    </button>
+			    <text><label>EMER STORES JETTISON</label></text>
 			</group>
 
 		</group>
