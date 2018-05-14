@@ -734,7 +734,7 @@
             </condition>
             <volume>
               <property>/sim/current-view/internal</property>
-                <factor>0.072</factor>
+                <factor>0.030</factor>
             </volume>
         </avionics>
 
