@@ -13,7 +13,7 @@
 
 <system name="hydraulic">
 	
-	 <channel name="sysB" execrate="4"> <!-- Channel B is above Channel A to avoid getNode failure -->
+	 <channel name="sysB" execrate="8"> <!-- Channel B is above Channel A to avoid getNode failure -->
 		
 		<scheduled_gain name="systems/hydraulics/edpb-pump-psi">
 			<input>propulsion/engine[0]/n1</input>
@@ -45,7 +45,7 @@
 		</summer>
 	</channel>
 	
-	<channel name="sysa" execrate="4">
+	<channel name="sysa" execrate="8">
 		<!-- 
 		No information about minimum engine N1 for hydraulics. 
 		For JFS accumulator charging 12 PSI is required. Will use that figure meantime
@@ -89,7 +89,7 @@
 		</summer>
 	</channel>
 	
-	<channel name="bleed" execrate="4">
+	<channel name="bleed" execrate="8">
 		<summer name="systems/hydraulics/elevator-bleed">
 			<input>-fcs/elevator-cmd-norm</input>
 		</summer>
@@ -118,7 +118,7 @@
 		</scheduled_gain>
 
 	</channel>
-	<channel name="Util" execrate="4">
+	<channel name="Util" execrate="8">
 		<switch name="systems/hydraulics/util-system-feedin">
 			<default value="0"/>
 			<test value="systems/hydraulics/sysa-psi">
