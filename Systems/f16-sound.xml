@@ -53,7 +53,10 @@
    <mode>looped</mode>
    <condition>
     <property>sim/current-view/internal</property>
-    <property>engines/engine/running</property>
+    <greater-than>
+        <property>engines/engine/n2</property>
+        <value>5</value>
+    </greater-than>
    </condition>
    <reference-dist>30</reference-dist>
    <max-dist>100</max-dist>
@@ -82,7 +85,10 @@
    <path>Aircraft/f16/Sounds/turbojet_fan.wav</path>
    <mode>looped</mode>
    <condition>
-    <property>engines/engine/running</property>
+    <greater-than>
+        <property>engines/engine/n2</property>
+        <value>5</value>
+    </greater-than>
     <not>
      <property>sim/current-view/internal</property>
     </not>
@@ -236,7 +242,7 @@
     <z>-0.6</z>
    </position>
    <volume>
-    <property>velocities/airspeed-kt</property>
+    <property>velocities/groundspeed-kt</property>
     <factor>.004</factor>
    </volume>
   </rumble>
@@ -714,7 +720,18 @@
             <path>Sounds/avionics-400Hz.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
-            <property>engines/engine/running</property>
+            <condition>
+              <or>
+                <greater-than>
+                    <property>elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
+            </condition>
             <volume>
               <property>/sim/current-view/internal</property>
                 <factor>0.072</factor>

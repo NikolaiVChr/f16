@@ -118,7 +118,7 @@ var az_scan = func(fcount) {
         return;
     }
     doRWR = !doRWR;
-    if (rwrs.rwr != nil) {
+    if (rwrs.rwr != nil and getprop("fdm/jsbsim/elec/bus/ess-ac")>100) {
             rwrs.rwr.update(rwrList);
     }
     if (doRWR) {
@@ -311,6 +311,7 @@ var az_scan = func(fcount) {
         armament.contact = active_u;
         #active_u_callsign = nil;
     }
+
     RWR_APG.run();
 }
 

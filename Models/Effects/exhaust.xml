@@ -16,6 +16,10 @@
   </offsets>
 
  <condition>
+   <greater-than>
+     <property>engines/engine[0]/n2</property>
+     <value>10</value>
+   </greater-than>
    <less-than-equals>
     <property>velocities/airspeed-kt</property>
     <value>40</value>

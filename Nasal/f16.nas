@@ -293,6 +293,22 @@ var medium = {
       }
       setprop("f16/avionics/hud-power",power);
     }
+    # engine
+    if (getprop("engines/engine[0]/running")) {
+      setprop("f16/engine/jet-fuel",0);
+    }
+    if (getprop("f16/engine/feed")) {
+      setprop("controls/engines/engine[0]/cutoff",!getprop("f16/engine/jsf-start"));
+      if (getprop("f16/engine/jet-fuel") != 0) {
+        setprop("controls/engines/engine[0]/starter", 1);
+      } else {
+        setprop("controls/engines/engine[0]/starter", 0);
+      }
+    } else {
+      setprop("controls/engines/engine[0]/starter", 0);
+      setprop("controls/engines/engine[0]/cutoff", 1);
+    }   
+    
     settimer(func {me.loop()},0.5);
   },
 };
@@ -318,9 +334,10 @@ var repair2 = func {
   screen.log.write("Repairing, standby..");
   setprop("ai/submodels/submodel[0]/count",100);
   crash.repair();
-  if (getprop("engines/engine[0]/running")!=1) {
-    setprop("controls/engines/engine[0]/cutoff", 1);
-    setprop("controls/engines/engine[0]/starter", 1);
+  if (getprop("engines/engine[0]/running")!=1 and getprop("f16/engine/running-state")) {
+    setprop("f16/engine/feed",1);
+    setprop("f16/engine/jet-fuel",-1);
+    setprop("f16/engine/jsf-start",0);
     settimer(repair3, 10);
   } else {
     screen.log.write("Done.");
@@ -328,7 +345,7 @@ var repair2 = func {
 }
 
 var repair3 = func {
-  setprop("controls/engines/engine[0]/cutoff", 0);
+  setprop("f16/engine/jsf-start", 1);
   screen.log.write("Attempting engine restart, standby for engine..");
 }
 
@@ -336,7 +353,7 @@ var re_init_listener = setlistener("/sim/signals/reinit", func {
   if (getprop("/sim/signals/reinit") != 0) {
     setprop("/controls/gear/gear-down",1);
     setprop("/controls/gear/brake-parking",1);
-    if (getprop("/consumables/fuel/tank[0]/level-norm")<0.5) {
+    if (getprop("/consumables/fuel/tank[0]/level-norm")<0.5 and getprop("f16/engine/running-state")) {
       setprop("/consumables/fuel/tank[0]/level-norm", 0.55);
     }
     repair2();

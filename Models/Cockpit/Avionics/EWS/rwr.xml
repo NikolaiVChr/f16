@@ -15,4 +15,18 @@
         <object-name>bkg</object-name>
     </effect>
 
+    <animation>
+        <object-name>bkg</object-name>
+        <type>material</type>
+        <greater-than-equals>
+                <property>fdm/jsbsim/elec/bus/ess-ac</property>
+                <value>100</value>
+            </greater-than-equals>
+        <emission>
+            <red>  1</red>
+            <green>1</green>
+            <blue> 1</blue>
+        </emission>
+    </animation>
+    
 </PropertyList>

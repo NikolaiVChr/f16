@@ -27,123 +27,211 @@
 	</group>
 	
 	<hrule/>
-	
+
 	<group>
-		<layout>vbox</layout>
+		<layout>hbox</layout>
 		
-		<text>
-			<label>A/P</label>
-		</text>
 		<group>
-			<layout>hbox</layout>
+			<layout>vbox</layout>
 			
+			<text>
+				<label>A/P</label>
+			</text>
 			<group>
-				<layout>vbox</layout>
-				
-				<text>
-					<label>ROLL      </label>
-				</text>
+				<layout>hbox</layout>
 				
 				<group>
-					<layout>hbox</layout>
-				
+					<layout>vbox</layout>
+					
+					<text>
+						<label>ROLL      </label>
+					</text>
+					
 					<group>
-						<layout>vbox</layout>
-						<halign>left</halign>
+						<layout>hbox</layout>
+					
+						<group>
+							<layout>vbox</layout>
+							<halign>left</halign>
+							
+							<text>
+								<label>HDG SEL</label>
+							</text>
+							<text>
+								<label>ATT HOLD</label>
+							</text>
+							<text>
+								<label>STRG SEL</label>
+							</text>
+							
+						</group>
 						
-						<text>
-							<label>HDG SEL</label>
-						</text>
-						<text>
-							<label>ATT HOLD</label>
-						</text>
-						<text>
-							<label>STRG SEL</label>
-						</text>
+						<slider>
+							<halign>left</halign>
+							<property>/f16/fcs/switch-roll</property>
+							<min>-1</min>
+							<max>1</max>
+							<step>1</step>
+							<live>true</live>
+							<vertical>true</vertical>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+						</slider>
 						
 					</group>
-					
-					<slider>
-						<halign>left</halign>
-						<property>/f16/fcs/switch-roll</property>
-						<min>-1</min>
-						<max>1</max>
-						<step>1</step>
-						<live>true</live>
-						<vertical>true</vertical>
-						<binding>
-							<command>dialog-apply</command>
-						</binding>
-					</slider>
-					
+				
 				</group>
-			
+				
+				<vrule/>
+				
+				<group>
+					<layout>vbox</layout>
+					
+					<text>
+						<label>PITCH      </label>
+					</text>
+					
+					<group>
+						<layout>hbox</layout>
+				
+						<group>
+							<layout>vbox</layout>
+							<halign>left</halign>
+							
+							<text>
+								<label>ALT HOLD</label>
+							</text>
+							<text>
+								<label>A/P OFF</label>
+							</text>
+							<text>
+								<label>ATT HOLD</label>
+							</text>
+							
+						</group>
+						
+						<slider>
+							<halign>left</halign>
+							<property>/f16/fcs/switch-pitch</property>
+							<min>-1</min>
+							<max>1</max>
+							<step>1</step>
+							<live>true</live>
+							<vertical>true</vertical>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+						</slider>
+						
+					</group>
+				
+				</group>
+
 			</group>
-			
+
 			<vrule/>
-			
+
+			<text>
+				<label>INTERIOR LIGHTS</label>
+			</text>
+
 			<group>
-				<layout>vbox</layout>
-				
-				<text>
-					<label>PITCH      </label>
-				</text>
-				
+				<layout>hbox</layout>
+
 				<group>
-					<layout>hbox</layout>
-			
+					<layout>vbox</layout>
+					
+					<text>
+						<label>INSTR</label>
+					</text>
+					
 					<group>
-						<layout>vbox</layout>
-						<halign>left</halign>
+						<layout>hbox</layout>
+				
+						<group>
+							<layout>vbox</layout>
+							<halign>left</halign>
+							
+							<text>
+								<label>FULL</label>
+							</text>
+							<text>
+								<label>OFF</label>
+							</text>
+							
+						</group>
 						
-						<text>
-							<label>ALT HOLD</label>
-						</text>
-						<text>
-							<label>A/P OFF</label>
-						</text>
-						<text>
-							<label>ATT HOLD</label>
-						</text>
+						<slider>
+							<halign>left</halign>
+							<property>controls/lighting/lighting-panel/pri-inst-pnl</property>
+							<min>0</min>
+							<max>1</max>
+							<step>0.1</step>
+							<live>true</live>
+							<vertical>true</vertical>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+						</slider>
 						
 					</group>
-					
-					<slider>
-						<halign>left</halign>
-						<property>/f16/fcs/switch-pitch</property>
-						<min>-1</min>
-						<max>1</max>
-						<step>1</step>
-						<live>true</live>
-						<vertical>true</vertical>
-						<binding>
-							<command>dialog-apply</command>
-						</binding>
-					</slider>
-					
+				
 				</group>
-			
+
+				<group>
+					<layout>vbox</layout>
+					
+					<text>
+						<label>FLOOD</label>
+					</text>
+					
+					<group>
+						<layout>hbox</layout>
+				
+						<group>
+							<layout>vbox</layout>
+							<halign>left</halign>
+							
+							<text>
+								<label>FULL</label>
+							</text>
+							<text>
+								<label>OFF</label>
+							</text>
+							
+						</group>
+						
+						<slider>
+							<halign>left</halign>
+							<property>controls/lighting/lighting-panel/flood-inst-pnl</property>
+							<min>0</min>
+							<max>1</max>
+							<step>0.1</step>
+							<live>true</live>
+							<vertical>true</vertical>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+						</slider>
+						
+					</group>
+				
+				</group>
+
+
 			</group>
 
-		</group>
-
-		<vrule/>
-
-		<text>
-			<label>INTERIOR LIGHTS</label>
-		</text>
-
-		<group>
-			<layout>hbox</layout>
+			<vrule/>
 
 			<group>
 				<layout>vbox</layout>
 				
 				<text>
-					<label>INSTR</label>
+					<label>EXT LIGHTS</label>
 				</text>
 				
-				<group>
+	<!--			<group>
 					<layout>hbox</layout>
 			
 					<group>
@@ -151,17 +239,17 @@
 						<halign>left</halign>
 						
 						<text>
-							<label>FULL</label>
+							<label>FORM ON</label>
 						</text>
 						<text>
-							<label>OFF</label>
+							<label>FORM OFF</label>
 						</text>
 						
 					</group>
 					
 					<slider>
 						<halign>left</halign>
-						<property>controls/lighting/lighting-panel/pri-inst-pnl</property>
+						<property>controls/lighting/ext-lighting-panel/form-knob</property>
 						<min>0</min>
 						<max>1</max>
 						<step>0.1</step>
@@ -173,15 +261,6 @@
 					</slider>
 					
 				</group>
-			
-			</group>
-
-			<group>
-				<layout>vbox</layout>
-				
-				<text>
-					<label>FLOOD</label>
-				</text>
 				
 				<group>
 					<layout>hbox</layout>
@@ -191,17 +270,17 @@
 						<halign>left</halign>
 						
 						<text>
-							<label>FULL</label>
+							<label>AR ON</label>
 						</text>
 						<text>
-							<label>OFF</label>
+							<label>AR OFF</label>
 						</text>
 						
 					</group>
 					
 					<slider>
 						<halign>left</halign>
-						<property>controls/lighting/lighting-panel/flood-inst-pnl</property>
+						<property>controls/lighting/ext-lighting-panel/ar-knob</property>
 						<min>0</min>
 						<max>1</max>
 						<step>0.1</step>
@@ -212,198 +291,234 @@
 						</binding>
 					</slider>
 					
+				</group>-->
+
+				<group>
+				    <layout>vbox</layout>
+
+					<group>
+					    <layout>hbox</layout>
+					    <checkbox>
+						    <property>controls/lighting/ext-lighting-panel/master</property>
+						    <live>true</live>
+						    <binding>
+								<command>nasal</command>
+								<script>
+								f16_switches.toggleMaster();
+								</script>
+					      	</binding>
+					    </checkbox>
+					    <text><label>MASTER</label></text>
+					</group>
+	<!--				<group>
+					    <layout>hbox</layout>
+					    <checkbox>
+						    <property>controls/lighting/ext-lighting-panel/anti-collision</property>
+						    <live>true</live>
+						    <binding>
+								<command>nasal</command>
+								<script>
+								f16.toggleAntiCollision();
+								</script>
+					      	</binding>
+					    </checkbox>
+					    <text><label>ANTI COL</label></text>
+					</group>
+					<group>
+					    <layout>hbox</layout>
+					    <checkbox>
+						    <property>controls/lighting/ext-lighting-panel/pos-lights-flash</property>
+						    <live>true</live>
+						    <binding>
+								<command>nasal</command>
+								<script>
+								f16.togglePosLightsFlash();
+								</script>
+					      	</binding>
+					    </checkbox>
+					    <text><label>POS FLASH</label></text>
+					</group>
+					<group>
+					    <layout>hbox</layout>
+					    <checkbox>
+						    <property>controls/lighting/ext-lighting-panel/wing-tail</property>
+						    <live>true</live>
+						    <binding>
+								<command>nasal</command>
+								<script>
+								f16.toggleWingTailUp();
+								</script>
+					      	</binding>
+					    </checkbox>
+					    <text><label>WING-TAIL</label></text>
+					</group>
+					<group>
+					    <layout>hbox</layout>
+					    <checkbox>
+						    <property>controls/lighting/ext-lighting-panel/fuselage</property>
+						    <live>true</live>
+						    <binding>
+								<command>nasal</command>
+								<script>
+								setprop("controls/lighting/ext-lighting-panel/fuselage", !getprop("controls/lighting/ext-lighting-panel/fuselage"));
+								</script>
+					      	</binding>
+					    </checkbox>
+					    <text><label>FUSELAGE</label></text>
+					</group>-->
+
 				</group>
-			
+
 			</group>
-
-
+			
 		</group>
 
 		<vrule/>
 
 		<group>
 			<layout>vbox</layout>
+
+			<group>
+				<layout>vbox</layout>
+				
+				<text>
+					<label>ELECTRIC</label>
+				</text>
+				
+				<group>
+					<layout>hbox</layout>
 			
+					<group>
+						<layout>vbox</layout>
+						<halign>left</halign>
+						
+						<text>
+							<label>MAIN PWR</label>
+						</text>
+						<text>
+							<label>BATT</label>
+						</text>
+						<text>
+							<label>OFF</label>
+						</text>
+						
+					</group>
+					
+					<slider>
+						<halign>left</halign>
+						<property>fdm/jsbsim/elec/switches/main-pwr</property>
+						<min>0</min>
+						<max>2</max>
+						<step>1</step>
+						<live>true</live>
+						<vertical>true</vertical>
+						<binding>
+							<command>dialog-apply</command>
+						</binding>
+					</slider>
+					
+				</group>
+			
+			</group>
+
+			<hrule/>
+
 			<text>
-				<label>EXT LIGHTS</label>
+				<label>ENGINE</label>
 			</text>
-			
-<!--			<group>
-				<layout>hbox</layout>
-		
-				<group>
-					<layout>vbox</layout>
-					<halign>left</halign>
-					
-					<text>
-						<label>FORM ON</label>
-					</text>
-					<text>
-						<label>FORM OFF</label>
-					</text>
-					
-				</group>
-				
-				<slider>
-					<halign>left</halign>
-					<property>controls/lighting/ext-lighting-panel/form-knob</property>
-					<min>0</min>
-					<max>1</max>
-					<step>0.1</step>
-					<live>true</live>
-					<vertical>true</vertical>
-					<binding>
-						<command>dialog-apply</command>
-					</binding>
-				</slider>
-				
-			</group>
-			
-			<group>
-				<layout>hbox</layout>
-		
-				<group>
-					<layout>vbox</layout>
-					<halign>left</halign>
-					
-					<text>
-						<label>AR ON</label>
-					</text>
-					<text>
-						<label>AR OFF</label>
-					</text>
-					
-				</group>
-				
-				<slider>
-					<halign>left</halign>
-					<property>controls/lighting/ext-lighting-panel/ar-knob</property>
-					<min>0</min>
-					<max>1</max>
-					<step>0.1</step>
-					<live>true</live>
-					<vertical>true</vertical>
-					<binding>
-						<command>dialog-apply</command>
-					</binding>
-				</slider>
-				
-			</group>-->
 
 			<group>
-			    <layout>vbox</layout>
+				<layout>hbox</layout>
 
 				<group>
-				    <layout>hbox</layout>
-				    <checkbox>
-					    <property>controls/lighting/ext-lighting-panel/master</property>
-					    <live>true</live>
-					    <binding>
-							<command>nasal</command>
-							<script>
-							f16_switches.toggleMaster();
-							</script>
-				      	</binding>
-				    </checkbox>
-				    <text><label>MASTER</label></text>
+					<layout>vbox</layout>
+
+					<group>
+					    <layout>hbox</layout>
+					    <text><label>ENG FEED NORM</label></text>
+					    <checkbox>
+					      <property>f16/engine/feed</property>
+					      <live>true</live>
+					      <binding>
+					          <command>property-toggle</command>
+					          <property>f16/engine/feed</property>
+					      </binding>
+					    </checkbox>
+					</group>
+
+					<group>
+					    <layout>hbox</layout>
+					    <text><label>JSF START</label></text>
+					    <checkbox>
+					      <property>f16/engine/jsf-start</property>
+					      <live>true</live>
+					      <binding>
+					          <command>property-toggle</command>
+					          <property>f16/engine/jsf-start</property>
+					      </binding>
+					    </checkbox>
+					</group>
+
 				</group>
-<!--				<group>
-				    <layout>hbox</layout>
-				    <checkbox>
-					    <property>controls/lighting/ext-lighting-panel/anti-collision</property>
-					    <live>true</live>
-					    <binding>
-							<command>nasal</command>
-							<script>
-							f16.toggleAntiCollision();
-							</script>
-				      	</binding>
-				    </checkbox>
-				    <text><label>ANTI COL</label></text>
-				</group>
+
+				<vrule/>
+
 				<group>
-				    <layout>hbox</layout>
-				    <checkbox>
-					    <property>controls/lighting/ext-lighting-panel/pos-lights-flash</property>
-					    <live>true</live>
-					    <binding>
-							<command>nasal</command>
-							<script>
-							f16.togglePosLightsFlash();
-							</script>
-				      	</binding>
-				    </checkbox>
-				    <text><label>POS FLASH</label></text>
+					<layout>hbox</layout>
+			
+					<group>
+						<layout>vbox</layout>
+						<halign>left</halign>
+						
+						<text>
+							<label>START 2</label>
+						</text>
+						<text>
+							<label>OFF</label>
+						</text>
+						<text>
+							<label>START 1</label>
+						</text>
+						
+					</group>
+					
+					<slider>
+						<halign>left</halign>
+						<property>f16/engine/jet-fuel</property>
+						<min>-1</min>
+						<max>1</max>
+						<step>1</step>
+						<live>true</live>
+						<vertical>true</vertical>
+						<binding>
+							<command>dialog-apply</command>
+						</binding>
+					</slider>
+					
 				</group>
-				<group>
-				    <layout>hbox</layout>
-				    <checkbox>
-					    <property>controls/lighting/ext-lighting-panel/wing-tail</property>
-					    <live>true</live>
-					    <binding>
-							<command>nasal</command>
-							<script>
-							f16.toggleWingTailUp();
-							</script>
-				      	</binding>
-				    </checkbox>
-				    <text><label>WING-TAIL</label></text>
-				</group>
-				<group>
-				    <layout>hbox</layout>
-				    <checkbox>
-					    <property>controls/lighting/ext-lighting-panel/fuselage</property>
-					    <live>true</live>
-					    <binding>
-							<command>nasal</command>
-							<script>
-							setprop("controls/lighting/ext-lighting-panel/fuselage", !getprop("controls/lighting/ext-lighting-panel/fuselage"));
-							</script>
-				      	</binding>
-				    </checkbox>
-				    <text><label>FUSELAGE</label></text>
-				</group>-->
 
 			</group>
 
+			<hrule/>
+
+			<text><label>FLIGHT</label></text>
+
+			<group>
+			    <layout>hbox</layout>
+			    <checkbox>
+				    <property>controls/flight/flaps</property>
+				    <live>true</live>
+				    <binding>
+						<command>nasal</command>
+						<script>
+							setprop("controls/flight/flaps", !getprop("controls/flight/flaps"));
+						</script>
+			      	</binding>
+			    </checkbox>
+			    <text><label>ALT FLAPS</label></text>
+			</group>
+
 		</group>
-		
-	</group>
-
-	<group>
-		<layout>vbox</layout>
-
-		<text><label>FLIGHT</label></text>
-
-		<group>
-		    <layout>hbox</layout>
-		    <checkbox>
-			    <property>controls/flight/flaps</property>
-			    <live>true</live>
-			    <binding>
-					<command>nasal</command>
-					<script>
-						setprop("controls/flight/flaps", !getprop("controls/flight/flaps"));
-					</script>
-		      	</binding>
-		    </checkbox>
-		    <text><label>ALT FLAPS</label></text>
-		</group>
-
-		<!--<group>
-		    <layout>hbox</layout>
-		    <checkbox>
-			    <property>controls/flight/flaps</property>
-			    <live>true</live>
-			    <binding>
-					<command>nasal</command>
-					<script>
-						setprop("controls/flight/flaps", !getprop("controls/flight/flaps"));
-					</script>
-		      	</binding>
-		    </checkbox>
-		    <text><label>MPO</label></text>
-		</group>-->
 
 	</group>
 
