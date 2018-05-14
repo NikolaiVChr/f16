@@ -338,6 +338,8 @@ var repair2 = func {
   setprop("ai/submodels/submodel[0]/count",100);
   crash.repair();
   if (getprop("engines/engine[0]/running")!=1 and getprop("f16/engine/running-state")) {
+    setprop("fdm/jsbsim/elec/switches/epu",1);
+    setprop("fdm/jsbsim/elec/switches/main-pwr",2);
     setprop("f16/engine/feed",1);
     setprop("f16/engine/jet-fuel",-1);
     setprop("f16/engine/jsf-start",0);
@@ -350,6 +352,20 @@ var repair2 = func {
 var repair3 = func {
   setprop("f16/engine/jsf-start", 1);
   screen.log.write("Attempting engine restart, standby for engine..");
+}
+
+var autostart = func {
+  screen.log.write("Starting, standby..");
+  if (getprop("engines/engine[0]/running")!=1) {
+    setprop("fdm/jsbsim/elec/switches/epu",1);
+    setprop("fdm/jsbsim/elec/switches/main-pwr",2);
+    setprop("f16/engine/feed",1);
+    setprop("f16/engine/jet-fuel",-1);
+    setprop("f16/engine/jsf-start",0);
+    settimer(repair3, 10);
+  } else {
+    screen.log.write("Done.");
+  }
 }
 
 var re_init_listener = setlistener("/sim/signals/reinit", func {

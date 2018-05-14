@@ -284,6 +284,13 @@
                 <menu n="100">
                     <enabled type="bool">true</enabled>
                     <item>
+                        <label>Autostart</label>
+                        <binding>
+                            <command>nasal</command>
+                            <script>f16.autostart();</script>
+                        </binding>
+                    </item>
+                    <item>
                         <label>Repair</label>
                         <binding>
                             <command>nasal</command>
