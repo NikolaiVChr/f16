@@ -8,11 +8,12 @@
   <type>select</type>
   <object-name>canopy</object-name>
   <condition>
-    <or>
+    <or><and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
    <greater-than>
     <property>fdm/jsbsim/fcs/canopy-pos-norm</property>
     <value>0.0</value>
    </greater-than>
+ </and>
    <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
@@ -37,8 +38,8 @@
   <type>select</type>
   <object-name>engine</object-name>
   <condition>
-    <or>
-    <not><property>engines/engine[0]/running</property></not>
+    <or><and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
+    <not><property>engines/engine[0]/running</property></not></and>
     <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
@@ -49,15 +50,20 @@
   <object-name>hyd_oil_press</object-name>
   <condition>
     <or>
-    <property>/tmp/nill</property>
-    <less-than>
-    <property>fdm/jsbsim/systems/hydraulics/sysa-psi</property>
-    <value>2000</value>
-    </less-than>
-      <less-than>
-    <property>fdm/jsbsim/systems/hydraulics/sysb-psi</property>
-    <value>2000</value>
-  </less-than>
+      <and>
+        <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
+        <or>
+            <property>/tmp/nill</property>
+            <less-than>
+              <property>fdm/jsbsim/systems/hydraulics/sysa-psi</property>
+              <value>2000</value>
+            </less-than>
+            <less-than>
+              <property>fdm/jsbsim/systems/hydraulics/sysb-psi</property>
+              <value>2000</value>
+            </less-than>
+        </or>
+    </and>
     <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>

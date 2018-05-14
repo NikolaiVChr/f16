@@ -127,6 +127,10 @@ var aerialRefueling = props.globals.getNode("controls/lighting/ext-lighting-pane
 var malIndLts = props.globals.getNode("controls/test/test-panel/mal-ind-lts");
 
  var toggleMalIndLts = func {
+        if (getprop("fdm/jsbsim/elec/bus/batt-2")<20) {
+            malIndLts.setBoolValue(0);
+            return;
+        }
         if(!malIndLts.getBoolValue()) {
                 malIndLts.setBoolValue(1);
         } else {

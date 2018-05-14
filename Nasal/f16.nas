@@ -308,6 +308,9 @@ var medium = {
       setprop("controls/engines/engine[0]/starter", 0);
       setprop("controls/engines/engine[0]/cutoff", 1);
     }   
+    if (getprop("fdm/jsbsim/elec/bus/batt-2")<20) {
+      setprop("controls/test/test-panel/mal-ind-lts", 0);
+    }
     
     settimer(func {me.loop()},0.5);
   },

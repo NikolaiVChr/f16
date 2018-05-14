@@ -377,10 +377,12 @@
   <object-name>AFT_FUEL_LOW_unlit</object-name>
   <condition>
    <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <or><not><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than></not>
    <greater-than> 
     <property>consumables/fuel/tank[1]/level-lbs</property>
     <value>400</value>
    </greater-than> 
+ </or>
   </condition>
  </animation> 
 
@@ -454,10 +456,14 @@
   <condition>
    <not>
     <or>
+      <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
+      <or>
     <not><property>fdm/jsbsim/elec/failures/battery/serviceable</property></not>
     <not><property>fdm/jsbsim/elec/failures/epu/serviceable</property></not>
     <not><property>fdm/jsbsim/elec/failures/main-gen/serviceable</property></not>
     <not><property>fdm/jsbsim/elec/failures/stby-gen/serviceable</property></not>
+  </or>
+  </and>
     <property>controls/test/test-panel/mal-ind-lts</property>
   </or>
   </not>
@@ -500,10 +506,12 @@
   <object-name>FWD_FUEL_LOW_unlit</object-name>
   <condition>
    <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <or><not><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than></not>
    <greater-than> 
     <property>consumables/fuel/tank/level-lbs</property>
     <value>400</value>
    </greater-than> 
+ </or>
   </condition>
  </animation> 
 
@@ -511,8 +519,13 @@
   <type>select</type>
   <object-name>HOOK_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
-   <not><property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property></not>
+   <not><or>
+   <property>controls/test/test-panel/mal-ind-lts</property>
+   <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
+   <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+ </and>
+   </or>
+ </not>
   </condition>
  </animation> 
 
@@ -592,8 +605,14 @@
   <type>select</type>
   <object-name>SEAT_NOT_ARMED_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
-   <property>controls/seat/ejection-safety-lever</property>
+   <not>
+    <or>
+         <property>controls/test/test-panel/mal-ind-lts</property>
+         <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
+         <not><property>controls/seat/ejection-safety-lever</property></not>
+       </and>
+     </or>
+   </not>
   </condition>
  </animation> 
 
@@ -609,19 +628,39 @@
   <type>select</type>
   <object-name>STORES_CONFIG_unlit</object-name>
   <condition>
-   <not><or>
-     <and>
-        <greater-than>
-          <property>f16/stores-cat</property>
-          <value>1</value>
-        </greater-than>
-        <less-than>
-          <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
-          <value>1</value>
-        </less-than>
-      </and>
-     <property>controls/test/test-panel/mal-ind-lts</property>
-   </or></not>
+   <not>
+      <or>
+          <and>
+              <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-2</property>
+                  <value>20</value>
+              </greater-than>
+              <or>
+                  <and>
+                      <greater-than>
+                        <property>f16/stores-cat</property>
+                        <value>1</value>
+                      </greater-than>
+                      <less-than>
+                        <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+                        <value>1</value>
+                      </less-than>
+                  </and>
+                  <and>
+                    <equals>
+                      <property>f16/stores-cat</property>
+                      <value>1</value>
+                    </equals>
+                    <equals>
+                      <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+                      <value>1</value>
+                    </equals>
+                  </and>
+              </or>
+          </and>
+          <property>controls/test/test-panel/mal-ind-lts</property>
+      </or>
+   </not>
   </condition>
  </animation> 
 
@@ -667,10 +706,12 @@
   <condition>
    <or>
    <property>controls/test/test-panel/mal-ind-lts</property>
+   <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
    <less-than> 
     <property>consumables/fuel/tank[1]/level-lbs</property>
     <value>400</value>
    </less-than> 
+ </and>
    </or>
   </condition>
  </animation> 
@@ -743,13 +784,14 @@
   <type>select</type>
   <object-name>ELEC_SYS_lit</object-name>
   <condition>
+    <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
     <or>
     <not><property>fdm/jsbsim/elec/failures/battery/serviceable</property></not>
     <not><property>fdm/jsbsim/elec/failures/epu/serviceable</property></not>
     <not><property>fdm/jsbsim/elec/failures/main-gen/serviceable</property></not>
     <not><property>fdm/jsbsim/elec/failures/stby-gen/serviceable</property></not>
     <property>controls/test/test-panel/mal-ind-lts</property>
-  </or>
+  </or></and>
   </condition>
  </animation> 
 
@@ -791,10 +833,12 @@
   <condition>
    <or>
    <property>controls/test/test-panel/mal-ind-lts</property>
+   <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
    <less-than> 
     <property>consumables/fuel/tank[0]/level-lbs</property>
     <value>400</value>
    </less-than> 
+ </and>
    </or>
   </condition>
  </animation> 
@@ -805,7 +849,9 @@
   <condition>
    <or>
    <property>controls/test/test-panel/mal-ind-lts</property>
+   <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
    <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+ </and>
    </or>
   </condition>
  </animation> 
@@ -888,7 +934,9 @@
   <condition>
    <or>
    <property>controls/test/test-panel/mal-ind-lts</property>
+   <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
    <not><property>controls/seat/ejection-safety-lever</property></not>
+ </and>
    </or>
   </condition>
  </animation> 
@@ -905,29 +953,37 @@
   <type>select</type>
   <object-name>STORES_CONFIG_lit</object-name>
   <condition>
-    <or>
-     <and>
-        <greater-than>
-          <property>f16/stores-cat</property>
-          <value>1</value>
-        </greater-than>
-        <less-than>
-          <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
-          <value>1</value>
-        </less-than>
-      </and>
-      <and>
-        <equals>
-          <property>f16/stores-cat</property>
-          <value>1</value>
-        </equals>
-        <equals>
-          <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
-          <value>1</value>
-        </equals>
-      </and>
-     <property>controls/test/test-panel/mal-ind-lts</property>
-   </or>
+      <or>
+          <and>
+              <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-2</property>
+                  <value>20</value>
+              </greater-than>
+              <or>
+                  <and>
+                      <greater-than>
+                        <property>f16/stores-cat</property>
+                        <value>1</value>
+                      </greater-than>
+                      <less-than>
+                        <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+                        <value>1</value>
+                      </less-than>
+                  </and>
+                  <and>
+                    <equals>
+                      <property>f16/stores-cat</property>
+                      <value>1</value>
+                    </equals>
+                    <equals>
+                      <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+                      <value>1</value>
+                    </equals>
+                  </and>
+              </or>
+          </and>
+          <property>controls/test/test-panel/mal-ind-lts</property>
+      </or>
   </condition>
  </animation> 
 

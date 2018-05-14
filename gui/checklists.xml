@@ -65,9 +65,8 @@
                 </equals>
             </condition>
             <binding>
-                <command>property-assign</command>
-                <property>controls/test/test-panel/mal-ind-lts</property>
-                <value>1</value>
+                <command>nasal</command>
+                <script>f16_switches.toggleMalIndLts()</script>
             </binding>
         </item>
         <item>
