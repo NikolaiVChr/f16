@@ -18,10 +18,12 @@
     <animation>
         <object-name>bkg</object-name>
         <type>material</type>
-        <greater-than-equals>
+        <condition>
+            <greater-than-equals>
                 <property>fdm/jsbsim/elec/bus/ess-ac</property>
                 <value>100</value>
             </greater-than-equals>
+        </condition>
         <emission>
             <red>  1</red>
             <green>1</green>
