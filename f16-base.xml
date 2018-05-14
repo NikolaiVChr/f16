@@ -893,7 +893,7 @@
 				</sources>
 				<switches>
 					<epu type="int">0</epu>
-					<main-pwr type="int">2</main-pwr>
+					<main-pwr type="int">0</main-pwr>
 				</switches>
 				<unused type="int">0</unused>
 			</elec>
