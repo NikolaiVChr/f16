@@ -44,6 +44,7 @@ Should auto missile view work for jettisoned stores as well?
 More gun tracers?
 A-A and A-G button cycle cannon also?
 Missile view start behind weapon?
+Stores should only emergency Jett. when main, stby or epu is running.
 
 Damage
 ------

@@ -28,6 +28,7 @@
         </tags>
         <state include="states/running.xml" n="0"/>
         <!--<state include="states/ramp.xml" n="1"/>-->
+        <checklists include="gui/checklists.xml"/>
         <submodels>
             <serviceable type="bool">1</serviceable>
             <path>Aircraft/f16/Systems/f16-submodels.xml</path>
