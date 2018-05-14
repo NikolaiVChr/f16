@@ -2615,4 +2615,27 @@
     </switch>
   </channel>-->
 
+    <channel name="Misc" execrate="16">
+
+        <fcs_function name="systems/approach-speed">
+            <description>Page A7-3 of Supplement HAF manual</description>
+            <function>
+                <table>
+                    <independentVar lookup="row">inertia/weight-lbs</independentVar>
+                    <tableData>
+                      17000 150
+                      20000 136
+                      25000 152
+                      30000 167
+                      35000 180
+                      40000 192
+                      45000 204
+                      48000 212
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+
+    </channel>
+
  </flight_control>

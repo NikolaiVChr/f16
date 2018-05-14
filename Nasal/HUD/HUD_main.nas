@@ -604,7 +604,12 @@ var F16_HUD = {
                 } else {
                     me.window4.hide();
                 }
-                me.window6.hide(); # SRM UNCAGE / TARGET ASPECT
+                if (hdp.gear_down and !hdp.wow) {
+                    me.window6.setText(sprintf("A%dKT", getprop("fdm/jsbsim/systems/approach-speed")));
+                    me.window6.show();
+                } else {
+                    me.window6.hide(); # SRM UNCAGE / TARGET ASPECT
+                }
             }
 
             if (hdp.range_rate != nil)
@@ -618,11 +623,26 @@ var F16_HUD = {
             me.window8.setText(sprintf("%.1f", hdp.Nz));
             me.window8.show();
             if (me.win9==0) {
-                me.window9.setText(sprintf("AOA %d",hdp.alpha));
-                me.window9.show();
+                if (hdp.gear_down) {
+                    me.alphaHUD = hdp.alpha;
+                    if (hdp.wow) {
+                        me.alphaHUD = 0;
+                    }
+                    me.window9.setText(sprintf("AOA %d",me.alphaHUD));
+                    me.window9.show();
+                } else {
+                    me.window9.hide();
+                }
             }
             me.window7.setText(sprintf("%.2f",hdp.mach));
             me.window7.show();
+#
+#               1 
+#
+# 2 nav/arm         3 fuel
+# 7 mach            4 eta
+# 8 g               5 waypoint
+# 9 weap/aoa        6 
         }
         if (hdp.heading < 180)
             me.heading_tape_position = -hdp.heading*54/10;
@@ -715,13 +735,7 @@ var F16_HUD = {
         me.trackLine.setVisible(me.trackLineShow);
 
         
-#
-#               1 
-#
-# 2 nav/arm         3
-# 7 mach            4
-# 8 g               5
-# 9 weap/aoa        6
+
 
         me.dlzArray = pylons.getDLZ();
         #me.dlzArray =[10,8,6,2,9];#test
