@@ -59,8 +59,10 @@ var F16_HUD = {
         obj.ladder_center = cent;
 
         obj.VV = obj.get_element("VelocityVector");
+
         obj.heading_tape = obj.get_element("heading-scale");
         obj.heading_tape_pointer = obj.get_element("path3419");
+
         obj.roll_pointer = obj.get_element("roll-pointer");
         obj.alt_range = obj.get_element("alt_range");
         obj.ias_range = obj.get_element("ias_range");
@@ -644,18 +646,22 @@ var F16_HUD = {
 #
 #               1 
 #
-# 2 nav/arm         3 fuel
-# 7 mach            4 eta
-# 8 g               5 waypoint
-# 9 weap/aoa        6 
+# 2 nav/arm         3 fuel/callsign
+# 7 mach            4 eta/altitude
+# 8 g               5 waypoint/slant range
+# 9 weap/aoa        6 type
         }
         if (hdp.heading < 180)
             me.heading_tape_position = -hdp.heading*54/10;
         else
             me.heading_tape_position = (360-hdp.heading)*54/10;
-         
-        me.heading_tape.setTranslation (me.heading_tape_position,-10);
-        me.heading_tape_pointer.setTranslation (0,-10);
+        if (hdp.gear_down) {
+            me.heading_tape_positionY = -10;
+        } else {
+            me.heading_tape_positionY = 95;
+        }
+        me.heading_tape.setTranslation (me.heading_tape_position,me.heading_tape_positionY);
+        me.heading_tape_pointer.setTranslation (0,me.heading_tape_positionY);
         me.roll_pointer.setRotation (me.roll_rad);
         me.trackLineShow = 0;
 #        if (hdp.FrameCount == 1 or hdp.FrameCount == 3 or me.initUpdate == 1) {
