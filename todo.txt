@@ -45,6 +45,7 @@ A-A and A-G button cycle cannon also?
 Missile view start behind weapon?
 Stores should only emergency Jett. when main, stby or epu is running.
 Guns guns, should not play for at least 10 secs. after its said.
+Found a document that details all loadouts for US F16s, they can carry alot more than Greek F16s. For example triple agm65 etc etc.
 
 Damage
 ------
