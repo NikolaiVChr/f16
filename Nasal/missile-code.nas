@@ -704,11 +704,11 @@ var AIM = {
 		me.SwSoundVol.setDoubleValue(0);
 	},
 
-	getDLZ: func {
+	getDLZ: func (ignoreLock = 0) {
 		# call this only before release/eject
 		if (me.dlz_enabled != TRUE) {
 			return nil;
-		} elsif (contact == nil or me.status != MISSILE_LOCK) {
+		} elsif (contact == nil or (me.status != MISSILE_LOCK and !ignoreLock)) {
 			return [];
 		}
 		me.dlz_t_alt = contact.get_altitude();

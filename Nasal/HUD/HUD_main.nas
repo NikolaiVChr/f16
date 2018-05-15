@@ -192,6 +192,11 @@ var F16_HUD = {
            .lineTo( -obj.dlzWidth*0.5, -obj.dlzWidth*0.4)
            .setColor(1,1,1)
            .setStrokeLineWidth(obj.dlzLW);
+        obj.dlzClo = obj.dlz.createChild("text")
+                .setText("+340")
+                .setAlignment("right-center")
+                .setColor(0,1,0)
+                .setFontSize(9, 1.1);
 
         obj.svg.setColor(0.3,1,0.3);
 		return obj;
@@ -562,8 +567,8 @@ var F16_HUD = {
                         me.window4.hide();
                         me.window5.hide();
                     } else {
-                        me.window4.setText(sprintf("RNG %3.1f", awg_9.active_u.get_range()));
-                        me.window5.setText(sprintf("CLO %-3d", awg_9.active_u.get_closure_rate()));
+                        me.window5.setText(sprintf("F%05.1f", awg_9.active_u.get_slant_range()));#slant range
+                        me.window4.setText(sprintf("TA%3d", awg_9.active_u.get_altitude()*0.001));
                         me.window4.show();
                         me.window5.show();
                     }
@@ -745,6 +750,12 @@ var F16_HUD = {
             #printf("%d %d %d %d %d",me.dlzArray[0],me.dlzArray[1],me.dlzArray[2],me.dlzArray[3],me.dlzArray[4]);
             me.dlz2.removeAllChildren();
             me.dlzArrow.setTranslation(0,-me.dlzArray[4]/me.dlzArray[0]*me.dlzHeight);
+            if (awg_9.active_u != nil) {
+                me.dlzClo.setTranslation(0,-me.dlzArray[4]/me.dlzArray[0]*me.dlzHeight);
+                me.dlzClo.setText(sprintf("%+d ",awg_9.active_u.get_closure_rate()));
+            } else {
+                me.dlzClo.setText("");
+            }
             me.dlzGeom = me.dlz2.createChild("path")
                     .moveTo(0, -me.dlzArray[3]/me.dlzArray[0]*me.dlzHeight)
                     .lineTo(0, -me.dlzArray[2]/me.dlzArray[0]*me.dlzHeight)

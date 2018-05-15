@@ -981,6 +981,11 @@ var Target = {
         }
         return me.Range.getValue();
 	},
+    get_slant_range : func {
+        #
+        # range on carriers (and possibly other items) is always 0 so recalc.
+        return me.get_Coord().direct_distance_to(geo.aircraft_position()) * M2NM; # distance in NM
+    },
 	get_horizon : func(own_alt) {
 		var tgt_alt = me.get_altitude();
 		if ( tgt_alt != nil ) {
