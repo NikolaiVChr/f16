@@ -4,6 +4,22 @@ No fixed landing speed, however keep a AoA of 11 to 13 in final.
 
 
 
+HUD
+
+Text left side:
+  NAV or ARM depending on masterarm. But BRAKES if parking brakes is on, and F 15 G if flaps is deployed, F for flaps, 15 for 15 deg extended, and G for gears down.
+  Mach number
+  G-Force number.
+  Selected weapon or AoA if gears down.
+
+Text Right side:
+  FUEL if bingo fuel. Callsign if masterarm.
+  ETA to next steerpoint. TA 20 if masterarm on, 20 stand for 20k target altitude.
+  023>2 means 23 NM to next steerpoint number 2. F034.2 if masterarm on, means 34.2 NM in slant range to target.
+  Type of target if masterarm on.
+
+
+
 RWR
 
 The round display above left MFD display is a Radar Warning Reciever.
