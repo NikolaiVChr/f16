@@ -419,7 +419,12 @@ var F16_HUD = {
 
 
             pitch_offset = -me.texels_over_middle + me.hozizon_line_offset_from_middle_in_svg*me.sy;
-            me.boreSymbol.setTranslation(me.sx/2,me.sy-me.texels_up_into_hud);
+            if (hdp.gear_down) {
+                me.boreSymbol.hide();
+            } else {
+                me.boreSymbol.setTranslation(me.sx/2,me.sy-me.texels_up_into_hud);
+                me.boreSymbol.show();
+            }
             me.oldBore.hide();
         }
 
@@ -612,7 +617,7 @@ var F16_HUD = {
                     me.window4.hide();
                 }
                 if (hdp.gear_down and !hdp.wow) {
-                    me.window6.setText(sprintf("A%dKT", getprop("fdm/jsbsim/systems/approach-speed")));
+                    me.window6.setText(sprintf("A%d", getprop("fdm/jsbsim/systems/approach-speed")));
                     me.window6.show();
                 } else {
                     me.window6.hide(); # SRM UNCAGE / TARGET ASPECT

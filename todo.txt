@@ -75,6 +75,7 @@ HUD
 Make tons of features.
 CCIP for MK82
 ILS (page 1-159 of block50 manual)
+When an eyebrow warning comes on the HUD should show WARN. Can be removed with WARN RESET on ICP panel below hud.
 
 DED (little display right-down from HUD)
 ---

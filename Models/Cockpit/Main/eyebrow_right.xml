@@ -24,13 +24,37 @@
   <object-name>eng_fire</object-name>
   <object-name>flcs</object-name>
   <object-name>dbu_on</object-name>
-  <object-name>to_ldg_config</object-name>
   <object-name>unused</object-name>
   <condition>
     <or>
     <property>/tmp/nill</property>
     <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
+  </condition>
+ </animation>
+
+  <animation>
+  <type>select</type>
+  <object-name>to_ldg_config</object-name>
+  <condition>
+      <and>
+        <less-than>
+          <property>controls/gear/gear-down</property>
+          <value>1</value>
+        </less-than>
+        <less-than>
+          <property>position/altitude-agl-ft</property>
+          <value>10000</value>
+        </less-than>
+        <less-than>
+          <property>velocities/airspeed-kt</property>
+          <value>190</value>
+        </less-than>
+        <greater-than>
+          <property>velocities/speed-down-fps</property>
+          <value>4.17</value>
+        </greater-than><!-- 250 fpm -->
+    </and>
   </condition>
  </animation>
 

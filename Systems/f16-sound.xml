@@ -355,6 +355,34 @@
    </condition>
   </stall>
 
+  <stall>
+   <name>stall2</name>
+   <path>Aircraft/f16/Sounds/warning.wav</path>
+   <mode>once</mode>
+   <type>avionics</type>
+   <condition>
+      <and><!-- eyebrow TO LDG CONFIG warning -->
+          <property>sim/current-view/internal</property>
+          <less-than>
+            <property>controls/gear/gear-down</property>
+            <value>1</value>
+          </less-than>
+          <less-than>
+            <property>position/altitude-agl-ft</property>
+            <value>10000</value>
+          </less-than>
+          <less-than>
+            <property>velocities/airspeed-kt</property>
+            <value>190</value>
+          </less-than>
+          <greater-than>
+            <property>velocities/speed-down-fps</property>
+            <value>4.17</value>
+          </greater-than><!-- 250 fpm -->
+      </and>
+   </condition>
+  </stall>
+
   <impact>
    <name>pullUp</name>
    <path>Aircraft/f16/Sounds/warning.wav</path>
