@@ -522,7 +522,7 @@ var F16_HUD = {
                 me.window2.setVisible(1);
             }
             me.win9 = 0;
-            if(getprop("controls/armament/master-arm"))
+            if(getprop("controls/armament/master-arm") and pylons.fcs != nil)
             {
                 me.weap = pylons.fcs.selectedType;
                 me.window9.setVisible(1);
@@ -533,21 +533,21 @@ var F16_HUD = {
                     if (me.weap == "20mm Cannon") {
                         me.txt = sprintf("%3d", pylons.fcs.getAmmo());
                     } elsif (me.weap == "AIM-9") {
-                        me.txt = sprintf("%dSRM", pylons.fcs.getAmmo());
+                        me.txt = sprintf("%d SRM", pylons.fcs.getAmmo());
                     } elsif (me.weap == "AIM-120") {
-                        me.txt = sprintf("%dLRM", pylons.fcs.getAmmo());
+                        me.txt = sprintf("%d LRM", pylons.fcs.getAmmo());
                     } elsif (me.weap == "AIM-7") {
-                        me.txt = sprintf("%dMRM", pylons.fcs.getAmmo());
+                        me.txt = sprintf("%d MRM", pylons.fcs.getAmmo());
                     } elsif (me.weap == "GBU-12") {
-                        me.txt = sprintf("%dB12", pylons.fcs.getAmmo());
+                        me.txt = sprintf("%d B12", pylons.fcs.getAmmo());
                     } elsif (me.weap == "AGM-65") {
-                        me.txt = sprintf("%dM65", pylons.fcs.getAmmo());
+                        me.txt = sprintf("%d M65", pylons.fcs.getAmmo());
                     } elsif (me.weap == "AGM-84") {
-                        me.txt = sprintf("%dM84", pylons.fcs.getAmmo());
+                        me.txt = sprintf("%d M84", pylons.fcs.getAmmo());
                     } elsif (me.weap == "MK-82") {
-                        me.txt = sprintf("%dB82", pylons.fcs.getAmmo());
+                        me.txt = sprintf("%d B82", pylons.fcs.getAmmo());
                     } elsif (me.weap == "AGM-88") {
-                        me.txt = sprintf("%dM88", pylons.fcs.getAmmo());
+                        me.txt = sprintf("%d M88", pylons.fcs.getAmmo());
                     }
                     me.win9 = 1;
                 }
@@ -571,11 +571,13 @@ var F16_HUD = {
     #these labels aren't correct - but we don't have a full simulation of the targetting and missiles so 
     #have no real idea on the details of how this works.
                     if (awg_9.active_u.get_display() == 0) {
-                        me.window4.hide();
-                        me.window5.hide();
+                        me.window4.setText("TA XX");
+                        me.window5.setText("FXXX.X");#slant range
+                        me.window4.show();
+                        me.window5.show();
                     } else {
-                        me.window5.setText(sprintf("F%05.1f", awg_9.active_u.get_slant_range()));#slant range
                         me.window4.setText(sprintf("TA%3d", awg_9.active_u.get_altitude()*0.001));
+                        me.window5.setText(sprintf("F%05.1f", awg_9.active_u.get_slant_range()));#slant range
                         me.window4.show();
                         me.window5.show();
                     }
@@ -606,16 +608,18 @@ var F16_HUD = {
                     } else {
                         me.window5.hide();
                     }
-                } else {
-                    me.window5.hide();
-                }
-                me.eta = getprop("autopilot/route-manager/wp[0]/eta");
-                if (me.eta != nil and me.eta != "") {
-                    me.window4.setText(me.eta);
+                    me.eta = getprop("autopilot/route-manager/wp[0]/eta");
+                    if (me.eta != nil and me.eta != "") {
+                        me.window4.setText(me.eta);
+                    } else {
+                        me.window4.setText("XX:XX");
+                    }
                     me.window4.show();
                 } else {
                     me.window4.hide();
+                    me.window5.hide();
                 }
+                
                 if (hdp.gear_down and !hdp.wow) {
                     me.window6.setText(sprintf("A%d", getprop("fdm/jsbsim/systems/approach-speed")));
                     me.window6.show();
