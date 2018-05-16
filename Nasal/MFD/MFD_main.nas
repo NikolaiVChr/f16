@@ -992,8 +992,8 @@ var MFD_Device =
             .arcSmallCW(svg.outerRadius,svg.outerRadius, 0,  svg.outerRadius*2, 0)
             .moveTo(0,-svg.innerRadius)#north
             .vert(-15)
-            .moveTo(-2.5,-svg.innerRadius-15)
-            .horiz(5)
+            .lineTo(3,-svg.innerRadius-15+2)
+            .lineTo(0,-svg.innerRadius-15+4)
             .moveTo(0,svg.innerRadius-15)#south
             .vert(30)
             .moveTo(-svg.innerRadius,0)#west
