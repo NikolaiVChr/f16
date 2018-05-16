@@ -408,14 +408,18 @@
         </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/roll/control-c/elevator-cmd-input">
+            <description>
+                The -1 factor was removed since it was wrong. When more than
+                5 deg nosedown elev is commanded this comes into effect.
+            </description>
             <function>
                 <product>
                     <max>
                         <sum>
-                            <product>
+                            <!--<product>-->
                                 <p>fcs/fly-by-wire/pitch/integrator-final</p>
-                                <v>-1</v><!-- this -1 is cause diagram expects elevator-command to be positive for pitch up cmd. -->
-                            </product>
+                                <!--<v>-1</v>
+                            </product>-->
                             <v>-5</v>
                         </sum>
                         <v>0</v>
@@ -1073,8 +1077,11 @@
 
         <fcs_function name="fcs/fly-by-wire/yaw/command-schedule">
             <description>
-                In Cat I old documents say 20-30, but modern flight manual say 14-26.
+                In Cat I TP-1538 say 20-30, but modern flight manual say 14-26.
                 Here I have implemented modern values.
+
+                TODO: Consider using aero/alpha-deg here instead of a_f.
+                      TP-1538 does say it uses alpha indicated directly.
             </description>
             <function>
                 <product>
@@ -1484,6 +1491,15 @@
         </fcs_function>
 
         <pure_gain name="fcs/fly-by-wire/pitch/control-c/da_p">
+            <description>
+                I just named this control-c since it uses the
+                same enable switch, its really control-b.
+
+                da_p is factored in 3 places in pitch system.
+                      Purpose is to reduce inertia-coupling pitch-out departures
+                      when rolling at high angle of attack.
+                      its not used in yaw, ari or roll.
+            </description>
             <input> fcs/fly-by-wire/pitch/control-c/roll-rate-schedule </input>
             <gain> fcs/fly-by-wire/enable-control-c </gain>
         </pure_gain>
@@ -1494,6 +1510,7 @@
         </lag_filter>
 
         <summer name="fcs/fly-by-wire/pitch/alpha-sum">
+            <description></description>
             <input> fcs/fly-by-wire/pitch/a_f </input>
             <input> fcs/fly-by-wire/pitch/control-c/da_p </input>
         </summer>
@@ -1502,6 +1519,9 @@
             <description>
                 The test is for MPO switch enabled.
                 Source: The Israeli document.
+
+                Since this is part of pitch limiter scheme it
+                uses alpha-sum instead of a_f.
             </description>
             <default value="fcs/fly-by-wire/pitch/alpha-sum"/>
             <test logic="AND" value="0"><!-- consider to lag this 0 -->
@@ -1731,7 +1751,11 @@
         </pure_gain>
 
         <pure_gain name="fcs/fly-by-wire/pitch/alpha-feedback">
-            <input>fcs/fly-by-wire/pitch/a_f</input>
+            <description>
+                         Since this is part of pitch limiter scheme it
+                         uses alpha-sum instead of a_f.
+            </description>
+            <input>fcs/fly-by-wire/pitch/alpha-sum</input>
             <gain> fcs/fly-by-wire/pitch/F2 </gain>
         </pure_gain>
 
@@ -1843,9 +1867,13 @@
         </summer>
 
         <summer name="fcs/fly-by-wire/pitch/pitch-rate-gain-sum">
+            <description>
+                         Since this is part of pitch limiter scheme it
+                         uses alpha-sum instead of a_f.
+            </description>
+            <input>fcs/fly-by-wire/pitch/alpha-sum</input>
             <input> fcs/fly-by-wire/pitch/pitch-rate-gain </input>
             <input> -fcs/fly-by-wire/pitch/bias-final </input>
-            <input> fcs/fly-by-wire/pitch/a_f </input>
         </summer>
 
         <switch name="fcs/fly-by-wire/pitch/pitch-gain">
