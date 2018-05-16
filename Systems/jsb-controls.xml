@@ -2,11 +2,21 @@
 
 <flight_control name="F-16 FC">
 
-<!-- begin: control system by Nikolai V. Chr. -->
+<!--
+    begin: control system by Nikolai V. Chr.
+
+    AD-A055-417 - Main source.
+    AD-A189-675 - I wish, too blurred to read.
+    TP-1538 - used for control system C and non-prototype gains.
+    TN-D-8176 - used for servodynamic filters. Disabled for now (fdm rate is only 120Hz).
+ -->
 
     <channel execrate="1" name="FCS Lookup">
 
         <switch name="fcs/fly-by-wire/MLG-GND">
+            <description>
+                Main landing gear on ground
+            </description>
             <default value="0"/>
             <test logic="AND" value="1">
                 gear/unit[1]/WOW eq 1
@@ -36,6 +46,9 @@
         </fcs_function>
 
         <switch name="fcs/fly-by-wire/q_c_standby">
+            <description>
+                pound per square feet
+            </description>
             <default value="1400"/>
             <test logic="AND" value="200">
                 fcs/fly-by-wire/condition-a == 1
@@ -43,6 +56,9 @@
         </switch>
 
         <fcs_function name="fcs/fly-by-wire/q_c">
+            <description>
+                Dynamic pressure. Pound per square feet
+            </description>
             <function>
                 <sum>
                     <product>
@@ -58,6 +74,9 @@
         </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/q_c_Nsqm">
+            <description>
+                Newton per square meter
+            </description>
             <function>
                 <product>
                     <p>fcs/fly-by-wire/q_c</p>
@@ -67,6 +86,9 @@
         </fcs_function>
         
         <fcs_function name="fcs/fly-by-wire/P_s">
+            <description>
+                Static pressure. Pound per square feet
+            </description>
             <function>
                 <sum>
                     <product>
@@ -90,7 +112,23 @@
             </function>
         </fcs_function>
 
+        <fcs_function name="fcs/fly-by-wire/pitch/F1">
+            <description>Stick limit</description>
+            <function>
+                <table>
+                <independentVar lookup="row">fcs/fly-by-wire/q_c</independentVar>
+                <tableData>
+                    34     -1
+                    184    -4
+                </tableData>
+            </table>
+            </function>
+        </fcs_function>
+
         <fcs_function name="fcs/fly-by-wire/pitch/F2">
+            <description>Static stability
+                         TP-1538: simplified to 0.5
+            </description>
             <function>
                 <table>
                 <independentVar lookup="row">fcs/fly-by-wire/qcps-ratio</independentVar>
@@ -104,6 +142,7 @@
         </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/pitch/F3">
+            <description>Pitch rate gain and pitch loop gain schedule.</description>
             <function>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/q_c</independentVar>
@@ -117,7 +156,12 @@
             </function>
         </fcs_function>
 
-        <fcs_function name="fcs/fly-by-wire/pitch/F3-alt">
+        <fcs_function name="fcs/fly-by-wire/pitch/F3-loop-alt">
+            <description>
+                TP-1538: pitch loop gain schedule.
+
+                Not used
+            </description>
             <function>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/q_c_Nsqm</independentVar>
@@ -130,7 +174,12 @@
             </function>
         </fcs_function>
 
-        <fcs_function name="fcs/fly-by-wire/pitch/F3-alt2">
+        <fcs_function name="fcs/fly-by-wire/pitch/F3-rate-alt">
+            <description>
+                TP-1538: Pitch rate gain schedule. 
+
+                Not used
+            </description>
             <function>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/q_c_Nsqm</independentVar>
@@ -144,6 +193,9 @@
         </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/ari/F7">
+            <description>Turn coordination
+                         TP-1538 is almost same.
+            </description>
             <function>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/qcps-ratio</independentVar>
@@ -159,6 +211,9 @@
         </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/yaw/F8">
+            <description>Yaw axis
+                         TP-1538 is simplified to 0.5
+            </description>
             <function>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/qcps-ratio</independentVar>
@@ -172,6 +227,7 @@
         </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/tef/F9">
+            <description>Transonic flaps</description>
             <function>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/qcps-ratio</independentVar>
@@ -185,6 +241,9 @@
         </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/roll/F10">
+            <description>Roll horiz tail
+                         TP-1538 is simplified to 0.25
+            </description>
             <function>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/qcps-ratio</independentVar>
@@ -540,7 +599,7 @@
             <input>-fcs/fly-by-wire/roll/loop-lag</input>
             <input>-fcs/fly-by-wire/roll/trim-gain</input>
             <input>fcs/fly-by-wire/roll/roll-filter</input>
-            <input>autoflight/roll/roll-rate-demand</input>
+            <input>autoflight/roll/roll-rate-demand</input><!-- should be negative input, fix later -->
         </summer>
 
         <pure_gain name="fcs/fly-by-wire/roll/trim-gain">
@@ -548,23 +607,26 @@
             <gain> 1.67 </gain>
         </pure_gain>
 
-        <pure_gain name="velocities/p-aero-deg_sec">
+        <pure_gain name="velocities/p-deg_sec">
             <input>velocities/p-rad_sec</input>
             <gain> 57.2957795 </gain>
         </pure_gain>
 
         <second_order_filter name="fcs/fly-by-wire/roll/lead-exit">
-          <input> velocities/p-aero-deg_sec </input>
-          <c1> 1 </c1>
-          <c2> 0 </c2>
-          <c3> 3025 </c3>
-          <c4> 1 </c4>
-          <c5> 0 </c5>
-          <c6> 3025 </c6>
+            <description>
+                Exit B in diagram.
+            </description>
+            <input> velocities/p-deg_sec </input>
+            <c1> 1 </c1>
+            <c2> 0 </c2>
+            <c3> 3025 </c3>
+            <c4> 1 </c4>
+            <c5> 0 </c5>
+            <c6> 3025 </c6>
         </second_order_filter>
 
         <second_order_filter name="fcs/fly-by-wire/roll/roll-filter">
-          <input> velocities/p-aero-deg_sec </input>
+          <input> velocities/p-deg_sec </input>
           <c1> 4 </c1>
           <c2> 64 </c2>
           <c3> 6400 </c3>
@@ -578,7 +640,7 @@
                 Is +8.34 in diagram, but must be negative to really work as flat spin protection.
                 And for slow flat spins it was way too small.
             </description>
-            <input> velocities/r-aero-deg_sec </input>
+            <input> velocities/r-deg_sec </input>
             <gain> -8.34 </gain>
         </pure_gain>
 
@@ -668,10 +730,28 @@
             </clipto>
         </summer>
 
+        <!--<second_order_filter name="fcs/fly-by-wire/roll/servodynamics-right">
+            <description>
+                (52)^2
+                div
+                (s^2+2(.7)(52)S+(52)^2
+            </description>
+            <input> fcs/fly-by-wire/roll/top-limit </input>
+            <c1> 0 </c1>
+            <c2> 0 </c2>
+            <c3> 2704 </c3>
+            <c4> 1 </c4>
+            <c5> 72.8 </c5>
+            <c6> 2704 </c6>
+        </second_order_filter>-->
+
         <lag_filter name="fcs/fly-by-wire/roll/flaperon-right-lag">
+            <description>
+                Power actuator dynamics
+                rate limit = 80 deg/s
+            </description>
             <input> fcs/fly-by-wire/roll/top-limit </input>
             <c1> 20 </c1>
-            <!-- defl. limit = 20, rate limit = 80 deg/s -->
         </lag_filter>
 
         <fcs_function name="fcs/fly-by-wire/roll/mech-bias-right">
@@ -723,10 +803,28 @@
             </range>
         </aerosurface_scale>
 
+        <!--<second_order_filter name="fcs/fly-by-wire/roll/servodynamics-left">
+            <description>
+                (52)^2
+                div
+                (s^2+2(.7)(52)S+(52)^2
+            </description>
+            <input> fcs/fly-by-wire/roll/bottom-limit </input>
+            <c1> 0 </c1>
+            <c2> 0 </c2>
+            <c3> 2704 </c3>
+            <c4> 1 </c4>
+            <c5> 72.8 </c5>
+            <c6> 2704 </c6>
+        </second_order_filter>-->
+
         <lag_filter name="fcs/fly-by-wire/roll/flaperon-left-lag">
+            <description>
+                Power actuator dynamics
+                rate limit = 80 deg/s
+            </description>
             <input> fcs/fly-by-wire/roll/bottom-limit </input>
             <c1> 20 </c1>
-            <!-- defl. limit = 20, rate limit = 80 deg/s -->
         </lag_filter>
 
         <fcs_function name="fcs/fly-by-wire/roll/mech-bias-left">
@@ -873,12 +971,25 @@
         </summer>
 
         <pure_gain name="fcs/fly-by-wire/ari/final">
+            <description>
+                Here the ARI result is multiplied to aileron demand,
+                the result is how much ARI contributes to rudder.
+
+                Notice that in TP-1538 the intergain has not been
+                multiplied by 0.5. But thats fine due to in that 
+                document it is a single aileron value used,
+                while here we subtract both aileron values, so
+                its double.
+            </description>
             <input>fcs/fly-by-wire/ari/sum</input>
-            <!--<gain> fcs/fly-by-wire/roll/inter-gain </gain>-->
+            <gain> fcs/fly-by-wire/roll/inter-gain </gain>
             <gain> fcs/fly-by-wire/enable-ari </gain>
         </pure_gain>
 
     </channel>
+
+
+
 
 
 
@@ -906,8 +1017,8 @@
                     <time>      0.0 </time>
                 </setting>
                 <setting>
-                    <position>  1.0 </position>
-                    <time>      1.25 </time>
+                    <position>  1.0  </position>
+                    <time>      0.75 </time>
                 </setting>
             </traverse>
         </kinematic>
@@ -926,6 +1037,9 @@
         </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/yaw/command-deg">
+            <description>
+                The +- 15 includes mech preload and electrical breakout.
+            </description>
             <function>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/yaw/pedal-force-lbf</independentVar>
@@ -1007,8 +1121,9 @@
 
         <switch name="fcs/fly-by-wire/yaw/command-switch">
             <default value="fcs/fly-by-wire/yaw/command-sum"/>
-            <test logic="AND" value="fcs/fly-by-wire/yaw/control-c/command-schedule">
+            <test logic="OR" value="fcs/fly-by-wire/yaw/control-c/command-schedule">
                 fcs/fly-by-wire/prototype == 0
+                fcs/fly-by-wire/prototype == 1 <!-- this is to allow prototype FBW to use control-c -->
             </test>
         </switch>
 
@@ -1022,7 +1137,7 @@
             <gain> 19.32 </gain>
         </pure_gain>
 
-        <pure_gain name="velocities/r-aero-deg_sec">
+        <pure_gain name="velocities/r-deg_sec">
             <input>velocities/r-rad_sec</input>
             <gain> 57.2957795 </gain>
         </pure_gain>
@@ -1038,7 +1153,7 @@
         </pure_gain>
 
         <summer name="fcs/fly-by-wire/yaw/yaw-limits-sum-1">
-            <input>velocities/r-aero-deg_sec</input>
+            <input>velocities/r-deg_sec</input>
             <input>-fcs/fly-by-wire/yaw/cross-multiplier</input>
         </summer>
 
@@ -1071,8 +1186,9 @@
         <pure_gain name="fcs/fly-by-wire/yaw/alt-schedule">
             <description>
                 Is +0.75 in diagram.
+                TODO: check the validity
             </description>
-            <input> velocities/r-aero-deg_sec </input>
+            <input> velocities/r-deg_sec </input>
             <gain> -0.75 </gain>
         </pure_gain>
 
@@ -1108,10 +1224,28 @@
           <c6> 1225 </c6>
         </second_order_filter>
 
+        <!--<second_order_filter name="fcs/fly-by-wire/yaw/servodynamics">
+            <description>
+                (52)^2
+                div
+                (s^2+2(.7)(52)S+(52)^2
+            </description>
+            <input> fcs/fly-by-wire/yaw/struct-filter </input>
+            <c1> 0 </c1>
+            <c2> 0 </c2>
+            <c3> 2704 </c3>
+            <c4> 1 </c4>
+            <c5> 72.8 </c5>
+            <c6> 2704 </c6>
+        </second_order_filter>-->
+
         <lag_filter name="fcs/fly-by-wire/yaw/rudder-lag">
+            <description>
+                Power actuator dynamics
+                Rate limit = 120 deg/s
+            </description>
             <input> fcs/fly-by-wire/yaw/struct-filter </input>
             <c1> 20 </c1>
-            <!-- defl. limit = 30, rate limit = 120 deg/s -->
         </lag_filter>
 
         <switch name="fcs/fly-by-wire/yaw/hyd">
@@ -1155,6 +1289,9 @@
         </aerosurface_scale>
 
     </channel>
+
+
+
 
 
 
@@ -1622,13 +1759,13 @@
             <gain> fcs/fly-by-wire/enable-q </gain>
         </pure_gain>-->
 
-        <pure_gain name="velocities/q-aero-deg_sec">
+        <pure_gain name="velocities/q-deg_sec">
             <input>velocities/q-rad_sec</input>
             <gain> 57.2957795 </gain>
         </pure_gain>
 
         <washout_filter name="fcs/fly-by-wire/pitch/q-washout">
-          <input> velocities/q-aero-deg_sec </input>
+          <input> velocities/q-deg_sec </input>
           <c1> 1 </c1>
         </washout_filter>
 
@@ -1881,11 +2018,11 @@
 
         <!-- servos -->
 
-        <second_order_filter name="fcs/fly-by-wire/pitch/right-servo">
+        <!--<second_order_filter name="fcs/fly-by-wire/pitch/right-servo">
             <description>
                 Ref.: TN D-8176
-
-                Disabled due to too slow to react to changes.
+                Servodynamics
+                Disabled due to too slow to react to changes?
             </description>
             <input> fcs/fly-by-wire/pitch/right-hyd </input>
             <c1> 0 </c1>
@@ -1904,14 +2041,16 @@
             <c4> 1 </c4>
             <c5> 72.8 </c5>
             <c6> 2704 </c6>
-        </second_order_filter>
+        </second_order_filter>-->
 
         <lag_filter name="fcs/fly-by-wire/pitch/right-lag">
+            <description>Power actuator dynamics</description>
             <input> fcs/fly-by-wire/pitch/right-hyd </input>
             <c1> 20 </c1>
         </lag_filter>
 
         <lag_filter name="fcs/fly-by-wire/pitch/left-lag">
+            <description>Power actuator dynamics</description>
             <input> fcs/fly-by-wire/pitch/left-hyd </input>
             <c1> 20 </c1>
         </lag_filter>

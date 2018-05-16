@@ -32,6 +32,10 @@ JSBSim
 Engine
 ------
 
+GUI
+---
+designation view
+
 Stores
 ------
 Model conformal fuel tanks.
@@ -114,6 +118,7 @@ Walker
 ------
 It can not walk forward or left.
 Other issues as well
+key for toggling
 
 Nasal
 -----
