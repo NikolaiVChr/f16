@@ -86,6 +86,7 @@
       	</color>
 	</input>
 	<empty><stretch>1</stretch></empty>
-	<text><label>Wingmen do not show up in RWR.</label></text>
+	<text><label>Wingmen only show up in RWR,</label></text>
+	<text><label>when no other threats present.</label></text>
 
 </PropertyList>

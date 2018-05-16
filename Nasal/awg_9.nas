@@ -119,7 +119,11 @@ var az_scan = func(fcount) {
     }
     doRWR = !doRWR;
     if (rwrs.rwr != nil and getprop("fdm/jsbsim/elec/bus/ess-ac")>100) {
-            rwrs.rwr.update(rwrList);
+            if (size(rwrList)>0) {
+                rwrs.rwr.update(rwrList);
+            } else {
+                rwrs.rwr.update(rwrList16);
+            }
     }
     if (doRWR) {
         selectCheck();# for it to be responsive have to do this more often than running radar code.
@@ -161,6 +165,7 @@ var az_scan = func(fcount) {
 
 		tgts_list = [];
         rwrList = [];
+        rwrList16 = [];
 		var raw_list = Mp.getChildren();
 
         if (active_u == nil or active_u.Callsign == nil or active_u.Callsign.getValue() == nil or active_u.Callsign.getValue() != active_u_callsign)
@@ -1192,7 +1197,9 @@ f16_radar = F16RadarRecipient.new("F16-RADAR");
 emesary.GlobalTransmitter.Register(f16_radar);
 
 var completeList = [];
-var rwrList = [];
+var rwrList   = [];
+var rwrList16 = [];
+
 
 var RWR_APG = {
     run: func () {
@@ -1200,8 +1207,9 @@ var RWR_APG = {
         foreach(me.u;completeList) {
             me.cs = me.u.get_Callsign();
             me.rn = me.u.get_range();
+            me.l16 = 0;
             if (getprop("link16/wingman-1")==me.cs or getprop("link16/wingman-2")==me.cs or getprop("link16/wingman-3")==me.cs or me.rn > 150) {
-                continue;
+                me.l16 = 1;
             }
             me.bearing = geo.aircraft_position().course_to(me.u.get_Coord());
             me.trAct = me.u.propNode.getNode("instrumentation/transponder/transmitted-id");
@@ -1240,8 +1248,13 @@ var RWR_APG = {
                 me.clo = me.u.get_closure_rate();
                 me.threat += me.clo>0?(me.clo/500)*0.10:0;
                 if (me.threat > 1) me.threat = 1;
+                if (me.threat <= 0) continue;
                 #printf("%s threat:%.2f range:%d dev:%d", u.get_Callsign(),threat,u.get_range(),dev);
-                append(rwrList,[me.u,me.threat]);
+                if (!me.l16) {
+                    append(rwrList,[me.u,me.threat]);
+                } else {
+                    append(rwrList16,[me.u,me.threat]);
+                }
             } else {
                 #printf("%s ----", u.get_Callsign());
             }
