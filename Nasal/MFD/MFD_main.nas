@@ -1044,6 +1044,12 @@ var MFD_Device =
                 .setAlignment("left-center")
                 .setColor(1,1,1)
                 .setFontSize(20, 1.0);
+        svg.cpl = svg.buttonView.createChild("text")#CPL/DCPL
+                .setTranslation(-276*0.795, -482*0.5+55)
+                .setText("DCPL")
+                .setAlignment("left-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
 #        svg.bars = svg.p_HSDc.createChild("text")#
 #                .setTranslation(-276*0.795, -482*0.5+60)
 #                .setText("8B")
@@ -1099,6 +1105,7 @@ var MFD_Device =
 #           .setColor(0.5,0.5,1)
 #           .setStrokeLineWidth(1);
         svg.centered = 0;
+        svg.coupled = 0;
         svg.range_cen = 40;
         svg.range_dep = 32;
     },
@@ -1123,6 +1130,7 @@ var MFD_Device =
         me.p_HSD.notifyButton = func (eventi) {
             if (eventi != nil) {
                 if (eventi == 0) {
+                    if (me.root.coupled) return;
                     if (me.root.centered) {
                         if (me.root.range_cen == 5)
                             me.root.range_cen =10
@@ -1151,6 +1159,7 @@ var MFD_Device =
                             me.root.range_dep = 256;
                     }
                 } elsif (eventi == 1) {
+                    if (me.root.coupled) return;
                     if (me.root.centered) {
                         if (me.root.range_cen == 160)
                             me.root.range_cen =80
@@ -1189,6 +1198,9 @@ var MFD_Device =
                 } elsif (eventi == 2) {
                     me.root.centered = !me.root.centered;
                     me.root.depcen.setText(me.root.centered==1?"CEN":"DEP");
+                } elsif (eventi == 3) {
+                    me.root.coupled = !me.root.coupled;
+                    me.root.cpl.setText(me.root.coupled==1?"CPL":"DCPL");
                 }
             }
 
@@ -1207,6 +1219,29 @@ var MFD_Device =
             me.root.conc.setRotation(-getprop("orientation/heading-deg")*D2R);
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
+            if (me.root.coupled) {
+                me.root.rangDown.hide();
+                me.root.rangUp.hide();
+                if (awg_9.range_radar2 == 10) {
+                    me.root.range_cen = 10;
+                    me.root.range_dep = 16;
+                } elsif (awg_9.range_radar2 == 20) {
+                    me.root.range_cen = 20;
+                    me.root.range_dep = 32;
+                } elsif (awg_9.range_radar2 == 40) {
+                    me.root.range_cen = 40;
+                    me.root.range_dep = 64;
+                } elsif (awg_9.range_radar2 == 80) {
+                    me.root.range_cen = 80;
+                    me.root.range_dep = 128;
+                } elsif (awg_9.range_radar2 == 160) {
+                    me.root.range_cen = 160;
+                    me.root.range_dep = 256;
+                }
+            } else {
+                me.root.rangDown.show();
+                me.root.rangUp.show();
+            }
             if (me.root.centered) {
                 me.root.p_HSDc.setTranslation(276*0.795,482*0.50);
                 me.root.rang.setText(""~me.root.range_cen);
