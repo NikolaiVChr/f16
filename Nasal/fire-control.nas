@@ -21,6 +21,7 @@ var FireControl = {
 		fc.typeOrder=typeOrder;
 		fc.selectedType = nil;
 		fc.triggerTime = 0;
+		fc.gunTriggerTime = 0;
 		fc.WeaponNotification = VectorNotification.new("WeaponNotification");
 		fc.setupMFDObservers();
 		setlistener("controls/armament/trigger",func{fc.trigger();fc.updateCurrent()});
@@ -456,7 +457,11 @@ var FireControl = {
 				me.triggerTime = getprop("sim/time/elapsed-sec");
 				settimer(func me.triggerHold(me.aim), 1.5);
 			} elsif (me.aim != nil and me.aim.parents[0] == stations.SubModelWeapon) {
-				armament.AIM.sendMessage("Guns guns");
+				if (getprop("sim/time/elapsed-sec")>me.gunTriggerTime+10) {
+					# only say guns guns every 10 seconds.
+					armament.AIM.sendMessage("Guns guns");
+					me.gunTriggerTime = getprop("sim/time/elapsed-sec");
+				}
 				me.triggerTime = 0;
 			}
 		} elsif (getprop("controls/armament/trigger") < 1) {
