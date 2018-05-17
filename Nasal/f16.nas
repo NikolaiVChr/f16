@@ -200,6 +200,7 @@ var loop_flare = func {
       if (!getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         call(func{fgcommand('dialog-close', props.Node.new({"dialog-name": "WeightAndFuel"}))},nil,var err2 = []);          
       }      
+      setprop("sim/freeze/fuel",0);
       setprop("/sim/speed-up", 1);
       setprop("/sim/rendering/als-filters/use-filtering", 1);
     }
