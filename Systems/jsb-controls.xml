@@ -7,8 +7,9 @@
 
     AD-A055-417 - Main source.
     AD-A189-675 - I wish, too blurred to read.
-    TP-1538 - used for control system C and non-prototype gains.
+    TP-1538 - used for control system B/C and non-prototype gains.
     TN-D-8176 - used for servodynamic filters. Disabled for now (fdm rate is only 120Hz).
+    ICAS-90-5.10.2 - used for MPO switch
  -->
 
     <channel execrate="1" name="FCS Lookup">
@@ -1364,26 +1365,12 @@
             <input>fcs/fly-by-wire/pitch/command-g</input>
         </summer>
 
-        <fcs_function name="fcs/fly-by-wire/pitch/negative-g-limit">
-            <function>
-                <table>
-                    <independentVar lookup="row">fcs/fly-by-wire/q_c</independentVar>
-                    <tableData>
-                        0.0      -1
-                        31.32815 -1
-                        187.9689 -4
-                        208.8543 -4
-                    </tableData>
-                </table>
-            </function>
-        </fcs_function>
-
         <switch name="fcs/fly-by-wire/pitch/negative-g-limit-final">
             <description>
                 The second test is for MPO switch enabled.
                 Source: The Israeli document.
             </description>
-            <default value="fcs/fly-by-wire/pitch/negative-g-limit"/>
+            <default value="fcs/fly-by-wire/pitch/F1"/>
             <test logic="OR" value="-4">
                 fcs/fly-by-wire/condition-a == 1
             </test>
@@ -1505,6 +1492,9 @@
         </pure_gain>
 
         <lag_filter name="fcs/fly-by-wire/pitch/a_f">
+            <description>
+                        Exit A
+            </description>
             <input> fcs/fly-by-wire/pitch/alpha-indicated-switch </input>
             <c1> 10 </c1>
         </lag_filter>
@@ -1596,20 +1586,20 @@
             <gain> fcs/fly-by-wire/pitch/main-gain </gain>
         </pure_gain>
 
-        <switch name="fcs/fly-by-wire/pitch/loop-schedule">
+        <!--<switch name="fcs/fly-by-wire/pitch/loop-schedule">
             <description>                
             </description>
             <default value="fcs/fly-by-wire/pitch/F3"/>
-            <test logic="AND" value="fcs/fly-by-wire/pitch/F3"><!-- alt -->
+            <test logic="AND" value="fcs/fly-by-wire/pitch/F3-loop-alt">
                 fcs/fly-by-wire/prototype == 0
             </test>
-        </switch>
+        </switch>-->
 
         <pure_gain name="fcs/fly-by-wire/pitch/main-gain-schedule">
-            <description>                
+            <description>
             </description>
             <input>fcs/fly-by-wire/pitch/main-gain-result</input>
-            <gain> fcs/fly-by-wire/pitch/loop-schedule </gain>
+            <gain> fcs/fly-by-wire/pitch/F3 </gain>
         </pure_gain>
 
         <summer name="fcs/fly-by-wire/pitch/integrator-feedback">
@@ -1637,39 +1627,12 @@
 
         <pure_gain name="fcs/fly-by-wire/pitch/ground-input">
             <description>
-                diagram say 0.5, but negative makes more sense
+                Diagram say 0.5, but negative makes more sense.
+                Negative will limit the integrator action when on ground.
             </description>
             <input>fcs/fly-by-wire/pitch/integrator</input>
             <gain> -0.5 </gain>
         </pure_gain>
-
-        <!--<fcs_function name="fcs/fly-by-wire/pitch/amp-deadzone-neg">
-            <function>
-                <difference>
-                    <property> fcs/fly-by-wire/pitch/integrator </property>
-                    <v> -25 </v>
-                </difference>
-            </function>
-        </fcs_function>
-
-        <fcs_function name="fcs/fly-by-wire/pitch/amp-deadzone-pos">
-            <function>
-                <difference>
-                    <property> fcs/fly-by-wire/pitch/integrator </property>
-                    <v> 25 </v>
-                </difference>
-            </function>
-        </fcs_function>
-
-        <switch name="fcs/fly-by-wire/pitch/amp-deadzone">
-            <default value="0"/>
-            <test logic="AND" value="fcs/fly-by-wire/pitch/amp-deadzone-pos">
-                fcs/fly-by-wire/pitch/integrator gt  25
-            </test>
-            <test logic="AND" value="fcs/fly-by-wire/pitch/amp-deadzone-neg">
-                fcs/fly-by-wire/pitch/integrator lt  -25
-            </test>
-        </switch>-->
 
         <deadband name="fcs/fly-by-wire/pitch/amp-deadzone">
           <input> fcs/fly-by-wire/pitch/integrator </input>
@@ -1680,11 +1643,6 @@
             <input>fcs/fly-by-wire/pitch/amp-deadzone</input>
             <gain> fcs/fly-by-wire/K_A </gain>
         </pure_gain>
-
-        <!--<pure_gain name="fcs/fly-by-wire/pitch/integrator">
-            <input>fcs/fly-by-wire/pitch/pitch-loop-gain-sum-int</input>
-            <gain> fcs/fly-by-wire/enable-int </gain>
-        </pure_gain>-->
 
         <summer name="fcs/fly-by-wire/pitch/integrator-post">
             <input> fcs/fly-by-wire/pitch/integrator </input>
@@ -1711,38 +1669,14 @@
             <input> fcs/fly-by-wire/pitch/integrator-post </input>
             <input> fcs/fly-by-wire/pitch/alpha-feedback </input>
         </summer>-->
-        
-        <!--<fcs_function name="fcs/fly-by-wire/pitch/pitch-loop-gain-feedback-deadzone-neg">
-            <function>
-                <difference>
-                    <property> fcs/fly-by-wire/pitch/integrator-almost-final </property>
-                    <v> -25 </v>
-                </difference>
-            </function>
-        </fcs_function>
-
-        <fcs_function name="fcs/fly-by-wire/pitch/pitch-loop-gain-feedback-deadzone-pos">
-            <function>
-                <difference>
-                    <property> fcs/fly-by-wire/pitch/integrator-almost-final </property>
-                    <v> 25 </v>
-                </difference>
-            </function>
-        </fcs_function>
-
-        <switch name="fcs/fly-by-wire/pitch/integrator-feedback-deadzone">
-            <default value="0"/>
-            <test logic="AND" value="fcs/fly-by-wire/pitch/pitch-loop-gain-feedback-deadzone-pos">
-                fcs/fly-by-wire/pitch/integrator-almost-final gt  25
-            </test>
-            <test logic="AND" value="fcs/fly-by-wire/pitch/pitch-loop-gain-feedback-deadzone-neg">
-                fcs/fly-by-wire/pitch/integrator-almost-final lt  -25
-            </test>
-        </switch>-->
 
         <deadband name="fcs/fly-by-wire/pitch/integrator-feedback-deadzone">
-          <input> fcs/fly-by-wire/pitch/integrator-almost-final </input>
-          <width> 50 </width>
+            <description>
+                         It deceptionally looks like 23 on diagram.
+                         But it +-25 since that the actuatorlimit.
+            </description>
+            <input> fcs/fly-by-wire/pitch/integrator-almost-final </input>
+            <width> 50 </width>
         </deadband>
 
         <pure_gain name="fcs/fly-by-wire/pitch/integrator-feedback-gain">
@@ -1798,18 +1732,18 @@
             <gain> 0.7 </gain>
         </pure_gain>
 
-        <switch name="fcs/fly-by-wire/pitch/q-schedule">
+        <!--<switch name="fcs/fly-by-wire/pitch/q-schedule">
             <description>                
             </description>
             <default value="fcs/fly-by-wire/pitch/F3"/>
-            <test logic="AND" value="fcs/fly-by-wire/pitch/F3"><!-- alt2 -->
+            <test logic="AND" value="fcs/fly-by-wire/pitch/F3-rate-alt">
                 fcs/fly-by-wire/prototype == 0
             </test>
-        </switch>
+        </switch>-->
 
         <pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-gain">
             <input>fcs/fly-by-wire/pitch/q-gain-1</input>
-            <gain> fcs/fly-by-wire/pitch/q-schedule </gain>
+            <gain> fcs/fly-by-wire/pitch/F3 </gain>
         </pure_gain>
 
         <switch name="fcs/fly-by-wire/pitch/bias-top">
@@ -1847,7 +1781,7 @@
 
         <lag_filter name="fcs/fly-by-wire/pitch/bias-bottom-lag">
             <description>
-                diagram say 0.125
+                Diagram say 0.125
             </description>
             <input> fcs/fly-by-wire/pitch/bias-bottom </input>
             <c1> 12.5 </c1>
@@ -1918,7 +1852,7 @@
 
         <lag_filter name="fcs/fly-by-wire/pitch/pitch-rate-lower-lag">
             <description>
-                diagram say 0.125, but that does a pitch up for too long after takeoff
+                Diagram say 0.125, but that does a pitch up for too long after takeoff
             </description>
             <input> fcs/fly-by-wire/pitch/pitch-rate-lower-switch </input>
             <c1> 12.5 </c1>
