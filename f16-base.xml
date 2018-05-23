@@ -882,6 +882,9 @@
 				</roll>
 			</autoflight>
 			<elec>
+				<bus>
+					<charger type="double">0</charger>
+				</bus>
 				<failures>
 					<battery>
 						<serviceable type="bool">1</serviceable>
@@ -897,7 +900,8 @@
 					</stby-gen>
 				</failures>
 				<sources>
-					<battery-volt-feed type="int">24</battery-volt-feed> <!-- Remove once charging and discharging works -->
+					<batt-bus type="bool">0</batt-bus>
+					<battery-percentage type="double">85</battery-percentage> <!-- Initial battery percentage value -->
 					<external-pwr-plugged-in type="int">0</external-pwr-plugged-in>
 				</sources>
 				<switches>
