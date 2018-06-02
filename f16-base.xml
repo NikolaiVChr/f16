@@ -338,10 +338,8 @@
                           <command>dialog-show</command>
                           <dialog-name>f16config</dialog-name>
                         </binding>
-                      </item>                    
-                </menu>
-                <menu n="5">
-                    <item n="10">
+                      </item> 
+                    <item>
                         <label>Pushback</label>
                         <enabled type="bool">true</enabled>
                         <name>pushback</name>
@@ -349,7 +347,7 @@
                             <command>dialog-show</command>
                             <dialog-name>pushback</dialog-name>
                         </binding>
-                    </item>
+                    </item>                   
                 </menu>
             </default>
         </menubar>
