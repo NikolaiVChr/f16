@@ -466,10 +466,144 @@
             <autopilot n="0">
                 <path>Aircraft/f16/Systems/autoflight-rules.xml</path>
             </autopilot>
+            <property-rule n="100">
+                <path>Aircraft/f16/Systems/zoom-views.xml</path>
+            </property-rule>
         </systems>
+        <current-view>
+            <z-offset-dec-step type="double">0.0</z-offset-dec-step>
+            <z-offset-inc-step type="double">0.0</z-offset-inc-step>
+            <can-change-z-offset type="bool">false</can-change-z-offset>
+            
+            <z-offset-default type="float">25.0</z-offset-default>
+            <z-offset-min-m type="float">10.0</z-offset-min-m>
+            <z-offset-max-m type="float">200.0</z-offset-max-m>
+        </current-view>
     </sim>
-    <input>
-        <keyboard>
+    <input n="0">
+        <mice n="0">
+            <mouse n="0">
+                <mode n="0">
+                    <button n="3">
+                        <binding n="0">
+                            <script></script>
+                        </binding>
+                        <binding n="1">
+                            <condition>
+                                <and>
+                                    <property>/devices/status/mice/mouse[0]/button[2]</property>
+                                    <not><property>/sim/mouse/right-button-mode-cycle-enabled</property></not>
+                                </and>
+                            </condition>
+                            <command>nasal</command>
+                            <script>
+                            if (getprop("/sim/current-view/can-change-z-offset")) {
+                                var distance = getprop("/sim/current-view/z-offset-m");
+                                var multiple = getprop("/sim/current-view/z-offset-inc-step");
+                                var min_dist = getprop("/sim/current-view/z-offset-min-m");
+
+                                distance = math.round(std.min(-min_dist, distance + multiple) / multiple) * multiple;
+                                setprop("/sim/current-view/z-offset-m", distance);
+
+                                gui.popupTip(sprintf("%d meters", abs(distance)));
+                            } else {
+                                view.decrease();
+                            }
+                            </script>
+                        </binding>
+                    </button>
+                    <button n="4">
+                        <binding n="0">
+                            <script></script>
+                        </binding>
+                        <binding n="1">
+                            <condition>
+                                <and>
+                                    <property>/devices/status/mice/mouse[0]/button[2]</property>
+                                    <not><property>/sim/mouse/right-button-mode-cycle-enabled</property></not>
+                                </and>
+                            </condition>
+                            <command>nasal</command>
+                            <script>
+                                if (getprop("/sim/current-view/can-change-z-offset")) {
+                                    var distance = getprop("/sim/current-view/z-offset-m");
+                                    var multiple = getprop("/sim/current-view/z-offset-dec-step");
+                                    var max_dist = getprop("/sim/current-view/z-offset-max-m");
+
+                                    distance = math.round(std.max(-max_dist, distance + multiple) / multiple) * multiple;
+                                    setprop("/sim/current-view/z-offset-m", distance);
+
+                                    gui.popupTip(sprintf("%d meters", abs(distance)));
+                                } else {
+                                    view.increase();
+                                }
+                            </script>
+                        </binding>
+                    </button>
+                </mode>
+            </mouse>
+        </mice>
+        <keyboard n="0">
+            <key n="24">
+                <name>Ctrl-x</name>
+                <desc>Reset zoom to default</desc>
+                <binding>
+                    <command>nasal</command>
+                    <script>
+                        if (getprop("/sim/current-view/can-change-z-offset")) {
+                            setprop("/sim/current-view/z-offset-m", getprop("/sim/current-view/z-offset-default") * -1);
+
+                            gui.popupTip(sprintf("%d meters", getprop("/sim/current-view/z-offset-default")));
+                        } else {
+                            setprop("/sim/current-view/field-of-view", getprop("/sim/view/config/default-field-of-view-deg"));
+                        }
+                    </script>
+                </binding>
+            </key>
+            <key n="88">
+                <name>X</name>
+                <desc>Increase field of view</desc>
+                <repeatable type="bool">true</repeatable>
+                <binding>
+                <command>nasal</command>
+                <script>
+                    if (getprop("/sim/current-view/can-change-z-offset")) {
+                        var distance = getprop("/sim/current-view/z-offset-m");
+                        var multiple = getprop("/sim/current-view/z-offset-dec-step");
+                        var max_dist = getprop("/sim/current-view/z-offset-max-m");
+
+                        distance = math.round(std.max(-max_dist, distance + multiple) / multiple) * multiple;
+                        setprop("/sim/current-view/z-offset-m", distance);
+
+                        gui.popupTip(sprintf("%d meters", abs(distance)));
+                    } else {
+                        view.increase();
+                    }
+                </script>
+                </binding>
+            </key>
+            <key n="120">
+                <name>x</name>
+                <desc>Decrease field of view</desc>
+                <repeatable type="bool">true</repeatable>
+                <binding>
+                    <command>nasal</command>
+                    <script>
+                        if (getprop("/sim/current-view/can-change-z-offset")) {
+                            var distance = getprop("/sim/current-view/z-offset-m");
+                            var multiple = getprop("/sim/current-view/z-offset-inc-step");
+                            var min_dist = getprop("/sim/current-view/z-offset-min-m");
+
+                            distance = math.round(std.min(-min_dist, distance + multiple) / multiple) * multiple;
+                            setprop("/sim/current-view/z-offset-m", distance);
+
+                            gui.popupTip(sprintf("%d meters", abs(distance)));
+                        } else {
+                            view.decrease();
+                        }
+                    </script>
+                </binding>
+            </key>
             <key n="81">
                 <name>Q</name>
                 <desc>Reset view</desc>
@@ -857,57 +991,57 @@
     </consumables>
     <fdm>
         <jsbsim>
-			<autoflight>
-				<pitch>
-					<altitude-2-sec-ahead type="double">0</altitude-2-sec-ahead> <!-- autoflight-rules.xml -->
-					<d-gain-att type="double">-5</d-gain-att>
-					<i-gain-att type="double">-1</i-gain-att>
-					<master-pid type="double">0</master-pid>
-					<p-gain-att type="double">0</p-gain-att> <!-- This gain is dynamic -->
-					<vs>
-						<pid type="double">0</pid>
-					</vs>
-				</pitch>
-				<roll>
-					<d-gain-att type="double">-0.2</d-gain-att>
-					<i-gain-att type="double">-6.4</i-gain-att>
-					<heading>
-						<pi type="double">0</pi>
-					</heading>
-					<heading-error-deg type="double">0</heading-error-deg> <!-- autoflight-rules.xml -->
-					<master-pid type="double">0</master-pid>
-					<p-gain-att type="double">-3.8</p-gain-att>
-				</roll>
-			</autoflight>
-			<elec>
-				<bus>
-					<charger type="double">0</charger>
-				</bus>
-				<failures>
-					<battery>
-						<serviceable type="bool">1</serviceable>
-					</battery>
-					<epu>
-						<serviceable type="bool">1</serviceable>
-					</epu>
-					<main-gen>
-						<serviceable type="bool">1</serviceable>
-					</main-gen>
-					<stby-gen>
-						<serviceable type="bool">1</serviceable>
-					</stby-gen>
-				</failures>
-				<sources>
-					<batt-bus type="bool">0</batt-bus>
-					<battery-percentage type="double">85</battery-percentage> <!-- Initial battery percentage value -->
-					<external-pwr-plugged-in type="int">0</external-pwr-plugged-in>
-				</sources>
-				<switches>
-					<epu type="int">0</epu>
-					<main-pwr type="int">0</main-pwr>
-				</switches>
-				<unused type="int">0</unused>
-			</elec>
+            <autoflight>
+                <pitch>
+                    <altitude-2-sec-ahead type="double">0</altitude-2-sec-ahead> <!-- autoflight-rules.xml -->
+                    <d-gain-att type="double">-5</d-gain-att>
+                    <i-gain-att type="double">-1</i-gain-att>
+                    <master-pid type="double">0</master-pid>
+                    <p-gain-att type="double">0</p-gain-att> <!-- This gain is dynamic -->
+                    <vs>
+                        <pid type="double">0</pid>
+                    </vs>
+                </pitch>
+                <roll>
+                    <d-gain-att type="double">-0.2</d-gain-att>
+                    <i-gain-att type="double">-6.4</i-gain-att>
+                    <heading>
+                        <pi type="double">0</pi>
+                    </heading>
+                    <heading-error-deg type="double">0</heading-error-deg> <!-- autoflight-rules.xml -->
+                    <master-pid type="double">0</master-pid>
+                    <p-gain-att type="double">-3.8</p-gain-att>
+                </roll>
+            </autoflight>
+            <elec>
+                <bus>
+                    <charger type="double">0</charger>
+                </bus>
+                <failures>
+                    <battery>
+                        <serviceable type="bool">1</serviceable>
+                    </battery>
+                    <epu>
+                        <serviceable type="bool">1</serviceable>
+                    </epu>
+                    <main-gen>
+                        <serviceable type="bool">1</serviceable>
+                    </main-gen>
+                    <stby-gen>
+                        <serviceable type="bool">1</serviceable>
+                    </stby-gen>
+                </failures>
+                <sources>
+                    <batt-bus type="bool">0</batt-bus>
+                    <battery-percentage type="double">85</battery-percentage> <!-- Initial battery percentage value -->
+                    <external-pwr-plugged-in type="int">0</external-pwr-plugged-in>
+                </sources>
+                <switches>
+                    <epu type="int">0</epu>
+                    <main-pwr type="int">0</main-pwr>
+                </switches>
+                <unused type="int">0</unused>
+            </elec>
             <inertia>
                 <pointmass-dragarea-sqft type="double" n="1">0</pointmass-dragarea-sqft>
                 <pointmass-dragarea-sqft type="double" n="2">0</pointmass-dragarea-sqft>
@@ -1433,10 +1567,10 @@
         <avionics>
             <hud-brt type="double">1.0</hud-brt>
         </avionics>
-		<fcs>
-			<switch-pitch type="int">0</switch-pitch>
-			<switch-roll type="int">0</switch-roll>
-		</fcs>
+        <fcs>
+            <switch-pitch type="int">0</switch-pitch>
+            <switch-roll type="int">0</switch-roll>
+        </fcs>
         <engine>
             <feed type="bool">false</feed><!-- OFF/NORM prevents starter, cutoff -->
             <jet-fuel type="int">0</jet-fuel><!-- starter -1=1 1=2 0=off  goes to off at 55% rpm -->
