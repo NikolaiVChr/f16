@@ -5,55 +5,12 @@
 
 <system name="electrical">
 	
-	<channel name="Battery Voltage" execrate="128">
-		
-		<switch name="elec/sources/battery-percentage-offset">
-			<default value="0"/>
-			<test logic="AND" value="0.15"> <!-- Roughly 90 percent every 10 mins -->
-				elec/sources/battery-percentage lt 100
-				elec/bus/charger ge 20
-				elec/failures/battery/serviceable eq 1
-				elec/switches/main-pwr gt 0
-			</test>
-			<test logic="AND" value="0"> <!-- Don't discharge if full and has charger -->
-				elec/sources/battery-percentage ge 100
-				elec/bus/charger ge 20
-				elec/failures/battery/serviceable eq 1
-				elec/switches/main-pwr gt 0
-			</test>
-			<test logic="AND" value="-0.075"> <!-- Roughly 90 percent every 20 mins -->
-				elec/sources/battery-percentage ge 0
-				elec/failures/battery/serviceable eq 1
-				elec/switches/main-pwr gt 0
-				elec/sources/batt-bus eq 1
-			</test>
-		</switch>
-		
-		<fcs_function name="elec/sources/battery-percentage-func">
-			<function>
-				<ifthen>
-					<nq>
-						<property>elec/sources/battery-percentage-offset</property>
-						<value>0</value>
-					</nq>
-					<sum>
-						<property>elec/sources/battery-percentage</property>
-						<property>elec/sources/battery-percentage-offset</property>
-					</sum>
-					<property>elec/sources/battery-percentage</property>
-				</ifthen>
-			</function>
-			<output>elec/sources/battery-percentage</output>
-			<clipto>
-				<min>0</min>
-				<max>100</max>
-			</clipto>
-		</fcs_function>
+	<channel name="Sources" execrate="8">
 		
 		<fcs_function name="elec/sources/battery-volt-feed">
 			<function>
 				<table>
-					<independentVar lookup="row">elec/sources/battery-percentage</independentVar>
+					<independentVar lookup="row">elec/sources/battery-percent</independentVar>
 					<tableData>
 						  0   0.0
 						 10  24.0
@@ -62,10 +19,6 @@
 				</table>
 			</function>
 		</fcs_function>
-	
-	</channel>
-	
-	<channel name="Sources" execrate="8">
 		
 		<pure_gain name="elec/sources/battery-volt">
 			<input>elec/sources/battery-volt-feed</input>

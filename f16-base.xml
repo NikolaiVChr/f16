@@ -1033,7 +1033,7 @@
                 </failures>
                 <sources>
                     <batt-bus type="bool">0</batt-bus>
-                    <battery-percentage type="double">85</battery-percentage> <!-- Initial battery percentage value -->
+                    <battery-percent type="double">85</battery-percent> <!-- Initial battery percentage value -->
                     <external-pwr-plugged-in type="int">0</external-pwr-plugged-in>
                 </sources>
                 <switches>
