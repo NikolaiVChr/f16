@@ -313,9 +313,39 @@ var medium = {
       setprop("controls/test/test-panel/mal-ind-lts", 0);
     }
     
+    batteryChargeDischarge(); ########## To work optimally, should run at or below 0.5 in a loop ##########
+    
     settimer(func {me.loop()},0.5);
   },
 };
+
+var batteryChargeDischarge = func {
+    var battery_percent = getprop("/fdm/jsbsim/elec/sources/battery-percent");
+    var mainpwr_sw = getprop("/fdm/jsbsim/elec/switches/main-pwr");
+    if (battery_percent < 100 and getprop("/fdm/jsbsim/elec/bus/charger") >= 20 and getprop("/fdm/jsbsim/elec/failures/battery/serviceable") and mainpwr_sw > 0) {
+        if (getprop("/fdm/jsbsim/elec/sources/battery-time") + 5 < getprop("/sim/time/elapsed-sec")) {
+            battery_percent_calc = battery_percent + 0.75; # Roughly 90 percent every 10 mins
+            if (battery_percent_calc > 100) {
+                battery_percent_calc = 100;
+            }
+            setprop("/fdm/jsbsim/elec/sources/battery-percent", battery_percent_calc);
+            setprop("/fdm/jsbsim/elec/sources/battery-time", getprop("/sim/time/elapsed-sec"));
+        }
+    } else if (battery_percent == 100 and getprop("/fdm/jsbsim/elec/bus/charger") >= 20 and getprop("/fdm/jsbsim/elec/failures/battery/serviceable") and mainpwr_sw > 0) {
+        setprop("/fdm/jsbsim/elec/sources/battery-time", getprop("/sim/time/elapsed-sec"));
+    } else if (battery_percent > 0 and getprop("/fdm/jsbsim/elec/sources/batt-bus") and getprop("/fdm/jsbsim/elec/failures/battery/serviceable") and mainpwr_sw > 0) {
+        if (getprop("/fdm/jsbsim/elec/sources/battery-time") + 5 < getprop("/sim/time/elapsed-sec")) {
+            battery_percent_calc = battery_percent - 0.375; # Roughly 90 percent every 20 mins
+            if (battery_percent_calc < 0) {
+                battery_percent_calc = 0;
+            }
+            setprop("/fdm/jsbsim/elec/sources/battery-percent", battery_percent_calc);
+            setprop("/fdm/jsbsim/elec/sources/battery-time", getprop("/sim/time/elapsed-sec"));
+        }
+    } else {
+        setprop("/fdm/jsbsim/elec/sources/battery-time", getprop("/sim/time/elapsed-sec"));
+    }
+}
 
 var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
   if (getprop("sim/signals/fdm-initialized") == 1) {
