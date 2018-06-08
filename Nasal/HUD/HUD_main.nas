@@ -452,13 +452,17 @@ var F16_HUD = {
         # 0.078135*2 = width of HUD  = 0.15627m
         me.pixelPerMeterX = (340*0.695633)/0.15627;
         me.pixelPerMeterY = 260/(me.Hz_t-me.Hz_b);
+
+        VV_x = hdp.beta*10;
+        VV_y = hdp.alpha*10;
+
         # UV mapped to x: 0-0.695633
         me.averageDegX = math.atan2(0.078135*1.0, me.Vx-me.Hx_m)*R2D;
         me.averageDegY = math.atan2((me.Hz_t-me.Hz_b)*0.5, me.Vx-me.Hx_m)*R2D;
         me.texelPerDegreeX = me.pixelPerMeterX*(((me.Vx-me.Hx_m)*math.tan(me.averageDegX*D2R))/me.averageDegX);
         me.texelPerDegreeY = me.pixelPerMeterY*(((me.Vx-me.Hx_m)*math.tan(me.averageDegY*D2R))/me.averageDegY);
         # the Y position is still not accurate due to HUD being at an angle, but will have to do.
-        me.VV.setTranslation (hdp.VV_x*0.1*me.texelPerDegreeX, hdp.VV_y*0.1*me.texelPerDegreeY+pitch_offset);# the 0.1 is to cancel out the factor applied in exec.nas
+        me.VV.setTranslation (VV_x*0.1*me.texelPerDegreeX, VV_y*0.1*me.texelPerDegreeY+pitch_offset);# the 0.1 is to cancel out the factor applied in exec.nas
         me.VV.update();
         if (getprop("autopilot/route-manager/active")) {
             me.wpbear = getprop("autopilot/route-manager/wp/bearing-deg");
@@ -810,8 +814,25 @@ var F16HudRecipient =
                 return emesary.Transmitter.ReceiptStatus_NotProcessed;
             }
 
+            notification.range_rate = "RNGRATE";
+
             if (notification.NotificationType == "FrameNotification")
             {
+                if (notification.route_manager_active) {
+                    if (notification.nav_range != nil) {
+                        notification.hud_window5 = sprintf("%2d MIN",notification.nav_range);
+                    } else {
+                        notification.hud_window5 = "XXX";
+                    }
+
+                    if (notification.eta_s != nil)
+                      notification.hud_window5 = sprintf("%2d MIN",eta_s/60);
+                    else
+                      notification.hud_window5 = "XX MIN";
+                } else {
+                    notification.nav_range = nil;
+                    notification.hud_window5 = "";
+                }
                 me.HUDobj.update(notification);
                 return emesary.Transmitter.ReceiptStatus_OK;
             }

@@ -123,15 +123,7 @@
                         <rd-rot-light type="bool">false</rd-rot-light>
                         <jat-light type="bool">false</jat-light>
                         <irot-light type="bool">false</irot-light>
-                        <wcs-mode>
-                            <pd-stt type="bool">false</pd-stt>
-                            <pulse-stt type="bool">false</pulse-stt>
-                            <pd-srch type="bool">false</pd-srch>
-                            <rws type="bool">false</rws>
-                            <tws-auto type="bool">false</tws-auto>
-                            <tws-man type="bool">false</tws-man>
-                            <pulse-srch type="bool">true</pulse-srch>
-                        </wcs-mode>
+                        <wcs-mode type="int">3</wcs-mode> <!-- pulse search -->
                     </radar-awg-9>
                     <vhf>
                         <selector type="int">0</selector>
@@ -1603,30 +1595,37 @@
         <rcs>
             <file>Aircraft/f16/Nasal/rcs.nas</file><!-- must be before radar -->
         </rcs>
-        <rwrs>
-            <file>Aircraft/f16/Nasal/rwr.nas</file>
-        </rwrs>
-        <awg_9>
-            <file>Aircraft/f16/Nasal/awg_9.nas</file>
-        </awg_9>
         <controls>
             <file>Aircraft/f16/Nasal/f16_controls.nas</file>
         </controls>
         <autoflight>
             <file>Aircraft/f16/Nasal/autoflight.nas</file>
         </autoflight>
+        <radardist>
+            <file>Aircraft/Instruments-3d/radardist/radardist.nas</file>
+        </radardist>
+        <notifications>
+            <file>Aircraft/f16/Nasal/M_frame_notification.nas</file>
+        </notifications>
         <f16> 
+            <file>Aircraft/f16/Nasal/exec.nas</file>
+
             <file>Aircraft/f16/Nasal/f16.nas</file>
             <file>Aircraft/f16/Nasal/liveries.nas</file>
             <file>Aircraft/f16/Nasal/tyresmoke.nas</file>
             <file>Aircraft/f16/Nasal/rain.nas</file>
             <file>Aircraft/f16/Nasal/vapor-lighting.nas</file>
-            <file>Aircraft/f16/Nasal/exec.nas</file>
             <file>Aircraft/f16/Nasal/mfd.nas</file>
             <file>Aircraft/f16/Nasal/HUD/HUD_main.nas</file>
             <file>Aircraft/f16/Nasal/MFD/MFD_main.nas</file>
             <!--<file>Aircraft/f16/Nasal/blackout.nas</file>-->
         </f16>
+        <rwrs>
+            <file>Aircraft/f16/Nasal/rwr.nas</file>
+        </rwrs>
+        <awg_9>
+            <file>Aircraft/f16/Nasal/M_radar2.nas</file>
+        </awg_9>
         <f16_chronograph>
             <file>Aircraft/f16/Nasal/chronograph.nas</file>
         </f16_chronograph>
