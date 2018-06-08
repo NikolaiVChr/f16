@@ -1457,7 +1457,7 @@
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double"> 275 </max-report-distance>
+                <max-report-distance type="double"> 275 </max-areport-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
@@ -1624,7 +1624,7 @@
             <file>Aircraft/f16/Nasal/rwr.nas</file>
         </rwrs>
         <awg_9>
-            <file>Aircraft/f16/Nasal/M_radar2.nas</file>
+            <file>Aircraft/f16/Nasal/awg_9.nas</file>
         </awg_9>
         <f16_chronograph>
             <file>Aircraft/f16/Nasal/chronograph.nas</file>
