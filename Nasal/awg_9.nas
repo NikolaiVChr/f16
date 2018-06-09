@@ -97,6 +97,10 @@ var wcs_mode_tws_auto = 6;
 var wcs_mode_tws_man = 7;
 var wcs_current_mode = wcs_mode_pulse_srch;
 
+var completeList = [];
+var rwrList   = [];
+var rwrList16 = [];
+
 SelectTargetCommand.setIntValue(0);
 
 # variables for the partioned scanning.
@@ -213,6 +217,10 @@ var pickingMethod = 0;
 if ((major == 2017 and minor == 2 and pica >= 1) or (major == 2017 and minor > 2) or major > 2017) {
     pickingMethod = 1;
 }
+tgt_list = [];
+rwrList16 = [];
+rwrList = [];
+completeList = [];
 
 #
 #
@@ -242,13 +250,16 @@ init = func() {
 
 # Radar main processing entry point
 # Run at 20hz - invoked from main loop in instruments.nas
-var doRWR = 1;
-var rdr_loop = func(fcount) {
+var rdr_loop = func(notification) {
+if (notification["ownship_pos"] == nil)
+  {
+print("Radar: disabled as no ownship position");
+return;
+}
 
 #    if (noti.FrameCount != 0) {
 #        return;
 #    }
-    doRWR = !doRWR;
     if (rwrs.rwr != nil and getprop("fdm/jsbsim/elec/bus/ess-ac")>100) {
             if (size(rwrList)>0) {
                 rwrs.rwr.update(rwrList);
@@ -256,15 +267,14 @@ var rdr_loop = func(fcount) {
                 rwrs.rwr.update(rwrList16);
             }
     }
-    if (doRWR) {
-        selectCheck();# for it to be responsive have to do this more often than running radar code.
-        return;
-    }
+#    if (doRWR) {
+#        selectCheck();# for it to be responsive have to do this more often than running radar code.
+#    }
 	var display_rdr = DisplayRdr.getBoolValue();
 
 	if ( display_rdr and RadarServicable.getValue() == 1) {
-        ownship_pos = noti.ownship_pos;
-		az_scan(noti);
+        ownship_pos = notification.ownship_pos;
+		az_scan(notification);
 		our_radar_stanby = RadarStandby.getValue();
 		if ( we_are_bs == 0) {
 			RadarStandbyMP.setIntValue(our_radar_stanby); # Tell over MP if
@@ -295,6 +305,11 @@ var az_scan = func(notification) {
 	r_az_fld = az_fld / 2;
 
 	var fading_speed = 0.015;   # Used for the screen animation, dots get bright when the sweep line goes over, then fade.
+
+    notification.tgt_list = tgt_list;
+    notification.rwrList16 = rwrList16;
+    notification.rwrList = rwrList;
+    notification.completeList = completeList;
 
 	our_true_heading = OurHdg.getValue();
 	our_alt = OurAlt.getValue();
@@ -403,6 +418,11 @@ var az_scan = func(notification) {
         }
     }
     var idx = 0;
+
+    notification.tgt_list = tgt_list;
+    notification.rwrList16 = rwrList16;
+    notification.rwrList = rwrList;
+    notification.completeList = completeList;
 
     u_ecm_signal      = 0;
     u_ecm_signal_norm = 0;
@@ -1664,115 +1684,17 @@ var RadarRecipient =
         var new_class = emesary.Recipient.new(_ident~".RADAR");
 
         new_class.Receive = func(notification)
-        {
-            if (notification == nil)
-            {
-                print("bad notification nil");
-                return emesary.Transmitter.ReceiptStatus_NotProcessed;
-            }
-
-            if (notification.NotificationType == "FrameNotification")
-            {
-                # Main loop ###############
-                # Done each 0.05 sec. Called from instruments.nas
-                var display_rdr = DisplayRdr.getBoolValue();
-                if ( display_rdr )
-                {
-                    az_scan(notification);
-                    RWR_APG.run(notification);
-                    our_radar_stanby = RadarStandby.getValue();
-                    #print ("Display radar ",our_radar_stanby, we_are_bs);
-                    if ( we_are_bs == 0)
-                    {
-                        # RadarStandbyMP.setIntValue(our_radar_stanby); # Tell over MP if
-                        # our radar is scaning or is in stanby. Don't if we are a back-seater.
-                    }
-                }
-                elsif ( size(tgts_list) > 0 )
-                {
-                    foreach ( u; tgts_list )
-                      {
-                        u.set_display(0);
-                    }
-                }
-                return emesary.Transmitter.ReceiptStatus_OK;
-            }
-            return emesary.Transmitter.ReceiptStatus_NotProcessed;
-        };
+          {
+              rdr_loop(notification);
+              return emesary.Transmitter.ReceiptStatus_OK;
+          }
         return new_class;
     },
 };
 
-var aircraft_radar = RadarRecipient.new(this_model~"RADAR");
+var aircraft_radar = RadarRecipient.new(this_model);
 emesary.GlobalTransmitter.Register(aircraft_radar );
 
-var completeList = [];
-var rwrList   = [];
-var rwrList16 = [];
-
-
-var RWR_APG = {
-             init: func() {
-               },
-    run: func (notification) {
-        #printf("clist %d", size(completeList));
-        foreach(me.u;completeList) {
-            me.cs = me.u.get_Callsign();
-            me.rn = me.u.get_range();
-            me.l16 = 0;
-            if (getprop("link16/wingman-1")==me.cs or getprop("link16/wingman-2")==me.cs or getprop("link16/wingman-3")==me.cs or me.rn > 150) {
-                me.l16 = 1;
-            }
-            me.bearing = geo.aircraft_position().course_to(me.u.get_Coord());
-            me.trAct = me.u.propNode.getNode("instrumentation/transponder/transmitted-id");
-            me.show = 0;
-            me.heading = me.u.get_heading();  
-            me.inv_bearing =  me.bearing+180;
-            me.deviation = me.inv_bearing - me.heading;
-            me.dev = math.abs(geo.normdeg180(me.deviation));
-            if (me.u.get_display()) {
-                me.show = 1;#in radar cone
-            } elsif(me.u.get_model()=="AI" and me.rn < 55) {
-                me.show = 1;#non MP always has transponder on.
-            } elsif (me.trAct != nil and me.trAct.getValue() != -9999 and me.rn < 55) {
-              # transponder on
-              me.show = 1;
-            } else {
-              me.rdrAct = me.u.propNode.getNode("sim/multiplay/generic/int[2]");
-              if (((me.rdrAct != nil and me.rdrAct.getValue()!=1) or me.rdrAct == nil) and math.abs(geo.normdeg180(me.deviation)) < 60) {
-                  # we detect its radar is pointed at us and active
-                  me.show = 1;
-              }
-            }
-            if (me.show == 1) {
-                me.threat = 0;
-                if (me.u.get_model() != "missile_frigate" and me.u.get_model() != "buk-m2") {
-                    me.threat += ((180-me.dev)/180)*0.30;
-                    me.spd = (60-me.u.get_Speed())/60;
-                    me.threat -= me.spd>0?me.spd:0;
-                } elsif (me.u.get_model == "missile_frigate") {
-                    me.threat += 0.30;
-                } else {
-                    me.threat += 0.30;
-                }
-                me.danger = me.u.get_model() == "missile_frigate"?75:(me.u.get_model() == "buk-m2"?35:50);
-                me.threat += ((me.danger-me.rn)/me.danger)>0?((me.danger-me.rn)/me.danger)*0.60:0;
-                me.clo = me.u.get_closure_rate();
-                me.threat += me.clo>0?(me.clo/500)*0.10:0;
-                if (me.threat > 1) me.threat = 1;
-                if (me.threat <= 0) continue;
-                #printf("%s threat:%.2f range:%d dev:%d", u.get_Callsign(),threat,u.get_range(),dev);
-                if (!me.l16) {
-                    append(rwrList,[me.u,me.threat]);
-                } else {
-                    append(rwrList16,[me.u,me.threat]);
-                }
-            } else {
-                #printf("%s ----", u.get_Callsign());
-            }
-        }
-    },
-};
 
 #
 # this is RWR for TEWS display for the F-15. For a less advanced EW system
@@ -1827,64 +1749,3 @@ var compute_rwr = func(radar_mode, u, u_rng){
     u.set_RWR_visible(emitting and u.get_visible());
 }
 
-#
-#
-#
-
-setlistener("/instrumentation/tacan/display/channel", func {
-                find_carrier_by_tacan();
-},0,0);
-#
-# Locate carrier based on TACAN. This used to be used for the ARA 63 (Carrier ILS) support - but this has
-# been replaced by the Emesary based notification model. However the ground services dialog uses this
-# for reposition - so replace the continual scanning (as part of the radar) with a one off method that can be
-# called as needed.
-find_carrier_by_tacan = func {
-    var raw_list = Mp.getChildren();
-    var carrier_located = 0;
-    
-    foreach ( var c; raw_list ) {
-
-        var tchan = c.getNode("navaids/tacan/channel-ID");
-        if (tchan != nil and !we_are_bs) {
-            tchan = tchan.getValue();
-            if (tchan == getprop("/instrumentation/tacan/display/channel")) {
-# Tuned into this carrier (node) so use the offset.
-# Get the position of the glideslope; this is offset from the carrier position by
-# a smidgen. This is measured and is a point slightly in front of the TDZ where the
-# deck is marked with previous tyre marks (which seems as good a place as any to 
-# aim for).
-                if (c.getNode("position/global-x") != nil) {
-                    var x = c.getNode("position/global-x").getValue() + 88.7713542;
-                    var y = c.getNode("position/global-y").getValue() + 18.74631309;
-                    var z = c.getNode("position/global-z").getValue() + 115.6574875;
-
-                    f14.carrier_ara_63_position = geo.Coord.new().set_xyz(x, y, z);
-
-                    var carrier_heading = c.getNode("orientation/true-heading-deg");
-                    if (carrier_heading != nil) {
-                        # relative offset of the course to the tdz
-                        # according to my measurements the Nimitz class is 8.1362114 degrees (measured 178 vs carrier 200 allowing for local magvar -13.8637886)
-                        # (i.e. this value is from tuning rather than calculation)
-                        f14.carrier_heading = carrier_heading.getValue();
-                        f14.carrier_ara_63_heading = carrier_heading.getValue() - 8.1362114;
-                    }
-                    else
-                    {
-                        f14.carrier_ara_63_heading = 0;
-                        print("Carrier heading invalid");
-                    }
-                    carrier_located = 1;
-                    f14.tuned_carrier_name = c.getNode("name").getValue();
-                    setprop("sim/model/f-14b/tuned-carrier",f14.tuned_carrier_name);
-                    return;
-                }
-                else
-                {
-                    # tuned tacan is not carrier.
-                    f14.carrier_ara_63_heading = 0;
-                }
-            }
-        }
-    }
-}

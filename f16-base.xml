@@ -1131,6 +1131,7 @@
             <radar-standby type="bool">0</radar-standby>
             <symbols-enabled type="bool">true</symbols-enabled>
             <debug-mode type="bool">true</debug-mode>
+            <serviceable type="bool">true</serviceable>
             <mode>
                 <rws type="bool">true</rws>
                 <tws-auto type="bool">false</tws-auto>
@@ -1626,6 +1627,9 @@
         <awg_9>
             <file>Aircraft/f16/Nasal/awg_9.nas</file>
         </awg_9>
+        <rwr_apg>
+            <file>Aircraft/f16/Nasal/rwr_apg.nas</file>
+        </rwr_apg>
         <f16_chronograph>
             <file>Aircraft/f16/Nasal/chronograph.nas</file>
         </f16_chronograph>

@@ -27,6 +27,7 @@ var FrameNotification =
  debug: 0,
     new: func(_rate)
     {
+print("Frame Notification Created");
         var new_class = emesary.Notification.new("FrameNotification", _rate);
         new_class.Rate = _rate;
         new_class.FrameRate = 60;
@@ -69,6 +70,7 @@ var FrameNotification =
                 }
             }
         };
+        emesary.GlobalTransmitter.Register(new_class.Recipient);
         return new_class;
     },
 };
@@ -85,5 +87,4 @@ var FrameNotificationAddProperty =
 };
 #    
 var frameNotification = FrameNotification.new(1);
-emesary.GlobalTransmitter.Register(frameNotification.Recipient);
 
