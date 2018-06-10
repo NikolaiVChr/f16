@@ -88,6 +88,52 @@ var F16_HUD = {
         obj.window8.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
         obj.window9.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
 
+
+        input = {
+                 IAS                       : "/velocities/airspeed-kt",
+                 Nz                        : "/accelerations/pilot-gdamped",
+                 alpha                     : "/fdm/jsbsim/aero/alpha-deg",
+                 altitude_ft               : "/position/altitude-ft",
+                 beta                      : "/orientation/side-slip-deg",
+                 brake_parking             : "/controls/gear/brake-parking",
+                 eta_s                     : "/autopilot/route-manager/wp/eta-seconds",
+                 flap_pos_deg              : "/fdm/jsbsim/fcs/flap-pos-deg",
+                 gear_down                 : "/controls/gear/gear-down",
+                 heading                   : "/orientation/heading-deg",
+                 mach                      : "/instrumentation/airspeed-indicator/indicated-mach",
+                 measured_altitude         : "/instrumentation/altimeter/indicated-altitude-ft",
+                 pitch                     : "/orientation/pitch-deg",
+                 nav_range                 : "/autopilot/route-manager/wp/dist",
+                 roll                      : "/orientation/roll-deg",
+                 route_manager_active      : "/autopilot/route-manager/active",
+                 speed                     : "/fdm/jsbsim/velocities/vt-fps",
+                 symbol_reject             : "/controls/HUD/sym-rej",
+                 target_display            : "/sim/model/f16/instrumentation/radar-awg-9/hud/target-display",
+                 wow                       : "/fdm/jsbsim/gear/wow",
+                 current_view_x_offset_m   : "sim/current-view/x-offset-m",
+                 current_view_y_offset_m   : "sim/current-view/y-offset-m",
+                 current_view_z_offset_m   : "sim/current-view/z-offset-m",
+                 master_arm                : "controls/armament/master-arm",
+                 groundspeed_kt            : "velocities/groundspeed-kt",
+                 density_altitude          : "fdm/jsbsim/atmosphere/density-altitude",
+                 speed_down_fps            : "velocities/speed-down-fps",
+                 speed_east_fps            : "velocities/speed-east-fps",
+                 speed_north_fps           : "velocities/speed-north-fps",
+                 hud_brightness            : "f16/avionics/hud-brt",
+                 hud_power                 : "f16/avionics/hud-power",
+                 time_until_crash          : "instrumentation/radar/time-till-crash",
+                 vne                       : "f16/vne",
+                 wp_bearing_deg            : "autopilot/route-manager/wp/bearing-deg",
+                 total_fuel_lbs            : "/consumables/fuel/total-fuel-lbs",
+                 altitude_agl_ft           : "position/altitude-agl-ft",
+                 wp0_eta                   : "autopilot/route-manager/wp[0]/eta",
+                 approach_speed            : "fdm/jsbsim/systems/approach-speed",
+                };
+
+        foreach (var name; keys(input)) {
+            emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("HUD", name, input[name]));
+        }
+
 # A 2D 3x2 matrix with six parameters a, b, c, d, e and f is equivalent to the matrix:
 # a  c  0 e 
 # b  d  0 f
@@ -220,7 +266,7 @@ var F16_HUD = {
         var hud_radius_m       = 0.08429;
         var clamped = 0;
 
-        eye_hud_m = hud_position + getprop("sim/current-view/z-offset-m"); # optimised for signs so we get a positive distance.
+        eye_hud_m = hud_position + current_view_z_offset_m; # optimised for signs so we get a positive distance.
 # Deviation length on the HUD (at level flight),
         var h_dev = eye_hud_m / ( math.sin(dev_rad) / math.cos(dev_rad) );
         var v_dev = eye_hud_m / ( math.sin(elev_rad) / math.cos(elev_rad) );
@@ -281,18 +327,19 @@ var F16_HUD = {
         return el;
     },
 
-    CCRP: func {
-        if (pylons.fcs != nil and pylons.fcs.getSelectedWeapon() != nil and (pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="GBU-12") and awg_9.active_u != nil and getprop("controls/armament/master-arm")==1 and pylons.fcs.getSelectedWeapon().status == armament.MISSILE_LOCK) {
-            me.agl = (getprop("position/altitude-ft")-awg_9.active_u.get_altitude())*FT2M;
+    CCRP: func(hdp) {
+        if (pylons.fcs != nil and pylons.fcs.getSelectedWeapon() != nil and (pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="GBU-12") 
+            and hdp.active_u != nil and hdp.master_arm ==1 and pylons.fcs.getSelectedWeapon().status == armament.MISSILE_LOCK) {
+            me.agl = (hdp.altitude_ft-hdp.active_u.get_altitude())*FT2M;
             #me.agl = getprop("position/altitude-agl-ft")*FT2M;
-            me.alti = getprop("position/altitude-ft")*FT2M;
-            me.roll = getprop("orientation/roll-deg");
-            me.vel = getprop("velocities/groundspeed-kt")*0.5144;#m/s
-            me.dens = getprop("fdm/jsbsim/atmosphere/density-altitude");
-            me.mach = getprop("velocities/mach");
-            me.speed_down_fps = getprop("velocities/speed-down-fps");
-            me.speed_east_fps = getprop("velocities/speed-east-fps");
-            me.speed_north_fps = getprop("velocities/speed-north-fps");
+            me.alti = hdp.altitude_ft*FT2M;
+            me.roll = hdp.roll;
+            me.vel = hdp.groundspeed_kt*0.5144;#m/s
+            me.dens = hdp.density_altitude;
+            me.mach = hdp.mach;
+            me.speed_down_fps = hdp.speed_down_fps;
+            me.speed_east_fps = hdp.speed_east_fps;
+            me.speed_north_fps = hdp.speed_north_fps;
 
             if (pylons.fcs.getSelectedWeapon().type=="MK-82") {
                 me.dt = 0.1;
@@ -373,13 +420,13 @@ var F16_HUD = {
             me.elev = me.alti-me.agl;#faster
             me.ccipPos.set_alt(me.elev);
             
-            me.distCCRP = me.ccipPos.distance_to(awg_9.active_u.get_Coord())/4000;
+            me.distCCRP = me.ccipPos.distance_to(hdp.active_u.get_Coord())/4000;
             if (me.distCCRP > 0.75) {
                 me.distCCRP = 0.75;
             }
-            me.bombFallLine.setTranslation(awg_9.active_u.get_relative_bearing()*me.texelPerDegreeX,0);
-            me.ccrpMarker.setTranslation(awg_9.active_u.get_relative_bearing()*me.texelPerDegreeX,0);
-            me.solutionCue.setTranslation(awg_9.active_u.get_relative_bearing()*me.texelPerDegreeX,me.sy*0.5-me.sy*0.5*me.distCCRP);
+            me.bombFallLine.setTranslation(hdp.active_u.get_relative_bearing()*me.texelPerDegreeX,0);
+            me.ccrpMarker.setTranslation(hdp.active_u.get_relative_bearing()*me.texelPerDegreeX,0);
+            me.solutionCue.setTranslation(hdp.active_u.get_relative_bearing()*me.texelPerDegreeX,me.sy*0.5-me.sy*0.5*me.distCCRP);
             me.bombFallLine.show();
             me.ccrpMarker.show();
             me.solutionCue.show();
@@ -396,8 +443,8 @@ var F16_HUD = {
         me.roll_rad = -hdp.roll*D2R;
 
         if (hdp.FrameCount == 2 or me.initUpdate == 1) {
-            var alpha = getprop("f16/avionics/hud-brt");
-            var power = getprop("f16/avionics/hud-power");
+            var alpha = hdp.hud_brightness;
+            var power = hdp.hud_power;
             if (alpha != me.alpha or power!=me.power) {# if power is dropping/rising this will cause stutter, find a better way of doing this.
                 me.alpha = alpha;
                 me.power = power;
@@ -407,8 +454,8 @@ var F16_HUD = {
             me.Hz_b =    0.663711;#0.801701;# HUD position inside ac model after it is loaded, translated (0.08m) and rotated (0.7d).
             me.Hz_t =    0.841082;#0.976668;
             me.Hx_m =   -4.65453;#-4.6429;# HUD median X pos
-            me.Vz   =    getprop("sim/current-view/y-offset-m"); # view Z position (0.94 meter per default)
-            me.Vx   =    getprop("sim/current-view/z-offset-m"); # view X position (0.94 meter per default)
+            me.Vz   =    hdp.current_view_y_offset_m; # view Z position (0.94 meter per default)
+            me.Vx   =    hdp.current_view_z_offset_m; # view X position (0.94 meter per default)
 
             me.bore_over_bottom = me.Vz - me.Hz_b;
             me.Hz_height        = me.Hz_t-me.Hz_b;
@@ -434,12 +481,12 @@ var F16_HUD = {
         me.ladder.setCenter (me.ladder_center[0], me.ladder_center[1] - hdp.pitch * pitch_factor);
         me.ladder.setRotation (me.roll_rad);
         me.ladder.update();
-        me.ttc = getprop("instrumentation/radar/time-till-crash");
+        me.ttc = hdp.time_until_crash;
         if (me.ttc != nil and me.ttc>0 and me.ttc<10) {
             me.flyup.setText("FLYUP");
             me.flyup.show();
         } else {
-            if (getprop("f16/vne")) {
+            if (hdp.vne) {
                 me.flyup.setText("LIMIT");
                 me.flyup.show();
             } else {
@@ -464,11 +511,11 @@ var F16_HUD = {
         # the Y position is still not accurate due to HUD being at an angle, but will have to do.
         me.VV.setTranslation (VV_x*0.1*me.texelPerDegreeX, VV_y*0.1*me.texelPerDegreeY+pitch_offset);# the 0.1 is to cancel out the factor applied in exec.nas
         me.VV.update();
-        if (getprop("autopilot/route-manager/active")) {
-            me.wpbear = getprop("autopilot/route-manager/wp/bearing-deg");
+        if (hdp.route_manager_active) {
+            me.wpbear = hdp.wp_bearing_deg;
             if (me.wpbear!=nil){
                                 
-                me.wpbear=geo.normdeg180(me.wpbear-getprop("orientation/heading-deg"));
+                me.wpbear=geo.normdeg180(me.wpbear-hdp.heading);
                 me.thingX = me.sx*0.5+me.wpbear*me.texelPerDegreeX;
 
                 if (me.thingX>me.sx*0.66) {
@@ -487,12 +534,12 @@ var F16_HUD = {
         }
 #Altitude
         me.alt_range.setTranslation(0, hdp.measured_altitude * alt_range_factor);
-        me.isItON = me.CCRP();
+        me.isItON = me.CCRP(hdp);
 # IAS
         me.ias_range.setTranslation(0, hdp.IAS * ias_range_factor);
         if (hdp.FrameCount == 2 or me.initUpdate == 1) {
-            me.fuel = getprop("/consumables/fuel/total-fuel-lbs");
-            me.agl=getprop("position/altitude-agl-ft");
+            me.fuel = hdp.total_fuel_lbs;
+            me.agl=hdp.altitude_agl_ft;
             if(me.agl < 13000) {
                 me.ralt.setText(sprintf("R %05d ",me.agl));
                 me.ralt.show();
@@ -514,7 +561,7 @@ var F16_HUD = {
                 if (hdp.gear_down)
                     me.gd = " G";
                 me.window2.setText(sprintf("F %d%s",hdp.flap_pos_deg,me.gd));
-            } elsif (getprop("controls/armament/master-arm")) {
+            } elsif (hdp.master_arm) {
                 if (me.isItON) {
                     me.window2.setText("ARM CCRP");
                 } else {
@@ -526,7 +573,7 @@ var F16_HUD = {
                 me.window2.setVisible(1);
             }
             me.win9 = 0;
-            if(getprop("controls/armament/master-arm") and pylons.fcs != nil)
+            if(hdp.master_arm and pylons.fcs != nil)
             {
                 me.weap = pylons.fcs.selectedType;
                 me.window9.setVisible(1);
@@ -556,32 +603,32 @@ var F16_HUD = {
                     me.win9 = 1;
                 }
                 me.window9.setText(me.txt);
-                if (awg_9.active_u != nil)
+                if (hdp.active_u != nil)
                 {
-                    if (awg_9.active_u.Callsign != nil) {
-                        me.window3.setText(awg_9.active_u.Callsign.getValue());
+                    if (hdp.active_u.Callsign != nil) {
+                        me.window3.setText(hdp.active_u.Callsign.getValue());
                         me.window3.show();
                     } else {
                         me.window3.hide();
                     }
                     me.model = "XX";
-                    if (awg_9.active_u.ModelType != "")
-                        me.model = awg_9.active_u.ModelType;
+                    if (hdp.active_u.ModelType != "")
+                        me.model = hdp.active_u.ModelType;
 
-    #        var w2 = sprintf("%-4d", awg_9.active_u.get_closure_rate());
-    #        w3_22 = sprintf("%3d-%1.1f %.5s %.4s",awg_9.active_u.get_bearing(), awg_9.active_u.get_range(), callsign, model);
+    #        var w2 = sprintf("%-4d", hdp.active_u.get_closure_rate());
+    #        w3_22 = sprintf("%3d-%1.1f %.5s %.4s",hdp.active_u.get_bearing(), hdp.active_u.get_range(), callsign, model);
     #
     #
     #these labels aren't correct - but we don't have a full simulation of the targetting and missiles so 
     #have no real idea on the details of how this works.
-                    if (awg_9.active_u.get_display() == 0) {
+                    if (hdp.active_u.get_display() == 0) {
                         me.window4.setText("TA XX");
                         me.window5.setText("FXXX.X");#slant range
                         me.window4.show();
                         me.window5.show();
                     } else {
-                        me.window4.setText(sprintf("TA%3d", awg_9.active_u.get_altitude()*0.001));
-                        me.window5.setText(sprintf("F%05.1f", awg_9.active_u.get_slant_range()));#slant range
+                        me.window4.setText(sprintf("TA%3d", hdp.active_u.get_altitude()*0.001));
+                        me.window5.setText(sprintf("F%05.1f", hdp.active_u.get_slant_range()));#slant range
                         me.window4.show();
                         me.window5.show();
                     }
@@ -612,7 +659,7 @@ var F16_HUD = {
                     } else {
                         me.window5.hide();
                     }
-                    me.eta = getprop("autopilot/route-manager/wp[0]/eta");
+                    me.eta = hdp.wp0_eta;
                     if (me.eta != nil and me.eta != "") {
                         me.window4.setText(me.eta);
                     } else {
@@ -625,7 +672,7 @@ var F16_HUD = {
                 }
                 
                 if (hdp.gear_down and !hdp.wow) {
-                    me.window6.setText(sprintf("A%d", getprop("fdm/jsbsim/systems/approach-speed")));
+                    me.window6.setText(sprintf("A%d", hdp.approach_speed));
                     me.window6.show();
                 } else {
                     me.window6.hide(); # SRM UNCAGE / TARGET ASPECT
@@ -686,7 +733,9 @@ var F16_HUD = {
             ht_ycf = -me.pixelPerMeterY;
             
             me.target_locked.setVisible(0);
-            foreach( me.u; awg_9.tgts_list ) 
+
+        if (hdp["tgt_list"] != nil)
+            foreach( me.u; hdp.tgt_list ) 
             {
                 me.callsign = "XX";
                 if(me.u.get_display())
@@ -715,7 +764,7 @@ var F16_HUD = {
 
                             me.clamped = me.yc > me.sy*0.5 or me.yc < -me.sy*0.5+me.hozizon_line_offset_from_middle_in_svg*me.sy or me.xc > me.sx *0.5 or me.xc < -me.sx*0.5;# outside HUD
 
-                            if (awg_9.active_u != nil and awg_9.active_u.Callsign != nil and me.u.Callsign != nil and me.u.Callsign.getValue() == awg_9.active_u.Callsign.getValue())
+                            if (hdp.active_u != nil and hdp.active_u.Callsign != nil and me.u.Callsign != nil and me.u.Callsign.getValue() == hdp.active_u.Callsign.getValue())
                             {
                                 me.target_locked.setVisible(1);
                                 me.target_locked.setTranslation (me.xc, me.yc);
@@ -769,9 +818,9 @@ var F16_HUD = {
             #printf("%d %d %d %d %d",me.dlzArray[0],me.dlzArray[1],me.dlzArray[2],me.dlzArray[3],me.dlzArray[4]);
             me.dlz2.removeAllChildren();
             me.dlzArrow.setTranslation(0,-me.dlzArray[4]/me.dlzArray[0]*me.dlzHeight);
-            if (awg_9.active_u != nil) {
+            if (hdp.active_u != nil) {
                 me.dlzClo.setTranslation(0,-me.dlzArray[4]/me.dlzArray[0]*me.dlzHeight);
-                me.dlzClo.setText(sprintf("%+d ",awg_9.active_u.get_closure_rate()));
+                me.dlzClo.setText(sprintf("%+d ",hdp.active_u.get_closure_rate()));
             } else {
                 me.dlzClo.setText("");
             }
@@ -826,7 +875,7 @@ var F16HudRecipient =
                     }
 
                     if (notification.eta_s != nil)
-                      notification.hud_window5 = sprintf("%2d MIN",eta_s/60);
+                      notification.hud_window5 = sprintf("%2d MIN",notification.eta_s/60);
                     else
                       notification.hud_window5 = "XX MIN";
                 } else {
