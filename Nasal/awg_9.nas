@@ -424,6 +424,7 @@ var az_scan = func(notification) {
     notification.rwrList = rwrList;
     notification.completeList = completeList;
 
+    notification.active_u = active_u;
     u_ecm_signal      = 0;
     u_ecm_signal_norm = 0;
     u_radar_standby   = 0;

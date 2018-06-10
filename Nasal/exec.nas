@@ -22,8 +22,8 @@
 # to add properties to the FrameNotification simply send a FrameNotificationAddProperty
 # to the global transmitter. This will be received by the frameNotifcation object and
 # included in the update.
-#emesary.GlobalTransmitter.NotifyAll(new FrameNotificationAddProperty("wow","gear/gear[0]/wow"));
-#emesary.GlobalTransmitter.NotifyAll(new FrameNotificationAddProperty("engine_n2", "engines/engine[0]/n2"));
+#emesary.GlobalTransmitter.NotifyAll(new FrameNotificationAddProperty("MODULE", "wow","gear/gear[0]/wow"));
+#emesary.GlobalTransmitter.NotifyAll(new FrameNotificationAddProperty("MODULE", "engine_n2", "engines/engine[0]/n2"));
 #    
 
 
@@ -79,7 +79,7 @@ elapsed_seconds           : "/sim/time/elapsed-sec",
 };
 
 foreach (var name; keys(input)) {
-    emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new(name, input[name]));
+    emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("EXEC", name, input[name]));
 }
 
 var execTimer = maketimer(1, rtExec_loop);

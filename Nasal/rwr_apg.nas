@@ -27,7 +27,7 @@ var SubSystem_RWR_APG = {
         };
 
         foreach (var name; keys(input)) {
-            emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new(name, input[name]));
+            emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new(_ident, name, input[name]));
         }
 
         #

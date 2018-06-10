@@ -46,9 +46,9 @@ print("Frame Notification Created");
                 if (new_class.monitored_properties[notification.variable] != nil 
                     and new_class.monitored_properties[notification.variable].getPath() != notification.property
                     and new_class.monitored_properties[notification.variable].getPath() != "/"~notification.property)
-                  print("[WARNING]: FrameNotification: already have variable ",notification.variable,"=",new_class.monitored_properties[notification.variable].getPath(), " using different property ",notification.property);
+                  print("[WARNING]: (",notification.module,") FrameNotification: already have variable ",notification.variable,"=",new_class.monitored_properties[notification.variable].getPath(), " using different property ",notification.property);
                 else if (new_class.monitored_properties[notification.variable] == nil)
-                  print("[INFO]: FrameNotification.",notification.variable, " = ",notification.property);
+                  print("[INFO]: (",notification.module,") FrameNotification.",notification.variable, " = ",notification.property);
 
                 new_class.monitored_properties[notification.variable] = props.globals.getNode(notification.property,1);
 
@@ -77,9 +77,10 @@ print("Frame Notification Created");
 
 var FrameNotificationAddProperty = 
 {
-    new: func(variable, property)
+    new: func(module, variable, property)
     {
         var new_class = emesary.Notification.new("FrameNotificationAddProperty", variable);
+        new_class.module = module ;
         new_class.variable = variable;
         new_class.property = property;
         return new_class;

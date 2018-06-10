@@ -523,7 +523,6 @@ var SubSystem_Main = {
                  gun_rounds                : "/sim/model/f16/systems/gun/rounds",
                  heading                   : "/orientation/heading-deg",
                  mach                      : "/instrumentation/airspeed-indicator/indicated-mach",
-                 mach                      : "/velocities/mach",
                  measured_altitude         : "/instrumentation/altimeter/indicated-altitude-ft",
                  pitch                     : "/orientation/pitch-deg",
                  radar_range               : "/instrumentation/radar/radar2-range",
@@ -543,7 +542,7 @@ var SubSystem_Main = {
                 };
 
         foreach (var name; keys(input)) {
-            emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new(name, input[name]));
+            emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new(_ident,name, input[name]));
         }
 
         #
