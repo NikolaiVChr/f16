@@ -51,6 +51,8 @@ var SubSystem_RWR_APG = {
 	},
     update : func(notification) {
         #printf("clist %d", size(notification.completeList));
+        notification.rwrList16 = [];
+        notification.rwrList = [];
         if (notification["completeList"] == nil) return;
         foreach(me.u;notification.completeList) {
             me.cs = me.u.get_Callsign();

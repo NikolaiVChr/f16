@@ -1,5 +1,5 @@
 RWRCanvas = {
-    new: func (root, center, diameter) {
+    new: func (_ident, root, center, diameter) {
         var rwr = {parents: [RWRCanvas]};
         rwr.max_icons = 12;
         var radius = diameter/2;
@@ -195,10 +195,33 @@ RWRCanvas = {
                 "f16":"16",
         };
         rwr.shownList = [];
+        #
+        # recipient that will be registered on the global transmitter and connect this
+        # subsystem to allow subsystem notifications to be received
+        rwr.recipient = emesary.Recipient.new(_ident);
+        rwr.recipient.parent_obj = rwr;
+
+        rwr.recipient.Receive = func(notification)
+        {
+            if (notification.NotificationType == "FrameNotification")
+            {
+                #
+                # Link16 wingmen only visible when no other threats. So check the size of this list
+                # first and if populated use it.
+                if (notification["rwrList"] != nil and size(notification.rwrList)>0)
+                  me.parent_obj.update(notification.rwrList, "normal");
+                else if (notification["rwrList16"] != nil)
+                  me.parent_obj.update(notification.rwrList16, "link16");
+                return emesary.Transmitter.ReceiptStatus_OK;
+            }
+            return emesary.Transmitter.ReceiptStatus_NotProcessed;
+        };
+        emesary.GlobalTransmitter.Register(rwr.recipient);
+
         return rwr;
     },
-    update: func (list) {
-        #printf("list %d", size(list));
+    update: func (list, type) {
+#        printf("list %d type %s", size(list), type);
         me.elapsed = getprop("sim/time/elapsed-sec");
         var sorter = func(a, b) {
             if(a[1] > b[1]){
@@ -295,21 +318,16 @@ RWRCanvas = {
     },
 };
 
-var rwr = nil;
-var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
-  if (getprop("sim/signals/fdm-initialized") == 1) {
-     var diam = 256;
-    var cv = canvas.new({
-        "name": "F16 RWR",
-        "size": [diam,diam], 
-        "view": [diam,diam],
-        "mipmapping": 1
-    });  
+                var diam = 256;
+                var cv = canvas.new({
+                                     "name": "F16 RWR",
+                                     "size": [diam,diam], 
+                                     "view": [diam,diam],
+                                     "mipmapping": 1
+                                    });  
 
-    cv.addPlacement({"node": "bkg", "texture":"rwr-bkg.png"});
-    cv.setColorBackground(0, 0.20, 0);
-    var root = cv.createGroup();
-    rwr = RWRCanvas.new(root, [diam/2,diam/2],diam);
-     removelistener(main_init_listener);
-  }
- }, 0, 0);
+                cv.addPlacement({"node": "bkg", "texture":"rwr-bkg.png"});
+                cv.setColorBackground(0, 0.20, 0);
+                var root = cv.createGroup();
+                rwr = RWRCanvas.new("RWRCanvas", root, [diam/2,diam/2],diam);
+

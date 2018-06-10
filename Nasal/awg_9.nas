@@ -101,8 +101,6 @@ var wcs_mode_tws_man = 7;
 var wcs_current_mode = wcs_mode_pulse_srch;
 
 var completeList = [];
-var rwrList   = [];
-var rwrList16 = [];
 
 SelectTargetCommand.setIntValue(0);
 
@@ -221,8 +219,6 @@ if ((major == 2017 and minor == 2 and pica >= 1) or (major == 2017 and minor > 2
     pickingMethod = 1;
 }
 tgts_list = [];
-rwrList16 = [];
-rwrList = [];
 completeList = [];
 
 #
@@ -263,13 +259,6 @@ return;
 #    if (noti.FrameCount != 0) {
 #        return;
 #    }
-    if (rwrs.rwr != nil and getprop("fdm/jsbsim/elec/bus/ess-ac")>100) {
-            if (size(rwrList)>0) {
-                rwrs.rwr.update(rwrList);
-            } else {
-                rwrs.rwr.update(rwrList16);
-            }
-    }
 #    if (doRWR) {
 #        selectCheck();# for it to be responsive have to do this more often than running radar code.
 #    }
@@ -310,8 +299,6 @@ var az_scan = func(notification) {
 	var fading_speed = 0.015;   # Used for the screen animation, dots get bright when the sweep line goes over, then fade.
 
     notification.tgt_list = tgts_list;
-    notification.rwrList16 = rwrList16;
-    notification.rwrList = rwrList;
     notification.completeList = completeList;
 
 	our_true_heading = OurHdg.getValue();
@@ -352,8 +339,6 @@ var az_scan = func(notification) {
         {
             scan_update_tgt_list=0;
             tgts_list = [];
-            rwrList = [];
-            rwrList16 = [];
             var raw_list = Mp.getChildren();
             var carrier_located = 0;
 
@@ -423,8 +408,6 @@ var az_scan = func(notification) {
     var idx = 0;
 
     notification.tgt_list = tgts_list;
-    notification.rwrList16 = rwrList16;
-    notification.rwrList = rwrList;
     notification.completeList = completeList;
 
     notification.active_u = active_u;
