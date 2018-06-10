@@ -58,6 +58,9 @@ var knownSurface = {
 
 var this_model = "f16";
 var ownship_pos = geo.Coord.new();
+var cockpitNotifier = nil;
+var radar_ranges = [5,10,20,40,50,100,200];
+
 #var this_model = "f15";
 #var this_model = "f-14b";
 
@@ -217,7 +220,7 @@ var pickingMethod = 0;
 if ((major == 2017 and minor == 2 and pica >= 1) or (major == 2017 and minor > 2) or major > 2017) {
     pickingMethod = 1;
 }
-tgt_list = [];
+tgts_list = [];
 rwrList16 = [];
 rwrList = [];
 completeList = [];
@@ -306,7 +309,7 @@ var az_scan = func(notification) {
 
 	var fading_speed = 0.015;   # Used for the screen animation, dots get bright when the sweep line goes over, then fade.
 
-    notification.tgt_list = tgt_list;
+    notification.tgt_list = tgts_list;
     notification.rwrList16 = rwrList16;
     notification.rwrList = rwrList;
     notification.completeList = completeList;
@@ -419,7 +422,7 @@ var az_scan = func(notification) {
     }
     var idx = 0;
 
-    notification.tgt_list = tgt_list;
+    notification.tgt_list = tgts_list;
     notification.rwrList16 = rwrList16;
     notification.rwrList = rwrList;
     notification.completeList = completeList;
@@ -1053,57 +1056,48 @@ var toggle_radar_standby = func() {
 }
 
 var range_control = func(n) {
-#
-# change this to data driven
-if (our_ac == "f16")
-{
-	# 1(+), -1(-), 5, 10, 20, 50, 100, 200
-	if ( pilot_lock and ! we_are_bs ) { return }
-	var range_radar = RangeRadar2.getValue();
-	if ( n == 1 ) {
-		if ( range_radar == 10 ) { range_radar = 20 }
-		elsif ( range_radar == 20 ) { range_radar = 40 }
-		elsif ( range_radar == 40 ) { range_radar = 80 }
-		elsif ( range_radar == 80 ) { range_radar = 160 }
-	} elsif (n == -1 ) {
-		if ( range_radar == 160 ) { range_radar = 80 }
-		elsif ( range_radar == 80 ) { range_radar = 40 }
-		elsif ( range_radar == 40 ) { range_radar = 20 }
-		elsif ( range_radar == 20 ) { range_radar = 10 }
-	} elsif (n == 10 ) { range_radar = 10 }
-	elsif (n == 20 ) { range_radar = 20 }
-	elsif (n == 40 ) { range_radar = 40 }
-	elsif (n == 80 ) { range_radar = 80 }
-	elsif (n == 160 ) { range_radar = 160 }
-	RangeRadar2.setValue(range_radar);
-    screen.log.write("Radar range "~range_radar~" NM", 0.5, 0.5, 1);
+    radar_ranges = [5,10,20,50,100,200];
+    newri = nil;
+    forindex(ri; radar_ranges)
+      {
+          if (radar_ranges[ri] == range_radar) {
+              newri = ri + n;
+              break;
+          }
+      }
+    if (newri != nil){
+        if (newri < 0) newri = size(radar_ranges) - 1;
+        elsif (newri >= size(radar_ranges))
+          newri = 0;
+        print("new range ",newri, " ", radar_ranges[newri]);
+range_radar = radar_ranges[newri];
+    }
 }
-else
-{
-	# 1(+), -1(-), 5, 10, 20, 50, 100, 200
-#	if ( pilot_lock and ! we_are_bs ) { return }
-	var range_radar = RangeRadar2.getValue();
-	if ( n == 1 ) {
-		if ( range_radar == 5 ) { range_radar = 10 }
-		elsif ( range_radar == 10 ) { range_radar = 20 }
-		elsif ( range_radar == 20 ) { range_radar = 50 }
-		elsif ( range_radar == 50 ) { range_radar = 100 }
-		else { range_radar = 200 }
-	} elsif (n == -1 ) {
-		if ( range_radar == 200 ) { range_radar = 100 }
-		elsif ( range_radar == 100 ) { range_radar = 50 }
-		elsif ( range_radar == 50 ) { range_radar = 20 }
-		elsif ( range_radar == 20 ) { range_radar = 10 }
-		else { range_radar = 5  }
-	} elsif (n == 5 ) { range_radar = 5 }
-	elsif (n == 10 ) { range_radar = 10 }
-	elsif (n == 20 ) { range_radar = 20 }
-	elsif (n == 50 ) { range_radar = 50 }
-	elsif (n == 100 ) { range_radar = 100 }
-	elsif (n == 200 ) { range_radar = 200 }
-	RangeRadar2.setValue(range_radar);
-    f14.notify_value(f14.set_radar_range, range_radar);
-}
+
+var range_control = func(n) {
+
+#    if ( pilot_lock and ! we_are_bs ) { return }
+
+    var range_radar = RangeRadar2.getValue();
+    newri = 0;
+    forindex(ri; radar_ranges){
+        if (radar_ranges[ri] == range_radar) {
+            newri = ri + n;
+            break;
+          }
+    }
+    if (newri == nil) newri = 0; # fallback to first in range
+
+    if (newri < 0) 
+      newri = size(radar_ranges) - 1;
+    elsif (newri >= size(radar_ranges))
+      newri = 0;
+
+    RangeRadar2.setValue(radar_ranges[newri]);
+
+    print("new range ",newri, " ", radar_ranges[newri]);
+    if (cockpitNotifier != nil)
+      cockpitNotifier.notify_value(cockpitNotifier.set_radar_range, range_radar);
 }
 
 wcs_mode_sel = func(mode) {
