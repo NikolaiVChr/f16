@@ -569,6 +569,10 @@ var SubSystem_Main = {
     update : func(notification) {
     },
 };
+#
+# Add failure for HUD to the compatible failures. This will setup the property tree in the normal way; 
+# but it will not add it to the gui dialog.
+append(compat_failure_modes.compat_modes,{ id: "instrumentation/hud", type: compat_failure_modes.MTBF, failure: compat_failure_modes.SERV, desc: "HUD" });
 
 subsystem = SubSystem_Main.new("SubSystem_Main");
 

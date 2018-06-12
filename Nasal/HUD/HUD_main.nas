@@ -124,6 +124,8 @@ var F16_HUD = {
                  speed_north_fps           : "velocities/speed-north-fps",
                  hud_brightness            : "f16/avionics/hud-brt",
                  hud_power                 : "f16/avionics/hud-power",
+                 hud_display               : "controls/HUD/display-on",
+                 hud_serviceable           : "sim/failure-manager/instrumentation/hud/serviceable",
                  time_until_crash          : "instrumentation/radar/time-till-crash",
                  vne                       : "f16/vne",
                  wp_bearing_deg            : "autopilot/route-manager/wp/bearing-deg",
@@ -141,10 +143,16 @@ var F16_HUD = {
         # set the update list - using the update manager to improve the performance
         # of the HUD update - without this there was a drop of 20fps (when running at 60fps)
         obj.update_items = [
-            props.UpdateManager.FromHashList(["hud_brightness", "hud_power"], 0.01, func(hdp)
+            props.UpdateManager.FromHashList(["hud_serviceable", "hud_display", "hud_brightness", "hud_power"], 0.01, func(hdp)
                                       {
-                                          if (hdp.hud_brightness != nil and hdp.hud_power != nil)
+# print("HUD hud_serviceable=", hdp.hud_serviceable," display=", hdp.hud_display, " brt=", hdp.hud_brightness, " power=", hdp.hud_power);
+                                          if (!hdp.hud_display or !hdp.hud_serviceable)
+                                            obj.svg.setColor(0.3,1,0.3,0);
+                                          elsif (hdp.hud_brightness != nil and hdp.hud_power != nil)
                                             obj.svg.setColor(0.3,1,0.3,hdp.hud_brightness * hdp.hud_power);
+                                      }),
+            props.UpdateManager.FromHashList([], 0.01, func(hdp)
+                                      {
                                       }),
             props.UpdateManager.FromHashList(["master_arm", "altitude_ft", "roll", "groundspeed_kt", "density_altitude", "mach", "speed_down_fps", "speed_east_fps", "speed_north_fps"], 0.01, func(hdp)
                                       {
@@ -466,11 +474,11 @@ var F16_HUD = {
            .setColor(1,1,1)
            .setStrokeLineWidth(obj.dlzLW);
         obj.dlzClo = obj.dlz.createChild("text")
-                .setText("+340")
+                .setText("+3409")
                 .setAlignment("right-center")
                 .setColor(0,1,0)
                 .setFont(HUD_FONT)
-                .setFontSize(9, 1.1);
+                .setFontSize(8, 1.0);
 
         obj.svg.setColor(0.3,1,0.3);
 		return obj;
@@ -667,6 +675,12 @@ var F16_HUD = {
 
     update : func(hdp) {
 
+#
+# short cut the whole thing if the display is turned off
+#        if (!hdp.hud_display or !hdp.hud_serviceable) {
+#            me.svg.setColor(0.3,1,0.3,0);
+#            return;
+#        }
         # part 1. update data items
         hdp.roll_rad = -hdp.roll*D2R;
         if (me.initUpdate) {
