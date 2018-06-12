@@ -387,12 +387,9 @@
 		
 		<fcs_function name="autoflight/roll/roll-rate-deg">
 			<function>
-				<product>
-					<todegrees>
-						<property>autoflight/roll/master-pid</property>
-					</todegrees>
-					<value>-1</value> <!-- Rate for some reason is inverted -->
-				</product>
+				<todegrees>
+					<property>autoflight/roll/master-pid</property>
+				</todegrees>
 			</function>
 		</fcs_function>
 		
