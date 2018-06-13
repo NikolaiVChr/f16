@@ -2,58 +2,40 @@
 
 <PropertyList>
 
- <path>icp.ac</path>
+    <path>icp.ac</path>
 
- <!--lighting -->
+    <!--lighting -->
 
- <animation>
-  <object-name>poly.001</object-name>
-  <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
-   <red>0.45</red>
-   <green>0.34</green>
-   <blue>0.18</blue>
-  </emission>
- </animation>
+    <animation>
+        <object-name>DED_panel</object-name>
+        <type>material</type>
+        <emission>
+            <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+            <red>0.45</red>
+            <green>0.34</green>
+            <blue>0.18</blue>
+        </emission>
+    </animation>
 
- <animation>
-  <object-name>com1</object-name>
-  <object-name>com2</object-name>
-  <object-name>iff</object-name>
-  <object-name>list</object-name>
-  <object-name>a-a</object-name>
-  <object-name>a-g</object-name>
+    <effect>
+        <name>f16panel-left</name>
+        <inherits-from>Models/Effects/f16dde-panel</inherits-from>
+        <object-name>DED_panel</object-name>
+        <object-name>DED_buttons</object-name>
+    </effect>
 
-  <object-name>1</object-name>
-  <object-name>2</object-name>
-  <object-name>3</object-name>
-  <object-name>4</object-name>
-  <object-name>5</object-name>
-  <object-name>6</object-name>
-  <object-name>7</object-name>
-  <object-name>8</object-name>
-  <object-name>9</object-name>
-  <object-name>0</object-name>
-  
-  <object-name>rcl</object-name>
-  <object-name>entr</object-name>
-  
-  <object-name>wx</object-name>
-  <object-name>flir_ud</object-name>
+    <animation>
+        <object-name>DED_buttons</object-name>
+        <type>material</type>
+        <emission>
+            <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+            <red>0.0</red>
+            <green>1.0</green>
+            <blue>0.40</blue>
+        </emission>
+    </animation>
 
-  <object-name>rtn_seq</object-name>
-
- <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
-
- <animation>
+    <animation>
         <type>knob</type>
         <object-name>brt</object-name>
         <property>f16/avionics/hud-brt</property>
@@ -76,9 +58,9 @@
                 <factor>1</factor>
                 <step>-0.1</step>
                 <min>0</min>
-                <max>1</max>           
+                <max>1</max>
                 <wrap>false</wrap>
-           </binding>
+            </binding>
         </increase>
         <decrease>
             <binding>
@@ -111,7 +93,7 @@
             </binding>
         </hovered>-->
     </animation>
-    
+
     <animation>
         <type>pick</type>
         <object-name>a-a</object-name>
