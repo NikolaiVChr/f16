@@ -93,7 +93,26 @@
             </binding>
         </hovered>-->
     </animation>
-
+    <animation>
+        <type>select</type>
+        <condition>
+                <less-than-equals>
+                    <property>sim/variant-id</property>
+                    <value>2</value>
+                </less-than-equals>
+        </condition>
+        <object-name>plrt</object-name>
+    </animation>
+    <animation>
+        <type>select</type>
+        <condition>
+            <greater-than-equals>
+                <property>sim/variant-id</property>
+                <value>5</value>
+            </greater-than-equals>
+        </condition>
+        <object-name>wx</object-name>
+    </animation>
     <animation>
         <type>pick</type>
         <object-name>a-a</object-name>
