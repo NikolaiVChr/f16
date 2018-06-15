@@ -1,11 +1,57 @@
 <?xml version="1.0"?>
 <PropertyList>
     <path>misc.ac</path>
+    <!--
+
+
+controls/lighting/lighting-panel/flood-inst-pnl Flood lighting
+
+controls/flight/alt-rel-button           Alternative release (pickle) button
+
+f16/fcs/autopilot-on                     Autopilot engage (block 15 and earlier)
+
+controls/armament/laser-arm-dmd          FLIR targeting laser
+
+controls/armament/master-arm             master arm
+      when controls/armament/master-arm-cover-open GreaterThan 0
+      when sim/variant-id GreaterThan 5
+
+f16/fcs/switch-roll                      autopilot roll control (post block 15)
+      when sim/variant-id GreaterThanEquals 2
+
+f16/fcs/switch-pitch                     autopilot pitch control (post block 15)
+      when sim/variant-id GreaterThanEquals 2
+
+controls/armament/master-arm-cover-open  guard for master arm (pre block 52)
+      when controls/armament/master-arm Equals 0
+
+controls/armament/rf-mode                RF mode, normal, quiet, silent
+
+f16/fcs/switch-pitch-hold                -1 ATT HOLD=Autopilot hold attitude, 0 AP OFF=Autopilot off, 1 ALT HOLD=Autopilot hold altitude
+      when sim/variant-id LessThan 2
+
+f16/fcs/switch-roll-hold                 -1 STRG SEL=waypoint, 0 hold roll and altitude, 0 ATT HOLD=Autopilot hold roll and altitude, 1 HDG SEL=HSI heading,
+      when sim/variant-id LessThan 2
+
+f16/fcs/adv-mode-sel                     autopilot adv mode (post block 15)
+
+light: TFS (Terrain Following System) active
+      when f16/fcs/adv-mode Equals 0
+
+light: TFS (Terrain Following System) standby
+      when f16/fcs/adv-mode GreaterThan 0
+
+light: ecm lamp on
+      when controls/armament/ecm-enabled Equals 0
+
+light: ecm lamp off
+      when controls/armament/ecm-enabled GreaterThan 0
+    -->
     <effect>
         <name>models-effects-f16panel-left</name>
         <inherits-from>Models/Effects/f16panel-left</inherits-from>
-        <object-name>MISC_1-block-50</object-name>
-        <object-name>MISC_1-block-15</object-name>
+        <object-name>MISC_1_block-50</object-name>
+        <object-name>MISC_1_block-15</object-name>
     </effect>
     <animation>
         <type>material</type>
@@ -199,18 +245,18 @@
     <animation>
         <type>knob</type>
         <object-name>quiet-switch</object-name>
-        <property>controls/armament/quiet</property>
-        <offset-deg>-30</offset-deg>
-        <factor>60</factor>
+        <property>controls/armament/rf-mode</property>
+        <offset-deg>0</offset-deg>
+        <factor>30</factor>
         <axis>
             <object-name>quiet-switch-axis</object-name>
         </axis>
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>controls/armament/quiet</property>
+                <property>controls/armament/rf-mode</property>
                 <factor>1</factor>
-                <min>0</min>
+                <min>-1</min>
                 <max>1</max>
                 <wrap>false</wrap>
             </binding>

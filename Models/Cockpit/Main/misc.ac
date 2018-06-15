@@ -751,9 +751,8 @@ name "MISC_1_block-15"
 loc 0.11572 -0.0818883 -0.120811
 data 4
 MISC
-texture "panels-MLU-left_right-aux-consoles.png"
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 crease 30.000000
-hidden
 numvert 122
 -0.33333 0.00618 0.30241
 -0.3355 0.00618 0.30457
