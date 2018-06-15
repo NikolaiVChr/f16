@@ -119,5 +119,19 @@
         <inherits-from>Models/Effects/f16panel-left</inherits-from>
         <object-name>LIGHTING_1</object-name>
     </effect>
+    <effect>
+        <name>models-effects-f16panel-left</name>
+        <inherits-from>Models/Effects/f16panel-knob</inherits-from>
+        <object-name>inst-pnl-flood-knob</object-name>
+        <object-name>inst-pnl-flood-knob-axis</object-name>
+        <object-name>inst-pnl-primary-knob</object-name>
+        <object-name>inst-pnl-primary-knob-axis</object-name>
+        <object-name>console-flood-knob</object-name>
+        <object-name>console-flood-knob-axis</object-name>
+        <object-name>data-entry-display-knob</object-name>
+        <object-name>data-entry-display-knob-axis</object-name>
+        <object-name>console-primary-knob</object-name>
+        <object-name>console-primary-knob-axis</object-name>
+        <object-name>inst-pnl-flood-knob</object-name>    </effect>
 
 </PropertyList>
