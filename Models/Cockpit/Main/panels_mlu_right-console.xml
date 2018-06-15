@@ -48,8 +48,8 @@
         <type>knob</type>
         <object-name>console-flood-knob</object-name>
         <property>controls/lighting/lighting-panel/console-flood</property>
-        <offset-deg>185</offset-deg>
-        <factor>330</factor>
+        <offset-deg>155</offset-deg>
+        <factor>-330</factor>
         <axis>
             <object-name>console-flood-knob-axis</object-name>
         </axis>
@@ -114,4 +114,10 @@
             <blue>0.18</blue>
         </emission>
     </animation>
+    <effect>
+        <name>models-effects-f16panel-left</name>
+        <inherits-from>Models/Effects/f16panel-left</inherits-from>
+        <object-name>LIGHTING_1</object-name>
+    </effect>
+
 </PropertyList>
