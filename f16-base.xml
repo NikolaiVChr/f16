@@ -922,6 +922,7 @@
         </MFD>
         <HUD>
             <sym-rej type="int">0</sym-rej>
+            <display-on type="int">1</display-on>
             <!-- declutter -->
         </HUD>
         <indicators />
