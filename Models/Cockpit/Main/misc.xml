@@ -16,22 +16,22 @@ controls/armament/master-arm             master arm
       when controls/armament/master-arm-cover-open GreaterThan 0
       when sim/variant-id GreaterThan 5
 
-f16/fcs/switch-roll                      autopilot roll control (post block 15)
-      when sim/variant-id GreaterThanEquals 2
+f16/fcs/switch-roll-block15              autopilot roll control (post block 15)
+      when sim/variant-id LessThan 2
 
-f16/fcs/switch-pitch                     autopilot pitch control (post block 15)
-      when sim/variant-id GreaterThanEquals 2
+f16/fcs/switch-pitch-block15             autopilot pitch control (post block 15)
+      when sim/variant-id LessThan 2
 
 controls/armament/master-arm-cover-open  guard for master arm (pre block 52)
       when controls/armament/master-arm Equals 0
 
 controls/armament/rf-mode                RF mode, normal, quiet, silent
 
-f16/fcs/switch-pitch-hold                -1 ATT HOLD=Autopilot hold attitude, 0 AP OFF=Autopilot off, 1 ALT HOLD=Autopilot hold altitude
-      when sim/variant-id LessThan 2
+f16/fcs/switch-pitch-block20             -1 ATT HOLD=Autopilot hold attitude, 0 AP OFF=Autopilot off, 1 ALT HOLD=Autopilot hold altitude
+      when sim/variant-id GreaterThanEquals 2
 
-f16/fcs/switch-roll-hold                 -1 STRG SEL=waypoint, 0 hold roll and altitude, 0 ATT HOLD=Autopilot hold roll and altitude, 1 HDG SEL=HSI heading,
-      when sim/variant-id LessThan 2
+f16/fcs/switch-roll-block20              -1 STRG SEL=waypoint, 0 hold roll and altitude, 0 ATT HOLD=Autopilot hold roll and altitude, 1 HDG SEL=HSI heading,
+      when sim/variant-id GreaterThanEquals 2
 
 f16/fcs/adv-mode-sel                     autopilot adv mode (post block 15)
 
@@ -169,24 +169,25 @@ light: ecm lamp off
     </animation>
     <animation>
         <type>knob</type>
-        <object-name>roll-hold-switch</object-name>
+        <object-name>pitch-switch-b15</object-name>
         <condition>
-            <greater-than-equals>
+            <less-than>
                 <property>sim/variant-id</property>
                 <value>2</value>
-            </greater-than-equals>
+            </less-than>
         </condition>
-        <property>f16/fcs/switch-roll</property>
-        <factor>45</factor>
+        <property>f16/fcs/switch-roll-block15</property>
+        <offset-deg>-30</offset-deg>
+        <factor>60</factor>
         <axis>
-            <object-name>roll-hold-switch-axis</object-name>
+            <object-name>pitch-switch-b15-axis</object-name>
         </axis>
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/fcs/switch-roll</property>
+                <property>f16/fcs/switch-roll-block15</property>
                 <factor>1</factor>
-                <min>-1</min>
+                <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
             </binding>
@@ -194,24 +195,25 @@ light: ecm lamp off
     </animation>
     <animation>
         <type>knob</type>
-        <object-name>pitch-hold-switch</object-name>
+        <object-name>roll-switch-b15</object-name>
         <condition>
-            <greater-than-equals>
+            <less-than>
                 <property>sim/variant-id</property>
                 <value>2</value>
-            </greater-than-equals>
+            </less-than>
         </condition>
-        <property>f16/fcs/switch-pitch</property>
-        <factor>45</factor>
+        <property>f16/fcs/switch-pitch-block15</property>
+        <offset-deg>-30</offset-deg>
+        <factor>60</factor>
         <axis>
-            <object-name>pitch-hold-switch-axis</object-name>
+            <object-name>roll-switch-b15-axis</object-name>
         </axis>
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/fcs/switch-pitch</property>
+                <property>f16/fcs/switch-pitch-block15</property>
                 <factor>1</factor>
-                <min>-1</min>
+                <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
             </binding>
@@ -264,25 +266,24 @@ light: ecm lamp off
     </animation>
     <animation>
         <type>knob</type>
-        <object-name>pitch-switch-b15</object-name>
+        <object-name>roll-hold-switch</object-name>
         <condition>
-            <less-than>
+            <greater-than-equals>
                 <property>sim/variant-id</property>
                 <value>2</value>
-            </less-than>
+            </greater-than-equals>
         </condition>
-        <property>f16/fcs/switch-pitch-hold</property>
-        <offset-deg>-30</offset-deg>
-        <factor>60</factor>
+        <property>f16/fcs/switch-pitch-block20</property>
+        <factor>45</factor>
         <axis>
-            <object-name>pitch-switch-b15-axis</object-name>
+            <object-name>roll-hold-switch-axis</object-name>
         </axis>
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/fcs/switch-pitch-hold</property>
+                <property>f16/fcs/switch-pitch-block20</property>
                 <factor>1</factor>
-                <min>0</min>
+                <min>-1</min>
                 <max>1</max>
                 <wrap>false</wrap>
             </binding>
@@ -290,25 +291,24 @@ light: ecm lamp off
     </animation>
     <animation>
         <type>knob</type>
-        <object-name>roll-switch-b15</object-name>
+        <object-name>pitch-hold-switch</object-name>
         <condition>
-            <less-than>
+            <greater-than-equals>
                 <property>sim/variant-id</property>
                 <value>2</value>
-            </less-than>
+            </greater-than-equals>
         </condition>
-        <property>f16/fcs/switch-roll-hold</property>
-        <offset-deg>-30</offset-deg>
-        <factor>60</factor>
+        <property>f16/fcs/switch-roll-block20</property>
+        <factor>45</factor>
         <axis>
-            <object-name>roll-switch-b15-axis</object-name>
+            <object-name>pitch-hold-switch-axis</object-name>
         </axis>
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/fcs/switch-roll-hold</property>
+                <property>f16/fcs/switch-roll-block20</property>
                 <factor>1</factor>
-                <min>0</min>
+                <min>-1</min>
                 <max>1</max>
                 <wrap>false</wrap>
             </binding>
