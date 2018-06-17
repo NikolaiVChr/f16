@@ -15,8 +15,8 @@
 		</switch>
 		
 		<switch name="autoflight/switch-roll">
-			<default value="/f16/fcs/switch-roll"/>
-			<test value="/f16/fcs/switch-roll-old">
+			<default value="/f16/fcs/switch-roll-block20"/>
+			<test value="/f16/fcs/switch-roll-block15">
 				/sim/variant-id lt 2
 			</test>
 			<clipto>
@@ -25,20 +25,20 @@
 			</clipto>
 		</switch>
 		
-		<switch name="autoflight/switch-pitch"> <!-- /f16/fcs/switch-master is ignored on Block 20+ -->
+		<switch name="autoflight/switch-pitch"> <!-- /f16/fcs/autopilot-on is ignored on Block 20+ -->
 			<default value="0"/>
-			<test logic="AND" value="/f16/fcs/switch-pitch">
+			<test logic="AND" value="/f16/fcs/switch-pitch-block20">
 				/sim/variant-id ge 2
 			</test>
 			<test logic="AND" value="-1">
 				/sim/variant-id lt 2
-				/f16/fcs/switch-master eq 1
-				/f16/fcs/switch-pitch-old eq 0
+				/f16/fcs/autopilot-on eq 1
+				/f16/fcs/switch-pitch-block15 eq 0
 			</test>
 			<test logic="AND" value="1">
 				/sim/variant-id lt 2
-				/f16/fcs/switch-master eq 1
-				/f16/fcs/switch-pitch-old eq 1
+				/f16/fcs/autopilot-on eq 1
+				/f16/fcs/switch-pitch-block15 eq 1
 			</test>
 		</switch>
 	
@@ -61,7 +61,7 @@
 				position/wow eq 1
 				attitude/roll-rad gt 1.0472
 				attitude/roll-rad lt -1.0472
-				elec/bus/emergency-dc-2 ge 20
+				elec/bus/emergency-dc-2 lt 20
 			</test>
 		</switch>
 		

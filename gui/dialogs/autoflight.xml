@@ -70,7 +70,7 @@
 			<label>Autopilot Master</label>
 			<halign>center</halign>
 			<live>true</live>
-			<property>/f16/fcs/switch-master</property>
+			<property>/f16/fcs/autopilot-on</property>
 			<binding>
 				<command>dialog-apply</command>
 			</binding>
@@ -111,7 +111,7 @@
 					
 					<slider>
 						<halign>left</halign>
-						<property>/f16/fcs/switch-roll-old</property>
+						<property>/f16/fcs/switch-roll-block15</property>
 						<min>0</min>
 						<max>1</max>
 						<step>1</step>
@@ -154,7 +154,7 @@
 					
 					<slider>
 						<halign>left</halign>
-						<property>/f16/fcs/switch-pitch-old</property>
+						<property>/f16/fcs/switch-pitch-block15</property>
 						<min>0</min>
 						<max>1</max>
 						<step>1</step>
@@ -213,7 +213,7 @@
 				
 				<slider>
 					<halign>left</halign>
-					<property>/f16/fcs/switch-roll</property>
+					<property>/f16/fcs/switch-roll-block20</property>
 					<min>-1</min>
 					<max>1</max>
 					<step>1</step>
@@ -258,7 +258,7 @@
 				
 				<slider>
 					<halign>left</halign>
-					<property>/f16/fcs/switch-pitch</property>
+					<property>/f16/fcs/switch-pitch-block20</property>
 					<min>-1</min>
 					<max>1</max>
 					<step>1</step>
