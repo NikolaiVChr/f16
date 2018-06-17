@@ -16,10 +16,10 @@ controls/armament/master-arm             master arm
       when controls/armament/master-arm-cover-open GreaterThan 0
       when sim/variant-id GreaterThan 5
 
-f16/fcs/switch-roll-block15              autopilot roll control (post block 15)
+f16/fcs/switch-roll-block15              autopilot roll control (block 15 or before)
       when sim/variant-id LessThan 2
 
-f16/fcs/switch-pitch-block15             autopilot pitch control (post block 15)
+f16/fcs/switch-pitch-block15             autopilot pitch control (block 15 or before)
       when sim/variant-id LessThan 2
 
 controls/armament/master-arm-cover-open  guard for master arm (pre block 52)
@@ -27,10 +27,10 @@ controls/armament/master-arm-cover-open  guard for master arm (pre block 52)
 
 controls/armament/rf-mode                RF mode, normal, quiet, silent
 
-f16/fcs/switch-pitch-block20             -1 ATT HOLD=Autopilot hold attitude, 0 AP OFF=Autopilot off, 1 ALT HOLD=Autopilot hold altitude
+f16/fcs/switch-pitch-block20             -1 ATT HOLD=Autopilot hold attitude, 0 AP OFF=Autopilot off, 1 ALT HOLD=Autopilot hold altitude (block 20 or later)
       when sim/variant-id GreaterThanEquals 2
 
-f16/fcs/switch-roll-block20              -1 STRG SEL=waypoint, 0 hold roll and altitude, 0 ATT HOLD=Autopilot hold roll and altitude, 1 HDG SEL=HSI heading,
+f16/fcs/switch-roll-block20              -1 STRG SEL=waypoint, 0 hold roll and altitude, 0 ATT HOLD=Autopilot hold roll and altitude, 1 HDG SEL=HSI heading, (block 20 or later)
       when sim/variant-id GreaterThanEquals 2
 
 f16/fcs/adv-mode-sel                     autopilot adv mode (post block 15)
