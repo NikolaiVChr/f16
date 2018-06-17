@@ -1568,8 +1568,11 @@
             <hud-brt type="double">1.0</hud-brt>
         </avionics>
         <fcs>
+            <switch-master type="int">0</switch-master> <!-- Ignored on Block 20+ -->
             <switch-pitch type="int">0</switch-pitch>
+            <switch-pitch-old type="int">0</switch-pitch-old>
             <switch-roll type="int">0</switch-roll>
+            <switch-roll-old type="int">0</switch-roll-old>
         </fcs>
         <engine>
             <feed type="bool">false</feed><!-- OFF/NORM prevents starter, cutoff -->
