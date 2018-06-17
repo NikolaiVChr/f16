@@ -27,13 +27,8 @@
 		
 		<switch name="autoflight/switch-pitch"> <!-- /f16/fcs/switch-master is ignored on Block 20+ -->
 			<default value="0"/>
-			<test logic="AND" value="-1">
+			<test logic="AND" value="/f16/fcs/switch-pitch">
 				/sim/variant-id ge 2
-				/f16/fcs/switch-pitch eq -1
-			</test>
-			<test logic="AND" value="1">
-				/sim/variant-id ge 2
-				/f16/fcs/switch-pitch eq 1
 			</test>
 			<test logic="AND" value="-1">
 				/sim/variant-id lt 2
@@ -66,6 +61,7 @@
 				position/wow eq 1
 				attitude/roll-rad gt 1.0472
 				attitude/roll-rad lt -1.0472
+				elec/bus/emergency-dc-2 ge 20
 			</test>
 		</switch>
 		
