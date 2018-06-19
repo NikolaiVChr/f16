@@ -27,7 +27,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/f16/fcs/switch-roll</property>
+						<property>/fdm/jsbsim/autoflight/switch-roll</property>
 						<value>-1</value>
 					</equals>
 					<equals>
@@ -54,7 +54,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/f16/fcs/switch-roll</property>
+						<property>/fdm/jsbsim/autoflight/switch-roll</property>
 						<value>-1</value>
 					</equals>
 					<not-equals>
@@ -116,7 +116,7 @@
 						<value>1</value>
 					</not-equals>
 					<not-equals>
-						<property>/f16/fcs/switch-pitch</property>
+						<property>/fdm/jsbsim/autoflight/switch-pitch</property>
 						<value>1</value>
 					</not-equals>
 				</or>
@@ -137,7 +137,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>/f16/fcs/switch-pitch</property>
+						<property>/fdm/jsbsim/autoflight/switch-pitch</property>
 						<value>1</value>
 					</equals>
 				</and>

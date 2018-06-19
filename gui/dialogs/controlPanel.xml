@@ -37,97 +37,227 @@
 			<text>
 				<label>A/P</label>
 			</text>
+			
 			<group>
-				<layout>hbox</layout>
+				<layout>table</layout>
 				
 				<group>
-					<layout>vbox</layout>
+					<visible>
+						<less-than>
+							<property>/sim/variant-id</property>
+							<value>2</value>
+						</less-than>
+					</visible>
+					<row>0</row>
+					<col>0</col>
+					<layout>table</layout>
 					
-					<text>
-						<label>ROLL      </label>
-					</text>
+					<checkbox>
+						<row>0</row>
+						<col>0</col>
+						<label>Autopilot Master</label>
+						<halign>center</halign>
+						<live>true</live>
+						<property>/f16/fcs/switch-master</property>
+						<binding>
+							<command>dialog-apply</command>
+						</binding>
+					</checkbox>
 					
 					<group>
+						<row>1</row>
+						<col>0</col>
 						<layout>hbox</layout>
 					
 						<group>
 							<layout>vbox</layout>
-							<halign>left</halign>
 							
 							<text>
-								<label>HDG SEL</label>
-							</text>
-							<text>
-								<label>ATT HOLD</label>
-							</text>
-							<text>
-								<label>STRG SEL</label>
+								<label>ROLL      </label>
 							</text>
 							
+							<group>
+								<layout>hbox</layout>
+							
+								<group>
+									<layout>vbox</layout>
+									<halign>left</halign>
+									
+									<text>
+										<label>HDG SEL</label>
+									</text>
+									<text>
+										<label>ATT HOLD</label>
+									</text>
+									
+								</group>
+								
+								<slider>
+									<halign>left</halign>
+									<property>/f16/fcs/switch-roll-block15</property>
+									<min>0</min>
+									<max>1</max>
+									<step>1</step>
+									<live>true</live>
+									<vertical>true</vertical>
+									<pref-height>40</pref-height>
+									<binding>
+										<command>dialog-apply</command>
+									</binding>
+								</slider>
+								
+							</group>
+						
 						</group>
 						
-						<slider>
-							<halign>left</halign>
-							<property>/f16/fcs/switch-roll</property>
-							<min>-1</min>
-							<max>1</max>
-							<step>1</step>
-							<live>true</live>
-							<vertical>true</vertical>
-							<binding>
-								<command>dialog-apply</command>
-							</binding>
-						</slider>
+						<vrule/>
 						
-					</group>
-				
-				</group>
-				
-				<vrule/>
-				
-				<group>
-					<layout>vbox</layout>
-					
-					<text>
-						<label>PITCH      </label>
-					</text>
-					
-					<group>
-						<layout>hbox</layout>
-				
 						<group>
 							<layout>vbox</layout>
-							<halign>left</halign>
 							
 							<text>
-								<label>ALT HOLD</label>
-							</text>
-							<text>
-								<label>A/P OFF</label>
-							</text>
-							<text>
-								<label>ATT HOLD</label>
+								<label>PITCH      </label>
 							</text>
 							
+							<group>
+								<layout>hbox</layout>
+						
+								<group>
+									<layout>vbox</layout>
+									<halign>left</halign>
+									
+									<text>
+										<label>ALT HOLD</label>
+									</text>
+									<text>
+										<label>ATT HOLD</label>
+									</text>
+									
+								</group>
+								
+								<slider>
+									<halign>left</halign>
+									<property>/f16/fcs/switch-pitch-block15</property>
+									<min>0</min>
+									<max>1</max>
+									<step>1</step>
+									<live>true</live>
+									<vertical>true</vertical>
+									<pref-height>40</pref-height>
+									<binding>
+										<command>dialog-apply</command>
+									</binding>
+								</slider>
+								
+							</group>
+						
 						</group>
 						
-						<slider>
-							<halign>left</halign>
-							<property>/f16/fcs/switch-pitch</property>
-							<min>-1</min>
-							<max>1</max>
-							<step>1</step>
-							<live>true</live>
-							<vertical>true</vertical>
-							<binding>
-								<command>dialog-apply</command>
-							</binding>
-						</slider>
-						
 					</group>
-				
+					
 				</group>
-
+				
+				<group>
+					<visible>
+						<greater-than-equals>
+							<property>/sim/variant-id</property>
+							<value>2</value>
+						</greater-than-equals>
+					</visible>
+					<row>0</row>
+					<col>0</col>
+					<layout>hbox</layout>
+					
+					<group>
+						<layout>vbox</layout>
+						
+						<text>
+							<label>ROLL      </label>
+						</text>
+						
+						<group>
+							<layout>hbox</layout>
+						
+							<group>
+								<layout>vbox</layout>
+								<halign>left</halign>
+								
+								<text>
+									<label>HDG SEL</label>
+								</text>
+								<text>
+									<label>ATT HOLD</label>
+								</text>
+								<text>
+									<label>STRG SEL</label>
+								</text>
+								
+							</group>
+							
+							<slider>
+								<halign>left</halign>
+								<property>/f16/fcs/switch-roll-block20</property>
+								<min>-1</min>
+								<max>1</max>
+								<step>1</step>
+								<live>true</live>
+								<vertical>true</vertical>
+								<binding>
+									<command>dialog-apply</command>
+								</binding>
+							</slider>
+							
+						</group>
+					
+					</group>
+					
+					<vrule/>
+					
+					<group>
+						<layout>vbox</layout>
+						
+						<text>
+							<label>PITCH      </label>
+						</text>
+						
+						<group>
+							<layout>hbox</layout>
+					
+							<group>
+								<layout>vbox</layout>
+								<halign>left</halign>
+								
+								<text>
+									<label>ALT HOLD</label>
+								</text>
+								<text>
+									<label>A/P OFF</label>
+								</text>
+								<text>
+									<label>ATT HOLD</label>
+								</text>
+								
+							</group>
+							
+							<slider>
+								<halign>left</halign>
+								<property>/f16/fcs/switch-pitch-block20</property>
+								<min>-1</min>
+								<max>1</max>
+								<step>1</step>
+								<live>true</live>
+								<vertical>true</vertical>
+								<binding>
+									<command>dialog-apply</command>
+								</binding>
+							</slider>
+							
+						</group>
+					
+					</group>
+					
+				</group>
+			
 			</group>
 
 			<hrule/>

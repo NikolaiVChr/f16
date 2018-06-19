@@ -28,79 +28,160 @@
 	
 	<hrule/>
 	
+	<text>
+		<halign>left</halign>
+		<label>How to use the F-16 Autoflight System</label>
+	</text>
+	
+	<hrule/>
+	
 	<group>
-		<layout>vbox</layout>
+		<layout>table</layout>
 		
-		<text>
-			<halign>left</halign>
-			<label>How to use the F-16 Autoflight System</label>
-		</text>
+		<group>
+			<visible>
+				<less-than>
+					<property>/sim/variant-id</property>
+					<value>2</value>
+				</less-than>
+			</visible>
+			<row>0</row>
+			<col>0</col>
+			<layout>vbox</layout>
+			
+			<text>
+				<halign>left</halign>
+				<label>General:</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>Both the roll and pitch axis in the autopilot are enabled when</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>the autopilot master switch is in the on (up) position.</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>If the stick is moved, the entire autopilot will disconnect,</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>and connect again when the stick is returned to neutral.</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>This ensures that the pilot can override the autopilot if needed.</label>
+			</text>
+			
+			<hrule/>
+			
+			<text>
+				<halign>left</halign>
+				<label>Roll:</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>HDG SEL: Holds the current heading</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>ATT HOLD: Holds the current roll</label>
+			</text>
+			
+			<hrule/>
+			
+			<text>
+				<halign>left</halign>
+				<label>Pitch:</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>ALT HOLD: Holds the current altitude</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>ATT HOLD: Holds the current pitch</label>
+			</text>
+			
+		</group>
 		
-		<hrule/>
-		
-		<text>
-			<halign>left</halign>
-			<label>General:</label>
-		</text>
-		<text>
-			<halign>left</halign>
-			<label>Both the roll and pitch axis in the autopilot are enabled when</label>
-		</text>
-		<text>
-			<halign>left</halign>
-			<label>the pitch switch is out of the A/P OFF position.</label>
-		</text>
-		<text>
-			<halign>left</halign>
-			<label>If the stick is moved, the entire autopilot will disconnect,</label>
-		</text>
-		<text>
-			<halign>left</halign>
-			<label>and connect again when the stick is returned to neutral.</label>
-		</text>
-		<text>
-			<halign>left</halign>
-			<label>This ensures that the pilot can override the autopilot if needed.</label>
-		</text>
-		
-		<hrule/>
-		
-		<text>
-			<halign>left</halign>
-			<label>Roll:</label>
-		</text>
-		<text>
-			<halign>left</halign>
-			<label>HDG SEL: Holds the current heading</label>
-		</text>
-		<text>
-			<halign>left</halign>
-			<label>ATT HOLD: Holds the current roll</label>
-		</text>
-		<text>
-			<halign>left</halign>
-			<label>STRG SEL: Follow Route Manager</label>
-		</text>
-		
-		<hrule/>
-		
-		<text>
-			<halign>left</halign>
-			<label>Pitch:</label>
-		</text>
-		<text>
-			<halign>left</halign>
-			<label>ALT HOLD: Holds the current altitude</label>
-		</text>
-		<text>
-			<halign>left</halign>
-			<label>A/P OFF: Switch the autopilot off</label>
-		</text>
-		<text>
-			<halign>left</halign>
-			<label>ATT HOLD: Holds the current pitch</label>
-		</text>
-		
+		<group>
+			<visible>
+				<greater-than-equals>
+					<property>/sim/variant-id</property>
+					<value>2</value>
+				</greater-than-equals>
+			</visible>
+			<row>0</row>
+			<col>0</col>
+			<layout>vbox</layout>
+			
+			<text>
+				<halign>left</halign>
+				<label>General:</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>Both the roll and pitch axis in the autopilot are enabled when</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>the pitch switch is out of the A/P OFF position.</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>If the stick is moved, the entire autopilot will disconnect,</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>and connect again when the stick is returned to neutral.</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>This ensures that the pilot can override the autopilot if needed.</label>
+			</text>
+			
+			<hrule/>
+			
+			<text>
+				<halign>left</halign>
+				<label>Roll:</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>HDG SEL: Holds the current heading</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>ATT HOLD: Holds the current roll</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>STRG SEL: Follow Route Manager</label>
+			</text>
+			
+			<hrule/>
+			
+			<text>
+				<halign>left</halign>
+				<label>Pitch:</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>ALT HOLD: Holds the current altitude</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>A/P OFF: Switch the autopilot off</label>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>ATT HOLD: Holds the current pitch</label>
+			</text>
+			
+		</group>
+	
 	</group>
 
 </PropertyList>

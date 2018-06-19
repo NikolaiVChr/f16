@@ -5,6 +5,45 @@
 
 <system name="autoflight">
 	
+	<channel name="Autoflight: Interface"> <!-- For differences in block versions -->
+		
+		<switch name="autoflight/switch-roll-min"> <!-- Allow STRG SEL on Block 20+ only -->
+			<default value="-1"/>
+			<test value="0">
+				/sim/variant-id lt 2
+			</test>
+		</switch>
+		
+		<switch name="autoflight/switch-roll">
+			<default value="/f16/fcs/switch-roll-block20"/>
+			<test value="/f16/fcs/switch-roll-block15">
+				/sim/variant-id lt 2
+			</test>
+			<clipto>
+				<min>autoflight/switch-roll-min</min>
+				<max>1</max>
+			</clipto>
+		</switch>
+		
+		<switch name="autoflight/switch-pitch"> <!-- /f16/fcs/autopilot-on is ignored on Block 20+ -->
+			<default value="0"/>
+			<test logic="AND" value="/f16/fcs/switch-pitch-block20">
+				/sim/variant-id ge 2
+			</test>
+			<test logic="AND" value="-1">
+				/sim/variant-id lt 2
+				/f16/fcs/autopilot-on eq 1
+				/f16/fcs/switch-pitch-block15 eq 0
+			</test>
+			<test logic="AND" value="1">
+				/sim/variant-id lt 2
+				/f16/fcs/autopilot-on eq 1
+				/f16/fcs/switch-pitch-block15 eq 1
+			</test>
+		</switch>
+	
+	</channel>
+	
 	<channel name="Autoflight: Logic">
 		
 		<switch name="position/wow">
@@ -22,6 +61,7 @@
 				position/wow eq 1
 				attitude/roll-rad gt 1.0472
 				attitude/roll-rad lt -1.0472
+				elec/bus/emergency-dc-2 lt 20
 			</test>
 		</switch>
 		
@@ -85,8 +125,8 @@
 		
 		<switch name="autoflight/output/roll-master">
 			<default value="0"/>
-			<test logic="AND" value="1"> <!-- /f16/fcs/switch-pitch is not a typo -->
-				/f16/fcs/switch-pitch ne 0
+			<test logic="AND" value="1"> <!-- autoflight/switch-pitch is not a typo -->
+				autoflight/switch-pitch ne 0
 				autoflight/can-engage eq 1
 				autoflight/ss/force eq 0
 				position/wow eq 0
@@ -96,7 +136,7 @@
 		<switch name="autoflight/output/pitch-master">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/f16/fcs/switch-pitch ne 0
+				autoflight/switch-pitch ne 0
 				autoflight/can-engage eq 1
 				autoflight/ss/force eq 0
 				position/wow eq 0
@@ -120,7 +160,7 @@
 									<value>1</value>
 								</eq>
 								<eq>
-									<property>/f16/fcs/switch-roll</property>
+									<property>autoflight/switch-roll</property>
 									<value>1</value>
 								</eq>
 							</and>
@@ -137,7 +177,7 @@
 			<default value="1"/>
 			<test logic="AND" value="0">
 				autoflight/output/roll-master eq 1
-				/f16/fcs/switch-roll ne 0
+				autoflight/switch-roll ne 0
 			</test>
 		</switch>
 		
@@ -208,7 +248,7 @@
 											<value>1</value>
 										</eq>
 										<eq>
-											<property>/f16/fcs/switch-pitch</property>
+											<property>autoflight/switch-pitch</property>
 											<value>1</value>
 										</eq>
 									</and>
@@ -252,7 +292,7 @@
 							<value>1</value>
 						</eq>
 						<eq>
-							<property>/f16/fcs/switch-roll</property>
+							<property>autoflight/switch-roll</property>
 							<value>0</value>
 						</eq>
 						<eq>
@@ -270,7 +310,7 @@
 			<default value="/orientation/roll-deg"/>
 			<test logic="AND" value="autoflight/roll/heading/pi">
 				autoflight/output/roll-master eq 1
-				/f16/fcs/switch-roll ne 0
+				autoflight/switch-roll ne 0
 			</test>
 		</switch>
 		
@@ -283,7 +323,7 @@
 							<value>1</value>
 						</eq>
 						<nq>
-							<property>/f16/fcs/switch-roll</property>
+							<property>autoflight/switch-roll</property>
 							<value>0</value>
 						</nq>
 					</and>
@@ -299,11 +339,11 @@
 			<default value="attitude/roll-rad"/>
 			<test logic="AND" value="autoflight/roll/roll-hld-target">
 				autoflight/output/roll-master eq 1
-				/f16/fcs/switch-roll eq 0
+				autoflight/switch-roll eq 0
 			</test>
 			<test logic="AND" value="autoflight/roll/roll-cmd-target">
 				autoflight/output/roll-master eq 1
-				/f16/fcs/switch-roll ne 0
+				autoflight/switch-roll ne 0
 			</test>
 		</switch>
 		
@@ -417,7 +457,7 @@
 							<value>1</value>
 						</eq>
 						<eq>
-							<property>/f16/fcs/switch-pitch</property>
+							<property>autoflight/switch-pitch</property>
 							<value>-1</value>
 						</eq>
 						<eq>
@@ -435,7 +475,7 @@
 			<default value="/orientation/pitch-deg"/>
 			<test logic="AND" value="autoflight/pitch/vs/pid">
 				autoflight/output/pitch-master eq 1
-				/f16/fcs/switch-pitch eq 1
+				autoflight/switch-pitch eq 1
 			</test>
 		</switch>
 		
@@ -448,7 +488,7 @@
 							<value>1</value>
 						</eq>
 						<eq>
-							<property>/f16/fcs/switch-pitch</property>
+							<property>autoflight/switch-pitch</property>
 							<value>1</value>
 						</eq>
 					</and>
@@ -464,11 +504,11 @@
 			<default value="attitude/pitch-rad"/>
 			<test logic="AND" value="autoflight/pitch/pitch-hld-target">
 				autoflight/output/pitch-master eq 1
-				/f16/fcs/switch-pitch eq -1
+				autoflight/switch-pitch eq -1
 			</test>
 			<test logic="AND" value="autoflight/pitch/pitch-cmd-target">
 				autoflight/output/pitch-master eq 1
-				/f16/fcs/switch-pitch eq 1
+				autoflight/switch-pitch eq 1
 			</test>
 		</switch>
 		
