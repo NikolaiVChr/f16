@@ -9,7 +9,7 @@
     <owner type="string">RSAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/Block50/BK-646.rgb</texture>
+    <texture>Liveries/Block50/BK-646.png</texture>
    </livery-logo>
   </model>
  </sim>

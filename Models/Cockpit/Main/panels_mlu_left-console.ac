@@ -18,7 +18,7 @@ name "ANTI_G"
 data 10
 ANTI_G.001
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 8
 0.73412 0.00765 0.26703
@@ -118,7 +118,7 @@ name "AUDIO-1_1"
 data 11
 AUDIO-1.002
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.19672 0.02789 0.26655
@@ -186,7 +186,7 @@ name "AUDIO-2_1"
 data 11
 AUDIO-2.002
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.27342 0.02145 0.26655
@@ -254,7 +254,7 @@ name "ECM_1"
 data 7
 ECM.002
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.31208 0.01821 0.26655
@@ -275,7 +275,7 @@ name "ELEC"
 data 8
 ELEC.001
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 34
 0.341 0.01578 0.41399
@@ -462,7 +462,7 @@ name "EPU_1"
 data 7
 EPU.002
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.31228 0.01819 0.49091
@@ -595,7 +595,7 @@ name "EXT_LIGHTING_1"
 data 16
 EXT_LIGHTING.002
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.58725 0.00765 0.30474
@@ -1268,7 +1268,7 @@ name "FLIGHT_CONTROL_1"
 data 18
 FLIGHT_CONTROL.002
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.58725 0.00765 0.39111
@@ -1336,7 +1336,7 @@ name "FUEL_1"
 data 8
 FUEL.002
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.43995 0.00765 0.48768
@@ -1404,7 +1404,7 @@ name "GROWTH.001_1"
 data 10
 GROWTH.002
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.37929 0.01256 0.26655
@@ -1472,7 +1472,7 @@ name "GROWTH.002_1"
 data 10
 GROWTH.007
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.43995 0.00765 0.26688
@@ -1540,7 +1540,7 @@ name "GROWTH.003_1"
 data 10
 GROWTH.009
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.58725 0.00765 0.26703
@@ -1659,7 +1659,7 @@ name "IFF_1"
 data 7
 IFF.002
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.43995 0.00765 0.39144
@@ -1727,7 +1727,7 @@ name "JET_FUEL_1"
 data 12
 JET_FUEL.002
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.13996 0.03266 0.41399
@@ -2441,7 +2441,7 @@ name "light_a"
 data 8
 ELEC.006
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.42316 0.00888 0.42904
@@ -2462,7 +2462,7 @@ name "light_b"
 data 8
 ELEC.007
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.43028 0.00828 0.42901
@@ -2483,7 +2483,7 @@ name "light_c"
 data 8
 ELEC.009
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.42324 0.00887 0.44419
@@ -2504,7 +2504,7 @@ name "light_d"
 data 8
 ELEC.008
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.42324 0.00887 0.44419
@@ -2525,7 +2525,7 @@ name "light_dash"
 data 8
 ELEC.011
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.38466 0.01211 0.42915
@@ -2546,7 +2546,7 @@ name "light_epu_gen"
 data 8
 ELEC.003
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.38745 0.01188 0.42915
@@ -2567,7 +2567,7 @@ name "light_epu_pmg"
 data 8
 ELEC.012
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.40256 0.01061 0.42915
@@ -2588,7 +2588,7 @@ name "light_fail"
 data 8
 ELEC.005
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.42331 0.00887 0.46417
@@ -2609,7 +2609,7 @@ name "light_main"
 data 8
 ELEC.010
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.3664 0.01365 0.44419
@@ -2630,7 +2630,7 @@ name "light_pmg"
 data 8
 ELEC.000
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.35159 0.01489 0.44411
@@ -2651,7 +2651,7 @@ name "light_stby"
 data 8
 ELEC.002
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.36955 0.01338 0.42923
@@ -2672,7 +2672,7 @@ name "light_to"
 data 8
 ELEC.004
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.42331 0.00887 0.46417
@@ -2740,7 +2740,7 @@ name "MANUAL_PITCH_1"
 data 16
 MANUAL_PITCH.002
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.07252 0.03832 0.41399
@@ -2808,7 +2808,7 @@ name "MANUAL_TRIM_1"
 data 15
 MANUAL_TRIM.002
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.43995 0.00765 0.28604
@@ -2936,7 +2936,7 @@ name "TEST_1"
 data 8
 TEST.001
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.73412 0.00765 0.41386
@@ -3048,7 +3048,7 @@ name "UHF_1"
 data 7
 UHF.002
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.07252 0.03832 0.26649
@@ -3069,7 +3069,7 @@ name "UHF_1.001"
 data 7
 UHF.003
 crease 30.0
-texture "../Textures/panels-MLU-left_console.rgb"
+texture "../Textures/panels-MLU-left_console.png"
 texrep 1 1
 numvert 4
 0.07252 0.03832 0.26649

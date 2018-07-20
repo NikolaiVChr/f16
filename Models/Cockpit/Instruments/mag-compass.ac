@@ -60,7 +60,7 @@ OBJECT poly
 name "poly"
 data 8
 Mesh.001
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 107
@@ -1317,7 +1317,7 @@ OBJECT poly
 name "ring"
 data 4
 Mesh
-texture "../Textures/mag-compass.rgb"
+texture "../Textures/mag-compass.png"
 texrep 1 1
 crease 30.000000
 numvert 48

@@ -11,7 +11,7 @@ OBJECT poly
 name "INSTR_hdg-knob"
 data 8
 Mesh.001
-texture "../Textures/instr.rgb"
+texture "../Textures/instr.png"
 texrep 1 1
 crease 45.000000
 numvert 49
@@ -428,7 +428,7 @@ OBJECT poly
 name "INSTR_mode-knob"
 data 4
 Mesh
-texture "../Textures/instr.rgb"
+texture "../Textures/instr.png"
 texrep 1 1
 crease 58.000000
 numvert 76
@@ -1039,7 +1039,7 @@ OBJECT poly
 name "INSTR_mount"
 data 8
 Mesh.002
-texture "../Textures/instr.rgb"
+texture "../Textures/instr.png"
 texrep 1 1
 crease 45.000000
 numvert 68

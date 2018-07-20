@@ -971,7 +971,7 @@ OBJECT poly
 name "AIR_COND_1"
 data 12
 AIR_COND.002
-texture "../Textures/panels-MLU-right_console.rgb"
+texture "../Textures/panels-MLU-right_console.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -1039,7 +1039,7 @@ OBJECT poly
 name "ANTI_ICE_1"
 data 12
 ANTI_ICE.001
-texture "../Textures/panels-MLU-right_console.rgb"
+texture "../Textures/panels-MLU-right_console.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -1107,7 +1107,7 @@ OBJECT poly
 name "AVIONICS_POWER_1"
 data 18
 AVIONICS_POWER.002
-texture "../Textures/panels-MLU-right_console.rgb"
+texture "../Textures/panels-MLU-right_console.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -1175,7 +1175,7 @@ OBJECT poly
 name "DTU_1"
 data 7
 DTU.002
-texture "../Textures/panels-MLU-right_console.rgb"
+texture "../Textures/panels-MLU-right_console.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -1243,7 +1243,7 @@ OBJECT poly
 name "GROWTH.101_1"
 data 10
 GROWTH.012
-texture "../Textures/panels-MLU-right_console.rgb"
+texture "../Textures/panels-MLU-right_console.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -1311,7 +1311,7 @@ OBJECT poly
 name "GROWTH.102_1"
 data 10
 GROWTH.014
-texture "../Textures/panels-MLU-right_console.rgb"
+texture "../Textures/panels-MLU-right_console.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -1379,7 +1379,7 @@ OBJECT poly
 name "GROWTH.103_1"
 data 10
 GROWTH.016
-texture "../Textures/panels-MLU-right_console.rgb"
+texture "../Textures/panels-MLU-right_console.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -1447,7 +1447,7 @@ OBJECT poly
 name "GROWTH.104_1"
 data 10
 GROWTH.018
-texture "../Textures/panels-MLU-right_console.rgb"
+texture "../Textures/panels-MLU-right_console.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -1515,7 +1515,7 @@ OBJECT poly
 name "HUD_1"
 data 7
 HUD.002
-texture "../Textures/panels-MLU-right_console.rgb"
+texture "../Textures/panels-MLU-right_console.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -1583,7 +1583,7 @@ OBJECT poly
 name "KY_58_1"
 data 9
 KY_58.002
-texture "../Textures/panels-MLU-right_console.rgb"
+texture "../Textures/panels-MLU-right_console.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -1727,7 +1727,7 @@ OBJECT poly
 name "LIGHTING_1"
 data 12
 LIGHTING.002
-texture "../Textures/panels-MLU-right_console.rgb"
+texture "../Textures/panels-MLU-right_console.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -1795,7 +1795,7 @@ OBJECT poly
 name "NUCLEAR_CONSENT_1"
 data 19
 NUCLEAR_CONSENT.002
-texture "../Textures/panels-MLU-right_console.rgb"
+texture "../Textures/panels-MLU-right_console.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -1863,7 +1863,7 @@ OBJECT poly
 name "OXYGEN_REGULATOR_1"
 data 20
 OXYGEN_REGULATOR.002
-texture "../Textures/panels-MLU-right_console.rgb"
+texture "../Textures/panels-MLU-right_console.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -2026,7 +2026,7 @@ OBJECT poly
 name "SNSR_PWR_1"
 data 12
 SNSR_PWR.002
-texture "../Textures/panels-MLU-right_console.rgb"
+texture "../Textures/panels-MLU-right_console.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -2094,7 +2094,7 @@ OBJECT poly
 name "VOICE_MESSAGE_1"
 data 17
 VOICE_MESSAGE.002
-texture "../Textures/panels-MLU-right_console.rgb"
+texture "../Textures/panels-MLU-right_console.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -2162,7 +2162,7 @@ OBJECT poly
 name "ZEROIZE_1"
 data 11
 ZEROIZE.002
-texture "../Textures/panels-MLU-right_console.rgb"
+texture "../Textures/panels-MLU-right_console.png"
 texrep 1 1
 crease 30.000000
 numvert 4

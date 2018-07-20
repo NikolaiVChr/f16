@@ -6,7 +6,7 @@ OBJECT poly
 name "RWStation1.001"
 data 8
 Mesh.156
-texture "f16.rgb"
+texture "f16.png"
 crease 80.000000
 numvert 12
 -2.27664 -0.785951 -0.787057
@@ -135,7 +135,7 @@ OBJECT poly
 name "RWStation1.002"
 data 8
 Mesh.158
-texture "f16.rgb"
+texture "f16.png"
 crease 80.000000
 numvert 12
 -2.27664 -0.834889 0.692984

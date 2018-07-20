@@ -10,15 +10,15 @@ _______________________________________________________________________
 <PropertyList>
 
  <name>F16 Panel</name>
- <background>Aircraft/f16/Panels/Textures/f16panel-00.rgb</background>
- <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-00.rgb</multibackground>
- <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-01.rgb</multibackground>
- <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-06.rgb</multibackground>
- <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-02.rgb</multibackground>
- <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-07.rgb</multibackground>
- <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-03.rgb</multibackground>
- <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-00.rgb</multibackground>
- <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-04.rgb</multibackground>
+ <background>Aircraft/f16/Panels/Textures/f16panel-00.png</background>
+ <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-00.png</multibackground>
+ <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-01.png</multibackground>
+ <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-06.png</multibackground>
+ <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-02.png</multibackground>
+ <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-07.png</multibackground>
+ <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-03.png</multibackground>
+ <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-00.png</multibackground>
+ <multibackground>Aircraft/f16/Models/Cockpit/Textures/f16panel-04.png</multibackground>
  <w>1024</w>
  <h>768</h>
  <y-offset>0</y-offset>

@@ -669,7 +669,7 @@ OBJECT poly
 name "ar_nws"
 data 8
 Mesh.074
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 crease 45.000000
 numvert 4
 -4.7857 0.692121 -0.131861
@@ -2615,7 +2615,7 @@ OBJECT poly
 name "disc"
 data 8
 Mesh.085
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 crease 45.000000
 numvert 4
 -4.78141 0.673615 -0.131656
@@ -2796,7 +2796,7 @@ OBJECT poly
 name "down"
 data 8
 Mesh.086
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 crease 45.000000
 numvert 4
 -4.78918 0.709756 0.130683
@@ -8374,7 +8374,7 @@ OBJECT poly
 name "rdy"
 data 8
 Mesh.098
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 crease 45.000000
 numvert 4
 -4.78945 0.710138 -0.132022
@@ -9387,7 +9387,7 @@ OBJECT poly
 name "steady"
 data 8
 Mesh.100
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 crease 45.000000
 numvert 4
 -4.78559 0.6921 0.130521
@@ -9412,7 +9412,7 @@ OBJECT poly
 name "up"
 data 8
 Mesh.101
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 crease 45.000000
 numvert 4
 -4.7815 0.674084 0.130316

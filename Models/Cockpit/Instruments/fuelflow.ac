@@ -5,7 +5,7 @@ kids 6
 OBJECT poly
 name "drum2"
 loc -4.84529e-05 -5.10957e-05 0.00842453
-texture "../Textures/faces1.rgb"
+texture "../Textures/faces1.png"
 texrep 0.042 0.468
 texoff 0.53 0.005
 numvert 30
@@ -124,7 +124,7 @@ kids 0
 OBJECT poly
 name "drum3"
 loc -4.26371e-05 -4.63254e-05 0.00238913
-texture "../Textures/faces1.rgb"
+texture "../Textures/faces1.png"
 texrep 0.042 0.468
 texoff 0.53 0.005
 numvert 20
@@ -223,7 +223,7 @@ kids 0
 OBJECT poly
 name "drum4"
 loc -3.10188e-05 -4.63254e-05 -0.00369671
-texture "../Textures/faces1.rgb"
+texture "../Textures/faces1.png"
 texrep 0.042 0.468
 texoff 0.53 0.005
 numvert 20
@@ -322,7 +322,7 @@ kids 0
 OBJECT poly
 name "housing"
 loc 0.00708727 -0.000538765 0.0024482
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep -0.227 0.193
 texoff 0.23 -0.66
 numvert 51
@@ -826,7 +826,7 @@ kids 0
 OBJECT poly
 name "drum1"
 loc -8.33195e-05 -6.99101e-05 0.0144875
-texture "../Textures/faces1.rgb"
+texture "../Textures/faces1.png"
 texrep 0.042 0.468
 texoff 0.53 0.005
 numvert 30
@@ -945,7 +945,7 @@ kids 0
 OBJECT poly
 name "drum5"
 loc -7.58355e-05 -6.18559e-05 -0.00981962
-texture "../Textures/faces1.rgb"
+texture "../Textures/faces1.png"
 texrep 0.042 0.468
 texoff 0.53 0.005
 numvert 20

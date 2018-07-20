@@ -14,7 +14,7 @@ Oil Pressure indicator instrument.
    <layers>
     <layer>
      <texture>
-      <path>Aircraft/f16/Panels/Textures/icp.rgb</path>
+      <path>Aircraft/f16/Panels/Textures/icp.png</path>
       <x1>0.0</x1>
       <y1>0.0</y1>
       <x2>1.0</x2>

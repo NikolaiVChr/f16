@@ -9315,7 +9315,7 @@ OBJECT poly
 name "FUEL_AL_needle2"
 data 15
 FUEL_AL_needle2
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 5
@@ -9351,7 +9351,7 @@ OBJECT poly
 name "FUEL_FR_needle1"
 data 15
 FUEL_FR_needle1
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 5
@@ -9470,7 +9470,7 @@ OBJECT poly
 name "FUEL_drum1"
 data 10
 FUEL_drum1
-texture "../Textures/faces1.rgb"
+texture "../Textures/faces1.png"
 texrep 1 1
 crease 30.000000
 numvert 20
@@ -9570,7 +9570,7 @@ OBJECT poly
 name "FUEL_drum2"
 data 10
 FUEL_drum2
-texture "../Textures/faces1.rgb"
+texture "../Textures/faces1.png"
 texrep 1 1
 crease 30.000000
 numvert 20
@@ -9670,7 +9670,7 @@ OBJECT poly
 name "FUEL_drum3"
 data 10
 FUEL_drum3
-texture "../Textures/faces1.rgb"
+texture "../Textures/faces1.png"
 texrep 1 1
 crease 30.000000
 numvert 20
@@ -9770,7 +9770,7 @@ OBJECT poly
 name "FUEL_drum4"
 data 10
 FUEL_drum4
-texture "../Textures/faces1.rgb"
+texture "../Textures/faces1.png"
 texrep 1 1
 crease 30.000000
 numvert 20
@@ -9870,7 +9870,7 @@ OBJECT poly
 name "FUEL_drum5"
 data 10
 FUEL_drum5
-texture "../Textures/faces1.rgb"
+texture "../Textures/faces1.png"
 texrep 1 1
 crease 30.000000
 numvert 20
@@ -9970,7 +9970,7 @@ OBJECT poly
 name "FUEL_rpm_disk"
 data 13
 FUEL_rpm_disk
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 20

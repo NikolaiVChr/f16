@@ -1686,7 +1686,7 @@
   <object-name>LandingGear</object-name>
   <property-base>sim/model/livery</property-base>
   <texture-prop>texture</texture-prop>
-  <texture>f16.rgb</texture>
+  <texture>f16.png</texture>
  </animation>
 
 
@@ -1695,7 +1695,7 @@
   <object-name>Logos</object-name>
   <property-base>sim/model/livery-logo</property-base>
   <texture-prop>texture</texture-prop>
-  <texture>f16trans.rgb</texture>
+  <texture>f16trans.png</texture>
  </animation>
 
 <model>

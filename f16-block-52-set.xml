@@ -38,7 +38,7 @@
     </tags>
 
   <startup>
-   <splash-texture>Aircraft/f16/f16-splash.rgb</splash-texture>
+   <splash-texture>Aircraft/f16/f16-splash.png</splash-texture>
   </startup>
 
   <previews>

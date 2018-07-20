@@ -4,7 +4,7 @@ OBJECT world
 kids 1
 OBJECT poly
 name "rect"
-texture "flack.rgb"
+texture "flack.png"
 crease 45.000000
 numvert 4
 1.98 -1.98 8.65485e-08

@@ -10,7 +10,7 @@
    <layers>
     <layer>
      <texture>
-      <path>Aircraft/f16/Models/Cockpit/Textures/icp_2D.rgb</path>
+      <path>Aircraft/f16/Models/Cockpit/Textures/icp_2D.png</path>
       <x1>0.0</x1>
       <y1>0.0</y1>
       <x2>1.0</x2>

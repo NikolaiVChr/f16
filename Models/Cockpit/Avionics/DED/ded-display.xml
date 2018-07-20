@@ -4,7 +4,7 @@
 <PropertyList>
 
  <name>Data Entry Display Panel</name>
- <background>Aircraft/f16/Models/Cockpit/Textures/trans.rgb</background>
+ <background>Aircraft/f16/Models/Cockpit/Textures/trans.png</background>
  <w>1024</w>
  <h>768</h>
 

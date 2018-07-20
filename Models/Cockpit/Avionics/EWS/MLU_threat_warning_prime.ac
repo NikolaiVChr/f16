@@ -8,7 +8,7 @@ name "launch"
 data 8
 Mesh.001
 crease 30.0
-texture "../../Textures/panels-MLU-1.rgb"
+texture "../../Textures/panels-MLU-1.png"
 texrep 1 1
 numvert 5
 0 -0.01922 -0.02957
@@ -36,7 +36,7 @@ name "pri"
 data 8
 Mesh.004
 crease 30.0
-texture "../../Textures/panels-MLU-1.rgb"
+texture "../../Textures/panels-MLU-1.png"
 texrep 1 1
 numvert 4
 0 -0.02125 0.01241
@@ -57,7 +57,7 @@ name "rect"
 data 4
 Mesh
 crease 30.0
-texture "../../Textures/panels-MLU-1.rgb"
+texture "../../Textures/panels-MLU-1.png"
 texrep 1 1
 numvert 50
 0 0.03456 -0.03193
@@ -404,7 +404,7 @@ name "unk"
 data 8
 Mesh.005
 crease 30.0
-texture "../../Textures/panels-MLU-1.rgb"
+texture "../../Textures/panels-MLU-1.png"
 texrep 1 1
 numvert 4
 0 -0.02117 -0.02077

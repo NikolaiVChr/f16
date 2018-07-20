@@ -32,7 +32,7 @@ OBJECT poly
 name "ASI_bkg2"
 data 8
 Mesh.005
-texture "../Textures/asi-mach-2-4.rgb"
+texture "../Textures/asi-mach-2-4.png"
 texrep 1 1
 crease 45.000000
 numvert 4
@@ -91,7 +91,7 @@ OBJECT poly
 name "ASI_face"
 data 8
 Mesh.003
-texture "../Textures/asi-mach-2-4-center.rgb"
+texture "../Textures/asi-mach-2-4-center.png"
 texrep 1 1
 crease 45.000000
 numvert 35
@@ -518,7 +518,7 @@ OBJECT poly
 name "ASI_mach-scale"
 data 8
 Mesh.004
-texture "../Textures/asi-mach-2-4-mn-scale.rgb"
+texture "../Textures/asi-mach-2-4-mn-scale.png"
 texrep 1 1
 crease 45.000000
 numvert 17

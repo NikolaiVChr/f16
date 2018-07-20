@@ -13,7 +13,7 @@
    <w>11</w>
    <h>11</h>
    <texture>
-    <path>Aircraft/f16/Panels/Textures/misc1.rgb</path>
+    <path>Aircraft/f16/Panels/Textures/misc1.png</path>
     <x1>0.578</x1>
     <y1>0.402</y1>
     <x2>0.672</x2>
@@ -39,7 +39,7 @@
    <w>9</w>
    <h>9</h>
    <texture>
-    <path>Aircraft/f16/Panels/Textures/misc1.rgb</path>
+    <path>Aircraft/f16/Panels/Textures/misc1.png</path>
     <x1>0.703</x1>
     <y1>0.391</y1>
     <x2>0.797</x2>
@@ -69,7 +69,7 @@
    <w>10</w>
    <h>10</h>
    <texture>
-    <path>Aircraft/f16/Panels/Textures/misc1.rgb</path>
+    <path>Aircraft/f16/Panels/Textures/misc1.png</path>
     <x1>0.824</x1>
     <y1>0.402</y1>
     <x2>0.914</x2>

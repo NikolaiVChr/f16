@@ -9,7 +9,7 @@ OBJECT poly
 name "box.001"
 data 8
 Mesh.018
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 8
@@ -87,7 +87,7 @@ OBJECT poly
 name "box.002"
 data 8
 Mesh.019
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 8
@@ -165,7 +165,7 @@ OBJECT poly
 name "box.003"
 data 8
 Mesh.025
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 32
@@ -837,7 +837,7 @@ OBJECT poly
 name "master_caution"
 data 8
 Mesh.027
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -863,7 +863,7 @@ OBJECT poly
 name "master_reset"
 data 8
 Mesh.021
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 8
@@ -941,7 +941,7 @@ OBJECT poly
 name "none"
 data 8
 Mesh.029
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -1121,7 +1121,7 @@ OBJECT poly
 name "tf_fail"
 data 8
 Mesh.026
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -1147,7 +1147,7 @@ OBJECT poly
 name "unused1"
 data 8
 Mesh.017
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -1173,7 +1173,7 @@ OBJECT poly
 name "unused2"
 data 8
 Mesh.030
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 4

@@ -15,7 +15,7 @@ Indicated airspeed instrument.
     <layer>
      <name>gauge border</name>
      <texture>
-     <path>Aircraft/f16/Models/Cockpit/Textures/faces1.rgb</path>
+     <path>Aircraft/f16/Models/Cockpit/Textures/faces1.png</path>
      <x1>0.0</x1>
      <y1>0.5</y1>
      <x2>0.5</x2>
@@ -28,7 +28,7 @@ Indicated airspeed instrument.
     <layer>
      <name>mach scale</name>
      <texture>
-     <path>Aircraft/f16/Models/Cockpit/Textures/misc1.rgb</path>
+     <path>Aircraft/f16/Models/Cockpit/Textures/misc1.png</path>
      <x1>0.</x1>
      <y1>0.53</y1>
      <x2>0.468</x2>
@@ -120,7 +120,7 @@ Indicated airspeed instrument.
     <layer>
      <name>mach face</name>
      <texture>
-     <path>Aircraft/f16/Models/Cockpit/Textures/faces1.rgb</path>
+     <path>Aircraft/f16/Models/Cockpit/Textures/faces1.png</path>
      <x1>0.51</x1>
      <y1>0.51</y1>
      <x2>1.0</x2>
@@ -205,7 +205,7 @@ Indicated airspeed instrument.
     <layer>
      <name>index</name>
      <texture>
-     <path>Aircraft/f16/Models/Cockpit/Textures/faces1.rgb</path>
+     <path>Aircraft/f16/Models/Cockpit/Textures/faces1.png</path>
      <x1>0.594</x1>
      <y1>0.332</y1>
      <x2>0.738</x2>

@@ -10,7 +10,7 @@ OBJECT poly
 name "AOA_mask"
 data 8
 Mesh.003
-texture "../Textures/aoa-gauge.rgb"
+texture "../Textures/aoa-gauge.png"
 texrep 1 1
 crease 80.000000
 numvert 18
@@ -99,7 +99,7 @@ OBJECT poly
 name "AOA_mount"
 data 4
 Mesh
-texture "../Textures/aoa-mount.rgb"
+texture "../Textures/aoa-mount.png"
 texrep 1 1
 crease 45.000000
 numvert 80
@@ -609,7 +609,7 @@ OBJECT poly
 name "AOA_off-flag"
 data 8
 Mesh.002
-texture "../Textures/aoa-gauge.rgb"
+texture "../Textures/aoa-gauge.png"
 texrep 1 1
 crease 80.000000
 numvert 8
@@ -648,7 +648,7 @@ OBJECT poly
 name "AOA_tape"
 data 8
 Mesh.001
-texture "../Textures/aoa-gauge.rgb"
+texture "../Textures/aoa-gauge.png"
 texrep 1 1
 crease 45.000000
 numvert 4

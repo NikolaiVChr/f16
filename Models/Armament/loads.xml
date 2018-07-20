@@ -675,7 +675,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   <object-name>LExtTank</object-name>
   <property-base>sim/model/livery</property-base>
   <texture-prop>texture</texture-prop>
-  <texture>f16.rgb</texture>
+  <texture>f16.png</texture>
  </animation>
  
 </PropertyList>

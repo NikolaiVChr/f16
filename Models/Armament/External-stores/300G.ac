@@ -5,7 +5,7 @@ kids 1
 OBJECT poly
 name "fuel_tank300"
 loc 0.130988 -0.0394056 -0.000795722
-texture "../../f16.rgb"
+texture "../../f16.png"
 texrep 0.385 0.064
 texoff 0.39 -0.09
 numvert 118

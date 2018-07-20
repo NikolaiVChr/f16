@@ -11,7 +11,7 @@ OBJECT poly
 name "needle_disk"
 data 8
 Mesh.129
-texture "faces1.rgb"
+texture "faces1.png"
 texrep 1 1
 crease 30.000000
 numvert 107
@@ -1162,7 +1162,7 @@ OBJECT poly
 name "poly.001"
 data 8
 Mesh.128
-texture "faces1.rgb"
+texture "faces1.png"
 texrep 1 1
 crease 30.000000
 numvert 7
@@ -1209,7 +1209,7 @@ OBJECT poly
 name "disk"
 data 8
 Mesh.125
-texture "faces1.rgb"
+texture "faces1.png"
 texrep 1 1
 crease 30.000000
 numvert 33
@@ -1444,7 +1444,7 @@ OBJECT poly
 name "housing"
 data 8
 Mesh.126
-texture "instruments.rgb"
+texture "instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 112
@@ -2574,7 +2574,7 @@ OBJECT poly
 name "mach_scale"
 data 8
 Mesh.127
-texture "misc1.rgb"
+texture "misc1.png"
 texrep 1 1
 crease 30.000000
 numvert 33
