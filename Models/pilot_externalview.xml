@@ -7,6 +7,7 @@
  <animation>
         <type>material</type>
         <object-name>helmet</object-name>
+        <object-name>patch</object-name>
         <property-base>sim/model/livery-patch</property-base>
         <texture-prop>texture</texture-prop>
         <texture>Liveries/patch.default.png</texture>
