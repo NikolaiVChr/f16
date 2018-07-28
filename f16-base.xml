@@ -1034,6 +1034,7 @@
                 <sources>
                     <batt-bus type="bool">0</batt-bus>
                     <battery-percent type="double">85</battery-percent> <!-- Initial battery percentage value -->
+                    <battery-time type="double">0</battery-time>
                     <external-pwr-plugged-in type="int">0</external-pwr-plugged-in>
                 </sources>
                 <switches>
