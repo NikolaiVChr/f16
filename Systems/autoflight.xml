@@ -235,6 +235,33 @@
 		
 		<!-- ALT HOLD -->
 		
+		<fcs_function name="autoflight/pitch/alt/gain">
+			<function>
+				<table>
+					<independentVar lookup="row">velocities/mach</independentVar>
+					<tableData>
+						0.2 -7
+						2.1 -5
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
+		<fcs_function name="autoflight/pitch/alt/predicted">
+			<function>
+				<sum>
+					<quotient>
+						<property>/instrumentation/gps/indicated-vertical-speed</property>
+						<product>
+							<property>autoflight/pitch/alt/gain</property>
+							<value>-1</value>
+						</product>
+					</quotient>
+					<property>/instrumentation/altimeter/indicated-altitude-ft</property>
+				</sum>
+			</function>
+		</fcs_function>
+		
 		<fcs_function name="autoflight/pitch/alt/target">
 			<function>
 				<product>
@@ -253,7 +280,7 @@
 										</eq>
 									</and>
 									<property>autoflight/pitch/alt/target</property>
-									<property>autoflight/pitch/altitude-2-sec-ahead</property>
+									<property>autoflight/pitch/alt/predicted</property>
 								</ifthen>
 								<value>50</value> <!-- Make the integer rounded correctly -->
 							</sum>
@@ -268,15 +295,16 @@
 		<fcs_function name="autoflight/pitch/alt/error">
 			<function>
 				<difference>
-					<property>autoflight/pitch/altitude-2-sec-ahead</property>
+					<property>/instrumentation/altimeter/indicated-altitude-ft</property>
 					<property>autoflight/pitch/alt/target</property>
+					<value>2</value>
 				</difference>
 			</function>
 		</fcs_function>
 		
 		<pure_gain name="autoflight/pitch/vs/target">
 			<input>autoflight/pitch/alt/error</input>
-			<gain>-4</gain>
+			<gain>autoflight/pitch/alt/gain</gain>
 		</pure_gain>
 	
 	</channel>
@@ -560,6 +588,19 @@
 			</function>
 		</fcs_function>
 		
+		<fcs_function name="autoflight/pitch/i-gain-att">
+			<function>
+				<table>
+					<independentVar lookup="row">velocities/mach</independentVar>
+					<tableData>
+						0.2 -2
+						1.0 -4
+						2.0 -5
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
 		<switch name="autoflight/pitch/p-gain">
 			<default value="0"/>
 			<test logic="AND" value="autoflight/pitch/p-gain-att">
@@ -603,19 +644,33 @@
 			<output>autoflight/pitch/master-pid</output>
 		</pid>
 		
-		<pure_gain name="autoflight/pitch/g-demand-inverted"> <!-- Invert the G command -->
-			<input>autoflight/pitch/master-pid</input>
-			<gain>-1.0</gain>
-		</pure_gain>
+		<fcs_function name="autoflight/pitch/g-demand"> <!-- Offset the G demand for rolling, better then integrating -->
+			<function>
+				<sum>
+					<property>autoflight/pitch/master-pid</property>
+					<quotient>
+						<value>1</value>
+						<cos>
+							<property>attitude/roll-rad</property>
+						</cos>
+					</quotient>
+					<value>-1</value>
+				</sum>
+			</function>
+			<clipto>
+				<min>-0.5</min> <!-- 0.5 G -->
+				<max>1.0</max> <!-- 2.0 G -->
+			</clipto>
+		</fcs_function>
 		
 		<switch name="autoflight/pitch/g-demand-switched">
 			<default value="0"/>
-			<test logic="AND" value="autoflight/pitch/g-demand-inverted">
+			<test logic="AND" value="autoflight/pitch/g-demand">
 				autoflight/output/pitch-master eq 1
 			</test>
 			<clipto>
-				<min>-1.0</min>
-				<max>0.5</max>
+				<min>-0.5</min> <!-- 0.5 G -->
+				<max>1.0</max> <!-- 2.0 G -->
 			</clipto>
 		</switch>
 	

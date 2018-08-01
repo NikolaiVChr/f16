@@ -995,7 +995,7 @@
                 <pitch>
                     <altitude-2-sec-ahead type="double">0</altitude-2-sec-ahead> <!-- autoflight-rules.xml -->
                     <d-gain-att type="double">-5</d-gain-att>
-                    <i-gain-att type="double">-1</i-gain-att>
+                    <i-gain-att type="double">0</i-gain-att> <!-- This gain is dynamic -->
                     <master-pid type="double">0</master-pid>
                     <p-gain-att type="double">0</p-gain-att> <!-- This gain is dynamic -->
                     <vs>
