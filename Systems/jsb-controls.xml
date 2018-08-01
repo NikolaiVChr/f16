@@ -1564,7 +1564,7 @@
         <summer name="fcs/fly-by-wire/pitch/command-sum-limit-alpha">
             <input> -fcs/fly-by-wire/pitch/command-sum-limit-lagged </input>
             <input> fcs/fly-by-wire/pitch/alpha-indicated-gain </input>
-            <input> autoflight/pitch/g-demand-switched </input>
+            <input> -autoflight/pitch/g-demand-switched </input>
         </summer>
 
         <summer name="fcs/fly-by-wire/pitch/command-sum-limit-alpha-pitch">
