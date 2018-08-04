@@ -548,6 +548,8 @@ var F16_HUD = {
                         me.txt = sprintf("%d B82", pylons.fcs.getAmmo());
                     } elsif (me.weap == "AGM-88") {
                         me.txt = sprintf("%d M88", pylons.fcs.getAmmo());
+                    } elsif (me.weap == "B61-12") {
+                        me.txt = sprintf("%d B61", pylons.fcs.getAmmo());
                     }
                     me.win9 = 1;
                 }

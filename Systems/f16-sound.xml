@@ -996,6 +996,21 @@
             </volume>
         </gbu-release>
 
+        <b61-release>
+            <name>b61-release</name>
+            <mode>once</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/gbu_release.wav</path>
+            <condition>
+                <property>payload/armament/agm84/sound-fire-on-off</property>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+                <max>1</max>
+            </volume>
+        </b61-release>
+
         <missile-hit>
             <!-- multiple of these so the sound can be played over each other -->
             <name>missile-hit1</name>
