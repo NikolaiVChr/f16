@@ -1,0 +1,300 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+	<path>B61-7.ac</path>
+
+  <animation>
+    <type>select</type>
+    <object-name>b61-7.body</object-name>
+    <object-name>hooks</object-name>
+    <object-name>wings</object-name>
+    <condition>
+      <property>payload/armament/b61-7/flags/msl-id-200</property>
+    </condition>
+  </animation>
+
+  <!--<effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.0</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <object-name>AGM-65</object-name>
+  </effect>-->
+
+    <particlesystem>
+       <name>smoke</name>
+       <texture>../smoke.png</texture>
+
+       <emissive type="bool">false</emissive>
+       <lighting type="bool">false</lighting>
+
+       <condition>
+             <property>payload/armament/b61-7/flags/smoke-id-200</property>
+       </condition>
+
+       <attach>world</attach>
+
+       <placer>
+         <type>point</type> 
+       </placer>
+
+       <offsets>
+          <x-m>1.90437</x-m>
+          <y-m>0</y-m>
+          <z-m>0</z-m>
+       </offsets>
+
+       <shooter>
+         <theta-min-deg>-180</theta-min-deg>
+		 <theta-max-deg>180</theta-max-deg>
+		 <phi-min-deg>-180</phi-min-deg>
+		 <phi-max-deg>180</phi-max-deg>
+		   <speed-mps>
+		     <value>500</value>
+		     <spread>80</spread>
+         </speed-mps>
+         <rotation-speed>
+           <x-min-deg-sec>0</x-min-deg-sec>
+           <y-min-deg-sec>0</y-min-deg-sec>
+           <z-min-deg-sec>0</z-min-deg-sec>
+           <x-max-deg-sec>0</x-max-deg-sec>
+           <y-max-deg-sec>0</y-max-deg-sec>
+           <z-max-deg-sec>0</z-max-deg-sec>
+         </rotation-speed>
+       </shooter>
+
+       <counter>
+         <particles-per-sec>
+           <value>30</value>
+           <spread>10</spread>
+         </particles-per-sec>
+       </counter>
+          
+       <align>billboard</align>
+
+       <particle>
+         <start>
+           <color>
+             <red><value>   0.8 </value></red>
+             <green><value> 0.8 </value></green>
+             <blue><value>  0.8 </value></blue>
+             <alpha><value> 0.5 </value></alpha>
+           </color>
+           <size>
+             <value>1.0</value>
+           </size>
+         </start>
+
+         <end>
+           <color>
+             <red><value>   0.8 </value></red>
+             <green><value> 0.8 </value></green>
+             <blue><value>  0.8 </value></blue>
+             <alpha><value> 0.1 </value></alpha>
+           </color>
+           <size>
+             <value>6</value>
+           </size>
+         </end>
+
+         <life-sec>
+           <value>0.5</value>
+         </life-sec>
+            
+         <mass-kg>  5 </mass-kg>
+         <radius-m> 0.5 </radius-m>
+       </particle>
+
+       <program>
+         <fluid>               air  </fluid>
+         <gravity type="bool"> true </gravity>
+         <wind typ="bool">     true </wind>
+       </program>
+
+     </particlesystem>
+
+    <particlesystem>
+       <name>explosion</name>
+       <texture>../smoke.png</texture>
+
+       <emissive type="bool">true</emissive>
+       <lighting type="bool">false</lighting>
+
+       <condition>
+             <property>payload/armament/b61-7/flags/explode-id-200</property>
+       </condition>
+
+       <attach>world</attach>
+
+       <placer>
+         <type>point</type> 
+       </placer>
+
+       <shooter>
+         <theta-min-deg>-180</theta-min-deg>
+         <theta-max-deg>180</theta-max-deg>
+         <phi-min-deg>-180</phi-min-deg>
+         <phi-max-deg>180</phi-max-deg>
+         <speed-mps>
+           <value>500</value>
+           <spread>60</spread>
+         </speed-mps>
+         <rotation-speed>
+           <x-min-deg-sec>0</x-min-deg-sec>
+           <y-min-deg-sec>0</y-min-deg-sec>
+           <z-min-deg-sec>0</z-min-deg-sec>
+           <x-max-deg-sec>0</x-max-deg-sec>
+           <y-max-deg-sec>0</y-max-deg-sec>
+           <z-max-deg-sec>0</z-max-deg-sec>
+         </rotation-speed>
+       </shooter>
+
+       <counter>
+         <particles-per-sec>
+           <value>30</value>
+           <spread>10</spread>
+         </particles-per-sec>
+       </counter>
+          
+       <align>billboard</align>
+
+       <particle>
+         <start>
+           <color>
+             <red><value>   1.0 </value></red>
+             <green><value> 1.0 </value></green>
+             <blue><value>  0.4 </value></blue>
+             <alpha><value> 1 </value></alpha>
+           </color>
+           <size>
+             <value>4</value>
+           </size>
+         </start>
+
+         <end>
+           <color>
+             <red><value>   0.8 </value></red>
+             <green><value> 0.5 </value></green>
+             <blue><value>  0.2 </value></blue>
+             <alpha><value> 0.1 </value></alpha>
+           </color>
+           <size>
+             <value>100</value>
+           </size>
+         </end>
+
+         <life-sec>
+           <value>0.5</value>
+         </life-sec>
+            
+         <mass-kg>  5 </mass-kg>
+         <radius-m> 0.5 </radius-m>
+       </particle>
+
+       <program>
+         <fluid>               air  </fluid>
+         <gravity type="bool"> true </gravity>
+         <wind typ="bool">     true </wind>
+       </program>
+
+     </particlesystem>
+
+    <particlesystem>
+       <name>explosion-smoke</name>
+       <texture>../smoke.png</texture>
+
+       <emissive type="bool">false</emissive>
+       <lighting type="bool">false</lighting>
+
+       <condition>
+             <property>payload/armament/b61-7/flags/explode-smoke-id-200</property>
+       </condition>
+
+       <attach>world</attach>
+
+       <placer>
+         <type>point</type> 
+       </placer>
+
+       <shooter>
+         <theta-min-deg>-180</theta-min-deg>
+         <theta-max-deg>180</theta-max-deg>
+         <phi-min-deg>-180</phi-min-deg>
+         <phi-max-deg>180</phi-max-deg>
+         <speed-mps>
+           <value>500</value>
+           <spread>60</spread>
+         </speed-mps>
+         <rotation-speed>
+           <x-min-deg-sec>0</x-min-deg-sec>
+           <y-min-deg-sec>0</y-min-deg-sec>
+           <z-min-deg-sec>0</z-min-deg-sec>
+           <x-max-deg-sec>0</x-max-deg-sec>
+           <y-max-deg-sec>0</y-max-deg-sec>
+           <z-max-deg-sec>0</z-max-deg-sec>
+         </rotation-speed>
+       </shooter>
+
+       <counter>
+         <particles-per-sec>
+           <value>50</value>
+           <spread>10</spread>
+         </particles-per-sec>
+       </counter>
+          
+       <align>billboard</align>
+
+       <particle>
+         <start>
+           <color>
+             <red><value>   0.3 </value></red>
+             <green><value> 0.3 </value></green>
+             <blue><value>  0.25 </value></blue>
+             <alpha><value> 0.5 </value></alpha>
+           </color>
+           <size>
+             <value>20</value>
+           </size>
+         </start>
+
+         <end>
+           <color>
+             <red><value>   0.4 </value></red>
+             <green><value> 0.4 </value></green>
+             <blue><value>  0.4 </value></blue>
+             <alpha><value> 0.04 </value></alpha>
+           </color>
+           <size>
+             <value>120</value>
+           </size>
+         </end>
+
+         <life-sec>
+           <value>40</value>
+         </life-sec>
+            
+         <mass-kg>  5 </mass-kg>
+         <radius-m> 0.5 </radius-m>
+       </particle>
+
+       <program>
+         <fluid>               air  </fluid>
+         <gravity type="bool"> true </gravity>
+         <wind typ="bool">     true </wind>
+       </program>
+
+     </particlesystem>
+
+	<animation>
+  	<object-name>b61-7.body</object-name>
+    <object-name>hooks</object-name>
+    <object-name>wings</object-name>
+  		<enable-hot type="bool">false</enable-hot>
+ 	</animation>
+	
+</PropertyList>
