@@ -226,7 +226,7 @@ var a2g_casext = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         pylon1.loadSet(pylonSets.g);
         pylon2.loadSet(pylonSets.h);
-        pylon3.loadSet(pylonSets.c2);
+        pylon3.loadSet(pylonSets.i);
         pylon4.loadSet(pylonSets.l);
         pylon5.loadSet(pylonSets.empty);
         pylon6.loadSet(pylonSets.m);

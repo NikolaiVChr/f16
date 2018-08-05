@@ -66,6 +66,15 @@
   <path>Aircraft/f16/Models/Effects/damage-smoke.xml</path>
  </model>
 
+ <model>
+    <path>Effects/trail/trail.xml</path>
+      <offsets>
+        <x-m>16.0</x-m>
+        <y-m>0.0</y-m>
+        <z-m>0.2</z-m>
+      </offsets>
+  </model>
+
  <!--<model>
   <name>Cockpit</name>
   <path>Aircraft/f16/Models/Cockpit/F-16C-40/cockpit.xml</path>
