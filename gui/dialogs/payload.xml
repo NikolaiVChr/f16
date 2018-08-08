@@ -38,87 +38,126 @@
   </group>
 
   <hrule/>
+    <group>
+        <layout>table</layout>
+        <text>
+            <row>0</row>
+            <col>0</col>
+            <label>Air patrol</label>
+        </text>
+        <button>
+            <row>0</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2a_patrol();</script>
+            </binding>
+        </button>
 
-  <group>
-    <layout>hbox</layout>
-    <text><label>Air patrol</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2a_patrol();</script>
-      </binding>
-    </button>
-  </group>
+        <hrule>
+            <row>1</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
 
-  <hrule/>
+        <text>
+            <row>2</row>
+            <col>0</col>
+            <label>Air superiority</label>
+        </text>
+        <button>
+            <row>2</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2a_super();</script>
+            </binding>
+        </button>
 
-  <group>
-    <layout>hbox</layout>
-    <text><label>Air superority</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2a_super();</script>
-      </binding>
-    </button>
-  </group>
+        <hrule>
+            <row>3</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
 
-    <hrule/>
+        <text>
+            <row>4</row>
+            <col>0</col>
+            <label>Standoff</label>
+        </text>
+        <button>
+            <row>4</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2a_standoff();</script>
+            </binding>
+        </button>
+        <hrule>
+            <row>5</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
 
-  <group>
-    <layout>hbox</layout>
-    <text><label>Standoff</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2a_standoff();</script>
-      </binding>
-    </button>
-  </group>
+        <text>
+            <row>6</row>
+            <col>0</col>
+            <label>Air to ground</label>
+        </text>
+        <button>
+            <row>6</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_standard();</script>
+            </binding>
+        </button>
 
-    <hrule/>
+        <hrule>
+            <row>7</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
 
-  <group>
-    <layout>hbox</layout>
-    <text><label>Air to ground</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2g_standard();</script>
-      </binding>
-    </button>
-  </group>
+        <layout>hbox</layout>
+        <text>
+            <row>8</row>
+            <col>0</col>
+            <label>Bomb mission</label>
+        </text>
+        <button>
+            <row>8</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_bombs();</script>
+            </binding>
+        </button>
 
-    <hrule/>
+        <hrule>
+            <row>9</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
 
-      <group>
-    <layout>hbox</layout>
-    <text><label>Bomb mission</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2g_bombs();</script>
-      </binding>
-    </button>
-  </group>
-
-    <hrule/>
-
-  <group>
-    <layout>hbox</layout>
-    <text><label>Air to sea</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2m_standard();</script>
-      </binding>
-    </button>
-  </group>
-
+        <text>
+            <row>10</row>
+            <col>0</col>
+            <label>Air to sea</label>
+        </text>
+        <button>
+            <row>10</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2m_standard();</script>
+            </binding>
+        </button>
+    </group>
 </PropertyList>
