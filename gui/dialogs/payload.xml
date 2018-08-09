@@ -38,199 +38,295 @@
   </group>
 
   <hrule/>
-
-  <group>
-    <layout>hbox</layout>
-    <text><label>Air patrol</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2a_patrol();</script>
-      </binding>
-    </button>
-  </group>
-
-  <hrule/>
-
-  <group>
-    <layout>hbox</layout>
-    <text><label>Air superiority</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2a_super();</script>
-      </binding>
-    </button>
-  </group>
-
-    <hrule/>
-
-  <group>
-    <layout>hbox</layout>
-    <text><label>Combat Air Patrol</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2a_cap();</script>
-      </binding>
-    </button>
-  </group>
-
-    <hrule/>
-
-  <group>
-    <layout>hbox</layout>
-    <text><label>Combat Air Patrol (Extended)</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2a_capext();</script>
-      </binding>
-    </button>
-  </group>
-
-    <hrule/>
-
-  <group>
-    <layout>hbox</layout>
-    <text><label>Close Air Support</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2g_cas();</script>
-      </binding>
-    </button>
-  </group>
-
-    <hrule/>
-
-  <group>
-    <layout>hbox</layout>
-    <text><label>Close Air Support (Extended)</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2g_casext();</script>
-      </binding>
-    </button>
-  </group>
-
-    <hrule/>
-
-  <group>
-    <layout>hbox</layout>
-    <text><label>Air to Ground</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2g_mix();</script>
-      </binding>
-    </button>
-  </group>
-
-    <hrule/>
-
-  <group>
-    <layout>hbox</layout>
-    <text><label>Bomb mission</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2g_bombs();</script>
-      </binding>
-    </button>
-  </group>
-
-    <hrule/>
-
-  <group>
-    <layout>hbox</layout>
-    <text><label>Air to sea (Anti-ship)</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2s_antiship();</script>
-      </binding>
-    </button>
-  </group>
-
-  <hrule/>
-
-  <group>
-    <layout>hbox</layout>
-    <text><label>"Wild Weasel" (SEAD)</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2g_sead();</script>
-      </binding>
-    </button>
-  </group>
-
-    <hrule/>
-
-  <group>
-    <layout>hbox</layout>
-    <text><label>Offensive Counter-Air</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2g_oca();</script>
-      </binding>
-    </button>
-  </group>
-
-    <hrule/>
-
-  <group>
-    <layout>hbox</layout>
-    <text><label>Ferry flight</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2a_ferry();</script>
-      </binding>
-    </button>
-  </group>
-
-    <hrule/>
-
-  <group>
-    <layout>hbox</layout>
-    <text><label>Training</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.a2a_training();</script>
-      </binding>
-    </button>
-  </group>
-
-    <hrule/>
-
     <group>
-    <layout>hbox</layout>
-    <text><label>Clean</label></text>
-    <button>
-      <legend>Mount</legend>
-      <binding>
-          <command>nasal</command>
-          <script>pylons.clean();</script>
-      </binding>
-    </button>
-  </group>
+        <layout>table</layout>
+        <text>
+            <row>0</row>
+            <col>0</col>
+            <label>Air patrol</label>
+        </text>
+        <button>
+            <row>0</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2a_patrol();</script>
+            </binding>
+        </button>
 
+        <hrule>
+            <row>1</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
+
+        <text>
+            <row>2</row>
+            <col>0</col>
+            <label>Air superiority</label>
+        </text>
+        <button>
+            <row>2</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2a_super();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>3</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
+
+        <text>
+            <row>4</row>
+            <col>0</col>
+            <label>Combat Air Patrol</label>
+        </text>
+        <button>
+            <row>4</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2a_cap();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>5</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
+
+        <text>
+            <row>6</row>
+            <col>0</col>
+            <label>Combat Air patrol (Extended)</label>
+        </text>
+        <button>
+            <row>6</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2a_capext();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>7</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
+
+        <layout>hbox</layout>
+        <text>
+            <row>8</row>
+            <col>0</col>
+            <label>Close Air Support</label>
+        </text>
+        <button>
+            <row>8</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_cas();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>9</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
+
+        <text>
+            <row>10</row>
+            <col>0</col>
+            <label>Close Air Support (Extended)</label>
+        </text>
+        <button>
+            <row>10</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_casext();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>11</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
+
+        <text>
+            <row>12</row>
+            <col>0</col>
+            <label>Air to Ground</label>
+        </text>
+        <button>
+            <row>12</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_mix();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>13</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
+
+        <text>
+            <row>14</row>
+            <col>0</col>
+            <label>Bomb Mission</label>
+        </text>
+        <button>
+            <row>14</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_bombs();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>15</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
+
+        <text>
+            <row>16</row>
+            <col>0</col>
+            <label>Air to sea (Anti-ship)</label>
+        </text>
+        <button>
+            <row>16</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2s_antiship();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>17</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
+
+        <text>
+            <row>18</row>
+            <col>0</col>
+            <label>"Wild Weasel" (SEAD)</label>
+        </text>
+        <button>
+            <row>18</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_sead();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>19</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
+
+        <text>
+            <row>20</row>
+            <col>0</col>
+            <label>Offensive Counter Air</label>
+        </text>
+        <button>
+            <row>20</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_oca();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>21</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
+
+        <text>
+            <row>22</row>
+            <col>0</col>
+            <label>Ferry flight</label>
+        </text>
+        <button>
+            <row>22</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2a_ferry();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>23</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
+
+        <text>
+            <row>24</row>
+            <col>0</col>
+            <label>Training</label>
+        </text>
+        <button>
+            <row>24</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2a_training();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>25</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
+
+        <text>
+            <row>26</row>
+            <col>0</col>
+            <label>Clean</label>
+        </text>
+        <button>
+            <row>26</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.clean();</script>
+            </binding>
+        </button>
+    </group>
 </PropertyList>
