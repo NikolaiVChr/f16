@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+<!--
+Used for non fired GBU-31
+-->
+
+  <path>GBU-31.ac</path>
+
+  <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.0</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <object-name>Shell</object-name>
+      <object-name>Cover</object-name>
+      <object-name>Tail</object-name>
+      <object-name>Hooks</object-name>
+      <object-name>Cube</object-name>
+  </effect>
+
+  <!--animation>
+    <type>select</type>
+    <object-name>Tail</object-name>
+    <condition>
+      <equals>
+        <value>0</value>
+        <value>1</value>
+      </equals>
+    </condition>
+  </animation-->
+
+</PropertyList>
