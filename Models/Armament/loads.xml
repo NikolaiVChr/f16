@@ -308,6 +308,21 @@
     </greater-than>
   </condition>
  </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>MXU-648</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-2-type</property>
+      <value>MXU-648 Cargopod</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-2-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
  
 <!--  ===========================================================================================================-->
 <!--  ================================================= id-3   ==================================================-->
@@ -420,7 +435,20 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
  </animation>
  
 
- 
+ <animation>
+  <type>select</type>
+  <object-name>MXU-648</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-4-type</property>
+      <value>MXU-648 Cargopod</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-4-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
  
  
  
@@ -641,6 +669,21 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
     <equals>
       <property>payload/armament/station/id-6-type</property>
       <value>B61-7</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-6-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>MXU-648</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-6-type</property>
+      <value>MXU-648 Cargopod</value>
     </equals>
     <greater-than>
       <property>payload/armament/station/id-6-count</property>
