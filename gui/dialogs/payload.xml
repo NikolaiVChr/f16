@@ -170,7 +170,7 @@
         <text>
             <row>12</row>
             <col>0</col>
-            <label>Air to Ground</label>
+            <label>Guided Air to Ground (config 1)</label>
         </text>
         <button>
             <row>12</row>
@@ -178,7 +178,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_mix();</script>
+                <script>pylons.a2g_guided1();</script>
             </binding>
         </button>
 
@@ -191,7 +191,7 @@
         <text>
             <row>14</row>
             <col>0</col>
-            <label>Bomb Mission</label>
+            <label>Guided Air to Ground (config 2)</label>
         </text>
         <button>
             <row>14</row>
@@ -199,7 +199,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_bombs();</script>
+                <script>pylons.a2g_guided2();</script>
             </binding>
         </button>
 
@@ -212,7 +212,7 @@
         <text>
             <row>16</row>
             <col>0</col>
-            <label>Air to sea (Anti-ship)</label>
+            <label>Air Strike</label>
         </text>
         <button>
             <row>16</row>
@@ -220,7 +220,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2s_antiship();</script>
+                <script>pylons.a2g_mix();</script>
             </binding>
         </button>
 
@@ -233,7 +233,7 @@
         <text>
             <row>18</row>
             <col>0</col>
-            <label>"Wild Weasel" (SEAD)</label>
+            <label>Air to sea (Anti-ship)</label>
         </text>
         <button>
             <row>18</row>
@@ -241,7 +241,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_sead();</script>
+                <script>pylons.a2s_antiship();</script>
             </binding>
         </button>
 
@@ -254,7 +254,7 @@
         <text>
             <row>20</row>
             <col>0</col>
-            <label>Offensive Counter Air</label>
+            <label>"Wild Weasel" (SEAD)</label>
         </text>
         <button>
             <row>20</row>
@@ -262,7 +262,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_oca();</script>
+                <script>pylons.a2g_sead();</script>
             </binding>
         </button>
 
@@ -275,7 +275,7 @@
         <text>
             <row>22</row>
             <col>0</col>
-            <label>Ferry flight</label>
+            <label>Offensive Counter Air</label>
         </text>
         <button>
             <row>22</row>
@@ -283,7 +283,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_ferry();</script>
+                <script>pylons.a2g_oca();</script>
             </binding>
         </button>
 
@@ -296,7 +296,7 @@
         <text>
             <row>24</row>
             <col>0</col>
-            <label>Training</label>
+            <label>Ferry flight</label>
         </text>
         <button>
             <row>24</row>
@@ -304,7 +304,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_training();</script>
+                <script>pylons.a2a_ferry();</script>
             </binding>
         </button>
 
@@ -317,10 +317,31 @@
         <text>
             <row>26</row>
             <col>0</col>
-            <label>Clean</label>
+            <label>Training</label>
         </text>
         <button>
             <row>26</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2a_training();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>27</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
+
+        <text>
+            <row>28</row>
+            <col>0</col>
+            <label>Clean</label>
+        </text>
+        <button>
+            <row>28</row>
             <col>1</col>
             <legend>Mount</legend>
             <binding>

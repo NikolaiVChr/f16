@@ -234,6 +234,17 @@
  </model>
 
  <model>
+  <name>Station3_GBU-31</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-31/GBU-31.xml</path>
+  <offsets>
+   <x-m>0.725</x-m>
+   <y-m>-2.872</y-m>
+   <z-m>-0.52</z-m>
+   <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
   <name>Station3_B61-12</name>
   <path>Aircraft/f16/Models/Armament/Weapons/B61-12/B61-12.xml</path>
   <offsets>
@@ -292,6 +303,17 @@
     <pitch-deg>0</pitch-deg>
   </offsets>
 </model>
+
+<model>
+  <name>Station4_GBU-31</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-31/GBU-31.xml</path>
+  <offsets>
+   <x-m>0.15</x-m>
+   <y-m>-1.63</y-m>
+   <z-m>-0.517</z-m>
+   <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+ </model>
  
 <!-- =============================================================================================================  --> 
 <!-- =========================================== Station 4 =======================================================  -->
@@ -360,7 +382,16 @@
   </offsets>
 </model>
  
- 
+ <model>
+  <name>Station6_GBU-31</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-31/GBU-31.xml</path>
+  <offsets>
+   <x-m>0.15</x-m>
+   <y-m>1.63</y-m>
+   <z-m>-0.517</z-m>
+   <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+ </model>
 
 <!-- =============================================================================================================  --> 
 <!-- =========================================== Station 7 =======================================================  -->
@@ -463,6 +494,17 @@
    <y-m>2.86988</y-m>
    <z-m>-0.438099</z-m>
    <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station7_GBU-31</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-31/GBU-31.xml</path>
+  <offsets>
+   <x-m>0.725</x-m>
+   <y-m>2.872</y-m>
+   <z-m>-0.52</z-m>
+   <pitch-deg>-3.35</pitch-deg>
   </offsets>
  </model>
 

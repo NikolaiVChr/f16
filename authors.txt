@@ -41,6 +41,8 @@ Justin Nicholson
 J Maverick 16
 - Adapted and added liveries by Gary Brown
 - Sound editing
+- Added weapons
+- Fixes and improvements
 
 Fabien Barbier
 - Work on stores
@@ -59,3 +61,6 @@ Alan Teeder
 Joshua Davidson (it0uchpods)
 - Autopilot
 - Electrical System
+
+Martien Van Der Plas
+- 3D modeling for weapons, stores
