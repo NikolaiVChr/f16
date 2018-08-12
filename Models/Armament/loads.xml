@@ -311,7 +311,7 @@
 
  <animation>
   <type>select</type>
-  <object-name>MXU-648</object-name>
+  <object-name>Station3_MXU-648</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-2-type</property>
@@ -437,7 +437,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
 
  <animation>
   <type>select</type>
-  <object-name>MXU-648</object-name>
+  <object-name>Station5_MXU-648</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-4-type</property>
@@ -679,7 +679,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
 
  <animation>
   <type>select</type>
-  <object-name>MXU-648</object-name>
+  <object-name>Station7_MXU-648</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-6-type</property>

@@ -267,12 +267,12 @@
  </model>
 
 <model>
-  <name>MXU-648</name>
+  <name>Station3_MXU-648</name>
   <path>Aircraft/f16/Models/Armament/External-stores/MXU-648.xml</path>
   <offsets>
-   <x-m>0.35</x-m>
-   <y-m>-2.86988</y-m>
-   <z-m>-0.4381</z-m>
+   <x-m>0.62</x-m>
+   <y-m>-2.872</y-m>
+   <z-m>-0.49</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
@@ -330,13 +330,13 @@
 <!-- =============================================================================================================  -->  
  <model>
   <name>AN-ALQ-131</name>
-  <path>Aircraft/f16/Models/Armament/External-stores/an-alq-131.ac</path>
+  <path>Aircraft/f16/Models/Armament/External-stores/AN-ALQ-131.xml</path>
   <offsets>
    <x-m>0</x-m>
    <y-m>0</y-m>
    <z-m>-1.46</z-m>
    <!--<z-m>-1.15</z-m>-->
-   <pitch-deg>-1</pitch-deg>
+   <pitch-deg>-1.6</pitch-deg>
   </offsets>
  </model>
   
@@ -352,7 +352,7 @@
  </model>
  
  <model>
-  <name>MXU-648</name>
+  <name>Station5_MXU-648</name>
   <path>Aircraft/f16/Models/Armament/External-stores/MXU-648.xml</path>
   <offsets>
    <x-m>0</x-m>
@@ -550,12 +550,12 @@
  </model>
 
  <model>
-  <name>MXU-648</name>
+  <name>Station7_MXU-648</name>
   <path>Aircraft/f16/Models/Armament/External-stores/MXU-648.xml</path>
   <offsets>
-   <x-m>0.35</x-m>
-   <y-m>2.86988</y-m>
-   <z-m>-0.4381</z-m>
+   <x-m>0.62</x-m>
+   <y-m>2.872</y-m>
+   <z-m>-0.49</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>

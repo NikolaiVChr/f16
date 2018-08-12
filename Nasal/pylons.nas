@@ -43,8 +43,8 @@ var pylonSets = {
     c3: {name: "1 x GBU-31", content: ["GBU-31"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
 	e: {name: "20mm Cannon", content: [cannon], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	f: {name: "300 Gal Fuel tank", content: [fuelTankCenter], fireOrder: [0], launcherDragArea: 0.18, launcherMass: 392, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 1},
-	f2: {name: "AN/ALQ-131 ECM Pod", content: [dummy3], fireOrder: [0], launcherDragArea: 0.18, launcherMass: 100, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 1},
-    f3: {name: "MXU-648 Cargopod", content: [dummy4], fireOrder: [0], launcherDragArea: 0.18, launcherMass: 100, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 1},
+	f2: {name: "AN/ALQ-131 ECM Pod", content: [dummy3], fireOrder: [0], launcherDragArea: 0.18, launcherMass: 410, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 1},
+    f3: {name: "MXU-648 Cargopod", content: [dummy4], fireOrder: [0], launcherDragArea: 0.18, launcherMass: 104, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 1},
 	g: {name: "1 x AIM-9", content: ["AIM-9"], fireOrder: [0], launcherDragArea: -0.0785, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#wingtip
 	h: {name: "1 x AIM-120", content: ["AIM-120"], fireOrder: [0], launcherDragArea: -0.025, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#non wingtip
 	i: {name: "3 x GBU-12", content: ["GBU-12","GBU-12", "GBU-12"], fireOrder: [0,1,2], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0, category: 2},
@@ -298,9 +298,9 @@ var a2s_antiship = func {
         pylon1.loadSet(pylonSets.g);
         pylon2.loadSet(pylonSets.h);
         pylon3.loadSet(pylonSets.b);
-        pylon4.loadSet(pylonSets.j);
+        pylon4.loadSet(pylonSets.c3);
         pylon5.loadSet(pylonSets.empty);
-        pylon6.loadSet(pylonSets.j);
+        pylon6.loadSet(pylonSets.c3);
         pylon7.loadSet(pylonSets.b);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
