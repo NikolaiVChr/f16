@@ -16,6 +16,10 @@
   <livery-patch>
         <texture>Liveries/Block40/patch.Mav.png</texture>
   </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/Block40/pod.Mav.png</texture>
+  </livery-pod>
   </model>
  </sim>
 </PropertyList>

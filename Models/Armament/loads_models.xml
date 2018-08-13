@@ -332,11 +332,11 @@
   <name>AN-ALQ-131</name>
   <path>Aircraft/f16/Models/Armament/External-stores/AN-ALQ-131.xml</path>
   <offsets>
-   <x-m>0</x-m>
+   <x-m>-0.02</x-m>
    <y-m>0</y-m>
-   <z-m>-1.46</z-m>
+   <z-m>-1.48</z-m>
    <!--<z-m>-1.15</z-m>-->
-   <pitch-deg>-1.6</pitch-deg>
+   <pitch-deg>-0.6</pitch-deg>
   </offsets>
  </model>
   
@@ -355,10 +355,21 @@
   <name>Station5_MXU-648</name>
   <path>Aircraft/f16/Models/Armament/External-stores/MXU-648.xml</path>
   <offsets>
-   <x-m>0</x-m>
+   <x-m>-0.02</x-m>
    <y-m>0</y-m>
-   <z-m>-1.15</z-m>
-   <pitch-deg>-2</pitch-deg>
+   <z-m>-1.136</z-m>
+   <pitch-deg>-0.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Centerpylon</name>
+  <path>Aircraft/f16/Models/Central-pylon.xml</path>
+  <offsets>
+   <x-m>0</x-m>
+   <y-m>0.02</y-m>
+   <z-m>0</z-m>
+   <pitch-deg>0</pitch-deg>
   </offsets>
  </model>
  

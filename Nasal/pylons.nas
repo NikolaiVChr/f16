@@ -326,6 +326,23 @@ var a2a_ferry = func {
     }
 }
 
+# Ferry configuration w/ cargo: 2 droptanks, 2 cargopods
+var a2a_ferrycargo = func {
+    if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+        pylon1.loadSet(pylonSets.h);
+        pylon2.loadSet(pylonSets.g);
+        pylon3.loadSet(pylonSets.f3);
+        pylon4.loadSet(pylonSets.l);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.m);
+        pylon7.loadSet(pylonSets.f3);
+        pylon8.loadSet(pylonSets.g);
+        pylon9.loadSet(pylonSets.h);
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
 # SEAD: 2 AGM88 and ECM pod
 var a2g_sead = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {

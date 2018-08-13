@@ -16,7 +16,7 @@ Used for non fired GBU-31
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
-      <object-name>Shell</object-name>
+      <object-name>Body</object-name>
       <object-name>Cover</object-name>
       <object-name>Tail</object-name>
       <object-name>Hooks</object-name>

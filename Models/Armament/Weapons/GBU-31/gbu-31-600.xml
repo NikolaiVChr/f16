@@ -9,7 +9,7 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>Shell</object-name>
+		<object-name>Body</object-name>
       	<object-name>Cover</object-name>
       	<object-name>Tail</object-name>
       	<object-name>Hooks</object-name>
@@ -192,7 +192,7 @@
 		 </particlesystem>
 
 	<animation>
-  		<object-name>Shell</object-name>
+  		<object-name>Body</object-name>
       	<object-name>Cover</object-name>
       	<object-name>Tail</object-name>
       	<object-name>Hooks</object-name>

@@ -449,7 +449,27 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
     </greater-than>
   </condition>
  </animation>
- 
+
+<animation>
+  <type>select</type>
+  <object-name>Centerpylon</object-name>
+  <condition>
+  	<or>
+    <equals>
+      <property>payload/armament/station/id-4-type</property>
+      <value>MXU-648 Cargopod</value>
+    </equals>
+	<equals>
+      <property>payload/armament/station/id-4-type</property>
+      <value>AN/ALQ-131 ECM Pod</value>
+    </equals>
+	</or>
+    <greater-than>
+      <property>payload/armament/station/id-4-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
  
  
 <!--  ===========================================================================================================-->
@@ -836,9 +856,19 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   <object-name>VentralTank</object-name>
   <object-name>RExtTank</object-name>
   <object-name>LExtTank</object-name>
+  <object-name>Centerpylon</object-name>
   <property-base>sim/model/livery</property-base>
   <texture-prop>texture</texture-prop>
   <texture>f16.png</texture>
  </animation>
+
+ <animation>
+    <type>material</type>
+    <object-name>Shell</object-name>
+    <object-name>Door</object-name>
+    <property-base>sim/model/livery-pod</property-base>
+    <texture-prop>texture</texture-prop>
+    <texture>Armament/External-stores/MXU-648.png</texture>
+  </animation>
  
 </PropertyList>

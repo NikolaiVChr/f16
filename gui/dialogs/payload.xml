@@ -317,7 +317,7 @@
         <text>
             <row>26</row>
             <col>0</col>
-            <label>Training</label>
+            <label>Ferry flight w/ cargo</label>
         </text>
         <button>
             <row>26</row>
@@ -325,7 +325,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_training();</script>
+                <script>pylons.a2a_ferrycargo();</script>
             </binding>
         </button>
 
@@ -338,10 +338,31 @@
         <text>
             <row>28</row>
             <col>0</col>
-            <label>Clean</label>
+            <label>Training</label>
         </text>
         <button>
             <row>28</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2a_training();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>29</row>
+            <col>0</col>
+            <colspan>2</colspan>
+        </hrule>
+
+        <text>
+            <row>30</row>
+            <col>0</col>
+            <label>Clean</label>
+        </text>
+        <button>
+            <row>30</row>
             <col>1</col>
             <legend>Mount</legend>
             <binding>
