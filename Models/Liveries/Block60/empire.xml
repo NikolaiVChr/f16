@@ -15,6 +15,10 @@
             <livery-patch>
                 <texture>Liveries/Block60/patch.raider1.png</texture>
             </livery-patch>
+
+            <livery-pod>
+                <texture>Liveries/Block60/pod.Raider1.png</texture>
+             </livery-pod>
         </model>
     </sim>
 </PropertyList>

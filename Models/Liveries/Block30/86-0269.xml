@@ -14,7 +14,11 @@
 
    <livery-patch>
             <texture>Liveries/patch.aggressor1.png</texture>
-        </livery-patch>
+    </livery-patch>
+
+    <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+    </livery-pod>
   </model>
  </sim>
 </PropertyList>
