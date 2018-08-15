@@ -213,8 +213,10 @@
 		
 		<switch name="autoflight/roll/heading/trigger">
 			<default value="0"/>
-			<test logic="OR" value="1">
+			<test value="-1">
 				autoflight/roll/gain-switch eq 1
+			</test>
+			<test logic="OR" value="1">
 				autoflight/roll/heading/pi le -29.99
 				autoflight/roll/heading/pi ge 29.99
 			</test>
@@ -433,8 +435,10 @@
 		
 		<switch name="autoflight/roll/trigger">
 			<default value="0"/>
-			<test logic="OR" value="1">
+			<test value="-1">
 				autoflight/output/roll-master ne 1
+			</test>
+			<test logic="OR" value="1">
 				autoflight/roll/master-pid le -0.348556
 				autoflight/roll/master-pid ge 0.348556
 			</test>
@@ -624,8 +628,10 @@
 		
 		<switch name="autoflight/pitch/trigger">
 			<default value="0"/>
-			<test logic="OR" value="1">
+			<test logic="OR" value="-1">
 				autoflight/output/pitch-master ne 1
+			</test>
+			<test logic="OR" value="1">
 				autoflight/pitch/master-pid le -0.499
 				autoflight/pitch/master-pid ge 0.999
 			</test>
