@@ -234,6 +234,17 @@
  </model>
 
  <model>
+  <name>Station3_GBU-31</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-31/GBU-31.xml</path>
+  <offsets>
+   <x-m>0.725</x-m>
+   <y-m>-2.872</y-m>
+   <z-m>-0.52</z-m>
+   <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
   <name>Station3_B61-12</name>
   <path>Aircraft/f16/Models/Armament/Weapons/B61-12/B61-12.xml</path>
   <offsets>
@@ -255,6 +266,16 @@
   </offsets>
  </model>
 
+<model>
+  <name>Station3_MXU-648</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/MXU-648.xml</path>
+  <offsets>
+   <x-m>0.62</x-m>
+   <y-m>-2.872</y-m>
+   <z-m>-0.49</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
 
 <!-- =============================================================================================================  --> 
 <!-- =========================================== Station 4 =======================================================  -->
@@ -292,19 +313,30 @@
     <pitch-deg>0</pitch-deg>
   </offsets>
 </model>
+
+<model>
+  <name>Station4_GBU-31</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-31/GBU-31.xml</path>
+  <offsets>
+   <x-m>0.15</x-m>
+   <y-m>-1.63</y-m>
+   <z-m>-0.517</z-m>
+   <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+ </model>
  
 <!-- =============================================================================================================  --> 
 <!-- =========================================== Station 4 =======================================================  -->
 <!-- =============================================================================================================  -->  
  <model>
   <name>AN-ALQ-131</name>
-  <path>Aircraft/f16/Models/Armament/External-stores/an-alq-131.ac</path>
+  <path>Aircraft/f16/Models/Armament/External-stores/AN-ALQ-131.xml</path>
   <offsets>
-   <x-m>0</x-m>
+   <x-m>-0.02</x-m>
    <y-m>0</y-m>
-   <z-m>-1.46</z-m>
+   <z-m>-1.48</z-m>
    <!--<z-m>-1.15</z-m>-->
-   <pitch-deg>0</pitch-deg>
+   <pitch-deg>-0.6</pitch-deg>
   </offsets>
  </model>
   
@@ -319,7 +351,27 @@
   </offsets>
  </model>
  
- 
+ <model>
+  <name>Station5_MXU-648</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/MXU-648.xml</path>
+  <offsets>
+   <x-m>-0.02</x-m>
+   <y-m>0</y-m>
+   <z-m>-1.136</z-m>
+   <pitch-deg>-0.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Centerpylon</name>
+  <path>Aircraft/f16/Models/Central-pylon.xml</path>
+  <offsets>
+   <x-m>0</x-m>
+   <y-m>0.02</y-m>
+   <z-m>0</z-m>
+   <pitch-deg>0</pitch-deg>
+  </offsets>
+ </model>
  
  
 <!-- =============================================================================================================  --> 
@@ -360,7 +412,16 @@
   </offsets>
 </model>
  
- 
+ <model>
+  <name>Station6_GBU-31</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-31/GBU-31.xml</path>
+  <offsets>
+   <x-m>0.15</x-m>
+   <y-m>1.63</y-m>
+   <z-m>-0.517</z-m>
+   <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+ </model>
 
 <!-- =============================================================================================================  --> 
 <!-- =========================================== Station 7 =======================================================  -->
@@ -467,6 +528,17 @@
  </model>
 
  <model>
+  <name>Station7_GBU-31</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-31/GBU-31.xml</path>
+  <offsets>
+   <x-m>0.725</x-m>
+   <y-m>2.872</y-m>
+   <z-m>-0.52</z-m>
+   <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
   <name>Station7_B61-12</name>
   <path>Aircraft/f16/Models/Armament/Weapons/B61-12/B61-12.xml</path>
   <offsets>
@@ -484,6 +556,17 @@
    <x-m>0.35</x-m>
    <y-m>2.86988</y-m>
    <z-m>-0.4381</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station7_MXU-648</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/MXU-648.xml</path>
+  <offsets>
+   <x-m>0.62</x-m>
+   <y-m>2.872</y-m>
+   <z-m>-0.49</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>

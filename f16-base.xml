@@ -1369,6 +1369,54 @@
                 <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
             </gbu-12>
+            <gbu-31>
+                <short-name type="string">GBU-31</short-name>
+                <long-name type="string">GBU-31 JDAM</long-name>
+                <fire-msg type="string">Bombs away</fire-msg>
+                <class type="string">GM</class>
+                <max-fire-range-nm type="double">15 </max-fire-range-nm>
+                <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
+                <guidance type="string">laser</guidance>
+                <navigation type="string">PN</navigation>
+                <loft-altitude type="int"> 0 </loft-altitude>
+                <terrain-follow type="bool">false</terrain-follow>
+                <FCS-field-deg type="int"> 200 </FCS-field-deg>
+                <seeker-field-deg type="int"> 32 </seeker-field-deg>
+                <reaquire type="bool">true</reaquire>
+                <max-g type="double"> 1.8 </max-g><!-- real is 2.8, but here its limited for technical reasons -->
+                <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
+                <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
+                <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
+                <stage-2-duration-sec type="double"> 0 </stage-2-duration-sec>
+                <weight-launch-lbs type="double"> 2036 </weight-launch-lbs>
+                <weight-warhead-lbs type="double"> 945 </weight-warhead-lbs>
+                <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
+                <drag-coeff type="double"> 0.012 </drag-coeff>
+                <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
+                <arming-time-sec type="double"> 3 </arming-time-sec>
+                <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
+                <self-destruct-time-sec type="double"> 10000 </self-destruct-time-sec>
+                <all-aspect type="bool">true</all-aspect>
+                <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
+                <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
+                <rail type="bool">false</rail>
+                <max-report-distance type="double"> 350 </max-report-distance>
+                <vol-search type="double"> 0.075 </vol-search>
+                <vol-track type="double"> 0.25 </vol-track>
+                <vol-track-weak type="double"> 0.175 </vol-track-weak>
+                <drop-time type="double">2</drop-time>
+                <deploy-time type="double">2</deploy-time>
+                <lateral-dps type="double"> 10 </lateral-dps>
+                <max-pitch-deg type="double">-45</max-pitch-deg>
+                <hit-everything-nearby type="bool">true</hit-everything-nearby>
+                <!-- the following 6 properties not used yet: -->
+                <release-limit-mach type="double"> 1.2 </release-limit-mach>
+                <release-limit-altitude type="double"> 45000 </release-limit-altitude>
+                <release-limit-g type="double"> 0 </release-limit-g><!-- no info on this -->
+                <release-limit-roll type="double"> 90 </release-limit-roll>
+                <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
+                <require-lock-to-fire type="bool">false</require-lock-to-fire>
+            </gbu-31>
             <agm-65>
                 <short-name type="string">AGM65</short-name>
                 <long-name type="string">AGM-65B Maverick</long-name>

@@ -16,6 +16,10 @@
    <livery-patch>
       <texture>Liveries/Block40/patch.buzzards.png</texture>
   </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/Block40/pod.buzzards.png</texture>
+  </livery-pod>
   </model>
  </sim>
 </PropertyList>
