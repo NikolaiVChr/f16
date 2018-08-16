@@ -40,8 +40,8 @@ Justin Nicholson
 
 J Maverick 16
 - Adapted and added liveries by Gary Brown
-- Sound editing
-- Added weapons
+- Sound recording/editing
+- Added weapons, stores
 - Fixes and improvements
 
 Fabien Barbier
