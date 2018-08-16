@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim> 
+  <model>
+   <livery>
+    <name type="string">USAF 31FW, 510FS AV "50 years USAF"</name>
+    <texture>Liveries/Block40/89-2050.png</texture>
+    
+    <owner type="string">USAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/yf/yf16-transp.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block40/patch.buzzards.png</texture>
+  </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/Block40/pod.buzzards.png</texture>
+  </livery-pod>
+  </model>
+ </sim>
+</PropertyList>
