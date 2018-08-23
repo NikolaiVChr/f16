@@ -788,6 +788,12 @@ var F16_HUD = {
                         hdp.window9_txt = sprintf("%d B82", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-88") {
                         hdp.window9_txt = sprintf("%d M88", pylons.fcs.getAmmo());
+                    } elsif (hdp.weapon_selected == "GBU-31") {
+                        hdp.window9_txt = sprintf("%d B31", pylons.fcs.getAmmo());
+                    } elsif (hdp.weapon_selected == "B61-12") {
+                        hdp.window9_txt = sprintf("%d B61-12", pylons.fcs.getAmmo());
+                    } elsif (hdp.weapon_selected == "B61-7") {
+                        hdp.window9_txt = sprintf("%d B61-7", pylons.fcs.getAmmo());
                     } else hdp.window9_txt = "";
                 }
                 if (hdp.active_u != nil)
