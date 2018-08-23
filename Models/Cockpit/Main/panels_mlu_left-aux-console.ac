@@ -787,7 +787,7 @@ OBJECT poly
 name "SW_PARKING_BRAKE"
 data 16
 SW_PARKING_BRAKE
-texture "../Textures/fuel-qty-sel.rgb"
+texture "../Textures/fuel-qty-sel.png"
 texrep 1 1
 crease 45.000000
 numvert 25

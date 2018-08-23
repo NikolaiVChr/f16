@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>pilot_externalview.ac</path>
+
+ <animation>
+        <type>material</type>
+        <object-name>helmet</object-name>
+        <object-name>patch</object-name>
+        <property-base>sim/model/livery-patch</property-base>
+        <texture-prop>texture</texture-prop>
+        <texture>Liveries/patch.default.png</texture>
+    </animation>
+
+</PropertyList>

@@ -82,7 +82,7 @@ name "AirIntake"
 data 8
 Mesh.080
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 93
 -3.25977 -0.8306 -0.01823
@@ -995,7 +995,7 @@ name "ArresterHook"
 data 8
 Mesh.037
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 20
 2.5746 -0.74314 -0.05524
@@ -1241,7 +1241,7 @@ name "Box"
 data 8
 Mesh.012
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 13
 -3.12926 -0.79284 -0.27421
@@ -1366,7 +1366,7 @@ name "BoxLeft"
 data 8
 Mesh.014
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 12
 -0.6601 -0.41419 0.76249
@@ -1478,7 +1478,7 @@ name "BoxRight"
 data 8
 Mesh.013
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 12
 -0.66001 -0.41419 -0.76343
@@ -1590,7 +1590,7 @@ name "CanopyFrame"
 data 8
 Mesh.058
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 75
 -5.44412 0.43922 0.16583
@@ -2457,7 +2457,7 @@ name "ExternalFrontGearDoor"
 data 8
 Mesh.044
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 7
 -3.13065 -1.39276 -0.27724
@@ -2504,7 +2504,7 @@ name "ExternalLeftMainDoor"
 data 8
 Mesh.006
 crease 65.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 12
 -0.83155 -0.41813 0.76301
@@ -2616,7 +2616,7 @@ name "ExternalRightMainDoor"
 data 8
 Mesh.010
 crease 65.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 12
 -0.83163 -0.41807 -0.76398
@@ -2728,7 +2728,7 @@ name "Fan"
 data 8
 Mesh.078
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 17
 0.59532 0.01856 0.4478
@@ -2851,7 +2851,7 @@ name "FanSpinning"
 data 8
 Mesh.079
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 17
 0.59683 0.01844 0.44619
@@ -2974,7 +2974,7 @@ name "FlashLightProtector"
 data 8
 Mesh.032
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 6
 5.07436 3.19134 -0.00229
@@ -3139,7 +3139,7 @@ name "LeftLowerAileron"
 data 8
 Mesh.093
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 8
 1.73389 0.05338 3.57829
@@ -3205,7 +3205,7 @@ name "LeftLowerFlap"
 data 8
 Mesh.096
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 8
 1.35176 0.15271 1.0652
@@ -3271,7 +3271,7 @@ name "LeftLowerHorizonTail"
 data 8
 Mesh.017
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 6
 5.33846 -0.26063 2.7904
@@ -3317,7 +3317,7 @@ name "LeftLowerLef"
 data 8
 Mesh.092
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 26
 0.71676 -0.0402 4.25494
@@ -3520,7 +3520,7 @@ name "LeftLowerSpeedbrake"
 data 8
 Mesh.028
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 9
 4.55555 0.02666 1.0804
@@ -3563,7 +3563,7 @@ name "LeftUpperAileron"
 data 8
 Mesh.020
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 27
 2.10113 0.04935 4.25052
@@ -3714,7 +3714,7 @@ name "LeftUpperFlap"
 data 8
 Mesh.056
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 6
 1.71989 0.0739 3.5817
@@ -3754,7 +3754,7 @@ name "LeftUpperHorizonTail"
 data 8
 Mesh.015
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 21
 5.39935 -0.13642 2.16614
@@ -3887,7 +3887,7 @@ name "LeftUpperLef"
 data 8
 Mesh.022
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 6
 1.29425 -0.00655 4.58845
@@ -3927,7 +3927,7 @@ name "LeftUpperSpeedbrake"
 data 8
 Mesh.027
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 6
 4.55555 0.09149 1.0804
@@ -3967,7 +3967,7 @@ name "Link16Antennas"
 data 8
 Mesh.057
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 24
 -5.85416 0.36774 -0.05907
@@ -4145,7 +4145,7 @@ name "LWStation1"
 data 8
 Mesh.107
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 12
 1.28469 0.06562 1.62864
@@ -4275,7 +4275,7 @@ name "LWStation2"
 data 8
 Mesh.000
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 12
 1.5586 0.06151 2.88009
@@ -4405,7 +4405,7 @@ name "LWStation3"
 data 8
 Mesh.108
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 12
 1.66705 0.06151 3.69937
@@ -4552,7 +4552,7 @@ name "Poly.001"
 data 8
 Mesh.075
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 32
 4.61286 0.45211 0.08911
@@ -5226,7 +5226,7 @@ name "RadarDomeTop"
 data 8
 Mesh.098
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 455
 -6.69573 -0.06574 -0.36509
@@ -10177,7 +10177,7 @@ name "RightLowerAileron"
 data 8
 Mesh.094
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 8
 1.73474 0.05242 -3.57134
@@ -10243,7 +10243,7 @@ name "RightLowerFlap"
 data 8
 Mesh.095
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 8
 1.35295 0.15096 -1.07402
@@ -10309,7 +10309,7 @@ name "RightLowerHorizonTail"
 data 8
 Mesh.024
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 6
 5.34627 -0.26063 -2.80247
@@ -10355,7 +10355,7 @@ name "RightLowerLef"
 data 8
 Mesh.097
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 19
 0.85145 -0.03321 -4.2948
@@ -10515,7 +10515,7 @@ name "RightLowerSpeedbrake"
 data 8
 Mesh.026
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 10
 4.55555 0.02667 -1.08342
@@ -10559,7 +10559,7 @@ name "RightUpperAileron"
 data 8
 Mesh.019
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 27
 2.10083 0.05014 -3.71646
@@ -10710,7 +10710,7 @@ name "RightUpperFlap"
 data 8
 Mesh.018
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 6
 1.72101 0.07277 -3.60735
@@ -10750,7 +10750,7 @@ name "RightUpperHorizonTail"
 data 8
 Mesh.023
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 21
 5.39014 -0.21865 -2.59715
@@ -10883,7 +10883,7 @@ name "RightUpperLef"
 data 8
 Mesh.021
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 6
 1.29106 -0.00332 -4.59923
@@ -10923,7 +10923,7 @@ name "RightUpperSpeedbrake"
 data 8
 Mesh.025
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 6
 4.55555 0.09149 -1.08342
@@ -10963,7 +10963,7 @@ name "RNLAF_Tailroot"
 data 8
 Mesh.072
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 28
 5.42794 0.62681 -0.14387
@@ -11295,7 +11295,7 @@ name "Rudder"
 data 8
 Mesh.048
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 3
 4.31473 1.15181 0.04312
@@ -11314,7 +11314,7 @@ name "Rudder.001"
 data 8
 Mesh.049
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 3
 5.52053 3.02997 -0.01674
@@ -11333,7 +11333,7 @@ name "Rudder.003"
 data 8
 Mesh.051
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 25
 5.03477 1.15181 -0.00177
@@ -11470,7 +11470,7 @@ name "Rudder.004"
 data 8
 Mesh.052
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 3
 5.52053 3.02997 0.00865
@@ -11489,7 +11489,7 @@ name "Rudder.005"
 data 8
 Mesh.053
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 3
 5.85243 3.02997 -0.00332
@@ -11508,7 +11508,7 @@ name "Rudder.006"
 data 8
 Mesh.054
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 3
 4.31473 1.15181 0.04312
@@ -11527,7 +11527,7 @@ name "RWStation1"
 data 8
 Mesh.106
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 12
 1.28257 0.06563 -1.63305
@@ -11657,7 +11657,7 @@ name "RWStation2"
 data 8
 Mesh.105
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 12
 1.5588 0.06151 -2.87989
@@ -11787,7 +11787,7 @@ name "RWStation3"
 data 8
 Mesh.009
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 12
 1.66705 0.06151 -3.70063
@@ -11917,7 +11917,7 @@ name "Tail"
 data 8
 Mesh.031
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 32
 4.47501 2.61936 -0.02248
@@ -12228,7 +12228,7 @@ name "Turbine"
 data 8
 Mesh.076
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 17
 2.98673 -0.08917 0.43846
@@ -12351,7 +12351,7 @@ name "USAF_Tailroot"
 data 8
 Mesh.073
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 18
 0.7145 0.66553 -0.00011
@@ -12541,7 +12541,7 @@ name "VentralFins"
 data 8
 Mesh.043
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 10
 1.78656 -0.54083 -0.48426
@@ -12621,7 +12621,7 @@ name "WingTips"
 data 8
 Mesh.100
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 59
 1.31141 -0.03766 -4.60823
@@ -13182,7 +13182,7 @@ name "FrontAftStrut"
 data 8
 Mesh.150
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 8
 -2.98924 -1.14126 0.05598
@@ -13248,7 +13248,7 @@ name "FrontLowerStrut"
 data 8
 Mesh.151
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 28
 -3.05185 -1.36321 -0.0145
@@ -13526,7 +13526,7 @@ name "FrontTire"
 data 8
 Mesh.152
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 146
 -3.00134 -1.66794 -0.02508
@@ -15314,7 +15314,7 @@ name "FrontUpperStrut"
 data 8
 Mesh.153
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 12
 -2.98897 -0.79689 0.0797
@@ -15411,7 +15411,7 @@ name "LeftLowerMainStrut"
 data 8
 Mesh.002
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 136
 0.09903 -1.15466 0.67714
@@ -17204,7 +17204,7 @@ name "LeftInnerStrut"
 data 8
 Mesh.083
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 76
 0.53688 -1.3713 0.98555
@@ -17950,7 +17950,7 @@ name "LeftOuterLowerStrut"
 data 8
 Mesh.081
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 32
 0.6076 -0.96904 0.92934
@@ -18184,7 +18184,7 @@ name "LeftOuterUpperStrut"
 data 8
 Mesh.082
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 32
 0.60715 -0.88539 0.87035
@@ -18418,7 +18418,7 @@ name "LeftMainTire"
 data 8
 Mesh.004
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 98
 0.68888 -1.46095 1.28264
@@ -19678,7 +19678,7 @@ name "LeftUpperMainStrut"
 data 8
 Mesh.003
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 100
 -0.5097 -0.80419 0.29897
@@ -21111,7 +21111,7 @@ name "RightLowerMainStrut"
 data 8
 Mesh.084
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 136
 0.09902 -1.15479 -0.6838
@@ -22904,7 +22904,7 @@ name "RightInnerStrut"
 data 8
 Mesh.087
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 76
 0.53686 -1.37132 -0.9972
@@ -23650,7 +23650,7 @@ name "RightOuterLowerStrut"
 data 8
 Mesh.088
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 32
 0.60758 -0.96858 -0.94275
@@ -23884,7 +23884,7 @@ name "RightOuterUpperStrut"
 data 8
 Mesh.089
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 32
 0.60663 -0.88545 -0.89395
@@ -24118,7 +24118,7 @@ name "RightMainTire"
 data 8
 Mesh.085
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 98
 0.68886 -1.46097 -1.29429
@@ -25378,7 +25378,7 @@ name "RightUpperMainStrut"
 data 8
 Mesh.086
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 100
 -0.50973 -0.80421 -0.31062
@@ -26814,7 +26814,7 @@ name "ExternalFlame"
 data 4
 Mesh
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 44
 3.07859 0.22398 0.31599
@@ -27143,7 +27143,7 @@ name "InternalFlame"
 data 8
 Mesh.029
 crease 80.0
-texture "f16.rgb"
+texture "f16.png"
 texrep 1 1
 numvert 16
 4.2077 0.00971 -0.37399
@@ -31656,7 +31656,7 @@ name "FuselageLogoLeft"
 data 8
 Mesh.062
 crease 80.0
-texture "f16trans.rgb"
+texture "f16trans.png"
 texrep 1 1
 numvert 4
 2.02032 0.55114 0.41976
@@ -31682,7 +31682,7 @@ name "FuselageLogoRight"
 data 8
 Mesh.063
 crease 80.0
-texture "f16trans.rgb"
+texture "f16trans.png"
 texrep 1 1
 numvert 4
 2.01844 0.55301 -0.39787
@@ -31708,7 +31708,7 @@ name "Rect"
 data 8
 Mesh.061
 crease 80.0
-texture "f16trans.rgb"
+texture "f16trans.png"
 texrep 1 1
 numvert 4
 1.29912 -0.01542 -2.96134
@@ -31734,7 +31734,7 @@ name "VstabBandLeftAft"
 data 8
 Mesh.102
 crease 80.0
-texture "f16trans.rgb"
+texture "f16trans.png"
 texrep 1 1
 numvert 4
 5.85471 3.03423 0.0016
@@ -31755,7 +31755,7 @@ name "VstabBandLeftFront"
 data 8
 Mesh.101
 crease 80.0
-texture "f16trans.rgb"
+texture "f16trans.png"
 texrep 1 1
 numvert 4
 5.2784 3.03423 0.01947
@@ -31776,7 +31776,7 @@ name "VstabBandRightAft"
 data 8
 Mesh.104
 crease 80.0
-texture "f16trans.rgb"
+texture "f16trans.png"
 texrep 1 1
 numvert 4
 5.85434 3.03317 -0.00949
@@ -31797,7 +31797,7 @@ name "VstabBandRightFront"
 data 8
 Mesh.103
 crease 80.0
-texture "f16trans.rgb"
+texture "f16trans.png"
 texrep 1 1
 numvert 4
 5.27803 3.03317 -0.02736
@@ -31818,7 +31818,7 @@ name "VstabLogoLeftBottom"
 data 8
 Mesh.067
 crease 80.0
-texture "f16trans.rgb"
+texture "f16trans.png"
 texrep 1 1
 numvert 4
 3.19029 1.56356 0.04917
@@ -31844,7 +31844,7 @@ name "VstabLogoLeftTop"
 data 8
 Mesh.065
 crease 80.0
-texture "f16trans.rgb"
+texture "f16trans.png"
 texrep 1 1
 numvert 4
 3.70994 1.56354 0.04917
@@ -31870,7 +31870,7 @@ name "VstabLogoRightBottom"
 data 8
 Mesh.066
 crease 80.0
-texture "f16trans.rgb"
+texture "f16trans.png"
 texrep 1 1
 numvert 4
 3.18902 1.56282 -0.05524
@@ -31896,7 +31896,7 @@ name "VstabLogoRightTop"
 data 8
 Mesh.064
 crease 80.0
-texture "f16trans.rgb"
+texture "f16trans.png"
 texrep 1 1
 numvert 4
 3.70867 1.56281 -0.05524
@@ -31922,7 +31922,7 @@ name "WinglogoLeftTop"
 data 8
 Mesh.068
 crease 80.0
-texture "f16trans.rgb"
+texture "f16trans.png"
 texrep 1 1
 numvert 4
 0.96913 0.12719 -2.96135
@@ -31948,7 +31948,7 @@ name "WinglogoRightBottom"
 data 8
 Mesh.069
 crease 80.0
-texture "f16trans.rgb"
+texture "f16trans.png"
 texrep 1 1
 numvert 4
 0.96899 -0.02021 2.95167
@@ -31974,7 +31974,7 @@ name "WinglogoRightTop"
 data 8
 Mesh.060
 crease 80.0
-texture "f16trans.rgb"
+texture "f16trans.png"
 texrep 1 1
 numvert 4
 1.29898 0.09612 3.95168

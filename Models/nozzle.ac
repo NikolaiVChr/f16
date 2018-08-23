@@ -5,7 +5,7 @@ kids 1
 OBJECT poly
 name "nozzle"
 loc 0.396386 0.00060612 -0.00510232
-texture "f16.rgb"
+texture "f16.png"
 texrep 0.035 0.013
 texoff 0.15 0.153
 numvert 32

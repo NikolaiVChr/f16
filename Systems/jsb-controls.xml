@@ -604,7 +604,7 @@
             <input>-fcs/fly-by-wire/roll/loop-lag</input>
             <input>-fcs/fly-by-wire/roll/trim-gain</input>
             <input>fcs/fly-by-wire/roll/roll-filter</input>
-            <input>autoflight/roll/roll-rate-demand</input><!-- should be negative input, fix later -->
+            <input>-autoflight/roll/roll-rate-demand</input>
         </summer>
 
         <pure_gain name="fcs/fly-by-wire/roll/trim-gain">
@@ -1564,7 +1564,7 @@
         <summer name="fcs/fly-by-wire/pitch/command-sum-limit-alpha">
             <input> -fcs/fly-by-wire/pitch/command-sum-limit-lagged </input>
             <input> fcs/fly-by-wire/pitch/alpha-indicated-gain </input>
-            <input> autoflight/pitch/g-demand-switched </input>
+            <input> -autoflight/pitch/g-demand-switched </input>
         </summer>
 
         <summer name="fcs/fly-by-wire/pitch/command-sum-limit-alpha-pitch">

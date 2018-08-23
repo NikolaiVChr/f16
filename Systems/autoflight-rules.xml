@@ -27,7 +27,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/f16/fcs/switch-roll</property>
+						<property>/fdm/jsbsim/autoflight/switch-roll</property>
 						<value>-1</value>
 					</equals>
 					<equals>
@@ -54,7 +54,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>/f16/fcs/switch-roll</property>
+						<property>/fdm/jsbsim/autoflight/switch-roll</property>
 						<value>-1</value>
 					</equals>
 					<not-equals>
@@ -79,31 +79,6 @@
 		</period>
 	</filter>
 	
-	<predict-simple>
-		<name>ALTITUDE 2 SECONDS AHEAD</name>
-		<debug>false</debug>
-		<input>/instrumentation/altimeter/indicated-altitude-ft</input>
-		<output>/fdm/jsbsim/autoflight/pitch/altitude-2-sec-ahead</output>
-		<seconds>5.0</seconds>
-		<filter-gain>0.0</filter-gain>
-	</predict-simple>
-	
-	<filter>
-		<name>IT-CONTROLLER: FPM KP (P Gain)</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<expression>
-				<table>
-					<property>/velocities/mach</property>
-					<entry><ind>0.2</ind><dep>0.0021</dep></entry>
-					<entry><ind>1.4</ind><dep>0.0007</dep></entry>
-				</table>
-			</expression>
-		</input>
-		<output>/fdm/jsbsim/autoflight/pitch/vs/p-gain</output>
-	</filter>
-	
 	<filter>
 		<name>PITCH DEG SYNC</name>
 		<type>gain</type>
@@ -116,7 +91,7 @@
 						<value>1</value>
 					</not-equals>
 					<not-equals>
-						<property>/f16/fcs/switch-pitch</property>
+						<property>/fdm/jsbsim/autoflight/switch-pitch</property>
 						<value>1</value>
 					</not-equals>
 				</or>
@@ -124,6 +99,8 @@
 		</enable>
 		<input>/orientation/pitch-deg</input>
 		<output>/fdm/jsbsim/autoflight/pitch/vs/pid</output>
+		<min>-15</min>
+		<max>30</max>
 	</filter>
  
 	<pid-controller>
@@ -137,7 +114,7 @@
 						<value>1</value>
 					</equals>
 					<equals>
-						<property>/f16/fcs/switch-pitch</property>
+						<property>/fdm/jsbsim/autoflight/switch-pitch</property>
 						<value>1</value>
 					</equals>
 				</and>
@@ -154,7 +131,14 @@
 		</output>
 		<config>
 			<Kp>
-				<property>/fdm/jsbsim/autoflight/pitch/vs/p-gain</property>
+				<expression>
+					<table>
+						<property>/velocities/mach</property>
+						<entry><ind>0.2</ind><dep>0.0029</dep></entry>
+						<entry><ind>0.9</ind><dep>0.0010</dep></entry>
+						<entry><ind>2.1</ind><dep>0.0003</dep></entry>
+					</table>
+				</expression>
 			</Kp>
 			<Ti>2.0</Ti>
 			<Td>0.0001</Td>
@@ -171,7 +155,15 @@
 						</equals>
 					</and>
 				</condition>
-				<value>-15</value>
+				<expression>
+					<max>
+						<dif>
+							<property>/orientation/pitch-deg</property>
+							<value>5</value>
+						</dif>
+						<value>-15</value>
+					</max>
+				</expression>
 			</u_min>
 			<u_min>
 				<condition>
@@ -201,7 +193,15 @@
 						</equals>
 					</and>
 				</condition>
-				<value>30</value>
+				<expression>
+					<min>
+						<sum>
+							<property>/orientation/pitch-deg</property>
+							<value>5</value>
+						</sum>
+						<value>30</value>
+					</min>
+				</expression>
 			</u_max>
 			<u_max>
 				<condition>

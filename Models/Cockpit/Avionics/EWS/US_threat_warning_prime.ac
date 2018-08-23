@@ -8,7 +8,7 @@ name "launch"
 data 13
 rect.mesh.001
 crease 40.0
-texture "../../Textures/panels-blck40-1.rgb"
+texture "../../Textures/panels-blck40-1.png"
 texrep 1 1
 numvert 4
 0.00101 -0.0091 -0.01046
@@ -34,7 +34,7 @@ name "pri"
 data 13
 rect.mesh.002
 crease 40.0
-texture "../../Textures/panels-blck40-1.rgb"
+texture "../../Textures/panels-blck40-1.png"
 texrep 1 1
 numvert 4
 0.00101 -0.0091 -0.02539
@@ -60,7 +60,7 @@ name "rect"
 data 9
 rect.mesh
 crease 40.0
-texture "../../Textures/panels-blck40-1.rgb"
+texture "../../Textures/panels-blck40-1.png"
 texrep 1 1
 numvert 53
 0 0.02996 -0.02785
@@ -465,7 +465,7 @@ name "unk"
 data 13
 rect.mesh.003
 crease 40.0
-texture "../../Textures/panels-blck40-1.rgb"
+texture "../../Textures/panels-blck40-1.png"
 texrep 1 1
 numvert 4
 0.00101 -0.02328 0.00463

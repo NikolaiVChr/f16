@@ -9,8 +9,16 @@
     <owner type="string">RSAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/Block50/BK-646.rgb</texture>
+    <texture>Liveries/Block50/BK-646.png</texture>
    </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block50/patch.default.png</texture>
+  </livery-patch>
+
+  <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+    </livery-pod>
   </model>
  </sim>
 </PropertyList>

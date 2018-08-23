@@ -11,6 +11,10 @@
    <livery-logo>
     <texture>Liveries/Block20/E-602.png</texture>
    </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block20/patch.rdaf.png</texture>
+  </livery-patch>
   </model>
  </sim>
 </PropertyList>

@@ -6,9 +6,11 @@
 <PropertyList>
 
 	<name>autopilot</name>
-	<layout>vbox</layout>
+	<layout>table</layout>
 
 	<group>
+		<row>0</row>
+		<col>0</col>
 		<layout>hbox</layout>
 		<text>
 			<halign>left</halign>
@@ -46,9 +48,141 @@
 		</group>
 	</group>
 	
-	<hrule/>
+	<hrule>
+		<row>1</row>
+		<col>0</col>
+	</hrule>
 	
 	<group>
+		<visible>
+			<less-than>
+				<property>/sim/variant-id</property>
+				<value>2</value>
+			</less-than>
+		</visible>
+		<row>2</row>
+		<col>0</col>
+		<layout>table</layout>
+		
+		<checkbox>
+			<row>0</row>
+			<col>0</col>
+			<label>Autopilot Master</label>
+			<halign>center</halign>
+			<live>true</live>
+			<property>/f16/fcs/autopilot-on</property>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+		</checkbox>
+		
+		<hrule>
+			<row>1</row>
+			<col>0</col>
+		</hrule>
+		
+		<group>
+			<row>2</row>
+			<col>0</col>
+			<layout>hbox</layout>
+		
+			<group>
+				<layout>vbox</layout>
+				
+				<text>
+					<label>ROLL      </label>
+				</text>
+				
+				<group>
+					<layout>hbox</layout>
+				
+					<group>
+						<layout>vbox</layout>
+						<halign>left</halign>
+						
+						<text>
+							<label>HDG SEL</label>
+						</text>
+						<text>
+							<label>ATT HOLD</label>
+						</text>
+						
+					</group>
+					
+					<slider>
+						<halign>left</halign>
+						<property>/f16/fcs/switch-roll-block15</property>
+						<min>0</min>
+						<max>1</max>
+						<step>1</step>
+						<live>true</live>
+						<vertical>true</vertical>
+						<pref-height>40</pref-height>
+						<binding>
+							<command>dialog-apply</command>
+						</binding>
+					</slider>
+					
+				</group>
+			
+			</group>
+			
+			<vrule/>
+			
+			<group>
+				<layout>vbox</layout>
+				
+				<text>
+					<label>PITCH      </label>
+				</text>
+				
+				<group>
+					<layout>hbox</layout>
+			
+					<group>
+						<layout>vbox</layout>
+						<halign>left</halign>
+						
+						<text>
+							<label>ALT HOLD</label>
+						</text>
+						<text>
+							<label>ATT HOLD</label>
+						</text>
+						
+					</group>
+					
+					<slider>
+						<halign>left</halign>
+						<property>/f16/fcs/switch-pitch-block15</property>
+						<min>0</min>
+						<max>1</max>
+						<step>1</step>
+						<live>true</live>
+						<vertical>true</vertical>
+						<pref-height>40</pref-height>
+						<binding>
+							<command>dialog-apply</command>
+						</binding>
+					</slider>
+					
+				</group>
+			
+			</group>
+			
+		</group>
+		
+	</group>
+	
+	<group>
+		<visible>
+			<greater-than-equals>
+				<property>/sim/variant-id</property>
+				<value>2</value>
+			</greater-than-equals>
+		</visible>
+		<row>2</row>
+		<col>0</col>
 		<layout>hbox</layout>
 		
 		<group>
@@ -79,7 +213,7 @@
 				
 				<slider>
 					<halign>left</halign>
-					<property>/f16/fcs/switch-roll</property>
+					<property>/f16/fcs/switch-roll-block20</property>
 					<min>-1</min>
 					<max>1</max>
 					<step>1</step>
@@ -124,7 +258,7 @@
 				
 				<slider>
 					<halign>left</halign>
-					<property>/f16/fcs/switch-pitch</property>
+					<property>/f16/fcs/switch-pitch-block20</property>
 					<min>-1</min>
 					<max>1</max>
 					<step>1</step>

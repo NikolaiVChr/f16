@@ -9,8 +9,16 @@
     <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/Block40/89-2029.rgb</texture>
+    <texture>Liveries/Block40/AV-029.png</texture>
    </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block40/patch.buzzards.png</texture>
+  </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/Block40/pod.buzzards.png</texture>
+  </livery-pod>
   </model>
  </sim>
 </PropertyList>

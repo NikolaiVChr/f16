@@ -8,7 +8,7 @@ kids 9
 OBJECT poly
 name "drum2"
 loc -0.0060777 -0.0122288 0.00260798
-texture "../Textures/faces1.rgb"
+texture "../Textures/faces1.png"
 texrep 0.042 0.468
 texoff 0.53 0.005
 numvert 30
@@ -127,7 +127,7 @@ kids 0
 OBJECT poly
 name "drum3"
 loc -0.00607258 -0.0122247 -0.00105658
-texture "../Textures/faces1.rgb"
+texture "../Textures/faces1.png"
 texrep 0.042 0.468
 texoff 0.53 0.005
 numvert 20
@@ -226,7 +226,7 @@ kids 0
 OBJECT poly
 name "drum4"
 loc -0.00606237 -0.0122247 -0.00475175
-texture "../Textures/faces1.rgb"
+texture "../Textures/faces1.png"
 texrep 0.042 0.468
 texoff 0.53 0.005
 numvert 20
@@ -325,7 +325,7 @@ kids 0
 OBJECT poly
 name "drum1"
 loc -0.00610832 -0.0122454 0.00628927
-texture "../Textures/faces1.rgb"
+texture "../Textures/faces1.png"
 texrep 0.042 0.468
 texoff 0.53 0.005
 numvert 30
@@ -444,7 +444,7 @@ kids 0
 OBJECT poly
 name "drum5"
 loc -0.00610175 -0.0122383 -0.00846944
-texture "../Textures/faces1.rgb"
+texture "../Textures/faces1.png"
 texrep 0.042 0.468
 texoff 0.53 0.005
 numvert 20
@@ -1831,7 +1831,7 @@ kids 0
 OBJECT poly
 name "rpm_disk"
 loc 0.000413071 4.02651e-05 0.000172828
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep -0.295 0.295
 texoff 0.909 0.01
 numvert 20
@@ -2074,7 +2074,7 @@ kids 0
 OBJECT poly
 name "FR_needle1"
 loc 0.00078236 -0.00168742 0.00260461
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep -0.06 0.1
 texoff -0.3556 -0.8
 numvert 5
@@ -2146,7 +2146,7 @@ kids 0
 OBJECT poly
 name "AL_needle2"
 loc -0.000572635 0.00187704 -0.00224606
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep -0.015 0.05
 texoff -0.083 -0.76
 numvert 5

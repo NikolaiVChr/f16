@@ -45,7 +45,7 @@
 
 <model>
   <name>Pilot_ext</name>
-  <path>Aircraft/f16/Models/Pilots/pilot_externalview.xml</path>
+  <path>Aircraft/f16/Models/pilot_externalview.xml</path>
  </model>
 
  <animation>
@@ -65,6 +65,15 @@
   <name>smoking</name>
   <path>Aircraft/f16/Models/Effects/damage-smoke.xml</path>
  </model>
+
+ <model>
+    <path>Effects/trail/trail.xml</path>
+      <offsets>
+        <x-m>16.0</x-m>
+        <y-m>0.0</y-m>
+        <z-m>0.2</z-m>
+      </offsets>
+  </model>
 
  <!--<model>
   <name>Cockpit</name>
@@ -1686,7 +1695,7 @@
   <object-name>LandingGear</object-name>
   <property-base>sim/model/livery</property-base>
   <texture-prop>texture</texture-prop>
-  <texture>f16.rgb</texture>
+  <texture>f16.png</texture>
  </animation>
 
 
@@ -1695,7 +1704,7 @@
   <object-name>Logos</object-name>
   <property-base>sim/model/livery-logo</property-base>
   <texture-prop>texture</texture-prop>
-  <texture>f16trans.rgb</texture>
+  <texture>f16trans.png</texture>
  </animation>
 
 <model>

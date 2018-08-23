@@ -7,7 +7,7 @@ kids 12
 OBJECT poly
 name "ftit_disk"
 loc 0.000797483 -0.0398478 -0.0113953
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep -0.255 0.255
 texoff 0.9 0.48
 numvert 16
@@ -1688,7 +1688,7 @@ kids 0
 OBJECT poly
 name "oil_disk"
 loc 0.000724105 0.0625514 0.00368445
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep -0.147 0.145
 texoff 0.15 0.6
 numvert 16
@@ -1803,7 +1803,7 @@ kids 0
 OBJECT poly
 name "nozzle_disk"
 loc 0.000784279 0.0338301 -5.61947e-05
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep -0.198 0.198
 texoff 0.36 0.542
 numvert 16
@@ -1918,7 +1918,7 @@ kids 0
 OBJECT poly
 name "rpm_disk"
 loc 0.000413069 -0.000348963 -0.00557971
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep -0.255 0.255
 texoff 0.63 0.49
 numvert 16

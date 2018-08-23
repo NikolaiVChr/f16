@@ -1545,7 +1545,7 @@ OBJECT poly
 name "FTIT_disk"
 data 9
 FTIT_disk
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -3229,7 +3229,7 @@ OBJECT poly
 name "NOZ_POS_disk"
 data 12
 NOZ_POS_disk
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -4919,7 +4919,7 @@ OBJECT poly
 name "OIL_disk"
 data 8
 OIL_disk
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -6603,7 +6603,7 @@ OBJECT poly
 name "RPM_disk"
 data 8
 RPM_disk
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 16

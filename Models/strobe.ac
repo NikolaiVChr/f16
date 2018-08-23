@@ -5,7 +5,7 @@ kids 1
 OBJECT poly
 name "strobe"
 loc 1.35498 1.68296 0
-texture "strobe.rgb"
+texture "strobe.png"
 numvert 4
 -1.55499 -1.48296 0
 -1.15498 -1.48296 0

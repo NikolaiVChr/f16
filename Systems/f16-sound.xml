@@ -49,6 +49,40 @@
 
   <engine_fan>
    <name>internal fan</name>
+   <path>Aircraft/f16/Sounds/engine-int.wav</path>
+   <mode>looped</mode>
+   <condition>
+    <property>sim/current-view/internal</property>
+    <greater-than>
+        <property>engines/engine/n2</property>
+        <value>5</value>
+    </greater-than>
+   </condition>
+   <reference-dist>30</reference-dist>
+   <max-dist>100</max-dist>
+   <position>
+    <x>-0.6</x>
+    <y>0.0</y>
+    <z>-0.37</z>
+   </position>
+   <orientation>
+    <x>-0.98</x>
+    <y>0.0</y>
+    <z>0.0</z>
+   </orientation>
+   <pitch>
+    <property>engines/engine/n1</property>
+    <offset>0.6</offset>
+    <factor>.00075</factor>
+   </pitch>
+   <volume>
+    <factor>0.5</factor>
+   </volume>
+  </engine_fan>
+
+
+<engine_fan>
+   <name>internal fan 2</name>
    <path>Sounds/whine.wav</path>
    <mode>looped</mode>
    <condition>
@@ -76,7 +110,7 @@
     <factor>.00075</factor>
    </pitch>
    <volume>
-    <factor>0.15</factor>
+    <factor>0.10</factor>
    </volume>
   </engine_fan>
 
@@ -981,6 +1015,7 @@
                 <max>1</max>
             </volume>
         </missile1>
+
         <gbu-release>
             <name>gbu-release</name>
             <mode>once</mode>
@@ -995,6 +1030,51 @@
                 <max>1</max>
             </volume>
         </gbu-release>
+
+        <jdam-release>
+            <name>jdam-release</name>
+            <mode>once</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/gbu_release.wav</path>
+            <condition>
+                <property>payload/armament/gbu-31/sound-fire-on-off</property>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+                <max>1</max>
+            </volume>
+        </jdam-release>
+
+        <!--b61-12-release>
+            <name>b61-12-release</name>
+            <mode>once</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/gbu_release.wav</path>
+            <condition>
+                <property>payload/armament/b61-12/sound-fire-on-off</property>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+                <max>1</max>
+            </volume>
+        </b61-12-release>
+
+        <b61-7-release>
+            <name>b61-7-release</name>
+            <mode>once</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/gbu_release.wav</path>
+            <condition>
+                <property>payload/armament/b61-7/sound-fire-on-off</property>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+                <max>1</max>
+            </volume>
+        </b61-7-release-->
 
         <missile-hit>
             <!-- multiple of these so the sound can be played over each other -->

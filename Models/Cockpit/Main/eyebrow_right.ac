@@ -8,7 +8,7 @@ OBJECT poly
 name "canopy"
 data 8
 Mesh.106
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -34,7 +34,7 @@ OBJECT poly
 name "dbu_on"
 data 8
 Mesh.112
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -60,7 +60,7 @@ OBJECT poly
 name "eng_fire"
 data 8
 Mesh.110
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -86,7 +86,7 @@ OBJECT poly
 name "engine"
 data 8
 Mesh.111
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -112,7 +112,7 @@ OBJECT poly
 name "flcs"
 data 8
 Mesh.109
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -138,7 +138,7 @@ OBJECT poly
 name "hyd_oil_press"
 data 8
 Mesh.107
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -164,7 +164,7 @@ OBJECT poly
 name "poly.004"
 data 8
 Mesh.031
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 8
@@ -242,7 +242,7 @@ OBJECT poly
 name "poly.005"
 data 8
 Mesh.102
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 8
@@ -320,7 +320,7 @@ OBJECT poly
 name "poly.006"
 data 8
 Mesh.103
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 8
@@ -398,7 +398,7 @@ OBJECT poly
 name "poly.007"
 data 8
 Mesh.104
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 8
@@ -476,7 +476,7 @@ OBJECT poly
 name "poly.008"
 data 8
 Mesh.105
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 8
@@ -554,7 +554,7 @@ OBJECT poly
 name "to_ldg_config"
 data 8
 Mesh.108
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 4
@@ -580,7 +580,7 @@ OBJECT poly
 name "unused"
 data 8
 Mesh.113
-texture "../Textures/instruments.rgb"
+texture "../Textures/instruments.png"
 texrep 1 1
 crease 30.000000
 numvert 4

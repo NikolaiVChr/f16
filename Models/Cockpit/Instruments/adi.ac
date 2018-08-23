@@ -18,7 +18,7 @@ OBJECT poly
 name "ADI_aux-flag"
 data 8
 Mesh.031
-texture "../Textures/adi.rgb"
+texture "../Textures/adi.png"
 texrep 1 1
 crease 45.000000
 numvert 4
@@ -39,7 +39,7 @@ OBJECT poly
 name "ADI_gs-flag"
 data 8
 Mesh.032
-texture "../Textures/adi.rgb"
+texture "../Textures/adi.png"
 texrep 1 1
 crease 45.000000
 numvert 4
@@ -60,7 +60,7 @@ OBJECT poly
 name "ADI_loc-flag"
 data 8
 Mesh.033
-texture "../Textures/adi.rgb"
+texture "../Textures/adi.png"
 texrep 1 1
 crease 45.000000
 numvert 4
@@ -81,7 +81,7 @@ OBJECT poly
 name "ADI_off-flag"
 data 8
 Mesh.034
-texture "../Textures/adi.rgb"
+texture "../Textures/adi.png"
 texrep 1 1
 crease 45.000000
 numvert 4
@@ -102,7 +102,7 @@ OBJECT poly
 name "ADI_bank-index"
 data 8
 Mesh.035
-texture "../Textures/adi-sphere.rgb"
+texture "../Textures/adi-sphere.png"
 texrep 1 1
 crease 45.000000
 numvert 12
@@ -162,7 +162,7 @@ OBJECT poly
 name "ADI_face"
 data 8
 Mesh.036
-texture "../Textures/adi.rgb"
+texture "../Textures/adi.png"
 texrep 1 1
 crease 45.000000
 numvert 206
@@ -1397,7 +1397,7 @@ OBJECT poly
 name "ADI_glide-slope-index"
 data 8
 Mesh.037
-texture "../Textures/adi.rgb"
+texture "../Textures/adi.png"
 texrep 1 1
 crease 45.000000
 numvert 4
@@ -1418,7 +1418,7 @@ OBJECT poly
 name "ADI_pitch-strg-bar"
 data 8
 Mesh.038
-texture "../Textures/adi.rgb"
+texture "../Textures/adi.png"
 texrep 1 1
 crease 45.000000
 numvert 6
@@ -1448,7 +1448,7 @@ OBJECT poly
 name "ADI_reticle"
 data 8
 Mesh.039
-texture "../Textures/adi.rgb"
+texture "../Textures/adi.png"
 texrep 1 1
 crease 45.000000
 numvert 63
@@ -2567,7 +2567,7 @@ OBJECT poly
 name "ADI_sphere"
 data 8
 Mesh.041
-texture "../Textures/adi-sphere.rgb"
+texture "../Textures/adi-sphere.png"
 texrep 1 1
 crease 45.000000
 numvert 184
@@ -4945,7 +4945,7 @@ OBJECT poly
 name "ADI_turn-indicator"
 data 8
 Mesh.042
-texture "../Textures/adi.rgb"
+texture "../Textures/adi.png"
 texrep 1 1
 crease 45.000000
 numvert 4
@@ -4966,7 +4966,7 @@ OBJECT poly
 name "ADI_yaw-steering-bar"
 data 8
 Mesh.043
-texture "../Textures/adi.rgb"
+texture "../Textures/adi.png"
 texrep 1 1
 crease 45.000000
 numvert 18
@@ -5106,7 +5106,7 @@ OBJECT poly
 name "ADI_bkg"
 data 8
 Mesh.044
-texture "../Textures/adi.rgb"
+texture "../Textures/adi.png"
 texrep 1 1
 crease 45.000000
 numvert 8
@@ -5159,7 +5159,7 @@ OBJECT poly
 name "ADI_knob"
 data 8
 Mesh.045
-texture "../Textures/adi.rgb"
+texture "../Textures/adi.png"
 texrep 1 1
 crease 45.000000
 numvert 49
@@ -5538,7 +5538,7 @@ OBJECT poly
 name "ADI_mount"
 data 8
 Mesh.046
-texture "../Textures/adi.rgb"
+texture "../Textures/adi.png"
 texrep 1 1
 crease 45.000000
 numvert 159

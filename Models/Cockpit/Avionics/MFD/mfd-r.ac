@@ -31,7 +31,7 @@ kids 0
 OBJECT poly
 name "MFDButtonBrightness"
 loc 0.00599768 -0.0479092 0.0643071
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0.00241755 -0.00760123 -0.00503039
@@ -89,7 +89,7 @@ kids 0
 OBJECT poly
 name "MFDButtonCon"
 loc 0.00599768 -0.0479092 -0.0646721
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0 0.0077525 -0.00503039
@@ -147,7 +147,7 @@ kids 0
 OBJECT poly
 name "MFDButtonR1"
 loc 0.00599768 0.0316837 -0.0647659
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0 0.005125 -0.005064
@@ -205,7 +205,7 @@ kids 0
 OBJECT poly
 name "MFDButtonR2"
 loc 0.00599768 0.0161855 -0.0647659
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0.00241755 -0.005025 -0.005064
@@ -263,7 +263,7 @@ kids 0
 OBJECT poly
 name "MFDButtonR3"
 loc 0.00599768 0.000266686 -0.0647659
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0 0.005125 -0.005064
@@ -321,7 +321,7 @@ kids 0
 OBJECT poly
 name "MFDButtonR4"
 loc 0.00599768 -0.0145774 -0.0647659
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0.00241755 -0.005025 -0.005064
@@ -379,7 +379,7 @@ kids 0
 OBJECT poly
 name "MFDButtonR5"
 loc 0.00599768 -0.0302276 -0.0647659
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0 0.005125 -0.005064
@@ -437,7 +437,7 @@ kids 0
 OBJECT poly
 name "MFDButtonSym"
 loc 0.00599768 0.048965 -0.0646721
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0.00241755 -0.00760123 -0.00503039
@@ -495,7 +495,7 @@ kids 0
 OBJECT poly
 name "MFDButtonT1"
 loc 0.00599768 0.0645594 0.033815
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0.00241755 -0.005025 -0.00506399
@@ -553,7 +553,7 @@ kids 0
 OBJECT poly
 name "MFDButtonGain"
 loc 0.00599768 0.048965 0.0643071
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0 0.0077525 -0.00503039
@@ -611,7 +611,7 @@ kids 0
 OBJECT poly
 name "MFDButtonL5"
 loc 0.00599768 -0.0302276 0.0642133
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0.00241755 -0.005025 -0.005064
@@ -669,7 +669,7 @@ kids 0
 OBJECT poly
 name "MFDButtonL4"
 loc 0.00599768 -0.0145774 0.0642133
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0 0.005125 -0.005064
@@ -727,7 +727,7 @@ kids 0
 OBJECT poly
 name "MFDButtonL3"
 loc 0.00599768 0.000266686 0.0642133
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0.00241755 -0.005025 -0.005064
@@ -785,7 +785,7 @@ kids 0
 OBJECT poly
 name "MFDButtonL2"
 loc 0.00599768 0.0161855 0.0642133
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0 0.005125 -0.005064
@@ -843,7 +843,7 @@ kids 0
 OBJECT poly
 name "MFDButtonB5"
 loc 0.00599768 -0.0635919 -0.0339032
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0.00241755 -0.005025 -0.00506399
@@ -901,7 +901,7 @@ kids 0
 OBJECT poly
 name "MFDButtonB4"
 loc 0.00599768 -0.0635919 -0.0173358
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0 0.005125 -0.00506399
@@ -959,7 +959,7 @@ kids 0
 OBJECT poly
 name "MFDButtonB3"
 loc 0.00599768 -0.0635919 -0.00022519
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0.00241755 -0.005025 -0.00506399
@@ -1017,7 +1017,7 @@ kids 0
 OBJECT poly
 name "MFDButtonB2"
 loc 0.00599768 -0.0635919 0.0167949
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0 0.005125 -0.00506399
@@ -1075,7 +1075,7 @@ kids 0
 OBJECT poly
 name "MFDButtonB1"
 loc 0.00599768 -0.0635919 0.0337244
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0.00241755 -0.005025 -0.00506399
@@ -1133,7 +1133,7 @@ kids 0
 OBJECT poly
 name "MFDButtonT5"
 loc 0.00599768 0.0645594 -0.0339032
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0.00241755 -0.005025 -0.00506399
@@ -1191,7 +1191,7 @@ kids 0
 OBJECT poly
 name "MFDButtonT4"
 loc 0.00599768 0.0645594 -0.0173358
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0 0.005125 -0.00506399
@@ -1249,7 +1249,7 @@ kids 0
 OBJECT poly
 name "MFDButtonT3"
 loc 0.00599768 0.0645594 -0.00022519
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0.00241755 -0.005025 -0.00506399
@@ -1307,7 +1307,7 @@ kids 0
 OBJECT poly
 name "MFDButtonT2"
 loc 0.00599768 0.0645594 0.0167949
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0 0.005125 -0.00506399
@@ -1369,7 +1369,7 @@ kids 1
 OBJECT poly
 name "mount"
 loc 0.00371622 0.00822183 -0.00321351
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 72
 -0.00296108 0.0684902 0.0699512
@@ -2025,7 +2025,7 @@ kids 0
 OBJECT poly
 name "MFDButtonL1"
 loc 0.00599768 0.0316837 0.0642133
-texture "../../Textures/f16trans_misc.rgb"
+texture "../../Textures/f16trans_misc.png"
 crease 45.000000
 numvert 8
 0.00241755 -0.005025 -0.005064

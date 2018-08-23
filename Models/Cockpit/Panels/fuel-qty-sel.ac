@@ -32,7 +32,7 @@ OBJECT poly
 name "FQS_fuel-trans-switch"
 data 8
 Mesh.003
-texture "../Textures/fuel-qty-sel.rgb"
+texture "../Textures/fuel-qty-sel.png"
 texrep 1 1
 crease 45.000000
 numvert 25
@@ -223,7 +223,7 @@ OBJECT poly
 name "FQS_marker-beacon"
 data 4
 Mesh
-texture "../Textures/fuel-qty-sel.rgb"
+texture "../Textures/fuel-qty-sel.png"
 texrep 1 1
 crease 45.000000
 numvert 86
@@ -799,7 +799,7 @@ OBJECT poly
 name "FQS_marker-beacon-on"
 data 8
 Mesh.001
-texture "../Textures/fuel-qty-sel.rgb"
+texture "../Textures/fuel-qty-sel.png"
 texrep 1 1
 crease 45.000000
 numvert 13
@@ -894,7 +894,7 @@ OBJECT poly
 name "FQS_mount"
 data 8
 Mesh.002
-texture "../Textures/fuel-qty-sel.rgb"
+texture "../Textures/fuel-qty-sel.png"
 texrep 1 1
 crease 45.000000
 numvert 62
@@ -1349,7 +1349,7 @@ OBJECT poly
 name "FQS_sel-knob"
 data 8
 Mesh.004
-texture "../Textures/instr.rgb"
+texture "../Textures/instr.png"
 texrep 1 1
 crease 58.000000
 numvert 76

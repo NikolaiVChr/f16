@@ -11,7 +11,7 @@ OBJECT poly
 name "VSI_face"
 data 8
 Mesh.001
-texture "../Textures/vsi-gauge.rgb"
+texture "../Textures/vsi-gauge.png"
 texrep 1 1
 crease 45.000000
 numvert 8
@@ -50,7 +50,7 @@ OBJECT poly
 name "VSI_mount"
 data 8
 Mesh.003
-texture "../Textures/aoa-mount.rgb"
+texture "../Textures/aoa-mount.png"
 texrep 1 1
 crease 45.000000
 numvert 80
@@ -560,7 +560,7 @@ OBJECT poly
 name "VSI_needle"
 data 4
 Mesh
-texture "../Textures/vsi-gauge.rgb"
+texture "../Textures/vsi-gauge.png"
 texrep 1 1
 crease 45.000000
 numvert 7
@@ -602,7 +602,7 @@ OBJECT poly
 name "VSI_off-flag-inverted"
 data 8
 Mesh.002
-texture "../Textures/vsi-gauge.rgb"
+texture "../Textures/vsi-gauge.png"
 texrep 1 1
 crease 45.000000
 numvert 4

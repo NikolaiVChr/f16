@@ -338,10 +338,8 @@
                           <command>dialog-show</command>
                           <dialog-name>f16config</dialog-name>
                         </binding>
-                      </item>                    
-                </menu>
-                <menu n="5">
-                    <item n="10">
+                      </item> 
+                    <item>
                         <label>Pushback</label>
                         <enabled type="bool">true</enabled>
                         <name>pushback</name>
@@ -349,7 +347,7 @@
                             <command>dialog-show</command>
                             <dialog-name>pushback</dialog-name>
                         </binding>
-                    </item>
+                    </item>                   
                 </menu>
             </default>
         </menubar>
@@ -468,10 +466,144 @@
             <autopilot n="0">
                 <path>Aircraft/f16/Systems/autoflight-rules.xml</path>
             </autopilot>
+            <property-rule n="100">
+                <path>Aircraft/f16/Systems/zoom-views.xml</path>
+            </property-rule>
         </systems>
+        <current-view>
+            <z-offset-dec-step type="double">0.0</z-offset-dec-step>
+            <z-offset-inc-step type="double">0.0</z-offset-inc-step>
+            <can-change-z-offset type="bool">false</can-change-z-offset>
+            
+            <z-offset-default type="float">25.0</z-offset-default>
+            <z-offset-min-m type="float">10.0</z-offset-min-m>
+            <z-offset-max-m type="float">200.0</z-offset-max-m>
+        </current-view>
     </sim>
-    <input>
-        <keyboard>
+    <input n="0">
+        <mice n="0">
+            <mouse n="0">
+                <mode n="0">
+                    <button n="3">
+                        <binding n="0">
+                            <script></script>
+                        </binding>
+                        <binding n="1">
+                            <condition>
+                                <and>
+                                    <property>/devices/status/mice/mouse[0]/button[2]</property>
+                                    <not><property>/sim/mouse/right-button-mode-cycle-enabled</property></not>
+                                </and>
+                            </condition>
+                            <command>nasal</command>
+                            <script>
+                            if (getprop("/sim/current-view/can-change-z-offset")) {
+                                var distance = getprop("/sim/current-view/z-offset-m");
+                                var multiple = getprop("/sim/current-view/z-offset-inc-step");
+                                var min_dist = getprop("/sim/current-view/z-offset-min-m");
+
+                                distance = math.round(std.min(-min_dist, distance + multiple) / multiple) * multiple;
+                                setprop("/sim/current-view/z-offset-m", distance);
+
+                                gui.popupTip(sprintf("%d meters", abs(distance)));
+                            } else {
+                                view.decrease();
+                            }
+                            </script>
+                        </binding>
+                    </button>
+                    <button n="4">
+                        <binding n="0">
+                            <script></script>
+                        </binding>
+                        <binding n="1">
+                            <condition>
+                                <and>
+                                    <property>/devices/status/mice/mouse[0]/button[2]</property>
+                                    <not><property>/sim/mouse/right-button-mode-cycle-enabled</property></not>
+                                </and>
+                            </condition>
+                            <command>nasal</command>
+                            <script>
+                                if (getprop("/sim/current-view/can-change-z-offset")) {
+                                    var distance = getprop("/sim/current-view/z-offset-m");
+                                    var multiple = getprop("/sim/current-view/z-offset-dec-step");
+                                    var max_dist = getprop("/sim/current-view/z-offset-max-m");
+
+                                    distance = math.round(std.max(-max_dist, distance + multiple) / multiple) * multiple;
+                                    setprop("/sim/current-view/z-offset-m", distance);
+
+                                    gui.popupTip(sprintf("%d meters", abs(distance)));
+                                } else {
+                                    view.increase();
+                                }
+                            </script>
+                        </binding>
+                    </button>
+                </mode>
+            </mouse>
+        </mice>
+        <keyboard n="0">
+            <key n="24">
+                <name>Ctrl-x</name>
+                <desc>Reset zoom to default</desc>
+                <binding>
+                    <command>nasal</command>
+                    <script>
+                        if (getprop("/sim/current-view/can-change-z-offset")) {
+                            setprop("/sim/current-view/z-offset-m", getprop("/sim/current-view/z-offset-default") * -1);
+
+                            gui.popupTip(sprintf("%d meters", getprop("/sim/current-view/z-offset-default")));
+                        } else {
+                            setprop("/sim/current-view/field-of-view", getprop("/sim/view/config/default-field-of-view-deg"));
+                        }
+                    </script>
+                </binding>
+            </key>
+            <key n="88">
+                <name>X</name>
+                <desc>Increase field of view</desc>
+                <repeatable type="bool">true</repeatable>
+                <binding>
+                <command>nasal</command>
+                <script>
+                    if (getprop("/sim/current-view/can-change-z-offset")) {
+                        var distance = getprop("/sim/current-view/z-offset-m");
+                        var multiple = getprop("/sim/current-view/z-offset-dec-step");
+                        var max_dist = getprop("/sim/current-view/z-offset-max-m");
+
+                        distance = math.round(std.max(-max_dist, distance + multiple) / multiple) * multiple;
+                        setprop("/sim/current-view/z-offset-m", distance);
+
+                        gui.popupTip(sprintf("%d meters", abs(distance)));
+                    } else {
+                        view.increase();
+                    }
+                </script>
+                </binding>
+            </key>
+            <key n="120">
+                <name>x</name>
+                <desc>Decrease field of view</desc>
+                <repeatable type="bool">true</repeatable>
+                <binding>
+                    <command>nasal</command>
+                    <script>
+                        if (getprop("/sim/current-view/can-change-z-offset")) {
+                            var distance = getprop("/sim/current-view/z-offset-m");
+                            var multiple = getprop("/sim/current-view/z-offset-inc-step");
+                            var min_dist = getprop("/sim/current-view/z-offset-min-m");
+
+                            distance = math.round(std.min(-min_dist, distance + multiple) / multiple) * multiple;
+                            setprop("/sim/current-view/z-offset-m", distance);
+
+                            gui.popupTip(sprintf("%d meters", abs(distance)));
+                        } else {
+                            view.decrease();
+                        }
+                    </script>
+                </binding>
+            </key>
             <key n="81">
                 <name>Q</name>
                 <desc>Reset view</desc>
@@ -859,53 +991,58 @@
     </consumables>
     <fdm>
         <jsbsim>
-			<autoflight>
-				<pitch>
-					<altitude-2-sec-ahead type="double">0</altitude-2-sec-ahead> <!-- autoflight-rules.xml -->
-					<d-gain-att type="double">-5</d-gain-att>
-					<i-gain-att type="double">-1</i-gain-att>
-					<master-pid type="double">0</master-pid>
-					<p-gain-att type="double">0</p-gain-att> <!-- This gain is dynamic -->
-					<vs>
-						<pid type="double">0</pid>
-					</vs>
-				</pitch>
-				<roll>
-					<d-gain-att type="double">-0.2</d-gain-att>
-					<i-gain-att type="double">-6.4</i-gain-att>
-					<heading>
-						<pi type="double">0</pi>
-					</heading>
-					<heading-error-deg type="double">0</heading-error-deg> <!-- autoflight-rules.xml -->
-					<master-pid type="double">0</master-pid>
-					<p-gain-att type="double">-3.8</p-gain-att>
-				</roll>
-			</autoflight>
-			<elec>
-				<failures>
-					<battery>
-						<serviceable type="bool">1</serviceable>
-					</battery>
-					<epu>
-						<serviceable type="bool">1</serviceable>
-					</epu>
-					<main-gen>
-						<serviceable type="bool">1</serviceable>
-					</main-gen>
-					<stby-gen>
-						<serviceable type="bool">1</serviceable>
-					</stby-gen>
-				</failures>
-				<sources>
-					<battery-volt-feed type="int">24</battery-volt-feed> <!-- Remove once charging and discharging works -->
-					<external-pwr-plugged-in type="int">0</external-pwr-plugged-in>
-				</sources>
-				<switches>
-					<epu type="int">0</epu>
-					<main-pwr type="int">0</main-pwr>
-				</switches>
-				<unused type="int">0</unused>
-			</elec>
+            <autoflight>
+                <pitch>
+                    <altitude-2-sec-ahead type="double">0</altitude-2-sec-ahead> <!-- autoflight-rules.xml -->
+                    <d-gain-att type="double">-5</d-gain-att>
+                    <i-gain-att type="double">0</i-gain-att> <!-- This gain is dynamic -->
+                    <master-pid type="double">0</master-pid>
+                    <p-gain-att type="double">0</p-gain-att> <!-- This gain is dynamic -->
+                    <vs>
+                        <pid type="double">0</pid>
+                    </vs>
+                </pitch>
+                <roll>
+                    <d-gain-att type="double">-0.2</d-gain-att>
+                    <i-gain-att type="double">-6.4</i-gain-att>
+                    <heading>
+                        <pi type="double">0</pi>
+                    </heading>
+                    <heading-error-deg type="double">0</heading-error-deg> <!-- autoflight-rules.xml -->
+                    <master-pid type="double">0</master-pid>
+                    <p-gain-att type="double">-3.8</p-gain-att>
+                </roll>
+            </autoflight>
+            <elec>
+                <bus>
+                    <charger type="double">0</charger>
+                </bus>
+                <failures>
+                    <battery>
+                        <serviceable type="bool">1</serviceable>
+                    </battery>
+                    <epu>
+                        <serviceable type="bool">1</serviceable>
+                    </epu>
+                    <main-gen>
+                        <serviceable type="bool">1</serviceable>
+                    </main-gen>
+                    <stby-gen>
+                        <serviceable type="bool">1</serviceable>
+                    </stby-gen>
+                </failures>
+                <sources>
+                    <batt-bus type="bool">0</batt-bus>
+                    <battery-percent type="double">85</battery-percent> <!-- Initial battery percentage value -->
+                    <battery-time type="double">0</battery-time>
+                    <external-pwr-plugged-in type="int">0</external-pwr-plugged-in>
+                </sources>
+                <switches>
+                    <epu type="int">0</epu>
+                    <main-pwr type="int">0</main-pwr>
+                </switches>
+                <unused type="int">0</unused>
+            </elec>
             <inertia>
                 <pointmass-dragarea-sqft type="double" n="1">0</pointmass-dragarea-sqft>
                 <pointmass-dragarea-sqft type="double" n="2">0</pointmass-dragarea-sqft>
@@ -1232,6 +1369,54 @@
                 <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
             </gbu-12>
+            <gbu-31>
+                <short-name type="string">GBU-31</short-name>
+                <long-name type="string">GBU-31 JDAM</long-name>
+                <fire-msg type="string">Bombs away</fire-msg>
+                <class type="string">GM</class>
+                <max-fire-range-nm type="double">15 </max-fire-range-nm>
+                <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
+                <guidance type="string">laser</guidance>
+                <navigation type="string">PN</navigation>
+                <loft-altitude type="int"> 0 </loft-altitude>
+                <terrain-follow type="bool">false</terrain-follow>
+                <FCS-field-deg type="int"> 200 </FCS-field-deg>
+                <seeker-field-deg type="int"> 32 </seeker-field-deg>
+                <reaquire type="bool">true</reaquire>
+                <max-g type="double"> 1.8 </max-g><!-- real is 2.8, but here its limited for technical reasons -->
+                <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
+                <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
+                <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
+                <stage-2-duration-sec type="double"> 0 </stage-2-duration-sec>
+                <weight-launch-lbs type="double"> 2036 </weight-launch-lbs>
+                <weight-warhead-lbs type="double"> 945 </weight-warhead-lbs>
+                <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
+                <drag-coeff type="double"> 0.012 </drag-coeff>
+                <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
+                <arming-time-sec type="double"> 3 </arming-time-sec>
+                <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
+                <self-destruct-time-sec type="double"> 10000 </self-destruct-time-sec>
+                <all-aspect type="bool">true</all-aspect>
+                <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
+                <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
+                <rail type="bool">false</rail>
+                <max-report-distance type="double"> 350 </max-report-distance>
+                <vol-search type="double"> 0.075 </vol-search>
+                <vol-track type="double"> 0.25 </vol-track>
+                <vol-track-weak type="double"> 0.175 </vol-track-weak>
+                <drop-time type="double">2</drop-time>
+                <deploy-time type="double">2</deploy-time>
+                <lateral-dps type="double"> 10 </lateral-dps>
+                <max-pitch-deg type="double">-45</max-pitch-deg>
+                <hit-everything-nearby type="bool">true</hit-everything-nearby>
+                <!-- the following 6 properties not used yet: -->
+                <release-limit-mach type="double"> 1.2 </release-limit-mach>
+                <release-limit-altitude type="double"> 45000 </release-limit-altitude>
+                <release-limit-g type="double"> 0 </release-limit-g><!-- no info on this -->
+                <release-limit-roll type="double"> 90 </release-limit-roll>
+                <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
+                <require-lock-to-fire type="bool">false</require-lock-to-fire>
+            </gbu-31>
             <agm-65>
                 <short-name type="string">AGM65</short-name>
                 <long-name type="string">AGM-65B Maverick</long-name>
@@ -1376,6 +1561,102 @@
                 <class type="string">GM</class>
                 <fire-msg type="string">Sniper</fire-msg>
             </agm-88>
+            <b61-12>
+                <short-name type="string">B61-12</short-name>
+                <long-name type="string">B61-12 Test body</long-name>
+                <fire-msg type="string">Bombs away</fire-msg>
+                <class type="string">GM</class>
+                <max-fire-range-nm type="double">12 </max-fire-range-nm>
+                <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
+                <guidance type="string">laser</guidance>
+                <navigation type="string">PN</navigation>
+                <loft-altitude type="int"> 0 </loft-altitude>
+                <terrain-follow type="bool">false</terrain-follow>
+                <FCS-field-deg type="int"> 200 </FCS-field-deg>
+                <seeker-field-deg type="int"> 32 </seeker-field-deg>
+                <reaquire type="bool">true</reaquire>
+                <max-g type="double"> 1.5 </max-g><!-- real is 2.8, but here its limited for technical reasons -->
+                <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
+                <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
+                <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
+                <stage-2-duration-sec type="double"> 0 </stage-2-duration-sec>
+                <weight-launch-lbs type="double"> 700 </weight-launch-lbs>
+                <weight-warhead-lbs type="double"> 640 </weight-warhead-lbs>
+                <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
+                <drag-coeff type="double"> 0.012 </drag-coeff>
+                <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
+                <arming-time-sec type="double"> 5000 </arming-time-sec>
+                <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
+                <self-destruct-time-sec type="double"> 10000 </self-destruct-time-sec>
+                <all-aspect type="bool">true</all-aspect>
+                <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
+                <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
+                <rail type="bool">false</rail>
+                <max-report-distance type="double"> 275 </max-report-distance>
+                <vol-search type="double"> 0.075 </vol-search>
+                <vol-track type="double"> 0.25 </vol-track>
+                <vol-track-weak type="double"> 0.175 </vol-track-weak>
+                <drop-time type="double">2</drop-time>
+                <deploy-time type="double">2</deploy-time>
+                <lateral-dps type="double"> 10 </lateral-dps>
+                <max-pitch-deg type="double">-45</max-pitch-deg>
+                <hit-everything-nearby type="bool">true</hit-everything-nearby>
+                <!-- the following 6 properties not used yet: -->
+                <release-limit-mach type="double"> 1.2 </release-limit-mach>
+                <release-limit-altitude type="double"> 30000 </release-limit-altitude>
+                <release-limit-g type="double"> 0 </release-limit-g><!-- no info on this -->
+                <release-limit-roll type="double"> 90 </release-limit-roll>
+                <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
+                <require-lock-to-fire type="bool">false</require-lock-to-fire>
+            </b61-12>
+            <b61-7>
+                <short-name type="string">B61-7</short-name>
+                <long-name type="string">B61-7 Inert</long-name>
+                <fire-msg type="string">Bombs away</fire-msg>
+                <class type="string">GM</class>
+                <max-fire-range-nm type="double">12 </max-fire-range-nm>
+                <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
+                <guidance type="string">unguided</guidance>
+                <navigation type="string">direct</navigation>
+                <loft-altitude type="int"> 0 </loft-altitude>
+                <terrain-follow type="bool">false</terrain-follow>
+                <FCS-field-deg type="int"> 200 </FCS-field-deg>
+                <seeker-field-deg type="int"> 32 </seeker-field-deg>
+                <reaquire type="bool">true</reaquire>
+                <max-g type="double"> 1.5 </max-g><!-- real is 2.8, but here its limited for technical reasons -->
+                <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
+                <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
+                <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
+                <stage-2-duration-sec type="double"> 0 </stage-2-duration-sec>
+                <weight-launch-lbs type="double"> 700 </weight-launch-lbs>
+                <weight-warhead-lbs type="double"> 640 </weight-warhead-lbs>
+                <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
+                <drag-coeff type="double"> 0.012 </drag-coeff>
+                <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
+                <arming-time-sec type="double"> 5000 </arming-time-sec>
+                <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
+                <self-destruct-time-sec type="double"> 10000 </self-destruct-time-sec>
+                <all-aspect type="bool">true</all-aspect>
+                <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
+                <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
+                <rail type="bool">false</rail>
+                <max-report-distance type="double"> 275 </max-report-distance>
+                <vol-search type="double"> 0.075 </vol-search>
+                <vol-track type="double"> 0.25 </vol-track>
+                <vol-track-weak type="double"> 0.175 </vol-track-weak>
+                <drop-time type="double">2</drop-time>
+                <deploy-time type="double">2</deploy-time>
+                <lateral-dps type="double"> 10 </lateral-dps>
+                <max-pitch-deg type="double">-45</max-pitch-deg>
+                <hit-everything-nearby type="bool">true</hit-everything-nearby>
+                <!-- the following 6 properties not used yet: -->
+                <release-limit-mach type="double"> 1.2 </release-limit-mach>
+                <release-limit-altitude type="double"> 30000 </release-limit-altitude>
+                <release-limit-g type="double"> 0 </release-limit-g><!-- no info on this -->
+                <release-limit-roll type="double"> 90 </release-limit-roll>
+                <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
+                <require-lock-to-fire type="bool">false</require-lock-to-fire>
+            </b61-7>
         </armament>
     </payload>
 
@@ -1431,10 +1712,13 @@
         <avionics>
             <hud-brt type="double">1.0</hud-brt>
         </avionics>
-		<fcs>
-			<switch-pitch type="int">0</switch-pitch>
-			<switch-roll type="int">0</switch-roll>
-		</fcs>
+        <fcs>
+            <autopilot-on type="int">0</autopilot-on> <!-- Ignored on Block 20+ -->
+            <switch-pitch-block15 type="int">0</switch-pitch-block15>
+            <switch-pitch-block20 type="int">0</switch-pitch-block20>
+            <switch-roll-block15 type="int">0</switch-roll-block15>
+            <switch-roll-block20 type="int">0</switch-roll-block20>
+        </fcs>
         <engine>
             <feed type="bool">false</feed><!-- OFF/NORM prevents starter, cutoff -->
             <jet-fuel type="int">0</jet-fuel><!-- starter -1=1 1=2 0=off  goes to off at 55% rpm -->

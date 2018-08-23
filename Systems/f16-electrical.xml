@@ -7,6 +7,19 @@
 	
 	<channel name="Sources" execrate="8">
 		
+		<fcs_function name="elec/sources/battery-volt-feed">
+			<function>
+				<table>
+					<independentVar lookup="row">elec/sources/battery-percent</independentVar>
+					<tableData>
+						  0   0.0
+						 10  24.0
+						100  26.5
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+		
 		<pure_gain name="elec/sources/battery-volt">
 			<input>elec/sources/battery-volt-feed</input>
 			<gain>elec/failures/battery/serviceable</gain>
@@ -185,12 +198,12 @@
 			</test>
 		</switch>
 		
-		<pure_gain name="elec/contactors/ocs-contactors-fwd"> <!-- They don't work yet, I don't know the current limits -->
+		<pure_gain name="elec/contactors/ocs-contactors-fwd"> <!-- They don't work yet, as I don't know the current limits -->
 			<input>elec/contactors/main-contactors-1</input>
 			<gain>1.0</gain>
 		</pure_gain>
 		
-		<pure_gain name="elec/contactors/ocs-contactors-nacelle"> <!-- They don't work yet, I don't know the current limits -->
+		<pure_gain name="elec/contactors/ocs-contactors-nacelle"> <!-- They don't work yet, as I don't know the current limits -->
 			<input>elec/contactors/main-contactors-2</input>
 			<gain>1.0</gain>
 		</pure_gain>
@@ -411,6 +424,16 @@
 			<input>elec/bus/flcc/cd-regulator</input>
 			<gain>1.0</gain>
 		</pure_gain>
+		
+		<switch name="elec/bus/charger">
+			<default value="0"/>
+			<test value="elec/bus/emergency-dc-1"> <!-- Guess, can't find what powers the charger -->
+				elec/bus/emergency-dc-1 ge 20
+			</test>
+			<test value="elec/bus/emergency-dc-2"> <!-- Guess, can't find what powers the charger -->
+				elec/bus/emergency-dc-2 ge 20
+			</test>
+		</switch>
 	
 	</channel>
 	

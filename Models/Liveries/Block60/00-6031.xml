@@ -11,6 +11,14 @@
             <livery-logo>
                 <texture type="string">Liveries/yf/yf16-transp.png</texture>
             </livery-logo>
+
+            <livery-patch>
+             <texture>Liveries/patch.default.png</texture>
+            </livery-patch>
+
+            <livery-pod>
+                <texture>Armament/External-stores/MXU-648.png</texture>
+            </livery-pod>
         </model>
     </sim>
 </PropertyList>

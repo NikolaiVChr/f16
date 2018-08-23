@@ -9,7 +9,7 @@ OBJECT poly
 name "0"
 data 8
 Mesh.010
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -167,7 +167,7 @@ OBJECT poly
 name "1"
 data 8
 Mesh.017
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -325,7 +325,7 @@ OBJECT poly
 name "2"
 data 8
 Mesh.014
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -483,7 +483,7 @@ OBJECT poly
 name "3"
 data 8
 Mesh.011
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -641,7 +641,7 @@ OBJECT poly
 name "4"
 data 8
 Mesh.018
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -799,7 +799,7 @@ OBJECT poly
 name "5"
 data 8
 Mesh.015
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -957,7 +957,7 @@ OBJECT poly
 name "6"
 data 8
 Mesh.012
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -1115,7 +1115,7 @@ OBJECT poly
 name "7"
 data 8
 Mesh.019
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -1273,7 +1273,7 @@ OBJECT poly
 name "8"
 data 8
 Mesh.016
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -1431,7 +1431,7 @@ OBJECT poly
 name "9"
 data 8
 Mesh.013
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -1589,7 +1589,7 @@ OBJECT poly
 name "a-a"
 data 8
 Mesh.023
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 31
@@ -1900,7 +1900,7 @@ OBJECT poly
 name "a-g"
 data 8
 Mesh.022
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 31
@@ -3886,7 +3886,7 @@ OBJECT poly
 name "com1"
 data 8
 Mesh.027
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 31
@@ -4197,7 +4197,7 @@ OBJECT poly
 name "com2"
 data 8
 Mesh.026
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 31
@@ -7987,7 +7987,7 @@ OBJECT poly
 name "entr"
 data 8
 Mesh.009
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -8145,7 +8145,7 @@ OBJECT poly
 name "flir_ud"
 data 8
 Mesh.006
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 20
@@ -8472,7 +8472,7 @@ OBJECT poly
 name "iff"
 data 8
 Mesh.025
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 31
@@ -8783,7 +8783,7 @@ OBJECT poly
 name "list"
 data 8
 Mesh.024
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 31
@@ -9094,7 +9094,7 @@ OBJECT poly
 name "poly"
 data 8
 Mesh.020
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 20
@@ -9292,7 +9292,7 @@ OBJECT poly
 name "poly.001"
 data 8
 Mesh.028
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 40
@@ -9606,7 +9606,7 @@ OBJECT poly
 name "rcl"
 data 8
 Mesh.008
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 16
@@ -9764,7 +9764,7 @@ OBJECT poly
 name "rtn_seq"
 data 8
 Mesh.021
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 31
@@ -11750,7 +11750,7 @@ OBJECT poly
 name "wx"
 data 8
 Mesh.007
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 texrep 1 1
 crease 30.000000
 numvert 21

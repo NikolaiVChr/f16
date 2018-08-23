@@ -11,6 +11,14 @@
             <livery-logo>
                 <texture type="string">Liveries/yf/yf16-transp.png</texture>
             </livery-logo>
+
+            <livery-patch>
+                <texture>Liveries/Block60/patch.raider1.png</texture>
+            </livery-patch>
+
+            <livery-pod>
+                <texture>Liveries/Block60/pod.Raider1.png</texture>
+             </livery-pod>
         </model>
     </sim>
 </PropertyList>

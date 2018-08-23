@@ -262,7 +262,67 @@
       </equals>
   </condition>
  </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station3_GBU-31</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-2-type</property>
+      <value>GBU-31</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-2-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station3_B61-12</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-2-type</property>
+      <value>B61-12</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-2-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
  
+
+ <animation>
+  <type>select</type>
+  <object-name>Station3_B61-7</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-2-type</property>
+      <value>B61-7</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-2-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station3_MXU-648</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-2-type</property>
+      <value>MXU-648 Cargopod</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-2-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
  
 <!--  ===========================================================================================================-->
 <!--  ================================================= id-3   ==================================================-->
@@ -309,6 +369,21 @@
         <property>payload/armament/station/id-3-set</property>
         <value>2 x MK-82</value>
       </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station4_GBU-31</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-3-type</property>
+      <value>GBU-31</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-3-count</property>
+      <value>0</value>
+    </greater-than>
   </condition>
  </animation>
  
@@ -360,8 +435,41 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
  </animation>
  
 
- 
- 
+ <animation>
+  <type>select</type>
+  <object-name>Station5_MXU-648</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-4-type</property>
+      <value>MXU-648 Cargopod</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-4-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+<animation>
+  <type>select</type>
+  <object-name>Centerpylon</object-name>
+  <condition>
+  	<or>
+    <equals>
+      <property>payload/armament/station/id-4-type</property>
+      <value>MXU-648 Cargopod</value>
+    </equals>
+	<equals>
+      <property>payload/armament/station/id-4-type</property>
+      <value>AN/ALQ-131 ECM Pod</value>
+    </equals>
+	</or>
+    <greater-than>
+      <property>payload/armament/station/id-4-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
  
  
 <!--  ===========================================================================================================-->
@@ -410,6 +518,21 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
         <property>payload/armament/station/id-5-set</property>
         <value>2 x MK-82</value>
       </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station6_GBU-31</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-5-type</property>
+      <value>GBU-31</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-5-count</property>
+      <value>0</value>
+    </greater-than>
   </condition>
  </animation>
  
@@ -521,6 +644,66 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
     <equals>
       <property>payload/armament/station/id-6-type</property>
       <value>AGM-88</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-6-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station7_GBU-31</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-6-type</property>
+      <value>GBU-31</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-6-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station7_B61-12</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-6-type</property>
+      <value>B61-12</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-6-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station7_B61-7</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-6-type</property>
+      <value>B61-7</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-6-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station7_MXU-648</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-6-type</property>
+      <value>MXU-648 Cargopod</value>
     </equals>
     <greater-than>
       <property>payload/armament/station/id-6-count</property>
@@ -673,9 +856,19 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   <object-name>VentralTank</object-name>
   <object-name>RExtTank</object-name>
   <object-name>LExtTank</object-name>
+  <object-name>Centerpylon</object-name>
   <property-base>sim/model/livery</property-base>
   <texture-prop>texture</texture-prop>
-  <texture>f16.rgb</texture>
+  <texture>f16.png</texture>
  </animation>
+
+ <animation>
+    <type>material</type>
+    <object-name>Shell</object-name>
+    <object-name>Door</object-name>
+    <property-base>sim/model/livery-pod</property-base>
+    <texture-prop>texture</texture-prop>
+    <texture>Armament/External-stores/MXU-648.png</texture>
+  </animation>
  
 </PropertyList>
