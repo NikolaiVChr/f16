@@ -69,6 +69,7 @@ light: ecm lamp off
         <object-name>alt-rel-button</object-name>
         <property>controls/flight/alt-rel-button</property>
         <factor>1</factor>
+        <drag-direction>vertical</drag-direction>
         <center>
             <x-m>1</x-m>
             <y-m>0</y-m>
@@ -103,6 +104,7 @@ light: ecm lamp off
         <object-name>autopilot-switch</object-name>
         <property>f16/fcs/autopilot-on</property>
         <factor>45</factor>
+        <drag-direction>vertical</drag-direction>
         <axis>
             <object-name>autopilot-switch-axis</object-name>
         </axis>
@@ -122,6 +124,7 @@ light: ecm lamp off
         <object-name>laser-arm-switch</object-name>
         <property>controls/armament/laser-arm-dmd</property>
         <factor>60</factor>
+        <drag-direction>vertical</drag-direction>
         <axis>
             <object-name>laser-arm-switch-axis</object-name>
         </axis>
@@ -153,6 +156,7 @@ light: ecm lamp off
         </condition>
         <property>controls/armament/master-arm</property>
         <factor>45</factor>
+        <drag-direction>vertical</drag-direction>
         <axis>
             <object-name>master-arm-switch-axis</object-name>
         </axis>
@@ -176,16 +180,17 @@ light: ecm lamp off
                 <value>2</value>
             </less-than>
         </condition>
-        <property>f16/fcs/switch-roll-block15</property>
+        <property>f16/fcs/switch-pitch-block15</property>
         <offset-deg>-30</offset-deg>
         <factor>60</factor>
+        <drag-direction>vertical</drag-direction>
         <axis>
             <object-name>pitch-switch-b15-axis</object-name>
         </axis>
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/fcs/switch-roll-block15</property>
+                <property>f16/fcs/switch-pitch-block15</property>
                 <factor>1</factor>
                 <min>0</min>
                 <max>1</max>
@@ -202,16 +207,17 @@ light: ecm lamp off
                 <value>2</value>
             </less-than>
         </condition>
-        <property>f16/fcs/switch-pitch-block15</property>
+        <property>f16/fcs/switch-roll-block15</property>
         <offset-deg>-30</offset-deg>
         <factor>60</factor>
+        <drag-direction>vertical</drag-direction>
         <axis>
             <object-name>roll-switch-b15-axis</object-name>
         </axis>
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/fcs/switch-pitch-block15</property>
+                <property>f16/fcs/switch-roll-block15</property>
                 <factor>1</factor>
                 <min>0</min>
                 <max>1</max>
@@ -230,6 +236,7 @@ light: ecm lamp off
         </condition>
         <property>controls/armament/master-arm-cover-open</property>
         <factor>-90</factor>
+        <drag-direction>horizontal</drag-direction>
         <axis>
             <object-name>master-arm-cover-axis</object-name>
         </axis>
@@ -237,7 +244,7 @@ light: ecm lamp off
             <binding>
                 <command>property-adjust</command>
                 <property>controls/armament/master-arm-cover-open</property>
-                <factor>1</factor>
+                <factor>-1</factor>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -250,6 +257,7 @@ light: ecm lamp off
         <property>controls/armament/rf-mode</property>
         <offset-deg>0</offset-deg>
         <factor>30</factor>
+        <drag-direction>vertical</drag-direction>
         <axis>
             <object-name>quiet-switch-axis</object-name>
         </axis>
@@ -275,6 +283,7 @@ light: ecm lamp off
         </condition>
         <property>f16/fcs/switch-pitch-block20</property>
         <factor>45</factor>
+        <drag-direction>vertical</drag-direction>
         <axis>
             <object-name>roll-hold-switch-axis</object-name>
         </axis>
@@ -300,6 +309,7 @@ light: ecm lamp off
         </condition>
         <property>f16/fcs/switch-roll-block20</property>
         <factor>45</factor>
+        <drag-direction>vertical</drag-direction>
         <axis>
             <object-name>pitch-hold-switch-axis</object-name>
         </axis>
@@ -323,6 +333,7 @@ light: ecm lamp off
         <object-name>adv-mode-button</object-name>
         <property>f16/fcs/adv-mode-sel</property>
         <factor>1</factor>
+        <drag-direction>vertical</drag-direction>
         <center>
             <x-m>1</x-m>
             <y-m>0</y-m>
