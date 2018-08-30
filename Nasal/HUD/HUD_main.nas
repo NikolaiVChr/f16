@@ -408,10 +408,10 @@ var F16_HUD = {
 #                .setFont(HUD_FONT)
 #                .setFontSize(9, 1.4);
         obj.raltFrame = obj.svg.createChild("path")
-                .moveTo(sx*1*0.695633-10,sy*0.45+5)
-                .horiz(-40)
+                .moveTo(sx*1*0.695633-9,sy*0.45+5)
+                .horiz(-41)
                 .vert(-10)
-                .horiz(40)
+                .horiz(41)
                 .vert(10)
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);

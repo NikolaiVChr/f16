@@ -18,7 +18,7 @@
 
 var SubSystem_RWR_APG = {
 	new : func (_ident){
-        print("RWR_APG: init");
+        #print("RWR_APG: init");
         var obj = { parents: [SubSystem_RWR_APG]};
         input = {
                link16_wingman_1: "link16/wingman-1",

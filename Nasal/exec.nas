@@ -63,7 +63,7 @@ var rtExec_loop = func
         frame_inc = 0.05;#20.0
     }
     if (frame_inc != cur_frame_inc) {
-        print("[EMEXEC]: Adjust frequency to ",1/frame_inc);
+#        print("[EMEXEC]: Adjust frequency to ",1/frame_inc);
         cur_frame_inc = frame_inc;
     }
     execTimer.restart(cur_frame_inc);

@@ -136,6 +136,7 @@ light: ecm lamp off
             </binding>
         </action>
     </animation>
+
     <animation>
         <type>knob</type>
         <object-name>master-arm-switch</object-name>
@@ -167,6 +168,7 @@ light: ecm lamp off
             </binding>
         </action>
     </animation>
+
     <animation>
         <type>knob</type>
         <object-name>pitch-switch-b15</object-name>
@@ -219,6 +221,7 @@ light: ecm lamp off
             </binding>
         </action>
     </animation>
+
     <animation>
         <type>knob</type>
         <object-name>master-arm-cover</object-name>
@@ -244,26 +247,28 @@ light: ecm lamp off
             </binding>
         </action>
     </animation>
+
     <animation>
         <type>knob</type>
         <object-name>quiet-switch</object-name>
-        <property>controls/armament/rf-mode</property>
-        <offset-deg>0</offset-deg>
-        <factor>30</factor>
+        <property>instrumentation/radar/radar-standby</property>
+        <offset-deg>30</offset-deg>
+        <factor>-60</factor>
         <axis>
             <object-name>quiet-switch-axis</object-name>
         </axis>
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>controls/armament/rf-mode</property>
+                <property>instrumentation/radar/radar-standby</property>
                 <factor>1</factor>
-                <min>-1</min>
+                <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
             </binding>
         </action>
     </animation>
+
     <animation>
         <type>knob</type>
         <object-name>roll-hold-switch</object-name>
@@ -289,6 +294,7 @@ light: ecm lamp off
             </binding>
         </action>
     </animation>
+
     <animation>
         <type>knob</type>
         <object-name>pitch-hold-switch</object-name>

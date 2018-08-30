@@ -88,8 +88,15 @@ var WcsMode           = props.globals.getNode("sim/model/"~this_model~"/instrume
 var SWTgtRange        = props.globals.getNode("sim/model/"~this_model~"/systems/armament/aim9/target-range-nm",1);
 var RadarServicable   = props.globals.getNode("instrumentation/radar/serviceable",1);
 var SelectTargetCommand =props.globals.getNode("sim/model/"~this_model~"/instrumentation/radar-awg-9/select-target",1);
+var LaserArm          = props.globals.getNode("controls/armament/laser-arm-dmd",1);
+var RefStrenght       = props.globals.getNode("instrumentation/radar/ref-strength",1);
+var RefRange          = props.globals.getNode("instrumentation/radar/ref-range",1);
+var LimitedSelect     = props.globals.getNode("instrumentation/radar/limited-select",1);
 
-var myRadarStrength_rcs = 3.2;
+
+var myRadarStrength_rcs = getprop("instrumentation/radar/ref-strength");
+var myRadarRange_rcs = getprop("instrumentation/radar/ref-range");
+
 #var awg9_trace = 0;
 var wcs_mode_pd_srch = 1;
 var wcs_mode_pd_stt = 2;
@@ -190,6 +197,9 @@ var mp_count          = 0;
 var mp_list           = [];
 var tgts_list         = [];
 var cnt               = 0;
+
+var use_tews          = 1;
+
 # Dual-control vars: 
 var we_are_bs         = 0;
 var pilot_lock        = 0;
@@ -208,6 +218,21 @@ var u_ecm_type_num    = 0;
 var FD_TAN3DEG = 0.052407779283; # tan(3)
 var sel_next_target = 0;
 var sel_prev_target = 0;
+var stby = 0;
+
+var cycle_range    = getprop("instrumentation/radar/cycle-range");
+
+var setupRanges = func {
+    var rdrNode = props.globals.getNode("instrumentation/radar",0);
+    var rangeNodes = rdrNode.getChildren("ranges");
+    if (rangeNodes != nil and size(rangeNodes) > 0) {
+        radar_ranges = [];
+        foreach(rNode ; rangeNodes) {
+            append(radar_ranges, rNode.getNode("entry").getValue());
+        }
+    }
+};
+setupRanges();
 
 var versionString = getprop("sim/version/flightgear");
 var version = split(".", versionString);
@@ -243,6 +268,7 @@ init = func() {
     if(our_ac_name == "f15d") our_ac_name = "f15c";
 	if (our_ac_name == "f-14b-bs") { we_are_bs = 1; }
 	if (our_ac_name == "f15-bs") we_are_bs = 1;
+    if (find("F-16", our_ac_name) != -1) { we_are_bs = 0; use_tews = 0; }
 
 	my_radarcorr = radardist.my_maxrange( our_ac_name ); # in kilometers
 }
@@ -356,8 +382,12 @@ var az_scan = func(notification) {
                 if (c.getNode("valid") == nil or !c.getNode("valid").getValue()) {
                     continue;
                 }
-                if (type == "multiplayer" or type == "tanker" or type == "aircraft" 
-                    or type == "ship" or type == "groundvehicle" or type == "aim-120" or type == "aim-7" or type == "aim-9") 
+                var ordnance = 1;
+                if (c.getNode("missile") == nil or !c.getNode("missile").getValue()) {
+                    ordnance = 0;
+                }
+                if (type == "multiplayer" or type == "tanker" or type == "aircraft" or type == "carrier"
+                    or type == "ship" or type == "groundvehicle") 
                 {
                     var new_tgt = Target.new(c);
                     var u = Target.new(c);
@@ -373,15 +403,16 @@ var az_scan = func(notification) {
                     u_radar_standby   = 0;
                     u_ecm_type_num    = 0;
                     var u_rng = u.get_range();
-
-                    if (type == "tanker" or type == "aircraft") {
+                    if (ordnance) {
+                        u.setClass(ORDNANCE);
+                    } elsif (type == "tanker" or type == "aircraft") {
                         u.setClass(AIR);
                     } elsif (type=="carrier") {
                         u.setClass(MARINE);
                     } elsif (type=="groundvehicle") {
                         u.setClass(SURFACE);
                     } else {
-                        # multiplayer:
+                        # multiplayer or ship:
                         var mdl = u.get_model();
                         if (contains(knownSurface,mdl)) {
                             u.setClass(SURFACE);
@@ -442,7 +473,8 @@ var az_scan = func(notification) {
     {
         scan_tgt_end = size(tgts_list);
     }
-
+    var silentChanged = RadarStandby.getValue() != stby;
+    stby = RadarStandby.getValue();
     for (;scan_tgt_idx < scan_tgt_end; scan_tgt_idx += 1) {
 
         u = tgts_list[scan_tgt_idx];
@@ -452,7 +484,7 @@ var az_scan = func(notification) {
         var u_rng = u.get_range();
         ecm_on = EcmOn.getValue();
 
-        if (scan_update_visibility) {
+        if (scan_update_visibility or silentChanged) {
 
             # check for visible by radar taking into account RCS, based on AWG-9 = 89NM for 3.2 rcs (guesstimate)
             # also then check to see if behind terrain.
@@ -468,7 +500,7 @@ var az_scan = func(notification) {
 #var v1 = TerrainManager.IsVisible(u.propNode,notification);
 #pickingMethod = 1;
 #var v2 = TerrainManager.IsVisible(u.propNode,notification);
-            if (rcs.isInRadarRange(u, 89, myRadarStrength_rcs) == 0) {
+            if (rcs.isInRadarRange(u, myRadarRange_rcs, myRadarStrength_rcs) == 0) {
                 u.set_display(0);
                 u.set_visible(0);
                 scan_hidden_by_rcs += 1;
@@ -490,9 +522,10 @@ var az_scan = func(notification) {
 #msg = msg ~ " in stby";
                       u.set_display(!u.get_rdr_standby());
                   }
-                  if (radar_mode < 2)
-                    u.set_display(1);
-                  else {
+                  if (radar_mode < 2) {
+                    u.set_display(!RadarStandby.getValue());## I do not understand radar_mode: if 2 then it can be silent, but ignores cone. if less than 2 its always on, respects cone.!!
+                    #printf("Hiding %d %s", !RadarStandby.getValue(), u.get_Callsign());
+                  } else {
 #msg = "radar not transmitting";
                       u.set_display(0);
                   }
@@ -519,7 +552,7 @@ var az_scan = func(notification) {
             u.get_deviation(our_true_heading);
             u.get_total_elevation(OurPitch.getValue());
 
-            if (rcs.isInRadarRange(u, 89, myRadarStrength_rcs) == 0) {
+            if (rcs.isInRadarRange(u, myRadarRange_rcs, myRadarStrength_rcs) == 0) {
 #                if(awg9_trace)
 #                  print(scan_tgt_idx,";",u.get_Callsign()," not visible by rcs");
                 u.set_display(0);
@@ -539,8 +572,8 @@ var az_scan = func(notification) {
 #1;MP2 within  azimuth 126.4171942282486 field=-60->60
 #1;MP2 within  azimuth -130.0592982116802 field=-60->60  (s->w quadrant)
 #0;MP1 within  azimuth 164.2283073827575 field=-60->60
-            if (radar_mode < 2 and u.deviation < az_fld/2 and math.abs(u.elevation) < HoField.getValue()/2) {
-                u.set_display(u.get_visible());
+            if (radar_mode < 2 and math.abs(u.deviationA) < az_fld/2 and math.abs(u.deviationE) < HoField.getValue()/2) {
+                u.set_display(u.get_visible() and !RadarStandby.getValue() and u.get_type() != ORDNANCE);
 #                if(awg9_trace)
 #                  print(scan_tgt_idx,";",u.get_Callsign()," within  azimuth ",u.deviation," field=",l_az_fld,"->",r_az_fld);
             }
@@ -549,6 +582,8 @@ var az_scan = func(notification) {
 #                  print(scan_tgt_idx,";",u.get_Callsign()," out of azimuth ",u.deviation," field=",l_az_fld,"->",r_az_fld);
                 u.set_display(0);
             }
+        } else {
+            u.set_display(0);
         }
 
 # RWR 
@@ -581,7 +616,7 @@ var az_scan = func(notification) {
               if (1==1) {
 
                   # Compute mp position in our DDD display. (Bearing/horizontal + Range/Vertical).
-                  u.set_relative_bearing( ddd_screen_width / az_fld * u.deviation );
+                  u.set_relative_bearing( ddd_screen_width / az_fld * u.deviationA );
                   var factor_range_radar = 0.0657 / range_radar2; # 0.0657m : length of the distance range on the DDD screen.
                   u.set_ddd_draw_range_nm( factor_range_radar * u_rng );
                   u_fading = 1;
@@ -669,7 +704,7 @@ var az_scan = func(notification) {
     }
 }
 
-setprop("sim/mul"~"tiplay/gen"~"eric/strin"~"g[14]", "o"~""~"7");
+#setprop("sim/mul"~"tiplay/gen"~"eric/strin"~"g[14]", "o"~""~"7");
 
 var containsV = func (vector, content) {
     if (content == nil) {
@@ -687,6 +722,7 @@ var selectCheck = func {
     #
     #
     # next / previous target selection. 
+    if (LimitedSelect.getValue()) {selectCheckLimited(); return;}
     var tgt_cmd = SelectTargetCommand.getValue();
     SelectTargetCommand.setIntValue(0);
 
@@ -796,6 +832,116 @@ var selectCheck = func {
     }
 }
 
+var selectCheck = func {
+    var tgt_cmd = SelectTargetCommand.getValue();
+    SelectTargetCommand.setIntValue(0);
+    if (tgt_cmd != nil)
+    {
+        if (tgt_cmd > 0)
+            awg_9.sel_next_target=1;
+        else if (tgt_cmd < 0)
+            awg_9.sel_prev_target=1;
+    }
+
+    if (awg_9.sel_prev_target)
+    {
+        var dist  = 0;
+        if (awg_9.active_u != nil)
+        {
+            dist = awg_9.active_u.get_range();
+        }
+#        print("Sel prev target:");
+
+        var sorted_dist = sort (awg_9.tgts_list, func (a,b) {a.get_range()-b.get_range()});
+        var prv=nil;
+        foreach (var u; sorted_dist) 
+        {
+#            printf("TGT:: %5.2f (%5.2f) : %s ",u.get_range(), dist, u.Callsign.getValue());
+            if(u.Callsign.getValue() == active_u_callsign and prv != nil)
+            {
+#                if (prv != nil)
+#                    print("Located prev: ",prv.Callsign.getValue(), prv.get_range());
+#                else
+#                    print("first in list");
+                break;
+            }
+            if(u.get_display() == 0) {
+                continue;
+            }
+            prv = u;
+        }
+        if (prv == nil and 1==0)
+        {
+            var idx = size(sorted_dist)-1;
+            if (idx > 0)
+            {
+                prv = sorted_dist[idx];
+#                print("Using last in list ",idx," = ",prv.Callsign.getValue(), prv.get_range());
+            }
+        }
+
+        if (prv != nil)
+        {
+            active_u = nearest_u = tmp_nearest_u = prv;
+            armament.contact = active_u;
+            if (tmp_nearest_u.Callsign != nil)
+                active_u_callsign = tmp_nearest_u.Callsign.getValue();
+            else
+                active_u_callsign = nil;
+                
+#            printf("prv: %s %3.1f", prv.Callsign.getValue(), prv.get_range());
+        }
+        awg_9.sel_prev_target =0;
+    }
+    else if (awg_9.sel_next_target)
+    {
+        var dist  = 0;
+        if (awg_9.active_u != nil)
+        {
+            dist = awg_9.active_u.get_range();
+        }
+#        print("Sel next target: dist=",dist);
+
+        var sorted_dist = sort (awg_9.tgts_list, func (a,b) {a.get_range()-b.get_range()});
+        var nxt=nil;
+        foreach (var u; sorted_dist) 
+        {
+#            printf("TGT:: %5.2f (%5.2f) : %s ",u.get_range(), dist, u.Callsign.getValue());
+            if(nxt == nil and u.get_display()) {
+                nxt = u;
+            }
+            if(u.Callsign.getValue() == active_u_callsign)
+            {
+#                print("Skipping active target ",active_u_callsign);
+                continue;
+}
+            if(u.get_range() > dist and u.get_display())
+            {
+                nxt = u;
+#                print("Located next ",nxt.Callsign.getValue(), nxt.get_range());
+                break;
+            }
+        }
+        if (nxt == nil and 1==0)
+        {
+            if(size(sorted_dist)>0)
+                nxt = sorted_dist[0];
+        }
+
+        if (nxt != nil)
+        {
+            active_u = nearest_u = tmp_nearest_u = nxt;armament.contact = active_u;
+            if (tmp_nearest_u.Callsign != nil)
+                active_u_callsign = tmp_nearest_u.Callsign.getValue();
+            else
+                active_u_callsign = nil;
+                
+#            printf("nxt: %s %3.1f", nxt.Callsign.getValue(), nxt.get_range());
+        }
+        awg_9.sel_next_target =0;
+    }
+}
+
 var TerrainManager = {
 #
     # returns true if the node (position) is visible taking into accoun terrain
@@ -868,8 +1014,8 @@ var hud_nearest_tgt = func() {
 #print("active_u ",wcs_mode, active_u.get_range()," Display", active_u.get_display(), "dev ",active_u.deviation," ",l_az_fld," ",r_az_fld);
 		if (wcs_current_mode == wcs_mode_tws_auto
 			and active_u.get_display()
-			and active_u.deviation > l_az_fld
-			and active_u.deviation < r_az_fld) {
+			and active_u.deviationA > l_az_fld
+			and active_u.deviationA < r_az_fld) {
 			var devs = aircraft.develev_to_devroll(u_dev_rad, u_elev_rad);
 			var combined_dev_deg = devs[0];
 			var combined_dev_length =  devs[1];
@@ -968,6 +1114,9 @@ rwr_warning_indication = func(u) {
 # then remove the .xml and additionally support extra craft using the ac_map mapping defined above.
 # this will then give us the maximum range.
 # although we will use our own RCS method to 
+    if (!use_tews) {
+        return;
+    }
 	var u_name = radardist.get_aircraft_name(u.string);
     u_name = string.truncateAt(u_name, ".xml");
     u_name = ac_map[u_name] or u_name;
@@ -1039,25 +1188,6 @@ var toggle_radar_standby = func() {
 }
 
 var range_control = func(n) {
-    radar_ranges = [5,10,20,50,100,200];
-    newri = nil;
-    forindex(ri; radar_ranges)
-      {
-          if (radar_ranges[ri] == range_radar) {
-              newri = ri + n;
-              break;
-          }
-      }
-    if (newri != nil){
-        if (newri < 0) newri = size(radar_ranges) - 1;
-        elsif (newri >= size(radar_ranges))
-          newri = 0;
-        print("new range ",newri, " ", radar_ranges[newri]);
-range_radar = radar_ranges[newri];
-    }
-}
-
-var range_control = func(n) {
 
 #    if ( pilot_lock and ! we_are_bs ) { return }
 
@@ -1071,14 +1201,17 @@ var range_control = func(n) {
     }
     if (newri == nil) newri = 0; # fallback to first in range
 
-    if (newri < 0) 
+    if (newri < 0) {
+      if (!cycle_range) {return;}
       newri = size(radar_ranges) - 1;
-    elsif (newri >= size(radar_ranges))
+    } elsif (newri >= size(radar_ranges)) {
+      if (!cycle_range) {return;}
       newri = 0;
+    }
 
     RangeRadar2.setValue(radar_ranges[newri]);
 
-    print("new range ",newri, " ", radar_ranges[newri]);
+    #print("new range ",newri, " ", radar_ranges[newri]);
     if (cockpitNotifier != nil)
       cockpitNotifier.notify_value(cockpitNotifier.set_radar_range, range_radar);
 }
@@ -1178,15 +1311,19 @@ var Target = {
             }
             else
                 obj.ModelType = "";
-        }
-        obj.class = AIR;
-        obj.ModelType = "";
-        if (c.getNode("type") != nil) {
+        } elsif (c.getNode("type") != nil) {
+            # not all have a path property
             obj.ModelType = c.getNode("type").getValue();
             if (obj.ModelType == nil) {
+                # not all have a type property
                 obj.ModelType = "";
             }
-        } 
+        } else {
+            obj.ModelType = "";
+        }
+
+        obj.class = AIR;
+        
 
 		obj.index = c.getIndex();
 		obj.string = "ai/models/" ~ obj.type ~ "[" ~ obj.index ~ "]";
@@ -1293,7 +1430,8 @@ var Target = {
 		# Radar emission status for other users of radar2.nas.
 		obj.RadarStandby = c.getNode("sim/multiplay/generic/int[2]");
 
-		obj.deviation = nil;
+		obj.deviationA = nil;
+        obj.deviationE = nil;
         obj.elevation = nil;
 
 		return obj;
@@ -1309,14 +1447,16 @@ var Target = {
 		    me.BHeading.setValue(n);
 		return n;	},
 	get_bearing : func {
-        if (me.Bearing == nil)
-            return 0;
-		var n = me.Bearing.getValue();
-        if (n != nil)
-        {
-    		me.BBearing.setValue(n);
+        var n = nil;
+        if (me.Bearing != nil and me.Bearing.getValue() != 0) {# will always be 0 for AI carriers
+            n = me.Bearing.getValue();
         }
-		return n;
+        if(n == nil) {
+            # AI/MP has no radar properties
+            n = me.get_bearing_from_Coord(geo.aircraft_position());
+        }
+        me.BBearing.setValue(n);
+        return n;
 	},
     get_bearing_from_Coord: func(MyAircraftCoord){
         var myBearing = 0;
@@ -1335,15 +1475,15 @@ var Target = {
 		return geo.normdeg(me.get_bearing() + 180);
 	},
 	get_deviation : func(true_heading_ref) {
-		me.deviation =  deviation_normdeg(true_heading_ref, me.get_bearing());
-		return me.deviation;
+		me.deviationA =  deviation_normdeg(true_heading_ref, me.get_bearing());
+		return me.deviationA;
 	},
 	get_altitude : func {
 		return me.Alt.getValue();
 	},
 	get_total_elevation : func(own_pitch) {
-		me.deviation =  deviation_normdeg(own_pitch, me.getElevation());
-		return me.deviation;
+		me.deviationE =  deviation_normdeg(own_pitch, me.getElevation());
+		return me.deviationE;
 	},
 	get_range : func {
         #
@@ -1559,6 +1699,9 @@ var Target = {
         }
     },
     isLaserPainted: func{
+        if (LaserArm.getValue() != 1) {
+            return 0;
+        }
         if (active_u != nil and active_u.getUnique() == me.getUnique()) {
             return 1;
         } else {
@@ -1616,12 +1759,12 @@ var Target = {
             me.bearingR = coord.course_to(me.get_Coord());
             me.headingR = me.get_heading();
             me.inv_bearingR =  me.bearingR+180;
-            me.deviationR = me.inv_bearingR - me.headingR;
+            me.deviationRd = me.inv_bearingR - me.headingR;
         } else {
-            me.deviationR = 0;
+            me.deviationRd = 0;
         }
         me.rdrAct = me.propNode.getNode("sim/multiplay/generic/int[2]");
-        if (me.rn < 70 and ((me.rdrAct != nil and me.rdrAct.getValue()!=1) or me.rdrAct == nil) and math.abs(geo.normdeg180(me.deviationR)) < 60) {
+        if (me.rn < 70 and ((me.rdrAct != nil and me.rdrAct.getValue()!=1) or me.rdrAct == nil) and math.abs(geo.normdeg180(me.deviationRd)) < 60) {
             # our radar is active and pointed at coord.
             return 1;
         }
@@ -1726,4 +1869,3 @@ var compute_rwr = func(radar_mode, u, u_rng){
 
     u.set_RWR_visible(emitting and u.get_visible());
 }
-

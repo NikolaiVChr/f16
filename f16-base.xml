@@ -742,11 +742,11 @@
                 <desc>Toggle radar standby mode</desc>
                 <binding>
                     <command>property-toggle</command>
-                    <property>sim/multiplay/generic/int[2]</property>
+                    <property>instrumentation/radar/radar-standby</property>
                 </binding>
                 <binding>
                     <command>nasal</command>
-                    <script>screen.log.write("Radar "~(getprop("sim/multiplay/generic/int[2]")==1?"SILENT":"ACTIVE"), 0.5, 0.5, 1);</script>
+                    <script>screen.log.write("Radar "~(getprop("instrumentation/radar/radar-standby")==1?"SILENT":"ACTIVE"), 0.5, 0.5, 1);#setprop("instrumentation/radar/radar-mode", (getprop("instrumentation/radar/radar-standby")==1?2:1));</script>
                 </binding>
             </key>
             <key n="127">
@@ -878,12 +878,14 @@
                 <name>m</name>
                 <desc>Masterarm</desc>
                 <binding>
-                    <command>property-toggle</command>
-                    <property>controls/armament/master-arm</property>
-                </binding>
-                <binding>
                     <command>nasal</command>
-                    <script>screen.log.write("Master-arm "~(getprop("controls/armament/master-arm")==0?"OFF":"ON"), 0.5, 0.5, 1);</script>
+                    <script>
+                        if (getprop("controls/armament/master-arm") == 0) {
+                            setprop("controls/armament/master-arm-cover-open",1);
+                        }
+                        setprop("controls/armament/master-arm",!getprop("controls/armament/master-arm"));
+                        screen.log.write("Master-arm "~(getprop("controls/armament/master-arm")==0?"OFF":"ON"), 0.5, 0.5, 1);
+                    </script>
                 </binding>
             </key>
             <key n="83">
@@ -903,6 +905,7 @@
     <controls>
         <armament>
             <automissileview type="bool">false</automissileview><!-- for now it has to be enabled, as its not a realistic feature -->
+            <laser-arm-dmd type="bool">false</laser-arm-dmd>
         </armament>
       
         <fuel>
@@ -1128,9 +1131,8 @@
             <range type="double">160</range>
             <range-selected type="double">40</range-selected>
             <display-rdr type="bool">true</display-rdr>
-            <radar-standby type="int">0</radar-standby>
-            <radar2-range type="int">40</radar2-range>
-            <radar-standby type="bool">0</radar-standby>
+            <radar2-range type="int">40</radar2-range><!-- default range -->
+            <radar-standby type="bool">false</radar-standby>
             <symbols-enabled type="bool">true</symbols-enabled>
             <debug-mode type="bool">true</debug-mode>
             <serviceable type="bool">true</serviceable>
@@ -1138,6 +1140,26 @@
                 <rws type="bool">true</rws>
                 <tws-auto type="bool">false</tws-auto>
             </mode>
+            <limited-select type="bool">true</limited-select>
+            <radar-mode type="int">1</radar-mode>
+            <ref-range type="double">70</ref-range>
+            <ref-strength type="double">3.2</ref-strength>
+            <ranges n="0">
+                <entry type="int">10</entry>
+            </ranges>
+            <ranges n="1">
+                <entry type="int">20</entry>
+            </ranges>
+            <ranges n="2">
+                <entry type="int">40</entry>
+            </ranges>
+            <ranges n="3">
+                <entry type="int">80</entry>
+            </ranges>
+            <ranges n="4">
+                <entry type="int">160</entry>
+            </ranges>
+            <cycle-range type="bool">false</cycle-range>
         </radar>
         <radar2>
             <sweep-width-m type="double">0.0844</sweep-width-m>
@@ -1740,7 +1762,7 @@
             <file>Aircraft/f16/Nasal/damage.nas</file>
         </damage>
         <vector>
-            <file>Aircraft/f16/Nasal/vector.nas</file><!-- must be before RCS and radar -->
+            <file>Aircraft/f16/Nasal/vector.nas</file><!-- must be before RCS, armament and radar -->
         </vector>
         <rcs>
             <file>Aircraft/f16/Nasal/rcs.nas</file><!-- must be before radar -->
@@ -1801,7 +1823,7 @@
             <file>Aircraft/f16/Nasal/station-manager.nas</file><!-- must be before fire-control and pylons -->
         </stations>
         <fc>
-            <file>Aircraft/f16/Nasal/fire-control.nas</file>
+            <file>Aircraft/f16/Nasal/fire-control.nas</file><!-- must be before pylons -->
         </fc>
         <pylons>
             <file>Aircraft/f16/Nasal/pylons.nas</file>
