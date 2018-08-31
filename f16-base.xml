@@ -879,13 +879,15 @@
                 <desc>Masterarm</desc>
                 <binding>
                     <command>nasal</command>
-                    <script>
-                        if (getprop("controls/armament/master-arm") == 0) {
+                    <script><![CDATA[
+                        if (getprop("sim/variant-id") <= 5 and getprop("controls/armament/master-arm") == 0 and getprop("controls/armament/master-arm-cover-open") == 0) {
                             setprop("controls/armament/master-arm-cover-open",1);
+                            screen.log.write("Master-arm cover open.", 0.5, 0.5, 1);
+                        } else {
+                            setprop("controls/armament/master-arm",!getprop("controls/armament/master-arm"));
+                            screen.log.write("Master-arm "~(getprop("controls/armament/master-arm")==0?"OFF":"ON"), 0.5, 0.5, 1);
                         }
-                        setprop("controls/armament/master-arm",!getprop("controls/armament/master-arm"));
-                        screen.log.write("Master-arm "~(getprop("controls/armament/master-arm")==0?"OFF":"ON"), 0.5, 0.5, 1);
-                    </script>
+                    ]]></script>
                 </binding>
             </key>
             <key n="83">
@@ -906,6 +908,7 @@
         <armament>
             <automissileview type="bool">false</automissileview><!-- for now it has to be enabled, as its not a realistic feature -->
             <laser-arm-dmd type="bool">false</laser-arm-dmd>
+            <master-arm-cover-open type="bool">false</master-arm-cover-open>
         </armament>
       
         <fuel>
