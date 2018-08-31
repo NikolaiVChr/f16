@@ -871,7 +871,7 @@
                 <desc>Cycle Weapon Type</desc>
                 <binding>
                     <command>nasal</command>
-                    <script>pylons.fcs.cycleWeapon();</script>
+                    <script>pylons.fcs.cycleLoadedWeapon();</script>
                 </binding>
             </key>
             <key n="109">

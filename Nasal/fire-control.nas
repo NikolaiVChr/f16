@@ -73,7 +73,7 @@ var FireControl = {
 	},
 
 	cycleWeapon: func {
-		# it will cycle to next weapon type, even if that one is empty. (maybe add option if it should skip empty types)
+		# it will cycle to next weapon type, even if that one is empty.
 		me.triggerTime = 0;
 		me.stopCurrent();
 		me.selWeapType = me.selectedType;
@@ -103,6 +103,41 @@ var FireControl = {
 			}
 		}
 		screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+	},
+
+	cycleLoadedWeapon: func {
+		# it will cycle to next weapon type that is not empty.
+		me.triggerTime = 0;
+		me.stopCurrent();
+		me.selWeapType = me.selectedType;
+		if (me.selWeapType == nil) {
+			me.selTypeIndex = -1;
+			me.cont = size(me.typeOrder);
+		} else {
+			me.selType = me.selectedType;
+			printfDebug("Already selected %s",me.selType);
+			me.selTypeIndex = me.vectorIndex(me.typeOrder, me.selType);
+			me.cont = me.selTypeIndex;
+		}
+		me.selTypeIndex += 1;
+		while (me.selTypeIndex != me.cont) {
+			if (me.selTypeIndex >= size(me.typeOrder)) {
+				me.selTypeIndex = 0;
+			}
+			me.selectedType = me.typeOrder[me.selTypeIndex];
+			me.selType = me.selectedType;
+			printfDebug(" Now selecting %s",me.selType);
+			me.wp = me.nextWeapon(me.selType);
+			if (me.wp != nil) {			
+				printfDebug("FC: Selected next weapon type: %s on pylon %d position %d",me.selectedType,me.selected[0],me.selected[1]);
+				screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+				return;
+			}
+			me.selTypeIndex += 1;
+		}		
+		me.selected = nil;
+		me.selectedType = nil;
+		screen.log.write("Selected nothing", 0.5, 0.5, 1);
 	},
 
 	_isSelectedWeapon: func {
