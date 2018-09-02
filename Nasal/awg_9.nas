@@ -389,7 +389,7 @@ var az_scan = func(notification) {
                 if (type == "multiplayer" or type == "tanker" or type == "aircraft" or type == "carrier"
                     or type == "ship" or type == "groundvehicle") 
                 {
-                    var new_tgt = Target.new(c);
+                    #var new_tgt = Target.new(c);# Richard, what is this for? Its important that every target that goes into completelist gets the setClass() called..
                     var u = Target.new(c);
 
                     if (active_u != nil and u.get_Callsign() == active_u.get_Callsign()) {
@@ -424,7 +424,8 @@ var az_scan = func(notification) {
                             u.setClass(SURFACE);
                         }
                     }
-                    append(tgts_list, new_tgt);
+                    printf("%s %d", u.get_Callsign(),u.get_type());
+                    append(tgts_list, u);
                 }
             }
             scan_tgt_idx = 0;
@@ -1769,6 +1770,9 @@ var Target = {
             return 1;
         }
         return 0;
+    },
+    isVirtual: func {
+        return FALSE;
     },
 	list : [],
 };

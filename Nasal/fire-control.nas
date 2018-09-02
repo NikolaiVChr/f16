@@ -473,7 +473,7 @@ var FireControl = {
 			me.aim = me.getSelectedWeapon();
 			#printfDebug(" to %d",me.aim != nil);
 			if (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.status == armament.MISSILE_LOCK) {
-				me.aim = me.pylons[me.selected[0]].fireWeapon(me.selected[1], awg_9.completeList);
+				me.aim = me.pylons[me.selected[0]].fireWeapon(me.selected[1], getCompleteRadarTargetsList());
 				me.aim.sendMessage(me.aim.brevity~" at: "~me.aim.callsign);
 				me.aimNext = me.nextWeapon(me.selectedType);
 				if (me.aimNext != nil) {
@@ -481,7 +481,7 @@ var FireControl = {
 				}
 				me.triggerTime = 0;
 			} elsif (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.guidance=="unguided") {
-				me.aim = me.pylons[me.selected[0]].fireWeapon(me.selected[1], awg_9.completeList);
+				me.aim = me.pylons[me.selected[0]].fireWeapon(me.selected[1], getCompleteRadarTargetsList());
 				me.aim.sendMessage(me.aim.brevity);
 				me.aimNext = me.nextWeapon(me.selectedType);
 				if (me.aimNext != nil) {
@@ -508,7 +508,7 @@ var FireControl = {
 		if (me.triggerTime == 0 or me.getSelectedWeapon() == nil or me.getSelectedWeapon().parents[0] != armament.AIM) {
 			return;
 		}
-		aimer = me.pylons[me.selected[0]].fireWeapon(me.selected[1], awg_9.completeList);
+		aimer = me.pylons[me.selected[0]].fireWeapon(me.selected[1], getCompleteRadarTargetsList());
 		aimer.sendMessage(aimer.brevity~" Maddog released");
 		me.aimNext = me.nextWeapon(me.selectedType);
 		if (me.aimNext != nil) {
@@ -638,3 +638,10 @@ var FireControl = {
 var debug = 0;
 var printDebug = func (msg) {if (debug == 1) print(msg);};
 var printfDebug = func {if (debug == 1) call(printf,arg);};
+
+
+# This is non-generic method, please edit it to fit your radar setup:
+var getCompleteRadarTargetsList = func {
+	# A list of all MP/AI aircraft/ships/surface-targets around the aircraft.
+	return awg_9.completeList;
+}

@@ -405,10 +405,10 @@
                 <name>f</name>
                 <desc>Toggle refuel door</desc>
             </key>
-            <key>
+            <!--<key>
                 <name>Ctrl-n</name>
                 <desc>Toggles Radar RWS / TWS AUTO Modes</desc>
-            </key>
+            </key>-->
             <key>
                 <name>E</name>
                 <desc>Decrease Radar Range</desc>
@@ -1620,6 +1620,7 @@
                 <lateral-dps type="double"> 10 </lateral-dps>
                 <max-pitch-deg type="double">-45</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
+                <inert type="bool">true</inert>
                 <!-- the following 6 properties not used yet: -->
                 <release-limit-mach type="double"> 1.2 </release-limit-mach>
                 <release-limit-altitude type="double"> 30000 </release-limit-altitude>
@@ -1668,6 +1669,7 @@
                 <lateral-dps type="double"> 10 </lateral-dps>
                 <max-pitch-deg type="double">-45</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
+                <inert type="bool">true</inert>
                 <!-- the following 6 properties not used yet: -->
                 <release-limit-mach type="double"> 1.2 </release-limit-mach>
                 <release-limit-altitude type="double"> 30000 </release-limit-altitude>
