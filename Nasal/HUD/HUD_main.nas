@@ -562,7 +562,7 @@ var F16_HUD = {
     },
 
     CCRP: func(hdp) {
-        if (pylons.fcs != nil and pylons.fcs.getSelectedWeapon() != nil and (pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="GBU-12") 
+        if (pylons.fcs != nil and pylons.fcs.getSelectedWeapon() != nil and (pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="GBU-12" or pylons.fcs.getSelectedWeapon().type=="B61-7" or pylons.fcs.getSelectedWeapon().type=="B61-12" or pylons.fcs.getSelectedWeapon().type=="GBU-31") 
             and hdp.active_u != nil and hdp.master_arm ==1 and pylons.fcs.getSelectedWeapon().status == armament.MISSILE_LOCK) {
             me.agl = (hdp.altitude_ft-hdp.active_u.get_altitude())*FT2M;
             #me.agl = getprop("position/altitude-agl-ft")*FT2M;
