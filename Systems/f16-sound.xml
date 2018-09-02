@@ -227,7 +227,7 @@
    </volume>
   </afterburner>
 
-  <afterburner>
+  <!--<afterburner>
    <name>afterburner internal</name>
    <path>Sounds/exhaust_loop.wav</path>
    <mode>looped</mode>
@@ -255,7 +255,28 @@
     <offset>0.05</offset>
     <factor>0.30</factor>
    </volume>
-  </afterburner>
+  </afterburner>-->
+
+    <!-- new AB internal sound by G-EED -->
+    <afterburner>
+     <name>afterburner internal</name>
+     <path>Aircraft/f16/Sounds/afterburner_interior.wav</path>
+     <mode>looped</mode>
+     <condition>
+      <property>sim/current-view/internal</property>
+      <property>engines/engine/augmentation</property>
+     </condition>
+     <position>
+      <x>4.6</x>
+      <y>0.0</y>
+      <z>0.0</z>
+     </position>
+     <volume>
+      <property>engines/engine/nozzle-pos-norm</property>
+      <offset>0.05</offset>
+      <factor>0.80</factor>
+     </volume>
+    </afterburner>
 
   <rumble>
    <name>gear rumble</name>
