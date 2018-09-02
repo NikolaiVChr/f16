@@ -717,6 +717,98 @@ var AIM = {
 		me.SwSoundVol.setDoubleValue(0);
 	},
 
+	getCCRP: func (maxFallTime_sec, timeStep) {
+		# returns distance in meters to ideal release time.
+		#
+		# maxFallTime_sec: maximum allowed predicted falltime. Higher value will make method take more CPU time.
+		# timeStep: Fidelity of prediction. Lower value will increase CPU consumption.
+		#
+		# Assumptions:
+		#  Ordnance do not have propulsion
+		#  Ordnance has very limited steering
+		if (me.status != MISSILE_LOCK or me.Tgt == nil) {
+			return nil;
+		}
+        me.ccrp_agl = (getprop("position/altitude-ft")-me.Tgt.get_altitude())*FT2M;
+        #me.agl = getprop("position/altitude-agl-ft")*FT2M;
+        me.ccrp_alti = getprop("position/altitude-ft")*FT2M;
+        me.ccrp_roll = getprop("orientation/roll-deg");
+        me.ccrp_vel = getprop("velocities/groundspeed-kt")*0.5144;#m/s
+        me.ccrp_dens = getprop("sim/flight-model") == "jsb"?getprop("fdm/jsbsim/atmosphere/density-altitude"):getprop("position/altitude-ft");
+        me.ccrp_mach = getprop("velocities/mach");
+        me.ccrp_speed_down_fps = getprop("velocities/speed-down-fps");
+		me.ccrp_speed_east_fps = getprop("velocities/speed-east-fps");
+		me.ccrp_speed_north_fps = getprop("velocities/speed-north-fps");
+
+        me.ccrp_t = 0.0;
+        
+        me.ccrp_altC = me.ccrp_agl;
+        me.ccrp_vel_z = -me.ccrp_speed_down_fps*FT2M;#positive upwards
+        me.ccrp_fps_z = -me.ccrp_speed_down_fps;
+        me.ccrp_vel_x = math.sqrt(me.ccrp_speed_east_fps*me.ccrp_speed_east_fps+me.ccrp_speed_north_fps*me.ccrp_speed_north_fps)*FT2M;
+        me.ccrp_fps_x = me.ccrp_vel_x * M2FT;
+
+        me.ccrp_rs = me.rho_sndspeed(me.ccrp_dens-(me.ccrp_agl/2)*M2FT);
+        me.ccrp_rho = me.ccrp_rs[0];
+        me.ccrp_Cd = me.drag(me.ccrp_mach);
+        me.ccrp_mass = me.weight_launch_lbm / slugs_to_lbm;
+        me.ccrp_q = 0.5 * me.ccrp_rho * me.ccrp_fps_z * me.ccrp_fps_z;
+        me.ccrp_deacc = (me.ccrp_Cd * me.ccrp_q * me.ref_area_sqft) / me.ccrp_mass;
+
+        while (me.ccrp_altC > 0 and me.ccrp_t <= maxFallTime_sec) {
+          me.ccrp_t += timeStep;
+          me.ccrp_acc = -9.81 + me.ccrp_deacc * FT2M;
+          me.ccrp_vel_z += me.ccrp_acc * timeStep;
+          me.ccrp_altC = me.ccrp_altC + me.ccrp_vel_z*timeStep+0.5*me.ccrp_acc*timeStep*timeStep;
+        }
+        #printf("predict fall time=%0.1f", me.t);
+
+        if (me.ccrp_t >= maxFallTime_sec) {
+            return nil;
+        }
+
+        me.ccrp_q = 0.5 * me.ccrp_rho * me.ccrp_fps_x * me.ccrp_fps_x;
+        me.ccrp_deacc = (me.ccrp_Cd * me.ccrp_q * me.ref_area_sqft) / me.ccrp_mass;
+        me.ccrp_acc = -me.ccrp_deacc * FT2M;
+        
+        me.ccrp_fps_x_final = me.ccrp_t*me.ccrp_acc+me.ccrp_fps_x;# calc final horz speed
+        me.ccrp_fps_x_average = (me.ccrp_fps_x-(me.ccrp_fps_x-me.ccrp_fps_x_final)*0.5);
+        me.ccrp_mach_average = me.ccrp_fps_x_average / me.ccrp_rs[1];
+        
+        me.ccrp_Cd = me.drag(me.ccrp_mach_average);
+        me.ccrp_q = 0.5 * me.ccrp_rho * me.ccrp_fps_x_average * me.ccrp_fps_x_average;
+        me.ccrp_deacc = (me.ccrp_Cd * me.ccrp_q * me.ref_area_sqft) / me.ccrp_mass;
+        me.ccrp_acc = -me.ccrp_deacc * FT2M;
+        me.ccrp_dist = me.ccrp_vel_x*me.ccrp_t+0.5*me.ccrp_acc*me.ccrp_t*me.ccrp_t;
+
+        me.ccrp_ac = geo.aircraft_position();
+        me.ccrpPos = geo.Coord.new(me.ccrp_ac);
+
+        # we calc heading from composite speeds, due to alpha and beta might influence direction bombs will fall:
+        me.ccrp_vectorMag = math.sqrt(me.ccrp_speed_east_fps*me.ccrp_speed_east_fps+me.ccrp_speed_north_fps*me.ccrp_speed_north_fps);
+        if (me.ccrp_vectorMag == 0) {
+            me.ccrp_vectorMag = 0.0001;
+        }
+        me.ccrp_heading = -math.asin(me.ccrp_speed_north_fps/me.ccrp_vectorMag)*R2D+90;#divide by vector mag, to get normalized unit vector length
+        if (me.ccrp_speed_east_fps/me.ccrp_vectorMag < 0) {
+          me.ccrp_heading = -me.ccrp_heading;
+          while (me.ccrp_heading > 360) {
+            me.ccrp_heading -= 360;
+          }
+          while (me.ccrp_heading < 0) {
+            me.ccrp_heading += 360;
+          }
+        }
+        me.ccrpPos.apply_course_distance(me.ccrp_heading, me.ccrp_dist);
+        #var elev = geo.elevation(ac.lat(), ac.lon());
+        #printf("Will fall %0.1f NM ahead of aircraft.", me.dist*M2NM);
+        me.ccrp_elev = me.ccrp_alti-me.ccrp_agl;#faster
+        me.ccrpPos.set_alt(me.ccrp_elev);
+        
+        me.ccrp_distCCRP = me.ccrpPos.distance_to(me.Tgt.get_Coord());
+        return me.ccrp_distCCRP;
+	},
+
 	getDLZ: func (ignoreLock = 0) {
 		# call this only before release/eject
 		if (me.dlz_enabled != TRUE) {
@@ -2467,75 +2559,164 @@ var AIM = {
         if(me.loft_alt != 0 and me.snapUp == FALSE) {
         	# this is for Air to ground/sea cruise-missile (SCALP, Sea-Eagle, Taurus, Tomahawk, RB-15...)
 
-        	# detect terrain for use in terrain following
-        	me.nextGroundElevationMem[1] -= 1;
-            me.geoPlus2 = me.nextGeoloc(me.coord.lat(), me.coord.lon(), me.hdg, me.old_speed_fps, me.dt*5);
-            me.geoPlus3 = me.nextGeoloc(me.coord.lat(), me.coord.lon(), me.hdg, me.old_speed_fps, me.dt*10);
-            me.geoPlus4 = me.nextGeoloc(me.coord.lat(), me.coord.lon(), me.hdg, me.old_speed_fps, me.dt*20);
-            me.e1 = geo.elevation(me.coord.lat(), me.coord.lon());# This is done, to make sure is does not decline before it has passed obstacle.
-            me.e2 = geo.elevation(me.geoPlus2.lat(), me.geoPlus2.lon());# This is the main one.
-            me.e3 = geo.elevation(me.geoPlus3.lat(), me.geoPlus3.lon());# This is an extra, just in case there is an high cliff it needs longer time to climb.
-            me.e4 = geo.elevation(me.geoPlus4.lat(), me.geoPlus4.lon());
-			if (me.e1 != nil) {
-            	me.nextGroundElevation = me.e1;
-            } else {
-            	me.printFlight(me.type~": nil terrain, blame terrasync! Cruise-missile keeping altitude.");
-            }
-            if (me.e2 != nil and me.e2 > me.nextGroundElevation) {
-            	me.nextGroundElevation = me.e2;
-            	if (me.e2 > me.nextGroundElevationMem[0] or me.nextGroundElevationMem[1] < 0) {
-            		me.nextGroundElevationMem[0] = me.e2;
-            		me.nextGroundElevationMem[1] = 5;
-            	}
-            }
-            if (me.nextGroundElevationMem[0] > me.nextGroundElevation) {
-            	me.nextGroundElevation = me.nextGroundElevationMem[0];
-            }
-            if (me.e3 != nil and me.e3 > me.nextGroundElevation) {
-            	me.nextGroundElevation = me.e3;
-            }
-            if (me.e4 != nil and me.e4 > me.nextGroundElevation) {
-            	me.nextGroundElevation = me.e4;
-            }
+        	var useNewCode = 1;# TODO: test this with all Viggen/F16/Mig21 cruise missiles.
 
-            me.Daground = 0;# zero for sealevel in case target is ship. Don't shoot A/S missiles over terrain. :)
-            if(me.Tgt.get_type() == SURFACE or me.follow == TRUE) {
-                me.Daground = me.nextGroundElevation * M2FT;
-            }
-            me.loft_alt_curr = me.loft_alt;
-            if (me.dist_curr < me.old_speed_fps * 6 * FT2M and me.dist_curr > me.old_speed_fps * 4 * FT2M) {
-            	# the missile lofts a bit at the end to avoid APN to slam it into ground before target is reached.
-            	# end here is between 2.5-4 seconds
-            	me.loft_alt_curr = me.loft_alt*2;
-            }
-            if (me.dist_curr > me.old_speed_fps * 4 * FT2M) {# need to give the missile time to do final navigation
-                # it's 1 or 2 seconds for this kinds of missiles...
-                me.t_alt_delta_ft = (me.loft_alt_curr + me.Daground - me.alt_ft);
-                me.printGuideDetails("var t_alt_delta_m : "~me.t_alt_delta_ft*FT2M);
-                if(me.loft_alt_curr + me.Daground > me.alt_ft) {
-                    # 200 is for a very short reaction to terrain
-                    me.printGuideDetails("Moving up");
-                    me.raw_steer_signal_elev = -me.pitch + math.atan2(me.t_alt_delta_ft, me.old_speed_fps * me.dt * 5) * R2D;
-                } else {
-                    # that means a dive angle of 22.5° (a bit less 
-                    # coz me.alt is in feet) (I let this alt in feet on purpose (more this figure is low, more the future pitch is high)
-                    me.printGuideDetails("Moving down");
-                    me.slope = me.clamp(me.t_alt_delta_ft / 300, -7.5, 0);# the lower the desired alt is, the steeper the slope.
-                    me.raw_steer_signal_elev = -me.pitch + me.clamp(math.atan2(me.t_alt_delta_ft, me.old_speed_fps * me.dt * 5) * R2D, me.slope, 0);
-                }
-                me.cruise_or_loft = TRUE;
-            } elsif (me.dist_curr > 500) {
-                # we put 9 feets up the target to avoid ground at the
-                # last minute...
-                me.printGuideDetails("less than 1000 m to target");
-                #me.raw_steer_signal_elev = -me.pitch + math.atan2(t_alt_delta_m + 100, me.dist_curr) * R2D;
-                #me.cruise_or_loft = 1;
-            } else {
-            	me.printGuideDetails("less than 500 m to target");
-            }
-            if (me.cruise_or_loft == TRUE) {
-            	me.printGuideDetails(" pitch "~me.pitch~" + me.raw_steer_signal_elev "~me.raw_steer_signal_elev);
-            }
+        	if (useNewCode) {# Shinobi's new code
+        		#Variable declaration
+	            var No_terrain = 0;
+	            var distance_Target = 0;
+	            var xyz = nil;
+	            var dir = nil;
+	            var GroundIntersectCoord = geo.Coord.new();
+	            var howmany = 0;
+	            var altitude_step = 30;
+	            
+	        	# detect terrain for use in terrain following
+	        	me.nextGroundElevationMem[1] -= 1;
+	            #First we need origin coordinates we transorfm it in xyz        
+	            xyz = {"x":me.coord.x(),                  "y":me.coord.y(),                 "z":me.coord.z()};
+	            
+	            #Then we need the coordinate of the future point at let say 20 dt
+	            me.geoPlus4 = me.nextGeoloc(me.coord.lat(), me.coord.lon(), me.hdg, me.old_speed_fps, me.dt*20);
+	            me.geoPlus4.set_alt(geo.elevation(me.geoPlus4.lat(),me.geoPlus4.lon()));
+	            
+	            #Loop
+	            while(No_terrain != 1){
+	                howmany = howmany + 1;
+	                #We finalize the vector
+	                dir = {"x":me.geoPlus4.x()-me.coord.x(),  "y":me.geoPlus4.y()-me.coord.y(), "z":me.geoPlus4.z()-me.coord.z()};
+	                #We measure distance to be sure that the ground intersection is closer than geoPlus4 
+	                distance_Target = me.coord.direct_distance_to(me.geoPlus4);
+	                # Check for terrain between own aircraft and other:
+	                GroundIntersectResult = get_cart_ground_intersection(xyz, dir);
+	                if(GroundIntersectResult == nil){
+	                    No_terrain = 1;
+	                #Checking if the distance to the intersection is before or after geoPlus4
+	                }else{
+	                    GroundIntersectCoord.set_latlon(GroundIntersectResult.lat, GroundIntersectResult.lon, GroundIntersectResult.elevation);
+	                    if(me.coord.direct_distance_to(GroundIntersectCoord)>distance_Target){
+	                        No_terrain = 1;
+	                    }else{
+	                        #Raising geoPlus4 altitude by 100 meters
+	                        me.geoPlus4.set_alt(me.geoPlus4.alt()+altitude_step);
+	                        #print("Alt too low :" ~ me.geoPlus4.alt() ~ "; Raising alt by 30 meters (100 feet)");
+	                    }
+	                }
+	                
+	            }
+	            #print("There was : " ~ howmany ~ " iteration of the ground loop");
+	            me.nextGroundElevation = me.geoPlus4.alt();
+	            
+
+	            me.Daground = 0;# zero for sealevel in case target is ship. Don't shoot A/S missiles over terrain. :)
+	            if(me.Tgt.get_type() == SURFACE or me.follow == TRUE) {
+	                me.Daground = me.nextGroundElevation * M2FT;
+	            }
+	            me.loft_alt_curr = me.loft_alt;
+	            if (me.dist_curr < me.old_speed_fps * 6 * FT2M and me.dist_curr > me.old_speed_fps * 4 * FT2M) {
+	            	# the missile lofts a bit at the end to avoid APN to slam it into ground before target is reached.
+	            	# end here is between 2.5-4 seconds
+	            	me.loft_alt_curr = me.loft_alt*2;
+	            }
+	            if (me.dist_curr > me.old_speed_fps * 4 * FT2M) {# need to give the missile time to do final navigation
+	                # it's 1 or 2 seconds for this kinds of missiles...
+	                me.t_alt_delta_ft = (me.loft_alt_curr + me.Daground - me.alt_ft);
+	                me.printGuideDetails("var t_alt_delta_m : "~me.t_alt_delta_ft*FT2M);
+	                if(me.loft_alt_curr + me.Daground > me.alt_ft) {
+	                    # 200 is for a very short reaction to terrain
+	                    me.printGuideDetails("Moving up");
+	                    me.raw_steer_signal_elev = -me.pitch + math.atan2(me.t_alt_delta_ft, me.old_speed_fps * me.dt * 5) * R2D;
+	                } else {
+	                    # that means a dive angle of 22.5° (a bit less 
+	                    # coz me.alt is in feet) (I let this alt in feet on purpose (more this figure is low, more the future pitch is high)
+	                    me.printGuideDetails("Moving down");
+	                    me.slope = me.clamp(me.t_alt_delta_ft / 300, -7.5, 0);# the lower the desired alt is, the steeper the slope.
+	                    me.raw_steer_signal_elev = -me.pitch + me.clamp(math.atan2(me.t_alt_delta_ft, me.old_speed_fps * me.dt * 5) * R2D, me.slope, 0);
+	                }
+	                me.cruise_or_loft = TRUE;
+	            } elsif (me.dist_curr > 500) {
+	                # we put 9 feets up the target to avoid ground at the
+	                # last minute...
+	                me.printGuideDetails("less than 1000 m to target");
+	                #me.raw_steer_signal_elev = -me.pitch + math.atan2(t_alt_delta_m + 100, me.dist_curr) * R2D;
+	                #me.cruise_or_loft = 1;
+	            } else {
+	            	me.printGuideDetails("less than 500 m to target");
+	            }
+	            if (me.cruise_or_loft == TRUE) {
+	            	me.printGuideDetails(" pitch "~me.pitch~" + me.raw_steer_signal_elev "~me.raw_steer_signal_elev);
+	            }
+        	} else {#Older code
+	        	# detect terrain for use in terrain following
+	        	me.nextGroundElevationMem[1] -= 1;
+	            me.geoPlus2 = me.nextGeoloc(me.coord.lat(), me.coord.lon(), me.hdg, me.old_speed_fps, me.dt*5);
+	            me.geoPlus3 = me.nextGeoloc(me.coord.lat(), me.coord.lon(), me.hdg, me.old_speed_fps, me.dt*10);
+	            me.geoPlus4 = me.nextGeoloc(me.coord.lat(), me.coord.lon(), me.hdg, me.old_speed_fps, me.dt*20);
+	            me.e1 = geo.elevation(me.coord.lat(), me.coord.lon());# This is done, to make sure is does not decline before it has passed obstacle.
+	            me.e2 = geo.elevation(me.geoPlus2.lat(), me.geoPlus2.lon());# This is the main one.
+	            me.e3 = geo.elevation(me.geoPlus3.lat(), me.geoPlus3.lon());# This is an extra, just in case there is an high cliff it needs longer time to climb.
+	            me.e4 = geo.elevation(me.geoPlus4.lat(), me.geoPlus4.lon());
+				if (me.e1 != nil) {
+	            	me.nextGroundElevation = me.e1;
+	            } else {
+	            	me.printFlight(me.type~": nil terrain, blame terrasync! Cruise-missile keeping altitude.");
+	            }
+	            if (me.e2 != nil and me.e2 > me.nextGroundElevation) {
+	            	me.nextGroundElevation = me.e2;
+	            	if (me.e2 > me.nextGroundElevationMem[0] or me.nextGroundElevationMem[1] < 0) {
+	            		me.nextGroundElevationMem[0] = me.e2;
+	            		me.nextGroundElevationMem[1] = 5;
+	            	}
+	            }
+	            if (me.nextGroundElevationMem[0] > me.nextGroundElevation) {
+	            	me.nextGroundElevation = me.nextGroundElevationMem[0];
+	            }
+	            if (me.e3 != nil and me.e3 > me.nextGroundElevation) {
+	            	me.nextGroundElevation = me.e3;
+	            }
+	            if (me.e4 != nil and me.e4 > me.nextGroundElevation) {
+	            	me.nextGroundElevation = me.e4;
+	            }
+
+	            me.Daground = 0;# zero for sealevel in case target is ship. Don't shoot A/S missiles over terrain. :)
+	            if(me.Tgt.get_type() == SURFACE or me.follow == TRUE) {
+	                me.Daground = me.nextGroundElevation * M2FT;
+	            }
+	            me.loft_alt_curr = me.loft_alt;
+	            if (me.dist_curr < me.old_speed_fps * 6 * FT2M and me.dist_curr > me.old_speed_fps * 4 * FT2M) {
+	            	# the missile lofts a bit at the end to avoid APN to slam it into ground before target is reached.
+	            	# end here is between 2.5-4 seconds
+	            	me.loft_alt_curr = me.loft_alt*2;
+	            }
+	            if (me.dist_curr > me.old_speed_fps * 4 * FT2M) {# need to give the missile time to do final navigation
+	                # it's 1 or 2 seconds for this kinds of missiles...
+	                me.t_alt_delta_ft = (me.loft_alt_curr + me.Daground - me.alt_ft);
+	                me.printGuideDetails("var t_alt_delta_m : "~me.t_alt_delta_ft*FT2M);
+	                if(me.loft_alt_curr + me.Daground > me.alt_ft) {
+	                    # 200 is for a very short reaction to terrain
+	                    me.printGuideDetails("Moving up");
+	                    me.raw_steer_signal_elev = -me.pitch + math.atan2(me.t_alt_delta_ft, me.old_speed_fps * me.dt * 5) * R2D;
+	                } else {
+	                    # that means a dive angle of 22.5° (a bit less 
+	                    # coz me.alt is in feet) (I let this alt in feet on purpose (more this figure is low, more the future pitch is high)
+	                    me.printGuideDetails("Moving down");
+	                    me.slope = me.clamp(me.t_alt_delta_ft / 300, -7.5, 0);# the lower the desired alt is, the steeper the slope.
+	                    me.raw_steer_signal_elev = -me.pitch + me.clamp(math.atan2(me.t_alt_delta_ft, me.old_speed_fps * me.dt * 5) * R2D, me.slope, 0);
+	                }
+	                me.cruise_or_loft = TRUE;
+	            } elsif (me.dist_curr > 500) {
+	                # we put 9 feets up the target to avoid ground at the
+	                # last minute...
+	                me.printGuideDetails("less than 1000 m to target");
+	                #me.raw_steer_signal_elev = -me.pitch + math.atan2(t_alt_delta_m + 100, me.dist_curr) * R2D;
+	                #me.cruise_or_loft = 1;
+	            } else {
+	            	me.printGuideDetails("less than 500 m to target");
+	            }
+	            if (me.cruise_or_loft == TRUE) {
+	            	me.printGuideDetails(" pitch "~me.pitch~" + me.raw_steer_signal_elev "~me.raw_steer_signal_elev);
+	            }
+	        }
         } elsif (me.rail == TRUE and me.rail_forward == FALSE and me.rotate_token == FALSE) {
 			# tube launched missile turns towards target
 
@@ -3040,7 +3221,7 @@ var AIM = {
 	multiExplosion: func (explode_coord, event) {
 		# hit everything that is nearby except for target itself.
 		foreach (me.testMe;me.contacts) {
-			if (!me.testMe.isValid() or me.Tgt.isVirtual()) {
+			if (!me.testMe.isValid() or me.testMe.isVirtual()) {
 				continue;
 			}
 			var min_distance = me.testMe.get_Coord().direct_distance_to(explode_coord);
