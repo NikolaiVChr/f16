@@ -25,7 +25,7 @@
  #
  #	Date                 : 4 June 2018
  #
- #	Version              : 2.8
+ #	Version              : 2.8b
  #
  #  Released under GPL V2
  #
@@ -384,6 +384,7 @@ var az_scan = func(notification) {
                 }
                 var ordnance = 1;
                 if (c.getNode("missile") == nil or !c.getNode("missile").getValue()) {
+                    # a little superflous atm. since the typecheck below will filter out ordnance. Their type look like: aim-9 or agm-88 etc etc.
                     ordnance = 0;
                 }
                 if (type == "multiplayer" or type == "tanker" or type == "aircraft" or type == "carrier"
@@ -423,6 +424,7 @@ var az_scan = func(notification) {
                         } elsif (u.get_Speed() < 60) {
                             u.setClass(SURFACE);
                         }
+                        # notice the default class is set to AIR
                     }
                     append(tgts_list, u);
                 }
@@ -1317,7 +1319,7 @@ var Target = {
         if (obj.Callsign == nil or obj.Callsign.getValue() == "")
         {
             if (obj.name == nil or obj.name.getValue() == "") {
-                obj.myCallsign = obj.get_model();# last resort. 
+                obj.myCallsign = obj.ModelType;# last resort. 
             } else {
                 obj.myCallsign = obj.name.getValue();# for AI ships.
             }
@@ -1782,6 +1784,7 @@ var Target = {
         return 0;
     },
     isVirtual: func {
+        # used by missile-code
         return FALSE;
     },
 	list : [],
