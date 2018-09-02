@@ -1389,26 +1389,26 @@
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
             </gbu-12>
             <gbu-31>
-                <short-name type="string">GBU-31</short-name>
+                <short-name type="string">GBU31</short-name>
                 <long-name type="string">GBU-31 JDAM</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
                 <class type="string">GM</class>
                 <max-fire-range-nm type="double">15 </max-fire-range-nm>
                 <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
-                <guidance type="string">laser</guidance>
+                <guidance type="string">gps</guidance>
                 <navigation type="string">PN</navigation>
                 <loft-altitude type="int"> 0 </loft-altitude>
                 <terrain-follow type="bool">false</terrain-follow>
                 <FCS-field-deg type="int"> 200 </FCS-field-deg>
                 <seeker-field-deg type="int"> 32 </seeker-field-deg>
                 <reaquire type="bool">true</reaquire>
-                <max-g type="double"> 1.8 </max-g><!-- real is 2.8, but here its limited for technical reasons -->
+                <max-g type="double"> 1.8 </max-g>
                 <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
                 <stage-2-duration-sec type="double"> 0 </stage-2-duration-sec>
-                <weight-launch-lbs type="double"> 2036 </weight-launch-lbs>
-                <weight-warhead-lbs type="double"> 945 </weight-warhead-lbs>
+                <weight-launch-lbs type="double"> 2039 </weight-launch-lbs><!-- weapons file 2004 -->
+                <weight-warhead-lbs type="double"> 945 </weight-warhead-lbs><!-- weapons file 2004 -->
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
                 <drag-coeff type="double"> 0.012 </drag-coeff>
                 <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
