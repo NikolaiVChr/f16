@@ -1587,7 +1587,7 @@
                 <class type="string">GM</class>
                 <max-fire-range-nm type="double">12 </max-fire-range-nm>
                 <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
-                <guidance type="string">laser</guidance>
+                <guidance type="string">gps</guidance>
                 <navigation type="string">PN</navigation>
                 <loft-altitude type="int"> 0 </loft-altitude>
                 <terrain-follow type="bool">false</terrain-follow>
