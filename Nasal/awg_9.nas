@@ -424,7 +424,6 @@ var az_scan = func(notification) {
                             u.setClass(SURFACE);
                         }
                     }
-                    printf("%s %d", u.get_Callsign(),u.get_type());
                     append(tgts_list, u);
                 }
             }
@@ -1283,17 +1282,8 @@ var Target = {
         obj.TAS = c.getNode("velocities/true-airspeed-kt");
         obj.TransponderId = c.getNode("instrumentation/transponder/transmitted-id");
 
-        if (obj.Callsign == nil or obj.Callsign.getValue() == "")
-        {
-            obj.unique = rand();
-            var signNode = c.getNode("sign");
-            if (signNode != nil)
-                obj.Callsign = signNode;
-        } else {
-            obj.unique = obj.Callsign.getValue();
-        }
-
-
+        
+        
         obj.Model = c.getNode("model-short");
         var model_short = c.getNode("sim/model/path");
         obj.Model = c.getNode("model-short");
@@ -1322,6 +1312,25 @@ var Target = {
         } else {
             obj.ModelType = "";
         }
+
+        # let us make callsign a static variable:
+        if (obj.Callsign == nil or obj.Callsign.getValue() == "")
+        {
+            if (obj.name == nil or obj.name.getValue() == "") {
+                obj.myCallsign = obj.get_model();# last resort. 
+            } else {
+                obj.myCallsign = obj.name.getValue();# for AI ships.
+            }
+        } else {
+            obj.myCallsign = obj.Callsign.getValue();
+        }
+
+        #just so I dont have to change all your code that rely on Target.Callsign directly Richard, I simply replace it:
+        obj.Callsign = c.getNode("compositeCallsign",1);
+        obj.Callsign.setValue(obj.myCallsign);
+
+        obj.unique = obj.myCallsign~c.getPath();# should be very unique, callsign might not be enough. Path by itself is not enough either, as paths gets reused.
+
 
         obj.class = AIR;
         
@@ -1732,6 +1741,7 @@ var Target = {
         return e;
     },
     get_Callsign: func{
+        return me.myCallsign;# callsigns are probably not dynamic, so its defined at Target creation.
         if (me.Callsign == nil or me.Callsign.getValue() == "") {
             if (me.name == nil or me.name.getValue() == "") {
                 return me.get_model();
