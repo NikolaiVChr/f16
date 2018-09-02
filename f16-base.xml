@@ -1594,7 +1594,7 @@
                 <FCS-field-deg type="int"> 200 </FCS-field-deg>
                 <seeker-field-deg type="int"> 32 </seeker-field-deg>
                 <reaquire type="bool">true</reaquire>
-                <max-g type="double"> 1.5 </max-g><!-- real is 2.8, but here its limited for technical reasons -->
+                <max-g type="double"> 1.5 </max-g>
                 <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
@@ -1643,7 +1643,7 @@
                 <FCS-field-deg type="int"> 200 </FCS-field-deg>
                 <seeker-field-deg type="int"> 32 </seeker-field-deg>
                 <reaquire type="bool">true</reaquire>
-                <max-g type="double"> 1.5 </max-g><!-- real is 2.8, but here its limited for technical reasons -->
+                <max-g type="double"> 1.5 </max-g>
                 <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
