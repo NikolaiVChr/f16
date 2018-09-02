@@ -564,6 +564,38 @@ var F16_HUD = {
     CCRP: func(hdp) {
         if (pylons.fcs != nil and pylons.fcs.getSelectedWeapon() != nil and (pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="GBU-12" or pylons.fcs.getSelectedWeapon().type=="B61-7" or pylons.fcs.getSelectedWeapon().type=="B61-12" or pylons.fcs.getSelectedWeapon().type=="GBU-31") 
             and hdp.active_u != nil and hdp.master_arm ==1 and pylons.fcs.getSelectedWeapon().status == armament.MISSILE_LOCK) {
+
+            if (pylons.fcs.getSelectedWeapon().type=="MK-82") {
+                me.dt = 0.1;
+                me.maxFallTime = 20;
+            } else {
+                me.agl = (hdp.altitude_ft-hdp.active_u.get_altitude())*FT2M;
+                me.dt = me.agl*0.000025;#4000 ft = ~0.1
+                if (me.dt < 0.1) me.dt = 0.1;
+                me.maxFallTime = 45;
+            }
+            me.distCCRP = pylons.fcs.getSelectedWeapon().getCCRP(me.maxFallTime,me.dt);
+            if (me.distCCRP == nil) {
+                me.solutionCue.hide();
+                me.ccrpMarker.hide();
+                me.bombFallLine.hide();
+                return 0;
+            }
+            me.distCCRP/=4000;
+            if (me.distCCRP > 0.75) {
+                me.distCCRP = 0.75;
+            }
+            me.bombFallLine.setTranslation(hdp.active_u.get_relative_bearing()*me.texelPerDegreeX,0);
+            me.ccrpMarker.setTranslation(hdp.active_u.get_relative_bearing()*me.texelPerDegreeX,0);
+            me.solutionCue.setTranslation(hdp.active_u.get_relative_bearing()*me.texelPerDegreeX,me.sy*0.5-me.sy*0.5*me.distCCRP);
+            me.bombFallLine.show();
+            me.ccrpMarker.show();
+            me.solutionCue.show();
+            return 1;
+
+
+
+
             me.agl = (hdp.altitude_ft-hdp.active_u.get_altitude())*FT2M;
             #me.agl = getprop("position/altitude-agl-ft")*FT2M;
             me.alti = hdp.altitude_ft*FT2M;
@@ -575,14 +607,7 @@ var F16_HUD = {
             me.speed_east_fps = hdp.speed_east_fps;
             me.speed_north_fps = hdp.speed_north_fps;
 
-            if (pylons.fcs.getSelectedWeapon().type=="MK-82") {
-                me.dt = 0.1;
-                me.maxFallTime = 20;
-            } else {
-                me.dt = me.agl*0.000025;#4000 ft = ~0.1
-                if (me.dt < 0.1) me.dt = 0.1;
-                me.maxFallTime = 45;
-            }
+            
 
             me.t = 0.0;
             
