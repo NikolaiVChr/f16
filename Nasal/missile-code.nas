@@ -319,6 +319,7 @@ var AIM = {
 		m.reportDist            = getprop(m.nodeString~"max-report-distance");        # Interpolation hit: max distance from target it report it exploded, not passed. Trig hit: Distance where it will trigger.
 		m.multiHit				= getprop(m.nodeString~"hit-everything-nearby");      # bool. Only works well for slow moving targets. Needs you to pass contacts to release().
 		m.inert                 = getprop(m.nodeString~"inert");                      # bool. If the weapon is inert and will not detonate. [optional]
+		m.triggerAlgorithm      = getprop(m.nodeString~"trigger-algorithm");          # proximity or passing. [optional, if left out "payload/armament/hit-interpolation" will be used]
 		# avionics sounds
 		m.vol_search            = getprop(m.nodeString~"vol-search");                 # sound volume when searcing
 		m.vol_track             = getprop(m.nodeString~"vol-track");                  # sound volume when having lock
@@ -366,6 +367,11 @@ var AIM = {
 		m.patternPitchDown      = -15;
 		m.patternYaw            = 8.5;
 
+		if (m.triggerAlgorithm == "proximity") {
+			m.useHitInterpolation = FALSE;
+		} elsif (m.triggerAlgorithm == "passing") {
+			m.useHitInterpolation = TRUE;
+		}
         if (m.detect_range_nm == nil) {
           # backwards compatibility
           m.detect_range_nm = m.max_fire_range_nm;
@@ -1337,6 +1343,9 @@ var AIM = {
 			me.printStats("All guidance has been disabled, the weapon will not guide.");
 		}
 		me.printStats("After propulsion ends, it will max steer up to %d degree pitch.",me.maxPitch);
+		if(me.Tgt == nil) {
+			me.printStats("Note: Ordnance was released with no lock or destination target.");
+		}
 		if (stages > 0) {
 			me.printStats("PROPULSION:");
 			me.printStats("Stage 1: %d lbf for %.1f seconds.", me.force_lbf_1, me.stage_1_duration);
@@ -1386,7 +1395,7 @@ var AIM = {
 		me.printStats("Arming time is %.1f seconds.",me.arming_time);
 		me.printStats("Will selfdestruct after %d seconds.",me.selfdestruct_time);
 		if (me.multiHit) {
-			me.printStats("When detonating, will hit everything nearby.");
+			me.printStats("When detonating, will hit everything nearby. Number of contacts to consider: %d", size(me.contacts));
 		} else {
 			me.printStats("When detonating, will only hit single target.");
 		}
@@ -1394,7 +1403,7 @@ var AIM = {
 			me.printStats("Will selfdestruct if loses lock.");
 		}
 		if (me.useHitInterpolation) {
-			me.printStats("Will not explode if more than %d meters of target.",me.reportDist);
+			me.printStats("Will explode by proximity: %d meters from target.",me.reportDist);
 		} else {
 			me.printStats("Will explode as soon as within %d meters of target.",me.reportDist);
 		}
@@ -2476,7 +2485,9 @@ var AIM = {
 			#} else {
 			#	me.viewLost = "Target is left of seeker view.";
 			#}
-			me.printStats(me.type~": "~me.callsign~" is not in missile seeker view.");#~me.viewLost);
+			if (me.fovLost == FALSE) {
+				me.printStats(me.type~": "~me.callsign~" is not in seeker view.");#~me.viewLost);
+			}
 			if (me.reaquire == FALSE) {
 				me.free = TRUE;
 			} else {
@@ -2503,6 +2514,9 @@ var AIM = {
 	    } elsif (me.tooLowSpeed == TRUE) {
 			me.printStats(me.type~": Gained speed and started guiding.");
 			me.tooLowSpeed = FALSE;
+		} elsif (me.fovLost == TRUE) {
+			me.printStats(me.type~": Regained view of target.");
+			me.fovLost = FALSE;
 		} elsif (me.loal and me.maddog) {
 			me.printStats(me.type~": "~me.callsign~" is potential target. ("~me.Tgt.get_type()~","~me.class~")");
 		}
@@ -3146,10 +3160,10 @@ var AIM = {
 		}
 		me.coord = explosion_coord;
 
-		var wh_mass = event == "exploded"?me.weight_whead_lbm:0;#will report 0 mass if did not have time to arm
-		settimer(func {impact_report(me.coord, wh_mass, "munition", me.type, me.new_speed_fps*FT2M);},0);
+		var wh_mass = (event == "exploded" and !me.inert)?me.weight_whead_lbm:0;#will report 0 mass if did not have time to arm
+		settimer(func {impact_report(me.coord, wh_mass, "munition", me.type, me.new_speed_fps*FT2M);},0);# method sent back to main nasal thread.
 
-		if (me.Tgt != nil and !me.Tgt.isVirtual()) {
+		if (me.Tgt != nil and !me.Tgt.isVirtual() and !me.inert) {
 			var phrase = sprintf( me.type~" "~event~": %.1f", min_distance) ~ " meters from: " ~ (me.flareLock == FALSE?(me.chaffLock == FALSE?me.callsign:(me.callsign ~ "'s chaff")):me.callsign ~ "'s flare");
 			me.printStats("%s  Reason: %s time %.1f", phrase, reason, me.life_time);
 			if (min_distance < me.reportDist) {
@@ -3157,17 +3171,21 @@ var AIM = {
 			} else {
 				me.sendMessage(me.type~" missed "~me.callsign~": "~reason);
 			}
-		} elsif(!me.inert) {
+		} elsif(!me.inert and !me.Tgt.isVirtual()) {
 			var phrase = sprintf(me.type~" "~event);
 			me.printStats("%s  Reason: %s time %.1f", phrase, reason, me.life_time);
 			me.sendMessage(phrase);
 		}
 		if (me.multiHit and !me.inert) {
-			me.multiExplosion(me.coord, event);
+			if (!me.multiExplosion(me.coord, event) and me.Tgt != nil and me.Tgt.isVirtual()) {
+				var phrase = sprintf(me.type~" "~event);
+				me.printStats("%s  Reason: %s time %.1f", phrase, reason, me.life_time);
+				me.sendMessage(phrase);
+			}
 		}
 		
 		me.ai.getNode("valid", 1).setBoolValue(0);
-		if (event == "exploded") {
+		if (event == "exploded" and !me.inert) {
 			me.animate_explosion();
 			me.explodeSound = TRUE;
 		} else {
@@ -3179,6 +3197,7 @@ var AIM = {
 
 	explodeTrig: func (reason, event = "exploded") {
 		# get missile relative position to the target at last frame.
+		# this method is not called at terrain impact (always explode() instead)
         var t_bearing_deg = me.last_t_coord.course_to(me.last_coord);
         var t_delta_alt_m = me.last_coord.alt() - me.last_t_coord.alt();
         var new_t_alt_m = me.t_coord.alt() + t_delta_alt_m;
@@ -3187,8 +3206,8 @@ var AIM = {
         # applied to target current coord.
         me.t_coord.apply_course_distance(t_bearing_deg, t_dist_m);
         me.t_coord.set_alt(new_t_alt_m);
-        var wh_mass = event == "exploded"?me.weight_whead_lbm:0;#will report 0 mass if did not have time to arm
-        settimer(func{impact_report(me.t_coord, wh_mass, "munition", me.type, me.new_speed_fps*FT2M);},0);
+        var wh_mass = (event == "exploded" and !me.inert)?me.weight_whead_lbm:0;#will report 0 mass if did not have time to arm
+        settimer(func{impact_report(me.t_coord, wh_mass, "munition", me.type, me.new_speed_fps*FT2M);},0);# method sent back to main nasal thread.
 
 		if (me.lock_on_sun == TRUE) {
 			reason = "Locked onto sun.";
@@ -3198,17 +3217,21 @@ var AIM = {
 			reason = "Locked onto chaff.";
 		}
 		
-		if (me.Tgt != nil and !me.Tgt.isVirtual()) {
+		if (me.Tgt != nil and !me.Tgt.isVirtual() and !me.inert) {
 			var phrase = sprintf( me.type~" "~event~": %.1f", me.direct_dist_m) ~ " meters from: " ~ (me.flareLock == FALSE?(me.chaffLock == FALSE?me.callsign:(me.callsign ~ "'s chaff")):me.callsign ~ "'s flare");
 			me.printStats("%s  Reason: %s time %.1f", phrase, reason, me.life_time);
 			me.sendMessage(phrase);
 		}
 		if (me.multiHit and !me.inert) {
-			me.multiExplosion(me.t_coord, event);
+			if (!me.multiExplosion(me.t_coord, event) and me.Tgt != nil and me.Tgt.isVirtual()) {
+				var phrase = sprintf(me.type~" "~event);
+				me.printStats("%s  Reason: %s time %.1f", phrase, reason, me.life_time);
+				me.sendMessage(phrase);
+			}
 		}
 		
 		me.ai.getNode("valid", 1).setBoolValue(0);
-		if (event == "exploded") {
+		if (event == "exploded" and !me.inert) {
 			me.animate_explosion();
 			me.explodeSound = TRUE;
 		} else {
@@ -3220,8 +3243,9 @@ var AIM = {
 
 	multiExplosion: func (explode_coord, event) {
 		# hit everything that is nearby except for target itself.
+		me.sendout = 0;
 		foreach (me.testMe;me.contacts) {
-			if (!me.testMe.isValid() or me.testMe.isVirtual()) {
+			if (!me.testMe.isValid() or me.testMe.isVirtual() or me.testMe.get_type() == ORDNANCE) {
 				continue;
 			}
 			var min_distance = me.testMe.get_Coord().direct_distance_to(explode_coord);
@@ -3229,8 +3253,10 @@ var AIM = {
 				var phrase = sprintf("%s %s: %.1f meters from: %s", me.type,event, min_distance, me.testMe.get_Callsign());
 				me.printStats(phrase);
 				me.sendMessage(phrase);
+				me.sendout = 1;
 			}
 		}
+		return me.sendout;
 	},
 
 	sendMessage: func (str) {
