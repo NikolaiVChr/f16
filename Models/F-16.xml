@@ -69,7 +69,7 @@
  <model>
     <path>Effects/trail/trail.xml</path>
       <offsets>
-        <x-m>16.0</x-m>
+        <x-m>20.0</x-m>
         <y-m>0.0</y-m>
         <z-m>0.2</z-m>
       </offsets>
