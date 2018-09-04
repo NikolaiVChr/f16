@@ -7,6 +7,11 @@
 
 	<path>AGM-65.ac</path>
 
+  <effect>  
+    <inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  
+    <object-name>AGM-65Glass</object-name> 
+  </effect>
+
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
       <parameters>
@@ -23,11 +28,5 @@
       <object-name>CamSphere</object-name>
       <object-name>Lens</object-name>
   </effect>
-
-	<animation>
-  		<object-name>AGM-65Body</object-name>
-      <object-name>AGM-65Glass</object-name>
-  		<enable-hot type="bool">false</enable-hot>
- 	</animation>
 	
 </PropertyList>
