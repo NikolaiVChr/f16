@@ -142,7 +142,7 @@ var DEBUG_STATS_DETAILS    = FALSE;
 var DEBUG_GUIDANCE         = FALSE;
 var DEBUG_GUIDANCE_DETAILS = FALSE;
 var DEBUG_FLIGHT_DETAILS   = 0;
-var DEBUG_SEARCH           = FALSE;
+var DEBUG_SEARCH           = 0;
 var DEBUG_CODE             = FALSE;
 
 var g_fps        = 9.80665 * M2FT;
@@ -634,6 +634,7 @@ var AIM = {
 		# cruise-missiles
 		m.nextGroundElevation = 0; # next Ground Elevation
 		m.nextGroundElevationMem = [-10000, -1];
+		m.terrainStage = 0;
 
 		#rail
 		m.rail_passed = FALSE;
@@ -2573,10 +2574,46 @@ var AIM = {
         if(me.loft_alt != 0 and me.snapUp == FALSE) {
         	# this is for Air to ground/sea cruise-missile (SCALP, Sea-Eagle, Taurus, Tomahawk, RB-15...)
 
-        	var useNewCode = 1;# TODO: test this with all Viggen/F16/Mig21 cruise missiles.
+        	var code = 1;# 0 = old, 1 = new, 2 = angle
 
-        	if (useNewCode) {# Shinobi's new code
-        		#Variable declaration
+			if (code == 2) {# angle code
+				me.terrainStage += 1;# only 1 terrain check in each stage.
+				if (me.terrainStage > 5) {
+					me.terrainStage = 0;
+				}
+				if (me.terrainStage == 0) {
+					# down
+					me.terrainUnder = geo.elevation(me.coord.lat(),me.coord.lon());
+				} elsif (me.terrainStage == 1) {
+					# level
+					me.geoPlus = me.nextGeoloc(me.coord.lat(), me.coord.lon(), me.hdg, me.old_speed_fps, 5, me.coord.alt());
+
+					xyz = {"x":me.coord.x(),                  "y":me.coord.y(),                 "z":me.coord.z()};
+					dir = {"x":me.geoPlus.x()-me.coord.x(),  "y":me.geoPlus.y()-me.coord.y(), "z":me.geoPlus.z()-me.coord.z()};
+					me.groundIntersectResult = get_cart_ground_intersection(xyz, dir);
+	                if(me.groundIntersectResult == nil) {
+	                    me.terrainLevel = 1000000;
+	                } else {
+	                    GroundIntersectCoord.set_latlon(me.groundIntersectResult.lat, me.groundIntersectResult.lon, me.groundIntersectResult.elevation);
+	                    me.terrainLevel = me.coord.direct_distance_to(me.groundIntersectCoord);
+	                }
+				} elsif (me.terrainStage == 2) {
+					# negative angle
+					me.geoPlus = me.nextGeoloc(me.coord.lat(), me.coord.lon(), me.hdg, me.old_speed_fps, 5, me.coord.alt());
+
+					xyz = {"x":me.coord.x(),                  "y":me.coord.y(),                 "z":me.coord.z()};
+					dir = {"x":me.geoPlus.x()-me.coord.x(),  "y":me.geoPlus.y()-me.coord.y(), "z":me.geoPlus.z()-me.coord.z()};
+					me.groundIntersectResult = get_cart_ground_intersection(xyz, dir);
+	                if(me.groundIntersectResult == nil) {
+	                    me.terrainLevel = 1000000;
+	                } else {
+	                    GroundIntersectCoord.set_latlon(me.groundIntersectResult.lat, me.groundIntersectResult.lon, me.groundIntersectResult.elevation);
+	                    me.terrainLevel = me.coord.direct_distance_to(me.groundIntersectCoord);
+	                }
+				}
+
+        	} elsif (code == 1) {# Shinobi's new code
+        		        		#Variable declaration
 	            var No_terrain = 0;
 	            var distance_Target = 0;
 	            var xyz = nil;
@@ -2591,7 +2628,7 @@ var AIM = {
 	            xyz = {"x":me.coord.x(),                  "y":me.coord.y(),                 "z":me.coord.z()};
 	            
 	            #Then we need the coordinate of the future point at let say 20 dt
-	            me.geoPlus4 = me.nextGeoloc(me.coord.lat(), me.coord.lon(), me.hdg, me.old_speed_fps, me.dt*20);
+	            me.geoPlus4 = me.nextGeoloc(me.coord.lat(), me.coord.lon(), me.hdg, me.old_speed_fps, 5);
 	            me.geoPlus4.set_alt(geo.elevation(me.geoPlus4.lat(),me.geoPlus4.lon()));
 	            
 	            #Loop

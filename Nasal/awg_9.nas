@@ -198,7 +198,7 @@ var mp_list           = [];
 var tgts_list         = [];
 var cnt               = 0;
 
-var use_tews          = 1;
+var use_tews          = 1;#skips the TEWS code to save performance if 0
 
 # Dual-control vars: 
 var we_are_bs         = 0;
@@ -220,7 +220,7 @@ var sel_next_target = 0;
 var sel_prev_target = 0;
 var stby = 0;
 
-var cycle_range    = getprop("instrumentation/radar/cycle-range");
+var cycle_range    = getprop("instrumentation/radar/cycle-range");# if range should be cycled or only go up/down.
 
 var setupRanges = func {
     var rdrNode = props.globals.getNode("instrumentation/radar",0);
@@ -475,7 +475,7 @@ var az_scan = func(notification) {
     {
         scan_tgt_end = size(tgts_list);
     }
-    var silentChanged = RadarStandby.getValue() != stby;
+    var silentChanged = RadarStandby.getValue() != stby;# we keep track of silent mode, to make sure there is no delay for the pilot to see, when radar is turned on/off.
     stby = RadarStandby.getValue();
     for (;scan_tgt_idx < scan_tgt_end; scan_tgt_idx += 1) {
 
@@ -525,7 +525,7 @@ var az_scan = func(notification) {
                       u.set_display(!u.get_rdr_standby());
                   }
                   if (radar_mode < 2) {
-                    u.set_display(!RadarStandby.getValue());## I do not understand radar_mode: if 2 then it can be silent, but ignores cone. if less than 2 its always on, respects cone.!!
+                    u.set_display(!RadarStandby.getValue());## Richard this hack by me you probably wanna clean up, had to make it for now to get f16 to behave.
                     #printf("Hiding %d %s", !RadarStandby.getValue(), u.get_Callsign());
                   } else {
 #msg = "radar not transmitting";
@@ -574,7 +574,7 @@ var az_scan = func(notification) {
 #1;MP2 within  azimuth 126.4171942282486 field=-60->60
 #1;MP2 within  azimuth -130.0592982116802 field=-60->60  (s->w quadrant)
 #0;MP1 within  azimuth 164.2283073827575 field=-60->60
-            if (radar_mode < 2 and math.abs(u.deviationA) < az_fld/2 and math.abs(u.deviationE) < HoField.getValue()/2) {
+            if (radar_mode < 2 and math.abs(u.deviationA) < az_fld/2 and math.abs(u.deviationE) < HoField.getValue()/2) {#richard, I had to fix 2 bugs here.
                 u.set_display(u.get_visible() and !RadarStandby.getValue() and u.get_type() != ORDNANCE);
 #                if(awg9_trace)
 #                  print(scan_tgt_idx,";",u.get_Callsign()," within  azimuth ",u.deviation," field=",l_az_fld,"->",r_az_fld);
@@ -585,7 +585,7 @@ var az_scan = func(notification) {
                 u.set_display(0);
             }
         } else {
-            u.set_display(0);
+            u.set_display(0);#richard, I added this line.
         }
 
 # RWR 
@@ -724,7 +724,7 @@ var selectCheck = func {
     #
     #
     # next / previous target selection. 
-    if (LimitedSelect.getValue()) {selectCheckLimited(); return;}
+    if (LimitedSelect.getValue()) {selectCheckLimited(); return;}# I could not get your selectcheck to behave like I liked. So I made a more restrictive check. And made a property that decide which check to use.
     var tgt_cmd = SelectTargetCommand.getValue();
     SelectTargetCommand.setIntValue(0);
 
@@ -854,7 +854,7 @@ var selectCheck = func {
         }
 #        print("Sel prev target:");
 
-        var sorted_dist = sort (awg_9.tgts_list, func (a,b) {a.get_range()-b.get_range()});
+        var sorted_dist = sort (awg_9.tgts_list, func (a,b) {a.get_range()-b.get_range()});#richard is this needed, or is the list guarenteed to be sorted by distance already?
         var prv=nil;
         foreach (var u; sorted_dist) 
         {
@@ -1189,7 +1189,7 @@ var toggle_radar_standby = func() {
 	RadarStandby.setBoolValue(!RadarStandby.getBoolValue());
 }
 
-var range_control = func(n) {
+var range_control = func(n) {#richard there was 2 of this method, I kinda deleted the unused one of them, not sure I should have done that if you kept it for some reason. Sorry, was maybe a bit too fast there.
 
 #    if ( pilot_lock and ! we_are_bs ) { return }
 
@@ -1493,7 +1493,7 @@ var Target = {
 	get_altitude : func {
 		return me.Alt.getValue();
 	},
-	get_total_elevation : func(own_pitch) {
+	get_total_elevation : func(own_pitch) {#richard, this method was sharing a variable with get_deviation and that variable was accesed different places which led to wrong value being used, I fixed that.
 		me.deviationE =  deviation_normdeg(own_pitch, me.getElevation());
 		return me.deviationE;
 	},
