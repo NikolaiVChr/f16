@@ -2244,10 +2244,10 @@
         <fcs_function name="fcs/fly-by-wire/lef/lef-pos-r-norm">
             <description>Inversed normalized LEF. Used in aero.</description>
             <function>
-                <difference>
-                    <v>1</v>
+<!--                <difference>   the reason this is commented out is very important, and will differ from the (1-d_lef/25) part of equations of motion in TP1538.
+                    <v>1</v>-->
                     <p>fcs/fly-by-wire/lef/lef-pos-norm</p>
-                </difference>
+                <!--</difference>-->
             </function>
         </fcs_function>
 

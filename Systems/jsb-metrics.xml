@@ -8,6 +8,7 @@
   <htailarm unit="FT"> 16.46 </htailarm>
   <vtailarea unit="FT2"> 54.75 </vtailarea>
   <vtailarm unit="FT"> 0 </vtailarm>
+  <wing_incidence unit="DEG"> 0 </wing_incidence>
   <location name="AERORP" unit="IN">
    <x> -1.9336 </x><!-- -180.4336 = static margin of -4%mac -->
    <y> 0 </y>
