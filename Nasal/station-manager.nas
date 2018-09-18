@@ -291,10 +291,10 @@ var Pylon = {
 		me.i = 0;
 		foreach(set ; me.sets) {
 			me.guiNode.initNode("opt["~me.i~"]/name",set.name,"STRING");
-			if (fdm=="yasim") {
+			#if (fdm=="yasim") { commented out due to fuel dialog changes in FG2018.3
 				# due to fuel dialog has different features in yasim from jsb, this must be done:
 				me.guiNode.initNode("opt["~me.i~"]/lbs",0,"DOUBLE");
-			}
+			#}
 			me.i += 1;
 		}
 		me.guiListener = setlistener(baseGui~"/weight["~me.guiID~"]/selected", func me.guiChanged());
@@ -551,6 +551,7 @@ var FuelTank = {
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/selected", 1);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", me.typeLong);
 		setprop(me.modelPath, 1);
+		setprop("sim/gui/dialogs/payload-reload",1);
 	},
 
 	eject: func {
@@ -560,6 +561,7 @@ var FuelTank = {
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/selected", 0);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", "Not attached");
 		setprop(me.modelPath, 0);
+		setprop("sim/gui/dialogs/payload-reload",1);
 	},
 
 	del: func {
@@ -569,6 +571,7 @@ var FuelTank = {
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/selected", 0);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", "Not attached");
 		setprop(me.modelPath, 0);
+		setprop("sim/gui/dialogs/payload-reload",1);
 	},
 
 	getAmmo: func {
