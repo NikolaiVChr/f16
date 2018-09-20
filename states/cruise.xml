@@ -2,7 +2,7 @@
 
 <PropertyList>
 
-    <name type="string" n="0">take-off</name>
+    <name type="string" n="0">cruise</name>
 
     <overlay>
         <fdm>
@@ -20,8 +20,12 @@
                 <engine n="0">
                     <cutoff type="bool">false</cutoff>
                     <starter type="bool">false</starter>
+                    <throttle type="double">0.75</throttle>
                 </engine>
             </engines>
+            <gear>
+                <gear-down type="double">0</gear-down>
+            </gear>
         </controls>
         <engines>
             <engine n="0">
