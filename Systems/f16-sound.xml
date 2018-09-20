@@ -1433,7 +1433,57 @@
         </rwr>
 
 
-
+        <thunder1>
+            <name>thunder1</name>
+            <mode>once</mode>
+            <path>Aircraft/f16/Sounds/thunder1.wav</path>
+            <type>avionics</type>
+            <property>f16/sound/thunder1</property>
+            <pitch>
+                <property>f16/sound/dist-thunder1</property>
+                <factor>2</factor>
+                <offset>0.50</offset>
+                <min>1.00</min>
+                <max>2.00</max>
+            </pitch>
+            <volume>
+                <property>f16/sound/dist-thunder1</property>
+            </volume>
+        </thunder1>
+        <thunder2>
+            <name>thunder2</name>
+            <mode>once</mode>
+            <path>Aircraft/f16/Sounds/thunder2.wav</path>
+            <type>avionics</type>
+            <property>f16/sound/thunder2</property>
+            <pitch>
+                <property>f16/sound/dist-thunder2</property>
+                <factor>2</factor>
+                <offset>0.50</offset>
+                <min>1.00</min>
+                <max>2.00</max>
+            </pitch>
+            <volume>
+                <property>f16/sound/dist-thunder2</property>
+            </volume>
+        </thunder2>
+        <thunder3>
+            <name>thunder3</name>
+            <mode>once</mode>
+            <path>Aircraft/f16/Sounds/thunder3.wav</path>
+            <type>avionics</type>
+            <property>f16/sound/thunder3</property>
+            <pitch>
+                <property>f16/sound/dist-thunder3</property>
+                <factor>1</factor>
+                <offset>0.50</offset>
+                <min>1.00</min>
+                <max>2.00</max>
+            </pitch>
+            <volume>
+                <property>f16/sound/dist-thunder3</property>
+            </volume>
+        </thunder3>
         
 
 

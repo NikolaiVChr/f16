@@ -1738,6 +1738,11 @@
         <rwr-unk type="bool">false</rwr-unk>
     </sound>
     <f16>
+        <sound>
+            <thunder1 type="bool">false</thunder1>
+            <thunder2 type="bool">false</thunder2>
+            <thunder3 type="bool">false</thunder3>
+        </sound>
         <avionics>
             <hud-brt type="double">1.0</hud-brt>
         </avionics>
