@@ -268,6 +268,7 @@ var F16_HUD = {
                                                  obj.ttc = hdp.time_until_crash;
                                                  if (obj.ttc != nil and obj.ttc>0 and obj.ttc<10) {
                                                      obj.flyup.setText("FLYUP");
+                                                     #obj.flyup.setColor(1,0,0,1);
                                                      obj.flyup.show();
                                                  } else {
                                                      if (hdp.vne) {
@@ -398,8 +399,7 @@ var F16_HUD = {
                 .setAlignment("center-center")
                 .setColor(0,1,0)
                 .setFont(HUD_FONT)
-                .setFontSize(13, 1.4)
-                .hide();
+                .setFontSize(13, 1.4);
 #        obj.ralt = obj.svg.createChild("text")
 #                .setText("R 00000 ")
 #                .setTranslation(sx*1*0.675633-5,sy*0.45)
@@ -451,8 +451,7 @@ var F16_HUD = {
             .moveTo(0,-3)
             .vert(-6)
             .setStrokeLineWidth(1)
-            .setColor(0,1,0)
-            .hide();
+            .setColor(0,1,0);
         obj.initUpdate =1;
         
         obj.alpha = getprop("f16/avionics/hud-brt");
@@ -480,7 +479,7 @@ var F16_HUD = {
                 .setFont(HUD_FONT)
                 .setFontSize(8, 1.0);
 
-        obj.svg.setColor(0.3,1,0.3);
+        obj.svg.setColor(0.3,1,0.3,1);
 		return obj;
 	},
 #
