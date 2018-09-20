@@ -551,7 +551,7 @@ var FuelTank = {
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/selected", 1);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", me.typeLong);
 		setprop(me.modelPath, 1);
-		setprop("sim/gui/dialogs/payload-reload",1);
+		setprop("sim/gui/dialogs/payload-reload",!getprop("sim/gui/dialogs/payload-reload"));
 	},
 
 	eject: func {
@@ -561,7 +561,7 @@ var FuelTank = {
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/selected", 0);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", "Not attached");
 		setprop(me.modelPath, 0);
-		setprop("sim/gui/dialogs/payload-reload",1);
+		setprop("sim/gui/dialogs/payload-reload",!getprop("sim/gui/dialogs/payload-reload"));
 	},
 
 	del: func {
@@ -571,7 +571,7 @@ var FuelTank = {
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/selected", 0);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", "Not attached");
 		setprop(me.modelPath, 0);
-		setprop("sim/gui/dialogs/payload-reload",1);
+		setprop("sim/gui/dialogs/payload-reload",!getprop("sim/gui/dialogs/payload-reload"));
 	},
 
 	getAmmo: func {

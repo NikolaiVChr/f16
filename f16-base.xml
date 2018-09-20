@@ -83,6 +83,7 @@
         </instrumentation>
         <flight-recorder include="Systems/f16-flight-recorder.xml"/>
         <model>
+            <fallback-model-index type="int">516</fallback-model-index>
             <f16>
                 <AIM-9L type="bool">true</AIM-9L>
                 <AIM-9L_dummy type="bool">false</AIM-9L_dummy>
@@ -471,6 +472,11 @@
             <z-offset-min-m type="float">10.0</z-offset-min-m>
             <z-offset-max-m type="float">200.0</z-offset-max-m>
         </current-view>
+        <gui>
+            <dialogs>
+                <payload-reload type="bool">false</payload-reload><!-- need to be defined to be backward compat with 2018.3 -->
+            </dialogs>
+        </gui>
     </sim>
     <input n="0">
         <mice n="0">
