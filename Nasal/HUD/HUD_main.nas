@@ -70,7 +70,7 @@ var F16_HUD = {
         obj.target_locked = obj.get_element("target_locked");
         obj.target_locked.setVisible(0);
 
-        HUD_FONT = "condensed.txf";
+        HUD_FONT = "LiberationFonts/LiberationMono-Bold.ttf";#"condensed.txf";  with condensed the FLYUP text was not displayed until minutes into flight, no clue why
         obj.window1 = obj.get_text("window1", HUD_FONT,9,1.4);
         obj.window2 = obj.get_text("window2", HUD_FONT,9,1.4);
         obj.window3 = obj.get_text("window3", HUD_FONT,9,1.4);
@@ -90,7 +90,7 @@ var F16_HUD = {
         obj.window9.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
 
         obj.ralt = obj.get_text("radalt", HUD_FONT,9,1.4);
-        obj.ralt.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
+        obj.ralt.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(9,1.1);
 
         input = {
                  IAS                       : "/velocities/airspeed-kt",
@@ -143,13 +143,14 @@ var F16_HUD = {
         # set the update list - using the update manager to improve the performance
         # of the HUD update - without this there was a drop of 20fps (when running at 60fps)
         obj.update_items = [
-            props.UpdateManager.FromHashList(["hud_serviceable", "hud_display", "hud_brightness", "hud_power"], 0.01, func(hdp)
+            props.UpdateManager.FromHashList(["hud_serviceable", "hud_display", "hud_brightness", "hud_power"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
                                       {
 # print("HUD hud_serviceable=", hdp.hud_serviceable," display=", hdp.hud_display, " brt=", hdp.hud_brightness, " power=", hdp.hud_power);
-                                          if (!hdp.hud_display or !hdp.hud_serviceable)
+                                          if (!hdp.hud_display or !hdp.hud_serviceable) {
                                             obj.svg.setColor(0.3,1,0.3,0);
-                                          elsif (hdp.hud_brightness != nil and hdp.hud_power != nil)
+                                          } elsif (hdp.hud_brightness != nil and hdp.hud_power != nil) {
                                             obj.svg.setColor(0.3,1,0.3,hdp.hud_brightness * hdp.hud_power);
+                                          }
                                       }),
             props.UpdateManager.FromHashList([], 0.01, func(hdp)
                                       {
@@ -278,6 +279,7 @@ var F16_HUD = {
                                                          obj.flyup.hide();
                                                      }
                                                  }
+                                                 obj.flyup.update();
                                              }
                                             ),
 
@@ -397,7 +399,7 @@ var F16_HUD = {
                 .setText("FLYUP")
                 .setTranslation(sx*0.5*0.695633,sy*0.30)
                 .setAlignment("center-center")
-                .setColor(0,1,0)
+                .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(13, 1.4);
 #        obj.ralt = obj.svg.createChild("text")
@@ -479,7 +481,7 @@ var F16_HUD = {
                 .setFont(HUD_FONT)
                 .setFontSize(8, 1.0);
 
-        obj.svg.setColor(0.3,1,0.3,1);
+        obj.svg.setColor(0.3,1,0.3);
 		return obj;
 	},
 #
