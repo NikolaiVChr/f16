@@ -4,6 +4,9 @@
   
   <name>payload</name>
   <modal type="bool">false</modal>
+  <draggable>true</draggable>
+  <resizable>true</resizable>
+  <width>500</width>
   <layout>vbox</layout>
   
   <group>
@@ -58,7 +61,7 @@
         <hrule>
             <row>1</row>
             <col>0</col>
-            <colspan>2</colspan>
+            <colspan>4</colspan>
         </hrule>
 
         <text>
@@ -79,7 +82,7 @@
         <hrule>
             <row>3</row>
             <col>0</col>
-            <colspan>2</colspan>
+            <colspan>4</colspan>
         </hrule>
 
         <text>
@@ -100,7 +103,7 @@
         <hrule>
             <row>5</row>
             <col>0</col>
-            <colspan>2</colspan>
+            <colspan>4</colspan>
         </hrule>
 
         <text>
@@ -121,7 +124,7 @@
         <hrule>
             <row>7</row>
             <col>0</col>
-            <colspan>2</colspan>
+            <colspan>4</colspan>
         </hrule>
 
         <layout>hbox</layout>
@@ -143,7 +146,7 @@
         <hrule>
             <row>9</row>
             <col>0</col>
-            <colspan>2</colspan>
+            <colspan>4</colspan>
         </hrule>
 
         <text>
@@ -164,7 +167,7 @@
         <hrule>
             <row>11</row>
             <col>0</col>
-            <colspan>2</colspan>
+            <colspan>4</colspan>
         </hrule>
 
         <text>
@@ -185,7 +188,7 @@
         <hrule>
             <row>13</row>
             <col>0</col>
-            <colspan>2</colspan>
+            <colspan>4</colspan>
         </hrule>
 
         <text>
@@ -203,20 +206,14 @@
             </binding>
         </button>
 
-        <hrule>
-            <row>15</row>
-            <col>0</col>
-            <colspan>2</colspan>
-        </hrule>
-
         <text>
-            <row>16</row>
-            <col>0</col>
+            <row>0</row>
+            <col>2</col>
             <label>Air Strike</label>
         </text>
         <button>
-            <row>16</row>
-            <col>1</col>
+            <row>0</row>
+            <col>3</col>
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
@@ -224,20 +221,14 @@
             </binding>
         </button>
 
-        <hrule>
-            <row>17</row>
-            <col>0</col>
-            <colspan>2</colspan>
-        </hrule>
-
         <text>
-            <row>18</row>
-            <col>0</col>
+            <row>2</row>
+            <col>2</col>
             <label>Air to sea (Anti-ship)</label>
         </text>
         <button>
-            <row>18</row>
-            <col>1</col>
+            <row>2</row>
+            <col>3</col>
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
@@ -245,20 +236,15 @@
             </binding>
         </button>
 
-        <hrule>
-            <row>19</row>
-            <col>0</col>
-            <colspan>2</colspan>
-        </hrule>
 
         <text>
-            <row>20</row>
-            <col>0</col>
+            <row>4</row>
+            <col>2</col>
             <label>"Wild Weasel" (SEAD)</label>
         </text>
         <button>
-            <row>20</row>
-            <col>1</col>
+            <row>4</row>
+            <col>3</col>
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
@@ -266,20 +252,14 @@
             </binding>
         </button>
 
-        <hrule>
-            <row>21</row>
-            <col>0</col>
-            <colspan>2</colspan>
-        </hrule>
-
         <text>
-            <row>22</row>
-            <col>0</col>
+            <row>6</row>
+            <col>2</col>
             <label>Offensive Counter Air</label>
         </text>
         <button>
-            <row>22</row>
-            <col>1</col>
+            <row>6</row>
+            <col>3</col>
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
@@ -287,20 +267,14 @@
             </binding>
         </button>
 
-        <hrule>
-            <row>23</row>
-            <col>0</col>
-            <colspan>2</colspan>
-        </hrule>
-
         <text>
-            <row>24</row>
-            <col>0</col>
+            <row>8</row>
+            <col>2</col>
             <label>Ferry flight</label>
         </text>
         <button>
-            <row>24</row>
-            <col>1</col>
+            <row>8</row>
+            <col>3</col>
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
@@ -308,20 +282,15 @@
             </binding>
         </button>
 
-        <hrule>
-            <row>25</row>
-            <col>0</col>
-            <colspan>2</colspan>
-        </hrule>
 
         <text>
-            <row>26</row>
-            <col>0</col>
+            <row>10</row>
+            <col>2</col>
             <label>Ferry flight w/ cargo</label>
         </text>
         <button>
-            <row>26</row>
-            <col>1</col>
+            <row>10</row>
+            <col>3</col>
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
@@ -329,20 +298,14 @@
             </binding>
         </button>
 
-        <hrule>
-            <row>27</row>
-            <col>0</col>
-            <colspan>2</colspan>
-        </hrule>
-
         <text>
-            <row>28</row>
-            <col>0</col>
+            <row>12</row>
+            <col>2</col>
             <label>Training</label>
         </text>
         <button>
-            <row>28</row>
-            <col>1</col>
+            <row>12</row>
+            <col>3</col>
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
@@ -350,20 +313,14 @@
             </binding>
         </button>
 
-        <hrule>
-            <row>29</row>
-            <col>0</col>
-            <colspan>2</colspan>
-        </hrule>
-
         <text>
-            <row>30</row>
-            <col>0</col>
+            <row>14</row>
+            <col>2</col>
             <label>Clean</label>
         </text>
         <button>
-            <row>30</row>
-            <col>1</col>
+            <row>14</row>
+            <col>3</col>
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
