@@ -489,6 +489,13 @@ FailureMgr.add_failure_mode("systems/hydraulics/edpa-pump", "Hydr. pump A", hyda
 var hydb_fc = compat_failure_modes.set_unserviceable("systems/hydraulics/edpb-pump");
 FailureMgr.add_failure_mode("systems/hydraulics/edpb-pump", "Hydr. pump B", hydb_fc);
 
+var radar_fc = compat_failure_modes.set_unserviceable("instrumentation/radar");
+FailureMgr.add_failure_mode("instrumentation/radar", "Radar", radar_fc);
+
+var rwr_fc = compat_failure_modes.set_unserviceable("instrumentation/rwr");
+FailureMgr.add_failure_mode("instrumentation/rwr", "RWR", rwr_fc);
+
+
 # setup properties required for frame notifier.
 # NOTE: This is a deprecated way of doing things; each subsystem should do this
 #       for the properties that are required, however this aircraft predates
