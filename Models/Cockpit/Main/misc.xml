@@ -53,10 +53,27 @@ light: ecm lamp off
         <object-name>MISC_1_block-50</object-name>
         <object-name>MISC_1_block-15</object-name>
     </effect>
+
     <animation>
         <type>material</type>
         <object-name>block-15</object-name>
         <object-name>block-50</object-name>
+        <object-name>alt-rel-button</object-name>
+        <object-name>autopilot-switch</object-name>
+        <object-name>laser-arm-switch</object-name>
+        <object-name>master-arm-switch</object-name>
+        <object-name>master-arm-cover</object-name>
+        <object-name>pitch-switch-b15</object-name>
+        <object-name>roll-switch-b15</object-name>
+        <object-name>quiet-switch</object-name>
+        <object-name>roll-hold-switch</object-name>
+        <object-name>pitch-hold-switch</object-name>
+        <object-name>stby-off</object-name>
+        <object-name>stby-on</object-name>
+        <object-name>active-on</object-name>
+        <object-name>active-off</object-name>
+        <object-name>adv-mode-button</object-name>
+        <object-name>autopilot-switch</object-name>
         <emission>
             <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
             <red>0.45</red>
@@ -64,6 +81,7 @@ light: ecm lamp off
             <blue>0.18</blue>
         </emission>
     </animation>
+
     <animation>
         <type>knob</type>
         <object-name>alt-rel-button</object-name>
