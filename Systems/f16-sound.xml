@@ -1485,7 +1485,28 @@
             </volume>
         </thunder3>
         
-
+        <brake>
+            <name>speedbrake</name>
+            <path>Aircraft/f16/Sounds/speedbrake.wav</path>
+            <mode>in-transit</mode>
+            <property>fdm/jsbsim/fcs/speedbrake-pos-norm</property>
+            <reference-dist>3</reference-dist>
+            <max-dist>10</max-dist>
+            <position>
+                <x>0.01</x>
+                <y>0.01</y>
+                <z>0.01</z>
+            </position>
+            <pitch>
+                <factor>1</factor>
+                <offset>0</offset>
+                <min>0</min>
+                <max>2</max>
+            </pitch>
+            <volume>
+                <max>0.40</max>
+            </volume>
+        </brake>
 
     </fx>
  
