@@ -134,7 +134,7 @@ var scan_update_visibility = 1;
 var scan_next_tgt_check = ElapsedSec.getValue() + 2;
 var scan_update_tgt_list = 1;
 var ScanPartitionSize = props.globals.getNode("instrumentation/radar/scan_partition_size", 1);
-var ScanVisibilityCheckInterval = props.globals.getNode("instrumentation/radar/scan_partition_size", 1);
+var ScanVisibilityCheckInterval = props.globals.getNode("instrumentation/radar/scan_visibility_check_interval", 1);
 var ScanId = props.globals.getNode("instrumentation/radar/scan_id", 1);
 var ScanTgtUpdateCount = props.globals.getNode("instrumentation/radar/scan_tgt_update", 1);
 var ScanTgtCount = props.globals.getNode("instrumentation/radar/scan_tgt_count", 1);
@@ -143,7 +143,7 @@ var ScanTgtHiddenTERRAIN = props.globals.getNode("instrumentation/radar/scan_tgt
 var ScanTgtVisible = props.globals.getNode("instrumentation/radar/scan_tgt_visible", 1);
 ScanTgtUpdateCount.setIntValue(0);
 
-ScanVisibilityCheckInterval.setIntValue(12); # seconds
+#ScanVisibilityCheckInterval.setIntValue(12); # seconds   is set in set file
 ScanPartitionSize.setIntValue(10); # size of partition to run per frame.
 
 # Azimuth field quadrants.
@@ -967,7 +967,7 @@ var TerrainManager = {
     # There is no terrain on earth that can be between these altitudes
     # so shortcut the whole thing and return now.
     if(fn.altitude_ft > 8900 and SelectCoord.alt() > 8900){
-        return 1;
+ #       return 1;   cannot compare ft and meters
     }
 
         
