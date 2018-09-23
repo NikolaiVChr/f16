@@ -71,7 +71,9 @@ var SubSystem_RWR_APG = {
             me.inv_bearing =  me.bearing+180;
             me.deviation = me.inv_bearing - me.heading;
             me.dev = math.abs(geo.normdeg180(me.deviation));
-            if (me.u.get_display()) {
+            if (me.u.get_behind_terrain()) {
+                me.show = 0;#behind terrain (does this terrain check happen often enough??)
+            } elsif (me.u.get_display()) {
                 me.show = 1;#in radar cone
             } elsif(me.u.get_model()=="AI" and me.rn < 55) {
                 me.show = 1;#non MP always has transponder on.
