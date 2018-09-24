@@ -1202,7 +1202,7 @@
             <rain-enabled type="int">1</rain-enabled>
         </aircraft-effects>
         <precipitation-control>
-            <clip-distance type="double">2.0</clip-distance>
+            <clip-distance type="double">3.5</clip-distance>
         </precipitation-control>
     </environment>
     <limits>
