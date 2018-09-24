@@ -351,7 +351,14 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
   if (getprop("sim/signals/fdm-initialized") == 1) {
     removelistener(main_init_listener);
    loop_flare();
-   medium.loop();   
+   medium.loop();
+    print();
+    print("***************************************************************");
+    print("         Initializing "~getprop("sim/description")~" systems.           ");
+    print("           Version "~getprop("sim/aircraft-version")~" on Flightgear "~getprop("sim/version/flightgear"));
+    print("***************************************************************");
+    print();
+    screen.log.write("Welcome to "~getprop("sim/description")~", version "~getprop("sim/aircraft-version"), 1.0, 0.2, 0.2);
   }
  }, 0, 0);
 

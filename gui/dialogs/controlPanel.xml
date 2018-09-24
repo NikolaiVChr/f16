@@ -13,6 +13,8 @@
 		<text>
 			<halign>left</halign>
 			<label>F-16 Control Panel</label>
+			<format>%s Control Panel</format>
+			<property>sim/description</property>
 		</text>
 		<button>
 			<halign>right</halign>
