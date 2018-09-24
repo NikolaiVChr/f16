@@ -56,7 +56,6 @@ Enable damage in-air but not disable. Already fired missiles should not broadcas
 Radar
 -----
 Add doppler.
-Update to latest F15 radar.
 
 Cockpit
 -------
@@ -91,7 +90,6 @@ page 1-131 of b50 manual
 MFDs
 ----
 Add tons of pages
-Make sit not crash the entire MFD.
 
 Aero
 ----

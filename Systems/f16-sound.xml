@@ -159,10 +159,13 @@
   </engine_fan>
 
   <exhaust>
-   <name>turbine</name>
+   <name>turbine internal</name>
    <path>Sounds/jet.wav</path>
    <mode>looped</mode>
-   <property>engines/engine/running</property>
+   <condition>
+     <property>engines/engine/running</property>
+     <property>sim/current-view/internal</property>
+   </condition>
    <reference-dist>250</reference-dist>
    <max-dist>12500</max-dist>
    <position>
@@ -191,6 +194,48 @@
    <pitch>
     <property>engines/engine/n1</property>
     <offset>0.25</offset>
+    <factor>0.01</factor>
+   </pitch>
+  </exhaust>
+
+  <exhaust>
+   <name>turbine external</name>
+   <path>Sounds/jet.wav</path>
+   <mode>looped</mode>
+   <condition>
+     <property>engines/engine/running</property>
+     <not>
+      <property>sim/current-view/internal</property>
+     </not>
+   </condition>
+   <reference-dist>250</reference-dist>
+   <max-dist>12500</max-dist>
+   <position>
+    <x>4.6</x>
+    <y>0.01</y>
+    <z>0.01</z>
+   </position>
+   <orientation>
+    <x>1.0</x>
+    <y>0.0</y>
+    <z>0.0</z>
+    <inner-angle>200.0</inner-angle>
+    <outer-angle>360.0</outer-angle>
+    <outer-gain>0.25</outer-gain>
+   </orientation>
+   <volume>
+    <property>engines/engine/thrust_lb</property>
+    <offset>0</offset>
+    <factor>0.000065</factor>
+   </volume>
+   <!--<volume>
+    <property>sim/current-view/internal</property>
+    <offset>1</offset>
+    <factor>-0.5</factor>
+   </volume>-->
+   <pitch>
+    <property>engines/engine/n1</property>
+    <offset>0.00</offset>
     <factor>0.01</factor>
    </pitch>
   </exhaust>

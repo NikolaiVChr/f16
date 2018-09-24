@@ -47,6 +47,13 @@
         <panel_2>
             <visibility>false</visibility>
         </panel_2>
+          <previews>
+        <preview>
+            <type>interior</type>
+            <splash type="bool">false</splash>
+            <path>gui/splash/cockpit.png</path>
+        </preview>
+      </previews>
         <hud>
             <visibility n="1">false</visibility>
             <!--
