@@ -363,6 +363,8 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
  }, 0, 0);
 
 
+var inAutostart = 0;
+
 var repair = func {
   if (getprop("payload/armament/msg")==1 and !getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
     screen.log.write(msgA);
@@ -372,6 +374,10 @@ var repair = func {
 }
 
 var repair2 = func {
+  if (inAutostart) {
+    return;
+  }
+  inAutostart = 1;
   screen.log.write("Repairing, standby..");
   setprop("ai/submodels/submodel[0]/count",100);
   crash.repair();
@@ -385,18 +391,25 @@ var repair2 = func {
       settimer(repair3, 10);
     } else {
       screen.log.write("Done.");
+      inAutostart = 0;
     }
   } else {
     screen.log.write("Done.");
+    inAutostart = 0;
   }
 }
 
 var repair3 = func {
   setprop("f16/engine/jsf-start", 1);
-  screen.log.write("Attempting engine restart, standby for engine..");
+  screen.log.write("Attempting engine start, standby for engine..");
+  inAutostart = 0;
 }
 
 var autostart = func {
+  if (inAutostart) {
+    return;
+  }
+  inAutostart = 1;
   screen.log.write("Starting, standby..");
   setprop("fdm/jsbsim/elec/switches/epu",1);
   setprop("fdm/jsbsim/elec/switches/main-pwr",2);
@@ -407,6 +420,7 @@ var autostart = func {
     settimer(repair3, 10);
   } else {
     screen.log.write("Done.");
+    inAutostart = 0;
   }
 }
 
