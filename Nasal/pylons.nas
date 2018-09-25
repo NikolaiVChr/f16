@@ -397,7 +397,7 @@ var a2a_training = func {
 # Clean configuration
 var clean = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
-        pylon1.loadSet(pylonSets.empty);
+        pylon1.loadSet(pylonSets.k);# F16 never has nothing on wingtips unless its fired off, its aerodynamics is designed to work better with something there.
         pylon2.loadSet(pylonSets.empty);
         pylon3.loadSet(pylonSets.empty);
         pylon4.loadSet(pylonSets.empty);
@@ -405,7 +405,7 @@ var clean = func {
         pylon6.loadSet(pylonSets.empty);
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.empty);
-        pylon9.loadSet(pylonSets.empty);
+        pylon9.loadSet(pylonSets.k);
     } else {
       screen.log.write(f16.msgB);
     }
