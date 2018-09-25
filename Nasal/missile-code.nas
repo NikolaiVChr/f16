@@ -894,6 +894,7 @@ var AIM = {
 		if (me.status == MISSILE_STANDBY) {
 			me.status = MISSILE_STARTING;
 			me.ready_standby_time = getprop("sim/time/elapsed-sec");
+			if (me.ready_standby_time == 0) me.ready_standby_time = 0.001;
 		}
 	},
 
