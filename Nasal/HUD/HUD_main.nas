@@ -128,7 +128,7 @@ var F16_HUD = {
                  hud_serviceable           : "sim/failure-manager/instrumentation/hud/serviceable",
                  time_until_crash          : "instrumentation/radar/time-till-crash",
                  vne                       : "f16/vne",
-                 wp_bearing_deg            : "autopilot/route-manager/wp/bearing-deg",
+                 wp_bearing_deg            : "autopilot/route-manager/wp/true-bearing-deg",
                  total_fuel_lbs            : "/consumables/fuel/total-fuel-lbs",
                  altitude_agl_ft           : "position/altitude-agl-ft",
                  wp0_eta                   : "autopilot/route-manager/wp[0]/eta",
