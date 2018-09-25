@@ -298,6 +298,10 @@ return;
 			RadarStandbyMP.setIntValue(our_radar_stanby); # Tell over MP if
 			# our radar is scaning or is in stanby. Don't if we are a back-seater.
 		}
+        if (our_radar_stanby) {
+            armament.contact = nil;
+            active_u = nil;
+        }
 	} elsif ( size(tgts_list) > 0 ) {
 		foreach( u; tgts_list ) {
 			u.set_display(0);
