@@ -747,7 +747,8 @@ var MFD_Device =
            .vert(30)
            .horiz(-130)
            .setColor(1,1,1)
-           .setStrokeLineWidth(1);
+           .setStrokeLineWidth(1)
+           .hide();
         svg.p2f = svg.p_SMS.createChild("path")
            .moveTo(-276*0.795*0.85, -482*0.5+10)
            .vert(-30)
@@ -755,7 +756,8 @@ var MFD_Device =
            .vert(30)
            .horiz(-130)
            .setColor(1,1,1)
-           .setStrokeLineWidth(1);
+           .setStrokeLineWidth(1)
+           .hide();
         svg.p3f = svg.p_SMS.createChild("path")
            .moveTo(-276*0.795*0.7, -482*0.5-55)
            .vert(-30)
@@ -763,7 +765,8 @@ var MFD_Device =
            .vert(30)
            .horiz(-130)
            .setColor(1,1,1)
-           .setStrokeLineWidth(1);
+           .setStrokeLineWidth(1)
+           .hide();
         svg.p4f = svg.p_SMS.createChild("path")
            .moveTo(-276*0.795*0.55, -482*0.5-120)
            .vert(-30)
@@ -771,7 +774,8 @@ var MFD_Device =
            .vert(30)
            .horiz(-130)
            .setColor(1,1,1)
-           .setStrokeLineWidth(1);
+           .setStrokeLineWidth(1)
+           .hide();
         svg.p5f = svg.p_SMS.createChild("path")
            .moveTo(-75, -482*0.5-185)
            .vert(-30)
@@ -779,7 +783,8 @@ var MFD_Device =
            .vert(30)
            .horiz(-130)
            .setColor(1,1,1)
-           .setStrokeLineWidth(1);
+           .setStrokeLineWidth(1)
+           .hide();
         svg.p6f = svg.p_SMS.createChild("path")
            .moveTo(276*0.795*0.55, -482*0.5-120)
            .vert(-30)
@@ -787,7 +792,8 @@ var MFD_Device =
            .vert(30)
            .horiz(130)
            .setColor(1,1,1)
-           .setStrokeLineWidth(1);
+           .setStrokeLineWidth(1)
+           .hide();
         svg.p7f = svg.p_SMS.createChild("path")
            .moveTo(276*0.795*0.7, -482*0.5-55)
            .vert(-30)
@@ -795,7 +801,8 @@ var MFD_Device =
            .vert(30)
            .horiz(130)
            .setColor(1,1,1)
-           .setStrokeLineWidth(1);
+           .setStrokeLineWidth(1)
+           .hide();
         svg.p8f = svg.p_SMS.createChild("path")
            .moveTo(276*0.795*0.85, -482*0.5+10)
            .vert(-30)
@@ -803,7 +810,8 @@ var MFD_Device =
            .vert(30)
            .horiz(130)
            .setColor(1,1,1)
-           .setStrokeLineWidth(1);
+           .setStrokeLineWidth(1)
+           .hide();
         svg.p9f = svg.p_SMS.createChild("path")
            .moveTo(276*0.795, -482*0.5+75)
            .vert(-30)
@@ -811,7 +819,8 @@ var MFD_Device =
            .vert(30)
            .horiz(130)
            .setColor(1,1,1)
-           .setStrokeLineWidth(1);
+           .setStrokeLineWidth(1)
+           .hide();
         svg.jett = svg.p_SMS.createChild("text")
                 .setTranslation(276*0.795, -482*0.5+125)
                 .setText("J-S")
@@ -842,24 +851,54 @@ var MFD_Device =
                 if (eventi == 10) {
                     me.ppp.selectPage(me.my.p_RDR);
                 } elsif (eventi == 0) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
                     pylons.fcs.selectPylon(3);
                 } elsif (eventi == 1) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
                     pylons.fcs.selectPylon(2);
                 } elsif (eventi == 2) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
                     pylons.fcs.selectPylon(1);
                 } elsif (eventi == 3) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
                     pylons.fcs.selectPylon(0);
                 } elsif (eventi == 5) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
                     pylons.fcs.selectPylon(5);
                 } elsif (eventi == 6) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
                     pylons.fcs.selectPylon(6);
                 } elsif (eventi == 7) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
                     pylons.fcs.selectPylon(7);
                 } elsif (eventi == 8) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
                     pylons.fcs.selectPylon(8);
                 } elsif (eventi == 9) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
                     pylons.fcs.jettisonSelectedPylonContent();
                 } elsif (eventi == 12) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
                     pylons.fcs.selectPylon(4);
                 } elsif (eventi == 15) {
                     me.ppp.selectPage(me.my.p_VSD);
@@ -883,6 +922,9 @@ var MFD_Device =
         me.p_SMS.update = func (noti) {
             if (noti.FrameCount != 3)
                 return;
+            if (getprop("sim/variant-id") == 0) {
+                return;
+            }
             me.cat = pylons.fcs.getCategory();
             me.root.cat.setText(sprintf("CAT %s", me.cat==1?"I":(me.cat==2?"II":"III")));
 
@@ -1526,7 +1568,11 @@ var MFD_Device =
         if (me.model_element == "MFDimage1") {
             me.PFD.selectPage(me.p_RDR);
         } else {
-            me.PFD.selectPage(me.p_SMS);
+            if (getprop("sim/variant-id") == 0) {
+                me.PFD.selectPage(me.p_HSD);
+            } else {
+                me.PFD.selectPage(me.p_SMS);
+            }
         }
     },
 

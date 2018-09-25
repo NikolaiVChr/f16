@@ -304,17 +304,6 @@
                         </binding>
                     </item>
                     <item>
-                        <label>Payload quick select</label>
-                        <binding>
-                          <command>dialog-show</command>
-                          <dialog-name>payload</dialog-name>
-                        </binding>
-                        <!--<binding>
-                            <command>nasal</command>
-                            <script>f16.a2a_standard();</script>
-                        </binding>-->
-                    </item>
-                    <item>
                         <label>Link 16</label>
                         <name>link16</name>
                         <binding>
