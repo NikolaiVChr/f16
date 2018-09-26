@@ -961,7 +961,7 @@
     </controls>
     <engines>
         <engine n="0">
-            <running>true</running>
+            <running type="bool">true</running>
         </engine>
     </engines>
     <consumables>
@@ -974,12 +974,21 @@
             </tank>
             <tank n="2">
                 <name>Not attached</name>
+                <selected type="bool">false</selected>
+                <capacity-gal_us type="double">0</capacity-gal_us>
+                <level-norm type="double">0</level-norm>
             </tank>
             <tank n="3">
                 <name>Not attached</name>
+                <selected type="bool">false</selected>
+                <capacity-gal_us type="double">0</capacity-gal_us>
+                <level-norm type="double">0</level-norm>
             </tank>
             <tank n="4">
                 <name>Not attached</name>
+                <selected type="bool">false</selected>
+                <capacity-gal_us type="double">0</capacity-gal_us>
+                <level-norm type="double">0</level-norm>
             </tank>
             <tank n="5">
                 <name>Right Wing Tank</name>
