@@ -1121,6 +1121,17 @@
                 <hook-engage type="bool">false</hook-engage>
                 <alpha-norm type="double">0</alpha-norm>
             </fcs>
+            <propulsion>
+                <tank n="2">
+                    <external-flow-rate-pps type="double">-1000</external-flow-rate-pps>
+                </tank>
+                <tank n="3">
+                    <external-flow-rate-pps type="double">-1000</external-flow-rate-pps>
+                </tank>
+                <tank n="4">
+                    <external-flow-rate-pps type="double">-1000</external-flow-rate-pps>
+                </tank>
+            </propulsion>
         </jsbsim>
     </fdm>
     <systems>

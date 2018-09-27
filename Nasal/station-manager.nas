@@ -546,6 +546,9 @@ var FuelTank = {
 
 	mount: func {
 		# set capacity in fuel tank
+		if (fdm == "jsb") {
+			setprop("fdm/jsbsim/propulsion/tank["~me.fuelTankNumber~"]/external-flow-rate-pps", 0);
+		}
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/capacity-gal_us", me.capacity);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/level-gal_us", me.capacity);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/selected", 1);
@@ -562,6 +565,9 @@ var FuelTank = {
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", "Not attached");
 		setprop(me.modelPath, 0);
 		setprop("sim/gui/dialogs/payload-reload",!getprop("sim/gui/dialogs/payload-reload"));
+		if (fdm == "jsb") {
+			setprop("fdm/jsbsim/propulsion/tank["~me.fuelTankNumber~"]/external-flow-rate-pps", -1000);
+		}
 	},
 
 	del: func {
@@ -572,6 +578,9 @@ var FuelTank = {
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", "Not attached");
 		setprop(me.modelPath, 0);
 		setprop("sim/gui/dialogs/payload-reload",!getprop("sim/gui/dialogs/payload-reload"));
+		if (fdm == "jsb") {
+			setprop("fdm/jsbsim/propulsion/tank["~me.fuelTankNumber~"]/external-flow-rate-pps", -1000);
+		}
 	},
 
 	getAmmo: func {
