@@ -1446,7 +1446,11 @@ var MFD_Device =
         #9 droptank
         me.p1_3.S10 = MFD_Station.new(me.PFDsvg, 10);
 
-        me.pjitds_1 =  PFD_NavDisplay.new(me.PFD,"Situation", "mfd-sit", "pjitds_1", "jtids_main");
+        if (me.model_element == "MFDimage1") {
+            me.pjitds_1 =  PFD_NavDisplay.new(me.PFD,"Situation", "mfd-sit-1", "pjitds_1", "jtids_main");
+        } else {
+            me.pjitds_1 =  PFD_NavDisplay.new(me.PFD,"Situation", "mfd-sit-2", "pjitds_1", "jtids_main");
+        }
         # use the radar range as the ND range.
 
         me.p_spin_recovery = me.PFD.addPage("Spin recovery", "p_spin_recovery");
