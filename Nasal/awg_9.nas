@@ -1289,9 +1289,6 @@ var Target = {
         obj.TransponderId = c.getNode("instrumentation/transponder/transmitted-id");
 
         
-        
-        obj.Model = c.getNode("model-short");
-        var model_short = c.getNode("sim/model/path");
         obj.Model = c.getNode("model-short");
         var model_short = c.getNode("sim/model/path");
         if(model_short != nil)
@@ -1796,7 +1793,7 @@ var Target = {
 
 # Notes:
 
-# HUD field of view = 2 * math.atan2( 0.0764, 0.7186) * globals.R2D; # ~ 12.1375°
+# HUD field of view = 2 * math.atan2( 0.0764, 0.7186) * globals.R2D; # ~ 12.1375Â°
 # where 0.071 : virtual screen half width, 0.7186 : distance eye -> screen
 dump_tgt = func (u){
     print(scan_tgt_idx, " callsign ", u.get_Callsign(), " range ",u.get_range(), " display ", u.get_display(), " visible ",u.get_visible(), 

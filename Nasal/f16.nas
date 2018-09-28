@@ -202,13 +202,17 @@ var loop_flare = func {
       #call(func{fgcommand('dialog-close', multiplayer.dialog.dialog.prop())},nil,var err= []);# props.Node.new({"dialog-name": "location-in-air"}));
       call(func{multiplayer.dialog.del();},nil,var err= []);
       if (!getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
-        call(func{fgcommand('dialog-close', props.Node.new({"dialog-name": "WeightAndFuel"}))},nil,var err2 = []);          
+        call(func{fgcommand('dialog-close', props.Node.new({"dialog-name": "WeightAndFuel"}))},nil,var err2 = []);
+        call(func{fgcommand('dialog-close', props.Node.new({"dialog-name": "system-failures"}))},nil,var err2 = []);
+        call(func{fgcommand('dialog-close', props.Node.new({"dialog-name": "instrument-failures"}))},nil,var err2 = []);
       }      
       setprop("sim/freeze/fuel",0);
       setprop("/sim/speed-up", 1);
+      setprop("/gui/map/draw-traffic", 0);
+      setprop("/sim/gui/dialogs/map-canvas/draw-TFC", 0);
       setprop("/sim/rendering/als-filters/use-filtering", 1);
     }
-
+    setprop("sim/multiplay/visibility-range-nm", 150);
     settimer(loop_flare, 0.10);
 };
 
