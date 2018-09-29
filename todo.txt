@@ -12,6 +12,7 @@ Make under cockpit floating texture livery
 Set proper default livery for all blocks.
 Make block 20 MLU liveries for Belgium and Norway.
 Make loads.xml not be a submodel.
+Fix hole in pitot tube.
 
 Hydraulics
 ----------
@@ -100,6 +101,7 @@ Effects
 -------
 Better aircraft lighting system: cockpit, taxi/landing, anti-collision, formation, navigation, beacon, tail flood, etc.
 page 1-111 of b50 manual
+Make ejection seat like in viggen.
 
 Flight controls
 ---------------

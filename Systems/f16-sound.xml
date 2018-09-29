@@ -1553,6 +1553,32 @@
             </volume>
         </brake>
 
+        <gamma>
+            <name>gamma</name>
+            <path>Aircraft/f16/Sounds/missile.wav</path>
+            <mode>once</mode>
+            <condition>
+                <property>payload/armament/es/sound-fire-on-off</property>
+            </condition>
+            <reference-dist>25</reference-dist>
+            <max-dist>10000</max-dist>
+            <position>
+                <x> 0.1 </x>
+                <y> 0.1 </y>
+                <z> 0.1 </z>
+            </position>
+            <pitch>
+                <factor>1.5</factor>
+                <offset>0</offset>
+                <min>0</min>
+                <max>2</max>
+            </pitch>
+            <volume>
+                <factor>1</factor>
+                <max>1</max>
+            </volume>
+        </gamma>
+
     </fx>
  
 </PropertyList>

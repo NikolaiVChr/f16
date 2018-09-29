@@ -449,6 +449,10 @@
                 <name>S</name>
                 <desc>Toggle smoke if installed</desc>
             </key>
+            <key>
+                <name>F6</name>
+                <desc>Eject</desc>
+            </key>
         </help>
         <systems n="0">
             <autopilot n="0">
@@ -903,6 +907,26 @@
                     <script>screen.log.write("Smoke "~(getprop("controls/smoke")==0?"OFF":"ON"), 0.5, 0.5, 1);</script>
                 </binding>
             </key>
+            <key n="262">
+              <name>F6</name>
+              <desc>noop</desc>
+              <repeatable type="bool">false</repeatable>
+              <binding>
+               <command>nasal</command>
+               <script>
+                if (getprop("f16/done")==1) {
+                    return;
+                }
+                setprop("f16/done",1);
+                var es = armament.AIM.new(10, "es","gamma", nil ,[-3.65,0,0.7]);
+                #setprop("fdm/jsbsim/fcs/canopy/hinges/serviceable",0);
+                es.releaseAtNothing();
+                view.view_firing_missile(es);
+                setprop("sim/view[0]/enabled",0);
+                settimer(func {crash.exp();},3.5);
+               </script>
+              </binding>
+             </key>
         </keyboard>
     </input>
     <controls>
@@ -1700,6 +1724,50 @@
                 <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
             </b61-7>
+            <es>                    <!-- Ejection seat -->
+                    <vol-search type="double">0.075</vol-search>
+                    <vol-track type="double">0.25</vol-track>
+                    <vol-track-weak type="double">0.175</vol-track-weak>
+                    <guidance type="string">unguided</guidance>
+                    <navigation type="string">direct</navigation>
+                    <all-aspect type="bool">false</all-aspect> 
+                    <max-fire-range-nm type="double">6.9</max-fire-range-nm>
+                    <FCS-field-deg type="int">50</FCS-field-deg>            
+                    <seeker-field-deg type="int">54</seeker-field-deg>      
+                    <max-g type="int">10</max-g>                            
+                    <max-launch-g type="int">9</max-launch-g>      
+                    <thrust-lbf-stage-1 type="double">1500</thrust-lbf-stage-1>
+                    <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>  
+                    <stage-1-duration-sec type="double">1</stage-1-duration-sec>
+                    <stage-2-duration-sec type="double">0.0</stage-2-duration-sec>
+                    <weight-launch-lbs type="double">300</weight-launch-lbs>
+                    <weight-warhead-lbs type="double">0.0</weight-warhead-lbs>  
+                    <weight-fuel-lbm type="double">5.0</weight-fuel-lbm>        
+                    <drag-coeff type="double">1.35</drag-coeff>                 
+                    <delta-drag-coeff-deploy type="double">75.00</delta-drag-coeff-deploy>
+                    <cross-section-sqft type="double">2</cross-section-sqft>
+                    <arming-time-sec type="double">0</arming-time-sec>    
+                    <min-speed-for-guiding-mach type="double">0.8</min-speed-for-guiding-mach>
+                    <self-destruct-time-sec type="double">5000</self-destruct-time-sec>       
+                    <seeker-angular-speed-dps type="double">10.0</seeker-angular-speed-dps>
+                    <lock-on-sun-deg type="double">20</lock-on-sun-deg>       
+                    <loft-altitude type="int">0</loft-altitude>
+                    <min-fire-range-nm type="double">0.0</min-fire-range-nm>
+                    <rail type="bool">true</rail>
+                    <rail-length-m type="double">1.5</rail-length-m>
+                    <rail-point-forward type="bool">false</rail-point-forward>
+                    <rail-pitch-deg type="double">89</rail-pitch-deg>
+                    <drop-time type="double">0</drop-time>
+                    <deploy-time type="double">3.5</deploy-time>                            
+                    <inert type="bool">true</inert>                            
+                    <lateral-dps type="int">2</lateral-dps>                            
+                    <max-report-distance type="double">65</max-report-distance>
+                    <class type="string">A</class>
+                    <fire-msg type="string">weeeeee</fire-msg>
+                    <long-name type="string">Project Gamma</long-name>
+                    <short-name type="string">gamma</short-name>
+                    <pitch-animation-disabled type="bool">true</pitch-animation-disabled>
+                </es>
         </armament>
     </payload>
 
@@ -1773,6 +1841,7 @@
             <jsf-start type="bool">false</jsf-start><!-- inverse cutoff -->
             <running-state type="bool">false</running-state>
         </engine>
+        <done type="bool">false</done>
     </f16>
     <damage>
         <sound>

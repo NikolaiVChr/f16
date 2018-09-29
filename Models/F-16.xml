@@ -53,6 +53,12 @@
   <object-name>Pilot_ext</object-name>
   <condition>
    <not><property>sim/current-view/internal</property></not>
+            <not>
+                <equals>
+                    <property>f16/done</property>
+                    <value>1</value>
+                </equals>
+            </not>
   </condition>
  </animation>
 
