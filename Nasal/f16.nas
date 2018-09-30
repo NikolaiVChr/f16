@@ -25,7 +25,7 @@ var checkVNE = func {
   var vneM     = getprop("limits-custom/mach");
   var airspeed = getprop("instrumentation/airspeed-indicator/indicated-speed-kt");
   var vne      = getprop("limits-custom/vne");
-  
+  var old = getprop("f16/vne");
 
   if ((airspeed != nil) and (vne != nil) and (airspeed > vne))
   {
@@ -43,8 +43,10 @@ var checkVNE = func {
     # If we have a message, display it, but don't bother checking for
     # any other errors for 10 seconds. Otherwise we're likely to get
     # repeated messages.
-    screen.log.write(msg);
-    settimer(checkVNE, 10);
+    if (rand()>0.9 or old == 0) {
+      screen.log.write(msg);
+    }
+    settimer(checkVNE, 1);
   }
   else
   {

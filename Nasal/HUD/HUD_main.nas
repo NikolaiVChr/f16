@@ -264,7 +264,7 @@ var F16_HUD = {
                                           obj.heading_tape_pointer.setTranslation (0,obj.heading_tape_positionY);
                                       }
                                             ),
-            props.UpdateManager.FromHashList(["time_until_crash"], 0.1, func(hdp)
+            props.UpdateManager.FromHashList(["time_until_crash","vne"], 0.1, func(hdp)
                                              {
                                                  obj.ttc = hdp.time_until_crash;
                                                  if (obj.ttc != nil and obj.ttc>0 and obj.ttc<10) {
