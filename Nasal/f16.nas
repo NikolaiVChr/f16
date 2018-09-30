@@ -389,6 +389,9 @@ var repair = func {
 }
 
 var repair2 = func {
+  setprop("f16/done",0);
+  setprop("sim/view[0]/enabled",1);
+  setprop("sim/current-view/view-number",0);
   if (inAutostart) {
     return;
   }
@@ -446,7 +449,7 @@ var re_init_listener = setlistener("/sim/signals/reinit", func {
     if (getprop("/consumables/fuel/tank[0]/level-norm")<0.5 and getprop("f16/engine/running-state")) {
       setprop("/consumables/fuel/tank[0]/level-norm", 0.55);
     }
-    setprop("f16/done",0);
+    
     repair2();
   }
  }, 0, 0);
