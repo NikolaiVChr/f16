@@ -88,9 +88,18 @@
     <condition>
       <greater-than>
         <property>payload/armament/es/flags/deploy-id-10</property>
-        <value>0.30</value>
+        <value>0.10</value>
       </greater-than>
     </condition>
   </animation>
+
+  <animation>
+  <type>scale</type>
+  <object-name>gamma3</object-name>
+  <property>payload/armament/es/flags/deploy-id-10</property>
+  <!--<x-factor>0.0</x-factor>
+  <y-factor>0.0</y-factor>-->
+  <z-factor>1.0</z-factor>
+ </animation>
 
 </PropertyList>
