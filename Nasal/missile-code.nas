@@ -1869,9 +1869,9 @@ var AIM = {
 		} else {
 			me.uprighter = me.pitchN.getValue();
 			if (me.uprighter<89.92) {
-				me.uprighter += 0.02;
+				me.uprighter += (90-me.uprighter)*me.dt*0.1;
 			} elsif (me.uprighter>90.08) {
-				me.uprighter -= 0.02;
+				me.uprighter -= (me.uprighter-90)*me.dt*0.1;
 			} else {
 				me.uprighter = 90.0;
 			}

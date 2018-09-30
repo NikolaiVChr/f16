@@ -13,7 +13,7 @@
       <object-name>DragChute</object-name>
       <inherits-from>Effects/chute</inherits-from>
       <parameters>
-          <chute_force><use>ja37/force</use></chute_force>
+          <chute_force><use>f16/force</use></chute_force>
           <chute_projection_z>10.35</chute_projection_z>
           <chute_fold>0.0</chute_fold>
           <chute_bend>0.0</chute_bend>
