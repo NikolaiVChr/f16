@@ -213,6 +213,11 @@ var loop_flare = func {
       setprop("/sim/rendering/als-filters/use-filtering", 1);
     }
     setprop("sim/multiplay/visibility-range-nm", 150);
+    if (getprop("payload/armament/es/flags/deploy-id-10")!= nil) {
+      setprop("f16/force", 7-5*getprop("payload/armament/es/flags/deploy-id-10"));
+      } else {
+        setprop("f16/force", 7);
+      }
     settimer(loop_flare, 0.10);
 };
 

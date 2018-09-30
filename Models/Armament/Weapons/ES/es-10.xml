@@ -22,7 +22,7 @@
     </offsets>
   </model>
 
-  <model>
+  <!--<model>
     <name>gamma3</name>
     <path>Aircraft/f16/Models/Cockpit/pilot/gamma.ac</path>
     <offsets>
@@ -30,12 +30,18 @@
       <y-m> 0.000</y-m>
       <z-m> -2.070</z-m>
     </offsets>
+  </model>-->
+
+  <model>
+    <name>gamma3</name>
+    <path>Aircraft/f16/Models/Cockpit/pilot/gamma2.xml</path>
   </model>
 
   <animation>
     <type>rotate</type>
     <object-name>gamma1</object-name>
     <object-name>gamma2</object-name>
+    <object-name>gamma3</object-name>
     <offset-deg>90</offset-deg>
     <center>
       <x-m> 0 </x-m>
@@ -48,7 +54,7 @@
      <z>0</z>
     </axis>
   </animation>
-
+<!--
   <animation>
     <type>rotate</type>
     <object-name>gamma3</object-name>
@@ -63,7 +69,7 @@
      <y>-1</y>
      <z>0</z>
     </axis>
-  </animation>
+  </animation>-->
 
   <animation>
     <type>select</type>
@@ -82,7 +88,7 @@
     <condition>
       <greater-than>
         <property>payload/armament/es/flags/deploy-id-10</property>
-        <value>0.99</value>
+        <value>0.30</value>
       </greater-than>
     </condition>
   </animation>
