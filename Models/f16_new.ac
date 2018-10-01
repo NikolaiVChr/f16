@@ -27270,7 +27270,7 @@ name "CanopyBackInside"
 data 8
 Mesh.047
 crease 80.0
-texture "canopy.png"
+texture "Effects/glass/canopy.png"
 texrep 1 1
 numvert 26
 -3.02548 0.90988 0.23525
@@ -27522,7 +27522,7 @@ name "CanopyBackOutside"
 data 8
 Mesh.001
 crease 80.0
-texture "canopy.png"
+texture "Effects/glass/canopy.png"
 texrep 1 1
 numvert 26
 -3.46354 0.6397 -0.31041
@@ -27774,7 +27774,7 @@ name "CanopyForwardInside"
 data 8
 Mesh.059
 crease 80.0
-texture "canopy.png"
+texture "Effects/glass/canopy.png"
 texrep 1 1
 numvert 215
 -4.9757 0.72958 -0.04387
@@ -29411,7 +29411,7 @@ name "CanopyForwardOutside"
 data 8
 Mesh.005
 crease 80.0
-texture "canopy.png"
+texture "Effects/glass/canopy.png"
 texrep 1 1
 numvert 215
 -4.9969 0.72804 0.04323
