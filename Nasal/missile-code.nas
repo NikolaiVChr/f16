@@ -1819,9 +1819,13 @@ var AIM = {
 			me.maxAlt = me.alt_ft;
 		}
 		# Get target position.
-		if (me.Tgt != nil) {
+		if (me.Tgt != nil and me.t_coord != nil) {
 			if (me.flareLock == FALSE and me.chaffLock == FALSE) {
 				me.t_coord = me.Tgt.get_Coord();
+				if (me.t_coord == nil) {
+					# just to protect the multithreaded code for invalid pos.
+					me.Tgt = nil;
+				}
 			} else {
 				# we are chasing a flare, lets update the flares position.
 				if (me.flareLock == TRUE) {
