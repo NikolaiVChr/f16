@@ -710,7 +710,7 @@
 						<command>nasal</command>
 						<script>
 							if (pylons.fcs != nil) {
-								pylons.fcs.jettisonFuelAndAG();
+								pylons.fcs.jettisonFuelAndAG([0,8]);#drop all fueltanks, dummies and A/G weapons. Except wingtips.
 							}
 						</script>
 			      	</binding>

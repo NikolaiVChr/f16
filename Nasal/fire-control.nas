@@ -414,14 +414,18 @@ var FireControl = {
 		}
 	},
 
-	jettisonFuelAndAG: func {
-		# jettison all fuel and A/G stations
+	jettisonFuelAndAG: func (exclude = nil) {
+		# jettison all fuel and A/G stations.
 		foreach (pyl;me.pylons) {
 			me.myWeaps = pyl.getWeapons();
 			if (me.myWeaps != nil and size(me.myWeaps)>0) {
 				if (me.myWeaps[0] != nil and me.myWeaps[0].parents[0] == armament.AIM and me.myWeaps[0].target_air == 1) {
 					continue;
 				}
+			}
+			if (exclude!=nil and me.vectorIndex(exclude, pyl.id) != -1) {
+				# excluded
+				continue;
 			}
 			pyl.jettisonAll();
 		}
