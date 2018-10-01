@@ -3278,7 +3278,7 @@ var AIM = {
 			} else {
 				me.sendMessage(me.type~" missed "~me.callsign~": "~reason);
 			}
-		} elsif(!me.inert and !me.Tgt.isVirtual()) {
+		} elsif(!me.inert and me.Tgt == nil) {
 			var phrase = sprintf(me.type~" "~event);
 			me.printStats("%s  Reason: %s time %.1f", phrase, reason, me.life_time);
 			me.sendMessage(phrase);

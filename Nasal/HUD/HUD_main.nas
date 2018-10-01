@@ -128,6 +128,7 @@ var F16_HUD = {
                  hud_serviceable           : "sim/failure-manager/instrumentation/hud/serviceable",
                  time_until_crash          : "instrumentation/radar/time-till-crash",
                  vne                       : "f16/vne",
+                 texUp                     : "f16/hud/texels-up",
                  wp_bearing_deg            : "autopilot/route-manager/wp/true-bearing-deg",
                  total_fuel_lbs            : "/consumables/fuel/total-fuel-lbs",
                  altitude_agl_ft           : "position/altitude-agl-ft",
@@ -160,7 +161,7 @@ var F16_HUD = {
                                           hdp.CCRP_active = obj.CCRP(hdp);
                                       }),
 
-            props.UpdateManager.FromHashList(["route_manager_active", "wp_bearing_deg", "heading"], 0.01, func(hdp)
+            props.UpdateManager.FromHashList(["texUp","route_manager_active", "wp_bearing_deg", "heading"], 0.01, func(hdp)
                                              {
                                                  # the Y position is still not accurate due to HUD being at an angle, but will have to do.
                                                  if (hdp.route_manager_active) {
@@ -187,7 +188,7 @@ var F16_HUD = {
                                              }
                                             ),
 
-            props.UpdateManager.FromHashList(["gear_down"], 0.01, func(val)
+            props.UpdateManager.FromHashList(["texUp","gear_down"], 0.01, func(val)
                                              {
                                                  if (val.gear_down) {
                                                      obj.boreSymbol.hide();
@@ -197,14 +198,14 @@ var F16_HUD = {
                                                  }
                                                  obj.oldBore.hide();
                                       }),
-            props.UpdateManager.FromHashList(["VV_x","VV_y"], 0.01, func(hdp)
+            props.UpdateManager.FromHashList(["texUp","VV_x","VV_y"], 0.01, func(hdp)
                                       {
                                         obj.VV.setTranslation (hdp.VV_x, hdp.VV_y + pitch_offset);
                                         obj.VV.setTranslation (hdp.VV_x * obj.texelPerDegreeX, hdp.VV_y * obj.texelPerDegreeY+pitch_offset);
                                         obj.VV.update();
                                       }),
 
-            props.UpdateManager.FromHashList(["pitch","roll"], 0.025, func(hdp)
+            props.UpdateManager.FromHashList(["texUp","pitch","roll"], 0.025, func(hdp)
                                       {
                                           obj.ladder.setTranslation (0.0, hdp.pitch * pitch_factor+pitch_offset);                                           
                                           obj.ladder.setCenter (obj.ladder_center[0], obj.ladder_center[1] - hdp.pitch * pitch_factor);
@@ -735,7 +736,7 @@ var F16_HUD = {
             me.texels_up_into_hud = me.frac_up_the_hud * me.sy;#sy default is 260
             me.texels_over_middle = me.texels_up_into_hud - me.sy/2;
             pitch_offset = -me.texels_over_middle + me.hozizon_line_offset_from_middle_in_svg*me.sy;
-
+            setprop("f16/hud/texels-up",me.texels_up_into_hud);
         }
 #Text windows on the HUD (F-16)
 #               1 
