@@ -4,9 +4,9 @@
  <sim>
   <model>
    <livery>
-    <name type="string">DARK FALCON</name>
-    <texture>Liveries/Block20/DARK_FALCON.png</texture>
-    <owner type="string">DARK FALCON</owner>
+    <name type="string">BAF 2 W, "Dark Falcon (Demo scheme 2018)"</name>
+    <texture>Liveries/Block20/86-0077.png</texture>
+    <owner type="string">BAF</owner>
    </livery>
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>
