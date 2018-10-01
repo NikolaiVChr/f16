@@ -28,7 +28,7 @@ MATERIAL "flameMat" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.0
 MATERIAL "logoMat" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.502 0.502 0.502  shi 10 trans 0.365
 MATERIAL "strut1Mat.001" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.502 0.502 0.502  shi 10 trans 0.008
 OBJECT world
-name "Blender_exporter_v2.26__f17.ac"
+name "Blender_exporter_v2.26__f16_new.ac"
 kids 3
 OBJECT group
 name "Fuselage"
@@ -27270,7 +27270,7 @@ name "CanopyBackInside"
 data 8
 Mesh.047
 crease 80.0
-texture "Effects/glass/canopy.png"
+texture "canopy.png"
 texrep 1 1
 numvert 26
 -3.02548 0.90988 0.23525
@@ -27522,7 +27522,7 @@ name "CanopyBackOutside"
 data 8
 Mesh.001
 crease 80.0
-texture "Effects/glass/canopy.png"
+texture "canopy.png"
 texrep 1 1
 numvert 26
 -3.46354 0.6397 -0.31041
@@ -27774,7 +27774,7 @@ name "CanopyForwardInside"
 data 8
 Mesh.059
 crease 80.0
-texture "Effects/glass/canopy.png"
+texture "canopy.png"
 texrep 1 1
 numvert 215
 -4.9757 0.72958 -0.04387
@@ -29411,7 +29411,7 @@ name "CanopyForwardOutside"
 data 8
 Mesh.005
 crease 80.0
-texture "Effects/glass/canopy.png"
+texture "canopy.png"
 texrep 1 1
 numvert 215
 -4.9969 0.72804 0.04323
@@ -31658,13 +31658,13 @@ refs 3
 kids 0
 OBJECT group
 name "Logos"
-kids 14
+kids 15
 OBJECT poly
 name "FuselageLogoLeft"
 data 8
 Mesh.062
 crease 80.0
-texture "f16trans.png"
+texture "J-008.png"
 texrep 1 1
 numvert 4
 2.02032 0.55114 0.41976
@@ -31690,7 +31690,7 @@ name "FuselageLogoRight"
 data 8
 Mesh.063
 crease 80.0
-texture "f16trans.png"
+texture "J-008.png"
 texrep 1 1
 numvert 4
 2.01844 0.55301 -0.39787
@@ -31712,11 +31712,128 @@ refs 3
 1 -1 0
 kids 0
 OBJECT poly
+name "LogoPilotRight"
+data 8
+Mesh.011
+crease 80.0
+texture "J-008.png"
+texrep 1 1
+numvert 17
+-3.51478 0.54442 -0.43055
+-3.60176 0.06501 -0.84714
+-3.61546 0.34314 -0.63638
+-4.33666 0.46572 -0.39201
+-4.49649 0.26031 -0.6003
+-5.39941 0.41467 -0.33545
+-5.40686 0.20049 -0.52237
+-5.41784 0.00004 -0.61361
+-3.60176 0.06501 0.83949
+-3.51478 0.54442 0.4264
+-3.61546 0.34313 0.62873
+-4.49649 0.26031 0.59266
+-4.33666 0.46514 0.38072
+-5.39941 0.41467 0.33197
+-5.40678 0.20042 0.51382
+-4.73701 0.44697 0.35687
+-5.41765 0.00004 0.60793
+numsurf 15
+SURF 0X30
+mat 26
+refs 3
+4 0.755071 0.119107
+3 0.717366 0.198974
+0 0.499304 0.21866
+SURF 0X30
+mat 26
+refs 3
+2 0.521457 0.140973
+4 0.755071 0.119107
+0 0.499304 0.21866
+SURF 0X30
+mat 26
+refs 3
+4 0.755071 0.119107
+1 0.513832 0.048787
+7 0.999246 0.050277
+SURF 0X30
+mat 26
+refs 3
+4 0.755071 0.119107
+2 0.521457 0.140973
+1 0.513832 0.048787
+SURF 0X30
+mat 26
+refs 3
+7 0.999246 0.050277
+6 0.997453 0.108662
+4 0.755071 0.119107
+SURF 0X30
+mat 26
+refs 3
+5 0.999246 0.183972
+4 0.755071 0.119107
+6 0.997453 0.108662
+SURF 0X30
+mat 26
+refs 3
+4 0.755071 0.119107
+5 0.999246 0.183972
+3 0.717366 0.198974
+SURF 0X30
+mat 26
+refs 3
+12 0.282775 0.196002
+11 0.247167 0.119256
+9 0.490598 0.214024
+SURF 0X30
+mat 26
+refs 3
+11 0.247167 0.119256
+10 0.469589 0.140639
+9 0.490598 0.214024
+SURF 0X30
+mat 26
+refs 3
+8 0.47707 0.052875
+11 0.247167 0.119256
+16 0.014937 0.052875
+SURF 0X30
+mat 26
+refs 3
+10 0.469589 0.140639
+11 0.247167 0.119256
+8 0.47707 0.052875
+SURF 0X30
+mat 26
+refs 3
+16 0.014937 0.052875
+11 0.247167 0.119256
+14 0.01639 0.108761
+SURF 0X30
+mat 26
+refs 3
+13 0.014597 0.179642
+14 0.01639 0.108761
+11 0.247167 0.119256
+SURF 0X30
+mat 26
+refs 3
+13 0.014597 0.179642
+11 0.247167 0.119256
+15 0.181622 0.190991
+SURF 0X30
+mat 26
+refs 3
+12 0.282775 0.196002
+15 0.181622 0.190991
+11 0.247167 0.119256
+kids 0
+OBJECT poly
 name "Rect"
 data 8
 Mesh.061
 crease 80.0
-texture "f16trans.png"
+texture "J-008.png"
 texrep 1 1
 numvert 4
 1.29912 -0.01542 -2.96134
@@ -31742,7 +31859,7 @@ name "VstabBandLeftAft"
 data 8
 Mesh.102
 crease 80.0
-texture "f16trans.png"
+texture "J-008.png"
 texrep 1 1
 numvert 4
 5.85471 3.03423 0.0016
@@ -31763,7 +31880,7 @@ name "VstabBandLeftFront"
 data 8
 Mesh.101
 crease 80.0
-texture "f16trans.png"
+texture "J-008.png"
 texrep 1 1
 numvert 4
 5.2784 3.03423 0.01947
@@ -31784,7 +31901,7 @@ name "VstabBandRightAft"
 data 8
 Mesh.104
 crease 80.0
-texture "f16trans.png"
+texture "J-008.png"
 texrep 1 1
 numvert 4
 5.85434 3.03317 -0.00949
@@ -31805,7 +31922,7 @@ name "VstabBandRightFront"
 data 8
 Mesh.103
 crease 80.0
-texture "f16trans.png"
+texture "J-008.png"
 texrep 1 1
 numvert 4
 5.27803 3.03317 -0.02736
@@ -31826,7 +31943,7 @@ name "VstabLogoLeftBottom"
 data 8
 Mesh.067
 crease 80.0
-texture "f16trans.png"
+texture "J-008.png"
 texrep 1 1
 numvert 4
 3.19029 1.56356 0.04917
@@ -31852,7 +31969,7 @@ name "VstabLogoLeftTop"
 data 8
 Mesh.065
 crease 80.0
-texture "f16trans.png"
+texture "J-008.png"
 texrep 1 1
 numvert 4
 3.70994 1.56354 0.04917
@@ -31878,7 +31995,7 @@ name "VstabLogoRightBottom"
 data 8
 Mesh.066
 crease 80.0
-texture "f16trans.png"
+texture "J-008.png"
 texrep 1 1
 numvert 4
 3.18902 1.56282 -0.05524
@@ -31904,7 +32021,7 @@ name "VstabLogoRightTop"
 data 8
 Mesh.064
 crease 80.0
-texture "f16trans.png"
+texture "J-008.png"
 texrep 1 1
 numvert 4
 3.70867 1.56281 -0.05524
@@ -31930,7 +32047,7 @@ name "WinglogoLeftTop"
 data 8
 Mesh.068
 crease 80.0
-texture "f16trans.png"
+texture "J-008.png"
 texrep 1 1
 numvert 4
 0.96913 0.12719 -2.96135
@@ -31956,7 +32073,7 @@ name "WinglogoRightBottom"
 data 8
 Mesh.069
 crease 80.0
-texture "f16trans.png"
+texture "J-008.png"
 texrep 1 1
 numvert 4
 0.96899 -0.02021 2.95167
@@ -31982,7 +32099,7 @@ name "WinglogoRightTop"
 data 8
 Mesh.060
 crease 80.0
-texture "f16trans.png"
+texture "J-008.png"
 texrep 1 1
 numvert 4
 1.29898 0.09612 3.95168
