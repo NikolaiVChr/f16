@@ -1805,7 +1805,7 @@ var AIM = {
 					me.coord = me.getGPS(me.x, me.y, me.z, OurPitch.getValue());
 				}				
 			} else {
-				# kind of a hack, but work
+				# kind of a hack, but work for static launcher
 				me.coord = me.getGPS(me.x, me.y, me.z, OurPitch.getValue()+me.rail_pitch_deg);
 			}
 			me.alt_ft = me.coord.alt() * M2FT;
@@ -1864,7 +1864,7 @@ var AIM = {
 		me.latN.setDoubleValue(me.coord.lat());
 		me.lonN.setDoubleValue(me.coord.lon());
 		me.altN.setDoubleValue(me.alt_ft);
-		if (!no_pitch) {
+		if (!no_pitch or (me.rail == TRUE and me.rail_passed == FALSE)) {
 			me.pitchN.setDoubleValue(me.pitch);
 		} else {
 			me.uprighter = me.pitchN.getValue();
@@ -1933,10 +1933,37 @@ var AIM = {
 			me.g = 0;
 		}
 
+		if (me.Tgt == nil and me.rail == TRUE and me.rail_pitch_deg==90 and me.rail_passed == FALSE) {
+			#for ejection seat to be oriented correct, wont be ran for missiles with target such as the frigate.
+			var a = me.myMath.eulerToCartesian3Z(-OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
+			#printf("%0.4f %0.4f %0.4f",OurHdg.getValue(),OurPitch.getValue(),OurRoll.getValue());
+			#printf("%0.4f %0.4f %0.4f",a[0],a[1],a[2]);
+			var euler = me.myMath.cartesianToEuler(a);
+			
+			me.pitch = euler[1];
+			me.pitchN.setDoubleValue(me.pitch);
+			if (euler[0]!=nil) {
+				me.hdg = euler[0];
+			} else {
+				me.hdg = OurHdg.getValue();
+			}
+			me.hdgN.setDoubleValue(me.hdg);
+			var nose = me.myMath.eulerToCartesian3X(-OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
+			var face = me.myMath.eulerToCartesian3Z(-me.hdg, me.pitch, 0);
+			face = me.myMath.product(-1,face);
+			var turnFace = me.myMath.angleBetweenVectors(face,nose);
+			if (me.myMath.angleBetweenVectors(nose,me.myMath.product(-1,me.myMath.eulerToCartesian3Z(-me.hdg, me.pitch, turnFace)))>turnFace) {
+				turnFace *= -1;
+			}
+			me.rollN.setDoubleValue(turnFace);
+
+			#printf("seat now at P:%d H:%d R:%d",me.pitch,me.hdg,me.rollN.getValue());
+		}
 		if (me.rail_passed == FALSE and (me.rail == FALSE or me.rail_pos > me.rail_dist_m * M2FT)) {
 			me.rail_passed = TRUE;
 			me.printFlight("rail passed");
 		}
+
 
 		# consume fuel
 		if (me.life_time > (me.drop_time + me.stage_1_duration + me.stage_2_duration)) {
@@ -1996,7 +2023,7 @@ var AIM = {
 		}
 	},
 
-	getGPS: func(x, y, z, pitch) {
+	getGPS: func(x, y, z, pitch, head=nil, roll=nil) {
 		#
 		# get Coord from body position. x,y,z must be in meters.
 		# derived from Vivian's code in AIModel/submodel.cxx.
@@ -2006,10 +2033,18 @@ var AIM = {
 		if(x == 0 and y==0 and z==0) {
 			return geo.Coord.new(me.ac);
 		}
-
-		me.ac_roll = OurRoll.getValue();
+		if (roll == nil) {
+			me.ac_roll = OurRoll.getValue();
+		} else {
+			me.ac_roll = roll;
+		}
 		me.ac_pitch = pitch;
-		me.ac_hdg   = OurHdg.getValue();
+		
+		if (head == nil) {
+			me.ac_hdg   = OurHdg.getValue();
+		} else {
+			me.ac_hdg = head;
+		}
 
 		me.in    = [0,0,0];
 		me.trans = [[0,0,0],[0,0,0],[0,0,0]];

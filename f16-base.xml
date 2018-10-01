@@ -1756,7 +1756,7 @@
                     <rail type="bool">true</rail>
                     <rail-length-m type="double">1.5</rail-length-m>
                     <rail-point-forward type="bool">false</rail-point-forward>
-                    <rail-pitch-deg type="double">89</rail-pitch-deg>
+                    <rail-pitch-deg type="double">90</rail-pitch-deg>
                     <drop-time type="double">0</drop-time>
                     <deploy-time type="double">3.5</deploy-time>                            
                     <inert type="bool">true</inert>                            
