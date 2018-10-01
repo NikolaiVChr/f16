@@ -491,18 +491,22 @@ var FireControl = {
 			#printfDebug(" to %d",me.aim != nil);
 			if (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.status == armament.MISSILE_LOCK) {
 				me.aim = me.pylons[me.selected[0]].fireWeapon(me.selected[1], getCompleteRadarTargetsList());
-				me.aim.sendMessage(me.aim.brevity~" at: "~me.aim.callsign);
-				me.aimNext = me.nextWeapon(me.selectedType);
-				if (me.aimNext != nil) {
-					me.aimNext.start();
+				if (me.aim != nil) {
+					me.aim.sendMessage(me.aim.brevity~" at: "~me.aim.callsign);
+					me.aimNext = me.nextWeapon(me.selectedType);
+					if (me.aimNext != nil) {
+						me.aimNext.start();
+					}
 				}
 				me.triggerTime = 0;
 			} elsif (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.guidance=="unguided") {
 				me.aim = me.pylons[me.selected[0]].fireWeapon(me.selected[1], getCompleteRadarTargetsList());
-				me.aim.sendMessage(me.aim.brevity);
-				me.aimNext = me.nextWeapon(me.selectedType);
-				if (me.aimNext != nil) {
-					me.aimNext.start();
+				if (me.aim != nil) {
+					me.aim.sendMessage(me.aim.brevity);
+					me.aimNext = me.nextWeapon(me.selectedType);
+					if (me.aimNext != nil) {
+						me.aimNext.start();
+					}
 				}
 				me.triggerTime = 0;
 			} elsif (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.loal) {
