@@ -453,6 +453,103 @@
                 <name>F6</name>
                 <desc>Eject</desc>
             </key>
+            <text><![CDATA[
+LANDING
+No fixed landing speed, however keep a AoA of 11 to 13 in final. A suggested approach speed will display in left side of HUD when gears is down.
+Notice that it can be hard to see the touchdown point when landing with that high AoA (even when raising seat), which is why many choose to land with around 9 AoA.
+
+TAKE-OFF
+You can rotate around 150 KT. Be somewhat gentle on the stick if you rotate early as you otherwise might tail-scrape.
+
+FBW
+The FBW in most variant will try to protect and escape the aircraft from deep stall, nose slide and spin. Also will reduce inertia-coupling when rolling fast at high AoA.
+However if the deep stall is very problemetic to escape, you can enable MPO (key 'del') which will allow you to semi override the FBW pitch control.
+With MPO enabled you can rock the aircraft up and down in bigger and bigger oscillations until the nose stays down and you have escaped the deep stall.
+For spins, we recommend letting go of stick and throttle back, and let the FBW save the aircraft.
+In the YF-16 to escape spins, apply rudder opposite of spin direction and ailerons into the spin direction while pitching down and throttle back. This will often get you into the deep stall where you will rock your way out of that.
+If you get close to ground in a departure use key 'F6' to eject.
+
+HUD
+The speed in HUD is calibrated airspeed.
+
+Text left side:
+  NAV or ARM depending on masterarm. But BRAKES if parking brakes is on, and F 15 G if flaps is deployed, F for flaps, 15 for 15 deg extended, and G for gears down.
+  Mach number
+  G-Force number.
+  Selected weapon or AoA if gears down.
+
+Text Right side:
+  FUEL if bingo fuel. Callsign if masterarm.
+  ETA to next steerpoint. TA 20 if masterarm on, 20 stand for 20k target altitude.
+  023>2 means 23 NM to next steerpoint number 2. F034.2 if masterarm on, means 34.2 NM in slant range to target.
+  Type of target if masterarm on.
+
+RWR
+The round display above left MFD display is a Radar Warning Reciever.
+It works by sorting the threats to you.
+
+Close to center: high threat
+Close to edge: threat
+Diamond: highest threat
+Upper semicircle: new threat (750Hz tone)
+Full blinking circle: hostile launch (2000Hz tone)
+Hat above designation: Airborne
+
+Use Link 16 in menu to define your wingmen, so they don't show up on RWR.
+
+For something to show up in the RWR at all these conditions must be met:
+1: Be a threat or unknown.
+2: Be picked up by your radar OR having an active radar pointed your way OR having transponder on and not be too far away.
+
+Notice that the RWR can sometimes pick up threat much further away than your radar is capable off.
+
+MFDs (Multi Function Displays)
+page SMS: Clicking on button next to a station will select it. 
+          J-S will jettison the selected station.
+          If CAT is greater than 1, then you should set the flightcontrols to CAT III in config menu.
+page CRM: B-scope radar display. Horizontal is relative bearing to targets, vertical is distance.
+          A4: How much azimuth the radar shall cover, A4 is max (120 degs).
+          8B: How much vertically the radar shall cover, 8B is max (120 degs).
+page VSD: Vertical situation display. Shows radar echoes.
+page HSD: Horizontal situation display. Shows route and radar echoes.
+          DEP: Depressed ownship in display
+          CEN: Centered ownship in display
+          CPL: Range will follow (approx) radar distance
+          DCPL: Range can be set independently of radar range by clicking on the up/down arrows.
+
+AUTOPILOT
+Notice that even when A/P is enabled you can control the airplane with the stick. When you let go of stick A/P will recalculate from current situation.
+
+The controls:
+Pitch: ALT HOLD: Hold current altitude
+       A/P OFF:  Disable autopilot for both roll and pitch
+       ATT HOLD: Hold current pitch attitude
+Roll:  HDG SEL:  Hold current heading
+       ATT HOLD: Hold current roll attitude
+       STRG SEL: Follow route from Route Manager
+
+RELEASING ORDNANCE
+First mount some armament.
+Secondly make sure masterarm is enabled.
+Thirdly select the arm. (use 'w' key or click buttons 'A-A' or 'A-G' under HUD)
+Fourthly make sure target is selected (key 'y')
+For GBU-12 make sure laser is armed.
+For GBU-12, GBU-31, MK-82 when getting close a vertical line will appear in HUD. Align flight path indicator on the line, when a small horizontal line on that line starts dropping down and reach another line then its time to release (key 'e' or 'trigger').
+
+EMER STORES JETTISON
+This will jettison all A/G ordnance and other payloads like fuel tanks that is not A/A. It will NOT jettison wingtips.
+
+ALT FLAPS
+This will deploy flaps as if the gears were extended. They will still retract at higher speeds though.
+
+NIGHTTIME FLYING
+There is flood and instrument lights that can be turned up.
+If running ALS you can also go into filters and enable one of the night vision modes.
+
+FLYING IN MP
+Firstly be sure to use "Visible to 2017+", else others will not see everything working okay when they see your aircraft.
+For doing combat enable "MP Discharge messages". This might be considered spam of MP chat, so use it sparringly and only against opponents that have agreed to be fighting you.
+            ]]></text>
         </help>
         <systems n="0">
             <autopilot n="0">
