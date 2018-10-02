@@ -1371,6 +1371,17 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <MP-lat type="string">rotors/main/blade[0]/flap-deg</MP-lat>
             <MP-lon type="string">rotors/main/blade[1]/flap-deg</MP-lon>
             <MP-alt type="string">rotors/main/blade[2]/flap-deg</MP-alt>
+            <station>
+                <id-0-set type="string">Empty</id-0-set>
+                <id-1-set type="string">Empty</id-1-set>
+                <id-2-set type="string">Empty</id-2-set>
+                <id-3-set type="string">Empty</id-3-set>
+                <id-4-set type="string">Empty</id-4-set>
+                <id-5-set type="string">Empty</id-5-set>
+                <id-6-set type="string">Empty</id-6-set>
+                <id-7-set type="string">Empty</id-7-set>
+                <id-8-set type="string">Empty</id-8-set>
+            </station>
             <aim-9>
                 <short-name type="string">AIM9</short-name>
                 <long-name type="string">AIM-9L Sidewinder</long-name>
