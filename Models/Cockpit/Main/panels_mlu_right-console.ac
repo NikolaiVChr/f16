@@ -1,11 +1,11 @@
 AC3Db
-MATERIAL "ac3dmat1" rgb 1 1 1  amb 0.2 0.2 0.2  emis 0 0 0  spec 0.2 0.2 0.2  shi 128  trans 0
-MATERIAL "ac3dmat5" rgb 1 1 0  amb 0.2 0.2 0.2  emis 0 0 0  spec 0.2 0.2 0.2  shi 128  trans 0
-MATERIAL "Material.002" rgb 0.062745 0.062745 0.062745  amb 0.3 0.3 0.3  emis 0 0 0  spec 0.176471 0.176471 0.176471  shi 32  trans 0
-MATERIAL "Material.003" rgb 1 1 1  amb 0.3 0.3 0.3  emis 0 0 0  spec 0.101961 0.101961 0.101961  shi 32  trans 0
+MATERIAL "ac3dmat1" rgb 1 1 1  amb 0.4 0.4 0.4  emis 0 0 0  spec 0.2 0.2 0.2  shi 128  trans 0
+MATERIAL "ac3dmat5" rgb 1 1 0  amb 0.4 0.4 0.4  emis 0 0 0  spec 0.2 0.2 0.2  shi 128  trans 0
+MATERIAL "Material.002" rgb 0.062745 0.062745 0.062745  amb 0.4 0.4 0.4  emis 0 0 0  spec 0.176471 0.176471 0.176471  shi 32  trans 0
+MATERIAL "Material.003" rgb 1 1 1  amb 0.4 0.4 0.4  emis 0 0 0  spec 0.101961 0.101961 0.101961  shi 32  trans 0
 MATERIAL "Material.006" rgb 0.062745 0.062745 0.062745  amb 0.005 0.005 0.005  emis 0 0 0  spec 0.101961 0.101961 0.101961  shi 32  trans 0
-MATERIAL "ac3dmat1.005" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0 0 0  shi 0  trans 1
-MATERIAL "ac3dmat1" rgb 1 1 1  amb 0.196 0.196 0.196  emis 0 0 0  spec 0.2 0.2 0.2  shi 128  trans 0
+MATERIAL "ac3dmat1.005" rgb 0 0 0  amb 0.4 0.4 0.4  emis 0 0 0  spec 0 0 0  shi 0  trans 1
+MATERIAL "ac3dmat1" rgb 1 1 1  amb 0.4 0.4 0.4  emis 0 0 0  spec 0.2 0.2 0.2  shi 128  trans 0
 OBJECT world
 kids 1
 OBJECT group

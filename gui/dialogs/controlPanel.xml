@@ -351,6 +351,46 @@
 				
 				</group>
 
+				<group>
+					<layout>vbox</layout>
+					
+					<text>
+						<label>CONSOLE</label>
+					</text>
+					
+					<group>
+						<layout>hbox</layout>
+				
+						<group>
+							<layout>vbox</layout>
+							<halign>left</halign>
+							
+							<text>
+								<label>FULL</label>
+							</text>
+							<text>
+								<label>OFF</label>
+							</text>
+							
+						</group>
+						
+						<slider>
+							<halign>left</halign>
+							<property>controls/lighting/lighting-panel/console-primary</property>
+							<min>0</min>
+							<max>1</max>
+							<step>0.1</step>
+							<live>true</live>
+							<vertical>true</vertical>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+						</slider>
+						
+					</group>
+				
+				</group>
+
 
 			</group>
 
