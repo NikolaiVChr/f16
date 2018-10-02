@@ -1081,6 +1081,25 @@
                 <max>1</max>
             </volume>
         </missile1>
+        <missile1>
+            <name>missile5</name>
+            <path>Aircraft/f16/Sounds/cruise-missile-launch.wav</path>
+            <mode>once</mode>
+            <condition>
+                <property>payload/armament/agm-84/sound-fire-on-off</property>
+            </condition>
+            <reference-dist>25</reference-dist>
+            <max-dist>10000</max-dist>
+            <position>
+                <x> 3.15986 </x>
+                <y> -2.70311 </y>
+                <z> -0.67645 </z>
+            </position>
+            <volume>
+                <factor>0.75</factor>
+                <max>1</max>
+            </volume>
+        </missile1>
 
         <gbu-release>
             <name>gbu-release</name>
