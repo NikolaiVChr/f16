@@ -53,6 +53,12 @@
   <object-name>Pilot_ext</object-name>
   <condition>
    <not><property>sim/current-view/internal</property></not>
+            <not>
+                <equals>
+                    <property>f16/done</property>
+                    <value>1</value>
+                </equals>
+            </not>
   </condition>
  </animation>
 
@@ -69,7 +75,7 @@
  <model>
     <path>Effects/trail/trail.xml</path>
       <offsets>
-        <x-m>16.0</x-m>
+        <x-m>20.0</x-m>
         <y-m>0.0</y-m>
         <z-m>0.2</z-m>
       </offsets>
@@ -1692,7 +1698,7 @@
   <object-name>Poly.002</object-name>
   <object-name>Turbine</object-name>-->
   <object-name>Fuselage</object-name>
-  <object-name>LandingGear</object-name>
+  <!--<object-name>LandingGear</object-name>-->
   <property-base>sim/model/livery</property-base>
   <texture-prop>texture</texture-prop>
   <texture>f16.png</texture>

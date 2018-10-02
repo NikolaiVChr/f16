@@ -1,7 +1,15 @@
+*********
+**
+** Flightgear F-16 Manual
+**
+*********
+
+
+
 LANDING
 
-No fixed landing speed, however keep a AoA of 11 to 13 in final.
-
+No fixed landing speed, however keep a AoA of 11 to 13 in final. A suggested approach speed will display in left side of HUD when gears is down.
+Notice that it can be hard to see the touchdown point when landing with that high AoA (even when raising seat), which is why many choose to land with around 9 AoA.
 
 
 HUD
@@ -44,17 +52,25 @@ Notice that the RWR can sometimes pick up threat much further away than your rad
 
 LIVERIES
 
-The liveries you get available depends on which variant you fly.
+The liveries you get available, depends on which variant you fly.
 
 
 
-MFD
+MFDs (Multi Function Displays)
 
-page SMS: J-S will jettison the selected station. Clicking on button next to a station will select it. If CAT is greater than 1, then you should set the flightcontrols to CAT III in config menu.
+page SMS: Clicking on button next to a station will select it. 
+          J-S will jettison the selected station.
+          If CAT is greater than 1, then you should set the flightcontrols to CAT III in config menu.
 page CRM: B-scope radar display. Horizontal is relative bearing to targets, vertical is distance.
+          A4: How much azimuth the radar shall cover, A4 is max (120 degs).
+          8B: How much vertically the radar shall cover, 8B is max (120 degs).
 page VSD: Vertical situation display. Shows radar echoes.
 page HSD: Horizontal situation display. Shows route and radar echoes.
-page SIT: A overview for navigation, shows route and other stuff. Once this has been shown, it will eat some framerate of your simulation.
+          DEP: Depressed ownship in display
+          CEN: Centered ownship in display
+          CPL: Range will follow (approx) radar distance
+          DCPL: Range can be set independently of radar range by clicking on the up/down arrows.
+
 
 
 
@@ -71,3 +87,15 @@ Pitch: ALT HOLD: Hold current altitude
 Roll:  HDG SEL:  Hold current heading
        ATT HOLD: Hold current roll attitude
        STRG SEL: Follow route from Route Manager
+
+
+
+
+RELEASING ORDNANCE
+
+First mount some armament.
+Secondly make sure masterarm is enabled.
+Thirdly select the arm. (use 'w' key or click buttons 'A-A' or 'A-G' under HUD)
+Fourthly make sure target is selected (key 'y')
+For GBU-12 make sure laser is armed.
+For GBU-12, GBU-31, MK-82 when getting close a vertical line will appear in HUD. Align flight path indicator on the line, when a small horizontal line on that line starts dropping down and reach another line then its time to release (key 'e' or 'trigger').

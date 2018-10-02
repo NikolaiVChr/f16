@@ -13,6 +13,8 @@
 		<text>
 			<halign>left</halign>
 			<label>F-16 Control Panel</label>
+			<format>%s Control Panel</format>
+			<property>sim/description</property>
 		</text>
 		<button>
 			<halign>right</halign>
@@ -68,49 +70,6 @@
 						<row>1</row>
 						<col>0</col>
 						<layout>hbox</layout>
-					
-						<group>
-							<layout>vbox</layout>
-							
-							<text>
-								<label>ROLL      </label>
-							</text>
-							
-							<group>
-								<layout>hbox</layout>
-							
-								<group>
-									<layout>vbox</layout>
-									<halign>left</halign>
-									
-									<text>
-										<label>HDG SEL</label>
-									</text>
-									<text>
-										<label>ATT HOLD</label>
-									</text>
-									
-								</group>
-								
-								<slider>
-									<halign>left</halign>
-									<property>/f16/fcs/switch-roll-block15</property>
-									<min>0</min>
-									<max>1</max>
-									<step>1</step>
-									<live>true</live>
-									<vertical>true</vertical>
-									<pref-height>40</pref-height>
-									<binding>
-										<command>dialog-apply</command>
-									</binding>
-								</slider>
-								
-							</group>
-						
-						</group>
-						
-						<vrule/>
 						
 						<group>
 							<layout>vbox</layout>
@@ -138,6 +97,49 @@
 								<slider>
 									<halign>left</halign>
 									<property>/f16/fcs/switch-pitch-block15</property>
+									<min>0</min>
+									<max>1</max>
+									<step>1</step>
+									<live>true</live>
+									<vertical>true</vertical>
+									<pref-height>40</pref-height>
+									<binding>
+										<command>dialog-apply</command>
+									</binding>
+								</slider>
+								
+							</group>
+						
+						</group>
+						
+						<vrule/>
+						
+						<group>
+							<layout>vbox</layout>
+							
+							<text>
+								<label>ROLL      </label>
+							</text>
+							
+							<group>
+								<layout>hbox</layout>
+							
+								<group>
+									<layout>vbox</layout>
+									<halign>left</halign>
+									
+									<text>
+										<label>HDG SEL</label>
+									</text>
+									<text>
+										<label>ATT HOLD</label>
+									</text>
+									
+								</group>
+								
+								<slider>
+									<halign>left</halign>
+									<property>/f16/fcs/switch-roll-block15</property>
 									<min>0</min>
 									<max>1</max>
 									<step>1</step>
@@ -708,7 +710,7 @@
 						<command>nasal</command>
 						<script>
 							if (pylons.fcs != nil) {
-								pylons.fcs.jettisonFuelAndAG();
+								pylons.fcs.jettisonFuelAndAG([0,8]);#drop all fueltanks, dummies and A/G weapons. Except wingtips.
 							}
 						</script>
 			      	</binding>

@@ -73,7 +73,7 @@ var FireControl = {
 	},
 
 	cycleWeapon: func {
-		# it will cycle to next weapon type, even if that one is empty. (maybe add option if it should skip empty types)
+		# it will cycle to next weapon type, even if that one is empty.
 		me.triggerTime = 0;
 		me.stopCurrent();
 		me.selWeapType = me.selectedType;
@@ -103,6 +103,41 @@ var FireControl = {
 			}
 		}
 		screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+	},
+
+	cycleLoadedWeapon: func {
+		# it will cycle to next weapon type that is not empty.
+		me.triggerTime = 0;
+		me.stopCurrent();
+		me.selWeapType = me.selectedType;
+		if (me.selWeapType == nil) {
+			me.selTypeIndex = -1;
+			me.cont = size(me.typeOrder);
+		} else {
+			me.selType = me.selectedType;
+			printfDebug("Already selected %s",me.selType);
+			me.selTypeIndex = me.vectorIndex(me.typeOrder, me.selType);
+			me.cont = me.selTypeIndex;
+		}
+		me.selTypeIndex += 1;
+		while (me.selTypeIndex != me.cont) {
+			if (me.selTypeIndex >= size(me.typeOrder)) {
+				me.selTypeIndex = 0;
+			}
+			me.selectedType = me.typeOrder[me.selTypeIndex];
+			me.selType = me.selectedType;
+			printfDebug(" Now selecting %s",me.selType);
+			me.wp = me.nextWeapon(me.selType);
+			if (me.wp != nil) {			
+				printfDebug("FC: Selected next weapon type: %s on pylon %d position %d",me.selectedType,me.selected[0],me.selected[1]);
+				screen.log.write("Selected "~me.selectedType, 0.5, 0.5, 1);
+				return;
+			}
+			me.selTypeIndex += 1;
+		}		
+		me.selected = nil;
+		me.selectedType = nil;
+		screen.log.write("Selected nothing", 0.5, 0.5, 1);
 	},
 
 	_isSelectedWeapon: func {
@@ -379,12 +414,29 @@ var FireControl = {
 		}
 	},
 
-	jettisonFuelAndAG: func {
-		# jettison all stations
+	jettisonFuelAndAG: func (exclude = nil) {
+		# jettison all fuel and A/G stations.
 		foreach (pyl;me.pylons) {
 			me.myWeaps = pyl.getWeapons();
 			if (me.myWeaps != nil and size(me.myWeaps)>0) {
 				if (me.myWeaps[0] != nil and me.myWeaps[0].parents[0] == armament.AIM and me.myWeaps[0].target_air == 1) {
+					continue;
+				}
+			}
+			if (exclude!=nil and me.vectorIndex(exclude, pyl.id) != -1) {
+				# excluded
+				continue;
+			}
+			pyl.jettisonAll();
+		}
+	},
+
+	jettisonFuel: func {
+		# jettison all fuel stations
+		foreach (pyl;me.pylons) {
+			me.myWeaps = pyl.getWeapons();
+			if (me.myWeaps != nil and size(me.myWeaps)>0) {
+				if (me.myWeaps[0] != nil and me.myWeaps[0].parents[0] == armament.AIM) {
 					continue;
 				}
 			}
@@ -438,19 +490,23 @@ var FireControl = {
 			me.aim = me.getSelectedWeapon();
 			#printfDebug(" to %d",me.aim != nil);
 			if (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.status == armament.MISSILE_LOCK) {
-				me.aim = me.pylons[me.selected[0]].fireWeapon(me.selected[1], awg_9.completeList);
-				me.aim.sendMessage(me.aim.brevity~" at: "~me.aim.callsign);
-				me.aimNext = me.nextWeapon(me.selectedType);
-				if (me.aimNext != nil) {
-					me.aimNext.start();
+				me.aim = me.pylons[me.selected[0]].fireWeapon(me.selected[1], getCompleteRadarTargetsList());
+				if (me.aim != nil) {
+					me.aim.sendMessage(me.aim.brevity~" at: "~me.aim.callsign);
+					me.aimNext = me.nextWeapon(me.selectedType);
+					if (me.aimNext != nil) {
+						me.aimNext.start();
+					}
 				}
 				me.triggerTime = 0;
 			} elsif (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.guidance=="unguided") {
-				me.aim = me.pylons[me.selected[0]].fireWeapon(me.selected[1], awg_9.completeList);
-				me.aim.sendMessage(me.aim.brevity);
-				me.aimNext = me.nextWeapon(me.selectedType);
-				if (me.aimNext != nil) {
-					me.aimNext.start();
+				me.aim = me.pylons[me.selected[0]].fireWeapon(me.selected[1], getCompleteRadarTargetsList());
+				if (me.aim != nil) {
+					me.aim.sendMessage(me.aim.brevity);
+					me.aimNext = me.nextWeapon(me.selectedType);
+					if (me.aimNext != nil) {
+						me.aimNext.start();
+					}
 				}
 				me.triggerTime = 0;
 			} elsif (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.loal) {
@@ -473,7 +529,7 @@ var FireControl = {
 		if (me.triggerTime == 0 or me.getSelectedWeapon() == nil or me.getSelectedWeapon().parents[0] != armament.AIM) {
 			return;
 		}
-		aimer = me.pylons[me.selected[0]].fireWeapon(me.selected[1], awg_9.completeList);
+		aimer = me.pylons[me.selected[0]].fireWeapon(me.selected[1], getCompleteRadarTargetsList());
 		aimer.sendMessage(aimer.brevity~" Maddog released");
 		me.aimNext = me.nextWeapon(me.selectedType);
 		if (me.aimNext != nil) {
@@ -603,3 +659,10 @@ var FireControl = {
 var debug = 0;
 var printDebug = func (msg) {if (debug == 1) print(msg);};
 var printfDebug = func {if (debug == 1) call(printf,arg);};
+
+
+# This is non-generic method, please edit it to fit your radar setup:
+var getCompleteRadarTargetsList = func {
+	# A list of all MP/AI aircraft/ships/surface-targets around the aircraft.
+	return awg_9.completeList;
+}

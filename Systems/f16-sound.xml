@@ -159,10 +159,13 @@
   </engine_fan>
 
   <exhaust>
-   <name>turbine</name>
+   <name>turbine internal</name>
    <path>Sounds/jet.wav</path>
    <mode>looped</mode>
-   <property>engines/engine/running</property>
+   <condition>
+     <property>engines/engine/running</property>
+     <property>sim/current-view/internal</property>
+   </condition>
    <reference-dist>250</reference-dist>
    <max-dist>12500</max-dist>
    <position>
@@ -191,6 +194,48 @@
    <pitch>
     <property>engines/engine/n1</property>
     <offset>0.25</offset>
+    <factor>0.01</factor>
+   </pitch>
+  </exhaust>
+
+  <exhaust>
+   <name>turbine external</name>
+   <path>Sounds/jet.wav</path>
+   <mode>looped</mode>
+   <condition>
+     <property>engines/engine/running</property>
+     <not>
+      <property>sim/current-view/internal</property>
+     </not>
+   </condition>
+   <reference-dist>250</reference-dist>
+   <max-dist>12500</max-dist>
+   <position>
+    <x>4.6</x>
+    <y>0.01</y>
+    <z>0.01</z>
+   </position>
+   <orientation>
+    <x>1.0</x>
+    <y>0.0</y>
+    <z>0.0</z>
+    <inner-angle>200.0</inner-angle>
+    <outer-angle>360.0</outer-angle>
+    <outer-gain>0.25</outer-gain>
+   </orientation>
+   <volume>
+    <property>engines/engine/thrust_lb</property>
+    <offset>0</offset>
+    <factor>0.000065</factor>
+   </volume>
+   <!--<volume>
+    <property>sim/current-view/internal</property>
+    <offset>1</offset>
+    <factor>-0.5</factor>
+   </volume>-->
+   <pitch>
+    <property>engines/engine/n1</property>
+    <offset>0.00</offset>
     <factor>0.01</factor>
    </pitch>
   </exhaust>
@@ -227,7 +272,7 @@
    </volume>
   </afterburner>
 
-  <afterburner>
+  <!--<afterburner>
    <name>afterburner internal</name>
    <path>Sounds/exhaust_loop.wav</path>
    <mode>looped</mode>
@@ -255,7 +300,28 @@
     <offset>0.05</offset>
     <factor>0.30</factor>
    </volume>
-  </afterburner>
+  </afterburner>-->
+
+    <!-- new AB internal sound by G-EED -->
+    <afterburner>
+     <name>afterburner internal</name>
+     <path>Aircraft/f16/Sounds/afterburner_interior.wav</path>
+     <mode>looped</mode>
+     <condition>
+      <property>sim/current-view/internal</property>
+      <property>engines/engine/augmentation</property>
+     </condition>
+     <position>
+      <x>4.6</x>
+      <y>0.0</y>
+      <z>0.0</z>
+     </position>
+     <volume>
+      <property>engines/engine/nozzle-pos-norm</property>
+      <offset>0.05</offset>
+      <factor>0.80</factor>
+     </volume>
+    </afterburner>
 
   <rumble>
    <name>gear rumble</name>
@@ -1412,9 +1478,106 @@
         </rwr>
 
 
-
+        <thunder1>
+            <name>thunder1</name>
+            <mode>once</mode>
+            <path>Aircraft/f16/Sounds/thunder1.wav</path>
+            <type>avionics</type>
+            <property>f16/sound/thunder1</property>
+            <pitch>
+                <property>f16/sound/dist-thunder1</property>
+                <factor>2</factor>
+                <offset>0.50</offset>
+                <min>1.00</min>
+                <max>2.00</max>
+            </pitch>
+            <volume>
+                <property>f16/sound/dist-thunder1</property>
+            </volume>
+        </thunder1>
+        <thunder2>
+            <name>thunder2</name>
+            <mode>once</mode>
+            <path>Aircraft/f16/Sounds/thunder2.wav</path>
+            <type>avionics</type>
+            <property>f16/sound/thunder2</property>
+            <pitch>
+                <property>f16/sound/dist-thunder2</property>
+                <factor>2</factor>
+                <offset>0.50</offset>
+                <min>1.00</min>
+                <max>2.00</max>
+            </pitch>
+            <volume>
+                <property>f16/sound/dist-thunder2</property>
+            </volume>
+        </thunder2>
+        <thunder3>
+            <name>thunder3</name>
+            <mode>once</mode>
+            <path>Aircraft/f16/Sounds/thunder3.wav</path>
+            <type>avionics</type>
+            <property>f16/sound/thunder3</property>
+            <pitch>
+                <property>f16/sound/dist-thunder3</property>
+                <factor>1</factor>
+                <offset>0.50</offset>
+                <min>1.00</min>
+                <max>2.00</max>
+            </pitch>
+            <volume>
+                <property>f16/sound/dist-thunder3</property>
+            </volume>
+        </thunder3>
         
+        <brake>
+            <name>speedbrake</name>
+            <path>Aircraft/f16/Sounds/speedbrake.wav</path>
+            <mode>in-transit</mode>
+            <property>fdm/jsbsim/fcs/speedbrake-pos-norm</property>
+            <reference-dist>3</reference-dist>
+            <max-dist>10</max-dist>
+            <position>
+                <x>0.01</x>
+                <y>0.01</y>
+                <z>0.01</z>
+            </position>
+            <pitch>
+                <factor>1</factor>
+                <offset>0</offset>
+                <min>0</min>
+                <max>2</max>
+            </pitch>
+            <volume>
+                <max>0.40</max>
+            </volume>
+        </brake>
 
+        <gamma>
+            <name>gamma</name>
+            <path>Aircraft/f16/Sounds/missile.wav</path>
+            <mode>once</mode>
+            <condition>
+                <property>payload/armament/es/sound-fire-on-off</property>
+            </condition>
+            <reference-dist>25</reference-dist>
+            <max-dist>10000</max-dist>
+            <position>
+                <x> 0.1 </x>
+                <y> 0.1 </y>
+                <z> 0.1 </z>
+            </position>
+            <pitch>
+                <factor>1.5</factor>
+                <offset>0</offset>
+                <min>0</min>
+                <max>2</max>
+            </pitch>
+            <volume>
+                <factor>1</factor>
+                <max>1</max>
+            </volume>
+        </gamma>
 
     </fx>
  

@@ -1119,7 +1119,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                 <p>aero/coefficient/CZ</p>
                 <product>
                     <p>aero/coefficient/dCZ_lef</p>
-                    <p>fcs/fly-by-wire/lef/lef-pos-r-norm</p>
+                    <p>fcs/fly-by-wire/lef/lef-pos-norm</p><!-- this is inverted from TP-1538, I think there is bug in document regarding this -->
                 </product>
                 <product>
                     <p>aero/coefficient/dCZ_sb</p>

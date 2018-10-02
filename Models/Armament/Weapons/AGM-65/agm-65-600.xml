@@ -6,19 +6,24 @@
 
   <animation>
     <type>select</type>
-    <object-name>AGM-65</object-name>
-    <object-name>AGM-65Nose</object-name>
+      <object-name>AGM-65Body</object-name>
+      <object-name>AGM-65Glass</object-name>
+      <object-name>AGM-65Wings</object-name>
+      <object-name>AGM-65Back</object-name>
+      <object-name>CamFrame</object-name>
+      <object-name>CamSphere</object-name>
+      <object-name>Lens</object-name>
     <condition>
       <property>payload/armament/agm-65/flags/msl-id-600</property>
     </condition>
   </animation>
-	
-	<effect>
-    <inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>
-    <object-name>AGM-65Nose</object-name>
+
+  <effect>  
+    <inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  
+    <object-name>AGM-65Glass</object-name> 
   </effect>
 
-  <!--<effect>
+    <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
       <parameters>
           <metallic type="float">0.80</metallic>
@@ -27,8 +32,13 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
-      <object-name>AGM-65</object-name>
-  </effect>-->
+      <object-name>AGM-65Body</object-name>
+      <object-name>AGM-65Wings</object-name>
+      <object-name>AGM-65Back</object-name>
+      <object-name>CamFrame</object-name>
+      <object-name>CamSphere</object-name>
+      <object-name>Lens</object-name>
+  </effect>
 
     <particlesystem>
        <name>smoke</name>
@@ -295,8 +305,13 @@
      </particlesystem>
 
 	<animation>
-  		<object-name>AGM-65</object-name>
-      <object-name>AGM-65Nose</object-name>
+  		<object-name>AGM-65Body</object-name>
+      <object-name>AGM-65Glass</object-name>
+      <object-name>AGM-65Wings</object-name>
+      <object-name>AGM-65Back</object-name>
+      <object-name>CamFrame</object-name>
+      <object-name>CamSphere</object-name>
+      <object-name>Lens</object-name>
   		<enable-hot type="bool">false</enable-hot>
  	</animation>
 	

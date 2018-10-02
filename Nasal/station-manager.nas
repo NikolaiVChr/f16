@@ -10,6 +10,9 @@
 #
 ###############################################
 
+var fdm = getprop("/sim/flight-model");
+var baseGui = fdm=="jsb"?"payload":"sim";
+
 var Station = {
 # pylon or fixed mounted weapon on the aircraft
 	new: func (name, id, position, sets, guiID, pointmassNode, operableFunction = nil) {
@@ -260,7 +263,7 @@ var Pylon = {
 	guiChanged: func {
 		#print("GUI changed");
 		if(!me.changingGui) {
-			me.desiredSet = getprop("payload/weight["~me.guiID~"]/selected");
+			me.desiredSet = getprop(baseGui~"/weight["~me.guiID~"]/selected");
 			if (me.desiredSet != me.currentName) {
 				me.set = me.findSetFromName(me.desiredSet);
 				if (me.set != nil) {
@@ -280,7 +283,7 @@ var Pylon = {
 		if (me.guiListener != nil) {
 			removelistener(me.guiListener);
 		}
-		me.guiNode = props.globals.getNode("payload/weight["~me.guiID~"]",1);
+		me.guiNode = props.globals.getNode(baseGui~"/weight["~me.guiID~"]",1);
 		me.guiNode.removeAllChildren();
 		me.guiNode.initNode("name",me.name,"STRING");
 		me.guiNode.initNode("selected","","STRING");
@@ -288,9 +291,13 @@ var Pylon = {
 		me.i = 0;
 		foreach(set ; me.sets) {
 			me.guiNode.initNode("opt["~me.i~"]/name",set.name,"STRING");
+			#if (fdm=="yasim") { commented out due to fuel dialog changes in FG2018.3
+				# due to fuel dialog has different features in yasim from jsb, this must be done:
+				me.guiNode.initNode("opt["~me.i~"]/lbs",0,"DOUBLE");
+			#}
 			me.i += 1;
 		}
-		me.guiListener = setlistener("payload/weight["~me.guiID~"]/selected", func me.guiChanged());
+		me.guiListener = setlistener(baseGui~"/weight["~me.guiID~"]/selected", func me.guiChanged());
 	},
 
 	setGUI: func {
@@ -325,8 +332,8 @@ var Pylon = {
 		}
 		me.changingGui = 1;
 		me.currentName = me.nameGUI;
-		setprop("payload/weight["~me.guiID~"]/selected", me.nameGUI);
-		setprop("payload/weight["~me.guiID~"]/weight-lb", me.node_pointMass.getValue());
+		setprop(baseGui~"/weight["~me.guiID~"]/selected", me.nameGUI);
+		setprop(baseGui~"/weight["~me.guiID~"]/weight-lb", me.node_pointMass.getValue());
 		me.changingGui = 0;
 	},
 
@@ -539,11 +546,15 @@ var FuelTank = {
 
 	mount: func {
 		# set capacity in fuel tank
+		if (fdm == "jsb") {
+			setprop("fdm/jsbsim/propulsion/tank["~me.fuelTankNumber~"]/external-flow-rate-pps", 0);
+		}
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/capacity-gal_us", me.capacity);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/level-gal_us", me.capacity);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/selected", 1);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", me.typeLong);
 		setprop(me.modelPath, 1);
+		setprop("sim/gui/dialogs/payload-reload",!getprop("sim/gui/dialogs/payload-reload"));
 	},
 
 	eject: func {
@@ -553,6 +564,10 @@ var FuelTank = {
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/selected", 0);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", "Not attached");
 		setprop(me.modelPath, 0);
+		setprop("sim/gui/dialogs/payload-reload",!getprop("sim/gui/dialogs/payload-reload"));
+		if (fdm == "jsb") {
+			setprop("fdm/jsbsim/propulsion/tank["~me.fuelTankNumber~"]/external-flow-rate-pps", -1000);
+		}
 	},
 
 	del: func {
@@ -562,6 +577,10 @@ var FuelTank = {
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/selected", 0);
 		setprop("/consumables/fuel/tank["~me.fuelTankNumber~"]/name", "Not attached");
 		setprop(me.modelPath, 0);
+		setprop("sim/gui/dialogs/payload-reload",!getprop("sim/gui/dialogs/payload-reload"));
+		if (fdm == "jsb") {
+			setprop("fdm/jsbsim/propulsion/tank["~me.fuelTankNumber~"]/external-flow-rate-pps", -1000);
+		}
 	},
 
 	getAmmo: func {

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+    <name type="string" n="0">approach</name>
+
+    <overlay>
+        <fdm>
+            <jsbsim>
+                <elec>
+                    <switches>
+                        <main-pwr type="int">2</main-pwr>
+                        <epu type="int">1</epu>
+                    </switches>
+                </elec>
+            </jsbsim>
+        </fdm>
+        <controls>
+            <engines>
+                <engine n="0">
+                    <cutoff type="bool">false</cutoff>
+                    <starter type="bool">false</starter>
+                    <throttle type="double">0.5</throttle>
+                </engine>
+            </engines>
+            <gear>
+                <gear-down type="double">1</gear-down>
+            </gear>
+        </controls>
+        <engines>
+            <engine n="0">
+                <running type="bool">true</running>
+            </engine>
+        </engines>
+        <f16>
+            <engine>
+                <feed type="bool">true</feed><!-- OFF/NORM prevents starter, cutoff -->
+                <jet-fuel type="int">0</jet-fuel><!-- starter -1=1 1=2 0=off  goes to off at 55% rpm -->
+                <jsf-start type="bool">true</jsf-start><!-- inverse cutoff -->
+                <running-state type="bool">true</running-state>
+            </engine>
+        </f16>
+    </overlay>
+
+</PropertyList>

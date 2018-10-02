@@ -2,7 +2,7 @@ var Math = {
     #
     # Author: Nikolai V. Chr.
     #
-    # Version 1.5
+    # Version 1.6
     #
     # When doing euler coords. to cartesian: +x = forw, +y = left,  +z = up.
     # FG struct. coords:                     +x = back, +y = right, +z = up.
@@ -92,6 +92,29 @@ var Math = {
         return [math.cos(yaw),-math.sin(yaw),0,
                 math.sin(yaw),math.cos(yaw),0,
                 0,0,1];
+    },
+
+    # vector to heading/pitch
+    cartesianToEuler: func (vector) {
+        me.horz  = math.sqrt(vector[0]*vector[0]+vector[1]*vector[1]);
+        if (me.horz != 0) {
+            me.pitch = math.atan2(vector[2],me.horz)*R2D;
+            me.hdg = math.asin(-vector[1]/me.horz)*R2D;
+
+            if (vector[0] < 0) {
+                # south
+                if (me.hdg >= 0) {
+                    me.hdg = 180-me.hdg;
+                } else {
+                    me.hdg = -180-me.hdg;
+                }
+            }
+            me.hdg = geo.normdeg(me.hdg);
+        } else {
+            me.pitch = vector[2]>=0?90:-90;
+            me.hdg = nil;
+        }
+        return [me.hdg, me.pitch];
     },
 
     # gives an vector that points up from fuselage

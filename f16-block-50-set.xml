@@ -55,6 +55,21 @@
                 <splash type="bool">true</splash>
                 <path>gui/splash/f16_b50_3.png</path>
             </preview>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>gui/splash/f16_b50_4.png</path>
+            </preview>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>gui/splash/f16_b50_5.png</path>
+            </preview>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>gui/splash/f16_b50_6.png</path>
+            </preview>
   </previews>
 
 
@@ -77,6 +92,13 @@
    <default>
     <menu n="100">
      <label>F-16</label>
+        <item n="7">
+          <label>Payload quick select</label>
+          <binding>
+            <command>dialog-show</command>
+            <dialog-name>payload</dialog-name>
+          </binding>
+      </item>
     </menu>
    </default>
   </menubar>
