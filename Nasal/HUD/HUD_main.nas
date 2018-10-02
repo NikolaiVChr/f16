@@ -94,6 +94,7 @@ var F16_HUD = {
 
         input = {
                  IAS                       : "/velocities/airspeed-kt",
+                 calibrated                : "/fdm/jsbsim/velocities/vc-kts",
                  Nz                        : "/accelerations/pilot-gdamped",
                  alpha                     : "/fdm/jsbsim/aero/alpha-deg",
                  altitude_ft               : "/position/altitude-ft",
@@ -232,9 +233,10 @@ var F16_HUD = {
                                       {
                                           obj.alt_range.setTranslation(0, measured_altitude * alt_range_factor);
                                       }),
-            props.UpdateManager.FromHashValue("IAS", 0.1, func(IAS)
-                                      {
-                                          obj.ias_range.setTranslation(0, IAS * ias_range_factor);
+            props.UpdateManager.FromHashValue("calibrated", 0.1, func(calibrated)
+                                      {   
+                                          # the real F-16 has calibrated airspeed as default in HUD.
+                                          obj.ias_range.setTranslation(0, calibrated * ias_range_factor);
                                       }),
             props.UpdateManager.FromHashValue("range_rate", 0.01, func(range_rate)
                                       {
