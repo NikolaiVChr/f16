@@ -17,9 +17,10 @@ Martin "Pegasus" Schmitt
 Nikolai V. Chr.
 - F16 block 10, 20 and YF-16 aerodynamics
 - Fly-by-wire system for all variants except simplified.
-- Danish, Ghost Gray, Blue Bandit, UAE, Croatian, Empire and prototype livery
-- Various changes to radar, MFD, HUD, RWR
-- Added Pylon, counter-measures and missile code
+- Danish, Ghost Gray, Blue Bandit, 2xUAE, Croatian, Empire, Norwegian and prototype livery
+- Various changes to radar, MFD, HUD
+- RWR
+- Pylons, counter-measures and missile code
 - Crash and stress code.
 - Splashes
 
@@ -27,6 +28,8 @@ Richard Harrison
 - Radar
 - MFDs
 - HUD
+- 3D misc. panel
+- Avionics communication system (emesary based)
 
 Jonathan Redpath
 - Hydraulics
