@@ -1382,6 +1382,9 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <id-7-set type="string">Empty</id-7-set>
                 <id-8-set type="string">Empty</id-8-set>
             </station>
+            <fire-control>
+                <servicable type="bool">true</servicable><!-- why is this not auto created by failure system in 2018.3?? -->
+            </fire-control>
             <aim-9>
                 <short-name type="string">AIM9</short-name>
                 <long-name type="string">AIM-9L Sidewinder</long-name>

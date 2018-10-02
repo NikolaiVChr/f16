@@ -525,7 +525,18 @@
   <cannon>
    <name>cannon</name>
    <path>Sounds/gatling.wav</path>
-   <property>fdm/jsbsim/fcs/guntrigger</property>
+   <condition>
+        <property>fdm/jsbsim/fcs/guntrigger</property>
+        <greater-than>
+          <property>ai/submodels/submodel[2]/count</property>
+          <value>0</value>
+        </greater-than>
+        <greater-than>
+          <property>fdm/jsbsim/systems/hydraulics/sysb-psi</property>
+          <value>1999</value>
+        </greater-than>
+        <property>payload/armament/fire-control/serviceable</property>
+    </condition>
    <mode>looped</mode>
    <position>
     <x>-1.0</x>

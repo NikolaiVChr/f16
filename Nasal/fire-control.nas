@@ -512,7 +512,7 @@ var FireControl = {
 			} elsif (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.loal) {
 				me.triggerTime = getprop("sim/time/elapsed-sec");
 				settimer(func me.triggerHold(me.aim), 1.5);
-			} elsif (me.aim != nil and me.aim.parents[0] == stations.SubModelWeapon) {
+			} elsif (me.aim != nil and me.aim.parents[0] == stations.SubModelWeapon and (me.aim.operableFunction == nil or me.aim.operableFunction()) and me.aim.getAmmo()>0) {
 				if (getprop("sim/time/elapsed-sec")>me.gunTriggerTime+10) {
 					# only say guns guns every 10 seconds.
 					armament.AIM.sendMessage("Guns guns");
