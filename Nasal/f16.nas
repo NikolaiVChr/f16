@@ -715,3 +715,16 @@ var play_thunder = func (name, timeout=0.1, delay=0) {
 };
 
 setlistener("/environment/lightning/lightning-pos-y", thunder_listener);
+
+var eject = func{
+  if (getprop("f16/done")==1 or !getprop("controls/seat/ejection-safety-lever")) {
+      return;
+  }
+  setprop("f16/done",1);
+  var es = armament.AIM.new(10, "es","gamma", nil ,[-3.65,0,0.7]);
+  #setprop("fdm/jsbsim/fcs/canopy/hinges/serviceable",0);
+  es.releaseAtNothing();
+  view.view_firing_missile(es);
+  #setprop("sim/view[0]/enabled",0); #disabled since it might get saved so user gets no pilotview in next aircraft he flies in.
+  settimer(func {crash.exp();},3.5);
+}
