@@ -469,6 +469,11 @@ For spins, we recommend letting go of stick and throttle back, and let the FBW s
 In the YF-16 to escape spins, apply rudder opposite of spin direction and ailerons into the spin direction while pitching down and throttle back. This will often get you into the deep stall where you will rock your way out of that.
 If you get close to ground in a departure use key 'F6' to eject.
 
+LIMITS
+Do not exceed Mach 2.05 or 800 KCAS.
+Do not roll faster than 225 kt groundspeed for main landing gear tires, or 217 for nose wheel tire.
+Do not operate below 200 KT with cat III stores, unless for landing or take-off.
+
 HUD
 The speed in HUD is calibrated airspeed.
 

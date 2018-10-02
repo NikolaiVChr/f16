@@ -27,6 +27,14 @@ If you get close to ground in a departure use key 'F6' to eject.
 
 
 
+LIMITS
+
+Do not exceed Mach 2.05 or 800 KCAS.
+Do not roll faster than 225 kt groundspeed for main landing gear tires, or 217 for nose wheel tire.
+Do not operate below 200 KT with cat III stores, unless for landing or take-off.
+
+
+
 HUD
 
 The speed in HUD is calibrated airspeed.
