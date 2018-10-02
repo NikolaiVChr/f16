@@ -1,7 +1,7 @@
 AC3Db
 MATERIAL "ac3dmat12" rgb 0.267 0.267 0.267  amb 0.200 0.200 0.200  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 10 trans 0.000
 MATERIAL "ac3dmat1" rgb 1.000 1.000 1.000  amb 0.200 0.200 0.200  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 10 trans 0.000
-MATERIAL "ac3dmat4" rgb 1.000 0.467 0.000  amb 0.200 0.200 0.200  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 10 trans 0.341
+MATERIAL "ac3dmat4" rgb 1.000 1.000 1.000  amb 0.300 0.300 0.300  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 10 trans 0.341
 OBJECT world
 name "Blender_exporter_v2.26__gamma2.ac"
 kids 1
