@@ -1112,6 +1112,21 @@
             </volume>
         </jdam-release>
 
+        <bomb-release>
+            <name>bomb-release</name>
+            <mode>once</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/gbu_release.wav</path>
+            <condition>
+                <property>payload/armament/mk-82/sound-fire-on-off</property>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+                <max>1</max>
+            </volume>
+        </bomb-release>
+
         <!--b61-12-release>
             <name>b61-12-release</name>
             <mode>once</mode>
