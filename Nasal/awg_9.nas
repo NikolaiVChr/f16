@@ -1824,8 +1824,12 @@ var RadarRecipient =
 
         new_class.Receive = func(notification)
           {
-              rdr_loop(notification);
-              return emesary.Transmitter.ReceiptStatus_OK;
+            if (notification.NotificationType == "FrameNotification")
+            {
+                rdr_loop(notification);
+                return emesary.Transmitter.ReceiptStatus_OK;
+            }
+            return emesary.Transmitter.ReceiptStatus_NotProcessed;
           }
         return new_class;
     },
