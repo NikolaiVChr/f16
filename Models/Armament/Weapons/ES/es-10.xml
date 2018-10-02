@@ -4,21 +4,21 @@
 
   <model>
     <name>gamma1</name>
-    <path>Aircraft/f16/Models/Cockpit/pilot/pilot.ac</path>
+    <path>Aircraft/f16/Models/pilot_externalview.xml</path>
     <offsets>
-      <x-m> 0.0</x-m>
+      <x-m> 5</x-m>
       <y-m> 0.000</y-m>
-      <z-m> 1.000</z-m>
+      <z-m> 0.000</z-m>
     </offsets>
   </model>
 
   <model> 
     <name>gamma2</name>
-    <path>Aircraft/f16/Models/Cockpit/seat/seat.xml</path>
+    <path>Aircraft/f16/Models/Cockpit/chair/chair.xml</path>
     <offsets>
-      <x-m> 0.3959</x-m>
+      <x-m> 5</x-m>
       <y-m> 0.0000</y-m>
-      <z-m> 1</z-m>
+      <z-m> 0</z-m>
     </offsets>
   </model>
 
@@ -41,10 +41,24 @@
     <type>rotate</type>
     <object-name>gamma1</object-name>
     <object-name>gamma2</object-name>
+    <offset-deg>130</offset-deg>
+    <center>
+      <x-m> 0 </x-m>
+      <y-m> 0.0000</y-m>
+      <z-m> 0.0</z-m>
+    </center>
+    <axis>
+     <x>0</x>
+     <y>-1</y>
+     <z>0</z>
+    </axis>
+  </animation>
+  <animation>
+    <type>rotate</type>
     <object-name>gamma3</object-name>
     <offset-deg>90</offset-deg>
     <center>
-      <x-m> 0 </x-m>
+      <x-m> 0.0 </x-m>
       <y-m> 0.0000</y-m>
       <z-m> 0.0</z-m>
     </center>
