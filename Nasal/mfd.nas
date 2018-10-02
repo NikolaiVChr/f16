@@ -421,6 +421,7 @@ var PFD_NavDisplay =
                     print(err[0]);
                 }
             }
+            me.NDCpt.windShown = 0;
             me.NDCpt.update();
         };
         #
