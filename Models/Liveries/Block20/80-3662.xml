@@ -4,8 +4,8 @@
  <sim>
   <model>
    <livery>
-    <name type="string">Norwegian</name>
-    <texture>Liveries/Block20/Norway.png</texture>
+    <name type="string">RNoAF FLO, 662</name>
+    <texture>Liveries/Block20/80-3662.png</texture>
     <owner type="string">RNoAF</owner>
    </livery>
    <livery-logo>
@@ -13,7 +13,7 @@
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/Block20/patch.rdaf.png</texture>
+      <texture>Liveries/patch.default.png</texture>
   </livery-patch>
   </model>
  </sim>
