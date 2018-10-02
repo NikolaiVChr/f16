@@ -603,7 +603,7 @@ var SubSystem_Main = {
             if (notification.NotificationType == "FrameNotification")
             {
                 me.Main.update(notification);
-                ownship_pos.set_latlon(getprop("position/latitude-deg"), getprop("position/longitude-deg"));
+                ownship_pos.set_latlon(getprop("position/latitude-deg"), getprop("position/longitude-deg"), getprop("position/altitude-ft")*FT2M);
                 notification.ownship_pos = ownship_pos;
                 return emesary.Transmitter.ReceiptStatus_OK;
             }
