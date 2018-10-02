@@ -1358,6 +1358,8 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
     <limits-custom>
         <vne>800</vne>   <!--(KIAS) source: T.O. GR1F-16CJ-1  page 1-32     also limited by mach 2.05-->
         <mach>2.05</mach>
+        <tire-nose>217</tire-nose>
+        <tire-main>225</tire-main>
     </limits-custom>
     <payload>
         <armament>

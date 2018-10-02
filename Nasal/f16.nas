@@ -23,8 +23,12 @@ var checkVNE = func {
   # Now check VNE
   var airspeedM= getprop("instrumentation/airspeed-indicator/indicated-mach");
   var vneM     = getprop("limits-custom/mach");
-  var airspeed = getprop("instrumentation/airspeed-indicator/indicated-speed-kt");
+  var airspeed = getprop("/fdm/jsbsim/velocities/vc-kts");
   var vne      = getprop("limits-custom/vne");
+  var nose      = getprop("limits-custom/tire-nose");
+  var main      = getprop("limits-custom/tire-main");
+  var MLG_kt   = getprop("fdm/jsbsim/gear/unit[1]/WOW")?(getprop("fdm/jsbsim/gear/unit[1]/wheel-speed-fps")*FPS2KT):0;
+  var NLG_kt   = getprop("fdm/jsbsim/gear/unit[0]/WOW")?(getprop("fdm/jsbsim/gear/unit[0]/wheel-speed-fps")*FPS2KT):0;
   var old = getprop("f16/vne");
 
   if ((airspeed != nil) and (vne != nil) and (airspeed > vne))
@@ -34,6 +38,9 @@ var checkVNE = func {
   } elsif ((airspeedM != nil) and (vneM != nil) and (airspeedM > vneM)) {
     msg = "Airspeed exceeds Vne!";
     setprop("f16/vne",1);
+  } elsif ((nose!=nil and NLG_kt>nose)or (main!=nil and MLG_kt>main)) {
+    msg = "Groundspeed exceeds tire limit!";
+    setprop("f16/vne",0);
   }  else {
     setprop("f16/vne",0);
   }
