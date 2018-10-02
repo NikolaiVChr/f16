@@ -9,7 +9,7 @@
                 <owner type="string">UAE</owner>
             </livery>
             <livery-logo>
-            <texture>Liveries/Block20/Norway.logos.png</texture>
+            <texture>Liveries/standard.logos.png</texture>
            </livery-logo>
 
         <livery-patch>
