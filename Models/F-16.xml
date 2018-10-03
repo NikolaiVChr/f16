@@ -407,6 +407,9 @@
   <type>select</type>
   <object-name>pos_lights_flash</object-name>
   <condition>
+    <not>
+    <property>sim/rendering/shaders/skydome</property>
+  </not>
    <property>controls/lighting/ext-lighting-panel/pos-lights-flash</property>
    <or>
    <equals>
@@ -421,6 +424,77 @@
    <property>controls/lighting/ext-lighting-panel/master</property>
   </condition>
  </animation>
+
+<model>
+  <name>pos-left1</name>
+  <path>Aircraft/f16/Models/pos-left.xml</path> 
+  <offsets>
+            <x-m> 1.60236 </x-m>
+            <y-m> -4.55165 </y-m>
+            <z-m> 0.012629 </z-m>
+        </offsets>   
+ </model>
+
+ <model>
+  <name>pos-right1</name>
+  <path>Aircraft/f16/Models/pos-right.xml</path>    
+  <offsets>
+            <x-m> 1.60236 </x-m>
+            <y-m> 4.55165 </y-m>
+            <z-m> 0.012629 </z-m>
+        </offsets>
+ </model>
+
+ <model>
+  <name>pos-left2</name>
+  <path>Aircraft/f16/Models/pos-left2.xml</path> 
+  <offsets>
+            <x-m> -3.36687 </x-m>
+            <y-m> -0.748387 </y-m>
+            <z-m> -0.555937 </z-m>
+        </offsets>   
+ </model>
+
+ <model>
+  <name>pos-right2</name>
+  <path>Aircraft/f16/Models/pos-right2.xml</path> 
+  <offsets>
+            <x-m> -3.36687 </x-m>
+            <y-m> 0.748387 </y-m>
+            <z-m> -0.555937 </z-m>
+        </offsets>   
+ </model>
+
+  <animation>
+    <type>select</type>
+    <object-name>pos-left</object-name>
+    <object-name>pos-right</object-name>
+    <object-name>pos-left2</object-name>
+    <object-name>pos-right2</object-name>
+    <condition>
+      <property>sim/rendering/shaders/skydome</property>
+      <property>controls/lighting/ext-lighting-panel/pos-lights-flash</property>
+      <or>
+        <equals>
+          <property>controls/lighting/ext-lighting-panel/wing-tail</property>
+          <value>2</value>
+        </equals>
+        <equals>
+          <property>controls/lighting/ext-lighting-panel/wing-tail</property>
+          <value>0.0</value>
+        </equals>
+      </or>
+      <property>controls/lighting/ext-lighting-panel/master</property>
+    </condition>
+  </animation>
+
+
+
+
+
+
+
+
 <!-- flash causes this not to work, since flash is what we use during flight
      we'll disable steady/off for now
  <animation>

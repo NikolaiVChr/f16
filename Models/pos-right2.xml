@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+  <path>/Models/Effects/procedural_light.ac</path>
+        
+    
+<animation>
+  <type>scale</type>
+  <object-name>procedural_light</object-name>
+  <x-offset>1.5</x-offset>
+  <y-offset>1.5</y-offset>
+  <z-offset>1.5</z-offset>
+ </animation>
+
+
+
+
+  
+  <effect>
+    <name>procedural-light-nav-left</name>
+    <inherits-from>Effects/procedural-light</inherits-from>
+    <object-name>procedural_light</object-name>
+    <parameters>
+        <light_color_base_r type="float">0.320</light_color_base_r>
+        <light_color_base_g type="float">1.000</light_color_base_g>
+        <light_color_base_b type="float">0.320</light_color_base_b>
+        <light_color_center_r type="float">1.0</light_color_center_r>
+        <light_color_center_g type="float">1.0</light_color_center_g>
+        <light_color_center_b type="float">1.0</light_color_center_b>
+        <intensity_scale type="float">1.0</intensity_scale>
+
+        <!-- Arc is 110 deg, is 55 deg per side, giving 35 deg from wing -->
+        <pointing_x type="float">0.0</pointing_x>
+        <pointing_y type="float">-1</pointing_y>
+        <pointing_z type="float">0.0</pointing_z>
+
+        <is_directional type="bool">true</is_directional>
+        <is_strobe type="bool">false</is_strobe>
+
+        <!-- Angles are 0.0 at 0 deg from pointing direction, 1.0 at
+             90/-90 deg, and 0.0 at 180/-180 deg.
+
+             For left navigation light we use -0/-35 .. +110/+145 for
+             the inner/outer range. This gives an arc of 110/180 deg,
+             or 55/90 deg from center.
+
+             Value = sin(angle in degrees)
+
+             0.8191520442889918 = 55 deg (* 2 = 110 deg inner angle)
+             1.0000 = 90 deg (* 2 = 180 deg outer angle)
+        -->
+        <inner_angle type="float">0.4</inner_angle>
+        <outer_angle type="float">0.7</outer_angle>
+        <zero_angle type="float">1</zero_angle>
+        <outer_gain type="float">0.5</outer_gain>
+    </parameters>
+
+</effect>
+
+</PropertyList>
