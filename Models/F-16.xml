@@ -490,9 +490,89 @@
 
 
 
+<model>
+  <name>belly</name>
+  <path>Aircraft/f16/Models/belly-light.xml</path> 
+  <offsets>
+            <x-m> -1.23466 </x-m>
+            <y-m> 0 </y-m>
+            <z-m> -0.862066 </z-m>
+        </offsets>   
+ </model>
+ <model>
+  <name>spine</name>
+  <path>Aircraft/f16/Models/spine-light.xml</path> 
+  <offsets>
+            <x-m> -2.05409 </x-m>
+            <y-m> 0 </y-m>
+            <z-m> 0.849391 </z-m>
+        </offsets>   
+ </model>
+ <model>
+  <name>tl</name>
+  <path>Aircraft/f16/Models/tail-light.xml</path> 
+  <offsets>
+            <x-m> 5.48036 </x-m>
+            <y-m> 0 </y-m>
+            <z-m> 1.13691 </z-m>
+        </offsets>   
+ </model>
+ <model>
+  <name>tl2</name>
+  <path>Aircraft/f16/Models/tail-light.xml</path> 
+  <offsets>
+            <x-m> 5.03444 </x-m>
+            <y-m> 0 </y-m>
+            <z-m> 0.853577 </z-m>
+        </offsets>   
+ </model>
 
+<animation>
+    <type>select</type>
+    <object-name>belly</object-name>
+    <condition>
+      <property>sim/rendering/shaders/skydome</property>
+      <property>controls/lighting/ext-lighting-panel/master</property>
+      <equals>
+       <property>controls/lighting/ext-lighting-panel/form-knob</property>
+       <value>1</value>
+      </equals>
+    </condition>
+  </animation>
 
+  <animation>
+    <type>select</type>
+    <object-name>tl</object-name>
+    <condition>
+      <property>sim/rendering/shaders/skydome</property>
+      <less-than>
+       <property>sim/variant-id</property>
+       <value>3</value>
+      </less-than>
+       <property>controls/lighting/ext-lighting-panel/master</property>
+      <equals>
+       <property>controls/lighting/ext-lighting-panel/form-knob</property>
+       <value>1</value>
+      </equals>
+    </condition>
+  </animation>
 
+  <animation>
+    <type>select</type>
+    <object-name>tl2</object-name>
+    <condition>
+      <property>sim/rendering/shaders/skydome</property>
+      <greater-than>
+       <property>sim/variant-id</property>
+       <value>2</value>
+      </greater-than>
+       <property>controls/lighting/ext-lighting-panel/master</property>
+      <equals>
+       <property>controls/lighting/ext-lighting-panel/form-knob</property>
+       <value>1</value>
+      </equals>
+    </condition>
+  </animation>
 
 
 <!-- flash causes this not to work, since flash is what we use during flight
