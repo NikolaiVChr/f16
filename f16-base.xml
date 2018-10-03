@@ -366,6 +366,10 @@
                 <float n="5" type="double" alias="/fdm/jsbsim/fcs/left-flaperon-norm"/>
                 <float n="6" type="double" alias="/fdm/jsbsim/fcs/right-flaperon-norm"/>
                 <float n="7" type="double" alias="/gear/gear[0]/steering-norm"/>
+                <float n="10" type="double">0</float><!-- afterburner -->
+                <float n="11" type="double">0</float>
+                <float n="12" type="double">0</float>
+                <float n="13" type="double">0</float>
             </generic>
             <visibility-range-nm type="int">150</visibility-range-nm>
         </multiplay>

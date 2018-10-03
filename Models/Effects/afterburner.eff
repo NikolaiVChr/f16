@@ -4,16 +4,16 @@
   <name>AB-flame</name>
   <inherits-from>Effects/thrust-flame</inherits-from>
   <parameters>
-    <flame_color_low_r type="float">0.75</flame_color_low_r>
-    <flame_color_low_g type="float">0.25</flame_color_low_g>
-    <flame_color_low_b type="float">0.2</flame_color_low_b>
+    <flame_color_low_r type="float"><use>sim/multiplay/generic/float[11]</use></flame_color_low_r>
+    <flame_color_low_g type="float"><use>sim/multiplay/generic/float[12]</use></flame_color_low_g>
+    <flame_color_low_b type="float"><use>sim/multiplay/generic/float[13]</use></flame_color_low_b>
     <flame_color_high_r type="float">1.0</flame_color_high_r>
-    <flame_color_high_g type="float">1.0</flame_color_high_g>
+    <flame_color_high_g type="float">1.0</flame_color_high_g> 
     <flame_color_high_b type="float">1.0</flame_color_high_b>
     <use_shocks type="int">1</use_shocks>
     <use_noise type="int">1</use_noise>
     <thrust_collimation type="float">0.1</thrust_collimation>   
-    <thrust_density type="float">0.5</thrust_density>
+    <thrust_density type="float"><use>sim/multiplay/generic/float[10]</use></thrust_density>
     <base_flame_density type="float">0.1</base_flame_density>
     <noise_strength type="float">0.2</noise_strength>
     <noise_scale type="float">0.3</noise_scale>

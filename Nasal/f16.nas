@@ -339,10 +339,20 @@ var medium = {
     batteryChargeDischarge(); ########## To work optimally, should run at or below 0.5 in a loop ##########
     
     sendLightsToMp();
+    sendABtoMP();
 
     settimer(func {me.loop()},0.5);
   },
 };
+
+var sendABtoMP = func {
+  var red = getprop("rendering/scene/diffuse/red");
+  setprop("sim/multiplay/generic/float[10]",  1-red*0.75);
+
+  setprop("sim/multiplay/generic/float[11]",  0.75+(0.25-red*0.25));
+  setprop("sim/multiplay/generic/float[12]",  0.25+(0.75-red*0.75));
+  setprop("sim/multiplay/generic/float[13]",  0.2+(0.8-red*0.8));
+}
 
 var sendLightsToMp = func {
   var master = getprop("controls/lighting/ext-lighting-panel/master");
