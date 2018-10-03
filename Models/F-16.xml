@@ -512,7 +512,7 @@
   <name>tl</name>
   <path>Aircraft/f16/Models/tail-light.xml</path> 
   <offsets>
-            <x-m> 5.48036 </x-m>
+            <x-m> 5.50707 </x-m>
             <y-m> 0 </y-m>
             <z-m> 1.13691 </z-m>
         </offsets>   
@@ -621,6 +621,9 @@
   <object-name>FwdFormationLight</object-name>
   <object-name>AftPosLight2</object-name>
   <condition>
+    <not>
+    <property>sim/rendering/shaders/skydome</property>
+  </not>
     <less-than>
      <property>sim/variant-id</property>
      <value>3</value>
@@ -640,6 +643,9 @@
   <object-name>FwdFormationLight</object-name>
   <object-name>AftPosLight1</object-name>
   <condition>
+    <not>
+    <property>sim/rendering/shaders/skydome</property>
+  </not>
     <greater-than>
      <property>sim/variant-id</property>
      <value>2</value>
