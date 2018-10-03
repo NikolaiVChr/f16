@@ -410,22 +410,7 @@
     <not>
     <property>sim/rendering/shaders/skydome</property>
   </not>
-   <property>controls/lighting/ext-lighting-panel/pos-lights-flash</property>
-   <or>
-   <equals>
-    <property>controls/lighting/ext-lighting-panel/wing-tail</property>
-    <value>2</value>
-   </equals>
-   <equals>
-    <property>controls/lighting/ext-lighting-panel/wing-tail</property>
-    <value>0.0</value>
-   </equals>
-   </or>
-   <property>controls/lighting/ext-lighting-panel/master</property>
-   <greater-than>
-       <property>fdm/jsbsim/elec/bus/ess-dc</property>
-       <value>20</value>
-    </greater-than>   
+   <property>sim/multiplay/generic/bool[40]</property>
   </condition>
  </animation>
 
@@ -477,22 +462,7 @@
     <object-name>posright2</object-name>
     <condition><and>
       <property>sim/rendering/shaders/skydome</property>
-      <property>controls/lighting/ext-lighting-panel/pos-lights-flash</property>
-      <or>
-        <equals>
-          <property>controls/lighting/ext-lighting-panel/wing-tail</property>
-          <value>2</value>
-        </equals>
-        <equals>
-          <property>controls/lighting/ext-lighting-panel/wing-tail</property>
-          <value>0.0</value>
-        </equals>
-      </or>
-      <property>controls/lighting/ext-lighting-panel/master</property>
-      <greater-than>
-       <property>fdm/jsbsim/elec/bus/ess-dc</property>
-       <value>20</value>
-    </greater-than>  
+      <property>sim/multiplay/generic/bool[40]</property> 
     </and> 
     </condition>
   </animation>
@@ -542,15 +512,7 @@
     <object-name>spine</object-name>
     <condition>
       <property>sim/rendering/shaders/skydome</property>
-      <property>controls/lighting/ext-lighting-panel/master</property>
-      <equals>
-       <property>controls/lighting/ext-lighting-panel/form-knob</property>
-       <value>1</value>
-      </equals>
-      <greater-than>
-       <property>fdm/jsbsim/elec/bus/ess-dc</property>
-       <value>20</value>
-    </greater-than>   
+      <property>sim/multiplay/generic/bool[41]</property> 
     </condition>
   </animation>
 
@@ -559,19 +521,7 @@
     <object-name>tl</object-name>
     <condition>
       <property>sim/rendering/shaders/skydome</property>
-      <less-than>
-       <property>sim/variant-id</property>
-       <value>3</value>
-      </less-than>
-       <property>controls/lighting/ext-lighting-panel/master</property>
-      <equals>
-       <property>controls/lighting/ext-lighting-panel/form-knob</property>
-       <value>1</value>
-      </equals>
-      <greater-than>
-       <property>fdm/jsbsim/elec/bus/ess-dc</property>
-       <value>20</value>
-    </greater-than>   
+      <property>sim/multiplay/generic/bool[42]</property>  
     </condition>
   </animation>
 
@@ -580,19 +530,7 @@
     <object-name>tl2</object-name>
     <condition>
       <property>sim/rendering/shaders/skydome</property>
-      <greater-than>
-       <property>sim/variant-id</property>
-       <value>2</value>
-      </greater-than>
-       <property>controls/lighting/ext-lighting-panel/master</property>
-      <equals>
-       <property>controls/lighting/ext-lighting-panel/form-knob</property>
-       <value>1</value>
-      </equals>
-      <greater-than>
-       <property>fdm/jsbsim/elec/bus/ess-dc</property>
-       <value>20</value>
-    </greater-than>   
+      <property>sim/multiplay/generic/bool[43]</property> 
     </condition>
   </animation>
 
@@ -645,15 +583,7 @@
     <not>
     <property>sim/rendering/shaders/skydome</property>
   </not>
-     <property>controls/lighting/ext-lighting-panel/master</property>
-    <equals>
-     <property>controls/lighting/ext-lighting-panel/form-knob</property>
-     <value>1</value>
-    </equals>
-    <greater-than>
-       <property>fdm/jsbsim/elec/bus/ess-dc</property>
-       <value>20</value>
-    </greater-than>   
+     <property>sim/multiplay/generic/bool[41]</property> 
   </and>
   </condition>
  </animation>
@@ -666,19 +596,7 @@
     <not>
     <property>sim/rendering/shaders/skydome</property>
   </not>
-    <less-than>
-     <property>sim/variant-id</property>
-     <value>3</value>
-    </less-than>
-     <property>controls/lighting/ext-lighting-panel/master</property>
-    <equals>
-     <property>controls/lighting/ext-lighting-panel/form-knob</property>
-     <value>1</value>
-    </equals>
-    <greater-than>
-       <property>fdm/jsbsim/elec/bus/ess-dc</property>
-       <value>20</value>
-    </greater-than>   
+    <property>sim/multiplay/generic/bool[42]</property>   
   </condition>
  </animation>
 
@@ -690,19 +608,7 @@
     <not>
     <property>sim/rendering/shaders/skydome</property>
   </not>
-    <greater-than>
-     <property>sim/variant-id</property>
-     <value>2</value>
-    </greater-than>
-     <property>controls/lighting/ext-lighting-panel/master</property>
-    <equals>
-     <property>controls/lighting/ext-lighting-panel/form-knob</property>
-     <value>1</value>
-    </equals>
-    <greater-than>
-       <property>fdm/jsbsim/elec/bus/ess-dc</property>
-       <value>20</value>
-    </greater-than>   
+    <property>sim/multiplay/generic/bool[43]</property>   
   </and>
   </condition>
  </animation>

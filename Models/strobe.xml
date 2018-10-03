@@ -13,11 +13,8 @@
   <type>select</type>
   <object-name>strobe</object-name>
   <condition>
-   <property>sim/model/lighting/strobe/state</property>
-   <greater-than>
-       <property>fdm/jsbsim/elec/bus/ess-dc</property>
-       <value>20</value>
-    </greater-than>  
+   <property>sim/multiplay/generic/bool[44]</property> 
+   <property>sim/multiplay/generic/bool[45]</property> 
   </condition>
  </animation>
 

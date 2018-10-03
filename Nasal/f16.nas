@@ -227,6 +227,7 @@ var loop_flare = func {
       } else {
         setprop("f16/force", 7);
       }
+      
     settimer(loop_flare, 0.10);
 };
 
@@ -337,9 +338,50 @@ var medium = {
     
     batteryChargeDischarge(); ########## To work optimally, should run at or below 0.5 in a loop ##########
     
+    sendLightsToMp();
+
     settimer(func {me.loop()},0.5);
   },
 };
+
+var sendLightsToMp = func {
+  var master = getprop("controls/lighting/ext-lighting-panel/master");
+  var pos = getprop("controls/lighting/ext-lighting-panel/pos-lights-flash");
+  var wing = getprop("controls/lighting/ext-lighting-panel/wing-tail");
+  var dc = getprop("fdm/jsbsim/elec/bus/ess-dc");
+  var form = getprop("controls/lighting/ext-lighting-panel/form-knob");
+  var vi = getprop("sim/variant-id");
+
+  if (pos and (wing == 0 or wing == 2) and master and dc > 20) {
+    setprop("sim/multiplay/generic/bool[40]",1);
+  } else {
+    setprop("sim/multiplay/generic/bool[40]",0);
+  }
+
+  if (form == 1 and master and dc > 20) {
+    setprop("sim/multiplay/generic/bool[41]",1);
+  } else {
+    setprop("sim/multiplay/generic/bool[41]",0);
+  }
+
+  if (form == 1 and master and dc > 20 and vi < 3) {
+    setprop("sim/multiplay/generic/bool[42]",1);
+  } else {
+    setprop("sim/multiplay/generic/bool[42]",0);
+  }
+
+  if (form == 1 and master and dc > 20 and vi > 2) {
+    setprop("sim/multiplay/generic/bool[43]",1);
+  } else {
+    setprop("sim/multiplay/generic/bool[43]",0);
+  }
+
+  if (master and dc > 20) {
+    setprop("sim/multiplay/generic/bool[44]",1);
+  } else {
+    setprop("sim/multiplay/generic/bool[44]",0);
+  }
+}
 
 var batteryChargeDischarge = func {
     var battery_percent = getprop("/fdm/jsbsim/elec/sources/battery-percent");
