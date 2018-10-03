@@ -14,6 +14,10 @@
   <object-name>strobe</object-name>
   <condition>
    <property>sim/model/lighting/strobe/state</property>
+   <greater-than>
+       <property>fdm/jsbsim/elec/bus/ess-dc</property>
+       <value>20</value>
+    </greater-than>  
   </condition>
  </animation>
 

@@ -422,11 +422,15 @@
    </equals>
    </or>
    <property>controls/lighting/ext-lighting-panel/master</property>
+   <greater-than>
+       <property>fdm/jsbsim/elec/bus/ess-dc</property>
+       <value>20</value>
+    </greater-than>   
   </condition>
  </animation>
 
 <model>
-  <name>pos-left1</name>
+  <name>posleft1</name>
   <path>Aircraft/f16/Models/pos-left.xml</path> 
   <offsets>
             <x-m> 1.60236 </x-m>
@@ -436,7 +440,7 @@
  </model>
 
  <model>
-  <name>pos-right1</name>
+  <name>posright1</name>
   <path>Aircraft/f16/Models/pos-right.xml</path>    
   <offsets>
             <x-m> 1.60236 </x-m>
@@ -446,7 +450,7 @@
  </model>
 
  <model>
-  <name>pos-left2</name>
+  <name>posleft2</name>
   <path>Aircraft/f16/Models/pos-left2.xml</path> 
   <offsets>
             <x-m> -3.36687 </x-m>
@@ -456,7 +460,7 @@
  </model>
 
  <model>
-  <name>pos-right2</name>
+  <name>posright2</name>
   <path>Aircraft/f16/Models/pos-right2.xml</path> 
   <offsets>
             <x-m> -3.36687 </x-m>
@@ -467,11 +471,11 @@
 
   <animation>
     <type>select</type>
-    <object-name>pos-left</object-name>
-    <object-name>pos-right</object-name>
-    <object-name>pos-left2</object-name>
-    <object-name>pos-right2</object-name>
-    <condition>
+    <object-name>posleft1</object-name>
+    <object-name>posright1</object-name>
+    <object-name>posleft2</object-name>
+    <object-name>posright2</object-name>
+    <condition><and>
       <property>sim/rendering/shaders/skydome</property>
       <property>controls/lighting/ext-lighting-panel/pos-lights-flash</property>
       <or>
@@ -485,6 +489,11 @@
         </equals>
       </or>
       <property>controls/lighting/ext-lighting-panel/master</property>
+      <greater-than>
+       <property>fdm/jsbsim/elec/bus/ess-dc</property>
+       <value>20</value>
+    </greater-than>  
+    </and> 
     </condition>
   </animation>
 
@@ -530,6 +539,7 @@
 <animation>
     <type>select</type>
     <object-name>belly</object-name>
+    <object-name>spine</object-name>
     <condition>
       <property>sim/rendering/shaders/skydome</property>
       <property>controls/lighting/ext-lighting-panel/master</property>
@@ -537,6 +547,10 @@
        <property>controls/lighting/ext-lighting-panel/form-knob</property>
        <value>1</value>
       </equals>
+      <greater-than>
+       <property>fdm/jsbsim/elec/bus/ess-dc</property>
+       <value>20</value>
+    </greater-than>   
     </condition>
   </animation>
 
@@ -554,6 +568,10 @@
        <property>controls/lighting/ext-lighting-panel/form-knob</property>
        <value>1</value>
       </equals>
+      <greater-than>
+       <property>fdm/jsbsim/elec/bus/ess-dc</property>
+       <value>20</value>
+    </greater-than>   
     </condition>
   </animation>
 
@@ -571,6 +589,10 @@
        <property>controls/lighting/ext-lighting-panel/form-knob</property>
        <value>1</value>
       </equals>
+      <greater-than>
+       <property>fdm/jsbsim/elec/bus/ess-dc</property>
+       <value>20</value>
+    </greater-than>   
     </condition>
   </animation>
 
@@ -615,10 +637,30 @@
 
 <!-- start formation lights -->
  <animation>
+  <name>Fformation_lights</name>
+  <type>select</type>
+  <object-name>LowFormationLlight</object-name>
+  <object-name>FwdFormationLight</object-name>
+  <condition><and>
+    <not>
+    <property>sim/rendering/shaders/skydome</property>
+  </not>
+     <property>controls/lighting/ext-lighting-panel/master</property>
+    <equals>
+     <property>controls/lighting/ext-lighting-panel/form-knob</property>
+     <value>1</value>
+    </equals>
+    <greater-than>
+       <property>fdm/jsbsim/elec/bus/ess-dc</property>
+       <value>20</value>
+    </greater-than>   
+  </and>
+  </condition>
+ </animation>
+
+ <animation>
   <name>F-16A-MLU-rnlaf_formation_lights</name>
   <type>select</type>
-  <object-name>LowFormationLight</object-name>
-  <object-name>FwdFormationLight</object-name>
   <object-name>AftPosLight2</object-name>
   <condition>
     <not>
@@ -633,16 +675,18 @@
      <property>controls/lighting/ext-lighting-panel/form-knob</property>
      <value>1</value>
     </equals>
+    <greater-than>
+       <property>fdm/jsbsim/elec/bus/ess-dc</property>
+       <value>20</value>
+    </greater-than>   
   </condition>
  </animation>
 
  <animation>
   <name>F-16C_formation_lights</name>
   <type>select</type>
-  <object-name>LowFormationLight</object-name>
-  <object-name>FwdFormationLight</object-name>
   <object-name>AftPosLight1</object-name>
-  <condition>
+  <condition><and>
     <not>
     <property>sim/rendering/shaders/skydome</property>
   </not>
@@ -655,6 +699,11 @@
      <property>controls/lighting/ext-lighting-panel/form-knob</property>
      <value>1</value>
     </equals>
+    <greater-than>
+       <property>fdm/jsbsim/elec/bus/ess-dc</property>
+       <value>20</value>
+    </greater-than>   
+  </and>
   </condition>
  </animation>
 <!-- end formation lights -->
