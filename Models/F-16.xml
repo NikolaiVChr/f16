@@ -336,9 +336,9 @@
   <path>Aircraft/Generic/Effects/tyre-smoke-nose.xml</path>
   <name>tyre-smoke-n</name>
   <offsets>
-   <x-m>-2.97</x-m>
-   <y-m>0.0</y-m>
-   <z-m>-2.0</z-m>
+   <x-m> -3.02153 </x-m>
+    <y-m> -0.03405 </y-m>
+    <z-m> -1.91735 </z-m>
   </offsets>
  </model>
 
@@ -346,9 +346,9 @@
    <path>Aircraft/Generic/Effects/tyre-smoke-port.xml</path>
    <name>tyre-smoke-p</name>
    <offsets>
-    <x-m>0.0</x-m>
-    <y-m>-1.21</y-m>
-    <z-m>-2.0</z-m>
+    <x-m> 0.56097 </x-m>
+    <y-m> 1.16952 </y-m>
+    <z-m> -1.79705 </z-m>
    </offsets>
   </model>
 
@@ -356,9 +356,39 @@
    <path>Aircraft/Generic/Effects/tyre-smoke-stbd.xml</path>
    <name>tyre-smoke-s</name>
    <offsets>
-   <x-m>0.0</x-m>
-    <y-m>1.21</y-m>
-    <z-m>-2.0</z-m>
+   <x-m> 0.56097 </x-m>
+    <y-m> -1.18118 </y-m>
+    <z-m> -1.79705 </z-m>
+   </offsets>
+  </model>
+
+  <model>
+  <path>Aircraft/Generic/Effects/rain-nose.xml</path>
+  <name>tyre-rain-n</name>
+  <offsets>
+   <x-m> -3.02153 </x-m>
+    <y-m> -0.03405 </y-m>
+    <z-m> -1.91735 </z-m>
+  </offsets>
+ </model>
+
+  <model>
+   <path>Aircraft/Generic/Effects/rain-port.xml</path>
+   <name>tyre-rain-p</name>
+   <offsets>
+    <x-m> 0.56097 </x-m>
+    <y-m> 1.16952 </y-m>
+    <z-m> -1.79705 </z-m>
+   </offsets>
+  </model>
+
+  <model>
+   <path>Aircraft/Generic/Effects/rain-stbd.xml</path>
+   <name>tyre-rain-s</name>
+   <offsets>
+   <x-m> 0.56097 </x-m>
+    <y-m> -1.18118 </y-m>
+    <z-m> -1.79705 </z-m>
    </offsets>
   </model>
  <!-- end effects -->
@@ -714,7 +744,7 @@
   <type>select</type>
   <object-name>InternalFlame</object-name>
   <condition>
-   <property>sim/multiplay/generic/float[1]</property>
+   <property>sim/multiplay/generic/bool[39]</property>
   </condition>
  </animation>
 
@@ -756,7 +786,7 @@
   <name>AB_Flame</name>
   <path>Aircraft/f16/Models/Effects/afterburner.xml</path>
   <condition>
-   <property>sim/multiplay/generic/float[1]</property>
+   <property>sim/multiplay/generic/bool[39]</property>
   </condition>
   <offsets>
    <x-m>5.44</x-m>

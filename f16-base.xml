@@ -359,7 +359,7 @@
                 <int n="18" type="int" alias="/sim/model/f16/smokewinderW9"/>
 
                 <float n="0" type="double" alias="/engines/engine[0]/nozzle-pos-norm"/>
-                <float n="1" type="double" alias="/engines/engine[0]/augmentation"/>
+                <bool n="39" type="bool" alias="/engines/engine[0]/augmentation"/>
                 <float n="2" type="double" alias="/engines/engine[0]/augmentation1"/>
                 <float n="3" type="double" alias="/velocities/airspeed-kt"/>
                 <float n="4" type="double" alias="/fdm/jsbsim/fcs/dht-right-pos-rad"/>
