@@ -98,9 +98,8 @@ Convert groundeffect to be an addition instead of a factor.
 
 Effects
 -------
-Better aircraft lighting system: cockpit, taxi/landing, anti-collision, formation, navigation, beacon, tail flood, etc.
 page 1-111 of b50 manual
-Make ejection seat use the proper F16 seat/pilot.
+
 
 Flight controls
 ---------------
