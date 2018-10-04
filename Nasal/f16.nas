@@ -361,7 +361,7 @@ var sendLightsToMp = func {
   var wing = getprop("controls/lighting/ext-lighting-panel/wing-tail");
   var dc = getprop("fdm/jsbsim/elec/bus/ess-dc");
   var form = getprop("controls/lighting/ext-lighting-panel/form-knob");
-  var vi = getprop("sim/variant-id");
+  var vi = getprop("sim/model/f16/dragchute");
 
   if (pos and (wing == 0 or wing == 2) and master and dc > 20) {
     setprop("sim/multiplay/generic/bool[40]",1);
@@ -375,13 +375,13 @@ var sendLightsToMp = func {
     setprop("sim/multiplay/generic/bool[41]",0);
   }
 
-  if (form == 1 and master and dc > 20 and vi < 3) {
+  if (form == 1 and master and dc > 20 and vi) {
     setprop("sim/multiplay/generic/bool[42]",1);
   } else {
     setprop("sim/multiplay/generic/bool[42]",0);
   }
 
-  if (form == 1 and master and dc > 20 and vi > 2) {
+  if (form == 1 and master and dc > 20 and !vi) {
     setprop("sim/multiplay/generic/bool[43]",1);
   } else {
     setprop("sim/multiplay/generic/bool[43]",0);

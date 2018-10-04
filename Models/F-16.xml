@@ -1628,7 +1628,6 @@
   <type>select</type>
   <object-name>RNLAF_Tailroot</object-name>
   <object-name>Chute</object-name>
-  <object-name>AftPosLight2</object-name>
   <condition>
    <property>sim/model/f16/dragchute</property>
   </condition>
