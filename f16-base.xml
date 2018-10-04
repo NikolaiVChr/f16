@@ -370,6 +370,7 @@
                 <float n="11" type="double">0</float>
                 <float n="12" type="double">0</float>
                 <float n="13" type="double">0</float>
+                <float n="14" type="double">0</float><!-- scene red inverted -->
             </generic>
             <visibility-range-nm type="int">150</visibility-range-nm>
         </multiplay>
