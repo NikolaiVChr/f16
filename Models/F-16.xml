@@ -76,7 +76,7 @@
   <type>select</type>
   <object-name>dc</object-name>
   <condition>
-   <property>f16/chute/enable</property>
+   <property>sim/multiplay/generic/bool[35]</property>
   </condition>
  </animation>
 
