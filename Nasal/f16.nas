@@ -793,8 +793,10 @@ var chute = func{
     setprop("f16/chute/fold",0);
   } else {
     setprop("f16/chute/force",getprop("/velocities/groundspeed-kt")*0.01);
+    setprop("fdm/jsbsim/external_reactions/chute/magnitude", getprop("/velocities/airspeed-kt")*30);
     if (getprop("/velocities/groundspeed-kt")<=3 or getprop("/velocities/groundspeed-kt")>300) {
       setprop("f16/chute/fold",1);
+      setprop("fdm/jsbsim/external_reactions/chute/magnitude", 0);
       settimer(chute2,2.0);
       return;
     } elsif (getprop("/velocities/groundspeed-kt")<=25) {
@@ -805,5 +807,6 @@ var chute = func{
 }
 
 var chute2 = func{
+  setprop("fdm/jsbsim/external_reactions/chute/magnitude", 0);
   setprop("f16/chute/enable",0);
 }

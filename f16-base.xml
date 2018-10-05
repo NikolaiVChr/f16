@@ -1250,6 +1250,11 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                     <util-system-preload-input type="double">0</util-system-preload-input>
                     <emerg-pump-on type="bool">false</emerg-pump-on><!-- Set by electrical system -->
                 </hydraulics>
+                <external_reactions>
+                    <chute>
+                        <magnitude type="double">0</magnitude>
+                    </chute>
+                </external_reactions>
             </systems>
             <fcs>
                 <fly-by-wire>
