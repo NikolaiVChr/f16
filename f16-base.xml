@@ -344,6 +344,11 @@
                 <bool n="0" type="bool" alias="/damage/sounds/explode-on"/>
                 <bool n="1" type="bool" alias="/damage/fire/serviceable"/>
                 <bool n="2" type="bool">true</bool><!-- this must stay true to prevent bug in MP protocol for bools -->
+                <bool n="40" type="bool">true</bool>
+                <bool n="41" type="bool">true</bool>
+                <bool n="42" type="bool">true</bool>
+                <bool n="43" type="bool">true</bool>
+                <bool n="44" type="bool">true</bool>
                 <bool n="45" type="bool" alias="/sim/model/lighting/strobe/state"/>
                 <bool n="35" type="bool" alias="/f16/chute/enable"/>
                 <int n="2" type="int">0</int><!-- radar-standby -->

@@ -784,7 +784,7 @@ var eject = func{
 }
 
 var chute = func{
-  if (!getprop("sim/model/f16/dragchute") or (getprop("f16/chute/enable")==0  and (getprop("f16/chute/done")==1 or !getprop("fdm/jsbsim/gear/unit[0]/WOW")))) {
+  if (!getprop("sim/model/f16/dragchute") or (getprop("f16/chute/enable")==0  and getprop("f16/chute/done")==1)) {
       return;
   } elsif (getprop("f16/chute/enable")==0) {
     setprop("f16/chute/done",1);
