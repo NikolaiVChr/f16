@@ -793,7 +793,7 @@ var chute = func{
     setprop("f16/chute/fold",0);
   } else {
     setprop("f16/chute/force",getprop("/velocities/groundspeed-kt")*0.01);
-    setprop("fdm/jsbsim/external_reactions/chute/magnitude", getprop("/velocities/airspeed-kt")*30);
+    setprop("fdm/jsbsim/external_reactions/chute/magnitude", getprop("/velocities/airspeed-kt")*30);# this should be changed to proper drag force algorithm.
     if (getprop("/velocities/groundspeed-kt")<=3 or getprop("/velocities/groundspeed-kt")>300) {
       setprop("f16/chute/fold",1);
       setprop("fdm/jsbsim/external_reactions/chute/magnitude", 0);
