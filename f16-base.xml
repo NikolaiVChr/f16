@@ -456,6 +456,10 @@
                 <desc>Toggle smoke if installed</desc>
             </key>
             <key>
+                <name>F4 (if variant support it)</name>
+                <desc>Deploy dragchute</desc>
+            </key>
+            <key>
                 <name>F6</name>
                 <desc>Eject</desc>
             </key>
@@ -556,6 +560,9 @@ This will deploy flaps as if the gears were extended. They will still retract at
 NIGHTTIME FLYING
 There is flood and instrument lights that can be turned up.
 If running ALS you can also go into filters and enable one of the night vision modes.
+
+DRAGCHUTE
+Only a visual effect for now. Nosewheel must touch ground.
 
 FLYING IN MP
 Firstly be sure to use "Visible to 2017+", else others will not see everything working okay when they see your aircraft.
@@ -1040,6 +1047,17 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                <command>nasal</command>
                <script>
                 f16.eject();
+               </script>
+              </binding>
+             </key>
+             <key n="260">
+              <name>F4</name>
+              <desc>noop</desc>
+              <repeatable type="bool">false</repeatable>
+              <binding>
+               <command>nasal</command>
+               <script>
+                f16.chute();
                </script>
               </binding>
              </key>
@@ -1974,6 +1992,12 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <running-state type="bool">false</running-state>
         </engine>
         <done type="bool">false</done>
+        <chute>
+            <force type="double">2.0</force>
+            <fold type="double">0.0</fold>
+            <done type="bool">false</done>
+            <enable type="bool">false</enable>
+        </chute>
     </f16>
     <damage>
         <sound>

@@ -68,6 +68,19 @@
  </model>
 
  <model>
+  <name>dc</name>
+  <path>Aircraft/f16/Models/Effects/dragchute/dragchute.xml</path>
+ </model>
+
+ <animation>
+  <type>select</type>
+  <object-name>dc</object-name>
+  <condition>
+   <property>f16/chute/enable</property>
+  </condition>
+ </animation>
+
+ <model>
   <name>smoking</name>
   <path>Aircraft/f16/Models/Effects/damage-smoke.xml</path>
  </model>

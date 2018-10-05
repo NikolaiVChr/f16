@@ -450,6 +450,7 @@ var repair = func {
 
 var repair2 = func {
   setprop("f16/done",0);
+  setprop("f16/chute/done",0);
   setprop("sim/view[0]/enabled",1);
   setprop("sim/current-view/view-number",0);
   if (inAutostart) {
@@ -780,4 +781,29 @@ var eject = func{
   view.view_firing_missile(es);
   #setprop("sim/view[0]/enabled",0); #disabled since it might get saved so user gets no pilotview in next aircraft he flies in.
   settimer(func {crash.exp();},3.5);
+}
+
+var chute = func{
+  if (!getprop("sim/model/f16/dragchute") or (getprop("f16/chute/enable")==0  and (getprop("f16/chute/done")==1 or !getprop("fdm/jsbsim/gear/unit[0]/WOW")))) {
+      return;
+  } elsif (getprop("f16/chute/enable")==0) {
+    setprop("f16/chute/done",1);
+    setprop("f16/chute/enable",1);
+    setprop("f16/chute/force",2);
+    setprop("f16/chute/fold",0);
+  } else {
+    setprop("f16/chute/force",getprop("/velocities/groundspeed-kt")*0.01);
+    if (getprop("/velocities/groundspeed-kt")<=3 or getprop("/velocities/groundspeed-kt")>300) {
+      setprop("f16/chute/fold",1);
+      settimer(chute2,2.0);
+      return;
+    } elsif (getprop("/velocities/groundspeed-kt")<=25) {
+      setprop("f16/chute/fold",1-getprop("/velocities/groundspeed-kt")/25);
+    }
+  }
+  settimer(chute,0.05);
+}
+
+var chute2 = func{
+  setprop("f16/chute/enable",0);
 }
