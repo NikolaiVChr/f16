@@ -12,6 +12,8 @@
   <animation>
     <type>rotate</type>
     <object-name>DragChute</object-name>
+    <property>orientation/alpha-deg</property>
+    <factor>-1</factor>
     <offset-deg>90</offset-deg>
     <center>
       <x-m> 0.0 </x-m>
