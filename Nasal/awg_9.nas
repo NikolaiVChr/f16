@@ -838,7 +838,7 @@ var selectCheck = func {
     }
 }
 
-var selectCheck = func {
+var selectCheckLimited = func {
     var tgt_cmd = SelectTargetCommand.getValue();
     SelectTargetCommand.setIntValue(0);
     if (tgt_cmd != nil)
