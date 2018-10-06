@@ -821,5 +821,3 @@ var chute2 = func{
   setprop("fdm/jsbsim/external_reactions/chute/magnitude", 0);
   setprop("f16/chute/enable",0);
 }
-
-setprop("cd", 10.0);
