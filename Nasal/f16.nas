@@ -784,7 +784,14 @@ var eject = func{
 }
 
 var chute = func{
-  if (!getprop("sim/model/f16/dragchute") or (getprop("f16/chute/enable")==0  and getprop("f16/chute/done")==1)) {
+  if (getprop("f16/chute/done")==1) {
+      return;
+  }
+  chute1();
+}
+
+var chute1 = func{
+  if (!getprop("sim/model/f16/dragchute") or (getprop("f16/chute/enable")==0 and getprop("f16/chute/done")==1)) {
       return;
   } elsif (getprop("f16/chute/enable")==0) {
     setprop("f16/chute/done",1);
@@ -792,9 +799,7 @@ var chute = func{
     setprop("f16/chute/force",2);
     setprop("f16/chute/fold",0);
   } else {
-    setprop("f16/chute/force",getprop("/velocities/groundspeed-kt")*0.01);
-    setprop("fdm/jsbsim/external_reactions/chute/magnitude", getprop("/velocities/airspeed-kt")*30);# this should be changed to proper drag force algorithm.
-    if (getprop("/velocities/groundspeed-kt")<=3 or getprop("/velocities/groundspeed-kt")>300) {
+    if (getprop("/velocities/groundspeed-kt")<=3 or getprop("/velocities/airspeed-kt")>250) {
       setprop("f16/chute/fold",1);
       setprop("fdm/jsbsim/external_reactions/chute/magnitude", 0);
       settimer(chute2,2.0);
@@ -802,11 +807,19 @@ var chute = func{
     } elsif (getprop("/velocities/groundspeed-kt")<=25) {
       setprop("f16/chute/fold",1-getprop("/velocities/groundspeed-kt")/25);
     }
+    var pressure = getprop("fdm/jsbsim/aero/qbar-psf");#dynamic
+    var chuteArea = 200;#squarefeet of chute canopy
+    var dragCoeff = 0.50;
+    var force     = pressure*chuteArea*dragCoeff;
+    setprop("fdm/jsbsim/external_reactions/chute/magnitude", force);
+    setprop("f16/chute/force", 0,force*0.000154);
   }
-  settimer(chute,0.05);
+  settimer(chute1,0.05);
 }
 
 var chute2 = func{
   setprop("fdm/jsbsim/external_reactions/chute/magnitude", 0);
   setprop("f16/chute/enable",0);
 }
+
+setprop("cd", 10.0);

@@ -138,6 +138,10 @@ If running ALS you can also go into filters and enable one of the night vision m
 
 
 
+DRAGCHUTE
+Max recommended KIAS for deployment is 170.
+
+
 
 FLYING IN MP
 Firstly be sure to use "Visible to 2017+", else others will not see everything working okay when they see your aircraft.
