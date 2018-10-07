@@ -6,6 +6,40 @@
 
     <path>mfd.ac</path>
 
+    <animation>
+      <object-name>MFDButtonL1</object-name>
+      <object-name>MFDButtonL2</object-name>
+      <object-name>MFDButtonL3</object-name>
+      <object-name>MFDButtonL4</object-name>
+      <object-name>MFDButtonL5</object-name>
+      <object-name>MFDButtonR1</object-name>
+      <object-name>MFDButtonR2</object-name>
+      <object-name>MFDButtonR3</object-name>
+      <object-name>MFDButtonR4</object-name>
+      <object-name>MFDButtonR5</object-name>
+      <object-name>MFDButtonT1</object-name>
+      <object-name>MFDButtonT2</object-name>
+      <object-name>MFDButtonT3</object-name>
+      <object-name>MFDButtonT4</object-name>
+      <object-name>MFDButtonT5</object-name>
+      <object-name>MFDButtonB1</object-name>
+      <object-name>MFDButtonB2</object-name>
+      <object-name>MFDButtonB3</object-name>
+      <object-name>MFDButtonB4</object-name>
+      <object-name>MFDButtonB5</object-name>
+      <object-name>MFDButtonBrightness</object-name>
+      <object-name>MFDButtonCon</object-name>
+      <object-name>MFDButtonSym</object-name>
+      <object-name>MFDButtonGain</object-name>
+      <type>material</type>
+      <emission>
+       <factor-prop>controls/lighting/lighting-panel/console-primary</factor-prop>
+       <red>0.476</red>
+       <green>0.9</green>
+       <blue>0.161</blue>
+      </emission>
+    </animation>
+
     <!-- used to turn the display off when no power, or device powered down-->
     <animation>
         <type>select</type>
