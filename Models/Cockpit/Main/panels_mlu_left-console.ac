@@ -1,5 +1,5 @@
 AC3Db
-MATERIAL "Material.005" rgb 1.000 1.000 1.000  amb 0.300 0.300 0.300  emis 0.000 0.000 0.000  spec 0.102 0.102 0.102  shi 32 trans 0.000
+MATERIAL "MainPanel" rgb 1.000 1.000 1.000  amb 0.7 0.7 0.7  emis 0.000 0.000 0.000  spec 0.5 0.5 0.5  shi 32 trans 0.000
 MATERIAL "Material.001" rgb 0.063 0.063 0.063  amb 0.005 0.005 0.005  emis 0.000 0.000 0.000  spec 0.102 0.102 0.102  shi 32 trans 0.000
 MATERIAL "Material.006" rgb 0.063 0.063 0.063  amb 0.005 0.005 0.005  emis 0.000 0.000 0.000  spec 0.102 0.102 0.102  shi 32 trans 0.000
 MATERIAL "ac3dmat6" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.284 0.284 0.284  spec 0.200 0.200 0.200  shi 10 trans 0.000

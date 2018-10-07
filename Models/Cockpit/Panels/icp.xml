@@ -6,7 +6,7 @@
 
     <!--lighting -->
 
-    <animation>
+    <!--<animation>
         <object-name>DED_panel</object-name>
         <type>material</type>
         <emission>
@@ -15,25 +15,44 @@
             <green>0.34</green>
             <blue>0.18</blue>
         </emission>
-    </animation>
+    </animation>-->
 
     <effect>
-        <name>f16panel-left</name>
-        <inherits-from>Models/Effects/f16dde-panel</inherits-from>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <parameters>
+            <implicit-lightmap-threshold-low type="float">0.3</implicit-lightmap-threshold-low>
+            <implicit-lightmap-threshold-high type="float">0.7</implicit-lightmap-threshold-high>
+            <!--<implicit-lightmap-intensity><use>controls/lighting/lighting-panel/data-entry-display</use></implicit-lightmap-intensity> this is ICP not DED panel, so should not have DED control -->
+            <lightmap-enabled type="int">0</lightmap-enabled>
+        </parameters>
+        
         <object-name>DED_panel</object-name>
-        <object-name>DED_buttons</object-name>
+        <object-name>com1</object-name>
+        <object-name>0</object-name>
+        <object-name>9</object-name>
+        <object-name>8</object-name>
+        <object-name>7</object-name>
+        <object-name>6</object-name>
+        <object-name>5</object-name>
+        <object-name>3</object-name>
+        <object-name>2</object-name>
+        <object-name>1</object-name>
+        <object-name>3.001</object-name>
+        <object-name>a-a</object-name>
+        <object-name>a-g</object-name>
+        <object-name>com2</object-name>
+        <object-name>cursor-up-down</object-name>
+        <object-name>entr</object-name>
+        <object-name>flir_ud</object-name>
+        <object-name>iff</object-name>
+        <object-name>list</object-name>
+        <object-name>plrt</object-name>
+        <object-name>rcl</object-name>
+        <object-name>wx</object-name>
+        <object-name>drift</object-name>
+        <object-name>gain_auto</object-name>
+        <object-name>rtn_seq</object-name>
     </effect>
-
-    <animation>
-        <object-name>DED_buttons</object-name>
-        <type>material</type>
-        <emission>
-            <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
-            <red>0.0</red>
-            <green>1.0</green>
-            <blue>0.40</blue>
-        </emission>
-    </animation>
 
     <animation>
         <type>knob</type>

@@ -1,5 +1,5 @@
 AC3Db
-MATERIAL "ac3dmat1" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.101961 0.101961 0.101961  shi 10  trans 0
+MATERIAL "MainPanel" rgb 1.000 1.000 1.000  amb 0.7 0.7 0.7  emis 0.000 0.000 0.000  spec 0.5 0.5 0.5  shi 32 trans 0.000
 MATERIAL "ac3dmat1.001" rgb 0.502 0.502 0.502  amb 0.022 0.022 0.022  emis 0 0 0  spec 0 0 0  shi 0  trans 0
 OBJECT world
 kids 9

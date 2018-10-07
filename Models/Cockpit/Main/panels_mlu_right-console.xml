@@ -117,7 +117,26 @@
     <effect>
         <name>models-effects-f16panel-left</name>
         <inherits-from>Models/Effects/f16panel-left</inherits-from>
+        <parameters>
+            <implicit-lightmap-threshold-low type="float">0.2</implicit-lightmap-threshold-low>
+            <implicit-lightmap-threshold-high type="float">0.7</implicit-lightmap-threshold-high>
+        </parameters>
         <object-name>LIGHTING_1</object-name>
+        <object-name>DTU_1</object-name>
+        <object-name>GROWNTH.104_1</object-name>
+        <object-name>OXYGEN_REGULATOR_1</object-name>
+        <object-name>GROWNTH.103_1</object-name>
+        <object-name>AVIONICS_POWER_1</object-name>
+        <object-name>ANTI_ICE_1</object-name>
+        <object-name>GROWNTH.102_1</object-name>
+        <object-name>KY_58_1</object-name>
+        <object-name>AIR_COND_1</object-name>
+        <object-name>GROWNTH.102_1</object-name>
+        <object-name>NUCLEAR_CONSENT_1</object-name>
+        <object-name>HUD_1</object-name>
+        <object-name>SNSR_PWR_1</object-name>
+        <object-name>VOICE_MESSAGE_1</object-name>
+        <object-name>ZEROIZE_1</object-name>
     </effect>
     <effect>
         <name>models-effects-f16panel-left</name>
@@ -132,6 +151,7 @@
         <object-name>data-entry-display-knob-axis</object-name>
         <object-name>console-primary-knob</object-name>
         <object-name>console-primary-knob-axis</object-name>
-        <object-name>inst-pnl-flood-knob</object-name>    </effect>
+        <object-name>inst-pnl-flood-knob</object-name>
+    </effect>
 
 </PropertyList>
