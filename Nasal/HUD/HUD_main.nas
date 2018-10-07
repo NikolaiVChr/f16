@@ -207,7 +207,7 @@ var F16_HUD = {
             props.UpdateManager.FromHashList(["texUp","gear_down","VV_x","VV_y", "wow"], 0.01, func(hdp)
                                       {
                                         if (hdp.gear_down and !hdp.wow) {
-                                          obj.bracket.setTranslation (obj.sx/2+hdp.VV_x * obj.texelPerDegreeX, obj.sy-obj.texels_up_into_hud+(13-hdp.VV_y+hdp.VV_y) * obj.texelPerDegreeY);
+                                          obj.bracket.setTranslation (obj.sx/2+hdp.VV_x * obj.texelPerDegreeX, obj.sy-obj.texels_up_into_hud+13 * obj.texelPerDegreeY);
                                           obj.bracket.show();
                                         } else {
                                           obj.bracket.hide();
