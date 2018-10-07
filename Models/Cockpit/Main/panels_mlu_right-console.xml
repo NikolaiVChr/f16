@@ -7,7 +7,7 @@
     <animation>
         <type>knob</type>
         <object-name>inst-pnl-flood-knob</object-name>
-        <property>controls/lighting/lighting-panel/flood-inst-pnl</property>
+        <property>controls/lighting/lighting-panel/flood-inst-pnl-knob</property>
         <offset-deg>135</offset-deg>
         <factor>-222</factor>
         <axis>
@@ -16,7 +16,7 @@
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>controls/lighting/lighting-panel/flood-inst-pnl</property>
+                <property>controls/lighting/lighting-panel/flood-inst-pnl-knob</property>
                 <factor>0.1</factor>
                 <min>0</min>
                 <max>1</max>
@@ -27,7 +27,7 @@
     <animation>
         <type>knob</type>
         <object-name>inst-pnl-primary-knob</object-name>
-        <property>controls/lighting/lighting-panel/pri-inst-pnl</property>
+        <property>controls/lighting/lighting-panel/pri-inst-pnl-knob</property>
         <offset-deg>135</offset-deg>
         <factor>-222</factor>
         <axis>
@@ -36,7 +36,7 @@
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>controls/lighting/lighting-panel/pri-inst-pnl</property>
+                <property>controls/lighting/lighting-panel/pri-inst-pnl-knob</property>
                 <factor>0.1</factor>
                 <min>0</min>
                 <max>1</max>
@@ -47,7 +47,7 @@
     <animation>
         <type>knob</type>
         <object-name>console-flood-knob</object-name>
-        <property>controls/lighting/lighting-panel/console-flood</property>
+        <property>controls/lighting/lighting-panel/console-flood-knob</property>
         <offset-deg>155</offset-deg>
         <factor>-330</factor>
         <axis>
@@ -56,7 +56,7 @@
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>controls/lighting/lighting-panel/console-flood</property>
+                <property>controls/lighting/lighting-panel/console-flood-knob</property>
                 <factor>0.1</factor>
                 <min>0</min>
                 <max>1</max>
@@ -87,7 +87,7 @@
     <animation>
         <type>knob</type>
         <object-name>console-primary-knob</object-name>
-        <property>controls/lighting/lighting-panel/console-primary</property>
+        <property>controls/lighting/lighting-panel/console-primary-knob</property>
         <offset-deg>135</offset-deg>
         <factor>-222</factor>
         <axis>
@@ -96,7 +96,7 @@
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>controls/lighting/lighting-panel/console-primary</property>
+                <property>controls/lighting/lighting-panel/console-primary-knob</property>
                 <factor>0.1</factor>
                 <min>0</min>
                 <max>1</max>

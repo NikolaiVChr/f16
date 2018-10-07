@@ -1111,6 +1111,10 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <lighting-panel>
                 <pri-inst-pnl type="double">0.2</pri-inst-pnl>
                 <flood-inst-pnl type="double">0</flood-inst-pnl>
+                <pri-inst-pnl-knob type="double">0.2</pri-inst-pnl-knob>
+                <flood-inst-pnl-knob type="double">0</flood-inst-pnl-knob>
+                <console-primary-knob type="double">0</console-primary-knob>
+                <console-primary type="double">0</console-primary>
             </lighting-panel>
         </lighting>
         <seat>

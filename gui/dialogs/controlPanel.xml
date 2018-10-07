@@ -296,7 +296,7 @@
 						
 						<slider>
 							<halign>left</halign>
-							<property>controls/lighting/lighting-panel/pri-inst-pnl</property>
+							<property>controls/lighting/lighting-panel/pri-inst-pnl-knob</property>
 							<min>0</min>
 							<max>1</max>
 							<step>0.1</step>
@@ -336,7 +336,7 @@
 						
 						<slider>
 							<halign>left</halign>
-							<property>controls/lighting/lighting-panel/flood-inst-pnl</property>
+							<property>controls/lighting/lighting-panel/flood-inst-pnl-knob</property>
 							<min>0</min>
 							<max>1</max>
 							<step>0.1</step>
@@ -376,7 +376,7 @@
 						
 						<slider>
 							<halign>left</halign>
-							<property>controls/lighting/lighting-panel/console-primary</property>
+							<property>controls/lighting/lighting-panel/console-primary-knob</property>
 							<min>0</min>
 							<max>1</max>
 							<step>0.1</step>

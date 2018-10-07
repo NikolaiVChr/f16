@@ -227,6 +227,16 @@ var loop_flare = func {
       } else {
         setprop("f16/force", 7);
       }
+
+    if (getprop("fdm/jsbsim/elec/bus/batt-2")<20) {
+      setprop("controls/lighting/lighting-panel/console-primary", 0);
+      setprop("controls/lighting/lighting-panel/flood-inst-pnl", 0);
+      setprop("controls/lighting/lighting-panel/pri-inst-pnl", 0);
+    } else {
+      setprop("controls/lighting/lighting-panel/console-primary", getprop("controls/lighting/lighting-panel/console-primary-knob"));
+      setprop("controls/lighting/lighting-panel/flood-inst-pnl", getprop("controls/lighting/lighting-panel/flood-inst-pnl-knob"));
+      setprop("controls/lighting/lighting-panel/pri-inst-pnl", getprop("controls/lighting/lighting-panel/pri-inst-pnl-knob"));
+    }
       
     settimer(loop_flare, 0.10);
 };
