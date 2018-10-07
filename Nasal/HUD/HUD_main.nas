@@ -201,11 +201,18 @@ var F16_HUD = {
                                       }),
             props.UpdateManager.FromHashList(["texUp","VV_x","VV_y"], 0.01, func(hdp)
                                       {
-                                        obj.VV.setTranslation (hdp.VV_x, hdp.VV_y + pitch_offset);
                                         obj.VV.setTranslation (hdp.VV_x * obj.texelPerDegreeX, hdp.VV_y * obj.texelPerDegreeY+pitch_offset);
                                         obj.VV.update();
                                       }),
-
+            props.UpdateManager.FromHashList(["texUp","gear_down","VV_x","VV_y", "wow"], 0.01, func(hdp)
+                                      {
+                                        if (hdp.gear_down and !hdp.wow) {
+                                          obj.bracket.setTranslation (obj.sx/2+hdp.VV_x * obj.texelPerDegreeX, obj.sy-obj.texels_up_into_hud+(13-hdp.VV_y+hdp.VV_y) * obj.texelPerDegreeY);
+                                          obj.bracket.show();
+                                        } else {
+                                          obj.bracket.hide();
+                                        }
+                                      }),
             props.UpdateManager.FromHashList(["texUp","pitch","roll"], 0.025, func(hdp)
                                       {
                                           obj.ladder.setTranslation (0.0, hdp.pitch * pitch_factor+pitch_offset);                                           
@@ -425,6 +432,13 @@ var F16_HUD = {
                 .horiz(10)
                 .moveTo(0,-5)
                 .vert(10)
+                .setStrokeLineWidth(1)
+                .setColor(0,1,0);
+        obj.bracket = obj.svg.createChild("path")
+                .moveTo(0,-34)
+                .horiz(-10)
+                .vert(68)
+                .horiz(10)
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
         obj.trackLine = obj.svg.createChild("path")
