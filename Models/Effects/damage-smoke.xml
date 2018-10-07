@@ -12,7 +12,10 @@
 		</offsets>
 		<texture>../Armament/Weapons/smoke.png</texture>
 		<condition>
-			<not><property>sim/multiplay/generic/bool[1]</property></not>
+			<equals>
+        		<property>sim/multiplay/generic/bool[1]</property> 
+        		<value>0</value>
+      		</equals> 
 		</condition>
 		<emissive>false</emissive>
 		<lighting>false</lighting>
