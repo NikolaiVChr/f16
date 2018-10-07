@@ -39,6 +39,86 @@
       </emission>
     </animation>
 
+    <animation>
+        <type>knob</type>
+        <object-name>MFDButtonCon</object-name>
+        <property>f16/avionics/mfd-r-con</property>
+        <factor>0</factor>
+        <offset-deg>0</offset-deg>
+        <center>
+            <x-m>  -0.0062 </x-m>
+            <y-m>  -0.074119 </y-m>
+            <z-m>  -0.023917 </z-m>
+        </center>
+        <axis>
+            <x> 0.0 </x>
+            <y> 1.0 </y>
+            <z> 0.0 </z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/mfd-r-con</property>
+                <factor>1</factor>
+                <step>-0.1</step>
+                <min>0</min>
+                <max>2</max>
+                <wrap>false</wrap>
+            </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/mfd-r-con</property>
+                <factor>1</factor>
+                <step>0.1</step>
+                <min>0</min>
+                <max>2</max>
+                <wrap>false</wrap>
+            </binding>
+        </decrease>
+    </animation>
+
+    <animation>
+        <type>knob</type>
+        <object-name>MFDButtonBrightness</object-name>
+        <property>f16/avionics/mfd-r-brt</property>
+        <factor>0</factor>
+        <offset-deg>0</offset-deg>
+        <center>
+            <x-m>  -0.0062 </x-m>
+            <y-m>  -0.074119 </y-m>
+            <z-m>  -0.023917 </z-m>
+        </center>
+        <axis>
+            <x> 0.0 </x>
+            <y> 1.0 </y>
+            <z> 0.0 </z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/mfd-r-brt</property>
+                <factor>1</factor>
+                <step>-0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/mfd-r-brt</property>
+                <factor>1</factor>
+                <step>0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </decrease>
+    </animation>
+
     <!-- used to turn the display off when no power, or device powered down-->
     <animation>
         <type>select</type>
@@ -775,7 +855,7 @@
         <object-name>MFDimage2</object-name>
         <type>material</type>
         <emission>
-            <factor-prop>controls/MFD[1]/mode</factor-prop>
+            <factor-prop>f16/avionics/mfd-r-brt</factor-prop>
             <red>  1</red>
             <green>1</green>
             <blue> 1</blue>
@@ -787,7 +867,7 @@
             <inner-angle type="float">45</inner-angle><!-- 0-90, use 90 for LED or plasma display-->
             <outer-angle type="float">60</outer-angle><!-- 0-90, but greater than inner -->
             <black-angle type="float">80</black-angle><!-- 0-90, but greater than outer -->
-            <contrast type="float">1</contrast>
+            <contrast><use>f16/avionics/mfd-r-con</use></contrast>
         </parameters>
         <object-name>MFDimage2</object-name>
     </effect>

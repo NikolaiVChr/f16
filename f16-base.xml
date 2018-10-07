@@ -470,11 +470,12 @@
             </key>
             <text><![CDATA[
 LANDING
-No fixed landing speed, however keep a AoA of 11 to 13 in final. A suggested approach speed will display in left side of HUD when gears is down.
-Notice that it can be hard to see the touchdown point when landing with that high AoA (even when raising seat), which is why many choose to land with around 9 AoA.
+No fixed landing speed, however a suggested approach speed will display in left side of HUD when gears is down.
+A little AoA bracket will appear down in the HUD, keep the flight path indicator inside the bracket. The top of the bracket is 11 and bottom is 15 deg AoA.
+Notice that it can be hard to see the touchdown point when landing with that high AoA, raising the seat with key 'u' will help.
 
 TAKE-OFF
-You can rotate around 150 KT. Be somewhat gentle on the stick if you rotate early as you otherwise might tail-scrape.
+You can rotate around 150 KT when aircraft is light. Be somewhat gentle on the stick if you rotate early as you otherwise might tail-scrape.
 
 FBW
 The FBW in most variant will try to protect and escape the aircraft from deep stall, nose slide and spin. Also will reduce inertia-coupling when rolling fast at high AoA.
@@ -1987,6 +1988,11 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
         </sound>
         <avionics>
             <hud-brt type="double">1.0</hud-brt>
+            <rwr-int type="double">1.0</rwr-int>
+            <mfd-l-brt type="double">1.0</mfd-l-brt>
+            <mfd-l-con type="double">1.0</mfd-l-con>
+            <mfd-r-brt type="double">1.0</mfd-r-brt>
+            <mfd-r-con type="double">1.0</mfd-r-con>
         </avionics>
         <fcs>
             <autopilot-on type="int">0</autopilot-on> <!-- Ignored on Block 20+ -->

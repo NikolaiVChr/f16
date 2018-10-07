@@ -8,8 +8,9 @@
 
 LANDING
 
-No fixed landing speed, however keep a AoA of 11 to 13 in final. A suggested approach speed will display in left side of HUD when gears is down.
-Notice that it can be hard to see the touchdown point when landing with that high AoA (even when raising seat), which is why many choose to land with around 9 AoA.
+No fixed landing speed, however a suggested approach speed will display in left side of HUD when gears is down.
+A little AoA bracket will appear down in the HUD, keep the flight path indicator inside the bracket. The top of the bracket is 11 and bottom is 15 deg AoA.
+Notice that it can be hard to see the touchdown point when landing with that high AoA, raising the seat with key 'u' will help.
 
 
 TAKE-OFF
