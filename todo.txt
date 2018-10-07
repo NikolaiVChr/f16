@@ -100,7 +100,7 @@ Convert groundeffect to be an addition instead of a factor.
 Effects
 -------
 page 1-111 of b50 manual
-Ext. ALS lights over MP don't work.
+Ext. strobe lights over MP is on for too long.
 
 Flight controls
 ---------------

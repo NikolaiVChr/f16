@@ -351,6 +351,7 @@
                 <bool n="44" type="bool">true</bool>
                 <bool n="45" type="bool" alias="/sim/model/lighting/strobe/state"/>
                 <bool n="35" type="bool" alias="/f16/chute/enable"/>
+                <bool n="36" type="bool" alias="/sim/model/f16/dragchute"/>
                 <int n="2" type="int">0</int><!-- radar-standby -->
                 <int n="9" type="int" alias="/sim/variant-id"/>
                 <int n="10" type="int" alias="/controls/smoke"/>

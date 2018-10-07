@@ -1658,7 +1658,7 @@
   <object-name>USAF_Tailroot</object-name>
   <condition>
    <not>
-    <property>sim/model/f16/dragchute</property>
+    <property>sim/multiplay/generic/bool[36]</property>
    </not>
   </condition>
  </animation>
@@ -1668,7 +1668,7 @@
   <object-name>RNLAF_Tailroot</object-name>
   <object-name>Chute</object-name>
   <condition>
-   <property>sim/model/f16/dragchute</property>
+   <property>sim/multiplay/generic/bool[36]</property>
   </condition>
  </animation>
 
