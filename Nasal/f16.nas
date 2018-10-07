@@ -468,7 +468,7 @@ var repair2 = func {
   }
   inAutostart = 1;
   screen.log.write("Repairing, standby..");
-  setprop("ai/submodels/submodel[0]/count",100);
+  reloadCannon();
   crash.repair();
   if (getprop("f16/engine/running-state")) {
     setprop("fdm/jsbsim/elec/switches/epu",1);
@@ -779,6 +779,11 @@ var play_thunder = func (name, timeout=0.1, delay=0) {
 };
 
 setlistener("/environment/lightning/lightning-pos-y", thunder_listener);
+
+var reloadCannon = func {
+    setprop("ai/submodels/submodel[0]/count", 100);
+    pylons.cannon.reloadAmmo();
+}
 
 var eject = func{
   if (getprop("f16/done")==1 or !getprop("controls/seat/ejection-safety-lever")) {

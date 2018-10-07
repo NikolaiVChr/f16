@@ -152,6 +152,7 @@ var a2a_patrol = func {
         pylon7.loadSet(pylonSets.q7);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -169,6 +170,7 @@ var a2a_super = func {
         pylon7.loadSet(pylonSets.h);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.h);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -186,6 +188,7 @@ var a2a_cap = func {
         pylon7.loadSet(pylonSets.h);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -203,6 +206,7 @@ var a2a_capext = func {
         pylon7.loadSet(pylonSets.h);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -219,6 +223,7 @@ var a2g_cas = func {
         pylon7.loadSet(pylonSets.a);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -236,6 +241,7 @@ var a2g_casext = func {
         pylon7.loadSet(pylonSets.i);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -253,6 +259,7 @@ var a2g_mix = func {
         pylon7.loadSet(pylonSets.i);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -270,6 +277,7 @@ var a2g_guided1 = func {
         pylon7.loadSet(pylonSets.c3);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -287,6 +295,7 @@ var a2g_guided2 = func {
         pylon7.loadSet(pylonSets.i);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -304,6 +313,7 @@ var a2s_antiship = func {
         pylon7.loadSet(pylonSets.b);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -321,6 +331,7 @@ var a2a_ferry = func {
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -338,6 +349,7 @@ var a2a_ferrycargo = func {
         pylon7.loadSet(pylonSets.f3);
         pylon8.loadSet(pylonSets.g);
         pylon9.loadSet(pylonSets.h);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -355,6 +367,7 @@ var a2g_sead = func {
         pylon7.loadSet(pylonSets.b2);
         pylon8.loadSet(pylonSets.g);
         pylon9.loadSet(pylonSets.h);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -372,6 +385,7 @@ var a2g_oca = func {
         pylon7.loadSet(pylonSets.a);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -389,6 +403,7 @@ var a2a_training = func {
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.k);
         pylon9.loadSet(pylonSets.k2);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -406,7 +421,9 @@ var clean = func {
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.k);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
 }
+
