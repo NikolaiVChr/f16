@@ -463,7 +463,7 @@
 
 <model>
   <name>posleft1</name>
-  <path>Aircraft/f16/Models/pos-left.xml</path> 
+  <path>Aircraft/f16/Models/Effects/lights/pos-left.xml</path> 
   <offsets>
             <x-m> 1.60236 </x-m>
             <y-m> -4.55165 </y-m>
@@ -473,7 +473,7 @@
 
  <model>
   <name>posright1</name>
-  <path>Aircraft/f16/Models/pos-right.xml</path>    
+  <path>Aircraft/f16/Models/Effects/lights/pos-right.xml</path>    
   <offsets>
             <x-m> 1.60236 </x-m>
             <y-m> 4.55165 </y-m>
@@ -483,7 +483,7 @@
 
  <model>
   <name>posleft2</name>
-  <path>Aircraft/f16/Models/pos-left2.xml</path> 
+  <path>Aircraft/f16/Models/Effects/lights/pos-left2.xml</path> 
   <offsets>
             <x-m> -3.36687 </x-m>
             <y-m> -0.748387 </y-m>
@@ -493,7 +493,7 @@
 
  <model>
   <name>posright2</name>
-  <path>Aircraft/f16/Models/pos-right2.xml</path> 
+  <path>Aircraft/f16/Models/Effects/lights/pos-right2.xml</path> 
   <offsets>
             <x-m> -3.36687 </x-m>
             <y-m> 0.748387 </y-m>
@@ -522,7 +522,7 @@
 
 <model>
   <name>belly</name>
-  <path>Aircraft/f16/Models/belly-light.xml</path> 
+  <path>Aircraft/f16/Models/Effects/lights/belly-light.xml</path> 
   <offsets>
             <x-m> -1.23466 </x-m>
             <y-m> 0 </y-m>
@@ -531,7 +531,7 @@
  </model>
  <model>
   <name>spine</name>
-  <path>Aircraft/f16/Models/spine-light.xml</path> 
+  <path>Aircraft/f16/Models/Effects/lights/spine-light.xml</path> 
   <offsets>
             <x-m> -2.05409 </x-m>
             <y-m> 0 </y-m>
@@ -540,7 +540,7 @@
  </model>
  <model>
   <name>tl</name>
-  <path>Aircraft/f16/Models/tail-light.xml</path> 
+  <path>Aircraft/f16/Models/Effects/lights/tail-light.xml</path> 
   <offsets>
             <x-m> 5.50707 </x-m>
             <y-m> 0 </y-m>
@@ -549,7 +549,7 @@
  </model>
  <model>
   <name>tl2</name>
-  <path>Aircraft/f16/Models/tail-light.xml</path> 
+  <path>Aircraft/f16/Models/Effects/lights/tail-light.xml</path> 
   <offsets>
             <x-m> 5.03444 </x-m>
             <y-m> 0 </y-m>
@@ -685,7 +685,7 @@
 
  <model>
   <name>strobe</name>
-  <path>Aircraft/f16/Models/strobe.xml</path>
+  <path>Aircraft/f16/Models/Effects/lights/strobe.xml</path>
   <offsets>
    <x-m>5.3</x-m>
    <y-m>0.0</y-m>
