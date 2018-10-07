@@ -49,7 +49,7 @@ light: ecm lamp off
     -->
     <effect>
         <name>models-effects-f16panel-left</name>
-        <inherits-from>Models/Effects/f16panel-left</inherits-from>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
         <object-name>MISC_1_block-50</object-name>
         <object-name>MISC_1_block-15</object-name>
     </effect>

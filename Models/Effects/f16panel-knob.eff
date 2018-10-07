@@ -6,12 +6,12 @@
 	<texture n="4">
 	  <type>cubemap</type>
 	  <images>
-		  <positive-x>Models/Effects/interior/0004.png</positive-x>      <!-- px (tail) rotate 90 deg from N or S to W -->
-          <negative-x>Models/Effects/interior/0002.png</negative-x>      <!-- nx (nose) rotate 90 deg from N or S to E -->
-          <positive-y>Models/Effects/interior/0001.png</positive-y>      <!-- py (starboard/right) from N do not rotate -->
-          <negative-y>Models/Effects/interior/0003.png</negative-y>      <!-- ny (port/left) from N rotate 180 deg to S -->
-          <positive-z>Models/Effects/interior/0006.png</positive-z>      <!-- pz (top) rotate 90 deg from N or S to W -->
-          <negative-z>Models/Effects/interior/0005.png</negative-z>      <!-- nz (bottom) rotate 90 deg from N or S to W -->
+		  <positive-x>Aircraft/f16/Models/Effects/interior/0004.png</positive-x>      <!-- px (tail) rotate 90 deg from N or S to W -->
+          <negative-x>Aircraft/f16/Models/Effects/interior/0002.png</negative-x>      <!-- nx (nose) rotate 90 deg from N or S to E -->
+          <positive-y>Aircraft/f16/Models/Effects/interior/0001.png</positive-y>      <!-- py (starboard/right) from N do not rotate -->
+          <negative-y>Aircraft/f16/Models/Effects/interior/0003.png</negative-y>      <!-- ny (port/left) from N rotate 180 deg to S -->
+          <positive-z>Aircraft/f16/Models/Effects/interior/0006.png</positive-z>      <!-- pz (top) rotate 90 deg from N or S to W -->
+          <negative-z>Aircraft/f16/Models/Effects/interior/0005.png</negative-z>      <!-- nz (bottom) rotate 90 deg from N or S to W -->
       </images>
 	</texture>
 	<opacity-cube-center type="vec3d" n="0"> -5.24268 0.0 1.682</opacity-cube-center>

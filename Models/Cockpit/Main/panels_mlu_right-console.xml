@@ -116,7 +116,7 @@
     </animation>
     <effect>
         <name>models-effects-f16panel-left</name>
-        <inherits-from>Models/Effects/f16panel-left</inherits-from>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
         <parameters>
             <implicit-lightmap-threshold-low type="float">0.2</implicit-lightmap-threshold-low>
             <implicit-lightmap-threshold-high type="float">0.7</implicit-lightmap-threshold-high>
@@ -140,7 +140,7 @@
     </effect>
     <effect>
         <name>models-effects-f16panel-left</name>
-        <inherits-from>Models/Effects/f16panel-knob</inherits-from>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-knob</inherits-from>
         <object-name>inst-pnl-flood-knob</object-name>
         <object-name>inst-pnl-flood-knob-axis</object-name>
         <object-name>inst-pnl-primary-knob</object-name>
