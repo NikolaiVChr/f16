@@ -90,6 +90,7 @@ page 1-131 of b50 manual
 MFDs
 ----
 Add tons of pages
+SIT page still crashes.
 
 Aero
 ----
@@ -99,7 +100,7 @@ Convert groundeffect to be an addition instead of a factor.
 Effects
 -------
 page 1-111 of b50 manual
-
+Ext. ALS lights over MP don't work.
 
 Flight controls
 ---------------

@@ -13,8 +13,14 @@
   <type>select</type>
   <object-name>strobe</object-name>
   <condition>
-   <property>sim/multiplay/generic/bool[44]</property> 
-   <property>sim/multiplay/generic/bool[45]</property> 
+   <equals>
+        <property>sim/multiplay/generic/bool[44]</property> 
+        <value>1</value>
+      </equals> 
+      <equals>
+        <property>sim/multiplay/generic/bool[45]</property> 
+        <value>1</value>
+      </equals> 
   </condition>
  </animation>
 

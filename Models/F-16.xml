@@ -452,9 +452,12 @@
   <object-name>pos_lights_flash</object-name>
   <condition>
     <not>
-    <property>sim/rendering/shaders/skydome</property>
+    <property>/sim/rendering/shaders/skydome</property>
   </not>
-   <property>sim/multiplay/generic/bool[40]</property>
+   <equals>
+        <property>sim/multiplay/generic/bool[40]</property> 
+        <value>1</value>
+      </equals>
   </condition>
  </animation>
 
@@ -504,10 +507,14 @@
     <object-name>posright1</object-name>
     <object-name>posleft2</object-name>
     <object-name>posright2</object-name>
-    <condition><and>
-      <property>sim/rendering/shaders/skydome</property>
-      <property>sim/multiplay/generic/bool[40]</property> 
-    </and> 
+    <condition>
+      <and>
+        <property>/sim/rendering/shaders/skydome</property>
+        <equals>
+        <property>sim/multiplay/generic/bool[40]</property> 
+        <value>1</value>
+      </equals>
+      </and> 
     </condition>
   </animation>
 
@@ -555,8 +562,11 @@
     <object-name>belly</object-name>
     <object-name>spine</object-name>
     <condition>
-      <property>sim/rendering/shaders/skydome</property>
-      <property>sim/multiplay/generic/bool[41]</property> 
+      <property>/sim/rendering/shaders/skydome</property>
+      <equals>
+        <property>sim/multiplay/generic/bool[41]</property> 
+        <value>1</value>
+      </equals>
     </condition>
   </animation>
 
@@ -564,8 +574,11 @@
     <type>select</type>
     <object-name>tl</object-name>
     <condition>
-      <property>sim/rendering/shaders/skydome</property>
-      <property>sim/multiplay/generic/bool[42]</property>  
+      <property>/sim/rendering/shaders/skydome</property>
+      <equals>
+        <property>sim/multiplay/generic/bool[42]</property> 
+        <value>1</value>
+      </equals> 
     </condition>
   </animation>
 
@@ -573,8 +586,11 @@
     <type>select</type>
     <object-name>tl2</object-name>
     <condition>
-      <property>sim/rendering/shaders/skydome</property>
-      <property>sim/multiplay/generic/bool[43]</property> 
+      <property>/sim/rendering/shaders/skydome</property>
+      <equals>
+        <property>sim/multiplay/generic/bool[43]</property> 
+        <value>1</value>
+      </equals> 
     </condition>
   </animation>
 
@@ -625,9 +641,12 @@
   <object-name>FwdFormationLight</object-name>
   <condition><and>
     <not>
-    <property>sim/rendering/shaders/skydome</property>
+    <property>/sim/rendering/shaders/skydome</property>
   </not>
-     <property>sim/multiplay/generic/bool[41]</property> 
+     <equals>
+        <property>sim/multiplay/generic/bool[41]</property> 
+        <value>1</value>
+      </equals>
   </and>
   </condition>
  </animation>
@@ -638,9 +657,12 @@
   <object-name>AftPosLight2</object-name>
   <condition>
     <not>
-    <property>sim/rendering/shaders/skydome</property>
+    <property>/sim/rendering/shaders/skydome</property>
   </not>
-    <property>sim/multiplay/generic/bool[42]</property>   
+    <equals>
+        <property>sim/multiplay/generic/bool[42]</property> 
+        <value>1</value>
+      </equals>
   </condition>
  </animation>
 
@@ -650,9 +672,12 @@
   <object-name>AftPosLight1</object-name>
   <condition><and>
     <not>
-    <property>sim/rendering/shaders/skydome</property>
+    <property>/sim/rendering/shaders/skydome</property>
   </not>
-    <property>sim/multiplay/generic/bool[43]</property>   
+    <equals>
+        <property>sim/multiplay/generic/bool[43]</property> 
+        <value>1</value>
+      </equals> 
   </and>
   </condition>
  </animation>
