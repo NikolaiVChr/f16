@@ -3,18 +3,11 @@
 <PropertyList>
 
 <!--CHOCKS -->
-<animation>
- <type>select</type>
- <object-name>chocks</object-name>
- <condition>
-   <property>controls/gear/brake-parking</property>
-   <not><property>controls/lighting/ext-lighting-panel/anti-collision</property></not>
- </condition>
-</animation>
+
  
 <!-- NOSE CHOCKS -->
 <model>
- <name>chocks</name>
+ <name>chocks1</name>
  <path>Aircraft/f16/Models/chock.ac</path>
  <offsets> 
   <x-m>-3.27</x-m>
@@ -25,7 +18,7 @@
 </model>
  
 <model>
- <name>chocks</name>
+ <name>chocks2</name>
  <path>Aircraft/f16/Models/chock.ac</path>
  <offsets> 
   <x-m> -2.77</x-m>
@@ -37,7 +30,7 @@
  
 <!-- MAIN LEFT CHOCKS -->
 <model>
- <name>chocks</name>
+ <name>chocks3</name>
  <path>Aircraft/f16/Models/chock.ac</path>
  <offsets> 
   <x-m> 0.27</x-m>
@@ -48,7 +41,7 @@
 </model>
  
 <model>
- <name>chocks</name>
+ <name>chocks4</name>
  <path>Aircraft/f16/Models/chock.ac</path>
  <offsets> 
   <x-m> 0.85</x-m>
@@ -60,7 +53,7 @@
  
 <!-- MAIN RIGHT CHOCKS -->
 <model>
- <name>chocks</name>
+ <name>chocks5</name>
  <path>Aircraft/f16/Models/chock.ac</path>
  <offsets> 
   <x-m> 0.27</x-m>
@@ -71,7 +64,7 @@
 </model>
  
 <model>
- <name>chocks</name>
+ <name>chocks6</name>
  <path>Aircraft/f16/Models/chock.ac</path>
  <offsets> 
   <x-m> 0.85</x-m>
@@ -80,5 +73,25 @@
   <heading-deg>90</heading-deg>
  </offsets>
 </model>
+
+<animation>
+ <type>select</type>
+ <object-name>chocks1</object-name>
+ <object-name>chocks2</object-name>
+ <object-name>chocks3</object-name>
+ <object-name>chocks4</object-name>
+ <object-name>chocks5</object-name>
+ <object-name>chocks6</object-name>
+ <condition>
+   <property>controls/gear/brake-parking</property>
+   <property>gear/gear[0]/wow</property>
+   <property>gear/gear[1]/wow</property>
+   <property>gear/gear[2]/wow</property>
+   <not>
+     <property>engines/engine[0]/running</property>
+   </not>
+   <!--<not><property>controls/lighting/ext-lighting-panel/anti-collision</property></not>-->
+ </condition>
+</animation>
 
 </PropertyList>
