@@ -3144,7 +3144,7 @@ var AIM = {
             }
         }
 
-		if (me.Tgt != nil and me.guidance != "inertial") {
+		if (me.Tgt != nil and me.t_coord != nil and me.guidance != "inertial") {
 			# Get current direct distance.
 			me.cur_dir_dist_m = me.coord.direct_distance_to(me.t_coord);
 			if (me.useHitInterpolation == TRUE) { # use Nikolai V. Chr. interpolation
