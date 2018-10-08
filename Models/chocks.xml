@@ -129,6 +129,10 @@
    <not>
      <property>engines/engine[0]/running</property>
    </not>
+   <less-than>
+    <property>velocities/groundspeed-kt</property>
+    <value>0.25</value>
+   </less-than>
    <!--<not><property>controls/lighting/ext-lighting-panel/anti-collision</property></not>-->
  </condition>
 </animation>

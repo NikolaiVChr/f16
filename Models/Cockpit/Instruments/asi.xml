@@ -205,84 +205,19 @@
  <!-- Lightning -->
  <animation>
   <object-name>ASI_mount</object-name>
-  <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
-   <red>0.45</red>
-   <green>0.34</green>
-   <blue>0.18</blue>
-  </emission>
- </animation>
- <animation>
   <object-name>ASI_knob</object-name>
-  <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
-   <red>0.45</red>
-   <green>0.34</green>
-   <blue>0.18</blue>
-  </emission>
- </animation>
-
- <animation>
   <object-name>ASI_face</object-name>
-  <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.55</red>
-   <green>0.24</green>
-   <blue>0.10</blue>
-  </emission>
- </animation>
-
- <animation>
   <object-name>ASI_mach-scale</object-name>
-  <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.55</red>
-   <green>0.24</green>
-   <blue>0.10</blue>
-  </emission>
- </animation>
-
- <animation>
   <object-name>ASI_bkg</object-name>
-  <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.55</red>
-   <green>0.24</green>
-   <blue>0.10</blue>
-  </emission>
- </animation>
- 
-<animation>
   <object-name>ASI_bkg2</object-name>
-  <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.55</red>
-   <green>0.24</green>
-   <blue>0.10</blue>
-  </emission>
- </animation>
-
- <animation>
   <object-name>ASI_safe-speed-bug</object-name>
   <type>material</type>
   <emission>
    <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.55</red>
-   <green>0.24</green>
-   <blue>0.10</blue>
+   <red>0.6</red>
+   <green>0.4</green>
+   <blue>0.3</blue>
   </emission>
- </animation>
-
- <animation>
-  <type>range</type>
-  <min-m>0</min-m>
-  <max-m>50</max-m>
  </animation>
 
 </PropertyList>

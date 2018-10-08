@@ -344,129 +344,24 @@
 
  <animation>
   <object-name>ADI_sphere</object-name>
-  <type>material</type>
-  <emission> 
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
- <animation>
   <object-name>ADI_pitch-strg-bar</object-name>
-  <type>material</type>
-  <emission> 
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
- <animation>
   <object-name>ADI_yaw-steering-bar</object-name>
-  <type>material</type>
-  <emission> 
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
- <animation>
   <object-name>ADI_turn-indicator</object-name>
-  <type>material</type>
-  <emission> 
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
- <animation>
   <object-name>ADI_bank-index</object-name>
-  <type>material</type>
-  <emission> 
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
- <animation>
   <object-name>ADI_reticle</object-name>
-  <type>material</type>
-  <emission> 
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
- <animation>
   <object-name>ADI_glide-slope-index</object-name>
-  <type>material</type>
-  <emission> 
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
- <animation>
   <object-name>ADI_face</object-name>
-  <type>material</type>
-  <emission> 
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
- <animation>
   <object-name>ADI_off-flag</object-name>
-  <type>material</type>
-  <emission> 
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
- <animation>
   <object-name>ADI_aux-flag</object-name>
-  <type>material</type>
-  <emission> 
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
- <animation>
   <object-name>ADI_gs-flag</object-name>
-  <type>material</type>
-  <emission> 
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
- <animation>
   <object-name>ADI_loc-flag</object-name>
   <type>material</type>
   <emission> 
    <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
+   <red>0.6</red>
+   <green>0.4</green>
+   <blue>0.3</blue>
   </emission>
- </animation>
-
- <animation>
-  <type>range</type>
-  <min-m>0</min-m>
-  <max-m>5</max-m>
  </animation>
 
 </PropertyList>

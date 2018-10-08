@@ -517,69 +517,18 @@
 
  <animation>
   <object-name>HSI_needles</object-name>
-  <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
- <animation>
   <object-name>HSI_cdi</object-name>
-  <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
- <animation>
   <object-name>HSI_drums</object-name>
-  <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
- <animation>
   <object-name>HSI_compass-card</object-name>
-  <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
- <animation>
   <object-name>HSI_aircraft-symbol</object-name>
-  <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
- <animation>
   <object-name>HSI_off-flag</object-name>
   <type>material</type>
   <emission>
    <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
+   <red>0.6</red>
+   <green>0.4</green>
+   <blue>0.3</blue>
   </emission>
- </animation>
-
- <animation>
-  <type>range</type>
-  <min-m>0</min-m>
-  <max-m>10</max-m>
  </animation>
 
 </PropertyList>
