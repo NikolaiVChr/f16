@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>Aircraft/f16/Models/Effects/mach-cone.ac</path>
+ <nopreview/>
+
+ <effect>
+  <inherits-from>Effects/thrust-flame</inherits-from>
+  <object-name>Bounding_box</object-name>
+  <parameters>
+      <flame_color_low_r>1</flame_color_low_r>
+      <flame_color_low_g>1</flame_color_low_g>
+      <flame_color_low_b>1</flame_color_low_b>
+      <flame_color_high_r>1</flame_color_high_r>
+      <flame_color_high_g>1</flame_color_high_g>
+      <flame_color_high_b>1</flame_color_high_b>
+
+      <use_shocks type="int">0</use_shocks>
+      <use_noise type="int">1</use_noise>
+      
+      <base_flame_b type="float">1</base_flame_b>
+      <base_flame_g type="float">1</base_flame_g>
+      <base_flame_r type="float">1</base_flame_r>
+
+      <noise_strength type="float">0.5</noise_strength>
+      <noise_scale type="float">0.75</noise_scale>
+      <deflection_coeff type="float">0</deflection_coeff>
+
+      <base_flame_density type="float">0.1</base_flame_density>
+      <thrust_density type="float">0.5</thrust_density>
+
+      <flame_radius_fraction type="float">0.2</flame_radius_fraction>
+      <thrust_collimation type="float">0.25</thrust_collimation>
+  </parameters>
+ </effect>
+
+ <animation>
+  <type>scale</type>
+  <object-name>Bounding_box</object-name>
+  <!--<property>orientation/alpha-deg</property>
+  <x-min>1.0</x-min>
+  <y-min>0.4</y-min>
+  <z-min>0.4</z-min>
+  <x-factor>0.0</x-factor>
+  <y-factor>0.05</y-factor>
+  <z-factor>0.05</z-factor>-->
+  <x-offset>1</x-offset>
+  <y-offset>15</y-offset>
+  <z-offset>15</z-offset>
+ </animation>
+
+ 
+</PropertyList>

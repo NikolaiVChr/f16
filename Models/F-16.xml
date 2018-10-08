@@ -253,6 +253,24 @@
 
  <!-- smokepods -->
 
+<model>
+  <name>mach cone</name>
+  <path>Aircraft/f16/Models/Effects/mach-cone.xml</path>
+  <condition>
+    <greater-than>
+     <property>velocities/mach</property>
+     <value>0.98</value>
+    </greater-than>
+    <less-than>
+     <property>velocities/mach</property>
+     <value>1.02</value>
+    </less-than>
+    <less-than>
+     <property>position/altitude-ft</property>
+     <value>5000</value>
+    </less-than>
+  </condition>
+ </model>
 
  <model>
   <name>left-strake-vortex</name>
