@@ -9,19 +9,19 @@
   <inherits-from>Effects/thrust-flame</inherits-from>
   <object-name>Bounding_box</object-name>
   <parameters>
-      <flame_color_low_r>1</flame_color_low_r>
-      <flame_color_low_g>1</flame_color_low_g>
-      <flame_color_low_b>1</flame_color_low_b>
-      <flame_color_high_r>1</flame_color_high_r>
-      <flame_color_high_g>1</flame_color_high_g>
-      <flame_color_high_b>1</flame_color_high_b>
+      <flame_color_low_r><use>rendering/scene/diffuse/red</use></flame_color_low_r>
+      <flame_color_low_g><use>rendering/scene/diffuse/red</use></flame_color_low_g>
+      <flame_color_low_b><use>rendering/scene/diffuse/red</use></flame_color_low_b>
+      <flame_color_high_r><use>rendering/scene/diffuse/red</use></flame_color_high_r>
+      <flame_color_high_g><use>rendering/scene/diffuse/red</use></flame_color_high_g>
+      <flame_color_high_b><use>rendering/scene/diffuse/red</use></flame_color_high_b>
 
       <use_shocks type="int">0</use_shocks>
       <use_noise type="int">1</use_noise>
       
-      <base_flame_b type="float">1</base_flame_b>
-      <base_flame_g type="float">1</base_flame_g>
-      <base_flame_r type="float">1</base_flame_r>
+      <base_flame_b type="float"><use>rendering/scene/diffuse/red</use></base_flame_b>
+      <base_flame_g type="float"><use>rendering/scene/diffuse/red</use></base_flame_g>
+      <base_flame_r type="float"><use>rendering/scene/diffuse/red</use></base_flame_r>
 
       <noise_strength type="float">0.5</noise_strength>
       <noise_scale type="float">0.75</noise_scale>
