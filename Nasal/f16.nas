@@ -362,7 +362,7 @@ var sendABtoMP = func {
   setprop("sim/multiplay/generic/float[11]",  0.75+(0.25-red*0.25));
   setprop("sim/multiplay/generic/float[12]",  0.25+(0.75-red*0.75));
   setprop("sim/multiplay/generic/float[13]",  0.2+(0.8-red*0.8));
-  setprop("sim/multiplay/generic/float[14]",  1-red);
+  setprop("sim/multiplay/generic/float[14]",  (1-red)*0.5);
 }
 
 var sendLightsToMp = func {
