@@ -237,6 +237,8 @@ var loop_flare = func {
       setprop("controls/lighting/lighting-panel/flood-inst-pnl", getprop("controls/lighting/lighting-panel/flood-inst-pnl-knob"));
       setprop("controls/lighting/lighting-panel/pri-inst-pnl", getprop("controls/lighting/lighting-panel/pri-inst-pnl-knob"));
     }
+
+    setprop("f16/external", !getprop("sim/current-view/internal"));
       
     settimer(loop_flare, 0.10);
 };

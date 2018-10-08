@@ -63,10 +63,8 @@ Make warning lights and master warning work.
 Convert all flat 2D panels into 3D.
 Make controls work for STORES CONFIG and STANDBY GAINS.
 Enable masterarm, jettison, trims, ALT FLAPS and MFD contrast/brightness.
-Enable the intensity knob on RWR.
 Enable knob for HUD focus. (above BRT knob)
 Fuel dial strange (not really, one needle shows frw tank, one shows aft tank), but should be configurable.
-Real flood light instead of emission.
 
 Sound
 -----
