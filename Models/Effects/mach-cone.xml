@@ -19,9 +19,9 @@
       <use_shocks type="int">0</use_shocks>
       <use_noise type="int">1</use_noise>
       
-      <base_flame_b type="float"><use>rendering/scene/diffuse/red</use></base_flame_b>
-      <base_flame_g type="float"><use>rendering/scene/diffuse/red</use></base_flame_g>
-      <base_flame_r type="float"><use>rendering/scene/diffuse/red</use></base_flame_r>
+      <base_flame_b><use>rendering/scene/diffuse/red</use></base_flame_b>
+      <base_flame_g><use>rendering/scene/diffuse/red</use></base_flame_g>
+      <base_flame_r><use>rendering/scene/diffuse/red</use></base_flame_r>
 
       <noise_strength type="float">0.5</noise_strength>
       <noise_scale type="float">0.75</noise_scale>
