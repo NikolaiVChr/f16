@@ -745,9 +745,9 @@ var F16_HUD = {
 
         if (hdp.FrameCount == 2 or me.initUpdate == 1) {
             # calc of pitch_offset (compensates for AC3D model translated and rotated when loaded. Also semi compensates for HUD being at an angle.)
-            me.Hz_b =    0.676226;#0.663711;#0.801701;# HUD position inside ac model after it is loaded, translated (0.08m) and rotated (0.7d).
-            me.Hz_t =    0.86608;#0.841082;#0.976668;
-            me.Hx_m =   -4.62737;#-4.65453;#-4.6429;# HUD median X pos
+            me.Hz_b =    0.669786;#0.676226;#0.663711;#0.801701;# HUD position inside ac model after it is loaded, translated (0.08m) and rotated (0.7d).
+            me.Hz_t =    0.85608;#0.86608;#0.841082;#0.976668;
+            me.Hx_m =   -4.62918;#-4.62737;#-4.65453;#-4.6429;# HUD median X pos
             me.Vz   =    hdp.current_view_y_offset_m; # view Z position (0.94 meter per default)
             me.Vx   =    hdp.current_view_z_offset_m; # view X position (0.94 meter per default)
 

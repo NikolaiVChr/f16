@@ -13,12 +13,15 @@ A little AoA bracket will appear down in the HUD, keep the flight path indicator
 Notice that it can be hard to see the touchdown point when landing with that high AoA, raising the seat with key 'u' will help.
 
 
+
 TAKE-OFF
+
 You can rotate around 150 KT. Be somewhat gentle on the stick if you rotate early as you otherwise might tail-scrape.
 
 
 
 FBW
+
 The FBW in most variant will try to protect and escape the aircraft from deep stall, nose slide and spin. Also will reduce inertia-coupling when rolling fast at high AoA.
 However if the deep stall is very problemetic to escape, you can enable MPO (key 'del') which will allow you to semi override the FBW pitch control.
 With MPO enabled you can rock the aircraft up and down in bigger and bigger oscillations until the nose stays down and you have escaped the deep stall.
