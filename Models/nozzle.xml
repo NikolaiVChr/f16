@@ -154,11 +154,4 @@
   <max-m>300</max-m>
  </animation>
 
- <animation>
-  <type>range</type>
-  <object-name>nozzle</object-name>
-  <min-m>300</min-m>
-  <max-m>50000</max-m>
- </animation>
-
 </PropertyList>

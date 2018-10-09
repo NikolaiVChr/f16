@@ -108,7 +108,7 @@ var resetView = func () {
   
   if (getprop("sim/current-view/view-number") == 0) {
     interpolate("sim/current-view/x-offset-m", 0, 1); 
-    interpolate("sim/current-view/y-offset-m", 0.82, 1); 
+    interpolate("sim/current-view/y-offset-m", 0.85, 1); 
     interpolate("sim/current-view/z-offset-m", -4, 1);
   } else {
     interpolate("sim/current-view/x-offset-m", 0, 1);
