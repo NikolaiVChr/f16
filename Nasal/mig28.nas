@@ -1,5 +1,5 @@
 var TopGun = {
-	# To start, type in nasal console: mig28.start();
+	# To start, type in nasal console: mig28.start(difficulty);
 	# To stop, type in nasal console: mig28.stop();
 	# Training floor is 10000ft, ceiling is 40000ft.
 	# Collision is enabled.
@@ -11,6 +11,7 @@ var TopGun = {
 	enabled: 0,
 	start: func {
 		if (me.enabled) {
+			print("TopGun: Already started, try stop() before starting again.");
 			return;
 		}
 		me.enabled = 1;
@@ -32,10 +33,10 @@ var TopGun = {
 		}
 		me.ai = n.getChild("mig28", i, 1);
 		me.ai.getNode("valid", 1).setBoolValue(0);
-		me.ai.getNode("name", 1).setValue("notMe");
+		me.ai.getNode("name", 1).setValue("No-name");
 		me.ai.getNode("sign", 1).setValue("Bandit");
 		me.ai.getNode("type", 1).setValue("mig28");
-		me.ai.getNode("callsign", 1).setValue("Ensign");
+		me.ai.getNode("callsign", 1).setValue(callsign);
 		#me.ai.getNode("sim/multiplay/generic/bool[2]",1).setBoolValue(0);#damage smoke
 		#me.ai.getNode("sim/multiplay/generic/bool[40]",1).setBoolValue(1);
 		#me.ai.getNode("sim/multiplay/generic/bool[41]",1).setBoolValue(1);#lights
@@ -75,14 +76,19 @@ var TopGun = {
 		me.model.getNode("roll-deg-prop", 1).setValue(me.nodeRoll.getPath());
 		me.loadNode = me.model.getNode("load", 1);
 		
-		print("TopGun: started");
+		print("TopGun: starting");
+		screen.log.write(callsign~": Hello.", 1.0, 1.0, 0.0);
 		settimer(func {me.spwn();}, 2);
 	},
 
 	stop: func {
 		if (me.enabled) {
+			me.ai.getNode("valid", 1).setBoolValue(0);
 			me.model.remove();
 			me.ai.remove();
+			screen.log.write(callsign~": I am returning to base, later.", 1.0, 1.0, 0.0);
+			print("TopGun: stopped.");
+			setprop("ai/models/model-removed", "/ai/models/mig28[0]");
 		}
 		me.enabled = 0;
 	},
@@ -95,14 +101,26 @@ var TopGun = {
 
 		print("TopGun: spawned");
 		me.reset();
+		if (MAX_ROLL_SPEED == 160) {
+			screen.log.write(callsign~": I will go easy on you, try to stay on my six. Have fun.", 1.0, 1.0, 0.0);
+		} elsif (MAX_ROLL_SPEED == 180) {
+			screen.log.write(callsign~": Nice weather for a fight, lets go.", 1.0, 1.0, 0.0);
+		} elsif (MAX_ROLL_SPEED == 200) {
+			screen.log.write(callsign~": Lets do this, don't make any mistakes.", 1.0, 1.0, 0.0);
+		} else {
+			screen.log.write(callsign~": You think you know what you are doing, alright, lets see..", 1.0, 1.0, 0.0);
+		}
 		settimer(func {me.apply();setprop("ai/models/model-added", "/ai/models/mig28[0]");}, 0.05);
 	},
 
 	decide: func {
 		if (me.enabled == 0) {
-			print("TopGun: interupted.");
+			print("TopGun: interupted training session.");
 			return;
 		}
+		me.elapsed = systime();
+		me.dt = me.elapsed - me.elapsed_last;
+		me.elapsed_last = me.elapsed;
 		me.random = rand();
 		if (me.elapsed - me.decisionTime > me.keepDecisionTime) {
 			if (me.alt < 12000*FT2M and me.speed*MPS2KT < 300) {
@@ -144,6 +162,14 @@ var TopGun = {
 			} else {
 				# here comes reaction to a16
 				me.a16Coord = geo.aircraft_position();
+				if(me.a16Coord.alt()*M2FT < 7000 and me.elapsed - me.warnTime > 15) {
+					screen.log.write(callsign~": Stay above 10000 feet.", 1.0, 1.0, 0.0);
+					me.warnTime = me.elapsed;
+				}
+				if(me.a16Coord.alt()*M2FT > 43000 and me.elapsed - me.warnTime > 15) {
+					screen.log.write(callsign~": Stay below 40000 feet.", 1.0, 1.0, 0.0);
+					me.warnTime = me.elapsed;
+				}
 				me.a16Pitch = vector.Math.getPitch(me.coord,me.a16Coord);
 				me.a16Elev  = me.a16Pitch-me.pitch;
 				me.a16Bearing = me.coord.course_to(me.a16Coord);
@@ -164,9 +190,9 @@ var TopGun = {
 					#} else {
 						me.thrust = 1;
 					#}
-					me.thrust = math.min(1.0,me.thrust*me.dist_nm/4);
+					me.thrust = math.min(1.0,me.thrust*me.dist_nm/2.0);
 					if (me.elapsed - me.sightTime > 3 and me.dist_nm < 2) {
-						screen.log.write("Mig28: Hey! I have you in my gunsight..", 1.0, 1.0, 0.0);
+						screen.log.write(callsign~": Hey! I have you in my gunsight..", 1.0, 1.0, 0.0);
 						me.sightTime = me.elapsed;
 					}
 				} elsif (math.abs(me.a16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.5) {
@@ -177,8 +203,13 @@ var TopGun = {
 					me.think = GO_SCISSOR;
 					me.thrust = 0;
 				} else {
-					if (me.think==GO_AIM and math.abs(me.rollTarget) > 70 and math.abs(me.a16ClockLast)>math.abs(me.a16Clock) and me.elapsed - me.aimTime > 15 and me.dist_nm < 3) {# been in turn fight for 15 secs+ and not gaining aspect
-						# turn fight going bad, do yo-yo
+					if (me.think==GO_AIM and math.abs(me.rollTarget) > 70 and math.abs(me.a16ClockLast)>math.abs(me.a16Clock) and me.elapsed - me.aimTime > 15 and me.dist_nm < 2.5) {# been in turn fight for 15 secs+ and not gaining aspect
+						me.bad += 1;
+					} else {
+						me.bad = 0;
+					}
+					if (me.bad > 20) {
+						# turn fight going bad, break circle
 						if (me.alt*M2FT < 25000) {
 							if (me.think != GO_BREAK_UP) {
 								me.aimTime = me.elapsed;
@@ -192,6 +223,7 @@ var TopGun = {
 							me.think = GO_BREAK_DOWN;
 							me.thrust = 0.75;
 						}
+						me.bad = 0;
 					} elsif ((me.think != GO_BREAK_UP or me.elapsed - me.aimTime > 5) and (me.think != GO_BREAK_DOWN or me.elapsed - me.aimTime > 4)) {# don't interupt break-up unless 5 secs has passed
 						# turn fight to try and get f16 in sight
 						if (me.think != GO_AIM) {
@@ -202,15 +234,14 @@ var TopGun = {
 							me.thrust = 0.25;
 						} elsif (me.speed*MPS2KT > 525) {
 							me.thrust = 0.5;
-						} elsif (me.speed*MPS2KT > 400) {
+						} elsif (me.speed*MPS2KT > 450) {
 							me.thrust = 0.75;
 						} else {
 							me.thrust = 1;
 						}
-					}
-					
+					}					
 				}
-				me.keepDecisionTime = 0.25;
+				me.keepDecisionTime = 0.15;
 				me.decided();
 			}
 		}
@@ -232,9 +263,6 @@ var TopGun = {
 	},
 
 	move: func {
-		me.elapsed = systime();
-		me.dt = me.elapsed - me.elapsed_last;
-		me.elapsed_last = me.elapsed;
 		if (me.think == GO_AHEAD) {
 			me.rollTarget = 0;
 			me.pitchTarget = 0;
@@ -256,15 +284,15 @@ var TopGun = {
 			me.pitchTarget = -30;
 			me.step();
 		} elsif (me.think == GO_AIM) {
-			me.rollTarget = math.max(-1,math.min(1,me.a16Clock/45))*MAX_ROLL;
+			me.rollTarget = math.max(-1,math.min(1,me.a16Clock/30))*MAX_ROLL;
 			me.pitchTarget = me.a16Pitch;
 			me.step();
 		} elsif (me.think == GO_BREAK_UP) {
-			me.rollTarget = math.max(-1,math.min(1,-me.a16Clock/45))*MAX_ROLL;
+			me.rollTarget = math.max(-1,math.min(1,-me.a16Clock/15))*MAX_ROLL;
 			me.pitchTarget = 50;
 			me.step();
 		} elsif (me.think == GO_BREAK_DOWN) {
-			me.rollTarget = math.max(-1,math.min(1,-me.a16Clock/45))*MAX_ROLL;
+			me.rollTarget = math.max(-1,math.min(1,-me.a16Clock/15))*MAX_ROLL;
 			me.pitchTarget = -35;
 			me.step();
 		} elsif (me.think == GO_SCISSOR) {
@@ -283,17 +311,21 @@ var TopGun = {
 	},
 
 	reset: func () {
-		me.alt = 20000*FT2M;
+		me.alt = 25000*FT2M;
 		me.speed = 400*KT2MPS;
+		me.mach = 1.0;
 		me.heading = 0;
-		me.lat = me.a16Coord.lat();
-		me.lon = me.a16Coord.lon();
+		me.lat = geo.aircraft_position().lat();
+		me.lon = geo.aircraft_position().lon();
+		me.coord = geo.Coord.new(geo.aircraft_position());
+		me.coord.set_alt(me.alt);
 		me.roll = 0;
 		me.pitch = 0;
 		me.think = GO_AHEAD;
 		me.thrust = 0.5;
 		me.elapsed = systime();
-		me.elapsed_last = systime();
+		me.elapsed_last = systime()-0.025;
+		me.dt = 0.025;
 		me.decisionTime = systime();
 		me.aimTime = systime();
 		me.rollTarget = me.roll;
@@ -302,9 +334,10 @@ var TopGun = {
 		me.a16Clock = 0;
 		me.keepDecisionTime = 0;
 		me.sightTime = 0;
+		me.warnTime = 0;
 		me.dist_nm = 0;
 
-		print("deciding to RESET!");
+		print("TopGun: deciding to RESET!");
 	},
 
 	step: func () {
@@ -344,12 +377,13 @@ var TopGun = {
 		me.lon = me.coord.lon();
 		me.turnNorm = me.rollNorm*me.turnSpeed/MAX_TURN_SPEED;
 
-		me.biasRoll   =  8.0*me.turnNorm*(me.turnNorm<0?-1:1); # turn bleed
-		me.biasThrust = 11.5*me.thrust;                        # thrust acc
-		me.biasDrag   = 10.0*me.speed/(800*KT2MPS);            # drag deacc
-		me.gravity    =  7.0*me.upFrac;                        # gravity acc/deacc
+		me.deacc      = me.deaccMax();
+		me.bleed      = me.extrapolate(me.turnNorm*(me.turnNorm<0?-1:1), 0, 1, 0, me.deacc*BLEED_FACTOR); # turn bleed (guess)
+		me.gravity    = 9.80665*me.upFrac;                                                       # gravity acc/deacc (sorta real)
+		me.acc        = me.extrapolate(me.thrust, 0, 1, -me.deaccMax(), me.accMax());            # acc (real)
+		
 
-		me.speed += (-me.gravity+me.biasThrust-me.biasRoll-me.biasDrag)*me.dt;
+		me.speed += (-me.gravity+me.acc-me.bleed)*me.dt; # the aircraft in level flight is unaffected by gravity drop.
 
 		me.ground = geo.elevation(me.lat,me.lon);
 		#printf("Max turn is %.1f deg/sec at this speed/altitude. Doing %.1f deg/sec at mach %.1f.", me.turnSpeed, me.rollNorm*me.turnSpeed,me.mach);
@@ -368,7 +402,7 @@ var TopGun = {
 		me.nodePitch.setDoubleValue(me.pitch);
 		me.nodeRoll.setDoubleValue(me.roll);
 		me.ai.getNode("velocities/true-airspeed-kt",1).setDoubleValue(me.speed*MPS2KT);
-		me.ai.getNode("instrumentation/transponder/transmitted-id",1).setIntValue(0);
+		me.ai.getNode("instrumentation/transponder/transmitted-id",1).setIntValue(num_t);
 		me.a16Coord = geo.aircraft_position();
 		me.ai.getNode("radar/bearing-deg", 1).setDoubleValue(me.a16Coord.course_to(me.coord));
 		me.ai.getNode("radar/elevation-deg", 1).setDoubleValue(vector.Math.getPitch(me.a16Coord, me.coord));
@@ -432,6 +466,169 @@ var TopGun = {
 		}
 	},
 
+	accMax: func {
+		# mps / sec , drag index 50, 24000 lbm
+		# taken from Greek F-16 block 52 supplemental manual.
+		#
+		# 10000:
+		# 650 16 10 8 4 3 4 4 3 4 4 200
+		# 
+		# 20000
+		# 650 34 15 11 9 8 5 6 6 6 7 200
+		# 
+		# 30000
+		# 600 38 21 17 14 14 11 10 11 12 200
+		#
+		# 40000
+		# 500 47 34 29 27 29 21 26 200
+
+		me.a10 = 0;
+		if (me.speed*MPS2KT > 650) {
+			me.a10 = 50*KT2MPS/16;
+		} elsif (me.speed*MPS2KT > 600) {
+			me.a10 = 50*KT2MPS/10;
+		} elsif (me.speed*MPS2KT > 550) {
+			me.a10 = 50*KT2MPS/8;
+		} elsif (me.speed*MPS2KT > 500) {
+			me.a10 = 50*KT2MPS/4;
+		} elsif (me.speed*MPS2KT > 450) {
+			me.a10 = 50*KT2MPS/3;
+		} elsif (me.speed*MPS2KT > 400) {
+			me.a10 = 50*KT2MPS/4;
+		} elsif (me.speed*MPS2KT > 350) {
+			me.a10 = 50*KT2MPS/4;
+		} elsif (me.speed*MPS2KT > 300) {
+			me.a10 = 50*KT2MPS/3;
+		} elsif (me.speed*MPS2KT > 250) {
+			me.a10 = 50*KT2MPS/4;
+		} else {
+			me.a10 = 50*KT2MPS/4;
+		}
+
+		me.a20 = 0;
+		if (me.speed*MPS2KT > 650) {
+			me.a20 = 50*KT2MPS/34;
+		} elsif (me.speed*MPS2KT > 600) {
+			me.a20 = 50*KT2MPS/15;
+		} elsif (me.speed*MPS2KT > 550) {
+			me.a20 = 50*KT2MPS/11;
+		} elsif (me.speed*MPS2KT > 500) {
+			me.a20 = 50*KT2MPS/9;
+		} elsif (me.speed*MPS2KT > 450) {
+			me.a20 = 50*KT2MPS/8;
+		} elsif (me.speed*MPS2KT > 400) {
+			me.a20 = 50*KT2MPS/5;
+		} elsif (me.speed*MPS2KT > 350) {
+			me.a20 = 50*KT2MPS/6;
+		} elsif (me.speed*MPS2KT > 300) {
+			me.a20 = 50*KT2MPS/6;
+		} elsif (me.speed*MPS2KT > 250) {
+			me.a20 = 50*KT2MPS/6;
+		} else {
+			me.a20 = 50*KT2MPS/7;
+		}
+
+		me.a30 = 0;
+		if (me.speed*MPS2KT > 600) {
+			me.a30 = 50*KT2MPS/38;
+		} elsif (me.speed*MPS2KT > 550) {
+			me.a30 = 50*KT2MPS/21;
+		} elsif (me.speed*MPS2KT > 500) {
+			me.a30 = 50*KT2MPS/17;
+		} elsif (me.speed*MPS2KT > 450) {
+			me.a30 = 50*KT2MPS/14;
+		} elsif (me.speed*MPS2KT > 400) {
+			me.a30 = 50*KT2MPS/14;
+		} elsif (me.speed*MPS2KT > 350) {
+			me.a30 = 50*KT2MPS/11;
+		} elsif (me.speed*MPS2KT > 300) {
+			me.a30 = 50*KT2MPS/10;
+		} elsif (me.speed*MPS2KT > 250) {
+			me.a30 = 50*KT2MPS/11;
+		} else {
+			me.a30 = 50*KT2MPS/12;
+		}
+
+		me.a40 = 0;
+		if (me.speed*MPS2KT > 500) {
+			me.a40 = 50*KT2MPS/47;
+		} elsif (me.speed*MPS2KT > 450) {
+			me.a40 = 50*KT2MPS/34;
+		} elsif (me.speed*MPS2KT > 400) {
+			me.a40 = 50*KT2MPS/29;
+		} elsif (me.speed*MPS2KT > 350) {
+			me.a40 = 50*KT2MPS/27;
+		} elsif (me.speed*MPS2KT > 300) {
+			me.a40 = 50*KT2MPS/29;
+		} elsif (me.speed*MPS2KT > 250) {
+			me.a40 = 50*KT2MPS/21;
+		} else {
+			me.a40 = 50*KT2MPS/26;
+		}
+
+		
+		if (me.alt*M2FT > 30000) {
+			return INDICATED_BIAS*me.extrapolate(me.alt*M2FT, 30000, 40000, me.a30, me.a40);
+		} elsif (me.alt*M2FT > 20000) {
+			return INDICATED_BIAS*me.extrapolate(me.alt*M2FT, 20000, 30000, me.a20, me.a30);
+		} else {
+			return INDICATED_BIAS*me.extrapolate(me.alt*M2FT, 10000, 20000, me.a10, me.a20);
+		}
+	},
+
+	deaccMax: func {
+		# mps / sec , drag index 50
+		# taken from Greek F-16 block 52 supplemental manual.
+		#
+		# 20000:
+		# 1.6M - 1.4M : 9s 1000-850 16.66 kt/sec
+		# 1.4 - 1.2 : 12s   850-725 10.41
+		# 1.2 - 1.0 : 12s   725-600 10.41
+		# 1.0 - 0.8 : 30s   600-500  3.33
+		# 0.8 - 0.6 : 48s   500-375  2.60
+
+		# 30000:
+		# 1.8M - 1.1M : 66s 1050-650  6.06
+		# 1.1 - 0.8 : 78s    650-450  2.56
+
+		# 40000:
+		# 1.8M - 1.4M : 30s 1050-800  8.33
+		# 1.4 - 1.0 : 60s    800-575  3.75
+		# 1.0 - 0.8 : 60s    575-450  2.08
+
+		me.a20 = 0;
+		if (me.mach > 1.4) {
+			me.a20 = 16.66*KT2MPS;
+		} elsif (me.mach > 1.2) {
+			me.a20 = 10.41*KT2MPS;
+		} elsif (me.mach > 1.0) {
+			me.a20 = 10.41*KT2MPS;
+		} elsif (me.mach > 0.8) {
+			me.a20 = 3.33*KT2MPS;
+		} else {
+			me.a20 = 2.60*KT2MPS;
+		}
+		me.a30 = 0;
+		if (me.mach > 1.1) {
+			me.a30 = 6.06*KT2MPS;
+		} else {
+			me.a30 = 2.56*KT2MPS;
+		}
+		me.a40 = 0;
+		if (me.mach > 1.4) {
+			me.a40 = 8.33*KT2MPS;
+		} elsif (me.mach > 1.0) {
+			me.a40 = 3.75*KT2MPS;
+		} else {
+			me.a40 = 2.08*KT2MPS;
+		}
+		if (me.alt*M2FT > 30000) {
+			return me.extrapolate(me.alt*M2FT, 30000, 40000, me.a30, me.a40);
+		} else {
+			return me.extrapolate(me.alt*M2FT, 20000, 30000, me.a20, me.a30);
+		}
+	},
+
 	extrapolate: func (x, x1, x2, y1, y2) {
     	return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
 	},
@@ -449,13 +646,43 @@ var GO_SCISSOR = 8;
 var GO_BREAK_UP = 9;
 var GO_BREAK_DOWN = 10;
 
-var MAX_ROLL = 75;
+var MAX_ROLL = 80;
 var MAX_ROLL_SPEED = 180;
-var MAX_PITCH_UP_SPEED = 10;
+var MAX_PITCH_UP_SPEED = 15;
 var MAX_PITCH_DOWN_SPEED = 5;
 var MAX_TURN_SPEED = 18;#do not mess with this number unless porting the system to another aircraft.
 
-var start = func {
+var INDICATED_BIAS = 1.0;
+var BLEED_FACTOR = 0.5;
+var callsign = "Lt.Endo";
+var num_t = "0000";
+
+
+var start = func (diff = 1) {
+	if (diff < 1 or diff > 3) {
+		print("Difficulty goes from 1 (easy) to 3 (hard), try again.");
+		return;
+	}
+	if (diff == 1) {
+		MAX_ROLL_SPEED = 160;
+		INDICATED_BIAS = 1.0;
+		BLEED_FACTOR = 1.0;
+		num_t = "0000";
+		callsign = "Lt.Endo";
+	} elsif (diff == 2) {
+		MAX_ROLL_SPEED = 180;
+		INDICATED_BIAS = 1.125;
+		BLEED_FACTOR = 0.85;
+		num_t = "0000";
+		callsign = "Cpt.Cas";
+	} elsif (diff == 3) {
+		MAX_ROLL_SPEED = 200;
+		INDICATED_BIAS = 1.25;
+		BLEED_FACTOR = 0.7;
+		num_t = "-9999";
+		callsign = "Maj.Rap";
+	}
+	print("Difficulty set to: "~diff);
 	TopGun.start();
 }
 
