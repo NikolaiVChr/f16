@@ -359,6 +359,7 @@ var medium = {
 
 var sendABtoMP = func {
   var red = getprop("rendering/scene/diffuse/red");
+  setprop("rendering/scene/diffuse/red-unbound", red);
   setprop("sim/multiplay/generic/float[10]",  1-red*0.75);
 
   setprop("sim/multiplay/generic/float[11]",  0.75+(0.25-red*0.25));
