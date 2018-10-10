@@ -29,7 +29,7 @@ Richard Harrison
 - MFDs
 - HUD
 - 3D misc. panel
-- Avionics communication system (emesary based)
+- Avionics communication system (emessary based)
 
 Jonathan Redpath
 - Hydraulics
@@ -42,10 +42,12 @@ Justin Nicholson
 - Radar RCS system
 
 J Maverick 16
-- Adapted and added liveries by Gary Brown
+- Added and adapted liveries by Gary Brown
 - Sound recording/editing
 - Added weapons, stores
-- Fixes and improvements
+- Various fixes and improvements
+- Some 3D works (pilot model)
+- Splashes
 
 Fabien Barbier
 - Work on stores
@@ -67,3 +69,7 @@ Joshua Davidson (it0uchpods)
 
 Martien Van Der Plas
 - 3D modeling for weapons, stores
+
+Enrico Castaldi (Spectre)
+- Italian and other liveries
+- Texture improvements
