@@ -392,7 +392,7 @@ var az_scan = func(notification) {
                     ordnance = 0;
                 }
                 if (type == "multiplayer" or type == "tanker" or type == "aircraft" or type == "carrier"
-                    or type == "ship" or type == "groundvehicle") 
+                    or type == "ship" or type == "groundvehicle" or type == "mig28") 
                 {
                     #var new_tgt = Target.new(c);# Richard, what is this for? Its important that every target that goes into completelist gets the setClass() called..
                     var u = Target.new(c);
@@ -410,7 +410,7 @@ var az_scan = func(notification) {
                     var u_rng = u.get_range();
                     if (ordnance) {
                         u.setClass(ORDNANCE);
-                    } elsif (type == "tanker" or type == "aircraft") {
+                    } elsif (type == "tanker" or type == "aircraft" or type == "mig28") {
                         u.setClass(AIR);
                     } elsif (type=="carrier") {
                         u.setClass(MARINE);
@@ -1653,7 +1653,7 @@ var Target = {
             }
         }
         else
-            print("NO TAS ",me.type," ",u.get_range(),u.Model, u.Callsign.getValue());
+            print("NO TAS ",me.type," ",me.get_range(),me.Model, me.get_Callsign());
         return 0;
 #
 # this is the old way of calculating closure; it's wrong because this isn't what it actually is in

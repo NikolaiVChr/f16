@@ -193,6 +193,7 @@ RWRCanvas = {
                 "A-10":"10",
                 "Typhoon":"EF",
                 "f16":"16",
+                "mig28":"28",
         };
         rwr.shownList = [];
         #
