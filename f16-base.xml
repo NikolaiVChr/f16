@@ -583,6 +583,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <property-rule n="100">
                 <path>Aircraft/f16/Systems/zoom-views.xml</path>
             </property-rule>
+            <!--<path>Aircraft/f16/Systems/f16-airdata.xml</path>-->
         </systems>
         <current-view>
             <z-offset-dec-step type="double">0.0</z-offset-dec-step>
@@ -2109,5 +2110,8 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
         <crash>
             <file>Aircraft/f16/Nasal/crash-and-stress.nas</file>
         </crash>
+        <mig28>
+            <file>Aircraft/f16/Nasal/mig28.nas</file>
+        </mig28>
     </nasal>
 </PropertyList>
