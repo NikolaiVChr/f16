@@ -9,7 +9,7 @@ Author: Nikolai V. Chr.
 		<outer-angle type="float">60</outer-angle><!-- 0-90, but greater than inner -->
 		<black-angle type="float">80</black-angle><!-- 0-90, but greater than outer -->
 		<contrast type="float">1</contrast><!-- 0.0001 - 255, 1.0 is normal -->
-		<dirt-factor>0.125</dirt-factor>
+		<dirt-factor>0.9</dirt-factor>
 
 
 
