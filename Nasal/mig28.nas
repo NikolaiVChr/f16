@@ -132,7 +132,7 @@ var TopGun = {
 			} elsif (me.alt > 38000*FT2M and me.GStoKIAS(me.speed*MPS2KT) > 700) {
 				# high speed at high alt, need to turn hard for 3 secs to bleed some speed
 				me.think = me.random>0.5?GO_LEFT:GO_RIGHT;
-				me.thrust = -0.2;#speedbrakes enabled
+				me.thrust = -0.1;#speedbrakes enabled
 				me.keepDecisionTime = 3;
 				me.decided();
 			} elsif (me.alt < 10000*FT2M) {
@@ -201,7 +201,7 @@ var TopGun = {
 						me.aimTime = me.elapsed;
 					}
 					me.think = GO_SCISSOR;
-					me.thrust = 0;
+					me.thrust = -0.1; #speedbrakes
 				} else {
 					if (me.think==GO_AIM and math.abs(me.rollTarget) > 70 and math.abs(me.a16ClockLast)>math.abs(me.a16Clock) and me.elapsed - me.aimTime > 15 and me.dist_nm < 2.5) {# been in turn fight for 15 secs+ and not gaining aspect
 						me.bad += 1;
@@ -258,7 +258,7 @@ var TopGun = {
 		if(me.think==GO_SCISSOR)me.prt="scissor";
 		if(me.think==GO_BREAK_UP)me.prt="break up the circle";
 		if(me.think==GO_BREAK_DOWN)me.prt="break down the circle";
-		printf("Deciding to go %s. Speed %d KIAS/M%.2f at %d ft. Roll %d, pitch %d. Thrust %.1f%%. %.1f NM.",me.prt,me.GStoKIAS(me.speed*MPS2KT),me.mach,me.alt*M2FT,me.roll,me.pitch,me.thrust*100, me.dist_nm);
+		#printf("Deciding to go %s. Speed %d KIAS/M%.2f at %d ft. Roll %d, pitch %d. Thrust %.1f%%. %.1f NM.",me.prt,me.GStoKIAS(me.speed*MPS2KT),me.mach,me.alt*M2FT,me.roll,me.pitch,me.thrust*100, me.dist_nm);
 		me.decisionTime = me.elapsed;
 	},
 
@@ -701,3 +701,4 @@ var stop = func {
 #  lower floor
 #  multiple opponents
 #  make him respect blackout and redout.
+#  start from menu.
