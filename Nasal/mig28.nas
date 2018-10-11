@@ -181,10 +181,24 @@ var TopGun = {
 				me.a16Bearing = me.coord.course_to(me.a16Coord);
 				me.a16ClockLast = me.a16Clock;
 				me.a16Clock = geo.normdeg180(me.a16Bearing-me.heading);
+				me.a16Range = me.coord.distance_to(me.a16Coord)*M2NM;
+				me.a16Speed = getprop("velocities/groundspeed-kt")*KT2MPS;
+				me.a16Roll  = getprop("orientation/roll-deg");
 				me.hisBearing = me.a16Coord.course_to(me.coord);
 				me.hisClock = geo.normdeg180(me.hisBearing-getprop("orientation/heading-deg"));
 				me.dist_nm = me.a16Coord.direct_distance_to(me.coord)*M2NM;
-				if ((math.abs(me.hisClock) < 20 or math.abs(me.hisClock) > 140) and math.abs(me.a16Elev)<7 and math.abs(me.a16Clock) < 7) {
+
+				if (math.abs(me.hisClock) > 45 and math.abs(me.a16Clock) < 45 and me.a16Range > 2.5 and me.a16Speed > me.speed) {
+					#lower speed, out of range but ahead
+					me.think = GO_LEAD_PURSUIT;
+					me.thrust = 0.75;
+					me.keepDecisionTime = 0.15;
+				} elsif (math.abs(me.hisClock) > 45 and math.abs(me.a16Clock) < 45 and me.a16Range > 2.5) {
+					#behind a16, but out of fire range, when reach lag point, do GO_AIM for cold-side lag.
+					me.think = GO_LAG_PURSUIT;
+					me.thrust = 1;
+					me.keepDecisionTime = 0.15;
+				} elsif ((math.abs(me.hisClock) < 20 or math.abs(me.hisClock) > 140) and math.abs(me.a16Elev)<7 and math.abs(me.a16Clock) < 7) {
 					# has aim on the f16, slow down a bit and keep that aim
 					me.think = GO_AIM;
 					#if (me.speed*MPS2KT > 650) {
@@ -201,6 +215,12 @@ var TopGun = {
 						screen.log.write(me.callsign~": Hey! I have you in my gunsight..", 1.0, 1.0, 0.0);
 						me.sightTime = me.elapsed;
 					}
+					me.keepDecisionTime = 0.15;
+				} elsif (((math.abs(me.a16Clock) > 0 and math.abs(me.hisClock) < 5 and me.a16Roll>0) or (math.abs(me.a16Clock) < 0 and math.abs(me.hisClock) > 5 and me.a16Roll<0)) and me.a16Speed < me.speed) {
+					#a16 does lead pursuit but has lower speed. Gently turn opposite the lead and away with full thrust until range better.
+					me.think = GO_LEAD_DEFEND_AWAY;
+					me.thrust = 1;
+					me.keepDecisionTime = 8;
 				} elsif (math.abs(me.a16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.5) {
 					# f16 has aim on mig28, do some scissors to not be hit
 					if (me.think != GO_SCISSOR) {
@@ -208,6 +228,16 @@ var TopGun = {
 					}
 					me.think = GO_SCISSOR;
 					me.thrust = -0.1; #speedbrakes
+					me.keepDecisionTime = 0.15;
+				} elsif (math.abs(me.a16Clock) < 115 and math.abs(me.a16Clock) > 75 and math.abs(me.hisClock) > 75 and math.abs(me.hisClock) < 115 and me.dist_nm < 1.5 and math.abs(geo.normdeg180(me.heading-getprop("orientation/heading-deg")))<30) {
+					# scissor response to parallel flight 
+					if (me.think != GO_SCISSOR) {
+						me.aimTime = me.elapsed;
+					}
+					me.scissorTarget = me.a16Clock < 0?-MAX_ROLL:MAX_ROLL;
+					me.think = GO_SCISSOR;
+					me.thrust = 1;
+					me.keepDecisionTime = 2.5;
 				} else {
 					if (me.think==GO_AIM and math.abs(me.rollTarget) > 70 and math.abs(me.a16ClockLast)>math.abs(me.a16Clock) and me.elapsed - me.aimTime > 15 and me.dist_nm < 2.5) {# been in turn fight for 15 secs+ and not gaining aspect
 						me.bad += 1;
@@ -245,9 +275,9 @@ var TopGun = {
 						} else {
 							me.thrust = 1;
 						}
-					}					
-				}
-				me.keepDecisionTime = 0.15;
+					}
+					me.keepDecisionTime = 0.15;				
+				}				
 				me.decided();
 			}
 		}
@@ -264,6 +294,9 @@ var TopGun = {
 		if(me.think==GO_SCISSOR)me.prt="scissor";
 		if(me.think==GO_BREAK_UP)me.prt="break up the circle";
 		if(me.think==GO_BREAK_DOWN)me.prt="break down the circle";
+		if(me.think==GO_LEAD_PURSUIT)me.prt="lead";
+		if(me.think==GO_LAG_PURSUIT)me.prt="lag";
+		if(me.think==GO_LEAD_DEFEND_AWAY)me.prt="lead defense";
 		#printf("Deciding to go %s. Speed %d KIAS/M%.2f at %d ft. Roll %d, pitch %d. Thrust %.1f%%. %.1f NM.",me.prt,me.GStoKIAS(me.speed*MPS2KT),me.mach,me.alt*M2FT,me.roll,me.pitch,me.thrust*100, me.dist_nm);
 		me.decisionTime = me.elapsed;
 	},
@@ -291,6 +324,20 @@ var TopGun = {
 			me.step();
 		} elsif (me.think == GO_AIM) {
 			me.rollTarget = math.max(-1,math.min(1,me.a16Clock/(30-(1-me.Gf)*15)))*MAX_ROLL;
+			me.pitchTarget = me.a16Pitch;
+			me.step();
+		} elsif (me.think == GO_LEAD_DEFEND_AWAY) {
+			me.rollTarget = math.max(-1,math.min(1,-me.a16Clock/(30-(1-me.Gf)*15)))*MAX_ROLL;
+			me.pitchTarget = -10;
+			me.step();
+		} elsif (me.think == GO_LEAD_PURSUIT) {
+			me.leadTarget = me.a16Roll < 0?-30:30;
+			me.rollTarget = math.max(-1,math.min(1,(me.a16Clock+me.leadTarget)/(30-(1-me.Gf)*15)))*MAX_ROLL;
+			me.pitchTarget = me.a16Pitch;
+			me.step();
+		} elsif (me.think == GO_LAG_PURSUIT) {
+			me.lagTarget = me.a16Roll < 0?15:-15;
+			me.rollTarget = math.max(-1,math.min(1,(me.a16Clock+me.lagTarget)/(30-(1-me.Gf)*15)))*MAX_ROLL;
 			me.pitchTarget = me.a16Pitch;
 			me.step();
 		} elsif (me.think == GO_BREAK_UP) {
@@ -676,6 +723,10 @@ var GO_AIM     = 7;
 var GO_SCISSOR = 8;
 var GO_BREAK_UP = 9;
 var GO_BREAK_DOWN = 10;
+var GO_LEAD_PURSUIT = 11;
+var GO_LAG_PURSUIT = 12;
+var GO_LEAD_DEFEND_AWAY = 13;
+var GO_LEAD_DEFEND_INTO = 14;#a16 does lead pursuit and has higher speed, turn aggressively into his lead in narrow turn.
 
 var MAX_ROLL = 80;
 var MAX_ROLL_SPEED = 180;
