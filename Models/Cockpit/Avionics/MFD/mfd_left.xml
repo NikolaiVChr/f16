@@ -869,7 +869,15 @@
             <inner-angle type="float">45</inner-angle><!-- 0-90, use 90 for LED or plasma display-->
             <outer-angle type="float">60</outer-angle><!-- 0-90, but greater than inner -->
             <black-angle type="float">80</black-angle><!-- 0-90, but greater than outer -->
-            <contrast><use>f16/avionics/mfd-l-con</use></contrast>
+            <contrast><use>f16/avionics/mfd-l-con</use></contrast> 
+            <texture n="1">
+                <type>2d</type>
+                <filter>linear-mipmap-linear</filter>
+                <wrap-s>clamp</wrap-s>
+                <wrap-t>clamp</wrap-t>
+                <internal-format>normalized</internal-format>
+                <image>Aircraft/f16/Models/Effects/dust2.png</image>
+            </texture>
         </parameters>
         <object-name>MFDimage1</object-name>
     </effect>
