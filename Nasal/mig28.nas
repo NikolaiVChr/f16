@@ -123,13 +123,13 @@ var TopGun = {
 		me.elapsed_last = me.elapsed;
 		me.random = rand();
 		if (me.elapsed - me.decisionTime > me.keepDecisionTime) {
-			if (me.alt < 12000*FT2M and me.speed*MPS2KT < 300) {
+			if (me.alt < 12000*FT2M and me.GStoKIAS(me.speed*MPS2KT) < 275) {
 				# low speed at low alt, need to fly straight for 3 secs to get some speed
 				me.think = GO_AHEAD;
 				me.thrust = 1;
 				me.keepDecisionTime = 3;
 				me.decided();
-			} elsif (me.alt > 38000*FT2M and me.speed*MPS2KT > 700) {
+			} elsif (me.alt > 38000*FT2M and me.GStoKIAS(me.speed*MPS2KT) > 700) {
 				# high speed at high alt, need to turn hard for 3 secs to bleed some speed
 				me.think = me.random>0.5?GO_LEFT:GO_RIGHT;
 				me.thrust = -0.2;#speedbrakes enabled
@@ -147,13 +147,13 @@ var TopGun = {
 				me.thrust = 0;
 				me.keepDecisionTime = 2;
 				me.decided();
-			} elsif (me.speed*MPS2KT < 250) {
+			} elsif (me.GStoKIAS(me.speed*MPS2KT) < 250) {
 				# too low speed, go down for 3 secs
 				me.think = GO_DOWN;
 				me.thrust = 1;
 				me.keepDecisionTime = 3;
 				me.decided();
-			} elsif (me.speed*MPS2KT > 750) {
+			} elsif (me.GStoKIAS(me.speed*MPS2KT) > 750) {
 				# too high speed, go up for 3 secs
 				me.think = GO_UP;
 				me.thrust = 0;
@@ -230,11 +230,11 @@ var TopGun = {
 							me.aimTime = me.elapsed;
 						}
 						me.think = GO_AIM;
-						if (me.speed*MPS2KT > 650) {
+						if (me.GStoKIAS(me.speed*MPS2KT) > 650) {
 							me.thrust = 0.25;
-						} elsif (me.speed*MPS2KT > 525) {
+						} elsif (me.GStoKIAS(me.speed*MPS2KT) > 525) {
 							me.thrust = 0.5;
-						} elsif (me.speed*MPS2KT > 450) {
+						} elsif (me.GStoKIAS(me.speed*MPS2KT) > 450) {
 							me.thrust = 0.75;
 						} else {
 							me.thrust = 1;
@@ -258,7 +258,7 @@ var TopGun = {
 		if(me.think==GO_SCISSOR)me.prt="scissor";
 		if(me.think==GO_BREAK_UP)me.prt="break up the circle";
 		if(me.think==GO_BREAK_DOWN)me.prt="break down the circle";
-		#printf("Deciding to go %s. Speed %dkt/M%.1f at %d ft. Roll %d, pitch %d. Thrust %.1f%%. %.1f NM.",me.prt,me.speed*MPS2KT,me.mach,me.alt*M2FT,me.roll,me.pitch,me.thrust*100, me.dist_nm);
+		printf("Deciding to go %s. Speed %d KIAS/M%.2f at %d ft. Roll %d, pitch %d. Thrust %.1f%%. %.1f NM.",me.prt,me.GStoKIAS(me.speed*MPS2KT),me.mach,me.alt*M2FT,me.roll,me.pitch,me.thrust*100, me.dist_nm);
 		me.decisionTime = me.elapsed;
 	},
 
@@ -387,8 +387,8 @@ var TopGun = {
 
 		me.ground = geo.elevation(me.lat,me.lon);
 		#printf("Max turn is %.1f deg/sec at this speed/altitude. Doing %.1f deg/sec at mach %.1f.", me.turnSpeed, me.rollNorm*me.turnSpeed,me.mach);
-		if (me.speed < (150*KT2MPS) or me.ground == nil or me.ground > me.alt) {
-			print("spd "~(me.speed*MPS2KT));
+		if (me.GStoKIAS(me.speed) < (150*KT2MPS) or me.ground == nil or me.ground > me.alt) {
+			print("spd "~me.GStoKIAS(me.speed*MPS2KT));
 			print("agl "~(me.ground == nil?"nil":(""~(me.alt-me.ground)*M2FT)));
 			me.reset();
 		}
@@ -481,98 +481,99 @@ var TopGun = {
 		#
 		# 40000
 		# 500 47 34 29 27 29 21 26 200
-
+		me.kias = me.GStoKIAS(me.speed*MPS2KT);
 		me.a10 = 0;
-		if (me.speed*MPS2KT > 650) {
-			me.a10 = 50*KT2MPS/16;
-		} elsif (me.speed*MPS2KT > 600) {
-			me.a10 = 50*KT2MPS/10;
-		} elsif (me.speed*MPS2KT > 550) {
-			me.a10 = 50*KT2MPS/8;
-		} elsif (me.speed*MPS2KT > 500) {
-			me.a10 = 50*KT2MPS/4;
-		} elsif (me.speed*MPS2KT > 450) {
-			me.a10 = 50*KT2MPS/3;
-		} elsif (me.speed*MPS2KT > 400) {
-			me.a10 = 50*KT2MPS/4;
-		} elsif (me.speed*MPS2KT > 350) {
-			me.a10 = 50*KT2MPS/4;
-		} elsif (me.speed*MPS2KT > 300) {
-			me.a10 = 50*KT2MPS/3;
-		} elsif (me.speed*MPS2KT > 250) {
-			me.a10 = 50*KT2MPS/4;
+		if (me.kias > 650) {
+			me.a10 = 16;
+		} elsif (me.kias > 600) {
+			me.a10 = 10;
+		} elsif (me.kias > 550) {
+			me.a10 = 8;
+		} elsif (me.kias > 500) {
+			me.a10 = 4;
+		} elsif (me.kias > 450) {
+			me.a10 = 3;
+		} elsif (me.kias > 400) {
+			me.a10 = 4;
+		} elsif (me.kias > 350) {
+			me.a10 = 4;
+		} elsif (me.kias > 300) {
+			me.a10 = 3;
+		} elsif (me.kias > 250) {
+			me.a10 = 4;
 		} else {
-			me.a10 = 50*KT2MPS/4;
+			me.a10 = 4;
 		}
+		me.a10 = me.KIAStoGS(50)*KT2MPS/me.a10;
 
 		me.a20 = 0;
-		if (me.speed*MPS2KT > 650) {
-			me.a20 = 50*KT2MPS/34;
-		} elsif (me.speed*MPS2KT > 600) {
-			me.a20 = 50*KT2MPS/15;
-		} elsif (me.speed*MPS2KT > 550) {
-			me.a20 = 50*KT2MPS/11;
-		} elsif (me.speed*MPS2KT > 500) {
-			me.a20 = 50*KT2MPS/9;
-		} elsif (me.speed*MPS2KT > 450) {
-			me.a20 = 50*KT2MPS/8;
-		} elsif (me.speed*MPS2KT > 400) {
-			me.a20 = 50*KT2MPS/5;
-		} elsif (me.speed*MPS2KT > 350) {
-			me.a20 = 50*KT2MPS/6;
-		} elsif (me.speed*MPS2KT > 300) {
-			me.a20 = 50*KT2MPS/6;
-		} elsif (me.speed*MPS2KT > 250) {
-			me.a20 = 50*KT2MPS/6;
+		if (me.kias > 650) {
+			me.a20 = me.KIAStoGS(50)*KT2MPS/34;
+		} elsif (me.kias > 600) {
+			me.a20 = me.KIAStoGS(50)*KT2MPS/15;
+		} elsif (me.kias > 550) {
+			me.a20 = me.KIAStoGS(50)*KT2MPS/11;
+		} elsif (me.kias > 500) {
+			me.a20 = me.KIAStoGS(50)*KT2MPS/9;
+		} elsif (me.kias > 450) {
+			me.a20 = me.KIAStoGS(50)*KT2MPS/8;
+		} elsif (me.kias > 400) {
+			me.a20 = me.KIAStoGS(50)*KT2MPS/5;
+		} elsif (me.kias > 350) {
+			me.a20 = me.KIAStoGS(50)*KT2MPS/6;
+		} elsif (me.kias > 300) {
+			me.a20 = me.KIAStoGS(50)*KT2MPS/6;
+		} elsif (me.kias > 250) {
+			me.a20 = me.KIAStoGS(50)*KT2MPS/6;
 		} else {
-			me.a20 = 50*KT2MPS/7;
+			me.a20 = me.KIAStoGS(50)*KT2MPS/7;
 		}
 
 		me.a30 = 0;
-		if (me.speed*MPS2KT > 600) {
-			me.a30 = 50*KT2MPS/38;
-		} elsif (me.speed*MPS2KT > 550) {
-			me.a30 = 50*KT2MPS/21;
-		} elsif (me.speed*MPS2KT > 500) {
-			me.a30 = 50*KT2MPS/17;
-		} elsif (me.speed*MPS2KT > 450) {
-			me.a30 = 50*KT2MPS/14;
-		} elsif (me.speed*MPS2KT > 400) {
-			me.a30 = 50*KT2MPS/14;
-		} elsif (me.speed*MPS2KT > 350) {
-			me.a30 = 50*KT2MPS/11;
-		} elsif (me.speed*MPS2KT > 300) {
-			me.a30 = 50*KT2MPS/10;
-		} elsif (me.speed*MPS2KT > 250) {
-			me.a30 = 50*KT2MPS/11;
+		if (me.kias > 600) {
+			me.a30 = me.KIAStoGS(50)*KT2MPS/38;
+		} elsif (me.kias > 550) {
+			me.a30 = me.KIAStoGS(50)*KT2MPS/21;
+		} elsif (me.kias > 500) {
+			me.a30 = me.KIAStoGS(50)*KT2MPS/17;
+		} elsif (me.kias > 450) {
+			me.a30 = me.KIAStoGS(50)*KT2MPS/14;
+		} elsif (me.kias > 400) {
+			me.a30 = me.KIAStoGS(50)*KT2MPS/14;
+		} elsif (me.kias > 350) {
+			me.a30 = me.KIAStoGS(50)*KT2MPS/11;
+		} elsif (me.kias > 300) {
+			me.a30 = me.KIAStoGS(50)*KT2MPS/10;
+		} elsif (me.kias > 250) {
+			me.a30 = me.KIAStoGS(50)*KT2MPS/11;
 		} else {
-			me.a30 = 50*KT2MPS/12;
+			me.a30 = me.KIAStoGS(50)*KT2MPS/12;
 		}
 
 		me.a40 = 0;
-		if (me.speed*MPS2KT > 500) {
-			me.a40 = 50*KT2MPS/47;
-		} elsif (me.speed*MPS2KT > 450) {
-			me.a40 = 50*KT2MPS/34;
-		} elsif (me.speed*MPS2KT > 400) {
-			me.a40 = 50*KT2MPS/29;
-		} elsif (me.speed*MPS2KT > 350) {
-			me.a40 = 50*KT2MPS/27;
-		} elsif (me.speed*MPS2KT > 300) {
-			me.a40 = 50*KT2MPS/29;
-		} elsif (me.speed*MPS2KT > 250) {
-			me.a40 = 50*KT2MPS/21;
+		if (me.kias > 500) {
+			me.a40 = me.KIAStoGS(50)*KT2MPS/47;
+		} elsif (me.kias > 450) {
+			me.a40 = me.KIAStoGS(50)*KT2MPS/34;
+		} elsif (me.kias > 400) {
+			me.a40 = me.KIAStoGS(50)*KT2MPS/29;
+		} elsif (me.kias > 350) {
+			me.a40 = me.KIAStoGS(50)*KT2MPS/27;
+		} elsif (me.kias > 300) {
+			me.a40 = me.KIAStoGS(50)*KT2MPS/29;
+		} elsif (me.kias > 250) {
+			me.a40 = me.KIAStoGS(50)*KT2MPS/21;
 		} else {
-			me.a40 = 50*KT2MPS/26;
+			me.a40 = me.KIAStoGS(50)*KT2MPS/26;
 		}
 
 		
 		if (me.alt*M2FT > 30000) {
-			return INDICATED_BIAS*me.extrapolate(me.alt*M2FT, 30000, 40000, me.a30, me.a40);
+			return me.extrapolate(me.alt*M2FT, 30000, 40000, me.a30, me.a40);
 		} elsif (me.alt*M2FT > 20000) {
-			return INDICATED_BIAS*me.extrapolate(me.alt*M2FT, 20000, 30000, me.a20, me.a30);
+			return me.extrapolate(me.alt*M2FT, 20000, 30000, me.a20, me.a30);
 		} else {
-			return INDICATED_BIAS*me.extrapolate(me.alt*M2FT, 10000, 20000, me.a10, me.a20);
+			return me.extrapolate(me.alt*M2FT, 10000, 20000, me.a10, me.a20);
 		}
 	},
 
@@ -629,6 +630,14 @@ var TopGun = {
 		}
 	},
 
+	KIAStoGS: func (kias) {
+		return (0.02*(M2FT*me.alt*0.001)+1)*kias;
+	},
+
+	GStoKIAS: func (gs) {
+		return gs/(0.02*(M2FT*me.alt*0.001)+1);
+	},
+
 	extrapolate: func (x, x1, x2, y1, y2) {
     	return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
 	},
@@ -652,7 +661,6 @@ var MAX_PITCH_UP_SPEED = 15;
 var MAX_PITCH_DOWN_SPEED = 5;
 var MAX_TURN_SPEED = 18;#do not mess with this number unless porting the system to another aircraft.
 
-var INDICATED_BIAS = 1.0;
 var BLEED_FACTOR = 0.5;
 var callsign = "Lt.Endo";
 var num_t = "0000";
@@ -660,25 +668,22 @@ var num_t = "0000";
 
 var start = func (diff = 1) {
 	if (diff < 1 or diff > 3) {
-		print("Difficulty goes from 1 (easy) to 3 (hard), try again.");
+		print("Difficulty goes from 1 (easy), 2 (normal) to 3 (hard), try again.");
 		return;
 	}
 	if (diff == 1) {
 		MAX_ROLL_SPEED = 160;
-		INDICATED_BIAS = 1.0;
-		BLEED_FACTOR = 1.0;
+		BLEED_FACTOR = 1.2;
 		num_t = "0000";
 		callsign = "Lt.Endo";
 	} elsif (diff == 2) {
 		MAX_ROLL_SPEED = 180;
-		INDICATED_BIAS = 1.125;
-		BLEED_FACTOR = 0.85;
+		BLEED_FACTOR = 1.0;
 		num_t = "0000";
 		callsign = "Cpt.Cas";
 	} elsif (diff == 3) {
 		MAX_ROLL_SPEED = 200;
-		INDICATED_BIAS = 1.25;
-		BLEED_FACTOR = 0.7;
+		BLEED_FACTOR = 0.9;
 		num_t = "-9999";
 		callsign = "Maj.Rap";
 	}
@@ -689,3 +694,10 @@ var start = func (diff = 1) {
 var stop = func {
 	TopGun.stop();
 }
+
+
+# TODO:
+#  make him switch on and off his radar in hard mode.
+#  lower floor
+#  multiple opponents
+#  make him respect blackout and redout.
