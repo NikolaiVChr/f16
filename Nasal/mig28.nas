@@ -1,3 +1,5 @@
+# License: GPL 2.0
+# Author: Nikolai V. Chr.
 var TopGun = {
 	# To start, type in nasal console: mig28.start(difficulty);
 	# To stop, type in nasal console: mig28.stop();
@@ -212,7 +214,7 @@ var TopGun = {
 					} else {
 						me.bad = 0;
 					}
-					if (me.bad > 20) {
+					if (me.bad > 60) {
 						# turn fight going bad, break circle
 						if (me.alt*M2FT < 25000) {
 							if (me.think != GO_BREAK_UP) {
@@ -288,7 +290,7 @@ var TopGun = {
 			me.pitchTarget = -30;
 			me.step();
 		} elsif (me.think == GO_AIM) {
-			me.rollTarget = math.max(-1,math.min(1,me.a16Clock/30))*MAX_ROLL;
+			me.rollTarget = math.max(-1,math.min(1,me.a16Clock/(30-(1-me.Gf)*15)))*MAX_ROLL;
 			me.pitchTarget = me.a16Pitch;
 			me.step();
 		} elsif (me.think == GO_BREAK_UP) {
@@ -340,6 +342,8 @@ var TopGun = {
 		me.sightTime = 0;
 		me.warnTime = 0;
 		me.dist_nm = 0;
+		me.turnStack = 0;
+		me.Gf = 0;
 
 		print("TopGun: deciding to RESET!");
 	},
@@ -369,8 +373,14 @@ var TopGun = {
 		}
 		me.rollNorm = me.roll/MAX_ROLL;
 		me.mach = me.machNow(me.speed*M2FT, me.alt*M2FT);
-		me.turnSpeed = me.turnMax(me.mach,me.alt*M2FT);
-		me.heading = geo.normdeg(me.heading+me.rollNorm*me.turnSpeed*me.dt);#todo
+		me.turn = me.turnMax(me.mach,me.alt*M2FT);
+		me.Gf        = math.min(1, me.extrapolate(me.turn[1], 3, 9, 1, math.max(0.11,(ENDURANCE*4.5*0.75)/math.max(0.00001,me.turnStack))));
+		me.G         = me.Gf*me.turn[1];
+		me.turnSpeed = me.Gf*me.turn[0];
+		#printf("max turn %.1f  max G %.1f  stack %.1f  turn %.1f  G %.1f", me.turn[0],me.turn[1],me.turnStack,me.rollNorm*(me.rollNorm<0?-1:1)*me.turnSpeed,me.rollNorm*(me.rollNorm<0?-1:1)*me.G*0.8888+1);
+		me.turnStack += (me.rollNorm*(me.rollNorm<0?-1:1)*me.G-4.5)*me.dt;
+		me.turnStack = math.max(0,me.turnStack);
+		me.heading = geo.normdeg(me.heading+me.rollNorm*me.turnSpeed*me.dt);
 		me.speedHorz = math.cos(me.pitch*D2R)*me.speed;
 		me.upFrac = math.sin(me.pitch*D2R);
 		me.speedUp   = me.upFrac*me.speed;
@@ -441,32 +451,40 @@ var TopGun = {
 		# taken from Greek F-16 block 52 supplemental manual.
 		if (mach>0.8) {
 			me.a10 = me.extrapolate(mach, 0.8, 1.3, MAX_TURN_SPEED, 12);
+			me.g10 = 9;
 		} else {
 			me.a10 = me.extrapolate(mach, 0.2, 0.8, 6, MAX_TURN_SPEED);
+			me.g10 = me.extrapolate(mach, 0.2, 0.8, 3, 9);
 		}
 		if (mach>1) {
 			me.a20 = me.extrapolate(mach, 1, 1.5, 16, 10);
+			me.g20 = 9;
 		} else {
 			me.a20 = me.extrapolate(mach, 0, 1, 4, 16);
+			me.g20 = me.extrapolate(mach, 0, 1, 3, 9);
 		}
 		if (mach>1.1) {
 			me.a30 = me.extrapolate(mach, 1.1, 1.7, 12.5, 9);
+			me.g30 = 9;
 		} else {
 			me.a30 = me.extrapolate(mach, 0.5, 1.1, 6, 12.5);
+			me.g30 = me.extrapolate(mach, 0.5, 1.1, 3, 9);
 		}
 		if (mach>1.1) {
 			me.a40 = me.extrapolate(mach, 1.1, 1.8, 8, 6);
+			me.g40 = 9;
 		} else {
 			me.a40 = me.extrapolate(mach, 0.6, 1.1, 4, 8);
+			me.g40 = me.extrapolate(mach, 0.6, 1.1, 3, 9);
 		}
 		if (altitude < 20000) {
-			return me.extrapolate(altitude, 10000, 20000, me.a10, me.a20);
+			return [me.extrapolate(altitude, 10000, 20000, me.a10, me.a20), me.extrapolate(altitude, 10000, 20000, me.g10, me.g20)];
 		} elsif (altitude < 30000) {
-			return me.extrapolate(altitude, 20000, 30000, me.a20, me.a30);
+			return [me.extrapolate(altitude, 20000, 30000, me.a20, me.a30), me.extrapolate(altitude, 20000, 30000, me.g20, me.g30)];
 		} elsif (altitude < 40000) {
-			return me.extrapolate(altitude, 30000, 40000, me.a30, me.a40);
+			return [me.extrapolate(altitude, 30000, 40000, me.a30, me.a40), me.extrapolate(altitude, 30000, 40000, me.g30, me.g40)];
 		} else {
-			return me.a40;
+			return [me.a40,me.g40]
 		}
 	},
 
@@ -667,6 +685,7 @@ var MAX_TURN_SPEED = 18;#do not mess with this number unless porting the system 
 
 var BLEED_FACTOR = 1.0;
 var num_t = "0000";
+var ENDURANCE = 10;
 
 var tg1 = TopGun.new(0);
 var tg2 = TopGun.new(180);
@@ -678,35 +697,40 @@ var start = func (diff = 1) {
 	}
 	print("Difficulty set to: "~diff);
 	if (diff == 1) {
-		MAX_ROLL_SPEED = 160;
+		MAX_ROLL_SPEED = 25;
 		BLEED_FACTOR = 1.2;
 		num_t = "0000";
+		ENDURANCE = 10;
 		tg1.callsign = "Lt.Endo";
 		tg1.start();
 	} elsif (diff == 2) {
-		MAX_ROLL_SPEED = 180;
+		MAX_ROLL_SPEED = 25;
 		BLEED_FACTOR = 1.0;
 		num_t = "0000";
+		ENDURANCE = 15;
 		tg1.callsign = "Cpt.Cas";
 		tg1.start();
 	} elsif (diff == 3) {
-		MAX_ROLL_SPEED = 200;
+		MAX_ROLL_SPEED = 30;
 		BLEED_FACTOR = 0.9;
 		num_t = "-9999";
+		ENDURANCE = 20;
 		tg1.callsign = "Maj.Rap";
 		tg1.start();
 	} elsif (diff == 4) {
-		MAX_ROLL_SPEED = 180;
+		MAX_ROLL_SPEED = 25;
 		BLEED_FACTOR = 1.0;
 		num_t = "0000";
+		ENDURANCE = 10;
 		tg1.callsign = "Cpt.Rap";
 		tg2.callsign = "Cpt.Cas";
 		tg1.start();
 		tg2.start();
 	} elsif (diff == 5) {
-		MAX_ROLL_SPEED = 180;
+		MAX_ROLL_SPEED = 30;
 		BLEED_FACTOR = 1.0;
 		num_t = "-9999";
+		ENDURANCE = 15;
 		tg1.callsign = "Cpt.Rap";
 		tg2.callsign = "Maj.Cas";
 		tg1.start();
