@@ -70,7 +70,7 @@
    <default>
     <menu n="100">
      <label>F-16</label>
-           <item n="7">
+           <item n="8">
           <label>Payload quick select</label>
           <binding>
             <command>dialog-show</command>

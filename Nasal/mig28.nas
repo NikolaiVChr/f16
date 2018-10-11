@@ -8,14 +8,20 @@ var TopGun = {
 	# Do not pause the sim, that might mess up the mig-28.
 	# There must be scenery and if you fly away from the mig28 so he get outside where there is scenery he will reset.
 	# He will also reset if he stalls or hit the ground.
+	new: func (heading) {
+		var obj = {parents: [TopGun]};
+		obj.startHeading = heading;
+		return obj;
+	},
 	enabled: 0,
+	startHeading: 0,
 	start: func {
 		if (me.enabled) {
 			print("TopGun: Already started, try stop() before starting again.");
 			return;
 		}
 		me.enabled = 1;
-		var model = "Aircraft/f16/Models/F-16.xml";
+		var model = getprop("sim/model/path");
 		var n = props.globals.getNode("models", 1);
 		var i = 0;
 		for (i = 0; 1==1; i += 1) {
@@ -36,7 +42,7 @@ var TopGun = {
 		me.ai.getNode("name", 1).setValue("No-name");
 		me.ai.getNode("sign", 1).setValue("Bandit");
 		me.ai.getNode("type", 1).setValue("mig28");
-		me.ai.getNode("callsign", 1).setValue(callsign);
+		me.ai.getNode("callsign", 1).setValue(me.callsign);
 		#me.ai.getNode("sim/multiplay/generic/bool[2]",1).setBoolValue(0);#damage smoke
 		#me.ai.getNode("sim/multiplay/generic/bool[40]",1).setBoolValue(1);
 		#me.ai.getNode("sim/multiplay/generic/bool[41]",1).setBoolValue(1);#lights
@@ -63,8 +69,8 @@ var TopGun = {
 
 		me.nodeLat.setDoubleValue(me.a16Coord.lat());
 		me.nodeLon.setDoubleValue(me.a16Coord.lon());
-		me.nodeAlt.setDoubleValue(20000);
-		me.nodeHeading.setDoubleValue(0);
+		me.nodeAlt.setDoubleValue(25000);
+		me.nodeHeading.setDoubleValue(me.startHeading);
 		me.nodePitch.setDoubleValue(0);
 		me.nodeRoll.setDoubleValue(0);
 
@@ -77,7 +83,7 @@ var TopGun = {
 		me.loadNode = me.model.getNode("load", 1);
 		
 		print("TopGun: starting");
-		screen.log.write(callsign~": Hello.", 1.0, 1.0, 0.0);
+		screen.log.write(me.callsign~": Hello.", 1.0, 1.0, 0.0);
 		settimer(func {me.spwn();}, 2);
 	},
 
@@ -86,31 +92,29 @@ var TopGun = {
 			me.ai.getNode("valid", 1).setBoolValue(0);
 			me.model.remove();
 			me.ai.remove();
-			screen.log.write(callsign~": I am returning to base, later.", 1.0, 1.0, 0.0);
+			screen.log.write(me.callsign~": I am returning to base, later.", 1.0, 1.0, 0.0);
 			print("TopGun: stopped.");
-			setprop("ai/models/model-removed", "/ai/models/mig28[0]");
+			setprop("ai/models/model-removed", me.ai.getPath());
 		}
 		me.enabled = 0;
 	},
 
 	spwn: func {
 		me.ai.getNode("valid").setBoolValue(1);
-		me.loadNode.setBoolValue(1);
-
-		me.coord = geo.Coord.new(me.a16Coord);
-
-		print("TopGun: spawned");
+		
 		me.reset();
-		if (MAX_ROLL_SPEED == 160) {
-			screen.log.write(callsign~": I will go easy on you, try to stay on my six. Have fun.", 1.0, 1.0, 0.0);
-		} elsif (MAX_ROLL_SPEED == 180) {
-			screen.log.write(callsign~": Nice weather for a fight, lets go.", 1.0, 1.0, 0.0);
-		} elsif (MAX_ROLL_SPEED == 200) {
-			screen.log.write(callsign~": Lets do this, don't make any mistakes.", 1.0, 1.0, 0.0);
-		} else {
-			screen.log.write(callsign~": You think you know what you are doing, alright, lets see..", 1.0, 1.0, 0.0);
+		if (me.callsign == "Lt.Endo") {
+			screen.log.write(me.callsign~": I will go easy on you, try to stay on my six. Have fun.", 1.0, 1.0, 0.0);
+		} elsif (me.callsign == "Cpt.Cas") {
+			screen.log.write(me.callsign~": Nice weather for a fair fight, lets go.", 1.0, 1.0, 0.0);
+		} elsif (me.callsign == "Maj.Rap") {
+			screen.log.write(me.callsign~": Lets do this, don't make any mistakes.", 1.0, 1.0, 0.0);
+		} elsif (me.callsign == "Maj.Cas") {
+			screen.log.write(me.callsign~": Fight is on!", 1.0, 1.0, 0.0);
+		} elsif (me.callsign == "Cpt.Rap") {
+			screen.log.write(me.callsign~": Lets do this.", 1.0, 1.0, 0.0);
 		}
-		settimer(func {me.apply();setprop("ai/models/model-added", "/ai/models/mig28[0]");}, 0.05);
+		settimer(func {me.apply();me.loadNode.setBoolValue(1);setprop("ai/models/model-added", me.ai.getPath());print("TopGun: "~me.callsign~" spawned");}, 0.05);
 	},
 
 	decide: func {
@@ -163,11 +167,11 @@ var TopGun = {
 				# here comes reaction to a16
 				me.a16Coord = geo.aircraft_position();
 				if(me.a16Coord.alt()*M2FT < 7000 and me.elapsed - me.warnTime > 15) {
-					screen.log.write(callsign~": Stay above 10000 feet.", 1.0, 1.0, 0.0);
+					screen.log.write(me.callsign~": Stay above 10000 feet.", 1.0, 1.0, 0.0);
 					me.warnTime = me.elapsed;
 				}
 				if(me.a16Coord.alt()*M2FT > 43000 and me.elapsed - me.warnTime > 15) {
-					screen.log.write(callsign~": Stay below 40000 feet.", 1.0, 1.0, 0.0);
+					screen.log.write(me.callsign~": Stay below 40000 feet.", 1.0, 1.0, 0.0);
 					me.warnTime = me.elapsed;
 				}
 				me.a16Pitch = vector.Math.getPitch(me.coord,me.a16Coord);
@@ -192,7 +196,7 @@ var TopGun = {
 					#}
 					me.thrust = math.min(1.0,me.thrust*me.dist_nm/2.0);
 					if (me.elapsed - me.sightTime > 3 and me.dist_nm < 2) {
-						screen.log.write(callsign~": Hey! I have you in my gunsight..", 1.0, 1.0, 0.0);
+						screen.log.write(me.callsign~": Hey! I have you in my gunsight..", 1.0, 1.0, 0.0);
 						me.sightTime = me.elapsed;
 					}
 				} elsif (math.abs(me.a16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.5) {
@@ -311,13 +315,13 @@ var TopGun = {
 	},
 
 	reset: func () {
-		me.alt = 25000*FT2M;
 		me.speed = 400*KT2MPS;
 		me.mach = 1.0;
-		me.heading = 0;
-		me.lat = geo.aircraft_position().lat();
-		me.lon = geo.aircraft_position().lon();
+		me.heading = me.startHeading;
 		me.coord = geo.Coord.new(geo.aircraft_position());
+		me.lat = me.coord.lat();
+		me.lon = me.coord.lon();
+		me.alt = me.coord.alt()+5000*FT2M;
 		me.coord.set_alt(me.alt);
 		me.roll = 0;
 		me.pitch = 0;
@@ -661,44 +665,64 @@ var MAX_PITCH_UP_SPEED = 15;
 var MAX_PITCH_DOWN_SPEED = 5;
 var MAX_TURN_SPEED = 18;#do not mess with this number unless porting the system to another aircraft.
 
-var BLEED_FACTOR = 0.5;
-var callsign = "Lt.Endo";
+var BLEED_FACTOR = 1.0;
 var num_t = "0000";
 
+var tg1 = TopGun.new(0);
+var tg2 = TopGun.new(180);
 
 var start = func (diff = 1) {
-	if (diff < 1 or diff > 3) {
-		print("Difficulty goes from 1 (easy), 2 (normal) to 3 (hard), try again.");
+	if (diff < 1 or diff > 5) {
+		print("Difficulty goes from 1 (easy), 2 (normal), 3 (hard), 4 (veteran) to 5 (master), try again.");
 		return;
 	}
+	print("Difficulty set to: "~diff);
 	if (diff == 1) {
 		MAX_ROLL_SPEED = 160;
 		BLEED_FACTOR = 1.2;
 		num_t = "0000";
-		callsign = "Lt.Endo";
+		tg1.callsign = "Lt.Endo";
+		tg1.start();
 	} elsif (diff == 2) {
 		MAX_ROLL_SPEED = 180;
 		BLEED_FACTOR = 1.0;
 		num_t = "0000";
-		callsign = "Cpt.Cas";
+		tg1.callsign = "Cpt.Cas";
+		tg1.start();
 	} elsif (diff == 3) {
 		MAX_ROLL_SPEED = 200;
 		BLEED_FACTOR = 0.9;
 		num_t = "-9999";
-		callsign = "Maj.Rap";
+		tg1.callsign = "Maj.Rap";
+		tg1.start();
+	} elsif (diff == 4) {
+		MAX_ROLL_SPEED = 180;
+		BLEED_FACTOR = 1.0;
+		num_t = "0000";
+		tg1.callsign = "Cpt.Rap";
+		tg2.callsign = "Cpt.Cas";
+		tg1.start();
+		tg2.start();
+	} elsif (diff == 5) {
+		MAX_ROLL_SPEED = 180;
+		BLEED_FACTOR = 1.0;
+		num_t = "-9999";
+		tg1.callsign = "Cpt.Rap";
+		tg2.callsign = "Maj.Cas";
+		tg1.start();
+		tg2.start();
 	}
-	print("Difficulty set to: "~diff);
-	TopGun.start();
 }
 
 var stop = func {
-	TopGun.stop();
+	tg1.stop();
+	tg2.stop();
 }
 
 
 # TODO:
 #  make him switch on and off his radar in hard mode.
 #  lower floor
-#  multiple opponents
 #  make him respect blackout and redout.
-#  start from menu.
+#  make hits affect mig28
+#  make mig28 fire fox2/fox3

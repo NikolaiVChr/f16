@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<PropertyList>
+
+	<name>scenario28</name>
+	<layout>vbox</layout>
+
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>Mock dogfight training Scenario</label>
+			<!--<format>%s Control Panel</format>
+			<property>sim/description</property>-->
+		</text>
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+	
+	<hrule/>
+
+	<group>
+	    <layout>hbox</layout>
+	    <button>
+	    	<legend>1</legend>
+		    <binding>
+				<command>nasal</command>
+				<script>
+					mig28.start(1);
+				</script>
+	      	</binding>
+	    </button>
+	    <button>
+	    	<legend>2</legend>
+		    <binding>
+				<command>nasal</command>
+				<script>
+					mig28.start(2);
+				</script>
+	      	</binding>
+	    </button>
+	    <button>
+	    	<legend>3</legend>
+		    <binding>
+				<command>nasal</command>
+				<script>
+					mig28.start(3);
+				</script>
+	      	</binding>
+	    </button>
+	    <button>
+	    	<legend>4</legend>
+		    <binding>
+				<command>nasal</command>
+				<script>
+					mig28.start(4);
+				</script>
+	      	</binding>
+	    </button>
+	    <button>
+	    	<legend>5</legend>
+		    <binding>
+				<command>nasal</command>
+				<script>
+					mig28.start(5);
+				</script>
+	      	</binding>
+	    </button>
+	    <button>
+	    	<legend>Stop</legend>
+		    <binding>
+				<command>nasal</command>
+				<script>
+					mig28.stop();
+				</script>
+	      	</binding>
+	    </button>
+
+	</group>
+
+	<hrule/>
+
+	<text><label>Select difficulty of training session. The opponent will fly block 52.</label></text>
+
+	<hrule/>
+
+	<text><label>Note: When a scenario is running click stop before starting another.</label></text>
+
+</PropertyList>
