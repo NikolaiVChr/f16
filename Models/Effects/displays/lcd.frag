@@ -6,6 +6,8 @@ varying vec3    VNormal;
 varying vec3    eyeVec;
 
 uniform sampler2D BaseTex;
+uniform sampler2D dust_texture;
+uniform float dirt_factor;
 uniform float innerAngle;//inside this angle the display is perfect
 uniform float outerAngle;//from inner to outer the display gets more color distorted.
 uniform float blackAngle;//from outer to this angle the display gets more black. From this angle to 90 the display stays black.
@@ -99,9 +101,15 @@ void main (void) {
 
     color = clamp(color+specular.rgb+ambient+diffuse, 0, 1);
 
+    vec4 dustTexel = texture2D(dust_texture, gl_TexCoord[0].st);
+    dustTexel.rgb *= gl_LightSource[0].diffuse.rgb * nDotVP;
+    dustTexel.a = clamp(dustTexel.a * dirt_factor * (1.0 - 0.4 * max(0.0,dot(normalize(VNormal), Lphong)))*(length(vec3(1,1,1))/1.76),0.0,1.0); 
+    color.rgb =  mix(color.rgb, dustTexel.rgb,  dustTexel.a );
+//    color.a = max(color.a, dustTexel.a);
+
     if (use_als > 0) {
-        gl_FragColor = vec4(filter_combined(pow(color,gamma)), 0.0);
+        gl_FragColor = vec4(filter_combined(pow(color,gamma)), dustTexel.a);
     } else {
-        gl_FragColor = vec4(pow(color,gamma), 0.0);
+        gl_FragColor = vec4(pow(color,gamma), dustTexel.a);
     }
 }
