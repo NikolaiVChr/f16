@@ -83,6 +83,9 @@ var TopGun = {
 		me.model.getNode("pitch-deg-prop", 1).setValue(me.nodePitch.getPath());
 		me.model.getNode("roll-deg-prop", 1).setValue(me.nodeRoll.getPath());
 		me.loadNode = me.model.getNode("load", 1);
+
+		me.mig28Score = 0;
+		me.a16Score = 0;
 		
 		print("TopGun: starting");
 		screen.log.write(me.callsign~": Hello.", 1.0, 1.0, 0.0);
@@ -94,7 +97,7 @@ var TopGun = {
 			me.ai.getNode("valid", 1).setBoolValue(0);
 			me.model.remove();
 			me.ai.remove();
-			screen.log.write(me.callsign~": I am returning to base, later.", 1.0, 1.0, 0.0);
+			screen.log.write(me.callsign~": I am returning to base, the score is ("~me.mig28Score~"-"~me.a16Score~")", 1.0, 1.0, 0.0);
 			print("TopGun: stopped.");
 			setprop("ai/models/model-removed", me.ai.getPath());
 		}
@@ -128,6 +131,39 @@ var TopGun = {
 		me.dt = me.elapsed - me.elapsed_last;
 		me.elapsed_last = me.elapsed;
 		me.random = rand();
+		me.a16Coord = geo.aircraft_position();
+		if(me.a16Coord.alt()*M2FT < 7000 and me.elapsed - me.warnTime > 15) {
+			screen.log.write(me.callsign~": Stay above 10000 feet.", 1.0, 1.0, 0.0);
+			me.warnTime = me.elapsed;
+		}
+		if(me.a16Coord.alt()*M2FT > 43000 and me.elapsed - me.warnTime > 15) {
+			screen.log.write(me.callsign~": Stay below 40000 feet.", 1.0, 1.0, 0.0);
+			me.warnTime = me.elapsed;
+		}
+		me.a16Pitch = vector.Math.getPitch(me.coord,me.a16Coord);
+		me.a16Elev  = me.a16Pitch-me.pitch;
+		me.mig28Elev  = -me.a16Pitch-getprop("orientation/pitch-deg");
+		me.a16Bearing = me.coord.course_to(me.a16Coord);
+		me.a16ClockLast = me.a16Clock;
+		me.a16Clock = geo.normdeg180(me.a16Bearing-me.heading);
+		me.a16Range = me.coord.distance_to(me.a16Coord)*M2NM;
+		me.a16Speed = getprop("velocities/groundspeed-kt")*KT2MPS;
+		me.a16Roll  = getprop("orientation/roll-deg");
+		me.hisBearing = me.a16Coord.course_to(me.coord);
+		me.hisClock = geo.normdeg180(me.hisBearing-getprop("orientation/heading-deg"));
+		me.dist_nm = me.a16Coord.direct_distance_to(me.coord)*M2NM;
+
+
+		if ((math.abs(me.a16Clock) < 20 or math.abs(me.a16Clock) > 140) and math.abs(me.mig28Elev)<3 and math.abs(me.hisClock) < 3 and me.dist_nm < 1) {
+			me.hisAim += me.dt;
+		} else {
+			me.hisAim = 0;
+		}
+		if (me.hisAim > 1) {
+			me.hisAim = 0;
+			me.a16Score += 1;
+			screen.log.write(me.callsign~": Good job! You have a firing solution..("~me.mig28Score~"-"~me.a16Score~")", 1.0, 1.0, 0.0);
+		}
 		if (me.elapsed - me.decisionTime > me.keepDecisionTime) {
 			if (me.alt < 12000*FT2M and me.GStoKIAS(me.speed*MPS2KT) < 275) {
 				# low speed at low alt, need to fly straight for 3 secs to get some speed
@@ -167,38 +203,19 @@ var TopGun = {
 				me.decided();
 			} else {
 				# here comes reaction to a16
-				me.a16Coord = geo.aircraft_position();
-				if(me.a16Coord.alt()*M2FT < 7000 and me.elapsed - me.warnTime > 15) {
-					screen.log.write(me.callsign~": Stay above 10000 feet.", 1.0, 1.0, 0.0);
-					me.warnTime = me.elapsed;
-				}
-				if(me.a16Coord.alt()*M2FT > 43000 and me.elapsed - me.warnTime > 15) {
-					screen.log.write(me.callsign~": Stay below 40000 feet.", 1.0, 1.0, 0.0);
-					me.warnTime = me.elapsed;
-				}
-				me.a16Pitch = vector.Math.getPitch(me.coord,me.a16Coord);
-				me.a16Elev  = me.a16Pitch-me.pitch;
-				me.a16Bearing = me.coord.course_to(me.a16Coord);
-				me.a16ClockLast = me.a16Clock;
-				me.a16Clock = geo.normdeg180(me.a16Bearing-me.heading);
-				me.a16Range = me.coord.distance_to(me.a16Coord)*M2NM;
-				me.a16Speed = getprop("velocities/groundspeed-kt")*KT2MPS;
-				me.a16Roll  = getprop("orientation/roll-deg");
-				me.hisBearing = me.a16Coord.course_to(me.coord);
-				me.hisClock = geo.normdeg180(me.hisBearing-getprop("orientation/heading-deg"));
-				me.dist_nm = me.a16Coord.direct_distance_to(me.coord)*M2NM;
+				
 
-				if (math.abs(me.hisClock) > 45 and math.abs(me.a16Clock) < 45 and me.a16Range > 2.5 and me.a16Speed > me.speed) {
-					#lower speed, out of range but ahead
+				if (math.abs(me.hisClock) > 45 and math.abs(me.a16Clock) < 45 and me.a16Range > 2 and me.a16Speed > me.speed) {
+					#a16 lower speed, out of range but ahead of mig28
 					me.think = GO_LEAD_PURSUIT;
-					me.thrust = 0.75;
+					me.thrust = 1;
 					me.keepDecisionTime = 0.15;
-				} elsif (math.abs(me.hisClock) > 45 and math.abs(me.a16Clock) < 45 and me.a16Range > 2.5) {
+				} elsif (math.abs(me.hisClock) > 45 and math.abs(me.a16Clock) < 45 and me.a16Range > 2) {
 					#behind a16, but out of fire range, when reach lag point, do GO_AIM for cold-side lag.
 					me.think = GO_LAG_PURSUIT;
 					me.thrust = 1;
 					me.keepDecisionTime = 0.15;
-				} elsif ((math.abs(me.hisClock) < 20 or math.abs(me.hisClock) > 140) and math.abs(me.a16Elev)<7 and math.abs(me.a16Clock) < 7) {
+				} elsif ((math.abs(me.hisClock) < 20 or math.abs(me.hisClock) > 140) and math.abs(me.a16Elev)<5 and math.abs(me.a16Clock) < 5) {
 					# has aim on the f16, slow down a bit and keep that aim
 					me.think = GO_AIM;
 					#if (me.speed*MPS2KT > 650) {
@@ -210,13 +227,14 @@ var TopGun = {
 					#} else {
 						me.thrust = 1;
 					#}
-					me.thrust = math.min(1.0,me.thrust*me.dist_nm/2.0);
-					if (me.elapsed - me.sightTime > 3 and me.dist_nm < 2) {
-						screen.log.write(me.callsign~": Hey! I have you in my gunsight..", 1.0, 1.0, 0.0);
-						me.sightTime = me.elapsed;
+					me.thrust = math.min(1.0,me.thrust*me.dist_nm/1.5);
+					if (me.elapsed - me.sightTime > 10 and me.dist_nm < 1) {
+						me.mig28Score += 1;
+						screen.log.write(me.callsign~": Hey! I have you in my gunsight..("~me.mig28Score~"-"~me.a16Score~")", 1.0, 1.0, 0.0);
+						me.sightTime = me.elapsed;						
 					}
 					me.keepDecisionTime = 0.15;
-				} elsif (((math.abs(me.a16Clock) > 0 and math.abs(me.hisClock) < 5 and me.a16Roll>0) or (math.abs(me.a16Clock) < 0 and math.abs(me.hisClock) > 5 and me.a16Roll<0)) and me.a16Speed < me.speed) {
+				} elsif (((me.a16Clock > 0 and me.hisClock < 1 and me.a16Roll>0) or (me.a16Clock < 0 and me.hisClock > 1 and me.a16Roll<0)) and me.a16Speed < me.speed) {
 					#a16 does lead pursuit but has lower speed. Gently turn opposite the lead and away with full thrust until range better.
 					me.think = GO_LEAD_DEFEND_AWAY;
 					me.thrust = 1;
@@ -297,7 +315,7 @@ var TopGun = {
 		if(me.think==GO_LEAD_PURSUIT)me.prt="lead";
 		if(me.think==GO_LAG_PURSUIT)me.prt="lag";
 		if(me.think==GO_LEAD_DEFEND_AWAY)me.prt="lead defense";
-		#printf("Deciding to go %s. Speed %d KIAS/M%.2f at %d ft. Roll %d, pitch %d. Thrust %.1f%%. %.1f NM.",me.prt,me.GStoKIAS(me.speed*MPS2KT),me.mach,me.alt*M2FT,me.roll,me.pitch,me.thrust*100, me.dist_nm);
+		#printf("Deciding to go %s. Speed %d KIAS/M%.2f at %d ft. Roll %d, pitch %d. Thrust %.1f%%. %.1f NM. %.1f horz G",me.prt,me.GStoKIAS(me.speed*MPS2KT),me.mach,me.alt*M2FT,me.roll,me.pitch,me.thrust*100, me.dist_nm, me.rollNorm*(me.rollNorm<0?-1:1)*me.G*0.8888+1);
 		me.decisionTime = me.elapsed;
 	},
 
@@ -391,6 +409,11 @@ var TopGun = {
 		me.dist_nm = 0;
 		me.turnStack = 0;
 		me.Gf = 0;
+		me.G  = 1;
+		me.mig28Score = 0;
+		me.a16Score = 0;
+		me.hisAim = 0;
+		me.rollNorm = 0;
 
 		print("TopGun: deciding to RESET!");
 	},
@@ -451,6 +474,7 @@ var TopGun = {
 		if (me.GStoKIAS(me.speed) < (150*KT2MPS) or me.ground == nil or me.ground > me.alt) {
 			print("spd "~me.GStoKIAS(me.speed*MPS2KT));
 			print("agl "~(me.ground == nil?"nil":(""~(me.alt-me.ground)*M2FT)));
+			screen.log.write(me.callsign~": I hit ground, lost terrain or stalled, will reset. Sorry.", 1.0, 1.0, 0.0);
 			me.reset();
 		}
 	},
