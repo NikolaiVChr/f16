@@ -542,6 +542,21 @@
 				</group>
 
 			</group>
+
+			<hrule/>
+
+			<group>
+			    <layout>hbox</layout>
+			    <checkbox>
+				    <property>instrumentation/heading-indicator/use-mag-in-hud</property>
+				    <live>true</live>
+				    <binding>
+						<command>property-toggle</command>
+						<property>instrumentation/heading-indicator/use-mag-in-hud</property>
+			      	</binding>
+			    </checkbox>
+			    <text><label>Magnetic heading in HUD</label></text>
+			</group>
 			
 		</group>
 

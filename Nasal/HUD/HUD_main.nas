@@ -106,6 +106,8 @@ var F16_HUD = {
                  flap_pos_deg              : "/fdm/jsbsim/fcs/flap-pos-deg",
                  gear_down                 : "/controls/gear/gear-down",
                  heading                   : "/orientation/heading-deg",
+                 headingMag                : "/orientation/heading-magnetic-deg",
+                 useMag:                     "instrumentation/heading-indicator/use-mag-in-hud",
                  mach                      : "/instrumentation/airspeed-indicator/indicated-mach",
                  measured_altitude         : "/instrumentation/altimeter/indicated-altitude-ft",
                  pitch                     : "/orientation/pitch-deg",
@@ -265,12 +267,13 @@ var F16_HUD = {
                                           obj.window8.setText(sprintf("%.1f", Nz));
                                           obj.window8.show();
                                       }),
-            props.UpdateManager.FromHashList(["heading", "gear_down"], 0.1, func(hdp)
+            props.UpdateManager.FromHashList(["heading", "headingMag", "useMag","gear_down"], 0.1, func(hdp)
                                       {
-                                          if (hdp.heading < 180)
-                                            obj.heading_tape_position = -hdp.heading*54/10;
+                                          var head = hdp.useMag?hdp.headingMag:hdp.heading;
+                                          if (head < 180)
+                                            obj.heading_tape_position = -head*54/10;
                                           else
-                                            obj.heading_tape_position = (360-hdp.heading)*54/10;
+                                            obj.heading_tape_position = (360-head)*54/10;
                                           if (hdp.gear_down) {
                                               obj.heading_tape_positionY = -10;
                                           } else {
