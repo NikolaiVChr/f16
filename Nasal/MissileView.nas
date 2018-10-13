@@ -87,7 +87,7 @@ var missile_view_handler = {
 var myModel = ai.AImodel.new();
 myModel.init();
 
-view.manager.register("Missile view",missile_view_handler);
+view.manager.register("Missile View",missile_view_handler);
 
 
 var view_firing_missile = func(myMissile)
