@@ -254,7 +254,7 @@
             </config>
         </view>        
         <view n="101">
-          <name>Missile view</name>
+          <name>Missile View</name>
             <type>lookat</type>
             <heading-offset-deg>180</heading-offset-deg>
             <pitch-offset-deg>10</pitch-offset-deg>
@@ -595,10 +595,6 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <path>Aircraft/f16/Systems/f16-airdata.xml</path>
         </systems>
         <current-view>
-            <z-offset-dec-step type="double">0.0</z-offset-dec-step>
-            <z-offset-inc-step type="double">0.0</z-offset-inc-step>
-            <can-change-z-offset type="bool">false</can-change-z-offset>
-            
             <z-offset-default type="float">25.0</z-offset-default>
             <z-offset-min-m type="float">10.0</z-offset-min-m>
             <z-offset-max-m type="float">200.0</z-offset-max-m>
@@ -611,128 +607,68 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
     </sim>
     <input n="0">
         <mice n="0">
-            <mouse n="0">
-                <mode n="0">
-                    <button n="3">
-                        <binding n="0">
-                            <script></script>
-                        </binding>
-                        <binding n="1">
-                            <condition>
-                                <and>
-                                    <property>/devices/status/mice/mouse[0]/button[2]</property>
-                                    <not><property>/sim/mouse/right-button-mode-cycle-enabled</property></not>
-                                </and>
-                            </condition>
-                            <command>nasal</command>
-                            <script>
-                            if (getprop("/sim/current-view/can-change-z-offset")) {
-                                var distance = getprop("/sim/current-view/z-offset-m");
-                                var multiple = getprop("/sim/current-view/z-offset-inc-step");
-                                var min_dist = getprop("/sim/current-view/z-offset-min-m");
-
-                                distance = math.round(std.min(-min_dist, distance + multiple) / multiple) * multiple;
-                                setprop("/sim/current-view/z-offset-m", distance);
-
-                                gui.popupTip(sprintf("%d meters", abs(distance)));
-                            } else {
-                                view.decrease();
-                            }
-                            </script>
-                        </binding>
-                    </button>
-                    <button n="4">
-                        <binding n="0">
-                            <script></script>
-                        </binding>
-                        <binding n="1">
-                            <condition>
-                                <and>
-                                    <property>/devices/status/mice/mouse[0]/button[2]</property>
-                                    <not><property>/sim/mouse/right-button-mode-cycle-enabled</property></not>
-                                </and>
-                            </condition>
-                            <command>nasal</command>
-                            <script>
-                                if (getprop("/sim/current-view/can-change-z-offset")) {
-                                    var distance = getprop("/sim/current-view/z-offset-m");
-                                    var multiple = getprop("/sim/current-view/z-offset-dec-step");
-                                    var max_dist = getprop("/sim/current-view/z-offset-max-m");
-
-                                    distance = math.round(std.max(-max_dist, distance + multiple) / multiple) * multiple;
-                                    setprop("/sim/current-view/z-offset-m", distance);
-
-                                    gui.popupTip(sprintf("%d meters", abs(distance)));
-                                } else {
-                                    view.increase();
-                                }
-                            </script>
-                        </binding>
-                    </button>
-                </mode>
-            </mouse>
+			<mouse n="0">
+				<mode n="0">
+					<button n="3">
+						<binding n="0">
+							<script></script>
+						</binding>
+						<binding n="1">
+							<condition>
+								<and>
+									<property>/devices/status/mice/mouse[0]/button[2]</property>
+									<not><property>/sim/mouse/right-button-mode-cycle-enabled</property></not>
+								</and>
+							</condition>
+							<command>nasal</command>
+							<script>f16.fovZoom(-1);</script>
+						</binding>
+					</button>
+					<button n="4">
+						<binding n="0">
+							<script></script>
+						</binding>
+						<binding n="1">
+							<condition>
+								<and>
+									<property>/devices/status/mice/mouse[0]/button[2]</property>
+									<not><property>/sim/mouse/right-button-mode-cycle-enabled</property></not>
+								</and>
+							</condition>
+							<command>nasal</command>
+							<script>f16.fovZoom(1);</script>
+						</binding>
+					</button>
+				</mode>
+			</mouse>
         </mice>
         <keyboard n="0">
-            <key n="24">
-                <name>Ctrl-x</name>
-                <desc>Reset zoom to default</desc>
-                <binding>
-                    <command>nasal</command>
-                    <script>
-                        if (getprop("/sim/current-view/can-change-z-offset")) {
-                            setprop("/sim/current-view/z-offset-m", getprop("/sim/current-view/z-offset-default") * -1);
-
-                            gui.popupTip(sprintf("%d meters", getprop("/sim/current-view/z-offset-default")));
-                        } else {
-                            setprop("/sim/current-view/field-of-view", getprop("/sim/view/config/default-field-of-view-deg"));
-                        }
-                    </script>
-                </binding>
-            </key>
-            <key n="88">
-                <name>X</name>
-                <desc>Increase field of view</desc>
-                <repeatable type="bool">true</repeatable>
-                <binding>
-                <command>nasal</command>
-                <script>
-                    if (getprop("/sim/current-view/can-change-z-offset")) {
-                        var distance = getprop("/sim/current-view/z-offset-m");
-                        var multiple = getprop("/sim/current-view/z-offset-dec-step");
-                        var max_dist = getprop("/sim/current-view/z-offset-max-m");
-
-                        distance = math.round(std.max(-max_dist, distance + multiple) / multiple) * multiple;
-                        setprop("/sim/current-view/z-offset-m", distance);
-
-                        gui.popupTip(sprintf("%d meters", abs(distance)));
-                    } else {
-                        view.increase();
-                    }
-                </script>
-                </binding>
-            </key>
-            <key n="120">
-                <name>x</name>
-                <desc>Decrease field of view</desc>
-                <repeatable type="bool">true</repeatable>
-                <binding>
-                    <command>nasal</command>
-                    <script>
-                        if (getprop("/sim/current-view/can-change-z-offset")) {
-                            var distance = getprop("/sim/current-view/z-offset-m");
-                            var multiple = getprop("/sim/current-view/z-offset-inc-step");
-                            var min_dist = getprop("/sim/current-view/z-offset-min-m");
-
-                            distance = math.round(std.min(-min_dist, distance + multiple) / multiple) * multiple;
-                            setprop("/sim/current-view/z-offset-m", distance);
-
-                            gui.popupTip(sprintf("%d meters", abs(distance)));
-                        } else {
-                            view.decrease();
-                        }
-                    </script>
-                </binding>
-            </key>
+			<key n="24">
+				<name>Ctrl-x</name>
+				<desc>Reset zoom to default</desc>
+				<binding>
+					<command>nasal</command>
+					<script>f16.fovZoom(0);</script>
+				</binding>
+			</key>
+			<key n="88">
+				<name>X</name>
+				<desc>Increase field of view</desc>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<command>nasal</command>
+					<script>f16.fovZoom(1);</script>
+				</binding>
+			</key>
+			<key n="120">
+				<name>x</name>
+				<desc>Decrease field of view</desc>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<command>nasal</command>
+					<script>f16.fovZoom(-1);</script>
+				</binding>
+			</key>
             <key n="81">
                 <name>Q</name>
                 <desc>Reset view</desc>
@@ -2073,7 +2009,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
         </notifications>
         <f16> 
             <file>Aircraft/f16/Nasal/exec.nas</file>
-
+            <file>Aircraft/f16/Nasal/zoom-views.nas</file>
             <file>Aircraft/f16/Nasal/f16.nas</file>
             <file>Aircraft/f16/Nasal/liveries.nas</file>
             <file>Aircraft/f16/Nasal/tyresmoke.nas</file>
