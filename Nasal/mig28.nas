@@ -156,6 +156,7 @@ var TopGun = {
 		me.rollNorm = 0;
 		me.turnSpeed = 0;
 		me.a16Bearing = 0;
+		me.altTarget_ft = nil;
 
 		print("TopGun: deciding to RESET!");
 	},
@@ -211,7 +212,7 @@ var TopGun = {
 			me.killTime = me.elapsed;
 		}						
 
-		if (me.elapsed - me.decisionTime > me.keepDecisionTime) {
+		if (me.keepDecisionTime != -1 and (me.elapsed - me.decisionTime) > me.keepDecisionTime) {
 			if (me.alt < 12000*FT2M and me.GStoKIAS(me.speed*MPS2KT) < 275) {
 				# low speed at low alt, need to fly straight for 3 secs to get some speed
 				me.think = GO_AHEAD;
@@ -234,19 +235,25 @@ var TopGun = {
 				# above training ceiling go down for 2 secs
 				me.think = GO_DOWN;
 				me.thrust = 0;
-				me.keepDecisionTime = 2;
+				me.altTarget_ft = 35000;
+				me.pitchTarget = 90;
+				me.keepDecisionTime = -1;
 				me.decided();
 			} elsif (me.GStoKIAS(me.speed*MPS2KT) < 275 and me.a16Speed > me.speed) {
 				# too low speed, go down for 3 secs
 				me.think = GO_DOWN;
 				me.thrust = 1;
-				me.keepDecisionTime = 3;
+				me.altTarget_ft = math.max(12000, (me.alt)*M2FT-5000);
+				me.pitchTarget = 90;
+				me.keepDecisionTime = -1;
 				me.decided();
 			} elsif (me.GStoKIAS(me.speed*MPS2KT) < 200) {
 				# too low speed, go down for 4.5 secs
 				me.think = GO_DOWN;
 				me.thrust = 1;
-				me.keepDecisionTime = 4.5;
+				me.altTarget_ft = math.max(12000, (me.alt)*M2FT-7500);
+				me.pitchTarget = 90;
+				me.keepDecisionTime = -1;
 				me.decided();
 			} elsif (me.GStoKIAS(me.speed*MPS2KT) > 750 or me.mach > 1.9) {
 				# too high speed, go up for 4.5 secs
@@ -370,7 +377,7 @@ var TopGun = {
 		if(me.think==GO_LEFT)me.prt="turn left";
 		if(me.think==GO_RIGHT)me.prt="turn right";
 		if(me.think==GO_UP)me.prt="go up";
-		if(me.think==GO_DOWN)me.prt="dive";
+		if(me.think==GO_DOWN)me.prt=sprintf("dive to %d ft",me.altTarget_ft);
 		if(me.think==GO_AIM)me.prt="turn fight";
 		if(me.think==GO_SCISSOR)me.prt="do flat scissor";
 		if(me.think==GO_BREAK_UP)me.prt="break up the circle";
@@ -406,9 +413,20 @@ var TopGun = {
 			me.pitchTarget = 45;
 			me.step();
 		} elsif (me.think == GO_DOWN) {
-			me.rollTarget = 0;
-			me.pitchTarget = -30;
+			me.pitchTargetOld = me.pitchTarget;
+			me.maxPitch = me.clamp(45*((me.alt*M2FT-me.altTarget_ft)/(me.ai.getNode("velocities/vertical-speed-fps").getValue()*3)),-45,5);
+			me.pitchTarget = math.max(-45, (me.altTarget_ft-me.alt*M2FT)*0.010);
+			#printf("max %d current %d target %d diff %d",me.maxPitch,me.pitch,me.pitchTarget,me.alt*M2FT-me.altTarget_ft);
+			me.pitchTarget = math.min(me.pitchTarget,me.maxPitch);
+			if (me.alt*M2FT < 11000) {
+				me.pitchTarget = 0;
+			}
+			me.rollTarget = (me.pitchTarget<=me.pitchTargetOld and me.pitchTarget<0)?(me.roll<0?-179:179):0;
 			me.step();
+			if (me.pitch > -1 and me.pitchTarget >= 0) {
+				me.keepDecisionTime = 0;
+				me.altTarget_ft = nil;
+			}
 		} elsif (me.think == GO_COLLISION_AVOID) {
 			me.rollTarget = math.max(-1,math.min(1,-me.a16Clock))*MAX_ROLL;
 			me.pitchTarget = -me.a16Pitch;
@@ -458,17 +476,7 @@ var TopGun = {
 	},
 
 	step: func () {
-		if(me.pitchTarget>me.pitch) {
-			me.pitch += MAX_PITCH_UP_SPEED*me.dt;
-			if (me.pitch > me.pitchTarget) {
-				me.pitch = me.pitchTarget;
-			}
-		} elsif(me.pitchTarget<me.pitch) {
-			me.pitch -= MAX_PITCH_DOWN_SPEED*me.dt;
-			if (me.pitch < me.pitchTarget) {
-				me.pitch = me.pitchTarget;
-			}
-		}
+		
 		
 		me.mach = me.machNow(me.speed*M2FT, me.alt*M2FT);
 		me.turn = me.turnMax(me.mach,me.alt*M2FT);
@@ -479,20 +487,56 @@ var TopGun = {
 		if (me.rollTarget == nil) {
 			me.rollTarget = me.clamp(me.turnrateTarget/me.turnSpeed,-1,1)*MAX_ROLL;
 		}
-
-		if(me.rollTarget>me.roll) {
-			me.roll += MAX_ROLL_SPEED*me.dt;
-			if (me.roll > me.rollTarget) {
-				me.roll = me.rollTarget;
+		if (me.altTarget_ft != nil) {
+			if(me.rollTarget>me.roll) {
+				me.roll += MAX_ROLL_RATE*me.dt;
+				if (me.roll > me.rollTarget) {
+					me.roll = me.rollTarget;
+				}
+			} elsif(me.rollTarget<me.roll) {
+				me.roll -= MAX_ROLL_RATE*me.dt;
+				if (me.roll < me.rollTarget) {
+					me.roll = me.rollTarget;
+				}
 			}
-		} elsif(me.rollTarget<me.roll) {
-			me.roll -= MAX_ROLL_SPEED*me.dt;
-			if (me.roll < me.rollTarget) {
-				me.roll = me.rollTarget;
+			me.rollNorm = 0;
+			if(me.pitchTarget>me.pitch) {
+				me.pitch += MAX_PITCH_UP_SPEED*me.dt;
+				if (me.pitch > me.pitchTarget) {
+					me.pitch = me.pitchTarget;
+				}
+			} elsif(me.pitchTarget<me.pitch) {
+				me.pitch -= MAX_PITCH_UP_SPEED*me.dt;
+				if (me.pitch < me.pitchTarget) {
+					me.pitch = me.pitchTarget;
+				}
+			}
+		} else {
+			if(me.rollTarget>me.roll) {
+				me.roll += MAX_ROLL_SPEED*me.dt;
+				if (me.roll > me.rollTarget) {
+					me.roll = me.rollTarget;
+				}
+			} elsif(me.rollTarget<me.roll) {
+				me.roll -= MAX_ROLL_SPEED*me.dt;
+				if (me.roll < me.rollTarget) {
+					me.roll = me.rollTarget;
+				}
+			}
+			me.rollNorm = me.roll/MAX_ROLL;
+			if(me.pitchTarget>me.pitch) {
+				me.pitch += MAX_PITCH_UP_SPEED*me.dt;
+				if (me.pitch > me.pitchTarget) {
+					me.pitch = me.pitchTarget;
+				}
+			} elsif(me.pitchTarget<me.pitch) {
+				me.pitch -= MAX_PITCH_DOWN_SPEED*me.dt;
+				if (me.pitch < me.pitchTarget) {
+					me.pitch = me.pitchTarget;
+				}
 			}
 		}
-
-		me.rollNorm = me.roll/MAX_ROLL;
+		
 		#printf("max turn %.1f  max G %.1f  stack %.1f  turn %.1f  G %.1f", me.turn[0],me.turn[1],me.turnStack,me.rollNorm*(me.rollNorm<0?-1:1)*me.turnSpeed,me.rollNorm*(me.rollNorm<0?-1:1)*me.G*0.8888+1);
 		me.turnStack += (me.rollNorm*(me.rollNorm<0?-1:1)*me.G-4.5)*me.dt;
 		me.turnStack = math.max(0,me.turnStack);
@@ -809,7 +853,8 @@ var GO_LEAD_DEFEND_INTO = 14;#a16 does lead pursuit and has higher speed, turn a
 var GO_COLLISION_AVOID = 15;
 
 var MAX_ROLL = 80;
-var MAX_ROLL_SPEED = 180;
+var MAX_ROLL_SPEED =  25;#special
+var MAX_ROLL_RATE  = 200;#real average roll rate
 var MAX_PITCH_UP_SPEED = 15;
 var MAX_PITCH_DOWN_SPEED = 4;
 var MAX_TURN_SPEED = 18;#do not mess with this number unless porting the system to another aircraft.
@@ -873,3 +918,4 @@ var stop = func {
 #  make him switch on and off his radar in hard mode.
 #  lower floor
 #  make mig28 fire fox2/fox3
+#  invert to level out after GO_UP
