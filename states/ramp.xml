@@ -2,7 +2,7 @@
 
 <PropertyList>
 
-    <name type="string" n="0">Aircraft cold and dark. Parking brakes on.</name>
+    <name type="string" n="0">parked</name>
 
     <overlay>
         <fdm>

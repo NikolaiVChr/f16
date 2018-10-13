@@ -7,6 +7,21 @@
  <effect>
   <inherits-from>Aircraft/f16/Models/Effects/adjustable-hud</inherits-from>
   <object-name>HUDImage2</object-name>
+  <parameters>
+    <rnorm type="float">0.0</rnorm>
+    <gsnorm type="float">0.0</gsnorm>
+    <frost-level type="float">0.0</frost-level>
+    <surface-mapping-scheme type="int">1</surface-mapping-scheme>
+    <fog-level type="float">0.0</fog-level>
+    <use-wipers type="int">0</use-wipers>
+    <overlay-alpha type="float">0.5</overlay-alpha>
+    <overlay-glare type="float">0.5</overlay-glare>
+    <use-reflection type="int">0</use-reflection>
+    <reflection-strength type="float">1.0</reflection-strength>
+    <use-mask type="int">0</use-mask>
+    <use-overlay type="int">1</use-overlay>
+    <hud-brightness><use>f16/avionics/hud-brt</use></hud-brightness>
+  </parameters>
  </effect>
 
  <animation>

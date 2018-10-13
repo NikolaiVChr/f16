@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+    <path>gamma2.ac</path>
+    <offsets>
+      <x-m> 0.5</x-m>
+      <y-m> 0.000</y-m>
+      <z-m> 1.50</z-m>
+    </offsets>
+
+  <effect>
+      <object-name>DragChute</object-name>
+      <inherits-from>Effects/chute</inherits-from>
+      <parameters>
+          <chute_force><use>f16/force</use></chute_force>
+          <chute_projection_z>6.65</chute_projection_z>
+          <chute_fold>0.0</chute_fold>
+          <chute_bend>0.0</chute_bend>
+      </parameters>
+    </effect>
+
+</PropertyList>

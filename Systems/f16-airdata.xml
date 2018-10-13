@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+    <pitot>
+        <name>pitot</name>
+        <number>0</number>
+        <stall-deg>60</stall-deg>
+    </pitot>
+
+    <static>
+        <name>static</name>
+        <number>0</number>
+        <tau>0.1</tau>
+        <type>2</type>
+        <!-- single static sensor at center of aircraft with measurement failures -->
+        <error-factor>0.1</error-factor>
+    </static>
+
+    <vacuum>
+        <name>vacuum</name>
+        <number>0</number>
+        <rpm>fdm/jsbsim/elec/bus/ess-dc</rpm>
+        <scale>250.0</scale>
+    </vacuum>
+
+</PropertyList>

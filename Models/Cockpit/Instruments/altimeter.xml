@@ -250,16 +250,6 @@
  <!-- lighting -->
  <animation>
   <object-name>mount</object-name>
-  <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
-   <red>0.45</red>
-   <green>0.34</green>
-   <blue>0.18</blue>
-  </emission>
- </animation>
-
- <animation> 
   <object-name>knobs</object-name>
   <type>material</type>
   <emission>
@@ -272,41 +262,16 @@
 
  <animation>
   <object-name>face</object-name>
-  <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
-
- <animation>
   <object-name>drums</object-name>
-  <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
-  </emission>
- </animation>
-
- <animation>
   <object-name>needle-w</object-name>
   <type>material</type>
   <emission>
    <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-   <red>0.0</red>
-   <green>1.0</green>
-   <blue>0.40</blue>
+   <red>0.6</red>
+   <green>0.4</green>
+   <blue>0.3</blue>
   </emission>
  </animation>
 
- <animation>
-  <type>range</type>
-  <min-m>0</min-m>
-  <max-m>50</max-m>
- </animation>
 
 </PropertyList>

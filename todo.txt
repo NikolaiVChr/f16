@@ -8,9 +8,7 @@ masterarm off while aim9 in lock..bad stuuff [cant reproduce]
 
 Model
 -----
-Make under cockpit floating texture livery
 Set proper default livery for all blocks.
-Make block 20 MLU liveries for Belgium and Norway.
 Make loads.xml not be a submodel.
 
 Hydraulics
@@ -23,24 +21,24 @@ Make more stuff depend on electrical system
 
 Fuel
 ----
-Make fuel system
+Make full fuel system
 Check priorities.
 
 JSBSim
 ------
+FBW with regards to take-off still have quirks. Had to make small differences from reference documents to make it behave reasonable in this regard. This needs to be further looked at.
 
 Engine
 ------
 
 GUI
 ---
-designation view
+designation view for targeting pod. (ala. Mirage2000)
 
 Stores
 ------
 Model conformal fuel tanks.
 Find real positions of payloads, is only approx. positions now.
-Jettison all
 Make id-0 be id-000, hmm not sure this is smart, not backwards compatible.
 Should auto missile view work for jettisoned stores as well?
 More gun tracers?
@@ -48,6 +46,7 @@ A-A and A-G button cycle cannon also?
 Missile view start behind weapon?
 Stores should only emergency Jett. when main, stby or epu is running.
 Found a document that details all loadouts for US F16s, they can carry alot more than Greek F16s. For example triple agm65 etc etc.
+Show stores over MP.
 
 Damage
 ------
@@ -56,22 +55,20 @@ Enable damage in-air but not disable. Already fired missiles should not broadcas
 Radar
 -----
 Add doppler.
-Update to latest F15 radar.
 
 Cockpit
 -------
 Make center mount less deep, so pilot get good view of MFDs and RWR.
 Make warning lights and master warning work.
-Convert flat 2D panels into 3D.
+Convert all flat 2D panels into 3D.
 Make controls work for STORES CONFIG and STANDBY GAINS.
 Enable masterarm, jettison, trims, ALT FLAPS and MFD contrast/brightness.
-Enable the intensity knob on RWR.
 Enable knob for HUD focus. (above BRT knob)
 Fuel dial strange (not really, one needle shows frw tank, one shows aft tank), but should be configurable.
-Real flood light instead of emission.
 
 Sound
 -----
+G-EEDs changes are still pending. Haven't been in contact with him since he made them.
 
 HUD
 ---
@@ -91,7 +88,7 @@ page 1-131 of b50 manual
 MFDs
 ----
 Add tons of pages
-Make sit not crash the entire MFD.
+SIT page still crashes.
 
 Aero
 ----
@@ -100,8 +97,8 @@ Convert groundeffect to be an addition instead of a factor.
 
 Effects
 -------
-Better aircraft lighting system: cockpit, taxi/landing, anti-collision, formation, navigation, beacon, tail flood, etc.
 page 1-111 of b50 manual
+Ext. strobe lights over MP is on for too long.
 
 Flight controls
 ---------------

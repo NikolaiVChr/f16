@@ -24,15 +24,15 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="15.839192"
-     inkscape:cx="33.72566"
-     inkscape:cy="100.34208"
+     inkscape:zoom="5.6"
+     inkscape:cx="144.27881"
+     inkscape:cy="161.74527"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1842"
+     inkscape:window-width="1858"
      inkscape:window-height="1057"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
@@ -10427,5 +10427,25 @@
          id="tspan8175-8-9-8-2-0"
          x="29.008793"
          y="968.58783">window9</tspan></text>
+    <text
+       xml:space="preserve"
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.15615749px;line-height:125%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:none;marker:none;enable-background:accumulate"
+       x="184.27969"
+       y="908.8808"
+       id="radalt"
+       sodipodi:linespacing="125%"
+       inkscape:label="#g-label-1-0"><tspan
+         sodipodi:role="line"
+         id="tspan8175-8-9-7-3"
+         x="184.27969"
+         y="908.8808">R 00000 </tspan></text>
+    <rect
+       style="opacity:1;fill:none;stroke:#008000;stroke-width:0.65200001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="radalt-box"
+       width="38.07151"
+       height="9.0296249"
+       x="182.78029"
+       y="901.43622"
+       inkscape:label="#target_9-1" />
   </g>
 </svg>

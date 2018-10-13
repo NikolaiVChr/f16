@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+  <model>
+    <name>gamma1</name>
+    <path>Aircraft/f16/Models/pilot_externalview.xml</path>
+    <offsets>
+      <x-m> 5</x-m>
+      <y-m> 0.000</y-m>
+      <z-m> 0.000</z-m>
+    </offsets>
+  </model>
+
+  <model> 
+    <name>gamma2</name>
+    <path>Aircraft/f16/Models/Cockpit/chair/chair.xml</path>
+    <offsets>
+      <x-m> 5</x-m>
+      <y-m> 0.0000</y-m>
+      <z-m> 0</z-m>
+    </offsets>
+  </model>
+
+  <!--<model>
+    <name>gamma3</name>
+    <path>Aircraft/f16/Models/Cockpit/pilot/gamma.ac</path>
+    <offsets>
+      <x-m>-13.0</x-m>
+      <y-m> 0.000</y-m>
+      <z-m> -2.070</z-m>
+    </offsets>
+  </model>-->
+
+  <model>
+    <name>gamma3</name>
+    <path>Aircraft/f16/Models/Cockpit/pilot/gamma2.xml</path>
+  </model>
+
+  <animation>
+    <type>rotate</type>
+    <object-name>gamma1</object-name>
+    <object-name>gamma2</object-name>
+    <offset-deg>130</offset-deg>
+    <center>
+      <x-m> 0 </x-m>
+      <y-m> 0.0000</y-m>
+      <z-m> 0.0</z-m>
+    </center>
+    <axis>
+     <x>0</x>
+     <y>-1</y>
+     <z>0</z>
+    </axis>
+  </animation>
+  <animation>
+    <type>rotate</type>
+    <object-name>gamma3</object-name>
+    <offset-deg>90</offset-deg>
+    <center>
+      <x-m> 0.0 </x-m>
+      <y-m> 0.0000</y-m>
+      <z-m> 0.0</z-m>
+    </center>
+    <axis>
+     <x>0</x>
+     <y>-1</y>
+     <z>0</z>
+    </axis>
+  </animation>
+<!--
+  <animation>
+    <type>rotate</type>
+    <object-name>gamma3</object-name>
+    <offset-deg>180</offset-deg>
+    <center>
+      <x-m> 0</x-m>
+      <y-m> 0.0000</y-m>
+      <z-m> 0.0</z-m>
+    </center>
+    <axis>
+     <x>0</x>
+     <y>-1</y>
+     <z>0</z>
+    </axis>
+  </animation>-->
+
+  <animation>
+    <type>select</type>
+    <object-name>gamma2</object-name>
+    <condition>
+      <less-than>
+        <property>payload/armament/es/flags/deploy-id-10</property>
+        <value>0.99</value>
+      </less-than>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>select</type>
+    <object-name>gamma3</object-name>
+    <condition>
+      <greater-than>
+        <property>payload/armament/es/flags/deploy-id-10</property>
+        <value>0.10</value>
+      </greater-than>
+    </condition>
+  </animation>
+
+  <animation>
+  <type>scale</type>
+  <object-name>gamma3</object-name>
+  <property>payload/armament/es/flags/deploy-id-10</property>
+  <!--<x-factor>0.0</x-factor>
+  <y-factor>0.0</y-factor>-->
+  <z-factor>1.0</z-factor>
+ </animation>
+
+</PropertyList>

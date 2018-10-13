@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+    <path>dragchute.ac</path>
+    <offsets>
+      <x-m> 5.5</x-m>
+      <y-m> 0.000</y-m>
+      <z-m> 0.90</z-m>
+    </offsets>
+
+  <animation>
+    <type>rotate</type>
+    <object-name>DragChute</object-name>
+    <property>orientation/alpha-deg</property>
+    <factor>-1</factor>
+    <offset-deg>90</offset-deg>
+    <center>
+      <x-m> 0.0 </x-m>
+      <y-m> 0.0000</y-m>
+      <z-m> 0.0</z-m>
+    </center>
+    <axis>
+     <x>0</x>
+     <y>1</y>
+     <z>0</z>
+    </axis>
+  </animation>
+
+  <effect>
+      <object-name>DragChute</object-name>
+      <inherits-from>Effects/chute</inherits-from>
+      <parameters>
+          <chute_force><use>f16/chute/force</use></chute_force>
+          <chute_projection_z>7</chute_projection_z>
+          <chute_fold><use>f16/chute/fold</use></chute_fold>
+          <chute_bend>0.0</chute_bend>
+      </parameters>
+    </effect>
+
+</PropertyList>

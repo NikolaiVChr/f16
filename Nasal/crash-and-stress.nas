@@ -6,7 +6,7 @@
 # Authors: Slavutinsky Victor, Nikolai V. Chr. (Necolatis)
 #
 #
-# Version 0.18
+# Version 0.19
 #
 # License:
 #   GPL 2.0
@@ -346,7 +346,7 @@ var CrashAndStress = {
 	    foreach(var failure_mode_id; me.mode_list) {
       		FailureMgr.set_failure_level(failure_mode_id, 1);
 	    }
-
+	    me.wingsAttached = FALSE;
 	    me._output(str~" and exploded.", TRUE);
 		
 		me.explodeTimer.restart(3);
@@ -572,4 +572,10 @@ var lsnr = setlistener("sim/signals/fdm-initialized", crash_start);
 # test:
 var repair = func {
 	crashCode.repair();
+};
+
+var exp = func {
+	if (crashCode.exploded==0) {
+		crashCode._explodeBegin("Aircraft was abandoned ");
+	}
 };

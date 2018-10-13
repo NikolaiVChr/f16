@@ -9,8 +9,8 @@
                 <owner type="string">UAE</owner>
             </livery>
             <livery-logo>
-                <texture type="string">Liveries/yf/yf16-transp.png</texture>
-            </livery-logo>
+            <texture>Liveries/standard.logos.png</texture>
+           </livery-logo>
 
             <livery-patch>
              <texture>Liveries/patch.default.png</texture>

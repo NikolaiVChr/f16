@@ -109,9 +109,9 @@
 		<type>material</type>
 		<emission>
 			<factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-			<red>0.55</red>
-			<green>0.24</green>
-			<blue>0.10</blue>
+			<red>0.6</red>
+   <green>0.4</green>
+   <blue>0.3</blue>
 		</emission>
 	</animation>
 
@@ -120,9 +120,9 @@
 		<type>material</type>
 		<emission> 
 			<factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-			<red>0.55</red>
-			<green>0.24</green>
-			<blue>0.10</blue>
+			<red>0.6</red>
+   <green>0.4</green>
+   <blue>0.3</blue>
 		</emission>
 	</animation>
 
@@ -131,9 +131,9 @@
 		<type>material</type>
 		<emission>
 		<factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-				<red>0.55</red>
-				<green>0.24</green>
-				<blue>0.10</blue>
+				<red>0.6</red>
+   <green>0.4</green>
+   <blue>0.3</blue>
 		</emission>
 	</animation>
 
@@ -142,9 +142,9 @@
 		<type>material</type>
 		<emission>
 			<factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-			<red>0.55</red>
-			<green>0.24</green>
-			<blue>0.10</blue>
+			<red>0.6</red>
+   <green>0.4</green>
+   <blue>0.3</blue>
 		</emission>
 	</animation>
 
@@ -153,16 +153,10 @@
 		<type>material</type>
 		<emission>
 			<factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
-			<red>0.55</red>
-			<green>0.24</green>
-			<blue>0.10</blue>
+			<red>0.6</red>
+   <green>0.4</green>
+   <blue>0.3</blue>
 		</emission>
-	</animation>
-
-	<animation>
-		<type>range</type>
-		<min-m>0</min-m>
-		<max-m>50</max-m>
 	</animation>
 
 </PropertyList>

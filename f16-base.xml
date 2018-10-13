@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
     <sim>
-        <long-description>
-            The General Dynamics F-16 Fighting Falcon is a single-engine supersonic multirole fighter aircraft originally developed by General Dynamics (now Lockheed Martin) for the United States Air Force (USAF). Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
-            The Fighting Falcon has key features including a frameless bubble canopy for better visibility, side-mounted control stick to ease control while maneuvering, a seat reclined 30 degrees to reduce the effect of g-forces on the pilot, and the first use of a relaxed static stability/fly-by-wire flight control system which helps to make it a nimble aircraft.
-        </long-description>
-        <minimum-fg-version>2017.3.1</minimum-fg-version>
+        <aircraft-version>3.00</aircraft-version>
+        <minimum-fg-version>2018.1.1</minimum-fg-version>
         <!-- enable "parkpos=AVAILABLE" option for the F-16 -->
         <dimensions>
             <radius-m type="double">10.0</radius-m>
@@ -27,7 +24,9 @@
             <tag>ifr</tag>
         </tags>
         <state include="states/running.xml" n="0"/>
-        <!--<state include="states/ramp.xml" n="1"/>-->
+        <state include="states/ramp.xml" n="1"/>
+        <state include="states/cruise.xml" n="2"/>
+        <state include="states/approach.xml" n="3"/>
         <checklists include="gui/checklists.xml"/>
         <submodels>
             <serviceable type="bool">1</serviceable>
@@ -45,6 +44,13 @@
         <panel_2>
             <visibility>false</visibility>
         </panel_2>
+          <previews>
+        <preview>
+            <type>interior</type>
+            <splash type="bool">false</splash>
+            <path>gui/splash/cockpit.png</path>
+        </preview>
+      </previews>
         <hud>
             <visibility n="1">false</visibility>
             <!--
@@ -83,6 +89,7 @@
         </instrumentation>
         <flight-recorder include="Systems/f16-flight-recorder.xml"/>
         <model>
+            <fallback-model-index type="int">516</fallback-model-index>
             <f16>
                 <AIM-9L type="bool">true</AIM-9L>
                 <AIM-9L_dummy type="bool">false</AIM-9L_dummy>
@@ -123,15 +130,7 @@
                         <rd-rot-light type="bool">false</rd-rot-light>
                         <jat-light type="bool">false</jat-light>
                         <irot-light type="bool">false</irot-light>
-                        <wcs-mode>
-                            <pd-stt type="bool">false</pd-stt>
-                            <pulse-stt type="bool">false</pulse-stt>
-                            <pd-srch type="bool">false</pd-srch>
-                            <rws type="bool">false</rws>
-                            <tws-auto type="bool">false</tws-auto>
-                            <tws-man type="bool">false</tws-man>
-                            <pulse-srch type="bool">true</pulse-srch>
-                        </wcs-mode>
+                        <wcs-mode type="int">3</wcs-mode> <!-- pulse search -->
                     </radar-awg-9>
                     <vhf>
                         <selector type="int">0</selector>
@@ -247,9 +246,9 @@
         <view>
             <internal archive="y">true</internal>
             <config>
-                <pitch-offset-deg>-12</pitch-offset-deg>
+                <pitch-offset-deg>-13.75</pitch-offset-deg>
                 <x-offset-m archive="y">0</x-offset-m>
-                <y-offset-m archive="y">0.82</y-offset-m>
+                <y-offset-m archive="y">0.85</y-offset-m>
                 <z-offset-m archive="y">-4</z-offset-m>
                 <default-field-of-view-deg>60</default-field-of-view-deg>
             </config>
@@ -305,17 +304,6 @@
                         </binding>
                     </item>
                     <item>
-                        <label>Payload quick select</label>
-                        <binding>
-                          <command>dialog-show</command>
-                          <dialog-name>payload</dialog-name>
-                        </binding>
-                        <!--<binding>
-                            <command>nasal</command>
-                            <script>f16.a2a_standard();</script>
-                        </binding>-->
-                    </item>
-                    <item>
                         <label>Link 16</label>
                         <name>link16</name>
                         <binding>
@@ -348,6 +336,15 @@
                             <dialog-name>pushback</dialog-name>
                         </binding>
                     </item>                   
+                    <item>
+                        <label>Training Scenario</label>
+                        <enabled type="bool">true</enabled>
+                        <name>scenario28</name>
+                        <binding>
+                            <command>dialog-show</command>
+                            <dialog-name>scenario28</dialog-name>
+                        </binding>
+                    </item> 
                 </menu>
             </default>
         </menubar>
@@ -356,7 +353,14 @@
                 <bool n="0" type="bool" alias="/damage/sounds/explode-on"/>
                 <bool n="1" type="bool" alias="/damage/fire/serviceable"/>
                 <bool n="2" type="bool">true</bool><!-- this must stay true to prevent bug in MP protocol for bools -->
-
+                <bool n="40" type="bool">true</bool>
+                <bool n="41" type="bool">true</bool>
+                <bool n="42" type="bool">true</bool>
+                <bool n="43" type="bool">true</bool>
+                <bool n="44" type="bool">true</bool>
+                <bool n="45" type="bool" alias="/sim/model/lighting/strobe/state"/>
+                <bool n="35" type="bool" alias="/f16/chute/enable"/>
+                <bool n="36" type="bool" alias="/sim/model/f16/dragchute"/>
                 <int n="2" type="int">0</int><!-- radar-standby -->
                 <int n="9" type="int" alias="/sim/variant-id"/>
                 <int n="10" type="int" alias="/controls/smoke"/>
@@ -370,13 +374,18 @@
                 <int n="18" type="int" alias="/sim/model/f16/smokewinderW9"/>
 
                 <float n="0" type="double" alias="/engines/engine[0]/nozzle-pos-norm"/>
-                <float n="1" type="double" alias="/engines/engine[0]/augmentation"/>
+                <bool n="39" type="bool" alias="/engines/engine[0]/augmentation"/>
                 <float n="2" type="double" alias="/engines/engine[0]/augmentation1"/>
                 <float n="3" type="double" alias="/velocities/airspeed-kt"/>
                 <float n="4" type="double" alias="/fdm/jsbsim/fcs/dht-right-pos-rad"/>
                 <float n="5" type="double" alias="/fdm/jsbsim/fcs/left-flaperon-norm"/>
                 <float n="6" type="double" alias="/fdm/jsbsim/fcs/right-flaperon-norm"/>
                 <float n="7" type="double" alias="/gear/gear[0]/steering-norm"/>
+                <float n="10" type="double">0</float><!-- afterburner -->
+                <float n="11" type="double">0</float>
+                <float n="12" type="double">0</float>
+                <float n="13" type="double">0</float>
+                <float n="14" type="double">0</float><!-- scene red inverted -->
             </generic>
             <visibility-range-nm type="int">150</visibility-range-nm>
         </multiplay>
@@ -413,10 +422,10 @@
                 <name>f</name>
                 <desc>Toggle refuel door</desc>
             </key>
-            <key>
+            <!--<key>
                 <name>Ctrl-n</name>
                 <desc>Toggles Radar RWS / TWS AUTO Modes</desc>
-            </key>
+            </key>-->
             <key>
                 <name>E</name>
                 <desc>Decrease Radar Range</desc>
@@ -461,6 +470,120 @@
                 <name>S</name>
                 <desc>Toggle smoke if installed</desc>
             </key>
+            <key>
+                <name>F4 (if variant support it)</name>
+                <desc>Deploy dragchute</desc>
+            </key>
+            <key>
+                <name>F6</name>
+                <desc>Eject</desc>
+            </key>
+            <text><![CDATA[
+LANDING
+No fixed landing speed, however a suggested approach speed will display in left side of HUD when gears is down.
+A little AoA bracket will appear down in the HUD, keep the flight path indicator inside the bracket. The top of the bracket is 11 and bottom is 15 deg AoA.
+Notice that it can be hard to see the touchdown point when landing with that high AoA, raising the seat with key 'u' will help.
+
+TAKE-OFF
+You can rotate around 150 KT when aircraft is light. Be somewhat gentle on the stick if you rotate early as you otherwise might tail-scrape.
+
+FBW
+The FBW in most variant will try to protect and escape the aircraft from deep stall, nose slide and spin. Also will reduce inertia-coupling when rolling fast at high AoA.
+However if the deep stall is very problemetic to escape, you can enable MPO (key 'del') which will allow you to semi override the FBW pitch control.
+With MPO enabled you can rock the aircraft up and down in bigger and bigger oscillations until the nose stays down and you have escaped the deep stall.
+For spins, we recommend letting go of stick and throttle back, and let the FBW save the aircraft.
+In the YF-16 to escape spins, apply rudder opposite of spin direction and ailerons into the spin direction while pitching down and throttle back. This will often get you into the deep stall where you will rock your way out of that.
+If you get close to ground in a departure use key 'F6' to eject.
+
+LIMITS
+Do not exceed Mach 2.05 or 800 KCAS.
+Do not roll faster than 225 kt groundspeed for main landing gear tires, or 217 for nose wheel tire.
+Do not operate below 200 KT with cat III stores, unless for landing or take-off.
+
+HUD
+The speed in HUD is calibrated airspeed.
+
+Text left side:
+  NAV or ARM depending on masterarm. But BRAKES if parking brakes is on, and F 15 G if flaps is deployed, F for flaps, 15 for 15 deg extended, and G for gears down.
+  Mach number
+  G-Force number.
+  Selected weapon or AoA if gears down.
+
+Text Right side:
+  FUEL if bingo fuel. Callsign if masterarm.
+  ETA to next steerpoint. TA 20 if masterarm on, 20 stand for 20k target altitude.
+  023>2 means 23 NM to next steerpoint number 2. F034.2 if masterarm on, means 34.2 NM in slant range to target.
+  Type of target if masterarm on.
+
+RWR
+The round display above left MFD display is a Radar Warning Reciever.
+It works by sorting the threats to you.
+
+Close to center: high threat
+Close to edge: threat
+Diamond: highest threat
+Upper semicircle: new threat (750Hz tone)
+Full blinking circle: hostile launch (2000Hz tone)
+Hat above designation: Airborne
+
+Use Link 16 in menu to define your wingmen, so they don't show up on RWR.
+
+For something to show up in the RWR at all these conditions must be met:
+1: Be a threat or unknown.
+2: Be picked up by your radar OR having an active radar pointed your way OR having transponder on and not be too far away.
+
+Notice that the RWR can sometimes pick up threat much further away than your radar is capable off.
+
+MFDs (Multi Function Displays)
+page SMS: Clicking on button next to a station will select it. 
+          J-S will jettison the selected station.
+          If CAT is greater than 1, then you should set the flightcontrols to CAT III in config menu.
+page CRM: B-scope radar display. Horizontal is relative bearing to targets, vertical is distance.
+          A4: How much azimuth the radar shall cover, A4 is max (120 degs).
+          8B: How much vertically the radar shall cover, 8B is max (120 degs).
+page VSD: Vertical situation display. Shows radar echoes.
+page HSD: Horizontal situation display. Shows route and radar echoes.
+          DEP: Depressed ownship in display
+          CEN: Centered ownship in display
+          CPL: Range will follow (approx) radar distance
+          DCPL: Range can be set independently of radar range by clicking on the up/down arrows.
+
+AUTOPILOT
+Notice that even when A/P is enabled you can control the airplane with the stick. When you let go of stick A/P will recalculate from current situation.
+
+The controls:
+Pitch: ALT HOLD: Hold current altitude
+       A/P OFF:  Disable autopilot for both roll and pitch
+       ATT HOLD: Hold current pitch attitude
+Roll:  HDG SEL:  Hold current heading
+       ATT HOLD: Hold current roll attitude
+       STRG SEL: Follow route from Route Manager
+
+RELEASING ORDNANCE
+First mount some armament.
+Secondly make sure masterarm is enabled.
+Thirdly select the arm. (use 'w' key or click buttons 'A-A' or 'A-G' under HUD)
+Fourthly make sure target is selected (key 'y')
+For GBU-12 make sure laser is armed.
+For GBU-12, GBU-31, MK-82 when getting close a vertical line will appear in HUD. Align flight path indicator on the line, when a small horizontal line on that line starts dropping down and reach another line then its time to release (key 'e' or 'trigger').
+
+EMER STORES JETTISON
+This will jettison all A/G ordnance and other payloads like fuel tanks that is not A/A. It will NOT jettison wingtips.
+
+ALT FLAPS
+This will deploy flaps as if the gears were extended. They will still retract at higher speeds though.
+
+NIGHTTIME FLYING
+There is flood and instrument lights that can be turned up.
+If running ALS you can also go into filters and enable one of the night vision modes.
+
+DRAGCHUTE
+Max recommended KIAS for deployment is 170.
+
+FLYING IN MP
+Firstly be sure to use "Visible to 2017+", else others will not see everything working okay when they see your aircraft.
+For doing combat enable "MP Discharge messages". This might be considered spam of MP chat, so use it sparringly and only against opponents that have agreed to be fighting you.
+            ]]></text>
         </help>
         <systems n="0">
             <autopilot n="0">
@@ -469,6 +592,7 @@
             <property-rule n="100">
                 <path>Aircraft/f16/Systems/zoom-views.xml</path>
             </property-rule>
+            <path>Aircraft/f16/Systems/f16-airdata.xml</path>
         </systems>
         <current-view>
             <z-offset-dec-step type="double">0.0</z-offset-dec-step>
@@ -479,6 +603,11 @@
             <z-offset-min-m type="float">10.0</z-offset-min-m>
             <z-offset-max-m type="float">200.0</z-offset-max-m>
         </current-view>
+        <gui>
+            <dialogs>
+                <payload-reload type="bool">false</payload-reload><!-- need to be defined to be backward compat with 2018.3 -->
+            </dialogs>
+        </gui>
     </sim>
     <input n="0">
         <mice n="0">
@@ -664,6 +793,23 @@
                     </script>
                 </binding>
              </key>
+             <key n="18">
+              <name>Ctrl-R</name>
+              <desc>Activate the instant replay system</desc>
+              <binding>
+                    <command>nasal</command>
+                    <script>
+                        if (getprop("payload/armament/msg")==1) {
+                            screen.log.write("Please do not use replay while in combat over MP!");
+                        } else {
+                            call(func{fgcommand('replay', props.Node.new({}))},nil,var err2 = []);
+                            call(func{fgcommand('dialog-show', props.Node.new({"dialog-name": "replay"}))},nil,var err2 = []);
+                        }
+                    </script>
+                </binding>
+                <mod-up>
+                </mod-up>
+             </key>
             <key n="87">
                 <name>SHIFT-W</name>
                 <desc>View RWR</desc>
@@ -750,11 +896,11 @@
                 <desc>Toggle radar standby mode</desc>
                 <binding>
                     <command>property-toggle</command>
-                    <property>sim/multiplay/generic/int[2]</property>
+                    <property>instrumentation/radar/radar-standby</property>
                 </binding>
                 <binding>
                     <command>nasal</command>
-                    <script>screen.log.write("Radar "~(getprop("sim/multiplay/generic/int[2]")==1?"SILENT":"ACTIVE"), 0.5, 0.5, 1);</script>
+                    <script>screen.log.write("Radar "~(getprop("instrumentation/radar/radar-standby")==1?"SILENT":"ACTIVE"), 0.5, 0.5, 1);#setprop("instrumentation/radar/radar-mode", (getprop("instrumentation/radar/radar-standby")==1?2:1));</script>
                 </binding>
             </key>
             <key n="127">
@@ -863,7 +1009,7 @@
                 <desc>Increase Radar Range</desc>
                 <binding>
                     <command>nasal</command>
-                    <script>awg_9.range_control(1);</script>
+                    <script>awg_9.range_control(1);screen.log.write("Radar range "~getprop("instrumentation/radar/radar2-range"), 0.5, 0.5, 1);</script>
                 </binding>
             </key>
             <key n="69">
@@ -871,7 +1017,7 @@
                 <desc>Decrease Radar Range</desc>
                 <binding>
                     <command>nasal</command>
-                    <script>awg_9.range_control(-1);</script>
+                    <script>awg_9.range_control(-1);screen.log.write("Radar range "~getprop("instrumentation/radar/radar2-range"), 0.5, 0.5, 1);</script>
                 </binding>
             </key>
             <key n="119">
@@ -879,19 +1025,23 @@
                 <desc>Cycle Weapon Type</desc>
                 <binding>
                     <command>nasal</command>
-                    <script>pylons.fcs.cycleWeapon();</script>
+                    <script>pylons.fcs.cycleLoadedWeapon();</script>
                 </binding>
             </key>
             <key n="109">
                 <name>m</name>
                 <desc>Masterarm</desc>
                 <binding>
-                    <command>property-toggle</command>
-                    <property>controls/armament/master-arm</property>
-                </binding>
-                <binding>
                     <command>nasal</command>
-                    <script>screen.log.write("Master-arm "~(getprop("controls/armament/master-arm")==0?"OFF":"ON"), 0.5, 0.5, 1);</script>
+                    <script><![CDATA[
+                        if (getprop("sim/variant-id") <= 5 and getprop("controls/armament/master-arm") == 0 and getprop("controls/armament/master-arm-cover-open") == 0) {
+                            setprop("controls/armament/master-arm-cover-open",1);
+                            screen.log.write("Master-arm cover open.", 0.5, 0.5, 1);
+                        } else {
+                            setprop("controls/armament/master-arm",!getprop("controls/armament/master-arm"));
+                            screen.log.write("Master-arm "~(getprop("controls/armament/master-arm")==0?"OFF":"ON"), 0.5, 0.5, 1);
+                        }
+                    ]]></script>
                 </binding>
             </key>
             <key n="83">
@@ -906,11 +1056,35 @@
                     <script>screen.log.write("Smoke "~(getprop("controls/smoke")==0?"OFF":"ON"), 0.5, 0.5, 1);</script>
                 </binding>
             </key>
+            <key n="262">
+              <name>F6</name>
+              <desc>noop</desc>
+              <repeatable type="bool">false</repeatable>
+              <binding>
+               <command>nasal</command>
+               <script>
+                f16.eject();
+               </script>
+              </binding>
+             </key>
+             <key n="260">
+              <name>F4</name>
+              <desc>noop</desc>
+              <repeatable type="bool">false</repeatable>
+              <binding>
+               <command>nasal</command>
+               <script>
+                f16.chute();
+               </script>
+              </binding>
+             </key>
         </keyboard>
     </input>
     <controls>
         <armament>
             <automissileview type="bool">false</automissileview><!-- for now it has to be enabled, as its not a realistic feature -->
+            <laser-arm-dmd type="bool">false</laser-arm-dmd>
+            <master-arm-cover-open type="bool">false</master-arm-cover-open>
         </armament>
       
         <fuel>
@@ -930,6 +1104,7 @@
         </MFD>
         <HUD>
             <sym-rej type="int">0</sym-rej>
+            <display-on type="int">1</display-on>
             <!-- declutter -->
         </HUD>
         <indicators />
@@ -947,6 +1122,10 @@
             <lighting-panel>
                 <pri-inst-pnl type="double">0.2</pri-inst-pnl>
                 <flood-inst-pnl type="double">0</flood-inst-pnl>
+                <pri-inst-pnl-knob type="double">0.2</pri-inst-pnl-knob>
+                <flood-inst-pnl-knob type="double">0</flood-inst-pnl-knob>
+                <console-primary-knob type="double">0</console-primary-knob>
+                <console-primary type="double">0</console-primary>
             </lighting-panel>
         </lighting>
         <seat>
@@ -961,7 +1140,7 @@
     </controls>
     <engines>
         <engine n="0">
-            <running>true</running>
+            <running type="bool">true</running>
         </engine>
     </engines>
     <consumables>
@@ -974,12 +1153,21 @@
             </tank>
             <tank n="2">
                 <name>Not attached</name>
+                <selected type="bool">false</selected>
+                <capacity-gal_us type="double">0</capacity-gal_us>
+                <level-norm type="double">0</level-norm>
             </tank>
             <tank n="3">
                 <name>Not attached</name>
+                <selected type="bool">false</selected>
+                <capacity-gal_us type="double">0</capacity-gal_us>
+                <level-norm type="double">0</level-norm>
             </tank>
             <tank n="4">
                 <name>Not attached</name>
+                <selected type="bool">false</selected>
+                <capacity-gal_us type="double">0</capacity-gal_us>
+                <level-norm type="double">0</level-norm>
             </tank>
             <tank n="5">
                 <name>Right Wing Tank</name>
@@ -1083,6 +1271,11 @@
                     <util-system-preload-input type="double">0</util-system-preload-input>
                     <emerg-pump-on type="bool">false</emerg-pump-on><!-- Set by electrical system -->
                 </hydraulics>
+                <external_reactions>
+                    <chute>
+                        <magnitude type="double">0</magnitude>
+                    </chute>
+                </external_reactions>
             </systems>
             <fcs>
                 <fly-by-wire>
@@ -1112,6 +1305,17 @@
                 <hook-engage type="bool">false</hook-engage>
                 <alpha-norm type="double">0</alpha-norm>
             </fcs>
+            <propulsion>
+                <tank n="2">
+                    <external-flow-rate-pps type="double">-1000</external-flow-rate-pps>
+                </tank>
+                <tank n="3">
+                    <external-flow-rate-pps type="double">-1000</external-flow-rate-pps>
+                </tank>
+                <tank n="4">
+                    <external-flow-rate-pps type="double">-1000</external-flow-rate-pps>
+                </tank>
+            </propulsion>
         </jsbsim>
     </fdm>
     <systems>
@@ -1135,15 +1339,36 @@
             <range type="double">160</range>
             <range-selected type="double">40</range-selected>
             <display-rdr type="bool">true</display-rdr>
-            <radar-standby type="int">0</radar-standby>
-            <radar2-range type="int">40</radar2-range>
-            <radar-standby type="bool">0</radar-standby>
+            <radar2-range type="int">40</radar2-range><!-- default range -->
+            <radar-standby type="bool">false</radar-standby>
             <symbols-enabled type="bool">true</symbols-enabled>
             <debug-mode type="bool">true</debug-mode>
+            <serviceable type="bool">true</serviceable>
             <mode>
                 <rws type="bool">true</rws>
                 <tws-auto type="bool">false</tws-auto>
             </mode>
+            <limited-select type="bool">true</limited-select>
+            <radar-mode type="int">1</radar-mode>
+            <ref-range type="double">70</ref-range>
+            <ref-strength type="double">3.2</ref-strength>
+            <ranges n="0">
+                <entry type="int">10</entry>
+            </ranges>
+            <ranges n="1">
+                <entry type="int">20</entry>
+            </ranges>
+            <ranges n="2">
+                <entry type="int">40</entry>
+            </ranges>
+            <ranges n="3">
+                <entry type="int">80</entry>
+            </ranges>
+            <ranges n="4">
+                <entry type="int">160</entry>
+            </ranges>
+            <cycle-range type="bool">false</cycle-range>
+            <scan_visibility_check_interval type="double">1</scan_visibility_check_interval>            
         </radar>
         <radar2>
             <sweep-width-m type="double">0.0844</sweep-width-m>
@@ -1160,6 +1385,10 @@
         <ecm>
             <on-off type="bool">true</on-off>
         </ecm>
+        <heading-indicator>
+            <offset-deg type="double">0</offset-deg>
+            <use-mag-in-hud type="bool">false</use-mag-in-hud>
+        </heading-indicator>
     </instrumentation>
     <environment>
         <aircraft-effects>
@@ -1170,7 +1399,7 @@
             <rain-enabled type="int">1</rain-enabled>
         </aircraft-effects>
         <precipitation-control>
-            <clip-distance type="double">2.0</clip-distance>
+            <clip-distance type="double">3.5</clip-distance>
         </precipitation-control>
     </environment>
     <limits>
@@ -1179,6 +1408,8 @@
     <limits-custom>
         <vne>800</vne>   <!--(KIAS) source: T.O. GR1F-16CJ-1  page 1-32     also limited by mach 2.05-->
         <mach>2.05</mach>
+        <tire-nose>217</tire-nose>
+        <tire-main>225</tire-main>
     </limits-custom>
     <payload>
         <armament>
@@ -1194,6 +1425,20 @@
             <MP-lat type="string">rotors/main/blade[0]/flap-deg</MP-lat>
             <MP-lon type="string">rotors/main/blade[1]/flap-deg</MP-lon>
             <MP-alt type="string">rotors/main/blade[2]/flap-deg</MP-alt>
+            <station>
+                <id-0-set type="string">Empty</id-0-set>
+                <id-1-set type="string">Empty</id-1-set>
+                <id-2-set type="string">Empty</id-2-set>
+                <id-3-set type="string">Empty</id-3-set>
+                <id-4-set type="string">Empty</id-4-set>
+                <id-5-set type="string">Empty</id-5-set>
+                <id-6-set type="string">Empty</id-6-set>
+                <id-7-set type="string">Empty</id-7-set>
+                <id-8-set type="string">Empty</id-8-set>
+            </station>
+            <fire-control>
+                <serviceable type="bool">true</serviceable><!-- why is this not auto created by failure system in 2018.3?? -->
+            </fire-control>
             <aim-9>
                 <short-name type="string">AIM9</short-name>
                 <long-name type="string">AIM-9L Sidewinder</long-name>
@@ -1329,7 +1574,7 @@
                 <max-fire-range-nm type="double">12 </max-fire-range-nm>
                 <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
                 <guidance type="string">laser</guidance>
-                <navigation type="string">PN</navigation>
+                <navigation type="string">APN</navigation>
                 <loft-altitude type="int"> 0 </loft-altitude>
                 <terrain-follow type="bool">false</terrain-follow>
                 <FCS-field-deg type="int"> 200 </FCS-field-deg>
@@ -1370,26 +1615,26 @@
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
             </gbu-12>
             <gbu-31>
-                <short-name type="string">GBU-31</short-name>
+                <short-name type="string">GBU31</short-name>
                 <long-name type="string">GBU-31 JDAM</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
                 <class type="string">GM</class>
                 <max-fire-range-nm type="double">15 </max-fire-range-nm>
                 <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
-                <guidance type="string">laser</guidance>
-                <navigation type="string">PN</navigation>
+                <guidance type="string">gps</guidance>
+                <navigation type="string">APN</navigation>
                 <loft-altitude type="int"> 0 </loft-altitude>
                 <terrain-follow type="bool">false</terrain-follow>
                 <FCS-field-deg type="int"> 200 </FCS-field-deg>
                 <seeker-field-deg type="int"> 32 </seeker-field-deg>
                 <reaquire type="bool">true</reaquire>
-                <max-g type="double"> 1.8 </max-g><!-- real is 2.8, but here its limited for technical reasons -->
+                <max-g type="double"> 1.8 </max-g>
                 <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
                 <stage-2-duration-sec type="double"> 0 </stage-2-duration-sec>
-                <weight-launch-lbs type="double"> 2036 </weight-launch-lbs>
-                <weight-warhead-lbs type="double"> 945 </weight-warhead-lbs>
+                <weight-launch-lbs type="double"> 2039 </weight-launch-lbs><!-- weapons file 2004 -->
+                <weight-warhead-lbs type="double"> 945 </weight-warhead-lbs><!-- weapons file 2004 -->
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
                 <drag-coeff type="double"> 0.012 </drag-coeff>
                 <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
@@ -1568,14 +1813,14 @@
                 <class type="string">GM</class>
                 <max-fire-range-nm type="double">12 </max-fire-range-nm>
                 <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
-                <guidance type="string">laser</guidance>
+                <guidance type="string">gps</guidance>
                 <navigation type="string">PN</navigation>
                 <loft-altitude type="int"> 0 </loft-altitude>
                 <terrain-follow type="bool">false</terrain-follow>
                 <FCS-field-deg type="int"> 200 </FCS-field-deg>
                 <seeker-field-deg type="int"> 32 </seeker-field-deg>
                 <reaquire type="bool">true</reaquire>
-                <max-g type="double"> 1.5 </max-g><!-- real is 2.8, but here its limited for technical reasons -->
+                <max-g type="double"> 1.5 </max-g>
                 <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
@@ -1601,6 +1846,7 @@
                 <lateral-dps type="double"> 10 </lateral-dps>
                 <max-pitch-deg type="double">-45</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
+                <inert type="bool">true</inert>
                 <!-- the following 6 properties not used yet: -->
                 <release-limit-mach type="double"> 1.2 </release-limit-mach>
                 <release-limit-altitude type="double"> 30000 </release-limit-altitude>
@@ -1623,7 +1869,7 @@
                 <FCS-field-deg type="int"> 200 </FCS-field-deg>
                 <seeker-field-deg type="int"> 32 </seeker-field-deg>
                 <reaquire type="bool">true</reaquire>
-                <max-g type="double"> 1.5 </max-g><!-- real is 2.8, but here its limited for technical reasons -->
+                <max-g type="double"> 1.5 </max-g>
                 <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
@@ -1649,6 +1895,7 @@
                 <lateral-dps type="double"> 10 </lateral-dps>
                 <max-pitch-deg type="double">-45</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
+                <inert type="bool">true</inert>
                 <!-- the following 6 properties not used yet: -->
                 <release-limit-mach type="double"> 1.2 </release-limit-mach>
                 <release-limit-altitude type="double"> 30000 </release-limit-altitude>
@@ -1657,6 +1904,50 @@
                 <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
             </b61-7>
+            <es>                    <!-- Ejection seat -->
+                    <vol-search type="double">0.075</vol-search>
+                    <vol-track type="double">0.25</vol-track>
+                    <vol-track-weak type="double">0.175</vol-track-weak>
+                    <guidance type="string">unguided</guidance>
+                    <navigation type="string">direct</navigation>
+                    <all-aspect type="bool">false</all-aspect> 
+                    <max-fire-range-nm type="double">6.9</max-fire-range-nm>
+                    <FCS-field-deg type="int">50</FCS-field-deg>            
+                    <seeker-field-deg type="int">54</seeker-field-deg>      
+                    <max-g type="int">10</max-g>                            
+                    <max-launch-g type="int">9</max-launch-g>      
+                    <thrust-lbf-stage-1 type="double">1500</thrust-lbf-stage-1>
+                    <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>  
+                    <stage-1-duration-sec type="double">1</stage-1-duration-sec>
+                    <stage-2-duration-sec type="double">0.0</stage-2-duration-sec>
+                    <weight-launch-lbs type="double">300</weight-launch-lbs>
+                    <weight-warhead-lbs type="double">0.0</weight-warhead-lbs>  
+                    <weight-fuel-lbm type="double">5.0</weight-fuel-lbm>        
+                    <drag-coeff type="double">1.35</drag-coeff>                 
+                    <delta-drag-coeff-deploy type="double">75.00</delta-drag-coeff-deploy>
+                    <cross-section-sqft type="double">2</cross-section-sqft>
+                    <arming-time-sec type="double">0</arming-time-sec>    
+                    <min-speed-for-guiding-mach type="double">0.8</min-speed-for-guiding-mach>
+                    <self-destruct-time-sec type="double">5000</self-destruct-time-sec>       
+                    <seeker-angular-speed-dps type="double">10.0</seeker-angular-speed-dps>
+                    <lock-on-sun-deg type="double">20</lock-on-sun-deg>       
+                    <loft-altitude type="int">0</loft-altitude>
+                    <min-fire-range-nm type="double">0.0</min-fire-range-nm>
+                    <rail type="bool">true</rail>
+                    <rail-length-m type="double">1.5</rail-length-m>
+                    <rail-point-forward type="bool">false</rail-point-forward>
+                    <rail-pitch-deg type="double">90</rail-pitch-deg>
+                    <drop-time type="double">0</drop-time>
+                    <deploy-time type="double">3.5</deploy-time>                            
+                    <inert type="bool">true</inert>                            
+                    <lateral-dps type="int">2</lateral-dps>                            
+                    <max-report-distance type="double">65</max-report-distance>
+                    <class type="string">A</class>
+                    <fire-msg type="string">weeeeee</fire-msg>
+                    <long-name type="string">Project Gamma</long-name>
+                    <short-name type="string">gamma</short-name>
+                    <pitch-animation-disabled type="bool">true</pitch-animation-disabled>
+                </es>
         </armament>
     </payload>
 
@@ -1709,8 +2000,18 @@
         <rwr-unk type="bool">false</rwr-unk>
     </sound>
     <f16>
+        <sound>
+            <thunder1 type="bool">false</thunder1>
+            <thunder2 type="bool">false</thunder2>
+            <thunder3 type="bool">false</thunder3>
+        </sound>
         <avionics>
             <hud-brt type="double">1.0</hud-brt>
+            <rwr-int type="double">1.0</rwr-int>
+            <mfd-l-brt type="double">1.0</mfd-l-brt>
+            <mfd-l-con type="double">1.0</mfd-l-con>
+            <mfd-r-brt type="double">1.0</mfd-r-brt>
+            <mfd-r-con type="double">1.0</mfd-r-con>
         </avionics>
         <fcs>
             <autopilot-on type="int">0</autopilot-on> <!-- Ignored on Block 20+ -->
@@ -1725,6 +2026,13 @@
             <jsf-start type="bool">false</jsf-start><!-- inverse cutoff -->
             <running-state type="bool">false</running-state>
         </engine>
+        <done type="bool">false</done>
+        <chute>
+            <force type="double">2.0</force>
+            <fold type="double">0.0</fold>
+            <done type="bool">false</done>
+            <enable type="bool">false</enable>
+        </chute>
     </f16>
     <damage>
         <sound>
@@ -1746,35 +2054,45 @@
             <file>Aircraft/f16/Nasal/damage.nas</file>
         </damage>
         <vector>
-            <file>Aircraft/f16/Nasal/vector.nas</file><!-- must be before RCS and radar -->
+            <file>Aircraft/f16/Nasal/vector.nas</file><!-- must be before RCS, armament and radar -->
         </vector>
         <rcs>
             <file>Aircraft/f16/Nasal/rcs.nas</file><!-- must be before radar -->
         </rcs>
-        <rwrs>
-            <file>Aircraft/f16/Nasal/rwr.nas</file>
-        </rwrs>
-        <awg_9>
-            <file>Aircraft/f16/Nasal/awg_9.nas</file>
-        </awg_9>
         <controls>
             <file>Aircraft/f16/Nasal/f16_controls.nas</file>
         </controls>
         <autoflight>
             <file>Aircraft/f16/Nasal/autoflight.nas</file>
         </autoflight>
+        <radardist>
+            <file>Aircraft/Instruments-3d/radardist/radardist.nas</file>
+        </radardist>
+        <notifications>
+            <file>Aircraft/f16/Nasal/M_frame_notification.nas</file>
+        </notifications>
         <f16> 
+            <file>Aircraft/f16/Nasal/exec.nas</file>
+
             <file>Aircraft/f16/Nasal/f16.nas</file>
             <file>Aircraft/f16/Nasal/liveries.nas</file>
             <file>Aircraft/f16/Nasal/tyresmoke.nas</file>
             <file>Aircraft/f16/Nasal/rain.nas</file>
             <file>Aircraft/f16/Nasal/vapor-lighting.nas</file>
-            <file>Aircraft/f16/Nasal/exec.nas</file>
             <file>Aircraft/f16/Nasal/mfd.nas</file>
             <file>Aircraft/f16/Nasal/HUD/HUD_main.nas</file>
             <file>Aircraft/f16/Nasal/MFD/MFD_main.nas</file>
             <!--<file>Aircraft/f16/Nasal/blackout.nas</file>-->
         </f16>
+        <rwrs>
+            <file>Aircraft/f16/Nasal/rwr.nas</file>
+        </rwrs>
+        <awg_9>
+            <file>Aircraft/f16/Nasal/awg_9.nas</file>
+        </awg_9>
+        <rwr_apg>
+            <file>Aircraft/f16/Nasal/rwr_apg.nas</file>
+        </rwr_apg>
         <f16_chronograph>
             <file>Aircraft/f16/Nasal/chronograph.nas</file>
         </f16_chronograph>
@@ -1797,7 +2115,7 @@
             <file>Aircraft/f16/Nasal/station-manager.nas</file><!-- must be before fire-control and pylons -->
         </stations>
         <fc>
-            <file>Aircraft/f16/Nasal/fire-control.nas</file>
+            <file>Aircraft/f16/Nasal/fire-control.nas</file><!-- must be before pylons -->
         </fc>
         <pylons>
             <file>Aircraft/f16/Nasal/pylons.nas</file>
@@ -1805,5 +2123,8 @@
         <crash>
             <file>Aircraft/f16/Nasal/crash-and-stress.nas</file>
         </crash>
+        <mig28>
+            <file>Aircraft/f16/Nasal/mig28.nas</file>
+        </mig28>
     </nasal>
 </PropertyList>

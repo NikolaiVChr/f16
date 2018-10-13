@@ -4,21 +4,19 @@
 
  <path>panels_mlu_left-aux-console.ac</path>
 
-  <animation>
+ <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <parameters>
+            <implicit-lightmap-threshold-low type="float">0.2</implicit-lightmap-threshold-low>
+            <implicit-lightmap-threshold-high type="float">0.7</implicit-lightmap-threshold-high>
+        </parameters>
   <object-name>EW_LEFT_1</object-name>
   <object-name>HMD_1</object-name>
   <object-name>EW_RIGHT_1</object-name>
   <object-name>GEAR</object-name>
   <object-name>ALT_GEAR_1</object-name>
   <object-name>SPEED_BRAKE_drum</object-name>
-  <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
-   <red>0.45</red>
-   <green>0.34</green>
-   <blue>0.18</blue>
-  </emission>
- </animation>
+</effect>
 
  <animation>
   <type>select</type>

@@ -2,11 +2,14 @@
 
 <PropertyList>
 
-	<path>agm88.ac</path>
+	<path>AGM-88.ac</path>
 
   <animation>
     <type>select</type>
-    <object-name>ID18.003_ID30</object-name>
+      <object-name>AGM88.body</object-name>
+      <object-name>Front-Wings</object-name>
+      <object-name>Tail-Fins</object-name>
+      <object-name>Exhaust</object-name>
     <condition>
       <property>payload/armament/agm-88/flags/msl-id-200</property>
     </condition>
@@ -278,7 +281,10 @@
      </particlesystem>
 
 	<animation>
-  		<object-name>ID18.003_ID30</object-name>
+  		<object-name>AGM88.body</object-name>
+      <object-name>Front-Wings</object-name>
+      <object-name>Tail-Fins</object-name>
+      <object-name>Exhaust</object-name>
   		<enable-hot type="bool">false</enable-hot>
  	</animation>
 	

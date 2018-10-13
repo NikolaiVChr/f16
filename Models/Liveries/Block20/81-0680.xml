@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">AMI 37 Stormo, "Livrea speciale Gruppi 10 e 18"</name>
+    <texture>Liveries/Block20/81-0680.png</texture>
+    <owner type="string">AMI</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/yf/yf16-transp.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block20/patch.itaf.png</texture>
+  </livery-patch>
+  </model>
+ </sim>
+</PropertyList>

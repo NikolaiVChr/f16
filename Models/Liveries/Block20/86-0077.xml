@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">BAF 2 W, "Dark Falcon (Demo scheme 2018)"</name>
+    <texture>Liveries/Block20/86-0077.png</texture>
+    <owner type="string">BAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/yf/yf16-transp.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/patch.default.png</texture>
+  </livery-patch>
+  </model>
+ </sim>
+</PropertyList>

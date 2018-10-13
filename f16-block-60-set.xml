@@ -64,12 +64,19 @@
    <default>
     <menu n="100">
      <label>F-16</label>
+        <item n="8">
+          <label>Payload quick select</label>
+          <binding>
+            <command>dialog-show</command>
+            <dialog-name>payload</dialog-name>
+          </binding>
+      </item>
     </menu>
    </default>
   </menubar>
 
   <help>
-   <title>General Dynamics F-16</title>
+   <title>Lockheed Martin F-16</title>
   </help>
 
  </sim>

@@ -26,4 +26,17 @@
     <z>   0.01 </z>
   </direction>
    </force>
+
+   <force name="chute" frame="WIND">
+      <location unit="M">
+        <x>    5.5 </x>
+        <y>    0.00000 </y>
+        <z>    0.9 </z>
+      </location>
+      <direction>
+        <x>  -1.0 </x>
+        <y>   0.0 </y>
+        <z>   0.0 </z>
+      </direction>
+    </force>
  </external_reactions>

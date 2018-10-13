@@ -3,41 +3,47 @@
 <PropertyList>
 
 <!--CHOCKS -->
-<animation>
- <type>select</type>
- <object-name>chocks</object-name>
- <condition>
-   <property>controls/gear/brake-parking</property>
-   <not><property>controls/lighting/ext-lighting-panel/anti-collision</property></not>
- </condition>
-</animation>
+
  
 <!-- NOSE CHOCKS -->
 <model>
- <name>chocks</name>
+ <name>chocks1</name>
  <path>Aircraft/f16/Models/chock.ac</path>
  <offsets> 
   <x-m>-3.27</x-m>
   <y-m>-0.05</y-m>
-  <z-m>-1.85</z-m>
+  <z-m>-1.90</z-m>
   <heading-deg>90</heading-deg>
  </offsets>
 </model>
- 
+
 <model>
- <name>chocks</name>
+ <name>chocks2</name>
  <path>Aircraft/f16/Models/chock.ac</path>
  <offsets> 
   <x-m> -2.77</x-m>
   <y-m> 0.00</y-m>
-  <z-m>-1.85</z-m>
+  <z-m>-1.90</z-m>
   <heading-deg>90</heading-deg>
  </offsets>
 </model>
+
+ <animation>
+  <type>translate</type>
+  <object-name>chocks1</object-name>
+  <object-name>chocks2</object-name>
+  <property>gear/gear[0]/compression-norm</property>
+  <factor>0.25</factor>
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>1</z>
+  </axis>
+ </animation>
  
 <!-- MAIN LEFT CHOCKS -->
 <model>
- <name>chocks</name>
+ <name>chocks3</name>
  <path>Aircraft/f16/Models/chock.ac</path>
  <offsets> 
   <x-m> 0.27</x-m>
@@ -48,19 +54,32 @@
 </model>
  
 <model>
- <name>chocks</name>
+ <name>chocks4</name>
  <path>Aircraft/f16/Models/chock.ac</path>
  <offsets> 
-  <x-m> 0.85</x-m>
+  <x-m> 0.80</x-m>
   <y-m>-1.20</y-m>
   <z-m>-1.82</z-m>
   <heading-deg>90</heading-deg>
  </offsets>
 </model>
+
+ <animation>
+  <type>translate</type>
+  <object-name>chocks3</object-name>
+  <object-name>chocks4</object-name>
+  <property>gear/gear[2]/compression-norm</property>
+  <factor>0.25</factor>
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>1</z>
+  </axis>
+ </animation>
  
 <!-- MAIN RIGHT CHOCKS -->
 <model>
- <name>chocks</name>
+ <name>chocks5</name>
  <path>Aircraft/f16/Models/chock.ac</path>
  <offsets> 
   <x-m> 0.27</x-m>
@@ -71,14 +90,51 @@
 </model>
  
 <model>
- <name>chocks</name>
+ <name>chocks6</name>
  <path>Aircraft/f16/Models/chock.ac</path>
  <offsets> 
-  <x-m> 0.85</x-m>
+  <x-m> 0.80</x-m>
   <y-m> 1.20</y-m>
   <z-m>-1.82</z-m>
   <heading-deg>90</heading-deg>
  </offsets>
 </model>
+
+<animation>
+  <type>translate</type>
+  <object-name>chocks5</object-name>
+  <object-name>chocks6</object-name>
+  <property>gear/gear[1]/compression-norm</property>
+  <factor>0.25</factor>
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>1</z>
+  </axis>
+ </animation>
+
+<animation>
+ <type>select</type>
+ <object-name>chocks1</object-name>
+ <object-name>chocks2</object-name>
+ <object-name>chocks3</object-name>
+ <object-name>chocks4</object-name>
+ <object-name>chocks5</object-name>
+ <object-name>chocks6</object-name>
+ <condition>
+   <property>controls/gear/brake-parking</property>
+   <property>gear/gear[0]/wow</property>
+   <property>gear/gear[1]/wow</property>
+   <property>gear/gear[2]/wow</property>
+   <not>
+     <property>engines/engine[0]/running</property>
+   </not>
+   <less-than>
+    <property>velocities/groundspeed-kt</property>
+    <value>0.25</value>
+   </less-than>
+   <!--<not><property>controls/lighting/ext-lighting-panel/anti-collision</property></not>-->
+ </condition>
+</animation>
 
 </PropertyList>

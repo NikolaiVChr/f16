@@ -23,6 +23,22 @@
     </action>
    </animation>
 
+ <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>eject-handle</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>false</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+                f16.eject();
+      </script>
+     </binding>
+    </action>
+   </animation>
+
 
 <!-- SWITCH ANIMATIONS -->
 

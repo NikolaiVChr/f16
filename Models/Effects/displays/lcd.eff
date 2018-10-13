@@ -9,12 +9,21 @@ Author: Nikolai V. Chr.
 		<outer-angle type="float">60</outer-angle><!-- 0-90, but greater than inner -->
 		<black-angle type="float">80</black-angle><!-- 0-90, but greater than outer -->
 		<contrast type="float">1</contrast><!-- 0.0001 - 255, 1.0 is normal -->
-
+		<dirt-factor>0.09</dirt-factor>
 
 
 
 		<texture n="0">
 			<type>white</type>
+		</texture>
+
+		<texture n="1">
+			<type>2d</type>
+			<filter>linear-mipmap-linear</filter>
+			<wrap-s>clamp</wrap-s>
+			<wrap-t>clamp</wrap-t>
+			<internal-format>normalized</internal-format>
+			<image>Aircraft/Generic/Effects/dust-effect-overlay.png</image>
 		</texture>
 
 		<vertex-program-two-side type="bool">false</vertex-program-two-side>
@@ -232,6 +241,14 @@ Author: Nikolai V. Chr.
 				   <use>texture[0]/internal-format</use>
 				</internal-format>
 		   	</texture-unit>
+		   	<texture-unit>
+		        <unit>1</unit>
+		        <type><use>texture[1]/type</use></type>
+		        <image><use>texture[1]/image</use></image>
+		        <filter><use>texture[1]/filter</use></filter>
+		        <wrap-s><use>texture[1]/wrap-s</use></wrap-s>
+		        <wrap-t><use>texture[1]/wrap-t</use></wrap-t>
+		    </texture-unit>
 		   	<vertex-program-two-side>
 		   		<use>vertex-program-two-side</use>
 			</vertex-program-two-side>
@@ -246,6 +263,11 @@ Author: Nikolai V. Chr.
 			   <type>sampler-2d</type>
 			   <value type="int">0</value>
 			</uniform>
+			<uniform>
+		        <name>dust_texture</name>
+		        <type>sampler-2d</type>
+		        <value type="int">1</value>
+		    </uniform>
 			<uniform>
 			   <name>innerAngle</name>
 			   <type>float</type>
@@ -281,7 +303,11 @@ Author: Nikolai V. Chr.
 				   <use>contrast</use>
 			   </value>
 			</uniform>
-
+			<uniform>
+		        <name>dirt_factor</name>
+		        <type>float</type>
+		        <value><use>dirt-factor</use></value>
+		    </uniform>
 			<uniform>
         			<name>gamma</name>
         			<type>float</type>

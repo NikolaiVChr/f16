@@ -51,7 +51,7 @@ var AImodel = {
         {
             #print(n.getName());
             
-            if((var valid = n.getNode("valid")) == nil or (!valid.getValue()) or n.getNode("missile") == nil or n.getNode("missile").getValue() != 1)
+            if((var valid = n.getNode("valid")) == nil or !valid.getValue() or ((n.getNode("missile") == nil or n.getNode("missile").getValue() != 1) and (n.getNode("type") == nil or n.getNode("type").getValue() != "mig28")))
             {
                 continue;
             }

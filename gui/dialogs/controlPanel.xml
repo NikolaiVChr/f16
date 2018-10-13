@@ -13,6 +13,8 @@
 		<text>
 			<halign>left</halign>
 			<label>F-16 Control Panel</label>
+			<format>%s Control Panel</format>
+			<property>sim/description</property>
 		</text>
 		<button>
 			<halign>right</halign>
@@ -294,7 +296,7 @@
 						
 						<slider>
 							<halign>left</halign>
-							<property>controls/lighting/lighting-panel/pri-inst-pnl</property>
+							<property>controls/lighting/lighting-panel/pri-inst-pnl-knob</property>
 							<min>0</min>
 							<max>1</max>
 							<step>0.1</step>
@@ -334,7 +336,47 @@
 						
 						<slider>
 							<halign>left</halign>
-							<property>controls/lighting/lighting-panel/flood-inst-pnl</property>
+							<property>controls/lighting/lighting-panel/flood-inst-pnl-knob</property>
+							<min>0</min>
+							<max>1</max>
+							<step>0.1</step>
+							<live>true</live>
+							<vertical>true</vertical>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+						</slider>
+						
+					</group>
+				
+				</group>
+
+				<group>
+					<layout>vbox</layout>
+					
+					<text>
+						<label>CONSOLE</label>
+					</text>
+					
+					<group>
+						<layout>hbox</layout>
+				
+						<group>
+							<layout>vbox</layout>
+							<halign>left</halign>
+							
+							<text>
+								<label>FULL</label>
+							</text>
+							<text>
+								<label>OFF</label>
+							</text>
+							
+						</group>
+						
+						<slider>
+							<halign>left</halign>
+							<property>controls/lighting/lighting-panel/console-primary-knob</property>
 							<min>0</min>
 							<max>1</max>
 							<step>0.1</step>
@@ -499,6 +541,21 @@
 
 				</group>
 
+			</group>
+
+			<hrule/>
+
+			<group>
+			    <layout>hbox</layout>
+			    <checkbox>
+				    <property>instrumentation/heading-indicator/use-mag-in-hud</property>
+				    <live>true</live>
+				    <binding>
+						<command>property-toggle</command>
+						<property>instrumentation/heading-indicator/use-mag-in-hud</property>
+			      	</binding>
+			    </checkbox>
+			    <text><label>Magnetic heading in HUD</label></text>
 			</group>
 			
 		</group>
@@ -708,7 +765,7 @@
 						<command>nasal</command>
 						<script>
 							if (pylons.fcs != nil) {
-								pylons.fcs.jettisonFuelAndAG();
+								pylons.fcs.jettisonFuelAndAG([0,8]);#drop all fueltanks, dummies and A/G weapons. Except wingtips.
 							}
 						</script>
 			      	</binding>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">RNoAF FLO, 662</name>
+    <texture>Liveries/Block20/80-3662.png</texture>
+    <owner type="string">RNoAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/standard.logos.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/patch.default.png</texture>
+  </livery-patch>
+  </model>
+ </sim>
+</PropertyList>

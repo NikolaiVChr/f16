@@ -8,12 +8,11 @@
   
   <group>
     <layout>hbox</layout>
-    <empty>
-      <stretch>1</stretch>
-    </empty>
     
     <text>
       <label>Configuration</label>
+      <format>%s Configuration</format>
+      <property>sim/description</property>
     </text>
     
     <empty>

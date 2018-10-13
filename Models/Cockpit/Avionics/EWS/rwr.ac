@@ -1,5 +1,5 @@
 AC3Db
-MATERIAL "ac3dmat1" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.300 0.300 0.300  shi 64 trans 0.000
+MATERIAL "ac3dmat1" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.25 0.25 0.25  shi 128 trans 0.000
 MATERIAL "white.001" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 0 trans 0.000
 MATERIAL "ac3dmat1.001" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 128 trans 1.000
 OBJECT world

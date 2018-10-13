@@ -390,7 +390,7 @@ var PFD_NavDisplay =
                 'toggle_terrain':       { path: '/inputs/terr',        value: 0,     type: 'BOOL' },
                 'toggle_traffic':       { path: '/inputs/tfc',         value: 0,     type: 'BOOL' },
                 'toggle_centered':      { path: '/inputs/nd-centered', value: 1,     type: 'BOOL' },
-                'toggle_lh_vor_adf':    { path: '/inputs/lh-vor-adf',  value: -1,     type: 'INT' },
+                'toggle_lh_vor_adf':    { path: '/inputs/lh-vor-adf',  value: 1,     type: 'INT' },
                 'toggle_rh_vor_adf':    { path: '/inputs/rh-vor-adf',  value: 1,     type: 'INT' },
                 'toggle_display_mode':  { path: '/mfd/display-mode',   value: 'MAP', type: 'STRING' },
                 'toggle_display_type':  { path: '/mfd/display-type',   value: 'LCD', type: 'STRING' },
@@ -409,18 +409,19 @@ var PFD_NavDisplay =
             me.ND = canvas.NavDisplay;
             if (!me.nd_initialised)
             {
+                me.nd_initialised = 1;
+
                 me.NDCpt = me.ND.new("instrumentation/"~me.nd_ident, me.switches,map_style);
 
                 me.group = me.pfd_device.svg.getElementById(me.nd_placeholder_ident);
                 me.group.setScale(0.39,0.45);
                 me.group.setTranslation(45,0);
                 call(me.NDCpt.newMFD, [me.group, pfd_device.canvas], me.NDCpt,me.NDCpt,var err = []);
-                me.NDCpt.setTimerInterval(0.5);
                 if (size(err)>0) {
                     print(err[0]);
                 }
-                me.nd_initialised = 1;
             }
+            me.NDCpt.windShown = 0;
             me.NDCpt.update();
         };
         #
@@ -434,14 +435,19 @@ var PFD_NavDisplay =
         {
             if (!me.nd_initialised)
                 me.nd_init();
+            #2018.2 - manage the timer so that the nav display is only updated when visibile
+            me.NDCpt.onDisplay();
+        };
+        obj.offdisplay = func
+        {
+            #2018.2 - manage the timer so that the nav display is only updated when visibile
+            if (me.nd_initialised)
+              me.NDCpt.offDisplay();
         };
         #
         # most updates performed by the canvas nav display directly.
-        obj.update = func (n)
+        obj.update = func
         {
-            if (n.FrameCount == 0) {
-                #call(func{me.NDCpt.update_timer.start();},nil,var err=[]);
-            }
         };
         return obj;
     },

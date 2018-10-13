@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+    <sim>
+        <model>
+            <livery>
+                <name type="string">Shaymo (fictional)</name>
+                <texture>Liveries/Block50/Shaymo.png</texture> 
+                <owner type="string">USAF</owner>
+            </livery>
+            <livery-logo>
+                <texture>Liveries/yf/yf16-transp.png</texture>
+            </livery-logo>
+
+        <livery-patch>
+        <texture>Liveries/Block50/patch.default.png</texture>
+        </livery-patch>
+
+        <livery-pod>
+            <texture>Armament/External-stores/MXU-648.png</texture>
+        </livery-pod>
+        </model>
+    </sim>
+</PropertyList>

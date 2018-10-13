@@ -51,10 +51,10 @@
 					<value>-50.0</value>
 				</less-than-equals>
 			</condition>
-			<value>-10.0</value>
+			<value>-5.0</value>
 		</input>
 		<input>
-			<value>-5.0</value>
+			<value>-1.0</value>
 		</input>
 		<output>
 			<property>/sim/current-view/z-offset-dec-step</property>
@@ -71,10 +71,10 @@
 					<value>-50.0</value>
 				</less-than>
 			</condition>
-			<value>10.0</value>
+			<value>5.0</value>
 		</input>
 		<input>
-			<value>5.0</value>
+			<value>1.0</value>
 		</input>
 		<output>
 			<property>/sim/current-view/z-offset-inc-step</property>

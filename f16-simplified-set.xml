@@ -4,6 +4,10 @@
 
  <sim>
   <description>General Dynamics F-16 (Simplified FDM)</description>
+  <long-description>
+      The General Dynamics F-16 Fighting Falcon is a single-engine supersonic multirole fighter aircraft originally developed by General Dynamics (now Lockheed Martin) for the United States Air Force (USAF). Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
+      The Fighting Falcon has key features including a frameless bubble canopy for better visibility, side-mounted control stick to ease control while maneuvering, a seat reclined 30 degrees to reduce the effect of g-forces on the pilot, and the first use of a relaxed static stability/fly-by-wire flight control system which helps to make it a nimble aircraft.
+  </long-description>
   <author>Erik Hofman, Pensacola (skin textures), Martin "Pegasus" Schmitt (panel textures), Richard Harrison (MFD, HUD)</author>
   <status>production</status>
   <rating>
@@ -42,7 +46,32 @@
             <preview>
                 <type>exterior</type>
                 <splash type="bool">true</splash>
+                <path>gui/splash/f16_b50_1.png</path>
+            </preview>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>gui/splash/f16_b50_2.png</path>
+            </preview>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>gui/splash/f16_b50_3.png</path>
+            </preview>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
                 <path>gui/splash/f16_b50_4.png</path>
+            </preview>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>gui/splash/f16_b50_5.png</path>
+            </preview>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>gui/splash/f16_b50_6.png</path>
             </preview>
   </previews>
 
@@ -63,6 +92,13 @@
    <default>
     <menu n="100">
      <label>F-16</label>
+        <item n="8">
+          <label>Payload quick select</label>
+          <binding>
+            <command>dialog-show</command>
+            <dialog-name>payload</dialog-name>
+          </binding>
+      </item>
     </menu>
    </default>
   </menubar>

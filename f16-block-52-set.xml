@@ -45,17 +45,32 @@
             <preview>
                 <type>exterior</type>
                 <splash type="bool">true</splash>
-                <path>gui/splash/f16_b52_1.png</path>
+                <path>gui/splash/f16_b50_1.png</path>
             </preview>
             <preview>
                 <type>exterior</type>
                 <splash type="bool">true</splash>
-                <path>gui/splash/f16_b52_2.png</path>
+                <path>gui/splash/f16_b50_2.png</path>
             </preview>
             <preview>
                 <type>exterior</type>
                 <splash type="bool">true</splash>
-                <path>gui/splash/f16_b52_3.png</path>
+                <path>gui/splash/f16_b50_3.png</path>
+            </preview>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>gui/splash/f16_b50_4.png</path>
+            </preview>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>gui/splash/f16_b50_5.png</path>
+            </preview>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>gui/splash/f16_b50_6.png</path>
             </preview>
   </previews>
 
@@ -76,6 +91,13 @@
    <default>
     <menu n="100">
      <label>F-16</label>
+        <item n="8">
+          <label>Payload quick select</label>
+          <binding>
+            <command>dialog-show</command>
+            <dialog-name>payload</dialog-name>
+          </binding>
+      </item>
     </menu>
    </default>
   </menubar>

@@ -17,9 +17,10 @@ Martin "Pegasus" Schmitt
 Nikolai V. Chr.
 - F16 block 10, 20 and YF-16 aerodynamics
 - Fly-by-wire system for all variants except simplified.
-- Danish, Ghost Gray, Blue Bandit, UAE, Croatian and prototype livery
-- Various changes to radar, MFD, HUD, RWR
-- Added Pylon, counter-measures and missile code
+- Danish, Ghost Gray, Blue Bandit, 2xUAE, Croatian, Empire, Norwegian and prototype livery
+- Various changes to radar, MFD, HUD
+- RWR
+- Pylons, counter-measures and missile code
 - Crash and stress code.
 - Splashes
 
@@ -27,6 +28,8 @@ Richard Harrison
 - Radar
 - MFDs
 - HUD
+- 3D misc. panel
+- Avionics communication system (emessary based)
 
 Jonathan Redpath
 - Hydraulics
@@ -39,10 +42,12 @@ Justin Nicholson
 - Radar RCS system
 
 J Maverick 16
-- Adapted and added liveries by Gary Brown
+- Added and adapted liveries by Gary Brown
 - Sound recording/editing
 - Added weapons, stores
-- Fixes and improvements
+- Various fixes and improvements
+- Some 3D works (pilot model)
+- Splashes
 
 Fabien Barbier
 - Work on stores
@@ -64,3 +69,7 @@ Joshua Davidson (it0uchpods)
 
 Martien Van Der Plas
 - 3D modeling for weapons, stores
+
+Enrico Castaldi (Spectre)
+- Italian and other liveries
+- Texture improvements

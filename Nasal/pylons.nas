@@ -16,7 +16,7 @@ var pylonI = nil;
 var cannon = stations.SubModelWeapon.new("20mm Cannon", 0.254, 511, 2, [1,3], props.globals.getNode("fdm/jsbsim/fcs/guntrigger",1), 0, func{return getprop("fdm/jsbsim/systems/hydraulics/sysb-psi")>=2000 and getprop("payload/armament/fire-control/serviceable");});
 var fuelTankCenter = stations.FuelTank.new("Center 300 Gal Tank", "300Gal", 4, 300, "sim/model/f16/ventraltank");
 var fuelTank370Left = stations.FuelTank.new("Left 370 Gal Tank", "370Gal", 3, 370, "sim/model/f16/wingtankL");
-var fuelTank370Right = stations.FuelTank.new("Right 370 Gal Tank", "300Gal", 2, 370, "sim/model/f16/wingtankR");
+var fuelTank370Right = stations.FuelTank.new("Right 370 Gal Tank", "370Gal", 2, 370, "sim/model/f16/wingtankR");
 var fuelTank600Left = stations.FuelTank.new("Left 600 Gal Tank", "600Gal", 3, 600, "sim/model/f16/wingtankL");
 var fuelTank600Right = stations.FuelTank.new("Right 600 Gal Tank", "600Gal", 2, 600, "sim/model/f16/wingtankR");
 var smokewinderRed1 = stations.Smoker.new("Smokewinder Red", "Smoke R", "sim/model/f16/smokewinderR1");
@@ -28,9 +28,9 @@ var smokewinderBlue9 = stations.Smoker.new("Smokewinder Blue", "Smoke B", "sim/m
 var smokewinderWhite1 = stations.Smoker.new("Smokewinder White", "Smoke W", "sim/model/f16/smokewinderW1");
 var smokewinderWhite9 = stations.Smoker.new("Smokewinder White", "Smoke W", "sim/model/f16/smokewinderW9");
 var dummy = stations.Dummy.new("AN-T-17", nil);
-var dummy2 = stations.Dummy.new("CATM-9L", nil);
-var dummy3 = stations.Dummy.new("AN/ALQ-131 ECM Pod", "ALQ-131");
-var dummy4 = stations.Dummy.new("MXU-648 Cargopod", "MXU-648");
+var dummy2 = stations.Dummy.new("CATM-9L", nil);# nil for shortname makes them not show up in MFD SMS page. If shortname is nil it MUST have showLongTypeInsteadOfCount: 1
+var dummy3 = stations.Dummy.new("AN/ALQ-131 ECM Pod", nil);
+var dummy4 = stations.Dummy.new("MXU-648 Cargopod", nil);
 var pylonSets = {
 	empty: {name: "Empty", content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
 	a: {name: "1 x AGM-65", content: ["AGM-65"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
@@ -49,8 +49,8 @@ var pylonSets = {
 	h: {name: "1 x AIM-120", content: ["AIM-120"], fireOrder: [0], launcherDragArea: -0.025, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#non wingtip
 	i: {name: "3 x GBU-12", content: ["GBU-12","GBU-12", "GBU-12"], fireOrder: [0,1,2], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0, category: 2},
 	j: {name: "2 x GBU-12", content: ["GBU-12", "GBU-12"], fireOrder: [0,1], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0, category: 2},
-	k: {name: "1 x AN-T-17", content: [dummy], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-	k2: {name: "1 x CATM-9L", content: [dummy2], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+	k: {name: "AN-T-17", content: [dummy], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+	k2: {name: "CATM-9L", content: [dummy2], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	l: {name: "370 Gal Fuel tank", content: [fuelTank370Left], fireOrder: [0], launcherDragArea: 0.35, launcherMass: 531, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 2},
 	m: {name: "370 Gal Fuel tank", content: [fuelTank370Right], fireOrder: [0], launcherDragArea: 0.35, launcherMass: 531, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 2},
 	o: {name: "600 Gal Fuel tank", content: [fuelTank600Left], fireOrder: [0], launcherDragArea: 0.30, launcherMass: 399, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 3},
@@ -58,14 +58,14 @@ var pylonSets = {
 	q: {name: "1 x AIM-9", content: ["AIM-9"], fireOrder: [0], launcherDragArea: -0.025, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#non wingtip
 	r: {name: "1 x AIM-120", content: ["AIM-120"], fireOrder: [0], launcherDragArea: -0.05, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#wingtip
 	q7: {name: "1 x AIM-7", content: ["AIM-7"], fireOrder: [0], launcherDragArea: -0.025, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#non wingtip
-	s: {name: "1 x Smokewinder Red", content: [smokewinderRed1], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
-	t: {name: "1 x Smokewinder Green", content: [smokewinderGreen1], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
-	u: {name: "1 x Smokewinder Blue", content: [smokewinderBlue1], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
-	v: {name: "1 x Smokewinder Red", content: [smokewinderRed9], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
-	w: {name: "1 x Smokewinder Green", content: [smokewinderGreen9], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
-	x: {name: "1 x Smokewinder Blue", content: [smokewinderBlue9], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
-	w1: {name: "1 x Smokewinder White", content: [smokewinderWhite1], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
-	w9: {name: "1 x Smokewinder White", content: [smokewinderWhite9], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
+	s: {name: "Smokewinder Red", content: [smokewinderRed1], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+	t: {name: "Smokewinder Green", content: [smokewinderGreen1], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+	u: {name: "Smokewinder Blue", content: [smokewinderBlue1], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+	v: {name: "Smokewinder Red", content: [smokewinderRed9], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+	w: {name: "Smokewinder Green", content: [smokewinderGreen9], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+	x: {name: "Smokewinder Blue", content: [smokewinderBlue9], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+	w1: {name: "Smokewinder White", content: [smokewinderWhite1], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+	w9: {name: "Smokewinder White", content: [smokewinderWhite9], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 };
 
 if (getprop("sim/model/f16/wingmounts") != 0) {
@@ -82,15 +82,15 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 	var pylon12setR = [pylonSets.empty, pylonSets.j, pylonSets.m, pylonSets.p, pylonSets.c, pylonSets.c3];
 
 	# pylons
-	pylon1 = stations.Pylon.new("Left Wingtip Pylon", 0, [0,0,0], wingtipSet1, 0, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[1]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[1]",1),func{return getprop("payload/armament/fire-control/serviceable")});
-	pylon2 = stations.Pylon.new("Left Outer Wing Pylon", 1, [0,0,0], pylon120set, 1, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[2]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[2]",1),func{return getprop("payload/armament/fire-control/serviceable")});
-	pylon3 = stations.Pylon.new("Left Wing Pylon", 2, [0,0,0], pylon9mix, 2, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[3]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[3]",1),func{return getprop("payload/armament/fire-control/serviceable")});
-	pylon4 = stations.Pylon.new("Left Inner Wing Pylon", 3, [0,0,0], pylon12setL, 3, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[4]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[4]",1),func{return getprop("payload/armament/fire-control/serviceable")});
-	pylon5 = stations.Pylon.new("Center Pylon", 4, [0,0,0], [pylonSets.empty, pylonSets.f,pylonSets.f2, pylonSets.f3], 4, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[5]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[5]",1),func{return getprop("payload/armament/fire-control/serviceable")});
-	pylon6 = stations.Pylon.new("Right Inner Wing Pylon", 5, [0,0,0], pylon12setR, 5, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[6]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[6]",1),func{return getprop("payload/armament/fire-control/serviceable")});
-	pylon7 = stations.Pylon.new("Right Wing Pylon", 6, [0,0,0], pylon9mix, 6, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[7]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[7]",1),func{return getprop("payload/armament/fire-control/serviceable")});
-	pylon8 = stations.Pylon.new("Right Outer Wing Pylon", 7, [0,0,0], pylon120set, 7, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[8]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[8]",1),func{return getprop("payload/armament/fire-control/serviceable")});
-	pylon9 = stations.Pylon.new("Right Wingtip Pylon", 8, [0,0,0], wingtipSet9, 8, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[9]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[9]",1),func{return getprop("payload/armament/fire-control/serviceable")});
+	pylon1 = stations.Pylon.new("Left Wingtip Pylon",     0, [0.082,-4.79412, 0.01109], wingtipSet1, 0, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[1]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[1]",1),func{return getprop("payload/armament/fire-control/serviceable")});
+	pylon2 = stations.Pylon.new("Left Outer Wing Pylon",  1, [0.082,-3.95167,-0.25696], pylon120set, 1, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[2]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[2]",1),func{return getprop("payload/armament/fire-control/serviceable")});
+	pylon3 = stations.Pylon.new("Left Wing Pylon",        2, [0.082,-2.88034,-0.25696], pylon9mix, 2, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[3]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[3]",1),func{return getprop("payload/armament/fire-control/serviceable")});
+	pylon4 = stations.Pylon.new("Left Inner Wing Pylon",  3, [0.082,-1.62889,-0.25696], pylon12setL, 3, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[4]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[4]",1),func{return getprop("payload/armament/fire-control/serviceable")});
+	pylon5 = stations.Pylon.new("Center Pylon",           4, [0.082, 0,      -0.83778], [pylonSets.empty, pylonSets.f,pylonSets.f2, pylonSets.f3], 4, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[5]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[5]",1),func{return getprop("payload/armament/fire-control/serviceable")});
+	pylon6 = stations.Pylon.new("Right Inner Wing Pylon", 5, [0.082, 1.62889,-0.25696], pylon12setR, 5, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[6]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[6]",1),func{return getprop("payload/armament/fire-control/serviceable")});
+	pylon7 = stations.Pylon.new("Right Wing Pylon",       6, [0.082, 2.88034,-0.25696], pylon9mix, 6, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[7]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[7]",1),func{return getprop("payload/armament/fire-control/serviceable")});
+	pylon8 = stations.Pylon.new("Right Outer Wing Pylon", 7, [0.082, 3.95167,-0.25696], pylon120set, 7, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[8]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[8]",1),func{return getprop("payload/armament/fire-control/serviceable")});
+	pylon9 = stations.Pylon.new("Right Wingtip Pylon",    8, [0.082, 4.79412, 0.01109], wingtipSet9, 8, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[9]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[9]",1),func{return getprop("payload/armament/fire-control/serviceable")});
 	pylonI = stations.InternalStation.new("Internal gun mount", 9, [pylonSets.e], props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[10]",1));
 
 	var pylons = [pylon1,pylon2,pylon3,pylon4,pylon5,pylon6,pylon7,pylon8,pylon9,pylonI];
@@ -115,11 +115,11 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
     pylon9.setAIMListener(aimListener);
 
 } else {
-	# YF-16 only get wingtip aim9 dummies:
+	# YF-16 only get wingtip aim9 dummies plus smoke:
 
 	# sets
-	var wingtipSet1yf  = [pylonSets.k,pylonSets.k2];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
-	var wingtipSet9yf  = [pylonSets.k,pylonSets.k2];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
+	var wingtipSet1yf  = [pylonSets.k,pylonSets.k2, pylonSets.s,pylonSets.t,pylonSets.u];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
+	var wingtipSet9yf  = [pylonSets.k,pylonSets.k2, pylonSets.v,pylonSets.w,pylonSets.x];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
 
 	# pylons
 	pylon1 = stations.Pylon.new("Left Wingtip Pylon", 0, [0,0,0], wingtipSet1yf, 0, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[1]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[1]",1));
@@ -152,6 +152,7 @@ var a2a_patrol = func {
         pylon7.loadSet(pylonSets.q7);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -169,6 +170,7 @@ var a2a_super = func {
         pylon7.loadSet(pylonSets.h);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.h);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -186,6 +188,7 @@ var a2a_cap = func {
         pylon7.loadSet(pylonSets.h);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -203,6 +206,7 @@ var a2a_capext = func {
         pylon7.loadSet(pylonSets.h);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -219,6 +223,7 @@ var a2g_cas = func {
         pylon7.loadSet(pylonSets.a);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -236,6 +241,7 @@ var a2g_casext = func {
         pylon7.loadSet(pylonSets.i);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -253,6 +259,7 @@ var a2g_mix = func {
         pylon7.loadSet(pylonSets.i);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -270,6 +277,7 @@ var a2g_guided1 = func {
         pylon7.loadSet(pylonSets.c3);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -287,6 +295,7 @@ var a2g_guided2 = func {
         pylon7.loadSet(pylonSets.i);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -304,6 +313,7 @@ var a2s_antiship = func {
         pylon7.loadSet(pylonSets.b);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -321,6 +331,7 @@ var a2a_ferry = func {
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -338,6 +349,7 @@ var a2a_ferrycargo = func {
         pylon7.loadSet(pylonSets.f3);
         pylon8.loadSet(pylonSets.g);
         pylon9.loadSet(pylonSets.h);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -355,6 +367,7 @@ var a2g_sead = func {
         pylon7.loadSet(pylonSets.b2);
         pylon8.loadSet(pylonSets.g);
         pylon9.loadSet(pylonSets.h);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -372,6 +385,7 @@ var a2g_oca = func {
         pylon7.loadSet(pylonSets.a);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -389,6 +403,7 @@ var a2a_training = func {
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.k);
         pylon9.loadSet(pylonSets.k2);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
@@ -397,7 +412,7 @@ var a2a_training = func {
 # Clean configuration
 var clean = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
-        pylon1.loadSet(pylonSets.empty);
+        pylon1.loadSet(pylonSets.k);# F16 never has nothing on wingtips unless its fired off, its aerodynamics is designed to work better with something there.
         pylon2.loadSet(pylonSets.empty);
         pylon3.loadSet(pylonSets.empty);
         pylon4.loadSet(pylonSets.empty);
@@ -405,8 +420,10 @@ var clean = func {
         pylon6.loadSet(pylonSets.empty);
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.empty);
-        pylon9.loadSet(pylonSets.empty);
+        pylon9.loadSet(pylonSets.k);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
 }
+
