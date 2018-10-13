@@ -10,9 +10,9 @@ var TopGun = {
 	# Do not pause the sim, that might mess up the mig-28.
 	# There must be scenery and if you fly away from the mig28 so he get outside where there is scenery he will reset.
 	# He will also reset if he stalls or hit the ground.
-	new: func (heading) {
+	new: func () {
 		var obj = {parents: [TopGun]};
-		obj.startHeading = heading;
+		obj.startHeading = rand()*360;
 		return obj;
 	},
 	enabled: 0,
@@ -122,13 +122,54 @@ var TopGun = {
 		settimer(func {me.apply();me.loadNode.setBoolValue(1);setprop("ai/models/model-added", me.ai.getPath());print("TopGun: "~me.callsign~" spawned");}, 0.05);
 	},
 
+	reset: func () {
+		me.speed = 450*KT2MPS;
+		me.mach = 1.0;
+		me.heading = me.startHeading;
+		me.coord = geo.Coord.new(geo.aircraft_position());
+		me.lat = me.coord.lat();
+		me.lon = me.coord.lon();
+		me.alt = me.coord.alt()+5000*FT2M;
+		me.coord.set_alt(me.alt);
+		me.roll = 0;
+		me.pitch = 0;
+		me.think = GO_AHEAD;
+		me.thinkLast = GO_AHEAD;
+		me.thrust = 0.5;
+		me.elapsed = systime();
+		me.elapsed_last = systime()-0.025;
+		me.dt = 0.025;
+		me.decisionTime = systime();
+		me.aimTime = systime();
+		me.rollTarget = me.roll;
+		me.pitchTarget = me.pitch;
+		me.scissorTarget = -MAX_ROLL;
+		me.a16Clock = 0;
+		me.keepDecisionTime = 0;
+		me.sightTime = 0;
+		me.killTime = 0;
+		me.warnTime = 0;
+		me.dist_nm = 0;
+		me.turnStack = 0;
+		me.Gf = 0;
+		me.G  = 1;
+		me.mig28Score = 0;
+		me.a16Score = 0;
+		me.hisAim = 0;
+		me.rollNorm = 0;
+		me.turnSpeed = 0;
+		me.a16Bearing = 0;
+
+		print("TopGun: deciding to RESET!");
+	},
+
 	decide: func {
 		if (me.enabled == 0) {
 			print("TopGun: interupted training session.");
 			return;
 		}
 		me.elapsed = systime();
-		me.dt = me.elapsed - me.elapsed_last;
+		me.dt = (me.elapsed - me.elapsed_last)*getprop("sim/speed-up");
 		me.elapsed_last = me.elapsed;
 		if(me.dt > 0.5) {
 			me.dt = 0.025;
@@ -146,9 +187,13 @@ var TopGun = {
 		me.a16Pitch = vector.Math.getPitch(me.coord,me.a16Coord);
 		me.a16Elev  = me.a16Pitch-me.pitch;
 		me.mig28Elev  = -me.a16Pitch-getprop("orientation/pitch-deg");
+		me.a16BearingOld = me.a16Bearing;
 		me.a16Bearing = me.coord.course_to(me.a16Coord);
+		me.a16BearingRate = geo.normdeg180(me.a16Bearing-me.a16BearingOld)/me.dt;
 		me.a16ClockLast = me.a16Clock;
+		me.a16ClockOld = me.a16Clock;
 		me.a16Clock = geo.normdeg180(me.a16Bearing-me.heading);
+		me.a16ClockRate = (me.a16Clock-me.a16ClockOld)/me.dt;
 		me.a16Range = me.coord.distance_to(me.a16Coord)*M2NM;
 		me.a16Speed = getprop("velocities/groundspeed-kt")*KT2MPS;
 		me.a16Roll  = getprop("orientation/roll-deg");
@@ -215,15 +260,15 @@ var TopGun = {
 			} else {
 				# here comes reaction to a16
 				
-				if (me.dist_nm < 0.33) {
+				if (me.dist_nm < 0.20) {
 					me.think = GO_COLLISION_AVOID;
 					me.keepDecisionTime = 0.15;
-				} elsif (math.abs(me.hisClock) > 45 and math.abs(me.a16Clock) < 45 and me.a16Range > 1.5 and me.a16Speed > me.speed*1.25) {
+				} elsif (math.abs(me.hisClock) > 90 and math.abs(me.a16Clock) < 45 and me.a16Range > 1.25 and me.a16Speed > me.speed*1.25) {
 					# lower speed, out of range but behind a16
 					me.think = GO_LEAD_PURSUIT;
 					me.thrust = 0.75;
 					me.keepDecisionTime = 0.15;
-				} elsif (math.abs(me.hisClock) > 90 and math.abs(me.a16Clock) < 45 and me.a16Range > 2) {
+				} elsif (math.abs(me.hisClock) < 150 and math.abs(me.hisClock) > 90 and math.abs(me.a16Clock) < 45 and me.a16Range > 1.5) {
 					#behind a16, but out of fire range, when reach lag point, do GO_AIM for cold-side lag.
 					me.think = GO_LAG_PURSUIT;
 					me.thrust = 1;
@@ -256,7 +301,7 @@ var TopGun = {
 					# f16 has aim on mig28, go up just to do something else
 					me.think = GO_UP;
 					me.thrust = 1; #speedbrakes
-					me.keepDecisionTime = 3.0;
+					me.keepDecisionTime = 2.0;
 				} elsif (math.abs(me.a16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.0) {
 					# f16 has aim on mig28, do some scissors to not be hit
 					if (me.think != GO_SCISSOR) {
@@ -274,15 +319,15 @@ var TopGun = {
 					me.scissorTarget = me.a16Clock < 0?-MAX_ROLL:MAX_ROLL;
 					me.think = GO_SCISSOR;
 					me.thrust = 0.75;
-					me.scissorPeriod = 2.0;
-					me.keepDecisionTime = 3.5;
+					me.scissorPeriod = me.a16Range;
+					me.keepDecisionTime = me.a16Range*2;
 				} else {
 					if (me.think==GO_AIM and math.abs(me.rollTarget) > 70 and math.abs(me.a16ClockLast)>math.abs(me.a16Clock) and me.elapsed - me.aimTime > 15 and me.dist_nm < 2.5) {# been in turn fight for 15 secs+ and not gaining aspect
 						me.bad += 1;
 					} else {
 						me.bad = 0;
 					}
-					if (me.bad > 120) {
+					if (me.bad > 100) {
 						# turn fight going bad, break circle
 						if (me.alt*M2FT < 25000) {
 							if (me.think != GO_BREAK_UP) {
@@ -338,8 +383,9 @@ var TopGun = {
 		if(me.think==GO_LEAD_DEFEND_AWAY)me.prt="does lead pursuit defense";
 		if(me.think==GO_COLLISION_AVOID)me.prt="does collision avoidance";
 		#printf("Deciding to %s. Speed %d KIAS/M%.2f at %d ft. Roll %d, pitch %d. Thrust %.1f%%. %.1f NM. %.1f horz G",me.prt,me.GStoKIAS(me.speed*MPS2KT),me.mach,me.alt*M2FT,me.roll,me.pitch,me.thrust*100, me.dist_nm, me.rollNorm*(me.rollNorm<0?-1:1)*me.G*0.8888+1);
-		if (me.thinkLast != me.think) {
-			#screen.log.write(me.callsign~" now "~me.prt, 1.0, 0.0, 0.0);
+		me.view = getprop("sim/current-view/missile-view");
+		if (me.thinkLast != me.think and getprop("sim/current-view/view-number")==8 and me.view != nil and find("mig28", me.view) != -1) {
+			screen.log.write(me.callsign~" now "~me.prt, 1.0, 0.0, 0.0);
 		}
 		me.thinkLast = me.think;
 		me.decisionTime = me.elapsed;
@@ -371,22 +417,25 @@ var TopGun = {
 			me.pitchTarget = -me.a16Pitch;
 			me.step();
 		} elsif (me.think == GO_AIM) {
-			me.rollTarget = math.max(-1,math.min(1,me.a16Clock/(30-(1-me.Gf)*15)))*MAX_ROLL;
+			me.turnrateTarget = (me.a16Clock*0.5+me.a16BearingRate);
 			me.pitchTarget = me.a16Pitch;
+			me.rollTarget = nil;
 			me.step();
 		} elsif (me.think == GO_LEAD_DEFEND_AWAY) {
-			me.rollTarget = math.max(-1,math.min(1,-me.a16Clock/(30-(1-me.Gf)*15)))*MAX_ROLL*0.75;
+			me.rollTarget = math.max(-1,math.min(1,-me.a16Clock))*MAX_ROLL*0.75;
 			me.pitchTarget = -10;
 			me.step();
 		} elsif (me.think == GO_LEAD_PURSUIT) {
-			me.leadTarget = me.a16Roll < 0?-10*math.min(3.5,me.a16Range):10*math.min(3.5,me.a16Range);
-			me.rollTarget = math.max(-1,math.min(1,(me.a16Clock+me.leadTarget)/(30-(1-me.Gf)*15)))*MAX_ROLL;
+			me.leadTarget = me.roll < 0?-10:10;
+			me.turnrateTarget = (me.a16Clock+me.leadTarget)*0.5+me.a16BearingRate;
 			me.pitchTarget = me.a16Pitch;
+			me.rollTarget = nil;
 			me.step();
 		} elsif (me.think == GO_LAG_PURSUIT) {
-			me.lagTarget = me.a16Roll < 0?5*math.min(3.5,me.a16Range):-5*math.min(3.5,me.a16Range);
-			me.rollTarget = math.max(-1,math.min(1,(me.a16Clock+me.lagTarget)/(30-(1-me.Gf)*15)))*MAX_ROLL;
+			me.lagTarget = me.roll < 0?25/math.max(0.0001,me.a16Range):-25/math.max(0.0001,me.a16Range);
+			me.turnrateTarget = (me.a16Clock+me.lagTarget)*0.5+me.a16BearingRate;
 			me.pitchTarget = me.a16Pitch;
+			me.rollTarget = nil;
 			me.step();
 		} elsif (me.think == GO_BREAK_UP) {
 			me.rollTarget = math.max(-1,math.min(1,-me.a16Clock/15))*MAX_ROLL;
@@ -411,58 +460,7 @@ var TopGun = {
 		me.apply();
 	},
 
-	reset: func () {
-		me.speed = 450*KT2MPS;
-		me.mach = 1.0;
-		me.heading = me.startHeading;
-		me.coord = geo.Coord.new(geo.aircraft_position());
-		me.lat = me.coord.lat();
-		me.lon = me.coord.lon();
-		me.alt = me.coord.alt()+5000*FT2M;
-		me.coord.set_alt(me.alt);
-		me.roll = 0;
-		me.pitch = 0;
-		me.think = GO_AHEAD;
-		me.thinkLast = GO_AHEAD;
-		me.thrust = 0.5;
-		me.elapsed = systime();
-		me.elapsed_last = systime()-0.025;
-		me.dt = 0.025;
-		me.decisionTime = systime();
-		me.aimTime = systime();
-		me.rollTarget = me.roll;
-		me.pitchTarget = me.pitch;
-		me.scissorTarget = -MAX_ROLL;
-		me.a16Clock = 0;
-		me.keepDecisionTime = 0;
-		me.sightTime = 0;
-		me.killTime = 0;
-		me.warnTime = 0;
-		me.dist_nm = 0;
-		me.turnStack = 0;
-		me.Gf = 0;
-		me.G  = 1;
-		me.mig28Score = 0;
-		me.a16Score = 0;
-		me.hisAim = 0;
-		me.rollNorm = 0;
-		me.turnSpeed = 0;
-
-		print("TopGun: deciding to RESET!");
-	},
-
 	step: func () {
-		if(me.rollTarget>me.roll) {
-			me.roll += MAX_ROLL_SPEED*me.dt;
-			if (me.roll > me.rollTarget) {
-				me.roll = me.rollTarget;
-			}
-		} elsif(me.rollTarget<me.roll) {
-			me.roll -= MAX_ROLL_SPEED*me.dt;
-			if (me.roll < me.rollTarget) {
-				me.roll = me.rollTarget;
-			}
-		}
 		if(me.pitchTarget>me.pitch) {
 			me.pitch += MAX_PITCH_UP_SPEED*me.dt;
 			if (me.pitch > me.pitchTarget) {
@@ -474,12 +472,30 @@ var TopGun = {
 				me.pitch = me.pitchTarget;
 			}
 		}
-		me.rollNorm = me.roll/MAX_ROLL;
+		
 		me.mach = me.machNow(me.speed*M2FT, me.alt*M2FT);
 		me.turn = me.turnMax(me.mach,me.alt*M2FT);
 		me.Gf        = math.min(1, me.extrapolate(me.turn[1], 3, 9, 1, math.max(0.11,(ENDURANCE*4.5*0.75)/math.max(0.00001,me.turnStack))));
 		me.G         = me.Gf*me.turn[1];
 		me.turnSpeed = me.Gf*me.turn[0];
+		
+		if (me.rollTarget == nil) {
+			me.rollTarget = me.clamp(me.turnrateTarget/me.turnSpeed,-1,1)*MAX_ROLL;
+		}
+
+		if(me.rollTarget>me.roll) {
+			me.roll += MAX_ROLL_SPEED*me.dt;
+			if (me.roll > me.rollTarget) {
+				me.roll = me.rollTarget;
+			}
+		} elsif(me.rollTarget<me.roll) {
+			me.roll -= MAX_ROLL_SPEED*me.dt;
+			if (me.roll < me.rollTarget) {
+				me.roll = me.rollTarget;
+			}
+		}
+
+		me.rollNorm = me.roll/MAX_ROLL;
 		#printf("max turn %.1f  max G %.1f  stack %.1f  turn %.1f  G %.1f", me.turn[0],me.turn[1],me.turnStack,me.rollNorm*(me.rollNorm<0?-1:1)*me.turnSpeed,me.rollNorm*(me.rollNorm<0?-1:1)*me.G*0.8888+1);
 		me.turnStack += (me.rollNorm*(me.rollNorm<0?-1:1)*me.G-4.5)*me.dt;
 		me.turnStack = math.max(0,me.turnStack);
@@ -771,6 +787,8 @@ var TopGun = {
 	extrapolate: func (x, x1, x2, y1, y2) {
     	return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
 	},
+
+	clamp: func(v, min, max) { v < min ? min : v > max ? max : v },
 };
 
 var GO_AHEAD   = 0;
@@ -800,8 +818,8 @@ var BLEED_FACTOR = 8;
 var num_t = "0000";
 var ENDURANCE = 10;
 
-var tg1 = TopGun.new(0);
-var tg2 = TopGun.new(180);
+var tg1 = TopGun.new();
+var tg2 = TopGun.new();
 
 var start = func (diff = 1) {
 	if (diff < 1 or diff > 5) {
@@ -855,6 +873,4 @@ var stop = func {
 # TODO:
 #  make him switch on and off his radar in hard mode.
 #  lower floor
-#  make him respect blackout and redout.
-#  make hits affect mig28
 #  make mig28 fire fox2/fox3
