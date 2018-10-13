@@ -264,6 +264,7 @@ var TopGun = {
 					}
 					me.think = GO_SCISSOR;
 					me.thrust = -0.1; #speedbrakes
+					me.scissorPeriod = 1.5;
 					me.keepDecisionTime = 0.15;
 				} elsif (math.abs(me.a16Clock) < 115 and math.abs(me.a16Clock) > 75 and math.abs(me.hisClock) > 75 and math.abs(me.hisClock) < 115 and me.dist_nm < 1.5 and math.abs(geo.normdeg180(me.heading-getprop("orientation/heading-deg")))<30) {
 					# scissor response to parallel flight 
@@ -272,8 +273,9 @@ var TopGun = {
 					}
 					me.scissorTarget = me.a16Clock < 0?-MAX_ROLL:MAX_ROLL;
 					me.think = GO_SCISSOR;
-					me.thrust = 1;
-					me.keepDecisionTime = 2.5;
+					me.thrust = 0.75;
+					me.scissorPeriod = 2.0;
+					me.keepDecisionTime = 3.5;
 				} else {
 					if (me.think==GO_AIM and math.abs(me.rollTarget) > 70 and math.abs(me.a16ClockLast)>math.abs(me.a16Clock) and me.elapsed - me.aimTime > 15 and me.dist_nm < 2.5) {# been in turn fight for 15 secs+ and not gaining aspect
 						me.bad += 1;
@@ -328,7 +330,7 @@ var TopGun = {
 		if(me.think==GO_UP)me.prt="go up";
 		if(me.think==GO_DOWN)me.prt="dive";
 		if(me.think==GO_AIM)me.prt="turn fight";
-		if(me.think==GO_SCISSOR)me.prt="do scissor";
+		if(me.think==GO_SCISSOR)me.prt="do flat scissor";
 		if(me.think==GO_BREAK_UP)me.prt="break up the circle";
 		if(me.think==GO_BREAK_DOWN)me.prt="break down the circle";
 		if(me.think==GO_LEAD_PURSUIT)me.prt="do lead pursuit";
@@ -399,7 +401,7 @@ var TopGun = {
 				me.rollTarget = MAX_ROLL;
 			} elsif (me.roll != -MAX_ROLL and me.scissorTarget == -MAX_ROLL) {
 				me.rollTarget = -MAX_ROLL;
-			} elsif (math.abs(me.roll)==MAX_ROLL and me.elapsed - me.aimTime > 1) {
+			} elsif (math.abs(me.roll)==MAX_ROLL and me.elapsed - me.aimTime > me.scissorPeriod) {
 				me.scissorTarget = -me.scissorTarget;
 				me.aimTime = me.elapsed;
 			}
@@ -503,7 +505,7 @@ var TopGun = {
 		me.ground = geo.elevation(me.lat,me.lon);
 		#printf("Max turn is %.1f deg/sec at this speed/altitude. Doing %.1f deg/sec at mach %.1f.", me.turnSpeed, me.rollNorm*me.turnSpeed,me.mach);
 		if (me.GStoKIAS(me.speed) < (150*KT2MPS) or me.ground == nil or me.ground > me.alt) {
-			print("spd "~me.GStoKIAS(me.speed*MPS2KT));
+			print("s "~me.GStoKIAS(me.speed*MPS2KT));
 			print("agl "~(me.ground == nil?"nil":(""~(me.alt-me.ground)*M2FT)));
 			screen.log.write(me.callsign~": I hit ground, lost terrain or stalled, will reset. Sorry.", 1.0, 1.0, 0.0);
 			me.reset();
@@ -571,17 +573,17 @@ var TopGun = {
 		}
 		if (mach>1.1) {
 			me.a30 = me.extrapolate(mach, 1.1, 1.7, 12.5, 9);
-			me.g30 = 9;
+			me.g30 = 8;
 		} else {
 			me.a30 = me.extrapolate(mach, 0.5, 1.1, 6, 12.5);
-			me.g30 = me.extrapolate(mach, 0.5, 1.1, 3, 9);
+			me.g30 = me.extrapolate(mach, 0.5, 1.1, 3, 8);
 		}
 		if (mach>1.1) {
 			me.a40 = me.extrapolate(mach, 1.1, 1.8, 8, 6);
-			me.g40 = 9;
+			me.g40 = 5;
 		} else {
 			me.a40 = me.extrapolate(mach, 0.6, 1.1, 4, 8);
-			me.g40 = me.extrapolate(mach, 0.6, 1.1, 3, 9);
+			me.g40 = me.extrapolate(mach, 0.6, 1.1, 3, 5);
 		}
 		if (altitude < 20000) {
 			return [me.extrapolate(altitude, 10000, 20000, me.a10, me.a20), me.extrapolate(altitude, 10000, 20000, me.g10, me.g20)];
