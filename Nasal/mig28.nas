@@ -8,7 +8,7 @@ var TopGun = {
 	# Do not do this in mountainous or high ground areas. Best is flat and elevation below 5000ft above sealevel.
 	# The mig-28 instructor will only fight you with cannon.
 	# Do not pause the sim, that might mess up the mig-28.
-	# There must be scenery and if you fly away from the mig28 so he get outside where there is scenery he will reset.
+	# There must be scenery and if you fly away from the mig28 so he get outside where there is scenery he might reset.
 	# He will also reset if he stalls or hit the ground.
 	new: func () {
 		var obj = {parents: [TopGun]};
@@ -16,7 +16,6 @@ var TopGun = {
 		return obj;
 	},
 	enabled: 0,
-	startHeading: 0,
 	start: func {
 		if (me.enabled) {
 			print("TopGun: Already started, try stop() before starting again.");
@@ -84,8 +83,8 @@ var TopGun = {
 		me.model.getNode("roll-deg-prop", 1).setValue(me.nodeRoll.getPath());
 		me.loadNode = me.model.getNode("load", 1);
 
-		me.mig28Score = 0;
-		me.a16Score = 0;
+		TopGun.mig28Score = 0;
+		TopGun.a16Score = 0;
 		
 		print("TopGun: starting");
 		screen.log.write(me.callsign~": Hello.", 1.0, 1.0, 0.0);
@@ -97,7 +96,7 @@ var TopGun = {
 			me.ai.getNode("valid", 1).setBoolValue(0);
 			me.model.remove();
 			me.ai.remove();
-			screen.log.write(me.callsign~": I am returning to base, the score is ("~me.mig28Score~"-"~me.a16Score~")", 1.0, 1.0, 0.0);
+			screen.log.write(me.callsign~": I am returning to base, the score is ("~TopGun.mig28Score~"-"~TopGun.a16Score~")", 1.0, 1.0, 0.0);
 			print("TopGun: stopped.");
 			setprop("ai/models/model-removed", me.ai.getPath());
 		}
@@ -153,8 +152,6 @@ var TopGun = {
 		me.turnStack = 0;
 		me.Gf = 0;
 		me.G  = 1;
-		me.mig28Score = 0;
-		me.a16Score = 0;
 		me.hisAim = 0;
 		me.rollNorm = 0;
 		me.turnSpeed = 0;
@@ -209,8 +206,8 @@ var TopGun = {
 		}
 		if (me.hisAim > 1) {
 			me.hisAim = 0;
-			me.a16Score += 1;
-			screen.log.write(me.callsign~": Good job! You have a firing solution..("~me.mig28Score~"-"~me.a16Score~")", 1.0, 1.0, 0.0);
+			TopGun.a16Score += 1;
+			screen.log.write(me.callsign~": Good job! You have a firing solution..("~TopGun.mig28Score~"-"~TopGun.a16Score~")", 1.0, 1.0, 0.0);
 			me.killTime = me.elapsed;
 		}						
 
@@ -287,8 +284,8 @@ var TopGun = {
 					#}
 					me.thrust = math.min(1.0,me.thrust*me.dist_nm/1.25);
 					if (me.elapsed - me.sightTime > 10 and me.dist_nm < 1) {
-						me.mig28Score += 1;
-						screen.log.write(me.callsign~": Hey! I have you in my gunsight..("~me.mig28Score~"-"~me.a16Score~")", 1.0, 1.0, 0.0);
+						TopGun.mig28Score += 1;
+						screen.log.write(me.callsign~": Hey! I have you in my gunsight..("~TopGun.mig28Score~"-"~TopGun.a16Score~")", 1.0, 1.0, 0.0);
 						me.sightTime = me.elapsed;
 					}
 					me.keepDecisionTime = 0.15;
@@ -297,7 +294,7 @@ var TopGun = {
 					me.think = GO_LEAD_DEFEND_AWAY;
 					me.thrust = 1;
 					me.keepDecisionTime = 8;
-				} elsif (math.mod(me.a16Score,2) > 0 and me.alt<12000 and math.abs(me.a16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.0) {
+				} elsif (math.mod(TopGun.a16Score,2) > 0 and me.alt<9000 and math.abs(me.a16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.0) {
 					# f16 has aim on mig28, go up just to do something else
 					me.think = GO_UP;
 					me.thrust = 1; #speedbrakes
@@ -520,7 +517,10 @@ var TopGun = {
 
 		me.ground = geo.elevation(me.lat,me.lon);
 		#printf("Max turn is %.1f deg/sec at this speed/altitude. Doing %.1f deg/sec at mach %.1f.", me.turnSpeed, me.rollNorm*me.turnSpeed,me.mach);
-		if (me.GStoKIAS(me.speed) < (150*KT2MPS) or me.ground == nil or me.ground > me.alt) {
+		if(me.ground == nil) {
+			me.ground = 0;
+		}
+		if (me.GStoKIAS(me.speed) < (150*KT2MPS) or me.ground > me.alt) {
 			print("s "~me.GStoKIAS(me.speed*MPS2KT));
 			print("agl "~(me.ground == nil?"nil":(""~(me.alt-me.ground)*M2FT)));
 			screen.log.write(me.callsign~": I hit ground, lost terrain or stalled, will reset. Sorry.", 1.0, 1.0, 0.0);
@@ -814,7 +814,6 @@ var MAX_PITCH_UP_SPEED = 15;
 var MAX_PITCH_DOWN_SPEED = 4;
 var MAX_TURN_SPEED = 18;#do not mess with this number unless porting the system to another aircraft.
 
-var BLEED_FACTOR = 8;
 var num_t = "0000";
 var ENDURANCE = 10;
 
