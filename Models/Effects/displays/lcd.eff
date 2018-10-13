@@ -23,7 +23,7 @@ Author: Nikolai V. Chr.
 			<wrap-s>clamp</wrap-s>
 			<wrap-t>clamp</wrap-t>
 			<internal-format>normalized</internal-format>
-			<image>Aircraft/Generic/Effects/dust-effect-overlay.png</image>
+			<image>Aircraft/f16/Models/Effects/dust-effect-overlay.png</image>
 		</texture>
 
 		<vertex-program-two-side type="bool">false</vertex-program-two-side>
