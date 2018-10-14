@@ -19,6 +19,7 @@ var TopGun = {
 	start: func {
 		if (me.enabled) {
 			print("TopGun: Already started, try stop() before starting again.");
+			screen.log.write("Scenario is already started, try 'stop' before starting again.", 1.0, 1.0, 0.0);
 			return;
 		}
 		me.enabled = 1;
@@ -34,15 +35,15 @@ var TopGun = {
 		
 		n = props.globals.getNode("ai/models", 1);
 		for (i = 0; 1==1; i += 1) {
-			if (n.getChild("mig28", i, 0) == nil) {
+			if (n.getChild(AI_AIRCRAFT_TYPE, i, 0) == nil) {
 				break;
 			}
 		}
-		me.ai = n.getChild("mig28", i, 1);
+		me.ai = n.getChild(AI_AIRCRAFT_TYPE, i, 1);
 		me.ai.getNode("valid", 1).setBoolValue(0);
 		me.ai.getNode("name", 1).setValue("No-name");
 		me.ai.getNode("sign", 1).setValue("Bandit");
-		me.ai.getNode("type", 1).setValue("mig28");
+		me.ai.getNode("type", 1).setValue(AI_AIRCRAFT_TYPE);
 		me.ai.getNode("callsign", 1).setValue(me.callsign);
 		#me.ai.getNode("sim/multiplay/generic/bool[2]",1).setBoolValue(0);#damage smoke
 		#me.ai.getNode("sim/multiplay/generic/bool[40]",1).setBoolValue(1);
@@ -136,8 +137,8 @@ var TopGun = {
 		me.thinkLast = GO_AHEAD;
 		me.thrust = 0.5;
 		me.elapsed = systime();
-		me.elapsed_last = systime()-0.025;
-		me.dt = 0.025;
+		me.elapsed_last = systime()-UPDATE_RATE;
+		me.dt = UPDATE_RATE;
 		me.decisionTime = systime();
 		me.aimTime = systime();
 		me.rollTarget = me.roll;
@@ -170,16 +171,16 @@ var TopGun = {
 		me.dt = (me.elapsed - me.elapsed_last)*getprop("sim/speed-up");
 		me.elapsed_last = me.elapsed;
 		if(me.dt > 0.5) {
-			me.dt = 0.025;
+			me.dt = UPDATE_RATE;
 		}
 		me.random = rand();
 		me.a16Coord = geo.aircraft_position();
-		if(me.a16Coord.alt()*M2FT < 7000 and me.elapsed - me.warnTime > 15) {
-			screen.log.write(me.callsign~": Stay above 10000 feet.", 1.0, 1.0, 0.0);
+		if(me.a16Coord.alt()*M2FT < FLOOR-3000 and me.elapsed - me.warnTime > 15) {
+			screen.log.write(me.callsign~": Stay above "~FLOOR~" feet.", 1.0, 1.0, 0.0);
 			me.warnTime = me.elapsed;
 		}
-		if(me.a16Coord.alt()*M2FT > 43000 and me.elapsed - me.warnTime > 15) {
-			screen.log.write(me.callsign~": Stay below 40000 feet.", 1.0, 1.0, 0.0);
+		if(me.a16Coord.alt()*M2FT > CEILING+3000 and me.elapsed - me.warnTime > 15) {
+			screen.log.write(me.callsign~": Stay below "~CEILING~" feet.", 1.0, 1.0, 0.0);
 			me.warnTime = me.elapsed;
 		}
 		me.a16Pitch = vector.Math.getPitch(me.coord,me.a16Coord);
@@ -213,45 +214,45 @@ var TopGun = {
 		}						
 
 		if (me.keepDecisionTime != -1 and (me.elapsed - me.decisionTime) > me.keepDecisionTime) {
-			if (me.alt < 12000*FT2M and me.GStoKIAS(me.speed*MPS2KT) < 275) {
+			if (me.alt < (FLOOR+2000)*FT2M and me.GStoKIAS(me.speed*MPS2KT) < 275) {
 				# low speed at low alt, need to fly straight for 3 secs to get some speed
 				me.think = GO_AHEAD;
 				me.thrust = 1;
 				me.keepDecisionTime = 3;
 				me.decided();
-			} elsif (me.alt > 38000*FT2M and me.GStoKIAS(me.speed*MPS2KT) > 700) {
+			} elsif (me.alt > (CEILING-2000)*FT2M and me.GStoKIAS(me.speed*MPS2KT) > 700) {
 				# high speed at high alt, need to turn hard for 3 secs to bleed some speed
 				me.think = me.random>0.5?GO_LEFT:GO_RIGHT;
 				me.thrust = -0.1;#speedbrakes enabled
 				me.keepDecisionTime = 3;
 				me.decided();
-			} elsif (me.alt < 10000*FT2M) {
+			} elsif (me.alt < FLOOR*FT2M) {
 				# below training floor, go up for 2 secs
 				me.think = GO_UP;
 				me.thrust = 1;
 				me.keepDecisionTime = 2;
 				me.decided();
-			} elsif (me.alt > 40000*FT2M) {
-				# above training ceiling go down for 2 secs
+			} elsif (me.alt > CEILING*FT2M) {
+				# above training ceiling go down to 36000
 				me.think = GO_DOWN;
 				me.thrust = 0;
-				me.altTarget_ft = 35000;
+				me.altTarget_ft = CEILING-4000;
 				me.pitchTarget = 90;
 				me.keepDecisionTime = -1;
 				me.decided();
 			} elsif (me.GStoKIAS(me.speed*MPS2KT) < 275 and me.a16Speed > me.speed) {
-				# too low speed, go down for 3 secs
+				# too low speed, go 5000 ft down
 				me.think = GO_DOWN;
 				me.thrust = 1;
-				me.altTarget_ft = math.max(12000, (me.alt)*M2FT-5000);
+				me.altTarget_ft = math.max((FLOOR+2000), (me.alt)*M2FT-5000);
 				me.pitchTarget = 90;
 				me.keepDecisionTime = -1;
 				me.decided();
 			} elsif (me.GStoKIAS(me.speed*MPS2KT) < 200) {
-				# too low speed, go down for 4.5 secs
+				# too low speed, go 7500 ft down
 				me.think = GO_DOWN;
 				me.thrust = 1;
-				me.altTarget_ft = math.max(12000, (me.alt)*M2FT-7500);
+				me.altTarget_ft = math.max((FLOOR+2000), (me.alt)*M2FT-7500);
 				me.pitchTarget = 90;
 				me.keepDecisionTime = -1;
 				me.decided();
@@ -264,7 +265,7 @@ var TopGun = {
 			} else {
 				# here comes reaction to a16
 				
-				if (me.dist_nm < 0.20) {
+				if (me.dist_nm < 0.25) {
 					me.think = GO_COLLISION_AVOID;
 					me.keepDecisionTime = 0.15;
 				} elsif (math.abs(me.hisClock) > 90 and math.abs(me.a16Clock) < 45 and me.a16Range > 1.25 and me.a16Speed > me.speed*1.25) {
@@ -296,7 +297,7 @@ var TopGun = {
 						me.sightTime = me.elapsed;
 					}
 					me.keepDecisionTime = 0.15;
-				} elsif (math.abs(me.a16Clock) <= 140 and ((me.a16Clock > 40 and me.hisClock < -1 and me.hisClock > -50 and me.a16Roll>0) or (me.a16Clock < 40 and me.hisClock > 1  and me.hisClock < 50 and me.a16Roll<0)) and me.a16Speed*1.25 < me.speed and me.a16Range<10) {
+				} elsif (math.abs(me.a16Elev)<15 and math.abs(me.a16Clock) <= 140 and ((me.a16Clock > 40 and me.hisClock < -1 and me.hisClock > -50 and me.a16Roll>0) or (me.a16Clock < 40 and me.hisClock > 1  and me.hisClock < 50 and me.a16Roll<0)) and me.a16Speed*1.25 < me.speed and me.a16Range<10) {
 					#a16 does lead pursuit but has lower speed. Gently turn opposite the lead and away with full thrust until range better.
 					me.think = GO_LEAD_DEFEND_AWAY;
 					me.thrust = 1;
@@ -388,7 +389,7 @@ var TopGun = {
 		if(me.think==GO_COLLISION_AVOID)me.prt="does collision avoidance";
 		#printf("Deciding to %s. Speed %d KIAS/M%.2f at %d ft. Roll %d, pitch %d. Thrust %.1f%%. %.1f NM. %.1f horz G",me.prt,me.GStoKIAS(me.speed*MPS2KT),me.mach,me.alt*M2FT,me.roll,me.pitch,me.thrust*100, me.dist_nm, me.rollNorm*(me.rollNorm<0?-1:1)*me.G*0.8888+1);
 		me.view = getprop("sim/current-view/missile-view");
-		if (me.thinkLast != me.think and getprop("sim/current-view/view-number")==8 and me.view != nil and find("mig28", me.view) != -1) {
+		if (me.thinkLast != me.think and getprop("sim/current-view/view-number")==8 and me.view != nil and find(AI_AIRCRAFT_TYPE, me.view) != -1) {
 			screen.log.write(me.callsign~" now "~me.prt, 1.0, 0.0, 0.0);
 		}
 		me.thinkLast = me.think;
@@ -414,11 +415,11 @@ var TopGun = {
 			me.step();
 		} elsif (me.think == GO_DOWN) {
 			me.pitchTargetOld = me.pitchTarget;
-			me.maxPitch = me.clamp(45*((me.alt*M2FT-me.altTarget_ft)/(me.ai.getNode("velocities/vertical-speed-fps").getValue()*3)),-45,5);
-			me.pitchTarget = math.max(-45, (me.altTarget_ft-me.alt*M2FT)*0.010);
+			me.maxPitch = me.clamp(MAX_DIVE_ANGLE*((me.alt*M2FT-me.altTarget_ft)/(me.ai.getNode("velocities/vertical-speed-fps").getValue()*MAX_DIVE_ANGLE/MAX_PITCH_UP_SPEED)),-MAX_DIVE_ANGLE,5);
+			me.pitchTarget = math.max(-MAX_DIVE_ANGLE, (me.altTarget_ft-me.alt*M2FT)*0.010);
 			#printf("max %d current %d target %d diff %d",me.maxPitch,me.pitch,me.pitchTarget,me.alt*M2FT-me.altTarget_ft);
 			me.pitchTarget = math.min(me.pitchTarget,me.maxPitch);
-			if (me.alt*M2FT < 11000) {
+			if (me.alt*M2FT < (FLOOR+1000)) {
 				me.pitchTarget = 0;
 			}
 			me.rollTarget = (me.pitchTarget<=me.pitchTargetOld and me.pitchTarget<0)?(me.roll<0?-179:179):0;
@@ -592,7 +593,7 @@ var TopGun = {
 		me.ai.getNode("velocities/vertical-speed-fps",1).setDoubleValue(me.speed*M2FT*math.sin(me.pitch*D2R));
 		me.ai.getNode("rotors/main/blade[3]/position-deg", 1 ).setDoubleValue(rand());#chaff
 		me.ai.getNode("rotors/main/blade[3]/flap-deg", 1 ).setDoubleValue(rand());#flares
-		settimer(func {me.decide();}, 0.025);
+		settimer(func {me.decide();}, UPDATE_RATE);
 	},
 
 	machNow: func (speed, altitude) {
@@ -852,12 +853,17 @@ var GO_LEAD_DEFEND_AWAY = 13;
 var GO_LEAD_DEFEND_INTO = 14;#a16 does lead pursuit and has higher speed, turn aggressively into his lead in narrow turn.
 var GO_COLLISION_AVOID = 15;
 
-var MAX_ROLL = 80;
+var FLOOR = 10000;
+var CEILING = 40000;
+var UPDATE_RATE = 0.05;#was 0.025
+var MAX_ROLL = 80;# visual only
 var MAX_ROLL_SPEED =  25;#special
-var MAX_ROLL_RATE  = 200;#real average roll rate
+var MAX_ROLL_RATE  = 160;#real average roll rate
 var MAX_PITCH_UP_SPEED = 15;
 var MAX_PITCH_DOWN_SPEED = 4;
+var MAX_DIVE_ANGLE = 45;
 var MAX_TURN_SPEED = 18;#do not mess with this number unless porting the system to another aircraft.
+var AI_AIRCRAFT_TYPE = "Mig-28";
 
 var num_t = "0000";
 var ENDURANCE = 10;
@@ -896,7 +902,7 @@ var start = func (diff = 1) {
 		tg1.callsign = "Cpt.Rap";
 		tg2.callsign = "Cpt.Tom";
 		tg1.start();
-		tg2.start();
+		settimer(func{tg2.start()},UPDATE_RATE*0.5);
 	} elsif (diff == 5) {
 		MAX_ROLL_SPEED = 30;
 		num_t = "-9999";
@@ -904,7 +910,7 @@ var start = func (diff = 1) {
 		tg1.callsign = "Cpt.Rap";
 		tg2.callsign = "Maj.Tom";
 		tg1.start();
-		tg2.start();
+		settimer(func{tg2.start()},UPDATE_RATE*0.5);
 	}
 }
 
@@ -919,3 +925,4 @@ var stop = func {
 #  lower floor
 #  make mig28 fire fox2/fox3
 #  invert to level out after GO_UP
+#  Friendly wingman

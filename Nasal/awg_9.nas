@@ -392,7 +392,7 @@ var az_scan = func(notification) {
                     ordnance = 0;
                 }
                 if (type == "multiplayer" or type == "tanker" or type == "aircraft" or type == "carrier"
-                    or type == "ship" or type == "groundvehicle" or type == "mig28") 
+                    or type == "ship" or type == "groundvehicle" or type == "Mig-28") 
                 {
                     #var new_tgt = Target.new(c);# Richard, what is this for? Its important that every target that goes into completelist gets the setClass() called..
                     var u = Target.new(c);
@@ -410,7 +410,7 @@ var az_scan = func(notification) {
                     var u_rng = u.get_range();
                     if (ordnance) {
                         u.setClass(ORDNANCE);
-                    } elsif (type == "tanker" or type == "aircraft" or type == "mig28") {
+                    } elsif (type == "tanker" or type == "aircraft" or type == "Mig-28") {
                         u.setClass(AIR);
                     } elsif (type=="carrier") {
                         u.setClass(MARINE);
