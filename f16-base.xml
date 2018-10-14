@@ -589,9 +589,6 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <autopilot n="0">
                 <path>Aircraft/f16/Systems/autoflight-rules.xml</path>
             </autopilot>
-            <property-rule n="100">
-                <path>Aircraft/f16/Systems/zoom-views.xml</path>
-            </property-rule>
             <path>Aircraft/f16/Systems/f16-airdata.xml</path>
         </systems>
         <current-view>

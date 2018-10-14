@@ -920,7 +920,7 @@ var F16_HUD = {
                 }
             }
 
-            if (hdp.total_fuel_lbs < 500)
+            if (hdp.total_fuel_lbs < 1250)
               hdp.window3_txt = "FUEL";
 
             if (hdp.window9_txt=="") {
@@ -983,7 +983,7 @@ var F16_HUD = {
                             if (hdp.active_u != nil and hdp.active_u.Callsign != nil and me.u.Callsign != nil and me.u.Callsign.getValue() == hdp.active_u.Callsign.getValue()) {
                                 me.target_locked.setVisible(1);
                                 me.target_locked.setTranslation (me.xc, me.yc);
-                                if (pylons.fcs.isLock()) {
+                                if (pylons.fcs != nil and pylons.fcs.isLock()) {
                                     me.target_locked.setRotation(45*D2R);
                                 } else {
                                     me.target_locked.setRotation(0);
