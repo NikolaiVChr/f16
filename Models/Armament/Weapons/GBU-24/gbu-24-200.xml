@@ -24,6 +24,11 @@
 		</condition>
 	</animation>
 
+	<effect>  
+    	<inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  
+    	<object-name>GBU-24_Glass</object-name> 
+  	</effect>
+
 	<animation>
   <type>rotate</type>
   <object-name>GBU-24_Wing1</object-name>
