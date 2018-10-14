@@ -1573,7 +1573,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <weight-warhead-lbs type="double"> 945 </weight-warhead-lbs><!-- weapons file 2004 -->
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
                 <drag-coeff type="double"> 0.012 </drag-coeff>
-                <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
+                <cross-section-sqft type="double"> 1.78886 </cross-section-sqft><!-- the MK832 which is the bomb part is 640 mm diam -->
                 <arming-time-sec type="double"> 3 </arming-time-sec>
                 <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
                 <self-destruct-time-sec type="double"> 10000 </self-destruct-time-sec>
@@ -1605,7 +1605,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <class type="string">GM</class>
                 <max-fire-range-nm type="double">15 </max-fire-range-nm>
                 <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
-                <guidance type="string">gps</guidance>
+                <guidance type="string">laser</guidance>
                 <navigation type="string">APN</navigation>
                 <loft-altitude type="int"> 0 </loft-altitude>
                 <terrain-follow type="bool">false</terrain-follow>
@@ -1617,11 +1617,11 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
                 <stage-2-duration-sec type="double"> 0 </stage-2-duration-sec>
-                <weight-launch-lbs type="double"> 2315 </weight-launch-lbs><!-- weapons file 2004 -->
+                <weight-launch-lbs type="double"> 2267 </weight-launch-lbs><!-- weapons file 1984 -->
                 <weight-warhead-lbs type="double"> 945 </weight-warhead-lbs><!-- weapons file 2004 -->
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
                 <drag-coeff type="double"> 0.012 </drag-coeff>
-                <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
+                <cross-section-sqft type="double"> 1.78886 </cross-section-sqft>
                 <arming-time-sec type="double"> 3 </arming-time-sec>
                 <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
                 <self-destruct-time-sec type="double"> 10000 </self-destruct-time-sec>
