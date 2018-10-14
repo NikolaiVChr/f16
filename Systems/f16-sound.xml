@@ -425,7 +425,7 @@
  
   <stall>
    <name>stall</name>
-   <path>Aircraft/f16/Sounds/warning.wav</path>
+   <path>Aircraft/f16/Sounds/betty/warning.wav</path>
    <mode>looped</mode>
    <type>avionics</type>
    <condition>
@@ -457,7 +457,7 @@
 
   <stall>
    <name>stall2</name>
-   <path>Aircraft/f16/Sounds/warning.wav</path>
+   <path>Aircraft/f16/Sounds/betty/caution.wav</path>
    <mode>once</mode>
    <type>avionics</type>
    <condition>
@@ -485,7 +485,7 @@
 
   <impact>
    <name>pullUp</name>
-   <path>Aircraft/f16/Sounds/warning.wav</path>
+   <path>Aircraft/f16/Sounds/betty/pullup.wav</path>
    <mode>looped</mode>
    <type>avionics</type>
    <condition>
@@ -509,7 +509,7 @@
 
   <bingo>
    <name>bingo</name>
-   <path>Aircraft/f16/Sounds/bingo.wav</path>
+   <path>Aircraft/f16/Sounds/betty/bingo.wav</path>
    <mode>once</mode>
    <type>avionics</type>
    <condition>
@@ -881,7 +881,7 @@
             <name>flare</name>
             <mode>once</mode>
             <type>avionics</type>
-            <path>Aircraft/f16/Sounds/flare.wav</path>
+            <path>Aircraft/f16/Sounds/betty/chaff-flare.wav</path>
             <condition>
                 <property>ai/submodels/submodel[0]/flare-release-snd</property>
                 <property>sim/current-view/internal</property>
@@ -896,7 +896,7 @@
             <name>flareOut</name>
             <mode>once</mode>
             <type>avionics</type>
-            <path>Aircraft/f16/Sounds/flareOut.wav</path>
+            <path>Aircraft/f16/Sounds/betty/chaff-flare-out.wav</path>
             <condition>
                 <property>ai/submodels/submodel[0]/flare-release-out-snd</property>
                 <property>sim/current-view/internal</property>
