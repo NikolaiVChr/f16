@@ -309,7 +309,7 @@ var medium = {
     setprop("/consumables/fuel/total-fuel-lbs-100",   int(fuel*0.01  )*100 -int(fuel*0.001)*1000);
     setprop("/consumables/fuel/total-fuel-lbs-1000",  int(fuel*0.001 )*1000-int(fuel*0.0001)*10000);
     setprop("/consumables/fuel/total-fuel-lbs-10000", int(fuel*0.0001)*10000);
-    if (fuel<500) {
+    if (fuel<1250) {
       setprop("f16/avionics/bingo", 1);
     } else {
       setprop("f16/avionics/bingo", 0);
