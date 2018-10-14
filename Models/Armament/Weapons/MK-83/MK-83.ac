@@ -6,7 +6,7 @@ OBJECT poly
 name "MK-83_Detonator"
 data 9
 Detonator
-texture "Mk83.png"
+texture "MK-83.png"
 crease 179.000000
 numvert 148
 -1.46407 0.05 0
@@ -2323,7 +2323,7 @@ OBJECT poly
 name "MK-83_Mounts"
 data 6
 Mounts
-texture "Mk83.png"
+texture "MK-83.png"
 crease 179.000000
 numvert 176
 -0.532232 0.219345 0.017071
@@ -4620,7 +4620,7 @@ OBJECT poly
 name "MK-83_Shell"
 data 5
 Shell
-texture "Mk83.png"
+texture "MK-83.png"
 crease 179.000000
 numvert 444
 1.5 -0.011092 0.041395
@@ -9669,7 +9669,7 @@ OBJECT poly
 name "MK-83_TailFins"
 data 8
 TailFins
-texture "Mk83.png"
+texture "MK-83.png"
 crease 179.000000
 numvert 37
 1.44234 0 0.007071
@@ -10135,7 +10135,7 @@ OBJECT poly
 name "MK-83_Wiring"
 data 6
 Wiring
-texture "Mk83.png"
+texture "MK-83.png"
 crease 179.000000
 numvert 1416
 -0.825071 0.198945 0.0005

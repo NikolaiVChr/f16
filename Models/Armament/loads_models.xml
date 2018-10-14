@@ -244,6 +244,17 @@
   </offsets>
  </model>
 
+<model>
+  <name>Station3_GBU-24</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-24/GBU-24.xml</path>
+  <offsets>
+   <x-m>0.5</x-m>
+   <y-m>-2.872</y-m>
+   <z-m>-0.49</z-m>
+   <pitch-deg>-3.9</pitch-deg>
+  </offsets>
+ </model>
+
  <model>
   <name>Station3_B61-12</name>
   <path>Aircraft/f16/Models/Armament/Weapons/B61-12/B61-12.xml</path>
@@ -293,6 +304,17 @@
  </model>
 
  <model>
+  <name>Station4_AGM-88</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-88/AGM-88.xml</path>
+  <offsets>
+    <x-m>-0.55</x-m>
+    <y-m>-1.629</y-m>
+    <z-m>-0.432</z-m>
+    <pitch-deg>-4.55</pitch-deg>
+  </offsets>
+</model>
+
+ <model>
   <name>Station4_GBU12</name>
   <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/duorack-4.xml</path>
   <offsets>
@@ -322,6 +344,17 @@
    <y-m>-1.63</y-m>
    <z-m>-0.517</z-m>
    <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station4_GBU-24</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-24/GBU-24.xml</path>
+  <offsets>
+   <x-m>-0.07</x-m>
+   <y-m>-1.63</y-m>
+   <z-m>-0.487</z-m>
+   <pitch-deg>-3.9</pitch-deg>
   </offsets>
  </model>
  
@@ -391,6 +424,17 @@
  </model>
 
  <model>
+  <name>Station6_AGM-88</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-88/AGM-88.xml</path>
+  <offsets>
+    <x-m>-0.55</x-m>
+    <y-m>1.63</y-m>
+    <z-m>-0.432</z-m>
+    <pitch-deg>-4.55</pitch-deg>
+  </offsets>
+</model>
+
+ <model>
   <name>Station6_GBU12</name>
   <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/duorack-6.xml</path>
   <offsets>
@@ -420,6 +464,17 @@
    <y-m>1.63</y-m>
    <z-m>-0.517</z-m>
    <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station6_GBU-24</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-24/GBU-24.xml</path>
+  <offsets>
+   <x-m>-0.07</x-m>
+   <y-m>1.63</y-m>
+   <z-m>-0.487</z-m>
+   <pitch-deg>-3.9</pitch-deg>
   </offsets>
  </model>
 
@@ -535,6 +590,17 @@
    <y-m>2.872</y-m>
    <z-m>-0.52</z-m>
    <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+ </model>
+
+<model>
+  <name>Station7_GBU-24</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-24/GBU-24.xml</path>
+  <offsets>
+   <x-m>0.5</x-m>
+   <y-m>2.872</y-m>
+   <z-m>-0.49</z-m>
+   <pitch-deg>-3.9</pitch-deg>
   </offsets>
  </model>
 

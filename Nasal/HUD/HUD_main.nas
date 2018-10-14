@@ -589,7 +589,7 @@ var F16_HUD = {
     },
 
     CCRP: func(hdp) {
-        if (pylons.fcs != nil and pylons.fcs.getSelectedWeapon() != nil and (pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="GBU-12" or pylons.fcs.getSelectedWeapon().type=="B61-7" or pylons.fcs.getSelectedWeapon().type=="B61-12" or pylons.fcs.getSelectedWeapon().type=="GBU-31") 
+        if (pylons.fcs != nil and pylons.fcs.getSelectedWeapon() != nil and (pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="GBU-12" or pylons.fcs.getSelectedWeapon().type=="B61-7" or pylons.fcs.getSelectedWeapon().type=="B61-12" or pylons.fcs.getSelectedWeapon().type=="GBU-31" or pylons.fcs.getSelectedWeapon().type=="GBU-24") 
             and hdp.active_u != nil and hdp.master_arm ==1 and pylons.fcs.getSelectedWeapon().status == armament.MISSILE_LOCK) {
 
             if (pylons.fcs.getSelectedWeapon().type=="MK-82") {
@@ -842,6 +842,8 @@ var F16_HUD = {
                         hdp.window9_txt = sprintf("%d M88", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "GBU-31") {
                         hdp.window9_txt = sprintf("%d B31", pylons.fcs.getAmmo());
+                    } elsif (hdp.weapon_selected == "GBU-24") {
+                        hdp.window9_txt = sprintf("%d B24", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "B61-12") {
                         hdp.window9_txt = sprintf("%d B61-12", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "B61-7") {
