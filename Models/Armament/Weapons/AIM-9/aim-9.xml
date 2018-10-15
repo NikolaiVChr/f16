@@ -19,9 +19,4 @@
       <object-name>aim-9</object-name>
   </effect>
 
-	<animation>
-  		<object-name>aim-9</object-name>
-  		<enable-hot type="bool">false</enable-hot>
- 	</animation>
-
 </PropertyList>

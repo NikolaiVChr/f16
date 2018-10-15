@@ -7,6 +7,23 @@
 	<name>MK-83</name>
 	<path>MK-83.ac</path>
 
+
+	<effect>
+	      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+	      <parameters>
+	          <metallic type="float">0.80</metallic>
+	          <ambient-factor type="float">0.0</ambient-factor>
+	          <rain-enabled type="int">0</rain-enabled>
+	          <ambient-correction type="float">0.00</ambient-correction>
+	          <reflection-enabled type="int">0</reflection-enabled>
+	      </parameters>
+	      <object-name>MK-83_Shell</object-name>
+	      <object-name>MK-83_TailFins</object-name>
+	      <object-name>MK-83_Detonator</object-name>
+	      <object-name>MK-83_Wiring</object-name>
+	      <object-name>MK-83_Mounts</object-name>
+	  </effect>
+
 	<animation>
 		<type>select</type>
 		<object-name>MK-83_Shell</object-name>

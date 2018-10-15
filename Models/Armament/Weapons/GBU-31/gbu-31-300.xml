@@ -7,6 +7,22 @@
 	<name>GBU-31</name>
 	<path>GBU-31.ac</path>
 
+	<effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.0</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <object-name>Body</object-name>
+      <object-name>Cover</object-name>
+      <object-name>Tail</object-name>
+      <object-name>Hooks</object-name>
+      <object-name>Cube</object-name>
+  </effect>
+
 	<animation>
 		<type>select</type>
 		<object-name>Body</object-name>
