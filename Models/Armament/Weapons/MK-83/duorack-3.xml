@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+  
+<PropertyList> 
+
+    <path>Aircraft/f16/Models/Armament/Triplerack/duorack.ac</path>
+
+    <model>
+      <name>Station3_MK83_left</name>
+      <path>Aircraft/f16/Models/Armament/Weapons/MK-83/MK-83.xml</path>
+      <offsets>
+        <x-m>-0.0</x-m>
+        <y-m>-0.3</y-m>
+        <z-m>-0.4</z-m>
+        <pitch-deg>0</pitch-deg>
+        <roll-deg>00</roll-deg>
+      </offsets>
+    </model>
+
+    <model>
+      <name>Station3_MK83_right</name>
+      <path>Aircraft/f16/Models/Armament/Weapons/MK-83/MK-83.xml</path>
+      <offsets>
+        <x-m>-0.0</x-m>
+        <y-m>0.3</y-m>
+        <z-m>-0.4</z-m>
+        <pitch-deg>0</pitch-deg>
+        <roll-deg>00</roll-deg>
+      </offsets>
+    </model>
+
+    <animation>
+      <type>select</type>
+      <object-name>Station3_MK83_left</object-name>
+      <condition><and>
+        <equals>
+          <property>payload/armament/station/id-2-type</property>
+          <value>MK-83</value>
+        </equals>
+        <greater-than>
+          <property>payload/armament/station/id-2-count</property>
+          <value>0</value>
+        </greater-than></and>
+      </condition>
+     </animation>
+
+     <animation>
+      <type>select</type>
+      <object-name>Station3_MK83_right</object-name>
+      <condition>
+        <and>
+        <equals>
+          <property>payload/armament/station/id-2-type</property>
+          <value>MK-83</value>
+        </equals>
+        <greater-than>
+          <property>payload/armament/station/id-2-count</property>
+          <value>1</value>
+        </greater-than>
+      </and>
+      </condition>
+     </animation>
+
+</PropertyList> 

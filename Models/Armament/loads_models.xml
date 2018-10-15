@@ -201,6 +201,17 @@
 </model>
 
 <model>
+  <name>Station3_MK83</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-83/duorack-3.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>-2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
   <name>Station3_AGM-65</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AGM-65/agm-65.xml</path>
   <offsets>
@@ -337,6 +348,17 @@
 </model>
 
 <model>
+  <name>Station4_MK83</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-83/duorack-4.xml</path>
+  <offsets>
+    <x-m>0.388102</x-m>
+    <y-m>-1.63859</y-m>
+    <z-m>-0.049251</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
   <name>Station4_GBU-31</name>
   <path>Aircraft/f16/Models/Armament/Weapons/GBU-31/GBU-31.xml</path>
   <offsets>
@@ -455,6 +477,17 @@
     <pitch-deg>0</pitch-deg>
   </offsets>
 </model>
+
+<model>
+  <name>Station6_MK83</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-83/duorack-6.xml</path>
+  <offsets>
+    <x-m>0.388102</x-m>
+    <y-m>1.63859</y-m>
+    <z-m>-0.049251</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
  
  <model>
   <name>Station6_GBU-31</name>
@@ -541,6 +574,17 @@
 <model>
   <name>Station7_MK82</name>
   <path>Aircraft/f16/Models/Armament/Weapons/MK-82/trirack-7.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station7_MK83</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-83/duorack-7.xml</path>
   <offsets>
     <x-m>1</x-m>
     <y-m>2.87</y-m>

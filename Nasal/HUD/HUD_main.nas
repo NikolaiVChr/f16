@@ -607,10 +607,10 @@ var F16_HUD = {
     },
 
     CCRP: func(hdp) {
-        if (pylons.fcs != nil and pylons.fcs.getSelectedWeapon() != nil and (pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="GBU-12" or pylons.fcs.getSelectedWeapon().type=="B61-7" or pylons.fcs.getSelectedWeapon().type=="B61-12" or pylons.fcs.getSelectedWeapon().type=="GBU-31" or pylons.fcs.getSelectedWeapon().type=="GBU-24") 
+        if (pylons.fcs != nil and pylons.fcs.getSelectedWeapon() != nil and (pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="MK-83" or pylons.fcs.getSelectedWeapon().type=="GBU-12" or pylons.fcs.getSelectedWeapon().type=="B61-7" or pylons.fcs.getSelectedWeapon().type=="B61-12" or pylons.fcs.getSelectedWeapon().type=="GBU-31" or pylons.fcs.getSelectedWeapon().type=="GBU-24") 
             and hdp.active_u != nil and hdp.master_arm ==1 and pylons.fcs.getSelectedWeapon().status == armament.MISSILE_LOCK) {
 
-            if (pylons.fcs.getSelectedWeapon().type=="MK-82") {
+            if (pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="MK-83") {
                 me.dt = 0.1;
                 me.maxFallTime = 20;
             } else {
@@ -856,6 +856,8 @@ var F16_HUD = {
                         hdp.window9_txt = sprintf("%d AG84", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "MK-82") {
                         hdp.window9_txt = sprintf("%d B82", pylons.fcs.getAmmo());
+                    } elsif (hdp.weapon_selected == "MK-83") {
+                        hdp.window9_txt = sprintf("%d B83", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-88") {
                         hdp.window9_txt = sprintf("%d AG88", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "GBU-31") {
