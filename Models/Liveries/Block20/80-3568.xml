@@ -4,9 +4,9 @@
  <sim>
   <model>
    <livery>
-    <name type="string">BAF 31 Sqn, "Skull n Bones (Tiger Meet '16)"</name>
+    <name type="string">BAC 31 Sqn, "Skull n Bones (Tiger Meet '16)"</name>
     <texture>Liveries/Block20/80-3568.png</texture>
-    <owner type="string">BAF</owner>
+    <owner type="string">BAC</owner>
    </livery>
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>

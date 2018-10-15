@@ -265,6 +265,17 @@
 
  <animation>
   <type>select</type>
+  <object-name>Station3_MK83</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-2-set</property>
+        <value>2 x MK-83</value>
+      </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
   <object-name>Station3_GBU-31</object-name>
   <condition>
     <equals>
@@ -398,6 +409,17 @@
     <equals>
         <property>payload/armament/station/id-3-set</property>
         <value>2 x MK-82</value>
+      </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station4_MK83</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-3-set</property>
+        <value>2 x MK-83</value>
       </equals>
   </condition>
  </animation>
@@ -583,6 +605,17 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
 
  <animation>
   <type>select</type>
+  <object-name>Station6_MK83</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-5-set</property>
+        <value>2 x MK-83</value>
+      </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
   <object-name>Station6_GBU-31</object-name>
   <condition>
     <equals>
@@ -678,6 +711,17 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
     <equals>
         <property>payload/armament/station/id-6-set</property>
         <value>3 x MK-82</value>
+      </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station7_MK83</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-6-set</property>
+        <value>2 x MK-83</value>
       </equals>
   </condition>
  </animation>
