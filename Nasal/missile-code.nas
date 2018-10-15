@@ -3130,12 +3130,16 @@ var AIM = {
 
 		####Ground interaction
         me.ground = geo.elevation(me.coord.lat(), me.coord.lon());
-        if(me.ground != nil)
-        {
+        if(me.ground != nil) {
             if(me.ground > me.coord.alt()) {
             	me.event = "exploded";
             	if(me.life_time < me.arming_time) {
                 	me.event = "landed disarmed";
+            	}
+            	if (me.Tgt != nil and me.direct_dist_m == nil) {
+            		# maddog might go here
+            		me.Tgt = nil;
+            		#me.direct_dist_m = me.coord.direct_distance_to(me.Tgt.get_Coord());
             	}
             	if ((me.Tgt != nil and me.direct_dist_m != nil) or me.Tgt == nil) {
             		me.explode("Hit terrain.", me.event);
