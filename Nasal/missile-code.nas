@@ -3374,7 +3374,7 @@ var AIM = {
 		if (getprop("payload/armament/msg")) {
 			defeatSpamFilter(str);
 		} else {
-			setprop("/sim/messages/atc", str);
+			setprop("/sim/messages/atcmsg", str);
 		}
 	},
 
