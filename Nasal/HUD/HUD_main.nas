@@ -139,6 +139,7 @@ var F16_HUD = {
                  altitude_agl_ft           : "position/altitude-agl-ft",
                  wp0_eta                   : "autopilot/route-manager/wp[0]/eta",
                  approach_speed            : "fdm/jsbsim/systems/approach-speed",
+                 standby                   : "instrumentation/radar/radar-standby",
                 };
 
         foreach (var name; keys(input)) {
@@ -301,7 +302,17 @@ var F16_HUD = {
                                                  obj.flyup.update();
                                              }
                                             ),
-
+            props.UpdateManager.FromHashList(["standby"], 0.5, func(hdp)
+                                             {
+                                                 if (hdp.standby) {
+                                                     obj.stby.setText("NO RAD");
+                                                     obj.stby.show();
+                                                 } else {
+                                                     obj.stby.hide();
+                                                 }
+                                                 obj.stby.update();
+                                             }
+                                            ),
             props.UpdateManager.FromHashList(["brake_parking", "gear_down", "flap_pos_deg", "CCRP_active", "master_arm"], 0.1, func(hdp)
                                              {
                                                  if (hdp.brake_parking) {
@@ -421,6 +432,13 @@ var F16_HUD = {
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(13, 1.4);
+        obj.stby = obj.svg.createChild("text")
+                .setText("NO RAD")
+                .setTranslation(sx*0.5*0.695633,sy*0.15)
+                .setAlignment("center-center")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(11, 1.1);
 #        obj.ralt = obj.svg.createChild("text")
 #                .setText("R 00000 ")
 #                .setTranslation(sx*1*0.675633-5,sy*0.45)
@@ -831,19 +849,19 @@ var F16_HUD = {
                     } elsif (hdp.weapon_selected == "AIM-7") {
                         hdp.window9_txt = sprintf("%d MRM", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "GBU-12") {
-                        hdp.window9_txt = sprintf("%d B12", pylons.fcs.getAmmo());
+                        hdp.window9_txt = sprintf("%d GB12", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-65") {
-                        hdp.window9_txt = sprintf("%d M65", pylons.fcs.getAmmo());
+                        hdp.window9_txt = sprintf("%d AG65", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-84") {
-                        hdp.window9_txt = sprintf("%d M84", pylons.fcs.getAmmo());
+                        hdp.window9_txt = sprintf("%d AG84", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "MK-82") {
                         hdp.window9_txt = sprintf("%d B82", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-88") {
-                        hdp.window9_txt = sprintf("%d M88", pylons.fcs.getAmmo());
+                        hdp.window9_txt = sprintf("%d AG88", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "GBU-31") {
-                        hdp.window9_txt = sprintf("%d B31", pylons.fcs.getAmmo());
+                        hdp.window9_txt = sprintf("%d GB31", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "GBU-24") {
-                        hdp.window9_txt = sprintf("%d B24", pylons.fcs.getAmmo());
+                        hdp.window9_txt = sprintf("%d GB24", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "B61-12") {
                         hdp.window9_txt = sprintf("%d B61-12", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "B61-7") {
