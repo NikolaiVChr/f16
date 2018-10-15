@@ -14,11 +14,11 @@ var pylon9 = nil;
 var pylonI = nil;
 
 var cannon = stations.SubModelWeapon.new("20mm Cannon", 0.254, 511, 2, [1,3], props.globals.getNode("fdm/jsbsim/fcs/guntrigger",1), 0, func{return getprop("fdm/jsbsim/systems/hydraulics/sysb-psi")>=2000 and getprop("payload/armament/fire-control/serviceable");});
-var fuelTankCenter = stations.FuelTank.new("Center 300 Gal Tank", "300Gal", 4, 300, "sim/model/f16/ventraltank");
-var fuelTank370Left = stations.FuelTank.new("Left 370 Gal Tank", "370Gal", 3, 370, "sim/model/f16/wingtankL");
-var fuelTank370Right = stations.FuelTank.new("Right 370 Gal Tank", "370Gal", 2, 370, "sim/model/f16/wingtankR");
-var fuelTank600Left = stations.FuelTank.new("Left 600 Gal Tank", "600Gal", 3, 600, "sim/model/f16/wingtankL");
-var fuelTank600Right = stations.FuelTank.new("Right 600 Gal Tank", "600Gal", 2, 600, "sim/model/f16/wingtankR");
+var fuelTankCenter = stations.FuelTank.new("Center 300 Gal Tank", "TK300", 4, 300, "sim/model/f16/ventraltank");
+var fuelTank370Left = stations.FuelTank.new("Left 370 Gal Tank", "TK370", 3, 370, "sim/model/f16/wingtankL");
+var fuelTank370Right = stations.FuelTank.new("Right 370 Gal Tank", "TK370", 2, 370, "sim/model/f16/wingtankR");
+var fuelTank600Left = stations.FuelTank.new("Left 600 Gal Tank", "TK600", 3, 600, "sim/model/f16/wingtankL");
+var fuelTank600Right = stations.FuelTank.new("Right 600 Gal Tank", "TK600", 2, 600, "sim/model/f16/wingtankR");
 var smokewinderRed1 = stations.Smoker.new("Smokewinder Red", "Smoke R", "sim/model/f16/smokewinderR1");
 var smokewinderGreen1 = stations.Smoker.new("Smokewinder Green", "Smoke G", "sim/model/f16/smokewinderG1");
 var smokewinderBlue1 = stations.Smoker.new("Smokewinder Blue", "Smoke B", "sim/model/f16/smokewinderB1");
@@ -29,8 +29,8 @@ var smokewinderWhite1 = stations.Smoker.new("Smokewinder White", "Smoke W", "sim
 var smokewinderWhite9 = stations.Smoker.new("Smokewinder White", "Smoke W", "sim/model/f16/smokewinderW9");
 var dummy = stations.Dummy.new("AN-T-17", nil);
 var dummy2 = stations.Dummy.new("CATM-9L", nil);# nil for shortname makes them not show up in MFD SMS page. If shortname is nil it MUST have showLongTypeInsteadOfCount: 1
-var dummy3 = stations.Dummy.new("AN/ALQ-131 ECM Pod", nil);
-var dummy4 = stations.Dummy.new("MXU-648 Cargopod", nil);
+var dummy3 = stations.Dummy.new("AN/ALQ-131 ECM Pod", "AL131");
+var dummy4 = stations.Dummy.new("MXU-648 Cargopod", "TRVL");
 var pylonSets = {
 	empty: {name: "Empty", content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
 	a: {name: "1 x AGM-65", content: ["AGM-65"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},

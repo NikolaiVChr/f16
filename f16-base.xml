@@ -1373,7 +1373,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <serviceable type="bool">true</serviceable><!-- why is this not auto created by failure system in 2018.3?? -->
             </fire-control>
             <aim-9>
-                <short-name type="string">AIM9</short-name>
+                <short-name type="string">A-9L</short-name>
                 <long-name type="string">AIM-9L Sidewinder</long-name>
                 <sound-on-off type="bool">false</sound-on-off>
                 <sound-fire-on-off type="bool">false</sound-fire-on-off>
@@ -1421,7 +1421,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <switch-time-sec type="double">5</switch-time-sec>
             </aim-9>
             <aim-120>
-                <short-name type="string">AIM120</short-name>
+                <short-name type="string">A120B</short-name>
                 <long-name type="string">AIM-120B Amraam</long-name>
                 <guidance type="string">radar</guidance>
                 <vol-search type="double">0.00</vol-search>
@@ -1462,7 +1462,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <switch-time-sec type="double">5</switch-time-sec>
             </aim-120>
             <aim-7>
-                <short-name type="string">AIM7</short-name>
+                <short-name type="string">A-7F</short-name>
                 <long-name type="string">AIM-7F Sparrow</long-name>
                 <guidance type="string">semi-radar</guidance>
                 <vol-search type="double">0.00</vol-search>
@@ -1500,7 +1500,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <auto-switch-target-allowed type="bool">false</auto-switch-target-allowed>
             </aim-7>
             <gbu-12>
-                <short-name type="string">GBU12</short-name>
+                <short-name type="string">GB12</short-name>
                 <long-name type="string">GBU-12 Paveway II</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
                 <class type="string">GM</class>
@@ -1548,7 +1548,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
             </gbu-12>
             <gbu-31>
-                <short-name type="string">GBU31</short-name>
+                <short-name type="string">GB31</short-name>
                 <long-name type="string">GBU-31 JDAM</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
                 <class type="string">GM</class>
@@ -1596,7 +1596,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
             </gbu-31>
             <gbu-24>
-                <short-name type="string">GBU24</short-name>
+                <short-name type="string">GB24</short-name>
                 <long-name type="string">GBU-24 Paveway III</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
                 <class type="string">GM</class>
@@ -1644,7 +1644,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
             </gbu-24>
             <agm-65>
-                <short-name type="string">AGM65</short-name>
+                <short-name type="string">AG65</short-name>
                 <long-name type="string">AGM-65B Maverick</long-name>
                 <vol-search type="double">0.00</vol-search>
                 <vol-track type="double">0.15</vol-track>
@@ -1677,7 +1677,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <fire-msg type="string">Rifle</fire-msg>
             </agm-65>
             <agm-84>                    <!-- A variant: 0.85 mach cruise, E is calibrated to just under 1.00 -->
-                <short-name type="string">AGM84</short-name>
+                <short-name type="string">AG84</short-name>
                 <long-name type="string">AGM-84E Harpoon</long-name>
                 <vol-search type="double">0.00</vol-search>
                 <vol-track type="double">0.15</vol-track>
@@ -1711,7 +1711,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <fire-msg type="string">Bruiser</fire-msg>
             </agm-84>
             <mk-82> 
-                <short-name type="string">MK82</short-name>
+                <short-name type="string">B82</short-name>
                 <long-name type="string">MK-82 General Purpose Bomb</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
                 <class type="string">GM</class>
@@ -1751,7 +1751,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
             </mk-82>
             <agm-88>
-                <short-name type="string">AGM88</short-name>
+                <short-name type="string">AG88</short-name>
                 <long-name type="string">AGM-88 HARM</long-name>
                 <vol-search type="double">0.00</vol-search>
                 <vol-track type="double">0.15</vol-track>
