@@ -31,15 +31,11 @@ var dummy = stations.Dummy.new("AN-T-17", nil);
 var dummy2 = stations.Dummy.new("CATM-9L", nil);# nil for shortname makes them not show up in MFD SMS page. If shortname is nil it MUST have showLongTypeInsteadOfCount: 1
 var dummy3 = stations.Dummy.new("AN/ALQ-131 ECM Pod", "AL131");
 var dummy4 = stations.Dummy.new("MXU-648 Cargopod", "TRVL");
-var b61_7 = stations.Dummy.new("B61-7", "B617");
-var b61_12 = stations.Dummy.new("B61-12", "B6112");
 var pylonSets = {
 	empty: {name: "Empty", content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
 	a: {name: "1 x AGM-65", content: ["AGM-65"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
 	b: {name: "1 x AGM-84", content: ["AGM-84"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     b2: {name: "1 x AGM-88", content: ["AGM-88"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
-    b3: {name: "1 x B61-12", content: [b61_12], fireOrder: [], launcherDragArea: 0.5, launcherMass: 700, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0, category: 3},
-    b4: {name: "1 x B61-7", content: [b61_7], fireOrder: [], launcherDragArea: 0.5, launcherMass: 700, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0, category: 3},
 	c: {name: "2 x MK-82", content: ["MK-82","MK-82"], fireOrder: [0,1], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
 	c2: {name: "3 x MK-82", content: ["MK-82","MK-82","MK-82"], fireOrder: [0,1,2], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
     c3: {name: "1 x GBU-31", content: ["GBU-31"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
@@ -81,7 +77,7 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 	var pylon120set = [pylonSets.empty, pylonSets.q, pylonSets.h, pylonSets.k];
 	var wingtipSet1  = [pylonSets.k,pylonSets.k2,     pylonSets.g, pylonSets.r,pylonSets.s,pylonSets.t,pylonSets.u,pylonSets.w1];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
 	var wingtipSet9  = [pylonSets.k,pylonSets.k2,     pylonSets.g, pylonSets.r,pylonSets.v,pylonSets.w,pylonSets.x,pylonSets.w9];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
-	var pylon9mix   = [pylonSets.empty, pylonSets.q, pylonSets.i, pylonSets.h, pylonSets.q7, pylonSets.a, pylonSets.b, pylonSets.c2, pylonSets.b2, pylonSets.b3, pylonSets.b4, pylonSets.c3, pylonSets.f3, pylonSets.c4, pylonSets.d];
+	var pylon9mix   = [pylonSets.empty, pylonSets.q, pylonSets.i, pylonSets.h, pylonSets.q7, pylonSets.a, pylonSets.b, pylonSets.c2, pylonSets.b2, pylonSets.c3, pylonSets.f3, pylonSets.c4, pylonSets.d];
 	var pylon12setL = [pylonSets.empty, pylonSets.j, pylonSets.l, pylonSets.o, pylonSets.c, pylonSets.c3, pylonSets.c4, pylonSets.b2, pylonSets.d];
 	var pylon12setR = [pylonSets.empty, pylonSets.j, pylonSets.m, pylonSets.p, pylonSets.c, pylonSets.c3, pylonSets.c4, pylonSets.b2, pylonSets.d];
 
