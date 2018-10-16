@@ -1182,9 +1182,9 @@ var start = func (diff = 1) {
 		tg4.callsign = "Gn.Endo";
 		setprop("link16/wingman-4", "Maj.Ice");
 		tg1.start([nil,tg2]);
-		settimer(func{tg2.start([tg1,tg3,tg4])},UPDATE_RATE*0.5);
-		settimer(func{tg3.start([nil,tg2])},UPDATE_RATE*1.25);
-		settimer(func{tg4.start([nil,tg2])},UPDATE_RATE*1.75);
+		settimer(func{tg2.start([tg1,tg3,tg4])},UPDATE_RATE*0.25);
+		settimer(func{tg3.start([nil,tg2])},UPDATE_RATE*0.5);
+		settimer(func{tg4.start([nil,tg2])},UPDATE_RATE*0.75);
 	}
 }
 
