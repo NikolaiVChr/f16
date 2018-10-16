@@ -158,6 +158,7 @@ var TopGun = {
 		me.turnSpeed = 0;
 		me.a16Bearing = 0;
 		me.altTarget_ft = nil;
+		me.specialMove = 0;
 
 		print("TopGun: deciding to RESET!");
 	},
@@ -302,10 +303,26 @@ var TopGun = {
 					me.think = GO_LEAD_DEFEND_AWAY;
 					me.thrust = 1;
 					me.keepDecisionTime = 8;
+				} elsif (math.mod(TopGun.a16Score,2) > 0 and me.alt*M2FT>15000 and me.alt*M2FT<20000 and me.speed*MPS2KT<550 and me.speed*MPS2KT>400 and math.abs(me.a16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.0) {
+					# f16 has aim on mig28 going medium in medium alt, do loop
+					me.think = GO_LOOP;
+					me.thrust = 1;
+					me.keepDecisionTime = -1;
+				} elsif (math.mod(TopGun.a16Score,2) > 0 and me.alt*M2FT<15000 and me.speed*MPS2KT<600 and me.speed*MPS2KT>400 and math.abs(me.a16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.0) {
+					# f16 has aim on mig28 going fast in low alt, do immelmann
+					me.think = GO_IMMEL;
+					me.thrust = 1; 
+					me.keepDecisionTime = -1;
+				} elsif (math.mod(TopGun.a16Score,2) > 0 and me.alt*M2FT>30000 and me.speed*MPS2KT<600 and math.abs(me.a16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.0) {
+					# f16 has aim on mig28 going not fast in high alt, do split S
+					me.think = GO_SPLIT_S;
+					me.specialMove = 0;
+					me.thrust = 0;
+					me.keepDecisionTime = -1;
 				} elsif (math.mod(TopGun.a16Score,2) > 0 and me.alt<9000 and math.abs(me.a16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.0) {
 					# f16 has aim on mig28, go up just to do something else
 					me.think = GO_UP;
-					me.thrust = 1; #speedbrakes
+					me.thrust = 1; 
 					me.keepDecisionTime = 2.0;
 				} elsif (math.abs(me.a16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.0) {
 					# f16 has aim on mig28, do some scissors to not be hit
@@ -387,6 +404,9 @@ var TopGun = {
 		if(me.think==GO_LAG_PURSUIT)me.prt="do lag pursuit";
 		if(me.think==GO_LEAD_DEFEND_AWAY)me.prt="does lead pursuit defense";
 		if(me.think==GO_COLLISION_AVOID)me.prt="does collision avoidance";
+		if(me.think==GO_IMMEL)me.prt="does an Immelmann";
+		if(me.think==GO_SPLIT_S)me.prt="does a split S";
+		if(me.think==GO_LOOP)me.prt="does a loop";
 		#printf("Deciding to %s. Speed %d KIAS/M%.2f at %d ft. Roll %d, pitch %d. Thrust %.1f%%. %.1f NM. %.1f horz G",me.prt,me.GStoKIAS(me.speed*MPS2KT),me.mach,me.alt*M2FT,me.roll,me.pitch,me.thrust*100, me.dist_nm, me.rollNorm*(me.rollNorm<0?-1:1)*me.G*0.8888+1);
 		me.view = getprop("sim/current-view/missile-view");
 		if (me.thinkLast != me.think and getprop("sim/current-view/view-number")==8 and me.view != nil and find(AI_AIRCRAFT_TYPE, me.view) != -1) {
@@ -413,6 +433,84 @@ var TopGun = {
 			me.rollTarget = 0;
 			me.pitchTarget = 45;
 			me.step();
+		} elsif (me.think == GO_LOOP) {
+			if (me.specialMove == 1) {
+				me.pitchTarget = 90;
+				me.rollTarget = 0;
+			} elsif (me.specialMove == 2) {
+				me.pitchTarget = 0;
+				me.rollTarget = 180;
+			} elsif (me.specialMove == 3) {
+				me.thrust = 0;
+				me.pitchTarget = -90;
+				me.rollTarget = 180;
+			} elsif (me.specialMove == 4) {
+				me.pitchTarget = 0;
+				me.rollTarget = 0;
+			} elsif (me.specialMove == 0) {
+				# level before doing it
+				me.thrust = 1;
+				me.rollTarget = 0;
+				me.pitchTarget = me.pitch;
+			}
+			me.step();
+			if (me.roll == me.rollTarget and me.pitch == me.pitchTarget) {
+				me.specialMove += 1;
+				print(me.specialMove~" "~me.pitch);
+			}
+			if (me.pitch == -90 and me.roll == 180) {
+				me.roll = 0;
+				me.heading = geo.normdeg(me.heading+180);
+			} elsif (me.pitch == 90 and me.roll == 0) {
+				me.roll = 180;
+				me.heading = geo.normdeg(me.heading+180);
+			}
+			if (me.specialMove==5) {
+				me.keepDecisionTime = 0;
+			}
+		} elsif (me.think == GO_SPLIT_S) {
+			if (me.specialMove == 1) {#me.roll == 180
+				me.pitchTarget = -90;
+				me.rollTarget = 180;
+			} elsif (me.specialMove == 2) {#me.roll == 0 and me.pitch < 0
+				me.pitchTarget = 0;
+				me.rollTarget = 0;
+			} elsif (me.specialMove == 0) {
+				# invert before doing it
+				me.rollTarget = 180;
+				me.pitchTarget = me.pitch;
+			}
+			me.step();
+			if (me.roll == me.rollTarget and me.pitch == me.pitchTarget) {
+				me.specialMove += 1;
+			}
+			if (me.pitch == -90 and me.roll == 180) {
+				me.roll = 0;
+				me.heading = geo.normdeg(me.heading+180);
+			}
+			if (me.specialMove==3) {#me.pitch >= 0 and me.roll == 0 and me.rollTarget == 0 and me.pitchTarget == 0
+				me.keepDecisionTime = 0;
+			}
+		} elsif (me.think == GO_IMMEL) {
+			if (me.roll == 0) {
+				me.pitchTarget = 90;
+				me.rollTarget = 0;
+			} elsif (me.roll == 180 and me.pitch > 0) {
+				me.pitchTarget = 0;
+				me.rollTarget = 180;
+			} else {
+				# level out before doing it OR bank to level after manouvre
+				me.rollTarget = 0;
+				me.pitchTarget = me.pitch;
+			}
+			me.step();
+			if (me.pitch == 90 and me.roll == 0) {
+				me.roll = 180;
+				me.heading = geo.normdeg(me.heading+180);
+			}
+			if (me.pitch <= 0 and me.roll == 0 and me.rollTarget == 0 and me.pitchTarget == me.pitch) {
+				me.keepDecisionTime = 0;
+			}
 		} elsif (me.think == GO_DOWN) {
 			me.pitchTargetOld = me.pitchTarget;
 			me.maxPitch = me.clamp(MAX_DIVE_ANGLE*((me.alt*M2FT-me.altTarget_ft)/(me.ai.getNode("velocities/vertical-speed-fps").getValue()*MAX_DIVE_ANGLE/MAX_PITCH_UP_SPEED)),-MAX_DIVE_ANGLE,5);
@@ -488,7 +586,7 @@ var TopGun = {
 		if (me.rollTarget == nil) {
 			me.rollTarget = me.clamp(me.turnrateTarget/me.turnSpeed,-1,1)*MAX_ROLL;
 		}
-		if (me.altTarget_ft != nil) {
+		if (me.altTarget_ft != nil or me.think==GO_IMMEL or me.think==GO_SPLIT_S or me.think==GO_LOOP) {
 			if(me.rollTarget>me.roll) {
 				me.roll += MAX_ROLL_RATE*me.dt;
 				if (me.roll > me.rollTarget) {
@@ -852,6 +950,7 @@ var GO_LAG_PURSUIT = 12;
 var GO_LEAD_DEFEND_AWAY = 13;
 var GO_LEAD_DEFEND_INTO = 14;#a16 does lead pursuit and has higher speed, turn aggressively into his lead in narrow turn.
 var GO_COLLISION_AVOID = 15;
+var GO_LOOP = 16;
 
 var FLOOR = 10000;
 var CEILING = 40000;
