@@ -336,22 +336,22 @@ var TopGun = {
 
 		if (me.keepDecisionTime != -1 and (me.elapsed - me.decisionTime) > me.keepDecisionTime) {
 			if (me.alt < (FLOOR+2000)*FT2M and me.GStoKIAS(me.speed*MPS2KT) < 275) {
-				# low speed at low alt, need to fly straight for 3 secs to get some speed
+				# low speed at low alt, need to fly straight for 8 secs to get some speed
 				me.think = GO_AHEAD;
 				me.thrust = 1;
 				me.keepDecisionTime = 8;
 				me.decided();
 			} elsif (me.alt > (CEILING-2000)*FT2M and me.GStoKIAS(me.speed*MPS2KT) > 700) {
-				# high speed at high alt, need to turn hard for 3 secs to bleed some speed
+				# high speed at high alt, need to turn hard for 6 secs to bleed some speed
 				me.think = me.random>0.5?GO_LEFT:GO_RIGHT;
 				me.thrust = -0.1;#speedbrakes enabled
-				me.keepDecisionTime = 3;
+				me.keepDecisionTime = 6;
 				me.decided();
 			} elsif (me.alt < FLOOR*FT2M) {
-				# below training floor, go up for 2 secs
+				# below training floor, go up for 5 secs
 				me.think = GO_UP;
 				me.thrust = 1;
-				me.keepDecisionTime = 2;
+				me.keepDecisionTime = 5;
 				me.decided();
 			} elsif (me.alt > CEILING*FT2M) {
 				# above training ceiling go down to 36000
@@ -361,21 +361,28 @@ var TopGun = {
 				me.pitchTarget = 90;
 				me.keepDecisionTime = -1;
 				me.decided();
-			} elsif (me.GStoKIAS(me.speed*MPS2KT) < 275 and me.a16Speed > me.speed) {
+			} elsif (me.GStoKIAS(me.speed*MPS2KT) < 275 and me.a16Speed > me.speed and me.alt*M2FT>FLOOR+5000) {
 				# too low speed, go 5000 ft down
 				me.think = GO_DOWN;
 				me.thrust = 1;
-				me.altTarget_ft = math.max((FLOOR+2000), (me.alt)*M2FT-5000);
+				me.altTarget_ft = math.max((FLOOR+1000), (me.alt)*M2FT-5000);
+				me.pitchTarget = 90;
+				me.keepDecisionTime = -1;
+				me.decided();
+			} elsif (me.GStoKIAS(me.speed*MPS2KT) < 200 and me.alt*M2FT>FLOOR+5000) {
+				# too low speed, go 7500 ft down
+				me.think = GO_DOWN;
+				me.thrust = 1;
+				me.altTarget_ft = math.max((FLOOR+1000), (me.alt)*M2FT-7500);
 				me.pitchTarget = 90;
 				me.keepDecisionTime = -1;
 				me.decided();
 			} elsif (me.GStoKIAS(me.speed*MPS2KT) < 200) {
-				# too low speed, go 7500 ft down
-				me.think = GO_DOWN;
+				# too low speed, go straight for 12 secs
+				me.think = GO_AHEAD;
 				me.thrust = 1;
-				me.altTarget_ft = math.max((FLOOR+2000), (me.alt)*M2FT-7500);
-				me.pitchTarget = 90;
-				me.keepDecisionTime = -1;
+				me.pitchTarget = 0;
+				me.keepDecisionTime = 12;
 				me.decided();
 			} elsif (me.GStoKIAS(me.speed*MPS2KT) > 750 or me.mach > 1.9) {
 				# too high speed, go up for 4.5 secs
@@ -489,7 +496,7 @@ var TopGun = {
 					} else {
 						me.bad = 0;
 					}
-					if (me.bad > 100) {
+					if (me.bad > 80) {
 						# turn fight going bad, break circle
 						if (me.alt*M2FT < 25000) {
 							if (me.think != GO_BREAK_UP) {
@@ -497,7 +504,7 @@ var TopGun = {
 							}
 							me.think = GO_BREAK_UP;
 							me.thrust = 1;
-							me.keepDecisionTime = 7;	
+							me.keepDecisionTime = 7;
 						} else {
 							if (me.think != GO_BREAK_DOWN) {
 								me.aimTime = me.elapsed;
