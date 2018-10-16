@@ -2,7 +2,8 @@
 
 <PropertyList>
 
-	<path>B61-7.ac</path>
+  <name>B61-7</name>
+  <path>B61-7.ac</path>
 
   <animation>
     <type>select</type>
@@ -13,6 +14,20 @@
       <property>payload/armament/b61-7/flags/msl-id-200</property>
     </condition>
   </animation>
+
+  <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.0</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+        <object-name>b61-7.body</object-name>
+      <object-name>hooks</object-name>
+      <object-name>wings</object-name>
+  </effect>
 
     <particlesystem>
        <name>smoke</name>
@@ -39,12 +54,12 @@
 
        <shooter>
          <theta-min-deg>-180</theta-min-deg>
-		 <theta-max-deg>180</theta-max-deg>
-		 <phi-min-deg>-180</phi-min-deg>
-		 <phi-max-deg>180</phi-max-deg>
-		   <speed-mps>
-		     <value>500</value>
-		     <spread>80</spread>
+     <theta-max-deg>180</theta-max-deg>
+     <phi-min-deg>-180</phi-min-deg>
+     <phi-max-deg>180</phi-max-deg>
+       <speed-mps>
+         <value>10000</value>
+         <spread>6000</spread>
          </speed-mps>
          <rotation-speed>
            <x-min-deg-sec>0</x-min-deg-sec>
@@ -58,8 +73,8 @@
 
        <counter>
          <particles-per-sec>
-           <value>30</value>
-           <spread>10</spread>
+           <value>500</value>
+           <spread>100</spread>
          </particles-per-sec>
        </counter>
           
@@ -74,7 +89,7 @@
              <alpha><value> 0.5 </value></alpha>
            </color>
            <size>
-             <value>1.0</value>
+             <value>500.0</value>
            </size>
          </start>
 
@@ -86,16 +101,16 @@
              <alpha><value> 0.1 </value></alpha>
            </color>
            <size>
-             <value>6</value>
+             <value>1000</value>
            </size>
          </end>
 
          <life-sec>
-           <value>0.5</value>
+           <value>10</value>
          </life-sec>
             
-         <mass-kg>  5 </mass-kg>
-         <radius-m> 0.5 </radius-m>
+         <mass-kg>  500 </mass-kg>
+         <radius-m> 100 </radius-m>
        </particle>
 
        <program>
@@ -129,8 +144,8 @@
          <phi-min-deg>-180</phi-min-deg>
          <phi-max-deg>180</phi-max-deg>
          <speed-mps>
-           <value>500</value>
-           <spread>60</spread>
+           <value>10000</value>
+           <spread>6000</spread>
          </speed-mps>
          <rotation-speed>
            <x-min-deg-sec>0</x-min-deg-sec>
@@ -144,8 +159,8 @@
 
        <counter>
          <particles-per-sec>
-           <value>30</value>
-           <spread>10</spread>
+           <value>500</value>
+           <spread>100</spread>
          </particles-per-sec>
        </counter>
           
@@ -160,7 +175,7 @@
              <alpha><value> 1 </value></alpha>
            </color>
            <size>
-             <value>4</value>
+             <value>500</value>
            </size>
          </start>
 
@@ -172,16 +187,16 @@
              <alpha><value> 0.1 </value></alpha>
            </color>
            <size>
-             <value>100</value>
+             <value>1000</value>
            </size>
          </end>
 
          <life-sec>
-           <value>0.5</value>
+           <value>10</value>
          </life-sec>
             
-         <mass-kg>  5 </mass-kg>
-         <radius-m> 0.5 </radius-m>
+         <mass-kg>  500 </mass-kg>
+         <radius-m> 100 </radius-m>
        </particle>
 
        <program>
@@ -215,8 +230,8 @@
          <phi-min-deg>-180</phi-min-deg>
          <phi-max-deg>180</phi-max-deg>
          <speed-mps>
-           <value>500</value>
-           <spread>60</spread>
+           <value>10000</value>
+           <spread>6000</spread>
          </speed-mps>
          <rotation-speed>
            <x-min-deg-sec>0</x-min-deg-sec>
@@ -230,8 +245,8 @@
 
        <counter>
          <particles-per-sec>
-           <value>50</value>
-           <spread>10</spread>
+           <value>500</value>
+           <spread>100</spread>
          </particles-per-sec>
        </counter>
           
@@ -246,7 +261,7 @@
              <alpha><value> 0.5 </value></alpha>
            </color>
            <size>
-             <value>20</value>
+             <value>1000</value>
            </size>
          </start>
 
@@ -258,16 +273,16 @@
              <alpha><value> 0.04 </value></alpha>
            </color>
            <size>
-             <value>120</value>
+             <value>4000</value>
            </size>
          </end>
 
          <life-sec>
-           <value>40</value>
+           <value>150</value>
          </life-sec>
             
-         <mass-kg>  5 </mass-kg>
-         <radius-m> 0.5 </radius-m>
+         <mass-kg>  500 </mass-kg>
+         <radius-m> 100 </radius-m>
        </particle>
 
        <program>
@@ -278,11 +293,11 @@
 
      </particlesystem>
 
-	<animation>
-  	<object-name>b61-7.body</object-name>
+  <animation>
+    <object-name>b61-7.body</object-name>
     <object-name>hooks</object-name>
     <object-name>wings</object-name>
-  		<enable-hot type="bool">false</enable-hot>
- 	</animation>
-	
+      <enable-hot type="bool">false</enable-hot>
+  </animation>
+  
 </PropertyList>
