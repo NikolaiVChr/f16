@@ -30,6 +30,15 @@
 	<group>
 	    <layout>hbox</layout>
 	    <button>
+	    	<legend>0</legend>
+		    <binding>
+				<command>nasal</command>
+				<script>
+					mig28.start(0);
+				</script>
+	      	</binding>
+	    </button>
+	    <button>
 	    	<legend>1</legend>
 		    <binding>
 				<command>nasal</command>
@@ -75,6 +84,15 @@
 	      	</binding>
 	    </button>
 	    <button>
+	    	<legend>6</legend>
+		    <binding>
+				<command>nasal</command>
+				<script>
+					mig28.start(6);
+				</script>
+	      	</binding>
+	    </button>
+	    <button>
 	    	<legend>Stop</legend>
 		    <binding>
 				<command>nasal</command>
@@ -88,10 +106,17 @@
 
 	<hrule/>
 
-	<text><label>Select difficulty of training session. The opponent will fly block 52.</label></text>
+	<text><label>Note: When a scenario is running click stop before starting another.</label></text>
 
 	<hrule/>
 
-	<text><label>Note: When a scenario is running click stop before starting another.</label></text>
+	<text><label>The opponent(s) will fly block 52.</label></text>
+	<text><label>0 - One bandit, one wingman (beginners)</label></text>
+	<text><label>1 - One bandit (beginner)</label></text>
+	<text><label>2 - One bandit (experienced)</label></text>
+	<text><label>3 - One bandit (veteran)</label></text>
+	<text><label>4 - Two bandits (beginners)</label></text>
+	<text><label>5 - Two bandits (veterans)</label></text>
+	<text><label>6 - Three bandits, one wingman (veterans)</label></text>
 
 </PropertyList>

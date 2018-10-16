@@ -16,12 +16,19 @@ var TopGun = {
 		return obj;
 	},
 	enabled: 0,
-	start: func {
+	warnTime: 0,
+	start: func (opponents = nil) {
 		if (me.enabled) {
 			print("TopGun: Already started, try stop() before starting again.");
 			screen.log.write("Scenario is already started, try 'stop' before starting again.", 1.0, 1.0, 0.0);
 			return;
 		}
+		if (opponents == nil) {
+			opponents = [nil];
+		}
+		me.opponent = opponents[0];
+		me.blufor = me.opponent!=nil;
+		me.opponents = opponents;
 		me.enabled = 1;
 		var model = getprop("sim/model/path");
 		var n = props.globals.getNode("models", 1);
@@ -35,15 +42,15 @@ var TopGun = {
 		
 		n = props.globals.getNode("ai/models", 1);
 		for (i = 0; 1==1; i += 1) {
-			if (n.getChild(AI_AIRCRAFT_TYPE, i, 0) == nil) {
+			if (n.getChild(me.blufor?BLUFOR_AIRCRAFT_TYPE:OPFOR_AIRCRAFT_TYPE, i, 0) == nil) {
 				break;
 			}
 		}
-		me.ai = n.getChild(AI_AIRCRAFT_TYPE, i, 1);
+		me.ai = n.getChild(me.blufor?BLUFOR_AIRCRAFT_TYPE:OPFOR_AIRCRAFT_TYPE, i, 1);
 		me.ai.getNode("valid", 1).setBoolValue(0);
 		me.ai.getNode("name", 1).setValue("No-name");
 		me.ai.getNode("sign", 1).setValue("Bandit");
-		me.ai.getNode("type", 1).setValue(AI_AIRCRAFT_TYPE);
+		me.ai.getNode("type", 1).setValue(me.blufor?BLUFOR_AIRCRAFT_TYPE:OPFOR_AIRCRAFT_TYPE);
 		me.ai.getNode("callsign", 1).setValue(me.callsign);
 		#me.ai.getNode("sim/multiplay/generic/bool[2]",1).setBoolValue(0);#damage smoke
 		#me.ai.getNode("sim/multiplay/generic/bool[40]",1).setBoolValue(1);
@@ -88,7 +95,11 @@ var TopGun = {
 		TopGun.a16Score = 0;
 		
 		print("TopGun: starting");
-		screen.log.write(me.callsign~": Hello.", 1.0, 1.0, 0.0);
+		if(me.blufor) {
+			screen.log.write(me.callsign~": Hello.", 0.0, 1.0, 0.0);
+		} else {
+			screen.log.write(me.callsign~": Hello.", 1.0, 1.0, 0.0);
+		}
 		settimer(func {me.spwn();}, 2);
 	},
 
@@ -97,7 +108,7 @@ var TopGun = {
 			me.ai.getNode("valid", 1).setBoolValue(0);
 			me.model.remove();
 			me.ai.remove();
-			screen.log.write(me.callsign~": I am returning to base, the score is ("~TopGun.mig28Score~"-"~TopGun.a16Score~")", 1.0, 1.0, 0.0);
+			screen.log.write(me.callsign~": I am returning to base, the score is (OPFOR "~TopGun.mig28Score~"- BLUFOR "~TopGun.a16Score~")", 1.0, 1.0, 0.0);
 			print("TopGun: stopped.");
 			setprop("ai/models/model-removed", me.ai.getPath());
 		}
@@ -108,16 +119,22 @@ var TopGun = {
 		me.ai.getNode("valid").setBoolValue(1);
 		
 		me.reset();
-		if (me.callsign == "Lt.Endo") {
-			screen.log.write(me.callsign~": I will go easy on you, try to stay on my six. Have fun.", 1.0, 1.0, 0.0);
-		} elsif (me.callsign == "Cpt.Tom") {
-			screen.log.write(me.callsign~": Nice weather for a fair fight, lets go.", 1.0, 1.0, 0.0);
-		} elsif (me.callsign == "Maj.Rap") {
-			screen.log.write(me.callsign~": Lets do this, don't make any mistakes.", 1.0, 1.0, 0.0);
-		} elsif (me.callsign == "Maj.Tom") {
-			screen.log.write(me.callsign~": Fight is on!", 1.0, 1.0, 0.0);
-		} elsif (me.callsign == "Cpt.Rap") {
-			screen.log.write(me.callsign~": Lets do this.", 1.0, 1.0, 0.0);
+		if (me.blufor) {
+			screen.log.write(me.callsign~": Hey, I'll be your wingman.", 0.0, 1.0, 0.0);
+		} else {
+			if (me.callsign == "Lt.Endo") {
+				screen.log.write(me.callsign~": I will go easy on you, try to stay on my six. Have fun.", 1.0, 1.0, 0.0);
+			} elsif (me.callsign == "Cpt.Tom") {
+				screen.log.write(me.callsign~": Nice weather for a fair fight, lets go.", 1.0, 1.0, 0.0);
+			} elsif (me.callsign == "Maj.Rap") {
+				screen.log.write(me.callsign~": Lets do this, don't make any mistakes.", 1.0, 1.0, 0.0);
+			} elsif (me.callsign == "Maj.Tom") {
+				screen.log.write(me.callsign~": Fight is on!", 1.0, 1.0, 0.0);
+			} elsif (me.callsign == "Gn.Endo") {
+				screen.log.write(me.callsign~": This is the end-game..", 1.0, 1.0, 0.0);
+			} elsif (me.callsign == "Cpt.Rap") {
+				screen.log.write(me.callsign~": Lets do this.", 1.0, 1.0, 0.0);
+			}
 		}
 		settimer(func {me.apply();me.loadNode.setBoolValue(1);setprop("ai/models/model-added", me.ai.getPath());print("TopGun: "~me.callsign~" spawned");}, 0.05);
 	},
@@ -140,15 +157,17 @@ var TopGun = {
 		me.elapsed_last = systime()-UPDATE_RATE;
 		me.dt = UPDATE_RATE;
 		me.decisionTime = systime();
+		me.specialTime = me.elapsed;
 		me.aimTime = systime();
+		me.circleTime = 0;
 		me.rollTarget = me.roll;
 		me.pitchTarget = me.pitch;
 		me.scissorTarget = -MAX_ROLL;
 		me.a16Clock = 0;
+		me.f16Clock = 0;
 		me.keepDecisionTime = 0;
 		me.sightTime = 0;
 		me.killTime = 0;
-		me.warnTime = 0;
 		me.dist_nm = 0;
 		me.turnStack = 0;
 		me.Gf = 0;
@@ -157,8 +176,11 @@ var TopGun = {
 		me.rollNorm = 0;
 		me.turnSpeed = 0;
 		me.a16Bearing = 0;
+		me.f16Bearing = 0;
 		me.altTarget_ft = nil;
 		me.specialMove = 0;
+		me.deadly = nil;
+		me.switchTime = 0;
 
 		print("TopGun: deciding to RESET!");
 	},
@@ -175,34 +197,61 @@ var TopGun = {
 			me.dt = UPDATE_RATE;
 		}
 		me.random = rand();
+		me.deadly = nil;
+
+		if (size(me.opponents) > 1 and me.elapsed - me.switchTime > 45) {
+			foreach(opp ; me.opponents) {
+				if (opp == nil) continue;
+				if (opp.deadly == me or (me.blufor and opp.deadly == "F-16")) {
+					if (opp != me.opponent) {
+						if (me.keepDecisionTime != -1) {
+							me.keepDecisionTime = 0;
+						}
+						me.switchTime = me.elapsed;
+						me.opponent = opp;
+						if (me.blufor) {
+							screen.log.write(me.callsign~": "~opp.callsign~" is on my six!", 0.0, 1.0, 0.0);
+						}
+						break;
+					}
+				}
+			}
+		}
+		if (me.elapsed - me.switchTime > 240) {
+			# time to switch opponent to mix it up a bit
+			me.opponent = me.opponents[me.clamp(int(me.random*(size(me.opponents))),0,size(me.opponents)-1)];
+			me.switchTime = me.elapsed;
+		}
+
+		# we always need some info from the player:
 		me.a16Coord = geo.aircraft_position();
-		if(me.a16Coord.alt()*M2FT < FLOOR-3000 and me.elapsed - me.warnTime > 15) {
-			screen.log.write(me.callsign~": Stay above "~FLOOR~" feet.", 1.0, 1.0, 0.0);
-			me.warnTime = me.elapsed;
-		}
-		if(me.a16Coord.alt()*M2FT > CEILING+3000 and me.elapsed - me.warnTime > 15) {
-			screen.log.write(me.callsign~": Stay below "~CEILING~" feet.", 1.0, 1.0, 0.0);
-			me.warnTime = me.elapsed;
-		}
 		me.a16Pitch = vector.Math.getPitch(me.coord,me.a16Coord);
-		me.a16Elev  = me.a16Pitch-me.pitch;
+		me.a16Heading = getprop("orientation/heading-deg");
+		#me.a16Elev  = me.a16Pitch-me.pitch;
 		me.mig28Elev  = -me.a16Pitch-getprop("orientation/pitch-deg");
-		me.a16BearingOld = me.a16Bearing;
-		me.a16Bearing = me.coord.course_to(me.a16Coord);
-		me.a16BearingRate = geo.normdeg180(me.a16Bearing-me.a16BearingOld)/me.dt;
-		me.a16ClockLast = me.a16Clock;
-		me.a16ClockOld = me.a16Clock;
-		me.a16Clock = geo.normdeg180(me.a16Bearing-me.heading);
-		me.a16ClockRate = (me.a16Clock-me.a16ClockOld)/me.dt;
-		me.a16Range = me.coord.distance_to(me.a16Coord)*M2NM;
-		me.a16Speed = getprop("velocities/groundspeed-kt")*KT2MPS;
-		me.a16Roll  = getprop("orientation/roll-deg");
+		#me.f16BearingOld = me.f16Bearing;
+		me.f16Bearing = me.coord.course_to(me.a16Coord);
+		#me.a16BearingRate = geo.normdeg180(me.f16Bearing-me.f16BearingOld)/me.dt;
+		#me.f16ClockLast = me.a16Clock;
+		#me.f16ClockOld = me.f16Clock;
+		me.f16Clock = geo.normdeg180(me.f16Bearing-me.heading);
+		#me.a16ClockRate = (me.f16Clock-me.f16ClockOld)/me.dt;
+		#me.a16Range = me.coord.distance_to(me.a16Coord)*M2NM;
+		#me.a16Speed = getprop("velocities/groundspeed-kt")*KT2MPS;
+		#me.a16Roll  = getprop("orientation/roll-deg");
 		me.hisBearing = me.a16Coord.course_to(me.coord);
-		me.hisClock = geo.normdeg180(me.hisBearing-getprop("orientation/heading-deg"));
+		me.hisClock = geo.normdeg180(me.hisBearing-me.a16Heading);
 		me.dist_nm = me.a16Coord.direct_distance_to(me.coord)*M2NM;
 
-
-		if (me.elapsed - me.killTime > 4 and (math.abs(me.a16Clock) < 20 or math.abs(me.a16Clock) > 120) and math.abs(me.mig28Elev)<3 and math.abs(me.hisClock) < 3 and me.dist_nm < 1) {
+		if (!me.blufor and me.elapsed - me.switchTime > 45 and me.opponent != nil and math.abs(me.f16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.0) {
+			me.opponent = nil;
+			me.switchTime = me.elapsed;
+			#screen.log.write(me.callsign~": Going after F-16..", 1.0, 1.0, 0.0);
+			if (me.keepDecisionTime != -1) {
+				me.keepDecisionTime = 0;
+			}
+		}
+		if (!me.blufor and me.elapsed - me.killTime > 4 and (math.abs(me.f16Clock) < 20 or math.abs(me.f16Clock) > 120) and math.abs(me.mig28Elev)<3 and math.abs(me.hisClock) < 3 and me.dist_nm < 1) {
 			me.hisAim += me.dt;
 		} else {
 			me.hisAim = 0;
@@ -212,14 +261,85 @@ var TopGun = {
 			TopGun.a16Score += 1;
 			screen.log.write(me.callsign~": Good job! You have a firing solution..("~TopGun.mig28Score~"-"~TopGun.a16Score~")", 1.0, 1.0, 0.0);
 			me.killTime = me.elapsed;
-		}						
+		}
+		
+		if (me.opponent != nil) {
+#			print(me.callsign ~" chasing "~me.opponent.callsign);
+		} else {
+#			print(me.callsign ~" chasing F-16");
+		}
+
+		if (me.dist_nm < 0.25) {
+			# collision with player eminent
+			me.think = GO_COLLISION_AVOID;
+			me.keepDecisionTime = 0.15;
+			me.tmp = me.a16Clock;
+			me.a16Clock = me.f16Clock;
+			me.decided();
+			me.move();
+			me.a16Clock = me.tmp;
+			return;
+		}
+
+		# okay, lets get some info on the opponent
+		if (me.opponent != nil and me.opponent["mach"] != nil) {
+			me.a16Coord = me.opponent.coord;
+			me.a16Pitch = vector.Math.getPitch(me.coord,me.a16Coord);
+			me.a16Heading = me.opponent.heading;
+			me.a16Elev  = me.a16Pitch-me.pitch;
+			me.mig28Elev  = -me.a16Pitch-me.opponent.pitch;
+			me.a16BearingOld = me.a16Bearing;
+			me.a16Bearing = me.coord.course_to(me.a16Coord);
+			me.a16BearingRate = geo.normdeg180(me.a16Bearing-me.a16BearingOld)/me.dt;
+			me.a16ClockLast = me.a16Clock;
+			me.a16ClockOld = me.a16Clock;
+			me.a16Clock = geo.normdeg180(me.a16Bearing-me.heading);
+			me.a16ClockRate = (me.a16Clock-me.a16ClockOld)/me.dt;
+			me.a16Range = me.coord.distance_to(me.a16Coord)*M2NM;
+			me.a16Speed = me.opponent.speed;
+			me.a16Roll  = me.opponent.roll;
+			me.hisBearing = me.a16Coord.course_to(me.coord);
+			me.hisClock = geo.normdeg180(me.hisBearing-me.a16Heading);
+			me.dist_nm = me.a16Coord.direct_distance_to(me.coord)*M2NM;
+#			printf("%s: %d NM, rel.bearing %d rate %d",me.callsign,me.a16Range,me.a16Clock,me.a16BearingRate);
+		} else {
+			me.a16Coord = geo.aircraft_position();
+			me.a16Pitch = vector.Math.getPitch(me.coord,me.a16Coord);
+			me.a16Heading = getprop("orientation/heading-deg");
+			me.a16Elev  = me.a16Pitch-me.pitch;
+			me.mig28Elev  = -me.a16Pitch-getprop("orientation/pitch-deg");
+			me.a16BearingOld = me.a16Bearing;
+			me.a16Bearing = me.coord.course_to(me.a16Coord);
+			me.a16BearingRate = geo.normdeg180(me.a16Bearing-me.a16BearingOld)/me.dt;
+			me.a16ClockLast = me.a16Clock;
+			me.a16ClockOld = me.a16Clock;
+			me.a16Clock = geo.normdeg180(me.a16Bearing-me.heading);
+			me.a16ClockRate = (me.a16Clock-me.a16ClockOld)/me.dt;
+			me.a16Range = me.coord.distance_to(me.a16Coord)*M2NM;
+			me.a16Speed = getprop("velocities/groundspeed-kt")*KT2MPS;
+			me.a16Roll  = getprop("orientation/roll-deg");
+			me.hisBearing = me.a16Coord.course_to(me.coord);
+			me.hisClock = geo.normdeg180(me.hisBearing-me.a16Heading);
+			me.dist_nm = me.a16Coord.direct_distance_to(me.coord)*M2NM;
+		}
+
+		if(!me.blufor and me.a16Coord.alt()*M2FT < FLOOR-3000 and me.elapsed - TopGun.warnTime > 15) {
+			screen.log.write(me.callsign~": Stay above "~FLOOR~" feet.", 1.0, 1.0, 0.0);
+			TopGun.warnTime = me.elapsed;
+		}
+		if(!me.blufor and me.a16Coord.alt()*M2FT > CEILING+3000 and me.elapsed - TopGun.warnTime > 15) {
+			screen.log.write(me.callsign~": Stay below "~CEILING~" feet.", 1.0, 1.0, 0.0);
+			TopGun.warnTime = me.elapsed;
+		}
+
+
 
 		if (me.keepDecisionTime != -1 and (me.elapsed - me.decisionTime) > me.keepDecisionTime) {
 			if (me.alt < (FLOOR+2000)*FT2M and me.GStoKIAS(me.speed*MPS2KT) < 275) {
 				# low speed at low alt, need to fly straight for 3 secs to get some speed
 				me.think = GO_AHEAD;
 				me.thrust = 1;
-				me.keepDecisionTime = 3;
+				me.keepDecisionTime = 8;
 				me.decided();
 			} elsif (me.alt > (CEILING-2000)*FT2M and me.GStoKIAS(me.speed*MPS2KT) > 700) {
 				# high speed at high alt, need to turn hard for 3 secs to bleed some speed
@@ -281,7 +401,11 @@ var TopGun = {
 					me.keepDecisionTime = 0.15;
 				} elsif ((math.abs(me.hisClock) < 20 or math.abs(me.hisClock) > 130) and math.abs(me.a16Elev)<5 and math.abs(me.a16Clock) < 5) {
 					# has aim on the f16, slow down a bit and keep that aim
+					if (me.dist_nm < 2) {
+						me.deadly = me.opponent==nil?"F-16":me.opponent;
+					}
 					me.think = GO_AIM;
+					me.circleTime = me.elapsed;
 					#if (me.speed*MPS2KT > 650) {
 					#	me.thrust = 0.25;
 					#} elsif (me.speed*MPS2KT > 525) {
@@ -293,8 +417,19 @@ var TopGun = {
 					#}
 					me.thrust = math.min(1.0,me.thrust*me.dist_nm/1.25);
 					if (me.elapsed - me.sightTime > 10 and me.dist_nm < 1) {
-						TopGun.mig28Score += 1;
-						screen.log.write(me.callsign~": Hey! I have you in my gunsight..("~TopGun.mig28Score~"-"~TopGun.a16Score~")", 1.0, 1.0, 0.0);
+						if (!me.blufor) {
+							TopGun.mig28Score += 1;
+							if (me.opponent == nil) {
+								screen.log.write(me.callsign~": Hey! I have you in my gunsight..("~TopGun.mig28Score~"-"~TopGun.a16Score~")", 1.0, 1.0, 0.0);
+							} else {
+								me.opponent.switchTime = me.opponent.elapsed;#major hack :)
+								screen.log.write(me.callsign~": Your wingman is in my gunsight..("~TopGun.mig28Score~"-"~TopGun.a16Score~")", 1.0, 1.0, 0.0);
+							}
+						} else {
+							TopGun.a16Score += 1;
+							screen.log.write(me.callsign~": Splash one! ("~TopGun.mig28Score~"-"~TopGun.a16Score~")", 0.0, 1.0, 0.0);
+							me.opponent.switchTime = me.opponent.elapsed;#major hack :)
+						}
 						me.sightTime = me.elapsed;
 					}
 					me.keepDecisionTime = 0.15;
@@ -303,20 +438,25 @@ var TopGun = {
 					me.think = GO_LEAD_DEFEND_AWAY;
 					me.thrust = 1;
 					me.keepDecisionTime = 8;
-				} elsif (math.mod(TopGun.a16Score,2) > 0 and me.alt*M2FT>15000 and me.alt*M2FT<20000 and me.speed*MPS2KT<550 and me.speed*MPS2KT>400 and math.abs(me.a16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.0) {
+				} elsif (me.elapsed - me.specialTime > 120 and me.alt*M2FT>15000 and me.alt*M2FT<20000 and me.speed*MPS2KT<550 and (me.elapsed - me.circleTime > 50 or (math.mod(TopGun.a16Score,2) > 0 and me.speed*MPS2KT>400 and math.abs(me.a16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.0))) {
 					# f16 has aim on mig28 going medium in medium alt, do loop
 					me.think = GO_LOOP;
 					me.thrust = 1;
+					me.specialMove = 0;
+					me.specialTime = me.elapsed;
 					me.keepDecisionTime = -1;
-				} elsif (math.mod(TopGun.a16Score,2) > 0 and me.alt*M2FT<15000 and me.speed*MPS2KT<600 and me.speed*MPS2KT>400 and math.abs(me.a16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.0) {
+				} elsif (me.elapsed - me.specialTime > 120 and me.alt*M2FT<15000 and me.speed*MPS2KT<600 and me.speed*MPS2KT>400 and (me.elapsed - me.circleTime > 50 or (math.mod(TopGun.a16Score,2) > 0 and math.abs(me.a16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.0))) {
 					# f16 has aim on mig28 going fast in low alt, do immelmann
 					me.think = GO_IMMEL;
 					me.thrust = 1; 
+					me.specialMove = 0;
+					me.specialTime = me.elapsed;
 					me.keepDecisionTime = -1;
-				} elsif (math.mod(TopGun.a16Score,2) > 0 and me.alt*M2FT>30000 and me.speed*MPS2KT<600 and math.abs(me.a16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.0) {
+				} elsif (me.elapsed - me.specialTime > 120 and me.alt*M2FT>30000 and me.speed*MPS2KT<600 and (me.elapsed - me.circleTime > 50 or (math.mod(TopGun.a16Score,2) > 0 and math.abs(me.a16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.0))) {
 					# f16 has aim on mig28 going not fast in high alt, do split S
 					me.think = GO_SPLIT_S;
 					me.specialMove = 0;
+					me.specialTime = me.elapsed;
 					me.thrust = 0;
 					me.keepDecisionTime = -1;
 				} elsif (math.mod(TopGun.a16Score,2) > 0 and me.alt<9000 and math.abs(me.a16Clock) > 140 and math.abs(me.a16Pitch)<15 and math.abs(me.hisClock) < 20 and me.dist_nm < 2.0) {
@@ -333,7 +473,7 @@ var TopGun = {
 					me.thrust = -0.1; #speedbrakes
 					me.scissorPeriod = 1.5;
 					me.keepDecisionTime = 0.15;
-				} elsif (math.abs(me.a16Clock) < 115 and math.abs(me.a16Clock) > 75 and math.abs(me.hisClock) > 75 and math.abs(me.hisClock) < 115 and me.dist_nm < 1.5 and math.abs(geo.normdeg180(me.heading-getprop("orientation/heading-deg")))<30) {
+				} elsif (math.abs(me.a16Clock) < 115 and math.abs(me.a16Clock) > 75 and math.abs(me.hisClock) > 75 and math.abs(me.hisClock) < 115 and me.dist_nm < 1.5 and math.abs(geo.normdeg180(me.heading-me.a16Heading))<30) {
 					# scissor response to parallel flight 
 					if (me.think != GO_SCISSOR) {
 						me.aimTime = me.elapsed;
@@ -357,18 +497,21 @@ var TopGun = {
 							}
 							me.think = GO_BREAK_UP;
 							me.thrust = 1;
+							me.keepDecisionTime = 7;	
 						} else {
 							if (me.think != GO_BREAK_DOWN) {
 								me.aimTime = me.elapsed;
 							}
 							me.think = GO_BREAK_DOWN;
 							me.thrust = 0.75;
+							me.keepDecisionTime = 6;	
 						}
 						me.bad = 0;
-					} elsif ((me.think != GO_BREAK_UP or me.elapsed - me.aimTime > 5) and (me.think != GO_BREAK_DOWN or me.elapsed - me.aimTime > 4)) {# don't interupt break-up unless 5 secs has passed
+					} else {
 						# turn fight to try and get f16 in sight
 						if (me.think != GO_AIM) {
 							me.aimTime = me.elapsed;
+							me.circleTime = me.aimTime;
 						}
 						me.think = GO_AIM;
 						me.corner = math.max(425, math.max(me.dist_nm*100,me.GStoKIAS(me.a16Speed)));
@@ -381,8 +524,8 @@ var TopGun = {
 						} else {
 							me.thrust = 1;
 						}
-					}
-					me.keepDecisionTime = 0.15;				
+						me.keepDecisionTime = 0.15;	
+					}								
 				}				
 				me.decided();
 			}
@@ -397,6 +540,7 @@ var TopGun = {
 		if(me.think==GO_UP)me.prt="go up";
 		if(me.think==GO_DOWN)me.prt=sprintf("dive to %d ft",me.altTarget_ft);
 		if(me.think==GO_AIM)me.prt="turn fight";
+		else me.circleTime = me.elapsed;
 		if(me.think==GO_SCISSOR)me.prt="do flat scissor";
 		if(me.think==GO_BREAK_UP)me.prt="break up the circle";
 		if(me.think==GO_BREAK_DOWN)me.prt="break down the circle";
@@ -407,9 +551,9 @@ var TopGun = {
 		if(me.think==GO_IMMEL)me.prt="does an Immelmann";
 		if(me.think==GO_SPLIT_S)me.prt="does a split S";
 		if(me.think==GO_LOOP)me.prt="does a loop";
-		#printf("Deciding to %s. Speed %d KIAS/M%.2f at %d ft. Roll %d, pitch %d. Thrust %.1f%%. %.1f NM. %.1f horz G",me.prt,me.GStoKIAS(me.speed*MPS2KT),me.mach,me.alt*M2FT,me.roll,me.pitch,me.thrust*100, me.dist_nm, me.rollNorm*(me.rollNorm<0?-1:1)*me.G*0.8888+1);
+		#printf(me.callsign~" deciding to %s. Speed %d KIAS/M%.2f at %d ft. Roll %d, pitch %d. Thrust %.1f%%. %.1f NM. %.1f horz G",me.prt,me.GStoKIAS(me.speed*MPS2KT),me.mach,me.alt*M2FT,me.roll,me.pitch,me.thrust*100, me.dist_nm, me.rollNorm*(me.rollNorm<0?-1:1)*me.G*0.8888+1);
 		me.view = getprop("sim/current-view/missile-view");
-		if (me.thinkLast != me.think and getprop("sim/current-view/view-number")==8 and me.view != nil and find(AI_AIRCRAFT_TYPE, me.view) != -1) {
+		if (me.thinkLast != me.think and getprop("sim/current-view/view-number")==8 and me.view != nil and (find(OPFOR_AIRCRAFT_TYPE, me.view) != -1 or find(BLUFOR_AIRCRAFT_TYPE,me.view)!= -1)) {
 			screen.log.write(me.callsign~" now "~me.prt, 1.0, 0.0, 0.0);
 		}
 		me.thinkLast = me.think;
@@ -456,7 +600,7 @@ var TopGun = {
 			me.step();
 			if (me.roll == me.rollTarget and me.pitch == me.pitchTarget) {
 				me.specialMove += 1;
-				print(me.specialMove~" "~me.pitch);
+				#print(me.specialMove~" "~me.pitch);
 			}
 			if (me.pitch == -90 and me.roll == 180) {
 				me.roll = 0;
@@ -492,23 +636,28 @@ var TopGun = {
 				me.keepDecisionTime = 0;
 			}
 		} elsif (me.think == GO_IMMEL) {
-			if (me.roll == 0) {
+			if (me.specialMove == 1) {
 				me.pitchTarget = 90;
 				me.rollTarget = 0;
-			} elsif (me.roll == 180 and me.pitch > 0) {
+			} elsif (me.specialMove == 2) {
 				me.pitchTarget = 0;
 				me.rollTarget = 180;
-			} else {
-				# level out before doing it OR bank to level after manouvre
+			} elsif (me.specialMove == 0 or me.specialMove == 3) {
+				# level before doing it
+				me.thrust = 1;
 				me.rollTarget = 0;
 				me.pitchTarget = me.pitch;
 			}
 			me.step();
+			if (me.roll == me.rollTarget and me.pitch == me.pitchTarget) {
+				me.specialMove += 1;
+				#print(me.specialMove~" "~me.pitch);
+			}
 			if (me.pitch == 90 and me.roll == 0) {
 				me.roll = 180;
 				me.heading = geo.normdeg(me.heading+180);
 			}
-			if (me.pitch <= 0 and me.roll == 0 and me.rollTarget == 0 and me.pitchTarget == me.pitch) {
+			if (me.specialMove==4) {
 				me.keepDecisionTime = 0;
 			}
 		} elsif (me.think == GO_DOWN) {
@@ -527,11 +676,12 @@ var TopGun = {
 				me.altTarget_ft = nil;
 			}
 		} elsif (me.think == GO_COLLISION_AVOID) {
-			me.rollTarget = math.max(-1,math.min(1,-me.a16Clock))*MAX_ROLL;
-			me.pitchTarget = -me.a16Pitch;
+			me.rollTarget = math.max(-1,math.min(1,-me.a16Clock*100))*MAX_ROLL;
+			me.pitchTarget = me.clamp(-me.a16Pitch*5000,-90,90);
 			me.step();
 		} elsif (me.think == GO_AIM) {
 			me.turnrateTarget = (me.a16Clock*0.5+me.a16BearingRate);
+			#if (me.blufor) printf("%s: %d target",me.callsign,me.turnrateTarget);
 			me.pitchTarget = me.a16Pitch;
 			me.rollTarget = nil;
 			me.step();
@@ -962,21 +1112,33 @@ var MAX_PITCH_UP_SPEED = 15;
 var MAX_PITCH_DOWN_SPEED = 4;
 var MAX_DIVE_ANGLE = 45;
 var MAX_TURN_SPEED = 18;#do not mess with this number unless porting the system to another aircraft.
-var AI_AIRCRAFT_TYPE = "Mig-28";
+var OPFOR_AIRCRAFT_TYPE = "Mig-28";
+var BLUFOR_AIRCRAFT_TYPE = "F-16";
 
 var num_t = "0000";
 var ENDURANCE = 10;
 
 var tg1 = TopGun.new();
 var tg2 = TopGun.new();
+var tg3 = TopGun.new();
+var tg4 = TopGun.new();
 
 var start = func (diff = 1) {
-	if (diff < 1 or diff > 5) {
-		print("Difficulty goes from 1 (easy), 2 (normal), 3 (hard), 4 (veteran) to 5 (master), try again.");
+	if (diff < 0 or diff > 6) {
+		print("Difficulty goes from 1 (easy), 2 (normal), 3 (hard), 4 (veteran), 5 (master) to 6 (supreme), try again.");
 		return;
 	}
 	print("Difficulty set to: "~diff);
-	if (diff == 1) {
+	if (diff == 0) {
+		MAX_ROLL_SPEED = 25;
+		num_t = "-9999";
+		ENDURANCE = 10;
+		tg1.callsign = "Lt.Endo";
+		tg2.callsign = "Lt.Ice";
+		setprop("link16/wingman-4", "Lt.Ice");
+		tg1.start([nil,tg2]);
+		settimer(func{tg2.start([tg1])},UPDATE_RATE*0.5);
+	} elsif (diff == 1) {
 		MAX_ROLL_SPEED = 25;
 		num_t = "0000";
 		ENDURANCE = 10;
@@ -1010,12 +1172,28 @@ var start = func (diff = 1) {
 		tg2.callsign = "Maj.Tom";
 		tg1.start();
 		settimer(func{tg2.start()},UPDATE_RATE*0.5);
+	} elsif (diff == 6) {
+		MAX_ROLL_SPEED = 30;
+		num_t = "-9999";
+		ENDURANCE = 30;
+		tg1.callsign = "Maj.Rap";
+		tg2.callsign = "Maj.Ice";
+		tg3.callsign = "Maj.Tom";
+		tg4.callsign = "Gn.Endo";
+		setprop("link16/wingman-4", "Maj.Ice");
+		tg1.start([nil,tg2]);
+		settimer(func{tg2.start([tg1,tg3,tg4])},UPDATE_RATE*0.5);
+		settimer(func{tg3.start([nil,tg2])},UPDATE_RATE*1.25);
+		settimer(func{tg4.start([nil,tg2])},UPDATE_RATE*1.75);
 	}
 }
 
 var stop = func {
 	tg1.stop();
 	tg2.stop();
+	tg3.stop();
+	tg4.stop();
+	setprop("link16/wingman-4", "");
 }
 
 
