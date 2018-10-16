@@ -2,6 +2,7 @@
 
 <PropertyList>
 
+  <name>B61-12</name>
 	<path>B61-12.ac</path>
 
   <animation>
@@ -13,6 +14,20 @@
       <property>payload/armament/b61-12/flags/msl-id-200</property>
     </condition>
   </animation>
+
+  <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.0</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+        <object-name>b61-12.body</object-name>
+      <object-name>hooks</object-name>
+      <object-name>wings</object-name>
+  </effect>
 
     <particlesystem>
        <name>smoke</name>

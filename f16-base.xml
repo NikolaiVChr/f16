@@ -1830,12 +1830,12 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <b61-12>
                 <short-name type="string">B61-12</short-name>
                 <long-name type="string">B61-12 Test body</long-name>
-                <fire-msg type="string">Bombs away</fire-msg>
+                <fire-msg type="string">Nukes away</fire-msg>
                 <class type="string">GM</class>
-                <max-fire-range-nm type="double">12 </max-fire-range-nm>
+                <max-fire-range-nm type="double">25 </max-fire-range-nm>
                 <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
                 <guidance type="string">gps</guidance>
-                <navigation type="string">PN</navigation>
+                <navigation type="string">APN</navigation>
                 <loft-altitude type="int"> 0 </loft-altitude>
                 <terrain-follow type="bool">false</terrain-follow>
                 <FCS-field-deg type="int"> 200 </FCS-field-deg>
@@ -1851,7 +1851,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
                 <drag-coeff type="double"> 0.012 </drag-coeff>
                 <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
-                <arming-time-sec type="double"> 5000 </arming-time-sec>
+                <arming-time-sec type="double"> 4 </arming-time-sec>
                 <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
                 <self-destruct-time-sec type="double"> 10000 </self-destruct-time-sec>
                 <all-aspect type="bool">true</all-aspect>
@@ -1879,9 +1879,9 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <b61-7>
                 <short-name type="string">B61-7</short-name>
                 <long-name type="string">B61-7 Inert</long-name>
-                <fire-msg type="string">Bombs away</fire-msg>
+                <fire-msg type="string">Nukes away</fire-msg>
                 <class type="string">GM</class>
-                <max-fire-range-nm type="double">12 </max-fire-range-nm>
+                <max-fire-range-nm type="double">20 </max-fire-range-nm>
                 <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
                 <guidance type="string">unguided</guidance>
                 <navigation type="string">direct</navigation>
@@ -1900,7 +1900,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
                 <drag-coeff type="double"> 0.012 </drag-coeff>
                 <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
-                <arming-time-sec type="double"> 5000 </arming-time-sec>
+                <arming-time-sec type="double"> 4 </arming-time-sec>
                 <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
                 <self-destruct-time-sec type="double"> 10000 </self-destruct-time-sec>
                 <all-aspect type="bool">true</all-aspect>
