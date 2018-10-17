@@ -340,6 +340,7 @@
 			<output>/systems/electrical/outputs/dme</output>
 			<output>/systems/electrical/outputs/tacan</output>
 			<output>/systems/electrical/outputs/gps</output>
+			<output>/systems/electrical/outputs/DG</output>
 			<output>/systems/electrical/outputs/transponder</output>
 			<output>/systems/electrical/outputs/turn-coordinator</output>
 		</summer>
