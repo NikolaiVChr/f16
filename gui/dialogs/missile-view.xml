@@ -52,7 +52,7 @@
   </whatever>
 
   <text>
-    <pref-width>0</pref-width>
+    <pref-width>70</pref-width>
     <live>1</live>
     <property>/sim/current-view/missile-view</property>
     <color>
@@ -67,8 +67,8 @@
   </text>
 
   <button>
-    <legend />
-    <pref-width>200</pref-width>
+    <legend>list</legend>
+    <pref-width>40</pref-width>
     <border>0</border>
     <color>
       <red>1</red>

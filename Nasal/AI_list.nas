@@ -56,6 +56,9 @@ var AImodel = {
                 continue;
             }
             var myName = string.replace(n.getPath(), "/ai/models/", "");
+            if (n.getNode("callsign") != nil and n.getNode("callsign").getValue()!=nil) {
+              myName = n.getNode("callsign").getValue();
+            }
             #print( string.replace(n.getPath(),"/ai/models/",""));
 
             var root = n.getPath();

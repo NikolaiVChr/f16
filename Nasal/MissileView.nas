@@ -95,6 +95,9 @@ var view_firing_missile = func(myMissile)
 
     # We select the missile name
     var myMissileName = string.replace(myMissile.ai.getPath(), "/ai/models/", "");
+    if (myMissile.ai.getNode("callsign") != nil and myMissile.ai.getNode("callsign").getValue()!=nil) {
+      myMissileName = myMissile.ai.getNode("callsign").getValue();
+    }
 
     # We memorize the initial view number
     var actualView = getprop("/sim/current-view/view-number");
