@@ -335,6 +335,13 @@
 				<min>0</min>
 				<max>28</max>
 			</clipto>
+			<output>/systems/electrical/outputs/adf</output>
+			<output>/systems/electrical/outputs/nav</output>
+			<output>/systems/electrical/outputs/dme</output>
+			<output>/systems/electrical/outputs/tacan</output>
+			<output>/systems/electrical/outputs/gps</output>
+			<output>/systems/electrical/outputs/transponder</output>
+			<output>/systems/electrical/outputs/turn-coordinator</output>
 		</summer>
 		
 		<summer name="elec/bus/batt-2">
