@@ -27,7 +27,8 @@ var F16_HUD = {
                 "name": "F16 HUD",
                     "size": [1024,1024], 
                     "view": [sx,sy],#340,260
-                    "mipmapping": 0 # mipmapping will make the HUD text blurry on smaller screens     
+                    "mipmapping": 0, # mipmapping will make the HUD text blurry on smaller screens     
+                    "additive-blend": 1# bool
                     });  
 
         obj.sy = sy;                        
@@ -48,7 +49,8 @@ var F16_HUD = {
                 "name": "F16 HUD",
                     "size": [1024,1024], 
                     "view": [sx,sy],
-                    "mipmapping": 0     
+                    "mipmapping": 0,
+                    "additive-blend": 1# bool
                     });
 
         obj.svg.setTranslation (tran_x,tran_y);
@@ -77,7 +79,27 @@ var F16_HUD = {
         obj.vel_line.hide();
         obj.vel_ind = obj.get_element("path3111");
         obj.vel_ind.hide();
-        
+        obj.alt_ind = obj.get_element("path3111-1");
+        obj.alt_ind.hide();
+        obj.scaling = [obj.get_element("alt_tick_0"),obj.get_element("alt_label0")];
+        for(var ii=1;ii<=1000;ii+=1) {
+          var tmp = obj.get_element("alt_tick_"~ii~"00");
+          append(obj.scaling, tmp);
+        }
+        for(var ii=500;ii<=100000;ii+=500) {
+          var tmp = obj.get_element("alt_label"~ii);
+          append(obj.scaling, tmp);
+        }
+        for(var ii=0;ii<=1100;ii+=20) {
+          var tmp = obj.get_element("ias_tick_"~ii);
+          append(obj.scaling, tmp);
+        }
+        for(var ii=0;ii<=1100;ii+=100) {
+          var tmp = obj.get_element("ias_label"~ii);
+          append(obj.scaling, tmp);
+
+        }
+         
 
         HUD_FONT = "LiberationFonts/LiberationMono-Bold.ttf";#"condensed.txf";  with condensed the FLYUP text was not displayed until minutes into flight, no clue why
         obj.window1 = obj.get_text("window1", HUD_FONT,9,1.4);
@@ -107,6 +129,7 @@ var F16_HUD = {
                  TAS                       : "/fdm/jsbsim/velocities/vtrue-kts",
                  GND_SPD                   : "/velocities/groundspeed-kt",
                  HUD_VEL                   : "/f16/avionics/hud-velocity",
+                 HUD_SCA                   : "/f16/avionics/hud-scales",
                  Nz                        : "/accelerations/pilot-gdamped",
                  alpha                     : "/fdm/jsbsim/aero/alpha-deg",
                  altitude_ft               : "/position/altitude-ft",
@@ -258,19 +281,35 @@ var F16_HUD = {
             props.UpdateManager.FromHashValue("measured_altitude", 1.0, func(measured_altitude)
                                       {
                                           obj.alt_range.setTranslation(0, measured_altitude * alt_range_factor);
+                                          obj.alt_curr.setText(sprintf("%5d",10*int(measured_altitude*0.1)));
                                       }),
-            props.UpdateManager.FromHashList(["calibrated", "GND_SPD", "HUD_VEL"], 0.5, func(hdp)
+            props.UpdateManager.FromHashValue("HUD_SCA", 0.5, func(HUD_SCA)
+                                      {
+                                          if (HUD_SCA) {
+                                            foreach(tck;obj.scaling) {
+                                                tck.show();
+                                              }
+                                          } else {
+                                              foreach(tck;obj.scaling) {
+                                                tck.hide();
+                                              }
+                                          }
+                                      }),
+            props.UpdateManager.FromHashList(["calibrated", "GND_SPD", "HUD_VEL", "gear_down"], 0.5, func(hdp)
                                       {   
                                           # the real F-16 has calibrated airspeed as default in HUD.
-                                          if (hdp.HUD_VEL == 1) {
+                                          if (hdp.HUD_VEL == 1 or hdp.gear_down) {
                                             obj.ias_range.setTranslation(0, hdp.calibrated * ias_range_factor);
                                             obj.speed_type.setText("C");
+                                            obj.speed_curr.setText(sprintf("%d",hdp.calibrated));
                                           } elsif (hdp.HUD_VEL == 0) {
                                             obj.ias_range.setTranslation(0, hdp.TAS * ias_range_factor);
                                             obj.speed_type.setText("T");
+                                            obj.speed_curr.setText(sprintf("%d",hdp.TAS));
                                           } else {
                                             obj.ias_range.setTranslation(0, hdp.GND_SPD * ias_range_factor);
                                             obj.speed_type.setText("G");
+                                            obj.speed_curr.setText(sprintf("%d",hdp.GND_SPD));
                                           }
                                       }),
             props.UpdateManager.FromHashValue("range_rate", 0.01, func(range_rate)
@@ -492,6 +531,13 @@ var F16_HUD = {
                 .horiz(7)
                 .setStrokeLineWidth(1)
                 .setColor(1,0,0);
+        obj.alti_indicator = obj.svg.createChild("path")
+                .moveTo(3+0.75*sx*0.695633,sy*0.245)
+                .horiz(7)
+                .setStrokeLineWidth(1)
+                .setColor(1,0,0);
+        append(obj.scaling, obj.alti_indicator);
+        append(obj.scaling, obj.speed_indicator);
         obj.speed_type = obj.svg.createChild("text")
                 .setText("C")
                 .setTranslation(1+0.25*sx*0.695633,sy*0.24)
@@ -499,6 +545,72 @@ var F16_HUD = {
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(9, 1.1);
+        obj.speed_mask = obj.svg.createChild("image")
+                .setTranslation(-27+0.21*sx*0.695633,sy*0.245-6)
+                .set("z-index",10000)
+                #.set("blend-source-rgb","one")
+                #.set("blend-source-alpha","one")
+                .set("blend-source","zero")
+                .set("blend-destination-rgb","one")
+                .set("blend-destination-alpha","one-minus-src-alpha")
+                #.set("blend-destination","zero")
+                .set("src", "Aircraft/f16/Nasal/HUD/speed_mask.png");
+        obj.speed_frame = obj.svg.createChild("path")
+                .set("z-index",10001)
+                .moveTo(2+0.20*sx*0.695633,sy*0.245)
+                .lineTo(2+0.20*sx*0.695633-5,sy*0.245-6)
+                .horiz(-25)
+                .vert(12)
+                .horiz(25)
+                .lineTo(2+0.20*sx*0.695633,sy*0.245)
+                .setStrokeLineWidth(1)
+                .setColor(1,0,0);
+        obj.speed_curr = obj.svg.createChild("text")
+                .set("z-index",10002)
+                .set("blend-source-rgb","one")
+                .set("blend-source-alpha","one")
+                .set("blend-destination-rgb","one")
+                .set("blend-destination-alpha","one")
+                .setText("425")
+                .setTranslation(0.18*sx*0.695633,sy*0.245)
+                .setAlignment("right-center")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(9, 1.1);
+
+        obj.alt_mask = obj.svg.createChild("image")
+                .setTranslation(5+3+0.79*sx*0.695633,sy*0.245-6)
+                .set("z-index",10000)
+                #.set("blend-source-rgb","one")
+                #.set("blend-source-alpha","one")
+                .set("blend-source","zero")
+                .set("blend-destination-rgb","one")
+                .set("blend-destination-alpha","one-minus-src-alpha")
+                #.set("blend-destination","zero")
+                .set("src", "Aircraft/f16/Nasal/HUD/alt_mask.png");
+        obj.alt_frame = obj.svg.createChild("path")
+                .set("z-index",10001)
+                .moveTo(8-2+0.80*sx*0.695633,sy*0.245)
+                .lineTo(8-2+0.80*sx*0.695633+5,sy*0.245-6)
+                .horiz(28)
+                .vert(12)
+                .horiz(-28)
+                .lineTo(8-2+0.80*sx*0.695633,sy*0.245)
+                .setStrokeLineWidth(1)
+                .setColor(1,0,0);
+        obj.alt_curr = obj.svg.createChild("text")
+                .set("z-index",10002)
+                .set("blend-source-rgb","one")
+                .set("blend-source-alpha","one")
+                .set("blend-destination-rgb","one")
+                .set("blend-destination-alpha","one")
+                .setText("88888")
+                .setTranslation(8+0.82*sx*0.695633,sy*0.245)
+                .setAlignment("left-center")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(9, 1.1);
+
         obj.trackLine = obj.svg.createChild("path")
                 .moveTo(0,0)
                 #.horiz(10)

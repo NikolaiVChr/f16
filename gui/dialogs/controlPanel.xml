@@ -558,7 +558,10 @@
 			    <text><label>Magnetic heading in HUD</label></text>
 			</group>
 
+			<hrule/>
 			<group>
+			    <layout>hbox</layout>
+					<group>
 						<layout>vbox</layout>
 						
 						<text>
@@ -600,6 +603,47 @@
 						</group>
 					
 					</group>
+
+					<group>
+						<layout>vbox</layout>
+						
+						<text>
+							<label>HUD SCALES</label>
+						</text>
+						
+						<group>
+							<layout>hbox</layout>
+						
+							<group>
+								<layout>vbox</layout>
+								<halign>left</halign>
+								
+								<text>
+									<label>VAH</label>
+								</text>
+								<text>
+									<label>OFF</label>
+								</text>								
+							</group>
+							
+							<slider>
+								<halign>left</halign>
+								<property>/f16/avionics/hud-scales</property>
+								<min>0</min>
+								<max>1</max>
+								<step>1</step>
+								<live>true</live>
+								<vertical>true</vertical>
+								<binding>
+									<command>dialog-apply</command>
+								</binding>
+							</slider>
+							
+						</group>
+					
+					</group>
+
+				</group>
 			
 		</group>
 

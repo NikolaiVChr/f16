@@ -1320,7 +1320,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
         </ecm>
         <heading-indicator>
             <offset-deg type="double">0</offset-deg>
-            <use-mag-in-hud type="bool">false</use-mag-in-hud>
+            <use-mag-in-hud type="bool">true</use-mag-in-hud><!-- as per manual the HUD shows magnetic -->
         </heading-indicator>
     </instrumentation>
     <environment>
@@ -1931,6 +1931,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <mfd-r-brt type="double">1.0</mfd-r-brt>
             <mfd-r-con type="double">1.0</mfd-r-con>
             <hud-velocity type="int">1</hud-velocity>
+            <hud-scales type="int">1</hud-scales>
         </avionics>
         <fcs>
             <autopilot-on type="int">0</autopilot-on> <!-- Ignored on Block 20+ -->
