@@ -139,7 +139,10 @@ var TopGun = {
 				screen.log.write(me.callsign~": Lets do this.", 1.0, 1.0, 0.0);
 			}
 		}
-		settimer(func {me.apply();me.loadNode.setBoolValue(1);setprop("ai/models/model-added", me.ai.getPath());print("TopGun: "~me.callsign~" spawned");}, 0.05);
+		me.apply();
+		me.loadNode.setBoolValue(1);
+		setprop("ai/models/model-added", me.ai.getPath());
+		print("TopGun: "~me.callsign~" spawned");
 	},
 
 	reset: func () {
@@ -1225,7 +1228,7 @@ var start = func (diff = 1) {
 	print("TopGun: Difficulty set to: "~diff);
 	if (diff == 0) {
 		MAX_ROLL_SPEED = 25;
-		num_t = "-9999";
+		num_t = "0000";
 		ENDURANCE = 10;
 		tg1.callsign = "Lt.Endo";
 		tg2.callsign = "Lt.Ice";
