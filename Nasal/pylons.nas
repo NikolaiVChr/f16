@@ -140,7 +140,7 @@ var getDLZ = func {
     return nil;
 }
 
-#Air patrol configuration
+# Air patrol
 var a2a_patrol = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         pylon1.loadSet(pylonSets.g);
@@ -158,7 +158,7 @@ var a2a_patrol = func {
     }
 }
 
-# Air superiority configuration
+# Air superiority
 var a2a_super = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
     	pylon1.loadSet(pylonSets.h);
@@ -176,7 +176,7 @@ var a2a_super = func {
     }
 }
 
-# CAP configuration
+# CAP
 var a2a_cap = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         pylon1.loadSet(pylonSets.g);
@@ -194,7 +194,7 @@ var a2a_cap = func {
     }
 }
 
-# CAP extended loiter configuration
+# CAP (extended loiter)
 var a2a_capext = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         pylon1.loadSet(pylonSets.g);
@@ -211,15 +211,15 @@ var a2a_capext = func {
       screen.log.write(f16.msgB);
     }
 }
-# CAS: 2 2XGBU and 2 AGM65
+# CAS: 2 2XMK82 and 2 AGM65
 var a2g_cas = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         pylon1.loadSet(pylonSets.g);
         pylon2.loadSet(pylonSets.h);
         pylon3.loadSet(pylonSets.a);
-        pylon4.loadSet(pylonSets.j);
+        pylon4.loadSet(pylonSets.c);
         pylon5.loadSet(pylonSets.f);
-        pylon6.loadSet(pylonSets.j);
+        pylon6.loadSet(pylonSets.c);
         pylon7.loadSet(pylonSets.a);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
@@ -229,16 +229,16 @@ var a2g_cas = func {
     }
 }
 
-# CAS extended loiter: 2 3XGBU
+# CAS (extended loiter): 2 3XAGM-65
 var a2g_casext = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         pylon1.loadSet(pylonSets.g);
         pylon2.loadSet(pylonSets.h);
-        pylon3.loadSet(pylonSets.i);
+        pylon3.loadSet(pylonSets.a);
         pylon4.loadSet(pylonSets.l);
         pylon5.loadSet(pylonSets.empty);
         pylon6.loadSet(pylonSets.m);
-        pylon7.loadSet(pylonSets.i);
+        pylon7.loadSet(pylonSets.a);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
         f16.reloadCannon();
@@ -247,15 +247,15 @@ var a2g_casext = func {
     }
 }
 
-# Air Strike : 2 3XGBU and 2 2XMK82
+# Air strike : 2 3XGBU and 2 2XMK83
 var a2g_mix = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         pylon1.loadSet(pylonSets.g);
         pylon2.loadSet(pylonSets.h);
         pylon3.loadSet(pylonSets.i);
-        pylon4.loadSet(pylonSets.c);
+        pylon4.loadSet(pylonSets.d);
         pylon5.loadSet(pylonSets.empty);
-        pylon6.loadSet(pylonSets.c);
+        pylon6.loadSet(pylonSets.d);
         pylon7.loadSet(pylonSets.i);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
@@ -265,16 +265,16 @@ var a2g_mix = func {
     }
 }
 
-# Guided Air to Ground 1 : 2 JDAM and 2 2XGBU
+# Guided A/G 1 : 2 GBU-24 and 2 2XGBU
 var a2g_guided1 = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         pylon1.loadSet(pylonSets.g);
         pylon2.loadSet(pylonSets.h);
-        pylon3.loadSet(pylonSets.c3);
+        pylon3.loadSet(pylonSets.c4);
         pylon4.loadSet(pylonSets.j);
         pylon5.loadSet(pylonSets.empty);
         pylon6.loadSet(pylonSets.j);
-        pylon7.loadSet(pylonSets.c3);
+        pylon7.loadSet(pylonSets.c4);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
         f16.reloadCannon();
@@ -283,14 +283,14 @@ var a2g_guided1 = func {
     }
 }
 
-# Guided Air to Ground 2 : 2 JDAM and 2 3XGBU
+# Guided A/G 2 : 2 JDAM and 2 3XGBU
 var a2g_guided2 = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         pylon1.loadSet(pylonSets.g);
         pylon2.loadSet(pylonSets.h);
         pylon3.loadSet(pylonSets.i);
         pylon4.loadSet(pylonSets.c3);
-        pylon5.loadSet(pylonSets.empty);
+        pylon5.loadSet(pylonSets.f);
         pylon6.loadSet(pylonSets.c3);
         pylon7.loadSet(pylonSets.i);
         pylon8.loadSet(pylonSets.h);
@@ -308,7 +308,7 @@ var a2s_antiship = func {
         pylon2.loadSet(pylonSets.h);
         pylon3.loadSet(pylonSets.b);
         pylon4.loadSet(pylonSets.c3);
-        pylon5.loadSet(pylonSets.empty);
+        pylon5.loadSet(pylonSets.f);
         pylon6.loadSet(pylonSets.c3);
         pylon7.loadSet(pylonSets.b);
         pylon8.loadSet(pylonSets.h);
@@ -373,7 +373,7 @@ var a2g_sead = func {
     }
 }
 
-# OCA: 4 AA missiles and 2 AGM65
+# OCA: 4 AA missiles and 2 3x AGM65
 var a2g_oca = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         pylon1.loadSet(pylonSets.g);
