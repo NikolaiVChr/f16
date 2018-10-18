@@ -1930,6 +1930,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <mfd-l-con type="double">1.0</mfd-l-con>
             <mfd-r-brt type="double">1.0</mfd-r-brt>
             <mfd-r-con type="double">1.0</mfd-r-con>
+            <hud-velocity type="int">1</hud-velocity>
         </avionics>
         <fcs>
             <autopilot-on type="int">0</autopilot-on> <!-- Ignored on Block 20+ -->

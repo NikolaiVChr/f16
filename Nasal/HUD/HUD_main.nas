@@ -71,6 +71,13 @@ var F16_HUD = {
         obj.oldBore = obj.get_element("path4530-6");
         obj.target_locked = obj.get_element("target_locked");
         obj.target_locked.setVisible(0);
+        obj.alt_line = obj.get_element("alt_tick_vert_line");
+        obj.alt_line.hide();
+        obj.vel_line = obj.get_element("ias_tick_vert_line");
+        obj.vel_line.hide();
+        obj.vel_ind = obj.get_element("path3111");
+        obj.vel_ind.hide();
+        
 
         HUD_FONT = "LiberationFonts/LiberationMono-Bold.ttf";#"condensed.txf";  with condensed the FLYUP text was not displayed until minutes into flight, no clue why
         obj.window1 = obj.get_text("window1", HUD_FONT,9,1.4);
@@ -97,6 +104,9 @@ var F16_HUD = {
         input = {
                  IAS                       : "/velocities/airspeed-kt",
                  calibrated                : "/fdm/jsbsim/velocities/vc-kts",
+                 TAS                       : "/fdm/jsbsim/velocities/vtrue-kts",
+                 GND_SPD                   : "/velocities/groundspeed-kt",
+                 HUD_VEL                   : "/f16/avionics/hud-velocity",
                  Nz                        : "/accelerations/pilot-gdamped",
                  alpha                     : "/fdm/jsbsim/aero/alpha-deg",
                  altitude_ft               : "/position/altitude-ft",
@@ -107,7 +117,7 @@ var F16_HUD = {
                  gear_down                 : "/controls/gear/gear-down",
                  heading                   : "/orientation/heading-deg",
                  headingMag                : "/orientation/heading-magnetic-deg",
-                 useMag:                     "instrumentation/heading-indicator/use-mag-in-hud",
+                 useMag:                     "/instrumentation/heading-indicator/use-mag-in-hud",
                  mach                      : "/instrumentation/airspeed-indicator/indicated-mach",
                  measured_altitude         : "/instrumentation/altimeter/indicated-altitude-ft",
                  pitch                     : "/orientation/pitch-deg",
@@ -249,10 +259,19 @@ var F16_HUD = {
                                       {
                                           obj.alt_range.setTranslation(0, measured_altitude * alt_range_factor);
                                       }),
-            props.UpdateManager.FromHashValue("calibrated", 0.1, func(calibrated)
+            props.UpdateManager.FromHashList(["calibrated", "GND_SPD", "HUD_VEL"], 0.5, func(hdp)
                                       {   
                                           # the real F-16 has calibrated airspeed as default in HUD.
-                                          obj.ias_range.setTranslation(0, calibrated * ias_range_factor);
+                                          if (hdp.HUD_VEL == 1) {
+                                            obj.ias_range.setTranslation(0, hdp.calibrated * ias_range_factor);
+                                            obj.speed_type.setText("C");
+                                          } elsif (hdp.HUD_VEL == 0) {
+                                            obj.ias_range.setTranslation(0, hdp.TAS * ias_range_factor);
+                                            obj.speed_type.setText("T");
+                                          } else {
+                                            obj.ias_range.setTranslation(0, hdp.GND_SPD * ias_range_factor);
+                                            obj.speed_type.setText("G");
+                                          }
                                       }),
             props.UpdateManager.FromHashValue("range_rate", 0.01, func(range_rate)
                                       {
@@ -317,22 +336,22 @@ var F16_HUD = {
                                              {
                                                  if (hdp.brake_parking) {
                                                      obj.window2.setVisible(1);
-                                                     obj.window2.setText("BRAKES");
+                                                     obj.window2.setText(" BRAKES");
                                                  } elsif (hdp.flap_pos_deg > 0 or hdp.gear_down) {
                                                      obj.window2.setVisible(1);
                                                      obj.gd = "";
                                                      if (hdp.gear_down)
                                                        obj.gd = " G";
-                                                     obj.window2.setText(sprintf("F %d%s",hdp.flap_pos_deg,obj.gd));
+                                                     obj.window2.setText(sprintf(" F %d%s",hdp.flap_pos_deg,obj.gd));
                                                  } elsif (hdp.master_arm) {
                                                      if (hdp.CCRP_active) {
-                                                         obj.window2.setText("ARM CCRP");
+                                                         obj.window2.setText(" ARM CCRP");
                                                      } else {
-                                                         obj.window2.setText("ARM");
+                                                         obj.window2.setText(" ARM");
                                                      }
                                                      obj.window2.setVisible(1);
                                                  } else {
-                                                     obj.window2.setText("NAV");
+                                                     obj.window2.setText(" NAV");
                                                      obj.window2.setVisible(1);
                                                  }
                                              }
@@ -468,6 +487,18 @@ var F16_HUD = {
                 .horiz(10)
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
+        obj.speed_indicator = obj.svg.createChild("path")
+                .moveTo(0.25*sx*0.695633,sy*0.245)
+                .horiz(7)
+                .setStrokeLineWidth(1)
+                .setColor(1,0,0);
+        obj.speed_type = obj.svg.createChild("text")
+                .setText("C")
+                .setTranslation(1+0.25*sx*0.695633,sy*0.24)
+                .setAlignment("left-bottom")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(9, 1.1);
         obj.trackLine = obj.svg.createChild("path")
                 .moveTo(0,0)
                 #.horiz(10)
@@ -949,7 +980,7 @@ var F16_HUD = {
                 hdp.window9_txt = sprintf("AOA %d",me.alphaHUD);
             }
 
-            hdp.window7_txt = sprintf("%.2f",hdp.mach);
+            hdp.window7_txt = sprintf(" %.2f",hdp.mach);
             me.window7.show();
         }
 
