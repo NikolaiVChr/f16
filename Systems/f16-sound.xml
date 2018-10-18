@@ -758,7 +758,7 @@
                 <factor>1.00</factor>
                 <offset>1.60</offset>
                 <min>0</min>
-                <max>1</max>
+                <max>2</max>
             </pitch>
             <volume>
                 <property>payload/armament/aim-9/sound-volume</property>
