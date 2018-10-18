@@ -81,7 +81,7 @@ var F16_HUD = {
         obj.vel_ind.hide();
         obj.alt_ind = obj.get_element("path3111-1");
         obj.alt_ind.hide();
-        obj.scaling = [obj.get_element("alt_tick_0"),obj.get_element("alt_label0")];
+        obj.scaling = [obj.get_element("alt_tick_0"),obj.get_element("alt_label0"),obj.get_element("heading-scale"),obj.get_element("path3419")];
         for(var ii=1;ii<=1000;ii+=1) {
           var tmp = obj.get_element("alt_tick_"~ii~"00");
           append(obj.scaling, tmp);
