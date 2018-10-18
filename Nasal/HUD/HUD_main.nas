@@ -81,24 +81,29 @@ var F16_HUD = {
         obj.vel_ind.hide();
         obj.alt_ind = obj.get_element("path3111-1");
         obj.alt_ind.hide();
-        obj.scaling = [obj.get_element("alt_tick_0"),obj.get_element("alt_label0"),obj.get_element("heading-scale"),obj.get_element("path3419")];
+        obj.scaling = [obj.get_element("alt_tick_0"),obj.get_element("alt_label0"),obj.heading_tape,obj.heading_tape_pointer];
+        obj.total   = [obj.get_element("alt_tick_0"),obj.get_element("alt_label0"),obj.heading_tape,obj.heading_tape_pointer];
         for(var ii=1;ii<=1000;ii+=1) {
           var tmp = obj.get_element("alt_tick_"~ii~"00");
           append(obj.scaling, tmp);
+          append(obj.total, tmp);
         }
         for(var ii=500;ii<=100000;ii+=500) {
           var tmp = obj.get_element("alt_label"~ii);
           append(obj.scaling, tmp);
+          append(obj.total, tmp);
         }
         for(var ii=0;ii<=1100;ii+=20) {
           var tmp = obj.get_element("ias_tick_"~ii);
           append(obj.scaling, tmp);
+          append(obj.total, tmp);
         }
         for(var ii=0;ii<=1100;ii+=100) {
           var tmp = obj.get_element("ias_label"~ii);
           append(obj.scaling, tmp);
+          append(obj.total, tmp);
         }
-         
+
 
         HUD_FONT = "LiberationFonts/LiberationMono-Bold.ttf";#"condensed.txf";  with condensed the FLYUP text was not displayed until minutes into flight, no clue why
         obj.window1 = obj.get_text("window1", HUD_FONT,9,1.4);
@@ -121,6 +126,30 @@ var F16_HUD = {
 
         obj.ralt = obj.get_text("radalt", HUD_FONT,9,1.4);
         obj.ralt.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(9,1.1);
+
+        append(obj.total, obj.ladder);
+        append(obj.total, obj.heading_tape);
+        append(obj.total, obj.VV);
+        append(obj.total, obj.heading_tape_pointer);
+        append(obj.total, obj.roll_pointer);
+        append(obj.total, obj.roll_lines);
+        append(obj.total, obj.alt_range);
+        append(obj.total, obj.ias_range);
+        append(obj.total, obj.target_locked);
+        append(obj.total, obj.alt_line);
+        append(obj.total, obj.vel_ind);
+        append(obj.total, obj.vel_line);
+        append(obj.total, obj.alt_ind);
+        append(obj.total, obj.window1);
+        append(obj.total, obj.window2);
+        append(obj.total, obj.window3);
+        append(obj.total, obj.window4);
+        append(obj.total, obj.window5);
+        append(obj.total, obj.window6);
+        append(obj.total, obj.window7);
+        append(obj.total, obj.window8);
+        append(obj.total, obj.window9);
+        append(obj.total, obj.ralt);
 
         input = {
                  IAS                       : "/velocities/airspeed-kt",
@@ -186,9 +215,15 @@ var F16_HUD = {
                                       {
 # print("HUD hud_serviceable=", hdp.hud_serviceable," display=", hdp.hud_display, " brt=", hdp.hud_brightness, " power=", hdp.hud_power);
                                           if (!hdp.hud_display or !hdp.hud_serviceable) {
-                                            obj.svg.setColor(0.3,1,0.3,0);
+                                            #obj.svg.setColor(0.3,1,0.3,0);
+                                            foreach(item;obj.total) {
+                                              item.setColor(0.3,1,0.3, 0);
+                                            }                                            
                                           } elsif (hdp.hud_brightness != nil and hdp.hud_power != nil) {
-                                            obj.svg.setColor(0.3,1,0.3,hdp.hud_brightness * hdp.hud_power);
+                                            #obj.svg.setColor(1,0,0.3,hdp.hud_brightness * hdp.hud_power);
+                                            foreach(item;obj.total) {
+                                              item.setColor(0.3,1,0.3,hdp.hud_brightness * hdp.hud_power);
+                                            }
                                           }
                                       }),
             props.UpdateManager.FromHashList([], 0.01, func(hdp)
@@ -335,9 +370,16 @@ var F16_HUD = {
                                             obj.heading_tape_position = (360-head)*54/10;
                                           if (hdp.gear_down) {
                                               obj.heading_tape_positionY = -10;
+                                              obj.head_curr.setTranslation(0.5*sx*0.695633,sy*0.1-12);
+                                              obj.head_mask.setTranslation(-10+0.5*sx*0.695633,sy*0.1-20);
+                                              obj.head_frame.setTranslation(0,0);
                                           } else {
                                               obj.heading_tape_positionY = 95;
+                                              obj.head_curr.setTranslation(0.5*sx*0.695633,sy*0.1-12+105);
+                                              obj.head_mask.setTranslation(-10+0.5*sx*0.695633,sy*0.1-20+105);
+                                              obj.head_frame.setTranslation(0,105);
                                           }
+
                                           obj.heading_tape.setTranslation (obj.heading_tape_position,obj.heading_tape_positionY);
                                           obj.heading_tape_pointer.setTranslation (0,obj.heading_tape_positionY);
                                       }
@@ -477,6 +519,7 @@ var F16_HUD = {
                 obj.tgt_symbols[i] = tgt;
                 tgt.updateCenter();
                 tgt.setVisible(0);
+                append(obj.total, tgt);
 #                print("HUD: loaded ",name);
             }
             else
@@ -490,6 +533,7 @@ var F16_HUD = {
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(13, 1.4);
+        append(obj.total, obj.flyup);
         obj.stby = obj.svg.createChild("text")
                 .setText("NO RAD")
                 .setTranslation(sx*0.5*0.695633,sy*0.15)
@@ -497,6 +541,8 @@ var F16_HUD = {
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(11, 1.1);
+
+          append(obj.total, obj.stby);
 #        obj.ralt = obj.svg.createChild("text")
 #                .setText("R 00000 ")
 #                .setTranslation(sx*1*0.675633-5,sy*0.45)
@@ -512,6 +558,7 @@ var F16_HUD = {
                 .vert(10)
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
+              append(obj.total, obj.raltFrame);
         obj.boreSymbol = obj.svg.createChild("path")
                 .moveTo(-5,0)
                 .horiz(10)
@@ -519,6 +566,7 @@ var F16_HUD = {
                 .vert(10)
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
+            append(obj.total, obj.boreSymbol);
         obj.bracket = obj.svg.createChild("path")
                 .moveTo(0,-34)
                 .horiz(-10)
@@ -526,18 +574,23 @@ var F16_HUD = {
                 .horiz(10)
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
+                append(obj.total, obj.bracket);
         obj.speed_indicator = obj.svg.createChild("path")
                 .moveTo(0.25*sx*0.695633,sy*0.245)
                 .horiz(7)
                 .setStrokeLineWidth(1)
                 .setColor(1,0,0);
+                append(obj.total, obj.speed_indicator);
         obj.alti_indicator = obj.svg.createChild("path")
                 .moveTo(3+0.75*sx*0.695633,sy*0.245)
                 .horiz(7)
                 .setStrokeLineWidth(1)
                 .setColor(1,0,0);
+                append(obj.total, obj.alti_indicator);
         append(obj.scaling, obj.alti_indicator);
         append(obj.scaling, obj.speed_indicator);
+        append(obj.total, obj.alti_indicator);
+        append(obj.total, obj.speed_indicator);
         obj.speed_type = obj.svg.createChild("text")
                 .setText("C")
                 .setTranslation(1+0.25*sx*0.695633,sy*0.24)
@@ -545,6 +598,7 @@ var F16_HUD = {
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(9, 1.1);
+        append(obj.total, obj.speed_type);
         obj.speed_mask = obj.svg.createChild("image")
                 .setTranslation(-27+0.21*sx*0.695633,sy*0.245-6)
                 .set("z-index",10000)
@@ -565,6 +619,7 @@ var F16_HUD = {
                 .lineTo(2+0.20*sx*0.695633,sy*0.245)
                 .setStrokeLineWidth(1)
                 .setColor(1,0,0);
+                append(obj.total, obj.speed_frame);
         obj.speed_curr = obj.svg.createChild("text")
                 .set("z-index",10002)
                 .set("blend-source-rgb","one")
@@ -577,7 +632,7 @@ var F16_HUD = {
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(9, 1.1);
-
+append(obj.total, obj.speed_curr);
         obj.alt_mask = obj.svg.createChild("image")
                 .setTranslation(5+3+0.79*sx*0.695633,sy*0.245-6)
                 .set("z-index",10000)
@@ -598,6 +653,7 @@ var F16_HUD = {
                 .lineTo(8-2+0.80*sx*0.695633,sy*0.245)
                 .setStrokeLineWidth(1)
                 .setColor(1,0,0);
+                append(obj.total, obj.alt_frame);
         obj.alt_curr = obj.svg.createChild("text")
                 .set("z-index",10002)
                 .set("blend-source-rgb","one")
@@ -610,7 +666,7 @@ var F16_HUD = {
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(9, 1.1);
-
+                append(obj.total, obj.alt_curr);
         obj.head_mask = obj.svg.createChild("image")
                 .setTranslation(-10+0.5*sx*0.695633,sy*0.1-20)
                 .set("z-index",10000)
@@ -621,6 +677,7 @@ var F16_HUD = {
                 .set("blend-destination-alpha","one-minus-src-alpha")
                 #.set("blend-destination","zero")
                 .set("src", "Aircraft/f16/Nasal/HUD/head_mask.png");
+                #append(obj.total, obj.head_mask);
         obj.head_frame = obj.svg.createChild("path")
                 .set("z-index",10001)
                 .moveTo(10+0.50*sx*0.695633,sy*0.1-10)
@@ -630,6 +687,7 @@ var F16_HUD = {
                 .horiz(20)
                 .setStrokeLineWidth(1)
                 .setColor(1,0,0);
+                append(obj.total, obj.head_frame);
         obj.head_curr = obj.svg.createChild("text")
                 .set("z-index",10002)
                 .set("blend-source-rgb","one")
@@ -642,29 +700,34 @@ var F16_HUD = {
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(9, 1.1);
-
+                append(obj.total, obj.head_curr);
         obj.trackLine = obj.svg.createChild("path")
                 .moveTo(0,0)
                 #.horiz(10)
                 .vert(-30)
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
+
+            append(obj.total, obj.trackLine);
         obj.bombFallLine = obj.svg.createChild("path")
                 .moveTo(sx*0.5*0.695633,0)
                 #.horiz(10)
                 .vert(400)
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
+                append(obj.total, obj.bombFallLine);
         obj.solutionCue = obj.svg.createChild("path")
                 .moveTo(sx*0.5*0.695633-5,0)
                 .horiz(10)
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
+                append(obj.total, obj.solutionCue);
         obj.ccrpMarker = obj.svg.createChild("path")
                 .moveTo(sx*0.5*0.695633-10,sy*0.5)
                 .horiz(20)
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
+                append(obj.total, obj.ccrpMarker);
         obj.thing = obj.svg.createChild("path")
             .moveTo(-3,0)
             .arcSmallCW(3,3, 0, 3*2, 0)
@@ -673,6 +736,7 @@ var F16_HUD = {
             .vert(-6)
             .setStrokeLineWidth(1)
             .setColor(0,1,0);
+            append(obj.total, obj.thing);
         obj.initUpdate =1;
         
         obj.alpha = getprop("f16/avionics/hud-brt");
@@ -685,6 +749,7 @@ var F16_HUD = {
         obj.dlzLW     =   1;
         obj.dlz      = obj.svg.createChild("group")
                         .setTranslation(obj.dlzX, obj.dlzY);
+        append(obj.total, obj.dlz);
         obj.dlz2     = obj.dlz.createChild("group");
         obj.dlzArrow = obj.dlz.createChild("path")
            .moveTo(0, 0)
