@@ -215,6 +215,14 @@
  <!-- glass effects, Cylinder.008 removed as HUD is factored out. -->
  <effect>
   <inherits-from>Aircraft/f16/Models/Effects/glass/glass</inherits-from>
+  <parameters>
+    <rendering-hint>transparent</rendering-hint>
+    <transparent>true</transparent>
+    <render-bin>
+      <bin-number>111</bin-number>
+      <bin-name>DepthSortedBin</bin-name>
+    </render-bin>
+  </parameters>
   <object-name>CanopyForwardInside</object-name>
   <object-name>CanopyBackInside</object-name>
  </effect>

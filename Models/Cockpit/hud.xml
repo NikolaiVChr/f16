@@ -21,6 +21,12 @@
     <use-mask type="int">0</use-mask>
     <use-overlay type="int">1</use-overlay>
     <hud-brightness><use>f16/avionics/hud-brt</use></hud-brightness>
+    <rendering-hint>transparent</rendering-hint>
+    <transparent>true</transparent>
+    <render-bin>
+      <bin-number>111</bin-number>
+      <bin-name>DepthSortedBin</bin-name>
+    </render-bin>
   </parameters>
  </effect>
 
