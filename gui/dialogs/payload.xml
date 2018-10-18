@@ -173,7 +173,7 @@
         <text>
             <row>12</row>
             <col>0</col>
-            <label>Guided Air to Ground (config 1)</label>
+            <label>Guided A/G (config 1)</label>
         </text>
         <button>
             <row>12</row>
@@ -194,7 +194,7 @@
         <text>
             <row>14</row>
             <col>0</col>
-            <label>Guided Air to Ground (config 2)</label>
+            <label>Guided A/G (config 2)</label>
         </text>
         <button>
             <row>14</row>
