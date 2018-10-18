@@ -97,7 +97,6 @@ var F16_HUD = {
         for(var ii=0;ii<=1100;ii+=100) {
           var tmp = obj.get_element("ias_label"~ii);
           append(obj.scaling, tmp);
-
         }
          
 
@@ -319,7 +318,7 @@ var F16_HUD = {
                                               obj.window1.setText("");
                                           } else
                                             obj.window1.setVisible(0);
-                                      }
+                                          }
                                              ),
             props.UpdateManager.FromHashValue("Nz", 0.1, func(Nz)
                                       {
@@ -329,6 +328,7 @@ var F16_HUD = {
             props.UpdateManager.FromHashList(["heading", "headingMag", "useMag","gear_down"], 0.1, func(hdp)
                                       {
                                           var head = hdp.useMag?hdp.headingMag:hdp.heading;
+                                          obj.head_curr.setText(sprintf("%03d",head));
                                           if (head < 180)
                                             obj.heading_tape_position = -head*54/10;
                                           else
@@ -607,6 +607,38 @@ var F16_HUD = {
                 .setText("88888")
                 .setTranslation(8+0.82*sx*0.695633,sy*0.245)
                 .setAlignment("left-center")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(9, 1.1);
+
+        obj.head_mask = obj.svg.createChild("image")
+                .setTranslation(-10+0.5*sx*0.695633,sy*0.1-20)
+                .set("z-index",10000)
+                #.set("blend-source-rgb","one")
+                #.set("blend-source-alpha","one")
+                .set("blend-source","zero")
+                .set("blend-destination-rgb","one")
+                .set("blend-destination-alpha","one-minus-src-alpha")
+                #.set("blend-destination","zero")
+                .set("src", "Aircraft/f16/Nasal/HUD/head_mask.png");
+        obj.head_frame = obj.svg.createChild("path")
+                .set("z-index",10001)
+                .moveTo(10+0.50*sx*0.695633,sy*0.1-10)
+                .vert(-10)
+                .horiz(-20)
+                .vert(10)
+                .horiz(20)
+                .setStrokeLineWidth(1)
+                .setColor(1,0,0);
+        obj.head_curr = obj.svg.createChild("text")
+                .set("z-index",10002)
+                .set("blend-source-rgb","one")
+                .set("blend-source-alpha","one")
+                .set("blend-destination-rgb","one")
+                .set("blend-destination-alpha","one")
+                .setText("360")
+                .setTranslation(0.5*sx*0.695633,sy*0.1-12)
+                .setAlignment("center-bottom")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(9, 1.1);
