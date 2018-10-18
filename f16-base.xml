@@ -1425,8 +1425,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <long-name type="string">AIM-120B Amraam</long-name>
                 <guidance type="string">radar</guidance>
                 <vol-search type="double">0.00</vol-search>
-                <vol-track type="double">0.15</vol-track>
-                <vol-track-weak type="double">0.1</vol-track-weak>
+                <vol-track type="double">1.00</vol-track>
                 <max-fire-range-nm type="int">38.8</max-fire-range-nm>
                 <min-fire-range-nm type="double">0.35</min-fire-range-nm>
                 <FCS-field-deg type="int">30</FCS-field-deg>
@@ -1466,8 +1465,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <long-name type="string">AIM-7F Sparrow</long-name>
                 <guidance type="string">semi-radar</guidance>
                 <vol-search type="double">0.00</vol-search>
-                <vol-track type="double">0.15</vol-track>
-                <vol-track-weak type="double">0.1</vol-track-weak>
+                <vol-track type="double">1.00</vol-track>
                 <max-fire-range-nm type="int">22</max-fire-range-nm><!-- authentic 21.5 for 2m2 RCS -->
                 <min-fire-range-nm type="double">0.16</min-fire-range-nm>
                 <FCS-field-deg type="int">25</FCS-field-deg>
@@ -1647,8 +1645,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <short-name type="string">AG65</short-name>
                 <long-name type="string">AGM-65B Maverick</long-name>
                 <vol-search type="double">0.00</vol-search>
-                <vol-track type="double">0.15</vol-track>
-                <vol-track-weak type="double">0.1</vol-track-weak>
+                <vol-track type="double">1.00</vol-track>
                 <guidance type="string">vision</guidance>
                 <navigation type="string">direct</navigation>                           
                 <all-aspect type="bool">true</all-aspect>
@@ -1680,8 +1677,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <short-name type="string">AG84</short-name>
                 <long-name type="string">AGM-84E Harpoon</long-name>
                 <vol-search type="double">0.00</vol-search>
-                <vol-track type="double">0.15</vol-track>
-                <vol-track-weak type="double">0.1</vol-track-weak>
+                <vol-track type="double">1.00</vol-track>
                 <guidance type="string">gps</guidance><!--  -->
                 <navigation type="string">direct</navigation>                           
                 <all-aspect type="bool">true</all-aspect>
@@ -1794,8 +1790,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <short-name type="string">AG88</short-name>
                 <long-name type="string">AGM-88 HARM</long-name>
                 <vol-search type="double">0.00</vol-search>
-                <vol-track type="double">0.15</vol-track>
-                <vol-track-weak type="double">0.1</vol-track-weak>
+                <vol-track type="double">1.00</vol-track>
                 <guidance type="string">radiation</guidance>
                 <navigation type="string">PN</navigation>                           
                 <all-aspect type="bool">true</all-aspect>

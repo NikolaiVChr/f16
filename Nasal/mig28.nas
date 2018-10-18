@@ -1358,7 +1358,8 @@ var stop = func {
 #  lower floor
 #  make mig28 fire fox2/fox3
 #  invert to level out after GO_UP
-#  lag filter on the bearing/clock rates
+#  lag filter on the bearing/clock rates. nope is fixed.
+#  land/take-off
 
 var fix = 0.05;
 var last = 0;
