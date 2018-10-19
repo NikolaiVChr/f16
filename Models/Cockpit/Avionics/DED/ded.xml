@@ -4,7 +4,7 @@
 
  <path>ded.ac</path>
 
- <panel>
+ <!--<panel>
   <name>Panel3D</name>
   <path>Aircraft/f16/Models/Cockpit/Avionics/DED/ded-display.xml</path>
   <bottom-left>
@@ -22,6 +22,34 @@
    <y-m>0.092</y-m>
    <z-m>0.686</z-m>
   </top-left>
- </panel>
+ </panel>-->
+
+ <animation>
+        <!--<object-name>poly.002</object-name>-->
+        <object-name>poly.003</object-name>
+        <type>material</type>
+        <condition>
+            <greater-than-equals>
+                <property>fdm/jsbsim/elec/bus/ess-ac</property>
+                <value>100</value>
+            </greater-than-equals>
+        </condition>
+        <emission>
+            <red>  1</red>
+            <green>1</green>
+            <blue> 1</blue>
+        </emission>
+    </animation>
+
+    <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/displays/lcd</inherits-from>
+        <parameters><!-- RWR is a CRT display, hence the big angles -->
+            <inner-angle type="float">45</inner-angle><!-- 0-90, use 90 for LED or plasma display-->
+            <outer-angle type="float">60</outer-angle><!-- 0-90, but greater than inner -->
+            <black-angle type="float">80</black-angle><!-- 0-90, but greater than outer -->
+            <contrast type="float">1</contrast>
+        </parameters>
+        <object-name>poly.003</object-name>
+    </effect>
 
 </PropertyList>

@@ -151,6 +151,9 @@ var F16_HUD = {
         append(obj.total, obj.window9);
         append(obj.total, obj.ralt);
 
+        obj.VV.set("z-index", 11000);# hmm, its inside layer1, so will still be below the heading readout.
+        obj.layer1 = obj.get_element("layer1");#main svg layer.
+
         input = {
                  IAS                       : "/velocities/airspeed-kt",
                  calibrated                : "/fdm/jsbsim/velocities/vc-kts",

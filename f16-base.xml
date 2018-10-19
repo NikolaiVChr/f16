@@ -1260,8 +1260,12 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             </outputs>
         </electrical>
         <refuel>
-            <type>boom</type>
+            <type type="string">boom</type>
             <serviceable type="bool">false</serviceable>
+            <offset-x-m>0.26</offset-x-m>
+            <offset-y-m>0.00</offset-y-m>
+            <offset-z-m>0.68</offset-z-m>
+            <max-fuel-transfer-lbs-min>6000</max-fuel-transfer-lbs-min>
         </refuel>
     </systems>
     <instrumentation>
@@ -2046,5 +2050,8 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
         <mig28>
             <file>Aircraft/f16/Nasal/mig28.nas</file>
         </mig28>
+        <ded>
+          <file>Aircraft/f16/Nasal/ded.nas</file>
+        </ded>
     </nasal>
 </PropertyList>

@@ -444,7 +444,7 @@
                         <table>
                             <independentVar lookup="row">fcs/fly-by-wire/pitch/control-c/roll-rate-abs</independentVar>
                             <tableData>
-                                30 0
+                                30 1 <!-- changed to 1 due to FG pilots use stick not pressure sticks -->
                                 50 1
                             </tableData>
                         </table>
@@ -472,15 +472,16 @@
 
         <fcs_function name="fcs/fly-by-wire/roll/min-cmd-roll-rate">
             <function>
-                <product>
+                <quotient>
                     <p>fcs/fly-by-wire/roll/max-cmd-roll-rate</p>
-                    <v>-1</v>
-                </product>
+                    <v>308</v>
+                </quotient>
             </function>
         </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/roll/command-deg_s">
             <function>
+                <product>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/roll/stick-force-lbf</independentVar>
                     <tableData>
@@ -489,17 +490,15 @@
                           -6   -20  
                           -1     0  
                            0     0  
-                           1     0  
+                           1     0   
                            6    20  
                           11    80  
                           17   308  
                     </tableData>
                 </table>
+                <p>fcs/fly-by-wire/roll/min-cmd-roll-rate</p>
+                </product>
             </function>
-            <clipto>
-                <min> fcs/fly-by-wire/roll/min-cmd-roll-rate </min>
-                <max> fcs/fly-by-wire/roll/max-cmd-roll-rate </max>
-            </clipto>
         </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/roll/command-limited-deg_s">

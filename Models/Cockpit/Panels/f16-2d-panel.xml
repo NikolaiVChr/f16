@@ -82,13 +82,13 @@ _______________________________________________________________________
    <h>12</h>
   </instrument>
 
-  <instrument include="ded-2d.xml">
+<!--  <instrument include="ded-2d.xml">
    <name>DED</name>
    <x>729</x>
    <y>286</y>
    <w>120</w>
    <h>120</h>
-  </instrument>
+  </instrument>-->
 
  </instruments>
 
