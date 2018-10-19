@@ -1326,6 +1326,13 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <offset-deg type="double">0</offset-deg>
             <use-mag-in-hud type="bool">true</use-mag-in-hud><!-- as per manual the HUD shows magnetic -->
         </heading-indicator>
+        <dme n="1">
+            <serviceable type="bool">true</serviceable>
+            <frequencies>
+                <source type="string">/instrumentation/nav[1]/frequencies/selected-mhz</source>
+            </frequencies>
+            <volume type="double">0</volume>
+        </dme>
     </instrumentation>
     <environment>
         <aircraft-effects>
