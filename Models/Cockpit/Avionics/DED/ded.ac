@@ -1,6 +1,6 @@
 AC3Db
 MATERIAL "ac3dmat0" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.286 0.286 0.286  shi 10 trans 0.000
-MATERIAL "ac3dmat0.007" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.0  emis 0.000 0.000 0.000  spec 0.102 0.102 0.102  shi 5 trans 0.000
+MATERIAL "ac3dmat0.007" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.0  emis 0.000 0.000 0.000  spec 0.0 0.0 0.0  shi 5 trans 0.000
 OBJECT world
 name "Blender_exporter_v2.26__ded.ac"
 kids 2
