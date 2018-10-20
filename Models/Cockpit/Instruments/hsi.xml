@@ -4,7 +4,23 @@
  <name>HSI</name>
  <path>hsi.ac</path>
 
- <animation>
+
+
+
+
+
+
+<!-- TODO: enable deviation lines for STPT and ILS -->
+
+
+
+
+
+
+
+
+
+ <!--<animation>
   <type>select</type>
   <object-name>hsi</object-name>
   <condition>
@@ -13,7 +29,7 @@
     <value>Cockpit View</value>
    </equals>
   </condition>
- </animation>
+ </animation>-->
 
  <!-- off-flag -->
  <!-- TODO: using simple electrical scheme for now -->
@@ -56,8 +72,18 @@
   <condition>
    <and>
    <property>instrumentation/tacan/in-range</property>
+   <or>
+     <equals>
+      <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property> 
+      <value>0</value>
+     </equals>
+     <equals>
+      <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property> 
+      <value>1</value>
+     </equals>
+   </or>
    <greater-than-equals>
-    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property> 
     <value>100</value>
    </greater-than-equals>
    </and>
@@ -66,6 +92,73 @@
  <animation>
   <type>rotate</type>
   <object-name>HSI_brg-tcn-needle-on</object-name>
+  <property>instrumentation/tacan/bearing-relative-deg</property>
+  <condition>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>100</value>
+   </greater-than-equals>
+  </condition>
+  <center>
+   <x-m>0</x-m>
+   <y-m>0</y-m>
+   <z-m>-0.0043</z-m>
+  </center>
+  <axis>
+   <x>1</x>
+  </axis>
+ </animation>
+ <!-- Note: TCN should provide magnetic-degs, as do the HSI -->
+ <!--<animation>
+  <type>rotate</type>
+  <object-name>HSI_brg-tcn-needle-on</object-name>
+  <property>instrumentation/tacan/indicated-bearing-true-deg</property>
+  <condition>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>100</value>
+   </greater-than-equals>
+  </condition>
+  <center>
+   <x-m>0</x-m>
+   <y-m>0</y-m>
+   <z-m>-0.0043</z-m>
+  </center>
+  <axis>
+   <x>-1</x>
+  </axis>
+ </animation>-->
+ <animation>
+  <type>select</type>
+  <object-name>HSI_brg-vor-needle-on</object-name>
+  <condition>
+   <and>
+    <not>
+          <equals>
+            <property>autopilot/route-manager/current-wp</property>
+            <value>-1</value>
+          </equals>
+    </not>
+    <or>
+     <equals>
+      <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property> 
+      <value>2</value>
+     </equals>
+     <equals>
+      <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property> 
+      <value>3</value>
+     </equals>
+   </or>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property> 
+    <value>100</value>
+   </greater-than-equals>
+   </and>
+  </condition>
+ </animation>
+ <animation>
+  <type>rotate</type>
+  <object-name>HSI_brg-vor-needle-on</object-name>
   <property>orientation/heading-magnetic-deg</property>
   <condition>
    <greater-than-equals>
@@ -84,15 +177,14 @@
  </animation>
  <animation>
   <type>rotate</type>
-  <object-name>HSI_brg-tcn-needle-on</object-name>
-  <property>instrumentation/tacan/indicated-bearing-true-deg</property>
+  <object-name>HSI_brg-vor-needle-on</object-name>
+  <property>autopilot/route-manager/wp/bearing-deg</property>
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
     <value>100</value>
    </greater-than-equals>
   </condition>
-  <!-- Note: TCN should provide magnetic-degs, as do the HSI -->
   <center>
    <x-m>0</x-m>
    <y-m>0</y-m>
@@ -107,10 +199,24 @@
   <type>select</type>
   <object-name>HSI_brg-needle-off</object-name>
   <condition>
+    <equals>
+      <value>1</value>
+      <value>0</value>
+     </equals>
    <and>
    <not>
     <property>instrumentation/tacan/in-range</property>
    </not>
+   <or>
+     <equals>
+      <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property> 
+      <value>0</value>
+     </equals>
+     <equals>
+      <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property> 
+      <value>1</value>
+     </equals>
+   </or>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
     <value>100</value>
@@ -118,7 +224,7 @@
    </and>
   </condition>
  </animation>
- <animation>
+ <!--<animation>
   <type>rotate</type>
   <object-name>HSI_brg-needle-off</object-name>
   <property>orientation/heading-magnetic-deg</property>
@@ -136,11 +242,15 @@
   <axis>
    <x>1</x>
   </axis>
- </animation>
+ </animation>-->
 
  <animation>
   <type>rotate</type>
-  <object-name>HSI_cdi</object-name>
+  <object-name>HSI_course-needle</object-name>
+  <object-name>HSI_tcn-cdi-on</object-name>
+  <object-name>HSI_cdi-bkg</object-name>
+  <object-name>HSI_tcn-tofrom-to</object-name>
+  <object-name>HSI_tcn-tofrom-from</object-name>
   <property>orientation/heading-magnetic-deg</property>
   <condition>
    <greater-than-equals>
@@ -157,14 +267,84 @@
  </animation>
  <animation>
   <type>rotate</type>
-  <object-name>HSI_cdi</object-name>
-  <property>instrumentation/nav[1]/radials/selected-deg</property>
+  <object-name>HSI_course-needle</object-name>
+  <object-name>HSI_tcn-cdi-on</object-name>
+  <object-name>HSI_cdi-bkg</object-name>
+  <object-name>HSI_tcn-tofrom-to</object-name>
+  <object-name>HSI_tcn-tofrom-from</object-name>
+  <property>instrumentation/nav[0]/radials/selected-deg</property>
+  <condition>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>100</value>
+   </greater-than-equals>
+  </condition>
   <center>
    <x-m>0</x-m>
    <y-m>0</y-m>
    <z-m>-0.0043</z-m>
   </center>
   <axis><x>-1</x></axis>
+ </animation>
+
+
+   <animation>
+  <type>select</type>
+  <object-name>HSI_tcn-tofrom-from</object-name>
+  <condition>
+   <and>
+    <property>instrumentation/tacan/in-range</property>
+   <or>
+     <equals>
+      <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property> 
+      <value>1</value>
+     </equals>
+   </or>
+   <or>
+       <greater-than-equals>
+      <property>instrumentation/tacan/bearing-relative-deg</property>
+      <value>90</value>
+     </greater-than-equals>
+     <less-than-equals>
+      <property>instrumentation/tacan/bearing-relative-deg</property>
+      <value>-90</value>
+     </less-than-equals>
+   </or>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>100</value>
+   </greater-than-equals>
+   </and>
+  </condition>
+ </animation>
+ <animation>
+  <type>select</type>
+  <object-name>HSI_tcn-tofrom-to</object-name>
+  <condition>
+   <and>
+    <property>instrumentation/tacan/in-range</property>
+   <or>
+     <equals>
+      <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property> 
+      <value>1</value>
+     </equals>
+   </or>
+   <or>
+       <less-than-equals>
+      <property>instrumentation/tacan/bearing-relative-deg</property>
+      <value>90</value>
+     </less-than-equals>
+     <greater-than-equals>
+      <property>instrumentation/tacan/bearing-relative-deg</property>
+      <value>-90</value>
+     </greater-than-equals>
+   </or>
+   <greater-than-equals>
+    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+    <value>100</value>
+   </greater-than-equals>
+   </and>
+  </condition>
  </animation>
 
 
@@ -268,7 +448,7 @@
  <animation>
   <type>rotate</type>
   <object-name>HSI_course-knob</object-name>
-  <property>instrumentation/nav[1]/radials/selected-deg</property>
+  <property>instrumentation/nav[0]/radials/selected-deg</property>
   <center>
    <x-m>0</x-m>
    <y-m>0.0315</y-m>
@@ -289,7 +469,7 @@
    <interval-sec>0.5</interval-sec>
    <binding>
     <command>property-adjust</command>
-    <property>instrumentation/nav[1]/radials/selected-deg</property>
+    <property>instrumentation/nav[0]/radials/selected-deg</property>
     <step>-1</step>
     <min>0</min>
     <max>360</max>
@@ -309,7 +489,7 @@
    <interval-sec>0.5</interval-sec>
    <binding>
     <command>property-adjust</command>
-    <property>instrumentation/nav[1]/radials/selected-deg</property>
+    <property>instrumentation/nav[0]/radials/selected-deg</property>
     <step>-5</step>
     <min>0</min>
     <max>360</max>
@@ -329,7 +509,7 @@
    <interval-sec>0.5</interval-sec>
    <binding>
     <command>property-adjust</command>
-    <property>instrumentation/nav[1]/radials/selected-deg</property>
+    <property>instrumentation/nav[0]/radials/selected-deg</property>
     <step>1</step>
     <min>0</min>
     <max>360</max>
@@ -349,7 +529,7 @@
    <interval-sec>0.5</interval-sec>
    <binding>
     <command>property-adjust</command>
-    <property>instrumentation/nav[1]/radials/selected-deg</property>
+    <property>instrumentation/nav[0]/radials/selected-deg</property>
     <step>5</step>
     <min>0</min>
     <max>360</max>
@@ -364,26 +544,55 @@
   <type>select</type>
   <object-name>HSI_out-of-range-flag</object-name>
   <condition>
-   <and>
-   <not>
-    <property>instrumentation/tacan/in-range</property>
-   </not>
+    <or>
+       <and>
+          <or>
+           <equals>
+            <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property> 
+            <value>0</value>
+           </equals>
+           <equals>
+            <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property> 
+            <value>1</value>
+           </equals>
+         </or>
+         <not>
+          <property>instrumentation/tacan/in-range</property>
+         </not>
+       </and>
+       <and>
+          <or>
+           <equals>
+            <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property> 
+            <value>2</value>
+           </equals>
+           <equals>
+            <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property> 
+            <value>3</value>
+           </equals>
+         </or>
+          <equals>
+            <property>autopilot/route-manager/current-wp</property>
+            <value>-1</value>
+          </equals>
+       </and>
+   </or>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
     <value>100</value>
    </greater-than-equals>
-   </and>
   </condition>
  </animation>
 
- <animation>
+<!-- STPT/TACAN range -->
+  <animation>
   <type>textranslate</type>
   <object-name>HSI_miles-drum-1</object-name>
-  <property>instrumentation/tacan/indicated-distance-nm</property>
+  <property>f16/avionics/hsi-dist</property>
   <condition>
    <greater-than-equals>
-    <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
-    <value>100</value>
+      <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+      <value>100</value>
    </greater-than-equals>
   </condition>
   <factor>0.1</factor>
@@ -393,7 +602,7 @@
  <animation>
   <type>textranslate</type>
   <object-name>HSI_miles-drum-2</object-name>
-  <property>instrumentation/tacan/indicated-distance-nm</property>
+  <property>f16/avionics/hsi-dist</property>
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
@@ -409,7 +618,7 @@
  <animation>
   <type>textranslate</type>
   <object-name>HSI_miles-drum-3</object-name>
-  <property>instrumentation/tacan/indicated-distance-nm</property>
+  <property>f16/avionics/hsi-dist</property>
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
@@ -423,11 +632,17 @@
   <axis><y>-1</y></axis>
  </animation>
 
+ 
+
+
+
+
+
 <!-- Course Digital Display -->
  <animation>
   <type>textranslate</type>
   <object-name>HSI_course-drum-1</object-name>
-  <property>instrumentation/nav[1]/radials/selected-deg</property>
+  <property>instrumentation/nav[0]/radials/selected-deg</property>
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
@@ -441,7 +656,7 @@
  <animation>
   <type>textranslate</type>
   <object-name>HSI_course-drum-2</object-name>
-  <property>instrumentation/nav[1]/radials/selected-deg</property>
+  <property>instrumentation/nav[0]/radials/selected-deg</property>
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
@@ -457,7 +672,7 @@
  <animation>
   <type>textranslate</type>
   <object-name>HSI_course-drum-3</object-name>
-  <property>instrumentation/nav[1]/radials/selected-deg</property>
+  <property>instrumentation/nav[0]/radials/selected-deg</property>
   <condition>
    <greater-than-equals>
     <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
@@ -473,14 +688,12 @@
 
  <!-- For now, hide everything else -->
  <animation>
-  <object-name>HSI_tcn-tofrom-to</object-name>
-  <object-name>HSI_tcn-tofrom-from</object-name>
   <object-name>HSI_vor-tofrom-to</object-name>
   <object-name>HSI_vor-tofrom-from</object-name>
-  <object-name>HSI_tcn-cdi-on</object-name>
   <object-name>HSI_vor-cdi-off</object-name>
-  <object-name>HSI_brg-vor-needle-on</object-name>
   <object-name>HSI_brg-validity-flag</object-name>
+  <object-name>HSI_vor-cdi-on</object-name>
+  <object-name>HSI_cdi-off</object-name>
 
   <type>select</type>
   <condition>

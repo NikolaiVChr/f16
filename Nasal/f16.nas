@@ -314,6 +314,25 @@ var medium = {
     } else {
       setprop("f16/avionics/bingo", 0);
     }
+    var tcnTrue = getprop("instrumentation/tacan/indicated-bearing-true-deg");
+    var trueH   = getprop("orientation/heading-deg");
+    var tcnDev  = geo.normdeg180(tcnTrue-trueH);
+    setprop("instrumentation/tacan/bearing-relative-deg", tcnDev);
+#    if (getprop("autopilot/route-manager/wp/dist") != nil) {
+#      setprop("autopilot/route-manager/wp/dist-int",int(getprop("autopilot/route-manager/wp/dist")));
+#    } else {
+#      setprop("autopilot/route-manager/wp/dist-int",0);
+#    }
+    if (getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 0 or getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 1) {
+      #tacan
+      setprop("f16/avionics/hsi-dist",getprop("instrumentation/tacan/indicated-distance-nm"));
+    } else {
+      if (getprop("autopilot/route-manager/wp/dist") != nil) {
+        setprop("f16/avionics/hsi-dist",getprop("autopilot/route-manager/wp/dist"));
+      } else {
+        setprop("f16/avionics/hsi-dist",0);
+      }
+    }
     # HUD power:
     if (getprop("fdm/jsbsim/elec/bus/emergency-ac-2")>100 or getprop("fdm/jsbsim/elec/bus/emergency-dc-2")>20) {
       setprop("f16/avionics/hud-power",1);
