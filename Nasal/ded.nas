@@ -99,12 +99,13 @@ var loop_ded = func {# one line is max 24 chars
       var freq   = getprop("instrumentation/tacan/frequencies/selected-mhz");
       var chan   = getprop("instrumentation/tacan/frequencies/selected-channel");
       var band   = getprop("instrumentation/tacan/frequencies/selected-channel[4]");
-      var course = getprop("instrumentation/tacan/in-range")?""~getprop("instrumentation/tacan/indicated-bearing-true-deg"):"";
+      var course = getprop("instrumentation/tacan/in-range")?getprop("instrumentation/tacan/indicated-bearing-true-deg"):-1;
+      course = course==-1?"":sprintf("%d\xc2\xb0",course);
       line1.setText(sprintf("     TCN  REC    ILS %s",ilsOn));
       line2.setText(sprintf("                        "));
       line3.setText(sprintf("               CMD STRG "));
       line4.setText(sprintf("CHAN    %03d FREQ %6.2f",chan,freq));
-      line5.setText(sprintf("BAND      %s CRS %s\xc2\xb0",band,course));
+      line5.setText(sprintf("BAND      %s CRS %s",band,course));
     } elsif (page == pIFF) {
       var target = awg_9.active_u;
       var sign = "";
