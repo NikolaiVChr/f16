@@ -1169,17 +1169,19 @@ append(obj.total, obj.speed_curr);
                 } else {
                     hdp.window6_txt = "";
                 }
+
+                if (hdp.total_fuel_lbs < hdp.bingo) {
+                  hdp.window3_txt = "FUEL";
+                } else {
+                  if (hdp.alow<hdp.altitude_agl_ft or math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0 or hdp.gear_down) {
+                    hdp.window3_txt = sprintf("AL%4d",hdp.alow);
+                  } else {
+                    hdp.window3_txt = "";
+                  }
+                }
             }
 
-            if (hdp.total_fuel_lbs < hdp.bingo) {
-              hdp.window3_txt = "FUEL";
-            } else {
-              if (hdp.alow<hdp.altitude_agl_ft or math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0 or hdp.gear_down) {
-                hdp.window3_txt = sprintf("AL%4d",hdp.alow);
-              } else {
-                hdp.window3_txt = "";
-              }
-            }
+            
 
             if (hdp.window9_txt=="") {
                 me.alphaHUD = hdp.alpha;

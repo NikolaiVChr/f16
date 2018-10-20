@@ -70,7 +70,7 @@ var pBINGO= 6;
 var page = pCNI;
 var comm = 0;
 
-var loop_ded = func {
+var loop_ded = func {# one line is max 24 chars
 
     if (page == pSTPT) {
       var fp = flightplan();
