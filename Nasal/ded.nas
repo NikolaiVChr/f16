@@ -18,42 +18,42 @@ var callInit = func {
   });
       
   canvasded.addPlacement({"node": "poly.003", "texture": "canvas.png"});
-  canvasded.setColorBackground(0.00, 0.20, 0.00, 1.00);
+  canvasded.setColorBackground(0.00, 0.10, 0.00, 1.00);
 
   dedGroup = canvasded.createGroup();
   dedGroup.show();
-
+  var color = [1,1,0.7,1];
   line1 = dedGroup.createChild("text")
         .setFontSize(13, 1)
-        .setColor(1,1,0.7, 1)
+        .setColor(color)
         .setAlignment("left-bottom")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("LINE 1            LINE 1")
         .setTranslation(55, 128*0.2);
   line2 = dedGroup.createChild("text")
         .setFontSize(13, 1)
-        .setColor(1,1,0.7, 1)
+        .setColor(color)
         .setAlignment("left-bottom")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("LINE 2            LINE 2")
         .setTranslation(55, 128*0.3);
   line3 = dedGroup.createChild("text")
         .setFontSize(13, 1)
-        .setColor(1,1,0.7, 1)
+        .setColor(color)
         .setAlignment("left-bottom")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("LINE 3            LINE 3")
         .setTranslation(55, 128*0.4);
   line4 = dedGroup.createChild("text")
         .setFontSize(13, 1)
-        .setColor(1,1,0.7, 1)
+        .setColor(color)
         .setAlignment("left-bottom")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("LINE 4            LINE 4")
         .setTranslation(55, 128*0.5);
   line5 = dedGroup.createChild("text")
         .setFontSize(13, 1)
-        .setColor(1,1,0.7, 1)
+        .setColor(color)
         .setAlignment("left-bottom")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("LINE 5            LINE 5")

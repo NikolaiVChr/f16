@@ -35,6 +35,7 @@
             </greater-than-equals>
         </condition>
         <emission>
+            <factor-prop>controls/lighting/lighting-panel/data-entry-display</factor-prop>
             <red>  1</red>
             <green>1</green>
             <blue> 1</blue>

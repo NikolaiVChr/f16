@@ -115,6 +115,7 @@ var F16_HUD = {
         obj.window7 = obj.get_text("window7", HUD_FONT,9,1.4);
         obj.window8 = obj.get_text("window8", HUD_FONT,9,1.4);
         obj.window9 = obj.get_text("window9", HUD_FONT,9,1.4);
+        obj.window10 = obj.get_text("window10", HUD_FONT,9,1.4);
         obj.window2.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
         obj.window3.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
         obj.window4.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
@@ -123,6 +124,7 @@ var F16_HUD = {
         obj.window7.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
         obj.window8.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
         obj.window9.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
+        obj.window10.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
 
         obj.ralt = obj.get_text("radalt", HUD_FONT,9,1.4);
         obj.ralt.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(9,1.1);
@@ -149,6 +151,7 @@ var F16_HUD = {
         append(obj.total, obj.window7);
         append(obj.total, obj.window8);
         append(obj.total, obj.window9);
+        append(obj.total, obj.window10);
         append(obj.total, obj.ralt);
 
         obj.VV.set("z-index", 11000);# hmm, its inside layer1, so will still be below the heading readout.
@@ -500,6 +503,16 @@ var F16_HUD = {
                                           }
                                           else
                                             obj.window9.hide();
+
+                                      }),
+            props.UpdateManager.FromHashValue("window10_txt", nil, func(txt)
+                                      {
+                                          if (txt != nil and txt != ""){
+                                              obj.window10.show();
+                                              obj.window10.setText(txt);
+                                          }
+                                          else
+                                            obj.window10.hide();
 
                                       }),
 
@@ -1001,12 +1014,14 @@ append(obj.total, obj.speed_curr);
         if (me.initUpdate) {
             hdp.window1_txt = "1";
             hdp.window2_txt = "2";
-            hdp.window4_txt = "3";
-            hdp.window5_txt = "4";
-            hdp.window6_txt = "5";
-            hdp.window7_txt = "6";
-            hdp.window8_txt = "7";
-            hdp.window9_txt = "8";
+            hdp.window2_txt = "3";
+            hdp.window4_txt = "4";
+            hdp.window5_txt = "5";
+            hdp.window6_txt = "6";
+            hdp.window7_txt = "7";
+            hdp.window8_txt = "8";
+            hdp.window9_txt = "9";
+            hdp.window10_txt = "10";
         }
 
         if (hdp.FrameCount == 2 or me.initUpdate == 1) {
@@ -1077,6 +1092,7 @@ append(obj.total, obj.speed_curr);
             hdp.window7_txt = "";
             hdp.window8_txt = "";
             hdp.window9_txt = "";
+            hdp.window10_txt = "";
 
             if(hdp.master_arm and pylons.fcs != nil)
             {
@@ -1169,19 +1185,42 @@ append(obj.total, obj.speed_curr);
                 } else {
                     hdp.window6_txt = "";
                 }
-
-                if (hdp.total_fuel_lbs < hdp.bingo) {
-                  hdp.window3_txt = "FUEL";
-                } else {
-                  if (hdp.alow<hdp.altitude_agl_ft or math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0 or hdp.gear_down) {
-                    hdp.window3_txt = sprintf("AL%4d",hdp.alow);
-                  } else {
-                    hdp.window3_txt = "";
-                  }
+                var fp = flightplan();
+                var slant = "";
+                if (fp != nil) {
+                    var wp = fp.currentWP();
+                    if (wp != nil) {
+                      slant = "B XXX";
+                      var lat = wp.lat;
+                      var lon = wp.lon;
+                      var alt = wp.alt_cstr;
+                      if (alt != nil) {
+                        var g = geo.Coord.new();
+                        g.set_latlon(lat,lon,alt*FT2M);
+                        var a = geo.aircraft_position();
+                        var r = a.direct_distance_to(g)*M2NM;
+                        if (r>= 1) {
+                            slant = sprintf("B %5.1f",r);#tenths of NM.
+                        } else {
+                            slant = sprintf("B %4.2f",r);#should really be hundreds of feet, but that will confuse everyone.
+                        }
+                      }
+                    }
                 }
+                hdp.window3_txt = slant;
             }
 
-            
+            if (hdp.total_fuel_lbs < hdp.bingo and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
+              hdp.window10_txt = "FUEL";
+            } elsif (hdp.total_fuel_lbs < hdp.bingo) {
+              hdp.window10_txt = "";
+            } else {
+              if (hdp.alow<hdp.altitude_agl_ft or math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0 or hdp.gear_down) {
+                hdp.window10_txt = sprintf("AL%4d",hdp.alow);
+              } else {
+                hdp.window10_txt = "";
+              }
+            }
 
             if (hdp.window9_txt=="") {
                 me.alphaHUD = hdp.alpha;

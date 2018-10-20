@@ -1059,6 +1059,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <flood-inst-pnl-knob type="double">0</flood-inst-pnl-knob>
                 <console-primary-knob type="double">0</console-primary-knob>
                 <console-primary type="double">0</console-primary>
+                <data-entry-display type="double">1.0</data-entry-display>
             </lighting-panel>
         </lighting>
         <seat>
