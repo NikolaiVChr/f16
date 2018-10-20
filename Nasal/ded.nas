@@ -65,6 +65,7 @@ var pALOW = 1;
 var pSTPT = 2;
 var pIFF  = 4;
 var pCNI  = 5;
+var pBINGO= 6;
 
 var page = pCNI;
 var comm = 0;
@@ -88,22 +89,22 @@ var loop_ded = func {
           }
         }
       }
-      line1.setText(sprintf("         STPT %02d   AUTO",no));
-      line2.setText(sprintf("      LAT    %s",lat));
-      line3.setText(sprintf("      LNG    %s",lon));
-      line4.setText(sprintf("     ELEV    %5dFT",alt));
-      line5.setText(sprintf("      TOS    %s","VOID"));
+      line1.setText(sprintf("         STPT %2d    AUTO",no));
+      line2.setText(sprintf("      LAT  %s",lat));
+      line3.setText(sprintf("      LNG  %s",lon));
+      line4.setText(sprintf("     ELEV  %5dFT",alt));
+      line5.setText(sprintf("      TOS  %s","VOID"));
     } elsif (page == pTACAN) {
       var ilsOn  = "ON";
       var freq   = getprop("instrumentation/tacan/frequencies/selected-mhz");
       var chan   = getprop("instrumentation/tacan/frequencies/selected-channel");
       var band   = getprop("instrumentation/tacan/frequencies/selected-channel[4]");
       var course = getprop("instrumentation/tacan/in-range")?""~getprop("instrumentation/tacan/indicated-bearing-true-deg"):"";
-      line1.setText(sprintf("     TCN  RC     ILS %s",ilsOn));
+      line1.setText(sprintf("     TCN  REC    ILS %s",ilsOn));
       line2.setText(sprintf("                        "));
       line3.setText(sprintf("               CMD STRG "));
       line4.setText(sprintf("CHAN    %03d FREQ %6.2f",chan,freq));
-      line5.setText(sprintf("BAND      %s CRS %s",band,course));
+      line5.setText(sprintf("BAND      %s CRS %s\xc2\xb0",band,course));
     } elsif (page == pIFF) {
       var target = awg_9.active_u;
       var sign = "";
@@ -114,9 +115,11 @@ var loop_ded = func {
       if (target != nil) {
         type = target.get_model();
       }
-      var friend = "NO CONN";
+      var friend = "";
       if (sign != "" and (sign == getprop("link16/wingman-1") or sign == getprop("link16/wingman-2") or sign == getprop("link16/wingman-3") or sign == getprop("link16/wingman-4"))) {
         friend = "WINGMAN";
+      } elsif (sign != "") {
+        friend = "NO CONN";
       }
 
       line1.setText(sprintf("     IFF                "));
@@ -125,17 +128,33 @@ var loop_ded = func {
       line4.setText(sprintf("ID      %s",type));
       line5.setText(sprintf("Link16  %s",friend));
     } elsif (page == pALOW) {
-      #signText.setText(ded);
+      var no = getprop("autopilot/route-manager/current-wp")+1;
+      var alow = getprop("f16/settings/cara-alow");
+      var floor = getprop("f16/settings/msl-floor");
+      line1.setText(sprintf("         ALOW       %2d  ",no));
+      line2.setText(sprintf("                        "));
+      line3.setText(sprintf("   CARA ALOW %5dFT    ",alow));
+      line4.setText(sprintf("   MSL FLOOR %5dFT    ",floor));
+      line5.setText(sprintf("TF ADV (MSL)  8500FT    "));
     } elsif (page == pCNI) {
       var no = getprop("autopilot/route-manager/current-wp")+1;
       var freq   = getprop("instrumentation/comm["~comm~"]/frequencies/selected-mhz");
       var time   = getprop("/sim/time/gmt-string");
       var t      = getprop("instrumentation/tacan/display/channel");
-      line1.setText(sprintf("UHF    --    STPT %02d",freq,no));
+      line1.setText(sprintf("UHF    --    STPT %2d",no));
       line2.setText(sprintf(" COMM%d                   ",comm+1));
       line3.setText(sprintf("VHF  %6.2f   %s",freq,time));
       line4.setText(sprintf("                        "));
       line5.setText(sprintf("                  T%s",t));
+    } elsif (page == pBINGO) {
+      var no = getprop("autopilot/route-manager/current-wp")+1;
+      var total = getprop("consumables/fuel/total-fuel-lbs");
+      var bingo = getprop("f16/settings/bingo");
+      line1.setText(sprintf("        BINGO       %2d  ",no));
+      line2.setText(sprintf("                        "));
+      line3.setText(sprintf("    SET    %5dLBS      ",bingo));
+      line4.setText(sprintf("  TOTAL    %5dLBS      ",total));
+      line5.setText(sprintf("                        "));
     }
     settimer(loop_ded, 0.5);
 };
@@ -147,7 +166,7 @@ var stpt = func {
 }
 
 var alow = func {
-  #page = pALOW;
+  page = pALOW;
 }
 
 var tacan = func {
@@ -168,8 +187,36 @@ var comm2 = func {
   page = pCNI;
 }
 
+var bingo = func {
+  page = pBINGO;
+}
+
 ## these methods taken from JA37:
 var convertDoubleToDegree = func (value) {
+        var sign = value < 0 ? -1 : 1;
+        var abs = math.abs(math.round(value * 1000000));
+        var dec = math.fmod(abs,1000000) / 1000000;
+        var deg = math.floor(abs / 1000000) * sign;
+        var min = dec * 60;
+        return [deg,min];
+}
+var convertDegreeToStringLat = func (lat) {
+  lat = convertDoubleToDegree(lat);
+  var s = "N";
+  if (lat[0]<0) {
+    s = "S";
+  }
+  return sprintf("%s %3d\xc2\xb0%06.3f´",s,math.abs(lat[0]),lat[1]);
+}
+var convertDegreeToStringLon = func (lon) {
+  lon = convertDoubleToDegree(lon);
+  var s = "E";
+  if (lon[0]<0) {
+    s = "W";
+  }
+  return sprintf("%s %3d\xc2\xb0%06.3f´",s,math.abs(lon[0]),lon[1]);
+}
+var convertDoubleToDegree37 = func (value) {
         var sign = value < 0 ? -1 : 1;
         var abs = math.abs(math.round(value * 1000000));
         var dec = math.fmod(abs,1000000) / 1000000;
@@ -178,7 +225,7 @@ var convertDoubleToDegree = func (value) {
         var sec = math.round((dec - min / 60) * 3600);#TODO: unsure of this round()
         return [deg,min,sec];
 }
-var convertDegreeToStringLat = func (lat) {
+var convertDegreeToStringLat37 = func (lat) {
   lat = convertDoubleToDegree(lat);
   var s = "N";
   if (lat[0]<0) {
@@ -186,7 +233,7 @@ var convertDegreeToStringLat = func (lat) {
   }
   return sprintf("%02d %02d %02d%s",math.abs(lat[0]),lat[1],lat[2],s);
 }
-var convertDegreeToStringLon = func (lon) {
+var convertDegreeToStringLon37 = func (lon) {
   lon = convertDoubleToDegree(lon);
   var s = "E";
   if (lon[0]<0) {

@@ -860,7 +860,64 @@
 			    <text><label>EMER STORES JETTISON</label></text>
 			</group>
 
-		</group>
+			<hrule/>
+
+			<input>
+			  	<width>75</width>
+			  	<height>25</height>
+			  	<label>BINGO</label>
+			  	<property>f16/settings/bingo</property>
+			  	<live>true</live>
+			  	<halign>left</halign>
+		        <binding>
+		            <command>dialog-apply</command>
+		      	</binding>
+		      	<!--<color>
+		      		<red>0.5</red>
+		      		<green>1</green>
+		      		<blue>0.5</blue>
+		      	</color>-->
+			</input>
+
+			<hrule/>
+
+			<input>
+			  	<width>75</width>
+			  	<height>25</height>
+			  	<label>CARA ALOW</label>
+			  	<property>f16/settings/cara-alow</property>
+			  	<live>true</live>
+			  	<halign>left</halign>
+		        <binding>
+		            <command>dialog-apply</command>
+		      	</binding>
+		      	<!--<color>
+		      		<red>0.5</red>
+		      		<green>1</green>
+		      		<blue>0.5</blue>
+		      	</color>-->
+			</input>
+
+			<hrule/>
+
+			<input>
+			  	<width>75</width>
+			  	<height>25</height>
+			  	<label>MSL FLOOR</label>
+			  	<property>f16/settings/msl-floor</property>
+			  	<live>true</live>
+			  	<halign>left</halign>
+		        <binding>
+		            <command>dialog-apply</command>
+		      	</binding>
+		      	<!--<color>
+		      		<red>0.5</red>
+		      		<green>1</green>
+		      		<blue>0.5</blue>
+		      	</color>-->
+			</input>
+
+		</group>		
 
 	</group>
 

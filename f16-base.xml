@@ -1934,6 +1934,12 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <thunder2 type="bool">false</thunder2>
             <thunder3 type="bool">false</thunder3>
         </sound>
+        <settings>
+            <bingo type="int">1250</bingo>
+            <msl-floor type="int">18000</msl-floor><!-- Mean Sea Level altitude advisory floor
+value. 18000=standard US transition altitude -->
+            <cara-alow type="int">500</cara-alow><!-- Combined Altitude Radar Altimeter Automatic LOw altitude Warning -->
+        </settings>
         <avionics>
             <hud-brt type="double">1.0</hud-brt>
             <rwr-int type="double">1.0</rwr-int>

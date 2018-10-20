@@ -221,6 +221,24 @@
         </hovered>
     </animation>
     <animation>
+        <type>pick</type>
+        <object-name>8</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.bingo();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-7</tooltip-id>
+                <label>BINGO</label>
+            </binding>
+        </hovered>
+    </animation>
+    <animation>
         <type>select</type>
         <condition>
                 <less-than-equals>

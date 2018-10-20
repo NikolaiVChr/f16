@@ -200,10 +200,13 @@ var F16_HUD = {
                  texUp                     : "f16/hud/texels-up",
                  wp_bearing_deg            : "autopilot/route-manager/wp/true-bearing-deg",
                  total_fuel_lbs            : "/consumables/fuel/total-fuel-lbs",
+                 bingo                     : "f16/settings/bingo",
+                 alow                      : "f16/settings/cara-alow",
                  altitude_agl_ft           : "position/altitude-agl-ft",
                  wp0_eta                   : "autopilot/route-manager/wp[0]/eta",
                  approach_speed            : "fdm/jsbsim/systems/approach-speed",
                  standby                   : "instrumentation/radar/radar-standby",
+                 elapsed                   : "sim/time/elapsed-sec",
                 };
 
         foreach (var name; keys(input)) {
@@ -441,12 +444,11 @@ var F16_HUD = {
                                              }
                                             ),
             props.UpdateManager.FromHashValue("window3_txt", nil, func(txt)
-                                      {
+                                      { 
                                           if (txt != nil and txt != ""){
-                                              obj.window3.show();
                                               obj.window3.setText(txt);
-                                          }
-                                          else
+                                              obj.window3.show();
+                                          }else
                                             obj.window3.hide();
 
                                       }),
@@ -1079,7 +1081,6 @@ append(obj.total, obj.speed_curr);
             if(hdp.master_arm and pylons.fcs != nil)
             {
                 hdp.weapon_selected = pylons.fcs.selectedType;
-                me.window9.setVisible(1);
                 
                 if (hdp.weapon_selected != nil)
                 {
@@ -1113,9 +1114,8 @@ append(obj.total, obj.speed_curr);
                 {
                     if (hdp.active_u.Callsign != nil) {
                         hdp.window3_txt = hdp.active_u.Callsign.getValue();
-                        me.window3.show();
                     } else {
-                        me.window3.hide();
+                        hdp.window3_txt = "";
                     }
 
     #        var w2 = sprintf("%-4d", hdp.active_u.get_closure_rate());
@@ -1127,23 +1127,18 @@ append(obj.total, obj.speed_curr);
                     if (hdp.active_u.get_display() == 0) {
                         hdp.window4_txt = "TA XX";
                         hdp.window5_txt = "FXXX.X";#slant range
-                        me.window4.show();
-                        me.window5.show();
                     } else {
                         hdp.window4_txt = sprintf("TA%3d", hdp.active_u.get_altitude()*0.001);
                         hdp.window5_txt = sprintf("F%05.1f", hdp.active_u.get_slant_range());#slant range
-                        me.window4.show();
-                        me.window5.show();
                     }
                     
                     hdp.window6_txt = hdp.active_target_model;
-                    me.window6.show(); # SRM UNCAGE / TARGET ASPECT
                 }
                 else {
-                    me.window3.hide();
-                    me.window4.hide();
-                    me.window5.hide();
-                    me.window6.hide();
+                    hdp.window3_txt = "";
+                    hdp.window4_txt = "";
+                    hdp.window5_txt = "";
+                    hdp.window6_txt = "";
                 }
             }
             else # weapons not armed
@@ -1155,32 +1150,36 @@ append(obj.total, obj.speed_curr);
                     me.planSize = me.plan.getPlanSize();
                     if (me.plan.current != nil and me.plan.current >= 0 and me.plan.current < me.planSize) {
                         hdp.window5_txt = sprintf("%d>%d", hdp.nav_range, me.plan.current+1);
-                        me.window5.show();
                     } else {
-                        me.window5.hide();
+                        hdp.window5_txt = "";
                     }
                     me.eta = hdp.wp0_eta;
                     if (me.eta != nil and me.eta != "") {
                         hdp.window4_txt = me.eta;
                     } else {
-                        hdp.window4 = "XX:XX";
+                        hdp.window4_txt = "XX:XX";
                     }
-                    me.window4.show();
                 } else {
-                    me.window4.hide();
-                    me.window5.hide();
+                    hdp.window4_txt = "";
+                    hdp.window5_txt = "";
                 }
                 
                 if (hdp.gear_down and !hdp.wow) {
                     hdp.window6_txt = sprintf("A%d", hdp.approach_speed);
-                    me.window6.show();
                 } else {
-                    me.window6.hide(); # SRM UNCAGE / TARGET ASPECT
+                    hdp.window6_txt = "";
                 }
             }
 
-            if (hdp.total_fuel_lbs < 1250)
+            if (hdp.total_fuel_lbs < hdp.bingo) {
               hdp.window3_txt = "FUEL";
+            } else {
+              if (hdp.alow<hdp.altitude_agl_ft or math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0 or hdp.gear_down) {
+                hdp.window3_txt = sprintf("AL%4d",hdp.alow);
+              } else {
+                hdp.window3_txt = "";
+              }
+            }
 
             if (hdp.window9_txt=="") {
                 me.alphaHUD = hdp.alpha;
@@ -1193,7 +1192,6 @@ append(obj.total, obj.speed_curr);
             }
 
             hdp.window7_txt = sprintf(" %.2f",hdp.mach);
-            me.window7.show();
         }
 
         foreach(var update_item; me.update_items)

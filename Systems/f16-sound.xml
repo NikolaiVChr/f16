@@ -520,6 +520,61 @@
         <factor>1</factor>
     </volume>
   </bingo>
+
+  <alow>
+   <name>alow</name>
+   <path>Aircraft/f16/Sounds/betty/altitude.wav</path>
+   <mode>once</mode>
+   <type>avionics</type>
+   <condition>
+        <equals>
+          <property>gear/gear/position-norm</property>
+          <value>0</value>
+        </equals>
+        <greater-than>
+          <property>f16/settings/cara-alow</property>
+          <property>position/altitude-agl-ft</property>
+        </greater-than>
+    </condition>
+   <volume>
+        <property>sim/current-view/internal</property>
+        <factor>1</factor>
+    </volume>
+  </alow>
+
+  <msl>
+   <name>msl-floor</name>
+   <path>Aircraft/f16/Sounds/betty/altitude.wav</path>
+   <mode>once</mode>
+   <type>avionics</type>
+   <condition>
+        <greater-than>
+          <property>instrumentation/altimeter/indicated-altitude-ft</property>
+          <property>f16/settings/msl-floor</property>
+        </greater-than>
+    </condition>
+   <volume>
+        <property>sim/current-view/internal</property>
+        <factor>1</factor>
+    </volume>
+  </msl>
+
+  <msl>
+   <name>msl-floor2</name>
+   <path>Aircraft/f16/Sounds/betty/altitude.wav</path>
+   <mode>once</mode>
+   <type>avionics</type>
+   <condition>
+        <greater-than>
+          <property>f16/settings/msl-floor</property>
+          <property>instrumentation/altimeter/indicated-altitude-ft</property>          
+        </greater-than>
+    </condition>
+   <volume>
+        <property>sim/current-view/internal</property>
+        <factor>1</factor>
+    </volume>
+  </msl>
   
 
   <cannon>
