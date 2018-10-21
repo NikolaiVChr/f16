@@ -106,28 +106,18 @@ var F16_HUD = {
 
 
         HUD_FONT = "LiberationFonts/LiberationMono-Bold.ttf";#"condensed.txf";  with condensed the FLYUP text was not displayed until minutes into flight, no clue why
-        obj.window1 = obj.get_text("window1", HUD_FONT,9,1.4);
-        obj.window2 = obj.get_text("window2", HUD_FONT,9,1.4);
-        obj.window3 = obj.get_text("window3", HUD_FONT,9,1.4);
-        obj.window4 = obj.get_text("window4", HUD_FONT,9,1.4);
-        obj.window5 = obj.get_text("window5", HUD_FONT,9,1.4);
-        obj.window6 = obj.get_text("window6", HUD_FONT,9,1.4);
-        obj.window7 = obj.get_text("window7", HUD_FONT,9,1.4);
-        obj.window8 = obj.get_text("window8", HUD_FONT,9,1.4);
-        obj.window9 = obj.get_text("window9", HUD_FONT,9,1.4);
-        obj.window10 = obj.get_text("window10", HUD_FONT,9,1.4);
-        obj.window2.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
-        obj.window3.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
-        obj.window4.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
-        obj.window5.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
-        obj.window6.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
-        obj.window7.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
-        obj.window8.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
-        obj.window9.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
-        obj.window10.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(10,1.1);
+        obj.window1 = obj.get_text("window1", HUD_FONT,9,1.1);
+        obj.window2 = obj.get_text("window2", HUD_FONT,9,1.1);
+        obj.window3 = obj.get_text("window3", HUD_FONT,9,1.1);
+        obj.window4 = obj.get_text("window4", HUD_FONT,9,1.1);
+        obj.window5 = obj.get_text("window5", HUD_FONT,9,1.1);
+        obj.window6 = obj.get_text("window6", HUD_FONT,9,1.1);
+        obj.window7 = obj.get_text("window7", HUD_FONT,9,1.1);
+        obj.window8 = obj.get_text("window8", HUD_FONT,9,1.1);
+        obj.window9 = obj.get_text("window9", HUD_FONT,9,1.1);
+        obj.window10 = obj.get_text("window10", HUD_FONT,9,1.1);
 
-        obj.ralt = obj.get_text("radalt", HUD_FONT,9,1.4);
-        obj.ralt.setFont("LiberationFonts/LiberationMono-Bold.ttf").setFontSize(9,1.1);
+        obj.ralt = obj.get_text("radalt", HUD_FONT,9,1.1);
 
         append(obj.total, obj.ladder);
         append(obj.total, obj.heading_tape);
