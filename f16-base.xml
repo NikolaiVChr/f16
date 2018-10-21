@@ -1950,6 +1950,7 @@ value. 18000=standard US transition altitude -->
             <mfd-r-con type="double">1.0</mfd-r-con>
             <hud-velocity type="int">1</hud-velocity>
             <hud-scales type="int">1</hud-scales>
+            <hud-fpm type="int">2</hud-fpm>
             <cara type="bool">false</cara>
         </avionics>
         <fcs>

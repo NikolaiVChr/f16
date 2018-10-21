@@ -201,6 +201,7 @@ var F16_HUD = {
                  standby                   : "instrumentation/radar/radar-standby",
                  elapsed                   : "sim/time/elapsed-sec",
                  cara                      : "f16/avionics/cara-on",
+                 fpm                       : "f16/avionics/hud-fpm",
                 };
 
         foreach (var name; keys(input)) {
@@ -271,10 +272,15 @@ var F16_HUD = {
                                                  }
                                                  obj.oldBore.hide();
                                       }),
-            props.UpdateManager.FromHashList(["texUp","VV_x","VV_y"], 0.01, func(hdp)
+            props.UpdateManager.FromHashList(["texUp","VV_x","VV_y","fpm"], 0.01, func(hdp)
                                       {
-                                        obj.VV.setTranslation (hdp.VV_x * obj.texelPerDegreeX, hdp.VV_y * obj.texelPerDegreeY+pitch_offset);
-                                        obj.VV.update();
+                                        if (hdp.fpm > 0) {
+                                            obj.VV.setTranslation (hdp.VV_x * obj.texelPerDegreeX, hdp.VV_y * obj.texelPerDegreeY+pitch_offset);
+                                            obj.VV.show();
+                                            obj.VV.update();
+                                        } else {
+                                            obj.VV.hide();
+                                        }
                                       }),
             props.UpdateManager.FromHashList(["texUp","gear_down","VV_x","VV_y", "wow"], 0.01, func(hdp)
                                       {
@@ -291,11 +297,16 @@ var F16_HUD = {
                                       }),
             props.UpdateManager.FromHashList(["texUp","pitch","roll"], 0.025, func(hdp)
                                       {
-                                          obj.ladder.setTranslation (0.0, hdp.pitch * pitch_factor+pitch_offset);                                           
-                                          obj.ladder.setCenter (obj.ladder_center[0], obj.ladder_center[1] - hdp.pitch * pitch_factor);
-                                          obj.ladder.setRotation (hdp.roll_rad);
-                                          obj.roll_pointer.setRotation (hdp.roll_rad);
-                                          obj.ladder.update();
+                                          if (hdp.fpm == 2) {
+                                            obj.ladder.setTranslation (0.0, hdp.pitch * pitch_factor+pitch_offset);                                           
+                                            obj.ladder.setCenter (obj.ladder_center[0], obj.ladder_center[1] - hdp.pitch * pitch_factor);
+                                            obj.ladder.setRotation (hdp.roll_rad);
+                                            obj.ladder.show();
+                                            obj.ladder.update();
+                                        } else {
+                                            obj.ladder.hide();
+                                        }
+                                        obj.roll_pointer.setRotation (hdp.roll_rad);
                                       }),
 #            props.UpdateManager.FromHashValue("roll_rad", 1.0, func(roll_rad)
 #                                      {

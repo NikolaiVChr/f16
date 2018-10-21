@@ -643,6 +643,48 @@
 					
 					</group>
 
+					<group>
+						<layout>vbox</layout>
+						
+						<text>
+							<label>HUD FPM</label>
+						</text>
+						
+						<group>
+							<layout>hbox</layout>
+						
+							<group>
+								<layout>vbox</layout>
+								<halign>left</halign>
+								
+								<text>
+									<label>ATT/FPM</label>
+								</text>
+								<text>
+									<label>FPM</label>
+								</text>
+								<text>
+									<label>OFF</label>
+								</text>								
+							</group>
+							
+							<slider>
+								<halign>left</halign>
+								<property>/f16/avionics/hud-fpm</property>
+								<min>0</min>
+								<max>2</max>
+								<step>1</step>
+								<live>true</live>
+								<vertical>true</vertical>
+								<binding>
+									<command>dialog-apply</command>
+								</binding>
+							</slider>
+							
+						</group>
+					
+					</group>
+
 				</group>
 			
 		</group>
