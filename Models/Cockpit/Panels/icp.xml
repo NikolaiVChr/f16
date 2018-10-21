@@ -150,6 +150,24 @@
     </animation>
     <animation>
         <type>pick</type>
+        <object-name>3</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.magv();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-magv</tooltip-id>
+                <label>MAGV</label>
+            </binding>
+        </hovered>
+    </animation>
+    <animation>
+        <type>pick</type>
         <object-name>5</object-name>
         <action>
             <button>0</button>

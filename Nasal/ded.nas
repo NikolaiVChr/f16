@@ -60,12 +60,13 @@ var callInit = func {
         .setTranslation(55, 128*0.6);
 };
 
-var pTACAN = 0;
+var pTACAN= 0;
 var pALOW = 1;
 var pSTPT = 2;
 var pIFF  = 4;
 var pCNI  = 5;
 var pBINGO= 6;
+var pMAGV = 7;
 
 var page = pCNI;
 var comm = 0;
@@ -156,6 +157,22 @@ var loop_ded = func {# one line is max 24 chars
       line3.setText(sprintf("    SET    %5dLBS      ",bingo));
       line4.setText(sprintf("  TOTAL    %5dLBS      ",total));
       line5.setText(sprintf("                        "));
+    } elsif (page == pMAGV) {
+      var amount = getprop("instrumentation/gps/magnetic-bug-error-deg");
+      if (amount != nil) {
+        var letter = "W";
+        if (amount <0) {
+          letter = "E";
+          amount = math.abs(amount);
+        }
+        line3.setText(sprintf("         %s %.1f\xc2\xb0",letter, amount));
+      } else {
+        line3.setText(sprintf("         GPS OFFLINE"));
+      }
+      line1.setText(sprintf("       MAGV  AUTO       "));
+      line2.setText(sprintf("                        "));
+      line4.setText(sprintf("                        "));
+      line5.setText(sprintf("                        "));
     }
     settimer(loop_ded, 0.5);
 };
@@ -190,6 +207,10 @@ var comm2 = func {
 
 var bingo = func {
   page = pBINGO;
+}
+
+var magv = func {
+  page = pMAGV;
 }
 
 ## these methods taken from JA37:
