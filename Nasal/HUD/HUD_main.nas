@@ -282,7 +282,7 @@ var F16_HUD = {
                                             obj.VV.hide();
                                         }
                                       }),
-            props.UpdateManager.FromHashList(["texUp","gear_down","VV_x","VV_y", "wow"], 0.01, func(hdp)
+            props.UpdateManager.FromHashList(["fpm","texUp","gear_down","VV_x","VV_y", "wow"], 0.01, func(hdp)
                                       {
                                         if (hdp.gear_down and !hdp.wow) {
                                           obj.bracket.setTranslation (obj.sx/2+hdp.VV_x * obj.texelPerDegreeX, obj.sy-obj.texels_up_into_hud+13 * obj.texelPerDegreeY);
@@ -291,8 +291,13 @@ var F16_HUD = {
                                           obj.roll_pointer.hide();
                                         } else {
                                           obj.bracket.hide();
-                                          obj.roll_lines.show();
-                                          obj.roll_pointer.show();
+                                          if (hdp.fpm==2) {
+                                              obj.roll_lines.show();
+                                              obj.roll_pointer.show();
+                                          } else {
+                                              obj.roll_lines.hide();
+                                              obj.roll_pointer.hide();
+                                          }
                                         }
                                       }),
             props.UpdateManager.FromHashList(["texUp","pitch","roll"], 0.025, func(hdp)
@@ -301,12 +306,13 @@ var F16_HUD = {
                                             obj.ladder.setTranslation (0.0, hdp.pitch * pitch_factor+pitch_offset);                                           
                                             obj.ladder.setCenter (obj.ladder_center[0], obj.ladder_center[1] - hdp.pitch * pitch_factor);
                                             obj.ladder.setRotation (hdp.roll_rad);
+                                            obj.roll_pointer.setRotation (hdp.roll_rad);
                                             obj.ladder.show();
                                             obj.ladder.update();
                                         } else {
                                             obj.ladder.hide();
                                         }
-                                        obj.roll_pointer.setRotation (hdp.roll_rad);
+                                        
                                       }),
 #            props.UpdateManager.FromHashValue("roll_rad", 1.0, func(roll_rad)
 #                                      {
