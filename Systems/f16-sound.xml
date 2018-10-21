@@ -535,6 +535,7 @@
           <property>f16/settings/cara-alow</property>
           <property>position/altitude-agl-ft</property>
         </greater-than>
+        <property>f16/avionics/cara-on</property>
     </condition>
    <volume>
         <property>sim/current-view/internal</property>

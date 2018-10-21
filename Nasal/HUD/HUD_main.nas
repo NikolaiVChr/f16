@@ -210,6 +210,7 @@ var F16_HUD = {
                  approach_speed            : "fdm/jsbsim/systems/approach-speed",
                  standby                   : "instrumentation/radar/radar-standby",
                  elapsed                   : "sim/time/elapsed-sec",
+                 cara                      : "f16/avionics/cara-on",
                 };
 
         foreach (var name; keys(input)) {
@@ -309,11 +310,15 @@ var F16_HUD = {
 #            props.UpdateManager.FromHashValue("roll_rad", 1.0, func(roll_rad)
 #                                      {
 #                                      }),
-            props.UpdateManager.FromHashList(["altitude_agl_ft"], 1.0, func(hdp)
+            props.UpdateManager.FromHashList(["altitude_agl_ft","cara"], 1.0, func(hdp)
                                       {
                                           obj.agl=hdp.altitude_agl_ft;
-                                          if(obj.agl < 13000) {
-                                              obj.ralt.setText(sprintf("R %05d ",obj.agl));
+                                          if(obj.agl < 13000 and hdp.cara) {
+                                              if(obj.agl < 10) {
+                                                obj.ralt.setText(sprintf("R %05d ",obj.agl));
+                                              } else {
+                                                obj.ralt.setText(sprintf("R %05d ",math.round(obj.agl,10)));
+                                              }
                                               obj.ralt.show();
                                               obj.raltFrame.hide();
                                           } else {
@@ -1215,7 +1220,7 @@ append(obj.total, obj.speed_curr);
             } elsif (hdp.total_fuel_lbs < hdp.bingo) {
               hdp.window10_txt = "";
             } else {
-              if (hdp.alow<hdp.altitude_agl_ft or math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0 or hdp.gear_down) {
+              if (hdp.alow<hdp.altitude_agl_ft or math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0 or !hdp.cara or hdp.gear_down) {
                 hdp.window10_txt = sprintf("AL%4d",hdp.alow);
               } else {
                 hdp.window10_txt = "";

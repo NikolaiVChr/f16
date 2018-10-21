@@ -373,6 +373,7 @@ var medium = {
     
     sendLightsToMp();
     sendABtoMP();
+    CARA();
 
     settimer(func {me.loop()},0.5);
   },
@@ -426,6 +427,16 @@ var sendLightsToMp = func {
   } else {
     setprop("sim/multiplay/generic/bool[44]",0);
   }
+}
+
+var CARA = func {
+  # Tri-service combined altitude radar altimeter
+  var viewOnGround = 0;
+  var attitudeConv = vector.Math.convertAngles(getprop("orientation/heading-deg"),getprop("orientation/pitch-deg"),getprop("orientation/roll-deg"));
+  var down = vector.Math.eulerToCartesian3Z(attitudeConv[0],attitudeConv[1],attitudeConv[2]);#vector pointing up from aircraft
+  var up = [0,0,1];#vector pointing up from ground
+  var angle = vector.Math.angleBetweenVectors(down,up);
+  setprop("f16/avionics/cara-on",angle<70);
 }
 
 var batteryChargeDischarge = func {
