@@ -1,14 +1,13 @@
 AC3Db
-MATERIAL "MainPanel" rgb 1.000 1.000 1.000  amb 0.7 0.7 0.7  emis 0.000 0.000 0.000  spec 0.5 0.5 0.5  shi 32 trans 0.000
-MATERIAL "Material.001" rgb 0.063 0.063 0.063  amb 0.005 0.005 0.005  emis 0.000 0.000 0.000  spec 0.102 0.102 0.102  shi 32 trans 0.000
-MATERIAL "Material.006" rgb 0.063 0.063 0.063  amb 0.005 0.005 0.005  emis 0.000 0.000 0.000  spec 0.102 0.102 0.102  shi 32 trans 0.000
-MATERIAL "ac3dmat6" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.284 0.284 0.284  spec 0.200 0.200 0.200  shi 10 trans 0.000
-MATERIAL "ac3dmat1.005" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 0 trans 1.000
-MATERIAL "ac3dmat1.009" rgb 0.722 0.722 0.722  amb 0.022 0.022 0.022  emis 0.000 0.000 0.000  spec 1.000 1.000 1.000  shi 85 trans 0.000
-MATERIAL "Material.004" rgb 0.063 0.063 0.063  amb 0.300 0.300 0.300  emis 0.000 0.000 0.000  spec 0.176 0.176 0.176  shi 32 trans 0.000
-MATERIAL "unlitMat" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 12 trans 0.000
+MATERIAL "MainPanel" rgb 1 1 1  amb 0.7 0.7 0.7  emis 0 0 0  spec 0.5 0.5 0.5  shi 32  trans 0
+MATERIAL "Material.006" rgb 0.063 0.063 0.063  amb 0.005 0.005 0.005  emis 0 0 0  spec 0.102 0.102 0.102  shi 32  trans 0
+MATERIAL "ac3dmat6" rgb 0 0 0  amb 0 0 0  emis 0.284 0.284 0.284  spec 0.2 0.2 0.2  shi 10  trans 0
+MATERIAL "ac3dmat1.005" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0 0 0  shi 0  trans 1
+MATERIAL "ac3dmat1.009" rgb 0.722 0.722 0.722  amb 0.022 0.022 0.022  emis 0 0 0  spec 1 1 1  shi 85  trans 0
+MATERIAL "Material.004" rgb 0.063 0.063 0.063  amb 0.3 0.3 0.3  emis 0 0 0  spec 0.176 0.176 0.176  shi 32  trans 0
+MATERIAL "unlitMat" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0 0 0  shi 12  trans 0
+MATERIAL "ac3dmat1" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0 0 0  shi 20  trans 0
 OBJECT world
-name "Blender_exporter_v2.24__panels_mlu_left-console.ac"
 kids 1
 OBJECT group
 name "LEFT_CONSOLE"
@@ -17,9 +16,8 @@ OBJECT poly
 name "ANTI_G"
 data 10
 ANTI_G.001
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 8
 0.73412 0.00765 0.26703
 0.81051 0.00765 0.26703
@@ -30,35 +28,35 @@ numvert 8
 0.73412 0.00382 0.26703
 0.73412 0.00382 0.41355
 numsurf 5
-SURF 0X20
+SURF 0x20
 mat 0
 refs 4
 0 0.248961 0.58253
 3 0.248961 0.778605
 2 0.047891 0.778605
 1 0.047891 0.58253
-SURF 0X20
+SURF 0x20
 mat 1
 refs 4
 1 0.033861 0.9881
 2 0.033861 0.9881
 5 0.033861 0.9881
 4 0.033861 0.9881
-SURF 0X20
+SURF 0x20
 mat 1
 refs 4
 0 0.033861 0.9881
 1 0.033861 0.9881
 4 0.033861 0.9881
 6 0.033861 0.9881
-SURF 0X20
+SURF 0x20
 mat 1
 refs 4
 3 0.033861 0.9881
 0 0.033861 0.9881
 6 0.033861 0.9881
 7 0.033861 0.9881
-SURF 0X20
+SURF 0x20
 mat 1
 refs 4
 2 0.033861 0.9881
@@ -73,7 +71,7 @@ OBJECT poly
 name "AUDIO-1_0"
 data 11
 AUDIO-1.001
-crease 30.0
+crease 30.000000
 numvert 8
 0.19672 0.02789 0.26655
 0.27316 0.02147 0.26655
@@ -84,29 +82,29 @@ numvert 8
 0.1964 0.02407 0.26655
 0.1964 0.02408 0.41357
 numsurf 4
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 1 0 0
 2 0 0
 5 0 0
 4 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 0 0 0
 1 0 0
 4 0 0
 6 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 3 0 0
 0 0 0
 6 0 0
 7 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 2 0 0
 3 0 0
@@ -117,16 +115,15 @@ OBJECT poly
 name "AUDIO-1_1"
 data 11
 AUDIO-1.002
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.19672 0.02789 0.26655
 0.27316 0.02147 0.26655
 0.27316 0.02147 0.41357
 0.19672 0.02789 0.41357
 numsurf 1
-SURF 0X20
+SURF 0x20
 mat 0
 refs 4
 0 0.941402 0.82031
@@ -141,7 +138,7 @@ OBJECT poly
 name "AUDIO-2_0"
 data 11
 AUDIO-2.001
-crease 30.0
+crease 30.000000
 numvert 8
 0.27342 0.02145 0.26655
 0.31163 0.01824 0.26655
@@ -152,29 +149,29 @@ numvert 8
 0.2731 0.01763 0.26655
 0.2731 0.01763 0.41357
 numsurf 4
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 1 0 0
 2 0 0
 5 0 0
 4 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 0 0 0
 1 0 0
 4 0 0
 6 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 3 0 0
 0 0 0
 6 0 0
 7 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 2 0 0
 3 0 0
@@ -185,16 +182,15 @@ OBJECT poly
 name "AUDIO-2_1"
 data 11
 AUDIO-2.002
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.27342 0.02145 0.26655
 0.31163 0.01824 0.26655
 0.31163 0.01824 0.41357
 0.27342 0.02145 0.41357
 numsurf 1
-SURF 0X20
+SURF 0x20
 mat 0
 refs 4
 0 0.941204 0.705074
@@ -209,7 +205,7 @@ OBJECT poly
 name "ECM_0"
 data 7
 ECM.001
-crease 30.0
+crease 30.000000
 numvert 8
 0.31208 0.01821 0.26655
 0.37868 0.01261 0.26655
@@ -220,29 +216,29 @@ numvert 8
 0.31176 0.01439 0.26655
 0.31176 0.01439 0.41357
 numsurf 4
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 1 0 0
 2 0 0
 5 0 0
 4 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 0 0 0
 1 0 0
 4 0 0
 6 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 3 0 0
 0 0 0
 6 0 0
 7 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 2 0 0
 3 0 0
@@ -253,16 +249,15 @@ OBJECT poly
 name "ECM_1"
 data 7
 ECM.002
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.31208 0.01821 0.26655
 0.37868 0.01261 0.26655
 0.37868 0.01261 0.41357
 0.31208 0.01821 0.41357
 numsurf 1
-SURF 0X20
+SURF 0x20
 mat 0
 refs 4
 0 0.941093 0.646955
@@ -274,9 +269,8 @@ OBJECT poly
 name "ELEC"
 data 8
 ELEC.001
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 34
 0.341 0.01578 0.41399
 0.43647 0.00776 0.41399
@@ -313,7 +307,7 @@ numvert 34
 0.41624 0.00946 0.43722
 0.43028 0.00828 0.43722
 numsurf 10
-SURF 0X20
+SURF 0x20
 mat 0
 refs 16
 0 0.526107 0.602063
@@ -332,42 +326,42 @@ refs 16
 10 0.48597 0.568048
 9 0.445405 0.568048
 8 0.445601 0.587888
-SURF 0X20
+SURF 0x20
 mat 1
 refs 4
 1 0.395052 0.505355
 2 0.289794 0.505355
 5 0.288865 0.505355
 4 0.394123 0.505355
-SURF 0X20
+SURF 0x20
 mat 1
 refs 4
 0 0.395052 0.639186
 1 0.395052 0.505355
 4 0.394123 0.505355
 6 0.394123 0.639186
-SURF 0X20
+SURF 0x20
 mat 1
 refs 4
 3 0.289794 0.639186
 0 0.395052 0.639186
 6 0.394123 0.639186
 7 0.288865 0.639186
-SURF 0X20
+SURF 0x20
 mat 1
 refs 4
 2 0.289794 0.505355
 3 0.289794 0.639186
 7 0.288865 0.639186
 5 0.288865 0.505355
-SURF 0X20
+SURF 0x20
 mat 0
 refs 4
 10 0.48597 0.568048
 12 0.485382 0.563824
 13 0.485578 0.543592
 1 0.526107 0.474211
-SURF 0X20
+SURF 0x20
 mat 0
 refs 7
 15 0.445797 0.563726
@@ -377,7 +371,7 @@ refs 7
 1 0.526107 0.474211
 13 0.485578 0.543592
 14 0.445993 0.54369
-SURF 0X20
+SURF 0x20
 mat 0
 refs 5
 11 0.48597 0.587888
@@ -385,7 +379,7 @@ refs 5
 1 0.526107 0.474211
 0 0.526107 0.602063
 8 0.445601 0.587888
-SURF 0X20
+SURF 0x20
 mat 0
 refs 13
 18 0.445797 0.519627
@@ -401,7 +395,7 @@ refs 13
 32 0.464023 0.501305
 30 0.485774 0.501358
 17 0.485578 0.519626
-SURF 0X20
+SURF 0x20
 mat 0
 refs 5
 17 0.485578 0.519626
@@ -417,7 +411,7 @@ OBJECT poly
 name "EPU_0"
 data 7
 EPU.001
-crease 30.0
+crease 30.000000
 numvert 8
 0.31228 0.01819 0.49091
 0.43646 0.00776 0.49091
@@ -428,29 +422,29 @@ numvert 8
 0.31196 0.01437 0.49091
 0.31196 0.01437 0.53705
 numsurf 4
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 1 0 0
 2 0 0
 5 0 0
 4 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 0 0 0
 1 0 0
 4 0 0
 6 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 3 0 0
 0 0 0
 6 0 0
 7 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 2 0 0
 3 0 0
@@ -461,16 +455,15 @@ OBJECT poly
 name "EPU_1"
 data 7
 EPU.002
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.31228 0.01819 0.49091
 0.43646 0.00776 0.49091
 0.43646 0.00776 0.54475
 0.31228 0.01819 0.53705
 numsurf 1
-SURF 0X20
+SURF 0x20
 mat 0
 refs 4
 0 0.153041 0.462885
@@ -482,7 +475,7 @@ OBJECT poly
 name "EPU_RUN_light"
 data 8
 Mesh.017
-crease 30.0
+crease 30.000000
 numvert 9
 0.3682 0.01498 0.50757
 0.36573 0.01498 0.50654
@@ -494,50 +487,50 @@ numvert 9
 0.37068 0.01498 0.50654
 0.3682 0.01557 0.50407
 numsurf 8
-SURF 0X10
-mat 3
+SURF 0x10
+mat 2
 refs 3
 1 0.853553 0.853553
 0 1 0.5
 8 0.5 0.5
-SURF 0X10
-mat 3
+SURF 0x10
+mat 2
 refs 3
 8 0.5 0.5
 2 0.5 1
 1 0.853553 0.853553
-SURF 0X10
-mat 3
+SURF 0x10
+mat 2
 refs 3
 8 0.5 0.5
 3 0.146447 0.853553
 2 0.5 1
-SURF 0X10
-mat 3
+SURF 0x10
+mat 2
 refs 3
 8 0.5 0.5
 4 0 0.5
 3 0.146447 0.853553
-SURF 0X10
-mat 3
+SURF 0x10
+mat 2
 refs 3
 8 0.5 0.5
 5 0.146447 0.146447
 4 0 0.5
-SURF 0X10
-mat 3
+SURF 0x10
+mat 2
 refs 3
 8 0.5 0.5
 6 0.5 0
 5 0.146447 0.146447
-SURF 0X10
-mat 3
+SURF 0x10
+mat 2
 refs 3
 8 0.5 0.5
 7 0.853553 0.146447
 6 0.5 0
-SURF 0X10
-mat 3
+SURF 0x10
+mat 2
 refs 3
 8 0.5 0.5
 0 1 0.5
@@ -550,7 +543,7 @@ OBJECT poly
 name "EXT_LIGHTING_0"
 data 16
 EXT_LIGHTING.001
-crease 30.0
+crease 30.000000
 numvert 8
 0.58725 0.00765 0.30474
 0.7337 0.00765 0.30474
@@ -561,29 +554,29 @@ numvert 8
 0.58725 0.00382 0.30474
 0.58725 0.00382 0.39075
 numsurf 4
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 1 0 0
 2 0 0
 5 0 0
 4 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 0 0 0
 1 0 0
 4 0 0
 6 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 3 0 0
 0 0 0
 6 0 0
 7 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 2 0 0
 3 0 0
@@ -594,16 +587,15 @@ OBJECT poly
 name "EXT_LIGHTING_1"
 data 16
 EXT_LIGHTING.002
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.58725 0.00765 0.30474
 0.7337 0.00765 0.30474
 0.7337 0.00765 0.39075
 0.58725 0.00765 0.39075
 numsurf 1
-SURF 0X20
+SURF 0x20
 mat 0
 refs 4
 0 0.830068 0.462882
@@ -615,15 +607,15 @@ OBJECT poly
 name "HS_ANTI_COLLISION"
 data 17
 HS_ANTI_COLLISION
-crease 45.0
+crease 45.000000
 numvert 4
 0.7126 0.00768 0.37178
 0.7126 0.00768 0.36226
 0.70019 0.00768 0.36226
 0.70019 0.00768 0.37178
 numsurf 1
-SURF 0X30
-mat 4
+SURF 0x30
+mat 3
 refs 4
 0 1 1
 1 0 1
@@ -634,15 +626,15 @@ OBJECT poly
 name "HS_AR-KNOB_DN"
 data 13
 HS_AR-KNOB_DN
-crease 45.0
+crease 45.000000
 numvert 4
 0.62216 0.00768 0.31892
 0.63168 0.00769 0.31892
 0.63168 0.00769 0.33133
 0.62216 0.00768 0.33133
 numsurf 1
-SURF 0X30
-mat 4
+SURF 0x30
+mat 3
 refs 4
 1 0 0
 0 1 0
@@ -653,15 +645,15 @@ OBJECT poly
 name "HS_AR-KNOB_UP"
 data 13
 HS_AR-KNOB_UP
-crease 45.0
+crease 45.000000
 numvert 4
 0.61159 0.00768 0.33133
 0.62111 0.00768 0.33133
 0.62111 0.00768 0.31892
 0.61159 0.00768 0.31892
 numsurf 1
-SURF 0X30
-mat 4
+SURF 0x30
+mat 3
 refs 4
 0 1 1
 1 0 1
@@ -672,15 +664,15 @@ OBJECT poly
 name "HS_FORM-KNOB_DN"
 data 15
 HS_FORM-KNOB_DN
-crease 45.0
+crease 45.000000
 numvert 4
 0.70073 0.00768 0.31892
 0.71025 0.00769 0.31892
 0.71025 0.00769 0.33133
 0.70073 0.00768 0.33133
 numsurf 1
-SURF 0X30
-mat 4
+SURF 0x30
+mat 3
 refs 4
 1 0 0
 0 1 0
@@ -691,15 +683,15 @@ OBJECT poly
 name "HS_FORM-KNOB_UP"
 data 15
 HS_FORM-KNOB_UP
-crease 45.0
+crease 45.000000
 numvert 4
 0.69017 0.00768 0.33133
 0.69969 0.00768 0.33133
 0.69969 0.00768 0.31892
 0.69017 0.00768 0.31892
 numsurf 1
-SURF 0X30
-mat 4
+SURF 0x30
+mat 3
 refs 4
 0 1 1
 1 0 1
@@ -710,15 +702,15 @@ OBJECT poly
 name "HS_FUSELAGE_DN"
 data 14
 HS_FUSELAGE_DN
-crease 45.0
+crease 45.000000
 numvert 4
 0.60696 0.00768 0.362
 0.60696 0.00769 0.35248
 0.61937 0.00769 0.35248
 0.61937 0.00768 0.362
 numsurf 1
-SURF 0X30
-mat 4
+SURF 0x30
+mat 3
 refs 4
 1 0 0
 0 1 0
@@ -729,15 +721,15 @@ OBJECT poly
 name "HS_FUSELAGE_UP"
 data 14
 HS_FUSELAGE_UP
-crease 45.0
+crease 45.000000
 numvert 4
 0.61937 0.00768 0.37256
 0.61937 0.00768 0.36304
 0.60696 0.00768 0.36304
 0.60696 0.00768 0.37256
 numsurf 1
-SURF 0X30
-mat 4
+SURF 0x30
+mat 3
 refs 4
 0 1 1
 1 0 1
@@ -748,15 +740,15 @@ OBJECT poly
 name "HS_MASTER_NORM"
 data 14
 HS_MASTER_NORM
-crease 45.0
+crease 45.000000
 numvert 4
 0.66732 0.00768 0.32742
 0.66732 0.00769 0.3179
 0.65491 0.00769 0.3179
 0.65491 0.00768 0.32742
 numsurf 1
-SURF 0X30
-mat 4
+SURF 0x30
+mat 3
 refs 4
 0 1 1
 1 0 1
@@ -767,15 +759,15 @@ OBJECT poly
 name "HS_POS_LIGHTS"
 data 13
 HS_POS_LIGHTS
-crease 45.0
+crease 45.000000
 numvert 4
 0.68096 0.00768 0.37178
 0.68096 0.00768 0.36226
 0.66855 0.00768 0.36226
 0.66855 0.00768 0.37178
 numsurf 1
-SURF 0X30
-mat 4
+SURF 0x30
+mat 3
 refs 4
 0 1 1
 1 0 1
@@ -786,15 +778,15 @@ OBJECT poly
 name "HS_WING-TAIL_DN"
 data 15
 HS_WING-TAIL_DN
-crease 45.0
+crease 45.000000
 numvert 4
 0.64107 0.00769 0.362
 0.64107 0.00769 0.35248
 0.65348 0.00769 0.35248
 0.65348 0.00769 0.362
 numsurf 1
-SURF 0X30
-mat 4
+SURF 0x30
+mat 3
 refs 4
 1 0 0
 0 1 0
@@ -805,15 +797,15 @@ OBJECT poly
 name "HS_WING-TAIL_UP"
 data 15
 HS_WING-TAIL_UP
-crease 45.0
+crease 45.000000
 numvert 4
 0.65348 0.00768 0.37256
 0.65348 0.00769 0.36304
 0.64107 0.00769 0.36304
 0.64107 0.00768 0.37256
 numsurf 1
-SURF 0X30
-mat 4
+SURF 0x30
+mat 3
 refs 4
 0 1 1
 1 0 1
@@ -824,7 +816,7 @@ OBJECT poly
 name "SW_ANTI_COLLISION"
 data 17
 SW_ANTI_COLLISION
-crease 30.0
+crease 30.000000
 numvert 8
 0.70482 0.02698 0.36503
 0.70733 0.02698 0.36503
@@ -835,74 +827,74 @@ numvert 8
 0.70607 -0.01939 0.36727
 0.70607 0.02768 0.36727
 numsurf 12
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 0 1 1
 1 0.833333 1
 6 0.833333 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 1 0.833333 1
 2 0.666667 1
 6 0.666667 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 2 0.666667 1
 3 0.5 1
 6 0.5 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 3 0.5 1
 4 0.333333 1
 6 0.333333 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 4 0.333333 1
 5 0.166667 1
 6 0.166667 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 5 0.166667 1
 0 0 1
 6 0 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 0 0.75 0
 5 1 0.5
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 1 0.25 0
 0 0.75 0
 7 0.5 0.5
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 2 0 0.5
 1 0.25 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 3 0.25 1
 2 0 0.5
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 4 0.75 1
 3 0.25 1
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 5 1 0.5
@@ -912,7 +904,7 @@ OBJECT poly
 name "SW_FUSELAGE"
 data 11
 SW_FUSELAGE
-crease 30.0
+crease 30.000000
 numvert 8
 0.61157 0.02698 0.36009
 0.61408 0.02698 0.36009
@@ -923,74 +915,74 @@ numvert 8
 0.61283 -0.01939 0.36233
 0.61283 0.02768 0.36233
 numsurf 12
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 0 1 1
 1 0.833333 1
 6 0.833333 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 1 0.833333 1
 2 0.666667 1
 6 0.666667 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 2 0.666667 1
 3 0.5 1
 6 0.5 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 3 0.5 1
 4 0.333333 1
 6 0.333333 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 4 0.333333 1
 5 0.166667 1
 6 0.166667 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 5 0.166667 1
 0 0 1
 6 0 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 0 0.75 0
 5 1 0.5
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 1 0.25 0
 0 0.75 0
 7 0.5 0.5
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 2 0 0.5
 1 0.25 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 3 0.25 1
 2 0 0.5
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 4 0.75 1
 3 0.25 1
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 5 1 0.5
@@ -1000,7 +992,7 @@ OBJECT poly
 name "SW_MASTER"
 data 8
 Mesh.038
-crease 30.0
+crease 30.000000
 numvert 5
 0.65585 0.02578 0.31822
 0.66499 0.02578 0.31822
@@ -1008,33 +1000,33 @@ numvert 5
 0.65585 0.02578 0.32697
 0.66048 -0.01939 0.3226
 numsurf 5
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 0 1 1
 1 0.833333 1
 4 0.833333 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 2 0.5 1
 3 0.333333 1
 4 0.333333 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 4
 0 0 0
 3 0 1
 2 1 1
 1 1 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 0 0 0
 4 1 1
 3 1 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 1 0 0
 2 1 0
@@ -1044,7 +1036,7 @@ OBJECT poly
 name "SW_POS_LIGHTS"
 data 13
 SW_POS_LIGHTS
-crease 30.0
+crease 30.000000
 numvert 8
 0.67329 0.02698 0.36503
 0.6758 0.02698 0.36503
@@ -1055,74 +1047,74 @@ numvert 8
 0.67455 -0.01939 0.36727
 0.67455 0.02768 0.36727
 numsurf 12
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 0 1 1
 1 0.833333 1
 6 0.833333 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 1 0.833333 1
 2 0.666667 1
 6 0.666667 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 2 0.666667 1
 3 0.5 1
 6 0.5 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 3 0.5 1
 4 0.333333 1
 6 0.333333 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 4 0.333333 1
 5 0.166667 1
 6 0.166667 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 5 0.166667 1
 0 0 1
 6 0 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 0 0.75 0
 5 1 0.5
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 1 0.25 0
 0 0.75 0
 7 0.5 0.5
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 2 0 0.5
 1 0.25 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 3 0.25 1
 2 0 0.5
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 4 0.75 1
 3 0.25 1
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 5 1 0.5
@@ -1132,7 +1124,7 @@ OBJECT poly
 name "SW_WING-TAIL"
 data 12
 SW_WING-TAIL
-crease 30.0
+crease 30.000000
 numvert 8
 0.64539 0.02698 0.36009
 0.6479 0.02698 0.36009
@@ -1143,74 +1135,74 @@ numvert 8
 0.64664 -0.01939 0.36233
 0.64664 0.02768 0.36233
 numsurf 12
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 0 1 1
 1 0.833333 1
 6 0.833333 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 1 0.833333 1
 2 0.666667 1
 6 0.666667 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 2 0.666667 1
 3 0.5 1
 6 0.5 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 3 0.5 1
 4 0.333333 1
 6 0.333333 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 4 0.333333 1
 5 0.166667 1
 6 0.166667 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 5 0.166667 1
 0 0 1
 6 0 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 0 0.75 0
 5 1 0.5
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 1 0.25 0
 0 0.75 0
 7 0.5 0.5
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 2 0 0.5
 1 0.25 0
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 3 0.25 1
 2 0 0.5
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 4 0.75 1
 3 0.25 1
-SURF 0X10
-mat 5
+SURF 0x10
+mat 4
 refs 3
 7 0.5 0.5
 5 1 0.5
@@ -1223,7 +1215,7 @@ OBJECT poly
 name "FLIGHT_CONTROL_0"
 data 18
 FLIGHT_CONTROL.001
-crease 30.0
+crease 30.000000
 numvert 8
 0.58725 0.00765 0.39111
 0.7337 0.00765 0.39111
@@ -1234,29 +1226,29 @@ numvert 8
 0.58725 0.00382 0.39111
 0.58725 0.00382 0.55349
 numsurf 4
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 1 0 0
 2 0 0
 5 0 0
 4 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 0 0 0
 1 0 0
 4 0 0
 6 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 3 0 0
 0 0 0
 6 0 0
 7 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 2 0 0
 3 0 0
@@ -1267,16 +1259,15 @@ OBJECT poly
 name "FLIGHT_CONTROL_1"
 data 18
 FLIGHT_CONTROL.002
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.58725 0.00765 0.39111
 0.7337 0.00765 0.39111
 0.7337 0.00765 0.55349
 0.58725 0.00765 0.55349
 numsurf 1
-SURF 0X20
+SURF 0x20
 mat 0
 refs 4
 0 0.49029 0.254882
@@ -1291,7 +1282,7 @@ OBJECT poly
 name "FUEL_0"
 data 8
 FUEL.001
-crease 30.0
+crease 30.000000
 numvert 8
 0.43995 0.00765 0.48768
 0.58684 0.00765 0.48768
@@ -1302,29 +1293,29 @@ numvert 8
 0.43995 0.00382 0.48768
 0.43995 0.00382 0.54479
 numsurf 4
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 1 0 0
 2 0 0
 5 0 0
 4 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 0 0 0
 1 0 0
 4 0 0
 6 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 3 0 0
 0 0 0
 6 0 0
 7 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 2 0 0
 3 0 0
@@ -1335,16 +1326,15 @@ OBJECT poly
 name "FUEL_1"
 data 8
 FUEL.002
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.43995 0.00765 0.48768
 0.58684 0.00765 0.48768
 0.58684 0.00765 0.54479
 0.43995 0.00765 0.54479
 numsurf 1
-SURF 0X20
+SURF 0x20
 mat 0
 refs 4
 0 0.317446 0.462886
@@ -1359,7 +1349,7 @@ OBJECT poly
 name "GROWTH.001_0"
 data 10
 GROWTH.001
-crease 30.0
+crease 30.000000
 numvert 8
 0.37929 0.01256 0.26655
 0.43647 0.00776 0.26655
@@ -1370,29 +1360,29 @@ numvert 8
 0.37896 0.00874 0.26655
 0.37896 0.00874 0.41357
 numsurf 4
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 1 0 0
 2 0 0
 5 0 0
 4 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 0 0 0
 1 0 0
 4 0 0
 6 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 3 0 0
 0 0 0
 6 0 0
 7 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 2 0 0
 3 0 0
@@ -1403,16 +1393,15 @@ OBJECT poly
 name "GROWTH.001_1"
 data 10
 GROWTH.002
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.37929 0.01256 0.26655
 0.43647 0.00776 0.26655
 0.43647 0.00776 0.41357
 0.37929 0.01256 0.41357
 numsurf 1
-SURF 0X20
+SURF 0x20
 mat 0
 refs 4
 0 0.941083 0.550773
@@ -1427,7 +1416,7 @@ OBJECT poly
 name "GROWTH.002_0"
 data 10
 GROWTH.003
-crease 30.0
+crease 30.000000
 numvert 8
 0.43995 0.00765 0.26688
 0.58684 0.00765 0.26688
@@ -1438,29 +1427,29 @@ numvert 8
 0.43995 0.00382 0.26688
 0.43995 0.00382 0.28564
 numsurf 4
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 1 0 0
 2 0 0
 5 0 0
 4 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 0 0 0
 1 0 0
 4 0 0
 6 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 3 0 0
 0 0 0
 6 0 0
 7 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 2 0 0
 3 0 0
@@ -1471,16 +1460,15 @@ OBJECT poly
 name "GROWTH.002_1"
 data 10
 GROWTH.007
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.43995 0.00765 0.26688
 0.58684 0.00765 0.26688
 0.58684 0.00765 0.28564
 0.43995 0.00765 0.28564
 numsurf 1
-SURF 0X20
+SURF 0x20
 mat 0
 refs 4
 0 0.941341 0.463373
@@ -1495,7 +1483,7 @@ OBJECT poly
 name "GROWTH.003_0"
 data 10
 GROWTH.008
-crease 30.0
+crease 30.000000
 numvert 8
 0.58725 0.00765 0.26703
 0.7337 0.00765 0.26703
@@ -1506,29 +1494,29 @@ numvert 8
 0.58725 0.00382 0.26703
 0.58725 0.00382 0.30365
 numsurf 4
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 1 0 0
 2 0 0
 5 0 0
 4 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 0 0 0
 1 0 0
 4 0 0
 6 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 3 0 0
 0 0 0
 6 0 0
 7 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 2 0 0
 3 0 0
@@ -1539,16 +1527,15 @@ OBJECT poly
 name "GROWTH.003_1"
 data 10
 GROWTH.009
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.58725 0.00765 0.26703
 0.7337 0.00765 0.26703
 0.7337 0.00765 0.30365
 0.58725 0.00765 0.30365
 numsurf 1
-SURF 0X20
+SURF 0x20
 mat 0
 refs 4
 0 0.94139 0.255362
@@ -1560,7 +1547,7 @@ OBJECT poly
 name "GROWTH.004"
 data 10
 GROWTH.010
-crease 30.0
+crease 30.000000
 numvert 8
 0.81429 0.00765 0.26695
 0.90288 0.00765 0.26695
@@ -1571,36 +1558,36 @@ numvert 8
 0.81429 0.00382 0.26695
 0.81429 0.00382 0.56038
 numsurf 5
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 0 0 0
 3 0 0
 2 0 0
 1 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 1 0 0
 2 0 0
 5 0 0
 4 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 0 0 0
 1 0 0
 4 0 0
 6 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 3 0 0
 0 0 0
 6 0 0
 7 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 2 0 0
 3 0 0
@@ -1614,7 +1601,7 @@ OBJECT poly
 name "IFF_0"
 data 7
 IFF.001
-crease 30.0
+crease 30.000000
 numvert 8
 0.43995 0.00765 0.39144
 0.58684 0.00765 0.39144
@@ -1625,29 +1612,29 @@ numvert 8
 0.43995 0.00382 0.39144
 0.43995 0.00382 0.48719
 numsurf 4
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 1 0 0
 2 0 0
 5 0 0
 4 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 0 0 0
 1 0 0
 4 0 0
 6 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 3 0 0
 0 0 0
 6 0 0
 7 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 2 0 0
 3 0 0
@@ -1658,16 +1645,15 @@ OBJECT poly
 name "IFF_1"
 data 7
 IFF.002
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.43995 0.00765 0.39144
 0.58684 0.00765 0.39144
 0.58684 0.00765 0.48719
 0.43995 0.00765 0.48719
 numsurf 1
-SURF 0X20
+SURF 0x20
 mat 0
 refs 4
 0 0.580612 0.462886
@@ -1682,7 +1668,7 @@ OBJECT poly
 name "JET_FUEL_0"
 data 12
 JET_FUEL.001
-crease 30.0
+crease 30.000000
 numvert 8
 0.13996 0.03266 0.41399
 0.34045 0.01582 0.41399
@@ -1693,29 +1679,29 @@ numvert 8
 0.13964 0.02884 0.41399
 0.13964 0.02884 0.49049
 numsurf 4
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 1 0 0
 2 0 0
 5 0 0
 4 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 0 0 0
 1 0 0
 4 0 0
 6 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 3 0 0
 0 0 0
 6 0 0
 7 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 2 0 0
 3 0 0
@@ -1726,16 +1712,15 @@ OBJECT poly
 name "JET_FUEL_1"
 data 12
 JET_FUEL.002
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.13996 0.03266 0.41399
 0.34045 0.01582 0.41399
 0.34045 0.01582 0.49049
 0.13996 0.03266 0.49049
 numsurf 1
-SURF 0X20
+SURF 0x20
 mat 0
 refs 4
 0 0.526228 0.895092
@@ -1747,7 +1732,7 @@ OBJECT poly
 name "JFS_RUN_light"
 data 4
 Mesh
-crease 30.0
+crease 30.000000
 numvert 9
 0.16687 0.00557 0.47237
 0.1644 0.00557 0.47135
@@ -1759,50 +1744,50 @@ numvert 9
 0.16935 0.00557 0.47135
 0.16687 0.00616 0.46887
 numsurf 8
-SURF 0X10
-mat 3
+SURF 0x10
+mat 2
 refs 3
 1 0.853553 0.853553
 0 1 0.5
 8 0.5 0.5
-SURF 0X10
-mat 3
+SURF 0x10
+mat 2
 refs 3
 8 0.5 0.5
 2 0.5 1
 1 0.853553 0.853553
-SURF 0X10
-mat 3
+SURF 0x10
+mat 2
 refs 3
 8 0.5 0.5
 3 0.146447 0.853553
 2 0.5 1
-SURF 0X10
-mat 3
+SURF 0x10
+mat 2
 refs 3
 8 0.5 0.5
 4 0 0.5
 3 0.146447 0.853553
-SURF 0X10
-mat 3
+SURF 0x10
+mat 2
 refs 3
 8 0.5 0.5
 5 0.146447 0.146447
 4 0 0.5
-SURF 0X10
-mat 3
+SURF 0x10
+mat 2
 refs 3
 8 0.5 0.5
 6 0.5 0
 5 0.146447 0.146447
-SURF 0X10
-mat 3
+SURF 0x10
+mat 2
 refs 3
 8 0.5 0.5
 7 0.853553 0.146447
 6 0.5 0
-SURF 0X10
-mat 3
+SURF 0x10
+mat 2
 refs 3
 8 0.5 0.5
 0 1 0.5
@@ -1812,11 +1797,11 @@ OBJECT poly
 name "LEFT_CONSOLE.001"
 data 16
 LEFT_CONSOLE.001
-crease 30.0
+crease 30.000000
 numvert 71
 0.04967 0.0364 0.25917
 0.9077 0.00382 0.25917
-0.9077 -0.00001 0.25917
+0.9077 -1e-05 0.25917
 0.04936 0.03258 0.25917
 0.1049 0.03176 0.53376
 0.10458 0.02794 0.53376
@@ -1836,49 +1821,49 @@ numvert 71
 0.39169 0.00768 0.59249
 0.39748 0.00335 0.59826
 0.3978 0.00716 0.59826
-0.53336 -0.00001 0.60544
+0.53336 -1e-05 0.60544
 0.53336 0.00382 0.60544
-0.53918 -0.00001 0.5997
+0.53918 -1e-05 0.5997
 0.53918 0.00382 0.5997
 0.53918 0.00382 0.5668
-0.53918 -0.00001 0.5668
+0.53918 -1e-05 0.5668
 0.54588 0.00382 0.56152
-0.54588 -0.00001 0.56152
-0.57393 -0.00001 0.56152
+0.54588 -1e-05 0.56152
+0.57393 -1e-05 0.56152
 0.57393 0.00382 0.56152
 0.58023 0.00382 0.56783
-0.58023 -0.00001 0.56783
+0.58023 -1e-05 0.56783
 0.58023 0.00382 0.56783
 0.58023 0.00382 0.60251
-0.58023 -0.00001 0.60251
+0.58023 -1e-05 0.60251
 0.58525 0.00382 0.6081
-0.58525 -0.00001 0.6081
+0.58525 -1e-05 0.6081
 0.71089 0.00382 0.61549
-0.71089 -0.00001 0.61549
-0.71801 -0.00001 0.60948
+0.71089 -1e-05 0.61549
+0.71801 -1e-05 0.60948
 0.71801 0.00382 0.60948
-0.71801 -0.00001 0.57782
+0.71801 -1e-05 0.57782
 0.71801 0.00382 0.57782
-0.72338 -0.00001 0.57235
+0.72338 -1e-05 0.57235
 0.72338 0.00382 0.57235
 0.74826 0.00382 0.57235
-0.74826 -0.00001 0.57235
-0.754 -0.00001 0.57794
+0.74826 -1e-05 0.57235
+0.754 -1e-05 0.57794
 0.754 0.00382 0.57794
-0.754 -0.00001 0.60876
+0.754 -1e-05 0.60876
 0.754 0.00382 0.60875
-0.76145 -0.00001 0.61678
+0.76145 -1e-05 0.61678
 0.76145 0.00382 0.61678
 0.8892 0.00382 0.61707
-0.8892 -0.00001 0.61707
-0.89755 -0.00001 0.60806
+0.8892 -1e-05 0.61707
+0.89755 -1e-05 0.60806
 0.89755 0.00382 0.60806
 0.89755 0.00382 0.57783
-0.89755 -0.00001 0.57783
-0.90286 -0.00001 0.5723
+0.89755 -1e-05 0.57783
+0.90286 -1e-05 0.5723
 0.90286 0.00382 0.5723
 0.9077 0.00382 0.5723
-0.9077 -0.00001 0.5723
+0.9077 -1e-05 0.5723
 0.06693 0.03495 0.52098
 0.06661 0.03113 0.52098
 0.43764 0.00382 0.25917
@@ -1886,551 +1871,551 @@ numvert 71
 0.43763 0.00382 0.59886
 0.43731 0 0.59886
 numsurf 84
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 5 0 0
 7 0 0
 6 0 0
 4 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 7 0 0
 9 0 0
 8 0 0
 6 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 9 0 0
 10 0 0
 11 0 0
 8 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 10 0 0
 12 0 0
 13 0 0
 11 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 12 0 0
 15 0 0
 14 0 0
 13 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 15 0 0
 16 0 0
 17 0 0
 14 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 16 0 0
 18 0 0
 19 0 0
 17 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 18 0 0
 20 0 0
 21 0 0
 19 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 22 0 0
 24 0 0
 25 0 0
 23 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 24 0 0
 27 0 0
 26 0 0
 25 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 27 0 0
 29 0 0
 28 0 0
 26 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 29 0 0
 30 0 0
 31 0 0
 28 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 30 0 0
 33 0 0
 32 0 0
 31 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 33 0 0
 32 0 0
 34 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 33 0 0
 36 0 0
 35 0 0
 34 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 36 0 0
 38 0 0
 37 0 0
 35 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 38 0 0
 40 0 0
 39 0 0
 37 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 40 0 0
 41 0 0
 42 0 0
 39 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 41 0 0
 43 0 0
 44 0 0
 42 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 43 0 0
 45 0 0
 46 0 0
 44 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 45 0 0
 48 0 0
 47 0 0
 46 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 48 0 0
 49 0 0
 50 0 0
 47 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 49 0 0
 51 0 0
 52 0 0
 50 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 51 0 0
 53 0 0
 54 0 0
 52 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 53 0 0
 56 0 0
 55 0 0
 54 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 56 0 0
 57 0 0
 58 0 0
 55 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 57 0 0
 60 0 0
 59 0 0
 58 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 60 0 0
 61 0 0
 62 0 0
 59 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 2 0 0
 1 0 0
 63 0 0
 64 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 61 0 0
 64 0 0
 63 0 0
 62 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 4 0 0
 65 0 0
 66 0 0
 5 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 65 0 0
 0 0 0
 3 0 0
 66 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 0 0 0
 65 0 0
 4 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 0 0 0
 4 0 0
 6 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 0 0 0
 6 0 0
 8 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 0 0 0
 8 0 0
 11 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 0 0 0
 11 0 0
 14 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 11 0 0
 13 0 0
 14 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 1 0 0
 28 0 0
 31 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 1 0 0
 31 0 0
 32 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 32 0 0
 35 0 0
 42 0 0
 44 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 35 0 0
 37 0 0
 39 0 0
 42 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 32 0 0
 44 0 0
 46 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 50 0 0
 52 0 0
 58 0 0
 59 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 52 0 0
 54 0 0
 55 0 0
 58 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 47 0 0
 50 0 0
 59 0 0
 62 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 1 0 0
 32 0 0
 46 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 1 0 0
 46 0 0
 47 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 1 0 0
 47 0 0
 62 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 1 0 0
 63 0 0
 62 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 33 0 0
 36 0 0
 41 0 0
 43 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 36 0 0
 38 0 0
 40 0 0
 41 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 33 0 0
 43 0 0
 45 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 48 0 0
 49 0 0
 60 0 0
 61 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 49 0 0
 51 0 0
 57 0 0
 60 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 51 0 0
 53 0 0
 56 0 0
 57 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 2 0 0
 48 0 0
 61 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 2 0 0
 61 0 0
 64 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 2 0 0
 45 0 0
 48 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 2 0 0
 33 0 0
 45 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 2 0 0
 30 0 0
 33 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 2 0 0
 29 0 0
 30 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 3 0 0
 10 0 0
 15 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 10 0 0
 12 0 0
 15 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 3 0 0
 9 0 0
 10 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 3 0 0
 7 0 0
 9 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 3 0 0
 5 0 0
 7 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 3 0 0
 66 0 0
 5 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 0 0 0
 67 0 0
 3 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 67 0 0
 1 0 0
 2 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 67 0 0
 0 0 0
 14 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 68 0 0
 3 0 0
 15 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 2 0 0
 68 0 0
 67 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 68 0 0
 3 0 0
 67 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 23 0 0
 25 0 0
 69 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 70 0 0
 22 0 0
 24 0 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 20 0 0
 70 0 1
 69 1 1
 21 1 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 22 0 0
 23 1 0
 69 1 1
 70 0 1
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 17 0 0
 19 1 0
 21 1 1
 69 0 1
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 17 0 0
 69 1 1
 67 1 0
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 14 0 0
 17 1 0
 67 1 1
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 4
 25 0 0
 26 1 0
 67 1 1
 69 0 1
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 26 0 0
 28 1 0
 67 1 1
-SURF 0X20
-mat 6
+SURF 0x20
+mat 5
 refs 3
 1 0 0
 67 1 1
@@ -2440,17 +2425,16 @@ OBJECT poly
 name "light_a"
 data 8
 ELEC.006
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.42316 0.00888 0.42904
 0.4162 0.00946 0.42908
 0.41624 0.00946 0.43722
 0.4232 0.00888 0.43722
 numsurf 1
-SURF 0X20
-mat 7
+SURF 0x20
+mat 6
 refs 4
 0 0.485871 0.492029
 1 0.485774 0.501358
@@ -2461,17 +2445,16 @@ OBJECT poly
 name "light_b"
 data 8
 ELEC.007
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.43028 0.00828 0.42901
 0.42316 0.00888 0.42904
 0.43028 0.00828 0.43722
 0.4232 0.00888 0.43722
 numsurf 1
-SURF 0X20
-mat 7
+SURF 0x20
+mat 6
 refs 4
 1 0.485871 0.492029
 3 0.464023 0.491975
@@ -2482,17 +2465,16 @@ OBJECT poly
 name "light_c"
 data 8
 ELEC.009
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.42324 0.00887 0.44419
 0.41627 0.00946 0.44419
 0.41624 0.00946 0.43722
 0.4232 0.00888 0.43722
 numsurf 1
-SURF 0X20
-mat 7
+SURF 0x20
+mat 6
 refs 4
 3 0.464023 0.491975
 2 0.464023 0.501305
@@ -2503,17 +2485,16 @@ OBJECT poly
 name "light_d"
 data 8
 ELEC.008
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.42324 0.00887 0.44419
 0.43028 0.00828 0.44419
 0.43028 0.00828 0.43722
 0.4232 0.00888 0.43722
 numsurf 1
-SURF 0X20
-mat 7
+SURF 0x20
+mat 6
 refs 4
 2 0.464022 0.4825
 3 0.464023 0.491975
@@ -2524,17 +2505,16 @@ OBJECT poly
 name "light_dash"
 data 8
 ELEC.011
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.38466 0.01211 0.42915
 0.38459 0.01212 0.44397
 0.37667 0.01278 0.42919
 0.3766 0.01279 0.44401
 numsurf 1
-SURF 0X20
-mat 7
+SURF 0x20
+mat 6
 refs 4
 2 0.485475 0.5543
 3 0.445888 0.554394
@@ -2545,17 +2525,16 @@ OBJECT poly
 name "light_epu_gen"
 data 8
 ELEC.003
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.38745 0.01188 0.42915
 0.38745 0.01188 0.44404
 0.39442 0.01129 0.44404
 0.39442 0.01129 0.42915
 numsurf 1
-SURF 0X20
-mat 7
+SURF 0x20
+mat 6
 refs 4
 0 0.485578 0.539859
 1 0.445797 0.539859
@@ -2566,17 +2545,16 @@ OBJECT poly
 name "light_epu_pmg"
 data 8
 ELEC.012
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.40256 0.01061 0.42915
 0.40256 0.01061 0.44404
 0.39442 0.01129 0.44404
 0.39442 0.01129 0.42915
 numsurf 1
-SURF 0X20
-mat 7
+SURF 0x20
+mat 6
 refs 4
 3 0.485578 0.530529
 2 0.445797 0.530529
@@ -2587,17 +2565,16 @@ OBJECT poly
 name "light_fail"
 data 8
 ELEC.005
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.42331 0.00887 0.46417
 0.43123 0.0082 0.46413
 0.43123 0.0082 0.44932
 0.42331 0.00887 0.44932
 numsurf 1
-SURF 0X20
-mat 7
+SURF 0x20
+mat 6
 refs 4
 3 0.431687 0.491831
 0 0.391998 0.49183
@@ -2608,17 +2585,16 @@ OBJECT poly
 name "light_main"
 data 8
 ELEC.010
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.3664 0.01365 0.44419
 0.3664 0.01365 0.42901
 0.3587 0.01429 0.44415
 0.35863 0.0143 0.42901
 numsurf 1
-SURF 0X20
-mat 7
+SURF 0x20
+mat 6
 refs 4
 3 0.48597 0.578459
 2 0.445507 0.578362
@@ -2629,17 +2605,16 @@ OBJECT poly
 name "light_pmg"
 data 8
 ELEC.000
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.35159 0.01489 0.44411
 0.35159 0.01489 0.42901
 0.3587 0.01429 0.44415
 0.35863 0.0143 0.42901
 numsurf 1
-SURF 0X20
-mat 7
+SURF 0x20
+mat 6
 refs 4
 0 0.445601 0.587888
 2 0.445507 0.578362
@@ -2650,17 +2625,16 @@ OBJECT poly
 name "light_stby"
 data 8
 ELEC.002
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.36955 0.01338 0.42923
 0.36963 0.01338 0.44404
 0.37667 0.01278 0.42919
 0.3766 0.01279 0.44401
 numsurf 1
-SURF 0X20
-mat 7
+SURF 0x20
+mat 6
 refs 4
 0 0.485382 0.563824
 1 0.445797 0.563726
@@ -2671,17 +2645,16 @@ OBJECT poly
 name "light_to"
 data 8
 ELEC.004
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.42331 0.00887 0.46417
 0.42331 0.00887 0.44932
 0.4162 0.00946 0.44932
 0.41634 0.00945 0.46421
 numsurf 1
-SURF 0X20
-mat 7
+SURF 0x20
+mat 6
 refs 4
 1 0.431687 0.491831
 2 0.431687 0.501358
@@ -2695,7 +2668,7 @@ OBJECT poly
 name "MANUAL_PITCH_0"
 data 16
 MANUAL_PITCH.001
-crease 30.0
+crease 30.000000
 numvert 8
 0.07252 0.03832 0.41399
 0.13924 0.03272 0.41399
@@ -2706,29 +2679,29 @@ numvert 8
 0.0722 0.03451 0.41399
 0.0722 0.0345 0.49049
 numsurf 4
-SURF 0X0
-mat 2
+SURF 0x0
+mat 1
 refs 4
 1 0 0
 2 1 0
 5 1 1
 4 0 1
-SURF 0X0
-mat 2
+SURF 0x0
+mat 1
 refs 4
 0 0 0
 1 1 0
 4 1 1
 6 0 1
-SURF 0X0
-mat 2
+SURF 0x0
+mat 1
 refs 4
 3 0 0
 0 1 0
 6 1 1
 7 0 1
-SURF 0X0
-mat 2
+SURF 0x0
+mat 1
 refs 4
 2 0 0
 3 1 0
@@ -2739,16 +2712,15 @@ OBJECT poly
 name "MANUAL_PITCH_1"
 data 16
 MANUAL_PITCH.002
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.07252 0.03832 0.41399
 0.13924 0.03272 0.41399
 0.13924 0.03272 0.49049
 0.07252 0.03832 0.49049
 numsurf 1
-SURF 0X0
+SURF 0x0
 mat 0
 refs 4
 0 0.526362 0.992646
@@ -2763,7 +2735,7 @@ OBJECT poly
 name "MANUAL_TRIM_0"
 data 15
 MANUAL_TRIM.001
-crease 30.0
+crease 30.000000
 numvert 8
 0.43995 0.00765 0.28604
 0.58684 0.00765 0.28604
@@ -2774,29 +2746,29 @@ numvert 8
 0.43995 0.00382 0.28604
 0.43995 0.00382 0.39111
 numsurf 4
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 1 0 0
 2 0 0
 5 0 0
 4 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 0 0 0
 1 0 0
 4 0 0
 6 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 3 0 0
 0 0 0
 6 0 0
 7 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 2 0 0
 3 0 0
@@ -2807,16 +2779,15 @@ OBJECT poly
 name "MANUAL_TRIM_1"
 data 15
 MANUAL_TRIM.002
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.43995 0.00765 0.28604
 0.58684 0.00765 0.28604
 0.58684 0.00765 0.39111
 0.43995 0.00765 0.39111
 numsurf 1
-SURF 0X20
+SURF 0x20
 mat 0
 refs 4
 0 0.779304 0.254882
@@ -2831,15 +2802,15 @@ OBJECT poly
 name "HS_MAL_IND_LTS"
 data 14
 HS_MAL_IND_LTS
-crease 45.0
+crease 45.000000
 numvert 4
 0.75601 0.00768 0.53431
 0.75601 0.00768 0.52479
 0.74359 0.00768 0.52479
 0.74359 0.00768 0.53431
 numsurf 1
-SURF 0X30
-mat 4
+SURF 0x30
+mat 3
 refs 4
 0 1 1
 1 0 1
@@ -2850,15 +2821,15 @@ OBJECT poly
 name "HS_TEST_PROBE_HEAT_DN"
 data 21
 HS_TEST_PROBE_HEAT_DN
-crease 45.0
+crease 45.000000
 numvert 4
 0.80573 0.00768 0.4892
 0.80573 0.00768 0.47969
 0.79332 0.00768 0.47969
 0.79332 0.00768 0.4892
 numsurf 1
-SURF 0X30
-mat 4
+SURF 0x30
+mat 3
 refs 4
 0 1 1
 1 0 1
@@ -2869,15 +2840,15 @@ OBJECT poly
 name "HS_TEST_PROBE_HEAT_UP"
 data 21
 HS_TEST_PROBE_HEAT_UP
-crease 45.0
+crease 45.000000
 numvert 4
 0.80573 0.00768 0.49919
 0.80573 0.00768 0.48967
 0.79332 0.00768 0.48967
 0.79332 0.00768 0.49919
 numsurf 1
-SURF 0X30
-mat 4
+SURF 0x30
+mat 3
 refs 4
 0 1 1
 1 0 1
@@ -2891,7 +2862,7 @@ OBJECT poly
 name "TEST_0"
 data 4
 TEST
-crease 30.0
+crease 30.000000
 numvert 8
 0.73412 0.00765 0.41386
 0.81051 0.00765 0.41386
@@ -2902,29 +2873,29 @@ numvert 8
 0.73412 0.00382 0.41386
 0.73412 0.00382 0.56038
 numsurf 4
-SURF 0X0
-mat 2
+SURF 0x0
+mat 1
 refs 4
 1 0 0
 2 1 0
 5 1 1
 4 0 1
-SURF 0X0
-mat 2
+SURF 0x0
+mat 1
 refs 4
 0 0 0
 1 1 0
 4 1 1
 6 0 1
-SURF 0X0
-mat 2
+SURF 0x0
+mat 1
 refs 4
 3 0 0
 0 1 0
 6 1 1
 7 0 1
-SURF 0X0
-mat 2
+SURF 0x0
+mat 1
 refs 4
 2 0 0
 3 1 0
@@ -2935,16 +2906,15 @@ OBJECT poly
 name "TEST_1"
 data 8
 TEST.001
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.73412 0.00765 0.41386
 0.81051 0.00765 0.41386
 0.81051 0.00765 0.56038
 0.73412 0.00765 0.56038
 numsurf 1
-SURF 0X0
+SURF 0x0
 mat 0
 refs 4
 0 0.248645 0.790084
@@ -2954,12 +2924,12 @@ refs 4
 kids 0
 OBJECT group
 name "UHF"
-kids 4
+kids 9
 OBJECT poly
 name "UHF_0"
 data 7
 UHF.001
-crease 30.0
+crease 30.000000
 numvert 8
 0.07252 0.03832 0.26649
 0.19632 0.02793 0.26649
@@ -2970,29 +2940,29 @@ numvert 8
 0.0722 0.0345 0.26649
 0.0722 0.03451 0.41351
 numsurf 4
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 1 0 0
 2 0 0
 5 0 0
 4 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 0 0 0
 1 0 0
 4 0 0
 6 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 3 0 0
 0 0 0
 6 0 0
 7 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 2 0 0
 3 0 0
@@ -3003,7 +2973,7 @@ OBJECT poly
 name "UHF_0.001"
 data 7
 UHF.000
-crease 30.0
+crease 30.000000
 numvert 8
 0.07252 0.03832 0.26649
 0.19632 0.02793 0.26649
@@ -3014,29 +2984,29 @@ numvert 8
 0.0722 0.0345 0.26649
 0.0722 0.03451 0.41351
 numsurf 4
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 1 0 0
 2 0 0
 5 0 0
 4 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 0 0 0
 1 0 0
 4 0 0
 6 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 3 0 0
 0 0 0
 6 0 0
 7 0 0
-SURF 0X20
-mat 2
+SURF 0x20
+mat 1
 refs 4
 2 0 0
 3 0 0
@@ -3047,16 +3017,15 @@ OBJECT poly
 name "UHF_1"
 data 7
 UHF.002
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.07252 0.03832 0.26649
 0.19632 0.02793 0.26649
 0.19632 0.02793 0.41351
 0.07252 0.03832 0.41351
 numsurf 1
-SURF 0X20
+SURF 0x20
 mat 0
 refs 4
 0 0.941502 0.997021
@@ -3068,20 +3037,1304 @@ OBJECT poly
 name "UHF_1.001"
 data 7
 UHF.003
-crease 30.0
 texture "../Textures/panels-MLU-left_console.png"
-texrep 1 1
+crease 30.000000
 numvert 4
 0.07252 0.03832 0.26649
 0.19632 0.02793 0.26649
 0.19632 0.02793 0.41351
 0.07252 0.03832 0.41351
 numsurf 1
-SURF 0X20
+SURF 0x20
 mat 0
 refs 4
 0 0.941502 0.997021
 3 0.548941 0.997021
 2 0.548941 0.832044
 1 0.941501 0.832044
+kids 0
+OBJECT poly
+name "uhf-knob.03"
+loc 0.145154 0.0332725 0.339729
+texture "../Textures/panels-MLU-left_console.png"
+crease 45.000000
+numvert 32
+0.0031081 0.0122197 -0.00608069
+0.00310813 0.0122197 0.00605708
+-0.000960499 0.0125757 0.00605711
+-0.000960529 0.0125757 -0.00608072
+-0.0029204 0.00104111 -0.00684077
+-0.0029204 0.00104111 0.00681719
+0.00303525 0.000520065 0.00681719
+0.00303526 0.000520062 -0.00684077
+-0.00474247 0.000836987 0.00637907
+-0.00769602 0.00109539 0.00243598
+-0.00769605 0.00109538 -0.00243607
+-0.00474247 0.00083698 -0.00637957
+3.66718e-05 0.000418864 -0.00788549
+0.00481573 7.45058e-07 -0.00637951
+0.00776932 -0.00025766 -0.00243607
+0.00776932 -0.000257652 0.00243595
+0.00481579 7.45058e-07 0.00637907
+3.66867e-05 0.000418864 0.00788537
+0.00246008 0.0127879 -0.00531065
+-0.000223652 0.0130227 -0.00531071
+-0.000223681 0.0130227 0.00528705
+0.00246005 0.0127879 0.00528705
+0.00764674 -0.00165882 -0.00243607
+0.00469317 -0.00140042 -0.00637951
+-8.58754e-05 -0.000982299 -0.00788546
+-0.00486505 -0.000564184 -0.00637954
+-0.00781865 -0.000305779 -0.00243607
+-0.00781861 -0.000305779 0.00243598
+-0.00486507 -0.000564184 0.00637907
+-8.59201e-05 -0.000982303 0.0078854
+0.00469318 -0.00140042 0.0063791
+0.00764675 -0.00165882 0.00243595
+numsurf 33
+SURF 0x10
+mat 7
+refs 4
+31 0.762945 0.898695
+15 0.762931 0.90158
+16 0.759609 0.901585
+30 0.759623 0.898699
+SURF 0x10
+mat 7
+refs 4
+30 0.759623 0.898699
+16 0.759609 0.901585
+17 0.756164 0.901589
+29 0.756178 0.898703
+SURF 0x10
+mat 7
+refs 4
+29 0.756178 0.898703
+17 0.756164 0.901589
+8 0.75272 0.901593
+28 0.752734 0.898707
+SURF 0x10
+mat 7
+refs 4
+28 0.752734 0.898707
+8 0.75272 0.901593
+9 0.749397 0.901597
+27 0.749411 0.898712
+SURF 0x10
+mat 7
+refs 4
+27 0.749411 0.898712
+9 0.749397 0.901597
+10 0.746148 0.901601
+26 0.746162 0.898715
+SURF 0x10
+mat 7
+refs 4
+26 0.746162 0.898715
+10 0.746148 0.901601
+11 0.742826 0.901605
+25 0.74284 0.898719
+SURF 0x10
+mat 7
+refs 4
+25 0.74284 0.898719
+11 0.742826 0.901605
+12 0.739382 0.901609
+24 0.739395 0.898724
+SURF 0x10
+mat 7
+refs 4
+24 0.739395 0.898724
+12 0.739382 0.901609
+13 0.735937 0.901613
+23 0.735951 0.898728
+SURF 0x10
+mat 7
+refs 4
+22 0.732629 0.898732
+14 0.732615 0.901617
+15 0.729365 0.901621
+31 0.729379 0.898736
+SURF 0x10
+mat 7
+refs 4
+23 0.735951 0.898728
+13 0.735937 0.901613
+14 0.732615 0.901617
+22 0.732629 0.898732
+SURF 0x30
+mat 7
+refs 3
+8 0.763736 0.893819
+17 0.767842 0.900239
+5 0.76493 0.896225
+SURF 0x30
+mat 7
+refs 3
+9 0.752987 0.889852
+8 0.763736 0.893819
+5 0.76493 0.896225
+SURF 0x30
+mat 7
+refs 3
+10 0.739707 0.889852
+9 0.752987 0.889852
+5 0.76493 0.896225
+SURF 0x30
+mat 7
+refs 3
+11 0.728958 0.893819
+10 0.739707 0.889852
+5 0.76493 0.896225
+SURF 0x30
+mat 7
+refs 3
+4 0.727701 0.896225
+11 0.728958 0.893819
+5 0.76493 0.896225
+SURF 0x30
+mat 7
+refs 3
+4 0.727701 0.896225
+12 0.724853 0.900239
+11 0.728958 0.893819
+SURF 0x30
+mat 7
+refs 3
+7 0.7277 0.904225
+12 0.724853 0.900239
+4 0.727701 0.896225
+SURF 0x30
+mat 7
+refs 3
+14 0.739707 0.910626
+13 0.728958 0.906659
+7 0.7277 0.904225
+SURF 0x30
+mat 7
+refs 3
+7 0.7277 0.904225
+13 0.728958 0.906659
+12 0.724853 0.900239
+SURF 0x30
+mat 7
+refs 3
+15 0.752987 0.910626
+14 0.739707 0.910626
+7 0.7277 0.904225
+SURF 0x30
+mat 7
+refs 3
+16 0.763736 0.906659
+15 0.752987 0.910626
+7 0.7277 0.904225
+SURF 0x30
+mat 7
+refs 3
+6 0.76493 0.904225
+16 0.763736 0.906659
+7 0.7277 0.904225
+SURF 0x30
+mat 7
+refs 3
+17 0.767842 0.900239
+16 0.763736 0.906659
+6 0.76493 0.904225
+SURF 0x30
+mat 7
+refs 3
+5 0.76493 0.896225
+17 0.767842 0.900239
+6 0.76493 0.904225
+SURF 0x30
+mat 7
+refs 4
+3 0.751168 0.89568
+4 0.739422 0.895271
+5 0.7402 0.891569
+2 0.75186 0.89239
+SURF 0x30
+mat 7
+refs 4
+1 0.75186 0.89239
+6 0.7402 0.891569
+7 0.739422 0.895271
+0 0.751168 0.89568
+SURF 0x30
+mat 7
+refs 4
+0 0.744955 0.896614
+7 0.738712 0.891623
+4 0.738712 0.891623
+3 0.744955 0.896614
+SURF 0x30
+mat 7
+refs 4
+2 0.750685 0.89496
+5 0.745161 0.889761
+6 0.745161 0.889761
+1 0.750685 0.89496
+SURF 0x30
+mat 7
+refs 4
+18 0.731871 0.902027
+19 0.731871 0.898422
+20 0.760759 0.898422
+21 0.760759 0.902027
+SURF 0x30
+mat 7
+refs 4
+0 0.729772 0.902957
+3 0.729772 0.897492
+19 0.731871 0.898422
+18 0.731871 0.902027
+SURF 0x30
+mat 7
+refs 4
+3 0.729772 0.897492
+2 0.762858 0.897492
+20 0.760759 0.898422
+19 0.731871 0.898422
+SURF 0x30
+mat 7
+refs 4
+2 0.762858 0.897492
+1 0.762858 0.902957
+21 0.760759 0.902027
+20 0.760759 0.898422
+SURF 0x30
+mat 7
+refs 4
+1 0.762858 0.902957
+0 0.729772 0.902957
+18 0.731871 0.902027
+21 0.760759 0.902027
+kids 0
+OBJECT poly
+name "uhf-knob.01"
+loc 0.146099 0.0331677 0.286023
+texture "../Textures/panels-MLU-left_console.png"
+crease 45.000000
+numvert 32
+-0.000191763 0.0125084 -0.00628164
+0.00585404 0.0119795 0.00422996
+0.00233051 0.0122878 0.00627208
+-0.00371531 0.0128167 -0.00423959
+-0.00592737 0.00130419 -0.00442424
+0.000875637 0.000709005 0.00740391
+0.00603336 0.00025776 0.00441468
+-0.000769615 0.000852946 -0.00741345
+-0.000924781 0.000502981 0.00792316
+-0.0054467 0.0008986 0.00599074
+-0.00787345 0.0011109 0.00177142
+-0.00727981 0.00105897 -0.00312614
+-0.00389107 0.000762496 -0.00682902
+0.000997871 0.000334766 -0.00792348
+0.00551994 -6.08638e-05 -0.0059908
+0.0079467 -0.000273168 -0.00177148
+0.00735289 -0.000221223 0.00312576
+0.00396435 7.5236e-05 0.00682893
+-0.000363499 0.0130349 -0.00526723
+-0.00268768 0.0132383 -0.00392026
+0.00259103 0.0127764 0.00525767
+0.00491519 0.0125731 0.00391066
+0.00539735 -0.00146203 -0.0059908
+0.000875279 -0.0010664 -0.00792348
+-0.00401363 -0.000638667 -0.00682902
+-0.00740239 -0.000342198 -0.00312611
+-0.00799604 -0.00029026 0.00177145
+-0.00556929 -0.000502568 0.00599074
+-0.00104736 -0.000898186 0.00792316
+0.00384179 -0.00132594 0.00682896
+0.00723031 -0.00162239 0.00312579
+0.00782412 -0.00167434 -0.00177148
+numsurf 33
+SURF 0x10
+mat 7
+refs 4
+31 0.906073 0.901788
+15 0.903217 0.904238
+16 0.900378 0.903426
+30 0.903234 0.900976
+SURF 0x10
+mat 7
+refs 4
+30 0.903234 0.900976
+16 0.900378 0.903426
+17 0.897434 0.902584
+29 0.90029 0.900134
+SURF 0x10
+mat 7
+refs 4
+29 0.90029 0.900134
+17 0.897434 0.902584
+8 0.894491 0.901742
+28 0.897346 0.899293
+SURF 0x10
+mat 7
+refs 4
+28 0.897346 0.899293
+8 0.894491 0.901742
+9 0.891651 0.90093
+27 0.894507 0.898481
+SURF 0x10
+mat 7
+refs 4
+27 0.894507 0.898481
+9 0.891651 0.90093
+10 0.888875 0.900136
+26 0.89173 0.897687
+SURF 0x10
+mat 7
+refs 4
+26 0.89173 0.897687
+10 0.888875 0.900136
+11 0.886035 0.899324
+25 0.888891 0.896875
+SURF 0x10
+mat 7
+refs 4
+25 0.888891 0.896875
+11 0.886035 0.899324
+12 0.883092 0.898483
+24 0.885947 0.896033
+SURF 0x10
+mat 7
+refs 4
+24 0.885947 0.896033
+12 0.883092 0.898483
+13 0.880148 0.897641
+23 0.883003 0.895191
+SURF 0x10
+mat 7
+refs 4
+22 0.880164 0.894379
+14 0.877309 0.896829
+15 0.874532 0.896035
+31 0.877387 0.893585
+SURF 0x10
+mat 7
+refs 4
+23 0.883003 0.895191
+13 0.880148 0.897641
+14 0.877309 0.896829
+22 0.880164 0.894379
+SURF 0x30
+mat 7
+refs 3
+8 0.911552 0.897837
+17 0.908729 0.904302
+5 0.910201 0.900175
+SURF 0x30
+mat 7
+refs 3
+9 0.906289 0.891826
+8 0.911552 0.897837
+5 0.910201 0.900175
+SURF 0x30
+mat 7
+refs 3
+10 0.894955 0.888567
+9 0.906289 0.891826
+5 0.910201 0.900175
+SURF 0x30
+mat 7
+refs 3
+11 0.881872 0.889302
+10 0.894955 0.888567
+5 0.910201 0.900175
+SURF 0x30
+mat 7
+refs 3
+4 0.878429 0.891038
+11 0.881872 0.889302
+5 0.910201 0.900175
+SURF 0x30
+mat 7
+refs 3
+4 0.878429 0.891038
+12 0.872043 0.893753
+11 0.881872 0.889302
+SURF 0x30
+mat 7
+refs 3
+7 0.870545 0.897839
+12 0.872043 0.893753
+4 0.878429 0.891038
+SURF 0x30
+mat 7
+refs 3
+14 0.874484 0.906228
+13 0.86922 0.900217
+7 0.870545 0.897839
+SURF 0x30
+mat 7
+refs 3
+7 0.870545 0.897839
+13 0.86922 0.900217
+12 0.872043 0.893753
+SURF 0x30
+mat 7
+refs 3
+15 0.885817 0.909487
+14 0.874484 0.906228
+7 0.870545 0.897839
+SURF 0x30
+mat 7
+refs 3
+16 0.898899 0.908752
+15 0.885817 0.909487
+7 0.870545 0.897839
+SURF 0x30
+mat 7
+refs 3
+6 0.902317 0.906976
+16 0.898899 0.908752
+7 0.870545 0.897839
+SURF 0x30
+mat 7
+refs 3
+17 0.908729 0.904302
+16 0.898899 0.908752
+6 0.902317 0.906976
+SURF 0x30
+mat 7
+refs 3
+5 0.910201 0.900175
+17 0.908729 0.904302
+6 0.902317 0.906976
+SURF 0x30
+mat 7
+refs 4
+3 0.898993 0.896335
+4 0.889372 0.893105
+5 0.893684 0.890148
+2 0.902826 0.893708
+SURF 0x30
+mat 7
+refs 4
+1 0.902826 0.893708
+6 0.893684 0.890148
+7 0.889372 0.893105
+0 0.898993 0.896335
+SURF 0x30
+mat 7
+refs 4
+0 0.89277 0.895604
+7 0.892362 0.889829
+4 0.892362 0.889829
+3 0.89277 0.895604
+SURF 0x30
+mat 7
+refs 4
+2 0.899291 0.895604
+5 0.899699 0.889829
+6 0.899699 0.889829
+1 0.899291 0.895604
+SURF 0x30
+mat 7
+refs 4
+18 0.87627 0.896995
+19 0.879823 0.89393
+20 0.904476 0.901019
+21 0.900923 0.904084
+SURF 0x30
+mat 7
+refs 4
+0 0.873563 0.897271
+3 0.878948 0.892624
+19 0.879823 0.89393
+18 0.87627 0.896995
+SURF 0x30
+mat 7
+refs 4
+3 0.878948 0.892624
+2 0.907184 0.900744
+20 0.904476 0.901019
+19 0.879823 0.89393
+SURF 0x30
+mat 7
+refs 4
+2 0.907184 0.900744
+1 0.901798 0.90539
+21 0.900923 0.904084
+20 0.904476 0.901019
+SURF 0x30
+mat 7
+refs 4
+1 0.901798 0.90539
+0 0.873563 0.897271
+18 0.87627 0.896995
+21 0.900923 0.904084
+kids 0
+OBJECT poly
+name "uhf-knob.04"
+loc 0.145115 0.033359 0.366851
+texture "../Textures/panels-MLU-left_console.png"
+crease 45.000000
+numvert 32
+-0.00251263 -0.000769991 0.00776222
+-0.00644076 -0.000426326 0.00479737
+-0.00794134 -0.000295047 2.98023e-08
+-0.00644074 -0.000426333 -0.0047974
+-0.00251266 -0.000769988 -0.00776222
+0.00234084 -0.00119462 -0.00776225
+0.00626929 -0.00153831 -0.00479737
+0.00776951 -0.00166956 5.96046e-08
+0.00626929 -0.00153831 0.00479737
+0.00234085 -0.00119462 0.00776219
+-0.00413796 0.0133651 0.00133616
+-0.00413795 0.0133651 -0.00135782
+0.00641948 0.0124415 -0.00135782
+0.00641944 0.0124415 0.00133616
+-0.00781873 0.00110612 2.98023e-08
+-0.00631817 0.000974838 0.0047974
+-0.00239007 0.000631176 0.00776222
+0.00246345 0.000206541 0.00776219
+0.00639187 -0.00013715 0.00479734
+0.0078921 -0.0002684 2.98023e-08
+0.00639193 -0.000137158 -0.00479737
+0.00246345 0.000206538 -0.00776222
+-0.00239009 0.00063118 -0.00776222
+-0.00631815 0.000974838 -0.0047974
+0.00688292 0.000183433 0.00297838
+-0.00672305 0.0013738 0.00297838
+-0.00672308 0.00137381 -0.00300005
+0.00688292 0.000183433 -0.00300005
+0.00714216 0.0118668 -0.0020529
+-0.00494951 0.0129247 -0.0020529
+-0.00494948 0.0129247 0.00203127
+0.00714211 0.0118668 0.00203124
+numsurf 33
+SURF 0x30
+mat 7
+refs 4
+30 0.668776 0.908548
+31 0.668776 0.892006
+13 0.670636 0.893055
+10 0.670637 0.907499
+SURF 0x30
+mat 7
+refs 4
+29 0.679707 0.908548
+30 0.668776 0.908548
+10 0.670637 0.907499
+11 0.677846 0.907499
+SURF 0x30
+mat 7
+refs 4
+28 0.679707 0.892006
+29 0.679707 0.908548
+11 0.677846 0.907499
+12 0.677846 0.893055
+SURF 0x30
+mat 7
+refs 4
+31 0.668776 0.892006
+28 0.679707 0.892006
+12 0.677846 0.893055
+13 0.670636 0.893055
+SURF 0x30
+mat 7
+refs 4
+13 0.670636 0.893055
+12 0.677846 0.893055
+11 0.677846 0.907499
+10 0.670637 0.907499
+SURF 0x30
+mat 7
+refs 4
+29 0.68477 0.902462
+26 0.695168 0.8997
+25 0.695168 0.8997
+30 0.68477 0.902462
+SURF 0x30
+mat 7
+refs 4
+31 0.681462 0.899597
+24 0.691445 0.896476
+27 0.691445 0.896476
+28 0.681462 0.899597
+SURF 0x30
+mat 7
+refs 4
+30 0.689911 0.90305
+25 0.691553 0.89722
+24 0.684148 0.896831
+31 0.68333 0.902704
+SURF 0x30
+mat 7
+refs 4
+28 0.68333 0.902704
+27 0.684148 0.896831
+26 0.691553 0.89722
+29 0.689911 0.90305
+SURF 0x30
+mat 7
+refs 3
+26 0.682242 0.909584
+14 0.674212 0.91104
+25 0.666241 0.909584
+SURF 0x30
+mat 7
+refs 3
+14 0.674212 0.91104
+15 0.661373 0.908987
+25 0.666241 0.909584
+SURF 0x30
+mat 7
+refs 3
+25 0.666241 0.909584
+15 0.661373 0.908987
+24 0.666241 0.89097
+SURF 0x30
+mat 7
+refs 3
+15 0.661373 0.908987
+16 0.653438 0.903613
+24 0.666241 0.89097
+SURF 0x30
+mat 7
+refs 3
+16 0.653438 0.903613
+17 0.653438 0.896973
+24 0.666241 0.89097
+SURF 0x30
+mat 7
+refs 3
+24 0.666241 0.89097
+18 0.661373 0.891598
+19 0.674212 0.889546
+SURF 0x30
+mat 7
+refs 3
+17 0.653438 0.896973
+18 0.661373 0.891598
+24 0.666241 0.89097
+SURF 0x30
+mat 7
+refs 3
+24 0.666241 0.89097
+19 0.674212 0.889546
+27 0.682242 0.89097
+SURF 0x30
+mat 7
+refs 3
+27 0.682242 0.89097
+19 0.674212 0.889546
+20 0.687052 0.891598
+SURF 0x30
+mat 7
+refs 3
+27 0.682242 0.89097
+20 0.687052 0.891598
+26 0.682242 0.909584
+SURF 0x30
+mat 7
+refs 3
+20 0.687052 0.891598
+21 0.694987 0.896973
+26 0.682242 0.909584
+SURF 0x30
+mat 7
+refs 3
+21 0.694987 0.896973
+22 0.694987 0.903613
+26 0.682242 0.909584
+SURF 0x30
+mat 7
+refs 3
+22 0.694987 0.903613
+23 0.687052 0.908987
+26 0.682242 0.909584
+SURF 0x30
+mat 7
+refs 3
+23 0.687052 0.908987
+14 0.674212 0.91104
+26 0.682242 0.909584
+SURF 0x10
+mat 7
+refs 4
+8 0.677235 0.895095
+18 0.671464 0.895088
+17 0.671456 0.893427
+9 0.677227 0.893434
+SURF 0x10
+mat 7
+refs 4
+9 0.677227 0.893434
+17 0.671456 0.893427
+16 0.671448 0.891802
+0 0.677219 0.891809
+SURF 0x10
+mat 7
+refs 4
+7 0.677243 0.896817
+19 0.671473 0.89681
+18 0.671464 0.895088
+8 0.677235 0.895095
+SURF 0x10
+mat 7
+refs 4
+6 0.677252 0.898539
+20 0.671481 0.898532
+19 0.671473 0.89681
+7 0.677243 0.896817
+SURF 0x10
+mat 7
+refs 4
+5 0.67726 0.900201
+21 0.671489 0.900194
+20 0.671481 0.898532
+6 0.677252 0.898539
+SURF 0x10
+mat 7
+refs 4
+4 0.677268 0.901825
+22 0.671497 0.901818
+21 0.671489 0.900194
+5 0.67726 0.900201
+SURF 0x10
+mat 7
+refs 4
+3 0.677276 0.903486
+23 0.671505 0.903479
+22 0.671497 0.901818
+4 0.677268 0.901825
+SURF 0x10
+mat 7
+refs 4
+2 0.677284 0.905209
+14 0.671513 0.905202
+23 0.671505 0.903479
+3 0.677276 0.903486
+SURF 0x10
+mat 7
+refs 4
+1 0.677292 0.906931
+15 0.671522 0.906924
+14 0.671513 0.905202
+2 0.677284 0.905209
+SURF 0x10
+mat 7
+refs 4
+0 0.677301 0.908592
+16 0.67153 0.908585
+15 0.671522 0.906924
+1 0.677292 0.906931
+kids 0
+OBJECT poly
+name "uhf-knob.02"
+loc 0.145236 0.0330608 0.31324
+texture "../Textures/panels-MLU-left_console.png"
+crease 45.000000
+numvert 32
+0.00427778 -0.00136407 0.00685552
+-0.000509739 -0.000945222 0.00797036
+-0.00513528 -0.000540543 0.00604057
+-0.00783177 -0.000304632 0.00180295
+-0.00756939 -0.000327583 -0.00312337
+-0.00444965 -0.000600528 -0.00685561
+0.000338107 -0.0010194 -0.00797069
+0.00496347 -0.00142406 -0.00604057
+0.00766012 -0.00165999 -0.00180331
+0.00739753 -0.00163702 0.00312331
+-0.0012369 0.0131113 0.00490898
+-0.00329275 0.0132912 0.00317731
+0.00349344 0.0126975 -0.00494102
+0.00554927 0.0125176 -0.00320932
+-0.00501269 0.000860624 0.00604057
+-0.000387117 0.000455942 0.00797036
+0.00440034 3.70927e-05 0.00685552
+0.00752012 -0.000235859 0.00312331
+0.00778268 -0.000258829 -0.00180331
+0.00508605 -2.28994e-05 -0.0060406
+0.000460699 0.000381757 -0.00797072
+-0.00432703 0.000800628 -0.00685561
+-0.00744681 0.00107359 -0.00312337
+-0.00770918 0.00109654 0.00180295
+0.00672151 0.000197556 -0.00332585
+-0.00202425 0.000962712 0.00713673
+-0.00658657 0.00136186 0.0032939
+0.00215919 0.000596706 -0.00716871
+0.00341167 0.0121932 -0.00597769
+-0.00436069 0.0128732 0.00332046
+-0.00124392 0.0126005 0.00594568
+0.00652838 0.0119205 -0.0033524
+numsurf 33
+SURF 0x30
+mat 7
+refs 4
+30 0.833844 0.896826
+31 0.808499 0.907459
+13 0.808911 0.906072
+10 0.83104 0.896788
+SURF 0x30
+mat 7
+refs 4
+29 0.826818 0.892639
+30 0.833844 0.896826
+10 0.83104 0.896788
+11 0.826406 0.894026
+SURF 0x30
+mat 7
+refs 4
+28 0.801473 0.903273
+29 0.826818 0.892639
+11 0.826406 0.894026
+12 0.804277 0.903311
+SURF 0x30
+mat 7
+refs 4
+31 0.808499 0.907459
+28 0.801473 0.903273
+12 0.804277 0.903311
+13 0.808911 0.906072
+SURF 0x30
+mat 7
+refs 4
+13 0.808911 0.906072
+12 0.804277 0.903311
+11 0.826406 0.894026
+10 0.83104 0.896788
+SURF 0x30
+mat 7
+refs 4
+29 0.814239 0.894612
+26 0.803323 0.892405
+25 0.803323 0.892405
+30 0.814239 0.894612
+SURF 0x30
+mat 7
+refs 4
+31 0.811976 0.897721
+24 0.800776 0.895903
+27 0.800776 0.895903
+28 0.811976 0.897721
+SURF 0x30
+mat 7
+refs 4
+30 0.811834 0.892265
+25 0.801847 0.895384
+24 0.806011 0.89847
+31 0.815534 0.895008
+SURF 0x30
+mat 7
+refs 4
+28 0.815534 0.895008
+27 0.806011 0.89847
+26 0.801847 0.895384
+29 0.811834 0.892265
+SURF 0x30
+mat 7
+refs 3
+26 0.826776 0.891002
+14 0.834168 0.893142
+25 0.837061 0.897131
+SURF 0x30
+mat 7
+refs 3
+14 0.834168 0.893142
+15 0.839275 0.899379
+25 0.837061 0.897131
+SURF 0x30
+mat 7
+refs 3
+25 0.837061 0.897131
+15 0.839275 0.899379
+24 0.808541 0.909096
+SURF 0x30
+mat 7
+refs 3
+15 0.839275 0.899379
+16 0.836142 0.905873
+24 0.808541 0.909096
+SURF 0x30
+mat 7
+refs 3
+16 0.836142 0.905873
+17 0.825969 0.910141
+24 0.808541 0.909096
+SURF 0x30
+mat 7
+refs 3
+24 0.808541 0.909096
+18 0.812634 0.910557
+19 0.801237 0.906958
+SURF 0x30
+mat 7
+refs 3
+17 0.825969 0.910141
+18 0.812634 0.910557
+24 0.808541 0.909096
+SURF 0x30
+mat 7
+refs 3
+24 0.808541 0.909096
+19 0.801237 0.906958
+27 0.798257 0.902968
+SURF 0x30
+mat 7
+refs 3
+27 0.798257 0.902968
+19 0.801237 0.906958
+20 0.796128 0.900721
+SURF 0x30
+mat 7
+refs 3
+27 0.798257 0.902968
+20 0.796128 0.900721
+26 0.826776 0.891002
+SURF 0x30
+mat 7
+refs 3
+20 0.796128 0.900721
+21 0.799262 0.894227
+26 0.826776 0.891002
+SURF 0x30
+mat 7
+refs 3
+21 0.799262 0.894227
+22 0.809435 0.889959
+26 0.826776 0.891002
+SURF 0x30
+mat 7
+refs 3
+22 0.809435 0.889959
+23 0.822769 0.889544
+26 0.826776 0.891002
+SURF 0x30
+mat 7
+refs 3
+23 0.822769 0.889544
+14 0.834168 0.893142
+26 0.826776 0.891002
+SURF 0x10
+mat 7
+refs 4
+8 0.807795 0.902234
+18 0.811494 0.904449
+17 0.808954 0.905519
+9 0.805255 0.903305
+SURF 0x10
+mat 7
+refs 4
+9 0.805255 0.903305
+17 0.808954 0.905519
+16 0.80647 0.906567
+0 0.802771 0.904352
+SURF 0x10
+mat 7
+refs 4
+7 0.810428 0.901123
+19 0.814127 0.903338
+18 0.811494 0.904449
+8 0.807795 0.902234
+SURF 0x10
+mat 7
+refs 4
+6 0.813061 0.900013
+20 0.81676 0.902228
+19 0.814127 0.903338
+7 0.810428 0.901123
+SURF 0x10
+mat 7
+refs 4
+5 0.815602 0.898942
+21 0.8193 0.901157
+20 0.81676 0.902228
+6 0.813061 0.900013
+SURF 0x10
+mat 7
+refs 4
+4 0.818085 0.897895
+22 0.821784 0.90011
+21 0.8193 0.901157
+5 0.815602 0.898942
+SURF 0x10
+mat 7
+refs 4
+3 0.820625 0.896824
+23 0.824324 0.899039
+22 0.821784 0.90011
+4 0.818085 0.897895
+SURF 0x10
+mat 7
+refs 4
+2 0.823259 0.895714
+14 0.826957 0.897929
+23 0.824324 0.899039
+3 0.820625 0.896824
+SURF 0x10
+mat 7
+refs 4
+1 0.825892 0.894604
+15 0.829591 0.896818
+14 0.826957 0.897929
+2 0.823259 0.895714
+SURF 0x10
+mat 7
+refs 4
+0 0.828432 0.893533
+16 0.83213 0.895748
+15 0.829591 0.896818
+1 0.825892 0.894604
+kids 0
+OBJECT poly
+name "uhf-knob.05"
+loc 0.145191 0.0332442 0.393567
+texture "../Textures/panels-MLU-left_console.png"
+crease 45.000000
+numvert 32
+0.00310808 0.0122197 -0.00608069
+0.00310811 0.0122197 0.00605708
+-0.000960514 0.0125757 0.00605711
+-0.000960529 0.0125757 -0.00608072
+-0.00292043 0.00104111 -0.00684077
+-0.00292043 0.00104111 0.00681722
+0.00303523 0.000520062 0.00681719
+0.00303525 0.000520062 -0.00684074
+-0.0047425 0.000836983 0.00637907
+-0.00769605 0.00109539 0.00243598
+-0.00769606 0.00109538 -0.00243607
+-0.0047425 0.000836976 -0.00637954
+3.66569e-05 0.000418864 -0.00788546
+0.00481573 7.45058e-07 -0.00637951
+0.0077693 -0.00025766 -0.00243607
+0.0077693 -0.000257652 0.00243598
+0.00481577 7.45058e-07 0.00637907
+3.66569e-05 0.000418864 0.0078854
+0.00246005 0.0127879 -0.00531065
+-0.000223681 0.0130227 -0.00531071
+-0.000223711 0.0130227 0.00528705
+0.00246002 0.0127879 0.00528705
+0.00764671 -0.00165882 -0.00243607
+0.00469314 -0.00140042 -0.00637951
+-8.59052e-05 -0.000982299 -0.00788546
+-0.00486507 -0.000564184 -0.00637951
+-0.00781867 -0.000305779 -0.00243604
+-0.00781862 -0.000305779 0.00243598
+-0.00486508 -0.000564184 0.00637907
+-8.59499e-05 -0.000982303 0.0078854
+0.00469315 -0.00140042 0.0063791
+0.00764672 -0.00165882 0.00243595
+numsurf 33
+SURF 0x10
+mat 7
+refs 4
+31 0.619366 0.898521
+15 0.619352 0.901406
+16 0.61603 0.90141
+30 0.616044 0.898525
+SURF 0x10
+mat 7
+refs 4
+30 0.616044 0.898525
+16 0.61603 0.90141
+17 0.612585 0.901415
+29 0.612599 0.898529
+SURF 0x10
+mat 7
+refs 4
+29 0.612599 0.898529
+17 0.612585 0.901415
+8 0.609141 0.901419
+28 0.609155 0.898533
+SURF 0x10
+mat 7
+refs 4
+28 0.609155 0.898533
+8 0.609141 0.901419
+9 0.605818 0.901423
+27 0.605832 0.898537
+SURF 0x10
+mat 7
+refs 4
+27 0.605832 0.898537
+9 0.605818 0.901423
+10 0.602569 0.901427
+26 0.602583 0.898541
+SURF 0x10
+mat 7
+refs 4
+26 0.602583 0.898541
+10 0.602569 0.901427
+11 0.599247 0.901431
+25 0.599261 0.898545
+SURF 0x10
+mat 7
+refs 4
+25 0.599261 0.898545
+11 0.599247 0.901431
+12 0.595802 0.901435
+24 0.595816 0.89855
+SURF 0x10
+mat 7
+refs 4
+24 0.595816 0.89855
+12 0.595802 0.901435
+13 0.592358 0.901439
+23 0.592372 0.898554
+SURF 0x10
+mat 7
+refs 4
+22 0.58905 0.898558
+14 0.589035 0.901443
+15 0.585786 0.901447
+31 0.5858 0.898562
+SURF 0x10
+mat 7
+refs 4
+23 0.592372 0.898554
+13 0.592358 0.901439
+14 0.589035 0.901443
+22 0.58905 0.898558
+SURF 0x30
+mat 7
+refs 3
+8 0.620156 0.893645
+17 0.624262 0.900065
+5 0.621351 0.89605
+SURF 0x30
+mat 7
+refs 3
+9 0.609408 0.889678
+8 0.620156 0.893645
+5 0.621351 0.89605
+SURF 0x30
+mat 7
+refs 3
+10 0.596128 0.889678
+9 0.609408 0.889678
+5 0.621351 0.89605
+SURF 0x30
+mat 7
+refs 3
+11 0.585379 0.893645
+10 0.596128 0.889678
+5 0.621351 0.89605
+SURF 0x30
+mat 7
+refs 3
+4 0.584121 0.89605
+11 0.585379 0.893645
+5 0.621351 0.89605
+SURF 0x30
+mat 7
+refs 3
+4 0.584121 0.89605
+12 0.581274 0.900065
+11 0.585379 0.893645
+SURF 0x30
+mat 7
+refs 3
+7 0.584121 0.904051
+12 0.581274 0.900065
+4 0.584121 0.89605
+SURF 0x30
+mat 7
+refs 3
+14 0.596128 0.910452
+13 0.585379 0.906485
+7 0.584121 0.904051
+SURF 0x30
+mat 7
+refs 3
+7 0.584121 0.904051
+13 0.585379 0.906485
+12 0.581274 0.900065
+SURF 0x30
+mat 7
+refs 3
+15 0.609408 0.910452
+14 0.596128 0.910452
+7 0.584121 0.904051
+SURF 0x30
+mat 7
+refs 3
+16 0.620156 0.906485
+15 0.609408 0.910452
+7 0.584121 0.904051
+SURF 0x30
+mat 7
+refs 3
+6 0.621351 0.904051
+16 0.620156 0.906485
+7 0.584121 0.904051
+SURF 0x30
+mat 7
+refs 3
+17 0.624262 0.900065
+16 0.620156 0.906485
+6 0.621351 0.904051
+SURF 0x30
+mat 7
+refs 3
+5 0.621351 0.89605
+17 0.624262 0.900065
+6 0.621351 0.904051
+SURF 0x30
+mat 7
+refs 4
+3 0.607589 0.895506
+4 0.595843 0.895097
+5 0.596621 0.891395
+2 0.608281 0.892216
+SURF 0x30
+mat 7
+refs 4
+1 0.608281 0.892216
+6 0.596621 0.891395
+7 0.595843 0.895097
+0 0.607589 0.895506
+SURF 0x30
+mat 7
+refs 4
+0 0.601376 0.89644
+7 0.595133 0.891448
+4 0.595133 0.891448
+3 0.601376 0.89644
+SURF 0x30
+mat 7
+refs 4
+2 0.607106 0.894786
+5 0.601581 0.889587
+6 0.601581 0.889587
+1 0.607106 0.894786
+SURF 0x30
+mat 7
+refs 4
+18 0.588292 0.901853
+19 0.588292 0.898248
+20 0.61718 0.898248
+21 0.61718 0.901853
+SURF 0x30
+mat 7
+refs 4
+0 0.586193 0.902783
+3 0.586193 0.897318
+19 0.588292 0.898248
+18 0.588292 0.901853
+SURF 0x30
+mat 7
+refs 4
+3 0.586193 0.897318
+2 0.619279 0.897318
+20 0.61718 0.898248
+19 0.588292 0.898248
+SURF 0x30
+mat 7
+refs 4
+2 0.619279 0.897318
+1 0.619279 0.902783
+21 0.61718 0.901853
+20 0.61718 0.898248
+SURF 0x30
+mat 7
+refs 4
+1 0.619279 0.902783
+0 0.586193 0.902783
+18 0.588292 0.901853
+21 0.61718 0.901853
 kids 0
