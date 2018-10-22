@@ -1390,12 +1390,8 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <aim-9>
                 <short-name type="string">A-9L</short-name>
                 <long-name type="string">AIM-9L Sidewinder</long-name>
-                <sound-on-off type="bool">false</sound-on-off>
-                <sound-fire-on-off type="bool">false</sound-fire-on-off>
-                <sound-volume type="double">0.0</sound-volume>
                 <vol-search type="double">0.075</vol-search>
                 <vol-track type="double">0.25</vol-track>
-                <vol-track-weak type="double">0.175</vol-track-weak>
                 <guidance type="string">heat</guidance>                       <!-- heat, radar or semi-radar -->
                 <navigation type="string">APN</navigation>
                 <all-aspect type="bool">true</all-aspect>                     <!-- all or rear-only -->
@@ -1428,7 +1424,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <DLZ type="bool">true</DLZ>
                 <DLZ-optimal-alt-feet type="double">25000</DLZ-optimal-alt-feet>
                 <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
-
+                <seeker-beam-width-deg type="double">4</seeker-beam-width-deg>
                 <reaquire type="bool">true</reaquire>
                 <lock-on-after-launch type="bool">true</lock-on-after-launch>
                 <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed>

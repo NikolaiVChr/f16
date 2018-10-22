@@ -427,3 +427,26 @@ var clean = func {
     }
 }
 
+var bore_loop = func {
+    #enables firing of aim9 without radar.
+    bore = 0;
+    if (fcs != nil) {
+        var standby = getprop("instrumentation/radar/radar-standby");
+        var aim = fcs.getSelectedWeapon();
+        if (aim != nil and aim.type == "AIM-9") {
+            if (standby == 1) {
+                aim.setBore(1);
+                aim.setContacts(awg_9.completeList);
+                bore = 1;
+            } else {
+                aim.setSlave(1);
+                aim.setContacts([]);
+            }
+        }
+    }
+    settimer(bore_loop, 0.5);
+};
+var bore = 0;
+if (fcs!=nil) {
+    bore_loop();
+}

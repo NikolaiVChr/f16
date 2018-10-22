@@ -800,6 +800,26 @@ append(obj.total, obj.speed_curr);
             .setColor(0,1,0)
             .setTranslation(sx*0.5*0.695633,sy*0.25);
             append(obj.total, obj.circle65);
+        obj.triangle65  = obj.svg.createChild("path")
+            .moveTo(0,-65*mr)
+            .lineTo(-5*mr,-75*mr)
+            .lineTo(5*mr,-75*mr)
+            .lineTo(0,-65*mr)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0)
+            #.set("z-index",10500)
+            .setTranslation(sx*0.5*0.695633,sy*0.25);
+            append(obj.total, obj.triangle65);
+        obj.triangle120 = obj.svg.createChild("path")
+            .moveTo(0,-120*mr)
+            .lineTo(-5*mr,-130*mr)
+            .lineTo(5*mr,-130*mr)
+            .lineTo(0,-120*mr)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0)
+            #.set("z-index",10500)
+            .setTranslation(sx*0.5*0.695633,sy*0.25);
+            append(obj.total, obj.triangle120);
         var boxRadius = 10;
         var boxRadiusHalf = boxRadius*0.5;
         obj.radarLock = obj.svg.createChild("path")
@@ -1392,6 +1412,8 @@ append(obj.total, obj.speed_curr);
         me.irL = 0;
         me.irS = 0;
         me.rdL = 0;
+        me.irT = 0;
+        me.rdT = 0;
         #printf("%d %d %d %s",hdp.master_arm,pylons.fcs != nil,pylons.fcs.getAmmo(),hdp.weapon_selected);
         if(hdp.master_arm and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
             hdp.weapon_selected = pylons.fcs.selectedType;
@@ -1401,8 +1423,21 @@ append(obj.total, obj.speed_curr);
                 }
                 me.rdL = 1;
             } elsif (!pylons.fcs.isLock() and hdp.weapon_selected == "AIM-9") {
-                me.irSearch.setTranslation(me.sx/2, me.sy*0.25);
+                if (pylons.bore) {
+                    me.irSearch.setTranslation(me.sx/2,me.sy-me.texels_up_into_hud);
+                } else {
+                    me.irSearch.setTranslation(me.sx/2, me.sy*0.25);
+                }
                 me.irS = 1;
+            } elsif (pylons.fcs.isLock() and hdp.weapon_selected == "AIM-9" and pylons.bore) {
+                var aim = pylons.fcs.getSelectedWeapon();
+                if (aim != nil) {
+                    var coords = aim.getSeekerInfo();
+                    if (coords != nil) {
+                        me.irLock.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
+                        me.irL = 1;
+                    }
+                }
             }
         }
         if (hdp["tgt_list"] != nil) {
@@ -1442,10 +1477,14 @@ append(obj.total, obj.speed_curr);
                                     #me.target_locked.setRotation(45*D2R);
                                     if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
                                         me.radarLock.setTranslation(me.xcS, me.ycS);
+                                        me.triangle120.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading));
+                                        me.rdT = 1;
                                     } elsif (hdp.weapon_selected == "AIM-9") {
                                         me.irLock.setTranslation(me.xcS, me.ycS);
+                                        me.triangle65.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading));
                                         me.irL = 1;
-                                    }
+                                        me.irT = 1;
+                                    }                                    
                                 } else {
                                     #me.target_locked.setRotation(0);
                                 }
@@ -1527,6 +1566,8 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
         me.radarLock.setVisible(me.rdL);
         me.irSearch.setVisible(me.irS);
         me.irLock.setVisible(me.irL);
+        me.triangle120.setVisible(me.rdT);
+        me.triangle65.setVisible(me.irT);
 
         me.initUpdate = 0;
  

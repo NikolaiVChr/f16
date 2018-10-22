@@ -661,7 +661,7 @@ var printDebug = func (msg) {if (debug == 1) print(msg);};
 var printfDebug = func {if (debug == 1) call(printf,arg);};
 
 
-# This is non-generic method, please edit it to fit your radar setup:
+# This is non-generic methods, please edit it to fit your radar setup:
 var getCompleteRadarTargetsList = func {
 	# A list of all MP/AI aircraft/ships/surface-targets around the aircraft.
 	return awg_9.completeList;
