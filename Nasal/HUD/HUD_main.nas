@@ -121,13 +121,13 @@ var F16_HUD = {
 
         append(obj.total, obj.ladder);
         append(obj.total, obj.heading_tape);
-        append(obj.total, obj.VV);
+        #append(obj.total, obj.VV);
         append(obj.total, obj.heading_tape_pointer);
         append(obj.total, obj.roll_pointer);
         append(obj.total, obj.roll_lines);
         append(obj.total, obj.alt_range);
         append(obj.total, obj.ias_range);
-        append(obj.total, obj.target_locked);
+        #append(obj.total, obj.target_locked);
         append(obj.total, obj.alt_line);
         append(obj.total, obj.vel_ind);
         append(obj.total, obj.vel_line);
@@ -144,7 +144,7 @@ var F16_HUD = {
         append(obj.total, obj.window10);
         append(obj.total, obj.ralt);
 
-        obj.VV.set("z-index", 11000);# hmm, its inside layer1, so will still be below the heading readout.
+        #obj.VV.set("z-index", 11000);# hmm, its inside layer1, so will still be below the heading readout.
         obj.layer1 = obj.get_element("layer1");#main svg layer.
 
         input = {
@@ -275,7 +275,7 @@ var F16_HUD = {
             props.UpdateManager.FromHashList(["texUp","VV_x","VV_y","fpm"], 0.01, func(hdp)
                                       {
                                         if (hdp.fpm > 0) {
-                                            obj.VV.setTranslation (hdp.VV_x * obj.texelPerDegreeX, hdp.VV_y * obj.texelPerDegreeY+pitch_offset);
+                                            obj.VV.setTranslation (obj.sx*0.5+hdp.VV_x * obj.texelPerDegreeX, obj.sy-obj.texels_up_into_hud+hdp.VV_y * obj.texelPerDegreeY);
                                             obj.VV.show();
                                             obj.VV.update();
                                         } else {
@@ -767,6 +767,103 @@ append(obj.total, obj.speed_curr);
             .setStrokeLineWidth(1)
             .setColor(0,1,0);
             append(obj.total, obj.thing);
+        var mr = 0.4;
+        obj.circle262 = obj.svg.createChild("path")
+            .moveTo(-262*mr,0)
+            .arcSmallCW(262*mr,262*mr, 0, 262*mr*2, 0)
+            .arcSmallCW(262*mr,262*mr, 0, -262*mr*2, 0)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0)
+            .setTranslation(sx*0.5*0.695633,sy*0.25);
+            append(obj.total, obj.circle262);
+        obj.circle100 = obj.svg.createChild("path")
+            .moveTo(-100*mr,0)
+            .arcSmallCW(100*mr,100*mr, 0, 100*mr*2, 0)
+            .arcSmallCW(100*mr,100*mr, 0, -100*mr*2, 0)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0)
+            .setTranslation(sx*0.5*0.695633,sy*0.25);
+            append(obj.total, obj.circle100);
+        obj.circle120 = obj.svg.createChild("path")
+            .moveTo(-120*mr,0)
+            .arcSmallCW(120*mr,120*mr, 0, 120*mr*2, 0)
+            .arcSmallCW(120*mr,120*mr, 0, -120*mr*2, 0)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0)
+            .setTranslation(sx*0.5*0.695633,sy*0.25);
+            append(obj.total, obj.circle120);
+        obj.circle65 = obj.svg.createChild("path")
+            .moveTo(-65*mr,0)
+            .arcSmallCW(65*mr,65*mr, 0, 65*mr*2, 0)
+            .arcSmallCW(65*mr,65*mr, 0, -65*mr*2, 0)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0)
+            .setTranslation(sx*0.5*0.695633,sy*0.25);
+            append(obj.total, obj.circle65);
+        var boxRadius = 10;
+        var boxRadiusHalf = boxRadius*0.5;
+        obj.radarLock = obj.svg.createChild("path")
+            .moveTo(-boxRadius,0)
+            .horiz(boxRadiusHalf)
+            .lineTo(0,boxRadiusHalf)
+            .moveTo(boxRadius,0)
+            .horiz(-boxRadiusHalf)
+            .lineTo(0,-boxRadiusHalf)
+            .moveTo(0,boxRadius)
+            .vert(-boxRadiusHalf)
+            .lineTo(boxRadiusHalf,0)
+            .moveTo(0,-boxRadius)
+            .vert(boxRadiusHalf)
+            .lineTo(-boxRadiusHalf,0)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0);
+            append(obj.total, obj.radarLock);
+        obj.irLock = obj.svg.createChild("path")
+            .moveTo(-boxRadius,0)
+            .lineTo(0,-boxRadius)
+            .lineTo(boxRadius,0)
+            .lineTo(0,boxRadius)
+            .lineTo(-boxRadius,0)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0);
+            append(obj.total, obj.irLock);
+        obj.irSearch = obj.svg.createChild("path")
+            .moveTo(-boxRadiusHalf,0)
+            .lineTo(0,-boxRadiusHalf)
+            .lineTo(boxRadiusHalf,0)
+            .lineTo(0,boxRadiusHalf)
+            .lineTo(-boxRadiusHalf,0)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0);
+            append(obj.total, obj.irSearch);
+        obj.target_locked.hide();
+        obj.target_locked = obj.svg.createChild("path")
+            .moveTo(-boxRadius,-boxRadius)
+            .vert(boxRadius*2)
+            .horiz(boxRadius*2)
+            .vert(-boxRadius*2)
+            .horiz(-boxRadius*2)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0);
+            append(obj.total, obj.target_locked);
+        obj.VV.hide();
+        mr = mr*1.5;#incorrect, but else in FG it will seem too small.
+        obj.VV = obj.svg.createChild("path")
+            .moveTo(-5*mr,0)
+            .arcSmallCW(5*mr,5*mr, 0, 5*mr*2, 0)
+            .arcSmallCW(5*mr,5*mr, 0, -5*mr*2, 0)
+            .moveTo(-5*mr,0)
+            .horiz(-10*mr)
+            .moveTo(5*mr,0)
+            .horiz(10*mr)
+            .moveTo(0,-5*mr)
+            .vert(-5*mr)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0)
+            .set("z-index",11000);
+            #.setTranslation(sx*0.5*0.695633,sy*0.25);
+            append(obj.total, obj.VV);
+
         obj.initUpdate =1;
         
         obj.alpha = getprop("f16/avionics/hud-brt");
@@ -1106,9 +1203,15 @@ append(obj.total, obj.speed_curr);
             hdp.window9_txt = "";
             hdp.window10_txt = "";
 
+            me.circle262.hide();
+            me.circle100.hide();
+            me.circle120.hide();
+            me.circle65.hide();
+
             if(hdp.master_arm and pylons.fcs != nil)
             {
                 hdp.weapon_selected = pylons.fcs.selectedType;
+                hdp.weapn = pylons.fcs.getSelectedWeapon();
                 
                 if (hdp.weapon_selected != nil)
                 {
@@ -1116,10 +1219,31 @@ append(obj.total, obj.speed_curr);
                         hdp.window9_txt = sprintf("%3d", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AIM-9") {
                         hdp.window9_txt = sprintf("%d SRM", pylons.fcs.getAmmo());
+                        if (hdp.weapn != nil) {
+                            if (hdp.weapn.status == armament.MISSILE_LOCK) {
+                                me.circle65.show();
+                            } else {
+                                me.circle100.show();
+                            }
+                        }
                     } elsif (hdp.weapon_selected == "AIM-120") {
                         hdp.window9_txt = sprintf("%d LRM", pylons.fcs.getAmmo());
+                        if (hdp.weapn != nil) {
+                            if (hdp.weapn.status == armament.MISSILE_LOCK) {
+                                me.circle120.show();
+                            } else {
+                                me.circle262.show();
+                            }
+                        }
                     } elsif (hdp.weapon_selected == "AIM-7") {
                         hdp.window9_txt = sprintf("%d MRM", pylons.fcs.getAmmo());
+                        if (hdp.weapn != nil) {
+                            if (hdp.weapn.status == armament.MISSILE_LOCK) {
+                                me.circle120.show();
+                            } else {
+                                me.circle262.show();
+                            }
+                        }
                     } elsif (hdp.weapon_selected == "GBU-12") {
                         hdp.window9_txt = sprintf("%d GB12", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-65") {
@@ -1137,6 +1261,8 @@ append(obj.total, obj.speed_curr);
                     } elsif (hdp.weapon_selected == "GBU-24") {
                         hdp.window9_txt = sprintf("%d GB24", pylons.fcs.getAmmo());
                     } else hdp.window9_txt = "";
+                    
+
                 }
                 if (hdp.active_u != nil)
                 {
@@ -1172,7 +1298,6 @@ append(obj.total, obj.speed_curr);
             else # weapons not armed
             {
                 #me.window7.setVisible(0);
-
                 if (hdp.nav_range != nil) {
                     me.plan = flightplan();
                     me.planSize = me.plan.getPlanSize();
@@ -1262,8 +1387,24 @@ append(obj.total, obj.speed_curr);
             ht_xcf = me.pixelPerMeterX;
             ht_ycf = -me.pixelPerMeterY;
             
-            me.target_locked.setVisible(0);
+        me.target_locked.setVisible(0);
 
+        me.irL = 0;
+        me.irS = 0;
+        me.rdL = 0;
+        #printf("%d %d %d %s",hdp.master_arm,pylons.fcs != nil,pylons.fcs.getAmmo(),hdp.weapon_selected);
+        if(hdp.master_arm and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
+            hdp.weapon_selected = pylons.fcs.selectedType;
+            if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
+                if (!pylons.fcs.isLock()) {
+                    me.radarLock.setTranslation(me.sx/2, me.sy*0.25);
+                }
+                me.rdL = 1;
+            } elsif (!pylons.fcs.isLock() and hdp.weapon_selected == "AIM-9") {
+                me.irSearch.setTranslation(me.sx/2, me.sy*0.25);
+                me.irS = 1;
+            }
+        }
         if (hdp["tgt_list"] != nil) {
             foreach ( me.u; hdp.tgt_list ) {
                 me.callsign = "XX";
@@ -1292,11 +1433,21 @@ append(obj.total, obj.speed_curr);
 
                             if (hdp.active_u != nil and hdp.active_u.Callsign != nil and me.u.Callsign != nil and me.u.Callsign.getValue() == hdp.active_u.Callsign.getValue()) {
                                 me.target_locked.setVisible(1);
-                                me.target_locked.setTranslation (me.xc, me.yc);
+                                me.tgt.hide();
+                                me.xcS = me.sx/2                     + (me.pixelPerMeterX * me.combined_dev_length * math.sin(me.combined_dev_deg*D2R));
+                                me.ycS = me.sy-me.texels_up_into_hud - (me.pixelPerMeterY * me.combined_dev_length * math.cos(me.combined_dev_deg*D2R));
+                                me.target_locked.setTranslation (me.xcS, me.ycS);
+                                
                                 if (pylons.fcs != nil and pylons.fcs.isLock()) {
-                                    me.target_locked.setRotation(45*D2R);
+                                    #me.target_locked.setRotation(45*D2R);
+                                    if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
+                                        me.radarLock.setTranslation(me.xcS, me.ycS);
+                                    } elsif (hdp.weapon_selected == "AIM-9") {
+                                        me.irLock.setTranslation(me.xcS, me.ycS);
+                                        me.irL = 1;
+                                    }
                                 } else {
-                                    me.target_locked.setRotation(0);
+                                    #me.target_locked.setRotation(0);
                                 }
                                 if (me.clamped) {
                                     me.trackLine.setTranslation(me.sx/2,me.sy-me.texels_up_into_hud);
@@ -1329,6 +1480,9 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
         }
         else print("[ERROR] Radar system missing or uninit (frame notifier)");
         
+        
+        #print(me.irS~" "~me.irL);
+
         me.trackLine.setVisible(me.trackLineShow);
 
         
@@ -1345,6 +1499,10 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
             if (hdp.active_u != nil) {
                 me.dlzClo.setTranslation(0,-me.dlzArray[4]/me.dlzArray[0]*me.dlzHeight);
                 me.dlzClo.setText(sprintf("%+d ",hdp.active_u.get_closure_rate()));
+                if (pylons.fcs.isLock() and me.dlzArray[4] < me.dlzArray[2] and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
+                    me.irL = 0;
+                    me.rdL = 0;
+                }
             } else {
                 me.dlzClo.setText("");
             }
@@ -1365,6 +1523,10 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
             me.dlz2.update();
             me.dlz.show();
         }
+
+        me.radarLock.setVisible(me.rdL);
+        me.irSearch.setVisible(me.irS);
+        me.irLock.setVisible(me.irL);
 
         me.initUpdate = 0;
  

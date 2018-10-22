@@ -1264,7 +1264,10 @@ var MFD_Device =
             if (me.root.coupled) {
                 me.root.rangDown.hide();
                 me.root.rangUp.hide();
-                if (awg_9.range_radar2 == 10) {
+                if (awg_9.range_radar2 == 5) {
+                    me.root.range_cen = 5;
+                    me.root.range_dep = 8;
+                } elsif (awg_9.range_radar2 == 10) {
                     me.root.range_cen = 10;
                     me.root.range_dep = 16;
                 } elsif (awg_9.range_radar2 == 20) {
