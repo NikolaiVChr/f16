@@ -220,8 +220,8 @@ var loop_flare = func {
       setprop("/gui/map/draw-traffic", 0);
       setprop("/sim/gui/dialogs/map-canvas/draw-TFC", 0);
       setprop("/sim/rendering/als-filters/use-filtering", 1);
-      var interfaceController = fg1000.GenericInterfaceController.getOrCreateInstance();
-      interfaceController.stop();
+      call(func{var interfaceController = fg1000.GenericInterfaceController.getOrCreateInstance();
+      interfaceController.stop();},nil,var err2=[]);
     }
     setprop("sim/multiplay/visibility-range-nm", 150);
     if (getprop("payload/armament/es/flags/deploy-id-10")!= nil) {
