@@ -767,8 +767,8 @@ append(obj.total, obj.speed_curr);
             .setStrokeLineWidth(1)
             .setColor(0,1,0);
             append(obj.total, obj.thing);
-        var mr = 0.4;
-        obj.circle262 = obj.svg.createChild("path")#rdsearch
+        var mr = 0.4;#milliradians
+        obj.circle262 = obj.svg.createChild("path")#rdsearch (Allowable Steering Error Circle (ASEC))
             .moveTo(-262*mr,0)
             .arcSmallCW(262*mr,262*mr, 0, 262*mr*2, 0)
             .arcSmallCW(262*mr,262*mr, 0, -262*mr*2, 0)
