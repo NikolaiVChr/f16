@@ -320,7 +320,7 @@ var F16_HUD = {
             props.UpdateManager.FromHashList(["altitude_agl_ft","cara"], 1.0, func(hdp)
                                       {
                                           obj.agl=hdp.altitude_agl_ft;
-                                          if(obj.agl < 13000 and hdp.cara) {
+                                          if(hdp.cara) {
                                               if(obj.agl < 10) {
                                                 obj.ralt.setText(sprintf("R %05d ",obj.agl));
                                               } else {

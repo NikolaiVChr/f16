@@ -436,7 +436,7 @@ var CARA = func {
   var down = vector.Math.eulerToCartesian3Z(attitudeConv[0],attitudeConv[1],attitudeConv[2]);#vector pointing up from aircraft
   var up = [0,0,1];#vector pointing up from ground
   var angle = vector.Math.angleBetweenVectors(down,up);
-  setprop("f16/avionics/cara-on",angle<70);
+  setprop("f16/avionics/cara-on",angle<70 and getprop("position/altitude-agl-ft")<50000);#yep, really goes up to 50000 ft!
 }
 
 var batteryChargeDischarge = func {
