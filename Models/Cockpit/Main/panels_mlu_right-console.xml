@@ -152,6 +152,16 @@
         <object-name>console-primary-knob</object-name>
         <object-name>console-primary-knob-axis</object-name>
         <object-name>inst-pnl-flood-knob</object-name>
+        <!-- these needs to be animated
+        <object-name>tas-switch</object-name>
+        <object-name>altrad-switch</object-name>
+        <object-name>autobrt-switch</object-name>
+        <object-name>test-step-switch</object-name>
+        <object-name>w_vah-switch</object-name>
+        <object-name>att_fpm-switch</object-name>
+        <object-name>deddata-switch</object-name>
+        <object-name>nuke-consent-switch</object-name>
+        <object-name>nuke-consent-cover</object-name>-->
     </effect>
 
 </PropertyList>

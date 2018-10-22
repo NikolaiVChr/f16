@@ -4737,7 +4737,7 @@ kids 0
 OBJECT poly
 name "horn_silencer"
 loc -0.133466 -0.0126514 0.341351
-texture "/Users/utente/Desktop/GitHub/Aircrafts/f16/Models/Cockpit/Textures/blck40-panels1.png"
+texture "../Textures/blck40-panels1.png"
 crease 45.000000
 numvert 48
 0 -0.0032073 0.00531873
@@ -5040,7 +5040,7 @@ kids 2
 OBJECT poly
 name "light-land-switch"
 loc 0 0 -5.96046e-08
-texture "/Users/utente/Desktop/GitHub/Aircrafts/f16/Models/Cockpit/Textures/blck40-panels1.png"
+texture "../Textures/blck40-panels1.png"
 crease 45.000000
 numvert 40
 -0.00350593 0.00728456 -0.000172585
@@ -5243,7 +5243,7 @@ kids 0
 OBJECT poly
 name "light-land-switch.01"
 loc 0 0 2.98023e-08
-texture "/Users/utente/Desktop/GitHub/Aircrafts/f16/Models/Cockpit/Textures/blck40-panels1.png"
+texture "../Textures/blck40-panels1.png"
 crease 45.000000
 subdiv 1
 numvert 57
