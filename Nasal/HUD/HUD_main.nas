@@ -300,7 +300,7 @@ var F16_HUD = {
                                           }
                                         }
                                       }),
-            props.UpdateManager.FromHashList(["texUp","pitch","roll"], 0.025, func(hdp)
+            props.UpdateManager.FromHashList(["texUp","pitch","roll","fpm"], 0.025, func(hdp)
                                       {
                                           if (hdp.fpm == 2) {
                                             obj.ladder.setTranslation (0.0, hdp.pitch * pitch_factor+pitch_offset);                                           
