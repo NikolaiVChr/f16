@@ -749,7 +749,7 @@ append(obj.total, obj.speed_curr);
         obj.solutionCue = obj.svg.createChild("path")
                 .moveTo(sx*0.5*0.695633-5,0)
                 .horiz(10)
-                .setStrokeLineWidth(1)
+                .setStrokeLineWidth(2)
                 .setColor(0,1,0);
                 append(obj.total, obj.solutionCue);
         obj.ccrpMarker = obj.svg.createChild("path")
@@ -1425,7 +1425,11 @@ append(obj.total, obj.speed_curr);
                 me.rdL = 1;
             } elsif (!pylons.fcs.isLock() and hdp.weapon_selected == "AIM-9") {
                 if (pylons.bore) {
-                    me.irSearch.setTranslation(me.sx/2,me.sy-me.texels_up_into_hud);
+                    var aim = pylons.fcs.getSelectedWeapon();
+                    if (aim != nil) {
+                        var coords = aim.getSeekerInfo();
+                        me.irSearch.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
+                    }
                 } else {
                     me.irSearch.setTranslation(me.sx/2, me.sy*0.25);
                 }

@@ -435,11 +435,12 @@ var bore_loop = func {
         var aim = fcs.getSelectedWeapon();
         if (aim != nil and aim.type == "AIM-9") {
             if (standby == 1) {
-                aim.setBore(1);
+                #aim.setBore(1);
                 aim.setContacts(awg_9.completeList);
+                aim.commandDir(0,-3.5);# the real is bored to -6 deg below real bore
                 bore = 1;
             } else {
-                aim.setSlave(1);
+                aim.commandRadar();
                 aim.setContacts([]);
             }
         }
