@@ -1421,8 +1421,8 @@ append(obj.total, obj.speed_curr);
             if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
                 if (!pylons.fcs.isLock()) {
                     me.radarLock.setTranslation(me.sx/2, me.sy*0.25);
-                }
-                me.rdL = 1;
+                    me.rdL = 1;
+                }                
             } elsif (!pylons.fcs.isLock() and hdp.weapon_selected == "AIM-9") {
                 if (pylons.bore) {
                     var aim = pylons.fcs.getSelectedWeapon();
@@ -1483,6 +1483,7 @@ append(obj.total, obj.speed_curr);
                                     if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
                                         me.radarLock.setTranslation(me.xcS, me.ycS);
                                         me.triangle120.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading));
+                                        me.rdL = 1;
                                         me.rdT = 1;
                                     } elsif (hdp.weapon_selected == "AIM-9") {
                                         me.irLock.setTranslation(me.xcS, me.ycS);
