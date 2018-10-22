@@ -768,7 +768,7 @@ append(obj.total, obj.speed_curr);
             .setColor(0,1,0);
             append(obj.total, obj.thing);
         var mr = 0.4;
-        obj.circle262 = obj.svg.createChild("path")
+        obj.circle262 = obj.svg.createChild("path")#rdsearch
             .moveTo(-262*mr,0)
             .arcSmallCW(262*mr,262*mr, 0, 262*mr*2, 0)
             .arcSmallCW(262*mr,262*mr, 0, -262*mr*2, 0)
@@ -776,7 +776,7 @@ append(obj.total, obj.speed_curr);
             .setColor(0,1,0)
             .setTranslation(sx*0.5*0.695633,sy*0.25);
             append(obj.total, obj.circle262);
-        obj.circle100 = obj.svg.createChild("path")
+        obj.circle100 = obj.svg.createChild("path")#irsearch
             .moveTo(-100*mr,0)
             .arcSmallCW(100*mr,100*mr, 0, 100*mr*2, 0)
             .arcSmallCW(100*mr,100*mr, 0, -100*mr*2, 0)
@@ -784,7 +784,7 @@ append(obj.total, obj.speed_curr);
             .setColor(0,1,0)
             .setTranslation(sx*0.5*0.695633,sy*0.25);
             append(obj.total, obj.circle100);
-        obj.circle120 = obj.svg.createChild("path")
+        obj.circle120 = obj.svg.createChild("path")#rdlock
             .moveTo(-120*mr,0)
             .arcSmallCW(120*mr,120*mr, 0, 120*mr*2, 0)
             .arcSmallCW(120*mr,120*mr, 0, -120*mr*2, 0)
@@ -792,7 +792,7 @@ append(obj.total, obj.speed_curr);
             .setColor(0,1,0)
             .setTranslation(sx*0.5*0.695633,sy*0.25);
             append(obj.total, obj.circle120);
-        obj.circle65 = obj.svg.createChild("path")
+        obj.circle65 = obj.svg.createChild("path")#irlock
             .moveTo(-65*mr,0)
             .arcSmallCW(65*mr,65*mr, 0, 65*mr*2, 0)
             .arcSmallCW(65*mr,65*mr, 0, -65*mr*2, 0)
@@ -811,10 +811,11 @@ append(obj.total, obj.speed_curr);
             .setTranslation(sx*0.5*0.695633,sy*0.25);
             append(obj.total, obj.triangle65);
         obj.triangle120 = obj.svg.createChild("path")
-            .moveTo(0,-120*mr)
-            .lineTo(-5*mr,-130*mr)
-            .lineTo(5*mr,-130*mr)
-            .lineTo(0,-120*mr)
+            .setCenter(0,0)
+            .moveTo(0,-0*mr)
+            .lineTo(-5*mr,-10*mr)
+            .lineTo(5*mr,-10*mr)
+            .lineTo(0,-0*mr)
             .setStrokeLineWidth(1)
             .setColor(0,1,0)
             #.set("z-index",10500)
@@ -1542,6 +1543,17 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
                     me.irL = 0;
                     me.rdL = 0;
                 }
+                if (pylons.fcs.isLock()) {
+                    me.scale120 = me.extrapolate(me.dlzArray[4],me.dlzArray[2],me.dlzArray[3],1,30/120);
+                    me.scale120 = clamp(me.scale120,30/120,1);
+                    me.circle120.setScale(me.scale120,me.scale120);
+                    me.circle120.setStrokeLineWidth(1/me.scale120);
+                    #me.triangle120.setScale(me.scale120,me.scale120);
+                    #me.triangle120.setStrokeLineWidth(1/me.scale120);
+                    me.triangle120.setTranslation(me.sx*0.5,me.sy*0.25-me.scale120*0.4*120);#0.4=mr
+                    #me.triangle120.setCenter(0,me.scale120*0.4*120);
+                    me.triangle120.setCenter(0,me.scale120*0.4*120);
+                }
             } else {
                 me.dlzClo.setText("");
             }
@@ -1572,6 +1584,10 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
         me.initUpdate = 0;
  
     },
+    extrapolate: func (x, x1, x2, y1, y2) {
+        return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
+    },
+    clamp: func(v, min, max) { v < min ? min : v > max ? max : v },
     list: [],
 };
 
