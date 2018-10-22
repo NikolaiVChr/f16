@@ -322,9 +322,7 @@
                                 <property> attitude/phi-rad </property>
                             </sin>
                         </product>
-                        <product>                            
-                            <property> accelerations/vdot-ft_sec2 </property>
-                        </product>
+                        <property> accelerations/vdot-ft_sec2 </property>
                     </sum>
                     <v> 32.174 </v>
                 </quotient>
