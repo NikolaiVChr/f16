@@ -216,16 +216,21 @@ var F16_HUD = {
             props.UpdateManager.FromHashList(["hud_serviceable", "hud_display", "hud_brightness", "hud_power"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
                                       {
 # print("HUD hud_serviceable=", hdp.hud_serviceable," display=", hdp.hud_display, " brt=", hdp.hud_brightness, " power=", hdp.hud_power);
+
                                           if (!hdp.hud_display or !hdp.hud_serviceable) {
-                                            #obj.svg.setColor(0.3,1,0.3,0);
+                                            var color = [0.3,1,0.3,0];
                                             foreach(item;obj.total) {
-                                              item.setColor(0.3,1,0.3, 0);
-                                            }                                            
-                                          } elsif (hdp.hud_brightness != nil and hdp.hud_power != nil) {
-                                            #obj.svg.setColor(1,0,0.3,hdp.hud_brightness * hdp.hud_power);
-                                            foreach(item;obj.total) {
-                                              item.setColor(0.3,1,0.3,hdp.hud_brightness * hdp.hud_power);
+                                              item.setColor(color);
                                             }
+                                            obj.triangle120.setColorFill(color);
+                                            obj.triangle65.setColorFill(color);
+                                          } elsif (hdp.hud_brightness != nil and hdp.hud_power != nil) {
+                                            var color = [0.3,1,0.3,hdp.hud_brightness * hdp.hud_power];
+                                            foreach(item;obj.total) {
+                                              item.setColor(color);
+                                            }
+                                            obj.triangle120.setColorFill(color);
+                                            obj.triangle65.setColorFill(color);
                                           }
                                       }),
             props.UpdateManager.FromHashList([], 0.01, func(hdp)
@@ -815,7 +820,7 @@ append(obj.total, obj.speed_curr);
             .arcSmallCW(262*mr,262*mr, 0, -262*mr*2, 0)
             .setStrokeLineWidth(1)
             .setColor(0,1,0)
-            .setTranslation(sx*0.5*0.695633,sy*0.25);
+            .setTranslation(sx*0.5*0.695633,sy*0.25+262*mr*0.5);
             append(obj.total, obj.circle262);
         obj.circle100 = obj.svg.createChild("path")#irsearch
             .moveTo(-100*mr,0)
@@ -847,6 +852,7 @@ append(obj.total, obj.speed_curr);
             .lineTo(5*mr,-75*mr)
             .lineTo(0,-65*mr)
             .setStrokeLineWidth(1)
+            .setColorFill(0,1,0)
             .setColor(0,1,0)
             #.set("z-index",10500)
             .setTranslation(sx*0.5*0.695633,sy*0.25);
@@ -857,6 +863,7 @@ append(obj.total, obj.speed_curr);
             .lineTo(-5*mr,-10*mr)
             .lineTo(5*mr,-10*mr)
             .lineTo(0,-0*mr)
+            .setColorFill(0,1,0)
             .setStrokeLineWidth(1)
             .setColor(0,1,0)
             #.set("z-index",10500)
@@ -1461,7 +1468,7 @@ append(obj.total, obj.speed_curr);
             hdp.weapon_selected = pylons.fcs.selectedType;
             if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
                 if (!pylons.fcs.isLock()) {
-                    me.radarLock.setTranslation(me.sx/2, me.sy*0.25);
+                    me.radarLock.setTranslation(me.sx/2, me.sy*0.25+262*0.4*0.5);
                     me.rdL = 1;
                 }                
             } elsif (!pylons.fcs.isLock() and hdp.weapon_selected == "AIM-9") {
