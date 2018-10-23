@@ -175,6 +175,7 @@ var F16_HUD = {
                  symbol_reject             : "/controls/HUD/sym-rej",
                  target_display            : "/sim/model/f16/instrumentation/radar-awg-9/hud/target-display",
                  wow                       : "/fdm/jsbsim/gear/wow",
+                 wow0                      : "/fdm/jsbsim/gear/unit[0]/WOW",
                  current_view_x_offset_m   : "sim/current-view/x-offset-m",
                  current_view_y_offset_m   : "sim/current-view/y-offset-m",
                  current_view_z_offset_m   : "sim/current-view/z-offset-m",
@@ -278,7 +279,7 @@ var F16_HUD = {
                                                  }
                                                  obj.oldBore.hide();
                                       }),
-            props.UpdateManager.FromHashList(["texUp","VV_x","VV_y","fpm"], 0.01, func(hdp)
+            props.UpdateManager.FromHashList(["texUp","VV_x","VV_y","fpm"], 0.001, func(hdp)
                                       {
                                         if (hdp.fpm > 0) {
                                             obj.VV.setTranslation (obj.sx*0.5+hdp.VV_x * obj.texelPerDegreeX, obj.sy-obj.texels_up_into_hud+hdp.VV_y * obj.texelPerDegreeY);
@@ -306,7 +307,7 @@ var F16_HUD = {
                                           }
                                         }
                                       }),
-            props.UpdateManager.FromHashList(["texUp","pitch","roll","fpm","VV_x","VV_y"], 0.025, func(hdp)
+            props.UpdateManager.FromHashList(["texUp","pitch","roll","fpm","VV_x","VV_y"], 0.001, func(hdp)
                                       {
                                           obj.ladder.hide();
                                           obj.roll_pointer.setRotation (hdp.roll_rad);
@@ -327,7 +328,7 @@ var F16_HUD = {
                                         obj.fpi_x = hdp.VV_x * obj.texelPerDegreeX;
                                         obj.fpi_y = hdp.VV_y * obj.texelPerDegreeY;
                                         obj.rot = -hdp.roll * D2R;
-                                        obj.h_rot.setRotation(obj.rot);
+                                        
                                         obj.pos_y_rel = obj.fpi_y;#position from bore
                                         obj.fpi_polar = clamp(math.sqrt(obj.fpi_x*obj.fpi_x+obj.pos_y_rel*obj.pos_y_rel),0.0001,10000);
                                         obj.inv_angle = clamp(-obj.pos_y_rel/obj.fpi_polar,-1,1);
@@ -360,11 +361,12 @@ var F16_HUD = {
 
 
                                         #obj.horizon_vertical = clamp(-math.cos(obj.fpi_angle-obj.rot)*obj.fpi_polar, -obj.sy*0, obj.sy*0.75);
-
+                                        obj.h_rot.setRotation(obj.rot);
                                         obj.horizon_group.setTranslation(obj.sx*0.5, obj.sy-obj.texels_up_into_hud);#place it on bore
                                         obj.ladder_group.setTranslation(obj.horizon_lateral, obj.texelPerDegreeY * hdp.pitch);
                                         obj.ladder_group.show();
                                         obj.ladder_group.update();
+                                        obj.horizon_group.update();
                                       }),
 #            props.UpdateManager.FromHashValue("roll_rad", 1.0, func(roll_rad)
 #                                      {
@@ -1382,8 +1384,25 @@ append(obj.total, obj.speed_curr);
         me.pixelPerMeterX = (340*0.695633)/0.15627;
         me.pixelPerMeterY = 260/(me.Hz_t-me.Hz_b);
 
-        hdp.VV_x = hdp.beta;
-        hdp.VV_y = hdp.alpha;
+        if (hdp.wow0) {
+            me.vectorMag = math.sqrt(hdp.speed_east_fps*hdp.speed_east_fps+hdp.speed_north_fps*hdp.speed_north_fps);
+            if (me.vectorMag == 0) {
+                me.vectorMag = 0.0001;
+            }
+            me.headingvv = -math.asin(hdp.speed_north_fps/me.vectorMag)*R2D+90;#divide by vector mag, to get normalized unit vector length
+            if (hdp.speed_east_fps/me.vectorMag < 0) {
+              me.headingvv = -me.headingvv;
+            }
+            if (me.vectorMag < 0.1) {
+                me.headingvv = hdp.heading;
+            }
+            hdp.VV_x = geo.normdeg180(me.headingvv-hdp.heading);
+            hdp.VV_y = 0;
+        } else {
+            hdp.VV_x = hdp.beta;
+            hdp.VV_y = hdp.alpha;
+        }
+        
 
         # UV mapped to x: 0-0.695633
         me.averageDegX = math.atan2(0.078135*1.0, me.Vx-me.Hx_m)*R2D;
@@ -1590,10 +1609,7 @@ append(obj.total, obj.speed_curr);
             hdp.window7_txt = sprintf(" %.2f",hdp.mach);
         }
 
-        foreach(var update_item; me.update_items)
-        {
-            update_item.update(hdp);
-        }
+        
 
 
         me.trackLineShow = 0;
@@ -1804,7 +1820,11 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
 
 
         me.initUpdate = 0;
- 
+        
+        foreach(var update_item; me.update_items)
+        {
+            update_item.update(hdp);
+        } 
     },
     extrapolate: func (x, x1, x2, y1, y2) {
         return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
