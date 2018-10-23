@@ -576,8 +576,9 @@ First mount some armament.
 Secondly make sure masterarm is enabled.
 Thirdly select the arm. (use 'w' key or click buttons 'A-A' or 'A-G' under HUD)
 Fourthly make sure target is selected (key 'y')
-For GBU-12 make sure laser is armed.
-For GBU-12, GBU-31, MK-82, MK-83 when getting close a vertical line will appear in HUD. Align flight path indicator on the line, when a small horizontal line on that line starts dropping down and reach another line then its time to release (key 'e' or 'trigger').
+For GBU-12 and GBU-24 make sure laser is armed.
+For GBU-12, GBU-24, GBU-31, MK-82, MK-83 when getting close a vertical line will appear in HUD. Align flight path indicator on the line, when a small horizontal line on that line starts dropping down and reach another line then its time to release (key 'e' or 'trigger').
+For AIM-120 the trigger can be held for 2 second to fire it without a lock in MADDOG mode, where it will lock onto anyone it sees. This feature is still not entirely bug free so do this on own risk.
 
 NIGHTTIME FLYING
 There is flood and instrument lights that can be turned up.
