@@ -71,6 +71,8 @@ var pMAGV = 7;
 var page = pCNI;
 var comm = 0;
 
+var text = ["","","","",""];
+
 var loop_ded = func {# one line is max 24 chars
 
     if (page == pSTPT) {
@@ -90,11 +92,11 @@ var loop_ded = func {# one line is max 24 chars
           }
         }
       }
-      line1.setText(sprintf("         STPT %2d    AUTO",no));
-      line2.setText(sprintf("      LAT  %s",lat));
-      line3.setText(sprintf("      LNG  %s",lon));
-      line4.setText(sprintf("     ELEV  %5dFT",alt));
-      line5.setText(sprintf("      TOS  %s","VOID"));
+      text[0] = sprintf("         STPT %2d    AUTO",no);
+      text[1] = sprintf("      LAT  %s",lat);
+      text[2] = sprintf("      LNG  %s",lon);
+      text[3] = sprintf("     ELEV  %5dFT",alt);
+      text[4] = sprintf("      TOS  %s","VOID");
     } elsif (page == pTACAN) {
       var ilsOn  = "ON";
       var freq   = getprop("instrumentation/tacan/frequencies/selected-mhz");
@@ -102,11 +104,11 @@ var loop_ded = func {# one line is max 24 chars
       var band   = getprop("instrumentation/tacan/frequencies/selected-channel[4]");
       var course = getprop("instrumentation/tacan/in-range")?getprop("instrumentation/tacan/indicated-bearing-true-deg"):-1;
       course = course==-1?"":sprintf("%d\xc2\xb0",course);
-      line1.setText(sprintf("     TCN  REC    ILS %s",ilsOn));
-      line2.setText(sprintf("                        "));
-      line3.setText(sprintf("               CMD STRG "));
-      line4.setText(sprintf("CHAN    %03d FREQ %6.2f",chan,freq));
-      line5.setText(sprintf("BAND      %s CRS %s",band,course));
+      text[0] = sprintf("    TCN REC       ILS %s",ilsOn);
+      text[1] = sprintf("                        ");
+      text[2] = sprintf("               CMD STRG ");
+      text[3] = sprintf("CHAN    %03d FREQ %6.2f",chan,freq);
+      text[4] = sprintf("BAND      %s CRS %s",band,course);
     } elsif (page == pIFF) {
       var target = awg_9.active_u;
       var sign = "";
@@ -124,39 +126,39 @@ var loop_ded = func {# one line is max 24 chars
         friend = "NO CONN";
       }
 
-      line1.setText(sprintf("     IFF                "));
-      line2.setText(sprintf("                        "));
-      line3.setText(sprintf("PILOT   %s",sign));
-      line4.setText(sprintf("ID      %s",type));
-      line5.setText(sprintf("Link16  %s",friend));
+      text[0] = sprintf("     IFF                ");
+      text[1] = sprintf("                        ");
+      text[2] = sprintf("PILOT   %s",sign);
+      text[3] = sprintf("ID      %s",type);
+      text[4] = sprintf("Link16  %s",friend);
     } elsif (page == pALOW) {
       var no = getprop("autopilot/route-manager/current-wp")+1;
       var alow = getprop("f16/settings/cara-alow");
       var floor = getprop("f16/settings/msl-floor");
-      line1.setText(sprintf("         ALOW       %2d  ",no));
-      line2.setText(sprintf("                        "));
-      line3.setText(sprintf("   CARA ALOW %5dFT    ",alow));
-      line4.setText(sprintf("   MSL FLOOR %5dFT    ",floor));
-      line5.setText(sprintf("TF ADV (MSL)  8500FT    "));
+      text[0] = sprintf("         ALOW       %2d  ",no);
+      text[1] = sprintf("                        ");
+      text[2] = sprintf("   CARA ALOW %5dFT    ",alow);
+      text[3] = sprintf("   MSL FLOOR %5dFT    ",floor);
+      text[4] = sprintf("TF ADV (MSL)  8500FT    ");
     } elsif (page == pCNI) {
       var no = getprop("autopilot/route-manager/current-wp")+1;
       var freq   = getprop("instrumentation/comm["~comm~"]/frequencies/selected-mhz");
       var time   = getprop("/sim/time/gmt-string");
       var t      = getprop("instrumentation/tacan/display/channel");
-      line1.setText(sprintf("UHF    --    STPT %2d",no));
-      line2.setText(sprintf(" COMM%d                   ",comm+1));
-      line3.setText(sprintf("VHF  %6.2f   %s",freq,time));
-      line4.setText(sprintf("                        "));
-      line5.setText(sprintf("                  T%s",t));
+      text[0] = sprintf("UHF    --    STPT %2d",no);
+      text[1] = sprintf(" COMM%d                   ",comm+1);
+      text[2] = sprintf("VHF  %6.2f   %s",freq,time);
+      text[3] = sprintf("                        ");
+      text[4] = sprintf("                  T%s",t);
     } elsif (page == pBINGO) {
       var no = getprop("autopilot/route-manager/current-wp")+1;
       var total = getprop("consumables/fuel/total-fuel-lbs");
       var bingo = getprop("f16/settings/bingo");
-      line1.setText(sprintf("        BINGO       %2d  ",no));
-      line2.setText(sprintf("                        "));
-      line3.setText(sprintf("    SET    %5dLBS      ",bingo));
-      line4.setText(sprintf("  TOTAL    %5dLBS      ",total));
-      line5.setText(sprintf("                        "));
+      text[0] = sprintf("        BINGO       %2d  ",no);
+      text[1] = sprintf("                        ");
+      text[2] = sprintf("    SET    %5dLBS      ",bingo);
+      text[3] = sprintf("  TOTAL    %5dLBS      ",total);
+      text[4] = sprintf("                        ");
     } elsif (page == pMAGV) {
       var amount = getprop("instrumentation/gps/magnetic-bug-error-deg");
       if (amount != nil) {
@@ -165,15 +167,20 @@ var loop_ded = func {# one line is max 24 chars
           letter = "E";
           amount = math.abs(amount);
         }
-        line3.setText(sprintf("         %s %.1f\xc2\xb0",letter, amount));
+        text[2] = sprintf("         %s %.1f\xc2\xb0",letter, amount);
       } else {
-        line3.setText(sprintf("         GPS OFFLINE"));
+        text[2] = sprintf("         GPS OFFLINE");
       }
-      line1.setText(sprintf("       MAGV  AUTO       "));
-      line2.setText(sprintf("                        "));
-      line4.setText(sprintf("                        "));
-      line5.setText(sprintf("                        "));
+      text[0] = sprintf("       MAGV  AUTO       ");
+      text[1] = sprintf("                        ");
+      text[3] = sprintf("                        ");
+      text[4] = sprintf("                        ");
     }
+    line1.setText(text[0]);
+    line2.setText(text[1]);
+    line3.setText(text[2]);
+    line4.setText(text[3]);
+    line5.setText(text[4]);
     settimer(loop_ded, 0.5);
 };
 callInit();

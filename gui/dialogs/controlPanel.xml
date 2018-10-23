@@ -548,14 +548,14 @@
 			<group>
 			    <layout>hbox</layout>
 			    <checkbox>
-				    <property>instrumentation/heading-indicator/use-mag-in-hud</property>
+				    <property>f16/avionics/hud-ded</property>
 				    <live>true</live>
 				    <binding>
 						<command>property-toggle</command>
-						<property>instrumentation/heading-indicator/use-mag-in-hud</property>
+						<property>f16/avionics/hud-ded</property>
 			      	</binding>
 			    </checkbox>
-			    <text><label>Magnetic heading in HUD</label></text>
+			    <text><label>HUD DED DATA</label></text>
 			</group>
 
 			<hrule/>

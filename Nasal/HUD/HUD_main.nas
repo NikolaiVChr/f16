@@ -202,6 +202,7 @@ var F16_HUD = {
                  elapsed                   : "sim/time/elapsed-sec",
                  cara                      : "f16/avionics/cara-on",
                  fpm                       : "f16/avionics/hud-fpm",
+                 ded                       : "f16/avionics/hud-ded",
                 };
 
         foreach (var name; keys(input)) {
@@ -731,6 +732,46 @@ append(obj.total, obj.speed_curr);
                 .setFont(HUD_FONT)
                 .setFontSize(9, 1.1);
                 append(obj.total, obj.head_curr);
+        obj.ded0 = obj.svg.createChild("text")
+                .setText("360")
+                .setTranslation(0.25*sx*0.695633,sy*0.75-20)
+                .setAlignment("left-center")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(9, 1.1);
+                append(obj.total, obj.ded0);
+        obj.ded1 = obj.svg.createChild("text")
+                .setText("360")
+                .setTranslation(0.25*sx*0.695633,sy*0.75-10)
+                .setAlignment("left-center")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(9, 1.1);
+                append(obj.total, obj.ded1);
+        obj.ded2 = obj.svg.createChild("text")
+                .setText("360")
+                .setTranslation(0.25*sx*0.695633,sy*0.75+0)
+                .setAlignment("left-center")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(9, 1.1);
+                append(obj.total, obj.ded2);
+        obj.ded3 = obj.svg.createChild("text")
+                .setText("360")
+                .setTranslation(0.25*sx*0.695633,sy*0.75+10)
+                .setAlignment("left-center")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(9, 1.1);
+                append(obj.total, obj.ded3);
+        obj.ded4 = obj.svg.createChild("text")
+                .setText("360")
+                .setTranslation(0.25*sx*0.695633,sy*0.75+20)
+                .setAlignment("left-center")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(9, 1.1);
+                append(obj.total, obj.ded4);
         obj.trackLine = obj.svg.createChild("path")
                 .moveTo(0,0)
                 #.horiz(10)
@@ -1585,6 +1626,26 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
         me.irLock.setVisible(me.irL);
         me.triangle120.setVisible(me.rdT);
         me.triangle65.setVisible(me.irT);
+
+        if (hdp.ded) {
+            me.ded0.setText(ded.text[0]);
+            me.ded1.setText(ded.text[1]);
+            me.ded2.setText(ded.text[2]);
+            me.ded3.setText(ded.text[3]);
+            me.ded4.setText(ded.text[4]);
+            me.ded0.show();
+            me.ded1.show();
+            me.ded2.show();
+            me.ded3.show();
+            me.ded4.show();
+        } else {
+            me.ded0.hide();
+            me.ded1.hide();
+            me.ded2.hide();
+            me.ded3.hide();
+            me.ded4.hide();
+        }
+
 
         me.initUpdate = 0;
  
