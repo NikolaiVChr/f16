@@ -2024,7 +2024,7 @@ var AIM = {
 			me.ai.getNode("valid").setBoolValue(1);
 		}
 		#thread.unlock(frameToggle);
-		}
+	  }
 	},
 
 	getGPS: func(x, y, z, pitch, head=nil, roll=nil) {
