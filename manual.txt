@@ -7,21 +7,15 @@
 
 
 LANDING
-
-No fixed landing speed, however a suggested approach speed will display in left side of HUD when gears is down.
+No fixed landing speed, however a suggested approach speed will display in left side of HUD when gears is down and masterarm is off.
 A little AoA bracket will appear down in the HUD, keep the flight path indicator inside the bracket. The top of the bracket is 11 and bottom is 15 deg AoA.
 Notice that it can be hard to see the touchdown point when landing with that high AoA, raising the seat with key 'u' will help.
-
-
+If the runway is wet, icy or short use the dragchute (F4).
 
 TAKE-OFF
-
-You can rotate around 150 KT. Be somewhat gentle on the stick if you rotate early as you otherwise might tail-scrape.
-
-
+You can rotate around 150 KT when aircraft is light. Be somewhat gentle on the stick if you rotate early as you otherwise might tail-scrape.
 
 FBW
-
 The FBW in most variant will try to protect and escape the aircraft from deep stall, nose slide and spin. Also will reduce inertia-coupling when rolling fast at high AoA.
 However if the deep stall is very problemetic to escape, you can enable MPO (key 'del') which will allow you to semi override the FBW pitch control.
 With MPO enabled you can rock the aircraft up and down in bigger and bigger oscillations until the nose stays down and you have escaped the deep stall.
@@ -29,19 +23,13 @@ For spins, we recommend letting go of stick and throttle back, and let the FBW s
 In the YF-16 to escape spins, apply rudder opposite of spin direction and ailerons into the spin direction while pitching down and throttle back. This will often get you into the deep stall where you will rock your way out of that.
 If you get close to ground in a departure use key 'F6' to eject.
 
-
-
 LIMITS
-
 Do not exceed Mach 2.05 or 800 KCAS.
 Do not roll faster than 225 kt groundspeed for main landing gear tires, or 217 for nose wheel tire.
 Do not operate below 200 KT with cat III stores, unless for landing or take-off.
 
-
-
 HUD
-
-The speed in HUD is calibrated airspeed.
+The speed in HUD is calibrated airspeed per default, and always when gear is commanded down. It can be switched in the control-panel.
 
 Text left side:
   NAV or ARM depending on masterarm. But BRAKES if parking brakes is on, and F 15 G if flaps is deployed, F for flaps, 15 for 15 deg extended, and G for gears down.
@@ -50,15 +38,22 @@ Text left side:
   Selected weapon or AoA if gears down.
 
 Text Right side:
-  FUEL if bingo fuel. Callsign if masterarm.
-  ETA to next steerpoint. TA 20 if masterarm on, 20 stand for 20k target altitude.
+  R XXXXX is the CARA radar altimeter altitude above ground.
+  FUEL if bingo fuel. CARA ALOW elsewise.
+  B XX.X is  slant range to steerpoint. Callsign if masterarm.
+  ETA to next steerpoint. TA XX if masterarm on, XX stand for 1000s ft of target altitude.
   023>2 means 23 NM to next steerpoint number 2. F034.2 if masterarm on, means 34.2 NM in slant range to target.
   Type of target if masterarm on.
 
+Text Center:
+  LIMIT if Vne exceeded.
+  NO RAD if the aircraft radar is off.
+  FLY UP if collision with terrain is emminent.
 
+Text Bottom
+  Here DED DATA will show if enabled.
 
 RWR
-
 The round display above left MFD display is a Radar Warning Reciever.
 It works by sorting the threats to you.
 
@@ -77,11 +72,7 @@ For something to show up in the RWR at all these conditions must be met:
 
 Notice that the RWR can sometimes pick up threat much further away than your radar is capable off.
 
-
-
-
 MFDs (Multi Function Displays)
-
 page SMS: Clicking on button next to a station will select it. 
           J-S will jettison the selected station.
           If CAT is greater than 1, then you should set the flightcontrols to CAT III in config menu.
@@ -94,63 +85,90 @@ page HSD: Horizontal situation display. Shows route and radar echoes.
           CEN: Centered ownship in display
           CPL: Range will follow (approx) radar distance
           DCPL: Range can be set independently of radar range by clicking on the up/down arrows.
-
-
-
+page SIT: Mostly for radio navigation.
 
 AUTOPILOT
-
 Notice that even when A/P is enabled you can control the airplane with the stick. When you let go of stick A/P will recalculate from current situation.
 
 The controls:
-
 Pitch: ALT HOLD: Hold current altitude
        A/P OFF:  Disable autopilot for both roll and pitch
        ATT HOLD: Hold current pitch attitude
-
 Roll:  HDG SEL:  Hold current heading
        ATT HOLD: Hold current roll attitude
        STRG SEL: Follow route from Route Manager
 
-
-
-
 RELEASING ORDNANCE
-
 First mount some armament.
 Secondly make sure masterarm is enabled.
 Thirdly select the arm. (use 'w' key or click buttons 'A-A' or 'A-G' under HUD)
 Fourthly make sure target is selected (key 'y')
 For GBU-12 make sure laser is armed.
-For GBU-12, GBU-31, MK-82 when getting close a vertical line will appear in HUD. Align flight path indicator on the line, when a small horizontal line on that line starts dropping down and reach another line then its time to release (key 'e' or 'trigger').
-
-
-
-EMER STORES JETTISON
-This will jettison all A/G ordnance and other payloads like fuel tanks that is not A/A. It will NOT jettison wingtips.
-
-
-
-ALT FLAPS
-This will deploy flaps as if the gears were extended. They will still retract at higher speeds though.
-
-
+For GBU-12, GBU-31, MK-82, MK-83 when getting close a vertical line will appear in HUD. Align flight path indicator on the line, when a small horizontal line on that line starts dropping down and reach another line then its time to release (key 'e' or 'trigger').
 
 NIGHTTIME FLYING
 There is flood and instrument lights that can be turned up.
 If running ALS you can also go into filters and enable one of the night vision modes.
 
-
-
 DRAGCHUTE
-Max recommended KIAS for deployment is 170.
+Max recommended KIAS for deployment is 170. Key is F4.
 
+DED
+The DED is the small display above the right color MFD.
+Clicking on certain buttons on the ICP (the panel below the HUD) can bring up different pages.
+The DED can also be brought up on the HUD in the controlpanel.
 
+CONTROLPANEL and CONFIG
+You can find these in the FG menu (the last item).
+They contains various aircraft and experience settings.
+Once the cockpit controls is full 3D the aircraft settings will be removed.
+
+BITCHING BETTY
+Thats the nickname of the annunciation voice. :)
+
+CARA ALOW
+Combined Altitude Radar Altimeter Automatic LOw altitude Warning.
+Is radar altitude warning from Betty when get below that. The CARA must have view of the ground for this to work.
+
+MSL FLOOR
+Mean Sea Level altitude advisory Floor.
+Is when you want Betty to remind you to switch to/from QNH/standard baro pressure.
+
+HUD VELOCITY
+Can switch the HUD scale to show true or ground speed.
+
+HUD SCALES
+Can switch the HUD Velocity, Altitude and Heading scales off, the digital readouts will remain though.
+
+HUD FPM
+Can switch off the ATTitude lines and/or the Flight Path Marker.
+
+BINGO
+The fuel level where the system and Betty will warn that the fuel is low.
+
+EMER STORES JETTISON
+This will jettison all A/G ordnance and other payloads like fuel tanks that is not A/A. It will NOT jettison wingtips.
+
+ALT FLAPS
+This will deploy flaps as if the gears were extended. They will still retract at higher speeds though.
+
+HSI
+Is located at the bottom of the center console.
+This can be used to navigate steerpoints if the knob to the left is in NAV mode.
+It can be used to navigate TACAN if the knob is in TCN mode.
+
+DOGFIGHT SCENARIO
+Bring this up in the menu.
+Select a difficulty.
+Aim with the '+' bore symbol in HUD on a enemy for 1 second to score a kill.
+Friendly fire is off.
+Its meant to be use without using missiles to simulate gun fight, but if you find it hard we recommend you practice on setting 0 with AIM-9.
+Some of the settings will give you a wingman.
+To view the AI flying, switch to missile view and click the arrows in lower left corner.
 
 FLYING IN MP
 Firstly be sure to use "Visible to 2017+", else others will not see everything working okay when they see your aircraft.
 For doing combat enable "MP Discharge messages". This might be considered spam of MP chat, so use it sparringly and only against opponents that have agreed to be fighting you.
-
 
 
 
