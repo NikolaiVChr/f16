@@ -67,6 +67,7 @@ var pIFF  = 4;
 var pCNI  = 5;
 var pBINGO= 6;
 var pMAGV = 7;
+var pLINK = 8;
 
 var page = pCNI;
 var comm = 0;
@@ -74,10 +75,15 @@ var comm = 0;
 var text = ["","","","",""];
 
 var loop_ded = func {# one line is max 24 chars
-
+    var no = getprop("autopilot/route-manager/current-wp")+1;
+    if (no == 0) {
+      no = "";
+    } else {
+      no = sprintf("%2d",no);
+    }
     if (page == pSTPT) {
       var fp = flightplan();
-      var no = getprop("autopilot/route-manager/current-wp")+1;
+      
       var lat = "";
       var lon = "";
       var alt = -1;
@@ -92,7 +98,7 @@ var loop_ded = func {# one line is max 24 chars
           }
         }
       }
-      text[0] = sprintf("         STPT %2d    AUTO",no);
+      text[0] = sprintf("         STPT %s    AUTO",no);
       text[1] = sprintf("      LAT  %s",lat);
       text[2] = sprintf("      LNG  %s",lon);
       text[3] = sprintf("     ELEV  %5dFT",alt);
@@ -131,30 +137,37 @@ var loop_ded = func {# one line is max 24 chars
       text[2] = sprintf("PILOT   %s",sign);
       text[3] = sprintf("ID      %s",type);
       text[4] = sprintf("Link16  %s",friend);
+    } elsif (page == pLINK) {
+      text[0] = sprintf(" XMT 40 INTRAFLIGHT  %s ",no);
+      text[1] = sprintf("#1 %s",getprop("link16/wingman-1"));
+      text[2] = sprintf("#2 %s",getprop("link16/wingman-2"));
+      text[3] = sprintf("#3 %s",getprop("link16/wingman-3"));
+      if (getprop("link16/wingman-4") != "") {
+        text[4] = sprintf("#4 %s",getprop("link16/wingman-4"));
+      } else {
+        text[4] = "";
+      }
     } elsif (page == pALOW) {
-      var no = getprop("autopilot/route-manager/current-wp")+1;
       var alow = getprop("f16/settings/cara-alow");
       var floor = getprop("f16/settings/msl-floor");
-      text[0] = sprintf("         ALOW       %2d  ",no);
+      text[0] = sprintf("         ALOW       %s  ",no);
       text[1] = sprintf("                        ");
       text[2] = sprintf("   CARA ALOW %5dFT    ",alow);
       text[3] = sprintf("   MSL FLOOR %5dFT    ",floor);
       text[4] = sprintf("TF ADV (MSL)  8500FT    ");
     } elsif (page == pCNI) {
-      var no = getprop("autopilot/route-manager/current-wp")+1;
       var freq   = getprop("instrumentation/comm["~comm~"]/frequencies/selected-mhz");
       var time   = getprop("/sim/time/gmt-string");
       var t      = getprop("instrumentation/tacan/display/channel");
-      text[0] = sprintf("UHF    --    STPT %2d",no);
+      text[0] = sprintf("UHF    --    STPT %s",no);
       text[1] = sprintf(" COMM%d                   ",comm+1);
       text[2] = sprintf("VHF  %6.2f   %s",freq,time);
       text[3] = sprintf("                        ");
       text[4] = sprintf("                  T%s",t);
     } elsif (page == pBINGO) {
-      var no = getprop("autopilot/route-manager/current-wp")+1;
       var total = getprop("consumables/fuel/total-fuel-lbs");
       var bingo = getprop("f16/settings/bingo");
-      text[0] = sprintf("        BINGO       %2d  ",no);
+      text[0] = sprintf("        BINGO       %s  ",no);
       text[1] = sprintf("                        ");
       text[2] = sprintf("    SET    %5dLBS      ",bingo);
       text[3] = sprintf("  TOTAL    %5dLBS      ",total);
@@ -218,6 +231,10 @@ var bingo = func {
 
 var magv = func {
   page = pMAGV;
+}
+
+var link16 = func {
+  page = pLINK;
 }
 
 ## these methods taken from JA37:

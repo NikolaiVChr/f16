@@ -186,6 +186,24 @@
     </animation>
     <animation>
         <type>pick</type>
+        <object-name>6</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.link16();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-l16</tooltip-id>
+                <label>Link 16</label>
+            </binding>
+        </hovered>
+    </animation>
+    <animation>
+        <type>pick</type>
         <object-name>iff</object-name>
         <action>
             <button>0</button>
