@@ -1184,13 +1184,13 @@
          transform="translate(0,-3.8146973e-6)">
         <path
            style="fill:none;stroke:#00ff00;stroke-width:1.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-           d="m 62.438827,832.55948 39.943753,0"
+           d="m 102.38258,832.55948 -90,0"
            id="path5650-4"
            inkscape:connector-curvature="0"
            sodipodi:nodetypes="cc" />
         <path
            style="fill:none;stroke:#00ff00;stroke-width:1.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-           d="m 132.22667,832.55948 45.40848,0"
+           d="m 132.22667,832.55948 90,0"
            id="path5650-0-0"
            inkscape:connector-curvature="0"
            sodipodi:nodetypes="cc" />

@@ -14,7 +14,7 @@ var ht_yco = -30;
 var ht_debug = 0;
 
 var pitch_offset = 12;
-var pitch_factor = 19.8;
+var pitch_factor = 14.85;#19.8;
 var pitch_factor_2 = pitch_factor * 180.0 / math.pi;
 var alt_range_factor = (9317-191) / 100000; # alt tape size and max value.
 var ias_range_factor = (694-191) / 1100;
@@ -119,7 +119,7 @@ var F16_HUD = {
 
         obj.ralt = obj.get_text("radalt", HUD_FONT,9,1.1);
 
-        append(obj.total, obj.ladder);
+        #append(obj.total, obj.ladder);
         append(obj.total, obj.heading_tape);
         #append(obj.total, obj.VV);
         append(obj.total, obj.heading_tape_pointer);
@@ -306,19 +306,65 @@ var F16_HUD = {
                                           }
                                         }
                                       }),
-            props.UpdateManager.FromHashList(["texUp","pitch","roll","fpm"], 0.025, func(hdp)
+            props.UpdateManager.FromHashList(["texUp","pitch","roll","fpm","VV_x","VV_y"], 0.025, func(hdp)
                                       {
-                                          if (hdp.fpm == 2) {
-                                            obj.ladder.setTranslation (0.0, hdp.pitch * pitch_factor+pitch_offset);                                           
-                                            obj.ladder.setCenter (obj.ladder_center[0], obj.ladder_center[1] - hdp.pitch * pitch_factor);
-                                            obj.ladder.setRotation (hdp.roll_rad);
-                                            obj.roll_pointer.setRotation (hdp.roll_rad);
-                                            obj.ladder.show();
-                                            obj.ladder.update();
-                                        } else {
-                                            obj.ladder.hide();
-                                        }
+                                          obj.ladder.hide();
+                                          obj.roll_pointer.setRotation (hdp.roll_rad);
+                                          if (hdp.fpm != 2) {
+                                            obj.ladder_group.hide();
+                                            return;
+                                          }
+                                            #obj.ladder.setTranslation (0.0, hdp.pitch * pitch_factor+pitch_offset);                                           
+                                            #obj.ladder.setCenter (obj.ladder_center[0], obj.ladder_center[1] - hdp.pitch * pitch_factor);
+                                            #obj.ladder.setRotation (hdp.roll_rad);
+                                            
+                                            #obj.ladder.show();
+                                            
                                         
+                                        #############################
+                                        # start new ladder:
+                                        #############################
+                                        obj.fpi_x = hdp.VV_x * obj.texelPerDegreeX;
+                                        obj.fpi_y = hdp.VV_y * obj.texelPerDegreeY;
+                                        obj.rot = -hdp.roll * D2R;
+                                        obj.h_rot.setRotation(obj.rot);
+                                        obj.pos_y_rel = obj.fpi_y;#position from bore
+                                        obj.fpi_polar = clamp(math.sqrt(obj.fpi_x*obj.fpi_x+obj.pos_y_rel*obj.pos_y_rel),0.0001,10000);
+                                        obj.inv_angle = clamp(-obj.pos_y_rel/obj.fpi_polar,-1,1);
+                                        obj.fpi_angle = math.acos(obj.inv_angle);
+                                        if (obj.fpi_x < 0) {
+                                          obj.fpi_angle *= -1;
+                                        }
+                                        obj.fpi_pos_rel_x    = math.sin(obj.fpi_angle-obj.rot)*obj.fpi_polar;
+
+                                        obj.rot_deg = geo.normdeg(-hdp.roll);
+                                        obj.default_lateral_pitchnumbers = obj.sx*0.25;
+                                        var centerOffset = -obj.texels_up_into_hud+0.5*obj.sy;
+                                        var frac = 1;
+                                        if (obj.rot_deg >= 0 and obj.rot_deg < 90) {
+                                          obj.max_lateral_pitchnumbers   = obj.extrapolate(obj.rot_deg,0,90,obj.default_lateral_pitchnumbers,obj.default_lateral_pitchnumbers+centerOffset);
+                                          obj.max_lateral_pitchnumbers_p = obj.extrapolate(obj.rot_deg,0,90,obj.default_lateral_pitchnumbers*frac,obj.default_lateral_pitchnumbers*frac-centerOffset);
+                                        } elsif (obj.rot_deg >= 90 and obj.rot_deg < 180) {
+                                          obj.max_lateral_pitchnumbers   = obj.extrapolate(obj.rot_deg,90,180,obj.default_lateral_pitchnumbers+centerOffset,obj.default_lateral_pitchnumbers);
+                                          obj.max_lateral_pitchnumbers_p = obj.extrapolate(obj.rot_deg,90,180,obj.default_lateral_pitchnumbers*frac-centerOffset,obj.default_lateral_pitchnumbers*frac);
+                                        } elsif (obj.rot_deg >= 180 and obj.rot_deg < 270) {
+                                          obj.max_lateral_pitchnumbers   = obj.extrapolate(obj.rot_deg,180,270,obj.default_lateral_pitchnumbers,obj.default_lateral_pitchnumbers-centerOffset);
+                                          obj.max_lateral_pitchnumbers_p = obj.extrapolate(obj.rot_deg,180,270,obj.default_lateral_pitchnumbers*frac,obj.default_lateral_pitchnumbers*frac+centerOffset);
+                                        } else {
+                                          obj.max_lateral_pitchnumbers   = obj.extrapolate(obj.rot_deg,270,360,obj.default_lateral_pitchnumbers-centerOffset,obj.default_lateral_pitchnumbers);
+                                          obj.max_lateral_pitchnumbers_p = obj.extrapolate(obj.rot_deg,270,360,obj.default_lateral_pitchnumbers*frac+centerOffset,obj.default_lateral_pitchnumbers*frac);
+                                        }
+                                        obj.horizon_lateral  = clamp(obj.fpi_pos_rel_x,-obj.max_lateral_pitchnumbers,obj.max_lateral_pitchnumbers_p);
+
+
+
+
+                                        #obj.horizon_vertical = clamp(-math.cos(obj.fpi_angle-obj.rot)*obj.fpi_polar, -obj.sy*0, obj.sy*0.75);
+
+                                        obj.horizon_group.setTranslation(obj.sx*0.5, obj.sy-obj.texels_up_into_hud);#place it on bore
+                                        obj.ladder_group.setTranslation(obj.horizon_lateral, obj.texelPerDegreeY * hdp.pitch);
+                                        obj.ladder_group.show();
+                                        obj.ladder_group.update();
                                       }),
 #            props.UpdateManager.FromHashValue("roll_rad", 1.0, func(roll_rad)
 #                                      {
@@ -932,6 +978,109 @@ append(obj.total, obj.speed_curr);
             .set("z-index",11000);
             #.setTranslation(sx*0.5*0.695633,sy*0.25);
             append(obj.total, obj.VV);
+
+
+    obj.horizon_group = obj.svg.createChild("group")
+      .set("z-order", 1);
+    obj.ladder_group = obj.horizon_group.createChild("group");
+    obj.h_rot   = obj.horizon_group.createTransform();
+
+    # pitch lines
+    var pixelPerDegreeY = 15.43724802231049;
+    var pixelPerDegreeX = 16.70527172464148;
+    var distance = pixelPerDegreeY * 5;
+    var minuss = 0.125*sx*0.695633;
+    var minuso = 20*mr;
+    for(var i = 1; i <= 18; i += 1) # full drawn lines
+      append(obj.total, obj.ladder_group.createChild("path")
+         .moveTo(minuso, -i * distance)
+         .horiz(minuss)
+         .vert(minuso*0.5)
+
+         .moveTo(-minuso, -i * distance)
+         .horiz(-minuss)
+         .vert(minuso*0.5)
+         
+         .setStrokeLineWidth(1)
+         .setColor(0,0,0));
+    
+    for(var i = -18; i <= -1; i += 1) { # stipled lines
+      append(obj.total, obj.ladder_group.createChild("path")
+                     .moveTo(minuso, -i * distance)
+                     .horiz(minuss*0.2)
+                     .moveTo(minuso+minuss*0.4, -i * distance)
+                     .horiz(minuss*0.2)
+                     .moveTo(minuso+minuss*0.8, -i * distance)
+                     .horiz(minuss*0.2)
+                     .vert(-minuso*0.5)
+
+                     .moveTo(-minuso, -i * distance)
+                     .horiz(-minuss*0.2)
+                     .moveTo(-minuso-minuss*0.4, -i * distance)
+                     .horiz(-minuss*0.2)
+                     .moveTo(-minuso-minuss*0.8, -i * distance)
+                     .horiz(-minuss*0.2)
+                     .vert(-minuso*0.5)
+
+                     .setStrokeLineWidth(1)
+                     .setColor(0,0,0));
+    }
+
+    #pitch line numbers
+    for(var i = -18; i <= 0; i += 1) {
+      if (i==0) continue;
+      append(obj.total, obj.ladder_group.createChild("text")
+         .setText(i*-5)
+         .setFontSize(9,1.1)
+         .setFont(HUD_FONT)
+         .setAlignment("right-center")
+         .setTranslation(-minuso-minuss-minuss*0.2, -i * distance)
+         .setColor(0,0,0));
+      append(obj.total, obj.ladder_group.createChild("text")
+         .setText(i*-5)
+         .setFontSize(9,1.1)
+         .setFont(HUD_FONT)
+         .setAlignment("left-center")
+         .setTranslation(minuso+minuss+minuss*0.2, -i * distance)
+         .setColor(0,0,0));
+    }
+    for(var i = 1; i <= 18; i += 1) {
+      if (i==0) continue;
+      append(obj.total, obj.ladder_group.createChild("text")
+         .setText(i*5)
+         .setFontSize(9,1.1)
+         .setFont(HUD_FONT)
+         .setAlignment("right-center")
+         .setTranslation(-minuso-minuss-minuss*0.2, -i * distance)
+         .setColor(0,0,0));
+      append(obj.total, obj.ladder_group.createChild("text")
+         .setText(i*5)
+         .setFontSize(9,1.1)
+         .setFont(HUD_FONT)
+         .setAlignment("left-center")
+         .setTranslation(minuso+minuss+minuss*0.2, -i * distance)
+         .setColor(0,0,0));
+    }
+
+    #Horizon line
+    obj.ladder_group.createChild("path")
+                     .moveTo(-0.40*sx*0.695633, 0)
+                     .horiz(0.40*sx*0.695633-20*mr)
+                     .moveTo(20*mr, 0)
+                     .horiz(0.40*sx*0.695633)
+                     .setStrokeLineWidth(1)
+                     .setColor(0,0,0);
+
+
+
+
+
+
+
+
+
+
+
 
         obj.initUpdate =1;
         
