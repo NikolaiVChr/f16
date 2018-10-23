@@ -13,6 +13,8 @@
       <object-name>CamFrame</object-name>
       <object-name>CamSphere</object-name>
       <object-name>Lens</object-name>
+      <object-name>AGM-65Back</object-name>
+      <object-name>AGM-65Mounts</object-name>
     <condition>
       <property>payload/armament/agm-65/flags/msl-id-601</property>
     </condition>
@@ -312,6 +314,8 @@
       <object-name>CamFrame</object-name>
       <object-name>CamSphere</object-name>
       <object-name>Lens</object-name>
+      <object-name>AGM-65Back</object-name>
+      <object-name>AGM-65Mounts</object-name>
   		<enable-hot type="bool">false</enable-hot>
  	</animation>
 	

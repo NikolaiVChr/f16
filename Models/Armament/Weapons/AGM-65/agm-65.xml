@@ -27,6 +27,8 @@
       <object-name>CamFrame</object-name>
       <object-name>CamSphere</object-name>
       <object-name>Lens</object-name>
+      <object-name>AGM-65Back</object-name>
+      <object-name>AGM-65Mounts</object-name>
   </effect>
 	
 </PropertyList>
