@@ -139,14 +139,15 @@ var loop_ded = func {# one line is max 24 chars
       text[4] = sprintf("Link16  %s",friend);
     } elsif (page == pLINK) {
       text[0] = sprintf(" XMT 40 INTRAFLIGHT  %s ",no);
-      text[1] = sprintf("#1 %s",getprop("link16/wingman-1"));
-      text[2] = sprintf("#2 %s",getprop("link16/wingman-2"));
-      text[3] = sprintf("#3 %s",getprop("link16/wingman-3"));
-      if (getprop("link16/wingman-4") != "") {
-        text[4] = sprintf("#4 %s",getprop("link16/wingman-4"));
-      } else {
-        text[4] = "";
-      }
+      var last = 0;
+      if (getprop("link16/wingman-4")!="") last = 4;
+      elsif (getprop("link16/wingman-3")!="") last = 3;
+      elsif (getprop("link16/wingman-2")!="") last = 2;
+      elsif (getprop("link16/wingman-1")!="") last = 1;
+      text[1] = sprintf("#1 %7s      COMM VHF",getprop("link16/wingman-1"));
+      text[2] = sprintf("#2 %7s      DATA 16K",getprop("link16/wingman-2"));
+      text[3] = sprintf("#3 %7s      OWN  #0 ",getprop("link16/wingman-3"));
+      text[4] = sprintf("#4 %7s      LAST #%d ",getprop("link16/wingman-4"),last);
     } elsif (page == pALOW) {
       var alow = getprop("f16/settings/cara-alow");
       var floor = getprop("f16/settings/msl-floor");
