@@ -193,5 +193,30 @@
   </axis>
  </animation>
 
+ <animation>
+        <type>knob</type>
+        <object-name>SW_STORES_CONFIG</object-name>
+        <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+        <factor>60</factor>
+        <offset-deg>-30</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>-0.14374</x-m><y-m>-0.414017</y-m><z-m>0.002988</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+                <factor>1</factor>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+
 
 </PropertyList>
