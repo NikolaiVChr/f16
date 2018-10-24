@@ -81,6 +81,7 @@ var F16_HUD = {
         obj.vel_ind.hide();
         obj.alt_ind = obj.get_element("path3111-1");
         obj.alt_ind.hide();
+        obj.radalt_box = obj.get_element("radalt-box");
         obj.scaling = [obj.get_element("alt_tick_0"),obj.get_element("alt_label0"),obj.heading_tape,obj.heading_tape_pointer];
         obj.total   = [obj.get_element("alt_tick_0"),obj.get_element("alt_label0"),obj.heading_tape,obj.heading_tape_pointer];
         for(var ii=1;ii<=1000;ii+=1) {
@@ -145,6 +146,7 @@ var F16_HUD = {
         append(obj.total, obj.window10);
         append(obj.total, obj.window11);
         append(obj.total, obj.ralt);
+        append(obj.total, obj.radalt_box);
 
         #obj.VV.set("z-index", 11000);# hmm, its inside layer1, so will still be below the heading readout.
         obj.layer1 = obj.get_element("layer1");#main svg layer.

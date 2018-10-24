@@ -2,7 +2,7 @@ AC3Db
 MATERIAL "ac3dmat0.005" rgb 0.000 0.000 0.000  amb 0.100 0.100 0.100  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 99 trans 0.000
 MATERIAL "ac3dmat13.012" rgb 0.325 0.251 0.075  amb 0.217 0.217 0.217  emis 0.000 0.000 0.000  spec 0.145 0.145 0.145  shi 3 trans 0.482
 MATERIAL "ac3dmat1.010" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.502 0.502 0.502  shi 10 trans 0.737
-MATERIAL "HUDGlass" rgb 0.600 0.600 0.600  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 50 trans 0.100
+MATERIAL "HUDGlass" rgb 0.600 0.600 0.600  amb 0.000 0.000 0.000  emis 1.000 1.000 1.000  spec 0.000 0.000 0.000  shi 50 trans 0.100
 OBJECT world
 name "Blender_exporter_v2.26__hud.ac"
 kids 3

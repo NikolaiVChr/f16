@@ -30,21 +30,16 @@
   </parameters>
  </effect>
 
- <animation>
+ <!--<animation>
   <object-name>HUDImage2</object-name>
   <type>material</type>
-<!--  <condition>
-      <not>
-      	<property>sim/rendering/shaders/skydome</property>
-      </not>
-  </condition>-->
   <emission>
   	<factor-prop>f16/avionics/hud-brt</factor-prop>
    <red-prop>f16/avionics/hud-power</red-prop>
    <green-prop>f16/avionics/hud-power</green-prop>
    <blue-prop>f16/avionics/hud-power</blue-prop>
   </emission>
- </animation>
+ </animation>-->
   
   <!--<animation>
   <object-name>HUDImage2</object-name>
