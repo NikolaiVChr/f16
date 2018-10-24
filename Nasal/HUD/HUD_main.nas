@@ -341,7 +341,7 @@ var F16_HUD = {
                                         obj.fpi_pos_rel_x    = math.sin(obj.fpi_angle-obj.rot)*obj.fpi_polar;
 
                                         obj.rot_deg = geo.normdeg(-hdp.roll);
-                                        obj.default_lateral_pitchnumbers = obj.sx*0.25;
+                                        obj.default_lateral_pitchnumbers = obj.sx*0.40;
                                         var centerOffset = -obj.texels_up_into_hud+0.5*obj.sy;
                                         var frac = 1;
                                         if (obj.rot_deg >= 0 and obj.rot_deg < 90) {
