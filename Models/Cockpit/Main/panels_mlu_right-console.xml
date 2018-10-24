@@ -114,6 +114,182 @@
             <blue>0.18</blue>
         </emission>
     </animation>
+
+    <animation>
+        <type>knob</type>
+        <object-name>tas-switch</object-name>
+        <property>f16/avionics/hud-velocity</property>
+        <factor>45</factor>
+        <offset-deg>0</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.161223</x-m><y-m>0.378022</y-m><z-m>0.027236</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>-1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hud-velocity</property>
+                <factor>1</factor>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+
+    <animation>
+        <type>knob</type>
+        <object-name>altrad-switch</object-name>
+        <property>f16/avionics/hud-cara</property>
+        <factor>45</factor>
+        <offset-deg>-45.0</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.161009</x-m><y-m>0.408407</y-m><z-m>0.027236</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>-1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hud-cara</property>
+                <factor>1</factor>
+                <min>0</min>
+                <max>2</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+
+    <animation>
+        <type>knob</type>
+        <object-name>deddata-switch</object-name>
+        <property>f16/avionics/hud-ded</property>
+        <factor>90</factor>
+        <offset-deg>-45.0</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.125163</x-m><y-m>0.439937</y-m><z-m>0.030422</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>-1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hud-ded</property>
+                <factor>1</factor>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+
+    <animation>
+        <type>knob</type>
+        <object-name>w_vah-switch</object-name>
+        <property>f16/avionics/hud-scales</property>
+        <factor>45</factor>
+        <offset-deg>-45.0</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.126675</x-m><y-m>0.377806</y-m><z-m>0.030568</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>-1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hud-scales</property>
+                <factor>1</factor>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+
+    <animation>
+        <type>knob</type>
+        <object-name>att_fpm-switch</object-name>
+        <property>f16/avionics/hud-fpm</property>
+        <factor>45</factor>
+        <offset-deg>-45.0</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.127244</x-m><y-m>0.408555</y-m><z-m>0.030568</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>-1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hud-fpm</property>
+                <factor>1</factor>
+                <min>0</min>
+                <max>2</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+
+    <animation>
+        <type>knob</type>
+        <object-name>autobrt-switch</object-name>
+        <property>f16/avionics/hud-brt</property>
+        <factor>45</factor>
+        <offset-deg>-45.0</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.160991</x-m><y-m>0.43924</y-m><z-m>0.027236</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>-1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hud-brt</property>
+                <factor>1</factor>
+                <min>0</min>
+                <max>2</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+
+    <animation>
+        <type>knob</type>
+        <object-name>test-step-switch</object-name>
+        <property>f16/avionics/hud-test</property>
+        <factor>45</factor>
+        <offset-deg>-45.0</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.161119</x-m><y-m>0.468743</y-m><z-m>0.027236</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>-1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hud-test</property>
+                <factor>1</factor>
+                <min>0</min>
+                <max>2</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+
     <effect>
         <name>models-effects-f16panel-left</name>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
@@ -153,13 +329,6 @@
         <object-name>console-primary-knob-axis</object-name>
         <object-name>inst-pnl-flood-knob</object-name>
         <!-- these needs to be animated
-        <object-name>tas-switch</object-name>
-        <object-name>altrad-switch</object-name>
-        <object-name>autobrt-switch</object-name>
-        <object-name>test-step-switch</object-name>
-        <object-name>w_vah-switch</object-name>
-        <object-name>att_fpm-switch</object-name>
-        <object-name>deddata-switch</object-name>
         <object-name>nuke-consent-switch</object-name>
         <object-name>nuke-consent-cover</object-name>-->
     </effect>

@@ -26,4 +26,15 @@
             <use>controls/lighting/lighting-panel/console-primary</use>
         </implicit-lightmap-intensity>
     </parameters>
+    <lightmap-enabled type="int">1</lightmap-enabled>
+    <lightmap-multi type="int">0</lightmap-multi>
+    <lightmap-factor type="float" n="0"><use>controls/lighting/lighting-panel/flood-inst-pnl</use></lightmap-factor>
+    <lightmap-color type="vec3d" n="0"> 0.45 0.34 0.18 </lightmap-color>
+    <texture n="3">
+      <image>Aircraft/f16/Models/Effects/white.png</image>
+      <filter>linear</filter>
+      <wrap-s>clamp</wrap-s>
+      <wrap-t>clamp</wrap-t>
+      <internal-format>normalized</internal-format>
+  </texture>
 </PropertyList>

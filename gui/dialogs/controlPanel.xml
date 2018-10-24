@@ -391,6 +391,45 @@
 				
 				</group>
 
+				<group>
+					<layout>vbox</layout>
+					
+					<text>
+						<label>DED</label>
+					</text>
+					
+					<group>
+						<layout>hbox</layout>
+				
+						<group>
+							<layout>vbox</layout>
+							<halign>left</halign>
+							
+							<text>
+								<label>FULL</label>
+							</text>
+							<text>
+								<label>OFF</label>
+							</text>
+							
+						</group>
+						
+						<slider>
+							<halign>left</halign>
+							<property>controls/lighting/lighting-panel/data-entry-display</property>
+							<min>0</min>
+							<max>1</max>
+							<step>0.1</step>
+							<live>true</live>
+							<vertical>true</vertical>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+						</slider>
+						
+					</group>
+				
+				</group>
 
 			</group>
 
@@ -545,27 +584,38 @@
 
 			<hrule/>
 
+			
 			<group>
-			    <layout>hbox</layout>
-			    <checkbox>
-				    <property>f16/avionics/hud-ded</property>
-				    <live>true</live>
-				    <binding>
-						<command>property-toggle</command>
-						<property>f16/avionics/hud-ded</property>
-			      	</binding>
-			    </checkbox>
-			    <text><label>HUD DED DATA</label></text>
-			</group>
+				<layout>vbox</layout>
+				
+				<text>
+					<label>HUD</label>
+				</text>
 
-			<hrule/>
-			<group>
-			    <layout>hbox</layout>
+				<group>
+				    <layout>hbox</layout>
+				    <empty>
+				      <stretch>1</stretch>
+				    </empty>
+				    <checkbox>
+					    <property>f16/avionics/hud-ded</property>
+					    <live>true</live>
+					    <binding>
+							<command>property-toggle</command>
+							<property>f16/avionics/hud-ded</property>
+				      	</binding>
+				    </checkbox>
+				    <text><label>DED DATA</label></text>
+				</group>
+
+				<group>
+			    	<layout>hbox</layout>
+
 					<group>
 						<layout>vbox</layout>
 						
 						<text>
-							<label>HUD VELOCITY</label>
+							<label>VELOCITY</label>
 						</text>
 						
 						<group>
@@ -608,7 +658,7 @@
 						<layout>vbox</layout>
 						
 						<text>
-							<label>HUD SCALES</label>
+							<label>SCALES</label>
 						</text>
 						
 						<group>
@@ -647,7 +697,7 @@
 						<layout>vbox</layout>
 						
 						<text>
-							<label>HUD FPM</label>
+							<label>FPM</label>
 						</text>
 						
 						<group>
@@ -686,6 +736,8 @@
 					</group>
 
 				</group>
+
+			</group>
 			
 		</group>
 
