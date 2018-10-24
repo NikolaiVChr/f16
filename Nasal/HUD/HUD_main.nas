@@ -116,6 +116,7 @@ var F16_HUD = {
         obj.window8 = obj.get_text("window8", HUD_FONT,9,1.1);
         obj.window9 = obj.get_text("window9", HUD_FONT,9,1.1);
         obj.window10 = obj.get_text("window10", HUD_FONT,9,1.1);
+        obj.window11 = obj.get_text("window11", HUD_FONT,9,1.1);
 
         obj.ralt = obj.get_text("radalt", HUD_FONT,9,1.1);
 
@@ -142,6 +143,7 @@ var F16_HUD = {
         append(obj.total, obj.window8);
         append(obj.total, obj.window9);
         append(obj.total, obj.window10);
+        append(obj.total, obj.window11);
         append(obj.total, obj.ralt);
 
         #obj.VV.set("z-index", 11000);# hmm, its inside layer1, so will still be below the heading readout.
@@ -488,7 +490,7 @@ var F16_HUD = {
                                                  obj.stby.update();
                                              }
                                             ),
-            props.UpdateManager.FromHashList(["brake_parking", "gear_down", "flap_pos_deg", "CCRP_active", "master_arm"], 0.1, func(hdp)
+            props.UpdateManager.FromHashList(["brake_parking", "gear_down", "flap_pos_deg", "CCRP_active", "master_arm","submode"], 0.1, func(hdp)
                                              {
                                                  if (hdp.brake_parking) {
                                                      obj.window2.setVisible(1);
@@ -500,11 +502,13 @@ var F16_HUD = {
                                                        obj.gd = " G";
                                                      obj.window2.setText(sprintf(" F %d%s",hdp.flap_pos_deg,obj.gd));
                                                  } elsif (hdp.master_arm) {
+                                                     var submode = "";
                                                      if (hdp.CCRP_active) {
-                                                         obj.window2.setText(" ARM CCRP");
-                                                     } else {
-                                                         obj.window2.setText(" ARM");
+                                                        submode = "CCRP";
+                                                     } elsif (hdp.submode == 1) {
+                                                        submode = "BORE";
                                                      }
+                                                     obj.window2.setText(" ARM "~submode);
                                                      obj.window2.setVisible(1);
                                                  } else {
                                                      obj.window2.setText(" NAV");
@@ -579,6 +583,16 @@ var F16_HUD = {
                                           }
                                           else
                                             obj.window10.hide();
+
+                                      }),
+            props.UpdateManager.FromHashValue("window11_txt", nil, func(txt)
+                                      {
+                                          if (txt != nil and txt != ""){
+                                              obj.window11.show();
+                                              obj.window11.setText(txt);
+                                          }
+                                          else
+                                            obj.window11.hide();
 
                                       }),
 
@@ -1351,6 +1365,7 @@ append(obj.total, obj.speed_curr);
             hdp.window8_txt = "8";
             hdp.window9_txt = "9";
             hdp.window10_txt = "10";
+            hdp.window11_txt = "11";
         }
 
         if (hdp.FrameCount == 2 or me.initUpdate == 1) {
@@ -1383,6 +1398,7 @@ append(obj.total, obj.speed_curr);
         # 0.078135*2 = width of HUD  = 0.15627m
         me.pixelPerMeterX = (340*0.695633)/0.15627;
         me.pixelPerMeterY = 260/(me.Hz_t-me.Hz_b);
+        me.submode = 0;
 
         if (hdp.wow0) {
             me.vectorMag = math.sqrt(hdp.speed_east_fps*hdp.speed_east_fps+hdp.speed_north_fps*hdp.speed_north_fps);
@@ -1439,6 +1455,7 @@ append(obj.total, obj.speed_curr);
             hdp.window8_txt = "";
             hdp.window9_txt = "";
             hdp.window10_txt = "";
+            hdp.window11_txt = "";
 
             me.circle262.hide();
             me.circle100.hide();
@@ -1585,26 +1602,27 @@ append(obj.total, obj.speed_curr);
             }
 
             if (hdp.total_fuel_lbs < hdp.bingo and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
-              hdp.window10_txt = "FUEL";
+              hdp.window11_txt = "FUEL";
             } elsif (hdp.total_fuel_lbs < hdp.bingo) {
-              hdp.window10_txt = "";
-            } else {
-              if (hdp.alow<hdp.altitude_agl_ft or math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0 or !hdp.cara or hdp.gear_down) {
-                hdp.window10_txt = sprintf("AL%4d",hdp.alow);
-              } else {
-                hdp.window10_txt = "";
-              }
+              hdp.window11_txt = "";
             }
 
-            if (hdp.window9_txt=="") {
-                me.alphaHUD = hdp.alpha;
-                if (hdp.gear_down) {
-                    if (hdp.wow) {
-                        me.alphaHUD = 0;
-                    }
-                }
-                hdp.window9_txt = sprintf("AOA %d",me.alphaHUD);
+            if (hdp.alow<hdp.altitude_agl_ft or math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0 or !hdp.cara or hdp.gear_down) {
+                hdp.window10_txt = sprintf("AL%4d",hdp.alow);
+            } else {
+                hdp.window10_txt = "";
             }
+            
+
+            #if (hdp.window9_txt=="") {
+            #    me.alphaHUD = hdp.alpha;
+            #    if (hdp.gear_down) {
+            #        if (hdp.wow) {
+            #            me.alphaHUD = 0;
+            #        }
+            #    }
+            #    hdp.window9_txt = sprintf("AOA %d",me.alphaHUD);
+            #}
 
             hdp.window7_txt = sprintf(" %.2f",hdp.mach);
         }
@@ -1640,6 +1658,7 @@ append(obj.total, obj.speed_curr);
                 if (pylons.bore) {
                     var aim = pylons.fcs.getSelectedWeapon();
                     if (aim != nil) {
+                        me.submode = 1;
                         var coords = aim.getSeekerInfo();
                         me.irSearch.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
                     }
@@ -1820,11 +1839,13 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
 
 
         me.initUpdate = 0;
+
+        hdp.submode = me.submode;
         
         foreach(var update_item; me.update_items)
         {
             update_item.update(hdp);
-        } 
+        }        
     },
     extrapolate: func (x, x1, x2, y1, y2) {
         return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);

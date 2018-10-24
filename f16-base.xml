@@ -509,10 +509,11 @@ Text left side:
   Mach number
   G-Force number.
   Selected weapon or AoA if gears down.
+  FUEL if bingo fuel.
 
 Text Right side:
   R XXXXX is the CARA radar altimeter altitude above ground.
-  FUEL if bingo fuel. CARA ALOW elsewise.
+  CARA ALOW.
   B XX.X is  slant range to steerpoint. Callsign if masterarm.
   ETA to next steerpoint. TA XX if masterarm on, XX stand for 1000s ft of target altitude.
   023>2 means 23 NM to next steerpoint number 2. F034.2 if masterarm on, means 34.2 NM in slant range to target.
