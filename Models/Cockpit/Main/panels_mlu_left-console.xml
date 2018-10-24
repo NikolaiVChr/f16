@@ -48,7 +48,7 @@
         <object-name>ELEC</object-name>
         <object-name>EPU_0</object-name>
         <object-name>EPU_1</object-name>
-        <object-name>EXT_LIGHTING</object-name>
+        <object-name>EXT_LIGHTING_1</object-name>
         <object-name>FLIGHT_CONTROL</object-name>
         <object-name>FUEL</object-name>
         <object-name>GROWTH.001</object-name>
@@ -62,6 +62,18 @@
         <object-name>MANUAL_TRIM</object-name>
         <object-name>TEST</object-name>
         <object-name>UHF</object-name>
+    </effect>
+
+    <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <parameters>
+            <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+        </parameters>
+        <object-name>SW_MASTER</object-name>
+        <object-name>SW_FUSELAGE</object-name>
+        <object-name>SW_ANTI_COLLISION</object-name>
+        <object-name>SW_POS_LIGHTS</object-name>
+        <object-name>SW_WING-TAIL</object-name>
     </effect>
 
  <animation>
