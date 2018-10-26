@@ -25,6 +25,12 @@ var fovZoom = func(d) {
 	} else {
 		incStep = 2.5;
 	}
+
+	# FLIR TGP stuff:
+	#setprop("sim/view[102]/enabled", 1);
+	setprop("aircraft/flir/target/view-enabled", viewName == "TGP");
+	#setprop("sim/rendering/als-filters/use-filtering", viewName == "TGP");
+	#setprop("sim/rendering/als-filters/use-IR-vision", viewName == "TGP");
 	
 	if (d == -1) {
 		if (canChangeZOffset) {

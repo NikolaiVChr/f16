@@ -254,11 +254,26 @@
             </config>
         </view>        
         <view n="101">
-          <name>Missile View</name>
+            <name>Missile View</name>
             <type>lookat</type>
             <heading-offset-deg>180</heading-offset-deg>
             <pitch-offset-deg>10</pitch-offset-deg>
-          </view>
+        </view>
+        <view n="102">
+            <name>TGP</name>
+            <enabled>false</enabled>
+            <internal archive="y">true</internal>
+            <config>
+              <from-model type="bool">true</from-model>
+              <from-model-idx type="int">0</from-model-idx>
+              <x-offset-m archive="y">0.8536</x-offset-m><!-- Right -->
+              <y-offset-m archive="y">-1.4121</y-offset-m><!-- Up -->
+              <z-offset-m archive="y">-2.5856</z-offset-m><!-- Back -->
+              <pitch-offset-deg> 0 </pitch-offset-deg>
+              <heading-offset-deg>0</heading-offset-deg>
+              <default-field-of-view-deg>20</default-field-of-view-deg>
+            </config>
+        </view>
 
         <rendering>
             <redout>
@@ -1071,7 +1086,16 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 f16.chute();
                </script>
               </binding>
-             </key>
+             </key>Ground_Targeting
+             <!--<key n="261">
+              <name>F5</name>
+              <desc>noop</desc>
+              <repeatable type="bool">false</repeatable>
+              <binding>
+                    <command>dialog-show</command>
+                    <dialog-name>Ground_Targeting</dialog-name>
+                </binding>
+             </key>-->
         </keyboard>
     </input>
     <controls>
@@ -2014,6 +2038,7 @@ value. 18000=standard US transition altitude -->
             <hud-fpm type="int">2</hud-fpm>
             <cara type="bool">false</cara>
             <hud-ded type="bool">false</hud-ded>
+            <lock-flir type="double">0.05</lock-flir>
         </avionics>
         <fcs>
             <autopilot-on type="int">0</autopilot-on> <!-- Ignored on Block 20+ -->
@@ -2035,6 +2060,9 @@ value. 18000=standard US transition altitude -->
             <done type="bool">false</done>
             <enable type="bool">false</enable>
         </chute>
+        <stores>
+            <tgp-mounted type="bool">false</tgp-mounted>
+        </stores>
     </f16>
     <damage>
         <sound>
@@ -2044,6 +2072,23 @@ value. 18000=standard US transition altitude -->
             <serviceable type="bool">true</serviceable>
         </fire>
     </damage>
+
+    <aircraft> 
+        <flir> 
+            <input> 
+                <yaw-deg type="double">0.0</yaw-deg> 
+                <pitch-deg type="double">0.0</pitch-deg> 
+            </input> 
+            <target> 
+                <yaw-deg type="double">0.0</yaw-deg> 
+                <pitch-deg type="double">0.0</pitch-deg> 
+                <auto-track type="bool">false</auto-track> 
+            </target> 
+            <locks> 
+                <auto-track type="bool">true</auto-track> 
+            </locks> 
+        </flir> 
+    </aircraft>
 
     <nasal>
         <hack>
@@ -2131,5 +2176,11 @@ value. 18000=standard US transition altitude -->
         <ded>
           <file>Aircraft/f16/Nasal/ded.nas</file>
         </ded>
+        <tgp>
+          <file>Aircraft/f16/Nasal/tgp.nas</file>
+        </tgp>
+        <!--<tgpTarget>
+          <file>Aircraft/f16/Nasal/tgp-target.nas</file>
+        </tgpTarget>-->
     </nasal>
 </PropertyList>
