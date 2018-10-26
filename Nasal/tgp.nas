@@ -193,7 +193,8 @@ setlistener("/sim/signals/fdm-initialized", func {
 });
 
 setlistener("controls/MFD[2]/button-pressed", func (node) {
-    if (getprop("controls/MFD[2]/button-pressed") == 1) {
+    var button = getprop("controls/MFD[2]/button-pressed");
+    if (button == 1) {
         var x = -2.5856;
         var y =  0.8536;
         var z = -1.4121;
@@ -206,7 +207,6 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
             var vHead = getprop("sim/current-view/heading-offset-deg");
             var vPitch = getprop("sim/current-view/pitch-offset-deg");
 
-            #(yaw, pitch) = math_ext.get_yaw_pitch_body(getprop("orientation/roll-deg"), getprop("orientation/pitch-deg"), vHead, vPitch, getprop("orientation/heading-deg"));
             var vectorF = vector.Math.eulerToCartesian3X(-getprop("orientation/heading-deg"),getprop("orientation/pitch-deg"),getprop("orientation/roll-deg"));
             var vectorL = vector.Math.eulerToCartesian3Y(-getprop("orientation/heading-deg"),getprop("orientation/pitch-deg"),getprop("orientation/roll-deg"));
             var vectorU = vector.Math.eulerToCartesian3Z(-getprop("orientation/heading-deg"),getprop("orientation/pitch-deg"),getprop("orientation/roll-deg"));
@@ -259,7 +259,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
             flir_updater.offsetP = 0;
             flir_updater.offsetH = 0;
         }
-    } elsif (getprop("controls/MFD[2]/button-pressed") == 2) {
+    } elsif (button == 2) {
         flir_updater.click_coord_cam = nil;
         setprop("/aircraft/flir/target/auto-track", 0);
         flir_updater.offsetP = 0;
@@ -269,46 +269,46 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
         if (pylons.fcs != nil) {
             pylons.fcs.setPoint(flir_updater.click_coord_cam);
         }
-    } elsif (getprop("controls/MFD[2]/button-pressed") == 20) {
+    } elsif (button == 20) {
         setprop("sim/current-view/view-number",0);
         #setprop("/aircraft/flir/target/auto-track", 0);
         #lock.hide();
         #setprop("f16/avionics/lock-flir",0.05);
-    } elsif (getprop("controls/MFD[2]/button-pressed") == 6) {
+    } elsif (button == 6) {
         ir = !ir;
-    } elsif (getprop("controls/MFD[2]/button-pressed") == 7) {
+    } elsif (button == 7) {
         if (pylons.fcs != nil) {
             pylons.fcs.setPoint(flir_updater.click_coord_cam);
         }
-    } elsif (getprop("controls/MFD[2]/button-pressed") == 11) {
+    } elsif (button == 11) {
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetP += fov/100;
         } else {
             setprop("sim/current-view/pitch-offset-deg",getprop("sim/current-view/pitch-offset-deg")+fov/20);
         }
-    } elsif (getprop("controls/MFD[2]/button-pressed") == 12) {
+    } elsif (button == 12) {
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetP -= fov/100;
         } else {
             setprop("sim/current-view/pitch-offset-deg",getprop("sim/current-view/pitch-offset-deg")-fov/20);
         }
-    } elsif (getprop("controls/MFD[2]/button-pressed") == 14) {
+    } elsif (button == 14) {
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetH -= fov/100;
         } else {
             setprop("sim/current-view/heading-offset-deg",getprop("sim/current-view/heading-offset-deg")-fov/20);
         }
-    } elsif (getprop("controls/MFD[2]/button-pressed") == 15) {
+    } elsif (button == 15) {
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetH += fov/100;
         } else {
             setprop("sim/current-view/heading-offset-deg",getprop("sim/current-view/heading-offset-deg")+fov/20);
         }
-    } elsif (getprop("controls/MFD[2]/button-pressed") == 3) {
+    } elsif (button == 3) {
         if (!getprop("/aircraft/flir/target/auto-track") and awg_9.active_u != nil) {
             flir_updater.offsetP = 0;
             flir_updater.offsetH = 0;
