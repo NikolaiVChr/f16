@@ -132,6 +132,7 @@ var AIR = 0;
 var MARINE = 1;
 var SURFACE = 2;
 var ORDNANCE = 3;
+var POINT = 4;
 
 # set these to print stuff to console:
 var DEBUG_STATS            = 0;#most basic stuff
@@ -139,8 +140,8 @@ var DEBUG_FLIGHT           = 0;#for creating missiles sometimes good to have thi
 
 # set these to debug the code:
 var DEBUG_STATS_DETAILS    = FALSE;
-var DEBUG_GUIDANCE         = FALSE;
-var DEBUG_GUIDANCE_DETAILS = FALSE;
+var DEBUG_GUIDANCE         = 0;
+var DEBUG_GUIDANCE_DETAILS = 0;
 var DEBUG_FLIGHT_DETAILS   = 0;
 var DEBUG_SEARCH           = 0;
 var DEBUG_CODE             = FALSE;
@@ -269,7 +270,7 @@ var AIM = {
 		m.max_fire_range_nm     = getprop(m.nodeString~"max-fire-range-nm");          # max range that the FCS allows firing
 		m.min_fire_range_nm     = getprop(m.nodeString~"min-fire-range-nm");          # it wont get solid lock before the target has this range
 		m.fcs_fov               = getprop(m.nodeString~"FCS-field-deg") / 2;          # fire control system total field of view diameter for when searching and getting lock before launch.
-		m.class                 = getprop(m.nodeString~"class");                      # put in letters here that represent the types the missile can fire at. A=air, M=marine, G=ground
+		m.class                 = getprop(m.nodeString~"class");                      # put in letters here that represent the types the missile can fire at. A=air, M=marine, G=ground, P=point
         m.brevity               = getprop(m.nodeString~"fire-msg");                   # what the pilot will call out over the comm when he fires this weapon
         m.coolable              = getprop(m.nodeString~"coolable");                   # If the seeker supports being cooled. (AIM-9L or later supports)
         m.cool_time             = getprop(m.nodeString~"cool-time");                  # Time to cold the seeker from fully warm.
@@ -529,6 +530,7 @@ var AIM = {
 		m.target_air = find("A", m.class)==-1?FALSE:TRUE;
 		m.target_sea = find("M", m.class)==-1?FALSE:TRUE;#use M for marine, since S can be confused with surface.
 		m.target_gnd = find("G", m.class)==-1?FALSE:TRUE;
+		m.target_pnt = find("P", m.class)==-1?FALSE:TRUE;
 
 		# Find the next index for "models/model" and create property node.
 		# Find the next index for "ai/models/aim-9" and create property node.
@@ -1247,6 +1249,10 @@ var AIM = {
 		}
 		if (me.target_sea) {
 			classes = classes~classesSep~"Ship";
+			classesSep = ", ";
+		}
+		if (me.target_pnt) {
+			classes = classes~classesSep~"TGP point";
 		}
 		var cooling = me.coolable?"YES":"NO";
 		var rea = me.reaquire?"YES":"NO";
@@ -3518,6 +3524,7 @@ var AIM = {
 		if(me.slaveContact != nil and me.slaveContact.isValid() == TRUE and
 					(  (me.slaveContact.get_type() == SURFACE and me.target_gnd == TRUE)
 	                or (me.slaveContact.get_type() == AIR and me.target_air == TRUE)
+	                or (me.slaveContact.get_type() == POINT and me.target_pnt == TRUE)
 	                or (me.slaveContact.get_type() == MARINE and me.target_sea == TRUE))) {
 			return TRUE;
 		}
@@ -3529,6 +3536,7 @@ var AIM = {
 		if(tact != nil and tact.isValid() == TRUE and
 					(  (tact.get_type() == SURFACE and me.target_gnd == TRUE)
 	                or (tact.get_type() == AIR and me.target_air == TRUE)
+	                or (tact.get_type() == POINT and me.target_pnt == TRUE)
 	                or (tact.get_type() == MARINE and me.target_sea == TRUE))) {
 			return TRUE;
 		}

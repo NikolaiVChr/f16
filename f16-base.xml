@@ -1743,7 +1743,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <vol-search type="double">0.00</vol-search>
                 <vol-track type="double">1.00</vol-track>
                 <guidance type="string">vision</guidance>
-                <navigation type="string">direct</navigation>                           
+                <navigation type="string">APN</navigation>                           
                 <all-aspect type="bool">true</all-aspect>
                 <max-fire-range-nm type="double">12</max-fire-range-nm>              <!-- source -->
                 <FCS-field-deg type="int">25</FCS-field-deg>            
@@ -1766,8 +1766,9 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <min-fire-range-nm type="double">0.2</min-fire-range-nm>
                 <rail type="bool">false</rail>
                 <max-report-distance type="double">65</max-report-distance>
-                <class type="string">GM</class>
+                <class type="string">P</class>
                 <fire-msg type="string">Rifle</fire-msg>
+                <hit-everything-nearby type="bool">true</hit-everything-nearby>
             </agm-65>
             <agm-84>                    <!-- A variant: 0.85 mach cruise, E is calibrated to just under 1.00 -->
                 <short-name type="string">AG84</short-name>
