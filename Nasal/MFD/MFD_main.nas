@@ -1522,6 +1522,7 @@ var MFD_Device =
                                 #printf("%s: Button %d",me.designation, me.mfd_button_pushed);
                                 me.PFD.notifyButton(me.mfd_button_pushed);
                                 me.mfd_button_pushed = 0;
+                                
                             }
                         }
                     }
@@ -1613,16 +1614,19 @@ var MFD_Device =
         me.p_RDR.addMenuItem(15, "VSD", me.p_VSD);
         me.p_RDR.addMenuItem(18, "SIT", me.pjitds_1);
         me.p_RDR.addMenuItem(16, "HSD", me.p_HSD);
+        me.p_RDR.addMenuItem(19, "TGP", nil);
 
         me.p_HSD.addMenuItem(17, "SMS", me.p_SMS);
         me.p_HSD.addMenuItem(15, "VSD", me.p_VSD);
         me.p_HSD.addMenuItem(18, "SIT", me.pjitds_1);
         me.p_HSD.addMenuItem(10, "CRM", me.p_RDR);
+        me.p_HSD.addMenuItem(19, "TGP", nil);
 
         me.p_SMS.addMenuItem(18, "SIT", me.pjitds_1);
         me.p_SMS.addMenuItem(10, "CRM", me.p_RDR);
         me.p_SMS.addMenuItem(15, "VSD", me.p_VSD);
         me.p_SMS.addMenuItem(16, "HSD", me.p_HSD);
+        me.p_SMS.addMenuItem(19, "TGP", nil);
 #        me.p_SMS.addMenuItem(16, "TIM", me.p1_1);
 
 #        me.p1_2.addMenuItem(0, "VSD", me.p_VSD);
@@ -1653,6 +1657,7 @@ var MFD_Device =
         me.pjitds_1.addMenuItem(10, "CRM", me.p_RDR);
         me.pjitds_1.addMenuItem(16, "HSD", me.p_HSD);
         me.pjitds_1.addMenuItem(17, "SMS", me.p_SMS);
+        me.pjitds_1.addMenuItem(19, "TGP", nil);
 
         #me.p_VSD.addMenuItem(0, "ARMT", me.p1_2);
         me.p_VSD.addMenuItem(18, "SIT", me.pjitds_1);
@@ -1661,6 +1666,7 @@ var MFD_Device =
         me.p_VSD.addMenuItem(10, "CRM", me.p_RDR);
         me.p_VSD.addMenuItem(17, "SMS", me.p_SMS);
         me.p_VSD.addMenuItem(16, "HSD", me.p_HSD);
+        me.p_VSD.addMenuItem(19, "TGP", nil);
     },
 
     update : func(notification)

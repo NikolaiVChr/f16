@@ -267,6 +267,11 @@ var PFD_Device =
             if (me.current_page != nil)
             {
                 me.current_page.notifyButton(button_id);
+                if(button_id==19 and getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
+                    screen.log.write("Drag with right mouse button to slew. X/x to zoom.",1,1,1);
+                    setprop("sim/current-view/view-number",9);
+                }
+
             }
             else
                 printf("PFD_Device: Could not locate page for button ",button_id);
@@ -308,6 +313,7 @@ var PFD_Device =
     # - the page object method controls the visibility
     selectPage : func(p)
     {
+        if (p==nil) {return;}
         if (me.current_page == p) return;
 
         if (me.current_page != nil)
