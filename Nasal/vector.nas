@@ -70,6 +70,63 @@ var Math = {
                 a[6]*b[0]+a[7]*b[3]+a[8]*b[6], a[6]*b[1]+a[7]*b[4]+a[8]*b[7], a[6]*b[2]+a[7]*b[5]+a[8]*b[8]];
     },
 
+    # multiply 2 matrices 3 x 4
+    multiplyMatrices4: func (a,b) {
+        #return [a[0]*b[0]+a[1]*b[3]+a[2]*b[6]+a[3]*b[9],    a[0]*b[1]+a[1]*b[4]+a[2]*b[7]+a[3]*b[10],    a[0]*b[2]+a[1]*b[5]+a[2]*b[8],    a[0]*b[3]+a[1]*b[6]+a[2]*b[9],
+        #        a[3]*b[0]+a[4]*b[3]+a[5]*b[6]+a[6]*b[9],    a[3]*b[1]+a[4]*b[4]+a[5]*b[7]+a[6]*b[10],    a[3]*b[2]+a[4]*b[5]+a[5]*b[8],    a[3]*b[3]+a[4]*b[6]+a[5]*b[9],
+        #        a[6]*b[0]+a[7]*b[3]+a[8]*b[6]+a[9]*b[9],    a[6]*b[1]+a[7]*b[4]+a[8]*b[7]+a[9]*b[10],    a[6]*b[2]+a[7]*b[5]+a[8]*b[8],    a[6]*b[3]+a[7]*b[6]+a[8]*b[9],
+        #        a[9]*b[0]+a[10]*b[3]+a[11]*b[6]+a[12]*b[9], a[9]*b[1]+a[10]*b[4]+a[11]*b[7]+a[12]*b[10],  a[9]*b[2]+a[10]*b[5]+a[11]*b[8],  a[9]*b[3]+a[10]*b[6]+a[11]*b[9]];
+        var result = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        for(var k=0; k<=12; k+=4) {
+            for(var i=0; i<4; i+=1) {
+                var count = 0;
+                for (var j=0; j<4; j+=1) {
+                    result[k+i] += a[k+math.fmod(j,4)] * b[count+math.fmod(i,4)];
+                    count+=4;
+                }
+            }
+        }
+        return result;
+    },
+
+    to4x4: func (a) {
+        return [a[0],a[1],a[2],0,
+                a[3],a[4],a[5],0,
+                a[6],a[7],a[8],0,
+                0,0,0,1];
+    },
+
+    xFromView: func (matrix) {
+        # WIP
+        return [matrix[0],matrix[4],matrix[8]];
+    },
+
+    viewMatrix: func (forw, left, up) {
+        # WIP
+        return [forw[0],left[0],up[0],0,
+                forw[1],left[1],up[1],0,
+                forw[2],left[2],up[2],0,
+                0,0,0,1];
+
+        return [left[0],up[0],forw[0],0,
+                left[1],up[1],forw[1],0,
+                left[2],up[2],forw[2],0,
+                0,0,0,1];
+
+        return [forw[0],forw[1],forw[2],0,
+                left[0],left[1],left[2],0,
+                up[0],up[1],up[2],0,
+                0,0,0,1];
+    },
+
+    mirrorMatrix: func {
+        # mirror y axis in transform matrix
+        return [1,0,0,0,
+                0,-1,0,0,
+                0,0,1,0,
+                0,0,0,1];
+    },
+
     # matrix for rolling
     rollMatrix: func (roll) {
         roll = roll * D2R;
