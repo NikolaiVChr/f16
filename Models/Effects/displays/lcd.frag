@@ -13,6 +13,7 @@ uniform float outerAngle;//from inner to outer the display gets more color disto
 uniform float blackAngle;//from outer to this angle the display gets more black. From this angle to 90 the display stays black.
 uniform float contrast;//0.0001 - 255.0, 1.0 is normal
 uniform int use_als;
+uniform int use_filters;
 
 const vec4  kRGBToYPrime = vec4 (0.299, 0.587, 0.114, 0.0);
 const vec4  kRGBToI     = vec4 (0.596, -0.275, -0.321, 0.0);
@@ -105,11 +106,11 @@ void main (void) {
     dustTexel.rgb *= gl_LightSource[0].diffuse.rgb * nDotVP;
     dustTexel.a = clamp(dustTexel.a * dirt_factor * (1.0 - 0.4 * max(0.0,dot(normalize(VNormal), Lphong)))*(length(vec3(1,1,1))/1.76),0.0,1.0); 
     color.rgb =  mix(color.rgb, dustTexel.rgb,  dustTexel.a );
-//    color.a = max(color.a, dustTexel.a);
-
-    if (use_als > 0) {
-        gl_FragColor = vec4(filter_combined(pow(color,gamma)), dustTexel.a);
+    //color.a = max(color.a, dustTexel.a);
+    texel.a = max(texel.a, dustTexel.a);
+    if (use_als > 0 && use_filters > 0) {
+        gl_FragColor = vec4(filter_combined(pow(color,gamma)), texel.a);
     } else {
-        gl_FragColor = vec4(pow(color,gamma), dustTexel.a);
+        gl_FragColor = vec4(pow(color,gamma), texel.a);
     }
 }

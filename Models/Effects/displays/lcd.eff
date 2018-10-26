@@ -10,6 +10,7 @@ Author: Nikolai V. Chr.
 		<black-angle type="float">80</black-angle><!-- 0-90, but greater than outer -->
 		<contrast type="float">1</contrast><!-- 0.0001 - 255, 1.0 is normal -->
 		<dirt-factor>0.09</dirt-factor>
+		<use_filters>1</use_filters>
 
 
 
@@ -301,6 +302,13 @@ Author: Nikolai V. Chr.
 			   <type>float</type>
 			   <value>
 				   <use>contrast</use>
+			   </value>
+			</uniform>
+			<uniform>
+			   <name>use_filters</name>
+			   <type>bool</type>
+			   <value>
+				   <use>use_filters</use>
 			   </value>
 			</uniform>
 			<uniform>
