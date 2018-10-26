@@ -54,7 +54,7 @@ light: ecm lamp off
         <object-name>MISC_1_block-15</object-name>
     </effect>
 
-<!--    <animation>
+    <animation>
         <type>material</type>
         <object-name>block-15</object-name>
         <object-name>block-50</object-name>
@@ -74,13 +74,18 @@ light: ecm lamp off
         <object-name>active-off</object-name>
         <object-name>adv-mode-button</object-name>
         <object-name>autopilot-switch</object-name>
+        <condition>
+            <not>
+            <property>/sim/rendering/shaders/skydome</property>
+          </not>
+          </condition>
         <emission>
             <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
             <red>0.45</red>
             <green>0.34</green>
             <blue>0.18</blue>
         </emission>
-    </animation>-->
+    </animation>
 
     <animation>
         <type>knob</type>

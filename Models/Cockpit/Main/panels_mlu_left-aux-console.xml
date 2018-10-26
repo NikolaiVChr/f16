@@ -18,6 +18,27 @@
   <object-name>SPEED_BRAKE_drum</object-name>
 </effect>
 
+  <animation>
+        <type>material</type>
+        <object-name>EW_LEFT_1</object-name>
+        <object-name>HMD_1</object-name>
+        <object-name>EW_RIGHT_1</object-name>
+        <object-name>GEAR</object-name>
+        <object-name>ALT_GEAR_1</object-name>
+        <object-name>SPEED_BRAKE_drum</object-name>
+        <condition>
+            <not>
+            <property>/sim/rendering/shaders/skydome</property>
+          </not>
+          </condition>
+        <emission>
+            <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+            <red>0.45</red>
+            <green>0.34</green>
+            <blue>0.18</blue>
+        </emission>
+    </animation>
+
  <animation>
   <type>select</type>
   <object-name>nose_gear_light</object-name>

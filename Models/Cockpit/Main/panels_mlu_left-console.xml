@@ -4,7 +4,7 @@
 
  <path>panels_mlu_left-console.ac</path>
 
- <!--<animation>
+ <animation>
   <object-name>ANTI_G</object-name>
   <object-name>AUDIO-1</object-name>
   <object-name>AUDIO-2</object-name>
@@ -27,13 +27,18 @@
   <object-name>TEST</object-name>
   <object-name>UHF</object-name>
   <type>material</type>
+  <condition>
+    <not>
+    <property>/sim/rendering/shaders/skydome</property>
+  </not>
+  </condition>
   <emission>
    <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
    <red>0.45</red>
    <green>0.34</green>
    <blue>0.18</blue>
   </emission>
- </animation>-->
+ </animation>
 
  <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
