@@ -777,9 +777,9 @@
   <name>Station10_SniperATP</name>
   <path>Aircraft/f16/Models/Armament/External-stores/SniperATP.xml</path>
   <offsets>
-   <x-m>-0.02</x-m>
-   <y-m>0</y-m>
-   <z-m>-1.136</z-m>
+   <x-m>-2.5</x-m>
+   <y-m>0.85</y-m>
+   <z-m>-0.95</z-m>
    <pitch-deg>-0.5</pitch-deg>
   </offsets>
  </model>
