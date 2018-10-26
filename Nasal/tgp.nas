@@ -12,7 +12,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+#
+# Lines below FLIRCameraUpdater has been modified/added by Nikolai V. Chr.
+#
 # Position of the FLIR camera ([z (back), x (right), y (up)])
 var coords_cam = [
     getprop("/sim/view[102]/config/z-offset-m"),
