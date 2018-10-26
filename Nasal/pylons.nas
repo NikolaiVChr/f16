@@ -12,6 +12,7 @@ var pylon7 = nil;
 var pylon8 = nil;
 var pylon9 = nil;
 var pylonI = nil;
+var pylon10 = nil;
 
 var cannon = stations.SubModelWeapon.new("20mm Cannon", 0.254, 511, 2, [1,3], props.globals.getNode("fdm/jsbsim/fcs/guntrigger",1), 0, func{return getprop("fdm/jsbsim/systems/hydraulics/sysb-psi")>=2000 and getprop("payload/armament/fire-control/serviceable");});
 var fuelTankCenter = stations.FuelTank.new("Center 300 Gal Tank", "TK300", 4, 300, "sim/model/f16/ventraltank");
@@ -27,7 +28,7 @@ var smokewinderGreen9 = stations.Smoker.new("Smokewinder Green", "SmokeG", "sim/
 var smokewinderBlue9 = stations.Smoker.new("Smokewinder Blue", "SmokeB", "sim/model/f16/smokewinderB9");
 var smokewinderWhite1 = stations.Smoker.new("Smokewinder White", "SmokeW", "sim/model/f16/smokewinderW1");
 var smokewinderWhite9 = stations.Smoker.new("Smokewinder White", "SmokeW", "sim/model/f16/smokewinderW9");
-var tgp = stations.Smoker.new("AN/AAQ-14 TargetPod", "AAQ-14", "f16/stores/tgp-mounted");
+var tgp = stations.Smoker.new("AN/AAQ-33 Sniper ATP", "AAQ-33", "f16/stores/tgp-mounted");
 var dummy = stations.Dummy.new("AN-T-17", nil);
 var dummy2 = stations.Dummy.new("CATM-9L", nil);# nil for shortname makes them not show up in MFD SMS page. If shortname is nil it MUST have showLongTypeInsteadOfCount: 1
 var dummy3 = stations.Dummy.new("AN/ALQ-131 ECM Pod", "AL131");
@@ -67,7 +68,7 @@ var pylonSets = {
 	x: {name: "Smokewinder Blue", content: [smokewinderBlue9], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	w1: {name: "Smokewinder White", content: [smokewinderWhite1], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	w9: {name: "Smokewinder White", content: [smokewinderWhite9], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    tgp: {name: "AN/AAQ-14 TargetPod", content: [tgp], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    tgp: {name: "AN/AAQ-33 Sniper ATP", content: [tgp], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 446, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 };
 
 if (getprop("sim/model/f16/wingmounts") != 0) {
