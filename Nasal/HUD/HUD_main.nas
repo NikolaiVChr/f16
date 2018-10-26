@@ -208,6 +208,7 @@ var F16_HUD = {
                  cara                      : "f16/avionics/cara-on",
                  fpm                       : "f16/avionics/hud-fpm",
                  ded                       : "f16/avionics/hud-ded",
+                 tgp_mounted               : "f16/stores/tgp-mounted",
                 };
 
         foreach (var name; keys(input)) {
@@ -1081,14 +1082,26 @@ append(obj.total, obj.speed_curr);
     }
 
     #Horizon line
-    obj.ladder_group.createChild("path")
+    append(obj.total, obj.ladder_group.createChild("path")
                      .moveTo(-0.40*sx*0.695633, 0)
                      .horiz(0.40*sx*0.695633-20*mr)
                      .moveTo(20*mr, 0)
                      .horiz(0.40*sx*0.695633)
                      .setStrokeLineWidth(1)
-                     .setColor(0,0,0);
+                     .setColor(0,0,0));
 
+    obj.tgpPoint = obj.svg.createChild("path")
+                     .moveTo(-10*mr, -10*mr)
+                     .horiz(20*mr)
+                     .vert(20*mr)
+                     .horiz(-20*mr)
+                     .vert(-20*mr)
+                     .lineTo(10*mr, 10*mr)
+                     .moveTo(10*mr, -10*mr)
+                     .lineTo(-10*mr, 10*mr)
+                     .setStrokeLineWidth(1)
+                     .setColor(0,0,0);
+    append(obj.total, obj.tgpPoint);
 
 
 
@@ -1837,6 +1850,18 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
             me.ded2.hide();
             me.ded3.hide();
             me.ded4.hide();
+        }
+
+        if (hdp.tgp_mounted and tgp.flir_updater.click_coord_cam != nil) {
+            var self = geo.aircraft_position();
+            var p = vector.Math.getPitch(self, tgp.flir_updater.click_coord_cam)-hdp.pitch;
+            var b = geo.normdeg180(self.course_to(tgp.flir_updater.click_coord_cam)-hdp.heading);
+            var y = me.clamp(-p*me.texelPerDegreeY+me.sy-me.texels_up_into_hud,me.sy*0.05,me.sy*0.95);
+            var x = me.clamp(b*me.texelPerDegreeX+me.sx*0.5,me.sx*0.025,me.sx*0.975);
+            me.tgpPoint.setTranslation(x,y);
+            me.tgpPoint.show();
+        } else {
+            me.tgpPoint.hide();
         }
 
 
