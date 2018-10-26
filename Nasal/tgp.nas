@@ -41,6 +41,9 @@ var FLIRCameraUpdater = {
 
         m.listeners = std.Vector.new();
 
+        m.offsetP = 0;
+        m.offsetH = 0;
+
         return m;
     },
 
@@ -115,7 +118,7 @@ var FLIRCameraUpdater = {
 
         if (getprop("sim/current-view/view-number") ==9 and getprop("/aircraft/flir/target/auto-track") and me.click_coord_cam != nil) {
             var (yaw, pitch, distance) = computer(coords_cam, me.click_coord_cam);
-            me.update_cam(roll_deg, pitch_deg, yaw, pitch);
+            me.update_cam(roll_deg, pitch_deg, yaw+me.offsetH, pitch+me.offsetP);
         }
 #        else {
 #            me.manual_update_cam(roll_deg, pitch_deg);
@@ -172,6 +175,14 @@ var FLIRCameraUpdater = {
     }
 
 };
+
+math_ext.get_yaw_pitch_distance_inert = func (position_2d, position, target_position, heading, f=nil) {
+    # Does the same as Onox's version, except takes curvature of Earth into account.
+    var heading_deg = positioned.courseAndDistance(position_2d, target_position)[0] - heading;
+    var pitch_deg   = vector.Math.getPitch(position, target_position);
+    var distance_m  = position.direct_distance_to(target_position);
+    return [heading_deg, pitch_deg, distance_m];
+}
 
 var flir_updater = FLIRCameraUpdater.new();
 
@@ -245,10 +256,14 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
             flir_updater.click_coord_cam = terrain;
             setprop("/aircraft/flir/target/auto-track", 1);
             interpolate("f16/avionics/lock-flir",1,1.5);
+            flir_updater.offsetP = 0;
+            flir_updater.offsetH = 0;
         }
     } elsif (getprop("controls/MFD[2]/button-pressed") == 2) {
         flir_updater.click_coord_cam = nil;
         setprop("/aircraft/flir/target/auto-track", 0);
+        flir_updater.offsetP = 0;
+        flir_updater.offsetH = 0;
         lock.hide();
         setprop("f16/avionics/lock-flir",0.05);
         if (pylons.fcs != nil) {
@@ -265,8 +280,38 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
         if (pylons.fcs != nil) {
             pylons.fcs.setPoint(flir_updater.click_coord_cam);
         }
+    } elsif (getprop("controls/MFD[2]/button-pressed") == 11) {
+        var fov = getprop("sim/current-view/field-of-view");
+        if (getprop("/aircraft/flir/target/auto-track")) {
+            flir_updater.offsetP += fov/100;
+        } else {
+            setprop("sim/current-view/pitch-offset-deg",getprop("sim/current-view/pitch-offset-deg")+fov/20);
+        }
+    } elsif (getprop("controls/MFD[2]/button-pressed") == 12) {
+        var fov = getprop("sim/current-view/field-of-view");
+        if (getprop("/aircraft/flir/target/auto-track")) {
+            flir_updater.offsetP -= fov/100;
+        } else {
+            setprop("sim/current-view/pitch-offset-deg",getprop("sim/current-view/pitch-offset-deg")-fov/20);
+        }
+    } elsif (getprop("controls/MFD[2]/button-pressed") == 14) {
+        var fov = getprop("sim/current-view/field-of-view");
+        if (getprop("/aircraft/flir/target/auto-track")) {
+            flir_updater.offsetH -= fov/100;
+        } else {
+            setprop("sim/current-view/heading-offset-deg",getprop("sim/current-view/heading-offset-deg")-fov/20);
+        }
+    } elsif (getprop("controls/MFD[2]/button-pressed") == 15) {
+        var fov = getprop("sim/current-view/field-of-view");
+        if (getprop("/aircraft/flir/target/auto-track")) {
+            flir_updater.offsetH += fov/100;
+        } else {
+            setprop("sim/current-view/heading-offset-deg",getprop("sim/current-view/heading-offset-deg")+fov/20);
+        }
     } elsif (getprop("controls/MFD[2]/button-pressed") == 3) {
         if (!getprop("/aircraft/flir/target/auto-track") and awg_9.active_u != nil) {
+            flir_updater.offsetP = 0;
+            flir_updater.offsetH = 0;
             flir_updater.click_coord_cam = awg_9.active_u.get_Coord();
             flir_updater.aim();
             flir_updater.click_coord_cam = nil;
@@ -317,6 +362,11 @@ var fast_loop = func {
     #lock.hide();
     #setprop("f16/avionics/lock-flir",0.05);
   }
+  if (flir_updater.offsetP != 0 or flir_updater.offsetH != 0) {
+    cross.setColor(1,0,0);
+  } else {
+    cross.setColor(1,1,1);
+  }
   settimer(fast_loop,0);
 }
 
@@ -327,6 +377,10 @@ var line3 = nil;
 var line4 = nil;
 var line6 = nil;
 var line7 = nil;
+var line11 = nil;
+var line12 = nil;
+var line14 = nil;
+var line15 = nil;
 var line20 = nil;
 var cross = nil;
 var lock = nil;
@@ -392,6 +446,34 @@ var callInit = func {
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("XFER")
         .setTranslation(256-5, 256*0.35);
+  line11 = dedGroup.createChild("text")
+        .setFontSize(13, 1)
+        .setColor(color)
+        .setAlignment("center-top")
+        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
+        .setText("UP")
+        .setTranslation(256*0.2, 5);
+  line12 = dedGroup.createChild("text")
+        .setFontSize(13, 1)
+        .setColor(color)
+        .setAlignment("center-top")
+        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
+        .setText("DOWN")
+        .setTranslation(256*0.35, 5);
+  line14 = dedGroup.createChild("text")
+        .setFontSize(13, 1)
+        .setColor(color)
+        .setAlignment("center-top")
+        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
+        .setText("LEFT")
+        .setTranslation(256*0.65, 5);
+  line15 = dedGroup.createChild("text")
+        .setFontSize(13, 1)
+        .setColor(color)
+        .setAlignment("center-top")
+        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
+        .setText("RGHT")
+        .setTranslation(256*0.8, 5);
   line20 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
@@ -406,7 +488,7 @@ var callInit = func {
         .setAlignment("center-top")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("1.0X")
-        .setTranslation(256*0.5, 15);
+        .setTranslation(256*0.5, 20);
     midl = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(1,1,1)
