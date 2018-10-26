@@ -122,6 +122,19 @@ var FLIRCameraUpdater = {
 #        }
     },
 
+    aim: func () {
+        var roll_deg  = getprop("/orientation/roll-deg");
+        var pitch_deg = getprop("/orientation/pitch-deg");
+        var heading   = getprop("/orientation/heading-deg");
+
+        var computer = me._get_flir_computer(roll_deg, pitch_deg, heading);
+
+        if (getprop("sim/current-view/view-number") ==9 and me.click_coord_cam != nil) {
+            var (yaw, pitch, distance) = computer(coords_cam, me.click_coord_cam);
+            me.update_cam(roll_deg, pitch_deg, yaw, pitch);
+        }
+    },
+
     ######################################################################
     # Gyro stabilization                                                 #
     ######################################################################
@@ -252,6 +265,12 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
         if (pylons.fcs != nil) {
             pylons.fcs.setPoint(flir_updater.click_coord_cam);
         }
+    } elsif (getprop("controls/MFD[2]/button-pressed") == 3) {
+        if (!getprop("/aircraft/flir/target/auto-track") and awg_9.active_u != nil) {
+            flir_updater.click_coord_cam = awg_9.active_u.get_Coord();
+            flir_updater.aim();
+            flir_updater.click_coord_cam = nil;
+        }
     }
 });
 
@@ -350,7 +369,7 @@ var callInit = func {
         .setColor(color)
         .setAlignment("left-center")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
-        .setText("")
+        .setText("RDR")
         .setTranslation(5, 256*0.50);
   line4 = dedGroup.createChild("text")
         .setFontSize(13, 1)
