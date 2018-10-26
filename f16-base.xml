@@ -1355,6 +1355,12 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
         </refuel>
     </systems>
     <instrumentation>
+        <altimeter>
+            <indicated-altitude-ft type="double">0</indicated-altitude-ft>
+        </altimeter>
+        <gps>
+            <indicated-vertical-speed type="double">0</indicated-vertical-speed>
+        </gps>
         <radar>
             <enabled type="bool">true</enabled>
             <az-field type="int">120</az-field>
