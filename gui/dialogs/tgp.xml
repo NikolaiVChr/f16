@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<PropertyList>
+  
+  <!-- If you put the dialog file in the Aircraft/aircraftname/gui/dialog the dialog box is loaded -->
+  <name>Ground_Targeting</name>
+  <modal type="bool">false</modal>
+  <layout>vbox</layout>
+<!--  <width>800</width>
+  <height>345</height>-->
+  
+  <group>
+    <layout>hbox</layout>
+    <empty>
+      <stretch>1</stretch>
+    </empty>
+    <text>
+      <label>Ground Targeting</label>
+    </text>
+    
+    <empty>
+      <stretch>1</stretch>
+    </empty>
+    
+    <button>
+      <pref-width>16</pref-width>
+      <pref-height>16</pref-height>
+      <legend></legend>
+      
+      <default>1</default>
+      <keynum>27</keynum>
+      <border>2</border>
+      <binding>
+        <command>dialog-close</command>
+      </binding>
+      <binding>
+        <command>dialog-apply</command>
+      </binding>
+    </button>
+  </group>
+
+  <hrule />
+
+  <button>
+    <legend>Sniping mode</legend>
+    <enable>
+    <!--    <equals>
+          <property>sim/weight[6]/selected</property>
+          <value>PDLCT</value>
+        </equals>-->
+    </enable>
+    <binding>
+      <command>nasal</command>
+      <script>tgpTarget.sniping()</script>
+    </binding>
+  </button>
+
+  <hrule />
+
+  <text><label>Sniped properties</label></text>
+
+  <hrule />
+
+  <input>
+   <width>75</width>
+   <height>25</height>
+   <label>Lat</label>
+   <property>/sim/dialog/groundtTargeting/target-latitude-deg</property>
+  </input>
+  
+  <input>
+   <width>75</width>
+   <height>25</height>
+   <label>Lon</label>
+   <property>/sim/dialog/groundtTargeting/target-longitude-deg</property>
+  </input>
+
+ <!--<input>
+   <width>75</width>
+   <height>25</height>
+   <label>Alt</label>
+   <property>/sim/dialog/groundtTargeting/target-alt-feet</property>
+  </input>-->
+
+
+  <hrule />
+  
+  <button>
+    <legend>Acquisition</legend>
+    <binding>
+     <command>dialog-apply</command>
+    </binding>
+    <binding>
+      <command>nasal</command>
+      <script>tgpTarget.targetingGround()</script>
+    </binding>
+  </button>
+  
+    <button>
+    <legend>Focus on target</legend>
+    <binding>
+     <command>dialog-apply</command>
+    </binding>
+    <binding>
+      <command>nasal</command>
+      <script>tgpTarget.focus_onTarget()</script>
+    </binding>
+  </button>
+  
+
+
+  <button>
+    <legend>Follow closest GND AI/MP</legend>
+    <binding>
+     <command>dialog-apply</command>
+    </binding>
+    <binding>
+      <command>nasal</command>
+      <script>tgpTarget.follow_AI_MP()</script>
+    </binding>
+  </button>
+  
+  
+  
+
+</PropertyList>
