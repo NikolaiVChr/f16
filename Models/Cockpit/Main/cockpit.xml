@@ -18,6 +18,14 @@
   <name>chair</name>
   <path>Aircraft/f16/Models/Cockpit/chair/chair.xml</path>
  </model>
+
+ <animation>
+  <type>select</type>
+  <object-name>chair</object-name>
+  <condition>
+   <not><property>f16/done</property></not>
+  </condition>
+ </animation>
  
 <!-- <model>
   <name>Pilot_ext</name>
