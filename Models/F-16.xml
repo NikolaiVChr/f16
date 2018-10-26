@@ -62,6 +62,91 @@
   </condition>
  </animation>
 
+<model>
+  <name>mfd-flir</name>
+  <path>Aircraft/f16/Models/Cockpit/Avionics/MFD/mfd-ext.xml</path>
+  <offsets>
+        <x-m>-2.5856</x-m>
+        <y-m>0.8536</y-m>
+        <z-m>-1.4121</z-m>
+  </offsets>
+ </model> 
+
+
+
+ <animation>
+  <type>rotate</type>
+  <object-name>mfd-flir</object-name>
+  <property>sim/current-view/heading-offset-deg</property>
+  <factor>1.0</factor>
+  <center>
+   <x-m>-2.5856</x-m>
+        <y-m>0.8536</y-m>
+        <z-m>-1.4121</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>0.0</y>
+   <z>1.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>mfd-flir</object-name>
+  <property>sim/current-view/pitch-offset-deg</property>
+  <factor>1.0</factor>
+  <center>
+   <x-m>-2.5856</x-m>
+        <y-m>0.8536</y-m>
+        <z-m>-1.4121</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>1.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+  <animation>
+  <type>scale</type>
+  <object-name>mfd-flir</object-name>
+  <property>sim/current-view/field-of-view-scale</property>
+  <center>
+    <x-m>-2.5856</x-m>
+    <y-m>0.8536</y-m>
+    <z-m>-1.4121</z-m>
+  </center>
+  <x-min>0.00001</x-min>
+  <y-min>0.00001</y-min>
+  <z-min>0.00001</z-min>
+  <x-max>10000</x-max>
+  <y-max>10000</y-max>
+  <z-max>10000</z-max>
+  <x-factor>1</x-factor>
+  <y-factor>0</y-factor>
+  <z-factor>0</z-factor>
+  <!--<x-offset>1.0</x-offset>-->
+  <y-offset>1.0</y-offset>
+  <z-offset>1.0</z-offset>
+  <axis>
+   <x>1.0</x>
+   <y>1.0</y>
+   <z>1.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>mfd-flir</object-name>
+  <condition>
+                <equals>
+                    <property>sim/current-view/name</property>
+                    <value>TGP</value>
+                </equals>
+  </condition>
+ </animation>
+
  <model>
   <name>ex</name>
   <path>Aircraft/f16/Models/Effects/explosion.xml</path>
