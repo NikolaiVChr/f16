@@ -54,7 +54,7 @@ light: ecm lamp off
         <object-name>MISC_1_block-15</object-name>
     </effect>
 
-    <animation>
+    <!--<animation>
         <type>material</type>
         <object-name>block-15</object-name>
         <object-name>block-50</object-name>
@@ -85,7 +85,7 @@ light: ecm lamp off
             <green>0.34</green>
             <blue>0.18</blue>
         </emission>
-    </animation>
+    </animation>-->
 
     <animation>
         <type>knob</type>

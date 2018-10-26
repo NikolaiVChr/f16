@@ -18,7 +18,7 @@
   <object-name>SPEED_BRAKE_drum</object-name>
 </effect>
 
-  <animation>
+  <!--<animation>
         <type>material</type>
         <object-name>EW_LEFT_1</object-name>
         <object-name>HMD_1</object-name>
@@ -37,7 +37,7 @@
             <green>0.34</green>
             <blue>0.18</blue>
         </emission>
-    </animation>
+    </animation>-->
 
  <animation>
   <type>select</type>

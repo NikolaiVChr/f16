@@ -104,7 +104,7 @@
             </binding>
         </action>
     </animation>
-    <animation>
+    <!--<animation>
         <type>material</type>
         <object-name>RIGHT_CONSOLE</object-name>
         <condition>
@@ -118,7 +118,7 @@
             <green>0.34</green>
             <blue>0.18</blue>
         </emission>
-    </animation>
+    </animation>-->
 
     <animation>
         <type>knob</type>
