@@ -236,13 +236,20 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
         setprop("/aircraft/flir/target/auto-track", 0);
         lock.hide();
         setprop("f16/avionics/lock-flir",0.05);
+        if (pylons.fcs != nil) {
+            pylons.fcs.setPoint(flir_updater.click_coord_cam);
+        }
     } elsif (getprop("controls/MFD[2]/button-pressed") == 20) {
         setprop("sim/current-view/view-number",0);
-        setprop("/aircraft/flir/target/auto-track", 0);
-        lock.hide();
-        setprop("f16/avionics/lock-flir",0.05);
+        #setprop("/aircraft/flir/target/auto-track", 0);
+        #lock.hide();
+        #setprop("f16/avionics/lock-flir",0.05);
     } elsif (getprop("controls/MFD[2]/button-pressed") == 6) {
         ir = !ir;
+    } elsif (getprop("controls/MFD[2]/button-pressed") == 7) {
+        if (pylons.fcs != nil) {
+            pylons.fcs.setPoint(flir_updater.click_coord_cam);
+        }
     }
 });
 
@@ -252,8 +259,8 @@ var fast_loop = func {
     setprop("sim/current-view/view-number",0);
     setprop("sim/rendering/als-filters/use-IR-vision", 0);
     setprop("sim/view[102]/enabled", 0);
-    setprop("f16/avionics/lock-flir",0.05);
-    lock.hide();
+    #setprop("f16/avionics/lock-flir",0.05);
+    #lock.hide();
   } elsif (viewName == "TGP") {
     # FLIR TGP stuff:
     setprop("aircraft/flir/target/view-enabled", viewName == "TGP");
@@ -286,8 +293,8 @@ var fast_loop = func {
   } else {
     setprop("sim/rendering/als-filters/use-IR-vision", 0);
     setprop("sim/view[102]/enabled", 0);#!getprop("gear/gear/wow"));
-    lock.hide();
-    setprop("f16/avionics/lock-flir",0.05);
+    #lock.hide();
+    #setprop("f16/avionics/lock-flir",0.05);
   }
   settimer(fast_loop,0);
 }
@@ -298,6 +305,7 @@ var line2 = nil;
 var line3 = nil;
 var line4 = nil;
 var line6 = nil;
+var line7 = nil;
 var line20 = nil;
 var cross = nil;
 var lock = nil;
@@ -356,6 +364,13 @@ var callInit = func {
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("WHOT")
         .setTranslation(256-5, 256*0.2);
+  line7 = dedGroup.createChild("text")
+        .setFontSize(13, 1)
+        .setColor(color)
+        .setAlignment("right-center")
+        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
+        .setText("XFER")
+        .setTranslation(256-5, 256*0.35);
   line20 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)

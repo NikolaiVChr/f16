@@ -654,6 +654,20 @@ var FireControl = {
 		me.selectedType = nil;
 		printDebug("FC: nothing selected");
 	},
+
+	setPoint: func (c) {
+		me.ag = me.getSelectedWeapon();
+		if (me.ag != nil and me.ag["target_pnt"] == 1) {
+			if (c == nil) {
+				print("agm65 nil");
+				me.ag.setContacts([]);
+			} else {
+				print("agm65 xfer");
+				me.tgp_point = ContactTGP.new("TGP-Spot",c);
+				me.ag.setContacts([me.tgp_point]);
+			}
+		}
+	},
 };
 
 var debug = 0;
@@ -661,8 +675,134 @@ var printDebug = func (msg) {if (debug == 1) print(msg);};
 var printfDebug = func {if (debug == 1) call(printf,arg);};
 
 
+
 # This is non-generic methods, please edit it to fit your radar setup:
 var getCompleteRadarTargetsList = func {
 	# A list of all MP/AI aircraft/ships/surface-targets around the aircraft.
 	return awg_9.completeList;
 }
+
+var ContactTGP = {
+  new: func(callsign, coord) {
+    var obj             = { parents : [ContactTGP]};# in real OO class this should inherit from Contact, but in nasal it does not need to
+    obj.coord           = geo.Coord.new(coord);
+    obj.coord.set_alt(coord.alt()+1);#avoid z fighting
+    obj.callsign        = callsign;
+    obj.unique          = rand();
+    return obj;
+  },
+
+  isValid: func () {
+    return 1;
+  },
+
+  isVirtual: func () {
+    return 1;
+  },
+
+  isPainted: func () {
+    return 0;
+  },
+
+  isLaserPainted: func{
+    getprop("controls/armament/laser-arm-dmd");
+  },
+
+  isRadiating: func (c) {
+  	return 0;
+  },
+
+  getUnique: func () {
+    return me.unique;
+  },
+
+  getElevation: func() {
+      #var e = 0;
+      var self = geo.aircraft_position();
+      #var angleInv = ja37.clamp(self.distance_to(me.coord)/self.direct_distance_to(me.coord), -1, 1);
+      #e = (self.alt()>me.coord.alt()?-1:1)*math.acos(angleInv)*R2D;
+      return vector.Math.getPitch(self, me.coord);
+  },
+
+  getFlareNode: func () {
+    return nil;
+  },
+
+  getChaffNode: func () {
+    return nil;
+  },
+
+  get_Coord: func(){
+      return me.coord;
+  },
+
+  getETA: func {
+      return nil;
+    },
+
+	getHitChance: func {
+	  return nil;
+	},
+
+  get_Callsign: func(){
+      return me.callsign;
+  },
+
+  get_model: func(){
+      return "TGP spot";
+  },
+
+  get_Speed: func(){
+      # return true airspeed
+      return 0;
+  },
+
+  get_Longitude: func(){
+      var n = me.coord.lon();
+      return n;
+  },
+
+  get_Latitude: func(){
+      var n = me.coord.lat();
+      return n;
+  },
+
+  get_Pitch: func(){
+      return 0;
+  },
+
+  get_Roll: func(){
+      return 0;
+  },
+
+  get_heading : func(){
+      return 0;
+  },
+
+  get_bearing: func(){
+      var n = me.get_bearing_from_Coord(geo.aircraft_position());
+      return n;
+  },
+
+  get_altitude: func(){
+      #Return Alt in feet
+      return me.coord.alt()*M2FT;
+  },
+
+  get_range: func() {
+      var r = me.coord.direct_distance_to(geo.aircraft_position()) * M2NM;
+      return r;
+  },
+
+  get_type: func () {
+    return armament.POINT;
+  },
+
+  get_bearing_from_Coord: func(MyAircraftCoord){
+      var myBearing = 0;
+      if(me.coord.is_defined()) {
+          myBearing = MyAircraftCoord.course_to(me.coord);
+      }
+      return myBearing;
+  },
+};
