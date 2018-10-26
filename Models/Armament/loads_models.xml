@@ -769,6 +769,31 @@
   </offsets>
  </model>
 
+ <!-- =============================================================================================================  --> 
+<!-- =========================================== Station 10 =======================================================  -->
+<!-- =============================================================================================================  --> 
+
+<model>
+  <name>Station10_SniperATP</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/SniperATP.xml</path>
+  <offsets>
+   <x-m>-0.02</x-m>
+   <y-m>0</y-m>
+   <z-m>-1.136</z-m>
+   <pitch-deg>-0.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Podpylon_right</name>
+  <path>Aircraft/f16/Models/Pod-pylon-right.xml</path>
+  <offsets>
+   <x-m>0</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0</z-m>
+   <pitch-deg>0</pitch-deg>
+  </offsets>
+ </model>
 
 <!-- ======================= END ARMAMENT =========================== -->
 </PropertyList>
