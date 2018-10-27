@@ -280,6 +280,7 @@ var F16_HUD = {
                                                      obj.boreSymbol.hide();
                                                  } else {
                                                      obj.boreSymbol.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud);
+                                                     obj.offangle.setTranslation(obj.sx/2-10,obj.sy-obj.texels_up_into_hud);
                                                      obj.boreSymbol.show();
                                                  }
                                                  obj.oldBore.hide();
@@ -850,6 +851,13 @@ append(obj.total, obj.speed_curr);
                 .setFont(HUD_FONT)
                 .setFontSize(9, 1.1);
                 append(obj.total, obj.ded4);
+        obj.offangle = obj.svg.createChild("text")# real name: locator line
+                .setText("0")
+                .setAlignment("right-center")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(9, 1.1);
+                append(obj.total, obj.offangle);
         obj.trackLine = obj.svg.createChild("path")
                 .moveTo(0,0)
                 #.horiz(10)
@@ -1784,6 +1792,9 @@ append(obj.total, obj.speed_curr);
                                 if (me.clamped) {
                                     me.trackLine.setTranslation(me.sx/2,me.sy-me.texels_up_into_hud);
                                     me.trackLine.setRotation(me.combined_dev_deg*D2R);
+                                    me.dev_h_d = me.u.get_deviation(hdp.heading);
+                                    me.dev_e_d = me.u.get_total_elevation(hdp.pitch);
+                                    me.offangle.setText(sprintf("%d", math.sqrt(me.dev_h_d*me.dev_h_d+me.dev_e_d*me.dev_e_d)));
                                     me.trackLineShow = 1;
                                 }
                             } else {
@@ -1816,6 +1827,7 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
         #print(me.irS~" "~me.irL);
 
         me.trackLine.setVisible(me.trackLineShow);
+        me.offangle.setVisible(me.trackLineShow);
 
         
 
