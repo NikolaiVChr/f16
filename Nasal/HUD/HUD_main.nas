@@ -247,7 +247,7 @@ var F16_HUD = {
                                           hdp.CCRP_active = obj.CCRP(hdp);
                                       }),
 
-            props.UpdateManager.FromHashList(["texUp","route_manager_active", "wp_bearing_deg", "heading"], 0.01, func(hdp)
+            props.UpdateManager.FromHashList(["texUp","route_manager_active", "wp_bearing_deg", "heading","VV_x","VV_y"], 0.01, func(hdp)
                                              {
                                                  # the Y position is still not accurate due to HUD being at an angle, but will have to do.
                                                  if (hdp.route_manager_active) {
@@ -262,7 +262,7 @@ var F16_HUD = {
                                                          } elsif (obj.thingX<obj.sx*0.33) {
                                                              obj.thingX=obj.sx*0.33;
                                                          }
-                                                         obj.thing.setTranslation(obj.thingX,obj.sy-obj.texels_up_into_hud+15);
+                                                         obj.thing.setTranslation(obj.thingX, obj.sy-obj.texels_up_into_hud+hdp.VV_y * obj.texelPerDegreeY);
                                                          obj.thing.setRotation(obj.wpbear*D2R);
                                                          obj.thing.show();
                                                      } else {
@@ -878,11 +878,11 @@ append(obj.total, obj.speed_curr);
                 .setColor(0,1,0);
                 append(obj.total, obj.ccrpMarker);
         obj.thing = obj.svg.createChild("path")
-            .moveTo(-3,0)
-            .arcSmallCW(3,3, 0, 3*2, 0)
-            .arcSmallCW(3,3, 0, -3*2, 0)
-            .moveTo(0,-3)
-            .vert(-6)
+            .moveTo(-2,0)
+            .arcSmallCW(2,2, 0, 2*2, 0)
+            .arcSmallCW(2,2, 0, -2*2, 0)
+            .moveTo(0,-2)
+            .vert(-8)
             .setStrokeLineWidth(1)
             .setColor(0,1,0);
             append(obj.total, obj.thing);
