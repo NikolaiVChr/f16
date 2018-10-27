@@ -878,10 +878,10 @@ append(obj.total, obj.speed_curr);
                 .setColor(0,1,0);
                 append(obj.total, obj.ccrpMarker);
         obj.thing = obj.svg.createChild("path")
-            .moveTo(-2,0)
-            .arcSmallCW(2,2, 0, 2*2, 0)
-            .arcSmallCW(2,2, 0, -2*2, 0)
-            .moveTo(0,-2)
+            .moveTo(-2.5,0)
+            .arcSmallCW(2.5,2.5, 0, 2.5*2, 0)
+            .arcSmallCW(2.5,2.5, 0, -2.5*2, 0)
+            .moveTo(0,-2.5)
             .vert(-8)
             .setStrokeLineWidth(1)
             .setColor(0,1,0);
