@@ -785,7 +785,7 @@
  </model>
 
  <model>
-  <name>Station10_LANTIRNtatget</name>
+  <name>Station10_LANTIRNtarget</name>
   <path>Aircraft/f16/Models/Armament/External-stores/LANTIRN/AN-AAQ-14.xml</path>
   <offsets>
    <x-m>-2.5</x-m>
