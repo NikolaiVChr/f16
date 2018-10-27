@@ -922,6 +922,19 @@
   </condition>
  </animation>
 
+ <animation>
+  <type>select</type>
+  <object-name>Turbine</object-name>
+  <condition>
+   <property>nop</property>
+  </condition>
+ </animation>
+
+ <model>
+  <name>outlet</name>
+  <path>Aircraft/f16/Models/outlet.xml</path>
+</model>
+
   <animation>
   <type>material</type>
   <condition>
