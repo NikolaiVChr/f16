@@ -933,14 +933,38 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   </condition>
  </animation>
 
+ <animation>
+  <type>select</type>
+  <object-name>Station10_LANTIRNtarget</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-10-type</property>
+      <value>AN/AAQ-14 LANTIRN Target Pod</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-10-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
 <animation>
   <type>select</type>
   <object-name>Podpylon_right</object-name>
   <condition>
+  <or>
     <equals>
       <property>payload/armament/station/id-10-set</property>
       <value>AN/AAQ-33 Sniper ATP</value>
     </equals>
+    <equals>
+      <property>payload/armament/station/id-10-set</property>
+      <value>AN/AAQ-14 LANTIRN Target Pod</value>
+    </equals>
+  </or>
+  <greater-than>
+      <property>payload/armament/station/id-10-count</property>
+      <value>0</value>
   </condition>
  </animation>
 
