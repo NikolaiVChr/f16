@@ -338,7 +338,10 @@ var fast_loop = func {
       fov = 50;
       setprop("sim/current-view/field-of-view",fov);
     }
-    var scale = 20/fov;
+    var x = getprop("sim/gui/canvas/size[0]");
+    var y = getprop("sim/gui/canvas/size[1]");
+    var format = (x/y)/2.25;#16/9 = 1.777
+    var scale = format*20/fov;# we take into account that different pilots have different screen formats so the height of the MFD in screen stays same relative.
     setprop("sim/current-view/field-of-view-scale",scale);
     var scaleLock = getprop("f16/avionics/lock-flir");
     lock.setScale(scaleLock,scaleLock);
