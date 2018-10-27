@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <path>Aircraft/f16/Models/Armament/External-stores/LANTIRN/AN-AAQ-14.ac</path>
+
+  <effect>  
+    <inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  
+    <object-name>ANAAQ-14_Lens</object-name>
+  </effect>
+
+  <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.35</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <object-name>ANAAQ-14_Back</object-name>
+      <object-name>ANAAQ-14_Ball</object-name>
+      <object-name>ANAAQ-14_Cam</object-name>
+      <object-name>ANAAQ-14_FLIR</object-name>
+      <object-name>ANAAQ-14_Inlet</object-name>
+      <object-name>ANAAQ-14_Inlet-inside</object-name>
+      <object-name>ANAAQ-14</object-name>
+      <object-name>ANAAQ-14_Tube-inside</object-name>
+      <object-name>ANAAQ-14_Turnable</object-name>
+  </effect>
+
+ </PropertyList>

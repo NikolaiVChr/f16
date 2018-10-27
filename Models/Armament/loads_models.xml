@@ -785,6 +785,17 @@
  </model>
 
  <model>
+  <name>Station10_LANTIRNtarget</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/LANTIRN/AN-AAQ-14.xml</path>
+  <offsets>
+   <x-m>-2.5</x-m>
+   <y-m>0.85</y-m>
+   <z-m>-0.95</z-m>
+   <pitch-deg>-0.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
   <name>Podpylon_right</name>
   <path>Aircraft/f16/Models/Pod-pylon-right.xml</path>
   <offsets>

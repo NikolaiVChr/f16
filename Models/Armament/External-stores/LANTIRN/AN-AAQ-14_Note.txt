@@ -1,0 +1,19 @@
+OBJECT NAMES:
+
+Turnable
+Ball
+Cam
+FLIR
+Lens
+
+AXIS for left & right
+
+X: -0.95225
+Y: 0.00154
+Z: -0.00512
+
+AXIS for up & down
+
+X: -1.06045
+Y: 0.00000
+Z: 0.00000
