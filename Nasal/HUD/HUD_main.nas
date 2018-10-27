@@ -284,6 +284,14 @@ var F16_HUD = {
                                                  }
                                                  obj.oldBore.hide();
                                       }),
+            props.UpdateManager.FromHashList(["gear_down"], 0.5, func(val)
+                                             {
+                                                 if (val.gear_down) {
+                                                     obj.appLine.show();
+                                                 } else {
+                                                     obj.appLine.hide();
+                                                 }
+                                      }),
             props.UpdateManager.FromHashList(["texUp","VV_x","VV_y","fpm"], 0.001, func(hdp)
                                       {
                                         if (hdp.fpm > 0) {
@@ -312,11 +320,11 @@ var F16_HUD = {
                                           }
                                         }
                                       }),
-            props.UpdateManager.FromHashList(["texUp","pitch","roll","fpm","VV_x","VV_y"], 0.001, func(hdp)
+            props.UpdateManager.FromHashList(["texUp","pitch","roll","fpm","VV_x","VV_y","gear_down"], 0.001, func(hdp)
                                       {
                                           obj.ladder.hide();
                                           obj.roll_pointer.setRotation (hdp.roll_rad);
-                                          if (hdp.fpm != 2) {
+                                          if (hdp.fpm != 2 and !hdp.gear_down) {
                                             obj.ladder_group.hide();
                                             return;
                                           }
@@ -1080,6 +1088,28 @@ append(obj.total, obj.speed_curr);
          .setTranslation(minuso+minuss+minuss*0.2, -i * distance)
          .setColor(0,0,0));
     }
+
+    # approach line
+    var i = -0.5;
+    obj.appLine = obj.ladder_group.createChild("path")
+                     .moveTo(minuso, -i * distance)
+                     .horiz(minuss*0.2)
+                     .moveTo(minuso+minuss*0.4, -i * distance)
+                     .horiz(minuss*0.2)
+                     .moveTo(minuso+minuss*0.8, -i * distance)
+                     .horiz(minuss*0.2)
+
+                     .moveTo(-minuso, -i * distance)
+                     .horiz(-minuss*0.2)
+                     .moveTo(-minuso-minuss*0.4, -i * distance)
+                     .horiz(-minuss*0.2)
+                     .moveTo(-minuso-minuss*0.8, -i * distance)
+                     .horiz(-minuss*0.2)
+
+                     .setStrokeLineWidth(1)
+                     .setColor(0,0,0);
+    
+    append(obj.total, obj.appLine);
 
     #Horizon line
     append(obj.total, obj.ladder_group.createChild("path")
