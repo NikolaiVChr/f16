@@ -882,7 +882,7 @@ append(obj.total, obj.speed_curr);
             .arcSmallCW(2.5,2.5, 0, 2.5*2, 0)
             .arcSmallCW(2.5,2.5, 0, -2.5*2, 0)
             .moveTo(0,-2.5)
-            .vert(-8)
+            .vert(-10)
             .setStrokeLineWidth(1)
             .setColor(0,1,0);
             append(obj.total, obj.thing);
@@ -1120,18 +1120,27 @@ append(obj.total, obj.speed_curr);
                      .setStrokeLineWidth(1)
                      .setColor(0,0,0));
 
-    obj.tgpPoint = obj.svg.createChild("path")
+    obj.tgpPointF = obj.svg.createChild("path")
                      .moveTo(-10*mr, -10*mr)
                      .horiz(20*mr)
                      .vert(20*mr)
                      .horiz(-20*mr)
                      .vert(-20*mr)
+                     .moveTo(-1*mr,-1*mr)
+                     .horiz(2*mr)
+                     .moveTo(-1*mr,0*mr)
+                     .horiz(2*mr)
+                     .setStrokeLineWidth(1)
+                     .setColor(0,0,0);
+    obj.tgpPointC = obj.svg.createChild("path")
+                     .moveTo(-10*mr, -10*mr)
                      .lineTo(10*mr, 10*mr)
                      .moveTo(10*mr, -10*mr)
                      .lineTo(-10*mr, 10*mr)
                      .setStrokeLineWidth(1)
                      .setColor(0,0,0);
-    append(obj.total, obj.tgpPoint);
+    append(obj.total, obj.tgpPointF);
+    append(obj.total, obj.tgpPointC);
 
 
 
@@ -1889,10 +1898,17 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
             var b = geo.normdeg180(self.course_to(tgp.flir_updater.click_coord_cam)-hdp.heading);
             var y = me.clamp(-p*me.texelPerDegreeY+me.sy-me.texels_up_into_hud,me.sy*0.05,me.sy*0.95);
             var x = me.clamp(b*me.texelPerDegreeX+me.sx*0.5,me.sx*0.025,me.sx*0.975);
-            me.tgpPoint.setTranslation(x,y);
-            me.tgpPoint.show();
+            if (y == me.sy*0.05 or y == me.sy*0.95 or x == me.sx*0.025 or x == me.sx*0.975) {
+                me.tgpPointC.setTranslation(x,y);
+                me.tgpPointC.show();
+            } else {
+                me.tgpPointC.hide();
+            }
+            me.tgpPointF.setTranslation(x,y);
+            me.tgpPointF.show();
         } else {
-            me.tgpPoint.hide();
+            me.tgpPointF.hide();
+            me.tgpPointC.hide();
         }
 
 

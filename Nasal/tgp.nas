@@ -509,9 +509,13 @@ var callInit = func {
 
   cross = dedGroup.createChild("path")
             .moveTo(128,0)
-            .vert(256)
+            .vert(120)
+            .moveTo(128,256)
+            .vert(-120)
             .moveTo(0,128)
-            .horiz(256)
+            .horiz(120)
+            .moveTo(256,128)
+            .horiz(-120)
             .setStrokeLineWidth(1)
             .setColor(1,1,1);
     lock = dedGroup.createChild("path")
