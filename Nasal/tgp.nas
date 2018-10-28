@@ -540,6 +540,7 @@ var callInit = func {
             .horiz(-96)
             .vert(96)
             .horiz(96)
+            .hide()
             .setTranslation(128,128)
             .setStrokeLineWidth(1)
             .setColor(1,1,1);

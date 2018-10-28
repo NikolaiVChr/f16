@@ -263,17 +263,17 @@
             <name>TGP</name>
             <enabled>false</enabled>
             <internal archive="y">true</internal>
-            <pitch-offset-deg> -30 </pitch-offset-deg>
-            <heading-offset-deg>0</heading-offset-deg>
+            <pitch-offset-deg type="double">-30</pitch-offset-deg>
+            <heading-offset-deg type="double">0</heading-offset-deg>
             <config>
               <from-model type="bool">true</from-model>
               <from-model-idx type="int">0</from-model-idx>
               <x-offset-m archive="y">0.8536</x-offset-m><!-- Right -->
               <y-offset-m archive="y">-1.4121</y-offset-m><!-- Up -->
               <z-offset-m archive="y">-2.5856</z-offset-m><!-- Back -->
-              <pitch-offset-deg> -30 </pitch-offset-deg>
-              <heading-offset-deg>0</heading-offset-deg>
-              <default-field-of-view-deg>20</default-field-of-view-deg>
+              <pitch-offset-deg type="double"> -30 </pitch-offset-deg>
+              <heading-offset-deg type="double">0</heading-offset-deg>
+              <default-field-of-view-deg type="double">20</default-field-of-view-deg>
             </config>
         </view>
 
