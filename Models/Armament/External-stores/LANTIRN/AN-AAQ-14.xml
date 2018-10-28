@@ -28,4 +28,50 @@
       <object-name>ANAAQ-14_Turnable</object-name>
   </effect>
 
- </PropertyList>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>ANAAQ-14_Ball</object-name>
+  <object-name>ANAAQ-14_Cam</object-name>
+  <object-name>ANAAQ-14_FLIR</object-name>
+  <object-name>ANAAQ-14_Lens</object-name>
+  <object-name>ANAAQ-14_Turnable</object-name>
+  <object-name>ANAAQ-14_Tube-inside</object-name>
+  <property>aircraft/flir/swivel/roll-deg</property>
+  <factor>1.0</factor>
+  <offset-deg>90</offset-deg>
+  <center>
+    <x-m>-0.95225</x-m>
+    <y-m>0.00154</y-m>
+    <z-m>-0.00512</z-m>
+  </center>
+  <axis>
+   <x>1.0</x>
+   <y>0.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+
+  <animation>
+  <type>rotate</type>
+  <object-name>ANAAQ-14_Ball</object-name>
+  <object-name>ANAAQ-14_Cam</object-name>
+  <object-name>ANAAQ-14_FLIR</object-name>
+  <object-name>ANAAQ-14_Lens</object-name>
+  <property>aircraft/flir/swivel/pitch-deg</property>
+  <factor>-1.0</factor>
+  <offset-deg>90</offset-deg>
+  <center>
+    <x-m>-1.06045</x-m>
+    <y-m>0</y-m>
+    <z-m>0</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>1.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation> 
+
+</PropertyList>

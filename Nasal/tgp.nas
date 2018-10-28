@@ -116,7 +116,7 @@ var FLIRCameraUpdater = {
 
         var computer = me._get_flir_computer(roll_deg, pitch_deg, heading);
 
-        if (getprop("sim/current-view/view-number") ==9 and getprop("/aircraft/flir/target/auto-track") and me.click_coord_cam != nil) {
+        if (getprop("/aircraft/flir/target/auto-track") and me.click_coord_cam != nil) {
             var (yaw, pitch, distance) = computer(coords_cam, me.click_coord_cam);
             me.update_cam(roll_deg, pitch_deg, yaw+me.offsetH, pitch+me.offsetP);
         }
@@ -161,9 +161,12 @@ var FLIRCameraUpdater = {
 
             setprop("/aircraft/flir/target/yaw-deg", yaw);
             setprop("/aircraft/flir/target/pitch-deg", pitch);
-
-            setprop("/sim/current-view/goal-heading-offset-deg", -yaw);
-            setprop("/sim/current-view/goal-pitch-offset-deg", pitch);
+            if (getprop("sim/current-view/view-number") ==9) {
+                setprop("/sim/current-view/goal-heading-offset-deg", -yaw);
+                setprop("/sim/current-view/goal-pitch-offset-deg", pitch);
+            }
+            setprop("sim/view[102]/heading-offset-deg", yaw);
+            setprop("sim/view[102]/pitch-offset-deg", pitch);
         };
     },
 
@@ -359,6 +362,10 @@ var fast_loop = func {
     } else {
         bott.setText(sprintf("      CMBT  %d",lasercode));
     }
+    if (!getprop("/aircraft/flir/target/auto-track") or flir_updater.click_coord_cam == nil) {
+        setprop("sim/view[102]/heading-offset-deg", -getprop("sim/current-view/heading-offset-deg"));
+        setprop("sim/view[102]/pitch-offset-deg", getprop("sim/current-view/pitch-offset-deg"));
+    }
   } else {
     setprop("sim/rendering/als-filters/use-IR-vision", 0);
     setprop("sim/view[102]/enabled", 0);#!getprop("gear/gear/wow"));
@@ -370,6 +377,7 @@ var fast_loop = func {
   } else {
     cross.setColor(1,1,1);
   }
+  
   settimer(fast_loop,0);
 }
 

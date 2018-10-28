@@ -263,6 +263,8 @@
             <name>TGP</name>
             <enabled>false</enabled>
             <internal archive="y">true</internal>
+            <pitch-offset-deg> -30 </pitch-offset-deg>
+            <heading-offset-deg>0</heading-offset-deg>
             <config>
               <from-model type="bool">true</from-model>
               <from-model-idx type="int">0</from-model-idx>
@@ -2085,7 +2087,11 @@ value. 18000=standard US transition altitude -->
             <input> 
                 <yaw-deg type="double">0.0</yaw-deg> 
                 <pitch-deg type="double">0.0</pitch-deg> 
-            </input> 
+            </input>
+            <swivel> 
+                <roll-deg type="double">0.0</roll-deg> 
+                <pitch-deg type="double">30.0</pitch-deg> 
+            </swivel> 
             <target> 
                 <yaw-deg type="double">0.0</yaw-deg> 
                 <pitch-deg type="double">0.0</pitch-deg> 
