@@ -813,7 +813,7 @@ append(obj.total, obj.speed_curr);
                 .setFontSize(9, 1.1);
                 append(obj.total, obj.head_curr);
         obj.ded0 = obj.svg.createChild("text")
-                .setText("360")
+                .setText("")
                 .setTranslation(0.25*sx*0.695633,sy*0.75-20)
                 .setAlignment("left-center")
                 .setColor(0,1,0,1)
@@ -821,7 +821,7 @@ append(obj.total, obj.speed_curr);
                 .setFontSize(9, 1.1);
                 append(obj.total, obj.ded0);
         obj.ded1 = obj.svg.createChild("text")
-                .setText("360")
+                .setText("")
                 .setTranslation(0.25*sx*0.695633,sy*0.75-10)
                 .setAlignment("left-center")
                 .setColor(0,1,0,1)
@@ -829,7 +829,7 @@ append(obj.total, obj.speed_curr);
                 .setFontSize(9, 1.1);
                 append(obj.total, obj.ded1);
         obj.ded2 = obj.svg.createChild("text")
-                .setText("360")
+                .setText("")
                 .setTranslation(0.25*sx*0.695633,sy*0.75+0)
                 .setAlignment("left-center")
                 .setColor(0,1,0,1)
@@ -837,7 +837,7 @@ append(obj.total, obj.speed_curr);
                 .setFontSize(9, 1.1);
                 append(obj.total, obj.ded2);
         obj.ded3 = obj.svg.createChild("text")
-                .setText("360")
+                .setText("")
                 .setTranslation(0.25*sx*0.695633,sy*0.75+10)
                 .setAlignment("left-center")
                 .setColor(0,1,0,1)
@@ -845,7 +845,7 @@ append(obj.total, obj.speed_curr);
                 .setFontSize(9, 1.1);
                 append(obj.total, obj.ded3);
         obj.ded4 = obj.svg.createChild("text")
-                .setText("360")
+                .setText("")
                 .setTranslation(0.25*sx*0.695633,sy*0.75+20)
                 .setAlignment("left-center")
                 .setColor(0,1,0,1)
@@ -872,7 +872,7 @@ append(obj.total, obj.speed_curr);
                 #.horiz(10)
                 .vert(400)
                 .setStrokeLineWidth(1)
-                .setColor(0,1,0);
+                .setColor(0,1,0).hide();
                 append(obj.total, obj.bombFallLine);
         obj.solutionCue = obj.svg.createChild("path")
                 .moveTo(sx*0.5*0.695633-5,0)
@@ -901,7 +901,7 @@ append(obj.total, obj.speed_curr);
             .arcSmallCW(262*mr,262*mr, 0, 262*mr*2, 0)
             .arcSmallCW(262*mr,262*mr, 0, -262*mr*2, 0)
             .setStrokeLineWidth(1)
-            .setColor(0,1,0)
+            .setColor(0,1,0).hide()
             .setTranslation(sx*0.5*0.695633,sy*0.25+262*mr*0.5);
             append(obj.total, obj.circle262);
         obj.circle100 = obj.svg.createChild("path")#irsearch
@@ -909,7 +909,7 @@ append(obj.total, obj.speed_curr);
             .arcSmallCW(100*mr,100*mr, 0, 100*mr*2, 0)
             .arcSmallCW(100*mr,100*mr, 0, -100*mr*2, 0)
             .setStrokeLineWidth(1)
-            .setColor(0,1,0)
+            .setColor(0,1,0).hide()
             .setTranslation(sx*0.5*0.695633,sy*0.25);
             append(obj.total, obj.circle100);
         obj.circle120 = obj.svg.createChild("path")#rdlock
@@ -917,7 +917,7 @@ append(obj.total, obj.speed_curr);
             .arcSmallCW(120*mr,120*mr, 0, 120*mr*2, 0)
             .arcSmallCW(120*mr,120*mr, 0, -120*mr*2, 0)
             .setStrokeLineWidth(1)
-            .setColor(0,1,0)
+            .setColor(0,1,0).hide()
             .setTranslation(sx*0.5*0.695633,sy*0.25);
             append(obj.total, obj.circle120);
         obj.circle65 = obj.svg.createChild("path")#irlock
@@ -925,7 +925,7 @@ append(obj.total, obj.speed_curr);
             .arcSmallCW(65*mr,65*mr, 0, 65*mr*2, 0)
             .arcSmallCW(65*mr,65*mr, 0, -65*mr*2, 0)
             .setStrokeLineWidth(1)
-            .setColor(0,1,0)
+            .setColor(0,1,0).hide()
             .setTranslation(sx*0.5*0.695633,sy*0.25);
             append(obj.total, obj.circle65);
         obj.triangle65  = obj.svg.createChild("path")
@@ -953,19 +953,20 @@ append(obj.total, obj.speed_curr);
             append(obj.total, obj.triangle120);
         var boxRadius = 10;
         var boxRadiusHalf = boxRadius*0.5;
+        var hairFactor = 0.8;
         obj.radarLock = obj.svg.createChild("path")
-            .moveTo(-boxRadius,0)
-            .horiz(boxRadiusHalf)
-            .lineTo(0,boxRadiusHalf)
-            .moveTo(boxRadius,0)
-            .horiz(-boxRadiusHalf)
-            .lineTo(0,-boxRadiusHalf)
-            .moveTo(0,boxRadius)
-            .vert(-boxRadiusHalf)
-            .lineTo(boxRadiusHalf,0)
-            .moveTo(0,-boxRadius)
-            .vert(boxRadiusHalf)
-            .lineTo(-boxRadiusHalf,0)
+            .moveTo(-boxRadius*hairFactor,0)
+            .horiz(boxRadiusHalf*hairFactor)
+            .lineTo(0,boxRadiusHalf*hairFactor)
+            .moveTo(boxRadius*hairFactor,0)
+            .horiz(-boxRadiusHalf*hairFactor)
+            .lineTo(0,-boxRadiusHalf*hairFactor)
+            .moveTo(0,boxRadius*hairFactor)
+            .vert(-boxRadiusHalf*hairFactor)
+            .lineTo(boxRadiusHalf*hairFactor,0)
+            .moveTo(0,-boxRadius*hairFactor)
+            .vert(boxRadiusHalf*hairFactor)
+            .lineTo(-boxRadiusHalf*hairFactor,0)
             .setStrokeLineWidth(1)
             .setColor(0,1,0);
             append(obj.total, obj.radarLock);
@@ -1776,13 +1777,23 @@ append(obj.total, obj.speed_curr);
                                 
                                 if (pylons.fcs != nil and pylons.fcs.isLock()) {
                                     #me.target_locked.setRotation(45*D2R);
+                                    if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7" or hdp.weapon_selected == "AIM-9") {
+                                        var aim = pylons.fcs.getSelectedWeapon();
+                                        if (aim != nil) {
+                                            var coords = aim.getSeekerInfo();
+                                            if (coords != nil) {
+                                                me.irLock.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
+                                                me.radarLock.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
+                                            }
+                                        }
+                                    }
                                     if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
-                                        me.radarLock.setTranslation(me.xcS, me.ycS);
+                                        #me.radarLock.setTranslation(me.xcS, me.ycS); too perfect
                                         me.triangle120.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading));
                                         me.rdL = 1;
                                         me.rdT = 1;
                                     } elsif (hdp.weapon_selected == "AIM-9") {
-                                        me.irLock.setTranslation(me.xcS, me.ycS);
+                                        #me.irLock.setTranslation(me.xcS, me.ycS);
                                         me.triangle65.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading));
                                         me.irL = 1;
                                         me.irT = 1;
@@ -1885,6 +1896,8 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
         me.irLock.setVisible(me.irL);
         me.triangle120.setVisible(me.rdT);
         me.triangle65.setVisible(me.irT);
+        me.radarLock.update();
+        me.irLock.update();
 
         if (hdp.ded) {
             me.ded0.setText(ded.text[0]);
