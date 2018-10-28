@@ -377,6 +377,13 @@ var fast_loop = func {
   } else {
     cross.setColor(1,1,1);
   }
+  # animate the LANTIRN camera:
+    var b = geo.normdeg180(getprop("sim/view[102]/heading-offset-deg"));
+    var p = getprop("sim/view[102]/pitch-offset-deg");
+    var polarL = math.sqrt(p*p+b*b);
+    var polarD = polarL!=0 and b!=0?math.atan2(p,b)*R2D:-90;
+    setprop("aircraft/flir/swivel/pitch-deg",polarL);
+    setprop("aircraft/flir/swivel/roll-deg",polarD);
   
   settimer(fast_loop,0);
 }

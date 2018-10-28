@@ -1908,13 +1908,6 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
         if (hdp.tgp_mounted and tgp.flir_updater.click_coord_cam != nil) {
             var b = geo.normdeg180(getprop("sim/view[102]/heading-offset-deg"));
             var p = getprop("sim/view[102]/pitch-offset-deg");
-            if (hdp.view_number != 9) {
-                var pp = p;
-                var polarL = math.sqrt(pp*pp+b*b);
-                var polarD = polarL!=0 and b!=0?math.atan2(pp,b)*R2D:-90;
-                setprop("aircraft/flir/swivel/pitch-deg",polarL);
-                setprop("aircraft/flir/swivel/roll-deg",polarD);
-            }
             var y = me.clamp(-p*me.texelPerDegreeY+me.sy-me.texels_up_into_hud,me.sy*0.05,me.sy*0.95);
             var x = me.clamp(b*me.texelPerDegreeX+me.sx*0.5,me.sx*0.025,me.sx*0.975);
             if (y == me.sy*0.05 or y == me.sy*0.95 or x == me.sx*0.025 or x == me.sx*0.975) {
