@@ -1563,6 +1563,14 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <auto-switch-target-allowed type="bool">false</auto-switch-target-allowed>
                 <prowl-flight type="string">gyro-pitch</prowl-flight>
                 <switch-time-sec type="double">5</switch-time-sec>
+
+                <!-- do NOT enable this: -->
+                <!-- More correct induced drag and PN, plus plume drag. Will make it acc. and bleed speed differently and guide differently. -->
+                <!--<advanced type="bool">true</advanced>
+                <wing-aspect-ratio type="double">1.72</wing-aspect-ratio>
+                <wing-efficiency-relative-to-an-elliptical-planform type="double">0.872</wing-efficiency-relative-to-an-elliptical-planform>
+                <exhaust-plume-paracitic-drag-factor type="double">0.6</exhaust-plume-paracitic-drag-factor>
+                <proportionality-constant type="double">5</proportionality-constant>--><!-- puts required Amraam acc. advantage down to 1.67 -->
             </aim-120>
             <aim-7>
                 <short-name type="string">A-7F</short-name>

@@ -342,7 +342,11 @@ var AIM = {
         m.dlz_enabled           = getprop(m.nodeString~"DLZ");                        # Supports dynamic launch zone info. For now only works with A/A. [optional]
         m.dlz_opt_alt           = getprop(m.nodeString~"DLZ-optimal-alt-feet");       # Minimum altitude required to hit the target at max range.
         m.dlz_opt_mach          = getprop(m.nodeString~"DLZ-optimal-closing-mach");   # Closing speed required to hit the target at max range at minimum altitude.
-		
+		# advanced settings
+		m.advanced              = getprop(m.nodeString~"advanced");                   # bool. Use advanced drag and guidance-laws.
+		m.a_ratio               = getprop(m.nodeString~"wing-aspect-ratio");          # 1.5
+		m.wing_eff              = getprop(m.nodeString~"wing-efficiency-relative-to-an-elliptical-planform"); # 1
+		m.Cd_plume              = getprop(m.nodeString~"exhaust-plume-paracitic-drag-factor"); # 15/25
 
         
         m.mode_slave            = TRUE;# if slaved to command seeker directions from radar/helmet/cursor
@@ -498,6 +502,9 @@ var AIM = {
 		if (m.no_pitch == nil) {
         	m.no_pitch = 0;
         }
+        if(m.advanced == nil) {
+			m.advanced = FALSE;
+		}
 
         m.useModelCase          = getprop("payload/armament/modelsUseCase");
         m.useModelUpperCase     = getprop("payload/armament/modelsUpperCase");
@@ -1661,7 +1668,7 @@ var AIM = {
 			me.maxMach3 = me.speed_m;
 		}
 
-		me.Cd = me.drag(me.speed_m);
+		me.Cd = me.drag(me.speed_m,me["myG"]);
 
 		me.speed_change_fps = me.speedChange(me.thrust_lbf, me.rho, me.Cd);
 		
@@ -2099,21 +2106,35 @@ var AIM = {
 		return me.c;
 	},
 
-	drag: func (mach) {
+	drag: func (mach, N=nil) {
 		# Nikolai V. Chr.: Made the drag calc more in line with big missiles as opposed to small bullets.
 		# 
 		# The old equations were based on curves for a conventional shell/bullet (no boat-tail),
 		# and derived from Davic Culps code in AIBallistic.
-		me.Cd = 0;
+		me.Cd0 = 0;
 		if (mach < 0.7) {
-			me.Cd = (0.0125 * mach + 0.20) * 5 * (me.Cd_base+me.Cd_delta*me.deploy);
+			me.Cd0 = (0.0125 * mach + 0.20) * 5 * (me.Cd_base+me.Cd_delta*me.deploy);
 		} elsif (mach < 1.2 ) {
-			me.Cd = (0.3742 * math.pow(mach, 2) - 0.252 * mach + 0.0021 + 0.2 ) * 5 * (me.Cd_base+me.Cd_delta*me.deploy);
+			me.Cd0 = (0.3742 * math.pow(mach, 2) - 0.252 * mach + 0.0021 + 0.2 ) * 5 * (me.Cd_base+me.Cd_delta*me.deploy);
 		} else {
-			me.Cd = (0.2965 * math.pow(mach, -1.1506) + 0.2) * 5 * (me.Cd_base+me.Cd_delta*me.deploy);
+			me.Cd0 = (0.2965 * math.pow(mach, -1.1506) + 0.2) * 5 * (me.Cd_base+me.Cd_delta*me.deploy);
+		}
+		if (me.advanced) {			
+			if (N==nil) N=1;
+			else N=N+1;
+			if (mach < 1.0) {
+				me.Cdi = me.Cd0*N;# N = normal force in G
+			} else {
+				N = N * me.mass * g_fps;# N = normal force in LBF (me.mass is in slugs)
+				me.CN  = 2*N/(me.rho*me.old_speed_fps*me.old_speed_fps*me.ref_area_sqft);
+				me.Cdi = (me.CN*me.CN)/(math.pi*me.wing_eff*me.a_ratio);
+			}
+			me.Cd0 = me["thrust"] != nil and me.thrust>0?me.Cd0*me.Cd_plume:me.Cd0;
+		} else {
+			me.Cdi = 0;
 		}
 
-		return me.Cd;
+		return me.Cd0+me.Cdi;
 	},
 
 	maxG: func (rho, max_g_sealevel) {
@@ -2180,6 +2201,7 @@ var AIM = {
 	},
 
     energyBleed: func (gForce, altitude) {
+    	if (me.advanced) return 0;
         # Bleed of energy from pulling Gs.
         # This is very inaccurate, but better than nothing.
         #
@@ -3023,7 +3045,13 @@ var AIM = {
 			me.last_t_norm_speed = me.t_LOS_norm_speed_fps;
 
 			# acceleration perpendicular to instantaneous line of sight in feet/sec^2
-			me.acc_lateral_fps2 = me.pro_constant*me.line_of_sight_rate_rps*me.horz_closing_rate_fps+me.apn*me.pro_constant*me.t_LOS_norm_acc_fps2/2;
+			if (me.advanced) {
+				me.toBody = math.cos(me.curr_deviation_h*D2R);
+				if (me.toBody==0) me.toBody=1;
+			} else {
+				me.toBody = 1;
+			}
+			me.acc_lateral_fps2 = me.pro_constant*me.line_of_sight_rate_rps*me.horz_closing_rate_fps/me.toBody+me.apn*me.pro_constant*me.t_LOS_norm_acc_fps2/2;
 			#printf("horz acc = %.1f + %.1f", proportionality_constant*line_of_sight_rate_rps*horz_closing_rate_fps, proportionality_constant*t_LOS_norm_acc/2);
 
 			# now translate that sideways acc to an angle:
@@ -3077,7 +3105,13 @@ var AIM = {
 					me.last_t_elev_norm_speed          = me.t_LOS_elev_norm_speed;
 					#printf("Target acc. perpendicular to LOS (positive up): %.1f G.", me.t_LOS_elev_norm_acc/g_fps);
 
-					me.acc_upwards_fps2 = me.pro_constant*me.line_of_sight_rate_up_rps*me.vert_closing_rate_fps+me.apn*me.pro_constant*me.t_LOS_elev_norm_acc/2;
+					if (me.advanced) {
+						me.toBody = math.cos(me.curr_deviation_e*D2R);
+						if (me.toBody==0) me.toBody=1;
+					} else {
+						me.toBody = 1;
+					}
+					me.acc_upwards_fps2 = me.pro_constant*me.line_of_sight_rate_up_rps*me.vert_closing_rate_fps/me.toBody+me.apn*me.pro_constant*me.t_LOS_elev_norm_acc/2;
 					#printf("vert acc = %.2f + %.2f G", me.pro_constant*me.line_of_sight_rate_up_rps*me.vert_closing_rate_fps/g_fps, (me.apn*me.pro_constant*me.t_LOS_elev_norm_acc/2)/g_fps);
 					me.velocity_vector_length_fps = me.clamp(me.old_speed_fps, 0.0001, 1000000);
 					me.commanded_upwards_vector_length_fps = me.acc_upwards_fps2*me.dt;
