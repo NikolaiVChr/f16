@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <PropertyList>
-  <path>Aircraft/f16/Models/Armament/External-stores/an-alq-131.ac</path>
+  <path>Aircraft/f16/Models/Armament/External-stores/MXU-648/MXU-648.ac</path>
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
       <parameters>
@@ -11,7 +11,9 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
-      <object-name>an-alq-131-body</object-name>
+      <object-name>Shell</object-name>
+      <object-name>Door</object-name>
+      <object-name>Hooks</object-name>
   </effect>
 
  </PropertyList>

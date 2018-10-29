@@ -1,14 +1,7 @@
 <?xml version="1.0"?>
 
 <PropertyList>
-  <path>Aircraft/f16/Models/Armament/External-stores/Sniperpod.ac</path>
-
-  <effect>  
-    <inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  
-    <object-name>sniper_pod_sapphire</object-name>
-    <object-name>sniper_pod_sapinn</object-name>
-  </effect>
-
+  <path>Aircraft/f16/Models/Armament/External-stores/AN-ALQ-131/an-alq-131.ac</path>
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
       <parameters>
@@ -18,9 +11,7 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
-      <object-name>sniper_pod</object-name>
-      <object-name>sniper_pod_head</object-name>
-      <!--object-name>sniper_pod_sapinn</object-name-->
+      <object-name>an-alq-131-body</object-name>
   </effect>
 
  </PropertyList>
