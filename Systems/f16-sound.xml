@@ -458,7 +458,7 @@
   <stall>
    <name>gear not down</name>
    <path>Aircraft/f16/Sounds/250hz-square.wav</path>
-   <mode>once</mode>
+   <mode>looped</mode>
    <type>avionics</type>
    <condition>
       <and><!-- eyebrow TO LDG CONFIG warning (gears not down warning) -->
@@ -488,10 +488,11 @@
   <stall>
    <name>lowspeed</name>
    <path>Aircraft/f16/Sounds/250hz-square-steady.wav</path>
-   <mode>once</mode>
+   <mode>looped</mode>
    <type>avionics</type>
    <condition>
       <property>sim/current-view/internal</property>
+      <not><property>gear/gear[0]/wow</property></not>
       <or>
         <and>
             <or>
@@ -528,7 +529,7 @@
   <stall>
    <name>AoA 1hz</name>
    <path>Aircraft/f16/Sounds/800hz-square.wav</path>
-   <mode>once</mode>
+   <mode>looped</mode>
    <type>avionics</type>
    <condition>
       <and>
@@ -549,7 +550,7 @@
   <stall>
    <name>AoA steady</name>
    <path>Aircraft/f16/Sounds/800hz-square-steady.wav</path>
-   <mode>once</mode>
+   <mode>looped</mode>
    <type>avionics</type>
    <condition>
       <and>

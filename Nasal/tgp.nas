@@ -74,6 +74,8 @@ var FLIRCameraUpdater = {
     },
 
     reset: func {
+        print("reset called?!?!");
+        return;
         me.remove_listeners();
         me.listeners.append(setlistener("/sim/signals/click", func {
             var lat = getprop("/sim/input/click/latitude-deg");
