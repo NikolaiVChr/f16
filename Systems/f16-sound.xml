@@ -456,12 +456,12 @@
   </stall>
 
   <stall>
-   <name>stall2</name>
-   <path>Aircraft/f16/Sounds/betty/caution.wav</path>
+   <name>gear not down</name>
+   <path>Aircraft/f16/Sounds/250hz-square.wav</path>
    <mode>once</mode>
    <type>avionics</type>
    <condition>
-      <and><!-- eyebrow TO LDG CONFIG warning -->
+      <and><!-- eyebrow TO LDG CONFIG warning (gears not down warning) -->
           <property>sim/current-view/internal</property>
           <less-than>
             <property>controls/gear/gear-down</property>
@@ -482,6 +482,88 @@
       </and>
    </condition>
   </stall>
+
+  
+
+  <stall>
+   <name>lowspeed</name>
+   <path>Aircraft/f16/Sounds/250hz-square-steady.wav</path>
+   <mode>once</mode>
+   <type>avionics</type>
+   <condition>
+      <property>sim/current-view/internal</property>
+      <or>
+        <and>
+            <or>
+              <less-than>
+                <property>controls/gear/gear-down</property>
+                <value>1</value>
+              </less-than>
+              <not><property>controls/flight/flaps</property></not>
+            </or>
+            <less-than>
+              <property>velocities/airspeed-kt</property>
+              <value>120</value>
+            </less-than>
+        </and>
+        <and>
+            <or>
+              <not>
+                <less-than>
+                  <property>controls/gear/gear-down</property>
+                  <value>1</value>
+                </less-than>
+              </not>
+              <property>controls/flight/flaps</property>
+            </or>
+            <greater-than>
+              <property>orientation/alpha-deg</property>
+              <value>15</value>
+            </greater-than>
+        </and>
+      </or>
+   </condition>
+  </stall>
+
+  <stall>
+   <name>AoA 1hz</name>
+   <path>Aircraft/f16/Sounds/800hz-square.wav</path>
+   <mode>once</mode>
+   <type>avionics</type>
+   <condition>
+      <and>
+          <property>sim/current-view/internal</property>
+          <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+          <greater-than>
+            <property>orientation/alpha-deg</property>
+            <value>12</value>
+          </greater-than>
+          <less-than>
+            <property>orientation/alpha-deg</property>
+            <value>18</value>
+          </less-than>
+      </and>
+   </condition>
+  </stall>
+
+  <stall>
+   <name>AoA steady</name>
+   <path>Aircraft/f16/Sounds/800hz-square-steady.wav</path>
+   <mode>once</mode>
+   <type>avionics</type>
+   <condition>
+      <and>
+          <property>sim/current-view/internal</property>
+          <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+          <greater-than>
+            <property>orientation/alpha-deg</property>
+            <value>18</value>
+          </greater-than>
+      </and>
+   </condition>
+  </stall>
+
+
 
   <impact>
    <name>pullUp</name>

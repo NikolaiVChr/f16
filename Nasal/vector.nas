@@ -119,6 +119,11 @@ var Math = {
                 0,0,0,1];
     },
 
+    invertMatrix4: func (matrix) {
+        # WIP
+        return [];
+    },
+
     mirrorMatrix: func {
         # mirror y axis in transform matrix
         return [1,0,0,0,
