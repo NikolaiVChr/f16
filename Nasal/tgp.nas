@@ -53,7 +53,7 @@ var FLIRCameraUpdater = {
     },
 
     disable: func {
-        me.remove_listeners();
+        #me.remove_listeners();
         me.loop.disable();
     },
 
@@ -423,7 +423,7 @@ var callInit = func {
 
   dedGroup = canvasMFDext.createGroup();
   dedGroup.show();
-  var color = [0,1,0,1];
+  var color = [1,1,1,1];
   line1 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)

@@ -31,6 +31,9 @@ var MFD_Station =
         obj.prop = "payload/weight["~ident~"]";
         obj.ident = ident;
 
+        obj.menuLayer = svg.getElementById("layer2");
+        obj.menuLayer.setColor(1,1,1);
+
 #        setlistener(obj.prop~"/selected", func(v)
 #                    {
     #                    obj.update();

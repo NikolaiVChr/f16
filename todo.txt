@@ -33,7 +33,7 @@ Engine
 
 GUI
 ---
-designation view for targeting pod. (ala. Mirage2000)
+
 
 Stores
 ------
@@ -79,7 +79,7 @@ When an eyebrow warning comes on the HUD should show WARN. Can be removed with W
 
 DED (little display right-down from HUD)
 ---
-Canvas (page 1-137 of b50 manual)
+
 
 Oxygen system
 -------------
