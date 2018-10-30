@@ -4,7 +4,7 @@
 
 <!-- this is the static non fired model on the aircraft -->
 
-	<path>pod-pylons.ac</path>
+	<path>fuselage-pylon-left.ac</path>
 	
 	<effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
@@ -15,7 +15,7 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
-      <object-name>RWStation1.002</object-name>
+      <object-name>PylonLFuselage</object-name>
   </effect>
 	
 </PropertyList>

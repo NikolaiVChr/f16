@@ -2,7 +2,7 @@
   
 <PropertyList> 
 
-    <path>Aircraft/f16/Models/Armament/Triplerack/trirack_small.xml</path>
+    <path>Aircraft/f16/Models/Armament/Racks/trirack_small.xml</path>
 
     <model>
       <name>Station3_MK82_left</name>

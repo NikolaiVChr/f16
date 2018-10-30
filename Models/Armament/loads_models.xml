@@ -777,8 +777,8 @@
   <name>Station10_SniperATP</name>
   <path>Aircraft/f16/Models/Armament/External-stores/SniperATP/SniperATP.xml</path>
   <offsets>
-   <x-m>-2.5</x-m>
-   <y-m>0.85</y-m>
+   <x-m>-2.25</x-m>
+   <y-m>0.80</y-m>
    <z-m>-0.95</z-m>
    <pitch-deg>-0.5</pitch-deg>
   </offsets>
@@ -788,16 +788,16 @@
   <name>Station10_LANTIRNtarget</name>
   <path>Aircraft/f16/Models/Armament/External-stores/LANTIRN/AN-AAQ-14.xml</path>
   <offsets>
-   <x-m>-2.5</x-m>
-   <y-m>0.85</y-m>
-   <z-m>-0.95</z-m>
+   <x-m>-2.25</x-m>
+   <y-m>0.80</y-m>
+   <z-m>-0.975</z-m>
    <pitch-deg>-0.5</pitch-deg>
   </offsets>
  </model>
 
  <model>
   <name>Podpylon_right</name>
-  <path>Aircraft/f16/Models/Pod-pylon-right.xml</path>
+  <path>Aircraft/f16/Models/Armament/External-stores/Pylons/fuselage-pylon-right.xml</path>
   <offsets>
    <x-m>0</x-m>
    <y-m>0.0</y-m>
