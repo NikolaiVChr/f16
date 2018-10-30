@@ -107,6 +107,8 @@
                 <ventraltank type="bool">false</ventraltank>
                 <wingtankL type="bool">false</wingtankL>
                 <wingtankR type="bool">false</wingtankR>
+                <wingtankL6 type="bool">false</wingtankL6>
+                <wingtankR6 type="bool">false</wingtankR6>
                 <controls>
                     <navigation>
                         <!-- INSTRUMENT MODE PANEL -->

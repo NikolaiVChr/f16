@@ -343,6 +343,21 @@
 
  <animation>
   <type>select</type>
+  <object-name>LExtTank6</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-3-type</property>
+      <value>Left 600 Gal Tank</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-3-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
   <object-name>Station4_AGM-88</object-name>
   <condition>
     <equals>
@@ -523,6 +538,21 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
     <equals>
       <property>payload/armament/station/id-5-type</property>
       <value>Right 370 Gal Tank</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-5-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>RExtTank6</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-5-type</property>
+      <value>Right 600 Gal Tank</value>
     </equals>
     <greater-than>
       <property>payload/armament/station/id-5-count</property>
@@ -972,6 +1002,8 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   <object-name>VentralTank</object-name>
   <object-name>RExtTank</object-name>
   <object-name>LExtTank</object-name>
+  <object-name>RExtTank6</object-name>
+  <object-name>LExtTank6</object-name>
   <object-name>Centerpylon</object-name>
   <property-base>sim/model/livery</property-base>
   <texture-prop>texture</texture-prop>

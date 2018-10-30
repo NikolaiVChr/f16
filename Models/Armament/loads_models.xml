@@ -293,6 +293,17 @@
  </model>
 
  <model>
+  <name>LExtTank6</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/600G.xml</path>
+  <offsets>
+   <x-m>-0.50</x-m>
+   <y-m>-1.65</y-m>
+   <z-m>-0.65</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
   <name>Station4_AGM-88</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AGM-88/AGM-88.xml</path>
   <offsets>
@@ -419,6 +430,17 @@
    <x-m>-0.50</x-m>
    <y-m>1.65</y-m>
    <z-m>-0.55</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>RExtTank6</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/600G.xml</path>
+  <offsets>
+   <x-m>-0.50</x-m>
+   <y-m>1.65</y-m>
+   <z-m>-0.65</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
