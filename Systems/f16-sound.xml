@@ -462,7 +462,6 @@
    <type>avionics</type>
    <condition>
       <and><!-- eyebrow TO LDG CONFIG warning (gears not down warning) -->
-          <property>sim/current-view/internal</property>
           <less-than>
             <property>controls/gear/gear-down</property>
             <value>1</value>
@@ -481,6 +480,10 @@
           </greater-than><!-- 250 fpm -->
       </and>
    </condition>
+   <volume>
+        <property>sim/current-view/internal</property>
+        <factor>0.5</factor>
+    </volume>
   </stall>
 
   
@@ -491,7 +494,6 @@
    <mode>looped</mode>
    <type>avionics</type>
    <condition>
-      <property>sim/current-view/internal</property>
       <not><property>gear/gear[0]/wow</property></not>
       <or>
         <and>
@@ -524,6 +526,10 @@
         </and>
       </or>
    </condition>
+   <volume>
+        <property>sim/current-view/internal</property>
+        <factor>0.5</factor>
+    </volume>
   </stall>
 
   <stall>
@@ -533,8 +539,11 @@
    <type>avionics</type>
    <condition>
       <and>
-          <property>sim/current-view/internal</property>
           <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+          <less-than>
+            <property>controls/gear/gear-down</property>
+            <value>1</value>
+          </less-than>
           <greater-than>
             <property>orientation/alpha-deg</property>
             <value>12</value>
@@ -545,6 +554,10 @@
           </less-than>
       </and>
    </condition>
+   <volume>
+        <property>sim/current-view/internal</property>
+        <factor>0.5</factor>
+    </volume>
   </stall>
 
   <stall>
@@ -554,7 +567,6 @@
    <type>avionics</type>
    <condition>
       <and>
-          <property>sim/current-view/internal</property>
           <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
           <greater-than>
             <property>orientation/alpha-deg</property>
@@ -562,6 +574,10 @@
           </greater-than>
       </and>
    </condition>
+   <volume>
+        <property>sim/current-view/internal</property>
+        <factor>0.5</factor>
+    </volume>
   </stall>
 
 
