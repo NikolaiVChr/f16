@@ -442,8 +442,15 @@ var AIM = {
         if (m.chaffResistance == nil) {
         	m.chaffResistance = 0.95;
         }
+        if (m.guidanceLaw == nil) {
+			m.guidanceLaw = "APN";
+		}
         if (m.pro_constant == nil) {
-        	m.pro_constant = 3;
+        	if (find("APN", m.guidanceLaw)!=-1) {
+        		m.pro_constant = 5;
+        	} else {
+	        	m.pro_constant = 3;
+	        }
         }
         if (m.force_lbf_1 == nil or m.force_lbf_1 == 0) {
         	m.force_lbf_1 = 0;
@@ -453,9 +460,6 @@ var AIM = {
         	m.force_lbf_2 = 0;
         	m.stage_2_duration = 0;
         }
-        if (m.guidanceLaw == nil) {
-			m.guidanceLaw = "APN";
-		}
 		if (m.destruct_when_free == nil) {
 			m.destruct_when_free = FALSE;
 		}
@@ -1834,7 +1838,7 @@ var AIM = {
 		# Get target position.
 		if (me.Tgt != nil and me.t_coord != nil) {
 			if (me.flareLock == FALSE and me.chaffLock == FALSE) {
-				me.t_coord = me.Tgt.get_Coord();
+				me.t_coord = geo.Coord.new(me.Tgt.get_Coord());#in case multiple missiles use same Tgt we cannot rely on coords being different, so we extra create new.
 				if (me.t_coord == nil) {
 					# just to protect the multithreaded code for invalid pos.
 					me.Tgt = nil;
@@ -1870,6 +1874,8 @@ var AIM = {
 		#var q = 0.5 * rho * me.old_speed_fps * me.old_speed_fps;
 		#setprop("logging/missile/dist-nm", me.ac_init.distance_to(me.coord)*M2NM);
 		#setprop("logging/missile/alt-m", me.alt_ft * FT2M);
+		#setprop("logging/missile/speed-kt", me.old_speed_fps * FPS2KT);
+		#setprop("logging/missile/target-dist-nm", me.dist_curr*M2NM);
 		#setprop("logging/missile/speed-m", me.speed_m*1000);
 		#setprop("logging/missile/drag-lbf", Cd * q * me.ref_area_sqft);
 		#setprop("logging/missile/thrust-lbf", thrust_lbf);
@@ -1995,7 +2001,7 @@ var AIM = {
 
 		# telemetry
 		if (me.data == TRUE) {
-			me.eta = me.free == TRUE or me.horz_closing_rate_fps == -1?-1:(me.dist_curr*M2FT)/me.horz_closing_rate_fps;
+			me.eta = me.free == TRUE or me.horz_closing_rate_fps == -1?-1:(me["t_go"]!=nil?me.t_go:(me.dist_curr*M2FT)/me.horz_closing_rate_fps);
 			me.hit = 50;# in percent
 			if (me.life_time > me.drop_time+me.stage_1_duration) {
 				# little less optimistic after reaching topspeed
@@ -2960,7 +2966,7 @@ var AIM = {
 		            me.raw_steer_signal_elev += me.gravComp;
 				}
 				return;
-			} elsif (find("APN", me.guidanceLaw)) {
+			} elsif (find("APN", me.guidanceLaw)!=-1) {
 				me.apn = 1;
 			} else {
 				me.apn = 0;
@@ -2982,6 +2988,8 @@ var AIM = {
 
 			me.horz_closing_rate_fps = me.clamp(((me.dist_last - me.dist_curr)*M2FT)/me.dt, 0, 1000000);#clamped due to cruise missiles that can fly slower than target.
 			me.printGuideDetails("Horz closing rate: %05d ft/sec", me.horz_closing_rate_fps);
+			me.vert_closing_rate_fps = me.clamp(((me.dist_direct_last - me.dist_curr_direct)*M2FT)/me.dt, 0.0, 1000000);
+			me.printGuideDetails("Vert closing rate: %05d ft/sec", me.vert_closing_rate_fps);
 
 			me.c_dv = geo.normdeg180(me.t_course-me.last_t_course);
 			
@@ -3044,23 +3052,54 @@ var AIM = {
 
 			me.last_t_norm_speed = me.t_LOS_norm_speed_fps;
 
-			# acceleration perpendicular to instantaneous line of sight in feet/sec^2
-			if (me.advanced) {
-				me.toBody = math.cos(me.curr_deviation_h*D2R);
-				if (me.toBody==0) me.toBody=1;
+			# time to go calc
+			me.t_away_norm_speed_fps = math.cos((me.t_course - me.t_heading)*D2R)*me.t_horz_speed_fps;
+			me.t_speed_vert_fps      = math.sin(me.t_pitch*D2R)*me.t_speed_fps;
+			me.m_speed_vert_fps      = math.sin(me.pitch*D2R)*me.old_speed_horz_fps;
+			me.t_pos_z               = (me.t_coord.alt()-me.coord.alt())*M2FT;
+			me.Vt   = [me.t_away_norm_speed_fps,me.t_LOS_norm_speed_fps,me.t_speed_vert_fps];
+			me.Vm   = [me.old_speed_horz_fps,0,me.m_speed_vert_fps];
+			me.Pm   = [0,0,0];
+			me.Pt   = [me.dist_curr*M2FT,0,me.t_pos_z];
+			me.V_tm = vector.Math.minus(me.Vt,me.Vm);
+			me.R_tm = vector.Math.minus(me.Pm,me.Pt);
+			me.t_go = vector.Math.dotProduct(me.R_tm,me.R_tm)/vector.Math.dotProduct(me.R_tm, me.V_tm);
+			#me.t_go = M2FT*me.dist_curr_direct/me.vert_closing_rate_fps;#time to go (too simple)
+			#printf("time_to_go %.1f, closing %d",me.t_go,me.vert_closing_rate_fps);
+
+			if (me.apn) {
+				# APN (constant best at 5)
+				# Augmented proportional navigation. Takes target acc. into account.
+				me.toBody = math.cos(me.curr_deviation_h*D2R);#convert perpendicular LOS acc. to perpendicular body acc.
+				if (me.toBody==0) me.toBody=0.00001;
+				# acceleration perpendicular to instantaneous line of sight in feet/sec^2:
+				me.acc_lateral_fps2 = me.pro_constant*me.line_of_sight_rate_rps*me.horz_closing_rate_fps/me.toBody+me.pro_constant*me.t_LOS_norm_acc_fps2*0.5;# in some litterature the second pro_constant is replaced by t_go, but that will make the missile overcompensate.
+				#printf("vert acc = %.2f + %.2f G", me.pro_constant*me.line_of_sight_rate_up_rps*me.vert_closing_rate_fps/g_fps, (me.apn*me.pro_constant*me.t_LOS_elev_norm_acc/2)/g_fps);
+				me.velocity_vector_length_fps = me.clamp(me.old_speed_horz_fps, 0.0001, 1000000);
+				me.commanded_lateral_vector_length_fps = me.acc_lateral_fps2*me.dt;
+				me.raw_steer_signal_head  = R2D*me.commanded_lateral_vector_length_fps/me.velocity_vector_length_fps;
+			} elsif (!me.apn) {
+				# PN (constant best at 3)
+				# Generalized Proportional navigation.
+				me.toBody = math.cos(me.curr_deviation_h*D2R);#convert perpendicular LOS acc. to perpendicular body acc.
+				if (me.toBody==0) me.toBody=0.00001;
+				me.acc_lateral_fps2     = me.pro_constant*me.line_of_sight_rate_rps*me.horz_closing_rate_fps/me.toBody;
+				me.velocity_vector_length_fps = me.clamp(me.old_speed_horz_fps, 0.0001, 1000000);
+				me.commanded_lateral_vector_length_fps = me.acc_lateral_fps2*me.dt;
+				me.raw_steer_signal_head  = R2D*me.commanded_lateral_vector_length_fps/me.velocity_vector_length_fps;
 			} else {
-				me.toBody = 1;
+				# PN [invented during WWII by Luke Chia‐Liu Yuan]
+				# Original Proportional navigation.
+				# Rearranging the equations gives Pure proportional navigation, which show that this law
+				# does not take missile alpha into account, and is therefore not very good in real life.
+				me.radians_lateral_per_sec     = me.pro_constant*me.line_of_sight_rate_rps;
+				me.raw_steer_signal_head  = me.dt*me.radians_lateral_per_sec*R2D;
 			}
-			me.acc_lateral_fps2 = me.pro_constant*me.line_of_sight_rate_rps*me.horz_closing_rate_fps/me.toBody+me.apn*me.pro_constant*me.t_LOS_norm_acc_fps2/2;
 			#printf("horz acc = %.1f + %.1f", proportionality_constant*line_of_sight_rate_rps*horz_closing_rate_fps, proportionality_constant*t_LOS_norm_acc/2);
 
 			# now translate that sideways acc to an angle:
-			me.velocity_vector_length_fps = me.clamp(me.old_speed_horz_fps, 0.0001, 1000000);
-			me.commanded_lateral_vector_length_fps = me.acc_lateral_fps2*me.dt;
-
-			#isosceles triangle:
-			me.raw_steer_signal_head = math.asin(me.clamp((me.commanded_lateral_vector_length_fps*0.5)/me.velocity_vector_length_fps,-1,1))*R2D*2;
-			#me.raw_steer_signal_head = math.atan2(me.commanded_lateral_vector_length_fps, me.velocity_vector_length_fps)*R2D; # flawed, its not a right triangle
+			
+			
 
 			#printf("Proportional lead: %0.1f deg horz", -(me.curr_deviation_h-me.raw_steer_signal_head));
 
@@ -3068,7 +3107,7 @@ var AIM = {
 			#me.print(sprintf("commanded-perpendicular-acceleration=%.1f ft/s^2", acc_lateral_fps2));
 			#printf("horz leading by %.1f deg, commanding %.1f deg", me.curr_deviation_h, me.raw_steer_signal_head);
 
-			if (me.cruise_or_loft == FALSE) {# and me.last_cruise_or_loft == FALSE
+			if (me.cruise_or_loft == FALSE) {
 				me.fixed_aim = nil;
 				me.fixed_aim_time = nil;
 				if (find("PN",me.guidanceLaw) != -1 and size(me.guidanceLaw) > 3) {
@@ -3086,8 +3125,7 @@ var AIM = {
 					# augmented proportional navigation for elevation #
 					###################################################
 					#me.print(me.guidanceLaw~" in fully control");
-					me.vert_closing_rate_fps = me.clamp(((me.dist_direct_last - me.dist_curr_direct)*M2FT)/me.dt, 0.0, 1000000);
-					me.printGuideDetails("Vert closing rate: %05d ft/sec", me.vert_closing_rate_fps);
+					
 					me.line_of_sight_rate_up_rps = (D2R*(me.t_elev_deg-me.last_t_elev_deg))/me.dt;
 
 					# calculate target acc as normal to LOS line: (up acc is positive)
@@ -3104,20 +3142,33 @@ var AIM = {
 					me.t_LOS_elev_norm_acc            = (me.t_LOS_elev_norm_speed - me.last_t_elev_norm_speed)/me.dt;
 					me.last_t_elev_norm_speed          = me.t_LOS_elev_norm_speed;
 					#printf("Target acc. perpendicular to LOS (positive up): %.1f G.", me.t_LOS_elev_norm_acc/g_fps);
-
-					if (me.advanced) {
-						me.toBody = math.cos(me.curr_deviation_e*D2R);
-						if (me.toBody==0) me.toBody=1;
+					if (me.apn) {
+						# APN (constant best at 5)
+						# Augmented proportional navigation. Takes target acc. into account.
+						me.toBody = math.cos(me.curr_deviation_e*D2R);#convert perpendicular LOS acc. to perpendicular body acc.
+						if (me.toBody==0) me.toBody=0.00001;
+						me.acc_upwards_fps2 = me.pro_constant*me.line_of_sight_rate_up_rps*me.vert_closing_rate_fps/me.toBody+me.pro_constant*me.t_LOS_elev_norm_acc/2;
+						#printf("vert acc = %.2f + %.2f G", me.pro_constant*me.line_of_sight_rate_up_rps*me.vert_closing_rate_fps/g_fps, (me.apn*me.pro_constant*me.t_LOS_elev_norm_acc/2)/g_fps);
+						me.velocity_vector_length_fps = me.clamp(me.old_speed_fps, 0.0001, 1000000);
+						me.commanded_upwards_vector_length_fps = me.acc_upwards_fps2*me.dt;
+						me.raw_steer_signal_elev  = R2D*me.commanded_upwards_vector_length_fps/me.velocity_vector_length_fps;
+					} elsif (!me.apn) {
+						# PN (constant best at 3)
+						# Proportional navigation. Takes target acc. into account.
+						me.toBody = math.cos(me.curr_deviation_e*D2R);#convert perpendicular LOS acc. to perpendicular body acc.
+						if (me.toBody==0) me.toBody=0.00001;
+						me.acc_upwards_fps2 = me.pro_constant*me.line_of_sight_rate_up_rps*me.vert_closing_rate_fps/me.toBody;
+						me.velocity_vector_length_fps = me.clamp(me.old_speed_fps, 0.0001, 1000000);
+						me.commanded_upwards_vector_length_fps = me.acc_upwards_fps2*me.dt;
+						me.raw_steer_signal_elev  = R2D*me.commanded_upwards_vector_length_fps/me.velocity_vector_length_fps;
 					} else {
-						me.toBody = 1;
+						# PN [invented during WWII by Luke Chia‐Liu Yuan]
+						# Original Proportional navigation.
+						# Rearranging the equations gives Pure proportional navigation, which show that this law
+						# does not take missile alpha into account, and is therefore not very good in real life.
+						me.radians_up_per_sec     = me.pro_constant*me.line_of_sight_rate_up_rps;
+						me.raw_steer_signal_elev  = me.dt*me.radians_up_per_sec*R2D;
 					}
-					me.acc_upwards_fps2 = me.pro_constant*me.line_of_sight_rate_up_rps*me.vert_closing_rate_fps/me.toBody+me.apn*me.pro_constant*me.t_LOS_elev_norm_acc/2;
-					#printf("vert acc = %.2f + %.2f G", me.pro_constant*me.line_of_sight_rate_up_rps*me.vert_closing_rate_fps/g_fps, (me.apn*me.pro_constant*me.t_LOS_elev_norm_acc/2)/g_fps);
-					me.velocity_vector_length_fps = me.clamp(me.old_speed_fps, 0.0001, 1000000);
-					me.commanded_upwards_vector_length_fps = me.acc_upwards_fps2*me.dt;
-
-					me.raw_steer_signal_elev = math.asin(me.clamp((me.commanded_upwards_vector_length_fps*0.5)/me.velocity_vector_length_fps,-1,1))*R2D*2;
-					#me.raw_steer_signal_elev = math.atan2(me.commanded_upwards_vector_length_fps, me.velocity_vector_length_fps)*R2D;
 
 					# now compensate for the predicted gravity drop of attitude:				
 		            me.attitudePN = math.atan2(-(me.speed_down_fps+g_fps * me.dt), me.speed_horizontal_fps ) * R2D;
@@ -3423,7 +3474,13 @@ var AIM = {
 	},
 
 	interpolate: func (start, end, fraction) {
-		me.xx = (start.x()*(1-fraction)+end.x()*fraction);
+		call(start.x,nil,start,start,var err = []);
+		if (size(err)) {
+			#in case we get this error again, I would like to see this output:
+			printf("ERROR: cd %d pd %d i %.2f",start._cdirty,start._pdirty,fraction);
+		}
+		me.xx = (start.x()*(1-fraction)
+			+end.x()*fraction);
 		me.yy = (start.y()*(1-fraction)+end.y()*fraction);
 		me.zz = (start.z()*(1-fraction)+end.z()*fraction);
 

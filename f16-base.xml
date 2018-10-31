@@ -2209,4 +2209,58 @@ value. 18000=standard US transition altitude -->
           <file>Aircraft/f16/Nasal/tgp-target.nas</file>
         </tgpTarget>-->
     </nasal>
+
+    <!--<logging>
+        <log>
+           <filename>C:/Users/Nikolai/AppData/Roaming/flightgear.org/Export/aim120_missile_performancelog.csv</filename>
+           <enabled>true</enabled>
+           <interval-ms>250</interval-ms>
+           <delimiter>,</delimiter>
+           <entry>
+            <enabled>true</enabled>
+            <title>Distance</title>
+            <property>logging/missile/dist-nm</property>
+           </entry>
+           <entry>
+            <enabled>true</enabled>
+            <title>Altitude</title>
+            <property>logging/missile/alt-m</property>
+           </entry>
+           <entry>
+            <enabled>true</enabled>
+            <title>Speed</title>
+            <property>logging/missile/speed-kt</property>
+           </entry>
+           <entry>
+            <enabled>true</enabled>
+            <title>TDistance</title>
+            <property>logging/missile/target-dist-nm</property>
+           </entry>
+        </log>
+        <time-log type="string">0:0:0</time-log>
+        <date-log type="string">0/0/0</date-log>
+        <missile>
+            <!-- for google earth -->
+            <altitude-ft type="double">0.0</altitude-ft>
+            <longitude-deg type="double">0.0</longitude-deg>
+            <latitude-deg type="double">0.0</latitude-deg>
+            <t-altitude-ft type="double">0.0</t-altitude-ft>
+            <t-longitude-deg type="double">0.0</t-longitude-deg>
+            <t-latitude-deg type="double">0.0</t-latitude-deg>
+
+            <!-- for plotting performance -->
+            <dist-m type="double">0.0</dist-m>
+            <target-dist-m type="double">0.0</target-dist-m>
+            <alt-m type="double">0.0</alt-m>
+            <speed-m type="double">0.0</speed-m>
+            <speed-kt type="double">0.0</speed-kt>
+            <drag-lbf type="double">0.0</drag-lbf>
+            <thrust-lbf type="double">0.0</thrust-lbf>
+
+            <!-- test -->
+            <LOS-rate type="double">0.0</LOS-rate>
+            <dt type="double">0.0</dt>
+        </missile>
+    </logging>-->
+
 </PropertyList>
