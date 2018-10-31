@@ -31,7 +31,7 @@ var smokewinderWhite1 = stations.Smoker.new("Smokewinder White", "SmokeW", "sim/
 var smokewinderWhite9 = stations.Smoker.new("Smokewinder White", "SmokeW", "sim/model/f16/smokewinderW9");
 var tgp = stations.Smoker.new("AN/AAQ-33 Sniper ATP", "AAQ-33", "f16/stores/tgp-mounted");
 var tgp2 = stations.Smoker.new("AN/AAQ-14 LANTIRN Target Pod", "AAQ-14", "f16/stores/tgp-mounted");
-var tgp3 = stations.Smoker.new("AN/AAQ-13 LANTIRN Nav Pod", "AAQ-13", "f16/stores/tgp-mounted");
+var tgp3 = stations.Smoker.new("AN/AAQ-13 LANTIRN Nav Pod", "AAQ-13", "f16/stores/nav-mounted");
 var dummy = stations.Dummy.new("AN-T-17", nil);
 var dummy2 = stations.Dummy.new("CATM-9L", nil);# nil for shortname makes them not show up in MFD SMS page. If shortname is nil it MUST have showLongTypeInsteadOfCount: 1
 var dummy3 = stations.Dummy.new("AN/ALQ-131 ECM Pod", "AL131");
@@ -72,8 +72,8 @@ var pylonSets = {
 	w1: {name: "Smokewinder White", content: [smokewinderWhite1], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	w9: {name: "Smokewinder White", content: [smokewinderWhite9], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     tgp: {name: "AN/AAQ-33 Sniper ATP", content: [tgp], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 446, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    tgp2: {name: "AN/AAQ-14 LANTIRN Target Pod", content: [tgp2], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 470, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1}
-    tgp3: {name: "AN/AAQ-13 LANTIRN nav Pod", content: [tgp3], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 470, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1}
+    tgp2: {name: "AN/AAQ-14 LANTIRN Target Pod", content: [tgp2], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 470, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    tgp3: {name: "AN/AAQ-13 LANTIRN Nav Pod", content: [tgp3], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 470, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 };
 
 if (getprop("sim/model/f16/wingmounts") != 0) {
@@ -100,9 +100,9 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 	pylon7 = stations.Pylon.new("Right Wing Pylon",       6, [0.082, 2.88034,-0.25696], pylon9mix, 6, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[7]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[7]",1),func{return getprop("payload/armament/fire-control/serviceable")});
 	pylon8 = stations.Pylon.new("Right Outer Wing Pylon", 7, [0.082, 3.95167,-0.25696], pylon120set, 7, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[8]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[8]",1),func{return getprop("payload/armament/fire-control/serviceable")});
 	pylon9 = stations.Pylon.new("Right Wingtip Pylon",    8, [0.082, 4.79412, 0.01109], wingtipSet9, 8, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[9]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[9]",1),func{return getprop("payload/armament/fire-control/serviceable")});
-    pylon10= stations.Pylon.new("Right Fuselage Pylon",  10, [0.082, 4.79412, 0.01109], fuselageset, 9, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[30]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[9]",1),func{return 1;});
+    pylon10= stations.Pylon.new("Right Fuselage Pylon",  10, [0.082, 4.79412, 0.01109], fuselageset, 9, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[30]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[30]",1),func{return 1;});
 	pylonI = stations.InternalStation.new("Internal gun mount", 9, [pylonSets.e], props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[10]",1));
-	pylon11= stations.Pylon.new("Left Fuselage Pylon",   11, [0,0,0], fuselageset, 10, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[31]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[1]",1),func{return 1;});
+	pylon11= stations.Pylon.new("Left Fuselage Pylon",   11, [0,0,0], fuselageset, 10, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[31]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[31]",1),func{return 1;});
 
     var pylons = [pylon1,pylon2,pylon3,pylon4,pylon5,pylon6,pylon7,pylon8,pylon9,pylonI,pylon10,pylon11];
 
