@@ -22,7 +22,7 @@ var coords_cam = [
     getprop("/sim/view[102]/config/y-offset-m")
 ];
 io.include("Aircraft/Generic/updateloop.nas");
-io.load_nasal(getprop("/sim/fg-root") ~ "/Aircraft/c172p/Nasal/generic/math_ext.nas","math_ext");
+#io.load_nasal(getprop("/sim/fg-root") ~ "/Aircraft/c172p/Nasal/generic/math_ext.nas","math_ext");
 var FLIRCameraUpdater = {
 
     new: func {
@@ -74,7 +74,7 @@ var FLIRCameraUpdater = {
     },
 
     reset: func {
-        print("reset called?!?!");
+        #print("reset called?!?!");
         return;
         me.remove_listeners();
         me.listeners.append(setlistener("/sim/signals/click", func {
