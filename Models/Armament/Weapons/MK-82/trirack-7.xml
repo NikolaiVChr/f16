@@ -8,9 +8,9 @@
       <name>Station7_MK82_left</name>
       <path>Aircraft/f16/Models/Armament/Weapons/MK-82/MK-82.xml</path>
       <offsets>
-        <x-m>-0.35</x-m>
-        <y-m>-0.432802</y-m>
-        <z-m>-0.231045</z-m>
+        <x-m>-0.23</x-m>
+        <y-m>-0.442802</y-m>
+        <z-m>-0.221045</z-m>
         <pitch-deg>0</pitch-deg>
         <roll-deg>00</roll-deg>
       </offsets>
@@ -20,9 +20,9 @@
       <name>Station7_MK82_center</name>
       <path>Aircraft/f16/Models/Armament/Weapons/MK-82/MK-82.xml</path>
       <offsets>
-        <x-m>-0.35</x-m>
+        <x-m>-0.23</x-m>
         <y-m>0</y-m>
-        <z-m>-0.525545</z-m>
+        <z-m>-0.535545</z-m>
         <pitch-deg>0</pitch-deg>
       </offsets>
     </model>
@@ -31,9 +31,9 @@
       <name>Station7_MK82_right</name>
       <path>Aircraft/f16/Models/Armament/Weapons/MK-82/MK-82.xml</path>
       <offsets>
-        <x-m>-0.35</x-m>
-        <y-m>0.432802</y-m>
-        <z-m>-0.231045</z-m>
+        <x-m>-0.23</x-m>
+        <y-m>0.442802</y-m>
+        <z-m>-0.221045</z-m>
         <pitch-deg>0</pitch-deg>
         <roll-deg>00</roll-deg>
       </offsets>

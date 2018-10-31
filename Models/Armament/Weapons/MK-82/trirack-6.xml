@@ -2,17 +2,28 @@
   
 <PropertyList> 
 
-    <path>Aircraft/f16/Models/Armament/Racks/duorack.xml</path>
+    <path>Aircraft/f16/Models/Armament/Racks/trirack_small.xml</path>
 
     <model>
       <name>Station6_MK82_left</name>
       <path>Aircraft/f16/Models/Armament/Weapons/MK-82/MK-82.xml</path>
       <offsets>
-        <x-m>-0.35</x-m>
-        <y-m>-0.302802</y-m>
-        <z-m>-0.341045</z-m>
+        <x-m>-0.23</x-m>
+        <y-m>-0.442802</y-m>
+        <z-m>-0.221045</z-m>
         <pitch-deg>0</pitch-deg>
         <roll-deg>00</roll-deg>
+      </offsets>
+    </model>
+
+    <model>
+      <name>Station6_MK82_center</name>
+      <path>Aircraft/f16/Models/Armament/Weapons/MK-82/MK-82.xml</path>
+      <offsets>
+        <x-m>-0.23</x-m>
+        <y-m>0</y-m>
+        <z-m>-0.535545</z-m>
+        <pitch-deg>0</pitch-deg>
       </offsets>
     </model>
 
@@ -20,9 +31,9 @@
       <name>Station6_MK82_right</name>
       <path>Aircraft/f16/Models/Armament/Weapons/MK-82/MK-82.xml</path>
       <offsets>
-        <x-m>-0.35</x-m>
-        <y-m>0.302802</y-m>
-        <z-m>-0.341045</z-m>
+        <x-m>-0.23</x-m>
+        <y-m>0.442802</y-m>
+        <z-m>-0.221045</z-m>
         <pitch-deg>0</pitch-deg>
         <roll-deg>00</roll-deg>
       </offsets>
@@ -57,6 +68,21 @@
           <value>1</value>
         </greater-than>
       </and>
+      </condition>
+     </animation>
+
+     <animation>
+      <type>select</type>
+      <object-name>Station6_MK82_center</object-name>
+      <condition><and>
+        <equals>
+          <property>payload/armament/station/id-5-type</property>
+          <value>MK-82</value>
+        </equals>
+        <greater-than>
+          <property>payload/armament/station/id-5-count</property>
+          <value>2</value>
+        </greater-than></and>
       </condition>
      </animation>
 

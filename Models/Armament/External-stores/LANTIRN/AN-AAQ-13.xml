@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <path>Aircraft/f16/Models/Armament/External-stores/LANTIRN/AN-AAQ-13.ac</path>
+
+  <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.35</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <object-name>ANAAQ-13_Back</object-name>
+      <object-name>ANAAQ-13_FLIR</object-name>
+      <object-name>ANAAQ-13_Inlet</object-name>
+      <object-name>ANAAQ-13_Inlet-inside</object-name>
+      <object-name>ANAAQ-13</object-name>
+      <object-name>ANAAQ-13_Midsection</object-name>
+      <object-name>ANAAQ-13_Top</object-name>
+  </effect>
+
+</PropertyList>

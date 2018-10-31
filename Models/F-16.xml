@@ -1912,7 +1912,7 @@
       </equals>
       <equals>
         <property>payload/armament/station/id-3-set</property>
-        <value>2 x MK-82</value>
+        <value>3 x MK-82</value>
       </equals>
       <equals>
         <property>payload/armament/station/id-3-set</property>
@@ -1943,7 +1943,7 @@
       </equals>
       <equals>
         <property>payload/armament/station/id-5-set</property>
-        <value>2 x MK-82</value>
+        <value>3 x MK-82</value>
       </equals>
       <equals>
         <property>payload/armament/station/id-5-set</property>

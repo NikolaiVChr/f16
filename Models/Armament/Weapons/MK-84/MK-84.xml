@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+<!--
+Used for non fired MK-84
+-->
+
+  <path>MK-84.ac</path>
+
+  <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.0</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <object-name>MK-84_Shell</object-name>
+      <object-name>MK-84_TailFins</object-name>
+      <object-name>MK-84_Detonator</object-name>
+      <object-name>MK-84_Wiring</object-name>
+      <object-name>MK-84_Mounts</object-name>
+  </effect>
+
+</PropertyList>
