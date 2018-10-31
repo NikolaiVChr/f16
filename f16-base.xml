@@ -2200,7 +2200,7 @@ value. 18000=standard US transition altitude -->
           <file>Aircraft/f16/Nasal/ded.nas</file>
         </ded>
         <math_ext>
-          <file>Aircraft/f16/Nasal/math_ext.nas</file>
+          <file>Aircraft/c172p/Nasal/generic/math_ext.nas</file>
         </math_ext>
         <tgp>
           <file>Aircraft/f16/Nasal/tgp.nas</file>
