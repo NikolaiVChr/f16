@@ -294,7 +294,7 @@
 
   <model>
   <name>LExtTank</name>
-  <path>Aircraft/f16/Models/Armament/External-stores/370G.xml</path>
+  <path>Aircraft/f16/Models/Armament/External-stores/Fueltanks/370G.xml</path>
   <offsets>
    <x-m>-0.50</x-m>
    <y-m>-1.65</y-m>
@@ -305,7 +305,7 @@
 
  <model>
   <name>LExtTank6</name>
-  <path>Aircraft/f16/Models/Armament/External-stores/600G.xml</path>
+  <path>Aircraft/f16/Models/Armament/External-stores/Fueltanks/600G.xml</path>
   <offsets>
    <x-m>-0.50</x-m>
    <y-m>-1.65</y-m>
@@ -408,7 +408,7 @@
   
  <model>
   <name>VentralTank</name>
-  <path>Aircraft/f16/Models/Armament/External-stores/300G.xml</path>
+  <path>Aircraft/f16/Models/Armament/External-stores/Fueltanks/300G.xml</path>
   <offsets>
    <x-m>0</x-m>
    <y-m>0</y-m>
@@ -447,7 +447,7 @@
  
   <model>
   <name>RExtTank</name>
-  <path>Aircraft/f16/Models/Armament/External-stores/370G.xml</path>
+  <path>Aircraft/f16/Models/Armament/External-stores/Fueltanks/370G.xml</path>
   <offsets>
    <x-m>-0.50</x-m>
    <y-m>1.65</y-m>
@@ -458,7 +458,7 @@
 
  <model>
   <name>RExtTank6</name>
-  <path>Aircraft/f16/Models/Armament/External-stores/600G.xml</path>
+  <path>Aircraft/f16/Models/Armament/External-stores/Fueltanks/600G.xml</path>
   <offsets>
    <x-m>-0.50</x-m>
    <y-m>1.65</y-m>
@@ -865,9 +865,9 @@
   <name>Station11_LANTIRNnav</name>
   <path>Aircraft/f16/Models/Armament/External-stores/LANTIRN/AN-AAQ-13.xml</path>
   <offsets>
-   <x-m>-2.25</x-m>
-   <y-m>-0.80</y-m>
-   <z-m>-0.975</z-m>
+   <x-m>-2.40</x-m>
+   <y-m>-0.70</y-m>
+   <z-m>-1.15</z-m>
    <pitch-deg>-0.5</pitch-deg>
   </offsets>
  </model>

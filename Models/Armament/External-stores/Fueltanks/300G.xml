@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <PropertyList>
-  <path>Aircraft/f16/Models/Armament/External-stores/300G.ac</path>
+  <path>Aircraft/f16/Models/Armament/External-stores/Fueltanks/300G.ac</path>
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
       <parameters>

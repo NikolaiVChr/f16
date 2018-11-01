@@ -8,7 +8,7 @@ name "fuel_tank600"
 data 17
 fuel_tank370.mesh
 crease 82.7
-texture "../../f16.png"
+texture "../../../f16.png"
 texrep 1 1
 numvert 116
 -1.41387 -0.3719 0.14691
