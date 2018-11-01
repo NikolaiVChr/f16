@@ -429,6 +429,16 @@
    <mode>looped</mode>
    <type>avionics</type>
    <condition>
+    <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
       <and>
         <property>sim/current-view/internal</property>
         <greater-than>
@@ -461,6 +471,16 @@
    <mode>looped</mode>
    <type>avionics</type>
    <condition>
+    <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
       <and><!-- eyebrow TO LDG CONFIG warning (gears not down warning) -->
           <less-than>
             <property>controls/gear/gear-down</property>
@@ -494,6 +514,16 @@
    <mode>looped</mode>
    <type>avionics</type>
    <condition>
+    <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
       <not><property>gear/gear[0]/wow</property></not>
       <or>
         <and>
@@ -538,6 +568,16 @@
    <mode>looped</mode>
    <type>avionics</type>
    <condition>
+    <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
       <and>
           <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
           <less-than>
@@ -566,6 +606,16 @@
    <mode>looped</mode>
    <type>avionics</type>
    <condition>
+    <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
       <and>
           <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
           <greater-than>
@@ -588,6 +638,16 @@
    <mode>looped</mode>
    <type>avionics</type>
    <condition>
+    <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
       <and>
           <greater-than>
               <property>instrumentation/radar/time-till-crash</property>
@@ -612,6 +672,16 @@
    <mode>once</mode>
    <type>avionics</type>
    <condition>
+    <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
         <property>f16/avionics/bingo</property>
     </condition>
    <volume>
@@ -626,6 +696,16 @@
    <mode>once</mode>
    <type>avionics</type>
    <condition>
+    <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
         <equals>
           <property>gear/gear/position-norm</property>
           <value>0</value>
@@ -648,6 +728,16 @@
    <mode>once</mode>
    <type>avionics</type>
    <condition>
+    <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
         <greater-than>
           <property>instrumentation/altimeter/indicated-altitude-ft</property>
           <property>f16/settings/msl-floor</property>
@@ -665,6 +755,16 @@
    <mode>once</mode>
    <type>avionics</type>
    <condition>
+    <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
         <greater-than>
           <property>f16/settings/msl-floor</property>
           <property>instrumentation/altimeter/indicated-altitude-ft</property>          
@@ -905,6 +1005,16 @@
             <type>avionics</type>
             <path>Aircraft/f16/Sounds/aim-9-growl.wav</path>
             <condition>
+              <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
                 <property>sim/current-view/internal</property>
                 <property>payload/armament/aim-9/sound-on-off</property>
             </condition>
@@ -926,6 +1036,16 @@
             <type>avionics</type>
             <path>Aircraft/f16/Sounds/betty/lock.wav</path>
             <condition>
+              <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
                 <property>sim/current-view/internal</property>
                 <property>payload/armament/aim-9/sound-on-off</property>
                 <equals>
@@ -945,6 +1065,16 @@
             <path>Aircraft/f16/Sounds/betty/lock.wav</path>
             <mode>once</mode>
             <condition>
+              <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
                 <property>payload/armament/aim-7/sound-on-off</property>
                 <equals>
                   <property>payload/armament/aim-7/sound-volume</property>
@@ -967,6 +1097,16 @@
             <path>Aircraft/f16/Sounds/betty/lock.wav</path>
             <mode>once</mode>
             <condition>
+              <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
                 <property>payload/armament/aim-120/sound-on-off</property>
                 <equals>
                   <property>payload/armament/aim-120/sound-volume</property>
@@ -989,6 +1129,16 @@
             <path>Aircraft/f16/Sounds/betty/lock.wav</path>
             <mode>once</mode>
             <condition>
+              <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
                 <property>payload/armament/agm-65/sound-on-off</property>
                 <equals>
                   <property>payload/armament/agm-65/sound-volume</property>
@@ -1011,6 +1161,16 @@
             <path>Aircraft/f16/Sounds/betty/lock.wav</path>
             <mode>once</mode>
             <condition>
+              <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
                 <property>payload/armament/agm-84/sound-on-off</property>
                 <equals>
                   <property>payload/armament/agm-84/sound-volume</property>
@@ -1033,6 +1193,16 @@
             <path>Aircraft/f16/Sounds/betty/lock.wav</path>
             <mode>once</mode>
             <condition>
+              <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
                 <property>payload/armament/agm-88/sound-on-off</property>
                 <equals>
                   <property>payload/armament/agm-88/sound-volume</property>
@@ -1064,6 +1234,16 @@
                     <value>20</value>
                 </greater-than>
               </or>
+              <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
             </condition>
             <volume>
               <property>/sim/current-view/internal</property>
@@ -1077,6 +1257,16 @@
             <type>avionics</type>
             <path>Aircraft/f16/Sounds/betty/chaff-flare.wav</path>
             <condition>
+              <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
                 <property>ai/submodels/submodel[0]/flare-release-snd</property>
                 <property>sim/current-view/internal</property>
             </condition>
@@ -1092,6 +1282,16 @@
             <type>avionics</type>
             <path>Aircraft/f16/Sounds/betty/chaff-flare-out.wav</path>
             <condition>
+              <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
                 <property>ai/submodels/submodel[0]/flare-release-out-snd</property>
                 <property>sim/current-view/internal</property>
             </condition>
@@ -1669,6 +1869,16 @@
             <mode>once</mode>
             <type>avionics</type>
             <condition>
+              <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
                 <equals>
                     <property>sound/rwr-new</property>
                     <value>1</value>
@@ -1686,6 +1896,16 @@
             <mode>once</mode>
             <type>avionics</type>
             <condition>
+              <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
                 <equals>
                     <property>sound/rwr-new</property>
                     <value>0</value>
@@ -1703,6 +1923,16 @@
             <mode>once</mode>
             <type>avionics</type>
             <condition>
+              <or>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                    <value>20</value>
+                </greater-than>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                    <value>20</value>
+                </greater-than>
+              </or>
                 <not>
                   <equals>
                       <property>sound/rwr-launch</property>
