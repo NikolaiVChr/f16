@@ -13,7 +13,7 @@
     <offset-x-m type="double">0.1054</offset-x-m>
     <offset-y-m type="double">0.0</offset-y-m>
     <offset-z-m type="double">0.6500</offset-z-m>
-    <type type="string">boom</type>  
+    <type type="string">boom</type>
   </refuel>
 </multiplay>
 
@@ -1989,23 +1989,6 @@
   </and>
   </condition>
  </animation>
-
- <animation>
-  <type>select</type>
-  <object-name>Podpylon_left</object-name>
-  <condition>
-    <and>
-    <not>
-     <equals>
-        <property>payload/armament/station/id-11-set</property>
-        <value>AN/AAQ-13 LANTIRN Nav Pod</value>
-      </equals>
-    </not>
-  </and>
-  </condition>
- </animation>
-
- 
 
  <!-- livery selection -->
  <animation>
