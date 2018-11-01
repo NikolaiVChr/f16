@@ -1076,7 +1076,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   <condition>
     <equals>
       <property>payload/armament/station/id-11-set</property>
-      <value>AN/AAQ-13 LANTIRN Nav Pod</value>
+      <value>not used yet</value>
     </equals>
   </condition>
  </animation>
