@@ -168,6 +168,8 @@ var a2a_patrol = func {
         pylon7.loadSet(pylonSets.q7);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -186,6 +188,8 @@ var a2a_super = func {
         pylon7.loadSet(pylonSets.h);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.h);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -204,6 +208,8 @@ var a2a_cap = func {
         pylon7.loadSet(pylonSets.h);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -222,12 +228,14 @@ var a2a_capext = func {
         pylon7.loadSet(pylonSets.h);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }
 }
-# CAS: 2 2XMK82 and 2 AGM65
+# CAS: 2 3XMK82 and 2 AGM65
 var a2g_cas = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         pylon1.loadSet(pylonSets.g);
@@ -239,6 +247,8 @@ var a2g_cas = func {
         pylon7.loadSet(pylonSets.a);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        pylon10.loadSet(pylonSets.tgp2);
+        pylon11.loadSet(pylonSets.tgp3);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -257,6 +267,8 @@ var a2g_casext = func {
         pylon7.loadSet(pylonSets.a);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        pylon10.loadSet(pylonSets.tgp2);
+        pylon11.loadSet(pylonSets.tgp3);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -275,6 +287,8 @@ var a2g_mix = func {
         pylon7.loadSet(pylonSets.i);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        pylon10.loadSet(pylonSets.tgp2);
+        pylon11.loadSet(pylonSets.tgp3);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -293,6 +307,8 @@ var a2g_guided1 = func {
         pylon7.loadSet(pylonSets.c4);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        pylon10.loadSet(pylonSets.tgp2);
+        pylon11.loadSet(pylonSets.tgp3);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -311,6 +327,8 @@ var a2g_guided2 = func {
         pylon7.loadSet(pylonSets.i);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        pylon10.loadSet(pylonSets.tgp2);
+        pylon11.loadSet(pylonSets.tgp3);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -329,6 +347,8 @@ var a2s_antiship = func {
         pylon7.loadSet(pylonSets.b);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        pylon10.loadSet(pylonSets.tgp2);
+        pylon11.loadSet(pylonSets.tgp3);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -347,6 +367,8 @@ var a2a_ferry = func {
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -359,12 +381,14 @@ var a2a_ferrycargo = func {
         pylon1.loadSet(pylonSets.h);
         pylon2.loadSet(pylonSets.g);
         pylon3.loadSet(pylonSets.f3);
-        pylon4.loadSet(pylonSets.l);
+        pylon4.loadSet(pylonSets.o);
         pylon5.loadSet(pylonSets.empty);
-        pylon6.loadSet(pylonSets.m);
+        pylon6.loadSet(pylonSets.p);
         pylon7.loadSet(pylonSets.f3);
         pylon8.loadSet(pylonSets.g);
         pylon9.loadSet(pylonSets.h);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -383,6 +407,8 @@ var a2g_sead = func {
         pylon7.loadSet(pylonSets.b2);
         pylon8.loadSet(pylonSets.g);
         pylon9.loadSet(pylonSets.h);
+        pylon10.loadSet(pylonSets.tgp2);
+        pylon11.loadSet(pylonSets.tgp3);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -395,12 +421,14 @@ var a2g_oca = func {
         pylon1.loadSet(pylonSets.g);
         pylon2.loadSet(pylonSets.h);
         pylon3.loadSet(pylonSets.a);
-        pylon4.loadSet(pylonSets.empty);
+        pylon4.loadSet(pylonSets.b2);
         pylon5.loadSet(pylonSets.f);
-        pylon6.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.b2);
         pylon7.loadSet(pylonSets.a);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
+        pylon10.loadSet(pylonSets.tgp2);
+        pylon11.loadSet(pylonSets.tgp3);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -419,6 +447,8 @@ var a2a_training = func {
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.k);
         pylon9.loadSet(pylonSets.k2);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -437,6 +467,8 @@ var clean = func {
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.k);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);

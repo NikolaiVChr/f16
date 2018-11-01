@@ -854,9 +854,9 @@
   <name>Station10_LANTIRNtarget</name>
   <path>Aircraft/f16/Models/Armament/External-stores/LANTIRN/AN-AAQ-14.xml</path>
   <offsets>
-   <x-m>-2.25</x-m>
-   <y-m>0.80</y-m>
-   <z-m>-0.975</z-m>
+   <x-m>-2.3</x-m>
+   <y-m>0.69</y-m>
+   <z-m>-1.01</z-m>
    <pitch-deg>-0.5</pitch-deg>
   </offsets>
  </model>
@@ -865,9 +865,9 @@
   <name>Station11_LANTIRNnav</name>
   <path>Aircraft/f16/Models/Armament/External-stores/LANTIRN/AN-AAQ-13.xml</path>
   <offsets>
-   <x-m>-2.40</x-m>
-   <y-m>-0.70</y-m>
-   <z-m>-1.15</z-m>
+   <x-m>-2.45</x-m>
+   <y-m>-0.66</y-m>
+   <z-m>-1.02</z-m>
    <pitch-deg>-0.5</pitch-deg>
   </offsets>
  </model>
