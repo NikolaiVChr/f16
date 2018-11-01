@@ -1091,6 +1091,8 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   <object-name>RExtTank6</object-name>
   <object-name>LExtTank6</object-name>
   <object-name>Centerpylon</object-name>
+  <object-name>Podpylon_left</object-name>
+  <object-name>Podpylon_right</object-name>
   <property-base>sim/model/livery</property-base>
   <texture-prop>texture</texture-prop>
   <texture>f16.png</texture>
