@@ -601,6 +601,10 @@
 				</or>
 				<and>
 					<property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+					<less-than>
+						<property>controls/gear/gear-down</property>
+						<value>1</value>
+					</less-than>
 					<greater-than>
 						<property>orientation/alpha-deg</property>
 						<value>18</value>
