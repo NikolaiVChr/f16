@@ -379,7 +379,7 @@ processCallsigns();
 
 setlistener("/sim/multiplay/chat-history", incoming_listener, 0, 0);
 
-#setprop("/sim/failure-manager/display-on-screen", FALSE);
+setprop("/sim/failure-manager/display-on-screen", FALSE);
 
 var re_init = func {
   # repair the aircraft
