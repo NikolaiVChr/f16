@@ -1834,7 +1834,7 @@ var AIM = {
 		# Get target position.
 		if (me.Tgt != nil and me.t_coord != nil) {
 			if (me.flareLock == FALSE and me.chaffLock == FALSE) {
-				me.t_coord = me.Tgt.get_Coord();
+				me.t_coord = geo.Coord.new(me.Tgt.get_Coord());#in case multiple missiles use same Tgt we cannot rely on coords being different, so we extra create new.
 				if (me.t_coord == nil) {
 					# just to protect the multithreaded code for invalid pos.
 					me.Tgt = nil;
