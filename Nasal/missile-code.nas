@@ -3290,7 +3290,7 @@ var AIM = {
 		}
 		
 		var explosion_coord = me.last_coord;
-		if (me.Tgt != nil) {
+		if (me.Tgt != nil and me.last_t_coord != nil and me.t_coord != nil) {#the two latter checks is for maddog/canSwitch, shouldn't really be needed but is.
 			var min_distance = me.direct_dist_m;
 			
 			for (var i = 0.00; i <= 1; i += 0.025) {
