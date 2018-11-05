@@ -486,7 +486,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.5</factor>
+				<factor>0.3</factor>
 			</volume>
 		</stall>
 		<stall>
@@ -543,7 +543,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.5</factor>
+				<factor>0.3</factor>
 			</volume>
 		</stall>
 		<stall>
@@ -580,7 +580,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.5</factor>
+				<factor>0.3</factor>
 			</volume>
 		</stall>
 		<stall>
@@ -613,7 +613,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.5</factor>
+				<factor>0.3</factor>
 			</volume>
 		</stall>
 		<impact>
