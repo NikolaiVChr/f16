@@ -1349,13 +1349,13 @@ var Target = {
             obj.lat = nil;
             obj.lon = nil;
         }
-        if (c.getNode("position/global-x") != nil)
+        if (c.getNode("position/global-x") != nil and c.getNode("position/global-x").getValue() != nil)
         {
             obj.x = c.getNode("position/global-x");
             obj.y = c.getNode("position/global-y");
             obj.z = c.getNode("position/global-z");
-            } else {
-                obj.x = nil;
+        } else {
+            obj.x = nil;
         }
 
         if (obj.type == "multiplayer" or obj.type == "tanker" or obj.type == "aircraft" and obj.RdrProp != nil) 

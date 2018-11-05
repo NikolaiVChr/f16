@@ -1522,7 +1522,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <seeker-beam-width-deg type="double">4</seeker-beam-width-deg>
                 <reaquire type="bool">true</reaquire>
                 <lock-on-after-launch type="bool">true</lock-on-after-launch>
-                <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed>
+                <auto-switch-target-allowed type="bool">false</auto-switch-target-allowed><!-- bug in m-code prevents from using this option atm. -->
                 <prowl-flight type="string">gyro-pitch</prowl-flight>
                 <switch-time-sec type="double">5</switch-time-sec>
             </aim-9>

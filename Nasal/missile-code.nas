@@ -1835,8 +1835,9 @@ var AIM = {
 		if (me.Tgt != nil and me.t_coord != nil) {
 			if (me.flareLock == FALSE and me.chaffLock == FALSE) {
 				me.t_coord = geo.Coord.new(me.Tgt.get_Coord());#in case multiple missiles use same Tgt we cannot rely on coords being different, so we extra create new.
-				if (me.t_coord == nil) {
+				if (me.t_coord == nil or !me.t_coord.is_defined()) {
 					# just to protect the multithreaded code for invalid pos.
+					print("Missile target has undefined coord!");
 					me.Tgt = nil;
 				}
 			} else {
@@ -3423,7 +3424,10 @@ var AIM = {
 	},
 
 	interpolate: func (start, end, fraction) {
-		me.xx = (start.x()*(1-fraction)+end.x()*fraction);
+		if (!start.is_defined()) print("start undefined:");
+		if (!end.is_defined()) print("end undefined:");
+		me.xx = (start.x()*(1-fraction)
+			+end.x()*fraction);
 		me.yy = (start.y()*(1-fraction)+end.y()*fraction);
 		me.zz = (start.z()*(1-fraction)+end.z()*fraction);
 
