@@ -912,35 +912,44 @@ var TopGun = {
 		# Max turn rate
 		# degs / sec , drag index 50
 		# taken from Greek F-16 block 52 supplemental manual.
-		if (mach>0.8) {
-			me.a10 = me.extrapolate(mach, 0.8, 1.3, MAX_TURN_SPEED, 12);
+		if (mach>0.6) {#no cft
+			me.a00 = me.extrapolate(mach, 0.6, 1.15, 22.5, 13);
+			me.g00 = 9;
+		} else {
+			me.a00 = me.extrapolate(mach, 0.2, 0.6, 8, 22.5);
+			me.g00 = me.extrapolate(mach, 0.2, 0.6, 1, 9);
+		}
+		if (mach>0.8) {#cft
+			me.a10 = me.extrapolate(mach, 0.8, 1.3, 18, 12);
 			me.g10 = 9;
 		} else {
-			me.a10 = me.extrapolate(mach, 0.2, 0.8, 6, MAX_TURN_SPEED);
+			me.a10 = me.extrapolate(mach, 0.2, 0.8, 6, 18);
 			me.g10 = me.extrapolate(mach, 0.2, 0.8, 3, 9);
 		}
-		if (mach>1) {
+		if (mach>1) {#cft
 			me.a20 = me.extrapolate(mach, 1, 1.5, 16, 10);
 			me.g20 = 9;
 		} else {
 			me.a20 = me.extrapolate(mach, 0, 1, 4, 16);
 			me.g20 = me.extrapolate(mach, 0, 1, 3, 9);
 		}
-		if (mach>1.1) {
+		if (mach>1.1) {#cft
 			me.a30 = me.extrapolate(mach, 1.1, 1.7, 12.5, 9);
 			me.g30 = 8;
 		} else {
 			me.a30 = me.extrapolate(mach, 0.5, 1.1, 6, 12.5);
 			me.g30 = me.extrapolate(mach, 0.5, 1.1, 3, 8);
 		}
-		if (mach>1.1) {
+		if (mach>1.1) {#cft
 			me.a40 = me.extrapolate(mach, 1.1, 1.8, 8, 6);
 			me.g40 = 5;
 		} else {
 			me.a40 = me.extrapolate(mach, 0.6, 1.1, 4, 8);
 			me.g40 = me.extrapolate(mach, 0.6, 1.1, 3, 5);
 		}
-		if (altitude < 20000) {
+		if (altitude < 10000) {
+			return [me.extrapolate(altitude,     0, 10000, me.a00, me.a10), me.extrapolate(altitude,     0, 10000, me.g00, me.g10)];
+		} elsif (altitude < 20000) {
 			return [me.extrapolate(altitude, 10000, 20000, me.a10, me.a20), me.extrapolate(altitude, 10000, 20000, me.g10, me.g20)];
 		} elsif (altitude < 30000) {
 			return [me.extrapolate(altitude, 20000, 30000, me.a20, me.a30), me.extrapolate(altitude, 20000, 30000, me.g20, me.g30)];
@@ -953,34 +962,71 @@ var TopGun = {
 
 	accMax: func {
 		# Max afterburner acceleration
-		# mps / sec , drag index 50, 24000 lbm
+		# mps / sec , drag index 50, 24000 lbm, f100-pw-229, no cft
 		# taken from Greek F-16 block 52 supplemental manual.
 		#
+		# 00000:
+		# 756/750 19 27  9  4 3 2 2 3 2 3 2 3 200 
+		#
 		# 10000:
-		# 650 16 10 8 4 3 4 4 3 4 4 200
+		# 775/750 50 20 10  8 5 4 4 3 4 3 4 4 200
 		# 
 		# 20000
-		# 650 34 15 11 9 8 5 6 6 6 7 200
+		# 757/750 39 46 17 12  9  8  7  5  6 6 6 7 200
+		#
 		# 
 		# 30000
-		# 600 38 21 17 14 14 11 10 11 12 200
+		# 698/650 93 21 16 14 12 13 10 10 11 12 200
 		#
 		# 40000
-		# 500 47 34 29 27 29 21 26 200
+		# 614/600 82 60 30 25 24 24 26 21 26 200
 		me.kias = me.GStoKIAS(me.speed*MPS2KT);
-		me.a10 = 0;
-		if (me.kias > 650) {
-			me.a10 = 16;
+		
+		me.a00 = 0;
+		if (me.kias > 750) {
+			me.a00 = 158;#8.33 * 19
+		} elsif (me.kias > 700) {
+			me.a00 = 27;
+		} elsif (me.kias > 650) {
+			me.a00 = 9;
 		} elsif (me.kias > 600) {
-			me.a10 = 10;
+			me.a00 = 4;
 		} elsif (me.kias > 550) {
+			me.a00 = 3;
+		} elsif (me.kias > 500) {
+			me.a00 = 2;
+		} elsif (me.kias > 450) {
+			me.a00 = 2;
+		} elsif (me.kias > 400) {
+			me.a00 = 3;
+		} elsif (me.kias > 350) {
+			me.a00 = 2;
+		} elsif (me.kias > 300) {
+			me.a00 = 3;
+		} elsif (me.kias > 250) {
+			me.a00 = 2;
+		} else {
+			me.a00 = 3;
+		}
+		me.a00 = me.KIAStoGS(50)*KT2MPS/me.a00;
+		
+		me.a10 = 0;
+		if (me.kias > 750) {
+			me.a10 = 100;#50 * 2
+		} elsif (me.kias > 700) {
+			me.a10 = 20;
+		} elsif (me.kias > 650) {
+			me.a10 = 10;
+		} elsif (me.kias > 600) {
 			me.a10 = 8;
+		} elsif (me.kias > 550) {
+			me.a10 = 5;
 		} elsif (me.kias > 500) {
 			me.a10 = 4;
 		} elsif (me.kias > 450) {
-			me.a10 = 3;
-		} elsif (me.kias > 400) {
 			me.a10 = 4;
+		} elsif (me.kias > 400) {
+			me.a10 = 3;
 		} elsif (me.kias > 350) {
 			me.a10 = 4;
 		} elsif (me.kias > 300) {
@@ -993,73 +1039,88 @@ var TopGun = {
 		me.a10 = me.KIAStoGS(50)*KT2MPS/me.a10;
 
 		me.a20 = 0;
-		if (me.kias > 650) {
-			me.a20 = me.KIAStoGS(50)*KT2MPS/34;
+		if (me.kias > 750) {
+			me.a20 = 279;#39*7.14
+		} elsif (me.kias > 700) {
+			me.a20 = 46;
+		} elsif (me.kias > 650) {
+			me.a20 = 17;
 		} elsif (me.kias > 600) {
-			me.a20 = me.KIAStoGS(50)*KT2MPS/15;
+			me.a20 = 12;
 		} elsif (me.kias > 550) {
-			me.a20 = me.KIAStoGS(50)*KT2MPS/11;
+			me.a20 = 9;
 		} elsif (me.kias > 500) {
-			me.a20 = me.KIAStoGS(50)*KT2MPS/9;
+			me.a20 = 8;
 		} elsif (me.kias > 450) {
-			me.a20 = me.KIAStoGS(50)*KT2MPS/8;
+			me.a20 = 7;
 		} elsif (me.kias > 400) {
-			me.a20 = me.KIAStoGS(50)*KT2MPS/5;
+			me.a20 = 5;
 		} elsif (me.kias > 350) {
-			me.a20 = me.KIAStoGS(50)*KT2MPS/6;
+			me.a20 = 6;
 		} elsif (me.kias > 300) {
-			me.a20 = me.KIAStoGS(50)*KT2MPS/6;
+			me.a20 = 6;
 		} elsif (me.kias > 250) {
-			me.a20 = me.KIAStoGS(50)*KT2MPS/6;
+			me.a20 = 6;
 		} else {
-			me.a20 = me.KIAStoGS(50)*KT2MPS/7;
+			me.a20 = 7;
 		}
+		me.a20 = me.KIAStoGS(50)*KT2MPS/me.a20;
 
 		me.a30 = 0;
-		if (me.kias > 600) {
-			me.a30 = me.KIAStoGS(50)*KT2MPS/38;
+		if (me.kias > 650) {
+			me.a30 = 97;#93*1.04
+		} elsif (me.kias > 600) {
+			me.a30 = 21;
 		} elsif (me.kias > 550) {
-			me.a30 = me.KIAStoGS(50)*KT2MPS/21;
+			me.a30 = 16;
 		} elsif (me.kias > 500) {
-			me.a30 = me.KIAStoGS(50)*KT2MPS/17;
+			me.a30 = 14;
 		} elsif (me.kias > 450) {
-			me.a30 = me.KIAStoGS(50)*KT2MPS/14;
+			me.a30 = 12;
 		} elsif (me.kias > 400) {
-			me.a30 = me.KIAStoGS(50)*KT2MPS/14;
+			me.a30 = 13;
 		} elsif (me.kias > 350) {
-			me.a30 = me.KIAStoGS(50)*KT2MPS/11;
+			me.a30 = 10;
 		} elsif (me.kias > 300) {
-			me.a30 = me.KIAStoGS(50)*KT2MPS/10;
+			me.a30 = 10;
 		} elsif (me.kias > 250) {
-			me.a30 = me.KIAStoGS(50)*KT2MPS/11;
+			me.a30 = 11;
 		} else {
-			me.a30 = me.KIAStoGS(50)*KT2MPS/12;
+			me.a30 = 12;
 		}
+		me.a30 = me.KIAStoGS(50)*KT2MPS/me.a30;
 
 		me.a40 = 0;
-		if (me.kias > 500) {
-			me.a40 = me.KIAStoGS(50)*KT2MPS/47;
+		if (me.kias > 600) {
+			me.a40 = 293;#3.57*82
+		} elsif (me.kias > 550) {
+			me.a40 = 60;
+		} elsif (me.kias > 500) {
+			me.a40 = 30;
 		} elsif (me.kias > 450) {
-			me.a40 = me.KIAStoGS(50)*KT2MPS/34;
+			me.a40 = 25;
 		} elsif (me.kias > 400) {
-			me.a40 = me.KIAStoGS(50)*KT2MPS/29;
+			me.a40 = 24;
 		} elsif (me.kias > 350) {
-			me.a40 = me.KIAStoGS(50)*KT2MPS/27;
+			me.a40 = 24;
 		} elsif (me.kias > 300) {
-			me.a40 = me.KIAStoGS(50)*KT2MPS/29;
+			me.a40 = 26;
 		} elsif (me.kias > 250) {
-			me.a40 = me.KIAStoGS(50)*KT2MPS/21;
+			me.a40 = 21;
 		} else {
-			me.a40 = me.KIAStoGS(50)*KT2MPS/26;
+			me.a40 = 26;
 		}
+		me.a40 = me.KIAStoGS(50)*KT2MPS/me.a40;
 
 		
 		if (me.alt*M2FT > 30000) {
 			return me.extrapolate(me.alt*M2FT, 30000, 40000, me.a30, me.a40);
 		} elsif (me.alt*M2FT > 20000) {
 			return me.extrapolate(me.alt*M2FT, 20000, 30000, me.a20, me.a30);
-		} else {
+		} elsif (me.alt*M2FT > 10000) {
 			return me.extrapolate(me.alt*M2FT, 10000, 20000, me.a10, me.a20);
+		} else {
+			return me.extrapolate(me.alt*M2FT,     0, 10000, me.a00, me.a10);
 		}
 	},
 
@@ -1187,7 +1248,7 @@ var MAX_ROLL_RATE  = 160;#real average roll rate
 var MAX_PITCH_UP_SPEED = 15;
 var MAX_PITCH_DOWN_SPEED = 4;
 var MAX_DIVE_ANGLE = 45;
-var MAX_TURN_SPEED = 18;#do not mess with this number unless porting the system to another aircraft.
+var MAX_TURN_SPEED = 22.5;#do not mess with this number unless porting the system to another aircraft.
 var MAX_CANNON_RANGE = 1.0;#nm
 var OPFOR_AIRCRAFT_TYPE = "Mig-28";
 var BLUFOR_AIRCRAFT_TYPE = "F-16";
