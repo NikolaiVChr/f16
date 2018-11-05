@@ -1561,7 +1561,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
 
                 <reaquire type="bool">true</reaquire>
-                <lock-on-after-launch type="bool">true</lock-on-after-launch>
+                <lock-on-after-launch type="bool">false</lock-on-after-launch>
                 <auto-switch-target-allowed type="bool">false</auto-switch-target-allowed>
                 <prowl-flight type="string">gyro-pitch</prowl-flight>
                 <switch-time-sec type="double">5</switch-time-sec>
