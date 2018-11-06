@@ -4,12 +4,12 @@
  <sim>
   <model>
    <livery>
-    <name type="string">RSAF, Black Knights No. 1</name>
-    <texture>Liveries/Block50/97-0119.png</texture>
-    <owner type="string">RSAF</owner>
+    <name type="string">HAF, 340 Mira, "Zeus Demo Team"</name>
+    <texture>Liveries/Block50/99-1523.png</texture>
+    <owner type="string">HAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/Block50/BK-646.png</texture>
+    <texture>Liveries/yf/yf16-transp.png</texture>
    </livery-logo>
 
    <livery-patch>
