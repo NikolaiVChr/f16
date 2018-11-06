@@ -179,7 +179,7 @@ var a2a_patrol = func {
 # Air superiority
 var a2a_super = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
-    	pylon1.loadSet(pylonSets.h);
+    	pylon1.loadSet(pylonSets.r);
         pylon2.loadSet(pylonSets.h);
         pylon3.loadSet(pylonSets.h);
         pylon4.loadSet(pylonSets.empty);
@@ -187,7 +187,7 @@ var a2a_super = func {
         pylon6.loadSet(pylonSets.empty);
         pylon7.loadSet(pylonSets.h);
         pylon8.loadSet(pylonSets.h);
-        pylon9.loadSet(pylonSets.h);
+        pylon9.loadSet(pylonSets.r);
         pylon10.loadSet(pylonSets.empty);
         pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
