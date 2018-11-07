@@ -380,6 +380,9 @@
                 <bool n="45" type="bool" alias="/sim/model/lighting/strobe/state"/>
                 <bool n="35" type="bool" alias="/f16/chute/enable"/>
                 <bool n="36" type="bool" alias="/sim/model/f16/dragchute"/>
+                <bool n="50" type="bool" alias="/instrumentation/gci/picture"/>
+                <bool n="51" type="bool" alias="/instrumentation/gci/bogeydope"/>
+                <bool n="52" type="bool" alias="/instrumentation/gci/cutoff"/>
                 <int n="2" type="int">0</int><!-- radar-standby -->
                 <int n="9" type="int" alias="/sim/variant-id"/>
                 <int n="10" type="int" alias="/controls/smoke"/>
@@ -496,6 +499,18 @@
             <key>
                 <name>F6</name>
                 <desc>Eject</desc>
+            </key>
+            <key>
+                <name>Ctrl-1</name>
+                <desc>GCI Picture</desc>
+            </key>
+            <key>
+                <name>Ctrl-2</name>
+                <desc>GCI Dope</desc>
+            </key>
+            <key>
+                <name>Ctrl-3</name>
+                <desc>GCI Cutoff</desc>
             </key>
             <text><![CDATA[
 LANDING
@@ -1100,6 +1115,39 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                     <dialog-name>Ground_Targeting</dialog-name>
                 </binding>
              </key>-->
+             <key n="49">
+                <name>CTRL-1</name>
+                <mod-ctrl>
+                    <desc>GCI pict</desc>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>instrumentation/gci/picture</property>
+                        <value>1</value>
+                    </binding>
+                </mod-ctrl>
+            </key>
+            <key n="50">
+                <name>CTRL-1</name>
+                <mod-ctrl>
+                    <desc>GCI dope</desc>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>instrumentation/gci/bogeydope</property>
+                        <value>1</value>
+                    </binding>
+                </mod-ctrl>
+            </key>
+            <key n="51">
+                <name>CTRL-1</name>
+                <mod-ctrl>
+                    <desc>GCI cutoff</desc>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>instrumentation/gci/cutoff</property>
+                        <value>1</value>
+                    </binding>
+                </mod-ctrl>
+            </key>
         </keyboard>
     </input>
     <controls>
@@ -2256,5 +2304,8 @@ value. 18000=standard US transition altitude -->
         <!--<tgpTarget>
           <file>Aircraft/f16/Nasal/tgp-target.nas</file>
         </tgpTarget>-->
+        <gci>
+            <file>Aircraft/automat/Nasal/gci-listener.nas</file>
+        </gci>
     </nasal>
 </PropertyList>
