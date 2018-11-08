@@ -139,7 +139,7 @@ var DEBUG_STATS            = 0;#most basic stuff
 var DEBUG_FLIGHT           = 0;#for creating missiles sometimes good to have this on to see how it flies.
 
 # set these to debug the code:
-var DEBUG_STATS_DETAILS    = FALSE;
+var DEBUG_STATS_DETAILS    = 0;
 var DEBUG_GUIDANCE         = 0;
 var DEBUG_GUIDANCE_DETAILS = 0;
 var DEBUG_FLIGHT_DETAILS   = 0;
@@ -1479,6 +1479,19 @@ var AIM = {
 		}
 		me.printStats("****************************************************");
 	},
+	
+	setNewTargetInFlight: func (tagt) {
+		me.Tgt = tagt;
+		me.callsign = me.Tgt.get_Callsign();
+		me.newTargetAssigned = TRUE;
+		me.t_coord = me.Tgt.get_Coord();
+		me.fovLost = FALSE;
+		me.lostLOS = FALSE;
+		me.radLostLock = FALSE;
+		me.semiLostLock = FALSE;
+		me.heatLostLock = FALSE;
+		me.hasGuided = FALSE;
+	},
 
 	flight: func {
 
@@ -1525,11 +1538,12 @@ var AIM = {
 				me.printStats("Guidance law switched to %s", me.guidanceLaw);
 			}
 			if (me.settings["target"] != nil) {
-				me.Tgt = me.settings.target;
-				me.callsign = me.Tgt.get_Callsign();
-				me.newTargetAssigned = TRUE;
-				me.t_coord = nil;
-				me.printStats("Target switched to %s",me.callsign);
+				if (me.newLock(me.settings.target)) {
+					me.setNewTargetInFlight(me.settings.target);
+					me.printStats("Target switched to %s",me.callsign);
+				} else {
+					me.printStats("Target switch ignored, could not lock on %s",me.settings.target.get_Callsign());
+				}
 			}
 		}
 
@@ -1549,21 +1563,14 @@ var AIM = {
 					me.switchIndex = 0;
 					me.nextFovCheck = me.nextFovCheck+me.switchTime;
 				}
-				me.Tgt = me.contacts[me.switchIndex];
-				me.callsign = me.Tgt.get_Callsign();
-				me.newTargetAssigned = TRUE;
-				me.t_coord = nil;
-				me.fovLost = FALSE;
-				me.lostLOS = FALSE;
-				me.radLostLock = FALSE;
-				me.semiLostLock = FALSE;
-				me.heatLostLock = FALSE;
-				me.hasGuided = FALSE;
-				if (!me.checkForClassInFlight(me.Tgt)) {
+				me.newTgt = me.contacts[me.switchIndex];
+				if (!me.newLock(me.newTgt)) {
 					me.Tgt = nil;
 					me.callsign = "Unknown";
 					me.newTargetAssigned = FALSE;
-				}
+				} else {
+					me.setNewTargetInFlight(me.newTgt);
+				}				
 			}
 		}
 
@@ -1571,14 +1578,15 @@ var AIM = {
 			me.keepPitch = me.pitch;
 		}
 		if (me.Tgt != nil and me.Tgt.isValid() == FALSE) {#TODO: verify that the following threaded code can handle invalid contact. As its read from property-tree, not mutex protected.
-			if (me.newTargetAssigned) {
-				me.Tgt=nil;
-				me.t_coord=nil;
-			} else {
+			if (!(me.canSwitch and me.reaquire)) {
 				me.printStats(me.type~": Target went away, deleting missile.");
 				me.sendMessage(me.type~" missed "~me.callsign~": Target logged off.");
 				settimer(func me.del(),0);
 				return;
+			} else {
+				me.Tgt = nil;
+				me.callsign = "Unknown";
+				me.newTargetAssigned = FALSE;
 			}
 		}
 		me.dt = deltaSec.getValue();#TODO: time since last time nasal timers were called
@@ -3521,7 +3529,7 @@ var AIM = {
 
 	checkForLock: func {
 		# call this only before firing
-		if ((me.class!="A" or me.tagt.get_Speed()>15) and ((me.guidance != "semi-radar" or me.is_painted(me.tagt) == TRUE) and (me.guidance !="laser" or me.is_laser_painted(me.tagt) == TRUE))
+		if (!(me.tagt.get_type() == AIR and me.tagt.get_Speed()<15) and ((me.guidance != "semi-radar" or me.is_painted(me.tagt) == TRUE) and (me.guidance !="laser" or me.is_laser_painted(me.tagt) == TRUE))
 						and (me.guidance != "radiation" or me.is_radiating_aircraft(me.tagt) == TRUE)
 					    and me.rng < me.max_fire_range_nm and me.rng > me.min_fire_range_nm and me.FOV_check(me.total_horiz, me.total_elev, me.fcs_fov)
 					    and (me.rng < me.detect_range_curr_nm or (me.guidance != "radar" and me.guidance != "semi-radar" and me.guidance != "heat" and me.guidance != "vision" and me.guidance != "heat" and me.guidance != "radiation"))
@@ -3529,6 +3537,7 @@ var AIM = {
 					    and me.checkForView()) {
 			return TRUE;
 		}
+		#printf("Lock failed %d %d %d %d %d %d",me.tagt.get_Speed()>15,me.rng < me.max_fire_range_nm,me.rng > me.min_fire_range_nm,me.FOV_check(me.total_horiz, me.total_elev, me.fcs_fov),me.rng < me.detect_range_curr_nm,me.checkForView());
 		return FALSE;
 	},
 
@@ -3536,6 +3545,31 @@ var AIM = {
 		if (me.guidance != "gps" and me.guidance != "inertial") {
 			me.launchCoord = geo.aircraft_position();
 			me.potentialCoord = me.tagt.get_Coord();
+			me.xyz          = {"x":me.launchCoord.x(),                  "y":me.launchCoord.y(),                 "z":me.launchCoord.z()};
+		    me.directionLOS = {"x":me.potentialCoord.x()-me.launchCoord.x(),   "y":me.potentialCoord.y()-me.launchCoord.y(),  "z":me.potentialCoord.z()-me.launchCoord.z()};
+
+			# Check for terrain between own weapon and target:
+			me.terrainGeod = get_cart_ground_intersection(me.xyz, me.directionLOS);
+			if (me.terrainGeod == nil) {
+				return TRUE;
+			} else {
+				me.terrain = geo.Coord.new();
+				me.terrain.set_latlon(me.terrainGeod.lat, me.terrainGeod.lon, me.terrainGeod.elevation);
+				me.maxDist = me.launchCoord.direct_distance_to(me.potentialCoord)-1;#-1 is to avoid z-fighting distance
+				me.terrainDist = me.launchCoord.direct_distance_to(me.terrain);
+				if (me.terrainDist >= me.maxDist) {
+					return TRUE;
+				}
+			}
+			return FALSE;
+		}
+		return TRUE;
+	},
+	
+	checkForViewInFlight: func (tagt) {
+		if (me.guidance != "gps" and me.guidance != "inertial") {
+			me.launchCoord = me.coord;
+			me.potentialCoord = tagt.get_Coord();
 			me.xyz          = {"x":me.launchCoord.x(),                  "y":me.launchCoord.y(),                 "z":me.launchCoord.z()};
 		    me.directionLOS = {"x":me.potentialCoord.x()-me.launchCoord.x(),   "y":me.potentialCoord.y()-me.launchCoord.y(),  "z":me.potentialCoord.z()-me.launchCoord.z()};
 
@@ -3566,7 +3600,51 @@ var AIM = {
 	                or (me.slaveContact.get_type() == MARINE and me.target_sea == TRUE))) {
 			return TRUE;
 		}
+		#if(me.slaveContact != nil) printf("class failed %d %d %d",me.slaveContact.isValid() == TRUE,me.slaveContact.get_type() == AIR,me.target_air == TRUE);
 		return FALSE;
+	},
+	
+	newLock: func (tagt) {
+		# for switching to new lock during flight.
+		#reorder to gain performance
+		me.newlockgained = 0;
+		if (!tagt.isValid()) {
+			me.printStatsDetails("Test: invalid contact. Rejected.");
+			return 0;
+		}
+		me.printStatsDetails("Test starting on %s:",tagt.get_Callsign());
+		me.newCoord           = tagt.get_Coord();
+		if (me.coord.direct_distance_to(me.newCoord)*M2NM > me.detect_range_curr_nm) {
+			me.printStatsDetails("Test: contact out of range. Rejected.");
+			return 0;
+		}
+		me.newlockgained = me.checkForClassInFlight(tagt);
+		if (!me.newlockgained) {me.printStatsDetails("Test: invalid type: %d. Rejected.",tagt.get_type());return 0;}
+		if (me.guidance == "laser") {
+			me.newlockgained = me.is_laser_painted(tagt);
+			if (!me.newlockgained){me.printStatsDetails("Test: no laser lock. Rejected.");return 0;}
+		} elsif (me.guidance == "semi-radar") {
+			me.newlockgained = me.is_painted(tagt);
+			if (!me.newlockgained) {me.printStatsDetails("Test: no radar paint. Rejected.");return 0;}
+		} elsif (me.guidance == "radiation") {
+			me.newlockgained = me.is_radiating_me(tagt);
+			if (!me.newlockgained) {me.printStatsDetails("Test: not radiating me. Rejected.");return 0;}
+		} elsif (me.guidance == "heat") {
+			me.newlockgained = me.all_aspect == TRUE or me.rear_aspect(me.coord, tagt);
+			if (!me.newlockgained) {me.printStatsDetails("Test: no view of heat source. Rejected.");return 0;}
+		}
+		if (me.guidance != "gps" and me.guidance != "inertial") {
+			me.new_elev_deg       = me.getPitch(me.coord, me.newCoord);
+			me.new_course         = me.coord.course_to(me.newCoord);
+			me.new_deviation_e    = me.new_elev_deg - me.pitch;
+			me.new_deviation_h    = me.new_course - me.hdg;
+			me.newlockgained      = me.FOV_check(me.new_deviation_h, me.new_deviation_e, me.max_seeker_dev);
+			if (!me.newlockgained) {me.printStatsDetails("Test: not in FoV. Rejected.");return 0;}
+		}
+		me.newlockgained = me.checkForViewInFlight(tagt);
+		if (!me.newlockgained) {me.printStatsDetails("Test: terrain obscurre contact. Rejected.");return 0;}
+		else me.printStatsDetails("Test: contact approved.");
+		return me.newlockgained;
 	},
 
 	checkForClassInFlight: func (tact) {
