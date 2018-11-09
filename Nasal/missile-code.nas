@@ -2130,11 +2130,15 @@ var AIM = {
 		} elsif (mach < 1.2 ) {
 			me.Cd0 = (0.3742 * math.pow(mach, 2) - 0.252 * mach + 0.0021 + 0.2 ) * 5 * (me.Cd_base+me.Cd_delta*me.deploy);
 		} else {
-			me.Cd0 = (0.2965 * math.pow(mach, -1.1506) + 0.2) * 5 * (me.Cd_base+me.Cd_delta*me.deploy);
+			if (!me.advanced) {
+                me.Cd0 = (0.2965 * math.pow(mach, -1.1506) + 0.2) * 5 * (me.Cd_base+me.Cd_delta*me.deploy);
+            } else {
+                me.Cd0 = (0.2965 * math.pow(mach, -2.1506) + 0.073766412) * 8 * (me.Cd_base+me.Cd_delta*me.deploy);
+            }
 		}
 		if (me.advanced) {			
-			if (N==nil) N=1;
-			else N=N+1;
+			if (N==nil) N=0;
+			if (me.vector_thrust and me.thrust_lbf>0) N=N*0.5;
 			if (mach < 1.0) {
 				me.Cdi = me.Cd0*N;# N = normal force in G
 			} else {
@@ -2163,6 +2167,7 @@ var AIM = {
 		# extra/inter-polation:
 		# f(x) = y1 + ((x - x1) / (x2 - x1)) * (y2 - y1)
 		# calculate its performance at current air density:
+		if (me.vector_thrust and me.thrust_lbf==0) max_g_sealevel=max_g_sealevel*0.666;
 		return me.clamp(max_g_sealevel+((rho-0.0023769)/(0.00036159-0.0023769))*(max_g_sealevel*0.5909-max_g_sealevel),0.25,100);
 	},
 
