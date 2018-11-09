@@ -1,11 +1,14 @@
 <?xml version="1.0"?>
 
-
-
 <PropertyList>
 
 	<name>GBU-12</name>
 	<path>GBU-12.ac</path>
+
+	<effect>  
+    	<inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  
+    	<object-name>GBU-12_Glass</object-name> 
+  	</effect>
 
 	<effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
@@ -17,83 +20,90 @@
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
       <object-name>GBU-12</object-name>
-      <object-name>wing1</object-name>
-      <object-name>wing2</object-name>
-      <object-name>wing3</object-name>
-      <object-name>wing4</object-name>
-  </effect>
+      <object-name>GBU-12_Hooks</object-name>
+      <object-name>GBU-12_Tail</object-name>
+      <object-name>GBU-12_FrontWing</object-name>
+      <object-name>GBU-12_Wing.001</object-name>
+      <object-name>GBU-12_Wing.002</object-name>
+      <object-name>GBU-12_Wing.003</object-name>
+      <object-name>GBU-12_Wing.004</object-name>
+  	</effect>
 
 	<animation>
 		<type>select</type>
-		<object-name>GBU-12</object-name>
-		<object-name>wing1</object-name>
-		<object-name>wing2</object-name>
-  		<object-name>wing3</object-name>
-  		<object-name>wing4</object-name>
+			<object-name>GBU-12</object-name>
+      		<object-name>GBU-12_Hooks</object-name>
+      		<object-name>GBU-12_Tail</object-name>
+      		<object-name>GBU-12_Glass</object-name>
+      		<object-name>GBU-12_FrontWing</object-name>
+      		<object-name>GBU-12_Wing.001</object-name>
+      		<object-name>GBU-12_Wing.002</object-name>
+      		<object-name>GBU-12_Wing.003</object-name>
+      		<object-name>GBU-12_Wing.004</object-name>
 		<condition>
 			<property>payload/armament/gbu-12/flags/msl-id-301</property>
 		</condition>
 	</animation>
 
-	<animation>
-		<type>rotate</type>
-		<object-name>wing1</object-name>
-		<property>payload/armament/gbu-12/flags/deploy-id-301</property>
-	  <factor>-90.0</factor>
-	  <axis>
-	   <x1-m>0.963062</x1-m>
-	   <y1-m>0.168768</y1-m>
-	   <z1-m>0.17489</z1-m>
-	   <x2-m>0.963062</x2-m>
-	   <y2-m>0.174882</y2-m>
-	   <z2-m>0.168772</z2-m>
-	  </axis>
-	 </animation>
-
 	 <animation>
-		<type>rotate</type>
-		<object-name>wing2</object-name>
-		<property>payload/armament/gbu-12/flags/deploy-id-301</property>
-	  <factor>-90.0</factor>
-	  <axis>
-	   <x1-m>0.963062</x1-m>
-	   <y1-m>-0.17489</y1-m>
-	   <z1-m>0.168768</z1-m>
-	   <x2-m>0.963062</x2-m>
-	   <y2-m>-0.168772</y2-m>
-	   <z2-m>0.174882</z2-m>
-	  </axis>
-	 </animation>
-
-	 <animation>
-		<type>rotate</type>
-		<object-name>wing3</object-name>
-		<property>payload/armament/gbu-12/flags/deploy-id-301</property>
-	  <factor>-90.0</factor>
-	  <axis>
-	   <x1-m>0.963062</x1-m>
-	   <y1-m>-0.168768</y1-m>
-	   <z1-m>-0.17489</z1-m>
-	   <x2-m>0.963062</x2-m>
-	   <y2-m>-0.174882</y2-m>
-	   <z2-m>-0.168772</z2-m>
-	  </axis>
-	 </animation>
-
-	 <animation>
-		<type>rotate</type>
-		<object-name>wing4</object-name>
-		<property>payload/armament/gbu-12/flags/deploy-id-301</property>
-	  <factor>90.0</factor>
-	  <axis>
-	   <x1-m>0.963062</x1-m>
-	   <y1-m>0.168772</y1-m>
-	   <z1-m>-0.174882</z1-m>
-	   <x2-m>0.963062</x2-m>
-	   <y2-m>0.17489</y2-m>
-	   <z2-m>-0.168768</z2-m>
-	  </axis>
-	 </animation>
+  <type>rotate</type>
+  <object-name>GBU-12_Wing.001</object-name>
+  <property>payload/armament/gbu-12/flags/deploy-id-301</property>
+  <factor>-75</factor>
+  <axis>
+   <x1-m>0.96767</x1-m>
+   <y1-m>-0.20115</y1-m>
+   <z1-m>0.19503</z1-m>
+   <x2-m>0.96767</x2-m>
+   <y2-m>-0.19503</y2-m>
+   <z2-m>0.20114</z2-m>
+  </axis>
+ </animation>
+ 
+ <animation>
+  <type>rotate</type>
+  <object-name>GBU-12_Wing.002</object-name>
+  <property>payload/armament/gbu-12/flags/deploy-id-301</property>
+  <factor>75</factor>
+  <axis>
+   <x1-m>0.96767</x1-m>
+   <y1-m>0.20114</y1-m>
+   <z1-m>0.19504</z1-m>
+   <x2-m>0.96767</x2-m>
+   <y2-m>0.19503</y2-m>
+   <z2-m>0.20115</z2-m>
+  </axis>
+ </animation>
+ 
+ <animation>
+  <type>rotate</type>
+  <object-name>GBU-12_Wing.003</object-name>
+  <property>payload/armament/gbu-12/flags/deploy-id-301</property>
+  <factor>75</factor>
+  <axis>
+   <x1-m>0.96767</x1-m>
+   <y1-m>0.19504</y1-m>
+   <z1-m>-0.20114</z1-m>
+   <x2-m>0.96767</x2-m>
+   <y2-m>0.20115</y2-m>
+   <z2-m>-0.19502</z2-m>
+  </axis>
+ </animation>
+ 
+ <animation>
+  <type>rotate</type>
+  <object-name>GBU-12_Wing.004</object-name>
+  <property>payload/armament/gbu-12/flags/deploy-id-301</property>
+  <factor>-75</factor>
+  <axis>
+   <x1-m>0.96767</x1-m>
+   <y1-m>-0.19502</y1-m>
+   <z1-m>-0.20115</z1-m>
+   <x2-m>0.96767</x2-m>
+   <y2-m>-0.20114</y2-m>
+   <z2-m>-0.19503</z2-m>
+  </axis>
+ </animation>
 
 	 <particlesystem>
 		   <name>explosion</name>
@@ -269,10 +279,14 @@
 
 	<animation>
   		<object-name>GBU-12</object-name>
-  		<object-name>wing1</object-name>
-  		<object-name>wing2</object-name>
-  		<object-name>wing3</object-name>
-  		<object-name>wing4</object-name>
+      	<object-name>GBU-12_Hooks</object-name>
+      	<object-name>GBU-12_Glass</object-name>
+      	<object-name>GBU-12_Tail</object-name>
+      	<object-name>GBU-12_FrontWing</object-name>
+      	<object-name>GBU-12_Wing.001</object-name>
+      	<object-name>GBU-12_Wing.002</object-name>
+      	<object-name>GBU-12_Wing.003</object-name>
+      	<object-name>GBU-12_Wing.004</object-name>
   		<enable-hot type="bool">false</enable-hot>
  	</animation>
 
