@@ -1469,14 +1469,18 @@ append(obj.total, obj.speed_curr);
             if (me.vectorMag == 0) {
                 me.vectorMag = 0.0001;
             }
-            me.headingvv = -math.asin(hdp.speed_north_fps/me.vectorMag)*R2D+90;#divide by vector mag, to get normalized unit vector length
-            if (hdp.speed_east_fps/me.vectorMag < 0) {
-              me.headingvv = -me.headingvv;
+            if (me.vectorMag<0.5) {
+                hdp.VV_x = 0;
+            } else {
+                me.headingvv = -math.asin(hdp.speed_north_fps/me.vectorMag)*R2D+90;#divide by vector mag, to get normalized unit vector length
+                if (hdp.speed_east_fps/me.vectorMag < 0) {
+                  me.headingvv = -me.headingvv;
+                }
+                if (me.vectorMag < 0.1) {
+                    me.headingvv = hdp.heading;
+                }
+                hdp.VV_x = geo.normdeg180(me.headingvv-hdp.heading);
             }
-            if (me.vectorMag < 0.1) {
-                me.headingvv = hdp.heading;
-            }
-            hdp.VV_x = geo.normdeg180(me.headingvv-hdp.heading);
             hdp.VV_y = 0;
         } else {
             hdp.VV_x = hdp.beta;
