@@ -166,7 +166,9 @@ RWRCanvas = {
         rwr.AIRCRAFT_MIRAGE = "20";
         rwr.AIRCRAFT_FALCON = "16";
         rwr.AIRCRAFT_FRIGATE = "SH";
-        rwr.AIRCRAFT_UNKNOWN = "U";
+        rwr.AIRCRAFT_TANKER = "KC";
+        rwr.AIRCRAFT_TANKER = "KC";
+        rwr.AIRCRAFT_AWACS = "S";
         rwr.AIRCRAFT_AI = "AI";
         rwr.lookupType = {
                 "f-14b":                    rwr.AIRCRAFT_TOMCAT,     #guess
@@ -183,6 +185,16 @@ RWRCanvas = {
                 "MiG-21bis":                rwr.AIRCRAFT_MIG,
                 "buk-m2":                   rwr.AIRCRAFT_BUK,      #estimated with blender
                 "missile_frigate":          rwr.AIRCRAFT_FRIGATE,    #estimated with blender
+                "KC-137R":                  rwr.AIRCRAFT_TANKER,
+                "KC-137R-RT":               rwr.AIRCRAFT_TANKER,
+                "707-TT":                   rwr.AIRCRAFT_TANKER,
+                "KC-30A":                   rwr.AIRCRAFT_TANKER,
+                "Voyager-KC":               rwr.AIRCRAFT_TANKER,
+                "KC-10A":                   rwr.AIRCRAFT_TANKER,
+                "EC-137R":                  rwr.AIRCRAFT_AWACS,
+                "RC-137R":                  rwr.AIRCRAFT_AWACS,
+                "E-8R":                     rwr.AIRCRAFT_AWACS,
+                "EC-137D":                  rwr.AIRCRAFT_AWACS,
                 "AI":                       rwr.AIRCRAFT_AI,
                 #misc threatening aircraft:
                 "MiG-29":"29",
@@ -194,6 +206,9 @@ RWRCanvas = {
                 "Typhoon":"EF",
                 "f16":"16",
                 "Mig-28":"28",
+                "Tu-95MR":"95",
+                "Tu-160-Blackjack":"BJ",
+
         };
         rwr.shownList = [];
         #
