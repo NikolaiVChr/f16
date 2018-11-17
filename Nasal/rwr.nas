@@ -168,6 +168,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_FRIGATE = "SH";
         rwr.AIRCRAFT_TANKER = "KC";
         rwr.AIRCRAFT_AWACS = "S";
+        rwr.AIRCRAFT_UNKNOWN = "U";
         rwr.AIRCRAFT_AI = "AI";
         rwr.lookupType = {
                 "f-14b":                    rwr.AIRCRAFT_TOMCAT,     #guess
