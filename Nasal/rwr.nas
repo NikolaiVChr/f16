@@ -167,7 +167,6 @@ RWRCanvas = {
         rwr.AIRCRAFT_FALCON = "16";
         rwr.AIRCRAFT_FRIGATE = "SH";
         rwr.AIRCRAFT_TANKER = "KC";
-        rwr.AIRCRAFT_TANKER = "KC";
         rwr.AIRCRAFT_AWACS = "S";
         rwr.AIRCRAFT_AI = "AI";
         rwr.lookupType = {
@@ -208,7 +207,6 @@ RWRCanvas = {
                 "Mig-28":"28",
                 "Tu-95MR":"95",
                 "Tu-160-Blackjack":"BJ",
-
         };
         rwr.shownList = [];
         #
