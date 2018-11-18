@@ -197,6 +197,7 @@ RWRCanvas = {
                 "RC-137R":                  rwr.AIRCRAFT_AWACS,
                 "E-8R":                     rwr.AIRCRAFT_AWACS,
                 "EC-137D":                  rwr.AIRCRAFT_AWACS,
+                "gci":                      rwr.AIRCRAFT_AWACS,
                 "AI":                       rwr.AIRCRAFT_AI,
                 #misc threatening aircraft:
                 "MiG-29":                   rwr.AIRCRAFT_MIG2,
