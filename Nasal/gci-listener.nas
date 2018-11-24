@@ -174,13 +174,13 @@ var parse_msg = func(msg) {
         # PICTURE message
         # 3:bearing, 4:range, 5:altitude, 6:blufor=0/opfor=1
         output = msg[6] ? output ~ "OPFOR is " : output ~ "BLUFOR is ";
-        output = output ~ msg[3] ~ " at " ~ int(math.round(msg[4],1000))*M2NM ~ "nm, ";
-        output = output ~ "altitude " ~ int(math.round(msg[5] * FT2M,100))*M2FT ~ "ft.";
+        output = output ~ msg[3] ~ " at " ~ int(msg[4]*M2NM) ~ "nm, ";
+        output = output ~ "altitude " ~ int(math.round(msg[5],100)) ~ "ft.";
     } elsif (msg[2] == 3) {
         # DOPE BOGEY message
         # 3:bearing, 4:range, 5:altitude, 6:aspect
-        output = output ~ "bandit " ~ msg[3] ~ " at " ~ int(math.round(int(msg[4]),1000))*M2NM ~ "nm, ";
-        output = output ~ "altitude " ~ int(math.round(msg[5] * FT2M,100))*M2FT ~ "ft, ";
+        output = output ~ "bandit " ~ int(msg[3]) ~ " at " ~ int(msg[4]*M2NM) ~ "nm, ";
+        output = output ~ "altitude " ~ int(math.round(msg[5],100)) ~ "ft, ";
         msg[6] = math.abs(msg[6]);
         if (msg[6] > 110) {
             output = output ~ "dragging.";
@@ -198,7 +198,7 @@ var parse_msg = func(msg) {
         # cutoff vector
         #requestor-callsign:unique-message-id:4:vector-heading:time:altitude:aspect
         #debug.dump(msg);
-        output = output ~ "fly " ~ msg[3] ~ " at altitude " ~ int(math.round(msg[5] * FT2M,100))*M2FT ~ "ft, ";
+        output = output ~ "fly " ~ int(msg[3]) ~ " at altitude " ~ int(math.round(msg[5],100)) ~ "ft, ";
         #print(output);
         output = output ~ "ETA " ~ int(msg[4]) ~ "s, ";
         #print(output);
