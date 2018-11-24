@@ -186,7 +186,7 @@ RWRCanvas = {
                 "MiG-21bis":                rwr.AIRCRAFT_MIG,
                 "buk-m2":                   rwr.AIRCRAFT_BUK,     
                 "missile_frigate":          rwr.AIRCRAFT_FRIGATE, 
-                "fleet"                     rwr.AIRCRAFT_FRIGATE, 
+                "fleet":                    rwr.AIRCRAFT_FRIGATE, 
                 "KC-137R":                  rwr.AIRCRAFT_TANKER,
                 "KC-137R-RT":               rwr.AIRCRAFT_TANKER,
                 "707-TT":                   rwr.AIRCRAFT_TANKER,
