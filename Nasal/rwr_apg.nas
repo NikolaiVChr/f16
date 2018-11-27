@@ -90,16 +90,21 @@ var SubSystem_RWR_APG = {
             }
             if (me.show == 1) {
                 me.threat = 0;
-                if (me.u.get_model() != "missile_frigate" and me.u.get_model() != "buk-m2") {
+                if (me.u.get_model() != "missile_frigate" and me.u.get_model() != "buk-m2" and me.u.get_model() != "fleet") {
                     me.threat += ((180-me.dev)/180)*0.30;
                     me.spd = (60-me.u.get_Speed())/60;
                     me.threat -= me.spd>0?me.spd:0;
-                } elsif (me.u.get_model == "missile_frigate") {
+                } elsif (me.u.get_model == "missile_frigate" or me.u.get_model() == "fleet") {
                     me.threat += 0.30;
                 } else {
                     me.threat += 0.30;
                 }
-                me.danger = me.u.get_model() == "missile_frigate"?75:(me.u.get_model() == "buk-m2"?35:50);
+                me.danger = 50;
+                if (me.u.get_model() == "missile_frigate" or me.u.get_model() == "fleet") {
+                    me.danger = 75
+                } elsif (me.u.get_model() == "buk-m2") {
+                    me.danger = 35;
+                }
                 me.threat += ((me.danger-me.rn)/me.danger)>0?((me.danger-me.rn)/me.danger)*0.60:0;
                 me.clo = me.u.get_closure_rate();
                 me.threat += me.clo>0?(me.clo/500)*0.10:0;
