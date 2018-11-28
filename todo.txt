@@ -47,6 +47,7 @@ Missile view start behind weapon?
 Stores should only emergency Jett. when main, stby or epu is running.
 Found a document that details all loadouts for US F16s, they can carry alot more than Greek F16s. For example triple agm65 etc etc.
 Show stores over MP.
+Add/edit payload quick selections as new weapons become available.
 
 Damage
 ------
