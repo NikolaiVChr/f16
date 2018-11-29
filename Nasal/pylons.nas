@@ -32,6 +32,7 @@ var smokewinderWhite9 = stations.Smoker.new("Smokewinder White", "SmokeW", "sim/
 var tgp = stations.Smoker.new("AN/AAQ-33 Sniper ATP", "AAQ-33", "f16/stores/tgp-mounted");
 var tgp2 = stations.Smoker.new("AN/AAQ-14 LANTIRN Target Pod", "AAQ-14", "f16/stores/tgp-mounted");
 var tgp3 = stations.Smoker.new("AN/AAQ-13 LANTIRN Nav Pod", "AAQ-13", "f16/stores/nav-mounted");
+var tgp4 = stations.Smoker.new("AN/ASQ-213 HARM TS Pod", "ASQ-213", "f16/stores/tgp-mounted");
 var dummy = stations.Dummy.new("AN-T-17", nil);
 var dummy2 = stations.Dummy.new("CATM-9L", nil);# nil for shortname makes them not show up in MFD SMS page. If shortname is nil it MUST have showLongTypeInsteadOfCount: 1
 var dummy3 = stations.Dummy.new("AN/ALQ-131 ECM Pod", "AL131");
@@ -74,6 +75,7 @@ var pylonSets = {
     tgp: {name: "AN/AAQ-33 Sniper ATP", content: [tgp], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 446, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     tgp2: {name: "AN/AAQ-14 LANTIRN Target Pod", content: [tgp2], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 470, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     tgp3: {name: "AN/AAQ-13 LANTIRN Nav Pod", content: [tgp3], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 470, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    tgp4: {name: "AN/ASQ-213 HARM TS Pod", content: [tgp4], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 100, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 };
 
 if (getprop("sim/model/f16/wingmounts") != 0) {
