@@ -79,7 +79,7 @@ var pylonSets = {
 };
 
 if (getprop("sim/model/f16/wingmounts") != 0) {
-	# all variants except YF-16 gets store options:
+	# all variants except YF-16 get store options:
 
 	# source for fuel tanks content, fuel type, jettisonable and drag: TO. GR1F-16CJ-1-1
 
@@ -93,8 +93,8 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 
 	#HTS can be carried on both left and right side.
 	#LITENING only on right	
-    var fuselageRset = [pylonSets.empty, pylonSets.tgp, pylonSets.tgp2];
-    var fuselageLset = [pylonSets.empty, pylonSets.tgp3];
+    var fuselageRset = [pylonSets.empty, pylonSets.tgp, pylonSets.tgp2, pylonSets.tgp4];
+    var fuselageLset = [pylonSets.empty, pylonSets.tgp3, pylonSets.tgp4];
 
 	# pylons
 	pylon1 = stations.Pylon.new("Left Wingtip Pylon",     0, [0.082,-4.79412, 0.01109], wingtipSet1, 0, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[1]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[1]",1),func{return getprop("payload/armament/fire-control/serviceable")});
@@ -113,7 +113,7 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 
     var pylons = [pylon1,pylon2,pylon3,pylon4,pylon5,pylon6,pylon7,pylon8,pylon9,pylonI,pylon10,pylon11];
 
-	fcs = fc.FireControl.new(pylons, [9,0,8,1,7,2,6,3,5,4], ["20mm Cannon","AIM-9","AIM-120","AIM-7","AGM-65","GBU-12","AGM-84","MK-82","AGM-88", "GBU-31", "GBU-24", "MK-83", "MK-84"]);
+	fcs = fc.FireControl.new(pylons, [9,0,8,1,7,2,6,3,5,4], ["20mm Cannon","AIM-9","AIM-120","AIM-7","AGM-65","GBU-12","AGM-84","MK-82","AGM-88","GBU-31","GBU-24","MK-83","MK-84"]);
 
 	var aimListener = func (obj) {
 		#If auto focus on missile is activated the we call the function
@@ -410,7 +410,7 @@ var a2g_sead = func {
         pylon8.loadSet(pylonSets.q);
         pylon9.loadSet(pylonSets.r);
         pylon10.loadSet(pylonSets.tgp2);
-        pylon11.loadSet(pylonSets.tgp3);
+        pylon11.loadSet(pylonSets.tgp4);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -430,7 +430,7 @@ var a2g_oca = func {
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
         pylon10.loadSet(pylonSets.tgp2);
-        pylon11.loadSet(pylonSets.tgp3);
+        pylon11.loadSet(pylonSets.tgp4);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);

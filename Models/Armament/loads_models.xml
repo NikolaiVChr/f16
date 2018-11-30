@@ -862,6 +862,18 @@
  </model>
 
 <model>
+  <name>Station10_HARMts</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/HARM_TS/AN-ASQ-213.xml</path>
+  <offsets>
+   <x-m>-2.75</x-m>
+   <y-m>0.727</y-m>
+   <z-m>-0.95</z-m>
+   <pitch-deg>-0.5</pitch-deg>
+   <roll-deg>21.0</roll-deg>
+  </offsets>
+ </model>
+
+<model>
   <name>Station11_LANTIRNnav</name>
   <path>Aircraft/f16/Models/Armament/External-stores/LANTIRN/AN-AAQ-13.xml</path>
   <offsets>
@@ -869,6 +881,18 @@
    <y-m>-0.66</y-m>
    <z-m>-1.02</z-m>
    <pitch-deg>-0.5</pitch-deg>
+  </offsets>
+ </model>
+
+<model>
+  <name>Station11_HARMts</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/HARM_TS/AN-ASQ-213.xml</path>
+  <offsets>
+   <x-m>-2.75</x-m>
+   <y-m>-0.695</y-m>
+   <z-m>-0.95</z-m>
+   <pitch-deg>-0.5</pitch-deg>
+   <roll-deg>-21.0</roll-deg>
   </offsets>
  </model>
 

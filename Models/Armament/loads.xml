@@ -1040,11 +1040,41 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
 
  <animation>
   <type>select</type>
+  <object-name>Station10_HARMts</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-10-type</property>
+      <value>AN/ASQ-213 HARM TS Pod</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-10-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
   <object-name>Station11_LANTIRNnav</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-11-type</property>
       <value>AN/AAQ-13 LANTIRN Nav Pod</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-11-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station11_HARMts</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-11-type</property>
+      <value>AN/ASQ-213 HARM TS Pod</value>
     </equals>
     <greater-than>
       <property>payload/armament/station/id-11-count</property>
@@ -1066,6 +1096,10 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
       <property>payload/armament/station/id-10-set</property>
       <value>AN/AAQ-14 LANTIRN Target Pod</value>
     </equals>
+    <equals>
+      <property>payload/armament/station/id-10-set</property>
+      <value>AN/ASQ-213 HARM TS Pod</value>
+    </equals>
   </or>
   </condition>
  </animation>
@@ -1074,10 +1108,16 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   <type>select</type>
   <object-name>Podpylon_left</object-name>
   <condition>
+   <or>
     <equals>
       <property>payload/armament/station/id-11-set</property>
-      <value>not used yet</value>
+      <value>AN/AAQ-13 LANTIRN Nav Pod</value>
     </equals>
+    <equals>
+      <property>payload/armament/station/id-11-set</property>
+      <value>AN/ASQ-213 HARM TS Pod</value>
+    </equals>
+   </or>
   </condition>
  </animation>
 
