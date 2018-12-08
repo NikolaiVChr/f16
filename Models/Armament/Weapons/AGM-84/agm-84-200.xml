@@ -13,7 +13,10 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
-      <object-name>Obj_000001_mat0</object-name>
+      <object-name>AGM-84</object-name>
+      <object-name>AGM-84_Frontfins</object-name>
+      <object-name>AGM-84_Tailend</object-name>
+      <object-name>AGM-84_Tailfins</object-name>
   </effect>
 
   <animation>
@@ -289,7 +292,10 @@
      </particlesystem>
 
 	<animation>
-  		<object-name>Obj_000001_mat0</object-name>
+  		<object-name>AGM-84</object-name>
+      <object-name>AGM-84_Frontfins</object-name>
+      <object-name>AGM-84_Tailend</object-name>
+      <object-name>AGM-84_Tailfins</object-name>
   		<enable-hot type="bool">false</enable-hot>
  	</animation>
 	
