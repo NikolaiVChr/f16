@@ -21,7 +21,10 @@
 
   <animation>
     <type>select</type>
-    <object-name>Obj_000001_mat0</object-name>
+      <object-name>AGM-84</object-name>
+      <object-name>AGM-84_Frontfins</object-name>
+      <object-name>AGM-84_Tailend</object-name>
+      <object-name>AGM-84_Tailfins</object-name>
     <condition>
       <property>payload/armament/agm-84/flags/msl-id-600</property>
     </condition>
