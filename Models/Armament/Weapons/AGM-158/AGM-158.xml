@@ -21,17 +21,5 @@
       <object-name>JASSM_Tail</object-name>
       <object-name>JASSM_hooks</object-name>
   </effect>
-
-  <animation>
-    <type>select</type>
-    <object-name>JASSM_LHWing</object-name>
-    <object-name>JASSM_RHWing</object-name>
-    <condition>
-      <equals>
-        <value>0</value>
-        <value>1</value>
-      </equals>
-    </condition>
-  </animation>
 	
 </PropertyList>

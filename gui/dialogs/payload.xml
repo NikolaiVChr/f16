@@ -173,7 +173,7 @@
         <text>
             <row>12</row>
             <col>0</col>
-            <label>Guided A/G (config 1)</label>
+            <label>Guided A/G Strike</label>
         </text>
         <button>
             <row>12</row>
@@ -181,7 +181,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_guided1();</script>
+                <script>pylons.a2g_guided();</script>
             </binding>
         </button>
 
@@ -194,7 +194,7 @@
         <text>
             <row>14</row>
             <col>0</col>
-            <label>Guided A/G (config 2)</label>
+            <label>JASSM Strike</label>
         </text>
         <button>
             <row>14</row>
@@ -202,7 +202,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_guided2();</script>
+                <script>pylons.a2g_jassm();</script>
             </binding>
         </button>
 
