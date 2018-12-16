@@ -1882,7 +1882,6 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <terrain-follow type="bool">true</terrain-follow>
                 <FCS-field-deg type="int">45</FCS-field-deg>
                 <seeker-field-deg type="int">270</seeker-field-deg>
-                <reaquire type="bool">true</reaquire>
                 <max-g type="double">8.0</max-g>
                 <max-launch-g type="int">7</max-launch-g>
                 <thrust-lbf-stage-1 type="double">680</thrust-lbf-stage-1>
@@ -1894,20 +1893,16 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <weight-fuel-lbm type="double">200</weight-fuel-lbm>
                 <drag-coeff type="double">0.3</drag-coeff>
                 <cross-section-sqft type="double">3.2332</cross-section-sqft>
-                <arming-time-sec type="double">2.5</arming-time-sec>
+                <arming-time-sec type="double">2.0</arming-time-sec>
                 <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>
                 <self-destruct-time-sec type="double">1600</self-destruct-time-sec>
                 <all-aspect type="bool">true</all-aspect>
-                <lock-on-sun-deg type="double">0</lock-on-sun-deg>
-                <seeker-angular-speed-dps type="double">0</seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
                 <max-report-distance type="double">275</max-report-distance>
-                <vol-search type="double">0.075</vol-search>
-                <vol-track type="double">0.25</vol-track>
-                <vol-track-weak type="double">0.175</vol-track-weak>
+                <vol-search type="double">0.0</vol-search>
+                <vol-track type="double">1.00</vol-track>
                 <drop-time type="double">2</drop-time>
                 <deploy-time type="double">0.25</deploy-time>
-                <lateral-dps type="double">10</lateral-dps>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
             </agm-158>
             <mk-82> 
