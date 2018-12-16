@@ -398,14 +398,14 @@ var a2g_sead = func {
     }
 }
 
-# JASSM Strike: 2 AGM-158 and ECM pod
+# Stand-off Strike: 2x JASSM and ECM pod
 var a2g_jassm = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         pylon1.loadSet(pylonSets.r);
         pylon2.loadSet(pylonSets.q);
         pylon3.loadSet(pylonSets.b3);
         pylon4.loadSet(pylonSets.l);
-        pylon5.loadSet(pylonSets.f2);
+        pylon5.loadSet(pylonSets.empty);
         pylon6.loadSet(pylonSets.m);
         pylon7.loadSet(pylonSets.b3);
         pylon8.loadSet(pylonSets.q);
