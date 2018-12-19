@@ -863,11 +863,11 @@
 
 <model>
   <name>Station10_SniperATP</name>
-  <path>Aircraft/f16/Models/Armament/External-stores/SniperATP/SniperATP.xml</path>
+  <path>Aircraft/f16/Models/Armament/External-stores/SniperATP/AN-AAQ-33.xml</path>
   <offsets>
-   <x-m>-2.25</x-m>
-   <y-m>0.80</y-m>
-   <z-m>-0.95</z-m>
+   <x-m>-2.6</x-m>
+   <y-m>0.675</y-m>
+   <z-m>-1.005</z-m>
    <pitch-deg>-0.5</pitch-deg>
   </offsets>
  </model>

@@ -290,8 +290,8 @@ var a2g_mix = func {
         pylon7.loadSet(pylonSets.i);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
-        pylon10.loadSet(pylonSets.tgp2);
-        pylon11.loadSet(pylonSets.tgp3);
+        pylon10.loadSet(pylonSets.tgp);
+        pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -390,7 +390,7 @@ var a2g_sead = func {
         pylon7.loadSet(pylonSets.b2);
         pylon8.loadSet(pylonSets.q);
         pylon9.loadSet(pylonSets.r);
-        pylon10.loadSet(pylonSets.tgp2);
+        pylon10.loadSet(pylonSets.tgp);
         pylon11.loadSet(pylonSets.tgp4);
         f16.reloadCannon();
     } else {
@@ -410,8 +410,8 @@ var a2g_jassm = func {
         pylon7.loadSet(pylonSets.b3);
         pylon8.loadSet(pylonSets.q);
         pylon9.loadSet(pylonSets.r);
-        pylon10.loadSet(pylonSets.tgp2);
-        pylon11.loadSet(pylonSets.tgp3);
+        pylon10.loadSet(pylonSets.tgp);
+        pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -430,7 +430,7 @@ var a2g_oca = func {
         pylon7.loadSet(pylonSets.a);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
-        pylon10.loadSet(pylonSets.tgp2);
+        pylon10.loadSet(pylonSets.tgp);
         pylon11.loadSet(pylonSets.tgp4);
         f16.reloadCannon();
     } else {

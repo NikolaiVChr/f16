@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <path>AN-AAQ-33.ac</path>
+
+  <effect>  
+    <inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  
+    <object-name>Sniper_Glass</object-name>
+  </effect>
+
+  <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.35</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <object-name>Sniper_Front</object-name>
+      <object-name>Sniper_Sphere</object-name>
+      <object-name>Sniper_SphereUnit</object-name>
+      <object-name>Sniper_TopMount</object-name>
+      <object-name>ANAAQ-33</object-name>
+  </effect>
+
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Sniper_Front</object-name>
+  <object-name>Sniper_Glass</object-name>
+  <object-name>Sniper_Sphere</object-name>
+  <object-name>Sniper_SphereUnit</object-name>
+  <property>aircraft/flir/swivel/roll-deg</property>
+  <factor>1.0</factor>
+  <offset-deg>90</offset-deg>
+  <center>
+    <x-m>0</x-m>
+    <y-m>0</y-m>
+    <z-m>0</z-m>
+  </center>
+  <axis>
+   <x>1.0</x>
+   <y>0.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+
+  <animation>
+  <type>rotate</type>
+  <object-name>Sniper_Sphere</object-name>
+  <object-name>Sniper_SphereUnit</object-name>
+  <property>aircraft/flir/swivel/pitch-deg</property>
+  <factor>-1.0</factor>
+  <offset-deg>90</offset-deg>
+  <center>
+    <x-m>-1.0111</x-m>
+    <y-m>0</y-m>
+    <z-m>0</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>1.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation> 
+
+</PropertyList>
