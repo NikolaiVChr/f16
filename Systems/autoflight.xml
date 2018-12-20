@@ -238,13 +238,13 @@
 		
 		<fcs_function name="autoflight/pitch/alt/gain">
 			<function>
-                <table>
-                    <independentVar lookup="row">velocities/vc-kts</independentVar>
-                    <tableData>
-                        200 -7
-                        600 -5
-                    </tableData>
-                </table>
+				<table>
+					<independentVar lookup="row">velocities/vc-kts</independentVar>
+					<tableData>
+						200 -7
+						600 -5
+					</tableData>
+				</table>
 			</function>
 		</fcs_function>
 		
