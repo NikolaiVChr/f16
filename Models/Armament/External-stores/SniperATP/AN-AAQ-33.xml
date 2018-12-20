@@ -32,7 +32,7 @@
   <object-name>Sniper_Sphere</object-name>
   <object-name>Sniper_SphereUnit</object-name>
   <property>aircraft/flir/swivel/roll-deg</property>
-  <factor>1.0</factor>
+  <factor>-1.0</factor>
   <offset-deg>90</offset-deg>
   <center>
     <x-m>0</x-m>
@@ -40,7 +40,7 @@
     <z-m>0</z-m>
   </center>
   <axis>
-   <x>1.0</x>
+   <x>-1.0</x>
    <y>0.0</y>
    <z>0.0</z>
   </axis>
@@ -52,8 +52,8 @@
   <object-name>Sniper_Sphere</object-name>
   <object-name>Sniper_SphereUnit</object-name>
   <property>aircraft/flir/swivel/pitch-deg</property>
-  <factor>-1.0</factor>
-  <offset-deg>90</offset-deg>
+  <factor>1.0</factor>
+  <offset-deg>0</offset-deg>
   <center>
     <x-m>-1.0111</x-m>
     <y-m>0</y-m>

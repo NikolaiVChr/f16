@@ -290,8 +290,8 @@ var a2g_mix = func {
         pylon7.loadSet(pylonSets.i);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
-        pylon10.loadSet(pylonSets.tgp);
-        pylon11.loadSet(pylonSets.empty);
+        pylon10.loadSet(pylonSets.tgp2);
+        pylon11.loadSet(pylonSets.tgp3);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -310,8 +310,8 @@ var a2g_guided = func {
         pylon7.loadSet(pylonSets.c4);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
-        pylon10.loadSet(pylonSets.tgp2);
-        pylon11.loadSet(pylonSets.tgp3);
+        pylon10.loadSet(pylonSets.tgp);
+        pylon11.loadSet(pylonSets.tempty);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
