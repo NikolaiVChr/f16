@@ -133,10 +133,10 @@
 			<Kp>
 				<expression>
 					<table>
-						<property>/velocities/mach</property>
-						<entry><ind>0.2</ind><dep>0.0029</dep></entry>
-						<entry><ind>0.9</ind><dep>0.0010</dep></entry>
-						<entry><ind>2.1</ind><dep>0.0003</dep></entry>
+						<property>/fdm/jsbsim/velocities/vc-kts</property>
+						<entry><ind>130</ind><dep>0.0029</dep></entry>
+						<entry><ind>600</ind><dep>0.0009</dep></entry>
+						<entry><ind>950</ind><dep>0.0003</dep></entry>
 					</table>
 				</expression>
 			</Kp>
