@@ -311,7 +311,7 @@ var a2g_guided = func {
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
         pylon10.loadSet(pylonSets.tgp);
-        pylon11.loadSet(pylonSets.tempty);
+        pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -398,7 +398,7 @@ var a2g_sead = func {
     }
 }
 
-# Stand-off Strike: 2x JASSM and ECM pod
+# Stand-off Strike: 2x JASSM
 var a2g_jassm = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         pylon1.loadSet(pylonSets.r);

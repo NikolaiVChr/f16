@@ -35,7 +35,7 @@
   <animation>
   <type>rotate</type>
   <object-name>JASSM_LHWing</object-name>
-  <property>payload/armament/agm-158/flags/msl-id-200</property>
+  <property>payload/armament/agm-158/flags/deploy-id-200</property>
   <factor>-43.3</factor>
   <center>
    <x-m>-0.53795</x-m>
@@ -52,7 +52,7 @@
  <animation>
   <type>rotate</type>
   <object-name>JASSM_RHWing</object-name>
-  <property>payload/armament/agm-158/flags/msl-id-200</property>
+  <property>payload/armament/agm-158/flags/deploy-id-200</property>
   <factor>43.3</factor>
   <center>
    <x-m>-0.53795</x-m>
@@ -69,7 +69,7 @@
  <animation>
   <type>rotate</type>
   <object-name>JASSM_Tail</object-name>
-  <property>payload/armament/agm-158/flags/msl-id-200</property>
+  <property>payload/armament/agm-158/flags/deploy-id-200</property>
   <factor>120</factor>
   <axis>
    <x1-m>2.02813</x1-m>
