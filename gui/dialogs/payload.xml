@@ -46,7 +46,7 @@
         <text>
             <row>0</row>
             <col>0</col>
-            <label>Air patrol</label>
+            <label>Standard Air Patrol</label>
         </text>
         <button>
             <row>0</row>
@@ -67,7 +67,7 @@
         <text>
             <row>2</row>
             <col>0</col>
-            <label>Air superiority</label>
+            <label>Combat Air Patrol</label>
         </text>
         <button>
             <row>2</row>
@@ -75,7 +75,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_super();</script>
+                <script>pylons.a2a_cap();</script>
             </binding>
         </button>
 
@@ -88,7 +88,7 @@
         <text>
             <row>4</row>
             <col>0</col>
-            <label>Combat Air Patrol</label>
+            <label>Combat Air Patrol (Extended)</label>
         </text>
         <button>
             <row>4</row>
@@ -96,7 +96,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_cap();</script>
+                <script>pylons.a2a_capext();</script>
             </binding>
         </button>
 
@@ -109,7 +109,7 @@
         <text>
             <row>6</row>
             <col>0</col>
-            <label>Combat Air patrol (Extended)</label>
+            <label>Air Superiority</label>
         </text>
         <button>
             <row>6</row>
@@ -117,7 +117,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_capext();</script>
+                <script>pylons.a2a_super();</script>
             </binding>
         </button>
 
@@ -173,7 +173,7 @@
         <text>
             <row>12</row>
             <col>0</col>
-            <label>Guided A/G Strike</label>
+            <label>"Wild Weasel" (SEAD)</label>
         </text>
         <button>
             <row>12</row>
@@ -181,7 +181,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_guided();</script>
+                <script>pylons.a2g_sead();</script>
             </binding>
         </button>
 
@@ -194,7 +194,7 @@
         <text>
             <row>14</row>
             <col>0</col>
-            <label>Stand-off Strike</label>
+            <label>A/G Unguided (Multi-mode 1)</label>
         </text>
         <button>
             <row>14</row>
@@ -202,14 +202,35 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_jassm();</script>
+                <script>pylons.a2g_mk1();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>15</row>
+            <col>0</col>
+            <colspan>4</colspan>
+        </hrule>
+
+        <text>
+            <row>16</row>
+            <col>0</col>
+            <label>A/G Unguided (Multi-mode 2)</label>
+        </text>
+        <button>
+            <row>16</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_mk2();</script>
             </binding>
         </button>
 
         <text>
             <row>0</row>
             <col>2</col>
-            <label>Air Strike</label>
+            <label>A/G LGB Strike (Single-mode)</label>
         </text>
         <button>
             <row>0</row>
@@ -217,17 +238,32 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_mix();</script>
+                <script>pylons.a2g_lgb1();</script>
             </binding>
         </button>
 
         <text>
             <row>2</row>
             <col>2</col>
-            <label>Air to sea (Anti-ship)</label>
+            <label>A/G LGB Strike (Multi-mode)</label>
         </text>
         <button>
             <row>2</row>
+            <col>3</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_lgb2();</script>
+            </binding>
+        </button>
+
+        <text>
+            <row>4</row>
+            <col>2</col>
+            <label>A/S Anti-Ship</label>
+        </text>
+        <button>
+            <row>4</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -236,29 +272,28 @@
             </binding>
         </button>
 
-
         <text>
-            <row>4</row>
+            <row>6</row>
             <col>2</col>
-            <label>"Wild Weasel" (SEAD)</label>
+            <label>A/G Stand-off Strike</label>
         </text>
         <button>
-            <row>4</row>
+            <row>6</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_sead();</script>
+                <script>pylons.a2g_jassm();</script>
             </binding>
         </button>
 
         <text>
-            <row>6</row>
+            <row>8</row>
             <col>2</col>
             <label>Offensive Counter Air</label>
         </text>
         <button>
-            <row>6</row>
+            <row>8</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -268,12 +303,12 @@
         </button>
 
         <text>
-            <row>8</row>
+            <row>10</row>
             <col>2</col>
-            <label>Ferry flight</label>
+            <label>Ferry Loadout</label>
         </text>
         <button>
-            <row>8</row>
+            <row>10</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -282,14 +317,13 @@
             </binding>
         </button>
 
-
         <text>
-            <row>10</row>
+            <row>12</row>
             <col>2</col>
-            <label>Ferry flight w/ cargo</label>
+            <label>Ferry w/ Cargo Loadout</label>
         </text>
         <button>
-            <row>10</row>
+            <row>12</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -299,27 +333,27 @@
         </button>
 
         <text>
-            <row>12</row>
+            <row>14</row>
             <col>2</col>
-            <label>Training</label>
+            <label>Training (Dummies)</label>
         </text>
         <button>
-            <row>12</row>
+            <row>14</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_training();</script>
+                <script>pylons.training();</script>
             </binding>
         </button>
 
         <text>
-            <row>14</row>
+            <row>16</row>
             <col>2</col>
             <label>Clean</label>
         </text>
         <button>
-            <row>14</row>
+            <row>16</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
