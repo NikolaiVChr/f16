@@ -3,9 +3,9 @@
 <PropertyList include="f16-base.xml">
 
  <sim>
-  <description>General Dynamics F-16C block 42</description>
+  <description>General Dynamics F-16CG block 42</description>
   <long-description>
-   The General Dynamics F-16C Fighting Falcon is a single-engine supersonic multirole fighter aircraft originally developed by General Dynamics (now Lockheed Martin) for the United States Air Force (USAF). Powered by F100-PW-220. Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
+   The General Dynamics F-16CG Fighting Falcon is a single-engine supersonic multirole fighter aircraft originally developed by General Dynamics (now Lockheed Martin) for the United States Air Force (USAF). Powered by F100-PW-220. Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
    The Fighting Falcon has key features including a frameless bubble canopy for better visibility, side-mounted control stick to ease control while maneuvering, a seat reclined 30 degrees to reduce the effect of g-forces on the pilot, and the first use of a relaxed static stability/fly-by-wire flight control system which helps to make it a nimble aircraft.
   </long-description>
   <author>Erik Hofman, Pensacola, Martin "Pegasus" Schmitt, Richard Harrison, Nikolai V. Chr., J Maverick 16, Joshua Davidson, Gary Brown, Jonathan Redpath, Martien Van Der P.</author>
@@ -71,7 +71,7 @@
   <menubar>
    <default>
     <menu n="100">
-     <label>F-16C Block 42</label>
+     <label>F-16CG Block 42</label>
         <item n="8">
           <label>Payload quick select</label>
           <binding>
