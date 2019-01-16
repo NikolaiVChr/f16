@@ -223,7 +223,7 @@ var loop_flare = func {
       call(func{var interfaceController = fg1000.GenericInterfaceController.getOrCreateInstance();
       interfaceController.stop();},nil,var err2=[]);
     }
-    setprop("sim/multiplay/visibility-range-nm", 150);
+    setprop("sim/multiplay/visibility-range-nm", 160);
     if (getprop("payload/armament/es/flags/deploy-id-10")!= nil) {
       setprop("f16/force", 7-5*getprop("payload/armament/es/flags/deploy-id-10"));
       } else {
