@@ -612,7 +612,7 @@ Secondly make sure masterarm is enabled.
 Thirdly select the arm. (use 'w' key or click buttons 'A-A' or 'A-G' under HUD)
 Fourthly make sure target is selected (key 'y')
 For GBU-12 and GBU-24 make sure laser is armed.
-For GBU-12, GBU-24, GBU-31, MK-82, MK-83, MK-84 when getting close a vertical line will appear in HUD. Align flight path indicator on the line, when a small horizontal line on that line starts dropping down and reach another line then its time to release (key 'e' or 'trigger').
+For GBU-12, GBU-24, GBU-31, MK-82, MK-83, MK-84, CBU-87 when getting close a vertical line will appear in HUD. Align flight path indicator on the line, when a small horizontal line on that line starts dropping down and reach another line then its time to release (key 'e' or 'trigger').
 For AIM-120 the trigger can be held for 2 second to fire it without a lock in MADDOG mode, where it will lock onto anyone it sees. This feature is still not entirely bug free so do this on own risk.
 
 NIGHTTIME FLYING
@@ -2034,6 +2034,46 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
             </mk-84>
+            <cbu-87> 
+                <short-name type="string">CB87</short-name>
+                <long-name type="string">CBU-87 Combined Effects Munition</long-name>
+                <fire-msg type="string">Bombs away</fire-msg>
+                <class type="string">GM</class>
+                <max-fire-range-nm type="double">8.5</max-fire-range-nm>
+                <min-fire-range-nm type="double">0</min-fire-range-nm>
+                <guidance type="string">unguided</guidance>
+                <navigation type="string">direct</navigation>
+                <loft-altitude type="int"> 0 </loft-altitude>
+                <terrain-follow type="bool">false</terrain-follow>
+                <FCS-field-deg type="int"> 240 </FCS-field-deg>
+                <seeker-field-deg type="int"> 360 </seeker-field-deg>
+                <max-g type="double"> 1.5 </max-g>
+                <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
+                <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
+                <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
+                <stage-2-duration-sec type="double"> 0 </stage-2-duration-sec>
+                <weight-launch-lbs type="double"> 950 </weight-launch-lbs>
+                <weight-warhead-lbs type="double"> 128 </weight-warhead-lbs>
+                <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
+                <drag-coeff type="double"> 0.018 </drag-coeff>
+                <cross-section-sqft type="double"> 1.8094133 </cross-section-sqft>
+                <arming-time-sec type="double"> 2.6 </arming-time-sec>
+                <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
+                <self-destruct-time-sec type="double"> 10000 </self-destruct-time-sec>
+                <all-aspect type="bool">true</all-aspect>
+                <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
+                <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
+                <rail type="bool">false</rail>
+                <max-report-distance type="double">1500</max-report-distance>
+                <vol-search type="double"> 0.075 </vol-search>
+                <vol-track type="double"> 0.25 </vol-track>
+                <vol-track-weak type="double"> 0.175 </vol-track-weak>
+                <drop-time type="double">1</drop-time>
+                <deploy-time type="double">0.75</deploy-time>
+                <lateral-dps type="double"> -40 </lateral-dps>
+                <max-pitch-deg type="double">-90</max-pitch-deg>
+                <hit-everything-nearby type="bool">true</hit-everything-nearby>
+            </cbu-87>
             <agm-88>
                 <short-name type="string">AG88</short-name>
                 <long-name type="string">AGM-88 HARM</long-name>

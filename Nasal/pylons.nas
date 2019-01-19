@@ -51,6 +51,7 @@ var pylonSets = {
 	c:  {name: "3 x MK-82", content: ["MK-82","MK-82","MK-82"], fireOrder: [0,1,2], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
     c5: {name: "1 x MK-84", content: ["MK-84"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     d:  {name: "2 x MK-83", content: ["MK-83","MK-83"], fireOrder: [0,1], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
+    d1:  {name: "2 x CBU-87", content: ["CBU-87","CBU-87"], fireOrder: [0,1], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
 	g:  {name: "1 x AIM-9", content: ["AIM-9"], fireOrder: [0], launcherDragArea: -0.0785, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#wingtip
 	q:  {name: "1 x AIM-9", content: ["AIM-9"], fireOrder: [0], launcherDragArea: -0.025, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#non wingtip
 	h:  {name: "1 x AIM-120", content: ["AIM-120"], fireOrder: [0], launcherDragArea: -0.025, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#non wingtip
@@ -88,9 +89,9 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 	var pylon120set = [pylonSets.empty, pylonSets.q, pylonSets.h, pylonSets.k];
 	var wingtipSet1  = [pylonSets.k,pylonSets.k2,     pylonSets.g, pylonSets.r,pylonSets.s,pylonSets.t,pylonSets.u,pylonSets.w1];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
 	var wingtipSet9  = [pylonSets.k,pylonSets.k2,     pylonSets.g, pylonSets.r,pylonSets.v,pylonSets.w,pylonSets.x,pylonSets.w9];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
-	var pylon9mix   = [pylonSets.empty, pylonSets.q, pylonSets.i, pylonSets.h, pylonSets.q7, pylonSets.a, pylonSets.b, pylonSets.c, pylonSets.b2, pylonSets.c3, pylonSets.f3, pylonSets.c4, pylonSets.d, pylonSets.c5, pylonSets.b3];
-	var pylon12setL = [pylonSets.empty, pylonSets.j, pylonSets.l, pylonSets.o, pylonSets.c, pylonSets.c3, pylonSets.c4, pylonSets.b2, pylonSets.d, pylonSets.c5];
-	var pylon12setR = [pylonSets.empty, pylonSets.j, pylonSets.m, pylonSets.p, pylonSets.c, pylonSets.c3, pylonSets.c4, pylonSets.b2, pylonSets.d, pylonSets.c5];
+	var pylon9mix   = [pylonSets.empty, pylonSets.q, pylonSets.i, pylonSets.h, pylonSets.q7, pylonSets.a, pylonSets.b, pylonSets.c, pylonSets.b2, pylonSets.c3, pylonSets.f3, pylonSets.c4, pylonSets.d, pylonSets.d1, pylonSets.c5, pylonSets.b3];
+	var pylon12setL = [pylonSets.empty, pylonSets.j, pylonSets.l, pylonSets.o, pylonSets.c, pylonSets.c3, pylonSets.c4, pylonSets.b2, pylonSets.d, pylonSets.d1, pylonSets.c5];
+	var pylon12setR = [pylonSets.empty, pylonSets.j, pylonSets.m, pylonSets.p, pylonSets.c, pylonSets.c3, pylonSets.c4, pylonSets.b2, pylonSets.d, pylonSets.d1, pylonSets.c5];
 
 	#HTS can be carried on both left and right side.
 	#LITENING only on right	
@@ -114,7 +115,7 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 
     var pylons = [pylon1,pylon2,pylon3,pylon4,pylon5,pylon6,pylon7,pylon8,pylon9,pylonI,pylon10,pylon11];
 
-	fcs = fc.FireControl.new(pylons, [9,0,8,1,7,2,6,3,5,4], ["20mm Cannon","AIM-9","AIM-120","AIM-7","AGM-65","GBU-12","AGM-84","MK-82","AGM-88","GBU-31","GBU-24","MK-83","MK-84","AGM-158"]);
+	fcs = fc.FireControl.new(pylons, [9,0,8,1,7,2,6,3,5,4], ["20mm Cannon","AIM-9","AIM-120","AIM-7","AGM-65","GBU-12","AGM-84","MK-82","AGM-88","GBU-31","GBU-24","MK-83","MK-84","AGM-158","CBU-87"]);
 
 	var aimListener = func (obj) {
 		#If auto focus on missile is activated the we call the function
@@ -308,6 +309,26 @@ var a2g_mk2 = func {
         pylon5.loadSet(pylonSets.f);
         pylon6.loadSet(pylonSets.c5);
         pylon7.loadSet(pylonSets.d);
+        pylon8.loadSet(pylonSets.h);
+        pylon9.loadSet(pylonSets.g);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# A/G CEM 1 (CBU-87)
+var a2g_mk2 = func {
+    if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+        pylon1.loadSet(pylonSets.g);
+        pylon2.loadSet(pylonSets.h);
+        pylon3.loadSet(pylonSets.d1);
+        pylon4.loadSet(pylonSets.d1);
+        pylon5.loadSet(pylonSets.f);
+        pylon6.loadSet(pylonSets.d1);
+        pylon7.loadSet(pylonSets.d1);
         pylon8.loadSet(pylonSets.h);
         pylon9.loadSet(pylonSets.g);
         pylon10.loadSet(pylonSets.empty);

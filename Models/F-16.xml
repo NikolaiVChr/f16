@@ -1887,6 +1887,10 @@
         <property>payload/armament/station/id-2-set</property>
         <value>2 x MK-83</value>
       </equals>
+      <equals>
+        <property>payload/armament/station/id-2-set</property>
+        <value>2 x CBU-87</value>
+      </equals>
     </or>
     </not>
   </and>
@@ -1918,6 +1922,10 @@
         <property>payload/armament/station/id-3-set</property>
         <value>2 x MK-83</value>
       </equals>
+      <equals>
+        <property>payload/armament/station/id-3-set</property>
+        <value>2 x CBU-87</value>
+      </equals>
     </or>
     </not>
   </and>
@@ -1948,6 +1956,10 @@
       <equals>
         <property>payload/armament/station/id-5-set</property>
         <value>2 x MK-83</value>
+      </equals>
+      <equals>
+        <property>payload/armament/station/id-5-set</property>
+        <value>2 x CBU-87</value>
       </equals>
     </or>
     </not>
@@ -1983,6 +1995,10 @@
       <equals>
         <property>payload/armament/station/id-6-set</property>
         <value>2 x MK-83</value>
+      </equals>
+      <equals>
+        <property>payload/armament/station/id-6-set</property>
+        <value>2 x CBU-87</value>
       </equals>
     </or>
     </not>
