@@ -320,7 +320,7 @@ var a2g_mk2 = func {
 }
 
 # A/G CEM 1 (CBU-87)
-var a2g_mk2 = func {
+var a2g_cem1 = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         pylon1.loadSet(pylonSets.g);
         pylon2.loadSet(pylonSets.h);

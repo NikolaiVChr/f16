@@ -1694,8 +1694,8 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
-                <drop-time type="double">2</drop-time>
-                <deploy-time type="double">2</deploy-time>
+                <drop-time type="double">1</drop-time>
+                <deploy-time type="double">1.5</deploy-time>
                 <lateral-dps type="double"> 10 </lateral-dps>
                 <max-pitch-deg type="double">-45</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
@@ -1742,8 +1742,8 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
-                <drop-time type="double">2</drop-time>
-                <deploy-time type="double">2</deploy-time>
+                <drop-time type="double">1</drop-time>
+                <deploy-time type="double">1</deploy-time>
                 <lateral-dps type="double"> 10 </lateral-dps>
                 <max-pitch-deg type="double">-45</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
@@ -1790,8 +1790,8 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
-                <drop-time type="double">2</drop-time>
-                <deploy-time type="double">2</deploy-time>
+                <drop-time type="double">1</drop-time>
+                <deploy-time type="double">1</deploy-time>
                 <lateral-dps type="double"> 10 </lateral-dps>
                 <max-pitch-deg type="double">-45</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
@@ -1940,8 +1940,8 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
-                <drop-time type="double">0</drop-time>
-                <deploy-time type="double">0</deploy-time>
+                <drop-time type="double">1</drop-time>
+                <deploy-time type="double">1</deploy-time>
                 <lateral-dps type="double"> -10 </lateral-dps>
                 <max-pitch-deg type="double">-90</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
@@ -1980,8 +1980,8 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
-                <drop-time type="double">0</drop-time>
-                <deploy-time type="double">0</deploy-time>
+                <drop-time type="double">1</drop-time>
+                <deploy-time type="double">1</deploy-time>
                 <lateral-dps type="double"> -10 </lateral-dps>
                 <max-pitch-deg type="double">-90</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
@@ -2021,8 +2021,8 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
-                <drop-time type="double">2</drop-time>
-                <deploy-time type="double">2</deploy-time>
+                <drop-time type="double">1</drop-time>
+                <deploy-time type="double">1</deploy-time>
                 <lateral-dps type="double"> 10 </lateral-dps>
                 <max-pitch-deg type="double">-45</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
@@ -2039,7 +2039,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <long-name type="string">CBU-87 Combined Effects Munition</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
                 <class type="string">GM</class>
-                <max-fire-range-nm type="double">8.5</max-fire-range-nm>
+                <max-fire-range-nm type="double">7</max-fire-range-nm>
                 <min-fire-range-nm type="double">0</min-fire-range-nm>
                 <guidance type="string">unguided</guidance>
                 <navigation type="string">direct</navigation>
@@ -2064,13 +2064,13 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double">1500</max-report-distance>
+                <max-report-distance type="double">1200</max-report-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
                 <drop-time type="double">1</drop-time>
                 <deploy-time type="double">0.75</deploy-time>
-                <lateral-dps type="double"> -40 </lateral-dps>
+                <lateral-dps type="double"> -50 </lateral-dps>
                 <max-pitch-deg type="double">-90</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
             </cbu-87>
