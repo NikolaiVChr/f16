@@ -2721,7 +2721,7 @@
                 <table>
                     <independentVar lookup="row">inertia/weight-lbs</independentVar>
                     <tableData>
-                      17000 150
+                      17000 125
                       20000 136
                       25000 152
                       30000 167
