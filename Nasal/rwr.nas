@@ -210,6 +210,7 @@ RWRCanvas = {
                 "QF-4E":"F4",
                 "B1-B":"B1",
                 "A-10":"10",
+                "A-10-model":"10",
                 "truck":"TR",
                 "Typhoon":"EF",
                 "f16":"16",
