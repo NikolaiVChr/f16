@@ -166,6 +166,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_MIG2 = "29";
         rwr.AIRCRAFT_MIRAGE = "20";
         rwr.AIRCRAFT_FALCON = "16";
+        rwr.AIRCRAFT_WARTHOG = "10";
         rwr.AIRCRAFT_FRIGATE = "SH";
         rwr.AIRCRAFT_TANKER = "KC";
         rwr.AIRCRAFT_AWACS = "S";
@@ -209,8 +210,8 @@ RWRCanvas = {
                 "MQ-9":"9",
                 "QF-4E":"F4",
                 "B1-B":"B1",
-                "A-10":"10",
-                "A-10-model":"10",
+                "A-10":                     rwr.AIRCRAFT_WARTHOG,
+                "A-10-model":               rwr.AIRCRAFT_WARTHOG,
                 "truck":"TR",
                 "Typhoon":"EF",
                 "f16":"16",
