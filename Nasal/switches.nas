@@ -71,6 +71,15 @@ var aerialRefueling = props.globals.getNode("controls/lighting/ext-lighting-pane
                 fuselage.setValue(0);
         } 
  }
+ 
+ var toggleWingTail = func {
+    wingTail.setValue(!wingTail.getValue());
+ }
+
+# Using the wing-tail property for now
+ var toggleFuselage = func {
+    fuselage.setValue(!fuselage.getValue());
+ }
 
 # Using the wing-tail property for now
  var toggleFuselageUp = func {
