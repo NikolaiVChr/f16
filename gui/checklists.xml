@@ -100,7 +100,7 @@
             </binding>
         </item>
         <item>
-            <name>JSF START</name>
+            <name>JSF START (black switch on throttle)</name>
             <value>OFF</value>
             <condition>
                 <equals>
@@ -140,7 +140,7 @@
             </condition>
         </item>
         <item>
-            <name>JSF START</name>
+            <name>JSF START (black switch on throttle)</name>
             <value>ON</value>
             <condition>
                 <equals>

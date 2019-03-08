@@ -40,7 +40,7 @@
         <light-radius type="float">9.6</light-radius>
         <lightmap-enabled type="int">1</lightmap-enabled>
         <lightmap-multi type="int">0</lightmap-multi>
-        <lightmap-factor type="float" n="0"><use>controls/lighting/lighting-panel/flood-inst-pnl</use></lightmap-factor>
+        <lightmap-factor n="0"><use>controls/lighting/lighting-panel/flood-inst-pnl</use></lightmap-factor>
         <lightmap-color type="vec3d" n="0"> 0.45 0.34 0.18 </lightmap-color>
     </parameters>
 </PropertyList>

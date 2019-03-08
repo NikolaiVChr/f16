@@ -1298,6 +1298,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 </sources>
                 <switches>
                     <epu type="int">0</epu>
+                    <epu-cover type="int">1</epu-cover>
                     <main-pwr type="int">0</main-pwr>
                 </switches>
                 <unused type="int">0</unused>

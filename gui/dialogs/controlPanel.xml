@@ -831,6 +831,16 @@
 							<binding>
 								<command>dialog-apply</command>
 							</binding>
+							<binding>
+						        <command>nasal</command>
+						        <script>
+						          if (getprop("fdm/jsbsim/elec/switches/epu")==1) {
+						            setprop("fdm/jsbsim/elec/switches/epu-cover",0);
+						          } else {
+						            setprop("fdm/jsbsim/elec/switches/epu-cover",1);
+						          }
+						        </script>
+						    </binding>
 						</slider>
 						
 					</group>
