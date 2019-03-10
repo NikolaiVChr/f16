@@ -327,7 +327,7 @@ var F16_HUD = {
                                                 if (hdp.hasGS and hdp.GSinRange) {
                                                     obj.gsGroup.setTranslation(0,-20*hdp.GSDeg);
                                                     #printf("GS %d ILS %d", hdp.GSDeg*10,hdp.ILSDeg,);
-                                                    if (math.abs(hdp.GSDeg)>5) {
+                                                    if (math.abs(hdp.GSDeg)>0.99) {
                                                         obj.gs.hide();
                                                         obj.gsOff.show();
                                                     } else {
