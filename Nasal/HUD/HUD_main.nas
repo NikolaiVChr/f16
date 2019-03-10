@@ -216,6 +216,7 @@ var F16_HUD = {
                  GSDeg                     : "instrumentation/nav[0]/gs-needle-deflection-norm",
                  ILSDeg                    : "instrumentation/nav[0]/heading-needle-deflection",
                  ILSinRange                : "instrumentation/nav[0]/in-range",
+                 GSdist                    : "instrumentation/nav[0]/gs-distance",
                 };
 
         foreach (var name; keys(input)) {
@@ -311,10 +312,10 @@ var F16_HUD = {
                                         }
                                         obj.localizer.setTranslation (obj.sx*0.5+hdp.VV_x * obj.texelPerDegreeX, obj.sy-obj.texels_up_into_hud+hdp.VV_y * obj.texelPerDegreeY);
                                       }),
-            props.UpdateManager.FromHashList(["rotary","hasGS","GSDeg","GSinRange","ILSDeg", "ILSinRange"], 0.01, func(hdp)
+            props.UpdateManager.FromHashList(["rotary","hasGS","GSDeg","GSinRange","ILSDeg", "ILSinRange", "GSdist"], 0.01, func(hdp)
                                       {
                                         if (hdp.rotary == 0 or hdp.rotary == 3) {
-                                            if (hdp.ILSinRange) {
+                                            if (hdp.ILSinRange and (hdp.GSdist == nil or hdp.GSdist < 20*NM2M)) {
                                                 obj.ilsGroup.setTranslation(4*clamp(hdp.ILSDeg,-5,5),0);
                                                 if (math.abs(hdp.ILSDeg)>5) {
                                                     obj.ils.hide();
