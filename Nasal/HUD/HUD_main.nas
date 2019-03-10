@@ -210,6 +210,12 @@ var F16_HUD = {
                  ded                       : "f16/avionics/hud-ded",
                  tgp_mounted               : "f16/stores/tgp-mounted",
                  view_number               : "sim/current-view/view-number",
+                 rotary                    : "sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob",
+                 hasGS                     : "instrumentation/nav[0]/has-gs",
+                 GSinRange                 : "instrumentation/nav[0]/gs-in-range",
+                 GSDeg                     : "instrumentation/nav[0]/gs-needle-deflection-norm",
+                 ILSDeg                    : "instrumentation/nav[0]/heading-needle-deflection",
+                 ILSinRange                : "instrumentation/nav[0]/in-range",
                 };
 
         foreach (var name; keys(input)) {
@@ -302,6 +308,48 @@ var F16_HUD = {
                                             obj.VV.update();
                                         } else {
                                             obj.VV.hide();
+                                        }
+                                        obj.localizer.setTranslation (obj.sx*0.5+hdp.VV_x * obj.texelPerDegreeX, obj.sy-obj.texels_up_into_hud+hdp.VV_y * obj.texelPerDegreeY);
+                                      }),
+            props.UpdateManager.FromHashList(["rotary","hasGS","GSDeg","GSinRange","ILSDeg", "ILSinRange"], 0.01, func(hdp)
+                                      {
+                                        if (hdp.rotary == 0 or hdp.rotary == 3) {
+                                            if (hdp.ILSinRange) {
+                                                obj.ilsGroup.setTranslation(4*clamp(hdp.ILSDeg,-5,5),0);
+                                                if (math.abs(hdp.ILSDeg)>5) {
+                                                    obj.ils.hide();
+                                                    obj.ilsOff.show();
+                                                } else {
+                                                    obj.ils.show();
+                                                    obj.ilsOff.hide();
+                                                }
+                                                
+                                                if (hdp.hasGS and hdp.GSinRange) {
+                                                    obj.gsGroup.setTranslation(0,-20*hdp.GSDeg);
+                                                    #printf("GS %d ILS %d", hdp.GSDeg*10,hdp.ILSDeg,);
+                                                    if (math.abs(hdp.GSDeg)>5) {
+                                                        obj.gs.hide();
+                                                        obj.gsOff.show();
+                                                    } else {
+                                                        obj.gs.show();
+                                                        obj.gsOff.hide();
+                                                    }
+                                                } else {
+                                                    obj.gsGroup.setTranslation(0,0);
+                                                    obj.gs.hide();
+                                                    obj.gsOff.show();
+                                                }
+                                            } else {
+                                                obj.ilsGroup.setTranslation(0,0);
+                                                obj.ils.hide();
+                                                obj.ilsOff.show();
+                                                obj.gsGroup.setTranslation(0,0);
+                                                obj.gs.hide();
+                                                obj.gsOff.show();
+                                            }
+                                            obj.localizer.show();
+                                        } else {
+                                            obj.localizer.hide();
                                         }
                                       }),
             props.UpdateManager.FromHashList(["fpm","texUp","gear_down","VV_x","VV_y", "wow"], 0.01, func(hdp)
@@ -1015,6 +1063,86 @@ append(obj.total, obj.speed_curr);
             .set("z-index",11000);
             #.setTranslation(sx*0.5*0.695633,sy*0.25);
             append(obj.total, obj.VV);
+    obj.localizer = obj.svg.createChild("group");
+    obj.ilsGroup  = obj.localizer.createChild("group");
+    obj.gsGroup   = obj.localizer.createChild("group");
+    obj.ils = obj.ilsGroup.createChild("path")
+            .moveTo(0,-20)
+            .vert(40)
+            .moveTo(-2,-20)
+            .horiz(4)
+            .moveTo(-2,20)
+            .horiz(4)
+            .moveTo(-2,-10)
+            .horiz(4)
+            .moveTo(-2,10)
+            .horiz(4)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0)
+            .set("z-index",11000);
+    obj.ilsOff = obj.ilsGroup.createChild("path")
+            .moveTo(0,-20)
+            .vert(4)
+            .moveTo(0,-12)
+            .vert(4)
+            .moveTo(0,-4)
+            .vert(8)
+            .moveTo(0,8)
+            .vert(4)
+            .moveTo(0,16)
+            .vert(4)
+            .moveTo(-2,-20)
+            .horiz(4)
+            .moveTo(-2,20)
+            .horiz(4)
+            .moveTo(-2,-10)
+            .horiz(4)
+            .moveTo(-2,10)
+            .horiz(4)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0)
+            .set("z-index",11000);
+    obj.gs = obj.gsGroup.createChild("path")
+            .moveTo(-20,0)
+            .horiz(40)
+            .moveTo(-20,-2)
+            .vert(4)
+            .moveTo(20,-2)
+            .vert(4)
+            .moveTo(-10,-2)
+            .vert(4)
+            .moveTo(10,-2)
+            .vert(4)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0)
+            .set("z-index",11000);
+    obj.gsOff = obj.gsGroup.createChild("path")
+            .moveTo(-20,0)
+            .horiz(4)
+            .moveTo(-12,0)
+            .horiz(4)
+            .moveTo(-4,0)
+            .horiz(8)
+            .moveTo(8,0)
+            .horiz(4)
+            .moveTo(16,0)
+            .horiz(4)            
+            
+            .moveTo(-20,-2)
+            .vert(4)
+            .moveTo(20,-2)
+            .vert(4)
+            .moveTo(-10,-2)
+            .vert(4)
+            .moveTo(10,-2)
+            .vert(4)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0)
+            .set("z-index",11000);
+    append(obj.total, obj.ils);
+    append(obj.total, obj.ilsOff);
+    append(obj.total, obj.gs);
+    append(obj.total, obj.gsOff);
 
 
     obj.horizon_group = obj.svg.createChild("group")

@@ -114,7 +114,7 @@
                         <!-- INSTRUMENT MODE PANEL -->
                         <instrument-mode-panel>
                             <mode>
-                                <rotary-switch-knob type="int">0</rotary-switch-knob>
+                                <rotary-switch-knob type="int">1</rotary-switch-knob>
                             </mode>
                             <hdg>
                                 <!-- if true than knob is pushed and compass can be calibrated -->
