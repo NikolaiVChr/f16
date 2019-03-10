@@ -295,7 +295,10 @@ var AIM = {
         m.follow                = getprop(m.nodeString~"terrain-follow");             # bool. used for anti-ship missiles that should be able to terrain follow instead of purely sea skimming.
         m.reaquire              = getprop(m.nodeString~"reaquire");                   # bool. If weapon will try to reaquire lock after losing it. [optional]
         m.maxPitch              = getprop(m.nodeString~"max-pitch-deg");              # After propulsion it will not be able to steer up more than this. [optional]
-        m.guidanceEnabled       = getprop(m.nodeString~"guidance-enabled");             # Boolean. If guidance will activate when launched. [optional]
+        m.guidanceEnabled       = getprop(m.nodeString~"guidance-enabled");           # Boolean. If guidance will activate when launched. [optional]
+        m.terminal_alt_factor   = getprop(m.nodeString~"terminal-alt-factor");        # Float. Cruise alt multiplied by this factor determines how much is rise up in terminal. Default: 2
+        m.terminal_rise_time    = getprop(m.nodeString~"terminal-rise-time");         # Float. Seconds before reaching target that cruise missile will start to rise up. Default: 6
+        m.terminal_dive_time    = getprop(m.nodeString~"terminal-dive-time");         # Float. Seconds before reaching target that cruise missile will start to dive down. Default: 4
 		# engine
 		m.force_lbf_1           = getprop(m.nodeString~"thrust-lbf-stage-1");         # stage 1 thrust [optional]
 		m.force_lbf_2           = getprop(m.nodeString~"thrust-lbf-stage-2");         # stage 2 thrust [optional]
@@ -420,6 +423,18 @@ var AIM = {
 
         if(m.canSwitch == nil) {
         	m.canSwitch = FALSE;
+        }
+        
+        if(m.terminal_alt_factor == nil) {
+        	m.terminal_alt_factor = 2;
+        }
+        
+        if(m.terminal_rise_time == nil) {
+        	m.terminal_rise_time = 6;
+        }
+        
+        if(m.terminal_dive_time == nil) {
+        	m.terminal_dive_time = 4;
         }
         
         # three variables used for trigonometry hit calc:
@@ -1126,6 +1141,7 @@ var AIM = {
 			} else {
 				# rail is pointing forward
 				me.rail_speed_into_wind = getprop("velocities/uBody-fps");# wind from nose
+				#printf("Rail: ac_fps=%d uBody_fps=%d", math.sqrt(me.speed_down_fps*me.speed_down_fps+math.pow(math.sqrt(me.speed_east_fps*me.speed_east_fps+me.speed_north_fps*me.speed_north_fps),2)), me.rail_speed_into_wind);
 			}
 		} elsif (me.intoBore == FALSE) {
 			# to prevent the missile from falling up, we need to sometimes pitch it into wind:
@@ -1597,6 +1613,7 @@ var AIM = {
 		if (me.dt == 0) {
 			#FG is likely paused
 			me.paused = 1;
+			me.elapsed_last = systime();
 			continue;
 		}
 		#if just called from release() then dt is almost 0 (cannot be zero as we use it to divide with)
@@ -1605,13 +1622,19 @@ var AIM = {
 		me.elapsed = systime();
 		if (me.paused == 1) {
 			# sim has been unpaused lets make sure dt becomes very small to let elapsed time catch up.
+			
+			# this pause detection system does not work anymore, since we now only get called when not paused.
+			
 			me.paused = 0;
-			me.elapsed_last = me.elapsed-0.02;
+			#me.elapsed_last = me.elapsed-0.02;
 		}
 		me.init_launch = 0;
+		me.dt_old = me.dt;
 		if (me.elapsed_last != 0) {
 			#if (getprop("sim/speed-up") == 1) {
+				
 				me.dt = (me.elapsed - me.elapsed_last)*speedUp.getValue();
+				
 			#} else {
 			#	dt = getprop("sim/time/delta-sec")*getprop("sim/speed-up");
 			#}
@@ -1621,6 +1644,10 @@ var AIM = {
 				# could happen if the OS adjusts the clock backwards
 				me.dt = 0.00001;
 			}
+		}
+		if (me.dt > 0.5 and speedUp.getValue() == 1) {
+			# we were paused so we use last dt
+			me.dt = me.dt_old;
 		}
 		
 		#if (me.dt < 0.025) {
@@ -1768,6 +1795,7 @@ var AIM = {
 		if (me.rail == TRUE and me.rail_passed == FALSE) {
 			# missile still on rail, lets calculate its speed relative to the wind coming in from the aircraft nose.
 			me.rail_speed_into_wind = me.rail_speed_into_wind + me.speed_change_fps;
+			#printf("Rail: ms_fps=%d", me.rail_speed_into_wind);
 		} elsif (me.observing != "gyro-pitch" or me.speed_m < me.min_speed_for_guiding) {
 			# gravity acc makes the weapon pitch down			
 			me.pitch = math.atan2(-me.speed_down_fps, me.speed_horizontal_fps ) * R2D;
@@ -1799,6 +1827,7 @@ var AIM = {
 			}			
 
 			me.speed_on_rail = me.clamp(me.rail_speed_into_wind - me.opposing_wind, 0, 1000000);
+			#printf("Rail: ms_rail_fps=%d", me.speed_on_rail);
 			me.movement_on_rail = me.speed_on_rail * me.dt;
 			
 			me.rail_pos = me.rail_pos + me.movement_on_rail;
@@ -1828,7 +1857,14 @@ var AIM = {
 					me.coord.set_xyz(me.geodPos.x, me.geodPos.y, me.geodPos.z);
 				} else {
 					me.coord = me.getGPS(me.x, me.y, me.z, OurPitch.getValue());
-				}				
+				}
+			} elsif (me.rail_forward) {
+				if (offsetMethod == TRUE) {
+					me.geodPos = aircraftToCart({x:-me.x, y:me.y, z: -me.z});
+					me.coord.set_xyz(me.geodPos.x, me.geodPos.y, me.geodPos.z);
+				} else {
+					me.coord = me.getGPS(me.x, me.y, me.z, OurPitch.getValue());
+				}
 			} else {
 				# kind of a hack, but work for static launcher
 				me.coord = me.getGPS(me.x, me.y, me.z, OurPitch.getValue()+me.rail_pitch_deg);
@@ -1839,6 +1875,7 @@ var AIM = {
 			me.speed_horizontal_fps = math.cos(me.pitch * D2R) * me.rail_speed_into_wind;
 			me.speed_north_fps      = math.cos(me.hdg * D2R) * me.speed_horizontal_fps;
 			me.speed_east_fps       = math.sin(me.hdg * D2R) * me.speed_horizontal_fps;
+			#printf("Rail: ms_after_fps=%d ac_fps=%d", math.sqrt(me.speed_down_fps*me.speed_down_fps+math.pow(math.sqrt(me.speed_east_fps*me.speed_east_fps+me.speed_north_fps*me.speed_north_fps),2)),math.sqrt(getprop("velocities/speed-down-fps")*getprop("velocities/speed-down-fps")+math.pow(math.sqrt(getprop("velocities/speed-east-fps")*getprop("velocities/speed-east-fps")+getprop("velocities/speed-north-fps")*getprop("velocities/speed-north-fps")),2)));
 		}
 		if (me.alt_ft > me.maxAlt) {
 			me.maxAlt = me.alt_ft;
@@ -2784,12 +2821,12 @@ var AIM = {
 	                me.Daground = me.nextGroundElevation * M2FT;
 	            }
 	            me.loft_alt_curr = me.loft_alt;
-	            if (me.dist_curr < me.old_speed_fps * 6 * FT2M and me.dist_curr > me.old_speed_fps * 4 * FT2M) {
+	            if (me.dist_curr < me.old_speed_fps * me.terminal_rise_time * FT2M and me.dist_curr > me.old_speed_fps * me.terminal_dive_time * FT2M) {
 	            	# the missile lofts a bit at the end to avoid APN to slam it into ground before target is reached.
 	            	# end here is between 2.5-4 seconds
-	            	me.loft_alt_curr = me.loft_alt*2;
+	            	me.loft_alt_curr = me.loft_alt*me.terminal_alt_factor;
 	            }
-	            if (me.dist_curr > me.old_speed_fps * 4 * FT2M) {# need to give the missile time to do final navigation
+	            if (me.dist_curr > me.old_speed_fps * me.terminal_dive_time * FT2M) {# need to give the missile time to do final navigation
 	                # it's 1 or 2 seconds for this kinds of missiles...
 	                me.t_alt_delta_ft = (me.loft_alt_curr + me.Daground - me.alt_ft);
 	                me.printGuideDetails("var t_alt_delta_m : "~me.t_alt_delta_ft*FT2M);
@@ -2854,12 +2891,12 @@ var AIM = {
 	                me.Daground = me.nextGroundElevation * M2FT;
 	            }
 	            me.loft_alt_curr = me.loft_alt;
-	            if (me.dist_curr < me.old_speed_fps * 6 * FT2M and me.dist_curr > me.old_speed_fps * 4 * FT2M) {
+	            if (me.dist_curr < me.old_speed_fps * me.terminal_rise_time * FT2M and me.dist_curr > me.old_speed_fps * me.terminal_dive_time * FT2M) {
 	            	# the missile lofts a bit at the end to avoid APN to slam it into ground before target is reached.
 	            	# end here is between 2.5-4 seconds
-	            	me.loft_alt_curr = me.loft_alt*2;
+	            	me.loft_alt_curr = me.loft_alt*me.terminal_alt_factor;
 	            }
-	            if (me.dist_curr > me.old_speed_fps * 4 * FT2M) {# need to give the missile time to do final navigation
+	            if (me.dist_curr > me.old_speed_fps * me.terminal_dive_time * FT2M) {# need to give the missile time to do final navigation
 	                # it's 1 or 2 seconds for this kinds of missiles...
 	                me.t_alt_delta_ft = (me.loft_alt_curr + me.Daground - me.alt_ft);
 	                me.printGuideDetails("var t_alt_delta_m : "~me.t_alt_delta_ft*FT2M);
