@@ -572,6 +572,9 @@ var F16_HUD = {
                                                      }
                                                      obj.window2.setText(" ARM "~submode);
                                                      obj.window2.setVisible(1);
+                                                 } elsif (hdp.rotary == 0 or hdp.rotary == 3) {
+                                                     obj.window2.setText(" ILS");
+                                                     obj.window2.setVisible(1);
                                                  } else {
                                                      obj.window2.setText(" NAV");
                                                      obj.window2.setVisible(1);
