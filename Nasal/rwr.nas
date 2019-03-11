@@ -168,7 +168,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_FALCON = "16";
         rwr.AIRCRAFT_WARTHOG = "10";
         rwr.AIRCRAFT_FRIGATE = "SH";
-        rwr.AIRCRAFT_TANKER = "KC";
+        #rwr.AIRCRAFT_TANKER = "KC";
         rwr.AIRCRAFT_AWACS = "S";
         rwr.AIRCRAFT_UNKNOWN = "U";
         rwr.AIRCRAFT_AI = "AI";
@@ -178,7 +178,7 @@ RWRCanvas = {
                 "F-15C":                    rwr.AIRCRAFT_EAGLE,     
                 "F-15D":                    rwr.AIRCRAFT_EAGLE,    
                 "F-16":                     rwr.AIRCRAFT_FALCON,
-                "YF-16":                    rwr.AIRCRAFT_FALCON,      
+        #        "YF-16":                    rwr.AIRCRAFT_FALCON,      
                 "JA37-Viggen":              rwr.AIRCRAFT_VIGGEN,     
                 "AJ37-Viggen":              rwr.AIRCRAFT_VIGGEN,     
                 "AJS37-Viggen":             rwr.AIRCRAFT_VIGGEN,     
@@ -190,13 +190,13 @@ RWRCanvas = {
                 "missile_frigate":          rwr.AIRCRAFT_FRIGATE,
                 "frigate":                  rwr.AIRCRAFT_FRIGATE,
                 "fleet":                    rwr.AIRCRAFT_FRIGATE, 
-                "KC-137R":                  rwr.AIRCRAFT_TANKER,
-                "KC-137R-RT":               rwr.AIRCRAFT_TANKER,
-                "707-TT":                   rwr.AIRCRAFT_TANKER,
-                "KC-30A":                   rwr.AIRCRAFT_TANKER,
-                "Voyager-KC":               rwr.AIRCRAFT_TANKER,
-                "KC-10A":                   rwr.AIRCRAFT_TANKER,
-                "KC-10A-GE":                rwr.AIRCRAFT_TANKER,
+        #        "KC-137R":                  rwr.AIRCRAFT_TANKER,
+        #        "KC-137R-RT":               rwr.AIRCRAFT_TANKER,
+        #        "707-TT":                   rwr.AIRCRAFT_TANKER,
+        #        "KC-30A":                   rwr.AIRCRAFT_TANKER,
+        #        "Voyager-KC":               rwr.AIRCRAFT_TANKER,
+        #        "KC-10A":                   rwr.AIRCRAFT_TANKER,
+        #        "KC-10A-GE":                rwr.AIRCRAFT_TANKER,
                 "EC-137R":                  rwr.AIRCRAFT_AWACS,
                 "RC-137R":                  rwr.AIRCRAFT_AWACS,
                 "E-8R":                     rwr.AIRCRAFT_AWACS,
@@ -206,19 +206,19 @@ RWRCanvas = {
                 #misc threatening aircraft:
                 "MiG-29":                   rwr.AIRCRAFT_MIG2,
                 "SU-27":                    rwr.AIRCRAFT_MIG2,
-                "ch53e":"53",
-                "MQ-9":"9",
-                "QF-4E":"F4",
-                "B1-B":"B1",
+        #        "ch53e":"53",
+        #        "MQ-9":"9",
+        #        "QF-4E":"F4",
+        #        "B1-B":"B1",
                 "A-10":                     rwr.AIRCRAFT_WARTHOG,
                 "A-10-model":               rwr.AIRCRAFT_WARTHOG,
-                "truck":"TR",
+        #        "truck":"TR",
                 "Typhoon":"EF",
                 "f16":"16",
                 "Mig-28":"28",
-                "Tu-95MR":"95",
-                "Tu-160-Blackjack":"BJ",
-                "AN-225-Mrija":"AN",
+        #        "Tu-95MR":"95",
+        #        "Tu-160-Blackjack":"BJ",
+        #        "AN-225-Mrija":"AN",
                 "Su-15":"SU",
         };
         rwr.shownList = [];
@@ -272,7 +272,8 @@ RWRCanvas = {
             }
             if (me.typ == nil) {
                 me.typ = me.AIRCRAFT_UNKNOWN;
-                me.unk = 1;
+                continue;
+                me.unk = 1;                
             }
             #print("show "~me.i~" "~me.typ~" "~contact[0].get_model()~"  "~contact[1]);
             me.threat = me.contact[1];#print(me.threat);
