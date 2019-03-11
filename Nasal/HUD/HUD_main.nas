@@ -217,6 +217,9 @@ var F16_HUD = {
                  ILSDeg                    : "instrumentation/nav[0]/heading-needle-deflection",
                  ILSinRange                : "instrumentation/nav[0]/in-range",
                  GSdist                    : "instrumentation/nav[0]/gs-distance",
+                 #cross                     : "instrumentation/nav[0]/crosstrack-heading-error-deg",
+                 #cross                     : "instrumentation/nav[0]/heading-deg",
+                 cross                     : "instrumentation/nav[0]/radials/target-auto-hdg-deg",
                 };
 
         foreach (var name; keys(input)) {
@@ -340,6 +343,13 @@ var F16_HUD = {
                                                     obj.gs.hide();
                                                     obj.gsOff.show();
                                                 }
+                                                if (obj["heading_tape_positionY"]!=nil) {
+                                                    #obj.inv_v.setTranslation(obj.sx*0.5+5.4*hdp.cross, 20+obj.heading_tape_positionY);
+                                                    obj.heading_tape_pointer.setTranslation (5.4*clamp(geo.normdeg180(hdp.cross-hdp.heading),-10,10), obj.heading_tape_positionY);
+                                                    obj.heading_tape_pointer.show();
+                                                } else {
+                                                    obj.heading_tape_pointer.hide();
+                                                }
                                             } else {
                                                 obj.ilsGroup.setTranslation(0,0);
                                                 obj.ils.hide();
@@ -347,10 +357,12 @@ var F16_HUD = {
                                                 obj.gsGroup.setTranslation(0,0);
                                                 obj.gs.hide();
                                                 obj.gsOff.show();
+                                                obj.heading_tape_pointer.hide();
                                             }
                                             obj.localizer.show();
                                         } else {
                                             obj.localizer.hide();
+                                            obj.heading_tape_pointer.hide();
                                         }
                                       }),
             props.UpdateManager.FromHashList(["fpm","texUp","gear_down","VV_x","VV_y", "wow"], 0.01, func(hdp)
@@ -520,7 +532,7 @@ var F16_HUD = {
                                           }
 
                                           obj.heading_tape.setTranslation (obj.heading_tape_position,obj.heading_tape_positionY);
-                                          obj.heading_tape_pointer.setTranslation (0,obj.heading_tape_positionY);
+                                          
                                       }
                                             ),
             props.UpdateManager.FromHashList(["time_until_crash","vne"], 0.1, func(hdp)
@@ -1143,10 +1155,19 @@ append(obj.total, obj.speed_curr);
             .setStrokeLineWidth(1)
             .setColor(0,1,0)
             .set("z-index",11000);
+#    obj.inv_v = obj.svg.createChild("path")
+#            .moveTo(0,0)
+#            .lineTo(-4,-5)
+#            .moveTo(0,0)
+#            .lineTo(4,5)
+#            .setStrokeLineWidth(1)
+#            .setColor(0,1,0)
+#            .set("z-index",11000);
     append(obj.total, obj.ils);
     append(obj.total, obj.ilsOff);
     append(obj.total, obj.gs);
     append(obj.total, obj.gsOff);
+#    append(obj.total, obj.inv_v);
 
 
     obj.horizon_group = obj.svg.createChild("group")
