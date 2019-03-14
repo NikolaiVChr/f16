@@ -267,6 +267,17 @@
  </model>
 
  <model>
+  <name>Station3_AGM-154A</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-154A/AGM-154A.xml</path>
+  <offsets>
+   <x-m>0.58</x-m>
+   <y-m>-2.872</y-m>
+   <z-m>-0.523</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
   <name>Station3_AGM-158</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AGM-158/AGM-158.xml</path>
   <offsets>
@@ -346,6 +357,17 @@
     <pitch-deg>-4.55</pitch-deg>
   </offsets>
 </model>
+
+<model>
+  <name>Station4_AGM-154A</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-154A/AGM-154A.xml</path>
+  <offsets>
+   <x-m>-0.05</x-m>
+   <y-m>-1.63</y-m>
+   <z-m>-0.525</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
 
  <model>
   <name>Station4_GBU12</name>
@@ -510,6 +532,17 @@
     <pitch-deg>-4.55</pitch-deg>
   </offsets>
 </model>
+
+<model>
+  <name>Station6_AGM-154A</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-154A/AGM-154A.xml</path>
+  <offsets>
+   <x-m>-0.05</x-m>
+   <y-m>1.63</y-m>
+   <z-m>-0.525</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
 
  <model>
   <name>Station6_GBU12</name>
@@ -721,6 +754,17 @@
    <x-m>0</x-m>
    <y-m>2.86988</y-m>
    <z-m>-0.438099</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station7_AGM-154A</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-154A/AGM-154A.xml</path>
+  <offsets>
+   <x-m>0.58</x-m>
+   <y-m>2.872</y-m>
+   <z-m>-0.523</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
