@@ -1868,13 +1868,11 @@
 
         <fcs_function name="fcs/fly-by-wire/pitch/normal-1">
             <function>
-                <product>
                     <!--<p>fcs/fly-by-wire/enable-nz</p>-->
                     <difference>
                         <property> accelerations/a_n </property>
                         <value> 1 </value>
                     </difference>
-                </product>
             </function>
         </fcs_function>
 

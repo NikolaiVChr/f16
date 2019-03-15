@@ -149,7 +149,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
 
     <function name="aero/coefficient/CL_g">
        <description>Change in lift due to ground effect</description>
-       <product>
           <table>
               <independentVar>aero/h_b-mac-ft</independentVar>
               <tableData>
@@ -168,7 +167,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
              2.2000  0.0000
               </tableData>
           </table>
-       </product>
       </function>
 
     <function name="aero/coefficient/Cx_g">
@@ -303,7 +301,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             <description>
                Cx coefficient in body coordinate system.
             </description>
-            <product>
                 <table name="table/Cx">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <independentVar lookup="column">aero/beta-deg</independentVar>
@@ -424,7 +421,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 -0.0472 -0.0542 -0.0593 -0.0492 -0.0406 -0.0417 -0.0390 -0.0440 -0.0431 -0.0432 -0.0424 -0.0438 -0.0433 -0.0377 -0.0400 -0.0496 -0.0597 -0.0504 -0.0393
                      </tableData>
                 </table>
-            </product>
         </function>
 
         <function name="aero/coefficient/Cx_lef">
@@ -561,7 +557,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             <description>
                Cx due to pitch rate coefficient.
             </description>
-            <product>
                 <table name="table/Cx_q">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <tableData>
@@ -587,7 +582,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 .273
                     </tableData>
                 </table>
-            </product>
         </function>
 
         <function name="aero/coefficient/dCx_q-lef">
@@ -595,8 +589,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                Cx due to pitch rate due to leading edge flaps coefficient.
 
                Source for alpha 50+: TN-D-8176
-            </description>
-            <product>                
+            </description>                
                 <table name="table/dCx_q-lef">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <tableData>
@@ -622,7 +615,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 0.000
                      </tableData>
                 </table>
-            </product>
         </function>
 
     <function name="aero/coefficient/dCx_lef">
@@ -716,9 +708,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             <product>
                 <property>aero/qbar-psf</property>
                 <property>metrics/Sw-sqft</property>              
-                <sum>
-                    <property>aero/coefficient/CLtef</property>
-                </sum>
+                <property>aero/coefficient/CLtef</property>
                 <sin>
                   <property>aero/alpha-rad</property>
                 </sin>
@@ -759,10 +749,8 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
 
     <function name="aero/coefficient/CLz">
         <description>Lift</description>
-        <product>             
-            <sum>
-                <property>aero/coefficient/CLtef</property>
-            </sum>
+        <product>
+            <property>aero/coefficient/CLtef</property>
             <cos>
               <property>aero/alpha-rad</property>
             </cos>
@@ -774,7 +762,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         <description>
            Cz coefficient
         </description>
-        <product>
             <table name="table/Cz">
                 <independentVar lookup="row">aero/alpha-deg</independentVar>
                 <independentVar lookup="column">aero/beta-deg</independentVar>
@@ -895,7 +882,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 -1.9163 -1.9125 -1.8625 -1.8538 -1.9463 -2.0493 -2.0083 -2.0195 -2.0513 -2.0513 -2.0050 -1.9795 -1.9748 -2.0640 -1.9905 -1.9003 -1.9255 -1.9643 -1.9238
                  </tableData>
             </table>
-        </product>
     </function>
 
     <function name="aero/coefficient/CZ_lef">
@@ -1032,7 +1018,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         <description>
            Cz due to pitch rate coefficient.
         </description>
-        <product>
             <table name="table/Cz_q">
                 <independentVar lookup="row">aero/alpha-deg</independentVar>
                 <tableData>
@@ -1058,7 +1043,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 -2.16
                 </tableData>
             </table>
-        </product>
     </function>
 
     <function name="aero/coefficient/dCZ_q-lef">
@@ -1066,8 +1050,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
            Cz due to pitch rate due to leading edge flaps coefficient.
 
            Source for alpha 50+: TN-D-8176
-        </description>
-        <product>            
+        </description>     
             <table name="table/dCz_q-lef">
                 <independentVar lookup="row">aero/alpha-deg</independentVar>
                 <tableData>
@@ -1093,26 +1076,22 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 0.00
                  </tableData>
             </table>
-        </product>
     </function>
 
     <function name="aero/coefficient/dCZ_lef">
         <description>
            Cz due to leading edge flaps coefficient.
         </description>
-        <product>
             <difference>
                 <p>aero/coefficient/CZ_lef</p>
                 <p>aero/coefficient/CZ_dh0</p>
             </difference>
-        </product>
     </function>
 
     <function name="aero/coefficient/CZ_t">
         <description>
            Total Z Coefficient
         </description>
-        <product>
             <sum>
                 <p>aero/coefficient/CLz</p>
                 <p>aero/coefficient/CDz</p>
@@ -1137,7 +1116,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                     </sum>
                 </product>
             </sum>
-        </product>
     </function>
 
 
@@ -1190,7 +1168,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         <description>
            Elevator effectiveness factor.
         </description>
-        <product>
             <table name="table/n_dh">
                 <independentVar lookup="row">fcs/fly-by-wire/pitch/horz-tail-deflection-deg</independentVar>
                 <tableData>
@@ -1201,14 +1178,12 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  25 .95
                  </tableData>
             </table>
-        </product>
     </function>
 
     <function name="aero/coefficient/Cm">
             <description>
                Cm coefficient
             </description>
-            <product>
                 <table name="table/Cm">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <independentVar lookup="column">aero/beta-deg</independentVar>
@@ -1329,7 +1304,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 -0.5418 -0.5825 -0.4873 -0.5873 -0.5576 -0.5946 -0.5704 -0.5956 -0.5868 -0.5812 -0.5758 -0.5586 -0.5607 -0.5786 -0.5591 -0.5899 -0.6145 -0.5851 -0.5447
                      </tableData>
                 </table>
-            </product>
         </function>
 
         <function name="aero/coefficient/Cm_lef">
@@ -1409,7 +1383,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             <description>
                dCm due speed brake coefficient.
             </description>
-            <product>
                 <table name="table/dCm_sb">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <tableData>
@@ -1435,7 +1408,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 -.0107
                      </tableData>
                 </table>
-            </product>
         </function>
 
         <function name="aero/coefficient/dCm_tef">
@@ -1444,7 +1416,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
 
                Page 180 of TP-1538, triangles and circles.
             </description>
-            <product>
                 <table name="table/dCm_tef">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <tableData>
@@ -1465,14 +1436,12 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  80 0.0
                      </tableData>
                 </table>
-            </product>
         </function>
 
         <function name="aero/coefficient/dCm_alpha">
             <description>
                Cm due to alpha coefficient.
             </description>
-            <product>
                 <table name="table/dCm_alpha">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <tableData>
@@ -1498,14 +1467,12 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 .06
                      </tableData>
                 </table>
-            </product>
         </function>
 
         <function name="aero/coefficient/Cm_q">
             <description>
                Cm due to pitch rate coefficient.
             </description>
-            <product>
                 <table name="table/Cm_q">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <tableData>
@@ -1531,7 +1498,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 -4.04
                     </tableData>
                 </table>
-            </product>
         </function>
 
         <function name="aero/coefficient/dCm_q-lef">
@@ -1540,7 +1506,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
 
                Source for alpha 50+: TN-D-8176
             </description>
-            <product>
                 <table name="table/dCm_q-lef">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <tableData>
@@ -1566,7 +1531,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 0.000
                      </tableData>
                 </table>
-            </product>
         </function>
 
         <function name="aero/coefficient/dCm_ds">
@@ -1831,7 +1795,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         <description>
            Cy due to yaw rate coefficient.
         </description>
-        <product>
             <table name="table/Cy_r">
                 <independentVar lookup="row">aero/alpha-deg</independentVar>
                 <tableData>
@@ -1857,7 +1820,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 .193
                  </tableData>
             </table>
-        </product>
     </function>
 
     <function name="aero/coefficient/dCy_r-lef">
@@ -1865,8 +1827,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
            Cy due to yaw rate due to leading edge flaps coefficient.
 
            Source for alpha 50+: TN-D-8176
-        </description>
-        <product>            
+        </description>         
             <table name="table/dCy_r-lef">
                 <independentVar lookup="row">aero/alpha-deg</independentVar>
                 <tableData>
@@ -1892,14 +1853,12 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 0.000
                  </tableData>
             </table>
-        </product>
     </function>        
 
     <function name="aero/coefficient/Cy_p">
         <description>
            Cy due to roll rate coefficient.
         </description>
-        <product>
             <table name="table/Cy_p">
                 <independentVar lookup="row">aero/alpha-deg</independentVar>
                 <tableData>
@@ -1925,7 +1884,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 -.261
                 </tableData>
             </table>
-        </product>
     </function>
 
     <function name="aero/coefficient/dCy_p-lef">
@@ -1934,7 +1892,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
 
            Source for alpha 50+: TN-D-8176
         </description>
-        <product>
             <table name="table/dCy_p-lef">
                 <independentVar lookup="row">aero/alpha-deg</independentVar>
                 <tableData>
@@ -1960,7 +1917,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 0.000
                  </tableData>
             </table>
-        </product>
     </function>
 
     <function name="aero/coefficient/dCy_lef">
@@ -2248,7 +2204,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             <description>
                Cn coefficient
             </description>
-            <product>
                 <table name="table/Cn">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <independentVar lookup="column">aero/beta-deg</independentVar>
@@ -2323,7 +2278,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90  0.0079  0.0094  0.0117  0.0030  0.0062  0.0055  0.0044  0.0037  0.0022  0.0000  0.0002  0.0016  0.0018  0.0002  0.0002  0.0031 -0.0057 -0.0037 -0.0049
                      </tableData>
                 </table>
-            </product>
         </function>
 
         <!--<function name="aero/coefficient/Cn_cg">
@@ -2348,7 +2302,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             <description>
                Cn due to yaw rate coefficient.
             </description>
-            <product>
                 <table name="table/Cn_r">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <tableData>
@@ -2374,14 +2327,12 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 -.15
                      </tableData>
                 </table>
-            </product>
         </function>
 
         <function name="aero/coefficient/dCn_b">
             <description>
                Cn due to beta coefficient.
             </description>
-            <product>
                 <table name="table/dCn_b">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <tableData>
@@ -2407,7 +2358,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 .0
                     </tableData>
                 </table>
-            </product>
         </function>
 
         <!--<function name="aero/coefficient/dCn_da">
@@ -2450,8 +2400,7 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         <function name="aero/coefficient/dCn_r-lef">
             <description>
                Cn due to yaw rate due to leading edge flaps coefficient.
-            </description>
-            <product>                
+            </description>            
                 <table name="table/dCn_r-lef">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <tableData>
@@ -2472,14 +2421,12 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  50 0.00
                      </tableData>
                 </table>
-            </product>
         </function>
 
         <function name="aero/coefficient/Cn_p">
             <description>
                Cn due to roll rate coefficient.
             </description>
-            <product>
                 <table name="table/Cn_p">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <tableData>
@@ -2505,7 +2452,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 0.0
                      </tableData>
                 </table>
-            </product>
         </function>
 
         <function name="aero/coefficient/dCn_p-lef">
@@ -2514,7 +2460,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
 
                Source for alpha 50+: TN-D-8176
             </description>
-            <product>
                 <table name="table/dCn_p-lef">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <tableData>
@@ -2540,7 +2485,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90 0.000
                      </tableData>
                 </table>
-            </product>
         </function>    
 
         <function name="aero/coefficient/dCn_lef">
@@ -2591,7 +2535,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         <description>
            Total Cn Coefficient
         </description>
-        <product>
             <sum>
                 <p>aero/coefficient/Cn</p>
                 <product>
@@ -2642,7 +2585,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                     <p>aero/beta-deg</p>
                 </product>
             </sum>
-        </product>
     </function>
 
     <axis name="YAW">
@@ -2878,7 +2820,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
             <description>
                Cl coefficient
             </description>
-            <product>
                 <table name="table/Cl">
                     <independentVar lookup="row">aero/alpha-deg</independentVar>
                     <independentVar lookup="column">aero/beta-deg</independentVar>
@@ -2953,7 +2894,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
  90  0.0584  0.0474  0.0406  0.0308  0.0213  0.0178  0.0166  0.0118  0.0071  0.0000 -0.0010 -0.0021 -0.0231 -0.0132 -0.0149 -0.0245 -0.0343 -0.0411 -0.0520
                      </tableData>
                 </table>
-            </product>
         </function>
 
         <function name="aero/coefficient/Cl_r">
@@ -3155,7 +3095,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
         <description>
            Total Cl Coefficient
         </description>
-        <product>
             <sum>
                 <p>aero/coefficient/Cl</p>
                 <product>
@@ -3206,7 +3145,6 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                     <p>aero/beta-deg</p>
                 </product>
             </sum>
-        </product>
     </function>
 
     <axis name="ROLL">
