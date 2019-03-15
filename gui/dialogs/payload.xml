@@ -227,6 +227,27 @@
             </binding>
         </button>
 
+        <hrule>
+            <row>17</row>
+            <col>0</col>
+            <colspan>4</colspan>
+        </hrule>
+
+        <text>
+            <row>18</row>
+            <col>0</col>
+            <label>A/G CEM (Unguided)</label>
+        </text>
+        <button>
+            <row>18</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_cem1();</script>
+            </binding>
+        </button>
+
         <text>
             <row>0</row>
             <col>2</col>
@@ -275,7 +296,7 @@
         <text>
             <row>6</row>
             <col>2</col>
-            <label>A/G Stand-off Strike</label>
+            <label>A/G JASSM Stand-off Strike</label>
         </text>
         <button>
             <row>6</row>
@@ -290,10 +311,25 @@
         <text>
             <row>8</row>
             <col>2</col>
-            <label>Offensive Counter Air</label>
+            <label>A/G JSOW Stand-off Strike</label>
         </text>
         <button>
             <row>8</row>
+            <col>3</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_jsow();</script>
+            </binding>
+        </button>
+
+        <text>
+            <row>10</row>
+            <col>2</col>
+            <label>Offensive Counter Air</label>
+        </text>
+        <button>
+            <row>10</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -303,12 +339,12 @@
         </button>
 
         <text>
-            <row>10</row>
+            <row>12</row>
             <col>2</col>
             <label>Ferry Loadout</label>
         </text>
         <button>
-            <row>10</row>
+            <row>12</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -318,12 +354,12 @@
         </button>
 
         <text>
-            <row>12</row>
+            <row>14</row>
             <col>2</col>
             <label>Ferry w/ Cargo Loadout</label>
         </text>
         <button>
-            <row>12</row>
+            <row>14</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -333,12 +369,12 @@
         </button>
 
         <text>
-            <row>14</row>
+            <row>16</row>
             <col>2</col>
             <label>Training (Dummies)</label>
         </text>
         <button>
-            <row>14</row>
+            <row>16</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -348,12 +384,12 @@
         </button>
 
         <text>
-            <row>16</row>
+            <row>18</row>
             <col>2</col>
             <label>Clean</label>
         </text>
         <button>
-            <row>16</row>
+            <row>18</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>

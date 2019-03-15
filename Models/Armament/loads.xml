@@ -239,6 +239,21 @@
 
  <animation>
   <type>select</type>
+  <object-name>Station3_AGM-154A</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-2-type</property>
+      <value>AGM-154A</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-2-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
   <object-name>Station3_AGM-158</object-name>
   <condition>
     <equals>
@@ -404,6 +419,21 @@
     <equals>
       <property>payload/armament/station/id-3-type</property>
       <value>AGM-88</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-3-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station4_AGM-154A</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-3-type</property>
+      <value>AGM-154A</value>
     </equals>
     <greater-than>
       <property>payload/armament/station/id-3-count</property>
@@ -645,6 +675,21 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
 
  <animation>
   <type>select</type>
+  <object-name>Station6_AGM-154A</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-5-type</property>
+      <value>AGM-154A</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-5-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
   <object-name>Station6_GBU12</object-name>
   <condition>
     <equals>
@@ -873,6 +918,21 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
     <equals>
       <property>payload/armament/station/id-6-type</property>
       <value>AGM-88</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-6-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station7_AGM-154A</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-6-type</property>
+      <value>AGM-154A</value>
     </equals>
     <greater-than>
       <property>payload/armament/station/id-6-count</property>

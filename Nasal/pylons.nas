@@ -44,6 +44,7 @@ var pylonSets = {
 	b:  {name: "1 x AGM-84", content: ["AGM-84"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     b2: {name: "1 x AGM-88", content: ["AGM-88"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     b3: {name: "1 x AGM-158", content: ["AGM-158"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
+    c1: {name: "1 x AGM-154A", content: ["AGM-154A"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     c3: {name: "1 x GBU-31", content: ["GBU-31"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     c4: {name: "1 x GBU-24", content: ["GBU-24"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     i:  {name: "3 x GBU-12", content: ["GBU-12","GBU-12", "GBU-12"], fireOrder: [0,1,2], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0, category: 2},
@@ -89,9 +90,9 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 	var pylon120set = [pylonSets.empty, pylonSets.q, pylonSets.h, pylonSets.k];
 	var wingtipSet1  = [pylonSets.k,pylonSets.k2,     pylonSets.g, pylonSets.r,pylonSets.s,pylonSets.t,pylonSets.u,pylonSets.w1];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
 	var wingtipSet9  = [pylonSets.k,pylonSets.k2,     pylonSets.g, pylonSets.r,pylonSets.v,pylonSets.w,pylonSets.x,pylonSets.w9];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
-	var pylon9mix   = [pylonSets.empty, pylonSets.q, pylonSets.i, pylonSets.h, pylonSets.q7, pylonSets.a, pylonSets.b, pylonSets.c, pylonSets.b2, pylonSets.c3, pylonSets.f3, pylonSets.c4, pylonSets.d, pylonSets.d1, pylonSets.c5, pylonSets.b3];
-	var pylon12setL = [pylonSets.empty, pylonSets.j, pylonSets.l, pylonSets.o, pylonSets.c, pylonSets.c3, pylonSets.c4, pylonSets.b2, pylonSets.d, pylonSets.d1, pylonSets.c5];
-	var pylon12setR = [pylonSets.empty, pylonSets.j, pylonSets.m, pylonSets.p, pylonSets.c, pylonSets.c3, pylonSets.c4, pylonSets.b2, pylonSets.d, pylonSets.d1, pylonSets.c5];
+	var pylon9mix   = [pylonSets.empty, pylonSets.q, pylonSets.i, pylonSets.h, pylonSets.q7, pylonSets.a, pylonSets.b, pylonSets.c, pylonSets.b2, pylonSets.c1, pylonSets.c3, pylonSets.f3, pylonSets.c4, pylonSets.d, pylonSets.d1, pylonSets.c5, pylonSets.b3];
+	var pylon12setL = [pylonSets.empty, pylonSets.j, pylonSets.l, pylonSets.o, pylonSets.c, pylonSets.c1, pylonSets.c3, pylonSets.c4, pylonSets.b2, pylonSets.d, pylonSets.d1, pylonSets.c5];
+	var pylon12setR = [pylonSets.empty, pylonSets.j, pylonSets.m, pylonSets.p, pylonSets.c, pylonSets.c1, pylonSets.c3, pylonSets.c4, pylonSets.b2, pylonSets.d, pylonSets.d1, pylonSets.c5];
 
 	#HTS can be carried on both left and right side.
 	#LITENING only on right	
@@ -115,7 +116,7 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 
     var pylons = [pylon1,pylon2,pylon3,pylon4,pylon5,pylon6,pylon7,pylon8,pylon9,pylonI,pylon10,pylon11];
 
-	fcs = fc.FireControl.new(pylons, [9,0,8,1,7,2,6,3,5,4], ["20mm Cannon","AIM-9","AIM-120","AIM-7","AGM-65","GBU-12","AGM-84","MK-82","AGM-88","GBU-31","GBU-24","MK-83","MK-84","AGM-158","CBU-87"]);
+	fcs = fc.FireControl.new(pylons, [9,0,8,1,7,2,6,3,5,4], ["20mm Cannon","AIM-9","AIM-120","AIM-7","AGM-65","GBU-12","AGM-84","MK-82","AGM-88","GBU-31","GBU-24","MK-83","MK-84","AGM-158","CBU-87", "AGM-154A"]);
 
 	var aimListener = func (obj) {
 		#If auto focus on missile is activated the we call the function
@@ -419,7 +420,27 @@ var a2g_sead = func {
     }
 }
 
-# A/G Stand-off Strike (AGM-158)
+# A/G Stand-off Strike mode 1 (AGM-154A)
+var a2g_jsow = func {
+    if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+        pylon1.loadSet(pylonSets.r);
+        pylon2.loadSet(pylonSets.q);
+        pylon3.loadSet(pylonSets.c1);
+        pylon4.loadSet(pylonSets.l);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.m);
+        pylon7.loadSet(pylonSets.c1);
+        pylon8.loadSet(pylonSets.q);
+        pylon9.loadSet(pylonSets.r);
+        pylon10.loadSet(pylonSets.tgp2);
+        pylon11.loadSet(pylonSets.tgp3);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# A/G Stand-off Strike mode 2 (AGM-158)
 var a2g_jassm = func {
     if (fcs != nil and getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         pylon1.loadSet(pylonSets.r);
