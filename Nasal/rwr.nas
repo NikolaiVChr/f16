@@ -220,6 +220,7 @@ RWRCanvas = {
         #        "Tu-160-Blackjack":"BJ",
         #        "AN-225-Mrija":"AN",
                 "Su-15":"SU",
+                "Jaguar-GR3":"JG",
         };
         rwr.shownList = [];
         #
