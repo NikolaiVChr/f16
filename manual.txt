@@ -10,7 +10,7 @@ LANDING
 No fixed landing speed, however a suggested approach speed will display in left side of HUD when gears is down and masterarm is off.
 A little AoA bracket will appear down in the HUD, keep the flight path indicator inside the bracket. The top of the bracket is 11 and bottom is 15 deg AoA.
 Notice that it can be hard to see the touchdown point when landing with that high AoA, raising the seat with key 'u' will help.
-If the runway is wet, icy or short use the dragchute (F4).
+If the runway is wet, icy or short use the dragchute (F5).
 
 TAKE-OFF
 You can rotate around 150 KT when aircraft is light. Be somewhat gentle on the stick if you rotate early as you otherwise might tail-scrape.
@@ -113,7 +113,7 @@ There is flood and instrument lights that can be turned up.
 If running ALS you can also go into filters and enable one of the night vision modes.
 
 DRAGCHUTE
-Max recommended KIAS for deployment is 170. Key is F4.
+Max recommended KIAS for deployment is 170. Key is F5.
 
 DED
 The DED is the small display above the right color MFD.
