@@ -2005,8 +2005,12 @@
   </and>
   </condition>
  </animation>
+ 
+ <model>
+    <path>Aircraft/f16/Models/Armament/loads.xml</path>
+ </model>
 
-<animation>
+<!--<animation>
   <type>select</type>
   <object-name>Podpylon_left</object-name>
   <condition>
@@ -2049,7 +2053,7 @@
     </not>
   </and>
   </condition>
- </animation>
+ </animation>-->
 
  <!-- livery selection -->
  <animation>

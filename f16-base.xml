@@ -31,7 +31,7 @@
         <submodels>
             <serviceable type="bool">1</serviceable>
             <path>Aircraft/f16/Systems/f16-submodels.xml</path>
-            <path>Aircraft/f16/Models/Armament/loads.xml</path>
+            <!--<path>Aircraft/f16/Models/Armament/loads.xml</path>-->
         </submodels>
         <sound>
             <path>Aircraft/f16/Systems/f16-sound.xml</path>

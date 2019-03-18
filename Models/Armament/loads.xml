@@ -1230,10 +1230,10 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
       <property>payload/armament/station/id-10-set</property>
       <value>AN/AAQ-14 LANTIRN Target Pod</value>
     </equals>
-    <equals>
+    <!--<equals>
       <property>payload/armament/station/id-10-set</property>
       <value>AN/ASQ-213 HARM TS Pod</value>
-    </equals>
+    </equals>-->
   </or>
   </condition>
  </animation>
@@ -1242,7 +1242,11 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   <type>select</type>
   <object-name>Podpylon_left</object-name>
   <condition>
-   <or>
+    <equals>
+      <value>1</value>
+      <value>0</value>
+    </equals>
+   <!--<or>
     <equals>
       <property>payload/armament/station/id-11-set</property>
       <value>AN/AAQ-13 LANTIRN Nav Pod</value>
@@ -1251,7 +1255,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
       <property>payload/armament/station/id-11-set</property>
       <value>AN/ASQ-213 HARM TS Pod</value>
     </equals>
-   </or>
+   </or>-->
   </condition>
  </animation>
 
