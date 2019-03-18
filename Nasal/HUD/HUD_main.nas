@@ -1693,7 +1693,7 @@ append(obj.total, obj.speed_curr);
                     if (hdp.weapon_selected == "20mm Cannon") {
                         hdp.window9_txt = sprintf("%3d", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AIM-9") {
-                        hdp.window9_txt = sprintf("%d SRM", pylons.fcs.getAmmo());
+                        hdp.window9_txt = sprintf("%d SRM", pylons.fcs.getAmmo());#short range missile
                         if (hdp.weapn != nil) {
                             if (hdp.weapn.status == armament.MISSILE_LOCK) {
                                 me.circle65.show();
@@ -1702,7 +1702,7 @@ append(obj.total, obj.speed_curr);
                             }
                         }
                     } elsif (hdp.weapon_selected == "AIM-120") {
-                        hdp.window9_txt = sprintf("%d LRM", pylons.fcs.getAmmo());
+                        hdp.window9_txt = sprintf("%d AMM", pylons.fcs.getAmmo());#adv. medium range missile
                         if (hdp.weapn != nil) {
                             if (hdp.weapn.status == armament.MISSILE_LOCK) {
                                 me.circle120.show();
@@ -1711,7 +1711,7 @@ append(obj.total, obj.speed_curr);
                             }
                         }
                     } elsif (hdp.weapon_selected == "AIM-7") {
-                        hdp.window9_txt = sprintf("%d MRM", pylons.fcs.getAmmo());
+                        hdp.window9_txt = sprintf("%d MRM", pylons.fcs.getAmmo());#medium range missile
                         if (hdp.weapn != nil) {
                             if (hdp.weapn.status == armament.MISSILE_LOCK) {
                                 me.circle120.show();
