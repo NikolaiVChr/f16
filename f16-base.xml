@@ -2298,6 +2298,8 @@ value. 18000=standard US transition altitude -->
         </chute>
         <stores>
             <tgp-mounted type="bool">false</tgp-mounted>
+            <harm-mounted type="bool">false</harm-mounted>
+            <nav-mounted type="bool">false</nav-mounted>
         </stores>
     </f16>
     <damage>
