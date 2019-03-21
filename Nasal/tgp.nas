@@ -265,7 +265,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
             terrain.set_latlon(terrainGeod.lat, terrainGeod.lon, terrainGeod.elevation);
             var ut = nil;
             foreach (u ; awg_9.completeList) {
-                if (terrain.direct_distance_to(u.get_aCoord())<30) {
+                if (terrain.direct_distance_to(u.get_aCoord())<45) {
                     ut = u;
                     break;
                 }
