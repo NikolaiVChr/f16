@@ -362,7 +362,7 @@ var fast_loop = func {
     setprop("sim/current-view/field-of-view-scale",scale);
     
     callsign = nil;
-    if (armament.contactPoint !=nil and armament.contactPoint.get_range()>20) {
+    if (armament.contactPoint !=nil and armament.contactPoint.get_range()>35) {
         armament.contactPoint = nil;
     }
     if (armament.contactPoint == nil) {
