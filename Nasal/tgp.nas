@@ -343,6 +343,7 @@ var fast_loop = func {
     setprop("sim/view[102]/enabled", 0);
     #setprop("f16/avionics/lock-flir",0.05);
     #lock.hide();
+    setprop("f16/avionics/tgp-lock", 0);
   } elsif (viewName == "TGP") {
     # FLIR TGP stuff:
     setprop("aircraft/flir/target/view-enabled", viewName == "TGP");
@@ -394,6 +395,7 @@ var fast_loop = func {
         flir_updater.offsetP = 0;
         flir_updater.offsetH = 0;
     }
+    setprop("f16/avionics/tgp-lock", lock_tgp);#used in HUD
     if (last_callsign != callsign and callsign != nil) {
         interpolate("f16/avionics/lock-flir",1,1.5);
     } elsif (callsign == nil) {

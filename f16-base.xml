@@ -2276,6 +2276,7 @@ value. 18000=standard US transition altitude -->
             <cara type="bool">false</cara>
             <hud-ded type="bool">false</hud-ded>
             <lock-flir type="double">0.05</lock-flir>
+            <tgp-lock type="bool">false</tgp-lock>
         </avionics>
         <fcs>
             <autopilot-on type="int">0</autopilot-on> <!-- Ignored on Block 20+ -->

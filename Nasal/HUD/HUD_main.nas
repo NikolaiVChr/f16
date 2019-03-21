@@ -2083,7 +2083,7 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
             me.ded4.hide();
         }
 
-        if (hdp.tgp_mounted and tgp.flir_updater.click_coord_cam != nil) {
+        if (hdp.tgp_mounted and tgp.flir_updater.click_coord_cam != nil and getprop("f16/avionics/tgp-lock")) {
             var b = geo.normdeg180(getprop("sim/view[102]/heading-offset-deg"));
             var p = getprop("sim/view[102]/pitch-offset-deg");
             var y = me.clamp(-p*me.texelPerDegreeY+me.sy-me.texels_up_into_hud,me.sy*0.05,me.sy*0.95);
