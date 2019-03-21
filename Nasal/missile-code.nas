@@ -772,10 +772,10 @@ var AIM = {
 		# Assumptions:
 		#  Ordnance do not have propulsion
 		#  Ordnance has very limited steering
-		if (me.status != MISSILE_LOCK or me.Tgt == nil) {
+		if (me.status != MISSILE_LOCK or me.getContact() == nil) {
 			return nil;
 		}
-        me.ccrp_agl = (getprop("position/altitude-ft")-me.Tgt.get_altitude())*FT2M;
+        me.ccrp_agl = (getprop("position/altitude-ft")-me.getContact().get_altitude())*FT2M;
         #me.agl = getprop("position/altitude-agl-ft")*FT2M;
         me.ccrp_alti = getprop("position/altitude-ft")*FT2M;
         me.ccrp_roll = getprop("orientation/roll-deg");
@@ -851,7 +851,7 @@ var AIM = {
         me.ccrp_elev = me.ccrp_alti-me.ccrp_agl;#faster
         me.ccrpPos.set_alt(me.ccrp_elev);
         
-        me.ccrp_distCCRP = me.ccrpPos.distance_to(me.Tgt.get_Coord());
+        me.ccrp_distCCRP = me.ccrpPos.distance_to(me.getContact().get_Coord());
         return me.ccrp_distCCRP;
 	},
 
