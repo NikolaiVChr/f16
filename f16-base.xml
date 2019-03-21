@@ -1875,7 +1875,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <short-name type="string">AG154</short-name>
                 <long-name type="string">AGM-154A JSOW</long-name>
                 <fire-msg type="string">Greyhound</fire-msg>
-                <class type="string">GMP</class>
+                <class type="string">GM</class>
                 <max-fire-range-nm type="double">70</max-fire-range-nm>
                 <min-fire-range-nm type="double">0</min-fire-range-nm>
                 <guidance type="string">gps</guidance>
@@ -1915,7 +1915,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <short-name type="string">AG158</short-name>
                 <long-name type="string">AGM-158A JASSM</long-name>
                 <fire-msg type="string">Greyhound</fire-msg>
-                <class type="string">GMP</class>
+                <class type="string">GM</class>
                 <max-fire-range-nm type="double">150</max-fire-range-nm>  <!--real is 200, reduced for obvious reasons-->
                 <min-fire-range-nm type="double">1.0</min-fire-range-nm>
                 <guidance type="string">gps</guidance>

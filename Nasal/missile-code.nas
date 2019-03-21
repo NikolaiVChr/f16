@@ -1110,6 +1110,11 @@ var AIM = {
 		me.coord = geo.Coord.new(init_coord);
 		# Get target position.
 		if (me.Tgt != nil) {
+			if (!me.target_pnt) {
+				me.Tgt.inac_x = 0;
+        		me.Tgt.inac_y = 0;
+        		me.Tgt.inac_z = 0;
+			}
 			me.t_coord = me.Tgt.get_Coord();
 			me.maddog = FALSE;
 			me.newTargetAssigned = TRUE;
