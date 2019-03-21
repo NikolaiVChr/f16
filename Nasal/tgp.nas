@@ -270,8 +270,8 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
                     break;
                 }
             }
-            if (u!=nil) {
-                var contact = awg_9.Target.new(u.propNode);
+            if (ut!=nil) {
+                var contact = awg_9.Target.new(ut.propNode);
                 contact.setClass(awg_9.POINT);
                 armament.contactPoint = contact;
             } else {
@@ -292,6 +292,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
     } elsif (button == 6) {#TV/IR
         ir = !ir;
     } elsif (button == 11) {#UP
+        if (lock_tgp) return;
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetP += fov/100;
@@ -299,6 +300,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
             setprop("sim/current-view/pitch-offset-deg",getprop("sim/current-view/pitch-offset-deg")+fov/20);
         }
     } elsif (button == 12) {#DOWN
+        if (lock_tgp) return;
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetP -= fov/100;
@@ -306,6 +308,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
             setprop("sim/current-view/pitch-offset-deg",getprop("sim/current-view/pitch-offset-deg")-fov/20);
         }
     } elsif (button == 14) {#LEFT
+        if (lock_tgp) return;
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetH -= fov/100;
@@ -313,6 +316,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
             setprop("sim/current-view/heading-offset-deg",getprop("sim/current-view/heading-offset-deg")-fov/20);
         }
     } elsif (button == 15) {#RGHT
+        if (lock_tgp) return;
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetH += fov/100;
@@ -365,6 +369,8 @@ var fast_loop = func {
         if (armament.contact == nil or !armament.get_display()) {
             # TGP not follow, locked from aircraft
             setprop("/aircraft/flir/target/auto-track", 0);
+            flir_updater.offsetP = 0;
+            flir_updater.offsetH = 0;
         } else {
             # TGP follow radar lock
             flir_updater.click_coord_cam = armament.contact.get_Coord();
@@ -378,6 +384,8 @@ var fast_loop = func {
         flir_updater.click_coord_cam = armament.contactPoint.get_Coord();
         callsign = armament.contactPoint.getUnique();
         setprop("/aircraft/flir/target/auto-track", 1);
+        flir_updater.offsetP = 0;
+        flir_updater.offsetH = 0;
     }
     if (last_callsign != callsign and callsign != nil) {
         interpolate("f16/avionics/lock-flir",1,1.5);
@@ -386,8 +394,16 @@ var fast_loop = func {
     }
     if (lock_tgp) {
         line1box.show();
+        line11.hide();
+        line12.hide();
+        line14.hide();
+        line15.hide();
     } else {
         line1box.hide();
+        line11.show();
+        line12.show();
+        line14.show();
+        line15.show();
     }
     
     var scaleLock = getprop("f16/avionics/lock-flir");
