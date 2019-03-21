@@ -265,7 +265,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
             terrain.set_latlon(terrainGeod.lat, terrainGeod.lon, terrainGeod.elevation);
             var ut = nil;
             foreach (u ; awg_9.completeList) {
-                if (terrain.direct_distance_to(u.get_aCoord())<45) {
+                if (terrain.direct_distance_to(u.get_Coord(0))<45) {
                     ut = u;
                     break;
                 }
@@ -273,6 +273,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
             if (ut!=nil) {
                 var contact = awg_9.Target.new(ut.propNode);
                 contact.setClass(awg_9.POINT);
+                contact.setVirtual(1);
                 armament.contactPoint = contact;
             } else {
                 armament.contactPoint = fc.ContactTGP.new("TGP-Spot",terrain);
@@ -336,119 +337,139 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
 
 var fast_loop = func {
   var viewName = getprop("/sim/current-view/name"); 
-  if (viewName == "TGP" and (getprop("gear/gear/wow") or !getprop("f16/stores/tgp-mounted"))) {
-    # deselect view back to pilot default
-    setprop("sim/current-view/view-number",0);
-    setprop("sim/rendering/als-filters/use-IR-vision", 0);
-    setprop("sim/view[102]/enabled", 0);
-    #setprop("f16/avionics/lock-flir",0.05);
-    #lock.hide();
-    setprop("f16/avionics/tgp-lock", 0);
-  } elsif (viewName == "TGP") {
-    # FLIR TGP stuff:
-    setprop("aircraft/flir/target/view-enabled", viewName == "TGP");
-    setprop("sim/rendering/als-filters/use-filtering", viewName == "TGP");
-    setprop("sim/rendering/als-filters/use-IR-vision", viewName == "TGP" and ir);
-    setprop("sim/rendering/als-filters/use-night-vision", 0);
-    var fov = getprop("sim/current-view/field-of-view");
-    if (fov > 50) {
-      fov = 50;
-      setprop("sim/current-view/field-of-view",fov);
-    }
-    var x = getprop("sim/gui/canvas/size[0]");
-    var y = getprop("sim/gui/canvas/size[1]");
-    var format = (x/y)/2.25;#16/9 = 1.777
-    var scale = format*20/fov;# we take into account that different pilots have different screen formats so the height of the MFD in screen stays same relative.
-    setprop("sim/current-view/field-of-view-scale",scale);
-    
-    callsign = nil;
-    if (armament.contactPoint !=nil and armament.contactPoint.get_range()>35) {
-        armament.contactPoint = nil;
-    }
-    if (armament.contactPoint == nil) {
-        # no TGP lock
-        if (armament.contact == nil or !armament.contact.get_display()) {
-            # TGP not follow, locked from aircraft
-            setprop("/aircraft/flir/target/auto-track", 0);
-            flir_updater.click_coord_cam = nil;
-            flir_updater.offsetP = 0;
-            flir_updater.offsetH = 0;
-        } elsif (armament.contact != nil and armament.contact.get_display()) {
-            # TGP follow radar lock
-            flir_updater.click_coord_cam = armament.contact.get_Coord();
-            setprop("/aircraft/flir/target/auto-track", 1);
-            callsign = armament.contact.getUnique();
-        } else {
-            setprop("/aircraft/flir/target/auto-track", 0);
-            flir_updater.click_coord_cam = nil;
-            callsign = nil;
-            flir_updater.offsetP = 0;
-            flir_updater.offsetH = 0;
+    if (viewName == "TGP" and (getprop("gear/gear/wow") or !getprop("f16/stores/tgp-mounted"))) {
+        # deselect view back to pilot default
+        setprop("sim/current-view/view-number",0);
+        setprop("sim/rendering/als-filters/use-IR-vision", 0);
+        setprop("sim/view[102]/enabled", 0);
+    } elsif (viewName == "TGP") {
+        # FLIR TGP stuff:
+        setprop("aircraft/flir/target/view-enabled", viewName == "TGP");
+        setprop("sim/rendering/als-filters/use-filtering", viewName == "TGP");
+        setprop("sim/rendering/als-filters/use-IR-vision", viewName == "TGP" and ir);
+        setprop("sim/rendering/als-filters/use-night-vision", 0);
+        var fov = getprop("sim/current-view/field-of-view");
+        if (fov > 50) {
+          fov = 50;
+          setprop("sim/current-view/field-of-view",fov);
         }
-        lock_tgp = 0;
+        var x = getprop("sim/gui/canvas/size[0]");
+        var y = getprop("sim/gui/canvas/size[1]");
+        var format = (x/y)/2.25;#16/9 = 1.777
+        var scale = format*20/fov;# we take into account that different pilots have different screen formats so the height of the MFD in screen stays same relative.
+        setprop("sim/current-view/field-of-view-scale",scale);
+
+
+        zoom.setText(sprintf("%.1fX",getprop("sim/current-view/field-of-view-scale")));
+        line6.setText(ir==1?"WHOT":"TV");
+        
+        if (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil) {
+            var dist = flir_updater.click_coord_cam.direct_distance_to(geo.aircraft_position())*M2NM;
+            bott.setText(sprintf("%2.1f  CMBT  %04d",dist,lasercode));
+        } else {
+            bott.setText(sprintf("      CMBT  %04d",lasercode));
+        }
+        if (!getprop("/aircraft/flir/target/auto-track") or flir_updater.click_coord_cam == nil) {
+            setprop("sim/view[102]/heading-offset-deg", -getprop("sim/current-view/heading-offset-deg"));
+            setprop("sim/view[102]/pitch-offset-deg", getprop("sim/current-view/pitch-offset-deg"));
+        }
     } else {
-        # TGP lock
-        lock_tgp = 1;
-        flir_updater.click_coord_cam = armament.contactPoint.get_Coord();
-        callsign = armament.contactPoint.getUnique();
-        setprop("/aircraft/flir/target/auto-track", 1);
-        flir_updater.offsetP = 0;
-        flir_updater.offsetH = 0;
+        # remove FLIR effects and disable TGP view
+        setprop("sim/rendering/als-filters/use-IR-vision", 0);
+        setprop("sim/view[102]/enabled", 0);#!getprop("gear/gear/wow"));
+        #lock.hide();
+        #setprop("f16/avionics/lock-flir",0.05);
     }
-    setprop("f16/avionics/tgp-lock", lock_tgp);#used in HUD
-    if (last_callsign != callsign and callsign != nil) {
-        interpolate("f16/avionics/lock-flir",1,1.5);
-    } elsif (callsign == nil) {
-        setprop("f16/avionics/lock-flir",0.05);
+    if (getprop("f16/stores/tgp-mounted")) {
+        callsign = nil;
+        var follow = 0;
+        if (armament.contactPoint !=nil and armament.contactPoint.get_range()>35) {
+            armament.contactPoint = nil;
+        }
+        if (armament.contactPoint == nil) {
+            # no TGP lock
+            if (armament.contact == nil or !armament.contact.get_display()) {
+                # TGP not follow, locked from aircraft
+                setprop("/aircraft/flir/target/auto-track", 0);
+                flir_updater.click_coord_cam = nil;
+                flir_updater.offsetP = 0;
+                flir_updater.offsetH = 0;
+            } elsif (armament.contact != nil and armament.contact.get_display()) {
+                # TGP follow radar lock
+                flir_updater.click_coord_cam = armament.contact.get_Coord();
+                setprop("/aircraft/flir/target/auto-track", 1);
+                callsign = armament.contact.getUnique();
+            } else {
+                setprop("/aircraft/flir/target/auto-track", 0);
+                flir_updater.click_coord_cam = nil;
+                callsign = nil;
+                flir_updater.offsetP = 0;
+                flir_updater.offsetH = 0;
+            }
+            lock_tgp = 0;
+        } else {
+            # TGP lock
+            var vis = 1;
+            if (armament.contactPoint.get_Callsign() != "TGP-Spot") {
+                follow = 1;
+                vis = awg_9.TerrainManager.IsVisible(armament.contactPoint.propNode,nil);
+            }
+            if (!vis) {
+                setprop("/aircraft/flir/target/auto-track", 0);
+                flir_updater.click_coord_cam = nil;
+                callsign = nil;
+                flir_updater.offsetP = 0;
+                flir_updater.offsetH = 0;
+                lock_tgp = 0;
+                armament.contactPoint = nil;
+            } else {
+                lock_tgp = 1;
+                flir_updater.click_coord_cam = armament.contactPoint.get_Coord();
+                callsign = armament.contactPoint.getUnique();
+                setprop("/aircraft/flir/target/auto-track", 1);
+                flir_updater.offsetP = 0;
+                flir_updater.offsetH = 0;
+            }
+        }
+        setprop("f16/avionics/tgp-lock", lock_tgp);#used in HUD
+        if (last_callsign != callsign and callsign != nil) {
+            interpolate("f16/avionics/lock-flir",1,1.5);
+        } elsif (callsign == nil) {
+            setprop("f16/avionics/lock-flir",0.05);
+        }
+        if (lock_tgp) {
+            line1box.show();
+            line11.hide();
+            line12.hide();
+            line14.hide();
+            line15.hide();
+        } else {
+            line1box.hide();
+            line11.show();
+            line12.show();
+            line14.show();
+            line15.show();
+        }
+        if (lock_tgp and follow) {
+            midl.setText(sprintf("%s POINT %s", ir==1?"IR":"TV", getprop("controls/armament/laser-arm-dmd")?"L":""));
+        } elsif (lock_tgp) {
+            midl.setText(sprintf("%s AREA  %s", ir==1?"IR":"TV", getprop("controls/armament/laser-arm-dmd")?"L":""));
+        } elsif (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil) {
+            midl.setText(sprintf("  RADAR  %s", ir==1?"IR":"TV", getprop("controls/armament/laser-arm-dmd")?"L":""));
+        } else {
+            midl.setText(sprintf("         %s", ir==1?"IR":"TV", getprop("controls/armament/laser-arm-dmd")?"L":""));
+        }
+        
+        var scaleLock = getprop("f16/avionics/lock-flir");
+        lock.setScale(scaleLock,scaleLock);
+        lock.setStrokeLineWidth(1/scaleLock);
+        if (scaleLock != 0.05) {
+            lock.show();
+        } else {
+            lock.hide();
+        }
+        lock.update();
     }
-    if (lock_tgp) {
-        line1box.show();
-        line11.hide();
-        line12.hide();
-        line14.hide();
-        line15.hide();
-    } else {
-        line1box.hide();
-        line11.show();
-        line12.show();
-        line14.show();
-        line15.show();
-    }
-    
-    var scaleLock = getprop("f16/avionics/lock-flir");
-    lock.setScale(scaleLock,scaleLock);
-    lock.setStrokeLineWidth(1/scaleLock);
-    if (scaleLock != 0.05) {
-        lock.show();
-    } else {
-        lock.hide();
-    }
-    lock.update();
-    zoom.setText(sprintf("%.1fX",getprop("sim/current-view/field-of-view-scale")));
-    line6.setText(ir==1?"WHOT":"TV");
-    midl.setText(sprintf("%s POINT %s", ir==1?"IR":"TV", getprop("controls/armament/laser-arm-dmd")?"L":""));
-    if (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil) {
-        var dist = flir_updater.click_coord_cam.direct_distance_to(geo.aircraft_position())*M2NM;
-        bott.setText(sprintf("%2.1f  CMBT  %04d",dist,lasercode));
-    } else {
-        bott.setText(sprintf("      CMBT  %04d",lasercode));
-    }
-    if (!getprop("/aircraft/flir/target/auto-track") or flir_updater.click_coord_cam == nil) {
-        setprop("sim/view[102]/heading-offset-deg", -getprop("sim/current-view/heading-offset-deg"));
-        setprop("sim/view[102]/pitch-offset-deg", getprop("sim/current-view/pitch-offset-deg"));
-    }
-  } else {
-    # remove FLIR effects and disable TGP view
-    setprop("sim/rendering/als-filters/use-IR-vision", 0);
-    setprop("sim/view[102]/enabled", 0);#!getprop("gear/gear/wow"));
-    #lock.hide();
-    #setprop("f16/avionics/lock-flir",0.05);
-  }
-#  if (flir_updater.offsetP != 0 or flir_updater.offsetH != 0) {
-#    cross.setColor(1,0,0);
-#  } else {
-    cross.setColor(1,1,1);
-#  }
   # animate the LANTIRN camera:
     var b = geo.normdeg180(getprop("sim/view[102]/heading-offset-deg"));
     var p = getprop("sim/view[102]/pitch-offset-deg");

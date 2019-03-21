@@ -3399,8 +3399,9 @@ var AIM = {
 		}
 		
 		var explosion_coord = me.last_coord;
-		if (me.Tgt != nil and me.last_t_coord != nil and me.t_coord != nil) {#the two latter checks is for maddog/canSwitch, shouldn't really be needed but is.
+		if (me.Tgt != nil and me.last_t_coord != nil) {#the two latter checks is for maddog/canSwitch, shouldn't really be needed but is.
 			var min_distance = me.direct_dist_m;
+			me.t_coord = me.Tgt.get_Coord(0);
 			
 			for (var i = 0.00; i <= 1; i += 0.025) {
 				var t_coord = me.interpolate(me.last_t_coord, me.t_coord, i);#todo: nil in numric inside this
@@ -3463,6 +3464,7 @@ var AIM = {
 	explodeTrig: func (reason, event = "exploded") {
 		# get missile relative position to the target at last frame.
 		# this method is not called at terrain impact (always explode() instead)
+		me.t_coord = me.Tgt.get_Coord(0);
         var t_bearing_deg = me.last_t_coord.course_to(me.last_coord);
         var t_delta_alt_m = me.last_coord.alt() - me.last_t_coord.alt();
         var new_t_alt_m = me.t_coord.alt() + t_delta_alt_m;
@@ -3513,7 +3515,7 @@ var AIM = {
 			if (!me.testMe.isValid() or me.testMe.isVirtual() or me.testMe.get_type() == ORDNANCE) {
 				continue;
 			}
-			var min_distance = me.testMe.get_Coord().direct_distance_to(explode_coord);
+			var min_distance = me.testMe.get_Coord(0).direct_distance_to(explode_coord);
 			if (min_distance < me.reportDist and (me.Tgt == nil or me.testMe.getUnique() != me.Tgt.getUnique())) {
 				var phrase = sprintf("%s %s: %.1f meters from: %s", me.type,event, min_distance, me.testMe.get_Callsign());
 				me.printStats(phrase);
@@ -3840,7 +3842,7 @@ var AIM = {
 		} elsif (me.mode_slave == TRUE and me.command_tgt == TRUE) {
 			me.slaveContact = nil;
 			if (size(me.contacts) == 0) {
-				me.slaveContact = contact;
+				me.slaveContact = me.getContact();
 			} else {
 				me.slaveContact = me.contacts[0];
 			}
@@ -3874,7 +3876,7 @@ var AIM = {
 		} elsif (me.mode_slave == FALSE) {
 			me.slaveContacts = nil;
 			if (size(me.contacts) == 0) {
-				me.slaveContacts = [contact];
+				me.slaveContacts = [me.getContact()];
 			} else {
 				me.slaveContacts = me.contacts;
 			}
@@ -3908,7 +3910,7 @@ var AIM = {
 		} elsif (me.mode_slave == TRUE and me.command_tgt == FALSE) {
 			me.slaveContacts = nil;
 			if (size(me.contacts) == 0) {
-				me.slaveContacts = [contact];
+				me.slaveContacts = [me.getContact()];
 			} else {
 				me.slaveContacts = me.contacts;
 			}
@@ -4180,7 +4182,7 @@ var AIM = {
 
 			me.slaveContact = nil;
 			if (size(me.contacts) == 0) {
-				me.slaveContact = contact;
+				me.slaveContact = me.getContact();
 			} else {
 				me.slaveContact = me.contacts[0];
 			}

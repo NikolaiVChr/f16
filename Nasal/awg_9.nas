@@ -1451,7 +1451,7 @@ var Target = {
 		obj.deviationA = nil;
         obj.deviationE = nil;
         obj.elevation = nil;
-        
+        obj.virtual = 0;
 		return obj;
 	},
 #
@@ -1613,12 +1613,12 @@ var Target = {
         }
         return 0;
     },
-    get_Coord: func(){
+    get_Coord: func(inaccurate = 1) {
         if (me.x != nil)
         {
-            var x = me.x.getValue()+me.inac_x;
-            var y = me.y.getValue()+me.inac_y;
-            var z = me.z.getValue()+me.inac_z;
+            var x = me.x.getValue()+me.inac_x*inaccurate;
+            var y = me.y.getValue()+me.inac_y*inaccurate;
+            var z = me.z.getValue()+me.inac_z*inaccurate;
 
             me.TgTCoord.set_xyz(x, y, z);
         } elsif (me.lat != nil) {
@@ -1817,9 +1817,12 @@ var Target = {
         }
         return 0;
     },
+    setVirtual: func (virt) {
+        me.virtual = virt;
+    },
     isVirtual: func {
         # used by missile-code
-        return FALSE;
+        return me.virtual;
     },
 	list : [],
 };

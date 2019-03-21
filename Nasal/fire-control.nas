@@ -732,7 +732,7 @@ var ContactTGP = {
     return nil;
   },
 
-  get_Coord: func(){
+  get_Coord: func(inaccurate = 1){
       return me.coord;
   },
 
