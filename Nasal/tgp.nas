@@ -366,7 +366,7 @@ var fast_loop = func {
     }
     if (armament.contactPoint == nil) {
         # no TGP lock
-        if (armament.contact == nil or !armament.get_display()) {
+        if (armament.contact == nil or !armament.contact.get_display()) {
             # TGP not follow, locked from aircraft
             setprop("/aircraft/flir/target/auto-track", 0);
             flir_updater.offsetP = 0;
