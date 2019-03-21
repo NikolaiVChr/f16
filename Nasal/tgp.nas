@@ -265,7 +265,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
             terrain.set_latlon(terrainGeod.lat, terrainGeod.lon, terrainGeod.elevation);
             var ut = nil;
             foreach (u ; awg_9.completeList) {
-                if (terrain.direct_distance_to(u.get_aCoord())<40) {
+                if (terrain.direct_distance_to(u.get_aCoord())<30) {
                     ut = u;
                     break;
                 }
@@ -369,13 +369,20 @@ var fast_loop = func {
         if (armament.contact == nil or !armament.contact.get_display()) {
             # TGP not follow, locked from aircraft
             setprop("/aircraft/flir/target/auto-track", 0);
+            flir_updater.click_coord_cam = nil;
             flir_updater.offsetP = 0;
             flir_updater.offsetH = 0;
-        } else {
+        } elsif (armament.contact != nil and armament.contact.get_display()) {
             # TGP follow radar lock
             flir_updater.click_coord_cam = armament.contact.get_Coord();
             setprop("/aircraft/flir/target/auto-track", 1);
             callsign = armament.contact.getUnique();
+        } else {
+            setprop("/aircraft/flir/target/auto-track", 0);
+            flir_updater.click_coord_cam = nil;
+            callsign = nil;
+            flir_updater.offsetP = 0;
+            flir_updater.offsetH = 0;
         }
         lock_tgp = 0;
     } else {
@@ -411,6 +418,8 @@ var fast_loop = func {
     lock.setStrokeLineWidth(1/scaleLock);
     if (scaleLock != 0.05) {
         lock.show();
+    } else {
+        lock.hide();
     }
     lock.update();
     zoom.setText(sprintf("%.1fX",getprop("sim/current-view/field-of-view-scale")));
@@ -497,9 +506,9 @@ var callInit = func {
   line1box = dedGroup.createChild("path")
         .moveTo(0,-7)
         .vert(14)
-        .horiz(40)
+        .horiz(35)
         .vert(-14)
-        .horiz(-40)
+        .horiz(-35)
         .setStrokeLineWidth(1)
         .setColor(1,1,1)
         .hide()
