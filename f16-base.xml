@@ -1514,6 +1514,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <station-name type="string">station</station-name>
             <hit-interpolation type="bool">true</hit-interpolation>
             <one-xml-per-type type="bool">false</one-xml-per-type>            
+            <inac type="double">250</inac>
             <MP-lat type="string">rotors/main/blade[0]/flap-deg</MP-lat>
             <MP-lon type="string">rotors/main/blade[1]/flap-deg</MP-lon>
             <MP-alt type="string">rotors/main/blade[2]/flap-deg</MP-alt>
@@ -1664,7 +1665,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <short-name type="string">GB12</short-name>
                 <long-name type="string">GBU-12 Paveway II</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
-                <class type="string">GM</class>
+                <class type="string">GMP</class>
                 <max-fire-range-nm type="double">12 </max-fire-range-nm>
                 <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
                 <guidance type="string">laser</guidance>
@@ -1712,7 +1713,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <short-name type="string">GB31</short-name>
                 <long-name type="string">GBU-31 JDAM</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
-                <class type="string">GM</class>
+                <class type="string">GMP</class>
                 <max-fire-range-nm type="double">15 </max-fire-range-nm>
                 <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
                 <guidance type="string">gps</guidance>
@@ -1760,7 +1761,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <short-name type="string">GB24</short-name>
                 <long-name type="string">GBU-24 Paveway III</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
-                <class type="string">GM</class>
+                <class type="string">GMP</class>
                 <max-fire-range-nm type="double">15 </max-fire-range-nm>
                 <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
                 <guidance type="string">laser</guidance>
@@ -1833,7 +1834,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <min-fire-range-nm type="double">0.2</min-fire-range-nm>
                 <rail type="bool">false</rail>
                 <max-report-distance type="double">65</max-report-distance>
-                <class type="string">P</class>
+                <class type="string">MGP</class>
                 <fire-msg type="string">Rifle</fire-msg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
             </agm-65>
@@ -1874,7 +1875,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <short-name type="string">AG154</short-name>
                 <long-name type="string">AGM-154A JSOW</long-name>
                 <fire-msg type="string">Greyhound</fire-msg>
-                <class type="string">GM</class>
+                <class type="string">GMP</class>
                 <max-fire-range-nm type="double">70</max-fire-range-nm>
                 <min-fire-range-nm type="double">0</min-fire-range-nm>
                 <guidance type="string">gps</guidance>
@@ -1914,7 +1915,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <short-name type="string">AG158</short-name>
                 <long-name type="string">AGM-158A JASSM</long-name>
                 <fire-msg type="string">Greyhound</fire-msg>
-                <class type="string">GM</class>
+                <class type="string">GMP</class>
                 <max-fire-range-nm type="double">150</max-fire-range-nm>  <!--real is 200, reduced for obvious reasons-->
                 <min-fire-range-nm type="double">1.0</min-fire-range-nm>
                 <guidance type="string">gps</guidance>
@@ -1954,7 +1955,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <short-name type="string">B82</short-name>
                 <long-name type="string">MK-82 General Purpose Bomb</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
-                <class type="string">GM</class>
+                <class type="string">GMP</class>
                 <max-fire-range-nm type="double"> 8 </max-fire-range-nm>
                 <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
                 <guidance type="string">unguided</guidance>
@@ -1994,7 +1995,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <short-name type="string">B83</short-name>
                 <long-name type="string">MK-83 General Purpose Bomb</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
-                <class type="string">GM</class>
+                <class type="string">GMP</class>
                 <max-fire-range-nm type="double"> 8 </max-fire-range-nm>
                 <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
                 <guidance type="string">unguided</guidance>
@@ -2034,7 +2035,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <short-name type="string">B84</short-name>
                 <long-name type="string">MK-84 General Purpose Bomb</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
-                <class type="string">GM</class>
+                <class type="string">GMP</class>
                 <max-fire-range-nm type="double">8 </max-fire-range-nm>
                 <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
                 <guidance type="string">unguided</guidance>
@@ -2082,7 +2083,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <short-name type="string">CB87</short-name>
                 <long-name type="string">CBU-87 Combined Effects Munition</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
-                <class type="string">GM</class>
+                <class type="string">GMP</class>
                 <max-fire-range-nm type="double">7</max-fire-range-nm>
                 <min-fire-range-nm type="double">0</min-fire-range-nm>
                 <guidance type="string">unguided</guidance>

@@ -39,6 +39,7 @@ var AIR = 0;
 var MARINE = 1;
 var SURFACE = 2;
 var ORDNANCE = 3;
+var POINT = 4;
 
 var knownShips = {
     "missile_frigate":       nil,
@@ -272,6 +273,7 @@ init = func() {
 
 	my_radarcorr = radardist.my_maxrange( our_ac_name ); # in kilometers
 }
+
 
 # Radar main processing entry point
 # Run at 20hz - invoked from main loop in instruments.nas
@@ -970,9 +972,9 @@ var TerrainManager = {
 
     # There is no terrain on earth that can be between these altitudes
     # so shortcut the whole thing and return now.
-    if(fn.altitude_ft > 8900 and SelectCoord.alt() > 8900){
+    #if(fn.altitude_ft > 8900 and SelectCoord.alt() > 8900){
  #       return 1;   cannot compare ft and meters
-    }
+    #}
 
         
             me.myOwnPos = geo.aircraft_position();
@@ -1275,6 +1277,9 @@ var Target = {
 	new : func (c) {
 		var obj = { parents : [Target]};
         obj.propNode = c;
+        obj.inac_x = 0;
+        obj.inac_y = 0;
+        obj.inac_z = 0;
 		obj.RdrProp = c.getNode("radar");
 		obj.Heading = c.getNode("orientation/true-heading-deg");
         obj.pitch   = c.getNode("orientation/pitch-deg");
@@ -1446,7 +1451,7 @@ var Target = {
 		obj.deviationA = nil;
         obj.deviationE = nil;
         obj.elevation = nil;
-
+        
 		return obj;
 	},
 #
@@ -1611,6 +1616,22 @@ var Target = {
     get_Coord: func(){
         if (me.x != nil)
         {
+            var x = me.x.getValue()+me.inac_x;
+            var y = me.y.getValue()+me.inac_y;
+            var z = me.z.getValue()+me.inac_z;
+
+            me.TgTCoord.set_xyz(x, y, z);
+        } elsif (me.lat != nil) {
+            me.TgTCoord.set_latlon(me.lat.getValue(), me.lon.getValue(), me.Alt.getValue() * FT2M);
+        } else {
+            return nil;#hopefully wont happen
+        }
+        return geo.Coord.new(me.TgTCoord);#best to pass a copy
+    },
+    get_aCoord: func(){
+        #get accurate coord
+        if (me.x != nil)
+        {
             var x = me.x.getValue();
             var y = me.y.getValue();
             var z = me.z.getValue();
@@ -1701,7 +1722,19 @@ var Target = {
         }
         return myBearing;
     },
-    setClass: func(cl){me.class=cl},
+    setClass: func(cl){
+        me.class=cl;
+        me.inac = getprop("payload/armament/inac");
+        if (cl == SURFACE and me.inac != nil) {
+            me.inac_x = rand()*me.inac-me.inac*0.5;
+            me.inac_y = rand()*me.inac-me.inac*0.5;
+            me.inac_z = rand()*me.inac-me.inac*0.5;
+        } else {
+            me.inac_x = 0;
+            me.inac_y = 0;
+            me.inac_z = 0;
+        }
+    },
     get_type: func{me.class},
     isPainted: func{
         #if (active_u !=nil) printf("%s %s %d", active_u.getUnique(), me.getUnique(), me.get_display());

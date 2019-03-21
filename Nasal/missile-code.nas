@@ -181,6 +181,7 @@ var spawn = func(c, context) return func {thread.newthread(func {
 # Whatever is targeted and ready to be fired upon, should be set here. (or set it directly on the missile using AIM.contacts[0])
 #
 var contact = nil;
+var contactPoint = nil;
 #
 # Contact should implement the following interface:
 #
@@ -3556,6 +3557,14 @@ var AIM = {
 	#  non-multi-threaded         loops for before flying. autostarted.
 	###################################################################
 
+	getContact: func {
+		if (me.target_pnt and contactPoint != nil) {
+			return contactPoint;
+		} else {
+			return contact;
+		}
+	},
+
 	standby: func {
 		# looping in standby mode
 		if (deltaSec.getValue()==0) {
@@ -3789,7 +3798,7 @@ var AIM = {
 		if (me.caged == FALSE) {
 			me.slaveContacts = nil;
 			if (size(me.contacts) == 0) {
-				me.slaveContacts = [contact];
+				me.slaveContacts = [me.getContact()];
 			} else {
 				me.slaveContacts = me.contacts;
 			}

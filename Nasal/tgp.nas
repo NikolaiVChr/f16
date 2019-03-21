@@ -199,7 +199,12 @@ setlistener("/sim/signals/fdm-initialized", func {
 
 setlistener("controls/MFD[2]/button-pressed", func (node) {
     var button = getprop("controls/MFD[2]/button-pressed");
-    if (button == 1) {
+    if (button == 1) {#LOCK
+        if (lock_tgp) {
+            lock_tgp = 0;
+            armament.contactPoint = nil;
+            return;
+        }
         var x = -2.5856;
         var y =  0.8536;
         var z = -1.4121;
@@ -258,75 +263,77 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
         } else {
             var terrain = geo.Coord.new();
             terrain.set_latlon(terrainGeod.lat, terrainGeod.lon, terrainGeod.elevation);
-            flir_updater.click_coord_cam = terrain;
-            setprop("/aircraft/flir/target/auto-track", 1);
-            interpolate("f16/avionics/lock-flir",1,1.5);
+            var ut = nil;
+            foreach (u ; awg_9.completeList) {
+                if (terrain.direct_distance_to(u.get_aCoord())<40) {
+                    ut = u;
+                    break;
+                }
+            }
+            if (u!=nil) {
+                var contact = awg_9.Target.new(u.propNode);
+                contact.setClass(awg_9.POINT);
+                armament.contactPoint = contact;
+            } else {
+                armament.contactPoint = ContactTGP.new("TGP-Spot",terrain);
+            }
+            #flir_updater.click_coord_cam = terrain;
+            #setprop("/aircraft/flir/target/auto-track", 1);
+            #interpolate("f16/avionics/lock-flir",1,1.5);
             flir_updater.offsetP = 0;
             flir_updater.offsetH = 0;
+            lock_tgp = 1;
         }
-    } elsif (button == 2) {
-        flir_updater.click_coord_cam = nil;
-        setprop("/aircraft/flir/target/auto-track", 0);
-        flir_updater.offsetP = 0;
-        flir_updater.offsetH = 0;
-        lock.hide();
-        setprop("f16/avionics/lock-flir",0.05);
-        if (pylons.fcs != nil) {
-            pylons.fcs.setPoint(flir_updater.click_coord_cam);
-        }
-    } elsif (button == 20) {
+    } elsif (button == 20) {#BACK
         setprop("sim/current-view/view-number",0);
         #setprop("/aircraft/flir/target/auto-track", 0);
         #lock.hide();
         #setprop("f16/avionics/lock-flir",0.05);
-    } elsif (button == 6) {
+    } elsif (button == 6) {#TV/IR
         ir = !ir;
-    } elsif (button == 7) {
-        if (pylons.fcs != nil) {
-            pylons.fcs.setPoint(flir_updater.click_coord_cam);
-        }
-    } elsif (button == 11) {
+    } elsif (button == 11) {#UP
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetP += fov/100;
         } else {
             setprop("sim/current-view/pitch-offset-deg",getprop("sim/current-view/pitch-offset-deg")+fov/20);
         }
-    } elsif (button == 12) {
+    } elsif (button == 12) {#DOWN
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetP -= fov/100;
         } else {
             setprop("sim/current-view/pitch-offset-deg",getprop("sim/current-view/pitch-offset-deg")-fov/20);
         }
-    } elsif (button == 14) {
+    } elsif (button == 14) {#LEFT
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetH -= fov/100;
         } else {
             setprop("sim/current-view/heading-offset-deg",getprop("sim/current-view/heading-offset-deg")-fov/20);
         }
-    } elsif (button == 15) {
+    } elsif (button == 15) {#RGHT
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetH += fov/100;
         } else {
             setprop("sim/current-view/heading-offset-deg",getprop("sim/current-view/heading-offset-deg")+fov/20);
         }
-    } elsif (button == 3) {
-        if (!getprop("/aircraft/flir/target/auto-track") and awg_9.active_u != nil) {
-            flir_updater.offsetP = 0;
-            flir_updater.offsetH = 0;
-            flir_updater.click_coord_cam = awg_9.active_u.get_Coord();
-            flir_updater.aim();
-            flir_updater.click_coord_cam = nil;
-        }
-    }
+    }# elsif (button == 3) {#RDR
+     #   if (!getprop("/aircraft/flir/target/auto-track") and awg_9.active_u != nil) {
+     #       flir_updater.offsetP = 0;
+     #       flir_updater.offsetH = 0;
+     #       flir_updater.click_coord_cam = awg_9.active_u.get_Coord();
+     #       flir_updater.aim();
+     #       flir_updater.click_coord_cam = nil;
+     #   }
+     #}
 });
 
 var fast_loop = func {
   var viewName = getprop("/sim/current-view/name"); 
   if (viewName == "TGP" and (getprop("gear/gear/wow") or !getprop("f16/stores/tgp-mounted"))) {
+    # deselect view back to pilot default
     setprop("sim/current-view/view-number",0);
     setprop("sim/rendering/als-filters/use-IR-vision", 0);
     setprop("sim/view[102]/enabled", 0);
@@ -348,6 +355,41 @@ var fast_loop = func {
     var format = (x/y)/2.25;#16/9 = 1.777
     var scale = format*20/fov;# we take into account that different pilots have different screen formats so the height of the MFD in screen stays same relative.
     setprop("sim/current-view/field-of-view-scale",scale);
+    
+    callsign = nil;
+    if (armament.contactPoint !=nil and armament.contactPoint.get_range()>20) {
+        armament.contactPoint = nil;
+    }
+    if (armament.contactPoint == nil) {
+        # no TGP lock
+        if (armament.contact == nil or !armament.get_display()) {
+            # TGP not follow, locked from aircraft
+            setprop("/aircraft/flir/target/auto-track", 0);
+        } else {
+            # TGP follow radar lock
+            flir_updater.click_coord_cam = armament.contact.get_Coord();
+            setprop("/aircraft/flir/target/auto-track", 1);
+            callsign = armament.contact.getUnique();
+        }
+        lock_tgp = 0;
+    } else {
+        # TGP lock
+        lock_tgp = 1;
+        flir_updater.click_coord_cam = armament.contactPoint.get_Coord();
+        callsign = armament.contactPoint.getUnique();
+        setprop("/aircraft/flir/target/auto-track", 1);
+    }
+    if (last_callsign != callsign and callsign != nil) {
+        interpolate("f16/avionics/lock-flir",1,1.5);
+    } elsif (callsign == nil) {
+        setprop("f16/avionics/lock-flir",0.05);
+    }
+    if (lock_tgp) {
+        line1box.show();
+    } else {
+        line1box.hide();
+    }
+    
     var scaleLock = getprop("f16/avionics/lock-flir");
     lock.setScale(scaleLock,scaleLock);
     lock.setStrokeLineWidth(1/scaleLock);
@@ -360,25 +402,26 @@ var fast_loop = func {
     midl.setText(sprintf("%s POINT %s", ir==1?"IR":"TV", getprop("controls/armament/laser-arm-dmd")?"L":""));
     if (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil) {
         var dist = flir_updater.click_coord_cam.direct_distance_to(geo.aircraft_position())*M2NM;
-        bott.setText(sprintf("%2.1f  CMBT  %d",dist,lasercode));
+        bott.setText(sprintf("%2.1f  CMBT  %04d",dist,lasercode));
     } else {
-        bott.setText(sprintf("      CMBT  %d",lasercode));
+        bott.setText(sprintf("      CMBT  %04d",lasercode));
     }
     if (!getprop("/aircraft/flir/target/auto-track") or flir_updater.click_coord_cam == nil) {
         setprop("sim/view[102]/heading-offset-deg", -getprop("sim/current-view/heading-offset-deg"));
         setprop("sim/view[102]/pitch-offset-deg", getprop("sim/current-view/pitch-offset-deg"));
     }
   } else {
+    # remove FLIR effects and disable TGP view
     setprop("sim/rendering/als-filters/use-IR-vision", 0);
     setprop("sim/view[102]/enabled", 0);#!getprop("gear/gear/wow"));
     #lock.hide();
     #setprop("f16/avionics/lock-flir",0.05);
   }
-  if (flir_updater.offsetP != 0 or flir_updater.offsetH != 0) {
-    cross.setColor(1,0,0);
-  } else {
+#  if (flir_updater.offsetP != 0 or flir_updater.offsetH != 0) {
+#    cross.setColor(1,0,0);
+#  } else {
     cross.setColor(1,1,1);
-  }
+#  }
   # animate the LANTIRN camera:
     var b = geo.normdeg180(getprop("sim/view[102]/heading-offset-deg"));
     var p = getprop("sim/view[102]/pitch-offset-deg");
@@ -392,6 +435,7 @@ var fast_loop = func {
 
 
 var line1 = nil;
+var line1box = nil;
 var line2 = nil;
 var line3 = nil;
 var line4 = nil;
@@ -409,6 +453,9 @@ var bott = nil;
 var midl = nil;
 var ir = 1;
 var lasercode = int(rand()*10000);
+var last_callsign = nil;
+var callsign = nil;
+var lock_tgp = 0;
 
 var callInit = func {
   var canvasMFDext = canvas.new({
@@ -431,12 +478,23 @@ var callInit = func {
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("LOCK")
         .setTranslation(5, 256*0.20);
+  line1box = dedGroup.createChild("path")
+        .moveTo(0,-7)
+        .vert(14)
+        .horiz(40)
+        .vert(-14)
+        .horiz(-40)
+        .setStrokeLineWidth(1)
+        .setColor(1,1,1)
+        .hide()
+        .setTranslation(5, 256*0.20);
   line2 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
         .setAlignment("left-center")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("UNLOCK")
+        .hide()
         .setTranslation(5, 256*0.35);
   line3 = dedGroup.createChild("text")
         .setFontSize(13, 1)
@@ -444,6 +502,7 @@ var callInit = func {
         .setAlignment("left-center")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("RDR")
+        .hide()
         .setTranslation(5, 256*0.50);
   line4 = dedGroup.createChild("text")
         .setFontSize(13, 1)
@@ -465,6 +524,7 @@ var callInit = func {
         .setAlignment("right-center")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("XFER")
+        .hide()
         .setTranslation(256-5, 256*0.35);
   line11 = dedGroup.createChild("text")
         .setFontSize(13, 1)
