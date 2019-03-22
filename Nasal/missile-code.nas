@@ -615,6 +615,8 @@ var AIM = {
 		m.t_coord             = nil;
 		m.last_t_coord        = m.t_coord;
 		m.before_last_t_coord = nil;
+		m.last_t_coord_accu        = m.t_coord;
+		m.before_last_t_coord_accu = nil;
 
 		m.speed_down_fps  = nil;
 		m.speed_east_fps  = nil;
@@ -772,10 +774,10 @@ var AIM = {
 		# Assumptions:
 		#  Ordnance do not have propulsion
 		#  Ordnance has very limited steering
-		if (me.status != MISSILE_LOCK or me.getContact() == nil) {
+		if (me.status != MISSILE_LOCK or me.Tgt == nil) {
 			return nil;
 		}
-        me.ccrp_agl = (getprop("position/altitude-ft")-me.getContact().get_altitude())*FT2M;
+        me.ccrp_agl = (getprop("position/altitude-ft")-me.Tgt.get_altitude())*FT2M;
         #me.agl = getprop("position/altitude-agl-ft")*FT2M;
         me.ccrp_alti = getprop("position/altitude-ft")*FT2M;
         me.ccrp_roll = getprop("orientation/roll-deg");
@@ -851,7 +853,7 @@ var AIM = {
         me.ccrp_elev = me.ccrp_alti-me.ccrp_agl;#faster
         me.ccrpPos.set_alt(me.ccrp_elev);
         
-        me.ccrp_distCCRP = me.ccrpPos.distance_to(me.getContact().get_Coord());
+        me.ccrp_distCCRP = me.ccrpPos.distance_to(me.Tgt.get_Coord());
         return me.ccrp_distCCRP;
 	},
 
@@ -1919,6 +1921,9 @@ var AIM = {
 		if (me.Tgt != nil) {
 			me.before_last_t_coord = geo.Coord.new(me.last_t_coord);
 			me.last_t_coord        = geo.Coord.new(me.t_coord);
+			
+			me.before_last_t_coord_accu = geo.Coord.new(me.last_t_coord_accu);
+			me.last_t_coord_accu        = geo.Coord.new(me.Tgt.get_Coord(0));
 		}
 
 		# performance logging:
@@ -3399,12 +3404,12 @@ var AIM = {
 		}
 		
 		var explosion_coord = me.last_coord;
-		if (me.Tgt != nil and me.last_t_coord != nil) {#the two latter checks is for maddog/canSwitch, shouldn't really be needed but is.
-			var min_distance = me.direct_dist_m;
-			me.t_coord = me.Tgt.get_Coord(0);
-			
+		var min_distance = me.direct_dist_m;
+		if (me.Tgt != nil and me.last_t_coord_accu != nil) {#the two latter checks is for maddog/canSwitch, shouldn't really be needed but is.
+			me.t_coord = me.Tgt.get_Coord(0);#recalc target pos without inaccuracy
+			min_distance = me.coord.direct_distance_to(me.t_coord);
 			for (var i = 0.00; i <= 1; i += 0.025) {
-				var t_coord = me.interpolate(me.last_t_coord, me.t_coord, i);#todo: nil in numric inside this
+				var t_coord = me.interpolate(me.last_t_coord_accu, me.t_coord, i);#todo: nil in numric inside this
 				var coord = me.interpolate(me.last_coord, me.coord, i);
 				var dist = coord.direct_distance_to(t_coord);
 				if (dist < min_distance) {
@@ -3412,9 +3417,9 @@ var AIM = {
 					explosion_coord = coord;
 				}
 			}
-			if (me.before_last_coord != nil and me.before_last_t_coord != nil) {
+			if (me.before_last_coord != nil and me.before_last_t_coord_accu != nil) {
 				for (var i = 0.00; i <= 1; i += 0.025) {
-					var t_coord = me.interpolate(me.before_last_t_coord, me.last_t_coord, i);
+					var t_coord = me.interpolate(me.before_last_t_coord_accu, me.last_t_coord_accu, i);
 					var coord = me.interpolate(me.before_last_coord, me.last_coord, i);
 					var dist = coord.direct_distance_to(t_coord);
 					if (dist < min_distance) {
