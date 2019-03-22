@@ -274,6 +274,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
                 var contact = awg_9.Target.new(ut.propNode);
                 contact.setClass(awg_9.POINT);
                 contact.setVirtual(1);
+                contact.unique = rand();
                 armament.contactPoint = contact;
             } else {
                 armament.contactPoint = fc.ContactTGP.new("TGP-Spot",terrain);
@@ -412,7 +413,7 @@ var fast_loop = func {
             var vis = 1;
             if (armament.contactPoint.get_Callsign() != "TGP-Spot") {
                 follow = 1;
-                vis = awg_9.TerrainManager.IsVisible(armament.contactPoint.propNode,nil);
+                vis = awg_9.TerrainManager.IsVisible(armament.contactPoint.propNode, nil);
             }
             if (!vis) {
                 setprop("/aircraft/flir/target/auto-track", 0);
