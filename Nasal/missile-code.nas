@@ -1519,6 +1519,11 @@ var AIM = {
 		me.semiLostLock = FALSE;
 		me.heatLostLock = FALSE;
 		me.hasGuided = FALSE;
+		if (!me.target_pnt) {
+			me.Tgt.inac_x = 0;
+    		me.Tgt.inac_y = 0;
+    		me.Tgt.inac_z = 0;
+		}
 	},
 
 	flight: func {
