@@ -299,7 +299,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetP += fov/100;
         } else {
-            setprop("sim/current-view/pitch-offset-deg",getprop("sim/current-view/pitch-offset-deg")+fov/20);
+            setprop("sim/current-view/pitch-offset-deg",getprop("sim/current-view/pitch-offset-deg")+fov/5);
         }
     } elsif (button == 12) {#DOWN
         if (lock_tgp) return;
@@ -307,7 +307,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetP -= fov/100;
         } else {
-            setprop("sim/current-view/pitch-offset-deg",getprop("sim/current-view/pitch-offset-deg")-fov/20);
+            setprop("sim/current-view/pitch-offset-deg",getprop("sim/current-view/pitch-offset-deg")-fov/5);
         }
     } elsif (button == 14) {#LEFT
         if (lock_tgp) return;
@@ -315,7 +315,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetH -= fov/100;
         } else {
-            setprop("sim/current-view/heading-offset-deg",getprop("sim/current-view/heading-offset-deg")-fov/20);
+            setprop("sim/current-view/heading-offset-deg",getprop("sim/current-view/heading-offset-deg")+fov/5);
         }
     } elsif (button == 15) {#RGHT
         if (lock_tgp) return;
@@ -323,7 +323,14 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetH += fov/100;
         } else {
-            setprop("sim/current-view/heading-offset-deg",getprop("sim/current-view/heading-offset-deg")+fov/20);
+            setprop("sim/current-view/heading-offset-deg",getprop("sim/current-view/heading-offset-deg")-fov/5);
+        }
+    } elsif (button == 13) {#WIDE/NARO
+        wide = !wide;        
+    } elsif (button == 2) {#ZOOM
+        zoomlvl += 1;
+        if (zoomlvl > 4) {
+            zoomlvl = 1;
         }
     }# elsif (button == 3) {#RDR
      #   if (!getprop("/aircraft/flir/target/auto-track") and awg_9.active_u != nil) {
@@ -349,19 +356,25 @@ var fast_loop = func {
         setprop("sim/rendering/als-filters/use-filtering", viewName == "TGP");
         setprop("sim/rendering/als-filters/use-IR-vision", viewName == "TGP" and ir);
         setprop("sim/rendering/als-filters/use-night-vision", 0);
-        var fov = getprop("sim/current-view/field-of-view");
-        if (fov > 50) {
-          fov = 50;
-          setprop("sim/current-view/field-of-view",fov);
-        }
+        
         var x = getprop("sim/gui/canvas/size[0]");
         var y = getprop("sim/gui/canvas/size[1]");
+                
+        var degs = 3.6/zoomlvl;
+        if (wide) {            
+            line13.setText("WIDE");
+        } else {
+            degs = 1.0/zoomlvl;
+            line13.setText("NARO");
+        }
+        var fov = degs*(x/y);
         var format = (x/y)/2.25;#16/9 = 1.777
         var scale = format*20/fov;# we take into account that different pilots have different screen formats so the height of the MFD in screen stays same relative.
         setprop("sim/current-view/field-of-view-scale",scale);
+        setprop("sim/current-view/field-of-view",fov);
 
-
-        zoom.setText(sprintf("%.1fX",getprop("sim/current-view/field-of-view-scale")));
+        zoom.setText(sprintf("%.1fX",zoomlvl));
+        
         line6.setText(ir==1?"WHOT":"TV");
         
         if (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil) {
@@ -433,11 +446,12 @@ var fast_loop = func {
             }
         }
         setprop("f16/avionics/tgp-lock", lock_tgp);#used in HUD
-        if (last_callsign != callsign and callsign != nil) {
+        if (lock_tgp and !lock_tgp_last) {
             interpolate("f16/avionics/lock-flir",1,1.5);
-        } elsif (callsign == nil) {
+        } elsif (!lock_tgp) {
             setprop("f16/avionics/lock-flir",0.05);
         }
+        lock_tgp_last = lock_tgp;
         if (lock_tgp) {
             line1box.show();
             line11.hide();
@@ -456,9 +470,9 @@ var fast_loop = func {
         } elsif (lock_tgp) {
             midl.setText(sprintf("%s AREA  %s", ir==1?"IR":"TV", getprop("controls/armament/laser-arm-dmd")?"L":""));
         } elsif (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil) {
-            midl.setText(sprintf("  RADAR  %s", ir==1?"IR":"TV", getprop("controls/armament/laser-arm-dmd")?"L":""));
+            midl.setText(sprintf("  RADAR  %s", getprop("controls/armament/laser-arm-dmd")?"L":""));
         } else {
-            midl.setText(sprintf("         %s", ir==1?"IR":"TV", getprop("controls/armament/laser-arm-dmd")?"L":""));
+            midl.setText(sprintf("         %s", getprop("controls/armament/laser-arm-dmd")?"L":""));
         }
         
         var scaleLock = getprop("f16/avionics/lock-flir");
@@ -492,6 +506,7 @@ var line6 = nil;
 var line7 = nil;
 var line11 = nil;
 var line12 = nil;
+var line13 = nil;
 var line14 = nil;
 var line15 = nil;
 var line20 = nil;
@@ -502,9 +517,11 @@ var bott = nil;
 var midl = nil;
 var ir = 1;
 var lasercode = int(rand()*10000);
-var last_callsign = nil;
 var callsign = nil;
 var lock_tgp = 0;
+var lock_tgp_last = 0;
+var wide = 1;
+var zoomlvl = 1.0;
 
 var callInit = func {
   var canvasMFDext = canvas.new({
@@ -542,16 +559,15 @@ var callInit = func {
         .setColor(color)
         .setAlignment("left-center")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
-        .setText("UNLOCK")
-        .hide()
+        .setText("ZOOM")
         .setTranslation(5, 256*0.35);
   line3 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
         .setAlignment("left-center")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
-        .setText("RDR")
-        .hide()
+        .setText("ZOOM")
+        .hide()        
         .setTranslation(5, 256*0.50);
   line4 = dedGroup.createChild("text")
         .setFontSize(13, 1)
@@ -589,6 +605,13 @@ var callInit = func {
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("DOWN")
         .setTranslation(256*0.35, 5);
+  line13 = dedGroup.createChild("text")
+        .setFontSize(13, 1)
+        .setColor(color)
+        .setAlignment("center-top")
+        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
+        .setText("WIDE")
+        .setTranslation(256*0.50, 5);
   line14 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
