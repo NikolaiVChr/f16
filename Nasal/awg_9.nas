@@ -1748,6 +1748,9 @@ var Target = {
         if (LaserArm.getValue() != 1) {
             return 0;
         }
+        if (me.class == POINT) {
+            return 1;
+        }
         if (active_u != nil and active_u.getUnique() == me.getUnique()) {
             return 1;
         } else {
