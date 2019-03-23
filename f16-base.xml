@@ -1880,12 +1880,12 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <min-fire-range-nm type="double">0</min-fire-range-nm>
                 <guidance type="string">gps</guidance>
                 <navigation type="string">APN</navigation>
-                <loft-altitude type="int">50</loft-altitude>
+                <loft-altitude type="int">0</loft-altitude>
                 <terrain-follow type="bool">true</terrain-follow>
                 <FCS-field-deg type="int">90</FCS-field-deg>
                 <seeker-field-deg type="int">180</seeker-field-deg>
                 <reaquire type="bool">true</reaquire>
-                <max-g type="double">3.0</max-g>
+                <max-g type="double">2.9</max-g>
                 <max-launch-g type="int">7</max-launch-g>
                 <thrust-lbf-stage-1 type="double">0.0</thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>
@@ -1894,7 +1894,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <weight-launch-lbs type="double">1065</weight-launch-lbs>
                 <weight-warhead-lbs type="double">493</weight-warhead-lbs>
                 <weight-fuel-lbm type="double">0</weight-fuel-lbm>
-                <drag-coeff type="double">0.007</drag-coeff>
+                <drag-coeff type="double">0.006</drag-coeff>
                 <cross-section-sqft type="double">1.9121</cross-section-sqft>
                 <arming-time-sec type="double">2.5</arming-time-sec>
                 <min-speed-for-guiding-mach type="double">0</min-speed-for-guiding-mach>
