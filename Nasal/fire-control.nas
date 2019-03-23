@@ -705,7 +705,7 @@ var ContactTGP = {
   },
 
   isLaserPainted: func{
-    getprop("controls/armament/laser-arm-dmd");
+    return getprop("controls/armament/laser-arm-dmd");
   },
 
   isRadiating: func (c) {

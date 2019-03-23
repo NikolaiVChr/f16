@@ -144,7 +144,7 @@ var DEBUG_GUIDANCE         = 0;
 var DEBUG_GUIDANCE_DETAILS = 0;
 var DEBUG_FLIGHT_DETAILS   = 0;
 var DEBUG_SEARCH           = 0;
-var DEBUG_CODE             = FALSE;
+var DEBUG_CODE             = 0;
 
 var g_fps        = 9.80665 * M2FT;
 var slugs_to_lbm = 32.1740485564;
@@ -732,6 +732,8 @@ var AIM = {
 		m.pendingSound = -1;
 
 		m.horz_closing_rate_fps = -1;
+		
+		m.usingTGPPoint = 0;
 
 		m.standby();# these loops will run until released or deleted.
 
@@ -1116,6 +1118,9 @@ var AIM = {
 				me.Tgt.inac_x = 0;
         		me.Tgt.inac_y = 0;
         		me.Tgt.inac_z = 0;
+			}
+			if (me.Tgt == contactPoint) {
+				me.usingTGPPoint = 1;
 			}
 			me.t_coord = me.Tgt.get_Coord();
 			me.maddog = FALSE;
@@ -1620,6 +1625,25 @@ var AIM = {
 				me.Tgt = nil;
 				me.callsign = "Unknown";
 				me.newTargetAssigned = FALSE;
+			}
+		} elsif (me.Tgt != nil and me.Tgt.get_type() == POINT and me.guidance == "laser" and me.usingTGPPoint and contactPoint == nil) {
+			# if laser illuminated lock is lost on a targetpod target:
+			if (!(me.canSwitch and me.reaquire)) {
+				me.Tgt = nil;
+				me.guidance = "unguided";
+				me.printStats("Guidance switched to %s",me.guidance);
+			} else {
+				me.Tgt = nil;
+				me.callsign = "Unknown";
+				me.newTargetAssigned = FALSE;
+			}
+		} elsif (me.Tgt == nil and me.guidance == "laser" and me.usingTGPPoint and contactPoint != nil) {
+			# see if we can regain lock on new laser spot:
+			if (me.newLock(contactPoint)) {
+				me.setNewTargetInFlight(contactPoint);
+				me.printStats("Laser lock switched to %s",me.callsign);
+			} else {
+				me.printStats("Laser spot ignored, could not lock on %s",me.settings.target.get_Callsign());
 			}
 		}
 		me.dt = deltaSec.getValue();#TODO: time since last time nasal timers were called
