@@ -2797,7 +2797,7 @@ var AIM = {
         if(me.loft_alt != 0 and me.snapUp == FALSE) {
         	# this is for Air to ground/sea cruise-missile (SCALP, Sea-Eagle, Taurus, Tomahawk, RB-15...)
 
-        	var code = 0;# 0 = old, 1 = new, 2 = angle
+        	var code = 1;# 0 = old, 1 = new, 2 = angle
 
 			if (code == 2) {# angle code
 				me.terrainStage += 1;# only 1 terrain check in each stage.
@@ -2878,7 +2878,7 @@ var AIM = {
 	                }
 	                
 	            }
-	            #print("There was : " ~ howmany ~ " iteration of the ground loop");
+	            me.printGuideDetails("There was : " ~ howmany ~ " iteration of the ground loop");
 	            me.nextGroundElevation = me.geoPlus4.alt();
 	            
 
