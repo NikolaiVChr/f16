@@ -683,12 +683,13 @@ var getCompleteRadarTargetsList = func {
 }
 
 var ContactTGP = {
-  new: func(callsign, coord) {
+  new: func(callsign, coord, laser = 1) {
     var obj             = { parents : [ContactTGP]};# in real OO class this should inherit from Contact, but in nasal it does not need to
     obj.coord           = geo.Coord.new(coord);
     obj.coord.set_alt(coord.alt()+1);#avoid z fighting
     obj.callsign        = callsign;
     obj.unique          = rand();
+    obj.laser = laser;
     return obj;
   },
 
@@ -705,7 +706,7 @@ var ContactTGP = {
   },
 
   isLaserPainted: func{
-    return getprop("controls/armament/laser-arm-dmd");
+    return getprop("controls/armament/laser-arm-dmd") and me.laser;
   },
 
   isRadiating: func (c) {
@@ -783,6 +784,10 @@ var ContactTGP = {
       var n = me.get_bearing_from_Coord(geo.aircraft_position());
       return n;
   },
+  
+  get_relative_bearing : func() {
+        return geo.normdeg180(me.get_bearing()-getprop("orientation/heading-deg"));
+	},
 
   get_altitude: func(){
       #Return Alt in feet

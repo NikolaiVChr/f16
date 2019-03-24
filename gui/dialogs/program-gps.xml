@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<PropertyList>
+	<name>programGPS</name>
+  	<modal>false</modal>
+  	<layout>vbox</layout>
+  	<draggable>true</draggable>
+    <resizable>false</resizable>
+    <!--<width>250</width>
+    <height>250</height>-->
+
+    <group>
+		<layout>hbox</layout>
+		<empty><stretch>1</stretch></empty>
+
+		<text><label>Program GPS target</label></text>
+
+		<empty><stretch>1</stretch></empty>
+
+		<button>
+			<pref-width>16</pref-width>
+			<pref-height>16</pref-height>
+			<legend></legend>
+			<default>1</default>
+			<keynum>27</keynum>
+			<border>2</border>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+		</button>
+	</group>
+
+  	<text>
+	    <label>Coordinates</label>
+	    <height>25</height>
+	</text>
+
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>Latitude</label>
+	  	<property>f16/avionics/gps-lat</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+      	<!--<color>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
+      	</color>-->
+	</input>
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>Longitude</label>
+	  	<property>f16/avionics/gps-lon</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+      	<!--<color>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
+      	</color>-->
+	</input>
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>Altitude</label>
+	  	<property>f16/avionics/gps-alt</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+      	<!--<color>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
+      	</color>-->
+	</input>
+	<button>
+		<legend>Apply to current weapon</legend>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				var lat = getprop("f16/avionics/gps-lat");
+				var lon = getprop("f16/avionics/gps-lon");
+				var alt = getprop("f16/avionics/gps-alt")*FT2M;
+				if (lat < 90 and lat > -90 and lon < 180 and lon > -180 and pylons.fcs != nil) {
+					var wp = pylons.fcs.getSelectedWeapon();
+					if (wp != nil and wp.parents[0] == armament.AIM and wp.target_pnt == 1 and wp.guidance=="gps") {
+						var coord = geo.Coord.new();
+						coord.set_latlon(lat,lon,alt);
+						var spot = fc.ContactTGP.new("GPS-Spot",coord,0);
+						#if (getprop("f16/stores/tgp-mounted")) {
+							armament.contactPoint = spot;
+						#}
+						wp.setContacts([spot]);
+					}
+				}
+			]]></script>
+		</binding>
+	</button>
+	<button>
+		<legend>Clear from weapon</legend>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				if (pylons.fcs != nil) {
+					var wp = pylons.fcs.getSelectedWeapon();
+					if (wp != nil and wp.parents[0] == armament.AIM) {
+						wp.setContacts([]);
+					}
+					armament.contactPoint = nil;
+				}				
+			]]></script>
+		</binding>
+	</button>
+
+	<empty><stretch>1</stretch></empty>
+	<text><label>Used for programming GPS guided munitions.</label></text>
+
+</PropertyList>

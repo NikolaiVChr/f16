@@ -277,7 +277,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
                 contact.unique = rand();
                 armament.contactPoint = contact;
             } else {
-                armament.contactPoint = fc.ContactTGP.new("TGP-Spot",terrain);
+                armament.contactPoint = fc.ContactTGP.new("TGP-Spot",terrain,0);
             }
             #flir_updater.click_coord_cam = terrain;
             #setprop("/aircraft/flir/target/auto-track", 1);
@@ -394,7 +394,7 @@ var fast_loop = func {
         #lock.hide();
         #setprop("f16/avionics/lock-flir",0.05);
     }
-    if (getprop("f16/stores/tgp-mounted")) {
+    
         callsign = nil;
         var follow = 0;
         if (armament.contactPoint !=nil and armament.contactPoint.get_range()>35) {
@@ -424,7 +424,7 @@ var fast_loop = func {
         } else {
             # TGP lock
             var vis = 1;
-            if (armament.contactPoint.get_Callsign() != "TGP-Spot") {
+            if (armament.contactPoint.get_Callsign() != "TGP-Spot" and armament.contactPoint.get_Callsign() != "GPS-Spot") {
                 follow = 1;
                 vis = awg_9.TerrainManager.IsVisible(armament.contactPoint.propNode, nil);
             }
@@ -446,6 +446,8 @@ var fast_loop = func {
             }
         }
         setprop("f16/avionics/tgp-lock", lock_tgp);#used in HUD
+        
+    if (getprop("f16/stores/tgp-mounted")) {
         if (lock_tgp and !lock_tgp_last) {
             interpolate("f16/avionics/lock-flir",1,1.5);
         } elsif (!lock_tgp) {
@@ -484,7 +486,7 @@ var fast_loop = func {
             lock.hide();
         }
         lock.update();
-    }
+    
   # animate the LANTIRN camera:
     var b = geo.normdeg180(getprop("sim/view[102]/heading-offset-deg"));
     var p = getprop("sim/view[102]/pitch-offset-deg");
@@ -492,7 +494,7 @@ var fast_loop = func {
     var polarD = polarL!=0 and b!=0?math.atan2(p,b)*R2D:-90;
     setprop("aircraft/flir/swivel/pitch-deg",polarL);
     setprop("aircraft/flir/swivel/roll-deg",polarD);
-  
+  }
   settimer(fast_loop,0);
 }
 

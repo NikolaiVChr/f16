@@ -2083,19 +2083,34 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
             me.ded4.hide();
         }
 
-        if (hdp.tgp_mounted and tgp.flir_updater.click_coord_cam != nil and getprop("f16/avionics/tgp-lock")) {
-            var b = geo.normdeg180(getprop("sim/view[102]/heading-offset-deg"));
-            var p = getprop("sim/view[102]/pitch-offset-deg");
-            var y = me.clamp(-p*me.texelPerDegreeY+me.sy-me.texels_up_into_hud,me.sy*0.05,me.sy*0.95);
-            var x = me.clamp(b*me.texelPerDegreeX+me.sx*0.5,me.sx*0.025,me.sx*0.975);
-            if (y == me.sy*0.05 or y == me.sy*0.95 or x == me.sx*0.025 or x == me.sx*0.975) {
-                me.tgpPointC.setTranslation(x,y);
-                me.tgpPointC.show();
+        if (tgp.flir_updater.click_coord_cam != nil and getprop("f16/avionics/tgp-lock")) {# hdp.tgp_mounted and 
+            if (getprop("sim/view[102]/heading-offset-deg")==0 and getprop("sim/view[102]/pitch-offset-deg")==-30 and armament.contactPoint != nil) {
+                var b = geo.normdeg180(armament.contactPoint.get_relative_bearing());
+                var p = armament.contactPoint.getElevation()-hdp.pitch;
+                var y = me.clamp(-p*me.texelPerDegreeY+me.sy-me.texels_up_into_hud,me.sy*0.05,me.sy*0.95);
+                var x = me.clamp(b*me.texelPerDegreeX+me.sx*0.5,me.sx*0.025,me.sx*0.975);
+                if (y == me.sy*0.05 or y == me.sy*0.95 or x == me.sx*0.025 or x == me.sx*0.975) {
+                    me.tgpPointC.setTranslation(x,y);
+                    me.tgpPointC.show();
+                } else {
+                    me.tgpPointC.hide();
+                }
+                me.tgpPointF.setTranslation(x,y);
+                me.tgpPointF.show();
             } else {
-                me.tgpPointC.hide();
+                var b = geo.normdeg180(getprop("sim/view[102]/heading-offset-deg"));
+                var p = getprop("sim/view[102]/pitch-offset-deg");
+                var y = me.clamp(-p*me.texelPerDegreeY+me.sy-me.texels_up_into_hud,me.sy*0.05,me.sy*0.95);
+                var x = me.clamp(b*me.texelPerDegreeX+me.sx*0.5,me.sx*0.025,me.sx*0.975);
+                if (y == me.sy*0.05 or y == me.sy*0.95 or x == me.sx*0.025 or x == me.sx*0.975) {
+                    me.tgpPointC.setTranslation(x,y);
+                    me.tgpPointC.show();
+                } else {
+                    me.tgpPointC.hide();
+                }
+                me.tgpPointF.setTranslation(x,y);
+                me.tgpPointF.show();
             }
-            me.tgpPointF.setTranslation(x,y);
-            me.tgpPointF.show();
         } else {
             me.tgpPointF.hide();
             me.tgpPointC.hide();

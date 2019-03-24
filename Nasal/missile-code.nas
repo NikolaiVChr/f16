@@ -284,8 +284,9 @@ var AIM = {
         m.ready_time            = getprop(m.nodeString~"ready-time");                 # time to get ready after standby mode.
         m.loal                  = getprop(m.nodeString~"lock-on-after-launch");       # bool. LOAL supported. For loal to work [optional]
         m.canSwitch             = getprop(m.nodeString~"auto-switch-target-allowed"); # bool. Can switch target at will if it loses lock [optional]
-        m.standbyFlight         = getprop(m.nodeString~"prowl-flight");               # unguided/level/gyro-pitch for LOAL and that stuff, when not locked onto stuff.
+        m.standbyFlight         = getprop(m.nodeString~"prowl-flight");               # unguided/level/gyro-pitch/5 for LOAL and that stuff, when not locked onto stuff.
         m.switchTime            = getprop(m.nodeString~"switch-time-sec");            # auto switch of targets in flight: time to scan FoV.
+        m.noCommonTarget        = getprop(m.nodeString~"no-common-target");           # bool. If true, target must be set directly on weapon.
 		# navigation, guiding and seekerhead
 		m.max_seeker_dev        = getprop(m.nodeString~"seeker-field-deg") / 2;       # missiles own seekers total FOV diameter.
 		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/laser/gps/vision/unguided/level/gyro-pitch/radiation/inertial
@@ -526,6 +527,9 @@ var AIM = {
         }
         if(m.advanced == nil) {
 			m.advanced = FALSE;
+		}
+		if(m.noCommonTarget == nil) {
+			m.noCommonTarget = FALSE;
 		}
 
         m.useModelCase          = getprop("payload/armament/modelsUseCase");
@@ -1519,16 +1523,17 @@ var AIM = {
 	
 	setNewTargetInFlight: func (tagt) {
 		me.Tgt = tagt;
-		me.callsign = me.Tgt.get_Callsign();
-		me.newTargetAssigned = TRUE;
-		me.t_coord = me.Tgt.get_Coord();
+		me.callsign = tagt==nil?"Unknown":me.Tgt.get_Callsign();
+		me.printStatsDetails("Target set to %s", me.callsign);
+		me.newTargetAssigned = tagt==nil?FALSE:TRUE;
+		me.t_coord = tagt==nil?nil:me.Tgt.get_Coord();
 		me.fovLost = FALSE;
-		me.lostLOS = FALSE;
+		me.lostLOS = tagt==nil?TRUE:FALSE;# to do prowl flight something needs to be lost.
 		me.radLostLock = FALSE;
 		me.semiLostLock = FALSE;
 		me.heatLostLock = FALSE;
 		me.hasGuided = FALSE;
-		if (!me.target_pnt) {
+		if (!me.target_pnt and tagt!=nil) {
 			me.Tgt.inac_x = 0;
     		me.Tgt.inac_y = 0;
     		me.Tgt.inac_z = 0;
@@ -1579,8 +1584,19 @@ var AIM = {
 				me.guidanceLaw = me.settings.guidanceLaw;
 				me.printStats("Guidance law switched to %s", me.guidanceLaw);
 			}
+			if (me.settings["class"] != nil) {
+				me.class = me.settings.class;
+				me.target_air = find("A", me.class)==-1?FALSE:TRUE;
+				me.target_sea = find("M", me.class)==-1?FALSE:TRUE;
+				me.target_gnd = find("G", me.class)==-1?FALSE:TRUE;
+				me.target_pnt = find("P", me.class)==-1?FALSE:TRUE;
+				me.printStats("Class switched to %s", me.class);
+			}
 			if (me.settings["target"] != nil) {
-				if (me.newLock(me.settings.target)) {
+				if (me.settings.target == "nil") {
+					me.setNewTargetInFlight(nil);
+					me.printStats("Target removed");
+				} elsif (me.newLock(me.settings.target)) {
 					me.setNewTargetInFlight(me.settings.target);
 					me.printStats("Target switched to %s",me.callsign);
 				} else {
@@ -1796,14 +1812,18 @@ var AIM = {
 	    	if (me.observing != me.standbyFlight) {
             	me.keepPitch = me.pitch;
             }
+            me.printGuide("Prowling");
 	    	if (me.standbyFlight == "level") {
 				me.level();
+			} elsif (me.standbyFlight == "5") {
+				me.level5();
 			} elsif (me.standbyFlight == "gyro-pitch") {
 				me.pitchGyro();
 			} else {
 				me.track_signal_e = 0;
 				me.track_signal_h = 0;
 			}
+			me.limitG();
 			me.pitch      += me.track_signal_e;
            	me.hdg        += me.track_signal_h;
             me.printGuideDetails("%04.1f deg elevation command done, new pitch: %04.1f deg", me.track_signal_e, me.pitch);
@@ -1813,6 +1833,7 @@ var AIM = {
 			me.observing = "unguided";
 			me.track_signal_e = 0;
 			me.track_signal_h = 0;
+			me.printGuide("Unguided");
 			#me.printGuideDetails(sprintf("not guiding %d %d %d %d %d",me.Tgt != nil,me.free == FALSE,me.guidance != "unguided",me.rail == FALSE,me.rail_passed == TRUE));
 		}
        	me.last_track_e = me.track_signal_e;
@@ -3034,6 +3055,12 @@ var AIM = {
         me.track_signal_h = 0;
         me.printGuide("Trying to keep current %04.1f deg pitch.", me.pitch);
 	},
+	
+	level5: func () {
+        me.track_signal_e = (5-me.pitch) * !me.free;
+        me.track_signal_h = 0;
+        me.printGuide("Gyro keeping %04.1f deg pitch. Current is %04.1f deg.", 5, me.pitch);
+	},
 
 	pitchGyro: func () {
         me.track_signal_e = (me.keepPitch-me.pitch) * !me.free;
@@ -3623,6 +3650,9 @@ var AIM = {
 	###################################################################
 
 	getContact: func {
+		if (me.noCommonTarget) {
+			return nil;
+		}
 		if (me.target_pnt and contactPoint != nil) {
 			return contactPoint;
 		} else {
