@@ -104,13 +104,13 @@ var loop_ded = func {# one line is max 24 chars
       text[3] = sprintf("     ELEV  %5dFT",alt);
       text[4] = sprintf("      TOS  %s","VOID");
     } elsif (page == pTACAN) {
-      var ilsOn  = "ON";
+      var ilsOn  = (getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 0 or getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 3)?"ON ":"OFF";
       var freq   = getprop("instrumentation/tacan/frequencies/selected-mhz");
       var chan   = getprop("instrumentation/tacan/frequencies/selected-channel");
       var band   = getprop("instrumentation/tacan/frequencies/selected-channel[4]");
       var course = getprop("instrumentation/tacan/in-range")?getprop("instrumentation/tacan/indicated-bearing-true-deg"):-1;
       course = course==-1?"":sprintf("%d\xc2\xb0",course);
-      text[0] = sprintf("    TCN REC       ILS %s",ilsOn);
+      text[0] = sprintf("    TCN REC      ILS %s",ilsOn);
       text[1] = sprintf("                        ");
       text[2] = sprintf("               CMD STRG ");
       text[3] = sprintf("CHAN    %03d FREQ %6.2f",chan,freq);
