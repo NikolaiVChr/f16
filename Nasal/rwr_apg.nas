@@ -88,6 +88,8 @@ var SubSystem_RWR_APG = {
                   me.show = 1;
               }
             }
+            #TODO: check if this is needed:
+            #me.show = me.show and awg_9.TerrainManager.IsVisible(me.u.propNode,notification);# seems awg_9 uses isbehindterrain for non terrain stuff, so we need to repeat check here.
             if (me.show == 1) {
                 me.threat = 0;
                 if (me.u.get_model() != "missile_frigate" and me.u.get_model() != "buk-m2" and me.u.get_model() != "fleet") {
