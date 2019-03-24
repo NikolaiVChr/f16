@@ -67,7 +67,7 @@
         <object-name>3</object-name>
         <object-name>2</object-name>
         <object-name>1</object-name>
-        <object-name>3.001</object-name>
+        <object-name>4</object-name>
         <object-name>a-a</object-name>
         <object-name>a-g</object-name>
         <object-name>com2</object-name>
@@ -154,7 +154,7 @@
     </animation>
     <animation>
         <type>pick</type>
-        <object-name>1</object-name>
+        <object-name>1</object-name><!-- 1 -->
         <action>
             <button>0</button>
             <binding>
@@ -172,7 +172,7 @@
     </animation>
     <animation>
         <type>pick</type>
-        <object-name>2</object-name>
+        <object-name>2</object-name><!-- 2 -->
         <action>
             <button>0</button>
             <binding>
@@ -190,7 +190,7 @@
     </animation>
     <animation>
         <type>pick</type>
-        <object-name>3</object-name>
+        <object-name>3</object-name><!-- 3 -->
         <action>
             <button>0</button>
             <binding>
@@ -208,7 +208,7 @@
     </animation>
     <animation>
         <type>pick</type>
-        <object-name>5</object-name>
+        <object-name>4</object-name><!-- 4 -->
         <action>
             <button>0</button>
             <binding>
@@ -226,7 +226,7 @@
     </animation>
     <animation>
         <type>pick</type>
-        <object-name>6</object-name>
+        <object-name>5</object-name><!-- 5 -->
         <action>
             <button>0</button>
             <binding>
@@ -298,7 +298,7 @@
     </animation>
     <animation>
         <type>pick</type>
-        <object-name>8</object-name>
+        <object-name>7</object-name><!-- 7 -->
         <action>
             <button>0</button>
             <binding>

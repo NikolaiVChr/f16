@@ -8018,7 +8018,7 @@ refs 3
 34 0.909541 0.223018
 kids 0
 OBJECT poly
-name "9"
+name "8"
 loc 0.001421 -0.0168714 0.0269284
 texture "../Textures/icp.rgb"
 crease 45.000000
@@ -8297,7 +8297,7 @@ refs 5
 1 0.839945 0.0292744
 kids 0
 OBJECT poly
-name "3"
+name "9"
 loc 0.001421 -0.0168714 0.005332
 texture "../Textures/icp.rgb"
 crease 45.000000
@@ -8576,7 +8576,7 @@ refs 3
 34 0.892984 0.0890633
 kids 0
 OBJECT poly
-name "8"
+name "7"
 loc 0.001421 -0.0168714 0.0461094
 texture "../Textures/icp.rgb"
 crease 45.000000
@@ -8855,7 +8855,7 @@ refs 3
 34 0.686512 0.0906296
 kids 0
 OBJECT poly
-name "5"
+name "4"
 loc 0.001421 0.00292796 0.0461094
 texture "../Textures/icp.rgb"
 crease 45.000000
@@ -9134,7 +9134,7 @@ refs 5
 1 0.839945 0.0292744
 kids 0
 OBJECT poly
-name "6"
+name "5"
 loc 0.001421 0.00292796 0.0269284
 texture "../Textures/icp.rgb"
 crease 45.000000
@@ -9692,7 +9692,7 @@ refs 3
 34 0.586173 0.0944316
 kids 0
 OBJECT poly
-name "7"
+name "6"
 loc 0.001421 0.00292796 0.005332
 texture "../Textures/icp.rgb"
 crease 45.000000
