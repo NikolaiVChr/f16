@@ -85,6 +85,22 @@
       		<blue>0.5</blue>
       	</color>
 	</input>
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>Wingman 4</label>
+	  	<property>link16/wingman-4</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+      	<color>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
+      	</color>
+	</input>
 	<empty><stretch>1</stretch></empty>
 	<text><label>Wingmen only show up in RWR,</label></text>
 	<text><label>when no other threats present.</label></text>
