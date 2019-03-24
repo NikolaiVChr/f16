@@ -166,6 +166,8 @@ if ((major == 2017 and minor == 2 and pica >= 1) or (major == 2017 and minor > 2
 	offsetMethod = TRUE;
 }
 
+var wingedGuideFactor = 0.1;
+
 var spawn = func(c, context) return func {thread.newthread(func {
 	call(c, nil, context, context, var err = []);
 	if(size(err)) {
@@ -287,7 +289,7 @@ var AIM = {
 		# navigation, guiding and seekerhead
 		m.max_seeker_dev        = getprop(m.nodeString~"seeker-field-deg") / 2;       # missiles own seekers total FOV diameter.
 		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/laser/gps/vision/unguided/level/gyro-pitch/radiation/inertial
-		m.guidanceLaw           = getprop(m.nodeString~"navigation");                 # guidance-law: direct/PN/APN/PNxxyy/APNxxyy (use direct for gravity bombs, use PN for very old missiles, use APN for modern missiles, use PNxxyy/APNxxyy for surface to air where xx is degrees to aim above target, yy is seconds it will do that)
+		m.guidanceLaw           = getprop(m.nodeString~"navigation");                 # guidance-law: direct/PN/APN/PNxxyy/APNxxyy (use direct for gravity bombs, use PN for very old missiles, use APN for modern missiles, use PNxxyy/APNxxyy for surface to air where xx is degrees to aim above target, yy is seconds it will do that). GPN is APN for winged glidebombs.
 		m.pro_constant          = getprop(m.nodeString~"proportionality-constant");   # Constant for how sensitive proportional navigation is to target speed/acc. Normally between 3-6. [optional]
 		m.all_aspect            = getprop(m.nodeString~"all-aspect");                 # bool. set to false if missile only locks on reliably to rear of target aircraft
 		m.angular_speed         = getprop(m.nodeString~"seeker-angular-speed-dps");   # only for heat/vision seeking missiles. Max angular speed that the target can move as seen from seeker, before seeker loses lock.
@@ -1312,6 +1314,8 @@ var AIM = {
 			nav = "Proportional navigation. Proportionality constant is "~me.pro_constant;
 		} elsif (me.guidanceLaw == "APN") {
 			nav = "Augmented proportional navigation. Proportionality constant is "~me.pro_constant;
+		} elsif (me.guidanceLaw == "GPN") {
+			nav = "Augmented proportional navigation. Proportionality constant is "~me.pro_constant~" for lateral and "~(wingedGuideFactor*me.pro_constant)~" for longitudal";
 		} elsif (left(me.guidanceLaw,2) == "PN") {
 			nav = "Proportional navigation. Proportionality constant is "~me.pro_constant;
 			var xxyy = right(me.guidanceLaw,4);
@@ -1974,6 +1978,7 @@ var AIM = {
 		if (!no_pitch or (me.rail == TRUE and me.rail_passed == FALSE)) {
 			me.pitchN.setDoubleValue(me.pitch);
 		} else {
+			# for ejection seat
 			me.uprighter = me.pitchN.getValue();
 			if (me.uprighter<89.92) {
 				me.uprighter += (90-me.uprighter)*me.dt*0.1;
@@ -3057,8 +3062,13 @@ var AIM = {
 				return;
 			} elsif (find("APN", me.guidanceLaw)!=-1) {
 				me.apn = 1;
+				me.gpn = 1;
+			} elsif (find("GPN", me.guidanceLaw)!=-1) {
+				me.apn = 1;
+				me.gpn = wingedGuideFactor;
 			} else {
 				me.apn = 0;
+				me.gpn = 1;
 			}
 			if ((me.dist_direct_last - me.dist_curr_direct) < 0) {
 				# might happen if missile is cannot catch up to target. It might still be accelerating or it has lost too much speed.
@@ -3238,7 +3248,7 @@ var AIM = {
 						# Augmented proportional navigation. Takes target acc. into account.
 						me.toBody = math.cos(me.curr_deviation_e*D2R);#convert perpendicular LOS acc. to perpendicular body acc.
 						if (me.toBody==0) me.toBody=0.00001;
-						me.acc_upwards_fps2 = me.pro_constant*me.line_of_sight_rate_up_rps*me.vert_closing_rate_fps+me.t_LOS_elev_norm_acc;
+						me.acc_upwards_fps2 = me.gpn*me.pro_constant*me.line_of_sight_rate_up_rps*me.vert_closing_rate_fps+me.t_LOS_elev_norm_acc;
 						me.acc_upwards_fps2 /= me.toBody;
 						#printf("vert acc = %.2f + %.2f G", me.pro_constant*me.line_of_sight_rate_up_rps*me.vert_closing_rate_fps/g_fps, (me.apn*me.pro_constant*me.t_LOS_elev_norm_acc/2)/g_fps);
 						me.velocity_vector_length_fps = me.clamp(me.old_speed_fps, 0.0001, 1000000);
@@ -3330,6 +3340,20 @@ var AIM = {
             		return TRUE;
             	}
             }
+        } elsif(0 > me.coord.alt()) {
+        	me.event = "exploded";
+        	if(me.life_time < me.arming_time) {
+            	me.event = "landed disarmed";
+        	}
+        	if (me.Tgt != nil and me.direct_dist_m == nil) {
+        		# maddog might go here
+        		me.Tgt = nil;
+        		#me.direct_dist_m = me.coord.direct_distance_to(me.Tgt.get_Coord());
+        	}
+        	if ((me.Tgt != nil and me.direct_dist_m != nil) or me.Tgt == nil) {
+        		me.explode("Hit terrain.", me.event);
+        		return TRUE;
+        	}
         }
 
 		if (me.Tgt != nil and me.t_coord != nil and me.guidance != "inertial") {
