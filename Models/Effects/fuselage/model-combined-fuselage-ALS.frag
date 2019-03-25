@@ -18,8 +18,6 @@ varying	vec3 	vViewVec;
 varying vec3	vertVec;
 //varying vec3    lightDir;
 
-varying	float	alpha;
-
 uniform sampler2D BaseTex;
 uniform sampler2D LightMapTex;
 uniform sampler2D NormalTex;
@@ -510,10 +508,10 @@ void main (void)
     ambient_Correction = clamp(ambient_Correction, -1.0, 1.0);
 
     
-    color.a = alpha;//combineMe
+    color.a = texel.a;//combineMe
     vec4 fragColor = vec4(color.rgb * mixedcolor.rgb + ambient_Correction.rgb, color.a);//CombineMe
 
-    fragColor += Specular * nmap.a;
+    fragColor.rgb += Specular.rgb * nmap.a;
 
     //////////////////////////////////////////////////////////////////////
     // BEGIN lightmap

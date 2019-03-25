@@ -2852,7 +2852,10 @@ var AIM = {
 	            
 	            #Then we need the coordinate of the future point at let say 20 dt
 	            me.geoPlus4 = me.nextGeoloc(me.coord.lat(), me.coord.lon(), me.hdg, me.old_speed_fps, 5);
-	            me.geoPlus4.set_alt(geo.elevation(me.geoPlus4.lat(),me.geoPlus4.lon()));
+	            me.geoAlt = geo.elevation(me.geoPlus4.lat(),me.geoPlus4.lon());
+	            if (me.geoAlt != nil) {
+	            	me.geoPlus4.set_alt(me.geoAlt);
+				}
 	            
 	            #Loop
 	            while(No_terrain != 1){
@@ -2883,7 +2886,7 @@ var AIM = {
 	            
 
 	            me.Daground = 0;# zero for sealevel in case target is ship. Don't shoot A/S missiles over terrain. :)
-	            if(me.Tgt.get_type() == SURFACE or me.follow == TRUE) {
+	            if(me.Tgt.get_type() == SURFACE or me.Tgt.get_type() == POINT or me.follow == TRUE) {
 	                me.Daground = me.nextGroundElevation * M2FT;
 	            }
 	            me.loft_alt_curr = me.loft_alt;

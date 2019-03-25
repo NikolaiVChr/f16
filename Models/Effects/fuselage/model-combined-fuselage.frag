@@ -283,7 +283,8 @@ void main (void)
 	ambient_Correction *= ambient_offset;
 	ambient_Correction = clamp(ambient_Correction, -1.0, 1.0);
 
-	color.a = gl_FrontMaterial.diffuse.a;//combineMe
+	//color.a = gl_FrontMaterial.diffuse.a;//combineMe
+	color.a = texel.a;//combineMe
 	vec4 fragColor = vec4(color.rgb * mixedcolor + ambient_Correction.rgb, color.a);
 
 	fragColor += Specular * nmap.a;

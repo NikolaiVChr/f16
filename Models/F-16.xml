@@ -233,7 +233,35 @@
  </model>
 
 
-
+<effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.35</ambient-factor>
+          <rain-enabled type="int">2</rain-enabled>
+          <snow-enabled type="int">0</snow-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+          <transparent type="int">1</transparent>
+          <rendering-hint>transparent</rendering-hint>
+      </parameters>
+      <!-- logos -->
+      <object-name>VstabBandLeftAft</object-name>
+      <object-name>VstabBandLeftFront</object-name>
+      <object-name>VstabBandRightAft</object-name>
+      <object-name>VstabBandRightFront</object-name>
+      <object-name>VstabLogoLeftBottom</object-name>
+      <object-name>VstabLogoLeftTop</object-name>
+      <object-name>VstabLogoRightBottom</object-name>
+      <object-name>VstabLogoRightTop</object-name>
+      <object-name>WinglogoLeftTop</object-name>
+      <object-name>WinglogoRightBottom</object-name>
+      <object-name>WinglogoRightTop</object-name>
+      <object-name>Rect</object-name>
+      <object-name>LogoPilotRight</object-name>
+      <object-name>FuselageLogoRight</object-name>
+      <object-name>FuselageLogoLeft</object-name>
+  </effect>
 
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
@@ -245,6 +273,23 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
+      <!-- logos -->
+      <object-name>VstabBandLeftAft</object-name>
+      <object-name>VstabBandLeftFront</object-name>
+      <object-name>VstabBandRightAft</object-name>
+      <object-name>VstabBandRightFront</object-name>
+      <object-name>VstabLogoLeftBottom</object-name>
+      <object-name>VstabLogoLeftTop</object-name>
+      <object-name>VstabLogoRightBottom</object-name>
+      <object-name>VstabLogoRightTop</object-name>
+      <object-name>WinglogoLeftTop</object-name>
+      <object-name>WinglogoRightBottom</object-name>
+      <object-name>WinglogoRightTop</object-name>
+      <object-name>Rect</object-name>
+      <object-name>LogoPilotRight</object-name>
+      <object-name>FuselageLogoRight</object-name>
+      <object-name>FuselageLogoLeft</object-name>
+      <!-- fuselage -->
       <object-name>RadarDomeTop</object-name>
       <object-name>Tail</object-name>
       <object-name>LeftLowerSpeedbrake</object-name>
