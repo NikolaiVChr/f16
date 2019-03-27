@@ -186,7 +186,7 @@
 		</pure_gain>
 		
 		<!-- HDG SEL / STRG SEL -->
-		<fcs_function name="autoflight/roll/hdg-hld-target">
+		<fcs_function name="autoflight/roll/hdg-hold-target">
 			<function>
 				<integer>
 					<sum>
@@ -201,7 +201,7 @@
 									<value>1</value>
 								</eq>
 							</and>
-							<property>autoflight/roll/hdg-hld-target</property>
+							<property>autoflight/roll/hdg-hold-target</property>
 							<property>/orientation/heading-magnetic-deg</property>
 						</ifthen>
 						<value>0.5</value> <!-- Make the integer rounded correctly -->

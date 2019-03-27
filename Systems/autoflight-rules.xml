@@ -83,7 +83,7 @@
 			<value>0</value>
 		</input>
 		<input>
-			<property>/fdm/jsbsim/autoflight/roll/hdg-hld-target</property>
+			<property>/fdm/jsbsim/autoflight/roll/hdg-hold-target</property>
 			<offset>
 				<property>/orientation/heading-magnetic-deg</property>
 				<scale>-1.0</scale>
