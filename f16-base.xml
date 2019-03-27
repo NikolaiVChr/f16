@@ -1272,7 +1272,6 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                     <no-rte-strg-sel type="bool">0</no-rte-strg-sel>
                     <p-gain-att type="double">0</p-gain-att>
                 </roll>
-				<roll-mode-out type="int">0</roll-mode-out> <!-- DO NOT MOVE/REMOVE! -->
             </autoflight>
             <elec>
                 <bus>
