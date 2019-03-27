@@ -1253,23 +1253,24 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <autoflight>
                 <pitch>
                     <altitude-2-sec-ahead type="double">0</altitude-2-sec-ahead> <!-- autoflight-rules.xml -->
-                    <d-gain-att type="double">-5</d-gain-att>
-                    <i-gain-att type="double">0</i-gain-att> <!-- This gain is dynamic -->
+                    <d-gain-att type="double">0</d-gain-att> <!-- Set in autoflight.xml -->
+                    <i-gain-att type="double">-35</i-gain-att>
                     <master-pid type="double">0</master-pid>
-                    <p-gain-att type="double">0</p-gain-att> <!-- This gain is dynamic -->
+                    <p-gain-att type="double">-70</p-gain-att>
                     <vs>
                         <pid type="double">0</pid>
                     </vs>
                 </pitch>
                 <roll>
-                    <d-gain-att type="double">-0.2</d-gain-att>
-                    <i-gain-att type="double">-6.4</i-gain-att>
+                    <d-gain-att type="double">0</d-gain-att>
+                    <i-gain-att type="double">0</i-gain-att>
                     <heading>
                         <pi type="double">0</pi>
                     </heading>
                     <heading-error-deg type="double">0</heading-error-deg> <!-- autoflight-rules.xml -->
                     <master-pid type="double">0</master-pid>
-                    <p-gain-att type="double">-3.8</p-gain-att>
+                    <no-rte-strg-sel type="bool">0</no-rte-strg-sel>
+                    <p-gain-att type="double">0</p-gain-att>
                 </roll>
             </autoflight>
             <elec>
