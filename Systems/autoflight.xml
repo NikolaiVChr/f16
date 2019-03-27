@@ -382,10 +382,6 @@
 							<value>1</value>
 						</eq>
 						<eq>
-							<property>autoflight/ss/active</property>
-							<value>0</value>
-						</eq>
-						<eq>
 							<property>autoflight/roll/att-hold-switch</property>
 							<value>1</value>
 						</eq>
@@ -394,6 +390,10 @@
 					<property>attitude/roll-rad</property>
 				</ifthen>
 			</function>
+			<clipto>
+				<min>-autoflight/roll/max-bank-rad</min>
+				<max>autoflight/roll/max-bank-rad</max>
+			</clipto>
 		</fcs_function>
 		
 		<switch name="autoflight/roll/target-roll-deg">
@@ -608,10 +608,6 @@
 						<eq>
 							<property>autoflight/pitch/att-hold-active</property>
 							<value>1</value>
-						</eq>
-						<eq>
-							<property>autoflight/ss/active</property>
-							<value>0</value>
 						</eq>
 						<eq>
 							<property>autoflight/pitch/att-hold-switch</property>
