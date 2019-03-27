@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- General Dynamics F-16 Autoflight System -->
-<!-- (c) 2018 Joshua Davidson (it0uchpods) -->
+<!-- Copyright (c) 2019 Joshua Davidson (it0uchpods) -->
 
 <PropertyList>
 	
@@ -17,6 +17,23 @@
 			<max>180</max>
 		</period>
 	</filter>
+	
+	<logic>
+		<name>No Route Active in STRG SEL</name>
+		<input>
+			<and>
+				<equals>
+					<property>/fdm/jsbsim/autoflight/switch-roll</property>
+					<value>-1</value>
+				</equals>
+				<not-equals>
+					<property>/autopilot/route-manager/active</property>
+					<value>1</value>
+				</not-equals>
+			</and>
+		</input>
+		<output>/fdm/jsbsim/autoflight/roll/no-rte-strg-sel</output>
+	</logic>
 	
 	<filter>
 		<name>HEADING ERROR DEG</name>
@@ -59,7 +76,7 @@
 					</equals>
 					<not-equals>
 						<property>/autopilot/route-manager/active</property>
-						<value>0</value>
+						<value>1</value>
 					</not-equals>
 				</and>
 			</condition>
@@ -68,7 +85,7 @@
 		<input>
 			<property>/fdm/jsbsim/autoflight/roll/hdg-hld-target</property>
 			<offset>
-				<property>/orientation/heading-deg</property>
+				<property>/orientation/heading-magnetic-deg</property>
 				<scale>-1.0</scale>
 			</offset>
 		</input>

@@ -1,13 +1,8 @@
 # General Dynamics F-16 Autoflight System
-# (c) 2018 Joshua Davidson (it0uchpods)
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
-var max_bank_limit = 30;
+var max_bank_limit = 20;
 setprop("/autopilot/route-manager/advance", 1);
-
-# Every time the waypoint changes, update the stored time
-setlistener("/autopilot/route-manager/current-wp", func {
-	setprop("/autopilot/internal/wp-change-time", getprop("/sim/time/elapsed-sec"));
-});
 
 # Calculates the optimum distance from waypoint to begin turning to next waypoint
 var apLoop = maketimer(1, func {
@@ -27,6 +22,7 @@ var apLoop = maketimer(1, func {
 
 			delta_angle = math.abs(geo.normdeg180(current_course - next_course));
 			max_bank = delta_angle * 1.5;
+			max_bank_limit = getprop("/fdm/jsbsim/autoflight/roll/max-bank-deg");
 			if (max_bank > max_bank_limit) {
 				max_bank = max_bank_limit;
 			}
@@ -43,9 +39,6 @@ var apLoop = maketimer(1, func {
 				turn_dist = 1;
 			}
 			setprop("/autopilot/route-manager/advance", turn_dist);
-			if (getprop("/sim/time/elapsed-sec")-getprop("/autopilot/internal/wp-change-time") > 60) {
-				setprop("/autopilot/internal/wp-change-check-period", time);
-			}
 			
 			if (getprop("/autopilot/route-manager/wp/dist") <= turn_dist) {
 				setprop("/autopilot/route-manager/current-wp", getprop("/autopilot/route-manager/current-wp") + 1);
