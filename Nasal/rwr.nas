@@ -162,14 +162,19 @@ RWRCanvas = {
         rwr.AIRCRAFT_EAGLE = "15";
         rwr.AIRCRAFT_TOMCAT = "14";
         rwr.AIRCRAFT_BUK = "11";
-        rwr.AIRCRAFT_MIG = "21";
-        rwr.AIRCRAFT_MIG2 = "29";
+        rwr.AIRCRAFT_MIG21 = "21";
+        rwr.AIRCRAFT_MIG29 = "29";
+        rwr.AIRCRAFT_SU27 = "27";
         rwr.AIRCRAFT_MIRAGE = "20";
         rwr.AIRCRAFT_FALCON = "16";
         rwr.AIRCRAFT_WARTHOG = "10";
         rwr.AIRCRAFT_FRIGATE = "SH";
         #rwr.AIRCRAFT_TANKER = "KC";
         rwr.AIRCRAFT_AWACS = "S";
+        rwr.AIRCRAFT_TYPHOON = "EF";
+        rwr.AIRCRAFT_SU15 = "SU";
+        rwr.SCENARIO_OPPONENT = "28";
+        rwr.AIRCRAFT_JAGUAR   = "JG";
         rwr.AIRCRAFT_UNKNOWN = "U";
         rwr.AIRCRAFT_AI = "AI";
         rwr.lookupType = {
@@ -185,7 +190,7 @@ RWRCanvas = {
                 "JA37Di-Viggen":            rwr.AIRCRAFT_VIGGEN,      
                 "m2000-5":                  rwr.AIRCRAFT_MIRAGE,
                 "m2000-5B":                 rwr.AIRCRAFT_MIRAGE,
-                "MiG-21bis":                rwr.AIRCRAFT_MIG,
+                "MiG-21bis":                rwr.AIRCRAFT_MIG21,
                 "buk-m2":                   rwr.AIRCRAFT_BUK,     
                 "missile_frigate":          rwr.AIRCRAFT_FRIGATE,
                 "frigate":                  rwr.AIRCRAFT_FRIGATE,
@@ -204,8 +209,8 @@ RWRCanvas = {
                 "gci":                      rwr.AIRCRAFT_AWACS,
                 "AI":                       rwr.AIRCRAFT_AI,
                 #misc threatening aircraft:
-                "MiG-29":                   rwr.AIRCRAFT_MIG2,
-                "SU-27":                    rwr.AIRCRAFT_MIG2,
+                "MiG-29":                   rwr.AIRCRAFT_MIG29,
+                "SU-27":                    rwr.AIRCRAFT_SU27,
         #        "ch53e":"53",
         #        "MQ-9":"9",
         #        "QF-4E":"F4",
@@ -213,14 +218,15 @@ RWRCanvas = {
                 "A-10":                     rwr.AIRCRAFT_WARTHOG,
                 "A-10-model":               rwr.AIRCRAFT_WARTHOG,
         #        "truck":"TR",
-                "Typhoon":"EF",
+                "Typhoon":                  rwr.AIRCRAFT_TYPHOON,
                 "f16":"16",
-                "Mig-28":"28",
+                "Mig-28":                   rwr.SCENARIO_OPPONENT,
         #        "Tu-95MR":"95",
         #        "Tu-160-Blackjack":"BJ",
         #        "AN-225-Mrija":"AN",
-                "Su-15":"SU",
-                "Jaguar-GR3":"JG",
+                "Su-15":                    rwr.AIRCRAFT_SU15,
+                "Jaguar-GR3":               rwr.AIRCRAFT_JAGUAR,
+        };
         };
         rwr.shownList = [];
         #
