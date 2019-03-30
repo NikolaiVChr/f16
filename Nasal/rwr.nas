@@ -219,7 +219,7 @@ RWRCanvas = {
                 "A-10-model":               rwr.AIRCRAFT_WARTHOG,
         #        "truck":"TR",
                 "Typhoon":                  rwr.AIRCRAFT_TYPHOON,
-                "f16":"16",
+                "f16":                      rwr.AIRCRAFT_FALCON,
                 "Mig-28":                   rwr.SCENARIO_OPPONENT,
         #        "Tu-95MR":"95",
         #        "Tu-160-Blackjack":"BJ",
