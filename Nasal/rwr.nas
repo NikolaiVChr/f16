@@ -227,7 +227,6 @@ RWRCanvas = {
                 "Su-15":                    rwr.AIRCRAFT_SU15,
                 "Jaguar-GR3":               rwr.AIRCRAFT_JAGUAR,
         };
-        };
         rwr.shownList = [];
         #
         # recipient that will be registered on the global transmitter and connect this
