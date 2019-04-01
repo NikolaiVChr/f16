@@ -169,12 +169,16 @@ RWRCanvas = {
         rwr.AIRCRAFT_FALCON = "16";
         rwr.AIRCRAFT_WARTHOG = "10";
         rwr.AIRCRAFT_FRIGATE = "SH";
-        #rwr.AIRCRAFT_TANKER = "KC";
         rwr.AIRCRAFT_AWACS = "S";
+        #rwr.AIRCRAFT_TANKER = "KC";
+        rwr.AIRCRAFT_BLACKBIRD = "71";
         rwr.AIRCRAFT_TYPHOON = "EF";
         rwr.AIRCRAFT_SU15 = "SU";
         rwr.SCENARIO_OPPONENT = "28";
         rwr.AIRCRAFT_JAGUAR   = "JG";
+        rwr.AIRCRAFT_PHANTOM  = "F4";
+        rwr.AIRCRAFT_SKYHAWK  = "A4";
+        rwr.AIRCRAFT_TONKA	  = "TN";
         rwr.AIRCRAFT_UNKNOWN = "U";
         rwr.AIRCRAFT_AI = "AI";
         rwr.lookupType = {
@@ -183,7 +187,7 @@ RWRCanvas = {
                 "F-15C":                    rwr.AIRCRAFT_EAGLE,     
                 "F-15D":                    rwr.AIRCRAFT_EAGLE,    
                 "F-16":                     rwr.AIRCRAFT_FALCON,
-        #        "YF-16":                    rwr.AIRCRAFT_FALCON,      
+        #       "YF-16":                    rwr.AIRCRAFT_FALCON,      
                 "JA37-Viggen":              rwr.AIRCRAFT_VIGGEN,     
                 "AJ37-Viggen":              rwr.AIRCRAFT_VIGGEN,     
                 "AJS37-Viggen":             rwr.AIRCRAFT_VIGGEN,     
@@ -195,37 +199,45 @@ RWRCanvas = {
                 "missile_frigate":          rwr.AIRCRAFT_FRIGATE,
                 "frigate":                  rwr.AIRCRAFT_FRIGATE,
                 "fleet":                    rwr.AIRCRAFT_FRIGATE, 
-        #        "KC-137R":                  rwr.AIRCRAFT_TANKER,
-        #        "KC-137R-RT":               rwr.AIRCRAFT_TANKER,
-        #        "707-TT":                   rwr.AIRCRAFT_TANKER,
-        #        "KC-30A":                   rwr.AIRCRAFT_TANKER,
-        #        "Voyager-KC":               rwr.AIRCRAFT_TANKER,
-        #        "KC-10A":                   rwr.AIRCRAFT_TANKER,
-        #        "KC-10A-GE":                rwr.AIRCRAFT_TANKER,
+        #       "KC-137R":                  rwr.AIRCRAFT_TANKER,
+        #       "KC-137R-RT":               rwr.AIRCRAFT_TANKER,
+        #       "707-TT":                   rwr.AIRCRAFT_TANKER,
+        #       "KC-30A":                   rwr.AIRCRAFT_TANKER,
+        #       "Voyager-KC":               rwr.AIRCRAFT_TANKER,
+        #       "KC-10A":                   rwr.AIRCRAFT_TANKER,
+        #       "KC-10A-GE":                rwr.AIRCRAFT_TANKER,
                 "EC-137R":                  rwr.AIRCRAFT_AWACS,
                 "RC-137R":                  rwr.AIRCRAFT_AWACS,
                 "E-8R":                     rwr.AIRCRAFT_AWACS,
                 "EC-137D":                  rwr.AIRCRAFT_AWACS,
                 "gci":                      rwr.AIRCRAFT_AWACS,
+                "Blackbird-SR71A":			rwr.AIRCRAFT_BLACKBIRD,
+                "Blackbird-SR71A-BigTail":	rwr.AIRCRAFT_BLACKBIRD,
+                "Blackbird-SR71B":			rwr.AIRCRAFT_BLACKBIRD,
                 "AI":                       rwr.AIRCRAFT_AI,
-                #misc threatening aircraft:
+        #misc threatening aircraft:
                 "MiG-29":                   rwr.AIRCRAFT_MIG29,
                 "SU-27":                    rwr.AIRCRAFT_SU27,
-        #        "ch53e":"53",
-        #        "MQ-9":"9",
-        #        "QF-4E":"F4",
-        #        "B1-B":"B1",
                 "A-10":                     rwr.AIRCRAFT_WARTHOG,
                 "A-10-model":               rwr.AIRCRAFT_WARTHOG,
-        #        "truck":"TR",
                 "Typhoon":                  rwr.AIRCRAFT_TYPHOON,
                 "f16":                      rwr.AIRCRAFT_FALCON,
+                "F-16CJ":					rwr.AIRCRAFT_FALCON,
                 "Mig-28":                   rwr.SCENARIO_OPPONENT,
-        #        "Tu-95MR":"95",
-        #        "Tu-160-Blackjack":"BJ",
-        #        "AN-225-Mrija":"AN",
                 "Su-15":                    rwr.AIRCRAFT_SU15,
                 "Jaguar-GR3":               rwr.AIRCRAFT_JAGUAR,
+                "F-4S":						rwr.AIRCRAFT_PHANTOM,
+                "A-4K":						rwr.AIRCRAFT_SKYHAWK,
+                "Tornado-GR4a":				rwr.AIRCRAFT_TONKA,
+                "Tornado-IDS":				rwr.AIRCRAFT_TONKA,
+                "Tornado-F3":				rwr.AIRCRAFT_TONKA,
+        #		"ch53e":"53",
+        #       "MQ-9":"9",
+        #       "QF-4E":"F4",
+        #       "B1-B":"B1",
+        #       "Tu-95MR":"95",
+        #       "Tu-160-Blackjack":"BJ",
+        #       "AN-225-Mrija":"AN",
         };
         rwr.shownList = [];
         #
