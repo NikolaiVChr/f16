@@ -1226,6 +1226,7 @@ append(obj.total, obj.speed_curr);
          .setColor(0,0,0));
     
     for(var i = -18; i <= -1; i += 1) { # stipled lines
+      #var rad = me.extrapolate(-i*5,10,90,8,45)*D2R;#as per US manual pitch lines bend down from 8 to 45 degrees
       append(obj.total, obj.ladder_group.createChild("path")
                      .moveTo(minuso, -i * distance)
                      .horiz(minuss*0.2)
