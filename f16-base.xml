@@ -2281,11 +2281,12 @@ value. 18000=standard US transition altitude -->
             <mfd-l-con type="double">1.0</mfd-l-con>
             <mfd-r-brt type="double">1.0</mfd-r-brt>
             <mfd-r-con type="double">1.0</mfd-r-con>
-            <hud-velocity type="int">1</hud-velocity>
-            <hud-scales type="int">1</hud-scales>
-            <hud-fpm type="int">2</hud-fpm>
-            <cara type="bool">false</cara>
+            <hud-velocity type="int">1</hud-velocity><!-- 0=TRUE 1=CAL 2=GND -->
+            <hud-scales type="int">1</hud-scales><!-- 0=OFF 1=VAH 2=VV/VAH -->
+            <hud-fpm type="int">2</hud-fpm><!-- 0=OFF 1=FPM 2=ATT/FPM -->
+            <cara-on type="bool">false</cara-on><!-- if CARA radar altimeter is detecting ground (whether enabled or not) -->
             <hud-ded type="bool">false</hud-ded>
+            <hud-alt type="int">0</hud-alt><!-- 0=AUTO 1=BARO 2=RADAR -->
             <lock-flir type="double">0.05</lock-flir>
             <tgp-lock type="bool">false</tgp-lock>
             <gps-lat type="double">36.858</gps-lat>

@@ -206,6 +206,7 @@ var F16_HUD = {
                  standby                   : "instrumentation/radar/radar-standby",
                  elapsed                   : "sim/time/elapsed-sec",
                  cara                      : "f16/avionics/cara-on",
+                 altSwitch                 : "f16/avionics/hud-alt",
                  fpm                       : "f16/avionics/hud-fpm",
                  ded                       : "f16/avionics/hud-ded",
                  tgp_mounted               : "f16/stores/tgp-mounted",
@@ -447,26 +448,49 @@ var F16_HUD = {
 #            props.UpdateManager.FromHashValue("roll_rad", 1.0, func(roll_rad)
 #                                      {
 #                                      }),
-            props.UpdateManager.FromHashList(["altitude_agl_ft","cara"], 1.0, func(hdp)
+            props.UpdateManager.FromHashList(["altitude_agl_ft","cara","measured_altitude"], 1.0, func(hdp)
                                       {
                                           obj.agl=hdp.altitude_agl_ft;
-                                          if(hdp.cara) {
+                                          obj.altScaleMode = 0;#0=baro, 1=radar
+                                          if (hdp.altSwitch == 2) {
+                                                obj.altScaleMode = hdp.cara;
+                                          } elsif (hdp.altSwitch == 1) {
+                                                obj.altScaleMode = 0;
+                                          } else {
+                                                if (obj["altScaleModeOld"] != nil) {
+                                                    if (obj.altScaleModeOld) {
+                                                        obj.altScaleMode = obj.agl < 1500 and hdp.cara;
+                                                    } else {
+                                                        obj.altScaleMode = obj.agl < 1200 and hdp.cara;
+                                                    }
+                                                } else {
+                                                    obj.altScaleMode = obj.agl < 1300 and hdp.cara;
+                                                }
+                                          }
+                                          obj.altScaleModeOld = obj.altScaleMode;
+                                          
+                                          if(hdp.cara and !obj.altScaleMode) {
                                               if(obj.agl < 10) {
                                                 obj.ralt.setText(sprintf("R %05d ",obj.agl));
                                               } else {
                                                 obj.ralt.setText(sprintf("R %05d ",math.round(obj.agl,10)));
                                               }
                                               obj.ralt.show();
-                                              obj.raltFrame.hide();
                                           } else {
                                               obj.ralt.hide();
-                                              obj.raltFrame.hide();
                                           }
-                                      }),
-            props.UpdateManager.FromHashValue("measured_altitude", 1.0, func(measured_altitude)
-                                      {
-                                          obj.alt_range.setTranslation(0, measured_altitude * alt_range_factor);
-                                          obj.alt_curr.setText(sprintf("%5d",10*int(measured_altitude*0.1)));
+                                          
+                                          if (obj.altScaleMode) {
+                                            obj.alt_range.setTranslation(0, obj.agl * alt_range_factor);
+                                            obj.alt_curr.setText(sprintf("%5d",10*int(obj.agl*0.1)));
+                                            obj.alt_type.setText("R");
+                                            obj.radalt_box.hide();
+                                          } else {
+                                            obj.alt_range.setTranslation(0, hdp.measured_altitude * alt_range_factor);
+                                            obj.alt_curr.setText(sprintf("%5d",10*int(hdp.measured_altitude*0.1)));
+                                            obj.alt_type.setText("");
+                                            obj.radalt_box.show();
+                                          }
                                       }),
             props.UpdateManager.FromHashValue("HUD_SCA", 0.5, func(HUD_SCA)
                                       {
@@ -732,6 +756,7 @@ var F16_HUD = {
                 .horiz(41)
                 .vert(10)
                 .setStrokeLineWidth(1)
+                .hide()
                 .setColor(0,1,0);
               append(obj.total, obj.raltFrame);
         obj.boreSymbol = obj.svg.createChild("path")
@@ -755,13 +780,11 @@ var F16_HUD = {
                 .horiz(7)
                 .setStrokeLineWidth(1)
                 .setColor(1,0,0);
-                append(obj.total, obj.speed_indicator);
         obj.alti_indicator = obj.svg.createChild("path")
                 .moveTo(3+0.75*sx*0.695633,sy*0.245)
                 .horiz(7)
                 .setStrokeLineWidth(1)
                 .setColor(1,0,0);
-                append(obj.total, obj.alti_indicator);
         append(obj.scaling, obj.alti_indicator);
         append(obj.scaling, obj.speed_indicator);
         append(obj.total, obj.alti_indicator);
@@ -773,7 +796,15 @@ var F16_HUD = {
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(9, 1.1);
+        obj.alt_type = obj.svg.createChild("text")
+                .setText("R")
+                .setTranslation(4+0.75*sx*0.695633,sy*0.24)
+                .setAlignment("left-bottom")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(9, 1.1);
         append(obj.total, obj.speed_type);
+        append(obj.total, obj.alt_type);
         obj.speed_mask = obj.svg.createChild("image")
                 .setTranslation(-27+0.21*sx*0.695633,sy*0.245-6)
                 .set("z-index",10000)

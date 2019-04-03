@@ -610,6 +610,49 @@
 
 				<group>
 			    	<layout>hbox</layout>
+			    	
+			    	<group>
+						<layout>vbox</layout>
+						
+						<text>
+							<label>ALT</label>
+						</text>
+						
+						<group>
+							<layout>hbox</layout>
+						
+							<group>
+								<layout>vbox</layout>
+								<halign>left</halign>
+								
+								<text>
+									<label>RDR</label>
+								</text>
+								<text>
+									<label>BARO</label>
+								</text>
+								<text>
+									<label>AUTO</label>
+								</text>
+								
+							</group>
+							
+							<slider>
+								<halign>left</halign>
+								<property>/f16/avionics/hud-alt</property>
+								<min>0</min>
+								<max>2</max>
+								<step>1</step>
+								<live>true</live>
+								<vertical>true</vertical>
+								<binding>
+									<command>dialog-apply</command>
+								</binding>
+							</slider>
+							
+						</group>
+					
+					</group>
 
 					<group>
 						<layout>vbox</layout>
