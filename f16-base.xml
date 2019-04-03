@@ -1494,6 +1494,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
         <precipitation-control>
             <clip-distance type="double">3.5</clip-distance>
         </precipitation-control>
+        <star-magnitude-cutoff type="float">6.0</star-magnitude-cutoff>
     </environment>
     <limits>
         <max-gear-extension-speed>300</max-gear-extension-speed>
