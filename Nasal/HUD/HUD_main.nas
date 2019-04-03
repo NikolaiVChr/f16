@@ -365,7 +365,7 @@ var F16_HUD = {
                                             obj.heading_tape_pointer.hide();
                                         }
                                       }),
-            props.UpdateManager.FromHashList(["fpm","texUp","gear_down","VV_x","VV_y", "wow"], 0.01, func(hdp)
+            props.UpdateManager.FromHashList(["fpm","texUp","gear_down","VV_x","VV_y", "wow", "ded"], 0.01, func(hdp)
                                       {
                                         if (hdp.gear_down and !hdp.wow) {
                                           obj.bracket.setTranslation (obj.sx/2+hdp.VV_x * obj.texelPerDegreeX, obj.sy-obj.texels_up_into_hud+13 * obj.texelPerDegreeY);
@@ -374,7 +374,7 @@ var F16_HUD = {
                                           obj.roll_pointer.hide();
                                         } else {
                                           obj.bracket.hide();
-                                          if (hdp.fpm==2) {
+                                          if (hdp.fpm==2 and !hdp.ded) {
                                               obj.roll_lines.show();
                                               obj.roll_pointer.show();
                                           } else {
