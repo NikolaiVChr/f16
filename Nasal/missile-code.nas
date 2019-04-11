@@ -3739,7 +3739,7 @@ var AIM = {
 					    and me.checkForView()) {
 			return TRUE;
 		}
-		#printf("Lock failed %d %d %d %d %d %d",me.tagt.get_Speed()>15,me.rng < me.max_fire_range_nm,me.rng > me.min_fire_range_nm,me.FOV_check(me.total_horiz, me.total_elev, me.fcs_fov),me.rng < me.detect_range_curr_nm,me.checkForView());
+		me.printSearch("Lock failed %d %d %d %d %d %d %d %d %d",!(me.tagt.get_type() == AIR and me.tagt.get_Speed()<15),((me.guidance != "semi-radar" or me.is_painted(me.tagt) == TRUE) and (me.guidance !="laser" or me.is_laser_painted(me.tagt) == TRUE)),(me.guidance != "radiation" or me.is_radiating_aircraft(me.tagt) == TRUE),me.rng < me.max_fire_range_nm, me.rng > me.min_fire_range_nm, me.FOV_check(me.total_horiz, me.total_elev, me.fcs_fov),(me.rng < me.detect_range_curr_nm or (me.guidance != "radar" and me.guidance != "semi-radar" and me.guidance != "heat" and me.guidance != "vision" and me.guidance != "heat" and me.guidance != "radiation")),(me.guidance != "heat" or (me.all_aspect == TRUE or me.rear_aspect(geo.aircraft_position(), me.tagt) == TRUE)),me.checkForView());
 		return FALSE;
 	},
 
