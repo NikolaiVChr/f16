@@ -3,13 +3,14 @@
 <PropertyList>
  <sim>
   <model>
-   <livery>
-    <name type="string">USAF 53TEG, 422TES OT "Dark Theme"</name>
-    <texture>Liveries/Block50/91-0374.png</texture>
+   <livery> 
+    <name type="string">USAF 52FW, 22FS SP</name>
+    <texture>Liveries/Block50/91-0351.png</texture>
+    
     <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/Block50/OT-374.png</texture>
+    <texture>Liveries/Block50/SP-351.png</texture>
    </livery-logo>
 
    <livery-patch>
