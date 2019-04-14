@@ -2121,7 +2121,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double">180</max-report-distance><!-- real: max 120x240 meter area -->
+                <max-report-distance type="double">90</max-report-distance><!-- real: max 120x240 meter area, so 90 is average radius of that -->
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
