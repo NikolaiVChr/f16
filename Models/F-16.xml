@@ -1910,6 +1910,10 @@
       </equals>
       <equals>
         <property>payload/armament/station/id-2-set</property>
+        <value>2 x GBU-54</value>
+      </equals>
+      <equals>
+        <property>payload/armament/station/id-2-set</property>
         <value>3 x AGM-65</value>
       </equals>
       <equals>
@@ -1949,6 +1953,10 @@
       </equals>
       <equals>
         <property>payload/armament/station/id-3-set</property>
+        <value>2 x GBU-54</value>
+      </equals>
+      <equals>
+        <property>payload/armament/station/id-3-set</property>
         <value>2 x MK-83</value>
       </equals>
       <equals>
@@ -1984,6 +1992,10 @@
       </equals>
       <equals>
         <property>payload/armament/station/id-5-set</property>
+        <value>2 x GBU-54</value>
+      </equals>
+      <equals>
+        <property>payload/armament/station/id-5-set</property>
         <value>2 x MK-83</value>
       </equals>
       <equals>
@@ -2016,6 +2028,10 @@
       <equals>
         <property>payload/armament/station/id-6-set</property>
         <value>3 x MK-82</value>
+      </equals>
+      <equals>
+        <property>payload/armament/station/id-6-set</property>
+        <value>2 x GBU-54</value>
       </equals>
       <equals>
         <property>payload/armament/station/id-6-set</property>

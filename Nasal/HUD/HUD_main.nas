@@ -1457,7 +1457,7 @@ append(obj.total, obj.speed_curr);
     },
 
     CCRP: func(hdp) {
-        if (pylons.fcs != nil and pylons.fcs.getSelectedWeapon() != nil and (pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="MK-83" or pylons.fcs.getSelectedWeapon().type=="MK-84" or pylons.fcs.getSelectedWeapon().type=="GBU-12" or pylons.fcs.getSelectedWeapon().type=="GBU-31" or pylons.fcs.getSelectedWeapon().type=="GBU-24" or pylons.fcs.getSelectedWeapon().type=="CBU-87" or pylons.fcs.getSelectedWeapon().type=="AGM-154A") 
+        if (pylons.fcs != nil and pylons.fcs.getSelectedWeapon() != nil and (pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="MK-83" or pylons.fcs.getSelectedWeapon().type=="MK-84" or pylons.fcs.getSelectedWeapon().type=="GBU-12" or pylons.fcs.getSelectedWeapon().type=="GBU-31" or pylons.fcs.getSelectedWeapon().type=="GBU-54" or pylons.fcs.getSelectedWeapon().type=="GBU-24" or pylons.fcs.getSelectedWeapon().type=="CBU-87" or pylons.fcs.getSelectedWeapon().type=="AGM-154A") 
             and hdp.active_u != nil and hdp.master_arm ==1 and pylons.fcs.getSelectedWeapon().status == armament.MISSILE_LOCK) {
 
             if (pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="MK-83") {
@@ -1767,6 +1767,8 @@ append(obj.total, obj.speed_curr);
                         hdp.window9_txt = sprintf("%d AG88", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "GBU-31") {
                         hdp.window9_txt = sprintf("%d GB31", pylons.fcs.getAmmo());
+                    } elsif (hdp.weapon_selected == "GBU-54") {
+                        hdp.window9_txt = sprintf("%d GB54", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "GBU-24") {
                         hdp.window9_txt = sprintf("%d GB24", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-158") {

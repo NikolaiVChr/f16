@@ -46,6 +46,7 @@ var pylonSets = {
     b2: {name: "1 x AGM-88", content: ["AGM-88"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     b3: {name: "1 x AGM-158", content: ["AGM-158"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     c1: {name: "1 x AGM-154A", content: ["AGM-154A"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
+    c2: {name: "2 x GBU-54", content: ["GBU-54","GBU-54"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
     c3: {name: "1 x GBU-31", content: ["GBU-31"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     c4: {name: "1 x GBU-24", content: ["GBU-24"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     i:  {name: "3 x GBU-12", content: ["GBU-12","GBU-12", "GBU-12"], fireOrder: [0,1,2], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0, category: 2},
@@ -91,9 +92,9 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 	var pylon120set = [pylonSets.empty, pylonSets.aim9, pylonSets.aim120, pylonSets.k];
 	var wingtipSet1  = [pylonSets.k,pylonSets.k2,     pylonSets.aim9WT, pylonSets.aim120WT,pylonSets.smokeRL,pylonSets.smokeGL,pylonSets.smokeBL,pylonSets.smokeWL];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
 	var wingtipSet9  = [pylonSets.k,pylonSets.k2,     pylonSets.aim9WT, pylonSets.aim120WT,pylonSets.smokeRR,pylonSets.smokeGR,pylonSets.smokeBR,pylonSets.smokeWR];# wingtips are normally not empty, so AN-T-17 dummy aim9 is loaded instead.
-	var pylon9mix   = [pylonSets.empty, pylonSets.aim9, pylonSets.i, pylonSets.aim120, pylonSets.aim7, pylonSets.agm65x3, pylonSets.b, pylonSets.c, pylonSets.b2, pylonSets.c1, pylonSets.c3, pylonSets.f3, pylonSets.c4, pylonSets.d, pylonSets.d1, pylonSets.c5, pylonSets.b3];
-	var pylon12setL = [pylonSets.empty, pylonSets.j, pylonSets.fuel37L, pylonSets.fuel60L, pylonSets.c, pylonSets.c1, pylonSets.c3, pylonSets.c4, pylonSets.b2, pylonSets.d, pylonSets.d1, pylonSets.c5];
-	var pylon12setR = [pylonSets.empty, pylonSets.j, pylonSets.fuel37R, pylonSets.fuel60R, pylonSets.c, pylonSets.c1, pylonSets.c3, pylonSets.c4, pylonSets.b2, pylonSets.d, pylonSets.d1, pylonSets.c5];
+	var pylon9mix   = [pylonSets.empty, pylonSets.aim9, pylonSets.i, pylonSets.aim120, pylonSets.aim7, pylonSets.agm65x3, pylonSets.b, pylonSets.c, pylonSets.b2, pylonSets.c1, pylonSets.c2, pylonSets.c3, pylonSets.f3, pylonSets.c4, pylonSets.d, pylonSets.d1, pylonSets.c5, pylonSets.b3];
+	var pylon12setL = [pylonSets.empty, pylonSets.j, pylonSets.fuel37L, pylonSets.fuel60L, pylonSets.c, pylonSets.c1, pylonSets.c2, pylonSets.c3, pylonSets.c4, pylonSets.b2, pylonSets.d, pylonSets.d1, pylonSets.c5];
+	var pylon12setR = [pylonSets.empty, pylonSets.j, pylonSets.fuel37R, pylonSets.fuel60R, pylonSets.c, pylonSets.c1, pylonSets.c2, pylonSets.c3, pylonSets.c4, pylonSets.b2, pylonSets.d, pylonSets.d1, pylonSets.c5];
 
 	#HTS can be carried on both left and right side.
 	#LITENING only on right	
@@ -371,6 +372,46 @@ var a2g_lgb2 = func {
         pylon5.loadSet(pylonSets.fuel30);
         pylon6.loadSet(pylonSets.j);
         pylon7.loadSet(pylonSets.c4);
+        pylon8.loadSet(pylonSets.aim120);
+        pylon9.loadSet(pylonSets.aim9WT);
+        pylon10.loadSet(pylonSets.podTgp2);
+        pylon11.loadSet(pylonSets.podNav);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# A/G GPS Strike 1 (GBU-54)
+var a2g_gps1 = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim9WT);
+        pylon2.loadSet(pylonSets.aim120);
+        pylon3.loadSet(pylonSets.c2);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.c2);
+        pylon8.loadSet(pylonSets.aim120);
+        pylon9.loadSet(pylonSets.aim9WT);
+        pylon10.loadSet(pylonSets.podTgp1);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# A/G GPS Strike 2 (GBU-54, GBU-31)
+var a2g_gps2 = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim9WT);
+        pylon2.loadSet(pylonSets.aim120);
+        pylon3.loadSet(pylonSets.c2);
+        pylon4.loadSet(pylonSets.c3);
+        pylon5.loadSet(pylonSets.fuel30);
+        pylon6.loadSet(pylonSets.c3);
+        pylon7.loadSet(pylonSets.c2);
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim9WT);
         pylon10.loadSet(pylonSets.podTgp1);

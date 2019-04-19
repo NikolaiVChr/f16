@@ -1,0 +1,225 @@
+<?xml version="1.0"?>
+
+
+
+<PropertyList>
+
+	<name>GBU-54</name>
+	<path>GBU-54.ac</path>
+
+	<effect>
+	      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+	      <parameters>
+	          <metallic type="float">0.80</metallic>
+	          <ambient-factor type="float">0.0</ambient-factor>
+	          <rain-enabled type="int">0</rain-enabled>
+	          <ambient-correction type="float">0.00</ambient-correction>
+	          <reflection-enabled type="int">0</reflection-enabled>
+	      </parameters>
+	  		<object-name>GBU-54</object-name>
+      		<object-name>LJDAM_belly</object-name>
+      		<object-name>LJDAM_tip</object-name>
+      		<object-name>LJDAM_seeker</object-name>
+      		<object-name>LJDAM_wings</object-name>
+      		<object-name>LJDAM_body</object-name>
+      		<object-name>LJDAM_top</object-name>
+	  </effect>
+
+	<animation>
+		<type>select</type>
+			<object-name>GBU-54</object-name>
+      		<object-name>LJDAM_belly</object-name>
+      		<object-name>LJDAM_tip</object-name>
+      		<object-name>LJDAM_seeker</object-name>
+      		<object-name>LJDAM_wings</object-name>
+      		<object-name>LJDAM_body</object-name>
+      		<object-name>LJDAM_top</object-name>
+		<condition>
+			<property>payload/armament/gbu-54/flags/msl-id-501</property>
+		</condition>
+	</animation>
+
+	 <particlesystem>
+		   <name>explosion</name>
+		   <texture>../smoke.png</texture>
+
+		   <emissive type="bool">true</emissive>
+		   <lighting type="bool">false</lighting>
+
+		   <condition>
+		         <property>payload/armament/gbu-54/flags/explode-id-501</property>
+		   </condition>
+
+		   <attach>world</attach>
+
+		   <placer>
+		     <type>point</type> 
+		   </placer>
+
+		   <shooter>
+		     <theta-min-deg>-180</theta-min-deg>
+		     <theta-max-deg>180</theta-max-deg>
+		     <phi-min-deg>-180</phi-min-deg>
+		     <phi-max-deg>180</phi-max-deg>
+		     <speed-mps>
+		       <value>500</value>
+		       <spread>80</spread>
+		     </speed-mps>
+		     <rotation-speed>
+		       <x-min-deg-sec>0</x-min-deg-sec>
+		       <y-min-deg-sec>0</y-min-deg-sec>
+		       <z-min-deg-sec>0</z-min-deg-sec>
+		       <x-max-deg-sec>0</x-max-deg-sec>
+		       <y-max-deg-sec>0</y-max-deg-sec>
+		       <z-max-deg-sec>0</z-max-deg-sec>
+		     </rotation-speed>
+		   </shooter>
+
+		   <counter>
+		     <particles-per-sec>
+		       <value>30</value>
+		       <spread>10</spread>
+		     </particles-per-sec>
+		   </counter>
+		      
+		   <align>billboard</align>
+
+		   <particle>
+		     <start>
+		       <color>
+		         <red><value>   1.0 </value></red>
+		         <green><value> 1.0 </value></green>
+		         <blue><value>  0.4 </value></blue>
+		         <alpha><value> 1 </value></alpha>
+		       </color>
+		       <size>
+		         <value>4</value>
+		       </size>
+		     </start>
+
+		     <end>
+		       <color>
+		         <red><value>   0.8 </value></red>
+		         <green><value> 0.5 </value></green>
+		         <blue><value>  0.2 </value></blue>
+		         <alpha><value> 0.1 </value></alpha>
+		       </color>
+		       <size>
+		         <value>200</value>
+		       </size>
+		     </end>
+
+		     <life-sec>
+		       <value>0.5</value>
+		     </life-sec>
+		        
+		     <mass-kg>  5 </mass-kg>
+		     <radius-m> 0.5 </radius-m>
+		   </particle>
+
+		   <program>
+		     <fluid>               air  </fluid>
+		     <gravity type="bool"> true </gravity>
+		     <wind typ="bool">     true </wind>
+		   </program>
+
+		 </particlesystem>
+
+		<particlesystem>
+		   <name>explosion-smoke</name>
+		   <texture>../smoke.png</texture>
+
+		   <emissive type="bool">false</emissive>
+		   <lighting type="bool">false</lighting>
+
+		   <condition>
+		         <property>payload/armament/gbu-54/flags/explode-smoke-id-501</property>
+		   </condition>
+
+		   <attach>world</attach>
+
+		   <placer>
+		     <type>point</type> 
+		   </placer>
+
+		   <shooter>
+		     <theta-min-deg>-180</theta-min-deg>
+		     <theta-max-deg>180</theta-max-deg>
+		     <phi-min-deg>-180</phi-min-deg>
+		     <phi-max-deg>180</phi-max-deg>
+		     <speed-mps>
+		       <value>500</value>
+		       <spread>60</spread>
+		     </speed-mps>
+		     <rotation-speed>
+		       <x-min-deg-sec>0</x-min-deg-sec>
+		       <y-min-deg-sec>0</y-min-deg-sec>
+		       <z-min-deg-sec>0</z-min-deg-sec>
+		       <x-max-deg-sec>0</x-max-deg-sec>
+		       <y-max-deg-sec>0</y-max-deg-sec>
+		       <z-max-deg-sec>0</z-max-deg-sec>
+		     </rotation-speed>
+		   </shooter>
+
+		   <counter>
+		     <particles-per-sec>
+		       <value>50</value>
+		       <spread>10</spread>
+		     </particles-per-sec>
+		   </counter>
+		      
+		   <align>billboard</align>
+
+		   <particle>
+		     <start>
+		       <color>
+		         <red><value>   0.3 </value></red>
+		         <green><value> 0.3 </value></green>
+		         <blue><value>  0.25 </value></blue>
+		         <alpha><value> 0.5 </value></alpha>
+		       </color>
+		       <size>
+		         <value>20</value>
+		       </size>
+		     </start>
+
+		     <end>
+		       <color>
+		         <red><value>   0.4 </value></red>
+		         <green><value> 0.4 </value></green>
+		         <blue><value>  0.4 </value></blue>
+		         <alpha><value> 0.04 </value></alpha>
+		       </color>
+		       <size>
+		         <value>240</value>
+		       </size>
+		     </end>
+
+		     <life-sec>
+		       <value>40</value>
+		     </life-sec>
+		        
+		     <mass-kg>  5 </mass-kg>
+		     <radius-m> 0.5 </radius-m>
+		   </particle>
+
+		   <program>
+		     <fluid>               air  </fluid>
+		     <gravity type="bool"> true </gravity>
+		     <wind typ="bool">     true </wind>
+		   </program>
+
+		 </particlesystem>
+
+	<animation>
+	  	<object-name>GBU-54</object-name>
+      	<object-name>LJDAM_belly</object-name>
+      	<object-name>LJDAM_tip</object-name>
+      	<object-name>LJDAM_seeker</object-name>
+      	<object-name>LJDAM_wings</object-name>
+      	<object-name>LJDAM_body</object-name>
+      	<object-name>LJDAM_top</object-name>
+  		<enable-hot type="bool">false</enable-hot>
+ 	</animation>
+
+</PropertyList>
