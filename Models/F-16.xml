@@ -318,6 +318,7 @@
       <object-name>RWStation3</object-name>
       <object-name>LWStation3</object-name>
       <object-name>ArresterHook</object-name>
+      <object-name>Link16Antennas</object-name>
  </effect>
 
  <effect>
