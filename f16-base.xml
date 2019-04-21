@@ -1252,7 +1252,6 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
         <jsbsim>
             <autoflight>
                 <pitch>
-                    <altitude-2-sec-ahead type="double">0</altitude-2-sec-ahead> <!-- autoflight-rules.xml -->
                     <d-gain-att type="double">0</d-gain-att> <!-- Set in autoflight.xml -->
                     <i-gain-att type="double">-35</i-gain-att>
                     <master-pid type="double">0</master-pid>
