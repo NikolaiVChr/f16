@@ -277,7 +277,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
                 contact.unique = rand();
                 armament.contactPoint = contact;
             } else {
-                armament.contactPoint = fc.ContactTGP.new("TGP-Spot",terrain,0);
+                armament.contactPoint = fc.ContactTGP.new("TGP-Spot",terrain,1);
             }
             #flir_updater.click_coord_cam = terrain;
             #setprop("/aircraft/flir/target/auto-track", 1);

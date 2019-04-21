@@ -1501,6 +1501,20 @@
 				<max>1</max>
 			</volume>
 		</jdam-release>
+		<ljdam-release>
+			<name>ljdam-release</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/gbu_release.wav</path>
+			<condition>
+				<property>payload/armament/gbu-54/sound-fire-on-off</property>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>1</factor>
+				<max>1</max>
+			</volume>
+		</ljdam-release>
 		<jsow-release>
 			<name>jsow-release</name>
 			<mode>once</mode>
@@ -1564,6 +1578,20 @@
 			<path>Aircraft/f16/Sounds/gbu_release.wav</path>
 			<condition>
 				<property>payload/armament/mk-84/sound-fire-on-off</property>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>1</factor>
+				<max>1</max>
+			</volume>
+		</bomb-release>
+		<bomb-release>
+			<name>bomb-release4</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/gbu_release.wav</path>
+			<condition>
+				<property>payload/armament/cbu-87/sound-fire-on-off</property>
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>

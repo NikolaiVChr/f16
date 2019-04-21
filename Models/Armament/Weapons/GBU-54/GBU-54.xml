@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+<!--
+Used for non fired GBU-54
+-->
+
+  <path>GBU-54.ac</path>
+
+  <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.0</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <object-name>GBU-54</object-name>
+      <object-name>LJDAM_belly</object-name>
+      <object-name>LJDAM_tip</object-name>
+      <object-name>LJDAM_seeker</object-name>
+      <object-name>LJDAM_wings</object-name>
+      <object-name>LJDAM_body</object-name>
+      <object-name>LJDAM_top</object-name>
+  </effect>
+
+</PropertyList>

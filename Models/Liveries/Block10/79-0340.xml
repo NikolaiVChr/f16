@@ -6,11 +6,16 @@
    <livery>
     <name type="string">USAF 31FW, 31 MOS AV</name>
     <texture>Liveries/Block10/79-0340.png</texture>
-    <owner type="string">IAF</owner>
+    <owner type="string">USAF</owner>
    </livery>
+
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>
    </livery-logo>
+
+  <livery-patch>
+      <texture>Liveries/Block10/patch.31mos.png</texture>
+  </livery-patch>
   </model>
  </sim>
 </PropertyList>

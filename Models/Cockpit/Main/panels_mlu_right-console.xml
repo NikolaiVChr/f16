@@ -148,7 +148,7 @@
     <animation>
         <type>knob</type>
         <object-name>altrad-switch</object-name>
-        <property>f16/avionics/hud-cara</property>
+        <property>f16/avionics/hud-alt</property>
         <factor>45</factor>
         <offset-deg>-45.0</offset-deg>
         <drag-direction>vertical</drag-direction>
@@ -161,7 +161,7 @@
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/hud-cara</property>
+                <property>f16/avionics/hud-alt</property>
                 <factor>1</factor>
                 <min>0</min>
                 <max>2</max>

@@ -4,9 +4,9 @@
     <sim>
         <model> 
             <livery>
-                <name type="string">USAF Raider1 (Fictional)</name>
+                <name type="string">Empire 181IFW, "Raider1" (Fictional)</name>
                 <texture type="string">Liveries/Block60/empire.png</texture>
-                <owner type="string">USAF</owner>
+                <owner type="string">Empire</owner>
             </livery>
             <livery-logo>
                 <texture type="string">Liveries/yf/yf16-transp.png</texture>
