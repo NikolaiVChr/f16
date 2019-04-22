@@ -291,7 +291,7 @@
 
  <animation>
   <type>select</type>
-  <object-name>Station3_GBU-54</object-name>
+  <object-name>Station3_GBU54</object-name>
   <condition>
     <equals>
         <property>payload/armament/station/id-2-set</property>
@@ -883,7 +883,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
 
  <animation>
   <type>select</type>
-  <object-name>Station7_GBU-54</object-name>
+  <object-name>Station7_GBU54</object-name>
   <condition>
     <equals>
         <property>payload/armament/station/id-6-set</property>
