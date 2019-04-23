@@ -2033,6 +2033,25 @@
 				<max>0.40</max>
 			</volume>
 		</brake>
+		<air-brakes>
+            <name>air-brakes</name>
+            <mode>looped</mode>
+            <condition>
+                <greater-than>
+                    <property>surface-positions/speedbrake-pos-norm</property>
+                    <value>0</value>
+                </greater-than>
+            </condition>
+            <path>Aircraft/f16/Sounds/air-brakes.wav</path>
+            <volume>
+                <property>velocities/airspeed-kt</property>
+                <factor>0.001</factor>
+            </volume>
+            <volume>
+                <property>surface-positions/speedbrake-pos-norm</property>
+                <factor>1.3</factor>
+            </volume>
+        </air-brakes>
 		<gamma>
 			<name>gamma</name>
 			<path>Aircraft/f16/Sounds/missile.wav</path>
