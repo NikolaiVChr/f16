@@ -184,7 +184,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_G91	  = "91";
         #rwr.AIRCRAFT_TANKER = "KC";
         rwr.AIRCRAFT_UNKNOWN = "U";
-        rwr.AIRCRAFT_AI = "AI";
+        rwr.ASSET_AI = "AI";
         rwr.lookupType = {
                 "f-14b":                    rwr.AIRCRAFT_TOMCAT,     
                 "F-14D":                    rwr.AIRCRAFT_TOMCAT,    
@@ -218,7 +218,7 @@ RWRCanvas = {
         #       "Voyager-KC":               rwr.AIRCRAFT_TANKER,
         #       "KC-10A":                   rwr.AIRCRAFT_TANKER,
         #       "KC-10A-GE":                rwr.AIRCRAFT_TANKER,
-                "AI":                       rwr.AIRCRAFT_AI,
+                "AI":                       rwr.ASSET_AI,
         #misc threatening aircraft:
                 "MiG-29":                   rwr.AIRCRAFT_MIG29,
                 "SU-27":                    rwr.AIRCRAFT_SU27,
@@ -309,7 +309,7 @@ RWRCanvas = {
             #print("show "~me.i~" "~me.typ~" "~contact[0].get_model()~"  "~contact[1]);
             me.threat = me.contact[1];#print(me.threat);
             
-            if (me.threat > 0.5 and me.typ != me.AIRCRAFT_UNKNOWN and me.typ != me.AIRCRAFT_AI) {
+            if (me.threat > 0.5 and me.typ != me.AIRCRAFT_UNKNOWN and me.typ != me.ASSET_AI) {
                 me.threat = me.inner_radius;# inner circle
             } elsif (me.threat > 0) {
                 me.threat = me.outer_radius;# outer circle
@@ -322,12 +322,12 @@ RWRCanvas = {
             me.texts[me.i].setTranslation(me.x,me.y);
             me.texts[me.i].setText(me.typ);
             me.texts[me.i].show();
-            if (me.prio == 0 and me.typ != me.AIRCRAFT_AI and me.typ != me.AIRCRAFT_UNKNOWN) {# 
+            if (me.prio == 0 and me.typ != me.ASSET_AI and me.typ != me.AIRCRAFT_UNKNOWN) {# 
                 me.symbol_priority.setTranslation(me.x,me.y);
                 me.symbol_priority.show();
                 me.prio = 1;
             }
-            if (!(me.typ == me.AIRCRAFT_BUK or me.typ == me.AIRCRAFT_FRIGATE) and me.contact[0].get_Speed()>60) {
+            if (!(me.typ == me.ASSET_BUK or me.typ == me.ASSET_FRIGATE) and me.contact[0].get_Speed()>60) {
                 #air-borne
                 me.symbol_hat[me.i].setTranslation(me.x,me.y);
                 me.symbol_hat[me.i].show();
