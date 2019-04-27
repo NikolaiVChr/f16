@@ -340,9 +340,9 @@
   <name>LExtTank</name>
   <path>Aircraft/f16/Models/Armament/External-stores/Fueltanks/370G.xml</path>
   <offsets>
-   <x-m>-0.50</x-m>
-   <y-m>-1.65</y-m>
-   <z-m>-0.55</z-m>
+   <x-m>-0.785</x-m>
+   <y-m>-1.63</y-m>
+   <z-m>-0.61</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
@@ -489,7 +489,7 @@
   <offsets>
    <x-m>0</x-m>
    <y-m>0</y-m>
-   <z-m>-1.15</z-m>
+   <z-m>-1.18</z-m>
    <pitch-deg>-2</pitch-deg>
   </offsets>
  </model>
@@ -526,9 +526,9 @@
   <name>RExtTank</name>
   <path>Aircraft/f16/Models/Armament/External-stores/Fueltanks/370G.xml</path>
   <offsets>
-   <x-m>-0.50</x-m>
-   <y-m>1.65</y-m>
-   <z-m>-0.55</z-m>
+   <x-m>-0.785</x-m>
+   <y-m>1.63</y-m>
+   <z-m>-0.61</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>

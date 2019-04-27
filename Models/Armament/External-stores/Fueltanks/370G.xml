@@ -12,6 +12,7 @@
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
       <object-name>fuel_tank370</object-name>
+      <object-name>fillercap-370</object-name>
   </effect>
 
  </PropertyList>

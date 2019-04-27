@@ -12,6 +12,8 @@
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
       <object-name>fuel_tank300</object-name>
+      <object-name>fillercap-300</object-name>
+      <object-name>pylon</object-name>
   </effect>
 
  </PropertyList>
