@@ -351,9 +351,9 @@
   <name>LExtTank6</name>
   <path>Aircraft/f16/Models/Armament/External-stores/Fueltanks/600G.xml</path>
   <offsets>
-   <x-m>-0.50</x-m>
-   <y-m>-1.65</y-m>
-   <z-m>-0.65</z-m>
+   <x-m>-0.62</x-m>
+   <y-m>-1.63</y-m>
+   <z-m>-0.725</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
@@ -487,9 +487,9 @@
   <name>VentralTank</name>
   <path>Aircraft/f16/Models/Armament/External-stores/Fueltanks/300G.xml</path>
   <offsets>
-   <x-m>0</x-m>
+   <x-m>-0.055</x-m>
    <y-m>0</y-m>
-   <z-m>-1.18</z-m>
+   <z-m>-1.21</z-m>
    <pitch-deg>-2</pitch-deg>
   </offsets>
  </model>
@@ -537,9 +537,9 @@
   <name>RExtTank6</name>
   <path>Aircraft/f16/Models/Armament/External-stores/Fueltanks/600G.xml</path>
   <offsets>
-   <x-m>-0.50</x-m>
-   <y-m>1.65</y-m>
-   <z-m>-0.65</z-m>
+   <x-m>-0.62</x-m>
+   <y-m>1.63</y-m>
+   <z-m>-0.725</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
