@@ -1762,9 +1762,7 @@ append(obj.total, obj.speed_curr);
                             me.eegsMe.pitch = getprop("orientation/pitch-deg");
                             me.eegsMe.vel = getprop("velocities/uBody-fps")+2041;#not sure if AIBallistic add aircraft speed to shell speed..it should
                             
-                            
-                            me.eegsMe.t = 0.0;
-                            
+                                                        
                             me.eegsMe.rs = armament.AIM.rho_sndspeed(me.eegsMe.alti*M2FT);#simplified
                             me.eegsMe.rho = me.eegsMe.rs[0];
                             
@@ -1844,21 +1842,20 @@ append(obj.total, obj.speed_curr);
                                 for (var i = 0;i<funnelParts;i+=1) {
                                     var radi = math.atan2(wingspanAverage*0.5,shellPosDist[i]);
                                     radi = radi*R2D*me.texelPerDegreeX;
-                                    var dx = -radi;
 
-                                    me.eegsRightX[i] = shellPosX[i] + dx;
+                                    me.eegsRightX[i] = shellPosX[i] - radi;
                                     me.eegsRightY[i] = shellPosY[i];
-                                    me.eegsLeftX[i] = shellPosX[i] - dx;
+                                    me.eegsLeftX[i] = shellPosX[i] + radi;
                                     me.eegsLeftY[i] = shellPosY[i];
                                 }
-                                var stopIdx = funnelParts-1;
+                                var lastIndex = funnelParts-1;
                                 me.eegsGroup.removeAllChildren();
-                                for (i = stopIdx; i > 0; i-=1) {
+                                for (i = lastIndex; i > 0; i-=1) {
                                     me.eegsGroup.createChild("path")
                                         .moveTo(me.eegsRightX[i], me.eegsRightY[i])
-                                        .lineTo(me.eegsRightX[i - 1], me.eegsRightY[i - 1])
+                                        .lineTo(me.eegsRightX[i-1], me.eegsRightY[i-1])
                                         .moveTo(me.eegsLeftX[i], me.eegsLeftY[i])
-                                        .lineTo(me.eegsLeftX[i - 1], me.eegsLeftY[i - 1])
+                                        .lineTo(me.eegsLeftX[i-1], me.eegsLeftY[i-1])
                                         .setStrokeLineWidth(1)
                                         .setColor(me.color);
                                 }
