@@ -1747,7 +1747,9 @@ append(obj.total, obj.speed_curr);
                         
                         var st = systime();
                         me.eegsMe.dt = st-me.lastTime;
-                        if (me.eegsMe.dt > desiredMs*0.001) {
+                        if (me.eegsMe.dt > 1) {
+                            me.lastTime = st;
+                        } elsif (me.eegsMe.dt > desiredMs*0.001) {
                             #printf("dt %.2f",me.eegsMe.dt);
                             me.lastTime = st;
                             
@@ -1798,7 +1800,7 @@ append(obj.total, obj.speed_curr);
                                 me.eegsMe.speed_down_fps += 9.81 *M2FT *me.eegsMe.dt;
                                 
                                 
-                                
+                                 
                                 me.eegsMe.altC -= (me.eegsMe.speed_down_fps*me.eegsMe.dt)*FT2M;
                                 
                                 
@@ -1811,16 +1813,19 @@ append(obj.total, obj.speed_curr);
                                 #printf("pitch=%.1f  vel=%d  vdown=%.1f",me.eegsMe.pitch, me.eegsMe.vel, me.eegsMe.speed_down_fps, );
                                 me.eegsMe.eegsPos.apply_course_distance(me.eegsMe.hdg, me.eegsMe.dist);
                                 me.eegsMe.eegsPos.set_alt(me.eegsMe.altC);
+                                #print(me.eegsMe.speed_down_fps*me.eegsMe.speed_down_fps+me.eegsMe.speed_horizontal_fps*me.eegsMe.speed_horizontal_fps);
+                                #print(me.eegsMe.speed_down_fps*me.eegsMe.speed_down_fps);
+                                #print(me.eegsMe.speed_horizontal_fps*me.eegsMe.speed_horizontal_fps);
                                 me.eegsMe.vel = math.sqrt(me.eegsMe.speed_down_fps*me.eegsMe.speed_down_fps+me.eegsMe.speed_horizontal_fps*me.eegsMe.speed_horizontal_fps);
                                 me.eegsMe.pitch = math.atan2(-me.eegsMe.speed_down_fps,me.eegsMe.speed_horizontal_fps)*R2D;
                                 
-                                var old = me.gunPos[j];
-                                me.gunPos[j] = [geo.Coord.new(me.eegsMe.eegsPos)];
-                                for (var k = 0;k<j;k+=1) {
-                                    append(me.gunPos[j], old[k]);
-                                }                            
+                                #if (count == 4) {
+                                    var old = me.gunPos[j];
+                                    me.gunPos[j] = [geo.Coord.new(me.eegsMe.eegsPos)];
+                                    for (var k = 0;k<j;k+=1) {
+                                        append(me.gunPos[j], old[k]);
+                                    }                                
                                 
-                                #if (1 or count == 4) {
                                     var pos = me.gunPos[j][j];
                                     if (pos == nil) {
                                         allow = 0;
