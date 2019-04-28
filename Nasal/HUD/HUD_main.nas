@@ -1727,7 +1727,7 @@ append(obj.total, obj.speed_curr);
             me.circle100.hide();
             me.circle120.hide();
             me.circle65.hide();
-            me.eegsGroup.hide();
+            var eegsShow = 0;
             if(hdp.master_arm and pylons.fcs != nil)
             {
                 hdp.weapon_selected = pylons.fcs.selectedType;
@@ -1742,20 +1742,23 @@ append(obj.total, obj.speed_curr);
                         #EEGS#
                         ###### 
                         #note: this stuff is expensive like hell to compute, but..lets do it anyway.
-                        me.eegsGroup.show();
-                        var desiredMs = 200;#ms
                         
+                        var desiredMs = 200;#ms
+                        var funnelParts = 7;
                         var st = systime();
                         me.eegsMe.dt = st-me.lastTime;
+                        eegsShow = 1;
                         if (me.eegsMe.dt > 1) {
                             me.lastTime = st;
+                            me.gunPos   = [[nil],[nil,nil],[nil,nil,nil],[nil,nil,nil,nil],[nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil]];
+                            me.eegsGroup.removeAllChildren();
                         } elsif (me.eegsMe.dt > desiredMs*0.001) {
                             #printf("dt %.2f",me.eegsMe.dt);
                             me.lastTime = st;
                             
                             
                             var wingspanAverage = 35;#ft
-                            var funnelParts = 7;
+                            
                             
                             
                             #calc shell positions
@@ -1863,11 +1866,8 @@ append(obj.total, obj.speed_curr);
                                         .lineTo(me.eegsLeftX[i-1], me.eegsLeftY[i-1])
                                         .setStrokeLineWidth(1)
                                         .setColor(me.color);
-                                }
-                            } else {
-                                me.eegsGroup.hide();
+                                }                                
                             }
-                            me.eegsGroup.update();
                         }
                     } elsif (hdp.weapon_selected == "AIM-9") {
                         hdp.window9_txt = sprintf("%d SRM", pylons.fcs.getAmmo());#short range missile
@@ -2008,6 +2008,8 @@ append(obj.total, obj.speed_curr);
                 }
                 hdp.window3_txt = slant;
             }
+            me.eegsGroup.setVisible(eegsShow);
+            #if(eegsShow) me.eegsGroup.update();
 
             if (hdp.total_fuel_lbs < hdp.bingo and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
               hdp.window11_txt = "FUEL";
