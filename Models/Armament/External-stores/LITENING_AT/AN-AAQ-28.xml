@@ -3,10 +3,10 @@
 <PropertyList>
   <path>Aircraft/f16/Models/Armament/External-stores/LITENING_AT/AN-AAQ-28.ac</path>
 
-  <!--effect>  
+  <effect>  
     <inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  
     <object-name>ANAAQ-28_Lens</object-name>
-  </effect-->
+  </effect>
 
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
@@ -32,7 +32,7 @@
   <type>rotate</type>
   <object-name>ANAAQ-28_Ball</object-name>
   <object-name>ANAAQ-28_Cams</object-name>
-  <!--object-name>ANAAQ-28_Lens</object-name-->
+  <object-name>ANAAQ-28_Lens</object-name>
   <object-name>ANAAQ-28_Turnable</object-name>
   <object-name>ANAAQ-28_Tube-inside</object-name>
   <property>aircraft/flir/swivel/roll-deg</property>
@@ -55,7 +55,7 @@
   <type>rotate</type>
   <object-name>ANAAQ-28_Ball</object-name>
   <object-name>ANAAQ-28_Cams</object-name>
-  <!--object-name>ANAAQ-28_Lens</object-name-->
+  <object-name>ANAAQ-28_Lens</object-name>
   <property>aircraft/flir/swivel/pitch-deg</property>
   <factor>-1.0</factor>
   <offset-deg>0</offset-deg>
