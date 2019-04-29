@@ -1756,8 +1756,29 @@ append(obj.total, obj.speed_curr);
                             #printf("dt %.2f",me.eegsMe.dt);
                             me.lastTime = st;
                             
+                            me.eegsMe.allow = 1;
+                            me.eegsMe.shellPosX    = [0,0,0,0,0,0,0];
+                            me.eegsMe.shellPosY    = [0,0,0,0,0,0,0];
+                            me.eegsMe.shellPosDist = [0,0,0,0,0,0,0];
                             
-                            var wingspanAverage = 35;#ft
+                            for (var l = 0;l < funnelParts;l+=1) {
+                                var pos = me.gunPos[l][l];
+                                if (pos == nil) {
+                                    me.eegsMe.allow = 0;
+                                } else {
+                                    me.eegsMe.u_dev_rad = (90-awg_9.deviation_normdeg(hdp.heading, me.eegsMe.ac.course_to(pos)))  * D2R;
+                                    me.eegsMe.u_elev_rad = (90-awg_9.deviation_normdeg(hdp.pitch, math.atan2(pos.alt()-me.eegsMe.alti,pos.distance_to(me.eegsMe.ac))*R2D))  * D2R;
+                                    me.eegsMe.devs = me.develev_to_devroll(hdp, me.eegsMe.u_dev_rad, me.eegsMe.u_elev_rad);
+                                    me.eegsMe.combined_dev_deg = me.eegsMe.devs[0];
+                                    me.eegsMe.combined_dev_length =  me.eegsMe.devs[1];
+                                    me.eegsMe.xcS = me.sx/2                     + (me.pixelPerMeterX * me.eegsMe.combined_dev_length * math.sin(me.eegsMe.combined_dev_deg*D2R));
+                                    me.eegsMe.ycS = me.sy-me.texels_up_into_hud - (me.pixelPerMeterY * me.eegsMe.combined_dev_length * math.cos(me.eegsMe.combined_dev_deg*D2R));
+                                    me.eegsMe.shellPosDist[l] = pos.direct_distance_to(me.eegsMe.ac)*M2FT;
+                                    me.eegsMe.shellPosX[l] = me.eegsMe.xcS;
+                                    me.eegsMe.shellPosY[l] = me.eegsMe.ycS;  #/4
+                                }
+                            }
+                            
                             
                             
                             
@@ -1775,17 +1796,17 @@ append(obj.total, obj.speed_curr);
                             
                             me.eegsMe.altC = me.eegsMe.alti;
                             
-                            var shellPosX = [0,0,0,0,0,0,0];
-                            var shellPosY = [0,0,0,0,0,0,0];
-                            var shellPosDist = [0,0,0,0,0,0,0];
+                            
                             
                             me.eegsMe.ac = geo.aircraft_position();
                             me.eegsMe.eegsPos = geo.Coord.new(me.eegsMe.ac);
+                            me.eegsMe.geodPos = aircraftToCart({x:-3.0, y:-2.5, z: -1.2});#position of gun in aircraft (x and z inverted)
+                            me.eegsMe.eegsPos.set_xyz(me.eegsMe.geodPos.x, me.eegsMe.geodPos.y, me.eegsMe.geodPos.z);
                             #print("x,y");
                             #printf("%d,%d",0,0);
                             #print("-----");
                             #var count = 0;
-                            var allow = 1;
+                            
                             for (var j = 0;j < funnelParts;j+=1) {#*4
                                 #count += 1;
                                 #if (count == 5) {
@@ -1825,36 +1846,23 @@ append(obj.total, obj.speed_curr);
                                 #if (count == 4) {
                                     var old = me.gunPos[j];
                                     me.gunPos[j] = [geo.Coord.new(me.eegsMe.eegsPos)];
-                                    for (var k = 0;k<j;k+=1) {
-                                        append(me.gunPos[j], old[k]);
+                                    for (var m = 0;m<j;m+=1) {
+                                        append(me.gunPos[j], old[m]);
                                     }                                
                                 
-                                    var pos = me.gunPos[j][j];
-                                    if (pos == nil) {
-                                        allow = 0;
-                                    } else {
-                                        me.eegsMe.u_dev_rad = (90-awg_9.deviation_normdeg(hdp.heading, me.eegsMe.ac.course_to(pos)))  * D2R;
-                                        me.eegsMe.u_elev_rad = (90-awg_9.deviation_normdeg(hdp.pitch, math.atan2(pos.alt()-me.eegsMe.alti,pos.distance_to(me.eegsMe.ac))*R2D))  * D2R;
-                                        me.eegsMe.devs = me.develev_to_devroll(hdp, me.eegsMe.u_dev_rad, me.eegsMe.u_elev_rad);
-                                        me.eegsMe.combined_dev_deg = me.eegsMe.devs[0];
-                                        me.eegsMe.combined_dev_length =  me.eegsMe.devs[1];
-                                        me.eegsMe.xcS = me.sx/2                     + (me.pixelPerMeterX * me.eegsMe.combined_dev_length * math.sin(me.eegsMe.combined_dev_deg*D2R));
-                                        me.eegsMe.ycS = me.sy-me.texels_up_into_hud - (me.pixelPerMeterY * me.eegsMe.combined_dev_length * math.cos(me.eegsMe.combined_dev_deg*D2R));
-                                        shellPosDist[j] = me.eegsMe.eegsPos.direct_distance_to(me.eegsMe.ac)*M2FT;
-                                        shellPosX[j] = me.eegsMe.xcS;
-                                        shellPosY[j] = me.eegsMe.ycS;  #/4
-                                    }
+                                    
                                 #}
                             }                        
-                            if (allow) {
-                                for (var i = 0;i<funnelParts;i+=1) {
-                                    var radi = math.atan2(wingspanAverage*0.5,shellPosDist[i]);
+                            if (me.eegsMe.allow) {
+                                var wingspanAverage = 35;#ft
+                                for (var k = 0;k<funnelParts;k+=1) {
+                                    var radi = math.atan2(wingspanAverage*0.5,me.eegsMe.shellPosDist[k]);
                                     radi = radi*R2D*me.texelPerDegreeX;
 
-                                    me.eegsRightX[i] = shellPosX[i] - radi;
-                                    me.eegsRightY[i] = shellPosY[i];
-                                    me.eegsLeftX[i] = shellPosX[i] + radi;
-                                    me.eegsLeftY[i] = shellPosY[i];
+                                    me.eegsRightX[k] = me.eegsMe.shellPosX[k] - radi;
+                                    me.eegsRightY[k] = me.eegsMe.shellPosY[k];
+                                    me.eegsLeftX[k] = me.eegsMe.shellPosX[k] + radi;
+                                    me.eegsLeftY[k] = me.eegsMe.shellPosY[k];
                                 }
                                 var lastIndex = funnelParts-1;
                                 me.eegsGroup.removeAllChildren();
