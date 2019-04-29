@@ -1800,7 +1800,7 @@ append(obj.total, obj.speed_curr);
                             
                             me.eegsMe.ac = geo.aircraft_position();
                             me.eegsMe.eegsPos = geo.Coord.new(me.eegsMe.ac);
-                            me.eegsMe.geodPos = aircraftToCart({x:-3.0, y:-2.5, z: -1.2});#position of gun in aircraft (x and z inverted)
+                            me.eegsMe.geodPos = aircraftToCart({x:3.16, y:-0.81, z: -0.17});#position of gun in aircraft (x and z inverted)
                             me.eegsMe.eegsPos.set_xyz(me.eegsMe.geodPos.x, me.eegsMe.geodPos.y, me.eegsMe.geodPos.z);
                             #print("x,y");
                             #printf("%d,%d",0,0);
