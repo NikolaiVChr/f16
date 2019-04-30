@@ -1621,10 +1621,12 @@ var Target = {
             var z = me.z.getValue()+me.inac_z*inaccurate;
 
             me.TgTCoord.set_xyz(x, y, z);
-            me.ele = geo.elevation(me.TgTCoord.lat(),me.TgTCoord.lon());
-            if (me.ele != nil) {
-                #prevents it from being underground so cant get lock
-                me.TgTCoord.set_alt(me.ele);
+            if (inaccurate and me.inac_x != 0) {
+                me.ele = geo.elevation(me.TgTCoord.lat(),me.TgTCoord.lon());
+                if (me.ele != nil) {
+                    #prevents it from being underground so cant get lock
+                    me.TgTCoord.set_alt(me.ele);
+                }
             }
         } elsif (me.lat != nil) {
             me.TgTCoord.set_latlon(me.lat.getValue(), me.lon.getValue(), me.Alt.getValue() * FT2M);

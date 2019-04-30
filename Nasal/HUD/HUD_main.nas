@@ -147,6 +147,8 @@ var F16_HUD = {
         append(obj.total, obj.window11);
         append(obj.total, obj.ralt);
         append(obj.total, obj.radalt_box);
+        
+        obj.color = [0,1,0];
 
         #obj.VV.set("z-index", 11000);# hmm, its inside layer1, so will still be below the heading readout.
         obj.layer1 = obj.get_element("layer1");#main svg layer.
@@ -236,19 +238,19 @@ var F16_HUD = {
 # print("HUD hud_serviceable=", hdp.hud_serviceable," display=", hdp.hud_display, " brt=", hdp.hud_brightness, " power=", hdp.hud_power);
 
                                           if (!hdp.hud_display or !hdp.hud_serviceable) {
-                                            var color = [0.3,1,0.3,0];
+                                            obj.color = [0.3,1,0.3,0];
                                             foreach(item;obj.total) {
-                                              item.setColor(color);
+                                              item.setColor(obj.color);
                                             }
-                                            obj.triangle120.setColorFill(color);
-                                            obj.triangle65.setColorFill(color);
+                                            obj.triangle120.setColorFill(obj.color);
+                                            obj.triangle65.setColorFill(obj.color);
                                           } elsif (hdp.hud_brightness != nil and hdp.hud_power != nil) {
-                                            var color = [0.3,1,0.3,hdp.hud_brightness * hdp.hud_power];
+                                            obj.color = [0.3,1,0.3,hdp.hud_brightness * hdp.hud_power];
                                             foreach(item;obj.total) {
-                                              item.setColor(color);
+                                              item.setColor(obj.color);
                                             }
-                                            obj.triangle120.setColorFill(color);
-                                            obj.triangle65.setColorFill(color);
+                                            obj.triangle120.setColorFill(obj.color);
+                                            obj.triangle65.setColorFill(obj.color);
                                           }
                                       }),
             props.UpdateManager.FromHashList([], 0.01, func(hdp)
@@ -258,7 +260,6 @@ var F16_HUD = {
                                       {
                                           hdp.CCRP_active = obj.CCRP(hdp);
                                       }),
-
             props.UpdateManager.FromHashList(["texUp","route_manager_active", "wp_bearing_deg", "heading","VV_x","VV_y"], 0.01, func(hdp)
                                              {
                                                  # the Y position is still not accurate due to HUD being at an angle, but will have to do.
@@ -292,6 +293,8 @@ var F16_HUD = {
                                                      obj.boreSymbol.hide();
                                                  } else {
                                                      obj.boreSymbol.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud);
+                                                     #obj.eegsGroup.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud);
+                                                     #printf("bore %d,%d",obj.sx/2,obj.sy-obj.texels_up_into_hud);
                                                      obj.offangle.setTranslation(obj.sx/2-10,obj.sy-obj.texels_up_into_hud);
                                                      obj.boreSymbol.show();
                                                  }
@@ -1111,6 +1114,16 @@ append(obj.total, obj.speed_curr);
             #.setTranslation(sx*0.5*0.695633,sy*0.25);
             append(obj.total, obj.VV);
     obj.localizer = obj.svg.createChild("group");
+    
+    obj.eegsGroup = obj.svg.createChild("group");
+    obj.eegsRightX = [0,0,0,0,0,0,0];
+    obj.eegsRightY = [0,0,0,0,0,0,0];
+    obj.eegsLeftX = [0,0,0,0,0,0,0];
+    obj.eegsLeftY = [0,0,0,0,0,0,0];
+    obj.gunPos   = [[nil],[nil,nil],[nil,nil,nil],[nil,nil,nil,nil],[nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil]];
+    obj.eegsMe = {};
+    obj.lastTime = systime();
+    
     obj.ilsGroup  = obj.localizer.createChild("group");
     obj.gsGroup   = obj.localizer.createChild("group");
     obj.ils = obj.ilsGroup.createChild("path")
@@ -1697,7 +1710,7 @@ append(obj.total, obj.speed_curr);
 
         # part2. update display, first with the update managed items
 
-        if (hdp.FrameCount == 2 or me.initUpdate == 1) {
+        if (1) {#hdp.FrameCount == 2 or me.initUpdate == 1) {
             hdp.window1_txt = "";
             hdp.window2_txt = "";
             hdp.window3_txt = "";
@@ -1714,7 +1727,7 @@ append(obj.total, obj.speed_curr);
             me.circle100.hide();
             me.circle120.hide();
             me.circle65.hide();
-
+            var eegsShow = 0;
             if(hdp.master_arm and pylons.fcs != nil)
             {
                 hdp.weapon_selected = pylons.fcs.selectedType;
@@ -1724,6 +1737,146 @@ append(obj.total, obj.speed_curr);
                 {
                     if (hdp.weapon_selected == "20mm Cannon") {
                         hdp.window9_txt = sprintf("%3d", pylons.fcs.getAmmo());
+                        
+                        ######
+                        #EEGS#
+                        ###### 
+                        #note: this stuff is expensive like hell to compute, but..lets do it anyway.
+                        
+                        var desiredMs = 200;#ms
+                        var funnelParts = 7;
+                        var st = systime();
+                        me.eegsMe.dt = st-me.lastTime;
+                        eegsShow = 1;
+                        if (me.eegsMe.dt > 1) {
+                            me.lastTime = st;
+                            me.gunPos   = [[nil],[nil,nil],[nil,nil,nil],[nil,nil,nil,nil],[nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil]];
+                            me.eegsGroup.removeAllChildren();
+                        } elsif (me.eegsMe.dt > desiredMs*0.001) {
+                            #printf("dt %.2f",me.eegsMe.dt);
+                            me.lastTime = st;
+                            
+                            me.eegsMe.allow = 1;
+                            me.eegsMe.shellPosX    = [0,0,0,0,0,0,0];
+                            me.eegsMe.shellPosY    = [0,0,0,0,0,0,0];
+                            me.eegsMe.shellPosDist = [0,0,0,0,0,0,0];
+                            
+                            for (var l = 0;l < funnelParts;l+=1) {
+                                var pos = me.gunPos[l][l];
+                                if (pos == nil) {
+                                    me.eegsMe.allow = 0;
+                                } else {
+                                    me.eegsMe.u_dev_rad = (90-awg_9.deviation_normdeg(hdp.heading, me.eegsMe.ac.course_to(pos)))  * D2R;
+                                    me.eegsMe.u_elev_rad = (90-awg_9.deviation_normdeg(hdp.pitch, math.atan2(pos.alt()-me.eegsMe.alti,pos.distance_to(me.eegsMe.ac))*R2D))  * D2R;
+                                    me.eegsMe.devs = me.develev_to_devroll(hdp, me.eegsMe.u_dev_rad, me.eegsMe.u_elev_rad);
+                                    me.eegsMe.combined_dev_deg = me.eegsMe.devs[0];
+                                    me.eegsMe.combined_dev_length =  me.eegsMe.devs[1];
+                                    me.eegsMe.xcS = me.sx/2                     + (me.pixelPerMeterX * me.eegsMe.combined_dev_length * math.sin(me.eegsMe.combined_dev_deg*D2R));
+                                    me.eegsMe.ycS = me.sy-me.texels_up_into_hud - (me.pixelPerMeterY * me.eegsMe.combined_dev_length * math.cos(me.eegsMe.combined_dev_deg*D2R));
+                                    me.eegsMe.shellPosDist[l] = pos.direct_distance_to(me.eegsMe.ac)*M2FT;
+                                    me.eegsMe.shellPosX[l] = me.eegsMe.xcS;
+                                    me.eegsMe.shellPosY[l] = me.eegsMe.ycS;  #/4
+                                }
+                            }
+                            
+                            
+                            
+                            
+                            #calc shell positions
+                            me.eegsMe.alti = getprop("position/altitude-ft")*FT2M;
+                            me.eegsMe.hdg = getprop("orientation/heading-deg");
+                            me.eegsMe.pitch = getprop("orientation/pitch-deg");
+                            me.eegsMe.vel = getprop("velocities/uBody-fps")+2041;#not sure if AIBallistic add aircraft speed to shell speed..it should
+                            
+                                                        
+                            me.eegsMe.rs = armament.AIM.rho_sndspeed(me.eegsMe.alti*M2FT);#simplified
+                            me.eegsMe.rho = me.eegsMe.rs[0];
+                            
+                            me.eegsMe.mass =  0.1069/ armament.slugs_to_lbm;#0.1069=lbs
+                            
+                            me.eegsMe.altC = me.eegsMe.alti;
+                            
+                            
+                            
+                            me.eegsMe.ac = geo.aircraft_position();
+                            me.eegsMe.eegsPos = geo.Coord.new(me.eegsMe.ac);
+                            me.eegsMe.geodPos = aircraftToCart({x:3.16, y:-0.81, z: -0.17});#position of gun in aircraft (x and z inverted)
+                            me.eegsMe.eegsPos.set_xyz(me.eegsMe.geodPos.x, me.eegsMe.geodPos.y, me.eegsMe.geodPos.z);
+                            #print("x,y");
+                            #printf("%d,%d",0,0);
+                            #print("-----");
+                            #var count = 0;
+                            
+                            for (var j = 0;j < funnelParts;j+=1) {#*4
+                                #count += 1;
+                                #if (count == 5) {
+                                #    count = 1;
+                                #}
+                                
+                                #calc new speed
+                                me.eegsMe.Cd = drag(me.eegsMe.vel/ me.eegsMe.rs[1],0.193);#0.193=cd
+                                me.eegsMe.q = 0.5 * me.eegsMe.rho * me.eegsMe.vel * me.eegsMe.vel;
+                                me.eegsMe.deacc = (me.eegsMe.Cd * me.eegsMe.q * 0.00136354) / me.eegsMe.mass;#0.00136354=eda
+                                me.eegsMe.vel -= me.eegsMe.deacc * me.eegsMe.dt;
+                                me.eegsMe.speed_down_fps       = -math.sin(me.eegsMe.pitch * D2R) * (me.eegsMe.vel);
+                                me.eegsMe.speed_horizontal_fps = math.cos(me.eegsMe.pitch * D2R) * (me.eegsMe.vel);
+                                
+                                me.eegsMe.speed_down_fps += 9.81 *M2FT *me.eegsMe.dt;
+                                
+                                
+                                 
+                                me.eegsMe.altC -= (me.eegsMe.speed_down_fps*me.eegsMe.dt)*FT2M;
+                                
+                                
+                                #printf("altC %d   vel_z %d   acc_z=%d",me.eegsMe.altC,me.eegsMe.vel_z,me.eegsMe.acc * me.eegsMe.dt);
+                                
+                                
+                                me.eegsMe.dist = (me.eegsMe.speed_horizontal_fps*me.eegsMe.dt)*FT2M;
+                                
+                                #printf("vel_x %d  acc_x %d", me.eegsMe.vel_x,me.eegsMe.acc);
+                                #printf("pitch=%.1f  vel=%d  vdown=%.1f",me.eegsMe.pitch, me.eegsMe.vel, me.eegsMe.speed_down_fps, );
+                                me.eegsMe.eegsPos.apply_course_distance(me.eegsMe.hdg, me.eegsMe.dist);
+                                me.eegsMe.eegsPos.set_alt(me.eegsMe.altC);
+                                #print(me.eegsMe.speed_down_fps*me.eegsMe.speed_down_fps+me.eegsMe.speed_horizontal_fps*me.eegsMe.speed_horizontal_fps);
+                                #print(me.eegsMe.speed_down_fps*me.eegsMe.speed_down_fps);
+                                #print(me.eegsMe.speed_horizontal_fps*me.eegsMe.speed_horizontal_fps);
+                                me.eegsMe.vel = math.sqrt(me.eegsMe.speed_down_fps*me.eegsMe.speed_down_fps+me.eegsMe.speed_horizontal_fps*me.eegsMe.speed_horizontal_fps);
+                                me.eegsMe.pitch = math.atan2(-me.eegsMe.speed_down_fps,me.eegsMe.speed_horizontal_fps)*R2D;
+                                
+                                #if (count == 4) {
+                                    var old = me.gunPos[j];
+                                    me.gunPos[j] = [geo.Coord.new(me.eegsMe.eegsPos)];
+                                    for (var m = 0;m<j;m+=1) {
+                                        append(me.gunPos[j], old[m]);
+                                    }                                
+                                
+                                    
+                                #}
+                            }                        
+                            if (me.eegsMe.allow) {
+                                var wingspanAverage = 35;#ft
+                                for (var k = 0;k<funnelParts;k+=1) {
+                                    var radi = math.atan2(wingspanAverage*0.5,me.eegsMe.shellPosDist[k]);
+                                    radi = radi*R2D*me.texelPerDegreeX;
+
+                                    me.eegsRightX[k] = me.eegsMe.shellPosX[k] - radi;
+                                    me.eegsRightY[k] = me.eegsMe.shellPosY[k];
+                                    me.eegsLeftX[k] = me.eegsMe.shellPosX[k] + radi;
+                                    me.eegsLeftY[k] = me.eegsMe.shellPosY[k];
+                                }
+                                var lastIndex = funnelParts-1;
+                                me.eegsGroup.removeAllChildren();
+                                for (i = lastIndex; i > 0; i-=1) {
+                                    me.eegsGroup.createChild("path")
+                                        .moveTo(me.eegsRightX[i], me.eegsRightY[i])
+                                        .lineTo(me.eegsRightX[i-1], me.eegsRightY[i-1])
+                                        .moveTo(me.eegsLeftX[i], me.eegsLeftY[i])
+                                        .lineTo(me.eegsLeftX[i-1], me.eegsLeftY[i-1])
+                                        .setStrokeLineWidth(1)
+                                        .setColor(me.color);
+                                }                                
+                            }
+                        }
                     } elsif (hdp.weapon_selected == "AIM-9") {
                         hdp.window9_txt = sprintf("%d SRM", pylons.fcs.getAmmo());#short range missile
                         if (hdp.weapn != nil) {
@@ -1863,6 +2016,8 @@ append(obj.total, obj.speed_curr);
                 }
                 hdp.window3_txt = slant;
             }
+            me.eegsGroup.setVisible(eegsShow);
+            #if(eegsShow) me.eegsGroup.update();
 
             if (hdp.total_fuel_lbs < hdp.bingo and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
               hdp.window11_txt = "FUEL";
@@ -2213,3 +2368,12 @@ f16_hud = F16HudRecipient.new("F16-HUD");
 HUDobj = f16_hud.HUDobj;
 
 emesary.GlobalTransmitter.Register(f16_hud);
+
+var drag = func (Mach, _cd) {
+    if (Mach < 0.7)
+        return 0.0125 * Mach + _cd;
+    elsif (Mach < 1.2)
+        return 0.3742 * math.pow(Mach, 2) - 0.252 * Mach + 0.0021 + _cd;
+    else
+        return 0.2965 * math.pow(Mach, -1.1506) + _cd;
+};

@@ -24,6 +24,9 @@ var rcs_database = {
     "F-15C":                    10,     #low end of sources
     "F-15D":                    11,     #low end of sources
     "F-16":                     2,      #guess
+    "YF-16":                    2,      #guess
+    "F-16CJ":                   2,      #guess
+    "f16":                      2,      #guess
     "f15-bs":                   0.001,   # low so it dont show up on radar
     "JA37-Viggen":              3,      #guess
     "AJ37-Viggen":              3,      #guess
@@ -44,12 +47,17 @@ var rcs_database = {
     "MQ-9":                     1,      #guess
     "KC-137R":                  100,    #guess
     "KC-137R-RT":               100,    #guess
-    "A-10":                     23.5, 
-    "KC-10A":                   100,    #guess
+    "A-10":                     23.5,
+    "A-10-model":               23.5, 
+    "KC-10A":                   110,    #guess
+    "KC-10A-GE":                110,    #guess
+    "KC-30A":                   110,    #guess
+    "Voyager-KC":               110,    #guess
     "Typhoon":                  0.5,
     "C-137R":                   100,    #guess
     "RC-137R":                  100,    #guess
     "EC-137R":                  110,    #guess
+    "E-8R":                     100,    #guess
     "c130":                     100,    #guess
     "SH-60J":                   30,     #guess
     "UH-60J":                   30,     #guess
