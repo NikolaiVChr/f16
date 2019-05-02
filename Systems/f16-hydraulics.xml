@@ -29,7 +29,7 @@
 			<clipto>
 				<min> 0 </min>
 				<max>
-					<property>systems/hydraulics/normal-pressure</property>
+					systems/hydraulics/normal-pressure
 				</max>
 			</clipto>
 		</scheduled_gain>
@@ -39,7 +39,7 @@
 			<clipto>
 				<min> 0 </min>
 				<max>
-					<property>systems/hydraulics/normal-pressure</property>
+					systems/hydraulics/normal-pressure
 				</max>
 			</clipto>
 		</summer>
@@ -65,7 +65,7 @@
 			<clipto>
 				<min> 0 </min>
 				<max>
-					<property>systems/hydraulics/normal-pressure</property>
+					systems/hydraulics/normal-pressure
 				</max>
 			</clipto>
 		</scheduled_gain>
@@ -83,7 +83,7 @@
 			<clipto>
 				<min> 0 </min>
 				<max>
-					<property>systems/hydraulics/normal-pressure</property>
+					systems/hydraulics/normal-pressure
 				</max>
 			</clipto>
 		</summer>
