@@ -668,6 +668,9 @@ var az_scan = func(notification) {
         if (active_u != nil) {
             tmp_nearest_u = active_u;
         }
+        if (u.get_Speed() > 60 and u.get_type() != ORDNANCE) {
+            u.setClass(AIR);
+        }
     }
 
 
@@ -1614,6 +1617,12 @@ var Target = {
         return 0;
     },
     get_Coord: func(inaccurate = 1) {
+        if (me.class != SURFACE) {
+            #double check
+            me.inac_x = 0;
+            me.inac_y = 0;
+            me.inac_z = 0;
+        }
         if (me.x != nil)
         {
             var x = me.x.getValue()+me.inac_x*inaccurate;
