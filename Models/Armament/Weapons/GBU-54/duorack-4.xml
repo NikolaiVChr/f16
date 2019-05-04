@@ -5,7 +5,7 @@
     <path>Aircraft/f16/Models/Armament/Racks/duorack.xml</path>
 
     <model>
-      <name>Station3_GBU54_left</name>
+      <name>Station4_GBU54_left</name>
       <path>Aircraft/f16/Models/Armament/Weapons/GBU-54/GBU-54.xml</path>
       <offsets>
         <x-m>-0.05</x-m>
