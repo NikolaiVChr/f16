@@ -63,7 +63,7 @@ Alan Teeder
 - FDM consulting
 - Fixed wrong aero data for speedbrake
 
-Joshua Davidson (it0uchpods)
+Joshua Davidson (Octal450)
 - Autopilot
 - Electrical System
 

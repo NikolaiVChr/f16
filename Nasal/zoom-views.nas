@@ -1,5 +1,5 @@
 # IDG Distance Zooming
-# Copyright (c) 2018 Joshua Davidson (it0uchpods)
+# Copyright (c) 2018 Joshua Davidson (Octal450)
 # Based on PropertyRule file by onox
 
 var distance = 0;
