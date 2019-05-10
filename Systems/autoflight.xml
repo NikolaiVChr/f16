@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!-- General Dynamics F-16 Autoflight System -->
-<!-- Copyright (c) 2019 Joshua Davidson (it0uchpods) -->
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
 
 <system name="F-16: Autoflight">
 	
@@ -186,7 +186,7 @@
 		</pure_gain>
 		
 		<!-- HDG SEL / STRG SEL -->
-		<fcs_function name="autoflight/roll/hdg-hld-target">
+		<fcs_function name="autoflight/roll/hdg-hold-target">
 			<function>
 				<integer>
 					<sum>
@@ -201,7 +201,7 @@
 									<value>1</value>
 								</eq>
 							</and>
-							<property>autoflight/roll/hdg-hld-target</property>
+							<property>autoflight/roll/hdg-hold-target</property>
 							<property>/orientation/heading-magnetic-deg</property>
 						</ifthen>
 						<value>0.5</value> <!-- Make the integer rounded correctly -->
@@ -272,14 +272,14 @@
 			<output>autoflight/roll/heading/pi</output>
 		</pid>
 		
-		<!-- ALT HOLD -->
-		<fcs_function name="autoflight/pitch/alt/gain">
+		<!-- ALT HOLD --> <!-- Note to self: Due to FBW's annoying downward limit of 0.5, we have do some ungood stuff to make it work -->
+		<fcs_function name="autoflight/pitch/alt/predicted-gain">
 			<function>
 				<table>
 					<independentVar lookup="row">velocities/vc-kts</independentVar>
 					<tableData>
-						200 -7
-						600 -5
+						200 -6.0
+						600 -7.5
 					</tableData>
 				</table>
 			</function>
@@ -291,7 +291,7 @@
 					<quotient>
 						<property>/instrumentation/gps/indicated-vertical-speed</property>
 						<product>
-							<property>autoflight/pitch/alt/gain</property>
+							<property>autoflight/pitch/alt/predicted-gain</property>
 							<value>-1</value>
 						</product>
 					</quotient>
@@ -328,24 +328,23 @@
 					<value>100</value>
 				</product>
 			</function>
+			<clipto>
+				<min>0</min>
+				<max>70000</max>
+			</clipto>
 		</fcs_function>
 		
-		<fcs_function name="autoflight/pitch/alt/error">
-			<function>
-				<difference>
-					<property>/instrumentation/altimeter/indicated-altitude-ft</property>
-					<property>autoflight/pitch/alt/target</property>
-					<value>2</value>
-				</difference>
-			</function>
-		</fcs_function>
+		<summer name="autoflight/pitch/alt/error">
+			<input>/instrumentation/altimeter/indicated-altitude-ft</input>
+			<input>-autoflight/pitch/alt/target</input>
+		</summer>
 		
 		<pure_gain name="autoflight/pitch/vs/target">
 			<input>autoflight/pitch/alt/error</input>
-			<gain>autoflight/pitch/alt/gain</gain>
+			<gain>-7</gain>
 			<clipto>
-				<min>-2000</min>
-				<max>2000</max>
+				<min>-3000</min>
+				<max>3000</max>
 			</clipto>
 		</pure_gain>
 	
