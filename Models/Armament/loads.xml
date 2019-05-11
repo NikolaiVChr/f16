@@ -1233,6 +1233,21 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
 
  <animation>
   <type>select</type>
+  <object-name>Station10_LegionPodirst</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-10-type</property>
+      <value>Legion Pod IRST</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-10-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
   <object-name>Station10_HARMts</object-name>
   <condition>
     <equals>
@@ -1293,10 +1308,10 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
       <property>payload/armament/station/id-10-set</property>
       <value>AN/AAQ-28 LITENING Advanced Targeting</value>
     </equals>
-    <!--<equals>
+    <equals>
       <property>payload/armament/station/id-10-set</property>
-      <value>AN/ASQ-213 HARM TS Pod</value>
-    </equals>-->
+      <value>Legion Pod IRST</value>
+    </equals>
   </or>
   </condition>
  </animation>

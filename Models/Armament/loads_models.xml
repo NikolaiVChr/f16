@@ -1026,6 +1026,17 @@
   </offsets>
  </model>
 
+ <model>
+  <name>Station10_LegionPodirst</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/LegionPod_IRST/LegionPod_IRST.xml</path>
+  <offsets>
+   <x-m>-2.49</x-m>
+   <y-m>0.69</y-m>
+   <z-m>-1.027</z-m>
+   <pitch-deg>-0.5</pitch-deg>
+  </offsets>
+ </model>
+
 <model>
   <name>Station10_HARMts</name>
   <path>Aircraft/f16/Models/Armament/External-stores/HARM_TS/AN-ASQ-213.xml</path>

@@ -33,6 +33,7 @@ var atp = stations.Smoker.new("AN/AAQ-33 Sniper ATP", "AAQ-33", "f16/stores/tgp-
 var tgp = stations.Smoker.new("AN/AAQ-14 LANTIRN Target Pod", "AAQ-14", "f16/stores/tgp-mounted");
 var nav = stations.Smoker.new("AN/AAQ-13 LANTIRN Nav Pod", "AAQ-13", "f16/stores/nav-mounted");
 var lite = stations.Smoker.new("AN/AAQ-28 LITENING Advanced Targeting", "AAQ-28", "f16/stores/tgp-mounted");
+var irst = stations.Smoker.new("Legion Pod IRST", "IRST", "f16/stores/irst-mounted");
 var harm = stations.Smoker.new("AN/ASQ-213 HARM TS Pod", "ASQ-213", "f16/stores/harm-mounted");
 var dummy = stations.Dummy.new("AN-T-17", nil);
 var dummy2 = stations.Dummy.new("CATM-9L", nil);# nil for shortname makes them not show up in MFD SMS page. If shortname is nil it MUST have showLongTypeInsteadOfCount: 1
@@ -82,6 +83,7 @@ var pylonSets = {
     podTgp2: {name: "AN/AAQ-14 LANTIRN Target Pod", content: [tgp], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 530, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     podNav:  {name: "AN/AAQ-13 LANTIRN Nav Pod", content: [nav], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 451.1, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     podTgp3: {name: "AN/AAQ-28 LITENING Advanced Targeting", content: [lite], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 460, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    podIrst: {name: "Legion Pod IRST", content: [irst], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 500, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1}, #mass guess based on available data
     podHarm: {name: "AN/ASQ-213 HARM TS Pod", content: [harm], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 100, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 };
 
@@ -99,8 +101,8 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 	var pylon12setR = [pylonSets.empty, pylonSets.g12x2, pylonSets.fuel37R, pylonSets.fuel60R, pylonSets.m82, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.a88, pylonSets.m83, pylonSets.c87, pylonSets.m84];
 
 	#HTS can be carried on both left and right side.
-	#LITENING only on right	
-    var fuselageRset = [pylonSets.empty, pylonSets.podTgp1, pylonSets.podTgp2, pylonSets.podTgp3, pylonSets.podHarm];
+	#Sniper, LITENING, IRST only on right	
+    var fuselageRset = [pylonSets.empty, pylonSets.podTgp1, pylonSets.podTgp2, pylonSets.podTgp3, pylonSets.podIrst, pylonSets.podHarm];
     var fuselageLset = [pylonSets.empty, pylonSets.podNav, pylonSets.podHarm];
 
 	# pylons
@@ -197,7 +199,7 @@ var a2a_super = func {
         pylon7.loadSet(pylonSets.aim120);
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.empty);
+        pylon10.loadSet(pylonSets.podIrst);
         pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
@@ -217,7 +219,7 @@ var a2a_cap = func {
         pylon7.loadSet(pylonSets.aim120);
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim9WT);
-        pylon10.loadSet(pylonSets.empty);
+        pylon10.loadSet(pylonSets.podIrst);
         pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
@@ -237,7 +239,7 @@ var a2a_capext = func {
         pylon7.loadSet(pylonSets.aim120);
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim9WT);
-        pylon10.loadSet(pylonSets.empty);
+        pylon10.loadSet(pylonSets.podIrst);
         pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
