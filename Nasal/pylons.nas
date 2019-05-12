@@ -246,6 +246,47 @@ var a2a_capext = func {
       screen.log.write(f16.msgB);
     }
 }
+
+# NFZ (AIM-120, AIM-7, AIM-9, ECM)
+var a2a_nfz = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim120WT);
+        pylon2.loadSet(pylonSets.aim120);
+        pylon3.loadSet(pylonSets.aim7);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.podEcm);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.aim7);
+        pylon8.loadSet(pylonSets.aim9);
+        pylon9.loadSet(pylonSets.aim120WT);
+        pylon10.loadSet(pylonSets.podIrst);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# DCA (AIM-9, AIM-120)
+var a2a_dca = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim120WT);
+        pylon2.loadSet(pylonSets.aim9);
+        pylon3.loadSet(pylonSets.aim9);
+        pylon4.loadSet(pylonSets.empty);
+        pylon5.loadSet(pylonSets.fuel30);
+        pylon6.loadSet(pylonSets.empty);
+        pylon7.loadSet(pylonSets.aim9);
+        pylon8.loadSet(pylonSets.aim9);
+        pylon9.loadSet(pylonSets.aim120WT);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
 # CAS (AGM-65, MK-82)
 var a2g_cas = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {

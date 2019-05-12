@@ -57,21 +57,6 @@
                 <splash type="bool">true</splash>
                 <path>gui/splash/f16_b50_3.png</path>
             </preview>
-            <preview>
-                <type>exterior</type>
-                <splash type="bool">true</splash>
-                <path>gui/splash/f16_b50_4.png</path>
-            </preview>
-            <preview>
-                <type>exterior</type>
-                <splash type="bool">true</splash>
-                <path>gui/splash/f16_b50_5.png</path>
-            </preview>
-            <preview>
-                <type>exterior</type>
-                <splash type="bool">true</splash>
-                <path>gui/splash/f16_b50_6.png</path>
-            </preview>
   </previews>
 
   <model>
