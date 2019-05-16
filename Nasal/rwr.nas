@@ -181,6 +181,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_SKYHAWK  = "A4";
         rwr.AIRCRAFT_TONKA	  = "TN";
         rwr.AIRCRAFT_RAFALE	  = "RF";
+        rwr.AIRCRAFT_HARRIER  = "HR";
         rwr.AIRCRAFT_G91	  = "91";
         #rwr.AIRCRAFT_TANKER = "KC";
         rwr.AIRCRAFT_UNKNOWN = "U";
@@ -241,6 +242,11 @@ RWRCanvas = {
                 "Tornado-IDS":				rwr.AIRCRAFT_TONKA,
                 "Tornado-F3":				rwr.AIRCRAFT_TONKA,
                 "brsq":						rwr.AIRCRAFT_RAFALE,
+                "Harrier-GR1":				rwr.AIRCRAFT_HARRIER,
+                "Harrier-GR3":				rwr.AIRCRAFT_HARRIER,
+                "Harrier-GR5":				rwr.AIRCRAFT_HARRIER,
+                "Harrier-GR9":				rwr.AIRCRAFT_HARRIER,
+                "AV-8B":					rwr.AIRCRAFT_HARRIER,
                 "G91":						rwr.AIRCRAFT_G91,
                 "MiG-15bis":                rwr.AIRCRAFT_MIG15,
                 "ufo":                      rwr.AIRCRAFT_UNKNOWN,
