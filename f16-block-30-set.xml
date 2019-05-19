@@ -8,7 +8,7 @@
    The General Dynamics F-16C Fighting Falcon is a single-engine supersonic multirole fighter aircraft originally developed by General Dynamics (now Lockheed Martin) for the United States Air Force (USAF). Powered by F110-GE-100. Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
    The Fighting Falcon has key features including a frameless bubble canopy for better visibility, side-mounted control stick to ease control while maneuvering, a seat reclined 30 degrees to reduce the effect of g-forces on the pilot, and the first use of a relaxed static stability/fly-by-wire flight control system which helps to make it a nimble aircraft.
   </long-description>
-  <author>Erik Hofman, Pensacola, Martin "Pegasus" Schmitt, Richard Harrison, Nikolai V. Chr., J Maverick 16, Joshua Davidson, Gary Brown, Jonathan Redpath, Martien Van Der P.</author>
+  <author>Erik Hofman, Pensacola, Martin "Pegasus" Schmitt, Richard Harrison, Nikolai V. Chr., J Maverick 16, Joshua Davidson, Gary Brown, Martien Van Der P., Justin Nicholson, Jonathan Redpath</author>
   <status>production</status>
   <rating>
     <FDM type="int">5</FDM>
@@ -68,7 +68,7 @@
    <path archive="y">Aircraft/f16/Models/F-16.xml</path>
    <livery>
     <file type="string"/>
-    <name type="string">USAF 89-2029/AV 510FS</name>
+    <name type="string">USAF 354FW, 18AS AK "Blue Bandit"</name>
     <folder type="string">Aircraft/f16/Models/Liveries/Block30</folder>
    </livery>
   </model>

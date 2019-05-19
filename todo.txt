@@ -4,11 +4,10 @@
 
 Bugs
 ----
-masterarm off while aim9 in lock..bad stuuff [cant reproduce]
+masterarm off while aim9 in lock..bad stuff [can’t reproduce]
 
 Model
 -----
-Set proper default livery for all blocks.
 Make loads.xml not be a submodel.
 
 Hydraulics
@@ -45,9 +44,9 @@ More gun tracers?
 A-A and A-G button cycle cannon also?
 Missile view start behind weapon?
 Stores should only emergency Jett. when main, stby or epu is running.
-Found a document that details all loadouts for US F16s, they can carry alot more than Greek F16s. For example triple agm65 etc etc.
+Found a document that details all loadouts for US F16s, they can carry a lot more than Greek F16s.
 Show stores over MP.
-Add/edit payload quick selections as new weapons become available.
+Add/edit payload quick selections as new weapons become available. Make it in a smarter way considering the number of them is becoming bigger every time?
 
 Damage
 ------

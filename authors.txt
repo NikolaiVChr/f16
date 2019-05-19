@@ -1,5 +1,5 @@
 #
-# Authors of Flightgear F-16
+# Authors of FlightGear F-16
 #
 
 
@@ -31,9 +31,14 @@ Richard Harrison
 - 3D misc. panel
 - Avionics communication system (emessary based)
 
-Jonathan Redpath
-- Hydraulics
-- Splash
+J Maverick 16
+- Addition and adaptation of liveries by Gary Brown
+- Liveries
+- Sound recording/editing and addition
+- Addition and implementation of weapons, stores
+- 3D works (pilot model, weapons/stores, misc)
+- Various fixes and improvements
+- Splashes
 
 Justin Nicholson
 - Splashes
@@ -41,35 +46,40 @@ Justin Nicholson
 - AIM-9 and AIM-120 models
 - Radar RCS system
 
-J Maverick 16
-- Added and adapted liveries by Gary Brown
-- Sound recording/editing
-- Added weapons, stores
-- Various fixes and improvements
-- Some 3D works (pilot model)
-- Splashes
-
 Fabien Barbier
 - Work on stores
 - Missile view
 
+Jonathan Redpath
+- Hydraulics
+- Splash
+- Bug reporting
+
+Martien Van Der Plas
+- 3D modeling for weapons, stores
+
+Joshua Davidson (Octal450)
+- Autopilot
+- Electrical System
+- Improvements
+
+Gary Brown
+- Most liveries
+- ALE-50 3D model
+
 Carsten Brueggmann
 - Sound creation and editing.
-
-FGUK
-- Used some of their GPL weapon models
 
 Alan Teeder
 - FDM consulting
 - Fixed wrong aero data for speedbrake
 
-Joshua Davidson (Octal450)
-- Autopilot
-- Electrical System
-
-Martien Van Der Plas
-- 3D modeling for weapons, stores
-
 Enrico Castaldi (Spectre)
 - Italian and other liveries
 - Texture improvements
+
+FGUK
+- Used some of their GPL weapon models
+
+Petar Jedvaj
+- F-16D 3D model
