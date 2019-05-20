@@ -37,8 +37,8 @@ var irst = stations.Smoker.new("Legion Pod IRST", "IRST", "f16/stores/irst-mount
 var harm = stations.Smoker.new("AN/ASQ-213 HARM TS Pod", "ASQ-213", "f16/stores/harm-mounted");
 var dummy = stations.Dummy.new("AN-T-17", nil);
 var dummy2 = stations.Dummy.new("CATM-9L", nil);# nil for shortname makes them not show up in MFD SMS page. If shortname is nil it MUST have showLongTypeInsteadOfCount: 1
-var dummy3 = stations.Dummy.new("AN/ALQ-131 ECM Pod", "AL131");
-var dummy4 = stations.Dummy.new("MXU-648 Cargopod", "TRVL");
+var ecmp = stations.Dummy.new("AN/ALQ-131 ECM Pod", "AL131");
+var crgpd = stations.Dummy.new("MXU-648 Cargopod", "TRVL");
 
 var pylonSets = {
 	empty: {name: "Empty", content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
@@ -77,14 +77,14 @@ var pylonSets = {
 	aim120:  {name: "1 x AIM-120", content: ["AIM-120"], fireOrder: [0], launcherDragArea: -0.025, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#non wingtip
 	aim120WT:{name: "1 x AIM-120", content: ["AIM-120"], fireOrder: [0], launcherDragArea: -0.05, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#wingtip
 	aim7:    {name: "1 x AIM-7",   content: ["AIM-7"], fireOrder: [0], launcherDragArea: -0.025, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
-	podEcm: {name: "AN/ALQ-131 ECM Pod", content: [dummy3], fireOrder: [], launcherDragArea: 0.18, launcherMass: 410, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 1},
-    podTrvl: {name: "MXU-648 Cargopod", content: [dummy4], fireOrder: [], launcherDragArea: 0.18, launcherMass: 104, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 1},
-    podTgp1: {name: "AN/AAQ-33 Sniper ATP", content: [atp], fireOrder: [0], launcherDragArea: 0.08, launcherMass: 446, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    podTgp2: {name: "AN/AAQ-14 LANTIRN Target Pod", content: [tgp], fireOrder: [0], launcherDragArea: 0.1, launcherMass: 530, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    podNav:  {name: "AN/AAQ-13 LANTIRN Nav Pod", content: [nav], fireOrder: [0], launcherDragArea: 0.12, launcherMass: 451.1, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    podTgp3: {name: "AN/AAQ-28 LITENING Advanced Targeting", content: [lite], fireOrder: [0], launcherDragArea: 0.1, launcherMass: 460, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    podIrst: {name: "Legion Pod IRST", content: [irst], fireOrder: [0], launcherDragArea: 0.11, launcherMass: 500, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1}, #mass guess based on available data
-    podHarm: {name: "AN/ASQ-213 HARM TS Pod", content: [harm], fireOrder: [0], launcherDragArea: 0.6, launcherMass: 100, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+	podEcm: {name: "AN/ALQ-131 ECM Pod", content: [ecmp], fireOrder: [], launcherDragArea: 0.18, launcherMass: 410, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 1},
+    podTrvl: {name: "MXU-648 Cargopod", content: [crgpd], fireOrder: [], launcherDragArea: 0.15, launcherMass: 104, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 1},
+    podSAtp: {name: "AN/AAQ-33 Sniper ATP", content: [atp], fireOrder: [0], launcherDragArea: 0.06, launcherMass: 446, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    podLTgp: {name: "AN/AAQ-14 LANTIRN Target Pod", content: [tgp], fireOrder: [0], launcherDragArea: 0.07, launcherMass: 530, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    podLNav:  {name: "AN/AAQ-13 LANTIRN Nav Pod", content: [nav], fireOrder: [0], launcherDragArea: 0.1, launcherMass: 451.1, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    podLite: {name: "AN/AAQ-28 LITENING Advanced Targeting", content: [lite], fireOrder: [0], launcherDragArea: 0.08, launcherMass: 460, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    podIrst: {name: "Legion Pod IRST", content: [irst], fireOrder: [0], launcherDragArea: 0.08, launcherMass: 500, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1}, #mass guess based on available data
+    podHarm: {name: "AN/ASQ-213 HARM TS Pod", content: [harm], fireOrder: [0], launcherDragArea: 0.03, launcherMass: 100, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 };
 
 if (getprop("sim/model/f16/wingmounts") != 0) {
@@ -102,8 +102,8 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 
 	#HTS can be carried on both left and right side.
 	#Sniper, LITENING, IRST only on right	
-    var fuselageRset = [pylonSets.empty, pylonSets.podTgp1, pylonSets.podTgp2, pylonSets.podTgp3, pylonSets.podIrst, pylonSets.podHarm];
-    var fuselageLset = [pylonSets.empty, pylonSets.podNav, pylonSets.podHarm];
+    var fuselageRset = [pylonSets.empty, pylonSets.podSAtp, pylonSets.podLTgp, pylonSets.podLite, pylonSets.podIrst, pylonSets.podHarm];
+    var fuselageLset = [pylonSets.empty, pylonSets.podLNav, pylonSets.podHarm];
 
 	# pylons
 	pylon1 = stations.Pylon.new("Left Wingtip Pylon",     0, [0.082,-4.79412, 0.01109], wingtipSet1, 0, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[1]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[1]",1),func{return getprop("payload/armament/fire-control/serviceable")});
@@ -299,8 +299,8 @@ var a2g_cas = func {
         pylon7.loadSet(pylonSets.agm65x3);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podTgp2);
-        pylon11.loadSet(pylonSets.podNav);
+        pylon10.loadSet(pylonSets.podLTgp);
+        pylon11.loadSet(pylonSets.podLNav);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -319,8 +319,8 @@ var a2g_casext = func {
         pylon7.loadSet(pylonSets.agm65x3);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podTgp2);
-        pylon11.loadSet(pylonSets.podNav);
+        pylon10.loadSet(pylonSets.podLTgp);
+        pylon11.loadSet(pylonSets.podLNav);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -399,8 +399,8 @@ var a2g_lgb1 = func {
         pylon7.loadSet(pylonSets.g12x3);
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim9WT);
-        pylon10.loadSet(pylonSets.podTgp2);
-        pylon11.loadSet(pylonSets.podNav);
+        pylon10.loadSet(pylonSets.podLTgp);
+        pylon11.loadSet(pylonSets.podLNav);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -419,8 +419,8 @@ var a2g_lgb2 = func {
         pylon7.loadSet(pylonSets.g24);
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim9WT);
-        pylon10.loadSet(pylonSets.podTgp2);
-        pylon11.loadSet(pylonSets.podNav);
+        pylon10.loadSet(pylonSets.podLTgp);
+        pylon11.loadSet(pylonSets.podLNav);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -439,7 +439,7 @@ var a2g_gps1 = func {
         pylon7.loadSet(pylonSets.g54);
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim9WT);
-        pylon10.loadSet(pylonSets.podTgp3);
+        pylon10.loadSet(pylonSets.podLite);
         pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
@@ -459,7 +459,7 @@ var a2g_gps2 = func {
         pylon7.loadSet(pylonSets.g54);
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim9WT);
-        pylon10.loadSet(pylonSets.podTgp3);
+        pylon10.loadSet(pylonSets.podLite);
         pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
@@ -479,7 +479,7 @@ var a2s_antiship = func {
         pylon7.loadSet(pylonSets.a84);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podTgp3);
+        pylon10.loadSet(pylonSets.podLite);
         pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
@@ -499,7 +499,7 @@ var a2g_sead = func {
         pylon7.loadSet(pylonSets.a88);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podTgp1);
+        pylon10.loadSet(pylonSets.podSAtp);
         pylon11.loadSet(pylonSets.podHarm);
         f16.reloadCannon();
     } else {
@@ -519,7 +519,7 @@ var a2g_jsow = func {
         pylon7.loadSet(pylonSets.a154);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podTgp3);
+        pylon10.loadSet(pylonSets.podLite);
         pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
@@ -539,7 +539,7 @@ var a2g_jassm = func {
         pylon7.loadSet(pylonSets.a158);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podTgp1);
+        pylon10.loadSet(pylonSets.podSAtp);
         pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
@@ -599,7 +599,7 @@ var a2g_oca = func {
         pylon7.loadSet(pylonSets.agm65x3);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podTgp1);
+        pylon10.loadSet(pylonSets.podSAtp);
         pylon11.loadSet(pylonSets.podHarm);
         f16.reloadCannon();
     } else {
