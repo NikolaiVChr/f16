@@ -1920,6 +1920,43 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <terrain-follow type="bool">true</terrain-follow>
                 <fire-msg type="string">Bruiser</fire-msg>
             </agm-84>
+            <agm-119>
+                <short-name type="string">AG119</short-name>
+                <long-name type="string">AGM-119A Penguin MK3</long-name>
+                <vol-search type="double">0.00</vol-search>
+                <vol-track type="double">1.00</vol-track>
+                <guidance type="string">heat</guidance><!--  -->
+                <navigation type="string">PN</navigation>                           
+                <all-aspect type="bool">true</all-aspect>
+                <class type="string">M</class>
+                <max-fire-range-nm type="double">30</max-fire-range-nm>              <!--  -->
+                <FCS-field-deg type="int">45</FCS-field-deg>            
+                <seeker-field-deg type="int">360</seeker-field-deg>
+                <reaquire type="bool">true</reaquire>
+                <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed>
+                <max-g type="int">5</max-g>
+                <max-launch-g type="int">7</max-launch-g>               
+                <thrust-lbf-stage-1 type="double">530</thrust-lbf-stage-1>
+                <thrust-lbf-stage-2 type="double">470</thrust-lbf-stage-2>
+                <stage-1-duration-sec type="double">60</stage-1-duration-sec>
+                <stage-2-duration-sec type="double">290</stage-2-duration-sec>
+                <weight-launch-lbs type="double">820</weight-launch-lbs>              <!--  -->
+                <weight-warhead-lbs type="double">264.5</weight-warhead-lbs>            <!--  -->
+                <weight-fuel-lbm type="double">104</weight-fuel-lbm>
+                <drag-coeff type="double">0.10</drag-coeff>
+                <cross-section-sqft type="double">0.844</cross-section-sqft>                             <!--  -->
+                <arming-time-sec type="double">3</arming-time-sec>          
+                <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>
+                <self-destruct-time-sec type="double">400</self-destruct-time-sec>  
+                <loft-altitude type="int">180</loft-altitude>
+                <min-fire-range-nm type="double">0.5</min-fire-range-nm>
+                <rail type="bool">false</rail>
+                <max-report-distance type="double">85</max-report-distance>
+                <hit-everything-nearby type="bool">true</hit-everything-nearby>
+                <terrain-follow type="bool">true</terrain-follow>
+                <seeker-angular-speed-dps type="double">40</seeker-angular-speed-dps>
+                <fire-msg type="string">Bruiser</fire-msg>
+            </agm-119>
             <agm-154a>
                 <short-name type="string">AG154</short-name>
                 <long-name type="string">AGM-154A JSOW</long-name>

@@ -2,7 +2,12 @@
 
 <PropertyList>
 
-	<path>AGM-84.ac</path>
+	<path>AGM-119.ac</path>
+
+    <effect>  
+      <inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  
+      <object-name>AGM-119_Glass</object-name> 
+    </effect>
 
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
@@ -13,22 +18,26 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
-      <object-name>AGM-84</object-name>
-      <object-name>AGM-84_Frontfins</object-name>
-      <object-name>AGM-84_Tailend</object-name>
-      <object-name>AGM-84_Tailfins</object-name>
+      <object-name>AGM-119</object-name>
+      <object-name>AGM-119_Front-wing</object-name>
+      <object-name>AGM-119_Tail-wing</object-name>
+      <object-name>AGM-119_Back</object-name>
+      <object-name>AGM-119_Cam</object-name>
   </effect>
 
   <animation>
     <type>select</type>
-      <object-name>AGM-84</object-name>
-      <object-name>AGM-84_Frontfins</object-name>
-      <object-name>AGM-84_Tailend</object-name>
-      <object-name>AGM-84_Tailfins</object-name>
+      <object-name>AGM-119</object-name>
+      <object-name>AGM-119_Front-wing</object-name>
+      <object-name>AGM-119_Tail-wing</object-name>
+      <object-name>AGM-119_Back</object-name>
+      <object-name>AGM-119_Cam</object-name>
+      <object-name>AGM-119_Glass</object-name>
     <condition>
-      <property>payload/armament/agm-84/flags/msl-id-200</property>
+      <property>payload/armament/agm-119/flags/msl-id-600</property>
     </condition>
   </animation>
+	
 
     <particlesystem>
        <name>smoke</name>
@@ -38,7 +47,7 @@
        <lighting type="bool">false</lighting>
 
        <condition>
-             <property>payload/armament/agm-84/flags/smoke-id-200</property>
+             <property>payload/armament/agm-119/flags/smoke-id-600</property>
        </condition>
 
        <attach>world</attach>
@@ -130,7 +139,7 @@
        <lighting type="bool">false</lighting>
 
        <condition>
-             <property>payload/armament/agm-84/flags/explode-id-200</property>
+             <property>payload/armament/agm-119/flags/explode-id-600</property>
        </condition>
 
        <attach>world</attach>
@@ -216,7 +225,7 @@
        <lighting type="bool">false</lighting>
 
        <condition>
-             <property>payload/armament/agm-84/flags/explode-smoke-id-200</property>
+             <property>payload/armament/agm-119/flags/explode-smoke-id-600</property>
        </condition>
 
        <attach>world</attach>
@@ -295,10 +304,12 @@
      </particlesystem>
 
 	<animation>
-  		<object-name>AGM-84</object-name>
-      <object-name>AGM-84_Frontfins</object-name>
-      <object-name>AGM-84_Tailend</object-name>
-      <object-name>AGM-84_Tailfins</object-name>
+      <object-name>AGM-119</object-name>
+      <object-name>AGM-119_Front-wing</object-name>
+      <object-name>AGM-119_Tail-wing</object-name>
+      <object-name>AGM-119_Back</object-name>
+      <object-name>AGM-119_Cam</object-name>
+      <object-name>AGM-119_Glass</object-name>
   		<enable-hot type="bool">false</enable-hot>
  	</animation>
 	

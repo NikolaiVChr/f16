@@ -368,10 +368,25 @@
         <text>
             <row>10</row>
             <col>2</col>
-            <label>A/G JASSM Stand-off Strike</label>
+            <label>A/S Anti-Ship (Single-mode)</label>
         </text>
         <button>
             <row>10</row>
+            <col>3</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2s_antiship2();</script>
+            </binding>
+        </button>
+
+        <text>
+            <row>12</row>
+            <col>2</col>
+            <label>A/G JASSM Stand-off Strike</label>
+        </text>
+        <button>
+            <row>12</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -381,12 +396,12 @@
         </button>
 
         <text>
-            <row>12</row>
+            <row>14</row>
             <col>2</col>
             <label>A/G JSOW Stand-off Strike</label>
         </text>
         <button>
-            <row>12</row>
+            <row>14</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -396,12 +411,12 @@
         </button>
 
         <text>
-            <row>14</row>
+            <row>16</row>
             <col>2</col>
             <label>Offensive Counter Air</label>
         </text>
         <button>
-            <row>14</row>
+            <row>16</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -411,12 +426,12 @@
         </button>
 
         <text>
-            <row>16</row>
+            <row>18</row>
             <col>2</col>
             <label>Ferry Loadout</label>
         </text>
         <button>
-            <row>16</row>
+            <row>18</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -426,12 +441,12 @@
         </button>
 
         <text>
-            <row>18</row>
+            <row>20</row>
             <col>2</col>
             <label>Ferry w/ Cargo Loadout</label>
         </text>
         <button>
-            <row>18</row>
+            <row>20</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -441,12 +456,12 @@
         </button>
 
         <text>
-            <row>20</row>
+            <row>22</row>
             <col>2</col>
             <label>Training (Dummies)</label>
         </text>
         <button>
-            <row>20</row>
+            <row>22</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -455,13 +470,19 @@
             </binding>
         </button>
 
+        <hrule>
+            <row>23</row>
+            <col>0</col>
+            <colspan>4</colspan>
+        </hrule>
+
         <text>
-            <row>22</row>
+            <row>24</row>
             <col>2</col>
             <label>Clean</label>
         </text>
         <button>
-            <row>22</row>
+            <row>24</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>

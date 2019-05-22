@@ -2,7 +2,7 @@
 
 <PropertyList>
 
-	<path>agm84.ac</path>
+	<path>AGM-84.ac</path>
 
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
