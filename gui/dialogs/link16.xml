@@ -6,13 +6,13 @@
   	<draggable>true</draggable>
     <resizable>true</resizable>
     <width>250</width>
-    <height>250</height>
+    <height>340</height>
 
     <group>
 		<layout>hbox</layout>
 		<empty><stretch>1</stretch></empty>
 
-		<text><label>Link 16</label></text>
+		<text><label>Link 16 Tactical Data Link</label></text>
 
 		<empty><stretch>1</stretch></empty>
 
@@ -33,7 +33,7 @@
 	</group>
 
   	<text>
-	    <label>Callsigns:</label>
+	    <label>Friendly callsigns:</label>
 	    <height>25</height>
 	</text>
 
@@ -85,9 +85,57 @@
       		<blue>0.5</blue>
       	</color>
 	</input>
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>Wingman 4</label>
+	  	<property>link16/wingman-5</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+      	<color>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
+      	</color>
+	</input>
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>Wingman 5</label>
+	  	<property>link16/wingman-6</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+      	<color>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
+      	</color>
+	</input>
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>Wingman 6</label>
+	  	<property>link16/wingman-7</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+      	<color>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
+      	</color>
+	</input>
 	<!-- wingman #4 is only used for the Mig28 scenario aircraft -->
 	<empty><stretch>1</stretch></empty>
-	<text><label>Wingmen only show up in RWR,</label></text>
-	<text><label>when no other threats present.</label></text>
+	<text><label>Wingmen only show up in RWR</label></text>
+	<text><label>when no other threats are present.</label></text>
 
 </PropertyList>
