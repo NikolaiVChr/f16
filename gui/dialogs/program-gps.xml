@@ -125,6 +125,6 @@
 	</button>
 
 	<empty><stretch>1</stretch></empty>
-	<text><label>Used for programming GPS guided munitions.</label></text>
+	<text><label>Used for programming GPS guided munitions like JASSM and JSOW.</label></text>
 
 </PropertyList>
