@@ -451,15 +451,15 @@ var F16_HUD = {
 #            props.UpdateManager.FromHashValue("roll_rad", 1.0, func(roll_rad)
 #                                      {
 #                                      }),
-            props.UpdateManager.FromHashList(["altitude_agl_ft","cara","measured_altitude"], 1.0, func(hdp)
+            props.UpdateManager.FromHashList(["altitude_agl_ft","cara","measured_altitude","altSwitch"], 1.0, func(hdp)
                                       {
                                           obj.agl=hdp.altitude_agl_ft;
                                           obj.altScaleMode = 0;#0=baro, 1=radar
-                                          if (hdp.altSwitch == 2) {
+                                          if (hdp.altSwitch == 2) {#RDR
                                                 obj.altScaleMode = hdp.cara;
-                                          } elsif (hdp.altSwitch == 1) {
+                                          } elsif (hdp.altSwitch == 1) {#BARO
                                                 obj.altScaleMode = 0;
-                                          } else {
+                                          } else {#AUTO
                                                 if (obj["altScaleModeOld"] != nil) {
                                                     if (obj.altScaleModeOld) {
                                                         obj.altScaleMode = obj.agl < 1500 and hdp.cara;
