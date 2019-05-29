@@ -53,6 +53,15 @@ Text Center:
 
 Text Bottom
   Here DED DATA will show if enabled.
+  
+Localizer in HUD
+To enable localizer in HUD turn the mode knob on centerpanel left of the HSI.
+It can show both glidepath and ILS, with vertical and horizontal lines.
+If a line is centered on the FPM and segmented it means its invalid.
+If a line is not centered but segmented it means its valid but out of range.
+If a line is not segmented, its in range and valid.
+Keep the lines centered on the FPM to aim for the localizer beams.
+
 
 RWR
 The round display above left MFD display is a Radar Warning Reciever.
@@ -68,7 +77,7 @@ Hat above designation: Airborne
 Use Link 16 in menu to define your wingmen, so they don't show up on RWR.
 
 For something to show up in the RWR at all these conditions must be met:
-1: Be a threat or unknown.
+1: Be a threat.
 2: Be picked up by your radar OR having an active radar pointed your way OR having transponder on and not be too far away.
 
 Notice that the RWR can sometimes pick up threat much further away than your radar is capable off.
@@ -99,6 +108,10 @@ Roll:  HDG SEL:  Hold current heading
        ATT HOLD: Hold current roll attitude
        STRG SEL: Follow route from Route Manager
 
+AIMING THE CANNON
+Once you have selected cannon and masterarm switch is ON, a timer will start and after around 2 seconds you will get the EEGS funnel on the HUD.
+EEGS stands for Enhanced Envelope Gun Sight. Keep you targets wingtips so that they touch the sides of the funnel, and keep your aircraft attitude movement stable for around 1 second, then fire a burst. This will give you the best chance of hitting. The sides of the funnel is computed for a 35ft wingspan, so if you are aiming at a larger or smaller aircraft you need to compensate for that.
+
 RELEASING ORDNANCE
 First mount some armament.
 Secondly make sure masterarm is enabled.
@@ -106,7 +119,11 @@ Thirdly select the arm. (use 'w' key or click buttons 'A-A' or 'A-G' under HUD)
 Fourthly make sure target is selected (key 'y')
 For GBU-12 and GBU-24 make sure laser is armed.
 For GBU-12, GBU-24, GBU-31, GBU-54, MK-82, MK-83, MK-84, CBU-87, AGM-154A when getting close a vertical line will appear in HUD. Align flight path indicator on the line, when a small horizontal line on that line starts dropping down and reach another line then its time to release (key 'e' or 'trigger').
-For AIM-120 the trigger can be held for 2 second to fire it without a lock in MADDOG mode, where it will lock onto anyone it sees. This feature is still not entirely bug free so do this on own risk.
+For AIM-120 the trigger can be held for 2 second to fire it without a lock in MADDOG mode, where it will lock onto anyone it sees.
+
+TARGETPODS
+On the MFDs you can select TGP. This however only works if you have mounted one of the target-pods.
+Per default the target pod fixed looking at some offset from you aircraft bore attitude. However if you select something with the radar it will if the distance is not too large look at that. You will notice in the TGP view on the MFD that it is not very accurate. So after selecting a radar target, use the TGP buttons (LEFT;RIGHT;UP;DOWN) to aim better and click LOCK. This will now make released ordnance hit more accurate. There is also keys to ZOOM and switch from narrow to wide field of view.
 
 NIGHTTIME FLYING
 There is flood and instrument lights that can be turned up.
@@ -123,7 +140,7 @@ The DED can also be brought up on the HUD in the controlpanel.
 CONTROLPANEL and CONFIG
 You can find these in the FG menu (the last item).
 They contains various aircraft and experience settings.
-Once the cockpit controls is full 3D the aircraft settings will be removed.
+Once the cockpit controls is full 3D the menu aircraft settings will be removed.
 
 BITCHING BETTY
 Thats the nickname of the annunciation voice. :)
@@ -144,6 +161,14 @@ Can switch the HUD Velocity, Altitude and Heading scales off, the digital readou
 
 HUD FPM
 Can switch off the ATTitude lines and/or the Flight Path Marker.
+
+HUD ALT
+RDR sets the altimeter scale to CARA whenever that is available.
+BARO sets the altimeter scale to barometric.
+AUTO sets the altimeter scale to CARA at low AGL and barometric at higher AGL.
+
+HUD DED
+Will copy the DED panel onto the HUD.
 
 BINGO
 The fuel level where the system and Betty will warn that the fuel is low.
