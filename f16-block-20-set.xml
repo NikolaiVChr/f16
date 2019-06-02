@@ -3,10 +3,10 @@
 <PropertyList include="f16-base.xml">
 
  <sim>
-  <description>General Dynamics F-16AM block 20</description>
+  <description>General Dynamics F-16AM Block 20</description>
   <long-description>
-   The General Dynamics F-16AM Fighting Falcon Mid-life upgrade is an upgrade of older, primary european, F16A block 10 and 15. It has approx. same capabilities as block 50.
-   With a slightly less powerful engine. This models the small tail variant (upgraded block 10).
+   The General Dynamics F-16AM Fighting Falcon Mid-life upgrade is an upgrade of older, primary european, F16A Block 10 and 15. It has approx. same capabilities as Block 50.
+   With a slightly less powerful engine. This models the small tail variant (upgraded Block 10).
   </long-description>
   <author>Erik Hofman, Pensacola, Martin "Pegasus" Schmitt, Richard Harrison, Nikolai V. Chr., J Maverick 16, Joshua Davidson, Gary Brown, Martien Van Der P., Justin Nicholson, Jonathan Redpath</author>
   <status>production</status>

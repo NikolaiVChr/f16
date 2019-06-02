@@ -1951,7 +1951,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <vol-search type="double">0.00</vol-search>
                 <vol-track type="double">1.00</vol-track>
                 <guidance type="string">heat</guidance><!--  -->
-                <navigation type="string">APN</navigation>                           
+                <navigation type="string">direct</navigation>                           
                 <all-aspect type="bool">true</all-aspect>
                 <class type="string">M</class>
                 <max-fire-range-nm type="double">30</max-fire-range-nm>              <!--  -->
