@@ -186,9 +186,9 @@ RWRCanvas = {
         rwr.AIRCRAFT_G91	  = "91";
         rwr.AIRCRAFT_MB339    = "MB";
         rwr.AIRCRAFT_INTRUDER = "A6";
+        rwr.AIRCRAFT_FROGFOOT = "25";
         rwr.AIRCRAFT_JSF      = "35";
         rwr.AIRCRAFT_GRIPEN   = "39";
-    #   rwr.AIRCRAFT_TANKER   = "KC";
         rwr.AIRCRAFT_UNKNOWN  = "U";
         rwr.ASSET_AI          = "AI";
         rwr.lookupType = {
@@ -222,19 +222,14 @@ RWRCanvas = {
                 "frigate":                  rwr.ASSET_FRIGATE,
                 "fleet":                    rwr.ASSET_FRIGATE,
                 "Mig-28":                   rwr.SCENARIO_OPPONENT,
-        #       "KC-137R":                  rwr.AIRCRAFT_TANKER,
-        #       "KC-137R-RT":               rwr.AIRCRAFT_TANKER,
-        #       "707-TT":                   rwr.AIRCRAFT_TANKER,
-        #       "KC-30A":                   rwr.AIRCRAFT_TANKER,
-        #       "Voyager-KC":               rwr.AIRCRAFT_TANKER,
-        #       "KC-10A":                   rwr.AIRCRAFT_TANKER,
-        #       "KC-10A-GE":                rwr.AIRCRAFT_TANKER,
         # Other threatening aircrafts (FGAddon, FGUK, etc.):
                 "AI":                       rwr.ASSET_AI,
                 "SU-27":                    rwr.AIRCRAFT_SU27,
                 "SU-37":					rwr.AIRCRAFT_SU27,
                 "EF2000":                   rwr.AIRCRAFT_TYPHOON,
                 "F-15C_Eagle":              rwr.AIRCRAFT_EAGLE,
+                "F-15J_ADTW":				rwr.AIRCRAFT_EAGLE,
+                "F-15DJ_ADTW":				rwr.AIRCRAFT_EAGLE,
                 "f16":                      rwr.AIRCRAFT_FALCON,
                 "F-16CJ":					rwr.AIRCRAFT_FALCON,
                 "FA-18C_Hornet":            rwr.AIRCRAFT_HORNET,
@@ -242,6 +237,9 @@ RWRCanvas = {
                 "Su-15":                    rwr.AIRCRAFT_SU15,
                 "Jaguar-GR3":               rwr.AIRCRAFT_JAGUAR,
                 "F-4S":						rwr.AIRCRAFT_PHANTOM,
+                "F-4EJ_ADTW":				rwr.AIRCRAFT_PHANTOM,
+                "FGR2-Phantom":				rwr.AIRCRAFT_PHANTOM,
+                "F4J":						rwr.AIRCRAFT_PHANTOM,
                 "A-4K":						rwr.AIRCRAFT_SKYHAWK,
                 "Tornado-GR4a":				rwr.AIRCRAFT_TONKA,
                 "Tornado-IDS":				rwr.AIRCRAFT_TONKA,
@@ -255,6 +253,7 @@ RWRCanvas = {
                 "G91":						rwr.AIRCRAFT_G91,
                 "mb339":                    rwr.AIRCRAFT_MB339,
                 "MiG-15bis":                rwr.AIRCRAFT_MIG15,
+                "Su-25":					rwr.AIRCRAFT_FROGFOOT,
                 "A-6E-model":               rwr.AIRCRAFT_INTRUDER,
                 "F-35B":                    rwr.AIRCRAFT_JSF,
                 "JAS-39C_Gripen":           rwr.AIRCRAFT_GRIPEN,
