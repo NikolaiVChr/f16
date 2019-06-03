@@ -59,5 +59,10 @@
    <blue>1</blue>
   </emission>
  </animation>-->
+ 
+ <effect>
+  <inherits-from>Effects/model-transparent</inherits-from>
+  <object-name>HUDedge</object-name>
+ </effect>
 
 </PropertyList>
