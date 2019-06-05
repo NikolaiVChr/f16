@@ -73,7 +73,8 @@ var rcs_database = {
     "frigate":                  450,    #estimated with blender
     "tower":                    60,     #estimated with blender
     "gci":                      50,     #guess
-    "F-35B":					0.05,   #guess
+    "F-22-Raptor":				0.04,	#guess
+    "F-35B":					0.025,  #guess
     "Jaguar-GR3":               1.5,	#guess
 };
 

@@ -187,6 +187,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_MB339    = "MB";
         rwr.AIRCRAFT_INTRUDER = "A6";
         rwr.AIRCRAFT_FROGFOOT = "25";
+        rwr.AIRCRAFT_RAPTOR	  = "22";
         rwr.AIRCRAFT_JSF      = "35";
         rwr.AIRCRAFT_GRIPEN   = "39";
         rwr.AIRCRAFT_UNKNOWN  = "U";
@@ -255,6 +256,7 @@ RWRCanvas = {
                 "MiG-15bis":                rwr.AIRCRAFT_MIG15,
                 "Su-25":					rwr.AIRCRAFT_FROGFOOT,
                 "A-6E-model":               rwr.AIRCRAFT_INTRUDER,
+                "F-22-Raptor":				rwr.AIRCRAFT_RAPTOR,
                 "F-35B":                    rwr.AIRCRAFT_JSF,
                 "JAS-39C_Gripen":           rwr.AIRCRAFT_GRIPEN,
                 "ufo":                      rwr.AIRCRAFT_UNKNOWN,
