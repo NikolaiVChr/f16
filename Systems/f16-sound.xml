@@ -1209,6 +1209,68 @@
 				<factor>1</factor>
 			</volume>
 		</lock-tone>
+		<lock-tone>
+			<name>aim-154-signal</name>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/betty/lock.wav</path>
+			<mode>once</mode>
+			<condition>
+				<or>
+					<greater-than>
+						<property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+						<value>20</value>
+					</greater-than>
+					<greater-than>
+						<property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+						<value>20</value>
+					</greater-than>
+				</or>
+				<property>payload/armament/agm-154/sound-on-off</property>
+				<equals>
+					<property>payload/armament/agm-154/sound-volume</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<!--<pitch>
+                <factor>1.8</factor>
+                <max>2</max>
+            </pitch>-->
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>1</factor>
+			</volume>
+		</lock-tone>
+		<lock-tone>
+			<name>aim-158-signal</name>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/betty/lock.wav</path>
+			<mode>once</mode>
+			<condition>
+				<or>
+					<greater-than>
+						<property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+						<value>20</value>
+					</greater-than>
+					<greater-than>
+						<property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+						<value>20</value>
+					</greater-than>
+				</or>
+				<property>payload/armament/agm-158/sound-on-off</property>
+				<equals>
+					<property>payload/armament/agm-158/sound-volume</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<!--<pitch>
+                <factor>1.8</factor>
+                <max>2</max>
+            </pitch>-->
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>1</factor>
+			</volume>
+		</lock-tone>
 		<avionics>
 			<path>Sounds/avionics-400Hz.wav</path>
 			<mode>looped</mode>
