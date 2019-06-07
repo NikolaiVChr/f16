@@ -1210,7 +1210,7 @@
 			</volume>
 		</lock-tone>
 		<lock-tone>
-			<name>aim-154-signal</name>
+			<name>aim-154a-signal</name>
 			<type>avionics</type>
 			<path>Aircraft/f16/Sounds/betty/lock.wav</path>
 			<mode>once</mode>
@@ -1225,9 +1225,9 @@
 						<value>20</value>
 					</greater-than>
 				</or>
-				<property>payload/armament/agm-154/sound-on-off</property>
+				<property>payload/armament/agm-154a/sound-on-off</property>
 				<equals>
-					<property>payload/armament/agm-154/sound-volume</property>
+					<property>payload/armament/agm-154a/sound-volume</property>
 					<value>1</value>
 				</equals>
 			</condition>
