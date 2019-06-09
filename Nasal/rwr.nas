@@ -180,6 +180,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_JAGUAR   = "JG";
         rwr.AIRCRAFT_PHANTOM  = "F4";
         rwr.AIRCRAFT_SKYHAWK  = "A4";
+        rwr.AIRCRAFT_TIGER    = "F5";
         rwr.AIRCRAFT_TONKA	  = "TN";
         rwr.AIRCRAFT_RAFALE	  = "RF";
         rwr.AIRCRAFT_HARRIER  = "HR";
@@ -241,7 +242,16 @@ RWRCanvas = {
                 "F-4EJ_ADTW":				rwr.AIRCRAFT_PHANTOM,
                 "FGR2-Phantom":				rwr.AIRCRAFT_PHANTOM,
                 "F4J":						rwr.AIRCRAFT_PHANTOM,
+                "a4f":                      rwr.AIRCRAFT_SKYHAWK,
                 "A-4K":						rwr.AIRCRAFT_SKYHAWK,
+                "F-5E":                     rwr.AIRCRAFT_TIGER,
+                "F-5E-TigerII":             rwr.AIRCRAFT_TIGER,
+                "F-5ENinja":                rwr.AIRCRAFT_TIGER,
+                "f-20A":                    rwr.AIRCRAFT_TIGER,
+                "f-20C":                    rwr.AIRCRAFT_TIGER,
+                "f-20prototype":            rwr.AIRCRAFT_TIGER,
+                "f-20bmw":                  rwr.AIRCRAFT_TIGER,
+                "f-20-dutchdemo":           rwr.AIRCRAFT_TIGER,
                 "Tornado-GR4a":				rwr.AIRCRAFT_TONKA,
                 "Tornado-IDS":				rwr.AIRCRAFT_TONKA,
                 "Tornado-F3":				rwr.AIRCRAFT_TONKA,
@@ -258,6 +268,7 @@ RWRCanvas = {
                 "A-6E-model":               rwr.AIRCRAFT_INTRUDER,
                 "F-22-Raptor":				rwr.AIRCRAFT_RAPTOR,
                 "F-35B":                    rwr.AIRCRAFT_JSF,
+                "daVinci_F-35A":            rwr.AIRCRAFT_JSF,
                 "JAS-39C_Gripen":           rwr.AIRCRAFT_GRIPEN,
                 "ufo":                      rwr.AIRCRAFT_UNKNOWN,
         };

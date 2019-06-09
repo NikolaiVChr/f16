@@ -20,7 +20,7 @@ var rcs_database = {
     "default":                  200,    #default value if target's model isn't listed
     "f-14b":                    12,     #guess
     "F-14D":                    12,     #guess
-    "f-14b-bs":                 0.001,   # low so it dont show up on radar
+    "f-14b-bs":                 0.001,  # low so it dont show up on radar
     "F-15C":                    10,     #low end of sources
     "F-15D":                    11,     #low end of sources
     "F-16":                     2,      #guess
@@ -28,7 +28,7 @@ var rcs_database = {
     "F-16CJ":                   2,      #guess
     "f16":                      2,      #guess
     "MiG-29":                   6,      #guess
-    "f15-bs":                   0.001,   # low so it dont show up on radar
+    "f15-bs":                   0.001,  # low so it dont show up on radar
     "JA37-Viggen":              3,      #guess
     "AJ37-Viggen":              3,      #guess
     "AJS37-Viggen":             3,      #guess
@@ -73,8 +73,9 @@ var rcs_database = {
     "frigate":                  450,    #estimated with blender
     "tower":                    60,     #estimated with blender
     "gci":                      50,     #guess
-    "F-22-Raptor":				0.04,	#guess
-    "F-35B":					0.025,  #guess
+    "F-22-Raptor":				0.01,	#actual: 0.0001
+    "F-35B":					0.005,
+    "daVinci_F-35A":            0.005,  
     "Jaguar-GR3":               1.5,	#guess
 };
 
