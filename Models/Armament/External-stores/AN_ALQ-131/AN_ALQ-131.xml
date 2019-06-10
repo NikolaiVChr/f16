@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <PropertyList>
-  <path>Aircraft/f16/Models/Armament/External-stores/AN-ALQ-131/an-alq-131.ac</path>
+  <path>Aircraft/f16/Models/Armament/External-stores/AN_ALQ-131/AN_ALQ-131.ac</path>
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
       <parameters>
@@ -11,7 +11,12 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
-      <object-name>an-alq-131-body</object-name>
+      <object-name>ALQ-131_body</object-name>
+      <object-name>ALQ-131_inside</object-name>
+      <object-name>ALQ-131_metal</object-name>
+      <object-name>ALQ-131_radome</object-name>
+      <object-name>ALQ-131_screws</object-name>
+      <object-name>ALQ-131_mounts</object-name>
   </effect>
 
  </PropertyList>

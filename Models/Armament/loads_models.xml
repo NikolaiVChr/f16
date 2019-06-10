@@ -157,13 +157,13 @@
  </model>
 
  <model>
-  <name>Station3_AIM-7</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-7/aim-7.xml</path>
+  <name>Station3_AIM-7F</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-7/AIM-7F.xml</path>
   <offsets>
    <x-m>0.513785</x-m>
    <y-m>-2.88606</y-m>
-   <z-m>-0.330157</z-m>
-   <pitch-deg>-3.5</pitch-deg>
+   <z-m>-0.355</z-m>
+   <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
  
@@ -495,12 +495,12 @@
 <!-- =========================================== Station 4 =======================================================  -->
 <!-- =============================================================================================================  -->  
  <model>
-  <name>AN-ALQ-131</name>
-  <path>Aircraft/f16/Models/Armament/External-stores/AN-ALQ-131/AN-ALQ-131.xml</path>
+  <name>AN_ALQ-131</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/AN_ALQ-131/AN_ALQ-131.xml</path>
   <offsets>
    <x-m>-0.02</x-m>
    <y-m>0</y-m>
-   <z-m>-1.48</z-m>
+   <z-m>-1.228</z-m>
    <!--<z-m>-1.15</z-m>-->
    <pitch-deg>-0.6</pitch-deg>
   </offsets>
@@ -727,13 +727,13 @@
  </model>
 
   <model>
-  <name>Station7_AIM-7</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/AIM-7/aim-7.xml</path>
+  <name>Station7_AIM-7F</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-7/AIM-7F.xml</path>
   <offsets>
    <x-m>0.513785</x-m>
    <y-m>2.88606</y-m>
-   <z-m>-0.330157</z-m>
-   <pitch-deg>-3.5</pitch-deg>
+   <z-m>-0.355</z-m>
+   <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
  

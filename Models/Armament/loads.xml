@@ -168,7 +168,7 @@
  
   <animation>
   <type>select</type>
-  <object-name>Station3_AIM-7</object-name>
+  <object-name>Station3_AIM-7F</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-2-type</property>
@@ -601,11 +601,11 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
  </animation>-->
 <animation>
   <type>select</type>
-  <object-name>AN-ALQ-131</object-name>
+  <object-name>AN_ALQ-131</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-4-type</property>
-      <value>AN/ALQ-131 ECM Pod</value>
+      <value>AN/ALQ-131(V) ECM Pod</value>
     </equals>
     <greater-than>
       <property>payload/armament/station/id-4-count</property>
@@ -657,7 +657,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
     </equals>
 	<equals>
       <property>payload/armament/station/id-4-type</property>
-      <value>AN/ALQ-131 ECM Pod</value>
+      <value>AN/ALQ-131(V) ECM Pod</value>
     </equals>
 	</or>
     <greater-than>
@@ -876,7 +876,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
  
  <animation>
   <type>select</type>
-  <object-name>Station7_AIM-7</object-name>
+  <object-name>Station7_AIM-7F</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-6-type</property>

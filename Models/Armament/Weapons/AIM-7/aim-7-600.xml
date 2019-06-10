@@ -4,8 +4,8 @@
 
 <PropertyList>
 
-	<name>aim-7</name>
-	<path>aim-7.ac</path>
+	<name>AIM-7F</name>
+	<path>AIM-7F.ac</path>
 
 	<effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
@@ -16,12 +16,14 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
-      <object-name>aim-7</object-name>
+      <object-name>AIM-7F</object-name>
+      <object-name>AIM-7F_Rear</object-name>
   </effect>
 
 	<animation>
 		<type>select</type>
-		<object-name>aim-7</object-name>
+      	<object-name>AIM-7F</object-name>
+      	<object-name>AIM-7F_Rear</object-name>
 		<condition>
 			<property>payload/armament/aim-7/flags/msl-id-600</property>
 		</condition>
@@ -384,7 +386,8 @@
 	 </particlesystem>
 
 	<animation>
-  		<object-name>aim-7</object-name>
+      	<object-name>AIM-7F</object-name>
+      	<object-name>AIM-7F_Rear</object-name>
   		<enable-hot type="bool">false</enable-hot>
  	</animation>
 
