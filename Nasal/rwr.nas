@@ -262,6 +262,7 @@ RWRCanvas = {
                 "Harrier-GR9":				rwr.AIRCRAFT_HARRIER,
                 "AV-8B":					rwr.AIRCRAFT_HARRIER,
                 "G91":						rwr.AIRCRAFT_G91,
+                "g91":						rwr.AIRCRAFT_G91,
                 "mb339":                    rwr.AIRCRAFT_MB339,
                 "MiG-15bis":                rwr.AIRCRAFT_MIG15,
                 "Su-25":					rwr.AIRCRAFT_FROGFOOT,
@@ -270,6 +271,10 @@ RWRCanvas = {
                 "F-35B":                    rwr.AIRCRAFT_JSF,
                 "daVinci_F-35A":            rwr.AIRCRAFT_JSF,
                 "JAS-39C_Gripen":           rwr.AIRCRAFT_GRIPEN,
+                "mp-nimitz":                rwr.ASSET_FRIGATE,
+                "mp-eisenhower":            rwr.ASSET_FRIGATE,
+                "mp-vinson":                rwr.ASSET_FRIGATE,
+                "mp-clemenceau":            rwr.ASSET_FRIGATE,
                 "ufo":                      rwr.AIRCRAFT_UNKNOWN,
         };
         rwr.shownList = [];
