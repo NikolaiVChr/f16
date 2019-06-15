@@ -20,7 +20,7 @@ var rcs_database = {
     "default":                  200,    #default value if target's model isn't listed
     "f-14b":                    12,     #guess
     "F-14D":                    12,     #guess
-    "f-14b-bs":                 0.001,  # low so it dont show up on radar
+    "f-14b-bs":                 0.0001, # low so it dont show up on radar
     "F-15C":                    10,     #low end of sources
     "F-15D":                    11,     #low end of sources
     "F-16":                     2,      #guess
@@ -28,20 +28,20 @@ var rcs_database = {
     "F-16CJ":                   2,      #guess
     "f16":                      2,      #guess
     "MiG-29":                   6,      #guess
-    "f15-bs":                   0.001,  # low so it dont show up on radar
+    "f15-bs":                   0.0001, # low so it dont show up on radar
     "JA37-Viggen":              3,      #guess
     "AJ37-Viggen":              3,      #guess
     "AJS37-Viggen":             3,      #guess
     "JA37Di-Viggen":            3,      #guess
     "m2000-5":                  1,
     "m2000-5B":                 1,
-    "m2000-5B-backseat":        0.001,
+    "m2000-5B-backseat":        0.0001,
     "707":                      100,    #guess
     "707-TT":                   100,    #guess
     "EC-137D":                  110,    #guess
     "B-1B":                     10,
-    "b2-spirit":                0.008,   #actual: 0.0001
-    "B-2A":                     0.008,   #actual: 0.0001
+    "b2-spirit":                0.005,   #actual: 0.0001
+    "B-2A":                     0.005,   #actual: 0.0001
     "Blackbird-SR71A":          0.25,
     "Blackbird-SR71B":          0.30,
     "Blackbird-SR71A-BigTail":  0.30,
@@ -76,10 +76,10 @@ var rcs_database = {
     "frigate":                  450,    #estimated with blender
     "tower":                    60,     #estimated with blender
     "gci":                      50,     #guess
-    "F-22-Raptor":				0.008,	#actual: 0.0001
-    "F-35B":					0.005,
-    "daVinci_F-35A":            0.005,  
-    "Jaguar-GR3":               1.5,	#guess
+    "F-22-Raptor":				0.005,	#actual: 0.0001
+    "F-35B":					0.002,
+    "daVinci_F-35A":            0.002,  
+    "Jaguar-GR3":               4,	    #guess
     "OpenRadar":                0.001,  # low so it dont show up on radar
 };
 
