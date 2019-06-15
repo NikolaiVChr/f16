@@ -40,9 +40,11 @@ var rcs_database = {
     "707-TT":                   100,    #guess
     "EC-137D":                  110,    #guess
     "B-1B":                     10,
+    "b2-spirit":                0.01,   #actual: 0.0001
     "Blackbird-SR71A":          0.25,
     "Blackbird-SR71B":          0.30,
     "Blackbird-SR71A-BigTail":  0.30,
+    "u2s":                      0.30,   #actual: 0.01
     "ch53e":                    20,     #guess
     "MiG-21bis":                3.5,
     "MQ-9":                     1,      #guess
@@ -77,6 +79,7 @@ var rcs_database = {
     "F-35B":					0.005,
     "daVinci_F-35A":            0.005,  
     "Jaguar-GR3":               1.5,	#guess
+    # "OpenRadar":                0.001,  # low so it dont show up on radar
 };
 
 var prevVisible = {};
