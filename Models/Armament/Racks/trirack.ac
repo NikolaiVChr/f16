@@ -6,6 +6,7 @@ OBJECT poly
 name "box.003"
 data 8
 Mesh.007
+texture "rack.png"
 crease 45.000000
 numvert 194
 0.38041 -0.183767 0.053454
