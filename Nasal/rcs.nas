@@ -40,8 +40,8 @@ var rcs_database = {
     "707-TT":                   100,    #guess
     "EC-137D":                  110,    #guess
     "B-1B":                     10,
-    "b2-spirit":                0.01,   #actual: 0.0001
-    "B-2A":                     0.01,   #actual: 0.0001
+    "b2-spirit":                0.008,   #actual: 0.0001
+    "B-2A":                     0.008,   #actual: 0.0001
     "Blackbird-SR71A":          0.25,
     "Blackbird-SR71B":          0.30,
     "Blackbird-SR71A-BigTail":  0.30,
@@ -76,7 +76,7 @@ var rcs_database = {
     "frigate":                  450,    #estimated with blender
     "tower":                    60,     #estimated with blender
     "gci":                      50,     #guess
-    "F-22-Raptor":				0.01,	#actual: 0.0001
+    "F-22-Raptor":				0.008,	#actual: 0.0001
     "F-35B":					0.005,
     "daVinci_F-35A":            0.005,  
     "Jaguar-GR3":               1.5,	#guess
