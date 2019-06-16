@@ -2366,6 +2366,9 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
         <wingman-2 type="string"></wingman-2>
         <wingman-3 type="string"></wingman-3>
         <wingman-4 type="string"></wingman-4>
+        <wingman-5 type="string"></wingman-5>
+        <wingman-6 type="string"></wingman-6>
+        <wingman-7 type="string"></wingman-7>
     </link16>
     <sound>
         <rwr-new type="bool">false</rwr-new>
