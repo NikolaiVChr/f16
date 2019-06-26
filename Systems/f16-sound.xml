@@ -2164,6 +2164,74 @@
                 <factor>1.3</factor>
             </volume>
         </air-brakes>
+        <drag-chute>
+			<name>drag-chute</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/caution.wav</path>
+			<condition>
+				<equals>
+					<property>f16/chute/enable</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>1</factor>
+				<max>1</max>
+			</volume>
+		</drag-chute>
+        <boom-contact>
+			<name>boom-contact</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/boom_contact.wav</path>
+			<condition>
+				<equals>
+					<property>systems/refuel/contact</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>1</factor>
+				<max>1</max>
+			</volume>
+		</boom-contact>
+		<boom-report>
+			<name>boom-report</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/caution.wav</path>
+			<condition>
+				<equals>
+					<property>systems/refuel/contact</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>1</factor>
+				<max>1</max>
+			</volume>
+		</boom-report>
+		<boom-disc>
+			<name>boom-disc</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/caution.wav</path>
+			<condition>
+				<equals>
+					<property>systems/refuel/contact</property>
+					<value>0</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>1</factor>
+				<max>1</max>
+			</volume>
+		</boom-disc>
 		<gamma>
 			<name>gamma</name>
 			<path>Aircraft/f16/Sounds/missile.wav</path>
