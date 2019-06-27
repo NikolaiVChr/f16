@@ -151,6 +151,49 @@
 				<factor>-0.01</factor>
 			</volume>
 		</engine_fan>
+		<engine_fan>
+			<name>external fan 2</name>
+			<path>Aircraft/f16/Sounds/FGUK/f16-whine.wav</path>
+			<mode>looped</mode>
+			<condition>
+				<greater-than>
+					<property>engines/engine/n2</property>
+					<value>5</value>
+				</greater-than>
+				<not>
+					<property>sim/current-view/internal</property>
+				</not>
+				<less-than>
+					<property>engines/engine/n1</property>
+					<value>100.0</value>
+				</less-than>
+			</condition>
+			<reference-dist>100</reference-dist>
+			<max-dist>4000</max-dist>
+			<position>
+				<x>0.6</x>
+				<y>0.01</y>
+				<z>-0.37</z>
+			</position>
+			<orientation>
+				<x>-0.98</x>
+				<y>0.0</y>
+				<z>-0.17</z>
+				<inner-angle>60.0</inner-angle>
+				<outer-angle>200.0</outer-angle>
+				<outer-gain>0.65</outer-gain>
+			</orientation>
+			<pitch>
+				<property>engines/engine/n1</property>
+				<offset>1.0</offset>
+				<factor>0.004</factor>
+			</pitch>
+			<volume>
+				<property>engines/engine/n1</property>
+				<offset>0.35</offset>
+				<factor>-0.01</factor>
+			</volume>
+		</engine_fan>
 		<exhaust>
 			<name>turbine internal</name>
 			<path>Sounds/jet.wav</path>
@@ -408,7 +451,7 @@
 		</squeal>
 		<stall>
 			<name>stall</name>
-			<path>Aircraft/f16/Sounds/betty/warning.wav</path>
+			<path>Aircraft/f16/Sounds/stall.wav</path>
 			<mode>looped</mode>
 			<type>avionics</type>
 			<condition>
@@ -1299,7 +1342,7 @@
 			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
-				<factor>0.030</factor>
+				<factor>0.033</factor>
 			</volume>
 		</avionics>
 		<flare>
@@ -2072,6 +2115,40 @@
 				<factor>1</factor>
 			</volume>
 		</rwr>
+		<radar-standby>
+			<name>radar-standby</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/caution.wav</path>
+			<condition>
+				<equals>
+					<property>instrumentation/radar/radar-standby</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>1</factor>
+				<max>1</max>
+			</volume>
+		</radar-standby>
+		<radar-active>
+			<name>radar-active</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/caution.wav</path>
+			<condition>
+				<equals>
+					<property>instrumentation/radar/radar-standby</property>
+					<value>0</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>1</factor>
+				<max>1</max>
+			</volume>
+		</radar-active>
 		<thunder1>
 			<name>thunder1</name>
 			<mode>once</mode>
@@ -2181,6 +2258,40 @@
 				<max>1</max>
 			</volume>
 		</drag-chute>
+		<refuel-door>
+			<name>refuel-door-on</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/caution.wav</path>
+			<condition>
+				<equals>
+					<property>systems/refuel/serviceable</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>1</factor>
+				<max>1</max>
+			</volume>
+		</refuel-door>
+		<refuel-door>
+			<name>refuel-door-off</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/caution.wav</path>
+			<condition>
+				<equals>
+					<property>systems/refuel/serviceable</property>
+					<value>0</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>1</factor>
+				<max>1</max>
+			</volume>
+		</refuel-door>
         <boom-contact>
 			<name>boom-contact</name>
 			<mode>once</mode>
