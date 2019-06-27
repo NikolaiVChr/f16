@@ -2373,6 +2373,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
     <sound>
         <rwr-new type="bool">false</rwr-new>
         <rwr-launch type="string"></rwr-launch>
+        <rwr-launch-sam type="bool">false</rwr-launch-sam>
         <rwr-pri type="bool">false</rwr-pri>
         <rwr-unk type="bool">false</rwr-unk>
     </sound>

@@ -2109,6 +2109,46 @@
 						<value type="string" />
 					</equals>
 				</not>
+				<not>
+					<equals>
+						<property>sound/rwr-launch-sam</property>
+						<value>1</value>
+					</equals>
+				</not>
+			</condition>
+			<volume>
+				<property>/sim/current-view/internal</property>
+				<factor>1</factor>
+			</volume>
+		</rwr>
+		<rwr>
+			<name>rwr-sam-launch</name>
+			<path>Aircraft/f16/Sounds/rwr-sam-launch.wav</path>
+			<mode>once</mode>
+			<type>avionics</type>
+			<condition>
+				<or>
+					<greater-than>
+						<property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+						<value>20</value>
+					</greater-than>
+					<greater-than>
+						<property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+						<value>20</value>
+					</greater-than>
+				</or>
+				<not>
+					<equals>
+						<property>sound/rwr-launch</property>
+						<value type="string" />
+					</equals>
+				</not>
+				<not>
+					<equals>
+						<property>sound/rwr-launch-sam</property>
+						<value>0</value>
+					</equals>
+				</not>
 			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
