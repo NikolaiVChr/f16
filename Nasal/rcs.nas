@@ -77,6 +77,7 @@ var rcs_database = {
     "tower":                    60,     #estimated with blender
     "gci":                      50,     #guess
     "F-22-Raptor":				0.005,	#actual: 0.0001
+    "F-35A":					0.002,
     "F-35B":					0.002,
     "daVinci_F-35A":            0.002,  
     "Jaguar-GR3":               4,	    #guess

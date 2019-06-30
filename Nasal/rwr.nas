@@ -268,6 +268,7 @@ RWRCanvas = {
                 "Su-25":					rwr.AIRCRAFT_FROGFOOT,
                 "A-6E-model":               rwr.AIRCRAFT_INTRUDER,
                 "F-22-Raptor":				rwr.AIRCRAFT_RAPTOR,
+                "F-35A":           			rwr.AIRCRAFT_JSF,
                 "F-35B":                    rwr.AIRCRAFT_JSF,
                 "daVinci_F-35A":            rwr.AIRCRAFT_JSF,
                 "JAS-39C_Gripen":           rwr.AIRCRAFT_GRIPEN,
