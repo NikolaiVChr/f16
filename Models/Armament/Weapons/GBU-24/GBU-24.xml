@@ -30,18 +30,4 @@
       <object-name>GBU-24_Wing4</object-name>
   </effect>
 
-<animation>
-    <type>select</type>
-    <object-name>GBU-24_Wing1</object-name>
-    <object-name>GBU-24_Wing2</object-name>
-    <object-name>GBU-24_Wing3</object-name>
-    <object-name>GBU-24_Wing4</object-name>
-    <condition>
-      <equals>
-        <value>0</value>
-        <value>1</value>
-      </equals>
-    </condition>
-  </animation>
-
 </PropertyList>

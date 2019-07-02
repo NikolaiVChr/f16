@@ -4,8 +4,13 @@
 
 <PropertyList>
 
-	<name>aim-9</name>
-	<path>aim-9.ac</path>
+	<name>AIM-9L</name>
+	<path>AIM-9L.ac</path>
+
+	<effect>  
+    	<inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  
+    	<object-name>AIM9_IRsphere</object-name> 
+  	</effect>
 
 	<effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
@@ -16,7 +21,10 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
-      <object-name>aim-9</object-name>
+      <object-name>AIM9L</object-name>
+      <object-name>AIM9_Back</object-name>
+      <object-name>AIM9_Rearwing</object-name>
+      <object-name>AIM9_Frontwing</object-name>
   </effect>
 
 </PropertyList>

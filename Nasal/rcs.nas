@@ -46,7 +46,7 @@ var rcs_database = {
     "Blackbird-SR71B":          0.30,
     "Blackbird-SR71A-BigTail":  0.30,
     "u2s":                      0.30,   #actual: 0.01
-    "ch53e":                    20,     #guess
+    "ch53e":                    40,     #guess
     "MiG-21bis":                3.5,
     "MQ-9":                     1,      #guess
     "KC-137R":                  100,    #guess
@@ -58,13 +58,16 @@ var rcs_database = {
     "KC-30A":                   110,    #guess
     "Voyager-KC":               110,    #guess
     "Typhoon":                  0.5,
+    "EF2000":                   0.5,
+    "brsq":                     5.0,
     "C-137R":                   100,    #guess
     "RC-137R":                  100,    #guess
     "EC-137R":                  110,    #guess
     "E-8R":                     100,    #guess
     "c130":                     100,    #guess
-    "SH-60J":                   30,     #guess
-    "UH-60J":                   30,     #guess
+    "SH-60J":                   20,     #guess
+    "UH-60J":                   20,     #guess
+    "uh60_Blackhawk":           20,     #guess
     "uh1":                      30,     #guess
     "212-TwinHuey":             25,     #guess
     "412-Griffin":              25,     #guess
@@ -80,7 +83,7 @@ var rcs_database = {
     "F-35A":					0.002,
     "F-35B":					0.002,
     "daVinci_F-35A":            0.002,  
-    "Jaguar-GR3":               4,	    #guess
+    "Jaguar-GR3":               6,	    #guess
     "OpenRadar":                0.001,  # low so it dont show up on radar
 };
 

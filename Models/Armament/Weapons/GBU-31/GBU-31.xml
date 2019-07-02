@@ -23,15 +23,4 @@ Used for non fired GBU-31
       <object-name>Cube</object-name>
   </effect>
 
-  <!--animation>
-    <type>select</type>
-    <object-name>Tail</object-name>
-    <condition>
-      <equals>
-        <value>0</value>
-        <value>1</value>
-      </equals>
-    </condition>
-  </animation-->
-
 </PropertyList>

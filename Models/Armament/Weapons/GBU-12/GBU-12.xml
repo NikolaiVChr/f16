@@ -31,18 +31,4 @@ Used for non fired GBU-12
       <object-name>GBU-12_Wing.004</object-name>
   </effect>
 
-  <animation>
-    <type>select</type>
-    <object-name>GBU-12_Wing.001</object-name>
-    <object-name>GBU-12_Wing.002</object-name>
-    <object-name>GBU-12_Wing.003</object-name>
-    <object-name>GBU-12_Wing.004</object-name>
-    <condition>
-      <equals>
-        <value>0</value>
-        <value>1</value>
-      </equals>
-    </condition>
-  </animation>
-
 </PropertyList>

@@ -27,18 +27,4 @@ Used for non fired CBU-87
       <object-name>CBU-87wingbase</object-name>
   </effect>
 
-  <animation>
-    <type>select</type>
-    <object-name>CBU-87wing1</object-name>
-    <object-name>CBU-87wing2</object-name>
-    <object-name>CBU-87wing3</object-name>
-    <object-name>CBU-87wing4</object-name>
-    <condition>
-      <equals>
-        <value>0</value>
-        <value>1</value>
-      </equals>
-    </condition>
-  </animation>
-
 </PropertyList>
