@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+<!-- this is the static non fired model on the aircraft -->
+
+	<path>B61-7.ac</path>
+	
+	<effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.0</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+    <object-name>B61-7</object-name>
+    <object-name>B61-7_Hooks</object-name>
+    <object-name>B61-7_Wings</object-name>
+  </effect>
+
+    <animation>
+    <type>select</type>
+    <object-name>B61-7_Dragchute</object-name>
+    <condition>
+      <equals>
+        <value>0</value>
+        <value>1</value>
+      </equals>
+    </condition>
+  </animation>
+	
+</PropertyList>
