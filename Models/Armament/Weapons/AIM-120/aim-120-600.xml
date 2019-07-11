@@ -4,8 +4,8 @@
 
 <PropertyList>
 
-	<name>aim-120</name>
-	<path>aim-120.ac</path>
+	<name>AIM-120B</name>
+	<path>AIM-120B.ac</path>
 
 	<effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
@@ -16,42 +16,36 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
-      <object-name>aim120</object-name>
-		<object-name>exhaust</object-name>
-		<object-name>end</object-name>
-		<object-name>finFront1</object-name>
-		<object-name>finFront2</object-name>
-		<object-name>finFront3</object-name>
-		<object-name>finFront4</object-name>
-		<object-name>finBack1</object-name>
-		<object-name>finBack2</object-name>
-		<object-name>finBack3</object-name>
-		<object-name>finBack4</object-name>
-		<object-name>mountRight</object-name>
-		<object-name>mountLeft</object-name>
-		<object-name>mountBack</object-name>
-		<object-name>mountFront</object-name>
-		<object-name>tail</object-name>
+      	<object-name>AIM-120B</object-name>
+		<object-name>AIM-120_bottom</object-name>
+		<object-name>AIM-120_exhaust</object-name>
+		<object-name>AIM-120_mounts</object-name>
+		<object-name>AIM-120_tail</object-name>
+		<object-name>AIM-120_Rearfin1</object-name>
+		<object-name>AIM-120_Rearfin2</object-name>
+		<object-name>AIM-120_Rearfin3</object-name>
+		<object-name>AIM-120_Rearfin4</object-name>
+		<object-name>AIM-120_Frontfin1</object-name>
+		<object-name>AIM-120_Frontfin2</object-name>
+		<object-name>AIM-120_Frontfin3</object-name>
+		<object-name>AIM-120_Frontfin4</object-name>
   </effect>
 
 	<animation>
 		<type>select</type>
-		<object-name>aim120</object-name>
-		<object-name>exhaust</object-name>
-		<object-name>end</object-name>
-		<object-name>finFront1</object-name>
-		<object-name>finFront2</object-name>
-		<object-name>finFront3</object-name>
-		<object-name>finFront4</object-name>
-		<object-name>finBack1</object-name>
-		<object-name>finBack2</object-name>
-		<object-name>finBack3</object-name>
-		<object-name>finBack4</object-name>
-		<object-name>mountRight</object-name>
-		<object-name>mountLeft</object-name>
-		<object-name>mountBack</object-name>
-		<object-name>mountFront</object-name>
-		<object-name>tail</object-name>
+      	<object-name>AIM-120B</object-name>
+		<object-name>AIM-120_bottom</object-name>
+		<object-name>AIM-120_exhaust</object-name>
+		<object-name>AIM-120_mounts</object-name>
+		<object-name>AIM-120_tail</object-name>
+		<object-name>AIM-120_Rearfin1</object-name>
+		<object-name>AIM-120_Rearfin2</object-name>
+		<object-name>AIM-120_Rearfin3</object-name>
+		<object-name>AIM-120_Rearfin4</object-name>
+		<object-name>AIM-120_Frontfin1</object-name>
+		<object-name>AIM-120_Frontfin2</object-name>
+		<object-name>AIM-120_Frontfin3</object-name>
+		<object-name>AIM-120_Frontfin4</object-name>
 		<condition>
 			<property>payload/armament/aim-120/flags/msl-id-600</property>
 		</condition>
@@ -415,22 +409,19 @@
 	 </particlesystem>
 
 	<animation>
-  		<object-name>aim120</object-name>
-		<object-name>exhaust</object-name>
-		<object-name>end</object-name>
-		<object-name>finFront1</object-name>
-		<object-name>finFront2</object-name>
-		<object-name>finFront3</object-name>
-		<object-name>finFront4</object-name>
-		<object-name>finBack1</object-name>
-		<object-name>finBack2</object-name>
-		<object-name>finBack3</object-name>
-		<object-name>finBack4</object-name>
-		<object-name>mountRight</object-name>
-		<object-name>mountLeft</object-name>
-		<object-name>mountBack</object-name>
-		<object-name>mountFront</object-name>
-		<object-name>tail</object-name>
+      	<object-name>AIM-120B</object-name>
+		<object-name>AIM-120_bottom</object-name>
+		<object-name>AIM-120_exhaust</object-name>
+		<object-name>AIM-120_mounts</object-name>
+		<object-name>AIM-120_tail</object-name>
+		<object-name>AIM-120_Rearfin1</object-name>
+		<object-name>AIM-120_Rearfin2</object-name>
+		<object-name>AIM-120_Rearfin3</object-name>
+		<object-name>AIM-120_Rearfin4</object-name>
+		<object-name>AIM-120_Frontfin1</object-name>
+		<object-name>AIM-120_Frontfin2</object-name>
+		<object-name>AIM-120_Frontfin3</object-name>
+		<object-name>AIM-120_Frontfin4</object-name>
   		<enable-hot type="bool">false</enable-hot>
  	</animation>
 
