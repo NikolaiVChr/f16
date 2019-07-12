@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<!-- this is the static non fired model on the aircraft -->
+
+<PropertyList>
+
+	<name>CATM-120B</name>
+	<path>CATM-120B_RW.ac</path>
+
+	<effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.0</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      	<object-name>CATM-120B</object-name>
+		<object-name>CATM-120_bottom</object-name>
+		<object-name>CATM-120_mounts</object-name>
+		<object-name>CATM-120_tail</object-name>
+		<object-name>CATM-120_Rearfin</object-name>
+		<object-name>CATM-120_Frontfin</object-name>
+  </effect>
+
+	<animation>
+      	<object-name>CATM-120B</object-name>
+		<object-name>CATM-120_bottom</object-name>
+		<object-name>CATM-120_mounts</object-name>
+		<object-name>CATM-120_tail</object-name>
+		<object-name>CATM-120_Rearfin</object-name>
+		<object-name>CATM-120_Frontfin</object-name>
+  		<enable-hot type="bool">false</enable-hot>
+ 	</animation>
+
+</PropertyList>

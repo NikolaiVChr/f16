@@ -458,7 +458,7 @@
         <text>
             <row>22</row>
             <col>2</col>
-            <label>Training (Dummies)</label>
+            <label>Training Mode 1</label>
         </text>
         <button>
             <row>22</row>
@@ -466,7 +466,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.training();</script>
+                <script>pylons.train1();</script>
             </binding>
         </button>
 
@@ -479,10 +479,31 @@
         <text>
             <row>24</row>
             <col>2</col>
-            <label>Clean</label>
+            <label>Training Mode 2</label>
         </text>
         <button>
             <row>24</row>
+            <col>3</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.train2();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>25</row>
+            <col>0</col>
+            <colspan>4</colspan>
+        </hrule>
+
+        <text>
+            <row>26</row>
+            <col>2</col>
+            <label>Clean</label>
+        </text>
+        <button>
+            <row>26</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>

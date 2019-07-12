@@ -52,12 +52,29 @@
     </greater-than>
   </condition>
  </animation>
+
+ <!-- in peacetime we don't carry live ammunition -->
+<!-- however for aerodynamic reasons we carry dummy missiles --> 
+  <animation>
+  <type>select</type>
+  <object-name>Station1_CATM-120B</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-0-type</property>
+      <value>CATM-120B</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-0-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
  
  <!-- in peacetime we don't carry live ammunition -->
 <!-- however for aerodynamic reasons we carry dummy missiles -->
    <animation>
   <type>select</type>
-  <object-name>Station1_AIM-9L_dummy2</object-name>
+  <object-name>Station1_AN-T-17</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-0-type</property>
@@ -1216,7 +1233,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
 <!-- however for aerodynamic reasons we carry dummy missiles --> 
  <animation>
   <type>select</type>
-  <object-name>Station9_AIM-9L_dummy2</object-name>
+  <object-name>Station9_AN-T-17</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-8-type</property>
@@ -1240,6 +1257,23 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   </condition>
  </animation>
  
+  <!-- in peacetime we don't carry live ammunition -->
+<!-- however for aerodynamic reasons we carry dummy missiles --> 
+  <animation>
+  <type>select</type>
+  <object-name>Station9_CATM-120B</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-8-type</property>
+      <value>CATM-120B</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-8-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
   <animation>
   <type>select</type>
   <object-name>Station_AIM-9_smokewinderR9</object-name>
