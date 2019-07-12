@@ -5,7 +5,7 @@
 <PropertyList>
 
 	<name>AIM-9L</name>
-	<path>AIM-9L.ac</path>
+	<path>AIM-9L_LW.ac</path>
 
 	<effect>  
     	<inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  

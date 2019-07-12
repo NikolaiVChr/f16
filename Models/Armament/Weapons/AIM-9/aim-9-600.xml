@@ -23,6 +23,7 @@
       </parameters>
       <object-name>AIM9L</object-name>
       <object-name>AIM9_Back</object-name>
+      <object-name>AIM9_Mounts</object-name>
       <object-name>AIM9_Rearwing</object-name>
       <object-name>AIM9_Frontwing</object-name>
   	</effect>
@@ -31,6 +32,7 @@
 		<type>select</type>
       		<object-name>AIM9L</object-name>
       		<object-name>AIM9_Back</object-name>
+      		<object-name>AIM9_Mounts</object-name>
       		<object-name>AIM9_Rearwing</object-name>
       		<object-name>AIM9_Frontwing</object-name>
       		<object-name>AIM9_IRsphere</object-name>
@@ -404,6 +406,7 @@
 	<animation>
       		<object-name>AIM9L</object-name>
       		<object-name>AIM9_Back</object-name>
+      		<object-name>AIM9_Mounts</object-name>
       		<object-name>AIM9_Rearwing</object-name>
       		<object-name>AIM9_Frontwing</object-name>
       		<object-name>AIM9_IRsphere</object-name>

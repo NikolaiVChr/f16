@@ -5,7 +5,7 @@
 <PropertyList>
 
 	<name>AIM-120B</name>
-	<path>AIM-120B.ac</path>
+	<path>AIM-120B_LW.ac</path>
 
 	<effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>

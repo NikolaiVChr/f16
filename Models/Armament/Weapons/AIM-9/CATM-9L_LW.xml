@@ -4,13 +4,8 @@
 
 <PropertyList>
 
-	<name>AIM-9L</name>
-	<path>AIM-9L.ac</path>
-
-	<effect>  
-    	<inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  
-    	<object-name>AIM9_IRsphere</object-name> 
-  	</effect>
+	<name>CATM-9L</name>
+	<path>CATM-9L_LW.ac</path>
 
 	<effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
@@ -21,11 +16,11 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
-      <object-name>AIM-9L</object-name>
-      <object-name>AIM9_Back</object-name>
-      <object-name>AIM9_Mounts</object-name>
-      <object-name>AIM9_Rearwing</object-name>
-      <object-name>AIM9_Frontwing</object-name>
+      <object-name>CATM-9L</object-name>
+      <object-name>CATM9_Sphere</object-name>
+      <object-name>CATM9_Mounts</object-name>
+      <object-name>CATM9_Rearwing</object-name>
+      <object-name>CATM9_Frontwing</object-name>
   </effect>
 
 </PropertyList>

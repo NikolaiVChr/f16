@@ -29,18 +29,18 @@
 <!-- however for aerodynamic reasons we carry dummy missiles --> 
   <animation>
   <type>select</type>
-  <object-name>Station1_AIM-9L_dummy</object-name>
+  <object-name>Station1_CATM-9L</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-0-type</property>
-      <value>AN-T-17</value>
+      <value>CATM-9L</value>
     </equals>
   </condition>
  </animation>
  
   <animation>
   <type>select</type>
-  <object-name>Station1_AIM-120C5_amraam</object-name>
+  <object-name>Station1_AIM-120B</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-0-type</property>
@@ -61,7 +61,7 @@
   <condition>
     <equals>
       <property>payload/armament/station/id-0-type</property>
-      <value>CATM-9L</value>
+      <value>AN-T-17</value>
     </equals>
   </condition>
  </animation>
@@ -124,7 +124,7 @@
  
   <animation>
   <type>select</type>
-  <object-name>Station2_AIM-120C5_amraam</object-name>
+  <object-name>Station2_AIM-120B</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-1-type</property>
@@ -139,11 +139,11 @@
 
  <animation>
   <type>select</type>
-  <object-name>Station2_AIM-9L_dummy</object-name>
+  <object-name>Station2_CATM-9L</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-1-type</property>
-      <value>AN-T-17</value>
+      <value>CATM-9L</value>
     </equals>
   </condition>
  </animation>
@@ -183,7 +183,7 @@
  
    <animation>
   <type>select</type>
-  <object-name>Station3_AIM-120C5_amraam</object-name>
+  <object-name>Station3_AIM-120B</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-2-type</property>
@@ -906,7 +906,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
  
  <animation>
   <type>select</type>
-  <object-name>Station7_AIM-120C5_amraam</object-name>
+  <object-name>Station7_AIM-120B</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-6-type</property>
@@ -1155,7 +1155,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
  
    <animation>
   <type>select</type>
-  <object-name>Station8_AIM-120C5_amraam</object-name>
+  <object-name>Station8_AIM-120B</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-7-type</property>
@@ -1170,11 +1170,11 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
 
  <animation>
   <type>select</type>
-  <object-name>Station8_AIM-9L_dummy</object-name>
+  <object-name>Station8_CATM-9L</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-7-type</property>
-      <value>AN-T-17</value>
+      <value>CATM-9L</value>
     </equals>
   </condition>
  </animation>
@@ -1203,11 +1203,11 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
 <!-- however for aerodynamic reasons we carry dummy missiles -->
  <animation>
   <type>select</type>
-  <object-name>Station9_AIM-9L_dummy</object-name>
+  <object-name>Station9_CATM-9L</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-8-type</property>
-      <value>AN-T-17</value>
+      <value>CATM-9L</value>
     </equals>
   </condition>
  </animation>
@@ -1220,14 +1220,14 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   <condition>
     <equals>
       <property>payload/armament/station/id-8-type</property>
-      <value>CATM-9L</value>
+      <value>AN-T-17</value>
     </equals>
   </condition>
  </animation>
 
   <animation>
   <type>select</type>
-  <object-name>Station9_AIM-120C5_amraam</object-name>
+  <object-name>Station9_AIM-120B</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-8-type</property>

@@ -92,7 +92,7 @@
             <fallback-model-index type="int">516</fallback-model-index>
             <f16>
                 <AIM-9L type="bool">true</AIM-9L>
-                <AIM-9L_dummy type="bool">false</AIM-9L_dummy>
+                <CATM-9L type="bool">false</CATM-9L>
                 <AIM-9_smokewinders type="bool">false</AIM-9_smokewinders>
                 <smokewinderR1 type="int">0</smokewinderR1>
                 <smokewinderR9 type="int">0</smokewinderR9>
@@ -102,7 +102,7 @@
                 <smokewinderB9 type="int">0</smokewinderB9>
                 <smokewinderW1 type="int">0</smokewinderW1>
                 <smokewinderW9 type="int">0</smokewinderW9>
-                <AIM-120C5 type="bool">false</AIM-120C5>
+                <AIM-120B type="bool">false</AIM-120B>
                 <wingmounts type="bool">true</wingmounts>
                 <ventraltank type="bool">false</ventraltank>
                 <wingtankL type="bool">false</wingtankL>
