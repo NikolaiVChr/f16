@@ -21,7 +21,7 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
-      <object-name>AIM9L</object-name>
+      <object-name>AIM-9L</object-name>
       <object-name>AIM9_Back</object-name>
       <object-name>AIM9_Mounts</object-name>
       <object-name>AIM9_Rearwing</object-name>
@@ -30,7 +30,7 @@
 
 	<animation>
 		<type>select</type>
-      		<object-name>AIM9L</object-name>
+      		<object-name>AIM-9L</object-name>
       		<object-name>AIM9_Back</object-name>
       		<object-name>AIM9_Mounts</object-name>
       		<object-name>AIM9_Rearwing</object-name>
@@ -404,7 +404,7 @@
 	 </particlesystem>
 
 	<animation>
-      		<object-name>AIM9L</object-name>
+      		<object-name>AIM-9L</object-name>
       		<object-name>AIM9_Back</object-name>
       		<object-name>AIM9_Mounts</object-name>
       		<object-name>AIM9_Rearwing</object-name>
