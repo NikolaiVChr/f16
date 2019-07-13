@@ -171,9 +171,9 @@
   <name>Station3_AIM-7F</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-7/AIM-7F.xml</path>
   <offsets>
-   <x-m>0.513785</x-m>
-   <y-m>-2.88606</y-m>
-   <z-m>-0.355</z-m>
+   <x-m>0.675</x-m>
+   <y-m>-2.877</y-m>
+   <z-m>-0.35</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
@@ -740,9 +740,9 @@
   <name>Station7_AIM-7F</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-7/AIM-7F.xml</path>
   <offsets>
-   <x-m>0.513785</x-m>
-   <y-m>2.88606</y-m>
-   <z-m>-0.355</z-m>
+   <x-m>0.675</x-m>
+   <y-m>2.877</y-m>
+   <z-m>-0.35</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
