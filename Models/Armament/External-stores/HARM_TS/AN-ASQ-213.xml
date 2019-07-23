@@ -13,7 +13,7 @@
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
       <object-name>AN-ASQ-213</object-name>
-      <object-name>HTS-pylon</object-name>
+      <object-name>HTS-Pylon</object-name>
       <object-name>HTS-connector</object-name>
       <object-name>HTS-gaps</object-name>
   </effect>
