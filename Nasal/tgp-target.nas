@@ -13,6 +13,7 @@ var MyActualview = props.globals.getNode("/sim/current-view/view-number");
 
 var listOfGroundOrShipVehicleModels = {
                                         "buk-m2":1, 
+                                        "s-300":1,
                                         "depot":1, 
                                         "truck":1, 
                                         "tower":1, 

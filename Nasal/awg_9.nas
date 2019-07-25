@@ -52,6 +52,7 @@ var knownShips = {
 
 var knownSurface = {
     "buk-m2":       nil,
+    "s-300":       nil,
     "depot":       nil,
     "truck":     nil,
     "tower":     nil,
