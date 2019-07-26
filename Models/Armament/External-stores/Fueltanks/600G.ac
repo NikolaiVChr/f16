@@ -6,7 +6,7 @@ OBJECT poly
 name "fillercap-600"
 data 13
 fillercap-600
-texture "/Users/utente/Desktop/GitHub/Aircrafts/f16/Models/f16.png"
+texture "../../../f16.png"
 crease 179.000000
 numvert 216
 -0.968308 0.405784 0.018117
@@ -1461,7 +1461,7 @@ OBJECT poly
 name "fuel_tank600"
 data 12
 fuel_tank600
-texture "/Users/utente/Desktop/GitHub/Aircrafts/f16/Models/f16.png"
+texture "../../../f16.png"
 crease 179.000000
 numvert 1004
 0.82555 0.004924 0
