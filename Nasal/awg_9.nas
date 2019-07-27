@@ -1822,7 +1822,7 @@ var Target = {
     },
     isRadiating: func (coord) {
         me.rn = me.get_range();
-        if (me.get_model() != "buk-m2" and me.get_model() != "missile_frigate" and me.get_type()!=MARINE) {
+        if (me.get_model() != "buk-m2" and me.get_model() != "missile_frigate" and me.get_model() != "s-300" and me.get_type()!=MARINE) {
             me.bearingR = coord.course_to(me.get_Coord());
             me.headingR = me.get_heading();
             me.inv_bearingR =  me.bearingR+180;
