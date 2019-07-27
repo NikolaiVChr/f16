@@ -163,13 +163,14 @@ RWRCanvas = {
         rwr.AIRCRAFT_EAGLE    = "15";
         rwr.AIRCRAFT_TOMCAT   = "14";
         rwr.ASSET_BUK         = "11";
+        rwr.ASSET_GRUMBLE     = "12";
         rwr.AIRCRAFT_MIG15    = "MG";
         rwr.AIRCRAFT_MIG21    = "21";
         rwr.AIRCRAFT_MIG29    = "29";
         rwr.AIRCRAFT_SU27     = "27";
         rwr.AIRCRAFT_MIRAGE   = "M2";
         rwr.AIRCRAFT_FALCON   = "16";
-        rwr.AIRCRAFT_WARTHOG  = "W1";
+        rwr.AIRCRAFT_WARTHOG  = "10";
         rwr.ASSET_FRIGATE     = "SH";
         rwr.AIRCRAFT_AWACS    = "S";
         rwr.AIRCRAFT_BLACKBIRD = "71";
@@ -220,7 +221,7 @@ RWRCanvas = {
                 "A-10-model":               rwr.AIRCRAFT_WARTHOG,
                 "Typhoon":                  rwr.AIRCRAFT_TYPHOON,
                 "buk-m2":                   rwr.ASSET_BUK,     
-                "s-300":                    "10",
+                "s-300":                    rwr.ASSET_GRUMBLE,
                 "missile_frigate":          rwr.ASSET_FRIGATE,
                 "frigate":                  rwr.ASSET_FRIGATE,
                 "fleet":                    rwr.ASSET_FRIGATE,
