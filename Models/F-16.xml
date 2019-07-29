@@ -307,6 +307,7 @@
       <object-name>Rudder.006</object-name>
       <object-name>Rudder</object-name>
       <object-name>VentralFins</object-name>
+      <object-name>AirIntake</object-name>
       <object-name>InternalFrontGearDoor</object-name>
       <object-name>ExternalFrontGearDoor</object-name>
       <object-name>ExternalRightMainDoor</object-name>
@@ -319,6 +320,22 @@
       <object-name>LWStation3</object-name>
       <object-name>ArresterHook</object-name>
       <object-name>Link16Antennas</object-name>
+      <object-name>FrontAftStrut</object-name>
+      <object-name>FrontLowerStrut</object-name>
+      <object-name>FrontTire</object-name>
+      <object-name>FrontUpperStrut</object-name>
+      <object-name>LeftLowerMainStrut</object-name>
+      <object-name>LeftMainTire</object-name>
+      <object-name>LeftUpperMainStrut</object-name>
+      <object-name>RightLowerMainStrut</object-name>
+      <object-name>RightMainTire</object-name>
+      <object-name>RightUpperMainStrut</object-name>
+      <object-name>LeftInnerStrut</object-name>
+      <object-name>LeftOuterLowerStrut</object-name>
+      <object-name>LeftOuterUpperStrut</object-name>
+      <object-name>RightInnerStrut</object-name>
+      <object-name>RightOuterLowerStrut</object-name>
+      <object-name>RightOuterUpperStrut</object-name>
  </effect>
 
  <effect>

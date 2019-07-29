@@ -13,7 +13,7 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
-      <object-name>AGM-154A</object-name>
+      <object-name>AGM-154A-1</object-name>
       <object-name>JSOW_LHwing</object-name>
       <object-name>JSOW_RHwing</object-name>
       <object-name>JSOW_Tail</object-name>
@@ -22,7 +22,7 @@
 
   <animation>
     <type>select</type>
-      <object-name>AGM-154A</object-name>
+      <object-name>AGM-154A-1</object-name>
       <object-name>JSOW_LHwing</object-name>
       <object-name>JSOW_RHwing</object-name>
       <object-name>JSOW_Tail</object-name>
@@ -239,7 +239,7 @@
      </particlesystem>
 
 	<animation>
-  		<object-name>AGM-154A</object-name>
+  		<object-name>AGM-154A-1</object-name>
       <object-name>JSOW_LHwing</object-name>
       <object-name>JSOW_RHwing</object-name>
       <object-name>JSOW_Tail</object-name>
