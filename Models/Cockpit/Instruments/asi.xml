@@ -204,13 +204,14 @@
 
  <!-- Lightning -->
  <animation>
-  <object-name>ASI_mount</object-name>
+  
   <object-name>ASI_knob</object-name>
-  <object-name>ASI_face</object-name>
+  <object-name>ASI_bug-left</object-name>
+  <object-name>ASI_bug-right</object-name>
   <object-name>ASI_mach-scale</object-name>
+  <object-name>ASI_safe-speed-bug</object-name>
   <object-name>ASI_bkg</object-name>
   <object-name>ASI_bkg2</object-name>
-  <object-name>ASI_safe-speed-bug</object-name>
   <type>material</type>
   <emission>
    <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
@@ -219,5 +220,15 @@
    <blue>0.3</blue>
   </emission>
  </animation>
+ 
+ <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <parameters>
+            <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+        </parameters>
+        <object-name>ASI_mount</object-name>
+  <object-name>ASI_face</object-name>      
+  
+ </effect>
 
 </PropertyList>

@@ -851,6 +851,13 @@
             <blue-prop>controls/lighting/panel-blue</blue-prop>
         </emission>
     </animation>-->
+    <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <parameters>
+            <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+        </parameters>
+        <object-name>mount</object-name>
+    </effect>
     <animation>
         <object-name>MFDimage2</object-name>
         <type>material</type>

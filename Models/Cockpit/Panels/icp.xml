@@ -18,7 +18,7 @@
         <object-name>3</object-name>
         <object-name>2</object-name>
         <object-name>1</object-name>
-        <object-name>3.001</object-name>
+        <object-name>4</object-name>
         <object-name>a-a</object-name>
         <object-name>a-g</object-name>
         <object-name>com2</object-name>
@@ -53,10 +53,9 @@
             <implicit-lightmap-threshold-low type="float">0.3</implicit-lightmap-threshold-low>
             <implicit-lightmap-threshold-high type="float">0.7</implicit-lightmap-threshold-high>
             <!--<implicit-lightmap-intensity><use>controls/lighting/lighting-panel/data-entry-display</use></implicit-lightmap-intensity> this is ICP not DED panel, so should not have DED control -->
-            <lightmap-enabled type="int">0</lightmap-enabled>
+            <lightmap-enabled type="int">1</lightmap-enabled>
         </parameters>
         
-        <object-name>DED_panel</object-name>
         <object-name>com1</object-name>
         <object-name>0</object-name>
         <object-name>9</object-name>
@@ -80,18 +79,30 @@
         <object-name>rcl</object-name>
         <object-name>wx</object-name>
     </effect>
+    
+    <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <parameters>
+            <lightmap-enabled type="int">1</lightmap-enabled>
+            <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+        </parameters>
+        
+        <object-name>DED_panel</object-name>
+    </effect>
 
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
         <parameters>
-            <implicit-lightmap-threshold-low type="float">0.0</implicit-lightmap-threshold-low>
-            <implicit-lightmap-threshold-high type="float">0.0</implicit-lightmap-threshold-high>
-            <!--<implicit-lightmap-intensity><use>controls/lighting/lighting-panel/data-entry-display</use></implicit-lightmap-intensity> this is ICP not DED panel, so should not have DED control -->
-            <lightmap-enabled type="int">0</lightmap-enabled>
+            <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+            <lightmap-enabled type="int">1</lightmap-enabled>
         </parameters>
         <object-name>drift</object-name>
         <object-name>gain_auto</object-name>
         <object-name>rtn_seq</object-name>
+        <object-name>brt</object-name>
+        <object-name>depr_ret</object-name>
+        <object-name>sym</object-name>
+        <object-name>cont</object-name>
     </effect>
 
     <animation>
