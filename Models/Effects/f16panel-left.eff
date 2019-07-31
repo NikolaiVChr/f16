@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PropertyList>
     <name>Effects/f16panel-left</name>
-    <inherits-from>Effects/model-interior</inherits-from>
+    <inherits-from>Aircraft/f16/Models/Effects/model-interior-detailed</inherits-from>
     <parameters>
       	<texture n="4">
       	  <type>cubemap</type>
@@ -16,7 +16,7 @@
       	</texture>
         <texture n="3">
             <image>Aircraft/f16/Models/Effects/white.png</image>
-            <filter>linear</filter>
+            <filter>linear-mipmap-linear</filter>
             <wrap-s>clamp</wrap-s>
             <wrap-t>clamp</wrap-t>
             <internal-format>normalized</internal-format>
@@ -40,7 +40,7 @@
         <light-radius type="float">9.6</light-radius>
         <lightmap-enabled type="int">1</lightmap-enabled>
         <lightmap-multi type="int">0</lightmap-multi>
-        <lightmap-factor n="0"><use>controls/lighting/lighting-panel/flood-inst-pnl</use></lightmap-factor>
-        <lightmap-color type="vec3d" n="0"> 0.45 0.34 0.18 </lightmap-color>
+        <lightmap-factor><use>controls/lighting/lighting-panel/flood-inst-pnl</use></lightmap-factor>
+        <lightmap-color type="vec3d"> 0.45 0.34 0.18 </lightmap-color>
     </parameters>
 </PropertyList>
