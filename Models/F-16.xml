@@ -1249,6 +1249,8 @@
   <type>translate</type>
   <object-name>FrontTire</object-name>
   <object-name>FrontLowerStrut</object-name>
+  <object-name>tyre-smoke-n</object-name>
+  <object-name>tyre-rain-n</object-name>
   <property>gear/gear/compression-norm</property>
   <factor>0.25</factor>
   <axis>
@@ -1506,6 +1508,8 @@
   <object-name>RightOuterUpperStrut</object-name>
   <object-name>RightUpperMainStrut</object-name>
   <object-name>RightLowerMainStrut</object-name>
+  <object-name>tyre-smoke-p</object-name>
+  <object-name>tyre-rain-p</object-name>
   <property>gear/gear[1]/compression-norm</property>
   <factor>20</factor>
   <center>
@@ -1668,6 +1672,8 @@
   <object-name>LeftOuterUpperStrut</object-name>
   <object-name>LeftUpperMainStrut</object-name>
   <object-name>LeftLowerMainStrut</object-name>
+  <object-name>tyre-smoke-s</object-name>
+  <object-name>tyre-rain-s</object-name>
   <property>gear/gear[2]/compression-norm</property>
   <factor>-20</factor>
   <center>
