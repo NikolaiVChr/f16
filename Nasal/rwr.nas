@@ -163,7 +163,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_EAGLE    = "15";
         rwr.AIRCRAFT_TOMCAT   = "14";
         rwr.ASSET_BUK         = "11";
-        rwr.ASSET_GARGOYLE    = "20";
+        rwr.ASSET_GARGOYLE    = "20"; # Other namings for tracking and radar: BB, CS.
         rwr.AIRCRAFT_MIG15    = "MG";
         rwr.AIRCRAFT_MIG21    = "21";
         rwr.AIRCRAFT_MIG29    = "29";
@@ -230,6 +230,7 @@ RWRCanvas = {
                 "AI":                       rwr.ASSET_AI,
                 "SU-27":                    rwr.AIRCRAFT_SU27,
                 "SU-37":					rwr.AIRCRAFT_SU27,
+                "MiG-21Bison":              rwr.AIRCRAFT_MIG21,
                 "EF2000":                   rwr.AIRCRAFT_TYPHOON,
                 "F-15C_Eagle":              rwr.AIRCRAFT_EAGLE,
                 "F-15J_ADTW":				rwr.AIRCRAFT_EAGLE,
