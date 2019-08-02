@@ -28,7 +28,8 @@ var rcs_database = {
     "F-16CJ":                   2,      #guess
     "f16":                      2,      #guess
     "MiG-29":                   6,      #guess
-    "SU-27":                    10,      #guess
+    "SU-27":                    10,     #guess
+    "T-50":                     0.3,    #guess
     "f15-bs":                   0.0001, # low so it doesnt show up on radar
     "JA37-Viggen":              3,      #guess
     "AJ37-Viggen":              3,      #guess
@@ -41,8 +42,8 @@ var rcs_database = {
     "707-TT":                   100,    #guess
     "EC-137D":                  110,    #guess
     "B-1B":                     10,
-    "b2-spirit":                0.004,   #actual: 0.0001
-    "B-2A":                     0.004,   #actual: 0.0001
+    "b2-spirit":                0.0025,   #actual: 0.0001
+    "B-2A":                     0.0025,   #actual: 0.0001
     "Blackbird-SR71A":          0.25,
     "Blackbird-SR71B":          0.30,
     "Blackbird-SR71A-BigTail":  0.30,
