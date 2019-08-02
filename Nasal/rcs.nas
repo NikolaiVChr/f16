@@ -49,6 +49,7 @@ var rcs_database = {
     "u2s":                      0.30,   #actual: 0.01
     "ch53e":                    40,     #guess
     "MiG-21bis":                3.5,
+    "MiG-21Bison":              3.5,
     "MQ-9":                     1,      #guess
     "KC-137R":                  100,    #guess
     "KC-137R-RT":               100,    #guess
@@ -81,7 +82,7 @@ var rcs_database = {
     "frigate":                  450,    #estimated with blender
     "tower":                    60,     #estimated with blender
     "gci":                      50,     #guess
-    "F-22-Raptor":				0.004,	#actual: 0.0001
+    "F-22-Raptor":				0.0025,	#actual: 0.0001
     "F-35A":					0.001,
     "F-35B":					0.001,
     "daVinci_F-35A":            0.001,  
