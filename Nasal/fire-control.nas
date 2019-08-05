@@ -24,9 +24,18 @@ var FireControl = {
 		fc.gunTriggerTime = 0;
 		fc.WeaponNotification = VectorNotification.new("WeaponNotification");
 		fc.setupMFDObservers();
+		fc.dropMode = 1;#0=ccrp, 1 = ccip
 		setlistener("controls/armament/trigger",func{fc.trigger();fc.updateCurrent()});
 		setlistener("controls/armament/master-arm",func{fc.updateCurrent()});
 		return fc;
+	},
+	
+	getDropMode: func {
+		me.dropMode;
+	},
+	
+	setDropMode: func (mode) {
+		me.dropMode = mode;
 	},
 
 	getCategory: func {

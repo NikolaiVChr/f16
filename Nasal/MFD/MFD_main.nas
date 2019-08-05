@@ -743,6 +743,14 @@ var MFD_Device =
                 .setAlignment("left-center")
                 .setColor(1,1,1)
                 .setFontSize(20, 1.0);
+        
+        svg.drop = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.65, -482*0.5-225)
+                .setText("CCRP")
+                .setAlignment("center-top")
+                .setColor(1,1,1)
+                .setFontSize(16, 1.0);        
+        
         svg.p1f = svg.p_SMS.createChild("path")
            .moveTo(-276*0.795, -482*0.5+75)
            .vert(-30)
@@ -907,6 +915,11 @@ var MFD_Device =
                     me.ppp.selectPage(me.my.p_VSD);
                 } elsif (eventi == 18) {
                     me.ppp.selectPage(me.my.pjitds_1);
+                } elsif (eventi == 14) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    pylons.fcs.setDropMode(!pylons.fcs.getDropMode());
                 } elsif (eventi == 16) {
                     me.ppp.selectPage(me.my.p_HSD);
                 }
@@ -941,6 +954,13 @@ var MFD_Device =
             me.root.p7f.setVisible(sel==6);
             me.root.p8f.setVisible(sel==7);
             me.root.p9f.setVisible(sel==8);
+
+            var pT = "CCRP";
+            if (pylons.fcs != nil) {
+                var nm = pylons.fcs.getDropMode();
+                if (nm == 1) pT = "CCIP";
+            }
+            me.root.drop.setText(pT);
 
             var pT = "--------";
             if (pylons.pylon1 != nil) {
