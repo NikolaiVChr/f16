@@ -1506,134 +1506,45 @@ append(obj.total, obj.speed_curr);
     },
 
     CCRP: func(hdp) {
-        if (pylons.fcs != nil and pylons.fcs.getSelectedWeapon() != nil and !hdp.CCIP_active and (pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="MK-83" or pylons.fcs.getSelectedWeapon().type=="MK-84" or pylons.fcs.getSelectedWeapon().type=="GBU-12" or pylons.fcs.getSelectedWeapon().type=="GBU-31" or pylons.fcs.getSelectedWeapon().type=="GBU-54" or pylons.fcs.getSelectedWeapon().type=="GBU-24" or pylons.fcs.getSelectedWeapon().type=="CBU-87" or pylons.fcs.getSelectedWeapon().type=="AGM-154A" or pylons.fcs.getSelectedWeapon().type=="B61-7" or pylons.fcs.getSelectedWeapon().type=="B61-12") 
-            and hdp.active_u != nil and hdp.master_arm ==1 and pylons.fcs.getSelectedWeapon().status == armament.MISSILE_LOCK) {
+        if (hdp.fcs_available and hdp.master_arm ==1 and hdp.active_u != nil) {
+            var selW = pylons.fcs.getSelectedWeapon();
+            if (selW != nil and !hdp.CCIP_active and selw.status == armament.MISSILE_LOCK and 
+                (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selw.type=="GBU-54" or selw.type=="GBU-24"
+                 or selw.type=="CBU-87" or selw.type=="AGM-154A" or selw.type=="B61-7" or selw.type=="B61-12") ) {
 
-            if (pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="MK-83" or pylons.fcs.getSelectedWeapon().type=="MK-84" or pylons.fcs.getSelectedWeapon().type=="CBU-87") {
-                me.dt = 0.1;
-                me.maxFallTime = 20;
+                if (selw.type=="MK-82" or selw.type=="MK-83" or selw.type=="MK-84" or selw.type=="CBU-87") {
+                    me.dt = 0.1;
+                    me.maxFallTime = 20;
+                } else {
+                    me.agl = (hdp.altitude_ft-hdp.active_u.get_altitude())*FT2M;
+                    me.dt = me.agl*0.000025;#4000 ft = ~0.1
+                    if (me.dt < 0.1) me.dt = 0.1;
+                    me.maxFallTime = 45;
+                }
+                me.distCCRP = pylons.fcs.getSelectedWeapon().getCCRP(me.maxFallTime,me.dt);
+                if (me.distCCRP == nil) {
+                    me.solutionCue.hide();
+                    me.ccrpMarker.hide();
+                    me.bombFallLine.hide();
+                    return 0;
+                }
+                me.distCCRP/=4000;
+                if (me.distCCRP > 0.75) {
+                    me.distCCRP = 0.75;
+                }
+                me.bombFallLine.setTranslation(hdp.active_u.get_relative_bearing()*me.texelPerDegreeX,0);
+                me.ccrpMarker.setTranslation(hdp.active_u.get_relative_bearing()*me.texelPerDegreeX,0);
+                me.solutionCue.setTranslation(hdp.active_u.get_relative_bearing()*me.texelPerDegreeX,me.sy*0.5-me.sy*0.5*me.distCCRP);
+                me.bombFallLine.show();
+                me.ccrpMarker.show();
+                me.solutionCue.show();
+                return 1;
             } else {
-                me.agl = (hdp.altitude_ft-hdp.active_u.get_altitude())*FT2M;
-                me.dt = me.agl*0.000025;#4000 ft = ~0.1
-                if (me.dt < 0.1) me.dt = 0.1;
-                me.maxFallTime = 45;
-            }
-            me.distCCRP = pylons.fcs.getSelectedWeapon().getCCRP(me.maxFallTime,me.dt);
-            if (me.distCCRP == nil) {
                 me.solutionCue.hide();
                 me.ccrpMarker.hide();
                 me.bombFallLine.hide();
                 return 0;
             }
-            me.distCCRP/=4000;
-            if (me.distCCRP > 0.75) {
-                me.distCCRP = 0.75;
-            }
-            me.bombFallLine.setTranslation(hdp.active_u.get_relative_bearing()*me.texelPerDegreeX,0);
-            me.ccrpMarker.setTranslation(hdp.active_u.get_relative_bearing()*me.texelPerDegreeX,0);
-            me.solutionCue.setTranslation(hdp.active_u.get_relative_bearing()*me.texelPerDegreeX,me.sy*0.5-me.sy*0.5*me.distCCRP);
-            me.bombFallLine.show();
-            me.ccrpMarker.show();
-            me.solutionCue.show();
-            return 1;
-
-
-
-
-            me.agl = (hdp.altitude_ft-hdp.active_u.get_altitude())*FT2M;
-            #me.agl = getprop("position/altitude-agl-ft")*FT2M;
-            me.alti = hdp.altitude_ft*FT2M;
-            me.roll = hdp.roll;
-            me.vel = hdp.groundspeed_kt*0.5144;#m/s
-            me.dens = hdp.density_altitude;
-            me.mach = hdp.mach;
-            me.speed_down_fps = hdp.speed_down_fps;
-            me.speed_east_fps = hdp.speed_east_fps;
-            me.speed_north_fps = hdp.speed_north_fps;
-
-            
-
-            me.t = 0.0;
-            
-            me.altC = me.agl;
-            me.vel_z = -me.speed_down_fps*FT2M;#positive upwards
-            me.fps_z = -me.speed_down_fps;
-            me.vel_x = math.sqrt(me.speed_east_fps*me.speed_east_fps+me.speed_north_fps*me.speed_north_fps)*FT2M;
-            me.fps_x = me.vel_x * M2FT;
-            me.bomb = pylons.fcs.getSelectedWeapon();
-
-            me.rs = me.bomb.rho_sndspeed(me.dens-(me.agl/2)*M2FT);
-            me.rho = me.rs[0];
-            me.Cd = me.bomb.drag(me.mach);
-            me.mass = me.bomb.weight_launch_lbm / armament.slugs_to_lbm;
-            me.q = 0.5 * me.rho * me.fps_z * me.fps_z;
-            me.deacc = (me.Cd * me.q * me.bomb.ref_area_sqft) / me.mass;
-
-            while (me.altC > 0 and me.t <= me.maxFallTime) {#16 secs is max fall time according to manual
-              me.t += me.dt;
-              me.acc = -9.81 + me.deacc * FT2M;
-              me.vel_z += me.acc * me.dt;
-              me.altC = me.altC + me.vel_z*me.dt+0.5*me.acc*me.dt*me.dt;
-            }
-            #printf("predict fall time=%0.1f", me.t);
-
-            if (me.t >= me.maxFallTime) {
-              me.solutionCue.hide();
-              me.ccrpMarker.hide();
-              me.bombFallLine.hide();
-              return 0;
-            }
-            #t -= 0.75 * math.cos(pitch*D2R);            # fudge factor
-
-            me.q = 0.5 * me.rho * me.fps_x * me.fps_x;
-            me.deacc = (me.Cd * me.q * me.bomb.ref_area_sqft) / me.mass;
-            me.acc = -me.deacc * FT2M;
-            
-            me.fps_x_final = me.t*me.acc+me.fps_x;# calc final horz speed
-            me.fps_x_average = (me.fps_x-(me.fps_x-me.fps_x_final)*0.5);
-            me.mach_average = me.fps_x_average / me.rs[1];
-            
-            me.Cd = me.bomb.drag(me.mach_average);
-            me.q = 0.5 * me.rho * me.fps_x_average * me.fps_x_average;
-            me.deacc = (me.Cd * me.q * me.bomb.ref_area_sqft) / me.mass;
-            me.acc = -me.deacc * FT2M;
-            me.dist = me.vel_x*me.t+0.5*me.acc*me.t*me.t;
-
-            me.ac = geo.aircraft_position();
-            me.ccipPos = geo.Coord.new(me.ac);
-
-            # we calc heading from composite speeds, due to alpha and beta might influence direction bombs will fall:
-            me.vectorMag = math.sqrt(me.speed_east_fps*me.speed_east_fps+me.speed_north_fps*me.speed_north_fps);
-            if (me.vectorMag == 0) {
-                me.vectorMag = 0.0001;
-            }
-            me.heading = -math.asin(me.speed_north_fps/me.vectorMag)*R2D+90;#divide by vector mag, to get normalized unit vector length
-            if (me.speed_east_fps/me.vectorMag < 0) {
-              me.heading = -me.heading;
-              while (me.heading > 360) {
-                me.heading -= 360;
-              }
-              while (me.heading < 0) {
-                me.heading += 360;
-              }
-            }
-            me.ccipPos.apply_course_distance(me.heading, me.dist);
-            #var elev = geo.elevation(ac.lat(), ac.lon());
-            #printf("Will fall %0.1f NM ahead of aircraft.", me.dist*M2NM);
-            me.elev = me.alti-me.agl;#faster
-            me.ccipPos.set_alt(me.elev);
-            
-            me.distCCRP = me.ccipPos.distance_to(hdp.active_u.get_Coord())/4000;
-            if (me.distCCRP > 0.75) {
-                me.distCCRP = 0.75;
-            }
-            me.bombFallLine.setTranslation(hdp.active_u.get_relative_bearing()*me.texelPerDegreeX,0);
-            me.ccrpMarker.setTranslation(hdp.active_u.get_relative_bearing()*me.texelPerDegreeX,0);
-            me.solutionCue.setTranslation(hdp.active_u.get_relative_bearing()*me.texelPerDegreeX,me.sy*0.5-me.sy*0.5*me.distCCRP);
-            me.bombFallLine.show();
-            me.ccrpMarker.show();
-            me.solutionCue.show();
-            return 1;
         } else {
             me.solutionCue.hide();
             me.ccrpMarker.hide();
