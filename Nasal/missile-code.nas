@@ -867,7 +867,7 @@ var AIM = {
 	
 	getCCIPadv: func (maxFallTime_sec, timeStep) {
 		# for non flat areas. Lower falltime or higher timestep means using less CPU time.
-        me.ccip_alti = getprop("position/altitude-ft")*FT2M;
+        me.ccip_altC = getprop("position/altitude-ft")*FT2M;
         me.ccip_dens = getprop("fdm/jsbsim/atmosphere/density-altitude");
         me.ccip_speed_down_fps = getprop("velocities/speed-down-fps");
         me.ccip_speed_east_fps = getprop("velocities/speed-east-fps");
@@ -875,17 +875,15 @@ var AIM = {
 
         me.ccip_t = 0.0;
         me.ccip_dt = timeStep;
-        me.ccip_altC = me.ccip_alti;
         me.ccip_fps_z = -me.ccip_speed_down_fps;
         me.ccip_fps_x = math.sqrt(me.ccip_speed_east_fps*me.ccip_speed_east_fps+me.ccip_speed_north_fps*me.ccip_speed_north_fps);
         me.ccip_bomb = me;
 
-        me.ccip_rs = me.ccip_bomb.rho_sndspeed(getprop("sim/flight-model") == "jsb"?me.ccip_dens:me.ccip_alti*M2FT);
+        me.ccip_rs = me.ccip_bomb.rho_sndspeed(getprop("sim/flight-model") == "jsb"?me.ccip_dens:me.ccip_altC*M2FT);
         me.ccip_rho = me.ccip_rs[0];
         me.ccip_mass = me.ccip_bomb.weight_launch_lbm / armament.slugs_to_lbm;
 
-        me.ccip_ac = geo.aircraft_position();
-        me.ccipPos = geo.Coord.new(me.ccip_ac);
+        me.ccipPos = geo.Coord.new(geo.aircraft_position());
         
         # we calc heading from composite speeds, due to alpha and beta might influence direction bombs will fall:
         if(me.ccip_fps_x == 0) return nil;
@@ -904,8 +902,7 @@ var AIM = {
 			me.ccip_fps_z = me.ccip_fps*math.sin(me.ccip_pitch);
 			me.ccip_fps_x = me.ccip_fps*math.cos(me.ccip_pitch);
 
-			me.ccip_acc_z = -9.81*M2FT;
-			me.ccip_fps_z += me.ccip_acc_z * me.ccip_dt;
+			me.ccip_fps_z -= g_fps * me.ccip_dt;
 			me.ccip_altC = me.ccip_altC + me.ccip_fps_z*me.ccip_dt*FT2M;
 			
 			me.ccip_oldPos = geo.Coord.new(me.ccipPos);

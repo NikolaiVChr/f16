@@ -1569,7 +1569,7 @@ append(obj.total, obj.speed_curr);
                 var selW = pylons.fcs.getSelectedWeapon();
                 if (selW != nil and (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87")) {
 
-                    me.ccipPos = pylons.fcs.getSelectedWeapon().getCCIPadv(20,0.20);
+                    me.ccipPos = pylons.fcs.getSelectedWeapon().getCCIPadv(18,0.20);
                     if (me.ccipPos == nil) {
                         me.pipper.setVisible(me.showPipper);
                         me.pipperLine.setVisible(me.showPipper);
@@ -1609,7 +1609,6 @@ append(obj.total, obj.speed_curr);
                                 }
                                 me.pipperLine.createChild("path")
                                     .moveTo(me.bPos)
-                                    #.lineTo(me.pos_x, me.pos_y)
                                     .lineTo(me.pos_x-math.cos(me.pipAng)*me.pipperRadius, me.pos_y-math.sin(me.pipAng)*me.pipperRadius)
                                     .setStrokeLineWidth(1)
                                     .setColor(me.color)
