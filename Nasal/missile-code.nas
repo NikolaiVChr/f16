@@ -866,12 +866,9 @@ var AIM = {
 	},
 	
 	getCCIPadv: func (maxFallTime_sec, timeStep) {
-		# for non flat areas
+		# for non flat areas. Lower falltime or higher timestep means using less CPU time.
         me.ccip_alti = getprop("position/altitude-ft")*FT2M;
-        me.ccip_roll = getprop("orientation/roll-deg");
-        me.ccip_vel = getprop("velocities/groundspeed-kt")*0.5144;#m/s
         me.ccip_dens = getprop("fdm/jsbsim/atmosphere/density-altitude");
-        me.ccip_mach = getprop("velocities/mach");
         me.ccip_speed_down_fps = getprop("velocities/speed-down-fps");
         me.ccip_speed_east_fps = getprop("velocities/speed-east-fps");
         me.ccip_speed_north_fps = getprop("velocities/speed-north-fps");
@@ -879,10 +876,8 @@ var AIM = {
         me.ccip_t = 0.0;
         me.ccip_dt = timeStep;
         me.ccip_altC = me.ccip_alti;
-        me.ccip_vel_z = -me.ccip_speed_down_fps*FT2M;#positive upwards
         me.ccip_fps_z = -me.ccip_speed_down_fps;
-        me.ccip_vel_x = math.sqrt(me.ccip_speed_east_fps*me.ccip_speed_east_fps+me.ccip_speed_north_fps*me.ccip_speed_north_fps)*FT2M;
-        me.ccip_fps_x = me.ccip_vel_x * M2FT;
+        me.ccip_fps_x = math.sqrt(me.ccip_speed_east_fps*me.ccip_speed_east_fps+me.ccip_speed_north_fps*me.ccip_speed_north_fps);
         me.ccip_bomb = me;
 
         me.ccip_rs = me.ccip_bomb.rho_sndspeed(getprop("sim/flight-model") == "jsb"?me.ccip_dens:me.ccip_alti*M2FT);
@@ -891,23 +886,16 @@ var AIM = {
 
         me.ccip_ac = geo.aircraft_position();
         me.ccipPos = geo.Coord.new(me.ccip_ac);
+        
         # we calc heading from composite speeds, due to alpha and beta might influence direction bombs will fall:
-        me.ccip_vectorMag = me.ccip_vel_x*M2FT;
-        if(me.ccip_vectorMag == 0) return nil;
-        me.ccip_heading = -math.asin(me.ccip_speed_north_fps/me.ccip_vectorMag)*R2D+90;#divide by vector mag, to get normalized unit vector length
-        if (me.ccip_speed_east_fps/me.ccip_vectorMag < 0) {
-          me.ccip_heading = -me.ccip_heading;
-          me.ccip_heading = geo.normdeg(me.ccip_heading);
-        }
+        if(me.ccip_fps_x == 0) return nil;
+        me.ccip_heading = geo.normdeg(math.atan2(me.ccip_speed_east_fps,me.ccip_speed_north_fps)*R2D);
 		me.ccip_pitch = math.atan2(me.ccip_fps_z, me.ccip_fps_x);
         while (me.ccip_t <= maxFallTime_sec) {
 			me.ccip_t += me.ccip_dt;
 			
 			me.ccip_fps = math.sqrt(me.ccip_fps_x*me.ccip_fps_x+me.ccip_fps_z*me.ccip_fps_z);
 			if (me.ccip_fps==0) return nil;
-			#me.d_frc = math.abs(me.ccip_fps_z)/me.ccip_fps;
-			#me.d_d = me.ccip_fps_z>0?-1:1;
-			#me.h_frc = me.ccip_fps_x/me.ccip_fps;
 			me.ccip_q = 0.5 * me.ccip_rho * me.ccip_fps * me.ccip_fps;
 			me.ccip_mach = me.ccip_fps / me.ccip_rs[1];
 			me.ccip_Cd = me.ccip_bomb.drag(me.ccip_mach);
