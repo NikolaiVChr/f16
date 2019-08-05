@@ -1422,6 +1422,14 @@ append(obj.total, obj.speed_curr);
             .arcSmallCW(2*mr,2*mr, 0, -2*mr*2, 0)                   
             .setStrokeLineWidth(1)
             .setColor(0,1,0);                    
+        obj.pipperCross = obj.centerOrigin.createChild("path")
+            .moveTo(-obj.pipperRadius,0)
+            .horiz(obj.pipperRadius*2)
+            .moveTo(0,-obj.pipperRadius)
+            .vert(obj.pipperRadius*2)
+            .setRotation(45*D2R)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0); 
         append(obj.total, obj.pipper);
         append(obj.total, obj.pipperLine);
                           
@@ -1554,142 +1562,74 @@ append(obj.total, obj.speed_curr);
     },
     
     CCIP: func (hdp) {
+        me.showPipper = 0;
+        me.showPipperCross = 0;
         if(hdp.CCIP_active) {
-          if (hdp.fcs_available and hdp.master_arm ==1) {
-            var selW = pylons.fcs.getSelectedWeapon();
-            if (selW != nil and (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87")) {
+            if (hdp.fcs_available and hdp.master_arm ==1) {
+                var selW = pylons.fcs.getSelectedWeapon();
+                if (selW != nil and (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87")) {
 
-                me.bomb = pylons.fcs.getSelectedWeapon();
-
-                me.agl = getprop("position/altitude-agl-ft")*FT2M;
-                me.alti = getprop("position/altitude-ft")*FT2M;
-                me.roll = getprop("orientation/roll-deg");
-                me.vel = getprop("velocities/groundspeed-kt")*0.5144;#m/s
-                me.dens = getprop("fdm/jsbsim/atmosphere/density-altitude");
-                me.mach = getprop("velocities/mach");
-                me.speed_down_fps = getprop("velocities/speed-down-fps");
-                me.speed_east_fps = getprop("velocities/speed-east-fps");
-                me.speed_north_fps = getprop("velocities/speed-north-fps");
-
-                me.t = 0.0;
-                me.dt = 0.1;
-                me.altC = me.agl;
-                me.vel_z = -me.speed_down_fps*FT2M;#positive upwards
-                me.fps_z = -me.speed_down_fps;
-                me.vel_x = math.sqrt(me.speed_east_fps*me.speed_east_fps+me.speed_north_fps*me.speed_north_fps)*FT2M;
-                me.fps_x = me.vel_x * M2FT;
-
-                me.rs = me.bomb.rho_sndspeed(me.dens-(me.agl/2)*M2FT);
-                me.rho = me.rs[0];
-                me.Cd = me.bomb.drag(me.mach);
-                me.mass = me.bomb.weight_launch_lbm / armament.slugs_to_lbm;
-                me.q = 0.5 * me.rho * me.fps_z * me.fps_z;
-                me.deacc = (me.Cd * me.q * me.bomb.ref_area_sqft) / me.mass;
-
-                while (me.altC > 0 and me.t <= 20) {#20 secs is max fall time
-                  me.t += me.dt;
-                  me.acc = -9.81 + me.deacc * FT2M;
-                  me.vel_z += me.acc * me.dt;
-                  me.altC = me.altC + me.vel_z*me.dt+0.5*me.acc*me.dt*me.dt;
-                }
-                #printf("predict fall time=%0.1f", t);
-
-                if (me.t >= 20) {
-                  me.pipper.hide();
-                  return me.t;
-                }
-                #t -= 0.75 * math.cos(pitch*D2R);            # fudge factor
-
-                me.q = 0.5 * me.rho * me.fps_x * me.fps_x;
-                me.deacc = (me.Cd * me.q * me.bomb.ref_area_sqft) / me.mass;
-                me.acc = -me.deacc * FT2M;
-                
-                me.fps_x_final = me.t*me.acc+me.fps_x;# calc final horz speed
-                me.fps_x_average = (me.fps_x-(me.fps_x-me.fps_x_final)*0.5);
-                me.mach_average = me.fps_x_average / me.rs[1];
-                
-                me.Cd = me.bomb.drag(me.mach_average);
-                me.q = 0.5 * me.rho * me.fps_x_average * me.fps_x_average;
-                me.deacc = (me.Cd * me.q * me.bomb.ref_area_sqft) / me.mass;
-                me.acc = -me.deacc * FT2M;
-                me.dist = me.vel_x*me.t+0.5*me.acc*me.t*me.t;
-
-                me.ac = geo.aircraft_position();
-                me.ccipPos = geo.Coord.new(me.ac);
-
-                # we calc heading from composite speeds, due to alpha and beta might influence direction bombs will fall:
-                me.vectorMag = math.sqrt(me.speed_east_fps*me.speed_east_fps+me.speed_north_fps*me.speed_north_fps);
-                # no check for divide by zero here??!?:
-                me.heading = -math.asin(me.speed_north_fps/me.vectorMag)*R2D+90;#divide by vector mag, to get normalized unit vector length
-                if (me.speed_east_fps/me.vectorMag < 0) {
-                  me.heading = -me.heading;
-                  me.heading = geo.normdeg(me.heading);
-                }
-                me.ccipPos.apply_course_distance(me.heading, me.dist);
-                #var elev = geo.elevation(ac.lat(), ac.lon());
-                me.elev = me.alti-me.agl;#faster
-                me.ccipPos.set_alt(me.elev);
-                
-
-
-                me.showme = TRUE;
-
-                me.hud_pos = HudMath.getPosFromCoord(me.ccipPos);
-                if(me.hud_pos != nil) {
-                  me.distance = me.ccipPos.distance_to(me.ac);
-                  me.pos_x = me.hud_pos[0];
-                  me.pos_y = me.hud_pos[1];
-
-                  #printf("dist=%0.1f (%3d , %3d)", dist, pos_x, pos_y);
-
-                  #if(me.pos_x > (512/1024)*canvasWidth) {
-                  #  me.showme = FALSE;
-                  #} elsif(me.pos_x < -(512/1024)*canvasWidth) {
-                  #  me.showme = FALSE;
-                  #} elsif(me.pos_y > (512/1024)*canvasWidth) {
-                  #  me.showme = FALSE;
-                  #} elsif(me.pos_y < -(512/1024)*canvasWidth) {
-                  #  me.showme = FALSE;
-                  #}
-
-                  if(me.showme == TRUE) {
-                    me.pipperLine.removeAllChildren();
-                    me.bPos = HudMath.getBorePos();
-                    me.llx  = me.pos_x-me.bPos[0];
-                    me.lly  = me.pos_y-me.bPos[1];
-                    me.pipAng = math.acos(me.llx/math.sqrt(me.llx*me.llx+me.lly*me.lly));
-                    #printf("angle %d  %d,%d",me.pipAng*R2D,me.llx,me.lly);
-                    if (me.lly < 0) {
-                        me.pipAng *= -1;
+                    me.ccipPos = pylons.fcs.getSelectedWeapon().getCCIPadv(20,0.20);
+                    if (me.ccipPos == nil) {
+                        me.pipper.setVisible(me.showPipper);
+                        me.pipperLine.setVisible(me.showPipper);
+                        return;
                     }
-                    me.pipperLine.createChild("path")
-                        .moveTo(me.bPos)
-                        #.lineTo(me.pos_x, me.pos_y)
-                        .lineTo(me.pos_x-math.cos(me.pipAng)*me.pipperRadius, me.pos_y-math.sin(me.pipAng)*me.pipperRadius)
-                        .setStrokeLineWidth(1)
-                        .setColor(me.color)
-                        .update();
-                    me.pipper.setTranslation(me.pos_x, me.pos_y);
-                    me.pipper.show();
-                    me.pipper.update();
-                  } else {
-                    me.pipper.hide();
-                  }
-                } else {
-                  me.pipper.hide();
+        
+                    me.showme = TRUE;
+
+                    me.hud_pos = HudMath.getPosFromCoord(me.ccipPos[0]);
+                    if(me.hud_pos != nil) {
+                        me.pos_x = me.hud_pos[0];
+                        me.pos_y = me.hud_pos[1];
+
+                        #printf("dist=%0.1f (%3d , %3d)", dist, pos_x, pos_y);
+
+                        #if(me.pos_x > (512/1024)*canvasWidth) {
+                        #  me.showme = FALSE;
+                        #} elsif(me.pos_x < -(512/1024)*canvasWidth) {
+                        #  me.showme = FALSE;
+                        #} elsif(me.pos_y > (512/1024)*canvasWidth) {
+                        #  me.showme = FALSE;
+                        #} elsif(me.pos_y < -(512/1024)*canvasWidth) {
+                        #  me.showme = FALSE;
+                        #}
+
+                        if(me.showme == TRUE) {
+                            me.pipperLine.removeAllChildren();
+                            me.bPos = HudMath.getBorePos();
+                            me.llx  = me.pos_x-me.bPos[0];
+                            me.lly  = me.pos_y-me.bPos[1];
+                            me.ll = math.sqrt(me.llx*me.llx+me.lly*me.lly);
+                            if (me.ll != 0) {
+                                me.pipAng = math.acos(me.llx/me.ll);
+                                #printf("angle %d  %d,%d",me.pipAng*R2D,me.llx,me.lly);
+                                if (me.lly < 0) {
+                                    me.pipAng *= -1;
+                                }
+                                me.pipperLine.createChild("path")
+                                    .moveTo(me.bPos)
+                                    #.lineTo(me.pos_x, me.pos_y)
+                                    .lineTo(me.pos_x-math.cos(me.pipAng)*me.pipperRadius, me.pos_y-math.sin(me.pipAng)*me.pipperRadius)
+                                    .setStrokeLineWidth(1)
+                                    .setColor(me.color)
+                                    .update();
+                                me.pipper.setTranslation(me.pos_x, me.pos_y);
+                                me.pipperCross.setTranslation(me.pos_x, me.pos_y);
+                                me.showPipperCross = !me.ccipPos[1];
+                                me.pipper.update();
+                                me.pipperCross.update();
+                                me.showPipper = 1;
+                            }
+                        }
+                    }
                 }
-                return me.t;
-              } else {
-                me.pipper.hide();
-              }
-          } else {
-            me.pipper.hide();
-          }
-        } else {
-          me.pipper.hide();
+            }
         }
-        return 21;
-      },
+        me.pipper.setVisible(me.showPipper);
+        me.pipperCross.setVisible(me.showPipperCross);
+        me.pipperLine.setVisible(me.showPipper);
+    },
     
     displayEEGS: func() {
         #note: this stuff is expensive like hell to compute, but..lets do it anyway.
