@@ -841,22 +841,9 @@ var AIM = {
         me.ccrpPos = geo.Coord.new(me.ccrp_ac);
 
         # we calc heading from composite speeds, due to alpha and beta might influence direction bombs will fall:
-        me.ccrp_vectorMag = math.sqrt(me.ccrp_speed_east_fps*me.ccrp_speed_east_fps+me.ccrp_speed_north_fps*me.ccrp_speed_north_fps);
-        if (me.ccrp_vectorMag == 0) {
-            me.ccrp_vectorMag = 0.0001;
-        }
-        me.ccrp_heading = -math.asin(me.ccrp_speed_north_fps/me.ccrp_vectorMag)*R2D+90;#divide by vector mag, to get normalized unit vector length
-        if (me.ccrp_speed_east_fps/me.ccrp_vectorMag < 0) {
-          me.ccrp_heading = -me.ccrp_heading;
-          while (me.ccrp_heading > 360) {
-            me.ccrp_heading -= 360;
-          }
-          while (me.ccrp_heading < 0) {
-            me.ccrp_heading += 360;
-          }
-        }
+        me.ccrp_heading = geo.normdeg(math.atan2(me.ccrp_speed_east_fps,me.ccrp_speed_north_fps)*R2D);
         me.ccrpPos.apply_course_distance(me.ccrp_heading, me.ccrp_dist);
-        #var elev = geo.elevation(ac.lat(), ac.lon());
+        
         #printf("Will fall %0.1f NM ahead of aircraft.", me.dist*M2NM);
         me.ccrp_elev = me.ccrp_alti-me.ccrp_agl;#faster
         me.ccrpPos.set_alt(me.ccrp_elev);
@@ -867,6 +854,7 @@ var AIM = {
 	
 	getCCIPadv: func (maxFallTime_sec, timeStep) {
 		# for non flat areas. Lower falltime or higher timestep means using less CPU time.
+		# returns nil for higher than maxFallTime_sec. Else a vector with [Coord, hasTimeToArm].
         me.ccip_altC = getprop("position/altitude-ft")*FT2M;
         me.ccip_dens = getprop("fdm/jsbsim/atmosphere/density-altitude");
         me.ccip_speed_down_fps = getprop("velocities/speed-down-fps");
@@ -926,75 +914,69 @@ var AIM = {
 	
 	getCCIPsimple: func (maxFallTime_sec, timeStep) {
 		#faster, but only works over level ground
-		me.agl = getprop("position/altitude-agl-ft")*FT2M;
-        me.alti = getprop("position/altitude-ft")*FT2M;
-        me.roll = getprop("orientation/roll-deg");
-        me.vel = getprop("velocities/groundspeed-kt")*0.5144;#m/s
-        me.dens = getprop("fdm/jsbsim/atmosphere/density-altitude");
-        me.mach = getprop("velocities/mach");
-        me.speed_down_fps = getprop("velocities/speed-down-fps");
-        me.speed_east_fps = getprop("velocities/speed-east-fps");
-        me.speed_north_fps = getprop("velocities/speed-north-fps");
+		me.ccip_agl = getprop("position/altitude-agl-ft")*FT2M;
+        me.ccip_alti = getprop("position/altitude-ft")*FT2M;
+        me.ccip_roll = getprop("orientation/roll-deg");
+        me.ccip_vel = getprop("velocities/groundspeed-kt")*0.5144;#m/s
+        me.ccip_dens = getprop("fdm/jsbsim/atmosphere/density-altitude");
+        me.ccip_mach = getprop("velocities/mach");
+        me.ccip_speed_down_fps = getprop("velocities/speed-down-fps");
+        me.ccip_speed_east_fps = getprop("velocities/speed-east-fps");
+        me.ccip_speed_north_fps = getprop("velocities/speed-north-fps");
 
-        me.t = 0.0;
-        me.dt = timeStep;
-        me.altC = me.agl;
-        me.vel_z = -me.speed_down_fps*FT2M;#positive upwards
-        me.fps_z = -me.speed_down_fps;
-        me.vel_x = math.sqrt(me.speed_east_fps*me.speed_east_fps+me.speed_north_fps*me.speed_north_fps)*FT2M;
-        me.fps_x = me.vel_x * M2FT;
-        me.bomb = me;
+        me.ccip_t = 0.0;
+        me.ccip_dt = timeStep;
+        me.ccip_altC = me.ccip_agl;
+        me.vel_z = -me.ccip_speed_down_fps*FT2M;#positive upwards
+        me.fps_z = -me.ccip_speed_down_fps;
+        me.vel_x = math.sqrt(me.ccip_speed_east_fps*me.ccip_speed_east_fps+me.ccip_speed_north_fps*me.ccip_speed_north_fps)*FT2M;
+        me.fps_x = me.ccip_vel_x * M2FT;
+        me.ccip_bomb = me;
 
-        me.rs = me.bomb.rho_sndspeed(me.dens-(me.agl/2)*M2FT);
-        me.rho = me.rs[0];
-        me.Cd = me.bomb.drag(me.mach);
-        me.mass = me.bomb.weight_launch_lbm / armament.slugs_to_lbm;
-        me.q = 0.5 * me.rho * me.fps_z * me.fps_z;
-        me.deacc = (me.Cd * me.q * me.bomb.ref_area_sqft) / me.mass;
+        me.ccip_rs = me.ccip_bomb.rho_sndspeed(me.ccip_dens-(me.ccip_agl/2)*M2FT);
+        me.ccip_rho = me.ccip_rs[0];
+        me.ccip_Cd = me.ccip_bomb.drag(me.ccip_mach);
+        me.ccip_mass = me.ccip_bomb.weight_launch_lbm / armament.slugs_to_lbm;
+        me.ccip_q = 0.5 * me.ccip_rho * me.ccip_fps_z * me.ccip_fps_z;
+        me.ccip_deacc = (me.ccip_Cd * me.ccip_q * me.ccip_bomb.ref_area_sqft) / me.ccip_mass;
 
-        while (me.altC > 0 and me.t <= maxFallTime_sec) {#20 secs is max fall time
-          me.t += me.dt;
-          me.acc = -9.81 + me.deacc * FT2M;
-          me.vel_z += me.acc * me.dt;
-          me.altC = me.altC + me.vel_z*me.dt+0.5*me.acc*me.dt*me.dt;
+        while (me.ccip_altC > 0 and me.ccip_t <= maxFallTime_sec) {#20 secs is max fall time
+          me.ccip_t += me.ccip_dt;
+          me.ccip_acc = -9.81 + me.ccip_deacc * FT2M;
+          me.ccip_vel_z += me.ccip_acc * me.ccip_dt;
+          me.ccip_altC = me.ccip_altC + me.ccip_vel_z*me.ccip_dt+0.5*me.ccip_acc*me.ccip_dt*me.ccip_dt;
         }
         #printf("predict fall time=%0.1f", t);
 
-        if (me.t >= maxFallTime_sec) {
+        if (me.ccip_t >= maxFallTime_sec) {
           return nil;
         }
         #t -= 0.75 * math.cos(pitch*D2R);            # fudge factor
 
-        me.q = 0.5 * me.rho * me.fps_x * me.fps_x;
-        me.deacc = (me.Cd * me.q * me.bomb.ref_area_sqft) / me.mass;
-        me.acc = -me.deacc * FT2M;
+        me.ccip_q = 0.5 * me.ccip_rho * me.ccip_fps_x * me.ccip_fps_x;
+        me.ccip_deacc = (me.ccip_Cd * me.ccip_q * me.ccip_bomb.ref_area_sqft) / me.ccip_mass;
+        me.ccip_acc = -me.ccip_deacc * FT2M;
         
-        me.fps_x_final = me.t*me.acc+me.fps_x;# calc final horz speed
-        me.fps_x_average = (me.fps_x-(me.fps_x-me.fps_x_final)*0.5);
-        me.mach_average = me.fps_x_average / me.rs[1];
+        me.ccip_fps_x_final = me.ccip_t*me.ccip_acc+me.ccip_fps_x;# calc final horz speed
+        me.ccip_fps_x_average = (me.ccip_fps_x-(me.ccip_fps_x-me.ccip_fps_x_final)*0.5);
+        me.ccip_mach_average = me.ccip_fps_x_average / me.ccip_rs[1];
         
-        me.Cd = me.bomb.drag(me.mach_average);
-        me.q = 0.5 * me.rho * me.fps_x_average * me.fps_x_average;
-        me.deacc = (me.Cd * me.q * me.bomb.ref_area_sqft) / me.mass;
-        me.acc = -me.deacc * FT2M;
-        me.dist = me.vel_x*me.t+0.5*me.acc*me.t*me.t;
+        me.ccip_Cd = me.ccip_bomb.drag(me.ccip_mach_average);
+        me.ccip_q = 0.5 * me.ccip_rho * me.ccip_fps_x_average * me.ccip_fps_x_average;
+        me.ccip_deacc = (me.ccip_Cd * me.ccip_q * me.ccip_bomb.ref_area_sqft) / me.ccip_mass;
+        me.ccip_acc = -me.ccip_deacc * FT2M;
+        me.ccip_dist = me.ccip_vel_x*me.ccip_t+0.5*me.ccip_acc*me.ccip_t*me.ccip_t;
 
-        me.ac = geo.aircraft_position();
-        me.ccipPos = geo.Coord.new(me.ac);
+        me.ccip_ac = geo.aircraft_position();
+        me.ccipPos = geo.Coord.new(me.ccip_ac);
 
         # we calc heading from composite speeds, due to alpha and beta might influence direction bombs will fall:
-        me.vectorMag = math.sqrt(me.speed_east_fps*me.speed_east_fps+me.speed_north_fps*me.speed_north_fps);
-        # no check for divide by zero here??!?:
-        me.heading = -math.asin(me.speed_north_fps/me.vectorMag)*R2D+90;#divide by vector mag, to get normalized unit vector length
-        if (me.speed_east_fps/me.vectorMag < 0) {
-          me.heading = -me.heading;
-          me.heading = geo.normdeg(me.heading);
-        }
-        me.ccipPos.apply_course_distance(me.heading, me.dist);
-        #var elev = geo.elevation(ac.lat(), ac.lon());
-        me.elev = me.alti-me.agl;#faster
-        me.ccipPos.set_alt(me.elev);
-        return me.ccipPos;
+        me.ccip_heading = geo.normdeg(math.atan2(me.ccip_speed_east_fps,me.ccip_speed_north_fps)*R2D);
+        me.ccipPos.apply_course_distance(me.ccip_heading, me.ccip_dist);
+        
+        me.ccip_elev = me.ccip_alti-me.ccip_agl;#faster
+        me.ccipPos.set_alt(me.ccip_elev);
+        return [me.ccipPos,me.arming_time<me.ccip_t];
 	},
 
 	getDLZ: func (ignoreLock = 0) {
