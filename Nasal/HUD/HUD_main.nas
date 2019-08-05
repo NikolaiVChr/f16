@@ -1506,7 +1506,7 @@ append(obj.total, obj.speed_curr);
     },
 
     CCRP: func(hdp) {
-        if (pylons.fcs != nil and pylons.fcs.getSelectedWeapon() != nil and !hdp.CCIP_active and(pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="MK-83" or pylons.fcs.getSelectedWeapon().type=="MK-84" or pylons.fcs.getSelectedWeapon().type=="GBU-12" or pylons.fcs.getSelectedWeapon().type=="GBU-31" or pylons.fcs.getSelectedWeapon().type=="GBU-54" or pylons.fcs.getSelectedWeapon().type=="GBU-24" or pylons.fcs.getSelectedWeapon().type=="CBU-87" or pylons.fcs.getSelectedWeapon().type=="AGM-154A" or pylons.fcs.getSelectedWeapon().type=="B61-7") 
+        if (pylons.fcs != nil and pylons.fcs.getSelectedWeapon() != nil and !hdp.CCIP_active and (pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="MK-83" or pylons.fcs.getSelectedWeapon().type=="MK-84" or pylons.fcs.getSelectedWeapon().type=="GBU-12" or pylons.fcs.getSelectedWeapon().type=="GBU-31" or pylons.fcs.getSelectedWeapon().type=="GBU-54" or pylons.fcs.getSelectedWeapon().type=="GBU-24" or pylons.fcs.getSelectedWeapon().type=="CBU-87" or pylons.fcs.getSelectedWeapon().type=="AGM-154A" or pylons.fcs.getSelectedWeapon().type=="B61-7" or pylons.fcs.getSelectedWeapon().type=="B61-12") 
             and hdp.active_u != nil and hdp.master_arm ==1 and pylons.fcs.getSelectedWeapon().status == armament.MISSILE_LOCK) {
 
             if (pylons.fcs.getSelectedWeapon().type=="MK-82" or pylons.fcs.getSelectedWeapon().type=="MK-83" or pylons.fcs.getSelectedWeapon().type=="MK-84" or pylons.fcs.getSelectedWeapon().type=="CBU-87") {
@@ -2115,6 +2115,8 @@ append(obj.total, obj.speed_curr);
                         hdp.window9_txt = sprintf("%d CB87", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "B61-7") {
                         hdp.window9_txt = sprintf("%d B617", pylons.fcs.getAmmo());
+                    } elsif (hdp.weapon_selected == "B61-12") {
+                        hdp.window9_txt = sprintf("%d B6112", pylons.fcs.getAmmo());
                     } else hdp.window9_txt = "";
                     
 

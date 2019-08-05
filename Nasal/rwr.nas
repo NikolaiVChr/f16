@@ -168,6 +168,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_MIG21    = "21";
         rwr.AIRCRAFT_MIG29    = "29";
         rwr.AIRCRAFT_SU27     = "27";
+        rwr.AIRCRAFT_SU57     = "57";
         rwr.AIRCRAFT_MIRAGE   = "M2";
         rwr.AIRCRAFT_FALCON   = "16";
         rwr.AIRCRAFT_WARTHOG  = "10";
@@ -230,6 +231,7 @@ RWRCanvas = {
                 "AI":                       rwr.ASSET_AI,
                 "SU-27":                    rwr.AIRCRAFT_SU27,
                 "SU-37":					rwr.AIRCRAFT_SU27,
+                "T-50":                     rwr.AIRCRAFT_SU57,
                 "MiG-21Bison":              rwr.AIRCRAFT_MIG21,
                 "EF2000":                   rwr.AIRCRAFT_TYPHOON,
                 "F-15C_Eagle":              rwr.AIRCRAFT_EAGLE,

@@ -51,6 +51,7 @@ var pylonSets = {
     a158: {name: "1 x AGM-158", content: ["AGM-158"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     a154: {name: "1 x AGM-154A", content: ["AGM-154A"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     b617: {name: "1 x B61-7", content: ["B61-7"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
+    b6112: {name: "1 x B61-12", content: ["B61-12"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     g54: {name: "2 x GBU-54", content: ["GBU-54","GBU-54"], fireOrder: [0,1], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
     g31: {name: "1 x GBU-31", content: ["GBU-31"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     g24: {name: "1 x GBU-24", content: ["GBU-24"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
@@ -100,7 +101,7 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 	var pylon120set = [pylonSets.empty, pylonSets.aim9, pylonSets.aim120, pylonSets.dumb1];
 	var wingtipSet1  = [pylonSets.dumb1,pylonSets.dumb2,pylonSets.dumb3, pylonSets.aim9WT, pylonSets.aim120WT,pylonSets.smokeRL,pylonSets.smokeGL,pylonSets.smokeBL,pylonSets.smokeWL];# wingtips are normally not empty, so CATM-9L dummy aim9 is loaded instead.
 	var wingtipSet9  = [pylonSets.dumb1,pylonSets.dumb2,pylonSets.dumb3, pylonSets.aim9WT, pylonSets.aim120WT,pylonSets.smokeRR,pylonSets.smokeGR,pylonSets.smokeBR,pylonSets.smokeWR];# wingtips are normally not empty, so CATM-9L dummy aim9 is loaded instead.
-	var pylon9mix   = [pylonSets.empty, pylonSets.aim9, pylonSets.g12x3, pylonSets.aim120, pylonSets.aim7, pylonSets.agm65x3, pylonSets.a84, pylonSets.m82, pylonSets.a88, pylonSets.a119, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.podTrvl, pylonSets.g24, pylonSets.m83, pylonSets.c87, pylonSets.m84, pylonSets.a158, pylonSets.b617];
+	var pylon9mix   = [pylonSets.empty, pylonSets.aim9, pylonSets.g12x3, pylonSets.aim120, pylonSets.aim7, pylonSets.agm65x3, pylonSets.a84, pylonSets.m82, pylonSets.a88, pylonSets.a119, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.podTrvl, pylonSets.g24, pylonSets.m83, pylonSets.c87, pylonSets.m84, pylonSets.a158, pylonSets.b617, pylonSets.b6112];
 	var pylon12setL = [pylonSets.empty, pylonSets.g12x2, pylonSets.fuel37L, pylonSets.fuel60L, pylonSets.m82, pylonSets.a119, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.a88, pylonSets.m83, pylonSets.c87, pylonSets.m84];
 	var pylon12setR = [pylonSets.empty, pylonSets.g12x2, pylonSets.fuel37R, pylonSets.fuel60R, pylonSets.m82, pylonSets.a119, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.a88, pylonSets.m83, pylonSets.c87, pylonSets.m84];
 
