@@ -1437,18 +1437,31 @@ append(obj.total, obj.speed_curr);
         
         #eegs:
         obj.eegsGroup = obj.centerOrigin.createChild("group");
-        obj.eegsRightX = [0,0,0,0,0,0,0,0,0,0];
-        obj.eegsRightY = [0,0,0,0,0,0,0,0,0,0];
-        obj.eegsLeftX  = [0,0,0,0,0,0,0,0,0,0];
-        obj.eegsLeftY  = [0,0,0,0,0,0,0,0,0,0];
-        obj.gunPos   = [[nil,nil],[nil,nil,nil],[nil,nil,nil,nil],[nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil]];
-        obj.eegsMe = {ac: geo.Coord.new(), eegsPos: geo.Coord.new(),shellPosX: [0,0,0,0,0,0,0,0,0,0],shellPosY: [0,0,0,0,0,0,0,0,0,0],shellPosDist: [0,0,0,0,0,0,0,0,0,0]};
+        obj.funnelParts = 17;#number of segments in funnel sides. If increase, remember to increase all relevant vectors also.
+        obj.eegsRightX = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        obj.eegsRightY = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        obj.eegsLeftX  = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        obj.eegsLeftY  = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        obj.gunPos   = nil;#[[nil,nil],[nil,nil,nil],[nil,nil,nil,nil],[nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil]];
+        obj.eegsMe = {ac: geo.Coord.new(), eegsPos: geo.Coord.new(),shellPosX: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],shellPosY: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],shellPosDist: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]};
         obj.lastTime = systime();
-        obj.averageDt = 0.150;
+        obj.averageDt = 0.100;
         obj.eegsLoop = maketimer(obj.averageDt, obj, obj.displayEEGS);
         obj.eegsLoop.simulatedTime = 1;
+        obj.resetGunPos();
                           
         return obj;
+    },
+    
+    resetGunPos: func {
+        me.gunPos   = [];
+        for(i = 0;i < me.funnelParts;i+=1){
+          var tmp = [];
+          for(var myloopy = 0;myloopy <= i+1;myloopy+=1){
+            append(tmp,nil);
+          }
+          append(me.gunPos, tmp);
+        }
     },
 #
 #
@@ -1663,12 +1676,11 @@ append(obj.total, obj.speed_curr);
     displayEEGS: func() {
         #note: this stuff is expensive like hell to compute, but..lets do it anyway.
         
-        var funnelParts = 10;#max 10
         var st = systime();
         me.eegsMe.dt = st-me.lastTime;
         if (me.eegsMe.dt > me.averageDt*3) {
             me.lastTime = st;
-            me.gunPos   = [[nil,nil],[nil,nil,nil],[nil,nil,nil,nil],[nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil]];
+            me.resetGunPos();
             me.eegsGroup.removeAllChildren();
         } else {
             #printf("dt %05.3f",me.eegsMe.dt);
@@ -1685,7 +1697,7 @@ append(obj.total, obj.speed_curr);
             me.eegsMe.ac = geo.aircraft_position();
             me.eegsMe.allow = 1;
             
-            for (var l = 0;l < funnelParts;l+=1) {
+            for (var l = 0;l < me.funnelParts;l+=1) {
                 # compute display positions of funnel on hud
                 var pos = me.gunPos[l][l+1];
                 if (pos == nil) {
@@ -1715,7 +1727,7 @@ append(obj.total, obj.speed_curr);
             }
             if (me.eegsMe.allow) {
                 # draw the funnel
-                for (var k = 0;k<funnelParts;k+=1) {
+                for (var k = 0;k<me.funnelParts;k+=1) {
                     var halfspan = math.atan2(35*0.5,me.eegsMe.shellPosDist[k])*R2D*me.texelPerDegreeX;#35ft average fighter wingspan
                     me.eegsRightX[k] = me.eegsMe.shellPosX[k]-halfspan;
                     me.eegsRightY[k] = me.eegsMe.shellPosY[k];
@@ -1723,7 +1735,7 @@ append(obj.total, obj.speed_curr);
                     me.eegsLeftY[k]  = me.eegsMe.shellPosY[k];
                 }
                 me.eegsGroup.removeAllChildren();
-                for (var i = 0; i < funnelParts-1; i+=1) {
+                for (var i = 0; i < me.funnelParts-1; i+=1) {
                     me.eegsGroup.createChild("path")
                         .moveTo(me.eegsRightX[i], me.eegsRightY[i])
                         .lineTo(me.eegsRightX[i+1], me.eegsRightY[i+1])
@@ -1757,7 +1769,7 @@ append(obj.total, obj.speed_curr);
             #printf("%d,%d",0,0);
             #print("-----");
             
-            for (var j = 0;j < funnelParts;j+=1) {
+            for (var j = 0;j < me.funnelParts;j+=1) {
                 
                 #calc new speed
                 me.eegsMe.Cd = drag(me.eegsMe.vel/ me.eegsMe.rs[1],0.193);#0.193=cd
