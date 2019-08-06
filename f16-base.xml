@@ -2012,8 +2012,8 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <drag-coeff type="double">0.02</drag-coeff>
                 <cross-section-sqft type="double">1.9121</cross-section-sqft>
                 <arming-time-sec type="double">2.5</arming-time-sec>
-                <min-speed-for-guiding-mach type="double">0</min-speed-for-guiding-mach>
-                <self-destruct-time-sec type="double">1100</self-destruct-time-sec>
+                <min-speed-for-guiding-mach type="double">0.3</min-speed-for-guiding-mach>
+                <self-destruct-time-sec type="double">400</self-destruct-time-sec>
                 <all-aspect type="bool">true</all-aspect>
                 <rail type="bool">false</rail>
                 <no-common-target type="bool">true</no-common-target>
@@ -2024,7 +2024,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <deploy-time type="double">1.0</deploy-time>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
                 <terminal-alt-factor type="double">2</terminal-alt-factor>
-                <terminal-rise-time type="double">15.0</terminal-rise-time>
+                <terminal-rise-time type="double">20.0</terminal-rise-time>
                 <terminal-dive-time type="double">9.0</terminal-dive-time>
                 <seeker-angular-speed-dps type="double">45</seeker-angular-speed-dps>
             </agm-154a>
