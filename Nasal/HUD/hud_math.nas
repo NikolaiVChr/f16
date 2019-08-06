@@ -55,7 +55,7 @@ var HudMath = {
 			me.pixelPerMeterYSlant = me.canvasHeight/me.length;#used
 			me.boreSlantedDownFromTopMeter =  (me.hud3dTop - me.input.viewZ.getValue())*math.sin(90*D2R)/math.sin(me.slantAngleOther);
 			me.centerOffsetSlantedMeter = -1*(me.length*0.5-me.boreSlantedDownFromTopMeter);#used (distance from center origin up to bore [negative number])
-			printf("len=%.3fm angle=%.1fdeg angle2=%.1fdeg boredist=%.3fm borefromtop=%.3fm offset=%.3fm",me.length,me.slantAngle*R2D,me.slantAngleOther*R2D,me.distanceToBore,me.boreSlantedDownFromTopMeter,me.centerOffsetSlantedMeter);
+			#printf("len=%.3fm angle=%.1fdeg angle2=%.1fdeg boredist=%.3fm borefromtop=%.3fm offset=%.3fm",me.length,me.slantAngle*R2D,me.slantAngleOther*R2D,me.distanceToBore,me.boreSlantedDownFromTopMeter,me.centerOffsetSlantedMeter);
 		}
 			if (initialization) {
 				# calc Y offset from HUD canvas center origin.
