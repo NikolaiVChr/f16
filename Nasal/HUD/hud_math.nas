@@ -2,7 +2,7 @@
 #
 # Author: Nikolai V. Chr. (FPI location code adapted from Buccaneer aircraft)
 #
-# Version 1.05
+# Version 1.06
 #
 # License: GPL 2.0
 	
@@ -31,6 +31,7 @@ var HudMath = {
 		me.pixelPerMeterX= me.canvasWidth / me.hud3dWidth;
 		me.parallax      = parallax;
 		me.originCanvas  = [uvUpperLeft_norm[0]*canvasSize[0],(1-uvUpperLeft_norm[1])*canvasSize[1]];
+		me.slanted       = me.hud3dXTop-me.hud3dXBottom > 0.01;
 		
 		#printf("HUD 3D. width=%.2f height=%.2f x_pos=%.2f",me.hud3dWidth,me.hud3dHeight,me.hud3dX);
 		#printf("HUD canvas. width=%d height=%d pixelX/meter=%.1f",me.canvasWidth,me.canvasHeight,me.pixelPerMeterX);
@@ -43,13 +44,46 @@ var HudMath = {
 	reCalc: func (initialization = 0) {
 		# if view position has moved and you dont use parallax, call this.
 		# 
-		if (initialization) {
-			# calc Y offset from HUD canvas center origin.
-			me.centerOffset = -1 * (me.canvasHeight/2 - ((me.hud3dTop - me.input.view0Z.getValue())*me.pixelPerMeterY));#TODO: use originCanvas?
-		} elsif (!me.parallax) {
-			# calc Y offset from HUD canvas center origin.
-			me.centerOffset = -1 * (me.canvasHeight/2 - ((me.hud3dTop - me.input.viewZ.getValue())*me.pixelPerMeterY));
+		if (me.slanted) {
+			# TODO: do init here also
+			me.length = math.sqrt(me.hud3dHeight*me.hud3dHeight+(me.hud3dXTop-me.hud3dXBottom)*(me.hud3dXTop-me.hud3dXBottom));
+			me.slantAngle = math.acos((me.length*me.length+me.hud3dHeight*me.hud3dHeight-(me.hud3dXTop-me.hud3dXBottom)*(me.hud3dXTop-me.hud3dXBottom))/(2*me.length*me.hud3dHeight));			
+			me.HorizTopToEye = me.input.viewX.getValue()-me.hud3dXTop;
+			me.slantAngleOther = (180-90-me.slantAngle*R2D)*D2R;
+			me.extendedHUDToOverEye = me.HorizTopToEye*math.sin(me.slantAngleOther)/math.sin(me.slantAngle)+(me.hud3dTop - me.input.viewZ.getValue());
+			me.distanceToBore = me.extendedHUDToOverEye*math.sin(me.slantAngle)/math.sin(me.slantAngleOther);#used
+			me.pixelPerMeterYSlant = me.canvasHeight/me.length;#used
+			me.boreSlantedDownFromTopMeter =  (me.hud3dTop - me.input.viewZ.getValue())*math.sin(90*D2R)/math.sin(me.slantAngleOther);
+			me.centerOffsetSlantedMeter = -1*(me.length*0.5-me.boreSlantedDownFromTopMeter);#used (distance from center origin up to bore [negative number])
+			printf("len=%.3fm angle=%.1fdeg angle2=%.1fdeg boredist=%.3fm borefromtop=%.3fm offset=%.3fm",me.length,me.slantAngle*R2D,me.slantAngleOther*R2D,me.distanceToBore,me.boreSlantedDownFromTopMeter,me.centerOffsetSlantedMeter);
 		}
+			if (initialization) {
+				# calc Y offset from HUD canvas center origin.
+				me.centerOffset = -1 * (me.canvasHeight/2 - ((me.hud3dTop - me.input.view0Z.getValue())*me.pixelPerMeterY));#TODO: use originCanvas?
+			} elsif (!me.parallax) {
+				# calc Y offset from HUD canvas center origin.
+				me.centerOffset = -1 * (me.canvasHeight/2 - ((me.hud3dTop - me.input.viewZ.getValue())*me.pixelPerMeterY));
+			}
+		
+	},
+	
+	hudX3d: func (y) {
+		# hud 3D X pos for slanted HUDs. y is pixelPos from bore.
+		# only does this for x as Y is less affected by slanting.
+		return me.extrapolate(y/me.pixelPerMeterYSlant,-me.boreSlantedDownFromTopMeter,me.length-me.boreSlantedDownFromTopMeter,me.hud3dXTop,me.hud3dXBottom);
+	},
+	
+	getVertDistSlanted: func (pitch) {
+		# pixels down from bore on slanted HUD
+		me.slantDistMeter = me.distanceToBore*math.sin(-pitch*D2R)/math.sin((180+pitch-me.slantAngle*R2D-90)*D2R);
+		
+		return me.pixelPerMeterYSlant*me.slantDistMeter;
+	},
+	
+	getVertDistSlantedFromCenter: func (pitch) {
+		# pixels down from center origin on slanted HUD
+		me.slantDistMeter = me.centerOffsetSlantedMeter+(me.distanceToBore*math.sin(-pitch*D2R)/math.sin((180+pitch-me.slantAngle*R2D-90)*D2R));
+		return me.pixelPerMeterYSlant*me.slantDistMeter;
 	},
 	
 	getCenterOrigin: func {
@@ -62,7 +96,12 @@ var HudMath = {
 	getBorePos: func {
 		# returns bore pos in canvas from center origin
 		return [0,me.centerOffset];
-	},	
+	},
+	
+	getBorePosSlanted: func {
+		# returns bore pos in canvas from center origin
+		return [0,me.centerOffsetSlantedMeter*me.pixelPerMeterYSlant];
+	},
 	
 	getPosFromCoord: func (gpsCoord, aircraft = nil) {
 		# return pos in canvas from center origin
@@ -102,26 +141,36 @@ var HudMath = {
 	    me.dir_y  = math.atan2(me.round0_(me.vel_bz), math.max(me.vel_bx, 0.001)) * R2D;
 	    me.dir_x  = math.atan2(me.round0_(me.vel_by), math.max(me.vel_bx, 0.001)) * R2D;
 
-	    me.pos = me.getPosFromDegs(me.dir_x,-me.dir_y);
+	    me.pos = me.getCenterPosFromDegs(me.dir_x,-me.dir_y);
 	    
-	    me.pos_xx = me.pos[0];# cannot be named pos_x as that is assumed to be FPI position.
-	    me.pos_yy = me.pos[1]+me.centerOffset;
-
-	    return [me.pos_xx, me.pos_yy];
+	    return [me.pos[0], me.pos[1]];
 	},
 	
 	getPosFromDegs:  func (yaw_deg, pitch_deg) {
 		# return pos from bore
-		var y = -me.pixelPerMeterY*((me.input.viewX.getValue() - me.hud3dX) * math.tan(pitch_deg*D2R));
-		var x =  me.pixelPerMeterX*((me.input.viewX.getValue() - me.hudX3d(y)) * math.tan(yaw_deg*D2R));
+		var y = 0;
+		var x = 0;
+		if (me.slanted) {
+			y =  me.getVertDistSlanted(pitch_deg);
+			x =  me.pixelPerMeterX*((me.input.viewX.getValue() - me.hudX3d(y)) * math.tan(yaw_deg*D2R));
+		} else {
+			y = -me.pixelPerMeterY*((me.input.viewX.getValue() - me.hud3dX) * math.tan(pitch_deg*D2R));
+			x =  me.pixelPerMeterX*((me.input.viewX.getValue() - me.hud3dX) * math.tan(yaw_deg*D2R));
+		}
 		return [x,y];
 	},
 	
 	getCenterPosFromDegs:  func (yaw_deg, pitch_deg) {
 		# return pos from center origin
-		var y = -me.pixelPerMeterY*((me.input.viewX.getValue() - me.hud3dX) * math.tan(pitch_deg*D2R));
-		var x =  me.pixelPerMeterX*((me.input.viewX.getValue() - me.hudX3d(y)) * math.tan(yaw_deg*D2R));
-		return [x,y+me.centerOffset];
+		if (me.slanted) {
+			var y = me.getVertDistSlanted(pitch_deg);
+			var x =  me.pixelPerMeterX*((me.input.viewX.getValue() - me.hudX3d(y)) * math.tan(yaw_deg*D2R));
+			return [x,y+me.centerOffsetSlantedMeter*me.pixelPerMeterYSlant];
+		} else {
+			var y = -me.pixelPerMeterY*((me.input.viewX.getValue() - me.hud3dX) * math.tan(pitch_deg*D2R));
+			var x =  me.pixelPerMeterX*((me.input.viewX.getValue() - me.hud3dX) * math.tan(yaw_deg*D2R));
+			return [x,y+me.centerOffset];
+		}
 	},
 	
 	isCanvasPosClamped: func (x,y) {
@@ -149,10 +198,6 @@ var HudMath = {
 		me.ll = math.sqrt(x*x+y*y);
         if (me.ll != 0) {
         	me.pipAng = math.atan2(x,-y);
-            #me.pipAng = math.acos(x/me.ll);
-            #if (y < 0) {
-            #    me.pipAng *= -1;
-            #}
             return [me.pipAng,me.ll];# notice is radians
         }
         return [0,0];
@@ -162,17 +207,7 @@ var HudMath = {
 		y -= me.centerOffset;
 		return me.getPolarFromBorePos(x,y);
 	},
-	
-	#getEyeToHudDistance: func {
-	#	return me.input.viewX.getValue() - me.hud3dX;
-	#},
-	
-	hudX3d: func (y) {
-		# hud 3D X pos for slanted HUDs
-		# only does this for x as Y is less affected by slanting.
-		return me.extrapolate(y+me.centerOffset,-me.canvasHeight*0.5,me.canvasHeight*0.5,me.hud3dXTop,me.hud3dXBottom);
-	},
-	
+		
 	getFlightPathIndicatorPos: func (clampXmin=-1000,clampYmin=-1000,clampXmax=1000,clampYmax=1000) {
 		# return pos from canvas center origin
 		# notice that this gives real flightpath location, not influenced by wind. (use the wind for yasim, as there is an issue with that somehow)
@@ -208,10 +243,10 @@ var HudMath = {
 	    me.dir_y  = math.atan2(me.round0_(me.vel_bz), math.max(me.vel_bx, 0.001)) * R2D;
 	    me.dir_x  = math.atan2(me.round0_(me.vel_by), math.max(me.vel_bx, 0.001)) * R2D;
 
-	    me.pos = me.getPosFromDegs(me.dir_x,-me.dir_y);
+	    me.pos = me.getCenterPosFromDegs(me.dir_x,-me.dir_y);
 	    
-	    me.pos_x = me.clamp(me.pos[0],                   clampXmin, clampXmax);
-	    me.pos_y = me.clamp(me.pos[1]+me.centerOffset,   clampYmin, clampYmax);
+	    me.pos_x = me.clamp(me.pos[0],   clampXmin, clampXmax);
+	    me.pos_y = me.clamp(me.pos[1],   clampYmin, clampYmax);
 
 	    return [me.pos_x, me.pos_y];
 	},
@@ -222,10 +257,10 @@ var HudMath = {
 		me.dir_y  = me.input.alpha.getValue();
 	    me.dir_x  = me.input.beta.getValue();
 	    
-	    me.pos = me.getPosFromDegs(me.dir_x,-me.dir_y);
+	    me.pos = me.getCenterPosFromDegs(me.dir_x,-me.dir_y);
 	    
-	    me.pos_x = me.clamp(me.pos[0],                   clampXmin, clampXmax);
-	    me.pos_y = me.clamp(me.pos[1]+me.centerOffset,   clampYmin, clampYmax);
+	    me.pos_x = me.clamp(me.pos[0],   clampXmin, clampXmax);
+	    me.pos_y = me.clamp(me.pos[1],   clampYmin, clampYmax);
 
 	    return [me.pos_x, me.pos_y];
 	},
@@ -243,6 +278,7 @@ var HudMath = {
 		# get translation and rotation for horizon line, dynamic means centered around FPI.
 		# should be called after getFlightPathIndicatorPos/getFlightPathIndicatorPosWind.
 		# return a vector of 3: translation of main horizon group, rotation of main horizon groups transform in radians, translation of sub horizon group (wherein the line (and pitch ladder) is drawn).
+		# not slant compatiple yet
 		
 		me.rot = -me.input.roll.getValue() * D2R;
 
@@ -262,6 +298,8 @@ var HudMath = {
 	getPixelPerDegreeAvg: func (averagePoint_deg = 7.5) {
 		# return average value, not exact unless parameter match what you multiply it with.
 		# the parameter is distance from bore. Typically if the result are to be multiplied on multiple values, use halfway between center and edge of HUD.
+		# not slant compatiple yet
+		
 		if (averagePoint_deg == 0) {
 			averagePoint_deg = 0.001;
 		}
@@ -271,6 +309,8 @@ var HudMath = {
 	getPixelPerDegreeXAvg: func (averagePoint_deg = 7.5) {
 		# return average value, not exact unless parameter match what you multiply it with.
 		# the parameter is distance from bore. Typically if the result are to be multiplied on multiple values, use halfway between center and edge of HUD.
+		# not slant compatiple yet
+		
 		if (averagePoint_deg == 0) {
 			averagePoint_deg = 0.001;
 		}
@@ -280,6 +320,8 @@ var HudMath = {
 	getPixelPerDegreeYAvg: func (averagePoint_deg = 7.5) {
 		# return average value, not exact unless parameter match what you multiply it with.
 		# the parameter is distance from bore. Typically if the result are to be multiplied on multiple values, use halfway between center and edge of HUD.
+		# not slant compatiple yet
+		
 		if (averagePoint_deg == 0) {
 			averagePoint_deg = 0.001;
 		}
