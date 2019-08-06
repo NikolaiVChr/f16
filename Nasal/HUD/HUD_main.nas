@@ -964,21 +964,6 @@ append(obj.total, obj.speed_curr);
                 .setFont(HUD_FONT)
                 .setFontSize(9, 1.1);
                 append(obj.total, obj.ded4);
-        obj.offangle = obj.svg.createChild("text")# real name: locator line
-                .setText("0")
-                .setAlignment("right-center")
-                .setColor(0,1,0,1)
-                .setFont(HUD_FONT)
-                .setFontSize(9, 1.1);
-                append(obj.total, obj.offangle);
-        obj.trackLine = obj.svg.createChild("path")
-                .moveTo(0,0)
-                #.horiz(10)
-                .vert(-30)
-                .setStrokeLineWidth(1)
-                .setColor(0,1,0);
-
-            append(obj.total, obj.trackLine);
         obj.bombFallLine = obj.svg.createChild("path")
                 .moveTo(sx*0.5*0.695633,0)
                 #.horiz(10)
@@ -1063,53 +1048,7 @@ append(obj.total, obj.speed_curr);
             #.set("z-index",10500)
             .setTranslation(sx*0.5*0.695633,sy*0.25);
             append(obj.total, obj.triangle120);
-        var boxRadius = 10;
-        var boxRadiusHalf = boxRadius*0.5;
-        var hairFactor = 0.8;
-        obj.radarLock = obj.svg.createChild("path")
-            .moveTo(-boxRadius*hairFactor,0)
-            .horiz(boxRadiusHalf*hairFactor)
-            .lineTo(0,boxRadiusHalf*hairFactor)
-            .moveTo(boxRadius*hairFactor,0)
-            .horiz(-boxRadiusHalf*hairFactor)
-            .lineTo(0,-boxRadiusHalf*hairFactor)
-            .moveTo(0,boxRadius*hairFactor)
-            .vert(-boxRadiusHalf*hairFactor)
-            .lineTo(boxRadiusHalf*hairFactor,0)
-            .moveTo(0,-boxRadius*hairFactor)
-            .vert(boxRadiusHalf*hairFactor)
-            .lineTo(-boxRadiusHalf*hairFactor,0)
-            .setStrokeLineWidth(1)
-            .setColor(0,1,0);
-            append(obj.total, obj.radarLock);
-        obj.irLock = obj.svg.createChild("path")
-            .moveTo(-boxRadius,0)
-            .lineTo(0,-boxRadius)
-            .lineTo(boxRadius,0)
-            .lineTo(0,boxRadius)
-            .lineTo(-boxRadius,0)
-            .setStrokeLineWidth(1)
-            .setColor(0,1,0);
-            append(obj.total, obj.irLock);
-        obj.irSearch = obj.svg.createChild("path")
-            .moveTo(-boxRadiusHalf,0)
-            .lineTo(0,-boxRadiusHalf)
-            .lineTo(boxRadiusHalf,0)
-            .lineTo(0,boxRadiusHalf)
-            .lineTo(-boxRadiusHalf,0)
-            .setStrokeLineWidth(1)
-            .setColor(0,1,0);
-            append(obj.total, obj.irSearch);
-        obj.target_locked.hide();
-        obj.target_locked = obj.svg.createChild("path")
-            .moveTo(-boxRadius,-boxRadius)
-            .vert(boxRadius*2)
-            .horiz(boxRadius*2)
-            .vert(-boxRadius*2)
-            .horiz(-boxRadius*2)
-            .setStrokeLineWidth(1)
-            .setColor(0,1,0);
-            append(obj.total, obj.target_locked);
+        
         obj.VV.hide();
         mr = mr*1.5;#incorrect, but else in FG it will seem too small.
         obj.VV = obj.svg.createChild("path")
@@ -1432,6 +1371,82 @@ append(obj.total, obj.speed_curr);
             .setColor(0,1,0); 
         append(obj.total, obj.pipper);
         append(obj.total, obj.pipperLine);
+        var boxRadius = 10;
+        var boxRadiusHalf = boxRadius*0.5;
+        var hairFactor = 0.8;
+        obj.tgt_symbols = [];
+        for(var k = 0; k<obj.max_symbols;k+=1) {
+            obj.tgt = obj.centerOrigin.createChild("path")
+                .moveTo(-boxRadiusHalf,-boxRadiusHalf)
+                .vert(boxRadius)
+                .horiz(boxRadius)
+                .vert(-boxRadius)
+                .horiz(-boxRadius)
+                .setStrokeLineWidth(1)
+                .hide()
+                .setColor(0,1,0);
+            append(obj.tgt_symbols, obj.tgt);
+            append(obj.total, obj.tgt);
+        }
+        obj.radarLock = obj.centerOrigin.createChild("path")
+            .moveTo(-boxRadius*hairFactor,0)
+            .horiz(boxRadiusHalf*hairFactor)
+            .lineTo(0,boxRadiusHalf*hairFactor)
+            .moveTo(boxRadius*hairFactor,0)
+            .horiz(-boxRadiusHalf*hairFactor)
+            .lineTo(0,-boxRadiusHalf*hairFactor)
+            .moveTo(0,boxRadius*hairFactor)
+            .vert(-boxRadiusHalf*hairFactor)
+            .lineTo(boxRadiusHalf*hairFactor,0)
+            .moveTo(0,-boxRadius*hairFactor)
+            .vert(boxRadiusHalf*hairFactor)
+            .lineTo(-boxRadiusHalf*hairFactor,0)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0);
+        append(obj.total, obj.radarLock);
+        obj.irLock = obj.centerOrigin.createChild("path")
+            .moveTo(-boxRadius,0)
+            .lineTo(0,-boxRadius)
+            .lineTo(boxRadius,0)
+            .lineTo(0,boxRadius)
+            .lineTo(-boxRadius,0)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0);
+        append(obj.total, obj.irLock);
+        obj.irSearch = obj.centerOrigin.createChild("path")
+            .moveTo(-boxRadiusHalf,0)
+            .lineTo(0,-boxRadiusHalf)
+            .lineTo(boxRadiusHalf,0)
+            .lineTo(0,boxRadiusHalf)
+            .lineTo(-boxRadiusHalf,0)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0);
+        append(obj.total, obj.irSearch);
+        obj.target_locked.hide();
+        obj.target_locked = obj.centerOrigin.createChild("path")
+            .moveTo(-boxRadius,-boxRadius)
+            .vert(boxRadius*2)
+            .horiz(boxRadius*2)
+            .vert(-boxRadius*2)
+            .horiz(-boxRadius*2)
+            .setStrokeLineWidth(1)
+            .hide()
+            .setColor(0,1,0);
+        append(obj.total, obj.target_locked);
+        obj.offangle = obj.svg.createChild("text")# real name: locator line
+                .setText("0")
+                .setAlignment("right-center")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(9, 1.1);
+        append(obj.total, obj.offangle);
+        obj.trackLine = obj.centerOrigin.createChild("path")
+                .moveTo(0,0)
+                #.horiz(10)
+                .vert(-30)
+                .setStrokeLineWidth(1)
+                .setColor(0,1,0);
+        append(obj.total, obj.trackLine);
                           
         return obj;
     },
@@ -1516,11 +1531,11 @@ append(obj.total, obj.speed_curr);
     CCRP: func(hdp) {
         if (hdp.fcs_available and hdp.master_arm ==1 and hdp.active_u != nil) {
             var selW = pylons.fcs.getSelectedWeapon();
-            if (selW != nil and !hdp.CCIP_active and selw.status == armament.MISSILE_LOCK and 
-                (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selw.type=="GBU-54" or selw.type=="GBU-24"
-                 or selw.type=="CBU-87" or selw.type=="AGM-154A" or selw.type=="B61-7" or selw.type=="B61-12") ) {
+            if (selW != nil and !hdp.CCIP_active and 
+                (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24"
+                 or selW.type=="CBU-87" or selW.type=="AGM-154A" or selW.type=="B61-7" or selW.type=="B61-12") and selW.status == armament.MISSILE_LOCK ) {
 
-                if (selw.type=="MK-82" or selw.type=="MK-83" or selw.type=="MK-84" or selw.type=="CBU-87") {
+                if (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="CBU-87") {
                     me.dt = 0.1;
                     me.maxFallTime = 20;
                 } else {
@@ -1792,7 +1807,7 @@ append(obj.total, obj.speed_curr);
     },
 
     update : func(hdp) {
-
+        HudMath.reCalc();
 #
 # short cut the whole thing if the display is turned off
 #        if (!hdp.hud_display or !hdp.hud_serviceable) {
@@ -2165,27 +2180,30 @@ append(obj.total, obj.speed_curr);
                       me.model = me.u.ModelType;
 
                     if (me.target_idx < me.max_symbols) {
+                        me.echoPos = HudMath.getPosFromCoord(me.u.get_Coord(0));
+                        #print(HudMath.dir_x);
                         me.tgt = me.tgt_symbols[me.target_idx];
                         if (me.tgt != nil) {
                             me.tgt.setVisible(me.u.get_display());
-                            me.u_dev_rad = (90-me.u.get_deviation(hdp.heading))  * D2R;
-                            me.u_elev_rad = (90-me.u.get_total_elevation( hdp.pitch))  * D2R;
-                            me.devs = me.develev_to_devroll(hdp, me.u_dev_rad, me.u_elev_rad);
-                            me.combined_dev_deg = me.devs[0];
-                            me.combined_dev_length =  me.devs[1];
+                            #me.u_dev_rad = (90-me.u.get_deviation(hdp.heading))  * D2R;
+                            #me.u_elev_rad = (90-me.u.get_total_elevation( hdp.pitch))  * D2R;
+                            #me.devs = me.develev_to_devroll(hdp, me.u_dev_rad, me.u_elev_rad);
+                            #me.combined_dev_deg = me.devs[0];
+                            #me.combined_dev_length =  me.devs[1];
                             #me.clamped = me.devs[2];
-                            me.yc = ht_yco + (ht_ycf * me.combined_dev_length * math.cos(me.combined_dev_deg*D2R));
-                            me.xc = ht_xco + (ht_xcf * me.combined_dev_length * math.sin(me.combined_dev_deg*D2R));
-
-                            me.clamped = me.yc > me.sy*0.5 or me.yc < -me.sy*0.5+me.hozizon_line_offset_from_middle_in_svg*me.sy or me.xc > me.sx *0.5 or me.xc < -me.sx*0.5; # outside HUD
-
+                            #me.yc = ht_yco + (ht_ycf * me.combined_dev_length * math.cos(me.combined_dev_deg*D2R));
+                            #me.xc = ht_xco + (ht_xcf * me.combined_dev_length * math.sin(me.combined_dev_deg*D2R));
+                            
+                            #me.clamped = me.yc > me.sy*0.5 or me.yc < -me.sy*0.5+me.hozizon_line_offset_from_middle_in_svg*me.sy or me.xc > me.sx *0.5 or me.xc < -me.sx*0.5; # outside HUD
+                            me.clamped = HudMath.isCenterPosClamped(me.echoPos[0],me.echoPos[1]);
+                            
                             if (hdp.active_u != nil and hdp.active_u.Callsign != nil and me.u.Callsign != nil and me.u.Callsign.getValue() == hdp.active_u.Callsign.getValue()) {
                                 me.target_locked.setVisible(1);
                                 me.tgt.hide();
-                                me.xcS = me.sx/2                     + (me.pixelPerMeterX * me.combined_dev_length * math.sin(me.combined_dev_deg*D2R));
-                                me.ycS = me.sy-me.texels_up_into_hud - (me.pixelPerMeterY * me.combined_dev_length * math.cos(me.combined_dev_deg*D2R));
-                                me.target_locked.setTranslation (me.xcS, me.ycS);
-                                
+                                #me.xcS = me.sx/2                     + (me.pixelPerMeterX * me.combined_dev_length * math.sin(me.combined_dev_deg*D2R));
+                                #me.ycS = me.sy-me.texels_up_into_hud - (me.pixelPerMeterY * me.combined_dev_length * math.cos(me.combined_dev_deg*D2R));
+                                #me.target_locked.setTranslation (me.xcS, me.ycS);
+                                me.target_locked.setTranslation (me.echoPos);
                                 if (pylons.fcs != nil and pylons.fcs.isLock()) {
                                     #me.target_locked.setRotation(45*D2R);
                                     if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7" or hdp.weapon_selected == "AIM-9") {
@@ -2193,8 +2211,11 @@ append(obj.total, obj.speed_curr);
                                         if (aim != nil) {
                                             var coords = aim.getSeekerInfo();
                                             if (coords != nil) {
-                                                me.irLock.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
-                                                me.radarLock.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
+                                                me.seekPos = HudMath.getCenterPosFromDegs(coords[0],coords[1]);
+                                                #me.irLock.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
+                                                #me.radarLock.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
+                                                me.irLock.setTranslation(me.seekPos);
+                                                me.radarLock.setTranslation(me.seekPos);
                                             }
                                         }
                                     }
@@ -2208,13 +2229,15 @@ append(obj.total, obj.speed_curr);
                                         me.triangle65.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading));
                                         me.irL = 1;
                                         me.irT = 1;
-                                    }                                    
+                                    }
                                 } else {
                                     #me.target_locked.setRotation(0);
                                 }
                                 if (me.clamped) {
-                                    me.trackLine.setTranslation(me.sx/2,me.sy-me.texels_up_into_hud);
-                                    me.trackLine.setRotation(me.combined_dev_deg*D2R);
+                                    #me.trackLine.setTranslation(me.sx/2,me.sy-me.texels_up_into_hud);
+                                    #me.trackLine.setRotation(me.combined_dev_deg*D2R);
+                                    me.trackLine.setTranslation(HudMath.getBorePos());
+                                    me.trackLine.setRotation(HudMath.getPolarFromCenterPos(me.echoPos[0],me.echoPos[1])[0]);
                                     me.dev_h_d = me.u.get_deviation(hdp.heading);
                                     me.dev_e_d = me.u.get_total_elevation(hdp.pitch);
                                     me.offangle.setText(sprintf("%d", math.sqrt(me.dev_h_d*me.dev_h_d+me.dev_e_d*me.dev_e_d)));
@@ -2226,7 +2249,7 @@ append(obj.total, obj.speed_curr);
                                 if (hdp.symbol_reject)
                                   me.tgt.setVisible(0);
                             }
-                            me.tgt.setTranslation (me.xc, me.yc);
+                            me.tgt.setTranslation (me.echoPos);
                             me.tgt.update();
                             if (ht_debug)
                               printf("%-10s %f,%f [%f,%f,%f] :: %f,%f",me.callsign,me.xc,me.yc, me.devs[0], me.devs[1], me.devs[2], me.u_dev_rad*D2R, me.u_elev_rad*D2R); 

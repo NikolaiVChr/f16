@@ -2,7 +2,7 @@
 #
 # Author: Nikolai V. Chr. (FPI location code adapted from Buccaneer aircraft)
 #
-# Version 1.03
+# Version 1.05
 #
 # License: GPL 2.0
 	
@@ -45,7 +45,7 @@ var HudMath = {
 		# 
 		if (initialization) {
 			# calc Y offset from HUD canvas center origin.
-			me.centerOffset = -1 * (me.canvasHeight/2 - ((me.hud3dTop - me.input.view0Z.getValue())*me.pixelPerMeterY));
+			me.centerOffset = -1 * (me.canvasHeight/2 - ((me.hud3dTop - me.input.view0Z.getValue())*me.pixelPerMeterY));#TODO: use originCanvas?
 		} elsif (!me.parallax) {
 			# calc Y offset from HUD canvas center origin.
 			me.centerOffset = -1 * (me.canvasHeight/2 - ((me.hud3dTop - me.input.viewZ.getValue())*me.pixelPerMeterY));
@@ -117,11 +117,50 @@ var HudMath = {
 		return [x,y];
 	},
 	
-	getPosFromPolar:  func (meter, angle_deg) {
+	getCenterPosFromDegs:  func (yaw_deg, pitch_deg) {
 		# return pos from center origin
+		var y = -me.pixelPerMeterY*((me.input.viewX.getValue() - me.hud3dX) * math.tan(pitch_deg*D2R));
+		var x =  me.pixelPerMeterX*((me.input.viewX.getValue() - me.hudX3d(y)) * math.tan(yaw_deg*D2R));
+		return [x,y+me.centerOffset];
+	},
+	
+	isCanvasPosClamped: func (x,y) {
+		if (x>me.originCanvas[0]+me.canvasWidth or x<me.originCanvas[0] or y >me.originCanvas[1]+me.canvasHeight or y<me.originCanvas[1]) {
+			return 1;
+		}
+		return 0;
+	},
+	
+	isCenterPosClamped: func (x,y) {
+		x += me.getCenterOrigin()[0];
+		y += me.getCenterOrigin()[1];
+		
+		return me.isCanvasPosClamped(x,y);
+	},
+	
+	getPosFromPolar:  func (meter, angle_deg) {
+		# return pos from center origin (not tested)
 		me.xxx =  me.pixelPerMeterX * meter * math.sin(angle_deg*D2R);
         me.yyy = -me.pixelPerMeterY * meter * math.cos(angle_deg*D2R);
         return [me.xxx, me.yyy+me.centerOffset];
+	},
+	
+	getPolarFromBorePos: func (x,y) {
+		me.ll = math.sqrt(x*x+y*y);
+        if (me.ll != 0) {
+        	me.pipAng = math.atan2(x,-y);
+            #me.pipAng = math.acos(x/me.ll);
+            #if (y < 0) {
+            #    me.pipAng *= -1;
+            #}
+            return [me.pipAng,me.ll];# notice is radians
+        }
+        return [0,0];
+	},
+	
+	getPolarFromCenterPos: func (x,y) {
+		y -= me.centerOffset;
+		return me.getPolarFromBorePos(x,y);
 	},
 	
 	#getEyeToHudDistance: func {
@@ -191,16 +230,16 @@ var HudMath = {
 	    return [me.pos_x, me.pos_y];
 	},
 	
-	getStaticHorizon: func {
+	getStaticHorizon: func (averagePoint_deg = 7.5) {
 		# get translation and rotation for horizon line, static means not centered around FPI.
 		# return a vector of 3: translation of main horizon group, rotation of main horizon groups transform, translation of sub horizon group (wherein the line (and pitch ladder) is drawn).
 		
 		me.rot = -me.input.roll.getValue() * D2R;
     
-	    return [[0,me.centerOffset],me.rot,[0, me.getPixelPerDegreeAvg(me.input.pitch.getValue())*me.input.pitch.getValue()]];
+	    return [[0,me.centerOffset],me.rot,[0, me.getPixelPerDegreeAvg(averagePoint_deg)*me.input.pitch.getValue()]];
 	},
 	
-	getDynamicHorizon: func {
+	getDynamicHorizon: func (averagePoint_deg = 7.5) {
 		# get translation and rotation for horizon line, dynamic means centered around FPI.
 		# should be called after getFlightPathIndicatorPos/getFlightPathIndicatorPosWind.
 		# return a vector of 3: translation of main horizon group, rotation of main horizon groups transform in radians, translation of sub horizon group (wherein the line (and pitch ladder) is drawn).
@@ -217,7 +256,7 @@ var HudMath = {
 	    }
 	    me.fpi_pos_rel_x    = math.sin(me.fpi_angle-me.rot)*me.fpi_polar;
 	    
-	    return [[0,me.centerOffset],me.rot,[me.fpi_pos_rel_x, me.getPixelPerDegreeAvg(me.input.pitch.getValue())*me.input.pitch.getValue()]];
+	    return [[0,me.centerOffset],me.rot,[me.fpi_pos_rel_x, me.getPixelPerDegreeAvg(averagePoint_deg)*me.input.pitch.getValue()]];
 	},
 	
 	getPixelPerDegreeAvg: func (averagePoint_deg = 7.5) {
