@@ -1068,19 +1068,6 @@ append(obj.total, obj.speed_curr);
             append(obj.total, obj.VV);
     obj.localizer = obj.svg.createChild("group");
     
-    #eegs:
-    obj.eegsGroup = obj.svg.createChild("group");
-    obj.eegsRightX = [0,0,0,0,0,0,0,0,0,0];
-    obj.eegsRightY = [0,0,0,0,0,0,0,0,0,0];
-    obj.eegsLeftX = [0,0,0,0,0,0,0,0,0,0];
-    obj.eegsLeftY = [0,0,0,0,0,0,0,0,0,0];
-    obj.gunPos   = [[nil,nil],[nil,nil,nil],[nil,nil,nil,nil],[nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil]];
-    obj.eegsMe = {ac: geo.Coord.new(), eegsPos: geo.Coord.new(),shellPosX: [0,0,0,0,0,0,0,0,0,0],shellPosY: [0,0,0,0,0,0,0,0,0,0],shellPosDist: [0,0,0,0,0,0,0,0,0,0]};
-    obj.lastTime = systime();
-    obj.averageDt = 0.150;
-    obj.eegsLoop = maketimer(obj.averageDt, obj, obj.displayEEGS);
-    obj.eegsLoop.simulatedTime = 1;
-    
     obj.ilsGroup  = obj.localizer.createChild("group");
     obj.gsGroup   = obj.localizer.createChild("group");
     obj.ils = obj.ilsGroup.createChild("path")
@@ -1447,6 +1434,19 @@ append(obj.total, obj.speed_curr);
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
         append(obj.total, obj.trackLine);
+        
+        #eegs:
+        obj.eegsGroup = obj.centerOrigin.createChild("group");
+        obj.eegsRightX = [0,0,0,0,0,0,0,0,0,0];
+        obj.eegsRightY = [0,0,0,0,0,0,0,0,0,0];
+        obj.eegsLeftX  = [0,0,0,0,0,0,0,0,0,0];
+        obj.eegsLeftY  = [0,0,0,0,0,0,0,0,0,0];
+        obj.gunPos   = [[nil,nil],[nil,nil,nil],[nil,nil,nil,nil],[nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil,nil],[nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil]];
+        obj.eegsMe = {ac: geo.Coord.new(), eegsPos: geo.Coord.new(),shellPosX: [0,0,0,0,0,0,0,0,0,0],shellPosY: [0,0,0,0,0,0,0,0,0,0],shellPosDist: [0,0,0,0,0,0,0,0,0,0]};
+        obj.lastTime = systime();
+        obj.averageDt = 0.150;
+        obj.eegsLoop = maketimer(obj.averageDt, obj, obj.displayEEGS);
+        obj.eegsLoop.simulatedTime = 1;
                           
         return obj;
     },
@@ -1693,8 +1693,8 @@ append(obj.total, obj.speed_curr);
                 } else {
                     var ac  = me.gunPos[l][l][1];
                     pos     = me.gunPos[l][l][0];
-                    me.eegsMe.u_dev_rad  = (90-awg_9.deviation_normdeg(me.eegsMe.hdg,   ac.course_to(pos)))  * D2R;
-                    me.eegsMe.u_elev_rad = (90-awg_9.deviation_normdeg(me.eegsMe.pitch, math.atan2(pos.alt()-ac.alt(),ac.distance_to(pos))*R2D))  * D2R;
+                    #me.eegsMe.u_dev_rad  = (90-awg_9.deviation_normdeg(me.eegsMe.hdg,   ac.course_to(pos)))  * D2R;
+                    #me.eegsMe.u_elev_rad = (90-awg_9.deviation_normdeg(me.eegsMe.pitch, math.atan2(pos.alt()-ac.alt(),ac.distance_to(pos))*R2D))  * D2R;
                     #if (l==0) {
                     #    #printf("prev %.2f alt %.2f our-pitch %.2f our-alt %.2f",math.atan2(pos.alt()-me.eegsMe.ac.alt(),pos.distance_to(me.eegsMe.ac))*R2D-me.eegsMe.pitch,pos.alt(),me.eegsMe.pitch, me.eegsMe.ac.alt());
                     #    printf("seen bearing %.2f from heading %.2f", me.eegsMe.ac.course_to(pos[0]), me.eegsMe.hdg);
@@ -1702,14 +1702,15 @@ append(obj.total, obj.speed_curr);
                         #pos.dump();
                     #    print();
                     #}
-                    me.eegsMe.devs = me.develev_to_devroll(hdp, me.eegsMe.u_dev_rad, me.eegsMe.u_elev_rad);
-                    me.eegsMe.combined_dev_deg    =  me.eegsMe.devs[0];
-                    me.eegsMe.combined_dev_length =  me.eegsMe.devs[1];
-                    me.eegsMe.xcS = me.sx/2                     + (me.pixelPerMeterX * me.eegsMe.combined_dev_length * math.sin(me.eegsMe.combined_dev_deg*D2R));
-                    me.eegsMe.ycS = me.sy-me.texels_up_into_hud - (me.pixelPerMeterY * me.eegsMe.combined_dev_length * math.cos(me.eegsMe.combined_dev_deg*D2R));
+                    #me.eegsMe.devs = me.develev_to_devroll(hdp, me.eegsMe.u_dev_rad, me.eegsMe.u_elev_rad);
+                    #me.eegsMe.combined_dev_deg    =  me.eegsMe.devs[0];
+                    #me.eegsMe.combined_dev_length =  me.eegsMe.devs[1];
+                    #me.eegsMe.xcS = me.sx/2                     + (me.pixelPerMeterX * me.eegsMe.combined_dev_length * math.sin(me.eegsMe.combined_dev_deg*D2R));
+                    #me.eegsMe.ycS = me.sy-me.texels_up_into_hud - (me.pixelPerMeterY * me.eegsMe.combined_dev_length * math.cos(me.eegsMe.combined_dev_deg*D2R));
+                    me.eegsMe.posTemp = HudMath.getPosFromCoord(pos,ac);
                     me.eegsMe.shellPosDist[l] = ac.direct_distance_to(pos)*M2FT;
-                    me.eegsMe.shellPosX[l] = me.eegsMe.xcS;
-                    me.eegsMe.shellPosY[l] = me.eegsMe.ycS;
+                    me.eegsMe.shellPosX[l] = me.eegsMe.posTemp[0];#me.eegsMe.xcS;
+                    me.eegsMe.shellPosY[l] = me.eegsMe.posTemp[1];#me.eegsMe.ycS;
                 }
             }
             if (me.eegsMe.allow) {
