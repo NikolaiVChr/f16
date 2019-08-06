@@ -1575,14 +1575,29 @@ append(obj.total, obj.speed_curr);
                         me.pipperLine.setVisible(me.showPipper);
                         return;
                     }
-        
                     me.showme = TRUE;
-
+                    
+                    #me.myOwnPos = geo.aircraft_position();
+                    #me.xyz = {"x":me.myOwnPos.x(),                  "y":me.myOwnPos.y(),                 "z":me.myOwnPos.z()};
+                    #me.dir = {"x":me.ccipPos[0].x()-me.myOwnPos.x(),  "y":me.ccipPos[0].y()-me.myOwnPos.y(), "z":me.ccipPos[0].z()-me.myOwnPos.z()};
+                    #me.v = get_cart_ground_intersection(me.xyz, me.dir);
+                    #if (me.v != nil) {
+                    #    me.terrain = geo.Coord.new();
+                    #    me.terrain.set_latlon(me.v.lat, me.v.lon, me.v.elevation);
+                    #    me.maxDist = me.myOwnPos.direct_distance_to(me.ccipPos[0])-1;
+                    #    me.terrainDist = me.myOwnPos.direct_distance_to(me.terrain);
+                    #    if (me.terrainDist < me.maxDist) {
+                    #        me.showme = FALSE;
+                    #    }
+                    #} else {
+                    #    me.showme = FALSE;
+                    #}
                     me.hud_pos = HudMath.getPosFromCoord(me.ccipPos[0]);
                     if(me.hud_pos != nil) {
                         me.pos_x = me.hud_pos[0];
                         me.pos_y = me.hud_pos[1];
-
+                        #printf("HUDMath  %.1f", HudMath.dir_x);
+                        #printf("Aircraft %.1f", hdp.heading);
                         #printf("dist=%0.1f (%3d , %3d)", dist, pos_x, pos_y);
 
                         #if(me.pos_x > (512/1024)*canvasWidth) {

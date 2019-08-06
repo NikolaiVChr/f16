@@ -876,10 +876,13 @@ var AIM = {
         # we calc heading from composite speeds, due to alpha and beta might influence direction bombs will fall:
         if(me.ccip_fps_x == 0) return nil;
         me.ccip_heading = geo.normdeg(math.atan2(me.ccip_speed_east_fps,me.ccip_speed_north_fps)*R2D);
+        #print();
+        #printf("CCIP     %.1f", me.ccip_heading);
 		me.ccip_pitch = math.atan2(me.ccip_fps_z, me.ccip_fps_x);
         while (me.ccip_t <= maxFallTime_sec) {
 			me.ccip_t += me.ccip_dt;
 			
+			# Apply drag
 			me.ccip_fps = math.sqrt(me.ccip_fps_x*me.ccip_fps_x+me.ccip_fps_z*me.ccip_fps_z);
 			if (me.ccip_fps==0) return nil;
 			me.ccip_q = 0.5 * me.ccip_rho * me.ccip_fps * me.ccip_fps;
@@ -887,27 +890,48 @@ var AIM = {
 			me.ccip_Cd = me.ccip_bomb.drag(me.ccip_mach);
 			me.ccip_deacc = (me.ccip_Cd * me.ccip_q * me.ccip_bomb.ref_area_sqft) / me.ccip_mass;
 			me.ccip_fps -= me.ccip_deacc*me.ccip_dt;
+			
+			# new components and pitch
 			me.ccip_fps_z = me.ccip_fps*math.sin(me.ccip_pitch);
 			me.ccip_fps_x = me.ccip_fps*math.cos(me.ccip_pitch);
-
 			me.ccip_fps_z -= g_fps * me.ccip_dt;
-			me.ccip_altC = me.ccip_altC + me.ccip_fps_z*me.ccip_dt*FT2M;
-			
-			me.ccip_oldPos = geo.Coord.new(me.ccipPos);
 			me.ccip_pitch = math.atan2(me.ccip_fps_z, me.ccip_fps_x);
 			
+			# new position
+			me.ccip_altC = me.ccip_altC + me.ccip_fps_z*me.ccip_dt*FT2M;
 			me.ccip_dist = me.ccip_fps_x*me.ccip_dt*FT2M;
+			me.ccip_oldPos = geo.Coord.new(me.ccipPos);
 			me.ccipPos.apply_course_distance(me.ccip_heading, me.ccip_dist);
 			me.ccipPos.set_alt(me.ccip_altC);
+			
+			# test terrain
 			me.ccip_grnd = geo.elevation(me.ccipPos.lat(),me.ccipPos.lon());
 			if (me.ccip_grnd != nil) {
 				if (me.ccip_grnd > me.ccip_altC) {
-					var inter = me.extrapolate(me.ccip_grnd,me.ccip_altC,me.ccip_oldPos.alt(),0,1);
-					return [me.interpolate(me.ccipPos,me.ccip_oldPos,inter),me.arming_time<me.ccip_t];
+					#return [me.ccipPos,me.arming_time<me.ccip_t];
+					me.result = me.getTerrain(me.ccip_oldPos, me.ccipPos);
+					if (me.result != nil) {
+						return [me.result, me.arming_time<me.ccip_t];
+					}
+					return [me.ccipPos,me.arming_time<me.ccip_t];
+					#var inter = me.extrapolate(me.ccip_grnd,me.ccip_altC,me.ccip_oldPos.alt(),0,1);
+					#return [me.interpolate(me.ccipPos,me.ccip_oldPos,inter),me.arming_time<me.ccip_t];
 				}
 			} else {
 				return nil;
-			}
+			}			
+        }
+        return nil;
+	},
+	
+	getTerrain: func (from, to) {
+		me.xyz = {"x":from.x(),                  "y":from.y(),                 "z":from.z()};
+        me.dir = {"x":to.x()-from.x(),  "y":to.y()-from.y(), "z":to.z()-from.z()};
+        me.v = get_cart_ground_intersection(me.xyz, me.dir);
+        if (me.v != nil) {
+            me.terrain = geo.Coord.new();
+            me.terrain.set_latlon(me.v.lat, me.v.lon, me.v.elevation);
+            return me.terrain;
         }
         return nil;
 	},
