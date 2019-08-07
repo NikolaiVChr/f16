@@ -968,6 +968,28 @@
    <property>sim/multiplay/generic/bool[39]</property>
   </condition>
  </animation>
+ 
+ <animation>
+  <type>material</type>
+<!--  <condition>
+    <equals>
+      <property>/sim/rendering/rembrandt/enabled</property>
+      <value>0</value>
+    </equals>
+  </condition>-->
+  <object-name>InternalFlame</object-name>
+  <transparency>
+   <alpha-prop>sim/multiplay/generic/float[19]</alpha-prop>
+   <factor>0.75</factor>
+   <offset>0</offset>
+  </transparency>
+  <!--<emission>
+   <red>  0.0100</red>
+   <green>0.0050</green>
+   <blue> 0.0039</blue>
+   <factor-prop>engines/engine[0]/n1</factor-prop>
+  </emission>-->
+ </animation>
 
  <animation>
   <type>select</type>

@@ -241,6 +241,8 @@ var loop_flare = func {
     }
 
     setprop("f16/external", !getprop("sim/current-view/internal"));
+    
+    setprop("sim/multiplay/generic/float[19]",  getprop("controls/engines/engine/throttle"));
       
     settimer(loop_flare, 0.10);
 };
@@ -388,6 +390,8 @@ var sendABtoMP = func {
   setprop("sim/multiplay/generic/float[12]",  0.25+(0.75-red*0.75));
   setprop("sim/multiplay/generic/float[13]",  0.2+(0.8-red*0.8));
   setprop("sim/multiplay/generic/float[14]",  (1-red)*0.5);
+  
+  
 }
 
 var sendLightsToMp = func {
