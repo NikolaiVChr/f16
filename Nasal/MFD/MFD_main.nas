@@ -1201,7 +1201,7 @@ var MFD_Device =
             .setStrokeLineWidth(1)
             .set("z-index",2)
             .hide()
-            .setColor(1,0,0);
+            .setColor(1,1,0);
         svg.c4 = svg.p_HSDc.createChild("path")
             .moveTo(-50,0)
             .arcSmallCW(50,50, 0, -50*2, 0)
@@ -1430,6 +1430,51 @@ var MFD_Device =
                         me.prevY = me.legY;
                     }
                 }
+                
+                for (var u = 0;u<2;u+=1) {
+                    if (lines[u] != nil) {
+                        # lines
+                        me.plan = lines[u];
+                        me.planSize = me.plan.getPlanSize();
+                        me.prevX = nil;
+                        me.prevY = nil;
+                        for (me.j = 0; me.j <= me.planSize;me.j+=1) {
+                            if (me.j == me.planSize) {
+                                if (me.planSize > 2) {
+                                    me.wp = me.plan.getWP(0);
+                                } else {
+                                    continue;
+                                }
+                            } else {
+                                me.wp = me.plan.getWP(me.j);
+                            }
+                            me.wpC = geo.Coord.new();
+                            me.wpC.set_latlon(me.wp.lat,me.wp.lon);
+                            me.legBearing = geo.aircraft_position().course_to(me.wpC)-getprop("orientation/heading-deg");#relative
+                            me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
+                            if (me.root.centered) {
+                                me.legRangePixels = me.root.mediumRadius*(me.legDistance/me.root.range_cen);;
+                            } else {
+                                me.legRangePixels = me.root.outerRadius*(me.legDistance/me.root.range_dep);;
+                            }
+                            me.legX = me.legRangePixels*math.sin(me.legBearing*D2R);
+                            me.legY = -me.legRangePixels*math.cos(me.legBearing*D2R);
+                            if (me.prevX != nil) {
+                                me.root.cone.createChild("path")
+                                    .moveTo(me.legX,me.legY)
+                                    .lineTo(me.prevX,me.prevY)
+                                    .setStrokeLineWidth(1)
+                                    .setStrokeDashArray([10, 10])
+                                    .set("z-index",4)
+                                    .setColor(0.9,0.9,0.9)
+                                    .update();
+                            }
+                            me.prevX = me.legX;
+                            me.prevY = me.legY;
+                        }
+                    }
+                }
+                
                 me.root.cone.update();
                 
                 for (var l = 1; l<=4;l+=1) {
@@ -1854,3 +1899,14 @@ f16_mfd = F16MfdRecipient.new("F16-MFD");
 #LowerMFD = f16_mfd.LowerMFD;
 
 emesary.GlobalTransmitter.Register(f16_mfd);
+
+var lines = [nil,nil];
+
+var loadLine = func  (no,path) {
+    printf("Attempting to load route %s to act as lines %d in HSD.", path, no);
+  
+    call(func {lines[no] = createFlightplan(path);}, nil, var err = []);
+    if (size(err) or lines[no] == nil) {
+        print(err[0]);
+    }
+};

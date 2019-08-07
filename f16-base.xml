@@ -387,7 +387,7 @@
                         </binding>
                     </item> 
                     <item>
-                        <label>Circles</label>
+                        <label>Preplanning</label>
                         <enabled type="bool">true</enabled>
                         <name>circles</name>
                         <binding>

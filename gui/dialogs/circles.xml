@@ -7,12 +7,39 @@
     <resizable>false</resizable>
     <width>500</width>
     <!--<height>250</height>-->
+    
+    <nasal>
+        <open><![CDATA[
+            var load_line1 = func(path) {
+                f16.loadLine(0,path.getValue());
+            }
+            
+            var load_line2 = func(path) {
+                f16.loadLine(1,path.getValue());
+            }
+
+            var defaultDirInFileSelector = getprop("/sim/fg-home") ~ "/Export";
+
+            var file_selector_1 = gui.FileSelector.new(
+              callback: load_line1, title: "Load Lines 1", button: "Load",
+              dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.gpx","*.fgfp"]);
+            var file_selector_2 = gui.FileSelector.new(
+              callback: load_line2, title: "Load Lines 2", button: "Load",
+              dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.gpx","*.fgfp"]);
+            
+        ]]></open>
+
+        <close><![CDATA[
+            file_selector_1.del();            
+            file_selector_2.del();            
+        ]]></close>
+    </nasal>
 
     <group>
 		<layout>hbox</layout>
 		<empty><stretch>1</stretch></empty>
 
-		<text><label>Preplanned Threats</label></text>
+		<text><label>Preplanned Threats:</label></text>
 
 		<empty><stretch>1</stretch></empty>
 
@@ -77,11 +104,11 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<!--<color>
-	      		<red>0.5</red>
-	      		<green>1</green>
+	      	<color>
+	      		<red>1.0</red>
+	      		<green>0.5</green>
 	      		<blue>0.5</blue>
-	      	</color>-->
+	      	</color>
 		</input>
 		<button>
 			<legend>Clear</legend>
@@ -141,11 +168,11 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<!--<color>
-	      		<red>0.5</red>
-	      		<green>1</green>
+	      	<color>
+	      		<red>1.0</red>
+	      		<green>0.5</green>
 	      		<blue>0.5</blue>
-	      	</color>-->
+	      	</color>
 		</input>
 		<button>
 			<legend>Clear</legend>
@@ -205,11 +232,11 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<!--<color>
-	      		<red>0.5</red>
+	      	<color>
+	      		<red>1</red>
 	      		<green>1</green>
 	      		<blue>0.5</blue>
-	      	</color>-->
+	      	</color>
 		</input>
 		<button>
 			<legend>Clear</legend>
@@ -289,6 +316,34 @@
 	</group>
 
 	<empty><stretch>1</stretch></empty>
-	<text><label>Input lat,lon and radius (nm) to get red circle areas in HSD.</label></text>
+	<text><label>Input lat,lon and radius (nm) to get circled threat areas in HSD.</label></text>
+	
+	<text>
+        <label></label>
+    </text>
+	<text>
+        <label>HSD Preloaded HSD Lines:</label>
+    </text>
+    <group>
+		<layout>hbox</layout>
+	    <button>
+	        <legend>Load Lines 1</legend>
+	        <equal>true</equal>
+	        <binding>
+	            <command>nasal</command>
+	            <script>file_selector_1.open()</script>
+	        </binding>
+	    </button>
+	    <button>
+	        <legend>Load Lines 2</legend>
+	        <equal>true</equal>
+	        <binding>
+	            <command>nasal</command>
+	            <script>file_selector_2.open()</script>
+	        </binding>
+	    </button>
+    </group>
+    <empty><stretch>1</stretch></empty>
+    <text><label>Load route file to enable lines in HSD.</label></text>
 
 </PropertyList>
