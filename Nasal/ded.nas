@@ -69,8 +69,9 @@ var pBINGO= 6;
 var pMAGV = 7;
 var pLINK = 8;
 var pLASER= 9;
+var pTIME = 10;
 
-var page = int(rand()*9.99);#random page at startup
+var page = int(rand()*10.99);#random page at startup
 var comm = 0;
 
 var text = ["","","","",""];
@@ -208,6 +209,13 @@ var loop_ded = func {# one line is max 24 chars
       text[2] = sprintf("   LST CODE    %04d     ",code);
       text[3] = sprintf("   A-G: CMBT  A-A: TRNG ");
       text[4] = sprintf("   LASER ST TIME  16 SEC");
+    } elsif (page == pTIME) {
+      var time   = getprop("/sim/time/gmt-string");
+      text[0] = sprintf("        TIME      %s     ",no);
+      text[1] = sprintf("  SYSTEM     %s",time);
+      text[2] = sprintf("  HACK       00:00:00   ");
+      text[3] = sprintf("  DELTA TOS  00:00:00   ");
+      text[4] = sprintf("                        ");
     }
     line1.setText(text[0]);
     line2.setText(text[1]);
@@ -259,6 +267,10 @@ var link16 = func {
 
 var laser = func {
   page = pLASER;
+}
+
+var time = func {
+  page = pTIME;
 }
 
 ## these methods taken from JA37:

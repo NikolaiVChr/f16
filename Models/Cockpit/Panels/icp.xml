@@ -338,8 +338,26 @@
         <hovered>
             <binding>
                 <command>set-tooltip</command>
-                <tooltip-id>button-stpt</tooltip-id>
+                <tooltip-id>button-laser</tooltip-id>
                 <label>Laser</label>
+            </binding>
+        </hovered>
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>6</object-name><!-- 6 -->
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.time();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-time</tooltip-id>
+                <label>Time</label>
             </binding>
         </hovered>
     </animation>
