@@ -326,6 +326,24 @@
         </hovered>
     </animation>
     <animation>
+        <type>pick</type>
+        <object-name>8</object-name><!-- 8 -->
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.laser();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-stpt</tooltip-id>
+                <label>Laser</label>
+            </binding>
+        </hovered>
+    </animation>
+    <animation>
         <type>select</type>
         <condition>
                 <less-than-equals>

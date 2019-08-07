@@ -68,8 +68,9 @@ var pCNI  = 5;
 var pBINGO= 6;
 var pMAGV = 7;
 var pLINK = 8;
+var pLASER= 9;
 
-var page = int(rand()*8.99);#random page at startup
+var page = int(rand()*9.99);#random page at startup
 var comm = 0;
 
 var text = ["","","","",""];
@@ -199,6 +200,14 @@ var loop_ded = func {# one line is max 24 chars
       text[1] = sprintf("                        ");
       text[3] = sprintf("                        ");
       text[4] = sprintf("                        ");
+    } elsif (page == pLASER) {
+      var code = getprop("f16/avionics/laser-code");
+      var arm = getprop("controls/armament/laser-arm-dmd");
+      text[0] = sprintf("         LASER      %s   ",no);
+      text[1] = sprintf("   TGP CODE    %04d     ",code);
+      text[2] = sprintf("   LST CODE    %04d     ",code);
+      text[3] = sprintf("   A-G: CMBT  A-A: TRNG ");
+      text[4] = sprintf("   LASER ST TIME  16 SEC");
     }
     line1.setText(text[0]);
     line2.setText(text[1]);
@@ -246,6 +255,10 @@ var magv = func {
 
 var link16 = func {
   page = pLINK;
+}
+
+var laser = func {
+  page = pLASER;
 }
 
 ## these methods taken from JA37:
