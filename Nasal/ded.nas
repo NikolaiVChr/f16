@@ -70,7 +70,7 @@ var pMAGV = 7;
 var pLINK = 8;
 var pLASER= 9;
 var pTIME = 10;
-var pLIST = 100;
+var pLIST = 100;#excluded from random
 
 var page = int(rand()*10.99);#random page at startup
 var comm = 0;
@@ -131,7 +131,7 @@ var loop_ded = func {# one line is max 24 chars
         type = target.get_model();
       }
       var friend = "";
-      if (sign != "" and (sign == getprop("link16/wingman-1") or sign == getprop("link16/wingman-2") or sign == getprop("link16/wingman-3") or sign == getprop("link16/wingman-4"))) {
+      if (sign != "" and (sign == getprop("link16/wingman-1") or sign == getprop("link16/wingman-2") or sign == getprop("link16/wingman-3") or sign == getprop("link16/wingman-4") or sign == getprop("link16/wingman-5") or sign == getprop("link16/wingman-6") or sign == getprop("link16/wingman-7"))) {
         friend = "WINGMAN";
       } elsif (sign != "") {
         friend = "NO CONN";
