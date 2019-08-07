@@ -1044,6 +1044,7 @@ var MFD_Device =
         svg.innerRadius  = svg.outerRadius*0.3333;
         #var innerTick    = 0.85*innerRadius*math.cos(45*D2R);
         #var outerTick    = 1.15*innerRadius*math.cos(45*D2R);
+        
 
         svg.conc = svg.p_HSDc.createChild("path")
             .moveTo(svg.innerRadius,0)
@@ -1169,6 +1170,46 @@ var MFD_Device =
 #           .lineTo(0, -482)
 #           .setColor(0.5,0.5,1)
 #           .setStrokeLineWidth(1);
+
+
+        
+        
+        svg.c1 = svg.p_HSDc.createChild("path")
+            .moveTo(-50,0)
+            .arcSmallCW(50,50, 0, -50*2, 0)
+            .arcSmallCW(50,50, 0,  50*2, 0)
+            .setStrokeLineWidth(1)
+            .set("z-index",2)
+            .hide()
+            .setColor(1,0,0);
+        svg.c2 = svg.p_HSDc.createChild("path")
+            .moveTo(-50,0)
+            .arcSmallCW(50,50, 0, -50*2, 0)
+            .arcSmallCW(50,50, 0,  50*2, 0)
+            .setStrokeLineWidth(1)
+            .set("z-index",2)
+            .hide()
+            .setColor(1,0,0);
+        svg.c3 = svg.p_HSDc.createChild("path")
+            .moveTo(-50,0)
+            .arcSmallCW(50,50, 0, -50*2, 0)
+            .arcSmallCW(50,50, 0,  50*2, 0)
+            .setStrokeLineWidth(1)
+            .set("z-index",2)
+            .hide()
+            .setColor(1,0,0);
+        svg.c4 = svg.p_HSDc.createChild("path")
+            .moveTo(-50,0)
+            .arcSmallCW(50,50, 0, -50*2, 0)
+            .arcSmallCW(50,50, 0,  50*2, 0)
+            .setStrokeLineWidth(1)
+            .set("z-index",2)
+            .hide()
+            .setColor(0,1,0);
+
+
+
+
         svg.centered = 0;
         svg.coupled = 0;
         svg.range_cen = 40;
@@ -1386,7 +1427,43 @@ var MFD_Device =
                     }
                 }
                 me.root.cone.update();
+                
+                for (var l = 1; l<=4;l+=1) {
+                    # threat circles
+                    me.la = getprop("f16/avionics/c"~l~"-lat");
+                    me.lo = getprop("f16/avionics/c"~l~"-lon");
+                    me.ra = getprop("f16/avionics/c"~l~"-rad");
+                    
+                    if (l==1) me.ci = me.root.c1;
+                    elsif (l==2) me.ci = me.root.c2;
+                    elsif (l==3) me.ci = me.root.c3;
+                    elsif (l==4) me.ci = me.root.c4;
+                    
+                    if (me.la != nil and me.lo != nil and me.ra != nil and me.ra > 0) {
+                        me.wpC = geo.Coord.new();
+                        me.wpC.set_latlon(me.la,me.lo);
+                        me.legBearing = geo.aircraft_position().course_to(me.wpC)-getprop("orientation/heading-deg");#relative
+                        me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
+                        me.legRadius  = me.ra;
+                        if (me.root.centered) {
+                            me.legRangePixels = me.root.mediumRadius*(me.legDistance/me.root.range_cen);
+                            me.legScale = me.root.mediumRadius*(me.legRadius/me.root.range_cen)/50;
+                        } else {
+                            me.legRangePixels = me.root.outerRadius*(me.legDistance/me.root.range_dep);
+                            me.legScale = me.root.outerRadius*(me.legRadius/me.root.range_dep)/50;
+                        }
+                        me.legX = me.legRangePixels*math.sin(me.legBearing*D2R);
+                        me.legY = -me.legRangePixels*math.cos(me.legBearing*D2R);
+                        me.ci.setTranslation(me.legX,me.legY);
+                        me.ci.setScale(me.legScale);
+                        me.ci.setStrokeLineWidth(1/me.legScale);
+                        me.ci.show();
+                    } else {
+                        me.ci.hide();
+                    }
+                }
             }
+            
             foreach(contact; awg_9.tgts_list) {
                 if (contact.get_display() == 0) {
                     continue;

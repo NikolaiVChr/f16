@@ -1,0 +1,294 @@
+<?xml version="1.0"?>
+<PropertyList>
+	<name>circles</name>
+  	<modal>false</modal>
+  	<layout>vbox</layout>
+  	<draggable>true</draggable>
+    <resizable>false</resizable>
+    <width>500</width>
+    <!--<height>250</height>-->
+
+    <group>
+		<layout>hbox</layout>
+		<empty><stretch>1</stretch></empty>
+
+		<text><label>HSD Threat Circles</label></text>
+
+		<empty><stretch>1</stretch></empty>
+
+		<button>
+			<pref-width>16</pref-width>
+			<pref-height>16</pref-height>
+			<legend></legend>
+			<default>1</default>
+			<keynum>27</keynum>
+			<border>2</border>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+		</button>
+	</group>
+
+  	<group>
+		<layout>hbox</layout>
+
+		<input>
+		  	<width>150</width>
+		  	<height>25</height>
+		  	<label>Lat</label>
+		  	<property>f16/avionics/c1-lat</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<!--<color>
+	      		<red>0.5</red>
+	      		<green>1</green>
+	      		<blue>0.5</blue>
+	      	</color>-->
+		</input>
+		<input>
+		  	<width>150</width>
+		  	<height>25</height>
+		  	<label>Lon</label>
+		  	<property>f16/avionics/c1-lon</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<!--<color>
+	      		<red>0.5</red>
+	      		<green>1</green>
+	      		<blue>0.5</blue>
+	      	</color>-->
+		</input>
+		<input>
+		  	<width>100</width>
+		  	<height>25</height>
+		  	<label>Radius</label>
+		  	<property>f16/avionics/c1-rad</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<!--<color>
+	      		<red>0.5</red>
+	      		<green>1</green>
+	      		<blue>0.5</blue>
+	      	</color>-->
+		</input>
+		<button>
+			<legend>Clear</legend>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					setprop("f16/avionics/c1-lat", 0);
+					setprop("f16/avionics/c1-lon", 0);
+					setprop("f16/avionics/c1-rad", 0);
+				]]></script>
+			</binding>
+		</button>
+	</group>
+	
+	<group>
+		<layout>hbox</layout>
+
+		<input>
+		  	<width>150</width>
+		  	<height>25</height>
+		  	<label>Lat</label>
+		  	<property>f16/avionics/c2-lat</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<!--<color>
+	      		<red>0.5</red>
+	      		<green>1</green>
+	      		<blue>0.5</blue>
+	      	</color>-->
+		</input>
+		<input>
+		  	<width>150</width>
+		  	<height>25</height>
+		  	<label>Lon</label>
+		  	<property>f16/avionics/c2-lon</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<!--<color>
+	      		<red>0.5</red>
+	      		<green>1</green>
+	      		<blue>0.5</blue>
+	      	</color>-->
+		</input>
+		<input>
+		  	<width>100</width>
+		  	<height>25</height>
+		  	<label>Radius</label>
+		  	<property>f16/avionics/c2-rad</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<!--<color>
+	      		<red>0.5</red>
+	      		<green>1</green>
+	      		<blue>0.5</blue>
+	      	</color>-->
+		</input>
+		<button>
+			<legend>Clear</legend>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					setprop("f16/avionics/c2-lat", 0);
+					setprop("f16/avionics/c2-lon", 0);
+					setprop("f16/avionics/c2-rad", 0);
+				]]></script>
+			</binding>
+		</button>
+	</group>
+	
+	<group>
+		<layout>hbox</layout>
+
+		<input>
+		  	<width>150</width>
+		  	<height>25</height>
+		  	<label>Lat</label>
+		  	<property>f16/avionics/c3-lat</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<!--<color>
+	      		<red>0.5</red>
+	      		<green>1</green>
+	      		<blue>0.5</blue>
+	      	</color>-->
+		</input>
+		<input>
+		  	<width>150</width>
+		  	<height>25</height>
+		  	<label>Lon</label>
+		  	<property>f16/avionics/c3-lon</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<!--<color>
+	      		<red>0.5</red>
+	      		<green>1</green>
+	      		<blue>0.5</blue>
+	      	</color>-->
+		</input>
+		<input>
+		  	<width>100</width>
+		  	<height>25</height>
+		  	<label>Radius</label>
+		  	<property>f16/avionics/c3-rad</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<!--<color>
+	      		<red>0.5</red>
+	      		<green>1</green>
+	      		<blue>0.5</blue>
+	      	</color>-->
+		</input>
+		<button>
+			<legend>Clear</legend>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					setprop("f16/avionics/c3-lat", 0);
+					setprop("f16/avionics/c3-lon", 0);
+					setprop("f16/avionics/c3-rad", 0);
+				]]></script>
+			</binding>
+		</button>
+	</group>
+	
+	<group>
+		<layout>hbox</layout>
+
+		<input>
+		  	<width>150</width>
+		  	<height>25</height>
+		  	<label>Lat</label>
+		  	<property>f16/avionics/c4-lat</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<!--<color>
+	      		<red>0.5</red>
+	      		<green>1</green>
+	      		<blue>0.5</blue>
+	      	</color>-->
+		</input>
+		<input>
+		  	<width>150</width>
+		  	<height>25</height>
+		  	<label>Lon</label>
+		  	<property>f16/avionics/c4-lon</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<!--<color>
+	      		<red>0.5</red>
+	      		<green>1</green>
+	      		<blue>0.5</blue>
+	      	</color>-->
+		</input>
+		<input>
+		  	<width>100</width>
+		  	<height>25</height>
+		  	<label>Radius</label>
+		  	<property>f16/avionics/c4-rad</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<color>
+	      		<red>0.5</red>
+	      		<green>1</green>
+	      		<blue>0.5</blue>
+	      	</color>
+		</input>
+		<button>
+			<legend>Clear</legend>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					setprop("f16/avionics/c4-lat", 0);
+					setprop("f16/avionics/c4-lon", 0);
+					setprop("f16/avionics/c4-rad", 0);
+				]]></script>
+			</binding>
+		</button>
+	</group>
+
+	<empty><stretch>1</stretch></empty>
+	<text><label>Input lat,lon and radius (nm) to get red circle areas in HSD.</label></text>
+
+</PropertyList>
