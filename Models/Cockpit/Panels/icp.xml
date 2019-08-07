@@ -309,6 +309,24 @@
     </animation>
     <animation>
         <type>pick</type>
+        <object-name>list</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.list();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-list</tooltip-id>
+                <label>LIST</label>
+            </binding>
+        </hovered>
+    </animation>
+    <animation>
+        <type>pick</type>
         <object-name>7</object-name><!-- 7 -->
         <action>
             <button>0</button>

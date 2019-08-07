@@ -70,6 +70,7 @@ var pMAGV = 7;
 var pLINK = 8;
 var pLASER= 9;
 var pTIME = 10;
+var pLIST = 100;
 
 var page = int(rand()*10.99);#random page at startup
 var comm = 0;
@@ -197,7 +198,7 @@ var loop_ded = func {# one line is max 24 chars
       } else {
         text[2] = sprintf("         GPS OFFLINE");
       }
-      text[0] = sprintf("       MAGV  AUTO       ");
+      text[0] = sprintf("       MAGV  AUTO   %s  ",no);
       text[1] = sprintf("                        ");
       text[3] = sprintf("                        ");
       text[4] = sprintf("                        ");
@@ -215,6 +216,12 @@ var loop_ded = func {# one line is max 24 chars
       text[1] = sprintf("  SYSTEM     %s",time);
       text[2] = sprintf("  HACK       00:00:00   ");
       text[3] = sprintf("  DELTA TOS  00:00:00   ");
+      text[4] = sprintf("                        ");
+    } elsif (page == pLIST) {
+      text[0] = sprintf("        LIST      %s     ",no);
+      text[1] = sprintf("  1ILS  2ALOW 3MAGV     ");
+      text[2] = sprintf("  4STPT 5DLNK 6TIME     ");
+      text[3] = sprintf("  7BNGO 8LASR           ");
       text[4] = sprintf("                        ");
     }
     line1.setText(text[0]);
@@ -271,6 +278,10 @@ var laser = func {
 
 var time = func {
   page = pTIME;
+}
+
+var list = func {
+  page = pLIST;
 }
 
 ## these methods taken from JA37:
