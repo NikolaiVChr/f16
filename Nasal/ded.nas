@@ -219,10 +219,10 @@ var loop_ded = func {# one line is max 24 chars
       text[4] = sprintf("                        ");
     } elsif (page == pLIST) {
       text[0] = sprintf("        LIST      %s     ",no);
-      text[1] = sprintf("  1ILS  2ALOW 3MAGV     ");
-      text[2] = sprintf("  4STPT 5DLNK 6TIME     ");
-      text[3] = sprintf("  7BNGO 8LASR           ");
-      text[4] = sprintf("                        ");
+      text[1] = sprintf(" 1ILS  2ALOW 3MAGV COM1 ");
+      text[2] = sprintf(" 4STPT 5DLNK 6TIME COM2 ");
+      text[3] = sprintf(" 7BNGO 8LASR       IFF  ");
+      text[4] = sprintf("                   LIST ");
     }
     line1.setText(text[0]);
     line2.setText(text[1]);
