@@ -2165,7 +2165,7 @@ append(obj.total, obj.speed_curr);
             hdp.weapon_selected = pylons.fcs.selectedType;
             if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
                 if (!pylons.fcs.isLock()) {
-                    me.radarLock.setTranslation(me.sx/2, me.sy*0.25+262*0.4*0.5);
+                    me.radarLock.setTranslation(0, -me.sy*0.25+262*0.3*0.5);
                     me.rdL = 1;
                 }                
             } elsif (!pylons.fcs.isLock() and hdp.weapon_selected == "AIM-9") {
@@ -2174,10 +2174,10 @@ append(obj.total, obj.speed_curr);
                     if (aim != nil) {
                         me.submode = 1;
                         var coords = aim.getSeekerInfo();
-                        me.irSearch.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
+                        me.irSearch.setTranslation(HudMath.getCenterPosFromDegs(coords[0],coords[1]));
                     }
                 } else {
-                    me.irSearch.setTranslation(me.sx/2, me.sy*0.25);
+                    me.irSearch.setTranslation(0, -me.sy*0.25);
                 }
                 me.irS = 1;
             } elsif (pylons.fcs.isLock() and hdp.weapon_selected == "AIM-9" and pylons.bore) {
@@ -2185,7 +2185,7 @@ append(obj.total, obj.speed_curr);
                 if (aim != nil) {
                     var coords = aim.getSeekerInfo();
                     if (coords != nil) {
-                        me.irLock.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
+                        me.irLock.setTranslation(HudMath.getCenterPosFromDegs(coords[0],coords[1]));
                         me.irL = 1;
                     }
                 }
