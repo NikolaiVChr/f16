@@ -26,35 +26,35 @@ var callInit = func {
   line1 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
-        .setAlignment("left-bottom")
+        .setAlignment("left-bottom-baseline")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("LINE 1            LINE 1")
         .setTranslation(55, 128*0.2);
   line2 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
-        .setAlignment("left-bottom")
+        .setAlignment("left-bottom-baseline")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("LINE 2            LINE 2")
         .setTranslation(55, 128*0.3);
   line3 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
-        .setAlignment("left-bottom")
+        .setAlignment("left-bottom-baseline")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("LINE 3            LINE 3")
         .setTranslation(55, 128*0.4);
   line4 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
-        .setAlignment("left-bottom")
+        .setAlignment("left-bottom-baseline")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("LINE 4            LINE 4")
         .setTranslation(55, 128*0.5);
   line5 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
-        .setAlignment("left-bottom")
+        .setAlignment("left-bottom-baseline")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("LINE 5            LINE 5")
         .setTranslation(55, 128*0.6);
@@ -69,10 +69,12 @@ var pBINGO= 6;
 var pMAGV = 7;
 var pLINK = 8;
 
-var page = pCNI;
+var page = int(rand()*8.99);#random page at startup
 var comm = 0;
 
 var text = ["","","","",""];
+
+var scroll = 0;
 
 var loop_ded = func {# one line is max 24 chars
     var no = getprop("autopilot/route-manager/current-wp")+1;
@@ -139,15 +141,23 @@ var loop_ded = func {# one line is max 24 chars
       text[4] = sprintf("Link16  %s",friend);
     } elsif (page == pLINK) {
       text[0] = sprintf(" XMT 40 INTRAFLIGHT  %s ",no);
+      
       var last = 0;
-      if (getprop("link16/wingman-4")!="") last = 4;
+      if (getprop("link16/wingman-7")!="") last = 7;
+      elsif (getprop("link16/wingman-6")!="") last = 6;
+      elsif (getprop("link16/wingman-5")!="") last = 5;
+      elsif (getprop("link16/wingman-4")!="") last = 4;
       elsif (getprop("link16/wingman-3")!="") last = 3;
       elsif (getprop("link16/wingman-2")!="") last = 2;
       elsif (getprop("link16/wingman-1")!="") last = 1;
-      text[1] = sprintf("#1 %7s      COMM VHF",getprop("link16/wingman-1"));
-      text[2] = sprintf("#2 %7s      DATA 16K",getprop("link16/wingman-2"));
-      text[3] = sprintf("#3 %7s      OWN  #0 ",getprop("link16/wingman-3"));
-      text[4] = sprintf("#4 %7s      LAST #%d ",getprop("link16/wingman-4"),last);
+      scroll += 0.25;
+      if (scroll >= last-3) scroll = 0;
+      var wingmen = [getprop("link16/wingman-1"),getprop("link16/wingman-2"),getprop("link16/wingman-3"),getprop("link16/wingman-4"),getprop("link16/wingman-5"),getprop("link16/wingman-6"),getprop("link16/wingman-7")];
+      var used = subvec(wingmen,int(scroll),4);
+      text[1] = sprintf("#%d %7s      COMM VHF",int(scroll+1),used[0]);
+      text[2] = sprintf("#%d %7s      DATA 16K",int(scroll+2),used[1]);
+      text[3] = sprintf("#%d %7s      OWN  #0 ",int(scroll+3),used[2]);
+      text[4] = sprintf("#%d %7s      LAST #%d ",int(scroll+4),used[3],last);
     } elsif (page == pALOW) {
       var alow = getprop("f16/settings/cara-alow");
       var floor = getprop("f16/settings/msl-floor");

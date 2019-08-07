@@ -27,6 +27,12 @@
             <path>/f16/avionics/c4-lat</path>
             <path>/f16/avionics/c4-lon</path>
             <path>/f16/avionics/c4-rad</path>
+            <path>/link16/wingman-1</path>
+            <path>/link16/wingman-2</path>
+            <path>/link16/wingman-3</path>
+            <path>/link16/wingman-5</path>
+            <path>/link16/wingman-6</path>
+            <path>/link16/wingman-7</path>
         </aircraft-data>
         <tags>
             <tag>fighter</tag>

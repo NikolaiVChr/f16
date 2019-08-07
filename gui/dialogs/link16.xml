@@ -88,7 +88,7 @@
 	<input>
 	  	<width>250</width>
 	  	<height>25</height>
-	  	<label>Wingman 4</label>
+	  	<label>Wingman 5</label>
 	  	<property>link16/wingman-5</property>
 	  	<live>true</live>
 	  	<halign>left</halign>
@@ -104,7 +104,7 @@
 	<input>
 	  	<width>250</width>
 	  	<height>25</height>
-	  	<label>Wingman 5</label>
+	  	<label>Wingman 6</label>
 	  	<property>link16/wingman-6</property>
 	  	<live>true</live>
 	  	<halign>left</halign>
@@ -120,7 +120,7 @@
 	<input>
 	  	<width>250</width>
 	  	<height>25</height>
-	  	<label>Wingman 6</label>
+	  	<label>Wingman 7</label>
 	  	<property>link16/wingman-7</property>
 	  	<live>true</live>
 	  	<halign>left</halign>
@@ -137,5 +137,6 @@
 	<empty><stretch>1</stretch></empty>
 	<text><label>Wingmen only show up in RWR</label></text>
 	<text><label>when no other threats are present.</label></text>
+	<text><label>Wingman #4 is reserved for scenario.</label></text>
 
 </PropertyList>
