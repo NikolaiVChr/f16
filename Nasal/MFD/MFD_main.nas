@@ -608,25 +608,29 @@ var MFD_Device =
                 }
                 me.distPixels = contact.get_range()*(482/awg_9.range_radar2);
 
-                me.root.blep[me.i].setColor(1,1,1);
+                me.root.blep[me.i].setColor(me.blue?[0,0,1]:[1,1,1]);
                 me.root.blep[me.i].setTranslation(me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels);
                 me.root.blep[me.i].show();
                 me.root.blep[me.i].update();
-                if (contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType)) {
+                
+                me.cs = contact.get_Callsign();
+                me.blue = me.cs == getprop("link16/wingman-1") or me.cs == getprop("link16/wingman-2") or me.cs == getprop("link16/wingman-3") or me.cs == getprop("link16/wingman-4") or me.cs == getprop("link16/wingman-5") or me.cs == getprop("link16/wingman-6") or me.cs == getprop("link16/wingman-7");
+                me.desig = contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType);
+                if (me.desig) {
                     me.rot = contact.get_heading();
                     if (me.rot == nil) {
                         #can happen in transition between TWS to RWS
                         #me.root.lock.hide();
                     } else {
                         me.lockAlt = sprintf("%02d", contact.get_altitude()*0.001);
-                        me.root.lockAlt.setText(me.lockAlt);
                         me.lockInfo = sprintf("%4d   %+4d", contact.get_Speed(), contact.get_closure_rate());
+                        me.root.lockAlt.setText(me.lockAlt);
                         me.root.lockInfo.setText(me.lockInfo);
                         me.root.lockInfo.show();
                         me.rot = me.rot-getprop("orientation/heading-deg")-geo.normdeg180(contact.get_relative_bearing());
                         me.root.lock.setTranslation(276*0.795*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels);
-                        me.cs = contact.get_Callsign();
-                        if (getprop("link16/wingman-1")==me.cs or getprop("link16/wingman-2")==me.cs or getprop("link16/wingman-3")==me.cs) {
+                        
+                        if (me.blue) {
                             me.root.lockFRot.setRotation(me.rot*D2R);
                             me.root.lockFRot.show();
                             me.root.lockRot.hide();
@@ -1465,16 +1469,19 @@ var MFD_Device =
             }
             
             foreach(contact; awg_9.tgts_list) {
-                if (contact.get_display() == 0) {
+                me.cs = contact.get_Callsign();
+                me.blue = me.cs == getprop("link16/wingman-1") or me.cs == getprop("link16/wingman-2") or me.cs == getprop("link16/wingman-3") or me.cs == getprop("link16/wingman-4") or me.cs == getprop("link16/wingman-5") or me.cs == getprop("link16/wingman-6") or me.cs == getprop("link16/wingman-7");
+                me.desig = contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType);
+                if (contact.get_display() == 0 or !(me.desig or me.blue)) {
                     continue;
                 }
                 me.distPixels = (contact.get_range()/awg_9.range_radar2)*me.rdrRangePixels;
 
-                me.root.blep[me.i].setColor(1,1,1);
+                me.root.blep[me.i].setColor(me.blue?[0,0,1]:[1,1,1]);
                 me.root.blep[me.i].setTranslation(me.distPixels*math.sin(contact.get_relative_bearing()*D2R),-me.distPixels*math.cos(contact.get_relative_bearing()*D2R));
                 me.root.blep[me.i].show();
                 me.root.blep[me.i].update();
-                if (contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType)) {
+                if (me.desig) {
                     me.rot = contact.get_heading();
                     if (me.rot == nil) {
                         #can happen in transition between TWS to RWS
@@ -1487,8 +1494,8 @@ var MFD_Device =
                         me.root.lockInfo.show();
                         me.rot = me.rot-getprop("orientation/heading-deg");
                         me.root.lock.setTranslation(me.distPixels*math.sin(contact.get_relative_bearing()*D2R),-me.distPixels*math.cos(contact.get_relative_bearing()*D2R));
-                        me.cs = contact.get_Callsign();
-                        if (getprop("link16/wingman-1")==me.cs or getprop("link16/wingman-2")==me.cs or getprop("link16/wingman-3")==me.cs) {
+                        
+                        if (me.blue) {
                             me.root.lockFRot.setRotation(me.rot*D2R);
                             me.root.lockFRot.show();
                             me.root.lockRot.hide();

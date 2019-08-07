@@ -12,7 +12,7 @@
 		<layout>hbox</layout>
 		<empty><stretch>1</stretch></empty>
 
-		<text><label>HSD Threat Circles</label></text>
+		<text><label>Preplanned Threats</label></text>
 
 		<empty><stretch>1</stretch></empty>
 
