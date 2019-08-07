@@ -33,6 +33,9 @@
             <path>/link16/wingman-5</path>
             <path>/link16/wingman-6</path>
             <path>/link16/wingman-7</path>
+            <path>/f16/avionics/gps-lat</path>
+            <path>/f16/avionics/gps-lon</path>
+            <path>/f16/avionics/gps-alt</path>
         </aircraft-data>
         <tags>
             <tag>fighter</tag>
