@@ -975,6 +975,7 @@ append(obj.total, obj.speed_curr);
                 .moveTo(sx*0.5*0.695633-5,0)
                 .horiz(10)
                 .setStrokeLineWidth(2)
+                .set("z-index",10005)
                 .setColor(0,1,0);
                 append(obj.total, obj.solutionCue);
         obj.ccrpMarker = obj.svg.createChild("path")
