@@ -278,14 +278,14 @@ var F16_HUD = {
                                                      if (obj.wpbear!=nil) {
                                 
                                                          obj.wpbear=geo.normdeg180(obj.wpbear-hdp.heading);
-                                                         obj.tadpoleX = obj.sx*0.5+obj.wpbear*obj.texelPerDegreeX;
+                                                         obj.tadpoleX = HudMath.getCenterPosFromDegs(obj.wpbear,0)[0];
 
-                                                         if (obj.tadpoleX>obj.sx*0.66) {
-                                                             obj.tadpoleX=obj.sx*0.66;
-                                                         } elsif (obj.tadpoleX<obj.sx*0.33) {
-                                                             obj.tadpoleX=obj.sx*0.33;
+                                                         if (obj.tadpoleX>obj.sx*0.20) {
+                                                             obj.tadpoleX=obj.sx*0.20;
+                                                         } elsif (obj.tadpoleX<-obj.sx*0.20) {
+                                                             obj.tadpoleX=-obj.sx*0.20;
                                                          }
-                                                         obj.greatCircleSteeringCue.setTranslation(obj.tadpoleX, obj.sy-obj.texels_up_into_hud+hdp.VV_y * obj.texelPerDegreeY);
+                                                         obj.greatCircleSteeringCue.setTranslation(obj.tadpoleX, hdp.VV_y);
                                                          obj.greatCircleSteeringCue.setRotation(obj.wpbear*D2R);
                                                          obj.greatCircleSteeringCue.show();
                                                      } else {
@@ -321,13 +321,14 @@ var F16_HUD = {
             props.UpdateManager.FromHashList(["texUp","VV_x","VV_y","fpm"], 0.001, func(hdp)
                                       {
                                         if (hdp.fpm > 0) {
-                                            obj.VV.setTranslation (obj.sx*0.5+hdp.VV_x * obj.texelPerDegreeX, obj.sy-obj.texels_up_into_hud+hdp.VV_y * obj.texelPerDegreeY);
+                                            #obj.VV.setTranslation (obj.sx*0.5+hdp.VV_x * obj.texelPerDegreeX, obj.sy-obj.texels_up_into_hud+hdp.VV_y * obj.texelPerDegreeY);
+                                            obj.VV.setTranslation (hdp.VV_x, hdp.VV_y);
                                             obj.VV.show();
                                             obj.VV.update();
                                         } else {
                                             obj.VV.hide();
                                         }
-                                        obj.localizer.setTranslation (obj.sx*0.5+hdp.VV_x * obj.texelPerDegreeX, obj.sy-obj.texels_up_into_hud+hdp.VV_y * obj.texelPerDegreeY);
+                                        obj.localizer.setTranslation (hdp.VV_x, hdp.VV_y);
                                       }),
             props.UpdateManager.FromHashList(["rotary","hasGS","GSDeg","GSinRange","ILSDeg", "ILSinRange", "GSdist"], 0.01, func(hdp)
                                       {
@@ -384,7 +385,8 @@ var F16_HUD = {
             props.UpdateManager.FromHashList(["fpm","texUp","gear_down","VV_x","VV_y", "wow", "ded"], 0.01, func(hdp)
                                       {
                                         if (hdp.gear_down and !hdp.wow) {
-                                          obj.bracket.setTranslation (obj.sx/2+hdp.VV_x * obj.texelPerDegreeX, obj.sy-obj.texels_up_into_hud+13 * obj.texelPerDegreeY);
+                                          obj.bracket.setTranslation (hdp.VV_x, HudMath.getCenterPosFromDegs(0,-13)[1]);
+                                          #obj.bracket.setTranslation (obj.sx/2+hdp.VV_x * obj.texelPerDegreeX, obj.sy-obj.texels_up_into_hud+13 * obj.texelPerDegreeY);
                                           obj.bracket.show();
                                           obj.roll_lines.hide();
                                           obj.roll_pointer.hide();
@@ -412,13 +414,22 @@ var F16_HUD = {
                                             #obj.ladder.setRotation (hdp.roll_rad);
                                             
                                             #obj.ladder.show();
-                                            
                                         
+                                        var result = HudMath.getDynamicHorizon(5,0.5,0.5,0.7,0.5);
+                                        obj.h_rot.setRotation(result[1]);
+                                        obj.horizon_group.setTranslation(result[0]);#place it on bore
+                                        obj.ladder_group.setTranslation(result[2]);
+                                        obj.ladder_group.show();
+                                        obj.ladder_group.update();
+                                        obj.horizon_group.update();
+                                        return;
                                         #############################
                                         # start new ladder:
                                         #############################
-                                        obj.fpi_x = hdp.VV_x * obj.texelPerDegreeX;
-                                        obj.fpi_y = hdp.VV_y * obj.texelPerDegreeY;
+                                        obj.fpi_x = hdp.VV_x;
+                                        obj.fpi_y = hdp.VV_y;
+                                        #obj.fpi_x = hdp.VV_x * obj.texelPerDegreeX;
+                                        #obj.fpi_y = hdp.VV_y * obj.texelPerDegreeY;
                                         obj.rot = -hdp.roll * D2R;
                                         
                                         obj.pos_y_rel = obj.fpi_y;#position from bore
@@ -453,9 +464,9 @@ var F16_HUD = {
 
 
                                         #obj.horizon_vertical = clamp(-math.cos(obj.fpi_angle-obj.rot)*obj.fpi_polar, -obj.sy*0, obj.sy*0.75);
-                                        obj.h_rot.setRotation(obj.rot);
-                                        obj.horizon_group.setTranslation(obj.sx*0.5, obj.sy-obj.texels_up_into_hud);#place it on bore
-                                        obj.ladder_group.setTranslation(obj.horizon_lateral, obj.texelPerDegreeY * hdp.pitch);
+                                        obj.h_rot.setRotation(result[1]);
+                                        obj.horizon_group.setTranslation(result[0]);#place it on bore
+                                        obj.ladder_group.setTranslation(result[2]);
                                         obj.ladder_group.show();
                                         obj.ladder_group.update();
                                         obj.horizon_group.update();
@@ -784,14 +795,8 @@ var F16_HUD = {
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
             append(obj.total, obj.boreSymbol);
-        obj.bracket = obj.svg.createChild("path")
-                .moveTo(0,-34)
-                .horiz(-10)
-                .vert(68)
-                .horiz(10)
-                .setStrokeLineWidth(1)
-                .setColor(0,1,0);
-                append(obj.total, obj.bracket);
+            
+            
         obj.speed_indicator = obj.svg.createChild("path")
                 .moveTo(0.25*sx*0.695633,sy*0.245)
                 .horiz(7)
@@ -984,15 +989,7 @@ append(obj.total, obj.speed_curr);
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
                 append(obj.total, obj.ccrpMarker);
-        obj.greatCircleSteeringCue = obj.svg.createChild("path")# nickname: tadpole
-            .moveTo(-2.5,0)
-            .arcSmallCW(2.5,2.5, 0, 2.5*2, 0)
-            .arcSmallCW(2.5,2.5, 0, -2.5*2, 0)
-            .moveTo(0,-2.5)
-            .vert(-10)
-            .setStrokeLineWidth(1)
-            .setColor(0,1,0);
-            append(obj.total, obj.greatCircleSteeringCue);
+        
         var mr = 0.4;#milliradians
         obj.circle262 = obj.svg.createChild("path")#rdsearch (Allowable Steering Error Circle (ASEC))
             .moveTo(-262*mr,0)
@@ -1052,238 +1049,6 @@ append(obj.total, obj.speed_curr);
         
         obj.VV.hide();
         mr = mr*1.5;#incorrect, but else in FG it will seem too small.
-        obj.VV = obj.svg.createChild("path")
-            .moveTo(-5*mr,0)
-            .arcSmallCW(5*mr,5*mr, 0, 5*mr*2, 0)
-            .arcSmallCW(5*mr,5*mr, 0, -5*mr*2, 0)
-            .moveTo(-5*mr,0)
-            .horiz(-10*mr)
-            .moveTo(5*mr,0)
-            .horiz(10*mr)
-            .moveTo(0,-5*mr)
-            .vert(-5*mr)
-            .setStrokeLineWidth(1)
-            .setColor(0,1,0)
-            .set("z-index",11000);
-            #.setTranslation(sx*0.5*0.695633,sy*0.25);
-            append(obj.total, obj.VV);
-    obj.localizer = obj.svg.createChild("group");
-    
-    obj.ilsGroup  = obj.localizer.createChild("group");
-    obj.gsGroup   = obj.localizer.createChild("group");
-    obj.ils = obj.ilsGroup.createChild("path")
-            .moveTo(0,-20)
-            .vert(40)
-            .moveTo(-2,-20)
-            .horiz(4)
-            .moveTo(-2,20)
-            .horiz(4)
-            .moveTo(-2,-10)
-            .horiz(4)
-            .moveTo(-2,10)
-            .horiz(4)
-            .setStrokeLineWidth(1)
-            .setColor(0,1,0)
-            .set("z-index",11000);
-    obj.ilsOff = obj.ilsGroup.createChild("path")
-            .moveTo(0,-20)
-            .vert(4)
-            .moveTo(0,-12)
-            .vert(4)
-            .moveTo(0,-4)
-            .vert(8)
-            .moveTo(0,8)
-            .vert(4)
-            .moveTo(0,16)
-            .vert(4)
-            .moveTo(-2,-20)
-            .horiz(4)
-            .moveTo(-2,20)
-            .horiz(4)
-            .moveTo(-2,-10)
-            .horiz(4)
-            .moveTo(-2,10)
-            .horiz(4)
-            .setStrokeLineWidth(1)
-            .setColor(0,1,0)
-            .set("z-index",11000);
-    obj.gs = obj.gsGroup.createChild("path")
-            .moveTo(-20,0)
-            .horiz(40)
-            .moveTo(-20,-2)
-            .vert(4)
-            .moveTo(20,-2)
-            .vert(4)
-            .moveTo(-10,-2)
-            .vert(4)
-            .moveTo(10,-2)
-            .vert(4)
-            .setStrokeLineWidth(1)
-            .setColor(0,1,0)
-            .set("z-index",11000);
-    obj.gsOff = obj.gsGroup.createChild("path")
-            .moveTo(-20,0)
-            .horiz(4)
-            .moveTo(-12,0)
-            .horiz(4)
-            .moveTo(-4,0)
-            .horiz(8)
-            .moveTo(8,0)
-            .horiz(4)
-            .moveTo(16,0)
-            .horiz(4)            
-            
-            .moveTo(-20,-2)
-            .vert(4)
-            .moveTo(20,-2)
-            .vert(4)
-            .moveTo(-10,-2)
-            .vert(4)
-            .moveTo(10,-2)
-            .vert(4)
-            .setStrokeLineWidth(1)
-            .setColor(0,1,0)
-            .set("z-index",11000);
-#    obj.inv_v = obj.svg.createChild("path")
-#            .moveTo(0,0)
-#            .lineTo(-4,-5)
-#            .moveTo(0,0)
-#            .lineTo(4,5)
-#            .setStrokeLineWidth(1)
-#            .setColor(0,1,0)
-#            .set("z-index",11000);
-    append(obj.total, obj.ils);
-    append(obj.total, obj.ilsOff);
-    append(obj.total, obj.gs);
-    append(obj.total, obj.gsOff);
-#    append(obj.total, obj.inv_v);
-
-
-    obj.horizon_group = obj.svg.createChild("group")
-      .set("z-order", 1);
-    obj.ladder_group = obj.horizon_group.createChild("group");
-    obj.h_rot   = obj.horizon_group.createTransform();
-
-    # pitch lines
-    var pixelPerDegreeY = HudMath.getPixelPerDegreeAvg(5.0);#15.43724802231049;
-    var pixelPerDegreeX = 16.70527172464148;
-    var distance = pixelPerDegreeY * 5;
-    var minuss = 0.125*sx*0.695633;
-    var minuso = 20*mr;
-    for(var i = 1; i <= 18; i += 1) # full drawn lines
-      append(obj.total, obj.ladder_group.createChild("path")
-         .moveTo(minuso, -i * distance)
-         .horiz(minuss)
-         .vert(minuso*0.5)
-
-         .moveTo(-minuso, -i * distance)
-         .horiz(-minuss)
-         .vert(minuso*0.5)
-         
-         .setStrokeLineWidth(1)
-         .setColor(0,0,0));
-    
-    for(var i = -18; i <= -1; i += 1) { # stipled lines
-      #var rad = me.extrapolate(-i*5,10,90,8,45)*D2R;#as per US manual pitch lines bend down from 8 to 45 degrees
-      append(obj.total, obj.ladder_group.createChild("path")
-                     .moveTo(minuso, -i * distance)
-                     .horiz(minuss*0.2)
-                     .moveTo(minuso+minuss*0.4, -i * distance)
-                     .horiz(minuss*0.2)
-                     .moveTo(minuso+minuss*0.8, -i * distance)
-                     .horiz(minuss*0.2)
-                     .vert(-minuso*0.5)
-
-                     .moveTo(-minuso, -i * distance)
-                     .horiz(-minuss*0.2)
-                     .moveTo(-minuso-minuss*0.4, -i * distance)
-                     .horiz(-minuss*0.2)
-                     .moveTo(-minuso-minuss*0.8, -i * distance)
-                     .horiz(-minuss*0.2)
-                     .vert(-minuso*0.5)
-
-                     .setStrokeLineWidth(1)
-                     .setColor(0,0,0));
-    }
-
-    #pitch line numbers
-    for(var i = -18; i <= 0; i += 1) {
-      if (i==0) continue;
-      append(obj.total, obj.ladder_group.createChild("text")
-         .setText(i*-5)
-         .setFontSize(9,1.1)
-         .setFont(HUD_FONT)
-         .setAlignment("right-center")
-         .setTranslation(-minuso-minuss-minuss*0.2, -i * distance)
-         .setColor(0,0,0));
-      append(obj.total, obj.ladder_group.createChild("text")
-         .setText(i*-5)
-         .setFontSize(9,1.1)
-         .setFont(HUD_FONT)
-         .setAlignment("left-center")
-         .setTranslation(minuso+minuss+minuss*0.2, -i * distance)
-         .setColor(0,0,0));
-    }
-    for(var i = 1; i <= 18; i += 1) {
-      if (i==0) continue;
-      append(obj.total, obj.ladder_group.createChild("text")
-         .setText(i*5)
-         .setFontSize(9,1.1)
-         .setFont(HUD_FONT)
-         .setAlignment("right-center")
-         .setTranslation(-minuso-minuss-minuss*0.2, -i * distance)
-         .setColor(0,0,0));
-      append(obj.total, obj.ladder_group.createChild("text")
-         .setText(i*5)
-         .setFontSize(9,1.1)
-         .setFont(HUD_FONT)
-         .setAlignment("left-center")
-         .setTranslation(minuso+minuss+minuss*0.2, -i * distance)
-         .setColor(0,0,0));
-    }
-
-    # approach line
-    var i = -0.5;
-    obj.appLine = obj.ladder_group.createChild("path")
-                     .moveTo(minuso, -i * distance)
-                     .horiz(minuss*0.2)
-                     .moveTo(minuso+minuss*0.4, -i * distance)
-                     .horiz(minuss*0.2)
-                     .moveTo(minuso+minuss*0.8, -i * distance)
-                     .horiz(minuss*0.2)
-
-                     .moveTo(-minuso, -i * distance)
-                     .horiz(-minuss*0.2)
-                     .moveTo(-minuso-minuss*0.4, -i * distance)
-                     .horiz(-minuss*0.2)
-                     .moveTo(-minuso-minuss*0.8, -i * distance)
-                     .horiz(-minuss*0.2)
-
-                     .setStrokeLineWidth(1)
-                     .setColor(0,0,0);
-    
-    append(obj.total, obj.appLine);
-
-    #Horizon line
-    append(obj.total, obj.ladder_group.createChild("path")
-                     .moveTo(-0.40*sx*0.695633, 0)
-                     .horiz(0.40*sx*0.695633-20*mr)
-                     .moveTo(20*mr, 0)
-                     .horiz(0.40*sx*0.695633)
-                     .setStrokeLineWidth(1)
-                     .setColor(0,0,0));
-
-    
-
-
-
-
-
-
-
-
-
-
 
         obj.initUpdate =1;
         
@@ -1316,8 +1081,21 @@ append(obj.total, obj.speed_curr);
         obj.svg.setColor(0.3,1,0.3);
         
         ############################## new center origin stuff that used hud math #################
+        
+        
         obj.centerOrigin = obj.canvas.createGroup()
                            .setTranslation(HudMath.getCenterOrigin());
+        
+        obj.greatCircleSteeringCue = obj.centerOrigin.createChild("path")# nickname: tadpole
+            .moveTo(-2.5,0)
+            .arcSmallCW(2.5,2.5, 0, 2.5*2, 0)
+            .arcSmallCW(2.5,2.5, 0, -2.5*2, 0)
+            .moveTo(0,-2.5)
+            .vert(-10)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0);
+        append(obj.total, obj.greatCircleSteeringCue);
+        
         obj.pipperLine = obj.centerOrigin.createChild("group");
         obj.pipperRadius = 15*mr;
         obj.pipper = obj.centerOrigin.createChild("path")
@@ -1428,15 +1206,247 @@ append(obj.total, obj.speed_curr);
                      .horiz(2*mr)
                      .setStrokeLineWidth(1)
                      .setColor(0,0,0);
-    obj.tgpPointC = obj.centerOrigin.createChild("path")
+        obj.tgpPointC = obj.centerOrigin.createChild("path")
                      .moveTo(-10*mr, -10*mr)
                      .lineTo(10*mr, 10*mr)
                      .moveTo(10*mr, -10*mr)
                      .lineTo(-10*mr, 10*mr)
                      .setStrokeLineWidth(1)
                      .setColor(0,0,0);
-    append(obj.total, obj.tgpPointF);
-    append(obj.total, obj.tgpPointC);
+        append(obj.total, obj.tgpPointF);
+        append(obj.total, obj.tgpPointC);
+            
+        
+        var bracketsize = HudMath.getPosFromDegs(0,-15)[1]-HudMath.getPosFromDegs(0,-11)[1];
+        obj.bracket = obj.centerOrigin.createChild("path")
+                .moveTo(0,-34)
+                .horiz(-10)
+                .vert(bracketsize*0.8)
+                .horiz(10)
+                .setStrokeLineWidth(1)
+                .setColor(0,1,0);
+        append(obj.total, obj.bracket);
+        
+        obj.VV = obj.centerOrigin.createChild("path")
+            .moveTo(-5*mr,0)
+            .arcSmallCW(5*mr,5*mr, 0, 5*mr*2, 0)
+            .arcSmallCW(5*mr,5*mr, 0, -5*mr*2, 0)
+            .moveTo(-5*mr,0)
+            .horiz(-10*mr)
+            .moveTo(5*mr,0)
+            .horiz(10*mr)
+            .moveTo(0,-5*mr)
+            .vert(-5*mr)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0)
+            .set("z-index",11000);
+            #.setTranslation(sx*0.5*0.695633,sy*0.25);
+            append(obj.total, obj.VV);
+        obj.localizer = obj.centerOrigin.createChild("group");
+        
+        obj.ilsGroup  = obj.localizer.createChild("group");
+        obj.gsGroup   = obj.localizer.createChild("group");
+        obj.ils = obj.ilsGroup.createChild("path")
+                .moveTo(0,-20)
+                .vert(40)
+                .moveTo(-2,-20)
+                .horiz(4)
+                .moveTo(-2,20)
+                .horiz(4)
+                .moveTo(-2,-10)
+                .horiz(4)
+                .moveTo(-2,10)
+                .horiz(4)
+                .setStrokeLineWidth(1)
+                .setColor(0,1,0)
+                .set("z-index",11000);
+        obj.ilsOff = obj.ilsGroup.createChild("path")
+                .moveTo(0,-20)
+                .vert(4)
+                .moveTo(0,-12)
+                .vert(4)
+                .moveTo(0,-4)
+                .vert(8)
+                .moveTo(0,8)
+                .vert(4)
+                .moveTo(0,16)
+                .vert(4)
+                .moveTo(-2,-20)
+                .horiz(4)
+                .moveTo(-2,20)
+                .horiz(4)
+                .moveTo(-2,-10)
+                .horiz(4)
+                .moveTo(-2,10)
+                .horiz(4)
+                .setStrokeLineWidth(1)
+                .setColor(0,1,0)
+                .set("z-index",11000);
+        obj.gs = obj.gsGroup.createChild("path")
+                .moveTo(-20,0)
+                .horiz(40)
+                .moveTo(-20,-2)
+                .vert(4)
+                .moveTo(20,-2)
+                .vert(4)
+                .moveTo(-10,-2)
+                .vert(4)
+                .moveTo(10,-2)
+                .vert(4)
+                .setStrokeLineWidth(1)
+                .setColor(0,1,0)
+                .set("z-index",11000);
+        obj.gsOff = obj.gsGroup.createChild("path")
+                .moveTo(-20,0)
+                .horiz(4)
+                .moveTo(-12,0)
+                .horiz(4)
+                .moveTo(-4,0)
+                .horiz(8)
+                .moveTo(8,0)
+                .horiz(4)
+                .moveTo(16,0)
+                .horiz(4)            
+                
+                .moveTo(-20,-2)
+                .vert(4)
+                .moveTo(20,-2)
+                .vert(4)
+                .moveTo(-10,-2)
+                .vert(4)
+                .moveTo(10,-2)
+                .vert(4)
+                .setStrokeLineWidth(1)
+                .setColor(0,1,0)
+                .set("z-index",11000);
+    #    obj.inv_v = obj.svg.createChild("path")
+    #            .moveTo(0,0)
+    #            .lineTo(-4,-5)
+    #            .moveTo(0,0)
+    #            .lineTo(4,5)
+    #            .setStrokeLineWidth(1)
+    #            .setColor(0,1,0)
+    #            .set("z-index",11000);
+        append(obj.total, obj.ils);
+        append(obj.total, obj.ilsOff);
+        append(obj.total, obj.gs);
+        append(obj.total, obj.gsOff);
+    #    append(obj.total, obj.inv_v);
+
+
+        obj.horizon_group = obj.centerOrigin.createChild("group")
+          .set("z-order", 1);
+        obj.ladder_group = obj.horizon_group.createChild("group");
+        obj.h_rot   = obj.horizon_group.createTransform();
+
+        # pitch lines
+        var pixelPerDegreeY = HudMath.getPixelPerDegreeAvg(5.0);#15.43724802231049;
+        var pixelPerDegreeX = 16.70527172464148;
+        var distance = pixelPerDegreeY * 5;
+        var minuss = 0.125*sx*0.695633;
+        var minuso = 20*mr;
+        for(var i = 1; i <= 18; i += 1) # full drawn lines
+          append(obj.total, obj.ladder_group.createChild("path")
+             .moveTo(minuso, -i * distance)
+             .horiz(minuss)
+             .vert(minuso*0.5)
+
+             .moveTo(-minuso, -i * distance)
+             .horiz(-minuss)
+             .vert(minuso*0.5)
+             
+             .setStrokeLineWidth(1)
+             .setColor(0,0,0));
+        
+        for(var i = -18; i <= -1; i += 1) { # stipled lines
+          #var rad = me.extrapolate(-i*5,10,90,8,45)*D2R;#as per US manual pitch lines bend down from 8 to 45 degrees
+          append(obj.total, obj.ladder_group.createChild("path")
+                         .moveTo(minuso, -i * distance)
+                         .horiz(minuss*0.2)
+                         .moveTo(minuso+minuss*0.4, -i * distance)
+                         .horiz(minuss*0.2)
+                         .moveTo(minuso+minuss*0.8, -i * distance)
+                         .horiz(minuss*0.2)
+                         .vert(-minuso*0.5)
+
+                         .moveTo(-minuso, -i * distance)
+                         .horiz(-minuss*0.2)
+                         .moveTo(-minuso-minuss*0.4, -i * distance)
+                         .horiz(-minuss*0.2)
+                         .moveTo(-minuso-minuss*0.8, -i * distance)
+                         .horiz(-minuss*0.2)
+                         .vert(-minuso*0.5)
+
+                         .setStrokeLineWidth(1)
+                         .setColor(0,0,0));
+        }
+
+        #pitch line numbers
+        for(var i = -18; i <= 0; i += 1) {
+          if (i==0) continue;
+          append(obj.total, obj.ladder_group.createChild("text")
+             .setText(i*-5)
+             .setFontSize(9,1.1)
+             .setFont(HUD_FONT)
+             .setAlignment("right-center")
+             .setTranslation(-minuso-minuss-minuss*0.2, -i * distance)
+             .setColor(0,0,0));
+          append(obj.total, obj.ladder_group.createChild("text")
+             .setText(i*-5)
+             .setFontSize(9,1.1)
+             .setFont(HUD_FONT)
+             .setAlignment("left-center")
+             .setTranslation(minuso+minuss+minuss*0.2, -i * distance)
+             .setColor(0,0,0));
+        }
+        for(var i = 1; i <= 18; i += 1) {
+          if (i==0) continue;
+          append(obj.total, obj.ladder_group.createChild("text")
+             .setText(i*5)
+             .setFontSize(9,1.1)
+             .setFont(HUD_FONT)
+             .setAlignment("right-center")
+             .setTranslation(-minuso-minuss-minuss*0.2, -i * distance)
+             .setColor(0,0,0));
+          append(obj.total, obj.ladder_group.createChild("text")
+             .setText(i*5)
+             .setFontSize(9,1.1)
+             .setFont(HUD_FONT)
+             .setAlignment("left-center")
+             .setTranslation(minuso+minuss+minuss*0.2, -i * distance)
+             .setColor(0,0,0));
+        }
+
+        # approach line
+        var i = -0.5;
+        obj.appLine = obj.ladder_group.createChild("path")
+                         .moveTo(minuso, -i * distance)
+                         .horiz(minuss*0.2)
+                         .moveTo(minuso+minuss*0.4, -i * distance)
+                         .horiz(minuss*0.2)
+                         .moveTo(minuso+minuss*0.8, -i * distance)
+                         .horiz(minuss*0.2)
+
+                         .moveTo(-minuso, -i * distance)
+                         .horiz(-minuss*0.2)
+                         .moveTo(-minuso-minuss*0.4, -i * distance)
+                         .horiz(-minuss*0.2)
+                         .moveTo(-minuso-minuss*0.8, -i * distance)
+                         .horiz(-minuss*0.2)
+
+                         .setStrokeLineWidth(1)
+                         .setColor(0,0,0);
+        
+        append(obj.total, obj.appLine);
+
+        #Horizon line
+        append(obj.total, obj.ladder_group.createChild("path")
+                         .moveTo(-0.40*sx*0.695633, 0)
+                         .horiz(0.40*sx*0.695633-20*mr)
+                         .moveTo(20*mr, 0)
+                         .horiz(0.40*sx*0.695633)
+                         .setStrokeLineWidth(1)
+                         .setColor(0,0,0));
         
         #EEGS:
         obj.eegsGroup = obj.centerOrigin.createChild("group");
@@ -1888,8 +1898,12 @@ append(obj.total, obj.speed_curr);
         me.pixelPerMeterX = (340*0.695633)/0.15627;
         me.pixelPerMeterY = 260/(me.Hz_t-me.Hz_b);
         me.submode = 0;
-
-        if (hdp.wow0) {
+        
+        if (1) {
+            var vvpos = HudMath.getFlightPathIndicatorPos();
+            hdp.VV_x = vvpos[0];
+            hdp.VV_y = vvpos[1];
+        } elsif (hdp.wow0) {
             me.vectorMag = math.sqrt(hdp.speed_east_fps*hdp.speed_east_fps+hdp.speed_north_fps*hdp.speed_north_fps);
             if (me.vectorMag == 0) {
                 me.vectorMag = 0.0001;
