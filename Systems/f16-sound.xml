@@ -1024,7 +1024,6 @@
 						<value>20</value>
 					</greater-than>
 				</or>
-				<property>sim/current-view/internal</property>
 				<property>payload/armament/aim-9/sound-on-off</property>
 			</condition>
 			<pitch>
@@ -1036,6 +1035,9 @@
 			</pitch>
 			<volume>
 				<property>payload/armament/aim-9/sound-volume</property>
+			</volume>
+			<volume>
+				<property>sim/current-view/internal</property>
 			</volume>
 		</lock-tone>
 		<lock-tone>
