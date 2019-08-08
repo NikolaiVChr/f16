@@ -148,6 +148,12 @@ var HudMath = {
 	
 	getPosFromDegs:  func (yaw_deg, pitch_deg) {
 		# return pos from bore
+		
+		if (yaw_deg > 89) yaw_deg = 89;
+		if (yaw_deg < -89) yaw_deg = -89;
+		if (pitch_deg < -89) pitch_deg = -89;
+		if (pitch_deg > 89) pitch_deg = 89;
+		
 		var y = 0;
 		var x = 0;
 		if (me.slanted) {
@@ -162,6 +168,12 @@ var HudMath = {
 	
 	getCenterPosFromDegs:  func (yaw_deg, pitch_deg) {
 		# return pos from center origin
+		
+		if (yaw_deg > 89) yaw_deg = 89;
+		if (yaw_deg < -89) yaw_deg = -89;
+		if (pitch_deg < -89) pitch_deg = -89;
+		if (pitch_deg > 89) pitch_deg = 89;
+		
 		if (me.slanted) {
 			var y = me.getVertDistSlanted(pitch_deg);
 			var x =  me.pixelPerMeterX*((me.input.viewX.getValue() - me.hudX3d(y)) * math.tan(yaw_deg*D2R));

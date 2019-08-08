@@ -1272,27 +1272,7 @@ append(obj.total, obj.speed_curr);
                      .setStrokeLineWidth(1)
                      .setColor(0,0,0));
 
-    obj.tgpPointF = obj.svg.createChild("path")
-                     .moveTo(-10*mr, -10*mr)
-                     .horiz(20*mr)
-                     .vert(20*mr)
-                     .horiz(-20*mr)
-                     .vert(-20*mr)
-                     .moveTo(-1*mr,-1*mr)
-                     .horiz(2*mr)
-                     .moveTo(-1*mr,0*mr)
-                     .horiz(2*mr)
-                     .setStrokeLineWidth(1)
-                     .setColor(0,0,0);
-    obj.tgpPointC = obj.svg.createChild("path")
-                     .moveTo(-10*mr, -10*mr)
-                     .lineTo(10*mr, 10*mr)
-                     .moveTo(10*mr, -10*mr)
-                     .lineTo(-10*mr, 10*mr)
-                     .setStrokeLineWidth(1)
-                     .setColor(0,0,0);
-    append(obj.total, obj.tgpPointF);
-    append(obj.total, obj.tgpPointC);
+    
 
 
 
@@ -1434,6 +1414,28 @@ append(obj.total, obj.speed_curr);
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
         append(obj.total, obj.locatorLine);
+        
+        obj.tgpPointF = obj.centerOrigin.createChild("path")
+                     .moveTo(-10*mr, -10*mr)
+                     .horiz(20*mr)
+                     .vert(20*mr)
+                     .horiz(-20*mr)
+                     .vert(-20*mr)
+                     .moveTo(-1*mr,-1*mr)
+                     .horiz(2*mr)
+                     .moveTo(-1*mr,0*mr)
+                     .horiz(2*mr)
+                     .setStrokeLineWidth(1)
+                     .setColor(0,0,0);
+    obj.tgpPointC = obj.centerOrigin.createChild("path")
+                     .moveTo(-10*mr, -10*mr)
+                     .lineTo(10*mr, 10*mr)
+                     .moveTo(10*mr, -10*mr)
+                     .lineTo(-10*mr, 10*mr)
+                     .setStrokeLineWidth(1)
+                     .setColor(0,0,0);
+    append(obj.total, obj.tgpPointF);
+    append(obj.total, obj.tgpPointC);
         
         #EEGS:
         obj.eegsGroup = obj.centerOrigin.createChild("group");
@@ -2379,9 +2381,12 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
             if (getprop("sim/view[102]/heading-offset-deg")==0 and getprop("sim/view[102]/pitch-offset-deg")==-30 and armament.contactPoint != nil) {
                 var b = geo.normdeg180(armament.contactPoint.get_relative_bearing());
                 var p = armament.contactPoint.getElevation()-hdp.pitch;
-                var y = me.clamp(-p*me.texelPerDegreeY+me.sy-me.texels_up_into_hud,me.sy*0.05,me.sy*0.95);
-                var x = me.clamp(b*me.texelPerDegreeX+me.sx*0.5,me.sx*0.025,me.sx*0.975);
-                if (y == me.sy*0.05 or y == me.sy*0.95 or x == me.sx*0.025 or x == me.sx*0.975) {
+                var xy = HudMath.getCenterPosFromDegs(b,p);
+                var y = me.clamp(xy[1],-me.sy*0.40,me.sy*0.40);
+                var x = me.clamp(xy[0],-me.sx*0.45,me.sx*0.45);
+                #var y = me.clamp(-p*me.texelPerDegreeY+me.sy-me.texels_up_into_hud,me.sy*0.05,me.sy*0.95);
+                #var x = me.clamp(b*me.texelPerDegreeX+me.sx*0.5,me.sx*0.025,me.sx*0.975);
+                if (y != xy[1] or x != xy[0]) {
                     me.tgpPointC.setTranslation(x,y);
                     me.tgpPointC.show();
                 } else {
@@ -2392,9 +2397,12 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
             } else {
                 var b = geo.normdeg180(getprop("sim/view[102]/heading-offset-deg"));
                 var p = getprop("sim/view[102]/pitch-offset-deg");
-                var y = me.clamp(-p*me.texelPerDegreeY+me.sy-me.texels_up_into_hud,me.sy*0.05,me.sy*0.95);
-                var x = me.clamp(b*me.texelPerDegreeX+me.sx*0.5,me.sx*0.025,me.sx*0.975);
-                if (y == me.sy*0.05 or y == me.sy*0.95 or x == me.sx*0.025 or x == me.sx*0.975) {
+                var xy = HudMath.getCenterPosFromDegs(b,p);
+                var y = me.clamp(xy[1],-me.sy*0.40,me.sy*0.40);
+                var x = me.clamp(xy[0],-me.sx*0.45,me.sx*0.45);
+                #var y = me.clamp(-p*me.texelPerDegreeY+me.sy-me.texels_up_into_hud,me.sy*0.05,me.sy*0.95);
+                #var x = me.clamp(b*me.texelPerDegreeX+me.sx*0.5,me.sx*0.025,me.sx*0.975);
+                if (y != xy[1] or x != xy[0]) {
                     me.tgpPointC.setTranslation(x,y);
                     me.tgpPointC.show();
                 } else {
