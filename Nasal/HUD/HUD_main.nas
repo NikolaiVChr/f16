@@ -2097,7 +2097,7 @@ append(obj.total, obj.speed_curr);
                 var knob = getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob");
                 if (hdp.gear_down and !hdp.wow) {
                     hdp.window6_txt = sprintf("A%d", hdp.approach_speed);
-                } elsif (knob==0 or knob == 1 and getprop("instrumentation/tacan/in-range")) {
+                } elsif ((knob==0 or knob == 1) and getprop("instrumentation/tacan/in-range")) {
                     # show tacan distance and mag heading. (not authentic like this, saw a paper on putting Tacan in hud, but not sure if it was done for F16)
                     hdp.window6_txt = sprintf("%.1fTCN%03d",getprop("instrumentation/tacan/indicated-distance-nm"),geo.normdeg(hdp.headingMag+getprop("instrumentation/tacan/bearing-relative-deg")));
                 } else {
