@@ -1183,32 +1183,32 @@ var MFD_Device =
         
         svg.c1 = svg.p_HSDc.createChild("path")
             .moveTo(-50,0)
-            .arcSmallCW(50,50, 0, -50*2, 0)
             .arcSmallCW(50,50, 0,  50*2, 0)
+            .arcSmallCW(50,50, 0, -50*2, 0)
             .setStrokeLineWidth(1)
             .set("z-index",2)
             .hide()
             .setColor(1,0,0);
         svg.c2 = svg.p_HSDc.createChild("path")
             .moveTo(-50,0)
-            .arcSmallCW(50,50, 0, -50*2, 0)
             .arcSmallCW(50,50, 0,  50*2, 0)
+            .arcSmallCW(50,50, 0, -50*2, 0)
             .setStrokeLineWidth(1)
             .set("z-index",2)
             .hide()
             .setColor(1,0,0);
         svg.c3 = svg.p_HSDc.createChild("path")
             .moveTo(-50,0)
-            .arcSmallCW(50,50, 0, -50*2, 0)
             .arcSmallCW(50,50, 0,  50*2, 0)
+            .arcSmallCW(50,50, 0, -50*2, 0)
             .setStrokeLineWidth(1)
             .set("z-index",2)
             .hide()
             .setColor(1,1,0);
         svg.c4 = svg.p_HSDc.createChild("path")
             .moveTo(-50,0)
-            .arcSmallCW(50,50, 0, -50*2, 0)
             .arcSmallCW(50,50, 0,  50*2, 0)
+            .arcSmallCW(50,50, 0, -50*2, 0)
             .setStrokeLineWidth(1)
             .set("z-index",2)
             .hide()
@@ -1403,9 +1403,9 @@ var MFD_Device =
                         me.legBearing = geo.aircraft_position().course_to(me.wpC)-getprop("orientation/heading-deg");#relative
                         me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
                         if (me.root.centered) {
-                            me.legRangePixels = me.root.mediumRadius*(me.legDistance/me.root.range_cen);;
+                            me.legRangePixels = me.root.mediumRadius*(me.legDistance/me.root.range_cen);
                         } else {
-                            me.legRangePixels = me.root.outerRadius*(me.legDistance/me.root.range_dep);;
+                            me.legRangePixels = me.root.outerRadius*(me.legDistance/me.root.range_dep);
                         }
                         me.legX = me.legRangePixels*math.sin(me.legBearing*D2R);
                         me.legY = -me.legRangePixels*math.cos(me.legBearing*D2R);
@@ -1504,6 +1504,7 @@ var MFD_Device =
                             me.legRangePixels = me.root.outerRadius*(me.legDistance/me.root.range_dep);
                             me.legScale = me.root.outerRadius*(me.legRadius/me.root.range_dep)/50;
                         }
+                        
                         me.legX = me.legRangePixels*math.sin(me.legBearing*D2R);
                         me.legY = -me.legRangePixels*math.cos(me.legBearing*D2R);
                         me.ci.setTranslation(me.legX,me.legY);
