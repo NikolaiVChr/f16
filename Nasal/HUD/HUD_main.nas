@@ -971,7 +971,7 @@ append(obj.total, obj.speed_curr);
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0).hide();
                 append(obj.total, obj.bombFallLine);
-        obj.solutionCue = obj.svg.createChild("path")
+        obj.solutionCue = obj.svg.createChild("path")#the moving line
                 .moveTo(sx*0.5*0.695633-5,0)
                 .horiz(10)
                 .setStrokeLineWidth(2)
@@ -1875,11 +1875,12 @@ append(obj.total, obj.speed_curr);
         }
 #Text windows on the HUD (F-16)
 #               1 
-#
-# 2 nav/arm         3 fuel/callsign
+#                   10 ALOW
+# 2 nav/arm         3 callsign
 # 7 mach            4 eta/altitude
 # 8 g               5 waypoint/slant range
-# 9 weap/aoa        6 type
+# 9 weap/aoa        6 type/tacan
+# 11 fuel
 
 # velocity vector
         #340,260
@@ -2079,9 +2080,12 @@ append(obj.total, obj.speed_curr);
                     hdp.window4_txt = "";
                     hdp.window5_txt = "";
                 }
-                
+                var knob = getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob");
                 if (hdp.gear_down and !hdp.wow) {
                     hdp.window6_txt = sprintf("A%d", hdp.approach_speed);
+                } elsif (knob==0 or knob == 1 and getprop("instrumentation/tacan/in-range")) {
+                    # show tacan distance and mag heading. (not authentic like this, saw a paper on putting Tacan in hud, but not sure if it was done for F16)
+                    hdp.window6_txt = sprintf("%.1fTCN%03d",getprop("instrumentation/tacan/indicated-distance-nm"),geo.normdeg(hdp.headingMag+getprop("instrumentation/tacan/bearing-relative-deg")));
                 } else {
                     hdp.window6_txt = "";
                 }
