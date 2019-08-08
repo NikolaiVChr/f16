@@ -357,9 +357,10 @@ var MFD_Device =
         svg.blep = setsize([],svg.maxB);
         for (var i = 0;i<svg.maxB;i+=1) {
             svg.blep[i] = svg.p_RDR.createChild("path")
-                    .moveTo(0,0)
-                    .vert(4)
-                    .setStrokeLineWidth(4)
+                    .moveTo(0,-4)
+                    .vert(8)
+                    .setStrokeLineWidth(8)
+                    .set("z-index",10)
                     .hide();
         }
         svg.rangUp = svg.p_RDR.createChild("path")
@@ -426,6 +427,7 @@ var MFD_Device =
                             .moveTo(0,-10)
                             .vert(-10)
                             .setColor(1,1,0)
+                            .set("z-index",20)
                             .setStrokeLineWidth(2);
             svg.lockAlt = svg.lock.createChild("text")
                 .setTranslation(0, 25)
