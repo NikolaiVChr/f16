@@ -53,13 +53,13 @@
    <start>
     <color>
      <red>
-      <value>1</value>
+      <expression><product><value>1</value><property>rendering/scene/diffuse/red</property></product></expression>
      </red>
      <green>
-      <value>1</value>
+      <expression><product><value>1</value><property>rendering/scene/diffuse/red</property></product></expression>
      </green>
      <blue>
-      <value>1</value>
+      <expression><product><value>1</value><property>rendering/scene/diffuse/red</property></product></expression>
      </blue>
      <alpha>
       <value>1</value>
@@ -72,13 +72,13 @@
    <end>
     <color>
      <red>
-      <value>1</value>
+      <expression><product><value>1</value><property>rendering/scene/diffuse/red</property></product></expression>
      </red>
      <green>
-      <value>1</value>
+      <expression><product><value>1</value><property>rendering/scene/diffuse/red</property></product></expression>
      </green>
      <blue>
-      <value>1</value>
+      <expression><product><value>1</value><property>rendering/scene/diffuse/red</property></product></expression>
      </blue>
      <alpha>
       <value>0.1</value>

@@ -44,7 +44,6 @@ More gun tracers?
 A-A and A-G button cycle cannon also?
 Missile view start behind weapon?
 Stores should only emergency Jett. when main, stby or epu is running.
-Found a document that details all loadouts for US F16s, they can carry a lot more than Greek F16s.
 Show stores over MP.
 Add/edit payload quick selections as new weapons become available. Make it in a smarter way considering the number of them is becoming bigger every time?
 
@@ -73,8 +72,6 @@ G-EEDs changes are still pending. Haven't been in contact with him since he made
 HUD
 ---
 Make tons of features.
-CCIP for MK82
-ILS (page 1-159 of block50 manual)
 When an eyebrow warning comes on the HUD should show WARN. Can be removed with WARN RESET on ICP panel below hud.
 
 DED (little display right-down from HUD)
