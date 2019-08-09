@@ -266,6 +266,8 @@ var F16_HUD = {
                                             } else {
                                                 hdp.CCIP_active = 0;
                                             }
+                                          } else {
+                                              hdp.CCIP_active = 0;
                                           }
                                           hdp.CCRP_active = obj.CCRP(hdp);
                                           obj.CCIP(hdp);
