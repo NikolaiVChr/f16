@@ -1221,7 +1221,7 @@ append(obj.total, obj.speed_curr);
         obj.bracket = obj.centerOrigin.createChild("path")
                 .moveTo(0,-34)
                 .horiz(-10)
-                .vert(bracketsize*0.8)
+                .vert(bracketsize*0.7)#fudge factor for when raising seat it gets higher up in HUD where degrees are less.
                 .horiz(10)
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
