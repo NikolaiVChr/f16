@@ -269,11 +269,15 @@ var HudMath = {
 		me.dir_y  = me.input.alpha.getValue();
 	    me.dir_x  = me.input.beta.getValue();
 	    
-	    me.pos = me.getCenterPosFromDegs(me.dir_x,-me.dir_y);
-	    
-	    me.pos_x = me.clamp(me.pos[0],   clampXmin, clampXmax);
-	    me.pos_y = me.clamp(me.pos[1],   clampYmin, clampYmax);
-
+	    if (me.dir_x==nil or me.dir_y==nil) {
+			me.pos_x = 0;
+	    	me.pos_y = 0;		    
+		} else{
+			me.pos = me.getCenterPosFromDegs(me.dir_x,-me.dir_y);
+		    
+		    me.pos_x = me.clamp(me.pos[0],   clampXmin, clampXmax);
+		    me.pos_y = me.clamp(me.pos[1],   clampYmin, clampYmax);
+		}
 	    return [me.pos_x, me.pos_y];
 	},
 	
