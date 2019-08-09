@@ -56,7 +56,7 @@
  <flight_control file="Systems/jsb-controls"/>
  <system file="autoflight"/>
  <propulsion file="Systems/jsb-propulsion-block60"/>
- <aerodynamics file="Systems/jsb-aerodynamics-block15.xml"/>
+ <aerodynamics file="Systems/jsb-aerodynamics-block15-subtle.xml"/>
 
 
 
