@@ -1217,11 +1217,11 @@ append(obj.total, obj.speed_curr);
         append(obj.total, obj.tgpPointC);
             
         
-        var bracketsize = HudMath.getPosFromDegs(0,-15)[1]-HudMath.getPosFromDegs(0,-11)[1];
+        var bracketsize = HudMath.getPosFromDegs(0,-13)[1]-HudMath.getPosFromDegs(0,-9)[1];#fudge factored for when raising seat it gets higher up in HUD where degrees are less. (is really 11 to 15)
         obj.bracket = obj.centerOrigin.createChild("path")
                 .moveTo(0,-34)
                 .horiz(-10)
-                .vert(bracketsize*0.7)#fudge factor for when raising seat it gets higher up in HUD where degrees are less.
+                .vert(bracketsize)
                 .horiz(10)
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
