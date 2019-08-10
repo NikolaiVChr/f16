@@ -63,16 +63,16 @@ var callInit = func {
 var pTACAN= 0;
 var pALOW = 1;
 var pSTPT = 2;
+var pTIME = 3;
 var pIFF  = 4;
 var pCNI  = 5;
 var pBINGO= 6;
 var pMAGV = 7;
 var pLINK = 8;
 var pLASER= 9;
-var pTIME = 10;
 var pLIST = 100;#excluded from random
 
-var page = int(rand()*10.99);#random page at startup
+var page = print(int(rand()*9.99));#random page at startup
 var comm = 0;
 
 var text = ["","","","",""];
