@@ -627,7 +627,7 @@ var F16_HUD = {
                                                      if (hdp.gear_down)
                                                        obj.gd = " G";
                                                      obj.window2.setText(sprintf(" F %d%s",hdp.flap_pos_deg,obj.gd));
-                                                 } elsif (hdp.master_arm) {
+                                                 } elsif (hdp.master_arm and hdp.fcs_available) {
                                                      var submode = "";
                                                      if (hdp.CCRP_active) {
                                                         submode = "CCRP";
@@ -1567,7 +1567,13 @@ append(obj.total, obj.speed_curr);
     },
 
     CCRP: func(hdp) {
-        if (hdp.fcs_available and hdp.master_arm ==1 and hdp.active_u != nil) {
+        if (hdp.fcs_available and hdp.master_arm ==1) {
+            var trgt = armament.contactPoint;
+            if(trgt == nil and hdp.active_u != nil) {
+                trgt = hdp.active_u;
+            } elsif (trgt == nil) {
+                return 0;
+            }
             var selW = pylons.fcs.getSelectedWeapon();
             if (selW != nil and !hdp.CCIP_active and 
                 (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24"
@@ -1577,7 +1583,7 @@ append(obj.total, obj.speed_curr);
                     me.dt = 0.1;
                     me.maxFallTime = 20;
                 } else {
-                    me.agl = (hdp.altitude_ft-hdp.active_u.get_altitude())*FT2M;
+                    me.agl = (hdp.altitude_ft-trgt.get_altitude())*FT2M;
                     me.dt = me.agl*0.000025;#4000 ft = ~0.1
                     if (me.dt < 0.1) me.dt = 0.1;
                     me.maxFallTime = 45;
@@ -1593,9 +1599,9 @@ append(obj.total, obj.speed_curr);
                 if (me.distCCRP > 0.75) {
                     me.distCCRP = 0.75;
                 }
-                me.bombFallLine.setTranslation(hdp.active_u.get_relative_bearing()*me.texelPerDegreeX,0);
-                me.ccrpMarker.setTranslation(hdp.active_u.get_relative_bearing()*me.texelPerDegreeX,0);
-                me.solutionCue.setTranslation(hdp.active_u.get_relative_bearing()*me.texelPerDegreeX,me.sy*0.5-me.sy*0.5*me.distCCRP);
+                me.bombFallLine.setTranslation(trgt.get_relative_bearing()*me.texelPerDegreeX,0);
+                me.ccrpMarker.setTranslation(trgt.get_relative_bearing()*me.texelPerDegreeX,0);
+                me.solutionCue.setTranslation(trgt.get_relative_bearing()*me.texelPerDegreeX,me.sy*0.5-me.sy*0.5*me.distCCRP);
                 me.bombFallLine.show();
                 me.ccrpMarker.show();
                 me.solutionCue.show();
@@ -2406,9 +2412,9 @@ else print("[ERROR]: HUD too many targets ",me.target_idx);
 
         if (tgp.flir_updater.click_coord_cam != nil and getprop("f16/avionics/tgp-lock")) {# hdp.tgp_mounted and 
             if (getprop("sim/view[102]/heading-offset-deg")==0 and getprop("sim/view[102]/pitch-offset-deg")==-30 and armament.contactPoint != nil) {
-                var b = geo.normdeg180(armament.contactPoint.get_relative_bearing());
-                var p = armament.contactPoint.getElevation()-hdp.pitch;
-                var xy = HudMath.getCenterPosFromDegs(b,p);
+                #var b = geo.normdeg180(armament.contactPoint.get_relative_bearing());
+                #var p = armament.contactPoint.getElevation()-hdp.pitch;
+                var xy = HudMath.getPosFromCoord(armament.contactPoint.get_Coord());
                 var y = me.clamp(xy[1],-me.sy*0.40,me.sy*0.40);
                 var x = me.clamp(xy[0],-me.sx*0.45,me.sx*0.45);
                 #var y = me.clamp(-p*me.texelPerDegreeY+me.sy-me.texels_up_into_hud,me.sy*0.05,me.sy*0.95);
