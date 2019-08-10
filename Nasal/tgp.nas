@@ -397,7 +397,7 @@ var fast_loop = func {
     
         callsign = nil;
         var follow = 0;
-        if (armament.contactPoint !=nil and armament.contactPoint.get_range()>35) {
+        if (armament.contactPoint !=nil and armament.contactPoint.get_range()>35 and armament.contactPoint.get_Callsign() != "GPS-Spot") {
             armament.contactPoint = nil;
         }
         if (armament.contactPoint == nil) {
@@ -424,7 +424,8 @@ var fast_loop = func {
         } else {
             # TGP lock
             var vis = 1;
-            if (armament.contactPoint.get_Callsign() != "TGP-Spot" and armament.contactPoint.get_Callsign() != "GPS-Spot") {
+            var gpss = armament.contactPoint.get_Callsign() == "GPS-Spot";
+            if (armament.contactPoint.get_Callsign() != "TGP-Spot" and !gpss) {
                 follow = 1;
                 vis = awg_9.TerrainManager.IsVisible(armament.contactPoint.propNode, nil);
             }
@@ -468,7 +469,7 @@ var fast_loop = func {
             line15.show();
         }
         if (lock_tgp and follow) {
-            midl.setText(sprintf("%s POINT %s", ir==1?"IR":"TV", getprop("controls/armament/laser-arm-dmd")?"L":""));
+            midl.setText(sprintf("%s POINT %s", gpss?"GPS":(ir==1?"IR":"TV"), getprop("controls/armament/laser-arm-dmd")?"L":""));
         } elsif (lock_tgp) {
             midl.setText(sprintf("%s AREA  %s", ir==1?"IR":"TV", getprop("controls/armament/laser-arm-dmd")?"L":""));
         } elsif (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil) {
