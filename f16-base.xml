@@ -2019,7 +2019,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <short-name type="string">AG154</short-name>
                 <long-name type="string">AGM-154A JSOW</long-name>
                 <fire-msg type="string">Greyhound</fire-msg>
-                <class type="string">P</class>
+                <class type="string">GP</class>
                 <max-fire-range-nm type="double">70</max-fire-range-nm>
                 <min-fire-range-nm type="double">0</min-fire-range-nm>
                 <guidance type="string">gps</guidance>
@@ -2269,7 +2269,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
                 <drop-time type="double">1</drop-time>
                 <deploy-time type="double">0.75</deploy-time>
-                <lateral-dps type="double"> -50 </lateral-dps>
+                <lateral-dps type="double">-90</lateral-dps>
                 <max-pitch-deg type="double">-90</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
             </cbu-87>

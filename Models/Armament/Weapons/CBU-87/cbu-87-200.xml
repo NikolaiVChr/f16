@@ -127,7 +127,7 @@
 		     <phi-max-deg>180</phi-max-deg>
 		     <speed-mps>
 		       <value>500</value>
-		       <spread>80</spread>
+		       <spread>120</spread>
 		     </speed-mps>
 		     <rotation-speed>
 		       <x-min-deg-sec>0</x-min-deg-sec>
@@ -142,7 +142,7 @@
 		   <counter>
 		     <particles-per-sec>
 		       <value>30</value>
-		       <spread>10</spread>
+		       <spread>20</spread>
 		     </particles-per-sec>
 		   </counter>
 		      
@@ -157,7 +157,7 @@
 		         <alpha><value> 1 </value></alpha>
 		       </color>
 		       <size>
-		         <value>4</value>
+		         <value>6</value>
 		       </size>
 		     </start>
 
@@ -169,16 +169,16 @@
 		         <alpha><value> 0.1 </value></alpha>
 		       </color>
 		       <size>
-		         <value>200</value>
+		         <value>180</value>
 		       </size>
 		     </end>
 
 		     <life-sec>
-		       <value>0.5</value>
+		       <value>1</value>
 		     </life-sec>
 		        
 		     <mass-kg>  5 </mass-kg>
-		     <radius-m> 0.5 </radius-m>
+		     <radius-m> 1 </radius-m>
 		   </particle>
 
 		   <program>
@@ -213,7 +213,7 @@
 		     <phi-max-deg>180</phi-max-deg>
 		     <speed-mps>
 		       <value>500</value>
-		       <spread>60</spread>
+		       <spread>100</spread>
 		     </speed-mps>
 		     <rotation-speed>
 		       <x-min-deg-sec>0</x-min-deg-sec>
@@ -227,8 +227,8 @@
 
 		   <counter>
 		     <particles-per-sec>
-		       <value>50</value>
-		       <spread>10</spread>
+		       <value>75</value>
+		       <spread>30</spread>
 		     </particles-per-sec>
 		   </counter>
 		      
@@ -243,7 +243,7 @@
 		         <alpha><value> 0.5 </value></alpha>
 		       </color>
 		       <size>
-		         <value>20</value>
+		         <value>30</value>
 		       </size>
 		     </start>
 
@@ -255,16 +255,16 @@
 		         <alpha><value> 0.04 </value></alpha>
 		       </color>
 		       <size>
-		         <value>240</value>
+		         <value>280</value>
 		       </size>
 		     </end>
 
 		     <life-sec>
-		       <value>40</value>
+		       <value>45</value>
 		     </life-sec>
 		        
 		     <mass-kg>  5 </mass-kg>
-		     <radius-m> 0.5 </radius-m>
+		     <radius-m> 2 </radius-m>
 		   </particle>
 
 		   <program>
