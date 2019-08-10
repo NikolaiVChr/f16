@@ -100,7 +100,8 @@
 						coord.set_latlon(lat,lon,alt);
 						var spot = fc.ContactTGP.new("GPS-Spot",coord,0);
 						armament.contactPoint = spot;
-						if (getprop("f16/stores/tgp-mounted")) {
+						tgp.gps = 1;
+						if (getprop("f16/stores/tgp-mounted") and 0) {
 							tgp.flir_updater.click_coord_cam = armament.contactPoint.get_Coord();
 							callsign = armament.contactPoint.getUnique();
 			                setprop("/aircraft/flir/target/auto-track", 1);
@@ -127,6 +128,7 @@
 					if (armament.contactPoint != nil and armament.contactPoint.get_Callsign()=="GPS-Spot") {
 						armament.contactPoint = nil;
 					}
+					tgp.gps = 0;
 					if (!getprop("f16/stores/tgp-mounted")) {
 						tgp.flir_updater.click_coord_cam = nil;
 					}

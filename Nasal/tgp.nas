@@ -200,6 +200,7 @@ setlistener("/sim/signals/fdm-initialized", func {
 setlistener("controls/MFD[2]/button-pressed", func (node) {
     var button = getprop("controls/MFD[2]/button-pressed");
     if (button == 1) {#LOCK
+        gps = 0;
         if (lock_tgp) {
             lock_tgp = 0;
             armament.contactPoint = nil;
@@ -295,6 +296,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
         ir = !ir;
     } elsif (button == 11) {#UP
         if (lock_tgp) return;
+        gps = 0;
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetP += fov/100;
@@ -303,6 +305,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
         }
     } elsif (button == 12) {#DOWN
         if (lock_tgp) return;
+        gps = 0;
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetP -= fov/100;
@@ -311,6 +314,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
         }
     } elsif (button == 14) {#LEFT
         if (lock_tgp) return;
+        gps = 0;
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetH -= fov/100;
@@ -319,6 +323,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
         }
     } elsif (button == 15) {#RGHT
         if (lock_tgp) return;
+        gps = 0;
         var fov = getprop("sim/current-view/field-of-view");
         if (getprop("/aircraft/flir/target/auto-track")) {
             flir_updater.offsetH += fov/100;
@@ -422,11 +427,12 @@ var fast_loop = func {
                 flir_updater.offsetH = 0;
             }
             lock_tgp = 0;
+            gps = 0;
         } else {
             # TGP lock
             var vis = 1;
             gpss = armament.contactPoint.get_Callsign() == "GPS-Spot";
-            if (armament.contactPoint.get_Callsign() != "TGP-Spot" and !gpss) {
+            if (armament.contactPoint.get_Callsign() != "TGP-Spot" and !gps and !gpss) {
                 follow = 1;
                 vis = awg_9.TerrainManager.IsVisible(armament.contactPoint.propNode, nil);
             }
@@ -469,10 +475,12 @@ var fast_loop = func {
             line14.show();
             line15.show();
         }
-        if (lock_tgp and follow) {
-            midl.setText(sprintf("%s POINT %s", gpss?"GPS":(ir==1?"IR":"TV"), getprop("controls/armament/laser-arm-dmd")?"L":""));
+        if (lock_tgp and gps) {
+            midl.setText(sprintf("%s      %s", "GPS", getprop("controls/armament/laser-arm-dmd")?"L":""));
+        } elsif (lock_tgp and follow) {
+            midl.setText(sprintf("%s POINT %s", gps?"GPS":(ir==1?"IR":"TV"), getprop("controls/armament/laser-arm-dmd")?"L":""));
         } elsif (lock_tgp) {
-            midl.setText(sprintf("%s AREA  %s", gpss?"GPS":(ir==1?"IR":"TV"), getprop("controls/armament/laser-arm-dmd")?"L":""));
+            midl.setText(sprintf("%s AREA  %s", gps?"GPS":(ir==1?"IR":"TV"), getprop("controls/armament/laser-arm-dmd")?"L":""));
         } elsif (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil) {
             midl.setText(sprintf("  RADAR  %s", getprop("controls/armament/laser-arm-dmd")?"L":""));
         } else {
@@ -526,6 +534,7 @@ var lock_tgp = 0;
 var lock_tgp_last = 0;
 var wide = 1;
 var zoomlvl = 1.0;
+var gps = 0;
 
 var callInit = func {
   var canvasMFDext = canvas.new({
