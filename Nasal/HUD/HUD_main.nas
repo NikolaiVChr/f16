@@ -2105,9 +2105,9 @@ append(obj.total, obj.speed_curr);
                 } elsif ((knob==2 or knob == 3) and getprop("instrumentation/adf/in-range")) {
                     # show adf mag heading.
                     hdp.window6_txt = sprintf("ADF%03d",geo.normdeg(hdp.headingMag+getprop("instrumentation/adf/indicated-bearing-deg")));
-                } elsif ((knob==2 or knob == 3) and getprop("instrumentation/nav[0]/in-range") and !getprop("instrumentation/nav[0]/nav-loc") and !getprop("instrumentation/adf/in-range")) {
+                } elsif ((knob==2 or knob == 3) and getprop("instrumentation/nav[0]/in-range") and !getprop("instrumentation/nav[0]/nav-loc")) {
                     # show vor mag heading.
-                    hdp.window6_txt = sprintf("VOR%03d",geo.normdeg(getprop("orientation/heading-deg")-getprop("orientation/heading-magnetic-deg")+getprop("instrumentation/nav[0]/radials/actual-deg")));
+                    hdp.window6_txt = sprintf("VOR%03d",geo.normdeg(getprop("orientation/heading-deg")-getprop("orientation/heading-magnetic-deg")+getprop("instrumentation/nav[0]/radials/target-auto-hdg-deg")));
                 } else {
                     hdp.window6_txt = "";
                 }
