@@ -72,7 +72,7 @@ var pLINK = 8;
 var pLASER= 9;
 var pLIST = 100;#excluded from random
 
-var page = print(int(rand()*9.99));#random page at startup
+var page = int(rand()*9.99);#random page at startup
 var comm = 0;
 
 var text = ["","","","",""];
