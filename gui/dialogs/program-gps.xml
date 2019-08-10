@@ -99,9 +99,15 @@
 						var coord = geo.Coord.new();
 						coord.set_latlon(lat,lon,alt);
 						var spot = fc.ContactTGP.new("GPS-Spot",coord,0);
-						#if (getprop("f16/stores/tgp-mounted")) {
-							armament.contactPoint = spot;
-						#}
+						armament.contactPoint = spot;
+						if (getprop("f16/stores/tgp-mounted")) {
+							tgp.flir_updater.click_coord_cam = armament.contactPoint.get_Coord();
+							callsign = armament.contactPoint.getUnique();
+			                setprop("/aircraft/flir/target/auto-track", 1);
+			                flir_updater.offsetP = 0;
+			                flir_updater.offsetH = 0;
+							setprop("f16/avionics/tgp-lock", 1);
+						}
 						wp.setContacts([spot]);
 					}
 				}
@@ -118,7 +124,12 @@
 					if (wp != nil and wp.parents[0] == armament.AIM) {
 						wp.setContacts([]);
 					}
-					armament.contactPoint = nil;
+					if (armament.contactPoint != nil and armament.contactPoint.get_Callsign()=="GPS-Spot") {
+						armament.contactPoint = nil;
+					}
+					if (!getprop("f16/stores/tgp-mounted")) {
+						tgp.flir_updater.click_coord_cam = nil;
+					}
 				}				
 			]]></script>
 		</binding>
