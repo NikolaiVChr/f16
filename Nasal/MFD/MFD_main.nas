@@ -1591,7 +1591,7 @@ var MFD_Device =
         me.p1_1 = me.PFD.addPage("Aircraft Menu", "p1_1");
         me.p1_2 = me.PFD.addPage("Top Level PACS Menu", "p1_2");
         me.p1_3 = me.PFD.addPage("PACS Menu", "p1_3");
-        #me.p_VSD = PFD_VSD.new(me.PFD,"VSD", "VSD0", "p_VSD");
+        me.p_VSD = PFD_VSD.new(me.PFD,"VSD", "VSD0", "p_VSD");
 
         me.p1_3.S0 = MFD_Station.new(me.PFDsvg, 0);
         #1 droptank
