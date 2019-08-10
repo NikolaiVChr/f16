@@ -520,8 +520,8 @@ var MFD_Device =
                     me.ppp.selectPage(me.my.p_SMS);
                 #} elsif (eventi == 15) {
                 #    me.ppp.selectPage(me.my.p_VSD);
-                } elsif (eventi == 18) {
-                    me.ppp.selectPage(me.my.pjitds_1);
+                #} elsif (eventi == 18) {
+                #    me.ppp.selectPage(me.my.pjitds_1);
                 } elsif (eventi == 16) {
                     me.ppp.selectPage(me.my.p_HSD);
                 } elsif (eventi == 2) {
@@ -920,8 +920,8 @@ var MFD_Device =
                     pylons.fcs.selectPylon(4);
                 #} elsif (eventi == 15) {
                 #    me.ppp.selectPage(me.my.p_VSD);
-                } elsif (eventi == 18) {
-                    me.ppp.selectPage(me.my.pjitds_1);
+                #} elsif (eventi == 18) {
+                #    me.ppp.selectPage(me.my.pjitds_1);
                 } elsif (eventi == 14) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
@@ -1304,8 +1304,8 @@ var MFD_Device =
                     me.ppp.selectPage(me.my.p_SMS);
                 #} elsif (eventi == 15) {
                 #    me.ppp.selectPage(me.my.p_VSD);
-                } elsif (eventi == 18) {
-                    me.ppp.selectPage(me.my.pjitds_1);
+                #} elsif (eventi == 18) {
+                #    me.ppp.selectPage(me.my.pjitds_1);
                 } elsif (eventi == 10) {
                     me.ppp.selectPage(me.my.p_RDR);
                 } elsif (eventi == 2) {
@@ -1605,11 +1605,11 @@ var MFD_Device =
         #9 droptank
         me.p1_3.S10 = MFD_Station.new(me.PFDsvg, 10);
 
-        if (me.model_element == "MFDimage1") {
-            me.pjitds_1 =  PFD_NavDisplay.new(me.PFD,"Situation", "mfd-sit-1", "pjitds_1", "jtids_main");
-        } else {
-            me.pjitds_1 =  PFD_NavDisplay.new(me.PFD,"Situation", "mfd-sit-2", "pjitds_1", "jtids_main");
-        }
+        #if (me.model_element == "MFDimage1") {
+        #    me.pjitds_1 =  PFD_NavDisplay.new(me.PFD,"Situation", "mfd-sit-1", "pjitds_1", "jtids_main");
+        #} else {
+        #    me.pjitds_1 =  PFD_NavDisplay.new(me.PFD,"Situation", "mfd-sit-2", "pjitds_1", "jtids_main");
+        #}
         # use the radar range as the ND range.
 
         me.p_spin_recovery = me.PFD.addPage("Spin recovery", "p_spin_recovery");
@@ -1768,17 +1768,17 @@ var MFD_Device =
 
         me.p_RDR.addMenuItem(17, "SMS", me.p_SMS);
         #me.p_RDR.addMenuItem(15, "VSD", me.p_VSD);
-        me.p_RDR.addMenuItem(18, "SIT", me.pjitds_1);
+        #me.p_RDR.addMenuItem(18, "SIT", me.pjitds_1);
         me.p_RDR.addMenuItem(16, "HSD", me.p_HSD);
         me.p_RDR.addMenuItem(19, "TGP", nil);
 
         me.p_HSD.addMenuItem(17, "SMS", me.p_SMS);
         #me.p_HSD.addMenuItem(15, "VSD", me.p_VSD);
-        me.p_HSD.addMenuItem(18, "SIT", me.pjitds_1);
+        #me.p_HSD.addMenuItem(18, "SIT", me.pjitds_1);
         me.p_HSD.addMenuItem(10, "CRM", me.p_RDR);
         me.p_HSD.addMenuItem(19, "TGP", nil);
 
-        me.p_SMS.addMenuItem(18, "SIT", me.pjitds_1);
+        #me.p_SMS.addMenuItem(18, "SIT", me.pjitds_1);
         me.p_SMS.addMenuItem(10, "CRM", me.p_RDR);
         #me.p_SMS.addMenuItem(15, "VSD", me.p_VSD);
         me.p_SMS.addMenuItem(16, "HSD", me.p_HSD);
@@ -1810,10 +1810,10 @@ var MFD_Device =
 #        me.pjitds_1.addMenuItem(9, "M", me.p1_1);
         #me.pjitds_1.addMenuItem(0, "ARMT", me.p1_2);
         #me.pjitds_1.addMenuItem(15, "VSD", me.p_VSD);
-        me.pjitds_1.addMenuItem(10, "CRM", me.p_RDR);
-        me.pjitds_1.addMenuItem(16, "HSD", me.p_HSD);
-        me.pjitds_1.addMenuItem(17, "SMS", me.p_SMS);
-        me.pjitds_1.addMenuItem(19, "TGP", nil);
+        #me.pjitds_1.addMenuItem(10, "CRM", me.p_RDR);
+        #me.pjitds_1.addMenuItem(16, "HSD", me.p_HSD);
+        #me.pjitds_1.addMenuItem(17, "SMS", me.p_SMS);
+        #me.pjitds_1.addMenuItem(19, "TGP", nil);
 
         #me.p_VSD.addMenuItem(0, "ARMT", me.p1_2);
         #me.p_VSD.addMenuItem(18, "SIT", me.pjitds_1);
