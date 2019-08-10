@@ -627,7 +627,7 @@ var F16_HUD = {
                                                      if (hdp.gear_down)
                                                        obj.gd = " G";
                                                      obj.window2.setText(sprintf(" F %d%s",hdp.flap_pos_deg,obj.gd));
-                                                 } elsif (hdp.master_arm and hdp.fcs_available) {
+                                                 } elsif (hdp.master_arm) {
                                                      var submode = "";
                                                      if (hdp.CCRP_active) {
                                                         submode = "CCRP";
