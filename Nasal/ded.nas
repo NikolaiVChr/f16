@@ -187,10 +187,10 @@ var loop_ded = func {# one line is max 24 chars
       text[3] = sprintf("  TOTAL    %5dLBS      ",total);
       text[4] = sprintf("                        ");
     } elsif (page == pMAGV) {
-      var amount = getprop("instrumentation/gps/magnetic-bug-error-deg");
+      var amount = geo.normdeg180(getprop("orientation/heading-deg")-getprop("orientation/heading-magnetic-deg"));
       if (amount != nil) {
         var letter = "W";
-        if (amount <0) {
+        if (amount <0) {#no longer sure, this is correct..
           letter = "E";
           amount = math.abs(amount);
         }
