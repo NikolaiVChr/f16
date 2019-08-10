@@ -3749,6 +3749,16 @@ var AIM = {
 				me.sendout = 1;
 			}
 		}
+		var min_distance = geo.aircraft_position().direct_distance_to(explode_coord);
+		if (min_distance < me.reportDist) {
+			# hitting oneself :)
+			var cs = getprop("sim/multiplay/callsign");
+			cs = size(cs) < 8 ? cs : left(cs,7);
+			var phrase = sprintf("%s %s: %.1f meters from: %s", me.type,event, min_distance, cs);# if we mention ourself then we need to explicit add ourself as author.
+			me.printStats(phrase);
+			me.sendMessage(phrase);
+			me.sendout = 1;
+		}
 		return me.sendout;
 	},
 

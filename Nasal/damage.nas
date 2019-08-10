@@ -155,7 +155,7 @@ var incoming_listener = func {
     var author = last_vector[0];
     var callsign = getprop("sim/multiplay/callsign");
     callsign = size(callsign) < 8 ? callsign : left(callsign,7);
-    if (size(last_vector) > 1 and author != callsign) {
+    if (size(last_vector) > 1) {
       # not myself
       #print("not me");
       var m2000 = FALSE;
@@ -165,7 +165,7 @@ var incoming_listener = func {
       } elsif (find(" Maddog released", last_vector[1]) != -1) {
         m2000 = TRUE;
       }
-      if (contains(fireMsgs, last_vector[1]) or m2000 == TRUE) {
+      if (author != callsign and (contains(fireMsgs, last_vector[1]) or m2000 == TRUE)) {
         # air2air being fired
         if (size(last_vector) > 2 or m2000 == TRUE) {
           #print("Missile launch detected at"~last_vector[2]~" from "~author);
