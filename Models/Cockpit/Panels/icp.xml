@@ -380,6 +380,24 @@
         </hovered>
     </animation>
     <animation>
+        <type>pick</type>
+        <object-name>9</object-name><!-- 9 -->
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.counter();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-cm</tooltip-id>
+                <label>Countermeasures</label>
+            </binding>
+        </hovered>
+    </animation>
+    <animation>
         <type>select</type>
         <condition>
                 <less-than-equals>

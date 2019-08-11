@@ -70,9 +70,10 @@ var pBINGO= 6;
 var pMAGV = 7;
 var pLINK = 8;
 var pLASER= 9;
+var pCM   = 10;
 var pLIST = 100;#excluded from random
 
-var page = int(rand()*9.99);#random page at startup
+var page = int(rand()*10.99);#random page at startup
 var comm = 0;
 
 var text = ["","","","",""];
@@ -223,11 +224,18 @@ var loop_ded = func {# one line is max 24 chars
       text[2] = sprintf("  HACK       00:00:00   ");
       text[3] = sprintf("  DELTA TOS  00:00:00   ");
       text[4] = sprintf("                        ");
+    } elsif (page == pCM) {
+      var flares   = getprop("ai/submodels/submodel[0]/count");
+      text[0] = sprintf("      CNTM       %s    ",no);
+      text[1] = sprintf("  CHAFF     %3d",flares);
+      text[2] = sprintf("  FLARE     %3d",flares);
+      text[3] = sprintf("                        ");
+      text[4] = sprintf("                        ");
     } elsif (page == pLIST) {
       text[0] = sprintf("        LIST      %s     ",no);
       text[1] = sprintf(" 1ILS  2ALOW 3MAGV COM1 ");
       text[2] = sprintf(" 4STPT 5DLNK 6TIME COM2 ");
-      text[3] = sprintf(" 7BNGO 8LASR       IFF  ");
+      text[3] = sprintf(" 7BNGO 8LASR 9CNTM IFF  ");
       text[4] = sprintf("                   LIST ");
     }
     line1.setText(text[0]);
@@ -288,6 +296,10 @@ var time = func {
 
 var list = func {
   page = pLIST;
+}
+
+var counter = func {
+  page = pCM;
 }
 
 ## these methods taken from JA37:
