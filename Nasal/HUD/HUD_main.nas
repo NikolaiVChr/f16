@@ -2107,7 +2107,14 @@ append(obj.total, obj.speed_curr);
                     hdp.window6_txt = sprintf("A%d", hdp.approach_speed);
                 } elsif ((knob==0 or knob == 1) and getprop("instrumentation/tacan/in-range")) {
                     # show tacan distance and mag heading. (not authentic like this, saw a paper on putting Tacan in hud, but not sure if it was done for F16)
-                    hdp.window6_txt = sprintf("%.1fTCN%03d",getprop("instrumentation/tacan/indicated-distance-nm"),geo.normdeg(hdp.headingMag+getprop("instrumentation/tacan/bearing-relative-deg")));
+                    var tcnDist = getprop("instrumentation/tacan/indicated-distance-nm");
+                    if (tcnDist >= 10) {
+                        # tacan can under right conditions be 3 digits
+                        tcnDist = sprintf("%d", tcnDist);
+                    } else {
+                        tcnDist = sprintf("%.1f", tcnDist);
+                    }
+                    hdp.window6_txt = sprintf("%s TCN%03d",tcnDist,geo.normdeg(hdp.headingMag+getprop("instrumentation/tacan/bearing-relative-deg")));
                 } elsif ((knob==2 or knob == 3) and getprop("instrumentation/adf/in-range")) {
                     # show adf mag heading.
                     hdp.window6_txt = sprintf("ADF%03d",geo.normdeg(hdp.headingMag+getprop("instrumentation/adf/indicated-bearing-deg")));
