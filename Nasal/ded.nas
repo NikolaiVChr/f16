@@ -110,11 +110,17 @@ var loop_ded = func {# one line is max 24 chars
       text[4] = sprintf("      TOS  %s","VOID");
     } elsif (page == pTACAN) {
       var ilsOn  = (getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 0 or getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 3)?"ON ":"OFF";
-      var freq   = getprop("instrumentation/tacan/frequencies/selected-mhz");
+      #var freq   = getprop("instrumentation/tacan/frequencies/selected-mhz");
+      var freq   = getprop("instrumentation/nav[0]/frequencies/selected-mhz");
       var chan   = getprop("instrumentation/tacan/frequencies/selected-channel");
       var band   = getprop("instrumentation/tacan/frequencies/selected-channel[4]");
-      var course = getprop("instrumentation/tacan/in-range")?getprop("instrumentation/tacan/indicated-bearing-true-deg"):-1;
-      course = course==-1?"":sprintf("%d\xc2\xb0",course);
+      #var course = getprop("instrumentation/tacan/in-range")?getprop("instrumentation/tacan/indicated-bearing-true-deg"):-1;
+      var course = (getprop("instrumentation/nav[0]/in-range") and getprop("instrumentation/nav[0]/nav-loc"))?geo.normdeg(getprop("orientation/heading-deg")-getprop("orientation/heading-magnetic-deg")+getprop("instrumentation/nav[0]/heading-deg")):-1;
+      if (course == -1) {
+        course = "---.--";
+      } else {
+        course = sprintf("%06.2f\xc2\xb0",course);
+      }
       text[0] = sprintf("    TCN REC      ILS %s",ilsOn);
       text[1] = sprintf("                        ");
       text[2] = sprintf("               CMD STRG ");
