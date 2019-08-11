@@ -677,6 +677,19 @@ var FireControl = {
 			}
 		}
 	},
+	
+	getAllOfType: func (typ) {
+		me.typVec = [];
+		
+		foreach(pyl;me.pylons) {
+			foreach(me.pylweap ; pyl.getWeapons()) {
+				if (me.pylweap != nil and me.pylweap.type == typ) {
+					append(me.typVec, me.pylweap);
+				}
+			}
+		}
+		return me.typVec;
+	},
 };
 
 var debug = 0;

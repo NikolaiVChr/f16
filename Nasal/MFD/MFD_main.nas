@@ -518,8 +518,8 @@ var MFD_Device =
                     awg_9.range_control(-1);
                 } elsif (eventi == 17) {
                     me.ppp.selectPage(me.my.p_SMS);
-                #} elsif (eventi == 15) {
-                #    me.ppp.selectPage(me.my.p_VSD);
+                } elsif (eventi == 15) {
+                    me.ppp.selectPage(me.my.p_WPN);
                 #} elsif (eventi == 18) {
                 #    me.ppp.selectPage(me.my.pjitds_1);
                 } elsif (eventi == 16) {
@@ -751,12 +751,12 @@ var MFD_Device =
                 .setColor(1,1,1)
                 .setFontSize(20, 1.0);
         
-        svg.drop = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.65, -482*0.5-225)
-                .setText("CCRP")
-                .setAlignment("center-top")
-                .setColor(1,1,1)
-                .setFontSize(16, 1.0);        
+        #svg.drop = svg.p_SMS.createChild("text")
+        #        .setTranslation(276*0.795*0.65, -482*0.5-225)
+        #        .setText("CCRP")
+        #        .setAlignment("center-top")
+        #        .setColor(1,1,1)
+        #        .setFontSize(16, 1.0);        
         
         svg.p1f = svg.p_SMS.createChild("path")
            .moveTo(-276*0.795, -482*0.5+75)
@@ -918,8 +918,8 @@ var MFD_Device =
                         return;
                     }
                     pylons.fcs.selectPylon(4);
-                #} elsif (eventi == 15) {
-                #    me.ppp.selectPage(me.my.p_VSD);
+                } elsif (eventi == 15) {
+                    me.ppp.selectPage(me.my.p_WPN);
                 #} elsif (eventi == 18) {
                 #    me.ppp.selectPage(me.my.pjitds_1);
                 } elsif (eventi == 14) {
@@ -962,12 +962,12 @@ var MFD_Device =
             me.root.p8f.setVisible(sel==7);
             me.root.p9f.setVisible(sel==8);
 
-            var pT = "CCRP";
-            if (pylons.fcs != nil) {
-                var nm = pylons.fcs.getDropMode();
-                if (nm == 1) pT = "CCIP";
-            }
-            me.root.drop.setText(pT);
+            #var pT = "CCRP";
+            #if (pylons.fcs != nil) {
+            #    var nm = pylons.fcs.getDropMode();
+            #    if (nm == 1) pT = "CCIP";
+            #}
+            #me.root.drop.setText(pT);
 
             var pT = "--------";
             if (pylons.pylon1 != nil) {
@@ -1031,6 +1031,272 @@ var MFD_Device =
                 if (nm != nil) pT = nm;
             }
             me.root.p9.setText(pT);
+        };
+    },
+    
+    setupWPN: func (svg) {
+        svg.p_WPN = me.canvas.createGroup()
+                .setTranslation(276*0.795,482);#552,482 , 0.795 is for UV map
+
+        
+        
+        svg.drop = svg.p_WPN.createChild("text")
+                .setTranslation(276*0.795*-0.30, -482*0.5-225)
+                .setText("")
+                .setAlignment("center-top")
+                .setColor(1,1,1)
+                .setFontSize(16, 1.0);    
+                
+        svg.eegs = svg.p_WPN.createChild("text")
+                .setTranslation(276*0.795*0.325, -482*0.5-225)
+                .setText("")
+                .setAlignment("center-top")
+                .setColor(1,1,1)
+                .setFontSize(16, 1.0);       
+        
+        svg.weap = svg.p_WPN.createChild("text")
+                .setTranslation(276*0.795, -482*0.5-135)
+                .setText("")
+                .setAlignment("right-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+                
+        svg.ready = svg.p_WPN.createChild("text")
+                .setTranslation(276*0.795, -482*0.5+0)
+                .setText("")
+                .setAlignment("right-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+        
+        svg.cool = svg.p_WPN.createChild("text")
+                .setTranslation(276*0.795, -482*0.5+140)
+                .setText("")
+                .setAlignment("right-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
+                
+        svg.rangUpA = svg.p_WPN.createChild("path")
+                    .moveTo(-276*0.795,-482*0.5-105-27.5)
+                    .horiz(30)
+                    .lineTo(-276*0.795+15,-482*0.5-105-27.5-15)
+                    .lineTo(-276*0.795,-482*0.5-105-27.5)
+                    .setStrokeLineWidth(2)
+                    .hide()
+                    .setColor(1,1,1);
+        svg.rangA = svg.p_WPN.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5-105)
+                .setAlignment("left-center")
+                .setColor(1,1,1)
+                .hide()
+                .setFontSize(20, 1.0);
+        svg.rangDownA = svg.p_WPN.createChild("path")
+                    .moveTo(-276*0.795,-482*0.5-105+27.5)
+                    .horiz(30)
+                    .lineTo(-276*0.795+15,-482*0.5-105+27.5+15)
+                    .lineTo(-276*0.795,-482*0.5-105+27.5)
+                    .setStrokeLineWidth(2)
+                    .hide()
+                    .setColor(1,1,1);
+                
+        svg.coolFrame = svg.p_WPN.createChild("path")
+           .moveTo(276*0.795, -482*0.5+140+12)
+           .vert(-24)
+           .horiz(-60)
+           .vert(24)
+           .horiz(60)
+           .setColor(1,1,1)
+           .setStrokeLineWidth(1)
+           .hide();
+    },
+    
+    addWPN: func {
+        var svg = {getElementById: func (id) {return me[id]},};
+        me.setupWPN(svg);
+        me.PFD.addWPNPage = func(svg, title, layer_id) {   
+            var np = PFD_Page.new(svg, title, layer_id, me);
+            append(me.pages, np);
+            me.page_index[layer_id] = np;
+            np.setVisible(0);
+            return np;
+        };
+        me.p_WPN = me.PFD.addWPNPage(svg, "WPN", "p_WPN");
+        me.p_WPN.root = svg;
+        me.p_WPN.wdt = 552*0.795;
+        me.p_WPN.fwd = 0;
+        me.p_WPN.plc = 0;
+        me.p_WPN.ppp = me.PFD;
+        me.p_WPN.my = me;
+        me.p_WPN.notifyButton = func (eventi) {
+            if (eventi != nil) {
+                if (eventi == 10) {
+                    me.ppp.selectPage(me.my.p_RDR);
+                } elsif (eventi == 5) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    pylons.fcs.cycleLoadedWeapon();
+                } elsif (eventi == 0) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    me.at = 1;
+                } elsif (eventi == 1) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    me.at = -1;
+                } elsif (eventi == 9) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }                    
+                    if (me.wpnType=="heat") {
+                        me.cooling = !me.cooling;
+                        foreach(var snake;pylons.fcs.getAllOfType("AIM-9")) {
+                            snake.setCooling(me.cooling);
+                        }                        
+                    }                    
+                } elsif (eventi == 17) {
+                    me.ppp.selectPage(me.my.p_SMS);
+                #} elsif (eventi == 18) {
+                #    me.ppp.selectPage(me.my.pjitds_1);
+                } elsif (eventi == 11) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    if (me.wpnType == "fall") {
+                        pylons.fcs.setDropMode(!pylons.fcs.getDropMode());
+                    }
+                } elsif (eventi == 16) {
+                    me.ppp.selectPage(me.my.p_HSD);
+                }
+# Menu Id's
+#  CRM
+#   10  11  12  13  14
+# 0                    5            
+# 1                    6            
+# 2                    7            
+# 3                    8            
+# 4                    9            
+#   15  16  17  18  19
+#  VSD HSD WPN SIT
+            }
+        };
+        me.p_WPN.update = func (noti) {
+            if (noti.FrameCount != 3)
+                return;
+            if (getprop("sim/variant-id") == 0) {
+                return;
+            }
+            if (me["cooling"]== nil) {
+                me.cooling = 0;
+            }
+            if (me["at"]== nil) {
+                me.at = 0;
+            }
+            me.wpn = pylons.fcs.getSelectedWeapon();
+            me.pylon = pylons.fcs.getSelectedPylon();
+            
+            me.wpnType = "";
+            me.cool = "";
+            me.eegs = "";
+            me.ready = "";
+            me.coolFrame = 0;
+            me.downA = 0;
+            me.upA = 0;
+            me.armtimer = "";
+            var pT = "";
+            if (me.wpn != nil and me.pylon != nil) {
+                if (me.wpn.type == "MK-82" or me.wpn.type == "MK-83" or me.wpn.type == "MK-84" or me.wpn.type == "GBU-12" or me.wpn.type == "GBU-24" or me.wpn.type == "GBU-54" or me.wpn.type == "CBU-87" or me.wpn.type == "GBU-31" or me.wpn.type == "B61-7" or me.wpn.type == "B61-12") {
+                    me.wpnType ="fall";
+                    var nm = pylons.fcs.getDropMode();
+                    if (nm == 1) pT = "CCIP";
+                    if (nm == 0) pT = "CCRP";
+                    me.wpn.arming_time += me.at;
+                    if (me.wpn.arming_time < 0) {
+                        me.wpn.arming_time = 0;
+                    } elsif (me.wpn.arming_time > 20) {
+                        me.wpn.arming_time = 20;
+                    }
+                    if (me.at != 0) {
+                        foreach(var bomb;pylons.fcs.getAllOfType(me.wpn.type)) {
+                            bomb.arming_time = me.wpn.arming_time;
+                        }
+                    }
+                    me.armtime = me.wpn.arming_time;
+                    me.downA = me.armtime>0;
+                    me.upA = me.armtime<20;
+                    me.armtimer = ""~me.armtime~" SECS ARM TIME";
+                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
+                        me.ready = "NO PWR";
+                    } elsif (me.wpn.status <= armament.MISSILE_STARTING){
+                        me.ready = "INIT";
+                    } else {
+                        me.ready = "READY";
+                    }
+                } elsif (me.wpn.type == "AGM-65" or me.wpn.type == "AGM-88" or me.wpn.type == "AGM-84" or me.wpn.type == "AGM-119" or me.wpn.type == "AGM-154A" or me.wpn.type == "AGM-158") {
+                    me.wpnType ="ground";
+                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
+                        me.ready = "NO PWR";
+                    } elsif (me.wpn.status <= armament.MISSILE_STARTING){
+                        me.ready = "INIT";
+                    } else {
+                        me.ready = "READY";
+                    }
+                } elsif (me.wpn.type == "AIM-9") {
+                    me.wpnType ="heat";
+                    me.cool = me.wpn.getWarm()==0?"COOL":"WARM";
+                    me.coolFrame = me.wpn.isCooling()==1?1:0;                    
+                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
+                        me.ready = "NO PWR";
+                    } elsif (me.wpn.status <= armament.MISSILE_STARTING){
+                        me.ready = "INIT";
+                    } else {
+                        me.ready = "READY";
+                    }
+                } elsif (me.wpn.type == "AIM-120" or me.wpn.type == "AIM-7") {
+                    me.wpnType ="air";
+                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
+                        me.ready = "NO PWR";
+                    } elsif (me.wpn.status <= armament.MISSILE_STARTING){
+                        me.ready = "INIT";
+                    } else {
+                        me.ready = "READY";
+                    }
+                } elsif (me.wpn.type == "20mm Cannon") {
+                    me.wpnType ="gun";
+                    me.eegs = "EEGS";
+                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
+                        me.ready = "NO PWR";
+                    } else {
+                        me.ready = "READY";
+                    }
+                } else {
+                    print(me.wpn.type~" not supported in WPN page.");
+                    me.wpnType ="void";
+                }
+                me.myammo = pylons.fcs.getAmmo();
+                if (me.myammo==1 or me.wpn.type == "20mm Cannon") {
+                    me.myammo = "";
+                } else {
+                    me.myammo = ""~me.myammo;
+                }
+                me.root.weap.setText(me.myammo~me.wpn.typeShort);
+                if (!getprop("controls/armament/master-arm")) {
+                    me.ready = "PWR OFF";
+                }
+            } else {
+                me.root.weap.setText("NONE");
+            }
+            me.root.drop.setText(pT);  
+            me.root.cool.setText(me.cool);
+            me.root.eegs.setText(me.eegs);
+            me.root.ready.setText(me.ready);
+            me.root.coolFrame.setVisible(me.coolFrame);
+            me.root.rangDownA.setVisible(me.downA);
+            me.root.rangUpA.setVisible(me.upA);
+            me.root.rangA.setText(me.armtimer);
+            me.root.rangA.setVisible(me.upA or me.downA);
+            me.at = 0;
         };
     },
 
@@ -1302,8 +1568,8 @@ var MFD_Device =
                     }
                 } elsif (eventi == 17) {
                     me.ppp.selectPage(me.my.p_SMS);
-                #} elsif (eventi == 15) {
-                #    me.ppp.selectPage(me.my.p_VSD);
+                } elsif (eventi == 15) {
+                    me.ppp.selectPage(me.my.p_WPN);
                 #} elsif (eventi == 18) {
                 #    me.ppp.selectPage(me.my.pjitds_1);
                 } elsif (eventi == 10) {
@@ -1576,6 +1842,7 @@ var MFD_Device =
         me.addRadar();
         me.addSMS();
         me.addHSD();
+        me.addWPN();
         me.p1_1 = me.PFD.addPage("Aircraft Menu", "p1_1");
 
         me.p1_1.update = func(notification)
@@ -1767,20 +2034,25 @@ var MFD_Device =
 #        me.p1_1.addMenuItem(12, "HSD", me.p_HSD);
 
         me.p_RDR.addMenuItem(17, "SMS", me.p_SMS);
-        #me.p_RDR.addMenuItem(15, "VSD", me.p_VSD);
+        me.p_RDR.addMenuItem(15, "WPN", me.p_WPN);
         #me.p_RDR.addMenuItem(18, "SIT", me.pjitds_1);
         me.p_RDR.addMenuItem(16, "HSD", me.p_HSD);
         me.p_RDR.addMenuItem(19, "TGP", nil);
 
         me.p_HSD.addMenuItem(17, "SMS", me.p_SMS);
-        #me.p_HSD.addMenuItem(15, "VSD", me.p_VSD);
+        me.p_HSD.addMenuItem(15, "WPN", me.p_WPN);
         #me.p_HSD.addMenuItem(18, "SIT", me.pjitds_1);
         me.p_HSD.addMenuItem(10, "CRM", me.p_RDR);
         me.p_HSD.addMenuItem(19, "TGP", nil);
+        
+        me.p_WPN.addMenuItem(17, "SMS", me.p_SMS);
+        me.p_WPN.addMenuItem(10, "CRM", me.p_RDR);
+        me.p_WPN.addMenuItem(19, "TGP", nil);
+        me.p_WPN.addMenuItem(16, "HSD", me.p_HSD);
 
         #me.p_SMS.addMenuItem(18, "SIT", me.pjitds_1);
         me.p_SMS.addMenuItem(10, "CRM", me.p_RDR);
-        #me.p_SMS.addMenuItem(15, "VSD", me.p_VSD);
+        me.p_SMS.addMenuItem(15, "WPN", me.p_WPN);
         me.p_SMS.addMenuItem(16, "HSD", me.p_HSD);
         me.p_SMS.addMenuItem(19, "TGP", nil);
 #        me.p_SMS.addMenuItem(16, "TIM", me.p1_1);
