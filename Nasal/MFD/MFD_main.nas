@@ -1237,7 +1237,7 @@ var MFD_Device =
                     me.armtimer = sprintf("AD %.2fSEC",me.armtime);#arming delay
                     me.cool = "SGL";#as opposed to PAIR
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "NO PWR";
+                        me.ready = "FAIL";
                     } elsif (me.wpn.status <= armament.MISSILE_STARTING){
                         me.ready = "INIT";
                     } else {
@@ -1246,7 +1246,7 @@ var MFD_Device =
                 } elsif (me.wpn.type == "AGM-65" or me.wpn.type == "AGM-88" or me.wpn.type == "AGM-84" or me.wpn.type == "AGM-119" or me.wpn.type == "AGM-154A" or me.wpn.type == "AGM-158") {
                     me.wpnType ="ground";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "NO PWR";
+                        me.ready = "FAIL";
                     } elsif (me.wpn.status <= armament.MISSILE_STARTING){
                         me.ready = "INIT";
                     } else {
@@ -1258,7 +1258,7 @@ var MFD_Device =
                     me.coolFrame = me.wpn.isCooling()==1?1:0;                    
                     pT = "SLAV";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "NO PWR";
+                        me.ready = "FAIL";
                     } elsif (me.wpn.status <= armament.MISSILE_STARTING){
                         me.ready = "INIT";
                     } else {
@@ -1268,7 +1268,7 @@ var MFD_Device =
                     me.wpnType ="air";
                     pT = "SLAV";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "NO PWR";
+                        me.ready = "FAIL";
                     } elsif (me.wpn.status <= armament.MISSILE_STARTING){
                         me.ready = "INIT";
                     } else {
@@ -1278,7 +1278,7 @@ var MFD_Device =
                     me.wpnType ="gun";
                     me.eegs = "EEGS";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "NO PWR";
+                        me.ready = "FAIL";
                     } else {
                         me.ready = "READY";
                     }
