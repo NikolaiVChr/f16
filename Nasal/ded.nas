@@ -71,9 +71,10 @@ var pMAGV = 7;
 var pLINK = 8;
 var pLASER= 9;
 var pCM   = 10;
+var pCRUS = 11;
 var pLIST = 100;#excluded from random
 
-var page = int(rand()*10.99);#random page at startup
+var page = int(rand()*11.99);#random page at startup
 var comm = 0;
 
 var text = ["","","","",""];
@@ -149,6 +150,38 @@ var loop_ded = func {# one line is max 24 chars
       text[2] = sprintf("      LNG  %s",lon);
       text[3] = sprintf("     ELEV  % 5dFT",alt);
       text[4] = sprintf("      TOS  %s",TOS);
+    } elsif (page == pCRUS) {
+      var fuel   = "";
+      var fp = flightplan();
+      var maxS = "";
+      if (fp != nil) {
+        var max = fp.getPlanSize();
+        if (max > 0) {
+          maxS =""~max;
+          var ete    = getprop("autopilot/route-manager/ete");
+          if (ete != nil and ete > 0) {
+            var pph = getprop("engines/engine[0]/fuel-flow_pph");
+            if (pph == nil) pph = 0;
+            fuel = sprintf("% 6dLBS",pph*(ete/3600));
+            if (size(fuel)>9) {
+              fuel = "999999LBS";
+            }
+          }
+        }
+      }
+      var windkts = getprop("environment/wind-speed-kt");
+      var winddir = getprop("environment/wind-from-heading-deg");
+      if (windkts == nil or winddir == nil) {
+        windkts = -1;
+        winddir = -1;
+      }
+      windkts = sprintf("% 3dKTS",getprop("environment/wind-speed-kt"));
+      winddir = sprintf("%03d\xc2\xb0",getprop("environment/wind-from-heading-deg"));
+      text[0] = sprintf("     CRUS  RNG  ",no);
+      text[1] = sprintf("     STPT  %s  ",maxS);
+      text[2] = sprintf("     FUEL %s",fuel);#fuel used to get to last steerpoint at current fuel consumption.
+      text[3] = sprintf("                        ");
+      text[4] = sprintf("     WIND  %s %s",winddir,windkts);
     } elsif (page == pTACAN) {
       var ilsOn  = (getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 0 or getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 3)?"ON ":"OFF";
       #var freq   = getprop("instrumentation/tacan/frequencies/selected-mhz");
@@ -188,7 +221,7 @@ var loop_ded = func {# one line is max 24 chars
       text[1] = sprintf("                        ");
       text[2] = sprintf("PILOT   %s",sign);
       text[3] = sprintf("ID      %s",type);
-      text[4] = sprintf("Link16  %s",friend);
+      text[4] = sprintf("LINK16  %s",friend);
     } elsif (page == pLINK) {
       text[0] = sprintf(" XMT 40 INTRAFLIGHT  %s ",no);
       
@@ -277,7 +310,7 @@ var loop_ded = func {# one line is max 24 chars
       text[1] = sprintf(" 1ILS  2ALOW 3MAGV COM1 ");
       text[2] = sprintf(" 4STPT 5DLNK 6TIME COM2 ");
       text[3] = sprintf(" 7BNGO 8LASR 9CNTM IFF  ");
-      text[4] = sprintf("                   LIST ");
+      text[4] = sprintf("             0CRUS LIST ");
     }
     line1.setText(text[0]);
     line2.setText(text[1]);
@@ -341,6 +374,10 @@ var list = func {
 
 var counter = func {
   page = pCM;
+}
+
+var cruise = func {
+  page = pCRUS;
 }
 
 ## these methods taken from JA37:
