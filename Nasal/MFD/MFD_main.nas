@@ -1163,7 +1163,7 @@ var MFD_Device =
                         return;
                     }                    
                     if (me.wpnType=="heat") {
-                        me.cooling = !me.cooling;
+                        me.cooling = !pylons.fcs.getSelectedWeapon().isCooling();
                         foreach(var snake;pylons.fcs.getAllOfType("AIM-9")) {
                             snake.setCooling(me.cooling);
                         }                        
@@ -1200,9 +1200,7 @@ var MFD_Device =
             if (getprop("sim/variant-id") == 0) {
                 return;
             }
-            if (me["cooling"]== nil) {
-                me.cooling = 0;
-            }
+            
             if (me["at"]== nil) {
                 me.at = 0;
             }
@@ -1317,7 +1315,7 @@ var MFD_Device =
                 }
                 me.root.weap.setText(me.myammo~me.wpn.typeShort);
                 if (!getprop("controls/armament/master-arm")) {
-                    me.ready = "PWR OFF";
+                    me.ready = "";#TODO: ?
                 }
             } else {
                 me.root.weap.setText("");
