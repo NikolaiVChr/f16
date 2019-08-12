@@ -270,7 +270,13 @@ var F16_HUD = {
                                               hdp.CCIP_active = 0;
                                           }
                                           hdp.CCRP_active = obj.CCRP(hdp);
-                                          obj.CCIP(hdp);
+                                          var lw = obj.CCIP(hdp);
+                                          if (lw==-1) {
+                                            obj.cciplow.setTranslation(hdp.VV_x+15,hdp.VV_y);
+                                            obj.cciplow.show();
+                                          } else {
+                                            obj.cciplow.hide();
+                                          }
                                       }),
             props.UpdateManager.FromHashList(["texUp","route_manager_active", "wp_bearing_deg", "heading","VV_x","VV_y"], 0.01, func(hdp)
                                              {
@@ -1109,14 +1115,14 @@ append(obj.total, obj.speed_curr);
             .arcSmallCW(2*mr,2*mr, 0, -2*mr*2, 0)                   
             .setStrokeLineWidth(1)
             .setColor(0,1,0);                    
-        obj.pipperCross = obj.centerOrigin.createChild("path")
-            .moveTo(-obj.pipperRadius,0)
-            .horiz(obj.pipperRadius*2)
-            .moveTo(0,-obj.pipperRadius)
-            .vert(obj.pipperRadius*2)
-            .setRotation(45*D2R)
-            .setStrokeLineWidth(1)
-            .setColor(0,1,0); 
+        #obj.pipperCross = obj.centerOrigin.createChild("path")
+        #    .moveTo(-obj.pipperRadius,0)
+        #    .horiz(obj.pipperRadius*2)
+        #    .moveTo(0,-obj.pipperRadius)
+        #    .vert(obj.pipperRadius*2)
+        #    .setRotation(45*D2R)
+        #    .setStrokeLineWidth(1)
+        #    .setColor(0,1,0); 
         append(obj.total, obj.pipper);
         append(obj.total, obj.pipperLine);
         var boxRadius = 10;
@@ -1228,6 +1234,16 @@ append(obj.total, obj.speed_curr);
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
         append(obj.total, obj.bracket);
+        
+        obj.cciplow = obj.centerOrigin.createChild("text")
+                .setText("LOW")
+                .setTranslation(0,0)
+                .setAlignment("left-center")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .hide()
+                .setFontSize(11, 1.4);
+        append(obj.total, obj.cciplow);
         
         obj.VV = obj.centerOrigin.createChild("path")
             .moveTo(-5*mr,0)
@@ -1632,7 +1648,7 @@ append(obj.total, obj.speed_curr);
                     if (me.ccipPos == nil) {
                         me.pipper.setVisible(me.showPipper);
                         me.pipperLine.setVisible(me.showPipper);
-                        return;
+                        return 0;
                     }
                     me.showme = TRUE;
                     
@@ -1671,7 +1687,7 @@ append(obj.total, obj.speed_curr);
 
                         if(me.showme == TRUE) {
                             me.pipperLine.removeAllChildren();
-                            me.bPos = HudMath.getBorePos();
+                            me.bPos = [hdp.VV_x,hdp.VV_y]; #HudMath.getBorePos(); 
                             me.llx  = me.pos_x-me.bPos[0];
                             me.lly  = me.pos_y-me.bPos[1];
                             me.ll = math.sqrt(me.llx*me.llx+me.lly*me.lly);
@@ -1688,10 +1704,10 @@ append(obj.total, obj.speed_curr);
                                     .setColor(me.color)
                                     .update();
                                 me.pipper.setTranslation(me.pos_x, me.pos_y);
-                                me.pipperCross.setTranslation(me.pos_x, me.pos_y);
+                                #me.pipperCross.setTranslation(me.pos_x, me.pos_y);
                                 me.showPipperCross = !me.ccipPos[1];
                                 me.pipper.update();
-                                me.pipperCross.update();
+                                #me.pipperCross.update();
                                 me.showPipper = 1;
                             }
                         }
@@ -1700,8 +1716,9 @@ append(obj.total, obj.speed_curr);
             }
         }
         me.pipper.setVisible(me.showPipper);
-        me.pipperCross.setVisible(me.showPipperCross);
+        #me.pipperCross.setVisible(0);#me.showPipperCross);
         me.pipperLine.setVisible(me.showPipper);
+        return me.showPipperCross?-1:1;
     },
     
     displayEEGS: func() {
@@ -1766,7 +1783,7 @@ append(obj.total, obj.speed_curr);
                     me.eegsLeftY[k]  = me.eegsMe.shellPosY[k];
                 }
                 me.eegsGroup.removeAllChildren();
-                for (var i = 0; i < me.funnelParts-1; i+=1) {
+                for (var i = 1; i < me.funnelParts-1; i+=1) {#changed to i=1 as we dont need funnel to start so close
                     me.eegsGroup.createChild("path")
                         .moveTo(me.eegsRightX[i], me.eegsRightY[i])
                         .lineTo(me.eegsRightX[i+1], me.eegsRightY[i+1])
