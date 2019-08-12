@@ -1225,7 +1225,8 @@ var MFD_Device =
                     me.armtime = me.wpn.arming_time;
                     me.downA = me.armtime>0;
                     me.upA = me.armtime<20;
-                    me.armtimer = ""~me.armtime~" ARMING DELAY";
+                    me.armtimer = "AD  "~me.armtime;#arming delay
+                    me.cool = "SGL";#as opposed to PAIR
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "NO PWR";
                     } elsif (me.wpn.status <= armament.MISSILE_STARTING){
@@ -1291,7 +1292,7 @@ var MFD_Device =
                     me.ready = "PWR OFF";
                 }
             } else {
-                me.root.weap.setText("NONE");
+                me.root.weap.setText("");
             }
             me.root.drop.setText(pT);  
             me.root.cool.setText(me.cool);
