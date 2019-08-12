@@ -1213,13 +1213,14 @@ var MFD_Device =
             me.downA = 0;
             me.upA = 0;
             me.armtimer = "";
-            var pT = "";
+            me.drop = "";
             if (me.wpn != nil and me.pylon != nil) {
                 if (me.wpn.type == "MK-82" or me.wpn.type == "MK-83" or me.wpn.type == "MK-84" or me.wpn.type == "GBU-12" or me.wpn.type == "GBU-24" or me.wpn.type == "GBU-54" or me.wpn.type == "CBU-87" or me.wpn.type == "GBU-31" or me.wpn.type == "B61-7" or me.wpn.type == "B61-12") {
                     me.wpnType ="fall";
                     var nm = pylons.fcs.getDropMode();
-                    if (nm == 1) pT = "CCIP";
-                    if (nm == 0) pT = "CCRP";
+                    if (nm == 1) me.drop = "CCIP";
+                    if (nm == 0) me.drop = "CCRP";
+                    me.eegs = "A-G";
                     me.wpn.arming_time += me.at;
                     if (me.wpn.arming_time < 0) {
                         me.wpn.arming_time = 0;
@@ -1243,8 +1244,20 @@ var MFD_Device =
                     } else {
                         me.ready = "READY";
                     }
-                } elsif (me.wpn.type == "AGM-65" or me.wpn.type == "AGM-88" or me.wpn.type == "AGM-84" or me.wpn.type == "AGM-119" or me.wpn.type == "AGM-154A" or me.wpn.type == "AGM-158") {
+                } elsif (me.wpn.type == "AGM-65" or me.wpn.type == "AGM-84" or me.wpn.type == "AGM-119" or me.wpn.type == "AGM-154A" or me.wpn.type == "AGM-158") {
                     me.wpnType ="ground";
+                    me.eegs = "A-G";
+                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
+                        me.ready = "FAIL";
+                    } elsif (me.wpn.status <= armament.MISSILE_STARTING){
+                        me.ready = "INIT";
+                    } else {
+                        me.ready = "READY";
+                    }
+                } elsif (me.wpn.type == "AGM-88") {
+                    me.wpnType ="anti-rad";
+                    me.eegs = "A-G";
+                    me.drop = getprop("f16/stores/harm-mounted")?"HAD":"HAS";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "FAIL";
                     } elsif (me.wpn.status <= armament.MISSILE_STARTING){
@@ -1255,8 +1268,9 @@ var MFD_Device =
                 } elsif (me.wpn.type == "AIM-9") {
                     me.wpnType ="heat";
                     me.cool = me.wpn.getWarm()==0?"COOL":"WARM";
+                    me.eegs = "A-A";
                     me.coolFrame = me.wpn.isCooling()==1?1:0;                    
-                    pT = "SLAV";
+                    me.drop = "SLAV";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "FAIL";
                     } elsif (me.wpn.status <= armament.MISSILE_STARTING){
@@ -1266,7 +1280,8 @@ var MFD_Device =
                     }
                 } elsif (me.wpn.type == "AIM-120" or me.wpn.type == "AIM-7") {
                     me.wpnType ="air";
-                    pT = "SLAV";
+                    me.drop = "SLAV";
+                    me.eegs = "A-A";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "FAIL";
                     } elsif (me.wpn.status <= armament.MISSILE_STARTING){
@@ -1303,7 +1318,7 @@ var MFD_Device =
             } else {
                 me.root.weap.setText("");
             }
-            me.root.drop.setText(pT);  
+            me.root.drop.setText(me.drop);  
             me.root.cool.setText(me.cool);
             me.root.eegs.setText(me.eegs);
             me.root.ready.setText(me.ready);
