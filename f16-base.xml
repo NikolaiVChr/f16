@@ -1638,7 +1638,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <cool-duration type="int">3600</cool-duration>
                 <warm-detect-range-nm type="double">6.5</warm-detect-range-nm>
                 <detect-range-nm type="double">9.7</detect-range-nm>
-                <ready-time type="double">1.5</ready-time>
+                <ready-time type="double">0.5</ready-time>
             </aim-9>
             <aim-120>
                 <short-name type="string">A120B</short-name>
@@ -1673,7 +1673,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <DLZ type="bool">true</DLZ>
                 <DLZ-optimal-alt-feet type="double">30000</DLZ-optimal-alt-feet>
                 <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
-                <ready-time type="double">3.5</ready-time>
+                <ready-time type="double">1.5</ready-time>
                 <reaquire type="bool">true</reaquire>
                 <lock-on-after-launch type="bool">true</lock-on-after-launch>
                 <auto-switch-target-allowed type="bool">false</auto-switch-target-allowed>
@@ -1724,6 +1724,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <reaquire type="bool">true</reaquire>
                 <lock-on-after-launch type="bool">false</lock-on-after-launch>
                 <auto-switch-target-allowed type="bool">false</auto-switch-target-allowed>
+                <ready-time type="double">1.5</ready-time>
             </aim-7>
             <mk-82> 
                 <short-name type="string">B82</short-name>
