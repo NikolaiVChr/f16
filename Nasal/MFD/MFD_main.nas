@@ -491,6 +491,12 @@ var MFD_Device =
            .setCenter(0, -482*0.5)
            .setColor(0.5,0.5,1)
            .setStrokeLineWidth(1);
+        svg.silent = svg.p_RDR.createChild("text")
+           .setTranslation(0, -482*0.25)
+           .setAlignment("center-center")
+           .setText("SILENT")
+           .setFontSize(15, 1.0)
+           .setColor(1.0,1.0,0.5);
     },
 
     addRadar: func {
@@ -571,6 +577,9 @@ var MFD_Device =
                 }
                 me.plc = plc;
                 me.root.ant_bottom.setTranslation(me.wdt*0.5-(me.az/120)*me.wdt*0.5+(me.az/120)*me.wdt*math.abs(me.fwd-me.plc),0);
+                me.root.silent.hide();
+            } else {
+                me.root.silent.show();
             }
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
@@ -1225,7 +1234,7 @@ var MFD_Device =
                     me.armtime = me.wpn.arming_time;
                     me.downA = me.armtime>0;
                     me.upA = me.armtime<20;
-                    me.armtimer = "AD  "~me.armtime;#arming delay
+                    me.armtimer = sprintf("AD %.2fSEC",me.armtime);#arming delay
                     me.cool = "SGL";#as opposed to PAIR
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "NO PWR";
