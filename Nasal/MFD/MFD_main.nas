@@ -1148,12 +1148,16 @@ var MFD_Device =
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    me.at = 1;
+                    if (me.wpnType == "fall") {
+                        me.at = 1;
+                    }
                 } elsif (eventi == 1) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    me.at = -1;
+                    if (me.wpnType == "fall") {
+                        me.at = -1;
+                    }
                 } elsif (eventi == 9) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
