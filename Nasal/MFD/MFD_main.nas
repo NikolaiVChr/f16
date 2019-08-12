@@ -1225,7 +1225,7 @@ var MFD_Device =
                     me.armtime = me.wpn.arming_time;
                     me.downA = me.armtime>0;
                     me.upA = me.armtime<20;
-                    me.armtimer = ""~me.armtime~" SECS ARM TIME";
+                    me.armtimer = ""~me.armtime~" ARMING DELAY";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "NO PWR";
                     } elsif (me.wpn.status <= armament.MISSILE_STARTING){
@@ -1246,6 +1246,7 @@ var MFD_Device =
                     me.wpnType ="heat";
                     me.cool = me.wpn.getWarm()==0?"COOL":"WARM";
                     me.coolFrame = me.wpn.isCooling()==1?1:0;                    
+                    pT = "SLAV";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "NO PWR";
                     } elsif (me.wpn.status <= armament.MISSILE_STARTING){
@@ -1255,6 +1256,7 @@ var MFD_Device =
                     }
                 } elsif (me.wpn.type == "AIM-120" or me.wpn.type == "AIM-7") {
                     me.wpnType ="air";
+                    pT = "SLAV";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "NO PWR";
                     } elsif (me.wpn.status <= armament.MISSILE_STARTING){
@@ -1275,7 +1277,11 @@ var MFD_Device =
                     me.wpnType ="void";
                 }
                 me.myammo = pylons.fcs.getAmmo();
-                if (me.myammo==1 or me.wpn.type == "20mm Cannon") {
+                if (me.wpn.type == "20mm Cannon") {
+                    if (me.myammo ==0) me.myammo = "0";
+                    elsif (me.myammo <10) me.myammo = "1";
+                    else me.myammo = ""~int(me.myammo*0.1);
+                } elsif (me.myammo==1) {
                     me.myammo = "";
                 } else {
                     me.myammo = ""~me.myammo;
