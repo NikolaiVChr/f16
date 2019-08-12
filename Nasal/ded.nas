@@ -89,7 +89,7 @@ var loop_ded = func {# one line is max 24 chars
     }
     if (page == pSTPT) {
       var fp = flightplan();
-      
+      var TOS = "--:--:--";
       var lat = "";
       var lon = "";
       var alt = -1;
@@ -102,13 +102,53 @@ var loop_ded = func {# one line is max 24 chars
           if (alt == nil) {
             alt = -1;
           }
+          var hour   = getprop("sim/time/utc/hour"); 
+          var minute = getprop("sim/time/utc/minute");
+          var second = getprop("sim/time/utc/second");
+          var eta    = getprop("autopilot/route-manager/wp/eta");
+          if (eta == nil or getprop("autopilot/route-manager/wp/eta-seconds")>3600*24) {
+            #
+          } elsif (getprop("autopilot/route-manager/wp/eta-seconds")>3600) {
+            eta = split(":",eta);
+            minute += num(eta[1]);
+            var addOver = 0;
+            if (minute > 59) {
+              addOver = 1;
+              minute -= 60;
+            }
+            hour += num(eta[0])+addOver;
+            while (hour > 23) {
+              hour -= 24;
+            }
+            TOS = sprintf("%02d:%02d:%02d",hour,minute,second);
+          } else {
+            eta = split(":",eta);
+            second += num(eta[1]);
+            var addOver = 0;
+            if (second > 59) {
+              addOver = 1;
+              second -= 60;
+            }
+            minute += num(eta[0])+addOver;
+            addOver = 0;
+            if (minute > 59) {
+              addOver = 1;
+              minute -= 60;
+            }
+            hour += addOver;
+            while (hour > 23) {
+              hour -= 24;
+            }
+            TOS = sprintf("%02d:%02d:%02d",hour,minute,second);   
+          }          
         }
       }
+      
       text[0] = sprintf("         STPT %s    AUTO",no);
       text[1] = sprintf("      LAT  %s",lat);
       text[2] = sprintf("      LNG  %s",lon);
-      text[3] = sprintf("     ELEV  %5dFT",alt);
-      text[4] = sprintf("      TOS  %s","VOID");
+      text[3] = sprintf("     ELEV  % 5dFT",alt);
+      text[4] = sprintf("      TOS  %s",TOS);
     } elsif (page == pTACAN) {
       var ilsOn  = (getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 0 or getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 3)?"ON ":"OFF";
       #var freq   = getprop("instrumentation/tacan/frequencies/selected-mhz");
