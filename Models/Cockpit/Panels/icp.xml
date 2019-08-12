@@ -237,7 +237,7 @@
     </animation>
     <animation>
         <type>pick</type>
-        <object-name>5</object-name><!-- 5 -->
+        <object-name>7</object-name><!-- 7 -->
         <action>
             <button>0</button>
             <binding>
@@ -327,7 +327,7 @@
     </animation>
     <animation>
         <type>pick</type>
-        <object-name>7</object-name><!-- 7 -->
+        <object-name>0</object-name><!-- 0 -->
         <action>
             <button>0</button>
             <binding>
@@ -399,7 +399,7 @@
     </animation>
     <animation>
         <type>pick</type>
-        <object-name>0</object-name><!-- 0 -->
+        <object-name>5</object-name><!-- 5 -->
         <action>
             <button>0</button>
             <binding>
