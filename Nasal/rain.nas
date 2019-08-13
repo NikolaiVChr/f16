@@ -37,3 +37,5 @@ var rtimer = maketimer(1.0, func {
    }
 );
 rtimer.start();
+
+aircraft.tyresmoke_system.new(0, 1, 2);

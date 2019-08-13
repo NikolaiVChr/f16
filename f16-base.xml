@@ -1001,7 +1001,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 </binding>
                 <binding>
                     <command>nasal</command>
-                    <script>screen.log.write("MPO "~(getprop("fdm/jsbsim/fcs/fbw-override")==1?"ON":"OFF"), 0.5, 0.5, 1);</script>
+                    <script>screen.log.write("Manual Pitch Override "~(getprop("fdm/jsbsim/fcs/fbw-override")==1?"ON":"OFF"), 0.5, 0.5, 1);</script>
                 </binding>
             </key>
             <key n="102">
@@ -1102,10 +1102,10 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <key n="25">
                 <name>ctrl-y</name>
                 <desc>Target deselect</desc>
-                    <binding>
-                        <command>nasal</command>
-                        <script>awg_9.active_u=nil;awg_9.active_u_callsign = nil;</script>
-                    </binding>
+                <binding>
+                    <command>nasal</command>
+                    <script>awg_9.active_u=nil;awg_9.active_u_callsign = nil;</script>
+                </binding>
             </key>
             <key n="82">
                 <name>R</name>
@@ -1202,7 +1202,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 </mod-ctrl>
             </key>
             <key n="50">
-                <name>CTRL-1</name>
+                <name>CTRL-2</name>
                 <mod-ctrl>
                     <desc>GCI dope</desc>
                     <binding>
@@ -1213,7 +1213,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 </mod-ctrl>
             </key>
             <key n="51">
-                <name>CTRL-1</name>
+                <name>CTRL-3</name>
                 <mod-ctrl>
                     <desc>GCI cutoff</desc>
                     <binding>
@@ -2668,7 +2668,6 @@ value. 18000=standard US transition altitude -->
             <file>Aircraft/f16/Nasal/zoom-views.nas</file>
             <file>Aircraft/f16/Nasal/f16.nas</file>
             <file>Aircraft/f16/Nasal/liveries.nas</file>
-            <file>Aircraft/f16/Nasal/tyresmoke.nas</file>
             <file>Aircraft/f16/Nasal/rain.nas</file>
             <file>Aircraft/f16/Nasal/vapor-lighting.nas</file>
             <file>Aircraft/f16/Nasal/mfd.nas</file>
