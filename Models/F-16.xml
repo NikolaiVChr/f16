@@ -350,7 +350,7 @@
           <lightmap-enabled type="int">1</lightmap-enabled>
           <lightmap-multi type="int">1</lightmap-multi>
       </parameters>
-      <object-name>Poly.001</object-name>
+      <object-name>Poly.001</object-name><!-- inner sidewalls of outlet -->
  </effect>
 
  <!-- glass effects, Cylinder.008 removed as HUD is factored out. -->
