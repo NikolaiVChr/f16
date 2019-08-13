@@ -521,6 +521,10 @@
                 <desc>Select next radar contact</desc>
             </key>
             <key>
+                <name>Ctrl-y</name>
+                <desc>Deselect radar contact</desc>
+            </key>
+            <key>
                 <name>S</name>
                 <desc>Toggle smoke if installed</desc>
             </key>
@@ -1088,6 +1092,20 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                     <property>sim/model/f16/instrumentation/radar-awg-9/select-target</property>
                     <value>1</value>
                 </binding>
+                <mod-ctrl>
+                    <binding>
+                        <command>nasal</command>
+                        <script>print("deselect");awg_9.active_u=nil;</script>
+                    </binding>
+                </mod-ctrl>
+            </key>
+            <key n="25">
+                <name>ctrl-y</name>
+                <desc>Target deselect</desc>
+                    <binding>
+                        <command>nasal</command>
+                        <script>awg_9.active_u=nil;awg_9.active_u_callsign = nil;</script>
+                    </binding>
             </key>
             <key n="82">
                 <name>R</name>
