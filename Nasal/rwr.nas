@@ -209,7 +209,8 @@ RWRCanvas = {
                 "m2000-5":                  rwr.AIRCRAFT_MIRAGE,
                 "m2000-5B":                 rwr.AIRCRAFT_MIRAGE,
                 "MiG-21bis":                rwr.AIRCRAFT_MIG21,
-                "MiG-29":                   rwr.AIRCRAFT_MIG29, 
+                "MiG-29":                   rwr.AIRCRAFT_MIG29,
+				"SU-27":                    rwr.AIRCRAFT_SU27, 
                 "EC-137R":                  rwr.AIRCRAFT_AWACS,
                 "RC-137R":                  rwr.AIRCRAFT_AWACS,
                 "E-8R":                     rwr.AIRCRAFT_AWACS,
@@ -229,7 +230,6 @@ RWRCanvas = {
                 "Mig-28":                   rwr.SCENARIO_OPPONENT,
         # Other threatening aircrafts (FGAddon, FGUK, etc.):
                 "AI":                       rwr.ASSET_AI,
-                "SU-27":                    rwr.AIRCRAFT_SU27,
                 "SU-37":					rwr.AIRCRAFT_SU27,
                 "T-50":                     rwr.AIRCRAFT_SU57,
                 "MiG-21Bison":              rwr.AIRCRAFT_MIG21,
