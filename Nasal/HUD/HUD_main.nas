@@ -1744,7 +1744,7 @@ append(obj.total, obj.speed_curr);
             #me.eegsMe.ac.set_xyz(geodPos.x, geodPos.y, geodPos.z);#position of pilot eyes in aircraft
             me.eegsMe.ac = geo.aircraft_position();
             me.eegsMe.allow = 1;
-            
+            me.drawEEGSPipper = 0;
             for (var l = 0;l < me.funnelParts;l+=1) {
                 # compute display positions of funnel on hud
                 var pos = me.gunPos[l][l+1];
@@ -1771,6 +1771,16 @@ append(obj.total, obj.speed_curr);
                     me.eegsMe.shellPosDist[l] = ac.direct_distance_to(pos)*M2FT;
                     me.eegsMe.shellPosX[l] = me.eegsMe.posTemp[0];#me.eegsMe.xcS;
                     me.eegsMe.shellPosY[l] = me.eegsMe.posTemp[1];#me.eegsMe.ycS;
+                    
+                    if (me.designatedDistanceFT != nil and !me.drawEEGSPipper) {
+                      if (l != 0 and me.eegsMe.shellPosDist[l] >= me.designatedDistanceFT and me.eegsMe.shellPosDist[l]>me.eegsMe.shellPosDist[l-1]) {
+                        var highdist = me.eegsMe.shellPosDist[l];
+                        var lowdist = me.eegsMe.shellPosDist[l-1];
+                        me.eegsPipperX = HudMath.extrapolate(me.designatedDistanceFT,lowdist,highdist,me.eegsMe.shellPosX[l-1],me.eegsMe.shellPosX[l]);
+                        me.eegsPipperY = HudMath.extrapolate(me.designatedDistanceFT,lowdist,highdist,me.eegsMe.shellPosY[l-1],me.eegsMe.shellPosY[l]);
+                        me.drawEEGSPipper = 1;
+                      }
+                    }
                 }
             }
             if (me.eegsMe.allow) {
@@ -1791,6 +1801,16 @@ append(obj.total, obj.speed_curr);
                         .lineTo(me.eegsLeftX[i+1], me.eegsLeftY[i+1])
                         .setStrokeLineWidth(1)
                         .setColor(me.color);
+                }
+                if (me.drawEEGSPipper) {
+                    var radius = 2;
+                    me.eegsGroup.createChild("path")
+                          .moveTo(me.eegsPipperX, me.eegsPipperY-radius)
+                          .arcSmallCW(radius,radius,0,0,radius*2)
+                          .arcSmallCW(radius,radius,0,0,-radius*2)
+                          .setStrokeLineWidth(4)
+                          .setStrokeLineWidth(1)
+                          .setColor(me.color);
                 }
                 me.eegsGroup.update();
             }
@@ -2250,6 +2270,7 @@ append(obj.total, obj.speed_curr);
                 }
             }
         }
+        me.designatedDistanceFT = nil;
         if (hdp["tgt_list"] != nil) {
             foreach ( me.u; hdp.tgt_list ) {
                 me.callsign = "XX";
@@ -2280,6 +2301,7 @@ append(obj.total, obj.speed_curr);
                             me.clamped = HudMath.isCenterPosClamped(me.echoPos[0],me.echoPos[1]);
                             
                             if (hdp.active_u != nil and hdp.active_u.Callsign != nil and me.u.Callsign != nil and me.u.Callsign.getValue() == hdp.active_u.Callsign.getValue()) {
+                                me.designatedDistanceFT = hdp.active_u.get_Coord().direct_distance_to(geo.aircraft_position())*M2FT;
                                 me.target_locked.setVisible(1);
                                 me.tgt.hide();
                                 #me.xcS = me.sx/2                     + (me.pixelPerMeterX * me.combined_dev_length * math.sin(me.combined_dev_deg*D2R));
