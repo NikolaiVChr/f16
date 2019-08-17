@@ -639,6 +639,8 @@ var F16_HUD = {
                                                         submode = "CCRP";
                                                      } elsif (hdp.CCIP_active) {
                                                         submode = "CCIP";
+                                                     } elsif (obj.eegsLoop.isRunning) {
+                                                        submode = "EEGS";
                                                      } elsif (hdp.submode == 1) {
                                                         submode = "BORE";
                                                      }
