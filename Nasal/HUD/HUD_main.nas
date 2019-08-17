@@ -637,7 +637,7 @@ var F16_HUD = {
                                                      var submode = "";
                                                      if (hdp.CCRP_active) {
                                                         submode = "CCRP";
-                                                     } elsif (hdp.CCIP_active) {
+                                                     } elsif (obj.showmeCCIP) {
                                                         submode = "CCIP";
                                                      } elsif (obj.eegsLoop.isRunning) {
                                                         submode = "EEGS";
@@ -1482,7 +1482,7 @@ append(obj.total, obj.speed_curr);
         obj.eegsLoop = maketimer(obj.averageDt, obj, obj.displayEEGS);
         obj.eegsLoop.simulatedTime = 1;
         obj.resetGunPos();
-                          
+        obj.showmeCCIP = 0;
         return obj;
     },
     
@@ -1641,11 +1641,12 @@ append(obj.total, obj.speed_curr);
     CCIP: func (hdp) {
         me.showPipper = 0;
         me.showPipperCross = 0;
+        me.showmeCCIP = 0;
         if(hdp.CCIP_active) {
             if (hdp.fcs_available and hdp.master_arm ==1) {
                 var selW = pylons.fcs.getSelectedWeapon();
                 if (selW != nil and (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87")) {
-
+                    me.showmeCCIP = 1;
                     me.ccipPos = pylons.fcs.getSelectedWeapon().getCCIPadv(18,0.20);
                     if (me.ccipPos == nil) {
                         me.pipper.setVisible(me.showPipper);
