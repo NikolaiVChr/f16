@@ -622,7 +622,7 @@ var F16_HUD = {
                                                  obj.stby.update();
                                              }
                                             ),
-            props.UpdateManager.FromHashList(["brake_parking", "gear_down", "flap_pos_deg", "CCRP_active", "master_arm","submode"], 0.1, func(hdp)
+            props.UpdateManager.FromHashList(["brake_parking", "gear_down", "flap_pos_deg", "CCRP_active", "master_arm","submode","VV_x"], 0.1, func(hdp)
                                              {
                                                  if (hdp.brake_parking) {
                                                      obj.window2.setVisible(1);
