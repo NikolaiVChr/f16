@@ -2285,12 +2285,18 @@ append(obj.total, obj.speed_curr);
                     if (me.u.ModelType != "")
                       me.model = me.u.ModelType;
 
-                    if (me.target_idx < me.max_symbols) {
+                    if (me.target_idx < me.max_symbols or me.designatedDistanceFT == nil) {
                         me.echoPos = HudMath.getPosFromCoord(me.u.get_Coord(0));
                         #print(HudMath.dir_x);
-                        me.tgt = me.tgt_symbols[me.target_idx];
-                        if (me.tgt != nil) {
-                            me.tgt.setVisible(me.u.get_display());
+                        if (me.target_idx < me.max_symbols) {
+                            me.tgt = me.tgt_symbols[me.target_idx];
+                        } else {
+                            me.tgt = nil;
+                        }
+                        if (me.tgt != nil or me.designatedDistanceFT == nil) {
+                            if (me.tgt != nil) {
+                                me.tgt.setVisible(me.u.get_display());
+                            }
                             #me.u_dev_rad = (90-me.u.get_deviation(hdp.heading))  * D2R;
                             #me.u_elev_rad = (90-me.u.get_total_elevation( hdp.pitch))  * D2R;
                             #me.devs = me.develev_to_devroll(hdp, me.u_dev_rad, me.u_elev_rad);
@@ -2306,7 +2312,9 @@ append(obj.total, obj.speed_curr);
                             if (hdp.active_u != nil and hdp.active_u.Callsign != nil and me.u.Callsign != nil and me.u.Callsign.getValue() == hdp.active_u.Callsign.getValue()) {
                                 me.designatedDistanceFT = hdp.active_u.get_Coord().direct_distance_to(geo.aircraft_position())*M2FT;
                                 me.target_locked.setVisible(1);
-                                me.tgt.hide();
+                                if (me.tgt != nil) {
+                                    me.tgt.hide();
+                                }
                                 #me.xcS = me.sx/2                     + (me.pixelPerMeterX * me.combined_dev_length * math.sin(me.combined_dev_deg*D2R));
                                 #me.ycS = me.sy-me.texels_up_into_hud - (me.pixelPerMeterY * me.combined_dev_length * math.cos(me.combined_dev_deg*D2R));
                                 #me.target_locked.setTranslation (me.xcS, me.ycS);
@@ -2353,15 +2361,18 @@ append(obj.total, obj.speed_curr);
                             } else {
                                 #
                                 # if in symbol reject mode then only show the active target.
-                                if (hdp.symbol_reject)
+                                if (hdp.symbol_reject and me.tgt != nil) {
                                   me.tgt.setVisible(0);
+                                }
                             }
-                            me.tgt.setTranslation (me.echoPos);
-                            me.tgt.update();
+                            if (me.tgt != nil) {
+                                me.tgt.setTranslation (me.echoPos);
+                                me.tgt.update();
+                            }
                             if (ht_debug)
                               printf("%-10s %f,%f [%f,%f,%f] :: %f,%f",me.callsign,me.xc,me.yc, me.devs[0], me.devs[1], me.devs[2], me.u_dev_rad*D2R, me.u_elev_rad*D2R); 
                         }
-else print("[ERROR]: HUD too many targets ",me.target_idx);
+                        else print("[ERROR]: HUD too many targets ",me.target_idx);
                     }
                     me.target_idx += 1;
                 }
