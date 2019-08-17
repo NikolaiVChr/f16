@@ -263,6 +263,13 @@ setlistener("/ai/models/model-removed", func(v){
     }
 });
 
+var extraUpdate = func {
+    # need this to get targets type reevaluated once in a while.
+    scan_update_tgt_list = 1;
+    settimer(extraUpdate,7.5);
+}
+extraUpdate();
+
 init = func() {
 	var our_ac_name = getprop("sim/aircraft");
     # map variants to the base
@@ -430,6 +437,8 @@ var az_scan = func(notification) {
                             u.setClass(MARINE);
                         } elsif (u.get_Speed() < 60) {
                             u.setClass(SURFACE);
+                        } else {
+                            u.setClass(AIR);
                         }
                         # notice the default class is set to AIR
                     }
