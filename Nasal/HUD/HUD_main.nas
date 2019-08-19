@@ -615,6 +615,7 @@ var F16_HUD = {
                                              {
                                                  if (hdp.standby) {
                                                      obj.stby.setText("NO RAD");
+                                                     obj.stby.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud+7);
                                                      obj.stby.show();
                                                  } else {
                                                      obj.stby.hide();
@@ -773,8 +774,8 @@ var F16_HUD = {
         append(obj.total, obj.flyup);
         obj.stby = obj.svg.createChild("text")
                 .setText("NO RAD")
-                .setTranslation(sx*0.5*0.695633,sy*0.15)
-                .setAlignment("center-center")
+                .setTranslation(sx*0.5*0.695633,sy*0.15)                
+                .setAlignment("center-top")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(11, 1.1);
