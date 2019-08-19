@@ -244,15 +244,15 @@ var F16_HUD = {
                                             foreach(item;obj.total) {
                                               item.setColor(obj.color);
                                             }
-                                            obj.triangle120.setColorFill(obj.color);
-                                            obj.triangle65.setColorFill(obj.color);
+                                            obj.ASEC120Aspect.setColorFill(obj.color);
+                                            obj.ASEC65Aspect.setColorFill(obj.color);
                                           } elsif (hdp.hud_brightness != nil and hdp.hud_power != nil) {
                                             obj.color = [0.3,1,0.3,hdp.hud_brightness * hdp.hud_power];
                                             foreach(item;obj.total) {
                                               item.setColor(obj.color);
                                             }
-                                            obj.triangle120.setColorFill(obj.color);
-                                            obj.triangle65.setColorFill(obj.color);
+                                            obj.ASEC120Aspect.setColorFill(obj.color);
+                                            obj.ASEC65Aspect.setColorFill(obj.color);
                                           }
                                       }),
             props.UpdateManager.FromHashList([], 0.01, func(hdp)
@@ -1001,39 +1001,39 @@ append(obj.total, obj.speed_curr);
                 append(obj.total, obj.ccrpMarker);
         
         var mr = 0.4;#milliradians
-        obj.circle262 = obj.svg.createChild("path")#rdsearch (Allowable Steering Error Circle (ASEC))
+        obj.ASEC262 = obj.svg.createChild("path")#rdsearch (Allowable Steering Error Circle (ASEC))
             .moveTo(-262*mr,0)
             .arcSmallCW(262*mr,262*mr, 0, 262*mr*2, 0)
             .arcSmallCW(262*mr,262*mr, 0, -262*mr*2, 0)
             .setStrokeLineWidth(1)
             .setColor(0,1,0).hide()
             .setTranslation(sx*0.5*0.695633,sy*0.25+262*mr*0.5);
-            append(obj.total, obj.circle262);
-        obj.circle100 = obj.svg.createChild("path")#irsearch
+            append(obj.total, obj.ASEC262);
+        obj.ASEC100 = obj.svg.createChild("path")#irsearch
             .moveTo(-100*mr,0)
             .arcSmallCW(100*mr,100*mr, 0, 100*mr*2, 0)
             .arcSmallCW(100*mr,100*mr, 0, -100*mr*2, 0)
             .setStrokeLineWidth(1)
             .setColor(0,1,0).hide()
             .setTranslation(sx*0.5*0.695633,sy*0.25);
-            append(obj.total, obj.circle100);
-        obj.circle120 = obj.svg.createChild("path")#rdlock
+            append(obj.total, obj.ASEC100);
+        obj.ASEC120 = obj.svg.createChild("path")#rdlock
             .moveTo(-120*mr,0)
             .arcSmallCW(120*mr,120*mr, 0, 120*mr*2, 0)
             .arcSmallCW(120*mr,120*mr, 0, -120*mr*2, 0)
             .setStrokeLineWidth(1)
             .setColor(0,1,0).hide()
             .setTranslation(sx*0.5*0.695633,sy*0.25);
-            append(obj.total, obj.circle120);
-        obj.circle65 = obj.svg.createChild("path")#irlock
+            append(obj.total, obj.ASEC120);
+        obj.ASEC65 = obj.svg.createChild("path")#irlock
             .moveTo(-65*mr,0)
             .arcSmallCW(65*mr,65*mr, 0, 65*mr*2, 0)
             .arcSmallCW(65*mr,65*mr, 0, -65*mr*2, 0)
             .setStrokeLineWidth(1)
             .setColor(0,1,0).hide()
             .setTranslation(sx*0.5*0.695633,sy*0.25);
-            append(obj.total, obj.circle65);
-        obj.triangle65  = obj.svg.createChild("path")
+            append(obj.total, obj.ASEC65);
+        obj.ASEC65Aspect  = obj.svg.createChild("path")#small triangle on ASEC that denotes aspect of target
             .moveTo(0,-65*mr)
             .lineTo(-5*mr,-75*mr)
             .lineTo(5*mr,-75*mr)
@@ -1043,8 +1043,8 @@ append(obj.total, obj.speed_curr);
             .setColor(0,1,0)
             #.set("z-index",10500)
             .setTranslation(sx*0.5*0.695633,sy*0.25);
-            append(obj.total, obj.triangle65);
-        obj.triangle120 = obj.svg.createChild("path")
+            append(obj.total, obj.ASEC65Aspect);
+        obj.ASEC120Aspect = obj.svg.createChild("path")
             .setCenter(0,0)
             .moveTo(0,-0*mr)
             .lineTo(-5*mr,-10*mr)
@@ -1055,7 +1055,7 @@ append(obj.total, obj.speed_curr);
             .setColor(0,1,0)
             #.set("z-index",10500)
             .setTranslation(sx*0.5*0.695633,sy*0.25);
-            append(obj.total, obj.triangle120);
+            append(obj.total, obj.ASEC120Aspect);
         
         obj.VV.hide();
         mr = mr*1.5;#incorrect, but else in FG it will seem too small.
@@ -2020,10 +2020,10 @@ append(obj.total, obj.speed_curr);
             hdp.window10_txt = "";
             hdp.window11_txt = "";
 
-            me.circle262.hide();
-            me.circle100.hide();
-            me.circle120.hide();
-            me.circle65.hide();
+            me.ASEC262.hide();
+            me.ASEC100.hide();
+            me.ASEC120.hide();
+            me.ASEC65.hide();
             var eegsShow = 0;
             if(hdp.master_arm and pylons.fcs != nil)
             {
@@ -2039,27 +2039,27 @@ append(obj.total, obj.speed_curr);
                         hdp.window9_txt = sprintf("%d SRM", pylons.fcs.getAmmo());#short range missile
                         if (hdp.weapn != nil) {
                             if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
-                                me.circle65.show();
+                                me.ASEC65.show();
                             } elsif (!hdp.standby) {
-                                me.circle100.show();
+                                me.ASEC100.show();
                             }
                         }
                     } elsif (hdp.weapon_selected == "AIM-120") {
                         hdp.window9_txt = sprintf("%d AMM", pylons.fcs.getAmmo());#adv. medium range missile
                         if (hdp.weapn != nil) {
                             if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
-                                me.circle120.show();
+                                me.ASEC120.show();
                             } elsif (!hdp.standby) {
-                                me.circle262.show();
+                                me.ASEC262.show();
                             }
                         }
                     } elsif (hdp.weapon_selected == "AIM-7") {
                         hdp.window9_txt = sprintf("%d MRM", pylons.fcs.getAmmo());#medium range missile
                         if (hdp.weapn != nil) {
                             if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
-                                me.circle120.show();
+                                me.ASEC120.show();
                             } elsif (!hdp.standby) {
-                                me.circle262.show();
+                                me.ASEC262.show();
                             }
                         }
                     } elsif (hdp.weapon_selected == "GBU-12") {
@@ -2347,12 +2347,12 @@ append(obj.total, obj.speed_curr);
                                     }
                                     if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
                                         #me.radarLock.setTranslation(me.xcS, me.ycS); too perfect
-                                        me.triangle120.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading));
+                                        me.ASEC120Aspect.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading));
                                         me.rdL = 1;
                                         me.rdT = 1;
                                     } elsif (hdp.weapon_selected == "AIM-9") {
                                         #me.irLock.setTranslation(me.xcS, me.ycS);
-                                        me.triangle65.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading));
+                                        me.ASEC65Aspect.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading));
                                         me.irL = 1;
                                         me.irT = 1;
                                     }
@@ -2425,13 +2425,13 @@ append(obj.total, obj.speed_curr);
                 if (pylons.fcs.isLock()) {
                     me.scale120 = me.extrapolate(me.dlzArray[4],me.dlzArray[2],me.dlzArray[3],1,30/120);
                     me.scale120 = clamp(me.scale120,30/120,1);
-                    me.circle120.setScale(me.scale120,me.scale120);
-                    me.circle120.setStrokeLineWidth(1/me.scale120);
-                    #me.triangle120.setScale(me.scale120,me.scale120);
-                    #me.triangle120.setStrokeLineWidth(1/me.scale120);
-                    me.triangle120.setTranslation(me.sx*0.5,me.sy*0.25-me.scale120*0.4*120);#0.4=mr
-                    #me.triangle120.setCenter(0,me.scale120*0.4*120);
-                    me.triangle120.setCenter(0,me.scale120*0.4*120);
+                    me.ASEC120.setScale(me.scale120,me.scale120);
+                    me.ASEC120.setStrokeLineWidth(1/me.scale120);
+                    #me.ASEC120Aspect.setScale(me.scale120,me.scale120);
+                    #me.ASEC120Aspect.setStrokeLineWidth(1/me.scale120);
+                    me.ASEC120Aspect.setTranslation(me.sx*0.5,me.sy*0.25-me.scale120*0.4*120);#0.4=mr
+                    #me.ASEC120Aspect.setCenter(0,me.scale120*0.4*120);
+                    me.ASEC120Aspect.setCenter(0,me.scale120*0.4*120);
                 }
             } else {
                 me.dlzClo.setText("");
@@ -2458,8 +2458,8 @@ append(obj.total, obj.speed_curr);
         me.irSearch.setVisible(me.irS);
         me.irLock.setVisible(me.irL);
         me.irBore.setVisible(me.irB);
-        me.triangle120.setVisible(me.rdT);
-        me.triangle65.setVisible(me.irT);
+        me.ASEC120Aspect.setVisible(me.rdT);
+        me.ASEC65Aspect.setVisible(me.irT);
         me.radarLock.update();
         me.irLock.update();
 
