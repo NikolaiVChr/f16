@@ -1280,7 +1280,7 @@ var MFD_Device =
                     me.cool = me.wpn.getWarm()==0?"COOL":"WARM";
                     me.eegs = "A-A";
                     me.coolFrame = me.wpn.isCooling()==1?1:0;                    
-                    me.drop = "SLAV";
+                    me.drop = getprop("instrumentation/radar/radar-standby")==1?"BORE":"SLAV";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "FAIL";
                     } elsif (me.wpn.status <= armament.MISSILE_STARTING){
