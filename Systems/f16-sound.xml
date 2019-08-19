@@ -682,7 +682,7 @@
 					</greater-than>
 					<less-than>
 						<property>instrumentation/radar/time-till-crash</property>
-						<value>10</value>
+						<value>8</value>
 					</less-than>
 				</and>
 			</condition>

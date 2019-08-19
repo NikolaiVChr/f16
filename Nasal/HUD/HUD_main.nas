@@ -596,7 +596,7 @@ var F16_HUD = {
             props.UpdateManager.FromHashList(["time_until_crash","vne"], 0.05, func(hdp)
                                              {
                                                  obj.ttc = hdp.time_until_crash;
-                                                 if (obj.ttc != nil and obj.ttc>0 and obj.ttc<10) {
+                                                 if (obj.ttc != nil and obj.ttc>0 and obj.ttc<8) {
                                                      obj.flyup.setText("FLYUP");
                                                      #obj.flyup.setColor(1,0,0,1);
                                                      obj.flyup.show();
@@ -607,8 +607,8 @@ var F16_HUD = {
                                                          obj.flyup.hide();
                                                  }
                                                  obj.flyup.update();
-                                                 if (obj.ttc != nil and obj.ttc>0 and obj.ttc<12) {
-                                                    obj.flyupAmount = math.max(0,obj.extrapolate(obj.ttc,10,12,0,1));
+                                                 if (obj.ttc != nil and obj.ttc>0 and obj.ttc<10.5) {
+                                                    obj.flyupAmount = math.max(0,obj.extrapolate(obj.ttc,8,9.5,0,1));
                                                     obj.flyupLeft.setTranslation(-obj.flyupAmount*150,0);
                                                     obj.flyupRight.setTranslation(obj.flyupAmount*150,0);
                                                     obj.flyupLeft.show().update();
