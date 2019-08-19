@@ -613,7 +613,7 @@ var F16_HUD = {
                                                     obj.flyupRight.setTranslation(obj.flyupAmount*150,0);
                                                     obj.flyupLeft.show().update();
                                                     obj.flyupRight.show().update();
-                                                } else{
+                                                } else {
                                                     obj.flyupLeft.hide();
                                                     obj.flyupRight.hide();
                                                 }
@@ -2286,15 +2286,15 @@ append(obj.total, obj.speed_curr);
                     var aim = pylons.fcs.getSelectedWeapon();
                     if (aim != nil) {
                         me.submode = 1;
-                        var coords = aim.getSeekerInfo();
-                        me.irSearch.setTranslation(HudMath.getCenterPosFromDegs(coords[0],coords[1]));
+                        #var coords = aim.getSeekerInfo();
+                        #me.irSearch.setTranslation(HudMath.getCenterPosFromDegs(coords[0],coords[1]));
                         me.irBore.setTranslation(HudMath.getCenterPosFromDegs(0,-3.5));
                         me.irB = 1;
                     }
                 } else {
+                    me.irS = 1;
                     me.irSearch.setTranslation(0, -me.sy*0.25);
                 }
-                me.irS = 1;
             } elsif (pylons.fcs.isLock() and hdp.weapon_selected == "AIM-9" and pylons.bore) {
                 var aim = pylons.fcs.getSelectedWeapon();
                 if (aim != nil) {
