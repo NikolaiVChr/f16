@@ -1252,7 +1252,7 @@ var MFD_Device =
                     } elsif (me.wpn.status <= armament.MISSILE_STARTING){
                         me.ready = "INIT";
                     } else {
-                        me.ready = "READY";
+                        me.ready = "RDY";
                     }
                 } elsif (me.wpn.type == "AGM-65" or me.wpn.type == "AGM-84" or me.wpn.type == "AGM-119" or me.wpn.type == "AGM-154A" or me.wpn.type == "AGM-158") {
                     me.wpnType ="ground";
@@ -1262,7 +1262,7 @@ var MFD_Device =
                     } elsif (me.wpn.status <= armament.MISSILE_STARTING){
                         me.ready = "INIT";
                     } else {
-                        me.ready = "READY";
+                        me.ready = "RDY";
                     }
                 } elsif (me.wpn.type == "AGM-88") {
                     me.wpnType ="anti-rad";
@@ -1273,7 +1273,7 @@ var MFD_Device =
                     } elsif (me.wpn.status <= armament.MISSILE_STARTING){
                         me.ready = "INIT";
                     } else {
-                        me.ready = "READY";
+                        me.ready = "RDY";
                     }
                 } elsif (me.wpn.type == "AIM-9") {
                     me.wpnType ="heat";
@@ -1286,7 +1286,7 @@ var MFD_Device =
                     } elsif (me.wpn.status <= armament.MISSILE_STARTING){
                         me.ready = "INIT";
                     } else {
-                        me.ready = "READY";
+                        me.ready = "RDY";
                     }
                 } elsif (me.wpn.type == "AIM-120" or me.wpn.type == "AIM-7") {
                     me.wpnType ="air";
@@ -1297,7 +1297,7 @@ var MFD_Device =
                     } elsif (me.wpn.status <= armament.MISSILE_STARTING){
                         me.ready = "INIT";
                     } else {
-                        me.ready = "READY";
+                        me.ready = "RDY";
                     }
                 } elsif (me.wpn.type == "20mm Cannon") {
                     me.wpnType ="gun";
@@ -1305,7 +1305,7 @@ var MFD_Device =
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "FAIL";
                     } else {
-                        me.ready = "READY";
+                        me.ready = "RDY";
                     }
                 } else {
                     print(me.wpn.type~" not supported in WPN page.");
