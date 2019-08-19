@@ -593,22 +593,30 @@ var F16_HUD = {
                                           
                                       }
                                             ),
-            props.UpdateManager.FromHashList(["time_until_crash","vne"], 0.1, func(hdp)
+            props.UpdateManager.FromHashList(["time_until_crash","vne"], 0.05, func(hdp)
                                              {
                                                  obj.ttc = hdp.time_until_crash;
                                                  if (obj.ttc != nil and obj.ttc>0 and obj.ttc<10) {
                                                      obj.flyup.setText("FLYUP");
                                                      #obj.flyup.setColor(1,0,0,1);
                                                      obj.flyup.show();
-                                                 } else {
-                                                     if (hdp.vne) {
+                                                 } elsif (hdp.vne) {
                                                          obj.flyup.setText("LIMIT");
                                                          obj.flyup.show();
-                                                     } else {
+                                                 } else {
                                                          obj.flyup.hide();
-                                                     }
                                                  }
                                                  obj.flyup.update();
+                                                 if (obj.ttc != nil and obj.ttc>0 and obj.ttc<12) {
+                                                    obj.flyupAmount = math.max(0,obj.extrapolate(obj.ttc,10,12,0,1));
+                                                    obj.flyupLeft.setTranslation(-obj.flyupAmount*150,0);
+                                                    obj.flyupRight.setTranslation(obj.flyupAmount*150,0);
+                                                    obj.flyupLeft.show().update();
+                                                    obj.flyupRight.show().update();
+                                                } else{
+                                                    obj.flyupLeft.hide();
+                                                    obj.flyupRight.hide();
+                                                }
                                              }
                                             ),
             props.UpdateManager.FromHashList(["standby"], 0.5, func(hdp)
@@ -1097,6 +1105,19 @@ append(obj.total, obj.speed_curr);
         obj.centerOrigin = obj.canvas.createGroup()
                            .setTranslation(HudMath.getCenterOrigin());
         
+        obj.flyupLeft    = obj.centerOrigin.createChild("path")
+                            .lineTo(-50,-50)
+                            .moveTo(0,0)
+                            .lineTo(-50,50)
+                            .setStrokeLineWidth(1)
+                            .setColor(0,1,0);
+        obj.flyupRight  = obj.centerOrigin.createChild("path")
+                            .lineTo(50,-50)
+                            .moveTo(0,0)
+                            .lineTo(50,50)
+                            .setStrokeLineWidth(1)
+                            .setColor(0,1,0);
+                            
         obj.greatCircleSteeringCue = obj.centerOrigin.createChild("path")# nickname: tadpole
             .moveTo(-2.5,0)
             .arcSmallCW(2.5,2.5, 0, 2.5*2, 0)
