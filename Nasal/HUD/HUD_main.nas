@@ -1178,6 +1178,14 @@ append(obj.total, obj.speed_curr);
             .setStrokeLineWidth(1)
             .setColor(0,1,0);
         append(obj.total, obj.irSearch);
+        obj.irBore = obj.centerOrigin.createChild("path")
+            .moveTo(-boxRadiusHalf*4,0)
+            .horiz(boxRadius*4)
+            .moveTo(0,-boxRadiusHalf*6)
+            .vert(boxRadius*6)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0);
+        append(obj.total, obj.irBore);
         obj.target_locked.hide();
         obj.target_locked = obj.centerOrigin.createChild("path")
             .moveTo(-boxRadius,-boxRadius)
@@ -2030,27 +2038,27 @@ append(obj.total, obj.speed_curr);
                     } elsif (hdp.weapon_selected == "AIM-9") {
                         hdp.window9_txt = sprintf("%d SRM", pylons.fcs.getAmmo());#short range missile
                         if (hdp.weapn != nil) {
-                            if (hdp.weapn.status == armament.MISSILE_LOCK) {
+                            if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
                                 me.circle65.show();
-                            } else {
+                            } elsif (!hdp.standby) {
                                 me.circle100.show();
                             }
                         }
                     } elsif (hdp.weapon_selected == "AIM-120") {
                         hdp.window9_txt = sprintf("%d AMM", pylons.fcs.getAmmo());#adv. medium range missile
                         if (hdp.weapn != nil) {
-                            if (hdp.weapn.status == armament.MISSILE_LOCK) {
+                            if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
                                 me.circle120.show();
-                            } else {
+                            } elsif (!hdp.standby) {
                                 me.circle262.show();
                             }
                         }
                     } elsif (hdp.weapon_selected == "AIM-7") {
                         hdp.window9_txt = sprintf("%d MRM", pylons.fcs.getAmmo());#medium range missile
                         if (hdp.weapn != nil) {
-                            if (hdp.weapn.status == armament.MISSILE_LOCK) {
+                            if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
                                 me.circle120.show();
-                            } else {
+                            } elsif (!hdp.standby) {
                                 me.circle262.show();
                             }
                         }
@@ -2242,6 +2250,7 @@ append(obj.total, obj.speed_curr);
         me.rdL = 0;
         me.irT = 0;
         me.rdT = 0;
+        me.irB = 0;
         #printf("%d %d %d %s",hdp.master_arm,pylons.fcs != nil,pylons.fcs.getAmmo(),hdp.weapon_selected);
         if(hdp.master_arm and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
             hdp.weapon_selected = pylons.fcs.selectedType;
@@ -2257,6 +2266,8 @@ append(obj.total, obj.speed_curr);
                         me.submode = 1;
                         var coords = aim.getSeekerInfo();
                         me.irSearch.setTranslation(HudMath.getCenterPosFromDegs(coords[0],coords[1]));
+                        me.irBore.setTranslation(HudMath.getCenterPosFromDegs(0,-3.5));
+                        me.irB = 1;
                     }
                 } else {
                     me.irSearch.setTranslation(0, -me.sy*0.25);
@@ -2446,6 +2457,7 @@ append(obj.total, obj.speed_curr);
         me.radarLock.setVisible(me.rdL);
         me.irSearch.setVisible(me.irS);
         me.irLock.setVisible(me.irL);
+        me.irBore.setVisible(me.irB);
         me.triangle120.setVisible(me.rdT);
         me.triangle65.setVisible(me.irT);
         me.radarLock.update();
