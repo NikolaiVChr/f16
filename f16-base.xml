@@ -2578,6 +2578,7 @@ value. 18000=standard US transition altitude -->
             <c4-lon type="double">0</c4-lon>
             <c4-rad type="double">0</c4-rad>
             <laser-code type="int">0000</laser-code>
+            <eegs-wingspan-ft type="int">35</eegs-wingspan-ft>
         </avionics>
         <fcs>
             <autopilot-on type="int">0</autopilot-on> <!-- Ignored on Block 20+ -->

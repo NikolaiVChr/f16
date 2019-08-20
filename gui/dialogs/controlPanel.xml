@@ -1063,6 +1063,20 @@
 		      		<blue>0.5</blue>
 		      	</color>-->
 			</input>
+			
+			<hrule/>
+
+			<input>
+			  	<width>75</width>
+			  	<height>25</height>
+			  	<label>EEGS WINGSPAN FT</label>
+			  	<property>f16/avionics/eegs-wingspan-ft</property>
+			  	<live>true</live>
+			  	<halign>left</halign>
+		        <binding>
+		            <command>dialog-apply</command>
+		      	</binding>
+			</input>
 
 		</group>		
 

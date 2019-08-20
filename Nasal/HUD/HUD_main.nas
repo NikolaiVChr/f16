@@ -1819,7 +1819,7 @@ append(obj.total, obj.speed_curr);
             if (me.eegsMe.allow) {
                 # draw the funnel
                 for (var k = 0;k<me.funnelParts;k+=1) {
-                    var halfspan = math.atan2(35*0.5,me.eegsMe.shellPosDist[k])*R2D*me.texelPerDegreeX;#35ft average fighter wingspan
+                    var halfspan = math.atan2(getprop("f16/avionics/eegs-wingspan-ft")*0.5,me.eegsMe.shellPosDist[k])*R2D*me.texelPerDegreeX;#35ft average fighter wingspan
                     me.eegsRightX[k] = me.eegsMe.shellPosX[k]-halfspan;
                     me.eegsRightY[k] = me.eegsMe.shellPosY[k];
                     me.eegsLeftX[k]  = me.eegsMe.shellPosX[k]+halfspan;
