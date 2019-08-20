@@ -2369,12 +2369,12 @@ append(obj.total, obj.speed_curr);
                                     }
                                     if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
                                         #me.radarLock.setTranslation(me.xcS, me.ycS); too perfect
-                                        me.ASEC120Aspect.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading));
+                                        me.ASEC120Aspect.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading+180));
                                         me.rdL = 1;
                                         me.rdT = 1;
                                     } elsif (hdp.weapon_selected == "AIM-9") {
                                         #me.irLock.setTranslation(me.xcS, me.ycS);
-                                        me.ASEC65Aspect.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading));
+                                        me.ASEC65Aspect.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading+180));
                                         me.irL = 1;
                                         me.irT = 1;
                                     }
