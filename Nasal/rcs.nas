@@ -88,7 +88,6 @@ var rcs_database = {
     "F-35B":					0.001,
     "daVinci_F-35A":            0.001,  
     "Jaguar-GR3":               6,	    #guess
-    "OpenRadar":                0.01,  # low so it doesnt show up on radar
 };
 
 var prevVisible = {};

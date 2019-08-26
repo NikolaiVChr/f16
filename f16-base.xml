@@ -34,6 +34,7 @@
             <path>/link16/wingman-5</path>
             <path>/link16/wingman-6</path>
             <path>/link16/wingman-7</path>
+            <path>/link16/wingman-8</path>
             <path>/f16/avionics/gps-lat</path>
             <path>/f16/avionics/gps-lon</path>
             <path>/f16/avionics/gps-alt</path>
@@ -2527,6 +2528,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
         <wingman-5 type="string"></wingman-5>
         <wingman-6 type="string"></wingman-6>
         <wingman-7 type="string"></wingman-7>
+        <wingman-8 type="string"></wingman-8>
     </link16>
     <sound>
         <rwr-new type="bool">false</rwr-new>
