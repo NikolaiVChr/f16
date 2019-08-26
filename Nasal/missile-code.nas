@@ -1019,8 +1019,8 @@ var AIM = {
 		me.dlz_t_mach = contact.get_Speed()*KT2FPS/me.dlz_t_sound_fps;
 		me.dlz_o_mach = getprop("velocities/mach");
 		me.contactCoord = contact.get_Coord();
-		me.vectorToEcho   = me.myMath.eulerToCartesian2(contact.get_bearing(), me.myMath.getPitch(geo.aircraft_position(), me.contactCoord));
-    	me.vectorEchoNose = me.myMath.eulerToCartesian3X(contact.get_heading(), contact.get_Pitch(), contact.get_Roll());
+		me.vectorToEcho   = me.myMath.eulerToCartesian2(-contact.get_bearing(), me.myMath.getPitch(geo.aircraft_position(), me.contactCoord));
+    	me.vectorEchoNose = me.myMath.eulerToCartesian3X(-contact.get_heading(), contact.get_Pitch(), contact.get_Roll());
     	me.angleToRear    = geo.normdeg180(me.myMath.angleBetweenVectors(me.vectorToEcho, me.vectorEchoNose));
     	me.abso           = math.abs(me.angleToRear)-90;
     	me.mach_factor    = math.sin(me.abso*D2R);
@@ -2206,29 +2206,51 @@ var AIM = {
 
 		if (me.Tgt == nil and me.rail == TRUE and me.rail_pitch_deg==90 and me.rail_passed == FALSE) {
 			#for ejection seat to be oriented correct, wont be ran for missiles with target such as the frigate.
-			var a = me.myMath.eulerToCartesian3Z(-OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
-			#printf("%0.4f %0.4f %0.4f",OurHdg.getValue(),OurPitch.getValue(),OurRoll.getValue());
-			#printf("%0.4f %0.4f %0.4f",a[0],a[1],a[2]);
-			var euler = me.myMath.cartesianToEuler(a);
 			
+			# model of seat is loaded such that face is pointing in -Z FG coords.
+			
+			# Get the vector pointing up from aircraft
+			var a = me.myMath.eulerToCartesian3Z(-OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
+			#printf("HPR: %0.4f %0.4f %0.4f",OurHdg.getValue(),OurPitch.getValue(),OurRoll.getValue());
+			#printf(" UP: %0.4f %0.4f %0.4f",a[0],a[1],a[2]);
+			
+			# get the pitch and heading of that vector
+			var euler = me.myMath.cartesianToEuler(a);
 			me.pitch = euler[1];
 			me.pitchN.setDoubleValue(me.pitch);
 			if (euler[0]!=nil) {
 				me.hdg = euler[0];
 			} else {
+				# straight up or down
 				me.hdg = OurHdg.getValue();
 			}
 			me.hdgN.setDoubleValue(me.hdg);
+						
+			# get vector pointing out from aircraft nose
 			var nose = me.myMath.eulerToCartesian3X(-OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
+			
+			# get vector pointing perpendicular to seat travel direction (most upward possible)
 			var face = me.myMath.eulerToCartesian3Z(-me.hdg, me.pitch, 0);
+			
+			# convert to angle pointing out from face if pilot turns head without nodding and looks downward
 			face = me.myMath.product(-1,face);
+			
+			# get angle between face and aircraft-nose vectors
 			var turnFace = me.myMath.angleBetweenVectors(face,nose);
-			if (me.myMath.angleBetweenVectors(nose,me.myMath.product(-1,me.myMath.eulerToCartesian3Z(-me.hdg, me.pitch, turnFace)))>turnFace) {
+			
+			if (me.myMath.angleBetweenVectors(nose,me.myMath.product(-1,me.myMath.eulerToCartesian3Z(-me.hdg, me.pitch, turnFace)))>me.myMath.angleBetweenVectors(nose,me.myMath.product(-1,me.myMath.eulerToCartesian3Z(-me.hdg, me.pitch, -turnFace)))) {
+				# if angle between aircraft nose and the face of pilot is greater than the roll of seat then the roll should be opposite
+				#print("looking1 "~me.myMath.cartesianToEuler(me.myMath.product(-1,me.myMath.eulerToCartesian3Z(-me.hdg, me.pitch, turnFace)))[0]);
 				turnFace *= -1;
+				#print("turned face");
+			} else {
+				#turnFace *= -1;
 			}
+			
+			# roll the seat so pilot faces forward
 			me.rollN.setDoubleValue(turnFace);
-
-			#printf("seat now at P:%d H:%d R:%d",me.pitch,me.hdg,me.rollN.getValue());
+			#print("looking2 "~me.myMath.cartesianToEuler(me.myMath.product(-1,me.myMath.eulerToCartesian3Z(-me.hdg, me.pitch, turnFace)))[0]);
+			#printf("seat now at P:%d H:%d R:%d",me.pitch, me.hdg, turnFace);
 		}
 		if (me.rail_passed == FALSE and (me.rail == FALSE or me.rail_pos > me.rail_dist_m * M2FT)) {
 			me.rail_passed = TRUE;
@@ -2595,8 +2617,8 @@ var AIM = {
 
 	aspectToExhaust: func (munition_coord, test_contact) {
 		# return angle to viewing rear of target
-		me.vectorToEcho   = me.myMath.eulerToCartesian2(munition_coord.course_to(test_contact.get_Coord()), me.myMath.getPitch(munition_coord, test_contact.get_Coord()));
-    	me.vectorEchoNose = me.myMath.eulerToCartesian3X(test_contact.get_heading(), test_contact.get_Pitch(), test_contact.get_Roll());
+		me.vectorToEcho   = me.myMath.eulerToCartesian2(-munition_coord.course_to(test_contact.get_Coord()), me.myMath.getPitch(munition_coord, test_contact.get_Coord()));
+    	me.vectorEchoNose = me.myMath.eulerToCartesian3X(-test_contact.get_heading(), test_contact.get_Pitch(), test_contact.get_Roll());
     	me.angleToRear    = geo.normdeg180(me.myMath.angleBetweenVectors(me.vectorToEcho, me.vectorEchoNose));
     	#me.printGuideDetails(sprintf("Angle to rear %d degs.", math.abs(me.angleToRear));
     	return math.abs(me.angleToRear);
@@ -2604,7 +2626,7 @@ var AIM = {
 
     aspectToTop: func () {
     	# WIP: not used, and might never be
-    	me.vectorEchoTop  = me.myMath.eulerToCartesian3Z(echoHeading, echoPitch, echoRoll);
+    	me.vectorEchoTop  = me.myMath.eulerToCartesian3Z(-echoHeading, echoPitch, echoRoll);
     	me.view2D         = me.myMath.projVectorOnPlane(me.vectorEchoTop, me.vectorToEcho);
 		me.angleToNose    = geo.normdeg180(me.myMath.angleBetweenVectors(me.vectorEchoNose, me.view2D)+180);
 		me.angleToBelly   = geo.normdeg180(me.myMath.angleBetweenVectors(me.vectorEchoTop, me.vectorToEcho));
@@ -4454,8 +4476,8 @@ var AIM = {
 
 	FOV_check: func (deviation_hori, deviation_elev, fov_radius) {
 		# we measure the geodesic angle between current attitude and the attitude to target.
-		me.meVector = vector.Math.eulerToCartesian3X(meHeading, mePitch, 0);
-		me.itVector = vector.Math.eulerToCartesian3X(meHeading+deviation_hori, mePitch+deviation_elev, 0);
+		me.meVector = vector.Math.eulerToCartesian3X(-meHeading, mePitch, 0);
+		me.itVector = vector.Math.eulerToCartesian3X(-(meHeading+deviation_hori), mePitch+deviation_elev, 0);
 		me.fov_radial = vector.Math.angleBetweenVectors(me.meVector, me.itVector);
 		if (me.fov_radial <= fov_radius) {
 			return TRUE;
@@ -4626,8 +4648,8 @@ var AIM = {
 
 	steering_speed_G: func(steering_e_deg, steering_h_deg, s_fps, dt) {
 		# Get G number from steering (e, h) in deg, speed in ft/s.
-		me.meVector = vector.Math.eulerToCartesian3X(meHeading, mePitch, 0);
-		me.itVector = vector.Math.eulerToCartesian3X(meHeading+steering_h_deg, mePitch+steering_e_deg, 0);
+		me.meVector = vector.Math.eulerToCartesian3X(-meHeading, mePitch, 0);
+		me.itVector = vector.Math.eulerToCartesian3X(-(meHeading+steering_h_deg), mePitch+steering_e_deg, 0);
 		me.steer_deg = vector.Math.angleBetweenVectors(me.meVector, me.itVector);
 
 		# next speed vector
