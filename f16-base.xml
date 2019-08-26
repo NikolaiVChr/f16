@@ -38,6 +38,10 @@
             <path>/f16/avionics/gps-lat</path>
             <path>/f16/avionics/gps-lon</path>
             <path>/f16/avionics/gps-alt</path>
+            <path>/instrumentation/transponder/inputs/digit[0]</path>
+            <path>/instrumentation/transponder/inputs/digit[1]</path>
+            <path>/instrumentation/transponder/inputs/digit[2]</path>
+            <path>/instrumentation/transponder/inputs/digit[3]</path>
         </aircraft-data>
         <tags>
             <tag>fighter</tag>
