@@ -20,7 +20,7 @@
   
   <effect>
     <name>procedural-light-nav-left</name>
-    <inherits-from>Effects/procedural-light</inherits-from>
+    <inherits-from>procedural-light-als-and-fixed-pipeline</inherits-from>
     <object-name>procedural_light</object-name>
     <parameters>
         <light_color_base_r type="float">1.00</light_color_base_r>

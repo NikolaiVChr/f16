@@ -691,7 +691,7 @@
     <object-name>posright2</object-name>
     <condition>
       <and>
-        <property>/sim/rendering/shaders/skydome</property>
+        <!--<property>/sim/rendering/shaders/skydome</property>-->
         <equals>
         <property>sim/multiplay/generic/bool[40]</property> 
         <value>1</value>
@@ -744,7 +744,7 @@
     <object-name>belly</object-name>
     <object-name>spine</object-name>
     <condition>
-      <property>/sim/rendering/shaders/skydome</property>
+      <!--<property>/sim/rendering/shaders/skydome</property>-->
       <equals>
         <property>sim/multiplay/generic/bool[41]</property> 
         <value>1</value>
@@ -756,7 +756,7 @@
     <type>select</type>
     <object-name>tl</object-name>
     <condition>
-      <property>/sim/rendering/shaders/skydome</property>
+      <!--<property>/sim/rendering/shaders/skydome</property>-->
       <equals>
         <property>sim/multiplay/generic/bool[42]</property> 
         <value>1</value>
@@ -768,7 +768,7 @@
     <type>select</type>
     <object-name>tl2</object-name>
     <condition>
-      <property>/sim/rendering/shaders/skydome</property>
+      <!--<property>/sim/rendering/shaders/skydome</property>-->
       <equals>
         <property>sim/multiplay/generic/bool[43]</property> 
         <value>1</value>
