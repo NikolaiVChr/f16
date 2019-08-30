@@ -76,6 +76,7 @@ var find_aew_cx = func() {
     dist = 99999999; # twice the diameter of earth
     foreach (var mp; props.globals.getNode("/ai/models").getChildren("multiplayer")) {
         #print('checking ' ~ mp.getNode("callsign").getValue());
+        if (mp.getNode("sim/model/path") == nil or mp.getNode("sim/model/path").getValue()==nil) continue;
         model = remove_suffix(remove_suffix(split(".", split("/", mp.getNode("sim/model/path").getValue())[-1])[0], "-model"), "-anim");
         #print("is it " ~ model);
         if (find_match(model,gci_models) == 0) { continue; }
