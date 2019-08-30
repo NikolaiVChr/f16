@@ -2191,6 +2191,57 @@
 				<max>1</max>
 			</volume>
 		</radar-active>
+		<transponder-off>
+			<name>transponder-off</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/caution.wav</path>
+			<condition>
+				<equals>
+					<property>instrumentation/transponder/inputs/knob-mode</property>
+					<value>0</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>1</factor>
+				<max>1</max>
+			</volume>
+		</transponder-off>
+		<transponder-standby>
+			<name>transponder-standby</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/caution.wav</path>
+			<condition>
+				<equals>
+					<property>instrumentation/transponder/inputs/knob-mode</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>1</factor>
+				<max>1</max>
+			</volume>
+		</transponder-standby>
+		<transponder-on>
+			<name>transponder-on</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/caution.wav</path>
+			<condition>
+				<equals>
+					<property>instrumentation/transponder/inputs/knob-mode</property>
+					<value>4</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>1</factor>
+				<max>1</max>
+			</volume>
+		</transponder-on>
 		<thunder1>
 			<name>thunder1</name>
 			<mode>once</mode>
