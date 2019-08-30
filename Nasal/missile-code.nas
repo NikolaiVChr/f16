@@ -4474,7 +4474,7 @@ var AIM = {
 	#                         end loops for before flying.
 	###################################################################
 
-	FOV_check: func (deviation_hori, deviation_elev, fov_radius) {
+	FOV_check: func (meHeading, mePitch, deviation_hori, deviation_elev, fov_radius) {
 		# we measure the geodesic angle between current attitude and the attitude to target.
 		me.meVector = vector.Math.eulerToCartesian3X(-meHeading, mePitch, 0);
 		me.itVector = vector.Math.eulerToCartesian3X(-(meHeading+deviation_hori), mePitch+deviation_elev, 0);
@@ -4646,7 +4646,7 @@ var AIM = {
 		}
 	},
 
-	steering_speed_G: func(steering_e_deg, steering_h_deg, s_fps, dt) {
+	steering_speed_G: func(meHeading, mePitch,steering_e_deg, steering_h_deg, s_fps, dt) {
 		# Get G number from steering (e, h) in deg, speed in ft/s.
 		me.meVector = vector.Math.eulerToCartesian3X(-meHeading, mePitch, 0);
 		me.itVector = vector.Math.eulerToCartesian3X(-(meHeading+steering_h_deg), mePitch+steering_e_deg, 0);
