@@ -42,6 +42,10 @@
             <path>/instrumentation/transponder/inputs/digit[1]</path>
             <path>/instrumentation/transponder/inputs/digit[2]</path>
             <path>/instrumentation/transponder/inputs/digit[3]</path>
+            <path>/instrumentation/tacan/frequencies/selected-channel[1]</path>
+            <path>/instrumentation/tacan/frequencies/selected-channel[2]</path>
+            <path>/instrumentation/tacan/frequencies/selected-channel[3]</path>
+            <path>/instrumentation/tacan/frequencies/selected-channel[4]</path>
         </aircraft-data>
         <tags>
             <tag>fighter</tag>
@@ -496,6 +500,10 @@
             <key>
                 <name>r</name>
                 <desc>Toggles Radar Standby Mode</desc>
+            </key>
+            <key>
+                <name>Ctrl-t</name>
+                <desc>Cycle Transponder modes</desc>
             </key>
             <key>
                 <name>Q</name>
@@ -1195,6 +1203,22 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                     <dialog-name>Ground_Targeting</dialog-name>
                 </binding>
              </key>-->
+             <key n="20">
+                <name>Ctrl-t</name>
+                <desc>Cycle Transponder modes</desc>
+                <binding>
+                    <command>property-cycle</command>
+                    <property>/instrumentation/transponder/inputs/knob-mode</property>
+                        <wrap>1</wrap>
+                        <value>0</value><!-- OFF -->
+                        <value>1</value><!-- STANDBY -->
+                        <value>4</value><!-- ON  -->
+                </binding>
+                <binding>
+                    <command>nasal</command>
+                    <script>screen.log.write("Transponder "~(getprop("instrumentation/transponder/inputs/knob-mode")==0?"OFF":(getprop("instrumentation/transponder/inputs/knob-mode")==1?"STANDBY":"ON")), 0.5, 0.5, 1);</script>
+                </binding>
+            </key>
              <key n="49">
                 <name>CTRL-1</name>
                 <mod-ctrl>
