@@ -5,7 +5,7 @@
   <model> 
    <livery>
     <name type="string">IAF 105 Sqn, "Scorpions"</name>
-    <texture>Liveries/Block10/90-0867.png</texture>
+    <texture>Liveries/Block40/90-0867.png</texture>
     <owner type="string">IAF</owner>
    </livery>
    <livery-logo>

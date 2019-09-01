@@ -58,15 +58,15 @@ var rcs_database = {
     "A-10-model":               23.5, 
     "KC-10A":                   110,    #guess
     "KC-10A-GE":                110,    #guess
-    "KC-30A":                   110,    #guess
-    "Voyager-KC":               110,    #guess
+    "KC-30A":                   80,    #guess
+    "Voyager-KC":               80,    #guess
     "Typhoon":                  0.5,
     "EF2000":                   0.5,
     "brsq":                     5.0,
     "C-137R":                   100,    #guess
     "RC-137R":                  100,    #guess
     "EC-137R":                  110,    #guess
-    "E-8R":                     100,    #guess
+    "E-8R":                     105,    #guess
     "c130":                     100,    #guess
     "SH-60J":                   20,     #guess
     "UH-60J":                   20,     #guess
@@ -85,8 +85,7 @@ var rcs_database = {
     "gci":                      50,     #guess
     "F-22-Raptor":				0.0025,	#actual: 0.0001
     "F-35A":					0.001,
-    "F-35B":					0.001,
-    "daVinci_F-35A":            0.001,  
+    "F-35B":					0.001,  
     "Jaguar-GR3":               6,	    #guess
 };
 
