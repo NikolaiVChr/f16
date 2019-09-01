@@ -4,9 +4,9 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">TNI-AU 3 Sqn, TS-1608</name>
-    <texture>Liveries/Block20/87-0716.png</texture>
-    <owner type="string">TNI-AU</owner>
+    <name type="string">RNLAF, 323Sqn J-248 "50 years"</name>
+    <texture>Liveries/Block10/78-0248.png</texture>
+    <owner type="string">RNLAF</owner>
    </livery>
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>
