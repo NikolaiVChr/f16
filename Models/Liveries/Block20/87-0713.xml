@@ -5,7 +5,7 @@
   <model> 
    <livery>
     <name type="string">TNI-AU 3 Sqn, TS-1605</name>
-    <texture>Liveries/Block30/87-713.png</texture>
+    <texture>Liveries/Block20/87-0713.png</texture>
     <owner type="string">TNI-AU</owner>
    </livery>
    <livery-logo>

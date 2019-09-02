@@ -164,11 +164,11 @@ RWRCanvas = {
         rwr.AIRCRAFT_TOMCAT   = "14";
         rwr.ASSET_BUK         = "11";
         rwr.ASSET_GARGOYLE    = "20"; # Other namings for tracking and radar: BB, CS.
-        rwr.AIRCRAFT_MIG15    = "MG";
-        rwr.AIRCRAFT_MIG21    = "21";
-        rwr.AIRCRAFT_MIG29    = "29";
-        rwr.AIRCRAFT_SU27     = "27";
-        rwr.AIRCRAFT_SU57     = "57";
+        rwr.AIRCRAFT_FAGOT    = "MG";
+        rwr.AIRCRAFT_FISHBED  = "21";
+        rwr.AIRCRAFT_FULCRUM  = "29";
+        rwr.AIRCRAFT_FLANKER  = "27";
+        rwr.AIRCRAFT_PAKFA    = "57";
         rwr.AIRCRAFT_MIRAGE   = "M2";
         rwr.AIRCRAFT_FALCON   = "16";
         rwr.AIRCRAFT_WARTHOG  = "10";
@@ -177,7 +177,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_BLACKBIRD = "71";
         rwr.AIRCRAFT_TYPHOON  = "EF";
         rwr.AIRCRAFT_HORNET   = "18";
-        rwr.AIRCRAFT_SU15     = "SU";
+        rwr.AIRCRAFT_FLAGON   = "SU";
         rwr.SCENARIO_OPPONENT = "28";
         rwr.AIRCRAFT_JAGUAR   = "JG";
         rwr.AIRCRAFT_PHANTOM  = "F4";
@@ -186,10 +186,12 @@ RWRCanvas = {
         rwr.AIRCRAFT_TONKA	  = "TN";
         rwr.AIRCRAFT_RAFALE	  = "RF";
         rwr.AIRCRAFT_HARRIER  = "HR";
-        rwr.AIRCRAFT_G91	  = "91";
+        rwr.AIRCRAFT_GINA	  = "91";
         rwr.AIRCRAFT_MB339    = "MB";
+        rwr.AIRCRAFT_ALPHAJET = "AJ";
         rwr.AIRCRAFT_INTRUDER = "A6";
         rwr.AIRCRAFT_FROGFOOT = "25";
+        rwr.AIRCRAFT_NIGHTHAWK = "17";
         rwr.AIRCRAFT_RAPTOR	  = "22";
         rwr.AIRCRAFT_JSF      = "35";
         rwr.AIRCRAFT_GRIPEN   = "39";
@@ -208,9 +210,9 @@ RWRCanvas = {
                 "JA37Di-Viggen":            rwr.AIRCRAFT_VIGGEN,      
                 "m2000-5":                  rwr.AIRCRAFT_MIRAGE,
                 "m2000-5B":                 rwr.AIRCRAFT_MIRAGE,
-                "MiG-21bis":                rwr.AIRCRAFT_MIG21,
-                "MiG-29":                   rwr.AIRCRAFT_MIG29,
-				"SU-27":                    rwr.AIRCRAFT_SU27, 
+                "MiG-21bis":                rwr.AIRCRAFT_FISHBED,
+                "MiG-29":                   rwr.AIRCRAFT_FULCRUM,
+				"SU-27":                    rwr.AIRCRAFT_FLANKER, 
                 "EC-137R":                  rwr.AIRCRAFT_AWACS,
                 "RC-137R":                  rwr.AIRCRAFT_AWACS,
                 "E-8R":                     rwr.AIRCRAFT_AWACS,
@@ -230,9 +232,10 @@ RWRCanvas = {
                 "Mig-28":                   rwr.SCENARIO_OPPONENT,
         # Other threatening aircrafts (FGAddon, FGUK, etc.):
                 "AI":                       rwr.ASSET_AI,
-                "SU-37":					rwr.AIRCRAFT_SU27,
-                "T-50":                     rwr.AIRCRAFT_SU57,
-                "MiG-21Bison":              rwr.AIRCRAFT_MIG21,
+                "SU-37":					rwr.AIRCRAFT_FLANKER,
+                "T-50":                     rwr.AIRCRAFT_PAKFA,
+                "MiG-21Bison":              rwr.AIRCRAFT_FISHBED,
+                "Mig-29":                   rwr.AIRCRAFT_FULCRUM,
                 "EF2000":                   rwr.AIRCRAFT_TYPHOON,
                 "F-15C_Eagle":              rwr.AIRCRAFT_EAGLE,
                 "F-15J_ADTW":				rwr.AIRCRAFT_EAGLE,
@@ -241,7 +244,7 @@ RWRCanvas = {
                 "F-16CJ":					rwr.AIRCRAFT_FALCON,
                 "FA-18C_Hornet":            rwr.AIRCRAFT_HORNET,
                 "FA-18D_Hornet":            rwr.AIRCRAFT_HORNET,
-                "Su-15":                    rwr.AIRCRAFT_SU15,
+                "Su-15":                    rwr.AIRCRAFT_FLAGON,
                 "Jaguar-GR3":               rwr.AIRCRAFT_JAGUAR,
                 "F-4S":						rwr.AIRCRAFT_PHANTOM,
                 "F-4EJ_ADTW":				rwr.AIRCRAFT_PHANTOM,
@@ -266,12 +269,16 @@ RWRCanvas = {
                 "Harrier-GR5":				rwr.AIRCRAFT_HARRIER,
                 "Harrier-GR9":				rwr.AIRCRAFT_HARRIER,
                 "AV-8B":					rwr.AIRCRAFT_HARRIER,
-                "G91":						rwr.AIRCRAFT_G91,
-                "g91":						rwr.AIRCRAFT_G91,
+                "G91-R1B":                  rwr.AIRCRAFT_GINA,
+                "G91":						rwr.AIRCRAFT_GINA,
+                "g91":						rwr.AIRCRAFT_GINA,
                 "mb339":                    rwr.AIRCRAFT_MB339,
-                "MiG-15bis":                rwr.AIRCRAFT_MIG15,
+                "mb339pan":                 rwr.AIRCRAFT_MB339,
+                "alphajet":                 rwr.AIRCRAFT_ALPHAJET,
+                "MiG-15bis":                rwr.AIRCRAFT_FAGOT,
                 "Su-25":					rwr.AIRCRAFT_FROGFOOT,
                 "A-6E-model":               rwr.AIRCRAFT_INTRUDER,
+                "F-117":                    rwr.AIRCRAFT_NIGHTHAWK,
                 "F-22-Raptor":				rwr.AIRCRAFT_RAPTOR,
                 "F-35A":           			rwr.AIRCRAFT_JSF,
                 "F-35B":                    rwr.AIRCRAFT_JSF,

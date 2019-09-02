@@ -28,7 +28,8 @@ var rcs_database = {
     "F-16CJ":                   2,      #guess
     "f16":                      2,      #guess
     "MiG-29":                   6,      #guess
-    "SU-27":                    10,     #guess
+    "SU-27":                    15,
+    "SU-37":                    15,
     "T-50":                     0.3,    #guess
     "f15-bs":                   0.0001, # low so it doesnt show up on radar
     "JA37-Viggen":              3,      #guess
@@ -44,6 +45,7 @@ var rcs_database = {
     "B-1B":                     10,
     "b2-spirit":                0.0025,   #actual: 0.0001
     "B-2A":                     0.0025,   #actual: 0.0001
+    "F-117":                    0.003,
     "Blackbird-SR71A":          0.25,
     "Blackbird-SR71B":          0.30,
     "Blackbird-SR71A-BigTail":  0.30,
@@ -58,8 +60,8 @@ var rcs_database = {
     "A-10-model":               23.5, 
     "KC-10A":                   110,    #guess
     "KC-10A-GE":                110,    #guess
-    "KC-30A":                   80,    #guess
-    "Voyager-KC":               80,    #guess
+    "KC-30A":                   80,     #guess
+    "Voyager-KC":               80,     #guess
     "Typhoon":                  0.5,
     "EF2000":                   0.5,
     "brsq":                     5.0,
@@ -67,7 +69,7 @@ var rcs_database = {
     "RC-137R":                  100,    #guess
     "EC-137R":                  110,    #guess
     "E-8R":                     105,    #guess
-    "c130":                     100,    #guess
+    "c130":                     90,     #guess
     "SH-60J":                   20,     #guess
     "UH-60J":                   20,     #guess
     "uh60_Blackhawk":           20,     #guess
@@ -83,10 +85,13 @@ var rcs_database = {
     "frigate":                  450,    #estimated with blender
     "tower":                    60,     #estimated with blender
     "gci":                      50,     #guess
+    "FA-18C_Hornet":            1,
+    "FA-18D_Hornet":            1,
     "F-22-Raptor":				0.0025,	#actual: 0.0001
     "F-35A":					0.001,
     "F-35B":					0.001,  
     "Jaguar-GR3":               6,	    #guess
+    "MiG-15bis":                17,     #guess
 };
 
 var prevVisible = {};
