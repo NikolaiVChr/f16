@@ -4,17 +4,21 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">TNI-AU 3 Sqn, TS-1608</name>
-    <texture>Liveries/Block20/87-0716.png</texture>
-    <owner type="string">TNI-AU</owner>
+    <name type="string">IAF 101 Sqn, "First Fighter"</name>
+    <texture>Liveries/Block40/90-0874.png</texture>
+    <owner type="string">IAF</owner>
    </livery>
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>
    </livery-logo>
-
+   
    <livery-patch>
       <texture>Liveries/patch.default.png</texture>
   </livery-patch>
+
+  <livery-pod>
+      <texture>Armament/External-stores/MXU-648.png</texture>
+  </livery-pod>
   </model>
  </sim>
 </PropertyList>
