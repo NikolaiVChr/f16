@@ -362,11 +362,35 @@
 
 
     <channel execrate="1" name="Roll">
+        
+        <fcs_function name="fcs/aileron-cmd-pow-norm">
+            <function>
+                    <ifthen>
+                        <lt>
+                            <p> fcs/aileron-cmd-norm </p>
+                            <v> 0 </v>
+                        </lt>
+                        <product>
+                            <v> -1 </v>
+                            <pow>
+                                <abs>
+                                    <p>fcs/aileron-cmd-norm</p>
+                                </abs>
+                                <v>1.3</v>
+                            </pow>
+                        </product>
+                        <pow>
+                            <p>fcs/aileron-cmd-norm</p>
+                            <v>1.3</v>
+                        </pow>
+                    </ifthen>
+            </function>
+        </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/roll/stick-force-lbf">
             <function>
                 <table>
-                    <independentVar lookup="row">fcs/aileron-cmd-norm</independentVar>
+                    <independentVar lookup="row">fcs/aileron-cmd-pow-norm</independentVar>
                     <tableData>
                        -1 -17
                         0   0
@@ -1005,13 +1029,37 @@
 
 
     <channel execrate="1" name="Yaw">
+        
+        <fcs_function name="fcs/rudder-cmd-pow-norm">
+            <function>
+                    <ifthen>
+                        <lt>
+                            <p> fcs/rudder-cmd-norm </p>
+                            <v> 0 </v>
+                        </lt>
+                        <product>
+                            <v> -1 </v>
+                            <pow>
+                                <abs>
+                                    <p>fcs/rudder-cmd-norm</p>
+                                </abs>
+                                <v>1.3</v>
+                            </pow>
+                        </product>
+                        <pow>
+                            <p>fcs/rudder-cmd-norm</p>
+                            <v>1.3</v>
+                        </pow>
+                    </ifthen>
+            </function>
+        </fcs_function>
 
         <kinematic name="fcs/fly-by-wire/yaw/rudder-cmd-norm-kinematic">
             <description>
                 Real pedals can not be moved as fast as a joystick.
                 This will limit the movement speed.
             </description>
-            <input>fcs/rudder-cmd-norm</input>
+            <input>fcs/rudder-cmd-pow-norm</input>
             <noscale/>
             <traverse>
                 <setting>

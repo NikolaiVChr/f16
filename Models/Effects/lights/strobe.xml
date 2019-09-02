@@ -1,9 +1,32 @@
 <?xml version="1.0"?>
 
 <PropertyList>
+  
+  <model>
+   <path>Aircraft/f16/Models/Effects/lights/strobe-light.xml</path>
+   <name>glow</name>
+  </model>
 
- <path>strobe.ac</path>
-
+ <animation>
+  <type>dist-scale</type>
+  <object-name>glow</object-name>
+  <interpolation>
+   <entry><ind>0</ind><dep>1.0</dep></entry>
+   <entry><ind>5000</ind><dep>50.0</dep></entry>
+  </interpolation>
+ </animation>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>glow</object-name>
+  <condition>
+   <equals>
+        <property>sim/multiplay/generic/bool[44]</property> 
+        <value>1</value>
+      </equals> 
+  </condition>
+ </animation>
+<!--
  <animation>
   <type>noshadow</type>
   <object-name>strobe</object-name>
@@ -46,6 +69,6 @@
   <x-factor>12</x-factor>
   <y-factor>12</y-factor>
   <z-factor>12</z-factor>
- </animation>
+ </animation>-->
 
 </PropertyList>

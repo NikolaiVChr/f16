@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+
+<PropertyList>
+
+  <path>Models/Effects/procedural_light.ac</path>
+
+ <effect>
+    <inherits-from>Aircraft/JA37/Models/Effects/proc-als-lights/strobe-light</inherits-from>
+   <object-name>procedural_light</object-name>
+   <parameters>
+        
+    </parameters>
+ </effect>
+ 
+  <nopreview/>
+
+  <animation>
+    <type>noshadow</type>
+    <object-name>procedural_light</object-name>
+  </animation>
+
+</PropertyList>

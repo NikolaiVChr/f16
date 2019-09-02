@@ -20,7 +20,7 @@
   
   <effect>
     <name>procedural-light-nav-left</name>
-    <inherits-from>procedural-light-als-and-fixed-pipeline</inherits-from>
+    <inherits-from>Aircraft/f16/Models/Effects/lights/procedural-light-als-and-fixed-pipeline</inherits-from>
     <object-name>procedural_light</object-name>
     <parameters>
         <light_color_base_r type="float">1.00</light_color_base_r>

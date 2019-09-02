@@ -354,7 +354,7 @@
         <type>float</type>
         <value><use>outer_gain</use></value>
       </uniform>
-      <uniform>
+      <!--<uniform>
         <name>visibility</name>
         <type>float</type>
         <value><use>visibility</use></value>
@@ -368,7 +368,7 @@
         <name>hazeLayerAltitude</name>
         <type>float</type>
         <value><use>lthickness</use></value>
-      </uniform>
+      </uniform>-->
       <uniform>
         <name>eye_alt</name>
         <type>float</type>

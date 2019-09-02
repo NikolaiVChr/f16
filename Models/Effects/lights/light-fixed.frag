@@ -22,9 +22,9 @@ uniform float inner_angle;
 uniform float zero_angle;
 uniform float outer_gain;
 
-uniform float visibility;
-uniform float avisibility;
-uniform float hazeLayerAltitude;
+//uniform float visibility;
+//uniform float avisibility;
+//uniform float hazeLayerAltitude;
 uniform float eye_alt;
 uniform float terminator;
 
@@ -110,6 +110,20 @@ return fade * 0.825 * (pow(time_arg1, 40.0) + pow(time_arg2, 8.0));
 
 }
 
+float fog_transmission()
+{
+	//if (type == 0){
+		const float LOG2 = 1.442695;
+		//float fogCoord =length(PointPos);
+		float fogCoord = gl_ProjectionMatrix[3].z/(gl_FragCoord.z * -2.0 + 1.0 - gl_ProjectionMatrix[2].z);
+		float fogFactor = exp2(-gl_Fog.density * gl_Fog.density * fogCoord * fogCoord * LOG2);
+
+		if(gl_Fog.density == 1.0)
+			fogFactor=1.0;
+
+		return fogFactor;
+}
+
 
 void main()
 {
@@ -125,13 +139,14 @@ vec3 viewDir = normalize(relPos);
 // fogging
 
 float dist = length(relPos);
-float delta_z = hazeLayerAltitude - eye_alt;
+//float delta_z = hazeLayerAltitude - eye_alt;
 float transmission = 1.0;
 float vAltitude;
-float delta_zv;
+//float delta_zv;
 float H;
 float distance_in_layer;
-//float transmission_arg;
+/**
+float transmission_arg;
 
  // angle with horizon
     float ct = dot(vec3(0.0, 0.0, 1.0), relPos)/dist;
@@ -171,7 +186,7 @@ float distance_in_layer;
 		}
 	}
 
-/**
+
 
     transmission_arg = (dist-distance_in_layer)/avisibility;
     if (visibility < avisibility)
@@ -185,7 +200,7 @@ float distance_in_layer;
 
 */
 
-    //transmission =  fog_func(transmission_arg, 0.0);
+    transmission =  fog_transmission();
     float lightArg = terminator/100000.0;
 
 
@@ -226,7 +241,7 @@ float intensity = shape(vertex, noise, fade, transmission, glare, lightArg);
 vec3 light_color = mix(light_color_base, light_color_center, intensity*intensity);
 
 
-gl_FragColor =   vec4 (fog_Func(light_color.rgb,0), intensity * transmission );
+gl_FragColor =   vec4 (light_color.rgb, intensity * transmission );
 
 
 }
