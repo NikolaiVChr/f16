@@ -61,13 +61,21 @@
   <type>select</type>
   <object-name>Pilot_ext</object-name>
   <condition>
-   <not><property>sim/current-view/internal</property></not>
-            <not>
-                <equals>
-                    <property>f16/done</property>
-                    <value>1</value>
-                </equals>
-            </not>
+    <and>
+      <equals>
+        <property>f16/done</property>
+        <value>0</value>
+      </equals>
+      <or>
+        <not>
+          <property>sim/current-view/internal</property>
+        </not>
+        <equals>
+          <property>sim/current-view/name</property>
+          <value type="string">Shoulder View</value>
+        </equals>
+      </or>
+    </and>
   </condition>
  </animation>
 
