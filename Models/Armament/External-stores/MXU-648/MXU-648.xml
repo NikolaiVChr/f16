@@ -16,4 +16,20 @@
       <object-name>Hooks</object-name>
   </effect>
 
+ <animation>
+  <type>rotate</type>
+  <object-name>Door</object-name>
+  <property>canopy/position-norm</property>
+  <factor>120</factor>
+  <center>
+   <x-m>-0.09000</x-m>
+   <y-m>-0.18010</y-m>
+   <z-m>-0.15000</z-m>
+  </center>
+  <axis>
+   <x>1.0</x>
+   <y>0.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
  </PropertyList>
