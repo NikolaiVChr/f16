@@ -1,0 +1,26 @@
+The fuselage effect.
+
+1 - Put the files into a folder under the aircraft.
+2 - Edit the *.eff files and replace all folders so they match.
+3 - Use approx as model-combined-deffered.
+4 - Transparency not supported, use model-combined-transparency for that.
+
+Textures:
+
+		0 - livery (rgba)
+		1 - autogen. 3D noise
+		2 - normal (rgb) & shininess (a)
+		3 - light (rgba)
+		4 - reflect map (a) & dirt (rgb)
+		5 - reflect cube map (rgb)
+		6 - fresnel (rgb) & rainbow (rgb) & ambient occlusion (a)
+		7 - grain (rgba)
+
+
+Parameters that differs from mode-combined-deffered:
+
+<metallic type="float">0.75</metallic><!-- 0-1 -->
+<ambient-factor type="float">0.75</ambient-factor><!-- 0-1 -->
+<normalmap-dds-compression-bc3n>1</normalmap-dds-compression-bc3n><!-- 0 or 1, if this is enabled alpha on texture 2 is not used for shininess -->
+
+<ambient-correction type="float">0.00</ambient-correction><!-- not used, as the way reflections are applied this is not an issue anymore -->
