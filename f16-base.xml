@@ -310,17 +310,56 @@
             </config>
         </view>
         <view n="103">
-            <name>Shoulder View</name>
+            <name>GoPro #1 View</name>
             <type>lookfrom</type>
             <heading-offset-deg>0</heading-offset-deg>
             <pitch-offset-deg>0</pitch-offset-deg>
             <internal archive="y">true</internal>
             <config>
-                <pitch-offset-deg>-13.75</pitch-offset-deg>
-                <x-offset-m archive="y">-0.25</x-offset-m>
-                <y-offset-m archive="y">0.90</y-offset-m>
-                <z-offset-m archive="y">-4</z-offset-m>
+                <pitch-offset-deg>-13.55</pitch-offset-deg>
+                <heading-offset-deg>-3</heading-offset-deg>
+                <x-offset-m archive="y">-0.23</x-offset-m>
+                <y-offset-m archive="y">0.795</y-offset-m>
+                <z-offset-m archive="y">-3.98</z-offset-m>
                 <default-field-of-view-deg>90</default-field-of-view-deg>
+                <from-model type="bool">true</from-model>
+                <limits>
+                    <enabled type="bool">false</enabled>
+                </limits>
+            </config>
+        </view>
+        <view n="104">
+            <name>GoPro #2 View</name>
+            <type>lookfrom</type>
+            <heading-offset-deg>0</heading-offset-deg>
+            <pitch-offset-deg>0</pitch-offset-deg>
+            <internal archive="y">true</internal>
+            <config>
+                <pitch-offset-deg>-6.25</pitch-offset-deg>
+                <heading-offset-deg>-218</heading-offset-deg>
+                <x-offset-m archive="y">-0.228</x-offset-m>
+                <y-offset-m archive="y">0.76</y-offset-m>
+                <z-offset-m archive="y">-4.15</z-offset-m>
+                <default-field-of-view-deg>88</default-field-of-view-deg>
+                <from-model type="bool">true</from-model>
+                <limits>
+                    <enabled type="bool">false</enabled>
+                </limits>
+            </config>
+        </view>
+        <view n="105">
+            <name>GoPro #3 View</name>
+            <type>lookfrom</type>
+            <heading-offset-deg>0</heading-offset-deg>
+            <pitch-offset-deg>0</pitch-offset-deg>
+            <internal archive="y">true</internal>
+            <config>
+                <pitch-offset-deg>-9.5</pitch-offset-deg>
+                <heading-offset-deg>-186</heading-offset-deg>
+                <x-offset-m archive="y">0.216</x-offset-m>
+                <y-offset-m archive="y">0.78</y-offset-m>
+                <z-offset-m archive="y">-4.673</z-offset-m>
+                <default-field-of-view-deg>92</default-field-of-view-deg>
                 <from-model type="bool">true</from-model>
                 <limits>
                     <enabled type="bool">false</enabled>

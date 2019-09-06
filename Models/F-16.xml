@@ -72,7 +72,15 @@
         </not>
         <equals>
           <property>sim/current-view/name</property>
-          <value type="string">Shoulder View</value>
+          <value type="string">GoPro #1 View</value>
+        </equals>
+        <equals>
+          <property>sim/current-view/name</property>
+          <value type="string">GoPro #2 View</value>
+        </equals>
+        <equals>
+          <property>sim/current-view/name</property>
+          <value type="string">GoPro #3 View</value>
         </equals>
       </or>
     </and>

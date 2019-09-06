@@ -150,6 +150,16 @@
   </offsets>
  </model>
 
+ <model>
+  <name>Station2_ACMIpod</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/ACMIpod/AN_ASQ-T50.xml</path>
+  <offsets>
+   <x-m>0.97</x-m>
+   <y-m>-3.7</y-m>
+   <z-m>-0.328</z-m>
+   <pitch-deg>-3.55</pitch-deg>
+  </offsets>
+ </model>
   
  <!-- =============================================================================================================  --> 
  <!-- =========================================== Station 3 =======================================================  -->

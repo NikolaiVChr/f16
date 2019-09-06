@@ -165,6 +165,21 @@
   </condition>
  </animation>
  
+<animation>
+  <type>select</type>
+  <object-name>Station2_ACMIpod</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-1-type</property>
+      <value>AN/ASQ-T50(V)1 ACMI Pod</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-1-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
 <!--  ===========================================================================================================-->
 <!--  ================================================= id-2   ==================================================-->
 <!--  ===========================================================================================================-->
