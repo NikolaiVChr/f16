@@ -287,7 +287,7 @@
           <rain-enabled type="int">2</rain-enabled>
           <snow-enabled type="int">0</snow-enabled>
           <reflection-enabled type="int">1</reflection-enabled>
-          <reflection-correction type="float">-0.30</reflection-correction>
+          <reflection-correction type="float">-0.45</reflection-correction>
       </parameters>
       <!-- fuselage -->
       <object-name>RadarDomeTop</object-name>
