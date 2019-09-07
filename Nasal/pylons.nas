@@ -63,9 +63,9 @@ var pylonSets = {
     m84: {name: "1 x MK-84", content: ["MK-84"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     m83:  {name: "2 x MK-83", content: ["MK-83","MK-83"], fireOrder: [0,1], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
     c87:  {name: "2 x CBU-87", content: ["CBU-87","CBU-87"], fireOrder: [0,1], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
-	dumb1:  {name: "CATM-9L", content: [catm9], fireOrder: [], launcherDragArea: 0.0, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-	dumb2: {name: "AN-T-17", content: [ant17], fireOrder: [], launcherDragArea: 0.0, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-	dumb3:  {name: "CATM-120B", content: [catm120], fireOrder: [], launcherDragArea: 0.0, launcherMass: 20, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+	dumb1:  {name: "CATM-9L", content: [catm9], fireOrder: [], launcherDragArea: 0.0, launcherMass: 185, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+	dumb2: {name: "AN-T-17", content: [ant17], fireOrder: [], launcherDragArea: 0.0, launcherMass: 185, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+	dumb3:  {name: "CATM-120B", content: [catm120], fireOrder: [], launcherDragArea: 0.0, launcherMass: 291, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	smokeRL: {name: "Smokewinder Red", content: [smokewinderRed1], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	smokeGL: {name: "Smokewinder Green", content: [smokewinderGreen1], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	smokeBL: {name: "Smokewinder Blue", content: [smokewinderBlue1], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
@@ -659,13 +659,13 @@ var ferrycargo2 = func {
 var train1 = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.dumb2);
-        pylon2.loadSet(pylonSets.podACMI);
+        pylon2.loadSet(pylonSets.dumb1);
         pylon3.loadSet(pylonSets.empty);
         pylon4.loadSet(pylonSets.empty);
         pylon5.loadSet(pylonSets.fuel30);
         pylon6.loadSet(pylonSets.empty);
         pylon7.loadSet(pylonSets.empty);
-        pylon8.loadSet(pylonSets.dumb1);
+        pylon8.loadSet(pylonSets.podACMI);
         pylon9.loadSet(pylonSets.dumb2);
         pylon10.loadSet(pylonSets.empty);
         pylon11.loadSet(pylonSets.empty);

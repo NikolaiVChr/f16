@@ -1240,7 +1240,21 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
     </equals>
   </condition>
  </animation>
- 
+
+<animation>
+  <type>select</type>
+  <object-name>Station8_ACMIpod</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-7-type</property>
+      <value>AN/ASQ-T50(V)1 ACMI Pod</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-7-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
  
 <!--  ===========================================================================================================-->
 <!--  ================================================= id-8   ==================================================-->
