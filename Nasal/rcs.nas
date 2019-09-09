@@ -49,7 +49,7 @@ var rcs_database = {
     "Blackbird-SR71A":          0.25,
     "Blackbird-SR71B":          0.30,
     "Blackbird-SR71A-BigTail":  0.30,
-    "u2s":                      0.30,   #actual: 0.01
+    "u2s":                      0.10,   #actual: 0.01
     "ch53e":                    40,     #guess
     "MiG-21bis":                3.5,
     "MiG-21Bison":              3.5,
@@ -64,7 +64,7 @@ var rcs_database = {
     "Voyager-KC":               80,     #guess
     "Typhoon":                  0.5,
     "EF2000":                   0.5,
-    "brsq":                     5.0,
+    "brsq":                     5,
     "C-137R":                   100,    #guess
     "RC-137R":                  100,    #guess
     "EC-137R":                  110,    #guess
@@ -91,6 +91,11 @@ var rcs_database = {
     "F-35A":					0.001,
     "F-35B":					0.001,  
     "Jaguar-GR3":               6,	    #guess
+    "f-20A":                    2.5,    #low end of sources
+    "f-20C":                    2.5,
+    "f-20prototype":            2.5,
+    "f-20bmw":                  2.5,
+    "f-20-dutchdemo":           2.5,
     "MiG-15bis":                17,     #guess
 };
 

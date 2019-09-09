@@ -65,7 +65,7 @@ var pylonSets = {
     c87:  {name: "2 x CBU-87", content: ["CBU-87","CBU-87"], fireOrder: [0,1], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
 	dumb1:  {name: "CATM-9L", content: [catm9], fireOrder: [], launcherDragArea: 0.0, launcherMass: 185, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	dumb2: {name: "AN-T-17", content: [ant17], fireOrder: [], launcherDragArea: 0.0, launcherMass: 185, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-	dumb3:  {name: "CATM-120B", content: [catm120], fireOrder: [], launcherDragArea: 0.0, launcherMass: 291, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+	dumb3:  {name: "CATM-120B", content: [catm120], fireOrder: [], launcherDragArea: 0.0, launcherMass: 290, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	smokeRL: {name: "Smokewinder Red", content: [smokewinderRed1], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	smokeGL: {name: "Smokewinder Green", content: [smokewinderGreen1], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	smokeBL: {name: "Smokewinder Blue", content: [smokewinderBlue1], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
