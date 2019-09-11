@@ -293,23 +293,6 @@
             <pitch-offset-deg>10</pitch-offset-deg>
         </view>
         <view n="102">
-            <name>TGP</name>
-            <enabled>false</enabled>
-            <internal archive="y">true</internal>
-            <pitch-offset-deg type="double">-30</pitch-offset-deg>
-            <heading-offset-deg type="double">0</heading-offset-deg>
-            <config>
-              <from-model type="bool">true</from-model>
-              <from-model-idx type="int">0</from-model-idx>
-              <x-offset-m archive="y">0.8536</x-offset-m><!-- Right -->
-              <y-offset-m archive="y">-1.4121</y-offset-m><!-- Up -->
-              <z-offset-m archive="y">-2.5856</z-offset-m><!-- Back -->
-              <pitch-offset-deg type="double"> -30 </pitch-offset-deg>
-              <heading-offset-deg type="double">0</heading-offset-deg>
-              <default-field-of-view-deg type="double">20</default-field-of-view-deg>
-            </config>
-        </view>
-        <view n="103">
             <name>GoPro #1 View</name>
             <type>lookfrom</type>
             <heading-offset-deg>0</heading-offset-deg>
@@ -328,7 +311,7 @@
                 </limits>
             </config>
         </view>
-        <view n="104">
+        <view n="103">
             <name>GoPro #2 View</name>
             <type>lookfrom</type>
             <heading-offset-deg>0</heading-offset-deg>
@@ -347,7 +330,7 @@
                 </limits>
             </config>
         </view>
-        <view n="105">
+        <view n="104">
             <name>GoPro #3 View</name>
             <type>lookfrom</type>
             <heading-offset-deg>0</heading-offset-deg>
@@ -359,11 +342,28 @@
                 <x-offset-m archive="y">0.211</x-offset-m>
                 <y-offset-m archive="y">0.78</y-offset-m>
                 <z-offset-m archive="y">-4.665</z-offset-m>
-                <default-field-of-view-deg>101</default-field-of-view-deg>
+                <default-field-of-view-deg>101.5</default-field-of-view-deg>
                 <from-model type="bool">true</from-model>
                 <limits>
                     <enabled type="bool">false</enabled>
                 </limits>
+            </config>
+        </view>
+        <view n="105">
+            <name>TGP</name>
+            <enabled>false</enabled>
+            <internal archive="y">true</internal>
+            <pitch-offset-deg type="double">-30</pitch-offset-deg>
+            <heading-offset-deg type="double">0</heading-offset-deg>
+            <config>
+              <from-model type="bool">true</from-model>
+              <from-model-idx type="int">0</from-model-idx>
+              <x-offset-m archive="y">0.8536</x-offset-m><!-- Right -->
+              <y-offset-m archive="y">-1.4121</y-offset-m><!-- Up -->
+              <z-offset-m archive="y">-2.5856</z-offset-m><!-- Back -->
+              <pitch-offset-deg type="double"> -30 </pitch-offset-deg>
+              <heading-offset-deg type="double">0</heading-offset-deg>
+              <default-field-of-view-deg type="double">20</default-field-of-view-deg>
             </config>
         </view>
 
@@ -1861,7 +1861,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double"> 275 </max-report-distance>
+                <max-report-distance type="double"> 250 </max-report-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
@@ -1901,7 +1901,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double"> 300 </max-report-distance>
+                <max-report-distance type="double"> 275 </max-report-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
@@ -1942,7 +1942,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double"> 350 </max-report-distance>
+                <max-report-distance type="double"> 325 </max-report-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
@@ -1990,7 +1990,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double"> 275 </max-report-distance>
+                <max-report-distance type="double"> 250 </max-report-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
@@ -2038,7 +2038,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double"> 275 </max-report-distance>
+                <max-report-distance type="double"> 250 </max-report-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
@@ -2086,7 +2086,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double"> 350 </max-report-distance>
+                <max-report-distance type="double"> 325 </max-report-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
@@ -2134,7 +2134,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double"> 350 </max-report-distance>
+                <max-report-distance type="double"> 325 </max-report-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
@@ -2289,7 +2289,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <all-aspect type="bool">true</all-aspect>
                 <rail type="bool">false</rail>
                 <no-common-target type="bool">true</no-common-target>
-                <max-report-distance type="double">800</max-report-distance>
+                <max-report-distance type="double">600</max-report-distance>
                 <vol-search type="double">0.075</vol-search>
                 <vol-track type="double">0.25</vol-track>
                 <drop-time type="double">3.5</drop-time>

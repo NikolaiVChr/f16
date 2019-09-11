@@ -269,7 +269,7 @@ var PFD_Device =
                 me.current_page.notifyButton(button_id);
                 if(button_id==19 and getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
                     screen.log.write("Drag with right mouse button to slew. X/x to zoom.",1,1,1);
-                    setprop("sim/current-view/view-number",9);
+                    setprop("sim/current-view/view-number",12);
                 }
 
             }

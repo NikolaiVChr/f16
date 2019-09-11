@@ -172,7 +172,7 @@
         <text>
             <row>12</row>
             <col>0</col>
-            <label>Training Mode 1</label>
+            <label>A/A Training (Mode 1)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>12</row>
@@ -187,7 +187,7 @@
         <text>
             <row>14</row>
             <col>0</col>
-            <label>Training Mode 2</label>
+            <label>A/A Training (Mode 2)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>14</row>
@@ -232,7 +232,7 @@
         <text>
             <row>2</row>
             <col>2</col>
-            <label>SEAD/DEAD</label>
+            <label>SEAD/DEAD (Mode 1)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>2</row>
@@ -240,18 +240,33 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_dead();</script>
+                <script>pylons.a2g_dead1();</script>
+            </binding>
+        </button>
+
+        <text>
+            <row>4</row>
+            <col>2</col>
+            <label>SEAD/DEAD (Mode 2)</label>
+        </text>
+        <button><pref-width>45</pref-width><pref-height>20</pref-height>
+            <row>4</row>
+            <col>3</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_dead2();</script>
             </binding>
         </button>
 
         <layout>hbox</layout>
         <text>
-            <row>4</row>
+            <row>6</row>
             <col>2</col>
             <label>Close Air Support</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>4</row>
+            <row>6</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -267,12 +282,12 @@
         </hrule>
 
         <text>
-            <row>6</row>
+            <row>8</row>
             <col>2</col>
             <label>Close Air Support (ER)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>6</row>
+            <row>8</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -288,12 +303,12 @@
         </hrule>
 
         <text>
-            <row>8</row>
+            <row>10</row>
             <col>2</col>
             <label>Offensive Counter Air</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>8</row>
+            <row>10</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -303,12 +318,12 @@
         </button>
 
         <text>
-            <row>10</row>
+            <row>12</row>
             <col>2</col>
             <label>A/G JASSM Stand-off Strike</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>10</row>
+            <row>12</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -318,12 +333,12 @@
         </button>
 
         <text>
-            <row>12</row>
+            <row>14</row>
             <col>2</col>
             <label>A/G JSOW Stand-off Strike</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>12</row>
+            <row>14</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -339,12 +354,12 @@
         </hrule>
 
         <text>
-            <row>14</row>
+            <row>16</row>
             <col>2</col>
             <label>Ferry Loadout 1</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>14</row>
+            <row>16</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -354,12 +369,12 @@
         </button>
 
         <text>
-            <row>16</row>
+            <row>18</row>
             <col>2</col>
             <label>Ferry Loadout 2</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>16</row>
+            <row>18</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -367,6 +382,12 @@
                 <script>pylons.ferrycargo2();</script>
             </binding>
         </button>
+
+        <hrule>
+            <row>19</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
 
         <text>
             <row>0</row>

@@ -17,9 +17,9 @@
 #
 # Position of the FLIR camera ([z (back), x (right), y (up)])
 var coords_cam = [
-    getprop("/sim/view[102]/config/z-offset-m"),
-    getprop("/sim/view[102]/config/x-offset-m"),
-    getprop("/sim/view[102]/config/y-offset-m")
+    getprop("/sim/view[105]/config/z-offset-m"),
+    getprop("/sim/view[105]/config/x-offset-m"),
+    getprop("/sim/view[105]/config/y-offset-m")
 ];
 io.include("Aircraft/Generic/updateloop.nas");
 #io.load_nasal(getprop("/sim/fg-root") ~ "/Aircraft/c172p/Nasal/generic/math_ext.nas","math_ext");
@@ -167,8 +167,8 @@ var FLIRCameraUpdater = {
                 setprop("/sim/current-view/goal-heading-offset-deg", -yaw);
                 setprop("/sim/current-view/goal-pitch-offset-deg", pitch);
             }
-            setprop("sim/view[102]/heading-offset-deg", yaw);
-            setprop("sim/view[102]/pitch-offset-deg", pitch);
+            setprop("sim/view[105]/heading-offset-deg", yaw);
+            setprop("sim/view[105]/pitch-offset-deg", pitch);
         };
     },
 
@@ -354,7 +354,7 @@ var fast_loop = func {
         # deselect view back to pilot default
         setprop("sim/current-view/view-number",0);
         setprop("sim/rendering/als-filters/use-IR-vision", 0);
-        setprop("sim/view[102]/enabled", 0);
+        setprop("sim/view[105]/enabled", 0);
     } elsif (viewName == "TGP") {
         # FLIR TGP stuff:
         setprop("aircraft/flir/target/view-enabled", viewName == "TGP");
@@ -389,13 +389,13 @@ var fast_loop = func {
             bott.setText(sprintf("      CMBT  %04d",lasercode));
         }
         if (!getprop("/aircraft/flir/target/auto-track") or flir_updater.click_coord_cam == nil) {
-            setprop("sim/view[102]/heading-offset-deg", -getprop("sim/current-view/heading-offset-deg"));
-            setprop("sim/view[102]/pitch-offset-deg", getprop("sim/current-view/pitch-offset-deg"));
+            setprop("sim/view[105]/heading-offset-deg", -getprop("sim/current-view/heading-offset-deg"));
+            setprop("sim/view[105]/pitch-offset-deg", getprop("sim/current-view/pitch-offset-deg"));
         }
     } else {
         # remove FLIR effects and disable TGP view
         setprop("sim/rendering/als-filters/use-IR-vision", 0);
-        setprop("sim/view[102]/enabled", 0);#!getprop("gear/gear/wow"));
+        setprop("sim/view[105]/enabled", 0);#!getprop("gear/gear/wow"));
         #lock.hide();
         #setprop("f16/avionics/lock-flir",0.05);
     }
@@ -498,8 +498,8 @@ var fast_loop = func {
         lock.update();
     
   # animate the LANTIRN camera:
-    var b = geo.normdeg180(getprop("sim/view[102]/heading-offset-deg"));
-    var p = getprop("sim/view[102]/pitch-offset-deg");
+    var b = geo.normdeg180(getprop("sim/view[105]/heading-offset-deg"));
+    var p = getprop("sim/view[105]/pitch-offset-deg");
     var polarL = math.sqrt(p*p+b*b);
     var polarD = polarL!=0 and b!=0?math.atan2(p,b)*R2D:-90;
     setprop("aircraft/flir/swivel/pitch-deg",polarL);

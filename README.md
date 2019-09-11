@@ -1,6 +1,11 @@
 # F-16 Fighting Falcon
 General Dynamics F-16 for Flightgear flight simulator
 
+![Image](https://i.ibb.co/s32M2mX/f16-b50-1.png)
+
+The General Dynamics F-16 Fighting Falcon is a single-engine supersonic multirole fighter aircraft by General Dynamics, exported to many countries. Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
+The Fighting Falcon has key features including a frameless bubble canopy for better visibility, side-mounted control stick to ease control while maneuvering, a seat reclined 30 degrees to reduce the effect of g-forces on the pilot, and the first use of a relaxed static stability/fly-by-wire flight control system which helps to make it a nimble aircraft.
+
 Includes the following Aircraft variants:
 
 - F-16E block 60

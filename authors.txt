@@ -37,6 +37,8 @@ J Maverick 16
 - Sound recording/editing and addition
 - Addition and implementation of weapons, stores
 - 3D works (pilot model, weapons/stores, misc)
+- RWR/RCS data research and update
+- GoPro views
 - Various fixes and improvements
 - Splashes
 
