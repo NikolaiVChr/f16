@@ -8,7 +8,7 @@
 <!-- NOSE CHOCKS -->
 <model>
  <name>chocks1</name>
- <path>Aircraft/f16/Models/chock.ac</path>
+ <path>Aircraft/f16/Models/Ramp/chock.ac</path>
  <offsets> 
   <x-m>-3.027</x-m>
   <y-m>-0.00</y-m>
@@ -32,7 +32,7 @@
 <!-- MAIN LEFT CHOCKS -->
 <model>
  <name>chocks2</name>
- <path>Aircraft/f16/Models/chocks.ac</path>
+ <path>Aircraft/f16/Models/Ramp/chocks.ac</path>
  <offsets> 
   <x-m> 0.522</x-m>
   <y-m>-1.30</y-m>
@@ -56,7 +56,7 @@
 <!-- MAIN RIGHT CHOCKS -->
 <model>
  <name>chocks3</name>
- <path>Aircraft/f16/Models/chocks.ac</path>
+ <path>Aircraft/f16/Models/Ramp/chocks.ac</path>
  <offsets> 
   <x-m> 0.522</x-m>
   <y-m>1.30</y-m>
@@ -76,6 +76,54 @@
    <z>1</z>
   </axis>
  </animation>
+
+ <!-- FIRE EXTINGUISHER -->
+<model>
+ <name>extinguisher</name>
+ <path>Aircraft/f16/Models/Ramp/extinguisher.ac</path>
+ <offsets> 
+  <x-m>-3.2</x-m>
+  <y-m>6.40</y-m>
+  <z-m>-2.00</z-m>
+  <heading-deg>185</heading-deg>
+ </offsets>
+</model>
+
+<animation>
+  <type>translate</type>
+  <object-name>extinguisher</object-name>
+  <property>gear/gear[1]/compression-norm</property>
+  <factor>0.25</factor>
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>1</z>
+  </axis>
+ </animation>
+
+ <!-- Cart -->
+<!--model>
+ <name>cart</name>
+ <path>Aircraft/f16/Models/Ramp/Cart.ac</path>
+ <offsets> 
+  <x-m>-3.25</x-m>
+  <y-m>0.00</y-m>
+  <z-m>-2.00</z-m>
+  <heading-deg>0</heading-deg>
+ </offsets>
+</model>
+
+<animation>
+  <type>translate</type>
+  <object-name>cart</object-name>
+  <property>gear/gear[1]/compression-norm</property>
+  <factor>0.25</factor>
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>1</z>
+  </axis>
+ </animation-->
 
 <animation>
  <type>select</type>
