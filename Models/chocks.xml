@@ -130,6 +130,7 @@
  <object-name>chocks1</object-name>
  <object-name>chocks2</object-name>
  <object-name>chocks3</object-name>
+ <object-name>extinguisher</object-name> 
  <condition>
    <property>controls/gear/brake-parking</property>
    <property>gear/gear[0]/wow</property>

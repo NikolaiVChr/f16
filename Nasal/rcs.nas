@@ -17,21 +17,21 @@ var test = func (echoHeading, echoPitch, echoRoll, bearing, frontRCS) {
 };
 
 var rcs_database = {
-    "default":                  200,    #default value if target's model isn't listed
+    "default":                  150,    #default value if target's model isn't listed
     "f-14b":                    12,     #guess
     "F-14D":                    12,     #guess
-    "f-14b-bs":                 0.0001, # low so it doesnt show up on radar
+    "f-14b-bs":                 0.0001, #low so it doesn't show up on radar
     "F-15C":                    10,     #low end of sources
     "F-15D":                    11,     #low end of sources
     "F-16":                     2,      #guess
-    "YF-16":                    2,      #guess
+    "YF-16":                    5,      
     "F-16CJ":                   2,      #guess
     "f16":                      2,      #guess
     "MiG-29":                   6,      #guess
-    "SU-27":                    15,
+    "SU-27":                    15,     #some data shows 22
     "SU-37":                    15,
     "T-50":                     0.3,    #guess
-    "f15-bs":                   0.0001, # low so it doesnt show up on radar
+    "f15-bs":                   0.0001, #low so it doesn't show up on radar
     "JA37-Viggen":              3,      #guess
     "AJ37-Viggen":              3,      #guess
     "AJS37-Viggen":             3,      #guess
@@ -39,43 +39,44 @@ var rcs_database = {
     "m2000-5":                  1,
     "m2000-5B":                 1,
     "m2000-5B-backseat":        0.0001,
-    "707":                      100,    #guess
-    "707-TT":                   100,    #guess
-    "EC-137D":                  110,    #guess
+    "707":                      90,     #guess
+    "707-TT":                   90,     #guess
+    "EC-137D":                  100,    #guess
     "B-1B":                     10,
-    "b2-spirit":                0.0025,   #actual: 0.0001
-    "B-2A":                     0.0025,   #actual: 0.0001
+    "b2-spirit":                0.002,  #actual: 0.0001
+    "B-2A":                     0.002,  #actual: 0.0001
     "F-117":                    0.003,
     "Blackbird-SR71A":          0.25,
     "Blackbird-SR71B":          0.30,
     "Blackbird-SR71A-BigTail":  0.30,
-    "u2s":                      0.10,   #actual: 0.01
-    "ch53e":                    40,     #guess
+    "u2s":                      0.01,
+    "ch53e":                    35,     #guess
     "MiG-21bis":                3.5,
     "MiG-21Bison":              3.5,
-    "MQ-9":                     1,      #guess
-    "KC-137R":                  100,    #guess
-    "KC-137R-RT":               100,    #guess
+    "MQ-9":                     0.5,    #guess
+    "KC-137R":                  90,     #guess
+    "KC-137R-RT":               90,     #guess
     "A-10":                     23.5,
-    "A-10-model":               23.5, 
-    "KC-10A":                   110,    #guess
-    "KC-10A-GE":                110,    #guess
+    "A-10-model":               23.5,
+    "A-10-modelB":              23.5, 
+    "KC-10A":                   100,    #guess
+    "KC-10A-GE":                100,    #guess
     "KC-30A":                   80,     #guess
     "Voyager-KC":               80,     #guess
     "Typhoon":                  0.5,
     "EF2000":                   0.5,
     "brsq":                     5,
-    "C-137R":                   100,    #guess
-    "RC-137R":                  100,    #guess
-    "EC-137R":                  110,    #guess
-    "E-8R":                     105,    #guess
-    "c130":                     90,     #guess
-    "SH-60J":                   20,     #guess
-    "UH-60J":                   20,     #guess
-    "uh60_Blackhawk":           20,     #guess
-    "uh1":                      30,     #guess
-    "212-TwinHuey":             25,     #guess
-    "412-Griffin":              25,     #guess
+    "C-137R":                   90,     #guess
+    "RC-137R":                  95,     #guess
+    "EC-137R":                  100,    #guess
+    "E-8R":                     95,     #guess
+    "c130":                     75,     #guess
+    "SH-60J":                   15,     #guess
+    "UH-60J":                   15,     #guess
+    "uh60_Blackhawk":           15,     #guess
+    "uh1":                      25,     #guess
+    "212-TwinHuey":             20,     #guess
+    "412-Griffin":              20,     #guess
     "QF-4E":                    1,      #actual: 6
     "depot":                    170,    #estimated with blender
     "buk-m2":                   7,      #estimated with blender
@@ -87,7 +88,7 @@ var rcs_database = {
     "gci":                      50,     #guess
     "FA-18C_Hornet":            1,
     "FA-18D_Hornet":            1,
-    "F-22-Raptor":				0.0025,	#actual: 0.0001
+    "F-22-Raptor":				0.002,	#actual: 0.0001
     "F-35A":					0.001,
     "F-35B":					0.001,  
     "Jaguar-GR3":               6,	    #guess
@@ -97,6 +98,7 @@ var rcs_database = {
     "f-20bmw":                  2.5,
     "f-20-dutchdemo":           2.5,
     "MiG-15bis":                17,     #guess
+    "G91-R1B":                  8,      #guess
 };
 
 var prevVisible = {};
