@@ -134,7 +134,7 @@ var FLIRCameraUpdater = {
 
         var computer = me._get_flir_computer(roll_deg, pitch_deg, heading);
 
-        if (getprop("sim/current-view/view-number") ==9 and me.click_coord_cam != nil) {
+        if (getprop("sim/current-view/view-number") ==12 and me.click_coord_cam != nil) {
             var (yaw, pitch, distance) = computer(coords_cam, me.click_coord_cam);
             me.update_cam(roll_deg, pitch_deg, yaw, pitch);
         }
@@ -163,7 +163,7 @@ var FLIRCameraUpdater = {
 
             setprop("/aircraft/flir/target/yaw-deg", yaw);
             setprop("/aircraft/flir/target/pitch-deg", pitch);
-            if (getprop("sim/current-view/view-number") ==9) {
+            if (getprop("sim/current-view/view-number") ==12) {
                 setprop("/sim/current-view/goal-heading-offset-deg", -yaw);
                 setprop("/sim/current-view/goal-pitch-offset-deg", pitch);
             }
