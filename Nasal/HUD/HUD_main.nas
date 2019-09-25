@@ -2505,7 +2505,7 @@ append(obj.total, obj.speed_curr);
         }
 
         if (tgp.flir_updater.click_coord_cam != nil and getprop("f16/avionics/tgp-lock")) {# hdp.tgp_mounted and 
-            if (getprop("sim/view[102]/heading-offset-deg")==0 and getprop("sim/view[102]/pitch-offset-deg")==-30 and armament.contactPoint != nil) {
+            if (getprop("sim/view[105]/heading-offset-deg")==0 and getprop("sim/view[105]/pitch-offset-deg")==-30 and armament.contactPoint != nil) {
                 #var b = geo.normdeg180(armament.contactPoint.get_relative_bearing());
                 #var p = armament.contactPoint.getElevation()-hdp.pitch;
                 var xy = HudMath.getPosFromCoord(armament.contactPoint.get_Coord());
@@ -2522,8 +2522,8 @@ append(obj.total, obj.speed_curr);
                 me.tgpPointF.setTranslation(x,y);
                 me.tgpPointF.show();
             } else {
-                var b = geo.normdeg180(getprop("sim/view[102]/heading-offset-deg"));
-                var p = getprop("sim/view[102]/pitch-offset-deg");
+                var b = geo.normdeg180(getprop("sim/view[105]/heading-offset-deg"));
+                var p = getprop("sim/view[105]/pitch-offset-deg");
                 var xy = HudMath.getCenterPosFromDegs(b,p);
                 var y = me.clamp(xy[1],-me.sy*0.40,me.sy*0.40);
                 var x = me.clamp(xy[0],-me.sx*0.45,me.sx*0.45);

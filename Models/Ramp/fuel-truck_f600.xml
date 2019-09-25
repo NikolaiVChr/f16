@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+    <path>fuel-truck_f600.ac</path>
+    
+    <animation>
+        <type>timed</type>
+        <object-name>flashing-light</object-name>
+        <object-name>flashing-light-off</object-name>
+        <use-personality type="bool">true</use-personality>
+        <branch-duration-sec>
+            <random>
+                <min>0.2</min>
+                <max>0.2</max>
+            </random>
+        </branch-duration-sec>
+        <branch-duration-sec>
+            <random>
+                <min>0.8</min>
+                <max>0.9</max>
+            </random>
+        </branch-duration-sec>
+    </animation>
+    <animation>
+        <type>material</type>
+        <object-name>lights</object-name>
+        <condition>
+            <greater-than>
+                <property>/sim/time/sun-angle-rad</property>
+                <value>1.60</value>
+            </greater-than>
+        </condition>
+        <emission>
+            <red>1</red>
+            <green>0.5</green>
+            <blue>0</blue>
+        </emission>
+    </animation>
+
+    <animation>
+        <type>material</type>
+        <object-name>lights</object-name>
+        <condition>
+            <less-than-equals>
+                <property>/sim/time/sun-angle-rad</property>
+                <value>1.60</value>
+            </less-than-equals>
+        </condition>
+        <emission>
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+        </emission>
+    </animation>
+</PropertyList>

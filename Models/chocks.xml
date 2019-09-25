@@ -83,9 +83,9 @@
  <path>Aircraft/f16/Models/Ramp/extinguisher.ac</path>
  <offsets> 
   <x-m>-3.2</x-m>
-  <y-m>6.40</y-m>
+  <y-m>-5.8</y-m>
   <z-m>-2.00</z-m>
-  <heading-deg>185</heading-deg>
+  <heading-deg>175</heading-deg>
  </offsets>
 </model>
 
@@ -101,21 +101,50 @@
   </axis>
  </animation>
 
- <!-- Cart -->
-<!--model>
- <name>cart</name>
- <path>Aircraft/f16/Models/Ramp/Cart.ac</path>
+ <!-- FUEL TRUCK -->
+<model>
+ <name>fuel-truck</name>
+ <path>Aircraft/f16/Models/Ramp/fuel-truck_f600.xml</path>
  <offsets> 
   <x-m>-3.25</x-m>
-  <y-m>0.00</y-m>
-  <z-m>-2.00</z-m>
+  <y-m>-2.1</y-m>
+  <z-m>-2.27</z-m>
   <heading-deg>0</heading-deg>
+  <pitch-deg>-2.1</pitch-deg>
  </offsets>
 </model>
 
 <animation>
   <type>translate</type>
-  <object-name>cart</object-name>
+  <object-name>fuel-truck_f600</object-name>
+  <object-name>fuel-truck_f600-paint</object-name>
+  <property>gear/gear[1]/compression-norm</property>
+  <factor>0.5</factor>
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>1</z>
+  </axis>
+ </animation>
+
+ <!-- GPU cart -->
+<model>
+ <name>GPUcart</name>
+ <path>Aircraft/f16/Models/Ramp/generic-trailer-GPU.xml</path>
+ <offsets> 
+  <x-m>-4.5</x-m>
+  <y-m>8.00</y-m>
+  <z-m>-1.955</z-m>
+  <heading-deg>180</heading-deg>
+  <pitch-deg>2.2</pitch-deg>
+ </offsets>
+</model>
+
+<animation>
+  <type>translate</type>
+  <object-name>GPU</object-name>
+  <object-name>GPUbtn</object-name>
+  <object-name>lights</object-name>
   <property>gear/gear[1]/compression-norm</property>
   <factor>0.25</factor>
   <axis>
@@ -123,14 +152,16 @@
    <y>0</y>
    <z>1</z>
   </axis>
- </animation-->
+ </animation>
 
 <animation>
  <type>select</type>
  <object-name>chocks1</object-name>
  <object-name>chocks2</object-name>
  <object-name>chocks3</object-name>
- <object-name>extinguisher</object-name> 
+ <object-name>extinguisher</object-name>
+ <object-name>fuel-truck</object-name>
+ <object-name>GPUcart</object-name>
  <condition>
    <property>controls/gear/brake-parking</property>
    <property>gear/gear[0]/wow</property>
@@ -144,6 +175,15 @@
     <value>0.25</value>
    </less-than>
    <!--<not><property>controls/lighting/ext-lighting-panel/anti-collision</property></not>-->
+ </condition>
+</animation>
+
+<animation>
+ <type>select</type>
+ <object-name>fuel-truck</object-name>
+ <condition>
+   <property>systems/refuel/serviceable</property>
+   <value>1</value>
  </condition>
 </animation>
 

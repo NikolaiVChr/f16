@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+  <path>generic-trailer-GPU.ac</path>
+ 
+ <animation>
+   <type>material</type> 
+   <object-name>lights</object-name>
+   <condition>		
+     <greater-than>		
+       <property>/sim/time/sun-angle-rad</property>
+       <value>1.60</value>
+     </greater-than>
+   </condition>
+   <emission>	
+     <red>1</red>	
+     <green>1</green>	
+     <blue>1</blue>
+   </emission>
+ </animation>
+
+ <animation>
+   <type>material</type>
+     <object-name>lights</object-name>
+     <condition>		
+     <less-than-equals>		
+       <property>/sim/time/sun-angle-rad</property>
+       <value>1.60</value>
+     </less-than-equals>
+   </condition>
+   <emission>	
+     <red>0</red>	
+     <green>0</green>	
+     <blue>0</blue>
+   </emission>
+ </animation>
+
+</PropertyList>
