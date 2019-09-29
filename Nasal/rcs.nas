@@ -30,6 +30,7 @@ var rcs_database = {
     "MiG-29":                   6,      #guess
     "SU-27":                    15,     #some data shows 22
     "SU-37":                    15,
+    "J-11A":                    15,
     "T-50":                     0.3,    #guess
     "f15-bs":                   0.0001, #low so it doesn't show up on radar
     "JA37-Viggen":              3,      #guess

@@ -234,6 +234,7 @@ RWRCanvas = {
         # Other threatening aircrafts (FGAddon, FGUK, etc.):
                 "AI":                       rwr.ASSET_AI,
                 "SU-37":					rwr.AIRCRAFT_FLANKER,
+                "J-11A":                    rwr.AIRCRAFT_FLANKER,
                 "T-50":                     rwr.AIRCRAFT_PAKFA,
                 "MiG-21Bison":              rwr.AIRCRAFT_FISHBED,
                 "Mig-29":                   rwr.AIRCRAFT_FULCRUM,
