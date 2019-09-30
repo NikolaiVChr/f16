@@ -78,7 +78,7 @@
 		</engine_fan>
 		<engine_fan>
 			<name>internal fan 2</name>
-			<path>Sounds/whine.wav</path>
+			<path>Aircraft/f16/Sounds/whine-int.wav</path>
 			<mode>looped</mode>
 			<condition>
 				<property>sim/current-view/internal</property>
@@ -105,7 +105,7 @@
 				<factor>.00075</factor>
 			</pitch>
 			<volume>
-				<factor>0.10</factor>
+				<factor>0.42</factor>
 			</volume>
 		</engine_fan>
 		<engine_fan>
@@ -383,7 +383,7 @@
 			<path>Sounds/gear-transit.wav</path>
 			<property>/gear/gear/position-norm</property>
 			<volume>
-				<factor>0.9</factor>
+				<factor>0.55</factor>
 			</volume>
 			<pitch>
 				<internal>dt_play</internal>
@@ -400,6 +400,9 @@
 					<value>0</value>
 				</equals>
 			</condition>
+			<volume>
+				<factor>0.55</factor>
+			</volume>
 		</gear>
 		<gear>
 			<name>gear-open</name>

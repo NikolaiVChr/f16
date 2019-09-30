@@ -19,11 +19,11 @@ OBJECT world
 kids 1
 OBJECT group
 name "pilot"
-loc -1.38315 0.187949 -0.0320779
+loc -1.38317 0.187949 -0.0321547
 kids 24
 OBJECT poly
 name "eye-balls"
-loc -2.68302 0.6832 0.0690341
+loc -2.683 0.6832 0.0691109
 texture "Pilots/face_a.png"
 crease 45.000000
 numvert 292
@@ -2459,7 +2459,7 @@ refs 3
 kids 0
 OBJECT group
 name "LL-arm"
-loc 1.38315 -0.187949 0.0320779
+loc 1.38317 -0.187949 0.0321547
 kids 4
 OBJECT group
 name "LL-glove"
@@ -6790,7 +6790,7 @@ refs 3
 kids 0
 OBJECT group
 name "LL-leg"
-loc 1.38315 -0.187949 0.0320779
+loc 1.38317 -0.187949 0.0321547
 kids 3
 OBJECT poly
 name "LL-Boot"
@@ -8712,7 +8712,7 @@ refs 4
 kids 0
 OBJECT group
 name "LR-armA"
-loc 1.38315 -0.187949 0.0320779
+loc 1.38317 -0.187949 0.0321547
 kids 2
 OBJECT group
 name "LR-armB"
@@ -13106,7 +13106,7 @@ refs 3
 kids 0
 OBJECT group
 name "LR-leg"
-loc 1.38315 -0.187949 0.0320779
+loc 1.38317 -0.187949 0.0321547
 kids 3
 OBJECT poly
 name "LR-Boot"
@@ -15028,7 +15028,7 @@ refs 3
 kids 0
 OBJECT poly
 name "L-chest"
-loc 1.38315 -0.187949 0.0320779
+loc 1.38317 -0.187949 0.0321547
 data 8
 Mesh.009
 crease 45.000000
@@ -16463,7 +16463,7 @@ refs 3
 kids 0
 OBJECT poly
 name "L-collar"
-loc 1.38315 -0.187949 0.0320779
+loc 1.38317 -0.187949 0.0321547
 data 8
 Mesh.023
 crease 45.000000
@@ -17029,7 +17029,7 @@ refs 3
 kids 0
 OBJECT poly
 name "L-face-mask"
-loc 1.28145 -0.545694 0.0326353
+loc 1.28147 -0.545694 0.0327121
 data 8
 Mesh.024
 crease 45.000000
@@ -17249,7 +17249,7 @@ refs 4
 kids 0
 OBJECT poly
 name "L-harness"
-loc 1.38315 -0.187949 0.0320779
+loc 1.38317 -0.187949 0.0321547
 data 8
 Mesh.006
 crease 45.000000
@@ -18952,7 +18952,7 @@ refs 4
 kids 0
 OBJECT poly
 name "helmet"
-loc -2.63983 0.673011 0.0308402
+loc -2.63981 0.673011 0.030917
 texture "Liveries/patch.default.png"
 crease 58.000000
 numvert 141
@@ -20449,7 +20449,7 @@ refs 3
 kids 0
 OBJECT poly
 name "L-mask-tube"
-loc 1.28687 -0.545511 0.0320779
+loc 1.28689 -0.545511 0.0321547
 data 8
 Mesh.008
 crease 45.000000
@@ -20755,7 +20755,7 @@ refs 4
 kids 0
 OBJECT poly
 name "L-oxy-tube"
-loc 1.37804 -0.188587 0.0320779
+loc 1.37806 -0.188587 0.0321547
 data 8
 Mesh.007
 texture "Pilots/white-black-gradient-stripes.png"
@@ -21848,7 +21848,7 @@ refs 4
 kids 0
 OBJECT poly
 name "L-visor"
-loc 1.38315 -0.187949 0.0320779
+loc 1.38317 -0.187949 0.0321547
 data 8
 Mesh.022
 crease 45.000000
@@ -22258,7 +22258,7 @@ refs 3
 kids 0
 OBJECT poly
 name "cylinder"
-loc 1.38315 -0.187949 0.0320779
+loc 1.38317 -0.187949 0.0321547
 data 8
 Mesh.002
 crease 45.000000
@@ -22698,7 +22698,7 @@ refs 3
 kids 0
 OBJECT poly
 name "cylinder.001"
-loc 1.38315 -0.187949 0.0320779
+loc 1.38317 -0.187949 0.0321547
 data 8
 Mesh.004
 crease 45.000000
@@ -23138,7 +23138,7 @@ refs 3
 kids 0
 OBJECT poly
 name "disk"
-loc 1.38315 -0.187949 0.0320779
+loc 1.38317 -0.187949 0.0321547
 data 4
 Mesh
 crease 45.000000
@@ -23468,7 +23468,7 @@ refs 3
 kids 0
 OBJECT poly
 name "disk.001"
-loc 1.3806 -0.187949 0.0320779
+loc 1.38062 -0.187949 0.0321547
 data 8
 Mesh.005
 crease 45.000000
@@ -23850,7 +23850,7 @@ refs 4
 kids 0
 OBJECT poly
 name "object"
-loc 1.38315 -0.187949 0.0320779
+loc 1.38317 -0.187949 0.0321547
 data 8
 Mesh.001
 crease 45.000000
@@ -23915,7 +23915,7 @@ refs 4
 kids 0
 OBJECT poly
 name "patchL"
-loc -2.77214 0.343222 1.29872
+loc -2.77212 0.343222 1.2988
 texture "Liveries/patch.default.png"
 crease 75.789474
 numvert 52
@@ -24282,7 +24282,7 @@ refs 3
 kids 0
 OBJECT poly
 name "patchR"
-loc -2.47744 0.2376 -1.21247
+loc -2.47742 0.2376 -1.21239
 texture "Liveries/patch.default.png"
 crease 75.789474
 numvert 52
@@ -24649,7 +24649,7 @@ refs 3
 kids 0
 OBJECT poly
 name "patchC"
-loc -3.44859 0.595893 -0.793674
+loc -3.44916 0.595893 -0.795441
 texture "Liveries/patch.default.png"
 crease 75.789474
 numvert 52
@@ -25016,7 +25016,7 @@ refs 3
 kids 0
 OBJECT poly
 name "L-head"
-loc -2.65099 0.636614 0.0306643
+loc -2.65097 0.636614 0.0307411
 texture "Pilots/face_a.png"
 crease 66.000000
 numvert 432
@@ -29620,7 +29620,7 @@ refs 3
 kids 0
 OBJECT poly
 name "bag"
-loc -2.58739 0.155842 0.0278693
+loc -2.58737 0.155842 0.0279461
 crease 45.000000
 numvert 52
 0.0277698 0.155213 0.14779
@@ -29931,7 +29931,7 @@ refs 4
 kids 0
 OBJECT poly
 name "life-jacket"
-loc -2.66529 0.397755 0.0352142
+loc -2.66527 0.397755 0.035291
 crease 66.000000
 numvert 102
 0.0999482 0.114807 0.000313578
