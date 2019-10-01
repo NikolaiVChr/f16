@@ -2,6 +2,7 @@
 
 <PropertyList>
 	<fx>
+		<!-- CANOPY -->
 		<canopy>
 			<name>canopy</name>
 			<path>Aircraft/f16/Sounds/canopy.wav</path>
@@ -44,6 +45,8 @@
 				<max>0.5</max>
 			</volume>
 		</canopy>
+
+		<!-- ENGINE -->
 		<engine_fan>
 			<name>internal fan</name>
 			<path>Aircraft/f16/Sounds/engine-int.wav</path>
@@ -73,7 +76,7 @@
 				<factor>.00075</factor>
 			</pitch>
 			<volume>
-				<factor>0.5</factor>
+				<factor>0.55</factor>
 			</volume>
 		</engine_fan>
 		<engine_fan>
@@ -105,7 +108,7 @@
 				<factor>.00075</factor>
 			</pitch>
 			<volume>
-				<factor>0.42</factor>
+				<factor>0.45</factor>
 			</volume>
 		</engine_fan>
 		<engine_fan>
@@ -126,7 +129,7 @@
 				</less-than>
 			</condition>
 			<reference-dist>100</reference-dist>
-			<max-dist>4000</max-dist>
+			<max-dist>5000</max-dist>
 			<position>
 				<x>0.6</x>
 				<y>0.01</y>
@@ -169,7 +172,7 @@
 				</less-than>
 			</condition>
 			<reference-dist>100</reference-dist>
-			<max-dist>4000</max-dist>
+			<max-dist>5000</max-dist>
 			<position>
 				<x>0.6</x>
 				<y>0.01</y>
@@ -354,6 +357,8 @@
 				<factor>0.80</factor>
 			</volume>
 		</afterburner>
+
+		<!-- GEAR -->
 		<rumble>
 			<name>gear rumble</name>
 			<mode>looped</mode>
@@ -383,7 +388,7 @@
 			<path>Sounds/gear-transit.wav</path>
 			<property>/gear/gear/position-norm</property>
 			<volume>
-				<factor>0.55</factor>
+				<factor>0.5</factor>
 			</volume>
 			<pitch>
 				<internal>dt_play</internal>
@@ -401,7 +406,7 @@
 				</equals>
 			</condition>
 			<volume>
-				<factor>0.55</factor>
+				<factor>0.5</factor>
 			</volume>
 		</gear>
 		<gear>
@@ -413,6 +418,9 @@
 					<value>1</value>
 				</equals>
 			</condition>
+			<volume>
+				<factor>0.5</factor>
+			</volume>
 		</gear>
 		<squeal>
 			<name>squeal</name>
@@ -452,6 +460,8 @@
 				<offset>1.2</offset>
 			</pitch>
 		</squeal>
+
+		<!-- STALL WARN -->
 		<stall>
 			<name>stall</name>
 			<path>Aircraft/f16/Sounds/stall.wav</path>
@@ -662,6 +672,8 @@
 				<factor>0.3</factor>
 			</volume>
 		</stall>
+
+		<!-- CRASH -->
 		<impact>
 			<name>pullUp</name>
 			<path>Aircraft/f16/Sounds/betty/pullup.wav</path>
@@ -694,6 +706,7 @@
 				<factor>1</factor>
 			</volume>
 		</impact>
+
 		<bingo>
 			<name>bingo</name>
 			<path>Aircraft/f16/Sounds/betty/bingo.wav</path>
@@ -800,9 +813,10 @@
 				<factor>1</factor>
 			</volume>
 		</msl>
+
 		<cannon>
 			<name>cannon</name>
-			<path>Sounds/gatling.wav</path>
+			<path>Aircraft/f16/Sounds/Vulcan.wav</path>
 			<condition>
 				<property>fdm/jsbsim/fcs/guntrigger</property>
 				<greater-than>
@@ -822,6 +836,7 @@
 				<z>0.0</z>
 			</position>
 		</cannon>
+
 		<voice>
 			<name>Geforce-breath-vox</name>
 			<path>Aircraft/f16/Sounds/Geforce.wav</path>
@@ -856,6 +871,7 @@
 				<factor>0.9</factor>
 			</volume>
 		</voice>
+
 		<rain>
 			<name>rain</name>
 			<mode>looped</mode>
@@ -891,6 +907,7 @@
 				<max>0.40</max>
 			</volume>
 		</rain-windshield>
+
 		<squeal>
 			<name>touchdown squeal</name>
 			<path>Sounds/squeal.wav</path>
@@ -930,6 +947,7 @@
 				<offset>1.2</offset>
 			</pitch>
 		</squeal>
+
 		<aircraft-explode>
 			<name>aircraft-explode</name>
 			<path>Aircraft/f16/Sounds/aircraft-explode.wav</path>
@@ -1011,6 +1029,7 @@
 				<max>1</max>
 			</volume>
 		</nearby-explode>
+
 		<lock-tone>
 			<name>aim-9-signal</name>
 			<mode>looped</mode>
@@ -1486,6 +1505,454 @@
 				<factor>0.15</factor>
 			</volume>
 		</throttle>
+		<switch>
+			<name>MasterArmOff</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                    <equals>
+                        <property>controls/armament/master-arm</property>
+                        <value>0</value>
+                    </equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>MasterArmOn</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                    <equals>
+                        <property>controls/armament/master-arm</property>
+                        <value>1</value>
+                    </equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>MasterArmCoverOff</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                    <equals>
+                        <property>controls/armament/master-arm-cover-open</property>
+                        <value>0</value>
+                    </equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>MasterArmCoverOn</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                    <equals>
+                        <property>controls/armament/master-arm-cover-open</property>
+                        <value>1</value>
+                    </equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>LaserArmOff</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                    <equals>
+                        <property>controls/armament/laser-arm-dmd</property>
+                        <value>0</value>
+                    </equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>LaserArmOn</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                    <equals>
+                        <property>controls/armament/laser-arm-dmd</property>
+                        <value>1</value>
+                    </equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>BrakeOn</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                    <equals>
+                        <property>controls/gear/brake-parking</property>
+                        <value>1</value>
+                    </equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>BrakeOff</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                    <equals>
+                        <property>controls/gear/brake-parking</property>
+                        <value>0</value>
+                    </equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>GearUp</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                    <equals>
+                        <property>controls/gear/gear-down</property>
+                        <value>0</value>
+                    </equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>GearDown</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                    <equals>
+                        <property>controls/gear/gear-down</property>
+                        <value>1</value>
+                    </equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>RadarOff</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>instrumentation/radar/radar-standby</property>
+						<value>0</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>RadarOn</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>instrumentation/radar/radar-standby</property>
+						<value>1</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>RefuelOn</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>systems/refuel/serviceable</property>
+						<value>1</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>RefuelOff</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>systems/refuel/serviceable</property>
+						<value>0</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>AP-HDG-B15</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>f16/fcs/switch-roll-block15</property>
+						<value>1</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>AP-ATT-B15</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>f16/fcs/switch-roll-block15</property>
+						<value>0</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>AP-ALT-B15</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>f16/fcs/switch-pitch-block15</property>
+						<value>1</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>AP-PATT-B15</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>f16/fcs/switch-pitch-block15</property>
+						<value>0</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>AP-ON-B15</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>f16/fcs/autopilot-on</property>
+						<value>1</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>AP-OFF-B15</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>f16/fcs/autopilot-off</property>
+						<value>0</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>AP-HDG-B20</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>f16/fcs/switch-roll-block20</property>
+						<value>1</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>AP-ATT-B20</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>f16/fcs/switch-roll-block20</property>
+						<value>0</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>AP-STRG-B20</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>f16/fcs/switch-roll-block20</property>
+						<value>-1</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>AP-ALT-B20</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>f16/fcs/switch-pitch-block20</property>
+						<value>1</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>AP-OFF-B20</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>f16/fcs/switch-pitch-block20</property>
+						<value>0</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>AP-PATT-B20</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>f16/fcs/switch-pitch-block20</property>
+						<value>-1</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>CAT III Off</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+						<value>0</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>CAT III On</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+						<value>1</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.65</factor>
+			</volume>
+		</switch>
 		<missile1>
 			<name>missile0</name>
 			<path>Aircraft/f16/Sounds/missile.wav</path>
@@ -2194,57 +2661,7 @@
 				<max>1</max>
 			</volume>
 		</radar-active>
-		<transponder-off>
-			<name>transponder-off</name>
-			<mode>once</mode>
-			<type>avionics</type>
-			<path>Aircraft/f16/Sounds/caution.wav</path>
-			<condition>
-				<equals>
-					<property>instrumentation/transponder/inputs/knob-mode</property>
-					<value>0</value>
-				</equals>
-			</condition>
-			<volume>
-				<property>sim/current-view/internal</property>
-				<factor>1</factor>
-				<max>1</max>
-			</volume>
-		</transponder-off>
-		<transponder-standby>
-			<name>transponder-standby</name>
-			<mode>once</mode>
-			<type>avionics</type>
-			<path>Aircraft/f16/Sounds/caution.wav</path>
-			<condition>
-				<equals>
-					<property>instrumentation/transponder/inputs/knob-mode</property>
-					<value>1</value>
-				</equals>
-			</condition>
-			<volume>
-				<property>sim/current-view/internal</property>
-				<factor>1</factor>
-				<max>1</max>
-			</volume>
-		</transponder-standby>
-		<transponder-on>
-			<name>transponder-on</name>
-			<mode>once</mode>
-			<type>avionics</type>
-			<path>Aircraft/f16/Sounds/caution.wav</path>
-			<condition>
-				<equals>
-					<property>instrumentation/transponder/inputs/knob-mode</property>
-					<value>4</value>
-				</equals>
-			</condition>
-			<volume>
-				<property>sim/current-view/internal</property>
-				<factor>1</factor>
-				<max>1</max>
-			</volume>
-		</transponder-on>
+		
 		<thunder1>
 			<name>thunder1</name>
 			<mode>once</mode>
@@ -2354,40 +2771,6 @@
 				<max>1</max>
 			</volume>
 		</drag-chute>
-		<refuel-door>
-			<name>refuel-door-on</name>
-			<mode>once</mode>
-			<type>avionics</type>
-			<path>Aircraft/f16/Sounds/caution.wav</path>
-			<condition>
-				<equals>
-					<property>systems/refuel/serviceable</property>
-					<value>1</value>
-				</equals>
-			</condition>
-			<volume>
-				<property>sim/current-view/internal</property>
-				<factor>1</factor>
-				<max>1</max>
-			</volume>
-		</refuel-door>
-		<refuel-door>
-			<name>refuel-door-off</name>
-			<mode>once</mode>
-			<type>avionics</type>
-			<path>Aircraft/f16/Sounds/caution.wav</path>
-			<condition>
-				<equals>
-					<property>systems/refuel/serviceable</property>
-					<value>0</value>
-				</equals>
-			</condition>
-			<volume>
-				<property>sim/current-view/internal</property>
-				<factor>1</factor>
-				<max>1</max>
-			</volume>
-		</refuel-door>
         <boom-contact>
 			<name>boom-contact</name>
 			<mode>once</mode>
