@@ -354,7 +354,7 @@
 			<volume>
 				<property>engines/engine/nozzle-pos-norm</property>
 				<offset>0.05</offset>
-				<factor>0.80</factor>
+				<factor>0.60</factor>
 			</volume>
 		</afterburner>
 
@@ -1518,7 +1518,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1534,14 +1534,14 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
 			<name>MasterArmCoverOff</name>
 			<mode>once</mode>
 			<type>avionics</type>
-			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<path>Aircraft/f16/Sounds/lift_cover.wav</path>
 			<condition>
                     <equals>
                         <property>controls/armament/master-arm-cover-open</property>
@@ -1550,14 +1550,14 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
 			<name>MasterArmCoverOn</name>
 			<mode>once</mode>
 			<type>avionics</type>
-			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<path>Aircraft/f16/Sounds/lift_cover.wav</path>
 			<condition>
                     <equals>
                         <property>controls/armament/master-arm-cover-open</property>
@@ -1566,7 +1566,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1582,7 +1582,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1598,7 +1598,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1614,7 +1614,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1630,14 +1630,14 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
 			<name>GearUp</name>
 			<mode>once</mode>
 			<type>avionics</type>
-			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<path>Aircraft/f16/Sounds/clamp.wav</path>
 			<condition>
                     <equals>
                         <property>controls/gear/gear-down</property>
@@ -1646,14 +1646,14 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.35</factor>
 			</volume>
 		</switch>
 		<switch>
 			<name>GearDown</name>
 			<mode>once</mode>
 			<type>avionics</type>
-			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<path>Aircraft/f16/Sounds/clamp.wav</path>
 			<condition>
                     <equals>
                         <property>controls/gear/gear-down</property>
@@ -1662,14 +1662,14 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.35</factor>
 			</volume>
 		</switch>
 		<switch>
 			<name>RadarOff</name>
 			<mode>once</mode>
 			<type>avionics</type>
-			<path>Aircraft/f16/Sounds/button2.wav</path>
+			<path>Aircraft/f16/Sounds/knob.wav</path>
 			<condition>
                 	<equals>
 						<property>instrumentation/radar/radar-standby</property>
@@ -1678,7 +1678,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1694,7 +1694,71 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>InstrMode1</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/knob.wav</path>
+			<condition>
+                <equals>
+					<property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
+					<value>0</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.60</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>InstrMode2</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/knob.wav</path>
+			<condition>
+                <equals>
+					<property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.60</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>InstrMode3</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/knob.wav</path>
+			<condition>
+                <equals>
+					<property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
+					<value>2</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.60</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>InstrMode4</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/knob.wav</path>
+			<condition>
+                <equals>
+					<property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
+					<value>3</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1710,7 +1774,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1726,7 +1790,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1742,7 +1806,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1758,7 +1822,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1774,7 +1838,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1790,7 +1854,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1806,7 +1870,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1822,7 +1886,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1838,7 +1902,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1854,7 +1918,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1870,7 +1934,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1886,7 +1950,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1902,7 +1966,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1918,7 +1982,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1934,7 +1998,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1950,7 +2014,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.60</factor>
 			</volume>
 		</switch>
 		<missile1>
