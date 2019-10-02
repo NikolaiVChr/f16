@@ -661,6 +661,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
    <property>sim/model/f16/ventraltank</property>
   </condition>
  </animation>-->
+
 <animation>
   <type>select</type>
   <object-name>AN_ALQ-131</object-name>
@@ -675,7 +676,21 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
     </greater-than>
   </condition>
  </animation>
- 
+
+ <animation>
+  <type>select</type>
+  <object-name>AN_ALQ-184</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-4-type</property>
+      <value>AN/ALQ-184(V) ECM Pod</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-4-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
  
   <animation>
   <type>select</type>
@@ -717,9 +732,13 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
       <property>payload/armament/station/id-4-type</property>
       <value>MXU-648 Cargopod</value>
     </equals>
-	<equals>
+	  <equals>
       <property>payload/armament/station/id-4-type</property>
       <value>AN/ALQ-131(V) ECM Pod</value>
+    </equals>
+    <equals>
+      <property>payload/armament/station/id-4-type</property>
+      <value>AN/ALQ-184(V) ECM Pod</value>
     </equals>
 	</or>
     <greater-than>
