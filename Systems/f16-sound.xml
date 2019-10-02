@@ -1669,7 +1669,7 @@
 			<name>RadarOff</name>
 			<mode>once</mode>
 			<type>avionics</type>
-			<path>Aircraft/f16/Sounds/knob.wav</path>
+			<path>Aircraft/f16/Sounds/button2.wav</path>
 			<condition>
                 	<equals>
 						<property>instrumentation/radar/radar-standby</property>
