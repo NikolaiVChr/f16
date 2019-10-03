@@ -721,7 +721,6 @@ var train2 = func {
 # Airshow configuration (Smokewinder white)
 var airshow = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
-        pylon1.loadSet(pylonSets.dumb1);# F16 never has nothing on wingtips unless its fired off, its aerodynamics is designed to work better with something there.
         pylon1.loadSet(pylonSets.smokeWL);
         pylon2.loadSet(pylonSets.empty);
         pylon3.loadSet(pylonSets.empty);
@@ -743,7 +742,6 @@ var airshow = func {
 var clean = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.dumb1);# F16 never has nothing on wingtips unless its fired off, its aerodynamics is designed to work better with something there.
-        pylon1.loadSet(pylonSets.dumb1);
         pylon2.loadSet(pylonSets.empty);
         pylon3.loadSet(pylonSets.empty);
         pylon4.loadSet(pylonSets.empty);

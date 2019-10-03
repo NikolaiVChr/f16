@@ -186,6 +186,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_TONKA	  = "TN";
         rwr.AIRCRAFT_RAFALE	  = "RF";
         rwr.AIRCRAFT_HARRIER  = "HR";
+        rwr.AIRCRAFT_HARRIERII = "AV";
         rwr.AIRCRAFT_GINA	  = "91";
         rwr.AIRCRAFT_MB339    = "MB";
         rwr.AIRCRAFT_ALPHAJET = "AJ";
@@ -249,6 +250,8 @@ RWRCanvas = {
                 "A-10-modelB":              rwr.AIRCRAFT_WARTHOG,
                 "Su-15":                    rwr.AIRCRAFT_FLAGON,
                 "Jaguar-GR3":               rwr.AIRCRAFT_JAGUAR,
+                "E3B":                      rwr.AIRCRAFT_AWACS,
+                "E-2C-Hawkeye":             rwr.AIRCRAFT_AWACS,
                 "F-4S":						rwr.AIRCRAFT_PHANTOM,
                 "F-4EJ_ADTW":				rwr.AIRCRAFT_PHANTOM,
                 "FGR2-Phantom":				rwr.AIRCRAFT_PHANTOM,
@@ -271,7 +274,7 @@ RWRCanvas = {
                 "Harrier-GR3":				rwr.AIRCRAFT_HARRIER,
                 "Harrier-GR5":				rwr.AIRCRAFT_HARRIER,
                 "Harrier-GR9":				rwr.AIRCRAFT_HARRIER,
-                "AV-8B":					rwr.AIRCRAFT_HARRIER,
+                "AV-8B":					rwr.AIRCRAFT_HARRIERII,
                 "G91-R1B":                  rwr.AIRCRAFT_GINA,
                 "G91":						rwr.AIRCRAFT_GINA,
                 "g91":						rwr.AIRCRAFT_GINA,

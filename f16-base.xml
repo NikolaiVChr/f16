@@ -2692,6 +2692,9 @@ value. 18000=standard US transition altitude -->
             <tgp-mounted type="bool">false</tgp-mounted>
             <harm-mounted type="bool">false</harm-mounted>
             <nav-mounted type="bool">false</nav-mounted>
+            <ecm-mounted type="bool">false</ecm-mounted>
+            <irst-mounted type="bool">false</irst-mounted>
+            <acmi-mounted type="bool">false</acmi-mounted>
         </stores>
     </f16>
     <damage>
