@@ -202,10 +202,25 @@
         <text>
             <row>16</row>
             <col>0</col>
-            <label>Clean</label>
+            <label>Airshow (White smoke)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>16</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.airshow();</script>
+            </binding>
+        </button>
+
+        <text>
+            <row>18</row>
+            <col>0</col>
+            <label>Clean</label>
+        </text>
+        <button><pref-width>45</pref-width><pref-height>20</pref-height>
+            <row>18</row>
             <col>1</col>
             <legend>Mount</legend>
             <binding>
