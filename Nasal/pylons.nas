@@ -605,7 +605,7 @@ var a2g_jsow = func {
         pylon2.loadSet(pylonSets.aim9);
         pylon3.loadSet(pylonSets.a154);
         pylon4.loadSet(pylonSets.fuel37L);
-        pylon5.loadSet(pylonSets.podEcm131);
+        pylon5.loadSet(pylonSets.podEcm184);
         pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.a154);
         pylon8.loadSet(pylonSets.aim9);
