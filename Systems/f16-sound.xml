@@ -35,7 +35,7 @@
 				</equals>
 			</condition>
 			<reference-dist>10</reference-dist>
-			<max-dist>40</max-dist>
+			<max-dist>50</max-dist>
 			<position>
 				<x>-1.0</x>
 				<y>0.0</y>
@@ -129,7 +129,7 @@
 				</less-than>
 			</condition>
 			<reference-dist>100</reference-dist>
-			<max-dist>5000</max-dist>
+			<max-dist>6000</max-dist>
 			<position>
 				<x>0.6</x>
 				<y>0.01</y>
@@ -172,7 +172,7 @@
 				</less-than>
 			</condition>
 			<reference-dist>100</reference-dist>
-			<max-dist>5000</max-dist>
+			<max-dist>6000</max-dist>
 			<position>
 				<x>0.6</x>
 				<y>0.01</y>
@@ -288,7 +288,7 @@
 				<property>engines/engine/augmentation</property>
 			</condition>
 			<reference-dist>500</reference-dist>
-			<max-dist>15000</max-dist>
+			<max-dist>16000</max-dist>
 			<position>
 				<x>4.6</x>
 				<y>0.01</y>
@@ -1339,6 +1339,7 @@
 			</volume>
 		</lock-tone>
 		<avionics>
+			<name>Avionics</name>
 			<path>Sounds/avionics-400Hz.wav</path>
 			<mode>looped</mode>
 			<type>avionics</type>
@@ -1366,7 +1367,7 @@
 			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
-				<factor>0.033</factor>
+				<factor>0.034</factor>
 			</volume>
 		</avionics>
 		<flare>
@@ -1646,7 +1647,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.35</factor>
+				<factor>0.30</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1662,7 +1663,39 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.35</factor>
+				<factor>0.20</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>HookUp</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/clamp.wav</path>
+			<condition>
+                    <equals>
+                        <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+                        <value>0</value>
+                    </equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.20</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>HookDown</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/clamp.wav</path>
+			<condition>
+                    <equals>
+                        <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+                        <value>1</value>
+                    </equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.30</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1710,7 +1743,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.40</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1726,7 +1759,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.40</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1742,7 +1775,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.40</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1758,7 +1791,23 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.40</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>Target cycle</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/knob2.wav</path>
+			<condition>
+                <equals>
+					<property>sim/model/f16/instrumentation/radar-awg-9/select-target</property>
+                    <value>1</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.9</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1774,7 +1823,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.40</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1790,7 +1839,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.65</factor>
+				<factor>0.40</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -2049,6 +2098,7 @@
 				<factor>0.60</factor>
 			</volume>
 		</switch>
+
 		<missile1>
 			<name>missile0</name>
 			<path>Aircraft/f16/Sounds/missile.wav</path>
@@ -2723,28 +2773,11 @@
 				<factor>1</factor>
 			</volume>
 		</rwr>
-		<radar-standby>
-			<name>radar-standby</name>
-			<mode>once</mode>
-			<type>avionics</type>
-			<path>Aircraft/f16/Sounds/caution.wav</path>
-			<condition>
-				<equals>
-					<property>instrumentation/radar/radar-standby</property>
-					<value>1</value>
-				</equals>
-			</condition>
-			<volume>
-				<property>sim/current-view/internal</property>
-				<factor>1</factor>
-				<max>1</max>
-			</volume>
-		</radar-standby>
 		<radar-active>
 			<name>radar-active</name>
 			<mode>once</mode>
 			<type>avionics</type>
-			<path>Aircraft/f16/Sounds/caution.wav</path>
+			<path>Aircraft/f16/Sounds/record-signal.wav</path>
 			<condition>
 				<equals>
 					<property>instrumentation/radar/radar-standby</property>
@@ -2753,8 +2786,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>1</factor>
-				<max>1</max>
+				<factor>0.75</factor>
 			</volume>
 		</radar-active>
 		

@@ -33,7 +33,7 @@ Richard Harrison
 
 J Maverick 16
 - Addition and adaptation of liveries by Gary Brown
-- Liveries
+- Liveries and textures
 - Sound recording/editing and addition
 - Addition and implementation of weapons, stores
 - 3D works (pilot model, weapons/stores, misc)
@@ -82,6 +82,7 @@ Enrico Castaldi (Spectre)
 
 FGUK
 - Used some of their GPL weapon models
+- Sounds
 
 Petar Jedvaj
 - F-16D 3D model
