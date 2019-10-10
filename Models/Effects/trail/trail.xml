@@ -95,7 +95,7 @@
                     </alpha>
                 </color>
                 <size>
-                    <value>2.45</value>
+                    <value>2.75</value>
                 </size>
             </start>
 
@@ -130,12 +130,12 @@
                     </alpha>
                 </color>
                 <size>
-                    <value>4</value>
+                    <value>4.5</value>
                 </size>
             </end>
 
             <life-sec>
-                <value>10</value>
+                <value>15</value>
             </life-sec>
 
             <mass-kg>  0.5 </mass-kg>

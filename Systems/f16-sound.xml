@@ -1731,6 +1731,38 @@
 			</volume>
 		</switch>
 		<switch>
+			<name>FuelExtTransfWng</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>controls/fuel/external-transfer</property>
+						<value>0</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.60</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>FuelExtTransfNrm</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>controls/fuel/external-transfer</property>
+						<value>1</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.60</factor>
+			</volume>
+		</switch>
+		<switch>
 			<name>InstrMode1</name>
 			<mode>once</mode>
 			<type>avionics</type>
@@ -1787,6 +1819,102 @@
                 <equals>
 					<property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
 					<value>3</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.40</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>FuelQtySel0</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/knob.wav</path>
+			<condition>
+                <equals>
+					<property>controls/fuel/qty-selector</property>
+					<value>0</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.40</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>FuelQtySel1</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/knob.wav</path>
+			<condition>
+                <equals>
+					<property>controls/fuel/qty-selector</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.40</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>FuelQtySel2</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/knob.wav</path>
+			<condition>
+                <equals>
+					<property>controls/fuel/qty-selector</property>
+					<value>2</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.40</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>FuelQtySel3</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/knob.wav</path>
+			<condition>
+                <equals>
+					<property>controls/fuel/qty-selector</property>
+					<value>3</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.40</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>FuelQtySel4</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/knob.wav</path>
+			<condition>
+                <equals>
+					<property>controls/fuel/qty-selector</property>
+					<value>4</value>
+				</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.40</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>FuelQtySel5</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/knob.wav</path>
+			<condition>
+                <equals>
+					<property>controls/fuel/qty-selector</property>
+					<value>5</value>
 				</equals>
 			</condition>
 			<volume>
@@ -2997,5 +3125,53 @@
 				<factor>1</factor>
 			</volume>
 		</boom>
+		<pushback>
+     		<name>Pushback_outside</name>
+      		<mode>looped</mode>
+      		<path>Aircraft/f16/Sounds/pushback.wav</path>
+      		<condition>
+      			<and>
+					<or>
+						<and>
+						<not>
+								<property>/sim/current-view/internal</property>
+						</not>
+						</and>
+					</or>
+					<or>
+		      			<property>/sim/model/pushback/enabled</property>
+					</or>
+		   		</and>
+      </condition>
+      <volume>
+        <property>/sim/model/pushback/position-norm</property>
+        <factor>1.00</factor>
+        <offset>0.00</offset>
+        <min>0.3</min>
+        <max>0.8</max>
+      </volume>
+    </pushback>
+    <pushback>
+      <name>Pushback_inside</name>
+      <mode>looped</mode>
+      <path>Aircraft/f16/Sounds/pushback.wav</path>
+      <condition>
+      	<and>
+			<or>
+				<property>/sim/current-view/internal</property>								
+			</or>
+			<or>
+      			<property>/sim/model/pushback/enabled</property>
+			</or>
+	    </and>
+      </condition>
+      <volume>
+        <property>/sim/model/pushback/position-norm</property>
+        <factor>1.00</factor>
+        <offset>0.00</offset>
+        <min>0.15</min>
+        <max>0.4</max>
+      </volume>
+    </pushback>
 	</fx>
 </PropertyList>

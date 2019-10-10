@@ -256,6 +256,7 @@ RWRCanvas = {
                 "F-4EJ_ADTW":				rwr.AIRCRAFT_PHANTOM,
                 "FGR2-Phantom":				rwr.AIRCRAFT_PHANTOM,
                 "F4J":						rwr.AIRCRAFT_PHANTOM,
+                "F-4N":						rwr.AIRCRAFT_PHANTOM,
                 "a4f":                      rwr.AIRCRAFT_SKYHAWK,
                 "A-4K":						rwr.AIRCRAFT_SKYHAWK,
                 "F-5E":                     rwr.AIRCRAFT_TIGER,
