@@ -244,6 +244,10 @@
   <object-name>Station3_AGM-65</object-name>
   <condition>
     <equals>
+      <property>payload/armament/station/id-2-set</property>
+      <value>1 x AGM-65</value>
+    </equals>
+    <equals>
       <property>payload/armament/station/id-2-type</property>
       <value>AGM-65</value>
     </equals>
@@ -1085,6 +1089,10 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   <type>select</type>
   <object-name>Station7_AGM-65</object-name>
   <condition>
+    <equals>
+      <property>payload/armament/station/id-6-set</property>
+      <value>1 x AGM-65</value>
+    </equals>
     <equals>
       <property>payload/armament/station/id-6-type</property>
       <value>AGM-65</value>
