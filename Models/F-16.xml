@@ -425,11 +425,23 @@
   <name>exhaust_smoke</name>
   <path>Aircraft/f16/Models/Effects/exhaust.xml</path>
   <offsets>
-   <x-m>4.6</x-m>
+   <x-m>4.25</x-m>
    <y-m>0.0</y-m>
    <z-m>0.0</z-m>
   </offsets>
  </model>
+
+<!-- the "jelly" generated when engine is above 98 N2 -->
+ <model>
+  <name>exhaust_jelly</name>
+  <path>Aircraft/f16/Models/Effects/jelly.xml</path>
+    <offsets>
+      <x-m>5.5</x-m>
+      <y-m>0.0</y-m>
+      <z-m>0.0</z-m>
+      </offsets>
+ </model>
+
 
  <!-- smokepods -->
 
