@@ -364,6 +364,17 @@
   </offsets>
  </model>
 
+ <model>
+  <name>Station3_LAU68</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/LAU-68/duorack-3.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>-2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
 <model>
   <name>Station3_B61-7</name>
   <path>Aircraft/f16/Models/Armament/Weapons/B61-7/B61-7.xml</path>
@@ -932,6 +943,17 @@
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
+
+ <model>
+  <name>Station7_LAU68</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/LAU-68/duorack-7.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
 
  <model>
   <name>Station7_GBU-31</name>

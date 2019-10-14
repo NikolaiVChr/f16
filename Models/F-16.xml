@@ -1998,6 +1998,10 @@
         <property>payload/armament/station/id-2-set</property>
         <value>2 x CBU-87</value>
       </equals>
+      <equals>
+        <property>payload/armament/station/id-2-set</property>
+        <value>2 x LAU-68</value>
+      </equals>
     </or>
     </not>
   </and>
@@ -2119,6 +2123,10 @@
         <property>payload/armament/station/id-6-set</property>
         <value>2 x CBU-87</value>
       </equals>
+      <equals>
+        <property>payload/armament/station/id-6-set</property>
+        <value>2 x LAU-68</value>
+      </equals>
     </or>
     </not>
   </and>
@@ -2128,51 +2136,6 @@
  <model>
     <path>Aircraft/f16/Models/Armament/loads.xml</path>
  </model>
-
-<!--<animation>
-  <type>select</type>
-  <object-name>Podpylon_left</object-name>
-  <condition>
-    <and>
-    <not>
-     <equals>
-        <property>payload/armament/station/id-11-set</property>
-        <value>AN/AAQ-13 LANTIRN Nav Pod</value>
-      </equals>
-    </not>
-  </and>
-  </condition>
- </animation>
-
-<animation>
-  <type>select</type>
-  <object-name>Podpylon_left</object-name>
-  <condition>
-    <and>
-    <not>
-     <equals>
-        <property>payload/armament/station/id-11-set</property>
-        <value>AN/ASQ-213 HARM TS Pod</value>
-      </equals>
-    </not>
-  </and>
-  </condition>
- </animation>
-
-<animation>
-  <type>select</type>
-  <object-name>Podpylon_right</object-name>
-  <condition>
-    <and>
-    <not>
-      <equals>
-        <property>payload/armament/station/id-10-set</property>
-        <value>AN/ASQ-213 HARM TS Pod</value>
-      </equals>
-    </not>
-  </and>
-  </condition>
- </animation>-->
 
  <!-- livery selection -->
  <animation>

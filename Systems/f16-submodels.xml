@@ -25,14 +25,14 @@
     <trigger>fdm/jsbsim/fcs/guntrigger</trigger>
     <speed>2041.0</speed>
     <repeat>true</repeat>
-    <delay>0.15</delay>
+    <delay>0.14</delay>
     <count>-1</count>
     <offsets>
         <x-m> -3.16</x-m>
         <y-m> -0.81</y-m>
         <z-m>  0.17</z-m>
     </offsets>
-    <life>2.0</life>
+    <life>2.5</life>
     <wind>false</wind>
     <weight>0.1</weight>
     <cd>0.193</cd>
@@ -64,7 +64,6 @@
     <submodel-path>Aircraft/f16/Models/Armament/Weapons/M61A1/bullet-submodel.xml</submodel-path>
   </submodel>
 
-
   <submodel>
     <name>gunsmoke</name>
     <model>Aircraft/f16/Models/Armament/Weapons/M61A1/smoke.xml</model>
@@ -83,4 +82,24 @@
     <buoyancy>33</buoyancy>
     <life>1</life>
   </submodel>
+
+  <submodel>
+    <name>rocket explosion</name>
+    <model>Aircraft/f16/Models/Armament/Weapons/LAU-68/rocket-explosion.xml</model>
+    <speed>0</speed>
+    <repeat>false</repeat>
+    <delay>0</delay>
+    <count>1</count>
+    <x-offset>0</x-offset>
+    <y-offset>0</y-offset>
+    <z-offset>0</z-offset>
+    <yaw-offset>0</yaw-offset>
+    <pitch-offset>0</pitch-offset>
+    <eda>100</eda>
+    <wind>false</wind>
+    <buoyancy>32.1</buoyancy>
+                <aero-stabilised>false</aero-stabilised>
+                <fuse-range>0</fuse-range>
+    <life>10</life>
+  </submodel> 
 </PropertyList>

@@ -119,7 +119,7 @@
 		   <placer>
 		     <type>sector</type>                                                    
 		    <radius-min-m>0</radius-min-m>
-		    <radius-max-m>240</radius-max-m>
+		    <radius-max-m>180</radius-max-m>
 		    <!--<phi-min-deg>float</phi-min-deg>
 		    <phi-max-deg>float</phi-max-deg>-->
 		   </placer>
@@ -178,7 +178,7 @@
 		     </end>
 
 		     <life-sec>
-		       <value>2.5</value>
+		       <value>3</value>
 		     </life-sec>
 		        
 		     <mass-kg>  5 </mass-kg>
