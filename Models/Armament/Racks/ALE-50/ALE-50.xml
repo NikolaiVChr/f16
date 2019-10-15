@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+
+  <PropertyList>
+
+   <animation>
+    <type>rotate</type>
+    <object-name>Door-Doghouse</object-name>
+    <property>???</property>
+    <factor>-1.0</factor>
+    <offset-deg>90</offset-deg>
+    <center>
+      <x-m>1.21545</x-m>
+      <y-m>0</y-m>
+      <z-m>0.19199</z-m>
+    </center>
+    <axis>
+     <x>0.0</x>
+     <y>1.0</y>
+     <z>0.0</z>
+    </axis>
+  </animation>
+
+  <!-- LH ALE-50 X:0.95784, Y:-3.69939, Z:-0.17432 -->
+  <!-- RH ALE-50 X:0.95784, Y:3.69939, Z:-0.17432 -->
+
+  </PropertyList>

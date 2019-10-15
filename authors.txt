@@ -24,13 +24,6 @@ Nikolai V. Chr.
 - Crash and stress code.
 - Splashes
 
-Richard Harrison
-- Radar
-- MFDs
-- HUD
-- 3D misc. panel
-- Avionics communication system (emessary based)
-
 J Maverick 16
 - Addition and adaptation of liveries by Gary Brown
 - Liveries and textures
@@ -38,9 +31,17 @@ J Maverick 16
 - Addition and implementation of weapons, stores
 - 3D works (pilot model, weapons/stores, misc)
 - RWR/RCS data research and update
+- Effects improvement
 - GoPro views
 - Various fixes and improvements
 - Splashes
+
+Richard Harrison
+- Radar
+- MFDs
+- HUD
+- 3D misc. panel
+- Avionics communication system (emessary based)
 
 Justin Nicholson
 - Splashes

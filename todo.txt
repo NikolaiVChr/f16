@@ -40,7 +40,6 @@ Model conformal fuel tanks.
 Find real positions of payloads, is only approx. positions now.
 Make id-0 be id-000, hmm not sure this is smart, not backwards compatible.
 Should auto missile view work for jettisoned stores as well?
-More gun tracers?
 A-A and A-G button cycle cannon also?
 Missile view start behind weapon?
 Stores should only emergency Jett. when main, stby or epu is running.
@@ -85,7 +84,6 @@ page 1-131 of b50 manual
 MFDs
 ----
 Add tons of pages
-SIT page still crashes.
 
 Aero
 ----
@@ -103,7 +101,7 @@ wheel brakes too weak?
 
 GUI
 ---
-Sort splashes so they match liveries.
+
 
 A/P
 ---

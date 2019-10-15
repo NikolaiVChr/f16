@@ -24,5 +24,6 @@ The liveries you get available depends on which variant you choose to fly.
 Notice that the quality of liveries differ.
 
 Beside from that, the variants also differ in engine, FBW system and aerodynamics. See manual.txt for more info.
-
 Weapons available and quick payload options are U.S. type.
+
+For the full list of contributors see authors.txt.
