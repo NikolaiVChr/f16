@@ -23,10 +23,6 @@
           <property>/engines/engine[0]/n2</property>
           <value>98</value>
         </greater-than>
-		<greater-than>
-     <property>velocities/airspeed-kt</property>
-     <value>41</value>
-	 </greater-than>
         <less-than>
           <property>/position/altitude-ft</property>
           <value>20999</value>
@@ -62,7 +58,7 @@
     <counter>
       <particles-per-sec>
         <property>engines/engine/n1</property>
-        <factor>1</factor>
+        <factor>2</factor>
         <spread>20</spread>
       </particles-per-sec>
     </counter>
@@ -78,7 +74,7 @@
           <alpha><value> 0.025 </value></alpha>
         </color>
         <size>
-          <value>1.5</value>
+          <value>1.1</value>
         </size>
       </start>
 
@@ -95,7 +91,7 @@
       </end>
 
       <life-sec>
-        <value>5.0</value>
+        <value>6.0</value>
       </life-sec>
 
       <mass-kg>0.05</mass-kg>

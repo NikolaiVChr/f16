@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+    <sim>
+        <model> 
+            <livery>
+                <name type="string">ITA MERCENARIES (Fictional)</name>
+                <texture type="string">Liveries/Block60/ITA_MERCENARIES.png</texture>
+                <owner type="string">ITAF</owner>
+            </livery>
+            <livery-logo>
+                <texture type="string">Liveries/standard.logos.color.png</texture>
+            </livery-logo>
+
+            <livery-patch>
+                <texture>Liveries/Block60/patch.ITA_MERCENARIES.png</texture>
+            </livery-patch>
+
+            <livery-pod>
+                <texture>Liveries/Block60/pod.ITA_MERCENARIES.png</texture>
+             </livery-pod>
+        </model>
+    </sim>
+</PropertyList>

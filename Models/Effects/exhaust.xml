@@ -22,7 +22,7 @@
    </greater-than>
    <less-than-equals>
     <property>velocities/airspeed-kt</property>
-    <value>40</value>
+    <value>50</value>
    </less-than-equals>
  </condition>
    
