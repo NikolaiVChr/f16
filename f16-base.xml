@@ -1316,6 +1316,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <automissileview type="bool">false</automissileview><!-- for now it has to be enabled, as its not a realistic feature -->
             <laser-arm-dmd type="bool">false</laser-arm-dmd>
             <master-arm-cover-open type="bool">false</master-arm-cover-open>
+            <trigger type="bool">false</trigger>
         </armament>
       
         <fuel>
@@ -1538,6 +1539,11 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <canopy-engage type="bool">false</canopy-engage>
                 <hook-engage type="bool">false</hook-engage>
                 <alpha-norm type="double">0</alpha-norm>
+                <guntrigger type="bool">false</guntrigger>
+                <hydra3ltrigger type="bool">false</hydra3ltrigger>
+                <hydra3rtrigger type="bool">false</hydra3rtrigger>
+                <hydra7ltrigger type="bool">false</hydra7ltrigger>
+                <hydra7rtrigger type="bool">false</hydra7rtrigger>
             </fcs>
             <propulsion>
                 <tank n="2">
