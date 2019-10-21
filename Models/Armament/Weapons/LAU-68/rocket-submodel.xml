@@ -4,7 +4,7 @@
 
 	<submodel>
 		<name>rocket splash</name>
-		<model>Aircraft/f16/Models/Armament/Weapons/M61A1/flack.xml</model>
+		<model>Aircraft/f16/Models/Armament/Weapons/LAU-68/rocket-explosion.xml</model>
 		<speed>0</speed>
 		<repeat>false</repeat>
 		<delay>0</delay>
