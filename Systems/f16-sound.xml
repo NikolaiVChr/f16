@@ -873,8 +873,8 @@
 		</cannon>
 		
 		<hydra>
-			<name>hydra</name>
-			<path>Aircraft/f16/Sounds/hydra.wav</path>
+			<name>hydra70</name>
+			<path>Aircraft/f16/Sounds/hydra70.wav</path>
 			<condition>
 				<or>
 					<and>
