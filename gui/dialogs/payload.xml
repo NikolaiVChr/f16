@@ -452,10 +452,25 @@
         <text>
             <row>6</row>
             <col>4</col>
-            <label>A/G LGB Strike (Single-mode)</label>
+            <label>A/G Hydra 70 (Unguided)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>6</row>
+            <col>5</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_hyd70();</script>
+            </binding>
+        </button>
+
+        <text>
+            <row>8</row>
+            <col>4</col>
+            <label>A/G LGB Strike (Single-mode)</label>
+        </text>
+        <button><pref-width>45</pref-width><pref-height>20</pref-height>
+            <row>8</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
@@ -465,12 +480,12 @@
         </button>
 
         <text>
-            <row>8</row>
+            <row>10</row>
             <col>4</col>
             <label>A/G LGB Strike (Multi-mode)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>8</row>
+            <row>10</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
@@ -480,12 +495,12 @@
         </button>
 
         <text>
-            <row>10</row>
+            <row>12</row>
             <col>4</col>
             <label>A/G GPS Strike (Single-mode)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>10</row>
+            <row>12</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
@@ -495,12 +510,12 @@
         </button>
 
         <text>
-            <row>12</row>
+            <row>14</row>
             <col>4</col>
             <label>A/G GPS Strike (Multi-mode)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>12</row>
+            <row>14</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
@@ -510,12 +525,12 @@
         </button>
 
         <text>
-            <row>14</row>
+            <row>16</row>
             <col>4</col>
             <label>A/S Anti-Ship (Multi-mode)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>14</row>
+            <row>16</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
@@ -525,12 +540,12 @@
         </button>
 
         <text>
-            <row>16</row>
+            <row>18</row>
             <col>4</col>
             <label>A/S Anti-Ship (Single-mode)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>16</row>
+            <row>18</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
