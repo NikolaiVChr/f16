@@ -522,12 +522,19 @@ var FireControl = {
 				me.triggerTime = getprop("sim/time/elapsed-sec");
 				settimer(func me.triggerHold(me.aim), 1.5);
 			} elsif (me.aim != nil and me.aim.parents[0] == stations.SubModelWeapon and (me.aim.operableFunction == nil or me.aim.operableFunction()) and me.aim.getAmmo()>0) {
-				if (getprop("sim/time/elapsed-sec")>me.gunTriggerTime+10) {
+				if (getprop("sim/time/elapsed-sec")>me.gunTriggerTime+10 or me.aim.alternate) {
 					# only say guns guns every 10 seconds.
-					armament.AIM.sendMessage("Guns guns");
+					armament.AIM.sendMessage(me.aim.brevity);
 					me.gunTriggerTime = getprop("sim/time/elapsed-sec");
 				}
 				me.triggerTime = 0;
+			}
+			if (me.aim != nil and me.aim.parents[0] == stations.SubModelWeapon) {
+				if (me.aim.alternate) {
+					me.stopCurrent();
+					me.nextWeapon(me.selectedType);
+				}
+				
 			}
 		} elsif (getprop("controls/armament/trigger") < 1) {
 			me.triggerTime = 0;
@@ -617,7 +624,7 @@ var FireControl = {
 					me.fireIndex = 0;
 				}
 				if (pylon.getWeapons()[pylon.currentSet.fireOrder[me.fireIndex]] != nil) {
-					if (pylon.getWeapons()[pylon.currentSet.fireOrder[me.fireIndex]].type == type) {
+					if (pylon.getWeapons()[pylon.currentSet.fireOrder[me.fireIndex]].type == type and (pylon.getWeapons()[pylon.currentSet.fireOrder[me.fireIndex]].parents[0] != stations.SubModelWeapon or pylon.getWeapons()[pylon.currentSet.fireOrder[me.fireIndex]].getAmmo() > 0)) {
 						return pylon.currentSet.fireOrder[me.fireIndex];
 					}
 				}
