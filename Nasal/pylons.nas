@@ -18,17 +18,17 @@ var pylon11 = nil;
 var cannon = stations.SubModelWeapon.new("20mm Cannon", 0.254, 511, 2, [1,3], props.globals.getNode("fdm/jsbsim/fcs/guntrigger",1), 0, func{return getprop("fdm/jsbsim/systems/hydraulics/sysb-psi")>=2000 and getprop("payload/armament/fire-control/serviceable");},0);
 cannon.typeShort = "GUN";
 cannon.brevity = "Guns guns";
-var hyd70lh3 = stations.SubModelWeapon.new("LAU-68", 27.0, 7, 4, [], props.globals.getNode("fdm/jsbsim/fcs/hydra3ltrigger",1), 1, func{return getprop("payload/armament/fire-control/serviceable");},1);
-hyd70lh3.typeShort = "LAU68";
+var hyd70lh3 = stations.SubModelWeapon.new("LAU-68", 23.6, 7, 4, [], props.globals.getNode("fdm/jsbsim/fcs/hydra3ltrigger",1), 1, func{return getprop("payload/armament/fire-control/serviceable");},1);
+hyd70lh3.typeShort = "2xLAU-68";
 hyd70lh3.brevity = "Rockets away";
-var hyd70rh3 = stations.SubModelWeapon.new("LAU-68", 27.0, 7, 5, [], props.globals.getNode("fdm/jsbsim/fcs/hydra3rtrigger",1), 1, func{return getprop("payload/armament/fire-control/serviceable");},1);
-hyd70rh3.typeShort = "LAU68";
+var hyd70rh3 = stations.SubModelWeapon.new("LAU-68", 23.6, 7, 5, [], props.globals.getNode("fdm/jsbsim/fcs/hydra3rtrigger",1), 1, func{return getprop("payload/armament/fire-control/serviceable");},1);
+hyd70rh3.typeShort = "2xLAU-68";
 hyd70rh3.brevity = "Rockets away";
-var hyd70lh7 = stations.SubModelWeapon.new("LAU-68", 27.0, 7, 6, [], props.globals.getNode("fdm/jsbsim/fcs/hydra7ltrigger",1), 1, func{return getprop("payload/armament/fire-control/serviceable");},1);
-hyd70lh7.typeShort = "LAU68";
+var hyd70lh7 = stations.SubModelWeapon.new("LAU-68", 23.6, 7, 6, [], props.globals.getNode("fdm/jsbsim/fcs/hydra7ltrigger",1), 1, func{return getprop("payload/armament/fire-control/serviceable");},1);
+hyd70lh7.typeShort = "2xLAU-68";
 hyd70lh7.brevity = "Rockets away";
-var hyd70rh7 = stations.SubModelWeapon.new("LAU-68", 27.0, 7, 7, [], props.globals.getNode("fdm/jsbsim/fcs/hydra7rtrigger",1), 1, func{return getprop("payload/armament/fire-control/serviceable");},1);
-hyd70rh7.typeShort = "LAU68";
+var hyd70rh7 = stations.SubModelWeapon.new("LAU-68", 23.6, 7, 7, [], props.globals.getNode("fdm/jsbsim/fcs/hydra7rtrigger",1), 1, func{return getprop("payload/armament/fire-control/serviceable");},1);
+hyd70rh7.typeShort = "2xLAU-68";
 hyd70rh7.brevity = "Rockets away";
 var fuelTankCenter = stations.FuelTank.new("Center 300 Gal Tank", "TK300", 4, 300, "sim/model/f16/ventraltank");
 var fuelTank370Left = stations.FuelTank.new("Left 370 Gal Tank", "TK370", 3, 370, "sim/model/f16/wingtankL");
@@ -60,10 +60,10 @@ var crgpd = stations.Dummy.new("MXU-648 Cargopod", "TRVL");
 var pylonSets = {
 	empty: {name: "Empty", content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
 	mm20:  {name: "20mm Cannon", content: [cannon], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-	hyd70h3:  {name: "2 x LAU-68", content: [hyd70lh3,hyd70rh3], fireOrder: [0,1], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-	hyd70h7:  {name: "2 x LAU-68", content: [hyd70lh7,hyd70rh7], fireOrder: [0,1], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+	hyd70h3:  {name: "2 x LAU-68", content: [hyd70lh3,hyd70rh3], fireOrder: [0,1], launcherDragArea: 0.007, launcherMass: 405.0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
+	hyd70h7:  {name: "2 x LAU-68", content: [hyd70lh7,hyd70rh7], fireOrder: [0,1], launcherDragArea: 0.007, launcherMass: 405.0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
 	a65x3:  {name: "3 x AGM-65", content: ["AGM-65", "AGM-65", "AGM-65"], fireOrder: [0,1,2], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
-	a65:  {name: "1 x AGM-65", content: ["AGM-65"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
+	a65:  {name: "1 x AGM-65", content: ["AGM-65"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
 	a84:  {name: "1 x AGM-84", content: ["AGM-84"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     a88: {name: "1 x AGM-88", content: ["AGM-88"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     a119:  {name: "1 x AGM-119", content: ["AGM-119"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
@@ -80,7 +80,6 @@ var pylonSets = {
     m84: {name: "1 x MK-84", content: ["MK-84"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     m83:  {name: "2 x MK-83", content: ["MK-83","MK-83"], fireOrder: [0,1], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
     c87:  {name: "2 x CBU-87", content: ["CBU-87","CBU-87"], fireOrder: [0,1], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
-    lau68:  {name: "2 x LAU-68", content: ["LAU-68","LAU-68"], fireOrder: [0,1], launcherDragArea: 0.01, launcherMass: 455.92, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
 	dumb1:  {name: "CATM-9L", content: [catm9], fireOrder: [], launcherDragArea: -0.025, launcherMass: 185, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	dumb2: {name: "AN-T-17", content: [ant17], fireOrder: [], launcherDragArea: -0.02, launcherMass: 185, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	dumb3:  {name: "CATM-120B", content: [catm120], fireOrder: [], launcherDragArea: -0.025, launcherMass: 290, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
@@ -102,8 +101,8 @@ var pylonSets = {
 	aim120:  {name: "1 x AIM-120", content: ["AIM-120"], fireOrder: [0], launcherDragArea: -0.025, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#non wingtip
 	aim120WT:{name: "1 x AIM-120", content: ["AIM-120"], fireOrder: [0], launcherDragArea: -0.05, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#wingtip
 	aim7:    {name: "1 x AIM-7",   content: ["AIM-7"], fireOrder: [0], launcherDragArea: -0.025, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
-	podEcm131: {name: "AN/ALQ-131(V) ECM Pod", content: [ecm131], fireOrder: [0], launcherDragArea: 0.16, launcherMass: 410, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-	podEcm184: {name: "AN/ALQ-184(V) ECM Pod", content: [ecm184], fireOrder: [0], launcherDragArea: 0.1, launcherMass: 635, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+	podEcm131: {name: "AN/ALQ-131(V) ECM Pod", content: [ecm131], fireOrder: [0], launcherDragArea: 0.16, launcherMass: 410, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
+	podEcm184: {name: "AN/ALQ-184(V) ECM Pod", content: [ecm184], fireOrder: [0], launcherDragArea: 0.1, launcherMass: 635, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
     podTrvl: {name: "MXU-648 Cargopod", content: [crgpd], fireOrder: [], launcherDragArea: 0.14, launcherMass: 104, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 1},
     podSAtp: {name: "AN/AAQ-33 Sniper ATP", content: [atp], fireOrder: [0], launcherDragArea: 0.06, launcherMass: 446, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     podLTgp: {name: "AN/AAQ-14 LANTIRN Target Pod", content: [tgp], fireOrder: [0], launcherDragArea: 0.07, launcherMass: 530, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
@@ -123,8 +122,8 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 	var pylon120set = [pylonSets.empty, pylonSets.aim9, pylonSets.aim120, pylonSets.dumb1, pylonSets.podACMI];
 	var wingtipSet1  = [pylonSets.dumb1,pylonSets.dumb2,pylonSets.dumb3, pylonSets.aim9WT, pylonSets.aim120WT,pylonSets.smokeRL,pylonSets.smokeGL,pylonSets.smokeBL,pylonSets.smokeWL];# wingtips are normally not empty, so CATM-9L dummy aim9 is loaded instead.
 	var wingtipSet9  = [pylonSets.dumb1,pylonSets.dumb2,pylonSets.dumb3, pylonSets.aim9WT, pylonSets.aim120WT,pylonSets.smokeRR,pylonSets.smokeGR,pylonSets.smokeBR,pylonSets.smokeWR];# wingtips are normally not empty, so CATM-9L dummy aim9 is loaded instead.
-	var pylon3set   = [pylonSets.empty, pylonSets.hyd70h3, pylonSets.b617, pylonSets.b6112, pylonSets.podTrvl, pylonSets.lau68, pylonSets.a154, pylonSets.a119, pylonSets.a158, pylonSets.a88, pylonSets.a84, pylonSets.a65x3, pylonSets.a65, pylonSets.c87, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x3, pylonSets.m84, pylonSets.m83, pylonSets.m82, pylonSets.aim9, pylonSets.aim7, pylonSets.aim120];
-	var pylon7set   = [pylonSets.empty, pylonSets.hyd70h7, pylonSets.b617, pylonSets.b6112, pylonSets.podTrvl, pylonSets.lau68, pylonSets.a154, pylonSets.a119, pylonSets.a158, pylonSets.a88, pylonSets.a84, pylonSets.a65x3, pylonSets.a65, pylonSets.c87, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x3, pylonSets.m84, pylonSets.m83, pylonSets.m82, pylonSets.aim9, pylonSets.aim7, pylonSets.aim120];
+	var pylon3set   = [pylonSets.empty, pylonSets.hyd70h3, pylonSets.b617, pylonSets.b6112, pylonSets.podTrvl, pylonSets.a154, pylonSets.a119, pylonSets.a158, pylonSets.a88, pylonSets.a84, pylonSets.a65x3, pylonSets.a65, pylonSets.c87, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x3, pylonSets.m84, pylonSets.m83, pylonSets.m82, pylonSets.aim9, pylonSets.aim7, pylonSets.aim120];
+	var pylon7set   = [pylonSets.empty, pylonSets.hyd70h7, pylonSets.b617, pylonSets.b6112, pylonSets.podTrvl, pylonSets.a154, pylonSets.a119, pylonSets.a158, pylonSets.a88, pylonSets.a84, pylonSets.a65x3, pylonSets.a65, pylonSets.c87, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x3, pylonSets.m84, pylonSets.m83, pylonSets.m82, pylonSets.aim9, pylonSets.aim7, pylonSets.aim120];
 	var pylon12setL = [pylonSets.empty, pylonSets.g12x2, pylonSets.fuel37L, pylonSets.fuel60L, pylonSets.m82, pylonSets.a119, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.a88, pylonSets.m83, pylonSets.c87, pylonSets.m84];
 	var pylon12setR = [pylonSets.empty, pylonSets.g12x2, pylonSets.fuel37R, pylonSets.fuel60R, pylonSets.m82, pylonSets.a119, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.a88, pylonSets.m83, pylonSets.c87, pylonSets.m84];
 

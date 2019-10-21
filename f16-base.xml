@@ -2429,7 +2429,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <max-pitch-deg type="double">-90</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
             </cbu-87>
-            <lau-68>
+            <!--lau-68>
                 <short-name type="string">LAU68</short-name>
                 <long-name type="string">LAU-68C/A Hydra 70</long-name>
                 <vol-search type="double">0.00</vol-search>
@@ -2440,16 +2440,16 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <max-fire-range-nm type="double">1.89</max-fire-range-nm>              
                 <FCS-field-deg type="int">30</FCS-field-deg>            
                 <seeker-field-deg type="int">180</seeker-field-deg>     
-                <seeker-angular-speed-dps type="double">30</seeker-angular-speed-dps><!-- deg/sec guess-->
+                <seeker-angular-speed-dps type="double">30</seeker-angular-speed-dps><!- deg/sec guess->
                 <max-g type="int">10</max-g>
                 <max-launch-g type="int">7</max-launch-g>               
-                <thrust-lbf-stage-1 type="double">1370</thrust-lbf-stage-1> <!-- guess -->
+                <thrust-lbf-stage-1 type="double">1370</thrust-lbf-stage-1> <!- guess ->
                 <thrust-lbf-stage-2 type="double">1415</thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double">1</stage-1-duration-sec>
                 <stage-2-duration-sec type="double">25</stage-2-duration-sec>
                 <weight-launch-lbs type="double">27</weight-launch-lbs>
-                <weight-warhead-lbs type="double">9.65</weight-warhead-lbs> <!-- M156 w/ white phosphorus -->
-                <weight-fuel-lbm type="double">3.25</weight-fuel-lbm> <!-- guess -->
+                <weight-warhead-lbs type="double">10.0</weight-warhead-lbs> <!- M151 High Explosive anti-personnel ->
+                <weight-fuel-lbm type="double">3.0</weight-fuel-lbm> <!- guess ->
                 <drag-coeff type="double">0.002</drag-coeff>
                 <cross-section-sqft type="double">1.507</cross-section-sqft>
                 <arming-time-sec type="double">0.5</arming-time-sec>          
@@ -2464,7 +2464,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <class type="string">GMP</class>
                 <fire-msg type="string">Rifle</fire-msg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
-            </lau-68>
+            </lau-68-->
             <b61-7>
                 <short-name type="string">B61-7</short-name>
                 <long-name type="string">B61-7 Inert Training Body</long-name>

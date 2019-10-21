@@ -98,7 +98,7 @@
     </offsets>
     <life>7.0</life><!-- since it has no drag, its lifetime should be as short as possible needed to hit stuff -->
     <wind>true</wind>
-    <weight>13.6</weight>
+    <weight>23.6</weight> <!-- 13.6lbs Mk66 Rocket Motor, 10lbs M151 HE warhead -->
     <cd>0.0</cd><!-- since it has engine and submodels dont support that, its drag is set to zero -->
     <eda>0.00136354</eda>
     <collision>true</collision>
@@ -123,7 +123,7 @@
     </offsets>
     <life>7.0</life>
     <wind>true</wind>
-    <weight>13.6</weight>
+    <weight>23.6</weight> <!-- 13.6lbs Mk66 Rocket Motor, 10lbs M151 HE warhead -->
     <cd>0.0</cd>
     <eda>0.00136354</eda>
     <collision>true</collision>
@@ -148,7 +148,7 @@
     </offsets>
     <life>7.0</life>
     <wind>true</wind>
-    <weight>13.6</weight>
+    <weight>23.6</weight> <!-- 13.6lbs Mk66 Rocket Motor, 10lbs M151 HE warhead -->
     <cd>0.0</cd>
     <eda>0.00136354</eda>
     <collision>true</collision>
@@ -173,7 +173,7 @@
     </offsets>
     <life>7.0</life>
     <wind>true</wind>
-    <weight>13.6</weight>
+    <weight>23.6</weight> <!-- 13.6lbs Mk66 Rocket Motor, 10lbs M151 HE warhead -->
     <cd>0.0</cd>
     <eda>0.00136354</eda>
     <collision>true</collision>

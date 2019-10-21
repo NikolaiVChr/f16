@@ -4,7 +4,7 @@
      <name>rocket-explosion</name>
      <texture>../smoke.png</texture>
 
-     <emissive type="bool">true</emissive>
+     <emissive type="bool">false</emissive>
      <lighting type="bool">false</lighting>
 
      <attach>world</attach>
@@ -149,7 +149,7 @@
        </end>
 
        <life-sec>
-         <value>10</value>
+         <value>20</value>
        </life-sec>
           
        <mass-kg>  5 </mass-kg>
