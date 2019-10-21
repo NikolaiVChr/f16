@@ -435,7 +435,7 @@ RWRCanvas = {
                                     });  
 
                 cv.addPlacement({"node": "bkg", "texture":"rwr-bkg.png"});
-                cv.setColorBackground(0, 0.20, 0);
+                cv.setColorBackground(0, 0.10, 0);
                 var root = cv.createGroup();
                 rwr = RWRCanvas.new("RWRCanvas", root, [diam/2,diam/2],diam);
 
