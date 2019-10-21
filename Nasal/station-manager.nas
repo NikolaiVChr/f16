@@ -438,7 +438,7 @@ var SubModelWeapon = {
 #
 # Attributes:
 #  drag, weight, submodel(s)
-	new: func (name, munitionMass, maxAmmo, submodelNumber, tracerSubModelNumbers, trigger, jettisonable, operableFunction=nil) {
+	new: func (name, munitionMass, maxAmmo, submodelNumber, tracerSubModelNumbers, trigger, jettisonable, operableFunction=nil, alternate = 0) {
 		var s = {parents:[SubModelWeapon]};
 		s.type = name;
 		s.typeLong = name;
@@ -453,6 +453,7 @@ var SubModelWeapon = {
 		s.trigger = trigger;
 		s.triggerNode = nil;
 		s.active = 0;
+		s.alternate = alternate;
 		s.timer = maketimer(0.3, s, func s.loop());
 		
 
@@ -509,14 +510,14 @@ var SubModelWeapon = {
 
 	eject: func {
 		if (me.jettisonable) {
-			s.timer.stop();
+			me.timer.stop();
 			me.trigger.unalias();
 			me.trigger.setBoolValue(0);
 		}
 	},
 
 	del: func {
-		s.timer.stop();
+		me.timer.stop();
 		me.trigger.unalias();
 		me.trigger.setBoolValue(0);
 	},
