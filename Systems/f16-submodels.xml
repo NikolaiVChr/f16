@@ -84,22 +84,22 @@
   </submodel>
 
   <submodel>
-    <name>Station 3 Left LAU-68</name>
+    <name>Hydra-70</name>
     <model>Aircraft/f16/Models/Armament/Weapons/LAU-68/Hydra70.xml</model>
-    <trigger>fdm/jsbsim/fcs/guntrigger</trigger>
-    <speed>2425.0</speed><!-- ft/sec -->
-    <repeat>true</repeat>
+    <trigger>fdm/jsbsim/fcs/hydra3ltrigger</trigger>
+    <speed>2000.0</speed><!-- ft/sec, due to no drag this should probably be around 65% of topspeed -->
+    <repeat>false</repeat>
     <delay>0.0</delay>
     <count>-1</count>
     <offsets>
-        <x-m> -3.16</x-m>
-        <y-m> -0.81</y-m>
-        <z-m>  0.17</z-m>
+        <x-m> -0.269</x-m><!-- in FEET and x is opposite normal FG model coordinates -->
+        <y-m> -9.45</y-m>
+        <z-m>  0.843</z-m>
     </offsets>
-    <life>60.0</life>
+    <life>7.0</life><!-- since it has no drag, its lifetime should be as short as possible needed to hit stuff -->
     <wind>true</wind>
-    <weight>27.0</weight>
-    <cd>0.193</cd>
+    <weight>13.6</weight>
+    <cd>0.0</cd><!-- since it has engine and submodels dont support that, its drag is set to zero -->
     <eda>0.00136354</eda>
     <collision>true</collision>
     <collision-report>sim/ai/aircraft/collision/bullet</collision-report>
@@ -108,23 +108,23 @@
     <submodel-path>Aircraft/f16/Models/Armament/Weapons/LAU-68/rocket-submodel.xml</submodel-path>
   </submodel>
 
-    <submodel>
-    <name>Station 3 Right LAU-68</name>
+  <submodel>
+    <name>Hydra-70</name>
     <model>Aircraft/f16/Models/Armament/Weapons/LAU-68/Hydra70.xml</model>
-    <trigger>fdm/jsbsim/fcs/guntrigger</trigger>
-    <speed>2425.0</speed><!-- ft/sec -->
-    <repeat>true</repeat>
+    <trigger>fdm/jsbsim/fcs/hydra3rtrigger</trigger>
+    <speed>2000.0</speed><!-- ft/sec -->
+    <repeat>false</repeat>
     <delay>0.0</delay>
     <count>-1</count>
     <offsets>
-        <x-m> -3.16</x-m>
-        <y-m> -0.81</y-m>
-        <z-m>  0.17</z-m>
+        <x-m> -0.269</x-m>
+        <y-m> -9.45</y-m>
+        <z-m>  0.843</z-m>
     </offsets>
-    <life>60.0</life>
+    <life>7.0</life>
     <wind>true</wind>
-    <weight>27.0</weight>
-    <cd>0.193</cd>
+    <weight>13.6</weight>
+    <cd>0.0</cd>
     <eda>0.00136354</eda>
     <collision>true</collision>
     <collision-report>sim/ai/aircraft/collision/bullet</collision-report>
@@ -133,23 +133,23 @@
     <submodel-path>Aircraft/f16/Models/Armament/Weapons/LAU-68/rocket-submodel.xml</submodel-path>
   </submodel>
 
-    <submodel>
-    <name>Station 7 Left LAU-68</name>
+  <submodel>
+    <name>Hydra-70</name>
     <model>Aircraft/f16/Models/Armament/Weapons/LAU-68/Hydra70.xml</model>
-    <trigger>fdm/jsbsim/fcs/guntrigger</trigger>
-    <speed>2425.0</speed><!-- ft/sec -->
-    <repeat>true</repeat>
+    <trigger>fdm/jsbsim/fcs/hydra7ltrigger</trigger>
+    <speed>2000.0</speed><!-- ft/sec -->
+    <repeat>false</repeat>
     <delay>0.0</delay>
     <count>-1</count>
     <offsets>
-        <x-m> -3.16</x-m>
-        <y-m> -0.81</y-m>
-        <z-m>  0.17</z-m>
+        <x-m> -0.269</x-m>
+        <y-m>  9.45</y-m>
+        <z-m>  0.843</z-m>
     </offsets>
-    <life>60.0</life>
+    <life>7.0</life>
     <wind>true</wind>
-    <weight>27.0</weight>
-    <cd>0.193</cd>
+    <weight>13.6</weight>
+    <cd>0.0</cd>
     <eda>0.00136354</eda>
     <collision>true</collision>
     <collision-report>sim/ai/aircraft/collision/bullet</collision-report>
@@ -158,23 +158,23 @@
     <submodel-path>Aircraft/f16/Models/Armament/Weapons/LAU-68/rocket-submodel.xml</submodel-path>
   </submodel>
 
-    <submodel>
-    <name>Station 7 Right LAU-68</name>
+  <submodel>
+    <name>Hydra-70</name>
     <model>Aircraft/f16/Models/Armament/Weapons/LAU-68/Hydra70.xml</model>
-    <trigger>fdm/jsbsim/fcs/guntrigger</trigger>
-    <speed>2425.0</speed><!-- ft/sec -->
-    <repeat>true</repeat>
+    <trigger>fdm/jsbsim/fcs/hydra7rtrigger</trigger>
+    <speed>2000.0</speed><!-- ft/sec -->
+    <repeat>false</repeat>
     <delay>0.0</delay>
     <count>-1</count>
     <offsets>
-        <x-m> -3.16</x-m>
-        <y-m> -0.81</y-m>
-        <z-m>  0.17</z-m>
+        <x-m> -0.269</x-m>
+        <y-m>  9.45</y-m>
+        <z-m>  0.843</z-m>
     </offsets>
-    <life>60.0</life>
+    <life>7.0</life>
     <wind>true</wind>
-    <weight>27.0</weight>
-    <cd>0.193</cd>
+    <weight>13.6</weight>
+    <cd>0.0</cd>
     <eda>0.00136354</eda>
     <collision>true</collision>
     <collision-report>sim/ai/aircraft/collision/bullet</collision-report>
