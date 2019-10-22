@@ -1544,6 +1544,10 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <hydra3rtrigger type="bool">false</hydra3rtrigger>
                 <hydra7ltrigger type="bool">false</hydra7ltrigger>
                 <hydra7rtrigger type="bool">false</hydra7rtrigger>
+                <hydra3ltriggers type="bool">false</hydra3ltriggers>
+                <hydra3rtriggers type="bool">false</hydra3rtriggers>
+                <hydra7ltriggers type="bool">false</hydra7ltriggers>
+                <hydra7rtriggers type="bool">false</hydra7rtriggers>
             </fcs>
             <propulsion>
                 <tank n="2">

@@ -877,11 +877,7 @@
 			<path>Aircraft/f16/Sounds/hydra70.wav</path>
 			<condition>
 					<and>
-						<property>fdm/jsbsim/fcs/hydra7rtrigger</property>
-						<greater-than>
-							<property>ai/submodels/submodel[7]/count</property>
-							<value>0</value>
-						</greater-than>
+						<property>fdm/jsbsim/fcs/hydra7rtriggers</property>
 					</and>
 				<property>payload/armament/fire-control/serviceable</property>
 			</condition>
@@ -898,11 +894,7 @@
 			<path>Aircraft/f16/Sounds/hydra70.wav</path>
 			<condition>
 					<and>
-						<property>fdm/jsbsim/fcs/hydra7ltrigger</property>
-						<greater-than>
-							<property>ai/submodels/submodel[6]/count</property>
-							<value>0</value>
-						</greater-than>
+						<property>fdm/jsbsim/fcs/hydra7ltriggers</property>
 					</and>
 				<property>payload/armament/fire-control/serviceable</property>
 			</condition>
@@ -919,11 +911,7 @@
 			<path>Aircraft/f16/Sounds/hydra70.wav</path>
 			<condition>
 					<and>
-						<property>fdm/jsbsim/fcs/hydra3rtrigger</property>
-						<greater-than>
-							<property>ai/submodels/submodel[5]/count</property>
-							<value>0</value>
-						</greater-than>
+						<property>fdm/jsbsim/fcs/hydra3rtriggers</property>
 					</and>
 				<property>payload/armament/fire-control/serviceable</property>
 			</condition>
@@ -940,11 +928,7 @@
 			<path>Aircraft/f16/Sounds/hydra70.wav</path>
 			<condition>
 					<and>
-						<property>fdm/jsbsim/fcs/hydra3ltrigger</property>
-						<greater-than>
-							<property>ai/submodels/submodel[4]/count</property>
-							<value>0</value>
-						</greater-than>
+						<property>fdm/jsbsim/fcs/hydra3ltriggers</property>
 					</and>
 				<property>payload/armament/fire-control/serviceable</property>
 			</condition>
