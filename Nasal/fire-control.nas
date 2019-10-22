@@ -529,15 +529,14 @@ var FireControl = {
 				}
 				me.triggerTime = 0;
 			}
+		} elsif (getprop("controls/armament/trigger") < 1) {
+			me.triggerTime = 0;
 			if (me.aim != nil and me.aim.parents[0] == stations.SubModelWeapon) {
 				if (me.aim.alternate) {
 					me.stopCurrent();
 					me.nextWeapon(me.selectedType);
-				}
-				
+				}				
 			}
-		} elsif (getprop("controls/armament/trigger") < 1) {
-			me.triggerTime = 0;
 		}
 	},
 

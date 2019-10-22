@@ -873,31 +873,9 @@
 		</cannon>
 		
 		<hydra>
-			<name>hydra70</name>
+			<name>hydra70a</name>
 			<path>Aircraft/f16/Sounds/hydra70.wav</path>
 			<condition>
-				<or>
-					<and>
-						<property>fdm/jsbsim/fcs/hydra3ltrigger</property>
-						<greater-than>
-							<property>ai/submodels/submodel[4]/count</property>
-							<value>0</value>
-						</greater-than>
-					</and>
-					<and>
-						<property>fdm/jsbsim/fcs/hydra3rtrigger</property>
-						<greater-than>
-							<property>ai/submodels/submodel[5]/count</property>
-							<value>0</value>
-						</greater-than>
-					</and>
-					<and>
-						<property>fdm/jsbsim/fcs/hydra7ltrigger</property>
-						<greater-than>
-							<property>ai/submodels/submodel[6]/count</property>
-							<value>0</value>
-						</greater-than>
-					</and>
 					<and>
 						<property>fdm/jsbsim/fcs/hydra7rtrigger</property>
 						<greater-than>
@@ -905,14 +883,76 @@
 							<value>0</value>
 						</greater-than>
 					</and>
-				</or>
 				<property>payload/armament/fire-control/serviceable</property>
 			</condition>
 			<mode>single</mode>
 			<position>
-				<x>-1.0</x>
-				<y>0.8</y>
-				<z>0.0</z>
+				<x>0.09</x>
+				<y>-3.1</y>
+				<z>0.25</z>
+			</position>
+		</hydra>
+		
+		<hydra>
+			<name>hydra70b</name>
+			<path>Aircraft/f16/Sounds/hydra70.wav</path>
+			<condition>
+					<and>
+						<property>fdm/jsbsim/fcs/hydra7ltrigger</property>
+						<greater-than>
+							<property>ai/submodels/submodel[6]/count</property>
+							<value>0</value>
+						</greater-than>
+					</and>
+				<property>payload/armament/fire-control/serviceable</property>
+			</condition>
+			<mode>single</mode>
+			<position>
+				<x>0.09</x>
+				<y>-3.1</y>
+				<z>0.25</z>
+			</position>
+		</hydra>
+		
+		<hydra>
+			<name>hydra70c</name>
+			<path>Aircraft/f16/Sounds/hydra70.wav</path>
+			<condition>
+					<and>
+						<property>fdm/jsbsim/fcs/hydra3rtrigger</property>
+						<greater-than>
+							<property>ai/submodels/submodel[5]/count</property>
+							<value>0</value>
+						</greater-than>
+					</and>
+				<property>payload/armament/fire-control/serviceable</property>
+			</condition>
+			<mode>single</mode>
+			<position>
+				<x>0.09</x>
+				<y>3.1</y>
+				<z>0.25</z>
+			</position>
+		</hydra>
+		
+		<hydra>
+			<name>hydra70d</name>
+			<path>Aircraft/f16/Sounds/hydra70.wav</path>
+			<condition>
+					<and>
+						<property>fdm/jsbsim/fcs/hydra3ltrigger</property>
+						<greater-than>
+							<property>ai/submodels/submodel[4]/count</property>
+							<value>0</value>
+						</greater-than>
+					</and>
+				<property>payload/armament/fire-control/serviceable</property>
+			</condition>
+			<mode>single</mode>
+			<position>
+				<x>0.09</x>
+				<y>3.1</y>
+				<z>0.25</z>
 			</position>
 		</hydra>
 
