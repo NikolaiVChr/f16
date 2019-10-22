@@ -21,7 +21,7 @@
 				<factor>-0.25</factor>
 			</pitch>
 			<volume>
-				<max>0.5</max>
+				<max>0.11</max>
 			</volume>
 		</canopy>
 		<canopy>
@@ -42,7 +42,7 @@
 				<z>0.195</z>
 			</position>
 			<volume>
-				<max>0.55</max>
+				<max>0.12</max>
 			</volume>
 		</canopy>
 
@@ -143,6 +143,7 @@
 				<factor>0.45</factor>
 			</volume>
 		</engine_fan>
+
 		<engine_fan>
 			<name>external fan</name>
 			<path>Aircraft/f16/Sounds/turbojet_fan.wav</path>
@@ -371,6 +372,209 @@
 				<factor>0.115</factor>
 			</volume>
 		</afterburner>
+		
+		
+		<!-- .................... external sounds heard inside when canopy open...........................-->
+		<exhaust>
+			<name>turbine externalc</name>
+			<path>Sounds/jet.wav</path>
+			<mode>looped</mode>
+			<condition>
+				<property>engines/engine/running</property>
+				<property>sim/current-view/internal</property>
+			</condition>
+			<reference-dist>250</reference-dist>
+			<max-dist>15500</max-dist>
+			<position>
+				<x>4.6</x>
+				<y>0.01</y>
+				<z>0.01</z>
+			</position>
+			<orientation>
+				<x>1.0</x>
+				<y>0.0</y>
+				<z>0.0</z>
+				<inner-angle>200.0</inner-angle>
+				<outer-angle>360.0</outer-angle>
+				<outer-gain>0.25</outer-gain>
+			</orientation>
+			<volume>
+				<property>engines/engine/thrust_lb</property>
+				<offset>0</offset>
+				<factor>0.000065</factor>
+			</volume>
+			<volume>
+			    <property>fdm/jsbsim/fcs/canopy-pos-norm</property>		
+			    <offset>0</offset>
+			    <factor>1</factor>
+		    </volume>
+			<pitch>
+				<property>engines/engine/n1</property>
+				<offset>0.00</offset>
+				<factor>0.01</factor>
+			</pitch>
+		</exhaust>
+		<afterburner>
+			<name>afterburnerc</name>
+			<path>Aircraft/f16/Sounds/exhaust_loop.wav</path>
+			<mode>looped</mode>
+			<condition>
+				<property>sim/current-view/internal</property>
+				<property>engines/engine/augmentation</property>
+			</condition>
+			<reference-dist>500</reference-dist>
+			<max-dist>16000</max-dist>
+			<position>
+				<x>4.6</x>
+				<y>0.01</y>
+				<z>0.01</z>
+			</position>
+			<orientation>
+				<x>1.0</x>
+				<y>0.0</y>
+				<z>0.0</z>
+				<inner-angle>200.0</inner-angle>
+				<outer-angle>360.0</outer-angle>
+				<outer-gain>0.2</outer-gain>
+			</orientation>
+			<volume>
+				<property>engines/engine/nozzle-pos-norm</property>
+				<offset>0.05</offset>
+				<factor>0.96</factor>
+			</volume>
+			<volume>
+			    <property>fdm/jsbsim/fcs/canopy-pos-norm</property>	
+			    <offset>0</offset>
+			    <factor>1</factor>
+		    </volume>
+		</afterburner>
+		<afterburner>
+			<name>afterburner blastc</name>
+			<path>Aircraft/f16/Sounds/GEED/afterburner_exterior.wav</path>
+			<mode>looped</mode>
+			<condition>
+				<property>sim/current-view/internal</property>
+				<property>engines/engine/augmentation</property>
+			</condition>
+			<reference-dist>500</reference-dist>
+			<max-dist>16000</max-dist>
+			<position>
+				<x>4.6</x>
+				<y>0.01</y>
+				<z>0.01</z>
+			</position>
+			<orientation>
+				<x>1.0</x>
+				<y>0.0</y>
+				<z>0.0</z>
+				<inner-angle>200.0</inner-angle>
+				<outer-angle>360.0</outer-angle>
+				<outer-gain>0.2</outer-gain>
+			</orientation>
+			<volume>
+				<property>engines/engine/nozzle-pos-norm</property>
+				<offset>0.05</offset>
+				<factor>0.115</factor>
+			</volume>
+			<volume>
+			    <property>fdm/jsbsim/fcs/canopy-pos-norm</property>
+			    <offset>0</offset>
+			    <factor>1</factor>
+		    </volume>
+		</afterburner>
+		<engine_fan>
+			<name>external fanc</name>
+			<path>Aircraft/f16/Sounds/turbojet_fan.wav</path>
+			<mode>looped</mode>
+			<condition>
+				<greater-than>
+					<property>engines/engine/n2</property>
+					<value>5</value>
+				</greater-than>
+				<property>sim/current-view/internal</property>
+				<less-than>
+					<property>engines/engine/n1</property>
+					<value>100.0</value>
+				</less-than>
+			</condition>
+			<reference-dist>100</reference-dist>
+			<max-dist>6000</max-dist>
+			<position>
+				<x>0.6</x>
+				<y>0.01</y>
+				<z>-0.37</z>
+			</position>
+			<orientation>
+				<x>-0.98</x>
+				<y>0.0</y>
+				<z>-0.17</z>
+				<inner-angle>60.0</inner-angle>
+				<outer-angle>200.0</outer-angle>
+				<outer-gain>0.65</outer-gain>
+			</orientation>
+			<pitch>
+				<property>engines/engine/n1</property>
+				<offset>1.0</offset>
+				<factor>0.004</factor>
+			</pitch>
+			<volume>
+				<property>engines/engine/n1</property>
+				<offset>1.30</offset>
+				<factor>-0.01</factor>
+			</volume>
+			<volume>
+			    <property>fdm/jsbsim/fcs/canopy-pos-norm</property>
+			    <offset>0</offset>
+			    <factor>1</factor>
+		    </volume>
+		</engine_fan>
+		<engine_fan>
+			<name>external fan 2c</name>
+			<path>Aircraft/f16/Sounds/FGUK/f16-whine.wav</path>
+			<mode>looped</mode>
+			<condition>
+				<greater-than>
+					<property>engines/engine/n2</property>
+					<value>5</value>
+				</greater-than>
+				<property>sim/current-view/internal</property>
+				<less-than>
+					<property>engines/engine/n1</property>
+					<value>100.0</value>
+				</less-than>
+			</condition>
+			<reference-dist>100</reference-dist>
+			<max-dist>6000</max-dist>
+			<position>
+				<x>0.6</x>
+				<y>0.01</y>
+				<z>-0.37</z>
+			</position>
+			<orientation>
+				<x>-0.98</x>
+				<y>0.0</y>
+				<z>-0.17</z>
+				<inner-angle>60.0</inner-angle>
+				<outer-angle>200.0</outer-angle>
+				<outer-gain>0.65</outer-gain>
+			</orientation>
+			<pitch>
+				<property>engines/engine/n1</property>
+				<offset>1.0</offset>
+				<factor>0.004</factor>
+			</pitch>
+			<volume>
+				<property>engines/engine/n1</property>
+				<offset>0.35</offset>
+				<factor>-0.01</factor>
+			</volume>
+			<volume>
+			    <property>fdm/jsbsim/fcs/canopy-pos-norm</property>	
+			    <offset>0</offset>
+			    <factor>1</factor>
+		    </volume>
+		</engine_fan>
+		<!-- ..........................................................-->
 
 		<!-- new AB internal sound by G-EED -->
 		<afterburner>
