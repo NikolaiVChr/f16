@@ -21,7 +21,7 @@
 				<factor>-0.25</factor>
 			</pitch>
 			<volume>
-				<max>0.11</max>
+				<max>0.40</max>
 			</volume>
 		</canopy>
 		<canopy>
@@ -42,7 +42,7 @@
 				<z>0.195</z>
 			</position>
 			<volume>
-				<max>0.12</max>
+				<max>0.45</max>
 			</volume>
 		</canopy>
 
@@ -108,7 +108,7 @@
 				<factor>.00075</factor>
 			</pitch>
 			<volume>
-				<factor>0.065</factor>
+				<factor>0.06</factor>
 			</volume>
 		</engine_fan>
 		<engine_fan>
@@ -369,7 +369,7 @@
 			<volume>
 				<property>engines/engine/nozzle-pos-norm</property>
 				<offset>0.05</offset>
-				<factor>0.115</factor>
+				<factor>0.117</factor>
 			</volume>
 		</afterburner>
 		
