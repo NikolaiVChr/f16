@@ -7,7 +7,7 @@ OBJECT poly
 name "DED_panel"
 data 8
 Mesh.028
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 30.000000
 numvert 40
 -0.000248 0.053519 0.072825
@@ -321,7 +321,7 @@ name "gain_auto"
 loc 0 -0.000168845 0.00118192
 data 8
 Mesh.001
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 30.000000
 numvert 13
 0.021127 -0.031073 -0.051386
@@ -451,7 +451,7 @@ OBJECT poly
 name "drift"
 data 4
 Mesh
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 30.000000
 numvert 13
 0.021412 -0.038742 -0.015908
@@ -582,7 +582,7 @@ name "cont"
 loc 0 0 0.00144265
 data 8
 Mesh.005
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 30.000000
 numvert 131
 0.010743 -0.022213 -0.073253
@@ -2259,7 +2259,7 @@ name "sym"
 loc 0 0 -0.00144266
 data 8
 Mesh.003
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 30.000000
 numvert 131
 0.010694 0.024712 0.066125
@@ -3936,7 +3936,7 @@ name "depr_ret"
 loc -4.65661e-010 1.86265e-009 0.00144265
 data 8
 Mesh.004
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 30.000000
 numvert 131
 0.010756 0.024697 -0.073247
@@ -5613,7 +5613,7 @@ name "brt"
 loc 0 0 -0.00144266
 data 8
 Mesh.002
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 30.000000
 numvert 131
 0.01068 -0.022199 0.066119
@@ -7288,7 +7288,7 @@ kids 0
 OBJECT poly
 name "rtn_seq"
 loc 0.0157812 -0.000309158 -0.00132855
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 45.000000
 numvert 32
 0.00314175 -0.049947 0.014898
@@ -7462,7 +7462,7 @@ kids 22
 OBJECT poly
 name "1"
 loc 0.001421 0.0245479 0.0461094
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 45.000000
 numvert 36
 -0.00275823 -0.0058812 0.00698897
@@ -7741,7 +7741,7 @@ kids 0
 OBJECT poly
 name "3"
 loc 0.001421 0.0245479 0.005332
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 45.000000
 numvert 36
 -0.00275823 -0.0058812 0.00698897
@@ -8020,7 +8020,7 @@ kids 0
 OBJECT poly
 name "8"
 loc 0.001421 -0.0168714 0.0269284
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 45.000000
 numvert 36
 -2.52621e-008 -0.00651206 -0.00646773
@@ -8299,7 +8299,7 @@ kids 0
 OBJECT poly
 name "9"
 loc 0.001421 -0.0168714 0.005332
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 45.000000
 numvert 36
 -0.00275823 -0.0058812 0.00698897
@@ -8578,7 +8578,7 @@ kids 0
 OBJECT poly
 name "7"
 loc 0.001421 -0.0168714 0.0461094
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 45.000000
 numvert 36
 -0.00275823 -0.0058812 0.00698897
@@ -8857,7 +8857,7 @@ kids 0
 OBJECT poly
 name "4"
 loc 0.001421 0.00292796 0.0461094
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 45.000000
 numvert 36
 -2.52621e-008 -0.00651206 -0.00646773
@@ -9136,7 +9136,7 @@ kids 0
 OBJECT poly
 name "5"
 loc 0.001421 0.00292796 0.0269284
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 45.000000
 numvert 36
 -0.00275823 -0.0058812 0.00698898
@@ -9415,7 +9415,7 @@ kids 0
 OBJECT poly
 name "entr"
 loc 0.001421 0.00355431 -0.0164337
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 45.000000
 numvert 36
 -0.00275823 -0.0058812 0.00698897
@@ -9694,7 +9694,7 @@ kids 0
 OBJECT poly
 name "6"
 loc 0.001421 0.00292796 0.005332
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 45.000000
 numvert 36
 -2.52621e-008 -0.00651206 -0.00646773
@@ -9973,7 +9973,7 @@ kids 0
 OBJECT poly
 name "rcl"
 loc 0.001421 0.0251743 -0.0164337
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 45.000000
 numvert 36
 -2.52621e-008 -0.00651206 -0.00646773
@@ -10252,7 +10252,7 @@ kids 0
 OBJECT poly
 name "2"
 loc 0.001421 0.0245479 0.0269284
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 45.000000
 numvert 36
 -2.52621e-008 -0.00651206 -0.00646773
@@ -10531,7 +10531,7 @@ kids 0
 OBJECT poly
 name "0"
 loc 0.001421 -0.0168714 -0.013302
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 45.000000
 numvert 36
 -2.52621e-008 -0.00651206 -0.00646773
@@ -10812,7 +10812,7 @@ name "a-a"
 loc 0 0.000707794 0.00182417
 data 8
 Mesh.023
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 30.000000
 numvert 31
 0.002874 0.048159 -0.025662
@@ -11123,7 +11123,7 @@ name "a-g"
 loc 0 0.000535168 0.00226726
 data 8
 Mesh.022
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 30.000000
 numvert 31
 0.002884 0.048117 -0.0468
@@ -11434,7 +11434,7 @@ name "com1"
 loc 0 0.000857316 -0.00105302
 data 8
 Mesh.027
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 30.000000
 numvert 31
 0.002884 0.048044 0.059653
@@ -11745,7 +11745,7 @@ name "com2"
 loc 0 0.000687584 -0.000509195
 data 8
 Mesh.026
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 30.000000
 numvert 31
 0.002884 0.048101 0.038376
@@ -12056,7 +12056,7 @@ name "flir_ud"
 loc 0 0.000240442 0.00140025
 data 8
 Mesh.006
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 30.000000
 numvert 20
 0.001401 0.006546 -0.045098
@@ -12254,7 +12254,7 @@ name "iff"
 loc 0 0.000264701 0.000535169
 data 8
 Mesh.025
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 30.000000
 numvert 31
 0.002884 0.04806 0.016752
@@ -12565,7 +12565,7 @@ name "list"
 loc 0 0.000397053 0.00111061
 data 8
 Mesh.024
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 30.000000
 numvert 31
 0.002888 0.048096 -0.004401
@@ -12876,7 +12876,7 @@ name "cursor-up-down"
 loc 0 0.000792038 -0.0011739
 data 8
 Mesh.020
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 30.000000
 hidden
 numvert 20
@@ -13075,7 +13075,7 @@ name "plrt"
 loc 0 0.000919368 0.00171141
 data 8
 Mesh.007
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 30.000000
 numvert 21
 0.001374 0.020061 -0.049493
@@ -13286,7 +13286,7 @@ name "wx"
 loc 0 0.000919368 0.00171141
 data 8
 Mesh.007
-texture "../Textures/icp.rgb"
+texture "../Textures/icp.png"
 crease 30.000000
 numvert 21
 0.001374 0.023334 -0.045258

@@ -1093,6 +1093,9 @@
 				<y>-3.1</y>
 				<z>0.25</z>
 			</position>
+			<volume>
+				<factor>0.3</factor>
+			</volume>
 		</hydra>
 		
 		<hydra>
@@ -1112,6 +1115,9 @@
 				<y>-3.1</y>
 				<z>0.25</z>
 			</position>
+			<volume>
+				<factor>0.3</factor>
+			</volume>
 		</hydra>
 		
 		<hydra>
@@ -1131,6 +1137,9 @@
 				<y>3.1</y>
 				<z>0.25</z>
 			</position>
+			<volume>
+				<factor>0.3</factor>
+			</volume>
 		</hydra>
 		
 		<hydra>
@@ -1150,6 +1159,9 @@
 				<y>3.1</y>
 				<z>0.25</z>
 			</position>
+			<volume>
+				<factor>0.3</factor>
+			</volume>
 		</hydra>
 
 		<voice>
