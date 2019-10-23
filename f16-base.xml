@@ -2429,7 +2429,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
                 <drop-time type="double">0.8</drop-time>
                 <deploy-time type="double">0.7</deploy-time>
-                <lateral-dps type="double">0</lateral-dps> <!-- -135 -->
+                <lateral-dps type="double">-135</lateral-dps> <!-- -135 -->
                 <max-pitch-deg type="double">-90</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
             </cbu-87>
