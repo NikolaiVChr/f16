@@ -628,7 +628,7 @@ setlistener("/ai/models/model-impact", impact_listener, 0, 0);
 var h3ltrigger = func {
   if (getprop("fdm/jsbsim/fcs/hydra3ltrigger") and !getprop("fdm/jsbsim/fcs/hydra3ltriggers") and getprop("ai/submodels/submodel[4]/count") > 0) {
     setprop("fdm/jsbsim/fcs/hydra3ltriggers",1);
-    settimer(h3ltrigger2, 0.5);
+    settimer(h3ltrigger2, 0.75);
   }
 }
 
@@ -636,12 +636,12 @@ var h3ltrigger2 = func {
   setprop("fdm/jsbsim/fcs/hydra3ltriggers",0);
 }
 
-setlistener("fdm/jsbsim/fcs/hydra3ltrigger", h3ltrigger, 0, 0);
+setlistener("controls/armament/trigger", h3ltrigger, 0, 0);
 
 var h3rtrigger = func {
   if (getprop("fdm/jsbsim/fcs/hydra3rtrigger") and !getprop("fdm/jsbsim/fcs/hydra3rtriggers") and getprop("ai/submodels/submodel[5]/count") > 0) {
     setprop("fdm/jsbsim/fcs/hydra3rtriggers",1);
-    settimer(h3rtrigger2, 0.5);
+    settimer(h3rtrigger2, 0.75);
   }
 }
 
@@ -649,12 +649,12 @@ var h3rtrigger2 = func {
   setprop("fdm/jsbsim/fcs/hydra3rtriggers",0);
 }
 
-setlistener("fdm/jsbsim/fcs/hydra3rtrigger", h3rtrigger, 0, 0);
+setlistener("controls/armament/trigger", h3rtrigger, 0, 0);
 
 var h7ltrigger = func {
   if (getprop("fdm/jsbsim/fcs/hydra7ltrigger") and !getprop("fdm/jsbsim/fcs/hydra7ltriggers") and getprop("ai/submodels/submodel[6]/count") > 0) {
     setprop("fdm/jsbsim/fcs/hydra7ltriggers",1);
-    settimer(h7ltrigger2, 0.5);
+    settimer(h7ltrigger2, 0.75);
   }
 }
 
@@ -662,12 +662,12 @@ var h7ltrigger2 = func {
   setprop("fdm/jsbsim/fcs/hydra7ltriggers",0);
 }
 
-setlistener("fdm/jsbsim/fcs/hydra7ltrigger", h7ltrigger, 0, 0);
+setlistener("controls/armament/trigger", h7ltrigger, 0, 0);
 
 var h7rtrigger = func {
   if (getprop("fdm/jsbsim/fcs/hydra7rtrigger") and !getprop("fdm/jsbsim/fcs/hydra7rtriggers") and getprop("ai/submodels/submodel[7]/count") > 0) {
     setprop("fdm/jsbsim/fcs/hydra7rtriggers",1);
-    settimer(h7rtrigger2, 0.5);
+    settimer(h7rtrigger2, 0.75);
   }
 }
 
@@ -675,7 +675,7 @@ var h7rtrigger2 = func {
   setprop("fdm/jsbsim/fcs/hydra7rtriggers",0);
 }
 
-setlistener("fdm/jsbsim/fcs/hydra7rtrigger", h7rtrigger, 0, 0);
+setlistener("controls/armament/trigger", h7rtrigger, 0, 0);
 
 var prop = "payload/armament/fire-control";
 var actuator_fc = compat_failure_modes.set_unserviceable(prop);

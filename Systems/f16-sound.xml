@@ -1086,6 +1086,8 @@
 				<property>payload/armament/fire-control/serviceable</property>
 			</condition>
 			<mode>single</mode>
+			<reference-dist>5</reference-dist>
+			<max-dist>100</max-dist>
 			<position>
 				<x>0.09</x>
 				<y>-3.1</y>
@@ -1103,6 +1105,8 @@
 				<property>payload/armament/fire-control/serviceable</property>
 			</condition>
 			<mode>single</mode>
+			<reference-dist>5</reference-dist>
+			<max-dist>100</max-dist>
 			<position>
 				<x>0.09</x>
 				<y>-3.1</y>
@@ -1120,6 +1124,8 @@
 				<property>payload/armament/fire-control/serviceable</property>
 			</condition>
 			<mode>single</mode>
+			<reference-dist>5</reference-dist>
+			<max-dist>100</max-dist>
 			<position>
 				<x>0.09</x>
 				<y>3.1</y>
@@ -1137,6 +1143,8 @@
 				<property>payload/armament/fire-control/serviceable</property>
 			</condition>
 			<mode>single</mode>
+			<reference-dist>5</reference-dist>
+			<max-dist>100</max-dist>
 			<position>
 				<x>0.09</x>
 				<y>3.1</y>
