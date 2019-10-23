@@ -21,7 +21,7 @@
 				<factor>-0.25</factor>
 			</pitch>
 			<volume>
-				<max>0.40</max>
+				<max>0.30</max>
 			</volume>
 		</canopy>
 		<canopy>
@@ -35,14 +35,14 @@
 				</equals>
 			</condition>
 			<reference-dist>10</reference-dist>
-			<max-dist>50</max-dist>
+			<max-dist>100</max-dist>
 			<position>
 				<x>-1.0</x>
 				<y>0.0</y>
 				<z>0.195</z>
 			</position>
 			<volume>
-				<max>0.45</max>
+				<max>0.35</max>
 			</volume>
 		</canopy>
 

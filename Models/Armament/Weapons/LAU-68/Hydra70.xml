@@ -29,7 +29,7 @@
        </placer>
 
        <offsets>
-          <x-m>1.90437</x-m>
+          <x-m>1.4</x-m>
           <y-m>0</y-m>
           <z-m>0</z-m>
        </offsets>
@@ -55,7 +55,7 @@
 
        <counter>
          <particles-per-sec>
-           <value>50</value>
+           <value>100</value>
            <spread>0</spread>
          </particles-per-sec>
        </counter>
@@ -83,7 +83,7 @@
              <alpha><value> 0.1 </value></alpha>
            </color>
            <size>
-             <value>6</value>
+             <value>5</value>
            </size>
          </end>
 

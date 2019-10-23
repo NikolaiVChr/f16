@@ -19,8 +19,8 @@
        <phi-min-deg>-180</phi-min-deg>
        <phi-max-deg>180</phi-max-deg>
        <speed-mps>
-         <value>500</value>
-         <spread>80</spread>
+         <value>250</value>
+         <spread>50</spread>
        </speed-mps>
        <rotation-speed>
          <x-min-deg-sec>0</x-min-deg-sec>
@@ -101,8 +101,8 @@
        <phi-min-deg>-180</phi-min-deg>
        <phi-max-deg>180</phi-max-deg>
        <speed-mps>
-         <value>500</value>
-         <spread>60</spread>
+         <value>250</value>
+         <spread>50</spread>
        </speed-mps>
        <rotation-speed>
          <x-min-deg-sec>0</x-min-deg-sec>
@@ -117,7 +117,7 @@
      <counter>
        <particles-per-sec>
          <value>50</value>
-         <spread>10</spread>
+         <spread>15</spread>
        </particles-per-sec>
      </counter>
         
@@ -132,7 +132,7 @@
            <alpha><value> 0.5 </value></alpha>
          </color>
          <size>
-           <value>10</value>
+           <value>7</value>
          </size>
        </start>
 
@@ -144,12 +144,12 @@
            <alpha><value> 0.04 </value></alpha>
          </color>
          <size>
-           <value>50</value>
+           <value>40</value>
          </size>
        </end>
 
        <life-sec>
-         <value>20</value>
+         <value>25</value>
        </life-sec>
           
        <mass-kg>  5 </mass-kg>
