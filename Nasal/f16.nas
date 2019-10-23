@@ -636,7 +636,7 @@ var h3ltrigger2 = func {
   setprop("fdm/jsbsim/fcs/hydra3ltriggers",0);
 }
 
-setlistener("controls/armament/trigger", h3ltrigger, 0, 0);
+setlistener("controls/armament/trigger", h3ltrigger, 0, 0);# listen to main trigger since direct trigger gets aliased on/off all the time so wont work.
 
 var h3rtrigger = func {
   if (getprop("fdm/jsbsim/fcs/hydra3rtrigger") and !getprop("fdm/jsbsim/fcs/hydra3rtriggers") and getprop("ai/submodels/submodel[5]/count") > 0) {
