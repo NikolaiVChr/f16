@@ -454,7 +454,7 @@ var SubModelWeapon = {
 		s.triggerNode = nil;
 		s.active = 0;
 		s.alternate = alternate;
-		s.timer = maketimer(0.3, s, func s.loop());
+		s.timer = maketimer(0.1, s, func s.loop());
 		
 
 		# these 2 needs to be here and be 0
