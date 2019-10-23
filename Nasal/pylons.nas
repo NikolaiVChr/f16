@@ -19,16 +19,16 @@ var cannon = stations.SubModelWeapon.new("20mm Cannon", 0.254, 511, 2, [1,3], pr
 cannon.typeShort = "GUN";
 cannon.brevity = "Guns guns";
 var hyd70lh3 = stations.SubModelWeapon.new("LAU-68", 23.6, 7, 4, [], props.globals.getNode("fdm/jsbsim/fcs/hydra3ltrigger",1), 1, func{return getprop("payload/armament/fire-control/serviceable");},1);
-hyd70lh3.typeShort = "2xLAU-68";
+hyd70lh3.typeShort = "LAU-68";
 hyd70lh3.brevity = "Rockets away";
 var hyd70rh3 = stations.SubModelWeapon.new("LAU-68", 23.6, 7, 5, [], props.globals.getNode("fdm/jsbsim/fcs/hydra3rtrigger",1), 1, func{return getprop("payload/armament/fire-control/serviceable");},1);
-hyd70rh3.typeShort = "2xLAU-68";
+hyd70rh3.typeShort = "LAU-68";
 hyd70rh3.brevity = "Rockets away";
 var hyd70lh7 = stations.SubModelWeapon.new("LAU-68", 23.6, 7, 6, [], props.globals.getNode("fdm/jsbsim/fcs/hydra7ltrigger",1), 1, func{return getprop("payload/armament/fire-control/serviceable");},1);
-hyd70lh7.typeShort = "2xLAU-68";
+hyd70lh7.typeShort = "LAU-68";
 hyd70lh7.brevity = "Rockets away";
 var hyd70rh7 = stations.SubModelWeapon.new("LAU-68", 23.6, 7, 7, [], props.globals.getNode("fdm/jsbsim/fcs/hydra7rtrigger",1), 1, func{return getprop("payload/armament/fire-control/serviceable");},1);
-hyd70rh7.typeShort = "2xLAU-68";
+hyd70rh7.typeShort = "LAU-68";
 hyd70rh7.brevity = "Rockets away";
 var fuelTankCenter = stations.FuelTank.new("Center 300 Gal Tank", "TK300", 4, 300, "sim/model/f16/ventraltank");
 var fuelTank370Left = stations.FuelTank.new("Left 370 Gal Tank", "TK370", 3, 370, "sim/model/f16/wingtankL");
@@ -60,8 +60,8 @@ var crgpd = stations.Dummy.new("MXU-648 Cargopod", "TRVL");
 var pylonSets = {
 	empty: {name: "Empty", content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
 	mm20:  {name: "20mm Cannon", content: [cannon], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-	hyd70h3:  {name: "2 x LAU-68", content: [hyd70lh3,hyd70rh3], fireOrder: [0,1], launcherDragArea: 0.007, launcherMass: 405.0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
-	hyd70h7:  {name: "2 x LAU-68", content: [hyd70lh7,hyd70rh7], fireOrder: [0,1], launcherDragArea: 0.007, launcherMass: 405.0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
+	hyd70h3:  {name: "2 x LAU-68", content: [hyd70lh3,hyd70rh3], fireOrder: [0,1], launcherDragArea: 0.007, launcherMass: 405.0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
+	hyd70h7:  {name: "2 x LAU-68", content: [hyd70lh7,hyd70rh7], fireOrder: [0,1], launcherDragArea: 0.007, launcherMass: 405.0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
 	a65x3:  {name: "3 x AGM-65", content: ["AGM-65", "AGM-65", "AGM-65"], fireOrder: [0,1,2], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
 	a65:  {name: "1 x AGM-65", content: ["AGM-65"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 2},
 	a84:  {name: "1 x AGM-84", content: ["AGM-84"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
