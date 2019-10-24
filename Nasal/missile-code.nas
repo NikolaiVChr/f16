@@ -4574,6 +4574,12 @@ var AIM = {
 		var explode_smoke_path = path_base~"explode-smoke-id-" ~ me.ID;
 		me.explode_smoke_prop = props.globals.initNode( explode_smoke_path, FALSE, "BOOL", TRUE);
 
+		var explode_water_path = path_base~"explode-water-id-" ~ me.ID;
+		me.explode_water_prop = props.globals.initNode( explode_water_path, FALSE, "BOOL", TRUE);
+
+		var explode_angle_path = path_base~"explode-angle";
+		me.explode_angle_prop = props.globals.initNode( explode_angle_path, 0.0, "DOUBLE", TRUE);
+
 		var explode_sound_path = "payload/armament/flags/explode-sound-on-" ~ me.ID;;
 		me.explode_sound_prop = props.globals.initNode( explode_sound_path, FALSE, "BOOL", TRUE);
 
@@ -4582,7 +4588,7 @@ var AIM = {
 
 		var deploy_path = path_base~"deploy-id-" ~ me.ID;
 		me.deploy_prop = props.globals.initNode(deploy_path, 0, "DOUBLE", TRUE);
-	},
+    },
 
 	animate_explosion: func {
 		#
@@ -4592,14 +4598,69 @@ var AIM = {
 		me.lonN.setDoubleValue(me.coord.lon());
 		me.altN.setDoubleValue(me.coord.alt()*M2FT);
 		me.pitchN.setDoubleValue(0);# this will make explosions from cluster bombs (like M90) align to ground 'sorta'.
-		me.rollN.setDoubleValue(0);# this will make explosions from cluster bombs (like M90) align to ground 'sorta'.
+		me.rollN.setDoubleValue(0);
 		me.msl_prop.setBoolValue(FALSE);
 		me.smoke_prop.setBoolValue(FALSE);
+		var info = geodinfo(me.coord.lat(), me.coord.lon());
+
+		if (info[1] == nil)
+		 {print ("Building hit!");}
+
+		if ((info[1] != nil) and(info[1].solid == 0))
+		 {
+		 me.explode_water_prop.setValue(TRUE);
+		 }
+		else
+		 {
+		 me.explode_water_prop.setValue(FALSE);
+		 }
+
+		#print (me.typeShort);
+
 		me.explode_prop.setBoolValue(TRUE);
+		me.explode_angle_prop.setDoubleValue((rand() - 0.5) * 50);
 		settimer( func me.explode_prop.setBoolValue(FALSE), 0.5 );
 		settimer( func me.explode_smoke_prop.setBoolValue(TRUE), 0.5 );
 		settimer( func me.explode_smoke_prop.setBoolValue(FALSE), 3 );
-	},
+
+
+
+		settimer ( func {
+
+		 if (info[1] == nil)
+		    {
+		       geo.put_model(
+		            "Aircraft/f16/Models/Armament/Weapons/bomb_hit_smoke.xml",
+		            me.coord.lat(),
+		            me.coord.lon()
+		            );
+		    }
+
+		 else if ((info[1] != nil) and (info[1].solid == 1))
+		       {
+		       
+		       var crater_model = "";
+		       
+		       if ((me.typeShort == "B82") or (me.typeShort == "B83"))
+		          {
+		          crater_model = "Aircraft/f16/Models/Armament/Weapons/crater_small.xml";
+		          }
+		       else if (me.typeShort == "B84")
+		          {
+		          crater_model = "Aircraft/f16/Models/Armament/Weapons/crater_big.xml";
+		          }
+		       
+		       if (crater_model != "")
+		            {
+		            geo.put_model(
+		            crater_model,
+		            me.coord.lat(),
+		            me.coord.lon()
+		            );
+		            }
+		       }
+        }, 0.5);
+    },
 
 	animate_dud: func {
 		#
