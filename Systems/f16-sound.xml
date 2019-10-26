@@ -292,7 +292,7 @@
 				<z>0.0</z>
 				<inner-angle>200.0</inner-angle>
 				<outer-angle>360.0</outer-angle>
-				<outer-gain>0.25</outer-gain>
+				<outer-gain>0.40</outer-gain>
 			</orientation>
 			<volume>
 				<property>engines/engine/thrust_lb</property>
@@ -364,7 +364,7 @@
 				<z>0.0</z>
 				<inner-angle>200.0</inner-angle>
 				<outer-angle>360.0</outer-angle>
-				<outer-gain>0.2</outer-gain>
+				<outer-gain>0.6</outer-gain>
 			</orientation>
 			<volume>
 				<property>engines/engine/nozzle-pos-norm</property>
