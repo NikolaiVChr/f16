@@ -16,13 +16,13 @@ var FireControl = {
 		foreach(pyl;pylons) {
 			pyl.setPylonListener(fc);
 		}
-		fc.selected = nil;    # vector [pylonNumber, weaponNumber]
-		fc.selectedAdd = nil; # vector of above kind of vector
-		fc.pylonOrder=pylonOrder;
-		fc.typeOrder=typeOrder;
-		fc.selectedType = nil;
-		fc.triggerTime = 0;
-		fc.gunTriggerTime = 0;
+		fc.selected = nil;        # vector [pylonNumber, weaponNumber]
+		fc.selectedAdd = nil;     # vector of above kind of vectors
+		fc.pylonOrder=pylonOrder; # vector with order the pylons should select/fire weapons from
+		fc.typeOrder=typeOrder;   # vector with order the types should be selected in
+		fc.selectedType = nil;    # string with current selected type
+		fc.triggerTime = 0;       # a timer for firing maddog
+		fc.gunTriggerTime = 0;    # a timer for how often to use gun brevity
 		fc.WeaponNotification = VectorNotification.new("WeaponNotification");
 		fc.setupMFDObservers();
 		fc.dropMode = 0;#0=ccrp, 1 = ccip
@@ -33,14 +33,17 @@ var FireControl = {
 	},
 	
 	getDropMode: func {
+		#0=ccrp, 1 = ccip
 		me.dropMode;
 	},
 	
 	setDropMode: func (mode) {
+		#0=ccrp, 1 = ccip
 		me.dropMode = mode;
 	},
 
 	getCategory: func {
+		# get loadout CAT (not to be confused with FBW CAT setting)
 		me.cat = 1;
 		foreach (pyl;me.pylons) {
 			if (pyl.getCategory()>me.cat) {
@@ -278,6 +281,7 @@ var FireControl = {
 		me.stopCurrent();
 		if (!me._isSelectedWeapon()) {
 			me.selected = nil;
+			me.selectedAdd = nil;
 			me.selectedType = nil;
 		}
 		if (me.selectedType == nil) {
@@ -343,6 +347,7 @@ var FireControl = {
 						} else {
 							me.selectedType = nil;
 							me.selected = nil;
+							me.selectedAdd = nil;
 							screen.log.write("Selected nothing", 0.5, 0.5, 1);
 						}
 						return;
@@ -370,6 +375,7 @@ var FireControl = {
 		}
 		me.selectedType = nil;
 		me.selected = nil;
+		me.selectedAdd = nil;
 	},
 
 	updateAll: func {
@@ -602,6 +608,7 @@ var FireControl = {
 				me.triggerTime = 0;
 			}
 		} elsif (getprop("controls/armament/trigger") < 1) {
+			# trigger was released, we reset triggertimer and if alternating submodelweapon we stop it and switch to next and start that
 			me.triggerTime = 0;
 			me.aim = me.getSelectedWeapon();
 			if (me.aim != nil and me.aim.parents[0] == stations.SubModelWeapon) {
@@ -614,6 +621,7 @@ var FireControl = {
 	},
 
 	triggerHold: func (aimer) {
+		# will fire weapon even with no lock
 		if (me.triggerTime == 0 or me.getSelectedWeapon() == nil or me.getSelectedWeapon().parents[0] != armament.AIM) {
 			return;
 		}
@@ -654,7 +662,7 @@ var FireControl = {
 	},
 	
 	updateDual: func (type = nil) {
-		# will stop all current weapons, and select dual weapons and start em all.
+		# will stop all current weapons, and select single and pair weapons and start em all.
 		me.duality = getprop("controls/armament/dual");
 		me.sweaps = me.getSelectedWeapons();
 		if (me.sweaps != nil) {
@@ -676,6 +684,7 @@ var FireControl = {
 	
 	selectDualWeapons: func (type, duality) {
 		# will select additional weapon of same type if dual is supported for the type and dual is greater than 'single'
+		# will NOT start them
 		me.selectedAdd = [];
 		me.listofduals = [me.getSelectedWeapon()];
 		if (me.selected == nil) {
@@ -812,7 +821,7 @@ var FireControl = {
 	},
 
 	stopCurrent: func {
-		# stops current weapon, but does not deselect it.
+		# stops current weapons, but does not deselect it.
 		me.selWeap = me.getSelectedWeapons();
 		if (me.selWeap == nil) {
 			return;
@@ -825,7 +834,7 @@ var FireControl = {
 	},
 
 	noWeapon: func {
-		# deselects
+		# stops and deselects
 		me.stopCurrent();
 		me.selected = nil;
 		me.selectedAdd = nil;
@@ -848,6 +857,7 @@ var FireControl = {
 	},
 	
 	getAllOfType: func (typ) {
+		# return vector with all weapons of certain type
 		me.typVec = [];
 		
 		foreach(pyl;me.pylons) {
