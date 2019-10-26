@@ -432,7 +432,6 @@ var fast_loop = func {
                 setprop("/aircraft/flir/target/auto-track", 1);
                 callsign = lat~lon;
                 steerlock = 1;
-                print("steerlock");
             } else {
                 # TGP not follow, locked from aircraft
                 setprop("/aircraft/flir/target/auto-track", 0);
