@@ -1175,7 +1175,13 @@ var MFD_Device =
                         foreach(var snake;pylons.fcs.getAllOfType("AIM-9")) {
                             snake.setCooling(me.cooling);
                         }                        
-                    }                    
+                    } elsif (me.wpnType == "fall") {
+                        if (getprop("controls/armament/dual")==1) {
+                            setprop("controls/armament/dual",2);
+                        } else {
+                            setprop("controls/armament/dual",1);
+                        }
+                    }               
                 } elsif (eventi == 17) {
                     me.ppp.selectPage(me.my.p_SMS);
                 #} elsif (eventi == 18) {
@@ -1246,10 +1252,12 @@ var MFD_Device =
                     me.downA = me.armtime>0;
                     me.upA = me.armtime<20;
                     me.armtimer = sprintf("AD %.2fSEC",me.armtime);#arming delay
-                    me.cool = "SGL";#as opposed to PAIR
+                    me.cool = getprop("controls/armament/dual")==1?"SGL":"PAIR";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "FAIL";
-                    } elsif (me.wpn.status <= armament.MISSILE_STARTING){
+                    } elsif (me.wpn.status < armament.MISSILE_STARTING) {
+                        me.ready = "OFF";
+                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
                         me.ready = "INIT";
                     } else {
                         me.ready = "RDY";
@@ -1259,7 +1267,9 @@ var MFD_Device =
                     me.eegs = "A-G";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "FAIL";
-                    } elsif (me.wpn.status <= armament.MISSILE_STARTING){
+                    } elsif (me.wpn.status < armament.MISSILE_STARTING) {
+                        me.ready = "OFF";
+                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
                         me.ready = "INIT";
                     } else {
                         me.ready = "RDY";
@@ -1270,7 +1280,9 @@ var MFD_Device =
                     me.drop = getprop("f16/stores/harm-mounted")?"HAD":"HAS";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "FAIL";
-                    } elsif (me.wpn.status <= armament.MISSILE_STARTING){
+                    } elsif (me.wpn.status < armament.MISSILE_STARTING) {
+                        me.ready = "OFF";
+                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
                         me.ready = "INIT";
                     } else {
                         me.ready = "RDY";
@@ -1283,7 +1295,9 @@ var MFD_Device =
                     me.drop = getprop("instrumentation/radar/radar-standby")==1?"BORE":"SLAV";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "FAIL";
-                    } elsif (me.wpn.status <= armament.MISSILE_STARTING){
+                    } elsif (me.wpn.status < armament.MISSILE_STARTING) {
+                        me.ready = "OFF";
+                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
                         me.ready = "INIT";
                     } else {
                         me.ready = "RDY";
@@ -1294,7 +1308,9 @@ var MFD_Device =
                     me.eegs = "A-A";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "FAIL";
-                    } elsif (me.wpn.status <= armament.MISSILE_STARTING){
+                    } elsif (me.wpn.status < armament.MISSILE_STARTING) {
+                        me.ready = "OFF";
+                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
                         me.ready = "INIT";
                     } else {
                         me.ready = "RDY";

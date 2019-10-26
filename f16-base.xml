@@ -1317,6 +1317,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <laser-arm-dmd type="bool">false</laser-arm-dmd>
             <master-arm-cover-open type="bool">false</master-arm-cover-open>
             <trigger type="bool">false</trigger>
+            <dual type="int">1</dual>
         </armament>
       
         <fuel>
