@@ -147,6 +147,7 @@ var FireControl = {
 			me.selTypeIndex += 1;
 		}		
 		me.selected = nil;
+		me.selectedAdd = nil;
 		me.selectedType = nil;
 		screen.log.write("Selected nothing", 0.5, 0.5, 1);
 	},
@@ -174,6 +175,7 @@ var FireControl = {
 		me.stopCurrent();
 		if (!me._isSelectedWeapon()) {
 			me.selected = nil;
+			me.selectedAdd = nil;
 			me.selectedType = nil;
 		}
 		if (me.selectedType == nil) {
@@ -238,6 +240,7 @@ var FireControl = {
 							return;
 						} else {
 							me.selectedType = nil;
+							me.selectedAdd = nil;
 							me.selected = nil;
 							screen.log.write("Selected nothing", 0.5, 0.5, 1);
 						}
@@ -266,6 +269,7 @@ var FireControl = {
 		}
 		me.selectedType = nil;
 		me.selected = nil;
+		me.selectedAdd = nil;
 		me.updateDual();
 	},
 
@@ -372,10 +376,8 @@ var FireControl = {
 		# called from the stations when they change.
 		if (me.selectedType != nil) {
 			screen.log.write("Fire-control: deselecting "~me.selectedType, 0.5, 0.5, 1);
-			me.selectedType = nil;
-			me.selected = nil;
-			me.selectedAdd = nil;
 		}
+		me.noWeapon();
 	},
 
 	getSelectedWeapon: func {
@@ -467,8 +469,10 @@ var FireControl = {
 			printDebug("Nothing to jettison");
 			return nil;
 		}
+		me.stopCurrent();
 		me.pylons[me.selected[0]].jettisonAll();
 		me.selected = nil;
+		me.selectedAdd = nil;
 		if (me.selectedType != nil) {
 			me.nextWeapon(me.selectedType);
 		}
@@ -754,6 +758,7 @@ var FireControl = {
 		}
 		printDebug(" Next weapon not found");
 		me.selected = nil;
+		me.selectedAdd = nil;
 		#me.selectedType = nil;
 		return nil;
 	},
