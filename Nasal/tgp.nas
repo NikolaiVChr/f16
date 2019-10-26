@@ -348,6 +348,8 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
      #}
 });
 
+var steerlock = 0;
+
 var fast_loop = func {
   var viewName = getprop("/sim/current-view/name"); 
     if (viewName == "TGP" and (getprop("gear/gear/wow") or !getprop("f16/stores/tgp-mounted"))) {
@@ -400,60 +402,84 @@ var fast_loop = func {
         #setprop("f16/avionics/lock-flir",0.05);
     }
     
-        callsign = nil;
-        var follow = 0;
-        if (armament.contactPoint !=nil and armament.contactPoint.get_range()>35 and armament.contactPoint.get_Callsign() != "GPS-Spot") {
-            armament.contactPoint = nil;
-        }
-        var gpps = 0;
-        if (armament.contactPoint == nil) {
-            # no TGP lock
-            if (armament.contact == nil or !armament.contact.get_display()) {
+    callsign = nil;
+    steerlock = 0;
+    var follow = 0;
+    if (armament.contactPoint !=nil and armament.contactPoint.get_range()>35 and armament.contactPoint.get_Callsign() != "GPS-Spot") {
+        armament.contactPoint = nil;
+    }
+    var gpps = 0;
+    if (armament.contactPoint == nil) {
+        # no TGP lock
+        if (armament.contact == nil or !armament.contact.get_display()) {
+            if (getprop("autopilot/route-manager/active") == 1 and getprop("autopilot/route-manager/current-wp") != nil and getprop("autopilot/route-manager/current-wp") > -1) {
+                # TGP follow steerpoint
+                var idx = getprop("autopilot/route-manager/current-wp");
+                var ele = getprop("autopilot/route-manager/route/wp["~idx~"]/altitude-ft");
+                var lat = getprop("autopilot/route-manager/route/wp["~idx~"]/latitude-deg");
+                var lon = getprop("autopilot/route-manager/route/wp["~idx~"]/longitude-deg");
+                if (ele == nil) {
+                    ele = 0;
+                }
+                ele *= FT2M;
+                var ele2 = geo.elevation(lat,lon);
+                if (ele2 != nil) {
+                    ele = ele2;
+                }                
+                var sp = geo.Coord.new();
+                sp.set_latlon(lat,lon,ele);
+                flir_updater.click_coord_cam = sp;
+                setprop("/aircraft/flir/target/auto-track", 1);
+                callsign = lat~lon;
+                steerlock = 1;
+                print("steerlock");
+            } else {
                 # TGP not follow, locked from aircraft
                 setprop("/aircraft/flir/target/auto-track", 0);
                 flir_updater.click_coord_cam = nil;
                 flir_updater.offsetP = 0;
                 flir_updater.offsetH = 0;
-            } elsif (armament.contact != nil and armament.contact.get_display()) {
-                # TGP follow radar lock
-                flir_updater.click_coord_cam = armament.contact.get_Coord();
-                setprop("/aircraft/flir/target/auto-track", 1);
-                callsign = armament.contact.getUnique();
-            } else {
-                setprop("/aircraft/flir/target/auto-track", 0);
-                flir_updater.click_coord_cam = nil;
-                callsign = nil;
-                flir_updater.offsetP = 0;
-                flir_updater.offsetH = 0;
             }
-            lock_tgp = 0;
-            gps = 0;
+        } elsif (armament.contact != nil and armament.contact.get_display()) {
+            # TGP follow radar lock
+            flir_updater.click_coord_cam = armament.contact.get_Coord();
+            setprop("/aircraft/flir/target/auto-track", 1);
+            callsign = armament.contact.getUnique();
         } else {
-            # TGP lock
-            var vis = 1;
-            gpss = armament.contactPoint.get_Callsign() == "GPS-Spot";
-            if (armament.contactPoint.get_Callsign() != "TGP-Spot" and !gps and !gpss) {
-                follow = 1;
-                vis = awg_9.TerrainManager.IsVisible(armament.contactPoint.propNode, nil);
-            }
-            if (!vis) {
-                setprop("/aircraft/flir/target/auto-track", 0);
-                flir_updater.click_coord_cam = nil;
-                callsign = nil;
-                flir_updater.offsetP = 0;
-                flir_updater.offsetH = 0;
-                lock_tgp = 0;
-                armament.contactPoint = nil;
-            } else {
-                lock_tgp = 1;
-                flir_updater.click_coord_cam = armament.contactPoint.get_Coord();
-                callsign = armament.contactPoint.getUnique();
-                setprop("/aircraft/flir/target/auto-track", 1);
-                flir_updater.offsetP = 0;
-                flir_updater.offsetH = 0;
-            }
+            setprop("/aircraft/flir/target/auto-track", 0);
+            flir_updater.click_coord_cam = nil;
+            callsign = nil;
+            flir_updater.offsetP = 0;
+            flir_updater.offsetH = 0;
         }
-        setprop("f16/avionics/tgp-lock", lock_tgp);#used in HUD
+        lock_tgp = 0;
+        gps = 0;
+    } else {
+        # TGP lock
+        var vis = 1;
+        gpss = armament.contactPoint.get_Callsign() == "GPS-Spot";
+        if (armament.contactPoint.get_Callsign() != "TGP-Spot" and !gps and !gpss) {
+            follow = 1;
+            vis = awg_9.TerrainManager.IsVisible(armament.contactPoint.propNode, nil);
+        }
+        if (!vis) {
+            setprop("/aircraft/flir/target/auto-track", 0);
+            flir_updater.click_coord_cam = nil;
+            callsign = nil;
+            flir_updater.offsetP = 0;
+            flir_updater.offsetH = 0;
+            lock_tgp = 0;
+            armament.contactPoint = nil;
+        } else {
+            lock_tgp = 1;
+            flir_updater.click_coord_cam = armament.contactPoint.get_Coord();
+            callsign = armament.contactPoint.getUnique();
+            setprop("/aircraft/flir/target/auto-track", 1);
+            flir_updater.offsetP = 0;
+            flir_updater.offsetH = 0;
+        }
+    }
+    setprop("f16/avionics/tgp-lock", lock_tgp);#used in HUD
         
     if (getprop("f16/stores/tgp-mounted")) {
         if (lock_tgp and !lock_tgp_last) {
@@ -481,6 +507,8 @@ var fast_loop = func {
             midl.setText(sprintf("%s POINT %s", gps?"GPS":(ir==1?"IR":"TV"), getprop("controls/armament/laser-arm-dmd")?"L":""));
         } elsif (lock_tgp) {
             midl.setText(sprintf("%s AREA  %s", gps?"GPS":(ir==1?"IR":"TV"), getprop("controls/armament/laser-arm-dmd")?"L":""));
+        } elsif (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil and steerlock) {
+            midl.setText(sprintf("  STEER  %s", getprop("controls/armament/laser-arm-dmd")?"L":""));
         } elsif (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil) {
             midl.setText(sprintf("  RADAR  %s", getprop("controls/armament/laser-arm-dmd")?"L":""));
         } else {
@@ -497,15 +525,15 @@ var fast_loop = func {
         }
         lock.update();
     
-  # animate the LANTIRN camera:
-    var b = geo.normdeg180(getprop("sim/view[105]/heading-offset-deg"));
-    var p = getprop("sim/view[105]/pitch-offset-deg");
-    var polarL = math.sqrt(p*p+b*b);
-    var polarD = polarL!=0 and b!=0?math.atan2(p,b)*R2D:-90;
-    setprop("aircraft/flir/swivel/pitch-deg",polarL);
-    setprop("aircraft/flir/swivel/roll-deg",polarD);
-  }
-  settimer(fast_loop,0);
+        # animate the LANTIRN camera:
+        var b = geo.normdeg180(getprop("sim/view[105]/heading-offset-deg"));
+        var p = getprop("sim/view[105]/pitch-offset-deg");
+        var polarL = math.sqrt(p*p+b*b);
+        var polarD = polarL!=0 and b!=0?math.atan2(p,b)*R2D:-90;
+        setprop("aircraft/flir/swivel/pitch-deg",polarL);
+        setprop("aircraft/flir/swivel/roll-deg",polarD);
+    }
+    settimer(fast_loop,0);
 }
 
 
