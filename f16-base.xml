@@ -1512,6 +1512,14 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                         <magnitude type="double">0</magnitude>
                     </chute>
                 </external_reactions>
+                <buffeting>
+                    <outputy type="double">0</outputy>
+                    <outputz type="double">0</outputz>
+                    <var1 type="double">10</var1>
+                    <var2 type="double">25</var2>
+                    <var3 type="double">60</var3>
+                    <magnitude type="double">0.0</magnitude>
+                </buffeting>
             </systems>
             <fcs>
                 <fly-by-wire>

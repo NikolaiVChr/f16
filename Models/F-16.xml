@@ -52,6 +52,32 @@
   <path>Aircraft/f16/Models/Cockpit/Main/cockpit.xml</path>
 </model> 
 
+<animation>
+  <type>translate</type>
+  <object-name>interior</object-name>
+  <property>fdm/jsbsim/systems/buffeting/outputy</property>
+  <offset-m>0.0</offset-m>
+  <factor>1.0</factor>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+ 
+ <animation>
+  <type>translate</type>
+  <object-name>interior</object-name>
+  <property>fdm/jsbsim/systems/buffeting/outputz</property>
+  <offset-m>0.0</offset-m>
+  <factor>1.0</factor>
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>1</z>
+  </axis>
+ </animation>
+
 <model>
   <name>Pilot_ext</name>
   <path>Aircraft/f16/Models/pilot_externalview.xml</path>

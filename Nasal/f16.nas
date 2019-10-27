@@ -334,6 +334,7 @@ var medium = {
     sendLightsToMp();
     sendABtoMP();
     CARA();
+    buffeting();
 
     settimer(func {me.loop()},0.5);
   },
@@ -440,6 +441,15 @@ var sendLightsToMp = func {
   } else {
     setprop("sim/multiplay/generic/bool[44]",0);
   }
+}
+
+var buffeting = func {
+    if (getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
+        var magn = 0.00025*getprop("/velocities/groundspeed-kt")/225;
+        setprop("fdm/jsbsim/systems/buffeting/magnitude",magn);
+    } else {
+        setprop("fdm/jsbsim/systems/buffeting/magnitude",0);
+    }
 }
 
 var CARA = func {
