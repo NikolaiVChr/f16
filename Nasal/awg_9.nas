@@ -311,6 +311,7 @@ return;
         if (our_radar_stanby) {
             armament.contact = nil;
             active_u = nil;
+            active_u_callsign = nil;
         }
 	} elsif ( size(tgts_list) > 0 ) {
 		foreach( u; tgts_list ) {
@@ -382,10 +383,13 @@ var az_scan = func(notification) {
             var raw_list = Mp.getChildren();
             var carrier_located = 0;
 
-            if (active_u == nil or active_u.Callsign == nil or active_u.Callsign.getValue() == nil or active_u.Callsign.getValue() != active_u_callsign)
+            if (active_u == nil or active_u.get_Callsign() != active_u_callsign)
             {
-                if (active_u != nil)
+                if (active_u != nil) {
                     active_u = nil;
+                    print(active_u_callsign);
+                    active_u_callsign = nil;
+                }
                 armament.contact = active_u;
             }
 
@@ -409,7 +413,12 @@ var az_scan = func(notification) {
 
                     if (active_u != nil and u.get_Callsign() == active_u.get_Callsign()) {
                         # replace selection with new, so it can be proper checked for still being visible to radar
+                        u.inac_x = active_u.inac_x;
+                        u.inac_y = active_u.inac_y;
+                        u.inac_z = active_u.inac_z;
+                        u.class  = active_u.class;# needed cause the get_range call further down will reset the inac since Targets are 'born' as AIR.
                         active_u = u;
+                        active_u_callsign = u.get_Callsign();
                         armament.contact = active_u;
                     }
 
@@ -660,7 +669,11 @@ var az_scan = func(notification) {
 
                   if (u.airbone) {
                       if (active_u_callsign != nil and u.Callsign != nil and u.Callsign.getValue() == active_u_callsign) {
-                          active_u = u; armament.contact = active_u;
+                            u.inac_x = active_u.inac_x;
+                            u.inac_y = active_u.inac_y;
+                            u.inac_z = active_u.inac_z;
+                            u.class  = active_u.class;
+                            active_u = u; armament.contact = active_u;
                       }
                   }
                   idx=idx+1;
@@ -678,8 +691,10 @@ var az_scan = func(notification) {
         if (active_u != nil) {
             tmp_nearest_u = active_u;
         }
-        if (u.get_Speed() > 60 and u.get_type() != ORDNANCE) {
+        if (u.get_Speed() > 60 and u.get_type() != ORDNANCE and u.get_type() != AIR) {
             u.setClass(AIR);
+        } elsif (u.get_Speed() < 50 and u.get_type() != ORDNANCE and u.get_type() == AIR) {
+            u.setClass(SURFACE);
         }
     }
 
@@ -721,7 +736,7 @@ var az_scan = func(notification) {
 
     # finally ensure that the active target is still in the targets list.
     if (!containsV(tgts_list, active_u)) {
-        active_u = nil; armament.contact = active_u;
+        active_u = nil; armament.contact = active_u; active_u_callsign = nil;
     }
 }
 
@@ -1749,17 +1764,19 @@ var Target = {
         return myBearing;
     },
     setClass: func(cl){
-        me.class=cl;
         me.inac = getprop("payload/armament/inac");
-        if (cl == SURFACE and me.inac != nil) {
+        if (cl == SURFACE and me.inac != nil and me.inac_x == 0) {
             me.inac_x = rand()*me.inac-me.inac*0.5;
             me.inac_y = rand()*me.inac-me.inac*0.5;
             me.inac_z = rand()*me.inac-me.inac*0.5;
+        } elsif (cl == SURFACE and me.inac != nil) {
+            #
         } else {
             me.inac_x = 0;
             me.inac_y = 0;
             me.inac_z = 0;
         }
+        me.class=cl;
     },
     get_type: func{me.class},
     isPainted: func{

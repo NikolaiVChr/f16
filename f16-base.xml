@@ -1688,7 +1688,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <station-name type="string">station</station-name>
             <hit-interpolation type="bool">true</hit-interpolation>
             <one-xml-per-type type="bool">false</one-xml-per-type>            
-            <inac type="double">250</inac>
+            <inac type="double">175</inac>
             <MP-lat type="string">rotors/main/blade[0]/flap-deg</MP-lat>
             <MP-lon type="string">rotors/main/blade[1]/flap-deg</MP-lon>
             <MP-alt type="string">rotors/main/blade[2]/flap-deg</MP-alt>
