@@ -444,9 +444,12 @@ var sendLightsToMp = func {
 }
 
 var buffeting = func {
+    var g = getprop("/accelerations/pilot-gdamped");
     if (getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
         var magn = 0.00025*getprop("/velocities/groundspeed-kt")/225;
         setprop("fdm/jsbsim/systems/buffeting/magnitude",magn);
+    } elsif (g > 6) {
+        setprop("fdm/jsbsim/systems/buffeting/magnitude",g/12);    
     } else {
         setprop("fdm/jsbsim/systems/buffeting/magnitude",0);
     }
