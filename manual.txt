@@ -89,13 +89,12 @@ page SMS: Clicking on button next to a station will select it.
 page CRM: B-scope radar display. Horizontal is relative bearing to targets, vertical is distance.
           A4: How much azimuth the radar shall cover, A4 is max (120 degs).
           8B: How much vertically the radar shall cover, 8B is max (120 degs).
-page VSD: Vertical situation display. Shows radar echoes.
 page HSD: Horizontal situation display. Shows route and radar echoes.
           DEP: Depressed ownship in display
           CEN: Centered ownship in display
           CPL: Range will follow (approx) radar distance
           DCPL: Range can be set independently of radar range by clicking on the up/down arrows.
-page SIT: Mostly for radio navigation.
+page WPN: Details about current selected weapon(s).
 
 AUTOPILOT
 Notice that even when A/P is enabled you can control the airplane with the stick. When you let go of stick A/P will recalculate from current situation.
@@ -117,9 +116,19 @@ First mount some armament.
 Secondly make sure masterarm is enabled.
 Thirdly select the arm. (use 'w' key or click buttons 'A-A' or 'A-G' under HUD)
 Fourthly make sure target is selected (key 'y')
-For GBU-12 and GBU-24 make sure laser is armed.
-For GBU-12, GBU-24, GBU-31, GBU-54, MK-82, MK-83, MK-84, CBU-87, AGM-154A when getting close a vertical line will appear in HUD. Align flight path indicator on the line, when a small horizontal line on that line starts dropping down and reach another line then its time to release (key 'e' or 'trigger').
-For AIM-120 the trigger can be held for 2 second to fire it without a lock in MADDOG mode, where it will lock onto anyone it sees.
+Bombs
+  For GBU-12 and GBU-24 make sure laser is armed.
+  Release mode can be set with WPN page, options are CCIP and CCRP.
+    CCRP: When getting close to target a vertical line will appear in HUD. Align flight path indicator on the line, when a small horizontal line on that line starts dropping down and reach another line then its time to release (key 'e' or 'trigger').
+    CCIP: A line from FPM to a round pipper is displayed when close enough to ground, manouvrer the pipper to be over the target and press trigger.
+  SGL or PAIR mode can be set on WPN MFD page.
+    SGL: single release
+    PAIR: double release.
+  RP (ripple release) can be set on WPN MFD page.
+    The number is how many subseqential releases should be done.
+    If RP is greater than 1, then you can also in same MFD page set distance in Feet between ripples.
+AIM120/AIM9
+  The trigger can be held for 2 second to fire it without a lock in MADDOG mode, where it will lock onto anyone it sees.
 
 TARGETPODS
 On the MFDs you can select TGP. This however only works if you have mounted one of the target-pods.
@@ -131,6 +140,7 @@ If running ALS you can also go into filters and enable one of the night vision m
 
 DRAGCHUTE
 Max recommended KIAS for deployment is 170. Key is F5.
+Not all variants have dragchute.
 
 DED
 The DED is the small display above the right color MFD.
