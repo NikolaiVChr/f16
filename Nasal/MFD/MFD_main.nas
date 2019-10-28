@@ -1084,6 +1084,13 @@ var MFD_Device =
                 .setAlignment("right-center")
                 .setColor(1,1,1)
                 .setFontSize(20, 1.0);
+                
+        svg.ripple = svg.p_WPN.createChild("text")
+                .setTranslation(276*0.795, -482*0.5+70)
+                .setText("")
+                .setAlignment("right-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
         
         svg.cool = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5+140)
@@ -1114,6 +1121,32 @@ var MFD_Device =
                     .setStrokeLineWidth(2)
                     .hide()
                     .setColor(1,1,1);
+                    
+        svg.distUpA = svg.p_WPN.createChild("path")
+                    .moveTo(-276*0.795,-482*0.5-105-27.5)
+                    .horiz(30)
+                    .lineTo(-276*0.795+15,-482*0.5-105-27.5-15)
+                    .lineTo(-276*0.795,-482*0.5-105-27.5)
+                    .setStrokeLineWidth(2)
+                    .hide()
+                    .setTranslation(0,140)
+                    .setColor(1,1,1);
+        svg.distA = svg.p_WPN.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5+35)
+                .setAlignment("left-center")
+                .setColor(1,1,1)
+                .hide()
+                .setFontSize(20, 1.0);
+        svg.distDownA = svg.p_WPN.createChild("path")
+                    .moveTo(-276*0.795,-482*0.5-105+27.5)
+                    .horiz(30)
+                    .lineTo(-276*0.795+15,-482*0.5-105+27.5+15)
+                    .lineTo(-276*0.795,-482*0.5-105+27.5)
+                    .setStrokeLineWidth(2)
+                    .hide()
+                    .setTranslation(0,140)
+                    .setColor(1,1,1);         
+        
                 
         svg.coolFrame = svg.p_WPN.createChild("path")
            .moveTo(276*0.795, -482*0.5+140+12)
@@ -1165,6 +1198,33 @@ var MFD_Device =
                     }
                     if (me.wpnType == "fall") {
                         me.at = -1;
+                    }
+                } elsif (eventi == 2) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    if (me.wpnType == "fall") {
+                        me.ar = 25;
+                    }
+                } elsif (eventi == 3) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    if (me.wpnType == "fall") {
+                        me.ar = -25;
+                    }
+                } elsif (eventi == 8) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    if (me.wpnType == "fall") {
+                        var rp = pylons.fcs.getRippleMode();
+                        if (rp < 9) {
+                            rp += 1;
+                        } elsif (rp == 9) {
+                            rp = 1;
+                        }
+                        pylons.fcs.setRippleMode(rp);
                     }
                 } elsif (eventi == 9) {
                     if (getprop("sim/variant-id") == 0) {
@@ -1218,6 +1278,9 @@ var MFD_Device =
             if (me["at"]== nil) {
                 me.at = 0;
             }
+            if (me["ar"]== nil) {
+                me.ar = 0;
+            }
             me.wpn = pylons.fcs.getSelectedWeapon();
             me.pylon = pylons.fcs.getSelectedPylon();
             
@@ -1225,17 +1288,40 @@ var MFD_Device =
             me.cool = "";
             me.eegs = "";
             me.ready = "";
+            me.ripple = "";
+            me.rippleDist = "";
+            me.downAd = 0;
+            me.upAd = 0;
             me.coolFrame = 0;
             me.downA = 0;
             me.upA = 0;
             me.armtimer = "";
             me.drop = "";
+            me.showDist = 0;
             if (me.wpn != nil and me.pylon != nil) {
                 if (me.wpn.type == "MK-82" or me.wpn.type == "MK-83" or me.wpn.type == "MK-84" or me.wpn.type == "GBU-12" or me.wpn.type == "GBU-24" or me.wpn.type == "GBU-54" or me.wpn.type == "CBU-87" or me.wpn.type == "GBU-31" or me.wpn.type == "B61-7" or me.wpn.type == "B61-12") {
                     me.wpnType ="fall";
                     var nm = pylons.fcs.getDropMode();
                     if (nm == 1) me.drop = "CCIP";
                     if (nm == 0) me.drop = "CCRP";
+                    var rp = pylons.fcs.getRippleMode();
+                    var rpd = pylons.fcs.getRippleDist()*M2FT;
+                    me.ripple = "RP "~rp;
+                    if (rp > 1) {
+                        me.showDist = 1;
+                    }
+                    rpd += me.ar;
+                    if (rpd < 25) {
+                        rpd = 25;
+                    } elsif (rpd > 200) {
+                        rpd = 200;
+                    }
+                    pylons.fcs.setRippleDist(FT2M * rpd);
+                    me.downAd = rpd>25 and me.showDist;
+                    me.upAd = rpd<200 and me.showDist;
+                    
+                    me.rippleDist = sprintf("%03d FT",math.round(rpd));
+                    
                     me.eegs = "A-G";
                     me.wpn.arming_time += me.at;
                     if (me.wpn.arming_time < 0) {
@@ -1348,11 +1434,17 @@ var MFD_Device =
             me.root.cool.setText(me.cool);
             me.root.eegs.setText(me.eegs);
             me.root.ready.setText(me.ready);
+            me.root.ripple.setText(me.ripple);
             me.root.coolFrame.setVisible(me.coolFrame);
             me.root.rangDownA.setVisible(me.downA);
             me.root.rangUpA.setVisible(me.upA);
             me.root.rangA.setText(me.armtimer);
             me.root.rangA.setVisible(me.upA or me.downA);
+            
+            me.root.distDownA.setVisible(me.downAd);
+            me.root.distUpA.setVisible(me.upAd);
+            me.root.distA.setText(me.rippleDist);
+            me.root.distA.setVisible(me.showDist);
             me.at = 0;
         };
     },

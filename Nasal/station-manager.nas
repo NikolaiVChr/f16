@@ -15,7 +15,7 @@ var baseGui = fdm=="jsb"?"payload":"sim";
 
 var Station = {
 # pylon or fixed mounted weapon on the aircraft
-	new: func (name, id, position, sets, guiID, pointmassNode, operableFunction = nil) {
+	new: func (name, id, position, sets, guiID, pointmassNode, operableFunction = nil, activeFunction = nil) {
 		var p = {parents:[Station]};
 		p.id = id;
 		p.name = name;
@@ -24,6 +24,7 @@ var Station = {
 		p.guiID = guiID;
 		p.node_pointMass = pointmassNode;
 		p.operableFunction = operableFunction;
+		p.activeFunction = activeFunction; # for F14, if a pylon is set active or not
 		p.weapons = [];#when weapons are fired/jettisoned, they turn to nil, the vector size must stay same as fire-order dictates.
 		p.changingGui = 0;
 		p.launcherDA=0;
@@ -53,6 +54,13 @@ var Station = {
 
 	getCurrentName: func {
 		return me.currentName;
+	},
+	
+	isActive: func {
+		if (me.activeFunction != nil) {
+			return me.activeFunction();
+		}
+		return 1;
 	},
 
 	loadSet: func (set) {
@@ -230,7 +238,7 @@ var InternalStation = {
 # simulates a fixed station, for example a cannon mounted inside the aircraft
 # inherits from Station
 	new: func (name, id, sets, pointmassNode, operableFunction = nil) {
-		var s = Station.new(name, id, [0,0,0], sets, nil, pointmassNode, operableFunction);
+		var s = Station.new(name, id, [0,0,0], sets, nil, pointmassNode, operableFunction, nil);
 		s.parents = [InternalStation, Station];
 
 		# these should not be called in parent.new(), as they are empty there.
@@ -258,8 +266,8 @@ var Pylon = {
 #   GUI payload id number
 #   shared position for 3D release (from xml?)
 #   possible sets that can be loaded ("2 x AIM9L", "1 x GBU-82") At loadtime, this can be many, so store in Nasal :(
-	new: func (name, id, position, sets, guiID, pointmassNode, dragareaNode, operableFunction = nil) {
-		var p = Station.new(name, id, position, sets, guiID, pointmassNode, operableFunction);
+	new: func (name, id, position, sets, guiID, pointmassNode, dragareaNode, operableFunction = nil, activeFunction = nil) {
+		var p = Station.new(name, id, position, sets, guiID, pointmassNode, operableFunction, activeFunction);
 		p.parents = [Pylon, Station];
 		p.node_dragaera = dragareaNode;
 
