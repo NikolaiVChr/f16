@@ -1313,14 +1313,14 @@ var MFD_Device =
                     rpd += me.ar;
                     if (rpd < 25) {
                         rpd = 25;
-                    } elsif (rpd > 200) {
-                        rpd = 200;
+                    } elsif (rpd > 400) {
+                        rpd = 400;
                     }
                     pylons.fcs.setRippleDist(FT2M * rpd);
                     me.downAd = rpd>25 and me.showDist;
                     me.upAd = rpd<200 and me.showDist;
                     
-                    me.rippleDist = sprintf("%03d FT",math.round(rpd));
+                    me.rippleDist = sprintf("RP %03d FT",math.round(rpd));
                     
                     me.eegs = "A-G";
                     me.wpn.arming_time += me.at;
