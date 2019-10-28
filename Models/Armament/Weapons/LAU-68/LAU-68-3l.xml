@@ -26,119 +26,81 @@
       <object-name>Hydra70_7</object-name>
   </effect>
 
-  <!--animation>
-    <type>select</type>
-    <object-name>Hydra70_1</object-name>
-    <object-name>Hydra70_2</object-name>
-    <object-name>Hydra70_3</object-name>
-    <object-name>Hydra70_4</object-name>
-    <object-name>Hydra70_5</object-name>
-    <object-name>Hydra70_6</object-name>
-    <object-name>Hydra70_7</object-name>
-    <condition>
-      <equals>
-        <property>ai/submodels/submodel[4]/count</property>
-        <value>7</value>
-      </equals>
-    </condition>
-  </animation>
-
   <animation>
     <type>select</type>
-    <object-name>Hydra70_2</object-name>
-    <object-name>Hydra70_3</object-name>
-    <object-name>Hydra70_4</object-name>
-    <object-name>Hydra70_5</object-name>
-    <object-name>Hydra70_6</object-name>
-    <object-name>Hydra70_7</object-name>
+    <object-name>Hydra70_1</object-name>
     <condition>
-      <equals>
+      <greater-than>
         <property>ai/submodels/submodel[4]/count</property>
         <value>6</value>
-      </equals>
+      </greater-than>
     </condition>
   </animation>
 
   <animation>
     <type>select</type>
-    <object-name>Hydra70_3</object-name>
-    <object-name>Hydra70_4</object-name>
-    <object-name>Hydra70_5</object-name>
-    <object-name>Hydra70_6</object-name>
-    <object-name>Hydra70_7</object-name>
+    <object-name>Hydra70_2</object-name>
     <condition>
-      <equals>
+      <greater-than>
         <property>ai/submodels/submodel[4]/count</property>
         <value>5</value>
-      </equals>
+      </greater-than>
     </condition>
   </animation>
 
   <animation>
     <type>select</type>
-    <object-name>Hydra70_4</object-name>
-    <object-name>Hydra70_5</object-name>
-    <object-name>Hydra70_6</object-name>
-    <object-name>Hydra70_7</object-name>
+    <object-name>Hydra70_3</object-name>
     <condition>
-      <equals>
+      <greater-than>
         <property>ai/submodels/submodel[4]/count</property>
         <value>4</value>
-      </equals>
+      </greater-than>
     </condition>
   </animation>
 
   <animation>
     <type>select</type>
-    <object-name>Hydra70_5</object-name>
-    <object-name>Hydra70_6</object-name>
-    <object-name>Hydra70_7</object-name>
+    <object-name>Hydra70_4</object-name>
     <condition>
-      <equals>
+      <greater-than>
         <property>ai/submodels/submodel[4]/count</property>
         <value>3</value>
-      </equals>
+      </greater-than>
     </condition>
   </animation>
 
   <animation>
     <type>select</type>
-    <object-name>Hydra70_6</object-name>
-    <object-name>Hydra70_7</object-name>
+    <object-name>Hydra70_5</object-name>
     <condition>
-      <equals>
+      <greater-than>
         <property>ai/submodels/submodel[4]/count</property>
         <value>2</value>
-      </equals>
+      </greater-than>
     </condition>
   </animation>
 
   <animation>
     <type>select</type>
-    <object-name>Hydra70_7</object-name>
+    <object-name>Hydra70_6</object-name>
     <condition>
-      <equals>
+      <greater-than>
         <property>ai/submodels/submodel[4]/count</property>
         <value>1</value>
-      </equals>
+      </greater-than>
     </condition>
   </animation>
 
   <animation>
     <type>select</type>
-    <object-name>Hydra70_1</object-name>
-    <object-name>Hydra70_2</object-name>
-    <object-name>Hydra70_3</object-name>
-    <object-name>Hydra70_4</object-name>
-    <object-name>Hydra70_5</object-name>
-    <object-name>Hydra70_6</object-name>
     <object-name>Hydra70_7</object-name>
     <condition>
-      <equals>
+      <greater-than>
+        <property>ai/submodels/submodel[4]/count</property>
         <value>0</value>
-        <value>1</value>
-      </equals>
+      </greater-than>
     </condition>
-  </animation-->
+  </animation>
 	
 </PropertyList>

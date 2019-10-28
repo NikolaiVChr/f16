@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+
+<!-- this is the static non fired model on the aircraft -->
+
+	<path>LAU-68.ac</path>
+
+  <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.0</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <object-name>LAU-68</object-name>
+      <object-name>Hydra70_1</object-name>
+      <object-name>Hydra70_2</object-name>
+      <object-name>Hydra70_3</object-name>
+      <object-name>Hydra70_4</object-name>
+      <object-name>Hydra70_5</object-name>
+      <object-name>Hydra70_6</object-name>
+      <object-name>Hydra70_7</object-name>
+  </effect>
+
+  <animation>
+    <type>select</type>
+    <object-name>Hydra70_1</object-name>
+    <condition>
+      <greater-than>
+        <property>ai/submodels/submodel[7]/count</property>
+        <value>6</value>
+      </greater-than>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>select</type>
+    <object-name>Hydra70_2</object-name>
+    <condition>
+      <greater-than>
+        <property>ai/submodels/submodel[7]/count</property>
+        <value>5</value>
+      </greater-than>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>select</type>
+    <object-name>Hydra70_3</object-name>
+    <condition>
+      <greater-than>
+        <property>ai/submodels/submodel[7]/count</property>
+        <value>4</value>
+      </greater-than>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>select</type>
+    <object-name>Hydra70_4</object-name>
+    <condition>
+      <greater-than>
+        <property>ai/submodels/submodel[7]/count</property>
+        <value>3</value>
+      </greater-than>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>select</type>
+    <object-name>Hydra70_5</object-name>
+    <condition>
+      <greater-than>
+        <property>ai/submodels/submodel[7]/count</property>
+        <value>2</value>
+      </greater-than>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>select</type>
+    <object-name>Hydra70_6</object-name>
+    <condition>
+      <greater-than>
+        <property>ai/submodels/submodel[7]/count</property>
+        <value>1</value>
+      </greater-than>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>select</type>
+    <object-name>Hydra70_7</object-name>
+    <condition>
+      <greater-than>
+        <property>ai/submodels/submodel[7]/count</property>
+        <value>0</value>
+      </greater-than>
+    </condition>
+  </animation>
+	
+</PropertyList>

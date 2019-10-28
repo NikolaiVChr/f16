@@ -638,6 +638,7 @@ var FireControl = {
 	},
 	
 	fireAIM: func (p,w) {
+		# fire a weapon (that is a missile-code instance)
 		me.aim = me.pylons[p].fireWeapon(w, getCompleteRadarTargetsList());
 		if (me.aim != nil) {
 			var add = "";
@@ -650,6 +651,7 @@ var FireControl = {
 	},
 	
 	rippleFireStart: func {
+		# First has been fired, now start system to fire the ripple ones.
 		if (me.getSelectedWeapon() != nil) {
 			me.rippleCoord = geo.aircraft_position();
 			me.rippleCount = 0;
@@ -658,6 +660,7 @@ var FireControl = {
 	},
 	
 	rippleTest: func {
+		# test for distance if we should fire ripple bombs. And do so if distance is great enough.
 		me.rippleCount += 1;
 		if (geo.aircraft_position().distance_to(me.rippleCoord) > me.rippleDist*(me.rippleThis-1)) {
 			me.aim = me.getSelectedWeapon();
