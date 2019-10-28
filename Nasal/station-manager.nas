@@ -446,12 +446,12 @@ var SubModelWeapon = {
 #
 # Attributes:
 #  drag, weight, submodel(s)
-	new: func (name, munitionMass, maxAmmo, submodelNumbers, tracerSubModelNumbers, trigger, jettisonable, operableFunction=nil, alternate = 0) {
+	new: func (name, munitionMass, maxAmmo, subModelNumbers, tracerSubModelNumbers, trigger, jettisonable, operableFunction=nil, alternate = 0) {
 		var s = {parents:[SubModelWeapon]};
 		s.type = name;
 		s.typeLong = name;
 		s.typeShort = name;
-		s.submodelNumbers = submodelNumbers;
+		s.subModelNumbers = subModelNumbers;
 		s.tracerSubModelNumbers = tracerSubModelNumbers;
 		s.operableFunction = operableFunction;
 		s.maxAmmo = maxAmmo;
@@ -534,14 +534,14 @@ var SubModelWeapon = {
 		# return ammo count
 		var ammo = 0;
 		for(me.i = 0;me.i<size(me.subModelNumbers);me.i+=1) {
-			ammo += getprop("ai/submodels/submodel["~me.submodelNumbers[me.i]~"]/count");
+			ammo += getprop("ai/submodels/submodel["~me.subModelNumbers[me.i]~"]/count");
 		}
 		return ammo;
 	},
 
 	reloadAmmo: func {
 		for(me.i = 0;me.i<size(me.subModelNumbers);me.i+=1) {
-			setprop("ai/submodels/submodel["~me.submodelNumbers[me.i]~"]/count", me.maxAmmo);
+			setprop("ai/submodels/submodel["~me.subModelNumbers[me.i]~"]/count", me.maxAmmo);
 		}
 	},
 };
