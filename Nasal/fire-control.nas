@@ -589,7 +589,7 @@ var FireControl = {
 		# trigger pressed down should go here, this will fire weapon
 		# cannon is fired in another way, but this method will print the brevity.
 		printfDebug("trigger called %d %d %d",getprop("controls/armament/master-arm"),getprop("controls/armament/trigger"),me.selected != nil);
-		if (!me.getSelectedPylon().isActive()) return;
+		if (me.getSelectedPylon() == nil or !me.getSelectedPylon().isActive()) return;
 		if (me.isRippling) return;
 		if (getprop("controls/armament/master-arm") == 1 and getprop("controls/armament/trigger") > 0 and me.selected != nil) {
 			printDebug("trigger propagating");
