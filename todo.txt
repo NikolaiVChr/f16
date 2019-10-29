@@ -5,6 +5,7 @@
 Bugs
 ----
 masterarm off while aim9 in lock..bad stuff [can’t reproduce]
+Sometimes the aim-9 can be in search mode even though its not selected. [Workaround: just cycle back to aim9 with 'w' and then back to your prefered weapon]
 
 Model
 -----
@@ -32,7 +33,7 @@ Engine
 
 GUI
 ---
-
+Too many loadout optios in fuel and payload dialog.
 
 Stores
 ------
@@ -60,7 +61,7 @@ Make center mount less deep, so pilot get good view of MFDs and RWR.
 Make warning lights and master warning work.
 Convert all flat 2D panels into 3D.
 Make controls work for STORES CONFIG and STANDBY GAINS.
-Enable masterarm, jettison, trims, ALT FLAPS and MFD contrast/brightness.
+Enable masterarm, jettison, trims, ALT FLAPS.
 Enable knob for HUD focus. (above BRT knob)
 Fuel dial strange (not really, one needle shows frw tank, one shows aft tank), but should be configurable.
 

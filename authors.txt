@@ -18,7 +18,10 @@ Nikolai V. Chr.
 - F16 block 10, 20 and YF-16 aerodynamics
 - Fly-by-wire system for all variants except simplified.
 - Danish, Ghost Gray, Blue Bandit, 2xUAE, Croatian, Empire, Norwegian and prototype livery
-- Various changes to radar, MFD, HUD
+- Various changes to radar, MFD, HUD, 3D cockpit
+- Ejection and drag chute
+- Effects and shader work
+- Systems work
 - RWR
 - Pylons, counter-measures and missile code
 - Crash and stress code.
