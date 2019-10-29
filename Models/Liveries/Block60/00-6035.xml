@@ -4,8 +4,8 @@
     <sim>
         <model> 
             <livery>
-                <name type="string">UAEAF 1 Sqn, #3056</name>
-                <texture type="string">Liveries/Block60/00-6031.png</texture>
+                <name type="string">UAEAF 2 Sqn, #3060</name>
+                <texture type="string">Liveries/Block60/00-6035.png</texture>
                 <owner type="string">UAEAF</owner>
             </livery>
             <livery-logo>
@@ -13,7 +13,7 @@
            </livery-logo>
 
         <livery-patch>
-            <texture>Liveries/Block60/patch.uaeaf_1sqn.png</texture>
+            <texture>Liveries/Block60/patch.uaeaf_2sqn.png</texture>
         </livery-patch>
 
         <livery-pod>
