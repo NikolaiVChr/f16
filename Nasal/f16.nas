@@ -903,9 +903,9 @@ var reloadCannon = func {
 
 var reloadHydras = func {
     pylons.hyd70lh3.reloadAmmo();
-    pylons.hyd70lr3.reloadAmmo();
+    pylons.hyd70rh3.reloadAmmo();
     pylons.hyd70lh7.reloadAmmo();
-    pylons.hyd70lr7.reloadAmmo();
+    pylons.hyd70rh7.reloadAmmo();
 }
 
 var eject = func{
