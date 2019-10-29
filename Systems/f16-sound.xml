@@ -699,6 +699,38 @@
 				<offset>1.2</offset>
 			</pitch>
 		</squeal>
+		<!-- buffet -->
+        <high-alpha-airflow>
+            <name>high-alpha-airflow</name>
+            <mode>looped</mode>
+            <path>Aircraft/f16/Sounds/stall-buffet.wav</path>
+            <condition>
+                <greater-than>
+                    <property>orientation/alpha-deg</property>
+                    <value>15</value>
+                </greater-than>
+                <greater-than>
+                    <property>accelerations/pilot-gdamped</property>
+                    <value>2.3</value>
+                    <!-- this is the airflow over the front so not going to be much if we're just dropping -->
+                </greater-than>
+                <greater-than>
+                    <property>instrumentation/airspeed-indicator/indicated-speed-kt</property>
+                    <value>100</value>
+                </greater-than>
+                                <greater-than>
+                    <property>sim/current-view/internal</property>
+                    <value>0</value>
+                </greater-than>
+
+            </condition>
+            <volume>
+                <property>orientation/alpha-deg</property>
+                <factor>0.04</factor>
+            </volume>
+            <reference-dist>450.0</reference-dist>
+            <max-dist>2900.0</max-dist>
+        </high-alpha-airflow>
 
 		<!-- STALL WARN -->
 		<stall>
