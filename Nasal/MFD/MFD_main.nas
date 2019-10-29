@@ -1320,7 +1320,7 @@ var MFD_Device =
                     me.downAd = rpd>25 and me.showDist;
                     me.upAd = rpd<400 and me.showDist;
                     
-                    me.rippleDist = sprintf("RP %03d FT",math.round(rpd));
+                    me.rippleDist = sprintf("RP %3d FT",math.round(rpd));
                     
                     me.eegs = "A-G";
                     me.wpn.arming_time += me.at;
@@ -1404,6 +1404,14 @@ var MFD_Device =
                 } elsif (me.wpn.type == "20mm Cannon") {
                     me.wpnType ="gun";
                     me.eegs = "EEGS";
+                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
+                        me.ready = "FAIL";
+                    } else {
+                        me.ready = "RDY";
+                    }
+                } elsif (me.wpn.type == "LAU-68") {
+                    me.wpnType ="rocket";
+                    me.eegs = "";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "FAIL";
                     } else {
