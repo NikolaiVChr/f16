@@ -1411,7 +1411,7 @@ var MFD_Device =
                     }
                 } elsif (me.wpn.type == "LAU-68") {
                     me.wpnType ="rocket";
-                    me.eegs = "";
+                    me.eegs = "A-G";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "FAIL";
                     } else {

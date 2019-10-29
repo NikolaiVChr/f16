@@ -449,6 +449,7 @@ var a2g_hyd70 = func {
         pylon10.loadSet(pylonSets.empty);
         pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
+        f16.reloadHydras();
     } else {
       screen.log.write(f16.msgB);
     }

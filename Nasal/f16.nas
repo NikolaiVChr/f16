@@ -531,6 +531,7 @@ var repair2 = func {
   inAutostart = 1;
   screen.log.write("Repairing, standby..");
   reloadCannon();
+  reloadHydras();
   crash.repair();
   if (getprop("f16/engine/running-state")) {
     setprop("fdm/jsbsim/elec/switches/epu",1);
@@ -896,8 +897,15 @@ var play_thunder = func (name, timeout=0.1, delay=0) {
 setlistener("/environment/lightning/lightning-pos-y", thunder_listener);
 
 var reloadCannon = func {
-    setprop("ai/submodels/submodel[0]/count", 100);
+    setprop("ai/submodels/submodel[0]/count", 100);#flares
     pylons.cannon.reloadAmmo();
+}
+
+var reloadHydras = func {
+    pylons.hyd70lh3.reloadAmmo();
+    pylons.hyd70lr3.reloadAmmo();
+    pylons.hyd70lh7.reloadAmmo();
+    pylons.hyd70lr7.reloadAmmo();
 }
 
 var eject = func{
