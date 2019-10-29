@@ -1446,6 +1446,7 @@ var MFD_Device =
             me.root.distA.setText(me.rippleDist);
             me.root.distA.setVisible(me.showDist);
             me.at = 0;
+            me.ar = 0;
         };
     },
 
