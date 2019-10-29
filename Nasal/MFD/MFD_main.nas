@@ -1318,7 +1318,7 @@ var MFD_Device =
                     }
                     pylons.fcs.setRippleDist(FT2M * rpd);
                     me.downAd = rpd>25 and me.showDist;
-                    me.upAd = rpd<200 and me.showDist;
+                    me.upAd = rpd<400 and me.showDist;
                     
                     me.rippleDist = sprintf("RP %03d FT",math.round(rpd));
                     
