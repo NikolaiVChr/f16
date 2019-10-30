@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>InnerBrakeUpper.ac</path>
+
+ <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.35</ambient-factor>
+          <rain-enabled type="int">2</rain-enabled>
+          <snow-enabled type="int">0</snow-enabled>
+          <reflection-enabled type="int">1</reflection-enabled>
+          <reflection-correction type="float">-0.45</reflection-correction>
+      </parameters>
+      <!-- fuselage -->
+      <object-name>LeftUpperSpeedbrake.001</object-name>
+      <object-name>RightUpperSpeedbrake.001</object-name>
+  </effect>
+  
+  <animation>
+  <type>rotate</type>
+  <object-name>RightUpperSpeedbrake.001</object-name>
+  <property>surface-positions/speedbrake-pos-norm</property>
+  <factor>-60</factor>
+  <center>
+   <x-m>4.55</x-m>
+   <y-m>-0.88</y-m>
+   <z-m>0.15</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>1.0</y>
+   <z>-0.04545</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>LeftUpperSpeedbrake.001</object-name>
+  <property>surface-positions/speedbrake-pos-norm</property>
+  <factor>-60</factor>
+  <center>
+   <x-m>4.55</x-m>
+   <y-m>0.88</y-m>
+   <z-m>0.15</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>1.0</y>
+   <z>0.0454</z>
+  </axis>
+ </animation>
+
+</PropertyList>

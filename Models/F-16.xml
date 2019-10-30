@@ -1812,6 +1812,17 @@
 
 <!-- ============== END GEAR ================== -->
 
+
+  <model>
+  <name>brakeL</name>
+  <path>Aircraft/f16/Models/InnerBrakeLower.xml</path>
+ </model>
+ 
+ <model>
+  <name>brakeU</name>
+  <path>Aircraft/f16/Models/InnerBrakeUpper.xml</path>
+ </model>
+
  <animation>
   <type>rotate</type>
   <object-name>RightUpperSpeedbrake</object-name>

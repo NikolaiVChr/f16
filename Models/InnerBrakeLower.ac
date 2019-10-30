@@ -1,0 +1,47 @@
+AC3Db
+MATERIAL "fuselage2Mat.002" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.735 0.815 0.835  shi 60 trans 0.000
+OBJECT world
+name "Blender_exporter_v2.26__InnerBrakeLower.ac"
+kids 2
+OBJECT poly
+name "LeftLowerSpeedbrake.001"
+data 8
+Mesh.008
+crease 80.0
+texture "f16.png"
+texrep 1 1
+numvert 4
+4.55555 0.09149 1.0804
+4.55555 0.11968 0.64785
+5.24744 0.0566 1.0804
+5.24744 0.14313 0.64785
+numsurf 1
+SURF 0X30
+mat 0
+refs 4
+3 0.660546 0.086261
+1 0.660436 0.193631
+0 0.71461 0.193705
+2 0.714763 0.086261
+kids 0
+OBJECT poly
+name "RightLowerSpeedbrake.001"
+data 8
+Mesh.035
+crease 80.0
+texture "f16.png"
+texrep 1 1
+numvert 4
+4.55555 0.09149 -1.08342
+4.55555 0.11968 -0.6577
+5.24744 0.0566 -1.08342
+5.24744 0.14313 -0.6577
+numsurf 1
+SURF 0X30
+mat 0
+refs 4
+2 0.714364 0.085836
+0 0.714428 0.193642
+1 0.660322 0.193695
+3 0.660265 0.085939
+kids 0

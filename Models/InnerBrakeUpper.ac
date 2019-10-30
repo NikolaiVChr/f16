@@ -1,0 +1,47 @@
+AC3Db
+MATERIAL "fuselage2Mat.002" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.735 0.815 0.835  shi 60 trans 0.000
+OBJECT world
+name "Blender_exporter_v2.26__InnerBrakeUpper.ac"
+kids 2
+OBJECT poly
+name "LeftUpperSpeedbrake.001"
+data 8
+Mesh.030
+crease 80.0
+texture "f16.png"
+texrep 1 1
+numvert 4
+4.55555 0.09149 1.0804
+4.55555 0.11968 0.64785
+5.24744 0.0566 1.0804
+5.24744 0.14313 0.64785
+numsurf 1
+SURF 0X30
+mat 0
+refs 4
+3 0.660624 0.085869
+2 0.714562 0.085625
+0 0.714406 0.1936
+1 0.660599 0.193721
+kids 0
+OBJECT poly
+name "RightUpperSpeedbrake.001"
+data 8
+Mesh.033
+crease 80.0
+texture "f16.png"
+texrep 1 1
+numvert 4
+4.55555 0.09149 -1.08342
+4.55555 0.11968 -0.6577
+5.24744 0.0566 -1.08342
+5.24744 0.14313 -0.6577
+numsurf 1
+SURF 0X30
+mat 0
+refs 4
+3 0.660191 0.086057
+1 0.660326 0.193448
+0 0.71474 0.193278
+2 0.714657 0.085812
+kids 0
