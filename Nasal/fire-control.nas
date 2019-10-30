@@ -639,10 +639,12 @@ var FireControl = {
 	
 	fireAIM: func (p,w) {
 		# fire a weapon (that is a missile-code instance)
+		me.aim = me._getSpecificWeapon(p,w);
+		me.lockedfire = me.aim.status == armament.MISSILE_LOCK;
 		me.aim = me.pylons[p].fireWeapon(w, getCompleteRadarTargetsList());
 		if (me.aim != nil) {
 			var add = "";
-			if (me.aim.status == armament.MISSILE_LOCK and me.aim.guidance != "unguided") {
+			if (me.lockedfire and me.aim.guidance != "unguided") {
 				add = " at: "~me.aim.callsign;
 			}
 			me.aim.sendMessage(me.aim.brevity~add);
