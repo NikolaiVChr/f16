@@ -1,0 +1,704 @@
+<?xml version="1.0"?>
+<!-- 	This is the Walker include file. To add the Walker to your Aircraft
+			simply replace the <PropertyList> Entry at the top of your -set file with this:
+			
+					<PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
+
+			This includes all Properties for the Walker, Key Bindings and a Menubar Entry. 
+			The Keys "a", "A" and "s" have their normal Binding when not in Walk View or 
+			Walker Orbit View.
+
+			To have a custom Exit Point add this to your Aircrafts -set file in the <model> 
+			section:
+
+					<map>
+						<default_exit>
+							<x-offset-m type ="float">1</x-offset-m>
+							<y-offset-m type ="float">3</y-offset-m>
+						</default_exit>
+					</map>
+
+			This specifies where the Walker Model appears.
+
+-->
+
+<PropertyList>
+	<sim n="0">
+		<model n="0">
+			<crew>
+				<cockpit-position type="int">0</cockpit-position>
+				<pilot>
+					<chair-back type="int">0</chair-back>
+					<visible type="bool">true</visible>
+				</pilot>
+				<walker>
+					<visible type="bool">true</visible>
+					<x-offset-m type="double">-0.8</x-offset-m>
+					<y-offset-m type="double">1.2</y-offset-m>
+					<z-offset-m type="double">0.0</z-offset-m>
+					<head-offset-deg type="double">0.0</head-offset-deg>
+				</walker>
+			</crew>
+			<map>
+				<default_exit>
+
+				</default_exit>
+			</map>
+			<walker n="1">
+				<animate>
+					<dialog-position type="int">0</dialog-position>
+					<enabled-current type="bool">false</enabled-current>
+					<enabled-triggers type="bool">true</enabled-triggers>
+					<sequence-selected type="int">0</sequence-selected>
+					<list>
+						<sequence n="0" include="Aircraft/Generic/Human/Models/Animations/walker-stand_bored.xml">
+						</sequence>
+						<sequence n="1" include="Aircraft/Generic/Human/Models/Animations/walker-walking.xml">
+						</sequence>
+						<sequence n="2" include="Aircraft/Generic/Human/Models/Animations/walker-running.xml">
+						</sequence>
+						<sequence n="3" include="Aircraft/Generic/Human/Models/Animations/walker-walk_backwards.xml">
+						</sequence>
+						<sequence n="4" include="Aircraft/Generic/Human/Models/Animations/walker-falling.xml">
+						</sequence>
+						<sequence n="5" include="Aircraft/Generic/Human/Models/Animations/walker-open_parachute.xml">
+						</sequence>
+						<sequence n="6" include="Aircraft/Generic/Human/Models/Animations/walker-jumping_jacks.xml">
+						</sequence>
+						<sequence n="7" include="Aircraft/Generic/Human/Models/Animations/walker-splat.xml">
+						</sequence>
+						<sequence n="8" include="Aircraft/Generic/Human/Models/Animations/walker-stand_still.xml">
+						</sequence>
+					</list>
+					<triggers>
+						<standing type="int">-1</standing>
+						<walking type="int">-1</walking>
+						<running type="int">-1</running>
+						<backwards type="int">-1</backwards>
+						<falling type="int">-1</falling>
+						<open-parachute type="int">-1</open-parachute>
+						<landing type="int">-1</landing>
+						<crashing type="int">-1</crashing>
+					</triggers>
+				</animate>
+				<name type="string"></name>
+				<loop-enabled type="bool">false</loop-enabled>
+				<loop-to type="int">0</loop-to>
+				<rest-sec type="double">0</rest-sec>	
+				<transit-sec type="double">1.0</transit-sec>
+				<trigger-upon type="string"></trigger-upon>
+				<limb n="0">
+					<y-deg type="double">0</y-deg>
+					<z-m type="double">0</z-m>
+				</limb>
+				<limb n="1">
+					<y-deg type="double">0</y-deg>
+					<z-deg type="double">0</z-deg>
+				</limb>
+				<limb n="2">
+					<y-deg type="double">0</y-deg>
+					<z-deg type="double">0</z-deg>
+				</limb>
+				<limb n="3">
+					<x-deg type="double">-80</x-deg>
+					<y-deg type="double">0</y-deg>
+					<z-deg type="double">0</z-deg>
+				</limb>
+				<limb n="4">
+					<y-deg type="double">0</y-deg>
+					<z-deg type="double">0</z-deg>
+				</limb>
+				<limb n="5">
+					<x-deg type="double">0</x-deg>
+					<y-deg type="double">0</y-deg>
+					<hand-pose>0</hand-pose>
+				</limb>
+				<limb n="6">
+					<x-deg type="double">-80</x-deg>
+					<y-deg type="double">0</y-deg>
+					<z-deg type="double">0</z-deg>
+				</limb>
+				<limb n="7">
+					<y-deg type="double">0</y-deg>
+					<z-deg type="double">0</z-deg>
+				</limb>
+				<limb n="8">
+					<x-deg type="double">0</x-deg>
+					<y-deg type="double">0</y-deg>
+					<hand-pose>0</hand-pose>
+				</limb>
+				<limb n="9">
+					<x-deg type="double">0</x-deg>
+					<y-deg type="double">0</y-deg>
+					<z-deg type="double">0</z-deg>
+				</limb>
+				<limb n="10">
+					<y-deg type="double">0</y-deg>
+				</limb>
+				<limb n="11">
+					<y-deg type="double">0</y-deg>
+				</limb>
+				<limb n="12">
+					<x-deg type="double">0</x-deg>
+					<y-deg type="double">0</y-deg>
+					<z-deg type="double">0</z-deg>
+				</limb>
+				<limb n="13">
+					<y-deg type="double">0</y-deg>
+				</limb>
+				<limb n="14">
+					<y-deg type="double">0</y-deg>
+				</limb>
+			</walker>
+		</model>
+	<walker>
+		<character>0</character>
+		<gender>0</gender>
+		<outfit>0</outfit>
+		<hair>1</hair>
+		<headgear>0</headgear>
+		<eyewear>0</eyewear>
+		<tools>0</tools>
+		<outside type="bool">false</outside>
+		<walking type="int">0</walking>
+		<walking-momentum type="bool">false</walking-momentum>
+		<speed-mps type="float">0.9</speed-mps>
+		<latitude-deg type="double">0.0</latitude-deg>
+		<longitude-deg type="double">0.0</longitude-deg>
+		<altitude-ft type="double">0.0</altitude-ft>
+		<heading-deg type="double">0.0</heading-deg>
+		<pitch-deg type="double">0.0</pitch-deg>
+		<roll-deg type="double">0.0</roll-deg>
+		<keep-inside-offset-x type="double">0.0</keep-inside-offset-x>
+		<keep-inside-offset-y type="double">2.1</keep-inside-offset-y>
+		<keep-inside-offset-z type="double">9.4</keep-inside-offset-z>
+		<keep-pitch-offset-deg type="double">0.0</keep-pitch-offset-deg>
+		<time-of-exit-sec type="double">0.0</time-of-exit-sec>
+		<altitude-at-exit-ft type="double">0.0</altitude-at-exit-ft>
+		<starting-lat type="double">0.0</starting-lat>
+		<starting-lon type="double">0.0</starting-lon>
+		<starting-trajectory-lat type="double">0.0</starting-trajectory-lat>
+		<starting-trajectory-lon type="double">0.0</starting-trajectory-lon>
+		<starting-trajectory-z-mps type="double">0.0</starting-trajectory-z-mps>
+		<time-to-zero-z-sec type="double">0.0</time-to-zero-z-sec>
+		<airborne type="bool">false</airborne>
+		<parachute-opened-altitude-ft type="double">0.0</parachute-opened-altitude-ft>
+		<parachute-opened-sec type="double">0.0</parachute-opened-sec>
+		<parachute-equipped type="bool">false</parachute-equipped>
+		<crashed type="bool">false</crashed>
+		<key-triggers>
+			<outside-toggle type="bool">false</outside-toggle>
+			<forward type="int">0</forward>
+			<slide type="int">0</slide>
+			<speed type="float">0</speed>
+		</key-triggers>
+	</walker>
+
+		<view n="110">
+			<name>Walk View</name>
+			<type>lookfrom</type>
+			<enabled type="bool">false</enabled>
+			<config>
+				<default-field-of-view-deg type="double">55.0</default-field-of-view-deg>
+				<eye-alt-ft-path>sim/walker/altitude-ft</eye-alt-ft-path>
+				<eye-heading-deg-path>sim/walker/heading-deg</eye-heading-deg-path>
+				<eye-lat-deg-path>sim/walker/latitude-deg</eye-lat-deg-path>
+				<eye-lon-deg-path>sim/walker/longitude-deg</eye-lon-deg-path>
+				<eye-pitch-deg-path>sim/walker/pitch-deg</eye-pitch-deg-path>
+				<eye-roll-deg-path>sim/walker/roll-deg</eye-roll-deg-path>
+				<ground-level-nearplane-m type="double">0.5</ground-level-nearplane-m>
+				<x-offset-m type="double">0.6</x-offset-m>
+				<y-offset-m type="double">2.1</y-offset-m>
+				<z-offset-m type="double">9.4</z-offset-m>
+				<limits>
+					<enabled type="bool">false</enabled>
+				</limits>
+			</config>
+		</view>
+		<view n="111">
+			<name>Walker Orbit View</name>
+			<type>lookat</type>
+			<enabled type="bool">false</enabled>
+			<config>
+				<from-model type="bool">false</from-model>
+				<from-model-idx type="int">0</from-model-idx>
+				<at-model type="bool">false</at-model>
+				<at-model-idx type="int">100</at-model-idx>
+				<eye-alt-ft-path>sim/walker/altitude-ft</eye-alt-ft-path>
+				<eye-heading-deg-path>sim/walker/heading-deg</eye-heading-deg-path>
+				<eye-lat-deg-path>sim/walker/latitude-deg</eye-lat-deg-path>
+				<eye-lon-deg-path>sim/walker/longitude-deg</eye-lon-deg-path>
+				<eye-pitch-deg-path>sim/walker/pitch-deg</eye-pitch-deg-path>
+				<eye-roll-deg-path>sim/walker/roll-deg</eye-roll-deg-path>
+				<target-alt-ft-path>sim/walker/altitude-ft</target-alt-ft-path>
+				<target-heading-deg-path>sim/walker/heading-deg</target-heading-deg-path>
+				<target-lat-deg-path>sim/walker/latitude-deg</target-lat-deg-path>
+				<target-lon-deg-path>sim/walker/longitude-deg</target-lon-deg-path>
+				<target-pitch-deg-path>sim/walker/pitch-deg</target-pitch-deg-path>
+				<target-roll-deg-path>sim/walker/roll-deg</target-roll-deg-path>
+				<target-x-offset-m type="double">0</target-x-offset-m>
+				<target-y-offset-m type="double">1.5</target-y-offset-m>
+				<target-z-offset-m type="double">0</target-z-offset-m>
+				<ground-level-nearplane-m type="double">0.2f</ground-level-nearplane-m>
+				<default-field-of-view-deg type="double">55.0</default-field-of-view-deg>
+				<x-offset-m type="double">0</x-offset-m>
+				<y-offset-m type="double">0.7</y-offset-m>
+				<z-offset-m type="double">5</z-offset-m>
+				<heading-offset-deg>0</heading-offset-deg>
+				<pitch-offset-deg>0</pitch-offset-deg>
+				<roll-offset-deg>0</roll-offset-deg>
+				<limits>
+					<enabled type="bool">false</enabled>
+				</limits>
+			</config>
+		</view>
+
+
+		<menubar n="0">
+			<default n="0">
+				<menu n="11">
+					<label>Walker</label>
+						<enabled type="bool">true</enabled>
+					<item>
+						<label>Walker animation dialog  [Tab]</label>
+						<binding>
+							<command>nasal</command>
+							<script>walker.sequence.showDialog()</script>
+						</binding>
+					</item>
+
+					<item>
+						<label>Select Theme</label>
+						<binding>
+                <command>nasal</command>
+                <script>walk.theme_dialog.toggle()</script>
+              </binding>
+					</item>
+					<item>
+						<label>Select Equipment</label>
+						<binding>
+                <command>nasal</command>
+                <script>walk.equip_dialog.toggle()</script>
+              </binding>
+					</item>
+					<item>
+						<label>Toggle Walker outside</label>
+						<binding>
+							<command>property-toggle</command>
+							<property>sim/walker/key-triggers/outside-toggle</property>
+						</binding>
+					</item>
+				</menu>
+			</default>
+		</menubar>
+	</sim>
+<!-- Keys -->
+	<input n="0">
+	<keyboard n="0">
+<!--
+		<key n="111">
+			<name>o</name>
+			<desc>Toggle walker outside/inside</desc>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>sim/walker/key-triggers/outside-toggle</property>
+			</binding>
+		</key>
+-->
+		<key n="106"> 
+			<name>j</name>
+			<desc>open parachute</desc>
+			<repeatable>false</repeatable>
+
+  			<condition>
+					<or>
+   					<equals>
+   	 					<property>sim/current-view/name</property>
+  			 	 		<value>Walk View</value>
+   					</equals>
+  			 		<equals>
+   				 		<property>sim/current-view/name</property>
+   				 		<value>Walker Orbit View</value>
+   					</equals>
+					</or>
+  			</condition>
+			<binding>
+				<command>nasal</command>
+				<script>walk.open_chute()</script>
+			</binding>
+			<binding n="1">
+                <command>nasal</command>
+                <script>controls.stepSpoilers(-1)</script>
+			</binding>
+		</key>
+
+		<key n="119"> 
+			<name>w</name>
+			<desc>Walk forward</desc>
+			<repeatable>false</repeatable>
+			<binding n="0">
+				<command>property-assign</command>
+				<property>sim/walker/key-triggers/forward</property>
+				<value>1</value>
+			</binding>
+			<binding n="1">
+				<command>property-assign</command>
+				<property>sim/walker/key-triggers/speed</property>
+				<property>sim/walker/speed-mps</property>
+			</binding>
+			<mod-up>
+				<binding n="0">
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/forward</property>
+					<value>0</value>
+				</binding>
+				<binding n="1">
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+			</mod-up>
+		</key>
+		<key n="87"> 
+			<name>W</name>
+			<desc>Run forward</desc>
+			<repeatable>false</repeatable>
+			<binding n="0">
+				<command>property-assign</command>
+				<property>sim/walker/key-triggers/forward</property>
+				<value>1</value>
+			</binding>
+			<binding n="1">
+				<command>property-assign</command>
+				<property>sim/walker/key-triggers/speed</property>
+				<property>sim/walker/speed-mps</property>
+			</binding>
+			<binding n="2">
+				<command>property-multiply</command>
+				<property>sim/walker/key-triggers/speed</property>
+				<factor>5.0</factor>
+			</binding>
+			<mod-up>
+				<binding n="0">
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/forward</property>
+					<value>0</value>
+				</binding>
+				<binding n="1">
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+			</mod-up>
+		</key>
+		<key n="115"> 
+			<name>s</name>
+			<desc>Walk backward</desc>
+			<repeatable>false</repeatable>
+			<binding n="0">
+  			<condition>
+					<or>
+   					<equals>
+   	 					<property>sim/current-view/name</property>
+  			 	 		<value>Walk View</value>
+   					</equals>
+  			 		<equals>
+   				 		<property>sim/current-view/name</property>
+   				 		<value>Walker Orbit View</value>
+   					</equals>
+					</or>
+ 			 </condition>
+				<command>property-assign</command>
+				<property>sim/walker/key-triggers/forward</property>
+				<value>-1</value>
+			</binding>
+			<binding n="1">
+				<command>property-assign</command>
+				<property>sim/walker/key-triggers/speed</property>
+				<property>sim/walker/speed-mps</property>
+			</binding>
+  		<binding n="2">
+  			<condition>
+					<and>
+   					<not-equals>
+   	 					<property>sim/current-view/name</property>
+  			 	 		<value>Walk View</value>
+   					</not-equals>
+  			 		<not-equals>
+   				 		<property>sim/current-view/name</property>
+   				 		<value>Walker Orbit View</value>
+   					</not-equals>
+					</and>
+ 			 </condition>
+   <command>nasal</command>
+   <script>controls.startEngine(1)</script>
+  </binding>
+			<mod-up>
+				<binding n="0">
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/forward</property>
+					<value>0</value>
+				</binding>
+				<binding n="1">
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+
+   <binding n="2">
+    <command>nasal</command>
+    <script>controls.startEngine(0)</script>
+   </binding>
+
+			</mod-up>
+		</key>
+		<key n="83"> 
+			<name>S</name>
+			<desc>Walk/run backward</desc>
+			<repeatable>false</repeatable>
+			<binding n="0">
+				<command>property-assign</command>
+				<property>sim/walker/key-triggers/forward</property>
+				<value>-1</value>
+			</binding>
+			<binding n="1">
+				<command>property-assign</command>
+				<property>sim/walker/key-triggers/speed</property>
+				<property>sim/walker/speed-mps</property>
+			</binding>
+			<binding n="2">
+				<command>property-multiply</command>
+				<property>sim/walker/key-triggers/speed</property>
+				<factor>2.5</factor>
+			</binding>
+			<mod-up>
+				<binding n="0">
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/forward</property>
+					<value>0</value>
+				</binding>
+				<binding n="1">
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+			</mod-up>
+		</key>
+		<key n="97"> 
+			<name>a</name>
+			<desc>Slide left</desc>
+			<repeatable>false</repeatable>
+			<binding n="0">
+  			<condition>
+   					<equals>
+   	 					<property>sim/current-view/name</property>
+  			 	 		<value>Walk View</value>
+   					</equals>
+ 			 </condition>
+				<command>property-assign</command>
+				<property>sim/walker/key-triggers/slide</property>
+				<value>-1</value>
+			</binding>
+			<binding n="1">
+				<command>property-assign</command>
+				<property>sim/walker/key-triggers/speed</property>
+				<property>sim/walker/speed-mps</property>
+			</binding>
+	<binding n="2">
+  			<condition>
+					<and>
+   					<not-equals>
+   	 					<property>sim/current-view/name</property>
+  			 	 		<value>Walk View</value>
+   					</not-equals>
+  			 		<not-equals>
+   				 		<property>sim/current-view/name</property>
+   				 		<value>Walker Orbit View</value>
+   					</not-equals>
+					</and>
+ 			 </condition>
+		<command>nasal</command>
+		<script>controls.speedup(1);</script>
+	</binding>
+			<binding n="3">
+  			<condition>
+  			 		<equals>
+   				 		<property>sim/current-view/name</property>
+   				 		<value>Walker Orbit View</value>
+   					</equals>
+ 			 </condition>
+   <command>property-adjust</command>
+   <property>/sim/walker/model-heading-deg</property>
+	 <min>0</min>
+	 <max>360</max>
+	 <wrap type="bool">true</wrap>
+   <step type="int">-10</step>
+			</binding>
+			<mod-up>
+				<binding n="0">
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/slide</property>
+					<value>0</value>
+				</binding>
+				<binding n="1">
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+			</mod-up>
+		</key>
+		<key n="65"> 
+			<name>A</name>
+			<desc>Slide left2, override default assignment</desc>
+			<repeatable>false</repeatable>
+			<binding n="0">
+  			<condition>
+					<or>
+   					<equals>
+   	 					<property>sim/current-view/name</property>
+  			 	 		<value>Walk View</value>
+   					</equals>
+  			 		<equals>
+   				 		<property>sim/current-view/name</property>
+   				 		<value>Walker Orbit View</value>
+   					</equals>
+					</or>
+ 			 </condition>
+				<command>property-assign</command>
+				<property>sim/walker/key-triggers/slide</property>
+				<value>-1</value>
+			</binding>
+			<binding n="1">
+				<command>property-assign</command>
+				<property>sim/walker/key-triggers/speed</property>
+				<property>sim/walker/speed-mps</property>
+			</binding>
+			<binding n="2">
+				<command>property-multiply</command>
+				<property>sim/walker/key-triggers/speed</property>
+				<factor>2.5</factor>
+			</binding>
+	<binding n="3">
+  			<condition>
+					<and>
+   					<not-equals>
+   	 					<property>sim/current-view/name</property>
+  			 	 		<value>Walk View</value>
+   					</not-equals>
+  			 		<not-equals>
+   				 		<property>sim/current-view/name</property>
+   				 		<value>Walker Orbit View</value>
+   					</not-equals>
+					</and>
+ 			 </condition>
+		<command>nasal</command>
+		<script>controls.speedup(-1);</script>
+	</binding>
+			<mod-up>
+				<binding n="0">
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/slide</property>
+					<value>0</value>
+				</binding>
+				<binding n="1">
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+			</mod-up>
+		</key>
+		<key n="100"> 
+			<name>d</name>
+			<desc>Slide right</desc>
+			<repeatable>false</repeatable>
+			<binding n="0">
+  			<condition>
+   					<equals>
+   	 					<property>sim/current-view/name</property>
+  			 	 		<value>Walk View</value>
+   					</equals>
+ 			 </condition>
+				<command>property-assign</command>
+				<property>sim/walker/key-triggers/slide</property>
+				<value>1</value>
+			</binding>
+			<binding n="1">
+				<command>property-assign</command>
+				<property>sim/walker/key-triggers/speed</property>
+				<property>sim/walker/speed-mps</property>
+			</binding>
+			<binding n="2">
+  			<condition>
+  			 		<equals>
+   				 		<property>sim/current-view/name</property>
+   				 		<value>Walker Orbit View</value>
+   					</equals>
+ 			 </condition>
+   <command>property-adjust</command>
+   <property>/sim/walker/model-heading-deg</property>
+	 <min>0</min>
+	 <max>360</max>
+	 <wrap type="bool">true</wrap>
+   <step type="int">10</step>
+			</binding>
+			<mod-up>
+				<binding n="0">
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/slide</property>
+					<value>0</value>
+				</binding>
+				<binding n="1">
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+			</mod-up>
+		</key>
+		<key n="68"> 
+			<name>D</name>
+			<desc>Slide right2</desc>
+			<repeatable>false</repeatable>
+			<binding n="0">
+				<command>property-assign</command>
+				<property>sim/walker/key-triggers/slide</property>
+				<value>1</value>
+			</binding>
+			<binding n="1">
+				<command>property-assign</command>
+				<property>sim/walker/key-triggers/speed</property>
+				<property>sim/walker/speed-mps</property>
+			</binding>
+			<binding n="2">
+				<command>property-multiply</command>
+				<property>sim/walker/key-triggers/speed</property>
+				<factor>2.5</factor>
+			</binding>
+			<mod-up>
+				<binding n="0">
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/slide</property>
+					<value>0</value>
+				</binding>
+				<binding n="1">
+					<command>property-assign</command>
+					<property>sim/walker/key-triggers/speed</property>
+					<property>sim/walker/speed-mps</property>
+				</binding>
+			</mod-up>
+		</key>
+
+	</keyboard>
+	</input>
+
+	<nasal n="0">
+		<walk>
+			<file>Aircraft/Generic/Human/Nasal/walk.nas</file>
+			<script>main_loop();</script>
+		</walk>
+		<walker>
+			<file>Aircraft/Generic/Human/Nasal/walker-animate.nas</file>
+		</walker>
+	</nasal>
+
+</PropertyList>

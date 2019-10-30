@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<PropertyList include="Aircraft/Generic/Human/Include/walker-include.xml">
+<PropertyList include="Aircraft/f16/Systems/walker-include.xml">
     <sim>
         <aircraft-version>3.16</aircraft-version>
         <minimum-fg-version>2018.3</minimum-fg-version>
@@ -927,7 +927,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
              <key n="97">
               <name>a</name>
               <desc>Increase speed-up</desc>
-                <binding>
+                <binding n="4">
                     <command>nasal</command>
                     <script>
                         if (getprop("payload/armament/msg")==1) {
@@ -941,7 +941,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
               <key n="65">
               <name>A</name>
               <desc>Decrease speed-up</desc>
-                <binding>
+                <binding n="4">
                     <command>nasal</command>
                     <script>
                         if (getprop("payload/armament/msg")==1) {
@@ -973,7 +973,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <name>SHIFT-W</name>
                 <desc>View RWR</desc>
                 <repeatable>false</repeatable>
-                    <binding>
+                    <binding n="3">
                         <command>nasal</command>
                         <script>f16.RWRView();</script>
                     </binding>
@@ -1196,7 +1196,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <key n="119">
                 <name>w</name>
                 <desc>Cycle Weapon Type</desc>
-                <binding>
+                <binding n="2">
                     <command>nasal</command>
                     <script>pylons.fcs.cycleLoadedWeapon();</script>
                 </binding>
@@ -1220,11 +1220,11 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <key n="83">
                 <name>S</name>
                 <desc>smoke</desc>
-                <binding>
+                <binding n="3">
                     <command>property-toggle</command>
                     <property>controls/smoke</property>
                 </binding>
-                <binding>
+                <binding n="4">
                     <command>nasal</command>
                     <script>screen.log.write("Smoke "~(getprop("controls/smoke")==0?"OFF":"ON"), 0.5, 0.5, 1);</script>
                 </binding>
