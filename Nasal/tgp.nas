@@ -120,7 +120,11 @@ var FLIRCameraUpdater = {
 
         if (getprop("/aircraft/flir/target/auto-track") and me.click_coord_cam != nil) {
             var (yaw, pitch, distance) = computer(coords_cam, me.click_coord_cam);
-            me.update_cam(roll_deg, pitch_deg, yaw+me.offsetH, pitch+me.offsetP);
+            if (lock_tgp) {
+                me.update_cam(roll_deg, pitch_deg, yaw, pitch);
+            } else {
+                me.update_cam(roll_deg, pitch_deg, yaw+me.offsetH, pitch+me.offsetP);
+            }
         }
 #        else {
 #            me.manual_update_cam(roll_deg, pitch_deg);
@@ -283,8 +287,8 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
             #flir_updater.click_coord_cam = terrain;
             #setprop("/aircraft/flir/target/auto-track", 1);
             #interpolate("f16/avionics/lock-flir",1,1.5);
-            flir_updater.offsetP = 0;
-            flir_updater.offsetH = 0;
+            #flir_updater.offsetP = 0;
+            #flir_updater.offsetH = 0;# commented so we get back to where we were when unlocking
             lock_tgp = 1;
         }
     } elsif (button == 20) {#BACK
@@ -411,7 +415,7 @@ var fast_loop = func {
     var gpps = 0;
     if (armament.contactPoint == nil) {
         # no TGP lock
-        if (armament.contact == nil or !armament.contact.get_display()) {
+        if (armament.contact == nil) {# we do not check for get_display here since as long as something is selected we dont show steerpoint.
             if (getprop("autopilot/route-manager/active") == 1 and getprop("autopilot/route-manager/current-wp") != nil and getprop("autopilot/route-manager/current-wp") > -1) {
                 # TGP follow steerpoint
                 var idx = getprop("autopilot/route-manager/current-wp");
@@ -430,34 +434,51 @@ var fast_loop = func {
                 sp.set_latlon(lat,lon,ele);
                 flir_updater.click_coord_cam = sp;
                 setprop("/aircraft/flir/target/auto-track", 1);
+                if (callsign != lat~lon) {
+                    # we switched steerpoint or from radar to steerpoint
+                    flir_updater.offsetP = 0;
+                    flir_updater.offsetH = 0;
+                }
                 callsign = lat~lon;
                 steerlock = 1;
+                steer = 1;
             } else {
                 # TGP not follow, locked from aircraft
                 setprop("/aircraft/flir/target/auto-track", 0);
                 flir_updater.click_coord_cam = nil;
                 flir_updater.offsetP = 0;
                 flir_updater.offsetH = 0;
+                steer = 0;
+                callsign = nil;
             }
         } elsif (armament.contact != nil and armament.contact.get_display()) {
             # TGP follow radar lock
             flir_updater.click_coord_cam = armament.contact.get_Coord();
             setprop("/aircraft/flir/target/auto-track", 1);
+            if (callsign != armament.contact.getUnique()) {
+                flir_updater.offsetP = 0;
+                flir_updater.offsetH = 0;
+            }
             callsign = armament.contact.getUnique();
+            steer = 0;
         } else {
             setprop("/aircraft/flir/target/auto-track", 0);
             flir_updater.click_coord_cam = nil;
             callsign = nil;
             flir_updater.offsetP = 0;
             flir_updater.offsetH = 0;
+            steer = 0;
         }
         lock_tgp = 0;
         gps = 0;
     } else {
         # TGP lock
         var vis = 1;
-        gpss = armament.contactPoint.get_Callsign() == "GPS-Spot";
-        if (armament.contactPoint.get_Callsign() != "TGP-Spot" and !gps and !gpss) {
+        gpss = armament.contactPoint.get_Callsign() == "GPS-Spot";# GPS-Spot only used by "program GPS dialog"
+        if (armament.contactPoint.get_Callsign() != "TGP-Spot" and !gps and !gpss and !steer) {
+            # we do not check for visibility if:
+            # - following steerpoint
+            # - a GPS coord has been entered manually by "program GPS dialog"
             follow = 1;
             vis = awg_9.TerrainManager.IsVisible(armament.contactPoint.propNode, nil);
         }
@@ -474,8 +495,8 @@ var fast_loop = func {
             flir_updater.click_coord_cam = armament.contactPoint.get_Coord();
             callsign = armament.contactPoint.getUnique();
             setprop("/aircraft/flir/target/auto-track", 1);
-            flir_updater.offsetP = 0;
-            flir_updater.offsetH = 0;
+            #flir_updater.offsetP = 0;
+            #flir_updater.offsetH = 0;# commented so we get back to where we were when unlocking
         }
     }
     setprop("f16/avionics/tgp-lock", lock_tgp);#used in HUD
@@ -561,7 +582,8 @@ var lock_tgp = 0;
 var lock_tgp_last = 0;
 var wide = 1;
 var zoomlvl = 1.0;
-var gps = 0;
+var gps = 0;# set from Program GPS dialog
+var steer = 0;
 
 var callInit = func {
   var canvasMFDext = canvas.new({
