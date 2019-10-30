@@ -927,8 +927,20 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
              <key n="97">
               <name>a</name>
               <desc>Increase speed-up</desc>
-                <binding n="4">
+                <binding n="3">
                     <command>nasal</command>
+                    <condition>
+                            <and>
+                            <not-equals>
+                                <property>sim/current-view/name</property>
+                                <value>Walk View</value>
+                            </not-equals>
+                            <not-equals>
+                                <property>sim/current-view/name</property>
+                                <value>Walker Orbit View</value>
+                            </not-equals>
+                            </and>
+                     </condition>
                     <script>
                         if (getprop("payload/armament/msg")==1) {
                             screen.log.write("Speed-up disabled at the moment.");
@@ -941,8 +953,20 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
               <key n="65">
               <name>A</name>
               <desc>Decrease speed-up</desc>
-                <binding n="4">
+                <binding n="3">
                     <command>nasal</command>
+                    <condition>
+                        <and>
+                        <not-equals>
+                            <property>sim/current-view/name</property>
+                            <value>Walk View</value>
+                        </not-equals>
+                        <not-equals>
+                            <property>sim/current-view/name</property>
+                            <value>Walker Orbit View</value>
+                        </not-equals>
+                        </and>
+                 </condition>
                     <script>
                         if (getprop("payload/armament/msg")==1) {
                             screen.log.write("Speed-down disabled at the moment.");
@@ -974,6 +998,18 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <desc>View RWR</desc>
                 <repeatable>false</repeatable>
                     <binding n="3">
+                        <condition>
+                                <and>
+                                <not-equals>
+                                    <property>sim/current-view/name</property>
+                                    <value>Walk View</value>
+                                </not-equals>
+                                <not-equals>
+                                    <property>sim/current-view/name</property>
+                                    <value>Walker Orbit View</value>
+                                </not-equals>
+                                </and>
+                         </condition>
                         <command>nasal</command>
                         <script>f16.RWRView();</script>
                     </binding>
@@ -1198,6 +1234,18 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <desc>Cycle Weapon Type</desc>
                 <binding n="2">
                     <command>nasal</command>
+                    <condition>
+                            <and>
+                            <not-equals>
+                                <property>sim/current-view/name</property>
+                                <value>Walk View</value>
+                            </not-equals>
+                            <not-equals>
+                                <property>sim/current-view/name</property>
+                                <value>Walker Orbit View</value>
+                            </not-equals>
+                            </and>
+                     </condition>
                     <script>pylons.fcs.cycleLoadedWeapon();</script>
                 </binding>
             </key>
@@ -1222,10 +1270,34 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <desc>smoke</desc>
                 <binding n="3">
                     <command>property-toggle</command>
+                    <condition>
+                            <and>
+                            <not-equals>
+                                <property>sim/current-view/name</property>
+                                <value>Walk View</value>
+                            </not-equals>
+                            <not-equals>
+                                <property>sim/current-view/name</property>
+                                <value>Walker Orbit View</value>
+                            </not-equals>
+                            </and>
+                     </condition>
                     <property>controls/smoke</property>
                 </binding>
                 <binding n="4">
                     <command>nasal</command>
+                    <condition>
+                            <and>
+                            <not-equals>
+                                <property>sim/current-view/name</property>
+                                <value>Walk View</value>
+                            </not-equals>
+                            <not-equals>
+                                <property>sim/current-view/name</property>
+                                <value>Walker Orbit View</value>
+                            </not-equals>
+                            </and>
+                     </condition>
                     <script>screen.log.write("Smoke "~(getprop("controls/smoke")==0?"OFF":"ON"), 0.5, 0.5, 1);</script>
                 </binding>
             </key>

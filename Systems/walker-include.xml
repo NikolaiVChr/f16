@@ -505,23 +505,7 @@
 				<property>sim/walker/key-triggers/speed</property>
 				<property>sim/walker/speed-mps</property>
 			</binding>
-	<binding n="2">
-  			<condition>
-					<and>
-   					<not-equals>
-   	 					<property>sim/current-view/name</property>
-  			 	 		<value>Walk View</value>
-   					</not-equals>
-  			 		<not-equals>
-   				 		<property>sim/current-view/name</property>
-   				 		<value>Walker Orbit View</value>
-   					</not-equals>
-					</and>
- 			 </condition>
-		<command>nasal</command>
-		<script>controls.speedup(1);</script>
-	</binding>
-			<binding n="3">
+			<binding n="2">
   			<condition>
   			 		<equals>
    				 		<property>sim/current-view/name</property>
@@ -579,22 +563,6 @@
 				<property>sim/walker/key-triggers/speed</property>
 				<factor>2.5</factor>
 			</binding>
-	<binding n="3">
-  			<condition>
-					<and>
-   					<not-equals>
-   	 					<property>sim/current-view/name</property>
-  			 	 		<value>Walk View</value>
-   					</not-equals>
-  			 		<not-equals>
-   				 		<property>sim/current-view/name</property>
-   				 		<value>Walker Orbit View</value>
-   					</not-equals>
-					</and>
- 			 </condition>
-		<command>nasal</command>
-		<script>controls.speedup(-1);</script>
-	</binding>
 			<mod-up>
 				<binding n="0">
 					<command>property-assign</command>
