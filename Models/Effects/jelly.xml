@@ -74,7 +74,7 @@
           <alpha><value> 0.025 </value></alpha>
         </color>
         <size>
-          <value>1.1</value>
+          <value>1.0</value>
         </size>
       </start>
 
@@ -91,10 +91,10 @@
       </end>
 
       <life-sec>
-        <value>6.0</value>
+        <value>6.5</value>
       </life-sec>
 
-      <mass-kg>0.05</mass-kg>
+      <mass-kg>0.15</mass-kg>
       <radius-m>0.3</radius-m>
     </particle>
 

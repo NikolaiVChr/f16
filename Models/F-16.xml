@@ -378,6 +378,7 @@
       <object-name>RightInnerStrut</object-name>
       <object-name>RightOuterLowerStrut</object-name>
       <object-name>RightOuterUpperStrut</object-name>
+      <object-name>Poly.002</object-name>
  </effect>
 
  <effect>
@@ -581,6 +582,26 @@
    <roll-deg>10</roll-deg>
   </offsets>
  </model>
+
+  <model>
+    <name>tiptrail-L</name>
+    <path>Aircraft/f16/Models/Effects/tiptrail/tiptrail.xml</path>
+      <offsets>
+        <x-m>2.2</x-m>
+        <y-m>-4.78</y-m>
+        <z-m>0.075</z-m>
+      </offsets>
+  </model>
+
+  <model>
+    <name>tiptrail-R</name>
+    <path>Aircraft/f16/Models/Effects/tiptrail/tiptrail.xml</path>
+      <offsets>
+        <x-m>2.2</x-m>
+        <y-m>4.78</y-m>
+        <z-m>0.075</z-m>
+      </offsets>
+  </model>
 
  <model>
   <path>Aircraft/Generic/Effects/tyre-smoke-nose.xml</path>

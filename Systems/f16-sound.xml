@@ -711,18 +711,17 @@
                 </greater-than>
                 <greater-than>
                     <property>accelerations/pilot-gdamped</property>
-                    <value>2.3</value>
+                    <value>2.4</value>
                     <!-- this is the airflow over the front so not going to be much if we're just dropping -->
                 </greater-than>
                 <greater-than>
                     <property>instrumentation/airspeed-indicator/indicated-speed-kt</property>
                     <value>100</value>
                 </greater-than>
-                                <greater-than>
+                <greater-than>
                     <property>sim/current-view/internal</property>
                     <value>0</value>
                 </greater-than>
-
             </condition>
             <volume>
                 <property>orientation/alpha-deg</property>
