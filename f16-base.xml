@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<PropertyList include="Aircraft/f16/Systems/walker-include.xml">
+<PropertyList include="Systems/walker-include.xml">
     <sim>
         <aircraft-version>3.16</aircraft-version>
         <minimum-fg-version>2018.3</minimum-fg-version>
