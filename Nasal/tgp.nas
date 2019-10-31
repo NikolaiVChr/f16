@@ -406,7 +406,7 @@ var fast_loop = func {
         #setprop("f16/avionics/lock-flir",0.05);
     }
     
-    callsign = nil;
+    #callsign = nil;
     steerlock = 0;
     var follow = 0;
     if (armament.contactPoint !=nil and armament.contactPoint.get_range()>35 and armament.contactPoint.get_Callsign() != "GPS-Spot") {
