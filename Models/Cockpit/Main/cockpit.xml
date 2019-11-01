@@ -439,6 +439,10 @@
     </and>
     <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
+    <greater-than>
+    <property>fdm/jsbsim/elec/bus/ess-dc</property>
+    <value>20.0</value>
+    </greater-than>
    </condition>
  </animation>
 
@@ -460,6 +464,10 @@
     </and>
     <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
+    <greater-than>
+    <property>fdm/jsbsim/elec/bus/ess-dc</property>
+    <value>20.0</value>
+    </greater-than>
    </condition>
  </animation>
 
@@ -477,6 +485,10 @@
     </and>
     <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
+    <greater-than>
+    <property>fdm/jsbsim/elec/bus/ess-dc</property>
+    <value>20.0</value>
+    </greater-than>
    </condition>
  </animation>
  
