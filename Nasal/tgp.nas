@@ -493,7 +493,7 @@ var fast_loop = func {
         } else {
             lock_tgp = 1;
             flir_updater.click_coord_cam = armament.contactPoint.get_Coord();
-            callsign = armament.contactPoint.getUnique();
+            #callsign = armament.contactPoint.getUnique();
             setprop("/aircraft/flir/target/auto-track", 1);
             #flir_updater.offsetP = 0;
             #flir_updater.offsetH = 0;# commented so we get back to where we were when unlocking
