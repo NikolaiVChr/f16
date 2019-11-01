@@ -494,7 +494,7 @@
     </less-than>
     <greater-than>
      <property>environment/pressure-inhg</property>
-     <value>20</value>
+     <value>22</value>
     </greater-than>
   </condition>
  </model>
@@ -514,7 +514,7 @@
     </greater-than>
     <greater-than>
       <property>environment/pressure-inhg</property>
-      <value>20</value>
+      <value>22</value>
     </greater-than>
     <greater-than>
      <property>orientation/alpha-deg</property>
@@ -548,7 +548,7 @@
     </greater-than>
     <greater-than>
       <property>environment/pressure-inhg</property>
-      <value>20</value>
+      <value>22</value>
     </greater-than>
     <greater-than>
      <property>orientation/alpha-deg</property>
@@ -582,7 +582,7 @@
     </greater-than>
     <greater-than>
       <property>environment/pressure-inhg</property>
-      <value>20</value>
+      <value>22</value>
     </greater-than>
     <greater-than>
      <property>orientation/alpha-deg</property>
@@ -618,7 +618,7 @@
     </greater-than>
     <greater-than>
       <property>environment/pressure-inhg</property>
-      <value>20</value>
+      <value>22</value>
     </greater-than>
     <greater-than>
      <property>orientation/alpha-deg</property>
