@@ -21,15 +21,15 @@
                     <value>200</value>
                 </greater-than>
                 <greater-than>
-                    <property>/environment/relative-humidity</property>
+                    <property>environment/relative-humidity</property>
                     <value>50</value>
                 </greater-than>
                 <greater-than>
-                    <property>/environment/temperature-degc</property>
+                    <property>environment/temperature-degc</property>
                     <value>0</value>
                 </greater-than>
                 <greater-than>
-                    <property>/environment/dewpoint-degc</property>
+                    <property>environment/dewpoint-degc</property>
                     <value>0.86</value>
                 </greater-than>
                 <greater-than>
