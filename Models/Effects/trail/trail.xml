@@ -20,9 +20,13 @@
                     <value>true</value>
                 </equals>
                 <greater-than>
-                    <property>/position/altitude-ft</property>
-                    <value>21000</value>
+                    <property>environment/relative-humidity</property>
+                    <value>75</value>
                 </greater-than>
+                <less-than>
+                    <property>/environment/temperature-degc</property>
+                    <value>-36.5</value>
+                </less-than>
                 <not>
                     <property>fdm/jsbsim/gear/wow</property>
                 </not>
@@ -56,7 +60,7 @@
 
         <counter>
             <particles-per-sec>
-                <value>55</value>
+                <value>60</value>
                 <spread>0</spread>
             </particles-per-sec>
         </counter>
@@ -95,7 +99,7 @@
                     </alpha>
                 </color>
                 <size>
-                    <value>2.25</value>
+                    <value>1.75</value>
                 </size>
             </start>
 
@@ -130,7 +134,7 @@
                     </alpha>
                 </color>
                 <size>
-                    <value>5.25</value>
+                    <value>20</value>
                 </size>
             </end>
 
