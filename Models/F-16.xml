@@ -477,6 +477,14 @@
   <path>Aircraft/f16/Models/Effects/mach-cone.xml</path>
   <condition>
     <greater-than>
+      <property>environment/relative-humidity</property>
+      <value>50</value>
+    </greater-than>
+    <greater-than>
+      <property>environment/temperature-degc</property>
+      <value>0</value>
+    </greater-than>
+    <greater-than>
      <property>velocities/mach</property>
      <value>0.98</value>
     </greater-than>
@@ -484,10 +492,10 @@
      <property>velocities/mach</property>
      <value>1.02</value>
     </less-than>
-    <less-than>
-     <property>position/altitude-ft</property>
-     <value>5000</value>
-    </less-than>
+    <greater-than>
+     <property>environment/pressure-inhg</property>
+     <value>20</value>
+    </greater-than>
   </condition>
  </model>
 
@@ -497,12 +505,24 @@
   <condition>
    <and>
     <greater-than>
+      <property>environment/relative-humidity</property>
+      <value>50</value>
+    </greater-than>
+    <greater-than>
+      <property>environment/temperature-degc</property>
+      <value>0</value>
+    </greater-than>
+    <greater-than>
+      <property>environment/pressure-inhg</property>
+      <value>20</value>
+    </greater-than>
+    <greater-than>
      <property>orientation/alpha-deg</property>
      <value>9.0</value>
     </greater-than>
     <greater-than>
      <property>velocities/airspeed-kt</property>
-     <value>200</value>
+     <value>180</value>
     </greater-than>
    </and>
   </condition>
@@ -519,12 +539,24 @@
   <condition>
    <and>
     <greater-than>
+      <property>environment/relative-humidity</property>
+      <value>50</value>
+    </greater-than>
+    <greater-than>
+      <property>environment/temperature-degc</property>
+      <value>0</value>
+    </greater-than>
+    <greater-than>
+      <property>environment/pressure-inhg</property>
+      <value>20</value>
+    </greater-than>
+    <greater-than>
      <property>orientation/alpha-deg</property>
      <value>9.0</value>
     </greater-than>
     <greater-than>
      <property>velocities/airspeed-kt</property>
-     <value>200</value>
+     <value>180</value>
     </greater-than>
    </and>
   </condition>
@@ -540,6 +572,18 @@
   <path>Aircraft/f16/Models/Effects/g-vortex.xml</path>
   <condition>
    <and>
+    <greater-than>
+      <property>environment/relative-humidity</property>
+      <value>50</value>
+    </greater-than>
+    <greater-than>
+      <property>environment/temperature-degc</property>
+      <value>0</value>
+    </greater-than>
+    <greater-than>
+      <property>environment/pressure-inhg</property>
+      <value>20</value>
+    </greater-than>
     <greater-than>
      <property>orientation/alpha-deg</property>
      <value>12.0</value>
@@ -564,6 +608,18 @@
   <path>Aircraft/f16/Models/Effects/g-vortex.xml</path>
   <condition>
    <and>
+    <greater-than>
+      <property>environment/relative-humidity</property>
+      <value>50</value>
+    </greater-than>
+    <greater-than>
+      <property>environment/temperature-degc</property>
+      <value>0</value>
+    </greater-than>
+    <greater-than>
+      <property>environment/pressure-inhg</property>
+      <value>20</value>
+    </greater-than>
     <greater-than>
      <property>orientation/alpha-deg</property>
      <value>12.0</value>
