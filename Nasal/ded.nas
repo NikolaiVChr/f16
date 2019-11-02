@@ -189,12 +189,12 @@ var loop_ded = func {# one line is max 24 chars
       var chan   = getprop("instrumentation/tacan/frequencies/selected-channel");
       var band   = getprop("instrumentation/tacan/frequencies/selected-channel[4]");
       #var course = getprop("instrumentation/tacan/in-range")?getprop("instrumentation/tacan/indicated-bearing-true-deg"):-1;
-      var course = (getprop("instrumentation/nav[0]/in-range") and getprop("instrumentation/nav[0]/nav-loc"))?geo.normdeg(getprop("orientation/heading-deg")-getprop("orientation/heading-magnetic-deg")+getprop("instrumentation/nav[0]/heading-deg")):-1;
-      if (course == -1) {
-        course = "---.--";
-      } else {
-        course = sprintf("%06.2f\xc2\xb0",course);
-      }
+      #var course = (getprop("instrumentation/nav[0]/in-range") and getprop("instrumentation/nav[0]/nav-loc"))?geo.normdeg(getprop("orientation/heading-deg")-getprop("orientation/heading-magnetic-deg")+getprop("instrumentation/nav[0]/heading-deg")):-1;
+      #if (course == -1) {
+      #  course = "---.--";
+      #} else {
+      var course = sprintf("%06.2f\xc2\xb0",getprop("f16/crs-ils"));
+      #}
       text[0] = sprintf("    TCN REC      ILS %s",ilsOn);
       text[1] = sprintf("                        ");
       text[2] = sprintf("               CMD STRG ");

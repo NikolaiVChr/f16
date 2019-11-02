@@ -36,6 +36,29 @@
    <z>0</z>
   </axis>
  </animation>
+ 
+  <animation>
+  <type>select</type>
+  <object-name>INSTR_mode-knob</object-name>
+  <object-name>INSTR_hdg-knob</object-name>
+  <object-name>INSTR_mount</object-name>
+  <condition>
+    <or>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>0</value>
+      </equals>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>1</value>
+      </equals>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>3</value>
+      </equals>
+    </or>
+   </condition>
+ </animation>
 
  <!-- Mode knob - pick animation-->
  <animation>

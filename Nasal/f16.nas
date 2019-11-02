@@ -287,12 +287,16 @@ var medium = {
 #    }
     if (getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 0 or getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 1) {
       #tacan
-      setprop("f16/avionics/hsi-dist",getprop("instrumentation/tacan/indicated-distance-nm"));
+      if (!getprop("instrumentation/tacan/in-range")) {
+          setprop("f16/avionics/hsi-dist",-1);
+        } else {
+          setprop("f16/avionics/hsi-dist",getprop("instrumentation/tacan/indicated-distance-nm"));
+        }
     } else {
       if (getprop("autopilot/route-manager/wp/dist") != nil) {
         setprop("f16/avionics/hsi-dist",getprop("autopilot/route-manager/wp/dist"));
       } else {
-        setprop("f16/avionics/hsi-dist",0);
+        setprop("f16/avionics/hsi-dist",-1);
       }
     }
     # HUD power:

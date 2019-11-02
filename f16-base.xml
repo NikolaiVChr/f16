@@ -1727,6 +1727,9 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <offset-deg type="double">0</offset-deg>
             <use-mag-in-hud type="bool">true</use-mag-in-hud><!-- as per manual the HUD shows magnetic -->
         </heading-indicator>
+        <heading-indicator-fg>
+            <offset-deg type="double">0</offset-deg>
+        </heading-indicator-fg>
         <dme n="1">
             <serviceable type="bool">true</serviceable>
             <frequencies>
@@ -2823,6 +2826,8 @@ value. 18000=standard US transition altitude -->
             <irst-mounted type="bool">false</irst-mounted>
             <acmi-mounted type="bool">false</acmi-mounted>
         </stores>
+        <crs-ils type="double">0.0</crs-ils>
+        <crs-non-ils type="double">0.0</crs-non-ils>
     </f16>
     <damage>
         <sound>
@@ -2858,6 +2863,9 @@ value. 18000=standard US transition altitude -->
         <hack>
             <file>Aircraft/f16/Nasal/hackCanvas.nas</file><!-- must be first -->
         </hack>
+        <ehsi>
+            <file>Aircraft/f16/Nasal/ehsi.nas</file>
+        </ehsi>
         <aar>
             <file>Aircraft/Generic/aar.nas</file>
         </aar>

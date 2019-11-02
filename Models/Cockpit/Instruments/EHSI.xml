@@ -1,0 +1,167 @@
+<PropertyList>
+
+ <!-- Horizontal Situation Indicator -->
+ 
+ <path>EHSI.ac</path>
+ 
+ <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <parameters>
+            <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+        </parameters>
+        <object-name>HSI_mount</object-name>
+    </effect>
+    <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <parameters>
+            <implicit-lightmap-enabled type="int">1</implicit-lightmap-enabled>
+        </parameters>
+        <object-name>button</object-name>
+    </effect>
+    <animation>
+        <object-name>EHSI-Display</object-name>
+        <type>material</type>
+        <emission>
+            <factor-prop>fdm/jsbsim/elec/bus/ess-dc</factor-prop>
+            <red>  0.0357</red>
+            <green>0.0357</green>
+            <blue> 0.0357</blue>
+        </emission>
+    </animation>
+    <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/displays/lcd</inherits-from>
+        <parameters>
+            <inner-angle type="float">45</inner-angle><!-- 0-90, use 90 for LED or plasma display-->
+            <outer-angle type="float">60</outer-angle><!-- 0-90, but greater than inner -->
+            <black-angle type="float">80</black-angle><!-- 0-90, but greater than outer -->
+            <contrast>1</contrast> 
+            <texture n="1">
+                <type>2d</type>
+                <filter>linear-mipmap-linear</filter>
+                <wrap-s>clamp</wrap-s>
+                <wrap-t>clamp</wrap-t>
+                <internal-format>normalized</internal-format>
+                <image>Aircraft/f16/Models/Effects/dust2.png</image>
+            </texture>
+        </parameters>
+        <object-name>EHSI-Display</object-name>
+    </effect>
+
+ <!-- HDG knob -->
+ <animation>
+        <type>knob</type>
+        <object-name>HSI_hdg-knob</object-name>
+        <property>instrumentation/heading-indicator-fg/offset-deg</property>
+        <factor>1</factor>
+        <offset-deg>0</offset-deg>
+        <interval-sec>0.075</interval-sec>
+        <center>
+            <x-m>0</x-m>
+            <y-m>-0.028996</y-m>
+            <z-m>-0.032472</z-m>
+        </center>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>        
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>instrumentation/heading-indicator-fg/offset-deg</property>
+                <step>1</step>
+                <min>0</min>
+                <max>360</max>
+                <wrap>true</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>instrumentation/heading-indicator-fg/offset-deg</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>360</max>                
+                <wrap>true</wrap>
+           </binding>
+        </decrease>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>crs</tooltip-id>
+                <label>CRS</label>
+            </binding>
+        </hovered>
+    </animation>
+
+
+  <!-- COURSE Knob --> 
+ <animation>
+        <type>knob</type>
+        <object-name>HSI_course-knob</object-name>
+        <property>instrumentation/nav[0]/radials/selected-deg</property>
+        <factor>1</factor>
+        <offset-deg>0</offset-deg>
+        <interval-sec>0.075</interval-sec>
+        <center>
+            <x-m>0</x-m>
+            <y-m>0.028243</y-m>
+            <z-m>-0.032472</z-m>
+        </center>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>        
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>instrumentation/nav[0]/radials/selected-deg</property>
+                <step>1</step>
+                <min>0</min>
+                <max>360</max>                
+                <wrap>true</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>instrumentation/nav[0]/radials/selected-deg</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>360</max>                
+                <wrap>true</wrap>
+           </binding>
+        </decrease>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>crs</tooltip-id>
+                <label>CRS</label>
+            </binding>
+        </hovered>
+    </animation>
+
+<animation>
+  <type>pick</type>
+   <object-name>button</object-name>
+   <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <interval-sec>0.2</interval-sec>
+    <binding>
+          <command>property-adjust</command>
+          <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
+          <step>1</step>
+          <min>0</min>
+          <max>4</max>                
+          <wrap>true</wrap>
+     </binding>
+    <!--<mod-up>
+    </mod-up>-->
+   </action>
+ </animation>
+
+
+
+</PropertyList>
