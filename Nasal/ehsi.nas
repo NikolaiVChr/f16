@@ -19,7 +19,7 @@ EHSI = {
         ehsi.compassMainGroup = ehsi.rootCenter.createChild("group").set("z-index",1);
         ehsi.compassGroup = ehsi.compassMainGroup.createChild("group").set("z-index",1);
         ehsi.arrowGroup = ehsi.compassMainGroup.createChild("group").set("z-index",10);
-        ehsi.arrowOuterGroup = ehsi.compassMainGroup.createChild("group").set("z-index",10);
+        ehsi.arrowOuterGroup = ehsi.rootCenter.createChild("group").set("z-index",10);
         
         ehsi.compassRadius = 0.32*diameter;
         ehsi.tickRadius = 0.42*diameter;
@@ -581,20 +581,29 @@ EHSI = {
         me.mode       = getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob");
         me.elec       = getprop("fdm/jsbsim/elec/bus/emergency-ac-2")>100;
         me.tacanInRange = getprop("instrumentation/tacan/in-range");
-        me.tacanBearing = getprop("instrumentation/tacan/bearing-relative-deg");
+        me.tacanBearingRel = getprop("instrumentation/tacan/bearing-relative-deg");
+        me.tacanBearingTrue = getprop("instrumentation/tacan/indicated-bearing-true-deg");
         me.navInRange   = getprop("autopilot/route-manager/current-wp") != -1;
         me.navBearingTrue = getprop("autopilot/route-manager/wp/bearing-deg");
-        
+        me.vorInRange  = getprop("instrumentation/nav[0]/in-range") and !getprop("instrumentation/nav[0]/nav-loc");
+        me.vorBearingTrue = getprop("instrumentation/nav[0]/heading-deg");
+        me.vorCDI = getprop("instrumentation/nav[0]/heading-needle-deflection-norm");
+        me.vorTo = getprop("instrumentation/nav[0]/to-flag");
+        me.vorFrom = getprop("instrumentation/nav[0]/from-flag");
         me.captHeading = getprop("instrumentation/heading-indicator-fg/offset-deg");
         me.dist = getprop("f16/avionics/hsi-dist");
         me.ilsDev      = getprop("instrumentation/nav[0]/heading-needle-deflection-norm");
         me.ilsInRange  = getprop("instrumentation/nav[0]/in-range");
         me.crsILS = getprop("f16/crs-ils");
         me.crsNonILS = getprop("f16/crs-non-ils");
+        me.adfBearingRel = getprop("instrumentation/adf/indicated-bearing-deg");
+        me.adfInRange = getprop("instrumentation/adf/in-range");
         
-        me.ils        = me.mode == 0 or me.mode == 3;
+        
+        me.ils        = me.mode == 0 or me.mode == 3 or me.mode == 5;
         me.tacan      = me.mode == 0 or me.mode == 1;
         me.nav        = me.mode == 2 or me.mode == 3;
+        me.vor        = me.mode == 4 or me.mode == 5;
         
         if (!me.elec) {
             settimer(func me.update(),0.2);
@@ -614,7 +623,7 @@ EHSI = {
         
         # Text
         me.textModeLeft  = me.ils?"PLS":"";
-        me.textModeRight = me.tacan?"TCN":"NAV";
+        me.textModeRight = me.tacan?"TCN":(me.vor?"VOR":"NAV");
         
         if (systime()-me.modeTime > 1) {
             me.txtNote.hide();
@@ -623,6 +632,8 @@ EHSI = {
             elsif (me.mode==1) me.textModeNote = "TACAN";
             elsif (me.mode==2) me.textModeNote = "NAV";
             elsif (me.mode==3) me.textModeNote = "PLS/NAV";
+            elsif (me.mode==4) me.textModeNote = "VOR";
+            elsif (me.mode==5) me.textModeNote = "PLS/VOR";
             me.txtNote.setText(me.textModeNote);
             me.txtNote.show();
         }
@@ -648,21 +659,40 @@ EHSI = {
         
         #Bearing and TO-FROM
         if (me.tacan and me.tacanInRange) {
-            me.arrowOuterGroup.setRotation(me.tacanBearing*D2R);
-            me.bearing = math.abs(geo.normdeg180(me.selectCRS-me.tacanBearing));
-                        
-            me.from.setVisible(!me.ils and me.bearing > 90);# to-from never shown in ILS mode
-            me.to.setVisible(!me.ils and me.bearing <= 90);
+            me.arrowOuterGroup.setRotation(me.tacanBearingRel*D2R);
+            me.tacanRadial = me.tacanBearingRel+me.headingMag+180;#the radial I am on
+            me.tacanDiff   = geo.normdeg180(me.selectCRS-me.tacanRadial);
+            me.tacanDiffAbs= math.abs(me.tacanDiff);
+            if (me.tacanDiffAbs <= 90) {
+                # we are close to selected CRS radial, so we are FROM
+                me.to.setVisible(0);
+                me.from.setVisible(!me.ils);
+            } else {
+                # we are far from selected CRS radial, so we are TO
+                me.to.setVisible(!me.ils);
+                me.from.setVisible(0);
+            }
             me.arrowOuterGroup.show();
         } elsif (me.nav and me.navInRange) {
-            me.navBearing = geo.normdeg180(me.navBearingTrue-me.heading);
-            me.bearing = math.abs(geo.normdeg180(me.selectCRS-me.navBearing));
+            me.navBearingRel = geo.normdeg180(me.navBearingTrue-me.heading);
+            me.navRadial = me.navBearingRel+me.headingMag+180;
+            me.navDiff   = geo.normdeg180(me.selectCRS-me.navRadial);
+            me.navDiffAbs= math.abs(me.navDiff);
             
-            me.arrowOuterGroup.setRotation(me.navBearing*D2R);
+            me.arrowOuterGroup.setRotation(me.navBearingRel*D2R);
             me.to.setVisible(0);
             me.from.setVisible(0);
-            #me.from.setVisible(!me.ils and me.bearing > 90);# to-from never shown in ILS mode
-            #me.to.setVisible(!me.ils and me.bearing <= 90);
+            me.arrowOuterGroup.show();
+        } elsif (me.vor and me.vorInRange) {
+            me.vorBearingRel = geo.normdeg180(me.vorBearingTrue-me.heading);            
+            me.arrowOuterGroup.setRotation(me.vorBearingRel*D2R);
+            me.to.setVisible(me.vorTo);
+            me.from.setVisible(me.vorFrom);
+            me.arrowOuterGroup.show();
+        } elsif (me.vor and me.adfInRange) {
+            me.arrowOuterGroup.setRotation(me.adfBearingRel*D2R);# TODO: Am I sure this is relative bearing??
+            me.to.setVisible(0);
+            me.from.setVisible(0);
             me.arrowOuterGroup.show();
         } else {
             me.arrowOuterGroup.hide();
@@ -676,31 +706,39 @@ EHSI = {
         }
         if (me.ils and me.ilsInRange) {
             me.arrowInnerSolid.setTranslation(me.cdiMaxMovement*me.ilsDev,0);
+            me.arrowInnerSegment.setTranslation(me.cdiMaxMovement*me.ilsDev,0);
             me.arrowInnerSolid.show();
             me.arrowInnerSegment.hide();
             me.cdiInvalid.hide();
         } elsif (me.tacan and me.tacanInRange and !me.ils) {
-            if (me.bearing > 90) {
-                me.dev = -math.min(10,math.max(-10, geo.normdeg180(me.tacanBearing+180)))*0.1;
+            if (me.tacanDiffAbs > 90) {
+                me.dev = -math.min(10,math.max(-10, geo.normdeg180(me.tacanDiff+180)))*0.1;# 10 degs is full CDI
             } else {
-                me.dev = math.min(10,math.max(-10, geo.normdeg180(me.tacanBearing)))*0.1;
+                me.dev = math.min(10,math.max(-10, geo.normdeg180(me.tacanDiff)))*0.1;
             }
             me.arrowInnerSolid.setTranslation(me.cdiMaxMovement*me.dev,0);
+            me.arrowInnerSegment.setTranslation(me.cdiMaxMovement*me.dev,0);
             me.arrowInnerSolid.show();
             me.arrowInnerSegment.hide();
             me.cdiInvalid.hide();
         } elsif (me.nav and me.navInRange and !me.ils) {
-            if (me.bearing > 90) {
-                me.dev = -math.min(10,math.max(-10, geo.normdeg180(me.navBearing+180)))*0.1;
+            if (me.navDiffAbs > 90) {
+                me.dev = -math.min(10,math.max(-10, geo.normdeg180(me.navDiff+180)))*0.1;# 10 degs is full CDI
             } else {
-                me.dev = math.min(10,math.max(-10, geo.normdeg180(me.navBearing)))*0.1;
+                me.dev = math.min(10,math.max(-10, geo.normdeg180(me.navDiff)))*0.1;
             }
             me.arrowInnerSolid.setTranslation(me.cdiMaxMovement*me.dev,0);
+            me.arrowInnerSegment.setTranslation(me.cdiMaxMovement*me.dev,0);
+            me.arrowInnerSolid.show();
+            me.arrowInnerSegment.hide();
+            me.cdiInvalid.hide();
+        } elsif (me.vor and me.vorInRange and !me.ils and !me.adfInRange) {
+            me.arrowInnerSolid.setTranslation(me.cdiMaxMovement*me.vorCDI,0);
+            me.arrowInnerSegment.setTranslation(me.cdiMaxMovement*me.vorCDI,0);
             me.arrowInnerSolid.show();
             me.arrowInnerSegment.hide();
             me.cdiInvalid.hide();
         } else {
-            me.arrowInnerSegment.setTranslation(me.cdiMaxMovement*me.ilsDev,0);
             me.arrowInnerSolid.hide();
             me.arrowInnerSegment.show();
             me.cdiInvalid.show();
@@ -729,7 +767,7 @@ EHSI = {
 
 #TODO:
 # confirm correctness
-# VOR?
+# VOR only in export variants of F-16?
 # BRT can be set by CRS knob (hold in for 2 secs), inactivity for 2 secs reverts to CRS
 
 var diam = 512;

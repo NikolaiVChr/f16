@@ -292,9 +292,15 @@ var medium = {
         } else {
           setprop("f16/avionics/hsi-dist",getprop("instrumentation/tacan/indicated-distance-nm"));
         }
-    } else {
+    } elsif (getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 2 or getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 3) {
       if (getprop("autopilot/route-manager/wp/dist") != nil) {
         setprop("f16/avionics/hsi-dist",getprop("autopilot/route-manager/wp/dist"));
+      } else {
+        setprop("f16/avionics/hsi-dist",-1);
+      }
+    } else {
+      if (getprop("instrumentation/dme/in-range") != nil and getprop("instrumentation/dme/in-range") and getprop("instrumentation/dme/indicated-distance-nm") != nil and getprop("instrumentation/dme/indicated-distance-nm") > 0) {
+        setprop("f16/avionics/hsi-dist",getprop("instrumentation/dme/indicated-distance-nm"));
       } else {
         setprop("f16/avionics/hsi-dist",-1);
       }

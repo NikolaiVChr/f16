@@ -154,7 +154,7 @@
           <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
           <step>1</step>
           <min>0</min>
-          <max>4</max>                
+          <max>6</max>                
           <wrap>true</wrap>
      </binding>
     <!--<mod-up>
