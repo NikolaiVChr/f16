@@ -1510,6 +1510,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             <elec>
                 <bus>
                     <charger type="double">0</charger>
+                    <ess-ac type="double">0</ess-ac>
                     <emergency-ac-2 type="double">0</emergency-ac-2>                    
                 </bus>
                 <failures>
