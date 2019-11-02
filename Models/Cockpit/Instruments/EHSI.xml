@@ -88,8 +88,8 @@
         <hovered>
             <binding>
                 <command>set-tooltip</command>
-                <tooltip-id>crs</tooltip-id>
-                <label>CRS</label>
+                <tooltip-id>hdg</tooltip-id>
+                <label>HDG</label>
             </binding>
         </hovered>
     </animation>
@@ -160,6 +160,13 @@
     <!--<mod-up>
     </mod-up>-->
    </action>
+   <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>ehsiMode</tooltip-id>
+                <label>Navigation Mode</label>
+            </binding>
+        </hovered>
  </animation>
 
 
