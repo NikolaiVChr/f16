@@ -596,6 +596,11 @@ EHSI = {
         me.tacan      = me.mode == 0 or me.mode == 1;
         me.nav        = me.mode == 2 or me.mode == 3;
         
+        if (!me.elec) {
+            settimer(func me.update(),0.2);
+            return;
+        }
+        
         if (me.mode != me.modeOld) {
             me.modeTime = systime();
         }
