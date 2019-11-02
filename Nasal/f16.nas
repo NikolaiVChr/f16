@@ -500,9 +500,6 @@ var batteryChargeDischarge = func {
 var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
   if (getprop("sim/signals/fdm-initialized") == 1) {
     removelistener(main_init_listener);
-   loop_flare();
-   medium.loop();
-   fast.loop();
     print();
     print("***************************************************************");
     print("         Initializing "~getprop("sim/description")~" systems.           ");
@@ -510,6 +507,20 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     print("***************************************************************");
     print();
     screen.log.write("Welcome to "~getprop("sim/description")~", version "~getprop("sim/aircraft-version"), 1.0, 0.2, 0.2);
+    
+    hack.init();
+    loop_flare();
+    medium.loop();
+    fast.loop();
+    ehsi.init();
+    tgp.callInit();
+    tgp.fast_loop();
+    ded.callInit();
+    ded.loop_ded();
+    emesary.GlobalTransmitter.Register(f16_mfd);
+    emesary.GlobalTransmitter.Register(f16_hud);
+    emesary.GlobalTransmitter.Register(awg_9.aircraft_radar);
+    execTimer.start();
   }
  }, 0, 0);
 

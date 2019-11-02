@@ -744,10 +744,12 @@ cv.addPlacement({"node": "EHSI-Display", "texture":"ehsi-display.png"});
 cv.setColorBackground(0, 0, 0);
 var root = cv.createGroup();
 var ehsi = nil;
-var variant = getprop("sim/variant-id");
-if (variant != 0 and variant != 1 and variant != 3) {
-    ehsi = EHSI.new("EHSI", root, [diam/2,diam/2],diam);
-    ehsi.update();
-} else {
-    props.globals.getNode("f16/crs-ils").alias(props.globals.getNode("instrumentation/nav[0]/radials/selected-deg"));    
+var init = func {
+    var variant = getprop("sim/variant-id");
+    if (variant != 0 and variant != 1 and variant != 3) {
+        ehsi = EHSI.new("EHSI", root, [diam/2,diam/2],diam);
+        ehsi.update();
+    } else {
+        props.globals.getNode("f16/crs-ils").alias(props.globals.getNode("instrumentation/nav[0]/radials/selected-deg"));    
+    }
 }

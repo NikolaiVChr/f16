@@ -742,5 +742,5 @@ var callInit = func {
             .setColor(1,1,1);
 };
 
-callInit();
-fast_loop();
+#callInit();
+#fast_loop();

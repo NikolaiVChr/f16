@@ -320,8 +320,8 @@ var loop_ded = func {# one line is max 24 chars
     line5.setText(text[4]);
     settimer(loop_ded, 0.5);
 };
-callInit();
-loop_ded();
+#callInit();
+#loop_ded();
 
 var stpt = func {
   page = pSTPT;

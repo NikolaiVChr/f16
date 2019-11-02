@@ -2332,7 +2332,7 @@ f16_mfd = F16MfdRecipient.new("F16-MFD");
 #UpperMFD = f16_mfd.UpperMFD;
 #LowerMFD = f16_mfd.LowerMFD;
 
-emesary.GlobalTransmitter.Register(f16_mfd);
+#emesary.GlobalTransmitter.Register(f16_mfd);
 
 var lines = [nil,nil];
 

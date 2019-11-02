@@ -1918,7 +1918,7 @@ var RadarRecipient =
 };
 
 var aircraft_radar = RadarRecipient.new(this_model);
-emesary.GlobalTransmitter.Register(aircraft_radar );
+#emesary.GlobalTransmitter.Register(aircraft_radar );
 
 
 #

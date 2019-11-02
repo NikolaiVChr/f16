@@ -1,8 +1,3 @@
-if(getprop("sim/version/flightgear")=="3.2.0") {
-    setprop("old",1);
-}
-
-
 #
 # Author: Nikolai V. Chr.
 #
@@ -21,7 +16,7 @@ var init = func {
   canvas.Text._lastText = canvas.Text["_lastText"];
   canvas.Text.setText = func (text)
     {
-        if (text == me._lastText) {return me;}
+        if (text == me._lastText and text != nil and size(""~text) == size(""~me._lastText)) {return me;}
         me._lastText = text;
         me.set("text", typeof(text) == 'scalar' ? text : "");
     };
@@ -44,3 +39,4 @@ var init = func {
         me.setBool("visible", vis);
   };
 };
+#init();

@@ -2607,7 +2607,7 @@ var F16HudRecipient =
 f16_hud = F16HudRecipient.new("F16-HUD");
 HUDobj = f16_hud.HUDobj;
 
-emesary.GlobalTransmitter.Register(f16_hud);
+#emesary.GlobalTransmitter.Register(f16_hud);
 
 var drag = func (Mach, _cd) {
     if (Mach < 0.7)
