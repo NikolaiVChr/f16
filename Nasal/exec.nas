@@ -83,4 +83,4 @@ foreach (var name; keys(input)) {
 }
 
 var execTimer = maketimer(1, rtExec_loop);
-execTimer.start();
+#execTimer.start();
