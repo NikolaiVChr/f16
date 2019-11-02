@@ -21,7 +21,7 @@
                 </equals>
                 <greater-than>
                     <property>environment/relative-humidity</property>
-                    <value>75</value>
+                    <value>60</value>
                 </greater-than>
                 <less-than>
                     <property>/environment/temperature-degc</property>

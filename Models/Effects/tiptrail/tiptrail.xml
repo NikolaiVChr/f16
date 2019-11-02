@@ -18,7 +18,7 @@
                 </not>
                 <greater-than>
                     <property>velocities/airspeed-kt</property>
-                    <value>200</value>
+                    <value>180</value>
                 </greater-than>
                 <greater-than>
                     <property>environment/relative-humidity</property>
@@ -29,8 +29,8 @@
                     <value>0</value>
                 </greater-than>
                 <greater-than>
-                    <property>environment/dewpoint-degc</property>
-                    <value>0.86</value>
+                    <property>environment/pressure-inhg</property>
+                    <value>22</value>
                 </greater-than>
                 <greater-than>
                     <property>orientation/alpha-deg</property>
