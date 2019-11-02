@@ -1509,9 +1509,22 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             </autoflight>
             <elec>
                 <bus>
+                    <batt-1 type="double">0</batt-1>
+                    <batt-2 type="double">0</batt-2>
                     <charger type="double">0</charger>
-                    <ess-ac type="double">0</ess-ac>
+                    <emergency-ac-1 type="double">0</emergency-ac-1>
                     <emergency-ac-2 type="double">0</emergency-ac-2>                    
+                    <emergency-dc-1 type="double">0</emergency-dc-1>
+                    <emergency-dc-2 type="double">0</emergency-dc-2>
+                    <ess-ac type="double">0</ess-ac>
+                    <ess-dc type="double">0</ess-dc>
+                    <nacelle-ess-ac type="double">0</nacelle-ess-ac>
+                    <nacelle-noness-ac type="double">0</nacelle-noness-ac>
+                    <nacelle-noness-dc-1 type="double">0</nacelle-noness-dc-1>
+                    <nacelle-noness-dc-2 type="double">0</nacelle-noness-dc-2>
+                    <noness-ac-1 type="double">0</noness-ac-1>
+                    <noness-ac-2 type="double">0</noness-ac-2>
+                    <noness-dc type="double">0</noness-dc>
                 </bus>
                 <failures>
                     <battery>
