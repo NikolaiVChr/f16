@@ -40,7 +40,7 @@ var F16_HUD = {
         obj.canvas.setColorBackground(0.30, 1, 0.3, 0.00);
 
 # Create a group for the parsed elements
-        obj.svg = obj.canvas.createGroup();
+        obj.svg = obj.canvas.createGroup().hide();
  
 # Parse an SVG file and add the parsed elements to the given group
         #print("HUD Parse SVG ",
@@ -1513,6 +1513,7 @@ append(obj.total, obj.speed_curr);
         obj.eegsLoop.simulatedTime = 1;
         obj.resetGunPos();
         obj.showmeCCIP = 0;
+        
         return obj;
     },
     
@@ -1921,6 +1922,7 @@ append(obj.total, obj.speed_curr);
     },
 
     update : func(hdp) {
+        me.svg.show();
         HudMath.reCalc();
 #
 # short cut the whole thing if the display is turned off
