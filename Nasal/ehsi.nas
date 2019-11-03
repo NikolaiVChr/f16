@@ -583,7 +583,7 @@ EHSI = {
         me.tacanInRange = getprop("instrumentation/tacan/in-range");
         me.tacanBearingRel = getprop("instrumentation/tacan/bearing-relative-deg");
         me.tacanBearingTrue = getprop("instrumentation/tacan/indicated-bearing-true-deg");
-        me.navInRange   = getprop("autopilot/route-manager/current-wp") != -1;
+        me.navInRange   = getprop("autopilot/route-manager/current-wp") != -1 and getprop("autopilot/route-manager/active");
         me.navBearingTrue = getprop("autopilot/route-manager/wp/bearing-deg");
         me.vorInRange  = getprop("instrumentation/nav[0]/in-range") and !getprop("instrumentation/nav[0]/nav-loc");
         me.vorBearingTrue = getprop("instrumentation/nav[0]/heading-deg");
@@ -784,7 +784,7 @@ HSI = {
         me.tacanInRange = getprop("instrumentation/tacan/in-range");
         me.tacanBearingRel = getprop("instrumentation/tacan/bearing-relative-deg");
         me.tacanBearingTrue = getprop("instrumentation/tacan/indicated-bearing-true-deg");
-        me.navInRange   = getprop("autopilot/route-manager/current-wp") != -1;
+        me.navInRange   = getprop("autopilot/route-manager/current-wp") != -1 and getprop("autopilot/route-manager/active");
         me.navBearingTrue = getprop("autopilot/route-manager/wp/bearing-deg");
         me.vorInRange  = getprop("instrumentation/nav[0]/in-range") and !getprop("instrumentation/nav[0]/nav-loc");
         me.vorBearingTrue = getprop("instrumentation/nav[0]/heading-deg");
