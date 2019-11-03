@@ -398,6 +398,9 @@ var fast_loop = func {
             setprop("sim/view[105]/heading-offset-deg", -getprop("sim/current-view/heading-offset-deg"));
             setprop("sim/view[105]/pitch-offset-deg", getprop("sim/current-view/pitch-offset-deg"));
         }
+        setprop("sim/current-view/x-offset-m",0.8536);
+        setprop("sim/current-view/y-offset-m",-1.4121);
+        setprop("sim/current-view/z-offset-m",-2.5856);
     } else {
         # remove FLIR effects and disable TGP view
         setprop("sim/rendering/als-filters/use-IR-vision", 0);
