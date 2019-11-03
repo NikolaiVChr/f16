@@ -132,6 +132,23 @@ var HDDView = func () {
   }
 }
 
+var HSIView = func () {
+  if (getprop("sim/current-view/view-number") == 0) {
+    var hd = getprop("sim/current-view/heading-offset-deg");
+    var hd_t = 360;
+    if (hd < 180) {
+      hd_t = hd_t - 360;
+    }
+    interpolate("sim/current-view/field-of-view", 12, 0.66);
+    interpolate("sim/current-view/heading-offset-deg", hd_t,0.66);
+    interpolate("sim/current-view/pitch-offset-deg", -41,0.66);
+    interpolate("sim/current-view/roll-offset-deg", 0,0.66);
+    interpolate("sim/current-view/x-offset-m", 0, 1); 
+    interpolate("sim/current-view/y-offset-m", 0.85, 1); 
+    interpolate("sim/current-view/z-offset-m", -4, 1);
+  }
+}
+
 var RWRView = func () {
   if (getprop("sim/current-view/view-number") == 0) {
     var hd = getprop("sim/current-view/heading-offset-deg");
