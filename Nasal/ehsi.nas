@@ -761,7 +761,143 @@ EHSI = {
         me.ilsDevOld = me.ilsDev;
         me.ilsOld    = me.ils;
         me.modeOld = me.mode;
-        settimer(func me.update(),0.2);
+        settimer(func me.update(),0.1);
+    },
+};
+
+HSI = {
+    new: func (ident, root, center, diameter) {
+        var ehsi = {parents: [HSI]};
+
+        
+        ehsi.ilsDevOld = 0;
+        ehsi.ilsOld = 0;
+        ehsi.modeOld = -1;
+        ehsi.modeTime = 0;
+        return ehsi;
+    },
+    update: func () {
+        me.headingMag = getprop("orientation/heading-magnetic-deg");
+        me.heading    = getprop("orientation/heading-deg");
+        me.mode       = getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob");
+        me.elec       = getprop("fdm/jsbsim/elec/bus/emergency-ac-2")>100;
+        me.tacanInRange = getprop("instrumentation/tacan/in-range");
+        me.tacanBearingRel = getprop("instrumentation/tacan/bearing-relative-deg");
+        me.tacanBearingTrue = getprop("instrumentation/tacan/indicated-bearing-true-deg");
+        me.navInRange   = getprop("autopilot/route-manager/current-wp") != -1;
+        me.navBearingTrue = getprop("autopilot/route-manager/wp/bearing-deg");
+        me.vorInRange  = getprop("instrumentation/nav[0]/in-range") and !getprop("instrumentation/nav[0]/nav-loc");
+        me.vorBearingTrue = getprop("instrumentation/nav[0]/heading-deg");
+        me.vorCDI = getprop("instrumentation/nav[0]/heading-needle-deflection-norm");
+        me.vorTo = getprop("instrumentation/nav[0]/to-flag");
+        me.vorFrom = getprop("instrumentation/nav[0]/from-flag");
+        me.captHeading = getprop("instrumentation/heading-indicator-fg/offset-deg");
+        me.dist = getprop("f16/avionics/hsi-dist");
+        me.ilsDev      = getprop("instrumentation/nav[0]/heading-needle-deflection-norm");
+        me.ilsInRange  = getprop("instrumentation/nav[0]/in-range");
+        me.crsILS = getprop("f16/crs-ils");
+        me.crsNonILS = getprop("f16/crs-non-ils");
+        me.adfBearingRel = getprop("instrumentation/adf/indicated-bearing-deg");
+        me.adfInRange = getprop("instrumentation/adf/in-range");
+        
+        
+        me.ils        = me.mode == 0 or me.mode == 3 or me.mode == 5;
+        me.tacan      = me.mode == 0 or me.mode == 1;
+        me.nav        = me.mode == 2 or me.mode == 3;
+        me.vor        = me.mode == 4 or me.mode == 5;# not used in the HSI
+        
+        if (!me.elec) {
+            settimer(func me.update(),0.2);
+            return;
+        }
+        
+        me.selectCRS = getprop("instrumentation/nav[0]/radials/selected-deg");
+                
+        
+        #Bearing and TO-FROM
+        if (me.tacan and me.tacanInRange) {
+            setprop("f16/avionics/hsi-bearing-rel", me.tacanBearingRel);
+            me.tacanRadial = me.tacanBearingRel+me.headingMag+180;#the radial I am on
+            me.tacanDiff   = geo.normdeg180(me.selectCRS-me.tacanRadial);
+            me.tacanDiffAbs= math.abs(me.tacanDiff);
+            if (me.tacanDiffAbs <= 90) {
+                # we are close to selected CRS radial, so we are FROM
+                setprop("f16/avionics/hsi-to", 0);
+                setprop("f16/avionics/hsi-from", !me.ils);
+            } else {
+                # we are far from selected CRS radial, so we are TO
+                setprop("f16/avionics/hsi-to", !me.ils);
+                setprop("f16/avionics/hsi-from", 0);
+            }
+            setprop("f16/avionics/hsi-show-bearing", 1);
+        } elsif (me.nav and me.navInRange) {
+            me.navBearingRel = geo.normdeg180(me.navBearingTrue-me.heading);
+            me.navRadial = me.navBearingRel+me.headingMag+180;
+            me.navDiff   = geo.normdeg180(me.selectCRS-me.navRadial);
+            me.navDiffAbs= math.abs(me.navDiff);
+            
+            setprop("f16/avionics/hsi-bearing-rel", me.navBearingRel);
+            setprop("f16/avionics/hsi-to", 0);
+            setprop("f16/avionics/hsi-from", 0);
+            setprop("f16/avionics/hsi-show-bearing", 1);
+        } elsif (me.vor and me.vorInRange) {
+            me.vorBearingRel = geo.normdeg180(me.vorBearingTrue-me.heading);  
+            setprop("f16/avionics/hsi-bearing-rel", me.vorBearingRel);
+            setprop("f16/avionics/hsi-to", me.vorTo);
+            setprop("f16/avionics/hsi-from", me.vorFrom);
+            setprop("f16/avionics/hsi-show-bearing", 1);
+        } elsif (me.vor and me.adfInRange) {
+            setprop("f16/avionics/hsi-bearing-rel", me.adfBearingRel);# TODO: Am I sure this is relative bearing??
+            setprop("f16/avionics/hsi-to", 0);
+            setprop("f16/avionics/hsi-from", 0);
+            setprop("f16/avionics/hsi-show-bearing", 1);
+        } else {
+            setprop("f16/avionics/hsi-show-bearing", 0);
+            setprop("f16/avionics/hsi-to", 0);
+            setprop("f16/avionics/hsi-from", 0);
+        }
+        
+        # CDI
+        if (me.ilsDev == nil) {
+            me.ilsDev = me.ilsDevOld;
+        }
+        if (me.ils and me.ilsInRange) {
+            setprop("f16/avionics/hsi-cdi", me.ilsDev);
+            setprop("f16/avionics/hsi-cdi-invalid", 0);
+        } elsif (me.tacan and me.tacanInRange and !me.ils) {
+            if (me.tacanDiffAbs > 90) {
+                me.dev = -math.min(10,math.max(-10, geo.normdeg180(me.tacanDiff+180)))*0.1;# 10 degs is full CDI
+            } else {
+                me.dev = math.min(10,math.max(-10, geo.normdeg180(me.tacanDiff)))*0.1;
+            }
+            setprop("f16/avionics/hsi-cdi", me.dev);
+            setprop("f16/avionics/hsi-cdi-invalid", 0);
+        } elsif (me.nav and me.navInRange and !me.ils) {
+            if (me.navDiffAbs > 90) {
+                me.dev = -math.min(10,math.max(-10, geo.normdeg180(me.navDiff+180)))*0.1;# 10 degs is full CDI
+            } else {
+                me.dev = math.min(10,math.max(-10, geo.normdeg180(me.navDiff)))*0.1;
+            }
+            setprop("f16/avionics/hsi-cdi", me.dev);
+            setprop("f16/avionics/hsi-cdi-invalid", 0);
+        } elsif (me.vor and me.vorInRange and !me.ils and !me.adfInRange) {
+            setprop("f16/avionics/hsi-cdi", me.vorCDI);
+            setprop("f16/avionics/hsi-cdi-invalid", 1);
+        } else {
+            setprop("f16/avionics/hsi-cdi-invalid", 1);
+        }
+        
+        # store selected CRS
+        #if (me.ils) {
+            setprop("f16/crs-ils", me.selectCRS);
+        #} else {
+        #    setprop("f16/crs-non-ils", me.selectCRS);
+        #}
+                
+        me.ilsDevOld = me.ilsDev;
+        me.ilsOld    = me.ils;
+        me.modeOld = me.mode;
+        settimer(func me.update(),0.1);
     },
 };
 
@@ -788,6 +924,8 @@ var init = func {
         ehsi = EHSI.new("EHSI", root, [diam/2,diam/2],diam);
         ehsi.update();
     } else {
-        props.globals.getNode("f16/crs-ils").alias(props.globals.getNode("instrumentation/nav[0]/radials/selected-deg"));    
+        #props.globals.getNode("f16/crs-ils").alias(props.globals.getNode("instrumentation/nav[0]/radials/selected-deg"));    
+        ehsi = HSI.new("HSI", root, [diam/2,diam/2],diam);
+        ehsi.update();
     }
 }
