@@ -540,6 +540,8 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     tgp.fast_loop();
     ded.callInit();
     ded.loop_ded();
+    frd.callInit();
+    frd.loop_ded();
     emesary.GlobalTransmitter.Register(f16_mfd);
     emesary.GlobalTransmitter.Register(f16_hud);
     emesary.GlobalTransmitter.Register(awg_9.aircraft_radar);
@@ -997,3 +999,20 @@ var chute2 = func{
   setprop("fdm/jsbsim/external_reactions/chute/magnitude", 0);
   setprop("f16/chute/enable",0);
 }
+
+var freqDigits = func {
+    var freq = getprop("instrumentation/nav[0]/frequencies/selected-mhz");
+    freq = math.round(freq*100)*0.01;
+    var a = int(math.round((freq*10-int(freq*10))*10));
+    var b = int((freq*1-int(freq*1))*10);
+    var c = int((freq*0.1-int(freq*0.1))*10);
+    var d = int((freq*0.01-int(freq*0.01))*10);
+    var e = int((freq*0.001-int(freq*0.001))*10);
+    setprop("instrumentation/nav[0]/frequencies/current-mhz-digit-1", a);
+    setprop("instrumentation/nav[0]/frequencies/current-mhz-digit-2", b);
+    setprop("instrumentation/nav[0]/frequencies/current-mhz-digit-3", c);
+    setprop("instrumentation/nav[0]/frequencies/current-mhz-digit-4", d);
+    setprop("instrumentation/nav[0]/frequencies/current-mhz-digit-5", e);
+    settimer(freqDigits, 0.2);
+}
+freqDigits();
