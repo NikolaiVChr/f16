@@ -4,9 +4,9 @@
 
  <path>rudder_pedals.ac</path>
 
- <animation>
+  <animation>
   <type>translate</type>
-  <object-name>Pedal.1</object-name>
+  <object-name>LHPedal</object-name>
   <property>controls/flight/rudder</property>
   <factor>0.06</factor>
   <axis>
@@ -18,7 +18,7 @@
 
  <animation>
   <type>rotate</type>
-  <object-name>Pedal.1</object-name>
+  <object-name>LHPedal</object-name>
   <property>controls/gear/brake-left</property>
   <factor>-15</factor>
   <axis>
@@ -33,9 +33,9 @@
   </center>
  </animation>
 
- <animation>
+  <animation>
   <type>translate</type>
-  <object-name>Pedal.2</object-name>
+  <object-name>RHPedal</object-name>
   <property>controls/flight/rudder</property>
   <factor>-0.06</factor>
   <axis>
@@ -47,7 +47,7 @@
 
  <animation>
   <type>rotate</type>
-  <object-name>Pedal.2</object-name>
+  <object-name>RHPedal</object-name>
   <property>controls/gear/brake-right</property>
   <factor>-15</factor>
   <axis>
@@ -61,6 +61,5 @@
    <z-m>0.02</z-m>
   </center>
  </animation>
-
 
 </PropertyList>

@@ -14761,7 +14761,7 @@ OBJECT poly
 name "seat-cushion"
 data 8
 Mesh.021
-texture "seat-cushion.png"
+texture "seat-cushion2.png"
 crease 80.000000
 numvert 207
 -4.25133 0.085127 -0.165431
