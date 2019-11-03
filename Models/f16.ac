@@ -11,7 +11,7 @@ MATERIAL "TheStrutMat" rgb 0.84 0.84 0.84  amb 0.8 0.8 0.8  emis 0 0 0  spec 0.5
 MATERIAL "TheOleoMat" rgb 0.9 0.9 0.9  amb 0.6 0.6 0.6  emis 0 0 0  spec 0.75 0.75 0.75  shi 64  trans 0
 MATERIAL "lightWhiteMat" rgb 0 0 0  amb 0 0 0  emis 0.977 0.977 0.977  spec 0 0 0  shi 0  trans 0.737
 MATERIAL "glassInsideMat" rgb 1 1 1  amb 0.045 0.045 0.045  emis 0 0 0  spec 1 1 1  shi 33  trans 0.929
-MATERIAL "glassOutsideMat" rgb 1 0.878 0.482  amb 0 0 0  emis 0 0 0  spec 0 0 0  shi 33  trans 0.812
+MATERIAL "glassOutsideMat" rgb 1 0.88 0.5  amb 0 0 0  emis 0 0 0  spec 1.000 1.000 1.000  shi 100  trans 0.55
 MATERIAL "strut1Mat.001" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.502 0.502 0.502  shi 10  trans 0.008
 MATERIAL "lightGreen2Mat" rgb 0.227 0.38 0  amb 0.202 0.202 0.202  emis 0 1 0  spec 0.227 0.227 0.227  shi 17  trans 0
 MATERIAL "hookMat" rgb 0.914 0.961 1  amb 0.962 0.962 0.962  emis 0.916 0.916 0.916  spec 0 0 0  shi 0  trans 0
@@ -27426,7 +27426,6 @@ OBJECT poly
 name "CanopyBackOutside"
 data 8
 Mesh.001
-texture "Effects/glass/canopy.png"
 crease 80.000000
 numvert 26
 -3.46354 0.6397 -0.31041
@@ -29313,7 +29312,6 @@ OBJECT poly
 name "CanopyForwardOutside"
 data 8
 Mesh.005
-texture "Effects/glass/canopy.png"
 crease 80.000000
 numvert 215
 -4.9969 0.72804 0.04323
