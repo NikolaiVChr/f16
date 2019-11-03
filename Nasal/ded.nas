@@ -323,6 +323,34 @@ var loop_ded = func {# one line is max 24 chars
 #callInit();
 #loop_ded();
 
+var cursorUp = func {
+  var active = getprop("autopilot/route-manager/active");
+  var wp = getprop("autopilot/route-manager/current-wp");
+  var max = getprop("autopilot/route-manager/route/num");
+  
+  if (active and wp != nil and wp > -1) {
+    wp += 1;
+    if (wp>max-1) {
+      wp = 0;
+    }
+    setprop("autopilot/route-manager/current-wp", wp);
+  }
+}
+
+var cursorDown = func {
+  var active = getprop("autopilot/route-manager/active");
+  var wp = getprop("autopilot/route-manager/current-wp");
+  var max = getprop("autopilot/route-manager/route/num");
+  
+  if (active and wp != nil and wp > -1) {
+    wp -= 1;
+    if (wp<0) {
+      wp = max-1;
+    }
+    setprop("autopilot/route-manager/current-wp", wp);
+  }
+}
+
 var stpt = func {
   page = pSTPT;
 }

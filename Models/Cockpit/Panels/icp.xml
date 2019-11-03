@@ -22,7 +22,8 @@
         <object-name>a-a</object-name>
         <object-name>a-g</object-name>
         <object-name>com2</object-name>
-        <object-name>cursor-up-down</object-name>
+        <object-name>cursor-up</object-name>
+        <object-name>cursor-down</object-name>
         <object-name>entr</object-name>
         <object-name>flir_ud</object-name>
         <object-name>iff</object-name>
@@ -70,7 +71,8 @@
         <object-name>a-a</object-name>
         <object-name>a-g</object-name>
         <object-name>com2</object-name>
-        <object-name>cursor-up-down</object-name>
+        <object-name>cursor-up</object-name>
+        <object-name>cursor-down</object-name>
         <object-name>entr</object-name>
         <object-name>flir_ud</object-name>
         <object-name>iff</object-name>
@@ -162,6 +164,44 @@
                 <label>Jettison drop-tank</label>
             </binding>
         </hovered>-->
+    </animation>
+    
+        
+    <animation>
+        <type>pick</type>
+        <object-name>cursor-up</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.cursorUp();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-cu</tooltip-id>
+                <label>Next steerpoint</label>
+            </binding>
+        </hovered>
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>cursor-down</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.cursorDown();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-cd</tooltip-id>
+                <label>Previous steerpoint</label>
+            </binding>
+        </hovered>
     </animation>
     <animation>
         <type>pick</type>
