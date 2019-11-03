@@ -340,7 +340,7 @@ var F16_HUD = {
                                       }),
             props.UpdateManager.FromHashList(["rotary","hasGS","GSDeg","GSinRange","ILSDeg", "ILSinRange", "GSdist"], 0.01, func(hdp)
                                       {
-                                        if (hdp.rotary == 0 or hdp.rotary == 3) {
+                                        if (hdp.rotary == 0 or hdp.rotary == 3 or hdp.rotary == 5) {
                                             #printf("ILSinRange %d GSdist %d", hdp.ILSinRange, hdp.GSdist == nil);
                                             if (hdp.ILSinRange) {
                                                 #printf("ILS %d", hdp.ILSDeg);
