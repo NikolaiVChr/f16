@@ -101,10 +101,10 @@
         <object-name>drift</object-name>
         <object-name>gain_auto</object-name>
         <object-name>rtn_seq</object-name>
-        <object-name>brt</object-name>
+        <!--<object-name>brt</object-name>
         <object-name>depr_ret</object-name>
         <object-name>sym</object-name>
-        <object-name>cont</object-name>
+        <object-name>cont</object-name>-->
     </effect>
 
     <animation>
