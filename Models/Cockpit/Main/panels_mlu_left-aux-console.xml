@@ -13,9 +13,15 @@
   <object-name>EW_LEFT_1</object-name>
   <object-name>HMD_1</object-name>
   <object-name>EW_RIGHT_1</object-name>
+  <object-name>EW_KNOB_MODE</object-name>
+  <object-name>EW_BRT_KNOB</object-name>
+  <object-name>SYMBOLOGY_INT_KNOB</object-name>
   <object-name>GEAR</object-name>
   <object-name>ALT_GEAR_1</object-name>
   <object-name>SPEED_BRAKE_drum</object-name>
+  <object-name>horn_silencer</object-name>
+  <object-name>light-land-switch</object-name>
+  <object-name>light-land-switch.0.1</object-name>
 </effect>
 
   <!--<animation>
