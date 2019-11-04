@@ -1922,7 +1922,6 @@ append(obj.total, obj.speed_curr);
     },
 
     update : func(hdp) {
-        me.svg.show();
         HudMath.reCalc();
 #
 # short cut the whole thing if the display is turned off
@@ -2555,7 +2554,8 @@ append(obj.total, obj.speed_curr);
         foreach(var update_item; me.update_items)
         {
             update_item.update(hdp);
-        }        
+        }
+        me.svg.show();
     },
     extrapolate: func (x, x1, x2, y1, y2) {
         return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
