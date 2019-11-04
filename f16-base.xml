@@ -276,7 +276,7 @@
            </config>
           </view>
         -->
-        <view>
+        <view n="0">
             <internal>true</internal>
             <enabled>true</enabled>
             <config>
@@ -298,8 +298,9 @@
                     </left>
                 </limits>
             </config>
-        </view>        
+        </view>
         <view n="101">
+            <!-- also used for ejection view -->
             <name>Missile View</name>
             <type>lookat</type>
             <enabled>true</enabled>

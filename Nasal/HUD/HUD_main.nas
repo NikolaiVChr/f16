@@ -1117,6 +1117,9 @@ append(obj.total, obj.speed_curr);
                             .lineTo(50,50)
                             .setStrokeLineWidth(1)
                             .setColor(0,1,0);
+        append(obj.total, obj.flyupRight);
+        append(obj.total, obj.flyupLeft);
+        
                             
         obj.greatCircleSteeringCue = obj.centerOrigin.createChild("path")# nickname: tadpole
             .moveTo(-2.5,0)
