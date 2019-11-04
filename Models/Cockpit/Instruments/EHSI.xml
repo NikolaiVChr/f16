@@ -43,6 +43,7 @@
                 <internal-format>normalized</internal-format>
                 <image>Aircraft/f16/Models/Effects/dust2.png</image>
             </texture>
+            <dirt-factor>0.02</dirt-factor>
         </parameters>
         <object-name>EHSI-Display</object-name>
     </effect>
