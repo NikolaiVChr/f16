@@ -543,6 +543,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     frd.callInit();
     frd.loop_ded();
     enableViews();
+    view.manager.register("Cockpit View", pilot_view_limiter);
     emesary.GlobalTransmitter.Register(f16_mfd);
     emesary.GlobalTransmitter.Register(f16_hud);
     emesary.GlobalTransmitter.Register(awg_9.aircraft_radar);
@@ -1030,3 +1031,80 @@ var roundabout = func(x) {
   return y < 0.5 ? int(x) : 1 + int(x) ;
 };
 freqDigits();
+
+var pilot_view_limiter = {
+  new : func {
+    return { parents: [pilot_view_limiter] };
+  },
+  init : func {
+    me.hdgN = props.globals.getNode("/sim/current-view/heading-offset-deg");
+    me.xoffsetN = props.globals.getNode("/sim/current-view/x-offset-m");
+    me.xoffset_lowpass = aircraft.lowpass.new(0.1);
+    me.last_offset = 0;
+    me.needs_start = 0;
+  },
+  start : func {
+    var limits = view.current.getNode("config/limits", 1);
+    me.left = {
+      heading_max : math.abs(limits.getNode("left/heading-max-deg", 1).getValue() or 1000),
+      threshold : math.abs(limits.getNode("left/x-offset-threshold-deg", 1).getValue() or 0),
+      xoffset_max : math.abs(limits.getNode("left/x-offset-max-m", 1).getValue() or 0),
+    };
+    me.right = {
+      heading_max : -math.abs(limits.getNode("right/heading-max-deg", 1).getValue() or 1000),
+      threshold : -math.abs(limits.getNode("right/x-offset-threshold-deg", 1).getValue() or 0),
+      xoffset_max : -math.abs(limits.getNode("right/x-offset-max-m", 1).getValue() or 0),
+    };
+    me.left.scale = me.left.xoffset_max / me.left.threshold;
+    me.right.scale = me.right.xoffset_max / me.right.threshold;
+    me.last_hdg = geo.normdeg180(me.hdgN.getValue());
+    me.enable_xoffset = me.right.xoffset_max > 0.001 or me.left.xoffset_max > 0.001;
+
+    me.needs_start = 0;
+  },
+  update : func {
+    if (getprop("/devices/status/keyboard/ctrl"))
+      return;
+
+    if( getprop("/sim/signals/reinit") )
+    {
+      me.needs_start = 1;
+      return;
+    }
+    else if( me.needs_start )
+      me.start();
+
+    var hdg = geo.normdeg180(me.hdgN.getValue());
+    if (math.abs(me.last_hdg - hdg) > 180) { # avoid wrap-around skips
+      me.hdgN.setDoubleValue(hdg = me.last_hdg);
+      #print("wrap skip");
+    } elsif (hdg > me.left.heading_max) {
+      me.hdgN.setDoubleValue(hdg = me.left.heading_max);
+      #print("wrap left");
+    } elsif (hdg < me.right.heading_max) {
+      me.hdgN.setDoubleValue(hdg = me.right.heading_max);
+      #print("wrap right");
+    }
+    me.last_hdg = hdg;
+
+    # translate view on X axis to look far right or far left
+    if (me.enable_xoffset) {
+      var offset = 0;
+      #print(hdg~" "~me.left.threshold);
+      if (hdg > 0 and hdg < me.left.threshold)
+        offset = -hdg * me.left.scale;
+      elsif (hdg > 0)
+        offset = -me.left.xoffset_max;
+      elsif (hdg < 0 and hdg > me.right.threshold)
+        offset = -hdg * me.right.scale;
+      elsif (hdg < 0)
+        offset = -me.right.xoffset_max;
+
+      var new_offset = me.xoffset_lowpass.filter(offset);
+      me.xoffsetN.setDoubleValue(me.xoffsetN.getValue() - me.last_offset + new_offset);
+      me.last_offset = new_offset;
+    }
+    return 0;
+  },
+};
+
