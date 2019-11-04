@@ -605,6 +605,7 @@ var autostart = func {
   screen.log.write("Starting, standby..");
   setprop("fdm/jsbsim/elec/switches/epu",1);
   setprop("fdm/jsbsim/elec/switches/main-pwr",2);
+  setprop("controls/seat/ejection-safety-lever",1);
   if (getprop("engines/engine[0]/running")!=1) {
     setprop("f16/engine/feed",1);
     setprop("f16/engine/jet-fuel",1);

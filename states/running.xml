@@ -22,6 +22,9 @@
                     <starter type="bool">false</starter>
                 </engine>
             </engines>
+            <seat>
+                <ejection-safety-lever type="bool">true</ejection-safety-lever>
+            </seat>
         </controls>
         <engines>
             <engine n="0">

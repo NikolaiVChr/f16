@@ -26,6 +26,9 @@
             <gear>
                 <gear-down type="double">0</gear-down>
             </gear>
+            <seat>
+                <ejection-safety-lever type="bool">true</ejection-safety-lever>
+            </seat>
         </controls>
         <engines>
             <engine n="0">

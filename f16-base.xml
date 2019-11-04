@@ -1448,7 +1448,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
             </lighting-panel>
         </lighting>
         <seat>
-            <ejection-safety-lever type="bool">true</ejection-safety-lever>
+            <ejection-safety-lever type="bool">false</ejection-safety-lever>
         </seat>
         <test>
             <test-panel>
