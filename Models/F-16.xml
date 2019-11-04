@@ -94,7 +94,7 @@
       </equals>
       <or>
         <not>
-          <property>sim/current-view/internal</property>
+          <property>/sim/current-view/internal</property>
         </not>
         <equals>
           <property>sim/current-view/name</property>
