@@ -9,10 +9,7 @@
   <type>select</type>
   <object-name>asi</object-name>
   <condition>
-   <equals>
-    <property>sim/current-view/name</property>
-    <value>Cockpit View</value>
-   </equals>
+   <property>sim/current-view/internal</property>
   </condition>
  </animation>
 

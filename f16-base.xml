@@ -277,7 +277,7 @@
           </view>
         -->
         <view>
-            <internal archive="y">true</internal>
+            <internal>true</internal>
             <config>
                 <pitch-offset-deg>-13.75</pitch-offset-deg>
                 <x-offset-m archive="y">0</x-offset-m>
@@ -297,7 +297,7 @@
             <type>lookfrom</type>
             <heading-offset-deg>0</heading-offset-deg>
             <pitch-offset-deg>0</pitch-offset-deg>
-            <internal archive="y">true</internal>
+            <internal>true</internal>
             <config>
                 <pitch-offset-deg>-13.55</pitch-offset-deg>
                 <heading-offset-deg>-3</heading-offset-deg>
@@ -316,7 +316,7 @@
             <type>lookfrom</type>
             <heading-offset-deg>0</heading-offset-deg>
             <pitch-offset-deg>0</pitch-offset-deg>
-            <internal archive="y">true</internal>
+            <internal>true</internal>
             <config>
                 <pitch-offset-deg>-6.25</pitch-offset-deg>
                 <heading-offset-deg>-218</heading-offset-deg>
@@ -335,7 +335,7 @@
             <type>lookfrom</type>
             <heading-offset-deg>0</heading-offset-deg>
             <pitch-offset-deg>0</pitch-offset-deg>
-            <internal archive="y">true</internal>
+            <internal>true</internal>
             <config>
                 <pitch-offset-deg>-9.0</pitch-offset-deg>
                 <heading-offset-deg>-181.5</heading-offset-deg>
@@ -352,7 +352,7 @@
         <view n="105">
             <name>TGP</name>
             <enabled>false</enabled>
-            <internal archive="y">true</internal>
+            <internal>true</internal>
             <pitch-offset-deg type="double">-30</pitch-offset-deg>
             <heading-offset-deg type="double">0</heading-offset-deg>
             <config>

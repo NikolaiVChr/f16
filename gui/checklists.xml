@@ -164,5 +164,15 @@
                 </equals>
             </condition>
         </item>
+        <item>
+            <name>Arm ejection chair</name>
+            <value>Armed</value>
+            <condition>
+                <equals>
+                    <property>controls/seat/ejection-safety-lever</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+        </item>
     </checklist>
 </PropertyList>
