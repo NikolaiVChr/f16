@@ -1012,9 +1012,9 @@ var chute2 = func{
 
 var freqDigits = func {
     var freq = getprop("instrumentation/nav[0]/frequencies/selected-mhz");
-    freq = math.round(freq*100)*0.01;
-    var a = int(math.round((freq*10-int(freq*10))*10));
-    var b = int((freq*1-int(freq*1))*10);
+    freq = roundabout(freq*100)*0.01;
+    var a = int(roundabout((freq*10-int(freq*10))*10));
+    var b = int(roundabout((freq*1-int(freq*1))*10-0.1*a));
     var c = int((freq*0.1-int(freq*0.1))*10);
     var d = int((freq*0.01-int(freq*0.01))*10);
     var e = int((freq*0.001-int(freq*0.001))*10);
@@ -1025,4 +1025,8 @@ var freqDigits = func {
     setprop("instrumentation/nav[0]/frequencies/current-mhz-digit-5", e);
     settimer(freqDigits, 0.2);
 }
+var roundabout = func(x) {
+  var y = x - int(x);
+  return y < 0.5 ? int(x) : 1 + int(x) ;
+};
 freqDigits();

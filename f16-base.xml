@@ -1756,6 +1756,15 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
         <ecm>
             <on-off type="bool">true</on-off>
         </ecm>
+        <nav n="0">
+            <frequencies>
+                <current-mhz-digit-1 type="int">0</current-mhz-digit-1>
+                <current-mhz-digit-2 type="int">0</current-mhz-digit-2>
+                <current-mhz-digit-3 type="int">0</current-mhz-digit-3>
+                <current-mhz-digit-4 type="int">0</current-mhz-digit-4>
+                <current-mhz-digit-5 type="int">0</current-mhz-digit-5>
+            </frequencies>
+        </nav>
         <heading-indicator>
             <offset-deg type="double">0</offset-deg>
             <use-mag-in-hud type="bool">true</use-mag-in-hud><!-- as per manual the HUD shows magnetic -->
