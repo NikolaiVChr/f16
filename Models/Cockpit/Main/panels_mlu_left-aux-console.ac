@@ -21,7 +21,7 @@ name "SYMBOLOGY_INT_KNOB"
 loc -0.00197381 0.00906556 0.327537
 data 28
 data-entry-display-knob.mesh
-texture "/Users/utente/Desktop/GitHub/Aircrafts/f16/Models/Cockpit/Textures/panels-MLU-right_console.png"
+texture "../Textures/panels-MLU-right_console.png"
 crease 45.000000
 numvert 286
 0.00224969 0.00717765 3.96371e-06
