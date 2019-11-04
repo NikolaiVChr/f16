@@ -278,6 +278,7 @@
         -->
         <view>
             <internal>true</internal>
+            <enabled>true</enabled>
             <config>
                 <pitch-offset-deg>-13.75</pitch-offset-deg>
                 <x-offset-m archive="y">0</x-offset-m>
@@ -289,12 +290,14 @@
         <view n="101">
             <name>Missile View</name>
             <type>lookat</type>
+            <enabled>true</enabled>
             <heading-offset-deg>180</heading-offset-deg>
             <pitch-offset-deg>10</pitch-offset-deg>
         </view>
         <view n="102">
             <name>GoPro #1 View</name>
             <type>lookfrom</type>
+            <enabled>true</enabled>
             <heading-offset-deg>0</heading-offset-deg>
             <pitch-offset-deg>0</pitch-offset-deg>
             <internal>true</internal>
@@ -314,6 +317,7 @@
         <view n="103">
             <name>GoPro #2 View</name>
             <type>lookfrom</type>
+            <enabled>true</enabled>
             <heading-offset-deg>0</heading-offset-deg>
             <pitch-offset-deg>0</pitch-offset-deg>
             <internal>true</internal>
@@ -333,6 +337,7 @@
         <view n="104">
             <name>GoPro #3 View</name>
             <type>lookfrom</type>
+            <enabled>true</enabled>
             <heading-offset-deg>0</heading-offset-deg>
             <pitch-offset-deg>0</pitch-offset-deg>
             <internal>true</internal>

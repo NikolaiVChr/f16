@@ -542,12 +542,21 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     ded.loop_ded();
     frd.callInit();
     frd.loop_ded();
+    enableViews();
     emesary.GlobalTransmitter.Register(f16_mfd);
     emesary.GlobalTransmitter.Register(f16_hud);
     emesary.GlobalTransmitter.Register(awg_9.aircraft_radar);
     execTimer.start();
   }
  }, 0, 0);
+
+var enableViews = func {
+  setprop("sim/view[101]/enabled",1);
+  setprop("sim/view[102]/enabled",1);
+  setprop("sim/view[103]/enabled",1);
+  setprop("sim/view[104]/enabled",1);
+  setprop("sim/view[105]/enabled",0);
+}
 
 
 var inAutostart = 0;
