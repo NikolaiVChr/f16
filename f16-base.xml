@@ -523,6 +523,8 @@
                 <float n="12" type="double">0</float>
                 <float n="13" type="double">0</float>
                 <float n="14" type="double">0</float><!-- scene red inverted -->
+                <float n="16" type="double" alias="/velocities/mach"/>
+                <float n="17" type="double" alias="/orientation/alpha-deg"/>
                 <float n="19" type="double">0</float><!-- afterburner engine fire transperancy -->
             </generic>
             <visibility-range-nm type="int">160</visibility-range-nm>
