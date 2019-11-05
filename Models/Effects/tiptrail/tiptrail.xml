@@ -14,10 +14,10 @@
         <condition>
             <and>
                 <not>
-                    <property>sim/model/f16/smoke</property>
+                    <property>sim/multiplay/generic/int[10]</property><!-- sim/model/f16/smoke -->
                 </not>
                 <greater-than>
-                    <property>velocities/airspeed-kt</property>
+                    <property>sim/multiplay/generic/float[3]</property><!-- velocities/airspeed-kt -->
                     <value>180</value>
                 </greater-than>
                 <greater-than>
@@ -33,7 +33,7 @@
                     <value>22</value>
                 </greater-than>
                 <greater-than>
-                    <property>orientation/alpha-deg</property>
+                    <property>sim/multiplay/generic/float[17]</property><!-- orientation/alpha-deg -->
                     <value>12</value>
                 </greater-than>
             </and>
@@ -76,9 +76,9 @@
         <particle>
         <start>
         <color>
-          <red><expression><product><value>1.0</value><property>rendering/scene/diffuse/red</property></product></expression></red>
-          <green><expression><product><value>1.0</value><property>rendering/scene/diffuse/red</property></product></expression></green>
-          <blue><expression><product><value>1.0</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
+          <red><expression><product><value>1.0</value><property>/rendering/scene/diffuse/red</property></product></expression></red>
+          <green><expression><product><value>1.0</value><property>/rendering/scene/diffuse/red</property></product></expression></green>
+          <blue><expression><product><value>1.0</value><property>/rendering/scene/diffuse/red</property></product></expression></blue>
           <alpha><value> 0.050 </value></alpha>
         </color>
         <size>
@@ -88,9 +88,9 @@
 
         <end>
         <color>
-          <red><expression><product><value>0.95</value><property>rendering/scene/diffuse/red</property></product></expression></red>
-          <green><expression><product><value>0.95</value><property>rendering/scene/diffuse/red</property></product></expression></green>
-          <blue><expression><product><value>0.95</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
+          <red><expression><product><value>0.95</value><property>/rendering/scene/diffuse/red</property></product></expression></red>
+          <green><expression><product><value>0.95</value><property>/rendering/scene/diffuse/red</property></product></expression></green>
+          <blue><expression><product><value>0.95</value><property>/rendering/scene/diffuse/red</property></product></expression></blue>
           <alpha><value> 0.0500 </value></alpha>
         </color>
         <size>
