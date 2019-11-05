@@ -17,11 +17,11 @@
 
  <condition>
    <greater-than>
-     <property>engines/engine[0]/n2</property>
+     <property>sim/multiplay/generic/short[6]</property>
      <value>10</value>
    </greater-than>
    <less-than-equals>
-    <property>velocities/airspeed-kt</property>
+    <property>sim/multiplay/generic/float[3]</property>
     <value>50</value>
    </less-than-equals>
  </condition>
