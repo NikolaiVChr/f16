@@ -1025,7 +1025,7 @@
   <object-name>Fan</object-name>
   <condition>
    <less-than>
-    <property>engines/engine[0]/n1</property>
+    <property>sim/multiplay/generic/short[5]</property>
     <value>1</value>
    </less-than>
   </condition>
@@ -1036,7 +1036,7 @@
   <object-name>FanSpinning</object-name>
   <condition>
    <greater-than>
-    <property>engines/engine[0]/n1</property>
+    <property>sim/multiplay/generic/short[5]</property>
     <value>1</value>
    </greater-than>
   </condition>
@@ -1047,7 +1047,7 @@
   <type>rotate</type>
   <object-name>fan</object-name>
   <object-name>fan_spinning</object-name>
-  <property>engines/engine[0]/n1</property>
+  <property>sim/multiplay/generic/short[5]</property>
   <factor>27</factor>
   <center>
    <x-m>0.596828</x-m>
@@ -1088,7 +1088,7 @@
    <red>  0.0100</red>
    <green>0.0050</green>
    <blue> 0.0039</blue>
-   <factor-prop>engines/engine[0]/n1</factor-prop>
+   <factor-prop>sim/multiplay/generic/short[5]</factor-prop>
   </emission>-->
  </animation>
 
@@ -1118,7 +1118,7 @@
    <red>  0.0100</red>
    <green>0.0050</green>
    <blue> 0.0039</blue>
-   <factor-prop>engines/engine[0]/n1</factor-prop>
+   <factor-prop>sim/multiplay/generic/short[5]</factor-prop>
   </emission>
  </animation>
 
@@ -1135,7 +1135,7 @@
    <red>0.01</red>
    <green>0.01</green>
    <blue>0.01</blue>
-   <factor-prop>engines/engine[0]/n1</factor-prop>
+   <factor-prop>sim/multiplay/generic/short[5]</factor-prop>
   </emission>
  </animation>
 
