@@ -7,7 +7,7 @@ MATERIAL "ac3dmat7.002" rgb 0.18 0.161 0.133  amb 0.158 0.158 0.158  emis 0 0 0 
 MATERIAL "ac3dmat7.003" rgb 0.31 0.361 0.263  amb 0.311333 0.311333 0.311333  emis 0 0 0  spec 0 0 0  shi 0  trans 0
 MATERIAL "ac3dmat0" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0 0 0  shi 0  trans 0
 MATERIAL "ac3dmat13" rgb 0.533333 0.533333 0.533333  amb 0.533333 0.533333 0.533333  emis 0 0 0  spec 0 0 0  shi 10  trans 0
-MATERIAL "ac3dmat14" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0.757 0.765 0.757  shi 81  trans 0
+MATERIAL "visor" rgb 0.25 0.25 0.25  amb 0 0 0  emis 0 0 0  spec 0.757 0.765 0.8  shi 128  trans 0.10
 MATERIAL "Chrome" rgb 0.5 0.5 0.5  amb 0.5 0.5 0.5  emis 0 0 0  spec 1 1 1  shi 72  trans 0
 MATERIAL "ac3dmat1" rgb 0.878 0.878 0.878  amb 0.878 0.878 0.878  emis 0 0 0  spec 0.8 0.8 0.8  shi 14  trans 0
 MATERIAL "white" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0 0 0  shi 0  trans 0
@@ -21898,363 +21898,363 @@ numsurf 60
 SURF 0x10
 mat 8
 refs 3
-0 0 0
-11 0 0
-8 0 0
+0 0 1
+11 0 1
+8 0 1
 SURF 0x10
 mat 8
 refs 3
-11 0 0
-0 0 0
-10 0 0
+11 0 1
+0 0 1
+10 0 1
 SURF 0x10
 mat 8
 refs 3
-31 0 0
-1 0 0
-28 0 0
+31 0 1
+1 0 1
+28 0 1
 SURF 0x10
 mat 8
 refs 3
-1 0 0
-31 0 0
-30 0 0
+1 0 1
+31 0 1
+30 0 1
 SURF 0x10
 mat 8
 refs 3
-39 0 0
-20 0 0
-16 0 0
+39 0 1
+20 0 1
+16 0 1
 SURF 0x10
 mat 8
 refs 3
-16 0 0
-17 0 0
-39 0 0
+16 0 1
+17 0 1
+39 0 1
 SURF 0x10
 mat 8
 refs 3
-18 0 0
-11 0 0
-13 0 0
+18 0 1
+11 0 1
+13 0 1
 SURF 0x10
 mat 8
 refs 3
-18 0 0
-9 0 0
-11 0 0
+18 0 1
+9 0 1
+11 0 1
 SURF 0x10
 mat 8
 refs 3
-18 0 0
-7 0 0
-9 0 0
+18 0 1
+7 0 1
+9 0 1
 SURF 0x10
 mat 8
 refs 3
-18 0 0
-4 0 0
-7 0 0
+18 0 1
+4 0 1
+7 0 1
 SURF 0x10
 mat 8
 refs 3
-18 0 0
-5 0 0
-4 0 0
+18 0 1
+5 0 1
+4 0 1
 SURF 0x10
 mat 8
 refs 3
-18 0 0
-16 0 0
-5 0 0
+18 0 1
+16 0 1
+5 0 1
 SURF 0x10
 mat 8
 refs 3
-18 0 0
-17 0 0
-16 0 0
+18 0 1
+17 0 1
+16 0 1
 SURF 0x10
 mat 8
 refs 3
-18 0 0
-14 0 0
-17 0 0
+18 0 1
+14 0 1
+17 0 1
 SURF 0x10
 mat 8
 refs 3
-18 0 0
-13 0 0
-14 0 0
+18 0 1
+13 0 1
+14 0 1
 SURF 0x10
 mat 8
 refs 3
-17 0 0
-14 0 0
-21 0 0
+17 0 1
+14 0 1
+21 0 1
 SURF 0x10
 mat 8
 refs 3
-15 0 0
-21 0 0
-14 0 0
+15 0 1
+21 0 1
+14 0 1
 SURF 0x10
 mat 8
 refs 3
-2 0 0
-5 0 0
-20 0 0
+2 0 1
+5 0 1
+20 0 1
 SURF 0x10
 mat 8
 refs 3
-16 0 0
-20 0 0
-5 0 0
+16 0 1
+20 0 1
+5 0 1
 SURF 0x10
 mat 8
 refs 3
-14 0 0
-13 0 0
-15 0 0
+14 0 1
+13 0 1
+15 0 1
 SURF 0x10
 mat 8
 refs 3
-12 0 0
-15 0 0
-13 0 0
+12 0 1
+15 0 1
+13 0 1
 SURF 0x10
 mat 8
 refs 3
-13 0 0
-11 0 0
-12 0 0
+13 0 1
+11 0 1
+12 0 1
 SURF 0x10
 mat 8
 refs 3
-10 0 0
-12 0 0
-11 0 0
+10 0 1
+12 0 1
+11 0 1
 SURF 0x10
 mat 8
 refs 3
-9 0 0
-8 0 0
-11 0 0
+9 0 1
+8 0 1
+11 0 1
 SURF 0x10
 mat 8
 refs 3
-7 0 0
-6 0 0
-9 0 0
+7 0 1
+6 0 1
+9 0 1
 SURF 0x10
 mat 8
 refs 3
-3 0 0
-6 0 0
-4 0 0
+3 0 1
+6 0 1
+4 0 1
 SURF 0x10
 mat 8
 refs 3
-7 0 0
-4 0 0
-6 0 0
+7 0 1
+4 0 1
+6 0 1
 SURF 0x10
 mat 8
 refs 3
-2 0 0
-3 0 0
-5 0 0
+2 0 1
+3 0 1
+5 0 1
 SURF 0x10
 mat 8
 refs 3
-4 0 0
-5 0 0
-3 0 0
+4 0 1
+5 0 1
+3 0 1
 SURF 0x10
 mat 8
 refs 3
-21 0 0
-39 0 0
-17 0 0
+21 0 1
+39 0 1
+17 0 1
 SURF 0x10
 mat 8
 refs 3
-8 0 0
-9 0 0
-19 0 0
+8 0 1
+9 0 1
+19 0 1
 SURF 0x10
 mat 8
 refs 3
-6 0 0
-19 0 0
-9 0 0
+6 0 1
+19 0 1
+9 0 1
 SURF 0x10
 mat 8
 refs 3
-36 0 0
-20 0 0
-39 0 0
+36 0 1
+20 0 1
+39 0 1
 SURF 0x10
 mat 8
 refs 3
-39 0 0
-37 0 0
-36 0 0
+39 0 1
+37 0 1
+36 0 1
 SURF 0x10
 mat 8
 refs 3
-33 0 0
-31 0 0
-38 0 0
+33 0 1
+31 0 1
+38 0 1
 SURF 0x10
 mat 8
 refs 3
-31 0 0
-29 0 0
-38 0 0
+31 0 1
+29 0 1
+38 0 1
 SURF 0x10
 mat 8
 refs 3
-29 0 0
-27 0 0
-38 0 0
+29 0 1
+27 0 1
+38 0 1
 SURF 0x10
 mat 8
 refs 3
-27 0 0
-24 0 0
-38 0 0
+27 0 1
+24 0 1
+38 0 1
 SURF 0x10
 mat 8
 refs 3
-24 0 0
-25 0 0
-38 0 0
+24 0 1
+25 0 1
+38 0 1
 SURF 0x10
 mat 8
 refs 3
-25 0 0
-36 0 0
-38 0 0
+25 0 1
+36 0 1
+38 0 1
 SURF 0x10
 mat 8
 refs 3
-36 0 0
-37 0 0
-38 0 0
+36 0 1
+37 0 1
+38 0 1
 SURF 0x10
 mat 8
 refs 3
-37 0 0
-34 0 0
-38 0 0
+37 0 1
+34 0 1
+38 0 1
 SURF 0x10
 mat 8
 refs 3
-34 0 0
-33 0 0
-38 0 0
+34 0 1
+33 0 1
+38 0 1
 SURF 0x10
 mat 8
 refs 3
-21 0 0
-34 0 0
-37 0 0
+21 0 1
+34 0 1
+37 0 1
 SURF 0x10
 mat 8
 refs 3
-34 0 0
-21 0 0
-35 0 0
+34 0 1
+21 0 1
+35 0 1
 SURF 0x10
 mat 8
 refs 3
-20 0 0
-25 0 0
-22 0 0
+20 0 1
+25 0 1
+22 0 1
 SURF 0x10
 mat 8
 refs 3
-25 0 0
-20 0 0
-36 0 0
+25 0 1
+20 0 1
+36 0 1
 SURF 0x10
 mat 8
 refs 3
-35 0 0
-33 0 0
-34 0 0
+35 0 1
+33 0 1
+34 0 1
 SURF 0x10
 mat 8
 refs 3
-33 0 0
-35 0 0
-32 0 0
+33 0 1
+35 0 1
+32 0 1
 SURF 0x10
 mat 8
 refs 3
-32 0 0
-31 0 0
-33 0 0
+32 0 1
+31 0 1
+33 0 1
 SURF 0x10
 mat 8
 refs 3
-31 0 0
-32 0 0
-30 0 0
+31 0 1
+32 0 1
+30 0 1
 SURF 0x10
 mat 8
 refs 3
-31 0 0
-28 0 0
-29 0 0
+31 0 1
+28 0 1
+29 0 1
 SURF 0x10
 mat 8
 refs 3
-29 0 0
-26 0 0
-27 0 0
+29 0 1
+26 0 1
+27 0 1
 SURF 0x10
 mat 8
 refs 3
-24 0 0
-26 0 0
-23 0 0
+24 0 1
+26 0 1
+23 0 1
 SURF 0x10
 mat 8
 refs 3
-26 0 0
-24 0 0
-27 0 0
+26 0 1
+24 0 1
+27 0 1
 SURF 0x10
 mat 8
 refs 3
-25 0 0
-23 0 0
-22 0 0
+25 0 1
+23 0 1
+22 0 1
 SURF 0x10
 mat 8
 refs 3
-23 0 0
-25 0 0
-24 0 0
+23 0 1
+25 0 1
+24 0 1
 SURF 0x10
 mat 8
 refs 3
-37 0 0
-39 0 0
-21 0 0
+37 0 1
+39 0 1
+21 0 1
 SURF 0x10
 mat 8
 refs 3
-40 0 0
-29 0 0
-28 0 0
+40 0 1
+29 0 1
+28 0 1
 SURF 0x10
 mat 8
 refs 3
-29 0 0
-40 0 0
-26 0 0
+29 0 1
+40 0 1
+26 0 1
 kids 0
 OBJECT poly
 name "cylinder"
