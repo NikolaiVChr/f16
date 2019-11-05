@@ -1108,3 +1108,41 @@ var pilot_view_limiter = {
   },
 };
 
+dynamic_view.view_manager.noGforce = func {
+  if (getprop("sim/current-view/view-number") !=0 ) {
+    me.pitch_offset = 0;
+    me.heading_offset = 0;
+    me.roll_offset = 0;
+    return;
+  }
+  var wow = me.wow.get();
+
+  # calculate steering factor
+  var hdg = me.headingN.getValue();
+  var hdiff = dynamic_view.normdeg(me.last_heading - hdg);
+  me.last_heading = hdg;
+  var steering = 0; # normatan(me.hdg_change.filter(hdiff)) * me.size_factor;
+
+  var az = me.az.get();
+  var vx = me.vx.get();
+
+  # calculate sideslip factor (zeroed when no forward ground speed)
+  var wspd = me.wind_speedN.getValue();
+  var wdir = me.headingN.getValue() - me.wind_dirN.getValue();
+  var u = vx - wspd * dynamic_view.cos(wdir);
+  var slip = dynamic_view.sin(me.slipN.getValue()) * me.ubody.filter(dynamic_view.normatan(u / 10));
+
+  me.heading_offset =             # view heading
+    -15 * dynamic_view.sin(me.roll) * dynamic_view.cos(me.pitch)        #     due to roll
+    + 40 * steering * wow           #     due to ground steering
+    + 10 * slip * (1 - wow);          #     due to sideslip (in air)
+
+  me.pitch_offset =             # view pitch
+    10 * dynamic_view.sin(me.roll) * dynamic_view.sin(me.roll)        #     due to roll
+    + 30 * (1 / (1 + math.exp(2 - az))        #     due to G load
+      - 0.119202922);           #         [move to origin; 1/(1+exp(2)) ]
+
+  me.roll_offset = 0;
+}
+
+dynamic_view.register(func {me.noGforce();});# no G-force head movement in goPro views even though they are internal.
