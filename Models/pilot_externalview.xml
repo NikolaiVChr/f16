@@ -23,10 +23,10 @@
 			<ambient-correction type="float">0.00</ambient-correction>
 			<lightmap-enabled type="int">0</lightmap-enabled>
 			<reflection-enabled type="int">1</reflection-enabled>			
-			<reflection-correction type="float">0.25</reflection-correction>
-			<reflection-fresnel type="float">0.0</reflection-fresnel>
-			<reflection-fresnel-factor type="float">0.0</reflection-fresnel-factor>
-			<reflection-rainbow type="float">0.25</reflection-rainbow>
+			<reflection-correction type="float">0.50</reflection-correction>
+			<reflection-fresnel type="float">0.01</reflection-fresnel>
+			<reflection-fresnel-factor type="float">0.01</reflection-fresnel-factor>
+			<reflection-rainbow type="float">0.35</reflection-rainbow>
 			<reflection-noise type="float">0.0</reflection-noise>
 			<reflection-dynamic type="int">1</reflection-dynamic>
 			<reflection-type type="int">1</reflection-type>
