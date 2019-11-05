@@ -13,7 +13,7 @@
  <animation>
   <type>scale</type>
   <object-name>Bounding_box2</object-name>
-  <property>orientation/alpha-deg</property>
+  <property>sim/multiplay/generic/float[17]</property><!-- orientation/alpha-deg -->
   <x-min>1.0</x-min>
   <y-min>0.4</y-min>
   <z-min>0.4</z-min>
@@ -25,7 +25,7 @@
  <animation>
   <type>rotate</type> 
   <object-name>Bounding_box2</object-name>
-  <property>orientation/alpha-deg</property>
+  <property>sim/multiplay/generic/float[17]</property><!-- orientation/alpha-deg -->
   <offset-deg>-25</offset-deg>
   <factor>-0.2</factor>
   <center>
