@@ -474,59 +474,40 @@
  <!-- smokepods -->
 
 <model>
-  <name>mach cone</name>
+  <name>machCone</name>
   <path>Aircraft/f16/Models/Effects/mach-cone.xml</path>
-  <condition>
-    <greater-than>
-      <property>environment/relative-humidity</property>
-      <value>50</value>
-    </greater-than>
-    <greater-than>
-      <property>environment/temperature-degc</property>
-      <value>0</value>
-    </greater-than>
-    <greater-than>
-     <property>velocities/mach</property>
-     <value>0.98</value>
-    </greater-than>
-    <less-than>
-     <property>velocities/mach</property>
-     <value>1.02</value>
-    </less-than>
-    <greater-than>
-     <property>environment/pressure-inhg</property>
-     <value>22</value>
-    </greater-than>
-  </condition>
  </model>
+ 
+ <animation>
+    <type>select</type>
+    <object-name>machCone</object-name>
+    <condition>
+      <greater-than>
+        <property>/environment/relative-humidity</property>
+        <value>50</value>
+      </greater-than>
+      <greater-than>
+        <property>/environment/temperature-degc</property>
+        <value>0</value>
+      </greater-than>
+      <greater-than>
+       <property>sim/multiplay/generic/float[16]</property><!-- velocities/mach -->
+       <value>0.98</value>
+      </greater-than>
+      <less-than>
+       <property>sim/multiplay/generic/float[16]</property><!-- velocities/mach -->
+       <value>1.02</value>
+      </less-than>
+      <greater-than>
+       <property>/environment/pressure-inhg</property>
+       <value>22</value>
+      </greater-than>
+    </condition>
+  </animation>
 
  <model>
   <name>left-strake-vortex</name>
   <path>Aircraft/f16/Models/Effects/strake-vortex.xml</path>
-  <condition>
-   <and>
-    <greater-than>
-      <property>environment/relative-humidity</property>
-      <value>50</value>
-    </greater-than>
-    <greater-than>
-      <property>environment/temperature-degc</property>
-      <value>0</value>
-    </greater-than>
-    <greater-than>
-      <property>environment/pressure-inhg</property>
-      <value>22</value>
-    </greater-than>
-    <greater-than>
-     <property>orientation/alpha-deg</property>
-     <value>9.0</value>
-    </greater-than>
-    <greater-than>
-     <property>velocities/airspeed-kt</property>
-     <value>180</value>
-    </greater-than>
-   </and>
-  </condition>
   <offsets>
    <x-m>-2.5</x-m>
    <y-m>-1.0</y-m>
@@ -537,64 +518,46 @@
  <model>
   <name>right-strake-vortex</name>
   <path>Aircraft/f16/Models/Effects/strake-vortex.xml</path>
-  <condition>
-   <and>
-    <greater-than>
-      <property>environment/relative-humidity</property>
-      <value>50</value>
-    </greater-than>
-    <greater-than>
-      <property>environment/temperature-degc</property>
-      <value>0</value>
-    </greater-than>
-    <greater-than>
-      <property>environment/pressure-inhg</property>
-      <value>22</value>
-    </greater-than>
-    <greater-than>
-     <property>orientation/alpha-deg</property>
-     <value>9.0</value>
-    </greater-than>
-    <greater-than>
-     <property>velocities/airspeed-kt</property>
-     <value>180</value>
-    </greater-than>
-   </and>
-  </condition>
   <offsets>
    <x-m>-2.5</x-m>
    <y-m>1.0</y-m>
    <z-m>0.0</z-m>
   </offsets>
  </model>
+ 
+ <animation>
+    <type>select</type>
+    <object-name>right-strake-vortex</object-name>
+    <object-name>left-strake-vortex</object-name>
+    <condition>
+       <and>
+          <greater-than>
+            <property>/environment/relative-humidity</property>
+            <value>50</value>
+          </greater-than>
+          <greater-than>
+            <property>/environment/temperature-degc</property>
+            <value>0</value>
+          </greater-than>
+          <greater-than>
+            <property>/environment/pressure-inhg</property>
+            <value>22</value>
+          </greater-than>
+          <greater-than>
+           <property>sim/multiplay/generic/float[17]</property><!-- orientation/alpha-deg -->
+           <value>9.0</value>
+          </greater-than>
+          <greater-than>
+           <property>sim/multiplay/generic/float[3]</property><!-- velocities/airspeed-kt -->
+           <value>180</value>
+          </greater-than>
+       </and>
+    </condition>
+  </animation>
 
  <model>
-  <name>g-vortex</name>
+  <name>g-vortexR</name>
   <path>Aircraft/f16/Models/Effects/g-vortex.xml</path>
-  <condition>
-   <and>
-    <greater-than>
-      <property>environment/relative-humidity</property>
-      <value>50</value>
-    </greater-than>
-    <greater-than>
-      <property>environment/temperature-degc</property>
-      <value>0</value>
-    </greater-than>
-    <greater-than>
-      <property>environment/pressure-inhg</property>
-      <value>22</value>
-    </greater-than>
-    <greater-than>
-     <property>orientation/alpha-deg</property>
-     <value>12.0</value>
-    </greater-than>
-    <greater-than>
-     <property>velocities/airspeed-kt</property>
-     <value>300</value>
-    </greater-than>
-   </and>
-  </condition>
   <offsets>
    <x-m>-0.8</x-m>
    <y-m>0.5</y-m>
@@ -605,32 +568,8 @@
  </model>
 
  <model>
-  <name>g-vortex</name>
+  <name>g-vortexL</name>
   <path>Aircraft/f16/Models/Effects/g-vortex.xml</path>
-  <condition>
-   <and>
-    <greater-than>
-      <property>environment/relative-humidity</property>
-      <value>50</value>
-    </greater-than>
-    <greater-than>
-      <property>environment/temperature-degc</property>
-      <value>0</value>
-    </greater-than>
-    <greater-than>
-      <property>environment/pressure-inhg</property>
-      <value>22</value>
-    </greater-than>
-    <greater-than>
-     <property>orientation/alpha-deg</property>
-     <value>12.0</value>
-    </greater-than>
-    <greater-than>
-     <property>velocities/airspeed-kt</property>
-     <value>300</value>
-    </greater-than>
-   </and>
-  </condition>
   <offsets>
    <x-m>-0.8</x-m>
    <y-m>-0.5</y-m>
@@ -639,6 +578,36 @@
    <roll-deg>10</roll-deg>
   </offsets>
  </model>
+ 
+ <animation>
+    <type>select</type>
+    <object-name>g-vortexL</object-name>
+    <object-name>g-vortexR</object-name>
+      <condition>
+           <and>
+                <greater-than>
+                  <property>/environment/relative-humidity</property>
+                  <value>50</value>
+                </greater-than>
+                <greater-than>
+                  <property>/environment/temperature-degc</property>
+                  <value>0</value>
+                </greater-than>
+                <greater-than>
+                  <property>/environment/pressure-inhg</property>
+                  <value>22</value>
+                </greater-than>
+                <greater-than>
+                 <property>sim/multiplay/generic/float[17]</property><!-- orientation/alpha-deg -->
+                 <value>12.0</value>
+                </greater-than>
+                <greater-than>
+                 <property>sim/multiplay/generic/float[3]</property><!-- velocities/airspeed-kt -->
+                 <value>300</value>
+                </greater-than>
+           </and>
+      </condition>
+  </animation>
 
   <model>
     <name>tiptrail-L</name>
@@ -1173,15 +1142,20 @@
  <model>
   <name>AB_Flame</name>
   <path>Aircraft/f16/Models/Effects/afterburner.xml</path>
-  <condition>
-   <property>sim/multiplay/generic/bool[39]</property>
-  </condition>
   <offsets>
    <x-m>5.44</x-m>
    <y-m>0.0</y-m>
    <z-m>0.0</z-m>
   </offsets>
  </model>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>AB_Flame</object-name>
+  <condition>
+   <property>sim/multiplay/generic/bool[39]</property>
+  </condition>
+ </animation>
 
  <animation>
   <type>select</type>
@@ -1194,7 +1168,7 @@
  <animation>
   <type>translate</type>
   <object-name>ExternalFlame</object-name>
-  <property>engines/engine[0]/nozzle-pos-norm</property>
+  <property>sim/multiplay/generic/float[0]</property>
   <offset-m>-4.0</offset-m>
   <factor>4.0</factor>
   <axis>
