@@ -301,12 +301,12 @@ void main (void)
 	// END lightmap
 	/////////////////////////////////////////////////////////////////////
 
-	fragColor.rgb = fog_Func(fragColor.rgb, fogType);
+	
 	fragColor.a = gl_FrontMaterial.diffuse.a * texel.a;//combineMe 
 	
 	// gamma correction
     fragColor.rgb = pow(fragColor.rgb, gamma);
-    
+    fragColor.rgb = fog_Func(fragColor.rgb, fogType);
     fragColor.rgb = max(gl_FrontMaterial.emission.rgb*texel.rgb, fragColor.rgb);
     
 	gl_FragColor = fragColor;
