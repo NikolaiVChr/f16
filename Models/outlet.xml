@@ -7,7 +7,7 @@
  <animation>
     <type>spin</type>
     <object-name>exhaustFan</object-name>
-    <property>engines/engine[0]/n1</property>
+    <property>sim/multiplay/generic/short[5]</property><!-- N1 -->
     <factor>1001</factor>
     <center>
         <x-m>3.0</x-m>
