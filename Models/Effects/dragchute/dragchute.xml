@@ -12,7 +12,7 @@
   <animation>
     <type>rotate</type>
     <object-name>DragChute</object-name>
-    <property>orientation/alpha-deg</property>
+    <property>sim/multiplay/generic/float[17]</property><!-- alpha -->
     <factor>-1</factor>
     <offset-deg>90</offset-deg>
     <center>
