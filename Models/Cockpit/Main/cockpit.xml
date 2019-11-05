@@ -487,13 +487,10 @@
   <object-name>down</object-name>
   <condition>
     <or>
-    <and>
-    <property>controls/gear/gear-down</property>
     <greater-than>
      <property>orientation/alpha-deg</property>
      <value>15.0</value>
     </greater-than>
-    </and>
     <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
     <greater-than>
@@ -509,7 +506,6 @@
   <condition>
     <or>
     <and>
-    <property>controls/gear/gear-down</property>
     <greater-than>
      <property>orientation/alpha-deg</property> 
      <value>11.0</value>
@@ -533,13 +529,10 @@
   <object-name>up</object-name>
   <condition>
     <or>
-    <and>
-    <property>controls/gear/gear-down</property>
     <less-than>
      <property>orientation/alpha-deg</property>
      <value>11.0</value>
     </less-than>
-    </and>
     <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
     <greater-than>
