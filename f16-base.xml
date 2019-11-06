@@ -2014,7 +2014,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double"> 250 </max-report-distance>
+                <max-report-distance type="double"> 150 </max-report-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
@@ -2054,7 +2054,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double"> 275 </max-report-distance>
+                <max-report-distance type="double"> 175 </max-report-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
@@ -2095,7 +2095,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double"> 325 </max-report-distance>
+                <max-report-distance type="double"> 225 </max-report-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
@@ -2143,7 +2143,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double"> 250 </max-report-distance>
+                <max-report-distance type="double"> 150 </max-report-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
@@ -2191,7 +2191,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double"> 250 </max-report-distance>
+                <max-report-distance type="double"> 150 </max-report-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
@@ -2239,7 +2239,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double"> 325 </max-report-distance>
+                <max-report-distance type="double"> 225 </max-report-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
@@ -2287,7 +2287,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
                 <rail type="bool">false</rail>
-                <max-report-distance type="double"> 325 </max-report-distance>
+                <max-report-distance type="double"> 225 </max-report-distance>
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
@@ -2442,7 +2442,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <all-aspect type="bool">true</all-aspect>
                 <rail type="bool">false</rail>
                 <no-common-target type="bool">true</no-common-target>
-                <max-report-distance type="double">600</max-report-distance>
+                <max-report-distance type="double">300</max-report-distance>
                 <vol-search type="double">0.075</vol-search>
                 <vol-track type="double">0.25</vol-track>
                 <drop-time type="double">3.5</drop-time>
@@ -2488,7 +2488,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <all-aspect type="bool">true</all-aspect>
                 <rail type="bool">false</rail>
                 <no-common-target type="bool">true</no-common-target>
-                <max-report-distance type="double">350</max-report-distance>
+                <max-report-distance type="double">250</max-report-distance>
                 <vol-search type="double">0.075</vol-search>
                 <vol-track type="double">0.25</vol-track>
                 <drop-time type="double">1.0</drop-time>
