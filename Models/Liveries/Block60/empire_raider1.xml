@@ -5,11 +5,11 @@
         <model> 
             <livery>
                 <name type="string">Empire 181IFW, "Raider1" (Fictional)</name>
-                <texture type="string">Liveries/Block60/empire.png</texture>
+                <texture type="string">Liveries/Block60/empire_raider1.png</texture>
                 <owner type="string">Empire</owner>
             </livery>
             <livery-logo>
-                <texture type="string">Liveries/yf/yf16-transp.png</texture>
+                <texture type="string">Liveries/Block60/logos.raider1.png</texture>
             </livery-logo>
 
             <livery-patch>
