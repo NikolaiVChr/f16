@@ -336,9 +336,13 @@
         <object-name>altrad-switch</object-name>
         <object-name>deddata-switch</object-name>
         <object-name>w_vah-switch</object-name>
-        <!-- these needs to be animated
+        <object-name>voice-msg-switch</object-name>
+        <object-name>plain-switch</object-name>
+        <object-name>mms-switch</object-name>
+        <object-name>mal-ind-lts-switch</object-name>
+        <!-- these needs to be animated:-->
         <object-name>nuke-consent-switch</object-name>
-        <object-name>nuke-consent-cover</object-name>-->
+        <object-name>nuke-consent-cover</object-name>
     </effect>
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-knob</inherits-from>
