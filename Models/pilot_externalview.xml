@@ -42,7 +42,6 @@
 				  <negative-z>Aircraft/Generic/Effects/fgfs-sky2/5.png</negative-z>
 				</images>
 			</texture>
-			<rendering-hint>transparent</rendering-hint>
 			<transparent>true</transparent>
 			<render-bin>
 			  <bin-number>111</bin-number>
