@@ -10,8 +10,9 @@
             <implicit-lightmap-threshold-low type="float">0.2</implicit-lightmap-threshold-low>
             <implicit-lightmap-threshold-high type="float">0.7</implicit-lightmap-threshold-high>
         </parameters>
-  <object-name>HYD_PRESS_1</object-name>
-  <!--<object-name>RIGHT_AUX_CONSOLE</object-name> looks bad on this-->
+        <!-- objects added to this will have all white in texture lit up green when console is high. They will also get flood light. -->
+        <object-name>HYD_PRESS_1</object-name>
+        <!--<object-name>RIGHT_AUX_CONSOLE</object-name> looks bad on this-->
 </effect>
 
  <!-- START HYDR GAUGE -->

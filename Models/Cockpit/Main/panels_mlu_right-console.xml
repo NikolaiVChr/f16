@@ -296,12 +296,12 @@
     </animation>
 
     <effect>
-        <name>models-effects-f16panel-left</name>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
         <parameters>
             <implicit-lightmap-threshold-low type="float">0.2</implicit-lightmap-threshold-low>
             <implicit-lightmap-threshold-high type="float">0.7</implicit-lightmap-threshold-high>
         </parameters>
+        <!-- objects added to this will have all white in texture lit up green when console is high. They will also get flood light -->
         <object-name>LIGHTING_1</object-name>
         <object-name>DTU_1</object-name>
         <object-name>GROWNTH.104_1</object-name>
@@ -323,22 +323,37 @@
         <object-name>ZEROIZE_1</object-name>
     </effect>
     <effect>
-        <name>models-effects-f16panel-left</name>
-        <inherits-from>Aircraft/f16/Models/Effects/f16panel-knob</inherits-from>
-        <object-name>inst-pnl-flood-knob</object-name>
-        <object-name>inst-pnl-flood-knob-axis</object-name>
-        <object-name>inst-pnl-primary-knob</object-name>
-        <object-name>inst-pnl-primary-knob-axis</object-name>
-        <object-name>console-flood-knob</object-name>
-        <object-name>console-flood-knob-axis</object-name>
-        <object-name>data-entry-display-knob</object-name>
-        <object-name>data-entry-display-knob-axis</object-name>
-        <object-name>console-primary-knob</object-name>
-        <object-name>console-primary-knob-axis</object-name>
-        <object-name>inst-pnl-flood-knob</object-name>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <parameters>
+            <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+        </parameters>
+        <!-- objects added to this will NOT have all white in texture lit up green when console is high. They will get flood light though. -->
+        <!-- mainly for switches -->
+        <object-name>test-step-switch</object-name>
+        <object-name>autobrt-switch</object-name>
+        <object-name>att_fpm-switch</object-name>
+        <object-name>tas-switch</object-name>
+        <object-name>altrad-switch</object-name>
+        <object-name>deddata-switch</object-name>
+        <object-name>w_vah-switch</object-name>
         <!-- these needs to be animated
         <object-name>nuke-consent-switch</object-name>
         <object-name>nuke-consent-cover</object-name>-->
+    </effect>
+    <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-knob</inherits-from>
+        <parameters>
+            <implicit-lightmap-threshold-low type="float">0.2</implicit-lightmap-threshold-low>
+            <implicit-lightmap-threshold-high type="float">0.7</implicit-lightmap-threshold-high>
+        </parameters>
+        <!-- objects added to this will have all white in texture lit up green when console is high. They will also get flood light -->
+        <!-- only for knobs -->
+        <object-name>inst-pnl-flood-knob</object-name>
+        <object-name>inst-pnl-primary-knob</object-name>
+        <object-name>console-flood-knob</object-name>
+        <object-name>data-entry-display-knob</object-name>
+        <object-name>console-primary-knob</object-name>
+        <object-name>inst-pnl-flood-knob</object-name>
     </effect>
 
 </PropertyList>
