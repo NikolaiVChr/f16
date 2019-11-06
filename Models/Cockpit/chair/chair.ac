@@ -14,7 +14,7 @@ MATERIAL "ac3dmat1.003" rgb 0.6 0.447 0.2  amb 0.6 0.447 0.2  emis 0 0 0  spec 0
 MATERIAL "ac3dmat1.004" rgb 0.341 0.341 0.341  amb 0.341 0.341 0.341  emis 0 0 0  spec 0.467 0.467 0.467  shi 20  trans 0
 MATERIAL "ac3dmat0" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0.502 0.502 0.502  shi 10  trans 0
 MATERIAL "ac3dmat1.002" rgb 0.431 0.455 0.384  amb 0.431 0.455 0.384  emis 0 0 0  spec 0 0 0  shi 0  trans 0
-MATERIAL "ac3dmat1.005" rgb 0.918 0.447 0.2  amb 0.918 0.447 0.2  emis 0 0 0  spec 0 0 0  shi 7  trans 0
+MATERIAL "oxygen" rgb 1 1 1  amb 0.8 0.8 0.8  emis 0 0 0  spec 0.5 0.5 0.5  shi 64  trans 0
 MATERIAL "ac3dmat12.003" rgb 0.278 0.282 0.141  amb 0.278 0.282 0.141  emis 0 0 0  spec 0.192 0.192 0.192  shi 10  trans 0
 MATERIAL "ac3dmat1.007" rgb 0.282 0.518 0.753  amb 0.282 0.518 0.753  emis 0 0 0  spec 0.451 0.459 0.459  shi 10  trans 0
 MATERIAL "ac3dmat3" rgb 1 0 0  amb 1 0 0  emis 0 0 0  spec 0.5 0.5 0.5  shi 10  trans 0
@@ -36932,7 +36932,7 @@ name "bottle"
 loc -0.00395236 0.00027647 0.000226177
 data 8
 Mesh.019
-texture "/Users/utente/Desktop/GitHub/Aircrafts/f16/Models/Pilots/Tex_0004_1.jpg"
+texture "../../Pilots/Tex_0004_1.jpg"
 crease 45.000000
 numvert 447
 -4.03547 0.103564 0.215104
