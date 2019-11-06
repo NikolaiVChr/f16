@@ -1017,6 +1017,7 @@ var chute2 = func{
   setprop("f16/chute/enable",0);
 }
 
+# used in left panel knobs anims.
 var freqDigits = func {
     var freq = getprop("instrumentation/nav[0]/frequencies/selected-mhz");
     freq = roundabout(freq*100)*0.01;
@@ -1038,6 +1039,7 @@ var roundabout = func(x) {
 };
 freqDigits();
 
+# pilot view that translates left or right depending on view direction.
 var pilot_view_limiter = {
   new : func {
     return { parents: [pilot_view_limiter] };

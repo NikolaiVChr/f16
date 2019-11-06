@@ -330,17 +330,15 @@
  
  <!-- lighting -->
 
- <animation>
-  <object-name>ADI_mount</object-name>
-  <object-name>ADI_knob</object-name>
-  <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
-   <red>0.45</red>
-   <green>0.34</green>
-   <blue>0.18</blue>
-  </emission>
- </animation>
+   <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <parameters>
+            <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+        </parameters>
+        <object-name>ADI_mount</object-name>
+  <object-name>ADI_knob</object-name>     
+  
+ </effect>
 
  <animation>
   <object-name>ADI_sphere</object-name>

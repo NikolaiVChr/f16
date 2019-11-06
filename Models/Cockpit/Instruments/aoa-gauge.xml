@@ -27,18 +27,16 @@
 
 
  <!-- lighting -->
- <animation>
-  <object-name>AOA_mount</object-name>
+  <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <parameters>
+            <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+        </parameters>
+        <object-name>AOA_mount</object-name>
   <object-name>AOA_knob</object-name>
-  <type>material</type>
-  <emission>
-   <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
-   <red>0.45</red>
-   <green>0.34</green>
-   <blue>0.18</blue>
-  </emission>
- </animation>
-
+  
+ </effect>
+ 
  <animation>
   <object-name>AOA_mask</object-name>
   <object-name>AOA_off-flag</object-name>
