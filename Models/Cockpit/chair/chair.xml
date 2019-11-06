@@ -59,6 +59,44 @@
    <z>0</z>
   </axis>
  </animation>
+ 
+ <effect>
+      <inherits-from>Effects/model-combined-deferred</inherits-from>
+      <parameters>
+      <rain-enabled type="int">0</rain-enabled>
+      <snow-enabled type="int">0</snow-enabled>
+      <ambient-correction type="float">0.00</ambient-correction>
+      <lightmap-enabled type="int">0</lightmap-enabled>
+      <reflection-enabled type="int">0</reflection-enabled> 
+      </parameters>
+      <object-name>chair</object-name>
+      <object-name>controls</object-name>
+      <object-name>eject-handle</object-name>
+      <object-name>ejection-safety-lever</object-name>
+      <object-name>inertia-reel-handle</object-name>
+      <object-name>oxygen-pull-ring</object-name>
+      <object-name>restreint-handle</object-name>
+      <object-name>cushions</object-name>
+      <object-name>back-cushion</object-name>
+      <object-name>seat-cushion</object-name>
+      <object-name>back-structure</object-name>
+      <object-name>bucket-structure</object-name>
+      <object-name>main-chute-container</object-name>
+      <object-name>main-chute-extractor</object-name>
+      <object-name>rails</object-name>
+      <object-name>survival-kit-containe</object-name>
+      <object-name>details</object-name>
+      <object-name>bottle</object-name>
+      <object-name>bottle-fixature</object-name>
+      <object-name>cables</object-name>
+      <object-name>cables.001</object-name>
+      <object-name>cables.002</object-name>
+      <object-name>head-rest</object-name>
+      <object-name>manometer</object-name>
+      <object-name>pitot-tubes</object-name>
+      <object-name>rocket-catapult</object-name>
+      <object-name>screws</object-name>
+    </effect>
 
 
 </PropertyList>
