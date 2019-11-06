@@ -83,7 +83,7 @@ var SubSystem_RWR_APG = {
                     me.show = 1;#in radar cone
                 } elsif(me.u.get_model()=="AI" and me.rn < 55) {
                     me.show = 1;#non MP always has transponder on.
-                } elsif (me.trAct != nil and me.trAct.getValue() != -9999 and me.rn < 55) {
+                } elsif (me.trAct != nil and me.trAct.getValue() != nil and me.trAct.getValue() != -9999 and me.rn < 55) {
                   # transponder on
                   me.show = 1;
                 } elsif (me.rn < 7.5 * me.fct) {
