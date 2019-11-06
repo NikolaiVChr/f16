@@ -78,7 +78,7 @@
       <value>1</value>
      </blue>
      <alpha>
-      <value>0.12</value>
+      <expression><product><value>0.12</value><property>/rendering/scene/diffuse/red</property></product></expression>
      </alpha>
     </color>
     <size>
