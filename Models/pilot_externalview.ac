@@ -1,14 +1,14 @@
 AC3Db
-MATERIAL "ac3dmat1" rgb 1 1 1  amb 0.2 0.2 0.2  emis 0 0 0  spec 0.2 0.2 0.2  shi 128  trans 0
-MATERIAL "ac3dmat12" rgb 0.266667 0.266667 0.266667  amb 0.2 0.2 0.2  emis 0 0 0  spec 0.2 0.2 0.2  shi 128  trans 0
-MATERIAL "ac3dmat0" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0 0 0  shi 0  trans 0
-MATERIAL "ac3dmat13" rgb 0.533333 0.533333 0.533333  amb 0.533333 0.533333 0.533333  emis 0 0 0  spec 0 0 0  shi 10  trans 0
+MATERIAL "cloth" rgb 1 1 1  amb 0.2 0.2 0.2  emis 0 0 0  spec 0.4 0.4 0.4  shi 16  trans 0
+MATERIAL "tube" rgb 0.266667 0.266667 0.266667  amb 0.2 0.2 0.2  emis 0 0 0  spec 0.5 0.5 0.5  shi 32  trans 0
+MATERIAL "blackPlastic" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0.5 0.5 0.5  shi 64  trans 0
+MATERIAL "buckle" rgb 0.533333 0.533333 0.533333  amb 0.533333 0.533333 0.533333  emis 0 0 0  spec 0.5 0.5 0.5  shi 128  trans 0
 MATERIAL "visor" rgb 0.25 0.25 0.25  amb 0 0 0  emis 0 0 0  spec 0.757 0.765 0.8  shi 128  trans 0.1
-MATERIAL "Chrome" rgb 0.5 0.5 0.5  amb 0.5 0.5 0.5  emis 0 0 0  spec 1 1 1  shi 72  trans 0
-MATERIAL "ac3dmat1" rgb 0.878 0.878 0.878  amb 0.878 0.878 0.878  emis 0 0 0  spec 0.8 0.8 0.8  shi 14  trans 0
-MATERIAL "white" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0 0 0  shi 0  trans 0
-MATERIAL "ac3dmat1" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 1 1 1  shi 20  trans 0
-MATERIAL "ac3dmat1" rgb 0.702 0.702 0.702  amb 0.702 0.702 0.702  emis 0 0 0  spec 0.306 0.306 0.306  shi 109  trans 0
+MATERIAL "Chrome" rgb 0.5 0.5 0.5  amb 0.5 0.5 0.5  emis 0 0 0  spec 1 1 1  shi 128  trans 0
+MATERIAL "helmet" rgb 0.878 0.878 0.878  amb 0.878 0.878 0.878  emis 0 0 0  spec 0.6 0.6 0.6  shi 50  trans 0
+MATERIAL "skin" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.2 0.2 0.2  shi 8  trans 0
+MATERIAL "L-head" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 1 1 1  shi 20  trans 0
+MATERIAL "eyes" rgb 0.702 0.702 0.702  amb 0.702 0.702 0.702  emis 0 0 0  spec 0.306 0.306 0.306  shi 109  trans 0
 OBJECT world
 kids 1
 OBJECT group
