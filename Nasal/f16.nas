@@ -431,7 +431,7 @@ var sendABtoMP = func {
   # *0.5 is to prevent it from getting too white during night
   setprop("sim/multiplay/generic/float[11]",  0.75+(0.25-red*0.25)*0.5);#red
   setprop("sim/multiplay/generic/float[12]",  0.25+(0.75-red*0.75)*0.5);#green
-  setprop("sim/multiplay/generic/float[13]",  0.2+(0.8-red*0.8)*0.5);   #blue
+  setprop("sim/multiplay/generic/float[13]",  0.2+(0.4-red*0.4)*0.5);   #blue
   
   # scene red inverted:
   setprop("sim/multiplay/generic/float[14]",  (1-red)*0.5);  
