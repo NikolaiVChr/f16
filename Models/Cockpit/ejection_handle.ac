@@ -666,98 +666,98 @@ numvert 16
 0.00743172 0.0145462 -0.0133286
 0.00743172 -0.00202443 -0.027233
 numsurf 14
-SURF 0x0
+SURF 0X10
 mat 1
 refs 4
 6 0 1
 7 0 0
 3 1 0
 2 1 1
-SURF 0x0
+SURF 0X10
 mat 1
 refs 4
 4 1 0
 5 1 1
 1 0 1
 0 0 0
-SURF 0x0
+SURF 0X10
 mat 1
 refs 4
 1 0 0
 5 1 0
 6 1 1
 2 0 1
-SURF 0x0
+SURF 0X10
 mat 1
 refs 4
 4 0 0
 0 1 0
 3 1 1
 7 0 1
-SURF 0x0
+SURF 0X10
 mat 1
 refs 4
 11 0 0
 10 0 1
 9 1 1
 8 1 0
-SURF 0x0
+SURF 0X10
 mat 1
 refs 4
 8 0 0
 9 0 1
 5 1 1
 4 1 0
-SURF 0x0
+SURF 0X10
 mat 1
 refs 4
 7 0 1
 11 1 1
 8 1 0
 4 0 0
-SURF 0x0
+SURF 0X10
 mat 1
 refs 4
 10 0 1
 6 1 1
 5 1 0
 9 0 0
-SURF 0x0
+SURF 0X10
 mat 1
 refs 4
 10 1 1
 11 1 0
 7 0 0
 6 0 1
-SURF 0x0
+SURF 0X10
 mat 1
 refs 4
 12 1 0
 13 1 1
 14 0 1
 15 0 0
-SURF 0x0
+SURF 0X10
 mat 1
 refs 4
 0 1 0
 1 1 1
 13 0 1
 12 0 0
-SURF 0x0
+SURF 0X10
 mat 1
 refs 4
 0 0 0
 12 1 0
 15 1 1
 3 0 1
-SURF 0x0
+SURF 0X10
 mat 1
 refs 4
 13 0 0
 1 1 0
 2 1 1
 14 0 1
-SURF 0x0
+SURF 0X10
 mat 1
 refs 4
 2 0 1
