@@ -17,7 +17,7 @@
   </condition>
  </animation>
  
- <animation>
+    <animation>
         <type>pick</type>
         <object-name>FQS_marker-beacon</object-name>
         <hovered>
@@ -28,7 +28,6 @@
             </binding>
         </hovered>
     </animation>
-</animation>
 
  <!-- Mode knob -->
  <animation>
