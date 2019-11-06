@@ -12,8 +12,27 @@
         </parameters>
         <!-- objects added to this will have all white in texture lit up green when console is high. They will also get flood light. -->
         <object-name>HYD_PRESS_1</object-name>
-        <!--<object-name>RIGHT_AUX_CONSOLE</object-name> looks bad on this-->
 </effect>
+<effect>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <parameters>
+            <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+        </parameters>
+        <!-- objects added to this will NOT have all white in texture lit up green when console is high. They will get flood light though. -->
+        <object-name>RIGHT_AUX_CONSOLE</object-name><!-- this dont show due to cockpit panel hides it I think -->
+        <object-name>CAB_PRESS_mount</object-name>
+        <object-name>CLOCK_mount</object-name>
+        <object-name>CLOCK_knob</object-name>
+        <object-name>CLOCK_button</object-name>
+        <object-name>FUEL.000</object-name>
+        <object-name>LIQ_OXY_cylinder</object-name>
+        <object-name>EPU_FUEL_cylinder</object-name>
+        <object-name>HYD_PRESS_A_cylinder</object-name>
+        <object-name>HYD_PRESS_B_cylinder</object-name>
+        <object-name>CAUTION_PANEL_1</object-name>
+</effect>
+        
+        
 
  <!-- START HYDR GAUGE -->
 <animation>

@@ -14,12 +14,8 @@
                 <negative-z>Aircraft/f16/Models/Effects/interior/0006.png</negative-z>      <!-- nz (bottom) rotate 90 deg from N or S to W -->
             </images>
       	</texture>
-        <texture n="3">
-            <image>Aircraft/f16/Models/Effects/white.png</image>
-            <filter>linear-mipmap-linear</filter>
-            <wrap-s>clamp</wrap-s>
-            <wrap-t>clamp</wrap-t>
-            <internal-format>normalized</internal-format>
+        <texture n="3"><!-- lightmap -->
+            <type>white</type>
         </texture>
       	<opacity-cube-center type="vec3d" n="0"> -5.24268 0.0 1.682</opacity-cube-center>
       	<opacity-cube-scale type="vec3d" n="0"> 1.5 0.5 0.7</opacity-cube-scale>
