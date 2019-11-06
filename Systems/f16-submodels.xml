@@ -93,8 +93,8 @@
     <count>-1</count>
     <offsets>
         <x-m> -0.269</x-m><!-- in FEET and x is opposite normal FG model coordinates -->
-        <y-m> -9.45</y-m>
-        <z-m>  0.843</z-m>
+        <y-m> -9.46</y-m>
+        <z-m>  0.81</z-m>
     </offsets>
     <life>7.0</life><!-- since it has no drag, its lifetime should be as short as possible needed to hit stuff -->
     <wind>true</wind>
@@ -118,8 +118,8 @@
     <count>-1</count>
     <offsets>
         <x-m> -0.269</x-m>
-        <y-m> -9.45</y-m>
-        <z-m>  0.843</z-m>
+        <y-m> -9.44</y-m>
+        <z-m>  0.81</z-m>
     </offsets>
     <life>7.0</life>
     <wind>true</wind>
@@ -143,8 +143,8 @@
     <count>-1</count>
     <offsets>
         <x-m> -0.269</x-m>
-        <y-m>  9.45</y-m>
-        <z-m>  0.843</z-m>
+        <y-m>  9.46</y-m>
+        <z-m>  0.81</z-m>
     </offsets>
     <life>7.0</life>
     <wind>true</wind>
@@ -168,8 +168,8 @@
     <count>-1</count>
     <offsets>
         <x-m> -0.269</x-m>
-        <y-m>  9.45</y-m>
-        <z-m>  0.843</z-m>
+        <y-m>  9.44</y-m>
+        <z-m>  0.81</z-m>
     </offsets>
     <life>7.0</life>
     <wind>true</wind>
