@@ -161,11 +161,9 @@
  <animation>
   <type>rotate</type>
   <object-name>FUEL_FR_needle</object-name>
-<!--  <property>/consumables/fuel/tank[0]/level-lbs</property> -->
-<!--  <factor>0.06</factor>-->
-  <property>consumables/fuel/tank[0]/level-gal_us</property>
-  <factor>0.3881</factor>
-  <max-deg>205</max-deg>
+  <property>f16/fuel/hand-fwd</property>
+  <factor>0.06</factor>
+  <max-deg>245</max-deg>
   <center>
    <x-m>-0.26</x-m>
    <y-m> 0.37</y-m>
@@ -181,11 +179,9 @@
  <animation>
   <type>rotate</type>
   <object-name>FUEL_AL_needle</object-name>
-<!--  <property>/consumables/fuel/tank[1]/level-lbs</property> -->
-<!--  <factor>0.06</factor>-->
-  <property>consumables/fuel/tank[1]/level-gal_us</property>
-  <factor>0.3881</factor>
-  <max-deg>205</max-deg>
+  <property>f16/fuel/hand-aft</property>
+  <factor>0.06</factor>
+  <max-deg>245</max-deg>
   <center>
    <x-m>-0.26</x-m>
    <y-m> 0.37</y-m>

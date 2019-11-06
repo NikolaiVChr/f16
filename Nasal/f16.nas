@@ -281,18 +281,7 @@ var medium = {
     } else {
       setprop("controls/lighting/ext-lighting-panel/anti-collision2",0);
     }
-    # Fuel:
-    var fuel = getprop("/consumables/fuel/total-fuel-lbs");
-    setprop("/consumables/fuel/total-fuel-lbs-1",     int(fuel       )     -int(fuel*0.1)*10);
-    setprop("/consumables/fuel/total-fuel-lbs-10",    int(fuel*0.1   )*10  -int(fuel*0.01)*100);
-    setprop("/consumables/fuel/total-fuel-lbs-100",   int(fuel*0.01  )*100 -int(fuel*0.001)*1000);
-    setprop("/consumables/fuel/total-fuel-lbs-1000",  int(fuel*0.001 )*1000-int(fuel*0.0001)*10000);
-    setprop("/consumables/fuel/total-fuel-lbs-10000", int(fuel*0.0001)*10000);
-    if (fuel<getprop("f16/settings/bingo")) {
-      setprop("f16/avionics/bingo", 1);
-    } else {
-      setprop("f16/avionics/bingo", 0);
-    }
+    
     var tcnTrue = getprop("instrumentation/tacan/indicated-bearing-true-deg");
     var trueH   = getprop("orientation/heading-deg");
     var tcnDev  = geo.normdeg180(tcnTrue-trueH);
@@ -362,7 +351,7 @@ var medium = {
     sendABtoMP();
     CARA();
     buffeting();
-
+    fuelqty();
     settimer(func {me.loop()},0.5);
   },
 };
@@ -496,6 +485,48 @@ var CARA = func {
   var up = [0,0,1];#vector pointing up from ground
   var angle = vector.Math.angleBetweenVectors(down,up);
   setprop("f16/avionics/cara-on",angle<70 and getprop("position/altitude-agl-ft")<50000);#yep, really goes up to 50000 ft!
+}
+
+var fuelqty = func {
+  var sel = getprop("controls/fuel/qty-selector");
+  var fuel = getprop("/consumables/fuel/total-fuel-lbs");
+
+  if (fuel<getprop("f16/settings/bingo")) {
+    setprop("f16/avionics/bingo", 1);
+  } else {
+    setprop("f16/avionics/bingo", 0);
+  }
+  if (sel == 0) {
+    # test
+    setprop("f16/fuel/hand-fwd", 2000);
+    setprop("f16/fuel/hand-aft", 2000);
+    fuel = 6000;
+  } elsif (sel == 1) {
+    #norm
+    setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[0]/level-lbs"));
+    setprop("f16/fuel/hand-aft", getprop("consumables/fuel/tank[1]/level-lbs"));
+  } elsif (sel == 2) {
+    #reservoir tanks
+    setprop("f16/fuel/hand-fwd", 0);
+    setprop("f16/fuel/hand-aft", 0);
+  } elsif (sel == 3) {
+    # int wing
+    setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[6]/level-lbs"));
+    setprop("f16/fuel/hand-aft", getprop("consumables/fuel/tank[5]/level-lbs"));
+  } elsif (sel == 4) {
+    # ext wing
+    setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[3]/level-lbs"));
+    setprop("f16/fuel/hand-aft", getprop("consumables/fuel/tank[2]/level-lbs"));
+  } elsif (sel == 5) {
+    # ext center
+    setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[4]/level-lbs"));
+    setprop("f16/fuel/hand-aft", 0);
+  }
+  setprop("/consumables/fuel/total-fuel-lbs-1",     int(fuel       )     -int(fuel*0.1)*10);
+  setprop("/consumables/fuel/total-fuel-lbs-10",    int(fuel*0.1   )*10  -int(fuel*0.01)*100);
+  setprop("/consumables/fuel/total-fuel-lbs-100",   int(fuel*0.01  )*100 -int(fuel*0.001)*1000);
+  setprop("/consumables/fuel/total-fuel-lbs-1000",  int(fuel*0.001 )*1000-int(fuel*0.0001)*10000);
+  setprop("/consumables/fuel/total-fuel-lbs-10000", int(fuel*0.0001)*10000);
 }
 
 var batteryChargeDischarge = func {

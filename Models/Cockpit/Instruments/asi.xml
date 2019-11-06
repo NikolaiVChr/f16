@@ -224,7 +224,7 @@
             <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
         </parameters>
         <object-name>ASI_mount</object-name>
-  <object-name>ASI_face</object-name>      
+        <object-name>ASI_face</object-name>      
   
  </effect>
 

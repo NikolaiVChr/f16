@@ -20,59 +20,58 @@
 
  <!-- Mode knob -->
  <animation>
-  <type>rotate</type>
-  <object-name>FQS_sel-knob</object-name>
-  <property>controls/fuel/qty-selector</property>
-  <factor>45</factor>
-  <center>
-   <x-m>0</x-m>
-   <y-m>0.0094</y-m>
-   <z-m>0.0208</z-m>
-  </center>
-  <axis>
-   <x>-1</x>
-   <y>0</y>
-   <z>0</z>
-  </axis>
- </animation>
-
+        <type>knob</type>
+        <object-name>FQS_sel-knob</object-name>
+        <property>controls/fuel/qty-selector</property>
+        <factor>45</factor>
+        <offset-deg>0</offset-deg>
+        <interval-sec>0.15</interval-sec>
+        <center>
+         <x-m>0</x-m>
+         <y-m>0.0094</y-m>
+         <z-m>0.0208</z-m>
+        </center>
+        <axis>
+         <x>-1</x>
+         <y>0</y>
+         <z>0</z>
+        </axis>  
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/fuel/qty-selector</property>
+                <step>1</step>
+                <min>0</min>
+                <max>5</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/fuel/qty-selector</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>5</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>fqs</tooltip-id>
+                <label>FUEL QTY SEL</label>
+            </binding>
+        </hovered>
+    </animation>
 
  <animation>
-  <name>sel-knob-left</name>
-  <type>pick</type>
-  <visible>true</visible>
-  <object-name>FQS_sel-knob-left</object-name>
-  <action>
-   <button>0</button>
-   <repeatable>false</repeatable>
-   <binding>
-    <command>property-adjust</command>
-    <property>controls/fuel/qty-selector</property>
-    <step>-1</step>
-    <min>0</min>
-    <max>5</max>
-    <wrap>false</wrap>
-   </binding>
-  </action>
- </animation>
-
- <animation>
-  <name>sel-knob-right</name>
-  <type>pick</type>
-  <visible>true</visible>
-  <object-name>FQS_sel-knob-right</object-name>
-  <action>
-   <button>0</button>
-   <repeatable>false</repeatable>
-   <binding>
-    <command>property-adjust</command>
-    <property>controls/fuel/qty-selector</property>
-    <step>1</step>
-    <min>0</min>
-    <max>5</max>
-    <wrap>false</wrap>
-   </binding>
-  </action>
+    <type>select</type>
+    <object-name>FQS_sel-knob-right</object-name>
+    <object-name>FQS_sel-knob-left</object-name>
+    <condition>
+    <equals><value>0</value><value>1</value></equals>
+  </condition>
  </animation>
 
 
@@ -158,8 +157,8 @@
             <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
         </parameters>      
   
-  <object-name>FQS_fuel-trans-switch</object-name>
-  <object-name>FQS_marker-beacon</object-name>
+        <object-name>FQS_fuel-trans-switch</object-name>
+        <object-name>FQS_marker-beacon</object-name>
  </effect>
  
  <effect>
@@ -170,7 +169,7 @@
         </parameters>
         <!-- objects added to this will have all white in texture lit up green when console is high. They will also get flood light -->
         <object-name>FQS_mount</object-name>
- </effect>f16panel-knob
+ </effect>
  <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-knob</inherits-from>
         <parameters>

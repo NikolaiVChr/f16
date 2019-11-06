@@ -12,14 +12,13 @@
             <!--<implicit-lightmap-intensity><use>controls/lighting/lighting-panel/data-entry-display</use></implicit-lightmap-intensity> this is ICP not DED panel, so should not have DED control -->
         </parameters>
         <object-name>INSTR_mode-knob</object-name>
-        <object-name>INSTR_mode-knob-left</object-name>
-        <object-name>INSTR_mode-knob-right</object-name>
         <object-name>INSTR_mount</object-name>
         <object-name>INSTR_mode-knob</object-name>
         <object-name>INSTR_hdg-knob</object-name>
   </effect>
 
  <!-- Mode knob -->
+ 
  <animation>
   <type>rotate</type>
   <object-name>INSTR_mode-knob</object-name>
@@ -42,6 +41,8 @@
   <object-name>INSTR_mode-knob</object-name>
   <object-name>INSTR_hdg-knob</object-name>
   <object-name>INSTR_mount</object-name>
+  <object-name>INSTR_mode-knob-left</object-name>
+  <object-name>INSTR_mode-knob-right</object-name>
   <condition>
     <or>
       <equals>
