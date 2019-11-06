@@ -74,9 +74,9 @@ var SubSystem_RWR_APG = {
                 me.trAct = me.u.propNode.getNode("instrumentation/transponder/transmitted-id");
                 me.show = 0;
                 me.heading = me.u.get_heading();  
-                me.inv_bearing =  me.bearing+180;
-                me.deviation = me.inv_bearing - me.heading;
-                me.dev = math.abs(geo.normdeg180(me.deviation));
+                me.inv_bearing =  me.bearing+180;#bearing from target to me
+                me.deviation = me.inv_bearing - me.heading;# bearing deviation from target to me
+                me.dev = math.abs(geo.normdeg180(me.deviation));# my degrees from opponents nose
                 if (me.u.get_behind_terrain()) {
                     me.show = 0;#behind terrain (does this terrain check happen often enough??)
                 } elsif (me.u.get_display()) {
@@ -98,23 +98,23 @@ var SubSystem_RWR_APG = {
                 if (me.show == 1) {
                     me.threat = 0;
                     if (me.u.get_model() != "missile_frigate" and me.u.get_model() != "buk-m2" and me.u.get_model() != "s-300" and me.u.get_model() != "fleet") {
-                        me.threat += ((180-me.dev)/180)*0.30;
+                        me.threat += ((180-me.dev)/180)*0.30;# most threat if I am in front of his nose
                         me.spd = (60-me.u.get_Speed())/60;
-                        me.threat -= me.spd>0?me.spd:0;
+                        me.threat -= me.spd>0?me.spd:0;# if his speed is lower than 60kt then give him minus threat else positive
                     } elsif (me.u.get_model == "missile_frigate" or me.u.get_model() == "fleet") {
                         me.threat += 0.30;
                     } else {
                         me.threat += 0.30;
                     }
-                    me.danger = 50;
+                    me.danger = 50;# within this range he is most dangerous
                     if (me.u.get_model() == "missile_frigate" or me.u.get_model() == "fleet" or me.u.get_model() == "s-300") {
                         me.danger = 75
                     } elsif (me.u.get_model() == "buk-m2") {
                         me.danger = 35;
                     }
-                    me.threat += ((me.danger-me.rn)/me.danger)>0?((me.danger-me.rn)/me.danger)*0.60:0;
+                    me.threat += ((me.danger-me.rn)/me.danger)>0?((me.danger-me.rn)/me.danger)*0.60:0;# if inside danger zone then add threat, the closer the more.
                     me.clo = me.u.get_closure_rate();
-                    me.threat += me.clo>0?(me.clo/500)*0.10:0;
+                    me.threat += me.clo>0?(me.clo/500)*0.10:0;# more closing speed means more threat.
                     if (me.threat > 1) me.threat = 1;
                     if (me.threat <= 0) continue;
     #                printf("%s threat:%.2f range:%d dev:%d", me.u.get_Callsign(),me.threat,me.u.get_range(),me.deviation);
