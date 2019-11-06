@@ -48,11 +48,11 @@
 			  <bin-name>DepthSortedBin</bin-name>
 			</render-bin>
       </parameters>
-      <object-name>L-visor</object-name><!-- inner sidewalls of outlet -->
+      <object-name>L-visor</object-name>
  </effect>
  
  	<effect>
-      <inherits-from>Effects/model-combined-transparent</inherits-from>
+      <inherits-from>Effects/model-combined-deferred</inherits-from>
       <parameters>
 			<rain-enabled type="int">0</rain-enabled>
 			<snow-enabled type="int">0</snow-enabled>
