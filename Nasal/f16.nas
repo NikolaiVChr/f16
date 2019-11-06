@@ -420,15 +420,21 @@ var fast = {
 
 var sendABtoMP = func {
   var red = getprop("rendering/scene/diffuse/red");
+  
+  # non-tied property for effect:
   setprop("rendering/scene/diffuse/red-unbound", red);
+  
+  # afterburner density:
   setprop("sim/multiplay/generic/float[10]",  1-red*0.75);
-
-  setprop("sim/multiplay/generic/float[11]",  0.75+(0.25-red*0.25));
-  setprop("sim/multiplay/generic/float[12]",  0.25+(0.75-red*0.75));
-  setprop("sim/multiplay/generic/float[13]",  0.2+(0.8-red*0.8));
-  setprop("sim/multiplay/generic/float[14]",  (1-red)*0.5);
   
+  #color of afterburner:
+  # *0.5 is to prevent it from getting too white during night
+  setprop("sim/multiplay/generic/float[11]",  0.75+(0.25-red*0.25)*0.5);#red
+  setprop("sim/multiplay/generic/float[12]",  0.25+(0.75-red*0.75)*0.5);#green
+  setprop("sim/multiplay/generic/float[13]",  0.2+(0.8-red*0.8)*0.5);   #blue
   
+  # scene red inverted:
+  setprop("sim/multiplay/generic/float[14]",  (1-red)*0.5);  
 }
 
 var sendLightsToMp = func {
