@@ -496,6 +496,9 @@ var fuelqty = func {
   } else {
     setprop("f16/avionics/bingo", 0);
   }
+  if (getprop("fdm/jsbsim/elec/bus/emergency-ac-2")<100) {
+    return;
+  }
   if (sel == 0) {
     # test
     setprop("f16/fuel/hand-fwd", 2000);
