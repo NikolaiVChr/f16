@@ -1055,16 +1055,18 @@ var pilot_view_limiter = {
       heading_max : math.abs(limits.getNode("left/heading-max-deg", 1).getValue() or 1000),
       threshold : math.abs(limits.getNode("left/x-offset-threshold-deg", 1).getValue() or 0),
       xoffset_max : math.abs(limits.getNode("left/x-offset-max-m", 1).getValue() or 0),
+      xoffset_t_max : math.abs(limits.getNode("left/x-offset-threshold-max-m", 1).getValue() or 0),
     };
     me.right = {
       heading_max : -math.abs(limits.getNode("right/heading-max-deg", 1).getValue() or 1000),
       threshold : -math.abs(limits.getNode("right/x-offset-threshold-deg", 1).getValue() or 0),
       xoffset_max : -math.abs(limits.getNode("right/x-offset-max-m", 1).getValue() or 0),
+      xoffset_t_max : -math.abs(limits.getNode("right/x-offset-threshold-max-m", 1).getValue() or 0),
     };
-    me.left.scale = me.left.xoffset_max / me.left.threshold;
-    me.right.scale = me.right.xoffset_max / me.right.threshold;
+    me.left.scale = me.left.xoffset_t_max / me.left.threshold;
+    me.right.scale = me.right.xoffset_t_max / me.right.threshold;
     me.last_hdg = geo.normdeg180(me.hdgN.getValue());
-    me.enable_xoffset = me.right.xoffset_max > 0.001 or me.left.xoffset_max > 0.001;
+    me.enable_xoffset = me.right.xoffset_t_max > 0.001 or me.left.xoffset_t_max > 0.001;
 
     me.needs_start = 0;
   },
@@ -1100,11 +1102,11 @@ var pilot_view_limiter = {
       if (hdg > 0 and hdg < me.left.threshold)
         offset = -hdg * me.left.scale;
       elsif (hdg > 0)
-        offset = -me.left.xoffset_max;
+        offset = -(me.left.xoffset_t_max+(me.left.xoffset_max-me.left.xoffset_t_max)*(hdg-me.left.threshold)/(me.left.heading_max-me.left.threshold));
       elsif (hdg < 0 and hdg > me.right.threshold)
         offset = -hdg * me.right.scale;
       elsif (hdg < 0)
-        offset = -me.right.xoffset_max;
+        offset = -(me.right.xoffset_t_max+(me.right.xoffset_max-me.right.xoffset_t_max)*(hdg-me.right.threshold)/(me.right.heading_max-me.right.threshold));
 
       var new_offset = me.xoffset_lowpass.filter(offset);
       me.xoffsetN.setDoubleValue(me.xoffsetN.getValue() - me.last_offset + new_offset);

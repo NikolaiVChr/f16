@@ -289,12 +289,14 @@
                     <right>
                         <heading-max-deg>170</heading-max-deg>
                         <x-offset-threshold-deg>15</x-offset-threshold-deg>
-                        <x-offset-max-m>0.10</x-offset-max-m>
+                        <x-offset-threshold-max-m>0.10</x-offset-threshold-max-m>
+                        <x-offset-max-m>0.175</x-offset-max-m>
                     </right>
                     <left>
                         <heading-max-deg>170</heading-max-deg>
                         <x-offset-threshold-deg>15</x-offset-threshold-deg>
-                        <x-offset-max-m>0.10</x-offset-max-m>
+                        <x-offset-threshold-max-m>0.10</x-offset-threshold-max-m>
+                        <x-offset-max-m>0.175</x-offset-max-m>
                     </left>
                 </limits>
             </config>
