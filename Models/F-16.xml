@@ -316,6 +316,19 @@
       <object-name>FuselageLogoRight</object-name>
       <object-name>FuselageLogoLeft</object-name>
   </effect>
+  
+  <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.0</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <snow-enabled type="int">0</snow-enabled>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <!-- fuselage -->
+      <object-name>CanopyFrameInner</object-name>
+    </effect>
 
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
@@ -997,6 +1010,7 @@
   <object-name>CanopyBackOutside</object-name>
 -->
   <object-name>CanopyFrame</object-name>
+  <object-name>CanopyFrameInner</object-name>
   <object-name>CanopyForwardInside</object-name>
   <object-name>CanopyForwardOutside</object-name>
  <property>canopy/position-norm</property>
