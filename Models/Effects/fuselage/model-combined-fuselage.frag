@@ -311,3 +311,7 @@ void main (void)
     
 	gl_FragColor = fragColor;
 }
+// TODO: Add compositor shadows
+//       Make it play nicer with the 2 types of transparency:
+//        * Glass and semi-transparent objects: Even with no alpha they should show reflections/specular/dirt and stuff.
+//        * No object: For example gauge dials that have the corners cut by transparent textures etc. They should not show reflections/specular/dirt and stuff.
