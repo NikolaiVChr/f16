@@ -5,6 +5,13 @@
  <path>nozzle.ac</path>
 
  <model>
+  <name>GE</name>
+  <path>Aircraft/f16/Models/nozzle-GE.xml</path>
+  <offsets>
+  </offsets>
+ </model>
+
+ <model>
   <name>sect1</name>
   <path>Aircraft/f16/Models/nozzle-section.xml</path>
   <offsets>

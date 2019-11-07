@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>nozzle-GE.ac</path>
+
+ <animation>
+  <type>range</type>
+  <object-name>InNozzleROpen</object-name>
+  <object-name>InNozzleR</object-name>
+  <object-name>Petals-R</object-name>
+  <object-name>NozzlePetal.024</object-name>
+  <object-name>NozzlePetal.025</object-name>
+  <object-name>NozzlePetal.026</object-name>
+  <object-name>NozzlePetal.027</object-name>
+  <object-name>NozzlePetal.028</object-name>
+  <object-name>NozzlePetal.029</object-name>
+  <object-name>NozzlePetal.030</object-name>
+  <object-name>NozzlePetal.031</object-name>
+  <object-name>NozzlePetal.032</object-name>
+  <object-name>NozzlePetal.033</object-name>
+  <object-name>NozzlePetal.034</object-name>
+  <object-name>NozzlePetal.035</object-name>
+  <min-m>900</min-m>
+  <max-m>901</max-m>
+ </animation>
+
+</PropertyList>
