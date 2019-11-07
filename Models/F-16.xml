@@ -112,6 +112,18 @@
     </and>
   </condition>
  </animation>
+ 
+ <animation>
+  <type>select</type>
+ <object-name>Rect</object-name>
+      <object-name>LogoPilotRight</object-name>
+  <condition>
+        <not>
+          <property>/sim/current-view/internal</property>
+        </not>
+  </condition>
+ </animation>
+ 
 
 <model>
   <name>mfd-flir</name>
