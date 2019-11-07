@@ -42,6 +42,7 @@
           Total external JP-4 should be: 9300 (the big tanks, there is 2 sizes)
   -->
   <refuel-rate unit="LBS/MIN"> 6000 </refuel-rate>
+  <dump-rate unit="LBS/MIN"> 1000 </dump-rate>
     <tank type="FUEL"> <!-- FWD Tank -->
    <location unit="IN">
     <x> -128.5 </x>

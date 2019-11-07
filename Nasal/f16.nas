@@ -496,6 +496,11 @@ var fuelqty = func {
   } else {
     setprop("f16/avionics/bingo", 0);
   }
+  if (!getprop("consumables/fuel-tanks/serviceable")) {
+    setprop("fdm/jsbsim/propulsion/dump_fuel",1);
+  } else {
+    setprop("fdm/jsbsim/propulsion/dump_fuel",0);
+  }
   if (getprop("fdm/jsbsim/elec/bus/emergency-ac-2")<100) {
     return;
   }
@@ -813,6 +818,8 @@ FailureMgr.add_failure_mode("instrumentation/radar", "Radar", radar_fc);
 var rwr_fc = compat_failure_modes.set_unserviceable("instrumentation/rwr");
 FailureMgr.add_failure_mode("instrumentation/rwr", "RWR", rwr_fc);
 
+var fl = compat_failure_modes.set_unserviceable("consumables/fuel-tanks");
+FailureMgr.add_failure_mode("consumables/fuel-tanks", "Fuel tank integrity", fl);
 
 # setup properties required for frame notifier.
 # NOTE: This is a deprecated way of doing things; each subsystem should do this
