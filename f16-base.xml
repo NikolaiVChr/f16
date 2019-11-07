@@ -2815,6 +2815,10 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
         <rwr-unk type="bool">false</rwr-unk>
     </sound>
     <f16>
+        <fuel>
+            <hand-fwd type="double">1000</hand-fwd>
+            <hand-aft type="double">3000</hand-aft>
+        </fuel>
         <sound>
             <thunder1 type="bool">false</thunder1>
             <thunder2 type="bool">false</thunder2>
