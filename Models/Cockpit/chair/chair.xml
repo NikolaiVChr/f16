@@ -69,6 +69,7 @@
           <snow-enabled type="int">0</snow-enabled>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
+      <!-- non metal -->
       <object-name>chair</object-name>
       <object-name>controls</object-name>
       <object-name>oxygen-pull-ring</object-name>
@@ -98,6 +99,7 @@
           <snow-enabled type="int">0</snow-enabled>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
+      <!-- metal -->
       <object-name>eject-handle</object-name>
       <object-name>ejection-safety-lever</object-name>
       <object-name>inertia-reel-handle</object-name>
