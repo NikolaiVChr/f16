@@ -553,5 +553,26 @@
                 <script>pylons.a2s_antiship2();</script>
             </binding>
         </button>
+        
+        <hrule>
+            <row>19</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
+        
+        <text>
+            <row>20</row>
+            <col>0</col>
+            <label>Internal and mounted tanks</label>
+        </text>
+        <button><pref-width>45</pref-width><pref-height>20</pref-height>
+            <row>20</row>
+            <col>1</col>
+            <legend>Refuel</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.refuel();</script>
+            </binding>
+        </button>
     </group>
 </PropertyList>

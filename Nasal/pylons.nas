@@ -780,6 +780,19 @@ var airshow = func {
     }
 }
 
+var refuel = func {
+	if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+		setprop("consumables/fuel/tank[0]/level-norm", 1);
+		setprop("consumables/fuel/tank[1]/level-norm", 1);
+		if (getprop("consumables/fuel/tank[2]/name") != "Not attached") setprop("consumables/fuel/tank[2]/level-norm", 1);
+		if (getprop("consumables/fuel/tank[3]/name") != "Not attached") setprop("consumables/fuel/tank[3]/level-norm", 1);
+		if (getprop("consumables/fuel/tank[4]/name") != "Not attached") setprop("consumables/fuel/tank[4]/level-norm", 1);
+		setprop("consumables/fuel/tank[5]/level-norm", 1);
+		setprop("consumables/fuel/tank[6]/level-norm", 1);
+	} else {
+      screen.log.write(f16.msgC);
+    }
+}
 # Clean configuration
 var clean = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
