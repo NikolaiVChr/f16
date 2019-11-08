@@ -1246,7 +1246,7 @@
 			</condition>
 			<volume>
 				<property>/environment/rain-norm</property>
-				<factor>0.375</factor>
+				<factor>0.39</factor>
 			</volume>
 		</rain>
 		<rain>
@@ -2405,6 +2405,54 @@
                 	<equals>
 						<property>systems/refuel/serviceable</property>
 						<value>0</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.60</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>LandingLightOff</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>controls/lighting/landing-light</property>
+						<value>0</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.60</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>LandingLightOn</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>controls/lighting/landing-light</property>
+						<value>1</value>
+					</equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.60</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>TaxiLightOn</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/button2.wav</path>
+			<condition>
+                	<equals>
+						<property>controls/lighting/landing-light</property>
+						<value>-1</value>
 					</equals>
 			</condition>
 			<volume>

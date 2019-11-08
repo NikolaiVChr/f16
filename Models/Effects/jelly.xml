@@ -17,7 +17,7 @@
     <condition>
       <and>
         <not>
-          <property>sim/multiplay/generic/int[10]</property><!-- smoke -->
+          <property>sim/multiplay/generic/bool[10]</property><!-- smoke -->
         </not>
         <greater-than>
           <property>sim/multiplay/generic/short[6]</property><!-- N2 -->
@@ -75,7 +75,7 @@
                     <red>
                         <expression>
                             <product>
-                                <value>0.98</value>
+                                <value>0.6</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -83,7 +83,7 @@
                     <green>
                         <expression>
                             <product>
-                                <value>0.97</value>
+                                <value>0.8</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -91,7 +91,7 @@
                     <blue>
                         <expression>
                             <product>
-                                <value>0.95</value>
+                                <value>1</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -101,7 +101,7 @@
                     </alpha>
                 </color>
                 <size>
-                    <value>1.0</value>
+                    <value>0.9</value>
                 </size>
             </start>
 
@@ -110,7 +110,7 @@
                     <red>
                         <expression>
                             <product>
-                                <value>0.95</value>
+                                <value>0.6</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -118,7 +118,7 @@
                     <green>
                         <expression>
                             <product>
-                                <value>0.95</value>
+                                <value>0.8</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -126,17 +126,17 @@
                     <blue>
                         <expression>
                             <product>
-                                <value>0.95</value>
+                                <value>1.0</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
                     </blue>
                     <alpha>
-                        <value>0.125</value>
+                        <value>0.075</value>
                     </alpha>
                 </color>
                 <size>
-                    <value>7.5</value>
+                    <value>8.0</value>
                 </size>
             </end>
 

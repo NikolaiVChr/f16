@@ -53,7 +53,7 @@
   
   <counter>
    <particles-per-sec>
-    <value>8</value>
+    <value>12</value>
     <spread>5</spread>
    </particles-per-sec>
   </counter>
