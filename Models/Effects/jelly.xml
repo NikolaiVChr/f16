@@ -17,11 +17,15 @@
     <condition>
       <and>
         <not>
-          <property>sim/multiplay/generic/int[10]</property>
+          <property>sim/multiplay/generic/int[10]</property><!-- smoke -->
         </not>
         <greater-than>
           <property>sim/multiplay/generic/short[6]</property><!-- N2 -->
           <value>98</value>
+        </greater-than>
+        <greater-than>
+         <property>sim/multiplay/generic/float[3]</property>
+         <value>50</value>
         </greater-than>
         <greater-than>
           <property>/environment/temperature-degc</property>
