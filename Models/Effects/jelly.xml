@@ -3,7 +3,7 @@
 <PropertyList>
 
   <particlesystem>
-    <name>jelly</name>
+    <name>heat-blur-moving</name>
     <texture>exhaustheath.png</texture>
     <emissive>false</emissive>
     <lighting>false</lighting>

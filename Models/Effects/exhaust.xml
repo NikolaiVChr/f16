@@ -2,7 +2,7 @@
 <PropertyList>
 
 <particlesystem>
-  <name>exhaust-heath</name>
+  <name>heat-blur-still</name>
   <texture>exhaustheath.png</texture>
   <emissive>false</emissive>
   <lighting>false</lighting>
