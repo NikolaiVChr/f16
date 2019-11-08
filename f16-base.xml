@@ -649,12 +649,13 @@
                 <name>Ctrl-3</name>
                 <desc>GCI Cutoff</desc>
             </key>
-            <text><![CDATA[
+            <text>Choose your section</text>
+            <text-1><![CDATA[
 LANDING
 No fixed landing speed, however a suggested approach speed will display in left side of HUD when gears is down and masterarm is off.
 A little AoA bracket will appear down in the HUD, keep the flight path indicator inside the bracket. The top of the bracket is 11 and bottom is 15 deg AoA.
 Notice that it can be hard to see the touchdown point when landing with that high AoA, raising the seat with key 'u' will help.
-If the runway is wet, icy or short use the dragchute (F5).
+If the runway is wet, icy or short use the dragchute (F5) and/or hook if the runway has cables.
 
 TAKE-OFF
 You can rotate around 150 KT when aircraft is light. Be somewhat gentle on the stick if you rotate early as you otherwise might tail-scrape.
@@ -672,6 +673,19 @@ Do not exceed Mach 2.05 or 800 KCAS.
 Do not roll faster than 225 kt groundspeed for main landing gear tires, or 217 for nose wheel tire.
 Do not operate below 200 KT with cat III stores, unless for landing or take-off.
 
+NIGHTTIME FLYING
+There is flood and instrument lights that can be turned up.
+If running ALS you can also go into filters and enable one of the night vision modes.
+
+DRAGCHUTE
+Max recommended KIAS for deployment is 170. Key is F5.
+Not all variants have dragchute.
+
+FLYING IN MP
+Firstly be sure to use "Visible to 2017+", else others will not see everything working okay when they see your aircraft.
+For doing combat enable "MP Discharge messages". This might be considered spam of MP chat, so use it sparringly and only against opponents that have agreed to be fighting you.
+            ]]></text-1>
+            <text-2><![CDATA[
 HUD
 The speed in HUD is calibrated airspeed per default, and always when gear is commanded down. It can be switched in the control-panel.
 
@@ -688,7 +702,7 @@ Text Right side:
   B XX.X is  slant range to steerpoint. Callsign if masterarm.
   ETA to next steerpoint. TA XX if masterarm on, XX stand for 1000s ft of target altitude.
   023>2 means 23 NM to next steerpoint number 2. F034.2 if masterarm on, means 34.2 NM in slant range to target.
-  Type of target if masterarm on.
+  Type of target if masterarm on. Else can show TACAN/VOR if enabled.
 
 Text Center:
   LIMIT if Vne exceeded.
@@ -705,8 +719,8 @@ If a line is centered on the FPM and segmented it means its invalid.
 If a line is not centered but segmented it means its valid but out of range.
 If a line is not segmented, its in range and valid.
 Keep the lines centered on the FPM to aim for the localizer beams.
-
-
+            ]]></text-2>
+            <text-3><![CDATA[
 RWR
 The round display above left MFD display is a Radar Warning Reciever.
 It works by sorting the threats to you.
@@ -725,7 +739,8 @@ For something to show up in the RWR at all these conditions must be met:
 2: Be picked up by your radar OR having an active radar pointed your way OR having transponder on and not be too far away.
 
 Notice that the RWR can sometimes pick up threat much further away than your radar is capable off.
-
+            ]]></text-3>
+            <text-4><![CDATA[
 MFDs (Multi Function Displays)
 page SMS: Clicking on button next to a station will select it. 
           J-S will jettison the selected station.
@@ -733,14 +748,19 @@ page SMS: Clicking on button next to a station will select it.
 page CRM: B-scope radar display. Horizontal is relative bearing to targets, vertical is distance.
           A4: How much azimuth the radar shall cover, A4 is max (120 degs).
           8B: How much vertically the radar shall cover, 8B is max (120 degs).
-page VSD: Vertical situation display. Shows radar echoes.
 page HSD: Horizontal situation display. Shows route and radar echoes.
           DEP: Depressed ownship in display
           CEN: Centered ownship in display
           CPL: Range will follow (approx) radar distance
           DCPL: Range can be set independently of radar range by clicking on the up/down arrows.
-page SIT: Mostly for radio navigation.
+page WPN: Details about current selected weapon(s).
 
+DED
+The DED is the small display above the right color MFD.
+Clicking on certain buttons on the ICP (the panel below the HUD) can bring up different pages.
+The DED can also be brought up on the HUD in the controlpanel.
+            ]]></text-4>
+            <text-5><![CDATA[
 AUTOPILOT
 Notice that even when A/P is enabled you can control the airplane with the stick. When you let go of stick A/P will recalculate from current situation.
 
@@ -751,7 +771,8 @@ Pitch: ALT HOLD: Hold current altitude
 Roll:  HDG SEL:  Hold current heading
        ATT HOLD: Hold current roll attitude
        STRG SEL: Follow route from Route Manager
-
+            ]]></text-5>
+            <text-6><![CDATA[
 AIMING THE CANNON
 Once you have selected cannon and masterarm switch is ON, a timer will start and after around 2 seconds you will get the EEGS funnel on the HUD.
 EEGS stands for Enhanced Envelope Gun Sight. Keep you targets wingtips so that they touch the sides of the funnel, and keep your aircraft attitude movement stable for around 1 second, then fire a burst. This will give you the best chance of hitting. The sides of the funnel is computed for a 35ft wingspan, so if you are aiming at a larger or smaller aircraft you need to compensate for that.
@@ -761,26 +782,25 @@ First mount some armament.
 Secondly make sure masterarm is enabled.
 Thirdly select the arm. (use 'w' key or click buttons 'A-A' or 'A-G' under HUD)
 Fourthly make sure target is selected (key 'y')
-For GBU-12 and GBU-24 make sure laser is armed.
-For GBU-12, GBU-24, GBU-31, GBU-54, MK-82, MK-83, MK-84, CBU-87, AGM-154A when getting close a vertical line will appear in HUD. Align flight path indicator on the line, when a small horizontal line on that line starts dropping down and reach another line then its time to release (key 'e' or 'trigger').
-For AIM-120 the trigger can be held for 2 second to fire it without a lock in MADDOG mode, where it will lock onto anyone it sees.
+Bombs
+  For GBU-12 and GBU-24 make sure laser is armed.
+  Release mode can be set with WPN page, options are CCIP and CCRP.
+    CCRP: When getting close to target a vertical line will appear in HUD. Align flight path indicator on the line, when a small horizontal line on that line starts dropping down and reach another line then its time to release (key 'e' or 'trigger').
+    CCIP: A line from FPM to a round pipper is displayed when close enough to ground, manouvrer the pipper to be over the target and press trigger.
+  SGL or PAIR mode can be set on WPN MFD page.
+    SGL: single release
+    PAIR: double release.
+  RP (ripple release) can be set on WPN MFD page.
+    The number is how many subseqential releases should be done.
+    If RP is greater than 1, then you can also in same MFD page set distance in Feet between ripples.
+AIM120/AIM9
+  The trigger can be held for 2 second to fire it without a lock in MADDOG mode, where it will lock onto anyone it sees.
 
 TARGETPODS
 On the MFDs you can select TGP. This however only works if you have mounted one of the target-pods.
 Per default the target pod fixed looking at some offset from you aircraft bore attitude. However if you select something with the radar it will if the distance is not too large look at that. You will notice in the TGP view on the MFD that it is not very accurate. So after selecting a radar target, use the TGP buttons (LEFT;RIGHT;UP;DOWN) to aim better and click LOCK. This will now make released ordnance hit more accurate. There is also keys to ZOOM and switch from narrow to wide field of view.
-
-NIGHTTIME FLYING
-There is flood and instrument lights that can be turned up.
-If running ALS you can also go into filters and enable one of the night vision modes.
-
-DRAGCHUTE
-Max recommended KIAS for deployment is 170. Key is F5.
-
-DED
-The DED is the small display above the right color MFD.
-Clicking on certain buttons on the ICP (the panel below the HUD) can bring up different pages.
-The DED can also be brought up on the HUD in the controlpanel.
-
+            ]]></text-6>
+            <text-7><![CDATA[
 CONTROLPANEL and CONFIG
 You can find these in the FG menu (the last item).
 They contains various aircraft and experience settings.
@@ -827,20 +847,35 @@ HSI
 Is located at the bottom of the center console.
 This can be used to navigate steerpoints if the knob to the left is in NAV mode.
 It can be used to navigate TACAN if the knob is in TCN mode.
-
+            ]]></text-7>
+            <text-8><![CDATA[
 DOGFIGHT SCENARIO
 Bring this up in the menu.
 Select a difficulty.
 Aim with the '+' bore symbol in HUD on a enemy for 1 second to score a kill.
 Friendly fire is off.
-Its meant to be use without using missiles to simulate gun fight, but if you find it hard we recommend you practice on setting 0 with AIM-9L.
+Its meant to be use without using missiles to simulate gun fight, but if you find it hard we recommend you practice on setting 0 with AIM-9.
 Some of the settings will give you a wingman.
 To view the AI flying, switch to missile view and click the arrows in lower left corner.
+            ]]></text-8>
+            <text-9><![CDATA[
+VARIANTS
+- F-16E block 60         : 19000/32500 lbf. Large horz. tail (mod. aero data).
+- F-16CJ block 52        : 17800/29000 lbf. Large horz. tail (mod. aero data).
+- F-16CJ block 50        : 17000/29000 lbf. Large horz. tail (mod. aero data).
+- F-16CG block 42         : 14670/23830 lbf. Large horz. tail (mod. aero data).
+- F-16CG block 40         : 18330/28620 lbf. Large horz. tail (mod. aero data).
+- F-16C block 32         : 14670/23830 lbf. Large horz. tail (mod. aero data).
+- F-16C block 30         : 18330/28620 lbf. Large horz. tail (mod. aero data).
+- F-16AM block 20 (MLU)  : 14670/23830 lbf. Small horz. tail (auth. aero data).
+- F-16A  block 10        : 14670/23830 lbf. Small horz. tail (auth. aero data). Engine has auth. power curves.
+- YF-16                  : 14670/23830 lbf. The FBW in this variant has no spin, nose-slide or deep stall protection. Small horz. tail (auth. aero data). Engine has auth. power curves.
+- F-16 Simplified        : 17800/29000 lbf. The FBW can be switched off. Uses custom FBW made for FG and aero data is simplified version of the other other versions.
 
-FLYING IN MP
-Firstly be sure to use "Visible to 2017+", else others will not see everything working okay when they see your aircraft.
-For doing combat enable "MP Discharge messages". This might be considered spam of MP chat, so use it sparringly and only against opponents that have agreed to be fighting you.
-            ]]></text>
+The engines wary not only in thrust, but also in fuel consumption.
+Variants will also have different sets of liveries that can be selected.
+There is also small changes in tail for different variants with and without braking chute.
+            ]]></text-9>
         </help>
         <systems n="0">
             <autopilot n="0">

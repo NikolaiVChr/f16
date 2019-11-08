@@ -28,6 +28,18 @@ Do not exceed Mach 2.05 or 800 KCAS.
 Do not roll faster than 225 kt groundspeed for main landing gear tires, or 217 for nose wheel tire.
 Do not operate below 200 KT with cat III stores, unless for landing or take-off.
 
+NIGHTTIME FLYING
+There is flood and instrument lights that can be turned up.
+If running ALS you can also go into filters and enable one of the night vision modes.
+
+DRAGCHUTE
+Max recommended KIAS for deployment is 170. Key is F5.
+Not all variants have dragchute.
+
+FLYING IN MP
+Firstly be sure to use "Visible to 2017+", else others will not see everything working okay when they see your aircraft.
+For doing combat enable "MP Discharge messages". This might be considered spam of MP chat, so use it sparringly and only against opponents that have agreed to be fighting you.
+
 HUD
 The speed in HUD is calibrated airspeed per default, and always when gear is commanded down. It can be switched in the control-panel.
 
@@ -96,6 +108,11 @@ page HSD: Horizontal situation display. Shows route and radar echoes.
           DCPL: Range can be set independently of radar range by clicking on the up/down arrows.
 page WPN: Details about current selected weapon(s).
 
+DED
+The DED is the small display above the right color MFD.
+Clicking on certain buttons on the ICP (the panel below the HUD) can bring up different pages.
+The DED can also be brought up on the HUD in the controlpanel.
+
 AUTOPILOT
 Notice that even when A/P is enabled you can control the airplane with the stick. When you let go of stick A/P will recalculate from current situation.
 
@@ -133,19 +150,6 @@ AIM120/AIM9
 TARGETPODS
 On the MFDs you can select TGP. This however only works if you have mounted one of the target-pods.
 Per default the target pod fixed looking at some offset from you aircraft bore attitude. However if you select something with the radar it will if the distance is not too large look at that. You will notice in the TGP view on the MFD that it is not very accurate. So after selecting a radar target, use the TGP buttons (LEFT;RIGHT;UP;DOWN) to aim better and click LOCK. This will now make released ordnance hit more accurate. There is also keys to ZOOM and switch from narrow to wide field of view.
-
-NIGHTTIME FLYING
-There is flood and instrument lights that can be turned up.
-If running ALS you can also go into filters and enable one of the night vision modes.
-
-DRAGCHUTE
-Max recommended KIAS for deployment is 170. Key is F5.
-Not all variants have dragchute.
-
-DED
-The DED is the small display above the right color MFD.
-Clicking on certain buttons on the ICP (the panel below the HUD) can bring up different pages.
-The DED can also be brought up on the HUD in the controlpanel.
 
 CONTROLPANEL and CONFIG
 You can find these in the FG menu (the last item).
@@ -202,12 +206,6 @@ Friendly fire is off.
 Its meant to be use without using missiles to simulate gun fight, but if you find it hard we recommend you practice on setting 0 with AIM-9.
 Some of the settings will give you a wingman.
 To view the AI flying, switch to missile view and click the arrows in lower left corner.
-
-FLYING IN MP
-Firstly be sure to use "Visible to 2017+", else others will not see everything working okay when they see your aircraft.
-For doing combat enable "MP Discharge messages". This might be considered spam of MP chat, so use it sparringly and only against opponents that have agreed to be fighting you.
-
-
 
 VARIANTS
 - F-16E block 60         : 19000/32500 lbf. Large horz. tail (mod. aero data).
