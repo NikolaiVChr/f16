@@ -21,7 +21,7 @@
 				<factor>-0.25</factor>
 			</pitch>
 			<volume>
-				<max>0.30</max>
+				<max>0.25</max>
 			</volume>
 		</canopy>
 		<canopy>
@@ -42,7 +42,7 @@
 				<z>0.195</z>
 			</position>
 			<volume>
-				<max>0.35</max>
+				<max>0.30</max>
 			</volume>
 		</canopy>
 
@@ -2074,6 +2074,38 @@
 			<volume>
 				<property>sim/current-view/internal</property>
 				<factor>0.20</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>EjectionControlsOff</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/clamp.wav</path>
+			<condition>
+                    <equals>
+                        <property>controls/seat/ejection-safety-lever</property>
+                        <value>0</value>
+                    </equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.10</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>EjectionControlsOn</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/clamp.wav</path>
+			<condition>
+                    <equals>
+                        <property>controls/seat/ejection-safety-lever</property>
+                        <value>1</value>
+                    </equals>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.10</factor>
 			</volume>
 		</switch>
 		<switch>
