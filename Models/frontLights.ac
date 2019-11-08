@@ -1,5 +1,5 @@
 AC3Db
-MATERIAL "glassMat" rgb 0.640 0.640 0.640  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 96 trans 0.800
+MATERIAL "glassMat" rgb 0.640 0.640 0.640  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 96 trans 0.600
 MATERIAL "lightMat" rgb 0.3 0.3 0.3  amb 0.2 0.2 0.2  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 12 trans 0.000
 MATERIAL "lightBox" rgb 0.1 0.1 0.1  amb 0.05 0.05 0.05  emis 0.000 0.000 0.000  spec 0.300 0.300 0.300  shi 64 trans 0.000
 OBJECT world

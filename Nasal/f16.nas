@@ -603,6 +603,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     ded.loop_ded();
     frd.callInit();
     frd.loop_ded();
+    mps.loop();
     enableViews();
     view.manager.register("Cockpit View", pilot_view_limiter);
     emesary.GlobalTransmitter.Register(f16_mfd);

@@ -532,6 +532,7 @@
                 <float n="19" type="double">0</float><!-- afterburner engine fire transperancy -->
                 <short n="5" type="int" alias="/engines/engine[0]/n1"/>
                 <short n="6" type="int" alias="/engines/engine[0]/n2"/>
+                <string n="5" type="string">00--++00--Empty</string><!-- mp stores -->
             </generic>
             <visibility-range-nm type="int">160</visibility-range-nm>
         </multiplay>
@@ -3004,6 +3005,9 @@ value. 18000=standard US transition altitude -->
         <fc>
             <file>Aircraft/f16/Nasal/fire-control.nas</file><!-- must be before pylons -->
         </fc>
+        <mps>
+            <file>Aircraft/f16/Nasal/mp-stores.nas</file>
+        </mps>
         <pylons>
             <file>Aircraft/f16/Nasal/pylons.nas</file>
         </pylons>
