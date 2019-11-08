@@ -124,14 +124,17 @@
   <object-name>Pilot_ext</object-name>
   <condition>
     <and>
-      <equals>
-        <property>f16/done</property>
-        <value>0</value>
-      </equals>
+      <not>
+        <equals>
+          <property>f16/done</property>
+          <value>1</value>
+        </equals>
+      </not>
       <or>
-        <not>
+        <equals>
           <property>/sim/current-view/internal</property>
-        </not>
+          <value>0</value>
+        </equals>
         <equals>
           <property>sim/current-view/name</property>
           <value type="string">GoPro #1 View</value>
