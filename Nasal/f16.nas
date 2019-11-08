@@ -1265,37 +1265,6 @@ var fuelDigits = func {
 }
 #fuelDigits();
 
-##
-# Dynamically generates a dialog from a help node.
-#
-# gui.showHelpDialog([<path> [, toggle]])
-#
-# path   ... path to help node
-# toggle ... decides if an already open dialog should be closed
-#            (useful when calling the dialog from a key binding; default: 0)
-#
-# help node
-# =========
-# each of <title>, <key>, <line>, <text> is optional; uses
-# "/sim/description" or "/sim/aircraft" if <title> is omitted;
-# only the first <text> is displayed
-#
-#
-# <help>
-#     <title>dialog title<title>
-#     <key>
-#         <name>g/G</name>
-#         <desc>gear up/down</desc>
-#     </key>
-#
-#     <line>one line</line>
-#     <line>another line</line>
-#
-#     <text>text in
-#           scrollable widget
-#     </text>
-# </help>
-#
 gui.showHelpDialog = func(path, toggle=0) {
     var node = props.globals.getNode(path);
     if (path == "/sim/help" and size(node.getChildren()) < 4) {
