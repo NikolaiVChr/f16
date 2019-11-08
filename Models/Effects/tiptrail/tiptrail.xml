@@ -14,7 +14,7 @@
         <condition>
             <and>
                 <not>
-                    <property>sim/multiplay/generic/int[10]</property><!-- sim/model/f16/smoke -->
+                    <property>sim/multiplay/generic/bool[10]</property><!-- sim/model/f16/smoke -->
                 </not>
                 <greater-than>
                     <property>sim/multiplay/generic/float[3]</property><!-- velocities/airspeed-kt -->

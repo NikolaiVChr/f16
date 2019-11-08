@@ -489,11 +489,21 @@
                 <bool n="0" type="bool" alias="/damage/sounds/explode-on"/>
                 <bool n="1" type="bool" alias="/damage/fire/serviceable"/>
                 <bool n="2" type="bool">true</bool><!-- this must stay true to prevent bug in MP protocol for bools -->
-                <bool n="40" type="bool">true</bool>
-                <bool n="41" type="bool">true</bool>
-                <bool n="42" type="bool">true</bool>
-                <bool n="43" type="bool">true</bool>
-                <bool n="44" type="bool">true</bool>
+                <bool n="10" type="bool" alias="/controls/smoke"/>
+                <bool n="11" type="bool" alias="/sim/model/f16/smokewinderR1"/>
+                <bool n="12" type="bool" alias="/sim/model/f16/smokewinderR9"/>
+                <bool n="13" type="bool" alias="/sim/model/f16/smokewinderG1"/>
+                <bool n="14" type="bool" alias="/sim/model/f16/smokewinderG9"/>
+                <bool n="15" type="bool" alias="/sim/model/f16/smokewinderB1"/>
+                <bool n="16" type="bool" alias="/sim/model/f16/smokewinderB9"/>
+                <bool n="17" type="bool" alias="/sim/model/f16/smokewinderW1"/>
+                <bool n="18" type="bool" alias="/sim/model/f16/smokewinderW9"/>
+                <bool n="39" type="bool" alias="/engines/engine[0]/augmentation"/>
+                <bool n="40" type="bool">true</bool><!-- wing light -->
+                <bool n="41" type="bool">true</bool><!-- formation light -->
+                <bool n="42" type="bool">true</bool><!-- tail light with dragchute -->
+                <bool n="43" type="bool">true</bool><!-- tail light without dragchute -->
+                <bool n="44" type="bool">true</bool><!-- strobe light -->
                 <bool n="45" type="bool" alias="/sim/model/lighting/strobe/state"/>
                 <bool n="46" type="bool">true</bool><!-- taxi ligth -->
                 <bool n="47" type="bool">true</bool><!-- landing ligth -->
@@ -504,18 +514,7 @@
                 <bool n="52" type="bool" alias="/instrumentation/gci/cutoff"/>
                 <int n="2" type="int">0</int><!-- radar-standby -->
                 <int n="9" type="int" alias="/sim/variant-id"/>
-                <int n="10" type="int" alias="/controls/smoke"/>
-                <int n="11" type="int" alias="/sim/model/f16/smokewinderR1"/>
-                <int n="12" type="int" alias="/sim/model/f16/smokewinderR9"/>
-                <int n="13" type="int" alias="/sim/model/f16/smokewinderG1"/>
-                <int n="14" type="int" alias="/sim/model/f16/smokewinderG9"/>
-                <int n="15" type="int" alias="/sim/model/f16/smokewinderB1"/>
-                <int n="16" type="int" alias="/sim/model/f16/smokewinderB9"/>
-                <int n="17" type="int" alias="/sim/model/f16/smokewinderW1"/>
-                <int n="18" type="int" alias="/sim/model/f16/smokewinderW9"/>
-
                 <float n="0" type="double" alias="/engines/engine[0]/nozzle-pos-norm"/>
-                <bool n="39" type="bool" alias="/engines/engine[0]/augmentation"/>
                 <float n="2" type="double" alias="/engines/engine[0]/augmentation1"/>
                 <float n="3" type="double" alias="/velocities/airspeed-kt"/>
                 <float n="4" type="double" alias="/fdm/jsbsim/fcs/dht-right-pos-rad"/>

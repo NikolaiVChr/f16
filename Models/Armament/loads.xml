@@ -90,7 +90,7 @@
   <object-name>Station_AIM-9_smokewinderR1</object-name>
   <condition>
     <equals>
-   <property>sim/multiplay/generic/int[11]</property>
+   <property>sim/multiplay/generic/bool[11]</property>
    <value>1</value>
  </equals>
   </condition>
@@ -100,7 +100,7 @@
   <type>select</type>
   <object-name>Station_AIM-9_smokewinderG1</object-name>
   <condition>
-   <property>sim/multiplay/generic/int[13]</property>
+   <property>sim/multiplay/generic/bool[13]</property>
   </condition>
  </animation>
  
@@ -108,7 +108,7 @@
   <type>select</type>
   <object-name>Station_AIM-9_smokewinderB1</object-name>
   <condition>
-   <property>sim/multiplay/generic/int[15]</property>
+   <property>sim/multiplay/generic/bool[15]</property>
   </condition>
  </animation>
  
@@ -116,7 +116,7 @@
   <type>select</type>
   <object-name>Station_AIM-9_smokewinderW1</object-name>
   <condition>
-   <property>sim/multiplay/generic/int[17]</property>
+   <property>sim/multiplay/generic/bool[17]</property>
   </condition>
  </animation>
  
@@ -1416,7 +1416,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   <type>select</type>
   <object-name>Station_AIM-9_smokewinderR9</object-name>
   <condition>
-   <property>sim/multiplay/generic/int[12]</property>
+   <property>sim/multiplay/generic/bool[12]</property>
   </condition>
  </animation>
  
@@ -1424,7 +1424,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   <type>select</type>
   <object-name>Station_AIM-9_smokewinderG9</object-name>
   <condition>
-   <property>sim/multiplay/generic/int[14]</property>
+   <property>sim/multiplay/generic/bool[14]</property>
   </condition>
  </animation>
  
@@ -1432,7 +1432,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   <type>select</type>
   <object-name>Station_AIM-9_smokewinderB9</object-name>
   <condition>
-   <property>sim/multiplay/generic/int[16]</property>
+   <property>sim/multiplay/generic/bool[16]</property>
   </condition>
  </animation>
  
@@ -1440,7 +1440,7 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   <type>select</type>
   <object-name>Station_AIM-9_smokewinderW9</object-name>
   <condition>
-   <property>sim/multiplay/generic/int[18]</property>
+   <property>sim/multiplay/generic/bool[18]</property>
   </condition>
  </animation>
 

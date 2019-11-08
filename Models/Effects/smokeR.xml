@@ -14,7 +14,7 @@
   </offsets>
 
   <condition>
-   <property>sim/multiplay/generic/int[10]</property>
+   <property>sim/multiplay/generic/bool[10]</property>
   </condition>
    
   <attach>world</attach>
