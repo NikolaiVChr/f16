@@ -505,11 +505,11 @@
 				</group>-->
 
 				<group>
-				    <layout>vbox</layout>
+				    <layout>table</layout>
 
-					<group>
-					    <layout>hbox</layout>
 					    <checkbox>
+					    	<row>0</row>
+					    	<col>0</col>
 						    <property>controls/lighting/ext-lighting-panel/master</property>
 						    <live>true</live>
 						    <binding>
@@ -519,67 +519,88 @@
 								</script>
 					      	</binding>
 					    </checkbox>
-					    <text><label>MASTER</label></text>
-					</group>
-	<!--				<group>
-					    <layout>hbox</layout>
+					    <text><row>0</row>
+					    	<col>1</col><label>MASTER</label></text>
 					    <checkbox>
+					    	<row>0</row>
+					    	<col>2</col>
 						    <property>controls/lighting/ext-lighting-panel/anti-collision</property>
 						    <live>true</live>
 						    <binding>
 								<command>nasal</command>
 								<script>
-								f16.toggleAntiCollision();
+								f16_switches.toggleAntiCollision();
 								</script>
 					      	</binding>
 					    </checkbox>
-					    <text><label>ANTI COL</label></text>
-					</group>
-					<group>
-					    <layout>hbox</layout>
+					    <text><row>0</row>
+					    	<col>3</col><label>AntiColl</label></text>
 					    <checkbox>
-						    <property>controls/lighting/ext-lighting-panel/pos-lights-flash</property>
-						    <live>true</live>
-						    <binding>
-								<command>nasal</command>
-								<script>
-								f16.togglePosLightsFlash();
-								</script>
-					      	</binding>
-					    </checkbox>
-					    <text><label>POS FLASH</label></text>
-					</group>
-					<group>
-					    <layout>hbox</layout>
-					    <checkbox>
+					    	<row>0</row>
+					    	<col>4</col>
 						    <property>controls/lighting/ext-lighting-panel/wing-tail</property>
 						    <live>true</live>
 						    <binding>
 								<command>nasal</command>
 								<script>
-								f16.toggleWingTailUp();
+								f16_switches.toggleWingTail();
 								</script>
 					      	</binding>
 					    </checkbox>
-					    <text><label>WING-TAIL</label></text>
-					</group>
-					<group>
-					    <layout>hbox</layout>
+					    <text><row>0</row>
+					    	<col>5</col><label>WingTail</label></text>
+
 					    <checkbox>
+					    	<row>1</row>
+					    	<col>0</col>
 						    <property>controls/lighting/ext-lighting-panel/fuselage</property>
 						    <live>true</live>
 						    <binding>
 								<command>nasal</command>
 								<script>
-								setprop("controls/lighting/ext-lighting-panel/fuselage", !getprop("controls/lighting/ext-lighting-panel/fuselage"));
+								f16_switches.toggleFuselage();
 								</script>
 					      	</binding>
 					    </checkbox>
-					    <text><label>FUSELAGE</label></text>
-					</group>-->
-
-				</group>
-
+					    <text><row>1</row>
+					    	<col>1</col><label>Fuselage</label></text>
+					    <radio>
+					    	<row>1</row>
+					    	<col>2</col>
+							<property>controls/lighting/landing-light-t</property>
+						    <live>true</live>
+						    <binding>
+								<command>nasal</command>
+								<script>
+									if (getprop("controls/lighting/landing-light") != -1) {
+										setprop("controls/lighting/landing-light",-1);
+									} else {
+										setprop("controls/lighting/landing-light",0);
+									}									
+								</script>
+					      	</binding>
+					    </radio>
+					    <text><row>1</row>
+					    	<col>3</col><label>Taxi</label></text>
+					    <radio>
+					    	<row>1</row>
+					    	<col>4</col>
+					    	<property>controls/lighting/landing-light-l</property>
+						    <live>true</live>
+						    <binding>
+								<command>nasal</command>
+								<script>
+									if (getprop("controls/lighting/landing-light") != 1) {
+										setprop("controls/lighting/landing-light",1);
+									} else {
+										setprop("controls/lighting/landing-light",0);
+									}									
+								</script>
+					      	</binding>
+					    </radio>
+					    <text><row>1</row>
+					    	<col>5</col><label>Land</label></text>
+					</group>
 			</group>
 
 			<hrule/>
@@ -890,6 +911,19 @@
 				
 				</group>
 
+			</group>
+			
+			<group>
+			    <layout>hbox</layout>
+			    <text><label>MAL IND LTS</label></text>
+			    <checkbox>
+			      <property>controls/test/test-panel/mal-ind-lts</property>
+			      <live>true</live>
+			      <binding>
+			          <command>property-toggle</command>
+			          <property>controls/test/test-panel/mal-ind-lts</property>
+			      </binding>
+			    </checkbox>
 			</group>
 
 			<hrule/>

@@ -1,4 +1,4 @@
-# thsi is temeporary, really want it done with emesary
+# this is temporary and not using emesary
 var pylon = 0;
 var loop = func {
 	pylon += 1;

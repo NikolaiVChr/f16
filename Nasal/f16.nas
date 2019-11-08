@@ -437,6 +437,17 @@ var sendLightsToMp = func {
   var vi = getprop("sim/model/f16/dragchute");
   var gear = getprop("fdm/jsbsim/gear/gear-pos-norm");
 
+  if (land == -1) {
+    setprop("controls/lighting/landing-light-t",1);
+  } else {
+    setprop("controls/lighting/landing-light-t",0);
+  }
+  if (land == 1) {
+    setprop("controls/lighting/landing-light-l",1);
+  } else {
+    setprop("controls/lighting/landing-light-l",0);
+  }
+
   if (land == -1 and master and dc > 20 and gear > 0.3) {
     # taxi
     setprop("sim/multiplay/generic/bool[46]",1);
