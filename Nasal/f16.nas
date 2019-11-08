@@ -430,9 +430,25 @@ var sendLightsToMp = func {
   var master = getprop("controls/lighting/ext-lighting-panel/master");
   var pos = getprop("controls/lighting/ext-lighting-panel/pos-lights-flash");
   var wing = getprop("controls/lighting/ext-lighting-panel/wing-tail");
+  var land = getprop("controls/lighting/landing-light");
   var dc = getprop("fdm/jsbsim/elec/bus/ess-dc");
   var form = getprop("controls/lighting/ext-lighting-panel/form-knob");
   var vi = getprop("sim/model/f16/dragchute");
+  var gear = getprop("fdm/jsbsim/gear/gear-pos-norm");
+
+  if (land == -1 and master and dc > 20 and gear > 0.3) {
+    # taxi
+    setprop("sim/multiplay/generic/bool[46]",1);
+  } else {
+    setprop("sim/multiplay/generic/bool[46]",0);
+  }
+  
+  if (land == 1 and master and dc > 20 and gear > 0.3) {
+    # land
+    setprop("sim/multiplay/generic/bool[47]",1);
+  } else {
+    setprop("sim/multiplay/generic/bool[47]",0);
+  }
 
   if (pos and (wing == 0 or wing == 2) and master and dc > 20) {
     setprop("sim/multiplay/generic/bool[40]",1);
@@ -1197,3 +1213,41 @@ dynamic_view.view_manager.noGforce = func {
 }
 
 dynamic_view.register(func {me.noGforce();});# no G-force head movement in goPro views even though they are internal.
+
+
+
+var fuelDigits = func {
+  var maxtank = 7;
+  for (var i=0;i<=maxtank;i+=1) {
+    var fuel = getprop("consumables/fuel/tank["~i~"]/level-lbs"); 
+    fuel = roundabout(fuel);
+    var a = int((fuel*1-int(fuel*1))*10);
+    var b = int((fuel*0.1-int(fuel*0.1))*10);
+    var c = int((fuel*0.01-int(fuel*0.01))*10);
+    var d = int((fuel*0.001-int(fuel*0.001))*10);
+    var e = int((fuel*0.0001-int(fuel*0.0001))*10);
+    var f = int((fuel*0.00001-int(fuel*0.00001))*10);
+    setprop("consumables/fuel/tank["~i~"]/level-lbs-digit-1", a);
+    setprop("consumables/fuel/tank["~i~"]/level-lbs-digit-2", b);
+    setprop("consumables/fuel/tank["~i~"]/level-lbs-digit-3", c);
+    setprop("consumables/fuel/tank["~i~"]/level-lbs-digit-4", d);
+    setprop("consumables/fuel/tank["~i~"]/level-lbs-digit-5", e);
+    setprop("consumables/fuel/tank["~i~"]/level-lbs-digit-6", f);
+  }
+  var fuel = getprop("/consumables/fuel/total-fuel-lbs");
+  fuel = roundabout(fuel);
+  var a = int((fuel*1-int(fuel*1))*10);
+  var b = int((fuel*0.1-int(fuel*0.1))*10);
+  var c = int((fuel*0.01-int(fuel*0.01))*10);
+  var d = int((fuel*0.001-int(fuel*0.001))*10);
+  var e = int((fuel*0.0001-int(fuel*0.0001))*10);
+  var f = int((fuel*0.00001-int(fuel*0.00001))*10);
+  setprop("consumables/fuel/total-level-lbs-digit-1", a);
+  setprop("consumables/fuel/total-level-lbs-digit-2", b);
+  setprop("consumables/fuel/total-level-lbs-digit-3", c);
+  setprop("consumables/fuel/total-level-lbs-digit-4", d);
+  setprop("consumables/fuel/total-level-lbs-digit-5", e);
+  setprop("consumables/fuel/total-level-lbs-digit-6", f);
+  settimer(fuelDigits,0.5);# runs 2 times every second.
+}
+#fuelDigits();

@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+	<path>frontLights.ac</path>
+	
+	<effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.0</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+      </parameters>
+      <object-name>LandL1</object-name>
+      <object-name>LandL2</object-name>
+      <object-name>LandLightBox</object-name>
+      <object-name>TaxiL1</object-name>
+      <object-name>TaxiL2</object-name>
+      <object-name>TaxiLightBox</object-name>
+  </effect>
+  
+  <effect>
+    <inherits-from>Effects/model-combined-transparent</inherits-from>
+    <parameters>
+      <rain-enabled>1</rain-enabled>
+      <normalmap-enabled type="int">0</normalmap-enabled>
+      <lightmap-enabled type="int">0</lightmap-enabled>
+      <reflection-enabled type="int">0</reflection-enabled>
+      <transparent>true</transparent>
+      <render-bin>
+        <bin-number>111</bin-number>
+        <bin-name>DepthSortedBin</bin-name>
+      </render-bin>
+    </parameters>
+    <object-name>taxiGlass</object-name>
+    <object-name>landGlass</object-name>
+   </effect>
+   
+ <animation>
+  <type>material</type>
+  <object-name>TaxiL1</object-name>
+  <object-name>TaxiL2</object-name>
+  <emission>
+   <red>  1</red>
+   <green>1</green>
+   <blue> 1</blue>
+   <factor-prop>sim/multiplay/generic/bool[46]</factor-prop>
+  </emission>
+ </animation>
+ 
+ <animation>
+  <type>material</type>
+  <object-name>LandL1</object-name>
+  <object-name>LandL2</object-name>
+  <emission>
+   <red>  1</red>
+   <green>1</green>
+   <blue> 1</blue>
+   <factor-prop>sim/multiplay/generic/bool[47]</factor-prop>
+  </emission>
+ </animation>
+
+   <animation>
+    <type>select</type>
+    <condition>
+      <not>
+      <property>sim/multiplay/generic/bool[46]</property> 
+    </not>
+    </condition>
+    <object-name>taxiGlass</object-name>
+  </animation>
+   
+   <animation>
+    <type>select</type>
+    <condition>
+      <not>
+      <property>sim/multiplay/generic/bool[47]</property> 
+    </not>
+    </condition>
+    <object-name>landGlass</object-name>
+  </animation>
+   
+   <model>
+    <name>l1</name>
+    <path>Aircraft/f16/Models/Effects/lights/landing-light.xml</path>
+      <offsets>
+        <x-m>-3.0996</x-m>
+        <y-m>0.297635</y-m>
+        <z-m>-1.1302</z-m>
+        </offsets>
+   </model>
+   
+   <model>
+    <name>l2</name>
+    <path>Aircraft/f16/Models/Effects/lights/landing-light.xml</path>
+      <offsets>
+        <x-m>-3.09248</x-m>
+        <y-m>0.284662</y-m>
+        <z-m>-1.18931</z-m>
+        </offsets>
+   </model>
+   
+   <model>
+    <name>t1</name>
+    <path>Aircraft/f16/Models/Effects/lights/taxi-light.xml</path>
+      <offsets>
+        <x-m>-3.0996</x-m>
+        <y-m>0.267209</y-m>
+        <z-m>-1.28635</z-m>
+        </offsets>
+   </model>
+   
+   <model>
+    <name>t2</name>
+    <path>Aircraft/f16/Models/Effects/lights/taxi-light.xml</path>
+      <offsets>
+        <x-m>-3.09248</x-m>
+        <y-m>0.254236</y-m>
+        <z-m>-1.34546</z-m>
+        </offsets>
+   </model>
+	
+</PropertyList>

@@ -274,8 +274,18 @@ setlistener("instrumentation/comm/frequencies/selected-mhz", getSelectedUHF);
 
 var hook = props.globals.getNode("fdm/jsbsim/systems/hook/tailhook-cmd-norm");
 var landingGear = props.globals.getNode("controls/gear/gear-down");
-var landingLights = props.globals.getNode("controls/lighting/landing-lights");
+var landingLights = props.globals.getNode("controls/lighting/landing-light");
 var parkingBrake = props.globals.getNode("controls/gear/brake-parking");
+
+
+var toggleLandlight = func {
+    var sw = landingLights.getValue();
+    sw += 1;
+    if (sw == 2) {
+        sw = -1;
+    }
+    landingLights.setIntValue(sw);
+}
 
  var toggleHook = func {
         if(!hook.getBoolValue()) {
@@ -290,23 +300,6 @@ var parkingBrake = props.globals.getNode("controls/gear/brake-parking");
                 landingGear.setBoolValue(0);
         } else {
                 landingGear.setBoolValue(1);
-        }
- }
-
-#FIXME landing lights switch should be 3-way
- var toggleLandingLightsUp = func {
-        if(landingLights.getBoolValue()) {
-                landingLights.setBoolValue(1);
-        } else {
-                landingLights.setBoolValue(0);
-        }
- }
-
- var toggleLandingLightsDn = func {
-        if(landingLights.getBoolValue()) {
-                landingLights.setBoolValue(0);
-        } else {
-                landingLights.setBoolValue(1);
         }
  }
 

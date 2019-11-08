@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PropertyList>
+
+    <name>procedural-light-nav-left</name>
+    <inherits-from>Aircraft/f16/Models/Effects/lights/procedural-light-als-and-fixed-pipeline</inherits-from>
+
+    <parameters>
+        <light_color_base_r type="float">1.000</light_color_base_r>
+        <light_color_base_g type="float">1.000</light_color_base_g>
+        <light_color_base_b type="float">1.000</light_color_base_b>
+        <light_color_center_r type="float">1.0</light_color_center_r>
+        <light_color_center_g type="float">1.0</light_color_center_g>
+        <light_color_center_b type="float">1.0</light_color_center_b>
+
+        <pointing_x type="float">1.0</pointing_x>
+        <pointing_y type="float">0.0</pointing_y>
+        <pointing_z type="float">0.1</pointing_z> <!-- Pointing ~5deg down (just a guess) -->
+
+        <is_directional type="bool">true</is_directional>
+        <is_strobe type="bool">false</is_strobe>
+
+        <inner_angle type="float">0.1</inner_angle>
+        <outer_angle type="float">0.25</outer_angle>
+        <zero_angle type="float">1.0</zero_angle>
+        <outer_gain type="float">0.4</outer_gain>
+    </parameters>
+
+</PropertyList>

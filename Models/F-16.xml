@@ -493,6 +493,16 @@
       <z-m>0.0</z-m>
       </offsets>
  </model>
+ 
+ <model>
+  <name>fli</name>
+  <path>Aircraft/f16/Models/frontLights.xml</path>
+    <offsets>
+      <x-m>0.0</x-m>
+      <y-m>0.0</y-m>
+      <z-m>0.0</z-m>
+      </offsets>
+ </model>
 
 
  <!-- smokepods -->
@@ -1379,6 +1389,7 @@
   <type>rotate</type>
   <object-name>InternalFrontGearDoor</object-name>
   <object-name>ExternalFrontGearDoor</object-name>
+  <object-name>fli</object-name>
   <property>gear/gear[0]/position-norm</property>
   <factor>420</factor>
   <offset-deg>-100</offset-deg>

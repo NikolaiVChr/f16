@@ -495,6 +495,8 @@
                 <bool n="43" type="bool">true</bool>
                 <bool n="44" type="bool">true</bool>
                 <bool n="45" type="bool" alias="/sim/model/lighting/strobe/state"/>
+                <bool n="46" type="bool">true</bool><!-- taxi ligth -->
+                <bool n="47" type="bool">true</bool><!-- landing ligth -->
                 <bool n="35" type="bool" alias="/f16/chute/enable"/>
                 <bool n="36" type="bool" alias="/sim/model/f16/dragchute"/>
                 <bool n="50" type="bool" alias="/instrumentation/gci/picture"/>
@@ -1470,6 +1472,7 @@ For doing combat enable "MP Discharge messages". This might be considered spam o
                 <console-primary type="double">0</console-primary>
                 <data-entry-display type="double">1.0</data-entry-display>
             </lighting-panel>
+            <landing-light type="int">0</landing-light>
         </lighting>
         <seat>
             <ejection-safety-lever type="bool">false</ejection-safety-lever>
