@@ -1494,7 +1494,7 @@ There is also small changes in tail for different variants with and without brak
                 <master type="bool">true</master>
                 <anti-collision type="bool">true</anti-collision>
                 <!--<anti-collision2 type="bool">true</anti-collision2>-->
-                <pos-lights-flash type="bool">true</pos-lights-flash>
+                <pos-lights-flash type="bool">false</pos-lights-flash>
                 <wing-tail type="int">1</wing-tail>
                 <fuselage type="int">1</fuselage>
                 <form-knob type="double">1</form-knob>
