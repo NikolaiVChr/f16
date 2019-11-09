@@ -1494,7 +1494,7 @@ var button2 = func {
   settimer(func {setprop("f16/sound/button2",0);},0.10);
 }
 
-var clamp = func {
+var clamp0 = func {
   setprop("f16/sound/clamp",1);
   settimer(func {setprop("f16/sound/clamp",0);},0.40);
 }
@@ -1525,9 +1525,9 @@ setlistener("controls/armament/master-arm", button2, nil, 0);
 setlistener("controls/armament/master-arm-cover-open", lift_cover, nil, 0);
 setlistener("controls/armament/laser-arm-dmd", button2, nil, 0);
 setlistener("controls/gear/brake-parking", button2, nil, 0);
-setlistener("controls/gear/gear-down", clamp, nil, 0);
-setlistener("fdm/jsbsim/systems/hook/tailhook-cmd-norm", clamp, nil, 0);
-setlistener("controls/seat/ejection-safety-lever", clamp, nil, 0);
+setlistener("controls/gear/gear-down", clamp0, nil, 0);
+setlistener("fdm/jsbsim/systems/hook/tailhook-cmd-norm", clamp0, nil, 0);
+setlistener("controls/seat/ejection-safety-lever", clamp0, nil, 0);
 setlistener("instrumentation/radar/radar-standby", button2, nil, 0);
 setlistener("controls/fuel/external-transfer", button2, nil, 0);
 setlistener("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob", knob, nil, 0);
@@ -1563,4 +1563,4 @@ setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-2", knob, nil,
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-3", knob, nil, 0);
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-4", knob, nil, 0);
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-5", knob, nil, 0);
-# valid methods: button, button2, knob, knob2, clamp, click3, lift_cover
+# valid methods: button, button2, knob, knob2, clamp0, click3, lift_cover
