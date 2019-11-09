@@ -1501,7 +1501,7 @@ var clamp = func {
 
 var click3 = func {
   setprop("f16/sound/click3",1);
-  settimer(func {setprop("f16/sound/click3",0);},0.10);
+  settimer(func {setprop("f16/sound/click3",0);},0.075);
 }
 
 var knob = func {
@@ -1551,4 +1551,10 @@ setlistener("controls/lighting/landing-light", button2, nil, 0);
 setlistener("controls/MFD[0]/button-pressed", button2, nil, 0);
 setlistener("controls/MFD[1]/button-pressed", button2, nil, 0);
 setlistener("controls/MFD[2]/button-pressed", button2, nil, 0);
+setlistener("f16/avionics/hud-brt", click3, nil, 0);
+setlistener("f16/avionics/rwr-int", click3, nil, 0);
+setlistener("f16/avionics/mfd-l-con", click3, nil, 0);
+setlistener("f16/avionics/mfd-l-brt", click3, nil, 0);
+setlistener("f16/avionics/mfd-r-con", click3, nil, 0);
+setlistener("f16/avionics/mfd-r-brt", click3, nil, 0);
 # valid methods: button, button2, knob, knob2, clamp, click3, lift_cover
