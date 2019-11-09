@@ -441,8 +441,8 @@ var F16_HUD = {
                                         obj.rot = -hdp.roll * D2R;
                                         
                                         obj.pos_y_rel = obj.fpi_y;#position from bore
-                                        obj.fpi_polar = clamp(math.sqrt(obj.fpi_x*obj.fpi_x+obj.pos_y_rel*obj.pos_y_rel),0.0001,10000);
-                                        obj.inv_angle = clamp(-obj.pos_y_rel/obj.fpi_polar,-1,1);
+                                        obj.fpi_polar = obj.clamp(math.sqrt(obj.fpi_x*obj.fpi_x+obj.pos_y_rel*obj.pos_y_rel),0.0001,10000);
+                                        obj.inv_angle = obj.clamp(-obj.pos_y_rel/obj.fpi_polar,-1,1);
                                         obj.fpi_angle = math.acos(obj.inv_angle);
                                         if (obj.fpi_x < 0) {
                                           obj.fpi_angle *= -1;
@@ -466,7 +466,7 @@ var F16_HUD = {
                                           obj.max_lateral_pitchnumbers   = obj.extrapolate(obj.rot_deg,270,360,obj.default_lateral_pitchnumbers-centerOffset,obj.default_lateral_pitchnumbers);
                                           obj.max_lateral_pitchnumbers_p = obj.extrapolate(obj.rot_deg,270,360,obj.default_lateral_pitchnumbers*frac+centerOffset,obj.default_lateral_pitchnumbers*frac);
                                         }
-                                        obj.horizon_lateral  = clamp(obj.fpi_pos_rel_x,-obj.max_lateral_pitchnumbers,obj.max_lateral_pitchnumbers_p);
+                                        obj.horizon_lateral  = obj.clamp(obj.fpi_pos_rel_x,-obj.max_lateral_pitchnumbers,obj.max_lateral_pitchnumbers_p);
 
 
 
@@ -1571,7 +1571,7 @@ append(obj.total, obj.speed_curr);
 
 # clamping
         var abs_combined_dev_deg = math.abs( combined_dev_deg );
-        var clamp = hud_radius_m;
+        var clmp = hud_radius_m;
 
 # squeeze the top of the display area for egg shaped HUD limits.
 #   if ( abs_combined_dev_deg >= 0 and abs_combined_dev_deg < 90 ) {
@@ -1579,7 +1579,7 @@ append(obj.total, obj.speed_curr);
 #       if ( coef > 0.050 ) { coef = 0.050 }
 #       clamp -= coef; 
         #   }
-        if ( combined_dev_length > clamp ) {
+        if ( combined_dev_length > clmp ) {
             #combined_dev_length = clamp;
             clamped = 1;
         }
@@ -2452,8 +2452,8 @@ append(obj.total, obj.speed_curr);
                 }
                 if (pylons.fcs.isLock()) {
                     me.scale120 = me.extrapolate(me.dlzArray[4],me.dlzArray[2],me.dlzArray[3],1,30/120);
-                    me.scale120 = clamp(me.scale120,30/120,1);
-                    me.ASEC120.setScale(me.scale120,me.scale120);
+                    me.scale120 = me.clamp(me.scale120,30/120,1);
+                    me.ASEC120.setScale(me.scale120,me.scale120);#todo error
                     me.ASEC120.setStrokeLineWidth(1/me.scale120);
                     #me.ASEC120Aspect.setScale(me.scale120,me.scale120);
                     #me.ASEC120Aspect.setStrokeLineWidth(1/me.scale120);

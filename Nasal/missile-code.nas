@@ -2740,11 +2740,11 @@ var AIM = {
 		#
 		# Check for being fooled by chaff.
 		#
-		if (me.fovLost != TRUE and (me.guidance == "radar" or me.guidance == "semi-radar") and me.chaffLock == FALSE and (getprop("sim/time/elapsed-sec")-me.chaffTime) > 1) {
+		if (me.Tgt != nil and me.fovLost != TRUE and (me.guidance == "radar" or me.guidance == "semi-radar") and me.chaffLock == FALSE and (getprop("sim/time/elapsed-sec")-me.chaffTime) > 1) {
 			#
 			# TODO: Use Richards Emissary for this.
 			#
-			me.chaffNode = me.Tgt.getChaffNode();
+			me.chaffNode = me.Tgt.getChaffNode();#error
 			if (me.chaffNode != nil) {
 				me.chaffNumber = me.chaffNode.getValue();
 				if (me.chaffNumber != nil and me.chaffNumber != 0) {
