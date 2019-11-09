@@ -9,9 +9,9 @@
   <type>scale</type>
   <object-name>procedural_light</object-name>
   <property>sim/multiplay/generic/float[14]</property>
-  <x-offset>0.25</x-offset>
-  <y-offset>0.25</y-offset>
-  <z-offset>0.25</z-offset>
+  <x-offset>0.5</x-offset>
+  <y-offset>0.5</y-offset>
+  <z-offset>0.5</z-offset>
  </animation>
 <animation>
   <type>scale</type>
