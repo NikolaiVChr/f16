@@ -436,27 +436,30 @@ var sendLightsToMp = func {
   var strobe = getprop("controls/lighting/ext-lighting-panel/anti-collision");#white flashing light at top of tail
   var ar = getprop("controls/lighting/ext-lighting-panel/ar-knob");#flood light in hatch of refuel ext. panel
   var land = getprop("controls/lighting/landing-light");# LAND: white bright light pointed downward in fwd gear door (1). TAXI: white light in fwd gear door (-1)
-  var dc = getprop("fdm/jsbsim/elec/bus/ess-dc");
+
+  var ac_non_ess_2 = getprop("fdm/jsbsim/elec/bus/noness-ac-2");# FORM and TAXI (I added fuselage to this as well)
+  var ac_em_2 = getprop("fdm/jsbsim/elec/bus/emergency-ac-2");# POS, ANTICOLL and LAND
+
   var vi = getprop("sim/model/f16/dragchute");#elongated tailroot
   var gear = getprop("fdm/jsbsim/gear/gear-pos-norm");
 
   # TODO: review elec
 
-  if (land == -1 and dc > 20 and gear > 0.3) {
+  if (land == -1 and ac_non_ess_2 > 100 and gear > 0.3) {
     # taxi
     setprop("sim/multiplay/generic/bool[46]",1);
   } else {
     setprop("sim/multiplay/generic/bool[46]",0);
   }
   
-  if (land == 1 and dc > 20 and gear > 0.3) {
+  if (land == 1 and ac_em_2 > 100 and gear > 0.3) {
     # land
     setprop("sim/multiplay/generic/bool[47]",1);
   } else {
     setprop("sim/multiplay/generic/bool[47]",0);
   }
 
-  if ((wing == -1 or wing == 1) and master and dc > 20 and (!getprop("sim/multiplay/generic/bool[40]") or !flash)) {
+  if ((wing == -1 or wing == 1) and master and ac_em_2 > 100 and (!getprop("sim/multiplay/generic/bool[40]") or !flash)) {
     setprop("sim/multiplay/generic/bool[40]",1);#on/off for wingtip and inlet sides.
     setprop("sim/multiplay/generic/float[9]",0.60+wing*0.40);#brightness for wingtip, back of tail and inlet sides.
       if (vi) {
@@ -479,7 +482,7 @@ var sendLightsToMp = func {
     setprop("sim/multiplay/generic/float[9]",0.001);
   }
 
-  if (form > 0 and master and dc > 20) {
+  if (form > 0 and master and ac_non_ess_2 > 100) {
     # belly and spine lights
     setprop("sim/multiplay/generic/bool[41]",1);
     setprop("sim/multiplay/generic/float[8]",form);
@@ -487,8 +490,17 @@ var sendLightsToMp = func {
     setprop("sim/multiplay/generic/bool[41]",0);
     setprop("sim/multiplay/generic/float[8]",0.001);
   }
+  
+  if ((fuse == -1 or fuse == 1) and master and ac_non_ess_2 > 100) {
+    # fuselage flood
+    setprop("sim/multiplay/generic/bool[48]",1);
+    setprop("sim/multiplay/generic/float[15]",0.60+fuse*0.40);
+  } else {
+    setprop("sim/multiplay/generic/bool[48]",0);
+    setprop("sim/multiplay/generic/float[15]",0.001);
+  }
 
-  if (strobe and master and dc > 20) {
+  if (strobe and master and ac_em_2 > 100) {
     # strobe
     setprop("sim/multiplay/generic/bool[44]",1);
   } else {

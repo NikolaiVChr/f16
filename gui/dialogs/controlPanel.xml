@@ -442,68 +442,6 @@
 					<label>EXT LIGHTS</label>
 				</text>
 				
-	<!--			<group>
-					<layout>hbox</layout>
-			
-					<group>
-						<layout>vbox</layout>
-						<halign>left</halign>
-						
-						<text>
-							<label>FORM ON</label>
-						</text>
-						<text>
-							<label>FORM OFF</label>
-						</text>
-						
-					</group>
-					
-					<slider>
-						<halign>left</halign>
-						<property>controls/lighting/ext-lighting-panel/form-knob</property>
-						<min>0</min>
-						<max>1</max>
-						<step>0.1</step>
-						<live>true</live>
-						<vertical>true</vertical>
-						<binding>
-							<command>dialog-apply</command>
-						</binding>
-					</slider>
-					
-				</group>
-				
-				<group>
-					<layout>hbox</layout>
-			
-					<group>
-						<layout>vbox</layout>
-						<halign>left</halign>
-						
-						<text>
-							<label>AR ON</label>
-						</text>
-						<text>
-							<label>AR OFF</label>
-						</text>
-						
-					</group>
-					
-					<slider>
-						<halign>left</halign>
-						<property>controls/lighting/ext-lighting-panel/ar-knob</property>
-						<min>0</min>
-						<max>1</max>
-						<step>0.1</step>
-						<live>true</live>
-						<vertical>true</vertical>
-						<binding>
-							<command>dialog-apply</command>
-						</binding>
-					</slider>
-					
-				</group>-->
-
 				<group>
 				    <layout>table</layout>
 
@@ -523,7 +461,7 @@
 					    	<col>2</col><label>MASTER</label></text>
 					    <checkbox>
 					    	<row>0</row>
-					    	<col>5</col>
+					    	<col>7</col>
 						    <property>controls/lighting/ext-lighting-panel/anti-collision</property>
 						    <live>true</live>
 						    <binding>
@@ -534,7 +472,7 @@
 					      	</binding>
 					    </checkbox>
 					    <text><row>0</row>
-					    	<col>4</col><label>COLL</label></text>
+					    	<col>6</col><label>ANTI-COLL</label></text>
 					    	
 					    <checkbox>
 					    	<row>1</row>
@@ -656,6 +594,46 @@
 							<min>0</min>
 							<max>1</max>
 							<step>0.2</step>
+							<live>true</live>
+							<vertical>true</vertical>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+							<binding>
+						        <command>nasal</command>
+						        <script>
+						        </script>
+						    </binding>
+						</slider>
+						
+						<text><row>1</row>
+					    	<col>6</col><label>FUSELAGE</label></text>
+				    	<group>
+				    		<row>2</row>
+				    		<col>6</col>
+							<layout>vbox</layout>
+							<halign>left</halign>
+							
+							<text>
+								<label>BRT</label>
+							</text>
+							<text>
+								<label>OFF</label>
+							</text>
+							<text>
+								<label>DIM</label>
+							</text>
+							
+						</group>
+						
+						<slider>
+							<row>2</row>
+				    		<col>7</col>
+							<halign>left</halign>
+							<property>controls/lighting/ext-lighting-panel/fuselage</property>
+							<min>-1</min>
+							<max>1</max>
+							<step>1</step>
 							<live>true</live>
 							<vertical>true</vertical>
 							<binding>

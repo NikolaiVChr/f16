@@ -498,6 +498,8 @@
                 <bool n="16" type="bool" alias="/sim/model/f16/smokewinderB9"/>
                 <bool n="17" type="bool" alias="/sim/model/f16/smokewinderW1"/>
                 <bool n="18" type="bool" alias="/sim/model/f16/smokewinderW9"/>
+                <bool n="35" type="bool" alias="/f16/chute/enable"/>
+                <bool n="36" type="bool" alias="/sim/model/f16/dragchute"/>
                 <bool n="39" type="bool" alias="/engines/engine[0]/augmentation"/>
                 <bool n="40" type="bool">true</bool><!-- wing light -->
                 <bool n="41" type="bool">true</bool><!-- formation light -->
@@ -507,8 +509,7 @@
                 <bool n="45" type="bool" alias="/sim/model/lighting/strobe/state"/>
                 <bool n="46" type="bool">true</bool><!-- taxi light -->
                 <bool n="47" type="bool">true</bool><!-- landing light -->
-                <bool n="35" type="bool" alias="/f16/chute/enable"/>
-                <bool n="36" type="bool" alias="/sim/model/f16/dragchute"/>
+                <bool n="48" type="bool">true</bool><!-- fuselage flood light -->
                 <bool n="50" type="bool" alias="/instrumentation/gci/picture"/>
                 <bool n="51" type="bool" alias="/instrumentation/gci/bogeydope"/>
                 <bool n="52" type="bool" alias="/instrumentation/gci/cutoff"/>
@@ -528,6 +529,7 @@
                 <float n="12" type="double">0</float><!-- afterburner color G-->
                 <float n="13" type="double">0</float><!-- afterburner color B-->
                 <float n="14" type="double">0</float><!-- scene red inverted -->
+                <float n="15" type="double">0</float><!-- fuselage flood brightness -->
                 <float n="16" type="double" alias="/velocities/mach"/>
                 <float n="17" type="double" alias="/orientation/alpha-deg"/>
                 <float n="19" type="double">0</float><!-- afterburner engine fire transperancy -->
@@ -1496,7 +1498,7 @@ There is also small changes in tail for different variants with and without brak
                 <!--<anti-collision2 type="bool">true</anti-collision2>-->
                 <pos-lights-flash type="bool">false</pos-lights-flash>
                 <wing-tail type="int">1</wing-tail>
-                <fuselage type="int">1</fuselage>
+                <fuselage type="int">0</fuselage>
                 <form-knob type="double">1</form-knob>
                 <ar-knob type="double">1</ar-knob>
             </ext-lighting-panel>

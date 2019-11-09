@@ -926,6 +926,27 @@
       </equals>
     </condition>
   </animation>
+  
+  <model>
+  <name>fll</name>
+  <path>Aircraft/f16/Models/Effects/lights/fuselage-flood-light.xml</path> 
+  <offsets>
+            <x-m> 4.17987 </x-m>
+            <y-m> 0 </y-m>
+            <z-m> 2.5925 </z-m>
+        </offsets>   
+ </model>
+
+<animation>
+    <type>select</type>
+    <object-name>fll</object-name>
+    <condition>
+      <equals>
+        <property>sim/multiplay/generic/bool[48]</property> 
+        <value>1</value>
+      </equals>
+    </condition>
+  </animation>
 
   <animation>
     <type>select</type>
