@@ -1540,6 +1540,7 @@ setlistener("controls/lighting/ext-lighting-panel/anti-collision", button2, nil,
 setlistener("controls/lighting/ext-lighting-panel/pos-lights-flash", button2, nil, 0);
 setlistener("controls/lighting/ext-lighting-panel/wing-tail", button2, nil, 0);
 setlistener("controls/lighting/ext-lighting-panel/fuselage", button2, nil, 0);
+setlistener("controls/lighting/ext-lighting-panel/form-knob", click3, nil, 0);
 setlistener("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III", button2, nil, 0);
 setlistener("f16/fcs/switch-pitch-block20", button2, nil, 0);
 setlistener("f16/fcs/switch-roll-block20", button2, nil, 0);
@@ -1557,4 +1558,9 @@ setlistener("f16/avionics/mfd-l-con", click3, nil, 0);
 setlistener("f16/avionics/mfd-l-brt", click3, nil, 0);
 setlistener("f16/avionics/mfd-r-con", click3, nil, 0);
 setlistener("f16/avionics/mfd-r-brt", click3, nil, 0);
+setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-1", knob, nil, 0);
+setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-2", knob, nil, 0);
+setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-3", knob, nil, 0);
+setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-4", knob, nil, 0);
+setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-5", knob, nil, 0);
 # valid methods: button, button2, knob, knob2, clamp, click3, lift_cover
