@@ -1491,32 +1491,32 @@ var button = func {
 
 var button2 = func {
   setprop("f16/sound/button2",1);
-  settimer(func {setprop("f16/sound/button2",0);},0.35);
+  settimer(func {setprop("f16/sound/button2",0);},0.10);
 }
 
 var clamp = func {
   setprop("f16/sound/clamp",1);
-  settimer(func {setprop("f16/sound/clamp",0);},0.35);
+  settimer(func {setprop("f16/sound/clamp",0);},0.40);
 }
 
 var click3 = func {
   setprop("f16/sound/click3",1);
-  settimer(func {setprop("f16/sound/click3",0);},0.35);
+  settimer(func {setprop("f16/sound/click3",0);},0.10);
 }
 
 var knob = func {
   setprop("f16/sound/knob",1);
-  settimer(func {setprop("f16/sound/knob",0);},0.35);
+  settimer(func {setprop("f16/sound/knob",0);},0.20);
 }
 
 var knob2 = func {
   setprop("f16/sound/knob2",1);
-  settimer(func {setprop("f16/sound/knob2",0);},0.35);
+  settimer(func {setprop("f16/sound/knob2",0);},0.30);
 }
 
 var lift_cover = func {
   setprop("f16/sound/lift_cover",1);
-  settimer(func {setprop("f16/sound/lift_cover",0);},0.35);
+  settimer(func {setprop("f16/sound/lift_cover",0);},0.15);
 }
 
 # cockpit control sounds: (don't add ICP buttons to this list, they are calling the functions directly)
