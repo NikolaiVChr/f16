@@ -324,6 +324,7 @@ var loop_ded = func {# one line is max 24 chars
 #loop_ded();
 
 var cursorUp = func {
+  f16.button2();
   var active = getprop("autopilot/route-manager/active");
   var wp = getprop("autopilot/route-manager/current-wp");
   var max = getprop("autopilot/route-manager/route/num");
@@ -338,6 +339,7 @@ var cursorUp = func {
 }
 
 var cursorDown = func {
+  f16.button2();
   var active = getprop("autopilot/route-manager/active");
   var wp = getprop("autopilot/route-manager/current-wp");
   var max = getprop("autopilot/route-manager/route/num");
@@ -352,60 +354,74 @@ var cursorDown = func {
 }
 
 var stpt = func {
+  f16.button2();
   page = pSTPT;
 }
 
 var alow = func {
+  f16.button2();
   page = pALOW;
 }
 
 var tacan = func {
+  f16.button2();
   page = pTACAN;
 }
 
 var iff = func {
+  f16.button2();
   page = pIFF;
 }
 
 var comm1 = func {
+  f16.button2();
   comm = 0;
   page = pCNI;
 }
 
 var comm2 = func {
+  f16.button2();
   comm = 1;
   page = pCNI;
 }
 
 var bingo = func {
+  f16.button2();
   page = pBINGO;
 }
 
 var magv = func {
+  f16.button2();
   page = pMAGV;
 }
 
 var link16 = func {
+  f16.button2();
   page = pLINK;
 }
 
 var laser = func {
+  f16.button2();
   page = pLASER;
 }
 
 var time = func {
+  f16.button2();
   page = pTIME;
 }
 
 var list = func {
+  f16.button2();
   page = pLIST;
 }
 
 var counter = func {
+  f16.button2();
   page = pCM;
 }
 
 var cruise = func {
+  f16.button2();
   page = pCRUS;
 }
 

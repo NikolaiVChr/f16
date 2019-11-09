@@ -1482,3 +1482,72 @@ gui.showHelpDialog = func(path, toggle=0) {
     fgcommand("dialog-new", dialog[name].prop());
     gui.showDialog(name);
 }
+
+
+var button = func {
+  setprop("f16/sound/button",1);
+  settimer(func {setprop("f16/sound/button",0);},0.35);
+}
+
+var button2 = func {
+  setprop("f16/sound/button2",1);
+  settimer(func {setprop("f16/sound/button2",0);},0.35);
+}
+
+var clamp = func {
+  setprop("f16/sound/clamp",1);
+  settimer(func {setprop("f16/sound/clamp",0);},0.35);
+}
+
+var click3 = func {
+  setprop("f16/sound/click3",1);
+  settimer(func {setprop("f16/sound/click3",0);},0.35);
+}
+
+var knob = func {
+  setprop("f16/sound/knob",1);
+  settimer(func {setprop("f16/sound/knob",0);},0.35);
+}
+
+var knob2 = func {
+  setprop("f16/sound/knob2",1);
+  settimer(func {setprop("f16/sound/knob2",0);},0.35);
+}
+
+var lift_cover = func {
+  setprop("f16/sound/lift_cover",1);
+  settimer(func {setprop("f16/sound/lift_cover",0);},0.35);
+}
+
+# cockpit control sounds: (don't add ICP buttons to this list, they are calling the functions directly)
+setlistener("controls/lighting/ext-lighting-panel/master", button2, nil, 0);
+setlistener("controls/armament/master-arm", button2, nil, 0);
+setlistener("controls/armament/master-arm-cover-open", lift_cover, nil, 0);
+setlistener("controls/armament/laser-arm-dmd", button2, nil, 0);
+setlistener("controls/gear/brake-parking", button2, nil, 0);
+setlistener("controls/gear/gear-down", clamp, nil, 0);
+setlistener("fdm/jsbsim/systems/hook/tailhook-cmd-norm", clamp, nil, 0);
+setlistener("controls/seat/ejection-safety-lever", clamp, nil, 0);
+setlistener("instrumentation/radar/radar-standby", button2, nil, 0);
+setlistener("controls/fuel/external-transfer", button2, nil, 0);
+setlistener("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob", knob, nil, 0);
+setlistener("controls/fuel/qty-selector", knob, nil, 0);
+setlistener("sim/model/f16/instrumentation/radar-awg-9/select-target", knob2, nil, 0);
+setlistener("f16/engine/feed", knob, nil, 0);
+setlistener("systems/refuel/serviceable", button2, nil, 0);
+setlistener("controls/lighting/ext-lighting-panel/master", button2, nil, 0);
+setlistener("controls/lighting/ext-lighting-panel/anti-collision", button2, nil, 0);
+setlistener("controls/lighting/ext-lighting-panel/pos-lights-flash", button2, nil, 0);
+setlistener("controls/lighting/ext-lighting-panel/wing-tail", button2, nil, 0);
+setlistener("controls/lighting/ext-lighting-panel/fuselage", button2, nil, 0);
+setlistener("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III", button2, nil, 0);
+setlistener("f16/fcs/switch-pitch-block20", button2, nil, 0);
+setlistener("f16/fcs/switch-roll-block20", button2, nil, 0);
+setlistener("f16/fcs/autopilot-off", button2, nil, 0);
+setlistener("f16/fcs/autopilot-on", button2, nil, 0);
+setlistener("f16/fcs/switch-pitch-block15", button2, nil, 0);
+setlistener("f16/fcs/switch-roll-block15", button2, nil, 0);
+setlistener("controls/lighting/landing-light", button2, nil, 0);
+setlistener("controls/MFD[0]/button-pressed", button2, nil, 0);
+setlistener("controls/MFD[1]/button-pressed", button2, nil, 0);
+setlistener("controls/MFD[2]/button-pressed", button2, nil, 0);
