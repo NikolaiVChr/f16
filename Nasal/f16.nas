@@ -1551,3 +1551,4 @@ setlistener("controls/lighting/landing-light", button2, nil, 0);
 setlistener("controls/MFD[0]/button-pressed", button2, nil, 0);
 setlistener("controls/MFD[1]/button-pressed", button2, nil, 0);
 setlistener("controls/MFD[2]/button-pressed", button2, nil, 0);
+# valid methods: button, button2, knob, knob2, clamp, click3, lift_cover
