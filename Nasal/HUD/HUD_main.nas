@@ -344,7 +344,7 @@ var F16_HUD = {
                                             #printf("ILSinRange %d GSdist %d", hdp.ILSinRange, hdp.GSdist == nil);
                                             if (hdp.ILSinRange) {
                                                 #printf("ILS %d", hdp.ILSDeg);
-                                                obj.ilsGroup.setTranslation(4*clamp(hdp.ILSDeg,-5,5),0);
+                                                obj.ilsGroup.setTranslation(4*obj.clamp(hdp.ILSDeg,-5,5),0);
                                                 if (math.abs(hdp.ILSDeg)>5) {
                                                     obj.ils.hide();
                                                     obj.ilsOff.show();
@@ -370,7 +370,7 @@ var F16_HUD = {
                                                 }
                                                 if (obj["heading_tape_positionY"]!=nil) {
                                                     #obj.inv_v.setTranslation(obj.sx*0.5+5.4*hdp.cross, 20+obj.heading_tape_positionY);
-                                                    obj.heading_tape_pointer.setTranslation (5.4*clamp(geo.normdeg180(hdp.cross-hdp.heading),-10,10), obj.heading_tape_positionY);
+                                                    obj.heading_tape_pointer.setTranslation (5.4*obj.clamp(geo.normdeg180(hdp.cross-hdp.heading),-10,10), obj.heading_tape_positionY);
                                                     obj.heading_tape_pointer.show();
                                                 } else {
                                                     obj.heading_tape_pointer.hide();
