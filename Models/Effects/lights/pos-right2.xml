@@ -15,6 +15,14 @@
  </animation>
 
 
+ <animation>
+  <type>scale</type>
+  <object-name>procedural_light</object-name>
+  <property>sim/multiplay/generic/float[9]</property>
+  <x-offset>1</x-offset>
+  <y-offset>1</y-offset>
+  <z-offset>1</z-offset>
+ </animation>
 
 
   

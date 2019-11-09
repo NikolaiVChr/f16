@@ -810,6 +810,7 @@
     <not>
     <property>/sim/rendering/shaders/skydome</property>
   </not>
+  <property>/sim/rendering/shaders/skydome</property>
    <equals>
         <property>sim/multiplay/generic/bool[40]</property> 
         <value>1</value>

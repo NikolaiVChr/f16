@@ -482,7 +482,6 @@
      <binding>
       <command>nasal</command>
       <script>
-                print("EPIC01, call func");
                 f16_switches.toggleMaster();
       </script>
      </binding>
@@ -554,22 +553,6 @@
     </action>
    </animation>
    
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_KNOB_EXT_FORMATION_LIGHT</object-name>
-    <action>
-     <button>0</button>
-     <repeatable>true</repeatable>
-     <binding>
-      <command>nasal</command>
-      <script>
-                f16_switches.toggleFormationDn();
-      </script>
-     </binding>
-    </action>
-   </animation>
-
    <animation>
     <type>pick</type>
     <visible>true</visible>
@@ -938,7 +921,7 @@
   <object-name>SW_WING-TAIL</object-name>
   <property>controls/lighting/ext-lighting-panel/wing-tail</property>
   <factor>20</factor>
-  <offset-deg>-20</offset-deg>
+  <offset-deg>0</offset-deg>
   <center>
    <x-m>0.65</x-m>
    <y-m>-0.36</y-m>
@@ -954,9 +937,9 @@
  <animation>
   <type>rotate</type>
   <object-name>SW_FUSELAGE</object-name>
-  <property>controls/lighting/ext-lighting-panel/wing-tail</property>
+  <property>controls/lighting/ext-lighting-panel/fuselage</property>
   <factor>20</factor>
-  <offset-deg>-20</offset-deg>
+  <offset-deg>0</offset-deg>
   <center>
    <x-m>0.61</x-m>
    <y-m>-0.36</y-m>
@@ -968,6 +951,52 @@
    <z>0</z>
   </axis>
  </animation>
+ 
+ <animation>
+        <type>knob</type>
+        <object-name>SW_KNOB_EXT_FORMATION_LIGHT</object-name>
+        <property>controls/lighting/ext-lighting-panel/form-knob</property>
+        <factor>90</factor>
+        <offset-deg>-90</offset-deg>
+        <interval-sec>0.10</interval-sec>
+        <center>
+         <x-m>0.700401</x-m>
+         <y-m>-0.324357</y-m>
+         <z-m>0.0</z-m>
+        </center>
+        <axis>
+         <x>0</x>
+         <y>0</y>
+         <z>-1</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/lighting/ext-lighting-panel/form-knob</property>
+                <step>0.2</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/lighting/ext-lighting-panel/form-knob</property>
+                <step>-0.2</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>fk</tooltip-id>
+                <label>FORM</label>
+            </binding>
+        </hovered>
+    </animation>
 
     <animation>
         <type>knob</type>

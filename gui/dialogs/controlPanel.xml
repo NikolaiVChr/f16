@@ -509,7 +509,7 @@
 
 					    <checkbox>
 					    	<row>0</row>
-					    	<col>0</col>
+					    	<col>3</col>
 						    <property>controls/lighting/ext-lighting-panel/master</property>
 						    <live>true</live>
 						    <binding>
@@ -520,10 +520,10 @@
 					      	</binding>
 					    </checkbox>
 					    <text><row>0</row>
-					    	<col>1</col><label>MASTER</label></text>
+					    	<col>2</col><label>MASTER</label></text>
 					    <checkbox>
 					    	<row>0</row>
-					    	<col>2</col>
+					    	<col>5</col>
 						    <property>controls/lighting/ext-lighting-panel/anti-collision</property>
 						    <live>true</live>
 						    <binding>
@@ -534,72 +534,140 @@
 					      	</binding>
 					    </checkbox>
 					    <text><row>0</row>
-					    	<col>3</col><label>AntiColl</label></text>
+					    	<col>4</col><label>COLL</label></text>
+					    	
 					    <checkbox>
-					    	<row>0</row>
-					    	<col>4</col>
-						    <property>controls/lighting/ext-lighting-panel/wing-tail</property>
+					    	<row>1</row>
+					    	<col>1</col>
+						    <property>controls/lighting/ext-lighting-panel/pos-lights-flash</property>
 						    <live>true</live>
 						    <binding>
 								<command>nasal</command>
 								<script>
-								f16_switches.toggleWingTail();
+								f16_switches.togglePosLightsFlash();
 								</script>
 					      	</binding>
 					    </checkbox>
+					    <text><row>1</row>
+					    	<col>0</col><label>FLASH</label></text>
+					    <hrule><row>1</row>
+					    	<col>2</col></hrule>
+					    <hrule><row>1</row>
+					    	<col>3</col></hrule>
+					    <group>
+				    		<row>2</row>
+				    		<col>2</col>
+							<layout>vbox</layout>
+							<halign>left</halign>
+							
+							<text>
+								<label>LAND</label>
+							</text>
+							<text>
+								<label>OFF</label>
+							</text>
+							<text>
+								<label>TAXI</label>
+							</text>
+							
+						</group>
+						
+						<slider>
+							<row>2</row>
+				    		<col>3</col>
+							<halign>left</halign>
+							<property>controls/lighting/landing-light</property>
+							<min>-1</min>
+							<max>1</max>
+							<step>1</step>
+							<live>true</live>
+							<vertical>true</vertical>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+							<binding>
+						        <command>nasal</command>
+						        <script>
+						        </script>
+						    </binding>
+						</slider>
+					    
 					    <text><row>0</row>
-					    	<col>5</col><label>WingTail</label></text>
-
-					    <checkbox>
-					    	<row>1</row>
-					    	<col>0</col>
-						    <property>controls/lighting/ext-lighting-panel/fuselage</property>
-						    <live>true</live>
-						    <binding>
-								<command>nasal</command>
-								<script>
-								f16_switches.toggleFuselage();
-								</script>
-					      	</binding>
-					    </checkbox>
-					    <text><row>1</row>
-					    	<col>1</col><label>Fuselage</label></text>
-					    <radio>
-					    	<row>1</row>
-					    	<col>2</col>
-							<property>controls/lighting/landing-light-t</property>
-						    <live>true</live>
-						    <binding>
-								<command>nasal</command>
-								<script>
-									if (getprop("controls/lighting/landing-light") != -1) {
-										setprop("controls/lighting/landing-light",-1);
-									} else {
-										setprop("controls/lighting/landing-light",0);
-									}									
-								</script>
-					      	</binding>
-					    </radio>
-					    <text><row>1</row>
-					    	<col>3</col><label>Taxi</label></text>
-					    <radio>
-					    	<row>1</row>
-					    	<col>4</col>
-					    	<property>controls/lighting/landing-light-l</property>
-						    <live>true</live>
-						    <binding>
-								<command>nasal</command>
-								<script>
-									if (getprop("controls/lighting/landing-light") != 1) {
-										setprop("controls/lighting/landing-light",1);
-									} else {
-										setprop("controls/lighting/landing-light",0);
-									}									
-								</script>
-					      	</binding>
-					    </radio>
-					    <text><row>1</row>
-					    	<col>5</col><label>Land</label></text>
+					    	<col>0</col><label>WING-TAIL</label></text>
+				    	<group>
+				    		<row>2</row>
+				    		<col>0</col>
+							<layout>vbox</layout>
+							<halign>left</halign>
+							
+							<text>
+								<label>BRT</label>
+							</text>
+							<text>
+								<label>OFF</label>
+							</text>
+							<text>
+								<label>DIM</label>
+							</text>
+							
+						</group>
+						
+						<slider>
+							<row>2</row>
+				    		<col>1</col>
+							<halign>left</halign>
+							<property>controls/lighting/ext-lighting-panel/wing-tail</property>
+							<min>-1</min>
+							<max>1</max>
+							<step>1</step>
+							<live>true</live>
+							<vertical>true</vertical>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+							<binding>
+						        <command>nasal</command>
+						        <script>
+						        </script>
+						    </binding>
+						</slider>
+						
+						<text><row>1</row>
+				    	<col>4</col><label>FORM</label></text>
+				    	<group>
+				    		<row>2</row>
+				    		<col>4</col>
+							<layout>vbox</layout>
+							<halign>left</halign>
+							
+							<text>
+								<label>BRT</label>
+							</text>
+							<text>
+								<label>OFF</label>
+							</text>								
+						</group>
+						
+						<slider>
+							<row>2</row>
+				    		<col>5</col>
+							<halign>left</halign>
+							<property>controls/lighting/ext-lighting-panel/form-knob</property>
+							<min>0</min>
+							<max>1</max>
+							<step>0.2</step>
+							<live>true</live>
+							<vertical>true</vertical>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+							<binding>
+						        <command>nasal</command>
+						        <script>
+						        </script>
+						    </binding>
+						</slider>
+							
 					</group>
 			</group>
 

@@ -2,13 +2,13 @@
 # External Lighting panel (left console)
 # ======================================
 
-var master = props.globals.getNode("controls/lighting/ext-lighting-panel/master");
-var antiCollision = props.globals.getNode("controls/lighting/ext-lighting-panel/anti-collision");
-var posLightsFlash = props.globals.getNode("controls/lighting/ext-lighting-panel/pos-lights-flash");
-var wingTail = props.globals.getNode("controls/lighting/ext-lighting-panel/wing-tail");
-var fuselage = props.globals.getNode("controls/lighting/ext-lighting-panel/fuselage");
-var formation = props.globals.getNode("controls/lighting/ext-lighting-panel/form-knob");
-var aerialRefueling = props.globals.getNode("controls/lighting/ext-lighting-panel/ar-knob");
+var master = props.globals.getNode("controls/lighting/ext-lighting-panel/master");#all ext. lights except for taxi and landing.
+var antiCollision = props.globals.getNode("controls/lighting/ext-lighting-panel/anti-collision");#white flashing light at top of tail
+var posLightsFlash = props.globals.getNode("controls/lighting/ext-lighting-panel/pos-lights-flash");#will flash all light controll by WingTail switch
+var wingTail = props.globals.getNode("controls/lighting/ext-lighting-panel/wing-tail");#all red/green plus tail white. BRT (1)/off (0)/dim (-1)
+var fuselage = props.globals.getNode("controls/lighting/ext-lighting-panel/fuselage");#white flood light mounted leading edge of tail
+var formation = props.globals.getNode("controls/lighting/ext-lighting-panel/form-knob");#white formation lights on top and bottom
+var aerialRefueling = props.globals.getNode("controls/lighting/ext-lighting-panel/ar-knob");#flood light in hatch of refuel ext. panel
 
 
 # Initialize the external lighting panel
@@ -49,62 +49,30 @@ var aerialRefueling = props.globals.getNode("controls/lighting/ext-lighting-pane
                 posLightsFlash.setBoolValue(1);
         }
  }
-
- # Controlling both wing-tail and fuselage switches for now 
- var toggleWingTailUp = func {
-        if(wingTail.getValue() == 0) {
-                wingTail.setValue(1);
-                fuselage.setValue(1);
-        } elsif (wingTail.getValue() == 1) {
-                wingTail.setValue(2);
-                fuselage.setValue(2);
-        } 
- } 
-
-
- var toggleWingTailDn = func {
-        if(wingTail.getValue() == 2) {
-                wingTail.setValue(1);
-                fuselage.setValue(1);
-        } elsif (wingTail.getValue() == 1) {
-                wingTail.setValue(0);
-                fuselage.setValue(0);
-        } 
- }
  
  var toggleWingTail = func {
-    wingTail.setValue(!wingTail.getValue());
+    var v = wingTail.getValue();
+    if (v == 0) v = 1;
+    elsif (v == 1) v = -1;
+    else v = 0;
+    wingTail.setIntValue(v);
  }
 
 # Using the wing-tail property for now
  var toggleFuselage = func {
-    fuselage.setValue(!fuselage.getValue());
+    var v = fuselage.getValue();
+    if (v == 0) v = 1;
+    elsif (v == 1) v = -1;
+    else v = 0;
+    fuselage.setIntValue(v);
  }
 
-# Using the wing-tail property for now
- var toggleFuselageUp = func {
-        if(wingTail.getValue() == 0) {
-                wingTail.setValue(1);
-                fuselage.setValue(1);
-        } elsif (wingTail.getValue() == 1) {
-                wingTail.setValue(2);
-                fuselage.setValue(2);
-        }
- }
-
-
- var toggleFuselageDn = func {
-        if(wingTail.getValue() == 2) {
-                wingTail.setValue(1);
-                fuselage.setValue(1);
-        } elsif (wingTail.getValue() == 1) {
-                wingTail.setValue(0);
-                fuselage.setValue(0);
-        }
- }
+# FIXME this is supposed to be a rotary
+ var toggleFormation = func {
+    formation.setBoolValue(!formation.getBoolValue());
+ }  
  
- # FIXME this is supposed to be a rotary
- var toggleFormationUp = func {
+  var toggleFormationUp = func {
         if(formation.getValue() == 0) {
                 formation.setValue(1);
         }

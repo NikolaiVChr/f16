@@ -4,8 +4,8 @@ var TRUE = 1;
 var FALSE = 0;
 
 # strobes ===========================================================
-var strobe_switch = props.globals.getNode("controls/lighting/ext-lighting-panel/anti-collision2", 1);
-aircraft.light.new("sim/model/lighting/strobe", [0.03, 1.9+rand()/5], strobe_switch);
+#var strobe_switch = props.globals.getNode("controls/lighting/ext-lighting-panel/anti-collision2", 1);
+#aircraft.light.new("sim/model/lighting/strobe", [0.03, 1.9+rand()/5], strobe_switch);
 var msgA = "If you need to repair now, then use Menu-Location-SelectAirport instead.";
 var msgB = "Please land before changing payload.";
 var msgC = "Please land before refueling.";
@@ -428,65 +428,68 @@ var sendABtoMP = func {
 }
 
 var sendLightsToMp = func {
-  var master = getprop("controls/lighting/ext-lighting-panel/master");
-  var pos = getprop("controls/lighting/ext-lighting-panel/pos-lights-flash");
-  var wing = getprop("controls/lighting/ext-lighting-panel/wing-tail");
-  var land = getprop("controls/lighting/landing-light");
+  var master = getprop("controls/lighting/ext-lighting-panel/master");#all ext. lights except for taxi and landing.
+  var flash = getprop("controls/lighting/ext-lighting-panel/pos-lights-flash");#will flash all light controll by WingTail switch
+  var wing = getprop("controls/lighting/ext-lighting-panel/wing-tail");#all red/green plus tail white. BRT (1)/off (0)/dim (-1)
+  var fuse = getprop("controls/lighting/ext-lighting-panel/fuselage");#white flood light mounted leading edge of tail
+  var form = getprop("controls/lighting/ext-lighting-panel/form-knob");#white formation lights on top and bottom
+  var strobe = getprop("controls/lighting/ext-lighting-panel/anti-collision");#white flashing light at top of tail
+  var ar = getprop("controls/lighting/ext-lighting-panel/ar-knob");#flood light in hatch of refuel ext. panel
+  var land = getprop("controls/lighting/landing-light");# LAND: white bright light pointed downward in fwd gear door (1). TAXI: white light in fwd gear door (-1)
   var dc = getprop("fdm/jsbsim/elec/bus/ess-dc");
-  var form = getprop("controls/lighting/ext-lighting-panel/form-knob");
-  var vi = getprop("sim/model/f16/dragchute");
+  var vi = getprop("sim/model/f16/dragchute");#elongated tailroot
   var gear = getprop("fdm/jsbsim/gear/gear-pos-norm");
 
-  if (land == -1) {
-    setprop("controls/lighting/landing-light-t",1);
-  } else {
-    setprop("controls/lighting/landing-light-t",0);
-  }
-  if (land == 1) {
-    setprop("controls/lighting/landing-light-l",1);
-  } else {
-    setprop("controls/lighting/landing-light-l",0);
-  }
+  # TODO: review elec
 
-  if (land == -1 and master and dc > 20 and gear > 0.3) {
+  if (land == -1 and dc > 20 and gear > 0.3) {
     # taxi
     setprop("sim/multiplay/generic/bool[46]",1);
   } else {
     setprop("sim/multiplay/generic/bool[46]",0);
   }
   
-  if (land == 1 and master and dc > 20 and gear > 0.3) {
+  if (land == 1 and dc > 20 and gear > 0.3) {
     # land
     setprop("sim/multiplay/generic/bool[47]",1);
   } else {
     setprop("sim/multiplay/generic/bool[47]",0);
   }
 
-  if (pos and (wing == 0 or wing == 2) and master and dc > 20) {
-    setprop("sim/multiplay/generic/bool[40]",1);
+  if ((wing == -1 or wing == 1) and master and dc > 20 and (!getprop("sim/multiplay/generic/bool[40]") or !flash)) {
+    setprop("sim/multiplay/generic/bool[40]",1);#on/off for wingtip and inlet sides.
+    setprop("sim/multiplay/generic/float[9]",0.60+wing*0.40);#brightness for wingtip, back of tail and inlet sides.
+      if (vi) {
+        # tail light with dragchute
+        setprop("sim/multiplay/generic/bool[42]",1);
+      } else {
+        setprop("sim/multiplay/generic/bool[42]",0);
+      }
+
+      if (!vi) {
+        # tail light without dragchute
+        setprop("sim/multiplay/generic/bool[43]",1);
+      } else {
+        setprop("sim/multiplay/generic/bool[43]",0);
+      }
   } else {
     setprop("sim/multiplay/generic/bool[40]",0);
+    setprop("sim/multiplay/generic/bool[42]",0);
+    setprop("sim/multiplay/generic/bool[43]",0);
+    setprop("sim/multiplay/generic/float[9]",0.001);
   }
 
-  if (form == 1 and master and dc > 20) {
+  if (form > 0 and master and dc > 20) {
+    # belly and spine lights
     setprop("sim/multiplay/generic/bool[41]",1);
+    setprop("sim/multiplay/generic/float[8]",form);
   } else {
     setprop("sim/multiplay/generic/bool[41]",0);
+    setprop("sim/multiplay/generic/float[8]",0.001);
   }
 
-  if (form == 1 and master and dc > 20 and vi) {
-    setprop("sim/multiplay/generic/bool[42]",1);
-  } else {
-    setprop("sim/multiplay/generic/bool[42]",0);
-  }
-
-  if (form == 1 and master and dc > 20 and !vi) {
-    setprop("sim/multiplay/generic/bool[43]",1);
-  } else {
-    setprop("sim/multiplay/generic/bool[43]",0);
-  }
-
-  if (master and dc > 20) {
+  if (strobe and master and dc > 20) {
+    # strobe
     setprop("sim/multiplay/generic/bool[44]",1);
   } else {
     setprop("sim/multiplay/generic/bool[44]",0);
