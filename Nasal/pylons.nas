@@ -103,7 +103,7 @@ var pylonSets = {
 	aim7:    {name: "1 x AIM-7",   content: ["AIM-7"], fireOrder: [0], launcherDragArea: -0.025, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
 	podEcm131: {name: "AN/ALQ-131(V) ECM Pod", content: [ecm131], fireOrder: [0], launcherDragArea: 0.16, launcherMass: 410, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
 	podEcm184: {name: "AN/ALQ-184(V) ECM Pod", content: [ecm184], fireOrder: [0], launcherDragArea: 0.1, launcherMass: 635, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
-    podTrvl: {name: "MXU-648 Cargopod", content: [crgpd], fireOrder: [], launcherDragArea: 0.14, launcherMass: 104, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 1},
+    podTrvl: {name: "MXU-648 Cargopod", content: [crgpd], fireOrder: [], launcherDragArea: 0.14, launcherMass: 104, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 2},
     podSAtp: {name: "AN/AAQ-33 Sniper ATP", content: [atp], fireOrder: [0], launcherDragArea: 0.06, launcherMass: 446, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     podLTgp: {name: "AN/AAQ-14 LANTIRN Target Pod", content: [tgp], fireOrder: [0], launcherDragArea: 0.07, launcherMass: 530, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     podLNav:  {name: "AN/AAQ-13 LANTIRN Nav Pod", content: [nav], fireOrder: [0], launcherDragArea: 0.1, launcherMass: 451.1, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
