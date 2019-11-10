@@ -644,7 +644,7 @@
 		<rumble>
 			<name>gear rumble</name>
 			<mode>looped</mode>
-			<path>Sounds/rumble.wav</path>
+			<path>Aircraft/f16/Sounds/ground_roll.wav</path>
 			<condition>
 				<property>sim/current-view/internal</property>
 				<or>
@@ -706,7 +706,7 @@
 		</gear>
 		<squeal>
 			<name>squeal</name>
-			<path>Sounds/squeal.wav</path>
+			<path>Aircraft/f16/Sounds/touchdown.wav</path>
 			<condition>
 				<not>
 					<property>sim/current-view/internal</property>
@@ -1239,7 +1239,7 @@
 		</hydra>
 
 		<voice>
-			<name>Geforce-breath-vox1</name>
+			<name>breathing</name>
 			<path>Aircraft/f16/Sounds/breathing.wav</path>
 			<type>avionics</type>
 			<condition>
@@ -1252,7 +1252,7 @@
 			<max-dist>4</max-dist>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>1.25</factor>
+				<factor>2.25</factor>
 			</volume>
 		</voice>
 		<voice>
@@ -1368,7 +1368,7 @@
    				</not>
 			</condition>
 			<volume>
-				<factor>0.30</factor>
+				<factor>0.20</factor>
 			</volume>
 		</ambience>
 		<ambience>
@@ -1386,13 +1386,13 @@
    				</not>
 			</condition>
 			<volume>
-				<factor>0.11</factor>
+				<factor>0.08</factor>
 			</volume>
 		</ambience>
 
 		<squeal>
 			<name>touchdown squeal</name>
-			<path>Sounds/squeal.wav</path>
+			<path>Aircraft/f16/Sounds/touchdown.wav</path>
 			<condition>
 				<and>
 					<or>
