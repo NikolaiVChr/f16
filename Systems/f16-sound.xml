@@ -1236,9 +1236,6 @@
 			<path>Aircraft/f16/Sounds/Effects/rain.wav</path>
 			<type>avionics</type>
 			<condition>
-				<not>
-				<property>sim/current-view/internal</property>
-				</not>
 				<greater-than>
 					<property>/environment/rain-norm</property>
 					<value>0</value>
@@ -1248,6 +1245,11 @@
 				<property>/environment/rain-norm</property>
 				<factor>0.39</factor>
 			</volume>
+			<volume>
+			    <property>fdm/jsbsim/fcs/canopy-pos-norm</property>		
+			    <offset>0</offset>
+			    <factor>1</factor>
+		    </volume>
 		</rain>
 		<rain>
 			<name>rain interior</name>
