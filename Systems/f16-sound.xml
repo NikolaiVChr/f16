@@ -1285,6 +1285,44 @@
 				<max>0.40</max>
 			</volume>
 		</rain-windshield>
+		<ambience>
+			<name>ambience_outside</name>
+			<mode>looped</mode>
+			<path>Aircraft/f16/Sounds/Effects/ambience_outside.wav</path>
+			<type>avionics</type>
+			<condition>
+				<not>
+				<property>sim/current-view/internal</property>
+				</not>
+				<property>gear/gear[0]/wow</property>
+   				<property>gear/gear[1]/wow</property>
+   				<property>gear/gear[2]/wow</property>
+   				<not>
+     			<property>engines/engine[0]/running</property>
+   				</not>
+			</condition>
+			<volume>
+				<factor>0.35</factor>
+			</volume>
+		</ambience>
+		<ambience>
+			<name>ambience_inside</name>
+			<mode>looped</mode>
+			<path>Aircraft/f16/Sounds/Effects/ambience_outside.wav</path>
+			<type>avionics</type>
+			<condition>
+				<property>sim/current-view/internal</property>
+				<property>gear/gear[0]/wow</property>
+   				<property>gear/gear[1]/wow</property>
+   				<property>gear/gear[2]/wow</property>
+   				<not>
+     			<property>engines/engine[0]/running</property>
+   				</not>
+			</condition>
+			<volume>
+				<factor>0.125</factor>
+			</volume>
+		</ambience>
 
 		<squeal>
 			<name>touchdown squeal</name>
@@ -1922,7 +1960,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.60</factor>
+				<factor>0.25</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1935,7 +1973,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.60</factor>
+				<factor>0.9</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1948,7 +1986,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.60</factor>
+				<factor>0.40</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1961,7 +1999,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.60</factor>
+				<factor>1.0</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -1974,7 +2012,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.60</factor>
+				<factor>0.65</factor>
 			</volume>
 		</switch>
 		
