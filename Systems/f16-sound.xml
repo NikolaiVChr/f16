@@ -1231,7 +1231,7 @@
 		</voice>
 
 		<rain>
-			<name>rain</name>
+			<name>rainHittingFuselage</name>
 			<mode>looped</mode>
 			<path>Aircraft/f16/Sounds/Effects/rain.wav</path>
 			<type>avionics</type>
@@ -1250,7 +1250,7 @@
 			</volume>
 		</rain>
 		<rain>
-			<name>rainin</name>
+			<name>rainHittingFuselageInt</name>
 			<mode>looped</mode>
 			<path>Aircraft/f16/Sounds/Effects/rain.wav</path>
 			<type>avionics</type>
@@ -1267,29 +1267,13 @@
 			</volume>
 			<volume>
 			    <property>fdm/jsbsim/fcs/canopy-pos-norm</property>		
-			    <offset>0</offset>
+			    <offset>0.125</offset>
 			    <factor>1</factor>
+			    <max>1</max>
 		    </volume>
 		</rain>
-		<rain>
-			<name>rain interior</name>
-			<mode>looped</mode>
-			<path>Aircraft/f16/Sounds/Effects/rain.wav</path>
-			<type>avionics</type>
-			<condition>
-				<property>sim/current-view/internal</property>
-				<greater-than>
-					<property>/environment/rain-norm</property>
-					<value>0</value>
-				</greater-than>
-			</condition>
-			<volume>
-				<property>/environment/rain-norm</property>
-				<factor>0.125</factor>
-			</volume>
-		</rain>
 		<rain-windshield>
-			<name>rain-windshield</name>
+			<name>rainHittingWindshieldInt</name>
 			<mode>looped</mode>
 			<path>Aircraft/f16/Sounds/Effects/rain-windshield.wav</path>
 			<type>avionics</type>
