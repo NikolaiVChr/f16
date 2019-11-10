@@ -1499,9 +1499,34 @@ var clamp0 = func {
   settimer(func {setprop("f16/sound/clamp",0);},0.40);
 }
 
+var click1 = func {
+  setprop("f16/sound/click1",1);
+  settimer(func {setprop("f16/sound/click1",0);},0.20);
+}
+
+var click2 = func {
+  setprop("f16/sound/click2",1);
+  settimer(func {setprop("f16/sound/click2",0);},0.15);
+}
+
 var click3 = func {
   setprop("f16/sound/click3",1);
   settimer(func {setprop("f16/sound/click3",0);},0.075);
+}
+
+var doubleClick = func {
+  setprop("f16/sound/double-click",1);
+  settimer(func {setprop("f16/sound/double-click",0);},0.30);
+}
+
+var doubleClick2 = func {
+  setprop("f16/sound/double-click2",1);
+  settimer(func {setprop("f16/sound/double-click2",0);},0.40);
+}
+
+var scroll = func {
+  setprop("f16/sound/scroll",1);
+  settimer(func {setprop("f16/sound/scroll",0);},0.35);
 }
 
 var knob = func {
@@ -1564,3 +1589,4 @@ setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-3", knob, nil,
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-4", knob, nil, 0);
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-5", knob, nil, 0);
 # valid methods: button, button2, knob, knob2, clamp0, click3, lift_cover
+#                click1, click2, doubleClick, doubleClick2, scroll

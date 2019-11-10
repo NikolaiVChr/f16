@@ -2868,7 +2868,12 @@ There is also small changes in tail for different variants with and without brak
             <button type="bool">false</button>
             <button2 type="bool">false</button2>
             <clamp type="bool">false</clamp>
+            <scroll type="bool">false</scroll>
+            <click1 type="bool">false</click1>
+            <click2 type="bool">false</click2>
             <click3 type="bool">false</click3>
+            <double-click type="bool">false</double-click>
+            <double-click2 type="bool">false</double-click2>
             <knob type="bool">false</knob>
             <knob2 type="bool">false</knob2>
             <lift_cover type="bool">false</lift_cover>

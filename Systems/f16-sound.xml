@@ -2021,6 +2021,71 @@
 				<factor>0.65</factor>
 			</volume>
 		</switch>
+		<switch>
+			<name>c2</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/click2.wav</path>
+			<condition>
+				<property>f16/sound/click2</property>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.9</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>c1</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/click1.wav</path>
+			<condition>
+				<property>f16/sound/click1</property>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.9</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>dc</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/double-click.wav</path>
+			<condition>
+				<property>f16/sound/double-click</property>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.9</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>dc2</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/double-click2.wav</path>
+			<condition>
+				<property>f16/sound/double-click2</property>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.9</factor>
+			</volume>
+		</switch>
+		<switch>
+			<name>scr</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/Cockpit/scroll.wav</path>
+			<condition>
+				<property>f16/sound/scroll</property>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>0.9</factor>
+			</volume>
+		</switch>
 		
 		<missile1>
 			<name>missile0</name>
