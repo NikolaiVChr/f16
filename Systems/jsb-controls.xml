@@ -2854,6 +2854,50 @@
                 </product>
             </function>
         </fcs_function>
+        
+    </channel>
+
+    <channel execrate="8">
+    
+        <fcs_function name="/engines/engine[0]/n2-low">
+            <function>
+                <table>
+                    <independentVar lookup="row">/engines/engine/n2</independentVar>
+                    <tableData>
+                          0.1         0.0
+                          1.0         0.1
+                         25.0         1.0
+                         35.0         0.75
+                         45.0         0.0
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="/engines/engine[0]/n1-mid">
+            <function>
+                <table>
+                    <independentVar lookup="row">/engines/engine/n1</independentVar>
+                    <tableData>
+                           5.5        0.0
+                          10          0.75
+                          15          1.0
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="/engines/engine[0]/n1-high">
+            <function>
+                <table>
+                    <independentVar lookup="row">/engines/engine/n1</independentVar>
+                    <tableData>
+                          10          0.0
+                          30          1.0
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
 
     </channel>
 

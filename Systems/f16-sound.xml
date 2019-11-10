@@ -46,7 +46,51 @@
 			</volume>
 		</canopy>
 
-		<!-- ENGINE -->
+		<!-- ********************************************************************************* -->
+		<!--                                 ENGINE                                            -->
+		<!-- ********************************************************************************* -->
+		
+		<engine_low>
+			<name>internal core low rpm</name>
+			<path>Aircraft/f16/Sounds/engine_low_int.wav</path>
+			<mode>looped</mode>
+			<condition>
+				<property>sim/current-view/internal</property>
+				<greater-than>
+					<property>engines/engine/n2</property>
+					<value>0.1</value>
+				</greater-than>
+			</condition>
+			<reference-dist>30</reference-dist>
+			<max-dist>100</max-dist>
+			<position>
+				<x>-0.6</x>
+				<y>0.0</y>
+				<z>-0.37</z>
+			</position>
+			<orientation>
+				<x>-0.98</x>
+				<y>0.0</y>
+				<z>0.0</z>
+			</orientation>
+			<pitch>
+				<property>engines/engine/n2</property>
+				<offset>0</offset>
+				<factor>0.08</factor>
+				<max>2</max>
+			</pitch>
+			<volume>
+				<property>engines/engine[0]/n2-low</property>
+				<offset>0</offset>
+				<factor>1</factor>
+				<type>lin</type>
+				<min>0</min>
+				<max>1</max>
+			</volume>
+			<volume>
+				<factor>0.10</factor>
+			</volume>
+		</engine_low>
 		<engine_fan>
 			<name>internal fan</name>
 			<path>Aircraft/f16/Sounds/engine-int.wav</path>
@@ -54,8 +98,8 @@
 			<condition>
 				<property>sim/current-view/internal</property>
 				<greater-than>
-					<property>engines/engine/n2</property>
-					<value>5</value>
+					<property>engines/engine/n1</property>
+					<value>0.5</value>
 				</greater-than>
 			</condition>
 			<reference-dist>30</reference-dist>
@@ -72,10 +116,13 @@
 			</orientation>
 			<pitch>
 				<property>engines/engine/n1</property>
-				<offset>0.6</offset>
-				<factor>.00075</factor>
+				<offset>0.5</offset>
+				<factor>0.00175</factor>
+				<min>0</min>
+				<max>2</max>
 			</pitch>
 			<volume>
+				<property>engines/engine/n1-high</property>
 				<factor>0.55</factor>
 			</volume>
 		</engine_fan>
@@ -86,8 +133,8 @@
 			<condition>
 				<property>sim/current-view/internal</property>
 				<greater-than>
-					<property>engines/engine/n2</property>
-					<value>5</value>
+					<property>engines/engine/n1</property>
+					<value>0.5</value>
 				</greater-than>
 			</condition>
 			<reference-dist>30</reference-dist>
@@ -104,10 +151,13 @@
 			</orientation>
 			<pitch>
 				<property>engines/engine/n1</property>
-				<offset>0.6</offset>
-				<factor>.00075</factor>
+				<offset>0.0</offset>
+				<factor>0.02</factor>
+				<min>0.0</min>
+				<max>0.80</max>
 			</pitch>
 			<volume>
+				<property>engines/engine/n1-mid</property>
 				<factor>0.06</factor>
 			</volume>
 		</engine_fan>
@@ -118,8 +168,8 @@
 			<condition>
 				<property>sim/current-view/internal</property>
 				<greater-than>
-					<property>engines/engine/n2</property>
-					<value>5</value>
+					<property>engines/engine/n1</property>
+					<value>5.5</value>
 				</greater-than>
 			</condition>
 			<reference-dist>30</reference-dist>
@@ -136,10 +186,13 @@
 			</orientation>
 			<pitch>
 				<property>engines/engine/n1</property>
-				<offset>0.6</offset>
-				<factor>.00075</factor>
+				<offset>0.0</offset>
+				<factor>.0030</factor>
+				<min>0.5</min>
+				<max>0.675</max>
 			</pitch>
 			<volume>
+				<property>engines/engine/n1-mid</property>
 				<factor>0.45</factor>
 			</volume>
 		</engine_fan>
@@ -150,8 +203,8 @@
 			<mode>looped</mode>
 			<condition>
 				<greater-than>
-					<property>engines/engine/n2</property>
-					<value>5</value>
+					<property>engines/engine/n1</property>
+					<value>0.5</value>
 				</greater-than>
 				<not>
 					<property>sim/current-view/internal</property>
@@ -193,8 +246,8 @@
 			<mode>looped</mode>
 			<condition>
 				<greater-than>
-					<property>engines/engine/n2</property>
-					<value>5</value>
+					<property>engines/engine/n1</property>
+					<value>0.5</value>
 				</greater-than>
 				<not>
 					<property>sim/current-view/internal</property>
@@ -258,17 +311,31 @@
 				<offset>0</offset>
 				<factor>0.000044944</factor>
 			</volume>
-			<!--<volume>
-    <property>sim/current-view/internal</property>
-    <offset>1</offset>
-    <factor>-0.5</factor>
-   </volume>-->
 			<pitch>
 				<property>engines/engine/n1</property>
 				<offset>0.25</offset>
-				<factor>0.1</factor>
+				<factor>0.0035</factor>
 			</pitch>
 		</exhaust>
+		<afterburner>
+			<name>afterburner internal</name>
+			<path>Aircraft/f16/Sounds/GEED/afterburner_interior.wav</path>
+			<mode>looped</mode>
+			<condition>
+				<property>sim/current-view/internal</property>
+				<property>engines/engine/augmentation</property>
+			</condition>
+			<position>
+				<x>4.6</x>
+				<y>0.0</y>
+				<z>0.0</z>
+			</position>
+			<volume>
+				<property>engines/engine/nozzle-pos-norm</property>
+				<offset>0.05</offset>
+				<factor>0.60</factor>
+			</volume>
+		</afterburner>
 		<exhaust>
 			<name>turbine external</name>
 			<path>Sounds/jet.wav</path>
@@ -299,11 +366,6 @@
 				<offset>0</offset>
 				<factor>0.000065</factor>
 			</volume>
-			<!--<volume>
-    <property>sim/current-view/internal</property>
-    <offset>1</offset>
-    <factor>-0.5</factor>
-   </volume>-->
 			<pitch>
 				<property>engines/engine/n1</property>
 				<offset>0.00</offset>
@@ -372,7 +434,7 @@
 				<factor>0.117</factor>
 			</volume>
 		</afterburner>
-		
+
 		
 		<!-- .................... external sounds heard inside when canopy open...........................-->
 		<exhaust>
@@ -489,7 +551,7 @@
 			<condition>
 				<greater-than>
 					<property>engines/engine/n2</property>
-					<value>5</value>
+					<value>0.5</value>
 				</greater-than>
 				<property>sim/current-view/internal</property>
 				<less-than>
@@ -535,7 +597,7 @@
 			<condition>
 				<greater-than>
 					<property>engines/engine/n2</property>
-					<value>5</value>
+					<value>0.5</value>
 				</greater-than>
 				<property>sim/current-view/internal</property>
 				<less-than>
@@ -576,26 +638,7 @@
 		</engine_fan>
 		<!-- ..........................................................-->
 
-		<!-- new AB internal sound by G-EED -->
-		<afterburner>
-			<name>afterburner internal</name>
-			<path>Aircraft/f16/Sounds/GEED/afterburner_interior.wav</path>
-			<mode>looped</mode>
-			<condition>
-				<property>sim/current-view/internal</property>
-				<property>engines/engine/augmentation</property>
-			</condition>
-			<position>
-				<x>4.6</x>
-				<y>0.0</y>
-				<z>0.0</z>
-			</position>
-			<volume>
-				<property>engines/engine/nozzle-pos-norm</property>
-				<offset>0.05</offset>
-				<factor>0.60</factor>
-			</volume>
-		</afterburner>
+
 
 		<!-- GEAR -->
 		<rumble>
