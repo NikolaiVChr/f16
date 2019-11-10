@@ -186,7 +186,7 @@
    <property>gear/gear[1]/wow</property>
    <property>gear/gear[2]/wow</property>
    <property>systems/refuel/serviceable</property>
-   <value>1</value>
+   <value>0</value>
  </condition>
 </animation>
 
