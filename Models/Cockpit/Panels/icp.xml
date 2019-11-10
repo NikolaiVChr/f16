@@ -154,7 +154,7 @@
             <button>0</button>
             <binding>
                 <command>nasal</command>
-                <script>f16.knob2();if (pylons.fcs!=nil) pylons.fcs.cycleAG();</script>
+                <script>f16.doubleClick();if (pylons.fcs!=nil) pylons.fcs.cycleAG();</script>
             </binding>
         </action>
         <!--<hovered>
@@ -482,7 +482,7 @@
             <button>0</button>
             <binding>
                 <command>nasal</command>
-                <script>f16.knob2();if (pylons.fcs!=nil) pylons.fcs.cycleAA();</script>
+                <script>f16.doubleClick();if (pylons.fcs!=nil) pylons.fcs.cycleAA();</script>
             </binding>
         </action>
         <!--<hovered>

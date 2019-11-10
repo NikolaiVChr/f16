@@ -1239,6 +1239,23 @@
 		</hydra>
 
 		<voice>
+			<name>Geforce-breath-vox1</name>
+			<path>Aircraft/f16/Sounds/breathing.wav</path>
+			<type>avionics</type>
+			<condition>
+				<greater-than>
+					<property>/accelerations/pilot/z-accel-fps_sec</property>
+					<value>-88</value>
+				</greater-than>
+			</condition>
+			<reference-dist>2</reference-dist>
+			<max-dist>4</max-dist>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>1.25</factor>
+			</volume>
+		</voice>
+		<voice>
 			<name>Geforce-breath-vox</name>
 			<path>Aircraft/f16/Sounds/Geforce.wav</path>
 			<type>avionics</type>
@@ -1351,7 +1368,7 @@
    				</not>
 			</condition>
 			<volume>
-				<factor>0.35</factor>
+				<factor>0.30</factor>
 			</volume>
 		</ambience>
 		<ambience>
@@ -1369,7 +1386,7 @@
    				</not>
 			</condition>
 			<volume>
-				<factor>0.125</factor>
+				<factor>0.11</factor>
 			</volume>
 		</ambience>
 
@@ -2100,7 +2117,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.9</factor>
+				<factor>0.70</factor>
 			</volume>
 		</switch>
 		<switch>
@@ -2113,7 +2130,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.9</factor>
+				<factor>0.70</factor>
 			</volume>
 		</switch>
 		<switch>

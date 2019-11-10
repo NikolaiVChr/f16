@@ -324,7 +324,7 @@ var loop_ded = func {# one line is max 24 chars
 #loop_ded();
 
 var cursorUp = func {
-  f16.knob2();
+  f16.doubleClick();
   var active = getprop("autopilot/route-manager/active");
   var wp = getprop("autopilot/route-manager/current-wp");
   var max = getprop("autopilot/route-manager/route/num");
@@ -339,7 +339,7 @@ var cursorUp = func {
 }
 
 var cursorDown = func {
-  f16.knob2();
+  f16.doubleClick();
   var active = getprop("autopilot/route-manager/active");
   var wp = getprop("autopilot/route-manager/current-wp");
   var max = getprop("autopilot/route-manager/route/num");
@@ -354,74 +354,74 @@ var cursorDown = func {
 }
 
 var stpt = func {
-  f16.knob2();
+  f16.doubleClick();
   page = pSTPT;
 }
 
 var alow = func {
-  f16.knob2();
+  f16.doubleClick();
   page = pALOW;
 }
 
 var tacan = func {
-  f16.knob2();
+  f16.doubleClick();
   page = pTACAN;
 }
 
 var iff = func {
-  f16.knob2();
+  f16.doubleClick();
   page = pIFF;
 }
 
 var comm1 = func {
-  f16.knob2();
+  f16.doubleClick();
   comm = 0;
   page = pCNI;
 }
 
 var comm2 = func {
-  f16.knob2();
+  f16.doubleClick();
   comm = 1;
   page = pCNI;
 }
 
 var bingo = func {
-  f16.knob2();
+  f16.doubleClick();
   page = pBINGO;
 }
 
 var magv = func {
-  f16.knob2();
+  f16.doubleClick();
   page = pMAGV;
 }
 
 var link16 = func {
-  f16.knob2();
+  f16.doubleClick();
   page = pLINK;
 }
 
 var laser = func {
-  f16.knob2();
+  f16.doubleClick();
   page = pLASER;
 }
 
 var time = func {
-  f16.knob2();
+  f16.doubleClick();
   page = pTIME;
 }
 
 var list = func {
-  f16.knob2();
+  f16.doubleClick();
   page = pLIST;
 }
 
 var counter = func {
-  f16.knob2();
+  f16.doubleClick();
   page = pCM;
 }
 
 var cruise = func {
-  f16.knob2();
+  f16.doubleClick();
   page = pCRUS;
 }
 
