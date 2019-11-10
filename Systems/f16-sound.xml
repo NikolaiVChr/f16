@@ -1236,6 +1236,26 @@
 			<path>Aircraft/f16/Sounds/Effects/rain.wav</path>
 			<type>avionics</type>
 			<condition>
+				<not>
+				<property>sim/current-view/internal</property>
+				</not>
+				<greater-than>
+					<property>/environment/rain-norm</property>
+					<value>0</value>
+				</greater-than>
+			</condition>
+			<volume>
+				<property>/environment/rain-norm</property>
+				<factor>0.39</factor>
+			</volume>
+		</rain>
+		<rain>
+			<name>rainin</name>
+			<mode>looped</mode>
+			<path>Aircraft/f16/Sounds/Effects/rain.wav</path>
+			<type>avionics</type>
+			<condition>
+				<property>sim/current-view/internal</property>
 				<greater-than>
 					<property>/environment/rain-norm</property>
 					<value>0</value>
