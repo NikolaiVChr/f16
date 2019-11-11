@@ -1697,8 +1697,6 @@ var AIM = {
 		}
 		if (!me.rail and me.eject_speed != 0) {
 			me.printStats("Weapon will be ejected at %.1f feet/sec.",me.eject_speed);
-		} else {
-			me.printStats("Weapon will be turn into airstream when released.");
 		}
 		
 		me.printStats("MISC:");
