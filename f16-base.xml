@@ -2049,7 +2049,7 @@ There is also small changes in tail for different variants with and without brak
                 <weight-launch-lbs type="double"> 500 </weight-launch-lbs>
                 <weight-warhead-lbs type="double"> 190 </weight-warhead-lbs>
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
-                <drag-coeff type="double"> 0.012 </drag-coeff>
+                <drag-coeff type="double"> 0.125 </drag-coeff>
                 <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
                 <arming-time-sec type="double"> 4 </arming-time-sec>
                 <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
@@ -2089,7 +2089,7 @@ There is also small changes in tail for different variants with and without brak
                 <weight-launch-lbs type="double"> 1014 </weight-launch-lbs>
                 <weight-warhead-lbs type="double"> 445 </weight-warhead-lbs>
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
-                <drag-coeff type="double"> 0.012 </drag-coeff>
+                <drag-coeff type="double"> 0.125 </drag-coeff>
                 <cross-section-sqft type="double"> 1.07744817 </cross-section-sqft><!-- the MK83 is 357 mm diam -->
                 <arming-time-sec type="double"> 5 </arming-time-sec>
                 <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
@@ -2130,7 +2130,7 @@ There is also small changes in tail for different variants with and without brak
                 <weight-launch-lbs type="double"> 2039 </weight-launch-lbs><!-- weapons file 2004 -->
                 <weight-warhead-lbs type="double"> 945 </weight-warhead-lbs><!-- weapons file 2004 -->
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
-                <drag-coeff type="double"> 0.012 </drag-coeff>
+                <drag-coeff type="double"> 0.125 </drag-coeff>
                 <cross-section-sqft type="double"> 1.78886 </cross-section-sqft><!-- the MK84 which is the bomb part is 640 mm diam -->
                 <arming-time-sec type="double"> 6 </arming-time-sec>
                 <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
@@ -2178,7 +2178,7 @@ There is also small changes in tail for different variants with and without brak
                 <weight-launch-lbs type="double"> 610 </weight-launch-lbs>
                 <weight-warhead-lbs type="double"> 190 </weight-warhead-lbs>
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
-                <drag-coeff type="double"> 0.013 </drag-coeff>
+                <drag-coeff type="double"> 0.10 </drag-coeff>
                 <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
                 <arming-time-sec type="double"> 4 </arming-time-sec>
                 <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
@@ -2226,7 +2226,7 @@ There is also small changes in tail for different variants with and without brak
                 <weight-launch-lbs type="double">558</weight-launch-lbs>
                 <weight-warhead-lbs type="double">190</weight-warhead-lbs>
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
-                <drag-coeff type="double"> 0.013 </drag-coeff>
+                <drag-coeff type="double"> 0.10 </drag-coeff>
                 <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
                 <arming-time-sec type="double"> 4 </arming-time-sec>
                 <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
@@ -2274,7 +2274,7 @@ There is also small changes in tail for different variants with and without brak
                 <weight-launch-lbs type="double"> 2039 </weight-launch-lbs><!-- weapons file 2004 -->
                 <weight-warhead-lbs type="double"> 945 </weight-warhead-lbs><!-- weapons file 2004 -->
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
-                <drag-coeff type="double"> 0.013 </drag-coeff>
+                <drag-coeff type="double"> 0.10 </drag-coeff>
                 <cross-section-sqft type="double"> 1.78886 </cross-section-sqft><!-- the MK84 which is the bomb part is 640 mm diam -->
                 <arming-time-sec type="double"> 6 </arming-time-sec>
                 <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
@@ -2322,7 +2322,7 @@ There is also small changes in tail for different variants with and without brak
                 <weight-launch-lbs type="double"> 2267 </weight-launch-lbs><!-- weapons file 1984 -->
                 <weight-warhead-lbs type="double"> 945 </weight-warhead-lbs><!-- weapons file 2004 -->
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
-                <drag-coeff type="double"> 0.013 </drag-coeff>
+                <drag-coeff type="double"> 0.10 </drag-coeff>
                 <cross-section-sqft type="double"> 1.78886 </cross-section-sqft>
                 <arming-time-sec type="double"> 6 </arming-time-sec>
                 <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
