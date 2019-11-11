@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+    <path>Aircraft/Generic/Effects/Thruster/thrust_flame.ac</path>
+   
+    <offsets>
+      <x-m>0</x-m>
+      <y-m>0</y-m>
+      <z-m>0</z-m>
+    </offsets>
+    
+    
+ 
+    <animation>
+      <type>scale</type>
+      <object-name>Bounding_box</object-name>
+      <x-offset>1.0</x-offset>
+      <y-offset>0.30</y-offset>
+      <z-offset>0.30</z-offset>
+    </animation>
+      
+      <effect>
+            <inherits-from>Aircraft/f16/Models/Armament/Weapons/AIM-120/flame</inherits-from>
+            <object-name>Bounding_box</object-name>
+       </effect>
+       
+    <animation>
+        <object-name>Bounding_box</object-name>
+        <enable-hot type="bool">false</enable-hot>
+    </animation>
+    
+</PropertyList>

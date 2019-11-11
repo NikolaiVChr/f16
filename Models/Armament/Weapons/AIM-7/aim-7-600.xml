@@ -120,6 +120,26 @@
 	   </program>
 
 	 </particlesystem>
+	 
+	 <model>
+		<name>flaminghot</name>
+		<path>aim-7-exhaust.xml</path>
+		<offsets>
+			<x-m>1.76667</x-m>
+			<y-m>0</y-m>
+			<z-m>0</z-m>
+		</offsets>
+	</model>
+	
+	<animation>
+      <type>select</type>
+      <object-name>flaminghot</object-name>
+      <condition>
+           <property>payload/armament/aim-7/flags/smoke-id-600</property>
+     </condition>
+    </animation>
+
+<!--
 
 	<particlesystem>
 	   <name>exhaust</name>
@@ -212,7 +232,7 @@
 	   </program>
 
 	 </particlesystem>
-
+-->
 	<particlesystem>
 	   <name>explosion</name>
 	   <texture>../smoke.png</texture>
