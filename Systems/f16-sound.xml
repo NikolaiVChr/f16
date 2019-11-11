@@ -2,7 +2,11 @@
 
 <PropertyList>
 	<fx>
-		<!-- CANOPY -->
+
+		<!-- ********************************************************************************* -->
+		<!--                                 CANOPY                                            -->
+		<!-- ********************************************************************************* -->
+		
 		<canopy>
 			<name>canopy</name>
 			<path>Aircraft/f16/Sounds/f16_canopy.wav</path>
@@ -48,7 +52,7 @@
 		</canopy>
 
 		<!-- ********************************************************************************* -->
-		<!--                                 ENGINE                                            -->
+		<!--                                 ENGINE INTERNAL                                   -->
 		<!-- ********************************************************************************* -->
 		
 		<engine_low>
@@ -198,6 +202,63 @@
 				<factor>0.45</factor>
 			</volume>
 		</engine_fan>
+		<exhaust>
+			<name>thrust internal</name>
+			<path>Aircraft/f16/Sounds/GEED/interior_mil_left.wav</path>
+			<mode>looped</mode>
+			<condition>
+				<property>engines/engine/running</property>
+				<property>sim/current-view/internal</property>
+			</condition>
+			<reference-dist>250</reference-dist>
+			<max-dist>12500</max-dist>
+			<position>
+				<x>4.6</x>
+				<y>0.01</y>
+				<z>0.01</z>
+			</position>
+			<orientation>
+				<x>1.0</x>
+				<y>0.0</y>
+				<z>0.0</z>
+				<inner-angle>200.0</inner-angle>
+				<outer-angle>360.0</outer-angle>
+				<outer-gain>0.25</outer-gain>
+			</orientation>
+			<volume>
+				<property>engines/engine/thrust_lb</property>
+				<offset>0</offset>
+				<factor>0.000044944</factor>
+			</volume>
+			<pitch>
+				<property>engines/engine/n1</property>
+				<offset>0.25</offset>
+				<factor>0.0035</factor>
+			</pitch>
+		</exhaust>
+		<afterburner>
+			<name>afterburner internal</name>
+			<path>Aircraft/f16/Sounds/GEED/afterburner_interior.wav</path>
+			<mode>looped</mode>
+			<condition>
+				<property>sim/current-view/internal</property>
+				<property>engines/engine/augmentation</property>
+			</condition>
+			<position>
+				<x>4.6</x>
+				<y>0.0</y>
+				<z>0.0</z>
+			</position>
+			<volume>
+				<property>engines/engine/nozzle-pos-norm</property>
+				<offset>0.05</offset>
+				<factor>0.60</factor>
+			</volume>
+		</afterburner>
+
+		<!-- ********************************************************************************* -->
+		<!--                                 ENGINE EXTERNAL                                   -->
+		<!-- ********************************************************************************* -->
 
 		<engine_fan>
 			<name>external fan</name>
@@ -285,59 +346,6 @@
 				<factor>-0.01</factor>
 			</volume>
 		</engine_fan>
-		<exhaust>
-			<name>turbine internal</name>
-			<path>Aircraft/f16/Sounds/GEED/interior_mil_left.wav</path>
-			<mode>looped</mode>
-			<condition>
-				<property>engines/engine/running</property>
-				<property>sim/current-view/internal</property>
-			</condition>
-			<reference-dist>250</reference-dist>
-			<max-dist>12500</max-dist>
-			<position>
-				<x>4.6</x>
-				<y>0.01</y>
-				<z>0.01</z>
-			</position>
-			<orientation>
-				<x>1.0</x>
-				<y>0.0</y>
-				<z>0.0</z>
-				<inner-angle>200.0</inner-angle>
-				<outer-angle>360.0</outer-angle>
-				<outer-gain>0.25</outer-gain>
-			</orientation>
-			<volume>
-				<property>engines/engine/thrust_lb</property>
-				<offset>0</offset>
-				<factor>0.000044944</factor>
-			</volume>
-			<pitch>
-				<property>engines/engine/n1</property>
-				<offset>0.25</offset>
-				<factor>0.0035</factor>
-			</pitch>
-		</exhaust>
-		<afterburner>
-			<name>afterburner internal</name>
-			<path>Aircraft/f16/Sounds/GEED/afterburner_interior.wav</path>
-			<mode>looped</mode>
-			<condition>
-				<property>sim/current-view/internal</property>
-				<property>engines/engine/augmentation</property>
-			</condition>
-			<position>
-				<x>4.6</x>
-				<y>0.0</y>
-				<z>0.0</z>
-			</position>
-			<volume>
-				<property>engines/engine/nozzle-pos-norm</property>
-				<offset>0.05</offset>
-				<factor>0.60</factor>
-			</volume>
-		</afterburner>
 		<exhaust>
 			<name>turbine external</name>
 			<path>Sounds/jet.wav</path>
@@ -437,8 +445,10 @@
 			</volume>
 		</afterburner>
 
+		<!-- ********************************************************************************* -->
+		<!--                                 ENGINE INTERNAL WITH CANOPY OPEN                  -->
+		<!-- ********************************************************************************* -->
 		
-		<!-- .................... external sounds heard inside when canopy open...........................-->
 		<exhaust>
 			<name>turbine externalc</name>
 			<path>Sounds/jet.wav</path>
@@ -638,11 +648,11 @@
 			    <factor>1</factor>
 		    </volume>
 		</engine_fan>
-		<!-- ..........................................................-->
 
+		<!-- ********************************************************************************* -->
+		<!--                                 GEARS                                             -->
+		<!-- ********************************************************************************* -->
 
-
-		<!-- GEAR -->
 		<rumble>
 			<name>gear rumble</name>
 			<mode>looped</mode>
