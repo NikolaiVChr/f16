@@ -43,7 +43,7 @@
  <animation>
   <type>rotate</type>
   <object-name>RPM_needle</object-name>
-  <property>engines/engine[0]/n1</property>
+  <property>engines/engine[0]/n2</property>
   <interpolation>
    <entry>
     <ind>0.0</ind>
