@@ -25,7 +25,30 @@
 				<factor>-0.25</factor>
 			</pitch>
 			<volume>
+				<property>sim/current-view/internal</property>
 				<max>0.55</max>
+			</volume>
+		</canopy>
+		<canopy>
+			<name>canopy_outside</name>
+			<path>Aircraft/f16/Sounds/f16_canopy.wav</path>
+			<mode>in-transit</mode>
+			<property>fdm/jsbsim/fcs/canopy-pos-norm</property>
+			<reference-dist>30</reference-dist>
+			<max-dist>100</max-dist>
+			<position>
+				<x>-1.0</x>
+				<y>0.0</y>
+				<z>0.195</z>
+			</position>
+			<pitch>
+				<internal>dt_start</internal>
+				<offset>1.25</offset>
+				<factor>-0.25</factor>
+			</pitch>
+			<volume>
+				<property>sim/current-view/external</property>
+				<max>0.10</max>
 			</volume>
 		</canopy>
 		<canopy>
@@ -48,6 +71,50 @@
 			<volume>
 				<property>sim/current-view/internal</property>
 				<max>0.50</max>
+			</volume>
+		</canopy>
+		<canopy>
+			<name>canopy_leveropen</name>
+			<path>Aircraft/f16/Sounds/Cockpit/canopy-lever.wav</path>
+			<mode>single</mode>
+			<condition>
+				<equals>
+					<property>fdm/jsbsim/fcs/canopy-engage</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<reference-dist>10</reference-dist>
+			<max-dist>100</max-dist>
+			<position>
+				<x>-1.0</x>
+				<y>0.0</y>
+				<z>0.195</z>
+			</position>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<max>0.25</max>
+			</volume>
+		</canopy>
+		<canopy>
+			<name>canopy_leverclose</name>
+			<path>Aircraft/f16/Sounds/Cockpit/canopy-lever.wav</path>
+			<mode>single</mode>
+			<condition>
+				<equals>
+					<property>fdm/jsbsim/fcs/canopy-engage</property>
+					<value>0</value>
+				</equals>
+			</condition>
+			<reference-dist>10</reference-dist>
+			<max-dist>100</max-dist>
+			<position>
+				<x>-1.0</x>
+				<y>0.0</y>
+				<z>0.195</z>
+			</position>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<max>0.25</max>
 			</volume>
 		</canopy>
 

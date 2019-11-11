@@ -124,6 +124,9 @@
         <object-name>SW_STARTING_FUEL</object-name>
         <object-name>SW_TANK_INERTING</object-name>
         <object-name>SW_TEST_EPU</object-name>
+        <object-name>SW_PROBE_HEAT</object-name>
+        <object-name>SW_TONE</object-name>
+        <object-name>SW_SQUELCH</object-name>
         <object-name>SW_TEST_OXY</object-name>
         <object-name>SW_TRIM_DISC</object-name>
     </effect>
