@@ -1998,6 +1998,7 @@ var AIM = {
 	            }
 	            me.pitch      += me.track_signal_e;
             	me.hdg        += me.track_signal_h;
+            	me.pitch       = math.max(-90, math.min(90, me.pitch));
 	            me.printGuideDetails("%04.1f deg elevation command done, new pitch: %04.1f deg", me.track_signal_e, me.pitch);
 	            me.printGuideDetails("%05.1f deg bearing command done, new heading: %05.1f", me.last_track_h, me.hdg);
 	            me.observing = me.guidance;
@@ -2763,7 +2764,7 @@ var AIM = {
 		#
 		# Check for being fooled by flare.
 		#
-		if (me.fovLost != TRUE and me.guidance == "heat" and me.flareLock == FALSE and (getprop("sim/time/elapsed-sec")-me.flareTime) > 1) {
+		if (me.Tgt != nil and me.fovLost != TRUE and me.guidance == "heat" and me.flareLock == FALSE and (getprop("sim/time/elapsed-sec")-me.flareTime) > 1) {
 			# the fov check is for loal missiles that should not lock onto flares from aircraft not in view.
 			#
 			# TODO: Use Richards Emissary for this.
