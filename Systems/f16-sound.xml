@@ -5,7 +5,7 @@
 		<!-- CANOPY -->
 		<canopy>
 			<name>canopy</name>
-			<path>Aircraft/f16/Sounds/canopy.wav</path>
+			<path>Aircraft/f16/Sounds/f16_canopy.wav</path>
 			<mode>in-transit</mode>
 			<property>fdm/jsbsim/fcs/canopy-pos-norm</property>
 			<reference-dist>30</reference-dist>
@@ -21,12 +21,12 @@
 				<factor>-0.25</factor>
 			</pitch>
 			<volume>
-				<max>0.25</max>
+				<max>0.55</max>
 			</volume>
 		</canopy>
 		<canopy>
 			<name>canopy_lock</name>
-			<path>Aircraft/f16/Sounds/canopy_lock.wav</path>
+			<path>Aircraft/f16/Sounds/f16_canopy_lock.wav</path>
 			<mode>single</mode>
 			<condition>
 				<equals>
@@ -42,7 +42,8 @@
 				<z>0.195</z>
 			</position>
 			<volume>
-				<max>0.30</max>
+				<property>sim/current-view/internal</property>
+				<max>0.50</max>
 			</volume>
 		</canopy>
 
