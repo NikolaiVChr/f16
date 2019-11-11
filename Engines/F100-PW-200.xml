@@ -6,6 +6,7 @@
   <bypassratio>     0.71 </bypassratio>
   <tsfc>            0.72 </tsfc>
   <atsfc>           2.1 </atsfc>
+  <!--<ignitionn2>     20.0 </ignitionn2>-->
   <idlen1>         30.0 </idlen1>
   <idlen2>         60.0 </idlen2>
   <maxn1>         100.0 </maxn1>
