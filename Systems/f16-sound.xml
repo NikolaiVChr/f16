@@ -76,8 +76,9 @@
 			</orientation>
 			<pitch>
 				<property>engines/engine/n2</property>
-				<offset>0</offset>
-				<factor>0.08</factor>
+				<offset>1</offset>
+				<factor>0.04</factor>
+				<min>0</min>
 				<max>2</max>
 			</pitch>
 			<volume>
@@ -89,7 +90,7 @@
 				<max>1</max>
 			</volume>
 			<volume>
-				<factor>0.10</factor>
+				<factor>0.15</factor>
 			</volume>
 		</engine_low>
 		<engine_fan>
