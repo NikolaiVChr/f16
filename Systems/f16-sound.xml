@@ -294,13 +294,13 @@
 			</orientation>
 			<pitch>
 				<property>engines/engine/n1</property>
-				<offset>1.0</offset>
-				<factor>0.004</factor>
+				<offset>0.8</offset>
+				<factor>0.00666</factor>
 			</pitch>
 			<volume>
-				<property>engines/engine/n1</property>
-				<offset>1.30</offset>
-				<factor>-0.01</factor>
+				<property>engines/engine[0]/n1-out2</property>
+				<offset>0.0</offset>
+				<factor>1</factor>
 			</volume>
 		</engine_fan>
 		<engine_fan>
@@ -337,17 +337,20 @@
 			</orientation>
 			<pitch>
 				<property>engines/engine/n1</property>
-				<offset>1.0</offset>
-				<factor>0.004</factor>
+				<offset>0.8</offset>
+				<factor>0.00666</factor>
 			</pitch>
 			<volume>
-				<property>engines/engine/n1</property>
-				<offset>0.35</offset>
-				<factor>-0.01</factor>
+				<property>engines/engine[0]/n1-out1</property>
+				<offset>0.0</offset>
+				<factor>1</factor>
+			</volume>
+			<volume>
+				<factor>0.35</factor>
 			</volume>
 		</engine_fan>
 		<exhaust>
-			<name>turbine external</name>
+			<name>thrust external</name>
 			<path>Sounds/jet.wav</path>
 			<mode>looped</mode>
 			<condition>
@@ -588,13 +591,13 @@
 			</orientation>
 			<pitch>
 				<property>engines/engine/n1</property>
-				<offset>1.0</offset>
-				<factor>0.004</factor>
+				<offset>0.8</offset>
+				<factor>0.00666</factor>
 			</pitch>
 			<volume>
-				<property>engines/engine/n1</property>
-				<offset>1.30</offset>
-				<factor>-0.01</factor>
+				<property>engines/engine[0]/n1-out2</property>
+				<offset>0.0</offset>
+				<factor>1</factor>
 			</volume>
 			<volume>
 			    <property>fdm/jsbsim/fcs/canopy-pos-norm</property>
@@ -634,13 +637,16 @@
 			</orientation>
 			<pitch>
 				<property>engines/engine/n1</property>
-				<offset>1.0</offset>
-				<factor>0.004</factor>
+				<offset>0.8</offset>
+				<factor>0.00666</factor>
 			</pitch>
 			<volume>
-				<property>engines/engine/n1</property>
-				<offset>0.35</offset>
-				<factor>-0.01</factor>
+				<property>engines/engine[0]/n1-out1</property>
+				<offset>0.0</offset>
+				<factor>1</factor>
+			</volume>
+			<volume>
+				<factor>0.35</factor>
 			</volume>
 			<volume>
 			    <property>fdm/jsbsim/fcs/canopy-pos-norm</property>	
