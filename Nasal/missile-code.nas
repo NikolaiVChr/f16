@@ -341,6 +341,7 @@ var AIM = {
         m.drop_time             = getprop(m.nodeString~"drop-time");                  # Time to fall before stage 1 thrust starts.
         m.deploy_time           = getprop(m.nodeString~"deploy-time");                # Time to deploy wings etc. Time starts when drop ends or rail passed.
         m.no_pitch              = getprop(m.nodeString~"pitch-animation-disabled");   # bool
+        m.eject_speed           = getprop(m.nodeString~"ejector-speed-fps");          # Ordnance ejected by pylon with this speed. Default = 0. Optional. Ignored if on rail.
         # counter-measures
         m.chaffResistance       = getprop(m.nodeString~"chaff-resistance");           # Float 0-1. Amount of resistance to chaff. Default 0.950. [optional]
         m.flareResistance       = getprop(m.nodeString~"flare-resistance");           # Float 0-1. Amount of resistance to flare. Default 0.950. [optional]
@@ -398,7 +399,15 @@ var AIM = {
         } 
         m.beam_width_deg *= 0.5;
         m.detect_range_curr_nm  = m.detect_range_nm;
-
+		
+		if (m.eject_speed == nil) {
+          m.eject_speed = 0;
+        } 
+        
+        if (m.rail_forward == TRUE) {
+        	m.rail_pitch_deg = 0;
+        }
+        
         if (m.ready_time == nil) {
         	m.ready_time = 0;
         }
@@ -795,7 +804,17 @@ var AIM = {
         me.ccrp_speed_down_fps = getprop("velocities/speed-down-fps");
 		me.ccrp_speed_east_fps = getprop("velocities/speed-east-fps");
 		me.ccrp_speed_north_fps = getprop("velocities/speed-north-fps");
-
+		if (me.eject_speed != 0 and !me.rail) {
+			# add ejector speed down from belly:
+			me.aircraft_vec = [me.ccrp_speed_north_fps,-me.ccrp_speed_east_fps,-me.ccrp_speed_down_fps];
+			me.eject_vec    = me.myMath.normalize(me.myMath.eulerToCartesian3Z(-OurHdg.getValue(),OurPitch.getValue(),OurRoll.getValue()));
+			me.eject_vec    = me.myMath.product(-me.eject_speed, me.eject_vec);
+			me.init_rel_vec = me.myMath.plus(me.aircraft_vec, me.eject_vec);
+			me.ccrp_speed_down_fps = -me.init_rel_vec[2];
+			me.ccrp_speed_east_fps = -me.init_rel_vec[1];
+			me.ccrp_speed_north_fps = me.init_rel_vec[0];
+		}
+		
         me.ccrp_t = 0.0;
         
         me.ccrp_altC = me.ccrp_agl;
@@ -860,7 +879,17 @@ var AIM = {
         me.ccip_speed_down_fps = getprop("velocities/speed-down-fps");
         me.ccip_speed_east_fps = getprop("velocities/speed-east-fps");
         me.ccip_speed_north_fps = getprop("velocities/speed-north-fps");
-
+		if (me.eject_speed != 0 and !me.rail) {
+			# add ejector speed down from belly:
+			me.aircraft_vec = [me.ccip_speed_north_fps,-me.ccip_speed_east_fps,-me.ccip_speed_down_fps];
+			me.eject_vec    = me.myMath.normalize(me.myMath.eulerToCartesian3Z(-OurHdg.getValue(),OurPitch.getValue(),OurRoll.getValue()));
+			me.eject_vec    = me.myMath.product(-me.eject_speed, me.eject_vec);
+			me.init_rel_vec = me.myMath.plus(me.aircraft_vec, me.eject_vec);
+			me.ccip_speed_down_fps = -me.init_rel_vec[2];
+			me.ccip_speed_east_fps = -me.init_rel_vec[1];
+			me.ccip_speed_north_fps = me.init_rel_vec[0];
+		}
+		
         me.ccip_t = 0.0;
         me.ccip_dt = timeStep;
         me.ccip_fps_z = -me.ccip_speed_down_fps;
@@ -947,7 +976,17 @@ var AIM = {
         me.ccip_speed_down_fps = getprop("velocities/speed-down-fps");
         me.ccip_speed_east_fps = getprop("velocities/speed-east-fps");
         me.ccip_speed_north_fps = getprop("velocities/speed-north-fps");
-
+        if (me.eject_speed != 0 and !me.rail) {
+			# add ejector speed down from belly:
+			me.aircraft_vec = [me.ccip_speed_north_fps,-me.ccip_speed_east_fps,-me.ccip_speed_down_fps];
+			me.eject_vec    = me.myMath.normalize(me.myMath.eulerToCartesian3Z(-OurHdg.getValue(),OurPitch.getValue(),OurRoll.getValue()));
+			me.eject_vec    = me.myMath.product(-me.eject_speed, me.eject_vec);
+			me.init_rel_vec = me.myMath.plus(me.aircraft_vec, me.eject_vec);
+			me.ccip_speed_down_fps = -me.init_rel_vec[2];
+			me.ccip_speed_east_fps = -me.init_rel_vec[1];
+			me.ccip_speed_north_fps = me.init_rel_vec[0];
+		}
+		
         me.ccip_t = 0.0;
         me.ccip_dt = timeStep;
         me.ccip_altC = me.ccip_agl;
@@ -1300,7 +1339,7 @@ var AIM = {
 				me.rail_speed_into_wind = getprop("velocities/uBody-fps");# wind from nose
 				#printf("Rail: ac_fps=%d uBody_fps=%d", math.sqrt(me.speed_down_fps*me.speed_down_fps+math.pow(math.sqrt(me.speed_east_fps*me.speed_east_fps+me.speed_north_fps*me.speed_north_fps),2)), me.rail_speed_into_wind);
 			}
-		} elsif (me.intoBore == FALSE) {
+		} elsif (me.intoBore == FALSE and me.eject_speed == 0 and !me.rail) {
 			# to prevent the missile from falling up, we need to sometimes pitch it into wind:
 			var h_spd = math.sqrt(me.speed_east_fps*me.speed_east_fps + me.speed_north_fps*me.speed_north_fps);
 			#var t_spd = math.sqrt(me.speed_down_fps*me.speed_down_fps + h_spd*h_spd);
@@ -1328,6 +1367,18 @@ var AIM = {
 				}
 				ac_hdg = geo.normdeg(ac_hdg);
 			}
+		}
+		if (me.eject_speed != 0 and !me.rail) {
+			# add ejector speed down from belly:
+			me.aircraft_vec = [me.speed_north_fps,-me.speed_east_fps,-me.speed_down_fps];
+			me.eject_vec    = me.myMath.normalize(me.myMath.eulerToCartesian3Z(-OurHdg.getValue(),OurPitch.getValue(),OurRoll.getValue()));
+			me.eject_vec    = me.myMath.product(-me.eject_speed, me.eject_vec);
+			me.init_rel_vec = me.myMath.plus(me.aircraft_vec, me.eject_vec);
+			me.speed_down_fps = -me.init_rel_vec[2];
+			me.speed_east_fps = -me.init_rel_vec[1];
+			me.speed_north_fps = me.init_rel_vec[0];
+			ac_hdg = geo.normdeg(math.atan2(me.speed_east_fps,me.speed_north_fps)*R2D);
+			ac_pitch = math.atan2(-me.speed_down_fps, math.sqrt(me.speed_east_fps*me.speed_east_fps+me.speed_north_fps*me.speed_north_fps))*R2D;
 		}
 
 		me.alt_ft = malt;
@@ -1639,11 +1690,17 @@ var AIM = {
 				me.printStats("Resistance to flares is %d%%.",me.flareResistance*100);
 			}
 		}
-		if (me.intoBore) {
-			me.printStats("Weapon will be unaffected by wind when released.");
+		if (me.intoBore or me.eject_speed != 0) {
+			me.printStats("Weapon will be unaffected by airstream when released.");
 		} else {
 			me.printStats("Weapon will be turn into airstream when released.");
 		}
+		if (!me.rail and me.eject_speed != 0) {
+			me.printStats("Weapon will be ejected at %.1f feet/sec.",me.eject_speed);
+		} else {
+			me.printStats("Weapon will be turn into airstream when released.");
+		}
+		
 		me.printStats("MISC:");
 		if (me.data) {
 			me.printStats("Will transmit telemetry data back to launch platform.");
