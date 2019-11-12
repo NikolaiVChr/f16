@@ -540,9 +540,9 @@ var fuelqty = func {
     setprop("f16/avionics/bingo", 0);
   }
   if (!getprop("consumables/fuel-tanks/serviceable")) {
-    setprop("fdm/jsbsim/propulsion/dump_fuel",1);
+    setprop("fdm/jsbsim/propulsion/fuel_dump",1);
   } else {
-    setprop("fdm/jsbsim/propulsion/dump_fuel",0);
+    setprop("fdm/jsbsim/propulsion/fuel_dump",0);
   }
   if (getprop("fdm/jsbsim/elec/bus/emergency-ac-2")<100) {
     return;
