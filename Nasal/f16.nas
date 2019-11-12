@@ -540,9 +540,9 @@ var fuelqty = func {
     setprop("f16/avionics/bingo", 0);
   }
   if (!getprop("consumables/fuel-tanks/serviceable")) {
-    setprop("fdm/jsbsim/propulsion/fuel_dump",1);
+    props.globals.getNode("fdm/jsbsim/propulsion/fuel_dump").setBoolValue(1);
   } else {
-    setprop("fdm/jsbsim/propulsion/fuel_dump",0);
+    props.globals.getNode("fdm/jsbsim/propulsion/fuel_dump").clearValue();
   }
   if (getprop("fdm/jsbsim/elec/bus/emergency-ac-2")<100) {
     return;
@@ -664,6 +664,7 @@ var repair2 = func {
   setprop("f16/chute/done",0);
   setprop("sim/view[0]/enabled",1);
   setprop("sim/current-view/view-number",0);
+  
   if (inAutostart) {
     return;
   }
@@ -695,6 +696,24 @@ var repair3 = func {
   screen.log.write("Attempting engine start, standby for engine..");
   inAutostart = 0;
 }
+var repair4 = func {
+    setprop("fdm/jsbsim/propulsion/tank[0]/external-flow-rate-pps", 0);
+    setprop("fdm/jsbsim/propulsion/tank[1]/external-flow-rate-pps", 0);
+    if (getprop("/consumables/fuel/tank[2]/name") != "Not attached") {
+      setprop("fdm/jsbsim/propulsion/tank[2]/external-flow-rate-pps", 0);
+    }
+    if (getprop("/consumables/fuel/tank[3]/name") != "Not attached") {
+      setprop("fdm/jsbsim/propulsion/tank[3]/external-flow-rate-pps", 0);
+    }
+    if (getprop("/consumables/fuel/tank[3]/name") != "Not attached") {
+      setprop("fdm/jsbsim/propulsion/tank[3]/external-flow-rate-pps", 0);
+    }
+    setprop("fdm/jsbsim/propulsion/tank[5]/external-flow-rate-pps", 0);
+    setprop("fdm/jsbsim/propulsion/tank[6]/external-flow-rate-pps", 0);
+    if (getprop("/consumables/fuel/tank[0]/level-norm")<0.5 and getprop("f16/engine/running-state")) {
+      setprop("/consumables/fuel/tank[0]/level-norm", 0.55);
+    }
+}
 
 var autostart = func {
   if (inAutostart) {
@@ -720,10 +739,7 @@ var re_init_listener = setlistener("/sim/signals/reinit", func {
   if (getprop("/sim/signals/reinit") != 0) {
     setprop("/controls/gear/gear-down",1);
     setprop("/controls/gear/brake-parking",1);
-    if (getprop("/consumables/fuel/tank[0]/level-norm")<0.5 and getprop("f16/engine/running-state")) {
-      setprop("/consumables/fuel/tank[0]/level-norm", 0.55);
-    }
-    
+    settimer(repair4,3);    
     repair2();
   }
  }, 0, 0);
