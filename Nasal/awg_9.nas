@@ -978,6 +978,23 @@ var selectCheckLimited = func {
     }
 }
 
+var selectCenterTarget = func () {
+    
+    var sorted_dist = sort (awg_9.tgts_list, func (a,b) {a.getTotalDeviation()-b.getTotalDeviation()});
+    
+    foreach(var testMe ; sorted_dist) {
+        if (testMe.get_display()) {
+            armament.contact = testMe;
+            active_u_callsign = testMe.get_Callsign();
+            active_u = testMe;
+            return;
+        }
+    }
+    armament.contact = nil;
+    active_u_callsign = nil;
+    active_u = nil;
+};
+
 var TerrainManager = {
 #
     # returns true if the node (position) is visible taking into accoun terrain
@@ -1517,6 +1534,11 @@ var Target = {
 	get_relative_bearing : func() {
         return geo.normdeg180(me.get_bearing()-getprop("orientation/heading-deg"));
 	},
+    getTotalDeviation: func {
+        me.grb = me.get_relative_bearing();
+        me.gte = me.get_total_elevation(getprop("orientation/pitch-deg"));
+        return math.sqrt(me.grb*me.grb+me.gte*me.gte);
+    },
 	get_reciprocal_bearing : func {
 		return geo.normdeg(me.get_bearing() + 180);
 	},
