@@ -166,7 +166,7 @@
      </condition>
     </animation>
 
-<!--	 <particlesystem>
+	 <particlesystem>
 	   <name>exhaust</name>
 	   <texture>../smoke.png</texture>
 
@@ -175,6 +175,9 @@
 
 	   <condition>
 	         <property>payload/armament/aim-120/flags/smoke-id-0</property>
+	         <not>
+                 <property>/sim/rendering/shaders/skydome</property>
+             </not>
 	   </condition>
 
 	   <attach>world</attach>
@@ -256,7 +259,7 @@
 	     <wind typ="bool">     true </wind>
 	   </program>
 
-	 </particlesystem>-->
+	 </particlesystem>
 
 	<particlesystem>
 	   <name>explosion</name>

@@ -160,7 +160,7 @@
            <property>payload/armament/aim-120/flags/smoke-id-600</property>
      </condition>
     </animation>
-<!--
+
 	 <particlesystem>
 	   <name>exhaust</name>
 	   <texture>../smoke.png</texture>
@@ -170,6 +170,9 @@
 
 	   <condition>
 	         <property>payload/armament/aim-120/flags/smoke-id-600</property>
+	         <not>
+                 <property>/sim/rendering/shaders/skydome</property>
+             </not>
 	   </condition>
 
 	   <attach>world</attach>
@@ -252,7 +255,7 @@
 	   </program>
 
 	 </particlesystem>
--->
+
 	<particlesystem>
 	   <name>explosion</name>
 	   <texture>../fire.png</texture>
