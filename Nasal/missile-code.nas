@@ -143,7 +143,7 @@ var DEBUG_STATS_DETAILS    = 0;
 var DEBUG_GUIDANCE         = 0;
 var DEBUG_GUIDANCE_DETAILS = 0;
 var DEBUG_FLIGHT_DETAILS   = 0;
-var DEBUG_SEARCH           = 0;
+var DEBUG_SEARCH           = 1;
 var DEBUG_CODE             = 0;
 
 var g_fps        = 9.80665 * M2FT;
@@ -4463,7 +4463,7 @@ var AIM = {
 		}
 
 		me.computeSeekerPos();
-		if (me.status != MISSILE_STANDBY ) {
+		if (me.status != MISSILE_STANDBY ) {#TODO: should this also check for starting up?
 			me.in_view = me.check_t_in_fov();
 			
 			if (me.in_view == FALSE) {
@@ -4938,7 +4938,7 @@ var develev_to_devroll = func(dev_rad, elev_rad) {
 
 #was in radar
 var deviation_normdeg = func(our_heading, target_bearing) {
-	var dev_norm = geo.normdeg180(our_heading - target_bearing);
+	var dev_norm = geo.normdeg180(target_bearing-our_heading);
 	return dev_norm;
 }
 
