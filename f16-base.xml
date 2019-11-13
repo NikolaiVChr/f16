@@ -1986,10 +1986,12 @@ There is also small changes in tail for different variants with and without brak
                 <drag-coeff type="double">0.3</drag-coeff>
                 <cross-section-sqft type="double">0.2739</cross-section-sqft>
                 <loft-altitude>0</loft-altitude>                <!-- in stage 1 it will attempt to climb to this altitude -->
-                <min-speed-for-guiding-mach type="double">0.7</min-speed-for-guiding-mach>
+                <min-speed-for-guiding-mach type="double">0.6</min-speed-for-guiding-mach>
                 <max-report-distance type="double">65</max-report-distance>
                 <arming-time-sec type="double">1.6</arming-time-sec>
-                <rail type="bool">false</rail>
+                <rail type="bool">false</rail><!-- wingtips will be set to rail by station-manager -->
+                <rail-length-m type="double">2.6924</rail-length-m><!-- LAU 127 Missile Launcher -->
+                <rail-point-forward type="bool">true</rail-point-forward>
                 <navigation type="string">PN</navigation>
                 <class type="string">A</class>
                 <fire-msg type="string">Fox 3</fire-msg>
@@ -1999,6 +2001,9 @@ There is also small changes in tail for different variants with and without brak
                 <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
                 <ready-time type="double">1.5</ready-time>
                 <reaquire type="bool">true</reaquire>
+                <guide-before-ignition type="bool">true</guide-before-ignition>
+                <ejector-speed-fps type="double">10</ejector-speed-fps>
+                <drop-time type="double">0.5</drop-time>
                 <lock-on-after-launch type="bool">true</lock-on-after-launch>
                 <auto-switch-target-allowed type="bool">false</auto-switch-target-allowed>
                 <prowl-flight type="string">gyro-pitch</prowl-flight>
@@ -2038,6 +2043,7 @@ There is also small changes in tail for different variants with and without brak
                 <arming-time-sec type="double">2.5</arming-time-sec>             <!-- authentic -->
                 <max-report-distance type="double">65</max-report-distance>
                 <navigation type="string">PN</navigation>
+                <guide-before-ignition type="bool">true</guide-before-ignition>
                 <rail type="bool">false</rail>
                 <class type="string">A</class>
                 <fire-msg>Fox 1</fire-msg>

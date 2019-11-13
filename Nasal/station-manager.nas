@@ -29,6 +29,7 @@ var Station = {
 		p.changingGui = 0;
 		p.launcherDA=0;
 		p.launcherMass=0;
+		p.forceRail = 0;
 		p.guiListener = nil;
 		p.currentName = nil;	
 		p.currentSet = nil;
@@ -89,6 +90,10 @@ var Station = {
 					if (me.aim == -1) {
 						print("Pylon could not create "~me.weaponName);
 						me.aim = nil;
+					}
+					if (me.forceRail) {
+						me.aim.rail = 1;
+						me.aim.drop_time = 0;
 					}
 					append(me.weapons, me.aim);
 				} else {
@@ -270,7 +275,7 @@ var Pylon = {
 		var p = Station.new(name, id, position, sets, guiID, pointmassNode, operableFunction, activeFunction);
 		p.parents = [Pylon, Station];
 		p.node_dragaera = dragareaNode;
-
+		
 		# these should not be called in parent.new(), as they are empty there.
 		p.initGUI();
 		p.loadSet(sets[0]);
