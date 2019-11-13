@@ -693,7 +693,7 @@ var FireControl = {
 
 	triggerHold: func (aimer) {
 		# will fire weapon even with no lock
-		if (me.triggerTime == 0 or me.getSelectedWeapon() == nil or me.getSelectedWeapon().parents[0] != armament.AIM or me.gunTriggerTime + 1.5 < getprop("sim/time/elapsed-sec")) {
+		if (me.triggerTime == 0 or me.getSelectedWeapon() == nil or me.getSelectedWeapon().parents[0] != armament.AIM or me.gunTriggerTime + 1.5 > getprop("sim/time/elapsed-sec")) {
 			return;
 		}
 		aimer = me.pylons[me.selected[0]].fireWeapon(me.selected[1], getCompleteRadarTargetsList());
