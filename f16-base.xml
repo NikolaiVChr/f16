@@ -1920,7 +1920,7 @@ There is also small changes in tail for different variants with and without brak
                 <vol-search type="double">0.075</vol-search>
                 <vol-track type="double">0.25</vol-track>
                 <guidance type="string">heat</guidance>                       <!-- heat, radar or semi-radar -->
-                <navigation type="string">APN</navigation>
+                <navigation type="string">PN</navigation>
                 <all-aspect type="bool">true</all-aspect>                     <!-- all or rear-only -->
                 <max-fire-range-nm type="double">9.7</max-fire-range-nm> <!-- source -->
                 <FCS-field-deg type="int">55</FCS-field-deg>                              <!-- source -->
@@ -1933,7 +1933,7 @@ There is also small changes in tail for different variants with and without brak
                 <weight-launch-lbs type="double">186.2</weight-launch-lbs>      <!-- authentic -->
                 <weight-warhead-lbs type="double">20.8</weight-warhead-lbs>   <!-- authentic -->
                 <weight-fuel-lbm type="double">60.4</weight-fuel-lbm>           <!-- guess -->
-                <drag-coeff type="double">0.55</drag-coeff>                   <!-- guesstimate -->
+                <drag-coeff type="double">0.55</drag-coeff>                   <!-- guesstimate. The python program estimates 1.15 to 1.30. But since RB24 and RB24J have to be adjust also I'll wait till I got their numbers. -->
                 <cross-section-sqft type="double">0.143</cross-section-sqft>                    <!-- sq ft -->
                 <arming-time-sec type="double">1.4</arming-time-sec>          <!-- guess -->
                 <min-speed-for-guiding-mach type="double">0.8</min-speed-for-guiding-mach><!-- guess -->
@@ -1983,14 +1983,14 @@ There is also small changes in tail for different variants with and without brak
                 <weight-launch-lbs>291</weight-launch-lbs>
                 <weight-warhead-lbs>44</weight-warhead-lbs>
                 <weight-fuel-lbm type="double">130</weight-fuel-lbm>
-                <drag-coeff type="double">0.2</drag-coeff>
+                <drag-coeff type="double">0.3</drag-coeff>
                 <cross-section-sqft type="double">0.2739</cross-section-sqft>
-                <loft-altitude>50000</loft-altitude>                <!-- in stage 1 it will attempt to climb to this altitude -->
+                <loft-altitude>0</loft-altitude>                <!-- in stage 1 it will attempt to climb to this altitude -->
                 <min-speed-for-guiding-mach type="double">0.7</min-speed-for-guiding-mach>
                 <max-report-distance type="double">65</max-report-distance>
                 <arming-time-sec type="double">1.6</arming-time-sec>
                 <rail type="bool">false</rail>
-                <navigation type="string">APN</navigation>
+                <navigation type="string">PN</navigation>
                 <class type="string">A</class>
                 <fire-msg type="string">Fox 3</fire-msg>
                 <telemetry type="bool">false</telemetry>                <!-- enable for aim 120 to see datalink info -->
@@ -2031,13 +2031,13 @@ There is also small changes in tail for different variants with and without brak
                 <weight-launch-lbs type="double">510</weight-launch-lbs>                       <!-- authentic -->
                 <weight-warhead-lbs type="double">88</weight-warhead-lbs>
                 <weight-fuel-lbm type="double">135</weight-fuel-lbm>
-                <drag-coeff type="double">0.25</drag-coeff>
+                <drag-coeff type="double">0.375</drag-coeff>
                 <cross-section-sqft type="double">0.3382</cross-section-sqft>
-                <loft-altitude type="int">30000</loft-altitude><!-- in stage 1 it will attempt to climb to this altitude -->
+                <loft-altitude type="int">0</loft-altitude><!-- in stage 1 it will attempt to climb to this altitude -->
                 <min-speed-for-guiding-mach type="double">0.7</min-speed-for-guiding-mach>
                 <arming-time-sec type="double">2.5</arming-time-sec>             <!-- authentic -->
                 <max-report-distance type="double">65</max-report-distance>
-                <navigation type="string">APN</navigation>
+                <navigation type="string">PN</navigation>
                 <rail type="bool">false</rail>
                 <class type="string">A</class>
                 <fire-msg>Fox 1</fire-msg>
