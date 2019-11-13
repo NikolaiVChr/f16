@@ -21,7 +21,7 @@ var Station = {
 		p.name = name;
 		p.position = position;
 		p.sets = sets;
-		p.guiID = guiID;
+		p.guiID = guiID;#can be nil when should not show up in GUI dialog.
 		p.node_pointMass = pointmassNode;
 		p.operableFunction = operableFunction;
 		p.activeFunction = activeFunction; # for F14, if a pylon is set active or not
@@ -311,10 +311,29 @@ var Pylon = {
 			#if (fdm=="yasim") { commented out due to fuel dialog changes in FG2018.3
 				# due to fuel dialog has different features in yasim from jsb, this must be done:
 				me.guiNode.initNode("opt["~me.i~"]/lbs",0,"DOUBLE");
+				set.opt = me.i;
 			#}
 			me.i += 1;
 		}
+		me.calculateSetMassForOpt();
 		me.guiListener = setlistener(baseGui~"/weight["~me.guiID~"]/selected", func me.guiChanged());
+	},
+	
+	calculateSetMassForOpt: func {
+		# do mass calc for OPT in dialog, this must be done due to fuel and payload dialog changed recently.
+		# only if gui name dont match OPT, OPT will not be forced upon us.
+		foreach(set ; me.sets) {
+			me.totalMass = 0;		
+			foreach(me.weapon;set.content) {
+				if (typeof(me.weapon) == "scalar") {
+					me.totalMass += getprop("payload/armament/"~string.lc(me.weapon)~"/weight-launch-lbs");
+				} else {
+					me.totalMass += me.weapon.weight_launch_lbm;
+				}
+			}
+			me.totalMass += set.launcherMass;
+			me.guiNode.getNode("opt["~set.opt~"]/lbs").setDoubleValue(me.totalMass);
+		}
 	},
 
 	setGUI: func {
@@ -351,6 +370,7 @@ var Pylon = {
 		me.currentName = me.nameGUI;
 		setprop(baseGui~"/weight["~me.guiID~"]/selected", me.nameGUI);
 		setprop(baseGui~"/weight["~me.guiID~"]/weight-lb", me.node_pointMass.getValue());
+
 		me.changingGui = 0;
 	},
 

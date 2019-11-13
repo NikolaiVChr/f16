@@ -697,6 +697,7 @@ var repair3 = func {
   inAutostart = 0;
 }
 var repair4 = func {
+  # this pps settings is for when reinit with non zero fuel dump value in jsb propulsion, that value gets set on non-mounted tanks.
     setprop("fdm/jsbsim/propulsion/tank[0]/external-flow-rate-pps", 0);
     setprop("fdm/jsbsim/propulsion/tank[1]/external-flow-rate-pps", 0);
     if (getprop("/consumables/fuel/tank[2]/name") != "Not attached") {

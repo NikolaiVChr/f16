@@ -695,6 +695,9 @@ Not all variants have dragchute.
 FLYING IN MP
 Firstly be sure to use "Visible to 2017+", else others will not see everything working okay when they see your aircraft.
 For doing combat enable "MP Discharge messages". This might be considered spam of MP chat, so use it sparringly and only against opponents that have agreed to be fighting you.
+
+EXT FUEL TANKS
+After you have mounted or dismounted ext fuel tank in the fuel and payload dialog, you will have to close the dialog and reopen it to see that change proper, and to be able to set the level.
             ]]></text-1>
             <text-2><![CDATA[
 HUD
