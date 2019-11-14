@@ -143,7 +143,7 @@ var HudMath = {
 
 	    me.pos = me.getCenterPosFromDegs(me.dir_x,-me.dir_y);
 	    
-	    return [me.pos[0], me.pos[1]];
+	    return [me.pos[0], me.pos[1], me.dir_x,-me.dir_y];
 	},
 	
 	getPosFromDegs:  func (yaw_deg, pitch_deg) {

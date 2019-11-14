@@ -1018,6 +1018,13 @@ append(obj.total, obj.speed_curr);
             .setColor(0,1,0).hide()
             .setTranslation(sx*0.5*0.695633,sy*0.25+262*mr*0.5);
             append(obj.total, obj.ASEC262);
+        obj.ASC = obj.svg.createChild("path")# (Attack Steering Cue (ASC))
+            .moveTo(-8*mr,0)
+            .arcSmallCW(8*mr,8*mr, 0, 8*mr*2, 0)
+            .arcSmallCW(8*mr,8*mr, 0, -8*mr*2, 0)
+            .setStrokeLineWidth(1)
+            .setColor(0,1,0).hide();
+            append(obj.total, obj.ASC);
         obj.ASEC100 = obj.svg.createChild("path")#irsearch
             .moveTo(-100*mr,0)
             .arcSmallCW(100*mr,100*mr, 0, 100*mr*2, 0)
@@ -2032,7 +2039,7 @@ append(obj.total, obj.speed_curr);
         hdp.weapon_selected = "";
 
         # part2. update display, first with the update managed items
-
+        var showASC = 0;
         if (1) {#hdp.FrameCount == 2 or me.initUpdate == 1) {
             hdp.window1_txt = "";
             hdp.window2_txt = "";
@@ -2051,6 +2058,8 @@ append(obj.total, obj.speed_curr);
             me.ASEC120.hide();
             me.ASEC65.hide();
             var eegsShow = 0;
+            var currASEC = nil;
+            
             if(hdp.master_arm and pylons.fcs != nil)
             {
                 hdp.weapon_selected = pylons.fcs.selectedType;
@@ -2058,6 +2067,7 @@ append(obj.total, obj.speed_curr);
                 
                 if (hdp.weapon_selected != nil)
                 {
+                    var mr = 0.4;
                     if (hdp.weapon_selected == "20mm Cannon") {
                         hdp.window9_txt = sprintf("%3d", pylons.fcs.getAmmo());
                         eegsShow = 1;
@@ -2066,8 +2076,10 @@ append(obj.total, obj.speed_curr);
                         if (hdp.weapn != nil) {
                             if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
                                 me.ASEC65.show();
+                                currASEC = [me.sx*0.5,me.sy*0.25];
                             } elsif (!hdp.standby) {
                                 me.ASEC100.show();
+                                currASEC = [me.sx*0.5,me.sy*0.25];
                             }
                         }
                     } elsif (hdp.weapon_selected == "AIM-120") {
@@ -2075,8 +2087,10 @@ append(obj.total, obj.speed_curr);
                         if (hdp.weapn != nil) {
                             if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
                                 me.ASEC120.show();
+                                currASEC = [me.sx*0.5,me.sy*0.25];
                             } elsif (!hdp.standby) {
                                 me.ASEC262.show();
+                                currASEC = [me.sx*0.5,me.sy*0.25+262*mr*0.5];
                             }
                         }
                     } elsif (hdp.weapon_selected == "AIM-7") {
@@ -2084,10 +2098,13 @@ append(obj.total, obj.speed_curr);
                         if (hdp.weapn != nil) {
                             if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
                                 me.ASEC120.show();
+                                currASEC = [me.sx*0.5,me.sy*0.25];
                             } elsif (!hdp.standby) {
                                 me.ASEC262.show();
+                                currASEC = [me.sx*0.5,me.sy*0.25+262*mr*0.5];
                             }
                         }
+                        
                     } elsif (hdp.weapon_selected == "GBU-12") {
                         hdp.window9_txt = sprintf("%d GB12", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-65") {
@@ -2124,8 +2141,9 @@ append(obj.total, obj.speed_curr);
                         hdp.window9_txt = sprintf("%d B6112", pylons.fcs.getAmmo());
                     } else hdp.window9_txt = "";
                     
-
+                    
                 }
+                
                 if (hdp.active_u != nil)
                 {
                     if (hdp.active_u.Callsign != nil) {
@@ -2358,6 +2376,15 @@ append(obj.total, obj.speed_curr);
                                 #me.ycS = me.sy-me.texels_up_into_hud - (me.pixelPerMeterY * me.combined_dev_length * math.cos(me.combined_dev_deg*D2R));
                                 #me.target_locked.setTranslation (me.xcS, me.ycS);
                                 me.target_locked.setTranslation (me.echoPos);
+                                if (currASEC != nil) {
+                                    me.cue = hdp.weapn.getIdealFireSolution();
+                                    if (me.cue != nil) {
+                                        me.ascpixel = me.cue[1]*HudMath.getPixelPerDegreeAvg(2);
+                                        me.ascPos = HudMath.getPosFromDegs(me.echoPos[2], me.echoPos[3]);
+                                        me.ASC.setTranslation(currASEC[0]+me.clamp(me.ascPos[0]+math.cos(me.cue[0]*D2R)*me.ascpixel,-me.sx*0.15,me.sx*0.15),currASEC[1]+me.clamp(me.ascPos[1]+math.sin(me.cue[0]*D2R)*me.ascpixel,-me.sx*0.15,me.sx*0.15));
+                                        showASC = 1;
+                                    }
+                                }
                                 if (pylons.fcs != nil and pylons.fcs.isLock()) {
                                     #me.target_locked.setRotation(45*D2R);
                                     if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7" or hdp.weapon_selected == "AIM-9") {
@@ -2425,7 +2452,7 @@ append(obj.total, obj.speed_curr);
             }
         }
         else print("[ERROR] Radar system missing or uninit (frame notifier)");
-        
+        me.ASC.setVisible(showASC);
         
         #print(me.irS~" "~me.irL);
 

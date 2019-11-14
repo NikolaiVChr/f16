@@ -143,7 +143,7 @@ var DEBUG_STATS_DETAILS    = 0;
 var DEBUG_GUIDANCE         = 0;
 var DEBUG_GUIDANCE_DETAILS = 0;
 var DEBUG_FLIGHT_DETAILS   = 0;
-var DEBUG_SEARCH           = 1;
+var DEBUG_SEARCH           = 0;
 var DEBUG_CODE             = 0;
 
 var g_fps        = 9.80665 * M2FT;
@@ -1075,6 +1075,28 @@ var AIM = {
     	me.dlz_nez   = me.clamp(me.dlz_opt * (me.dlz_tG/45), me.min_fire_range_nm, me.dlz_opt);
     	me.printStatsDetails("Dynamic Launch Zone reported (NM): Maximum=%04.1f Optimistic=%04.1f NEZ=%04.1f Minimum=%04.1f",me.max_fire_range_nm,me.dlz_opt,me.dlz_nez,me.min_fire_range_nm);
     	return [me.max_fire_range_nm,me.dlz_opt,me.dlz_nez,me.min_fire_range_nm,geo.aircraft_position().direct_distance_to(me.contactCoord)*M2NM];
+	},
+	
+	getIdealFireSolution: func {
+		if (me.status != MISSILE_LOCK) return nil;
+		# do only call this for A/A missiles
+		# range elevDev horizDev angleSpeedHoriz
+		# move 3rd in HUD
+		me.idVec = vector.Math.normalize(vector.Math.eulerToCartesian3X(-me.Tgt.get_heading(), me.Tgt.get_Pitch(), 0));
+		me.planeVec = vector.Math.normalize(vector.Math.eulerToCartesian3X(-OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue()));
+		me.idVec = vector.Math.product(1.5*me.Tgt.get_Speed()*NM2M/3600, me.idVec);#meter/sec 1.5 is factor for HUD
+		#2 deg/s means 2 deg of bore
+		#plus to that the lofting angle:
+		me.idealLoft = me.clamp(me.extrapolate(me.Tgt.get_range(), 15, 40, 0, 10),0,10);
+		me.idVec = vector.Math.plus([0,0,math.tan(me.idealLoft*D2R)*me.Tgt.get_range()*NM2M],me.idVec);
+		me.idHere = vector.Math.projVectorOnPlane(me.planeVec, me.idVec);
+		me.angleFromUp = vector.Math.angleBetweenVectors(me.idHere, vector.Math.eulerToCartesian3Z(-OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue()));
+		me.angleFromRight = 180-vector.Math.angleBetweenVectors(me.idHere, vector.Math.eulerToCartesian3Y(-OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue()));
+		me.angleInHUD = me.angleFromUp>=90?me.angleFromRight:-me.angleFromRight;#0 is up, 180 normalized
+		me.angleInHUD = geo.normdeg180(me.angleInHUD-OurRoll.getValue());
+		me.degOnHUD = math.atan2(vector.Math.magnitudeVector(me.idHere),me.Tgt.get_range()*NM2M)*R2D;#deg/sec
+		#printf("ASC: %.1f deg loft. Inv trigo angle: %d deg. Lead %.1f deg. atan2(%d,%d)", me.idealLoft, me.angleInHUD, me.degOnHUD,vector.Math.magnitudeVector(me.idHere),me.Tgt.get_range()*NM2M);
+		return [me.angleInHUD, me.degOnHUD];# 0,0 is center of ASEC. Thats the origin of ASC (Attack Steering Cue)
 	},
 
 	setContacts: func (vect) {
