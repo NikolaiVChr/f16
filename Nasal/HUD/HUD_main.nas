@@ -2381,7 +2381,9 @@ append(obj.total, obj.speed_curr);
                                     if (me.cue != nil) {
                                         me.ascpixel = me.cue[1]*HudMath.getPixelPerDegreeAvg(2);
                                         me.ascPos = HudMath.getPosFromDegs(me.echoPos[2], me.echoPos[3]);
-                                        me.ASC.setTranslation(currASEC[0]+me.clamp(me.ascPos[0]+math.cos(me.cue[0]*D2R)*me.ascpixel,-me.sx*0.15,me.sx*0.15),currASEC[1]+me.clamp(me.ascPos[1]+math.sin(me.cue[0]*D2R)*me.ascpixel,-me.sx*0.15,me.sx*0.15));
+                                        me.ascDist = math.sqrt(math.pow(me.ascPos[0]+math.cos(me.cue[0]*D2R)*me.ascpixel,2)+math.pow(me.ascPos[1]+math.sin(me.cue[0]*D2R)*me.ascpixel,2));
+                                        me.ascReduce = me.ascDist > me.sx*0.20?me.sx*0.20/me.ascDist:1;
+                                        me.ASC.setTranslation(currASEC[0]+me.ascReduce*(me.ascPos[0]+math.cos(me.cue[0]*D2R)*me.ascpixel),currASEC[1]+me.ascReduce*(me.ascPos[1]+math.sin(me.cue[0]*D2R)*me.ascpixel));
                                         showASC = 1;
                                     }
                                 }
