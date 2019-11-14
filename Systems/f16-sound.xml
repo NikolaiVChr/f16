@@ -2049,7 +2049,7 @@
 				<z>0.015</z>
 			</position>
 			<volume>
-				<factor>0.15</factor>
+				<factor>0.175</factor>
 			</volume>
 		</throttle>
 		<throttle>
@@ -2070,7 +2070,7 @@
 				<z>0.015</z>
 			</position>
 			<volume>
-				<factor>0.15</factor>
+				<factor>0.175</factor>
 			</volume>
 		</throttle>
 		
@@ -2124,7 +2124,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.9</factor>
+				<factor>1.05</factor>
 			</volume>
 		</switch>
 		<switch>
