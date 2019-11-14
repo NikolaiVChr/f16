@@ -39,7 +39,7 @@
    <phi-max-deg>15</phi-max-deg>
    <speed-mps>
     <property>engines/engine/thrust_lb</property>
-    <spread>50</spread>
+    <spread>15</spread>
    </speed-mps>
    <rotation-speed>
     <x-min-deg-sec>5</x-min-deg-sec>
