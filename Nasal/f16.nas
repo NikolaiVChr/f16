@@ -1516,7 +1516,7 @@ var button = func {
 
 var button2 = func {
   setprop("f16/sound/button2",1);
-  settimer(func {setprop("f16/sound/button2",0);},0.15);#0.10 but on some pc dont get time to play
+  settimer(func {setprop("f16/sound/button2",0);},0.20);#0.10 but on some pc dont get time to play
 }
 
 var clamp0 = func {
