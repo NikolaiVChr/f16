@@ -29,9 +29,9 @@ var FireControl = {
 		fc.WeaponNotification = VectorNotification.new("WeaponNotification");
 		fc.setupMFDObservers();
 		fc.dropMode = 0;          # 0=ccrp, 1 = ccip
-		setlistener("controls/armament/trigger",func{fc.trigger();fc.updateDual()});
-		setlistener("controls/armament/master-arm",func{fc.updateCurrent()});
-		setlistener("controls/armament/dual",func{fc.updateDual()});
+		setlistener("controls/armament/trigger",func{fc.trigger();fc.updateDual()},nil,0);
+		setlistener("controls/armament/master-arm",func{fc.updateCurrent()},nil,0);
+		setlistener("controls/armament/dual",func{fc.updateDual()},nil,0);
 		return fc;
 	},
 	

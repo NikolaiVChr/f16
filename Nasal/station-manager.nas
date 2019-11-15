@@ -487,17 +487,19 @@ var SubModelWeapon = {
 		s.triggerNode = nil;
 		s.active = 0;
 		s.alternate = alternate;
-		s.timer = maketimer(0.1, s, func s.loop());
-		
+		s.timer = nil;
+		s.neverRan = 1;
 
 		# these 2 needs to be here and be 0
 		s.Cd_base = 0;
 		s.ref_area_sqft = 0;
 
+		
 		return s;
 	},
 
 	loop: func {
+		if (me.timer == nil) settimer(func me.loop(), 0.5);#bug in maketimer makes this loop need to run all the time :(
 		me.ammo = me.getAmmo();#print("ammo "~me.ammo);
 		for(me.i = 0;me.i<size(me.tracerSubModelNumbers);me.i+=1) {
 			setprop("ai/submodels/submodel["~me.tracerSubModelNumbers[me.i]~"]/count",me.ammo>0?-1:0);
@@ -505,18 +507,17 @@ var SubModelWeapon = {
 		me.weight_launch_lbm = me.munitionMass*me.ammo;
 
 		#not sure how smart it is to do this all the time, but..:
-		if (me.operableFunction != nil and !me.operableFunction()) {
-			#print("gun missing hydraulics");
-			me.trigger.unalias();
-			me.trigger.setBoolValue(0);
-		} else {
-			if (me.active) {
+		if (me.active and (me.operableFunction == nil or me.operableFunction())) {
+			if (me.trigger.getAliasTarget() == nil or me.trigger.getAliasTarget().getPath() != me.triggerNode.getPath()) {
 				me.trigger.alias(me.triggerNode);
-			} else {
-				me.trigger.unalias();
-				me.trigger.setBoolValue(0);
 			}
+		} else {
+			if (me.trigger.getAliasTarget() != nil) {
+				me.trigger.unalias();
+			}
+			me.trigger.setBoolValue(0);
 		}
+		settimer(func me.loop(), 0.1);
 	},
 
 	start: func (triggerNode = nil) {
@@ -537,20 +538,28 @@ var SubModelWeapon = {
 
 	mount: func {
 		me.reloadAmmo();
-		me.timer.start();
-		me.loop();
+		#if (me.timer != nil and me.timer.isRunning) me.timer.stop();
+		#me.timer = nil;
+		me.timer = 1;#maketimer(0.1, me, func me.loop());
+		#me.timer.restart(0.1);
+		#me.timer.start();
+
+		if (me.neverRan) me.loop();
+		me.neverRan = 0;		
 	},
 
 	eject: func {
 		if (me.jettisonable) {
-			me.timer.stop();
+			#if (me.timer != nil and me.timer.isRunning) me.timer.stop();
+			me.timer = nil;
 			me.trigger.unalias();
 			me.trigger.setBoolValue(0);
 		}
 	},
 
 	del: func {
-		me.timer.stop();
+		#if (me.timer != nil and me.timer.isRunning) me.timer.stop();
+		me.timer = nil;
 		me.trigger.unalias();
 		me.trigger.setBoolValue(0);
 	},
