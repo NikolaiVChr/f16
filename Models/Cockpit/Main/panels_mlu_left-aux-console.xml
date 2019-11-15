@@ -32,6 +32,11 @@
         <!-- mainly for switches -->
         <object-name>light-land-switch</object-name>
         <object-name>light-land-switch.01</object-name>
+        <object-name>SW_STORES_CONFIG</object-name>
+        <object-name>SW_PARKING_BRAKE</object-name>
+        <object-name>SW_GND_JETT</object-name>
+        <object-name>SW_BRAKES_CHAN</object-name>
+        <object-name>gear_lever</object-name>
     </effect>
 
   <!--<animation>
