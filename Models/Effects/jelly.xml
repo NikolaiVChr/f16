@@ -24,12 +24,12 @@
           <value>98</value>
         </greater-than>
         <greater-than>
-         <property>sim/multiplay/generic/float[3]</property>
-         <value>50</value>
-        </greater-than>
-        <greater-than>
           <property>/environment/temperature-degc</property>
           <value>-36.5</value>
+        </greater-than>
+        <greater-than>
+          <property>sim/multiplay/generic/float[3]</property><!-- kts -->
+          <value>25</value>
         </greater-than>
       </and>
     </condition>
@@ -75,7 +75,7 @@
                     <red>
                         <expression>
                             <product>
-                                <value>0.6</value>
+                                <value>0.98</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -83,7 +83,7 @@
                     <green>
                         <expression>
                             <product>
-                                <value>0.8</value>
+                                <value>0.97</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -91,7 +91,7 @@
                     <blue>
                         <expression>
                             <product>
-                                <value>1</value>
+                                <value>0.95</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -101,7 +101,7 @@
                     </alpha>
                 </color>
                 <size>
-                    <value>0.9</value>
+                    <value>0.75</value>
                 </size>
             </start>
 
@@ -110,7 +110,7 @@
                     <red>
                         <expression>
                             <product>
-                                <value>0.6</value>
+                                <value>0.95</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -118,7 +118,7 @@
                     <green>
                         <expression>
                             <product>
-                                <value>0.8</value>
+                                <value>0.95</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -126,13 +126,13 @@
                     <blue>
                         <expression>
                             <product>
-                                <value>1.0</value>
+                                <value>0.95</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
                     </blue>
                     <alpha>
-                        <value>0.075</value>
+                        <value>0.005</value>
                     </alpha>
                 </color>
                 <size>

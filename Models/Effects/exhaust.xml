@@ -39,7 +39,7 @@
    <phi-max-deg>15</phi-max-deg>
    <speed-mps>
     <property>engines/engine/thrust_lb</property>
-    <spread>20</spread>
+    <spread>15</spread>
    </speed-mps>
    <rotation-speed>
     <x-min-deg-sec>5</x-min-deg-sec>
@@ -53,7 +53,7 @@
   
   <counter>
    <particles-per-sec>
-    <value>12</value>
+    <value>14</value>
     <spread>5</spread>
    </particles-per-sec>
   </counter>
@@ -69,7 +69,7 @@
      <blue><expression><product><value>1.0</value><property>/rendering/scene/diffuse/red</property></product></expression></blue>
 -->
      <red>
-      <value>0.6</value>
+      <value>0.7</value>
      </red>
      <green>
       <value>0.8</value>
@@ -78,7 +78,7 @@
       <value>1</value>
      </blue>
      <alpha>
-      <expression><product><value>0.12</value><property>/rendering/scene/diffuse/red</property></product></expression>
+      <expression><product><value>0.09</value><property>/rendering/scene/diffuse/red</property></product></expression>
      </alpha>
     </color>
     <size>
@@ -88,7 +88,7 @@
    <end>
     <color>
      <red>
-      <value>0.6</value>
+      <value>0.7</value>
      </red>
      <green>
       <value>0.8</value>

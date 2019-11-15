@@ -835,11 +835,11 @@
             <condition>
                 <greater-than>
                     <property>orientation/alpha-deg</property>
-                    <value>15</value>
+                    <value>17</value>
                 </greater-than>
                 <greater-than>
                     <property>accelerations/pilot-gdamped</property>
-                    <value>2.4</value>
+                    <value>2.5</value>
                     <!-- this is the airflow over the front so not going to be much if we're just dropping -->
                 </greater-than>
                 <greater-than>
@@ -853,7 +853,7 @@
             </condition>
             <volume>
                 <property>orientation/alpha-deg</property>
-                <factor>0.04</factor>
+                <factor>0.035</factor>
             </volume>
             <reference-dist>450.0</reference-dist>
             <max-dist>2900.0</max-dist>
@@ -2049,7 +2049,7 @@
 				<z>0.015</z>
 			</position>
 			<volume>
-				<factor>0.15</factor>
+				<factor>0.175</factor>
 			</volume>
 		</throttle>
 		<throttle>
@@ -2070,7 +2070,7 @@
 				<z>0.015</z>
 			</position>
 			<volume>
-				<factor>0.15</factor>
+				<factor>0.175</factor>
 			</volume>
 		</throttle>
 		
@@ -2124,7 +2124,7 @@
 			</condition>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.9</factor>
+				<factor>1.05</factor>
 			</volume>
 		</switch>
 		<switch>
