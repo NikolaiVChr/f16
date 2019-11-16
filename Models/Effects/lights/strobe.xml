@@ -12,7 +12,7 @@
   <object-name>glow</object-name>
   <interpolation>
    <entry><ind>0</ind><dep>1.5</dep></entry>
-   <entry><ind>8000</ind><dep>40.0</dep></entry>
+   <entry><ind>10000</ind><dep>40.0</dep></entry>
   </interpolation>
  </animation>
  
