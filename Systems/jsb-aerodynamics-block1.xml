@@ -295,6 +295,22 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                 <property>inertia/pointmass-dragarea-sqft[9]</property>
             </product>
     </function>
+    
+    <function name="aero/coefficient/force/CDhardpointLeft">
+        <description>drag for pylon</description>
+            <product>
+                <property>aero/qbar-psf</property>
+                <property>inertia/pointmass-dragarea-sqft[11]</property>
+            </product>
+    </function>
+    
+    <function name="aero/coefficient/force/CDhardpointRight">
+        <description>drag for pylon</description>
+            <product>
+                <property>aero/qbar-psf</property>
+                <property>inertia/pointmass-dragarea-sqft[12]</property>
+            </product>
+    </function>
 
     <function name="aero/coefficient/Cx">
             <description>
@@ -677,6 +693,8 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                         <property>aero/coefficient/force/CDpylon7</property>
                         <property>aero/coefficient/force/CDpylon8</property>
                         <property>aero/coefficient/force/CDpylon9</property>
+                        <property>aero/coefficient/force/CDhardpointLeft</property>
+                        <property>aero/coefficient/force/CDhardpointRight</property>
                     </sum>
                     <cos>
                       <property>aero/alpha-rad</property>
@@ -1143,6 +1161,8 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                         <property>aero/coefficient/force/CDpylon7</property>
                         <property>aero/coefficient/force/CDpylon8</property>
                         <property>aero/coefficient/force/CDpylon9</property>
+                        <property>aero/coefficient/force/CDhardpointLeft</property>
+                        <property>aero/coefficient/force/CDhardpointRight</property>
                     </sum>
                     <sin>
                       <property>aero/alpha-rad</property>
@@ -2638,6 +2658,14 @@ Put in engine gyroscopic effect (160 slugs-ft2/sec)
                     <product>
                         <property>aero/coefficient/force/CDpylon9</property>
                         <value>4.79412</value>
+                    </product>
+                    <product>
+                        <property>aero/coefficient/force/CDhardpointLeft</property>
+                        <value>-0.675068</value>
+                    </product>
+                    <product>
+                        <property>aero/coefficient/force/CDhardpointRight</property>
+                        <value>0.675068</value>
                     </product>
                 </sum>
                 <value>3.28084</value><!-- convert meter to feet -->

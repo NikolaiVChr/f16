@@ -1664,6 +1664,8 @@ There is also small changes in tail for different variants with and without brak
                 <pointmass-dragarea-sqft type="double" n="7">0</pointmass-dragarea-sqft>
                 <pointmass-dragarea-sqft type="double" n="8">0</pointmass-dragarea-sqft>
                 <pointmass-dragarea-sqft type="double" n="9">0</pointmass-dragarea-sqft>
+                <pointmass-dragarea-sqft type="double" n="11">0</pointmass-dragarea-sqft>
+                <pointmass-dragarea-sqft type="double" n="12">0</pointmass-dragarea-sqft>
             </inertia>
             <systems>
                 <hook>

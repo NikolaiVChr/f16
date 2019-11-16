@@ -111,5 +111,23 @@
    <z> 0 </z>
    </location>
   </pointmass>
+  
+  <pointmass name="hardpoint-left">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -2.6409 </x>
+    <y> -0.675068 </y>
+    <z> -0.933711 </z>
+   </location>
+  </pointmass>
+  
+  <pointmass name="hardpoint-right">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -2.6409 </x>
+    <y>  0.675068 </y>
+    <z> -0.933711 </z>
+   </location>
+  </pointmass>
 
  </mass_balance>
