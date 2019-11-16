@@ -7,7 +7,7 @@
   <ixy unit="SLUG*FT2"> 0 </ixy>
   <ixz unit="SLUG*FT2"> 982 </ixz><!-- why is this negated when flying???? -->
   <iyz unit="SLUG*FT2"> 0 </iyz>
-  <emptywt unit="LBS"> 17400 </emptywt>
+  <emptywt unit="LBS"> 19500 </emptywt>
   <location name="CG" unit="IN">
    <x> 3.5 </x><!-- 35%mac = -176.5in with VRP applied; measured by Richard in Blender. Offset -2in due to gears not correct in model? -->
    <y> 0 </y>

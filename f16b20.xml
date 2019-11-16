@@ -50,7 +50,7 @@
  <external_reactions file="Systems/jsb-external-reactions"/>
  <system file="jsb-pushback"/> 
  <metrics file="Systems/jsb-metrics"/>
- <mass_balance file="Systems/jsb-mass"/>
+ <mass_balance file="Systems/jsb-mass-20"/>
  <system file="jsb-hook"/>
  <system file="f16-hydraulics"/>
  <system file="f16-electrical"/>

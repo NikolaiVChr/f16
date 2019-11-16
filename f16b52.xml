@@ -52,7 +52,7 @@
  <external_reactions file="Systems/jsb-external-reactions"/>
  <system file="jsb-pushback"/> 
  <metrics file="Systems/jsb-metrics"/>
- <mass_balance file="Systems/jsb-mass"/> 
+ <mass_balance file="Systems/jsb-mass-52"/> 
  <flight_control file="Systems/jsb-controls"/>
  <system file="autoflight"/>
  <propulsion file="Systems/jsb-propulsion-block52"/>

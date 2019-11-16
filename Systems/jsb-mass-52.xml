@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+
+ <mass_balance>
+  <ixx unit="SLUG*FT2"> 9496 </ixx>
+  <iyy unit="SLUG*FT2"> 55814 </iyy>
+  <izz unit="SLUG*FT2"> 63100 </izz>
+  <ixy unit="SLUG*FT2"> 0 </ixy>
+  <ixz unit="SLUG*FT2"> 982 </ixz><!-- why is this negated when flying???? -->
+  <iyz unit="SLUG*FT2"> 0 </iyz>
+  <emptywt unit="LBS"> 18300 </emptywt>
+  <location name="CG" unit="IN">
+   <x> 3.5 </x><!-- 35%mac = -176.5in with VRP applied; measured by Richard in Blender. Offset -2in due to gears not correct in model? -->
+   <y> 0 </y>
+   <z> 0 </z>
+  </location>
+  <pointmass name="Pilot">
+   <weight unit="LBS"> 159 </weight>
+   <location name="POINTMASS" unit="IN">
+    <x> -156.2 </x>
+    <y> 0 </y>
+    <z> 0 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon1">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> 0.082 </x>
+    <y> -4.79412 </y>
+    <z> 0.01109 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon2">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> 0.082 </x>
+    <y> -3.95167 </y>
+    <z> -0.25696 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon3">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> 0.082 </x>
+    <y> -2.88034 </y>
+    <z> -0.25696 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon4">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> 0.082 </x>
+    <y> -1.62889 </y>
+    <z> -0.25696 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon5">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> 0.082 </x>
+    <y> 0 </y>
+    <z> -0.83778 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon6">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> 0.082 </x>
+    <y> 1.62889 </y>
+    <z> -0.25696 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon7">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> 0.082 </x>
+    <y> 2.88034 </y>
+    <z> -0.25696 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon8">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> 0.082 </x>
+    <y> 3.95167 </y>
+    <z> -0.25696 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="pylon9">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> 0.082 </x>
+    <y> 4.79412 </y>
+    <z> 0.01109 </z>
+   </location>
+  </pointmass>
+
+  <pointmass name="Cannon ammo">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="IN">
+   <x> 3.5 </x>
+   <y> 0 </y>
+   <z> 0 </z>
+   </location>
+  </pointmass>
+  
+  <pointmass name="hardpoint-left">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -2.6409 </x>
+    <y> -0.675068 </y>
+    <z> -0.933711 </z>
+   </location>
+  </pointmass>
+  
+  <pointmass name="hardpoint-right">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="M">
+    <x> -2.6409 </x>
+    <y>  0.675068 </y>
+    <z> -0.933711 </z>
+   </location>
+  </pointmass>
+
+ </mass_balance>
