@@ -94,7 +94,7 @@ var fl = compat_failure_modes.set_unserviceable("consumables/fuel-tanks");
 FailureMgr.add_failure_mode("consumables/fuel-tanks", "Fuel tank integrity", fl);
 
 
-foreach (mode;FailureMgr.get_failure_modes()) print(mode.id);
+#foreach (mode;FailureMgr.get_failure_modes()) print(mode.id);
 
 var trigger_eng = RandVneTrigger.new(0.25, 1, "f16/vne");
 FailureMgr.set_trigger("engines/engine", trigger_eng);
