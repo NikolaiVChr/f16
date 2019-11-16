@@ -641,7 +641,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     mps.loop();
     enableViews();
     fail.start();
-    view.manager.register("Cockpit View", pilot_view_limiter);
+    if (getprop("f16/disable-custom-view") != 1) view.manager.register("Cockpit View", pilot_view_limiter);
     emesary.GlobalTransmitter.Register(f16_mfd);
     emesary.GlobalTransmitter.Register(f16_hud);
     emesary.GlobalTransmitter.Register(awg_9.aircraft_radar);
