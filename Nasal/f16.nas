@@ -13,6 +13,10 @@ var cockpit_blink = props.globals.getNode("f16/avionics/cockpit_blink", 1);
 aircraft.light.new("f16/avionics/cockpit_blinker", [0.25, 0.25], cockpit_blink);
 setprop("f16/avionics/cockpit_blink", 1);
 
+var extrapolate = func (x, x1, x2, y1, y2) {
+    return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
+};
+
 var checkVNE = func {
   if (getprop("/sim/freeze/replay-state")) {
     settimer(checkVNE, 1);
@@ -36,14 +40,18 @@ var checkVNE = func {
   {
     msg = "Airspeed exceeds Vne!";
     setprop("f16/vne",1);
+    setprop("f16/vne-exceed",extrapolate(airspeed-vne,0,100,0,1));
   } elsif ((airspeedM != nil) and (vneM != nil) and (airspeedM > vneM)) {
     msg = "Airspeed exceeds Vne!";
     setprop("f16/vne",1);
+    setprop("f16/vne-exceed",extrapolate(airspeedM-vneM,0,0.20,0,1));
   } elsif ((nose!=nil and NLG_kt>nose)or (main!=nil and MLG_kt>main)) {
     msg = "Groundspeed exceeds tire limit!";
     setprop("f16/vne",0);
+    setprop("f16/vne-exceed",0);
   }  else {
     setprop("f16/vne",0);
+    setprop("f16/vne-exceed",0);
   }
 
   if (msg != "")
@@ -632,6 +640,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     frd.loop_ded();
     mps.loop();
     enableViews();
+    fail.start();
     view.manager.register("Cockpit View", pilot_view_limiter);
     emesary.GlobalTransmitter.Register(f16_mfd);
     emesary.GlobalTransmitter.Register(f16_hud);
@@ -856,39 +865,7 @@ var h7rtrigger2 = func {
 
 setlistener("controls/armament/trigger", h7rtrigger, 0, 0);
 
-var prop = "payload/armament/fire-control";
-var actuator_fc = compat_failure_modes.set_unserviceable(prop);
-FailureMgr.add_failure_mode(prop, "Fire control", actuator_fc);
 
-var battery_fc = compat_failure_modes.set_unserviceable("fdm/jsbsim/elec/failures/battery");
-FailureMgr.add_failure_mode("fdm/jsbsim/elec/failures/battery", "Battery", battery_fc);
-
-var epu_fc = compat_failure_modes.set_unserviceable("fdm/jsbsim/elec/failures/epu");
-FailureMgr.add_failure_mode("fdm/jsbsim/elec/failures/epu", "EPU", epu_fc);
-
-var maingen_fc = compat_failure_modes.set_unserviceable("fdm/jsbsim/elec/failures/main-gen");
-FailureMgr.add_failure_mode("fdm/jsbsim/elec/failures/main-gen", "Main Generator", maingen_fc);
-
-var stbygen_fc = compat_failure_modes.set_unserviceable("fdm/jsbsim/elec/failures/stby-gen");
-FailureMgr.add_failure_mode("fdm/jsbsim/elec/failures/stby-gen", "Stby Generator", stbygen_fc);
-
-var fire_fc = compat_failure_modes.set_unserviceable("damage/fire");
-FailureMgr.add_failure_mode("damage/fire", "Fire", fire_fc);
-
-var hyda_fc = compat_failure_modes.set_unserviceable("systems/hydraulics/edpa-pump");
-FailureMgr.add_failure_mode("systems/hydraulics/edpa-pump", "Hydr. pump A", hyda_fc);
-
-var hydb_fc = compat_failure_modes.set_unserviceable("systems/hydraulics/edpb-pump");
-FailureMgr.add_failure_mode("systems/hydraulics/edpb-pump", "Hydr. pump B", hydb_fc);
-
-var radar_fc = compat_failure_modes.set_unserviceable("instrumentation/radar");
-FailureMgr.add_failure_mode("instrumentation/radar", "Radar", radar_fc);
-
-var rwr_fc = compat_failure_modes.set_unserviceable("instrumentation/rwr");
-FailureMgr.add_failure_mode("instrumentation/rwr", "RWR", rwr_fc);
-
-var fl = compat_failure_modes.set_unserviceable("consumables/fuel-tanks");
-FailureMgr.add_failure_mode("consumables/fuel-tanks", "Fuel tank integrity", fl);
 
 # setup properties required for frame notifier.
 # NOTE: This is a deprecated way of doing things; each subsystem should do this
