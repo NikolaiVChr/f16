@@ -343,6 +343,10 @@
         <!-- these needs to be animated:-->
         <object-name>nuke-consent-switch</object-name>
         <object-name>nuke-consent-cover</object-name>
+        <object-name>l-hdpt-switch</object-name>
+        <object-name>r-hdpt-switch</object-name>
+        <object-name>fcr-switch</object-name>
+        <object-name>rdr-alt-switch</object-name>
     </effect>
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-knob</inherits-from>

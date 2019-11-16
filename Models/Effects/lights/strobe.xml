@@ -11,7 +11,7 @@
   <type>dist-scale</type>
   <object-name>glow</object-name>
   <interpolation>
-   <entry><ind>0</ind><dep>1.0</dep></entry>
+   <entry><ind>0</ind><dep>1.25</dep></entry>
    <entry><ind>5000</ind><dep>50.0</dep></entry>
   </interpolation>
  </animation>
