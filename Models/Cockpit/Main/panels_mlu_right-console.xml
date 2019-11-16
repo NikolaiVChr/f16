@@ -347,6 +347,11 @@
         <object-name>r-hdpt-switch</object-name>
         <object-name>fcr-switch</object-name>
         <object-name>rdr-alt-switch</object-name>
+        <object-name>depr-ret-switch</object-name>
+        <object-name>zeroize-switch</object-name>
+        <object-name>zeroize-cover</object-name>
+        <object-name>ant-sel-uhf-switch</object-name>
+        <object-name>ant-sel-iff-switch</object-name>
     </effect>
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-knob</inherits-from>

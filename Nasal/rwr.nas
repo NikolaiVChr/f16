@@ -197,6 +197,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_JSF      = "35";
         rwr.AIRCRAFT_GRIPEN   = "39";
         rwr.AIRCRAFT_MITTEN   = "YK";
+        rwr.AIRCRAFT_ALCA     = "LC";
         rwr.AIRCRAFT_UNKNOWN  = "U";
         rwr.ASSET_AI          = "AI";
         rwr.lookupType = {
@@ -291,6 +292,7 @@ RWRCanvas = {
                 "F-35B":                    rwr.AIRCRAFT_JSF,
                 "JAS-39C_Gripen":           rwr.AIRCRAFT_GRIPEN,
                 "Yak-130":                  rwr.AIRCRAFT_MITTEN,
+                "L-159":                    rwr.AIRCRAFT_ALCA,
                 "mp-nimitz":                rwr.ASSET_FRIGATE,
                 "mp-eisenhower":            rwr.ASSET_FRIGATE,
                 "mp-vinson":                rwr.ASSET_FRIGATE,

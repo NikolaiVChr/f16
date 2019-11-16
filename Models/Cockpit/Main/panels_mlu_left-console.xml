@@ -75,6 +75,7 @@
         <object-name>SW_KNOB_IFF_C_AND_I</object-name>
         <object-name>MAL_IND_LTS</object-name>
         <object-name>BIT</object-name>
+        <object-name>dim-reset</object-name>
         <object-name>FIRE_OHEAT_DETECT</object-name>
         <object-name>FCS_CAUTION_RESET</object-name>
         <object-name>SECURE_VOICE_KNOB</object-name>
@@ -82,6 +83,14 @@
         <object-name>COMM1_KNOB</object-name>
         <object-name>COMM2_KNOB</object-name>
         <object-name>CAUTION_RESET</object-name>
+        <object-name>ecm-1</object-name>
+        <object-name>ecm-2</object-name>
+        <object-name>ecm-3</object-name>
+        <object-name>ecm-4</object-name>
+        <object-name>ecm-5</object-name>
+        <object-name>ecm-nil</object-name>
+        <object-name>ecm-frm</object-name>
+        <object-name>ecm-spl</object-name>
     </effect>
 
     <effect>
@@ -129,6 +138,16 @@
         <object-name>SW_SQUELCH</object-name>
         <object-name>SW_TEST_OXY</object-name>
         <object-name>SW_TRIM_DISC</object-name>
+        <object-name>Torus</object-name>
+        <object-name>Torus.001</object-name>
+        <object-name>Torus.002</object-name>
+        <object-name>Torus.003</object-name>
+        <object-name>Torus.004</object-name>
+        <object-name>Torus.005</object-name>
+        <object-name>Torus.006</object-name>
+        <object-name>Torus.007</object-name>
+        <object-name>pitch-trim-wheel</object-name>
+        <object-name>roll-trim-wheel</object-name>
     </effect>
 
  <animation>
