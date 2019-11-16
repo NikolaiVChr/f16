@@ -706,8 +706,8 @@ var repair4 = func {
     if (getprop("/consumables/fuel/tank[3]/name") != "Not attached") {
       setprop("fdm/jsbsim/propulsion/tank[3]/external-flow-rate-pps", 0);
     }
-    if (getprop("/consumables/fuel/tank[3]/name") != "Not attached") {
-      setprop("fdm/jsbsim/propulsion/tank[3]/external-flow-rate-pps", 0);
+    if (getprop("/consumables/fuel/tank[4]/name") != "Not attached") {
+      setprop("fdm/jsbsim/propulsion/tank[4]/external-flow-rate-pps", 0);
     }
     setprop("fdm/jsbsim/propulsion/tank[5]/external-flow-rate-pps", 0);
     setprop("fdm/jsbsim/propulsion/tank[6]/external-flow-rate-pps", 0);
