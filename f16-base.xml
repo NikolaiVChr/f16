@@ -877,8 +877,8 @@ VARIANTS
 - F-16E block 60         : 19000/32500 lbf. Large horz. tail (mod. aero data).
 - F-16CJ block 52        : 17800/29000 lbf. Large horz. tail (mod. aero data).
 - F-16CJ block 50        : 17000/29000 lbf. Large horz. tail (mod. aero data).
-- F-16CG block 42         : 14670/23830 lbf. Large horz. tail (mod. aero data).
-- F-16CG block 40         : 18330/28620 lbf. Large horz. tail (mod. aero data).
+- F-16CG block 42        : 14670/23830 lbf. Large horz. tail (mod. aero data).
+- F-16CG block 40        : 18330/28620 lbf. Large horz. tail (mod. aero data).
 - F-16C block 32         : 14670/23830 lbf. Large horz. tail (mod. aero data).
 - F-16C block 30         : 18330/28620 lbf. Large horz. tail (mod. aero data).
 - F-16AM block 20 (MLU)  : 14670/23830 lbf. Small horz. tail (auth. aero data).
@@ -888,6 +888,7 @@ VARIANTS
 
 The engines wary not only in thrust, but also in fuel consumption.
 Variants will also have different sets of liveries that can be selected.
+Furthermore they differ in empty weight. And some block have HSI gauge while others have EHSI display.
 There is also small changes in tail for different variants with and without braking chute.
             ]]></text-9>
         </help>
