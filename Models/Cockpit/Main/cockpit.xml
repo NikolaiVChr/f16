@@ -9,6 +9,42 @@
    <z-m>0.0</z-m>
   </offsets>
 
+  <effect>
+      <inherits-from>Effects/model-combined-transparent</inherits-from>
+      <parameters>
+			<rain-enabled type="int">0</rain-enabled>
+			<snow-enabled type="int">0</snow-enabled>
+			<ambient-correction type="float">0.00</ambient-correction>
+			<lightmap-enabled type="int">0</lightmap-enabled>
+			<reflection-enabled type="int">1</reflection-enabled>			
+			<reflection-correction type="float">1.00</reflection-correction>
+			<reflection-fresnel type="float">0.01</reflection-fresnel>
+			<reflection-fresnel-factor type="float">0.01</reflection-fresnel-factor>
+			<reflection-rainbow type="float">0.50</reflection-rainbow>
+			<reflection-noise type="float">0.0</reflection-noise>
+			<reflection-dynamic type="int">1</reflection-dynamic>
+			<reflection-type type="int">1</reflection-type>
+			<texture n= "0" ><type>black</type></texture>
+			<texture n= "5" >
+				<type>cubemap</type>
+				<images>
+				  <positive-x>Aircraft/Generic/Effects/fgfs-sky2/1.png</positive-x>
+				  <negative-x>Aircraft/Generic/Effects/fgfs-sky2/4.png</negative-x>
+				  <positive-y>Aircraft/Generic/Effects/fgfs-sky2/2.png</positive-y>
+				  <negative-y>Aircraft/Generic/Effects/fgfs-sky2/3.png</negative-y>
+				  <positive-z>Aircraft/Generic/Effects/fgfs-sky2/6.png</positive-z>
+				  <negative-z>Aircraft/Generic/Effects/fgfs-sky2/5.png</negative-z>
+				</images>
+			</texture>
+			<transparent>true</transparent>
+			<render-bin>
+			  <bin-number>111</bin-number>
+			  <bin-name>DepthSortedBin</bin-name>
+			</render-bin>
+      </parameters>
+      <object-name>hud-optics</object-name>
+ </effect>
+
  <model>
   <name>HUD</name>
   <path>Aircraft/f16/Models/Cockpit/hud.xml</path>
