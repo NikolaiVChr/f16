@@ -173,6 +173,71 @@
                     <value>1</value>
                 </equals>
             </condition>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/seat/ejection-safety-lever</property>
+                <value>1</value>
+            </binding>
+        </item>
+        <item>
+            <name>FCR</name>
+            <value>ON</value>
+            <condition>
+                <equals>
+                    <property>f16/avionics/power-fcr</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/avionics/power-fcr</property>
+                <value>1</value>
+            </binding>
+        </item>
+        <item>
+            <name>RDR ALT</name>
+            <value>ON</value>
+            <condition>
+                <equals>
+                    <property>f16/avionics/power-rdr-alt</property>
+                    <value>2</value>
+                </equals>
+            </condition>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/avionics/power-rdr-alt</property>
+                <value>2</value>
+            </binding>
+        </item>
+        <item>
+            <name>LEFT HDPT (if something mounted on it)</name>
+            <value>ON</value>
+            <condition>
+                <equals>
+                    <property>f16/avionics/power-left-hdpt</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/avionics/power-left-hdpt</property>
+                <value>1</value>
+            </binding>
+        </item>
+        <item>
+            <name>RIGHT HDPT (if something mounted on it)</name>
+            <value>ON</value>
+            <condition>
+                <equals>
+                    <property>f16/avionics/power-right-hdpt</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/avionics/power-right-hdpt</property>
+                <value>1</value>
+            </binding>
         </item>
     </checklist>
 </PropertyList>

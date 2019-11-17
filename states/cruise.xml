@@ -42,6 +42,12 @@
                 <jsf-start type="bool">true</jsf-start><!-- inverse cutoff -->
                 <running-state type="bool">true</running-state>
             </engine>
+            <avionics>
+                <power-rdr-alt type="int">2</power-rdr-alt>
+                <power-fcr type="bool">true</power-fcr>
+                <power-right-hdpt type="bool">true</power-right-hdpt>
+                <power-left-hdpt type="bool">true</power-left-hdpt>
+            </avionics>
         </f16>
     </overlay>
 
