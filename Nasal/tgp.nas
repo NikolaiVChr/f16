@@ -203,6 +203,14 @@ setlistener("/sim/signals/fdm-initialized", func {
 
 setlistener("controls/MFD[2]/button-pressed", func (node) {
     var button = getprop("controls/MFD[2]/button-pressed");
+    if (button == 20) {#BACK
+        setprop("sim/current-view/view-number",0);
+        #setprop("/aircraft/flir/target/auto-track", 0);
+        #lock.hide();
+        #setprop("f16/avionics/lock-flir",0.05);
+        return;
+    }
+    if (!enable) return;
     if (button == 1) {#LOCK
         gps = 0;
         if (lock_tgp) {
@@ -291,11 +299,6 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
             #flir_updater.offsetH = 0;# commented so we get back to where we were when unlocking
             lock_tgp = 1;
         }
-    } elsif (button == 20) {#BACK
-        setprop("sim/current-view/view-number",0);
-        #setprop("/aircraft/flir/target/auto-track", 0);
-        #lock.hide();
-        #setprop("f16/avionics/lock-flir",0.05);
     } elsif (button == 6) {#TV/IR
         ir = !ir;
     } elsif (button == 11) {#UP
@@ -353,9 +356,11 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
 });
 
 var steerlock = 0;
+var enable = 1;
 
 var fast_loop = func {
   var viewName = getprop("/sim/current-view/name"); 
+    
     if (viewName == "TGP" and (getprop("gear/gear/wow") or !getprop("f16/stores/tgp-mounted"))) {
         # deselect view back to pilot default
         setprop("sim/current-view/view-number",0);
@@ -366,14 +371,15 @@ var fast_loop = func {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
             midl.setText("    MFD OFF   ");
             bott.setText("");
-            return;
+            enable = 0;
         } elsif (getprop("avionics/power-right-hdpt-warm") != 1 and getprop("f16/avionics/power-mfd") and getprop("f16/avionics/power-ufc-warm")) {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
             midl.setText("NOT TIMED OUT");
             bott.setText("");
-            return;
+            enable = 0;
         } else {
             canvasMFDext.setColorBackground(1.00, 1.00, 1.00, 0.00);
+            enable = 1;
         }
         # FLIR TGP stuff:
         setprop("aircraft/flir/target/view-enabled", viewName == "TGP");
@@ -401,7 +407,9 @@ var fast_loop = func {
         
         line6.setText(ir==1?"WHOT":"TV");
         
-        if (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil) {
+        if (!enable) {
+            bott.setText("");
+        } elsif (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil) {
             var dist = flir_updater.click_coord_cam.direct_distance_to(geo.aircraft_position())*M2NM;
             bott.setText(sprintf("%2.1f  CMBT  %04d",dist,lasercode));
         } else {
@@ -429,9 +437,9 @@ var fast_loop = func {
         armament.contactPoint = nil;
     }
     var gpps = 0;
-    if (armament.contactPoint == nil) {
+    if (armament.contactPoint == nil or !enable) {
         # no TGP lock
-        if (armament.contact == nil) {# we do not check for get_display here since as long as something is selected we dont show steerpoint.
+        if (armament.contact == nil and enable) {# we do not check for get_display here since as long as something is selected we dont show steerpoint.
             if (getprop("autopilot/route-manager/active") == 1 and getprop("f16/avionics/power-mmc") and getprop("autopilot/route-manager/current-wp") != nil and getprop("autopilot/route-manager/current-wp") > -1) {
                 # TGP follow steerpoint
                 var idx = getprop("autopilot/route-manager/current-wp");
@@ -467,7 +475,7 @@ var fast_loop = func {
                 steer = 0;
                 callsign = nil;
             }
-        } elsif (armament.contact != nil and armament.contact.get_display()) {
+        } elsif (armament.contact != nil and armament.contact.get_display() and enable) {
             # TGP follow radar lock
             flir_updater.click_coord_cam = armament.contact.get_Coord();
             setprop("/aircraft/flir/target/auto-track", 1);
@@ -517,7 +525,7 @@ var fast_loop = func {
     }
     setprop("f16/avionics/tgp-lock", lock_tgp);#used in HUD
         
-    if (getprop("f16/stores/tgp-mounted")) {
+    if (getprop("f16/stores/tgp-mounted") and enable) {
         if (lock_tgp and !lock_tgp_last) {
             interpolate("f16/avionics/lock-flir",1,1.5);
         } elsif (!lock_tgp) {
