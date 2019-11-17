@@ -2968,6 +2968,9 @@ value. 18000=standard US transition altitude -->
             <power-ufc-warming type="bool">true</power-ufc-warming>
             <power-rdr-alt-warm type="double">2</power-rdr-alt-warm>
             <power-rdr-alt-warming type="int">2</power-rdr-alt-warming>
+            <power-fcr-bit type="int">2</power-fcr-bit>
+            <power-fcr-warm type="double">1</power-fcr-warm>
+            <power-fcr-warming type="bool">true</power-fcr-warming>
         </avionics>
         <fcs>
             <autopilot-on type="int">0</autopilot-on> <!-- Ignored on Block 20+ -->

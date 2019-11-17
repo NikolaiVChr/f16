@@ -650,6 +650,11 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     emesary.GlobalTransmitter.Register(f16_hud);
     emesary.GlobalTransmitter.Register(awg_9.aircraft_radar);
     execTimer.start();
+    if (getprop("f16/engine/running-state")) {
+      #skip warmup if not cold and dark selected from launcher.
+      setprop("/f16/avionics/power-fcr-warm", 1);
+      setprop("/f16/avionics/power-rdr-alt-warm", 1);
+    }
   }
  }, 0, 0);
 

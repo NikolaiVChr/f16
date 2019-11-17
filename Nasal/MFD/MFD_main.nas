@@ -578,9 +578,17 @@ var MFD_Device =
                 me.plc = plc;
                 me.root.ant_bottom.setTranslation(me.wdt*0.5-(me.az/120)*me.wdt*0.5+(me.az/120)*me.wdt*math.abs(me.fwd-me.plc),0);
                 me.root.silent.hide();
-            } else {
+            } elsif (getprop("/f16/avionics/power-fcr-bit") == 2) {
+                me.root.silent.setText("SILENT");
+                me.root.silent.show();
+            } elsif (getprop("/f16/avionics/power-fcr-bit") == 1) {
+                me.root.silent.setText("  BIT  ");
+                me.root.silent.show();
+            } elsif (getprop("/f16/avionics/power-fcr-bit") == 0) {
+                me.root.silent.setText("  OFF  ");
                 me.root.silent.show();
             }
+            
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
             me.i=0;

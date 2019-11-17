@@ -2894,7 +2894,7 @@
          </test>
         </switch>
         
-        <kinematic name="/f16/avionics/power-rdr-alt-warm">
+        <kinematic name="avionics/power-rdr-alt-warm">
             <input>/f16/avionics/power-rdr-alt-warming</input>
             <noscale/>
             <traverse>
@@ -2915,7 +2915,51 @@
                 <min>   0 </min>
                 <max>   2 </max>
             </clipto>
+            <output>/f16/avionics/power-rdr-alt-warm</output>
         </kinematic>
+        
+        <switch name="/f16/avionics/power-fcr-warming">
+         <default value="0"/>
+         <test  logic="AND" value="1">
+           /f16/avionics/power-fcr == 1
+           elec/bus/noness-dc gt 20
+           elec/contactors/main-contactors-1 gt 100
+         </test>
+        </switch>
+        
+        <kinematic name="avionics/power-fcr-warm">
+            <input>/f16/avionics/power-fcr-warming</input>
+            <noscale/>
+            <traverse>
+                <setting>
+                    <position>  0.0 </position>
+                    <time>      0.0 </time>
+                </setting>
+                <setting>
+                    <position>  1.0 </position>
+                    <time>    120.0 </time>
+                </setting>
+            </traverse>
+            <clipto>
+                <min>   0 </min>
+                <max>   1 </max>
+            </clipto>
+            <output>/f16/avionics/power-fcr-warm</output>
+        </kinematic>
+        
+        <switch name="/f16/avionics/power-fcr-bit">
+         <default value="0"/>
+         <test logic="AND" value="0">
+           /f16/avionics/power-fcr-warming == 0
+         </test>
+         <test logic="AND" value="2">
+           /f16/avionics/power-fcr-warm == 1
+         </test>
+         <test logic="AND" value="1">
+           /f16/avionics/power-fcr-warm gt 0
+           /f16/avionics/power-fcr-warming == 1
+         </test>
+        </switch>
         
     </channel>
 

@@ -305,7 +305,7 @@ return;
 		az_scan(notification);
 		our_radar_stanby = RadarStandby.getValue();
 		if ( we_are_bs == 0) {
-			RadarStandbyMP.setIntValue(our_radar_stanby); # Tell over MP if
+			RadarStandbyMP.setIntValue(our_radar_stanby or getprop("/f16/avionics/power-fcr-bit") != 2); # Tell over MP if
 			# our radar is scaning or is in stanby. Don't if we are a back-seater.
 		}
         if (our_radar_stanby) {
@@ -500,8 +500,8 @@ var az_scan = func(notification) {
     {
         scan_tgt_end = size(tgts_list);
     }
-    var silentChanged = RadarStandby.getValue() != stby;# we keep track of silent mode, to make sure there is no delay for the pilot to see, when radar is turned on/off.
-    stby = RadarStandby.getValue();
+    var silentChanged = RadarStandbyMP.getValue() != stby;# we keep track of silent mode, to make sure there is no delay for the pilot to see, when radar is turned on/off.
+    stby = RadarStandbyMP.getValue();
     for (;scan_tgt_idx < scan_tgt_end; scan_tgt_idx += 1) {
 
         u = tgts_list[scan_tgt_idx];
@@ -550,7 +550,7 @@ var az_scan = func(notification) {
                       u.set_display(!u.get_rdr_standby());
                   }
                   if (radar_mode < 2) {
-                    u.set_display(!RadarStandby.getValue());## Richard this hack by me you probably wanna clean up, had to make it for now to get f16 to behave.
+                    u.set_display(!RadarStandbyMP.getValue());## Richard this hack by me you probably wanna clean up, had to make it for now to get f16 to behave.
                     #printf("Hiding %d %s", !RadarStandby.getValue(), u.get_Callsign());
                   } else {
 #msg = "radar not transmitting";
@@ -600,7 +600,7 @@ var az_scan = func(notification) {
 #1;MP2 within  azimuth -130.0592982116802 field=-60->60  (s->w quadrant)
 #0;MP1 within  azimuth 164.2283073827575 field=-60->60
             if (radar_mode < 2 and math.abs(u.deviationA) < az_fld/2 and math.abs(u.deviationE) < HoField.getValue()/2) {#richard, I had to fix 2 bugs here.
-                u.set_display(u.get_visible() and !RadarStandby.getValue() and u.get_type() != ORDNANCE);
+                u.set_display(u.get_visible() and !RadarStandbyMP.getValue() and u.get_type() != ORDNANCE);
 #                if(awg9_trace)
 #                  print(scan_tgt_idx,";",u.get_Callsign()," within  azimuth ",u.deviation," field=",l_az_fld,"->",r_az_fld);
             }
