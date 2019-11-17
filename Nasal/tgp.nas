@@ -362,6 +362,19 @@ var fast_loop = func {
         setprop("sim/rendering/als-filters/use-IR-vision", 0);
         setprop("sim/view[105]/enabled", 0);
     } elsif (viewName == "TGP") {
+        if (!getprop("f16/avionics/power-mfd") or getprop("f16/avionics/power-ufc-warm")!=1) {
+            canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
+            midl.setText("    MFD OFF   ");
+            bott.setText("");
+            return;
+        } elsif (getprop("avionics/power-right-hdpt-warm") != 1 and getprop("f16/avionics/power-mfd") and getprop("f16/avionics/power-ufc-warm")) {
+            canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
+            midl.setText("NOT TIMED OUT");
+            bott.setText("");
+            return;
+        } else {
+            canvasMFDext.setColorBackground(1.00, 1.00, 1.00, 0.00);
+        }
         # FLIR TGP stuff:
         setprop("aircraft/flir/target/view-enabled", viewName == "TGP");
         setprop("sim/rendering/als-filters/use-filtering", viewName == "TGP");
@@ -588,8 +601,9 @@ var zoomlvl = 1.0;
 var gps = 0;# set from Program GPS dialog
 var steer = 0;
 
+var canvasMFDext = nil;
 var callInit = func {
-  var canvasMFDext = canvas.new({
+  canvasMFDext = canvas.new({
         "name": "MFD-EXT",
         "size": [256, 256],
         "view": [256, 256],

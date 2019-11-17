@@ -2971,6 +2971,8 @@ value. 18000=standard US transition altitude -->
             <power-fcr-bit type="int">2</power-fcr-bit>
             <power-fcr-warm type="double">1</power-fcr-warm>
             <power-fcr-warming type="bool">true</power-fcr-warming>
+            <power-right-hdpt-warm type="double">0</power-right-hdpt-warm>
+            <power-right-hdpt-warming type="bool">true</power-right-hdpt-warming>
         </avionics>
         <fcs>
             <autopilot-on type="int">0</autopilot-on> <!-- Ignored on Block 20+ -->

@@ -2961,6 +2961,35 @@
          </test>
         </switch>
         
+        <switch name="/f16/avionics/power-right-hdpt-warming">
+         <default value="0"/>
+         <test  logic="AND" value="1">
+           /f16/avionics/power-right-hdpt == 1
+           elec/bus/ess-dc gt 20
+           /f16/stores/tgp-mounted gt 0
+         </test>
+        </switch>
+        
+        <kinematic name="avionics/power-right-hdpt-warm">
+            <input>/f16/avionics/power-right-hdpt-warming</input>
+            <noscale/>
+            <traverse>
+                <setting>
+                    <position>  0.0 </position>
+                    <time>      0.0 </time>
+                </setting>
+                <setting>
+                    <position>  1.0 </position>
+                    <time>    180.0 </time>
+                </setting>
+            </traverse>
+            <clipto>
+                <min>   0 </min>
+                <max>   1 </max>
+            </clipto>
+            <output>/f16/avionics/power-right-hdpt-warm</output>
+        </kinematic>
+        
     </channel>
 
     <channel name="sound" execrate="8">
