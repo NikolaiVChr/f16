@@ -530,6 +530,10 @@ var buffeting = func {
 
 var CARA = func {
   # Tri-service combined altitude radar altimeter
+  if (getprop("f16/avionics/power-rdr-alt-warm")<2) {
+    setprop("f16/avionics/cara-on",0);
+    return;
+  }
   var viewOnGround = 0;
   var attitudeConv = vector.Math.convertAngles(getprop("orientation/heading-deg"),getprop("orientation/pitch-deg"),getprop("orientation/roll-deg"));
   var down = vector.Math.eulerToCartesian3Z(attitudeConv[0],attitudeConv[1],attitudeConv[2]);#vector pointing up from aircraft

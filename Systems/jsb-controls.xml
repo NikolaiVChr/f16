@@ -2882,6 +2882,41 @@
             </clipto>
         </kinematic>
         
+        <switch name="/f16/avionics/power-rdr-alt-warming">
+         <default value="0"/>
+         <test  logic="AND" value="2">
+           /f16/avionics/power-rdr-alt == 2
+           elec/bus/ess-dc gt 20
+         </test>
+         <test  logic="AND" value="1">
+           /f16/avionics/power-rdr-alt == 1
+           elec/bus/ess-dc gt 20
+         </test>
+        </switch>
+        
+        <kinematic name="/f16/avionics/power-rdr-alt-warm">
+            <input>/f16/avionics/power-rdr-alt-warming</input>
+            <noscale/>
+            <traverse>
+                <setting>
+                    <position>  0.0 </position>
+                    <time>      0.0 </time>
+                </setting>
+                <setting>
+                    <position>  1.0 </position>
+                    <time>     60.0 </time>
+                </setting>
+                <setting>
+                    <position>  2.0 </position>
+                    <time>      0.1 </time>
+                </setting>
+            </traverse>
+            <clipto>
+                <min>   0 </min>
+                <max>   2 </max>
+            </clipto>
+        </kinematic>
+        
     </channel>
 
     <channel name="sound" execrate="8">
