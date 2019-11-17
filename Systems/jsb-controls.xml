@@ -2855,9 +2855,36 @@
             </function>
         </fcs_function>
         
+        <switch name="/f16/avionics/power-ufc-warming">
+         <default value="0"/>
+         <test  logic="AND" value="1">
+           /f16/avionics/power-ufc == 1
+           elec/bus/ess-ac gt 100
+         </test>
+        </switch>
+        
+        <kinematic name="/f16/avionics/power-ufc-warm">
+            <input>/f16/avionics/power-ufc-warming</input>
+            <noscale/>
+            <traverse>
+                <setting>
+                    <position>  0.0 </position>
+                    <time>      0.0 </time>
+                </setting>
+                <setting>
+                    <position>  1.0 </position>
+                    <time>      5.0 </time>
+                </setting>
+            </traverse>
+            <clipto>
+                <min>   0 </min>
+                <max>   1 </max>
+            </clipto>
+        </kinematic>
+        
     </channel>
 
-    <channel execrate="8">
+    <channel name="sound" execrate="8">
     
         <fcs_function name="/engines/engine[0]/n2-low">
             <function>

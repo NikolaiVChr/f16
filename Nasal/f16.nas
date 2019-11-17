@@ -322,13 +322,13 @@ var medium = {
     }
     # HUD power:
     if (getprop("fdm/jsbsim/elec/bus/emergency-ac-2")>100 or getprop("fdm/jsbsim/elec/bus/emergency-dc-2")>20) {
-      setprop("f16/avionics/hud-power",1);
+      setprop("f16/avionics/hud-power",getprop("f16/avionics/power-ufc"));
     } else {
       var ac = getprop("fdm/jsbsim/elec/bus/emergency-ac-2")/100;
       var dc = getprop("fdm/jsbsim/elec/bus/emergency-dc-2")/20;
-      var power = ac;
+      var power = ac*getprop("f16/avionics/power-ufc");
       if (ac < dc) {
-        power=dc;
+        power=dc*getprop("f16/avionics/power-ufc");
       }
       if (power<0.5) {
         power=0;

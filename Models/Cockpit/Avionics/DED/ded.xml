@@ -33,6 +33,10 @@
                 <property>fdm/jsbsim/elec/bus/ess-ac</property>
                 <value>100</value>
             </greater-than-equals>
+            <greater-than-equals>
+                <property>f16/avionics/power-ufc-warm</property>
+                <value>0.95</value>
+            </greater-than-equals>
         </condition>
         <emission>
             <factor-prop>controls/lighting/lighting-panel/data-entry-display</factor-prop>

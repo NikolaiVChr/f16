@@ -130,6 +130,14 @@
                 <property>fdm/jsbsim/elec/bus/ess-ac</property>
                 <value>100</value>
             </greater-than-equals>
+            <greater-than-equals>
+                <property>f16/avionics/power-ufc-warm</property>
+                <value>1</value>
+            </greater-than-equals>
+            <equals>
+                <property>f16/avionics/power-mfd</property>
+                <value>1</value>
+            </equals>
 
         </condition>
     </animation>
