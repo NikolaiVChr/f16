@@ -1815,7 +1815,7 @@ var MFD_Device =
                         .setColor(0.5,0.5,1)
                         .update();
                 }
-                if (getprop("autopilot/route-manager/active")) {
+                if (getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc")) {
                     me.plan = flightplan();
                     me.planSize = me.plan.getPlanSize();
                     me.prevX = nil;

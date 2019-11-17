@@ -96,7 +96,7 @@ var loop_ded = func {# one line is max 24 chars
       var alt = -1;
       if (fp != nil) {
         var wp = fp.currentWP();
-        if (wp != nil) {
+        if (wp != nil and getprop("f16/avionics/power-mmc")) {
           lat = convertDegreeToStringLat(wp.lat);
           lon = convertDegreeToStringLon(wp.lon);
           alt = wp.alt_cstr;
@@ -325,7 +325,7 @@ var loop_ded = func {# one line is max 24 chars
 
 var cursorUp = func {
   f16.doubleClick();
-  var active = getprop("autopilot/route-manager/active");
+  var active = getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc");
   var wp = getprop("autopilot/route-manager/current-wp");
   var max = getprop("autopilot/route-manager/route/num");
   
@@ -340,7 +340,7 @@ var cursorUp = func {
 
 var cursorDown = func {
   f16.doubleClick();
-  var active = getprop("autopilot/route-manager/active");
+  var active = getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc");
   var wp = getprop("autopilot/route-manager/current-wp");
   var max = getprop("autopilot/route-manager/route/num");
   

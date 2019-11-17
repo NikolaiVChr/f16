@@ -2954,6 +2954,16 @@ value. 18000=standard US transition altitude -->
             <c4-rad type="double">0</c4-rad>
             <laser-code type="int">0000</laser-code>
             <eegs-wingspan-ft type="int">35</eegs-wingspan-ft>
+            <power-mmc type="bool">true</power-mmc>
+            <power-st-sta type="bool">true</power-st-sta>
+            <power-mfd type="bool">true</power-mfd>
+            <power-ufc type="bool">true</power-ufc>
+            <power-gps type="bool">true</power-gps>
+            <power-dl type="bool">true</power-dl>
+            <power-rdr-alt type="int">2</power-rdr-alt>
+            <power-fcr type="bool">true</power-fcr>
+            <power-right-hdpt type="bool">true</power-right-hdpt>
+            <power-left-hdpt type="bool">true</power-left-hdpt>
         </avionics>
         <fcs>
             <autopilot-on type="int">0</autopilot-on> <!-- Ignored on Block 20+ -->

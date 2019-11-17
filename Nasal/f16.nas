@@ -308,7 +308,7 @@ var medium = {
           setprop("f16/avionics/hsi-dist",getprop("instrumentation/tacan/indicated-distance-nm"));
         }
     } elsif (getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 2 or getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 3) {
-      if (getprop("autopilot/route-manager/wp/dist") != nil) {
+      if (getprop("autopilot/route-manager/wp/dist") != nil and getprop("f16/avionics/power-mmc")) {
         setprop("f16/avionics/hsi-dist",getprop("autopilot/route-manager/wp/dist"));
       } else {
         setprop("f16/avionics/hsi-dist",-1);

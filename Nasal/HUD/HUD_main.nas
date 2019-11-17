@@ -179,6 +179,7 @@ var F16_HUD = {
                  nav_range                 : "/autopilot/route-manager/wp/dist",
                  roll                      : "/orientation/roll-deg",
                  route_manager_active      : "/autopilot/route-manager/active",
+                 route_manager_power       : "f16/avionics/power-mmc",
                  speed                     : "/fdm/jsbsim/velocities/vt-fps",
                  symbol_reject             : "/controls/HUD/sym-rej",
                  target_display            : "/sim/model/f16/instrumentation/radar-awg-9/hud/target-display",
@@ -278,10 +279,10 @@ var F16_HUD = {
                                             obj.cciplow.hide();
                                           }
                                       }),
-            props.UpdateManager.FromHashList(["texUp","route_manager_active", "wp_bearing_deg", "heading","VV_x","VV_y"], 0.01, func(hdp)
+            props.UpdateManager.FromHashList(["texUp","route_manager_active", "route_manager_power", "wp_bearing_deg", "heading","VV_x","VV_y"], 0.01, func(hdp)
                                              {
                                                  # the Y position is still not accurate due to HUD being at an angle, but will have to do.
-                                                 if (hdp.route_manager_active) {
+                                                 if (hdp.route_manager_active and hdp.route_manager_power) {
                                                      obj.wpbear = hdp.wp_bearing_deg;
                                                      if (obj.wpbear!=nil) {
                                 
@@ -2615,7 +2616,7 @@ var F16HudRecipient =
 
             if (notification.NotificationType == "FrameNotification")
             {
-                if (notification.route_manager_active) {
+                if (notification.route_manager_active and notification.route_manager_power) {
                     if (notification.nav_range != nil) {
                         notification.hud_window5 = sprintf("%2d MIN",notification.nav_range);
                     } else {
