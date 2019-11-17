@@ -372,6 +372,11 @@ var fast_loop = func {
             midl.setText("    MFD OFF   ");
             bott.setText("");
             enable = 0;
+        } elsif (getprop("f16/avionics/power-right-hdpt") == 0 or getprop("fdm/jsbsim/elec/bus/ess-dc") <=20) {
+            canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
+            midl.setText("   NO POWER  ");
+            bott.setText("");
+            enable = 0;
         } elsif (getprop("f16/avionics/power-right-hdpt-warm") < 1) {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
             midl.setText("NOT TIMED OUT");
