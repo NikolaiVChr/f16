@@ -1615,5 +1615,9 @@ setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-2", knob, nil,
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-3", knob, nil, 0);
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-4", knob, nil, 0);
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-5", knob, nil, 0);
+setlistener("f16/avionics/power-rdr-alt", click1, nil, 0);
+setlistener("f16/avionics/power-fcr", click1, nil, 0);
+setlistener("f16/avionics/power-right-hdpt", click1, nil, 0);
+setlistener("f16/avionics/power-left-hdpt", click1, nil, 0);
 # valid methods: button, button2, knob, knob2, clamp0, click3, lift_cover
 #                click1, click2, doubleClick, doubleClick2, scroll
