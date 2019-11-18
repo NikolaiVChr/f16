@@ -318,6 +318,13 @@
                 <wrap>false</wrap>
             </binding>
         </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>lhp</tooltip-id>
+                <label>Left hardpoint power (fuselage station)</label>
+            </binding>
+        </hovered>
     </animation>
     
     <animation>
@@ -343,6 +350,13 @@
                 <wrap>false</wrap>
             </binding>
         </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>rhp</tooltip-id>
+                <label>Right hardpoint power (fuselage station)</label>
+            </binding>
+        </hovered>
     </animation>
     
     <animation>
@@ -368,6 +382,13 @@
                 <wrap>false</wrap>
             </binding>
         </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>rp</tooltip-id>
+                <label>Fire-control radar power</label>
+            </binding>
+        </hovered>
     </animation>
     
     <animation>
@@ -393,6 +414,25 @@
                 <wrap>false</wrap>
             </binding>
         </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>cp</tooltip-id>
+                <label>CARA power state</label>
+            </binding>
+        </hovered>
+    </animation>
+    
+    <animation>
+        <type>pick</type>
+        <object-name>plain-switch</object-name>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>pc</tooltip-id>
+                <label>PLAIN Cipher</label>
+            </binding>
+        </hovered>
     </animation>
 
     <effect>
