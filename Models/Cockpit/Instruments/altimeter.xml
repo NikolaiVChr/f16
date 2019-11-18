@@ -97,14 +97,13 @@
           <property>fdm/jsbsim/elec/bus/batt-2</property>
           <value>20</value>
       </greater-than-equals>
-  </condition>
-		<condition>
 			<less-than>
 				<property>instrumentation/altimeter/indicated-altitude-ft</property>
 				<value>0</value>
 			</less-than>
 		</condition>
 	</animation>
+  
 	<animation>
 		<type>select</type>
 		<object-name>below-1000-flag</object-name>
@@ -113,14 +112,13 @@
           <property>fdm/jsbsim/elec/bus/batt-2</property>
           <value>20</value>
       </greater-than-equals>
-  </condition>
-		<condition>
 			<less-than>
 				<property>instrumentation/altimeter/indicated-altitude-ft</property>
 				<value>1000</value>
 			</less-than>
 		</condition>
 	</animation>
+  
 	<animation>
 		<type>select</type>
 		<object-name>below-10000-flag</object-name>
@@ -129,8 +127,6 @@
           <property>fdm/jsbsim/elec/bus/batt-2</property>
           <value>20</value>
       </greater-than-equals>
-  </condition>
-		<condition>
 			<less-than>
 				<property>instrumentation/altimeter/indicated-altitude-ft</property>
 				<value>10000</value>
