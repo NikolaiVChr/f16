@@ -9,6 +9,12 @@
  <animation>
   <type>rotate</type>
   <object-name>OIL_needle</object-name>
+  <condition>
+        <greater-than-equals>
+            <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+            <value>100</value>
+        </greater-than-equals>
+  </condition>
   <property>engines/engine[0]/oil-pressure-psi</property>
   <factor>3.3</factor>
   <center>
@@ -26,6 +32,12 @@
  <animation>
   <type>rotate</type>
   <object-name>NOZ_POS_needle</object-name>
+  <condition>
+        <greater-than-equals>
+            <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+            <value>100</value>
+        </greater-than-equals>
+  </condition>
   <property>engines/engine[0]/nozzle-pos-norm</property>
   <factor>250.0</factor>
   <center>
@@ -43,6 +55,12 @@
  <animation>
   <type>rotate</type>
   <object-name>RPM_needle</object-name>
+  <condition>
+        <greater-than-equals>
+            <property>fdm/jsbsim/elec/bus/batt-1</property>
+            <value>20</value>
+        </greater-than-equals>
+  </condition>
   <property>engines/engine[0]/n2</property>
   <interpolation>
    <entry>
@@ -73,6 +91,12 @@
  <animation>
   <type>rotate</type> <!-- 2192 --> <!-- 17.5 graden -->
   <object-name>FTIT_needle</object-name>
+  <condition>
+        <greater-than-equals>
+            <property>fdm/jsbsim/elec/bus/batt-1</property>
+            <value>20</value>
+        </greater-than-equals>
+  </condition>
   <property>engines/engine[0]/egt-degf</property>
   <offset-deg>65</offset-deg>
   <interpolation>

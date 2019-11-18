@@ -11,6 +11,10 @@
     <property type="bool">systems/static/serviceable</property>
     <value>false</value>
    </equals>
+                        <greater-than-equals>
+                            <property>fdm/jsbsim/elec/bus/emergency-ac-1</property>
+                            <value>100</value>
+                        </greater-than-equals>
   </condition>
  </animation>
 
@@ -18,6 +22,12 @@
   <type>textranslate</type>
   <object-name>AOA_tape</object-name>
   <property>orientation/alpha-deg</property>
+  <condition>
+                        <greater-than-equals>
+                            <property>fdm/jsbsim/elec/bus/emergency-ac-1</property>
+                            <value>100</value>
+                        </greater-than-equals>
+  </condition>
   <factor>0.0235</factor>
   <axis>
    <x>0</x>
@@ -41,6 +51,12 @@
   <object-name>AOA_mask</object-name>
   <object-name>AOA_off-flag</object-name>
   <object-name>AOA_tape</object-name>
+  <condition>
+                        <greater-than-equals>
+                            <property>fdm/jsbsim/elec/bus/emergency-ac-1</property>
+                            <value>100</value>
+                        </greater-than-equals>
+  </condition>
   <type>material</type>
   <emission> 
    <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>

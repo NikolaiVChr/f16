@@ -2609,15 +2609,17 @@
    <scheduled_gain name="fcs/scheduled-steer-pos-deg">
     <input>fcs/steer-cmd-norm</input>
     <table>
-     <independentVar>velocities/vg-fps</independentVar>
+     <independentVar lookup="row">velocities/vg-fps</independentVar>
+     <independentVar lookup="column">elec/bus/emergency-dc-1</independentVar>
      <tableData>
-       1.0  10.0
-      10.0  32.0
-      20.0  15.0
-      50.0   4.5
-      100.0  2.0
-      150.0  1.0
-      300.0  0.5
+            0 20
+       1.0  0  10.0
+      10.0  0  32.0
+      20.0  0  15.0
+      50.0  0   4.5
+      100.0 0   2.0
+      150.0 0   1.0
+      300.0 0   0.5
      </tableData>
     </table>
     <output>fcs/steer-pos-deg</output>
@@ -2672,6 +2674,7 @@
      <default value="0"/>
      <test  logic="AND" value="fcs/speedbrake-scheduler">
        systems/hydraulics/sysa-psi ge 2000
+       elec/bus/emergency-dc-1 gt 20
      </test>
     </switch>
 
@@ -2914,7 +2917,7 @@
             <clipto>
                 <min>   0 </min>
                 <max>   2 </max>
-            </clipto>
+            </clipto> 
             <output>/f16/avionics/power-rdr-alt-warm</output>
         </kinematic>
         

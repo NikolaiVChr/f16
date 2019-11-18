@@ -194,7 +194,7 @@ var loop_flare = func {
         flareCount = getprop("ai/submodels/submodel[0]/count");
         flareStart = getprop("sim/time/elapsed-sec");
         setprop("ai/submodels/submodel[0]/flare-release-cmd", FALSE);
-        if (flareCount > 0) {
+        if (flareCount > 0 and getprop("fdm/jsbsim/elec/bus/emergency-dc-2")>20) {
             # release a flare
             setprop("ai/submodels/submodel[0]/flare-release-snd", TRUE);
             setprop("ai/submodels/submodel[0]/flare-release", TRUE);
@@ -1095,7 +1095,7 @@ var chute = func{
 }
 
 var chute1 = func{
-  if (!getprop("sim/model/f16/dragchute") or (getprop("f16/chute/enable")==0 and getprop("f16/chute/done")==1)) {
+  if (!getprop("sim/model/f16/dragchute") or (getprop("f16/chute/enable")==0 and getprop("f16/chute/done")==1) or getprop("fdm/jsbsim/elec/bus/batt-1")<20) {
       return;
   } elsif (getprop("f16/chute/enable")==0) {
     setprop("f16/chute/done",1);

@@ -33,6 +33,16 @@
                 <property>f16/avionics/power-ufc-warm</property>
                 <value>0.95</value>
             </greater-than-equals>
+            <or>
+              <greater-than-equals>
+                  <property>fdm/jsbsim/elec/bus/emergency-ac-1</property>
+                  <value>100</value>
+              </greater-than-equals>
+              <greater-than-equals>
+                  <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+                  <value>100</value>
+              </greater-than-equals>
+            </or>
         </condition>
         <emission>
             <factor-prop>controls/lighting/lighting-panel/data-entry-display</factor-prop>

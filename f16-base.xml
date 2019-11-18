@@ -1126,6 +1126,12 @@ There is also small changes in tail for different variants with and without brak
                 <binding>
                     <command>property-toggle</command>
                     <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+                    <condition>
+                        <greater-than-equals>
+                            <property>fdm/jsbsim/elec/bus/batt-2</property>
+                            <value>20</value>
+                        </greater-than-equals>
+                    </condition>
                 </binding>
             </key>
             <key n="14">
@@ -1226,6 +1232,10 @@ There is also small changes in tail for different variants with and without brak
                             <property>sim/current-view/internal</property>
                             <value>true</value>
                         </equals>
+                        <greater-than-equals>
+                            <property>fdm/jsbsim/elec/bus/noness-ac-2</property>
+                            <value>100</value>
+                        </greater-than-equals>
                     </condition>
                 </binding>
                 <binding>
@@ -1234,6 +1244,10 @@ There is also small changes in tail for different variants with and without brak
                             <property>sim/current-view/view-number</property>
                             <value>0</value>
                         </equals>
+                        <greater-than-equals>
+                            <property>fdm/jsbsim/elec/bus/noness-ac-2</property>
+                            <value>100</value>
+                        </greater-than-equals>
                     </condition>
                     <command>property-adjust</command>
                     <property>sim/current-view/y-offset-m</property>
@@ -1260,6 +1274,10 @@ There is also small changes in tail for different variants with and without brak
                             <property>sim/current-view/internal</property>
                             <value>true</value>
                         </equals>
+                        <greater-than-equals>
+                            <property>fdm/jsbsim/elec/bus/noness-ac-2</property>
+                            <value>100</value>
+                        </greater-than-equals>
                     </condition>
                 </binding>
                 <binding>
@@ -1268,6 +1286,10 @@ There is also small changes in tail for different variants with and without brak
                             <property>sim/current-view/view-number</property>
                             <value>0</value>
                         </equals>
+                        <greater-than-equals>
+                            <property>fdm/jsbsim/elec/bus/noness-ac-2</property>
+                            <value>100</value>
+                        </greater-than-equals>
                     </condition>
                     <command>property-adjust</command>
                     <property>sim/current-view/y-offset-m</property>
