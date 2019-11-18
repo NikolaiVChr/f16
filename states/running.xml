@@ -43,6 +43,12 @@
                 <power-fcr type="bool">true</power-fcr>
                 <power-right-hdpt type="bool">true</power-right-hdpt>
                 <power-left-hdpt type="bool">true</power-left-hdpt>
+                <power-mmc type="bool">true</power-mmc>
+                <power-st-sta type="bool">true</power-st-sta>
+                <power-mfd type="bool">true</power-mfd>
+                <power-ufc type="bool">true</power-ufc>
+                <power-gps type="bool">true</power-gps>
+                <power-dl type="bool">true</power-dl>
             </avionics>
         </f16>
     </overlay>

@@ -1911,16 +1911,7 @@
 			<mode>looped</mode>
 			<type>avionics</type>
 			<condition>
-				<or>
-					<greater-than>
-						<property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
-						<value>20</value>
-					</greater-than>
-					<greater-than>
-						<property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
-						<value>20</value>
-					</greater-than>
-				</or>
+				<property>f16/avionics/power-ufc</property>
 				<or>
 					<greater-than>
 						<property>fdm/jsbsim/elec/bus/emergency-dc-1</property>

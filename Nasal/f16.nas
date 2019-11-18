@@ -747,6 +747,12 @@ var autostart = func {
   setprop("f16/avionics/power-fcr",1);
   setprop("f16/avionics/power-right-hdpt",1);
   setprop("f16/avionics/power-left-hdpt",1);
+  setprop("f16/avionics/power-mfd",1);
+  setprop("f16/avionics/power-ufc",1);
+  setprop("f16/avionics/power-mmc",1);
+  setprop("f16/avionics/power-gps",1);
+  setprop("f16/avionics/power-dl",1);
+  setprop("f16/avionics/power-st-sta",1);
   if (getprop("engines/engine[0]/running")!=1) {
     setprop("f16/engine/feed",1);
     setprop("f16/engine/jet-fuel",1);
@@ -1619,5 +1625,11 @@ setlistener("f16/avionics/power-rdr-alt", click1, nil, 0);
 setlistener("f16/avionics/power-fcr", click1, nil, 0);
 setlistener("f16/avionics/power-right-hdpt", click1, nil, 0);
 setlistener("f16/avionics/power-left-hdpt", click1, nil, 0);
+setlistener("f16/avionics/power-mfd", click1, nil, 0);
+setlistener("f16/avionics/power-mmc", click1, nil, 0);
+setlistener("f16/avionics/power-st-sta", click1, nil, 0);
+setlistener("f16/avionics/power-ufc", click1, nil, 0);
+setlistener("f16/avionics/power-gps", click1, nil, 0);
+setlistener("f16/avionics/power-dl", click1, nil, 0);
 # valid methods: button, button2, knob, knob2, clamp0, click3, lift_cover
 #                click1, click2, doubleClick, doubleClick2, scroll

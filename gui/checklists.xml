@@ -178,7 +178,97 @@
                 <property>controls/seat/ejection-safety-lever</property>
                 <value>1</value>
             </binding>
+        </item>        
+        <item>
+            <name>UFC</name>
+            <value>ON</value>
+            <condition>
+                <equals>
+                    <property>f16/avionics/power-ufc</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/avionics/power-ufc</property>
+                <value>1</value>
+            </binding>
         </item>
+        <item>
+            <name>DL</name>
+            <value>ON</value>
+            <condition>
+                <equals>
+                    <property>f16/avionics/power-dl</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/avionics/power-dl</property>
+                <value>1</value>
+            </binding>
+        </item>
+        <item>
+            <name>GPS</name>
+            <value>ON</value>
+            <condition>
+                <equals>
+                    <property>f16/avionics/power-gps</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/avionics/power-gps</property>
+                <value>1</value>
+            </binding>
+        </item>
+        <item>
+            <name>MMC</name>
+            <value>ON</value>
+            <condition>
+                <equals>
+                    <property>f16/avionics/power-mmc</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/avionics/power-mmc</property>
+                <value>1</value>
+            </binding>
+        </item>
+        <item>
+            <name>ST STA</name>
+            <value>ON</value>
+            <condition>
+                <equals>
+                    <property>f16/avionics/power-st-sta</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/avionics/power-st-sta</property>
+                <value>1</value>
+            </binding>
+        </item>
+        <item>
+            <name>MFD</name>
+            <value>ON</value>
+            <condition>
+                <equals>
+                    <property>f16/avionics/power-mfd</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/avionics/power-mfd</property>
+                <value>1</value>
+            </binding>
+        </item>        
         <item>
             <name>FCR</name>
             <value>ON</value>
