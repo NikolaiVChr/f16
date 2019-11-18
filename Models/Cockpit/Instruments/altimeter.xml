@@ -6,16 +6,14 @@
  <path>/Aircraft/Instruments-3d/altimeter/altimeter.ac</path>
 
  <animation>
-  <type>select</type>
-  <object-name>altimeter</object-name>
-  <condition>
-    <property>sim/current-view/internal</property>
-  </condition>
- </animation>
-
- <animation>
   <type>rotate</type>
   <object-name>needle</object-name>
+  <condition>
+      <greater-than-equals>
+          <property>fdm/jsbsim/elec/bus/batt-2</property>
+          <value>20</value>
+      </greater-than-equals>
+  </condition>
   <property>instrumentation/altimeter/indicated-altitude-ft</property>
   <factor>0.36</factor>  
   <axis>
@@ -29,6 +27,12 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>drum-1</object-name>
+    <condition>
+      <greater-than-equals>
+          <property>fdm/jsbsim/elec/bus/batt-2</property>
+          <value>20</value>
+      </greater-than-equals>
+  </condition>
 		<property>instrumentation/altimeter/indicated-altitude-ft</property>
 		<factor>0.001</factor>
 		<offset>-100</offset>
@@ -45,6 +49,12 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>drum-2</object-name>
+    <condition>
+      <greater-than-equals>
+          <property>fdm/jsbsim/elec/bus/batt-2</property>
+          <value>20</value>
+      </greater-than-equals>
+  </condition>
 		<property>instrumentation/altimeter/indicated-altitude-ft</property>
 		<factor>0.0001</factor>
 		<offset>-1000</offset>
@@ -61,6 +71,12 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>drum-3</object-name>
+    <condition>
+      <greater-than-equals>
+          <property>fdm/jsbsim/elec/bus/batt-2</property>
+          <value>20</value>
+      </greater-than-equals>
+  </condition>
 		<property>instrumentation/altimeter/indicated-altitude-ft</property>
 		<factor>0.00001</factor>
 		<offset>-10000</offset>
@@ -76,6 +92,12 @@
 	<animation>
 		<type>select</type>
 		<object-name>negativ-flag</object-name>
+    <condition>
+      <greater-than-equals>
+          <property>fdm/jsbsim/elec/bus/batt-2</property>
+          <value>20</value>
+      </greater-than-equals>
+  </condition>
 		<condition>
 			<less-than>
 				<property>instrumentation/altimeter/indicated-altitude-ft</property>
@@ -86,6 +108,12 @@
 	<animation>
 		<type>select</type>
 		<object-name>below-1000-flag</object-name>
+    <condition>
+      <greater-than-equals>
+          <property>fdm/jsbsim/elec/bus/batt-2</property>
+          <value>20</value>
+      </greater-than-equals>
+  </condition>
 		<condition>
 			<less-than>
 				<property>instrumentation/altimeter/indicated-altitude-ft</property>
@@ -96,6 +124,12 @@
 	<animation>
 		<type>select</type>
 		<object-name>below-10000-flag</object-name>
+    <condition>
+      <greater-than-equals>
+          <property>fdm/jsbsim/elec/bus/batt-2</property>
+          <value>20</value>
+      </greater-than-equals>
+  </condition>
 		<condition>
 			<less-than>
 				<property>instrumentation/altimeter/indicated-altitude-ft</property>
@@ -108,6 +142,12 @@
  <animation>
   <type>textranslate</type>
   <object-name>drum-inhg-1</object-name>
+    <condition>
+      <greater-than-equals>
+          <property>fdm/jsbsim/elec/bus/batt-2</property>
+          <value>20</value>
+      </greater-than-equals>
+  </condition>
   <property>instrumentation/altimeter/setting-inhg</property>
   <factor>10</factor>
   <offset>-0.01</offset>
@@ -121,6 +161,12 @@
  <animation>
   <type>textranslate</type>
   <object-name>drum-inhg-2</object-name>
+    <condition>
+      <greater-than-equals>
+          <property>fdm/jsbsim/elec/bus/batt-2</property>
+          <value>20</value>
+      </greater-than-equals>
+  </condition>
   <property>instrumentation/altimeter/setting-inhg</property>
   <factor>1</factor>
   <offset>-0.1</offset>
@@ -136,6 +182,12 @@
  <animation>
   <type>textranslate</type>
   <object-name>drum-inhg-3</object-name>
+    <condition>
+      <greater-than-equals>
+          <property>fdm/jsbsim/elec/bus/batt-2</property>
+          <value>20</value>
+      </greater-than-equals>
+  </condition>
   <property>instrumentation/altimeter/setting-inhg</property>
   <factor>0.1</factor>
   <offset>-1</offset>
@@ -151,6 +203,12 @@
  <animation>
   <type>textranslate</type>
   <object-name>drum-inhg-4</object-name>
+    <condition>
+      <greater-than-equals>
+          <property>fdm/jsbsim/elec/bus/batt-2</property>
+          <value>20</value>
+      </greater-than-equals>
+  </condition>
   <property>instrumentation/altimeter/setting-inhg</property>
   <factor>0.01</factor>
   <offset>-10</offset>

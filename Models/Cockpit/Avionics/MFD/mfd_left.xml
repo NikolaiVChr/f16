@@ -134,7 +134,10 @@
                 <property>f16/avionics/power-mfd</property>
                 <value>1</value>
             </equals>
-
+            <greater-than-equals>
+                <property>fdm/jsbsim/elec/bus/ess-ac</property>
+                <value>100</value>
+            </greater-than-equals>
         </condition>
     </animation>
 

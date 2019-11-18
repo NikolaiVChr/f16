@@ -580,7 +580,7 @@ EHSI = {
         me.heading    = getprop("orientation/heading-deg");
         me.mode       = getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob");
         me.elec       = getprop("f16/avionics/power-ufc-warm") == 1;
-        me.tacanInRange = getprop("instrumentation/tacan/in-range");
+        me.tacanInRange = getprop("instrumentation/tacan/in-range") and getprop("fdm/jsbsim/elec/bus/emergency-ac-2")>100 and getprop("fdm/jsbsim/elec/bus/emergency-dc-1")>20;
         me.tacanBearingRel = getprop("instrumentation/tacan/bearing-relative-deg");
         me.tacanBearingTrue = getprop("instrumentation/tacan/indicated-bearing-true-deg");
         me.navInRange   = getprop("autopilot/route-manager/current-wp") != -1 and getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc");
@@ -781,7 +781,7 @@ HSI = {
         me.heading    = getprop("orientation/heading-deg");
         me.mode       = getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob");
         me.elec       = getprop("f16/avionics/power-ufc-warm") == 1;
-        me.tacanInRange = getprop("instrumentation/tacan/in-range");
+        me.tacanInRange = getprop("instrumentation/tacan/in-range") and getprop("fdm/jsbsim/elec/bus/emergency-ac-2")>100 and getprop("fdm/jsbsim/elec/bus/emergency-dc-1")>20;
         me.tacanBearingRel = getprop("instrumentation/tacan/bearing-relative-deg");
         me.tacanBearingTrue = getprop("instrumentation/tacan/indicated-bearing-true-deg");
         me.navInRange   = getprop("autopilot/route-manager/current-wp") != -1 and getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc");
