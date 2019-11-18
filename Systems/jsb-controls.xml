@@ -2736,7 +2736,7 @@
         elec/switches/main-pwr gt 0
     </test>
     <test logic="AND" value="fcs/canopy-trigger">
-        elec/bus/batt-1 lt 20
+        elec/contactors/battery lt 20
         elec/switches/main-pwr == 0
     </test>
     <test value="0">
