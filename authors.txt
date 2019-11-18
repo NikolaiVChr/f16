@@ -46,6 +46,9 @@ Richard Harrison
 - 3D misc. panel
 - Avionics communication system (emessary based)
 
+NC-687
+- Side stick
+
 Justin Nicholson
 - Splashes
 - AIM-9 growl sound

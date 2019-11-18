@@ -101,6 +101,16 @@
  </animation>
 -->
 
+ <model>
+  <name>F-16-FS</name>
+  <path>Aircraft/f16/Models/Cockpit/Main/stick.xml</path>
+  <offsets>
+   <x-m>-4.456</x-m>
+   <y-m> 0.272</y-m>
+   <z-m> 0.200</z-m> 
+  </offsets>
+ </model>
+<!--
  <animation>
   <type>rotate</type>
   <object-name>side_stick</object-name>
@@ -165,6 +175,20 @@
             <x>-1</x>
         </axis>
     </animation>
+-->
+ <animation>
+        <type>select</type>
+        <object-name>side_stick</object-name>
+        <object-name>cylinder.004</object-name>
+        <object-name>cylinder.002</object-name>
+        <object-name>cylinder.003</object-name>
+        <object-name>box</object-name>
+        <object-name>disk.002</object-name>
+        <object-name>side_stick</object-name>
+        <condition>
+    <equals><value>10</value><value>20</value></equals>
+   </condition>
+  </animation>
 
  <animation>
   <type>translate</type>
