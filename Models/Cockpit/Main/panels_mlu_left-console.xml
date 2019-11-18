@@ -183,7 +183,7 @@
   <type>material</type>
   <condition>
     <greater-than>
-      <property>fdm/jsbsim/elec/bus/batt-2</property>
+      <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
       <value>20</value>
     </greater-than>
     <or>
@@ -206,7 +206,7 @@
   <type>material</type>
   <condition>
     <greater-than>
-      <property>fdm/jsbsim/elec/bus/batt-2</property>
+      <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
       <value>20</value>
     </greater-than>
     <or>
@@ -229,7 +229,7 @@
   <type>material</type>
   <condition>
     <greater-than>
-      <property>fdm/jsbsim/elec/bus/batt-2</property>
+      <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
       <value>20</value>
     </greater-than>
     <or>
@@ -252,7 +252,7 @@
   <type>material</type>
   <condition>
     <greater-than>
-      <property>fdm/jsbsim/elec/bus/batt-2</property>
+      <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
       <value>20</value>
     </greater-than>
     <or>
@@ -1300,8 +1300,8 @@
         <type>material</type>
         <condition>
             <greater-than-equals>
-                <property>fdm/jsbsim/elec/bus/ess-ac</property>
-                <value>100</value>
+                <property>fdm/jsbsim/elec/bus/noness-dc</property>
+                <value>20</value>
             </greater-than-equals>
         </condition>
         <emission>

@@ -579,7 +579,7 @@ EHSI = {
         me.headingMag = getprop("orientation/heading-magnetic-deg");
         me.heading    = getprop("orientation/heading-deg");
         me.mode       = getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob");
-        me.elec       = getprop("fdm/jsbsim/elec/bus/emergency-ac-2")>100 and getprop("f16/avionics/power-ufc");
+        me.elec       = getprop("f16/avionics/power-ufc-warm") == 1;
         me.tacanInRange = getprop("instrumentation/tacan/in-range");
         me.tacanBearingRel = getprop("instrumentation/tacan/bearing-relative-deg");
         me.tacanBearingTrue = getprop("instrumentation/tacan/indicated-bearing-true-deg");
@@ -780,7 +780,7 @@ HSI = {
         me.headingMag = getprop("orientation/heading-magnetic-deg");
         me.heading    = getprop("orientation/heading-deg");
         me.mode       = getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob");
-        me.elec       = getprop("fdm/jsbsim/elec/bus/emergency-ac-2")>100 and getprop("f16/avionics/power-ufc");
+        me.elec       = getprop("f16/avionics/power-ufc-warm") == 1;
         me.tacanInRange = getprop("instrumentation/tacan/in-range");
         me.tacanBearingRel = getprop("instrumentation/tacan/bearing-relative-deg");
         me.tacanBearingTrue = getprop("instrumentation/tacan/indicated-bearing-true-deg");

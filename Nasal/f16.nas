@@ -256,13 +256,16 @@ var loop_flare = func {
         setprop("f16/force", 7);
       }
 
-    if (getprop("fdm/jsbsim/elec/bus/batt-2")<20) {
-      setprop("controls/lighting/lighting-panel/console-primary", 0);
+    if (getprop("fdm/jsbsim/elec/bus/noness-ac-2")<100) {
       setprop("controls/lighting/lighting-panel/flood-inst-pnl", 0);
+    } else {
+      setprop("controls/lighting/lighting-panel/flood-inst-pnl", getprop("controls/lighting/lighting-panel/flood-inst-pnl-knob"));
+    }
+    if (getprop("fdm/jsbsim/elec/bus/emergency-ac-1")<100) {
+      setprop("controls/lighting/lighting-panel/console-primary", 0);
       setprop("controls/lighting/lighting-panel/pri-inst-pnl", 0);
     } else {
       setprop("controls/lighting/lighting-panel/console-primary", getprop("controls/lighting/lighting-panel/console-primary-knob"));
-      setprop("controls/lighting/lighting-panel/flood-inst-pnl", getprop("controls/lighting/lighting-panel/flood-inst-pnl-knob"));
       setprop("controls/lighting/lighting-panel/pri-inst-pnl", getprop("controls/lighting/lighting-panel/pri-inst-pnl-knob"));
     }
 
@@ -350,7 +353,7 @@ var medium = {
       setprop("controls/engines/engine[0]/starter", 0);
       setprop("controls/engines/engine[0]/cutoff", 1);
     }   
-    if (getprop("fdm/jsbsim/elec/bus/batt-2")<20) {
+    if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20) {
       setprop("controls/test/test-panel/mal-ind-lts", 0);
     }
     
@@ -595,7 +598,7 @@ var fuelqty = func {
 var batteryChargeDischarge = func {
     var battery_percent = getprop("/fdm/jsbsim/elec/sources/battery-percent");
     var mainpwr_sw = getprop("/fdm/jsbsim/elec/switches/main-pwr");
-    if (battery_percent < 100 and getprop("/fdm/jsbsim/elec/bus/charger") >= 20 and getprop("/fdm/jsbsim/elec/failures/battery/serviceable") and mainpwr_sw > 0) {
+    if (battery_percent < 100 and getprop("/fdm/jsbsim/elec/bus/charger") >= 100 and getprop("/fdm/jsbsim/elec/failures/battery/serviceable") and mainpwr_sw > 0) {
         if (getprop("/fdm/jsbsim/elec/sources/battery-time") + 5 < getprop("/sim/time/elapsed-sec")) {
             battery_percent_calc = battery_percent + 0.75; # Roughly 90 percent every 10 mins
             if (battery_percent_calc > 100) {
@@ -604,7 +607,7 @@ var batteryChargeDischarge = func {
             setprop("/fdm/jsbsim/elec/sources/battery-percent", battery_percent_calc);
             setprop("/fdm/jsbsim/elec/sources/battery-time", getprop("/sim/time/elapsed-sec"));
         }
-    } else if (battery_percent == 100 and getprop("/fdm/jsbsim/elec/bus/charger") >= 20 and getprop("/fdm/jsbsim/elec/failures/battery/serviceable") and mainpwr_sw > 0) {
+    } else if (battery_percent == 100 and getprop("/fdm/jsbsim/elec/bus/charger") >= 100 and getprop("/fdm/jsbsim/elec/failures/battery/serviceable") and mainpwr_sw > 0) {
         setprop("/fdm/jsbsim/elec/sources/battery-time", getprop("/sim/time/elapsed-sec"));
     } else if (battery_percent > 0 and getprop("/fdm/jsbsim/elec/sources/batt-bus") and getprop("/fdm/jsbsim/elec/failures/battery/serviceable") and mainpwr_sw > 0) {
         if (getprop("/fdm/jsbsim/elec/sources/battery-time") + 5 < getprop("/sim/time/elapsed-sec")) {

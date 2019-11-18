@@ -56,7 +56,7 @@ var SubSystem_RWR_APG = {
 	},
     update : func(notification) {
             #printf("clist %d", size(notification.completeList));
-            if (!getprop("instrumentation/rwr/serviceable") or getprop("fdm/jsbsim/elec/bus/ess-ac")<100) {
+            if (!getprop("instrumentation/rwr/serviceable") or getprop("f16/avionics/power-ufc-warm") == 1) {
                 return;
             }
             notification.rwrList16 = [];

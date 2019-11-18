@@ -126,11 +126,6 @@
         <object-name>MFDimage1</object-name>
         <condition>
             <property>controls/MFD[0]/mode</property>
-
-            <greater-than-equals>
-                <property>fdm/jsbsim/elec/bus/ess-ac</property>
-                <value>100</value>
-            </greater-than-equals>
             <greater-than-equals>
                 <property>f16/avionics/power-ufc-warm</property>
                 <value>1</value>

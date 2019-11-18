@@ -435,11 +435,8 @@
 		
 		<switch name="elec/bus/charger">
 			<default value="0"/>
-			<test value="elec/bus/emergency-dc-1"> <!-- Guess, can't find what powers the charger -->
-				elec/bus/emergency-dc-1 ge 20
-			</test>
-			<test value="elec/bus/emergency-dc-2"> <!-- Guess, can't find what powers the charger -->
-				elec/bus/emergency-dc-2 ge 20
+			<test value="elec/bus/ess-ac">
+				elec/bus/ess-ac ge 100
 			</test>
 		</switch>
 	

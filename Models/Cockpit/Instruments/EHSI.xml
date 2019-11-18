@@ -22,10 +22,10 @@
         <object-name>EHSI-Display</object-name>
         <type>material</type>
         <emission>
-            <factor-prop>fdm/jsbsim/elec/bus/ess-dc</factor-prop>
-            <red>  0.0357</red>
-            <green>0.0357</green>
-            <blue> 0.0357</blue>
+            <factor-prop>fdm/jsbsim/elec/bus/emergency-ac-2</factor-prop>
+            <red>  0.00714</red>
+            <green>0.00714</green>
+            <blue> 0.00714</blue>
         </emission>
     </animation>
     <effect>

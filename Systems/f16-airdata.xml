@@ -20,8 +20,8 @@
     <vacuum>
         <name>vacuum</name>
         <number>0</number>
-        <rpm>fdm/jsbsim/elec/bus/ess-dc</rpm>
-        <scale>250.0</scale>
+        <rpm>fdm/jsbsim/elec/bus/emergency-ac-1</rpm>
+        <scale>50.0</scale>
     </vacuum>
 
 </PropertyList>
