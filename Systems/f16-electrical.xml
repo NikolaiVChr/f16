@@ -135,6 +135,15 @@
 			<gain>0.24347826086956523</gain> <!-- AC to DC converter -->
 		</pure_gain>
 		
+		<switch name="elec/sources/external-pwr-plugged-in">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				elec/sources/external-pwr == 1
+				fcs/gear-wow eq 1
+				velocities/vg-fps lt 1
+			</test>
+		</switch>
+		
 		<pure_gain name="elec/sources/external-pwr-volt">
 			<input>elec/sources/external-pwr-plugged-in</input>
 			<gain>115.0</gain>

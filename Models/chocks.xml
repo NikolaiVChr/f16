@@ -153,6 +153,16 @@
    <z>1</z>
   </axis>
  </animation>
+ 
+ 
+ 
+ <animation>
+ <type>select</type>
+ <object-name>GPUcart</object-name>
+ <condition>
+   <property>fdm/jsbsim/elec/sources/external-pwr-plugged-in</property>
+ </condition>
+</animation>
 
 <animation>
  <type>select</type>
@@ -160,7 +170,6 @@
  <object-name>chocks2</object-name>
  <object-name>chocks3</object-name>
  <object-name>extinguisher</object-name>
- <object-name>GPUcart</object-name>
  <condition>
    <property>controls/gear/brake-parking</property>
    <property>gear/gear[0]/wow</property>

@@ -15,13 +15,17 @@
                 <value>As required</value>
             </item>
             <item>
+                <name>External power</name>
+                <value>As needed and available</value>
+            </item>
+            <item>
                 <name>Auto ordnance view</name>
                 <value>As required</value>
             </item>
             <item>
                 <name>Flightplan</name>
                 <value>Load or create as needed</value>
-            </item>
+            </item>            
         </checklist>
         
         <checklist>

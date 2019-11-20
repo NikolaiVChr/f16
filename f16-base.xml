@@ -1673,7 +1673,8 @@ There is also small changes in tail for different variants with and without brak
                     <batt-bus type="bool">0</batt-bus>
                     <battery-percent type="double">85</battery-percent> <!-- Initial battery percentage value -->
                     <battery-time type="double">0</battery-time>
-                    <external-pwr-plugged-in type="int">0</external-pwr-plugged-in>
+                    <external-pwr-plugged-in type="bool">false</external-pwr-plugged-in>
+                    <external-pwr type="bool">false</external-pwr>
                 </sources>
                 <switches>
                     <epu type="int">0</epu>

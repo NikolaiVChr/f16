@@ -150,6 +150,20 @@
   <text><label>so that you easier can make minute corrections</label></text>
   <text><label>when close to the tanker.</label></text>
 
+<hrule/>
+  
+    <group>
+    <layout>hbox</layout>
+    <text><label>Activate external power</label></text>
+    <checkbox>
+      <property>fdm/jsbsim/elec/sources/external-pwr</property>
+      <live>true</live>
+        <binding>
+          <command>property-toggle</command>
+          <property>fdm/jsbsim/elec/sources/external-pwr</property>
+        </binding>
+    </checkbox>
+  </group>
   <hrule/>
   
     <group>
