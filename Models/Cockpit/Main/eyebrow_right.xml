@@ -27,7 +27,6 @@
   <object-name>unused</object-name>
   <condition>
     <or>
-    <property>/tmp/nill</property>
     <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
@@ -85,7 +84,7 @@
       <and>
         <greater-than><property>fdm/jsbsim/elec/bus/batt-1</property><value>20</value></greater-than>
         <or>
-            <property>/tmp/nill</property>
+            
             <less-than>
               <property>fdm/jsbsim/systems/hydraulics/sysa-psi</property>
               <value>2000</value>

@@ -154,7 +154,7 @@
   
     <group>
     <layout>hbox</layout>
-    <text><label>Activate Auto missile view</label></text>
+    <text><label>Activate Auto ordnance view</label></text>
     <checkbox>
       <property>/controls/armament/automissileview</property>
       <live>true</live>

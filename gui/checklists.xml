@@ -5,6 +5,22 @@
         <name>Normal Procedures</name>
         
         <checklist>
+            <title>Config</title>
+            <item>
+                <name>Fuel and Payload</name>
+                <value>Load stores and fuel as needed</value>
+            </item>
+            <item>
+                <name>MP discharge messages</name>
+                <value>As required</value>
+            </item>
+            <item>
+                <name>Auto ordnance view</name>
+                <value>As required</value>
+            </item>
+        </checklist>
+        
+        <checklist>
             <title>Cockpit check</title>
             <item>
                 <name>ENG FEED knob</name>
@@ -217,21 +233,20 @@
                 <value>Off</value>
                 <condition>
                     <not>
-                    <and>
-                        <greater-than><property>fdm/jsbsim/elec/bus/batt-1</property><value>20</value></greater-than>
-                        <or>
-                            <property>/tmp/nill</property>
-                            <less-than>
-                              <property>fdm/jsbsim/systems/hydraulics/sysa-psi</property>
-                              <value>2000</value>
-                            </less-than>
-                            <less-than>
-                              <property>fdm/jsbsim/systems/hydraulics/sysb-psi</property>
-                              <value>2000</value>
-                            </less-than>
-                        </or>
-                    </and>
-                </not>
+                        <and>
+                            <greater-than><property>fdm/jsbsim/elec/bus/batt-1</property><value>20</value></greater-than>
+                            <or>
+                                <less-than>
+                                  <property>fdm/jsbsim/systems/hydraulics/sysa-psi</property>
+                                  <value>2000</value>
+                                </less-than>
+                                <less-than>
+                                  <property>fdm/jsbsim/systems/hydraulics/sysb-psi</property>
+                                  <value>2000</value>
+                                </less-than>
+                            </or>
+                        </and>
+                    </not>
                 </condition>
             </item>
             <item>
