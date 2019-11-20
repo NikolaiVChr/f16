@@ -12,8 +12,8 @@
 			<path>Aircraft/f16/Sounds/f16_canopy.wav</path>
 			<mode>in-transit</mode>
 			<property>fdm/jsbsim/fcs/canopy-pos-norm</property>
-			<reference-dist>30</reference-dist>
-			<max-dist>100</max-dist>
+			<reference-dist>3</reference-dist>
+			<max-dist>50</max-dist>
 			<position>
 				<x>-1.0</x>
 				<y>0.0</y>
@@ -25,34 +25,7 @@
 				<factor>-0.25</factor>
 			</pitch>
 			<volume>
-				<property>sim/current-view/internal</property>
 				<max>0.55</max>
-			</volume>
-		</canopy>
-		<canopy>
-			<name>canopy_outside</name>
-			<path>Aircraft/f16/Sounds/f16_canopy.wav</path>
-			<mode>single</mode>
-			<condition>
-			<property>fdm/jsbsim/fcs/canopy-pos-norm</property>
-			<not>
-				<property>/sim/current-view/internal</property>
-			</not>
-			</condition>
-			<reference-dist>30</reference-dist>
-			<max-dist>100</max-dist>
-			<position>
-				<x>-1.0</x>
-				<y>0.0</y>
-				<z>0.195</z>
-			</position>
-			<pitch>
-				<internal>dt_start</internal>
-				<offset>1.25</offset>
-				<factor>-0.25</factor>
-			</pitch>
-			<volume>
-				<max>0.15</max>
 			</volume>
 		</canopy>
 		<canopy>
