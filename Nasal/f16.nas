@@ -416,6 +416,9 @@ var fast = {
       setprop("instrumentation/radar/time-till-crash", 15);
     }
     setprop("controls/engines/engine[0]/throttle-movement", getprop("controls/engines/engine[0]/throttle")*getprop("f16/engine/jsf-start"));
+    if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20) {#TODO: this hack should be done proper.
+        setprop("controls/test/test-panel/mal-ind-lts", 0);
+    }
     settimer(func {me.loop()},0.05);
   },
 };
