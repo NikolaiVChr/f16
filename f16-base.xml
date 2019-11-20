@@ -1567,6 +1567,11 @@ There is also small changes in tail for different variants with and without brak
             </test-panel>
         </test>
         <smoke type="bool">false</smoke>
+        <engines>
+            <engine n="0">
+                <throttle-movement type="double">0</throttle-movement>
+            </engine>
+        </engines>
     </controls>
     <engines>
         <engine n="0">

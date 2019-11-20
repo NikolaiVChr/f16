@@ -415,6 +415,7 @@ var fast = {
     } else {
       setprop("instrumentation/radar/time-till-crash", 15);
     }
+    setprop("controls/engines/engine[0]/throttle-movement", getprop("controls/engines/engine[0]/throttle")*getprop("f16/engine/jsf-start"));
     settimer(func {me.loop()},0.05);
   },
 };

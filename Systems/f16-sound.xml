@@ -1880,9 +1880,8 @@
 			<reference-dist>0</reference-dist>
 			<max-dist>2</max-dist>
 			<condition>
-				<property>f16/engine/jsf-start</property>
 				<equals>
-					<property>controls/engines/engine[0]/throttle</property>
+					<property>controls/engines/engine[0]/throttle-movement</property>
 					<value>0.0</value>
 				</equals>
 			</condition>
@@ -1904,9 +1903,8 @@
 			<reference-dist>0</reference-dist>
 			<max-dist>2</max-dist>
 			<condition>
-				<property>f16/engine/jsf-start</property>
 				<greater-than>
-					<property>controls/engines/engine[0]/throttle</property>
+					<property>controls/engines/engine[0]/throttle-movement</property>
 					<value>0</value>
 				</greater-than>
 			</condition>
@@ -1927,9 +1925,8 @@
 			<reference-dist>0</reference-dist>
 			<max-dist>2</max-dist>
 			<condition>
-				<property>f16/engine/jsf-start</property>
 				<greater-than-equals>
-					<property>controls/engines/engine[0]/throttle</property>
+					<property>controls/engines/engine[0]/throttle-movement</property>
 					<value>0.77</value>
 				</greater-than-equals>
 			</condition>
@@ -1949,9 +1946,8 @@
 			<reference-dist>0</reference-dist>
 			<max-dist>2</max-dist>
 			<condition>
-				<property>f16/engine/jsf-start</property>
 				<less-than>
-					<property>controls/engines/engine[0]/throttle</property>
+					<property>controls/engines/engine[0]/throttle-movement</property>
 					<value>0.77</value>
 				</less-than>
 			</condition>
