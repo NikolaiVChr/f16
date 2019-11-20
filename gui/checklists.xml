@@ -1,333 +1,793 @@
 <?xml version="1.0"?>
 
 <PropertyList>
-
-    <checklist>
-        <title>Start from cold and dark</title>
-        <item>
-            <name>ENG FEED</name>
-            <value>NORM</value>
-            <condition>
-                <equals>
+    <group>
+        <name>Normal Procedures</name>
+        
+        <checklist>
+            <title>Cockpit check</title>
+            <item>
+                <name>ENG FEED knob</name>
+                <value>NORM</value>
+                <condition>
+                    <equals>
+                        <property>f16/engine/feed</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
                     <property>f16/engine/feed</property>
                     <value>1</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>f16/engine/feed</property>
-                <value>1</value>
-            </binding>
-        </item>
-        <item>
-            <name>EPU</name>
-            <value>NORM</value>
-            <condition>
-                <equals>
+                </binding>
+            </item>
+            <item>
+                <name>EPU switch</name>
+                <value>NORM</value>
+                <condition>
+                    <equals>
+                        <property>fdm/jsbsim/elec/switches/epu</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
                     <property>fdm/jsbsim/elec/switches/epu</property>
                     <value>1</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>fdm/jsbsim/elec/switches/epu</property>
-                <value>1</value>
-            </binding>
-        </item>
-        <item>
-            <name>ELEC</name>
-            <value>BATT</value>
-            <!--<marker>
-                <x-m>-3.9554</x-m>
-                <y-m>-0.0595</y-m>
-                <z-m>0.0686</z-m>
-                <scale>2.4711</scale>
-            </marker>-->
-            <condition>
-                <equals>
+                </binding>
+            </item>
+            <item>
+                <name>Throttle</name>
+                <value>OFF</value>
+                <condition>
+                    <equals>
+                        <property>controls/engines/engine[0]/throttle</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/engines/engine[0]/throttle</property>
+                    <value>0</value>
+                </binding>
+            </item>
+            <item>
+                <name>LG handle</name>
+                <value>DN</value>
+                <condition>
+                    <equals>
+                        <property>controls/gear/gear-down</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/gear/gear-down</property>
+                    <value>1</value>
+                </binding>
+            </item>
+            <item>
+                <name>HOOK switch</name>
+                <value>UP</value>
+                <condition>
+                    <equals>
+                        <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+                    <value>0</value>
+                </binding>
+            </item>
+            <item>
+                <name>MASTER ARM switch</name>
+                <value>OFF</value>
+                <condition>
+                    <equals>
+                        <property>controls/armament/master-arm</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/armament/master-arm</property>
+                    <value>0</value>
+                </binding>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/armament/master-arm-cover-open</property>
+                    <value>0</value>
+                </binding>
+            </item>
+        </checklist>
+        
+        <checklist>
+            <title>Before starting engine</title>
+            <item>
+                <name>MAIN PWR switch</name>
+                <value>BATT</value>
+                <condition>
+                    <equals>
+                        <property>fdm/jsbsim/elec/switches/main-pwr</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
                     <property>fdm/jsbsim/elec/switches/main-pwr</property>
                     <value>1</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>fdm/jsbsim/elec/switches/main-pwr</property>
-                <value>1</value>
-            </binding>
-        </item>
-        <item>
-            <name>MAL and IND LTS</name>
-            <value>ON</value>
-            <condition>
-                <equals>
-                    <property>controls/test/test-panel/mal-ind-lts</property>
-                    <value>1</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>nasal</command>
-                <script>f16_switches.toggleMalIndLts()</script>
-            </binding>
-        </item>
-        <item>
-            <name>MAL and IND LTS</name>
-            <value>OFF</value>
-            <condition>
-                <equals>
-                    <property>controls/test/test-panel/mal-ind-lts</property>
-                    <value>0</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>controls/test/test-panel/mal-ind-lts</property>
-                <value>0</value>
-            </binding>
-        </item>
-        <item>
-            <name>ELEC</name>
-            <value>MAIN PWR</value>
-            <condition>
-                <equals>
+                </binding>
+            </item>
+            <item>
+                <name>MAIN PWR switch</name>
+                <value>MAIN PWR</value>
+                <!--<marker>
+                    <x-m>-3.9554</x-m>
+                    <y-m>-0.0595</y-m>
+                    <z-m>0.0686</z-m>
+                    <scale>2.4711</scale>
+                </marker>-->
+                <condition>
+                    <equals>
+                        <property>fdm/jsbsim/elec/switches/main-pwr</property>
+                        <value>2</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
                     <property>fdm/jsbsim/elec/switches/main-pwr</property>
                     <value>2</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>fdm/jsbsim/elec/switches/main-pwr</property>
-                <value>2</value>
-            </binding>
-        </item>
-        <item>
-            <name>JSF START (black switch on throttle)</name>
-            <value>OFF</value>
-            <condition>
-                <equals>
-                    <property>f16/engine/jsf-start</property>
-                    <value>0</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>f16/engine/jsf-start</property>
-                <value>0</value>
-            </binding>
-        </item>
-        <item>
-            <name>JET FUEL</name>
-            <value>START 2</value>
-            <condition>
-                <equals>
+                </binding>
+            </item>
+            <item>
+                <name>EPU GEN and EPU PMG lights</name>
+                <value>Confirm off</value>
+                <condition>
+                    <or>
+                    <less-than>
+                      <property>fdm/jsbsim/elec/bus/batt-2</property>
+                      <value>20</value>
+                    </less-than>
+                      <less-than>
+                        <property>fdm/jsbsim/elec/sources/epu-gen-volt</property>
+                        <value>100</value>
+                      </less-than>
+                    </or>
+                </condition>
+            </item>
+            <item>
+                <name>Canopy</name>
+                <value>As desired</value>
+            </item>
+        </checklist>
+
+        <checklist>
+            <title>Starting engine</title>
+            <item>
+                <name>JET FUEL</name>
+                <value>START 2</value>
+                <condition>
+                    <equals>
+                        <property>f16/engine/jet-fuel</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
                     <property>f16/engine/jet-fuel</property>
                     <value>1</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>f16/engine/jet-fuel</property>
-                <value>1</value>
-            </binding>
-        </item>
-        <item>
-            <name>Wait for RPM</name>
-            <value>N2 25%</value>
-            <condition>
-                <greater-than>
-                    <property>engines/engine[0]/n2</property>
-                    <value>25</value>
-                </greater-than>
-            </condition>
-        </item>
-        <item>
-            <name>JSF START (black switch on throttle)</name>
-            <value>ON</value>
-            <condition>
-                <equals>
+                </binding>
+            </item>
+            <item>
+                <name>Throttle</name>
+                <value>IDLE</value>
+                <condition>
+                    <greater-than>
+                        <property>controls/engines/engine[0]/throttle</property>
+                        <value>0</value>
+                    </greater-than>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/engines/engine[0]/throttle</property>
+                    <value>0</value>
+                </binding>
+            </item>
+            <item>
+                <name>Wait for RPM</name>
+                <value>N2 25%</value>
+                <condition>
+                    <greater-than>
+                        <property>engines/engine[0]/n2</property>
+                        <value>25</value>
+                    </greater-than>
+                </condition>
+            </item>
+            <item>
+                <name>JSF START (black switch on throttle)</name>
+                <value>OFF</value>
+                <condition>
+                    <equals>
+                        <property>f16/engine/jsf-start</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
                     <property>f16/engine/jsf-start</property>
                     <value>1</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>f16/engine/jsf-start</property>
-                <value>1</value>
-            </binding>
-        </item>
-        <item>
-            <name>Wait for engine</name>
-            <value>Ready</value>
-            <condition>
-                <equals>
-                    <property>engines/engine[0]/running</property>
-                    <value>1</value>
-                </equals>
-            </condition>
-        </item>
-        <item>
-            <name>Arm ejection chair</name>
-            <value>Armed</value>
-            <condition>
-                <equals>
-                    <property>controls/seat/ejection-safety-lever</property>
-                    <value>1</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>controls/seat/ejection-safety-lever</property>
-                <value>1</value>
-            </binding>
-        </item>        
-        <item>
-            <name>UFC</name>
-            <value>ON</value>
-            <condition>
-                <equals>
-                    <property>f16/avionics/power-ufc</property>
-                    <value>1</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>f16/avionics/power-ufc</property>
-                <value>1</value>
-            </binding>
-        </item>
-        <item>
-            <name>DL</name>
-            <value>ON</value>
-            <condition>
-                <equals>
-                    <property>f16/avionics/power-dl</property>
-                    <value>1</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>f16/avionics/power-dl</property>
-                <value>1</value>
-            </binding>
-        </item>
-        <item>
-            <name>GPS</name>
-            <value>ON</value>
-            <condition>
-                <equals>
-                    <property>f16/avionics/power-gps</property>
-                    <value>1</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>f16/avionics/power-gps</property>
-                <value>1</value>
-            </binding>
-        </item>
-        <item>
-            <name>MMC</name>
-            <value>ON</value>
-            <condition>
-                <equals>
+                </binding>
+            </item>
+            <item>
+                <name>Wait for engine</name>
+                <value>Ready</value>
+                <condition>
+                    <equals>
+                        <property>engines/engine[0]/running</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+            </item>         
+            <item>
+                <name>HYD/OIL PRESS warning light</name>
+                <value>Off</value>
+                <condition>
+                    <not>
+                    <and>
+                        <greater-than><property>fdm/jsbsim/elec/bus/batt-1</property><value>20</value></greater-than>
+                        <or>
+                            <property>/tmp/nill</property>
+                            <less-than>
+                              <property>fdm/jsbsim/systems/hydraulics/sysa-psi</property>
+                              <value>2000</value>
+                            </less-than>
+                            <less-than>
+                              <property>fdm/jsbsim/systems/hydraulics/sysb-psi</property>
+                              <value>2000</value>
+                            </less-than>
+                        </or>
+                    </and>
+                </not>
+                </condition>
+            </item>
+            <item>
+                <name>FUEL FLOW</name>
+                <value>PPH 100-200</value><!-- real: 500-1500 -->
+                <condition>
+                    <greater-than>
+                        <property>engines/engine[0]/fuel-flow_pph</property>
+                        <value>100</value>
+                    </greater-than>
+                    <less-than>
+                        <property>engines/engine[0]/fuel-flow_pph</property>
+                        <value>200</value>
+                    </less-than>
+                </condition>
+            </item>
+            <item>
+                <name>OIL pressure</name>
+                <value>Minimum 15 psi</value>
+                <condition>
+                    <greater-than>
+                        <property>engines/engine[0]/oil-pressure-psi</property>
+                        <value>15</value>
+                    </greater-than>
+                </condition>
+            </item>
+            <item>
+                <name>NOZ POS</name>
+                <value>Minimum 80%</value>
+                <condition>
+                    <greater-than>
+                        <property>engines/engine[0]/nozzle-pos-norm</property>
+                        <value>0.8</value>
+                    </greater-than>
+                </condition>
+            </item>
+            <item>
+                <name>RPM</name>
+                <value>Around 60%</value>
+                <condition>
+                    <equals>
+                        <property>engines/engine[0]/n2</property>
+                        <value>80</value>
+                    </equals>
+                </condition>
+            </item>
+            <item>
+                <name>FTIT</name>
+                <value>625c deg or less</value>
+                <condition>
+                    <less-than>
+                        <property>engines/engine[0]/egt-degc</property>
+                        <value>626</value>
+                    </less-than>
+                </condition>
+            </item>
+            <item>
+                <name><![CDATA[HYD PRESS A & B]]></name>
+                <value>psi 2850-3250</value>
+                <condition>
+                    <greater-than>
+                        <property>fdm/jsbsim/systems/hydraulics/sysa-psi</property>
+                        <value>2850</value>
+                    </greater-than>
+                    <less-than>
+                        <property>fdm/jsbsim/systems/hydraulics/sysa-psi</property>
+                        <value>3250</value>
+                    </less-than>
+                    <greater-than>
+                        <property>fdm/jsbsim/systems/hydraulics/sysb-psi</property>
+                        <value>2850</value>
+                    </greater-than>
+                    <less-than>
+                        <property>fdm/jsbsim/systems/hydraulics/sysb-psi</property>
+                        <value>3250</value>
+                    </less-than>
+                </condition>
+            </item>            
+        </checklist>
+
+        <checklist>
+            <title>After engine start</title>  
+            <item>
+                <name>MAL and IND LTS</name>
+                <value>ON</value>
+                <condition>
+                    <equals>
+                        <property>controls/test/test-panel/mal-ind-lts</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>nasal</command>
+                    <script>f16_switches.toggleMalIndLts()</script>
+                </binding>
+            </item>
+            <item>
+                <name>Check warning and indicator lights</name>
+                <value>ON</value>
+            </item>
+            <item>
+                <name>MAL and IND LTS</name>
+                <value>OFF</value>
+                <condition>
+                    <equals>
+                        <property>controls/test/test-panel/mal-ind-lts</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/test/test-panel/mal-ind-lts</property>
+                    <value>0</value>
+                </binding>
+            </item>
+            <item>
+                <name>MMC</name>
+                <value>MMC</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/power-mmc</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
                     <property>f16/avionics/power-mmc</property>
                     <value>1</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>f16/avionics/power-mmc</property>
-                <value>1</value>
-            </binding>
-        </item>
-        <item>
-            <name>ST STA</name>
-            <value>ON</value>
-            <condition>
-                <equals>
+                </binding>
+            </item>
+            <item>
+                <name>ST STA</name>
+                <value>ST STA</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/power-st-sta</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
                     <property>f16/avionics/power-st-sta</property>
                     <value>1</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>f16/avionics/power-st-sta</property>
-                <value>1</value>
-            </binding>
-        </item>
-        <item>
-            <name>MFD</name>
-            <value>ON</value>
-            <condition>
-                <equals>
+                </binding>
+            </item>
+            <item>
+                <name>MFD</name>
+                <value>MFD</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/power-mfd</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
                     <property>f16/avionics/power-mfd</property>
                     <value>1</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>f16/avionics/power-mfd</property>
-                <value>1</value>
-            </binding>
-        </item>        
-        <item>
-            <name>FCR</name>
-            <value>ON</value>
-            <condition>
-                <equals>
-                    <property>f16/avionics/power-fcr</property>
+                </binding>
+            </item> 
+            <item>
+                <name>UFC</name>
+                <value>UFC</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/power-ufc</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/power-ufc</property>
                     <value>1</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>f16/avionics/power-fcr</property>
-                <value>1</value>
-            </binding>
-        </item>
-        <item>
-            <name>RDR ALT</name>
-            <value>ON</value>
-            <condition>
-                <equals>
-                    <property>f16/avionics/power-rdr-alt</property>
-                    <value>2</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>f16/avionics/power-rdr-alt</property>
-                <value>2</value>
-            </binding>
-        </item>
-        <item>
-            <name>LEFT HDPT (if something mounted on it)</name>
-            <value>ON</value>
-            <condition>
-                <equals>
+                </binding>
+            </item>
+            <item>
+                <name>GPS</name>
+                <value>GPS</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/power-gps</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/power-gps</property>
+                    <value>1</value>
+                </binding>
+            </item>
+            <item>
+                <name>DL</name>
+                <value>DL</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/power-dl</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/power-dl</property>
+                    <value>1</value>
+                </binding>
+            </item>
+            <item>
+                <name>LEFT HDPT switch</name>
+                <value>OFF, unless required</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/power-left-hdpt</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
                     <property>f16/avionics/power-left-hdpt</property>
                     <value>1</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>f16/avionics/power-left-hdpt</property>
-                <value>1</value>
-            </binding>
-        </item>
-        <item>
-            <name>RIGHT HDPT (if something mounted on it)</name>
-            <value>ON</value>
-            <condition>
-                <equals>
+                </binding>
+            </item>
+            <item>
+                <name>RIGHT HDPT switch</name>
+                <value>As desired</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/power-right-hdpt</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
                     <property>f16/avionics/power-right-hdpt</property>
                     <value>1</value>
-                </equals>
-            </condition>
-            <binding>
-                <command>property-assign</command>
-                <property>f16/avionics/power-right-hdpt</property>
-                <value>1</value>
-            </binding>
-        </item>
-    </checklist>
-</PropertyList>
+                </binding>
+            </item>                   
+            <item>
+                <name>FCR</name>
+                <value>FCR</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/power-fcr</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/power-fcr</property>
+                    <value>1</value>
+                </binding>
+            </item>
+            <item>
+                <name>RDR ALT</name>
+                <value>RDR ALT</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/power-rdr-alt</property>
+                        <value>2</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/power-rdr-alt</property>
+                    <value>2</value>
+                </binding>
+            </item>
+            <item>
+                <name>WHEEL down light</name>
+                <value>Three green</value>
+                <condition>
+                    <equals>
+                        <property>gear/gear[0]/position-norm</property>
+                        <value>1</value>
+                    </equals>
+                    <equals>
+                        <property>gear/gear[1]/position-norm</property>
+                        <value>1</value>
+                    </equals>
+                    <equals>
+                        <property>gear/gear[2]/position-norm</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+            </item>
+            <item>
+                <name>EPU FUEL</name>
+                <value>at 95-102%</value>
+                <condition>
+                    <equals>
+                        <value>0</value>
+                        <value>0</value>
+                    </equals>
+                </condition>
+            </item>
+            <item>
+                <name>MPO</name>
+                <value>Check</value>
+            </item>
+            <item>
+                <name>Move controls</name>
+                <value>Verify they respond</value>
+            </item>
+        </checklist>
+        
+        
+        <checklist>
+            <title>Before taxi</title> 
+            <item>
+                <name>Canopy</name>
+                <value>Close and lock</value>
+                <condition>
+                    <equals>
+                        <property>fdm/jsbsim/fcs/canopy-engage</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+            </item>
+            <item>
+                <name>Altimeter</name>
+                <value>Set and check</value>
+            </item>
+            <item>
+                <name>Exterior lights</name>
+                <value>As required</value>
+            </item>
+        </checklist>
+        
+        <checklist>
+            <title>Taxi</title> 
+            <item>
+                <name>Brakes and nosewheel steering</name>
+                <value>Check</value>
+            </item>
+            <item>
+                <name>Heading</name>
+                <value>Check</value>
+            </item>
+        </checklist>
+        
+        <checklist>
+            <title>Before takeoff</title>
+            <item>
+                <name>ALT FLAPS switch</name>
+                <value>NORM</value>
+                <condition>
+                    <equals>
+                        <property>controls/flight/flaps</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/flight/flaps</property>
+                    <value>0</value>
+                </binding>
+            </item>
+            <item>
+                <name>Speedbrakes</name>
+                <value>Closed</value>
+                <condition>
+                    <equals>
+                        <property>fdm/jsbsim/fcs/speedbrake-pos-norm</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+            </item>
+            <item>
+                <name>Canopy</name>
+                <value>Closed and locked</value>
+                <condition>
+                    <equals>
+                        <property>canopy/position-norm</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+            </item>
+            <item>
+                <name>FUEL QTY knob</name>
+                <value>NORM</value>
+                <condition>
+                    <equals>
+                        <property>controls/fuel/qty-selector</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+            </item>
+            <item>
+                <name>STORES CONFIG switch</name>
+                <value>As required</value>
+                <condition>
+                    <not>
+                  <or>
+                      <and>
+                          <greater-than>
+                            <property>f16/stores-cat</property>
+                            <value>1</value>
+                          </greater-than>
+                          <less-than>
+                            <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+                            <value>1</value>
+                          </less-than>
+                      </and>
+                      <and>
+                        <equals>
+                          <property>f16/stores-cat</property>
+                          <value>1</value>
+                        </equals>
+                        <equals>
+                          <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+                          <value>1</value>
+                        </equals>
+                      </and>
+                  </or>
+              </not>
+                </condition>
+            </item>
+            <item>
+                <name>Arm ejection chair</name>
+                <value>Armed</value>
+                <condition>
+                    <equals>
+                        <property>controls/seat/ejection-safety-lever</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/seat/ejection-safety-lever</property>
+                    <value>1</value>
+                </binding>
+            </item>
+            <item>
+                <name>OIL pressure</name>
+                <value>Check psi</value>
+            </item>
+            <item>
+                <name>ALOW MSL FLOOR Data</name>
+                <value>Check</value>
+            </item>
+            <item>
+                <name>All warning and caution lights</name>
+                <value>Check</value>
+            </item>
+        </checklist>
+        
+        <checklist>
+            <title>After landing</title>
+            <item>
+                <name>Speedbrakes</name>
+                <value>Closed</value>
+                <condition>
+                    <equals>
+                        <property>fdm/jsbsim/fcs/speedbrake-pos-norm</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+            </item>
+            <item>
+                <name>Ejection safety lever</name>
+                <value>Safe</value>
+                <condition>
+                    <equals>
+                        <property>controls/seat/ejection-safety-lever</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/seat/ejection-safety-lever</property>
+                    <value>0</value>
+                </binding>
+            </item>
+            <item>
+                <name>LANDING TAXI lights</name>
+                <value>As required</value>
+            </item>
+            <item>
+                <name>Canopy handle</name>
+                <value>Up</value>
+                <condition>
+                    <equals>
+                        <property>fdm/jsbsim/fcs/canopy-engage</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+            </item>
+        </checklist>
+        
+        <checklist>
+            <title>Engine shutdown</title>
+            <item>
+                <name>Throttle</name>
+                <value>OFF</value>
+                <condition>
+                    <equals>
+                        <property>controls/engines/engine[0]/throttle</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/engines/engine[0]/throttle</property>
+                    <value>0</value>
+                </binding>
+            </item>
+            <item>
+                <name>JSF START (black switch on throttle)</name>
+                <value>ON</value>
+                <condition>
+                    <equals>
+                        <property>f16/engine/jsf-start</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/engine/jsf-start</property>
+                    <value>0</value>
+                </binding>
+            </item>
+            <item>
+                <name>JSF RUN light</name>
+                <value>Check</value>
+            </item>
+            <item>
+                <name>MAIN PWR switch</name>
+                <value>OFF</value>
+                <condition>
+                    <equals>
+                        <property>fdm/jsbsim/elec/switches/main-pwr</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>fdm/jsbsim/elec/switches/main-pwr</property>
+                    <value>0</value>
+                </binding>
+            </item>
+        </checklist>
+    </group>
+</PropertyList>      
