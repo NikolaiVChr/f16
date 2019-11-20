@@ -36,6 +36,7 @@
   <type>select</type>
   <object-name>to_ldg_config</object-name>
   <condition>
+    <or>
       <and>
         <less-than>
           <property>controls/gear/gear-down</property>
@@ -54,6 +55,8 @@
           <value>4.17</value>
         </greater-than><!-- 250 fpm -->
     </and>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
   </condition>
  </animation>
 
