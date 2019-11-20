@@ -174,21 +174,22 @@ RWRCanvas = {
         rwr.AIRCRAFT_WARTHOG  = "10";
         rwr.ASSET_FRIGATE     = "SH";
         rwr.AIRCRAFT_AWACS    = "S";
+        rwr.AIRCRAFT_SENTRY   = "E3";
         rwr.AIRCRAFT_BLACKBIRD = "71";
         rwr.AIRCRAFT_TYPHOON  = "EF";
         rwr.AIRCRAFT_HORNET   = "18";
         rwr.AIRCRAFT_FLAGON   = "SU";
         rwr.SCENARIO_OPPONENT = "28";
-        rwr.AIRCRAFT_JAGUAR   = "JG";
+        rwr.AIRCRAFT_JAGUAR   = "JA";
         rwr.AIRCRAFT_PHANTOM  = "F4";
         rwr.AIRCRAFT_SKYHAWK  = "A4";
         rwr.AIRCRAFT_TIGER    = "F5";
-        rwr.AIRCRAFT_TONKA	  = "TN";
+        rwr.AIRCRAFT_TONKA	  = "TO";
         rwr.AIRCRAFT_RAFALE	  = "RF";
-        rwr.AIRCRAFT_HARRIER  = "HR";
+        rwr.AIRCRAFT_HARRIER  = "HA";
         rwr.AIRCRAFT_HARRIERII = "AV";
         rwr.AIRCRAFT_GINA	  = "91";
-        rwr.AIRCRAFT_MB339    = "MB";
+        rwr.AIRCRAFT_MB339    = "M3";
         rwr.AIRCRAFT_ALPHAJET = "AJ";
         rwr.AIRCRAFT_INTRUDER = "A6";
         rwr.AIRCRAFT_FROGFOOT = "25";
@@ -196,7 +197,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_RAPTOR	  = "22";
         rwr.AIRCRAFT_JSF      = "35";
         rwr.AIRCRAFT_GRIPEN   = "39";
-        rwr.AIRCRAFT_MITTEN   = "YK";
+        rwr.AIRCRAFT_MITTEN   = "Y1";
         rwr.AIRCRAFT_ALCA     = "LC";
         rwr.AIRCRAFT_UNKNOWN  = "U";
         rwr.ASSET_AI          = "AI";
@@ -216,10 +217,10 @@ RWRCanvas = {
                 "MiG-21bis":                rwr.AIRCRAFT_FISHBED,
                 "MiG-29":                   rwr.AIRCRAFT_FULCRUM,
 				"SU-27":                    rwr.AIRCRAFT_FLANKER, 
-                "EC-137R":                  rwr.AIRCRAFT_AWACS,
+                "EC-137R":                  rwr.AIRCRAFT_SENTRY,
                 "RC-137R":                  rwr.AIRCRAFT_AWACS,
                 "E-8R":                     rwr.AIRCRAFT_AWACS,
-                "EC-137D":                  rwr.AIRCRAFT_AWACS,
+                "EC-137D":                  rwr.AIRCRAFT_SENTRY,
                 "gci":                      rwr.AIRCRAFT_AWACS,
                 "Blackbird-SR71A":			rwr.AIRCRAFT_BLACKBIRD,
                 "Blackbird-SR71A-BigTail":	rwr.AIRCRAFT_BLACKBIRD,
@@ -251,7 +252,7 @@ RWRCanvas = {
                 "A-10-modelB":              rwr.AIRCRAFT_WARTHOG,
                 "Su-15":                    rwr.AIRCRAFT_FLAGON,
                 "Jaguar-GR3":               rwr.AIRCRAFT_JAGUAR,
-                "E3B":                      rwr.AIRCRAFT_AWACS,
+                "E3B":                      rwr.AIRCRAFT_SENTRY,
                 "E-2C-Hawkeye":             rwr.AIRCRAFT_AWACS,
                 "F-4S":						rwr.AIRCRAFT_PHANTOM,
                 "F-4EJ_ADTW":				rwr.AIRCRAFT_PHANTOM,
