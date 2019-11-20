@@ -123,12 +123,6 @@
             <item>
                 <name>MAIN PWR switch</name>
                 <value>MAIN PWR</value>
-                <!--<marker>
-                    <x-m>-3.9554</x-m>
-                    <y-m>-0.0595</y-m>
-                    <z-m>0.0686</z-m>
-                    <scale>2.4711</scale>
-                </marker>-->
                 <condition>
                     <equals>
                         <property>fdm/jsbsim/elec/switches/main-pwr</property>
@@ -254,15 +248,15 @@
             </item>
             <item>
                 <name>FUEL FLOW</name>
-                <value>PPH 100-200</value><!-- real: 500-1500 -->
+                <value>PPH 500-1500</value><!-- real: 500-1500 -->
                 <condition>
                     <greater-than>
                         <property>engines/engine[0]/fuel-flow_pph</property>
-                        <value>100</value>
+                        <value>500</value>
                     </greater-than>
                     <less-than>
                         <property>engines/engine[0]/fuel-flow_pph</property>
-                        <value>200</value>
+                        <value>1500</value>
                     </less-than>
                 </condition>
             </item>

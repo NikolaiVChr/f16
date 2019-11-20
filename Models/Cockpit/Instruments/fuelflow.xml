@@ -15,7 +15,7 @@
                         </greater-than-equals>
   </condition>
   <property>/engines/engine[0]/fuel-flow_pph</property>
-  <factor>3.6</factor>
+  <factor>36</factor>
   <axis>
    <x>0</x>
    <y>-1</y>
@@ -33,7 +33,7 @@
                         </greater-than-equals>
   </condition>
   <property>/engines/engine[0]/fuel-flow_pph</property>
-  <factor>0.36</factor>
+  <factor>3.6</factor>
   <axis>
    <x>0</x>
    <y>-1</y>
@@ -51,7 +51,7 @@
                         </greater-than-equals>
   </condition>
   <property>/engines/engine[0]/fuel-flow_pph</property>
-  <factor>0.036</factor>
+  <factor>0.36</factor>
   <axis>
    <x>0</x>
    <y>-1</y>
@@ -69,7 +69,7 @@
                         </greater-than-equals>
   </condition>
   <property>/engines/engine[0]/fuel-flow_pph</property>
-  <factor>0.0036</factor>
+  <factor>0.036</factor>
   <axis>
    <x>0</x>
    <y>-1</y>
@@ -87,7 +87,7 @@
                         </greater-than-equals>
   </condition>
   <property>/engines/engine[0]/fuel-flow_pph</property>
-  <factor>0.00036</factor>
+  <factor>0.0036</factor>
   <axis>
    <x>0</x>
    <y>-1</y>
