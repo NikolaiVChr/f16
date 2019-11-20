@@ -443,6 +443,7 @@
       <object-name>RightOuterLowerStrut</object-name>
       <object-name>RightOuterUpperStrut</object-name>
       <object-name>Poly.002</object-name>
+      <object-name>Tail-antenna</object-name>
  </effect>
 
  <effect>
@@ -2112,6 +2113,7 @@
  <animation>
   <type>select</type>
   <object-name>Link16Antennas</object-name>
+  <object-name>Tail-antenna</object-name>
   <condition>
    <property>sim/model/f16/link16</property>
   </condition>

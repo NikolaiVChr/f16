@@ -32,8 +32,13 @@
 		<canopy>
 			<name>canopy_outside</name>
 			<path>Aircraft/f16/Sounds/f16_canopy.wav</path>
-			<mode>in-transit</mode>
+			<mode>single</mode>
+			<condition>
 			<property>fdm/jsbsim/fcs/canopy-pos-norm</property>
+			<not>
+				<property>/sim/current-view/internal</property>
+			</not>
+			</condition>
 			<reference-dist>30</reference-dist>
 			<max-dist>100</max-dist>
 			<position>
@@ -47,8 +52,7 @@
 				<factor>-0.25</factor>
 			</pitch>
 			<volume>
-				<property>sim/current-view/external</property>
-				<max>0.10</max>
+				<max>0.15</max>
 			</volume>
 		</canopy>
 		<canopy>
@@ -92,7 +96,7 @@
 			</position>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<max>0.25</max>
+				<max>0.22</max>
 			</volume>
 		</canopy>
 		<canopy>
@@ -114,7 +118,7 @@
 			</position>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<max>0.25</max>
+				<max>0.22</max>
 			</volume>
 		</canopy>
 
@@ -3017,6 +3021,38 @@
 				<factor>1</factor>
 			</volume>
 		</boom>
+		<gpu>
+	      <name>GPU_outside</name>
+	      <mode>looped</mode>
+	      <path>Aircraft/f16/Sounds/gpu-running.wav</path>
+	      <condition>
+	      	<not>
+				<property>/sim/current-view/internal</property>
+			</not>
+	      	<equals>
+	      		<property>fdm/jsbsim/elec/sources/external-pwr</property>
+	      		<value>1</value>
+			</equals>
+	      </condition>
+	      <volume>
+	        <factor>0.6</factor>
+      	  </volume>
+    	</gpu>
+    	<gpu>
+	      <name>GPU_inside</name>
+	      <mode>looped</mode>
+	      <path>Aircraft/f16/Sounds/gpu-running.wav</path>
+	      <condition>
+	      	<equals>
+	      		<property>fdm/jsbsim/elec/sources/external-pwr</property>
+	      		<value>1</value>
+			</equals>
+	      </condition>
+	      <volume>
+	      	<property>/sim/current-view/internal</property>
+	        <factor>0.15</factor>
+      	  </volume>
+    	</gpu>
 		<pushback>
      		<name>Pushback_outside</name>
       		<mode>looped</mode>
