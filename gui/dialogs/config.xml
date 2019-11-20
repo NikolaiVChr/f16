@@ -83,40 +83,6 @@
 
   <group>
     <layout>hbox</layout>
-    <text><label>Standby gains</label></text>
-    <checkbox>
-      <property>fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains</property>
-      <live>true</live>
-        <binding>
-          <command>property-toggle</command>
-          <property>fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains</property>
-        </binding>
-    </checkbox>
-  </group>
-  <text><label>Enable this when you don't trust the systems is</label></text>
-  <text><label>working properly to collect air data.</label></text>
-  <text><label>Then it will use fixed gains instead.</label></text>
-
-  <hrule/>
-
-  <group>
-    <layout>hbox</layout>
-    <text><label>CAT III</label></text>
-    <checkbox>
-      <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
-      <live>true</live>
-        <binding>
-          <command>property-toggle</command>
-          <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
-        </binding>
-    </checkbox>
-  </group>
-  <text><label>Enable this to use CAT III instead of CAT I</label></text>
-
-  <hrule/>
-
-  <group>
-    <layout>hbox</layout>
     <text><label>Aileron Rudder Interconnect (ARI)</label></text>
     <checkbox>
       <property>fdm/jsbsim/fcs/fly-by-wire/enable-ari</property>
@@ -132,25 +98,7 @@
 
   <hrule/>
 
-  <group>
-    <layout>hbox</layout>
-    <text><label>Refuel door open</label></text>
-    <checkbox>
-      <property>systems/refuel/serviceable</property>
-      <live>true</live>
-        <binding>
-          <command>property-toggle</command>
-          <property>systems/refuel/serviceable</property>
-        </binding>
-    </checkbox>
-  </group>
-  <text><label>Enable this to open refuel door in order to enable</label></text>
-  <text><label>refueling in air. Notice that this will also</label></text>
-  <text><label>change how the fly-by-wire reacts to your stick inputs,</label></text>
-  <text><label>so that you easier can make minute corrections</label></text>
-  <text><label>when close to the tanker.</label></text>
-
-<hrule/>
+  
   
     <group>
     <layout>hbox</layout>

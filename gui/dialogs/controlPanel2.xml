@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- General Dynamics F-16 Autoflight System -->
+<!-- (c) 2018 Joshua Davidson (Octal450) -->
+
+<PropertyList>
+
+	<name>controlPanel2</name>
+	<layout>vbox</layout>
+
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>F-16 Control Panel 2</label>
+			<format>%s Control Panel Right and Center</format>
+			<property>sim/description</property>
+		</text>
+		<button>
+			<halign>right</halign>
+			<pref-width>20</pref-width>
+			<pref-height>20</pref-height>
+			<legend>X</legend>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+	
+	<hrule/>
+
+	<group>
+		<layout>hbox</layout>
+
+		<group>
+			
+			<layout>vbox</layout>
+			
+			<width>175</width>
+			
+			<text>
+				<label>BINGO</label>
+			</text>
+
+			<input>
+			  	<width>75</width>
+			  	<height>25</height>
+			  	<property>f16/settings/bingo</property>
+			  	<live>true</live>
+			  	<halign>left</halign>
+		        <binding>
+		            <command>dialog-apply</command>
+		      	</binding>
+		      	<!--<color>
+		      		<red>0.5</red>
+		      		<green>1</green>
+		      		<blue>0.5</blue>
+		      	</color>-->
+			</input>
+
+			<hrule/>
+			
+			<text>
+				<label>CARA ALOW</label>
+			</text>
+
+			<input>
+			  	<width>75</width>
+			  	<height>25</height>
+			  	
+			  	<property>f16/settings/cara-alow</property>
+			  	<live>true</live>
+			  	<halign>left</halign>
+		        <binding>
+		            <command>dialog-apply</command>
+		      	</binding>
+		      	<!--<color>
+		      		<red>0.5</red>
+		      		<green>1</green>
+		      		<blue>0.5</blue>
+		      	</color>-->
+			</input>
+
+			<hrule/>
+			
+			<text>
+				<label>MSL FLOOR</label>
+			</text>
+
+			<input>
+			  	<width>75</width>
+			  	<height>25</height>
+			  	<property>f16/settings/msl-floor</property>
+			  	<live>true</live>
+			  	<halign>left</halign>
+		        <binding>
+		            <command>dialog-apply</command>
+		      	</binding>
+		      	<!--<color>
+		      		<red>0.5</red>
+		      		<green>1</green>
+		      		<blue>0.5</blue>
+		      	</color>-->
+			</input>
+			
+			<hrule/>
+			
+			<text>
+				<label>EEGS WINGSPAN FT</label>
+			</text>
+
+			<input>
+			  	<width>75</width>
+			  	<height>25</height>
+			  	<property>f16/avionics/eegs-wingspan-ft</property>
+			  	<live>true</live>
+			  	<halign>left</halign>
+		        <binding>
+		            <command>dialog-apply</command>
+		      	</binding>
+			</input>
+
+		</group>
+		
+		<vrule/>
+		
+		<group>
+			
+			<layout>vbox</layout>	
+		
+			<text>
+				<label>INTERIOR LIGHTS</label>
+			</text>
+
+			<group>
+				<layout>hbox</layout>
+
+				<group>
+					<layout>vbox</layout>
+					
+					<text>
+						<label>INSTR</label>
+					</text>
+					
+					<group>
+						<layout>hbox</layout>
+				
+						<group>
+							<layout>vbox</layout>
+							<halign>left</halign>
+							
+							<text>
+								<label>FULL</label>
+							</text>
+							<text>
+								<label>OFF</label>
+							</text>
+							
+						</group>
+						
+						<slider>
+							<halign>left</halign>
+							<property>controls/lighting/lighting-panel/pri-inst-pnl-knob</property>
+							<min>0</min>
+							<max>1</max>
+							<step>0.1</step>
+							<live>true</live>
+							<vertical>true</vertical>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+						</slider>
+						
+					</group>
+				
+				</group>
+
+				<group>
+					<layout>vbox</layout>
+					
+					<text>
+						<label>FLOOD</label>
+					</text>
+					
+					<group>
+						<layout>hbox</layout>
+				
+						<group>
+							<layout>vbox</layout>
+							<halign>left</halign>
+							
+							<text>
+								<label>FULL</label>
+							</text>
+							<text>
+								<label>OFF</label>
+							</text>
+							
+						</group>
+						
+						<slider>
+							<halign>left</halign>
+							<property>controls/lighting/lighting-panel/flood-inst-pnl-knob</property>
+							<min>0</min>
+							<max>1</max>
+							<step>0.1</step>
+							<live>true</live>
+							<vertical>true</vertical>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+						</slider>
+						
+					</group>
+				
+				</group>
+
+				<group>
+					<layout>vbox</layout>
+					
+					<text>
+						<label>CONSOLE</label>
+					</text>
+					
+					<group>
+						<layout>hbox</layout>
+				
+						<group>
+							<layout>vbox</layout>
+							<halign>left</halign>
+							
+							<text>
+								<label>FULL</label>
+							</text>
+							<text>
+								<label>OFF</label>
+							</text>
+							
+						</group>
+						
+						<slider>
+							<halign>left</halign>
+							<property>controls/lighting/lighting-panel/console-primary-knob</property>
+							<min>0</min>
+							<max>1</max>
+							<step>0.1</step>
+							<live>true</live>
+							<vertical>true</vertical>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+						</slider>
+						
+					</group>
+				
+				</group>
+
+				<group>
+					<layout>vbox</layout>
+					
+					<text>
+						<label>DED</label>
+					</text>
+					
+					<group>
+						<layout>hbox</layout>
+				
+						<group>
+							<layout>vbox</layout>
+							<halign>left</halign>
+							
+							<text>
+								<label>FULL</label>
+							</text>
+							<text>
+								<label>OFF</label>
+							</text>
+							
+						</group>
+						
+						<slider>
+							<halign>left</halign>
+							<property>controls/lighting/lighting-panel/data-entry-display</property>
+							<min>0</min>
+							<max>1</max>
+							<step>0.1</step>
+							<live>true</live>
+							<vertical>true</vertical>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+						</slider>
+						
+					</group>
+				
+				</group>
+
+			</group>
+
+			
+			<hrule/>
+
+			
+			<group>
+				<layout>vbox</layout>
+				
+				<text>
+					<label>HUD</label>
+				</text>
+
+				<group>
+				    <layout>hbox</layout>
+				    <empty>
+				      <stretch>1</stretch>
+				    </empty>
+				    <checkbox>
+					    <property>f16/avionics/hud-ded</property>
+					    <live>true</live>
+					    <binding>
+							<command>property-toggle</command>
+							<property>f16/avionics/hud-ded</property>
+				      	</binding>
+				    </checkbox>
+				    <text><label>DED DATA</label></text>
+				</group>
+
+				<group>
+			    	<layout>hbox</layout>
+			    	
+			    	<group>
+						<layout>vbox</layout>
+						
+						<text>
+							<label>ALT</label>
+						</text>
+						
+						<group>
+							<layout>hbox</layout>
+						
+							<group>
+								<layout>vbox</layout>
+								<halign>left</halign>
+								
+								<text>
+									<label>RDR</label>
+								</text>
+								<text>
+									<label>BARO</label>
+								</text>
+								<text>
+									<label>AUTO</label>
+								</text>
+								
+							</group>
+							
+							<slider>
+								<halign>left</halign>
+								<property>/f16/avionics/hud-alt</property>
+								<min>0</min>
+								<max>2</max>
+								<step>1</step>
+								<live>true</live>
+								<vertical>true</vertical>
+								<binding>
+									<command>dialog-apply</command>
+								</binding>
+							</slider>
+							
+						</group>
+					
+					</group>
+
+					<group>
+						<layout>vbox</layout>
+						
+						<text>
+							<label>VELOCITY</label>
+						</text>
+						
+						<group>
+							<layout>hbox</layout>
+						
+							<group>
+								<layout>vbox</layout>
+								<halign>left</halign>
+								
+								<text>
+									<label>CAS</label>
+								</text>
+								<text>
+									<label>TAS</label>
+								</text>
+								<text>
+									<label>GND SPD</label>
+								</text>
+								
+							</group>
+							
+							<slider>
+								<halign>left</halign>
+								<property>/f16/avionics/hud-velocity</property>
+								<min>-1</min>
+								<max>1</max>
+								<step>1</step>
+								<live>true</live>
+								<vertical>true</vertical>
+								<binding>
+									<command>dialog-apply</command>
+								</binding>
+							</slider>
+							
+						</group>
+					
+					</group>
+
+					<group>
+						<layout>vbox</layout>
+						
+						<text>
+							<label>SCALES</label>
+						</text>
+						
+						<group>
+							<layout>hbox</layout>
+						
+							<group>
+								<layout>vbox</layout>
+								<halign>left</halign>
+								
+								<text>
+									<label>VAH</label>
+								</text>
+								<text>
+									<label>OFF</label>
+								</text>								
+							</group>
+							
+							<slider>
+								<halign>left</halign>
+								<property>/f16/avionics/hud-scales</property>
+								<min>0</min>
+								<max>1</max>
+								<step>1</step>
+								<live>true</live>
+								<vertical>true</vertical>
+								<binding>
+									<command>dialog-apply</command>
+								</binding>
+							</slider>
+							
+						</group>
+					
+					</group>
+
+					<group>
+						<layout>vbox</layout>
+						
+						<text>
+							<label>FPM</label>
+						</text>
+						
+						<group>
+							<layout>hbox</layout>
+						
+							<group>
+								<layout>vbox</layout>
+								<halign>left</halign>
+								
+								<text>
+									<label>ATT/FPM</label>
+								</text>
+								<text>
+									<label>FPM</label>
+								</text>
+								<text>
+									<label>OFF</label>
+								</text>								
+							</group>
+							
+							<slider>
+								<halign>left</halign>
+								<property>/f16/avionics/hud-fpm</property>
+								<min>0</min>
+								<max>2</max>
+								<step>1</step>
+								<live>true</live>
+								<vertical>true</vertical>
+								<binding>
+									<command>dialog-apply</command>
+								</binding>
+							</slider>
+							
+						</group>
+					
+					</group>
+
+				</group>
+				
+			</group>
+			
+			<hrule/>
+			
+			<group>
+				<layout>vbox</layout>
+				
+				<text>
+					<label>SNSR PWR</label>
+				</text>
+
+				<group>
+				    <layout>hbox</layout>
+				    
+				    <checkbox>
+					    <property>f16/avionics/power-left-hdpt</property>
+					    <live>true</live>
+					    <binding>
+							<command>property-toggle</command>
+							<property>f16/avionics/power-left-hdpt</property>
+				      	</binding>
+				    </checkbox>
+				    <text><label>LEFT HDPT</label></text>
+				    
+				    <checkbox>
+					    <property>f16/avionics/power-right-hdpt</property>
+					    <live>true</live>
+					    <binding>
+							<command>property-toggle</command>
+							<property>f16/avionics/power-right-hdpt</property>
+				      	</binding>
+				    </checkbox>
+				    <text><label>RIGHT HDPT</label></text>
+				    
+				    <checkbox>
+					    <property>f16/avionics/power-fcr</property>
+					    <live>true</live>
+					    <binding>
+							<command>property-toggle</command>
+							<property>f16/avionics/power-fcr</property>
+				      	</binding>
+				    </checkbox>
+				    <text><label>FCR</label></text>
+				    
+				</group>
+				
+				<group>
+					<layout>hbox</layout>
+					
+					<empty>
+				      <stretch>1</stretch>
+				    </empty>
+			
+					<group>
+						<layout>vbox</layout>
+						<halign>left</halign>
+						
+						<text>
+							<label>RDR ALT</label>
+						</text>
+						<text>
+							<label>STBY</label>
+						</text>
+						<text>
+							<label>OFF</label>
+						</text>
+						
+					</group>
+					
+					<slider>
+						<halign>left</halign>
+						<property>f16/avionics/power-rdr-alt</property>
+						<min>0</min>
+						<max>2</max>
+						<step>1</step>
+						<live>true</live>
+						<vertical>true</vertical>
+						<binding>
+							<command>dialog-apply</command>
+						</binding>
+					</slider>
+					
+				</group>
+				
+			</group>
+			
+			<hrule/>
+			
+			<group>
+				<layout>vbox</layout>
+				
+				<text>
+					<label>AVIONICS POWER</label>
+				</text>
+
+				<group>
+				    <layout>hbox</layout>
+				    
+				    <checkbox>
+					    <property>f16/avionics/power-mmc</property>
+					    <live>true</live>
+					    <binding>
+							<command>property-toggle</command>
+							<property>f16/avionics/power-mmc</property>
+				      	</binding>
+				    </checkbox>
+				    <text><label>MMC</label></text>
+				    
+				    <checkbox>
+					    <property>f16/avionics/power-st-sta</property>
+					    <live>true</live>
+					    <binding>
+							<command>property-toggle</command>
+							<property>f16/avionics/power-st-sta</property>
+				      	</binding>
+				    </checkbox>
+				    <text><label>ST STA</label></text>
+				    
+				    <checkbox>
+					    <property>f16/avionics/power-mfd</property>
+					    <live>true</live>
+					    <binding>
+							<command>property-toggle</command>
+							<property>f16/avionics/power-mfd</property>
+				      	</binding>
+				    </checkbox>
+				    <text><label>MFD</label></text>
+				    
+				</group>
+				
+				<group>
+				    <layout>hbox</layout>
+				    
+				    
+				    <checkbox>
+					    <property>f16/avionics/power-ufc</property>
+					    <live>true</live>
+					    <binding>
+							<command>property-toggle</command>
+							<property>f16/avionics/power-ufc</property>
+				      	</binding>
+				    </checkbox>
+				    <text><label>UFC</label></text>
+				    
+				    <checkbox>
+					    <property>f16/avionics/power-gps</property>
+					    <live>true</live>
+					    <binding>
+							<command>property-toggle</command>
+							<property>f16/avionics/power-gps</property>
+				      	</binding>
+				    </checkbox>
+				    <text><label>GPS</label></text>
+				    
+				    <checkbox>
+					    <property>f16/avionics/power-dl</property>
+					    <live>true</live>
+					    <binding>
+							<command>property-toggle</command>
+							<property>f16/avionics/power-dl</property>
+				      	</binding>
+				    </checkbox>
+				    <text><label>DL</label></text>
+				    
+				</group>
+								
+			</group>
+			
+		</group>
+		
+		<vrule/>
+		
+		<group>
+				<layout>vbox</layout>
+				
+				
+				
+				<text>
+					<label>FUEL QTY SEL</label>
+				</text>
+
+				<group>
+					<layout>hbox</layout>
+					
+					<empty>
+				      <stretch>1</stretch>
+				    </empty>
+			
+					<group>
+						<layout>vbox</layout>
+						<halign>left</halign>
+						
+						<text>
+							<label>TEST</label>
+						</text>
+						<text>
+							<label>NORM</label>
+						</text>
+						<text>
+							<label>RSVR</label>
+						</text>
+						<text>
+							<label>INT WING</label>
+						</text>
+						<text>
+							<label>EXT WING</label>
+						</text>
+						<text>
+							<label>EXT CTR</label>
+						</text>
+						
+					</group>
+					
+					<slider>
+						<halign>left</halign>
+						<pref-height>200</pref-height>
+						<property>controls/fuel/qty-selector</property>
+						<min>0</min>
+						<max>5</max>
+						<step>1</step>
+						<live>true</live>
+						<vertical>true</vertical>
+						<binding>
+							<command>dialog-apply</command>
+						</binding>
+					</slider>
+					
+				</group>
+				
+				<empty>
+				      <stretch>1</stretch>
+				</empty>
+				
+			</group>
+
+	</group>
+
+</PropertyList>

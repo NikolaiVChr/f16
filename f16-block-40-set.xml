@@ -77,14 +77,14 @@
    <default>
     <menu n="100">
      <label>F-16CG Block 40</label>
-        <item n="9">
+        <item n="10">
           <label>Payload quick select</label>
           <binding>
             <command>dialog-show</command>
             <dialog-name>payload</dialog-name>
           </binding>
       </item>
-      <item n="10">
+      <item n="11">
           <label>Program target</label>
           <enabled type="bool">true</enabled>
           <name>programGPS</name>

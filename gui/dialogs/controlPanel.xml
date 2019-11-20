@@ -12,8 +12,8 @@
 		<layout>hbox</layout>
 		<text>
 			<halign>left</halign>
-			<label>F-16 Control Panel</label>
-			<format>%s Control Panel</format>
+			<label>F-16 Control Panel 1</label>
+			<format>%s Control Panel Left</format>
 			<property>sim/description</property>
 		</text>
 		<button>
@@ -264,177 +264,6 @@
 
 			<hrule/>
 
-			<text>
-				<label>INTERIOR LIGHTS</label>
-			</text>
-
-			<group>
-				<layout>hbox</layout>
-
-				<group>
-					<layout>vbox</layout>
-					
-					<text>
-						<label>INSTR</label>
-					</text>
-					
-					<group>
-						<layout>hbox</layout>
-				
-						<group>
-							<layout>vbox</layout>
-							<halign>left</halign>
-							
-							<text>
-								<label>FULL</label>
-							</text>
-							<text>
-								<label>OFF</label>
-							</text>
-							
-						</group>
-						
-						<slider>
-							<halign>left</halign>
-							<property>controls/lighting/lighting-panel/pri-inst-pnl-knob</property>
-							<min>0</min>
-							<max>1</max>
-							<step>0.1</step>
-							<live>true</live>
-							<vertical>true</vertical>
-							<binding>
-								<command>dialog-apply</command>
-							</binding>
-						</slider>
-						
-					</group>
-				
-				</group>
-
-				<group>
-					<layout>vbox</layout>
-					
-					<text>
-						<label>FLOOD</label>
-					</text>
-					
-					<group>
-						<layout>hbox</layout>
-				
-						<group>
-							<layout>vbox</layout>
-							<halign>left</halign>
-							
-							<text>
-								<label>FULL</label>
-							</text>
-							<text>
-								<label>OFF</label>
-							</text>
-							
-						</group>
-						
-						<slider>
-							<halign>left</halign>
-							<property>controls/lighting/lighting-panel/flood-inst-pnl-knob</property>
-							<min>0</min>
-							<max>1</max>
-							<step>0.1</step>
-							<live>true</live>
-							<vertical>true</vertical>
-							<binding>
-								<command>dialog-apply</command>
-							</binding>
-						</slider>
-						
-					</group>
-				
-				</group>
-
-				<group>
-					<layout>vbox</layout>
-					
-					<text>
-						<label>CONSOLE</label>
-					</text>
-					
-					<group>
-						<layout>hbox</layout>
-				
-						<group>
-							<layout>vbox</layout>
-							<halign>left</halign>
-							
-							<text>
-								<label>FULL</label>
-							</text>
-							<text>
-								<label>OFF</label>
-							</text>
-							
-						</group>
-						
-						<slider>
-							<halign>left</halign>
-							<property>controls/lighting/lighting-panel/console-primary-knob</property>
-							<min>0</min>
-							<max>1</max>
-							<step>0.1</step>
-							<live>true</live>
-							<vertical>true</vertical>
-							<binding>
-								<command>dialog-apply</command>
-							</binding>
-						</slider>
-						
-					</group>
-				
-				</group>
-
-				<group>
-					<layout>vbox</layout>
-					
-					<text>
-						<label>DED</label>
-					</text>
-					
-					<group>
-						<layout>hbox</layout>
-				
-						<group>
-							<layout>vbox</layout>
-							<halign>left</halign>
-							
-							<text>
-								<label>FULL</label>
-							</text>
-							<text>
-								<label>OFF</label>
-							</text>
-							
-						</group>
-						
-						<slider>
-							<halign>left</halign>
-							<property>controls/lighting/lighting-panel/data-entry-display</property>
-							<min>0</min>
-							<max>1</max>
-							<step>0.1</step>
-							<live>true</live>
-							<vertical>true</vertical>
-							<binding>
-								<command>dialog-apply</command>
-							</binding>
-						</slider>
-						
-					</group>
-				
-				</group>
-
-			</group>
-
-			<hrule/>
-
 			<group>
 				<layout>vbox</layout>
 				
@@ -650,204 +479,6 @@
 			</group>
 
 			<hrule/>
-
-			
-			<group>
-				<layout>vbox</layout>
-				
-				<text>
-					<label>HUD</label>
-				</text>
-
-				<group>
-				    <layout>hbox</layout>
-				    <empty>
-				      <stretch>1</stretch>
-				    </empty>
-				    <checkbox>
-					    <property>f16/avionics/hud-ded</property>
-					    <live>true</live>
-					    <binding>
-							<command>property-toggle</command>
-							<property>f16/avionics/hud-ded</property>
-				      	</binding>
-				    </checkbox>
-				    <text><label>DED DATA</label></text>
-				</group>
-
-				<group>
-			    	<layout>hbox</layout>
-			    	
-			    	<group>
-						<layout>vbox</layout>
-						
-						<text>
-							<label>ALT</label>
-						</text>
-						
-						<group>
-							<layout>hbox</layout>
-						
-							<group>
-								<layout>vbox</layout>
-								<halign>left</halign>
-								
-								<text>
-									<label>RDR</label>
-								</text>
-								<text>
-									<label>BARO</label>
-								</text>
-								<text>
-									<label>AUTO</label>
-								</text>
-								
-							</group>
-							
-							<slider>
-								<halign>left</halign>
-								<property>/f16/avionics/hud-alt</property>
-								<min>0</min>
-								<max>2</max>
-								<step>1</step>
-								<live>true</live>
-								<vertical>true</vertical>
-								<binding>
-									<command>dialog-apply</command>
-								</binding>
-							</slider>
-							
-						</group>
-					
-					</group>
-
-					<group>
-						<layout>vbox</layout>
-						
-						<text>
-							<label>VELOCITY</label>
-						</text>
-						
-						<group>
-							<layout>hbox</layout>
-						
-							<group>
-								<layout>vbox</layout>
-								<halign>left</halign>
-								
-								<text>
-									<label>CAS</label>
-								</text>
-								<text>
-									<label>TAS</label>
-								</text>
-								<text>
-									<label>GND SPD</label>
-								</text>
-								
-							</group>
-							
-							<slider>
-								<halign>left</halign>
-								<property>/f16/avionics/hud-velocity</property>
-								<min>-1</min>
-								<max>1</max>
-								<step>1</step>
-								<live>true</live>
-								<vertical>true</vertical>
-								<binding>
-									<command>dialog-apply</command>
-								</binding>
-							</slider>
-							
-						</group>
-					
-					</group>
-
-					<group>
-						<layout>vbox</layout>
-						
-						<text>
-							<label>SCALES</label>
-						</text>
-						
-						<group>
-							<layout>hbox</layout>
-						
-							<group>
-								<layout>vbox</layout>
-								<halign>left</halign>
-								
-								<text>
-									<label>VAH</label>
-								</text>
-								<text>
-									<label>OFF</label>
-								</text>								
-							</group>
-							
-							<slider>
-								<halign>left</halign>
-								<property>/f16/avionics/hud-scales</property>
-								<min>0</min>
-								<max>1</max>
-								<step>1</step>
-								<live>true</live>
-								<vertical>true</vertical>
-								<binding>
-									<command>dialog-apply</command>
-								</binding>
-							</slider>
-							
-						</group>
-					
-					</group>
-
-					<group>
-						<layout>vbox</layout>
-						
-						<text>
-							<label>FPM</label>
-						</text>
-						
-						<group>
-							<layout>hbox</layout>
-						
-							<group>
-								<layout>vbox</layout>
-								<halign>left</halign>
-								
-								<text>
-									<label>ATT/FPM</label>
-								</text>
-								<text>
-									<label>FPM</label>
-								</text>
-								<text>
-									<label>OFF</label>
-								</text>								
-							</group>
-							
-							<slider>
-								<halign>left</halign>
-								<property>/f16/avionics/hud-fpm</property>
-								<min>0</min>
-								<max>2</max>
-								<step>1</step>
-								<live>true</live>
-								<vertical>true</vertical>
-								<binding>
-									<command>dialog-apply</command>
-								</binding>
-							</slider>
-							
-						</group>
-					
-					</group>
-
-				</group>
-
-			</group>
 			
 		</group>
 
@@ -1052,25 +683,6 @@
 
 			<hrule/>
 
-			<text><label>FLIGHT</label></text>
-
-			<group>
-			    <layout>hbox</layout>
-			    <checkbox>
-				    <property>controls/flight/flaps</property>
-				    <live>true</live>
-				    <binding>
-						<command>nasal</command>
-						<script>
-							setprop("controls/flight/flaps", !getprop("controls/flight/flaps"));
-						</script>
-			      	</binding>
-			    </checkbox>
-			    <text><label>ALT FLAPS</label></text>
-			</group>
-
-			<hrule/>
-
 			<group>
 			    <layout>hbox</layout>
 			    <button>
@@ -1088,78 +700,89 @@
 			</group>
 
 			<hrule/>
-
-			<input>
-			  	<width>75</width>
-			  	<height>25</height>
-			  	<label>BINGO</label>
-			  	<property>f16/settings/bingo</property>
-			  	<live>true</live>
-			  	<halign>left</halign>
-		        <binding>
-		            <command>dialog-apply</command>
-		      	</binding>
-		      	<!--<color>
-		      		<red>0.5</red>
-		      		<green>1</green>
-		      		<blue>0.5</blue>
-		      	</color>-->
-			</input>
-
-			<hrule/>
-
-			<input>
-			  	<width>75</width>
-			  	<height>25</height>
-			  	<label>CARA ALOW</label>
-			  	<property>f16/settings/cara-alow</property>
-			  	<live>true</live>
-			  	<halign>left</halign>
-		        <binding>
-		            <command>dialog-apply</command>
-		      	</binding>
-		      	<!--<color>
-		      		<red>0.5</red>
-		      		<green>1</green>
-		      		<blue>0.5</blue>
-		      	</color>-->
-			</input>
-
-			<hrule/>
-
-			<input>
-			  	<width>75</width>
-			  	<height>25</height>
-			  	<label>MSL FLOOR</label>
-			  	<property>f16/settings/msl-floor</property>
-			  	<live>true</live>
-			  	<halign>left</halign>
-		        <binding>
-		            <command>dialog-apply</command>
-		      	</binding>
-		      	<!--<color>
-		      		<red>0.5</red>
-		      		<green>1</green>
-		      		<blue>0.5</blue>
-		      	</color>-->
-			</input>
-			
-			<hrule/>
-
-			<input>
-			  	<width>75</width>
-			  	<height>25</height>
-			  	<label>EEGS WINGSPAN FT</label>
-			  	<property>f16/avionics/eegs-wingspan-ft</property>
-			  	<live>true</live>
-			  	<halign>left</halign>
-		        <binding>
-		            <command>dialog-apply</command>
-		      	</binding>
-			</input>
-
-		</group>		
-
+		
+		</group>
+		
 	</group>
+	
+	<hrule/>
+
+	<text><label>FLIGHT</label></text>
+
+	<group>
+	    <layout>hbox</layout>
+	    <text><label>ALT FLAPS</label></text>
+	    <checkbox>
+		    <property>controls/flight/flaps</property>
+		    <live>true</live>
+		    <binding>
+				<command>nasal</command>
+				<script>
+					setprop("controls/flight/flaps", !getprop("controls/flight/flaps"));
+				</script>
+	      	</binding>
+	    </checkbox>
+	    <text><label>MPO</label></text>
+	    <checkbox>
+		    <property>fdm/jsbsim/fcs/fbw-override</property>
+		    <live>true</live>
+		    <binding>
+				<command>nasal</command>
+				<script>
+					setprop("fdm/jsbsim/fcs/fbw-override", !getprop("fdm/jsbsim/fcs/fbw-override"));
+				</script>
+	      	</binding>
+	    </checkbox>	  
+	    <layout>hbox</layout>
+	    <text><label>CAT III</label></text>
+	    <checkbox>
+	      <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+	      <live>true</live>
+	        <binding>
+	          <command>property-toggle</command>
+	          <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+	        </binding>
+	    </checkbox>
+	    <empty>
+	      <stretch>1</stretch>
+	    </empty>
+	</group>
+	
+	<hrule/>
+	
+	<group>
+	    <layout>hbox</layout>
+	    <text><label>Refuel door open</label></text>
+	    <checkbox>
+	      <property>systems/refuel/serviceable</property>
+	      <live>true</live>
+	        <binding>
+	          <command>property-toggle</command>
+	          <property>systems/refuel/serviceable</property>
+	        </binding>
+	    </checkbox>
+	</group>
+	<text><label>Enable this to open refuel door in order to enable refueling in air. Notice that this will also</label></text>
+	<text><label>change how the fly-by-wire reacts to your stick inputs, so that you easier can make minute corrections</label></text>
+	<text><label>when close to the tanker.</label></text>
+	
+	<hrule/>
+
+  <group>
+    <layout>hbox</layout>
+    <text><label>Standby gains</label></text>
+    <checkbox>
+      <property>fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains</property>
+      <live>true</live>
+        <binding>
+          <command>property-toggle</command>
+          <property>fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains</property>
+        </binding>
+    </checkbox>
+  </group>
+  <text><label>Enable this when you don't trust the systems is working properly to collect air data.</label></text>
+  <text><label>Then it will use fixed gains instead.</label></text>
+
+  <hrule/>
 
 </PropertyList>
