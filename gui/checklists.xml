@@ -18,6 +18,10 @@
                 <name>Auto ordnance view</name>
                 <value>As required</value>
             </item>
+            <item>
+                <name>Flightplan</name>
+                <value>Load or create as needed</value>
+            </item>
         </checklist>
         
         <checklist>

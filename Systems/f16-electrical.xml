@@ -469,6 +469,14 @@
 			</test>
 		</switch>
 		
+		<switch name="elec/sources/epu-emerg-allow">
+			<default value="1"/>
+			<test logic="AND" value="0">
+				/f16/engine/jsf-start == 0
+				gear/unit[0]/WOW == 1
+			</test>
+		</switch>
+		
 		<switch name="elec/sources/epu-on">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -476,12 +484,14 @@
 				elec/sources/batt-bus eq 1
 				elec/failures/epu/serviceable eq 1
 				elec/sources/epu-elec eq 1
+				elec/sources/epu-emerg-allow == 1
 			</test>
 			<test logic="AND" value="1">
 				elec/switches/epu ne 0
 				elec/sources/batt-bus eq 1
 				elec/failures/epu/serviceable eq 1
 				elec/sources/epu-hyd eq 1
+				elec/sources/epu-emerg-allow == 1
 			</test>
 			<test logic="AND" value="1">
 				elec/switches/epu eq 2
