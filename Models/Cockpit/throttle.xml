@@ -23,6 +23,12 @@
   <object-name>PINKY_SWITCH</object-name>
   <object-name>PINKY_SWITCH_HANDLE</object-name>
   <object-name>PINKY_SWITCH_LB</object-name>
+  <condition>
+      <equals>
+          <property>f16/engine/jsf-start</property>
+          <value>1</value>
+      </equals>
+  </condition>
   <property>/controls/engines/engine/throttle</property>
   <offset-deg>45</offset-deg>
   <factor>-75</factor>
@@ -86,7 +92,7 @@
   <hovered>
       <binding>
           <command>set-tooltip</command>
-          <label>JSF START</label>
+          <label>OFF toggle</label>
           <tooltip-id>jsfstart</tooltip-id>
       </binding>
  </hovered>

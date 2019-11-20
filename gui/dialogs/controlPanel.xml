@@ -999,7 +999,7 @@
 
 					<group>
 					    <layout>hbox</layout>
-					    <text><label>JSF START</label></text>
+					    <text><label>THROTTLE</label></text>
 					    <checkbox>
 					      <property>f16/engine/jsf-start</property>
 					      <live>true</live>

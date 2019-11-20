@@ -37,17 +37,17 @@
                 </binding>
             </item>
             <item>
-                <name>Throttle</name>
+                <name>Throttle (black switch on throttle)</name>
                 <value>OFF</value>
                 <condition>
                     <equals>
-                        <property>controls/engines/engine[0]/throttle</property>
+                        <property>f16/engine/jsf-start</property>
                         <value>0</value>
                     </equals>
                 </condition>
                 <binding>
                     <command>property-assign</command>
-                    <property>controls/engines/engine[0]/throttle</property>
+                    <property>f16/engine/jsf-start</property>
                     <value>0</value>
                 </binding>
             </item>
@@ -139,16 +139,10 @@
                 <name>EPU GEN and EPU PMG lights</name>
                 <value>Confirm off</value>
                 <condition>
-                    <or>
                     <less-than>
-                      <property>fdm/jsbsim/elec/bus/batt-2</property>
-                      <value>20</value>
-                    </less-than>
-                      <less-than>
                         <property>fdm/jsbsim/elec/sources/epu-gen-volt</property>
                         <value>100</value>
-                      </less-than>
-                    </or>
+                    </less-than>
                 </condition>
             </item>
             <item>
@@ -175,21 +169,6 @@
                 </binding>
             </item>
             <item>
-                <name>Throttle</name>
-                <value>IDLE</value>
-                <condition>
-                    <greater-than>
-                        <property>controls/engines/engine[0]/throttle</property>
-                        <value>0</value>
-                    </greater-than>
-                </condition>
-                <binding>
-                    <command>property-assign</command>
-                    <property>controls/engines/engine[0]/throttle</property>
-                    <value>0</value>
-                </binding>
-            </item>
-            <item>
                 <name>Wait for RPM</name>
                 <value>N2 25%</value>
                 <condition>
@@ -200,18 +179,27 @@
                 </condition>
             </item>
             <item>
-                <name>JSF START (black switch on throttle)</name>
-                <value>OFF</value>
+                <name>Throttle (black switch on throttle)</name>
+                <value>IDLE</value>
                 <condition>
                     <equals>
                         <property>f16/engine/jsf-start</property>
                         <value>1</value>
+                    </equals>
+                    <equals>
+                        <property>controls/engines/engine[0]/throttle</property>
+                        <value>0</value>
                     </equals>
                 </condition>
                 <binding>
                     <command>property-assign</command>
                     <property>f16/engine/jsf-start</property>
                     <value>1</value>
+                </binding>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/engines/engine[0]/throttle</property>
+                    <value>0</value>
                 </binding>
             </item>
             <item>
@@ -282,11 +270,11 @@
             </item>
             <item>
                 <name>RPM</name>
-                <value>Around 60%</value>
+                <value>Around 60%</value><!-- real: greater than 55% -->
                 <condition>
                     <equals>
                         <property>engines/engine[0]/n2</property>
-                        <value>80</value>
+                        <value>60</value>
                     </equals>
                 </condition>
             </item>
@@ -734,23 +722,8 @@
         <checklist>
             <title>Engine shutdown</title>
             <item>
-                <name>Throttle</name>
+                <name>Throttle (black switch on throttle)</name>
                 <value>OFF</value>
-                <condition>
-                    <equals>
-                        <property>controls/engines/engine[0]/throttle</property>
-                        <value>0</value>
-                    </equals>
-                </condition>
-                <binding>
-                    <command>property-assign</command>
-                    <property>controls/engines/engine[0]/throttle</property>
-                    <value>0</value>
-                </binding>
-            </item>
-            <item>
-                <name>JSF START (black switch on throttle)</name>
-                <value>ON</value>
                 <condition>
                     <equals>
                         <property>f16/engine/jsf-start</property>
