@@ -137,7 +137,7 @@
 		
 		<switch name="elec/sources/external-pwr-plugged-in">
 			<default value="0"/>
-			<test logic="OR" value="1">
+			<test logic="AND" value="1">
 				elec/sources/external-pwr == 1
 				fcs/gear-wow eq 1
 				velocities/vg-fps lt 1
