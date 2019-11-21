@@ -32,7 +32,7 @@ J Maverick 16
 - Liveries and textures
 - Sound recording/editing and addition
 - Addition and implementation of weapons, stores
-- 3D works (pilot model, weapons/stores, misc)
+- 3D works (pilot model, weapons/stores, cockpit, misc)
 - RWR/RCS data research and update
 - Effects improvement
 - GoPro views
@@ -45,9 +45,6 @@ Richard Harrison
 - HUD
 - 3D misc. panel
 - Avionics communication system (emessary based)
-
-NC-687
-- Side stick
 
 Justin Nicholson
 - Splashes
@@ -65,7 +62,10 @@ Jonathan Redpath
 - Bug reporting
 
 Martien Van Der Plas
-- 3D modeling for weapons, stores
+- 3D modeling/texturing for weapons, stores, racks
+
+NC-687
+- Side stick
 
 Joshua Davidson (Octal450)
 - Autopilot
@@ -75,6 +75,7 @@ Joshua Davidson (Octal450)
 Gary Brown
 - Most liveries
 - ALE-50 3D model
+- Paintkit
 
 Carsten Brueggmann
 - Sound creation and editing.
