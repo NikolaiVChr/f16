@@ -140,7 +140,7 @@
 			<test logic="AND" value="1">
 				elec/sources/external-pwr == 1
 				fcs/gear-wow eq 1
-				velocities/vg-fps lt 1
+				velocities/vg-fps lt 0.05
 			</test>
 		</switch>
 		
