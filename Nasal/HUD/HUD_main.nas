@@ -2379,7 +2379,7 @@ append(obj.total, obj.speed_curr);
                                 me.target_locked.setTranslation (me.echoPos);
                                 if (currASEC != nil) {
                                     me.cue = nil;
-                                    call(func {me.cue = hdp.weapn.getIdealFireSolution();});
+                                    call(func {me.cue = hdp.weapn.getIdealFireSolution();},[], nil, nil, var err = []);
                                     if (me.cue != nil) {
                                         me.ascpixel = me.cue[1]*HudMath.getPixelPerDegreeAvg(2);
                                         me.ascPos = HudMath.getPosFromDegs(me.echoPos[2], me.echoPos[3]);
