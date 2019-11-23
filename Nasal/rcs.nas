@@ -24,7 +24,7 @@ var rcs_database = {
     "F-15C":                    10,     #low end of sources
     "F-15D":                    11,     #low end of sources
     "F-16":                     2,      #guess
-    "YF-16":                    2,      
+    "YF-16":                    5,      #higher because earlier blocks had larger RCS
     "F-16CJ":                   2,      #guess
     "f16":                      2,      #guess
     "MiG-29":                   6,      #guess
