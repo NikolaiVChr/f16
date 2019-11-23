@@ -1322,13 +1322,14 @@ gui.showHelpDialog = func(path, toggle=0) {
         }
     }
     var toggle = toggle > 0;
+    var dialog = gui.dialog;
     if (toggle and contains(dialog, name)) {
         fgcommand("dialog-close", props.Node.new({ "dialog-name": name }));
         delete(dialog, name);
         return;
     }
     
-    var dialog = gui.dialog;
+    
 
     dialog[name] = gui.Widget.new();
     dialog[name].set("layout", "vbox");
