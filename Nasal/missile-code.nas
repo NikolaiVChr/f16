@@ -1090,6 +1090,10 @@ var AIM = {
 		me.idealLoft = me.clamp(me.extrapolate(me.Tgt.get_range(), 15, 40, 0, 10),0,10);
 		me.idVec = vector.Math.plus([0,0,math.tan(me.idealLoft*D2R)*me.Tgt.get_range()*NM2M],me.idVec);
 		me.idHere = vector.Math.projVectorOnPlane(me.planeVec, me.idVec);
+#		if (type(me.idHere[0]) != "scalar" or type(me.idHere[1]) != "scalar" or type(me.idHere[2]) != "scalar") {
+#			print("ASC floating point error");
+#			return nil;
+#		}
 		me.angleFromUp = vector.Math.angleBetweenVectors(me.idHere, vector.Math.eulerToCartesian3Z(-OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue()));
 		me.angleFromRight = 180-vector.Math.angleBetweenVectors(me.idHere, vector.Math.eulerToCartesian3Y(-OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue()));
 		me.angleInHUD = me.angleFromUp>=90?me.angleFromRight:-me.angleFromRight;#0 is up, 180 normalized
@@ -4494,8 +4498,8 @@ var AIM = {
 				return;
 			}
 
-			me.curr_deviation_e = - deviation_normdeg(OurPitch.getValue(), me.Tgt.getElevation());
-			me.curr_deviation_h = - deviation_normdeg(OurHdg.getValue(), me.Tgt.get_bearing());
+			me.curr_deviation_e = deviation_normdeg(OurPitch.getValue(), me.Tgt.getElevation());
+			me.curr_deviation_h = deviation_normdeg(OurHdg.getValue(), me.Tgt.get_bearing());
 			if (!me.caged) {
 				me.seeker_elev_target = me.curr_deviation_e;
 				me.seeker_head_target = me.curr_deviation_h;
