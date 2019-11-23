@@ -24,7 +24,7 @@ var rcs_database = {
     "F-15C":                    10,     #low end of sources
     "F-15D":                    11,     #low end of sources
     "F-16":                     2,      #guess
-    "YF-16":                    5,      
+    "YF-16":                    2,      
     "F-16CJ":                   2,      #guess
     "f16":                      2,      #guess
     "MiG-29":                   6,      #guess
@@ -66,7 +66,7 @@ var rcs_database = {
     "Voyager-KC":               80,     #guess
     "Typhoon":                  0.5,
     "EF2000":                   0.5,
-    "brsq":                     5,
+    "brsq":                     2.5,
     "C-137R":                   90,     #guess
     "RC-137R":                  95,     #guess
     "EC-137R":                  100,    #guess
@@ -87,8 +87,8 @@ var rcs_database = {
     "frigate":                  450,    #estimated with blender
     "tower":                    60,     #estimated with blender
     "gci":                      50,     #guess
-    "FA-18C_Hornet":            1,
-    "FA-18D_Hornet":            1,
+    "FA-18C_Hornet":            3.5,
+    "FA-18D_Hornet":            3.5,
     "F-22-Raptor":				0.002,	#actual: 0.0001
     "F-35A":					0.001,
     "F-35B":					0.001,  
@@ -99,7 +99,7 @@ var rcs_database = {
     "f-20bmw":                  2.5,
     "f-20-dutchdemo":           2.5,
     "MiG-15bis":                17,     #guess
-    "G91-R1B":                  8,      #guess
+    "G91-R1B":                  4,      #guess
 };
 
 var prevVisible = {};
