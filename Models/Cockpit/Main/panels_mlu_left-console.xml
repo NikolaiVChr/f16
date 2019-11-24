@@ -148,6 +148,8 @@
         <object-name>Torus.007</object-name>
         <object-name>pitch-trim-wheel</object-name>
         <object-name>roll-trim-wheel</object-name>
+        <object-name>eec-cover</object-name>
+        <object-name>eec-switch</object-name>
     </effect>
 
  <animation>

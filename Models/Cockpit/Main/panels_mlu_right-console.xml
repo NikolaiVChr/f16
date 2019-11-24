@@ -661,6 +661,7 @@
         </parameters>
         <!-- objects added to this will NOT have all white in texture lit up green when console is high. They will get flood light though. -->
         <!-- mainly for switches -->
+        <object-name>switch-bases</object-name>
         <object-name>test-step-switch</object-name>
         <object-name>autobrt-switch</object-name>
         <object-name>att_fpm-switch</object-name>
@@ -692,6 +693,7 @@
         <object-name>dl-switch</object-name>
         <object-name>gps-switch</object-name>
         <object-name>aircond-switch</object-name>
+        <object-name>indv-lgt-cont</object-name>
     </effect>
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-knob</inherits-from>
