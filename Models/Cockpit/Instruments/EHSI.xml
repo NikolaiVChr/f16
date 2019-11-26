@@ -10,7 +10,8 @@
             <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
         </parameters>
         <object-name>HSI_mount</object-name>
-        <object-name>HSI_knobs</object-name>
+        <object-name>HSI_course-knob</object-name>
+        <object-name>HSI_hdg-knob</object-name>
     </effect>
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
