@@ -209,6 +209,10 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
         #lock.hide();
         #setprop("f16/avionics/lock-flir",0.05);
         return;
+    } elsif (button == 3) {#STBY/A-G/A-A
+        if (getprop("f16/avionics/power-mfd") and getprop("f16/avionics/power-ufc-warm")==1 and getprop("f16/avionics/power-right-hdpt") == 1 and getprop("fdm/jsbsim/elec/bus/ess-dc") > 20) {
+            masterMode = !masterMode;
+        }
     }
     if (!enable) return;
     if (button == 1) {#LOCK
@@ -344,15 +348,7 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
         if (zoomlvl > 4) {
             zoomlvl = 1;
         }
-    }# elsif (button == 3) {#RDR
-     #   if (!getprop("/aircraft/flir/target/auto-track") and awg_9.active_u != nil) {
-     #       flir_updater.offsetP = 0;
-     #       flir_updater.offsetH = 0;
-     #       flir_updater.click_coord_cam = awg_9.active_u.get_Coord();
-     #       flir_updater.aim();
-     #       flir_updater.click_coord_cam = nil;
-     #   }
-     #}
+    }
 });
 
 var steerlock = 0;
@@ -363,6 +359,7 @@ var fast_loop = func {
     
     if (viewName == "TGP" and (getprop("gear/gear/wow") or !getprop("f16/stores/tgp-mounted"))) {
         # deselect view back to pilot default
+        masterMode = STBY;
         setprop("sim/current-view/view-number",0);
         setprop("sim/rendering/als-filters/use-IR-vision", 0);
         setprop("sim/view[105]/enabled", 0);
@@ -371,21 +368,39 @@ var fast_loop = func {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
             midl.setText("    MFD OFF   ");
             bott.setText("");
+            line3.setText("");
+            cross.hide();
             enable = 0;
+            masterMode = STBY;
         } elsif (getprop("f16/avionics/power-right-hdpt") == 0 or getprop("fdm/jsbsim/elec/bus/ess-dc") <=20) {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
-            midl.setText("   NO POWER  ");
+            midl.setText("      OFF     ");
             bott.setText("");
+            line3.setText("");
+            cross.hide();
             enable = 0;
+            masterMode = STBY;
         } elsif (getprop("f16/avionics/power-right-hdpt-warm") < 1) {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
             midl.setText("NOT TIMED OUT");
             bott.setText("");
+            line3.setText(masterMode==0?"STBY":(hiddenMode==AG?"A-G":"A-A"));
+            cross.hide();
+            enable = 0;
+        } elsif (masterMode == STBY) {
+            canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
+            midl.setText("   STANDBY   ");
+            bott.setText("");
+            line3.setText("STBY");
+            cross.hide();
             enable = 0;
         } else {
             canvasMFDext.setColorBackground(1.00, 1.00, 1.00, 0.00);
+            line3.setText(hiddenMode==AG?"A-G":"A-A");
+            cross.show();
             enable = 1;
         }
+        
         # FLIR TGP stuff:
         setprop("aircraft/flir/target/view-enabled", viewName == "TGP");
         setprop("sim/rendering/als-filters/use-filtering", viewName == "TGP");
@@ -435,7 +450,6 @@ var fast_loop = func {
         #setprop("f16/avionics/lock-flir",0.05);
     }
     
-    #callsign = nil;
     steerlock = 0;
     var follow = 0;
     if (armament.contactPoint !=nil and armament.contactPoint.get_range()>35 and armament.contactPoint.get_Callsign() != "GPS-Spot") {
@@ -444,9 +458,10 @@ var fast_loop = func {
     var gpps = 0;
     if (armament.contactPoint == nil or !enable) {
         # no TGP lock
-        if (armament.contact == nil and enable) {# we do not check for get_display here since as long as something is selected we dont show steerpoint.
+        if (armament.contact == nil and enable and masterMode) {# we do not check for get_display here since as long as something is selected we dont show steerpoint.
             if (getprop("autopilot/route-manager/active") == 1 and getprop("f16/avionics/power-mmc") and getprop("autopilot/route-manager/current-wp") != nil and getprop("autopilot/route-manager/current-wp") > -1) {
                 # TGP follow steerpoint
+                hiddenMode = AG;
                 var idx = getprop("autopilot/route-manager/current-wp");
                 var ele = getprop("autopilot/route-manager/route/wp["~idx~"]/altitude-ft");
                 var lat = getprop("autopilot/route-manager/route/wp["~idx~"]/latitude-deg");
@@ -473,6 +488,7 @@ var fast_loop = func {
                 steer = 1;
             } else {
                 # TGP not follow, locked from aircraft
+                hiddenMode = AG;
                 setprop("/aircraft/flir/target/auto-track", 0);
                 flir_updater.click_coord_cam = nil;
                 flir_updater.offsetP = 0;
@@ -480,7 +496,7 @@ var fast_loop = func {
                 steer = 0;
                 callsign = nil;
             }
-        } elsif (armament.contact != nil and armament.contact.get_display() and enable) {
+        } elsif (armament.contact != nil and armament.contact.get_display() and enable and masterMode) {
             # TGP follow radar lock
             flir_updater.click_coord_cam = armament.contact.get_Coord();
             setprop("/aircraft/flir/target/auto-track", 1);
@@ -489,8 +505,10 @@ var fast_loop = func {
                 flir_updater.offsetH = 0;
             }
             callsign = armament.contact.getUnique();
+            hiddenMode = armament.contact.get_type() == armament.AIR?AA:AG;
             steer = 0;
         } else {
+            hiddenMode = AG;
             setprop("/aircraft/flir/target/auto-track", 0);
             flir_updater.click_coord_cam = nil;
             callsign = nil;
@@ -511,7 +529,7 @@ var fast_loop = func {
             follow = 1;
             vis = awg_9.TerrainManager.IsVisible(armament.contactPoint.propNode, nil);
         }
-        if (!vis) {
+        if (!vis or !masterMode) {
             setprop("/aircraft/flir/target/auto-track", 0);
             flir_updater.click_coord_cam = nil;
             callsign = nil;
@@ -519,6 +537,7 @@ var fast_loop = func {
             flir_updater.offsetH = 0;
             lock_tgp = 0;
             armament.contactPoint = nil;
+            hiddenMode = AG;
         } else {
             lock_tgp = 1;
             flir_updater.click_coord_cam = armament.contactPoint.get_Coord();
@@ -581,6 +600,8 @@ var fast_loop = func {
         var polarD = polarL!=0 and b!=0?math.atan2(p,b)*R2D:-90;
         setprop("aircraft/flir/swivel/pitch-deg",polarL);
         setprop("aircraft/flir/swivel/roll-deg",polarD);
+    } elsif (!masterMode) {
+        lock.hide();
     }
     settimer(fast_loop,0);
 }
@@ -613,6 +634,11 @@ var wide = 1;
 var zoomlvl = 1.0;
 var gps = 0;# set from Program GPS dialog
 var steer = 0;
+var STBY = 0;
+var AG = 1;
+var AA = 2;
+var masterMode = STBY;
+var hiddenMode = AG;
 
 var canvasMFDext = nil;
 var callInit = func {
@@ -658,8 +684,7 @@ var callInit = func {
         .setColor(color)
         .setAlignment("left-center")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
-        .setText("ZOOM")
-        .hide()        
+        .setText("STBY")
         .setTranslation(5, 256*0.50);
   line4 = dedGroup.createChild("text")
         .setFontSize(13, 1)
