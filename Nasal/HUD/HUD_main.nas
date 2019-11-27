@@ -2658,9 +2658,9 @@ var isDropping = 0;
 
 var dropping = func {
     if (getprop("payload/armament/gravity-dropping")) {
-        isDropping = 1;print("is dropping");
+        isDropping = 1;
     } else {
-        settimer(func {isDropping = 0;print("is !dropping");}, 1.0);
+        settimer(func {isDropping = 0;}, 1.0);
     }
 }
 

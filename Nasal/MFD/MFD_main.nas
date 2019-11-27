@@ -1072,6 +1072,13 @@ var MFD_Device =
                 .setColor(1,1,1)
                 .setFontSize(16, 1.0);    
                 
+        svg.pre = svg.p_WPN.createChild("text")
+                .setTranslation(276*0.795*0.0, -482*0.5-225)
+                .setText("")
+                .setAlignment("center-top")
+                .setColor(1,1,1)
+                .setFontSize(16, 1.0);
+                
         svg.eegs = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795*0.325, -482*0.5-225)
                 .setText("")
@@ -1306,12 +1313,13 @@ var MFD_Device =
             me.armtimer = "";
             me.drop = "";
             me.showDist = 0;
+            me.pre = "";
             if (me.wpn != nil and me.pylon != nil) {
                 if (me.wpn.type == "MK-82" or me.wpn.type == "MK-83" or me.wpn.type == "MK-84" or me.wpn.type == "GBU-12" or me.wpn.type == "GBU-24" or me.wpn.type == "GBU-54" or me.wpn.type == "CBU-87" or me.wpn.type == "GBU-31" or me.wpn.type == "B61-7" or me.wpn.type == "B61-12") {
                     me.wpnType ="fall";
                     var nm = pylons.fcs.getDropMode();
-                    if (nm == 1) me.drop = "CCIP";
-                    if (nm == 0) me.drop = "CCRP";
+                    if (nm == 1) {me.drop = "CCIP";me.pre=armament.contact != nil and armament.contact.get_type() != armament.AIR?"PRE":"VIS";}
+                    if (nm == 0) {me.drop = "CCRP";me.pre="PRE"}
                     var rp = pylons.fcs.getRippleMode();
                     var rpd = pylons.fcs.getRippleDist()*M2FT;
                     me.ripple = "RP "~rp;
@@ -1446,6 +1454,7 @@ var MFD_Device =
             } else {
                 me.root.weap.setText("");
             }
+            me.root.pre.setText(me.pre);  
             me.root.drop.setText(me.drop);  
             me.root.cool.setText(me.cool);
             me.root.eegs.setText(me.eegs);
