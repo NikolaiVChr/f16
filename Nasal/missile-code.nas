@@ -695,6 +695,9 @@ var AIM = {
 		m.nextGroundElevation = 0; # next Ground Elevation
 		m.nextGroundElevationMem = [-10000, -1];
 		m.terrainStage = 0;
+		
+		# DLZ needs this for vector thrust missiles
+		m.thrust_lbf = 0;
 
 		#rail
 		m.rail_passed = FALSE;
