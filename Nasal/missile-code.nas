@@ -1155,12 +1155,14 @@ var AIM = {
 			me.status = MISSILE_STARTING;
 			me.ready_standby_time = getprop("sim/time/elapsed-sec");
 			if (me.ready_standby_time == 0) me.ready_standby_time = 0.001;
+			#printf("start #%3d %s", me.ID, me.type);
 		}
 	},
 
 	stop: func {
 		if (me.status != MISSILE_FLYING) {
 			me.status = MISSILE_STANDBY;
+			#printf("stop  #%3d %s", me.ID, me.type);
 		}
 	},
 
@@ -3950,7 +3952,10 @@ var AIM = {
 		if(me.uncage_auto) {
 			me.caged = TRUE;
 		}
-		if (me.status != MISSILE_STARTING) me.standby();
+		if (me.status != MISSILE_STARTING) {
+			me.standby();
+			return;
+		}
 		if (me.ready_standby_time != 0 and getprop("sim/time/elapsed-sec") > (me.ready_standby_time+me.ready_time)) {
 			me.status = MISSILE_SEARCH;
 			me.search();
