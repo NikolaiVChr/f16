@@ -1939,6 +1939,7 @@ There is also small changes in tail for different variants with and without brak
             <MP-lat type="string">rotors/main/blade[0]/flap-deg</MP-lat>
             <MP-lon type="string">rotors/main/blade[1]/flap-deg</MP-lon>
             <MP-alt type="string">rotors/main/blade[2]/flap-deg</MP-alt>
+            <gravity-dropping type="bool">false</gravity-dropping>
             <station>
                 <id-0-set type="string">Empty</id-0-set>
                 <id-1-set type="string">Empty</id-1-set>

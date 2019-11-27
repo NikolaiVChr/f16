@@ -329,7 +329,7 @@ var F16_HUD = {
                                       }),
             props.UpdateManager.FromHashList(["texUp","VV_x","VV_y","fpm"], 0.001, func(hdp)
                                       {
-                                        if (hdp.fpm > 0) {
+                                        if (hdp.fpm > 0 and (!obj.showmeCCIP or !isDropping or math.mod(int(8*(systime()-int(systime()))),2)>0)) {
                                             #obj.VV.setTranslation (obj.sx*0.5+hdp.VV_x * obj.texelPerDegreeX, obj.sy-obj.texels_up_into_hud+hdp.VV_y * obj.texelPerDegreeY);
                                             obj.VV.setTranslation (hdp.VV_x, hdp.VV_y);
                                             obj.VV.show();
@@ -2653,3 +2653,15 @@ var drag = func (Mach, _cd) {
     else
         return 0.2965 * math.pow(Mach, -1.1506) + _cd;
 };
+
+var isDropping = 0;
+
+var dropping = func {
+    if (getprop("payload/armament/gravity-dropping")) {
+        isDropping = 1;print("is dropping");
+    } else {
+        settimer(func {isDropping = 0;print("is !dropping");}, 1.0);
+    }
+}
+
+setlistener("payload/armament/gravity-dropping",func{dropping()},nil,0);
