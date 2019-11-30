@@ -35,6 +35,8 @@
             <path>/link16/wingman-6</path>
             <path>/link16/wingman-7</path>
             <path>/link16/wingman-8</path>
+            <path>/link16/wingman-9</path>
+            <path>/link16/wingman-10</path>
             <path>/f16/avionics/gps-lat</path>
             <path>/f16/avionics/gps-lon</path>
             <path>/f16/avionics/gps-alt</path>
@@ -754,7 +756,7 @@ Upper semicircle: new threat (750Hz tone)
 Full blinking circle: hostile launch (2000Hz tone)
 Hat above designation: Airborne
 
-Use Link 16 in menu to define your wingmen, so they don't show up on RWR.
+Use Link 16 in menu to define your wingmen (up to 10), so they don't show up on RWR.
 
 For something to show up in the RWR at all these conditions must be met:
 1: Be a threat.
@@ -2923,6 +2925,8 @@ There is also small changes in tail for different variants with and without brak
         <wingman-6 type="string"></wingman-6>
         <wingman-7 type="string"></wingman-7>
         <wingman-8 type="string"></wingman-8>
+        <wingman-9 type="string"></wingman-9>
+        <wingman-10 type="string"></wingman-10>
     </link16>
     <sound>
         <rwr-new type="bool">false</rwr-new>

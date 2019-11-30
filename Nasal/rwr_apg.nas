@@ -29,6 +29,8 @@ var SubSystem_RWR_APG = {
                link16_wingman_6: "link16/wingman-6",
                link16_wingman_7: "link16/wingman-7",
                link16_wingman_8: "link16/wingman-8",
+               link16_wingman_9: "link16/wingman-9",
+               link16_wingman_10: "link16/wingman-10",
         };
 
         foreach (var name; keys(input)) {
@@ -67,7 +69,7 @@ var SubSystem_RWR_APG = {
                 me.cs = me.u.get_Callsign();
                 me.rn = me.u.get_range();
                 me.l16 = 0;
-                if (notification.link16_wingman_1 == me.cs or notification.link16_wingman_2 == me.cs or notification.link16_wingman_3 == me.cs or notification.link16_wingman_4 == me.cs or notification.link16_wingman_5 == me.cs or notification.link16_wingman_6 == me.cs or notification.link16_wingman_7 == me.cs or notification.link16_wingman_8 == me.cs or me.rn > 160) {
+                if (notification.link16_wingman_1 == me.cs or notification.link16_wingman_2 == me.cs or notification.link16_wingman_3 == me.cs or notification.link16_wingman_4 == me.cs or notification.link16_wingman_5 == me.cs or notification.link16_wingman_6 == me.cs or notification.link16_wingman_7 == me.cs or notification.link16_wingman_8 == me.cs or notification.link16_wingman_9 == me.cs or notification.link16_wingman_10 == me.cs or me.rn > 160) {
                     me.l16 = 1;
                 }
                 me.bearing = geo.aircraft_position().course_to(me.u.get_Coord());
