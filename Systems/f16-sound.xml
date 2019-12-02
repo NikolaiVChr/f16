@@ -812,17 +812,17 @@
             <condition>
                 <greater-than>
                     <property>orientation/alpha-deg</property>
-                    <value>17</value>
+                    <value>15</value>
                 </greater-than>
                 <greater-than>
                     <property>accelerations/pilot-gdamped</property>
                     <value>2.5</value>
                     <!-- this is the airflow over the front so not going to be much if we're just dropping -->
                 </greater-than>
-                <greater-than>
+                <less-than>
                     <property>instrumentation/airspeed-indicator/indicated-speed-kt</property>
-                    <value>100</value>
-                </greater-than>
+                    <value>300</value>
+                </less-than>
                 <greater-than>
                     <property>sim/current-view/internal</property>
                     <value>0</value>
@@ -832,8 +832,8 @@
                 <property>orientation/alpha-deg</property>
                 <factor>0.035</factor>
             </volume>
-            <reference-dist>450.0</reference-dist>
-            <max-dist>2900.0</max-dist>
+            <reference-dist>400.0</reference-dist>
+            <max-dist>2000.0</max-dist>
         </high-alpha-airflow>
 
 		<!-- STALL WARN -->
