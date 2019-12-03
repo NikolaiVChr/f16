@@ -1314,7 +1314,7 @@ var MFD_Device =
             me.drop = "";
             me.showDist = 0;
             me.pre = "";
-            if (me.wpn != nil and me.pylon != nil) {
+            if (me.wpn != nil and me.pylon != nil and me.wpn["typeShort"] != nil) {
                 if (me.wpn.type == "MK-82" or me.wpn.type == "MK-83" or me.wpn.type == "MK-84" or me.wpn.type == "GBU-12" or me.wpn.type == "GBU-24" or me.wpn.type == "GBU-54" or me.wpn.type == "CBU-87" or me.wpn.type == "GBU-31" or me.wpn.type == "B61-7" or me.wpn.type == "B61-12") {
                     me.wpnType ="fall";
                     var nm = pylons.fcs.getDropMode();
