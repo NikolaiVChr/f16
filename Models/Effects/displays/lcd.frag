@@ -37,7 +37,7 @@ vec3 rotateHue (in vec4 color) {
 
     // Make the adjustment
     hue += radians(180.0);
-    YPrime = 1 - YPrime;
+    YPrime = 1.0 - YPrime;
 
     // Convert back to YIQ
     Q = chroma * sin (hue);
@@ -92,7 +92,7 @@ void main (void) {
         phong = clamp(phong, 0.0, 1.0);
     }
     vec4 specular = gl_FrontMaterial.specular * gl_LightSource[0].diffuse * phong;
-    vec3 ambient = gl_FrontMaterial.ambient.rgb * gl_LightSource[0].ambient.rgb * gl_LightSource[0].ambient.rgb * 2;//hack but works, pitch black at night. :)
+    vec3 ambient = gl_FrontMaterial.ambient.rgb * gl_LightSource[0].ambient.rgb * gl_LightSource[0].ambient.rgb * 2.0;//hack but works, pitch black at night. :)
 
     vec3 L = normalize((gl_ModelViewMatrixInverse * gl_LightSource[0].position).xyz);
     N = normalize((gl_ModelViewMatrixTranspose * vec4(N,0.0)).xyz);
@@ -100,11 +100,11 @@ void main (void) {
     nDotVP = max(0.0, nDotVP);
     vec3 diffuse = gl_FrontMaterial.diffuse.rgb * gl_LightSource[0].diffuse.rgb * nDotVP;
 
-    color = clamp(color+specular.rgb+ambient+diffuse, 0, 1);
+    color = clamp(color+specular.rgb+ambient+diffuse, 0.0, 1.0);
 
     vec4 dustTexel = texture2D(dust_texture, gl_TexCoord[0].st);
     dustTexel.rgb *= gl_LightSource[0].diffuse.rgb * nDotVP;
-    dustTexel.a = clamp(dustTexel.a * dirt_factor * (1.0 - 0.4 * max(0.0,dot(normalize(VNormal), Lphong)))*(length(vec3(1,1,1))/1.76),0.0,1.0); 
+    dustTexel.a = clamp(dustTexel.a * dirt_factor * (1.0 - 0.4 * max(0.0,dot(normalize(VNormal), Lphong)))*(length(vec3(1.0))/1.76),0.0,1.0); 
     color.rgb =  mix(color.rgb, dustTexel.rgb,  dustTexel.a );
     //color.a = max(color.a, dustTexel.a);
     texel.a = max(texel.a, dustTexel.a);
