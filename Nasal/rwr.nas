@@ -199,7 +199,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_MITTEN   = "Y1";
         rwr.AIRCRAFT_ALCA     = "LC";
         rwr.AIRCRAFT_UNKNOWN  = "U";
-        rwr.AIRCRAFT_UFO      = "UN";
+        rwr.AIRCRAFT_UFO      = "UK";
         rwr.ASSET_AI          = "AI";
         rwr.lookupType = {
         # OPRF fleet and related aircrafts:
