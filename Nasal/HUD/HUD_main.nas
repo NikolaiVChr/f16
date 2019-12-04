@@ -2077,10 +2077,10 @@ append(obj.total, obj.speed_curr);
                         if (hdp.weapn != nil) {
                             if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
                                 me.ASEC65.show();
-                                currASEC = [me.sx*0.5,me.sy*0.25];
+                                currASEC = nil;#[me.sx*0.5,me.sy*0.25];
                             } elsif (!hdp.standby) {
                                 me.ASEC100.show();
-                                currASEC = [me.sx*0.5,me.sy*0.25];
+                                currASEC = nil;#[me.sx*0.5,me.sy*0.25];
                             }
                         }
                     } elsif (hdp.weapon_selected == "AIM-120") {
