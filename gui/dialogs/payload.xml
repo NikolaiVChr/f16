@@ -574,5 +574,20 @@
                 <script>pylons.refuel();</script>
             </binding>
         </button>
+        
+        <text>
+            <row>20</row>
+            <col>2</col>
+            <label>Cannon</label>
+        </text>
+        <button><pref-width>45</pref-width><pref-height>20</pref-height>
+            <row>20</row>
+            <col>3</col>
+            <legend>Rearm</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.cannon_load();</script>
+            </binding>
+        </button>
     </group>
 </PropertyList>

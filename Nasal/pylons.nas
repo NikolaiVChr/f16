@@ -201,6 +201,15 @@ var getDLZ = func {
     return nil;
 }
 
+# reload cannon only
+var cannon_load = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
 # Standard Air patrol (AIM-9, AIM-120, AIM-7)
 var a2a_patrol = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
