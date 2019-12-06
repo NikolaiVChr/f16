@@ -130,11 +130,11 @@
         <use>vertex-program-two-side</use>
       </vertex-program-two-side>
       <program>
-        <vertex-shader>Shaders/model-interior-ALS-detailed.vert</vertex-shader>
-        <fragment-shader>Shaders/model-interior-ALS-detailed.frag</fragment-shader>
-        <fragment-shader>Shaders/secondary_lights.frag</fragment-shader>
-        <fragment-shader>Shaders/noise.frag</fragment-shader>
-        <fragment-shader>Shaders/filters-ALS.frag</fragment-shader>
+        <vertex-shader>Shaders/ALS/model-interior-detailed.vert</vertex-shader>
+        <fragment-shader>Shaders/ALS/model-interior-detailed.frag</fragment-shader>
+        <fragment-shader>Shaders/ALS/secondary_lights.frag</fragment-shader>
+        <fragment-shader>Shaders/ALS/noise.frag</fragment-shader>
+        <fragment-shader>Shaders/ALS/filters.frag</fragment-shader>
       </program>
       <uniform>
         <name>visibility</name>
@@ -516,12 +516,12 @@
         <use>vertex-program-two-side</use>
       </vertex-program-two-side>
       <program>
-        <vertex-shader>Shaders/generic-ALS-base.vert</vertex-shader>
-        <fragment-shader>Shaders/model-interior-ALS-base.frag</fragment-shader>
-        <fragment-shader>Shaders/hazes.frag</fragment-shader>
-        <fragment-shader>Shaders/secondary_lights.frag</fragment-shader>
-        <fragment-shader>Shaders/noise.frag</fragment-shader>
-        <fragment-shader>Shaders/filters-ALS.frag</fragment-shader>
+        <vertex-shader>Shaders/ALS/generic-base.vert</vertex-shader>
+        <fragment-shader>Shaders/ALS/model-interior-base.frag</fragment-shader>
+        <fragment-shader>Shaders/ALS/hazes.frag</fragment-shader>
+        <fragment-shader>Shaders/ALS/secondary_lights.frag</fragment-shader>
+        <fragment-shader>Shaders/ALS/noise.frag</fragment-shader>
+        <fragment-shader>Shaders/ALS/filters.frag</fragment-shader>
       </program>
       <uniform>
         <name>visibility</name>

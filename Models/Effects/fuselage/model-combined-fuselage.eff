@@ -307,11 +307,11 @@ Modifications author: Nikolai V. Chr.
 			   <program>
 				<vertex-shader n="0">Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage-ALS.vert</vertex-shader>
 			 	<fragment-shader n="0">Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage-ALS.frag</fragment-shader>
-				<fragment-shader n="1">Shaders/cloud-shadowfunc.frag</fragment-shader>
-				<fragment-shader n="2">Shaders/hazes.frag</fragment-shader>
-				<fragment-shader n="3">Shaders/secondary_lights.frag</fragment-shader>
-				<fragment-shader n="4">Shaders/noise.frag</fragment-shader>
-				<fragment-shader n="5">Shaders/filters-ALS.frag</fragment-shader>
+				<fragment-shader n="1">Shaders/ALS/cloud-shadowfunc.frag</fragment-shader>
+				<fragment-shader n="2">Shaders/ALS/hazes.frag</fragment-shader>
+				<fragment-shader n="3">Shaders/ALS/secondary_lights.frag</fragment-shader>
+				<fragment-shader n="4">Shaders/ALS/noise.frag</fragment-shader>
+				<fragment-shader n="5">Shaders/ALS/filters.frag</fragment-shader>
 			   </program>
 			   
 			   <uniform>
@@ -1396,7 +1396,7 @@ Modifications author: Nikolai V. Chr.
 
 		  <program n="0">
 			  <vertex-shader n="0">Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage.vert</vertex-shader>
-			  <fragment-shader n="0">Shaders/include_fog.frag</fragment-shader>
+			  <fragment-shader n="0">Shaders/Default/include_fog.frag</fragment-shader>
 			  <fragment-shader n="1">Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage.frag</fragment-shader>
 		  </program>
 

@@ -90,10 +90,10 @@
       </depth>
       <vertex-program-two-side>false</vertex-program-two-side>
       <program>
-        <vertex-shader>Shaders/light-ALS.vert</vertex-shader>
-        <fragment-shader>Shaders/light-ALS.frag</fragment-shader>
-        <fragment-shader>Shaders/noise.frag</fragment-shader>
-        <fragment-shader>Shaders/hazes.frag</fragment-shader>
+        <vertex-shader>Shaders/ALS/light.vert</vertex-shader>
+        <fragment-shader>Shaders/ALS/light.frag</fragment-shader>
+        <fragment-shader>Shaders/ALS/noise.frag</fragment-shader>
+        <fragment-shader>Shaders/ALS/hazes.frag</fragment-shader>
       </program>
 
     
@@ -277,10 +277,10 @@
       </depth>
       <vertex-program-two-side>false</vertex-program-two-side>
       <program>
-        <vertex-shader>Shaders/light-ALS.vert</vertex-shader>
-        <fragment-shader>Shaders/include_fog.frag</fragment-shader>
+        <vertex-shader>Shaders/ALS/light.vert</vertex-shader>
+        <fragment-shader>Shaders/Default/include_fog.frag</fragment-shader>
         <fragment-shader>light-fixed.frag</fragment-shader>
-        <fragment-shader>Shaders/noise.frag</fragment-shader>        
+        <fragment-shader>Shaders/ALS/noise.frag</fragment-shader>        
       </program>
 
     
