@@ -1031,14 +1031,14 @@ There is also small changes in tail for different variants with and without brak
                     <command>nasal</command>
                     <condition>
                             <and>
-                            <not-equals>
-                                <property>sim/current-view/name</property>
-                                <value>Walk View</value>
-                            </not-equals>
-                            <not-equals>
-                                <property>sim/current-view/name</property>
-                                <value>Walker Orbit View</value>
-                            </not-equals>
+                                <not-equals>
+                                    <property>sim/current-view/name</property>
+                                    <value>Walk View</value>
+                                </not-equals>
+                                <not-equals>
+                                    <property>sim/current-view/name</property>
+                                    <value>Walker Orbit View</value>
+                                </not-equals>
                             </and>
                      </condition>
                     <script>
@@ -1066,9 +1066,9 @@ There is also small changes in tail for different variants with and without brak
                             <value>Walker Orbit View</value>
                         </not-equals>
                         </and>
-                 </condition>
+                    </condition>
                     <script>
-                        if (getprop("payload/armament/msg")==1) {
+                        if (getprop("payload/armament/msg")) {
                             screen.log.write("Speed-down disabled at the moment.");
                         } else {
                             controls.speedup(-1);
@@ -1903,6 +1903,11 @@ There is also small changes in tail for different variants with and without brak
             </frequencies>
             <volume type="double">0</volume>
         </dme>
+        <gci>
+            <picture type="bool">false</picture>
+            <bogeydope type="bool">false</bogeydope>
+            <cutoff type="bool">false</cutoff>
+        </gci>
     </instrumentation>
     <environment>
         <aircraft-effects>
@@ -1996,7 +2001,7 @@ There is also small changes in tail for different variants with and without brak
                 <seeker-beam-width-deg type="double">4</seeker-beam-width-deg>
                 <reaquire type="bool">true</reaquire>
                 <lock-on-after-launch type="bool">true</lock-on-after-launch>
-                <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed><!-- bug in m-code prevents from using this option atm. -->
+                <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed>
                 <prowl-flight type="string">gyro-pitch</prowl-flight>
                 <switch-time-sec type="double">5</switch-time-sec>
                 <coolable type="bool">true</coolable>
