@@ -1092,14 +1092,14 @@ var eject = func{
 }
 
 var chute = func{
-  if (getprop("f16/chute/done")==1) {
+  if (getprop("f16/chute/done")==1 or getprop("fdm/jsbsim/elec/bus/batt-1")<20) {
       return;
   }
   chute1();
 }
 
 var chute1 = func{
-  if (!getprop("sim/model/f16/dragchute") or (getprop("f16/chute/enable")==0 and getprop("f16/chute/done")==1) or getprop("fdm/jsbsim/elec/bus/batt-1")<20) {
+  if (!getprop("sim/model/f16/dragchute") or (getprop("f16/chute/enable")==0 and getprop("f16/chute/done")==1)) {
       return;
   } elsif (getprop("f16/chute/enable")==0) {
     setprop("f16/chute/done",1);
