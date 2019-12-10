@@ -4509,13 +4509,13 @@ var AIM = {
 			me.curr_deviation_e = deviation_normdeg(OurPitch.getValue(), me.Tgt.getElevation());
 			me.curr_deviation_h = deviation_normdeg(OurHdg.getValue(), me.Tgt.get_bearing());
 			if (!me.caged) {
-				me.seeker_elev_target = me.curr_deviation_e;
-				me.seeker_head_target = me.curr_deviation_h;
+				me.seeker_elev_target = -me.curr_deviation_e;
+				me.seeker_head_target = -me.curr_deviation_h;
 				me.rotateTarget();
 				me.moveSeeker();
 			}			
-			me.seeker_elev_target = me.curr_deviation_e;
-			me.seeker_head_target = me.curr_deviation_h;
+			me.seeker_elev_target = -me.curr_deviation_e;
+			me.seeker_head_target = -me.curr_deviation_h;
 			me.rotateTarget();
 			me.testSeeker();
 			if (!me.inBeam) {
