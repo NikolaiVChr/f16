@@ -126,13 +126,20 @@ var Station = {
 		me.myListener = ml;
 	},
 
+	getMass: func {
+		if (me["weaponsMass"] == nil) me.weaponsMass = 0;
+		return [me.weaponsMass, me.launcherMass];
+	},
+
 	calculateMass: func {
 		# do mass
 		me.totalMass = 0;
+		me.weaponsMass = 0;
 		me.singleName = "";#this is hack to show stores locally
 		foreach(me.weapon;me.weapons) {
 			if (me.weapon != nil) {
 				me.totalMass += me.weapon.weight_launch_lbm;
+				me.weaponsMass += me.weapon.weight_launch_lbm;
 				me.singleName = me.weapon.type;#this is hack to show stores locally
 			}
 		}

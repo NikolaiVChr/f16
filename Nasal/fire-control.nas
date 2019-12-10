@@ -816,6 +816,18 @@ var FireControl = {
 		}
 #		print("duals found "~size(me.selectedAdd));
 	},
+	
+	selectWeapon: func (w) {
+		me.stopCurrent();
+		me.selectedType = w;
+		return me.nextWeapon(w);
+	},
+	
+	selectNothing: func {
+		me.stopCurrent();
+		me.selectedType = nil;
+		me.selected = nil;
+	},
 
 	nextWeapon: func (type) {
 		# find next weapon of type. Will select and start it. Will not select weapons on inactive pylons.
