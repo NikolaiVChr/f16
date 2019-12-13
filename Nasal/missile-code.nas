@@ -4174,8 +4174,8 @@ var AIM = {
 					if (me.checkForLock()) {
 						me.printSearch("pattern-search ready for lock");
 						
-						me.seeker_elev_target = -me.total_elev;
-						me.seeker_head_target = -me.total_horiz;
+						me.seeker_elev_target = me.total_elev;
+						me.seeker_head_target = me.total_horiz;
 						me.rotateTarget();
 						me.testSeeker();
 						if (me.inBeam) {
@@ -4210,13 +4210,13 @@ var AIM = {
 				if (me.checkForLock()) {
 					me.printSearch("rdr-slave-search ready for lock");
 					if (me.caged) {
-						me.seeker_elev_target = -me.total_elev;
-						me.seeker_head_target = -me.total_horiz;
+						me.seeker_elev_target = me.total_elev;
+						me.seeker_head_target = me.total_horiz;
 						me.rotateTarget();
 						me.moveSeeker();
 					}
-					me.seeker_elev_target = -me.total_elev;
-					me.seeker_head_target = -me.total_horiz;
+					me.seeker_elev_target = me.total_elev;
+					me.seeker_head_target = me.total_horiz;
 					me.rotateTarget();
 					me.testSeeker();
 					if (me.inBeam) {
@@ -4248,8 +4248,8 @@ var AIM = {
 					# Check if in range and in the seeker FOV.
 					if (me.checkForLock()) {
 						me.printSearch("bore-search ready for lock");
-						me.seeker_elev_target = -me.total_elev;
-						me.seeker_head_target = -me.total_horiz;
+						me.seeker_elev_target = me.total_elev;
+						me.seeker_head_target = me.total_horiz;
 						me.rotateTarget();
 						me.testSeeker();
 						if (me.inBeam) {
@@ -4282,8 +4282,8 @@ var AIM = {
 					# Check if in range and in the seeker FOV.
 					if (me.checkForLock()) {
 						me.printSearch("dir-search ready for lock");
-						me.seeker_elev_target = -me.total_elev;
-						me.seeker_head_target = -me.total_horiz;
+						me.seeker_elev_target = me.total_elev;
+						me.seeker_head_target = me.total_horiz;
 						me.rotateTarget();
 						me.testSeeker();
 						if (me.inBeam) {
@@ -4509,13 +4509,13 @@ var AIM = {
 			me.curr_deviation_e = deviation_normdeg(OurPitch.getValue(), me.Tgt.getElevation());
 			me.curr_deviation_h = deviation_normdeg(OurHdg.getValue(), me.Tgt.get_bearing());
 			if (!me.caged) {
-				me.seeker_elev_target = -me.curr_deviation_e;
-				me.seeker_head_target = -me.curr_deviation_h;
+				me.seeker_elev_target = me.curr_deviation_e;
+				me.seeker_head_target = me.curr_deviation_h;
 				me.rotateTarget();
 				me.moveSeeker();
 			}			
-			me.seeker_elev_target = -me.curr_deviation_e;
-			me.seeker_head_target = -me.curr_deviation_h;
+			me.seeker_elev_target = me.curr_deviation_e;
+			me.seeker_head_target = me.curr_deviation_h;
 			me.rotateTarget();
 			me.testSeeker();
 			if (!me.inBeam) {
