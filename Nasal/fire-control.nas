@@ -534,6 +534,40 @@ var FireControl = {
 			pyl.jettisonAll();
 		}
 	},
+	
+	jettisonSpecificPylons: func (list, also_heat) {
+		# jettison commanded pylons
+		foreach (pyl;me.pylons) {
+			if (list !=nil and me.vectorIndex(list, pyl.id) != -1) {
+				if (!also_heat) {
+					me.myWeaps = pyl.getWeapons();
+					if (me.myWeaps != nil and size(me.myWeaps)>0) {
+						if (me.myWeaps[0] != nil and me.myWeaps[0].parents[0] == armament.AIM and me.myWeaps[0].guidance == "heat") {
+							continue;
+						}
+					}
+				}
+				pyl.jettisonAll();
+			}			
+		}
+	},
+	
+	jettisonAllButHeat: func (exclude = nil) {
+		# jettison all but heat seekers.
+		foreach (pyl;me.pylons) {
+			me.myWeaps = pyl.getWeapons();
+			if (me.myWeaps != nil and size(me.myWeaps)>0) {
+				if (me.myWeaps[0] != nil and me.myWeaps[0].parents[0] == armament.AIM and me.myWeaps[0].guidance == "heat") {
+					continue;
+				}
+			}
+			if (exclude!=nil and me.vectorIndex(exclude, pyl.id) != -1) {
+				# excluded
+				continue;
+			}
+			pyl.jettisonAll();
+		}
+	},
 
 	jettisonFuel: func {
 		# jettison all fuel stations
@@ -555,7 +589,19 @@ var FireControl = {
 		}
 		return me.selected[0];
 	},
-
+	
+	selectWeapon: func (w) {
+		me.stopCurrent();
+		me.selectedType = w;
+		return me.nextWeapon(w);
+	},
+	
+	selectNothing: func {
+		me.stopCurrent();
+		me.selectedType = nil;
+		me.selected = nil;
+	},
+	
 	selectPylon: func (p, w=nil) {
 		# select a specified pylon
 		# will stop previous weapon, will start next.
@@ -816,18 +862,6 @@ var FireControl = {
 		}
 #		print("duals found "~size(me.selectedAdd));
 	},
-	
-	selectWeapon: func (w) {
-		me.stopCurrent();
-		me.selectedType = w;
-		return me.nextWeapon(w);
-	},
-	
-	selectNothing: func {
-		me.stopCurrent();
-		me.selectedType = nil;
-		me.selected = nil;
-	},
 
 	nextWeapon: func (type) {
 		# find next weapon of type. Will select and start it. Will not select weapons on inactive pylons.
@@ -984,7 +1018,6 @@ var FireControl = {
 var debug = 0;
 var printDebug = func (msg) {if (debug == 1) print(msg);};
 var printfDebug = func {if (debug == 1) call(printf,arg);};
-
 
 
 # This is non-generic methods, please edit it to fit your radar setup:
