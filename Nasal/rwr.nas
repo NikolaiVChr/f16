@@ -368,7 +368,7 @@ RWRCanvas = {
             } else {
                 continue;
             }
-            if (me.contact[0].get_range() > 170) {
+            if (me.contact[0].get_range() > 150) {
                 continue;
             }
             me.dev = -geo.normdeg180(me.contact[0].get_bearing()-getprop("orientation/heading-deg"))+90;
