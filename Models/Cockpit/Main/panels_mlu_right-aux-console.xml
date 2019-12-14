@@ -161,7 +161,7 @@
  <animation>
   <type>rotate</type>
   <object-name>FUEL_FR_needle</object-name>
-  <property>f16/fuel/hand-fwd</property>
+  <property>f16/fuel/hand-fwd-lag</property>
   <factor>0.06</factor>
   <max-deg>245</max-deg>
   <center>
@@ -179,7 +179,7 @@
  <animation>
   <type>rotate</type>
   <object-name>FUEL_AL_needle</object-name>
-  <property>f16/fuel/hand-aft</property>
+  <property>f16/fuel/hand-aft-lag</property>
   <factor>0.06</factor>
   <max-deg>245</max-deg>
   <center>

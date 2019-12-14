@@ -3072,6 +3072,16 @@
                 </table>
             </function>
         </fcs_function>
+        
+        <lag_filter name="/f16/fuel/hand-fwd-lag">
+            <input> /f16/fuel/hand-fwd </input>
+            <c1> 2 </c1>
+        </lag_filter>
+        
+        <lag_filter name="/f16/fuel/hand-aft-lag">
+            <input> /f16/fuel/hand-aft </input>
+            <c1> 1 </c1>
+        </lag_filter>
 
     </channel>
 
