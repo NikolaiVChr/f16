@@ -2050,7 +2050,7 @@ There is also small changes in tail for different variants with and without brak
                 <ready-time type="double">1.5</ready-time>
                 <reaquire type="bool">true</reaquire>
                 <guide-before-ignition type="bool">true</guide-before-ignition>
-                <ejector-speed-fps type="double">10</ejector-speed-fps>
+                <ejector-speed-fps type="double">20</ejector-speed-fps>
                 <drop-time type="double">0.5</drop-time>
                 <lock-on-after-launch type="bool">true</lock-on-after-launch>
                 <auto-switch-target-allowed type="bool">false</auto-switch-target-allowed>
@@ -2103,6 +2103,8 @@ There is also small changes in tail for different variants with and without brak
                 <lock-on-after-launch type="bool">false</lock-on-after-launch>
                 <auto-switch-target-allowed type="bool">false</auto-switch-target-allowed>
                 <ready-time type="double">1.5</ready-time>
+                <ejector-speed-fps type="double">20</ejector-speed-fps>
+                <drop-time type="double">0.5</drop-time>
             </aim-7>
             <mk-82> 
                 <short-name type="string">B82</short-name>
