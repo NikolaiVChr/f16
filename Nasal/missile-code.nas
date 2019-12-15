@@ -399,7 +399,7 @@ var AIM = {
           m.beam_width_deg = 4;
         } 
         m.beam_width_deg *= 0.5;
-        m.detect_range_curr_nm  = m.detect_range_nm;
+        m.detect_range_curr_nm = m.detect_range_nm;
 		
 		if (m.eject_speed == nil) {
           m.eject_speed = 0;
@@ -733,6 +733,8 @@ var AIM = {
 		m.semiLostLock = FALSE;
 		m.radLostLock  = FALSE;
 		m.tooLowSpeed  = FALSE;
+		m.tooLowSpeedPass = FALSE;
+		m.tooLowSpeedTime  = -1;
 		m.lostLOS      = FALSE;
 
 		m.prevTarget   = nil;
@@ -1397,7 +1399,20 @@ var AIM = {
 			}
 		} elsif (me.eject_speed != 0) {
 			# add ejector speed down from belly:
-			me.aircraft_vec = [me.speed_north_fps,-me.speed_east_fps,-me.speed_down_fps];
+			if (me.force_lbf_1 > 0 and me.stage_1_duration > 0) {
+				# for missiles
+				#
+				# So we cheat a bit and pretend the aircraft groundspeed is in its nose direction instead of into airstream.
+				# We do this cause the missile has no alpha/beta and when firing in hard turn alpha can easy be 15+ degs,
+				# so the missile would otherwise be pointed much further from target that the pilot intends.
+				me.aircraft_vec = me.myMath.eulerToCartesian3X(-OurHdg.getValue(),OurPitch.getValue(),OurRoll.getValue());
+				me.aircraft_vec = me.myMath.normalize(me.aircraft_vec);
+				me.aircraft_fps = math.sqrt(math.pow(math.sqrt(math.pow(me.speed_north_fps,2)+math.pow(me.speed_east_fps,2)),2)+math.pow(me.speed_down_fps,2));
+				me.aircraft_vec = me.myMath.product(me.aircraft_fps, me.aircraft_vec);
+			} else {
+				# for bombs
+				me.aircraft_vec = [me.speed_north_fps,-me.speed_east_fps,-me.speed_down_fps];
+			}
 			me.eject_vec    = me.myMath.normalize(me.myMath.eulerToCartesian3Z(-OurHdg.getValue(),OurPitch.getValue(),OurRoll.getValue()));
 			me.eject_vec    = me.myMath.product(-me.eject_speed, me.eject_vec);
 			me.init_rel_vec = me.myMath.plus(me.aircraft_vec, me.eject_vec);
@@ -2082,7 +2097,7 @@ var AIM = {
 			# missile still on rail, lets calculate its speed relative to the wind coming in from the aircraft nose.
 			me.rail_speed_into_wind = me.rail_speed_into_wind + me.speed_change_fps;
 			#printf("Rail: ms_fps=%d", me.rail_speed_into_wind);
-		} elsif (me.observing != "gyro-pitch" or me.speed_m < me.min_speed_for_guiding) {
+		} elsif (me.observing != "gyro-pitch" or (me.speed_m < me.min_speed_for_guiding and me.tooLowSpeedPass)) {
 			# gravity acc makes the weapon pitch down			
 			me.pitch = math.atan2(-me.speed_down_fps, me.speed_horizontal_fps ) * R2D;
 		}
@@ -2256,7 +2271,7 @@ var AIM = {
 
 				if ( me.g > me.max_g_current and me.init_launch != 0) {
 					#me.free = TRUE;
-					me.printStats("%s: Missile attempted %.1f%% of max G.", me.type, 100*me.g/me.max_g_current);
+					me.printStats("%s: Missile attempted to pull too many G, would have broken. %d G", me.type, me.g);
 				}
 			} else {
 				me.g = 0;
@@ -2934,6 +2949,7 @@ var AIM = {
 				}
 				me.semiLostLock = TRUE;
 			} else {
+				me.printStats(me.type~": Not guiding (lost radar reflection, gave up)");
 				me.free = TRUE;
 			}			
 		} elsif (me.guidance == "radiation" and me.is_radiating_me(me.Tgt) == FALSE) {
@@ -2945,9 +2961,10 @@ var AIM = {
 				}
 				me.radLostLock = TRUE;
 			} else {
+				me.printStats(me.type~": Not guiding (lost radiation, gave up)");
 				me.free = TRUE;
 			}			
-		} elsif ((me.dist_curr_direct*M2NM > me.detect_range_curr_nm or !me.FOV_check(me.hdg, me.pitch, me.curr_deviation_h, me.curr_deviation_e, me.max_seeker_dev)) and me.guidance != "gps" and me.guidance != "inertial") {
+		} elsif ((me.dist_curr_direct*M2NM > me.detect_range_curr_nm or !me.FOV_check(me.hdg, me.pitch, me.curr_deviation_h, me.curr_deviation_e, me.max_seeker_dev, me.myMath)) and me.guidance != "gps" and me.guidance != "inertial") {
 			# target is not in missile seeker view anymore
 			#if (me.curr_deviation_e > me.max_seeker_dev) {
 			#	me.viewLost = "Target is above seeker view.";
@@ -2958,8 +2975,12 @@ var AIM = {
 			#} else {
 			#	me.viewLost = "Target is left of seeker view.";
 			#}
-			if (me.fovLost == FALSE) {
-				me.printStats(me.type~": "~me.callsign~" is not in seeker view.");#~me.viewLost);
+			if (me.fovLost == FALSE and me.detect_range_curr_nm != 0) {
+				me.normFOV = me.FOV_check_norm(me.hdg, me.pitch, me.curr_deviation_h, me.curr_deviation_e, me.max_seeker_dev, me.myMath);
+				me.printStats(me.type~": "~me.callsign~" is not in seeker view. (%d%% in view, %d%% in range)", me.normFOV*100, 100*me.dist_curr_direct*M2NM / me.detect_range_curr_nm);#~me.viewLost);
+			} elsif (me.fovLost == FALSE) {
+				me.normFOV = me.FOV_check_norm(me.hdg, me.pitch, me.curr_deviation_h, me.curr_deviation_e, me.max_seeker_dev, me.myMath);
+				me.printStats(me.type~": "~me.callsign~" is not in seeker view. (%d%% in view)", me.normFOV*100);#~me.viewLost);
 			}
 			if (me.reaquire == FALSE) {
 				me.free = TRUE;
@@ -2993,11 +3014,19 @@ var AIM = {
 		} elsif (me.loal and me.maddog) {
 			me.printStats(me.type~": "~me.callsign~" is potential target. ("~me.Tgt.get_type()~","~me.class~")");
 		}
+		if (me.speed_m >= me.min_speed_for_guiding) {
+			me.tooLowSpeedPass = TRUE;
+			if (me.tooLowSpeedTime == -1) {
+				me.tooLowSpeedTime = me.life_time;
+				me.normFOV = me.FOV_check_norm(me.hdg, me.pitch, me.curr_deviation_h, me.curr_deviation_e, me.max_seeker_dev, me.myMath);
+				me.printStats(me.type~": Passed minimum speed for guiding after %.1f seconds. Target %d%% inside view.", me.life_time, me.normFOV*100);
+			}
+		}
 	},
 
 	adjustToKeepLock: func {
 		if (me.guidance != "gps" and me.guidance != "inertial") {
-			if (!me.FOV_check(me.hdg, me.pitch, me.curr_deviation_h+me.raw_steer_signal_head, me.curr_deviation_e+me.raw_steer_signal_elev, me.max_seeker_dev) and me.fov_radial != 0) {
+			if (!me.FOV_check(me.hdg, me.pitch, me.curr_deviation_h+me.raw_steer_signal_head, me.curr_deviation_e+me.raw_steer_signal_elev, me.max_seeker_dev, me.myMath) and me.fov_radial != 0) {
 				# the commanded steer order will make the missile lose its lock, to prevent that we reduce the steering just enough so lock wont be lost.
 				me.factorKeep = me.max_seeker_dev/me.fov_radial;
 				me.raw_steer_signal_elev = (me.curr_deviation_e+me.raw_steer_signal_elev)*me.factorKeep-me.curr_deviation_e;
@@ -3439,9 +3468,9 @@ var AIM = {
 			me.Vm   = [me.old_speed_horz_fps,0,me.m_speed_vert_fps];
 			me.Pm   = [0,0,0];
 			me.Pt   = [me.dist_curr*M2FT,0,me.t_pos_z];
-			me.V_tm = vector.Math.minus(me.Vt,me.Vm);
-			me.R_tm = vector.Math.minus(me.Pm,me.Pt);
-			me.t_go = vector.Math.dotProduct(me.R_tm,me.R_tm)/vector.Math.dotProduct(me.R_tm, me.V_tm);
+			me.V_tm = me.myMath.minus(me.Vt,me.Vm);
+			me.R_tm = me.myMath.minus(me.Pm,me.Pt);
+			me.t_go = me.myMath.dotProduct(me.R_tm,me.R_tm)/me.myMath.dotProduct(me.R_tm, me.V_tm);
 			#me.t_go = M2FT*me.dist_curr_direct/me.vert_closing_rate_fps;#time to go (too simple)
 			#printf("time_to_go %.1f, closing %d",me.t_go,me.vert_closing_rate_fps);
 
@@ -3995,7 +4024,7 @@ var AIM = {
 		# call this only before firing
 		if (!(me.tagt.get_type() == AIR and me.tagt.get_Speed()<15) and ((me.guidance != "semi-radar" or me.is_painted(me.tagt) == TRUE) and (me.guidance !="laser" or me.is_laser_painted(me.tagt) == TRUE))
 						and (me.guidance != "radiation" or me.is_radiating_aircraft(me.tagt) == TRUE)
-					    and me.rng < me.max_fire_range_nm and me.rng > me.min_fire_range_nm and me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.fcs_fov)
+					    and me.rng < me.max_fire_range_nm and me.rng > me.min_fire_range_nm and me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.fcs_fov, vector.Math)
 					    and (me.rng < me.detect_range_curr_nm or (me.guidance != "radar" and me.guidance != "semi-radar" and me.guidance != "heat" and me.guidance != "vision" and me.guidance != "heat" and me.guidance != "radiation"))
 					    and (me.guidance != "heat" or (me.all_aspect == TRUE or me.rear_aspect(geo.aircraft_position(), me.tagt) == TRUE))
 					    and me.checkForView()) {
@@ -4102,7 +4131,7 @@ var AIM = {
 			me.new_course         = me.coord.course_to(me.newCoord);
 			me.new_deviation_e    = me.new_elev_deg - me.pitch;
 			me.new_deviation_h    = me.new_course - me.hdg;
-			me.newlockgained      = me.FOV_check(me.hdg, me.pitch, me.new_deviation_h, me.new_deviation_e, me.max_seeker_dev);
+			me.newlockgained      = me.FOV_check(me.hdg, me.pitch, me.new_deviation_h, me.new_deviation_e, me.max_seeker_dev, me.myMath);
 			if (!me.newlockgained) {me.printStatsDetails("Test: not in FoV. Rejected.");return 0;}
 		}
 		me.newlockgained = me.checkForViewInFlight(tagt);
@@ -4566,16 +4595,29 @@ var AIM = {
 	#                         end loops for before flying.
 	###################################################################
 
-	FOV_check: func (meHeading, mePitch, deviation_hori, deviation_elev, fov_radius) {
-		# we measure the geodesic angle between current attitude and the attitude to target.
-		me.meVector = vector.Math.eulerToCartesian3X(-meHeading, mePitch, 0);
-		me.itVector = vector.Math.eulerToCartesian3X(-(meHeading+deviation_hori), mePitch+deviation_elev, 0);
-		me.fov_radial = vector.Math.angleBetweenVectors(me.meVector, me.itVector);
+	FOV_check: func (meHeading, mePitch, deviation_hori, deviation_elev, fov_radius, vect) {
+		# we measure the geodesic angle between current attitude and the attitude to target. We pass vector math since this method is called both during multi-threading and not.
+		me.meVector = vect.eulerToCartesian3X(-meHeading, mePitch, 0);
+		me.itVector = vect.eulerToCartesian3X(-(meHeading+deviation_hori), mePitch+deviation_elev, 0);
+		me.fov_radial = vect.angleBetweenVectors(me.meVector, me.itVector);
+		#me.fov_radial = math.sqrt(math.pow(deviation_hori,2)+math.pow(deviation_elev,2));
 		if (me.fov_radial <= fov_radius) {
 			return TRUE;
 		}
 		# out of FOV
+		#if (me.status==MISSILE_FLYING) printf("1: %.1f out of %.1f, deviation %.1f, %.1f", me.fov_radial, fov_radius, deviation_hori, deviation_elev);
 		return FALSE;
+	},
+	
+	FOV_check_norm: func (meHeading, mePitch, deviation_hori, deviation_elev, fov_radius,vect) {
+		# we measure the geodesic angle between current attitude and the attitude to target.
+		me.meVector = vect.eulerToCartesian3X(-meHeading, mePitch, 0);
+		me.itVector = vect.eulerToCartesian3X(-(meHeading+deviation_hori), mePitch+deviation_elev, 0);
+		me.fov_radial = vect.angleBetweenVectors(me.meVector, me.itVector);
+		#me.fov_radial = math.sqrt(math.pow(deviation_hori,2)+math.pow(deviation_elev,2));
+		if (fov_radius == 0) return -1;
+		#if (me.status==MISSILE_FLYING) printf("2: %.1f out of %.1f, deviation %.1f, %.1f", me.fov_radial, fov_radius, deviation_hori, deviation_elev);
+		return me.fov_radial/fov_radius;
 	},
 
 	check_t_in_fov: func {
@@ -4583,7 +4625,7 @@ var AIM = {
 		me.total_elev  = deviation_normdeg(OurPitch.getValue(), me.Tgt.getElevation()); # deg.
 		me.total_horiz = deviation_normdeg(OurHdg.getValue(), me.Tgt.get_bearing());    # deg.
 		# Check if in range and in the seeker FOV.
-		if (me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.fcs_fov) and me.Tgt.get_range() < me.max_fire_range_nm and me.Tgt.get_range() > me.min_fire_range_nm
+		if (me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.fcs_fov, vector.Math) and me.Tgt.get_range() < me.max_fire_range_nm and me.Tgt.get_range() > me.min_fire_range_nm
 			and (me.Tgt.get_range() < me.detect_range_curr_nm or (me.guidance != "radar" and me.guidance != "semi-radar" and me.guidance != "heat" and me.guidance != "vision" and me.guidance != "heat" and me.guidance != "radiation"))) {
 			return TRUE;
 		}
@@ -4741,9 +4783,9 @@ var AIM = {
 
 	steering_speed_G: func(meHeading, mePitch,steering_e_deg, steering_h_deg, s_fps, dt) {
 		# Get G number from steering (e, h) in deg, speed in ft/s.
-		me.meVector = vector.Math.eulerToCartesian3X(-meHeading, mePitch, 0);
-		me.itVector = vector.Math.eulerToCartesian3X(-(meHeading+steering_h_deg), mePitch+steering_e_deg, 0);
-		me.steer_deg = vector.Math.angleBetweenVectors(me.meVector, me.itVector);
+		me.meVector = me.myMath.eulerToCartesian3X(-meHeading, mePitch, 0);
+		me.itVector = me.myMath.eulerToCartesian3X(-(meHeading+steering_h_deg), mePitch+steering_e_deg, 0);
+		me.steer_deg = me.myMath.angleBetweenVectors(me.meVector, me.itVector);
 
 		# next speed vector
 		me.vector_next_x = math.cos(me.steer_deg*D2R)*s_fps;
