@@ -104,6 +104,7 @@ page SMS: Clicking on button next to a station will select it.
 page CRM: B-scope radar display. Horizontal is relative bearing to targets, vertical is distance.
           A4: How much azimuth the radar shall cover, A4 is max (120 degs).
           8B: How much vertically the radar shall cover, 8B is max (120 degs).
+          Notice: The radar when started up goes through a Built In Test (BIT) for a couple of minutes.
 page HSD: Horizontal situation display. Shows route and radar echoes.
           DEP: Depressed ownship in display
           CEN: Centered ownship in display
