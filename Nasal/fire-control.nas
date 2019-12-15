@@ -940,6 +940,15 @@ var FireControl = {
 		return me.count;
 	},
 	
+	getAllAmmo: func (type = nil) {
+        # return ammo count of all pylons in a vector
+        me.ammoVector = [];
+        foreach (p;me.pylons) {
+            append(me.ammoVector, p.getAmmo(type));
+        }
+        return me.ammoVector;
+    },
+	
 	getActiveAmmo: func {
 		# return ammo count of currently selected type that are on active pylons
 		me.count = 0;
