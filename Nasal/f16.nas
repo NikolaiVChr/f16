@@ -775,6 +775,11 @@ var re_init_listener = setlistener("/sim/signals/reinit", func {
   if (getprop("/sim/signals/reinit") != 0) {
     setprop("/controls/gear/gear-down",1);
     setprop("/controls/gear/brake-parking",1);
+    setprop("f16/fcs/autopilot-on",0);
+    setprop("f16/fcs/switch-pitch-block15",0);
+    setprop("f16/fcs/switch-roll-block15",0);
+    setprop("f16/fcs/switch-roll-block20",0);
+    setprop("f16/fcs/switch-pitch-block20",0);
     settimer(repair4,3);    
     if (pylons.fcs != nil) {
       # replenish cooling fluid on all aim-9:
