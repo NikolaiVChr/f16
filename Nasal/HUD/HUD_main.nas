@@ -2029,6 +2029,8 @@ append(obj.total, obj.speed_curr);
                 hdp.active_target_callsign = hdp.active_u.Callsign;
                 if (hdp.active_u.ModelType != "")
                   hdp.active_target_model = hdp.active_u.ModelType;
+                else
+                  hdp.active_target_model = "XX";
             }
         } else {
             hdp.active_target_available = 0;
