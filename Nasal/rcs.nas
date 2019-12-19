@@ -91,7 +91,8 @@ var rcs_database = {
     "FA-18D_Hornet":            3.5,
     "F-22-Raptor":				0.002,	#actual: 0.0001
     "F-35A":					0.001,
-    "F-35B":					0.001,  
+    "F-35B":					0.001,
+    "Jaguar-GR1":               6,      #guess  
     "Jaguar-GR3":               6,	    #guess
     "f-20A":                    2.5,    #low end of sources
     "f-20C":                    2.5,
