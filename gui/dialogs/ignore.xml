@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<PropertyList>
+	<name>ignore</name>
+  	<modal>false</modal>
+  	<layout>vbox</layout>
+  	<draggable>true</draggable>
+    <resizable>true</resizable>
+    <width>250</width>
+    <height>475</height>
+
+    <group>
+		<layout>hbox</layout>
+		<empty><stretch>1</stretch></empty>
+
+		<text><label>Ignore trolls</label></text>
+
+		<empty><stretch>1</stretch></empty>
+
+		<button>
+			<pref-width>16</pref-width>
+			<pref-height>16</pref-height>
+			<legend></legend>
+			<default>1</default>
+			<keynum>27</keynum>
+			<border>2</border>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+		</button>
+	</group>
+
+  	<text>
+	    <label>Block callsigns:</label>
+	    <height>25</height>
+	</text>
+
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>Troll 1</label>
+	  	<property>ignore-list/troll-1</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+      	<color>
+      		<red>1</red>
+      		<green>0.5</green>
+      		<blue>0.5</blue>
+      	</color>
+	</input>
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>Troll 2</label>
+	  	<property>ignore-list/troll-2</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+      	<color>
+      		<red>1</red>
+      		<green>0.5</green>
+      		<blue>0.5</blue>
+      	</color>
+	</input>
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>Troll 3</label>
+	  	<property>ignore-list/troll-3</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+      	<color>
+      		<red>1</red>
+      		<green>0.5</green>
+      		<blue>0.5</blue>
+      	</color>
+	</input>
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>Troll 4</label>
+	  	<property>ignore-list/troll-4</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+      	<color>
+      		<red>1</red>
+      		<green>0.5</green>
+      		<blue>0.5</blue>
+      	</color>
+	</input>
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>Troll 5</label>
+	  	<property>ignore-list/troll-5</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+      	<color>
+      		<red>1</red>
+      		<green>0.5</green>
+      		<blue>0.5</blue>
+      	</color>
+	</input>
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>Troll 6</label>
+	  	<property>ignore-list/troll-6</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+      	<color>
+      		<red>1</red>
+      		<green>0.5</green>
+      		<blue>0.5</blue>
+      	</color>
+	</input>
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>Troll 7</label>
+	  	<property>ignore-list/troll-7</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+      	<color>
+      		<red>1</red>
+      		<green>0.5</green>
+      		<blue>0.5</blue>
+      	</color>
+	</input>
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>Troll 8</label>
+	  	<property>ignore-list/troll-8</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+      	<color>
+      		<red>1</red>
+      		<green>0.5</green>
+      		<blue>0.5</blue>
+      	</color>
+	</input>
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>Troll 9</label>
+	  	<property>ignore-list/troll-9</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+      	<color>
+      		<red>1</red>
+      		<green>0.5</green>
+      		<blue>0.5</blue>
+      	</color>
+	</input>
+	<empty><stretch>1</stretch></empty>
+	<text><label></label></text>
+	<text><label></label></text>
+	<text><label></label></text>
+
+</PropertyList>

@@ -1646,3 +1646,47 @@ setlistener("f16/avionics/power-gps", click1, nil, 0);
 setlistener("f16/avionics/power-dl", click1, nil, 0);
 # valid methods: button, button2, knob, knob2, clamp0, click3, lift_cover
 #                click1, click2, doubleClick, doubleClick2, scroll
+
+
+## Following code adapted from script shared by Warty at https://forum.flightgear.org/viewtopic.php?f=10&t=28665
+## (C) pinto aka Justin Nicholson - 2016
+## GPL v2
+
+var updateRater = 2;
+
+var ignoreLoop = func () {
+  if (getprop("sim/multiplay/txhost") != "mpserver.opredflag.com") {
+    var trolls = [
+                  getprop("ignore-list/troll-1"),
+                  getprop("ignore-list/troll-2"),
+                  getprop("ignore-list/troll-3"),
+                  getprop("ignore-list/troll-4"),
+                  getprop("ignore-list/troll-5"),
+                  getprop("ignore-list/troll-6"),
+                  getprop("ignore-list/troll-7"),
+                  getprop("ignore-list/troll-8"),
+                  getprop("ignore-list/troll-9")];
+    var listMP = props.globals.getNode("ai/models/").getChildren("multiplayer");
+    foreach (m; listMP) {
+      var thisCallsign = m.getValue("callsign");
+      foreach(csToIgnore; trolls){
+        if(thisCallsign == csToIgnore){
+          setInvisible(m);
+        }
+      }
+    }
+  }
+  settimer( func { ignoreLoop(); }, updateRater);
+}
+
+var setInvisible = func (m) {
+  var currentlyInvisible = m.getValue("controls/invisible");
+  if(!currentlyInvisible){
+    var thisCallsign = m.getValue("callsign");
+    multiplayer.dialog.toggle_ignore(thisCallsign);
+    m.setValue("controls/invisible",1);
+    screen.log.write("Automatically ignoring " ~ thisCallsign ~ ".");
+  }
+}
+
+settimer( func { ignoreLoop(); }, 5);

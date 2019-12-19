@@ -603,6 +603,10 @@
                 <desc>Cycle Transponder modes</desc>
             </key>
             <key>
+                <name>Ctrl-s</name>
+                <desc>Ignore selected MP pilots</desc>
+            </key>
+            <key>
                 <name>Q</name>
                 <desc>Reset view</desc>
             </key>
@@ -1001,6 +1005,16 @@ There is also small changes in tail for different variants with and without brak
                     <script>f16.HDDView();</script>
                 </binding>
             </key>
+            <key n="19">
+                <name>CTRL-S</name>
+                <desc>Ignore trolls</desc>
+                <repeatable>false</repeatable>
+                <binding>
+                      <command>dialog-show</command>
+                      <dialog-name>ignore</dialog-name>
+                </binding>
+            </key>
+            
             <key n="23">
                 <name>CTRL-W</name>
                 <desc>View HSI</desc>
