@@ -25,7 +25,7 @@
         </greater-than>
         <greater-than>
           <property>/environment/temperature-degc</property>
-          <value>-36.5</value>
+          <value>-38</value>
         </greater-than>
         <greater-than>
           <property>sim/multiplay/generic/float[3]</property><!-- kts -->
