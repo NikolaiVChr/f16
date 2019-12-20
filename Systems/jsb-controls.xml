@@ -2160,7 +2160,7 @@
 
 
 
-    <channel name="Throttle" execrate="8">
+    <channel name="Throttle" execrate="1">
 
         <fcs_function name="fcs/fly-by-wire/throttle/pos-norm">
             <description>Page 153 of secondary doc</description>
