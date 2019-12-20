@@ -810,30 +810,26 @@
             <mode>looped</mode>
             <path>Aircraft/f16/Sounds/stall-buffet.wav</path>
             <condition>
+            	<property>sim/current-view/internal</property>
                 <greater-than>
                     <property>orientation/alpha-deg</property>
                     <value>15</value>
                 </greater-than>
                 <greater-than>
                     <property>accelerations/pilot-gdamped</property>
-                    <value>2.5</value>
-                    <!-- this is the airflow over the front so not going to be much if we're just dropping -->
+                    <value>2.4</value> <!-- this is the airflow over the front so not going to be much if we're just dropping -->
                 </greater-than>
                 <less-than>
-                    <property>instrumentation/airspeed-indicator/indicated-speed-kt</property>
+                    <property>velocities/airspeed-kt</property>
                     <value>300</value>
                 </less-than>
-                <greater-than>
-                    <property>sim/current-view/internal</property>
-                    <value>0</value>
-                </greater-than>
             </condition>
             <volume>
                 <property>orientation/alpha-deg</property>
                 <factor>0.035</factor>
             </volume>
-            <reference-dist>400.0</reference-dist>
-            <max-dist>2000.0</max-dist>
+            <reference-dist>200.0</reference-dist>
+            <max-dist>1000.0</max-dist>
         </high-alpha-airflow>
 
 		<!-- STALL WARN -->
@@ -1284,7 +1280,7 @@
 			<max-dist>4</max-dist>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>2.25</factor>
+				<factor>4.5</factor>
 			</volume>
 		</voice>
 		<voice>
