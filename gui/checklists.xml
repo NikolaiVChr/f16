@@ -700,6 +700,70 @@
         </checklist>
         
         <checklist>
+            <title>Descent/Before landing</title>
+            <item>
+                <name>Fuel</name>
+                <value>Check quantity</value>
+            </item>
+            <item>
+                <name>Approach speed</name>
+                <value>Notice computed approach speed in HUD</value>
+            </item>
+            <item>
+                <name>Landing light</name>
+                <value>ON</value>
+            </item>
+            <item>
+                <name>Altimeter</name>
+                <value>Check setting</value>
+            </item>
+            <item>
+                <name>TGP</name>
+                <value>STBY</value>
+            </item>            
+        </checklist>
+        
+        <checklist>
+            <title>Landing</title>
+            <item>
+                <name>Speed</name>
+                <value>Fly initially at 300 KT</value>
+            </item>
+            <item>
+                <name>Throttle</name>
+                <value>Reduce</value>
+            </item>
+            <item>
+                <name>Speedbrakes</name>
+                <value>Enable as needed</value>
+            </item>
+            <item>
+                <name>Speed below 300 KT</name>
+                <value>Deploy gears</value>
+            </item>
+            <item>
+                <name>Slow down</name>
+                <value>Slow down till 11 to 13 AoA</value>
+            </item>
+            <item>
+                <name>Check speedbrakes</name>
+                <value>ON for final</value>
+            </item>
+            <item>
+                <name>At touchdown</name>
+                <value>Deploy dragchute as desired</value>
+            </item>
+            <item>
+                <name>At 100 KT</name>
+                <value>Put nosewheel on ground</value>
+            </item>
+            <item>
+                <name>Decelerate</name>
+                <value>Smoothly brake to decelerate to taxi speed</value>
+            </item>
+        </checklist>
+        
+        <checklist>
             <title>After landing</title>
             <item>
                 <name>Speedbrakes</name>
@@ -777,6 +841,29 @@
                     <property>fdm/jsbsim/elec/switches/main-pwr</property>
                     <value>0</value>
                 </binding>
+            </item>
+        </checklist>
+    </group>
+    <group>
+        <name>Emergency Procedures</name>
+        
+        <checklist>
+            <title>Arrestor hook landing</title>
+            <item>
+                <name>Latest 1500ft before cable</name>
+                <value>Lower hook</value>
+            </item>
+            <item>
+                <name>Nose gear</name>
+                <value>Make sure its on ground</value>
+            </item>
+            <item>
+                <name>Throttle</name>
+                <value>IDLE</value>
+            </item>
+            <item>
+                <name>Hitting cable</name>
+                <value>Engage close to center</value>
             </item>
         </checklist>
     </group>
