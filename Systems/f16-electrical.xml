@@ -481,7 +481,7 @@
 		<switch name="elec/sources/epu-emerg-allow">
 			<default value="1"/>
 			<test logic="AND" value="0">
-				/f16/engine/jsf-start == 0
+				/f16/engine/jfs-start == 0
 				gear/unit[0]/WOW == 1
 			</test>
 		</switch>

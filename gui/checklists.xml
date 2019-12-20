@@ -65,13 +65,13 @@
                 <value>OFF</value>
                 <condition>
                     <equals>
-                        <property>f16/engine/jsf-start</property>
+                        <property>f16/engine/jfs-start</property>
                         <value>0</value>
                     </equals>
                 </condition>
                 <binding>
                     <command>property-assign</command>
-                    <property>f16/engine/jsf-start</property>
+                    <property>f16/engine/jfs-start</property>
                     <value>0</value>
                 </binding>
             </item>
@@ -207,7 +207,7 @@
                 <value>IDLE</value>
                 <condition>
                     <equals>
-                        <property>f16/engine/jsf-start</property>
+                        <property>f16/engine/jfs-start</property>
                         <value>1</value>
                     </equals>
                     <equals>
@@ -217,7 +217,7 @@
                 </condition>
                 <binding>
                     <command>property-assign</command>
-                    <property>f16/engine/jsf-start</property>
+                    <property>f16/engine/jfs-start</property>
                     <value>1</value>
                 </binding>
                 <binding>
@@ -749,13 +749,13 @@
                 <value>OFF</value>
                 <condition>
                     <equals>
-                        <property>f16/engine/jsf-start</property>
+                        <property>f16/engine/jfs-start</property>
                         <value>0</value>
                     </equals>
                 </condition>
                 <binding>
                     <command>property-assign</command>
-                    <property>f16/engine/jsf-start</property>
+                    <property>f16/engine/jfs-start</property>
                     <value>0</value>
                 </binding>
             </item>

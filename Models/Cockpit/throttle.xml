@@ -41,9 +41,9 @@
  <animation>
   <type>rotate</type>
   <object-name>PINKY_SWITCH_HANDLE</object-name>
-  <property>f16/engine/jsf-start</property>
+  <property>f16/engine/jfs-start</property>
   <offset-deg>0</offset-deg>
-  <factor>-20</factor>
+  <factor>-10</factor>
   <axis>   
    <x1-m> -0.051951</x1-m>
    <y1-m> 0.002993</y1-m>
@@ -80,7 +80,7 @@
    <repeatable>false</repeatable>
     <binding>
         <command>property-toggle</command>
-        <property>f16/engine/jsf-start</property>
+        <property>f16/engine/jfs-start</property>
     </binding>
   </action>
   <hovered>

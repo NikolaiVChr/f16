@@ -632,11 +632,11 @@
 					    <layout>hbox</layout>
 					    <text><label>THROTTLE</label></text>
 					    <checkbox>
-					      <property>f16/engine/jsf-start</property>
+					      <property>f16/engine/jfs-start</property>
 					      <live>true</live>
 					      <binding>
 					          <command>property-toggle</command>
-					          <property>f16/engine/jsf-start</property>
+					          <property>f16/engine/jfs-start</property>
 					      </binding>
 					    </checkbox>
 					</group>

@@ -2160,7 +2160,7 @@
 
 
 
-    <channel name="Throttle">
+    <channel name="Throttle" execrate="8">
 
         <fcs_function name="fcs/fly-by-wire/throttle/pos-norm">
             <description>Page 153 of secondary doc</description>
@@ -2175,6 +2175,21 @@
                 </table>
             </function>
             <output>fcs/throttle-pos-norm</output>
+        </fcs_function>
+        
+        <fcs_function name="/controls/engines/engine[0]/throttle-movement">
+            <description></description>
+            <function>
+                <table>
+                    <independentVar lookup="row">/controls/engines/engine[0]/throttle</independentVar>
+                    <independentVar lookup="column">/f16/engine/jfs-start</independentVar>                    
+                    <tableData>
+                                  0    1
+                      0.0       0.0   0.05
+                      1.0       0.0   1.00
+                    </tableData>
+                </table>
+            </function>
         </fcs_function>
 
     </channel>

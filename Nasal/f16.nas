@@ -343,7 +343,7 @@ var medium = {
       setprop("f16/engine/jet-fuel",0);
     }
     if (getprop("f16/engine/feed")) {
-      setprop("controls/engines/engine[0]/cutoff",!getprop("f16/engine/jsf-start"));
+      setprop("controls/engines/engine[0]/cutoff",!getprop("f16/engine/jfs-start"));
       if (getprop("f16/engine/jet-fuel") != 0) {
         setprop("controls/engines/engine[0]/starter", 1);
       } else {
@@ -415,7 +415,6 @@ var fast = {
     } else {
       setprop("instrumentation/radar/time-till-crash", 15);
     }
-    setprop("controls/engines/engine[0]/throttle-movement", getprop("controls/engines/engine[0]/throttle")*getprop("f16/engine/jsf-start"));
     if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20) {#TODO: this hack should be done proper.
         setprop("controls/test/test-panel/mal-ind-lts", 0);
     }
@@ -704,7 +703,7 @@ var repair2 = func {
     if (getprop("engines/engine[0]/running")!=1) {
       setprop("f16/engine/feed",1);
       setprop("f16/engine/jet-fuel",1);
-      setprop("f16/engine/jsf-start",0);
+      setprop("f16/engine/jfs-start",0);
       settimer(repair3, 10);
     } else {
       screen.log.write("Done.");
@@ -717,7 +716,7 @@ var repair2 = func {
 }
 
 var repair3 = func {
-  setprop("f16/engine/jsf-start", 1);
+  setprop("f16/engine/jfs-start", 1);
   screen.log.write("Attempting engine start, standby for engine..");
   inAutostart = 0;
 }
@@ -763,7 +762,7 @@ var autostart = func {
   if (getprop("engines/engine[0]/running")!=1) {
     setprop("f16/engine/feed",1);
     setprop("f16/engine/jet-fuel",1);
-    setprop("f16/engine/jsf-start",0);
+    setprop("f16/engine/jfs-start",0);
     settimer(repair3, 10);
   } else {
     screen.log.write("Done.");
