@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model> 
+   <livery>
+    <name type="string">Leto Aggressor (fictional)</name>
+    <texture>Liveries/Block10/LetoAggressor.png</texture>
+    <owner type="string">RDAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/standard.logos.color.png</texture>
+   </livery-logo>
+   
+   <livery-patch>
+      <texture>Liveries/patch.default.png</texture>
+  </livery-patch>
+  </model>
+ </sim>
+</PropertyList>
