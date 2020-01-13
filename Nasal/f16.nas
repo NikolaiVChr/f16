@@ -1668,9 +1668,19 @@ var ignoreLoop = func () {
     var listMP = props.globals.getNode("ai/models/").getChildren("multiplayer");
     foreach (m; listMP) {
       var thisCallsign = m.getValue("callsign");
-      foreach(csToIgnore; trolls){
-        if(thisCallsign != nil and thisCallsign != "" and thisCallsign == csToIgnore){
-          setInvisible(m);
+      if(thisCallsign != nil and thisCallsign != "") {
+        var clear = 1;
+        foreach(csToIgnore; trolls){
+          if(thisCallsign == csToIgnore){
+            setInvisible(m);
+            clear = 0;
+          }
+        }
+        if (clear) {
+          if (contains(multiplayer.ignore, thisCallsign)) {
+              delete(ignore, thisCallsign);
+          }
+          m.setValue("controls/invisible", 0);
         }
       }
     }
@@ -1682,7 +1692,8 @@ var setInvisible = func (m) {
   var currentlyInvisible = m.getValue("controls/invisible");
   if(!currentlyInvisible){
     var thisCallsign = m.getValue("callsign");
-    multiplayer.dialog.toggle_ignore(thisCallsign);
+    multiplayer.ignore[thisCallsign] = 1;
+    #multiplayer.dialog.toggle_ignore(thisCallsign);
     m.setValue("controls/invisible",1);
     screen.log.write("Automatically ignoring " ~ thisCallsign ~ ".");
   }
