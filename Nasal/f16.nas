@@ -1669,7 +1669,7 @@ var ignoreLoop = func () {
     foreach (m; listMP) {
       var thisCallsign = m.getValue("callsign");
       foreach(csToIgnore; trolls){
-        if(thisCallsign == csToIgnore){
+        if(thisCallsign != nil and thisCallsign != "" and thisCallsign == csToIgnore){
           setInvisible(m);
         }
       }
