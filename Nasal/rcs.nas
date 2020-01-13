@@ -43,6 +43,7 @@ var rcs_database = {
     "707":                      90,     #guess
     "707-TT":                   90,     #guess
     "EC-137D":                  100,    #guess
+    "onox-tanker":              90,     #guess
     "B-1B":                     10,
     "b2-spirit":                0.002,  #actual: 0.0001
     "B-2A":                     0.002,  #actual: 0.0001
