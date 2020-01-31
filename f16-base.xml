@@ -2719,6 +2719,46 @@ There is also small changes in tail for different variants with and without brak
                 <max-pitch-deg type="double">-90</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
             </cbu-87>
+            <cbu-105> 
+                <short-name type="string">CB105</short-name>
+                <long-name type="string">CBU-105 Sensor Fuzed Weapon (WCMD)</long-name>
+                <fire-msg type="string">Bombs away</fire-msg>
+                <class type="string">GMP</class>
+                <max-fire-range-nm type="double">10</max-fire-range-nm>
+                <min-fire-range-nm type="double">0</min-fire-range-nm>
+                <guidance type="string">gps</guidance>
+                <navigation type="string">APN</navigation>
+                <loft-altitude type="int"> 0 </loft-altitude>
+                <terrain-follow type="bool">false</terrain-follow>
+                <FCS-field-deg type="int"> 200 </FCS-field-deg>
+                <seeker-field-deg type="int"> 90 </seeker-field-deg>
+                <max-g type="double"> 1.5 </max-g>
+                <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
+                <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
+                <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
+                <stage-2-duration-sec type="double"> 0 </stage-2-duration-sec>
+                <weight-launch-lbs type="double"> 927 </weight-launch-lbs>
+                <weight-warhead-lbs type="double"> 136 </weight-warhead-lbs>
+                <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
+                <drag-coeff type="double"> 0.019 </drag-coeff>
+                <cross-section-sqft type="double"> 1.8094133 </cross-section-sqft>
+                <arming-time-sec type="double"> 3 </arming-time-sec>
+                <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
+                <self-destruct-time-sec type="double"> 10000 </self-destruct-time-sec>
+                <all-aspect type="bool">true</all-aspect>
+                <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
+                <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
+                <rail type="bool">false</rail>
+                <max-report-distance type="double">130</max-report-distance><!-- real: max 150x365 meter area, so 130 is average radius of that -->
+                <vol-search type="double"> 0.075 </vol-search>
+                <vol-track type="double"> 0.25 </vol-track>
+                <vol-track-weak type="double"> 0.175 </vol-track-weak>
+                <drop-time type="double">0.75</drop-time>
+                <deploy-time type="double">0.9</deploy-time>
+                <lateral-dps type="double">15</lateral-dps>
+                <max-pitch-deg type="double">-90</max-pitch-deg>
+                <hit-everything-nearby type="bool">true</hit-everything-nearby>
+            </cbu-105>
             <!--lau-68>
                 <short-name type="string">LAU68</short-name>
                 <long-name type="string">LAU-68C/A Hydra 70</long-name>

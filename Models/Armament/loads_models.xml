@@ -266,6 +266,17 @@
 </model>
 
 <model>
+  <name>Station3_CBU105</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/CBU-105/duorack-3.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>-2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
   <name>Station3_3xAGM-65</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AGM-65/trirack-3.xml</path>
   <offsets>
@@ -535,6 +546,17 @@
 </model>
 
 <model>
+  <name>Station4_CBU105</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/CBU-105/duorack-4.xml</path>
+  <offsets>
+    <x-m>0.388102</x-m>
+    <y-m>-1.63859</y-m>
+    <z-m>-0.049251</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
   <name>Station4_GBU-31</name>
   <path>Aircraft/f16/Models/Armament/Weapons/GBU-31/GBU-31.xml</path>
   <offsets>
@@ -741,6 +763,17 @@
     <pitch-deg>0</pitch-deg>
   </offsets>
 </model>
+
+<model>
+  <name>Station6_CBU105</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/CBU-105/duorack-6.xml</path>
+  <offsets>
+    <x-m>0.388102</x-m>
+    <y-m>1.63859</y-m>
+    <z-m>-0.049251</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
  
  <model>
   <name>Station6_GBU-31</name>
@@ -859,6 +892,17 @@
  <model>
   <name>Station7_CBU87</name>
   <path>Aircraft/f16/Models/Armament/Weapons/CBU-87/duorack-7.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station7_CBU105</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/CBU-105/duorack-7.xml</path>
   <offsets>
     <x-m>1</x-m>
     <y-m>2.87</y-m>

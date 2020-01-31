@@ -2365,6 +2365,20 @@
 				<max>1</max>
 			</volume>
 		</bomb-release>
+		<bomb-release>
+			<name>bomb-release5</name>
+			<mode>once</mode>
+			<type>avionics</type>
+			<path>Aircraft/f16/Sounds/gbu_release.wav</path>
+			<condition>
+				<property>payload/armament/cbu-105/sound-fire-on-off</property>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>1</factor>
+				<max>1</max>
+			</volume>
+		</bomb-release>
 		<missile-hit>
 			<!-- multiple of these so the sound can be played over each other -->
 			<name>missile-hit1</name>

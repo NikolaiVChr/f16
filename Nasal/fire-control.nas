@@ -1030,7 +1030,7 @@ var printfDebug = func {if (debug == 1) call(printf,arg);};
 
 
 # This is non-generic methods, please edit it to fit your radar setup:
-var dualWeapons = ["MK-82","MK-83","MK-84","GBU-12","GBU-24","GBU-54","CBU-87","GBU-31","B61-7","B61-12"];
+var dualWeapons = ["MK-82","MK-83","MK-84","GBU-12","GBU-24","GBU-54","CBU-87","CBU-105","GBU-31","B61-7","B61-12"];
 var getCompleteRadarTargetsList = func {
 	# A list of all MP/AI aircraft/ships/surface-targets around the aircraft.
 	return awg_9.completeList;
