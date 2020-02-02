@@ -1,0 +1,302 @@
+<?xml version="1.0"?>
+
+
+
+<PropertyList>
+
+	<name>CBU-105</name>
+	<path>CBU-105.ac</path>
+
+	<effect>
+	      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+	      <parameters>
+	          <metallic type="float">0.80</metallic>
+	          <ambient-factor type="float">0.0</ambient-factor>
+	          <rain-enabled type="int">0</rain-enabled>
+	          <ambient-correction type="float">0.00</ambient-correction>
+	          <reflection-enabled type="int">0</reflection-enabled>
+	      </parameters>
+	  		<object-name>CBU-105frontsection</object-name>
+      		<object-name>CBU-105mounts</object-name>
+      		<object-name>CBU-105panelLH</object-name>
+     		<object-name>CBU-105panelRH</object-name>
+      		<object-name>CBU-105wing1</object-name>
+      		<object-name>CBU-105wing2</object-name>
+     		<object-name>CBU-105wing3</object-name>
+      		<object-name>CBU-105wing4</object-name>
+      		<object-name>CBU-105wingbase</object-name>
+      		<object-name>CBU-105tail</object-name>
+	  </effect>
+
+	<animation>
+		<type>select</type>
+		<object-name>CBU-105frontsection</object-name>
+      	<object-name>CBU-105mounts</object-name>
+      	<object-name>CBU-105panelLH</object-name>
+      	<object-name>CBU-105panelRH</object-name>
+      	<object-name>CBU-105wing1</object-name>
+      	<object-name>CBU-105wing2</object-name>
+      	<object-name>CBU-105wing3</object-name>
+      	<object-name>CBU-105wing4</object-name>
+      	<object-name>CBU-105wingbase</object-name>
+      	<object-name>CBU-105tail</object-name>
+		<condition>
+			<property>payload/armament/cbu-105/flags/msl-id-500</property>
+		</condition>
+	</animation>
+
+	<animation>
+  <type>rotate</type>
+  <object-name>CBU-105wing1</object-name>
+  <property>payload/armament/cbu-105/flags/deploy-id-500</property>
+  <factor>90</factor>
+  <axis>
+   <x1-m>1.13712</x1-m>
+   <y1-m>-0.14522</y1-m>
+   <z1-m>0.12254</z1-m>
+   <x2-m>1.13712</x2-m>
+   <y2-m>-0.12867</y2-m>
+   <z2-m>0.13992</z2-m>
+  </axis>
+ </animation>
+ 
+ <animation>
+  <type>rotate</type>
+  <object-name>CBU-105wing2</object-name>
+  <property>payload/armament/cbu-105/flags/deploy-id-500</property>
+  <factor>-90</factor>
+  <axis>
+   <x1-m>1.13712</x1-m>
+   <y1-m>0.14522</y1-m>
+   <z1-m>0.12254</z1-m>
+   <x2-m>1.13712</x2-m>
+   <y2-m>0.12867</y2-m>
+   <z2-m>0.13992</z2-m>
+  </axis>
+ </animation>
+ 
+ <animation>
+  <type>rotate</type>
+  <object-name>CBU-105wing3</object-name>
+  <property>payload/armament/cbu-105/flags/deploy-id-500</property>
+  <factor>90</factor>
+  <axis>
+   <x1-m>1.13712</x1-m>
+   <y1-m>0.14522</y1-m>
+   <z1-m>-0.12254</z1-m>
+   <x2-m>1.13712</x2-m>
+   <y2-m>0.12867</y2-m>
+   <z2-m>-0.13992</z2-m>
+  </axis>
+ </animation>
+ 
+ <animation>
+  <type>rotate</type>
+  <object-name>CBU-105wing4</object-name>
+  <property>payload/armament/cbu-105/flags/deploy-id-500</property>
+  <factor>-90</factor>
+  <axis>
+   <x1-m>1.13712</x1-m>
+   <y1-m>-0.14522</y1-m>
+   <z1-m>-0.12254</z1-m>
+   <x2-m>1.13712</x2-m>
+   <y2-m>-0.12867</y2-m>
+   <z2-m>-0.13992</z2-m>
+  </axis>
+ </animation>
+
+	 <particlesystem>
+		   <name>explosion</name>
+		   <texture>../smoke.png</texture>
+
+		   <emissive type="bool">true</emissive>
+		   <lighting type="bool">false</lighting>
+
+		   <condition>
+		         <property>payload/armament/cbu-105/flags/explode-id-500</property>
+		   </condition>
+
+		   <attach>world</attach>
+
+		   <placer>
+		     <type>sector</type>                                                    
+		    <radius-min-m>0</radius-min-m>
+		    <radius-max-m>150</radius-max-m>
+		    <!--<phi-min-deg>float</phi-min-deg>
+		    <phi-max-deg>float</phi-max-deg>-->
+		   </placer>
+
+		   <shooter>
+		     <theta-min-deg>-10</theta-min-deg>
+		     <theta-max-deg>10</theta-max-deg>
+		     <phi-min-deg>-180</phi-min-deg>
+		     <phi-max-deg>180</phi-max-deg>
+		     <speed-mps>
+		       <value>10</value>
+		       <spread>5</spread>
+		     </speed-mps>
+		     <rotation-speed>
+		       <x-min-deg-sec>0</x-min-deg-sec>
+		       <y-min-deg-sec>0</y-min-deg-sec>
+		       <z-min-deg-sec>0</z-min-deg-sec>
+		       <x-max-deg-sec>0</x-max-deg-sec>
+		       <y-max-deg-sec>0</y-max-deg-sec>
+		       <z-max-deg-sec>0</z-max-deg-sec>
+		     </rotation-speed>
+		   </shooter>
+
+		   <counter>
+		     <particles-per-sec>
+		       <value>200</value>
+		       <spread>15</spread>
+		     </particles-per-sec>
+		   </counter>
+		      
+		   <align>billboard</align>
+
+		   <particle>
+		     <start>
+		       <color>
+		         <red><value>   1.0 </value></red>
+		         <green><value> 1.0 </value></green>
+		         <blue><value>  0.4 </value></blue>
+		         <alpha><value> 1 </value></alpha>
+		       </color>
+		       <size>
+		         <value>5</value>
+		       </size>
+		     </start>
+
+		     <end>
+		       <color>
+		         <red><value>   0.8 </value></red>
+		         <green><value> 0.5 </value></green>
+		         <blue><value>  0.2 </value></blue>
+		         <alpha><value> 0.1 </value></alpha>
+		       </color>
+		       <size>
+		         <value>15</value>
+		       </size>
+		     </end>
+
+		     <life-sec>
+		       <value>3</value>
+		     </life-sec>
+		        
+		     <mass-kg>  5 </mass-kg>
+		     <radius-m> 0.5 </radius-m>
+   			</particle>
+
+		   <program>
+		     <fluid>               air  </fluid>
+		     <gravity type="bool"> true </gravity>
+		     <wind typ="bool">     true </wind>
+		   </program>
+
+		 </particlesystem>
+
+		<particlesystem>
+		   <name>explosion-smoke</name>
+		   <texture>../smoke.png</texture>
+
+		   <emissive type="bool">false</emissive>
+		   <lighting type="bool">false</lighting>
+
+		   <condition>
+		         <property>payload/armament/cbu-105/flags/explode-smoke-id-500</property>
+		   </condition>
+
+		   <attach>world</attach>
+
+		   <placer>
+		     <type>sector</type>                                                    
+		    <radius-min-m>0</radius-min-m>
+		    <radius-max-m>365</radius-max-m>
+		    <!--<phi-min-deg>float</phi-min-deg>
+		    <phi-max-deg>float</phi-max-deg>-->
+		   </placer>
+
+		   <shooter>
+		     <theta-min-deg>-180</theta-min-deg>
+		     <theta-max-deg>180</theta-max-deg>
+		     <phi-min-deg>-180</phi-min-deg>
+		     <phi-max-deg>180</phi-max-deg>
+		     <speed-mps>
+		       <value>10</value>
+		       <spread>5</spread>
+		     </speed-mps>
+		     <rotation-speed>
+		       <x-min-deg-sec>0</x-min-deg-sec>
+		       <y-min-deg-sec>0</y-min-deg-sec>
+		       <z-min-deg-sec>0</z-min-deg-sec>
+		       <x-max-deg-sec>0</x-max-deg-sec>
+		       <y-max-deg-sec>0</y-max-deg-sec>
+		       <z-max-deg-sec>0</z-max-deg-sec>
+		     </rotation-speed>
+		   </shooter>
+
+		   <counter>
+		     <particles-per-sec>
+		       <value>200</value>
+		       <spread>15</spread>
+		     </particles-per-sec>
+		   </counter>
+		      
+		   <align>billboard</align>
+
+		   <particle>
+		     <start>
+		       <color>
+		         <red><value>   0.3 </value></red>
+		         <green><value> 0.3 </value></green>
+		         <blue><value>  0.25 </value></blue>
+		         <alpha><value> 0.5 </value></alpha>
+		       </color>
+		       <size>
+		         <value>15</value>
+		       </size>
+		     </start>
+
+		     <end>
+		       <color>
+		         <red><value>   0.4 </value></red>
+		         <green><value> 0.4 </value></green>
+		         <blue><value>  0.4 </value></blue>
+		         <alpha><value> 0.04 </value></alpha>
+		       </color>
+		       <size>
+		         <value>20</value>
+		       </size>
+		     </end>
+
+		     <life-sec>
+		       <value>45</value>
+		     </life-sec>
+		        
+		     <mass-kg>  5 </mass-kg>
+		     <radius-m> 0.5 </radius-m>
+		   </particle>
+
+		   <program>
+		     <fluid>               air  </fluid>
+		     <gravity type="bool"> true </gravity>
+		     <wind typ="bool">     true </wind>
+		   </program>
+
+		 </particlesystem>
+
+	<animation>
+  		<object-name>CBU-105frontsection</object-name>
+      	<object-name>CBU-105mounts</object-name>
+      	<object-name>CBU-105panelLH</object-name>
+      	<object-name>CBU-105panelRH</object-name>
+      	<object-name>CBU-105wing1</object-name>
+      	<object-name>CBU-105wing2</object-name>
+      	<object-name>CBU-105wing3</object-name>
+      	<object-name>CBU-105wing4</object-name>
+      	<object-name>CBU-105wingbase</object-name>
+      	<object-name>CBU-105tail</object-name>
+  		<enable-hot type="bool">false</enable-hot>
+ 	</animation>
+
+</PropertyList>

@@ -1636,8 +1636,7 @@ append(obj.total, obj.speed_curr);
             }
             var selW = pylons.fcs.getSelectedWeapon();
             if (selW != nil and !hdp.CCIP_active and 
-                (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24"
-                 or selW.type=="CBU-87" or selW.type=="AGM-154A" or selW.type=="B61-7" or selW.type=="B61-12") and selW.status == armament.MISSILE_LOCK ) {
+                (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87" or selW.type=="CBU-105" or selW.type=="AGM-154A" or selW.type=="B61-7" or selW.type=="B61-12") and selW.status == armament.MISSILE_LOCK ) {
 
                 if (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="CBU-87") {
                     me.dt = 0.1;
@@ -1687,7 +1686,7 @@ append(obj.total, obj.speed_curr);
         if(hdp.CCIP_active) {
             if (hdp.fcs_available and hdp.master_arm ==1) {
                 var selW = pylons.fcs.getSelectedWeapon();
-                if (selW != nil and (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87")) {
+                if (selW != nil and (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87" or selW.type=="CBU-105")) {
                     me.showmeCCIP = 1;
                     me.ccipPos = pylons.fcs.getSelectedWeapon().getCCIPadv(18,0.20);
                     if (me.ccipPos == nil) {
@@ -2136,6 +2135,8 @@ append(obj.total, obj.speed_curr);
                         hdp.window9_txt = sprintf("%d AG154", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "CBU-87") {
                         hdp.window9_txt = sprintf("%d CB87", pylons.fcs.getAmmo());
+                    } elsif (hdp.weapon_selected == "CBU-105") {
+                        hdp.window9_txt = sprintf("%d CB105", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "LAU-68") {
                         hdp.window9_txt = sprintf("%d HYD70", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "B61-7") {
