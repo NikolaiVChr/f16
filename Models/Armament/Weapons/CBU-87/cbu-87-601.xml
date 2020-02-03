@@ -161,7 +161,7 @@
 		         <alpha><value> 1 </value></alpha>
 		       </color>
 		       <size>
-		         <value>5</value>
+		         <value>10</value>
 		       </size>
 		     </start>
 
@@ -178,7 +178,7 @@
 		     </end>
 
 		     <life-sec>
-		       <value>3</value>
+		       <value>3.5</value>
 		     </life-sec>
 		        
 		     <mass-kg>  5 </mass-kg>

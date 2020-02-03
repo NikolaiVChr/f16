@@ -51,12 +51,12 @@
   <property>payload/armament/cbu-105/flags/deploy-id-601</property>
   <factor>90</factor>
   <axis>
-   <x1-m>1.13712</x1-m>
-   <y1-m>-0.14522</y1-m>
-   <z1-m>0.12254</z1-m>
-   <x2-m>1.13712</x2-m>
-   <y2-m>-0.12867</y2-m>
-   <z2-m>0.13992</z2-m>
+   <x1-m>1.13212</x1-m>
+   <y1-m>-0.12971</y1-m>
+   <z1-m>0.09188</z1-m>
+   <x2-m>1.13212</x2-m>
+   <y2-m>-0.09384</y2-m>
+   <z2-m>0.12953</z2-m>
   </axis>
  </animation>
  
@@ -66,12 +66,12 @@
   <property>payload/armament/cbu-105/flags/deploy-id-601</property>
   <factor>-90</factor>
   <axis>
-   <x1-m>1.13712</x1-m>
-   <y1-m>0.14522</y1-m>
-   <z1-m>0.12254</z1-m>
-   <x2-m>1.13712</x2-m>
-   <y2-m>0.12867</y2-m>
-   <z2-m>0.13992</z2-m>
+   <x1-m>1.13212</x1-m>
+   <y1-m>0.12944</y1-m>
+   <z1-m>0.09738</z1-m>
+   <x2-m>1.13212</x2-m>
+   <y2-m>0.09179</y2-m>
+   <z2-m>0.13324</z2-m>
   </axis>
  </animation>
  
@@ -81,12 +81,12 @@
   <property>payload/armament/cbu-105/flags/deploy-id-601</property>
   <factor>90</factor>
   <axis>
-   <x1-m>1.13712</x1-m>
-   <y1-m>0.14522</y1-m>
-   <z1-m>-0.12254</z1-m>
-   <x2-m>1.13712</x2-m>
-   <y2-m>0.12867</y2-m>
-   <z2-m>-0.13992</z2-m>
+   <x1-m>1.13212</x1-m>
+   <y1-m>0.13316</y1-m>
+   <z1-m>-0.08826</z1-m>
+   <x2-m>1.13212</x2-m>
+   <y2-m>0.09729</y2-m>
+   <z2-m>-0.12591</z2-m>
   </axis>
  </animation>
  
@@ -96,12 +96,12 @@
   <property>payload/armament/cbu-105/flags/deploy-id-601</property>
   <factor>-90</factor>
   <axis>
-   <x1-m>1.13712</x1-m>
-   <y1-m>-0.14522</y1-m>
-   <z1-m>-0.12254</z1-m>
-   <x2-m>1.13712</x2-m>
-   <y2-m>-0.12867</y2-m>
-   <z2-m>-0.13992</z2-m>
+   <x1-m>1.13212</x1-m>
+   <y1-m>-0.12599</y1-m>
+   <z1-m>-0.09376</z1-m>
+   <x2-m>1.13212</x2-m>
+   <y2-m>-0.08835</y2-m>
+   <z2-m>-0.12962</z2-m>
   </axis>
  </animation>
 

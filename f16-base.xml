@@ -2707,7 +2707,7 @@ There is also small changes in tail for different variants with and without brak
                 <weight-launch-lbs type="double"> 950 </weight-launch-lbs>
                 <weight-warhead-lbs type="double"> 128 </weight-warhead-lbs>
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
-                <drag-coeff type="double"> 0.13 </drag-coeff>
+                <drag-coeff type="double"> 0.14 </drag-coeff>
                 <cross-section-sqft type="double"> 1.8094133 </cross-section-sqft>
                 <arming-time-sec type="double"> 3 </arming-time-sec>
                 <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
@@ -2749,7 +2749,7 @@ There is also small changes in tail for different variants with and without brak
                 <weight-launch-lbs type="double"> 927 </weight-launch-lbs>
                 <weight-warhead-lbs type="double"> 136 </weight-warhead-lbs>
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
-                <drag-coeff type="double"> 0.13 </drag-coeff>
+                <drag-coeff type="double"> 0.14 </drag-coeff>
                 <cross-section-sqft type="double"> 1.8094133 </cross-section-sqft>
                 <arming-time-sec type="double"> 3 </arming-time-sec>
                 <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
