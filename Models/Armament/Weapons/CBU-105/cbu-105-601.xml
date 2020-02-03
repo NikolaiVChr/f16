@@ -147,7 +147,7 @@
 
 		   <counter>
 		     <particles-per-sec>
-		       <value>200</value>
+		       <value>40</value>
 		       <spread>15</spread>
 		     </particles-per-sec>
 		   </counter>
@@ -211,7 +211,7 @@
 		   <placer>
 		     <type>sector</type>                                                    
 		    <radius-min-m>0</radius-min-m>
-		    <radius-max-m>365</radius-max-m>
+		    <radius-max-m>150</radius-max-m>
 		    <!--<phi-min-deg>float</phi-min-deg>
 		    <phi-max-deg>float</phi-max-deg>-->
 		   </placer>
@@ -237,7 +237,7 @@
 
 		   <counter>
 		     <particles-per-sec>
-		       <value>200</value>
+		       <value>80</value>
 		       <spread>15</spread>
 		     </particles-per-sec>
 		   </counter>

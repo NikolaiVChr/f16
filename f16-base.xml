@@ -2133,7 +2133,7 @@ There is also small changes in tail for different variants with and without brak
                 <terrain-follow type="bool">false</terrain-follow>
                 <FCS-field-deg type="int"> 240 </FCS-field-deg>
                 <seeker-field-deg type="int"> 360 </seeker-field-deg>
-                <max-g type="double"> 1.5 </max-g>
+                <max-g type="double"> 1.6 </max-g>
                 <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
@@ -2154,12 +2154,13 @@ There is also small changes in tail for different variants with and without brak
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
-                <drop-time type="double">1</drop-time>
+                <drop-time type="double">0.75</drop-time>
                 <deploy-time type="double">1</deploy-time>
                 <lateral-dps type="double"> -10 </lateral-dps>
                 <max-pitch-deg type="double">-90</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
-                <ejector-speed-fps type="double">20</ejector-speed-fps>                
+                <ejector-speed-fps type="double">20</ejector-speed-fps>
+                <ready-time type="double">0.5</ready-time>               
             </mk-82>
             <mk-83> 
                 <short-name type="string">B83</short-name>
@@ -2174,7 +2175,7 @@ There is also small changes in tail for different variants with and without brak
                 <terrain-follow type="bool">false</terrain-follow>
                 <FCS-field-deg type="int"> 240 </FCS-field-deg>
                 <seeker-field-deg type="int"> 360 </seeker-field-deg>
-                <max-g type="double"> 1.5 </max-g>
+                <max-g type="double"> 1.8 </max-g>
                 <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
@@ -2195,12 +2196,13 @@ There is also small changes in tail for different variants with and without brak
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
-                <drop-time type="double">1</drop-time>
+                <drop-time type="double">0.75</drop-time>
                 <deploy-time type="double">1</deploy-time>
                 <lateral-dps type="double"> -10 </lateral-dps>
                 <max-pitch-deg type="double">-90</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
                 <ejector-speed-fps type="double">10</ejector-speed-fps>
+                <ready-time type="double">0.5</ready-time>
             </mk-83>
             <mk-84>
                 <short-name type="string">B84</short-name>
@@ -2216,7 +2218,7 @@ There is also small changes in tail for different variants with and without brak
                 <FCS-field-deg type="int"> 200 </FCS-field-deg>
                 <seeker-field-deg type="int"> 32 </seeker-field-deg>
                 <reaquire type="bool">true</reaquire>
-                <max-g type="double"> 1.8 </max-g>
+                <max-g type="double"> 2.0 </max-g>
                 <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
@@ -2237,7 +2239,7 @@ There is also small changes in tail for different variants with and without brak
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
-                <drop-time type="double">1</drop-time>
+                <drop-time type="double">0.75</drop-time>
                 <deploy-time type="double">1</deploy-time>
                 <lateral-dps type="double"> 10 </lateral-dps>
                 <max-pitch-deg type="double">-45</max-pitch-deg>
@@ -2250,6 +2252,7 @@ There is also small changes in tail for different variants with and without brak
                 <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
                 <ejector-speed-fps type="double">5</ejector-speed-fps>
+                <ready-time type="double">0.5</ready-time>
             </mk-84>
             <gbu-12>
                 <short-name type="string">GB12</short-name>
@@ -2265,7 +2268,7 @@ There is also small changes in tail for different variants with and without brak
                 <FCS-field-deg type="int"> 200 </FCS-field-deg>
                 <seeker-field-deg type="int"> 32 </seeker-field-deg>
                 <reaquire type="bool">true</reaquire>
-                <max-g type="double"> 1.5 </max-g><!-- real is 2.8, but here its limited for technical reasons -->
+                <max-g type="double"> 1.6 </max-g><!-- real is 2.8, but here its limited for technical reasons -->
                 <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
@@ -2286,8 +2289,8 @@ There is also small changes in tail for different variants with and without brak
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
-                <drop-time type="double">1</drop-time>
-                <deploy-time type="double">1.5</deploy-time>
+                <drop-time type="double">0.75</drop-time>
+                <deploy-time type="double">1.25</deploy-time>
                 <lateral-dps type="double"> 10 </lateral-dps>
                 <max-pitch-deg type="double">-45</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
@@ -2299,6 +2302,7 @@ There is also small changes in tail for different variants with and without brak
                 <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
                 <ejector-speed-fps type="double">20</ejector-speed-fps>
+                <ready-time type="double">0.5</ready-time>
             </gbu-12>
             <gbu-54>
                 <short-name type="string">GB54</short-name>
@@ -2314,7 +2318,7 @@ There is also small changes in tail for different variants with and without brak
                 <FCS-field-deg type="int"> 200 </FCS-field-deg>
                 <seeker-field-deg type="int"> 45 </seeker-field-deg>
                 <reaquire type="bool">true</reaquire>
-                <max-g type="double"> 1.8 </max-g>
+                <max-g type="double"> 1.6 </max-g>
                 <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
@@ -2335,7 +2339,7 @@ There is also small changes in tail for different variants with and without brak
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
-                <drop-time type="double">1</drop-time>
+                <drop-time type="double">0.75</drop-time>
                 <deploy-time type="double">1</deploy-time>
                 <lateral-dps type="double"> 10 </lateral-dps>
                 <max-pitch-deg type="double">-45</max-pitch-deg>
@@ -2348,6 +2352,7 @@ There is also small changes in tail for different variants with and without brak
                 <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
                 <ejector-speed-fps type="double">20</ejector-speed-fps>
+                <ready-time type="double">0.5</ready-time>
             </gbu-54>
             <gbu-31>
                 <short-name type="string">GB31</short-name>
@@ -2363,7 +2368,7 @@ There is also small changes in tail for different variants with and without brak
                 <FCS-field-deg type="int"> 200 </FCS-field-deg>
                 <seeker-field-deg type="int"> 45 </seeker-field-deg>
                 <reaquire type="bool">true</reaquire>
-                <max-g type="double"> 1.8 </max-g>
+                <max-g type="double"> 2.0 </max-g>
                 <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
@@ -2384,7 +2389,7 @@ There is also small changes in tail for different variants with and without brak
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
-                <drop-time type="double">1</drop-time>
+                <drop-time type="double">0.75</drop-time>
                 <deploy-time type="double">1</deploy-time>
                 <lateral-dps type="double"> 10 </lateral-dps>
                 <max-pitch-deg type="double">-45</max-pitch-deg>
@@ -2397,6 +2402,7 @@ There is also small changes in tail for different variants with and without brak
                 <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
                 <ejector-speed-fps type="double">5</ejector-speed-fps>
+                <ready-time type="double">0.5</ready-time>
             </gbu-31>
             <gbu-24>
                 <short-name type="string">GB24</short-name>
@@ -2433,7 +2439,7 @@ There is also small changes in tail for different variants with and without brak
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
-                <drop-time type="double">1</drop-time>
+                <drop-time type="double">0.75</drop-time>
                 <deploy-time type="double">1</deploy-time>
                 <lateral-dps type="double"> 10 </lateral-dps>
                 <max-pitch-deg type="double">-45</max-pitch-deg>
@@ -2446,6 +2452,7 @@ There is also small changes in tail for different variants with and without brak
                 <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
                 <ejector-speed-fps type="double">5</ejector-speed-fps>
+                <ready-time type="double">0.5</ready-time>
             </gbu-24>
             <agm-65>
                 <short-name type="string">AG65</short-name>
@@ -2692,7 +2699,7 @@ There is also small changes in tail for different variants with and without brak
                 <terrain-follow type="bool">false</terrain-follow>
                 <FCS-field-deg type="int"> 240 </FCS-field-deg>
                 <seeker-field-deg type="int"> 360 </seeker-field-deg>
-                <max-g type="double"> 1.5 </max-g>
+                <max-g type="double"> 1.8 </max-g>
                 <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
@@ -2700,7 +2707,7 @@ There is also small changes in tail for different variants with and without brak
                 <weight-launch-lbs type="double"> 950 </weight-launch-lbs>
                 <weight-warhead-lbs type="double"> 128 </weight-warhead-lbs>
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
-                <drag-coeff type="double"> 0.018 </drag-coeff>
+                <drag-coeff type="double"> 0.13 </drag-coeff>
                 <cross-section-sqft type="double"> 1.8094133 </cross-section-sqft>
                 <arming-time-sec type="double"> 3 </arming-time-sec>
                 <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
@@ -2713,11 +2720,12 @@ There is also small changes in tail for different variants with and without brak
                 <vol-search type="double"> 0.075 </vol-search>
                 <vol-track type="double"> 0.25 </vol-track>
                 <vol-track-weak type="double"> 0.175 </vol-track-weak>
-                <drop-time type="double">0.8</drop-time>
-                <deploy-time type="double">0.7</deploy-time>
+                <drop-time type="double">0.75</drop-time>
+                <deploy-time type="double">0.75</deploy-time>
                 <lateral-dps type="double">-135</lateral-dps> <!-- -135 -->
-                <max-pitch-deg type="double">-90</max-pitch-deg>
+                <max-pitch-deg type="double">-45</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
+                <ready-time type="double">0.5</ready-time>
             </cbu-87>
             <cbu-105> 
                 <short-name type="string">CB105</short-name>
@@ -2731,8 +2739,9 @@ There is also small changes in tail for different variants with and without brak
                 <loft-altitude type="int"> 0 </loft-altitude>
                 <terrain-follow type="bool">false</terrain-follow>
                 <FCS-field-deg type="int"> 200 </FCS-field-deg>
-                <seeker-field-deg type="int"> 90 </seeker-field-deg>
-                <max-g type="double"> 1.5 </max-g>
+                <seeker-field-deg type="int"> 70 </seeker-field-deg>
+                <reaquire type="bool">true</reaquire>
+                <max-g type="double"> 1.8 </max-g>
                 <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
@@ -2740,7 +2749,7 @@ There is also small changes in tail for different variants with and without brak
                 <weight-launch-lbs type="double"> 927 </weight-launch-lbs>
                 <weight-warhead-lbs type="double"> 136 </weight-warhead-lbs>
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
-                <drag-coeff type="double"> 0.019 </drag-coeff>
+                <drag-coeff type="double"> 0.13 </drag-coeff>
                 <cross-section-sqft type="double"> 1.8094133 </cross-section-sqft>
                 <arming-time-sec type="double"> 3 </arming-time-sec>
                 <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
@@ -2756,8 +2765,10 @@ There is also small changes in tail for different variants with and without brak
                 <drop-time type="double">0.75</drop-time>
                 <deploy-time type="double">0.9</deploy-time>
                 <lateral-dps type="double">15</lateral-dps>
-                <max-pitch-deg type="double">-90</max-pitch-deg>
+                <max-pitch-deg type="double">-45</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
+                <require-lock-to-fire type="bool">false</require-lock-to-fire>
+                <ready-time type="double">0.5</ready-time>
             </cbu-105>
             <!--lau-68>
                 <short-name type="string">LAU68</short-name>
@@ -2809,7 +2820,7 @@ There is also small changes in tail for different variants with and without brak
                 <FCS-field-deg type="int">200</FCS-field-deg>
                 <seeker-field-deg type="int">45</seeker-field-deg>
                 <reaquire type="bool">true</reaquire>
-                <max-g type="double">1.4</max-g>
+                <max-g type="double">1.8</max-g>
                 <thrust-lbf-stage-1 type="double">0</thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double">0</thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double">0</stage-1-duration-sec>
@@ -2859,7 +2870,7 @@ There is also small changes in tail for different variants with and without brak
                 <FCS-field-deg type="int">240</FCS-field-deg>
                 <seeker-field-deg type="int">90</seeker-field-deg>
                 <reaquire type="bool">true</reaquire>
-                <max-g type="double"> 1.9 </max-g>
+                <max-g type="double"> 2.0 </max-g>
                 <thrust-lbf-stage-1 type="double">0</thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double">0</thrust-lbf-stage-2>
                 <stage-1-duration-sec type="double">0</stage-1-duration-sec>
