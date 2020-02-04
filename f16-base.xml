@@ -55,6 +55,8 @@
             <tag>single-engine</tag>
             <tag>retractable-gear</tag>
             <tag>ifr</tag>
+            <tag>hud</tag>
+            <tag>refuel</tag>
         </tags>
         <state include="states/running.xml" n="0"/>
         <state include="states/ramp.xml" n="1"/>
