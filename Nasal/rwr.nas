@@ -198,6 +198,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_GRIPEN   = "39";
         rwr.AIRCRAFT_MITTEN   = "Y1";
         rwr.AIRCRAFT_ALCA     = "LC";
+        rwr.AIRCRAFT_SPRETNDRD = "ET";
         rwr.AIRCRAFT_UNKNOWN  = "U";
         rwr.AIRCRAFT_UFO      = "UK";
         rwr.ASSET_AI          = "AI";
@@ -298,6 +299,7 @@ RWRCanvas = {
                 "gripen":                   rwr.AIRCRAFT_GRIPEN,
                 "Yak-130":                  rwr.AIRCRAFT_MITTEN,
                 "L-159":                    rwr.AIRCRAFT_ALCA,
+                "super-etendard":           rwr.AIRCRAFT_SPRETNDRD,
                 "mp-nimitz":                rwr.ASSET_FRIGATE,
                 "mp-eisenhower":            rwr.ASSET_FRIGATE,
                 "mp-vinson":                rwr.ASSET_FRIGATE,
