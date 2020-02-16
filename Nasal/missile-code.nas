@@ -4759,9 +4759,9 @@ var AIM = {
 		    } else if ((info[1] != nil) and (info[1].solid == 1)) {
 		        var crater_model = "";
 		       
-		        if (me.weight_whead_lbm < 850) {
+		        if (me.weight_whead_lbm < 850 and (me.target_sea or me.target_gnd)) {
 		          crater_model = getprop("payload/armament/models") ~ "crater_small.xml";
-		        } else {
+		        } elsif (me.target_sea or me.target_gnd) {
 		          crater_model = getprop("payload/armament/models") ~ "crater_big.xml";
 		        }
 		       
