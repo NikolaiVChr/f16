@@ -77,6 +77,9 @@ Gary Brown
 - ALE-50 3D model
 - Paintkit
 
+Thorsten Renk
+- Enhanced bomb effects at exploding.
+
 Carsten Brueggmann
 - Sound creation and editing.
 
