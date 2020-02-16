@@ -4758,14 +4758,14 @@ var AIM = {
 		       geo.put_model(getprop("payload/armament/models") ~ "bomb_hit_smoke.xml", me.coord.lat(), me.coord.lon());
 		    } else if ((info[1] != nil) and (info[1].solid == 1)) {
 		        var crater_model = "";
-		       
+		       	
 		        if (me.weight_whead_lbm < 850 and (me.target_sea or me.target_gnd)) {
 		          crater_model = getprop("payload/armament/models") ~ "crater_small.xml";
 		        } elsif (me.target_sea or me.target_gnd) {
 		          crater_model = getprop("payload/armament/models") ~ "crater_big.xml";
 		        }
 		       
-		       	if (crater_model != "") {
+		       	if (crater_model != "" and me.weight_whead_lbm > 150) {
 		            geo.put_model(crater_model, me.coord.lat(), me.coord.lon());
 		        }
 		    }
