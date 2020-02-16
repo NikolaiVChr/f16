@@ -1954,6 +1954,7 @@ There is also small changes in tail for different variants with and without brak
             <modelsUseCase type="bool">true</modelsUseCase>
             <modelsUpperCase type="bool">true</modelsUpperCase>
             <msg type="bool">false</msg>
+            <enable-craters type="bool">true</enable-craters>
             <pylon-offset type="int">0</pylon-offset>
             <pylon-stations>payload</pylon-stations>
             <station-name type="string">station</station-name>
