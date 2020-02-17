@@ -2,7 +2,7 @@
 
 <PropertyList>
 
-	<path>AGM-65.ac</path>
+   <path>AGM-65.ac</path>
 
   <animation>
     <type>select</type>
@@ -20,9 +20,9 @@
     </condition>
   </animation>
 
-  <effect>  
-    <inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  
-    <object-name>AGM-65Glass</object-name> 
+  <effect> 
+    <inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from> 
+    <object-name>AGM-65Glass</object-name>
   </effect>
 
   <effect>
@@ -56,7 +56,7 @@
        <attach>world</attach>
 
        <placer>
-         <type>point</type> 
+         <type>point</type>
        </placer>
 
        <offsets>
@@ -90,15 +90,15 @@
            <spread>0</spread>
          </particles-per-sec>
        </counter>
-          
+         
        <align>billboard</align>
 
        <particle>
          <start>
            <color>
-             <red><value>   0.8 </value></red>
-             <green><value> 0.8 </value></green>
-             <blue><value>  0.8 </value></blue>
+         <red><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></red>
+         <green><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></green>
+         <blue><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
              <alpha><value> 0.5 </value></alpha>
            </color>
            <size>
@@ -108,9 +108,9 @@
 
          <end>
            <color>
-             <red><value>   0.8 </value></red>
-             <green><value> 0.8 </value></green>
-             <blue><value>  0.8 </value></blue>
+         <red><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></red>
+         <green><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></green>
+         <blue><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
              <alpha><value> 0.1 </value></alpha>
            </color>
            <size>
@@ -121,7 +121,7 @@
          <life-sec>
            <value>30</value>
          </life-sec>
-            
+           
          <mass-kg>  0.5 </mass-kg>
          <radius-m> 0.5 </radius-m>
        </particle>
@@ -135,179 +135,656 @@
      </particlesystem>
 
     <particlesystem>
-       <name>explosion</name>
-       <texture>../smoke.png</texture>
+         <name>explosion-inner</name>
+         <texture>../smoke.png</texture>
 
-       <emissive type="bool">true</emissive>
-       <lighting type="bool">false</lighting>
+         <emissive type="bool">true</emissive>
+         <lighting type="bool">false</lighting>
 
-       <condition>
+         <condition>
              <property>payload/armament/agm-65/flags/explode-id-601</property>
-       </condition>
+         </condition>
 
-       <attach>world</attach>
+         <attach>world</attach>
 
-       <placer>
-         <type>point</type> 
-       </placer>
+         <placer>
+           <type>point</type>
+         </placer>
 
-       <shooter>
-         <theta-min-deg>-180</theta-min-deg>
-         <theta-max-deg>180</theta-max-deg>
-         <phi-min-deg>-180</phi-min-deg>
-         <phi-max-deg>180</phi-max-deg>
-         <speed-mps>
-           <value>500</value>
-           <spread>80</spread>
-         </speed-mps>
-         <rotation-speed>
-           <x-min-deg-sec>0</x-min-deg-sec>
-           <y-min-deg-sec>0</y-min-deg-sec>
-           <z-min-deg-sec>0</z-min-deg-sec>
-           <x-max-deg-sec>0</x-max-deg-sec>
-           <y-max-deg-sec>0</y-max-deg-sec>
-           <z-max-deg-sec>0</z-max-deg-sec>
-         </rotation-speed>
-       </shooter>
+         <shooter>
+           <theta-min-deg>35</theta-min-deg>
+           <theta-max-deg>65</theta-max-deg>
+           <phi-min-deg>-180</phi-min-deg>
+           <phi-max-deg>180</phi-max-deg>
+           <speed-mps>
+             <value>170</value>
+             <spread>40</spread>
+           </speed-mps>
+           <rotation-speed>
+             <x-min-deg-sec>0</x-min-deg-sec>
+             <y-min-deg-sec>0</y-min-deg-sec>
+             <z-min-deg-sec>0</z-min-deg-sec>
+             <x-max-deg-sec>0</x-max-deg-sec>
+             <y-max-deg-sec>0</y-max-deg-sec>
+             <z-max-deg-sec>0</z-max-deg-sec>
+           </rotation-speed>
+         </shooter>
 
-       <counter>
-         <particles-per-sec>
-           <value>30</value>
-           <spread>10</spread>
-         </particles-per-sec>
-       </counter>
-          
-       <align>billboard</align>
+         <counter>
+           <particles-per-sec>
+             <value>20</value>
+             <spread>10</spread>
+           </particles-per-sec>
+         </counter>
+           
+         <align>billboard</align>
 
-       <particle>
-         <start>
-           <color>
-             <red><value>   1.0 </value></red>
-             <green><value> 1.0 </value></green>
-             <blue><value>  0.4 </value></blue>
-             <alpha><value> 1 </value></alpha>
-           </color>
-           <size>
-             <value>4</value>
-           </size>
-         </start>
+         <particle>
+           <start>
+             <color>
+               <red><value>   1.0 </value></red>
+               <green><value> 1.0 </value></green>
+               <blue><value>  0.4 </value></blue>
+               <alpha><value> 1 </value></alpha>
+             </color>
+             <size>
+               <value>5</value>
+             </size>
+           </start>
 
-         <end>
-           <color>
-             <red><value>   0.8 </value></red>
-             <green><value> 0.5 </value></green>
-             <blue><value>  0.2 </value></blue>
-             <alpha><value> 0.1 </value></alpha>
-           </color>
-           <size>
-             <value>100</value>
-           </size>
-         </end>
+           <end>
+             <color>
+               <red><value>   1.0 </value></red>
+               <green><value> 0.5 </value></green>
+               <blue><value>  0.2 </value></blue>
+               <alpha><value> 0.7 </value></alpha>
+             </color>
+             <size>
+               <value>8</value>
+             </size>
+           </end>
 
-         <life-sec>
-           <value>0.5</value>
-         </life-sec>
-            
-         <mass-kg>  5 </mass-kg>
-         <radius-m> 0.5 </radius-m>
-       </particle>
+           <life-sec>
+             <value>0.4</value>
+           </life-sec>
+             
+           <mass-kg>  5 </mass-kg>
+           <radius-m> 0.5 </radius-m>
+         </particle>
 
-       <program>
-         <fluid>               air  </fluid>
-         <gravity type="bool"> true </gravity>
-         <wind typ="bool">     true </wind>
-       </program>
+         <program>
+           <fluid>               air  </fluid>
+           <gravity type="bool"> true </gravity>
+           <wind typ="bool">     true </wind>
+         </program>
 
-     </particlesystem>
+       </particlesystem>
 
     <particlesystem>
-       <name>explosion-smoke</name>
-       <texture>../smoke.png</texture>
+         <name>explosion-outer</name>
+         <texture>../smoke.png</texture>
 
-       <emissive type="bool">false</emissive>
-       <lighting type="bool">false</lighting>
+         <emissive type="bool">true</emissive>
+         <lighting type="bool">false</lighting>
 
-       <condition>
+         <condition>
+             <property>payload/armament/agm-65/flags/explode-id-601</property>
+         </condition>
+
+         <attach>world</attach>
+
+         <placer>
+           <type>point</type>
+         </placer>
+
+         <shooter>
+           <theta-min-deg>-180</theta-min-deg>
+           <theta-max-deg>180</theta-max-deg>
+           <phi-min-deg>-180</phi-min-deg>
+           <phi-max-deg>180</phi-max-deg>
+           <speed-mps>
+             <value>400</value>
+             <spread>80</spread>
+           </speed-mps>
+           <rotation-speed>
+             <x-min-deg-sec>0</x-min-deg-sec>
+             <y-min-deg-sec>0</y-min-deg-sec>
+             <z-min-deg-sec>0</z-min-deg-sec>
+             <x-max-deg-sec>0</x-max-deg-sec>
+             <y-max-deg-sec>0</y-max-deg-sec>
+             <z-max-deg-sec>0</z-max-deg-sec>
+           </rotation-speed>
+         </shooter>
+
+         <counter>
+           <particles-per-sec>
+             <value>50</value>
+             <spread>10</spread>
+           </particles-per-sec>
+         </counter>
+           
+         <align>billboard</align>
+
+         <particle>
+           <start>
+             <color>
+               <red><value>   1.0 </value></red>
+               <green><value> 1.0 </value></green>
+               <blue><value>  0.4 </value></blue>
+               <alpha><value> 1 </value></alpha>
+             </color>
+             <size>
+               <value>5</value>
+             </size>
+           </start>
+
+           <end>
+             <color>
+               <red><value>   1.0 </value></red>
+               <green><value> 0.5 </value></green>
+               <blue><value>  0.2 </value></blue>
+               <alpha><value> 0.7 </value></alpha>
+             </color>
+             <size>
+               <value>14</value>
+             </size>
+           </end>
+
+           <life-sec>
+             <value>1.0</value>
+           </life-sec>
+             
+           <mass-kg>  5 </mass-kg>
+           <radius-m> 0.5 </radius-m>
+         </particle>
+
+         <program>
+           <fluid>               air  </fluid>
+           <gravity type="bool"> true </gravity>
+           <wind typ="bool">     true </wind>
+         </program>
+
+       </particlesystem>
+
+      <particlesystem>
+         <name>explosion-smoke-inner</name>
+         <texture>../smoke.png</texture>
+
+         <emissive type="bool">false</emissive>
+         <lighting type="bool">false</lighting>
+
+         <condition>
+          <and>
+             <property>payload/armament/agm-65/flags/explode-id-601</property>
+          <not>
+             <property>payload/armament/agm-65/flags/explode-water-id-601</property>
+           </not>
+          </and>
+         </condition>
+
+         <attach>world</attach>
+
+         <placer>
+           <type>point</type>
+         </placer>
+
+         <shooter>
+           <theta-min-deg>30</theta-min-deg>
+           <theta-max-deg>40</theta-max-deg>
+           <phi-min-deg>-180</phi-min-deg>
+           <phi-max-deg>180</phi-max-deg>
+           <speed-mps>
+             <value>300</value>
+             <spread>100</spread>
+           </speed-mps>
+           <rotation-speed>
+             <x-min-deg-sec>0</x-min-deg-sec>
+             <y-min-deg-sec>0</y-min-deg-sec>
+             <z-min-deg-sec>0</z-min-deg-sec>
+             <x-max-deg-sec>0</x-max-deg-sec>
+             <y-max-deg-sec>0</y-max-deg-sec>
+             <z-max-deg-sec>30</z-max-deg-sec>
+           </rotation-speed>
+         </shooter>
+
+         <counter>
+           <particles-per-sec>
+             <value>200</value>
+             <spread>5</spread>
+           </particles-per-sec>
+         </counter>
+           
+         <align>billboard</align>
+
+         <particle>
+           <start>
+             <color>
+            <red><expression><product><value>0.3</value><property>rendering/scene/diffuse/red</property></product></expression></red>
+            <green><expression><product><value>0.3</value><property>rendering/scene/diffuse/red</property></product></expression></green>
+            <blue><expression><product><value>0.25</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
+               <alpha><value> 1.0 </value></alpha>
+             </color>
+             <size>
+               <value>3</value>
+             </size>
+           </start>
+
+           <end>
+             <color>
+            <red><expression><product><value>0.4</value><property>rendering/scene/diffuse/red</property></product></expression></red>
+            <green><expression><product><value>0.4</value><property>rendering/scene/diffuse/red</property></product></expression></green>
+            <blue><expression><product><value>0.4</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
+               <alpha><value> 1.0 </value></alpha>
+               <alpha><value> 0.1 </value></alpha>
+             </color>
+             <size>
+               <value>5</value>
+             </size>
+           </end>
+
+           <life-sec>
+             <value>18</value>
+           </life-sec>
+             
+           <mass-kg>  6.0 </mass-kg>
+           <radius-m> 0.5 </radius-m>
+         </particle>
+
+         <program>
+           <fluid>               air  </fluid>
+           <gravity type="bool"> true </gravity>
+           <wind typ="bool">     true </wind>
+         </program>
+
+       </particlesystem>
+
+
+
+      <particlesystem>
+         <name>explosion-smoke-outer</name>
+         <texture>../smoke.png</texture>
+
+         <emissive type="bool">false</emissive>
+         <lighting type="bool">false</lighting>
+
+         <condition>
+         <and>
              <property>payload/armament/agm-65/flags/explode-smoke-id-601</property>
-       </condition>
+          <not>
+             <property>payload/armament/agm-65/flags/explode-water-id-601</property>
+           </not>
+          </and>
+         </condition>
 
-       <attach>world</attach>
+         <attach>world</attach>
 
-       <placer>
-         <type>point</type> 
-       </placer>
+         <placer>
+           <type>point</type>
+         </placer>
 
-       <shooter>
-         <theta-min-deg>-180</theta-min-deg>
-         <theta-max-deg>180</theta-max-deg>
-         <phi-min-deg>-180</phi-min-deg>
-         <phi-max-deg>180</phi-max-deg>
-         <speed-mps>
-           <value>500</value>
-           <spread>60</spread>
-         </speed-mps>
-         <rotation-speed>
-           <x-min-deg-sec>0</x-min-deg-sec>
-           <y-min-deg-sec>0</y-min-deg-sec>
-           <z-min-deg-sec>0</z-min-deg-sec>
-           <x-max-deg-sec>0</x-max-deg-sec>
-           <y-max-deg-sec>0</y-max-deg-sec>
-           <z-max-deg-sec>0</z-max-deg-sec>
-         </rotation-speed>
-       </shooter>
+         <shooter>
+           <theta-min-deg>0</theta-min-deg>
+           <theta-max-deg>50</theta-max-deg>
+           <phi-min-deg>-180</phi-min-deg>
+           <phi-max-deg>180</phi-max-deg>
+           <speed-mps>
+             <value>150</value>
+             <spread>120</spread>
+           </speed-mps>
+           <rotation-speed>
+             <x-min-deg-sec>0</x-min-deg-sec>
+             <y-min-deg-sec>0</y-min-deg-sec>
+             <z-min-deg-sec>0</z-min-deg-sec>
+             <x-max-deg-sec>0</x-max-deg-sec>
+             <y-max-deg-sec>0</y-max-deg-sec>
+             <z-max-deg-sec>0</z-max-deg-sec>
+           </rotation-speed>
+         </shooter>
 
-       <counter>
-         <particles-per-sec>
-           <value>50</value>
-           <spread>10</spread>
-         </particles-per-sec>
-       </counter>
-          
-       <align>billboard</align>
+         <counter>
+           <particles-per-sec>
+             <value>8</value>
+             <spread>5</spread>
+           </particles-per-sec>
+         </counter>
+           
+         <align>billboard</align>
 
-       <particle>
-         <start>
-           <color>
-             <red><value>   0.3 </value></red>
-             <green><value> 0.3 </value></green>
-             <blue><value>  0.25 </value></blue>
-             <alpha><value> 0.5 </value></alpha>
-           </color>
-           <size>
+         <particle>
+           <start>
+             <color>
+         <red><expression><product><value>0.3</value><property>rendering/scene/diffuse/red</property></product></expression></red>
+         <green><expression><product><value>0.3</value><property>rendering/scene/diffuse/red</property></product></expression></green>
+         <blue><expression><product><value>0.25</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
+               <alpha><value> 1.0 </value></alpha>
+             </color>
+             <size>
+               <value>12</value>
+             </size>
+           </start>
+
+           <end>
+             <color>
+         <red><expression><product><value>0.4</value><property>rendering/scene/diffuse/red</property></product></expression></red>
+         <green><expression><product><value>0.4</value><property>rendering/scene/diffuse/red</property></product></expression></green>
+         <blue><expression><product><value>0.4</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
+               <alpha><value> 0.5 </value></alpha>
+             </color>
+             <size>
+               <value>24</value>
+             </size>
+           </end>
+
+           <life-sec>
+             <value>28</value>
+           </life-sec>
+             
+           <mass-kg>  5.0 </mass-kg>
+           <radius-m> 0.5 </radius-m>
+         </particle>
+
+         <program>
+           <fluid>               air  </fluid>
+           <gravity type="bool"> true </gravity>
+           <wind typ="bool">     true </wind>
+         </program>
+
+       </particlesystem>
+
+
+      <particlesystem>
+         <name>explosion-debris</name>
+         <texture>../lava.png</texture>
+
+         <emissive type="bool">false</emissive>
+         <lighting type="bool">false</lighting>
+
+         <condition>
+          <and>
+             <property>payload/armament/agm-65/flags/explode-id-601</property>
+          <not>
+             <property>payload/armament/agm-65/flags/explode-water-id-601</property>
+           </not>
+          </and>
+         </condition>
+
+         <attach>world</attach>
+
+         <placer>
+           <type>point</type>
+         </placer>
+
+         <shooter>
+           <theta-min-deg>35</theta-min-deg>
+           <theta-max-deg>55</theta-max-deg>
+           <phi-min-deg>-180</phi-min-deg>
+           <phi-max-deg>180</phi-max-deg>
+           <speed-mps>
+             <value>300</value>
+             <spread>200</spread>
+           </speed-mps>
+           <rotation-speed>
+             <x-min-deg-sec>0</x-min-deg-sec>
+             <y-min-deg-sec>0</y-min-deg-sec>
+             <z-min-deg-sec>100</z-min-deg-sec>
+             <x-max-deg-sec>0</x-max-deg-sec>
+             <y-max-deg-sec>0</y-max-deg-sec>
+             <z-max-deg-sec>300</z-max-deg-sec>
+           </rotation-speed>
+         </shooter>
+
+         <counter>
+           <particles-per-sec>
+             <value>200</value>
+             <spread>5</spread>
+           </particles-per-sec>
+         </counter>
+           
+         <align>billboard</align>
+
+         <particle>
+           <start>
+             <color>
+         <red><expression><product><value>0.2</value><property>rendering/scene/diffuse/red</property></product></expression></red>
+         <green><expression><product><value>0.2</value><property>rendering/scene/diffuse/red</property></product></expression></green>
+         <blue><expression><product><value>0.2</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
+               <alpha><value> 1.0 </value></alpha>
+             </color>
+             <size>
+               <value>0.5</value>
+             </size>
+           </start>
+
+           <end>
+             <color>
+         <red><expression><product><value>0.2</value><property>rendering/scene/diffuse/red</property></product></expression></red>
+         <green><expression><product><value>0.2</value><property>rendering/scene/diffuse/red</property></product></expression></green>
+         <blue><expression><product><value>0.2</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
+               <alpha><value> 0.1 </value></alpha>
+             </color>
+             <size>
+               <value>0.5</value>
+             </size>
+           </end>
+
+           <life-sec>
+             <value>10</value>
+           </life-sec>
+             
+           <mass-kg>  14.0 </mass-kg>
+           <radius-m> 0.5 </radius-m>
+         </particle>
+
+         <program>
+           <fluid>               air  </fluid>
+           <gravity type="bool"> true </gravity>
+           <wind typ="bool">     true </wind>
+         </program>
+
+       </particlesystem>
+
+
+      <particlesystem>
+         <name>explosion-water-inner</name>
+         <texture>../smoke.png</texture>
+
+         <emissive type="bool">false</emissive>
+         <lighting type="bool">false</lighting>
+
+         <condition>
+          <and>
+             <property>payload/armament/agm-65/flags/explode-id-601</property>
+             <property>payload/armament/agm-65/flags/explode-water-id-601</property>
+          </and>
+         </condition>
+
+         <attach>world</attach>
+
+         <placer>
+           <type>point</type>
+         </placer>
+
+         <shooter>
+           <theta-min-deg>0</theta-min-deg>
+           <theta-max-deg>5</theta-max-deg>
+           <phi-min-deg>-180</phi-min-deg>
+           <phi-max-deg>180</phi-max-deg>
+           <speed-mps>
+             <value>350</value>
+             <spread>350</spread>
+           </speed-mps>
+           <rotation-speed>
+             <x-min-deg-sec>0</x-min-deg-sec>
+             <y-min-deg-sec>0</y-min-deg-sec>
+             <z-min-deg-sec>-30</z-min-deg-sec>
+             <x-max-deg-sec>0</x-max-deg-sec>
+             <y-max-deg-sec>0</y-max-deg-sec>
+             <z-max-deg-sec>30</z-max-deg-sec>
+           </rotation-speed>
+         </shooter>
+
+         <counter>
+           <particles-per-sec>
+             <value>500</value>
+             <spread>5</spread>
+           </particles-per-sec>
+         </counter>
+           
+         <align>billboard</align>
+
+         <particle>
+           <start>
+             <color>
+         <red><expression><product><value>1.0</value><property>rendering/scene/diffuse/red</property></product></expression></red>
+         <green><expression><product><value>1.0</value><property>rendering/scene/diffuse/red</property></product></expression></green>
+         <blue><expression><product><value>1.0</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
+               <alpha><value> 0.5 </value></alpha>
+             </color>
+             <size>
+               <value>4.0</value>
+             </size>
+           </start>
+
+           <end>
+             <color>
+         <red><expression><product><value>1.0</value><property>rendering/scene/diffuse/red</property></product></expression></red>
+         <green><expression><product><value>1.0</value><property>rendering/scene/diffuse/red</property></product></expression></green>
+         <blue><expression><product><value>1.0</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
+               <alpha><value> 0.2 </value></alpha>
+             </color>
+             <size>
+               <value>2.0</value>
+             </size>
+           </end>
+
+           <life-sec>
              <value>20</value>
-           </size>
-         </start>
+           </life-sec>
+             
+           <mass-kg>  15.0 </mass-kg>
+           <radius-m> 0.5 </radius-m>
+         </particle>
 
-         <end>
-           <color>
-             <red><value>   0.4 </value></red>
-             <green><value> 0.4 </value></green>
-             <blue><value>  0.4 </value></blue>
-             <alpha><value> 0.04 </value></alpha>
-           </color>
-           <size>
-             <value>120</value>
-           </size>
-         </end>
+         <program>
+           <fluid>               air  </fluid>
+           <gravity type="bool"> true </gravity>
+           <wind typ="bool">     true </wind>
+         </program>
 
-         <life-sec>
-           <value>40</value>
-         </life-sec>
-            
-         <mass-kg>  5 </mass-kg>
-         <radius-m> 0.5 </radius-m>
-       </particle>
+       </particlesystem>
 
-       <program>
-         <fluid>               air  </fluid>
-         <gravity type="bool"> true </gravity>
-         <wind typ="bool">     true </wind>
-       </program>
 
-     </particlesystem>
+      <particlesystem>
+         <name>explosion-water-outer</name>
+         <texture>../smoke.png</texture>
 
-	<animation>
-  		<object-name>AGM-65Body</object-name>
+         <emissive type="bool">false</emissive>
+         <lighting type="bool">false</lighting>
+
+         <condition>
+          <and>
+             <property>payload/armament/agm-65/flags/explode-smoke-id-601</property>
+             <property>payload/armament/agm-65/flags/explode-water-id-601</property>
+          </and>
+         </condition>
+
+         <attach>world</attach>
+
+         <placer>
+           <type>point</type>
+         </placer>
+
+         <shooter>
+           <theta-min-deg>0</theta-min-deg>
+           <theta-max-deg>70</theta-max-deg>
+           <phi-min-deg>-180</phi-min-deg>
+           <phi-max-deg>180</phi-max-deg>
+           <speed-mps>
+             <value>80</value>
+             <spread>60</spread>
+           </speed-mps>
+           <rotation-speed>
+             <x-min-deg-sec>0</x-min-deg-sec>
+             <y-min-deg-sec>0</y-min-deg-sec>
+             <z-min-deg-sec>-50</z-min-deg-sec>
+             <x-max-deg-sec>0</x-max-deg-sec>
+             <y-max-deg-sec>0</y-max-deg-sec>
+             <z-max-deg-sec>50</z-max-deg-sec>
+           </rotation-speed>
+         </shooter>
+
+         <counter>
+           <particles-per-sec>
+             <value>60</value>
+             <spread>5</spread>
+           </particles-per-sec>
+         </counter>
+           
+         <align>billboard</align>
+
+         <particle>
+           <start>
+             <color>
+         <red><expression><product><value>1.0</value><property>rendering/scene/diffuse/red</property></product></expression></red>
+         <green><expression><product><value>1.0</value><property>rendering/scene/diffuse/red</property></product></expression></green>
+         <blue><expression><product><value>1.0</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
+               <alpha><value> 0.5 </value></alpha>
+             </color>
+             <size>
+               <value>10.0</value>
+             </size>
+           </start>
+
+           <end>
+             <color>
+         <red><expression><product><value>1.0</value><property>rendering/scene/diffuse/red</property></product></expression></red>
+         <green><expression><product><value>1.0</value><property>rendering/scene/diffuse/red</property></product></expression></green>
+         <blue><expression><product><value>1.0</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
+               <alpha><value> 0.2 </value></alpha>
+             </color>
+             <size>
+               <value>14.0</value>
+             </size>
+           </end>
+
+           <life-sec>
+             <value>18</value>
+           </life-sec>
+             
+           <mass-kg>  8.0 </mass-kg>
+           <radius-m> 0.5 </radius-m>
+         </particle>
+
+         <program>
+           <fluid>               air  </fluid>
+           <gravity type="bool"> true </gravity>
+           <wind typ="bool">     true </wind>
+         </program>
+
+       </particlesystem>
+
+   <animation>
+        <type>rotate</type>
+        <object-name>explosion-smoke-inner</object-name>
+      <object-name>explosion-smoke-outer</object-name>
+      <offset-deg>0</offset-deg>
+        <factor>1</factor>
+        <property>payload/armament/agm-65/flags/explode-angle</property>      
+        <center>
+         <x-m>0</x-m>
+          <y-m>0</y-m>
+          <z-m>0</z-m>
+        </center>
+        <axis>
+          <x>1</x>
+          <y>0</y>
+          <z>0</z>
+        </axis>
+    </animation>      
+
+
+   <animation>
+        <object-name>AGM-65Body</object-name>
       <object-name>AGM-65Glass</object-name>
       <object-name>AGM-65Wings</object-name>
       <object-name>AGM-65Back</object-name>
@@ -316,7 +793,7 @@
       <object-name>Lens</object-name>
       <object-name>AGM-65Back</object-name>
       <object-name>AGM-65Mounts</object-name>
-  		<enable-hot type="bool">false</enable-hot>
- 	</animation>
-	
+        <enable-hot type="bool">false</enable-hot>
+    </animation>
+   
 </PropertyList>
