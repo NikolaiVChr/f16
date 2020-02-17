@@ -106,7 +106,7 @@
   <path>Aircraft/f16/Models/Cockpit/Main/stick.xml</path>
   <offsets>
    <!--x-m>-4.456</x-m-->
-   <x-m>-4.440</x-m>
+   <x-m>-4.450</x-m>
    <y-m> 0.272</y-m>
    <!--z-m> 0.200</z-m-->
    <z-m> 0.310</z-m>

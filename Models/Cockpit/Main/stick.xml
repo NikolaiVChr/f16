@@ -15,7 +15,6 @@
 		<object-name>Pinky</object-name>
 		<object-name>Target-Man</object-name>
 		<object-name>Trigger</object-name>
-		<object-name>screws</object-name>
         <object-name>side_stick2</object-name>
 		<property>controls/flight/elevator</property>
 		<factor>5</factor>
@@ -40,7 +39,6 @@
 		<object-name>Pinky</object-name>
 		<object-name>Target-Man</object-name>
 		<object-name>Trigger</object-name>
-		<object-name>screws</object-name>
         <object-name>side_stick2</object-name>
 		<factor>5</factor>
 		<property>controls/flight/aileron</property>
@@ -98,9 +96,9 @@
 		<object-name>Pinky</object-name>
 		<object-name>Target-Man</object-name>
 		<object-name>Trigger</object-name>
-		<object-name>screws</object-name>
         <object-name>side_stick2</object-name>
         <object-name>base</object-name>
+		<object-name>base-connect</object-name>
     </effect>
 
 </PropertyList>
