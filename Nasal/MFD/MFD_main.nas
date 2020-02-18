@@ -394,6 +394,12 @@ var MFD_Device =
                 .setAlignment("left-center")
                 .setColor(1,1,1)
                 .setFontSize(20, 1.0);
+        svg.mod = svg.p_RDR.createChild("text")
+                .setTranslation(-276*0.795, -482*0.5+125)
+                .setText("")
+                .setAlignment("left-center")
+                .setColor(1,1,1)
+                .setFontSize(20, 1.0);
         svg.ant_bottom = svg.p_RDR.createChild("path")
                     .moveTo(-276*0.795,0)
                     .vert(-10)
@@ -460,6 +466,7 @@ var MFD_Device =
         svg.dlzHeight = 482*0.5;
         svg.dlzLW     =   2;
         svg.dlz      = svg.p_RDR.createChild("group")
+                        .set("z-index",11)
                         .setTranslation(svg.dlzX, svg.dlzY);
         svg.dlz2     = svg.dlz.createChild("group");
         svg.dlzArrow = svg.dlz.createChild("path")
@@ -490,13 +497,25 @@ var MFD_Device =
            .horiz(-276*0.795*0.4)
            .setCenter(0, -482*0.5)
            .setColor(0.5,0.5,1)
+           .set("z-index",11)
            .setStrokeLineWidth(1);
         svg.silent = svg.p_RDR.createChild("text")
            .setTranslation(0, -482*0.25)
            .setAlignment("center-center")
            .setText("SILENT")
+           .set("z-index",12)
            .setFontSize(15, 1.0)
            .setColor(1.0,1.0,0.5);
+           
+        # GM mode
+        svg.rdrMode = 0;
+        #svg.gmPicG = svg.p_RDR.createChild("group");
+        svg.gmPic = svg.p_RDR.createChild("image")
+            .set("src", "Aircraft/f16/Nasal/MFD/gm.png")
+            .setTranslation(-128,-286)
+            .setScale(2,2)
+            .set("z-index",5)
+            .hide();
     },
 
     addRadar: func {
@@ -516,6 +535,7 @@ var MFD_Device =
         me.p_RDR.plc = 0;
         me.p_RDR.ppp = me.PFD;
         me.p_RDR.my = me;
+        me.p_RDR.gmLine = 10;
         me.p_RDR.notifyButton = func (eventi) {
             if (eventi != nil) {
                 if (eventi == 0) {
@@ -552,6 +572,8 @@ var MFD_Device =
                     else
                         ho = 120;
                     setprop("instrumentation/radar/ho-field", ho);
+                } elsif (eventi == 4) {
+                    setprop("instrumentation/radar/mode-switch", 1);
                 }
             }
 
@@ -567,6 +589,19 @@ var MFD_Device =
 #  VSD HSD SMS SIT
         };
         me.p_RDR.update = func (noti) {
+            me.modeSw = getprop("instrumentation/radar/mode-switch");
+            if (me.modeSw == 1) {
+                #me.root.rdrMode = !me.root.rdrMode;
+                if (me.root.rdrMode) {
+                    
+                    me.root.mod.setText("GM");
+                    me.root.gmPic.show();
+                } else {
+                    me.root.mod.setText("");
+                    me.root.gmPic.hide();
+                }
+            }
+            setprop("instrumentation/radar/mode-switch", 0);
             me.root.horiz.setRotation(-getprop("orientation/roll-deg")*D2R);
             me.time = getprop("sim/time/elapsed-sec");
             me.az = getprop("instrumentation/radar/az-field");
@@ -589,10 +624,54 @@ var MFD_Device =
                 me.root.silent.show();
             }
             
+            if (getprop("sim/multiplay/generic/int[2]")!=1 and me.root.rdrMode) {
+                # GM mode
+                me.gmLine += 1;
+                if (me.gmLine > 127) {
+                    me.gmLine = 0;
+                }
+                me.gmCoord = geo.aircraft_position();
+                me.gmMe = geo.aircraft_position();
+                me.gmHead = getprop("orientation/heading-deg");
+                me.gmCoord.apply_course_distance(me.gmHead-90, NM2M*getprop("instrumentation/radar/radar2-range")*0.5);
+                me.gmCoord.apply_course_distance(me.gmHead+90, NM2M*getprop("instrumentation/radar/radar2-range")*me.gmLine/127);
+                for(me.gmi = 0; me.gmi < 128; me.gmi += 1) {
+                    
+                    if (math.abs(geo.normdeg180(me.gmMe.course_to(me.gmCoord)-me.gmHead)) < 60) {
+                        me.gmEle = geo.elevation(me.gmCoord.lat(),me.gmCoord.lon());
+                        if (me.gmEle == nil) {
+                            me.gmEle = 0;
+                            #print("nil");
+                        }
+                        me.gmColor = math.clamp((me.gmEle*M2FT-4500)/1000,0,1);
+                        #printf("GM %03d,%03d: %3d",me.gmLine,me.gmi,me.gmColor*127);
+                        #if (me.gmLine != 0)
+                        #print(me.gmLine);
+                        #me.root.gmPic.set("src", "Aircraft/f16/Nasal/MFD/gm.png");
+                        #me.root.gmPic.setPixel(int(rand()*127), int(rand()*127), [me.gmColor,me.gmColor,me.gmColor,1]);
+                        me.root.gmPic.setPixel(me.gmLine, me.gmi, [me.gmColor,me.gmColor,me.gmColor,1]);
+                        #f16.f16_mfd.MFDl.p_RDR.root.gmPic.setPixel(50, 50, [1,0,0,1]);
+                        #f16.f16_mfd.MFDl.p_RDR.root.gmPicG.update();
+                    }
+                    me.gmCoord.apply_course_distance(me.gmHead, NM2M*getprop("instrumentation/radar/radar2-range")/128);
+                }
+                #me.root.gmPic.update();
+            }
+            
+            me.root.az1.setVisible(!me.root.rdrMode);
+            me.root.az2.setVisible(!me.root.rdrMode);
+            me.root.bars.setVisible(!me.root.rdrMode);
+            me.root.az.setVisible(!me.root.rdrMode);
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
-            me.i=0;
             me.root.rang.setText(sprintf("%d",getprop("instrumentation/radar/radar2-range")));
+            if (me.root.rdrMode) {
+                me.root.dlz.hide();
+                # hide radar echoes here also
+                return;
+            }
+            me.i=0;
+            
             me.ho = getprop("instrumentation/radar/ho-field");
             
             me.azt = "";
