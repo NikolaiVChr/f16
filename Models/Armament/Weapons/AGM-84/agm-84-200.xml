@@ -30,6 +30,98 @@
     </condition>
   </animation>
 
+  <particlesystem>
+       <name>smoke</name>
+       <texture>../smoke.png</texture>
+
+       <emissive type="bool">false</emissive>
+       <lighting type="bool">false</lighting>
+
+       <condition>
+             <property>payload/armament/agm-84/flags/smoke-id-200</property>
+       </condition>
+
+       <attach>world</attach>
+
+       <placer>
+         <type>point</type> 
+       </placer>
+
+       <offsets>
+          <x-m>1.90437</x-m>
+          <y-m>0</y-m>
+          <z-m>0</z-m>
+       </offsets>
+
+       <shooter>
+         <theta-min-deg>-1.5</theta-min-deg>
+         <theta-max-deg>1.5</theta-max-deg>
+         <phi-min-deg>-1.5</phi-min-deg>
+         <phi-max-deg>1.5</phi-max-deg>
+         <speed-mps>
+           <value>0</value>
+           <spread>0</spread>
+         </speed-mps>
+         <rotation-speed>
+           <x-min-deg-sec>0</x-min-deg-sec>
+           <y-min-deg-sec>0</y-min-deg-sec>
+           <z-min-deg-sec>0</z-min-deg-sec>
+           <x-max-deg-sec>0</x-max-deg-sec>
+           <y-max-deg-sec>0</y-max-deg-sec>
+           <z-max-deg-sec>0</z-max-deg-sec>
+         </rotation-speed>
+       </shooter>
+
+       <counter>
+         <particles-per-sec>
+           <value>50</value>
+           <spread>0</spread>
+         </particles-per-sec>
+       </counter>
+          
+       <align>billboard</align>
+
+       <particle>
+         <start>
+           <color>
+             <red><value>   0.8 </value></red>
+             <green><value> 0.8 </value></green>
+             <blue><value>  0.8 </value></blue>
+             <alpha><value> 0.5 </value></alpha>
+           </color>
+           <size>
+             <value>1.0</value>
+           </size>
+         </start>
+
+         <end>
+           <color>
+             <red><value>   0.8 </value></red>
+             <green><value> 0.8 </value></green>
+             <blue><value>  0.8 </value></blue>
+             <alpha><value> 0.1 </value></alpha>
+           </color>
+           <size>
+             <value>6</value>
+           </size>
+         </end>
+
+         <life-sec>
+           <value>30</value>
+         </life-sec>
+            
+         <mass-kg>  0.5 </mass-kg>
+         <radius-m> 0.5 </radius-m>
+       </particle>
+
+       <program>
+         <fluid>               air  </fluid>
+         <gravity type="bool"> true </gravity>
+         <wind typ="bool">     true </wind>
+       </program>
+
+     </particlesystem>
+
     <particlesystem>
          <name>explosion-inner</name>
          <texture>../smoke.png</texture>

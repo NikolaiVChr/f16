@@ -2591,7 +2591,7 @@ There is also small changes in tail for different variants with and without brak
                 <cross-section-sqft type="double">1.9121</cross-section-sqft>
                 <arming-time-sec type="double">2.5</arming-time-sec>
                 <min-speed-for-guiding-mach type="double">0.3</min-speed-for-guiding-mach>
-                <self-destruct-time-sec type="double">400</self-destruct-time-sec>
+                <self-destruct-time-sec type="double">600</self-destruct-time-sec>
                 <all-aspect type="bool">true</all-aspect>
                 <rail type="bool">false</rail>
                 <no-common-target type="bool">true</no-common-target>
@@ -2637,7 +2637,7 @@ There is also small changes in tail for different variants with and without brak
                 <cross-section-sqft type="double">3.2332</cross-section-sqft>
                 <arming-time-sec type="double">2.0</arming-time-sec>
                 <min-speed-for-guiding-mach type="double">0.3</min-speed-for-guiding-mach>
-                <self-destruct-time-sec type="double">2000</self-destruct-time-sec>
+                <self-destruct-time-sec type="double">2100</self-destruct-time-sec>
                 <all-aspect type="bool">true</all-aspect>
                 <rail type="bool">false</rail>
                 <no-common-target type="bool">true</no-common-target>
