@@ -2575,7 +2575,7 @@ There is also small changes in tail for different variants with and without brak
                 <FCS-field-deg type="int">90</FCS-field-deg>
                 <seeker-field-deg type="int">180</seeker-field-deg>
                 <reaquire type="bool">true</reaquire>
-                <switch-time-sec type="double">0.5</switch-time-sec>
+                <switch-time-sec type="double">0.25</switch-time-sec>
                 <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed>
                 <prowl-flight type="string">5</prowl-flight>
                 <max-g type="double">2.9</max-g>
