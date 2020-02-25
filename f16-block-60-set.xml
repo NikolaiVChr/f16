@@ -72,7 +72,7 @@
 
   <menubar>
    <default>
-    <menu n="100">
+    <menu n="101">
      <label>F-16E Block 60</label>
         <item n="10">
           <label>Payload quick select</label>

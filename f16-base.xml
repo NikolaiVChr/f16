@@ -412,6 +412,10 @@
         <menubar>
             <default>
                 <menu n="100">
+                    <label>|</label>
+                    <enabled type="bool">false</enabled>
+                </menu>
+                <menu n="101">
                     <enabled type="bool">true</enabled>
                     <item>
                         <label>Autostart</label>
