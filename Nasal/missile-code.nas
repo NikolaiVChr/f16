@@ -738,6 +738,8 @@ var AIM = {
 		m.lostLOS      = FALSE;
 
 		m.prevTarget   = nil;
+		m.counter_last = -2;
+		m.counter      = 0;
 		m.prevGuidance = nil;
 		m.keepPitch    = 0;
 
@@ -950,9 +952,9 @@ var AIM = {
 					#return [me.ccipPos,me.arming_time<me.ccip_t];
 					me.result = me.getTerrain(me.ccip_oldPos, me.ccipPos);
 					if (me.result != nil) {
-						return [me.result, me.arming_time<me.ccip_t];
+						return [me.result, me.arming_time<me.ccip_t, me.ccip_t];
 					}
-					return [me.ccipPos,me.arming_time<me.ccip_t];
+					return [me.ccipPos,me.arming_time<me.ccip_t, me.ccip_t];
 					#var inter = me.extrapolate(me.ccip_grnd,me.ccip_altC,me.ccip_oldPos.alt(),0,1);
 					#return [me.interpolate(me.ccipPos,me.ccip_oldPos,inter),me.arming_time<me.ccip_t];
 				}
@@ -1797,6 +1799,7 @@ var AIM = {
 		#
 		#
 		#############################################################################################################
+		me.counter += 1;#main counter for which number of loop we are in.
 		me.pendingSound -= 1;
 		if(me.pendingSound == 0) {
 			me.SwSoundFireOnOff.setBoolValue(TRUE);
@@ -2406,7 +2409,7 @@ var AIM = {
 		}
 
 		me.last_dt = me.dt;
-		me.prevTarget = me.Tgt;
+		
 		me.prevGuidance = me.guidance;
 		#spawn(me.flight, me)();#, update_loop_time, SIM_TIME);
 		#me.flight(); cannot keep calling itself: call stack error
@@ -3036,7 +3039,7 @@ var AIM = {
 	},
 
 	canSeekerKeepUp: func () {
-		if (!me.newTargetAssigned and me.last_deviation_e != nil and (me.guidance == "heat" or me.guidance == "vision") and me.prevGuidance == me.guidance and me.prevTarget == me.Tgt) {
+		if (me.counter == me.counter_last+1 and !me.newTargetAssigned and me.last_deviation_e != nil and (me.guidance == "heat" or me.guidance == "vision") and me.prevGuidance == me.guidance and me.prevTarget == me.Tgt) {
 			# calculate if the seeker can keep up with the angular change of the target
 			#
 			# missile own movement is subtracted from this change due to seeker being on gyroscope
@@ -3058,6 +3061,8 @@ var AIM = {
 		}
 		me.last_deviation_e = me.curr_deviation_e;
 		me.last_deviation_h = me.curr_deviation_h;
+		me.prevTarget = me.Tgt;
+		me.counter_last = me.counter;# since we use dt as time passed since last we were in this function, we need to be sure only 1 loop has passed.
 	},
 
 	cruiseAndLoft: func () {
@@ -4737,7 +4742,7 @@ var AIM = {
 		me.smoke_prop.setBoolValue(FALSE);
 		var info = geodinfo(me.coord.lat(), me.coord.lon());
 
-		if (info[1] == nil) {
+		if (info == nil or info[1] == nil) {
 			print ("Building hit!");
 		} elsif (info[1] != nil and info[1].solid == 0) {
 		 	me.explode_water_prop.setValue(TRUE);
