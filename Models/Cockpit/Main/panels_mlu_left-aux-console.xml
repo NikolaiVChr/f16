@@ -37,6 +37,11 @@
         <object-name>SW_GND_JETT</object-name>
         <object-name>SW_BRAKES_CHAN</object-name>
         <object-name>gear_lever</object-name>
+        <object-name>JMR_switch</object-name>
+        <object-name>MWS_switch</object-name>
+        <object-name>RWR_switch</object-name>
+        <object-name>DISP_switch</object-name>
+        <object-name>RF_switch</object-name>
     </effect>
 
   <!--<animation>
