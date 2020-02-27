@@ -48,6 +48,7 @@
             <path>/instrumentation/tacan/frequencies/selected-channel[2]</path>
             <path>/instrumentation/tacan/frequencies/selected-channel[3]</path>
             <path>/instrumentation/tacan/frequencies/selected-channel[4]</path>
+            <path>/instrumentation/iff/channel-selection</path>
         </aircraft-data>
         <tags>
             <tag>fighter</tag>
@@ -412,6 +413,10 @@
         <menubar>
             <default>
                 <menu n="100">
+                    <label>|</label>
+                    <enabled type="bool">false</enabled>
+                </menu>
+                <menu n="101">
                     <enabled type="bool">true</enabled>
                     <item>
                         <label>Autostart</label>
@@ -548,6 +553,7 @@
                 <short n="5" type="int" alias="/engines/engine[0]/n1"/>
                 <short n="6" type="int" alias="/engines/engine[0]/n2"/>
                 <string n="5" type="string">00--++00--Empty</string><!-- mp stores -->
+                <string n="4" type="string"></string><!-- string 4 used by IFF -->
             </generic>
             <visibility-range-nm type="int">160</visibility-range-nm>
         </multiplay>
@@ -1894,6 +1900,13 @@ There is also small changes in tail for different variants with and without brak
             <display-lighting-intens type="double">0.4</display-lighting-intens>
             <symbology-lighting-intens type="double">1</symbology-lighting-intens>
         </rwr>
+        <iff>
+            <channel_prop type="string">/instrumentation/iff/channel-selection</channel_prop>
+            <power_prop type="string">/instrumentation/iff/power</power_prop>
+            <power type="bool">true</power>
+            <channel-selection type="int">1</channel-selection>
+            <response type="bool">false</response>
+        </iff>
         <ecm>
             <on-off type="bool">true</on-off>
         </ecm>
@@ -2591,7 +2604,7 @@ There is also small changes in tail for different variants with and without brak
                 <cross-section-sqft type="double">1.9121</cross-section-sqft>
                 <arming-time-sec type="double">2.5</arming-time-sec>
                 <min-speed-for-guiding-mach type="double">0.3</min-speed-for-guiding-mach>
-                <self-destruct-time-sec type="double">600</self-destruct-time-sec>
+                <self-destruct-time-sec type="double">800</self-destruct-time-sec>
                 <all-aspect type="bool">true</all-aspect>
                 <rail type="bool">false</rail>
                 <no-common-target type="bool">true</no-common-target>
@@ -2602,8 +2615,8 @@ There is also small changes in tail for different variants with and without brak
                 <deploy-time type="double">1.0</deploy-time>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
                 <terminal-alt-factor type="double">2</terminal-alt-factor>
-                <terminal-rise-time type="double">20.0</terminal-rise-time>
-                <terminal-dive-time type="double">9.0</terminal-dive-time>
+                <terminal-rise-time type="double">25.0</terminal-rise-time>
+                <terminal-dive-time type="double">14.0</terminal-dive-time>
                 <seeker-angular-speed-dps type="double">45</seeker-angular-speed-dps>
                 <ready-time type="double">3.5</ready-time>
             </agm-154a>
@@ -3263,5 +3276,8 @@ value. 18000=standard US transition altitude -->
         <gci>
             <file>Aircraft/f16/Nasal/gci-listener.nas</file>
         </gci>
+        <iff>
+            <file>Aircraft/f16/Nasal/iff.nas</file>
+        </iff>
     </nasal>
 </PropertyList>

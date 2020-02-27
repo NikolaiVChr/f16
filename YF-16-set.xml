@@ -65,7 +65,7 @@
 
   <menubar>
    <default>
-    <menu n="100">
+    <menu n="101">
      <label>YF-16</label>
     </menu>
    </default>

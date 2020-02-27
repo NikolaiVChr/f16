@@ -4,6 +4,11 @@
 
  <path>crater.ac</path>
  
+ <animation>
+      <object-name>Sphere</object-name>
+      <enable-hot type="bool">false</enable-hot>
+  </animation>
+ 
       <particlesystem>
          <name>explosion-smoke-longterm</name>
          <texture>smoke.png</texture>

@@ -216,12 +216,17 @@ var loop_ded = func {# one line is max 24 chars
       } elsif (sign != "") {
         friend = "NO CONN";
       }
-
+      if (type != "") {
+        friend  = getprop("instrumentation/iff/response")?"M1":"UNKWN";
+      } else {
+        friend = "";
+      }
+      var iffcode = getprop("instrumentation/iff/channel-selection");
       text[0] = sprintf("     IFF                ");
-      text[1] = sprintf("                        ");
+      text[1] = sprintf("MODE 1 CHANNEL   % 4d   ", iffcode);
       text[2] = sprintf("PILOT   %s",sign);
-      text[3] = sprintf("ID      %s",type);
-      text[4] = sprintf("LINK16  %s",friend);
+      text[3] = sprintf("TYPE    %s",type);
+      text[4] = sprintf("RESPNS  %s",friend);
     } elsif (page == pLINK) {
       text[0] = sprintf(" XMT 40 INTRAFLIGHT  %s ",no);
       

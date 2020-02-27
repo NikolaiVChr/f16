@@ -11,6 +11,11 @@
    <y-offset>1.8</y-offset>
    <z-offset>1.3</z-offset>
  </animation>
+ 
+ <animation>
+      <object-name>Sphere</object-name>
+      <enable-hot type="bool">false</enable-hot>
+  </animation>
 
       <particlesystem>
          <name>explosion-smoke-longterm</name>

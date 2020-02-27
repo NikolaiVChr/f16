@@ -453,6 +453,14 @@
 	
 	<channel name="Various" execrate="8">
 		
+		<switch name="elec/various/iff">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				elec/bus/emergency-dc-1 ge 20
+			</test>
+			<output>/instrumentation/iff/power</output>
+		</switch>
+		
 		<switch name="elec/sources/batt-bus">
 			<default value="0"/>
 			<test logic="OR" value="1">
