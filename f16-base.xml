@@ -48,6 +48,7 @@
             <path>/instrumentation/tacan/frequencies/selected-channel[2]</path>
             <path>/instrumentation/tacan/frequencies/selected-channel[3]</path>
             <path>/instrumentation/tacan/frequencies/selected-channel[4]</path>
+            <path>/instrumentation/iff/channel-selection</path>
         </aircraft-data>
         <tags>
             <tag>fighter</tag>
@@ -552,6 +553,7 @@
                 <short n="5" type="int" alias="/engines/engine[0]/n1"/>
                 <short n="6" type="int" alias="/engines/engine[0]/n2"/>
                 <string n="5" type="string">00--++00--Empty</string><!-- mp stores -->
+                <string n="4" type="string"></string><!-- string 4 used by IFF -->
             </generic>
             <visibility-range-nm type="int">160</visibility-range-nm>
         </multiplay>
@@ -1898,6 +1900,13 @@ There is also small changes in tail for different variants with and without brak
             <display-lighting-intens type="double">0.4</display-lighting-intens>
             <symbology-lighting-intens type="double">1</symbology-lighting-intens>
         </rwr>
+        <iff>
+            <channel_prop type="string">/instrumentation/iff/channel-selection</channel_prop>
+            <power_prop type="string">/instrumentation/iff/power</power_prop>
+            <power type="bool">true</power>
+            <channel-selection type="int">1</channel-selection>
+            <response type="bool">false</response>
+        </iff>
         <ecm>
             <on-off type="bool">true</on-off>
         </ecm>
@@ -3267,5 +3276,8 @@ value. 18000=standard US transition altitude -->
         <gci>
             <file>Aircraft/f16/Nasal/gci-listener.nas</file>
         </gci>
+        <iff>
+            <file>Aircraft/f16/Nasal/iff.nas</file>
+        </iff>
     </nasal>
 </PropertyList>

@@ -368,6 +368,17 @@ var medium = {
   },
 };
 
+var slow = {
+  loop: func {
+    var valid = 0;
+    if (awg_9.active_u != nil) {
+      valid = iff.interrogate(awg_9.active_u.propNode);
+    }
+    setprop("instrumentation/iff/response", valid);
+    settimer(func {me.loop()},5);
+  },
+};
+
 var fast = {
   loop: func {
     # Terrain warning:
@@ -639,6 +650,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     
     hack.init();
     loop_flare();
+    slow.loop();
     medium.loop();
     fast.loop();
     ehsi.init();

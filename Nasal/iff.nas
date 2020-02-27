@@ -56,7 +56,7 @@ var iff_hash = {
 	},
 
 	loop: func() {
-		if (node.power.getValue()) {
+		if (node.power.getBoolValue()) {
 			if (me.timer.isRunning == 0) {
 				me.timer.start();
 			}
@@ -66,6 +66,7 @@ var iff_hash = {
 			node.hash.setValue(_calculate_hash(me.time, me.callsign, node.channel.getValue()));
 		} else {
 			me.timer.stop();
+			node.hash.setValue("");
 		}
 	},
 };
@@ -101,5 +102,5 @@ var _calculate_hash = func(time, callsign, channel) {
 
 var new_hashing = iff_hash.new();
 new_hashing.loop();
-setlistener(node.channel.getPath(),func(){new_hashing.loop();});
-setlistener(node.power.getPath(),func(){new_hashing.loop();});
+setlistener(node.channel,func(){new_hashing.loop();},nil,0);
+setlistener(node.power,func(){new_hashing.loop();},nil,0);

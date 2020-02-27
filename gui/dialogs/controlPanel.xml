@@ -706,6 +706,25 @@
 	</group>
 	
 	<hrule/>
+	
+	<text><label>IFF</label></text>
+
+	<group>
+	    <layout>hbox</layout>
+	    <text><label>MODE 1 CHANNEL</label></text>
+	    <input>
+		  	<width>75</width>
+		  	<height>25</height>
+		  	<property>instrumentation/iff/channel-selection</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+		</input>
+	</group>
+	
+	<hrule/>
 
 	<text><label>FLIGHT</label></text>
 
