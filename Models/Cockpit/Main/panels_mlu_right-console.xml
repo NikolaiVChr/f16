@@ -694,6 +694,12 @@
         <object-name>gps-switch</object-name>
         <object-name>aircond-switch</object-name>
         <object-name>indv-lgt-cont</object-name>
+        <object-name>PBG</object-name>
+        <object-name>O2</object-name>
+        <object-name>EM-NO-TE</object-name>
+        <object-name>AirSource_knob</object-name>
+        <object-name>INS_knob</object-name>
+        <object-name>TD_knob</object-name>
     </effect>
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-knob</inherits-from>
