@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--<PropertyList include="loads_models.xml">-->
+  
+  <PropertyList> 
+     <model>
+      <path>Aircraft/f16/Models/Armament/loads_models-inner.xml</path>
+    </model>
+
+ 
+<!--  ===========================================================================================================-->
+<!--  ================================================= id-3   ==================================================-->
+<!--  ===========================================================================================================-->
+ 
+<!--  <animation>
+  <type>select</type>
+  <object-name>RExtTank</object-name>
+  <condition>
+   <property>sim/model/f16/wingtankR</property>
+  </condition>
+ </animation>-->
+<animation>
+  <type>select</type>
+  <object-name>LExtTank</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-3-type</property>
+      <value>Left 370 Gal Tank</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-3-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>LExtTank6</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-3-type</property>
+      <value>Left 600 Gal Tank</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-3-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station4_AGM-88</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-3-type</property>
+      <value>AGM-88</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-3-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+  <animation>
+  <type>select</type>
+  <object-name>Station4_AGM-119</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-3-type</property>
+      <value>AGM-119</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-3-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station4_AGM-154A</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-3-type</property>
+      <value>AGM-154A</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-3-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>Station4_GBU12</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-3-set</property>
+        <value>2 x GBU-12</value>
+      </equals>
+  </condition>
+ </animation>
+
+  <animation>
+  <type>select</type>
+  <object-name>Station4_MK82</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-3-set</property>
+        <value>3 x MK-82</value>
+      </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station4_GBU54</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-3-set</property>
+        <value>2 x GBU-54</value>
+      </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station4_MK83</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-3-set</property>
+        <value>2 x MK-83</value>
+      </equals>
+  </condition>
+ </animation>
+
+<animation>
+  <type>select</type>
+  <object-name>Station4_MK84</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-3-type</property>
+      <value>MK-84</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-3-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station4_CBU87</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-3-set</property>
+        <value>2 x CBU-87</value>
+      </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station4_CBU105</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-3-set</property>
+        <value>2 x CBU-105</value>
+      </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station4_GBU-31</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-3-type</property>
+      <value>GBU-31</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-3-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station4_GBU-24</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-3-type</property>
+      <value>GBU-24</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-3-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+ 
+ 
+<!--  ===========================================================================================================-->
+<!--  ================================================= id-5   ==================================================-->
+<!--  ===========================================================================================================-->
+ 
+<!-- <animation>
+  <type>select</type>
+  <object-name>LExtTank</object-name>
+  <condition>
+   <property>sim/model/f16/wingtankL</property>
+  </condition>
+ </animation>--> 
+ 
+  <animation>
+  <type>select</type>
+  <object-name>RExtTank</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-5-type</property>
+      <value>Right 370 Gal Tank</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-5-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>RExtTank6</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-5-type</property>
+      <value>Right 600 Gal Tank</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-5-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station6_AGM-88</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-5-type</property>
+      <value>AGM-88</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-5-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+  <animation>
+  <type>select</type>
+  <object-name>Station6_AGM-119</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-5-type</property>
+      <value>AGM-119</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-5-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station6_AGM-154A</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-5-type</property>
+      <value>AGM-154A</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-5-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station6_GBU12</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-5-set</property>
+        <value>2 x GBU-12</value>
+      </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station6_MK82</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-5-set</property>
+        <value>3 x MK-82</value>
+      </equals>
+  </condition>
+ </animation>
+
+<animation>
+  <type>select</type>
+  <object-name>Station6_GBU54</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-5-set</property>
+        <value>2 x GBU-54</value>
+      </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station6_MK83</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-5-set</property>
+        <value>2 x MK-83</value>
+      </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station6_MK84</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-5-type</property>
+      <value>MK-84</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-5-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station6_CBU87</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-5-set</property>
+        <value>2 x CBU-87</value>
+      </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station6_CBU105</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-5-set</property>
+        <value>2 x CBU-105</value>
+      </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station6_GBU-31</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-5-type</property>
+      <value>GBU-31</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-5-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station6_GBU-24</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-5-type</property>
+      <value>GBU-24</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-5-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+ 
+ 
+
+ <!-- livery selection -->
+
+ <animation>
+  <type>material</type>
+  <object-name>RExtTank</object-name>
+  <object-name>LExtTank</object-name>
+  <object-name>RExtTank6</object-name>
+  <object-name>LExtTank6</object-name>
+  <property-base>sim/model/livery</property-base>
+  <texture-prop>texture</texture-prop>
+  <texture>f16.png</texture>
+ </animation>
+
+ 
+</PropertyList>

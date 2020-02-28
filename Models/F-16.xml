@@ -347,10 +347,6 @@
       <object-name>VstabLogoLeftTop</object-name>
       <object-name>VstabLogoRightBottom</object-name>
       <object-name>VstabLogoRightTop</object-name>
-      <object-name>WinglogoLeftTop</object-name>
-      <object-name>WinglogoRightBottom</object-name>
-      <object-name>WinglogoRightTop</object-name>
-      <object-name>Rect</object-name>
       <object-name>LogoPilotRight</object-name>
       <object-name>FuselageLogoRight</object-name>
       <object-name>FuselageLogoLeft</object-name>
@@ -370,6 +366,48 @@
     </effect>
 
   <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
+      
+      <object-name>RadarDomeTop</object-name>
+      
+      
+      
+      <object-name>WingTips</object-name>
+      
+      <!--<object-name>LeftUpperFlap</object-name>
+      <object-name>LeftLowerFlap</object-name>-->
+      
+      <!--<object-name>RightUpperFlap</object-name>
+      <object-name>RightLowerFlap</object-name>-->
+      
+      <!--<object-name>LeftUpperAileron</object-name>
+      <object-name>LeftLowerAileron</object-name>-->
+      
+      <!--<object-name>RightUpperAileron</object-name>
+      <object-name>RightLowerAileron</object-name>-->
+      
+  </effect>
+
+<effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.35</ambient-factor>
+          <rain-enabled type="int">2</rain-enabled>
+          <snow-enabled type="int">0</snow-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">0</reflection-enabled>
+          <transparent type="int">1</transparent>
+          <rendering-hint>transparent</rendering-hint>
+      </parameters>
+      <!-- logos -->
+      <object-name>WinglogoLeftTop</object-name>
+      <object-name>WinglogoRightBottom</object-name>
+      <object-name>WinglogoRightTop</object-name>
+      <object-name>Rect</object-name>
+  </effect>
+
+  <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
       <parameters>
           <metallic type="float">0.80</metallic>
@@ -380,7 +418,7 @@
           <reflection-correction type="float">-0.45</reflection-correction>
       </parameters>
       <!-- fuselage -->
-      <object-name>RadarDomeTop</object-name>
+      
       <object-name>Tail</object-name>
       <object-name>LeftLowerSpeedbrake</object-name>
       <object-name>RightLowerSpeedbrake</object-name>
@@ -392,19 +430,7 @@
       <object-name>RightLowerHorizonTail</object-name>
       <object-name>RNLAF_Tailroot</object-name>
       <object-name>USAF_Tailroot</object-name>
-      <object-name>WingTips</object-name>
-      <object-name>LeftUpperFlap</object-name>
-      <object-name>LeftLowerFlap</object-name>
-      <object-name>RightUpperFlap</object-name>
-      <object-name>RightLowerFlap</object-name>
-      <object-name>LeftUpperAileron</object-name>
-      <object-name>LeftLowerAileron</object-name>
-      <object-name>RightUpperAileron</object-name>
-      <object-name>RightLowerAileron</object-name>
-      <object-name>LeftLowerLef</object-name>
-      <object-name>LeftUpperLef</object-name>
-      <object-name>RightUpperLef</object-name>
-      <object-name>RightLowerLef</object-name>
+      
       <object-name>CanopyFrame</object-name>
       <object-name>Rudder.001</object-name>
       <object-name>Rudder.003</object-name>
@@ -773,9 +799,6 @@
 
  
 
-   <model>
-    <path>Aircraft/f16/Models/Armament/loads.xml</path>
-  </model>
 
  
 <!-- ===================== START LIGHTING =========================== -->
@@ -1275,7 +1298,7 @@
   </axis>
  </animation>
 
- <animation>
+ <!--<animation>
   <type>rotate</type>
   <object-name>RightUpperAileron</object-name>
   <object-name>RightLowerAileron</object-name>
@@ -1291,27 +1314,115 @@
    <y>0.985090</y>
    <z>-0.039404</z>
   </axis>
- </animation>
+ </animation>-->
+ 
+ <effect>
+  <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
+  <parameters>
+    <rotation-rad><use>surface-positions/rightrad</use></rotation-rad>
+     <rotation-x1>1.71989</rotation-x1>
+     <rotation-y1>3.5817</rotation-y1>
+     <rotation-z1>0.073898</rotation-z1>
+     <rotation-x2>1.3266</rotation-x2>
+     <rotation-y2>1.0652</rotation-y2>
+     <rotation-z2>0.170853</rotation-z2>
+  </parameters>  
+  <object-name>RightUpperFlap</object-name>
+  <object-name>RightLowerFlap</object-name>
+</effect>
 
- <animation>
+<effect>
+  <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
+  <parameters>
+    <rotation-rad><use>surface-positions/rightrad2</use></rotation-rad>
+     <rotation-x1>1.71989</rotation-x1>
+     <rotation-y1>3.5817</rotation-y1>
+     <rotation-z1>0.073898</rotation-z1>
+     <rotation-x2>1.3266</rotation-x2>
+     <rotation-y2>1.0652</rotation-y2>
+     <rotation-z2>0.170853</rotation-z2>
+  </parameters>  
+  <object-name>RightUpperAileron</object-name>
+  <object-name>RightLowerAileron</object-name>
+</effect>
+ 
+ <effect>
+  <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
+  <parameters>
+    <rotation-rad><use>surface-positions/leftrad</use></rotation-rad>
+     <rotation-x1>1.71989</rotation-x1>
+     <rotation-y1>-3.5817</rotation-y1>
+     <rotation-z1>0.073898</rotation-z1>
+     <rotation-x2>1.3266</rotation-x2>
+     <rotation-y2>-1.0652</rotation-y2>
+     <rotation-z2>0.170853</rotation-z2>
+  </parameters>  
+  <object-name>LeftUpperFlap</object-name>
+  <object-name>LeftLowerFlap</object-name>
+</effect>
+
+<effect>
+  <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
+  <parameters>
+    <rotation-rad><use>surface-positions/leftrad2</use></rotation-rad>
+     <rotation-x1>1.71989</rotation-x1>
+     <rotation-y1>-3.5817</rotation-y1>
+     <rotation-z1>0.073898</rotation-z1>
+     <rotation-x2>1.3266</rotation-x2>
+     <rotation-y2>-1.0652</rotation-y2>
+     <rotation-z2>0.170853</rotation-z2>
+  </parameters>  
+  <object-name>LeftUpperAileron</object-name>
+  <object-name>LeftLowerAileron</object-name>
+</effect>
+
+<effect>
+  <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
+  <parameters>
+    <rotation-rad><use>surface-positions/radlefl</use></rotation-rad>
+     <rotation-x1>-0.813197</rotation-x1>
+     <rotation-y1>-1.41659</rotation-y1>
+     <rotation-z1>0.078991</rotation-z1>
+     <rotation-x2>1.29425</rotation-x2>
+     <rotation-y2>-4.58845</rotation-y2>
+     <rotation-z2>-0.006551</rotation-z2>
+  </parameters>  
+  <object-name>LeftUpperLef</object-name>
+  <object-name>LeftLowerLef</object-name>
+</effect>
+
+<effect>
+  <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
+  <parameters>
+    <rotation-rad><use>surface-positions/radlefr</use></rotation-rad>
+     <rotation-x1>-0.813197</rotation-x1>
+     <rotation-y1>1.41659</rotation-y1>
+     <rotation-z1>0.078991</rotation-z1>
+     <rotation-x2>1.29425</rotation-x2>
+     <rotation-y2>4.58845</rotation-y2>
+     <rotation-z2>-0.006551</rotation-z2>
+  </parameters>  
+  <object-name>RightUpperLef</object-name>
+  <object-name>RightLowerLef</object-name>
+</effect>
+
+ <!--<animation>
   <type>rotate</type>
   <object-name>LeftUpperAileron</object-name>
   <object-name>LeftLowerAileron</object-name>
   <property>surface-positions/left-aileron-pos-norm</property>
   <factor>-21.5</factor>
-  <center>
-   <x-m>1.815</x-m>
-   <y-m>-4.11</y-m>
-   <z-m>0.05</z-m>
-  </center>
   <axis>
-   <x>0.167465</x>
-   <y>-0.985090</y>
-   <z>-0.039404</z>
+   <x1-m>1.71989</x1-m>
+   <y1-m>-3.5817</y1-m>
+   <z1-m>0.073898</z1-m>
+   <x2-m>1.3266</x2-m>
+   <y2-m>-1.0652</y2-m>
+   <z2-m>0.170853</z2-m>
   </axis>
- </animation>
+ </animation>-->
 
- <animation>
+ <!--<animation>
   <type>rotate</type>
   <object-name>RightUpperFlap</object-name>
   <object-name>RightLowerFlap</object-name>
@@ -1327,9 +1438,9 @@
    <y>0.987872</y>
    <z>-0.039515</z>
   </axis>
- </animation>
+ </animation>-->
 
- <animation>
+ <!--<animation>
   <type>rotate</type>
   <object-name>LeftUpperFlap</object-name>
   <object-name>LeftLowerFlap</object-name>
@@ -1345,9 +1456,9 @@
    <y>-0.987872</y>
    <z>-0.039515</z>
   </axis>
- </animation>
+ </animation>-->
 
- <animation>
+ <!--<animation>
   <type>rotate</type>
   <object-name>RightUpperLef</object-name>
   <object-name>RightLowerLef</object-name>
@@ -1380,7 +1491,7 @@
    <y>-0.834983</y>
    <z>-0.031988</z>
   </axis>
- </animation>
+ </animation>-->
 
  <animation>
   <type>rotate</type>
@@ -2338,8 +2449,85 @@
  </animation>
  
  <model>
+    <name>tip-pay</name>
+    <path>Aircraft/f16/Models/Armament/loads-tip.xml</path>
+ </model>
+ 
+ <model>
+  <name>outer-pay</name>
+    <path>Aircraft/f16/Models/Armament/loads-outer.xml</path>
+ </model>
+ 
+ <model>
+  <name>middle-pay</name>
+    <path>Aircraft/f16/Models/Armament/loads-middle.xml</path>
+ </model>
+ 
+ <model>
+  <name>inner-pay</name>
+    <path>Aircraft/f16/Models/Armament/loads-inner.xml</path>
+ </model>
+ 
+ <model>
+  <name>pay</name>
     <path>Aircraft/f16/Models/Armament/loads.xml</path>
  </model>
+  
+ <animation>
+    <type>translate</type>
+    <object-name>tip-pay</object-name>
+    <object-name>posright1</object-name>
+    <object-name>posleft1</object-name>
+    <property>sim/systems/wingflexer/z-m-tip</property><!-- can be: tip, outer, middle or inner -->
+    <factor>1</factor>
+    <axis>
+      <x>0</x>
+      <y>0</y>
+      <z>1</z>
+    </axis>
+  </animation>
+  
+  <animation>
+    <type>translate</type>
+    <object-name>outer-pay</object-name>
+    <object-name>LWStation3</object-name>
+    <object-name>RWStation3</object-name>
+    <property>sim/systems/wingflexer/z-m-outer</property><!-- can be: tip, outer, middle or inner -->
+    <factor>1</factor>
+    <axis>
+      <x>0</x>
+      <y>0</y>
+      <z>1</z>
+    </axis>
+  </animation>
+  
+  <animation>
+    <type>translate</type>
+    <object-name>middle-pay</object-name>
+    <object-name>LWStation2</object-name>
+    <object-name>RWStation2</object-name>
+    <property>sim/systems/wingflexer/z-m-middle</property><!-- can be: tip, outer, middle or inner -->
+    <factor>1</factor>
+    <axis>
+      <x>0</x>
+      <y>0</y>
+      <z>1</z>
+    </axis>
+  </animation>
+  
+  <animation>
+    <type>translate</type>
+    <object-name>inner-pay</object-name>
+    <object-name>LWStation1</object-name>
+    <object-name>RWStation1</object-name>
+    <property>sim/systems/wingflexer/z-m-inner</property><!-- can be: tip, outer, middle or inner -->
+    <factor>1</factor>
+    <axis>
+      <x>0</x>
+      <y>0</y>
+      <z>1</z>
+    </axis>
+  </animation>
 
  <!-- livery selection -->
  <animation>

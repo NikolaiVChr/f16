@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<PropertyList>
+  
+  <!-- ===================== START ARMAMENT =========================== -->
+<!-- The armament section should probably be placed in a seperate file -->
+
+
+
+  
+  
+ <!-- =============================================================================================================  --> 
+ <!-- =========================================== Station 1 =======================================================  -->
+ <!-- =============================================================================================================  --> 
+ <model>
+  <name>Station1_AIM-9L</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L_LW.xml</path>
+  <offsets>
+   <x-m>1.16</x-m>
+   <y-m>-4.87</y-m>
+   <z-m>0.00</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <model>
+  <name>Station1_CATM-9L</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/CATM-9L_LW.xml</path>
+  <offsets>
+   <x-m>1.16</x-m>
+   <y-m>-4.87</y-m>
+   <z-m>0.00</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <model>
+  <name>Station1_AN-T-17</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AN-T-17_LW.xml</path>
+  <offsets>
+   <x-m>1.16</x-m>
+   <y-m>-4.87</y-m>
+   <z-m>0.00</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+ 
+  <model>
+  <name>Station1_AIM-120B</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/AIM-120B_LW.xml</path>
+  <offsets>
+   <x-m>1.15374</x-m>
+   <y-m>-4.89183</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+ 
+  <model>
+  <name>Station1_CATM-120B</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/CATM-120B_LW.xml</path>
+  <offsets>
+   <x-m>1.15374</x-m>
+   <y-m>-4.89183</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <model>
+  <name>Station_AIM-9_smokewinderR1</name>
+  <path>Aircraft/f16/Models/Armament/red.xml</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>-4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+ 
+ <model>
+  <name>Station_AIM-9_smokewinderG1</name>
+  <path>Aircraft/f16/Models/Armament/green.xml</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>-4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+ 
+  <model>
+  <name>Station_AIM-9_smokewinderB1</name>
+  <path>Aircraft/f16/Models/Armament/blue.xml</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>-4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+ 
+ <model>
+  <name>Station_AIM-9_smokewinderW1</name>
+  <path>Aircraft/f16/Models/Armament/white.xml</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>-4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+ 
+<!-- =============================================================================================================  --> 
+<!-- =========================================== Station 9 =======================================================  -->
+<!-- =============================================================================================================  -->  
+  <model>
+  <name>Station9_AIM-9L</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L_RW.xml</path>
+  <offsets>
+   <x-m>1.16</x-m>
+   <y-m>4.87</y-m>
+   <z-m>0.00</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+ 
+ <model>
+  <name>Station9_CATM-9L</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/CATM-9L_RW.xml</path>
+  <offsets>
+   <x-m>1.16</x-m>
+   <y-m>4.87</y-m>
+   <z-m>0.00</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <model>
+  <name>Station9_AN-T-17</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AN-T-17_RW.xml</path>
+  <offsets>
+   <x-m>1.16</x-m>
+   <y-m>4.87</y-m>
+   <z-m>0.00</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station9_AIM-120B</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/AIM-120B_RW.xml</path>
+  <offsets>
+   <x-m>1.15374</x-m>
+   <y-m>4.89183</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <model>
+  <name>Station9_CATM-120B</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/CATM-120B_RW.xml</path>
+  <offsets>
+   <x-m>1.15374</x-m>
+   <y-m>4.89183</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-3.5</pitch-deg>
+  </offsets>
+ </model>
+ 
+ <model>
+  <name>Station_AIM-9_smokewinderR9</name>
+  <path>Aircraft/f16/Models/Armament/red.xml</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station_AIM-9_smokewinderG9</name>
+  <path>Aircraft/f16/Models/Armament/green.xml</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+ 
+ 
+ <model>
+  <name>Station_AIM-9_smokewinderB9</name>
+  <path>Aircraft/f16/Models/Armament/blue.xml</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+ 
+ <model>
+  <name>Station_AIM-9_smokewinderW9</name>
+  <path>Aircraft/f16/Models/Armament/white.xml</path>
+  <offsets>
+   <x-m>1.5</x-m>
+   <y-m>4.87</y-m>
+   <z-m>0.0</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+
+<!-- ======================= END ARMAMENT =========================== -->
+</PropertyList>

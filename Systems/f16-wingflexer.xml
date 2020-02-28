@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+
+	<params>
+	  <m-wing-dry-kg type="double">500</m-wing-dry-kg>
+	  <K type="double">250</K>
+	  <D type="double">25</D>
+	  <fuel-frac type="double">0.300</fuel-frac>
+	  <lift-node-lbs alias="/f16/wings/lift-lbf"/>
+	  <fuel-node-1-kg alias="/f16/wings/fuel-and-stores-kg"/>
+	  <fuel-node-2-kg type="double">0</fuel-node-2-kg>
+	  <fuel-node-3-kg type="double">0</fuel-node-3-kg>
+	  <fuel-node-4-kg type="double">0</fuel-node-4-kg>
+	  <z-fac type="double">1</z-fac>
+	</params>
+	<z-m type="double">0</z-m>
+
+</PropertyList>

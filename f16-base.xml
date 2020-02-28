@@ -67,7 +67,6 @@
         <submodels>
             <serviceable type="bool">1</serviceable>
             <path>Aircraft/f16/Systems/f16-submodels.xml</path>
-            <!--<path>Aircraft/f16/Models/Armament/loads.xml</path>-->
         </submodels>
         <sound>
             <path>Aircraft/f16/Systems/f16-sound.xml</path>
@@ -920,6 +919,11 @@ There is also small changes in tail for different variants with and without brak
                 <path>Aircraft/f16/Systems/autoflight-rules.xml</path>
             </autopilot>
             <path>Aircraft/f16/Systems/f16-airdata.xml</path>
+            <wingflexer include="Systems/f16-wingflexer.xml"/>
+            <property-rule n="100">
+                <name>wing flexer property rule</name>
+                <path>Aircraft/Generic/wingflexer.xml</path>
+            </property-rule>
         </systems>
         <current-view>
             <z-offset-default type="float">25.0</z-offset-default>
@@ -1838,7 +1842,7 @@ There is also small changes in tail for different variants with and without brak
             <offset-y-m>0.00</offset-y-m>
             <offset-z-m>0.68</offset-z-m>
             <max-fuel-transfer-lbs-min>6000</max-fuel-transfer-lbs-min>
-        </refuel>
+        </refuel>        
     </systems>
     <instrumentation>
         <altimeter>
@@ -3132,6 +3136,10 @@ value. 18000=standard US transition altitude -->
             <irst-mounted type="bool">false</irst-mounted>
             <acmi-mounted type="bool">false</acmi-mounted>
         </stores>
+        <wings>
+            <fuel-and-stores-kg type="double">0.0</fuel-and-stores-kg>
+            <lift-lbf type="double">0.0</lift-lbf>
+        </wings>
         <vne-exceed type="double">0</vne-exceed>
         <crs-ils type="double">0.0</crs-ils>
         <crs-non-ils type="double">0.0</crs-non-ils>
@@ -3279,5 +3287,8 @@ value. 18000=standard US transition altitude -->
         <iff>
             <file>Aircraft/f16/Nasal/iff.nas</file>
         </iff>
+        <!--<flex>
+            <file>Aircraft/f16/Nasal/wingflexer.nas</file>
+        </flex>-->
     </nasal>
 </PropertyList>

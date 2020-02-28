@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PropertyList>
+	<name>wingflex</name>
+	<inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from> 
+	<parameters>
+		<wingflex>1</wingflex>
+		<wingflex-z><use>/sim/systems/wingflexer/z-m</use></wingflex-z>
+		<body-width>2.84</body-width>
+		<wing-span>9.2</wing-span>
+		
+		<metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.35</ambient-factor>
+          <rain-enabled type="int">2</rain-enabled>
+          <snow-enabled type="int">0</snow-enabled>
+          <reflection-enabled type="int">1</reflection-enabled>
+          <reflection-correction type="float">-0.45</reflection-correction>
+	</parameters>
+
+</PropertyList>
