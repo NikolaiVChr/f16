@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PropertyList>
+    <debug>true</debug>
+
+    <!-- Some filters are useful when tuning the parameters, but not needed in
+         production aircraft. They're tagged DEVELOP and disabled by default. -->
+
+    <!-- limit time step -->
+    <filter>
+        <type>gain</type>
+        <gain>1.</gain>
+        <output>/sim/systems/wingflexer/delta-sec</output>
+        <input>
+            <property>/sim/time/delta-sec</property>
+        </input>
+        <max>0.05</max>
+    </filter>
+
+    <!-- fuselage z (up) acceleration in m/s^2
+         we get -g in unaccelerated flight, and large negative numbers on touchdown -->
+    <filter>
+        <type>gain</type>
+        <gain>1.</gain>
+        <output>/sim/systems/wingflexer/a-fuselage-mps2</output>
+        <input>
+            <expression>
+                <product>
+                    <property>/accelerations/pilot/z-accel-fps_sec</property>
+                    <value>0.3048</value> <!-- FT2M -->
+                </product>
+            </expression>
+        </input>
+    </filter>
+
+    <!-- compute k and d -->
+    <filter>
+        <type>gain</type>
+        <gain>1.</gain>
+        <output>/sim/systems/wingflexer/k</output>
+        <input>
+            <expression>
+                <product>
+                    <property>/sim/systems/wingflexer/params/K</property>
+                    <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
+                </product>
+            </expression>
+        </input>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.</gain>
+        <output>/sim/systems/wingflexer/d</output>
+        <input>
+            <expression>
+                <product>
+                    <property>/sim/systems/wingflexer/params/D</property>
+                    <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
+                </product>
+            </expression>
+        </input>
+    </filter>
+
+
+    <!-- lift force. Convert to N and use 1/2 (one wing only) -->
+    <filter>
+        <type>gain</type>
+        <gain>1.</gain>
+        <output>/sim/systems/wingflexer/f-lift-N</output>
+        <input>
+            <expression>
+                <product>
+                    <property>/sim/systems/wingflexer/params/lift-node-lbs</property>
+                    <product>
+                        <property>/environment/gravitational-acceleration-mps2</property>
+                        <value>0.226796</value> <!-- LB2KG / 2-->
+                    </product>
+                </product>
+            </expression>
+        </input>
+    </filter>
+
+    <!-- z_ofs = g * mass_dry_kg / k -->
+    <filter>
+        <type>gain</type>
+        <gain>1.</gain>
+        <output>/sim/systems/wingflexer/z-ofs-m</output>
+        <input>
+            <expression>
+                <div>
+                    <product>
+                        <property>/environment/gravitational-acceleration-mps2</property>
+                        <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
+                    </product>
+                    <property>/sim/systems/wingflexer/k</property>
+                </div>
+            </expression>
+        </input>
+    </filter>
+
+    <!--
+    compute total mass of one wing, using the average fuel mass in all wing tanks.
+    The weighting factor should be lumped into fuel_frac.
+      mass = mass_dry_kg + fuel_frac * sum_i (fuel_node_i_kg)
+    -->
+    <filter>
+        <type>gain</type>
+        <gain>1.</gain>
+        <output>/sim/systems/wingflexer/m-wing-kg</output>
+        <input>
+            <expression>
+                <sum>
+                    <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
+                    <product>
+                        <property>/sim/systems/wingflexer/params/fuel-frac</property>
+                        <sum>
+                            <property>/sim/systems/wingflexer/params/fuel-node-1-kg</property>
+                            <property>/sim/systems/wingflexer/params/fuel-node-2-kg</property>
+                            <property>/sim/systems/wingflexer/params/fuel-node-3-kg</property>
+                            <property>/sim/systems/wingflexer/params/fuel-node-4-kg</property>
+                        </sum>
+                    </product>
+                </sum>
+            </expression>
+        </input>
+    </filter>
+
+    <!-- integrate the ODE -->
+    <filter>
+        <type>damped-oscillation</type>
+	<output>/sim/systems/wingflexer/z-raw-m</output>
+        <a>
+	    <expression>
+                <div>
+		      <property>/sim/systems/wingflexer/d</property>
+		      <property>/sim/systems/wingflexer/m-wing-kg</property>
+                </div>
+            </expression>
+	</a>
+        <b>
+	    <expression>
+                <div>
+		      <property>/sim/systems/wingflexer/k</property>
+		      <property>/sim/systems/wingflexer/m-wing-kg</property>
+                </div>
+            </expression>
+	</b>
+        <c>
+	    <expression>
+		<difference>
+		    <div>
+			<property>/sim/systems/wingflexer/f-lift-N</property>
+			<property>/sim/systems/wingflexer/m-wing-kg</property>
+		    </div>
+		    <property>/sim/systems/wingflexer/a-fuselage-mps2</property>
+		</difference>
+            </expression>
+	</c>
+        <!-- DEVELOP: initialize the wing's vertical velocity to a given value,
+                      overriding all previous computations -->
+	<input>
+            <expression>
+                <product>
+                    <property>/sim/systems/wingflexer/sink-rate-fps</property>
+                    <value>0.3048</value> <!-- feet to meters -->
+                </product>
+            </expression>
+        </input>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <output>/sim/systems/wingflexer/z-m</output>
+        <!--<gain>1.</gain> -->
+        <!-- DEVELOP: scaled output. For production aircraft, this should be done in
+                    the model animation. -->
+        <gain><property>/sim/systems/wingflexer/params/z-fac</property></gain>
+        
+	<input>
+            <expression>
+                <sum>
+                    <property>/sim/systems/wingflexer/z-raw-m</property>
+                    <property>/sim/systems/wingflexer/z-ofs-m</property>
+                </sum>
+            </expression>
+        </input>
+    </filter>
+
+    <!-- DEVELOP: reset sink rate -->
+    <filter>
+        <type>gain</type>
+        <gain>0.</gain>
+        <output>/sim/systems/wingflexer/sink-rate-fps</output>
+    </filter>
+    
+    <!-- DEVELOP: log max z-m -->
+    <filter>
+        <type>gain</type>
+        <gain>1.</gain>
+        <output>/sim/systems/wingflexer/z-max-m</output>
+        <input>
+            <expression>
+                <max>
+                    <property>/sim/systems/wingflexer/z-max-m</property>
+                    <abs>
+                        <property>/sim/systems/wingflexer/z-m</property>
+                    </abs>
+                </max>
+            </expression>
+        </input>
+    </filter>
+
+</PropertyList>
