@@ -2506,6 +2506,7 @@ There is also small changes in tail for different variants with and without brak
                 <class type="string">MGP</class>
                 <fire-msg type="string">Rifle</fire-msg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
+                <ready-time type="double">0.25</ready-time>
             </agm-65>
             <agm-84>                    <!-- A variant: 0.85 mach cruise, E is calibrated to just under 1.00 -->
                 <short-name type="string">AG84</short-name>
@@ -2539,6 +2540,7 @@ There is also small changes in tail for different variants with and without brak
                 <class type="string">M</class>
                 <terrain-follow type="bool">true</terrain-follow>
                 <fire-msg type="string">Bruiser</fire-msg>
+                <ready-time type="double">0.25</ready-time>
             </agm-84>
             <agm-119>
                 <short-name type="string">AG119</short-name>
@@ -2577,6 +2579,7 @@ There is also small changes in tail for different variants with and without brak
                 <terrain-follow type="bool">true</terrain-follow>
                 <seeker-angular-speed-dps type="double">40</seeker-angular-speed-dps>
                 <fire-msg type="string">Bruiser</fire-msg>
+                <ready-time type="double">0.25</ready-time>
             </agm-119>
             <agm-154a>
                 <short-name type="string">AG154</short-name>
@@ -2705,6 +2708,7 @@ There is also small changes in tail for different variants with and without brak
                 <switch-time-sec type="double">5</switch-time-sec>
                 <class type="string">GM</class>
                 <fire-msg type="string">Sniper</fire-msg>
+                <ready-time type="double">0.25</ready-time>
             </agm-88>
             <cbu-87> 
                 <short-name type="string">CB87</short-name>
