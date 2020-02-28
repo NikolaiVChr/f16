@@ -6,6 +6,23 @@ Modifications author: Nikolai V. Chr.
 	<name>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</name>
 	<inherits-from>Effects/model-combined-deferred</inherits-from>
 	<parameters>
+		<!-- Wingflex -->
+		<wingflex type="int">0</wingflex>
+		<body-width type="float">0.7</body-width>
+		<wingflex-alpha>0.0</wingflex-alpha>
+		<wingflex-trailing-alpha>0.0</wingflex-trailing-alpha>
+		<wingsweep-factor>0.0</wingsweep-factor>
+		<wingflex-z>0.0</wingflex-z>
+		<wing-span>15.0</wing-span>
+		<!-- Sub: rotation -->
+		<rotation-rad type="float">0.0</rotation-rad>
+		<rotation-x1 type="float">0.0</rotation-x1>
+		<rotation-y1 type="float">0.0</rotation-y1>
+		<rotation-z1 type="float">0.0</rotation-z1>
+		<rotation-x2 type="float">0.0</rotation-x2>
+		<rotation-y2 type="float">0.0</rotation-y2>
+		<rotation-z2 type="float">0.0</rotation-z2>
+		<!-- END Wingflex -->
 		<metallic type="float">0.80</metallic><!-- 0-1 -->
 		<ambient-factor type="float">0.0</ambient-factor><!-- 0-1 -->
 		<normalmap-dds-compression-bc3n>0</normalmap-dds-compression-bc3n>
@@ -1164,6 +1181,72 @@ Modifications author: Nikolai V. Chr.
 			 	 <use>ambient-factor</use>
 				</value>
 		  	</uniform>
+		  	
+		  	<uniform>
+				   <name>wingflex</name>
+				   <type>int</type>
+				   <value><use>wingflex</use></value>
+			   </uniform>
+			   
+		   	   <uniform>
+				   <name>wingflex_z</name>
+				   <type>float</type>
+				   <value><use>wingflex-z</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>body_width</name>
+				   <type>float</type>
+				   <value><use>body-width</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>wing_span</name>
+				   <type>float</type>
+				   <value><use>wing-span</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_rad</name>
+				   <type>float</type>
+				   <value><use>rotation-rad</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_x1</name>
+				   <type>float</type>
+				   <value><use>rotation-x1</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_y1</name>
+				   <type>float</type>
+				   <value><use>rotation-y1</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_z1</name>
+				   <type>float</type>
+				   <value><use>rotation-z1</use></value>
+			   </uniform>
+			   
+		   	   <uniform>
+				   <name>rotation_x2</name>
+				   <type>float</type>
+				   <value><use>rotation-x2</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_y2</name>
+				   <type>float</type>
+				   <value><use>rotation-y2</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_z2</name>
+				   <type>float</type>
+				   <value><use>rotation-z2</use></value>
+			   </uniform>
 
 		  <!-- 			END fog include -->
 		  <!--<uniform>
@@ -1769,6 +1852,73 @@ Modifications author: Nikolai V. Chr.
 			 	 <use>ambient-factor</use>
 				</value>
 		  	</uniform>
+		  	
+		  	<uniform>
+				   <name>wingflex</name>
+				   <type>int</type>
+				   <value><use>wingflex</use></value>
+			   </uniform>
+			   
+		   	   <uniform>
+				   <name>wingflex_z</name>
+				   <type>float</type>
+				   <value><use>wingflex-z</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>body_width</name>
+				   <type>float</type>
+				   <value><use>body-width</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>wing_span</name>
+				   <type>float</type>
+				   <value><use>wing-span</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_rad</name>
+				   <type>float</type>
+				   <value><use>rotation-rad</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_x1</name>
+				   <type>float</type>
+				   <value><use>rotation-x1</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_y1</name>
+				   <type>float</type>
+				   <value><use>rotation-y1</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_z1</name>
+				   <type>float</type>
+				   <value><use>rotation-z1</use></value>
+			   </uniform>
+			   
+		   	   <uniform>
+				   <name>rotation_x2</name>
+				   <type>float</type>
+				   <value><use>rotation-x2</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_y2</name>
+				   <type>float</type>
+				   <value><use>rotation-y2</use></value>
+			   </uniform>
+
+		   	   <uniform>
+				   <name>rotation_z2</name>
+				   <type>float</type>
+				   <value><use>rotation-z2</use></value>
+			   </uniform>
+			   
 		  <!-- 			END fog include -->
 		  <!--<uniform>
 			<name>rembrandt_enabled</name>

@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<PropertyList>
+  
+  <!-- ===================== START ARMAMENT =========================== -->
+<!-- The armament section should probably be placed in a seperate file -->
+
+
+
+  
+  
+ <!-- =============================================================================================================  --> 
+ <!-- =========================================== Station 3 =======================================================  -->
+ <!-- =============================================================================================================  -->  
+ 
+ 
+ <model>
+  <name>Station3_AIM-9L</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L.xml</path>
+  <offsets>
+   <x-m>0.3</x-m>
+   <y-m>-2.88</y-m>
+   <z-m>-0.35</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station3_AIM-7F</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-7/AIM-7F.xml</path>
+  <offsets>
+   <x-m>0.675</x-m>
+   <y-m>-2.877</y-m>
+   <z-m>-0.35</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+ 
+  <model>
+  <name>Station3_AIM-120B</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/AIM-120B.xml</path>
+  <offsets>
+   <x-m>0.605</x-m>
+   <y-m>-2.8762</y-m>
+   <z-m>-0.347</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+ 
+<model>
+  <name>Station3_GBU12</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/trirack-3.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>-2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station3_MK82</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-82/trirack-3.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>-2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station3_GBU54</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-54/duorack-3.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>-2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station3_MK83</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-83/duorack-3.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>-2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station3_MK84</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-84/MK-84.xml</path>
+  <offsets>
+   <x-m>0.61</x-m>
+   <y-m>-2.872</y-m>
+   <z-m>-0.485</z-m>
+   <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station3_CBU87</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/CBU-87/duorack-3.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>-2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station3_CBU105</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/CBU-105/duorack-3.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>-2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station3_3xAGM-65</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-65/trirack-3.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>-2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station3_AGM-65</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-65/agm-65.xml</path>
+  <offsets>
+   <x-m>0.625</x-m>
+   <y-m>-2.8799</y-m>
+   <z-m>-0.418</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station3_AGM-84</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-84/AGM-84.xml</path>
+  <offsets>
+   <x-m>-0.35133</x-m>
+   <y-m>-2.87928</y-m>
+   <z-m>-0.501045</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station3_AGM-88</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-88/AGM-88.xml</path>
+  <offsets>
+   <x-m>0</x-m>
+   <y-m>-2.86988</y-m>
+   <z-m>-0.438099</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <model>
+  <name>Station3_AGM-119</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-119/AGM-119.xml</path>
+  <offsets>
+   <x-m>0.05</x-m>
+   <y-m>-2.87922</y-m>
+   <z-m>-0.447</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station3_AGM-154A</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-154A/AGM-154A.xml</path>
+  <offsets>
+   <x-m>0.58</x-m>
+   <y-m>-2.872</y-m>
+   <z-m>-0.523</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station3_AGM-158</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-158/AGM-158.xml</path>
+  <offsets>
+   <x-m>0.725</x-m>
+   <y-m>-2.872</y-m>
+   <z-m>-0.48</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station3_GBU-31</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-31/GBU-31.xml</path>
+  <offsets>
+   <x-m>0.725</x-m>
+   <y-m>-2.872</y-m>
+   <z-m>-0.52</z-m>
+   <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+ </model>
+
+<model>
+  <name>Station3_GBU-24</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-24/GBU-24.xml</path>
+  <offsets>
+   <x-m>0.5</x-m>
+   <y-m>-2.872</y-m>
+   <z-m>-0.49</z-m>
+   <pitch-deg>-3.9</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station3_LAU68</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/LAU-68/duorack-3.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>-2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station3_B61-7</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/B61-7/B61-7.xml</path>
+  <offsets>
+   <x-m>0.34</x-m>
+   <y-m>-2.88</y-m>
+   <z-m>-0.4465</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+</model>
+
+ <model>
+  <name>Station3_B61-12</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/B61-12/B61-12.xml</path>
+  <offsets>
+   <x-m>0.34</x-m>
+   <y-m>-2.88</y-m>
+   <z-m>-0.4465</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+<model>
+  <name>Station3_MXU-648</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/MXU-648/MXU-648.xml</path>
+  <offsets>
+   <x-m>0.62</x-m>
+   <y-m>-2.872</y-m>
+   <z-m>-0.49</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+<!-- =============================================================================================================  --> 
+<!-- =========================================== Station 7 =======================================================  -->
+<!-- =============================================================================================================  -->  
+ 
+  <model>
+  <name>Station7_AIM-120B</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-120/AIM-120B.xml</path>
+  <offsets>
+   <x-m>0.605</x-m>
+   <y-m>2.8762</y-m>
+   <z-m>-0.347</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+ 
+  <model>
+  <name>Station7_AIM-9L</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L.xml</path>
+  <offsets>
+   <x-m>0.3</x-m>
+   <y-m>2.88</y-m>
+   <z-m>-0.35</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <model>
+  <name>Station7_AIM-7F</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AIM-7/AIM-7F.xml</path>
+  <offsets>
+   <x-m>0.675</x-m>
+   <y-m>2.877</y-m>
+   <z-m>-0.35</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+ 
+  <model>
+  <name>Station7_GBU12</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/trirack-7.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station7_MK82</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-82/trirack-7.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station7_GBU54</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-54/duorack-7.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station7_MK83</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-83/duorack-7.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station7_MK84</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-84/MK-84.xml</path>
+  <offsets>
+   <x-m>0.61</x-m>
+   <y-m>2.872</y-m>
+   <z-m>-0.485</z-m>
+   <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station7_CBU87</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/CBU-87/duorack-7.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station7_CBU105</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/CBU-105/duorack-7.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station7_3xAGM-65</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-65/trirack-7.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+ </model>
+
+<model>
+  <name>Station7_AGM-65</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-65/agm-65.xml</path>
+  <offsets>
+   <x-m>0.625</x-m>
+   <y-m>2.8799</y-m>
+   <z-m>-0.418</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station7_AGM-84</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-84/AGM-84.xml</path>
+  <offsets>
+   <x-m>-0.35133</x-m>
+   <y-m>2.87928</y-m>
+   <z-m>-0.501045</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station7_AGM-88</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-88/AGM-88.xml</path>
+  <offsets>
+   <x-m>0</x-m>
+   <y-m>2.86988</y-m>
+   <z-m>-0.438099</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+  <model>
+  <name>Station7_AGM-119</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-119/AGM-119.xml</path>
+  <offsets>
+   <x-m>0.05</x-m>
+   <y-m>2.87922</y-m>
+   <z-m>-0.447</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station7_AGM-154A</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-154A/AGM-154A.xml</path>
+  <offsets>
+   <x-m>0.58</x-m>
+   <y-m>2.872</y-m>
+   <z-m>-0.523</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station7_AGM-158</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-158/AGM-158.xml</path>
+  <offsets>
+   <x-m>0.725</x-m>
+   <y-m>2.872</y-m>
+   <z-m>-0.48</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station7_LAU68</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/LAU-68/duorack-7.xml</path>
+  <offsets>
+    <x-m>1</x-m>
+    <y-m>2.87</y-m>
+    <z-m>-0.071944</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+ <model>
+  <name>Station7_GBU-31</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-31/GBU-31.xml</path>
+  <offsets>
+   <x-m>0.725</x-m>
+   <y-m>2.872</y-m>
+   <z-m>-0.52</z-m>
+   <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+ </model>
+
+<model>
+  <name>Station7_GBU-24</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-24/GBU-24.xml</path>
+  <offsets>
+   <x-m>0.5</x-m>
+   <y-m>2.872</y-m>
+   <z-m>-0.49</z-m>
+   <pitch-deg>-3.9</pitch-deg>
+  </offsets>
+ </model>
+
+<model>
+  <name>Station7_B61-7</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/B61-7/B61-7.xml</path>
+  <offsets>
+   <x-m>0.34</x-m>
+   <y-m>2.88</y-m>
+   <z-m>-0.4465</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+</model>
+
+ <model>
+  <name>Station7_B61-12</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/B61-12/B61-12.xml</path>
+  <offsets>
+   <x-m>0.34</x-m>
+   <y-m>2.88</y-m>
+   <z-m>-0.4465</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station7_MXU-648</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/MXU-648/MXU-648.xml</path>
+  <offsets>
+   <x-m>0.62</x-m>
+   <y-m>2.872</y-m>
+   <z-m>-0.49</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+ 
+
+<!-- ======================= END ARMAMENT =========================== -->
+</PropertyList>

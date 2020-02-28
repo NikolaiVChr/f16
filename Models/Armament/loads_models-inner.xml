@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<PropertyList>
+  
+  <!-- ===================== START ARMAMENT =========================== -->
+<!-- The armament section should probably be placed in a seperate file -->
+
+
+
+  
+<!-- =============================================================================================================  --> 
+<!-- =========================================== Station 4 =======================================================  -->
+<!-- =============================================================================================================  -->  
+
+  <model>
+  <name>LExtTank</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/Fueltanks/370G.xml</path>
+  <offsets>
+   <x-m>-0.785</x-m>
+   <y-m>-1.63</y-m>
+   <z-m>-0.61</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>LExtTank6</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/Fueltanks/600G.xml</path>
+  <offsets>
+   <x-m>-0.62</x-m>
+   <y-m>-1.63</y-m>
+   <z-m>-0.725</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station4_AGM-88</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-88/AGM-88.xml</path>
+  <offsets>
+    <x-m>-0.55</x-m>
+    <y-m>-1.629</y-m>
+    <z-m>-0.432</z-m>
+    <pitch-deg>-4.55</pitch-deg>
+  </offsets>
+</model>
+
+ <model>
+  <name>Station4_AGM-119</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-119/AGM-119.xml</path>
+  <offsets>
+    <x-m>-0.5</x-m>
+    <y-m>-1.63</y-m>
+    <z-m>-0.439</z-m>
+    <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+</model>
+
+
+<model>
+  <name>Station4_AGM-154A</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-154A/AGM-154A.xml</path>
+  <offsets>
+   <x-m>-0.05</x-m>
+   <y-m>-1.63</y-m>
+   <z-m>-0.525</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station4_GBU12</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/duorack-4.xml</path>
+  <offsets>
+    <x-m>0.388102</x-m>
+    <y-m>-1.63859</y-m>
+    <z-m>-0.049251</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station4_MK82</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-82/trirack-4.xml</path>
+  <offsets>
+    <x-m>0.388102</x-m>
+    <y-m>-1.63859</y-m>
+    <z-m>-0.049251</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station4_GBU54</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-54/duorack-4.xml</path>
+  <offsets>
+    <x-m>0.388102</x-m>
+    <y-m>-1.63859</y-m>
+    <z-m>-0.049251</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station4_MK83</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-83/duorack-4.xml</path>
+  <offsets>
+    <x-m>0.388102</x-m>
+    <y-m>-1.63859</y-m>
+    <z-m>-0.049251</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station4_MK84</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-84/MK-84.xml</path>
+  <offsets>
+   <x-m>0.06</x-m>
+   <y-m>-1.63</y-m>
+   <z-m>-0.482</z-m>
+   <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station4_CBU87</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/CBU-87/duorack-4.xml</path>
+  <offsets>
+    <x-m>0.388102</x-m>
+    <y-m>-1.63859</y-m>
+    <z-m>-0.049251</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station4_CBU105</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/CBU-105/duorack-4.xml</path>
+  <offsets>
+    <x-m>0.388102</x-m>
+    <y-m>-1.63859</y-m>
+    <z-m>-0.049251</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station4_GBU-31</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-31/GBU-31.xml</path>
+  <offsets>
+   <x-m>0.15</x-m>
+   <y-m>-1.63</y-m>
+   <z-m>-0.517</z-m>
+   <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station4_GBU-24</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-24/GBU-24.xml</path>
+  <offsets>
+   <x-m>-0.07</x-m>
+   <y-m>-1.63</y-m>
+   <z-m>-0.487</z-m>
+   <pitch-deg>-3.9</pitch-deg>
+  </offsets>
+ </model>
+ 
+ 
+ 
+<!-- =============================================================================================================  --> 
+<!-- =========================================== Station 6 =======================================================  -->
+<!-- =============================================================================================================  -->  
+ 
+ 
+  <model>
+  <name>RExtTank</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/Fueltanks/370G.xml</path>
+  <offsets>
+   <x-m>-0.785</x-m>
+   <y-m>1.63</y-m>
+   <z-m>-0.61</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>RExtTank6</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/Fueltanks/600G.xml</path>
+  <offsets>
+   <x-m>-0.62</x-m>
+   <y-m>1.63</y-m>
+   <z-m>-0.725</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station6_AGM-88</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-88/AGM-88.xml</path>
+  <offsets>
+    <x-m>-0.55</x-m>
+    <y-m>1.63</y-m>
+    <z-m>-0.432</z-m>
+    <pitch-deg>-4.55</pitch-deg>
+  </offsets>
+</model>
+
+ <model>
+  <name>Station6_AGM-119</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-119/AGM-119.xml</path>
+  <offsets>
+    <x-m>-0.5</x-m>
+    <y-m>1.63</y-m>
+    <z-m>-0.439</z-m>
+    <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station6_AGM-154A</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-154A/AGM-154A.xml</path>
+  <offsets>
+   <x-m>-0.05</x-m>
+   <y-m>1.63</y-m>
+   <z-m>-0.525</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station6_GBU12</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/duorack-6.xml</path>
+  <offsets>
+    <x-m>0.388102</x-m>
+    <y-m>1.63859</y-m>
+    <z-m>-0.049251</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+ <model>
+  <name>Station6_MK82</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-82/trirack-6.xml</path>
+  <offsets>
+    <x-m>0.388102</x-m>
+    <y-m>1.63859</y-m>
+    <z-m>-0.049251</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station6_GBU54</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-54/duorack-6.xml</path>
+  <offsets>
+    <x-m>0.388102</x-m>
+    <y-m>1.63859</y-m>
+    <z-m>-0.049251</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station6_MK83</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-83/duorack-6.xml</path>
+  <offsets>
+    <x-m>0.388102</x-m>
+    <y-m>1.63859</y-m>
+    <z-m>-0.049251</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station6_MK84</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-84/MK-84.xml</path>
+  <offsets>
+   <x-m>0.06</x-m>
+   <y-m>1.63</y-m>
+   <z-m>-0.482</z-m>
+   <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station6_CBU87</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/CBU-87/duorack-6.xml</path>
+  <offsets>
+    <x-m>0.388102</x-m>
+    <y-m>1.63859</y-m>
+    <z-m>-0.049251</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station6_CBU105</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/CBU-105/duorack-6.xml</path>
+  <offsets>
+    <x-m>0.388102</x-m>
+    <y-m>1.63859</y-m>
+    <z-m>-0.049251</z-m>
+    <pitch-deg>0</pitch-deg>
+  </offsets>
+</model>
+ 
+ <model>
+  <name>Station6_GBU-31</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-31/GBU-31.xml</path>
+  <offsets>
+   <x-m>0.15</x-m>
+   <y-m>1.63</y-m>
+   <z-m>-0.517</z-m>
+   <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station6_GBU-24</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-24/GBU-24.xml</path>
+  <offsets>
+   <x-m>-0.07</x-m>
+   <y-m>1.63</y-m>
+   <z-m>-0.487</z-m>
+   <pitch-deg>-3.9</pitch-deg>
+  </offsets>
+ </model>
+
+
+<!-- ======================= END ARMAMENT =========================== -->
+</PropertyList>
