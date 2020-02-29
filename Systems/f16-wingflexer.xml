@@ -18,6 +18,7 @@
       <max type="double">0.5</max>
       <aerotow-active type="bool">false</aerotow-active><!-- for now very simple, just a bool if towed or not -->
       <aircraft-g-force alias="/fdm/jsbsim/accelerations/a_n"/><!-- aircraft G force at center of gravity -->
+      <aircraft-total-weight-lbs alias="/fdm/jsbsim/inertia/weight-lbs"/><!-- current aircraft total weight including fuel, stores, cargo and emptyweight -->
 	</params>
 	<z-m type="double">0</z-m><!-- the output -->
 </PropertyList>

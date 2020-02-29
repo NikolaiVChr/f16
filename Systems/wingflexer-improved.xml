@@ -125,7 +125,7 @@
                     <property>/sim/systems/wingflexer/params/aircraft-g-force</property><!-- body mass is multiplied by G -->
                     <difference>
                         <product>
-                            <property>fdm/jsbsim/inertia/weight-lbs</property>
+                            <property>/sim/systems/wingflexer/params/aircraft-total-weight-lbs</property>
                             <value>0.4535</value><!-- lbs to kg -->
                         </product>
                         <sum><!-- subtract both wings mass -->
