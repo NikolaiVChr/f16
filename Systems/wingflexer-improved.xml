@@ -202,6 +202,8 @@
     <filter>
         <type>damped-oscillation</type>
 	    <output>/sim/systems/wingflexer/z-raw-m</output>
+        <min>-0.5</min>
+        <max>0.5</max>
         <a>
     	    <expression>
                 <div>
@@ -250,6 +252,8 @@
     <filter>
         <type>gain</type>
         <output>/sim/systems/wingflexer/z-m</output>
+        <min>-0.5</min>
+        <max>0.5</max>
         <!--<gain>1.</gain> -->
         <!-- DEVELOP: scaled output. For production aircraft, this should be done in
                     the model animation. -->
