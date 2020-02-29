@@ -15,6 +15,9 @@
 	  <fuel-node-3-kg type="double">0</fuel-node-3-kg>
 	  <fuel-node-4-kg type="double">0</fuel-node-4-kg>
 	  <z-fac type="double">1</z-fac><!-- animation factor for when animating degrees instead of flex shader -->
+	  <min>-0.5</min>
+      <max>0.5</max>
+      <aircraft-g-force alias="/fdm/jsbsim/accelerations/a_n"/>
 	</params>
 	<z-m type="double">0</z-m>
 

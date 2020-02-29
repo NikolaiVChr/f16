@@ -16,22 +16,6 @@
         <max>0.05</max>
     </filter>
 
-    <!-- fuselage z (up) acceleration in m/s^2
-         we get -g in unaccelerated flight, and large negative numbers on touchdown -->
-    <filter>
-        <type>gain</type>
-        <gain>1.</gain>
-        <output>/sim/systems/wingflexer/a-fuselage-mps2</output>
-        <input>
-            <expression>
-                <product>
-                    <property>/accelerations/pilot/z-accel-fps_sec</property>
-                    <value>0.3048</value> <!-- FT2M -->
-                </product>
-            </expression>
-        </input>
-    </filter>
-
     <!-- compute k and d -->
     <filter>
         <type>gain</type>
@@ -142,7 +126,7 @@
                 <product>
                     <property>/sim/systems/wingflexer/params/fuel-frac</property>
                     <value>0.5</value><!-- half the body, as the 2 wings share the load -->
-                    <property>fdm/jsbsim/accelerations/a_n</property><!-- body mass is multiplied by G -->
+                    <property>/sim/systems/wingflexer/params/aircraft-g-force</property><!-- body mass is multiplied by G -->
                     <difference>
                         <product>
                             <property>fdm/jsbsim/inertia/weight-lbs</property>
@@ -202,8 +186,8 @@
     <filter>
         <type>damped-oscillation</type>
 	    <output>/sim/systems/wingflexer/z-raw-m</output>
-        <min>-0.5</min>
-        <max>0.5</max>
+        <min><property>/sim/systems/wingflexer/params/min</property></min>
+        <max><property>/sim/systems/wingflexer/params/max</property></max>
         <a>
     	    <expression>
                 <div>
@@ -252,8 +236,8 @@
     <filter>
         <type>gain</type>
         <output>/sim/systems/wingflexer/z-m</output>
-        <min>-0.5</min>
-        <max>0.5</max>
+        <min><property>/sim/systems/wingflexer/params/min</property></min>
+        <max><property>/sim/systems/wingflexer/params/max</property></max>
         <!--<gain>1.</gain> -->
         <!-- DEVELOP: scaled output. For production aircraft, this should be done in
                     the model animation. -->
