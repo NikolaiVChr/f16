@@ -6,7 +6,7 @@
 	  <m-wing-dry-kg type="double">500</m-wing-dry-kg>
 	  <K type="double">250</K>
 	  <D type="double">25</D>
-	  <fuel-frac type="double">0.300</fuel-frac>
+	  <fuel-frac type="double">0.400</fuel-frac>
 	  <lift-node-lbs alias="/f16/wings/lift-lbf"/>
 	  <fuel-node-1-kg alias="/f16/wings/fuel-and-stores-kg"/>
 	  <fuel-node-2-kg type="double">0</fuel-node-2-kg>

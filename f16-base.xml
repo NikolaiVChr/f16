@@ -922,7 +922,7 @@ There is also small changes in tail for different variants with and without brak
             <wingflexer include="Systems/f16-wingflexer.xml"/>
             <property-rule n="100">
                 <name>wing flexer property rule</name>
-                <path>Aircraft/Generic/wingflexer.xml</path>
+                <path>Aircraft/f16/Systems/wingflexer-improved.xml</path>
             </property-rule>
         </systems>
         <current-view>
