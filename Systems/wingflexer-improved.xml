@@ -163,6 +163,12 @@
                             <property>/sim/systems/wingflexer/params/body-factor</property>
                             <abs>
                                 <difference>
+                                    <property>/sim/systems/wingflexer/params/aerotow-active</property>
+                                    <value>1</value>
+                                </difference>
+                            </abs>
+                            <abs>
+                                <difference>
                                     <property>fdm/jsbsim/gear/unit[1]/WOW</property>
                                     <value>1</value>
                                 </difference>
@@ -178,6 +184,23 @@
                                     <property>/sim/systems/wingflexer/m-wing-kg</property>
                                 </product>
                             </difference>
+                        </product>
+                        <!-- towed -->
+                        <product>
+                            <difference>
+                                <property>/sim/systems/wingflexer/f-normal-N</property>
+                                <product>
+                                    <property>/sim/systems/wingflexer/params/aircraft-g-force</property>
+                                    <property>/sim/systems/wingflexer/m-wing-kg</property>
+                                </product>
+                            </difference>
+                            <property>/sim/systems/wingflexer/params/aerotow-active</property>
+                            <abs>
+                                <difference>
+                                    <property>fdm/jsbsim/gear/unit[1]/WOW</property>
+                                    <value>1</value>
+                                </difference>
+                            </abs>
                         </product>
                     </sum>
                 </product>
