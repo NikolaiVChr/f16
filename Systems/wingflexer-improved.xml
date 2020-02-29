@@ -40,6 +40,7 @@
         <input>
             <expression>
                 <product>
+                    <property>/sim/systems/wingflexer/params/fuel-frac</property>
                     <property>/sim/systems/wingflexer/params/K</property>
                     <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
                 </product>
@@ -54,6 +55,7 @@
         <input>
             <expression>
                 <product>
+                    <property>/sim/systems/wingflexer/params/fuel-frac</property>
                     <property>/sim/systems/wingflexer/params/D</property>
                     <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
                 </product>
@@ -61,7 +63,24 @@
         </input>
     </filter>
 
-
+    <!-- lift force. Convert to N and use 1/2 (one wing only) -->
+    <filter>
+        <type>gain</type>
+        <gain>1.</gain>
+        <output>/sim/systems/wingflexer/f-lift-N</output>
+        <input>
+            <expression>
+                <product>
+                    <property>/sim/systems/wingflexer/params/fuel-frac</property>
+                    <property>/sim/systems/wingflexer/params/lift-node-lbs</property>
+                    <!--<product>
+                        <property>/environment/gravitational-acceleration-mps2</property>-->
+                        <value>0.226796</value> <!-- LB2KG / 2-->
+                    <!--</product>-->
+                </product>
+            </expression>
+        </input>
+    </filter>
     
 
     <!-- z_ofs = g * mass_dry_kg / k -->
@@ -73,7 +92,8 @@
             <expression>
                 <div>
                     <product>
-                        <property>/environment/gravitational-acceleration-mps2</property>
+                        <property>/sim/systems/wingflexer/params/fuel-frac</property>
+                        <!--<property>/environment/gravitational-acceleration-mps2</property>-->
                         <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
                     </product>
                     <property>/sim/systems/wingflexer/k</property>
@@ -93,18 +113,21 @@
         <output>/sim/systems/wingflexer/m-wing-kg</output>
         <input>
             <expression>
-                <sum>
-                    <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
                     <product>
                         <property>/sim/systems/wingflexer/params/fuel-frac</property>
                         <sum>
-                            <property>/sim/systems/wingflexer/params/fuel-node-1-kg</property>
-                            <property>/sim/systems/wingflexer/params/fuel-node-2-kg</property>
-                            <property>/sim/systems/wingflexer/params/fuel-node-3-kg</property>
-                            <property>/sim/systems/wingflexer/params/fuel-node-4-kg</property>
+                            <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
+                            <product>
+                                <value>0.5</value><!-- half since we only want 1 wing -->
+                                <sum>
+                                    <property>/sim/systems/wingflexer/params/fuel-node-1-kg</property>
+                                    <property>/sim/systems/wingflexer/params/fuel-node-2-kg</property>
+                                    <property>/sim/systems/wingflexer/params/fuel-node-3-kg</property>
+                                    <property>/sim/systems/wingflexer/params/fuel-node-4-kg</property>
+                                </sum>
+                            </product>
                         </sum>
                     </product>
-                </sum>
             </expression>
         </input>
     </filter>
@@ -117,7 +140,7 @@
         <input>
             <expression>
                 <product>
-                    <value>0.0025</value><!-- fudge factor -->
+                    <property>/sim/systems/wingflexer/params/fuel-frac</property>
                     <value>0.5</value><!-- half the body, as the 2 wings share the load -->
                     <property>fdm/jsbsim/accelerations/a_n</property><!-- body mass is multiplied by G -->
                     <difference>
@@ -128,9 +151,48 @@
                         <sum><!-- subtract both wings mass -->
                             <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
                             <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
-                            <property>/f16/wings/fuel-and-stores-kg-a</property>
+                            <sum>
+                                <property>/sim/systems/wingflexer/params/fuel-node-1-kg</property>
+                                <property>/sim/systems/wingflexer/params/fuel-node-2-kg</property>
+                                <property>/sim/systems/wingflexer/params/fuel-node-3-kg</property>
+                                <property>/sim/systems/wingflexer/params/fuel-node-4-kg</property>
+                            </sum>
                         </sum>
                     </difference>
+                </product>
+            </expression>
+        </input>
+    </filter>
+    
+    <filter>
+        <type>gain</type>
+        <gain>1.</gain>
+        <output>/sim/systems/wingflexer/c-input</output>
+        <input>
+            <expression>
+                <product>
+                    <value>-1</value>
+                    <sum>
+                        <!-- in air -->
+                        <product>
+                            <property>/sim/systems/wingflexer/half-fuselage-weight</property>
+                            <property>/sim/systems/wingflexer/params/body-factor</property>
+                            <abs>
+                                <difference>
+                                    <property>fdm/jsbsim/gear/unit[1]/WOW</property>
+                                    <value>1</value>
+                                </difference>
+                            </abs>
+                        </product>
+                        <!-- on ground -->
+                        <product>
+                            <property>fdm/jsbsim/gear/unit[1]/WOW</property>
+                            <difference>
+                                <property>/sim/systems/wingflexer/f-lift-N</property>
+                                <property>/sim/systems/wingflexer/m-wing-kg</property>
+                            </difference>
+                        </product>
+                    </sum>
                 </product>
             </expression>
         </input>
@@ -139,51 +201,37 @@
     <!-- integrate the ODE -->
     <filter>
         <type>damped-oscillation</type>
-	<output>/sim/systems/wingflexer/z-raw-m</output>
+	    <output>/sim/systems/wingflexer/z-raw-m</output>
         <a>
     	    <expression>
-                    <div>
-            		      <property>/sim/systems/wingflexer/d</property>
-            		      <property>/sim/systems/wingflexer/m-wing-kg</property>
-                    </div>
+                <div>
+        		      <property>/sim/systems/wingflexer/d</property>
+        		      <property>/sim/systems/wingflexer/m-wing-kg</property>
+                </div>
             </expression>
     	</a>
         <b>
     	    <expression>
-                    <div>
-            		      <property>/sim/systems/wingflexer/k</property>
-            		      <property>/sim/systems/wingflexer/m-wing-kg</property>
-                    </div>
+                <div>
+        		      <property>/sim/systems/wingflexer/k</property>
+        		      <property>/sim/systems/wingflexer/m-wing-kg</property>
+                </div>
             </expression>
     	</b>
         <c>
     	    <expression>
                 <sum>
-                    <!-- in air -->
-            		<product>
-                        <!--<difference>-->
-                            <product>
-                    		    <property>/sim/systems/wingflexer/half-fuselage-weight</property>
-                                <value>-1</value>
-                            </product>
-                            <!--<property>/sim/systems/wingflexer/a-fuselage-mps2</property>
-                        </difference>-->
-                        <abs>
-                            <difference>
-                                <property>fdm/jsbsim/gear/unit[1]/WOW</property>
-                                <value>1</value>
-                            </difference>
-                        </abs>
-            		</product>
-                    <!-- on ground -->
-                    <product>
-                        <property>fdm/jsbsim/gear/unit[1]/WOW</property>
-                        <difference>
-                           <value>0</value>
-                           <!--<property>/sim/systems/wingflexer/m-wing-kg</property>-->
-                           <property>/sim/systems/wingflexer/a-fuselage-mps2</property>
-                        </difference>
-                    </product>
+                    <max>
+                        <value>0</value>
+                        <property>/sim/systems/wingflexer/c-input</property>
+                    </max>
+                    <min>
+                        <value>0</value>
+                        <product>
+                            <property>/sim/systems/wingflexer/params/upwards-stiffness-factor</property>
+                            <property>/sim/systems/wingflexer/c-input</property>
+                        </product>
+                    </min>
                 </sum>
             </expression>
     	</c>

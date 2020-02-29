@@ -3,16 +3,18 @@
 <PropertyList>
 
 	<params>
-	  <m-wing-dry-kg type="double">500</m-wing-dry-kg>
-	  <K type="double">250</K>
-	  <D type="double">25</D>
-	  <fuel-frac type="double">0.400</fuel-frac>
-	  <lift-node-lbs alias="/f16/wings/lift-lbf"/>
-	  <fuel-node-1-kg alias="/f16/wings/fuel-and-stores-kg"/>
+	  <m-wing-dry-kg type="double">500</m-wing-dry-kg><!-- mass of 1 wing -->
+	  <K type="double">250</K><!-- stiffness -->
+	  <D type="double">25</D><!-- damping -->
+	  <fuel-frac type="double">0.0010</fuel-frac><!-- infamous fudge factor -->
+	  <upwards-stiffness-factor type="double">0.5</upwards-stiffness-factor><!-- how much less wings gets bend upwards than downwards -->
+	  <body-factor type="double">0.5</body-factor><!-- how much less wings gets bend from carrying body than own weight when WoW -->
+	  <lift-node-lbs alias="/f16/wings/lift-lbf"/><!-- normal force -->
+	  <fuel-node-1-kg alias="/f16/wings/fuel-and-stores-kg"/><!-- total fuel and stores in both wings -->
 	  <fuel-node-2-kg type="double">0</fuel-node-2-kg>
 	  <fuel-node-3-kg type="double">0</fuel-node-3-kg>
 	  <fuel-node-4-kg type="double">0</fuel-node-4-kg>
-	  <z-fac type="double">1</z-fac>
+	  <z-fac type="double">1</z-fac><!-- animation factor for when animating degrees instead of flex shader -->
 	</params>
 	<z-m type="double">0</z-m>
 
