@@ -57,10 +57,7 @@
                 <product>
                     <property>/sim/systems/wingflexer/params/fuel-frac</property>
                     <property>/sim/systems/wingflexer/params/normal-node-lbs</property>
-                    <!--<product>
-                        <property>/environment/gravitational-acceleration-mps2</property>-->
-                        <value>0.226796</value> <!-- LB2KG / 2-->
-                    <!--</product>-->
+                    <value>0.226796</value> <!-- LB2KG / 2-->
                 </product>
             </expression>
         </input>
@@ -77,7 +74,6 @@
                 <div>
                     <product>
                         <property>/sim/systems/wingflexer/params/fuel-frac</property>
-                        <!--<property>/environment/gravitational-acceleration-mps2</property>-->
                         <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
                     </product>
                     <property>/sim/systems/wingflexer/k</property>
