@@ -1758,7 +1758,7 @@ var flexer = func {
       #setprop("sim/systems/wingflexer/params/K",2500);
     #}
   }
-  setprop("f16/wings/lift-lbf", -getprop("fdm/jsbsim/aero/coefficient/force/Z_t-lbf"));
+  setprop("f16/wings/normal-lbf", -getprop("fdm/jsbsim/aero/coefficient/force/Z_t-lbf"));
   
   var z = getprop("sim/systems/wingflexer/z-m");
   var max2 = (9.2-2.84)*0.5;

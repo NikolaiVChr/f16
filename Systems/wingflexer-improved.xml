@@ -47,16 +47,16 @@
         </input>
     </filter>
 
-    <!-- lift force. Convert to N and use 1/2 (one wing only) -->
+    <!-- normal force. Convert to Newton and use 1/2 (one wing only) -->
     <filter>
         <type>gain</type>
         <gain>1.</gain>
-        <output>/sim/systems/wingflexer/f-lift-N</output>
+        <output>/sim/systems/wingflexer/f-normal-N</output>
         <input>
             <expression>
                 <product>
                     <property>/sim/systems/wingflexer/params/fuel-frac</property>
-                    <property>/sim/systems/wingflexer/params/lift-node-lbs</property>
+                    <property>/sim/systems/wingflexer/params/normal-node-lbs</property>
                     <!--<product>
                         <property>/environment/gravitational-acceleration-mps2</property>-->
                         <value>0.226796</value> <!-- LB2KG / 2-->
@@ -172,8 +172,11 @@
                         <product>
                             <property>fdm/jsbsim/gear/unit[1]/WOW</property>
                             <difference>
-                                <property>/sim/systems/wingflexer/f-lift-N</property>
-                                <property>/sim/systems/wingflexer/m-wing-kg</property>
+                                <property>/sim/systems/wingflexer/f-normal-N</property>
+                                <product>
+                                    <property>/sim/systems/wingflexer/params/aircraft-g-force</property><!-- at landings G can affect how much wing weighs -->
+                                    <property>/sim/systems/wingflexer/m-wing-kg</property>
+                                </product>
                             </difference>
                         </product>
                     </sum>
@@ -236,8 +239,8 @@
     <filter>
         <type>gain</type>
         <output>/sim/systems/wingflexer/z-m</output>
-        <min><property>/sim/systems/wingflexer/params/min</property></min>
-        <max><property>/sim/systems/wingflexer/params/max</property></max>
+        <!--<min><property>/sim/systems/wingflexer/params/min</property></min>
+        <max><property>/sim/systems/wingflexer/params/max</property></max>-->
         <!--<gain>1.</gain> -->
         <!-- DEVELOP: scaled output. For production aircraft, this should be done in
                     the model animation. -->

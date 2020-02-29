@@ -3144,7 +3144,7 @@ value. 18000=standard US transition altitude -->
         </stores>
         <wings>
             <fuel-and-stores-kg type="double">0.0</fuel-and-stores-kg>
-            <lift-lbf type="double">0.0</lift-lbf>
+            <normal-lbf type="double">0.0</normal-lbf>
         </wings>
         <vne-exceed type="double">0</vne-exceed>
         <crs-ils type="double">0.0</crs-ils>
