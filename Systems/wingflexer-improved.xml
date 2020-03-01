@@ -26,7 +26,7 @@
         <input>
             <expression>
                 <product>
-                    <property>/sim/systems/wingflexer/params/fuel-frac</property>
+                    <property>/sim/systems/wingflexer/params/fudge-factor</property>
                     <property>/sim/systems/wingflexer/params/K</property>
                     <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
                 </product>
@@ -43,7 +43,7 @@
         <input>
             <expression>
                 <product>
-                    <property>/sim/systems/wingflexer/params/fuel-frac</property>
+                    <property>/sim/systems/wingflexer/params/fudge-factor</property>
                     <property>/sim/systems/wingflexer/params/D</property>
                     <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
                 </product>
@@ -59,7 +59,7 @@
         <input>
             <expression>
                 <product>
-                    <property>/sim/systems/wingflexer/params/fuel-frac</property>
+                    <property>/sim/systems/wingflexer/params/fudge-factor</property>
                     <property>/sim/systems/wingflexer/params/normal-node-lbs</property>
                     <value>4.45</value><!-- LBF to Newton -->
                     <value>0.5</value> 
@@ -78,7 +78,7 @@
             <expression>
                 <div>
                     <product>
-                        <property>/sim/systems/wingflexer/params/fuel-frac</property>
+                        <property>/sim/systems/wingflexer/params/fudge-factor</property>
                         <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
                     </product>
                     <property>/sim/systems/wingflexer/k</property>
@@ -99,7 +99,7 @@
         <input>
             <expression>
                     <product>
-                        <property>/sim/systems/wingflexer/params/fuel-frac</property>
+                        <property>/sim/systems/wingflexer/params/fudge-factor</property>
                         <sum>
                             <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
                             <product>
@@ -125,7 +125,7 @@
         <input>
             <expression>
                 <product>
-                    <property>/sim/systems/wingflexer/params/fuel-frac</property>
+                    <property>/sim/systems/wingflexer/params/fudge-factor</property>
                     <value>0.5</value><!-- half the body, as the 2 wings share the load -->
                     <property>/sim/systems/wingflexer/params/aircraft-g-force</property><!-- body mass is multiplied by G -->
                     <difference>
@@ -221,8 +221,8 @@
     <filter>
         <type>damped-oscillation</type>
 	    <output>/sim/systems/wingflexer/z-raw-m</output>
-        <min><property>/sim/systems/wingflexer/params/min</property></min>
-        <max><property>/sim/systems/wingflexer/params/max</property></max>
+        <min><property>/sim/systems/wingflexer/params/min-m</property></min>
+        <max><property>/sim/systems/wingflexer/params/max-m</property></max>
         <a>
     	    <expression>
                 <div>
