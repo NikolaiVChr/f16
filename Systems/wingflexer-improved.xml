@@ -16,10 +16,12 @@
         <max>0.05</max>
     </filter>
 
-    <!-- compute k and d -->
+    <!-- compute k and d. Using low-pass filter to allow for setting these in in the sim without the oscillation filter going nuts. -->
     <filter>
         <type>gain</type>
-        <gain>1.</gain>
+        <gain>1.0</gain>
+        <!--<type>exponential</type>
+        <filter-time>0.01</filter-time>-->
         <output>/sim/systems/wingflexer/k</output>
         <input>
             <expression>
@@ -34,7 +36,9 @@
 
     <filter>
         <type>gain</type>
-        <gain>1.</gain>
+        <gain>1.0</gain>
+        <!--<type>exponential</type>
+        <filter-time>0.01</filter-time>-->
         <output>/sim/systems/wingflexer/d</output>
         <input>
             <expression>
@@ -57,7 +61,8 @@
                 <product>
                     <property>/sim/systems/wingflexer/params/fuel-frac</property>
                     <property>/sim/systems/wingflexer/params/normal-node-lbs</property>
-                    <value>0.226796</value> <!-- LB2KG / 2-->
+                    <value>4.45</value><!-- LBF to Newton -->
+                    <value>0.5</value> 
                 </product>
             </expression>
         </input>
@@ -174,8 +179,12 @@
                         <product>
                             <property>fdm/jsbsim/gear/unit[1]/WOW</property>
                             <difference>
-                                <property>/sim/systems/wingflexer/f-normal-N</property>
+                                <div>
+                                    <property>/sim/systems/wingflexer/f-normal-N</property>
+                                    <value>9.81</value>
+                                </div>
                                 <product>
+                                    <property>/sim/systems/wingflexer/params/wing-factor</property>
                                     <property>/sim/systems/wingflexer/params/aircraft-g-force</property><!-- at landings G can affect how much wing weighs -->
                                     <property>/sim/systems/wingflexer/m-wing-kg</property>
                                 </product>
@@ -184,10 +193,14 @@
                         <!-- towed -->
                         <product>
                             <difference>
-                                <property>/sim/systems/wingflexer/f-normal-N</property>
+                                <div>
+                                    <property>/sim/systems/wingflexer/f-normal-N</property>
+                                    <value>9.81</value>
+                                </div>
                                 <product>
                                     <property>/sim/systems/wingflexer/params/aircraft-g-force</property>
                                     <property>/sim/systems/wingflexer/m-wing-kg</property>
+                                    <property>/sim/systems/wingflexer/params/wing-factor</property>
                                 </product>
                             </difference>
                             <property>/sim/systems/wingflexer/params/aerotow-active</property>
@@ -265,7 +278,7 @@
                     the model animation. -->
         <gain><property>/sim/systems/wingflexer/params/z-fac</property></gain>
         
-	<input>
+	    <input>
             <expression>
                 <sum>
                     <property>/sim/systems/wingflexer/z-raw-m</property>
@@ -298,5 +311,12 @@
             </expression>
         </input>
     </filter>
+    
+    <!-- TODO and limitations:
+        Aerotow should be much more complex, how much force does cable pull, and from which direction.
+        At rotation the wings will flex too much up due to WoW is bool, and info on how much weight is really on wheel is unavailable.
+        
+        Debug reload: fgcommand('reinit', props.Node.new({ subsystem: "xml-proprules" }));
+    -->
 
 </PropertyList>
