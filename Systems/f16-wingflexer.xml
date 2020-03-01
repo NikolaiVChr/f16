@@ -2,24 +2,19 @@
 
 <PropertyList>
 	<params>
-	  <m-wing-dry-kg type="double">500</m-wing-dry-kg><!-- mass of single wing -->
-	  <K type="double">250</K><!-- stiffness -->
-	  <D type="double">25</D><!-- damping -->
-	  <fudge-factor type="double">0.0005</fudge-factor><!-- infamous fudge factor -->
-	  <upwards-stiffness-factor type="double">0.5</upwards-stiffness-factor><!-- how much less wings gets bend upwards than downwards by same force due to structural design -->
-	  <body-factor type="double">1</body-factor><!-- how much more/less wings gets bend from carrying body in air than own weight when WoW, for realism leave this to 1.0 -->
-	  <wing-factor type="double">2</wing-factor><!-- how much more/less wings gets bend from carrying their own weight when WoW, for realism leave this to 1.0 -->
-	  <normal-node-lbs alias="/f16/wings/normal-lbf"/><!-- normal force, if inputing lift here please convert to normal force by normal=lift*cos(alpha) + drag*sin(alpha)  -->
+	  <m-wing-dry-kg type="double">300</m-wing-dry-kg><!-- mass of single wing -->
+	  <K type="double">5000</K><!-- stiffness -->
+	  <D type="double">75</D><!-- damping -->
+	  <fuel-frac type="double">1.5</fuel-frac>
+	  <normal-node-lbs alias="/f16/wings/normal-lbf"/><!-- normal force (up is positive), if inputing lift here please convert to normal force by normal=lift*cos(alpha) + drag*sin(alpha)  -->
 	  <fuel-node-1-kg alias="/f16/wings/fuel-and-stores-kg"/><!-- total fuel and stores in both wings -->
 	  <fuel-node-2-kg type="double">0</fuel-node-2-kg>
 	  <fuel-node-3-kg type="double">0</fuel-node-3-kg>
 	  <fuel-node-4-kg type="double">0</fuel-node-4-kg>
-	  <z-fac type="double">1</z-fac><!-- animation factor for when animating degrees instead of flex shader -->
-	  <min-m type="double">-0.5</min-m><!-- clips are applied before z-fac is multiplied onto z-m -->
-      <max-m type="double">0.5</max-m>
-      <aerotow-active type="bool">false</aerotow-active><!-- for now very simple, just a bool if towed or not, should be true when cable attached -->
+	  <z-fac type="double">1.0</z-fac><!-- animation factor for example for when animating degrees instead of flex shader -->
+	  <min-m type="double">-0.25</min-m>
+      <max-m type="double">0.25</max-m>
       <aircraft-g-force alias="/fdm/jsbsim/accelerations/a_n"/><!-- aircraft G force at center of gravity -->
-      <aircraft-total-weight-lbs alias="/fdm/jsbsim/inertia/weight-lbs"/><!-- current aircraft total weight including fuel, stores, cargo, pilot(s), wings and emptyweight -->
 	</params>
 	<z-m type="double">0</z-m><!-- the output -->
 </PropertyList>
