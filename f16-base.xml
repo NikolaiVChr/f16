@@ -922,7 +922,7 @@ There is also small changes in tail for different variants with and without brak
             <wingflexer include="Systems/f16-wingflexer.xml"/>
             <property-rule n="100">
                 <name>wing flexer property rule</name>
-                <path>Aircraft/Generic/wingflexer.xml</path>
+                <path>Aircraft/f16/Systems/wingflexer-improved.xml</path>
             </property-rule>
         </systems>
         <current-view>
@@ -2506,6 +2506,7 @@ There is also small changes in tail for different variants with and without brak
                 <class type="string">MGP</class>
                 <fire-msg type="string">Rifle</fire-msg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
+                <ready-time type="double">0.25</ready-time>
             </agm-65>
             <agm-84>                    <!-- A variant: 0.85 mach cruise, E is calibrated to just under 1.00 -->
                 <short-name type="string">AG84</short-name>
@@ -2539,6 +2540,7 @@ There is also small changes in tail for different variants with and without brak
                 <class type="string">M</class>
                 <terrain-follow type="bool">true</terrain-follow>
                 <fire-msg type="string">Bruiser</fire-msg>
+                <ready-time type="double">0.25</ready-time>
             </agm-84>
             <agm-119>
                 <short-name type="string">AG119</short-name>
@@ -2577,25 +2579,26 @@ There is also small changes in tail for different variants with and without brak
                 <terrain-follow type="bool">true</terrain-follow>
                 <seeker-angular-speed-dps type="double">40</seeker-angular-speed-dps>
                 <fire-msg type="string">Bruiser</fire-msg>
+                <ready-time type="double">0.25</ready-time>
             </agm-119>
             <agm-154a>
                 <short-name type="string">AG154</short-name>
-                <long-name type="string">AGM-154A JSOW</long-name>
+                <long-name type="string">AGM-154A-1 JSOW</long-name> <!-- Unitary warhead variant -->
                 <fire-msg type="string">Greyhound</fire-msg>
-                <class type="string">GP</class>
+                <class type="string">GMP</class>
                 <max-fire-range-nm type="double">70</max-fire-range-nm>
                 <min-fire-range-nm type="double">0</min-fire-range-nm>
                 <guidance type="string">gps</guidance>
                 <navigation type="string">GPN</navigation>
                 <loft-altitude type="int">0</loft-altitude>
                 <terrain-follow type="bool">false</terrain-follow>
-                <FCS-field-deg type="int">90</FCS-field-deg>
-                <seeker-field-deg type="int">180</seeker-field-deg>
+                <FCS-field-deg type="int">100</FCS-field-deg>
+                <seeker-field-deg type="int">200</seeker-field-deg>
                 <reaquire type="bool">true</reaquire>
                 <switch-time-sec type="double">0.25</switch-time-sec>
                 <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed>
                 <prowl-flight type="string">5</prowl-flight>
-                <max-g type="double">2.9</max-g>
+                <max-g type="double">3.0</max-g>
                 <max-launch-g type="int">7</max-launch-g>
                 <thrust-lbf-stage-1 type="double">0.0</thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>
@@ -2607,22 +2610,23 @@ There is also small changes in tail for different variants with and without brak
                 <drag-coeff type="double">0.02</drag-coeff>
                 <cross-section-sqft type="double">1.9121</cross-section-sqft>
                 <arming-time-sec type="double">2.5</arming-time-sec>
-                <min-speed-for-guiding-mach type="double">0.3</min-speed-for-guiding-mach>
+                <min-speed-for-guiding-mach type="double">0.26</min-speed-for-guiding-mach> <!-- source -->
                 <self-destruct-time-sec type="double">800</self-destruct-time-sec>
                 <all-aspect type="bool">true</all-aspect>
                 <rail type="bool">false</rail>
-                <no-common-target type="bool">true</no-common-target>
-                <max-report-distance type="double">300</max-report-distance>
+                <no-common-target type="bool">false</no-common-target>
+                <max-report-distance type="double">325</max-report-distance>
                 <vol-search type="double">0.075</vol-search>
                 <vol-track type="double">0.25</vol-track>
-                <drop-time type="double">3.5</drop-time>
-                <deploy-time type="double">1.0</deploy-time>
+                <drop-time type="double">3.0</drop-time>
+                <deploy-time type="double">2.0</deploy-time>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
                 <terminal-alt-factor type="double">2</terminal-alt-factor>
-                <terminal-rise-time type="double">25.0</terminal-rise-time>
-                <terminal-dive-time type="double">14.0</terminal-dive-time>
+                <terminal-rise-time type="double">22.0</terminal-rise-time>
+                <terminal-dive-time type="double">12.0</terminal-dive-time>
                 <seeker-angular-speed-dps type="double">45</seeker-angular-speed-dps>
                 <ready-time type="double">3.5</ready-time>
+                <ejector-speed-fps type="double">5</ejector-speed-fps>
             </agm-154a>
             <agm-158>
                 <short-name type="string">AG158</short-name>
@@ -2645,7 +2649,7 @@ There is also small changes in tail for different variants with and without brak
                 <max-launch-g type="int">7</max-launch-g>
                 <thrust-lbf-stage-1 type="double">680</thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>
-                <stage-1-duration-sec type="double">1800</stage-1-duration-sec>
+                <stage-1-duration-sec type="double">1920</stage-1-duration-sec>
                 <stage-2-duration-sec type="double">0.0</stage-2-duration-sec>
                 <weight-launch-lbs type="double">2150</weight-launch-lbs>
                 <weight-warhead-lbs type="double">1000</weight-warhead-lbs>
@@ -2669,6 +2673,7 @@ There is also small changes in tail for different variants with and without brak
                 <terminal-dive-time type="double">9.0</terminal-dive-time>
                 <seeker-angular-speed-dps type="double">45</seeker-angular-speed-dps>
                 <ready-time type="double">3.5</ready-time>
+                <ejector-speed-fps type="double">5</ejector-speed-fps>
             </agm-158>
             <agm-88>
                 <short-name type="string">AG88</short-name>
@@ -2705,6 +2710,7 @@ There is also small changes in tail for different variants with and without brak
                 <switch-time-sec type="double">5</switch-time-sec>
                 <class type="string">GM</class>
                 <fire-msg type="string">Sniper</fire-msg>
+                <ready-time type="double">0.25</ready-time>
             </agm-88>
             <cbu-87> 
                 <short-name type="string">CB87</short-name>
@@ -3138,7 +3144,7 @@ value. 18000=standard US transition altitude -->
         </stores>
         <wings>
             <fuel-and-stores-kg type="double">0.0</fuel-and-stores-kg>
-            <lift-lbf type="double">0.0</lift-lbf>
+            <normal-lbf type="double">0.0</normal-lbf>
         </wings>
         <vne-exceed type="double">0</vne-exceed>
         <crs-ils type="double">0.0</crs-ils>

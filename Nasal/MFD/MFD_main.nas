@@ -1394,7 +1394,7 @@ var MFD_Device =
             me.showDist = 0;
             me.pre = "";
             if (me.wpn != nil and me.pylon != nil and me.wpn["typeShort"] != nil) {
-                if (me.wpn.type == "MK-82" or me.wpn.type == "MK-83" or me.wpn.type == "MK-84" or me.wpn.type == "GBU-12" or me.wpn.type == "GBU-24" or me.wpn.type == "GBU-54" or me.wpn.type == "CBU-87" or me.wpn.type == "CBU-105" or me.wpn.type == "GBU-31" or me.wpn.type == "B61-7" or me.wpn.type == "B61-12") {
+                if (me.wpn.type == "MK-82" or me.wpn.type == "MK-83" or me.wpn.type == "MK-84" or me.wpn.type == "GBU-12" or me.wpn.type == "GBU-24" or me.wpn.type == "GBU-54" or me.wpn.type == "CBU-87" or me.wpn.type == "CBU-105" or me.wpn.type == "GBU-31" or me.wpn.type == "AGM-154A" or me.wpn.type == "B61-7" or me.wpn.type == "B61-12") {
                     me.wpnType ="fall";
                     var nm = pylons.fcs.getDropMode();
                     if (nm == 1) {me.drop = "CCIP";me.pre=armament.contact != nil and armament.contact.get_type() != armament.AIR?"PRE":"VIS";}
@@ -1443,7 +1443,7 @@ var MFD_Device =
                     } else {
                         me.ready = "RDY";
                     }
-                } elsif (me.wpn.type == "AGM-65" or me.wpn.type == "AGM-84" or me.wpn.type == "AGM-119" or me.wpn.type == "AGM-154A" or me.wpn.type == "AGM-158") {
+                } elsif (me.wpn.type == "AGM-65" or me.wpn.type == "AGM-84" or me.wpn.type == "AGM-119" or me.wpn.type == "AGM-158") {
                     me.wpnType ="ground";
                     me.eegs = "A-G";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
