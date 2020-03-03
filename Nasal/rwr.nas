@@ -145,7 +145,7 @@ RWRCanvas = {
                     .lineTo(0,-font*1.2)
                     .lineTo(-font*1.2,0)
                     .lineTo(0, font*1.2)
-                    .setStrokeLineWidth(12)
+                    .setStrokeLineWidth(1.2)
                     .setColor(colorG)
                     .hide();
         
