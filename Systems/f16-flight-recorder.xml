@@ -124,7 +124,10 @@
             <type>float</type>
             <property type="string">damage/sounds/creaking-volume</property>
         </signal>
-
+        <signal>
+            <type>float</type>
+            <property type="string">sim/systems/wingflexer/z-m</property>
+        </signal>
     </config>
     <!-- 
     - double: 8 byte/sample
