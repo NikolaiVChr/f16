@@ -5,13 +5,13 @@
 	  <m-wing-dry-kg type="double">300</m-wing-dry-kg><!-- mass of single wing -->
 	  <K type="double">2500</K><!-- stiffness -->
 	  <D type="double">25</D><!-- damping -->
-	  <fuel-frac type="double">0.75</fuel-frac>
+	  <fuel-frac type="double">1</fuel-frac>
 	  <normal-node-lbs alias="/f16/wings/normal-lbf"/><!-- normal force (up is positive), if inputing lift here please convert to normal force by normal=lift*cos(alpha) + drag*sin(alpha)  -->
 	  <fuel-node-1-kg alias="/f16/wings/fuel-and-stores-kg"/><!-- total fuel and stores in both wings -->
 	  <fuel-node-2-kg type="double">0</fuel-node-2-kg>
 	  <fuel-node-3-kg type="double">0</fuel-node-3-kg>
 	  <fuel-node-4-kg type="double">0</fuel-node-4-kg>
-	  <z-fac type="double">1.0</z-fac><!-- animation factor for example for when animating degrees instead of flex shader -->
+	  <z-fac type="double">0.75</z-fac><!-- animation factor for example for when animating degrees instead of flex shader -->
 	  <min-m type="double">-0.25</min-m>
       <max-m type="double">0.25</max-m>
       <aircraft-g-force alias="/fdm/jsbsim/accelerations/a_n"/><!-- aircraft G force at center of gravity -->
