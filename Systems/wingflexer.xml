@@ -15,17 +15,7 @@
         </input>
         <max>0.05</max>
     </filter>
-    
-    <filter>
-        <type>gain</type>
-        <gain>1.</gain>
-        <output>/sim/systems/property-rule[100]/delta-sec</output>
-        <input>
-            <property>/sim/time/delta-sec</property>
-        </input>
-        <max>0.05</max>
-    </filter>
-    
+        
     <filter>
         <type>gain</type>
         <gain>1.</gain>
@@ -79,7 +69,7 @@
                 <product>
                     <property>/sim/systems/wingflexer/params/normal-node-lbs</property>
                     <value>4.45</value><!-- LBF to Newton -->
-                    <value>0.5</value> 
+                    <value>-0.5</value> 
                 </product>
             </expression>
         </input>
@@ -194,7 +184,43 @@
             </expression>
         </input>
     </filter>
-
+    
+    <filter>
+        <type>gain</type>
+        <output>/sim/systems/wingflexer/z-m-tip</output>
+        <gain>1</gain>        
+        <input>
+            <property>/sim/systems/wingflexer/z-m</property>   
+        </input>
+    </filter>
+    
+    <filter>
+        <type>gain</type>
+        <output>/sim/systems/wingflexer/z-m-outer</output>
+        <gain>0.5140619</gain>        
+        <input>
+            <property>/sim/systems/wingflexer/z-m</property>   
+        </input>
+    </filter>
+    
+    <filter>
+        <type>gain</type>
+        <output>/sim/systems/wingflexer/z-m-middle</output>
+        <gain>0.21079</gain>        
+        <input>
+            <property>/sim/systems/wingflexer/z-m</property>   
+        </input>
+    </filter>
+    
+    <filter>
+        <type>gain</type>
+        <output>/sim/systems/wingflexer/z-m-inner</output>
+        <gain>0.00436098</gain>        
+        <input>
+            <property>/sim/systems/wingflexer/z-m</property>   
+        </input>
+    </filter>
+    
     <!-- DEVELOP: reset sink rate -->
     <filter>
         <type>gain</type>

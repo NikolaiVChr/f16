@@ -6,7 +6,7 @@
 	  <K type="double">2500</K><!-- stiffness -->
 	  <D type="double">25</D><!-- damping -->
 	  <fuel-frac type="double">1</fuel-frac>
-	  <normal-node-lbs alias="/f16/wings/normal-lbf"/><!-- normal force (up is positive), if inputing lift here please convert to normal force by normal=lift*cos(alpha) + drag*sin(alpha)  -->
+	  <normal-node-lbs alias="/fdm/jsbsim/forces/fbz-aero-lbs"/><!-- normal force (up is negative), if inputing lift here please convert to normal force by normal=lift*cos(alpha) + drag*sin(alpha)  -->
 	  <fuel-node-1-kg alias="/f16/wings/fuel-and-stores-kg"/><!-- total fuel and stores in both wings -->
 	  <fuel-node-2-kg type="double">0</fuel-node-2-kg>
 	  <fuel-node-3-kg type="double">0</fuel-node-3-kg>

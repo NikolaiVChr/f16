@@ -1758,25 +1758,25 @@ var flexer = func {
       #setprop("sim/systems/wingflexer/params/K",2500);
     #}
   }
-  setprop("f16/wings/normal-lbf", -getprop("fdm/jsbsim/aero/coefficient/force/Z_t-lbf"));
+  #setprop("f16/wings/normal-lbf", -getprop("fdm/jsbsim/aero/coefficient/force/Z_t-lbf"));
   
   var errors = [];
   call(func {var z = getprop("sim/systems/wingflexer/z-m");
-      var max2 = (9.2-2.84)*0.5;
-      max2 = max2 * max2;
-      
-      setprop("sim/systems/wingflexer/z-m-tip",z);
-      setprop("sim/systems/wingflexer/z-m-outer", z*((3.70-1.42)*(3.70-1.42))/(max2));
-      setprop("sim/systems/wingflexer/z-m-middle",z*((2.88-1.42)*(2.88-1.42))/(max2));
-      setprop("sim/systems/wingflexer/z-m-inner", z*((1.63-1.42)*(1.63-1.42))/(max2));},nil,nil, errors);
+      #var max2 = (9.2-2.84)*0.5;
+      #max2 = max2 * max2;
+      if (z == nil) nil.nop();
+      #setprop("sim/systems/wingflexer/z-m-tip",z);
+      #setprop("sim/systems/wingflexer/z-m-outer", z*((3.70-1.42)*(3.70-1.42))/(max2));
+      #setprop("sim/systems/wingflexer/z-m-middle",z*((2.88-1.42)*(2.88-1.42))/(max2));
+      #setprop("sim/systems/wingflexer/z-m-inner", z*((1.63-1.42)*(1.63-1.42))/(max2));},nil,nil, errors);
   if (size(errors)) {
     fgcommand('reinit', props.Node.new({ subsystem: "xml-autopilot" }));
   }
-  if (getprop("/sim/frame-rate-worst")<12) {
-    setprop("/sim/systems/property-rule[100]/serviceable",0);
-    setprop("sim/systems/wingflexer/z-m",0);
-  } else {
-    setprop("/sim/systems/property-rule[100]/serviceable",1);
-  }
+  #if (getprop("/sim/frame-rate-worst")<12) {
+  #  setprop("/sim/systems/property-rule[100]/serviceable",0);
+  #  setprop("sim/systems/wingflexer/z-m",0);
+  #} else {
+  #  setprop("/sim/systems/property-rule[100]/serviceable",1);
+  #}
   settimer(flexer,0);
 }
