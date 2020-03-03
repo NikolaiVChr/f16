@@ -255,7 +255,6 @@ RWRCanvas = {
                 "f18":                      rwr.AIRCRAFT_HORNET,
                 "A-10-modelB":              rwr.AIRCRAFT_WARTHOG,
                 "Su-15":                    rwr.AIRCRAFT_FLAGON,
-                "Jaguar-GR1":               rwr.AIRCRAFT_JAGUAR,
                 "Jaguar-GR3":               rwr.AIRCRAFT_JAGUAR,
                 "E3B":                      rwr.AIRCRAFT_SEARCH,
                 "E-2C-Hawkeye":             rwr.AIRCRAFT_SEARCH,
