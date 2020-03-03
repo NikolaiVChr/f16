@@ -19,6 +19,16 @@
     <filter>
         <type>gain</type>
         <gain>1.</gain>
+        <output>/sim/systems/property-rule[100]/delta-sec</output>
+        <input>
+            <property>/sim/time/delta-sec</property>
+        </input>
+        <max>0.05</max>
+    </filter>
+    
+    <filter>
+        <type>gain</type>
+        <gain>1.</gain>
         <output>/sim/systems/wingflexer/a-fuselage-mps2</output>
         <input>
             <expression>
