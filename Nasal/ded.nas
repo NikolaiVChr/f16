@@ -271,7 +271,7 @@ var loop_ded = func {# one line is max 24 chars
       text[1] = sprintf(" COMM%d                   ",comm+1);
       text[2] = sprintf("VHF  %6.2f   %s",freq,time);
       text[3] = sprintf("                        ");
-      text[4] = sprintf(" M34  %s      OFF  T%s",pond,t);
+      text[4] = sprintf("M34   %s    OFF  T%s",pond,t);
     } elsif (page == pBINGO) {
       var total = getprop("consumables/fuel/total-fuel-lbs");
       var bingo = getprop("f16/settings/bingo");

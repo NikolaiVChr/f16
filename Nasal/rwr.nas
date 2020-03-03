@@ -12,7 +12,7 @@ RWRCanvas = {
         var font = int(0.08*diameter);
         var colorG = [0.3,1,0.3];
         var colorLG = [0.16,0.8,0.13];
-        var colorBG = [0.48,0.55,0.47];
+        var colorBG = [0.4,0.48,0.4];
         rwr.fadeTime = 7;#seconds
         rwr.rootCenter = root.createChild("group")
                 .setTranslation(center[0],center[1]);
@@ -21,26 +21,26 @@ RWRCanvas = {
 #           .moveTo(0, diameter/2)
 #           .arcSmallCW(diameter/2, diameter/2, 0, diameter, 0)
 #           .arcSmallCW(diameter/2, diameter/2, 0, -diameter, 0)
-#           .setStrokeLineWidth(1.8)
+#           .setStrokeLineWidth(1.7)
 #           .setColor(1, 1, 1);
         root.createChild("path")
            .moveTo(diameter/2-rwr.circle_radius_small, diameter/2)
            .arcSmallCW(rwr.circle_radius_small, rwr.circle_radius_small, 0, rwr.circle_radius_small*2, 0)
            .arcSmallCW(rwr.circle_radius_small, rwr.circle_radius_small, 0, -rwr.circle_radius_small*2, 0)
-           .setStrokeLineWidth(1.8)
+           .setStrokeLineWidth(1.7)
            .setColor(colorBG);
         root.createChild("path")
            .moveTo(diameter/2-rwr.circle_radius_big, diameter/2)
            .arcSmallCW(rwr.circle_radius_big, rwr.circle_radius_big, 0, rwr.circle_radius_big*2, 0)
            .arcSmallCW(rwr.circle_radius_big, rwr.circle_radius_big, 0, -rwr.circle_radius_big*2, 0)
-           .setStrokeLineWidth(1.8)
+           .setStrokeLineWidth(1.7)
            .setColor(colorBG);
         root.createChild("path")
            .moveTo(diameter/2-rwr.circle_radius_small/2, diameter/2)
            .lineTo(diameter/2+rwr.circle_radius_small/2, diameter/2)
            .moveTo(diameter/2, diameter/2-rwr.circle_radius_small/2)
            .lineTo(diameter/2, diameter/2+rwr.circle_radius_small/2)
-           .setStrokeLineWidth(2.0)
+           .setStrokeLineWidth(2.1)
            .setColor(colorLG);
         root.createChild("path")
            .moveTo(0,diameter*0.5)
@@ -51,7 +51,7 @@ RWRCanvas = {
            .vert(tick_long)
            .moveTo(diameter*0.5,diameter)
            .vert(-tick_long)
-           .setStrokeLineWidth(1.8)
+           .setStrokeLineWidth(1.7)
            .setColor(colorBG);
         rwr.rootCenter.createChild("path")
            .moveTo(radius*math.cos(30*D2R),radius*math.sin(-30*D2R))
@@ -71,7 +71,7 @@ RWRCanvas = {
            .lineTo(-(radius-tick_short)*math.cos(30*D2R),(radius-tick_short)*math.sin(30*D2R))
            .moveTo(-radius*math.cos(60*D2R),radius*math.sin(60*D2R))
            .lineTo(-(radius-tick_short)*math.cos(60*D2R),(radius-tick_short)*math.sin(60*D2R))
-           .setStrokeLineWidth(1.8)
+           .setStrokeLineWidth(1.7)
            .setColor(colorBG);
         rwr.texts = setsize([],rwr.max_icons);
         for (var i = 0;i<rwr.max_icons;i+=1) {
