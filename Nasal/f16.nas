@@ -1772,5 +1772,11 @@ var flexer = func {
   if (size(errors)) {
     fgcommand('reinit', props.Node.new({ subsystem: "xml-proprules" }));
   }
+  if (getprop("/sim/frame-rate-worst")<12) {
+    setprop("/sim/systems/property-rule[100]/serviceable",0);
+    setprop("sim/systems/wingflexer/z-m",0);
+  } else {
+    setprop("/sim/systems/property-rule[100]/serviceable",1);
+  }
   settimer(flexer,0);
 }
