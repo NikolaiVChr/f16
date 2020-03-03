@@ -236,6 +236,7 @@ RWRCanvas = {
                 "frigate":                  rwr.ASSET_FRIGATE,
                 "fleet":                    rwr.ASSET_FRIGATE,
                 "Mig-28":                   rwr.SCENARIO_OPPONENT,
+                "Jaguar-GR1":               rwr.AIRCRAFT_JAGUAR,
         # Other threatening aircrafts (FGAddon, FGUK, etc.):
                 "AI":                       rwr.ASSET_AI,
                 "SU-37":                    rwr.AIRCRAFT_FLANKER,
