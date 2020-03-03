@@ -196,7 +196,8 @@ var loop_ded = func {# one line is max 24 chars
       var course = sprintf("%06.2f\xc2\xb0",getprop("f16/crs-ils"));
       #}
       var ident = getprop("instrumentation/tacan/ident");
-      if (ident == nil or ident == "") ident = "   ";
+      var inrng = getprop("instrumentation/tacan/in-range");
+      if (!inrng or ident == nil or ident == "") ident = "   ";
       text[0] = sprintf("    TCN REC      ILS %s",ilsOn);
       text[1] = sprintf("                        ");
       text[2] = sprintf("BCN     %s    CMD STRG ",ident);
