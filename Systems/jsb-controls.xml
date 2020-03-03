@@ -2963,7 +2963,7 @@
                 </setting>
                 <setting>
                     <position>  1.0 </position>
-                    <time>    120.0 </time>
+                    <time>    120.0 </time><!-- if change this then change the countdown in MFD CRM also -->
                 </setting>
             </traverse>
             <clipto>

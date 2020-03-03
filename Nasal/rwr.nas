@@ -12,6 +12,7 @@ RWRCanvas = {
         var font = int(0.08*diameter);
         var colorG = [0.3,1,0.3];
         var colorLG = [0,0.5,0];
+        var colorBG = [0.5,0.57,0.50];
         rwr.fadeTime = 7;#seconds
         rwr.rootCenter = root.createChild("group")
                 .setTranslation(center[0],center[1]);
@@ -20,27 +21,27 @@ RWRCanvas = {
 #           .moveTo(0, diameter/2)
 #           .arcSmallCW(diameter/2, diameter/2, 0, diameter, 0)
 #           .arcSmallCW(diameter/2, diameter/2, 0, -diameter, 0)
-#           .setStrokeLineWidth(1)
+#           .setStrokeLineWidth(1.6)
 #           .setColor(1, 1, 1);
         root.createChild("path")
            .moveTo(diameter/2-rwr.circle_radius_small, diameter/2)
            .arcSmallCW(rwr.circle_radius_small, rwr.circle_radius_small, 0, rwr.circle_radius_small*2, 0)
            .arcSmallCW(rwr.circle_radius_small, rwr.circle_radius_small, 0, -rwr.circle_radius_small*2, 0)
-           .setStrokeLineWidth(1)
-           .setColor(colorLG);
+           .setStrokeLineWidth(1.6)
+           .setColor(colorBG);
         root.createChild("path")
            .moveTo(diameter/2-rwr.circle_radius_big, diameter/2)
            .arcSmallCW(rwr.circle_radius_big, rwr.circle_radius_big, 0, rwr.circle_radius_big*2, 0)
            .arcSmallCW(rwr.circle_radius_big, rwr.circle_radius_big, 0, -rwr.circle_radius_big*2, 0)
-           .setStrokeLineWidth(1)
-           .setColor(colorLG);
+           .setStrokeLineWidth(1.6)
+           .setColor(colorBG);
         root.createChild("path")
            .moveTo(diameter/2-rwr.circle_radius_small/2, diameter/2)
            .lineTo(diameter/2+rwr.circle_radius_small/2, diameter/2)
            .moveTo(diameter/2, diameter/2-rwr.circle_radius_small/2)
            .lineTo(diameter/2, diameter/2+rwr.circle_radius_small/2)
-           .setStrokeLineWidth(1)
-           .setColor(colorLG);
+           .setStrokeLineWidth(1.6)
+           .setColor(colorBG);
         root.createChild("path")
            .moveTo(0,diameter*0.5)
            .horiz(tick_long)
@@ -50,8 +51,8 @@ RWRCanvas = {
            .vert(tick_long)
            .moveTo(diameter*0.5,diameter)
            .vert(-tick_long)
-           .setStrokeLineWidth(1)
-           .setColor(colorLG);
+           .setStrokeLineWidth(1.6)
+           .setColor(colorBG);
         rwr.rootCenter.createChild("path")
            .moveTo(radius*math.cos(30*D2R),radius*math.sin(-30*D2R))
            .lineTo((radius-tick_short)*math.cos(30*D2R),(radius-tick_short)*math.sin(-30*D2R))
@@ -70,8 +71,8 @@ RWRCanvas = {
            .lineTo(-(radius-tick_short)*math.cos(30*D2R),(radius-tick_short)*math.sin(30*D2R))
            .moveTo(-radius*math.cos(60*D2R),radius*math.sin(60*D2R))
            .lineTo(-(radius-tick_short)*math.cos(60*D2R),(radius-tick_short)*math.sin(60*D2R))
-           .setStrokeLineWidth(1)
-           .setColor(colorLG);
+           .setStrokeLineWidth(1.6)
+           .setColor(colorBG);
         rwr.texts = setsize([],rwr.max_icons);
         for (var i = 0;i<rwr.max_icons;i+=1) {
             rwr.texts[i] = rwr.rootCenter.createChild("text")
@@ -89,7 +90,7 @@ RWRCanvas = {
                     .lineTo(font*0.7,-font*0.5)
                     .moveTo(0,-font)
                     .lineTo(-font*0.7,-font*0.5)
-                    .setStrokeLineWidth(1)
+                    .setStrokeLineWidth(1.2)
                     .setColor(colorG)
                     .hide();
         }
@@ -113,7 +114,7 @@ RWRCanvas = {
                     .moveTo(font*1.2, 0)
                     .arcSmallCW(font*1.2, font*1.2, 0, -font*2.4, 0)
                     .arcSmallCW(font*1.2, font*1.2, 0, font*2.4, 0)
-                    .setStrokeLineWidth(1)
+                    .setStrokeLineWidth(1.2)
                     .setColor(colorG)
                     .hide();
         }
@@ -122,7 +123,7 @@ RWRCanvas = {
             rwr.symbol_new[i] = rwr.rootCenter.createChild("path")
                     .moveTo(font*1.2, 0)
                     .arcSmallCCW(font*1.2, font*1.2, 0, -font*2.4, 0)
-                    .setStrokeLineWidth(1)
+                    .setStrokeLineWidth(1.2)
                     .setColor(colorG)
                     .hide();
         }
@@ -144,7 +145,7 @@ RWRCanvas = {
                     .lineTo(0,-font*1.2)
                     .lineTo(-font*1.2,0)
                     .lineTo(0, font*1.2)
-                    .setStrokeLineWidth(1)
+                    .setStrokeLineWidth(1.2)
                     .setColor(colorG)
                     .hide();
         
@@ -235,6 +236,7 @@ RWRCanvas = {
                 "frigate":                  rwr.ASSET_FRIGATE,
                 "fleet":                    rwr.ASSET_FRIGATE,
                 "Mig-28":                   rwr.SCENARIO_OPPONENT,
+                "Jaguar-GR1":               rwr.AIRCRAFT_JAGUAR,
         # Other threatening aircrafts (FGAddon, FGUK, etc.):
                 "AI":                       rwr.ASSET_AI,
                 "SU-37":                    rwr.AIRCRAFT_FLANKER,
@@ -253,7 +255,6 @@ RWRCanvas = {
                 "f18":                      rwr.AIRCRAFT_HORNET,
                 "A-10-modelB":              rwr.AIRCRAFT_WARTHOG,
                 "Su-15":                    rwr.AIRCRAFT_FLAGON,
-                "Jaguar-GR1":               rwr.AIRCRAFT_JAGUAR,
                 "Jaguar-GR3":               rwr.AIRCRAFT_JAGUAR,
                 "E3B":                      rwr.AIRCRAFT_SEARCH,
                 "E-2C-Hawkeye":             rwr.AIRCRAFT_SEARCH,

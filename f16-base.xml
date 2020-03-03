@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PropertyList include="Systems/walker-include.xml">
     <sim>
-        <aircraft-version>3.18</aircraft-version>
+        <aircraft-version>3.19</aircraft-version>
         <minimum-fg-version>2018.3</minimum-fg-version>
         <!-- enable "parkpos=AVAILABLE" option for the F-16 -->
         <dimensions>
@@ -880,9 +880,23 @@ ALT FLAPS
 This will deploy flaps as if the gears were extended. They will still retract at higher speeds though.
 
 HSI
-Is located at the bottom of the center console.
+Is located at the bottom of the center console in some blocks.
 This can be used to navigate steerpoints if the knob to the left is in NAV mode.
 It can be used to navigate TACAN if the knob is in TCN mode.
+ILS if knob is set to ILS mode as well.
+
+EHSI
+Is located at the bottom of the center console in some blocks.
+Use the M button to switch mode.
+This can be used to navigate steerpoints if it is in NAV mode.
+It can be used to navigate TACAN if it is in TCN mode.
+And VOR/ADF if in VOR mode.
+PLS stand for Precision Landing System and in that mode it can use ILS.
+It stores the CRS between modes, PLS modes has their own and non PLS modes has their owns stored.
+The CRS knob (radial course) and the HDG knob (captains bars) can be turned faster by holding in SHIFT.
+It works mostly as a normal HSI.
+When the course deviation CDI is invalid it will be segmented line, and a red bar will appear.
+If the distance indicator is invalid then a red bar will appear above the NM distance.
             ]]></text-7>
             <text-8><![CDATA[
 DOGFIGHT SCENARIO
@@ -922,7 +936,7 @@ There is also small changes in tail for different variants with and without brak
             <wingflexer include="Systems/f16-wingflexer.xml"/>
             <property-rule n="100">
                 <name>wing flexer property rule</name>
-                <path>Aircraft/f16/Systems/wingflexer-improved.xml</path>
+                <path>Aircraft/f16/Systems/wingflexer.xml</path>
             </property-rule>
         </systems>
         <current-view>

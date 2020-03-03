@@ -711,7 +711,7 @@
 
 	<group>
 	    <layout>hbox</layout>
-	    <text><label>MODE 1 CHANNEL</label></text>
+	    <text><label>MODE 4 CHANNEL</label></text>
 	    <input>
 		  	<width>75</width>
 		  	<height>25</height>

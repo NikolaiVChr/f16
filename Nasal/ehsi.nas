@@ -633,7 +633,7 @@ EHSI = {
             elsif (me.mode==2) me.textModeNote = "NAV";
             elsif (me.mode==3) me.textModeNote = "PLS/NAV";
             elsif (me.mode==4) me.textModeNote = "VOR";
-            elsif (me.mode==5) me.textModeNote = "PLS/VOR";
+            #elsif (me.mode==5) me.textModeNote = "PLS/VOR";
             me.txtNote.setText(me.textModeNote);
             me.txtNote.show();
         }

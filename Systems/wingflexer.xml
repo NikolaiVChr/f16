@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PropertyList>
+    <debug>true</debug>
+
+    <!-- Some filters are useful when tuning the parameters, but not needed in
+         production aircraft. They're tagged DEVELOP and disabled by default. -->
+
+    <!-- limit time step -->
+    <filter>
+        <type>gain</type>
+        <gain>1.</gain>
+        <output>/sim/systems/wingflexer/delta-sec</output>
+        <input>
+            <property>/sim/time/delta-sec</property>
+        </input>
+        <max>0.05</max>
+    </filter>
+    
+    <filter>
+        <type>gain</type>
+        <gain>1.</gain>
+        <output>/sim/systems/property-rule[100]/delta-sec</output>
+        <input>
+            <property>/sim/time/delta-sec</property>
+        </input>
+        <max>0.05</max>
+    </filter>
+    
+    <filter>
+        <type>gain</type>
+        <gain>1.</gain>
+        <output>/sim/systems/wingflexer/a-fuselage-mps2</output>
+        <input>
+            <expression>
+                <product>
+                    <property>/sim/systems/wingflexer/params/aircraft-g-force</property>
+                    <value>9.8</value> <!-- convert to m/s^2 -->
+                </product>
+            </expression>
+        </input>
+    </filter>
+
+    <!-- compute k and d. -->
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <output>/sim/systems/wingflexer/k</output>
+        <input>
+            <expression>
+                <product>
+                    <property>/sim/systems/wingflexer/params/K</property>
+                    <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
+                </product>
+            </expression>
+        </input>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <output>/sim/systems/wingflexer/d</output>
+        <input>
+            <expression>
+                <product>
+                    <property>/sim/systems/wingflexer/params/D</property>
+                    <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
+                </product>
+            </expression>
+        </input>
+    </filter>
+
+    <!-- normal force. Convert to Newton and use 1/2 (one wing only) -->
+    <filter>
+        <type>gain</type>
+        <gain>1.</gain>
+        <output>/sim/systems/wingflexer/f-normal-N</output>
+        <input>
+            <expression>
+                <product>
+                    <property>/sim/systems/wingflexer/params/normal-node-lbs</property>
+                    <value>4.45</value><!-- LBF to Newton -->
+                    <value>0.5</value> 
+                </product>
+            </expression>
+        </input>
+    </filter>
+    
+
+    <!-- z_ofs = g * mass_dry_kg / k , ensures that the dry wing (which still has a non-zero mass) creates neutral deflection -->
+    <filter>
+        <type>gain</type>
+        <gain>1.</gain>
+        <output>/sim/systems/wingflexer/z-ofs-m</output>
+        <input>
+            <expression>
+                <div>
+                    <product>
+                        <property>/environment/gravitational-acceleration-mps2</property>
+                        <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
+                    </product>
+                    <property>/sim/systems/wingflexer/k</property>
+                </div>
+            </expression>
+        </input>
+    </filter>
+
+    <!--
+    compute total mass of one wing, using the average fuel mass in all wing tanks.
+    The weighting factor should be lumped into fuel_frac.
+      mass = mass_dry_kg + fuel_frac * sum_i (fuel_node_i_kg)
+    -->
+    <filter>
+        <type>gain</type>
+        <gain>1.</gain>
+        <output>/sim/systems/wingflexer/m-wing-kg</output>
+        <input>
+            <expression>
+                <sum>
+                    <property>/sim/systems/wingflexer/params/m-wing-dry-kg</property>
+                    <product>
+                        <value>0.5</value><!-- half since we only want 1 wing -->
+                        <property>/sim/systems/wingflexer/params/fuel-frac</property>
+                        <sum>
+                            <property>/sim/systems/wingflexer/params/fuel-node-1-kg</property>
+                            <property>/sim/systems/wingflexer/params/fuel-node-2-kg</property>
+                            <property>/sim/systems/wingflexer/params/fuel-node-3-kg</property>
+                            <property>/sim/systems/wingflexer/params/fuel-node-4-kg</property>
+                        </sum>
+                    </product>
+                </sum>
+            </expression>
+        </input>
+    </filter>
+    
+    <!-- integrate the ODE -->
+    <filter>
+        <type>damped-oscillation</type>
+	    <output>/sim/systems/wingflexer/z-raw-m</output>
+        <a>
+    	    <expression>
+                <div>
+        		      <property>/sim/systems/wingflexer/d</property>
+        		      <property>/sim/systems/wingflexer/m-wing-kg</property>
+                </div>
+            </expression>
+    	</a>
+        <b>
+    	    <expression>
+                <div>
+        		      <property>/sim/systems/wingflexer/k</property>
+        		      <property>/sim/systems/wingflexer/m-wing-kg</property>
+                </div>
+            </expression>
+    	</b>
+        <c>
+    	    <expression>
+                <difference>
+                    <property>/sim/systems/wingflexer/a-fuselage-mps2</property>
+                    <div>
+                        <property>/sim/systems/wingflexer/f-normal-N</property>
+                        <property>/sim/systems/wingflexer/m-wing-kg</property>
+                    </div>                        
+                </difference>
+            </expression>
+    	</c>
+        <!-- DEVELOP: initialize the wing's vertical velocity to a given value,
+                      overriding all previous computations -->
+	    <input>
+            <expression>
+                <product>
+                    <property>/sim/systems/wingflexer/sink-rate-fps</property>
+                    <value>0.3048</value> <!-- feet to meters -->
+                </product>
+            </expression>
+        </input>
+    </filter>
+
+    <filter>
+        <type>gain</type>
+        <output>/sim/systems/wingflexer/z-m</output>
+        <min><property>/sim/systems/wingflexer/params/min-m</property></min>
+        <max><property>/sim/systems/wingflexer/params/max-m</property></max>
+        <!--<gain>1.</gain> -->
+        <!-- DEVELOP: scaled output. For production aircraft, this should be done in
+                    the model animation. -->
+        <gain><property>/sim/systems/wingflexer/params/z-fac</property></gain>
+        
+	    <input>
+            <expression>
+                <sum>
+                    <property>/sim/systems/wingflexer/z-ofs-m</property>
+                    <property>/sim/systems/wingflexer/z-raw-m</property>                    
+                </sum>
+            </expression>
+        </input>
+    </filter>
+
+    <!-- DEVELOP: reset sink rate -->
+    <filter>
+        <type>gain</type>
+        <gain>0.</gain>
+        <output>/sim/systems/wingflexer/sink-rate-fps</output>
+    </filter>
+    
+    <!-- DEVELOP: log max z-m -->
+    <filter>
+        <type>gain</type>
+        <gain>1.</gain>
+        <output>/sim/systems/wingflexer/z-max-m</output>
+        <input>
+            <expression>
+                <max>
+                    <property>/sim/systems/wingflexer/z-max-m</property>
+                    <abs>
+                        <property>/sim/systems/wingflexer/z-m</property>
+                    </abs>
+                </max>
+            </expression>
+        </input>
+    </filter>
+    
+    <!-- TODO and limitations:
+        Aerotow should be much more complex, how much force does cable pull, and from which direction.
+        At rotation the wings will flex too much up due to WoW is bool, and info on how much weight is really on wheel is unavailable.
+        
+        Debug reload: fgcommand('reinit', props.Node.new({ subsystem: "xml-proprules" }));
+    -->
+
+</PropertyList>

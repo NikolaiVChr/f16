@@ -78,7 +78,14 @@ var Station = {
 				if (typeof(me.weaponName) == "scalar") {
 					#print("attempting to create weapon id="~(me.id*100+me.i));
 					var mf = nil;
-					if (me.weaponName == "AGM-154A" or me.weaponName == "AGM-158") {
+					if (me.weaponName == "AGM-154A") {
+						mf = func (struct) {
+							if (struct.dist_m != -1 and struct.dist_m*M2NM < 7) {
+								return {"guidanceLaw":"PN"};
+							}
+							return {};
+						};
+					} elsif (me.weaponName == "AGM-158") {
 						mf = func (struct) {
 							if (struct.dist_m != -1 and struct.dist_m*M2NM < 7 and struct.guidance == "gps") {
 								return {"guidance":"vision","class":"GM","target":"nil","guidanceLaw":"PN"};

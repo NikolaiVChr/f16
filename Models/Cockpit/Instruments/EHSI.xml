@@ -64,7 +64,7 @@
             <z-m>-0.032472</z-m>
         </center>
         <axis>
-            <x>1</x>
+            <x>-1</x>
             <y>0</y>
             <z>0</z>
         </axis>        
@@ -112,7 +112,7 @@
             <z-m>-0.032472</z-m>
         </center>
         <axis>
-            <x>1</x>
+            <x>-1</x>
             <y>0</y>
             <z>0</z>
         </axis>        
@@ -157,7 +157,7 @@
           <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
           <step>1</step>
           <min>0</min>
-          <max>6</max>                
+          <max>5</max>                
           <wrap>true</wrap>
      </binding>
     <!--<mod-up>

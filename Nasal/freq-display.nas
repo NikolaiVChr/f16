@@ -14,14 +14,14 @@ var callInit = func {
   dedGroup.show();
   var color = [0.3,1,0.3];
   line1 = dedGroup.createChild("text")
-        .setFontSize(64, 0.90)#higher aspect = thinner font
+        .setFontSize(50, 0.90)#higher aspect = thinner font
         .setColor(color)
         .setAlignment("right-bottom-baseline")
-        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
+        .setFont("LED-8.ttf")
         .setText("120.25")
         .setTranslation(256, 60);
   dedGroup.createChild("path")
-                .moveTo(130,60)
+                .moveTo(126,60)
                 .horiz(3)
                 .vert(-4)
                 .horiz(-3)

@@ -217,13 +217,13 @@ var loop_ded = func {# one line is max 24 chars
         friend = "NO CONN";
       }
       if (type != "") {
-        friend  = getprop("instrumentation/iff/response")?"M1":"UNKWN";
+        friend  = getprop("instrumentation/iff/response")?"M4":"UNKWN";
       } else {
         friend = "";
       }
       var iffcode = getprop("instrumentation/iff/channel-selection");
       text[0] = sprintf("     IFF                ");
-      text[1] = sprintf("MODE 1 CHANNEL   % 4d   ", iffcode);
+      text[1] = sprintf("MODE 4 CHANNEL   % 4d   ", iffcode);
       text[2] = sprintf("PILOT   %s",sign);
       text[3] = sprintf("TYPE    %s",type);
       text[4] = sprintf("RESPNS  %s",friend);
