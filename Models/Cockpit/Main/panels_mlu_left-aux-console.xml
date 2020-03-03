@@ -42,6 +42,7 @@
         <object-name>RWR_switch</object-name>
         <object-name>DISP_switch</object-name>
         <object-name>RF_switch</object-name>
+        <object-name>JTSN_switch</object-name>
     </effect>
 
   <!--<animation>

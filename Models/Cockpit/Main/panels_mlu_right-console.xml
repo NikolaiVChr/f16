@@ -697,9 +697,6 @@
         <object-name>PBG</object-name>
         <object-name>O2</object-name>
         <object-name>EM-NO-TE</object-name>
-        <object-name>AirSource_knob</object-name>
-        <object-name>INS_knob</object-name>
-        <object-name>TD_knob</object-name>
     </effect>
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-knob</inherits-from>
@@ -715,6 +712,13 @@
         <object-name>data-entry-display-knob</object-name>
         <object-name>console-primary-knob</object-name>
         <object-name>inst-pnl-flood-knob</object-name>
+        <object-name>AirSource_knob</object-name>
+        <object-name>INS_knob</object-name>
+        <object-name>TD_knob</object-name>
+        <object-name>TEMP_knob</object-name>
+        <object-name>PBG</object-name>
+        <object-name>O2</object-name>
+        <object-name>EM-NO-TE</object-name>
     </effect>
 
 </PropertyList>
