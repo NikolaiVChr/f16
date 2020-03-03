@@ -934,10 +934,10 @@ There is also small changes in tail for different variants with and without brak
             </autopilot>
             <path>Aircraft/f16/Systems/f16-airdata.xml</path>
             <wingflexer include="Systems/f16-wingflexer.xml"/>
-            <property-rule n="100">
+            <autopilot n="1">
                 <name>wing flexer property rule</name>
                 <path>Aircraft/f16/Systems/wingflexer.xml</path>
-            </property-rule>
+            </autopilot>
         </systems>
         <current-view>
             <z-offset-default type="float">25.0</z-offset-default>
