@@ -197,7 +197,7 @@ var F16_HUD = {
                  hud_brightness            : "f16/avionics/hud-brt",
                  hud_power                 : "f16/avionics/hud-power",
                  hud_display               : "controls/HUD/display-on",
-                 hud_serviceable           : "sim/failure-manager/instrumentation/hud/serviceable",
+                 hud_serviceable           : "instrumentation/hud/serviceable",
                  time_until_crash          : "instrumentation/radar/time-till-crash",
                  vne                       : "f16/vne",
                  texUp                     : "f16/hud/texels-up",

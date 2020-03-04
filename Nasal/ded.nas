@@ -72,6 +72,7 @@ var pLINK = 8;
 var pLASER= 9;
 var pCM   = 10;
 var pCRUS = 11;
+var pFACK = 12;
 var pLIST = 100;#excluded from random
 
 var page = int(rand()*11.99);#random page at startup
@@ -80,6 +81,7 @@ var comm = 0;
 var text = ["","","","",""];
 
 var scroll = 0;
+var scrollF = 0;
 
 var loop_ded = func {# one line is max 24 chars
     var no = getprop("autopilot/route-manager/current-wp")+1;
@@ -323,12 +325,27 @@ var loop_ded = func {# one line is max 24 chars
       text[2] = sprintf("  FLARE     %3d",flares);
       text[3] = sprintf("                        ");
       text[4] = sprintf("                        ");
+    } elsif (page == pFACK) {
+      
+      var fails = fail.getList();
+      var last = size(fails);
+      scrollF += 0.25;
+      if (scrollF >= last-2) scrollF = 0;     
+      var used = subvec(fails,int(scrollF),3);
+      text[0] = sprintf("       F-ACK     %s     ",no);
+      text[1] = sprintf("                        ");
+      if (size(used)>0) text[2] = sprintf(" %s ",used[0]);
+      else text[2] = "";
+      if (size(used)>1) text[3] = sprintf(" %s ",used[1]);
+      else text[3] = "";
+      if (size(used)>2) text[4] = sprintf(" %s ",used[2]);
+      else text[4] = "";
     } elsif (page == pLIST) {
       text[0] = sprintf("        LIST      %s     ",no);
-      text[1] = sprintf(" 1ILS  2ALOW 3MAGV COM1 ");
+      text[1] = sprintf(" 1ILS  2ALOW 3FACK COM1 ");
       text[2] = sprintf(" 4STPT 5CRUS 6TIME COM2 ");
       text[3] = sprintf(" 7DLNK 8LASR 9CNTM IFF  ");
-      text[4] = sprintf("             0BNGO LIST ");
+      text[4] = sprintf(" RMAGV       0BNGO LIST ");
     }
     line1.setText(text[0]);
     line2.setText(text[1]);
@@ -410,6 +427,11 @@ var bingo = func {
 var magv = func {
   f16.doubleClick();
   page = pMAGV;
+}
+
+var f_ack = func {
+  f16.doubleClick();
+  page = pFACK;
 }
 
 var link16 = func {

@@ -711,6 +711,7 @@ var repair2 = func {
   reloadCannon();
   reloadHydras();
   crash.repair();
+  
   if (getprop("f16/engine/running-state")) {
     setprop("fdm/jsbsim/elec/switches/epu",1);
     setprop("fdm/jsbsim/elec/switches/main-pwr",2);
@@ -752,6 +753,7 @@ var repair4 = func {
     if (getprop("/consumables/fuel/tank[0]/level-norm")<0.5 and getprop("f16/engine/running-state")) {
       setprop("/consumables/fuel/tank[0]/level-norm", 0.55);
     }
+    fail.fail_reset();
 }
 
 var autostart = func {
@@ -994,7 +996,7 @@ var SubSystem_Main = {
 #
 # Add failure for HUD to the compatible failures. This will setup the property tree in the normal way; 
 # but it will not add it to the gui dialog.
-append(compat_failure_modes.compat_modes,{ id: "instrumentation/hud", type: compat_failure_modes.MTBF, failure: compat_failure_modes.SERV, desc: "HUD" });
+#append(compat_failure_modes.compat_modes,{ id: "instrumentation/hud", type: compat_failure_modes.MTBF, failure: compat_failure_modes.SERV, desc: "HUD" });
 
 subsystem = SubSystem_Main.new("SubSystem_Main");
 

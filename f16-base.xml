@@ -1972,6 +1972,9 @@ There is also small changes in tail for different variants with and without brak
             <bogeydope type="bool">false</bogeydope>
             <cutoff type="bool">false</cutoff>
         </gci>
+        <hud>
+            <serviceable type="bool">true</serviceable>
+        </hud>
     </instrumentation>
     <environment>
         <aircraft-effects>

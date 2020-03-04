@@ -90,10 +90,80 @@ var start = func {
 	var fl = compat_failure_modes.set_unserviceable("consumables/fuel-tanks");
 	FailureMgr.add_failure_mode("consumables/fuel-tanks", "Fuel tank integrity", fl);
 
-
+    var tacan = compat_failure_modes.set_unserviceable("instrumentation/tacan");
+    FailureMgr.add_failure_mode("instrumentation/tacan", "Tacan", tacan);
+    
+    var hud = compat_failure_modes.set_unserviceable("instrumentation/hud");
+    FailureMgr.add_failure_mode("instrumentation/hud", "HUD", hud);
+    
 	#foreach (mode;FailureMgr.get_failure_modes()) print(mode.id);
 
 	var trigger_eng = RandVneTrigger.new(0.25, 1, "f16/vne");
 	FailureMgr.set_trigger("engines/engine", trigger_eng);
 	trigger_eng.arm();
 }
+
+var loop = func {
+    var fail_keys = keys(fail_list);
+    foreach (key;fail_keys) {
+        var sys = fail_list[key];
+        var status = getprop(sys[1]);
+        sys[2] = status == 1;
+        fail_list[key] = sys;
+        #print(sys[1]~" "~sys[2]);
+    }
+    fail_list["eng"][2] = !FailureMgr.get_failure_level("engines/engine");
+    settimer(loop,1);
+}
+
+var fail_list = {
+    a: ["TANK LEAK", "consumables/fuel-tanks/serviceable", 1, 0],
+    b: ["RWR DEGR", "instrumentation/rwr/serviceable", 1, 0],
+    c: ["FCR BUS FAIL", "instrumentation/radar/serviceable", 1, 0],
+    d: ["HYD B FAIL", "systems/hydraulics/edpb-pump/serviceable", 1, 0],
+    e: ["HYD A FAIL", "systems/hydraulics/edpa-pump/serviceable", 1, 0],
+    f: ["FIRE", "damage/fire/serviceable", 1, 0],
+    g: ["GEN STBY FAIL", "fdm/jsbsim/elec/failures/stby-gen/serviceable", 1, 0],
+    h: ["GEN MAIN FAIL", "fdm/jsbsim/elec/failures/main-gen/serviceable", 1, 0],
+    i: ["EPU FAIL", "fdm/jsbsim/elec/failures/epu/serviceable", 1, 0],
+    j: ["BATT HOT", "fdm/jsbsim/elec/failures/battery/serviceable", 1, 0],
+    k: ["WPN FAIL", "payload/armament/fire-control/serviceable", 1, 0],
+    l: ["ISA RUD FAIL", "sim/failure-manager/controls/flight/rudder/serviceable", 1, 0],
+    m: ["ISA ELV FAIL", "sim/failure-manager/controls/flight/elevator/serviceable", 1, 0],
+    n: ["ISA FPR FAIL", "sim/failure-manager/controls/flight/aileron/serviceable", 1, 0],
+    eng: ["ENG FAIL", "engines/engine/service", 1, 0],
+    p: ["FLCS BUS FAIL", "instrumentation/rwr/serviceable", 1, 0],
+    q: ["HUD BUS FAIL", "instrumentation/hud/serviceable", 1, 0],
+    r: ["TCN FAIL", "instrumentation/tacan/serviceable", 1, 0],
+    s: ["NVP COMM FAIL", "instrumentation/airspeed-indicator/serviceable", 1, 0],
+    t: ["GEAR FAIL", "sim/failure-manager/controls/gear/serviceable", 1, 0],
+};
+
+var getList = func {
+    var fail_keys = keys(fail_list);
+    var fails = [];
+    foreach (key;fail_keys) {
+        if (!fail_list[key][2] and !fail_list[key][3]) {
+            append(fails, fail_list[key][0]);
+        }
+    }
+    return fails;
+}
+
+var fail_reset = func {
+    var fail_keys = keys(fail_list);
+    foreach (key;fail_keys) {
+        fail_list[key][3] = 0;
+    }
+}
+
+var f_ack = func {
+    var fail_keys = keys(fail_list);
+    foreach (key;fail_keys) {
+        if (fail_list[key][2] == 0) {
+            fail_list[key][3] = 1;
+        }
+    }
+}
+
+loop();
