@@ -72,6 +72,7 @@ var pLINK = 8;
 var pLASER= 9;
 var pCM   = 10;
 var pCRUS = 11;
+var pFACK = 12;
 var pLIST = 100;#excluded from random
 
 var page = int(rand()*11.99);#random page at startup
@@ -80,6 +81,7 @@ var comm = 0;
 var text = ["","","","",""];
 
 var scroll = 0;
+var scrollF = 0;
 
 var loop_ded = func {# one line is max 24 chars
     var no = getprop("autopilot/route-manager/current-wp")+1;
@@ -195,9 +197,12 @@ var loop_ded = func {# one line is max 24 chars
       #} else {
       var course = sprintf("%06.2f\xc2\xb0",getprop("f16/crs-ils"));
       #}
+      var ident = getprop("instrumentation/tacan/ident");
+      var inrng = getprop("instrumentation/tacan/in-range");
+      if (!inrng or ident == nil or ident == "") ident = "   ";
       text[0] = sprintf("    TCN REC      ILS %s",ilsOn);
       text[1] = sprintf("                        ");
-      text[2] = sprintf("               CMD STRG ");
+      text[2] = sprintf("BCN     %s    CMD STRG ",ident);
       text[3] = sprintf("CHAN    %03d FREQ %6.2f",chan,freq);
       text[4] = sprintf("BAND      %s CRS %s",band,course);
     } elsif (page == pIFF) {
@@ -216,17 +221,21 @@ var loop_ded = func {# one line is max 24 chars
       } elsif (sign != "") {
         friend = "NO CONN";
       }
-      if (type != "") {
-        friend  = getprop("instrumentation/iff/response")?"M4":"UNKWN";
-      } else {
-        friend = "";
-      }
+      #if (type != "") {
+      #  friend  = getprop("instrumentation/iff/response")?"M4":"UNKWN";
+      #} else {
+      #  friend = "";
+      #}
       var iffcode = getprop("instrumentation/iff/channel-selection");
-      text[0] = sprintf("     IFF                ");
-      text[1] = sprintf("MODE 4 CHANNEL   % 4d   ", iffcode);
+      var pond   = getprop("instrumentation/transponder/inputs/knob-mode")==0?0:1;
+      if (pond) pond = sprintf("%04d",getprop("instrumentation/transponder/id-code"));
+      else pond = "----";
+      text[0] = sprintf("     IFF   MAN          ");
+      text[1] = sprintf("M3     %s             ", pond);
+      text[1] = sprintf("M4     %04d             ", iffcode);
       text[2] = sprintf("PILOT   %s",sign);
       text[3] = sprintf("TYPE    %s",type);
-      text[4] = sprintf("RESPNS  %s",friend);
+      text[4] = sprintf("                        ");
     } elsif (page == pLINK) {
       text[0] = sprintf(" XMT 40 INTRAFLIGHT  %s ",no);
       
@@ -261,11 +270,14 @@ var loop_ded = func {# one line is max 24 chars
       var freq   = getprop("instrumentation/comm["~comm~"]/frequencies/selected-mhz");
       var time   = getprop("/sim/time/gmt-string");
       var t      = getprop("instrumentation/tacan/display/channel");
+      var pond   = getprop("instrumentation/transponder/inputs/knob-mode")==0?0:1;
+      if (pond) pond = sprintf("%04d",getprop("instrumentation/transponder/id-code"));
+      else pond = "----";
       text[0] = sprintf("UHF    --    STPT %s",no);
       text[1] = sprintf(" COMM%d                   ",comm+1);
       text[2] = sprintf("VHF  %6.2f   %s",freq,time);
       text[3] = sprintf("                        ");
-      text[4] = sprintf("                  T%s",t);
+      text[4] = sprintf("M34   %s    MAN  T%s",pond,t);
     } elsif (page == pBINGO) {
       var total = getprop("consumables/fuel/total-fuel-lbs");
       var bingo = getprop("f16/settings/bingo");
@@ -313,12 +325,27 @@ var loop_ded = func {# one line is max 24 chars
       text[2] = sprintf("  FLARE     %3d",flares);
       text[3] = sprintf("                        ");
       text[4] = sprintf("                        ");
+    } elsif (page == pFACK) {
+      
+      var fails = fail.getList();
+      var last = size(fails);
+      scrollF += 0.25;
+      if (scrollF >= last-2) scrollF = 0;     
+      var used = subvec(fails,int(scrollF),3);
+      text[0] = sprintf("       F-ACK     %s     ",no);
+      text[1] = sprintf("                        ");
+      if (size(used)>0) text[2] = sprintf(" %s ",used[0]);
+      else text[2] = "";
+      if (size(used)>1) text[3] = sprintf(" %s ",used[1]);
+      else text[3] = "";
+      if (size(used)>2) text[4] = sprintf(" %s ",used[2]);
+      else text[4] = "";
     } elsif (page == pLIST) {
       text[0] = sprintf("        LIST      %s     ",no);
-      text[1] = sprintf(" 1ILS  2ALOW 3MAGV COM1 ");
+      text[1] = sprintf(" 1ILS  2ALOW 3FACK COM1 ");
       text[2] = sprintf(" 4STPT 5CRUS 6TIME COM2 ");
       text[3] = sprintf(" 7DLNK 8LASR 9CNTM IFF  ");
-      text[4] = sprintf("             0BNGO LIST ");
+      text[4] = sprintf(" RMAGV       0BNGO LIST ");
     }
     line1.setText(text[0]);
     line2.setText(text[1]);
@@ -400,6 +427,11 @@ var bingo = func {
 var magv = func {
   f16.doubleClick();
   page = pMAGV;
+}
+
+var f_ack = func {
+  f16.doubleClick();
+  page = pFACK;
 }
 
 var link16 = func {

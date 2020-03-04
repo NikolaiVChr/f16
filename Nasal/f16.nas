@@ -370,11 +370,11 @@ var medium = {
 
 var slow = {
   loop: func {
-    var valid = 0;
-    if (awg_9.active_u != nil) {
-      valid = iff.interrogate(awg_9.active_u.propNode);
-    }
-    setprop("instrumentation/iff/response", valid);
+    #var valid = 0;
+    #if (awg_9.active_u != nil) {
+    #  valid = iff.interrogate(awg_9.active_u.propNode);
+    #}
+    #setprop("instrumentation/iff/response", valid);
     settimer(func {me.loop()},5);
   },
 };
@@ -711,6 +711,7 @@ var repair2 = func {
   reloadCannon();
   reloadHydras();
   crash.repair();
+  
   if (getprop("f16/engine/running-state")) {
     setprop("fdm/jsbsim/elec/switches/epu",1);
     setprop("fdm/jsbsim/elec/switches/main-pwr",2);
@@ -752,6 +753,7 @@ var repair4 = func {
     if (getprop("/consumables/fuel/tank[0]/level-norm")<0.5 and getprop("f16/engine/running-state")) {
       setprop("/consumables/fuel/tank[0]/level-norm", 0.55);
     }
+    fail.fail_reset();
 }
 
 var autostart = func {
@@ -994,7 +996,7 @@ var SubSystem_Main = {
 #
 # Add failure for HUD to the compatible failures. This will setup the property tree in the normal way; 
 # but it will not add it to the gui dialog.
-append(compat_failure_modes.compat_modes,{ id: "instrumentation/hud", type: compat_failure_modes.MTBF, failure: compat_failure_modes.SERV, desc: "HUD" });
+#append(compat_failure_modes.compat_modes,{ id: "instrumentation/hud", type: compat_failure_modes.MTBF, failure: compat_failure_modes.SERV, desc: "HUD" });
 
 subsystem = SubSystem_Main.new("SubSystem_Main");
 
@@ -1758,19 +1760,26 @@ var flexer = func {
       #setprop("sim/systems/wingflexer/params/K",2500);
     #}
   }
-  setprop("f16/wings/normal-lbf", -getprop("fdm/jsbsim/aero/coefficient/force/Z_t-lbf"));
+  #setprop("f16/wings/normal-lbf", -getprop("fdm/jsbsim/aero/coefficient/force/Z_t-lbf"));
   
   var errors = [];
   call(func {var z = getprop("sim/systems/wingflexer/z-m");
-      var max2 = (9.2-2.84)*0.5;
-      max2 = max2 * max2;
-      
-      setprop("sim/systems/wingflexer/z-m-tip",z);
-      setprop("sim/systems/wingflexer/z-m-outer", z*((3.70-1.42)*(3.70-1.42))/(max2));
-      setprop("sim/systems/wingflexer/z-m-middle",z*((2.88-1.42)*(2.88-1.42))/(max2));
-      setprop("sim/systems/wingflexer/z-m-inner", z*((1.63-1.42)*(1.63-1.42))/(max2));},nil,nil, errors);
+      #var max2 = (9.2-2.84)*0.5;
+      #max2 = max2 * max2;
+      setprop("sim/systems/wingflexer/NaN", z);# this line will fail if NaN, so that an error is raised.
+      #setprop("sim/systems/wingflexer/z-m-tip",z);
+      #setprop("sim/systems/wingflexer/z-m-outer", z*((3.70-1.42)*(3.70-1.42))/(max2));
+      #setprop("sim/systems/wingflexer/z-m-middle",z*((2.88-1.42)*(2.88-1.42))/(max2));
+      #setprop("sim/systems/wingflexer/z-m-inner", z*((1.63-1.42)*(1.63-1.42))/(max2));
+      },nil,nil, errors);
   if (size(errors)) {
-    fgcommand('reinit', props.Node.new({ subsystem: "xml-proprules" }));
+    fgcommand('reinit', props.Node.new({ subsystem: "xml-autopilot" }));
   }
+  #if (getprop("/sim/frame-rate-worst")<12) {
+  #  setprop("/sim/systems/property-rule[100]/serviceable",0);
+  #  setprop("sim/systems/wingflexer/z-m",0);
+  #} else {
+  #  setprop("/sim/systems/property-rule[100]/serviceable",1);
+  #}
   settimer(flexer,0);
 }

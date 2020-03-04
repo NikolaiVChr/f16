@@ -681,6 +681,10 @@
                 <name>Ctrl-3</name>
                 <desc>GCI Cutoff</desc>
             </key>
+            <key>
+                <name>Ctrl-4</name>
+                <desc>IFF interrogation</desc>
+            </key>
             <text>Choose your section</text>
             <text-1><![CDATA[
 LANDING
@@ -934,10 +938,10 @@ There is also small changes in tail for different variants with and without brak
             </autopilot>
             <path>Aircraft/f16/Systems/f16-airdata.xml</path>
             <wingflexer include="Systems/f16-wingflexer.xml"/>
-            <property-rule n="100">
+            <autopilot n="1">
                 <name>wing flexer property rule</name>
                 <path>Aircraft/f16/Systems/wingflexer.xml</path>
-            </property-rule>
+            </autopilot>
         </systems>
         <current-view>
             <z-offset-default type="float">25.0</z-offset-default>
@@ -1555,6 +1559,17 @@ There is also small changes in tail for different variants with and without brak
                     </binding>
                 </mod-ctrl>
             </key>
+            <key n="52">
+                <name>CTRL-4</name>
+                <mod-ctrl>
+                    <desc>IFF interrogation</desc>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>instrumentation/radar/iff</property>
+                        <value>1</value>
+                    </binding>
+                </mod-ctrl>
+            </key>
         </keyboard>
     </input>
     <controls>
@@ -1867,6 +1882,7 @@ There is also small changes in tail for different variants with and without brak
         </gps>
         <radar>
             <enabled type="bool">true</enabled>
+            <iff type="bool">false</iff>
             <az-field type="int">120</az-field>
             <ho-field type="int">120</ho-field><!-- bars -->
             <range type="double">160</range>
@@ -1956,6 +1972,9 @@ There is also small changes in tail for different variants with and without brak
             <bogeydope type="bool">false</bogeydope>
             <cutoff type="bool">false</cutoff>
         </gci>
+        <hud>
+            <serviceable type="bool">true</serviceable>
+        </hud>
     </instrumentation>
     <environment>
         <aircraft-effects>

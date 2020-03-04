@@ -246,6 +246,24 @@
             <button>0</button>
             <binding>
                 <command>nasal</command>
+                <script>ded.f_ack();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-fack</tooltip-id>
+                <label>F-ACK</label>
+            </binding>
+        </hovered>
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>rcl</object-name><!-- 3 -->
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
                 <script>ded.magv();</script>
             </binding>
         </action>

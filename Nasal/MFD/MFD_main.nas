@@ -355,6 +355,7 @@ var MFD_Device =
                 .setTranslation(276*0.795,482);#552,482 , 0.795 is for UV map
         svg.maxB = 16;
         svg.blep = setsize([],svg.maxB);
+        svg.iff  = setsize([],svg.maxB);
         for (var i = 0;i<svg.maxB;i+=1) {
             svg.blep[i] = svg.p_RDR.createChild("path")
                     .moveTo(0,-4)
@@ -362,6 +363,11 @@ var MFD_Device =
                     .setStrokeLineWidth(8)
                     .set("z-index",10)
                     .hide();
+            svg.iff[i] = svg.p_RDR.createChild("text")
+                    .setText("4")
+                    .setAlignment("center-center")
+                    .setColor(0,1,0)
+                    .setFontSize(22, 1.0);
         }
         svg.rangUp = svg.p_RDR.createChild("path")
                     .moveTo(-276*0.795,-482*0.5-105-27.5)
@@ -713,18 +719,26 @@ var MFD_Device =
                 }
                 me.cs = contact.get_Callsign();
                 me.blue = getprop("f16/avionics/power-dl") and (me.cs == getprop("link16/wingman-1") or me.cs == getprop("link16/wingman-2") or me.cs == getprop("link16/wingman-3") or me.cs == getprop("link16/wingman-4") or me.cs == getprop("link16/wingman-5") or me.cs == getprop("link16/wingman-6") or me.cs == getprop("link16/wingman-7") or me.cs == getprop("link16/wingman-8") or me.cs == getprop("link16/wingman-9") or me.cs == getprop("link16/wingman-10"));
-                
+                me.iff = contact.getIff();
                 if (me.i <= (me.root.maxB-1)) {
-                    me.root.blep[me.i].setColor(me.blue?[0.5,1,0.5]:[1,1,1]);
-                    me.root.blep[me.i].setTranslation(me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels);
-                    me.root.blep[me.i].show();
-                    me.root.blep[me.i].update();
+                    if (me.iff) {
+                        me.root.iff[me.i].setTranslation(me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels);
+                        me.root.iff[me.i].show();
+                        me.root.iff[me.i].update();
+                        me.root.blep[me.i].hide();
+                    } else {
+                        me.root.blep[me.i].setColor(me.blue?[0.5,1,0.5]:[1,1,1]);
+                        me.root.blep[me.i].setTranslation(me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels);
+                        me.root.blep[me.i].show();
+                        me.root.blep[me.i].update();
+                        me.root.iff[me.i].hide();
+                    }
                 }
                 
                 
                 
                 me.desig = contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType);
-                if (me.desig) {
+                if (me.desig and !me.iff) {
                     me.rot = contact.get_heading();
                     if (me.rot == nil) {
                         #can happen in transition between TWS to RWS
@@ -763,7 +777,7 @@ var MFD_Device =
             }
             for (;me.i<me.root.maxB;me.i+=1) {
                 me.root.blep[me.i].hide();
-                #me.root.lock[me.i].hide();
+                me.root.iff[me.i].hide();
             }
             me.root.dlzArray = pylons.getDLZ();
             #me.dlzArray =[10,8,6,2,9];#test
