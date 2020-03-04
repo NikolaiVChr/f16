@@ -132,10 +132,9 @@ var fail_list = {
     m: ["ISA ELV FAIL", "sim/failure-manager/controls/flight/elevator/serviceable", 1, 0],
     n: ["ISA FPR FAIL", "sim/failure-manager/controls/flight/aileron/serviceable", 1, 0],
     eng: ["ENG FAIL", "engines/engine/service", 1, 0],
-    p: ["FLCS BUS FAIL", "instrumentation/rwr/serviceable", 1, 0],
     q: ["HUD BUS FAIL", "instrumentation/hud/serviceable", 1, 0],
     r: ["TCN FAIL", "instrumentation/tacan/serviceable", 1, 0],
-    s: ["NVP COMM FAIL", "instrumentation/airspeed-indicator/serviceable", 1, 0],
+    s: ["AIR DATA FAIL", "instrumentation/airspeed-indicator/serviceable", 1, 0],
     t: ["GEAR FAIL", "sim/failure-manager/controls/gear/serviceable", 1, 0],
 };
 
