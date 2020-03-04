@@ -219,17 +219,21 @@ var loop_ded = func {# one line is max 24 chars
       } elsif (sign != "") {
         friend = "NO CONN";
       }
-      if (type != "") {
-        friend  = getprop("instrumentation/iff/response")?"M4":"UNKWN";
-      } else {
-        friend = "";
-      }
+      #if (type != "") {
+      #  friend  = getprop("instrumentation/iff/response")?"M4":"UNKWN";
+      #} else {
+      #  friend = "";
+      #}
       var iffcode = getprop("instrumentation/iff/channel-selection");
+      var pond   = getprop("instrumentation/transponder/inputs/knob-mode")==0?0:1;
+      if (pond) pond = sprintf("%04d",getprop("instrumentation/transponder/id-code"));
+      else pond = "----";
       text[0] = sprintf("     IFF                ");
-      text[1] = sprintf("MODE 4 CHANNEL   % 4d   ", iffcode);
+      text[1] = sprintf("M3     %s             ", pond);
+      text[1] = sprintf("M4     %04d             ", iffcode);
       text[2] = sprintf("PILOT   %s",sign);
       text[3] = sprintf("TYPE    %s",type);
-      text[4] = sprintf("RESPNS  %s",friend);
+      text[4] = sprintf("                        ");
     } elsif (page == pLINK) {
       text[0] = sprintf(" XMT 40 INTRAFLIGHT  %s ",no);
       

@@ -370,11 +370,11 @@ var medium = {
 
 var slow = {
   loop: func {
-    var valid = 0;
-    if (awg_9.active_u != nil) {
-      valid = iff.interrogate(awg_9.active_u.propNode);
-    }
-    setprop("instrumentation/iff/response", valid);
+    #var valid = 0;
+    #if (awg_9.active_u != nil) {
+    #  valid = iff.interrogate(awg_9.active_u.propNode);
+    #}
+    #setprop("instrumentation/iff/response", valid);
     settimer(func {me.loop()},5);
   },
 };
@@ -1764,7 +1764,7 @@ var flexer = func {
   call(func {var z = getprop("sim/systems/wingflexer/z-m");
       #var max2 = (9.2-2.84)*0.5;
       #max2 = max2 * max2;
-      if (z == nil) nil.nop();
+      setprop("sim/systems/wingflexer/NaN", z);# this line will fail if NaN, so that an error is raised.
       #setprop("sim/systems/wingflexer/z-m-tip",z);
       #setprop("sim/systems/wingflexer/z-m-outer", z*((3.70-1.42)*(3.70-1.42))/(max2));
       #setprop("sim/systems/wingflexer/z-m-middle",z*((2.88-1.42)*(2.88-1.42))/(max2));

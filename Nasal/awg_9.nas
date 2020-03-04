@@ -493,15 +493,27 @@ var az_scan = func(notification) {
         u_radar_standby   = 0;
         u_ecm_type_num    = 0;
     }
+    
+    var doIFF = getprop("instrumentation/radar/iff");
+    setprop("instrumentation/radar/iff",0);
 
     scan_tgt_end = scan_tgt_idx + ScanPartitionSize.getValue();
+        
 
     if (scan_tgt_end >= size(tgts_list))
     {
         scan_tgt_end = size(tgts_list);
     }
+    
+    if (doIFF) {
+        # if its time to do IFF then rescan all
+        scan_tgt_idx = 0;
+        scan_tgt_end = size(tgts_list);
+    }
+    var myTime = getprop("sim/time/elapsed-sec");
     var silentChanged = RadarStandbyMP.getValue() != stby;# we keep track of silent mode, to make sure there is no delay for the pilot to see, when radar is turned on/off.
     stby = RadarStandbyMP.getValue();
+    
     for (;scan_tgt_idx < scan_tgt_end; scan_tgt_idx += 1) {
 
         u = tgts_list[scan_tgt_idx];
@@ -510,6 +522,13 @@ var az_scan = func(notification) {
 		var u_fading = u.get_fading() - fading_speed;
         var u_rng = u.get_range();
         ecm_on = EcmOn.getValue();
+
+        if (doIFF) {
+            var iffr = iff.interrogate(u.propNode);
+            if (iffr) {
+                u.iff = myTime;
+            }
+        }
 
         if (scan_update_visibility or silentChanged) {
 
@@ -1497,10 +1516,17 @@ var Target = {
         obj.deviationE = nil;
         obj.elevation = nil;
         obj.virtual = 0;
+        obj.iff = -1000;
 		return obj;
 	},
 #
 # radar azimuth
+    getIff: func {
+        if (getprop("sim/time/elapsed-sec")-me.iff < 3.5) {
+            return 1;
+        }
+        return 0;
+    },
     get_az_field : func {
         return 60.0;
     },

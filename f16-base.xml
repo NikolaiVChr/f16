@@ -681,6 +681,10 @@
                 <name>Ctrl-3</name>
                 <desc>GCI Cutoff</desc>
             </key>
+            <key>
+                <name>Ctrl-4</name>
+                <desc>IFF interogation</desc>
+            </key>
             <text>Choose your section</text>
             <text-1><![CDATA[
 LANDING
@@ -1555,6 +1559,17 @@ There is also small changes in tail for different variants with and without brak
                     </binding>
                 </mod-ctrl>
             </key>
+            <key n="52">
+                <name>CTRL-4</name>
+                <mod-ctrl>
+                    <desc>IFF interogation</desc>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>instrumentation/radar/iff</property>
+                        <value>1</value>
+                    </binding>
+                </mod-ctrl>
+            </key>
         </keyboard>
     </input>
     <controls>
@@ -1867,6 +1882,7 @@ There is also small changes in tail for different variants with and without brak
         </gps>
         <radar>
             <enabled type="bool">true</enabled>
+            <iff type="bool">false</iff>
             <az-field type="int">120</az-field>
             <ho-field type="int">120</ho-field><!-- bars -->
             <range type="double">160</range>
