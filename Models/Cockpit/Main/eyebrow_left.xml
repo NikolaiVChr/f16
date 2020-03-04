@@ -18,5 +18,31 @@
     </or>
   </condition>
  </animation>
+ 
+ <animation>
+  <object-name>iff</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>instrumentation/radar/iff</factor-prop>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
+ 
+ <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>iff</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>false</repeatable>
+     <binding>
+      <command>property-assign</command>
+      <property>instrumentation/radar/iff</property>
+      <value>1</value>
+     </binding>
+    </action>
+   </animation>
 
 </PropertyList>
