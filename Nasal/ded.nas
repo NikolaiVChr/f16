@@ -228,7 +228,7 @@ var loop_ded = func {# one line is max 24 chars
       var pond   = getprop("instrumentation/transponder/inputs/knob-mode")==0?0:1;
       if (pond) pond = sprintf("%04d",getprop("instrumentation/transponder/id-code"));
       else pond = "----";
-      text[0] = sprintf("     IFF                ");
+      text[0] = sprintf("     IFF   MAN          ");
       text[1] = sprintf("M3     %s             ", pond);
       text[1] = sprintf("M4     %04d             ", iffcode);
       text[2] = sprintf("PILOT   %s",sign);
@@ -275,7 +275,7 @@ var loop_ded = func {# one line is max 24 chars
       text[1] = sprintf(" COMM%d                   ",comm+1);
       text[2] = sprintf("VHF  %6.2f   %s",freq,time);
       text[3] = sprintf("                        ");
-      text[4] = sprintf("M34   %s    OFF  T%s",pond,t);
+      text[4] = sprintf("M34   %s    MAN  T%s",pond,t);
     } elsif (page == pBINGO) {
       var total = getprop("consumables/fuel/total-fuel-lbs");
       var bingo = getprop("f16/settings/bingo");

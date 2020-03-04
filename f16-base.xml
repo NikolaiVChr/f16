@@ -683,7 +683,7 @@
             </key>
             <key>
                 <name>Ctrl-4</name>
-                <desc>IFF interogation</desc>
+                <desc>IFF interrogation</desc>
             </key>
             <text>Choose your section</text>
             <text-1><![CDATA[
@@ -1562,7 +1562,7 @@ There is also small changes in tail for different variants with and without brak
             <key n="52">
                 <name>CTRL-4</name>
                 <mod-ctrl>
-                    <desc>IFF interogation</desc>
+                    <desc>IFF interrogation</desc>
                     <binding>
                         <command>property-assign</command>
                         <property>instrumentation/radar/iff</property>
