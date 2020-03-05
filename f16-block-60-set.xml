@@ -109,5 +109,11 @@
    </fcs>
   </jsbsim>
  </fdm>
+ 
+  <engines>
+    <engine>
+      <rated-mil-dry type="double">19000</rated-mil-dry>
+    </engine>
+  </engines>
 
 </PropertyList>

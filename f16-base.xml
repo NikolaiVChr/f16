@@ -942,6 +942,10 @@ There is also small changes in tail for different variants with and without brak
                 <name>wing flexer property rule</name>
                 <path>Aircraft/f16/Systems/wingflexer.xml</path>
             </autopilot>
+            <property-rule n="100">
+                <name>Sound properties</name>
+                <path>Aircraft/f16/Systems/sound-rules.xml</path>
+            </property-rule>
         </systems>
         <current-view>
             <z-offset-default type="float">25.0</z-offset-default>

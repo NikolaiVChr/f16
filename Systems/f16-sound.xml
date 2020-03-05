@@ -270,9 +270,9 @@
 				<outer-gain>0.25</outer-gain>
 			</orientation>
 			<volume>
-				<property>engines/engine/thrust_lb</property>
+				<property>f16/sound/pow-thrust</property>
 				<offset>0</offset>
-				<factor>0.000044944</factor>
+				<factor>1</factor>
 			</volume>
 			<pitch>
 				<property>engines/engine/n1</property>
@@ -294,7 +294,7 @@
 				<z>0.0</z>
 			</position>
 			<volume>
-				<property>engines/engine/nozzle-pos-norm</property>
+				<property>f16/sound/pow-nozzle</property>
 				<offset>0.05</offset>
 				<factor>0.60</factor>
 			</volume>
@@ -429,9 +429,9 @@
 				<outer-gain>0.40</outer-gain>
 			</orientation>
 			<volume>
-				<property>engines/engine/thrust_lb</property>
+				<property>f16/sound/pow-thrust</property>
 				<offset>0</offset>
-				<factor>0.000065</factor>
+				<factor>1</factor>
 			</volume>
 			<volume>
 				<property>f16/sound/front-on</property>
@@ -470,9 +470,9 @@
 				<outer-gain>0.00</outer-gain>
 			</orientation>
 			<volume>
-				<property>engines/engine/thrust_lb</property>
+				<property>f16/sound/pow-thrust</property>
 				<offset>0</offset>
-				<factor>0.000065</factor>
+				<factor>1</factor>
 			</volume>
 			<volume>
 				<property>f16/sound/front-off</property>
@@ -511,7 +511,7 @@
 				<outer-gain>0.2</outer-gain>
 			</orientation>
 			<volume>
-				<property>engines/engine/nozzle-pos-norm</property>
+				<property>f16/sound/pow-nozzle</property>
 				<offset>0.00</offset>
 				<factor>0.96</factor>
 			</volume>
@@ -547,7 +547,7 @@
 				<outer-gain>0.6</outer-gain>
 			</orientation>
 			<volume>
-				<property>engines/engine/nozzle-pos-norm</property>
+				<property>f16/sound/pow-nozzle</property>
 				<offset>0.00</offset>
 				<factor>0.117</factor>
 			</volume>
@@ -583,7 +583,7 @@
 				<outer-gain>0.0</outer-gain>
 			</orientation>
 			<volume>
-				<property>engines/engine/nozzle-pos-norm</property>
+				<property>f16/sound/pow-nozzle</property>
 				<offset>0.05</offset>
 				<factor>0.96</factor>
 			</volume>
@@ -619,7 +619,7 @@
 				<outer-gain>0.0</outer-gain>
 			</orientation>
 			<volume>
-				<property>engines/engine/nozzle-pos-norm</property>
+				<property>f16/sound/pow-nozzle</property>
 				<offset>0.05</offset>
 				<factor>0.117</factor>
 			</volume>
@@ -658,9 +658,9 @@
 				<outer-gain>0.25</outer-gain>
 			</orientation>
 			<volume>
-				<property>engines/engine/thrust_lb</property>
+				<property>f16/sound/pow-thrust</property>
 				<offset>0</offset>
-				<factor>0.000065</factor>
+				<factor>1</factor>
 			</volume>
 			<volume>
 			    <property>fdm/jsbsim/fcs/canopy-pos-norm</property>		
@@ -697,7 +697,7 @@
 				<outer-gain>0.2</outer-gain>
 			</orientation>
 			<volume>
-				<property>engines/engine/nozzle-pos-norm</property>
+				<property>f16/sound/pow-nozzle</property>
 				<offset>0.05</offset>
 				<factor>0.96</factor>
 			</volume>
@@ -731,7 +731,7 @@
 				<outer-gain>0.2</outer-gain>
 			</orientation>
 			<volume>
-				<property>engines/engine/nozzle-pos-norm</property>
+				<property>f16/sound/pow-nozzle</property>
 				<offset>0.05</offset>
 				<factor>0.115</factor>
 			</volume>
@@ -1054,6 +1054,19 @@
 				<factor>0.3</factor>
 			</volume>
 		</stall>
+		<!--<stall>
+			<name>test</name>
+			<path>Aircraft/f16/Sounds/250hz-square-steady.wav</path>
+			<mode>looped</mode>
+			<type>avionics</type>
+			<property>sim/current-view/internal</property>
+			<volume>
+				<property>a</property>
+				<factor>1</factor>
+				<offset>0.0</offset>
+				<type>log</type>
+			</volume>
+		</stall>-->
 		<stall>
 			<name>lowspeed</name>
 			<path>Aircraft/f16/Sounds/250hz-square-steady.wav</path>
