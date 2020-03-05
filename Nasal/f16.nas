@@ -1781,5 +1781,14 @@ var flexer = func {
   #} else {
   #  setprop("/sim/systems/property-rule[100]/serviceable",1);
   #}
+  
+  var mach = getprop("velocities/mach") >= 1;
+  var cam = getprop("sim/current-view/name");
+  var still = cam == "Fly-By View" or cam == "Tower View" or cam == "Tower View Look From";
+  var nofrontsound = still and mach;
+  
+  setprop("f16/sound/front-on", !nofrontsound);
+  setprop("f16/sound/front-off", nofrontsound);
+    
   settimer(flexer,0);
 }

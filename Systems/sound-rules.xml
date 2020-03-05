@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PropertyList>
+    <debug>false</debug>
+
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <output>f16/sound/pow-nozzle</output>
+        <input>
+            <expression>
+                <product>
+                    <property>engines/engine/nozzle-pos-norm</property>
+                    <property>engines/engine/nozzle-pos-norm</property>
+                    <property>engines/engine/nozzle-pos-norm</property>
+                </product>
+            </expression>
+        </input>
+        <min>0</min>
+        <max>1</max>
+    </filter>
+    
+    <filter>
+        <type>gain</type>
+        <gain>1.0</gain>
+        <output>f16/sound/pow-thrust</output>
+        <input>
+            <expression>
+                <pow>
+                    <div>
+                        <property>engines/engine/thrust_lb</property>
+                        <property>engines/engine/rated-mil-dry</property>
+                    </div>
+                    <value>3</value>
+                </pow>
+            </expression>
+        </input>
+        <min>0</min>
+        <max>1</max>
+    </filter>
+        
+</PropertyList>

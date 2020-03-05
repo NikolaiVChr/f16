@@ -1638,7 +1638,7 @@ append(obj.total, obj.speed_curr);
             if (selW != nil and !hdp.CCIP_active and 
                 (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87" or selW.type=="CBU-105" or selW.type=="AGM-154A" or selW.type=="B61-7" or selW.type=="B61-12") and selW.status == armament.MISSILE_LOCK ) {
 
-                if (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="CBU-87") {
+                if (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="CBU-87" or selW.type=="B61-7") {
                     me.dt = 0.1;
                     me.maxFallTime = 20;
                 } else {
@@ -1686,7 +1686,7 @@ append(obj.total, obj.speed_curr);
         if(hdp.CCIP_active) {
             if (hdp.fcs_available and hdp.master_arm ==1) {
                 var selW = pylons.fcs.getSelectedWeapon();
-                if (selW != nil and (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87" or selW.type=="CBU-105")) {
+                if (selW != nil and (selW.type=="MK-82" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87" or selW.type=="CBU-105" or selW.type=="B61-12")) {
                     me.showmeCCIP = 1;
                     me.ccipPos = pylons.fcs.getSelectedWeapon().getCCIPadv(18,0.20);
                     if (me.ccipPos == nil) {
