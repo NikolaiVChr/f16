@@ -330,7 +330,7 @@
 			</position>
 			<orientation>
 				<x>-0.98</x>
-				<y>0.0</y>
+				<y>0.001</y>
 				<z>-0.17</z>
 				<inner-angle>60.0</inner-angle>
 				<outer-angle>200.0</outer-angle>
@@ -344,6 +344,11 @@
 			<volume>
 				<property>engines/engine[0]/n1-out2</property>
 				<offset>0.0</offset>
+				<factor>1</factor>
+			</volume>
+			<volume>
+				<property>f16/sound/front-on</property>
+				<offset>0</offset>
 				<factor>1</factor>
 			</volume>
 		</engine_fan>
@@ -373,7 +378,7 @@
 			</position>
 			<orientation>
 				<x>-0.98</x>
-				<y>0.0</y>
+				<y>0.001</y>
 				<z>-0.17</z>
 				<inner-angle>60.0</inner-angle>
 				<outer-angle>200.0</outer-angle>
@@ -391,6 +396,11 @@
 			</volume>
 			<volume>
 				<factor>0.35</factor>
+			</volume>
+			<volume>
+				<property>f16/sound/front-on</property>
+				<offset>0</offset>
+				<factor>1</factor>
 			</volume>
 		</engine_fan>
 		<exhaust>
@@ -412,9 +422,9 @@
 			</position>
 			<orientation>
 				<x>1.0</x>
-				<y>0.0</y>
-				<z>0.0</z>
-				<inner-angle>200.0</inner-angle>
+				<y>0.001</y>
+				<z>0.001</z>
+				<inner-angle>180.0</inner-angle>
 				<outer-angle>360.0</outer-angle>
 				<outer-gain>0.40</outer-gain>
 			</orientation>
@@ -422,6 +432,52 @@
 				<property>engines/engine/thrust_lb</property>
 				<offset>0</offset>
 				<factor>0.000065</factor>
+			</volume>
+			<volume>
+				<property>f16/sound/front-on</property>
+				<offset>0</offset>
+				<factor>1</factor>
+			</volume>
+			<pitch>
+				<property>engines/engine/n1</property>
+				<offset>0.00</offset>
+				<factor>0.01</factor>
+			</pitch>
+		</exhaust>
+		<exhaust>
+			<name>thrust external mach</name>
+			<path>Sounds/jet.wav</path>
+			<mode>looped</mode>
+			<condition>
+				<property>engines/engine/running</property>
+				<not>
+					<property>sim/current-view/internal</property>
+				</not>
+			</condition>
+			<reference-dist>250</reference-dist>
+			<max-dist>15500</max-dist>
+			<position>
+				<x>4.6</x>
+				<y>0.01</y>
+				<z>0.01</z>
+			</position>
+			<orientation>
+				<x>1.0</x>
+				<y>0.001</y>
+				<z>0.001</z>
+				<inner-angle>180.0</inner-angle>
+				<outer-angle>180.0</outer-angle>
+				<outer-gain>0.00</outer-gain>
+			</orientation>
+			<volume>
+				<property>engines/engine/thrust_lb</property>
+				<offset>0</offset>
+				<factor>0.000065</factor>
+			</volume>
+			<volume>
+				<property>f16/sound/front-off</property>
+				<offset>0</offset>
+				<factor>1</factor>
 			</volume>
 			<pitch>
 				<property>engines/engine/n1</property>
@@ -448,16 +504,21 @@
 			</position>
 			<orientation>
 				<x>1.0</x>
-				<y>0.0</y>
-				<z>0.0</z>
+				<y>0.001</y>
+				<z>0.001</z>
 				<inner-angle>200.0</inner-angle>
 				<outer-angle>360.0</outer-angle>
 				<outer-gain>0.2</outer-gain>
 			</orientation>
 			<volume>
 				<property>engines/engine/nozzle-pos-norm</property>
-				<offset>0.05</offset>
+				<offset>0.00</offset>
 				<factor>0.96</factor>
+			</volume>
+			<volume>
+				<property>f16/sound/front-on</property>
+				<offset>0</offset>
+				<factor>1</factor>
 			</volume>
 		</afterburner>
 		<afterburner>
@@ -479,16 +540,93 @@
 			</position>
 			<orientation>
 				<x>1.0</x>
-				<y>0.0</y>
-				<z>0.0</z>
+				<y>0.001</y>
+				<z>0.001</z>
 				<inner-angle>200.0</inner-angle>
 				<outer-angle>360.0</outer-angle>
 				<outer-gain>0.6</outer-gain>
 			</orientation>
 			<volume>
 				<property>engines/engine/nozzle-pos-norm</property>
+				<offset>0.00</offset>
+				<factor>0.117</factor>
+			</volume>
+			<volume>
+				<property>f16/sound/front-on</property>
+				<offset>0</offset>
+				<factor>1</factor>
+			</volume>
+		</afterburner>
+		<afterburner>
+			<name>afterburner mach</name>
+			<path>Aircraft/f16/Sounds/exhaust_loop.wav</path>
+			<mode>looped</mode>
+			<condition>
+				<not>
+					<property>sim/current-view/internal</property>
+				</not>
+				<property>engines/engine/augmentation</property>
+			</condition>
+			<reference-dist>500</reference-dist>
+			<max-dist>16000</max-dist>
+			<position>
+				<x>4.6</x>
+				<y>0.01</y>
+				<z>0.01</z>
+			</position>
+			<orientation>
+				<x>1.0</x>
+				<y>0.001</y>
+				<z>0.001</z>
+				<inner-angle>180.0</inner-angle>
+				<outer-angle>180.0</outer-angle>
+				<outer-gain>0.0</outer-gain>
+			</orientation>
+			<volume>
+				<property>engines/engine/nozzle-pos-norm</property>
+				<offset>0.05</offset>
+				<factor>0.96</factor>
+			</volume>
+			<volume>
+				<property>f16/sound/front-off</property>
+				<offset>0</offset>
+				<factor>1</factor>
+			</volume>
+		</afterburner>
+		<afterburner>
+			<name>afterburner blast mach</name>
+			<path>Aircraft/f16/Sounds/GEED/afterburner_exterior.wav</path>
+			<mode>looped</mode>
+			<condition>
+				<not>
+					<property>sim/current-view/internal</property>
+				</not>
+				<property>engines/engine/augmentation</property>
+			</condition>
+			<reference-dist>500</reference-dist>
+			<max-dist>16000</max-dist>
+			<position>
+				<x>4.6</x>
+				<y>0.01</y>
+				<z>0.01</z>
+			</position>
+			<orientation>
+				<x>1.0</x>
+				<y>0.001</y>
+				<z>0.001</z>
+				<inner-angle>180.0</inner-angle>
+				<outer-angle>180.0</outer-angle>
+				<outer-gain>0.0</outer-gain>
+			</orientation>
+			<volume>
+				<property>engines/engine/nozzle-pos-norm</property>
 				<offset>0.05</offset>
 				<factor>0.117</factor>
+			</volume>
+			<volume>
+				<property>f16/sound/front-off</property>
+				<offset>0</offset>
+				<factor>1</factor>
 			</volume>
 		</afterburner>
 
@@ -2984,7 +3122,7 @@
 				<max>1</max>
 			</volume>
 		</gamma>
-		<boom>
+		<!--<boom>
 			<name>boom</name>
 			<path>Aircraft/f16/Sounds/Effects/Sonic-Boom.wav</path>
 			<mode>once</mode>
@@ -3005,7 +3143,7 @@
 				<property>f16/external</property>
 				<factor>1</factor>
 			</volume>
-		</boom>
+		</boom>-->
 		<gpu>
 	      <name>GPU_outside</name>
 	      <mode>looped</mode>

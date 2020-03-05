@@ -3080,6 +3080,8 @@ There is also small changes in tail for different variants with and without brak
             <knob type="bool">false</knob>
             <knob2 type="bool">false</knob2>
             <lift_cover type="bool">false</lift_cover>
+            <front-on type="bool">true</front-on>
+            <front-off type="bool">false</front-off>
         </sound>
         <settings>
             <bingo type="int">1250</bingo>
@@ -3322,4 +3324,5 @@ value. 18000=standard US transition altitude -->
             <file>Aircraft/f16/Nasal/wingflexer.nas</file>
         </flex>-->
     </nasal>
+    
 </PropertyList>
