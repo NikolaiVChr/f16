@@ -978,6 +978,98 @@
  
  <animation>
         <type>knob</type>
+        <object-name>COMM1_KNOB</object-name>
+        <property>instrumentation/comm[0]/volume</property>
+        <factor>250</factor>
+        <offset-deg>-90</offset-deg>
+        <interval-sec>0.10</interval-sec>
+        <center>
+         <x-m>0.217793</x-m>
+         <y-m>-0.386469</y-m>
+         <z-m>0.024669</z-m>
+        </center>
+        <axis>
+         <x>0</x>
+         <y>0</y>
+         <z>-1</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>instrumentation/comm[0]/volume</property>
+                <step>0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>instrumentation/comm[0]/volume</property>
+                <step>-0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>fdk</tooltip-id>
+                <label>COMM 1 VOLUME</label>
+            </binding>
+        </hovered>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>COMM2_KNOB</object-name>
+        <property>instrumentation/comm[1]/volume</property>
+        <factor>250</factor>
+        <offset-deg>-120</offset-deg>
+        <interval-sec>0.10</interval-sec>
+        <center>
+         <x-m>0.217799</x-m>
+         <y-m>-0.355149</y-m>
+         <z-m>0.024669</z-m>
+        </center>
+        <axis>
+         <x>0</x>
+         <y>0</y>
+         <z>-1</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>instrumentation/comm[1]/volume</property>
+                <step>0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>instrumentation/comm[1]/volume</property>
+                <step>-0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>fdk2</tooltip-id>
+                <label>COMM 2 VOLUME</label>
+            </binding>
+        </hovered>
+    </animation>
+ 
+ <animation>
+        <type>knob</type>
         <object-name>SW_KNOB_EXT_FORMATION_LIGHT</object-name>
         <property>controls/lighting/ext-lighting-panel/form-knob</property>
         <factor>90</factor>
