@@ -507,7 +507,7 @@ var F16_HUD = {
                                           obj.altScaleModeOld = obj.altScaleMode;
                                           #print("UPDATE "~obj.altScaleMode~"  CARA "~hdp.cara~"  AGL "~obj.agl);
                                           if(hdp.cara and !obj.altScaleMode) {
-                                              obj.ralt.setText(sprintf("R %s", obj.getAltTxt(obj.agl-5)));
+                                              obj.ralt.setText(sprintf("R %s", obj.getAltTxt(obj.agl)));
                                           } else {
                                               obj.ralt.setText("    ,   ");
                                           }
@@ -1558,9 +1558,7 @@ append(obj.total, obj.speed_curr);
     },
     
     getAltTxt: func (alt) {
-        if(alt < 10) {
-            me.txtRAlt = sprintf("%03d",alt);
-        } elsif (alt < 1000) {
+        if (alt < 1000) {
             me.txtRAlt = sprintf("%03d",math.round(alt,10));
         } else {
             # CARA is never more than 5 digits, and aircraft is not supposed to fly above 100k ft
