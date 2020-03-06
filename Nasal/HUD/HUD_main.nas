@@ -908,8 +908,8 @@ append(obj.total, obj.speed_curr);
                 .set("blend-destination-rgb","one")
                 .set("blend-destination-alpha","one")
                 .setText("88888")
-                .setTranslation(4+0.82*sx*0.695633,sy*0.245)
-                .setAlignment("left-center")
+                .setTranslation(4+0.82*sx*0.695633,sy*0.245+3.5)
+                .setAlignment("left-bottom-baseline")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(9, 1.1);
