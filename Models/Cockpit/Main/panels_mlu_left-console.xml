@@ -91,6 +91,7 @@
         <object-name>ecm-nil</object-name>
         <object-name>ecm-frm</object-name>
         <object-name>ecm-spl</object-name>
+        <object-name>flcs-pwr</object-name>
     </effect>
 
     <effect>
