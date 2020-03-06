@@ -122,7 +122,9 @@ var F16_HUD = {
         obj.window11 = obj.get_text("window11", HUD_FONT,9,1.1);
 
         obj.ralt = obj.get_text("radalt", HUD_FONT,9,1.1);
-
+        obj.ralt.setAlignment("right-bottom-baseline");
+        obj.ralt.setTranslation(35,0);
+        
         #append(obj.total, obj.ladder);
         append(obj.total, obj.heading_tape);
         #append(obj.total, obj.VV);
@@ -503,27 +505,24 @@ var F16_HUD = {
                                                 }
                                           }
                                           obj.altScaleModeOld = obj.altScaleMode;
-                                          
+                                          #print("UPDATE "~obj.altScaleMode~"  CARA "~hdp.cara~"  AGL "~obj.agl);
                                           if(hdp.cara and !obj.altScaleMode) {
-                                              if(obj.agl < 10) {
-                                                obj.ralt.setText(sprintf("R %05d ",obj.agl));
-                                              } else {
-                                                obj.ralt.setText(sprintf("R %05d ",math.round(obj.agl,10)));
-                                              }
-                                              obj.ralt.show();
+                                              obj.ralt.setText(sprintf("R %s", obj.getAltTxt(obj.agl-5)));
                                           } else {
-                                              obj.ralt.hide();
+                                              obj.ralt.setText("    ,   ");
                                           }
                                           
                                           if (obj.altScaleMode) {
                                             obj.alt_range.setTranslation(0, obj.agl * alt_range_factor);
-                                            obj.alt_curr.setText(sprintf("%5d",10*int(obj.agl*0.1)));
+                                            obj.alt_curr.setText(obj.getAltTxt(obj.agl));
                                             obj.alt_type.setText("R");
+                                            obj.ralt.hide();
                                             obj.radalt_box.hide();
                                           } else {
                                             obj.alt_range.setTranslation(0, hdp.measured_altitude * alt_range_factor);
-                                            obj.alt_curr.setText(sprintf("%5d",10*int(hdp.measured_altitude*0.1)));
+                                            obj.alt_curr.setText(obj.getAltTxt(hdp.measured_altitude));
                                             obj.alt_type.setText("");
+                                            obj.ralt.show();
                                             obj.radalt_box.show();
                                           }
                                       }),
@@ -790,23 +789,23 @@ var F16_HUD = {
                 .setFontSize(11, 1.1);
 
           append(obj.total, obj.stby);
-#        obj.ralt = obj.svg.createChild("text")
-#                .setText("R 00000 ")
+#        obj.raltR = obj.svg.createChild("text")
+#                .setText("R")
 #                .setTranslation(sx*1*0.675633-5,sy*0.45)
 #                .setAlignment("right-center")
 #                .setColor(0,1,0)
 #                .setFont(HUD_FONT)
-#                .setFontSize(9, 1.4);
-        obj.raltFrame = obj.svg.createChild("path")
-                .moveTo(sx*1*0.695633-9,sy*0.45+5)
-                .horiz(-41)
-                .vert(-10)
-                .horiz(41)
-                .vert(10)
-                .setStrokeLineWidth(1)
-                .hide()
-                .setColor(0,1,0);
-              append(obj.total, obj.raltFrame);
+#                .setFontSize(9, 1.1);
+#        obj.raltFrame = obj.svg.createChild("path")
+#                .moveTo(sx*1*0.695633-9,sy*0.45+5)
+#                .horiz(-41)
+#                .vert(-10)
+#                .horiz(41)
+#                .vert(10)
+#                .setStrokeLineWidth(1)
+#                .hide()
+#                .setColor(0,1,0);
+#              append(obj.total, obj.raltFrame);
         obj.boreSymbol = obj.svg.createChild("path")
                 .moveTo(-5,0)
                 .horiz(10)
@@ -909,7 +908,7 @@ append(obj.total, obj.speed_curr);
                 .set("blend-destination-rgb","one")
                 .set("blend-destination-alpha","one")
                 .setText("88888")
-                .setTranslation(8+0.82*sx*0.695633,sy*0.245)
+                .setTranslation(4+0.82*sx*0.695633,sy*0.245)
                 .setAlignment("left-center")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
@@ -1556,6 +1555,30 @@ append(obj.total, obj.speed_curr);
         var el = me.svg.getElementById(id);
         el.setFont(font).setFontSize(size,ratio);
         return el;
+    },
+    
+    getAltTxt: func (alt) {
+        if(alt < 10) {
+            me.txtRAlt = sprintf("%03d",alt);
+        } elsif (alt < 1000) {
+            me.txtRAlt = sprintf("%03d",math.round(alt,10));
+        } else {
+            # CARA is never more than 5 digits, and aircraft is not supposed to fly above 100k ft
+            me.txtRAlt = sprintf("%d",math.round(alt,10));
+        }
+        if (alt < 0) {
+            if (alt>-1000) {
+                me.txtRAlt = sprintf(" -,%s", right(me.txtRAlt,3));
+            } else {
+                me.txtRAlt = sprintf("%s,%s", left(me.txtRAlt,size(me.txtRAlt)-3),right(me.txtRAlt,3));
+            }
+            # no reason to cope for alts lower than -9999ft
+        } elsif (alt<1000) {
+            me.txtRAlt = sprintf("  ,%s", right(me.txtRAlt,3));
+        } else {
+            me.txtRAlt = sprintf("%s%s,%s", size(me.txtRAlt)==4?" ":"",left(me.txtRAlt,size(me.txtRAlt)-3),right(me.txtRAlt,3));
+        }
+        return me.txtRAlt; # always return 6 char string
     },
 
     develev_to_devroll : func(notification, dev_rad, elev_rad)
