@@ -10221,17 +10221,17 @@
        style="opacity:0.46000001;fill:#ff00ff;fill-opacity:1;stroke:#1a1a1a;stroke-width:1.10931921;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="ias_range_clip"
        width="29.566805"
-       height="98.766708"
+       height="80"
        x="29.630526"
-       y="796.36084"
+       y="820"
        inkscape:label="#rect9211" />
     <rect
        style="opacity:0.46000001;fill:#ff00ff;fill-opacity:1;stroke:#1a1a1a;stroke-width:1.31734478;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="alt_range_clip"
        width="41.532413"
-       height="106.1659"
+       height="80"
        x="187.32144"
-       y="796.36084"
+       y="820"
        inkscape:label="#rect9213" />
     <text
        xml:space="preserve"
@@ -10468,9 +10468,9 @@
     <rect
        style="opacity:1;fill:none;stroke:#008000;stroke-width:0.65200001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="radalt-box"
-       width="38.07151"
+       width="35"
        height="9.0296249"
-       x="182.78029"
+       x="185.78029"
        y="901.43622"
        inkscape:label="#target_9-1" />
   </g>

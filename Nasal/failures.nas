@@ -130,12 +130,18 @@ var fail_list = {
     k: ["WPN FAIL", "payload/armament/fire-control/serviceable", 1, 0],
     l: ["ISA RUD FAIL", "sim/failure-manager/controls/flight/rudder/serviceable", 1, 0],
     m: ["ISA ELV FAIL", "sim/failure-manager/controls/flight/elevator/serviceable", 1, 0],
-    n: ["ISA FPRN FAIL", "sim/failure-manager/controls/flight/aileron/serviceable", 1, 0],
+    n: ["ISA ROLL FAIL", "sim/failure-manager/controls/flight/aileron/serviceable", 1, 0],
+    o: ["ISA FLAP FAIL", "sim/failure-manager/controls/flight/flaps/serviceable", 1, 0],
     eng: ["ENG FAIL", "engines/engine/service", 1, 0],
     q: ["HUD BUS FAIL", "instrumentation/hud/serviceable", 1, 0],
     r: ["TCN FAIL", "instrumentation/tacan/serviceable", 1, 0],
     s: ["AIR DATA FAIL", "instrumentation/airspeed-indicator/serviceable", 1, 0],
     t: ["GEAR FAIL", "sim/failure-manager/controls/gear/serviceable", 1, 0],
+    u: ["DME FAIL", "instrumentation/dme/serviceable", 1, 0],
+    v: ["ALTI FAIL", "instrumentation/altimeter/serviceable", 1, 0],
+    w: ["HEAD FAIL", "instrumentation/heading-indicator/serviceable", 1, 0],
+    x: ["MAGN COMP FAIL", "instrumentation/magnetic-compass/serviceable", 1, 0],
+    y: ["IND TURN FAIL", "instrumentation/turn-indicator/serviceable", 1, 0],
 };
 
 var getList = func {

@@ -2659,8 +2659,8 @@ There is also small changes in tail for different variants with and without brak
                 <deploy-time type="double">2.0</deploy-time>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
                 <terminal-alt-factor type="double">2</terminal-alt-factor>
-                <terminal-rise-time type="double">22.0</terminal-rise-time>
-                <terminal-dive-time type="double">12.0</terminal-dive-time>
+                <terminal-rise-time type="double">23.0</terminal-rise-time>
+                <terminal-dive-time type="double">13.0</terminal-dive-time>
                 <seeker-angular-speed-dps type="double">45</seeker-angular-speed-dps>
                 <ready-time type="double">3.5</ready-time>
                 <ejector-speed-fps type="double">5</ejector-speed-fps>
@@ -2789,6 +2789,7 @@ There is also small changes in tail for different variants with and without brak
                 <max-pitch-deg type="double">-45</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
                 <ready-time type="double">0.5</ready-time>
+                <ejector-speed-fps type="double">10</ejector-speed-fps>
             </cbu-87>
             <cbu-105> 
                 <short-name type="string">CB105</short-name>
@@ -2832,6 +2833,7 @@ There is also small changes in tail for different variants with and without brak
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
                 <ready-time type="double">0.5</ready-time>
+                <ejector-speed-fps type="double">10</ejector-speed-fps>
             </cbu-105>
             <!--lau-68>
                 <short-name type="string">LAU68</short-name>
@@ -3105,6 +3107,7 @@ value. 18000=standard US transition altitude -->
             <hud-fpm type="int">2</hud-fpm><!-- 0=OFF 1=FPM 2=ATT/FPM -->
             <cara-on type="bool">false</cara-on><!-- if CARA radar altimeter is detecting ground (whether enabled or not) -->
             <hud-ded type="bool">false</hud-ded>
+            <n-reset type="bool">false</n-reset>
             <hud-alt type="int">0</hud-alt><!-- 0=AUTO 1=BARO 2=RADAR -->
             <lock-flir type="double">0.05</lock-flir>
             <tgp-lock type="bool">false</tgp-lock>
