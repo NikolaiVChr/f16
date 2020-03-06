@@ -707,21 +707,44 @@
 	
 	<hrule/>
 	
-	<text><label>IFF</label></text>
-
 	<group>
-	    <layout>hbox</layout>
-	    <text><label>MODE 4 CHANNEL</label></text>
-	    <input>
-		  	<width>75</width>
-		  	<height>25</height>
-		  	<property>instrumentation/iff/channel-selection</property>
-		  	<live>true</live>
-		  	<halign>left</halign>
-	        <binding>
-	            <command>dialog-apply</command>
-	      	</binding>
-		</input>
+		<layout>hbox</layout>
+		<group>
+			<layout>vbox</layout>
+			<text><label>IFF</label></text>
+
+			<group>
+			    <layout>hbox</layout>
+			    <text><label>MODE 4 CHANNEL</label></text>
+			    <input>
+				  	<width>75</width>
+				  	<height>25</height>
+				  	<property>instrumentation/iff/channel-selection</property>
+				  	<live>true</live>
+				  	<halign>left</halign>
+			        <binding>
+			            <command>dialog-apply</command>
+			      	</binding>
+				</input>
+			</group>
+		</group>
+		
+		<vrule/>
+		
+		<group>
+			<layout>vbox</layout>
+			<text><label>HUD max G</label></text>
+
+			<button>
+			    	<legend>Reset</legend>
+				    <binding>
+						<command>property-assign</command>
+						<property>f16/avionics/n-reset</property>
+						<value>1</value>
+			      	</binding>
+			    </button>
+		</group>
+		
 	</group>
 	
 	<hrule/>

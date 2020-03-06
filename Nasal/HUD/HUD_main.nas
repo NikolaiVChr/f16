@@ -120,10 +120,21 @@ var F16_HUD = {
         obj.window9 = obj.get_text("window9", HUD_FONT,9,1.1);
         obj.window10 = obj.get_text("window10", HUD_FONT,9,1.1);
         obj.window11 = obj.get_text("window11", HUD_FONT,9,1.1);
+        obj.window12 = obj.svg.createChild("text")
+                .setText("1.0")
+                .setTranslation(45,20)
+                .setAlignment("right-bottom-baseline")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(9, 1.1);
 
         obj.ralt = obj.get_text("radalt", HUD_FONT,9,1.1);
         obj.ralt.setAlignment("right-bottom-baseline");
         obj.ralt.setTranslation(35,0);
+        
+        
+        #obj.alt_range.set("clip", "rect(75px, 10000px, 10000px, -10000px)"); # top,right,bottom,left
+        #obj.ias_range.set("clip", "rect(125px, 10000px, 10000px, -10000px)"); # top,right,bottom,left
         
         #append(obj.total, obj.ladder);
         append(obj.total, obj.heading_tape);
@@ -149,6 +160,7 @@ var F16_HUD = {
         append(obj.total, obj.window9);
         append(obj.total, obj.window10);
         append(obj.total, obj.window11);
+        append(obj.total, obj.window12);
         append(obj.total, obj.ralt);
         append(obj.total, obj.radalt_box);
         
@@ -165,6 +177,7 @@ var F16_HUD = {
                  HUD_VEL                   : "/f16/avionics/hud-velocity",
                  HUD_SCA                   : "/f16/avionics/hud-scales",
                  Nz                        : "/accelerations/pilot-gdamped",
+                 nReset                    : "f16/avionics/n-reset",
                  alpha                     : "/fdm/jsbsim/aero/alpha-deg",
                  altitude_ft               : "/position/altitude-ft",
                  beta                      : "/orientation/side-slip-deg",
@@ -564,9 +577,12 @@ var F16_HUD = {
                                             obj.window1.setVisible(0);
                                           }
                                              ),
-            props.UpdateManager.FromHashValue("Nz", 0.1, func(Nz)
+            props.UpdateManager.FromHashList(["Nz","nReset"], 0.1, func(hdp)
                                       {
-                                          obj.window8.setText(sprintf("%.1f", Nz));
+                                          obj.window12.setText(sprintf("%.1f", hdp.Nz));
+                                          obj.window12.show();
+                                          obj.NzMax = math.max(hdp.Nz, obj.NzMax);
+                                          obj.window8.setText(sprintf("%.1f", obj.NzMax));
                                           obj.window8.show();
                                       }),
             props.UpdateManager.FromHashList(["heading", "headingMag", "useMag","gear_down"], 0.1, func(hdp)
@@ -1523,7 +1539,7 @@ append(obj.total, obj.speed_curr);
         obj.eegsLoop.simulatedTime = 1;
         obj.resetGunPos();
         obj.showmeCCIP = 0;
-        
+        obj.NzMax = 1.0;
         return obj;
     },
     
@@ -1954,6 +1970,11 @@ append(obj.total, obj.speed_curr);
 
     update : func(hdp) {
         HudMath.reCalc();
+        
+        if (hdp.nReset) {
+            me.NzMax = 1.0;
+            setprop("f16/avionics/n-reset",0);
+        }
 #
 # short cut the whole thing if the display is turned off
 #        if (!hdp.hud_display or !hdp.hud_serviceable) {
@@ -1974,6 +1995,7 @@ append(obj.total, obj.speed_curr);
             hdp.window9_txt = "9";
             hdp.window10_txt = "10";
             hdp.window11_txt = "11";
+            hdp.window12_txt = "12";
         }
 
         if (hdp.FrameCount == 2 or me.initUpdate == 1) {
@@ -2075,6 +2097,7 @@ append(obj.total, obj.speed_curr);
             hdp.window9_txt = "";
             hdp.window10_txt = "";
             hdp.window11_txt = "";
+            hdp.window12_txt = "";
 
             me.ASEC262.hide();
             me.ASEC100.hide();
