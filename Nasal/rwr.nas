@@ -3,11 +3,12 @@ RWRCanvas = {
         var rwr = {parents: [RWRCanvas]};
         rwr.max_icons = 12;
         var radius = diameter/2;
-        rwr.inner_radius = radius*0.30;
+        rwr.inner_radius = radius*0.30;# field where inner IDs are placed
         rwr.outer_radius = radius*0.75;
         rwr.circle_radius_big = radius*0.5;
         rwr.circle_radius_small = radius*0.125;
         var tick_long = radius*0.25;
+        var tick_full = radius-rwr.circle_radius_small;
         var tick_short = tick_long*0.5;
         var font = int(0.08*diameter);
         var colorG = [0.3,1,0.3];
@@ -23,13 +24,13 @@ RWRCanvas = {
 #           .arcSmallCW(diameter/2, diameter/2, 0, -diameter, 0)
 #           .setStrokeLineWidth(1.7)
 #           .setColor(1, 1, 1);
-        root.createChild("path")
+        root.createChild("path")# inner circle
            .moveTo(diameter/2-rwr.circle_radius_small, diameter/2)
            .arcSmallCW(rwr.circle_radius_small, rwr.circle_radius_small, 0, rwr.circle_radius_small*2, 0)
            .arcSmallCW(rwr.circle_radius_small, rwr.circle_radius_small, 0, -rwr.circle_radius_small*2, 0)
            .setStrokeLineWidth(1.7)
            .setColor(colorBG);
-        root.createChild("path")
+        root.createChild("path")# outer circle
            .moveTo(diameter/2-rwr.circle_radius_big, diameter/2)
            .arcSmallCW(rwr.circle_radius_big, rwr.circle_radius_big, 0, rwr.circle_radius_big*2, 0)
            .arcSmallCW(rwr.circle_radius_big, rwr.circle_radius_big, 0, -rwr.circle_radius_big*2, 0)
@@ -46,43 +47,69 @@ RWRCanvas = {
            .vert(-rwr.circle_radius_small*0.5)
            .setStrokeLineWidth(2.1)
            .setColor(colorLG);
-        rwr.noisebar = root.createChild("path")#middle cross
+        rwr.noisebar = root.createChild("path")#middle cross moving tick
            .moveTo(diameter/2+rwr.circle_radius_small*0.5, diameter/2)
            .vert(-rwr.circle_radius_small*0.25)
            .setStrokeLineWidth(2.1)
            .setColor(colorLG);
-        root.createChild("path")
+        root.createChild("path")# 4 main ticks
            .moveTo(0,diameter*0.5)
-           .horiz(tick_long)
+           .horiz(tick_full)
            .moveTo(diameter,diameter*0.5)
-           .horiz(-tick_long)
+           .horiz(-tick_full)
            .moveTo(diameter*0.5,0)
-           .vert(tick_long)
+           .vert(tick_full)
            .moveTo(diameter*0.5,diameter)
-           .vert(-tick_long)
+           .vert(-tick_full)
            .setStrokeLineWidth(1.7)
            .setColor(colorBG);
-        rwr.rootCenter.createChild("path")
+        rwr.rootCenter.createChild("path")# minor ticks
            .moveTo(radius*math.cos(30*D2R),radius*math.sin(-30*D2R))
            .lineTo((radius-tick_short)*math.cos(30*D2R),(radius-tick_short)*math.sin(-30*D2R))
+           .moveTo(radius*math.cos(15*D2R),radius*math.sin(-15*D2R))
+           .lineTo((radius-tick_short)*math.cos(15*D2R),(radius-tick_short)*math.sin(-15*D2R))
+           .moveTo(radius*math.cos(45*D2R),radius*math.sin(-45*D2R))
+           .lineTo((radius-tick_long)*math.cos(45*D2R),(radius-tick_long)*math.sin(-45*D2R))
            .moveTo(radius*math.cos(60*D2R),radius*math.sin(-60*D2R))
            .lineTo((radius-tick_short)*math.cos(60*D2R),(radius-tick_short)*math.sin(-60*D2R))
+           .moveTo(radius*math.cos(75*D2R),radius*math.sin(-75*D2R))
+           .lineTo((radius-tick_short)*math.cos(75*D2R),(radius-tick_short)*math.sin(-75*D2R))
+           
            .moveTo(radius*math.cos(30*D2R),radius*math.sin(30*D2R))
            .lineTo((radius-tick_short)*math.cos(30*D2R),(radius-tick_short)*math.sin(30*D2R))
+           .moveTo(radius*math.cos(15*D2R),radius*math.sin(15*D2R))
+           .lineTo((radius-tick_short)*math.cos(15*D2R),(radius-tick_short)*math.sin(15*D2R))
+           .moveTo(radius*math.cos(45*D2R),radius*math.sin(45*D2R))
+           .lineTo((radius-tick_long)*math.cos(45*D2R),(radius-tick_long)*math.sin(45*D2R))
            .moveTo(radius*math.cos(60*D2R),radius*math.sin(60*D2R))
            .lineTo((radius-tick_short)*math.cos(60*D2R),(radius-tick_short)*math.sin(60*D2R))
+           .moveTo(radius*math.cos(75*D2R),radius*math.sin(75*D2R))
+           .lineTo((radius-tick_short)*math.cos(75*D2R),(radius-tick_short)*math.sin(75*D2R))
 
            .moveTo(-radius*math.cos(30*D2R),radius*math.sin(-30*D2R))
            .lineTo(-(radius-tick_short)*math.cos(30*D2R),(radius-tick_short)*math.sin(-30*D2R))
+           .moveTo(-radius*math.cos(15*D2R),radius*math.sin(-15*D2R))
+           .lineTo(-(radius-tick_short)*math.cos(15*D2R),(radius-tick_short)*math.sin(-15*D2R))
+           .moveTo(-radius*math.cos(45*D2R),radius*math.sin(-45*D2R))
+           .lineTo(-(radius-tick_long)*math.cos(45*D2R),(radius-tick_long)*math.sin(-45*D2R))
            .moveTo(-radius*math.cos(60*D2R),radius*math.sin(-60*D2R))
            .lineTo(-(radius-tick_short)*math.cos(60*D2R),(radius-tick_short)*math.sin(-60*D2R))
+           .moveTo(-radius*math.cos(75*D2R),radius*math.sin(-75*D2R))
+           .lineTo(-(radius-tick_short)*math.cos(75*D2R),(radius-tick_short)*math.sin(-75*D2R))
+           
            .moveTo(-radius*math.cos(30*D2R),radius*math.sin(30*D2R))
            .lineTo(-(radius-tick_short)*math.cos(30*D2R),(radius-tick_short)*math.sin(30*D2R))
+           .moveTo(-radius*math.cos(15*D2R),radius*math.sin(15*D2R))
+           .lineTo(-(radius-tick_short)*math.cos(15*D2R),(radius-tick_short)*math.sin(15*D2R))
+           .moveTo(-radius*math.cos(45*D2R),radius*math.sin(45*D2R))
+           .lineTo(-(radius-tick_long)*math.cos(45*D2R),(radius-tick_long)*math.sin(45*D2R))
            .moveTo(-radius*math.cos(60*D2R),radius*math.sin(60*D2R))
            .lineTo(-(radius-tick_short)*math.cos(60*D2R),(radius-tick_short)*math.sin(60*D2R))
+           .moveTo(-radius*math.cos(75*D2R),radius*math.sin(75*D2R))
+           .lineTo(-(radius-tick_short)*math.cos(75*D2R),(radius-tick_short)*math.sin(75*D2R))
            .setStrokeLineWidth(1.7)
            .setColor(colorBG);
-        rwr.texts = setsize([],rwr.max_icons);
+        rwr.texts = setsize([],rwr.max_icons);# aircraft ID
         for (var i = 0;i<rwr.max_icons;i+=1) {
             rwr.texts[i] = rwr.rootCenter.createChild("text")
                 .setText("00")
@@ -92,7 +119,7 @@ RWRCanvas = {
                 .hide();
 
         }
-        rwr.symbol_hat = setsize([],rwr.max_icons);
+        rwr.symbol_hat = setsize([],rwr.max_icons);# airborne symbol over ID
         for (var i = 0;i<rwr.max_icons;i+=1) {
             rwr.symbol_hat[i] = rwr.rootCenter.createChild("path")
                     .moveTo(0,-font)
@@ -352,7 +379,7 @@ RWRCanvas = {
             me.noisebar.setTranslation(0,0);
         }
         me.noiseup += 1;
-        if (me.noiseup == 21) me.noiseup = 1;
+        if (me.noiseup > 20) me.noiseup = 1;
 #        printf("list %d type %s", size(list), type);
         me.elapsed = getprop("sim/time/elapsed-sec");
         var sorter = func(a, b) {
