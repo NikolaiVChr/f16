@@ -14,7 +14,7 @@ MATERIAL "TheStrutMat" rgb 0.840 0.840 0.840  amb 0.800 0.800 0.800  emis 0.000 
 MATERIAL "TheOleoMat" rgb 0.900 0.900 0.900  amb 0.600 0.600 0.600  emis 0.000 0.000 0.000  spec 0.750 0.750 0.750  shi 64 trans 0.000
 MATERIAL "lightWhiteMat" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.977 0.977 0.977  spec 0.000 0.000 0.000  shi 0 trans 0.737
 MATERIAL "emissiveMat.000" rgb 0.914 0.961 1.000  amb 0.958 0.958 0.958  emis 0.916 0.916 0.916  spec 0.000 0.000 0.000  shi 0 trans 0.000
-MATERIAL "glassInsideMat" rgb 1.000 1.000 1.000  amb 0.045 0.045 0.045  emis 0.000 0.000 0.000  spec 1.000 1.000 1.000  shi 33 trans 0.929
+MATERIAL "glassInsideMat" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0 0 0  shi 12  trans 1
 MATERIAL "glassOutsideMat" rgb 1.000 0.880 0.500  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 1.000 1.000 0.800  shi 128 trans 0.550
 MATERIAL "strut1Mat.001" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.502 0.502 0.502  shi 10 trans 0.008
 MATERIAL "lightGreen2Mat" rgb 0.227 0.380 0.000  amb 0.202 0.202 0.202  emis 0.333 0.333 0.333  spec 0.227 0.227 0.227  shi 17 trans 0.000
@@ -97067,7 +97067,7 @@ name "CanopyBackInside"
 data 8
 Mesh.047
 crease 80.0
-texture "Effects/glass/canopy.png"
+texture "Effects/glass/canopy2.png"
 texrep 1 1
 numvert 26
 -3.02548 0.90988 0.23525
@@ -97569,7 +97569,7 @@ name "CanopyForwardInside"
 data 8
 Mesh.059
 crease 80.0
-texture "Effects/glass/canopy.png"
+texture "Effects/glass/canopy2.png"
 texrep 1 1
 numvert 215
 -4.9757 0.72958 -0.04387
