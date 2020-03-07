@@ -227,9 +227,43 @@
      </binding>
     </action>
    </animation>
+   
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>SW_GND_JETT</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>false</repeatable>
+     <binding>
+      <command>property-toggle</command>
+        <property>f16/avionics/gnd-jett</property>
+     </binding>
+    </action>
+   </animation>
 
 
 <!-- SWITCH ANIMATIONS -->
+
+<animation>
+  <type>rotate</type>
+  <object-name>SW_GND_JETT</object-name>
+  <property>f16/avionics/gnd-jett</property>
+  <factor>-50</factor>
+  <offset-deg>25</offset-deg>
+  <roll-deg>-10</roll-deg>
+  <heading-deg>7.3</heading-deg> 
+  <center>
+   <x-m>-0.190538</x-m>
+   <y-m>-0.402386</y-m>
+   <z-m>0.002988</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+   <z>0</z>
+  </axis>
+ </animation>
 
 <animation>
   <type>rotate</type>

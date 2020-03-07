@@ -3108,6 +3108,7 @@ value. 18000=standard US transition altitude -->
             <cara-on type="bool">false</cara-on><!-- if CARA radar altimeter is detecting ground (whether enabled or not) -->
             <hud-ded type="bool">false</hud-ded>
             <n-reset type="bool">false</n-reset>
+            <gnd-jett type="bool">false</gnd-jett>
             <hud-alt type="int">0</hud-alt><!-- 0=AUTO 1=BARO 2=RADAR -->
             <lock-flir type="double">0.05</lock-flir>
             <tgp-lock type="bool">false</tgp-lock>

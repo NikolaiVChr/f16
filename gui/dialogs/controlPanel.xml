@@ -690,7 +690,7 @@
 				    <binding>
 						<command>nasal</command>
 						<script>
-							if (pylons.fcs != nil) {
+							if (pylons.fcs != nil and (getprop("f16/avionics/gnd-jett") or !getprop("gear/gear[0]/wow"))) {
 								pylons.fcs.jettisonFuelAndAG([0,8]);#drop all fueltanks, dummies and A/G weapons. Except wingtips.
 							}
 						</script>
