@@ -1982,11 +1982,17 @@ There is also small changes in tail for different variants with and without brak
     </instrumentation>
     <environment>
         <aircraft-effects>
-            <fog-level type="float">0.5</fog-level>
-            <overlay-alpha type="float">0.5</overlay-alpha>
-            <use-overlay type="int">1</use-overlay>
-            <use-wipers type="int">1</use-wipers>
+            <fog-level type="float">0.0</fog-level>
+            <frost-level type="float">0.0</frost-level>
+            <overlay-alpha type="float">0.35</overlay-alpha>
+            <overlay-glare type="float">1.5</overlay-glare>
+            <use-overlay type="bool">1</use-overlay>
+            <use-wipers type="bool">0</use-wipers>
+            <scheme type="int">0</scheme>
             <rain-enabled type="int">1</rain-enabled>
+            <reflection-strength type="double">0.25</reflection-strength>
+            <use-reflection type="bool">1</use-reflection>
+            <use-mask type="bool">1</use-mask>
         </aircraft-effects>
         <precipitation-control>
             <clip-distance type="double">3.5</clip-distance>
