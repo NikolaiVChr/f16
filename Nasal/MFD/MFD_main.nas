@@ -352,7 +352,8 @@ var MFD_Device =
 
     setupRadar: func (svg) {
         svg.p_RDR = me.canvas.createGroup()
-                .setTranslation(276*0.795,482);#552,482 , 0.795 is for UV map
+                .setTranslation(276*0.795,482)
+                .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,482 , 0.795 is for UV map
         svg.maxB = 16;
         svg.blep = setsize([],svg.maxB);
         svg.iff  = setsize([],svg.maxB);
@@ -809,7 +810,8 @@ var MFD_Device =
 
     setupSMS: func (svg) {
         svg.p_SMS = me.canvas.createGroup()
-                .setTranslation(276*0.795,482);#552,482 , 0.795 is for UV map
+                .setTranslation(276*0.795,482)
+                .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,482 , 0.795 is for UV map
 
         svg.cat = svg.p_SMS.createChild("text")
                 .setTranslation(0, -482*0.5+100)
@@ -1157,7 +1159,8 @@ var MFD_Device =
     
     setupWPN: func (svg) {
         svg.p_WPN = me.canvas.createGroup()
-                .setTranslation(276*0.795,482);#552,482 , 0.795 is for UV map
+                .setTranslation(276*0.795,482)
+                .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,482 , 0.795 is for UV map
 
         
         
@@ -1572,7 +1575,8 @@ var MFD_Device =
     },
 
     setupHSD: func (svg) {
-        svg.p_HSD = me.canvas.createGroup();
+        svg.p_HSD = me.canvas.createGroup()
+                    .set("font","LiberationFonts/LiberationMono-Regular.ttf");
         svg.buttonView = svg.p_HSD.createChild("group")
                 .setTranslation(276*0.795,482);
         svg.p_HSDc = svg.p_HSD.createChild("group")
