@@ -17,7 +17,8 @@ RWRCanvas = {
         rwr.stroke = 2;
         rwr.fadeTime = 7;#seconds
         rwr.rootCenter = root.createChild("group")
-                .setTranslation(center[0],center[1]);
+                .setTranslation(center[0],center[1])
+                .set("font","LiberationFonts/LiberationMono-Regular.ttf");
         
 #        root.createChild("path")
 #           .moveTo(0, diameter/2)
