@@ -35,11 +35,20 @@ RWRCanvas = {
            .arcSmallCW(rwr.circle_radius_big, rwr.circle_radius_big, 0, -rwr.circle_radius_big*2, 0)
            .setStrokeLineWidth(1.7)
            .setColor(colorBG);
-        root.createChild("path")
-           .moveTo(diameter/2-rwr.circle_radius_small/2, diameter/2)
-           .lineTo(diameter/2+rwr.circle_radius_small/2, diameter/2)
-           .moveTo(diameter/2, diameter/2-rwr.circle_radius_small/2)
-           .lineTo(diameter/2, diameter/2+rwr.circle_radius_small/2)
+        root.createChild("path")#middle cross
+           .moveTo(diameter/2-rwr.circle_radius_small, diameter/2)
+           .horiz(rwr.circle_radius_small/2)
+           .moveTo(diameter/2+rwr.circle_radius_small, diameter/2)
+           .horiz(-rwr.circle_radius_small/2)
+           .moveTo(diameter/2, diameter/2-rwr.circle_radius_small)
+           .vert(rwr.circle_radius_small*0.5)
+           .moveTo(diameter/2, diameter/2+rwr.circle_radius_small)
+           .vert(-rwr.circle_radius_small*0.5)
+           .setStrokeLineWidth(2.1)
+           .setColor(colorLG);
+        rwr.noisebar = root.createChild("path")#middle cross
+           .moveTo(diameter/2+rwr.circle_radius_small*0.5, diameter/2)
+           .vert(-rwr.circle_radius_small*0.25)
            .setStrokeLineWidth(2.1)
            .setColor(colorLG);
         root.createChild("path")
@@ -332,10 +341,18 @@ RWRCanvas = {
             return emesary.Transmitter.ReceiptStatus_NotProcessed;
         };
         emesary.GlobalTransmitter.Register(rwr.recipient);
-
+        
+        rwr.noiseup = 10;
         return rwr;
     },
     update: func (list, type) {
+        if (me.noiseup == 10) {
+            me.noisebar.setTranslation(0,me.circle_radius_small*0.25);
+        } elsif (me.noiseup == 1) {
+            me.noisebar.setTranslation(0,0);
+        }
+        me.noiseup += 1;
+        if (me.noiseup == 21) me.noiseup = 1;
 #        printf("list %d type %s", size(list), type);
         me.elapsed = getprop("sim/time/elapsed-sec");
         var sorter = func(a, b) {
