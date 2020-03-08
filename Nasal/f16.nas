@@ -364,9 +364,11 @@ var medium = {
     CARA();
     buffeting();
     fuelqty();
-    settimer(func {me.loop()},0.5);
+    cockpit_temperature_control.loop();
+    settimer(func {me.loop()},LOOP_MEDIUM_RATE);
   },
 };
+var LOOP_MEDIUM_RATE = 0.5;
 
 var slow = {
   loop: func {
@@ -532,6 +534,165 @@ var sendLightsToMp = func {
     setprop("sim/multiplay/generic/bool[44]",0);
   }
 }
+
+var cockpit_temperature_control = {
+  loop: func {
+    ###########################################################
+    #               Aircondition, frost, fog and rain         #
+    ###########################################################
+
+    if (me["currentFrost"]==nil) settimer(func {
+      setprop("environment/aircraft-effects/temperature-inside-degC", getprop("environment/temperature-degc"));
+      if (getprop("environment/temperature-degc") < 0) setprop("/environment/aircraft-effects/frost-outside",1);
+      },3);
+
+    # auto temp adjust:
+    me.currentFrost = getprop("/environment/aircraft-effects/frost-level");
+    me.tempInside  = getprop("environment/aircraft-effects/temperature-inside-degC");
+    me.tempAC = getprop("controls/ventilation/airconditioning-temperature");
+    if (me.currentFrost > 0.8) {
+      me.tempAC += 0.70;
+    } elsif (me.currentFrost > 0.4) {
+      me.tempAC += 0.30;
+    } elsif (me.currentFrost > 0.2) {
+      me.tempAC += 0.15;
+    } elsif (me.currentFrost > 0.0) {
+      me.tempAC += 0.05;
+    } elsif (me.tempInside > 21) {
+      me.tempAC -= me.tempAC*0.1;
+    } elsif (me.tempInside < 10) {
+      me.tempAC += 0.25;
+    }
+    if (me.tempAC > 80) me.tempAC = 80;
+    if (me.tempAC < -4) me.tempAC = -4;
+    setprop("controls/ventilation/airconditioning-temperature", me.tempAC);
+    
+    # If the AC is turned on and on auto setting, it will slowly move the cockpit temperature toward its temperature setting.
+    # The dewpoint inside the cockpit depends on the outside dewpoint and how the AC is working.
+    me.tempOutside = getprop("environment/temperature-degc");
+    me.ramRise     = (getprop("fdm/jsbsim/velocities/vtrue-kts")*getprop("fdm/jsbsim/velocities/vtrue-kts"))/(87*87);#this is called the ram rise formula
+    me.tempOutside += me.ramRise;
+    
+    me.tempOutsideDew = getprop("environment/dewpoint-degc");
+    me.tempInsideDew = getprop("/environment/aircraft-effects/dewpoint-inside-degC");
+    me.tempACDew = 5;# aircondition dew point target. 5 = dry
+    me.ACRunning = getprop("fdm/jsbsim/elec/bus/emergency-dc-1") > 20 and getprop("controls/ventilation/airconditioning-enabled") == TRUE;
+
+    # calc inside temp
+    me.hotAir_deg_min = 2.0;# how fast does the sources heat up cockpit.
+    me.pilot_deg_min  = 0.2;
+    me.glass_deg_min_per_deg_diff  = 0.15;
+    me.AC_deg_min_per_deg_diff     = 0.50;
+    me.knob = getprop("controls/ventilation/windshield-hot-air-knob");
+    me.hotAirOnWindshield = getprop("fdm/jsbsim/elec/bus/emergency-dc-1") > 20?me.knob:0;
+    if (getprop("canopy/position-norm") > 0) {
+      me.tempInside = getprop("environment/temperature-degc");
+    } else {
+      me.tempInside += me.hotAirOnWindshield * (me.hotAir_deg_min/(60/LOOP_MEDIUM_RATE)); # having hot air on windshield will also heat cockpit (10 degs/5 mins).
+      if (me.tempInside < 37) {
+        me.tempInside += me.pilot_deg_min/(60/LOOP_MEDIUM_RATE); # pilot will also heat cockpit with 1 deg per 5 mins
+      }
+      # outside temp ram air temp and static temp will influence inside temp:
+      me.coolingFactor = ((me.tempOutside+getprop("environment/temperature-degc"))*0.5-me.tempInside)*me.glass_deg_min_per_deg_diff/(60/LOOP_MEDIUM_RATE);# 1 degrees difference will cool/warm with 0.5 DegCelsius/min
+      me.tempInside += me.coolingFactor;
+      if (me.ACRunning) {
+        # AC is running and will work to influence the inside temperature
+        me.tempInside += (me.tempAC-me.tempInside)*me.AC_deg_min_per_deg_diff/(60/LOOP_MEDIUM_RATE);# (tempAC-tempInside) = degs/mins it should change
+      }
+    }
+
+    # calc temp of glass itself
+    me.tempIndex = getprop("/environment/aircraft-effects/glass-temperature-index"); # 0.80 = good window   0.45 = bad window
+    me.tempGlass = me.tempIndex*(me.tempInside - me.tempOutside)+me.tempOutside;
+    
+    # calc dewpoint inside
+    if (getprop("canopy/position-norm") > 0) {
+      # canopy is open, inside dewpoint aligns to outside dewpoint instead
+      me.tempInsideDew = me.tempOutsideDew;
+    } else {
+      me.tempInsideDewTarget = 0;
+      if (me.ACRunning == TRUE) {
+        # calculate dew point for inside air. When full airconditioning is achieved at tempAC dewpoint will be tempACdew.
+        # slope = (outsideDew - desiredInsideDew)/(outside-desiredInside)
+        # insideDew = slope*(inside-desiredInside)+desiredInsideDew
+        if ((me.tempOutside-me.tempAC) == 0) {
+          me.slope = 1; # divide by zero prevention
+        } else {
+          me.slope = (me.tempOutsideDew - me.tempACDew)/(me.tempOutside-me.tempAC);
+        }
+        me.tempInsideDewTarget = me.slope*(me.tempInside-me.tempAC)+me.tempACDew;
+      } else {
+        me.tempInsideDewTarget = me.tempOutsideDew;
+      }
+      if (me.tempInsideDewTarget > me.tempInsideDew) {
+        me.tempInsideDew = clamp(me.tempInsideDew + 0.15, -1000, me.tempInsideDewTarget);
+      } else {
+        me.tempInsideDew = clamp(me.tempInsideDew - 0.15, me.tempInsideDewTarget, 1000);
+      }
+    }
+    
+
+    # calc fogging outside and inside on glass
+    me.fogNormOutside = clamp((me.tempOutsideDew-me.tempGlass)*0.05, 0, 1);
+    me.fogNormInside = clamp((me.tempInsideDew-me.tempGlass)*0.05, 0, 1);
+    
+    # calc frost
+    me.frostNormOutside = getprop("/environment/aircraft-effects/frost-outside");
+    me.frostNormInside = getprop("/environment/aircraft-effects/frost-inside");
+    me.rain = getprop("/environment/rain-norm");
+    if (me.rain == nil) {
+      me.rain = 0;
+    }
+    me.frostSpeedInside = clamp(-me.tempGlass, -60, 60)/600 + (me.tempGlass<0?me.fogNormInside/50:0);
+    me.frostSpeedOutside = clamp(-me.tempGlass, -60, 60)/600 + (me.tempGlass<0?(me.fogNormOutside/50 + me.rain/50):0);
+    me.maxFrost = clamp(1 + ((me.tempGlass + 5) / (0 + 5)) * (0 - 1), 0, 1);# -5 is full frost, 0 is no frost
+    me.maxFrostInside = clamp(me.maxFrost - clamp(me.tempInside/30,0,1), 0, 1);# frost having harder time to form while being constantly thawed.
+    me.frostNormOutside = clamp(me.frostNormOutside + me.frostSpeedOutside, 0, me.maxFrost);
+    me.frostNormInside = clamp(me.frostNormInside + me.frostSpeedInside, 0, me.maxFrostInside);
+    me.frostNorm = me.frostNormOutside>me.frostNormInside?me.frostNormOutside:me.frostNormInside;
+    #var frostNorm = clamp((tempGlass-0)*-0.05, 0, 1);# will freeze below 0
+
+    # recalc fogging from frost levels, frost will lower the fogging
+    me.fogNormOutside = clamp(me.fogNormOutside - me.frostNormOutside / 4, 0, 1);
+    me.fogNormInside = clamp(me.fogNormInside - me.frostNormInside / 4, 0, 1);
+    me.fogNorm = me.fogNormOutside>me.fogNormInside?me.fogNormOutside:me.fogNormInside;
+
+    # If the hot air on windshield is enabled and its setting is high enough, then apply the mask which will defog the windshield.
+    #me.mask = FALSE;
+    #if (me.frostNorm <= me.hotAirOnWindshield and me.hotAirOnWindshield != 0) {
+      me.mask = TRUE;
+    #}
+
+    # internal environment
+    setprop("/environment/aircraft-effects/fog-inside", me.fogNormInside);
+    setprop("/environment/aircraft-effects/fog-outside", me.fogNormOutside);
+    setprop("/environment/aircraft-effects/frost-inside", me.frostNormInside);
+    setprop("/environment/aircraft-effects/frost-outside", me.frostNormOutside);
+    setprop("/environment/aircraft-effects/temperature-glass-degC", me.tempGlass);
+    setprop("/environment/aircraft-effects/dewpoint-inside-degC", me.tempInsideDew);
+    setprop("/environment/aircraft-effects/temperature-inside-degC", me.tempInside);
+    setprop("/environment/aircraft-effects/temperature-outside-ram-degC", me.tempOutside);
+    # effects
+    setprop("/environment/aircraft-effects/frost-level", me.frostNorm);
+    setprop("/environment/aircraft-effects/fog-level", me.fogNorm);
+    setprop("/environment/aircraft-effects/use-mask", me.mask);
+    if (rand() > 0.95) {
+      if (me.tempInside < 10) {
+        if (me.tempInside < 5) {
+#          screen.log.write("You are freezing, the cabin is very cold", 1.0, 0.0, 0.0);
+        } else {
+#          screen.log.write("You feel cold, the cockpit is cold", 1.0, 0.5, 0.0);
+        }
+      } elsif (me.tempInside > 25) {
+        if (me.tempInside > 28) {
+#          screen.log.write("You are sweating, the cabin is way too hot", 1.0, 0.0, 0.0);
+        } else {
+#          screen.log.write("You feel its too warm in the cabin", 1.0, 0.5, 0.0);
+        }
+      }
+    }
+  },
+};
 
 var buffeting = func {
     var g = getprop("/accelerations/pilot-gdamped");

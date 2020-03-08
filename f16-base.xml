@@ -1642,6 +1642,12 @@ There is also small changes in tail for different variants with and without brak
                 <throttle-movement type="double">0</throttle-movement>
             </engine>
         </engines>
+        <ventilation>
+            <airconditioning-type type="int">0</airconditioning-type><!-- cold for 12s: -1 auto: 0 warm for 12s: 1 -->
+            <airconditioning-enabled type="bool">true</airconditioning-enabled>
+            <airconditioning-temperature type="double">16.0</airconditioning-temperature>
+            <windshield-hot-air-knob type="double">0.0</windshield-hot-air-knob>
+        </ventilation>
     </controls>
     <engines>
         <engine n="0">
@@ -1993,6 +1999,14 @@ There is also small changes in tail for different variants with and without brak
             <reflection-strength type="double">0.25</reflection-strength>
             <use-reflection type="bool">1</use-reflection>
             <use-mask type="bool">1</use-mask>
+            <dewpoint-inside-degC type="float" userarchive="n">0.0</dewpoint-inside-degC>
+            <temperature-inside-degC type="float" userarchive="n">15.0</temperature-inside-degC>
+            <temperature-glass-degC type="float" userarchive="n">15.0</temperature-glass-degC>
+            <glass-temperature-index type="float" userarchive="n">0.51</glass-temperature-index>
+            <fog-inside type="float" userarchive="n">0.0</fog-inside>
+            <fog-outside type="float" userarchive="n">0.0</fog-outside>
+            <frost-inside type="float" userarchive="n">0.0</frost-inside>
+            <frost-outside type="float" userarchive="n">0.0</frost-outside>
         </aircraft-effects>
         <precipitation-control>
             <clip-distance type="double">3.5</clip-distance>
