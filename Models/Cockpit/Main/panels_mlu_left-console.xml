@@ -91,19 +91,7 @@
         <object-name>ecm-nil</object-name>
         <object-name>ecm-frm</object-name>
         <object-name>ecm-spl</object-name>
-        <object-name>flcs-pwr</object-name>
-        <object-name>horiz-l</object-name>
-        <object-name>horiz-r</object-name>
-        <object-name>flaperons-l</object-name>
-        <object-name>flaperons-r</object-name>
-        <object-name>rudder-dot</object-name>
-        <object-name>hyd-air_epu</object-name>
-        <object-name>stbygains-dot</object-name>
-        <object-name>stbygains-y</object-name>
-        <object-name>stbygains-r</object-name>
-        <object-name>stbygains-p</object-name>
-        <object-name>mal</object-name>
-        <object-name>adv</object-name>
+        
     </effect>
 
     <effect>
@@ -163,6 +151,19 @@
         <object-name>roll-trim-wheel</object-name>
         <object-name>eec-cover</object-name>
         <object-name>eec-switch</object-name>
+        <object-name>flcs-pwr</object-name>
+        <object-name>horiz-l</object-name>
+        <object-name>horiz-r</object-name>
+        <object-name>flaperons-l</object-name>
+        <object-name>flaperons-r</object-name>
+        <object-name>rudder-dot</object-name>
+        <object-name>hyd-air_epu</object-name>
+        <object-name>stbygains-dot</object-name>
+        <object-name>stbygains-y</object-name>
+        <object-name>stbygains-r</object-name>
+        <object-name>stbygains-p</object-name>
+        <object-name>mal</object-name>
+        <object-name>adv</object-name>
     </effect>
 
  <animation>
