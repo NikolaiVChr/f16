@@ -98,6 +98,12 @@
         <object-name>flaperons-r</object-name>
         <object-name>rudder-dot</object-name>
         <object-name>hyd-air_epu</object-name>
+        <object-name>stbygains-dot</object-name>
+        <object-name>stbygains-y</object-name>
+        <object-name>stbygains-r</object-name>
+        <object-name>stbygains-p</object-name>
+        <object-name>mal</object-name>
+        <object-name>adv</object-name>
     </effect>
 
     <effect>
