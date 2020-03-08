@@ -29,6 +29,9 @@
             <seat>
                 <ejection-safety-lever type="bool">true</ejection-safety-lever>
             </seat>
+            <ventilation>
+                <airconditioning-enabled type="bool">true</airconditioning-enabled>
+            </ventilation>
         </controls>
         <engines>
             <engine n="0">

@@ -144,6 +144,31 @@
             </binding>
         </action>
     </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>TEMP_knob</object-name>
+        <property>controls/ventilation/airconditioning-enabled</property>
+        <factor>90</factor>
+        <offset-deg>-15</offset-deg>
+        <drag-direction>horizontal</drag-direction>
+        <center>
+            <x-m>0.34827</x-m><y-m>0.398823</y-m><z-m>0.009161</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>0</y><z>-1</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/ventilation/airconditioning-enabled</property>
+                <factor>1</factor>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
 
     <animation>
         <type>knob</type>

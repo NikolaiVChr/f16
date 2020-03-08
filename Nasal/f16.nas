@@ -936,6 +936,7 @@ var autostart = func {
   setprop("f16/avionics/power-gps",1);
   setprop("f16/avionics/power-dl",1);
   setprop("f16/avionics/power-st-sta",1);
+  setprop("controls/ventilation/airconditioning-enabled",1);
   if (getprop("engines/engine[0]/running")!=1) {
     setprop("f16/engine/feed",1);
     setprop("f16/engine/jet-fuel",1);
