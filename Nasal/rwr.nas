@@ -18,7 +18,7 @@ RWRCanvas = {
         rwr.fadeTime = 7;#seconds
         rwr.rootCenter = root.createChild("group")
                 .setTranslation(center[0],center[1])
-                .set("font","monoMMM_5.ttf");
+                .set("font","B612/B612Mono-Bold.ttf");
         
 #        root.createChild("path")
 #           .moveTo(0, diameter/2)
@@ -117,7 +117,7 @@ RWRCanvas = {
                 .setText("00")
                 .setAlignment("center-center")
                 .setColor(colorG)
-                .setFontSize(font, 0.9)
+                .setFontSize(font, 1)
                 .hide();
 
         }
