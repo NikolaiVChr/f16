@@ -55,11 +55,11 @@
   <particle>
    <start>
     <color>
-     <red><expression><product><value>0.35</value><property>/rendering/scene/diffuse/red</property></product></expression></red>
+     <red><expression><product><value>0.315</value><property>/rendering/scene/diffuse/red</property></product></expression></red>
      <green>
-      <expression><product><value>0.8</value><property>/rendering/scene/diffuse/red</property></product></expression>
+      <expression><product><value>0.72</value><property>/rendering/scene/diffuse/red</property></product></expression>
      </green>
-     <blue><expression><product><value>0.35</value><property>/rendering/scene/diffuse/red</property></product></expression></blue>
+     <blue><expression><product><value>0.315</value><property>/rendering/scene/diffuse/red</property></product></expression></blue>
      <alpha>
       <value>1.0</value>
      </alpha>
