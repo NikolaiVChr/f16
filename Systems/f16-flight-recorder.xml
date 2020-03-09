@@ -3,9 +3,14 @@
     <replay-config type="int">0</replay-config>
     <config n="0">
         <name type="string">F-16 Flight Recorder</name>
-        <!-- Custom properties -->
-        <signals include="/Aircraft/Generic/flightrecorder/components/environment.xml"/>
+
         <signals include="/Aircraft/Generic/flightrecorder/components/position.xml"/>
+        <signals include="/Aircraft/Generic/flightrecorder/components/gear-retractable.xml">
+            <count type="int">3</count>
+        </signals>
+<!--
+        <signals include="/Aircraft/Generic/flightrecorder/components/environment.xml"/>
+        
         <signals include="/Aircraft/Generic/flightrecorder/components/controls.xml"/>
         <signals include="/Aircraft/Generic/flightrecorder/components/engine-jet.xml">
             <count type="int">1</count>
@@ -15,15 +20,7 @@
         </signals>
         <signals include="/Aircraft/Generic/flightrecorder/components/tanks.xml">
             <count type="int">7</count>
-        </signals>
-        <signals include="/Aircraft/Generic/flightrecorder/components/gear-retractable.xml">
-            <count type="int">3</count>
-        </signals>
-        <!-- <signal>
-          <type>float</type>
-          <property type="string">/controls/gear/nosegear-steering-cmd-norm</property>
-          <interpolation>linear</interpolation>
-        </signal> -->
+        </signals>-->
 
 
         <!-- custom signals here -->
@@ -33,6 +30,11 @@
 
         <!-- control surfaces -->
 
+        <!--  disabled until work on them is finished and they are all tested.
+        
+        
+        
+        
         <signal>
             <type>float</type>
             <property type="string">surface-positions/right-aileron-pos-norm</property>
@@ -94,7 +96,6 @@
             <interpolation>linear</interpolation>
         </signal>
 
-        <!-- Sound -->
 
         <signal>
             <type>bool</type>
@@ -127,7 +128,123 @@
         <signal>
             <type>float</type>
             <property type="string">sim/systems/wingflexer/z-m</property>
+        </signal>        
+        <signal>
+            <type>float</type>
+            <property type="string">fdm/jsbsim/fcs/canopy-pos-norm</property>
+        </signal>        
+        <signal>
+            <type>bool</type>
+            <property type="string">damage/fire/serviceable</property>
         </signal>
+        <signal>
+            <type>bool</type>
+            <property type="string">controls/smoke</property>
+        </signal>
+        <signal>
+            <type>bool</type>
+            <property type="string">sim/model/f16/smokewinderR1</property>
+        </signal>
+        <signal>
+            <type>bool</type>
+            <property type="string">sim/model/f16/smokewinderR9</property>
+        </signal>
+        <signal>
+            <type>bool</type>
+            <property type="string">sim/model/f16/smokewinderG1</property>
+        </signal>
+        <signal>
+            <type>bool</type>
+            <property type="string">sim/model/f16/smokewinderG9</property>
+        </signal>
+        <signal>
+            <type>bool</type>
+            <property type="string">sim/model/f16/smokewinderB1</property>
+        </signal>
+        <signal>
+            <type>bool</type>
+            <property type="string">sim/model/f16/smokewinderB9</property>
+        </signal>
+        <signal>
+            <type>bool</type>
+            <property type="string">sim/model/f16/smokewinderW1</property>
+        </signal>
+        <signal>
+            <type>bool</type>
+            <property type="string">sim/model/f16/smokewinderW9</property>
+        </signal>
+        <signal>
+            <type>bool</type>
+            <property type="string">f16/chute/enable</property>
+        </signal>
+        <signal>
+            <type>bool</type>
+            <property type="string">sim/model/f16/dragchute</property>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">f16/sound/pow-thrust</property>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">engines/engine[0]/n2-low</property>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">engines/engine[0]/n1-out1</property>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">engines/engine[0]/n1-out2</property>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">engines/engine/n1-mid</property>
+        </signal>        
+        <signal>
+            <type>bool</type>
+            <property type="string">f16/chute/enable</property>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">environment/rain-norm</property>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">instrumentation/radar/time-till-crash</property>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">accelerations/pilot-gdamped</property>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">f16/chute/fold</property>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">f16/chute/force</property>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">velocities/speed-down-fps</property>
+        </signal>
+        <signal>
+            <type>int</type>
+            <property type="string">velocities/groundspeed-kt</property>
+        </signal>
+        <signal>
+            <type>bool</type>
+            <property type="string">f16/sound/front-off</property>
+        </signal>
+        <signal>
+            <type>bool</type>
+            <property type="string">f16/sound/front-on</property>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">f16/sound/pow-nozzle</property>
+        </signal>-->
     </config>
     <!-- 
     - double: 8 byte/sample

@@ -56,31 +56,32 @@
    <start>
     <color>
      <red>
-      <expression><product><value>1</value><property>/rendering/scene/diffuse/red</property></product></expression>
+      <expression><product><value>0.72</value><property>/rendering/scene/diffuse/red</property></product></expression>
      </red>
-     <green><expression><product><value>0.4</value><property>/rendering/scene/diffuse/red</property></product></expression></green>
-     <blue><expression><product><value>0.4</value><property>/rendering/scene/diffuse/red</property></product></expression></blue>
+     <green><expression><product><value>0.315</value><property>/rendering/scene/diffuse/red</property></product></expression></green>
+     <blue><expression><product><value>0.315</value><property>/rendering/scene/diffuse/red</property></product></expression>
+     </blue>
      <alpha>
       <value>1.0</value>
      </alpha>
     </color>
     <size>
-     <value>0.5</value>
+     <value>0.6</value>
     </size>
    </start>
    <end>
     <color>
      <red>
-      <expression><product><value>1</value><property>/rendering/scene/diffuse/red</property></product></expression>
+      <expression><product><value>0.8</value><property>/rendering/scene/diffuse/red</property></product></expression>
      </red>
-     <green><expression><product><value>0.4</value><property>/rendering/scene/diffuse/red</property></product></expression></green>
-     <blue><expression><product><value>0.4</value><property>/rendering/scene/diffuse/red</property></product></expression></blue>
+     <green><expression><product><value>0.35</value><property>/rendering/scene/diffuse/red</property></product></expression></green>
+     <blue><expression><product><value>0.35</value><property>/rendering/scene/diffuse/red</property></product></expression></blue>
      <alpha>
-      <value>0.4</value>
+      <value>0.25</value>
      </alpha>
     </color>
     <size>
-     <value>6</value>
+     <value>15</value>
     </size>
    </end>
    <life-sec>

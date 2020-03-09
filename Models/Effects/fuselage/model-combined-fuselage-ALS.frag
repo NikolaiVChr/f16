@@ -512,10 +512,10 @@ void main (void)
              //   lightmap_b_color * lightmapFactor.b +
              //   lightmap_a_color * lightmapFactor.a ;
 
-        lightmapcolor = lightmap_r_color * lightmapFactor.r;
-        lightmapcolor = addLights(lightmapcolor, lightmap_g_color * lightmapFactor.g);
-        lightmapcolor = addLights(lightmapcolor, lightmap_b_color * lightmapFactor.b);
-        lightmapcolor = addLights(lightmapcolor, lightmap_a_color * lightmapFactor.a);
+            lightmapcolor = lightmap_r_color * lightmapFactor.r;
+            lightmapcolor = addLights(lightmapcolor, lightmap_g_color * lightmapFactor.g);
+            lightmapcolor = addLights(lightmapcolor, lightmap_b_color * lightmapFactor.b);
+            lightmapcolor = addLights(lightmapcolor, lightmap_a_color * lightmapFactor.a);
 
 
         } else {

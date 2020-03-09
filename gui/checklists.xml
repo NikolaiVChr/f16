@@ -521,6 +521,21 @@
                 </binding>
             </item>
             <item>
+                <name>AIR COND</name>
+                <value>AUTO</value>
+                <condition>
+                    <equals>
+                        <property>controls/ventilation/airconditioning-enabled</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/ventilation/airconditioning-enabled</property>
+                    <value>1</value>
+                </binding>
+            </item>
+            <item>
                 <name>WHEEL down light</name>
                 <value>Three green</value>
                 <condition>
