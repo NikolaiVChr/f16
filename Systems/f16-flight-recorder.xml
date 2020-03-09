@@ -3,9 +3,14 @@
     <replay-config type="int">0</replay-config>
     <config n="0">
         <name type="string">F-16 Flight Recorder</name>
-        <!-- Custom properties -->
-        <signals include="/Aircraft/Generic/flightrecorder/components/environment.xml"/>
+
         <signals include="/Aircraft/Generic/flightrecorder/components/position.xml"/>
+        <signals include="/Aircraft/Generic/flightrecorder/components/gear-retractable.xml">
+            <count type="int">3</count>
+        </signals>
+<!--
+        <signals include="/Aircraft/Generic/flightrecorder/components/environment.xml"/>
+        
         <signals include="/Aircraft/Generic/flightrecorder/components/controls.xml"/>
         <signals include="/Aircraft/Generic/flightrecorder/components/engine-jet.xml">
             <count type="int">1</count>
@@ -15,15 +20,7 @@
         </signals>
         <signals include="/Aircraft/Generic/flightrecorder/components/tanks.xml">
             <count type="int">7</count>
-        </signals>
-        <signals include="/Aircraft/Generic/flightrecorder/components/gear-retractable.xml">
-            <count type="int">3</count>
-        </signals>
-        <!-- <signal>
-          <type>float</type>
-          <property type="string">/controls/gear/nosegear-steering-cmd-norm</property>
-          <interpolation>linear</interpolation>
-        </signal> -->
+        </signals>-->
 
 
         <!-- custom signals here -->
@@ -34,6 +31,10 @@
         <!-- control surfaces -->
 
         <!--  disabled until work on them is finished and they are all tested.
+        
+        
+        
+        
         <signal>
             <type>float</type>
             <property type="string">surface-positions/right-aileron-pos-norm</property>
@@ -95,7 +96,6 @@
             <interpolation>linear</interpolation>
         </signal>
 
-        <!-- Sound -->
 
         <signal>
             <type>bool</type>
