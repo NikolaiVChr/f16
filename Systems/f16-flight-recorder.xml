@@ -244,8 +244,8 @@
         <signal>
             <type>float</type>
             <property type="string">f16/sound/pow-nozzle</property>
-        </signal>
-    </config>-->
+        </signal>-->
+    </config>
     <!-- 
     - double: 8 byte/sample
     - float:  4 byte/sample (default)
