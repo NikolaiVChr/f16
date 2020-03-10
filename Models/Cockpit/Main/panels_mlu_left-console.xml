@@ -83,14 +83,6 @@
         <object-name>COMM1_KNOB</object-name>
         <object-name>COMM2_KNOB</object-name>
         <object-name>CAUTION_RESET</object-name>
-        <object-name>ecm-1</object-name>
-        <object-name>ecm-2</object-name>
-        <object-name>ecm-3</object-name>
-        <object-name>ecm-4</object-name>
-        <object-name>ecm-5</object-name>
-        <object-name>ecm-nil</object-name>
-        <object-name>ecm-frm</object-name>
-        <object-name>ecm-spl</object-name>
         
     </effect>
 
@@ -164,6 +156,15 @@
         <object-name>stbygains-p</object-name>
         <object-name>mal</object-name>
         <object-name>adv</object-name>
+        <object-name>slf-tst-num</object-name>
+        <object-name>ecm-1</object-name>
+        <object-name>ecm-2</object-name>
+        <object-name>ecm-3</object-name>
+        <object-name>ecm-4</object-name>
+        <object-name>ecm-5</object-name>
+        <object-name>ecm-nil</object-name>
+        <object-name>ecm-frm</object-name>
+        <object-name>ecm-spl</object-name>
     </effect>
 
  <animation>
@@ -277,6 +278,15 @@
   <object-name>stbygains-p</object-name>
   <object-name>mal</object-name>
   <object-name>adv</object-name>
+  <object-name>slf-tst-num</object-name>
+  <object-name>ecm-1</object-name>
+  <object-name>ecm-2</object-name>
+  <object-name>ecm-3</object-name>
+  <object-name>ecm-4</object-name>
+  <object-name>ecm-5</object-name>
+  <object-name>ecm-nil</object-name>
+  <object-name>ecm-frm</object-name>
+  <object-name>ecm-spl</object-name>
   <type>material</type>
   <condition>
       <property>controls/test/test-panel/mal-ind-lts</property>
