@@ -85,11 +85,11 @@
      </alpha>
     </color>
     <size>
-     <value>5</value>
+     <value>4</value>
     </size>
    </end>
    <life-sec>
-    <value>2.5</value>
+    <value>4</value>
    </life-sec>
    <mass-kg>0.00001</mass-kg>
    <radius-m>0.015</radius-m>

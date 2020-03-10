@@ -1996,7 +1996,7 @@ There is also small changes in tail for different variants with and without brak
             <use-wipers type="bool">0</use-wipers>
             <scheme type="int">0</scheme>
             <rain-enabled type="int">1</rain-enabled>
-            <reflection-strength type="double">0.65</reflection-strength>
+            <reflection-strength type="double">0.55</reflection-strength>
             <use-reflection type="bool">1</use-reflection>
             <use-mask type="bool">1</use-mask>
             <dewpoint-inside-degC type="float" userarchive="n">0.0</dewpoint-inside-degC>
