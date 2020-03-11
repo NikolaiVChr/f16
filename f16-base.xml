@@ -778,6 +778,27 @@ For something to show up in the RWR at all these conditions must be met:
 2: Be picked up by your radar OR having an active radar pointed your way OR having transponder on and not be too far away.
 
 Notice that the RWR can sometimes pick up threat much further away than your radar is capable off.
+
+Here's a brief list including the most common symbols and what they refer to:
+    - 16:   F-16
+    - 10:   A-10
+    - 14:   F-14
+    - 15:   F-15
+    - 18:   F/A-18
+    - 37:   J-37 Viggen
+    - 21:   MiG-21
+    - 27:   Su-27
+    - 29:   MiG-29
+    - 71:   SR-71
+    - M2:   Mirage-2000
+    - EF:   Eurofighter
+    - JA:   Jaguar
+    - RF:   Rafale (brsq)
+    - S:    AWACS, GCI or Recon
+    - 11:   BUK M2 (SAM)
+    - 20:   S-300 (SAM)
+    - SH:   Frigate/Carrier
+    - AI:   AI scenario
             ]]></text-3>
             <text-4><![CDATA[
 MFDs (Multi Function Displays)
@@ -2664,7 +2685,7 @@ There is also small changes in tail for different variants with and without brak
                 <weight-launch-lbs type="double">1065</weight-launch-lbs>
                 <weight-warhead-lbs type="double">493</weight-warhead-lbs>
                 <weight-fuel-lbm type="double">0</weight-fuel-lbm>
-                <drag-coeff type="double">0.02</drag-coeff>
+                <drag-coeff type="double">0.017</drag-coeff>
                 <cross-section-sqft type="double">1.9121</cross-section-sqft>
                 <arming-time-sec type="double">2.5</arming-time-sec>
                 <min-speed-for-guiding-mach type="double">0.26</min-speed-for-guiding-mach> <!-- source -->
