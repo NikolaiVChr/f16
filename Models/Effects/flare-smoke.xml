@@ -53,43 +53,43 @@
    <start>
     <color>
      <red>
-      <expression><product><value>1</value><property>/rendering/scene/diffuse/red</property></product></expression>
+      <expression><product><value>0.5</value><property>/rendering/scene/diffuse/red</property></product></expression>
      </red>
      <green>
-      <expression><product><value>1</value><property>/rendering/scene/diffuse/red</property></product></expression>
+      <expression><product><value>0.5</value><property>/rendering/scene/diffuse/red</property></product></expression>
      </green>
      <blue>
-      <expression><product><value>1</value><property>/rendering/scene/diffuse/red</property></product></expression>
+      <expression><product><value>0.5</value><property>/rendering/scene/diffuse/red</property></product></expression>
      </blue>
      <alpha>
       <value>1</value>
      </alpha>
     </color>
     <size>
-     <value>0.4</value>
+     <value>0.5</value>
     </size>
    </start>
    <end>
     <color>
      <red>
-      <expression><product><value>1</value><property>/rendering/scene/diffuse/red</property></product></expression>
+      <expression><product><value>0.5</value><property>/rendering/scene/diffuse/red</property></product></expression>
      </red>
      <green>
-      <expression><product><value>1</value><property>/rendering/scene/diffuse/red</property></product></expression>
+      <expression><product><value>0.5</value><property>/rendering/scene/diffuse/red</property></product></expression>
      </green>
      <blue>
-      <expression><product><value>1</value><property>/rendering/scene/diffuse/red</property></product></expression>
+      <expression><product><value>0.5</value><property>/rendering/scene/diffuse/red</property></product></expression>
      </blue>
      <alpha>
-      <value>0.1</value>
+      <value>0.05</value>
      </alpha>
     </color>
     <size>
-     <value>5</value>
+     <value>4</value>
     </size>
    </end>
    <life-sec>
-    <value>2.5</value>
+    <value>4.5</value>
    </life-sec>
    <mass-kg>0.00001</mass-kg>
    <radius-m>0.015</radius-m>

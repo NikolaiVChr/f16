@@ -279,7 +279,7 @@
       <program>
         <vertex-shader>Shaders/light-ALS.vert</vertex-shader>
         <fragment-shader>Shaders/include_fog.frag</fragment-shader>
-        <fragment-shader>light-fixed.frag</fragment-shader>
+        <fragment-shader>Aircraft/f16/Models/Effects/lights/light-fixed.frag</fragment-shader>
         <fragment-shader>Shaders/noise.frag</fragment-shader>        
       </program>
 

@@ -6,15 +6,15 @@
     <name>flares</name>
     <model>Aircraft/f16/Models/Effects/flare.xml</model>
     <trigger>ai/submodels/submodel[0]/flare-release</trigger>
-    <speed>100.0</speed>   <!-- ft/sec -->
+    <speed>200.0</speed>   <!-- ft/sec -->
     <repeat>true</repeat>
     <delay>0.75</delay>
     <count>100</count>
-    <x-offset>5.0</x-offset><!-- positive forward -->
-    <y-offset>2.0</y-offset><!-- feet -->
-    <z-offset>0.1</z-offset>
-    <yaw-offset>90.0</yaw-offset>
-    <life>5</life>
+    <x-offset>-10.67</x-offset><!-- positive forward -->
+    <y-offset>2.97</y-offset><!-- feet -->
+    <z-offset>0.15</z-offset>
+    <pitch-offset>-90.0</pitch-offset>
+    <life>6</life>
     <buoyancy>8</buoyancy>
     <eda>1.0</eda>
   </submodel>
@@ -25,14 +25,14 @@
     <trigger>fdm/jsbsim/fcs/guntrigger</trigger>
     <speed>2041.0</speed>
     <repeat>true</repeat>
-    <delay>0.13</delay>
+    <delay>0.11</delay>
     <count>-1</count>
     <offsets>
         <x-m> -3.16</x-m>
         <y-m> -0.81</y-m>
         <z-m>  0.17</z-m>
     </offsets>
-    <life>2.5</life>
+    <life>3.5</life>
     <wind>false</wind>
     <weight>0.1</weight>
     <cd>0.193</cd>
