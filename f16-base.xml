@@ -854,8 +854,13 @@ Bombs
   RP (ripple release) can be set on WPN MFD page.
     The number is how many subseqential releases should be done.
     If RP is greater than 1, then you can also in same MFD page set distance in Feet between ripples.
-AIM120/AIM9
+AIM-120/AIM-9
   The trigger can be held for 2 second to fire it without a lock in MADDOG mode, where it will lock onto anyone it sees.
+AGM-154A JSOW (Joint Standoff Weapon)
+   Long range guided glide bomb. Can be launched by either inputing GPS coordinates in the "Program Target" dialog for a desired spot or against a TOO (Target Of Opportunity) with a targeting pod lock (see section below). Operational range varies from 70NM max with GPS to about 34NM max with TGP lock.
+   Optimal release envelopes are as follows:
+        GPS lock - Release at or above FL420 with speed at or above M1.6 (70NM and closer).
+        TGP lock (TOO) - Release at or above FL340 with speed at or above M1.3 (34NM and closer).
 
 TARGETPODS
 On the MFDs you can select TGP. This however only works if you have mounted one of the target-pods.
