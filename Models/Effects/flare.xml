@@ -13,7 +13,8 @@
     <type>dist-scale</type>
     <object-name>procedural_light</object-name>
     <interpolation>
-      <entry><ind>0</ind><dep>6.0</dep></entry>
+      <entry><ind>0</ind><dep>5.5</dep></entry>
+      <entry><ind>3750</ind><dep>15.0</dep></entry>
       <entry><ind>7500</ind><dep>30.0</dep></entry>
     </interpolation>
   </animation>

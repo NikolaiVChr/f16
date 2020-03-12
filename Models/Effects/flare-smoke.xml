@@ -5,7 +5,7 @@
   <name>flare-smoke</name>
   <texture>puff.png</texture>
   <emissive>false</emissive>
-  <lighting>true</lighting>
+  <lighting>false</lighting>
   
   <offsets>
    <x-m>0</x-m>
@@ -53,13 +53,13 @@
    <start>
     <color>
      <red>
-      <expression><product><value>0.5</value><property>/rendering/scene/diffuse/red</property></product></expression>
+      <expression><product><value>0.9</value><property>/rendering/scene/diffuse/red</property></product></expression>
      </red>
      <green>
-      <expression><product><value>0.5</value><property>/rendering/scene/diffuse/red</property></product></expression>
+      <expression><product><value>0.9</value><property>/rendering/scene/diffuse/red</property></product></expression>
      </green>
      <blue>
-      <expression><product><value>0.5</value><property>/rendering/scene/diffuse/red</property></product></expression>
+      <expression><product><value>0.9</value><property>/rendering/scene/diffuse/red</property></product></expression>
      </blue>
      <alpha>
       <value>1</value>
@@ -72,20 +72,20 @@
    <end>
     <color>
      <red>
-      <expression><product><value>0.5</value><property>/rendering/scene/diffuse/red</property></product></expression>
+      <expression><product><value>0.9</value><property>/rendering/scene/diffuse/red</property></product></expression>
      </red>
      <green>
-      <expression><product><value>0.5</value><property>/rendering/scene/diffuse/red</property></product></expression>
+      <expression><product><value>0.9</value><property>/rendering/scene/diffuse/red</property></product></expression>
      </green>
      <blue>
-      <expression><product><value>0.5</value><property>/rendering/scene/diffuse/red</property></product></expression>
+      <expression><product><value>0.9</value><property>/rendering/scene/diffuse/red</property></product></expression>
      </blue>
      <alpha>
       <value>0.05</value>
      </alpha>
     </color>
     <size>
-     <value>4</value>
+     <value>3.5</value>
     </size>
    </end>
    <life-sec>

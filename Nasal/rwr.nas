@@ -297,6 +297,8 @@ RWRCanvas = {
                 "E3B":                      rwr.AIRCRAFT_SEARCH,
                 "E-2C-Hawkeye":             rwr.AIRCRAFT_SEARCH,
                 "onox-awacs":               rwr.AIRCRAFT_SEARCH,
+                "u2s":                      rwr.AIRCRAFT_SEARCH,
+                "U-2S-model":               rwr.AIRCRAFT_SEARCH,
                 "F-4S":                     rwr.AIRCRAFT_PHANTOM,
                 "F-4EJ_ADTW":               rwr.AIRCRAFT_PHANTOM,
                 "FGR2-Phantom":             rwr.AIRCRAFT_PHANTOM,
