@@ -3,15 +3,15 @@
 <PropertyList>
 
   <submodel>
-    <name>flares</name>
+    <name>flaresL</name>
     <model>Aircraft/f16/Models/Effects/flare.xml</model>
     <trigger>ai/submodels/submodel[0]/flare-release</trigger>
-    <speed>200.0</speed>   <!-- ft/sec -->
+    <speed>300.0</speed>   <!-- ft/sec -->
     <repeat>true</repeat>
     <delay>0.75</delay>
-    <count>100</count>
+    <count>120</count>
     <x-offset>-10.67</x-offset><!-- positive forward -->
-    <y-offset>2.97</y-offset><!-- feet -->
+    <y-offset>2.98</y-offset><!-- feet -->
     <z-offset>0.15</z-offset>
     <pitch-offset>-90.0</pitch-offset>
     <life>6</life>
@@ -181,5 +181,22 @@
     <impact>true</impact>
     <impact-reports>/ai/models/model-impact</impact-reports>
     <submodel-path>Aircraft/f16/Models/Armament/Weapons/LAU-68/rocket-submodel.xml</submodel-path>
+  </submodel>
+
+  <submodel>
+    <name>flaresR</name>
+    <model>Aircraft/f16/Models/Effects/flare.xml</model>
+    <trigger>ai/submodels/submodel[0]/flare-release</trigger>
+    <speed>300.0</speed>   <!-- ft/sec -->
+    <repeat>true</repeat>
+    <delay>0.75</delay>
+    <count>120</count>
+    <x-offset>-10.67</x-offset><!-- positive forward -->
+    <y-offset>-2.98</y-offset><!-- feet -->
+    <z-offset>0.15</z-offset>
+    <pitch-offset>-90.0</pitch-offset>
+    <life>6</life>
+    <buoyancy>8</buoyancy>
+    <eda>1.0</eda>
   </submodel>
 </PropertyList>
