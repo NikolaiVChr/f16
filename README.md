@@ -1,6 +1,9 @@
 # F-16 Fighting Falcon
 General Dynamics F-16 for Flightgear flight simulator
 
+Current FGAddon version: 3.19
+Suitable for: FlightGear 2018.3 and above.
+
 ![Image](https://i.ibb.co/nsXRXLS/f16-splash1.png)
 
 The General Dynamics F-16 Fighting Falcon is a single-engine supersonic multirole fighter aircraft by General Dynamics, exported to many countries. Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
@@ -20,7 +23,7 @@ Includes the following Aircraft variants:
 - F-16AM block 20 (MLU)
 - F-16A  block 10
 - YF-16
-- F-16 Simplified  (a simpler FDM, yet still complex)
+- F-16 Simplified (a simpler FDM, yet still complex)
 
 The liveries you get available depends on which variant you choose to fly.
 Notice that the quality of liveries differ.
