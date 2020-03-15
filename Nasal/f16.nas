@@ -1249,7 +1249,7 @@ var play_thunder = func (name, timeout=0.1, delay=0) {
 setlistener("/environment/lightning/lightning-pos-y", thunder_listener);
 
 var reloadCannon = func {
-    setprop("ai/submodels/submodel[0]/count", 100);#flares
+    setprop("ai/submodels/submodel[0]/count", 120);#flares
     pylons.cannon.reloadAmmo();
 }
 

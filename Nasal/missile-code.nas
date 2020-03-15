@@ -1299,18 +1299,16 @@ var AIM = {
 		}
 		var init_coord = nil;
 		if (me.rail == TRUE) {
-			if (me.rail_forward == FALSE and me.rail_pitch_deg != 90) {
+			if (me.rail_forward == FALSE) {
 				# polar pylon coords:
 				me.rail_dist_origin = math.sqrt(me.x*me.x+me.z*me.z);
-				if(me.rail_dist_origin==0){
-					me.x = 0.0;
-					me.z = 0.0;
-				} else {
-					me.rail_origin_angle_rad = math.acos(me.clamp(me.x/me.rail_dist_origin,-1,1))*(me.z<0?-1:1);
-					# since we cheat by rotating entire launcher, we must calculate new pylon positions after the rotation:
-					me.x = me.rail_dist_origin*math.cos(me.rail_origin_angle_rad+me.rail_pitch_deg*D2R);
-					me.z = me.rail_dist_origin*math.sin(me.rail_origin_angle_rad+me.rail_pitch_deg*D2R);
+				if (me.rail_dist_origin == 0) {
+					me.rail_dist_origin = 0.00001;
 				}
+				me.rail_origin_angle_rad = math.acos(me.clamp(me.x/me.rail_dist_origin,-1,1))*(me.z<0?-1:1);
+				# since we cheat by rotating entire launcher, we must calculate new pylon positions after the rotation:
+				me.x = me.rail_dist_origin*math.cos(me.rail_origin_angle_rad+me.rail_pitch_deg*D2R);
+				me.z = me.rail_dist_origin*math.sin(me.rail_origin_angle_rad+me.rail_pitch_deg*D2R);
 			}
 		}
 		if (offsetMethod == TRUE and (me.rail == FALSE or me.rail_forward == TRUE)) {
@@ -1367,13 +1365,9 @@ var AIM = {
 		me.speed_north_fps = getprop("velocities/speed-north-fps");
 		if (me.rail == TRUE) {
 			if (me.rail_forward == FALSE) {
-				if (me.rail_pitch_deg == 90) {
-					# rail is actually a tube pointing upward
-					me.rail_speed_into_wind = -getprop("velocities/wBody-fps");# wind from below
-				} else {
-					#does not account for incoming airstream, yet.
-					me.rail_speed_into_wind = 0;
-				}
+					me.u = noseAir.getValue();
+					me.w = -belowAir.getValue();
+					me.rail_speed_into_wind = me.u*math.cos(me.rail_pitch_deg*D2R)+me.w*math.sin(me.rail_pitch_deg*D2R);
 			} else {
 				# rail is pointing forward
 				me.rail_speed_into_wind = getprop("velocities/uBody-fps");# wind from nose
@@ -2109,20 +2103,14 @@ var AIM = {
 		if (me.rail == TRUE and me.rail_passed == FALSE) {
 			me.u = noseAir.getValue();# airstream from nose
 			#var v = getprop("velocities/vBody-fps");# airstream from side
-			me.w = belowAir.getValue();# airstream from below
+			me.w = -belowAir.getValue();# airstream from below
+			me.opposing_wind = me.u*math.cos(me.rail_pitch_deg*D2R)+me.w*math.sin(me.rail_pitch_deg*D2R);
 
 			if (me.rail_forward == TRUE) {
 				me.pitch = OurPitch.getValue();
-				me.opposing_wind = me.u;
 				me.hdg = OurHdg.getValue();
 			} else {
 				me.pitch = OurPitch.getValue() + me.rail_pitch_deg;
-				if (me.rail_pitch_deg == 90) {
-					me.opposing_wind = -me.w;
-				} else {
-					# no incoming airstream if not vertical tube
-					me.opposing_wind = 0;
-				}
 				if (me.Tgt != nil) {
 					me.hdg = me.Tgt.get_bearing();
 				} else {
@@ -2137,8 +2125,6 @@ var AIM = {
 			me.rail_pos = me.rail_pos + me.movement_on_rail;
 			if (me.rail_forward == TRUE) {
 				me.x = me.x - (me.movement_on_rail * FT2M);# negative cause positive is rear in body coordinates
-			} elsif (me.rail_pitch_deg == 90) {
-				me.z = me.z + (me.movement_on_rail * FT2M);# positive cause positive is up in body coordinates
 			} else {
 				me.x = me.x - (me.movement_on_rail * FT2M);
 			}
@@ -2154,15 +2140,8 @@ var AIM = {
 			me.coord.set_alt(me.alt_ft * FT2M);
 		} else {
 			# missile on rail, lets move it on the rail
-			if (me.rail_pitch_deg == 90 or me.rail_forward == TRUE) {
+			if (me.rail_forward == TRUE) {
 				var init_coord = nil;
-				if (offsetMethod == TRUE) {
-					me.geodPos = aircraftToCart({x:-me.x, y:me.y, z: -me.z});
-					me.coord.set_xyz(me.geodPos.x, me.geodPos.y, me.geodPos.z);
-				} else {
-					me.coord = me.getGPS(me.x, me.y, me.z, OurPitch.getValue());
-				}
-			} elsif (me.rail_forward) {
 				if (offsetMethod == TRUE) {
 					me.geodPos = aircraftToCart({x:-me.x, y:me.y, z: -me.z});
 					me.coord.set_xyz(me.geodPos.x, me.geodPos.y, me.geodPos.z);
@@ -4742,9 +4721,11 @@ var AIM = {
 		me.smoke_prop.setBoolValue(FALSE);
 		var info = geodinfo(me.coord.lat(), me.coord.lon());
 
-		if (info == nil or info[1] == nil) {
-			print ("Building hit!");
-		} elsif (info[1] != nil and info[1].solid == 0) {
+		if (info == nil) {
+			me.explode_water_prop.setValue(FALSE);
+		} elsif (info[1] == nil) {
+			#print ("Building hit!");
+		} elsif (info[1].solid == 0) {
 		 	me.explode_water_prop.setValue(TRUE);
 		} else {
 			me.explode_water_prop.setValue(FALSE);
@@ -4757,7 +4738,7 @@ var AIM = {
 		settimer( func me.explode_prop.setBoolValue(FALSE), 0.5 );
 		settimer( func me.explode_smoke_prop.setBoolValue(TRUE), 0.5 );
 		settimer( func me.explode_smoke_prop.setBoolValue(FALSE), 3 );
-		if (getprop("payload/armament/enable-craters") == nil or !getprop("payload/armament/enable-craters")) {return;};
+		if (info == nil or getprop("payload/armament/enable-craters") == nil or !getprop("payload/armament/enable-craters")) {return;};
 		settimer ( func {
 		 	if (info[1] == nil) {
 		       geo.put_model(getprop("payload/armament/models") ~ "bomb_hit_smoke.xml", me.coord.lat(), me.coord.lon());

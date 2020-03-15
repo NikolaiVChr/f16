@@ -320,7 +320,7 @@ var loop_ded = func {# one line is max 24 chars
     } elsif (page == pCM) {
       # this page is not authentic, but since the in cockpit display is defunc, pilot need to know these values so I put them into a DED page.
       var flares   = getprop("ai/submodels/submodel[0]/count");
-      text[0] = sprintf("      CNTM       %s    ",no);
+      text[0] = sprintf("      CMDS       %s    ",no);
       text[1] = sprintf("  CHAFF     %3d",flares);
       text[2] = sprintf("  FLARE     %3d",flares);
       text[3] = sprintf("                        ");
@@ -344,7 +344,7 @@ var loop_ded = func {# one line is max 24 chars
       text[0] = sprintf("        LIST      %s     ",no);
       text[1] = sprintf(" 1ILS  2ALOW 3FACK COM1 ");
       text[2] = sprintf(" 4STPT 5CRUS 6TIME COM2 ");
-      text[3] = sprintf(" 7DLNK 8LASR 9CNTM IFF  ");
+      text[3] = sprintf(" 7DLNK 8LASR 9CMDS IFF  ");
       text[4] = sprintf(" RMAGV       0BNGO LIST ");
     }
     line1.setText(text[0]);

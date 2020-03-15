@@ -51,7 +51,7 @@ var rcs_database = {
     "Blackbird-SR71A":          0.25,
     "Blackbird-SR71B":          0.30,
     "Blackbird-SR71A-BigTail":  0.30,
-    "u2s":                      0.01,
+    "u-2s":                     0.01,
     "U-2S-model":               0.01,
     "ch53e":                    35,     #guess
     "MiG-21bis":                3.5,
