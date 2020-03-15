@@ -28,6 +28,7 @@
     <interpolation>
       <entry><ind>0</ind><dep>1.0</dep></entry>
       <entry><ind>3000</ind><dep>10.0</dep></entry>
+      <entry><ind>5000</ind><dep>12.5</dep></entry>
     </interpolation>
   </animation>
 
