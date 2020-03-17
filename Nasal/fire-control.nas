@@ -753,10 +753,12 @@ var FireControl = {
 			return;
 		}
 		aimer = me.pylons[me.selected[0]].fireWeapon(me.selected[1], getCompleteRadarTargetsList());
-		aimer.sendMessage(aimer.brevity~" Maddog released");
-		me.aimNext = me.nextWeapon(me.selectedType);
-		if (me.aimNext != nil) {
-			me.aimNext.start();
+		if (aimer != nil) {
+			aimer.sendMessage(aimer.brevity~" Maddog released");
+			me.aimNext = me.nextWeapon(me.selectedType);
+			if (me.aimNext != nil) {
+				me.aimNext.start();
+			}
 		}
 		return;
 	},
