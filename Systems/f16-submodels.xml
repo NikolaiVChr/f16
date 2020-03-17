@@ -20,6 +20,10 @@
     <weight>1</weight>
     <cd>0.05</cd>
     <eda>0.12</eda>
+    <randomness>
+        <azimuth>5</azimuth>
+        <elevation>5</elevation>
+    </randomness>
   </submodel>
 
   <submodel>
@@ -204,5 +208,9 @@
     <weight>1</weight>
     <cd>0.05</cd>
     <eda>0.12</eda>
+    <randomness>
+        <azimuth>5</azimuth>
+        <elevation>5</elevation>
+    </randomness>
   </submodel>
 </PropertyList>
