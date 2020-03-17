@@ -2,11 +2,11 @@
 
 <PropertyList>
 
- <path>Aircraft/f16/Models/Effects/mach-cone.ac</path>
+ <path>Aircraft/f16/Models/Effects/vapour/mach-cone.ac</path>
  <nopreview/>
 
  <effect>
-  <inherits-from>Aircraft/f16/Models/Effects/mach-cone</inherits-from>
+  <inherits-from>Aircraft/f16/Models/Effects/vapour/mach-cone</inherits-from>
   <object-name>Bounding_box</object-name>
   <parameters>
       <flame_color_low_r><use>rendering/scene/diffuse/red-unbound</use></flame_color_low_r>

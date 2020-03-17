@@ -3,7 +3,7 @@
 
 <particlesystem>
   <name>smoke</name>
-  <texture>smokepuff.png</texture>
+  <texture>../smokepuff.png</texture>
   <emissive>false</emissive>
   <lighting>false</lighting>
   

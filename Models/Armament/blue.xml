@@ -6,7 +6,7 @@
 
 	<model>
 		<name>sr</name>
-		<path>Aircraft/f16/Models/Effects/smokeB.xml</path>
+		<path>Aircraft/f16/Models/Effects/smokewinder/smokeB.xml</path>
 			<offsets>
 				<x-m>0</x-m>
 			    <y-m>0</y-m>

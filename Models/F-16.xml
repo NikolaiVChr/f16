@@ -575,7 +575,7 @@
 
 <model>
   <name>machCone</name>
-  <path>Aircraft/f16/Models/Effects/mach-cone.xml</path>
+  <path>Aircraft/f16/Models/Effects/vapour/mach-cone.xml</path>
  </model>
  
  <animation>
@@ -607,7 +607,7 @@
 
  <model>
   <name>left-strake-vortex</name>
-  <path>Aircraft/f16/Models/Effects/strake-vortex.xml</path>
+  <path>Aircraft/f16/Models/Effects/vapour/strake-vortex.xml</path>
   <offsets>
    <x-m>-2.5</x-m>
    <y-m>-1.0</y-m>
@@ -617,7 +617,7 @@
 
  <model>
   <name>right-strake-vortex</name>
-  <path>Aircraft/f16/Models/Effects/strake-vortex.xml</path>
+  <path>Aircraft/f16/Models/Effects/vapour/strake-vortex.xml</path>
   <offsets>
    <x-m>-2.5</x-m>
    <y-m>1.0</y-m>
@@ -657,7 +657,7 @@
 
  <model>
   <name>g-vortexR</name>
-  <path>Aircraft/f16/Models/Effects/g-vortex.xml</path>
+  <path>Aircraft/f16/Models/Effects/vapour/g-vortex.xml</path>
   <offsets>
    <x-m>-0.8</x-m>
    <y-m>0.5</y-m>
@@ -669,7 +669,7 @@
 
  <model>
   <name>g-vortexL</name>
-  <path>Aircraft/f16/Models/Effects/g-vortex.xml</path>
+  <path>Aircraft/f16/Models/Effects/vapour/g-vortex.xml</path>
   <offsets>
    <x-m>-0.8</x-m>
    <y-m>-0.5</y-m>

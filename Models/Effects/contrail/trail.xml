@@ -12,9 +12,9 @@
 
         <condition>
             <and>
-                <not>
-                    <property>sim/multiplay/generic/bool[10]</property><!-- smoke -->
-                </not>
+                <!-- smoke --><!--<not>
+                    <property>sim/multiplay/generic/bool[10]</property>
+                </not>-->
                 <greater-than>
                     <property>sim/multiplay/generic/short[6]</property><!-- n2 -->
                     <value>59</value>
