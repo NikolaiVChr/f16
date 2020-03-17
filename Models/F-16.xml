@@ -273,7 +273,7 @@
  </model>
 
  <model>
-    <path>Effects/trail/trail.xml</path>
+    <path>Effects/contrail/trail.xml</path>
       <offsets>
         <x-m>10.0</x-m>
         <y-m>0.0</y-m>
