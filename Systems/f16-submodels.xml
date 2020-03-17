@@ -16,7 +16,10 @@
     <pitch-offset>-90.0</pitch-offset>
     <life>6</life>
     <buoyancy>8</buoyancy>
-    <eda>1.0</eda>
+    <wind>true</wind>
+    <weight>1</weight>
+    <cd>0.05</cd>
+    <eda>0.12</eda>
   </submodel>
 
   <submodel>
@@ -197,6 +200,9 @@
     <pitch-offset>-90.0</pitch-offset>
     <life>6</life>
     <buoyancy>8</buoyancy>
-    <eda>1.0</eda>
+    <wind>true</wind>
+    <weight>1</weight>
+    <cd>0.05</cd>
+    <eda>0.12</eda>
   </submodel>
 </PropertyList>
