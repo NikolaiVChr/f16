@@ -21,7 +21,7 @@
         </not>
         <greater-than>
           <property>sim/multiplay/generic/short[6]</property><!-- N2 -->
-          <value>98</value>
+          <value>97</value>
         </greater-than>
         <greater-than>
           <property>/environment/temperature-degc</property>
@@ -97,7 +97,7 @@
                         </expression>
                     </blue>
                     <alpha>
-                        <value>0.025</value>
+                        <value>0.027</value>
                     </alpha>
                 </color>
                 <size>
@@ -110,7 +110,7 @@
                     <red>
                         <expression>
                             <product>
-                                <value>0.95</value>
+                                <value>0.97</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -118,7 +118,7 @@
                     <green>
                         <expression>
                             <product>
-                                <value>0.95</value>
+                                <value>0.96</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -132,16 +132,16 @@
                         </expression>
                     </blue>
                     <alpha>
-                        <value>0.005</value>
+                        <value>0.0025</value>
                     </alpha>
                 </color>
                 <size>
-                    <value>8.0</value>
+                    <value>12.0</value>
                 </size>
             </end>
 
       <life-sec>
-        <value>6.5</value>
+        <value>7</value>
       </life-sec>
 
       <mass-kg>0.15</mass-kg>

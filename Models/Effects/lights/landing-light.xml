@@ -21,6 +21,7 @@
     <object-name>procedural_light</object-name>
     <interpolation>
       <entry><ind>0</ind><dep>2.0</dep></entry>
+      <entry><ind>3750</ind><dep>14.0</dep></entry>
       <entry><ind>7500</ind><dep>22.0</dep></entry>
     </interpolation>
   </animation>
