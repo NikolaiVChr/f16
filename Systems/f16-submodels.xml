@@ -4,19 +4,26 @@
 
   <submodel>
     <name>flaresL</name>
-    <model>Aircraft/f16/Models/Effects/flare.xml</model>
+    <model>Aircraft/f16/Models/Effects/flare/flare.xml</model>
     <trigger>ai/submodels/submodel[0]/flare-release</trigger>
-    <speed>300.0</speed>   <!-- ft/sec -->
+    <speed>75.0</speed>   <!-- ft/sec -->
     <repeat>true</repeat>
     <delay>0.75</delay>
-    <count>120</count>
+    <count>100</count>
     <x-offset>-10.67</x-offset><!-- positive forward -->
-    <y-offset>2.98</y-offset><!-- feet -->
+    <y-offset>2.99</y-offset><!-- feet -->
     <z-offset>0.15</z-offset>
-    <pitch-offset>-90.0</pitch-offset>
+    <pitch-offset>-89.0</pitch-offset>
     <life>6</life>
     <buoyancy>8</buoyancy>
-    <eda>1.0</eda>
+    <wind>true</wind>
+    <weight>1</weight>
+    <cd>0.1</cd>
+    <eda>0.12</eda>
+    <randomness>
+        <azimuth>5</azimuth>
+        <elevation>5</elevation>
+    </randomness>
   </submodel>
 
   <submodel>
@@ -185,18 +192,25 @@
 
   <submodel>
     <name>flaresR</name>
-    <model>Aircraft/f16/Models/Effects/flare.xml</model>
+    <model>Aircraft/f16/Models/Effects/flare/flare.xml</model>
     <trigger>ai/submodels/submodel[0]/flare-release</trigger>
-    <speed>300.0</speed>   <!-- ft/sec -->
+    <speed>68.0</speed>   <!-- ft/sec -->
     <repeat>true</repeat>
     <delay>0.75</delay>
-    <count>120</count>
+    <count>100</count>
     <x-offset>-10.67</x-offset><!-- positive forward -->
-    <y-offset>-2.98</y-offset><!-- feet -->
+    <y-offset>-2.99</y-offset><!-- feet -->
     <z-offset>0.15</z-offset>
-    <pitch-offset>-90.0</pitch-offset>
+    <pitch-offset>-91.0</pitch-offset>
     <life>6</life>
     <buoyancy>8</buoyancy>
-    <eda>1.0</eda>
+    <wind>true</wind>
+    <weight>1</weight>
+    <cd>0.1</cd>
+    <eda>0.12</eda>
+    <randomness>
+        <azimuth>5</azimuth>
+        <elevation>5</elevation>
+    </randomness>
   </submodel>
 </PropertyList>

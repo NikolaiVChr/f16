@@ -3,7 +3,7 @@
 
 <particlesystem>
   <name>flare-smoke</name>
-  <texture>puff.png</texture>
+  <texture>../puff.png</texture>
   <emissive>false</emissive>
   <lighting>false</lighting>
   
@@ -31,18 +31,18 @@
     <spread>2</spread>
    </speed-mps>
    <rotation-speed>
-    <x-min-deg-sec>5</x-min-deg-sec>
-    <y-min-deg-sec>5</y-min-deg-sec>
-    <z-min-deg-sec>5</z-min-deg-sec>
-    <x-max-deg-sec>20</x-max-deg-sec>
-    <y-max-deg-sec>20</y-max-deg-sec>
-    <z-max-deg-sec>20</z-max-deg-sec>
+    <x-min-deg-sec>10</x-min-deg-sec>
+    <y-min-deg-sec>10</y-min-deg-sec>
+    <z-min-deg-sec>10</z-min-deg-sec>
+    <x-max-deg-sec>40</x-max-deg-sec>
+    <y-max-deg-sec>40</y-max-deg-sec>
+    <z-max-deg-sec>40</z-max-deg-sec>
    </rotation-speed>
   </shooter>
   
   <counter>
    <particles-per-sec>
-    <value>20</value>
+    <value>25</value>
     <spread>5</spread>
    </particles-per-sec>
   </counter>
@@ -66,7 +66,7 @@
      </alpha>
     </color>
     <size>
-     <value>0.55</value>
+     <value>0.6</value>
     </size>
    </start>
    <end>
@@ -85,11 +85,11 @@
      </alpha>
     </color>
     <size>
-     <value>4</value>
+     <value>6.0</value>
     </size>
    </end>
    <life-sec>
-    <value>4.5</value>
+    <value>2.75</value>
    </life-sec>
    <mass-kg>0.00001</mass-kg>
    <radius-m>0.015</radius-m>

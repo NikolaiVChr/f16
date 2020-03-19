@@ -21,7 +21,7 @@
         </not>
         <greater-than>
           <property>sim/multiplay/generic/short[6]</property><!-- N2 -->
-          <value>98</value>
+          <value>97</value>
         </greater-than>
         <greater-than>
           <property>/environment/temperature-degc</property>
@@ -41,8 +41,8 @@
     </placer>
 
     <shooter>
-      <theta-min-deg>84</theta-min-deg>
-      <theta-max-deg>86</theta-max-deg>
+      <theta-min-deg>83</theta-min-deg>
+      <theta-max-deg>87</theta-max-deg>
       <phi-min-deg>-1.5</phi-min-deg>
       <phi-max-deg>1.5</phi-max-deg>
       <speed-mps>
@@ -97,7 +97,7 @@
                         </expression>
                     </blue>
                     <alpha>
-                        <value>0.025</value>
+                        <value>0.026</value>
                     </alpha>
                 </color>
                 <size>
@@ -110,7 +110,7 @@
                     <red>
                         <expression>
                             <product>
-                                <value>0.95</value>
+                                <value>0.97</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -118,7 +118,7 @@
                     <green>
                         <expression>
                             <product>
-                                <value>0.95</value>
+                                <value>0.96</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -132,16 +132,16 @@
                         </expression>
                     </blue>
                     <alpha>
-                        <value>0.005</value>
+                        <value>0.0025</value>
                     </alpha>
                 </color>
                 <size>
-                    <value>8.0</value>
+                    <value>15.0</value>
                 </size>
             </end>
 
       <life-sec>
-        <value>6.5</value>
+        <value>7</value>
       </life-sec>
 
       <mass-kg>0.15</mass-kg>

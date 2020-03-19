@@ -3,7 +3,7 @@
 
 <particlesystem>
   <name>smoke</name>
-  <texture>smokepuff.png</texture>
+  <texture>../smokepuff.png</texture>
   <emissive>false</emissive>
   <lighting>false</lighting>
   
@@ -55,10 +55,15 @@
   <particle>
    <start>
     <color>
-     <red><expression><product><value>0.79</value><property>/rendering/scene/diffuse/red</property></product></expression></red>
-     <green><expression><product><value>0.79</value><property>/rendering/scene/diffuse/red</property></product></expression></green>
-     <blue> <expression><product><value>0.79</value><property>/rendering/scene/diffuse/red</property></product></expression> </blue>
-     <alpha>   <value>1.0</value>  </alpha>
+     <red>
+      <expression><product><value>0.72</value><property>/rendering/scene/diffuse/red</property></product></expression>
+     </red>
+     <green><expression><product><value>0.315</value><property>/rendering/scene/diffuse/red</property></product></expression></green>
+     <blue><expression><product><value>0.315</value><property>/rendering/scene/diffuse/red</property></product></expression>
+     </blue>
+     <alpha>
+      <value>1.0</value>
+     </alpha>
     </color>
     <size>
      <value>0.6</value>
@@ -66,10 +71,14 @@
    </start>
    <end>
     <color>
-     <red><expression><product><value>0.79</value><property>/rendering/scene/diffuse/red</property></product></expression></red>
-     <green><expression><product><value>0.79</value><property>/rendering/scene/diffuse/red</property></product></expression></green>
-     <blue>      <expression><product><value>0.79</value><property>/rendering/scene/diffuse/red</property></product></expression>     </blue>
-     <alpha>      <value>0.25</value>     </alpha>
+     <red>
+      <expression><product><value>0.8</value><property>/rendering/scene/diffuse/red</property></product></expression>
+     </red>
+     <green><expression><product><value>0.35</value><property>/rendering/scene/diffuse/red</property></product></expression></green>
+     <blue><expression><product><value>0.35</value><property>/rendering/scene/diffuse/red</property></product></expression></blue>
+     <alpha>
+      <value>0.25</value>
+     </alpha>
     </color>
     <size>
      <value>15</value>

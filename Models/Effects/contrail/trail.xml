@@ -3,7 +3,7 @@
 <PropertyList>
 
     <particlesystem>
-        <name>Trail</name>
+        <name>Contrail</name>
         <texture>smoke.png</texture>
 
         <emissive type="bool">false</emissive>
@@ -12,13 +12,13 @@
 
         <condition>
             <and>
-                <not>
-                    <property>sim/model/f16/smoke</property>
-                </not>
-                <equals>
-                    <property>engines/engine/running</property>
-                    <value>true</value>
-                </equals>
+                <!-- smoke --><!--<not>
+                    <property>sim/multiplay/generic/bool[10]</property>
+                </not>-->
+                <greater-than>
+                    <property>sim/multiplay/generic/short[6]</property><!-- n2 -->
+                    <value>59</value>
+                </greater-than>
                 <greater-than>
                     <property>environment/relative-humidity</property>
                     <value>60</value>
@@ -27,9 +27,6 @@
                     <property>/environment/temperature-degc</property>
                     <value>-38</value>
                 </less-than>
-                <not>
-                    <property>fdm/jsbsim/gear/wow</property>
-                </not>
             </and>
         </condition>
 
@@ -95,7 +92,7 @@
                         </expression>
                     </blue>
                     <alpha>
-                        <value> 0.05 </value>
+                        <value> 0.06 </value>
                     </alpha>
                 </color>
                 <size>
