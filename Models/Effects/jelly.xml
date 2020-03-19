@@ -41,8 +41,8 @@
     </placer>
 
     <shooter>
-      <theta-min-deg>84</theta-min-deg>
-      <theta-max-deg>86</theta-max-deg>
+      <theta-min-deg>83</theta-min-deg>
+      <theta-max-deg>87</theta-max-deg>
       <phi-min-deg>-1.5</phi-min-deg>
       <phi-max-deg>1.5</phi-max-deg>
       <speed-mps>
@@ -97,7 +97,7 @@
                         </expression>
                     </blue>
                     <alpha>
-                        <value>0.027</value>
+                        <value>0.026</value>
                     </alpha>
                 </color>
                 <size>
@@ -136,7 +136,7 @@
                     </alpha>
                 </color>
                 <size>
-                    <value>12.0</value>
+                    <value>15.0</value>
                 </size>
             </end>
 

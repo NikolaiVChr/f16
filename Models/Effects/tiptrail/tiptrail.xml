@@ -18,7 +18,7 @@
                 </not>
                 <greater-than>
                     <property>sim/multiplay/generic/float[3]</property><!-- velocities/airspeed-kt -->
-                    <value>180</value>
+                    <value>170</value>
                 </greater-than>
                 <greater-than>
                     <property>environment/relative-humidity</property>
@@ -82,7 +82,7 @@
           <alpha><value> 0.050 </value></alpha>
         </color>
         <size>
-          <value>0.175</value>
+          <value>0.185</value>
         </size>
         </start>
 
@@ -91,7 +91,7 @@
           <red><expression><product><value>0.95</value><property>/rendering/scene/diffuse/red</property></product></expression></red>
           <green><expression><product><value>0.95</value><property>/rendering/scene/diffuse/red</property></product></expression></green>
           <blue><expression><product><value>0.95</value><property>/rendering/scene/diffuse/red</property></product></expression></blue>
-          <alpha><value> 0.0500 </value></alpha>
+          <alpha><value> 0.030 </value></alpha>
         </color>
         <size>
           <value>0.025</value>
