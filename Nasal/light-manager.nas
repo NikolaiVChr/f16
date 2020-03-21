@@ -31,7 +31,7 @@ var light_manager = {
 		# lights ########
       me.data_light = [
                         #light_xpos,light_ypos,light_zpos, light_dir,light_size,light_stretch,light_r,light_g,light_b,light_is_on,number
-        ALS_light_spot.new(10,0,-1,  0, 6,-3.0, 0.7,0.7,0.7,0,0),#landing
+        ALS_light_spot.new(10,0,-1,  0, 1,-2.5, 0.7,0.7,0.7,0,0),#landing
         ALS_light_spot.new(70,0,-1,  0,12,-7.0, 0.7,0.7,0.7,0,1),#taxi
 #        ALS_light_spot.new(-4,4.5,2,0,3.5,0,1,0,0,1,2),#test
 #        ALS_light_spot.new(-4,-4.5,2,0,3.5,0,0,0.4,0,1,3)
@@ -175,29 +175,53 @@ var ALS_light_spot = {
 
 			var sh = math.sin(heading);
 			var ch = math.cos(heading);
-      
-      var proj_x = cur_alt*FT2M*10;
-			var proj_z = cur_alt*FT2M;
-      
-      #print("sh:"~sh ~" ch:"~ch~ " proj_x:"~proj_x~ " proj_z:"~proj_z ~" me.light_stretch:"~me.light_stretch);
-      #print("me.nd_ref_light_x.getValue():"~me.nd_ref_light_x.getValue() ~ " me.nd_ref_light_y.getValue():"~ me.nd_ref_light_y.getValue());
-	 
-			apos.set_lat(lat + ((me.light_xpos + proj_x) * ch + me.light_ypos * sh) / me.lat_to_m);
-			apos.set_lon(lon + ((me.light_xpos + proj_x)* sh - me.light_ypos * ch) / me.lon_to_m);
-      
+      if (me.number == 0) {
+        #landing light
+        
+        var test = fix.testForDistance();
+        if (test != nil) {
+          apos = test[1];
+       
+          var delta_x = (apos.lat() - vpos.lat()) * me.lat_to_m;
+          var delta_y = -(apos.lon() - vpos.lon()) * me.lon_to_m;
+          var delta_z = apos.alt() - vpos.alt();
+          
+          me.nd_ref_light_x.setValue(delta_x);
+          me.nd_ref_light_y.setValue(delta_y);
+          me.nd_ref_light_z.setValue(delta_z);
+          me.nd_ref_light_dir.setValue(heading);  
+          me.nd_ref_light_size.setValue(me.light_size*test[0]);
+        } else {
+          me.nd_ref_light_r.setValue(0);
+          me.nd_ref_light_g.setValue(0);
+          me.nd_ref_light_b.setValue(0);
+          me.light_is_on = 0;
+        }
+      } else {
+        #taxi light
+        var proj_x = cur_alt*FT2M*10;
+  			var proj_z = cur_alt*FT2M;
+        
+        #print("sh:"~sh ~" ch:"~ch~ " proj_x:"~proj_x~ " proj_z:"~proj_z ~" me.light_stretch:"~me.light_stretch);
+        #print("me.nd_ref_light_x.getValue():"~me.nd_ref_light_x.getValue() ~ " me.nd_ref_light_y.getValue():"~ me.nd_ref_light_y.getValue());
+  	 
+  			apos.set_lat(lat + ((me.light_xpos + proj_x) * ch + me.light_ypos * sh) / me.lat_to_m);
+  			apos.set_lon(lon + ((me.light_xpos + proj_x)* sh - me.light_ypos * ch) / me.lon_to_m);
+        
 
-	 
-			var delta_x = (apos.lat() - vpos.lat()) * me.lat_to_m;
-			var delta_y = -(apos.lon() - vpos.lon()) * me.lon_to_m;
-			var delta_z = apos.alt()- proj_z - vpos.alt();
-      
-#        print("delta_x:"~delta_x);
-	 
-			me.nd_ref_light_x.setValue(delta_x);
-			me.nd_ref_light_y.setValue(delta_y);
-			me.nd_ref_light_z.setValue(delta_z);
-			me.nd_ref_light_dir.setValue(heading);	
-      me.nd_ref_light_size.setValue(me.light_size+me.light_size*cur_alt*0.05);
+  	 
+  			var delta_x = (apos.lat() - vpos.lat()) * me.lat_to_m;
+  			var delta_y = -(apos.lon() - vpos.lon()) * me.lon_to_m;
+  			var delta_z = apos.alt()- proj_z - vpos.alt();
+        
+  #        print("delta_x:"~delta_x);
+  	 
+  			me.nd_ref_light_x.setValue(delta_x);
+  			me.nd_ref_light_y.setValue(delta_y);
+  			me.nd_ref_light_z.setValue(delta_z);
+  			me.nd_ref_light_dir.setValue(heading);	
+        me.nd_ref_light_size.setValue(me.light_size+me.light_size*cur_alt*0.05);
+      }
     },
     light_on : func {
       if (me.light_is_on == 1) {return;}
@@ -220,6 +244,126 @@ var ALS_light_spot = {
     },
   
 };
+
+
+SelfContact = {
+# Ownship info
+# 
+  new: func {
+    var c = {parents: [SelfContact]};
+
+    c.init();
+
+      return c;
+  },
+
+  init: func {
+    # read all properties and store them for fast lookup.
+      me.acHeading  = props.globals.getNode("orientation/heading-deg");
+      me.acPitch    = props.globals.getNode("orientation/pitch-deg");
+      me.acRoll     = props.globals.getNode("orientation/roll-deg");
+      me.acalt      = props.globals.getNode("position/altitude-ft");
+      me.aclat      = props.globals.getNode("position/latitude-deg");
+      me.aclon      = props.globals.getNode("position/longitude-deg");
+      me.acgns      = props.globals.getNode("velocities/groundspeed-kt");
+      me.acdns      = props.globals.getNode("velocities/speed-down-fps");
+      me.aceas      = props.globals.getNode("velocities/speed-east-fps");
+      me.acnos      = props.globals.getNode("velocities/speed-north-fps");
+  },
+  
+  getCoord: func {
+    # this is much faster than calling geo.aircraft_position().
+    me.accoord = geo.Coord.new().set_latlon(me.aclat.getValue(), me.aclon.getValue(), me.acalt.getValue()*FT2M);
+      return me.accoord;
+  },
+  
+  getLightCoord: func {
+    # this is much faster than calling geo.aircraft_position().
+      me.light = aircraftToCart({x:3.13064, y:0.307693, z: 1.23477});
+      me.accoord = geo.Coord.new().set_xyz(me.light.x,me.light.y,me.light.z);
+      return me.accoord;
+  },
+  
+  getAttitude: func {
+    return [me.acHeading.getValue(),me.acPitch.getValue(),me.acRoll.getValue()];
+  },
+  
+  getSpeedVector: func {
+    me.speed_down_mps  = me.acdns.getValue()*FT2M;
+        me.speed_east_mps  = me.aceas.getValue()*FT2M;
+        me.speed_north_mps = me.acnos.getValue()*FT2M;
+        return [me.speed_north_mps,-me.speed_east_mps,-me.speed_down_mps];
+  },
+  
+  getHeading: func {
+    return me.acHeading.getValue();
+  },
+  
+  getPitch: func {
+    return me.acPitch.getValue();
+  },
+  
+  getRoll: func {
+    return me.acRoll.getValue();
+  },
+  
+  getSpeed: func {
+    return me.acgns.getValue();
+  },
+};
+
+var self = SelfContact.new();
+
+
+Radar = {
+# master radar class
+#
+# Attributes:
+#   on/off
+#   limitedContactVector of RadarContacts
+  enabled: 1,
+};
+
+
+var FixedBeamRadar = {
+# inherits from Radar
+  new: func () {
+    var fb = {parents: [FixedBeamRadar, Radar]};
+    
+    fb.beam_pitch_deg = 0;
+    
+    return fb;
+  },
+  
+  setBeamPitch: func (pitch_deg) {
+    me.beam_pitch_deg = pitch_deg;
+  },
+  
+  computeBeamVector: func {
+    me.beamVector = [math.cos(me.beam_pitch_deg*D2R), 0, math.sin(me.beam_pitch_deg*D2R)];
+    me.beamVectorFix = vector.Math.yawPitchRollVector(-self.getHeading(), self.getPitch(), self.getRoll(), me.beamVector);
+    me.geoVector = vector.Math.vectorToGeoVector(me.beamVectorFix, self.getLightCoord());
+    return me.geoVector;
+  },
+  
+  testForDistance: func {
+    if (me.enabled) {
+      me.selfPos = self.getLightCoord();
+      me.pick = get_cart_ground_intersection({"x":me.selfPos.x(), "y":me.selfPos.y(), "z":me.selfPos.z()}, me.computeBeamVector());
+          if (me.pick != nil) {
+          me.terrain = geo.Coord.new();
+        me.terrain.set_latlon(me.pick.lat, me.pick.lon, me.pick.elevation);
+        me.terrainDist_m = me.selfPos.direct_distance_to(me.terrain);
+        return [me.terrainDist_m, me.terrain];
+        }
+      }
+      return nil;
+  },
+};
+
+# example code
+var fix = FixedBeamRadar.new();
+fix.setBeamPitch(-7.5);
 
 light_manager.init();
 

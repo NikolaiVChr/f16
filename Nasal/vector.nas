@@ -2,10 +2,13 @@ var Math = {
     #
     # Author: Nikolai V. Chr.
     #
-    # Version 1.6
+    # Version 1.7
     #
     # When doing euler coords. to cartesian: +x = forw, +y = left,  +z = up.
     # FG struct. coords:                     +x = back, +y = right, +z = up.
+    #
+    # If euler to cartesian (with inverted heading) then:
+    # cartesian vector will be x: north, y: west, z: skyward
     #
     # When doing euler angles (from pilots point of view):  yaw     = yaw left,  pitch = rotate up, roll = roll right.
     # FG rotations:                                         heading = yaw right, pitch = rotate up, roll = roll right.
@@ -18,6 +21,24 @@ var Math = {
 
     convertAngles: func (heading,pitch,roll) {
         return [-heading, pitch, roll];
+    },
+    
+    # returns direction in geo coordinate system
+    vectorToGeoVector: func (a, coord) {
+        me.handp = me.cartesianToEuler(a);
+        me.end_dist_m = 100;# not too low for floating point precision. Not too high to get into earth curvature stuff.
+        me.tgt_coord = geo.Coord.new(coord);
+        if (me.handp[0] != nil) {
+            me.tgt_coord.apply_course_distance(me.handp[0],me.end_dist_m);
+            me.upamount = me.end_dist_m * math.tan(me.handp[1]*D2R);
+        } elsif (me.handp[1] == 90) {
+            me.upamount = me.end_dist_m;
+        } else {
+            me.upamount = -me.end_dist_m;
+        }
+        me.tgt_coord.set_alt(coord.alt()+me.upamount);
+        
+        return {"x":me.tgt_coord.x()-coord.x(),  "y":me.tgt_coord.y()-coord.y(), "z":me.tgt_coord.z()-coord.z()};
     },
 
     # angle between 2 vectors. Returns 0-180 degrees.
@@ -68,68 +89,6 @@ var Math = {
         return [a[0]*b[0]+a[1]*b[3]+a[2]*b[6], a[0]*b[1]+a[1]*b[4]+a[2]*b[7], a[0]*b[2]+a[1]*b[5]+a[2]*b[8],
                 a[3]*b[0]+a[4]*b[3]+a[5]*b[6], a[3]*b[1]+a[4]*b[4]+a[5]*b[7], a[3]*b[2]+a[4]*b[5]+a[5]*b[8],
                 a[6]*b[0]+a[7]*b[3]+a[8]*b[6], a[6]*b[1]+a[7]*b[4]+a[8]*b[7], a[6]*b[2]+a[7]*b[5]+a[8]*b[8]];
-    },
-
-    # multiply 2 matrices 3 x 4
-    multiplyMatrices4: func (a,b) {
-        #return [a[0]*b[0]+a[1]*b[3]+a[2]*b[6]+a[3]*b[9],    a[0]*b[1]+a[1]*b[4]+a[2]*b[7]+a[3]*b[10],    a[0]*b[2]+a[1]*b[5]+a[2]*b[8],    a[0]*b[3]+a[1]*b[6]+a[2]*b[9],
-        #        a[3]*b[0]+a[4]*b[3]+a[5]*b[6]+a[6]*b[9],    a[3]*b[1]+a[4]*b[4]+a[5]*b[7]+a[6]*b[10],    a[3]*b[2]+a[4]*b[5]+a[5]*b[8],    a[3]*b[3]+a[4]*b[6]+a[5]*b[9],
-        #        a[6]*b[0]+a[7]*b[3]+a[8]*b[6]+a[9]*b[9],    a[6]*b[1]+a[7]*b[4]+a[8]*b[7]+a[9]*b[10],    a[6]*b[2]+a[7]*b[5]+a[8]*b[8],    a[6]*b[3]+a[7]*b[6]+a[8]*b[9],
-        #        a[9]*b[0]+a[10]*b[3]+a[11]*b[6]+a[12]*b[9], a[9]*b[1]+a[10]*b[4]+a[11]*b[7]+a[12]*b[10],  a[9]*b[2]+a[10]*b[5]+a[11]*b[8],  a[9]*b[3]+a[10]*b[6]+a[11]*b[9]];
-        var result = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-        for(var k=0; k<=12; k+=4) {
-            for(var i=0; i<4; i+=1) {
-                var count = 0;
-                for (var j=0; j<4; j+=1) {
-                    result[k+i] += a[k+math.fmod(j,4)] * b[count+math.fmod(i,4)];
-                    count+=4;
-                }
-            }
-        }
-        return result;
-    },
-
-    to4x4: func (a) {
-        return [a[0],a[1],a[2],0,
-                a[3],a[4],a[5],0,
-                a[6],a[7],a[8],0,
-                0,0,0,1];
-    },
-
-    xFromView: func (matrix) {
-        # WIP
-        return [matrix[0],matrix[4],matrix[8]];
-    },
-
-    viewMatrix: func (forw, left, up) {
-        # WIP
-        return [forw[0],left[0],up[0],0,
-                forw[1],left[1],up[1],0,
-                forw[2],left[2],up[2],0,
-                0,0,0,1];
-
-        return [left[0],up[0],forw[0],0,
-                left[1],up[1],forw[1],0,
-                left[2],up[2],forw[2],0,
-                0,0,0,1];
-
-        return [forw[0],forw[1],forw[2],0,
-                left[0],left[1],left[2],0,
-                up[0],up[1],up[2],0,
-                0,0,0,1];
-    },
-
-    invertMatrix4: func (matrix) {
-        # WIP
-        return [];
-    },
-
-    mirrorMatrix: func {
-        # mirror y axis in transform matrix
-        return [1,0,0,0,
-                0,-1,0,0,
-                0,0,1,0,
-                0,0,0,1];
     },
 
     # matrix for rolling
@@ -330,36 +289,3 @@ var Math = {
 #
 
 };
-
-# Fix for geo.Coord: (not needed in FG 2017.4+)
-geo.Coord.set_x = func(x) { me._cupdate(); me._pdirty = 1; me._x = x; me };
-geo.Coord.set_y = func(y) { me._cupdate(); me._pdirty = 1; me._y = y; me };
-geo.Coord.set_z = func(z) { me._cupdate(); me._pdirty = 1; me._z = z; me };
-geo.Coord.set_lat = func(lat) { me._pupdate(); me._cdirty = 1; me._lat = lat * D2R; me };
-geo.Coord.set_lon = func(lon) { me._pupdate(); me._cdirty = 1; me._lon = lon * D2R; me };
-geo.Coord.set_alt = func(alt) { me._pupdate(); me._cdirty = 1; me._alt = alt; me };
-geo.Coord.apply_course_distance2 = func(course, dist) {# this method in geo is not bad, just wanted to see if this way of doing it worked better.
-        me._pupdate();
-        course *= D2R;
-        var nc = geo.Coord.new();
-        nc.set_xyz(0,0,0);        # center of earth
-        dist /= me.direct_distance_to(nc);# current distance to earth center
-        
-        if (dist < 0.0) {
-          dist = abs(dist);
-          course = course - math.pi;        
-        }
-        
-        me._lat2 = math.asin(math.sin(me._lat) * math.cos(dist) + math.cos(me._lat) * math.sin(dist) * math.cos(course));
-
-        me._lon = me._lon + math.atan2(math.sin(course)*math.sin(dist)*math.cos(me._lat),math.cos(dist)-math.sin(me._lat)*math.sin(me._lat2));
-
-        while (me._lon <= -math.pi)
-            me._lon += math.pi*2;
-        while (me._lon > math.pi)
-            me._lon -= math.pi*2;
-
-        me._lat = me._lat2;
-        me._cdirty = 1;
-        me;
-    };
