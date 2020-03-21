@@ -826,6 +826,9 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     mps.loop();
     enableViews();
     fail.start();
+    setprop("consumables/fuel/tank[2]/capacity-gal_us",0);
+    setprop("consumables/fuel/tank[3]/capacity-gal_us",0);
+    setprop("consumables/fuel/tank[4]/capacity-gal_us",0);
     if (getprop("f16/disable-custom-view") != 1) view.manager.register("Cockpit View", pilot_view_limiter);
     emesary.GlobalTransmitter.Register(f16_mfd);
     emesary.GlobalTransmitter.Register(f16_hud);
