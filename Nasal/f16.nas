@@ -826,6 +826,9 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     mps.loop();
     enableViews();
     fail.start();
+    setprop("consumables/fuel/tank[2]/capacity-gal_us",0);
+    setprop("consumables/fuel/tank[3]/capacity-gal_us",0);
+    setprop("consumables/fuel/tank[4]/capacity-gal_us",0);
     if (getprop("f16/disable-custom-view") != 1) view.manager.register("Cockpit View", pilot_view_limiter);
     emesary.GlobalTransmitter.Register(f16_mfd);
     emesary.GlobalTransmitter.Register(f16_hud);
@@ -1903,6 +1906,13 @@ var flexer = func {
     setprop("surface-positions/radlefl", -getprop("surface-positions/flap-pos-norm")*D2R);  
     # sice weight works wrong in air, we remove the weight when in air:
     #var ground = 1;#getprop("fdm/jsbsim/gear/unit[1]/WOW");
+    var wingcontent = 0;
+    if (getprop("consumables/fuel/tank[5]/level-kg")!=nil) {
+      wingcontent += getprop("consumables/fuel/tank[5]/level-kg");
+    }
+    if (getprop("consumables/fuel/tank[6]/level-kg")!=nil) {
+      wingcontent += getprop("consumables/fuel/tank[6]/level-kg");
+    }
     setprop("f16/wings/fuel-and-stores-kg", 
     (getprop("payload/weight[0]/weight-lb")
     +getprop("payload/weight[1]/weight-lb")
@@ -1912,7 +1922,7 @@ var flexer = func {
     +getprop("payload/weight[8]/weight-lb")
     +getprop("payload/weight[9]/weight-lb")
     +getprop("payload/weight[10]/weight-lb"))*LBM2KG
-    +getprop("consumables/fuel/tank[5]/level-kg")+getprop("consumables/fuel/tank[6]/level-kg"));
+    +wingcontent);
     #setprop("f16/wings/fuel-and-stores-kg", ground*(getprop("f16/wings/fuel-and-stores-kg-a")));
     
     # since the wingflexer works wrong in air we make the wing more stiff in air:
