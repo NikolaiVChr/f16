@@ -1034,17 +1034,17 @@ var TerrainManager = {
     }
     var SelectCoord = geo.Coord.new().set_xyz(x, y, z);
 
-    # There is no terrain on earth that can be between these altitudes
-    # so shortcut the whole thing and return now.
-    #if(fn.altitude_ft > 8900 and SelectCoord.alt() > 8900){
- #       return 1;   cannot compare ft and meters
-    #}
-
-        
-            me.myOwnPos = geo.aircraft_position();
-            if(me.myOwnPos.alt() > 8900 and SelectCoord.alt() > 8900) {
-              # both higher than mt. everest, so not need to check.
-              return TRUE;
+            
+    me.myOwnPos = geo.aircraft_position();
+    me.maxDist = me.myOwnPos.direct_distance_to(SelectCoord);
+    me.itsAlt = math.abs(SelectCoord.alt())<0.001?0:SelectCoord.alt();
+    if (me.maxDist*0.001 > 3.57*(math.sqrt(me.myOwnPos.alt())+math.sqrt(me.itsAlt))) {
+      # behind earth curvature
+      return FALSE;
+    }
+    if(me.myOwnPos.alt() > 8900 and SelectCoord.alt() > 8900) {
+      # both higher than mt. everest, so not need to check.
+      return TRUE;
     }
               me.xyz = {"x":me.myOwnPos.x(),                  "y":me.myOwnPos.y(),                 "z":me.myOwnPos.z()};
               me.dir = {"x":SelectCoord.x()-me.myOwnPos.x(),  "y":SelectCoord.y()-me.myOwnPos.y(), "z":SelectCoord.z()-me.myOwnPos.z()};
