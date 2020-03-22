@@ -1038,10 +1038,12 @@ var TerrainManager = {
     me.myOwnPos = geo.aircraft_position();
     me.maxDist = me.myOwnPos.direct_distance_to(SelectCoord);
     me.itsAlt = math.abs(SelectCoord.alt())<0.001?0:SelectCoord.alt();
-    if (me.maxDist*0.001 > 3.57*(math.sqrt(me.myOwnPos.alt())+math.sqrt(me.itsAlt))) {
-      # behind earth curvature
-      return FALSE;
-    }
+    call(func{
+        if (me.maxDist*0.001 > 3.57*(math.sqrt(me.myOwnPos.alt())+math.sqrt(me.itsAlt))) {
+          # behind earth curvature
+          return FALSE;
+        }
+    },nil,nil,var err =[]);
     if(me.myOwnPos.alt() > 8900 and SelectCoord.alt() > 8900) {
       # both higher than mt. everest, so not need to check.
       return TRUE;

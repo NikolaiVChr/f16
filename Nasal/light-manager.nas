@@ -224,7 +224,7 @@ var ALS_light_spot = {
       }
     },
     light_on : func {
-      if (me.light_is_on == 1) {return;}
+      #if (me.light_is_on == 1) {return;}
         me.nd_ref_light_r.setValue(me.light_r);
         me.nd_ref_light_g.setValue(me.light_g);
         me.nd_ref_light_b.setValue(me.light_b);
@@ -232,7 +232,7 @@ var ALS_light_spot = {
       },
   
     light_off : func {
-        if (me.light_is_on == 0) {return;}
+        #if (me.light_is_on == 0) {return;}
         me.nd_ref_light_r.setValue(0);
         me.nd_ref_light_g.setValue(0);
         me.nd_ref_light_b.setValue(0);
