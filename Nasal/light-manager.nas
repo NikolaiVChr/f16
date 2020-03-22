@@ -31,7 +31,7 @@ var light_manager = {
 		# lights ########
       me.data_light = [
                         #light_xpos,light_ypos,light_zpos, light_dir,light_size,light_stretch,light_r,light_g,light_b,light_is_on,number
-        ALS_light_spot.new(10,0,-1,  0, 1,-2.5, 0.7,0.7,0.7,0,0),#landing
+        ALS_light_spot.new(10,0,-1,  0, 0.5,-2.5, 0.7,0.7,0.7,0,0),#landing
         ALS_light_spot.new(70,0,-1,  0,12,-7.0, 0.7,0.7,0.7,0,1),#taxi
 #        ALS_light_spot.new(-4,4.5,2,0,3.5,0,1,0,0,1,2),#test
 #        ALS_light_spot.new(-4,-4.5,2,0,3.5,0,0,0.4,0,1,3)
