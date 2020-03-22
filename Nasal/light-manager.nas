@@ -7,6 +7,10 @@
 # This need to have work in order to initialize the differents lights with the new object
 # Then we need to put a foreach loop in the update loop
 
+# NikolaiVChr:
+# made landing spot be placed correct from light beam
+# Adapted for F-16 2020-03
+
 
 var als_on = props.globals.getNode("/sim/rendering/shaders/skydome");
 var alt_agl = props.globals.getNode("/position/altitude-agl-ft");
@@ -14,6 +18,9 @@ var cur_alt = 0;
 
 var taxiLight = props.globals.getNode("sim/multiplay/generic/bool[46]", 1);
 var landingLight = props.globals.getNode("sim/multiplay/generic/bool[47]", 1);
+var navLight     = props.globals.getNode("sim/multiplay/generic/bool[40]",1);
+
+
 var gearPos = props.globals.getNode("gear/gear[0]/position-norm", 1);
 
 
@@ -33,8 +40,8 @@ var light_manager = {
                         #light_xpos,light_ypos,light_zpos, light_dir,light_size,light_stretch,light_r,light_g,light_b,light_is_on,number
         ALS_light_spot.new(10,0,-1,  0, 0.5,-2.5, 0.7,0.7,0.7,0,0),#landing
         ALS_light_spot.new(70,0,-1,  0,12,-7.0, 0.7,0.7,0.7,0,1),#taxi
-#        ALS_light_spot.new(-4,4.5,2,0,3.5,0,1,0,0,1,2),#test
-#        ALS_light_spot.new(-4,-4.5,2,0,3.5,0,0,0.4,0,1,3)
+        ALS_light_spot.new(1.60236,-4.55165, 0.012629, 0,2,0, 0.5,0,0, 1,2),#left
+        ALS_light_spot.new(1.60236, 4.55165, 0.012629, 0,2,0, 0,0.5,0, 1,3),#right
       ];
 
 		
@@ -64,7 +71,7 @@ var light_manager = {
 		cur_alt = alt_agl.getValue();
     if(cur_alt != nil){
       if (als_on.getValue() == 1) {
-        
+          var red = 1-getprop("rendering/scene/diffuse/red");
           #Condition for lights
           if(gearPos.getValue() > 0.3 and landingLight.getValue() and alt_agl.getValue() < 400.0){
               me.data_light[0].light_r = 0.8-0.8*alt_agl.getValue()/400;
@@ -81,12 +88,30 @@ var light_manager = {
               me.data_light[1].light_off();
           }
           
+          if(navLight.getValue() and alt_agl.getValue() < 20.0){
+              me.data_light[2].light_on();
+              me.data_light[3].light_on();
+          }else{
+              me.data_light[2].light_off();
+              me.data_light[3].light_off();
+          }
+          
          #Updating each light position 
         for(var i = 0; i < size(me.data_light); i += 1)
         {
           me.data_light[i].position();
         }
+      } else {
+        me.data_light[0].light_off();
+        me.data_light[1].light_off();
+        me.data_light[2].light_off();
+        me.data_light[3].light_off();
       }
+    } else {
+      me.data_light[0].light_off();
+      me.data_light[1].light_off();
+      me.data_light[2].light_off();
+      me.data_light[3].light_off();
     }
 		
 		settimer ( func me.update(), 0.00);
@@ -160,7 +185,7 @@ var ALS_light_spot = {
             return me;
     },
     
-    position: func(){
+    position: func() {
       
       cur_alt = alt_agl.getValue();
       var apos = geo.aircraft_position();
@@ -197,6 +222,20 @@ var ALS_light_spot = {
           me.nd_ref_light_b.setValue(0);
           me.light_is_on = 0;
         }
+      } elsif (me.number == 2 or me.number == 3) {
+        #red/green nav light
+        me.lightGPS = aircraftToCart({x:-me.light_xpos, y:me.light_ypos, z: -me.light_zpos});
+        apos = geo.Coord.new().set_xyz(me.lightGPS.x,me.lightGPS.y,me.lightGPS.z);
+        
+        var delta_x = (apos.lat() - vpos.lat()) * me.lat_to_m;
+        var delta_y = -(apos.lon() - vpos.lon()) * me.lon_to_m;
+        var delta_z = apos.alt() - vpos.alt();
+
+        me.nd_ref_light_x.setValue(delta_x);
+        me.nd_ref_light_y.setValue(delta_y);
+        me.nd_ref_light_z.setValue(delta_z);
+          
+        me.nd_ref_light_size.setValue(me.light_size);
       } else {
         #taxi light
         var proj_x = cur_alt*FT2M*10;
@@ -225,9 +264,10 @@ var ALS_light_spot = {
     },
     light_on : func {
       #if (me.light_is_on == 1) {return;}
-        me.nd_ref_light_r.setValue(me.light_r);
-        me.nd_ref_light_g.setValue(me.light_g);
-        me.nd_ref_light_b.setValue(me.light_b);
+        var red = 1-getprop("rendering/scene/diffuse/red");
+        me.nd_ref_light_r.setValue(me.light_r*red);
+        me.nd_ref_light_g.setValue(me.light_g*red);
+        me.nd_ref_light_b.setValue(me.light_b*red);
         me.light_is_on = 1;
       },
   
