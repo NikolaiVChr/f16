@@ -2736,7 +2736,7 @@ There is also small changes in tail for different variants with and without brak
                 <stage-2-duration-sec type="double">0.0</stage-2-duration-sec>
                 <weight-launch-lbs type="double">2150</weight-launch-lbs>
                 <weight-warhead-lbs type="double">1000</weight-warhead-lbs>
-                <weight-fuel-lbm type="double">300</weight-fuel-lbm>
+                <weight-fuel-lbm type="double">450</weight-fuel-lbm>
                 <drag-coeff type="double">0.019</drag-coeff>
                 <cross-section-sqft type="double">3.2332</cross-section-sqft>
                 <arming-time-sec type="double">2.0</arming-time-sec>
