@@ -66,8 +66,8 @@ var light_manager = {
       if (als_on.getValue() == 1) {
         
           #Condition for lights
-          if(gearPos.getValue() > 0.3 and landingLight.getValue() and alt_agl.getValue() < 750.0){
-              me.data_light[0].light_r = 0.8-0.8*alt_agl.getValue()/750;
+          if(gearPos.getValue() > 0.3 and landingLight.getValue() and alt_agl.getValue() < 400.0){
+              me.data_light[0].light_r = 0.8-0.8*alt_agl.getValue()/400;
               me.data_light[0].light_g = me.data_light[0].light_r;
               me.data_light[0].light_b = me.data_light[0].light_r;
               me.data_light[0].light_on();    
