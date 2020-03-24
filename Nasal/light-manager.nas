@@ -403,7 +403,7 @@ var FixedBeamRadar = {
 
 # example code
 var fix = FixedBeamRadar.new();
-fix.setBeamPitch(-7.5);
+fix.setBeamPitch(-15);
 
 light_manager.init();
 
