@@ -403,7 +403,7 @@ var FixedBeamRadar = {
 
 # example code
 var fix = FixedBeamRadar.new();
-fix.setBeamPitch(-15);
+fix.setBeamPitch(-10.14);#glideslope of -2.86 degs, AoA of 13 degs: -(13-2.86) = -10.14 degs
 
 light_manager.init();
 
