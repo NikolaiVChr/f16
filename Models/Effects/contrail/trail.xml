@@ -20,7 +20,7 @@
                     <value>59</value>
                 </greater-than>
                 <greater-than>
-                    <property>environment/relative-humidity</property>
+                    <property>/environment/relative-humidity</property>
                     <value>60</value>
                 </greater-than>
                 <less-than>
