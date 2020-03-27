@@ -442,7 +442,7 @@ var sendABtoMP = func {
   setprop("rendering/scene/diffuse/red-unbound", red);
   
   # afterburner density:
-  setprop("sim/multiplay/generic/float[10]",  1-red*0.95);
+  setprop("sim/multiplay/generic/float[10]",  1-red*0.90);
   
   #color of afterburner:
   # *0.5 is to prevent it from getting too white during night

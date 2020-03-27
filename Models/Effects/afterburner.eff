@@ -14,7 +14,7 @@
     <use_noise type="int">1</use_noise>
     <thrust_collimation type="float">0.1</thrust_collimation>   
     <thrust_density type="float"><use>sim/multiplay/generic/float[10]</use></thrust_density>
-    <base_flame_density type="float">0.075</base_flame_density>
+    <base_flame_density type="float">0.08</base_flame_density>
     <noise_strength type="float">0.2</noise_strength>
     <noise_scale type="float">0.3</noise_scale>
     <deflection_coeff type="float">0.0</deflection_coeff>

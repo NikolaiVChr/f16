@@ -6,7 +6,7 @@
   	<draggable>true</draggable>
     <resizable>true</resizable>
     <width>250</width>
-    <height>475</height>
+    <height>545</height>
 
     <group>
 		<layout>hbox</layout>
@@ -170,6 +170,38 @@
 	  	<height>25</height>
 	  	<label>Wingman 10</label>
 	  	<property>link16/wingman-10</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+      	<color>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
+      	</color>
+	</input>
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>Wingman 11</label>
+	  	<property>link16/wingman-11</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+      	<color>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
+      	</color>
+	</input>
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>Wingman 12</label>
+	  	<property>link16/wingman-12</property>
 	  	<live>true</live>
 	  	<halign>left</halign>
         <binding>
