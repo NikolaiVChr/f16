@@ -89,7 +89,7 @@ Upper semicircle: new threat (750Hz tone)
 Full blinking circle: hostile launch (2000Hz tone)
 Hat above designation: Airborne
 
-Use Link 16 in menu to define your wingmen (up to 10), so they don't show up on RWR.
+Use Link 16 in menu to define your wingmen (up to 12), so they don't show up on RWR.
 
 For something to show up in the RWR at all these conditions must be met:
 1: Be a threat.
