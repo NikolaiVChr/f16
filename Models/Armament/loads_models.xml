@@ -24,7 +24,7 @@
   </offsets>
  </model>
 
-  <model>
+ <model>
   <name>AN_ALQ-184</name>
   <path>Aircraft/f16/Models/Armament/External-stores/AN_ALQ-184/AN_ALQ-184.xml</path>
   <offsets>
@@ -54,6 +54,28 @@
    <y-m>0</y-m>
    <z-m>-1.136</z-m>
    <pitch-deg>-0.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station5_B61-7</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/B61-7/B61-7.xml</path>
+  <offsets>
+   <x-m>0.09</x-m>
+   <y-m>0</y-m>
+   <z-m>-1.064</z-m>
+   <pitch-deg>-0.6</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station5_B61-12</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/B61-12/B61-12.xml</path>
+  <offsets>
+   <x-m>0.09</x-m>
+   <y-m>0</y-m>
+   <z-m>-1.064</z-m>
+   <pitch-deg>-0.6</pitch-deg>
   </offsets>
  </model>
 
