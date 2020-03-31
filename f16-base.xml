@@ -90,9 +90,11 @@
       </previews>
         <hud>
             <visibility n="1">false</visibility>
-            <!--
-            <path n="1">Aircraft/f16/Models/Cockpit/hud.xml</path>
-            <visibility n="1">true</visibility>
+            
+            <path n="1">Aircraft/f16/Systems/nohud.xml</path>
+            <path n="2">Aircraft/f16/Systems/nohud.xml</path>
+            <path n="3">Aircraft/f16/Systems/nohud.xml</path>
+            <!--<visibility n="1">true</visibility>
             <palette>
             <color n="0">
              <alpha type="float">0.85</alpha>
