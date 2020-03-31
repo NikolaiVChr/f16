@@ -875,6 +875,7 @@ var repair2 = func {
   reloadCannon();
   reloadHydras();
   crash.repair();
+  fail.trigger_eng.arm();
   
   if (getprop("f16/engine/running-state")) {
     setprop("fdm/jsbsim/elec/switches/epu",1);
