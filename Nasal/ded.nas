@@ -216,7 +216,7 @@ var loop_ded = func {# one line is max 24 chars
         type = target.get_model();
       }
       var friend = "";
-      if (getprop("f16/avionics/power-dl") and sign != "" and (sign == getprop("link16/wingman-1") or sign == getprop("link16/wingman-2") or sign == getprop("link16/wingman-3") or sign == getprop("link16/wingman-4") or sign == getprop("link16/wingman-5") or sign == getprop("link16/wingman-6") or sign == getprop("link16/wingman-7") or sign == getprop("link16/wingman-8") or sign == getprop("link16/wingman-9") or sign == getprop("link16/wingman-10"))) {
+      if (getprop("f16/avionics/power-dl") and sign != "" and (sign == getprop("link16/wingman-1") or sign == getprop("link16/wingman-2") or sign == getprop("link16/wingman-3") or sign == getprop("link16/wingman-4") or sign == getprop("link16/wingman-5") or sign == getprop("link16/wingman-6") or sign == getprop("link16/wingman-7") or sign == getprop("link16/wingman-8") or sign == getprop("link16/wingman-9") or sign == getprop("link16/wingman-10") or sign == getprop("link16/wingman-11") or sign == getprop("link16/wingman-12"))) {
         friend = "WINGMAN";
       } elsif (sign != "") {
         friend = "NO CONN";
@@ -240,7 +240,9 @@ var loop_ded = func {# one line is max 24 chars
       text[0] = sprintf(" XMT 40 INTRAFLIGHT  %s ",no);
       
       var last = 0;
-      if (getprop("link16/wingman-10")!="") last = 10;
+      if (getprop("link16/wingman-12")!="") last = 12;
+      elsif (getprop("link16/wingman-11")!="") last = 11;
+      elsif (getprop("link16/wingman-10")!="") last = 10;
       elsif (getprop("link16/wingman-9")!="") last = 9;
       elsif (getprop("link16/wingman-8")!="") last = 8;
       elsif (getprop("link16/wingman-7")!="") last = 7;
@@ -252,7 +254,7 @@ var loop_ded = func {# one line is max 24 chars
       elsif (getprop("link16/wingman-1")!="") last = 1;
       scroll += 0.25;
       if (scroll >= last-3) scroll = 0;
-      var wingmen = [getprop("link16/wingman-1"),getprop("link16/wingman-2"),getprop("link16/wingman-3"),getprop("link16/wingman-4"),getprop("link16/wingman-5"),getprop("link16/wingman-6"),getprop("link16/wingman-7"),getprop("link16/wingman-8"),getprop("link16/wingman-9"),getprop("link16/wingman-10")];
+      var wingmen = [getprop("link16/wingman-1"),getprop("link16/wingman-2"),getprop("link16/wingman-3"),getprop("link16/wingman-4"),getprop("link16/wingman-5"),getprop("link16/wingman-6"),getprop("link16/wingman-7"),getprop("link16/wingman-8"),getprop("link16/wingman-9"),getprop("link16/wingman-10"),getprop("link16/wingman-11"),getprop("link16/wingman-12")];
       var used = subvec(wingmen,int(scroll),4);
       text[1] = sprintf("#%d %7s      COMM VHF",int(scroll+1),used[0]);
       text[2] = sprintf("#%d %7s      DATA 16K",int(scroll+2),used[1]);
