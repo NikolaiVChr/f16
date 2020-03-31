@@ -2946,9 +2946,9 @@ There is also small changes in tail for different variants with and without brak
                 <drag-coeff type="double">0.125</drag-coeff>
                 <delta-drag-coeff-deploy type="double">20.00</delta-drag-coeff-deploy>
                 <cross-section-sqft type="double">1.1722</cross-section-sqft>
-                <arming-time-sec type="double">1200</arming-time-sec>
+                <arming-time-sec type="double">1320</arming-time-sec>
                 <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
-                <self-destruct-time-sec type="double">1200</self-destruct-time-sec>
+                <self-destruct-time-sec type="double">1320</self-destruct-time-sec>
                 <all-aspect type="bool">true</all-aspect>
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
@@ -2963,7 +2963,7 @@ There is also small changes in tail for different variants with and without brak
                 <max-pitch-deg type="double">-45</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
                 <inert type="bool">true</inert>
-                <ready-time type="double">25</ready-time>
+                <ready-time type="double">1320</ready-time>
                 <require-lock-to-fire type="bool">true</require-lock-to-fire>
                 <ejector-speed-fps type="double">15</ejector-speed-fps>
             </b61-7>
@@ -2991,9 +2991,9 @@ There is also small changes in tail for different variants with and without brak
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
                 <drag-coeff type="double">0.125</drag-coeff>
                 <cross-section-sqft type="double">1.1722</cross-section-sqft>
-                <arming-time-sec type="double">800</arming-time-sec>
+                <arming-time-sec type="double">900</arming-time-sec>
                 <min-speed-for-guiding-mach type="double">0</min-speed-for-guiding-mach>
-                <self-destruct-time-sec type="double">800</self-destruct-time-sec>
+                <self-destruct-time-sec type="double">900</self-destruct-time-sec>
                 <all-aspect type="bool">true</all-aspect>
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
@@ -3008,7 +3008,7 @@ There is also small changes in tail for different variants with and without brak
                 <max-pitch-deg type="double">-45</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
                 <inert type="bool">true</inert>
-                <ready-time type="double">25</ready-time>
+                <ready-time type="double">900</ready-time>
                 <require-lock-to-fire type="bool">true</require-lock-to-fire>
                 <ejector-speed-fps type="double">15</ejector-speed-fps>
             </b61-12>
