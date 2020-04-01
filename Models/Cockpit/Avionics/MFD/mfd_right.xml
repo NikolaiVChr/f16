@@ -874,6 +874,19 @@
             <blue> 1</blue>
         </emission>
     </animation>
+    <animation>
+       <type>touch</type>
+       <visible>true</visible>
+       <object-name>MFDimage2</object-name>
+       <action>
+           <touch>0</touch>
+           <repeatable>false</repeatable>
+           <binding>
+               <command>nasal</command>
+               <script>f16.setCursor(cmdarg().getNode("x").getValue(),cmdarg().getNode("y").getValue(),1);</script>
+           </binding>
+       </action>
+   </animation>
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/displays/lcd</inherits-from>
         <parameters>

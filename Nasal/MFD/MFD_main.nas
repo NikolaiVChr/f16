@@ -350,11 +350,12 @@ var MFD_Device =
         return obj;
     },
 
-    setupRadar: func (svg) {
+    setupRadar: func (svg, index) {
         svg.p_RDR = me.canvas.createGroup()
                 .setTranslation(276*0.795,482)
                 .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,482 , 0.795 is for UV map
         svg.maxB = 16;
+        svg.index = index;
         svg.blep = setsize([],svg.maxB);
         svg.iff  = setsize([],svg.maxB);
         for (var i = 0;i<svg.maxB;i+=1) {
@@ -513,7 +514,16 @@ var MFD_Device =
            .set("z-index",12)
            .setFontSize(15, 1.0)
            .setColor(1.0,1.0,0.5);
-           
+        
+        svg.cursor = svg.p_RDR.createChild("path")
+                    .moveTo(-8,-8)
+                    .vert(16)
+                    .moveTo(8,-8)
+                    .vert(16)
+                    .setStrokeLineWidth(1.5)
+                    .setColor(1,1,1)
+                    .set("z-index",1000);
+        
         # GM mode
         svg.rdrMode = 0;
         #svg.gmPicG = svg.p_RDR.createChild("group");
@@ -527,7 +537,7 @@ var MFD_Device =
 
     addRadar: func {
         var svg = {getElementById: func (id) {return me[id]},};
-        me.setupRadar(svg);
+        me.setupRadar(svg, me.model_index);
         me.PFD.addRadarPage = func(svg, title, layer_id) {   
             var np = PFD_Page.new(svg, title, layer_id, me);
             append(me.pages, np);
@@ -543,6 +553,7 @@ var MFD_Device =
         me.p_RDR.ppp = me.PFD;
         me.p_RDR.my = me;
         me.p_RDR.gmLine = 10;
+        me.p_RDR.elapsed = 0;
         me.p_RDR.notifyButton = func (eventi) {
             if (eventi != nil) {
                 if (eventi == 0) {
@@ -633,6 +644,46 @@ var MFD_Device =
                 me.root.silent.setText("  OFF  ");
                 me.root.silent.show();
             }
+            if (uv != nil and me.root.index == uv[2]) {
+                if (systime()-uv[3] < 0.5) {
+                    # the time check is to prevent click on other pages to carry over to CRM when that is selected.
+                    cursor_destination = uv;
+                }
+                uv = nil;
+            }
+            
+            if (cursor_destination != nil and cursor_destination[2] == me.root.index) {
+                me.dt = noti.ElapsedSeconds - me.elapsed;
+                me.slew = 100*me.dt;
+                if (cursor_destination[0] > cursor_pos[0]) {
+                    cursor_pos[0] += me.slew;
+                    if (cursor_destination[0] < cursor_pos[0]) {
+                        cursor_pos[0] = cursor_destination[0]
+                    }
+                } elsif (cursor_destination[0] < cursor_pos[0]) {
+                    cursor_pos[0] -= me.slew;
+                    if (cursor_destination[0] > cursor_pos[0]) {
+                        cursor_pos[0] = cursor_destination[0]
+                    }
+                }
+                if (cursor_destination[1] > cursor_pos[1]) {
+                    cursor_pos[1] += me.slew;
+                    if (cursor_destination[1] < cursor_pos[1]) {
+                        cursor_pos[1] = cursor_destination[1]
+                    }
+                } elsif (cursor_destination[1] < cursor_pos[1]) {
+                    cursor_pos[1] -= me.slew;
+                    if (cursor_destination[1] > cursor_pos[1]) {
+                        cursor_pos[1] = cursor_destination[1]
+                    }
+                }
+                
+                if (cursor_destination[0] == cursor_pos[0] and cursor_destination[1] == cursor_pos[1]) {
+                    cursor_click = me.root.index;
+                }
+            }
+            me.elapsed = noti.ElapsedSeconds;
+            me.root.cursor.setTranslation(cursor_pos);
             
             if (getprop("sim/multiplay/generic/int[2]")!=1 and me.root.rdrMode) {
                 # GM mode
@@ -710,6 +761,7 @@ var MFD_Device =
             me.root.az2.setTranslation((me.az/120)*me.wdt*0.5,0);
             me.root.lock.hide();
             me.root.lockInfo.hide();
+            me.desig_new = nil;
             foreach(contact; awg_9.tgts_list) {
                 if (contact.get_display() == 0) {
                     continue;
@@ -733,6 +785,11 @@ var MFD_Device =
                         me.root.blep[me.i].show();
                         me.root.blep[me.i].update();
                         me.root.iff[me.i].hide();
+                        if (cursor_click == me.root.index) {
+                            if (math.abs(cursor_pos[0] - me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60) < 6 and math.abs(cursor_pos[1] + me.distPixels) < 6) {
+                                me.desig_new = contact;
+                            }
+                        }
                     }
                 }
                 
@@ -752,7 +809,9 @@ var MFD_Device =
                         me.root.lockInfo.show();
                         me.rot = me.rot-getprop("orientation/heading-deg")-geo.normdeg180(contact.get_relative_bearing());
                         me.root.lock.setTranslation(276*0.795*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels);
-                        
+                        if (cursor_destination == nil and cursor_click == -1) {
+                            cursor_pos = [276*0.795*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels];
+                        }
                         if (me.blue) {
                             me.root.lockFRot.setRotation(me.rot*D2R);
                             me.root.lockFRot.show();
@@ -775,6 +834,11 @@ var MFD_Device =
                 #if (me.i > (me.root.maxB-1)) {
                     #break;
                 #}
+            }
+            if (cursor_click == me.root.index) {
+                awg_9.designate(me.desig_new);
+                cursor_destination = nil;
+                cursor_click = -1;
             }
             for (;me.i<me.root.maxB;me.i+=1) {
                 me.root.blep[me.i].hide();
@@ -2460,4 +2524,15 @@ var loadLine = func  (no,path) {
     if (size(err) or lines[no] == nil) {
         print(err[0]);
     }
+};
+
+var uv = nil;
+var cursor_pos = [100,-100];
+var cursor_click = -1;
+var cursor_destination = nil;
+
+var setCursor = func (x, y, screen) {
+    #552,482 , 0.795 is for UV map
+    uv = [x*552-552*0.5*0.795,-y*486,screen, systime()];
+    #printf("slew %d,%d on screen %d", uv[0],uv[1],uv[2]);
 };

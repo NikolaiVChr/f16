@@ -1014,6 +1014,18 @@ var selectCenterTarget = func () {
     active_u = nil;
 };
 
+var designate = func (new_u) {
+    if (new_u == nil or active_u_callsign == new_u.get_Callsign() or active_u == new_u) {
+        armament.contact = nil;
+        active_u_callsign = nil;
+        active_u = nil;
+        return;
+    }
+    armament.contact = new_u;
+    active_u_callsign = new_u.get_Callsign();
+    active_u = new_u;
+};
+
 var TerrainManager = {
 #
     # returns true if the node (position) is visible taking into accoun terrain
