@@ -1909,7 +1909,7 @@ var ignoreLoop = func () {
         }
         if (clear) {
           if (contains(multiplayer.ignore, thisCallsign)) {
-              delete(ignore, thisCallsign);
+              delete(multiplayer.ignore, thisCallsign);
           }
           m.setValue("controls/invisible", 0);
         }
