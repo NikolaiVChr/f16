@@ -98,6 +98,7 @@ var rcs_database = {
     "USS-NORMANDY":             450,    #estimated with blender
     "USS-LakeChamplain":        450,    #estimated with blender
     "USS-OliverPerry":          450,    #estimated with blender
+    "USS-SanAntonio":           450,    #estimated with blender
     "tower":                    60,     #estimated with blender
     "gci":                      50,     #guess
     "FA-18C_Hornet":            3.5,
