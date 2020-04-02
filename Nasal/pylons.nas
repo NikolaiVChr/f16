@@ -656,7 +656,7 @@ var a2g_sead = func {
 var a2g_dead1 = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.aim120WT);
-        pylon2.loadSet(pylonSets.aim9);
+        pylon2.loadSet(pylonSets.aim120);
         pylon3.loadSet(pylonSets.a65);
         pylon4.loadSet(pylonSets.a88);
         pylon5.loadSet(pylonSets.fuel30);
@@ -676,7 +676,7 @@ var a2g_dead1 = func {
 var a2g_dead2 = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.aim120WT);
-        pylon2.loadSet(pylonSets.aim120);
+        pylon2.loadSet(pylonSets.aim9);
         pylon3.loadSet(pylonSets.a88);
         pylon4.loadSet(pylonSets.c87);
         pylon5.loadSet(pylonSets.fuel30);
