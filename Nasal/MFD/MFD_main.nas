@@ -514,6 +514,22 @@ var MFD_Device =
            .set("z-index",12)
            .setFontSize(15, 1.0)
            .setColor(1.0,1.0,0.5);
+           
+        svg.norm = svg.p_RDR.createChild("text")
+                .setTranslation(276*0.795*0.0, -482*0.5-225)
+                .setText("NORM")
+                .setAlignment("center-top")
+                .setColor(1,1,1)
+                .setFontSize(16, 1.0);
+        svg.exp = svg.p_RDR.createChild("path")
+                    .moveTo(-100,-100)
+                    .vert(200)
+                    .horiz(200)
+                    .vert(-200)
+                    .horiz(-200)
+                    .setStrokeLineWidth(1.5)
+                    .setColor(0.5,0.5,1)
+                    .hide();
         
         svg.cursor = svg.p_RDR.createChild("path")
                     .moveTo(-8,-8)
@@ -554,6 +570,7 @@ var MFD_Device =
         me.p_RDR.my = me;
         me.p_RDR.gmLine = 10;
         me.p_RDR.elapsed = 0;
+        me.p_RDR.pressEXP = 0;
         me.p_RDR.notifyButton = func (eventi) {
             if (eventi != nil) {
                 if (eventi == 0) {
@@ -568,6 +585,8 @@ var MFD_Device =
                 #    me.ppp.selectPage(me.my.pjitds_1);
                 } elsif (eventi == 16) {
                     me.ppp.selectPage(me.my.p_HSD);
+                } elsif (eventi == 12) {
+                    me.pressEXP = 1;
                 } elsif (eventi == 2) {
                     var az = getprop("instrumentation/radar/az-field");
                     if(az==120)
@@ -620,6 +639,17 @@ var MFD_Device =
                 }
             }
             setprop("instrumentation/radar/mode-switch", 0);
+            if (me.pressEXP) {
+                me.pressEXP = 0;
+                exp = !exp;
+            }
+            if (exp) {
+                me.root.norm.setText("EXP");
+                me.root.exp.setTranslation(cursor_pos);                
+            } else {
+                me.root.norm.setText("NORM");
+            }
+            me.root.exp.setVisible(exp);
             me.root.horiz.setRotation(-getprop("orientation/roll-deg")*D2R);
             me.time = getprop("sim/time/elapsed-sec");
             me.az = getprop("instrumentation/radar/az-field");
@@ -651,8 +681,9 @@ var MFD_Device =
                 }
                 uv = nil;
             }
-            me.slew_x = getprop("controls/displays/cursor-slew-x");
-            me.slew_y = -getprop("controls/displays/cursor-slew-y");
+            me.exp_modi = exp?0.3:1;
+            me.slew_x = getprop("controls/displays/cursor-slew-x")*me.exp_modi;
+            me.slew_y = -getprop("controls/displays/cursor-slew-y")*me.exp_modi;
             me.slew_c = getprop("controls/displays/cursor-click");
             
             me.dt = noti.ElapsedSeconds - me.elapsed;
@@ -789,20 +820,28 @@ var MFD_Device =
                 me.cs = contact.get_Callsign();
                 me.blue = getprop("f16/avionics/power-dl") and (me.cs == getprop("link16/wingman-1") or me.cs == getprop("link16/wingman-2") or me.cs == getprop("link16/wingman-3") or me.cs == getprop("link16/wingman-4") or me.cs == getprop("link16/wingman-5") or me.cs == getprop("link16/wingman-6") or me.cs == getprop("link16/wingman-7") or me.cs == getprop("link16/wingman-8") or me.cs == getprop("link16/wingman-9") or me.cs == getprop("link16/wingman-10") or me.cs == getprop("link16/wingman-11") or me.cs == getprop("link16/wingman-12"));
                 me.iff = contact.getIff();
+                me.echoPos = [me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels];
+                me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
+                if (me.close and exp) {
+                    me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
+                    me.echoPos[1] = cursor_pos[1]+(me.echoPos[1] - cursor_pos[1])*4;
+                } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
+                    continue;
+                }
                 if (me.i <= (me.root.maxB-1)) {
                     if (me.iff) {
-                        me.root.iff[me.i].setTranslation(me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels);
+                        me.root.iff[me.i].setTranslation(me.echoPos);
                         me.root.iff[me.i].show();
                         me.root.iff[me.i].update();
                         me.root.blep[me.i].hide();
                     } else {
                         me.root.blep[me.i].setColor(me.blue?[0.5,1,0.5]:[1,1,1]);
-                        me.root.blep[me.i].setTranslation(me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels);
+                        me.root.blep[me.i].setTranslation(me.echoPos);
                         me.root.blep[me.i].show();
                         me.root.blep[me.i].update();
                         me.root.iff[me.i].hide();
                         if (cursor_click == me.root.index) {
-                            if (math.abs(cursor_pos[0] - me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60) < 8 and math.abs(cursor_pos[1] + me.distPixels) < 8) {
+                            if (math.abs(cursor_pos[0] - me.echoPos[0]) < 8 and math.abs(cursor_pos[1] - me.echoPos[1]) < 8) {
                                 me.desig_new = contact;
                             }
                         }
@@ -824,7 +863,7 @@ var MFD_Device =
                         me.root.lockInfo.setText(me.lockInfo);
                         me.root.lockInfo.show();
                         me.rot = me.rot-getprop("orientation/heading-deg")-geo.normdeg180(contact.get_relative_bearing());
-                        me.root.lock.setTranslation(276*0.795*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels);
+                        me.root.lock.setTranslation(me.echoPos);
                         #if (cursor_lock == -1) {
                             #cursor_pos = [276*0.795*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels];
                         #}
@@ -2547,6 +2586,7 @@ var cursor_pos = [100,-100];
 var cursor_click = -1;
 var cursor_destination = nil;
 var cursor_lock = -1;
+var exp = 0;
 
 var setCursor = func (x, y, screen) {
     #552,482 , 0.795 is for UV map
