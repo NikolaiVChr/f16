@@ -1026,6 +1026,77 @@ There is also small changes in tail for different variants with and without brak
 			</mouse>
         </mice>
         <keyboard n="0">
+            <key n="356">
+                <name>Left</name>
+                <repeatable type="bool">false</repeatable>
+                <desc>slew</desc>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/displays/cursor-slew-x</property>
+                    <value type="int">-1</value>
+                </binding>
+                <mod-up>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/cursor-slew-x</property>
+                        <value type="int">0</value>
+                    </binding>
+                </mod-up>
+            </key>
+
+            <key n="358">
+                <name>Right</name>
+                <repeatable type="bool">false</repeatable>
+                <desc>slew</desc>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/displays/cursor-slew-x</property>
+                    <value type="int">1</value>
+                </binding>
+                <mod-up>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/cursor-slew-x</property>
+                        <value type="int">0</value>
+                    </binding>
+                </mod-up>
+            </key>
+
+            <key n="357">
+                <name>Up</name>
+                <repeatable type="bool">true</repeatable>
+                <desc>slew</desc>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/displays/cursor-slew-y</property>
+                    <value type="int">-1</value>
+                </binding>
+                <mod-up>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/cursor-slew-y</property>
+                        <value type="int">0</value>
+                    </binding>
+                </mod-up>
+            </key>
+
+            <key n="359">
+                <name>Down</name>
+                <repeatable type="bool">true</repeatable>
+                <desc>slew</desc>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/displays/cursor-slew-y</property>
+                    <value type="int">1</value>
+                </binding>
+                <mod-up>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/cursor-slew-y</property>
+                        <value type="int">0</value>
+                    </binding>
+                </mod-up>
+            </key>
 			<key n="24">
 				<name>Ctrl-x</name>
 				<desc>Reset zoom to default</desc>
@@ -1052,6 +1123,22 @@ There is also small changes in tail for different variants with and without brak
 					<script>f16.fovZoom(-1);</script>
 				</binding>
 			</key>
+            <key n="108">
+                <name>l</name>
+                <desc>cursor designate</desc>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/displays/cursor-click</property>
+                    <value type="bool">true</value>
+                </binding>
+                <mod-up>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/cursor-click</property>
+                        <value type="bool">false</value>
+                    </binding>
+                </mod-up>
+            </key>
             <key n="81">
                 <name>Q</name>
                 <desc>Reset view</desc>
@@ -1635,6 +1722,11 @@ There is also small changes in tail for different variants with and without brak
             <display-on type="int">1</display-on>
             <!-- declutter -->
         </HUD>
+        <displays>
+            <cursor-slew-x type="float">0</cursor-slew-x>
+            <cursor-slew-y type="float">0</cursor-slew-y>
+            <cursor-click type="bool">false</cursor-click>
+        </displays>
         <indicators />
         <lighting>
             <ext-lighting-panel>
