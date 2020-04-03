@@ -532,10 +532,10 @@ var MFD_Device =
                     .hide();
         
         svg.cursor = svg.p_RDR.createChild("path")
-                    .moveTo(-8,-8)
-                    .vert(16)
-                    .moveTo(8,-8)
-                    .vert(16)
+                    .moveTo(-8,-9)
+                    .vert(18)
+                    .moveTo(8,-9)
+                    .vert(18)
                     .setStrokeLineWidth(1.5)
                     .setColor(1,1,1)
                     .set("z-index",1000);
@@ -681,7 +681,7 @@ var MFD_Device =
                 }
                 uv = nil;
             }
-            me.exp_modi = exp?0.3:1;
+            me.exp_modi = exp?0.25:1;
             me.slew_x = getprop("controls/displays/cursor-slew-x")*me.exp_modi;
             me.slew_y = -getprop("controls/displays/cursor-slew-y")*me.exp_modi;
             me.slew_c = getprop("controls/displays/cursor-click");
@@ -841,7 +841,7 @@ var MFD_Device =
                         me.root.blep[me.i].update();
                         me.root.iff[me.i].hide();
                         if (cursor_click == me.root.index) {
-                            if (math.abs(cursor_pos[0] - me.echoPos[0]) < 8 and math.abs(cursor_pos[1] - me.echoPos[1]) < 8) {
+                            if (math.abs(cursor_pos[0] - me.echoPos[0]) < 8 and math.abs(cursor_pos[1] - me.echoPos[1]) < 9) {
                                 me.desig_new = contact;
                             }
                         }
