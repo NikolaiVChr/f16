@@ -107,7 +107,7 @@
    <life-sec>
     <value>5.0</value>
    </life-sec>
-   <mass-kg>0.00001</mass-kg>
+   <mass-kg>0.00005</mass-kg>
    <radius-m>0.015</radius-m>
   </particle>
   

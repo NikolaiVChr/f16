@@ -1,3 +1,5 @@
+var trigger_eng = nil;
+
 var start = func {
     ##
     # Trigger object that will fire when aircraft air-speed is over
@@ -98,7 +100,7 @@ var start = func {
     
 	#foreach (mode;FailureMgr.get_failure_modes()) print(mode.id);
 
-	var trigger_eng = RandVneTrigger.new(0.25, 1, "f16/vne");
+	trigger_eng = RandVneTrigger.new(0.25, 1, "f16/vne");
 	FailureMgr.set_trigger("engines/engine", trigger_eng);
 	trigger_eng.arm();
 }

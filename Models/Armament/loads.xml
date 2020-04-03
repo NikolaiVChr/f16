@@ -85,6 +85,36 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   </condition>
  </animation>
 
+ <animation>
+  <type>select</type>
+  <object-name>Station5_B61-7</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-4-type</property>
+      <value>B61-7</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-4-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station5_B61-12</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-4-type</property>
+      <value>B61-12</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-4-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
 <animation>
   <type>select</type>
   <object-name>Centerpylon</object-name>
@@ -101,6 +131,14 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
     <equals>
       <property>payload/armament/station/id-4-type</property>
       <value>AN/ALQ-184(V) ECM Pod</value>
+    </equals>
+    <equals>
+      <property>payload/armament/station/id-4-type</property>
+      <value>B61-7</value>
+    </equals>
+    <equals>
+      <property>payload/armament/station/id-4-type</property>
+      <value>B61-12</value>
     </equals>
 	</or>
     <greater-than>

@@ -27,6 +27,10 @@
 	          <value type="string"></value>
 	      </equals>
 	    </not>
+      <greater-than-equals>
+                <property>f16/avionics/power-ufc-warm</property>
+                <value>0.90</value>
+            </greater-than-equals>
 	</and>
   </condition>
 
@@ -45,6 +49,10 @@
 	          <property>sound/rwr-pri</property>
 	          <value>1</value>
 	      </equals>
+        <greater-than-equals>
+                <property>f16/avionics/power-ufc-warm</property>
+                <value>0.90</value>
+            </greater-than-equals>
 	</condition>
   <emission>
    <red>1</red>
@@ -61,6 +69,10 @@
 	          <property>sound/rwr-unk</property>
 	          <value>1</value>
 	      </equals>
+        <greater-than-equals>
+                <property>f16/avionics/power-ufc-warm</property>
+                <value>0.90</value>
+            </greater-than-equals>
 	</condition>
   <emission>
    <red>1</red>

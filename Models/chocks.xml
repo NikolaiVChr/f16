@@ -82,9 +82,9 @@
  <name>extinguisher</name>
  <path>Aircraft/f16/Models/Ramp/extinguisher.ac</path>
  <offsets> 
-  <x-m>-3.2</x-m>
-  <y-m>-5.8</y-m>
-  <z-m>-2.00</z-m>
+  <x-m>7.1</x-m>
+  <y-m>-5.35</y-m>
+  <z-m>-1.62</z-m>
   <heading-deg>175</heading-deg>
  </offsets>
 </model>

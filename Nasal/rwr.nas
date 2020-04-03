@@ -238,6 +238,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_MITTEN   = "Y1";
         rwr.AIRCRAFT_ALCA     = "LC";
         rwr.AIRCRAFT_SPRETNDRD = "ET";
+        rwr.AIRCRAFT_MIRAGEF1 = "M1";
         rwr.AIRCRAFT_UNKNOWN  = "U";
         rwr.AIRCRAFT_UFO      = "UK";
         rwr.ASSET_AI          = "AI";
@@ -255,6 +256,7 @@ RWRCanvas = {
                 "m2000-5":                  rwr.AIRCRAFT_MIRAGE,
                 "m2000-5B":                 rwr.AIRCRAFT_MIRAGE,
                 "MiG-21bis":                rwr.AIRCRAFT_FISHBED,
+                "MiG-21MF-75":              rwr.AIRCRAFT_FISHBED,
                 "MiG-29":                   rwr.AIRCRAFT_FULCRUM,
                 "SU-27":                    rwr.AIRCRAFT_FLANKER,
                 "EC-137R":                  rwr.AIRCRAFT_SEARCH,
@@ -341,6 +343,11 @@ RWRCanvas = {
                 "Yak-130":                  rwr.AIRCRAFT_MITTEN,
                 "L-159":                    rwr.AIRCRAFT_ALCA,
                 "super-etendard":           rwr.AIRCRAFT_SPRETNDRD,
+                "Mirage_F1-model":          rwr.AIRCRAFT_MIRAGEF1,
+                "USS-NORMANDY":             rwr.ASSET_FRIGATE,
+                "USS-LakeChamplain":        rwr.ASSET_FRIGATE,
+                "USS-OliverPerry":          rwr.ASSET_FRIGATE,
+                "USS-SanAntonio":           rwr.ASSET_FRIGATE,
                 "mp-nimitz":                rwr.ASSET_FRIGATE,
                 "mp-eisenhower":            rwr.ASSET_FRIGATE,
                 "mp-vinson":                rwr.ASSET_FRIGATE,

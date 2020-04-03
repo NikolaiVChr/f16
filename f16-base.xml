@@ -90,9 +90,11 @@
       </previews>
         <hud>
             <visibility n="1">false</visibility>
-            <!--
-            <path n="1">Aircraft/f16/Models/Cockpit/hud.xml</path>
-            <visibility n="1">true</visibility>
+            
+            <path n="1">Aircraft/f16/Systems/nohud.xml</path>
+            <path n="2">Aircraft/f16/Systems/nohud.xml</path>
+            <path n="3">Aircraft/f16/Systems/nohud.xml</path>
+            <!--<visibility n="1">true</visibility>
             <palette>
             <color n="0">
              <alpha type="float">0.85</alpha>
@@ -656,6 +658,14 @@
                 <desc>Deselect radar contact</desc>
             </key>
             <key>
+                <name>Arrow keys</name>
+                <desc>Slew cursor on CRM</desc>
+            </key>
+            <key>
+                <name>l</name>
+                <desc>Cursor designate</desc>
+            </key>
+            <key>
                 <name>i</name>
                 <desc>Select centermost radar contact</desc>
             </key>
@@ -1024,6 +1034,77 @@ There is also small changes in tail for different variants with and without brak
 			</mouse>
         </mice>
         <keyboard n="0">
+            <key n="356">
+                <name>Left</name>
+                <repeatable type="bool">false</repeatable>
+                <desc>slew</desc>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/displays/cursor-slew-x</property>
+                    <value type="int">-1</value>
+                </binding>
+                <mod-up>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/cursor-slew-x</property>
+                        <value type="int">0</value>
+                    </binding>
+                </mod-up>
+            </key>
+
+            <key n="358">
+                <name>Right</name>
+                <repeatable type="bool">false</repeatable>
+                <desc>slew</desc>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/displays/cursor-slew-x</property>
+                    <value type="int">1</value>
+                </binding>
+                <mod-up>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/cursor-slew-x</property>
+                        <value type="int">0</value>
+                    </binding>
+                </mod-up>
+            </key>
+
+            <key n="357">
+                <name>Up</name>
+                <repeatable type="bool">true</repeatable>
+                <desc>slew</desc>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/displays/cursor-slew-y</property>
+                    <value type="int">-1</value>
+                </binding>
+                <mod-up>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/cursor-slew-y</property>
+                        <value type="int">0</value>
+                    </binding>
+                </mod-up>
+            </key>
+
+            <key n="359">
+                <name>Down</name>
+                <repeatable type="bool">true</repeatable>
+                <desc>slew</desc>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/displays/cursor-slew-y</property>
+                    <value type="int">1</value>
+                </binding>
+                <mod-up>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/cursor-slew-y</property>
+                        <value type="int">0</value>
+                    </binding>
+                </mod-up>
+            </key>
 			<key n="24">
 				<name>Ctrl-x</name>
 				<desc>Reset zoom to default</desc>
@@ -1050,6 +1131,22 @@ There is also small changes in tail for different variants with and without brak
 					<script>f16.fovZoom(-1);</script>
 				</binding>
 			</key>
+            <key n="108">
+                <name>l</name>
+                <desc>cursor designate</desc>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/displays/cursor-click</property>
+                    <value type="bool">true</value>
+                </binding>
+                <mod-up>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/cursor-click</property>
+                        <value type="bool">false</value>
+                    </binding>
+                </mod-up>
+            </key>
             <key n="81">
                 <name>Q</name>
                 <desc>Reset view</desc>
@@ -1633,6 +1730,11 @@ There is also small changes in tail for different variants with and without brak
             <display-on type="int">1</display-on>
             <!-- declutter -->
         </HUD>
+        <displays>
+            <cursor-slew-x type="float">0</cursor-slew-x>
+            <cursor-slew-y type="float">0</cursor-slew-y>
+            <cursor-click type="bool">false</cursor-click>
+        </displays>
         <indicators />
         <lighting>
             <ext-lighting-panel>
@@ -2944,9 +3046,9 @@ There is also small changes in tail for different variants with and without brak
                 <drag-coeff type="double">0.125</drag-coeff>
                 <delta-drag-coeff-deploy type="double">20.00</delta-drag-coeff-deploy>
                 <cross-section-sqft type="double">1.1722</cross-section-sqft>
-                <arming-time-sec type="double">1200</arming-time-sec>
+                <arming-time-sec type="double">1320</arming-time-sec>
                 <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
-                <self-destruct-time-sec type="double">1200</self-destruct-time-sec>
+                <self-destruct-time-sec type="double">1320</self-destruct-time-sec>
                 <all-aspect type="bool">true</all-aspect>
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
@@ -2961,7 +3063,7 @@ There is also small changes in tail for different variants with and without brak
                 <max-pitch-deg type="double">-45</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
                 <inert type="bool">true</inert>
-                <ready-time type="double">25</ready-time>
+                <ready-time type="double">1320</ready-time>
                 <require-lock-to-fire type="bool">true</require-lock-to-fire>
                 <ejector-speed-fps type="double">15</ejector-speed-fps>
             </b61-7>
@@ -2989,9 +3091,9 @@ There is also small changes in tail for different variants with and without brak
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
                 <drag-coeff type="double">0.125</drag-coeff>
                 <cross-section-sqft type="double">1.1722</cross-section-sqft>
-                <arming-time-sec type="double">800</arming-time-sec>
+                <arming-time-sec type="double">900</arming-time-sec>
                 <min-speed-for-guiding-mach type="double">0</min-speed-for-guiding-mach>
-                <self-destruct-time-sec type="double">800</self-destruct-time-sec>
+                <self-destruct-time-sec type="double">900</self-destruct-time-sec>
                 <all-aspect type="bool">true</all-aspect>
                 <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
                 <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
@@ -3006,7 +3108,7 @@ There is also small changes in tail for different variants with and without brak
                 <max-pitch-deg type="double">-45</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
                 <inert type="bool">true</inert>
-                <ready-time type="double">25</ready-time>
+                <ready-time type="double">900</ready-time>
                 <require-lock-to-fire type="bool">true</require-lock-to-fire>
                 <ejector-speed-fps type="double">15</ejector-speed-fps>
             </b61-12>

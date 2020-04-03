@@ -875,6 +875,7 @@ var repair2 = func {
   reloadCannon();
   reloadHydras();
   crash.repair();
+  fail.trigger_eng.arm();
   
   if (getprop("f16/engine/running-state")) {
     setprop("fdm/jsbsim/elec/switches/epu",1);
@@ -1908,7 +1909,7 @@ var ignoreLoop = func () {
         }
         if (clear) {
           if (contains(multiplayer.ignore, thisCallsign)) {
-              delete(ignore, thisCallsign);
+              delete(multiplayer.ignore, thisCallsign);
           }
           m.setValue("controls/invisible", 0);
         }

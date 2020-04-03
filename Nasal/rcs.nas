@@ -54,7 +54,11 @@ var rcs_database = {
     "u-2s":                     0.01,
     "U-2S-model":               0.01,
     "ch53e":                    35,     #guess
+    "Mil-Mi-8":                 30,     #guess
+    "CH47":                     30,     #guess
+    "mi24":                     35,     #guess
     "MiG-21bis":                3.5,
+    "MiG-21MF-75":              3.5,
     "MiG-21Bison":              3.5,
     "MQ-9":                     0.5,    #guess
     "KC-137R":                  90,     #guess
@@ -77,16 +81,24 @@ var rcs_database = {
     "SH-60J":                   15,     #guess
     "UH-60J":                   15,     #guess
     "uh60_Blackhawk":           15,     #guess
+    "tigre":                    8,      #guess
     "uh1":                      25,     #guess
     "212-TwinHuey":             20,     #guess
     "412-Griffin":              20,     #guess
     "QF-4E":                    1,      #actual: 6
     "depot":                    170,    #estimated with blender
+    "struct":                   170,    #estimated with blender
+    "rig":                      500,    #guess
+    "point":                    120,    #guess
     "buk-m2":                   7,      #estimated with blender
     "s-300":                    17,     
     "truck":                    1.5,    #estimated with blender
     "missile_frigate":          450,    #estimated with blender
     "frigate":                  450,    #estimated with blender
+    "USS-NORMANDY":             450,    #estimated with blender
+    "USS-LakeChamplain":        450,    #estimated with blender
+    "USS-OliverPerry":          450,    #estimated with blender
+    "USS-SanAntonio":           450,    #estimated with blender
     "tower":                    60,     #estimated with blender
     "gci":                      50,     #guess
     "FA-18C_Hornet":            3.5,
@@ -101,8 +113,8 @@ var rcs_database = {
     "f-20prototype":            2.5,
     "f-20bmw":                  2.5,
     "f-20-dutchdemo":           2.5,
-    "MiG-15bis":                17,     #guess
-    "G91-R1B":                  4,      #guess
+    "MiG-15bis":                12,     #guess
+    "G91-R1B":                  7,      #guess
 };
 
 var prevVisible = {};
