@@ -658,6 +658,14 @@
                 <desc>Deselect radar contact</desc>
             </key>
             <key>
+                <name>Arrow keys</name>
+                <desc>Slew cursor on CRM</desc>
+            </key>
+            <key>
+                <name>l</name>
+                <desc>Cursor designate</desc>
+            </key>
+            <key>
                 <name>i</name>
                 <desc>Select centermost radar contact</desc>
             </key>
