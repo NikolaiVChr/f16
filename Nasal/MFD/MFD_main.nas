@@ -651,9 +651,25 @@ var MFD_Device =
                 }
                 uv = nil;
             }
+            me.slew_x = getprop("controls/displays/cursor-slew-x");
+            me.slew_y = -getprop("controls/displays/cursor-slew-y");
+            me.slew_c = getprop("controls/displays/cursor-click");
             
+            me.dt = noti.ElapsedSeconds - me.elapsed;
+            
+            if ((me.slew_x != 0 or me.slew_y != 0 or me.slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index)) {
+                cursor_destination = nil;
+                cursor_pos[0] += me.slew_x*125*me.dt;
+                cursor_pos[1] -= me.slew_y*125*me.dt;
+                cursor_pos[0] = clamp(cursor_pos[0], -552*0.5*0.795, 552*0.5*0.795);
+                cursor_pos[1] = clamp(cursor_pos[1], -482, 0);
+                cursor_click = (me.slew_c and !me.slew_c_last)?me.root.index:-1;
+                cursor_lock = me.root.index;
+            } elsif (cursor_lock == me.root.index or (me.slew_x == 0 or me.slew_y == 0 or me.slew_c == 0)) {
+                cursor_lock = -1;
+            }
+            me.slew_c_last = me.slew_c;
             if (cursor_destination != nil and cursor_destination[2] == me.root.index) {
-                me.dt = noti.ElapsedSeconds - me.elapsed;
                 me.slew = 100*me.dt;
                 if (cursor_destination[0] > cursor_pos[0]) {
                     cursor_pos[0] += me.slew;
@@ -677,7 +693,7 @@ var MFD_Device =
                         cursor_pos[1] = cursor_destination[1]
                     }
                 }
-                
+                cursor_lock = me.root.index;
                 if (cursor_destination[0] == cursor_pos[0] and cursor_destination[1] == cursor_pos[1]) {
                     cursor_click = me.root.index;
                 }
@@ -786,7 +802,7 @@ var MFD_Device =
                         me.root.blep[me.i].update();
                         me.root.iff[me.i].hide();
                         if (cursor_click == me.root.index) {
-                            if (math.abs(cursor_pos[0] - me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60) < 6 and math.abs(cursor_pos[1] + me.distPixels) < 6) {
+                            if (math.abs(cursor_pos[0] - me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60) < 8 and math.abs(cursor_pos[1] + me.distPixels) < 8) {
                                 me.desig_new = contact;
                             }
                         }
@@ -809,9 +825,9 @@ var MFD_Device =
                         me.root.lockInfo.show();
                         me.rot = me.rot-getprop("orientation/heading-deg")-geo.normdeg180(contact.get_relative_bearing());
                         me.root.lock.setTranslation(276*0.795*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels);
-                        if (cursor_destination == nil and cursor_click == -1) {
-                            cursor_pos = [276*0.795*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels];
-                        }
+                        #if (cursor_lock == -1) {
+                            #cursor_pos = [276*0.795*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels];
+                        #}
                         if (me.blue) {
                             me.root.lockFRot.setRotation(me.rot*D2R);
                             me.root.lockFRot.show();
@@ -2530,6 +2546,7 @@ var uv = nil;
 var cursor_pos = [100,-100];
 var cursor_click = -1;
 var cursor_destination = nil;
+var cursor_lock = -1;
 
 var setCursor = func (x, y, screen) {
     #552,482 , 0.795 is for UV map
