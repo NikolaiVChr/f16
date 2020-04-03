@@ -4,6 +4,16 @@
 
  <path>mag-compass.ac</path>
 
+  <!-- lighting -->
+ <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <parameters>
+            <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+        </parameters>
+        <object-name>poly</object-name>
+  
+ </effect>
+
  <animation>
   <type>rotate</type>
   <object-name>ring</object-name>
