@@ -616,7 +616,7 @@ var fast_loop = func {
         lock.hide();
     }
     var dt = systime();
-    if (getprop("f16/stores/tgp-mounted") and enable) {
+    if (viewName == "TGP" and getprop("f16/stores/tgp-mounted") and enable) {
         var cx = -getprop("controls/displays/cursor-slew-x");
         var cy = -getprop("controls/displays/cursor-slew-y");
         
