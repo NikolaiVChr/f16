@@ -2588,6 +2588,9 @@
   <object-name>Poly.002</object-name>
   <object-name>Turbine</object-name>-->
   <object-name>Fuselage</object-name>
+  <!--<object-name>FrontTire</object-name>
+  <object-name>LeftMainTire</object-name>
+  <object-name>RightMainTire</object-name>-->
   <!--<object-name>LandingGear</object-name>-->
   <property-base>sim/model/livery</property-base>
   <texture-prop>texture</texture-prop>

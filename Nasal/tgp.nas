@@ -201,7 +201,10 @@ setlistener("/sim/signals/fdm-initialized", func {
     }, 1, 0);
 });
 
-setlistener("controls/MFD[2]/button-pressed", func (node) {
+var steerlock = 0;
+var enable = 1;
+
+var list = func () {
     var button = getprop("controls/MFD[2]/button-pressed");
     if (button == 20) {#BACK
         setprop("sim/current-view/view-number",0);
@@ -215,7 +218,10 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
         }
     }
     if (!enable) return;
-    if (button == 1) {#LOCK
+    
+    
+    
+    if (button == 1 or getprop("controls/displays/cursor-click")) {#LOCK
         gps = 0;
         if (lock_tgp) {
             lock_tgp = 0;
@@ -349,10 +355,11 @@ setlistener("controls/MFD[2]/button-pressed", func (node) {
             zoomlvl = 1;
         }
     }
-});
+};
+setlistener("controls/MFD[2]/button-pressed", list);
+setlistener("controls/displays/cursor-click", list);
 
-var steerlock = 0;
-var enable = 1;
+
 
 var fast_loop = func {
   var viewName = getprop("/sim/current-view/name"); 
@@ -382,8 +389,13 @@ var fast_loop = func {
             masterMode = STBY;
         } elsif (getprop("f16/avionics/power-right-hdpt-warm") < 1) {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
+            
+            var to_secs = (1.0-getprop("/f16/avionics/power-right-hdpt-warm"))*180;
+            var mins = int(to_secs/60);
+            var secs = to_secs-mins*60;
+            var ttxt = sprintf(" %1d:%02d ", mins, secs);
             midl.setText("NOT TIMED OUT");
-            bott.setText("");
+            bott.setText(ttxt);
             line3.setText(masterMode==0?"STBY":(hiddenMode==AG?"A-G":"A-A"));
             cross.hide();
             enable = 0;
@@ -427,13 +439,13 @@ var fast_loop = func {
         
         line6.setText(ir==1?"WHOT":"TV");
         
-        if (!enable) {
-            bott.setText("");
-        } elsif (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil) {
-            var dist = flir_updater.click_coord_cam.direct_distance_to(geo.aircraft_position())*M2NM;
-            bott.setText(sprintf("%2.1f  CMBT  %04d",dist,lasercode));
-        } else {
-            bott.setText(sprintf("      CMBT  %04d",lasercode));
+        if (enable) {
+            if (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil) {
+                var dist = flir_updater.click_coord_cam.direct_distance_to(geo.aircraft_position())*M2NM;
+                bott.setText(sprintf("%2.1f  CMBT  %04d",dist,lasercode));
+            } else {
+                bott.setText(sprintf("      CMBT  %04d",lasercode));
+            }
         }
         if (!getprop("/aircraft/flir/target/auto-track") or flir_updater.click_coord_cam == nil) {
             setprop("sim/view[105]/heading-offset-deg", -getprop("sim/current-view/heading-offset-deg"));
@@ -603,9 +615,28 @@ var fast_loop = func {
     } elsif (!masterMode) {
         lock.hide();
     }
+    var dt = systime();
+    if (viewName == "TGP" and getprop("f16/stores/tgp-mounted") and enable) {
+        var cx = -getprop("controls/displays/cursor-slew-x");
+        var cy = -getprop("controls/displays/cursor-slew-y");
+        
+        if (!lock_tgp and (cy != 0 or cx != 0)) {
+            gps = 0;
+            var fov = getprop("sim/current-view/field-of-view");
+            var tme = dt - dt_old;
+            if (getprop("/aircraft/flir/target/auto-track")) {
+                flir_updater.offsetP += tme*cy*fov/100;
+                flir_updater.offsetH -= tme*cx*fov/100;
+            } else {
+                setprop("sim/current-view/pitch-offset-deg",getprop("sim/current-view/pitch-offset-deg")+tme*cy*fov/5);
+                setprop("sim/current-view/heading-offset-deg",getprop("sim/current-view/heading-offset-deg")+tme*cx*fov/5);
+            }
+        }
+    }
+    dt_old = dt;
     settimer(fast_loop,0);
 }
-
+var dt_old = 0;
 
 var line1 = nil;
 var line1box = nil;

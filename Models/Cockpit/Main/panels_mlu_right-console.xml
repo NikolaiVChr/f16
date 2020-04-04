@@ -661,18 +661,19 @@
         <!-- objects added to this will have all white in texture lit up green when console is high. They will also get flood light -->
         <object-name>LIGHTING_1</object-name>
         <object-name>DTU_1</object-name>
-        <object-name>GROWNTH.104_1</object-name>
+        <object-name>GROWTH.104_1</object-name>
         <object-name>OXYGEN_REGULATOR_1</object-name>
-        <object-name>GROWNTH.103_1</object-name>
+        <object-name>GROWTH.103_1</object-name>
         <object-name>AVIONICS_POWER_1</object-name>
         <object-name>ANTI_ICE_1</object-name>
-        <object-name>GROWNTH.102_1</object-name>
+        <object-name>GROWTH.102_1</object-name>
+        <object-name>GROWTH.101_1</object-name>
         <object-name>KY_58_1</object-name>
         <object-name>KY_58_KNOB_MODE</object-name>
         <object-name>KY_58_KNOB_PULL</object-name>
         <object-name>KY_58_VOL_KNOB</object-name>
         <object-name>AIR_COND_1</object-name>
-        <object-name>GROWNTH.102_1</object-name>
+        <object-name>GROWTH.102_1</object-name>
         <object-name>NUCLEAR_CONSENT_1</object-name>
         <object-name>HUD_1</object-name>
         <object-name>SNSR_PWR_1</object-name>
