@@ -221,7 +221,7 @@ var list = func () {
     
     
     
-    if (button == 1 or getprop("controls/displays/cursor-click")) {#LOCK
+    if (button == 1 or (getprop("controls/displays/cursor-click") and getprop("/sim/current-view/name") == "TGP")) {#LOCK
         gps = 0;
         if (lock_tgp) {
             lock_tgp = 0;
