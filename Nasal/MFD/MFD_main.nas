@@ -688,7 +688,7 @@ var MFD_Device =
             
             me.dt = noti.ElapsedSeconds - me.elapsed;
             
-            if ((me.slew_x != 0 or me.slew_y != 0 or me.slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index)) {
+            if ((me.slew_x != 0 or me.slew_y != 0 or me.slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and getprop("/sim/current-view/name") != "TGP") {
                 cursor_destination = nil;
                 cursor_pos[0] += me.slew_x*125*me.dt;
                 cursor_pos[1] -= me.slew_y*125*me.dt;
