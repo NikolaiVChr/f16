@@ -993,6 +993,7 @@ append(obj.total, obj.speed_curr);
                  altSwitch                 : "f16/avionics/hud-alt",
                  fpm                       : "f16/avionics/hud-fpm",
                  ded                       : "f16/avionics/hud-ded",
+                 dgft                      : "f16/avionics/dgft",
                  tgp_mounted               : "f16/stores/tgp-mounted",
                  view_number               : "sim/current-view/view-number",
                  rotary                    : "sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob",
@@ -1058,10 +1059,10 @@ append(obj.total, obj.speed_curr);
                                             obj.cciplow.hide();
                                           }
                                       }),
-            props.UpdateManager.FromHashList(["texUp","route_manager_active", "route_manager_power", "wp_bearing_deg", "heading","VV_x","VV_y"], 0.01, func(hdp)
+            props.UpdateManager.FromHashList(["texUp","route_manager_active", "route_manager_power", "wp_bearing_deg", "heading","VV_x","VV_y", "dgft"], 0.01, func(hdp)
                                              {
                                                  # the Y position is still not accurate due to HUD being at an angle, but will have to do.
-                                                 if (hdp.route_manager_active and hdp.route_manager_power) {
+                                                 if (hdp.route_manager_active and hdp.route_manager_power and !hdp.dgft) {
                                                      obj.wpbear = hdp.wp_bearing_deg;
                                                      if (obj.wpbear!=nil) {
                                 
@@ -1170,7 +1171,7 @@ append(obj.total, obj.speed_curr);
                                             obj.heading_tape_pointer.hide();
                                         }
                                       }),
-            props.UpdateManager.FromHashList(["fpm","texUp","gear_down","VV_x","VV_y", "wow", "ded"], 0.01, func(hdp)
+            props.UpdateManager.FromHashList(["fpm","texUp","gear_down","VV_x","VV_y", "wow", "ded", "dgft"], 0.01, func(hdp)
                                       {
                                         if (hdp.gear_down and !hdp.wow) {
                                           obj.bracket.setTranslation (hdp.VV_x, HudMath.getCenterPosFromDegs(0,-13)[1]);
@@ -1180,7 +1181,7 @@ append(obj.total, obj.speed_curr);
                                           obj.roll_pointer.hide();
                                         } else {
                                           obj.bracket.hide();
-                                          if (hdp.fpm==2 and !hdp.ded) {
+                                          if (hdp.fpm==2 and !hdp.ded and !hdp.dgft) {
                                               obj.roll_lines.show();
                                               obj.roll_pointer.show();
                                           } else {
@@ -1189,11 +1190,11 @@ append(obj.total, obj.speed_curr);
                                           }
                                         }
                                       }),
-            props.UpdateManager.FromHashList(["texUp","pitch","roll","fpm","VV_x","VV_y","gear_down"], 0.001, func(hdp)
+            props.UpdateManager.FromHashList(["texUp","pitch","roll","fpm","VV_x","VV_y","gear_down", "dgft"], 0.001, func(hdp)
                                       {
                                           obj.ladder.hide();
                                           obj.roll_pointer.setRotation (hdp.roll_rad);
-                                          if (hdp.fpm != 2 and !hdp.gear_down) {
+                                          if ((hdp.fpm != 2 and !hdp.gear_down) or hdp.dgft) {
                                             obj.ladder_group.hide();
                                             return;
                                           }
@@ -1303,9 +1304,9 @@ append(obj.total, obj.speed_curr);
                                             obj.radalt_box.show();
                                           }
                                       }),
-            props.UpdateManager.FromHashValue("HUD_SCA", 0.5, func(HUD_SCA)
+            props.UpdateManager.FromHashList(["HUD_SCA", "DGFT"], 0.5, func(hdp)
                                       {
-                                          if (HUD_SCA) {
+                                          if (hdp.HUD_SCA and !hdp.dgft) {
                                             foreach(tck;obj.scaling) {
                                                 tck.show();
                                               }
@@ -1411,7 +1412,7 @@ append(obj.total, obj.speed_curr);
                                                  obj.stby.update();
                                              }
                                             ),
-            props.UpdateManager.FromHashList(["brake_parking", "gear_down", "flap_pos_deg", "CCRP_active", "master_arm","submode","VV_x"], 0.1, func(hdp)
+            props.UpdateManager.FromHashList(["brake_parking", "gear_down", "flap_pos_deg", "CCRP_active", "master_arm","submode","VV_x","DGFT"], 0.1, func(hdp)
                                              {
                                                  if (hdp.brake_parking) {
                                                      obj.window2.setVisible(1);
@@ -1433,7 +1434,8 @@ append(obj.total, obj.speed_curr);
                                                      } elsif (hdp.submode == 1) {
                                                         submode = "BORE";
                                                      }
-                                                     obj.window2.setText(" ARM "~submode);
+                                                     var dgft = hdp.dgft?"DGFT ":"";
+                                                     obj.window2.setText(" ARM "~dgft~submode);
                                                      obj.window2.setVisible(1);
                                                  } elsif (hdp.rotary == 0 or hdp.rotary == 3) {
                                                      obj.window2.setText(" ILS");
@@ -2157,7 +2159,7 @@ append(obj.total, obj.speed_curr);
         me.radarLock.update();
         me.irLock.update();
 
-        if (hdp.ded) {
+        if (hdp.ded and !hdp.dgft) {
             me.ded0.setText(ded.text[0]);
             me.ded1.setText(ded.text[1]);
             me.ded2.setText(ded.text[2]);

@@ -602,7 +602,7 @@ var MFD_Device =
                     var ho = getprop("instrumentation/radar/ho-field");
                     if(ho==120)
                         ho = 15;
-                    elsif(ho==15)
+                    elsif(ho==15 or ho == 20)
                         ho = 30;
                     elsif(ho==30)
                         ho = 60;
@@ -796,6 +796,8 @@ var MFD_Device =
             me.root.az.setText(me.azt);
             if (me.ho==15) {
                 me.hot = "2B";
+            } elsif (me.ho==20) {
+                me.hot = "3B";#DGFT mode
             } elsif (me.ho==30) {
                 me.hot = "4B";
             } elsif (me.ho==60) {
