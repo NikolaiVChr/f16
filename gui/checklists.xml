@@ -61,17 +61,17 @@
                 </binding>
             </item>
             <item>
-                <name>Throttle (black switch on throttle)</name>
+                <name>CUTOFF RELEASE (black switch on throttle)</name>
                 <value>OFF</value>
                 <condition>
                     <equals>
-                        <property>f16/engine/jfs-start</property>
+                        <property>f16/engine/cutoff-release-lever</property>
                         <value>0</value>
                     </equals>
                 </condition>
                 <binding>
                     <command>property-assign</command>
-                    <property>f16/engine/jfs-start</property>
+                    <property>f16/engine/cutoff-release-lever</property>
                     <value>0</value>
                 </binding>
             </item>
@@ -182,13 +182,13 @@
                 <value>START 2</value>
                 <condition>
                     <equals>
-                        <property>f16/engine/jet-fuel</property>
+                        <property>f16/engine/jfs-start-switch</property>
                         <value>1</value>
                     </equals>
                 </condition>
                 <binding>
                     <command>property-assign</command>
-                    <property>f16/engine/jet-fuel</property>
+                    <property>f16/engine/jfs-start-switch</property>
                     <value>1</value>
                 </binding>
             </item>
@@ -203,11 +203,11 @@
                 </condition>
             </item>
             <item>
-                <name>Throttle (black switch on throttle)</name>
+                <name>CUTOFF RELEASE (black switch on throttle)</name>
                 <value>IDLE</value>
                 <condition>
                     <equals>
-                        <property>f16/engine/jfs-start</property>
+                        <property>f16/engine/cutoff-release-lever</property>
                         <value>1</value>
                     </equals>
                     <equals>
@@ -217,7 +217,7 @@
                 </condition>
                 <binding>
                     <command>property-assign</command>
-                    <property>f16/engine/jfs-start</property>
+                    <property>f16/engine/cutoff-release-lever</property>
                     <value>1</value>
                 </binding>
                 <binding>
@@ -824,17 +824,17 @@
         <checklist>
             <title>Engine shutdown</title>
             <item>
-                <name>Throttle (black switch on throttle)</name>
+                <name>CUTOFF RELEASE (black switch on throttle)</name>
                 <value>OFF</value>
                 <condition>
                     <equals>
-                        <property>f16/engine/jfs-start</property>
+                        <property>f16/engine/cutoff-release-lever</property>
                         <value>0</value>
                     </equals>
                 </condition>
                 <binding>
                     <command>property-assign</command>
-                    <property>f16/engine/jfs-start</property>
+                    <property>f16/engine/cutoff-release-lever</property>
                     <value>0</value>
                 </binding>
             </item>

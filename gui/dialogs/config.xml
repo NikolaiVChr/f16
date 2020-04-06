@@ -112,6 +112,24 @@
         </binding>
     </checkbox>
   </group>
+  
+  <hrule/>
+  
+  <group>
+          <layout>hbox</layout>
+          <button>
+            <legend>Request</legend>
+            <binding>
+              <command>nasal</command>
+              <script>
+                eng.accu_1_psi = eng.accu_psi_max;
+                eng.accu_2_psi = eng.accu_psi_max;
+              </script>
+            </binding>
+          </button>
+          <text><label>Ask ground chief to charge JFS accumulators</label></text>
+      </group>
+  
   <hrule/>
   
     <group>

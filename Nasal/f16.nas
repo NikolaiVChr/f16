@@ -338,21 +338,6 @@ var medium = {
       }
       setprop("f16/avionics/hud-power",power);
     }
-    # engine
-    if (getprop("engines/engine[0]/running")) {
-      setprop("f16/engine/jet-fuel",0);
-    }
-    if (getprop("f16/engine/feed")) {
-      setprop("controls/engines/engine[0]/cutoff",!getprop("f16/engine/jfs-start"));
-      if (getprop("f16/engine/jet-fuel") != 0) {
-        setprop("controls/engines/engine[0]/starter", 1);
-      } else {
-        setprop("controls/engines/engine[0]/starter", 0);
-      }
-    } else {
-      setprop("controls/engines/engine[0]/starter", 0);
-      setprop("controls/engines/engine[0]/cutoff", 1);
-    }   
     if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20) {
       setprop("controls/test/test-panel/mal-ind-lts", 0);
     }
@@ -826,6 +811,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     mps.loop();
     enableViews();
     fail.start();
+    eng.JFS.init();
     setprop("consumables/fuel/tank[2]/capacity-gal_us",0);
     setprop("consumables/fuel/tank[3]/capacity-gal_us",0);
     setprop("consumables/fuel/tank[4]/capacity-gal_us",0);
@@ -882,8 +868,8 @@ var repair2 = func {
     setprop("fdm/jsbsim/elec/switches/main-pwr",2);
     if (getprop("engines/engine[0]/running")!=1) {
       setprop("f16/engine/feed",1);
-      setprop("f16/engine/jet-fuel",1);
-      setprop("f16/engine/jfs-start",0);
+      setprop("f16/engine/jfs-start-switch",1);
+      setprop("f16/engine/cutoff-release-lever",1);
       settimer(repair3, 10);
     } else {
       screen.log.write("Done.");
@@ -896,7 +882,7 @@ var repair2 = func {
 }
 
 var repair3 = func {
-  setprop("f16/engine/jfs-start", 1);
+  setprop("f16/engine/cutoff-release-lever", 0);
   screen.log.write("Attempting engine start, standby for engine..");
   inAutostart = 0;
 }
@@ -943,9 +929,9 @@ var autostart = func {
   setprop("controls/ventilation/airconditioning-enabled",1);
   if (getprop("engines/engine[0]/running")!=1) {
     setprop("f16/engine/feed",1);
-    setprop("f16/engine/jet-fuel",1);
-    setprop("f16/engine/jfs-start",0);
-    settimer(repair3, 10);
+    setprop("f16/engine/cutoff-release-lever",1);
+    setprop("f16/engine/jfs-start-switch",1);    
+    settimer(repair3, 40);
   } else {
     screen.log.write("Done.");
     inAutostart = 0;
@@ -1852,7 +1838,7 @@ setlistener("f16/avionics/hud-velocity", button2, nil, 0);
 setlistener("f16/avionics/hud-fpm", click1, nil, 0);
 setlistener("f16/avionics/hud-scales", click1, nil, 0);
 setlistener("fdm/jsbsim/elec/switches/main-pwr", button2, nil, 0);
-setlistener("f16/engine/jet-fuel", button2, nil, 0);
+setlistener("f16/engine/jfs-start-switch", button2, nil, 0);
 setlistener("f16/avionics/hud-brt", click3, nil, 0);
 setlistener("f16/avionics/rwr-int", click3, nil, 0);
 setlistener("f16/avionics/mfd-l-con", click3, nil, 0);
