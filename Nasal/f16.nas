@@ -914,7 +914,7 @@ var autostart = func {
   inAutostart = 1;
   screen.log.write("Starting, standby..");
   setprop("fdm/jsbsim/elec/switches/epu",1);
-  eng.JSF.start_switch_last = 0;# bypass check for switch was in OFF
+  eng.JFS.start_switch_last = 0;# bypass check for switch was in OFF
   setprop("fdm/jsbsim/elec/switches/main-pwr",2);
   setprop("controls/seat/ejection-safety-lever",1);
   setprop("f16/avionics/power-rdr-alt",2);
