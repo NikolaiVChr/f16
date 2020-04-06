@@ -2182,11 +2182,11 @@
             <function>
                 <table>
                     <independentVar lookup="row">/controls/engines/engine[0]/throttle</independentVar>
-                    <independentVar lookup="column">/f16/engine/jfs-start</independentVar>                    
+                    <independentVar lookup="column">/f16/engine/cutoff-release-lever</independentVar>                    
                     <tableData>
                                   0    1
-                      0.0       0.0   0.05
-                      1.0       0.0   1.00
+                      0.0       0.05   0
+                      1.0       1.0   0
                     </tableData>
                 </table>
             </function>
@@ -3020,7 +3020,7 @@
 
     <channel name="sound" execrate="8">
     
-        <fcs_function name="/engines/engine[0]/n2-low">
+        <fcs_function name="/engines/engine[0]/n2-low"><!-- replaced with JFS sound -->
             <function>
                 <table>
                     <independentVar lookup="row">/engines/engine/n2</independentVar>

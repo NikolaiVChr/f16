@@ -41,7 +41,7 @@
  <animation>
   <type>rotate</type>
   <object-name>PINKY_SWITCH_HANDLE</object-name>
-  <property>f16/engine/jfs-start</property>
+  <property>f16/engine/cutoff-release-lever</property>
   <offset-deg>0</offset-deg>
   <factor>-10</factor>
   <axis>   
@@ -80,13 +80,13 @@
    <repeatable>false</repeatable>
     <binding>
         <command>property-toggle</command>
-        <property>f16/engine/jfs-start</property>
+        <property>f16/engine/cutoff-release-lever</property>
     </binding>
   </action>
   <hovered>
       <binding>
           <command>set-tooltip</command>
-          <label>OFF toggle</label>
+          <label>CUTOFF RELEASE</label>
           <tooltip-id>jsfstart</tooltip-id>
       </binding>
  </hovered>

@@ -99,15 +99,14 @@
 		<!--                                 ENGINE INTERNAL                                   -->
 		<!-- ********************************************************************************* -->
 		
-		<engine_low>
-			<name>internal core low rpm</name>
+		<jfs>
+			<name>JFS</name>
 			<path>Aircraft/f16/Sounds/engine_low_int.wav</path>
 			<mode>looped</mode>
 			<condition>
-				<property>sim/current-view/internal</property>
 				<greater-than>
-					<property>engines/engine/n2</property>
-					<value>0.1</value>
+					<property>f16/engine/jfs-rpm-normalized</property>
+					<value>0.0</value>
 				</greater-than>
 			</condition>
 			<reference-dist>30</reference-dist>
@@ -123,14 +122,14 @@
 				<z>0.0</z>
 			</orientation>
 			<pitch>
-				<property>engines/engine/n2</property>
+				<property>f16/engine/jfs-rpm-normalized</property>
 				<offset>1</offset>
-				<factor>0.04</factor>
+				<factor>1</factor>
 				<min>0</min>
 				<max>2</max>
 			</pitch>
 			<volume>
-				<property>engines/engine[0]/n2-low</property>
+				<property>f16/engine/jfs-rpm-normalized</property>
 				<offset>0</offset>
 				<factor>1</factor>
 				<type>lin</type>
@@ -140,7 +139,7 @@
 			<volume>
 				<factor>0.15</factor>
 			</volume>
-		</engine_low>
+		</jfs>
 		<engine_fan>
 			<name>internal fan</name>
 			<path>Aircraft/f16/Sounds/engine-int.wav</path>
@@ -2049,7 +2048,9 @@
 			<reference-dist>0</reference-dist>
 			<max-dist>2</max-dist>
 			<condition>
-				<property>/f16/engine/jfs-start</property>
+				<not>
+					<property>/f16/engine/cutoff-release-lever</property>
+				</not>
 				<greater-than-equals>
 					<property>controls/engines/engine[0]/throttle</property>
 					<value>0.77</value>
@@ -2071,7 +2072,9 @@
 			<reference-dist>0</reference-dist>
 			<max-dist>2</max-dist>
 			<condition>
-				<property>/f16/engine/jfs-start</property>
+				<not>
+					<property>/f16/engine/cutoff-release-lever</property>
+				</not>
 				<less-than>
 					<property>controls/engines/engine[0]/throttle</property>
 					<value>0.77</value>

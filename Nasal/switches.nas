@@ -118,15 +118,7 @@ var malIndLts = props.globals.getNode("controls/test/test-panel/mal-ind-lts");
 # FIXME: the JFS is more complex in reality 
 # (F-16 A/B dash-1 (pdf page 36) (PW220 Engine info starts at pdf page 31)
 
-var jfs = props.globals.getNode("controls/engines/engine/starter");
 
- var toggleJFS = func {
-        if(!jfs.getBoolValue()) {
-                jfs.setBoolValue(1);
-        } else {
-                jfs.setBoolValue(0);
-        }
- }
 
 # =========================
 # UHF Panel (left console)

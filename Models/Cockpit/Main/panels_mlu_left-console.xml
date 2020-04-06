@@ -194,6 +194,36 @@
    <blue>0</blue>
   </emission>
  </animation>
+ 
+  <animation>
+  <object-name>JFS_RUN_light</object-name>
+  <type>select</type>
+  <condition>
+    <or>
+      <and>
+        <greater-than>
+          <property>fdm/jsbsim/elec/bus/batt-2</property>
+          <value>20</value>
+        </greater-than>
+        <equals>
+          <property>f16/engine/jfs-full-speed</property>
+          <value>1</value>
+        </equals>
+      </and>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>    
+  </condition>
+ </animation>
+
+  <animation>
+  <object-name>JFS_RUN_light</object-name>
+  <type>material</type>
+  <emission>
+   <red>0</red>
+   <green>1</green>
+   <blue>0</blue>
+  </emission>
+ </animation>
 
  <animation>
   <object-name>light_a</object-name>
@@ -674,24 +704,44 @@
       </binding>
     </action>
    </animation> 
-      
+         
    <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_JET_FUEL</object-name>
-    <action>
-      <button>0</button>
-      <repeatable>false</repeatable>
-      <binding>
-        <command>property-cycle</command>
-        <property>f16/engine/jet-fuel</property>
-        <value type="int">-1</value>
-        <value type="int">0</value>
-        <value type="int">1</value>
-        <wrap>true</wrap>
-      </binding>
-    </action>
-   </animation> 
+        <type>knob</type>
+        <object-name>SW_JET_FUEL</object-name>
+        <property>f16/engine/jfs-start-switch</property>
+        <factor>20</factor>
+        <offset-deg>0</offset-deg>
+        <center>
+          <x-m>0.167234</x-m>
+          <y-m>-0.440165</y-m>
+          <z-m>0.030396</z-m>
+        </center>
+        <axis>
+          <x>0</x>
+          <y>1</y>
+          <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/engine/jfs-start-switch</property>
+                <step>1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/engine/jfs-start-switch</property>
+                <step>-1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
    
    <animation>
     <type>pick</type>
@@ -804,25 +854,7 @@
       <z>0</z>
     </axis>
   </animation>
-  
-  <animation>
-    <type>rotate</type>
-    <object-name>SW_JET_FUEL</object-name>
-    <property>f16/engine/jet-fuel</property>
-    <factor>20</factor>
-    <offset-deg>0</offset-deg>
-    <center>
-      <x-m>0.167234</x-m>
-      <y-m>-0.440165</y-m>
-      <z-m>0.030396</z-m>
-    </center>
-    <axis>
-      <x>0</x>
-      <y>1</y>
-      <z>0</z>
-    </axis>
-  </animation>
-  
+    
   <animation>
     <type>rotate</type>
     <object-name>SW_MAIN_POWER</object-name>

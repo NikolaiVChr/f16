@@ -630,13 +630,13 @@
 
 					<group>
 					    <layout>hbox</layout>
-					    <text><label>THROTTLE</label></text>
+					    <text><label>CUTOFF RELEASE</label></text>
 					    <checkbox>
-					      <property>f16/engine/jfs-start</property>
+					      <property>f16/engine/cutoff-release-lever</property>
 					      <live>true</live>
 					      <binding>
 					          <command>property-toggle</command>
-					          <property>f16/engine/jfs-start</property>
+					          <property>f16/engine/cutoff-release-lever</property>
 					      </binding>
 					    </checkbox>
 					</group>
@@ -666,7 +666,7 @@
 					
 					<slider>
 						<halign>left</halign>
-						<property>f16/engine/jet-fuel</property>
+						<property>f16/engine/jfs-start-switch</property>
 						<min>-1</min>
 						<max>1</max>
 						<step>1</step>

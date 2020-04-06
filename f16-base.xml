@@ -1224,6 +1224,25 @@ There is also small changes in tail for different variants with and without brak
                     </script>
                 </binding>
              </key>
+             <key n="100">
+              <name>d</name>
+              <desc>Dogfight mode</desc>
+                <binding n="3">
+                    <command>nasal</command>
+                    <script>
+                        var dg = getprop("f16/avionics/dgft");
+                        dg = !dg;
+                        setprop("f16/avionics/dgft", dg);
+                        if (dg) {
+                            setprop("instrumentation/radar/radar-standby", 1);
+                            pylons.fcs.selectWeapon("20mm Cannon");
+                            setprop("instrumentation/radar/radar2-range", 10);#should be forced
+                            setprop("instrumentation/radar/az-field", 30);
+                            setprop("instrumentation/radar/ho-field", 20);#TODO: when something is selected, track it outside 30X20.
+                        }
+                    </script>
+                </binding>
+             </key>
               <key n="65">
               <name>A</name>
               <desc>Decrease speed-up</desc>
@@ -1749,11 +1768,11 @@ There is also small changes in tail for different variants with and without brak
             </ext-lighting-panel>
             <lighting-panel>
                 <pri-inst-pnl type="double">0.2</pri-inst-pnl>
-                <flood-inst-pnl type="double">0</flood-inst-pnl>
                 <pri-inst-pnl-knob type="double">0.2</pri-inst-pnl-knob>
+                <flood-inst-pnl type="double">0</flood-inst-pnl>
                 <flood-inst-pnl-knob type="double">0</flood-inst-pnl-knob>
-                <console-primary-knob type="double">0</console-primary-knob>
-                <console-primary type="double">0</console-primary>
+                <console-primary-knob type="double">0.1</console-primary-knob>
+                <console-primary type="double">0.1</console-primary>
                 <data-entry-display type="double">1.0</data-entry-display>
             </lighting-panel>
             <landing-light type="int">0</landing-light>
@@ -3248,6 +3267,7 @@ value. 18000=standard US transition altitude -->
             <cara-alow type="int">500</cara-alow><!-- Combined Altitude Radar Altimeter Automatic LOw altitude Warning -->
         </settings>
         <avionics>
+            <dgft type="bool">false</dgft>
             <hud-brt type="double">1.0</hud-brt>
             <rwr-int type="double">1.0</rwr-int>
             <mfd-l-brt type="double">1.0</mfd-l-brt>
@@ -3483,6 +3503,9 @@ value. 18000=standard US transition altitude -->
         <lm>
             <file>Aircraft/f16/Nasal/light-manager.nas</file>
         </lm>
+        <eng>
+            <file>Aircraft/f16/Nasal/engine.nas</file>
+        </eng>
     </nasal>
     
 </PropertyList>
