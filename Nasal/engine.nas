@@ -11,7 +11,7 @@ var starter      = props.globals.getNode("controls/engines/engine[0]/starter", 0
 var cutoff       = props.globals.getNode("controls/engines/engine[0]/cutoff", 0);
 var feed         = props.globals.getNode("f16/engine/feed", 0);
 var running      = props.globals.getNode("engines/engine[0]/running", 0);
-
+var fuel         = props.globals.getNode("consumables/fuel/total-fuel-lbs", 0);
 
 var accu_psi_max = 3000;
 var accu_charge_time_s = 50;
@@ -45,7 +45,7 @@ var JFS = {
 		}
 		
 		if (me.start_switch != 0 and me.start_switch != me.start_switch_last) {
-			print("JFS start requested");
+			#print("JFS start requested");
 			me.psi_for_start = 0;
 			if (me.start_switch == 1) {
 				if (accu_1_psi == accu_psi_max or accu_2_psi == accu_psi_max) {
@@ -53,16 +53,16 @@ var JFS = {
 				}
 				accu_1_psi = 0;
 				accu_2_psi = 0;
-				print("blow both");
+				#print("blow both");
 			} else {
 				if (accu_1_psi == accu_psi_max) {
 					accu_1_psi = 0;
 					me.psi_for_start = 1;
-					print("blow 1");
+					#print("blow 1");
 				} elsif (accu_2_psi == accu_psi_max) {
 					accu_2_psi = 0;
 					me.psi_for_start = 1;
-					print("blow 2");
+					#print("blow 2");
 				}
 			}
 			if (me.psi_for_start and jfs_spooling != 1) {
@@ -75,19 +75,22 @@ var JFS = {
 			}
 		}
 		
-		if (jfs_spooling == 1) {
+		if (jfs_spooling == 1 and (jfs_n_norm < 0.4 or fuel.getValue() > 5)) {
 			jfs_n_norm += me.dt / jfs_spool_up_time_s;
+		} elsif (jfs_spooling == 1) {
+			# no fuel to sustain rpm
+			jfs_spooling = -1;
 		} elsif (jfs_spooling == -1) {
 			jfs_n_norm -= me.dt / jfs_spool_down_time_s;
 		}
 		if (jfs_n_norm > 1) {
 			jfs_spooling = 0;
 			jfs_n_norm = 1;
-			print("JFS full speed");
+			#print("JFS full speed");
 		} elsif (jfs_n_norm < 0) {
 			jfs_spooling = 0;
 			jfs_n_norm = 0;
-			print("JFS stopped");
+			#print("JFS stopped");
 		}
 		
 		
@@ -102,14 +105,14 @@ var JFS = {
 			accu_1_psi += me.dt * accu_psi_max/accu_charge_time_s;
 			if (accu_1_psi > hyd_b.getValue()) {
 				accu_1_psi = hyd_b.getValue();
-				print("accu 1 to "~accu_1_psi);
+				#print("accu 1 to "~accu_1_psi);
 			}
 		}
 		if (accu_charge_allowed and accu_2_psi < hyd_b.getValue()) {
 			accu_2_psi += me.dt * accu_psi_max/accu_charge_time_s;
 			if (accu_2_psi > hyd_b.getValue()) {
 				accu_2_psi = hyd_b.getValue();
-				print("accu 2 to "~accu_2_psi);
+				#print("accu 2 to "~accu_2_psi);
 			}
 		}
 		
@@ -126,7 +129,7 @@ var JFS = {
 		} else {
 			starter.setBoolValue(0);
 		}
-		    
+		
 		me.start_switch_last = me.start_switch;
 		me.elapsed_last = me.elapsed;
 	},
