@@ -914,6 +914,7 @@ var autostart = func {
   inAutostart = 1;
   screen.log.write("Starting, standby..");
   setprop("fdm/jsbsim/elec/switches/epu",1);
+  eng.JSF.start_switch_last = 0;# bypass check for switch was in OFF
   setprop("fdm/jsbsim/elec/switches/main-pwr",2);
   setprop("controls/seat/ejection-safety-lever",1);
   setprop("f16/avionics/power-rdr-alt",2);
@@ -928,10 +929,17 @@ var autostart = func {
   setprop("f16/avionics/power-st-sta",1);
   setprop("controls/ventilation/airconditioning-enabled",1);
   if (getprop("engines/engine[0]/running")!=1) {
-    setprop("f16/engine/feed",1);
-    setprop("f16/engine/cutoff-release-lever",1);
-    setprop("f16/engine/jfs-start-switch",1);    
-    settimer(repair3, 40);
+    if (eng.accu_1_psi < 3000 and eng.accu_2_psi < 3000) {
+      screen.log.write("Both JFS accumulators de-pressurized. Engine start aborted.");
+      print("Both JFS accumulators de-pressurized. Auto engine start aborted.");
+      print("Menu->F-16->Config to fill them up again.");
+      inAutostart = 0;
+    } else {
+      setprop("f16/engine/feed",1);
+      setprop("f16/engine/cutoff-release-lever",1);
+      setprop("f16/engine/jfs-start-switch",1);    
+      settimer(repair3, 40);
+    }
   } else {
     screen.log.write("Done.");
     inAutostart = 0;
