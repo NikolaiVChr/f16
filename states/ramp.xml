@@ -34,8 +34,8 @@
         <f16>
             <engine>
                 <feed type="bool">false</feed><!-- OFF/NORM prevents starter, cutoff -->
-                <jet-fuel type="int">0</jet-fuel><!-- starter -1=1 1=2 0=off  goes to off at 55% rpm -->
-                <jfs-start type="bool">false</jfs-start><!-- inverse cutoff -->
+                <jfs-start-switch type="int">0</jfs-start-switch><!-- starter -1=1 1=2 0=off  goes to off at 55% rpm -->
+                <cutoff-release-lever type="bool">true</cutoff-release-lever><!-- cutoff -->
                 <running-state type="bool">false</running-state>
             </engine>
         </f16>
