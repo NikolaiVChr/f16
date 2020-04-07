@@ -2839,7 +2839,7 @@
 			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
-				<factor>0.5</factor>
+				<factor>0.4</factor>
 			</volume>
 		</rwr>
 		<rwr>
@@ -2865,7 +2865,7 @@
 			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
-				<factor>0.5</factor>
+				<factor>0.4</factor>
 			</volume>
 		</rwr>
 		<rwr>

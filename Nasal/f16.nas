@@ -932,7 +932,7 @@ var autostart = func {
     if (eng.accu_1_psi < 3000 and eng.accu_2_psi < 3000) {
       screen.log.write("Both JFS accumulators de-pressurized. Engine start aborted.");
       print("Both JFS accumulators de-pressurized. Auto engine start aborted.");
-      print("Menu->F-16->Config to fill them up again.");
+      print("Menu->F-16->Config to fill them up again. Or wait for Hydraulic-B system to do it.");
       inAutostart = 0;
     } else {
       setprop("f16/engine/feed",1);

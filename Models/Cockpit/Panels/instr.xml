@@ -13,6 +13,7 @@
         </parameters>
         <object-name>INSTR_mode-knob</object-name>
         <object-name>INSTR_mount</object-name>
+        <object-name>INSTR_mount50</object-name>
         <object-name>INSTR_mode-knob</object-name>
         <object-name>INSTR_hdg-knob</object-name>
   </effect>
@@ -56,6 +57,31 @@
       <equals>
        <property>sim/variant-id</property>
        <value>3</value>
+      </equals>
+    </or>
+   </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>INSTR_mount50</object-name>
+  <condition>
+    <or>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>2</value>
+      </equals>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>4</value>
+      </equals>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>5</value>
+      </equals>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>6</value>
       </equals>
     </or>
    </condition>
@@ -148,6 +174,7 @@
  <!-- lighting -->
  <animation>
   <object-name>INSTR_mount</object-name>
+  <object-name>INSTR_mount50</object-name>
   <object-name>INSTR_mode-knob</object-name>
   <object-name>INSTR_hdg-knob</object-name>
   <condition>

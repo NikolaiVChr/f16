@@ -27,6 +27,13 @@
             <path>/f16/avionics/c4-lat</path>
             <path>/f16/avionics/c4-lon</path>
             <path>/f16/avionics/c4-rad</path>
+            <path>/f16/avionics/c1-typ</path>
+            <path>/f16/avionics/c2-typ</path>
+            <path>/f16/avionics/c3-typ</path>
+            <path>/f16/avionics/c4-typ</path>
+            <path>/f16/avionics/bulls-eye-defined</path>
+            <path>/f16/avionics/bulls-eye-lat</path>
+            <path>/f16/avionics/bulls-eye-lon</path>
             <path>/link16/wingman-1</path>
             <path>/link16/wingman-2</path>
             <path>/link16/wingman-3</path>
@@ -3299,6 +3306,13 @@ value. 18000=standard US transition altitude -->
             <c4-lat type="double">0</c4-lat>
             <c4-lon type="double">0</c4-lon>
             <c4-rad type="double">0</c4-rad>
+            <c1-typ type="string">11</c1-typ>
+            <c2-typ type="string">11</c2-typ>
+            <c3-typ type="string">11</c3-typ>
+            <c4-typ type="string">11</c4-typ>
+            <bulls-eye-defined type="bool">true</bulls-eye-defined>
+            <bulls-eye-lat type="double">37.20</bulls-eye-lat>
+            <bulls-eye-lon type="double">-115.60</bulls-eye-lon>
             <laser-code type="int">0000</laser-code>
             <eegs-wingspan-ft type="int">35</eegs-wingspan-ft>
             <power-mmc type="bool">false</power-mmc>

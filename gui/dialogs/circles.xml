@@ -5,7 +5,7 @@
   	<layout>vbox</layout>
   	<draggable>true</draggable>
     <resizable>false</resizable>
-    <width>500</width>
+    <width>600</width>
     <!--<height>250</height>-->
     
     <nasal>
@@ -110,6 +110,20 @@
 	      		<blue>0.5</blue>
 	      	</color>
 		</input>
+		<combo>
+            <halign>left</halign>
+            <name>typ1</name>
+            <label>Type</label>
+            <pref-width>60</pref-width>
+            <property>f16/avionics/c1-typ</property>
+            <value type="string">11</value>
+            <value type="string">20</value>
+            <value type="string">SH</value>
+            <binding>
+                <command>dialog-apply</command>
+                <object-name>typ1</object-name>
+            </binding>
+        </combo>
 		<button>
 			<legend>Clear</legend>
 			<binding>
@@ -174,6 +188,20 @@
 	      		<blue>0.5</blue>
 	      	</color>
 		</input>
+		<combo>
+            <halign>left</halign>
+            <name>typ2</name>
+            <label>Type</label>
+            <pref-width>60</pref-width>
+            <property>f16/avionics/c2-typ</property>
+            <value type="string">11</value>
+            <value type="string">20</value>
+            <value type="string">SH</value>
+            <binding>
+                <command>dialog-apply</command>
+                <object-name>typ2</object-name>
+            </binding>
+        </combo>
 		<button>
 			<legend>Clear</legend>
 			<binding>
@@ -238,6 +266,20 @@
 	      		<blue>0.5</blue>
 	      	</color>
 		</input>
+		<combo>
+            <halign>left</halign>
+            <name>typ3</name>
+            <label>Type</label>
+            <pref-width>60</pref-width>
+            <property>f16/avionics/c3-typ</property>
+            <value type="string">11</value>
+            <value type="string">20</value>
+            <value type="string">SH</value>
+            <binding>
+                <command>dialog-apply</command>
+                <object-name>typ3</object-name>
+            </binding>
+        </combo>
 		<button>
 			<legend>Clear</legend>
 			<binding>
@@ -302,6 +344,20 @@
 	      		<blue>0.5</blue>
 	      	</color>
 		</input>
+		<combo>
+            <halign>left</halign>
+            <name>typ4</name>
+            <label>Type</label>
+            <pref-width>60</pref-width>
+            <property>f16/avionics/c4-typ</property>
+            <value type="string">11</value>
+            <value type="string">20</value>
+            <value type="string">SH</value>
+            <binding>
+                <command>dialog-apply</command>
+                <object-name>typ4</object-name>
+            </binding>
+        </combo>
 		<button>
 			<legend>Clear</legend>
 			<binding>
@@ -314,6 +370,53 @@
 			</binding>
 		</button>
 	</group>
+	
+	<group>
+		<layout>hbox</layout>
+
+		<input>
+		  	<width>150</width>
+		  	<height>25</height>
+		  	<label>Lat</label>
+		  	<property>f16/avionics/bulls-eye-lat</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<!--<color>
+	      		<red>0.5</red>
+	      		<green>1</green>
+	      		<blue>0.5</blue>
+	      	</color>-->
+		</input>
+		<input>
+		  	<width>150</width>
+		  	<height>25</height>
+		  	<label>Lon</label>
+		  	<property>f16/avionics/bulls-eye-lon</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<!--<color>
+	      		<red>0.5</red>
+	      		<green>1</green>
+	      		<blue>0.5</blue>
+	      	</color>-->
+		</input>
+		<checkbox>
+			<label>Bullseye defined</label>
+			<halign>center</halign>
+			<live>true</live>
+			<property>f16/avionics/bulls-eye-defined</property>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+		</checkbox>
+	</group>
+	
 
 	<empty><stretch>1</stretch></empty>
 	<text><label>Input lat,lon and radius (nm) to get circled threat areas in HSD.</label></text>
