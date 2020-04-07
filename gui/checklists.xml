@@ -61,18 +61,18 @@
                 </binding>
             </item>
             <item>
-                <name>CUTOFF RELEASE (black switch on throttle)</name>
-                <value>OFF</value>
+                <name>CUTOFF (black switch on throttle)</name>
+                <value>LOCK</value>
                 <condition>
                     <equals>
                         <property>f16/engine/cutoff-release-lever</property>
-                        <value>0</value>
+                        <value>1</value>
                     </equals>
                 </condition>
                 <binding>
                     <command>property-assign</command>
                     <property>f16/engine/cutoff-release-lever</property>
-                    <value>0</value>
+                    <value>1</value>
                 </binding>
             </item>
             <item>
@@ -203,12 +203,12 @@
                 </condition>
             </item>
             <item>
-                <name>CUTOFF RELEASE (black switch on throttle)</name>
-                <value>IDLE</value>
+                <name>CUTOFF (black switch on throttle)</name>
+                <value>RELEASE</value>
                 <condition>
                     <equals>
                         <property>f16/engine/cutoff-release-lever</property>
-                        <value>1</value>
+                        <value>0</value>
                     </equals>
                     <equals>
                         <property>controls/engines/engine[0]/throttle</property>
@@ -218,7 +218,7 @@
                 <binding>
                     <command>property-assign</command>
                     <property>f16/engine/cutoff-release-lever</property>
-                    <value>1</value>
+                    <value>0</value>
                 </binding>
                 <binding>
                     <command>property-assign</command>
@@ -824,18 +824,18 @@
         <checklist>
             <title>Engine shutdown</title>
             <item>
-                <name>CUTOFF RELEASE (black switch on throttle)</name>
-                <value>OFF</value>
+                <name>CUTOFF (black switch on throttle)</name>
+                <value>LOCK</value>
                 <condition>
                     <equals>
                         <property>f16/engine/cutoff-release-lever</property>
-                        <value>0</value>
+                        <value>1</value>
                     </equals>
                 </condition>
                 <binding>
                     <command>property-assign</command>
                     <property>f16/engine/cutoff-release-lever</property>
-                    <value>0</value>
+                    <value>1</value>
                 </binding>
             </item>
             <item>
