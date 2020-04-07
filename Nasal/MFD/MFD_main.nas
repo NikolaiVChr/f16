@@ -540,6 +540,44 @@ var MFD_Device =
                     .setColor(1,1,1)
                     .set("z-index",1000);
         
+        svg.bullseye = svg.p_RDR.createChild("path")
+            .moveTo(-25,0)
+            .arcSmallCW(25,25, 0,  25*2, 0)
+            .arcSmallCW(25,25, 0, -25*2, 0)
+            .moveTo(-15,0)
+            .arcSmallCW(15,15, 0,  15*2, 0)
+            .arcSmallCW(15,15, 0, -15*2, 0)
+            .moveTo(-5,0)
+            .arcSmallCW(5,5, 0,  5*2, 0)
+            .arcSmallCW(5,5, 0, -5*2, 0)
+            .setStrokeLineWidth(2)
+            .setColor(0.5,0.5,1);
+        svg.bullOwnRing = svg.p_RDR.createChild("path")
+            .moveTo(-15,0)
+            .arcSmallCW(15,15, 0,  15*2, 0)
+            .arcSmallCW(15,15, 0, -15*2, 0)
+            .close()
+            .moveTo(0,-18)
+            .lineTo(7,-13)
+            .moveTo(0,-18)
+            .lineTo(-7,-13)
+            .close()
+            .setStrokeLineWidth(2)
+            .setTranslation(-190, -50)
+            .setColor(0.5,0.5,1);
+        svg.bullOwnDist = svg.p_RDR.createChild("text")
+                .setAlignment("center-center")
+                .setColor(0.5,0.5,1)
+                .setTranslation(-190, -50)
+                .setText("12")
+                .setFontSize(18, 1.0);            
+        svg.bullOwnDir = svg.p_RDR.createChild("text")
+                .setAlignment("center-top")
+                .setColor(0.5,0.5,1)
+                .setTranslation(-190, -30)
+                .setText("270")
+                .setFontSize(18, 1.0);
+        
         # GM mode
         svg.rdrMode = 0;
         #svg.gmPicG = svg.p_RDR.createChild("group");
@@ -639,6 +677,33 @@ var MFD_Device =
                 }
             }
             setprop("instrumentation/radar/mode-switch", 0);
+            me.bullOn = getprop("f16/avionics/bulls-eye-defined");
+            if (me.bullOn) {
+                me.bullLat = getprop("f16/avionics/bulls-eye-lat");
+                me.bullLon = getprop("f16/avionics/bulls-eye-lon");
+                me.bullCoord = geo.Coord.new().set_latlon(me.bullLat,me.bullLon);
+                me.ownCoord = geo.aircraft_position();
+                me.bullDirToMe = me.bullCoord.course_to(me.ownCoord);
+                me.meToBull = ((me.bullDirToMe+180)-noti.heading)*D2R;
+                me.root.bullOwnRing.setRotation(me.meToBull);
+                me.bullDistToMe = me.bullCoord.distance_to(me.ownCoord)*M2NM;
+                me.distPixels = me.bullDistToMe*(482/awg_9.range_radar2);
+                me.bullPos = [me.wdt*0.5*geo.normdeg180(me.meToBull*R2D)/60,-me.distPixels];
+                me.root.bullseye.setTranslation(me.bullPos);
+                me.bullDirToMe = sprintf("%03d", me.bullDirToMe);
+                if (me.bullDistToMe > 100) {
+                    me.bullDistToMe = "  ";
+                } else {
+                    me.bullDistToMe = sprintf("%02d", me.bullDistToMe);
+                }
+                me.root.bullOwnDir.setText(me.bullDirToMe);
+                me.root.bullOwnDist.setText(me.bullDistToMe);
+            }
+            me.root.bullOwnRing.setVisible(me.bullOn);
+            me.root.bullOwnDir.setVisible(me.bullOn);
+            me.root.bullOwnDist.setVisible(me.bullOn);
+            me.root.bullseye.setVisible(me.bullOn);
+            
             if (me.pressEXP) {
                 me.pressEXP = 0;
                 exp = !exp;
@@ -1897,8 +1962,43 @@ var MFD_Device =
                 .set("z-index",2)
                 .setFontSize(15, 1.0);        
         
-
-
+        svg.bullseye = svg.p_HSDc.createChild("path")
+            .moveTo(-25,0)
+            .arcSmallCW(25,25, 0,  25*2, 0)
+            .arcSmallCW(25,25, 0, -25*2, 0)
+            .moveTo(-15,0)
+            .arcSmallCW(15,15, 0,  15*2, 0)
+            .arcSmallCW(15,15, 0, -15*2, 0)
+            .moveTo(-5,0)
+            .arcSmallCW(5,5, 0,  5*2, 0)
+            .arcSmallCW(5,5, 0, -5*2, 0)
+            .setStrokeLineWidth(2)
+            .setColor(0.5,0.5,1);
+        svg.bullOwnRing = svg.buttonView.createChild("path")
+            .moveTo(-15,0)
+            .arcSmallCW(15,15, 0,  15*2, 0)
+            .arcSmallCW(15,15, 0, -15*2, 0)
+            .close()
+            .moveTo(0,-18)
+            .lineTo(7,-13)
+            .moveTo(0,-18)
+            .lineTo(-7,-13)
+            .close()
+            .setStrokeLineWidth(2)
+            .setTranslation(-190, -50)
+            .setColor(0.5,0.5,1);
+        svg.bullOwnDist = svg.buttonView.createChild("text")
+                .setAlignment("center-center")
+                .setColor(0.5,0.5,1)
+                .setTranslation(-190, -50)
+                .setText("12")
+                .setFontSize(18, 1.0);            
+        svg.bullOwnDir = svg.buttonView.createChild("text")
+                .setAlignment("center-top")
+                .setColor(0.5,0.5,1)
+                .setTranslation(-190, -30)
+                .setText("270")
+                .setFontSize(18, 1.0);
 
         svg.centered = 0;
         svg.coupled = 0;
@@ -2048,7 +2148,37 @@ var MFD_Device =
                 me.root.p_HSDc.setTranslation(276*0.795,482*0.75);
                 me.root.rang.setText(""~me.root.range_dep);
             }
-            
+            me.bullOn = getprop("f16/avionics/bulls-eye-defined");
+            if (me.bullOn) {
+                me.bullLat = getprop("f16/avionics/bulls-eye-lat");
+                me.bullLon = getprop("f16/avionics/bulls-eye-lon");
+                me.bullCoord = geo.Coord.new().set_latlon(me.bullLat,me.bullLon);
+                me.ownCoord = geo.aircraft_position();
+                me.bullDirToMe = me.bullCoord.course_to(me.ownCoord);
+                me.meToBull = ((me.bullDirToMe+180)-noti.heading)*D2R;
+                me.root.bullOwnRing.setRotation(me.meToBull);
+                me.bullDistToMe = me.bullCoord.distance_to(me.ownCoord)*M2NM;
+                if (me.root.centered) {
+                    me.bullRangePixels = me.root.mediumRadius*(me.bullDistToMe/me.root.range_cen);
+                } else {
+                    me.bullRangePixels = me.root.outerRadius*(me.bullDistToMe/me.root.range_dep);
+                }                
+                me.legX = me.bullRangePixels*math.sin(me.meToBull);
+                me.legY = -me.bullRangePixels*math.cos(me.meToBull);
+                me.root.bullseye.setTranslation(me.legX,me.legY);
+                if (me.bullDistToMe > 100) {
+                    me.bullDistToMe = "  ";
+                } else {
+                    me.bullDistToMe = sprintf("%02d", me.bullDistToMe);
+                }
+                me.bullDirToMe = sprintf("%03d", me.bullDirToMe);
+                me.root.bullOwnDir.setText(me.bullDirToMe);
+                me.root.bullOwnDist.setText(me.bullDistToMe);
+            }
+            me.root.bullOwnRing.setVisible(me.bullOn);
+            me.root.bullOwnDir.setVisible(me.bullOn);
+            me.root.bullOwnDist.setVisible(me.bullOn);
+            me.root.bullseye.setVisible(me.bullOn);
             me.i=0;
             me.root.lock.hide();
             me.root.lockInfo.hide();
