@@ -21,6 +21,11 @@
         <object-name>ALT_GEAR_1</object-name>
         <object-name>SPEED_BRAKE_drum</object-name>
         <object-name>horn_silencer</object-name>
+        <object-name>ew-set1</object-name>
+        <object-name>ew-set2</object-name>
+        <object-name>ew-set3</object-name>
+        <object-name>ew-set4</object-name>
+        <object-name>ew-run</object-name>
     </effect>
 
     <effect>
