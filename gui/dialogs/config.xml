@@ -122,8 +122,13 @@
             <binding>
               <command>nasal</command>
               <script>
+                if (!getprop("gear/gear[0]/wow")) {
+                  screen.log.write("This is only possible on ground.");
+                  return;
+                }
                 eng.accu_1_psi = eng.accu_psi_max;
                 eng.accu_2_psi = eng.accu_psi_max;
+                screen.log.write("10 minutes later: Both JFS accumulators pressurized.");
               </script>
             </binding>
           </button>
