@@ -577,6 +577,12 @@ var MFD_Device =
                 .setTranslation(-190, -30)
                 .setText("270")
                 .setFontSize(18, 1.0);
+        svg.cursorLoc = svg.p_RDR.createChild("text")
+                .setAlignment("left-bottom")
+                .setColor(1,1,1)
+                .setTranslation(-200, -75)
+                .setText("12")
+                .setFontSize(18, 1.0);
         
         # GM mode
         svg.rdrMode = 0;
@@ -796,6 +802,15 @@ var MFD_Device =
             }
             me.elapsed = noti.ElapsedSeconds;
             me.root.cursor.setTranslation(cursor_pos);
+            if (me.bullOn) {
+                me.cursorDev   = cursor_pos[0]*60/(me.wdt*0.5);
+                me.cursorDist  = -NM2M*cursor_pos[1]/(482/awg_9.range_radar2);
+                me.ownCoord.apply_course_distance(noti.heading+me.cursorDev, me.cursorDist);
+                me.cursorBullDist = me.ownCoord.distance_to(me.bullCoord);
+                me.cursorBullCrs  = me.bullCoord.course_to(me.ownCoord);
+                me.root.cursorLoc.setText(sprintf("%03d %03d",me.cursorBullCrs, me.cursorBullDist*M2NM));
+            }
+            me.root.cursorLoc.setVisible(me.bullOn);
             
             if (getprop("sim/multiplay/generic/int[2]")!=1 and me.root.rdrMode) {
                 # GM mode
