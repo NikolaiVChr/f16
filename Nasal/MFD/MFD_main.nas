@@ -695,7 +695,7 @@ var MFD_Device =
                 me.bullDistToMe = me.bullCoord.distance_to(me.ownCoord)*M2NM;
                 me.distPixels = me.bullDistToMe*(482/awg_9.range_radar2);
                 me.bullPos = [me.wdt*0.5*geo.normdeg180(me.meToBull*R2D)/60,-me.distPixels];
-                me.root.bullseye.setTranslation(me.bullPos);
+                
                 me.bullDirToMe = sprintf("%03d", me.bullDirToMe);
                 if (me.bullDistToMe > 100) {
                     me.bullDistToMe = "  ";
@@ -708,7 +708,7 @@ var MFD_Device =
             me.root.bullOwnRing.setVisible(me.bullOn);
             me.root.bullOwnDir.setVisible(me.bullOn);
             me.root.bullOwnDist.setVisible(me.bullOn);
-            me.root.bullseye.setVisible(me.bullOn);
+            
             
             if (me.pressEXP) {
                 me.pressEXP = 0;
@@ -890,6 +890,21 @@ var MFD_Device =
             me.root.az2.setTranslation((me.az/120)*me.wdt*0.5,0);
             me.root.lock.hide();
             me.root.lockInfo.hide();
+            
+            if (me.bullOn) {
+                me.close = math.abs(cursor_pos[0] - me.bullPos[0]) < 25 and math.abs(cursor_pos[1] - me.bullPos[1]) < 25;
+                if (me.close and exp) {
+                    me.bullPos[0] = cursor_pos[0]+(me.bullPos[0] - cursor_pos[0])*4;
+                    me.bullPos[1] = cursor_pos[1]+(me.bullPos[1] - cursor_pos[1])*4;
+                } elsif (exp and math.abs(cursor_pos[0] - me.bullPos[0]) < 100 and math.abs(cursor_pos[1] - me.bullPos[1]) < 100) {
+                    me.bullOn = 0;
+                }
+            }
+            me.root.bullseye.setVisible(me.bullOn);
+            if (me.bullOn) {
+                me.root.bullseye.setTranslation(me.bullPos);
+            }
+            
             me.desig_new = nil;
             foreach(contact; awg_9.tgts_list) {
                 if (contact.get_display() == 0) {
