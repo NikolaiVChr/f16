@@ -360,9 +360,10 @@ var MFD_Device =
         svg.iff  = setsize([],svg.maxB);
         for (var i = 0;i<svg.maxB;i+=1) {
             svg.blep[i] = svg.p_RDR.createChild("path")
-                    .moveTo(0,-4)
-                    .vert(8)
-                    .setStrokeLineWidth(8)
+                    .moveTo(0,-3)
+                    .vert(7)
+                    .setStrokeLineWidth(7)
+                    .setStrokeLineCap("butt")
                     .set("z-index",10)
                     .hide();
             svg.iff[i] = svg.p_RDR.createChild("text")
@@ -756,22 +757,23 @@ var MFD_Device =
             me.exp_modi = exp?0.25:1;
             me.slew_x = getprop("controls/displays/cursor-slew-x")*me.exp_modi;
             me.slew_y = -getprop("controls/displays/cursor-slew-y")*me.exp_modi;
-            me.slew_c = getprop("controls/displays/cursor-click");
             
-            me.dt = math.min(noti.ElapsedSeconds - me.elapsed, 0.05);
+            #me.dt = math.min(noti.ElapsedSeconds - me.elapsed, 0.05);
+            me.dt = noti.ElapsedSeconds - me.elapsed;
             
-            if ((me.slew_x != 0 or me.slew_y != 0 or me.slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and getprop("/sim/current-view/name") != "TGP") {
+            if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and getprop("/sim/current-view/name") != "TGP") {
                 cursor_destination = nil;
                 cursor_pos[0] += me.slew_x*125*me.dt;
                 cursor_pos[1] -= me.slew_y*125*me.dt;
                 cursor_pos[0] = clamp(cursor_pos[0], -552*0.5*0.795, 552*0.5*0.795);
                 cursor_pos[1] = clamp(cursor_pos[1], -482, 0);
-                cursor_click = (me.slew_c and !me.slew_c_last)?me.root.index:-1;
+                cursor_click = (slew_c and !me.slew_c_last)?me.root.index:-1;
                 cursor_lock = me.root.index;
-            } elsif (cursor_lock == me.root.index or (me.slew_x == 0 or me.slew_y == 0 or me.slew_c == 0)) {
+            } elsif (cursor_lock == me.root.index or (me.slew_x == 0 or me.slew_y == 0 or slew_c == 0)) {
                 cursor_lock = -1;
             }
-            me.slew_c_last = me.slew_c;
+            me.slew_c_last = slew_c;
+            slew_c = 0;
             if (cursor_destination != nil and cursor_destination[2] == me.root.index) {
                 me.slew = 100*me.dt;
                 if (cursor_destination[0] > cursor_pos[0]) {
@@ -939,7 +941,7 @@ var MFD_Device =
                         me.root.blep[me.i].update();
                         me.root.iff[me.i].hide();
                         if (cursor_click == me.root.index) {
-                            if (math.abs(cursor_pos[0] - me.echoPos[0]) < 8 and math.abs(cursor_pos[1] - me.echoPos[1]) < 9) {
+                            if (math.abs(cursor_pos[0] - me.echoPos[0]) < 10 and math.abs(cursor_pos[1] - me.echoPos[1]) < 11) {
                                 me.desig_new = contact;
                             }
                         }
@@ -2785,6 +2787,10 @@ var cursor_click = -1;
 var cursor_destination = nil;
 var cursor_lock = -1;
 var exp = 0;
+
+var slew_c = 0;
+
+setlistener("controls/displays/cursor-click", func {if (getprop("controls/displays/cursor-click")) {slew_c = 1;}});
 
 var setCursor = func (x, y, screen) {
     #552,482 , 0.795 is for UV map
