@@ -1875,7 +1875,28 @@ var MFD_Device =
             .set("z-index",2)
             .hide()
             .setColor(0,1,0);
-
+        
+        svg.ct1 = svg.p_HSDc.createChild("text")
+                .setAlignment("center-center")
+                .setColor(1,0,0)
+                .set("z-index",2)
+                .setFontSize(15, 1.0);
+        svg.ct2 = svg.p_HSDc.createChild("text")
+                .setAlignment("center-center")
+                .setColor(1,0,0)
+                .set("z-index",2)
+                .setFontSize(15, 1.0);
+        svg.ct3 = svg.p_HSDc.createChild("text")
+                .setAlignment("center-center")
+                .setColor(1,1,0)
+                .set("z-index",2)
+                .setFontSize(15, 1.0);
+        svg.ct4 = svg.p_HSDc.createChild("text")
+                .setAlignment("center-center")
+                .setColor(0,1,0)
+                .set("z-index",2)
+                .setFontSize(15, 1.0);        
+        
 
 
 
@@ -2147,11 +2168,21 @@ var MFD_Device =
                     me.la = getprop("f16/avionics/c"~l~"-lat");
                     me.lo = getprop("f16/avionics/c"~l~"-lon");
                     me.ra = getprop("f16/avionics/c"~l~"-rad");
+                    me.ty = getprop("f16/avionics/c"~l~"-typ");
                     
-                    if (l==1) me.ci = me.root.c1;
-                    elsif (l==2) me.ci = me.root.c2;
-                    elsif (l==3) me.ci = me.root.c3;
-                    elsif (l==4) me.ci = me.root.c4;
+                    if (l==1) {
+                        me.ci = me.root.c1;
+                        me.cit = me.root.ct1;
+                    } elsif (l==2) {
+                        me.ci = me.root.c2;
+                        me.cit = me.root.ct2;
+                    } elsif (l==3) {
+                        me.ci = me.root.c3;
+                        me.cit = me.root.ct3;
+                    } elsif (l==4) {
+                        me.ci = me.root.c4;
+                        me.cit = me.root.ct4;
+                    }
                     
                     if (me.la != nil and me.lo != nil and me.ra != nil and me.ra > 0) {
                         me.wpC = geo.Coord.new();
@@ -2173,8 +2204,12 @@ var MFD_Device =
                         me.ci.setScale(me.legScale);
                         me.ci.setStrokeLineWidth(1/me.legScale);
                         me.ci.show();
+                        me.cit.setText(me.ty);
+                        me.cit.setTranslation(me.legX,me.legY);
+                        me.cit.show();
                     } else {
                         me.ci.hide();
+                        me.cit.hide();
                     }
                 }
             }
