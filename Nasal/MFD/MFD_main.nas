@@ -758,7 +758,7 @@ var MFD_Device =
             me.slew_y = -getprop("controls/displays/cursor-slew-y")*me.exp_modi;
             me.slew_c = getprop("controls/displays/cursor-click");
             
-            me.dt = noti.ElapsedSeconds - me.elapsed;
+            me.dt = math.min(noti.ElapsedSeconds - me.elapsed, 0.05);
             
             if ((me.slew_x != 0 or me.slew_y != 0 or me.slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and getprop("/sim/current-view/name") != "TGP") {
                 cursor_destination = nil;
