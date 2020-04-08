@@ -84,7 +84,7 @@ var F16_HUD = {
         obj.alt_ind = obj.get_element("path3111-1");
         obj.alt_ind.hide();
         obj.radalt_box = obj.get_element("radalt-box");
-        obj.scaling = [obj.get_element("alt_tick_0"),obj.get_element("alt_label0"),obj.heading_tape,obj.heading_tape_pointer];
+        obj.scaling = [obj.get_element("alt_tick_0"),obj.get_element("alt_label0"),obj.heading_tape];
         obj.total   = [obj.get_element("alt_tick_0"),obj.get_element("alt_label0"),obj.heading_tape,obj.heading_tape_pointer];
         for(var ii=1;ii<=1000;ii+=1) {
           var tmp = obj.get_element("alt_tick_"~ii~"00");
@@ -1119,7 +1119,7 @@ append(obj.total, obj.speed_curr);
                                         }
                                         obj.localizer.setTranslation (hdp.VV_x, hdp.VV_y);
                                       }),
-            props.UpdateManager.FromHashList(["rotary","hasGS","GSDeg","GSinRange","ILSDeg", "ILSinRange", "GSdist"], 0.01, func(hdp)
+            props.UpdateManager.FromHashList(["rotary","hasGS","GSDeg","GSinRange","ILSDeg", "ILSinRange", "GSdist", "DGFT"], 0.01, func(hdp)
                                       {
                                         if (hdp.rotary == 0 or hdp.rotary == 3 or hdp.rotary == 5) {
                                             #printf("ILSinRange %d GSdist %d", hdp.ILSinRange, hdp.GSdist == nil);
@@ -1314,6 +1314,7 @@ append(obj.total, obj.speed_curr);
                                               foreach(tck;obj.scaling) {
                                                 tck.hide();
                                               }
+                                              obj.heading_tape_pointer.hide();
                                           }
                                       }),
             props.UpdateManager.FromHashList(["calibrated", "GND_SPD", "HUD_VEL", "gear_down"], 0.5, func(hdp)
