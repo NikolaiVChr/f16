@@ -38,6 +38,7 @@
                 <running type="bool">true</running>
             </engine>
         </engines>
+        
         <f16>
             <engine>
                 <feed type="bool">true</feed><!-- OFF/NORM prevents starter, cutoff -->
@@ -58,6 +59,11 @@
                 <power-dl type="bool">true</power-dl>
             </avionics>
         </f16>
+        <instrumentation>
+            <radar>
+                <radar-standby type="bool">false</radar-standby>
+            </radar>
+        </instrumentation>    
     </overlay>
 
 </PropertyList>

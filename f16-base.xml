@@ -1808,6 +1808,7 @@ There is also small changes in tail for different variants with and without brak
     <engines>
         <engine n="0">
             <running type="bool">true</running>
+            <ftit-degc type="double">0</ftit-degc>
         </engine>
     </engines>
     <consumables>
@@ -2055,7 +2056,7 @@ There is also small changes in tail for different variants with and without brak
             <range-selected type="double">40</range-selected>
             <display-rdr type="bool">true</display-rdr>
             <radar2-range type="int">40</radar2-range><!-- default range -->
-            <radar-standby type="bool">false</radar-standby>
+            <radar-standby type="bool">true</radar-standby>
             <symbols-enabled type="bool">true</symbols-enabled>
             <debug-mode type="bool">true</debug-mode>
             <serviceable type="bool">true</serviceable>
