@@ -24,6 +24,7 @@ var jfs_spool_down_time_s = 17;
 var jfs_n_norm = 0;
 
 var JFS = {
+	# and PDF page 384 in block 50 manual
 	init: func {
 		me.elapsed_last = systime();
 		me.start_switch_last = 0;
