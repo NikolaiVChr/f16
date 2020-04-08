@@ -3099,6 +3099,44 @@
             <input> /f16/fuel/hand-aft </input>
             <c1> 1 </c1>
         </lag_filter>
+        
+        
+        
+        <fcs_function name="propulsion/engine[0]/ftit-direct">
+            <function>
+                <sum>
+                    <table>
+                        <independentVar lookup="row">/engines/engine/n2</independentVar>
+                        <independentVar lookup="column">/damage/fire/serviceable</independentVar>
+                        <tableData>
+                                           0      1
+                               0          600      0
+                              20          800    300
+                              40         1000    600
+                              60         1200    650
+                              80         1200    700 
+                             100         1200    750
+                        </tableData>
+                    </table>
+                    <product>
+                        <value>250</value>
+                        <min>
+                            <value>1</value>
+                            <quotient>
+                                <property>/engines/engine/thrust_lb</property>
+                                <property>/engines/engine/rated-mil-dry</property>
+                            </quotient>
+                        </min>
+                    </product>
+                </sum>
+            </function>
+        </fcs_function>
+        
+        <lag_filter name="names/ftit-c">
+            <input> propulsion/engine[0]/ftit-direct </input>
+            <c1> 0.35 </c1>
+            <output>/engines/engine[0]/ftit-degc</output>
+        </lag_filter>        
 
     </channel>
 
