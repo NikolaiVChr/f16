@@ -49,9 +49,9 @@
                 <x-min-deg-sec>0</x-min-deg-sec>
                 <y-min-deg-sec>0</y-min-deg-sec>
                 <z-min-deg-sec>0</z-min-deg-sec>
-                <x-max-deg-sec>0</x-max-deg-sec>
-                <y-max-deg-sec>0</y-max-deg-sec>
-                <z-max-deg-sec>0</z-max-deg-sec>
+                <x-max-deg-sec>10</x-max-deg-sec>
+                <y-max-deg-sec>10</y-max-deg-sec>
+                <z-max-deg-sec>10</z-max-deg-sec>
             </rotation-speed>
         </shooter>
 
@@ -70,7 +70,7 @@
                     <red>
                         <expression>
                             <product>
-                                <value>1.0</value>
+                                <value>0.9</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -78,7 +78,7 @@
                     <green>
                         <expression>
                             <product>
-                                <value>1.0</value>
+                                <value>0.9</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -86,7 +86,7 @@
                     <blue>
                         <expression>
                             <product>
-                                <value>1.0</value>
+                                <value>0.9</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -105,7 +105,7 @@
                     <red>
                         <expression>
                             <product>
-                                <value>1.0</value>
+                                <value>0.9</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -113,7 +113,7 @@
                     <green>
                         <expression>
                             <product>
-                                <value>1.0</value>
+                                <value>0.9</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -121,7 +121,7 @@
                     <blue>
                         <expression>
                             <product>
-                                <value>1.0</value>
+                                <value>0.9</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>

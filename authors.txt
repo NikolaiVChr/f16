@@ -67,6 +67,9 @@ Martien Van Der Plas
 NC-687
 - Side stick
 
+Barszczisbad (BARS1)
+- Side stick improvement
+
 Joshua Davidson (Octal450)
 - Autopilot
 - Electrical System
