@@ -97,7 +97,7 @@
             <value>20</value>
         </greater-than-equals>
   </condition>
-  <property>engines/engine[0]/egt-degf</property>
+  <property>engines/engine[0]/ftit-degc</property>
   <offset-deg>65</offset-deg>
   <interpolation>
    <entry>
@@ -105,16 +105,28 @@
     <dep>0.0</dep>
    </entry>
    <entry>
-    <ind>1292</ind>
-    <dep>103.5</dep>
+    <ind>200</ind>
+    <dep>18.5</dep>
    </entry>
    <entry>
-    <ind>1832</ind>
-    <dep>257.5</dep>
+    <ind>700</ind>
+    <dep>117.5</dep>
    </entry>
    <entry>
-    <ind>2192</ind>
-    <dep>322.5</dep>
+    <ind>800</ind>
+    <dep>177.5</dep>
+   </entry>
+   <entry>
+    <ind>900</ind>
+    <dep>237.5</dep>
+   </entry>
+   <entry>
+    <ind>1000</ind>
+    <dep>297.5</dep>
+   </entry>
+   <entry>
+    <ind>1200</ind>
+    <dep>337.5</dep>
    </entry>
   </interpolation>
   <center>

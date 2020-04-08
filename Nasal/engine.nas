@@ -14,6 +14,7 @@ var running      = props.globals.getNode("engines/engine[0]/running", 0);
 var fuel         = props.globals.getNode("consumables/fuel/total-fuel-lbs", 0);
 
 var accu_psi_max = 3000;
+var accu_psi_both_max = 2800;
 var accu_charge_time_s = 50;
 var accu_1_psi = accu_psi_max;
 var accu_2_psi = accu_psi_max;
@@ -24,6 +25,7 @@ var jfs_spool_down_time_s = 17;
 var jfs_n_norm = 0;
 
 var JFS = {
+	# and PDF page 384 in block 50 manual
 	init: func {
 		me.elapsed_last = systime();
 		me.start_switch_last = 0;
@@ -48,7 +50,7 @@ var JFS = {
 			#print("JFS start requested");
 			me.psi_for_start = 0;
 			if (me.start_switch == 1) {
-				if (accu_1_psi == accu_psi_max or accu_2_psi == accu_psi_max) {
+				if (accu_1_psi == accu_psi_max or accu_2_psi == accu_psi_max or (accu_1_psi >= accu_psi_both_max and accu_2_psi >= accu_psi_both_max)) {
 					me.psi_for_start = 1;
 				}
 				accu_1_psi = 0;

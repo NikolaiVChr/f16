@@ -13,6 +13,9 @@
                         <epu type="int">0</epu>
                     </switches>
                 </elec>
+                <fcs>
+                    <canopy-engage type="bool">true</canopy-engage>
+                </fcs>
             </jsbsim>
         </fdm>
         <controls>
@@ -39,6 +42,14 @@
                 <running-state type="bool">false</running-state>
             </engine>
         </f16>
+        <canopy>
+            <position-norm type="double">1</position-norm>
+        </canopy>
+        <instrumentation>
+            <radar>
+                <radar-standby type="bool">true</radar-standby>
+            </radar>
+        </instrumentation>    
     </overlay>
 
 </PropertyList>

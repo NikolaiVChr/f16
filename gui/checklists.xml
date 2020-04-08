@@ -611,6 +611,21 @@
         <checklist>
             <title>Before takeoff</title>
             <item>
+                <name>RADAR</name>
+                <value>ACTIVE</value>
+                <condition>
+                    <equals>
+                        <property>instrumentation/radar/radar-standby</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>instrumentation/radar/radar-standby</property>
+                    <value>0</value>
+                </binding>
+            </item>
+            <item>
                 <name>ALT FLAPS switch</name>
                 <value>NORM</value>
                 <condition>
