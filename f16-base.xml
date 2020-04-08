@@ -2891,7 +2891,7 @@ There is also small changes in tail for different variants with and without brak
             </agm-158>
             <agm-88>
                 <short-name type="string">AG88</short-name>
-                <long-name type="string">AGM-88 HARM</long-name>
+                <long-name type="string">AGM-88B HARM</long-name>
                 <vol-search type="double">0.00</vol-search>
                 <vol-track type="double">1.00</vol-track>
                 <guidance type="string">radiation</guidance>
