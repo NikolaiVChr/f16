@@ -931,7 +931,7 @@ var autostart = func {
   setprop("fdm/jsbsim/fcs/canopy-engage", 0);
   setprop("instrumentation/radar/radar-standby", 0);
   if (getprop("engines/engine[0]/running")!=1) {
-    if (eng.accu_1_psi < 3000 and eng.accu_2_psi < 3000) {
+    if (eng.accu_1_psi < eng.accu_psi_max and eng.accu_2_psi < eng.accu_psi_max) {
       screen.log.write("Both JFS accumulators de-pressurized. Engine start aborted.");
       print("Both JFS accumulators de-pressurized. Auto engine start aborted.");
       print("Menu->F-16->Config to fill them up again. Or wait for Hydraulic-B system to do it.");
