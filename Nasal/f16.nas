@@ -429,6 +429,9 @@ var sendABtoMP = func {
   # afterburner density:
   setprop("sim/multiplay/generic/float[10]",  1-red*0.90);
   
+  # turbine emission:
+  setprop("sim/multiplay/generic/short[7]",  (1-red)*getprop("/engines/engine[0]/n2")*getprop("sim/multiplay/generic/bool[39]")*0.01);
+  
   #color of afterburner:
   # *0.5 is to prevent it from getting too white during night
   setprop("sim/multiplay/generic/float[11]",  0.75+(0.25-red*0.25)*0.5);#red
