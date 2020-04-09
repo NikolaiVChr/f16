@@ -991,6 +991,7 @@ append(obj.total, obj.speed_curr);
                  elapsed                   : "sim/time/elapsed-sec",
                  cara                      : "f16/avionics/cara-on",
                  altSwitch                 : "f16/avionics/hud-alt",
+                 drift                     : "f16/avionics/hud-drift",
                  fpm                       : "f16/avionics/hud-fpm",
                  ded                       : "f16/avionics/hud-ded",
                  dgft                      : "f16/avionics/dgft",
@@ -1190,7 +1191,7 @@ append(obj.total, obj.speed_curr);
                                           }
                                         }
                                       }),
-            props.UpdateManager.FromHashList(["texUp","pitch","roll","fpm","VV_x","VV_y","gear_down", "dgft"], 0.001, func(hdp)
+            props.UpdateManager.FromHashList(["texUp","pitch","roll","fpm","VV_x","VV_y","gear_down", "dgft", "drift"], 0.001, func(hdp)
                                       {
                                           obj.ladder.hide();
                                           obj.roll_pointer.setRotation (hdp.roll_rad);
@@ -1204,7 +1205,7 @@ append(obj.total, obj.speed_curr);
                                             
                                             #obj.ladder.show();
                                         
-                                        var result = HudMath.getDynamicHorizon(5,0.5,0.5,0.7,0.5);
+                                        var result = HudMath.getDynamicHorizon(5,0.5,0.5,0.7,0.5,hdp.drift,-0.25);
                                         obj.h_rot.setRotation(result[1]);
                                         obj.horizon_group.setTranslation(result[0]);#place it on bore
                                         obj.ladder_group.setTranslation(result[2]);
@@ -1624,7 +1625,11 @@ append(obj.total, obj.speed_curr);
         
         if (1) {
             var vvpos = HudMath.getFlightPathIndicatorPos();
-            hdp.VV_x = vvpos[0];
+            if (hdp.drift) {
+                hdp.VV_x = vvpos[0];
+            } else {
+                hdp.VV_x = 0;
+            }
             hdp.VV_y = vvpos[1];
         } elsif (hdp.wow0) {
             me.vectorMag = math.sqrt(hdp.speed_east_fps*hdp.speed_east_fps+hdp.speed_north_fps*hdp.speed_north_fps);

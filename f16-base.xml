@@ -3277,6 +3277,7 @@ value. 18000=standard US transition altitude -->
         </settings>
         <avionics>
             <dgft type="bool">false</dgft>
+            <hud-drift type="bool">true</hud-drift>
             <hud-brt type="double">1.0</hud-brt>
             <rwr-int type="double">1.0</rwr-int>
             <mfd-l-brt type="double">1.0</mfd-l-brt>

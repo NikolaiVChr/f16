@@ -298,7 +298,7 @@ var HudMath = {
 		}
 	},
 	
-	getDynamicHorizon: func (averagePoint_deg = 7.5, xMin=1,xMax=1,yMin=1,yMax=1) {
+	getDynamicHorizon: func (averagePoint_deg = 7.5, xMin=1,xMax=1,yMin=1,yMax=1,drift=1, drift_fix=0.0) {
 		# get translation and rotation for horizon line, dynamic means centered around FPI.
 		# the min max values are faction from center to edge of hud to restrict ladder movement.
 		# should be called after getFlightPathIndicatorPos/getFlightPathIndicatorPosWind.
@@ -306,8 +306,8 @@ var HudMath = {
 		
 		me.rot = -me.input.roll.getValue() * D2R;
 
-		me.pos_x_clamp = me.clamp(me.pos_x, -xMin*me.canvasWidth*0.5,xMax*me.canvasWidth*0.5);
-		me.pos_y_clamp = me.clamp(me.pos_y, -yMin*me.canvasHeight*0.5,yMax*me.canvasHeight*0.5);
+		me.pos_x_clamp = drift?me.clamp(me.pos_x, -xMin*me.canvasWidth*0.5,xMax*me.canvasWidth*0.5):0;
+		me.pos_y_clamp = drift?me.clamp(me.pos_y, -yMin*me.canvasHeight*0.5,yMax*me.canvasHeight*0.5):drift_fix*me.canvasHeight;
 
 	    # now figure out how much we move horizon group laterally, to keep FPI in middle of it.
 	    me.pos_y_rel = me.pos_y_clamp - me.getCenterOffset();
