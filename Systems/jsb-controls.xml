@@ -3019,7 +3019,47 @@
     </channel>
 
     <channel name="sound" execrate="8">
-    
+        
+        <fcs_function name="/engines/engine[0]/sound-n2-70-to-90">
+            <function>
+                <table>
+                    <independentVar lookup="row">/engines/engine/n2</independentVar>
+                    <tableData>
+                          70         -1.0
+                          90          1.0
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="/engines/engine[0]/sound-n2-vol-a">
+            <function>
+                <sqrt>
+                    <product>
+                        <v>0.5</v>
+                        <sum>
+                            <v>1</v>
+                            <p>/engines/engine[0]/sound-n2-70-to-90</p>                    
+                        </sum>
+                    </product>
+                </sqrt>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="/engines/engine[0]/sound-n2-vol-b">
+            <function>
+                <sqrt>
+                    <product>
+                        <v>0.5</v>
+                        <difference>
+                            <v>1</v>
+                            <p>/engines/engine[0]/sound-n2-70-to-90</p>                    
+                        </difference>
+                    </product>
+                </sqrt>
+            </function>
+        </fcs_function>
+        
         <fcs_function name="/engines/engine[0]/n2-low"><!-- replaced with JFS sound -->
             <function>
                 <table>
