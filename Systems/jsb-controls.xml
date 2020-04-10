@@ -2163,14 +2163,16 @@
     <channel name="Throttle" execrate="1">
 
         <fcs_function name="fcs/fly-by-wire/throttle/pos-norm">
-            <description>Page 153 of secondary doc</description>
+            <description>Page 153 of secondary doc. And F-16.net. The 0.35 is a guesstimate.</description>
             <function>
                 <table>
                     <independentVar lookup="row">fcs/throttle-cmd-norm</independentVar>
+                    <independentVar lookup="column">velocities/mach</independentVar>
                     <tableData>
-                      0.0       0.0
-                      0.77      1.0
-                      1.0       2.0
+                                0.84 1.00 1.40
+                      0.00      0.00 0.35 1.00
+                      0.77      1.00 1.00 1.00
+                      1.00      2.00 2.00 2.00
                     </tableData>
                 </table>
             </function>
@@ -2186,7 +2188,7 @@
                     <tableData>
                                   0    1
                       0.0       0.05   0
-                      1.0       1.0   0
+                      1.0       1.0    0
                     </tableData>
                 </table>
             </function>
