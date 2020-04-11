@@ -327,12 +327,12 @@
    <z>0</z>
   </axis>
  </animation>
-
+<!-- -35 = closed -165 = stripes -270 = dots -->
  <animation>
   <type>rotate</type>
   <object-name>SPEED_BRAKE_drum</object-name>
-  <property>surface-positions/speedbrake-pos-norm</property>
-  <factor>95</factor>
+  <property>surface-positions/speedbrake-pos-anim-lag</property>
+  <factor>1</factor>
   <center>
    <x-m>-0.094</x-m>
    <y-m>-0.424</y-m>

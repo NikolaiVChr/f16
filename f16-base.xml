@@ -3383,6 +3383,10 @@ value. 18000=standard US transition altitude -->
         </fire>
     </damage>
 
+    <surface-positions>
+        <speedbrake-pos-anim type="double">-35</speedbrake-pos-anim>
+    </surface-positions>
+
     <aircraft> 
         <flir> 
             <input> 

@@ -2675,10 +2675,12 @@
    <scheduled_gain name="fcs/speedbrake-scheduler">
     <input>fcs/speedbrake-initiate</input>
     <table>
-     <independentVar>gear/gear-cmd-norm</independentVar>
+     <independentVar lookup="row">gear/gear-pos-norm</independentVar>
+     <independentVar lookup="column">gear/unit[0]/WOW</independentVar>
      <tableData>
-      0 1.0
-      1 0.71667
+         0        1
+      0 1.0       1.0
+      1 0.71667   1.0
      </tableData>
     </table>
     <!-- <output>fcs/speedbrake-pos-norm</output> -->
@@ -2786,7 +2788,12 @@
     </switch>
   </channel>-->
 
-    <channel name="Misc" execrate="16">
+    <channel name="Misc" execrate="16">        
+        
+        <lag_filter name="/surface-positions/speedbrake-pos-anim-lag">
+            <input> /surface-positions/speedbrake-pos-anim </input>
+            <c1> 2 </c1>
+        </lag_filter>
 
         <fcs_function name="systems/approach-speed">
             <description>Page A7-3 of Supplement HAF manual</description>

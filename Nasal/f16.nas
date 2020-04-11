@@ -416,9 +416,22 @@ var fast = {
     if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20) {#TODO: this hack should be done proper.
         setprop("controls/test/test-panel/mal-ind-lts", 0);
     }
+    var spd_deg = getprop("fdm/jsbsim/fcs/speedbrake-pos-deg");
+    var spd_anim = -35;#-35 = closed -165 = stripes -270 = dots
+    if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20) {#TODO check what elec it really needs
+      spd_anim = -165;
+    } elsif (last_spd_deg != spd_deg) {
+      spd_anim = -165;
+    } elsif (spd_deg > 2) {
+      spd_anim = -270;
+    }
+    setprop("surface-positions/speedbrake-pos-anim", spd_anim);
+    last_spd_deg = spd_deg;
     settimer(func {me.loop()},0.05);
   },
 };
+
+var last_spd_deg = 0;
 
 var sendABtoMP = func {
   var red = getprop("rendering/scene/diffuse/red");
