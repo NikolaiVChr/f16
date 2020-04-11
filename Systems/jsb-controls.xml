@@ -2165,18 +2165,50 @@
                 /engines/engine/n2 gt 96.5
             </test>
         </switch>        
+        
+        <aerosurface_scale name="fcs/throttle-cmd-deg">
+            <description>
+                F100 PW throttle (power lever angle)
+                
+                F100:
+                0 deg - Cutoff
+                16 deg - Idle
+                86 deg - Mil
+                91 deg - AB
+                130 deg - Full AB
+            </description>
+            <input>fcs/throttle-cmd-norm</input>
+            <zero_centered> false </zero_centered>
+            <domain>
+                <min>   0.0 </min>
+                <max>   1.0 </max>
+            </domain>
+            <range>
+                <min>  16.0 </min><!-- idle -->
+                <max> 130.0 </max><!-- full AB -->
+            </range>
+        </aerosurface_scale>
 
         <fcs_function name="fcs/fly-by-wire/throttle/pos-norm">
-            <description>Page 153 of secondary doc. And F-16.net. The 0.35 is a guesstimate.</description>
+            <description>
+                Page 153 of secondary doc. And F-16.net. The mach 1.00 column is a guesstimate.
+                
+                Thrust is approx linear with PLA.
+            </description>
             <function>
                 <table>
-                    <independentVar lookup="row">fcs/throttle-cmd-norm</independentVar>
+                    <independentVar lookup="row">fcs/throttle-cmd-deg</independentVar>
                     <independentVar lookup="column">velocities/mach</independentVar>
                     <tableData>
-                                0.84 1.00 1.40
-                      0.00      0.00 0.35 1.00
-                      0.77      1.00 1.00 1.00
-                      1.00      2.00 2.00 2.00
+                               0.84 1.00 1.40
+                       16      0.00 0.43 1.00
+                       30      0.43 0.53 1.00
+                       44      0.63 0.70 1.00
+                       58      0.79 0.85 1.00
+                       72      0.89 0.89 1.00
+                       86      1.00 1.00 1.00
+                       90.99   1.00 1.00 1.00
+                      130      2.00 2.00 2.00
                     </tableData>
                 </table>
             </function>

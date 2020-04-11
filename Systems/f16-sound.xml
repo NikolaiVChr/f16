@@ -2052,8 +2052,8 @@
 					<property>/f16/engine/cutoff-release-lever</property>
 				</not>
 				<greater-than-equals>
-					<property>controls/engines/engine[0]/throttle</property>
-					<value>0.77</value>
+					<property>fdm/jsbsim/fcs/throttle-cmd-deg</property>
+					<value>91</value>
 				</greater-than-equals>
 			</condition>
 			<position>
@@ -2076,8 +2076,8 @@
 					<property>/f16/engine/cutoff-release-lever</property>
 				</not>
 				<less-than>
-					<property>controls/engines/engine[0]/throttle</property>
-					<value>0.77</value>
+					<property>fdm/jsbsim/fcs/throttle-cmd-deg</property>
+					<value>91</value>
 				</less-than>
 			</condition>
 			<position>
