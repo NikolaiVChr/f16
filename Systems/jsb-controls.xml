@@ -2220,15 +2220,17 @@
         </fcs_function>
         
         <fcs_function name="/controls/engines/engine[0]/throttle-movement">
-            <description></description>
+            <description>
+                At idle the throttle will be at 12.3% of full throttle movement.
+            </description>
             <function>
                 <table>
-                    <independentVar lookup="row">/controls/engines/engine[0]/throttle</independentVar>
+                    <independentVar lookup="row">fcs/throttle-cmd-deg</independentVar>
                     <independentVar lookup="column">/f16/engine/cutoff-release-lever</independentVar>                    
                     <tableData>
-                                  0    1
-                      0.0       0.05   0
-                      1.0       1.0    0
+                                  0      1
+                       16.0       0.123  0
+                      130.0       1.000  0
                     </tableData>
                 </table>
             </function>
