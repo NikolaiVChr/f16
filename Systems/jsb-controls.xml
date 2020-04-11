@@ -606,21 +606,35 @@
         </pure_gain>
 
         <switch name="fcs/fly-by-wire/pitch/bias-top">
-            <default value="6"/>
+            <description>
+                In documents this is 6 instead of 11.
+                However due to landing AoA should be 11 to 15,
+                The 6 bias is changed to 11.
+                DNU
+            </description>
+            <default value="11"/>
             <test logic="AND" value="0">
                 fcs/fly-by-wire/MLG-GND == 1                
             </test>
         </switch>
 
         <fcs_function name="fcs/fly-by-wire/pitch/bias-number">
+            <description>
+                In documents this is 1 and 9 instead of -4 and 4.
+                However due to landing AoA should be 11 to 15,
+                The 6 bias is changed to 11, and these numbers
+                changed so its still 15 in flight CAT I and
+                7 in flight CAT III at 100 KCAS.
+                DNU
+            </description>
             <function>
                 <table>
                     <independentVar lookup="row">fcs/fly-by-wire/enable-cat-III</independentVar>
                     <independentVar lookup="column">velocities/vc-kts</independentVar>
                     <tableData>
                           100 420
-                        0   9   9
-                        1   1   9
+                        0   4   4
+                        1   -4   4
                     </tableData>
                 </table>
             </function>
@@ -654,9 +668,16 @@
 
         <summer name="fcs/fly-by-wire/pitch/bias-final">
             <description>
-                In air:         15
-                On approach:     6
-                On ground:       0
+                              docs  niko
+                In air:         15    15
+                On approach:     6    11
+                On ground:       0     0
+                
+                In air it only react with pitch down when AoA is above 15.
+                With gears down it resist with counter pitch whenever the AoA is
+                above or below 11, to keep it at 11.
+                On ground the bias dont matter. Although if AoA is above
+                20.4 another system will react with neutralizing the commanded pitch up.
             </description>
             <input> fcs/fly-by-wire/pitch/bias-top-lag </input><!-- top bias -->
             <input> fcs/fly-by-wire/pitch/bias1 </input>
