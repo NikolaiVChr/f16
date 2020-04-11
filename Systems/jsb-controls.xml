@@ -2155,6 +2155,16 @@
 
 
     <channel name="Throttle" execrate="1">
+        
+        <switch name="fcs/fly-by-wire/throttle-limit-ab">
+            <description>
+                Don't allow reheat before N2 has reached 96.5% 
+            </description>
+            <default value="1.0"/>
+            <test logic="AND" value="2.0">
+                /engines/engine/n2 gt 96.5
+            </test>
+        </switch>        
 
         <fcs_function name="fcs/fly-by-wire/throttle/pos-norm">
             <description>Page 153 of secondary doc. And F-16.net. The 0.35 is a guesstimate.</description>
@@ -2170,6 +2180,10 @@
                     </tableData>
                 </table>
             </function>
+            <clipto>
+                <min>  0 </min>
+                <max>  fcs/fly-by-wire/throttle-limit-ab </max>
+            </clipto>
             <output>fcs/throttle-pos-norm</output>
         </fcs_function>
         
