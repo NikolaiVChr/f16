@@ -449,7 +449,7 @@
             <gain> fcs/fly-by-wire/pitch/g-limit-product </gain>
         </pure_gain>
 
-        <lag_filter name="fcs/fly-by-wire/pitch/command-sum-limit-lagged">
+        <lag_filter name="fcs/fly-by-wire/pitch/command-final">
             <input> fcs/fly-by-wire/pitch/g-limit-gain </input>
             <c1> 8.3 </c1>
         </lag_filter>
@@ -569,7 +569,7 @@
             </function>
         </fcs_function>
 
-        <pure_gain name="fcs/fly-by-wire/pitch/alpha-indicated-gain">
+        <pure_gain name="fcs/fly-by-wire/pitch/high-alpha-cmd-neutralizer">
             <description></description>
             <input>fcs/fly-by-wire/pitch/alpha-indicated-sum</input>
             <gain> 0.5 </gain>
@@ -579,10 +579,10 @@
             </clipto>
         </pure_gain>
 
-        <summer name="fcs/fly-by-wire/pitch/command-sum-limit-alpha">
-            <input> -fcs/fly-by-wire/pitch/command-sum-limit-lagged </input>
-            <input> fcs/fly-by-wire/pitch/alpha-indicated-gain </input>
-            <input> -autoflight/pitch/g-demand-switched </input>
+        <summer name="fcs/fly-by-wire/pitch/command-neutralized-by-high-alpha">
+            <input> -fcs/fly-by-wire/pitch/command-final </input>
+            <input> fcs/fly-by-wire/pitch/high-alpha-cmd-neutralizer </input>
+            <input> -autoflight/pitch/g-demand-switched </input><!-- autopilot input -->
         </summer>
 
         <pure_gain name="velocities/q-deg_sec">
@@ -632,8 +632,8 @@
                     <independentVar lookup="row">fcs/fly-by-wire/enable-cat-III</independentVar>
                     <independentVar lookup="column">velocities/vc-kts</independentVar>
                     <tableData>
-                          100 420
-                        0   4   4
+                           100 420
+                        0    4   4
                         1   -4   4
                     </tableData>
                 </table>
@@ -767,17 +767,6 @@
             <gain> 0.5 </gain>
         </pure_gain>
 
-        <summer name="fcs/fly-by-wire/pitch/pitch-rate-gain-2-sum">
-            <input> fcs/fly-by-wire/pitch/normal-gain </input>
-            <input> fcs/fly-by-wire/pitch/q-gain-2 </input>
-        </summer>
-        
-        <summer name="fcs/fly-by-wire/pitch/pitch-rate-gain-sum-gain-sum">
-            <input> fcs/fly-by-wire/pitch/pitch-rate-upper </input>
-            <input> fcs/fly-by-wire/pitch/pitch-rate-lower-gain </input>
-            <input> fcs/fly-by-wire/pitch/pitch-rate-gain-2-sum </input>
-        </summer>
-
         <switch name="fcs/fly-by-wire/pitch/q-product">
             <description></description>
             <default value="0.167"/>
@@ -786,25 +775,36 @@
             </test>
         </switch>
 
-        <pure_gain name="fcs/fly-by-wire/pitch/q-gain-2">
+        <pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-second-path">
             <input>fcs/fly-by-wire/pitch/q-washout</input>
             <gain> fcs/fly-by-wire/pitch/q-product </gain>
         </pure_gain>
+        
+        <summer name="fcs/fly-by-wire/pitch/n-and-pitch-rate-combined">
+            <input> fcs/fly-by-wire/pitch/normal-gain </input>
+            <input> fcs/fly-by-wire/pitch/pitch-rate-second-path </input>
+        </summer>
+        
+        <summer name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-combined">
+            <input> fcs/fly-by-wire/pitch/pitch-rate-upper </input>
+            <input> fcs/fly-by-wire/pitch/pitch-rate-lower-gain </input>
+            <input> fcs/fly-by-wire/pitch/n-and-pitch-rate-combined </input>
+        </summer>
 
-        <lead_lag_filter name="fcs/fly-by-wire/pitch/pitch-rate-lead">
-            <input> fcs/fly-by-wire/pitch/pitch-rate-gain-sum-gain-sum </input>
+        <lead_lag_filter name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lead-lagged">
+            <input> fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-combined </input>
             <c1> 3 </c1>
             <c2> 12 </c2>
             <c3> 1 </c3>
             <c4> 12 </c4>
         </lead_lag_filter>
 
-        <second_order_filter name="fcs/fly-by-wire/pitch/pitch-rate-lead-2nd">
+        <second_order_filter name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-demand">
             <description>
                 on old diagram looks to be 2.5, not 2 nor 25
                 DNU
             </description>
-            <input> fcs/fly-by-wire/pitch/pitch-rate-lead </input>
+            <input> fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lead-lagged </input>
             <c1> 2.5 </c1>
             <c2> 20 </c2>
             <c3> 3500 </c3>
@@ -813,9 +813,9 @@
             <c6> 3500 </c6>
         </second_order_filter>
         
-        <summer name="fcs/fly-by-wire/pitch/command-sum-limit-alpha-pitch">
-            <input> fcs/fly-by-wire/pitch/command-sum-limit-alpha </input>
-            <input> fcs/fly-by-wire/pitch/pitch-rate-lead-2nd </input>
+        <summer name="fcs/fly-by-wire/pitch/error">
+            <input> fcs/fly-by-wire/pitch/command-neutralized-by-high-alpha </input>
+            <input> fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-demand </input>
         </summer>
 
     </channel>
@@ -838,8 +838,8 @@
 
     <channel execrate="1" name="Pitch Integrator loop and surfaces">
 
-        <pure_gain name="fcs/fly-by-wire/pitch/main-gain-result">
-            <input>fcs/fly-by-wire/pitch/command-sum-limit-alpha-pitch</input>
+        <pure_gain name="fcs/fly-by-wire/pitch/main-error">
+            <input>fcs/fly-by-wire/pitch/error</input>
             <gain> 3.0 </gain>
         </pure_gain>
 
@@ -852,15 +852,15 @@
             </test>
         </switch>-->
 
-        <pure_gain name="fcs/fly-by-wire/pitch/main-gain-schedule">
+        <pure_gain name="fcs/fly-by-wire/pitch/main-error-scheduled">
             <description>
             </description>
-            <input>fcs/fly-by-wire/pitch/main-gain-result</input>
+            <input>fcs/fly-by-wire/pitch/main-error</input>
             <gain> fcs/fly-by-wire/pitch/F3 </gain>
         </pure_gain>
 
         <summer name="fcs/fly-by-wire/pitch/integrator-feedback">
-            <input> fcs/fly-by-wire/pitch/main-gain-schedule </input>
+            <input> fcs/fly-by-wire/pitch/main-error-scheduled </input>
             <input> -fcs/fly-by-wire/pitch/integrator-feedback-gain </input>
         </summer>
 
@@ -904,7 +904,7 @@
 
         <summer name="fcs/fly-by-wire/pitch/integrator-post">
             <input> fcs/fly-by-wire/pitch/integrator </input>
-            <input> fcs/fly-by-wire/pitch/main-gain-schedule </input>
+            <input> fcs/fly-by-wire/pitch/main-error-scheduled </input>
         </summer>
 
         <pure_gain name="fcs/fly-by-wire/pitch/integrator-selftest">
