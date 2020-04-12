@@ -291,7 +291,82 @@
             <input> propulsion/engine[0]/ftit-direct </input>
             <c1> 0.35 </c1>
             <output>/engines/engine[0]/ftit-degc</output>
-        </lag_filter> 
+        </lag_filter>
+        
+        <fcs_function name="/f16/cockpit/pressure-ft-direct">
+            <function>
+                    <table>
+                        <independentVar lookup="row">atmosphere/density-altitude</independentVar>
+                        <independentVar lookup="column">fcs/canopy-pos-norm</independentVar>
+                        <tableData>
+                                             0     1
+                               0             0     0
+                            8000          8000  8000
+                           23000          8000 23000
+                           30000         13000 30000
+                           40000         17000 40000
+                           60000         22000 60000
+                        </tableData>
+                    </table>
+            </function>
+        </fcs_function>
+        
+        <lag_filter name="/f16/cockpit/pressure-ft">
+            <input> /f16/cockpit/pressure-ft-direct </input>
+            <c1> 0.35 </c1>
+        </lag_filter>
+        
+    </channel>
+    
+    
+
+    <channel name="oxygen" execrate="7200">
+                
+        <fcs_function name="systems/oxy-mins">
+            <function>
+                  <product>
+                    <table>
+                        <independentVar lookup="row">/f16/cockpit/pressure-ft-direct</independentVar>
+                        <tableData>
+                              15000 29.86
+                              20000 24.43
+                              25000 21.72
+                              30000 23.00
+                              35000 30.94
+                        </tableData>
+                    </table>
+                    <quotient>
+                      <p>/f16/cockpit/oxygen-liters</p>
+                      <v>5</v>
+                    </quotient>
+                    <v>60</v>
+                  </product>
+            </function>
+            <output>/f16/cockpit/oxygen-minutes</output>
+        </fcs_function>
+        
+        <fcs_function name="systems/oxy-lit">
+            <function>
+                <ifthen>
+                  <gt>
+                      <p>/f16/cockpit/oxygen-minutes</p>
+                      <value>0</value>
+                  </gt>
+                  <product>
+                    <p>/f16/cockpit/oxygen-liters</p>
+                    <quotient>
+                      <sum>
+                        <p>/f16/cockpit/oxygen-minutes</p>
+                        <v>-1</v>
+                      </sum>
+                      <p>/f16/cockpit/oxygen-minutes</p>
+                    </quotient>
+                  </product>
+                  <v>0</v>
+                </ifthen>
+            </function>
+            <output>/f16/cockpit/oxygen-liters</output>
+        </fcs_function>
         
     </channel>
     

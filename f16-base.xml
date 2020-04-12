@@ -3359,6 +3359,10 @@ value. 18000=standard US transition altitude -->
             <done type="bool">false</done>
             <enable type="bool">false</enable>
         </chute>
+        <cockpit>
+            <oxygen-liters type="double">5.0</oxygen-liters>
+            <oxygen-minutes type="double">10000</oxygen-minutes>
+        </cockpit>
         <stores>
             <tgp-mounted type="bool">false</tgp-mounted>
             <harm-mounted type="bool">false</harm-mounted>

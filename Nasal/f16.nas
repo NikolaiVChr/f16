@@ -841,6 +841,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
       setprop("/f16/avionics/power-fcr-warm", 1);
       setprop("/f16/avionics/power-rdr-alt-warm", 1);
     }
+    setprop("/f16/cockpit/oxygen-liters", 5.0);
   }
  }, 0, 0);
 
