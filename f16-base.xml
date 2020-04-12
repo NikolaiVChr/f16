@@ -1810,6 +1810,7 @@ There is also small changes in tail for different variants with and without brak
         <engine n="0">
             <running type="bool">true</running>
             <ftit-degc type="double">0</ftit-degc>
+            <egt-degf type="double">0</egt-degf>
         </engine>
     </engines>
     <consumables>

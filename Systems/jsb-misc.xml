@@ -250,20 +250,30 @@
         <fcs_function name="propulsion/engine[0]/ftit-direct">
             <function>
                 <sum>
-                    <table>
+                    <table><!-- engine fire will contribute some -->
                         <independentVar lookup="row">/engines/engine/n2</independentVar>
                         <independentVar lookup="column">/damage/fire/serviceable</independentVar>
                         <tableData>
-                                           0      1
-                               0          600      0
-                              20          800    300
-                              40         1000    600
-                              60         1200    650
-                              80         1200    700 
-                             100         1200    750
+                                           0     1
+                               0          600    0
+                              20          500    0
+                              40          400    0
+                              60          300    0
+                              80          300    0 
+                             100          300    0
                         </tableData>
                     </table>
-                    <product>
+                    <product><!-- egt to deg celcius -->
+                        <difference>
+                            <property>/engines/engine/egt-degf</property>
+                            <v>32</v>
+                        </difference>
+                        <quotient>
+                            <v>5</v>
+                            <v>9</v>
+                        </quotient>
+                    </product>
+                    <product><!-- add some extra from thrust -->
                         <value>250</value>
                         <min>
                             <value>1</value>
