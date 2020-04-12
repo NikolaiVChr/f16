@@ -36,6 +36,14 @@
                 fcs/fly-by-wire/q_c lt 646
             </test>
         </switch>
+        
+        <switch name="fcs/fly-by-wire/condition-aar">
+            <default value="0"/>
+            <test logic="AND" value="1">
+                /systems/refuel/serviceable == 1
+                fcs/fly-by-wire/q_c lt 646
+            </test>
+        </switch>
 
         <fcs_function name="fcs/fly-by-wire/enable-standby-gains-inv">
             <function>
@@ -641,6 +649,9 @@
         </fcs_function>
 
         <switch name="fcs/fly-by-wire/pitch/bias-bottom">
+            <description>
+                Diagram say condition A
+            </description>
             <default value="0"/>
             <test logic="OR" value="fcs/fly-by-wire/pitch/bias-number">
                 gear/gear-cmd-norm == 1
@@ -648,6 +659,10 @@
         </switch>
 
         <lag_filter name="fcs/fly-by-wire/pitch/bias-top-lag">
+            <description>
+                Diagram say 10
+                DNU
+            </description>
             <input> fcs/fly-by-wire/pitch/bias-top </input>
             <c1> 10 </c1>
         </lag_filter>
@@ -658,7 +673,7 @@
                 DNU
             </description>
             <input> fcs/fly-by-wire/pitch/bias-bottom </input>
-            <c1> 1.25 </c1>
+            <c1> 0.125 </c1>
         </lag_filter>
 
         <summer name="fcs/fly-by-wire/pitch/bias1">
@@ -722,22 +737,41 @@
                 DNU
                 
                 It makes negative pitch rate (washed out) plus alpha (minus a bias)
-                give zero input on FBW when gear is up. And x10 influence with gear down.
+                give zero input on FBW when gear is up. And x1 influence with gear down.
+                
+                In diagram relies only on Cond A
             </description>
             <default value="0"/>
-            <test logic="AND" value="1.0">
-                fcs/fly-by-wire/condition-a == 1
+            <test logic="AND" value="0.075">
+                <!-- fcs/fly-by-wire/condition-a == 1 -->
+                gear/gear-cmd-norm == 1
+                fcs/fly-by-wire/MLG-GND != 1
             </test>
         </switch>
 
-        <lag_filter name="fcs/fly-by-wire/pitch/pitch-rate-lower-lag">
+        <!--<lag_filter name="fcs/fly-by-wire/pitch/pitch-rate-lower-lag">
             <description>
                 Diagram say 0.125, but that does a pitch up for too long after takeoff
                 DNU
             </description>
             <input> fcs/fly-by-wire/pitch/pitch-rate-lower-switch </input>
             <c1> 1.25 </c1>
-        </lag_filter>
+        </lag_filter>-->
+        
+        <actuator name="fcs/fly-by-wire/pitch/pitch-rate-lower-lag">
+            <description>
+                2 secs to decrease to zero
+                100 secs to increase to 0.07
+                DNU
+            </description>
+          <input> fcs/fly-by-wire/pitch/pitch-rate-lower-switch </input>
+          <lag> 20 </lag>
+          <rate_limit sense="incr"> 0.01 </rate_limit>
+          <rate_limit sense="decr"> 0.50 </rate_limit>
+          <bias> 0 </bias>
+          <deadband_width> 0 </deadband_width>
+          <hysteresis_width> 0 </hysteresis_width>
+        </actuator>
 
         <pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-lower-gain">
             <input>fcs/fly-by-wire/pitch/pitch-rate-lower</input>

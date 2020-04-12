@@ -842,6 +842,11 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
       setprop("/f16/avionics/power-rdr-alt-warm", 1);
     }
     setprop("/f16/cockpit/oxygen-liters", 5.0);
+    
+    # debug:
+    #
+    #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/pitch-rate-lower-lag");
+    #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/bias-final");
   }
  }, 0, 0);
 
