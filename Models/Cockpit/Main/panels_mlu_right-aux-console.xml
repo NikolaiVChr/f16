@@ -959,7 +959,7 @@
   <type>select</type>
   <object-name>OXY_LOW_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property><!-- should be lit when oxy is below 0.5 liters -->
+   <property>controls/test/test-panel/mal-ind-lts</property><!-- should be lit when /f16/cockpit/oxygen-liters is below 0.5 liters -->
   </condition>
  </animation> 
 

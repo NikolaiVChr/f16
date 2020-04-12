@@ -357,7 +357,7 @@
                     <quotient>
                       <sum>
                         <p>/f16/cockpit/oxygen-minutes</p>
-                        <v>-1</v>
+                        <v>-1</v><!-- channel execrate set to 1 minute -->
                       </sum>
                       <p>/f16/cockpit/oxygen-minutes</p>
                     </quotient>
