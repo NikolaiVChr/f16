@@ -642,8 +642,8 @@
 
         <switch name="fcs/fly-by-wire/pitch/bias-bottom">
             <default value="0"/>
-            <test logic="AND" value="fcs/fly-by-wire/pitch/bias-number">
-                fcs/fly-by-wire/condition-a == 1
+            <test logic="OR" value="fcs/fly-by-wire/pitch/bias-number">
+                gear/gear-cmd-norm == 1
             </test>
         </switch>
 
