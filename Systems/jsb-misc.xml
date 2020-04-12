@@ -1,0 +1,404 @@
+<?xml version="1.0"?>
+
+
+<system name="Miscelanous">
+
+    <channel name="Misc" execrate="16">        
+        
+        <lag_filter name="/surface-positions/speedbrake-pos-anim-lag">
+            <input> /surface-positions/speedbrake-pos-anim </input>
+            <c1> 2 </c1>
+        </lag_filter>
+
+        <fcs_function name="systems/approach-speed">
+            <description>Page A7-3 of Supplement HAF manual</description>
+            <function>
+                <table>
+                    <independentVar lookup="row">inertia/weight-lbs</independentVar>
+                    <tableData>
+                      17000 125
+                      20000 136
+                      25000 152
+                      30000 167
+                      35000 180
+                      40000 192
+                      45000 204
+                      48000 212
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="systems/buffeting/outputy">
+            <function>
+                <product>
+                    <sum>
+                        <sin>
+                          <product>
+                            <property>sim-time-sec</property>
+                            <property>systems/buffeting/var1</property>
+                          </product>
+                        </sin>
+                        <sin>
+                          <product>
+                            <property>sim-time-sec</property>
+                            <property>systems/buffeting/var2</property>
+                          </product>
+                        </sin>
+                        <sin>
+                          <product>
+                            <property>sim-time-sec</property>
+                            <property>systems/buffeting/var3</property>
+                          </product>
+                        </sin>
+                    </sum>
+                    <!--<table>
+                        <independentVar lookup="row">atmosphere/density-altitude</independentVar>
+                        <tableData>
+                              0.0         1.0
+                          30000.0         0.0
+                        </tableData>
+                    </table>-->
+                    <property>systems/buffeting/magnitude</property>
+                </product>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="systems/buffeting/outputz">
+            <function>
+                <product>
+                    <sum>
+                        <sin>
+                          <product>
+                            <property>sim-time-sec</property>
+                            <property>systems/buffeting/var1</property>
+                            <v>776.345</v>
+                          </product>
+                        </sin>
+                        <sin>
+                          <product>
+                            <property>sim-time-sec</property>
+                            <property>systems/buffeting/var2</property>
+                            <v>736.345</v>
+                          </product>
+                        </sin>
+                        <sin>
+                          <product>
+                            <property>sim-time-sec</property>
+                            <property>systems/buffeting/var3</property>
+                            <v>756.345</v>
+                          </product>
+                        </sin>
+                    </sum>
+                    <!--<table>
+                        <independentVar lookup="row">atmosphere/density-altitude</independentVar>
+                        <tableData>
+                              0.0         1.0
+                          30000.0         0.0
+                        </tableData>
+                    </table>-->
+                    <property>systems/buffeting/magnitude</property>
+                </product>
+            </function>
+        </fcs_function>
+        
+        <switch name="/f16/avionics/power-ufc-warming">
+         <default value="0"/>
+         <test  logic="AND" value="1">
+           /f16/avionics/power-ufc == 1
+           elec/bus/ess-ac gt 100
+         </test>
+        </switch>
+        
+        <kinematic name="/f16/avionics/power-ufc-warm">
+            <input>/f16/avionics/power-ufc-warming</input>
+            <noscale/>
+            <traverse>
+                <setting>
+                    <position>  0.0 </position>
+                    <time>      0.0 </time>
+                </setting>
+                <setting>
+                    <position>  1.0 </position>
+                    <time>      5.0 </time>
+                </setting>
+            </traverse>
+            <clipto>
+                <min>   0 </min>
+                <max>   1 </max>
+            </clipto>
+        </kinematic>
+        
+        <switch name="/f16/avionics/power-rdr-alt-warming">
+         <default value="0"/>
+         <test  logic="AND" value="2">
+           /f16/avionics/power-rdr-alt == 2
+           elec/bus/ess-dc gt 20
+         </test>
+         <test  logic="AND" value="1">
+           /f16/avionics/power-rdr-alt == 1
+           elec/bus/ess-dc gt 20
+         </test>
+        </switch>
+        
+        <kinematic name="avionics/power-rdr-alt-warm">
+            <input>/f16/avionics/power-rdr-alt-warming</input>
+            <noscale/>
+            <traverse>
+                <setting>
+                    <position>  0.0 </position>
+                    <time>      0.0 </time>
+                </setting>
+                <setting>
+                    <position>  1.0 </position>
+                    <time>     60.0 </time>
+                </setting>
+                <setting>
+                    <position>  2.0 </position>
+                    <time>      0.1 </time>
+                </setting>
+            </traverse>
+            <clipto>
+                <min>   0 </min>
+                <max>   2 </max>
+            </clipto> 
+            <output>/f16/avionics/power-rdr-alt-warm</output>
+        </kinematic>
+        
+        <switch name="/f16/avionics/power-fcr-warming">
+         <default value="0"/>
+         <test  logic="AND" value="1">
+           /f16/avionics/power-fcr == 1
+           elec/bus/noness-dc gt 20
+           elec/contactors/main-contactors-1 gt 100
+         </test>
+        </switch>
+        
+        <kinematic name="avionics/power-fcr-warm">
+            <input>/f16/avionics/power-fcr-warming</input>
+            <noscale/>
+            <traverse>
+                <setting>
+                    <position>  0.0 </position>
+                    <time>      0.0 </time>
+                </setting>
+                <setting>
+                    <position>  1.0 </position>
+                    <time>    120.0 </time><!-- if change this then change the countdown in MFD CRM also -->
+                </setting>
+            </traverse>
+            <clipto>
+                <min>   0 </min>
+                <max>   1 </max>
+            </clipto>
+            <output>/f16/avionics/power-fcr-warm</output>
+        </kinematic>
+        
+        <switch name="/f16/avionics/power-fcr-bit">
+         <default value="0"/>
+         <test logic="AND" value="0">
+           /f16/avionics/power-fcr-warming == 0
+         </test>
+         <test logic="AND" value="2">
+           /f16/avionics/power-fcr-warm == 1
+         </test>
+         <test logic="AND" value="1">
+           /f16/avionics/power-fcr-warm gt 0
+           /f16/avionics/power-fcr-warming == 1
+         </test>
+        </switch>
+        
+        <switch name="/f16/avionics/power-right-hdpt-warming">
+         <default value="0"/>
+         <test  logic="AND" value="1">
+           /f16/avionics/power-right-hdpt == 1
+           elec/bus/ess-dc gt 20
+           /f16/stores/tgp-mounted gt 0
+         </test>
+        </switch>
+        
+        <kinematic name="avionics/power-right-hdpt-warm">
+            <input>/f16/avionics/power-right-hdpt-warming</input>
+            <noscale/>
+            <traverse>
+                <setting>
+                    <position>  0.0 </position>
+                    <time>      0.0 </time>
+                </setting>
+                <setting>
+                    <position>  1.0 </position>
+                    <time>    180.0 </time>
+                </setting>
+            </traverse>
+            <clipto>
+                <min>   0 </min>
+                <max>   1 </max>
+            </clipto>
+            <output>/f16/avionics/power-right-hdpt-warm</output>
+        </kinematic>
+        
+        <lag_filter name="/f16/fuel/hand-fwd-lag">
+            <input> /f16/fuel/hand-fwd </input>
+            <c1> 2 </c1>
+        </lag_filter>
+        
+        <lag_filter name="/f16/fuel/hand-aft-lag">
+            <input> /f16/fuel/hand-aft </input>
+            <c1> 1 </c1>
+        </lag_filter>
+        
+        <fcs_function name="propulsion/engine[0]/ftit-direct">
+            <function>
+                <sum>
+                    <table>
+                        <independentVar lookup="row">/engines/engine/n2</independentVar>
+                        <independentVar lookup="column">/damage/fire/serviceable</independentVar>
+                        <tableData>
+                                           0      1
+                               0          600      0
+                              20          800    300
+                              40         1000    600
+                              60         1200    650
+                              80         1200    700 
+                             100         1200    750
+                        </tableData>
+                    </table>
+                    <product>
+                        <value>250</value>
+                        <min>
+                            <value>1</value>
+                            <quotient>
+                                <property>/engines/engine/thrust_lb</property>
+                                <property>/engines/engine/rated-mil-dry</property>
+                            </quotient>
+                        </min>
+                    </product>
+                </sum>
+            </function>
+        </fcs_function>
+        
+        <lag_filter name="names/ftit-c">
+            <input> propulsion/engine[0]/ftit-direct </input>
+            <c1> 0.35 </c1>
+            <output>/engines/engine[0]/ftit-degc</output>
+        </lag_filter> 
+        
+    </channel>
+    
+    
+
+    <channel name="sound" execrate="8">
+        
+        <fcs_function name="/engines/engine[0]/sound-n2-70-to-90">
+            <function>
+                <table>
+                    <independentVar lookup="row">/engines/engine/n2</independentVar>
+                    <tableData>
+                          70         -1.0
+                          90          1.0
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="/engines/engine[0]/sound-n2-vol-a">
+            <function>
+                <sqrt>
+                    <product>
+                        <v>0.5</v>
+                        <sum>
+                            <v>1</v>
+                            <p>/engines/engine[0]/sound-n2-70-to-90</p>                    
+                        </sum>
+                    </product>
+                </sqrt>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="/engines/engine[0]/sound-n2-vol-b">
+            <function>
+                <sqrt>
+                    <product>
+                        <v>0.5</v>
+                        <difference>
+                            <v>1</v>
+                            <p>/engines/engine[0]/sound-n2-70-to-90</p>                    
+                        </difference>
+                    </product>
+                </sqrt>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="/engines/engine[0]/n2-low"><!-- replaced with JFS sound -->
+            <function>
+                <table>
+                    <independentVar lookup="row">/engines/engine/n2</independentVar>
+                    <tableData>
+                          0.1         0.0
+                          1.0         0.1
+                         25.0         1.0
+                         35.0         0.75
+                         45.0         0.0
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="/engines/engine[0]/n1-out1">
+            <function>
+                <table>
+                    <independentVar lookup="row">/engines/engine/n1</independentVar>
+                    <tableData>
+                           0.5        0.0
+                          15          1.0
+                          30          1.0
+                          40          0.0 
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="/engines/engine[0]/n1-out2">
+            <function>
+                <table>
+                    <independentVar lookup="row">/engines/engine/n1</independentVar>
+                    <tableData>
+                           0.5        0.0
+                           5          0.2
+                          10          0.55
+                          15          1.0
+                          30          1.0
+                         100          0.3 
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="/engines/engine[0]/n1-mid">
+            <function>
+                <table>
+                    <independentVar lookup="row">/engines/engine/n1</independentVar>
+                    <tableData>
+                           5.5        0.0
+                          10          0.75
+                          15          1.0
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="/engines/engine[0]/n1-high">
+            <function>
+                <table>
+                    <independentVar lookup="row">/engines/engine/n1</independentVar>
+                    <tableData>
+                          10          0.0
+                          30          1.0
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>  
+
+    </channel>
+    
+</system>
