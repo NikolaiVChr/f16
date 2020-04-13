@@ -515,7 +515,16 @@
   <type>select</type>
   <object-name>CABIN_PRESS_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not><or>
+      <property>controls/test/test-panel/mal-ind-lts</property><!-- should lit up when f16/cockpit/pressure-ft is above 27000 -->
+      <and>
+        <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
+        <greater-than>
+          <property>/f16/cockpit/pressure-ft</property>
+          <value>27000</value>
+        </greater-than>
+      </and>
+    </or></not>
   </condition>
  </animation> 
 
@@ -845,7 +854,16 @@
   <type>select</type>
   <object-name>CABIN_PRESS_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property><!-- should lit up when f16/cockpit/pressure-ft is above 27000 -->
+    <or>
+      <property>controls/test/test-panel/mal-ind-lts</property><!-- should lit up when f16/cockpit/pressure-ft is above 27000 -->
+      <and>
+        <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
+        <greater-than>
+          <property>/f16/cockpit/pressure-ft</property>
+          <value>27000</value>
+        </greater-than>
+      </and>
+    </or>
   </condition>
  </animation> 
 
