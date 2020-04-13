@@ -2198,7 +2198,26 @@
             <test logic="AND" value="2.0">
                 /engines/engine/n2 gt 96.5
             </test>
-        </switch>        
+        </switch>
+        
+        <!--<switch name="fcs/fly-by-wire/throttle-max-ab">
+            <description>
+                MAX POWER switch is solenoid that is held in place at max power when
+                at mach 1.1 or higher and throttle at max AB. For later engines than PW 200
+                is non-functional.
+                
+                To switch it OFF is not implemented.
+            </description>
+            <default value="0"/>
+            <test logic="AND" value="0.5">
+                /sim/variant-id gt 1
+            </test>
+            <test logic="AND" value="1">
+                fcs/throttle-pos-norm == 2.0
+                velocities/mach ge 1.1
+            </test>
+            <output>/f16/engine/max-power</output>
+        </switch>-->
         
         <aerosurface_scale name="fcs/throttle-cmd-deg">
             <description>

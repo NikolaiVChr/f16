@@ -778,6 +778,20 @@
    <animation>
     <type>pick</type>
     <visible>true</visible>
+    <object-name>SW_MAX_POWER</object-name>
+    <action>
+      <button>0</button>
+      <repeatable>false</repeatable>
+      <binding>
+        <command>property-toggle</command>
+        <property>f16/engine/max-power</property>
+      </binding>
+    </action>
+   </animation>
+   
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
     <object-name>SW_AIR_REFUEL</object-name>
     <action>
       <button>0</button>
@@ -887,6 +901,24 @@
     <axis>
       <x>1</x>
       <y>0</y>
+      <z>0</z>
+    </axis>
+  </animation>
+  
+  <animation>
+    <type>rotate</type>
+    <object-name>SW_MAX_POWER</object-name>
+    <property>f16/engine/max-power</property>
+    <factor>-40</factor>
+    <offset-deg>20</offset-deg>
+    <center>
+      <x-m>0.31965</x-m>
+      <y-m>-0.45225</y-m>
+      <z-m>0.0176</z-m>
+    </center>
+    <axis>
+      <x>0</x>
+      <y>1</y>
       <z>0</z>
     </axis>
   </animation>
