@@ -379,6 +379,8 @@
         
         <fcs_function name="systems/hydrazine-mins">
             <function>
+              <max>
+                <v>0</v>
                       <sum>
                         <p>/f16/cockpit/hydrazine-minutes</p>
                         <product>
@@ -386,6 +388,7 @@
                             <p>elec/sources/epu-starting</p>
                         </product>
                       </sum>
+              </max>
             </function>
             <output>/f16/cockpit/hydrazine-minutes</output>
         </fcs_function>
