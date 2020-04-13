@@ -70,12 +70,10 @@
 			</clipto>
 		</scheduled_gain>
 
-		<switch name="systems/hydraulics/emerg-pump-psi">
-			<default value="0"/>
-			<test  logic="AND" value="2500">
-				systems/hydraulics/emerg-pump-on eq 1
-			</test>
-		</switch>
+		<pure_gain name="systems/hydraulics/emerg-pump-psi">
+			<input>elec/sources/epu-on</input>
+			<gain>2500</gain>
+		</pure_gain>
 
 		<summer name="systems/hydraulics/sysa-psi">
 			<input>systems/hydraulics/emerg-pump-psi</input>

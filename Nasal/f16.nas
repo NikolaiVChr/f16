@@ -842,6 +842,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
       setprop("/f16/avionics/power-rdr-alt-warm", 1);
     }
     setprop("/f16/cockpit/oxygen-liters", 5.0);
+    setprop("f16/cockpit/hydrazine-minutes", 10);
     
     # debug:
     #
@@ -874,6 +875,7 @@ var repair2 = func {
   setprop("f16/chute/done",0);
   setprop("sim/view[0]/enabled",1);
   setprop("sim/current-view/view-number",0);
+  setprop("f16/cockpit/hydrazine-minutes", 10);
   
   if (inAutostart) {
     return;

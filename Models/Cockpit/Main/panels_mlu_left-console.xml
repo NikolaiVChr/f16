@@ -171,15 +171,17 @@
   <object-name>EPU_RUN_light</object-name><!-- EPU running -->
   <type>select</type>
   <condition>
-    <greater-than>
-      <property>fdm/jsbsim/elec/bus/batt-2</property>
-      <value>20</value>
-    </greater-than>
     <or>
-      <greater-than>
-        <property>fdm/jsbsim/elec/sources/epu-gen-volt</property>
-        <value>100</value>
-      </greater-than>
+      <and>
+        <greater-than>
+          <property>fdm/jsbsim/elec/bus/batt-2</property>
+          <value>20</value>
+        </greater-than>
+        <greater-than>
+          <property>fdm/jsbsim/elec/sources/epu-gen-volt</property>
+          <value>100</value>
+        </greater-than>
+      </and>
       <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
@@ -301,7 +303,6 @@
   <object-name>flaperons-l</object-name>
   <object-name>flaperons-r</object-name>
   <object-name>rudder-dot</object-name>
-  <object-name>hyd-air_epu</object-name>
   <object-name>stbygains-dot</object-name>
   <object-name>stbygains-y</object-name>
   <object-name>stbygains-r</object-name>
@@ -327,6 +328,29 @@
    <blue>1</blue>
   </emission>
  </animation>
+ 
+ <animation>
+  <object-name>hyd-air_epu</object-name><!-- todo: seperate them so only hydrazine lit up not air also -->
+  <type>material</type>
+  <condition>
+    <or>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+      <and>
+        <greater-than>
+          <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+          <value>20</value>
+        </greater-than>
+        <property>fdm/jsbsim/elec/sources/epu-require-hydrazine</property>
+      </and>
+    </or>
+  </condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
+ 
 
   <animation>
   <object-name>light_d</object-name>
@@ -361,10 +385,10 @@
     </greater-than>
     <or>
       <and>
-        <greater-than>
-          <property>fdm/jsbsim/elec/sources/epu-on</property>
-          <value>0</value>
-        </greater-than>
+        <equals>
+          <property>fdm/jsbsim/elec/sources/epu-cmd</property>
+          <value>1</value>
+        </equals>
         <less-than>
           <property>fdm/jsbsim/elec/sources/epu-gen-volt</property>
           <value>100</value>
@@ -391,7 +415,7 @@
     <or>
       <and>
         <greater-than>
-          <property>fdm/jsbsim/elec/sources/epu-on</property>
+          <property>fdm/jsbsim/elec/sources/epu-cmd</property>
           <value>0</value>
         </greater-than>
         <not>

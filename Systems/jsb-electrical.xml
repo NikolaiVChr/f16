@@ -148,6 +148,95 @@
 			<input>elec/sources/external-pwr-plugged-in</input>
 			<gain>115.0</gain>
 		</pure_gain>
+	
+	</channel>
+	
+	
+	<channel name="EPU" execrate="8">
+		
+		<switch name="elec/sources/epu-elec">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				elec/sources/main-gen-volt lt 100
+				elec/sources/stby-gen-volt lt 100
+				elec/sources/external-pwr-volt lt 100
+			</test>
+		</switch>
+		
+		<switch name="elec/sources/epu-hyd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				systems/hydraulics/edpa-pump-psi lt 1000
+				systems/hydraulics/edpb-pump-psi lt 1000
+			</test>
+		</switch>
+		
+		<switch name="elec/sources/epu-emerg-allow">
+			<default value="1"/>
+			<test logic="AND" value="0">
+				/f16/engine/cutoff-release-lever == 1
+				gear/unit[0]/WOW == 1
+			</test>
+		</switch>
+		
+		<switch name="elec/sources/epu-cmd">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				elec/switches/epu ne 0
+				elec/sources/batt-bus eq 1
+				elec/failures/epu/serviceable eq 1
+				elec/sources/epu-elec eq 1
+				elec/sources/epu-emerg-allow == 1
+			</test>
+			<test logic="AND" value="1">
+				elec/switches/epu ne 0
+				elec/sources/batt-bus eq 1
+				elec/failures/epu/serviceable eq 1
+				elec/sources/epu-hyd eq 1
+				elec/sources/epu-emerg-allow == 1
+			</test>
+			<test logic="AND" value="1">
+				elec/switches/epu eq 2
+				elec/sources/batt-bus eq 1
+				elec/failures/epu/serviceable eq 1
+			</test>
+		</switch>
+		
+		<switch name="elec/sources/epu-require-hydrazine">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				elec/sources/epu-cmd == 1
+				/engines/engine/n2 lt 75
+			</test>
+		</switch>
+		
+		<switch name="elec/sources/epu-starting">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				elec/sources/epu-cmd == 1
+				elec/sources/epu-require-hydrazine == 0
+			</test>
+			<test logic="AND" value="1">
+				elec/sources/epu-cmd == 1
+				elec/sources/epu-require-hydrazine == 1
+				/f16/cockpit/hydrazine-minutes gt 0
+			</test>
+		</switch>
+		
+		<kinematic name="elec/sources/epu-on">
+            <input>elec/sources/epu-starting</input>
+            <!--<noscale/>-->
+            <traverse>
+                <setting>
+                    <position>0</position>
+                    <time>0.0</time>
+                </setting>
+                <setting>
+                    <position>1</position>
+                    <time>2.0</time>
+                </setting>
+            </traverse>
+        </kinematic>
 		
 		<pure_gain name="elec/sources/epu-kva">
 			<input>elec/sources/epu-on</input>
@@ -240,7 +329,6 @@
 				elec/sources/main-gen-volt lt 100
 				elec/sources/stby-gen-volt lt 100
 				elec/sources/epu-gen-volt ge 100
-				fcs/gear-wow eq 0
 			</test>
 		</switch>
 		
@@ -272,7 +360,6 @@
 				elec/sources/main-gen-volt lt 100
 				elec/sources/stby-gen-volt lt 100
 				elec/sources/epu-gen-volt ge 100
-				fcs/gear-wow eq 0
 			</test>
 		</switch>
 		
@@ -469,54 +556,7 @@
 			</test>
 		</switch>
 		
-		<switch name="elec/sources/epu-elec">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				elec/sources/main-gen-volt lt 100
-				elec/sources/stby-gen-volt lt 100
-				elec/sources/external-pwr-volt lt 100
-			</test>
-		</switch>
 		
-		<switch name="elec/sources/epu-hyd">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				systems/hydraulics/edpa-pump-psi lt 1000
-				systems/hydraulics/edpb-pump-psi lt 1000
-			</test>
-		</switch>
-		
-		<switch name="elec/sources/epu-emerg-allow">
-			<default value="1"/>
-			<test logic="AND" value="0">
-				/f16/engine/cutoff-release-lever == 1
-				gear/unit[0]/WOW == 1
-			</test>
-		</switch>
-		
-		<switch name="elec/sources/epu-on">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				elec/switches/epu ne 0
-				elec/sources/batt-bus eq 1
-				elec/failures/epu/serviceable eq 1
-				elec/sources/epu-elec eq 1
-				elec/sources/epu-emerg-allow == 1
-			</test>
-			<test logic="AND" value="1">
-				elec/switches/epu ne 0
-				elec/sources/batt-bus eq 1
-				elec/failures/epu/serviceable eq 1
-				elec/sources/epu-hyd eq 1
-				elec/sources/epu-emerg-allow == 1
-			</test>
-			<test logic="AND" value="1">
-				elec/switches/epu eq 2
-				elec/sources/batt-bus eq 1
-				elec/failures/epu/serviceable eq 1
-			</test>
-			<output>systems/hydraulics/emerg-pump-on</output> <!-- Also output to hydraulic system -->
-		</switch>
 	
 	</channel>
 

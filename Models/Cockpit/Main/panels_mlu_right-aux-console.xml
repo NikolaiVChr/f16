@@ -91,6 +91,24 @@
  
  <animation>
   <type>rotate</type>
+  <object-name>EPU_FUEL_needle</object-name>
+  <property>/f16/cockpit/hydrazine-minutes</property>
+  <factor>24</factor>
+  <offset-deg>135</offset-deg><!-- 135 -->
+  <center>
+   <x-m>-0.06688</x-m>
+   <y-m>0.45277</y-m>
+   <z-m>0.00514</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>-1</z>
+  </axis>
+ </animation>
+ 
+ <animation>
+  <type>rotate</type>
   <object-name>LIQ_OXY_needle</object-name>
   <property>/f16/cockpit/oxygen-liters</property>
   <factor>36</factor>

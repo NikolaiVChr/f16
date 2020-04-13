@@ -367,10 +367,25 @@
             </function>
             <output>/f16/cockpit/oxygen-liters</output>
         </fcs_function>
-        
+                
     </channel>
     
-    
+    <channel name="hydrazine" execrate="720">
+        
+        <fcs_function name="systems/hydrazine-mins">
+            <function>
+                      <sum>
+                        <p>/f16/cockpit/hydrazine-minutes</p>
+                        <product>
+                            <v>-0.1</v><!-- channel execrate set to 0.1 minute -->
+                            <p>elec/sources/epu-starting</p>
+                        </product>
+                      </sum>
+            </function>
+            <output>/f16/cockpit/hydrazine-minutes</output>
+        </fcs_function>
+        
+    </channel>
 
     <channel name="sound" execrate="8">
         
