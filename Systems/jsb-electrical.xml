@@ -184,6 +184,7 @@
 			<test logic="AND" value="1">
 				elec/switches/epu ne 0
 				elec/sources/batt-bus eq 1
+				elec/switches/main-pwr eq 2
 				elec/failures/epu/serviceable eq 1
 				elec/sources/epu-elec eq 1
 				elec/sources/epu-emerg-allow == 1
@@ -191,12 +192,14 @@
 			<test logic="AND" value="1">
 				elec/switches/epu ne 0
 				elec/sources/batt-bus eq 1
+				elec/switches/main-pwr eq 2
 				elec/failures/epu/serviceable eq 1
 				elec/sources/epu-hyd eq 1
 				elec/sources/epu-emerg-allow == 1
 			</test>
 			<test logic="AND" value="1">
 				elec/switches/epu eq 2
+				elec/switches/main-pwr eq 2
 				elec/sources/batt-bus eq 1
 				elec/failures/epu/serviceable eq 1
 			</test>
