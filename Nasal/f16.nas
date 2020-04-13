@@ -338,9 +338,6 @@ var medium = {
       }
       setprop("f16/avionics/hud-power",power);
     }
-    if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20) {
-      setprop("controls/test/test-panel/mal-ind-lts", 0);
-    }
     
     batteryChargeDischarge(); ########## To work optimally, should run at or below 0.5 in a loop ##########
     
