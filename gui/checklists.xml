@@ -59,6 +59,11 @@
                     <property>fdm/jsbsim/elec/switches/epu</property>
                     <value>1</value>
                 </binding>
+                <binding>
+                    <command>property-assign</command>
+                    <property>fdm/jsbsim/elec/switches/epu-cover</property>
+                    <value>0</value>
+                </binding>
             </item>
             <item>
                 <name>CUTOFF (black switch on throttle)</name>
