@@ -11,6 +11,7 @@
                     <switches>
                         <main-pwr type="int">0</main-pwr>
                         <epu type="int">0</epu>
+                        <epu-cover type="int">1</epu-cover>
                     </switches>
                 </elec>
                 <fcs>

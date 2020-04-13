@@ -415,7 +415,7 @@ var fast = {
     }
     var spd_deg = getprop("fdm/jsbsim/fcs/speedbrake-pos-deg");
     var spd_anim = -35;#-35 = closed -165 = stripes -270 = dots
-    if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20) {#TODO check what elec it really needs
+    if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20) {
       spd_anim = -165;
     } elsif (last_spd_deg != spd_deg) {
       spd_anim = -165;
@@ -886,6 +886,7 @@ var repair2 = func {
   
   if (getprop("f16/engine/running-state")) {
     setprop("fdm/jsbsim/elec/switches/epu",1);
+    setprop("fdm/jsbsim/elec/switches/epu-cover",0);
     setprop("fdm/jsbsim/elec/switches/main-pwr",2);
     if (getprop("engines/engine[0]/running")!=1) {
       setprop("f16/engine/feed",1);
