@@ -2848,6 +2848,9 @@
 
    <switch name="fcs/canopy-trigger">
     <default value="fcs/canopy-engage"/>
+    <test value="1">
+     /canopy/serviceable == 0
+    </test>
     <test logic="AND" value="fcs/canopy-trigger">
         elec/bus/emergency-dc-2 lt 20
         elec/switches/main-pwr gt 0

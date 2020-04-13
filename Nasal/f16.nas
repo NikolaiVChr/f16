@@ -1336,6 +1336,7 @@ var eject = func{
       return;
   }
   setprop("f16/done",1);
+  setprop("canopy/serviceable", 0);
   var es = armament.AIM.new(10, "es","gamma", nil ,[-3.65,0,0.7]);
   #setprop("fdm/jsbsim/fcs/canopy/hinges/serviceable",0);
   es.releaseAtNothing();

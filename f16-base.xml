@@ -2172,6 +2172,9 @@ There is also small changes in tail for different variants with and without brak
         </precipitation-control>
         <star-magnitude-cutoff type="float">6.0</star-magnitude-cutoff>
     </environment>
+    <canopy>
+        <serviceable type="bool">true</serviceable>
+    </canopy>
     <limits>
         <max-gear-extension-speed>300</max-gear-extension-speed>
     </limits>

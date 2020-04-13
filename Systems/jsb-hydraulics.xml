@@ -21,7 +21,7 @@
 				<independentVar lookup="row">propulsion/engine[0]/n2</independentVar>
 				<independentVar lookup="column">systems/hydraulics/edpb-pump/serviceable</independentVar>
 				<tableData>
-					0      1
+					        0      1
 					0       0      0
 					12      0    130
 				</tableData>
@@ -116,7 +116,9 @@
 		</scheduled_gain>
 
 	</channel>
+	
 	<channel name="Util" execrate="8">
+		
 		<switch name="systems/hydraulics/util-system-feedin">
 			<default value="0"/>
 			<test value="systems/hydraulics/sysa-psi">
