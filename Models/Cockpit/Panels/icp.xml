@@ -106,6 +106,32 @@
         <object-name>sym</object-name>
         <object-name>cont</object-name>
     </effect>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>drift</object-name>
+        <property>f16/avionics/hud-drift</property>
+        <factor>20</factor>
+        <offset-deg>-20</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>-5</drag-scale-px><!-- 10 is default -->
+        <center>
+            <x-m>-0.000831</x-m><y-m>0.01355</y-m><z-m>-0.039324</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hud-drift</property>
+                <factor>1</factor>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
 
     <animation>
         <type>knob</type>

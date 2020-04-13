@@ -562,6 +562,7 @@
                 <float n="19" type="double">0</float><!-- afterburner engine fire transperancy -->
                 <short n="5" type="int" alias="/engines/engine[0]/n1"/>
                 <short n="6" type="int" alias="/engines/engine[0]/n2"/>
+                <short n="7" type="int">0</short><!-- turbine emission color from afterburner -->
                 <string n="5" type="string">00--++00--Empty</string><!-- mp stores -->
                 <string n="4" type="string"></string><!-- string 4 used by IFF -->
             </generic>
@@ -1809,6 +1810,7 @@ There is also small changes in tail for different variants with and without brak
         <engine n="0">
             <running type="bool">true</running>
             <ftit-degc type="double">0</ftit-degc>
+            <egt-degf type="double">0</egt-degf>
         </engine>
     </engines>
     <consumables>
@@ -3276,6 +3278,7 @@ value. 18000=standard US transition altitude -->
         </settings>
         <avionics>
             <dgft type="bool">false</dgft>
+            <hud-drift type="bool">true</hud-drift>
             <hud-brt type="double">1.0</hud-brt>
             <rwr-int type="double">1.0</rwr-int>
             <mfd-l-brt type="double">1.0</mfd-l-brt>
@@ -3348,6 +3351,7 @@ value. 18000=standard US transition altitude -->
             <jet-fuel type="int">0</jet-fuel><!-- starter -1=1 1=2 0=off  goes to off at 55% rpm -->
             <jfs-start type="bool">false</jfs-start><!-- inverse cutoff -->
             <running-state type="bool">false</running-state>
+            <max-power type="bool">true</max-power>
         </engine>
         <done type="bool">false</done>
         <chute>
@@ -3356,6 +3360,10 @@ value. 18000=standard US transition altitude -->
             <done type="bool">false</done>
             <enable type="bool">false</enable>
         </chute>
+        <cockpit>
+            <oxygen-liters type="double">5.0</oxygen-liters>
+            <oxygen-minutes type="double">10000</oxygen-minutes>
+        </cockpit>
         <stores>
             <tgp-mounted type="bool">false</tgp-mounted>
             <harm-mounted type="bool">false</harm-mounted>
@@ -3380,6 +3388,10 @@ value. 18000=standard US transition altitude -->
             <serviceable type="bool">true</serviceable>
         </fire>
     </damage>
+
+    <surface-positions>
+        <speedbrake-pos-anim type="double">-35</speedbrake-pos-anim>
+    </surface-positions>
 
     <aircraft> 
         <flir> 

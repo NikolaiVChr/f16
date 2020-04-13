@@ -46,8 +46,9 @@
  </fileheader>
 
  <system file="jsb-hook"/>
- <system file="f16-hydraulics"/>
- <system file="f16-electrical"/>
+ <system file="jsb-hydraulics"/>
+ <system file="jsb-electrical"/>
+ <system file="jsb-misc"/>
  <ground_reactions file="Systems/jsb-ground-reactions"/>
  <external_reactions file="Systems/jsb-external-reactions"/>
  <system file="jsb-pushback"/> 

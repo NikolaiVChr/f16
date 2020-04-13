@@ -70,6 +70,42 @@
    <z>-1</z>
   </axis>
  </animation>
+ 
+  <animation>
+  <type>rotate</type>
+  <object-name>CAB_PRESS_needle</object-name>
+  <property>/f16/cockpit/pressure-ft</property>
+  <factor>0.0061</factor>
+  <offset-deg>-48</offset-deg><!-- -48 -->
+  <center>
+   <x-m>-0.00166</x-m>
+   <y-m>0.39401</y-m>
+   <z-m>0.00521</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>-1</z>
+  </axis>
+ </animation>
+ 
+ <animation>
+  <type>rotate</type>
+  <object-name>LIQ_OXY_needle</object-name>
+  <property>/f16/cockpit/oxygen-liters</property>
+  <factor>36</factor>
+  <offset-deg>-160</offset-deg>
+  <center>
+   <x-m>-0.11233</x-m>
+   <y-m>0.41624</y-m>
+   <z-m>0.00463</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>-1</z>
+  </axis>
+ </animation>
 
  <!-- START FUEL GAUGE -->
  <animation>
@@ -767,7 +803,7 @@
   <type>select</type>
   <object-name>CABIN_PRESS_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <property>controls/test/test-panel/mal-ind-lts</property><!-- should lit up when f16/cockpit/pressure-ft is above 27000 -->
   </condition>
  </animation> 
 
@@ -923,7 +959,7 @@
   <type>select</type>
   <object-name>OXY_LOW_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <property>controls/test/test-panel/mal-ind-lts</property><!-- should be lit when /f16/cockpit/oxygen-liters is below 0.5 liters -->
   </condition>
  </animation> 
 

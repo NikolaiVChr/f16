@@ -631,7 +631,7 @@ var FuelTank = {
 
 	eject: func {
 		# spill out all the fuel?
-		me.guiNode = props.globals.getNode(baseGui~"/weight["~pylon.guiID~"]",1);
+		#me.guiNode = props.globals.getNode(baseGui~"/weight["~pylon.guiID~"]",1);
 		me.setv("capacity-gal_us", 0);
 		me.setv("level-norm", 0);
 		me.setv("selected", 0);

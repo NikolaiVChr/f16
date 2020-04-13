@@ -24,8 +24,8 @@
   <object-name>PINKY_SWITCH_HANDLE</object-name>
   <object-name>PINKY_SWITCH_LB</object-name>
   <property>/controls/engines/engine/throttle-movement</property>
-  <offset-deg>45</offset-deg>
-  <factor>-75</factor>
+  <offset-deg>40</offset-deg>
+  <factor>-80</factor><!-- should really move 130 degs, but isn't modeled for that -->
   <center>
    <x-m>0.0</x-m>
    <y-m>0.0</y-m>
@@ -42,8 +42,8 @@
   <type>rotate</type>
   <object-name>PINKY_SWITCH_HANDLE</object-name>
   <property>f16/engine/cutoff-release-lever</property>
-  <offset-deg>0</offset-deg>
-  <factor>-10</factor>
+  <offset-deg>15</offset-deg>
+  <factor>-20</factor>
   <axis>   
    <x1-m> -0.051951</x1-m>
    <y1-m> 0.002993</y1-m>

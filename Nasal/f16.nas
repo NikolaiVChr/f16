@@ -416,9 +416,22 @@ var fast = {
     if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20) {#TODO: this hack should be done proper.
         setprop("controls/test/test-panel/mal-ind-lts", 0);
     }
+    var spd_deg = getprop("fdm/jsbsim/fcs/speedbrake-pos-deg");
+    var spd_anim = -35;#-35 = closed -165 = stripes -270 = dots
+    if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20) {#TODO check what elec it really needs
+      spd_anim = -165;
+    } elsif (last_spd_deg != spd_deg) {
+      spd_anim = -165;
+    } elsif (spd_deg > 2) {
+      spd_anim = -270;
+    }
+    setprop("surface-positions/speedbrake-pos-anim", spd_anim);
+    last_spd_deg = spd_deg;
     settimer(func {me.loop()},0.05);
   },
 };
+
+var last_spd_deg = 0;
 
 var sendABtoMP = func {
   var red = getprop("rendering/scene/diffuse/red");
@@ -428,6 +441,9 @@ var sendABtoMP = func {
   
   # afterburner density:
   setprop("sim/multiplay/generic/float[10]",  1-red*0.90);
+  
+  # turbine emission:
+  setprop("sim/multiplay/generic/short[7]",  (1-red)*getprop("/engines/engine[0]/n2")*getprop("sim/multiplay/generic/bool[39]")*0.01);
   
   #color of afterburner:
   # *0.5 is to prevent it from getting too white during night
@@ -825,6 +841,12 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
       setprop("/f16/avionics/power-fcr-warm", 1);
       setprop("/f16/avionics/power-rdr-alt-warm", 1);
     }
+    setprop("/f16/cockpit/oxygen-liters", 5.0);
+    
+    # debug:
+    #
+    #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/pitch-rate-lower-lag");
+    #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/bias-final");
   }
  }, 0, 0);
 
@@ -1298,7 +1320,7 @@ var play_thunder = func (name, timeout=0.1, delay=0) {
 setlistener("/environment/lightning/lightning-pos-y", thunder_listener);
 
 var reloadCannon = func {
-    setprop("ai/submodels/submodel[0]/count", 120);#flares
+    setprop("ai/submodels/submodel[0]/count", 100);#flares
     pylons.cannon.reloadAmmo();
 }
 
