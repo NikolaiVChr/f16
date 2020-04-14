@@ -10,6 +10,7 @@
     TP-1538 - used for control system B/C and non-prototype gains.
     TN-D-8176 - used for servodynamic filters. Disabled for now (fdm rate is only 120Hz).
     ICAS-90-5.10.2 - used for MPO switch
+    AFSC 32657C - has more clean view of Integrator pitch loop.
  -->
 
     <channel execrate="1" name="FCS Lookup">
@@ -912,13 +913,22 @@
         </summer>
 
         <integrator name="fcs/fly-by-wire/pitch/integrator">
+            <description>
+                Main component of pitch FBW system.
+                
+                - rect, for a rectangular integrator
+                - trap, for a trapezoidal integrator (default)
+                - ab2, for a second order Adams Bashforth integrator
+                - ab3, for a third order Adams Bashforth integrator
+            </description>
             <input> fcs/fly-by-wire/pitch/integrator-pre </input>
-            <c1> 5 </c1>
+            <c1 type="ab2"> 5 </c1>
         </integrator>
 
         <pure_gain name="fcs/fly-by-wire/pitch/ground-input">
             <description>
                 Diagram say 0.5, but negative makes more sense.
+                AFSC 32657C diagram says -0.5, so yes indeed.
                 Negative will limit the integrator action when on ground.
                 DNU
             </description>
@@ -2848,6 +2858,9 @@
 
    <switch name="fcs/canopy-trigger">
     <default value="fcs/canopy-engage"/>
+    <test value="1">
+     /canopy/serviceable == 0
+    </test>
     <test logic="AND" value="fcs/canopy-trigger">
         elec/bus/emergency-dc-2 lt 20
         elec/switches/main-pwr gt 0

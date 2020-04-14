@@ -338,9 +338,6 @@ var medium = {
       }
       setprop("f16/avionics/hud-power",power);
     }
-    if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20) {
-      setprop("controls/test/test-panel/mal-ind-lts", 0);
-    }
     
     batteryChargeDischarge(); ########## To work optimally, should run at or below 0.5 in a loop ##########
     
@@ -418,7 +415,7 @@ var fast = {
     }
     var spd_deg = getprop("fdm/jsbsim/fcs/speedbrake-pos-deg");
     var spd_anim = -35;#-35 = closed -165 = stripes -270 = dots
-    if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20) {#TODO check what elec it really needs
+    if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20) {
       spd_anim = -165;
     } elsif (last_spd_deg != spd_deg) {
       spd_anim = -165;
@@ -842,6 +839,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
       setprop("/f16/avionics/power-rdr-alt-warm", 1);
     }
     setprop("/f16/cockpit/oxygen-liters", 5.0);
+    setprop("f16/cockpit/hydrazine-minutes", 10);
     
     # debug:
     #
@@ -874,6 +872,7 @@ var repair2 = func {
   setprop("f16/chute/done",0);
   setprop("sim/view[0]/enabled",1);
   setprop("sim/current-view/view-number",0);
+  setprop("f16/cockpit/hydrazine-minutes", 10);
   
   if (inAutostart) {
     return;
@@ -887,6 +886,7 @@ var repair2 = func {
   
   if (getprop("f16/engine/running-state")) {
     setprop("fdm/jsbsim/elec/switches/epu",1);
+    setprop("fdm/jsbsim/elec/switches/epu-cover",0);
     setprop("fdm/jsbsim/elec/switches/main-pwr",2);
     if (getprop("engines/engine[0]/running")!=1) {
       setprop("f16/engine/feed",1);
@@ -1336,6 +1336,7 @@ var eject = func{
       return;
   }
   setprop("f16/done",1);
+  setprop("canopy/serviceable", 0);
   var es = armament.AIM.new(10, "es","gamma", nil ,[-3.65,0,0.7]);
   #setprop("fdm/jsbsim/fcs/canopy/hinges/serviceable",0);
   es.releaseAtNothing();

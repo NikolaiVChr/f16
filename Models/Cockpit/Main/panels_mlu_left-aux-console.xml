@@ -28,6 +28,12 @@
         <object-name>ew-run</object-name>
     </effect>
 
+
+
+
+
+
+
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
         <parameters>
@@ -48,6 +54,9 @@
         <object-name>DISP_switch</object-name>
         <object-name>RF_switch</object-name>
         <object-name>JTSN_switch</object-name>
+        <object-name>DN-LOCK-REL</object-name>
+        <object-name>SW_HOOK</object-name>
+        <object-name>EMER_JETT</object-name>
     </effect>
 
   <!--<animation>
@@ -70,10 +79,49 @@
             <blue>0.18</blue>
         </emission>
     </animation>-->
+    
+    <animation>
+        <type>material</type>
+        <object-name>EW_CANVAS_DISPLAY</object-name>
+        <condition>
+            <greater-than-equals>
+                <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                <value>20</value>
+            </greater-than-equals>
+          </condition>
+        <emission>
+            <red>1</red>
+            <green>1</green>
+            <blue>1</blue>
+        </emission>
+    </animation>
+    
+    
+    <animation>
+        <type>material</type>
+        <object-name>gear_lever_light</object-name>
+        <condition>
+          <greater-than-equals>
+                <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                <value>20</value>
+            </greater-than-equals>
+          <not>
+            <equals>
+                <property>controls/gear/gear-down</property>
+                <property>gear/gear[0]/position-norm</property>
+            </equals>
+          </not>
+        </condition>
+        <emission>
+            <red>1</red>
+            <green>0</green>
+            <blue>0</blue>
+        </emission>
+    </animation>
 
  <animation>
-  <type>select</type>
-  <object-name>nose_gear_light</object-name>
+  <type>material</type>
+  <object-name>GEAR-nose</object-name>
   <condition>
     <or>
         <and>
@@ -81,19 +129,24 @@
             <property>/gear/gear[0]/position-norm</property>
             <value>1.0</value>
            </equals>
-              <greater-than-equals>
-                <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
-                <value>20</value>
-            </greater-than-equals>
+              <greater-than>
+      <property>fdm/jsbsim/elec/bus/batt-1</property>
+      <value>20</value>
+    </greater-than>
       </and>
         <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
+  <emission>
+            <red>1</red>
+            <green>1</green>
+            <blue>1</blue>
+        </emission>
  </animation>
 
  <animation>
-  <type>select</type>
-  <object-name>left_gear_light</object-name>
+  <type>material</type>
+  <object-name>GEAR-left</object-name>
   <condition>
     <or>
         <and>
@@ -101,19 +154,24 @@
             <property>/gear/gear[1]/position-norm</property>
             <value>1.0</value>
            </equals>
-              <greater-than-equals>
-                <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
-                <value>20</value>
-            </greater-than-equals>
+              <greater-than>
+      <property>fdm/jsbsim/elec/bus/batt-1</property>
+      <value>20</value>
+    </greater-than>
       </and>
         <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
+  <emission>
+            <red>1</red>
+            <green>1</green>
+            <blue>1</blue>
+        </emission>
  </animation>
 
  <animation>
-  <type>select</type>
-  <object-name>right_gear_light</object-name>
+  <type>material</type>
+  <object-name>GEAR-right</object-name>
   <condition>
     <or>
         <and>
@@ -121,14 +179,19 @@
             <property>/gear/gear[2]/position-norm</property>
             <value>1.0</value>
            </equals>
-              <greater-than-equals>
-                <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
-                <value>20</value>
-            </greater-than-equals>
+              <greater-than>
+      <property>fdm/jsbsim/elec/bus/batt-1</property>
+      <value>20</value>
+    </greater-than>
       </and>
         <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
+  <emission>
+            <red>1</red>
+            <green>1</green>
+            <blue>1</blue>
+        </emission>
  </animation>
 
 
@@ -150,13 +213,32 @@
      </binding>
     </action>
    </animation>
+   
+   
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>EMER_JETT</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>true</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>
+              if (pylons.fcs != nil and (getprop("f16/avionics/gnd-jett") or !getprop("gear/gear[0]/wow"))) {
+                pylons.fcs.jettisonFuelAndAG([0,8]);#drop all fueltanks, dummies and A/G weapons. Except wingtips.
+              }
+      </script>
+     </binding>
+    </action>
+   </animation>
 
   <!-- Landing Gear Panel -->
 
    <animation>
     <type>pick</type>
     <visible>true</visible>
-    <object-name>HS_HOOK</object-name>
+    <object-name>SW_HOOK</object-name>
     <action>
      <button>0</button>
      <repeatable>true</repeatable>
@@ -188,7 +270,8 @@
    <animation>
     <type>pick</type>
     <visible>true</visible>
-    <object-name>HS_LANDING_LIGHTS</object-name>
+    <object-name>light-land-switch</object-name>
+  <object-name>light-land-switch.01</object-name>
     <action>
      <button>0</button>
      <repeatable>true</repeatable>
@@ -201,26 +284,11 @@
     </action>
    </animation>
    
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>HS_LANDING_LIGHTS</object-name>
-    <action>
-     <button>0</button>
-     <repeatable>true</repeatable>
-     <binding>
-      <command>nasal</command>
-      <script>
-                f16_switches.toggleLandlight();
-      </script>
-     </binding>
-    </action>
-   </animation>
 <!-- FIXME should be 3-way switch -->  
    <animation>
     <type>pick</type>
     <visible>true</visible>
-    <object-name>HS_PARKING_BRAKE</object-name>
+    <object-name>SW_PARKING_BRAKE</object-name>
     <action>
      <button>0</button>
      <repeatable>true</repeatable>
@@ -269,10 +337,32 @@
    <z>0</z>
   </axis>
  </animation>
+    
+
+<animation>
+  <type>rotate</type>
+  <object-name>SW_HOOK</object-name>
+  <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+  <factor>-50</factor>
+  <offset-deg>25</offset-deg>
+  <roll-deg>-10</roll-deg>
+  <heading-deg>7.3</heading-deg> 
+  <center>
+   <x-m>-0.249596</x-m>
+   <y-m>-0.281688</y-m>
+   <z-m>0.003061</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+   <z>0</z>
+  </axis>
+ </animation>
 
 <animation>
   <type>rotate</type>
   <object-name>gear_lever</object-name>
+  <object-name>gear_lever_light</object-name>
   <property>controls/gear/gear-down</property>
   <factor>90</factor>
   <offset-deg>-45</offset-deg>

@@ -21,7 +21,7 @@
 				<independentVar lookup="row">propulsion/engine[0]/n2</independentVar>
 				<independentVar lookup="column">systems/hydraulics/edpb-pump/serviceable</independentVar>
 				<tableData>
-					0      1
+					        0      1
 					0       0      0
 					12      0    130
 				</tableData>
@@ -48,7 +48,7 @@
 	<channel name="sysa" execrate="8">
 		<!-- 
 		No information about minimum engine N1 for hydraulics. 
-		For JFS accumulator charging 12 PSI is required. Will use that figure meantime
+		For JFS accumulator charging 12% N2 is required. Will use that figure meantime
 		-->
 
 		<scheduled_gain name="systems/hydraulics/edpa-pump-psi">
@@ -70,12 +70,10 @@
 			</clipto>
 		</scheduled_gain>
 
-		<switch name="systems/hydraulics/emerg-pump-psi">
-			<default value="0"/>
-			<test  logic="AND" value="2500">
-				systems/hydraulics/emerg-pump-on eq 1
-			</test>
-		</switch>
+		<pure_gain name="systems/hydraulics/emerg-pump-psi">
+			<input>elec/sources/epu-on</input>
+			<gain>2500</gain>
+		</pure_gain>
 
 		<summer name="systems/hydraulics/sysa-psi">
 			<input>systems/hydraulics/emerg-pump-psi</input>
@@ -90,6 +88,7 @@
 	</channel>
 	
 	<channel name="bleed" execrate="8">
+		
 		<summer name="systems/hydraulics/elevator-bleed">
 			<input>-fcs/elevator-cmd-norm</input>
 		</summer>
@@ -107,7 +106,7 @@
 			<table>
 				<independentVar lookup="row">systems/hydraulics/emerg-pump-psi</independentVar>
 				<tableData>
-					0      30
+					   0      30
 					2001     100
 				</tableData>
 			</table>
@@ -118,7 +117,9 @@
 		</scheduled_gain>
 
 	</channel>
+	
 	<channel name="Util" execrate="8">
+		
 		<switch name="systems/hydraulics/util-system-feedin">
 			<default value="0"/>
 			<test value="systems/hydraulics/sysa-psi">

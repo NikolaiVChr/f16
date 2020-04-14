@@ -38,6 +38,12 @@
 <animation>
   <type>rotate</type>
   <object-name>HYD_PRESS_A_needle</object-name>
+  <condition>
+              <greater-than-equals>
+                  <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+                  <value>100</value>
+              </greater-than-equals>
+  </condition>
   <property>fdm/jsbsim/systems/hydraulics/sysa-psi</property>
   <factor>0.08</factor>
   <offset-deg>21</offset-deg>
@@ -56,6 +62,12 @@
  <animation>
   <type>rotate</type>
   <object-name>HYD_PRESS_B_needle</object-name>
+  <condition>
+              <greater-than-equals>
+                  <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+                  <value>100</value>
+              </greater-than-equals>
+  </condition>
   <property>fdm/jsbsim/systems/hydraulics/sysb-psi</property>
   <factor>0.08</factor>
   <offset-deg>21</offset-deg>
@@ -73,10 +85,10 @@
  
   <animation>
   <type>rotate</type>
-  <object-name>CAB_PRESS_needle</object-name>
+  <object-name>CAB_PRESS_needle</object-name><!-- could not find which elec this gauge relies on -->
   <property>/f16/cockpit/pressure-ft</property>
   <factor>0.0061</factor>
-  <offset-deg>-48</offset-deg><!-- -48 -->
+  <offset-deg>-48</offset-deg>
   <center>
    <x-m>-0.00166</x-m>
    <y-m>0.39401</y-m>
@@ -91,7 +103,37 @@
  
  <animation>
   <type>rotate</type>
+  <object-name>EPU_FUEL_needle</object-name>
+  <condition>
+              <greater-than-equals>
+                  <property>fdm/jsbsim/elec/bus/batt-2</property>
+                  <value>20</value>
+              </greater-than-equals>
+  </condition>
+  <property>/f16/cockpit/hydrazine-minutes</property>
+  <factor>24</factor>
+  <offset-deg>135</offset-deg><!-- 135 -->
+  <center>
+   <x-m>-0.06688</x-m>
+   <y-m>0.45277</y-m>
+   <z-m>0.00514</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>-1</z>
+  </axis>
+ </animation>
+ 
+ <animation>
+  <type>rotate</type>
   <object-name>LIQ_OXY_needle</object-name>
+  <condition>
+              <greater-than-equals>
+                  <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+                  <value>100</value>
+              </greater-than-equals>
+  </condition>
   <property>/f16/cockpit/oxygen-liters</property>
   <factor>36</factor>
   <offset-deg>-160</offset-deg>
@@ -473,7 +515,16 @@
   <type>select</type>
   <object-name>CABIN_PRESS_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not><or>
+      <property>controls/test/test-panel/mal-ind-lts</property><!-- should lit up when f16/cockpit/pressure-ft is above 27000 -->
+      <and>
+        <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
+        <greater-than>
+          <property>/f16/cockpit/pressure-ft</property>
+          <value>27000</value>
+        </greater-than>
+      </and>
+    </or></not>
   </condition>
  </animation> 
 
@@ -632,7 +683,16 @@
   <type>select</type>
   <object-name>OXY_LOW_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not><or>
+      <property>controls/test/test-panel/mal-ind-lts</property><!-- should lit up when f16/cockpit/pressure-ft is above 27000 -->
+      <and>
+        <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
+        <less-than>
+          <property>/f16/cockpit/oxygen-liters</property>
+          <value>0.5</value>
+        </less-than>
+      </and>
+    </or></not>
   </condition>
  </animation> 
 
@@ -803,7 +863,16 @@
   <type>select</type>
   <object-name>CABIN_PRESS_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property><!-- should lit up when f16/cockpit/pressure-ft is above 27000 -->
+    <or>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+      <and>
+        <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
+        <greater-than>
+          <property>/f16/cockpit/pressure-ft</property>
+          <value>27000</value>
+        </greater-than>
+      </and>
+    </or>
   </condition>
  </animation> 
 
@@ -959,7 +1028,16 @@
   <type>select</type>
   <object-name>OXY_LOW_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property><!-- should be lit when /f16/cockpit/oxygen-liters is below 0.5 liters -->
+   <or>
+      <property>controls/test/test-panel/mal-ind-lts</property><!-- should lit up when f16/cockpit/pressure-ft is above 27000 -->
+      <and>
+        <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
+        <less-than>
+          <property>/f16/cockpit/oxygen-liters</property>
+          <value>0.5</value>
+        </less-than>
+      </and>
+    </or>
   </condition>
  </animation> 
 

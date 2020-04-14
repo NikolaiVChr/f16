@@ -11,6 +11,7 @@
                     <switches>
                         <main-pwr type="int">2</main-pwr>
                         <epu type="int">1</epu>
+                        <epu-cover type="int">0</epu-cover>
                     </switches>
                 </elec>
             </jsbsim>

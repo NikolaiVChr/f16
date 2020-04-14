@@ -27,6 +27,10 @@
 			<volume>
 				<max>0.55</max>
 			</volume>
+			<volume>
+				<property>canopy/serviceable</property>
+				<factor>1</factor>
+			</volume>
 		</canopy>
 		<canopy>
 			<name>canopy_lock</name>
@@ -48,6 +52,10 @@
 			<volume>
 				<property>sim/current-view/internal</property>
 				<max>0.50</max>
+			</volume>
+			<volume>
+				<property>canopy/serviceable</property>
+				<factor>1</factor>
 			</volume>
 		</canopy>
 		<canopy>
@@ -71,6 +79,10 @@
 				<property>sim/current-view/internal</property>
 				<max>0.22</max>
 			</volume>
+			<volume>
+				<property>canopy/serviceable</property>
+				<factor>1</factor>
+			</volume>
 		</canopy>
 		<canopy>
 			<name>canopy_leverclose</name>
@@ -92,6 +104,10 @@
 			<volume>
 				<property>sim/current-view/internal</property>
 				<max>0.22</max>
+			</volume>
+			<volume>
+				<property>canopy/serviceable</property>
+				<factor>1</factor>
 			</volume>
 		</canopy>
 

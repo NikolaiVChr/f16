@@ -1121,7 +1121,17 @@
    <z>0.0</z>
   </axis>
  </animation>
-
+ 
+ <animation>
+  <type>select</type>
+  <object-name>CanopyFrame</object-name>
+  <object-name>CanopyFrameInner</object-name>
+  <object-name>CanopyForwardInside</object-name>
+  <object-name>CanopyForwardOutside</object-name>
+  <condition>
+    <property>canopy/serviceable</property>
+  </condition>
+ </animation>
 
  <animation>
   <type>rotate</type>

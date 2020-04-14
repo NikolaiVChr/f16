@@ -1977,7 +1977,7 @@ There is also small changes in tail for different variants with and without brak
             </systems>
             <fcs>
                 <fly-by-wire>
-                    <K_A type="double">2</K_A>
+                    <K_A type="double">2</K_A><!-- AFSC 32657C say 50, but that give instability -->
                     <q_c type="double">0</q_c>
                     <!-- should be 2000, but JSB cannot handle that -->
                     <integrator-selftest-value type="double">1</integrator-selftest-value>
@@ -2172,6 +2172,9 @@ There is also small changes in tail for different variants with and without brak
         </precipitation-control>
         <star-magnitude-cutoff type="float">6.0</star-magnitude-cutoff>
     </environment>
+    <canopy>
+        <serviceable type="bool">true</serviceable>
+    </canopy>
     <limits>
         <max-gear-extension-speed>300</max-gear-extension-speed>
     </limits>
@@ -3363,6 +3366,7 @@ value. 18000=standard US transition altitude -->
         <cockpit>
             <oxygen-liters type="double">5.0</oxygen-liters>
             <oxygen-minutes type="double">10000</oxygen-minutes>
+            <hydrazine-minutes type="double">10</hydrazine-minutes>
         </cockpit>
         <stores>
             <tgp-mounted type="bool">false</tgp-mounted>
