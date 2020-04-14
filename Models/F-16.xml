@@ -125,10 +125,7 @@
   <condition>
     <and>
       <not>
-        <equals>
           <property>f16/done</property>
-          <value>1</value>
-        </equals>
       </not>
       <or>
         <not>
