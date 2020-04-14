@@ -132,7 +132,7 @@
       </not>
       <or>
         <not>
-          <property>sim/current-view/internal</property>
+          <property>sim/current-view/internal</property><!-- without a leading slash this property wont exist over MP, and so will always default to not internal -->
         </not>
         <equals>
           <property>sim/current-view/name</property>
@@ -157,7 +157,7 @@
       <object-name>LogoPilotRight</object-name>
   <condition>
         <not>
-          <property>sim/current-view/internal</property>
+          <property>sim/current-view/internal</property><!-- without a leading slash this property wont exist over MP, and so will always default to not internal -->
         </not>
   </condition>
  </animation>
