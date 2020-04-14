@@ -131,10 +131,9 @@
         </equals>
       </not>
       <or>
-        <equals>
+        <not>
           <property>sim/current-view/internal</property>
-          <value>0</value>
-        </equals>
+        </not>
         <equals>
           <property>sim/current-view/name</property>
           <value type="string">GoPro #1 View</value>
