@@ -76,7 +76,7 @@
         <object-name>SW_KNOB_REFUEL</object-name>
         <object-name>SW_KNOB_IFF_MASTER</object-name>
         <object-name>SW_KNOB_IFF_C_AND_I</object-name>
-		<object-name>SW_KNOB_MAN_TRIM_YAW</object-name>
+        <object-name>SW_KNOB_MAN_TRIM_YAW</object-name>
         <object-name>MAL_IND_LTS</object-name>
         <object-name>BIT</object-name>
         <object-name>dim-reset</object-name>
@@ -96,7 +96,7 @@
             <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
         </parameters>
         <!-- objects added to this will NOT have all white in texture lit up green when console is high. They will get flood light though. -->
-		<object-name>Guards</object-name>
+        <object-name>Guards</object-name>
         <object-name>SW_MASTER</object-name>
         <object-name>SW_FUSELAGE</object-name>
         <object-name>SW_ANTI_COLLISION</object-name>
