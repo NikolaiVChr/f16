@@ -1125,7 +1125,9 @@
   <object-name>CanopyForwardInside</object-name>
   <object-name>CanopyForwardOutside</object-name>
   <condition>
-    <property>canopy/serviceable</property>
+    <not>
+    <property>canopy/not-serviceable</property>
+  </not>
   </condition>
  </animation>
 

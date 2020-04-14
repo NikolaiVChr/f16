@@ -98,8 +98,8 @@ var start = func {
     var hud = compat_failure_modes.set_unserviceable("instrumentation/hud");
     FailureMgr.add_failure_mode("instrumentation/hud", "HUD", hud);
     
-    var ch = compat_failure_modes.set_unserviceable("canopy");
-    FailureMgr.add_failure_mode("canopy", "Canopy hinges", ch);
+    #var ch = compat_failure_modes.set_unserviceable("canopy");
+    #FailureMgr.add_failure_mode("canopy", "Canopy hinges", ch);
     
 	#foreach (mode;FailureMgr.get_failure_modes()) print(mode.id);
 

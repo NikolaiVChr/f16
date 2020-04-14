@@ -2859,7 +2859,7 @@
    <switch name="fcs/canopy-trigger">
     <default value="fcs/canopy-engage"/>
     <test value="1">
-     /canopy/serviceable == 0
+     /canopy/not-serviceable == 1
     </test>
     <test logic="AND" value="fcs/canopy-trigger">
         elec/bus/emergency-dc-2 lt 20
@@ -2874,7 +2874,7 @@
     </test>
    </switch>
 
-   <kinematic name="fcs/canopy-control">
+   <kinematic name="fcs/canopy-control-1">
     <input>fcs/canopy-trigger</input>
     <traverse>
      <setting>
@@ -2886,9 +2886,16 @@
       <time>10</time>
      </setting>
     </traverse>
+   </kinematic>
+   
+   <switch name="fcs/canopy-control">
+    <default value="fcs/canopy-control-1"/>
+    <test value="1">
+     /canopy/not-serviceable == 1
+    </test>
     <output>fcs/canopy-pos-norm</output>
     <output>/canopy/position-norm</output>
-   </kinematic>
+   </switch>
 
   </channel>
   
