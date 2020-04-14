@@ -3,6 +3,9 @@
 <PropertyList>
 
  <path>panels_mlu_left-console.ac</path>
+ 
+
+    
 
  <!--<animation>
   <object-name>ANTI_G</object-name>
@@ -167,9 +170,9 @@
         <object-name>ecm-spl</object-name>
     </effect>
 
- <animation>
-  <object-name>EPU_RUN_light</object-name><!-- EPU running -->
-  <type>select</type>
+  <animation>
+  <object-name>EPU_RUN_light</object-name>
+  <type>material</type>
   <condition>
     <or>
       <and>
@@ -185,21 +188,16 @@
       <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
- </animation>
-
-  <animation>
-  <object-name>EPU_RUN_light</object-name>
-  <type>material</type>
   <emission>
-   <red>0</red>
+   <red>1</red>
    <green>1</green>
-   <blue>0</blue>
+   <blue>1</blue>
   </emission>
  </animation>
  
   <animation>
   <object-name>JFS_RUN_light</object-name>
-  <type>select</type>
+  <type>material</type>
   <condition>
     <or>
       <and>
@@ -215,15 +213,10 @@
       <property>controls/test/test-panel/mal-ind-lts</property>
     </or>    
   </condition>
- </animation>
-
-  <animation>
-  <object-name>JFS_RUN_light</object-name>
-  <type>material</type>
   <emission>
-   <red>0</red>
+   <red>1</red>
    <green>1</green>
-   <blue>0</blue>
+   <blue>1</blue>
   </emission>
  </animation>
 
@@ -353,7 +346,7 @@
  </animation>
  
  <animation>
-  <object-name>hyd-air_epu</object-name><!-- todo: seperate them so only hydrazine lit up not air also -->
+  <object-name>light_epu_hydrazine</object-name>
   <type>material</type>
   <condition>
     <or>
@@ -704,7 +697,7 @@
    <animation>
     <type>pick</type>
     <visible>true</visible>
-    <object-name>HS_MAL_IND_LTS</object-name>
+    <object-name>MAL_IND_LTS</object-name>
     <action>
      <button>0</button>
      <repeatable>true</repeatable>
@@ -1534,6 +1527,22 @@
             <red>  1</red>
             <green>1</green>
             <blue> 1</blue>
+        </emission>
+    </animation>
+    
+    <animation>
+        <type>material</type>
+        <object-name>CHAN_CANVAS_DISPLAY</object-name>
+        <condition>
+            <greater-than-equals>
+                <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                <value>20</value>
+            </greater-than-equals>
+          </condition>
+        <emission>
+            <red>1</red>
+            <green>1</green>
+            <blue>1</blue>
         </emission>
     </animation>
 
