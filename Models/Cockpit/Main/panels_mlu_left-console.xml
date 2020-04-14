@@ -76,6 +76,7 @@
         <object-name>SW_KNOB_REFUEL</object-name>
         <object-name>SW_KNOB_IFF_MASTER</object-name>
         <object-name>SW_KNOB_IFF_C_AND_I</object-name>
+		<object-name>SW_KNOB_MAN_TRIM_YAW</object-name>
         <object-name>MAL_IND_LTS</object-name>
         <object-name>BIT</object-name>
         <object-name>dim-reset</object-name>
