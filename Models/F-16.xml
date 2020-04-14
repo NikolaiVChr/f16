@@ -132,7 +132,7 @@
       </not>
       <or>
         <equals>
-          <property>/sim/current-view/internal</property>
+          <property>sim/current-view/internal</property>
           <value>0</value>
         </equals>
         <equals>
