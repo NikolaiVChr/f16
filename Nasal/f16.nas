@@ -873,6 +873,7 @@ var repair2 = func {
   setprop("sim/view[0]/enabled",1);
   setprop("sim/current-view/view-number",0);
   setprop("f16/cockpit/hydrazine-minutes", 10);
+  setprop("canopy/not-serviceable", 0);
   
   if (inAutostart) {
     return;
@@ -1336,7 +1337,7 @@ var eject = func{
       return;
   }
   setprop("f16/done",1);
-  setprop("canopy/serviceable", 0);
+  setprop("canopy/not-serviceable", 1);
   var es = armament.AIM.new(10, "es","gamma", nil ,[-3.65,0,0.7]);
   #setprop("fdm/jsbsim/fcs/canopy/hinges/serviceable",0);
   es.releaseAtNothing();
