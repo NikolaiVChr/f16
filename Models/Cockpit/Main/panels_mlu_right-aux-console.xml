@@ -864,7 +864,7 @@
   <object-name>CABIN_PRESS_lit</object-name>
   <condition>
     <or>
-      <property>controls/test/test-panel/mal-ind-lts</property><!-- should lit up when f16/cockpit/pressure-ft is above 27000 -->
+      <property>controls/test/test-panel/mal-ind-lts</property>
       <and>
         <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
         <greater-than>

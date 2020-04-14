@@ -236,10 +236,10 @@
       <value>20</value>
     </greater-than>
     <or>
-      <greater-than>
+      <less-than-equals>
         <property>fdm/jsbsim/elec/bus/flcc/a</property>
-        <value>20</value>
-      </greater-than>
+        <value>22</value>
+      </less-than-equals>
       <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
@@ -259,10 +259,10 @@
       <value>20</value>
     </greater-than>
     <or>
-      <greater-than>
+      <less-than-equals>
         <property>fdm/jsbsim/elec/bus/flcc/b</property>
-        <value>20</value>
-      </greater-than>
+        <value>22</value>
+      </less-than-equals>
       <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
@@ -282,10 +282,33 @@
       <value>20</value>
     </greater-than>
     <or>
-      <greater-than>
+      <less-than-equals>
         <property>fdm/jsbsim/elec/bus/flcc/c</property>
-        <value>20</value>
-      </greater-than>
+        <value>22</value>
+      </less-than-equals>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
+ 
+ <animation>
+  <object-name>light_d</object-name>
+  <type>material</type>
+  <condition>
+    <greater-than>
+      <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+      <value>20</value>
+    </greater-than>
+    <or>
+      <less-than-equals>
+        <property>fdm/jsbsim/elec/bus/flcc/d</property>
+        <value>22</value>
+      </less-than-equals>
       <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
@@ -352,28 +375,7 @@
  </animation>
  
 
-  <animation>
-  <object-name>light_d</object-name>
-  <type>material</type>
-  <condition>
-    <greater-than>
-      <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
-      <value>20</value>
-    </greater-than>
-    <or>
-      <greater-than>
-        <property>fdm/jsbsim/elec/bus/flcc/d</property>
-        <value>20</value>
-      </greater-than>
-      <property>controls/test/test-panel/mal-ind-lts</property>
-    </or>
-  </condition>
-  <emission>
-   <red>1</red>
-   <green>1</green>
-   <blue>1</blue>
-  </emission>
- </animation>
+  
 
   <animation>
   <object-name>light_epu_gen</object-name><!-- EPU commanded on, but does not supply power -->
@@ -473,7 +475,7 @@
  </animation>
 
   <animation>
-  <object-name>light_main</object-name><!-- MAIN gen is not connected to buses -->
+  <object-name>light_main</object-name><!-- MAIN gen is not supplying -->
   <type>material</type>
   <condition>
     <greater-than>
@@ -482,8 +484,8 @@
     </greater-than>
     <or>
         <less-than>
-          <property>fdm/jsbsim/elec/switches/main-pwr</property>
-          <value>2</value>
+          <property>fdm/jsbsim/elec/sources/main-gen-volt</property>
+          <value>100</value>
         </less-than>
         <property>controls/test/test-panel/mal-ind-lts</property>
     </or>

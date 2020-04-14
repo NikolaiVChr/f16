@@ -48,7 +48,7 @@
 	<channel name="sysa" execrate="8">
 		<!-- 
 		No information about minimum engine N1 for hydraulics. 
-		For JFS accumulator charging 12 PSI is required. Will use that figure meantime
+		For JFS accumulator charging 12% N2 is required. Will use that figure meantime
 		-->
 
 		<scheduled_gain name="systems/hydraulics/edpa-pump-psi">
@@ -88,6 +88,7 @@
 	</channel>
 	
 	<channel name="bleed" execrate="8">
+		
 		<summer name="systems/hydraulics/elevator-bleed">
 			<input>-fcs/elevator-cmd-norm</input>
 		</summer>
@@ -105,7 +106,7 @@
 			<table>
 				<independentVar lookup="row">systems/hydraulics/emerg-pump-psi</independentVar>
 				<tableData>
-					0      30
+					   0      30
 					2001     100
 				</tableData>
 			</table>
