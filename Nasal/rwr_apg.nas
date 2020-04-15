@@ -71,7 +71,7 @@ var SubSystem_RWR_APG = {
                 me.cs = me.u.get_Callsign();
                 me.rn = me.u.get_range();
                 me.l16 = 0;
-                if (notification.link16_wingman_1 == me.cs or notification.link16_wingman_2 == me.cs or notification.link16_wingman_3 == me.cs or notification.link16_wingman_4 == me.cs or notification.link16_wingman_5 == me.cs or notification.link16_wingman_6 == me.cs or notification.link16_wingman_7 == me.cs or notification.link16_wingman_8 == me.cs or notification.link16_wingman_9 == me.cs or notification.link16_wingman_10 or notification.link16_wingman_11 or notification.link16_wingman_12 == me.cs or me.rn > 150) {
+                if (notification.link16_wingman_1 == me.cs or notification.link16_wingman_2 == me.cs or notification.link16_wingman_3 == me.cs or notification.link16_wingman_4 == me.cs or notification.link16_wingman_5 == me.cs or notification.link16_wingman_6 == me.cs or notification.link16_wingman_7 == me.cs or notification.link16_wingman_8 == me.cs or notification.link16_wingman_9 == me.cs or notification.link16_wingman_10 == me.cs or notification.link16_wingman_11 == me.cs or notification.link16_wingman_12 == me.cs or me.rn > 150) {
                     me.l16 = 1;
                 }
                 me.bearing = geo.aircraft_position().course_to(me.u.get_Coord());

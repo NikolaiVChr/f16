@@ -125,16 +125,12 @@
   <condition>
     <and>
       <not>
-        <equals>
           <property>f16/done</property>
-          <value>1</value>
-        </equals>
       </not>
       <or>
-        <equals>
-          <property>/sim/current-view/internal</property>
-          <value>0</value>
-        </equals>
+        <not>
+          <property>sim/current-view/internal</property><!-- without a leading slash this property wont exist over MP, and so will always default to not internal -->
+        </not>
         <equals>
           <property>sim/current-view/name</property>
           <value type="string">GoPro #1 View</value>
@@ -154,11 +150,11 @@
  
  <animation>
   <type>select</type>
- <object-name>Rect</object-name>
+  <object-name>Rect</object-name>
       <object-name>LogoPilotRight</object-name>
   <condition>
         <not>
-          <property>/sim/current-view/internal</property>
+          <property>sim/current-view/internal</property><!-- without a leading slash this property wont exist over MP, and so will always default to not internal -->
         </not>
   </condition>
  </animation>
@@ -1129,7 +1125,9 @@
   <object-name>CanopyForwardInside</object-name>
   <object-name>CanopyForwardOutside</object-name>
   <condition>
-    <property>canopy/serviceable</property>
+    <not>
+    <property>canopy/not-serviceable</property>
+  </not>
   </condition>
  </animation>
 
