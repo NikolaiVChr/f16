@@ -1972,8 +1972,8 @@ var flexer = func {
     setprop("surface-positions/leftrad2", -getprop("surface-positions/left-aileron-pos-norm")*21.5*D2R);  
     setprop("surface-positions/rightrad", getprop("sim/multiplay/generic/float[6]")*20*D2R);  
     setprop("surface-positions/rightrad2", getprop("surface-positions/right-aileron-pos-norm")*21.5*D2R);  
-    setprop("surface-positions/radlefr", getprop("surface-positions/flap-pos-norm")*D2R);  
-    setprop("surface-positions/radlefl", -getprop("surface-positions/flap-pos-norm")*D2R);  
+    setprop("surface-positions/radlefr", getprop("fdm/jsbsim/fcs/lef-pos-deg")*D2R);
+    setprop("surface-positions/radlefl", -getprop("fdm/jsbsim/fcs/lef-pos-deg")*D2R);
     # sice weight works wrong in air, we remove the weight when in air:
     #var ground = 1;#getprop("fdm/jsbsim/gear/unit[1]/WOW");
     var wingcontent = 0;
