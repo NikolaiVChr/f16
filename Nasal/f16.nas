@@ -1993,8 +1993,10 @@ var flexer = func {
       +getprop("payload/weight[9]/weight-lb")
       +getprop("payload/weight[10]/weight-lb"))*LBM2KG
       +wingcontent);
-    } else {
-      setprop("f16/wings/fuel-and-stores-kg", wingcontent);
+    } elsif (getprop("payload/weight[0]/weight-lb") !=nil
+        and getprop("payload/weight[1]/weight-lb") !=nil) {
+      # for prototype
+      setprop("f16/wings/fuel-and-stores-kg", (getprop("payload/weight[0]/weight-lb")+getprop("payload/weight[1]/weight-lb"))*LBM2KG+wingcontent);
     }
     #setprop("f16/wings/fuel-and-stores-kg", ground*(getprop("f16/wings/fuel-and-stores-kg-a")));
     
