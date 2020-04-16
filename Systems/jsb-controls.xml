@@ -1807,33 +1807,19 @@
             </function>
         </fcs_function>
 
-        <switch name="fcs/fly-by-wire/ari/schedule-gain">
-            <default value="0.65"/>
-            <test logic="AND" value="1">
-                fcs/fly-by-wire/prototype == 0 <!-- too much ARI from tp-1538, maybe use tp-2857 values? -->
-            </test>
-        </switch>
-
         <fcs_function name="fcs/fly-by-wire/ari/schedule">
             <function>
                 <product>
                     <p> fcs/fly-by-wire/ari/inverter-norm </p>
-                    <p> fcs/fly-by-wire/ari/schedule-gain </p>
+                    <v> 0.65 </v>
                     <p> fcs/fly-by-wire/ari/F7 </p>
                 </product>
             </function>
         </fcs_function>
 
-        <switch name="fcs/fly-by-wire/ari/gain-value">
-            <default value="0.0375"/>
-            <test logic="AND" value="0.0750">
-                fcs/fly-by-wire/prototype == 0 <!-- too much ARI from tp-1538, maybe use tp-2857 values? -->
-            </test>
-        </switch>
-
         <pure_gain name="fcs/fly-by-wire/ari/gain">
             <input>fcs/fly-by-wire/pitch/a_f</input>
-            <gain> fcs/fly-by-wire/ari/gain-value </gain>
+            <gain> 0.0375 </gain>
         </pure_gain>
 
         <summer name="fcs/fly-by-wire/ari/sum">
