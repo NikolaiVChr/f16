@@ -651,7 +651,8 @@
 
         <switch name="fcs/fly-by-wire/pitch/bias-bottom">
             <description>
-                Diagram say condition A
+                Diagram say condition A, changed so this don't kick in
+                when doing AAR.
             </description>
             <default value="0"/>
             <test logic="OR" value="fcs/fly-by-wire/pitch/bias-number">
@@ -661,7 +662,6 @@
 
         <lag_filter name="fcs/fly-by-wire/pitch/bias-top-lag">
             <description>
-                Diagram say 10
                 DNU
             </description>
             <input> fcs/fly-by-wire/pitch/bias-top </input>
@@ -738,9 +738,11 @@
                 DNU
                 
                 It makes negative pitch rate (washed out) plus alpha (minus a bias)
-                give zero input on FBW when gear is up. And x1 influence with gear down.
+                give zero input on FBW when gear is up. And x0.075 influence with gear down.
                 
-                In diagram relies only on Cond A
+                In diagram relies only on Condition A, but its not helpful during AAR,
+                nor right after take-off, it should really only get into effect when on
+                approach, hence that test.
             </description>
             <default value="0"/>
             <test logic="AND" value="0.075">
@@ -761,8 +763,9 @@
         
         <actuator name="fcs/fly-by-wire/pitch/pitch-rate-lower-lag">
             <description>
-                2 secs to decrease to zero
-                100 secs to increase to 0.07
+                2 secs to decrease to zero, when retracting gears.
+                100 secs to increase to 0.075, which is time enough to get gear up
+                from take-off.
                 DNU
             </description>
           <input> fcs/fly-by-wire/pitch/pitch-rate-lower-switch </input>
@@ -792,8 +795,8 @@
             <description>This prevents NaN to propagate through the system</description>
             <default value="0"/>
             <test logic="AND" value="fcs/fly-by-wire/pitch/normal-1">
-                accelerations/a_n lt  30
-                accelerations/a_n gt -30
+                accelerations/a_n lt  1000
+                accelerations/a_n gt -1000
             </test>
         </switch>
 
@@ -2358,7 +2361,7 @@
 
         <lag_filter name="fcs/fly-by-wire/lef/servo">
             <input> fcs/fly-by-wire/lef/cmd-pos-elec </input>
-            <c1> 0.136 </c1>
+            <c1> 7.3529 </c1><!-- 1/0.136 -->
         </lag_filter>
 
         <switch name="fcs/fly-by-wire/lef/pos-hyd">
