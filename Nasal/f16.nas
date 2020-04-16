@@ -359,7 +359,7 @@ var slow = {
     #  valid = iff.interrogate(awg_9.active_u.propNode);
     #}
     #setprop("instrumentation/iff/response", valid);
-    settimer(func {me.loop()},5);
+    #settimer(func {me.loop()},5);
   },
 };
 
@@ -1960,22 +1960,14 @@ var fx = nil;
 
 var flexer = func {
   # this function needs to become optimized using Nodes
-  if (getprop("sim/multiplay/generic/float[5]")!=nil and getprop("payload/weight[0]/weight-lb") !=nil
-    and getprop("payload/weight[1]/weight-lb") !=nil 
-    and getprop("payload/weight[2]/weight-lb") !=nil 
-    and getprop("payload/weight[3]/weight-lb") !=nil 
-    and getprop("payload/weight[7]/weight-lb") !=nil 
-    and getprop("payload/weight[8]/weight-lb") !=nil 
-    and getprop("payload/weight[9]/weight-lb") !=nil 
-    and getprop("payload/weight[10]/weight-lb") !=nil ) {
+  if (getprop("sim/multiplay/generic/float[5]")!=nil) {
     setprop("surface-positions/leftrad", getprop("sim/multiplay/generic/float[5]")*20*D2R);  
     setprop("surface-positions/leftrad2", -getprop("surface-positions/left-aileron-pos-norm")*21.5*D2R);  
     setprop("surface-positions/rightrad", getprop("sim/multiplay/generic/float[6]")*20*D2R);  
     setprop("surface-positions/rightrad2", getprop("surface-positions/right-aileron-pos-norm")*21.5*D2R);  
     setprop("surface-positions/radlefr", getprop("fdm/jsbsim/fcs/lef-pos-deg")*D2R);
     setprop("surface-positions/radlefl", -getprop("fdm/jsbsim/fcs/lef-pos-deg")*D2R);
-    # sice weight works wrong in air, we remove the weight when in air:
-    #var ground = 1;#getprop("fdm/jsbsim/gear/unit[1]/WOW");
+
     var wingcontent = 0;
     if (getprop("consumables/fuel/tank[5]/level-kg")!=nil) {
       wingcontent += getprop("consumables/fuel/tank[5]/level-kg");
@@ -1983,16 +1975,27 @@ var flexer = func {
     if (getprop("consumables/fuel/tank[6]/level-kg")!=nil) {
       wingcontent += getprop("consumables/fuel/tank[6]/level-kg");
     }
-    setprop("f16/wings/fuel-and-stores-kg", 
-    (getprop("payload/weight[0]/weight-lb")
-    +getprop("payload/weight[1]/weight-lb")
-    +getprop("payload/weight[2]/weight-lb")
-    +getprop("payload/weight[3]/weight-lb")
-    +getprop("payload/weight[7]/weight-lb")
-    +getprop("payload/weight[8]/weight-lb")
-    +getprop("payload/weight[9]/weight-lb")
-    +getprop("payload/weight[10]/weight-lb"))*LBM2KG
-    +wingcontent);
+    if (getprop("payload/weight[0]/weight-lb") !=nil
+        and getprop("payload/weight[1]/weight-lb") !=nil 
+        and getprop("payload/weight[2]/weight-lb") !=nil 
+        and getprop("payload/weight[3]/weight-lb") !=nil 
+        and getprop("payload/weight[7]/weight-lb") !=nil 
+        and getprop("payload/weight[8]/weight-lb") !=nil 
+        and getprop("payload/weight[9]/weight-lb") !=nil 
+        and getprop("payload/weight[10]/weight-lb") !=nil ) {
+      setprop("f16/wings/fuel-and-stores-kg", 
+      (getprop("payload/weight[0]/weight-lb")
+      +getprop("payload/weight[1]/weight-lb")
+      +getprop("payload/weight[2]/weight-lb")
+      +getprop("payload/weight[3]/weight-lb")
+      +getprop("payload/weight[7]/weight-lb")
+      +getprop("payload/weight[8]/weight-lb")
+      +getprop("payload/weight[9]/weight-lb")
+      +getprop("payload/weight[10]/weight-lb"))*LBM2KG
+      +wingcontent);
+    } else {
+      setprop("f16/wings/fuel-and-stores-kg", wingcontent);
+    }
     #setprop("f16/wings/fuel-and-stores-kg", ground*(getprop("f16/wings/fuel-and-stores-kg-a")));
     
     # since the wingflexer works wrong in air we make the wing more stiff in air:

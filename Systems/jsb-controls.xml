@@ -38,6 +38,23 @@
             </test>
         </switch>
         
+        <switch name="fcs/fly-by-wire/condition-b">
+            <description>
+                Since this was removed on later blocks,
+                not sure when, it is used just for
+                prototype for now.
+            </description>
+            <default value="0"/>
+            <test logic="AND" value="1">
+                fcs/fly-by-wire/MLG-GND == 1
+                gear/unit[0]/WOW == 1
+                fcs/speedbrake-pos-deg == 60
+                fcs/throttle-cmd-deg lt 17
+                fcs/throttle-cmd-deg ge 16
+                fcs/fly-by-wire/prototype == 1
+            </test>
+        </switch>
+        
         <switch name="fcs/fly-by-wire/condition-aar">
             <default value="0"/>
             <test logic="AND" value="1">
@@ -2487,16 +2504,33 @@
             <c1> 8 </c1>
         </integrator>
 
-        <switch name="fcs/fly-by-wire/tef/int-elec">
-            <description>                
+        <switch name="fcs/fly-by-wire/tef/braking-help">
+            <description> 
+                The flaps will deploy up to help with braking,
+                it will produce drag, and since they are going up,
+                will also reduce lift.               
             </description>
             <default value="fcs/fly-by-wire/tef/int"/>
+            <test logic="OR" value="-23">
+                fcs/fly-by-wire/condition-b == 1
+            </test>
+        </switch>
+        
+        <switch name="fcs/fly-by-wire/tef/int-elec">
+            <description>
+            </description>
+            <default value="fcs/fly-by-wire/tef/braking-help"/>
             <test logic="AND" value="fcs/fly-by-wire/tef/int-elec">
                 elec/bus/flcc/d lt 20
             </test>
         </switch>
-
+        
         <switch name="fcs/fly-by-wire/tef/hyd">
+          <description>
+             Since this is going to be fed into Aerodynamics as flaps and HUD as info,
+             we need to make sure to check for hydraulics and power here.
+             Else we get what flaps is commanded to do, not what they are at.
+          </description>
           <default value="0"/>
           <test  logic="OR" value="fcs/fly-by-wire/tef/int-elec">
             systems/hydraulics/sysa-psi ge 2000
@@ -2514,7 +2548,10 @@
         </fcs_function>
 
         <pure_gain name="fcs/fly-by-wire/tef/tef-pos-norm">
-            <description>Using integrator output as mechanical bias should not be feed into aerodynamics</description>
+            <description>
+                Using integrator output as mechanical bias should not be feed into aerodynamics,
+                so we bypass that here, this is the property that is fed into aerodynamics.
+            </description>
             <input>fcs/fly-by-wire/tef/hyd</input>
             <gain>0.05</gain>
         </pure_gain>
