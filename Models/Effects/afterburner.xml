@@ -17,6 +17,11 @@
   <inherits-from>Aircraft/f16/Models/Effects/afterburner</inherits-from>
   <object-name>Bounding_box</object-name>
  </effect>
+ 
+ <animation>
+    <type>noshadow</type>
+    <object-name>Bounding_box</object-name>
+  </animation>
 
 </PropertyList>
 

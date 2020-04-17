@@ -4,7 +4,23 @@
 
  <path>engine.ac</path>
 
- 
+ <animation>
+    <type>noshadow</type>
+    <object-name>ENGINE</object-name>
+    <object-name>ENGINE</object-name>
+    <object-name>FTIT_cylinder</object-name>
+    <object-name>FTIT_disk</object-name>
+    <object-name>FTIT_needle</object-name>
+    <object-name>NOZ_POS_cylinder</object-name>
+    <object-name>NOZ_POS_disk</object-name>
+    <object-name>NOZ_POS_needle</object-name>
+    <object-name>OIL_cylinder</object-name>
+    <object-name>OIL_disk</object-name>
+    <object-name>OIL_needle</object-name>
+    <object-name>RPM_cylinder</object-name>
+    <object-name>RPM_disk</object-name>
+    <object-name>RPM_needle</object-name>
+  </animation>
 
  <animation>
   <type>rotate</type>

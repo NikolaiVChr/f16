@@ -3,7 +3,11 @@
 <PropertyList>
 
   <path>/Models/Effects/procedural_light.ac</path>
-        
+    
+  <animation>
+    <type>noshadow</type>
+    <object-name>procedural_light</object-name>
+  </animation>    
     
 <animation>
   <type>scale</type>

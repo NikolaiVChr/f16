@@ -4,6 +4,61 @@
 
  <path>panels_mlu_left-aux-console.ac</path>
 
+  <animation>
+        <type>noshadow</type>
+        <object-name>ALT_GEAR</object-name>
+        <object-name>ALT_GEAR_0</object-name>
+        <object-name>ALT_GEAR_1</object-name>
+        <object-name>DN-LOCK-REL</object-name>
+        <object-name>EMER_JETT</object-name>
+        <object-name>ew-run</object-name>
+        <object-name>ew-set1</object-name>
+        <object-name>ew-set2</object-name>
+        <object-name>ew-set3</object-name>
+        <object-name>ew-set4</object-name>
+        <object-name>EW_BRT_KNOB</object-name>
+        <object-name>EW_LEFT</object-name>
+        <object-name>EW_LEFT_0</object-name>
+        <object-name>EW_LEFT_1</object-name>
+        <object-name>EW_RIGHT</object-name>
+        <object-name>DISP_switch</object-name>
+        <object-name>EW_CANVAS_DISPLAY</object-name>
+        <object-name>EW_KNOB_MODE</object-name>
+        <object-name>EW_RIGHT_0</object-name>
+        <object-name>EW_RIGHT_1</object-name>
+        <object-name>JMR_switch</object-name>
+        <object-name>MWS_switch</object-name>
+        <object-name>RWR_switch</object-name>
+        <object-name>GEAR</object-name>
+        <object-name>GEAR-left</object-name>
+        <object-name>GEAR-nose</object-name>
+        <object-name>GEAR-right</object-name>
+        <object-name>gear_lever</object-name>
+        <object-name>gear_lever_light</object-name>
+        <object-name>HMD</object-name>
+        <object-name>HMD_0</object-name>
+        <object-name>HMD_1</object-name>
+        <object-name>RF_switch</object-name>
+        <object-name>horn_silencer</object-name>
+        <object-name>JTSN_switch</object-name>
+        <object-name>landlight_switch</object-name>
+        <object-name>light-land-switch</object-name>
+        <object-name>light-land-switch.01</object-name>
+        <object-name>LEFT_AUX_CONSOLE</object-name>
+        <object-name>RIGHT_AUX_CONSOLE</object-name>
+        <object-name>FUEL.001</object-name>
+        <object-name>RIGHT_AUX_CONSOLE.001</object-name>
+        <object-name>SPEED_BRAKE</object-name>
+        <object-name>SPEED_BRAKE.001</object-name>
+        <object-name>SPEED_BRAKE_drum</object-name>
+        <object-name>SW_BRAKES_CHAN</object-name>
+        <object-name>SW_GND_JETT</object-name>
+        <object-name>SW_HOOK</object-name>
+        <object-name>SW_PARKING_BRAKE</object-name>
+        <object-name>SW_STORES_CONFIG</object-name>
+        <object-name>SYMBOLOGY_INT_KNOB</object-name>
+  </animation>
+
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
         <parameters>
