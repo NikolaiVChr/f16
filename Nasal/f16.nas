@@ -1835,6 +1835,7 @@ setlistener("controls/armament/master-arm-cover-open", lift_cover, nil, 0);
 setlistener("controls/armament/laser-arm-dmd", button2, nil, 0);
 setlistener("controls/gear/brake-parking", button2, nil, 0);
 setlistener("controls/gear/gear-down", clamp0, nil, 0);
+setlistener("f16/avionics/gnd-jett", button2, nil, 0);
 setlistener("fdm/jsbsim/systems/hook/tailhook-cmd-norm", clamp0, nil, 0);
 setlistener("controls/seat/ejection-safety-lever", clamp0, nil, 0);
 setlistener("instrumentation/radar/radar-standby", button2, nil, 0);
@@ -1873,6 +1874,7 @@ setlistener("f16/avionics/hud-fpm", click1, nil, 0);
 setlistener("f16/avionics/hud-scales", click1, nil, 0);
 setlistener("fdm/jsbsim/elec/switches/main-pwr", button2, nil, 0);
 setlistener("f16/engine/jfs-start-switch", button2, nil, 0);
+setlistener("fdm/jsbsim/elec/switches/epu", click2, nil, 0);
 setlistener("f16/avionics/hud-brt", click3, nil, 0);
 setlistener("f16/avionics/rwr-int", click3, nil, 0);
 setlistener("f16/avionics/mfd-l-con", click3, nil, 0);
@@ -1884,6 +1886,13 @@ setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-2", knob, nil,
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-3", knob, nil, 0);
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-4", knob, nil, 0);
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-5", knob, nil, 0);
+setlistener("instrumentation/comm[0]/volume", click3, nil, 0);
+setlistener("instrumentation/comm[1]/volume", click3, nil, 0);
+setlistener("controls/lighting/lighting-panel/console-flood-knob", click3, nil, 0);
+setlistener("controls/lighting/lighting-panel/flood-inst-pnl-knob", click3, nil, 0);
+setlistener("controls/lighting/lighting-panel/pri-inst-pnl-knob", click3, nil, 0);
+setlistener("controls/lighting/lighting-panel/data-entry-display", click3, nil, 0);
+setlistener("controls/lighting/lighting-panel/console-primary-knob", click3, nil, 0);
 setlistener("f16/avionics/power-rdr-alt", click1, nil, 0);
 setlistener("f16/avionics/power-fcr", click1, nil, 0);
 setlistener("f16/avionics/power-right-hdpt", click1, nil, 0);
@@ -1894,6 +1903,7 @@ setlistener("f16/avionics/power-st-sta", click1, nil, 0);
 setlistener("f16/avionics/power-ufc", click1, nil, 0);
 setlistener("f16/avionics/power-gps", click1, nil, 0);
 setlistener("f16/avionics/power-dl", click1, nil, 0);
+setlistener("controls/ventilation/airconditioning-enabled", knob, nil, 0);
 # valid methods: button, button2, knob, knob2, clamp0, click3, lift_cover
 #                click1, click2, doubleClick, doubleClick2, scroll
 
