@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<PropertyList>
+  <!-- File form Jaguar, NC-687 sent it, I'll have to take set it up when I have time -->
+
+  <path>Pedal-Adjust.ac</path>
+  <animation>
+    <object-name>Handle</object-name>
+    <object-name>Mount</object-name>
+  </animation>
+
+  <animation>
+    <type>rotate</type>
+    <object-name>Handle</object-name>
+    <property>controls/pedals/fore-aft-adjust</property>
+    <factor>-60</factor>
+    <interval-sec>0.05</interval-sec>
+    <offset-m>0</offset-m>
+    <center>
+      <x-m>-3.28547</x-m>
+      <y-m>-0.00074</y-m>
+      <z-m>-0.46088</z-m>
+    </center>
+    <axis>
+      <x>-1</x>
+      <y> 0</y>
+      <z> 0</z>
+    </axis>
+  </animation>
+
+  <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>Handle</object-name>
+    <action>
+      <button>0</button>
+      <binding>
+        <command>property-toggle</command>
+        <property>controls/pedals/fore-aft-adjust</property>
+        <interval-sec>0.05</interval-sec>
+      </binding>
+    </action>
+  </animation>
+
+
+  <!-- Lighting -->
+  <animation>
+    <object-name>Handle</object-name>
+    <object-name>Mount</object-name>
+    <type>material</type>
+    <emission>
+      <red>   0.9 </red>
+      <green> 0.9 </green>
+      <blue>  0.9 </blue>
+      <factor-prop>controls/lighting/instruments-norm</factor-prop>
+    </emission>
+  </animation>
+
+</PropertyList>
