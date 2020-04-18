@@ -86,7 +86,26 @@
   <name>interior</name>
   <usage>interior</usage>
   <path>Aircraft/f16/Models/Cockpit/Main/cockpit.xml</path>
-</model> 
+</model>
+
+<animation>
+    <type>noshadow</type>
+    <object-name>Rect</object-name>
+    <object-name>LogoPilotRight</object-name>
+    <object-name>VstabBandLeftAft</object-name>
+    <object-name>VstabBandLeftFront</object-name>
+    <object-name>VstabBandRightAft</object-name>
+    <object-name>VstabBandRightFront</object-name>
+    <object-name>VstabLogoLeftBottom</object-name>
+    <object-name>VstabLogoLeftTop</object-name>
+    <object-name>VstabLogoRightBottom</object-name>
+    <object-name>VstabLogoRightTop</object-name>
+    <object-name>LogoPilotRight</object-name>
+    <object-name>FuselageLogoRight</object-name>
+    <object-name>FuselageLogoLeft</object-name>
+    <object-name>CanopyForwardInside</object-name>
+    <object-name>CanopyForwardOutside</object-name>
+  </animation>
 
 <animation>
   <type>translate</type>
@@ -332,7 +351,11 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
           <transparent type="int">1</transparent>
-          <rendering-hint>transparent</rendering-hint>
+          <render-bin>
+            <bin-number>111</bin-number>
+            <bin-name>DepthSortedBin</bin-name>
+          </render-bin>
+          <opaque type="int">0</opaque>
       </parameters>
       <!-- logos -->
       <object-name>VstabBandLeftAft</object-name>

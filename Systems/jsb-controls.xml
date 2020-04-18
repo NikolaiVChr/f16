@@ -38,6 +38,23 @@
             </test>
         </switch>
         
+        <switch name="fcs/fly-by-wire/condition-b">
+            <description>
+                Since this was removed on later blocks,
+                not sure when, it is used just for
+                prototype for now.
+            </description>
+            <default value="0"/>
+            <test logic="AND" value="1">
+                fcs/fly-by-wire/MLG-GND == 1
+                gear/unit[0]/WOW == 1
+                fcs/speedbrake-pos-deg == 60
+                fcs/throttle-cmd-deg lt 17
+                fcs/throttle-cmd-deg ge 16
+                fcs/fly-by-wire/prototype == 1
+            </test>
+        </switch>
+        
         <switch name="fcs/fly-by-wire/condition-aar">
             <default value="0"/>
             <test logic="AND" value="1">
@@ -651,7 +668,8 @@
 
         <switch name="fcs/fly-by-wire/pitch/bias-bottom">
             <description>
-                Diagram say condition A
+                Diagram say condition A, changed so this don't kick in
+                when doing AAR.
             </description>
             <default value="0"/>
             <test logic="OR" value="fcs/fly-by-wire/pitch/bias-number">
@@ -661,7 +679,6 @@
 
         <lag_filter name="fcs/fly-by-wire/pitch/bias-top-lag">
             <description>
-                Diagram say 10
                 DNU
             </description>
             <input> fcs/fly-by-wire/pitch/bias-top </input>
@@ -738,9 +755,11 @@
                 DNU
                 
                 It makes negative pitch rate (washed out) plus alpha (minus a bias)
-                give zero input on FBW when gear is up. And x1 influence with gear down.
+                give zero input on FBW when gear is up. And x0.075 influence with gear down.
                 
-                In diagram relies only on Cond A
+                In diagram relies only on Condition A, but its not helpful during AAR,
+                nor right after take-off, it should really only get into effect when on
+                approach, hence that test.
             </description>
             <default value="0"/>
             <test logic="AND" value="0.075">
@@ -761,8 +780,9 @@
         
         <actuator name="fcs/fly-by-wire/pitch/pitch-rate-lower-lag">
             <description>
-                2 secs to decrease to zero
-                100 secs to increase to 0.07
+                2 secs to decrease to zero, when retracting gears.
+                100 secs to increase to 0.075, which is time enough to get gear up
+                from take-off.
                 DNU
             </description>
           <input> fcs/fly-by-wire/pitch/pitch-rate-lower-switch </input>
@@ -792,8 +812,8 @@
             <description>This prevents NaN to propagate through the system</description>
             <default value="0"/>
             <test logic="AND" value="fcs/fly-by-wire/pitch/normal-1">
-                accelerations/a_n lt  30
-                accelerations/a_n gt -30
+                accelerations/a_n lt  1000
+                accelerations/a_n gt -1000
             </test>
         </switch>
 
@@ -1787,33 +1807,19 @@
             </function>
         </fcs_function>
 
-        <switch name="fcs/fly-by-wire/ari/schedule-gain">
-            <default value="0.65"/>
-            <test logic="AND" value="1">
-                fcs/fly-by-wire/prototype == 0 <!-- too much ARI from tp-1538, maybe use tp-2857 values? -->
-            </test>
-        </switch>
-
         <fcs_function name="fcs/fly-by-wire/ari/schedule">
             <function>
                 <product>
                     <p> fcs/fly-by-wire/ari/inverter-norm </p>
-                    <p> fcs/fly-by-wire/ari/schedule-gain </p>
+                    <v> 0.65 </v>
                     <p> fcs/fly-by-wire/ari/F7 </p>
                 </product>
             </function>
         </fcs_function>
 
-        <switch name="fcs/fly-by-wire/ari/gain-value">
-            <default value="0.0375"/>
-            <test logic="AND" value="0.0750">
-                fcs/fly-by-wire/prototype == 0 <!-- too much ARI from tp-1538, maybe use tp-2857 values? -->
-            </test>
-        </switch>
-
         <pure_gain name="fcs/fly-by-wire/ari/gain">
             <input>fcs/fly-by-wire/pitch/a_f</input>
-            <gain> fcs/fly-by-wire/ari/gain-value </gain>
+            <gain> 0.0375 </gain>
         </pure_gain>
 
         <summer name="fcs/fly-by-wire/ari/sum">
@@ -2358,7 +2364,7 @@
 
         <lag_filter name="fcs/fly-by-wire/lef/servo">
             <input> fcs/fly-by-wire/lef/cmd-pos-elec </input>
-            <c1> 0.136 </c1>
+            <c1> 7.3529 </c1><!-- 1/0.136 -->
         </lag_filter>
 
         <switch name="fcs/fly-by-wire/lef/pos-hyd">
@@ -2484,16 +2490,33 @@
             <c1> 8 </c1>
         </integrator>
 
-        <switch name="fcs/fly-by-wire/tef/int-elec">
-            <description>                
+        <switch name="fcs/fly-by-wire/tef/braking-help">
+            <description> 
+                The flaps will deploy up to help with braking,
+                it will produce drag, and since they are going up,
+                will also reduce lift.               
             </description>
             <default value="fcs/fly-by-wire/tef/int"/>
+            <test logic="OR" value="-23">
+                fcs/fly-by-wire/condition-b == 1
+            </test>
+        </switch>
+        
+        <switch name="fcs/fly-by-wire/tef/int-elec">
+            <description>
+            </description>
+            <default value="fcs/fly-by-wire/tef/braking-help"/>
             <test logic="AND" value="fcs/fly-by-wire/tef/int-elec">
                 elec/bus/flcc/d lt 20
             </test>
         </switch>
-
+        
         <switch name="fcs/fly-by-wire/tef/hyd">
+          <description>
+             Since this is going to be fed into Aerodynamics as flaps and HUD as info,
+             we need to make sure to check for hydraulics and power here.
+             Else we get what flaps is commanded to do, not what they are at.
+          </description>
           <default value="0"/>
           <test  logic="OR" value="fcs/fly-by-wire/tef/int-elec">
             systems/hydraulics/sysa-psi ge 2000
@@ -2511,7 +2534,10 @@
         </fcs_function>
 
         <pure_gain name="fcs/fly-by-wire/tef/tef-pos-norm">
-            <description>Using integrator output as mechanical bias should not be feed into aerodynamics</description>
+            <description>
+                Using integrator output as mechanical bias should not be feed into aerodynamics,
+                so we bypass that here, this is the property that is fed into aerodynamics.
+            </description>
             <input>fcs/fly-by-wire/tef/hyd</input>
             <gain>0.05</gain>
         </pure_gain>

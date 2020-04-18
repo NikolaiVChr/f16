@@ -47,6 +47,44 @@ light: ecm lamp on
 light: ecm lamp off
       when controls/armament/ecm-enabled GreaterThan 0
     -->
+    <animation>
+        <type>noshadow</type>
+        <object-name>pitch-hold-switch-axis</object-name>
+        <object-name>master-arm-switch-axis</object-name>
+        <object-name>quiet-switch-axis</object-name>
+        <object-name>block-15</object-name>
+        <object-name>roll-switch-b15</object-name>
+        <object-name>roll-switch-b15-axis</object-name>
+        <object-name>pitch-switch-b15-axis</object-name>
+        <object-name>pitch-switch-b15</object-name>
+        <object-name>MISC_1_block-15</object-name>
+        <object-name>autopilot-switch-axis</object-name>
+        <object-name>autopilot-switch-base</object-name>
+        <object-name>block-50</object-name>
+        <object-name>active-off</object-name>
+        <object-name>roll-hold-switch</object-name>
+        <object-name>pitch-hold-switch</object-name>
+        <object-name>active-on</object-name>
+        <object-name>MISC_1_block-50</object-name>
+        <object-name>adv-mode-button</object-name>
+        <object-name>stby-on</object-name>
+        <object-name>stby-off</object-name>
+        <object-name>switches</object-name>
+        <object-name>quiet-switch</object-name>
+        <object-name>ecm-enbl-off</object-name>
+        <object-name>ecm-enbl-on</object-name>
+        <object-name>ecm-enbl</object-name>
+        <object-name>laser-arm-switch-axis</object-name>
+        <object-name>roll-hold-switch-axis</object-name>
+        <object-name>switch-bases</object-name>
+        <object-name>alt-rel-button</object-name>
+        <object-name>laser-arm-switch</object-name>
+        <object-name>master-arm-cover</object-name>
+        <object-name>autopilot-switch</object-name>
+        <object-name>master-arm-cover-axis</object-name>
+        <object-name>master-arm-switch</object-name>
+  </animation>
+  
     <effect>
         <name>models-effects-f16panel-left</name>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>

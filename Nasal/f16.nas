@@ -359,7 +359,7 @@ var slow = {
     #  valid = iff.interrogate(awg_9.active_u.propNode);
     #}
     #setprop("instrumentation/iff/response", valid);
-    settimer(func {me.loop()},5);
+    #settimer(func {me.loop()},5);
   },
 };
 
@@ -1835,6 +1835,7 @@ setlistener("controls/armament/master-arm-cover-open", lift_cover, nil, 0);
 setlistener("controls/armament/laser-arm-dmd", button2, nil, 0);
 setlistener("controls/gear/brake-parking", button2, nil, 0);
 setlistener("controls/gear/gear-down", clamp0, nil, 0);
+setlistener("f16/avionics/gnd-jett", button2, nil, 0);
 setlistener("fdm/jsbsim/systems/hook/tailhook-cmd-norm", clamp0, nil, 0);
 setlistener("controls/seat/ejection-safety-lever", clamp0, nil, 0);
 setlistener("instrumentation/radar/radar-standby", button2, nil, 0);
@@ -1873,6 +1874,7 @@ setlistener("f16/avionics/hud-fpm", click1, nil, 0);
 setlistener("f16/avionics/hud-scales", click1, nil, 0);
 setlistener("fdm/jsbsim/elec/switches/main-pwr", button2, nil, 0);
 setlistener("f16/engine/jfs-start-switch", button2, nil, 0);
+setlistener("fdm/jsbsim/elec/switches/epu", click2, nil, 0);
 setlistener("f16/avionics/hud-brt", click3, nil, 0);
 setlistener("f16/avionics/rwr-int", click3, nil, 0);
 setlistener("f16/avionics/mfd-l-con", click3, nil, 0);
@@ -1884,6 +1886,13 @@ setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-2", knob, nil,
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-3", knob, nil, 0);
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-4", knob, nil, 0);
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-5", knob, nil, 0);
+setlistener("instrumentation/comm[0]/volume", click3, nil, 0);
+setlistener("instrumentation/comm[1]/volume", click3, nil, 0);
+setlistener("controls/lighting/lighting-panel/console-flood-knob", click3, nil, 0);
+setlistener("controls/lighting/lighting-panel/flood-inst-pnl-knob", click3, nil, 0);
+setlistener("controls/lighting/lighting-panel/pri-inst-pnl-knob", click3, nil, 0);
+setlistener("controls/lighting/lighting-panel/data-entry-display", click3, nil, 0);
+setlistener("controls/lighting/lighting-panel/console-primary-knob", click3, nil, 0);
 setlistener("f16/avionics/power-rdr-alt", click1, nil, 0);
 setlistener("f16/avionics/power-fcr", click1, nil, 0);
 setlistener("f16/avionics/power-right-hdpt", click1, nil, 0);
@@ -1894,6 +1903,7 @@ setlistener("f16/avionics/power-st-sta", click1, nil, 0);
 setlistener("f16/avionics/power-ufc", click1, nil, 0);
 setlistener("f16/avionics/power-gps", click1, nil, 0);
 setlistener("f16/avionics/power-dl", click1, nil, 0);
+setlistener("controls/ventilation/airconditioning-enabled", knob, nil, 0);
 # valid methods: button, button2, knob, knob2, clamp0, click3, lift_cover
 #                click1, click2, doubleClick, doubleClick2, scroll
 
@@ -1960,22 +1970,14 @@ var fx = nil;
 
 var flexer = func {
   # this function needs to become optimized using Nodes
-  if (getprop("sim/multiplay/generic/float[5]")!=nil and getprop("payload/weight[0]/weight-lb") !=nil
-    and getprop("payload/weight[1]/weight-lb") !=nil 
-    and getprop("payload/weight[2]/weight-lb") !=nil 
-    and getprop("payload/weight[3]/weight-lb") !=nil 
-    and getprop("payload/weight[7]/weight-lb") !=nil 
-    and getprop("payload/weight[8]/weight-lb") !=nil 
-    and getprop("payload/weight[9]/weight-lb") !=nil 
-    and getprop("payload/weight[10]/weight-lb") !=nil ) {
+  if (getprop("sim/multiplay/generic/float[5]")!=nil) {
     setprop("surface-positions/leftrad", getprop("sim/multiplay/generic/float[5]")*20*D2R);  
     setprop("surface-positions/leftrad2", -getprop("surface-positions/left-aileron-pos-norm")*21.5*D2R);  
     setprop("surface-positions/rightrad", getprop("sim/multiplay/generic/float[6]")*20*D2R);  
     setprop("surface-positions/rightrad2", getprop("surface-positions/right-aileron-pos-norm")*21.5*D2R);  
-    setprop("surface-positions/radlefr", getprop("surface-positions/flap-pos-norm")*D2R);  
-    setprop("surface-positions/radlefl", -getprop("surface-positions/flap-pos-norm")*D2R);  
-    # sice weight works wrong in air, we remove the weight when in air:
-    #var ground = 1;#getprop("fdm/jsbsim/gear/unit[1]/WOW");
+    setprop("surface-positions/radlefr", getprop("fdm/jsbsim/fcs/lef-pos-deg")*D2R);
+    setprop("surface-positions/radlefl", -getprop("fdm/jsbsim/fcs/lef-pos-deg")*D2R);
+
     var wingcontent = 0;
     if (getprop("consumables/fuel/tank[5]/level-kg")!=nil) {
       wingcontent += getprop("consumables/fuel/tank[5]/level-kg");
@@ -1983,16 +1985,29 @@ var flexer = func {
     if (getprop("consumables/fuel/tank[6]/level-kg")!=nil) {
       wingcontent += getprop("consumables/fuel/tank[6]/level-kg");
     }
-    setprop("f16/wings/fuel-and-stores-kg", 
-    (getprop("payload/weight[0]/weight-lb")
-    +getprop("payload/weight[1]/weight-lb")
-    +getprop("payload/weight[2]/weight-lb")
-    +getprop("payload/weight[3]/weight-lb")
-    +getprop("payload/weight[7]/weight-lb")
-    +getprop("payload/weight[8]/weight-lb")
-    +getprop("payload/weight[9]/weight-lb")
-    +getprop("payload/weight[10]/weight-lb"))*LBM2KG
-    +wingcontent);
+    if (getprop("payload/weight[0]/weight-lb") !=nil
+        and getprop("payload/weight[1]/weight-lb") !=nil 
+        and getprop("payload/weight[2]/weight-lb") !=nil 
+        and getprop("payload/weight[3]/weight-lb") !=nil 
+        and getprop("payload/weight[7]/weight-lb") !=nil 
+        and getprop("payload/weight[8]/weight-lb") !=nil 
+        and getprop("payload/weight[9]/weight-lb") !=nil 
+        and getprop("payload/weight[10]/weight-lb") !=nil ) {
+      setprop("f16/wings/fuel-and-stores-kg", 
+      (getprop("payload/weight[0]/weight-lb")
+      +getprop("payload/weight[1]/weight-lb")
+      +getprop("payload/weight[2]/weight-lb")
+      +getprop("payload/weight[3]/weight-lb")
+      +getprop("payload/weight[7]/weight-lb")
+      +getprop("payload/weight[8]/weight-lb")
+      +getprop("payload/weight[9]/weight-lb")
+      +getprop("payload/weight[10]/weight-lb"))*LBM2KG
+      +wingcontent);
+    } elsif (getprop("payload/weight[0]/weight-lb") !=nil
+        and getprop("payload/weight[1]/weight-lb") !=nil) {
+      # for prototype
+      setprop("f16/wings/fuel-and-stores-kg", (getprop("payload/weight[0]/weight-lb")+getprop("payload/weight[1]/weight-lb"))*LBM2KG+wingcontent);
+    }
     #setprop("f16/wings/fuel-and-stores-kg", ground*(getprop("f16/wings/fuel-and-stores-kg-a")));
     
     # since the wingflexer works wrong in air we make the wing more stiff in air:
