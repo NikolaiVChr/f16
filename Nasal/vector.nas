@@ -2,7 +2,7 @@ var Math = {
     #
     # Author: Nikolai V. Chr.
     #
-    # Version 1.8
+    # Version 1.9
     #
     # When doing euler coords. to cartesian: +x = forw, +y = left,  +z = up.
     # FG struct. coords:                     +x = back, +y = right, +z = up.
@@ -39,6 +39,12 @@ var Math = {
         me.tgt_coord.set_alt(coord.alt()+me.upamount);
         
         return {"x":me.tgt_coord.x()-coord.x(),  "y":me.tgt_coord.y()-coord.y(), "z":me.tgt_coord.z()-coord.z()};
+    },
+    
+    # When observing another MP aircraft the groundspeed velocity info is in body frame, this method will convert it to cartesian vector.
+    getCartesianVelocity: func (yaw_deg, pitch_deg, roll_deg, uBody_fps, vBody_fps, wBody_fps) {
+        me.bodyVelocity = [uBody_fps, -vBody_fps, -wBody_fps];
+        return me.yawPitchRollVector(yaw_deg, pitch_deg, roll_deg, me.bodyVelocity);
     },
 
     # angle between 2 vectors. Returns 0-180 degrees.
