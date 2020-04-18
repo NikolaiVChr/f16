@@ -43,6 +43,7 @@
         <object-name>GROWTH.104</object-name>
         <object-name>GROWTH.104_0</object-name>
         <object-name>GROWTH.104_1</object-name>
+        <object-name>GROWTH.105</object-name>
         <object-name>HUD</object-name>
         <object-name>altrad-switch</object-name>
         <object-name>att_fpm-switch</object-name>
@@ -792,6 +793,7 @@
         <object-name>SNSR_PWR_1</object-name>
         <object-name>VOICE_MESSAGE_1</object-name>
         <object-name>ZEROIZE_1</object-name>
+        <object-name>GROWTH.105</object-name>
     </effect>
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
