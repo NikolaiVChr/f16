@@ -1113,6 +1113,16 @@ var ContactTGP = {
       # return true airspeed
       return 0;
   },
+  
+  get_uBody: func {
+      return 0;
+	},    
+	get_vBody: func {
+	  return 0;
+	},    
+	get_wBody: func {
+	  return 0;
+	},
 
   get_Longitude: func(){
       var n = me.coord.lon();

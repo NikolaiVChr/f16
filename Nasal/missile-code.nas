@@ -201,6 +201,9 @@ var contactPoint = nil;
 # get_Pitch()
 # get_Speed()
 # get_heading()
+# get_uBody()
+# get_vBody()
+# get_wBody()
 # getFlareNode()  - Used for flares.
 # getChaffNode()  - Used for chaff.
 # isPainted()     - Tells if this target is still being radar tracked by the launch platform, only used in semi-radar guided missiles.
@@ -245,6 +248,10 @@ var AIM = {
         	m.SwSoundVol.setDoubleValue(0);
         }
         m.useHitInterpolation   = getprop("payload/armament/hit-interpolation");#false to use 5H1N0B1 trigonometry, true to use Leto interpolation.
+        m.gnd_launch   = getprop("payload/armament/gnd-launch");#true to be a SAM or ship
+        if (m.gnd_launch == nil) {
+        	m.gnd_launch = 0;
+        }
         m.useSingleFile   = nil;#getprop("payload/armament/one-xml-per-type");#disabled.
         if (m.useSingleFile == nil) {
         	m.useSingleFile = FALSE;
@@ -2355,8 +2362,9 @@ var AIM = {
 		# telemetry
 		if (me.data == TRUE) {
 			me.eta = me.free == TRUE or me.horz_closing_rate_fps == -1?-1:(me["t_go"]!=nil?me.t_go:(me.dist_curr*M2FT)/me.horz_closing_rate_fps);
+			if (me.eta < 0) me.eta = -1;
 			me.hit = 50;# in percent
-			if (me.life_time > me.drop_time+me.stage_1_duration) {
+			if (me.life_time > me.drop_time+me.stage_1_duration + me.gnd_launch?(me.stage_2_duration):0) {
 				# little less optimistic after reaching topspeed
 				if (me.selfdestruct_time-me.life_time < me.eta) {
 					# reduce alot if eta later than lifespan
@@ -2369,6 +2377,10 @@ var AIM = {
 					# penalty if eta is high
 					me.hit -= me.clamp(40*me.eta/(me.life_time*0.85), 0, 40);
 				}
+				if (me.eta < 0) {
+					# penalty if eta is incomputable
+					me.hit -= 75;
+				}
 			}
 			if (me.curr_deviation_h != nil and me.dist_curr > 50) {
 				# penalty for target being off-bore
@@ -2378,13 +2390,18 @@ var AIM = {
 				# bonus for traveling faster than target
 				me.hit += me.clamp((me.old_speed_fps / me.t_speed_fps)*15,-25,50);
 			}			
-			if (me.free == TRUE) {
+			if (me.free == TRUE or (me.gnd_launch and (me.chaffLock or me.flareLock))) {
 				# penalty for not longer guiding
 				me.hit -= 75;
 			}
 			me.hit = int(me.clamp(me.hit, 0, 90));
 			me.ai.getNode("ETA").setIntValue(me.eta);
 			me.ai.getNode("hit").setIntValue(me.hit);
+			
+			if (me.gnd_launch) {
+				setprop("sam/impact"~me.ID,me.eta);
+				setprop("sam/hit"~me.ID,me.hit);
+			}
 		}
 
 		me.last_dt = me.dt;
@@ -2535,6 +2552,8 @@ var AIM = {
 				me.thrust_lbf = me.force_lbf_2;
 			} elsif (me.life_time > me.drop_time) {
 				me.thrust_lbf = me.force_lbf_1;
+			}else {
+				me.thrust_lbf = 0;
 			}
 		}
 		
@@ -3256,17 +3275,17 @@ var AIM = {
 	            	me.printGuideDetails(" pitch "~me.pitch~" + me.raw_steer_signal_elev "~me.raw_steer_signal_elev);
 	            }
 	        }
-        } elsif (me.rail == TRUE and me.rail_forward == FALSE and me.rotate_token == FALSE) {
+        #} elsif (me.rail == TRUE and me.rail_forward == FALSE and me.rotate_token == FALSE) {
 			# tube launched missile turns towards target
 
-			me.raw_steer_signal_elev = me.curr_deviation_e;
-			me.printGuideDetails("Turning, desire "~me.t_elev_deg~" degs pitch.");
-			me.cruise_or_loft = TRUE;
-			me.limitGs = TRUE;
-			if (math.abs(me.curr_deviation_e) < 20) {
-				me.rotate_token = TRUE;
-				me.printGuide("Is last turn, snap-up/PN takes it from here..")
-			}
+		#	me.raw_steer_signal_elev = me.curr_deviation_e;
+		#	me.printGuideDetails("Turning, desire "~me.t_elev_deg~" degs pitch.");
+		#	me.cruise_or_loft = TRUE;
+		#	me.limitGs = TRUE;
+		#	if (math.abs(me.curr_deviation_e) < 20) {
+		#		me.rotate_token = TRUE;
+		#		me.printGuide("Is last turn, snap-up/PN takes it from here..")
+		#	}
 		} elsif (me.snapUp == TRUE and me.t_elev_deg > me.clamp(-80/me.speed_m,-30,-5) and me.dist_curr * M2NM > me.speed_m * 3
 			 and me.t_elev_deg < me.loft_angle #and me.t_elev_deg > -7.5
 			 and me.dive_token == FALSE) {
@@ -3365,9 +3384,11 @@ var AIM = {
 			if ((me.dist_direct_last - me.dist_curr_direct) < 0) {
 				# might happen if missile is cannot catch up to target. It might still be accelerating or it has lost too much speed.
 				# PN needs closing rate to be positive to give meaningful steering commands. So we fly straight and hope for better closing rate.
-				me.raw_steer_signal_head = 0;
+				me.raw_steer_signal_head = me.curr_deviation_h;
+				me.vert_closing_rate_fps = me.clamp(((me.dist_direct_last - me.dist_curr_direct)*M2FT)/me.dt, -1000000, 1000000);
+				if (me.vert_closing_rate_fps != 0) me.t_go = M2FT*me.dist_curr_direct/me.vert_closing_rate_fps;#time to go
 				if (me.cruise_or_loft == FALSE) {
-					me.raw_steer_signal_elev = 0;
+					me.raw_steer_signal_elev = me.curr_deviation_e;
 					me.attitudePN = math.atan2(-(me.speed_down_fps+g_fps * me.dt), me.speed_horizontal_fps ) * R2D;
 			        me.gravComp = me.pitch - me.attitudePN;
 			        #printf("Gravity compensation %0.2f degs", me.gravComp);
@@ -3388,50 +3409,22 @@ var AIM = {
 
 			me.printGuideDetails("LOS rate: %06.4f rad/s", me.line_of_sight_rate_rps);
 
-			#if (me.before_last_t_coord != nil) {
-			#	var t_heading = me.before_last_t_coord.course_to(me.t_coord);
-			#	var t_dist   = me.before_last_t_coord.distance_to(me.t_coord);
-			#	var t_dist_dir   = me.before_last_t_coord.direct_distance_to(me.t_coord);
-			#	var t_climb      = me.t_coord.alt() - me.before_last_t_coord.alt();
-			#	var t_horz_speed = (t_dist*M2FT)/(me.dt+me.last_dt);
-			#	var t_speed      = (t_dist_dir*M2FT)/(me.dt+me.last_dt);
-			#} else {
-			#	var t_heading = me.last_t_coord.course_to(me.t_coord);
-			#	var t_dist   = me.last_t_coord.distance_to(me.t_coord);
-			#	var t_dist_dir   = me.last_t_coord.direct_distance_to(me.t_coord);
-			#	var t_climb      = me.t_coord.alt() - me.last_t_coord.alt();
-			#	var t_horz_speed = (t_dist*M2FT)/me.dt;
-			#	var t_speed      = (t_dist_dir*M2FT)/me.dt;
-			#}
-			
-			#var t_pitch      = math.atan2(t_climb,t_dist)*R2D;
-			
-			# calculate target acc as normal to LOS line:
+			me.t_velocity = me.myMath.getCartesianVelocity(me.Tgt.get_heading(), me.Tgt.get_Pitch(), me.Tgt.get_Roll(), me.Tgt.get_uBody(), me.Tgt.get_vBody(), me.Tgt.get_wBody());
+						
 			if ((me.flareLock == FALSE and me.chaffLock == FALSE) or me.t_heading == nil) {
-				me.t_heading        = me.Tgt.get_heading();
-				me.t_pitch          = me.Tgt.get_Pitch();
-				me.t_speed_fps      = me.Tgt.get_Speed()*KT2FPS;#true airspeed
+				me.euler = me.myMath.cartesianToEuler(me.t_velocity);
+				if (me.euler[0] != nil) {
+					me.t_heading        = me.euler[0];
+				} else {
+					me.t_heading        = me.Tgt.get_heading();
+				}
+				me.t_pitch          = me.euler[1];
+				me.t_speed_fps      = me.myMath.magnitudeVector(me.t_velocity);#groundspeed
 			} elsif (me.flarespeed_fps != nil) {
 				me.t_speed_fps      = me.flarespeed_fps;#true airspeed
 			}
-
-			#if (me.last_t_coord.direct_distance_to(me.t_coord) != 0) {
-			#	# taking sideslip and AoA into consideration:
-			#	me.t_heading    = me.last_t_coord.course_to(me.t_coord);
-			#	me.t_climb      = me.t_coord.alt() - me.last_t_coord.alt();
-			#	me.t_dist       = me.last_t_coord.distance_to(me.t_coord);
-			#	me.t_pitch      = math.atan2(me.t_climb, me.t_dist) * R2D;
-			#} elsif (me.Tgt.get_Speed() > 25) {
-				# target position was not updated since last loop.
-				# to avoid confusing the navigation, we just fly
-				# straight.
-				#print("not updated");
-			#	return;
-			#}
-
-
 			
-			me.t_horz_speed_fps     = math.abs(math.cos(me.t_pitch*D2R)*me.t_speed_fps);#flawed due to AoA is not taken into account, but dont have that info.
+			me.t_horz_speed_fps     = math.sqrt(me.t_velocity[0]*me.t_velocity[0]+me.t_velocity[1]*me.t_velocity[1]);
 			me.t_LOS_norm_head_deg  = me.t_course + 90;#when looking at target this direction will be 90 deg right of target
 			me.t_LOS_norm_speed_fps = math.cos((me.t_LOS_norm_head_deg - me.t_heading)*D2R)*me.t_horz_speed_fps;
 
@@ -3445,7 +3438,7 @@ var AIM = {
 
 			# time to go calc
 			me.t_away_norm_speed_fps = math.cos((me.t_course - me.t_heading)*D2R)*me.t_horz_speed_fps;
-			me.t_speed_vert_fps      = math.sin(me.t_pitch*D2R)*me.t_speed_fps;
+			me.t_speed_vert_fps      = me.t_velocity[2];
 			me.m_speed_vert_fps      = math.sin(me.pitch*D2R)*me.old_speed_horz_fps;
 			me.t_pos_z               = (me.t_coord.alt()-me.coord.alt())*M2FT;
 			me.Vt   = [me.t_away_norm_speed_fps,me.t_LOS_norm_speed_fps,me.t_speed_vert_fps];
@@ -3873,6 +3866,7 @@ var AIM = {
 				me.sendout = 1;
 			}
 		}
+		# Now check for hitting ourselves:
 		var min_distance = geo.aircraft_position().direct_distance_to(explode_coord);
 		if (min_distance < me.reportDist) {
 			# hitting oneself :)

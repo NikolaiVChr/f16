@@ -1363,6 +1363,9 @@ var Target = {
         obj.pitch   = c.getNode("orientation/pitch-deg");
         obj.roll   = c.getNode("orientation/roll-deg");
 		obj.Alt = c.getNode("position/altitude-ft");
+        obj.ubody           = c.getNode("velocities/uBody-fps");
+        obj.vbody           = c.getNode("velocities/vBody-fps");
+        obj.wbody           = c.getNode("velocities/wBody-fps");
 		obj.AcType = c.getNode("sim/model/ac-type");
 		obj.type = c.getName();
 		obj.Valid = c.getNode("valid");
@@ -1931,6 +1934,36 @@ var Target = {
     isVirtual: func {
         # used by missile-code
         return me.virtual;
+    },
+    get_uBody: func {
+      var body = nil;
+      if (me.ubody != nil) {
+        body = me.ubody.getValue();
+      }
+      if(body == nil) {
+        body = me.get_Speed()*KT2FPS;
+      }
+      return body;
+    },    
+    get_vBody: func {
+      var body = nil;
+      if (me.ubody != nil) {
+        body = me.vbody.getValue();
+      }
+      if(body == nil) {
+        body = 0;
+      }
+      return body;
+    },    
+    get_wBody: func {
+      var body = nil;
+      if (me.ubody != nil) {
+        body = me.wbody.getValue();
+      }
+      if(body == nil) {
+        body = 0;
+      }
+      return body;
     },
 	list : [],
 };
