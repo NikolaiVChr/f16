@@ -1980,7 +1980,7 @@
 			</condition>
 			<volume>
 				<property>/sim/current-view/internal</property>
-				<factor>0.07</factor>
+				<factor>0.072</factor>
 			</volume>
 		</main-pwr>
 		<flare>

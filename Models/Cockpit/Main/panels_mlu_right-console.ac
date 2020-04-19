@@ -5062,7 +5062,7 @@ name "GROWTH.105"
 loc 0.00778294 0 -0.846284
 data 10
 GROWTH.010
-texture "/Users/utente/Desktop/GitHub/Aircrafts/f16/Models/Cockpit/Textures/rear-left.png"
+texture "../Textures/rear-left.png"
 crease 30.000000
 numvert 8
 0.81429 0.00382 0.56038
