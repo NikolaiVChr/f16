@@ -1,7 +1,78 @@
 <?xml version="1.0"?>
 
-<!-- General Dynamics F-16 Electrical System -->
-<!-- (c) 2018 Joshua Davidson (Octal450) -->
+<!-- General Dynamics block 50 F-16 Electrical System -->
+<!-- (c) 2018 Joshua Davidson (Octal450)
+         2020 Nikolai V. Chr.
+
+	Main gen: 60 KVA
+	Stby gen: 10 KVA
+	EPU: 5 KVA
+	
+	KVA = kilo watt ampere
+	
+	ADG = assessory drive gearbox
+	
+	FLCS PMG = permanent magnet gen
+		need 40% N2 to supply FBW (block 50)
+		is part of STBY gen and genereates power when ADG is running (block 50)
+		is part of main gen (block 10/15)
+	
+	FLCC = 4 branch FBW power supply
+	
+	FLCS = flight control system
+	
+	ACFT = aircraft
+	
+	Lights: Block 50:
+	  	ELEC SYS (caution panel)
+	  	  lit when any of the below lights is lit except for those on test panel.
+	  		lit during shutdown when engine spools down.
+	  	FLCS PMG
+	  	  WOW0: lit when PMG does not power ALL FLCS branches
+	  	  FLY: lit when PMG powers none of the FLCS branches
+	  		unlit when switch in BATT
+	  		unlits before engine reach idle
+	  			holding FLCS PWR TEST in TEST will lit.
+	  		lit when JFS start (either type). Until 44% rpm.
+	  		lit during shutdown when engine spools down.
+	  	MAIN GEN
+	  	  Lit when main gen not powering one of the noness AC	
+	  		lit when switch in BATT
+	  			goes unlit at 10 seconds after 60% rpm
+	  		unlit when supplied by external and switch moved to MAIN PWR
+	  		lit during shutdown when engine spools down.
+	  	STBY GEN
+	  	  Lit when stby power not available
+	  		lit when switch in BATT
+	  			goes unlit at 60% rpm
+	  				lit during shutdown when engine spools down.
+	  	FLCS RLY
+	  	  Batt gives less than 20V to one or more FLCS systems. (might be because relays are not closed and latched)
+	  		lit when switch in BATT, to show the relays prevent BATT from powering FLCC until a JFS start has been initiated.
+	  			holding FLCS PWR TEST in TEST will unlit. and relays will close but not latch
+	  			If holding FLCS PWR TEST in TEST when in MAIN PWR the relays will latch, and when FLCS PWR TEST returned to NORM the light wil unlit. BATT will now pwr the FLCC.
+	  				To undo that, cycle the MAIN PWR switch to BATT and back to MAIN PWR.
+	  			unlit when JFS start (either type)
+	  	ACFT BATT TO FLCS
+	  	  WOW: batt powering at least 1 FLCS branch
+	  	  FLY: batt powering at least 1 FLCS branch and 25V or less
+	  		unlit when switch in BATT, since FLCC is not powered by BATT due to relays.
+	  			holding FLCS PWR TEST in TEST will lit.
+	  		lit when JFS start (either type) if starting on battery. Until 44% rpm.
+	  		lit during shutdown when engine spools down.
+	  	FLCS PWR (test panel)
+	  		lit when switch in BATT after holding FLCS PWR TEST in TEST to show FBW is getting good power
+	  		lit when holding FLCS PWR TEST in TEST to show FBW is getting good power when in MAIN PWR
+	  		lit when doing EPU test
+	  	FLCS FAIL
+	  	  FLY: 20V or less on batt
+	  	  WOW0: batt or charger fail
+	
+	
+	
+	  		
+	  		
+ -->
 
 <system name="electrical">
 	
@@ -25,84 +96,23 @@
 			<gain>elec/failures/battery/serviceable</gain>
 		</pure_gain>
 		
-		<fcs_function name="elec/sources/adg-percent-rpm"><!-- assessory drive gearbox -->
-			<function>
-				<table>
-					<independentVar lookup="row">/engines/engine[0]/n2</independentVar>
-					<tableData>
-						  0    0
-						 50   55
-						105  100
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="elec/sources/csd-gearbox-ratio"> <!-- Goal is 75% RPM -->
-			<function>
-				<table>
-					<independentVar lookup="row">elec/sources/adg-percent-rpm</independentVar>
-					<tableData>
-						 50  1.50
-						 60  1.25
-						 70  1.07
-						 75  1.00
-						 80  0.94
-						 90  0.83
-						100  0.75
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
-		
-		<pure_gain name="elec/sources/csd-percent-rpm">
-			<input>elec/sources/adg-percent-rpm</input>
-			<gain>elec/sources/csd-gearbox-ratio</gain>
-		</pure_gain>
-		
-		<fcs_function name="elec/sources/adg-kva">
-			<function>
-				<table>
-					<independentVar lookup="row">elec/sources/csd-percent-rpm</independentVar>
-					<tableData>
-						 0   0
-						38   0
-						75  40
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
-		
 		<fcs_function name="elec/sources/main-gen-volt">
 			<function>
 				<table>
-					<independentVar lookup="row">elec/sources/adg-kva</independentVar>
+					<independentVar lookup="row">/engines/engine[0]/n2</independentVar>
 					<independentVar lookup="column">elec/switches/main-pwr</independentVar>
 					<independentVar lookup="table">elec/failures/main-gen/serviceable</independentVar>
 					<tableData breakPoint="0">
 						    0  1  2
 						 0  0  0  0
-						30  0  0  0
-						40  0  0  0
+						44  0  0  0
+						58  0  0  0
 					</tableData>
 					<tableData breakPoint="1">
 						    0  1    2
 						 0  0  0    0
-						30  0  0    0
-						40  0  0  115
-					</tableData>
-				</table>
-			</function>
-		</fcs_function>
-		
-		<fcs_function name="elec/sources/stby-kva">
-			<function>
-				<table>
-					<independentVar lookup="row">elec/sources/adg-percent-rpm</independentVar>
-					<tableData>
-						 0   0
-						28   0
-						42  10
+						44  0  0   35
+						58  0  0  115
 					</tableData>
 				</table>
 			</function>
@@ -111,7 +121,7 @@
 		<fcs_function name="elec/sources/stby-gen-volt">
 			<function>
 				<table>
-					<independentVar lookup="row">elec/sources/stby-kva</independentVar>
+					<independentVar lookup="row">/engines/engine[0]/n2</independentVar>
 					<independentVar lookup="column">elec/switches/main-pwr</independentVar>
 					<independentVar lookup="table">elec/failures/stby-gen/serviceable</independentVar>
 					<tableData breakPoint="0">
@@ -123,8 +133,8 @@
 					<tableData breakPoint="1">
 						   0  1    2
 						0  0  0    0
-						2  0  0    0
-						8  0  0  115
+					   44  0  0   35
+					   58  0  0  115
 					</tableData>
 				</table>
 			</function>
@@ -132,7 +142,11 @@
 		
 		<pure_gain name="elec/sources/stby-gen-volt-dc">
 			<input>elec/sources/stby-gen-volt</input>
-			<gain>0.24347826086956523</gain> <!-- AC to DC converter -->
+			<gain>0.7</gain> <!-- AC to DC converter -->
+			<clipto>
+				<min>0</min>
+				<max>28</max>
+			</clipto>
 		</pure_gain>
 		
 		<switch name="elec/sources/external-pwr-plugged-in">
@@ -150,6 +164,10 @@
 		</pure_gain>
 	
 	</channel>
+	
+	
+	
+	
 	
 	
 	<channel name="EPU" execrate="8">
@@ -267,6 +285,11 @@
 	
 	</channel>
 	
+	
+	
+	
+	
+	
 	<channel name="Contactors" execrate="8">
 		
 		<switch name="elec/contactors/battery">
@@ -310,6 +333,12 @@
 		</pure_gain>
 	
 	</channel>
+	
+	
+	
+	
+	
+	
 	
 	<channel name="Buses" execrate="8">
 		
@@ -391,7 +420,11 @@
 		<!-- DC -->
 		<pure_gain name="elec/bus/emergency-dc-1">
 			<input>elec/bus/emergency-ac-1</input>
-			<gain>0.24347826086956523</gain> <!-- AC to DC converter -->
+			<gain>0.7</gain> <!-- AC to DC converter -->
+			<clipto>
+				<min>0</min>
+				<max>28</max>
+			</clipto>
 		</pure_gain>
 		
 		<switch name="elec/bus/switch/emergency-dc-1-epu-stby">
@@ -409,7 +442,11 @@
 		
 		<pure_gain name="elec/bus/emergency-dc-2">
 			<input>elec/bus/emergency-ac-2</input>
-			<gain>0.24347826086956523</gain> <!-- AC to DC converter -->
+			<gain>0.7</gain> <!-- AC to DC converter -->
+			<clipto>
+				<min>0</min>
+				<max>28</max>
+			</clipto>
 		</pure_gain>
 		
 		<switch name="elec/bus/switch/emergency-dc-2-epu">
@@ -464,6 +501,338 @@
 			<gain>1.0</gain>
 		</pure_gain>
 		
+		<switch name="elec/bus/switch/flcs-relay">
+			<description>
+				
+				
+	  			0 = OPEN
+	  			0.5 = ready to close
+	  			1.0 = closed (unlit)
+	  			1.5 = ready to latch
+	  			2.0 = latched (unlit)
+	  			3.0 = latched due to JFS start (unlit)
+	  		</description>
+			<default value="elec/bus/switch/flcs-relay"/>
+			<test logic="AND" value="0">
+				elec/switches/main-pwr == 0
+			</test>
+			<test logic="AND" value="0">
+				elec/switches/main-pwr == 1
+				elec/bus/switch/flcs-relay == 2
+			</test>
+			<test logic="AND" value="3">
+				/f16/engine/jfs-rpm-normalized gt 0
+			</test>
+			<test logic="AND" value="3">
+				/engines/engine[0]/running == 1
+				elec/switches/main-pwr gt 0
+			</test>
+			<test logic="AND" value="0.5">
+				elec/switches/flcs-pwr-test == 1
+				elec/switches/main-pwr == 1
+				elec/bus/switch/flcs-relay == 0
+			</test>
+			<test logic="AND" value="1.5">
+				elec/switches/flcs-pwr-test == 1
+				elec/switches/main-pwr == 2
+				elec/bus/switch/flcs-relay ne 3
+			</test>
+			<test logic="AND" value="1">
+				elec/bus/switch/flcs-relay == 0.5
+				elec/switches/flcs-pwr-test == 0
+				elec/bus/switch/flcs-relay ne 3
+			</test>
+			<test logic="AND" value="2">
+				elec/bus/switch/flcs-relay == 1.5
+				elec/switches/flcs-pwr-test == 0
+				elec/bus/switch/flcs-relay ne 3
+			</test>
+			
+		</switch>
+		
+		<switch name="elec/bus/switch/flcs-relay-volt">
+			<description>
+	  		</description>
+			<default value="0"/>
+			<test logic="OR" value="elec/sources/battery-volt">
+				elec/bus/switch/flcs-relay gt 1.5
+			</test>
+		</switch>
+		
+		<switch name="elec/bus/light/flcs-relay-light">
+			<description>
+			FLCS RLY light
+	  	  		Batt gives less than 20V to one or more FLCS systems. (might be because relays are not closed and latched)
+	  			lit when switch in BATT, to show the relays prevent BATT from powering FLCC until a JFS start has been initiated.
+	  				holding FLCS PWR TEST in TEST will unlit. and relays will close but not latch
+	  			If holding FLCS PWR TEST in TEST when in MAIN PWR the relays will latch, and when FLCS PWR TEST returned to NORM the light wil unlit. BATT will now pwr the FLCC.
+	  				To undo that, cycle the MAIN PWR switch to BATT and back to MAIN PWR.
+	  			unlit when JFS start (either type)
+	  		</description>
+			<default value="1"/>
+			<test logic="AND" value="1">
+				elec/sources/battery-volt lt 20
+				elec/bus/switch/flcs-relay == 1
+			</test>
+			<test logic="AND" value="1">
+				elec/sources/battery-volt lt 20
+				elec/bus/switch/flcs-relay == 2
+			</test>
+			<test logic="AND" value="1">
+				elec/sources/battery-volt lt 20
+				elec/bus/switch/flcs-relay == 3
+			</test>
+			<test logic="OR" value="0">
+				elec/bus/switch/flcs-relay == 1
+				elec/bus/switch/flcs-relay == 2
+				elec/bus/switch/flcs-relay == 3
+			</test>
+		</switch>
+		
+		<switch name="elec/bus/light/flcs-fail">
+			<description>
+			FLCS FAIL
+			  	FLY: 20V or less on batt
+			  	WOW0: batt or charger fail
+	  		</description>
+			<default value="0"/>
+			<test logic="AND" value="1">
+				gear/unit[0]/WOW == 1
+				elec/failures/battery/serviceable == 0
+			</test>
+			<test logic="AND" value="1">
+				gear/unit[0]/WOW == 0
+				elec/sources/battery-volt lt 20
+			</test>
+		</switch>
+		
+		<switch name="elec/bus/light/flcs-pwr">
+			<description>
+			FLCS PWR (test panel)
+		  		lit when switch in BATT after holding FLCS PWR TEST in TEST to show FBW is getting good power
+		  		lit when holding FLCS PWR TEST in TEST to show FBW is getting good power when in MAIN PWR
+		  		lit when doing EPU test (TODO)
+	  		</description>
+			<default value="0"/>
+			<test logic="AND" value="1">
+				elec/switches/flcs-pwr-test == 1
+				elec/switches/main-pwr gt 0
+				elec/bus/flcc/a gt 22
+				elec/bus/flcc/b gt 22
+				elec/bus/flcc/c gt 22
+				elec/bus/flcc/d gt 22
+			</test>
+		</switch>
+		
+		<switch name="elec/bus/light/acft-batt-to-flcs">
+			<description>
+			ACFT BATT TO FLCS
+		  	  WOW: batt powering at least 1 FLCS branch
+		  	  FLY: batt powering at least 1 FLCS branch and 25V or less
+		  		unlit when switch in BATT, since FLCC is not powered by BATT due to relays.
+		  			holding FLCS PWR TEST in TEST will lit.
+		  		lit when JFS start (either type) if starting on battery. Until 44% rpm.
+		  		lit during shutdown when engine spools down.
+	  		</description>
+			<default value="0"/>
+			<test logic="OR" value="1">
+				elec/bus/switch/flcs-relay == 1
+				elec/bus/switch/flcs-relay == 2
+			</test>
+			<test logic="AND" value="1">
+				gear/unit[0]/WOW == 1
+				elec/bus/switch/flcs-relay == 3
+				elec/bus/switch/ab-regulator == 4
+			</test>
+			<test logic="AND" value="1">
+				gear/unit[0]/WOW == 0
+				elec/bus/switch/flcs-relay == 3
+				elec/bus/switch/ab-regulator == 4
+				elec/bus/flcc/ab-regulator lt 25
+			</test>
+			<test logic="AND" value="1">
+				gear/unit[0]/WOW == 1
+				elec/bus/switch/flcs-relay == 3
+				elec/bus/switch/cd-regulator == 4
+			</test>
+			<test logic="AND" value="1">
+				gear/unit[0]/WOW == 0
+				elec/bus/switch/flcs-relay == 3
+				elec/bus/switch/cd-regulator == 4
+				elec/bus/flcc/cd-regulator lt 25
+			</test>
+		</switch>
+		
+		<switch name="elec/bus/light/stby-gen">
+			<description>
+			STBY GEN
+		  	  Lit when stby power not available
+		  		lit when switch in BATT
+		  			goes unlit at 60% rpm
+		  				lit during shutdown when engine spools down.
+	  		</description>
+			<default value="0"/>
+			<test logic="AND" value="1">
+				elec/sources/stby-gen-volt lt 115
+			</test>
+		</switch>
+		
+		<switch name="elec/bus/light/main-gen">
+			<description>
+			MAIN GEN
+		  	  Lit when main gen not powering one of the noness AC	
+		  		lit when switch in BATT
+		  			goes unlit at 10 seconds after 60% rpm (TODO)
+		  		unlit when supplied by external and switch moved to MAIN PWR
+		  		lit during shutdown when engine spools down.
+	  		</description>
+			<default value="0"/>
+			<test logic="OR" value="1">
+				elec/bus/noness-ac-1 lt 115
+				elec/bus/noness-ac-2 lt 115
+			</test>
+		</switch>
+		
+		<switch name="elec/bus/switch/flcs-pmg">
+			<description>
+	  		</description>
+			<default value="elec/bus/switch/flcs-pmg"/>
+			<test logic="AND" value="0">
+				elec/switches/main-pwr == 0
+			</test>
+			<test logic="AND" value="2">
+				/f16/engine/jfs-rpm-normalized gt 0
+			</test>
+			<test logic="AND" value="2">
+				/engines/engine[0]/running == 1
+			</test>
+			<test logic="AND" value="0.5">
+				elec/switches/flcs-pwr-test == 1
+				elec/switches/main-pwr == 1
+				elec/bus/switch/flcs-pmg == 0
+			</test>
+			<test logic="AND" value="1">
+				elec/bus/switch/flcs-pmg == 0.5
+				elec/switches/flcs-pwr-test == 0
+				elec/bus/switch/flcs-pmg ne 2
+			</test>
+		</switch>
+		
+		<switch name="elec/bus/light/flcs-pmg">
+			<description>
+			FLCS PMG
+			  	  WOW0: lit when PMG does not power ALL FLCS branches
+			  	  FLY: lit when PMG powers none of the FLCS branches
+			  		unlit when switch in BATT
+			  		(unlits before engine reach idle)
+			  			holding FLCS PWR TEST in TEST will lit.
+			  		lit when JFS start (either type). Until 44% rpm.
+			  		lit during shutdown when engine spools down.
+	  		</description>
+			<default value="0"/>
+			<test logic="AND" value="1">
+				gear/unit[0]/WOW == 1
+				elec/bus/switch/ab-regulator ne 1
+				elec/bus/switch/flcs-pmg ge 1
+			</test>
+			<test logic="AND" value="1">
+				gear/unit[0]/WOW == 1
+				elec/bus/switch/cd-regulator ne 1
+				elec/bus/switch/flcs-pmg ge 1
+			</test>
+			<test logic="AND" value="1">
+				gear/unit[0]/WOW == 0
+				elec/bus/switch/ab-regulator ne 1
+				elec/bus/switch/cd-regulator ne 1
+				elec/bus/switch/flcs-pmg ge 1
+			</test>
+		</switch>
+		
+		<switch name="elec/bus/light/elec-sys">
+			<description>
+			ELEC SYS (caution panel)
+		  	  lit when any of the below lights is lit except for those on test panel.
+		  		lit during shutdown when engine spools down.
+	  		</description>
+			<default value="0"/>
+			<test logic="OR" value="1">
+				elec/bus/light/flcs-pmg == 1
+				elec/bus/light/main-gen == 1
+				elec/bus/light/stby-gen == 1
+				elec/bus/light/acft-batt-to-flcs == 1
+				elec/bus/light/flcs-fail == 1
+				elec/bus/light/flcs-relay-light == 1
+			</test>
+			<test logic="AND" value="1">
+				elec/sources/epu-cmd == 1
+				elec/sources/epu-gen-volt lt 100
+			</test>
+			<test logic="AND" value="1">
+				elec/sources/epu-cmd == 1
+				elec/bus/flcc/a lt 28
+			</test>
+			<test logic="AND" value="1">
+				elec/sources/epu-cmd == 1
+				elec/bus/flcc/b lt 28
+			</test>
+			<test logic="AND" value="1">
+				elec/sources/epu-cmd == 1
+				elec/bus/flcc/c lt 28
+			</test>
+			<test logic="AND" value="1">
+				elec/sources/epu-cmd == 1
+				elec/bus/flcc/d lt 28
+			</test>
+		</switch>
+		
+		<switch name="elec/bus/switch/ab-regulator">
+			<default value="0">0</default>
+			<test logic="AND" value="1">
+				elec/sources/stby-gen-volt-dc ge elec/sources/epu-gen-volt-dc
+				elec/sources/stby-gen-volt-dc ge elec/bus/emergency-dc-1
+				elec/sources/stby-gen-volt-dc ge elec/sources/battery-volt
+			</test>
+			<test logic="AND" value="2">
+				elec/sources/epu-gen-volt-dc ge elec/sources/stby-gen-volt-dc
+				elec/sources/epu-gen-volt-dc ge elec/bus/emergency-dc-1
+				elec/sources/epu-gen-volt-dc ge elec/sources/battery-volt
+			</test>
+			<test logic="AND" value="3">
+				elec/bus/emergency-dc-1 ge elec/sources/stby-gen-volt-dc
+				elec/bus/emergency-dc-1 ge elec/sources/epu-gen-volt-dc
+				elec/bus/emergency-dc-1 ge elec/sources/battery-volt
+			</test>
+			<test logic="AND" value="4">
+				elec/bus/switch/flcs-relay-volt ge elec/sources/stby-gen-volt-dc
+				elec/bus/switch/flcs-relay-volt ge elec/sources/epu-gen-volt-dc
+				elec/bus/switch/flcs-relay-volt ge elec/bus/emergency-dc-1
+			</test>
+		</switch>
+		
+		<switch name="elec/bus/switch/cd-regulator">
+			<default value="0">0</default>
+			<test logic="AND" value="1">
+				elec/sources/stby-gen-volt-dc ge elec/sources/epu-gen-volt-dc
+				elec/sources/stby-gen-volt-dc ge elec/bus/emergency-dc-2
+				elec/sources/stby-gen-volt-dc ge elec/sources/battery-volt
+			</test>
+			<test logic="AND" value="2">
+				elec/sources/epu-gen-volt-dc ge elec/sources/stby-gen-volt-dc
+				elec/sources/epu-gen-volt-dc ge elec/bus/emergency-dc-2
+				elec/sources/epu-gen-volt-dc ge elec/sources/battery-volt
+			</test>
+			<test logic="AND" value="3">
+				elec/bus/emergency-dc-2 ge elec/sources/stby-gen-volt-dc
+				elec/bus/emergency-dc-2 ge elec/sources/epu-gen-volt-dc
+				elec/bus/emergency-dc-2 ge elec/sources/battery-volt
+			</test>
+			<test logic="AND" value="4">
+				elec/bus/switch/flcs-relay-volt ge elec/sources/stby-gen-volt-dc
+				elec/bus/switch/flcs-relay-volt ge elec/sources/epu-gen-volt-dc
+				elec/bus/switch/flcs-relay-volt ge elec/bus/emergency-dc-2
+			</test>
+		</switch>
+		
 		<switch name="elec/bus/flcc/ab-regulator">
 			<default value="0">0</default>
 			<test logic="AND" value="elec/sources/stby-gen-volt-dc">
@@ -481,10 +850,10 @@
 				elec/bus/emergency-dc-1 ge elec/sources/epu-gen-volt-dc
 				elec/bus/emergency-dc-1 ge elec/sources/battery-volt
 			</test>
-			<test logic="AND" value="elec/sources/battery-volt">
-				elec/sources/battery-volt ge elec/sources/stby-gen-volt-dc
-				elec/sources/battery-volt ge elec/sources/epu-gen-volt-dc
-				elec/sources/battery-volt ge elec/bus/emergency-dc-1
+			<test logic="AND" value="elec/bus/switch/flcs-relay-volt">
+				elec/bus/switch/flcs-relay-volt ge elec/sources/stby-gen-volt-dc
+				elec/bus/switch/flcs-relay-volt ge elec/sources/epu-gen-volt-dc
+				elec/bus/switch/flcs-relay-volt ge elec/bus/emergency-dc-1
 			</test>
 		</switch>
 		
@@ -505,10 +874,10 @@
 				elec/bus/emergency-dc-2 ge elec/sources/epu-gen-volt-dc
 				elec/bus/emergency-dc-2 ge elec/sources/battery-volt
 			</test>
-			<test logic="AND" value="elec/sources/battery-volt">
-				elec/sources/battery-volt ge elec/sources/stby-gen-volt-dc
-				elec/sources/battery-volt ge elec/sources/epu-gen-volt-dc
-				elec/sources/battery-volt ge elec/bus/emergency-dc-2
+			<test logic="AND" value="elec/bus/switch/flcs-relay-volt">
+				elec/bus/switch/flcs-relay-volt ge elec/sources/stby-gen-volt-dc
+				elec/bus/switch/flcs-relay-volt ge elec/sources/epu-gen-volt-dc
+				elec/bus/switch/flcs-relay-volt ge elec/bus/emergency-dc-2
 			</test>
 		</switch>
 		

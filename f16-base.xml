@@ -1915,6 +1915,7 @@ There is also small changes in tail for different variants with and without brak
                     <epu type="int">0</epu>
                     <epu-cover type="int">1</epu-cover>
                     <main-pwr type="int">0</main-pwr>
+                    <flcs-pwr-test type="bool">false</flcs-pwr-test>
                 </switches>
                 <unused type="int">0</unused>
             </elec>
@@ -3355,6 +3356,7 @@ value. 18000=standard US transition altitude -->
             <jfs-start type="bool">false</jfs-start><!-- inverse cutoff -->
             <running-state type="bool">false</running-state>
             <max-power type="bool">true</max-power>
+            <jfs-rpm-normalized type="double">0</jfs-rpm-normalized>
         </engine>
         <done type="bool">false</done>
         <chute>

@@ -384,86 +384,47 @@
 
  <animation>
   <object-name>light_a</object-name>
-  <type>material</type>
-  <condition>
-    <greater-than>
-      <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
-      <value>20</value>
-    </greater-than>
-    <or>
-      <less-than-equals>
-        <property>fdm/jsbsim/elec/bus/flcc/a</property>
-        <value>22</value>
-      </less-than-equals>
-      <property>controls/test/test-panel/mal-ind-lts</property>
-    </or>
-  </condition>
-  <emission>
-   <red>1</red>
-   <green>1</green>
-   <blue>1</blue>
-  </emission>
- </animation>
-
-  <animation>
   <object-name>light_b</object-name>
-  <type>material</type>
-  <condition>
-    <greater-than>
-      <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
-      <value>20</value>
-    </greater-than>
-    <or>
-      <less-than-equals>
-        <property>fdm/jsbsim/elec/bus/flcc/b</property>
-        <value>22</value>
-      </less-than-equals>
-      <property>controls/test/test-panel/mal-ind-lts</property>
-    </or>
-  </condition>
-  <emission>
-   <red>1</red>
-   <green>1</green>
-   <blue>1</blue>
-  </emission>
- </animation>
-
-  <animation>
   <object-name>light_c</object-name>
-  <type>material</type>
-  <condition>
-    <greater-than>
-      <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
-      <value>20</value>
-    </greater-than>
-    <or>
-      <less-than-equals>
-        <property>fdm/jsbsim/elec/bus/flcc/c</property>
-        <value>22</value>
-      </less-than-equals>
-      <property>controls/test/test-panel/mal-ind-lts</property>
-    </or>
-  </condition>
-  <emission>
-   <red>1</red>
-   <green>1</green>
-   <blue>1</blue>
-  </emission>
- </animation>
- 
- <animation>
   <object-name>light_d</object-name>
   <type>material</type>
   <condition>
-    <greater-than>
-      <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
-      <value>20</value>
-    </greater-than>
     <or>
-      <less-than-equals>
-        <property>fdm/jsbsim/elec/bus/flcc/d</property>
-        <value>22</value>
-      </less-than-equals>
+      <and>
+          <greater-than>
+        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+        <value>20</value>
+      </greater-than>
+        <equals>
+          <property>fdm/jsbsim/elec/bus/light/flcs-fail</property>
+          <value>1</value>
+        </equals>
+    </and>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
+ 
+<animation>
+  <object-name>flcs-pwr</object-name>
+  <type>material</type>
+  <condition>
+    <or>
+      <and>
+          <greater-than>
+        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+        <value>20</value>
+      </greater-than>
+        <equals>
+          <property>fdm/jsbsim/elec/bus/light/flcs-pwr</property>
+          <value>1</value>
+        </equals>
+    </and>
       <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
@@ -475,7 +436,6 @@
  </animation>
  
  <animation>
-  <object-name>flcs-pwr</object-name>
   <object-name>horiz-l</object-name>
   <object-name>horiz-r</object-name>
   <object-name>flaperons-l</object-name>
@@ -607,18 +567,20 @@
  </animation>
 
   <animation>
-  <object-name>light_fail</object-name><!-- battery fails -->
+  <object-name>light_fail</object-name><!-- is FLCS RLY light -->
   <type>material</type>
   <condition>
-    <greater-than>
-      <property>fdm/jsbsim/elec/bus/batt-2</property>
-      <value>20</value>
-    </greater-than>
     <or>
-        <less-than>
-          <property>fdm/jsbsim/elec/sources/battery-volt</property>
-          <value>20</value>
-        </less-than>
+        <and>
+          <greater-than>
+            <property>fdm/jsbsim/elec/bus/batt-2</property>
+            <value>20</value>
+          </greater-than>
+          <equals>
+            <property>fdm/jsbsim/elec/bus/light/flcs-relay-light</property>
+            <value>1</value>
+          </equals>
+        </and>
         <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
@@ -633,16 +595,18 @@
   <object-name>light_main</object-name><!-- MAIN gen is not supplying -->
   <type>material</type>
   <condition>
-    <greater-than>
-      <property>fdm/jsbsim/elec/bus/batt-2</property>
-      <value>20</value>
-    </greater-than>
     <or>
-        <less-than>
-          <property>fdm/jsbsim/elec/sources/main-gen-volt</property>
-          <value>100</value>
-        </less-than>
-        <property>controls/test/test-panel/mal-ind-lts</property>
+          <and>
+            <greater-than>
+              <property>fdm/jsbsim/elec/bus/batt-2</property>
+              <value>20</value>
+            </greater-than>
+            <equals>
+              <property>fdm/jsbsim/elec/bus/light/main-gen</property>
+              <value>1</value>
+            </equals>
+          </and>
+      <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
   <emission>
@@ -653,34 +617,20 @@
  </animation>
 
   <animation>
-  <object-name>light_pmg</object-name><!-- FBW does not get power -->
+  <object-name>light_pmg</object-name><!-- FBW does not get power from main gen PMG -->
   <type>material</type>
   <condition>
-    <greater-than>
-      <property>fdm/jsbsim/elec/bus/batt-2</property>
-      <value>20</value>
-    </greater-than>
     <or>
-        <not>
           <and>
             <greater-than>
-              <property>fdm/jsbsim/elec/bus/flcc/a</property>
+              <property>fdm/jsbsim/elec/bus/batt-2</property>
               <value>20</value>
             </greater-than>
-            <greater-than>
-              <property>fdm/jsbsim/elec/bus/flcc/b</property>
-              <value>20</value>
-            </greater-than>
-            <greater-than>
-              <property>fdm/jsbsim/elec/bus/flcc/c</property>
-              <value>20</value>
-            </greater-than>
-            <greater-than>
-              <property>fdm/jsbsim/elec/bus/flcc/d</property>
-              <value>20</value>
-            </greater-than>
+            <equals>
+              <property>fdm/jsbsim/elec/bus/light/flcs-pmg</property>
+              <value>1</value>
+            </equals>
           </and>
-        </not>
       <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
@@ -695,14 +645,17 @@
   <object-name>light_stby</object-name><!-- stby gen not available-->
   <type>material</type>
   <condition>
-    <greater-than>
-      <property>fdm/jsbsim/elec/bus/batt-2</property>
-      <value>20</value>
-    </greater-than>
     <or>
-        <not>
-          <property>fdm/jsbsim/elec/failures/stby-gen/serviceable</property>
-        </not>
+          <and>
+            <greater-than>
+              <property>fdm/jsbsim/elec/bus/batt-2</property>
+              <value>20</value>
+            </greater-than>
+            <equals>
+              <property>fdm/jsbsim/elec/bus/light/stby-gen</property>
+              <value>1</value>
+            </equals>
+          </and>
       <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
@@ -717,31 +670,18 @@
   <object-name>light_to</object-name><!-- battery goes to fbw and voltage there is less than 25 -->
   <type>material</type>
   <condition>
-    <greater-than>
-      <property>fdm/jsbsim/elec/bus/batt-2</property>
-      <value>20</value>
-    </greater-than>
+    
     <or>
-        <not>
           <and>
             <greater-than>
-              <property>fdm/jsbsim/elec/bus/flcc/a</property>
-              <value>25</value>
+              <property>fdm/jsbsim/elec/bus/batt-2</property>
+              <value>20</value>
             </greater-than>
-            <greater-than>
-              <property>fdm/jsbsim/elec/bus/flcc/b</property>
-              <value>25</value>
-            </greater-than>
-            <greater-than>
-              <property>fdm/jsbsim/elec/bus/flcc/c</property>
-              <value>25</value>
-            </greater-than>
-            <greater-than>
-              <property>fdm/jsbsim/elec/bus/flcc/d</property>
-              <value>25</value>
-            </greater-than>
+            <equals>
+              <property>fdm/jsbsim/elec/bus/light/acft-batt-to-flcs</property>
+              <value>1</value>
+            </equals>
           </and>
-        </not>
       <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
   </condition>
@@ -885,6 +825,29 @@
       </binding>
     </action>
    </animation> 
+   
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>SW_FLCS_TEST</object-name>
+    <action>
+      <button>0</button>
+      <repeatable>false</repeatable>
+      <binding>
+        <command>property-assign</command>
+        <property>fdm/jsbsim/elec/switches/flcs-pwr-test</property>
+        <value>1</value>
+      </binding>
+      <mod-up>
+        <binding>
+          <command>property-assign</command>
+          <property>fdm/jsbsim/elec/switches/flcs-pwr-test</property>
+          <value>0</value>
+        </binding>
+      </mod-up>
+    </action>
+   </animation> 
+   
          
    <animation>
         <type>knob</type>
@@ -1067,6 +1030,24 @@
       <z>0</z>
     </axis>
   </animation>
+  
+  <animation>
+  <type>rotate</type>
+  <object-name>SW_FLCS_TEST</object-name>
+  <property>fdm/jsbsim/elec/switches/flcs-pwr-test</property>
+  <factor>20</factor>
+  <offset-deg>0</offset-deg>
+  <center>
+   <x-m>0.75385</x-m>
+   <y-m>-0.46326</y-m>
+   <z-m>0.00768</z-m>
+  </center>
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
   
   <animation>
     <type>rotate</type>

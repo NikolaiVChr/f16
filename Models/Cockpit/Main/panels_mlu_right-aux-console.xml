@@ -749,14 +749,10 @@
   <condition>
    <not>
     <or>
-      <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-      <or>
-    <not><property>fdm/jsbsim/elec/failures/battery/serviceable</property></not>
-    <not><property>fdm/jsbsim/elec/failures/epu/serviceable</property></not>
-    <not><property>fdm/jsbsim/elec/failures/main-gen/serviceable</property></not>
-    <not><property>fdm/jsbsim/elec/failures/stby-gen/serviceable</property></not>
-  </or>
-  </and>
+    <and>
+      <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
+      <equals><property>fdm/jsbsim/elec/bus/light/elec-sys</property><value>1</value></equals>
+    </and>
     <property>controls/test/test-panel/mal-ind-lts</property>
   </or>
   </not>
@@ -1095,14 +1091,13 @@
   <type>select</type>
   <object-name>ELEC_SYS_lit</object-name>
   <condition>
-    <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
     <or>
-    <not><property>fdm/jsbsim/elec/failures/battery/serviceable</property></not>
-    <not><property>fdm/jsbsim/elec/failures/epu/serviceable</property></not>
-    <not><property>fdm/jsbsim/elec/failures/main-gen/serviceable</property></not>
-    <not><property>fdm/jsbsim/elec/failures/stby-gen/serviceable</property></not>
+    <and>
+      <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
+      <equals><property>fdm/jsbsim/elec/bus/light/elec-sys</property><value>1</value></equals>
+    </and>
     <property>controls/test/test-panel/mal-ind-lts</property>
-  </or></and>
+  </or>
   </condition>
  </animation> 
 
