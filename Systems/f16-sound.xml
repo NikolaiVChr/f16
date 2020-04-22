@@ -3203,6 +3203,13 @@
 	      		<value>1</value>
 			</equals>
 	      </condition>
+	      <position>
+		      <x>-4.5</x>
+			  <y>-8.00</y>
+			  <z>-1.955</z>
+		  </position>
+		  <reference-dist>3</reference-dist>
+			<max-dist>50</max-dist>
 	      <volume>
 	        <factor>0.6</factor>
       	  </volume>
@@ -3216,11 +3223,20 @@
 	      		<property>fdm/jsbsim/elec/sources/external-pwr</property>
 	      		<value>1</value>
 			</equals>
+			<property>/sim/current-view/internal</property>
 	      </condition>
+	      <position>
+		      <x>-4.5</x>
+			  <y>-8.00</y>
+			  <z>-1.955</z>
+		  </position>
+		  <reference-dist>3</reference-dist>
+			<max-dist>50</max-dist>
 	      <volume>
-	      	<property>/sim/current-view/internal</property>
-	        <factor>0.15</factor>
-      	  </volume>
+			    <property>fdm/jsbsim/fcs/canopy-pos-norm</property>		
+			    <offset>0.15</offset>
+			    <factor>0.45</factor>
+		  </volume>
     	</gpu>
 		<pushback>
      		<name>Pushback_outside</name>
