@@ -1194,6 +1194,20 @@
 			</volume>
 		</stall>
 
+		<impact>
+			<name>betty</name>
+			<path>Aircraft/f16/Sounds/betty/combined.wav</path>
+			<mode>looped</mode>
+			<type>avionics</type>
+			<condition>
+				<property>controls/test/test-panel/mal-ind-lts</property>
+			</condition>
+			<volume>
+				<property>sim/current-view/internal</property>
+				<factor>1</factor>
+			</volume>
+		</impact>
+
 		<!-- CRASH -->
 		<impact>
 			<name>pullUp</name>
