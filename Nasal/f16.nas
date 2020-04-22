@@ -359,7 +359,10 @@ var slow = {
     #  valid = iff.interrogate(awg_9.active_u.propNode);
     #}
     #setprop("instrumentation/iff/response", valid);
-    #settimer(func {me.loop()},5);
+    if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20 and getprop("fdm/jsbsim/elec/bus/emergency-dc-2")<20) {
+      setprop("sound/rwr-new", -1);#prevent sound from going off whenever it gets elec
+    }
+    settimer(func {me.loop()},5);
   },
 };
 
