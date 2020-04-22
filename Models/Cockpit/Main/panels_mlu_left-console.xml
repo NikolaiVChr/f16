@@ -392,7 +392,7 @@
     <or>
       <and>
           <greater-than>
-        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+        <property>fdm/jsbsim/elec/bus/batt-2</property><!-- todo: verify. changed so that checklist can complete -->
         <value>20</value>
       </greater-than>
         <equals>
@@ -417,7 +417,7 @@
     <or>
       <and>
           <greater-than>
-        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+        <property>fdm/jsbsim/elec/bus/batt-2</property><!-- todo: verify. changed so that checklist can complete -->
         <value>20</value>
       </greater-than>
         <equals>
@@ -496,12 +496,13 @@
   <object-name>light_epu_gen</object-name><!-- EPU commanded on, but does not supply power -->
   <type>material</type>
     <condition>
-    <greater-than>
-      <property>fdm/jsbsim/elec/bus/batt-2</property>
-      <value>20</value>
-    </greater-than>
+    
     <or>
       <and>
+        <greater-than>
+          <property>fdm/jsbsim/elec/bus/batt-2</property>
+          <value>20</value>
+        </greater-than>
         <equals>
           <property>fdm/jsbsim/elec/sources/epu-cmd</property>
           <value>1</value>
@@ -525,12 +526,13 @@
   <object-name>light_epu_pmg</object-name><!-- EPU commanded on, but FBW does not get 28 V -->
   <type>material</type>
   <condition>
-    <greater-than>
-      <property>fdm/jsbsim/elec/bus/batt-2</property>
-      <value>20</value>
-    </greater-than>
+    
     <or>
       <and>
+        <greater-than>
+          <property>fdm/jsbsim/elec/bus/batt-2</property>
+          <value>20</value>
+        </greater-than>
         <greater-than>
           <property>fdm/jsbsim/elec/sources/epu-cmd</property>
           <value>0</value>

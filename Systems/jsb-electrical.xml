@@ -506,8 +506,7 @@
 				
 				
 	  			0 = OPEN
-	  			0.5 = ready to close
-	  			1.0 = closed (unlit)
+	  			0.5 = closed (unlit)
 	  			1.5 = ready to latch
 	  			2.0 = latched (unlit)
 	  			3.0 = latched due to JFS start (unlit)
@@ -537,7 +536,7 @@
 				elec/switches/main-pwr == 2
 				elec/bus/switch/flcs-relay ne 3
 			</test>
-			<test logic="AND" value="1">
+			<test logic="AND" value="0">
 				elec/bus/switch/flcs-relay == 0.5
 				elec/switches/flcs-pwr-test == 0
 				elec/bus/switch/flcs-relay ne 3
@@ -555,7 +554,7 @@
 	  		</description>
 			<default value="0"/>
 			<test logic="OR" value="elec/sources/battery-volt">
-				elec/bus/switch/flcs-relay gt 1.5
+				elec/bus/switch/flcs-relay gt 0.0
 			</test>
 		</switch>
 		
@@ -572,7 +571,7 @@
 			<default value="1"/>
 			<test logic="AND" value="1">
 				elec/sources/battery-volt lt 20
-				elec/bus/switch/flcs-relay == 1
+				elec/bus/switch/flcs-relay == 0.5
 			</test>
 			<test logic="AND" value="1">
 				elec/sources/battery-volt lt 20
@@ -583,9 +582,7 @@
 				elec/bus/switch/flcs-relay == 3
 			</test>
 			<test logic="OR" value="0">
-				elec/bus/switch/flcs-relay == 1
-				elec/bus/switch/flcs-relay == 2
-				elec/bus/switch/flcs-relay == 3
+				elec/bus/switch/flcs-relay gt 0
 			</test>
 		</switch>
 		
@@ -635,9 +632,9 @@
 		  		lit during shutdown when engine spools down.
 	  		</description>
 			<default value="0"/>
-			<test logic="OR" value="1">
-				elec/bus/switch/flcs-relay == 1
-				elec/bus/switch/flcs-relay == 2
+			<test logic="AND" value="1">
+				elec/bus/switch/flcs-relay gt 0
+				elec/bus/switch/ab-regulator == 4
 			</test>
 			<test logic="AND" value="1">
 				gear/unit[0]/WOW == 1

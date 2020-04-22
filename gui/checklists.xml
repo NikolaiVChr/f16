@@ -150,6 +150,116 @@
                 </binding>
             </item>
             <item>
+                <name>FLCS RLY</name>
+                <value>LIT</value>
+                <condition>
+                    <and>
+                      <greater-than>
+                        <property>fdm/jsbsim/elec/bus/batt-2</property>
+                        <value>20</value>
+                      </greater-than>
+                      <equals>
+                        <property>fdm/jsbsim/elec/bus/light/flcs-relay-light</property>
+                        <value>1</value>
+                      </equals>
+                    </and>
+                </condition>
+            </item>
+            <item>
+                <name>FLCS PWR TEST switch</name>
+                <value>HOLD</value>
+                <condition>
+                    <equals>
+                        <property>fdm/jsbsim/elec/switches/flcs-pwr-test</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>fdm/jsbsim/elec/switches/flcs-pwr-test</property>
+                    <value>1</value>
+                  </binding>
+            </item>
+            <item>
+                <name>FLCS PWR</name>
+                <value>ALL LIT</value>
+                <condition>
+                    <and>
+                          <greater-than>
+                        <property>fdm/jsbsim/elec/bus/batt-2</property>
+                        <value>20</value>
+                      </greater-than>
+                        <equals>
+                          <property>fdm/jsbsim/elec/bus/light/flcs-pwr</property>
+                          <value>1</value>
+                        </equals>
+                    </and>
+                </condition>
+            </item>
+            <item>
+                <name>FLCS RLY</name>
+                <value>UNLIT</value>
+                <condition>
+                    <and>
+                      <greater-than>
+                        <property>fdm/jsbsim/elec/bus/batt-2</property>
+                        <value>20</value>
+                      </greater-than>
+                      <equals>
+                        <property>fdm/jsbsim/elec/bus/light/flcs-relay-light</property>
+                        <value>0</value>
+                      </equals>
+                    </and>
+                </condition>
+            </item>
+            <item>
+                <name>ACFT BATT TO FLCS</name>
+                <value>LIT</value>
+                <condition>
+                    <and>
+                        <greater-than>
+                          <property>fdm/jsbsim/elec/bus/batt-2</property>
+                          <value>20</value>
+                        </greater-than>
+                        <equals>
+                          <property>fdm/jsbsim/elec/bus/light/acft-batt-to-flcs</property>
+                          <value>1</value>
+                        </equals>
+                      </and>
+                </condition>
+            </item>
+            <item>
+                <name>FLCS PWR TEST switch</name>
+                <value>RELEASE</value>
+                <condition>
+                    <equals>
+                        <property>fdm/jsbsim/elec/switches/flcs-pwr-test</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>fdm/jsbsim/elec/switches/flcs-pwr-test</property>
+                    <value>0</value>
+                  </binding>
+            </item>
+            <item>
+                <name>FLCS PMG</name>
+                <value>LIT</value>
+                <condition>
+                    <and>
+                    <greater-than>
+                      <property>fdm/jsbsim/elec/bus/batt-2</property>
+                      <value>20</value>
+                    </greater-than>
+                    <equals>
+                      <property>fdm/jsbsim/elec/bus/light/flcs-pmg</property>
+                      <value>1</value>
+                    </equals>
+                  </and>
+                </condition>
+            </item>
+            <item>
                 <name>MAIN PWR switch</name>
                 <value>MAIN PWR</value>
                 <condition>
@@ -165,13 +275,120 @@
                 </binding>
             </item>
             <item>
+                <name>ELEC SYS</name>
+                <value>LIT</value>
+                <condition>
+                    <and>
+                      <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
+                      <equals><property>fdm/jsbsim/elec/bus/light/elec-sys</property><value>1</value></equals>
+                    </and>
+                </condition>
+            </item>
+            <item>
+                <name>HYD/OIL PRESS</name>
+                <value>LIT</value>
+                <condition>
+                    <and>
+                        <greater-than><property>fdm/jsbsim/elec/bus/batt-1</property><value>20</value></greater-than>
+                        <or>
+                            
+                            <less-than>
+                              <property>fdm/jsbsim/systems/hydraulics/sysa-psi</property>
+                              <value>2000</value>
+                            </less-than>
+                            <less-than>
+                              <property>fdm/jsbsim/systems/hydraulics/sysb-psi</property>
+                              <value>2000</value>
+                            </less-than>
+                        </or>
+                    </and>
+                </condition>
+            </item>
+            <item>
+                <name>FLCS RLY</name>
+                <value>LIT</value>
+                <condition>
+                    <and>
+                      <greater-than>
+                        <property>fdm/jsbsim/elec/bus/batt-2</property>
+                        <value>20</value>
+                      </greater-than>
+                      <equals>
+                        <property>fdm/jsbsim/elec/bus/light/flcs-relay-light</property>
+                        <value>1</value>
+                      </equals>
+                    </and>
+                </condition>
+            </item>
+            <item>
+                <name>ENGINE</name>
+                <value>LIT</value>
+                <condition>
+                    <and>
+                        <greater-than>
+                            <property>fdm/jsbsim/elec/bus/batt-1</property>
+                            <value>20</value>
+                        </greater-than>
+                        <not>
+                            <property>engines/engine[0]/running</property>
+                        </not>
+                    </and>
+                </condition>
+            </item>
+            <item>
                 <name>EPU GEN and EPU PMG lights</name>
                 <value>Confirm off</value>
                 <condition>
-                    <less-than>
-                        <property>fdm/jsbsim/elec/sources/epu-gen-volt</property>
-                        <value>100</value>
-                    </less-than>
+                    <and>
+                    <not>
+                      <and>
+                        <greater-than>
+                          <property>fdm/jsbsim/elec/bus/batt-2</property>
+                          <value>20</value>
+                        </greater-than>
+                        <equals>
+                          <property>fdm/jsbsim/elec/sources/epu-cmd</property>
+                          <value>1</value>
+                        </equals>
+                        <less-than>
+                          <property>fdm/jsbsim/elec/sources/epu-gen-volt</property>
+                          <value>100</value>
+                        </less-than>
+                      </and>
+                    </not>
+                    <not>
+                        <and>
+                            <greater-than>
+                              <property>fdm/jsbsim/elec/bus/batt-2</property>
+                              <value>20</value>
+                            </greater-than>
+                            <greater-than>
+                              <property>fdm/jsbsim/elec/sources/epu-cmd</property>
+                              <value>0</value>
+                            </greater-than>
+                            <not>
+                              <and>
+                                <greater-than>
+                                  <property>fdm/jsbsim/elec/bus/flcc/a</property>
+                                  <value>26</value>
+                                </greater-than>
+                                <greater-than>
+                                  <property>fdm/jsbsim/elec/bus/flcc/b</property>
+                                  <value>26</value>
+                                </greater-than>
+                                <greater-than>
+                                  <property>fdm/jsbsim/elec/bus/flcc/c</property>
+                                  <value>26</value>
+                                </greater-than>
+                                <greater-than>
+                                  <property>fdm/jsbsim/elec/bus/flcc/d</property>
+                                  <value>26</value>
+                                </greater-than>
+                              </and>
+                            </not>
+                          </and>
+                        </not>
+                    </and>
                 </condition>
             </item>
             <item>
@@ -337,7 +554,23 @@
                         <value>3250</value>
                     </less-than>
                 </condition>
-            </item>            
+            </item>
+            <item>
+                <name>FLCS RLY</name>
+                <value>UNLIT</value>
+                <condition>
+                    <and>
+                      <greater-than>
+                        <property>fdm/jsbsim/elec/bus/batt-2</property>
+                        <value>20</value>
+                      </greater-than>
+                      <equals>
+                        <property>fdm/jsbsim/elec/bus/light/flcs-relay-light</property>
+                        <value>0</value>
+                      </equals>
+                    </and>
+                </condition>
+            </item>
         </checklist>
 
         <checklist>
