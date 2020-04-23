@@ -130,6 +130,21 @@
                     <value>0</value>
                 </binding>
             </item>
+            <item>
+                <name>LE FLAPS switch</name>
+                <value>AUTO</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/le-flaps-switch</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/le-flaps-switch</property>
+                    <value>1</value>
+                </binding>
+            </item>
         </checklist>
         
         <checklist>

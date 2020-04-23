@@ -2369,6 +2369,9 @@
 
         <switch name="fcs/fly-by-wire/lef/pos-hyd">
           <default value="0"/>
+          <test  logic="OR" value="fcs/fly-by-wire/lef/lef-pos-deg">
+            /f16/avionics/le-flaps-switch == 0
+          </test>
           <test  logic="OR" value="fcs/fly-by-wire/lef/servo">
             systems/hydraulics/sysa-psi ge 2000
             systems/hydraulics/sysb-psi ge 2000
