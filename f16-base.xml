@@ -3352,6 +3352,8 @@ value. 18000=standard US transition altitude -->
             <le-flaps-switch type="bool">true</le-flaps-switch>
         </avionics>
         <fcs>
+            <stby-mode type="bool">false</stby-mode>
+            <adv-mode type="bool">false</adv-mode>
             <autopilot-on type="int">0</autopilot-on> <!-- Ignored on Block 20+ -->
             <switch-pitch-block15 type="int">0</switch-pitch-block15>
             <switch-pitch-block20 type="int">0</switch-pitch-block20>
