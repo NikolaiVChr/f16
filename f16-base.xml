@@ -82,19 +82,18 @@
         </sound>
         <virtual-cockpit archive="y">true</virtual-cockpit>
         <panel>
-            <!--<path>Aircraft/f16/Panels/f16-2d-panel.xml</path> had to test this out, was curious..old-style -->
             <visibility archive="y">false</visibility>
         </panel>
         <panel_2>
             <visibility>false</visibility>
         </panel_2>
-          <previews>
-        <preview>
-            <type>interior</type>
-            <splash type="bool">false</splash>
-            <path>gui/splash/cockpit.png</path>
-        </preview>
-      </previews>
+        <previews>
+            <preview>
+                <type>interior</type>
+                <splash type="bool">false</splash>
+                <path>gui/splash/cockpit.png</path>
+            </preview>
+        </previews>
         <hud>
             <visibility n="1">false</visibility>
             
@@ -1161,6 +1160,14 @@ There is also small changes in tail for different variants with and without brak
                 <binding>
                     <command>nasal</command>
                     <script>f16.resetView();</script>
+                </binding>
+            </key>
+            <key n="80">
+                <name>P</name>
+                <desc>NOP panel here</desc>
+                <binding>
+                    <command>nasal</command>
+                    <script>#Prevents 2D panel from activating</script>
                 </binding>
             </key>
             <key n="17">
