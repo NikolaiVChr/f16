@@ -838,7 +838,15 @@
   <type>select</type>
   <object-name>LE_FLAPS_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not>
+    <or>
+    <and>
+      <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
+      <equals><property>f16/avionics/le-flaps-switch</property><value>0</value></equals>
+    </and>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+  </or>
+   </not>
   </condition>
  </animation> 
 
@@ -1182,7 +1190,13 @@
   <type>select</type>
   <object-name>LE_FLAPS_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+    <or>
+    <and>
+      <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
+      <equals><property>f16/avionics/le-flaps-switch</property><value>0</value></equals>
+    </and>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+  </or>
   </condition>
  </animation> 
 
