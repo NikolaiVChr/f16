@@ -1434,48 +1434,43 @@
 			<name>breathing</name>
 			<path>Aircraft/f16/Sounds/breathing.wav</path>
 			<type>avionics</type>
+			<mode>looped</mode>
 			<condition>
 				<greater-than>
-					<property>/accelerations/pilot/z-accel-fps_sec</property>
-					<value>-88</value>
+					<property>accelerations/pilot-g</property>
+					<value>5</value>
 				</greater-than>
 			</condition>
-			<reference-dist>2</reference-dist>
-			<max-dist>4</max-dist>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>4.5</factor>
+				<factor>1</factor>
 			</volume>
 		</voice>
 		<voice>
-			<name>Geforce-breath-vox</name>
+			<name>geforce-breath-relaxed</name>
 			<path>Aircraft/f16/Sounds/Geforce.wav</path>
 			<type>avionics</type>
 			<condition>
-				<greater-than>
-					<property>/accelerations/pilot/z-accel-fps_sec</property>
-					<value>-161</value>
-				</greater-than>
+				<less-than>
+					<property>accelerations/pilot-g</property>
+					<value>5</value>
+				</less-than>
 			</condition>
-			<reference-dist>2</reference-dist>
-			<max-dist>4</max-dist>
 			<volume>
 				<property>sim/current-view/internal</property>
-				<factor>0.9</factor>
+				<factor>0.6</factor>
 			</volume>
 		</voice>
 		<voice>
-			<name>Geforce-vox</name>
+			<name>geforce-breath-tight</name>
 			<path>Aircraft/f16/Sounds/geforce1.wav</path>
 			<type>avionics</type>
 			<condition>
-				<less-than>
-					<property>/accelerations/pilot/z-accel-fps_sec</property>
-					<value>-225</value>
-				</less-than>
+				<greater-than>
+					<property>accelerations/pilot-g</property>
+					<value>7</value>
+				</greater-than>
 			</condition>
-			<reference-dist>2</reference-dist>
-			<max-dist>4</max-dist>
 			<volume>
 				<property>sim/current-view/internal</property>
 				<factor>0.9</factor>
