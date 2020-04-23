@@ -19,19 +19,22 @@
   <object-name>launch</object-name>
   <type>material</type>
   <condition>
+    <or>
 	    <and>
-  		<property>f16/avionics/cockpit_blinker/state</property>
-	    <not>
-	      <equals>
-	          <property>sound/rwr-launch</property>
-	          <value type="string"></value>
-	      </equals>
-	    </not>
-      <greater-than-equals>
-                <property>f16/avionics/power-ufc-warm</property>
-                <value>0.90</value>
-            </greater-than-equals>
-	</and>
+      		<property>f16/avionics/cockpit_blinker/state</property>
+    	    <not>
+    	      <equals>
+    	          <property>sound/rwr-launch</property>
+    	          <value type="string"></value>
+    	      </equals>
+    	    </not>
+          <greater-than-equals>
+                    <property>f16/avionics/power-ufc-warm</property>
+                    <value>0.90</value>
+          </greater-than-equals>
+    	</and>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
 	</condition>
   <emission>
    <red>1</red>
@@ -44,6 +47,9 @@
   <object-name>pri</object-name>
   <type>material</type>
   <condition>
+    <or>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+      <and>
 	      <equals>
 	          <property>sound/rwr-pri</property>
 	          <value>1</value>
@@ -51,7 +57,9 @@
         <greater-than-equals>
                 <property>f16/avionics/power-ufc-warm</property>
                 <value>0.90</value>
-            </greater-than-equals>
+        </greater-than-equals>
+      </and>
+    </or>
 	</condition>
   <emission>
    <red>1</red>
@@ -64,14 +72,19 @@
   <object-name>unk</object-name>
   <type>material</type>
   <condition>
+    <or>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+      <and>
 	      <equals>
 	          <property>sound/rwr-unk</property>
 	          <value>1</value>
 	      </equals>
-            <greater-than-equals>
-                <property>f16/avionics/power-ufc-warm</property>
-                <value>0.90</value>
-            </greater-than-equals>
+        <greater-than-equals>
+            <property>f16/avionics/power-ufc-warm</property>
+            <value>0.90</value>
+        </greater-than-equals>
+      </and>
+    </or>
 	</condition>
   <emission>
    <red>1</red>
@@ -79,5 +92,5 @@
    <blue>1</blue>
   </emission>
  </animation>
-
+ 
 </PropertyList>

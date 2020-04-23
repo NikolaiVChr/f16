@@ -1,7 +1,7 @@
 AC3Db
 MATERIAL "MainPanel" rgb 1 1 1  amb 0.7 0.7 0.7  emis 0 0 0  spec 0.5 0.5 0.5  shi 32  trans 0
 MATERIAL "ac3dmat1" rgb 1 1 1  amb 0.6 0.6 0.6  emis 0 0 0  spec 0.2 0.2 0.2  shi 128  trans 0
-MATERIAL "ac3dmat1" rgb 1 1 1  amb 1 1 1  emis 1 1 1  spec 0 0 0  shi 21  trans 0
+MATERIAL "litup" rgb 1 1 1  amb 1 1 1  emis 1 1 1  spec 0 0 0  shi 21  trans 0
 MATERIAL "ac3dmat1" rgb 0 0.25098 0  amb 0.6 0.6 0.6  emis 0 0 0  spec 0 0 0  shi 128  trans 0
 OBJECT world
 kids 6
@@ -2463,7 +2463,6 @@ OBJECT poly
 name "active-on"
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 crease 45.000000
-hidden
 numvert 4
 -0.367224 0.00401647 0.285642
 -0.375552 0.00401647 0.285642
@@ -2471,7 +2470,7 @@ numvert 4
 -0.367224 0.00401647 0.269698
 numsurf 1
 SURF 0x30
-mat 0
+mat 2
 refs 4
 3 0.907485 0.207499
 2 0.928213 0.207499
@@ -3323,7 +3322,6 @@ OBJECT poly
 name "stby-on"
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 crease 45.000000
-hidden
 numvert 4
 -0.358835 0.00401647 0.269698
 -0.366605 0.00401647 0.269698
@@ -3331,7 +3329,7 @@ numvert 4
 -0.358835 0.00401647 0.285642
 numsurf 1
 SURF 0x30
-mat 0
+mat 2
 refs 4
 0 0.88558 0.207499
 1 0.905071 0.207499
@@ -3342,7 +3340,6 @@ OBJECT poly
 name "stby-off"
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 crease 45.000000
-hidden
 numvert 4
 -0.358835 0.00401647 0.285642
 -0.366605 0.00401647 0.285642
