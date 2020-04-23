@@ -813,6 +813,18 @@
      </binding>
     </action>
    </animation>
+   
+   <animation>
+    <type>translate</type>
+    <object-name>MAL_IND_LTS</object-name>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    <factor>-0.0035</factor>
+    <axis>
+     <x>0</x>
+     <y>0</y>
+     <z>1</z>
+    </axis>
+   </animation>
 
   <animation>
     <type>pick</type>
