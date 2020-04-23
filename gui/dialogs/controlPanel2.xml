@@ -690,23 +690,23 @@
 						<halign>left</halign>
 						
 						<text>
-							<label>TEST</label>
-						</text>
-						<text>
-							<label>NORM</label>
-						</text>
-						<text>
-							<label>RSVR</label>
-						</text>
-						<text>
-							<label>INT WING</label>
+							<label>EXT CTR</label>
 						</text>
 						<text>
 							<label>EXT WING</label>
 						</text>
 						<text>
-							<label>EXT CTR</label>
+							<label>INT WING</label>
 						</text>
+						<text>
+							<label>RSVR</label>
+						</text>
+						<text>
+							<label>NORM</label>
+						</text>
+						<text>
+							<label>TEST</label>
+						</text>					
 						
 					</group>
 					

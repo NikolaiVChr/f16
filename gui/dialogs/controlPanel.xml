@@ -820,8 +820,7 @@
 					setprop("fdm/jsbsim/fcs/fbw-override", !getprop("fdm/jsbsim/fcs/fbw-override"));
 				</script>
 	      	</binding>
-	    </checkbox>	  
-	    <layout>hbox</layout>
+	    </checkbox>
 	    <text><label>CAT III</label></text>
 	    <checkbox>
 	      <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
@@ -829,6 +828,15 @@
 	        <binding>
 	          <command>property-toggle</command>
 	          <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+	        </binding>
+	    </checkbox>
+	    <text><label>LE FLAPS</label></text>
+	    <checkbox>
+	      <property>f16/avionics/le-flaps-switch</property>
+	      <live>true</live>
+	        <binding>
+	          <command>property-toggle</command>
+	          <property>f16/avionics/le-flaps-switch</property>
 	        </binding>
 	    </checkbox>
 	    <empty>
