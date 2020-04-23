@@ -359,7 +359,10 @@ var slow = {
     #  valid = iff.interrogate(awg_9.active_u.propNode);
     #}
     #setprop("instrumentation/iff/response", valid);
-    #settimer(func {me.loop()},5);
+    if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20 and getprop("fdm/jsbsim/elec/bus/emergency-dc-2")<20) {
+      setprop("sound/rwr-new", -1);#prevent sound from going off whenever it gets elec
+    }
+    settimer(func {me.loop()},5);
   },
 };
 
@@ -1861,10 +1864,11 @@ setlistener("f16/fcs/autopilot-on", button2, nil, 0);
 setlistener("f16/fcs/switch-pitch-block15", button2, nil, 0);
 setlistener("f16/fcs/switch-roll-block15", button2, nil, 0);
 setlistener("fdm/jsbsim/fcs/fbw-override", button2, nil, 0);
-setlistener("controls/lighting/landing-light", button2, nil, 0);
+setlistener("controls/lighting/landing-light", click2, nil, 0);
 setlistener("controls/MFD[0]/button-pressed", doubleClick, nil, 0);
 setlistener("controls/MFD[1]/button-pressed", doubleClick, nil, 0);
 setlistener("controls/MFD[2]/button-pressed", doubleClick, nil, 0);
+setlistener("instrumentation/radar/iff", doubleClick, nil, 0);
 setlistener("f16/avionics/hud-test", button2, nil, 0);
 setlistener("f16/avionics/hud-ded", button2, nil, 0);
 setlistener("f16/avionics/hud-brt", button2, nil, 0);
@@ -1872,9 +1876,11 @@ setlistener("f16/avionics/hud-alt", button2, nil, 0);
 setlistener("f16/avionics/hud-velocity", button2, nil, 0);
 setlistener("f16/avionics/hud-fpm", click1, nil, 0);
 setlistener("f16/avionics/hud-scales", click1, nil, 0);
-setlistener("fdm/jsbsim/elec/switches/main-pwr", button2, nil, 0);
+setlistener("f16/avionics/hud-drift", button2, nil, 0);
+setlistener("fdm/jsbsim/elec/switches/main-pwr", click2, nil, 0);
 setlistener("f16/engine/jfs-start-switch", button2, nil, 0);
 setlistener("fdm/jsbsim/elec/switches/epu", click2, nil, 0);
+setlistener("f16/engine/max-power", button2, nil, 0);
 setlistener("f16/avionics/hud-brt", click3, nil, 0);
 setlistener("f16/avionics/rwr-int", click3, nil, 0);
 setlistener("f16/avionics/mfd-l-con", click3, nil, 0);
