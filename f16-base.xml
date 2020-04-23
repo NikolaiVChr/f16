@@ -3350,6 +3350,7 @@ value. 18000=standard US transition altitude -->
             <power-right-hdpt-warm type="double">0</power-right-hdpt-warm>
             <power-right-hdpt-warming type="bool">true</power-right-hdpt-warming>
             <le-flaps-switch type="bool">true</le-flaps-switch>
+            <ins-knob type="int">0</ins-knob>            
         </avionics>
         <fcs>
             <stby-mode type="bool">false</stby-mode>

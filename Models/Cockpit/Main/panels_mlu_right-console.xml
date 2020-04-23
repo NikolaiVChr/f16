@@ -755,6 +755,41 @@
     </animation>
     
     <animation>
+        <type>knob</type>
+        <object-name>INS_knob</object-name>
+        <property>f16/avionics/ins-knob</property>
+        <factor>-48</factor>
+        <offset-deg>150</offset-deg>
+        <drag-direction>horizontal</drag-direction>
+        <center>
+            <x-m>0.568015</x-m><y-m>0.443262</y-m><z-m>0.007577</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>0</y><z>1</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ins-knob</property>
+                <step>1</step>
+                <min>0</min>
+                <max>5</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ins-knob</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>5</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+    
+    <animation>
         <type>pick</type>
         <object-name>plain-switch</object-name>
         <hovered>

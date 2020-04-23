@@ -956,6 +956,7 @@ var autostart = func {
   setprop("controls/ventilation/airconditioning-enabled",1);
   setprop("fdm/jsbsim/fcs/canopy-engage", 0);
   setprop("instrumentation/radar/radar-standby", 0);
+  setprop("f16/avionics/ins-knob", 2);#ALIGN NORM
   if (getprop("engines/engine[0]/running")!=1) {
     if (eng.accu_1_psi < eng.accu_psi_max and eng.accu_2_psi < eng.accu_psi_max) {
       screen.log.write("Both JFS accumulators de-pressurized. Engine start aborted.");
@@ -972,6 +973,7 @@ var autostart = func {
     screen.log.write("Done.");
     inAutostart = 0;
   }
+  setprop("f16/avionics/ins-knob", 3);#NAV
 }
 
 var re_init_listener = setlistener("/sim/signals/reinit", func {
