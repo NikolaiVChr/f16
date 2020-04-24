@@ -864,21 +864,6 @@
 	
 	<hrule/>
 
-  <group>
-    <layout>hbox</layout>
-    <text><label>Standby gains</label></text>
-    <checkbox>
-      <property>fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains</property>
-      <live>true</live>
-        <binding>
-          <command>property-toggle</command>
-          <property>fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains</property>
-        </binding>
-    </checkbox>
-  </group>
-  <text><label>Enable this when you don't trust the systems is working properly to collect air data.</label></text>
-  <text><label>Then it will use fixed gains instead.</label></text>
-
-  <hrule/>
+  
 
 </PropertyList>

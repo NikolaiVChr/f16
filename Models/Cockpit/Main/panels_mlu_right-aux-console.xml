@@ -652,7 +652,15 @@
   <type>select</type>
   <object-name>ADC_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not><or>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+     <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
+     <equals> 
+      <property>fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains</property>
+      <value>1</value>
+     </equals> 
+   </and>
+   </or></not>
   </condition>
  </animation> 
 
@@ -842,7 +850,13 @@
     <or>
     <and>
       <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-      <equals><property>f16/avionics/le-flaps-switch</property><value>0</value></equals>
+      <or>
+        <equals><property>f16/avionics/le-flaps-switch</property><value>0</value></equals>
+        <equals> 
+          <property>fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains</property>
+          <value>1</value>
+       </equals>
+     </or>
     </and>
     <property>controls/test/test-panel/mal-ind-lts</property>
   </or>
@@ -1002,7 +1016,15 @@
   <type>select</type>
   <object-name>ADC_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <or>
+     <property>controls/test/test-panel/mal-ind-lts</property>
+     <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
+     <equals> 
+      <property>fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains</property>
+      <value>1</value>
+     </equals> 
+   </and>
+   </or>
   </condition>
  </animation> 
 
@@ -1193,7 +1215,13 @@
     <or>
     <and>
       <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-      <equals><property>f16/avionics/le-flaps-switch</property><value>0</value></equals>
+      <or>
+        <equals><property>f16/avionics/le-flaps-switch</property><value>0</value></equals>
+        <equals> 
+          <property>fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains</property>
+          <value>1</value>
+       </equals>
+     </or>
     </and>
     <property>controls/test/test-panel/mal-ind-lts</property>
   </or>
