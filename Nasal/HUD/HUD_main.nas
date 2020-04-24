@@ -1321,7 +1321,7 @@ append(obj.total, obj.speed_curr);
             props.UpdateManager.FromHashList(["calibrated", "GND_SPD", "HUD_VEL", "gear_down"], 0.5, func(hdp)
                                       {   
                                           # the real F-16 has calibrated airspeed as default in HUD.
-                                          var pitot = getprop("systems/pitot/servicable") and getprop("systems/static/servicable");
+                                          var pitot = getprop("systems/pitot/serviceable") and getprop("systems/static/serviceable");
                                           if (hdp.HUD_VEL == 1 or hdp.gear_down) {
                                             obj.ias_range.setTranslation(0, hdp.calibrated * ias_range_factor * pitot);
                                             obj.speed_type.setText("C");
