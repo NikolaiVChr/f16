@@ -8,6 +8,10 @@
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
         <parameters>
             <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+            <reflection-enabled type="int">0</reflection-enabled>
+            <reflection-fresnel type="float">0</reflection-fresnel>
+            <reflection-rainbow type="float">0</reflection-rainbow>
+            <reflection-noise type="float">0.0</reflection-noise>
         </parameters>
         <object-name>BASE</object-name>
         <object-name>THROTTLE</object-name>
@@ -19,6 +23,8 @@
  <animation>
   <type>rotate</type>
   <object-name>BASE</object-name>
+  <object-name>cursor</object-name>
+  <object-name>comm</object-name>
   <object-name>THROTTLE</object-name>
   <object-name>PINKY_SWITCH</object-name>
   <object-name>PINKY_SWITCH_HANDLE</object-name>
