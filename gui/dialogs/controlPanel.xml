@@ -597,8 +597,8 @@
 			      <property>controls/test/test-panel/mal-ind-lts</property>
 			      <live>true</live>
 			      <binding>
-			          <command>property-toggle</command>
-			          <property>controls/test/test-panel/mal-ind-lts</property>
+			          <command>nasal</command>
+			          <script>f16_switches.toggleMalIndLts();</script>
 			      </binding>
 			    </checkbox>
 			</group>
