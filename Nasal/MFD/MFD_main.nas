@@ -862,7 +862,7 @@ var MFD_Device =
                         if (me.gmMin == me.gmMax) {
                             me.gmMax += 1;
                         }
-                        printf("GM radar scanning from from %d to %d ft", me.gmMin*M2FT, me.gmMax*M2FT);
+                        #printf("GM radar scanning from from %d to %d ft", me.gmMin*M2FT, me.gmMax*M2FT);
                         me.gmMintemp = 5000;
                         me.gmMaxtemp = 300;
                     }
