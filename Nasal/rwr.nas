@@ -207,6 +207,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_FISHBED  = "21";
         rwr.AIRCRAFT_FULCRUM  = "29";
         rwr.AIRCRAFT_FLANKER  = "27";
+        rwr.AIRCRAFT_FULLBACK = "34";
         rwr.AIRCRAFT_PAKFA    = "57";
         rwr.AIRCRAFT_MIRAGE   = "M2";
         rwr.AIRCRAFT_FALCON   = "16";
@@ -281,6 +282,8 @@ RWRCanvas = {
                 "AI":                       rwr.ASSET_AI,
                 "SU-37":                    rwr.AIRCRAFT_FLANKER,
                 "J-11A":                    rwr.AIRCRAFT_FLANKER,
+                "daVinci_SU-34":            rwr.AIRCRAFT_FULLBACK,
+                "Su-34":                    rwr.AIRCRAFT_FULLBACK,
                 "T-50":                     rwr.AIRCRAFT_PAKFA,
                 "MiG-21Bison":              rwr.AIRCRAFT_FISHBED,
                 "Mig-29":                   rwr.AIRCRAFT_FULCRUM,
