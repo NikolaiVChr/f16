@@ -397,13 +397,13 @@
 
     <channel name="sound" execrate="8">
         
-        <fcs_function name="/engines/engine[0]/sound-n2-70-to-90">
+        <fcs_function name="/engines/engine[0]/sound-n2-low-down">
             <function>
                 <table>
                     <independentVar lookup="row">/engines/engine/n2</independentVar>
                     <tableData>
-                          70         -1.0
-                          90          1.0
+                          60          1.0
+                          95         -1.0
                     </tableData>
                 </table>
             </function>
@@ -416,10 +416,22 @@
                         <v>0.5</v>
                         <sum>
                             <v>1</v>
-                            <p>/engines/engine[0]/sound-n2-70-to-90</p>                    
+                            <p>/engines/engine[0]/sound-n2-low-down</p>
                         </sum>
                     </product>
                 </sqrt>
+            </function>
+        </fcs_function>
+
+        <fcs_function name="/engines/engine[0]/sound-n2-medium-up">
+            <function>
+                <table>
+                    <independentVar lookup="row">/engines/engine/n2</independentVar>
+                    <tableData>
+                          60         -1.0
+                          80          1.0
+                    </tableData>
+                </table>
             </function>
         </fcs_function>
         
@@ -428,10 +440,62 @@
                 <sqrt>
                     <product>
                         <v>0.5</v>
-                        <difference>
+                        <sum>
                             <v>1</v>
-                            <p>/engines/engine[0]/sound-n2-70-to-90</p>                    
-                        </difference>
+                            <p>/engines/engine[0]/sound-n2-medium-up</p>
+                        </sum>
+                    </product>
+                </sqrt>
+            </function>
+        </fcs_function>
+
+        <fcs_function name="/engines/engine[0]/sound-n2-medium-down">
+            <function>
+                <table>
+                    <independentVar lookup="row">/engines/engine/n2</independentVar>
+                    <tableData>
+                          80          1.0
+                          100        -1.0
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="/engines/engine[0]/sound-n2-vol-c">
+            <function>
+                <sqrt>
+                    <product>
+                        <v>0.5</v>
+                        <sum>
+                            <v>1</v>
+                            <p>/engines/engine[0]/sound-n2-medium-down</p>
+                        </sum>
+                    </product>
+                </sqrt>
+            </function>
+        </fcs_function>
+
+        <fcs_function name="/engines/engine[0]/sound-n2-high-up">
+            <function>
+                <table>
+                    <independentVar lookup="row">/engines/engine/n2</independentVar>
+                    <tableData>
+                          80         -1.0
+                          100         1.0
+                    </tableData>
+                </table>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="/engines/engine[0]/sound-n2-vol-d">
+            <function>
+                <sqrt>
+                    <product>
+                        <v>0.5</v>
+                        <sum>
+                            <v>1</v>
+                            <p>/engines/engine[0]/sound-n2-high-up</p>
+                        </sum>
                     </product>
                 </sqrt>
             </function>
