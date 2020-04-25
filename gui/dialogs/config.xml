@@ -80,27 +80,8 @@
   <text><label>Disabled means G-suit anno 1979.</label></text>
 
   <hrule/>
-
+  
   <group>
-    <layout>hbox</layout>
-    <text><label>Aileron Rudder Interconnect (ARI)</label></text>
-    <checkbox>
-      <property>fdm/jsbsim/fcs/fly-by-wire/enable-ari</property>
-      <live>true</live>
-        <binding>
-          <command>property-toggle</command>
-          <property>fdm/jsbsim/fcs/fly-by-wire/enable-ari</property>
-        </binding>
-    </checkbox>
-  </group>
-  <text><label>Disable this to stop the the FBW from</label></text>
-  <text><label>appliying some rudder when deploying ailerons.</label></text>
-
-  <hrule/>
-
-  
-  
-    <group>
     <layout>hbox</layout>
     <text><label>Activate external power</label></text>
     <checkbox>
