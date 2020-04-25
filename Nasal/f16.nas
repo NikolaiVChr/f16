@@ -1843,14 +1843,16 @@ var lift_cover = func {
 setlistener("controls/lighting/ext-lighting-panel/master", button2, nil, 0);
 setlistener("controls/armament/master-arm", button2, nil, 0);
 setlistener("controls/armament/master-arm-cover-open", lift_cover, nil, 0);
-setlistener("controls/armament/laser-arm-dmd", button2, nil, 0);
+setlistener("controls/armament/laser-arm-dmd", click2, nil, 0);
 setlistener("controls/gear/brake-parking", button2, nil, 0);
 setlistener("controls/gear/gear-down", clamp0, nil, 0);
 setlistener("f16/avionics/gnd-jett", button2, nil, 0);
 setlistener("fdm/jsbsim/systems/hook/tailhook-cmd-norm", clamp0, nil, 0);
 setlistener("controls/seat/ejection-safety-lever", clamp0, nil, 0);
 setlistener("instrumentation/radar/radar-standby", button2, nil, 0);
-setlistener("controls/fuel/external-transfer", button2, nil, 0);
+setlistener("controls/fuel/external-transfer", click2, nil, 0);
+setlistener("instrumentation/heading-indicator-fg/offset-deg", click3, nil, 0);
+setlistener("instrumentation/nav[0]/radials/selected-deg", click3, nil, 0);
 setlistener("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob", knob, nil, 0);
 setlistener("controls/fuel/qty-selector", knob, nil, 0);
 setlistener("sim/model/f16/instrumentation/radar-awg-9/select-target", knob2, nil, 0);
@@ -1897,7 +1899,7 @@ setlistener("fdm/jsbsim/elec/switches/main-pwr", click2, nil, 0);
 setlistener("f16/engine/jfs-start-switch", button2, nil, 0);
 setlistener("fdm/jsbsim/elec/switches/epu", click2, nil, 0);
 setlistener("f16/engine/max-power", button2, nil, 0);
-setlistener("f16/avionics/hud-brt", click3, nil, 0);
+setlistener("f16/avionics/hud-brt", scroll, nil, 0);
 setlistener("f16/avionics/rwr-int", click3, nil, 0);
 setlistener("f16/avionics/mfd-l-con", click3, nil, 0);
 setlistener("f16/avionics/mfd-l-brt", click3, nil, 0);
@@ -1928,6 +1930,9 @@ setlistener("f16/avionics/power-gps", click1, nil, 0);
 setlistener("f16/avionics/power-dl", click1, nil, 0);
 setlistener("f16/avionics/ins-knob", knob, nil, 0);
 setlistener("controls/ventilation/airconditioning-enabled", knob, nil, 0);
+setlistener("f16/avionics/o2-switch", click3, nil, 0);
+setlistener("f16/avionics/em-no-te-switch", click3, nil, 0);
+setlistener("f16/avionics/pbg-switch", click3, nil, 0);
 # valid methods: button, button2, knob, knob2, clamp0, click3, lift_cover
 #                click1, click2, doubleClick, doubleClick2, scroll
 

@@ -83,7 +83,10 @@ Gary Brown
 Thorsten Renk
 - Enhanced bomb effects at exploding.
 
-Carsten Brueggmann
+Timi (MrChillStorm)
+- Internal sound overhaul and rework
+
+Carsten Brueggmann (GEED)
 - Sound creation and editing.
 
 Alan Teeder
