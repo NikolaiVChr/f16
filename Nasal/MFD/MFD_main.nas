@@ -537,6 +537,13 @@ var MFD_Device =
                 .setColor(1,1,1)
                 .set("z-index",1)
                 .setFontSize(16, 1.0);
+        svg.acm = svg.p_RDR.createChild("text")
+                .setTranslation(276*0.795*-0.30, -482*0.5-225)
+                .setText("ACM")
+                .setAlignment("center-top")
+                .setColor(1,1,1)
+                .hide()
+                .setFontSize(16, 1.0); 
         svg.exp = svg.p_RDR.createChild("path")
                     .moveTo(-100,-100)
                     .vert(200)
@@ -754,6 +761,7 @@ var MFD_Device =
                 me.root.norm.setText("NORM");
             }
             me.root.exp.setVisible(exp);
+            me.root.acm.setVisible(getprop("f16/avionics/dgft"));
             me.root.horiz.setRotation(-getprop("orientation/roll-deg")*D2R);
             me.time = getprop("sim/time/elapsed-sec");
             me.az = getprop("instrumentation/radar/az-field");

@@ -1251,9 +1251,19 @@ There is also small changes in tail for different variants with and without brak
                         if (dg) {
                             setprop("instrumentation/radar/radar-standby", 1);
                             pylons.fcs.selectWeapon("20mm Cannon");
-                            setprop("instrumentation/radar/radar2-range", 10);#should be forced
+                            setprop("instrumentation/radar/radar2-range-std", getprop("instrumentation/radar/radar2-range"));
+                            setprop("instrumentation/radar/radar2-range", 10);
+                            setprop("instrumentation/radar/az-field-std", getprop("instrumentation/radar/az-field"));
+                            setprop("instrumentation/radar/ho-field-std", getprop("instrumentation/radar/ho-field"));
                             setprop("instrumentation/radar/az-field", 30);
-                            setprop("instrumentation/radar/ho-field", 20);#TODO: when something is selected, track it outside 30X20.
+                            setprop("instrumentation/radar/ho-field", 20);
+                            ded.page = ded.pCM;
+                            f16.f16_mfd.MFDl.PFD.selectPage(f16.f16_mfd.MFDl.p_RDR);
+                            f16.f16_mfd.MFDr.PFD.selectPage(f16.f16_mfd.MFDr.p_WPN);
+                        } else {
+                            setprop("instrumentation/radar/radar2-range", getprop("instrumentation/radar/radar2-range-std"));
+                            setprop("instrumentation/radar/az-field", getprop("instrumentation/radar/az-field-std"));
+                            setprop("instrumentation/radar/ho-field", getprop("instrumentation/radar/ho-field-std"));
                         }
                     </script>
                 </binding>
@@ -2062,10 +2072,13 @@ There is also small changes in tail for different variants with and without brak
             <iff type="bool">false</iff>
             <az-field type="int">120</az-field>
             <ho-field type="int">120</ho-field><!-- bars -->
+            <az-field-std type="int">120</az-field-std>
+            <ho-field-std type="int">120</ho-field-std><!-- bars -->
             <range type="double">160</range>
             <range-selected type="double">40</range-selected>
             <display-rdr type="bool">true</display-rdr>
             <radar2-range type="int">40</radar2-range><!-- default range -->
+            <radar2-range-std type="int">40</radar2-range-std>
             <radar-standby type="bool">true</radar-standby>
             <symbols-enabled type="bool">true</symbols-enabled>
             <debug-mode type="bool">true</debug-mode>

@@ -832,6 +832,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     mps.loop();
     enableViews();
     fail.start();
+    awg_9.loopDGFT();
     eng.JFS.init();
     setprop("consumables/fuel/tank[2]/capacity-gal_us",0);
     setprop("consumables/fuel/tank[3]/capacity-gal_us",0);
