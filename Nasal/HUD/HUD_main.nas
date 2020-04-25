@@ -1355,7 +1355,7 @@ append(obj.total, obj.speed_curr);
                                       }),
             props.UpdateManager.FromHashList(["heading", "headingMag", "useMag","gear_down"], 0.1, func(hdp)
                                       {
-                                          var head = hdp.useMag?hdp.headingMag:hdp.heading;
+                                          var head = geo.normdeg(hdp.useMag?hdp.headingMag:hdp.heading);
                                           obj.head_curr.setText(sprintf("%03d",head));
                                           if (head < 180)
                                             obj.heading_tape_position = -head*54/10;
