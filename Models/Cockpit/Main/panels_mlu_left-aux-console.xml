@@ -398,8 +398,8 @@
   <type>rotate</type>
   <object-name>SW_HOOK</object-name>
   <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
-  <factor>-50</factor>
-  <offset-deg>25</offset-deg>
+  <factor>50</factor>
+  <offset-deg>10</offset-deg>
   <roll-deg>-10</roll-deg>
   <heading-deg>7.3</heading-deg> 
   <center>
