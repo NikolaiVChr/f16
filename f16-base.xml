@@ -806,18 +806,22 @@ Here's a brief list including the most common symbols and what they refer to:
     - 18:   F/A-18
     - 37:   J-37 Viggen
     - 21:   MiG-21
-    - 27:   Su-27
+    - 27:   Su-27, J-11A
     - 29:   MiG-29
     - 71:   SR-71
     - M2:   Mirage-2000
     - EF:   Eurofighter
     - JA:   Jaguar
+    - TO:   Tornado
     - RF:   Rafale (brsq)
+    - 35:   F-35
     - S:    AWACS, GCI or Recon
-    - 11:   BUK M2 (SAM)
-    - 20:   S-300 (SAM)
-    - SH:   Frigate/Carrier
+    - 11:   SA-11 (BUK M2,SAM)
+    - 20:   SA-20 (S-300, SAM)
+    - SH:   Frigate/Carrier/Ship
+    - 28:   Training scenario opponent
     - AI:   AI scenario
+    - UK:   Unknown threat
             ]]></text-3>
             <text-4><![CDATA[
 MFDs (Multi Function Displays)
