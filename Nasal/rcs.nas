@@ -108,6 +108,7 @@ var rcs_database = {
     "F-22-Raptor":				0.001,	#actual: 0.0001
     "F-35A":					0.0005,
     "F-35B":					0.0005,
+    "F-35C":                    0.0005,
     "Jaguar-GR1":               6,      #guess  
     "Jaguar-GR3":               6,	    #guess
     "f-20A":                    2.5,    #low end of sources

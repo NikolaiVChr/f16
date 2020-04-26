@@ -224,6 +224,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_SKYHAWK  = "A4";
         rwr.AIRCRAFT_TIGER    = "F5";
         rwr.AIRCRAFT_TONKA    = "TO";
+        rwr.AIRCRAFT_AARDVARK = "F1";
         rwr.AIRCRAFT_RAFALE   = "RF";
         rwr.AIRCRAFT_HARRIER  = "HA";
         rwr.AIRCRAFT_HARRIERII = "AV";
@@ -296,6 +297,7 @@ RWRCanvas = {
                 "FA-18C_Hornet":            rwr.AIRCRAFT_HORNET,
                 "FA-18D_Hornet":            rwr.AIRCRAFT_HORNET,
                 "f18":                      rwr.AIRCRAFT_HORNET,
+                "F-111C":                   rwr.AIRCRAFT_AARDVARK,
                 "A-10-modelB":              rwr.AIRCRAFT_WARTHOG,
                 "Su-15":                    rwr.AIRCRAFT_FLAGON,
                 "Jaguar-GR3":               rwr.AIRCRAFT_JAGUAR,
@@ -341,6 +343,7 @@ RWRCanvas = {
                 "F-22-Raptor":              rwr.AIRCRAFT_RAPTOR,
                 "F-35A":                    rwr.AIRCRAFT_JSF,
                 "F-35B":                    rwr.AIRCRAFT_JSF,
+                "F-35C":                    rwr.AIRCRAFT_JSF,
                 "JAS-39C_Gripen":           rwr.AIRCRAFT_GRIPEN,
                 "gripen":                   rwr.AIRCRAFT_GRIPEN,
                 "Yak-130":                  rwr.AIRCRAFT_MITTEN,

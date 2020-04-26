@@ -3172,18 +3172,18 @@
         </avionics>
         <main-pwr>
             <name>Main Power</name>
-            <path>Sounds/f16-battery.wav</path>
+            <path>Sounds/Timi/f16-battery.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
             <condition>
                 <greater-than>
                     <property>fdm/jsbsim/elec/switches/main-pwr</property>
-                    <value>0</value>
+                    <value>0</value> <!-- For now tied to MAIN PWR switch until futher info is found -->
                 </greater-than>
             </condition>
             <volume>
                 <property>/sim/current-view/internal</property>
-                <factor>0.072</factor>
+                <factor>0.075</factor>
             </volume>
         </main-pwr>
         <boom-report>
