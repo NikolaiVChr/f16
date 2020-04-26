@@ -130,6 +130,21 @@
                     <value>0</value>
                 </binding>
             </item>
+            <item>
+                <name>LE FLAPS switch</name>
+                <value>AUTO</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/le-flaps-switch</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/le-flaps-switch</property>
+                    <value>1</value>
+                </binding>
+            </item>
         </checklist>
         
         <checklist>
@@ -150,7 +165,7 @@
                 </binding>
             </item>
             <item>
-                <name>FLCS RLY</name>
+                <name>FLCS RLY light</name>
                 <value>LIT</value>
                 <condition>
                     <and>
@@ -181,7 +196,7 @@
                   </binding>
             </item>
             <item>
-                <name>FLCS PWR</name>
+                <name>FLCS PWR light</name>
                 <value>ALL LIT</value>
                 <condition>
                     <and>
@@ -197,7 +212,7 @@
                 </condition>
             </item>
             <item>
-                <name>FLCS RLY</name>
+                <name>FLCS RLY light</name>
                 <value>UNLIT</value>
                 <condition>
                     <and>
@@ -213,7 +228,7 @@
                 </condition>
             </item>
             <item>
-                <name>ACFT BATT TO FLCS</name>
+                <name>ACFT BATT TO FLCS light</name>
                 <value>LIT</value>
                 <condition>
                     <and>
@@ -244,7 +259,7 @@
                   </binding>
             </item>
             <item>
-                <name>FLCS PMG</name>
+                <name>FLCS PMG light</name>
                 <value>LIT</value>
                 <condition>
                     <and>
@@ -275,7 +290,7 @@
                 </binding>
             </item>
             <item>
-                <name>ELEC SYS</name>
+                <name>ELEC SYS light</name>
                 <value>LIT</value>
                 <condition>
                     <and>
@@ -285,7 +300,7 @@
                 </condition>
             </item>
             <item>
-                <name>HYD/OIL PRESS</name>
+                <name>HYD/OIL PRESS light</name>
                 <value>LIT</value>
                 <condition>
                     <and>
@@ -305,7 +320,7 @@
                 </condition>
             </item>
             <item>
-                <name>FLCS RLY</name>
+                <name>FLCS RLY light</name>
                 <value>LIT</value>
                 <condition>
                     <and>
@@ -321,7 +336,7 @@
                 </condition>
             </item>
             <item>
-                <name>ENGINE</name>
+                <name>ENGINE light</name>
                 <value>LIT</value>
                 <condition>
                     <and>
@@ -457,7 +472,40 @@
                         <value>1</value>
                     </equals>
                 </condition>
-            </item>         
+            </item>
+            <item>
+                <name>FLCS RLY light</name>
+                <value>UNLIT</value>
+                <condition>
+                    <and>
+                      <greater-than>
+                        <property>fdm/jsbsim/elec/bus/batt-2</property>
+                        <value>20</value>
+                      </greater-than>
+                      <equals>
+                        <property>fdm/jsbsim/elec/bus/light/flcs-relay-light</property>
+                        <value>0</value>
+                      </equals>
+                    </and>
+                </condition>
+            </item>
+            <item>
+                <name>ENGINE light</name>
+                <value>UNLIT</value>
+                <condition>
+                    <not>
+                        <and>
+                            <greater-than>
+                                <property>fdm/jsbsim/elec/bus/batt-1</property>
+                                <value>20</value>
+                            </greater-than>
+                            <not>
+                                <property>engines/engine[0]/running</property>
+                            </not>
+                        </and>
+                    </not>
+                </condition>
+            </item>
             <item>
                 <name>HYD/OIL PRESS warning light</name>
                 <value>Off</value>
@@ -555,22 +603,7 @@
                     </less-than>
                 </condition>
             </item>
-            <item>
-                <name>FLCS RLY</name>
-                <value>UNLIT</value>
-                <condition>
-                    <and>
-                      <greater-than>
-                        <property>fdm/jsbsim/elec/bus/batt-2</property>
-                        <value>20</value>
-                      </greater-than>
-                      <equals>
-                        <property>fdm/jsbsim/elec/bus/light/flcs-relay-light</property>
-                        <value>0</value>
-                      </equals>
-                    </and>
-                </condition>
-            </item>
+            
         </checklist>
 
         <checklist>
@@ -1112,6 +1145,7 @@
             </item>
         </checklist>
     </group>
+    
     <group>
         <name>Emergency Procedures</name>
         

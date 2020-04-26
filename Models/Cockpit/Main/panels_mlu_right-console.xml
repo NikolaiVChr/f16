@@ -64,24 +64,15 @@
         <object-name>KY_58_VOL_KNOB</object-name>
         <object-name>LIGHTING</object-name>
         <object-name>console-flood-knob</object-name>
-        <object-name>console-flood-knob-axis</object-name>
         <object-name>console-primary-knob</object-name>
-        <object-name>console-primary-knob-axis</object-name>
-        <object-name>data-entry-display-axis</object-name>
         <object-name>data-entry-display-knob</object-name>
-        <object-name>data-entry-display-knob-axis</object-name>
         <object-name>indv-lgt-cont</object-name>
-        <object-name>indv-ltg-axis</object-name>
         <object-name>inst-pnl-flood-knob</object-name>
-        <object-name>inst-pnl-flood-knob-axis</object-name>
         <object-name>inst-pnl-primary-knob</object-name>
-        <object-name>inst-pnl-primary-knob-axis</object-name>
         <object-name>LIGHTING_0</object-name>
         <object-name>LIGHTING_1</object-name>
         <object-name>mal-ind-lts-switch</object-name>
-        <object-name>mal-ind-lts-switch-axis</object-name>
         <object-name>mms-switch</object-name>
-        <object-name>mms-switch-axis</object-name>
         <object-name>switch-bases</object-name>
         <object-name>NUCLEAR_CONSENT</object-name>
         <object-name>NUCLEAR_CONSENT_0</object-name>
@@ -124,8 +115,11 @@
         <property>controls/lighting/lighting-panel/flood-inst-pnl-knob</property>
         <offset-deg>135</offset-deg>
         <factor>-222</factor>
+        <center>
+            <x-m>0.257749</x-m><y-m>0.426127</y-m><z-m>0.018706</z-m>
+        </center>
         <axis>
-            <object-name>inst-pnl-flood-knob-axis</object-name>
+            <x>0</x><y>0</y><z>1</z>
         </axis>
         <action>
             <binding>
@@ -144,8 +138,11 @@
         <property>controls/lighting/lighting-panel/pri-inst-pnl-knob</property>
         <offset-deg>135</offset-deg>
         <factor>-222</factor>
+        <center>
+            <x-m>0.205023</x-m><y-m>0.422467</y-m><z-m>0.02552</z-m>
+        </center>
         <axis>
-            <object-name>inst-pnl-primary-knob-axis</object-name>
+            <x>0</x><y>0</y><z>1</z>
         </axis>
         <action>
             <binding>
@@ -164,8 +161,11 @@
         <property>controls/lighting/lighting-panel/console-flood-knob</property>
         <offset-deg>155</offset-deg>
         <factor>-330</factor>
+        <center>
+            <x-m>0.25416</x-m><y-m>0.380485</y-m><z-m>0.020808</z-m>
+        </center>
         <axis>
-            <object-name>console-flood-knob-axis</object-name>
+            <x>0</x><y>0</y><z>1</z>
         </axis>
         <action>
             <binding>
@@ -184,8 +184,11 @@
         <property>controls/lighting/lighting-panel/data-entry-display</property>
         <offset-deg>135</offset-deg>
         <factor>-222</factor>
+        <center>
+            <x-m>0.205023</x-m><y-m>0.463021</y-m><z-m>0.025529</z-m>
+        </center>
         <axis>
-            <object-name>data-entry-display-knob-axis</object-name>
+            <x>0</x><y>0</y><z>1</z>
         </axis>
         <action>
             <binding>
@@ -204,8 +207,11 @@
         <property>controls/lighting/lighting-panel/console-primary-knob</property>
         <offset-deg>135</offset-deg>
         <factor>-222</factor>
+        <center>
+            <x-m>0.205023</x-m><y-m>0.380484</y-m><z-m>0.02552</z-m>
+        </center>
         <axis>
-            <object-name>console-primary-knob-axis</object-name>
+            <x>0</x><y>0</y><z>1</z>
         </axis>
         <action>
             <binding>
@@ -752,6 +758,252 @@
                 <label>GPS power</label>
             </binding>
         </hovered>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>anti-ice-switch</object-name>
+        <property>f16/avionics/anti-ice-switch</property>
+        <factor>-25</factor>
+        <offset-deg>0</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.568114</x-m><y-m>0.534751</y-m><z-m>0.007469</z-m>
+        </center>
+        <axis>
+            <x>1</x><y>0</y><z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/anti-ice-switch</property>
+                <step>1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/anti-ice-switch</property>
+                <step>-1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>ant-sel-iff-switch</object-name>
+        <property>f16/avionics/ant-sel-iff-switch</property>
+        <factor>-25</factor>
+        <offset-deg>0</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.568114</x-m><y-m>0.534751</y-m><z-m>0.007469</z-m>
+        </center>
+        <axis>
+            <x>1</x><y>0</y><z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ant-sel-iff-switch</property>
+                <step>1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ant-sel-iff-switch</property>
+                <step>-1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>ant-sel-uhf-switch</object-name>
+        <property>f16/avionics/ant-sel-uhf-switch</property>
+        <factor>-25</factor>
+        <offset-deg>0</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.568114</x-m><y-m>0.534751</y-m><z-m>0.007469</z-m>
+        </center>
+        <axis>
+            <x>1</x><y>0</y><z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ant-sel-uhf-switch</property>
+                <step>1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ant-sel-uhf-switch</property>
+                <step>-1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>EM-NO-TE</object-name>
+        <property>f16/avionics/em-no-te-switch</property>
+        <factor>-20</factor>
+        <offset-deg>0</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.705448</x-m><y-m>0.491282</y-m><z-m>0.007586</z-m>
+        </center>
+        <axis>
+            <x>1</x><y>0</y><z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/em-no-te-switch</property>
+                <step>1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/em-no-te-switch</property>
+                <step>-1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>O2</object-name>
+        <property>f16/avionics/o2-switch</property>
+        <factor>-20</factor>
+        <offset-deg>0</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.705448</x-m><y-m>0.491282</y-m><z-m>0.007586</z-m>
+        </center>
+        <axis>
+            <x>1</x><y>0</y><z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/o2-switch</property>
+                <step>0.1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/o2-switch</property>
+                <step>-0.1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>PBG</object-name>
+        <property>f16/avionics/pbg-switch</property>
+        <factor>-20</factor>
+        <offset-deg>0</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.705448</x-m><y-m>0.491282</y-m><z-m>0.007586</z-m>
+        </center>
+        <axis>
+            <x>1</x><y>0</y><z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/pbg-switch</property>
+                <step>1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/pbg-switch</property>
+                <step>-1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+    
+    
+    <animation>
+        <type>knob</type>
+        <object-name>INS_knob</object-name>
+        <property>f16/avionics/ins-knob</property>
+        <factor>-48</factor>
+        <offset-deg>150</offset-deg>
+        <drag-direction>horizontal</drag-direction>
+        <center>
+            <x-m>0.568015</x-m><y-m>0.443262</y-m><z-m>0.007577</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>0</y><z>1</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ins-knob</property>
+                <step>1</step>
+                <min>0</min>
+                <max>5</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ins-knob</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>5</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
     </animation>
     
     <animation>

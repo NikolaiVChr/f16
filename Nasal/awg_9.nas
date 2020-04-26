@@ -618,7 +618,14 @@ var az_scan = func(notification) {
 #1;MP2 within  azimuth 126.4171942282486 field=-60->60
 #1;MP2 within  azimuth -130.0592982116802 field=-60->60  (s->w quadrant)
 #0;MP1 within  azimuth 164.2283073827575 field=-60->60
-            if (radar_mode < 2 and math.abs(u.deviationA) < az_fld/2 and math.abs(u.deviationE) < HoField.getValue()/2) {#richard, I had to fix 2 bugs here.
+            if (getprop("f16/avionics/dgft")) {
+                if (radar_mode < 2 and math.abs(u.get_deviation(our_true_heading)) < 12.5 and math.abs(u.get_total_elevation(OurPitch.getValue())) < 12.5) {
+                    # the field is 30x20 but due to roll we just take average and use it in all attitudes/directions.
+                    u.set_display(u.get_visible() and !RadarStandbyMP.getValue() and u.get_type() != ORDNANCE);
+                } else {
+                    u.set_display(0);
+                }
+            } elsif (radar_mode < 2 and math.abs(u.deviationA) < az_fld/2 and math.abs(u.deviationE) < HoField.getValue()/2) {#richard, I had to fix 2 bugs here.
                 u.set_display(u.get_visible() and !RadarStandbyMP.getValue() and u.get_type() != ORDNANCE);
 #                if(awg9_trace)
 #                  print(scan_tgt_idx,";",u.get_Callsign()," within  azimuth ",u.deviation," field=",l_az_fld,"->",r_az_fld);
@@ -1276,6 +1283,7 @@ var toggle_radar_standby = func() {
 var range_control = func(n) {#richard there was 2 of this method, I kinda deleted the unused one of them, not sure I should have done that if you kept it for some reason. Sorry, was maybe a bit too fast there.
 
 #    if ( pilot_lock and ! we_are_bs ) { return }
+    if (getprop("f16/avionics/dgft")) return;
 
     var range_radar = RangeRadar2.getValue();
     newri = 0;
@@ -2067,4 +2075,12 @@ var compute_rwr = func(radar_mode, u, u_rng){
 #    print("TEWS: ",u.Callsign.getValue()," range ",u_rng, " by ", em_by, " our_mode=",radar_mode, " their_mode=",their_radar_standby, " their_transponder_id=",their_transponder_id, " emitting = ",emitting, " vis=",u.get_visible());
 
     u.set_RWR_visible(emitting and u.get_visible());
+}
+
+
+var loopDGFT = func {
+    if (getprop("f16/avionics/dgft") and active_u == nil) {
+        selectCenterTarget();
+    }
+    settimer(loopDGFT, 0.5);
 }

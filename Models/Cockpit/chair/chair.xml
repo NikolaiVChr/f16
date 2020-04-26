@@ -110,6 +110,30 @@
       <object-name>rocket-catapult</object-name>
       <object-name>screws</object-name>
     </effect>
+    
+    <animation>
+      <type>material</type>
+      <object-name>seat-cushion</object-name>
+      <condition>
+            <greater-than>
+              <property>sim/variant-id</property>
+              <value>3</value>
+            </greater-than>
+      </condition>
+      <texture>seat-cushion-b2.png</texture>
+    </animation>
+    
+    <animation>
+      <type>material</type>
+      <object-name>back-cushion</object-name>
+      <condition>
+            <greater-than>
+              <property>sim/variant-id</property>
+              <value>3</value>
+            </greater-than>
+      </condition>
+      <texture>seat-cushion-b.png</texture>
+    </animation>
 
 
 </PropertyList>

@@ -362,6 +362,12 @@ var slow = {
     if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20 and getprop("fdm/jsbsim/elec/bus/emergency-dc-2")<20) {
       setprop("sound/rwr-new", -1);#prevent sound from going off whenever it gets elec
     }
+    if (!getprop("systems/pitot/serviceable") or !getprop("systems/static/serviceable")) {
+      setprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", 1);
+    } else {
+      setprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", 0);
+    }
+    setprop("f16/avionics/emer-jett-switch",0);
     settimer(func {me.loop()},5);
   },
 };
@@ -827,6 +833,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     mps.loop();
     enableViews();
     fail.start();
+    awg_9.loopDGFT();
     eng.JFS.init();
     setprop("consumables/fuel/tank[2]/capacity-gal_us",0);
     setprop("consumables/fuel/tank[3]/capacity-gal_us",0);
@@ -956,6 +963,7 @@ var autostart = func {
   setprop("controls/ventilation/airconditioning-enabled",1);
   setprop("fdm/jsbsim/fcs/canopy-engage", 0);
   setprop("instrumentation/radar/radar-standby", 0);
+  setprop("f16/avionics/ins-knob", 2);#ALIGN NORM
   if (getprop("engines/engine[0]/running")!=1) {
     if (eng.accu_1_psi < eng.accu_psi_max and eng.accu_2_psi < eng.accu_psi_max) {
       screen.log.write("Both JFS accumulators de-pressurized. Engine start aborted.");
@@ -972,6 +980,7 @@ var autostart = func {
     screen.log.write("Done.");
     inAutostart = 0;
   }
+  setprop("f16/avionics/ins-knob", 3);#NAV
 }
 
 var re_init_listener = setlistener("/sim/signals/reinit", func {
@@ -1835,14 +1844,16 @@ var lift_cover = func {
 setlistener("controls/lighting/ext-lighting-panel/master", button2, nil, 0);
 setlistener("controls/armament/master-arm", button2, nil, 0);
 setlistener("controls/armament/master-arm-cover-open", lift_cover, nil, 0);
-setlistener("controls/armament/laser-arm-dmd", button2, nil, 0);
+setlistener("controls/armament/laser-arm-dmd", click2, nil, 0);
 setlistener("controls/gear/brake-parking", button2, nil, 0);
 setlistener("controls/gear/gear-down", clamp0, nil, 0);
 setlistener("f16/avionics/gnd-jett", button2, nil, 0);
 setlistener("fdm/jsbsim/systems/hook/tailhook-cmd-norm", clamp0, nil, 0);
 setlistener("controls/seat/ejection-safety-lever", clamp0, nil, 0);
 setlistener("instrumentation/radar/radar-standby", button2, nil, 0);
-setlistener("controls/fuel/external-transfer", button2, nil, 0);
+setlistener("controls/fuel/external-transfer", click2, nil, 0);
+setlistener("instrumentation/heading-indicator-fg/offset-deg", click3, nil, 0);
+setlistener("instrumentation/nav[0]/radials/selected-deg", click3, nil, 0);
 setlistener("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob", knob, nil, 0);
 setlistener("controls/fuel/qty-selector", knob, nil, 0);
 setlistener("sim/model/f16/instrumentation/radar-awg-9/select-target", knob2, nil, 0);
@@ -1850,6 +1861,14 @@ setlistener("f16/engine/feed", knob, nil, 0);
 setlistener("systems/refuel/serviceable", button2, nil, 0);
 setlistener("controls/flight/flaps", button2, nil, 0);
 setlistener("controls/test/test-panel/mal-ind-lts", doubleClick2, nil, 0);
+setlistener("fdm/jsbsim/elec/switches/flcs-pwr-test", click2, nil, 0);
+setlistener("f16/avionics/le-flaps-switch", button2, nil, 0);
+setlistener("f16/fail/servo-rudder-switch", button2, nil, 0);
+setlistener("f16/fail/servo-flaperon-switch", button2, nil, 0);
+setlistener("f16/fail/servo-tail-switch", button2, nil, 0);
+setlistener("f16/avionics/anti-ice-switch", click2, nil, 0);
+setlistener("f16/avionics/ant-sel-iff-switch", click2, nil, 0);
+setlistener("f16/avionics/ant-sel-uhf-switch", click2, nil, 0);
 setlistener("controls/lighting/ext-lighting-panel/master", button2, nil, 0);
 setlistener("controls/lighting/ext-lighting-panel/anti-collision", button2, nil, 0);
 setlistener("controls/lighting/ext-lighting-panel/pos-lights-flash", button2, nil, 0);
@@ -1881,12 +1900,13 @@ setlistener("fdm/jsbsim/elec/switches/main-pwr", click2, nil, 0);
 setlistener("f16/engine/jfs-start-switch", button2, nil, 0);
 setlistener("fdm/jsbsim/elec/switches/epu", click2, nil, 0);
 setlistener("f16/engine/max-power", button2, nil, 0);
-setlistener("f16/avionics/hud-brt", click3, nil, 0);
+setlistener("f16/avionics/hud-brt", scroll, nil, 0);
 setlistener("f16/avionics/rwr-int", click3, nil, 0);
 setlistener("f16/avionics/mfd-l-con", click3, nil, 0);
 setlistener("f16/avionics/mfd-l-brt", click3, nil, 0);
 setlistener("f16/avionics/mfd-r-con", click3, nil, 0);
 setlistener("f16/avionics/mfd-r-brt", click3, nil, 0);
+setlistener("f16/fcs/adv-mode-sel", doubleClick2, nil, 0);
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-1", knob, nil, 0);
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-2", knob, nil, 0);
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-3", knob, nil, 0);
@@ -1909,7 +1929,11 @@ setlistener("f16/avionics/power-st-sta", click1, nil, 0);
 setlistener("f16/avionics/power-ufc", click1, nil, 0);
 setlistener("f16/avionics/power-gps", click1, nil, 0);
 setlistener("f16/avionics/power-dl", click1, nil, 0);
+setlistener("f16/avionics/ins-knob", knob, nil, 0);
 setlistener("controls/ventilation/airconditioning-enabled", knob, nil, 0);
+setlistener("f16/avionics/o2-switch", click3, nil, 0);
+setlistener("f16/avionics/em-no-te-switch", click3, nil, 0);
+setlistener("f16/avionics/pbg-switch", click3, nil, 0);
 # valid methods: button, button2, knob, knob2, clamp0, click3, lift_cover
 #                click1, click2, doubleClick, doubleClick2, scroll
 

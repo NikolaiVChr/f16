@@ -1321,18 +1321,19 @@ append(obj.total, obj.speed_curr);
             props.UpdateManager.FromHashList(["calibrated", "GND_SPD", "HUD_VEL", "gear_down"], 0.5, func(hdp)
                                       {   
                                           # the real F-16 has calibrated airspeed as default in HUD.
+                                          var pitot = getprop("systems/pitot/serviceable") and getprop("systems/static/serviceable");
                                           if (hdp.HUD_VEL == 1 or hdp.gear_down) {
-                                            obj.ias_range.setTranslation(0, hdp.calibrated * ias_range_factor);
+                                            obj.ias_range.setTranslation(0, hdp.calibrated * ias_range_factor * pitot);
                                             obj.speed_type.setText("C");
-                                            obj.speed_curr.setText(sprintf("%d",hdp.calibrated));
+                                            obj.speed_curr.setText(!pitot?0:sprintf("%d",hdp.calibrated));
                                           } elsif (hdp.HUD_VEL == 0) {
-                                            obj.ias_range.setTranslation(0, hdp.TAS * ias_range_factor);
+                                            obj.ias_range.setTranslation(0, hdp.TAS * ias_range_factor * pitot);
                                             obj.speed_type.setText("T");
-                                            obj.speed_curr.setText(sprintf("%d",hdp.TAS));
+                                            obj.speed_curr.setText(!pitot?0:sprintf("%d",hdp.TAS));
                                           } else {
-                                            obj.ias_range.setTranslation(0, hdp.GND_SPD * ias_range_factor);
+                                            obj.ias_range.setTranslation(0, hdp.GND_SPD * ias_range_factor * pitot);
                                             obj.speed_type.setText("G");
-                                            obj.speed_curr.setText(sprintf("%d",hdp.GND_SPD));
+                                            obj.speed_curr.setText(!pitot?0:sprintf("%d",hdp.GND_SPD));
                                           }
                                       }),
             props.UpdateManager.FromHashValue("range_rate", 0.01, func(range_rate)
@@ -1354,7 +1355,7 @@ append(obj.total, obj.speed_curr);
                                       }),
             props.UpdateManager.FromHashList(["heading", "headingMag", "useMag","gear_down"], 0.1, func(hdp)
                                       {
-                                          var head = hdp.useMag?hdp.headingMag:hdp.heading;
+                                          var head = geo.normdeg(hdp.useMag?hdp.headingMag:hdp.heading);
                                           obj.head_curr.setText(sprintf("%03d",head));
                                           if (head < 180)
                                             obj.heading_tape_position = -head*54/10;
@@ -1917,7 +1918,7 @@ append(obj.total, obj.speed_curr);
             #    }
             #    hdp.window9_txt = sprintf("AOA %d",me.alphaHUD);
             #}
-
+            
             hdp.window7_txt = sprintf(" %.2f",hdp.mach);
         }
 

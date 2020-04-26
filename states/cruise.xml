@@ -57,6 +57,7 @@
                 <power-ufc type="bool">true</power-ufc>
                 <power-gps type="bool">true</power-gps>
                 <power-dl type="bool">true</power-dl>
+                <ins-knob type="int">3</ins-knob>
             </avionics>
         </f16>
         <instrumentation>

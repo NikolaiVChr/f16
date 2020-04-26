@@ -280,6 +280,7 @@
      <binding>
       <command>nasal</command>
       <script>
+              setprop("f16/avionics/emer-jett-switch",1);
               if (pylons.fcs != nil and (getprop("f16/avionics/gnd-jett") or !getprop("gear/gear[0]/wow"))) {
                 pylons.fcs.jettisonFuelAndAG([0,8]);#drop all fueltanks, dummies and A/G weapons. Except wingtips.
               }
@@ -398,8 +399,8 @@
   <type>rotate</type>
   <object-name>SW_HOOK</object-name>
   <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
-  <factor>-50</factor>
-  <offset-deg>25</offset-deg>
+  <factor>50</factor>
+  <offset-deg>10</offset-deg>
   <roll-deg>-10</roll-deg>
   <heading-deg>7.3</heading-deg> 
   <center>

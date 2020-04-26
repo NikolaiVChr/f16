@@ -370,6 +370,7 @@ var MFD_Device =
                     .setText("4")
                     .setAlignment("center-center")
                     .setColor(0,1,0)
+                    .set("z-index",1)
                     .setFontSize(22, 1.0);
         }
         svg.rangUp = svg.p_RDR.createChild("path")
@@ -378,11 +379,13 @@ var MFD_Device =
                     .lineTo(-276*0.795+15,-482*0.5-105-27.5-15)
                     .lineTo(-276*0.795,-482*0.5-105-27.5)
                     .setStrokeLineWidth(2)
+                    .set("z-index",1)
                     .setColor(1,1,1);
         svg.rang = svg.p_RDR.createChild("text")
                 .setTranslation(-276*0.795, -482*0.5-105)
                 .setAlignment("left-center")
                 .setColor(1,1,1)
+                .set("z-index",1)
                 .setFontSize(20, 1.0);
         svg.rangDown = svg.p_RDR.createChild("path")
                     .moveTo(-276*0.795,-482*0.5-105+27.5)
@@ -390,24 +393,28 @@ var MFD_Device =
                     .lineTo(-276*0.795+15,-482*0.5-105+27.5+15)
                     .lineTo(-276*0.795,-482*0.5-105+27.5)
                     .setStrokeLineWidth(2)
+                    .set("z-index",1)
                     .setColor(1,1,1);
         svg.az = svg.p_RDR.createChild("text")
                 .setTranslation(-276*0.795, -482*0.5-5)
                 .setText("A4")
                 .setAlignment("left-center")
                 .setColor(1,1,1)
+                .set("z-index",1)
                 .setFontSize(20, 1.0);
         svg.bars = svg.p_RDR.createChild("text")
                 .setTranslation(-276*0.795, -482*0.5+60)
                 .setText("8B")
                 .setAlignment("left-center")
                 .setColor(1,1,1)
+                .set("z-index",1)
                 .setFontSize(20, 1.0);
         svg.mod = svg.p_RDR.createChild("text")
                 .setTranslation(-276*0.795, -482*0.5+125)
                 .setText("")
                 .setAlignment("left-center")
                 .setColor(1,1,1)
+                .set("z-index",1)
                 .setFontSize(20, 1.0);
         svg.ant_bottom = svg.p_RDR.createChild("path")
                     .moveTo(-276*0.795,0)
@@ -415,6 +422,7 @@ var MFD_Device =
                     .moveTo(-276*0.795-10,-10)
                     .horiz(20)
                     .setStrokeLineWidth(1)
+                    .set("z-index",1)
                     .setColor(0.5,0.5,1);
         svg.distl = svg.p_RDR.createChild("path")
                     .moveTo(-276*0.795+40,-482*0.25)
@@ -430,10 +438,12 @@ var MFD_Device =
                     .moveTo(276*0.795*0.5,0)
                     .vert(-20)
                     .setStrokeLineWidth(1)
+                    .set("z-index",1)
                     .setColor(0.5,0.5,1);
         #svg.lock = setsize([],svg.maxB);
         #for (var i = 0;i<svg.maxB;i+=1) {
-            svg.lock = svg.p_RDR.createChild("group");
+            svg.lock = svg.p_RDR.createChild("group")
+            .set("z-index",1);
             svg.lockRot = svg.lock.createChild("path")
                             .moveTo(10,10)
                             .lineTo(0,-10)
@@ -454,6 +464,7 @@ var MFD_Device =
                 .setTranslation(276*0.795*0.8, -482*0.9)
                 .setAlignment("right-center")
                 .setColor(1,1,1)
+                .set("z-index",1)
                 .setFontSize(20, 1.0);
         #}
         #svg.lockF = setsize([],3);
@@ -484,16 +495,19 @@ var MFD_Device =
            .moveTo(0, 0)
            .lineTo( -10, -8)
            .setColor(1,1,1)
+           .set("z-index",1)
            .setStrokeLineWidth(svg.dlzLW);
         svg.az1 = svg.p_RDR.createChild("path")
            .moveTo(0, 0)
            .lineTo(0, -482)
            .setColor(0.5,0.5,1)
+           .set("z-index",1)
            .setStrokeLineWidth(1);
         svg.az2 = svg.p_RDR.createChild("path")
            .moveTo(0, 0)
            .lineTo(0, -482)
            .setColor(0.5,0.5,1)
+           .set("z-index",1)
            .setStrokeLineWidth(1);
         svg.horiz = svg.p_RDR.createChild("path")
            .moveTo(-276*0.795*0.5, -482*0.5)
@@ -521,7 +535,15 @@ var MFD_Device =
                 .setText("NORM")
                 .setAlignment("center-top")
                 .setColor(1,1,1)
+                .set("z-index",1)
                 .setFontSize(16, 1.0);
+        svg.acm = svg.p_RDR.createChild("text")
+                .setTranslation(276*0.795*-0.30, -482*0.5-225)
+                .setText("ACM")
+                .setAlignment("center-top")
+                .setColor(1,1,1)
+                .hide()
+                .setFontSize(16, 1.0); 
         svg.exp = svg.p_RDR.createChild("path")
                     .moveTo(-100,-100)
                     .vert(200)
@@ -530,6 +552,7 @@ var MFD_Device =
                     .horiz(-200)
                     .setStrokeLineWidth(1.5)
                     .setColor(0.5,0.5,1)
+                    .set("z-index",1)
                     .hide();
         
         svg.cursor = svg.p_RDR.createChild("path")
@@ -552,6 +575,7 @@ var MFD_Device =
             .arcSmallCW(5,5, 0,  5*2, 0)
             .arcSmallCW(5,5, 0, -5*2, 0)
             .setStrokeLineWidth(2)
+            .set("z-index",1)
             .setColor(0.5,0.5,1);
         svg.bullOwnRing = svg.p_RDR.createChild("path")
             .moveTo(-15,0)
@@ -566,35 +590,46 @@ var MFD_Device =
             .setStrokeLineWidth(2)
             .setStrokeLineCap("round")
             .setTranslation(-190, -50)
+            .set("z-index",1)
             .setColor(0.5,0.5,1);
         svg.bullOwnDist = svg.p_RDR.createChild("text")
                 .setAlignment("center-center")
                 .setColor(0.5,0.5,1)
                 .setTranslation(-190, -50)
                 .setText("12")
+                .set("z-index",1)
                 .setFontSize(18, 1.0);            
         svg.bullOwnDir = svg.p_RDR.createChild("text")
                 .setAlignment("center-top")
                 .setColor(0.5,0.5,1)
                 .setTranslation(-190, -30)
                 .setText("270")
+                .set("z-index",1)
                 .setFontSize(18, 1.0);
         svg.cursorLoc = svg.p_RDR.createChild("text")
                 .setAlignment("left-bottom")
                 .setColor(1,1,1)
                 .setTranslation(-200, -75)
                 .setText("12")
+                .set("z-index",1)
                 .setFontSize(18, 1.0);
         
-        # GM mode
-        svg.rdrMode = 0;
         #svg.gmPicG = svg.p_RDR.createChild("group");
-        svg.gmPic = svg.p_RDR.createChild("image")
-            .set("src", "Aircraft/f16/Nasal/MFD/gm.png")
-            .setTranslation(-128,-286)
-            .setScale(2,2)
-            .set("z-index",5)
-            .hide();
+        #if (index == 0) {
+            svg.gmPic = svg.p_RDR.createChild("image")
+                .set("src", "Aircraft/f16/Nasal/MFD/gm.png")
+                .setTranslation(-192,-384)
+                .setScale(3,3)
+                .set("z-index",0)
+                .hide();
+        #} else {
+        #    svg.gmPic = svg.p_RDR.createChild("image")
+        #        .set("src", "Aircraft/f16/Nasal/MFD/gm2.png")
+        #        .setTranslation(-128,-286)
+        #        .setScale(2,2)
+        #        .set("z-index",5)
+        #        .hide();
+        #}
     },
 
     addRadar: func {
@@ -617,6 +652,10 @@ var MFD_Device =
         me.p_RDR.gmLine = 10;
         me.p_RDR.elapsed = 0;
         me.p_RDR.pressEXP = 0;
+        me.p_RDR.gmMin = 0;
+        me.p_RDR.gmMax = 1500;
+        me.p_RDR.gmMintemp = 5000;
+        me.p_RDR.gmMaxtemp = 300;
         me.p_RDR.notifyButton = func (eventi) {
             if (eventi != nil) {
                 if (eventi == 0) {
@@ -674,15 +713,14 @@ var MFD_Device =
         me.p_RDR.update = func (noti) {
             me.modeSw = getprop("instrumentation/radar/mode-switch");
             if (me.modeSw == 1) {
-                #me.root.rdrMode = !me.root.rdrMode;
-                if (me.root.rdrMode) {
-                    
-                    me.root.mod.setText("GM");
-                    me.root.gmPic.show();
-                } else {
-                    me.root.mod.setText("");
-                    me.root.gmPic.hide();
-                }
+                #rdrMode = !rdrMode;
+            }
+            if (rdrMode) {
+                me.root.mod.setText("GM");
+                me.root.gmPic.show();
+            } else {
+                me.root.mod.setText("");
+                me.root.gmPic.hide();
             }
             setprop("instrumentation/radar/mode-switch", 0);
             me.bullOn = getprop("f16/avionics/bulls-eye-defined");
@@ -723,6 +761,7 @@ var MFD_Device =
                 me.root.norm.setText("NORM");
             }
             me.root.exp.setVisible(exp);
+            me.root.acm.setVisible(getprop("f16/avionics/dgft"));
             me.root.horiz.setRotation(-getprop("orientation/roll-deg")*D2R);
             me.time = getprop("sim/time/elapsed-sec");
             me.az = getprop("instrumentation/radar/az-field");
@@ -732,7 +771,11 @@ var MFD_Device =
                     me.fwd = !me.fwd;
                 }
                 me.plc = plc;
-                me.root.ant_bottom.setTranslation(me.wdt*0.5-(me.az/120)*me.wdt*0.5+(me.az/120)*me.wdt*math.abs(me.fwd-me.plc),0);
+                if (!rdrMode) {
+                    me.root.ant_bottom.setTranslation(me.wdt*0.5-(me.az/120)*me.wdt*0.5+(me.az/120)*me.wdt*math.abs(me.fwd-me.plc),0);
+                } else {
+                    me.root.ant_bottom.setTranslation(-192+me.gmLine*3+276*0.795,0);
+                }
                 me.root.silent.hide();
             } elsif (getprop("/f16/avionics/power-fcr-bit") == 2) {
                 me.root.silent.setText("SILENT");
@@ -815,48 +858,70 @@ var MFD_Device =
             }
             me.root.cursorLoc.setVisible(me.bullOn);
             
-            if (getprop("sim/multiplay/generic/int[2]")!=1 and me.root.rdrMode) {
+            if (getprop("sim/multiplay/generic/int[2]")!=1 and rdrMode) {
                 # GM mode
-                me.gmLine += 1;
-                if (me.gmLine > 127) {
-                    me.gmLine = 0;
-                }
-                me.gmCoord = geo.aircraft_position();
-                me.gmMe = geo.aircraft_position();
-                me.gmHead = getprop("orientation/heading-deg");
-                me.gmCoord.apply_course_distance(me.gmHead-90, NM2M*getprop("instrumentation/radar/radar2-range")*0.5);
-                me.gmCoord.apply_course_distance(me.gmHead+90, NM2M*getprop("instrumentation/radar/radar2-range")*me.gmLine/127);
-                for(me.gmi = 0; me.gmi < 128; me.gmi += 1) {
-                    
-                    if (math.abs(geo.normdeg180(me.gmMe.course_to(me.gmCoord)-me.gmHead)) < 60) {
-                        me.gmEle = geo.elevation(me.gmCoord.lat(),me.gmCoord.lon());
-                        if (me.gmEle == nil) {
-                            me.gmEle = 0;
-                            #print("nil");
+                me.linesFrame = 2;
+                while (me.linesFrame > 0) {
+                    me.gmLine += 1;
+                    if (me.gmLine > 127) {
+                        me.gmLine = 0;
+                        me.gmMin = me.gmMintemp;
+                        me.gmMax = me.gmMaxtemp;
+                        if (me.gmMin == me.gmMax) {
+                            me.gmMax += 1;
                         }
-                        me.gmColor = math.clamp((me.gmEle*M2FT-4500)/1000,0,1);
-                        #printf("GM %03d,%03d: %3d",me.gmLine,me.gmi,me.gmColor*127);
-                        #if (me.gmLine != 0)
-                        #print(me.gmLine);
-                        #me.root.gmPic.set("src", "Aircraft/f16/Nasal/MFD/gm.png");
-                        #me.root.gmPic.setPixel(int(rand()*127), int(rand()*127), [me.gmColor,me.gmColor,me.gmColor,1]);
-                        me.root.gmPic.setPixel(me.gmLine, me.gmi, [me.gmColor,me.gmColor,me.gmColor,1]);
-                        #f16.f16_mfd.MFDl.p_RDR.root.gmPic.setPixel(50, 50, [1,0,0,1]);
-                        #f16.f16_mfd.MFDl.p_RDR.root.gmPicG.update();
+                        #printf("GM radar scanning from from %d to %d ft", me.gmMin*M2FT, me.gmMax*M2FT);
+                        me.gmMintemp = 5000;
+                        me.gmMaxtemp = 300;
                     }
-                    me.gmCoord.apply_course_distance(me.gmHead, NM2M*getprop("instrumentation/radar/radar2-range")/128);
+                    me.gmCoord = geo.aircraft_position();
+                    me.gmMe = geo.aircraft_position();
+                    me.gmHead = getprop("orientation/heading-deg");
+                    me.gmCoord.apply_course_distance(me.gmHead-90, NM2M*getprop("instrumentation/radar/radar2-range")*0.5);
+                    me.gmCoord.apply_course_distance(me.gmHead+90, NM2M*getprop("instrumentation/radar/radar2-range")*me.gmLine/127);
+                    for(me.gmi = 0; me.gmi < 128; me.gmi += 1) {
+                        
+                        if (math.abs(geo.normdeg180(me.gmMe.course_to(me.gmCoord)-me.gmHead)) < 60) {
+                            me.gmEle = geo.elevation(me.gmCoord.lat(),me.gmCoord.lon());
+                            if (me.gmEle == nil) {
+                                me.gmEle = 0;
+                                #print("nil");
+                            }
+                            if (me.gmEle > me.gmMaxtemp) {
+                                me.gmMaxtemp = me.gmEle;
+                            }
+                            if (me.gmEle < me.gmMintemp) {
+                                me.gmMintemp = me.gmEle;
+                            }
+                            me.gmColor = math.clamp((me.gmEle-me.gmMin)/(me.gmMax-me.gmMin),0,1);
+                            #printf("GM %03d,%03d: %3d %.5f",me.gmLine,me.gmi,me.gmColor*127,me.gmColor);
+                            #if (me.gmLine != 0)
+                            #print(me.gmLine);
+                            #me.root.gmPic.set("src", "Aircraft/f16/Nasal/MFD/gm.png");
+                            #me.root.gmPic.setPixel(int(rand()*127), int(rand()*127), [me.gmColor,me.gmColor,me.gmColor,1]);
+                            me.root.gmPic.setPixel(me.gmLine, me.gmi, [me.gmColor,me.gmColor,me.gmColor,1]);
+                            
+                            #me.root.gmPic.update();
+                            #f16.f16_mfd.MFDl.p_RDR.root.gmPic.setPixel(50, 50, [1,0,0,1]);
+                            #f16.f16_mfd.MFDl.p_RDR.root.gmPicG.update();
+                        }
+                        me.gmCoord.apply_course_distance(me.gmHead, NM2M*getprop("instrumentation/radar/radar2-range")/128);
+                    }
+                    me.linesFrame -= 1;
                 }
                 #me.root.gmPic.update();
+                me.root.gmPic.set("src", "Aircraft/f16/Nasal/MFD/gm2.png");
+                me.root.gmPic.set("src", "Aircraft/f16/Nasal/MFD/gm.png");
             }
             
-            me.root.az1.setVisible(!me.root.rdrMode);
-            me.root.az2.setVisible(!me.root.rdrMode);
-            me.root.bars.setVisible(!me.root.rdrMode);
-            me.root.az.setVisible(!me.root.rdrMode);
+            me.root.az1.setVisible(!rdrMode);
+            me.root.az2.setVisible(!rdrMode);
+            me.root.bars.setVisible(!rdrMode);
+            me.root.az.setVisible(!rdrMode);
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
             me.root.rang.setText(sprintf("%d",getprop("instrumentation/radar/radar2-range")));
-            if (me.root.rdrMode) {
+            if (rdrMode) {
                 me.root.dlz.hide();
                 # hide radar echoes here also
                 return;
@@ -2787,6 +2852,7 @@ var cursor_click = -1;
 var cursor_destination = nil;
 var cursor_lock = -1;
 var exp = 0;
+var rdrMode = 0;
 
 var slew_c = 0;
 

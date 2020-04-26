@@ -448,20 +448,28 @@ light: ecm lamp off
         <type>select</type>
         <object-name>active-off</object-name>
         <condition>
-            <equals>
-                <property>f16/fcs/adv-mode</property>
-                <value>0</value>
-            </equals>
+            <not>
+                <or>
+                    <property>controls/test/test-panel/mal-ind-lts</property>
+                    <greater-than>
+                        <property>f16/fcs/adv-mode</property>
+                        <value>0</value>
+                    </greater-than>
+                </or>
+            </not>
         </condition>
     </animation>
     <animation>
         <type>select</type>
         <object-name>active-on</object-name>
         <condition>
-            <greater-than>
-                <property>f16/fcs/adv-mode</property>
-                <value>0</value>
-            </greater-than>
+            <or>
+                <property>controls/test/test-panel/mal-ind-lts</property>
+                <greater-than>
+                    <property>f16/fcs/adv-mode</property>
+                    <value>0</value>
+                </greater-than>
+            </or>
         </condition>
     </animation>
     <animation>
@@ -498,20 +506,28 @@ light: ecm lamp off
         <type>select</type>
         <object-name>ecm-enbl-off</object-name>
         <condition>
-            <equals>
-                <property>controls/armament/ecm-enabled</property>
-                <value>0</value>
-            </equals>
+            <not>
+                <or>
+                    <property>controls/test/test-panel/mal-ind-lts</property>
+                    <greater-than>
+                        <property>controls/armament/ecm-enabled</property>
+                        <value>0</value>
+                    </greater-than>
+                </or>
+            </not>
         </condition>
     </animation>
     <animation>
         <type>select</type>
         <object-name>ecm-enbl-on</object-name>
         <condition>
-            <greater-than>
-                <property>controls/armament/ecm-enabled</property>
-                <value>0</value>
-            </greater-than>
+            <or>
+                <property>controls/test/test-panel/mal-ind-lts</property>
+                <greater-than>
+                    <property>controls/armament/ecm-enabled</property>
+                    <value>0</value>
+                </greater-than>
+            </or>
         </condition>
     </animation>
     <animation>
@@ -568,20 +584,28 @@ light: ecm lamp off
         <type>select</type>
         <object-name>stby-off</object-name>
         <condition>
-            <equals>
-                <property>f16/fcs/stby-mode</property>
-                <value>0</value>
-            </equals>
+            <not>
+                <or>
+                    <property>controls/test/test-panel/mal-ind-lts</property>
+                    <greater-than>
+                        <property>f16/fcs/stby-mode</property>
+                        <value>0</value>
+                    </greater-than>
+                </or>
+            </not>
         </condition>
     </animation>
     <animation>
         <type>select</type>
         <object-name>stby-on</object-name>
         <condition>
-            <greater-than>
-                <property>f16/fcs/stby-mode</property>
-                <value>0</value>
-            </greater-than>
+            <or>
+                <property>controls/test/test-panel/mal-ind-lts</property>
+                <greater-than>
+                    <property>f16/fcs/stby-mode</property>
+                    <value>0</value>
+                </greater-than>
+            </or>
         </condition>
     </animation>
 </PropertyList>

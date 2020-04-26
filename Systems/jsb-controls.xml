@@ -2357,6 +2357,9 @@
             <description>                
             </description>
             <default value="fcs/fly-by-wire/lef/cmd-pos"/>
+            <test logic="AND" value="0">
+                fcs/fly-by-wire/enable-standby-gains == 1
+            </test>
             <test logic="AND" value="fcs/fly-by-wire/lef/cmd-pos-elec">
                 elec/bus/flcc/d lt 20
             </test>
@@ -2369,6 +2372,9 @@
 
         <switch name="fcs/fly-by-wire/lef/pos-hyd">
           <default value="0"/>
+          <test  logic="OR" value="fcs/fly-by-wire/lef/lef-pos-deg">
+            /f16/avionics/le-flaps-switch == 0
+          </test>
           <test  logic="OR" value="fcs/fly-by-wire/lef/servo">
             systems/hydraulics/sysa-psi ge 2000
             systems/hydraulics/sysb-psi ge 2000

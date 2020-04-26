@@ -436,12 +436,6 @@
  </animation>
  
  <animation>
-  <object-name>horiz-l</object-name>
-  <object-name>horiz-r</object-name>
-  <object-name>flaperons-l</object-name>
-  <object-name>flaperons-r</object-name>
-  <object-name>rudder-dot</object-name>
-  <object-name>stbygains-dot</object-name>
   <object-name>stbygains-y</object-name>
   <object-name>stbygains-r</object-name>
   <object-name>stbygains-p</object-name>
@@ -693,6 +687,176 @@
    <blue>1</blue>
   </emission>
  </animation>
+ 
+ <animation>
+  <object-name>horiz-l</object-name>
+  <type>material</type>
+  <condition>
+    <or>
+          <and>
+            <greater-than>
+              <property>fdm/jsbsim/elec/bus/batt-2</property>
+              <value>20</value>
+            </greater-than>
+            <equals>
+              <property>f16/fail/servo-tail-switch</property>
+              <value>1</value>
+            </equals>
+            <equals>
+              <property>sim/failure-manager/controls/flight/elevator/serviceable</property>
+              <value>1</value>
+            </equals>
+          </and>
+          <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
+ 
+ <animation>
+  <object-name>horiz-r</object-name>
+  <type>material</type>
+  <condition>
+    <or>
+          <and>
+            <greater-than>
+              <property>fdm/jsbsim/elec/bus/batt-2</property>
+              <value>20</value>
+            </greater-than>
+            <equals>
+              <property>f16/fail/servo-tail-switch</property>
+              <value>-1</value>
+            </equals>
+            <equals>
+              <property>sim/failure-manager/controls/flight/elevator/serviceable</property>
+              <value>1</value>
+            </equals>
+          </and>
+          <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
+ 
+ <animation>
+  <object-name>flaperons-l</object-name>
+  <type>material</type>
+  <condition>
+    <or>
+          <and>
+            <greater-than>
+              <property>fdm/jsbsim/elec/bus/batt-2</property>
+              <value>20</value>
+            </greater-than>
+            <equals>
+              <property>f16/fail/servo-flaperon-switch</property>
+              <value>1</value>
+            </equals>
+            <equals>
+              <property>sim/failure-manager/controls/flight/aileron/serviceable</property>
+              <value>1</value>
+            </equals>
+          </and>
+          <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
+ 
+ <animation>
+  <object-name>flaperons-r</object-name>
+  <type>material</type>
+  <condition>
+    <or>
+          <and>
+            <greater-than>
+              <property>fdm/jsbsim/elec/bus/batt-2</property>
+              <value>20</value>
+            </greater-than>
+            <equals>
+              <property>f16/fail/servo-flaperon-switch</property>
+              <value>-1</value>
+            </equals>
+            <equals>
+              <property>sim/failure-manager/controls/flight/aileron/serviceable</property>
+              <value>1</value>
+            </equals>
+          </and>
+          <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
+ 
+ <animation>
+  <object-name>rudder-dot</object-name>
+  <type>material</type>
+  <condition>
+    <or>
+          <and>
+            <greater-than>
+              <property>fdm/jsbsim/elec/bus/batt-2</property>
+              <value>20</value>
+            </greater-than>
+            <equals>
+              <property>f16/fail/servo-rudder-switch</property>
+              <value>1</value>
+            </equals>
+            <equals>
+              <property>sim/failure-manager/controls/flight/rudder/serviceable</property>
+              <value>1</value>
+            </equals>
+          </and>
+          <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
+ 
+ <animation>
+  <object-name>stbygains-dot</object-name>
+  <type>material</type>
+  <condition>
+    <or>
+          <and>
+            <greater-than>
+              <property>fdm/jsbsim/elec/bus/batt-2</property>
+              <value>20</value>
+            </greater-than>
+            <equals>
+              <property>fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains</property>
+              <value>1</value>
+            </equals>
+          </and>
+          <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
 
  <!-- PICK ANIMATIONS -->
 
@@ -813,6 +977,18 @@
      </binding>
     </action>
    </animation>
+   
+   <animation>
+    <type>translate</type>
+    <object-name>MAL_IND_LTS</object-name>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    <factor>-0.0035</factor>
+    <axis>
+     <x>0</x>
+     <y>0</y>
+     <z>1</z>
+    </axis>
+   </animation>
 
   <animation>
     <type>pick</type>
@@ -848,7 +1024,167 @@
         </binding>
       </mod-up>
     </action>
-   </animation> 
+   </animation>
+   
+   <animation>
+        <type>knob</type>
+        <object-name>SW_LE_FLAPS</object-name>
+        <property>f16/avionics/le-flaps-switch</property>
+        <factor>40</factor>
+        <offset-deg>-20</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <center>
+          <x-m>0.65821</x-m>
+          <y-m>-0.40929</y-m>
+          <z-m>0.00661</z-m>
+        </center>
+        <axis>
+          <x>1</x>
+          <y>0</y>
+          <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/le-flaps-switch</property>
+                <step>1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/le-flaps-switch</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+   
+   <animation>
+        <type>knob</type>
+        <object-name>SW_SERVO_RUDDER</object-name>
+        <property>f16/fail/servo-rudder-switch</property>
+        <factor>20</factor>
+        <offset-deg>0</offset-deg>
+        <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>-10</drag-scale-px><!-- 10 is default -->
+        <center>
+          <x-m>0.61927</x-m>
+          <y-m>-0.51574</y-m>
+          <z-m>0.00768</z-m>
+        </center>
+        <axis>
+          <x>0</x>
+          <y>1</y>
+          <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/fail/servo-rudder-switch</property>
+                <step>1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/fail/servo-rudder-switch</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>SW_SERVO_FLAPERON</object-name>
+        <property>f16/fail/servo-flaperon-switch</property>
+        <factor>20</factor>
+        <offset-deg>0</offset-deg>
+        <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>-10</drag-scale-px><!-- 10 is default -->
+        <center>
+          <x-m>0.66103</x-m>
+          <y-m>-0.51573</y-m>
+          <z-m>0.00768</z-m>
+        </center>
+        <axis>
+          <x>0</x>
+          <y>1</y>
+          <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/fail/servo-flaperon-switch</property>
+                <step>1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/fail/servo-flaperon-switch</property>
+                <step>-1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>SW_SERVO_HORIZ</object-name>
+        <property>f16/fail/servo-tail-switch</property>
+        <factor>20</factor>
+        <offset-deg>0</offset-deg>
+        <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>-10</drag-scale-px><!-- 10 is default -->
+        <center>
+          <x-m>0.70142</x-m>
+          <y-m>-0.5159</y-m>
+          <z-m>0.00768</z-m>
+        </center>
+        <axis>
+          <x>0</x>
+          <y>1</y>
+          <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/fail/servo-tail-switch</property>
+                <step>1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/fail/servo-tail-switch</property>
+                <step>-1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
    
          
    <animation>

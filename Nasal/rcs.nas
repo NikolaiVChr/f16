@@ -29,6 +29,8 @@ var rcs_database = {
     "f16":                      2,      #guess
     "MiG-29":                   6,      #guess
     "SU-27":                    15,     #some data shows 22
+    "daVinci_SU-34":            15,     #same as Su-27 for now
+    "Su-34":                    15,     #same as Su-27 for now
     "SU-37":                    15,
     "J-11A":                    15,
     "T-50":                     0.3,    #guess
@@ -45,8 +47,8 @@ var rcs_database = {
     "EC-137D":                  100,    #guess
     "onox-tanker":              90,     #guess
     "B-1B":                     10,
-    "b2-spirit":                0.002,  #actual: 0.0001
-    "B-2A":                     0.002,  #actual: 0.0001
+    "b2-spirit":                0.001,  #actual: 0.0001
+    "B-2A":                     0.001,  #actual: 0.0001
     "F-117":                    0.003,
     "Blackbird-SR71A":          0.25,
     "Blackbird-SR71B":          0.30,
@@ -103,9 +105,10 @@ var rcs_database = {
     "gci":                      50,     #guess
     "FA-18C_Hornet":            3.5,
     "FA-18D_Hornet":            3.5,
-    "F-22-Raptor":				0.002,	#actual: 0.0001
-    "F-35A":					0.001,
-    "F-35B":					0.001,
+    "F-22-Raptor":				0.001,	#actual: 0.0001
+    "F-35A":					0.0005,
+    "F-35B":					0.0005,
+    "F-35C":                    0.0005,
     "Jaguar-GR1":               6,      #guess  
     "Jaguar-GR3":               6,	    #guess
     "f-20A":                    2.5,    #low end of sources
