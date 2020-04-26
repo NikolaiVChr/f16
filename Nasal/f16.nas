@@ -367,6 +367,7 @@ var slow = {
     } else {
       setprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", 0);
     }
+    setprop("f16/avionics/emer-jett-switch",0);
     settimer(func {me.loop()},5);
   },
 };
