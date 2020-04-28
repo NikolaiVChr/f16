@@ -13,6 +13,7 @@
         <object-name>mmc-switch</object-name>
         <object-name>st-sta-switch</object-name>
         <object-name>ufc-switch</object-name>
+        <object-name>plug</object-name>
         <object-name>AIR_COND</object-name>
         <object-name>TEMP_knob</object-name>
         <object-name>AirSource_knob</object-name>

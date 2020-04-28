@@ -3170,22 +3170,22 @@
                 <factor>0.04</factor>
             </volume>
         </avionics>
-        <main-pwr>
-            <name>Main Power</name>
+        <altimeter>
+            <name>altimeter-vibrator</name>
             <path>Sounds/Timi/f16-battery.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
             <condition>
                 <greater-than>
-                    <property>fdm/jsbsim/elec/switches/main-pwr</property>
-                    <value>0</value> <!-- For now tied to MAIN PWR switch until futher info is found -->
+                    <property>fdm/jsbsim/elec/bus/batt-2</property>
+                    <value>20</value>
                 </greater-than>
             </condition>
             <volume>
                 <property>/sim/current-view/internal</property>
                 <factor>0.075</factor>
             </volume>
-        </main-pwr>
+        </altimeter>
         <boom-report>
             <name>boom-report</name>
             <mode>once</mode>
