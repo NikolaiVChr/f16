@@ -150,6 +150,10 @@
         <checklist>
             <title>Before starting engine</title>
             <item>
+                <name>Canopy</name>
+                <value>As desired</value>
+            </item>
+            <item>
                 <name>MAIN PWR switch</name>
                 <value>BATT</value>
                 <condition>
@@ -405,10 +409,6 @@
                         </not>
                     </and>
                 </condition>
-            </item>
-            <item>
-                <name>Canopy</name>
-                <value>As desired</value>
             </item>
         </checklist>
 
