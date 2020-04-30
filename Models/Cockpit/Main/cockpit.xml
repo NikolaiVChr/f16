@@ -684,16 +684,6 @@
   </offsets>
  </model>
 
- <model>
-  <name>RADAR_SCREEN</name>
-  <path>Aircraft/Instruments-3d/radar2/radar-screen.xml</path>
-  <offsets>
-   <x-m>-4.760</x-m>
-   <y-m>-0.158</y-m>
-   <z-m>0.4793</z-m>
-   <pitch-deg>-13.8</pitch-deg>
-  </offsets>
- </model>
 <!-- ======= END AVIONICS ======= -->
 
 
@@ -704,19 +694,6 @@
    <x-m>-4.555</x-m>
    <y-m>0.0</y-m>
    <z-m>0.65</z-m>
-  </offsets>
- </model>
-
-
- <model>
-  <!-- Just a diamond displayed in the HUD above the nearest target -->
-  <name>HUD_ADDS</name>
-  <path>Aircraft/Instruments-3d/radar2/hud.xml</path>
-  <offsets>
-   <x-m>-4.7061</x-m>
-   <y-m>0</y-m>
-   <z-m>0.803</z-m>
-   <pitch-deg>-5</pitch-deg>
   </offsets>
  </model>
 
