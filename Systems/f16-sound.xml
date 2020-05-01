@@ -2781,7 +2781,7 @@
             </condition>
             <volume>
                 <property>/sim/current-view/internal</property>
-                <factor>0.4</factor>
+                <factor>0.55</factor>
             </volume>
         </rwr>
         <radar-active>
