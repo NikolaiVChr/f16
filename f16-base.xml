@@ -564,6 +564,7 @@
                 <short n="7" type="int">0</short><!-- turbine emission color from afterburner -->
                 <string n="5" type="string">00--++00--Empty</string><!-- mp stores -->
                 <string n="4" type="string"></string><!-- string 4 used by IFF -->
+                <string n="6" type="string"></string><!-- string 6 used by radar lock RWR warning -->
             </generic>
             <visibility-range-nm type="int">160</visibility-range-nm>
         </multiplay>

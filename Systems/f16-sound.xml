@@ -2758,6 +2758,32 @@
                 <factor>1</factor>
             </volume>
         </rwr>
+        <rwr>
+            <name>rwr-lock</name>
+            <path>Aircraft/f16/Sounds/rwr-lock-01.wav</path>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <condition>
+                <or>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                        <value>20</value>
+                    </greater-than>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                        <value>20</value>
+                    </greater-than>
+                </or>
+                <equals>
+                    <property>sound/rwr-lck</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <volume>
+                <property>/sim/current-view/internal</property>
+                <factor>0.4</factor>
+            </volume>
+        </rwr>
         <radar-active>
             <name>radar-active</name>
             <mode>once</mode>

@@ -61,15 +61,23 @@ var SubSystem_RWR_APG = {
     update : func(notification) {
             #printf("clist %d", size(notification.completeList));
             if (!getprop("instrumentation/rwr/serviceable") or getprop("f16/avionics/power-ufc-warm") != 1) {
+                setprop("sound/rwr-lck", 0);
                 return;
             }
             notification.rwrList16 = [];
             notification.rwrList = [];
             me.fct = 10*2.0;
             if (notification["completeList"] == nil) return;
+            me.myCallsign = getprop("sim/multiplay/callsign");
+            me.myCallsign = size(me.myCallsign) < 8 ? me.myCallsign : left(me.myCallsign,7);
+            me.act_lck = 0;
             foreach(me.u;notification.completeList) {
                 me.cs = me.u.get_Callsign();
                 me.rn = me.u.get_range();
+                me.lck = me.u.propNode.getNode("sim/multiplay/generic/string[6]");
+                if (me.lck != nil and size(me.lck.getValue())==4 and left(md5(me.myCallsign),4) == me.lck.getValue()) {
+                    me.act_lck = 1;
+                }
                 me.l16 = 0;
                 if (notification.link16_wingman_1 == me.cs or notification.link16_wingman_2 == me.cs or notification.link16_wingman_3 == me.cs or notification.link16_wingman_4 == me.cs or notification.link16_wingman_5 == me.cs or notification.link16_wingman_6 == me.cs or notification.link16_wingman_7 == me.cs or notification.link16_wingman_8 == me.cs or notification.link16_wingman_9 == me.cs or notification.link16_wingman_10 == me.cs or notification.link16_wingman_11 == me.cs or notification.link16_wingman_12 == me.cs or me.rn > 150) {
                     me.l16 = 1;
@@ -131,6 +139,7 @@ var SubSystem_RWR_APG = {
     #                printf("%s ----", me.u.get_Callsign());
                 }
             }
+            setprop("sound/rwr-lck", me.act_lck);
     },
 };
 
