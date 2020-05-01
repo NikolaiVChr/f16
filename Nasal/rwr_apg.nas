@@ -75,7 +75,7 @@ var SubSystem_RWR_APG = {
                 me.cs = me.u.get_Callsign();
                 me.rn = me.u.get_range();
                 me.lck = me.u.propNode.getNode("sim/multiplay/generic/string[6]");
-                if (me.lck != nil and size(me.lck.getValue())==4 and left(md5(me.myCallsign),4) == me.lck.getValue()) {
+                if (me.lck != nil and me.lck.getValue() != nil and me.lck.getValue() != "" and size(""~me.lck.getValue())==4 and left(md5(me.myCallsign),4) == me.lck.getValue()) {
                     me.act_lck = 1;
                 }
                 me.l16 = 0;
