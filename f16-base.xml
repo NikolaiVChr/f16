@@ -2828,7 +2828,7 @@ There is also small changes in tail for different variants with and without brak
             <agm-154a>
                 <short-name type="string">AG154</short-name>
                 <long-name type="string">AGM-154A-1 JSOW</long-name> <!-- Unitary warhead variant -->
-                <fire-msg type="string">Greyhound</fire-msg>
+                <fire-msg type="string">Greyhound</fire-msg><!--Pigs away-->
                 <class type="string">GMP</class>
                 <max-fire-range-nm type="double">70</max-fire-range-nm>
                 <min-fire-range-nm type="double">0.5</min-fire-range-nm>
@@ -2953,7 +2953,7 @@ There is also small changes in tail for different variants with and without brak
                 <prowl-flight type="string">gyro-pitch</prowl-flight>
                 <switch-time-sec type="double">5</switch-time-sec>
                 <class type="string">GM</class>
-                <fire-msg type="string">Sniper</fire-msg>
+                <fire-msg type="string">Sniper</fire-msg><!--Magnum-->
                 <ready-time type="double">0.25</ready-time>
             </agm-88>
             <cbu-87> 
