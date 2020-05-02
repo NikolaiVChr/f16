@@ -109,7 +109,7 @@
         <text>
             <row>6</row>
             <col>0</col>
-            <label>Air Superiority</label>
+            <label>Air Superiority (ER)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>6</row>
@@ -619,6 +619,42 @@
             <col>0</col>
             <colspan>6</colspan>
         </hrule>
+
+        <text>
+            <row>24</row>
+            <col>4</col>
+            <label>A/G Strategic Strike (Unguided)</label>
+        </text>
+        <button><pref-width>45</pref-width><pref-height>20</pref-height>
+            <row>24</row>
+            <col>5</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_strat();</script>
+            </binding>
+        </button>
+
+         <text>
+            <row>26</row>
+            <col>4</col>
+            <label>A/G Tactical Strike (Guided)</label>
+        </text>
+        <button><pref-width>45</pref-width><pref-height>20</pref-height>
+            <row>26</row>
+            <col>5</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_tact();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>21</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
         
         <text>
             <row>20</row>
@@ -636,7 +672,7 @@
         </button>
 
         <hrule>
-            <row>21</row>
+            <row>23</row>
             <col>0</col>
             <colspan>6</colspan>
         </hrule>
@@ -655,5 +691,11 @@
                 <script>pylons.cannon_load();</script>
             </binding>
         </button>
+
+        <hrule>
+            <row>25</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
     </group>
 </PropertyList>
