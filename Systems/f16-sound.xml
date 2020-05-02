@@ -2409,6 +2409,23 @@
                 <property>f16/sound/dist-thunder3</property>
             </volume>
         </thunder3>
+        <thunder4>
+            <name>thunder4</name>
+            <mode>once</mode>
+            <path>Aircraft/f16/Sounds/Effects/thunder4.wav</path>
+            <type>avionics</type>
+            <property>f16/sound/thunder4</property>
+            <pitch>
+                <property>f16/sound/dist-thunder4</property>
+                <factor>1</factor>
+                <offset>0.50</offset>
+                <min>1.00</min>
+                <max>2.00</max>
+            </pitch>
+            <volume>
+                <property>f16/sound/dist-thunder4</property>
+            </volume>
+        </thunder4>
         <brake>
             <name>speedbrake</name>
             <path>Aircraft/f16/Sounds/speedbrake.wav</path>

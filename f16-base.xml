@@ -3284,6 +3284,7 @@ There is also small changes in tail for different variants with and without brak
             <thunder1 type="bool">false</thunder1>
             <thunder2 type="bool">false</thunder2>
             <thunder3 type="bool">false</thunder3>
+            <thunder4 type="bool">false</thunder4>
             <button type="bool">false</button>
             <button2 type="bool">false</button2>
             <clamp type="bool">false</clamp>

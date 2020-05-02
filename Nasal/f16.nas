@@ -1289,6 +1289,7 @@ var thunder_listener = func {
         var thunder1 = getprop("f16/sound/thunder1");
         var thunder2 = getprop("f16/sound/thunder2");
         var thunder3 = getprop("f16/sound/thunder3");
+        var thunder4 = getprop("f16/sound/thunder4");
         var vol = 0;
         if(getprop("sim/current-view/internal") != nil and getprop("canopy/position-norm") != nil) {
           vol = clamp(1-(getprop("sim/current-view/internal")*0.5)+(getprop("canopy/position-norm")*0.5), 0, 1);
@@ -1306,6 +1307,10 @@ var thunder_listener = func {
         else if (!thunder3) {
             thunderCalls = 3;
             setprop("f16/sound/dist-thunder3", lightning_distance_norm * vol * 2.25);
+        }
+        else if (!thunder4) {
+            thunderCalls = 4;
+            setprop("f16/sound/dist-thunder4", lightning_distance_norm * vol * 2.25);
         }
         else
             return;
