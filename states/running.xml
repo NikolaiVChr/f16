@@ -23,6 +23,19 @@
                     <starter type="bool">false</starter>
                 </engine>
             </engines>
+            <lighting>
+                <ext-lighting-panel>
+                    <master type="bool">true</master>
+                </ext-lighting-panel>
+                <lighting-panel>
+                    <pri-inst-pnl type="double">0.3</pri-inst-pnl>
+                    <pri-inst-pnl-knob type="double">0.3</pri-inst-pnl-knob>
+                    <flood-inst-pnl type="double">0.1</flood-inst-pnl>
+                    <flood-inst-pnl-knob type="double">0.1</flood-inst-pnl-knob>
+                    <console-primary-knob type="double">0.2</console-primary-knob>
+                    <console-primary type="double">0.2</console-primary>
+                </lighting-panel>
+            </lighting>
             <seat>
                 <ejection-safety-lever type="bool">true</ejection-safety-lever>
             </seat>
