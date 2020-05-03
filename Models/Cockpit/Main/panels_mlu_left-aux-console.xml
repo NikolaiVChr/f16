@@ -84,12 +84,6 @@
         <object-name>ew-run</object-name>
     </effect>
 
-
-
-
-
-
-
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
         <parameters>
