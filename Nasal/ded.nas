@@ -275,8 +275,12 @@ var loop_ded = func {# one line is max 24 chars
       var pond   = getprop("instrumentation/transponder/inputs/knob-mode")==0?0:1;
       if (pond) pond = sprintf("%04d",getprop("instrumentation/transponder/id-code"));
       else pond = "----";
+      var off = "   ";
+      if (getprop("instrumentation/comm["~comm~"]/volume") == 0) {
+        off = "OFF";
+      }
       text[0] = sprintf("UHF    --    STPT %s",no);
-      text[1] = sprintf(" COMM%d                   ",comm+1);
+      text[1] = sprintf(" COMM%d  %s              ",comm+1,off);
       text[2] = sprintf("VHF  %6.2f   %s",freq,time);
       text[3] = sprintf("                        ");
       text[4] = sprintf("M34   %s    MAN  T%s",pond,t);

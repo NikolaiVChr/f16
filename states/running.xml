@@ -79,6 +79,12 @@
             <radar>
                 <radar-standby type="bool">false</radar-standby>
             </radar>
+            <comm n="0">
+                <volume type="double">1</volume>
+            </comm>
+            <comm n="1">
+                <volume type="double">1</volume>
+            </comm>
         </instrumentation>    
     </overlay>
 

@@ -2163,6 +2163,12 @@ There is also small changes in tail for different variants with and without brak
             </frequencies>
             <volume type="double">0</volume>
         </dme>
+        <comm n="0">
+            <volume type="double">0</volume>
+        </comm>
+        <comm n="1">
+            <volume type="double">0</volume>
+        </comm>
         <gci>
             <picture type="bool">false</picture>
             <bogeydope type="bool">false</bogeydope>

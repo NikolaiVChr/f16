@@ -947,6 +947,36 @@
                     <value>1</value>
                 </binding>
             </item>
+            <item>
+                <name>COMM 1 knob</name>
+                <value>ON</value>
+                <condition>
+                    <equals>
+                        <property>instrumentation/comm[0]/volume</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>instrumentation/comm[0]/volume</property>
+                    <value>1</value>
+                </binding>
+            </item>
+            <item>
+                <name>COMM 2 knob</name>
+                <value>ON</value>
+                <condition>
+                    <equals>
+                        <property>instrumentation/comm[1]/volume</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>instrumentation/comm[1]/volume</property>
+                    <value>1</value>
+                </binding>
+            </item>
         </checklist>
         
         
