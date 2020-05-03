@@ -2167,6 +2167,9 @@ There is also small changes in tail for different variants with and without brak
             </frequencies>
             <volume type="double">0</volume>
         </dme>
+        <nav n="0">
+            <volume type="double">0.1</volume>
+        </nav>
         <comm n="0">
             <volume type="double">0</volume>
         </comm>
@@ -2255,8 +2258,8 @@ There is also small changes in tail for different variants with and without brak
             <aim-9>
                 <short-name type="string">A-9L</short-name>
                 <long-name type="string">AIM-9L Sidewinder</long-name>
-                <vol-search type="double">0.075</vol-search>
-                <vol-track type="double">0.25</vol-track>
+                <vol-search type="double">0.15</vol-search>
+                <vol-track type="double">0.50</vol-track>
                 <guidance type="string">heat</guidance>                       <!-- heat, radar or semi-radar -->
                 <navigation type="string">PN</navigation>
                 <all-aspect type="bool">true</all-aspect>                     <!-- all or rear-only -->
@@ -3387,6 +3390,8 @@ value. 18000=standard US transition altitude -->
             <ew-rwr-switch type="bool">false</ew-rwr-switch>
             <ew-mws-switch type="bool">false</ew-mws-switch>
             <ew-jmr-switch type="bool">false</ew-jmr-switch>
+            <msl-vol-knob type="double">0.5</msl-vol-knob>
+            <rwr-volume type="double">0.7</rwr-volume>
         </avionics>
         <fcs>
             <stby-mode type="bool">false</stby-mode>
