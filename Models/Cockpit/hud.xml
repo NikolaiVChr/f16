@@ -20,7 +20,7 @@
     <reflection-strength type="float">1.0</reflection-strength>
     <use-mask type="int">0</use-mask>
     <use-overlay type="int">1</use-overlay>
-    <hud-brightness><use>f16/avionics/hud-brt</use></hud-brightness>
+    <hud-brightness><use>f16/avionics/hud-sym</use></hud-brightness>
     <rendering-hint>transparent</rendering-hint>
     <transparent>true</transparent>
     <render-bin>

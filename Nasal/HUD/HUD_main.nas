@@ -973,7 +973,7 @@ append(obj.total, obj.speed_curr);
                  speed_down_fps            : "velocities/speed-down-fps",
                  speed_east_fps            : "velocities/speed-east-fps",
                  speed_north_fps           : "velocities/speed-north-fps",
-                 hud_brightness            : "f16/avionics/hud-brt",
+                 hud_brightness            : "f16/avionics/hud-sym",
                  hud_power                 : "f16/avionics/hud-power",
                  hud_display               : "controls/HUD/display-on",
                  hud_serviceable           : "instrumentation/hud/serviceable",
