@@ -58,6 +58,9 @@
             <path>/instrumentation/tacan/frequencies/selected-channel[3]</path>
             <path>/instrumentation/tacan/frequencies/selected-channel[4]</path>
             <path>/instrumentation/iff/channel-selection</path>
+            <path>/f16/avionics/msl-vol-knob</path>
+            <path>/instrumentation/nav[0]/volume</path>
+            <path>/f16/avionics/rwr-volume</path>
         </aircraft-data>
         <tags>
             <tag>fighter</tag>
