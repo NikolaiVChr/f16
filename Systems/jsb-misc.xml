@@ -569,7 +569,21 @@
                     </tableData>
                 </table>
             </function>
-        </fcs_function>  
+        </fcs_function>
+        
+        <fcs_function name="/engines/engine[0]/n2-60-to-80-log">
+            <function>
+                <log10>
+                    <table>
+                        <independentVar lookup="row">/engines/engine/n2</independentVar>
+                        <tableData>
+                              60          1.0
+                              80          10.0
+                        </tableData>
+                    </table>
+                </log10>
+            </function>
+        </fcs_function>
 
     </channel>
     
