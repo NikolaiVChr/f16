@@ -1787,7 +1787,7 @@ There is also small changes in tail for different variants with and without brak
         <indicators />
         <lighting>
             <ext-lighting-panel>
-                <master type="bool">true</master>
+                <master type="bool">false</master>
                 <anti-collision type="bool">true</anti-collision>
                 <!--<anti-collision2 type="bool">true</anti-collision2>-->
                 <pos-lights-flash type="bool">false</pos-lights-flash>
@@ -1797,12 +1797,12 @@ There is also small changes in tail for different variants with and without brak
                 <ar-knob type="double">1</ar-knob>
             </ext-lighting-panel>
             <lighting-panel>
-                <pri-inst-pnl type="double">0.2</pri-inst-pnl>
-                <pri-inst-pnl-knob type="double">0.2</pri-inst-pnl-knob>
-                <flood-inst-pnl type="double">0</flood-inst-pnl>
-                <flood-inst-pnl-knob type="double">0</flood-inst-pnl-knob>
-                <console-primary-knob type="double">0.1</console-primary-knob>
-                <console-primary type="double">0.1</console-primary>
+                <pri-inst-pnl type="double">0.0</pri-inst-pnl>
+                <pri-inst-pnl-knob type="double">0.0</pri-inst-pnl-knob>
+                <flood-inst-pnl type="double">0.0</flood-inst-pnl>
+                <flood-inst-pnl-knob type="double">0.0</flood-inst-pnl-knob>
+                <console-primary-knob type="double">0.0</console-primary-knob>
+                <console-primary type="double">0.0</console-primary>
                 <data-entry-display type="double">1.0</data-entry-display>
             </lighting-panel>
             <landing-light type="int">0</landing-light>

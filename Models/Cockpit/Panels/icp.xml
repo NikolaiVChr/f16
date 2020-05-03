@@ -514,7 +514,7 @@
         <condition>
             <greater-than-equals>
                 <property>sim/variant-id</property>
-                <value>5</value>
+                <value>4</value>
             </greater-than-equals>
         </condition>
         <object-name>wx</object-name>

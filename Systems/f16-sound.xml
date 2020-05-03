@@ -2139,8 +2139,8 @@
             <mode>looped</mode>
             <condition>
                 <greater-than>
-                    <property>accelerations/pilot-g</property>
-                    <value>5</value>
+                    <property>f16/avionics/pbg-switch</property><!-- Should be binded to actual oxygen sys -->
+                    <value>-1</value>
                 </greater-than>
             </condition>
             <volume>
@@ -3226,7 +3226,7 @@
             </condition>
             <volume>
                 <property>/sim/current-view/internal</property>
-                <factor>0.075</factor>
+                <factor>0.09</factor>
             </volume>
         </altimeter>
         <boom-report>
@@ -4213,6 +4213,18 @@
                 <factor>1</factor>
             </volume>
         </missile-hit>
+        <flare-release>
+            <name>flare-release</name>
+            <mode>once</mode>
+            <path>Aircraft/f16/Sounds/Effects/cmds-release.wav</path>
+            <condition>
+                <property>ai/submodels/submodel[0]/flare-release-snd</property>
+            </condition>
+            <volume>
+                <property>fdm/jsbsim/elec/bus/batt-1</property>
+                <factor>0.10</factor>
+            </volume>
+        </flare-release>
         
         <!-- ********************************************************************************* -->
         <!-- ********************************************************************************* -->
