@@ -650,6 +650,10 @@
                 <desc>Masterarm</desc>
             </key>
             <key>
+                <name>d</name>
+                <desc>Dogfight mode toggle</desc>
+            </key>
+            <key>
                 <name>w</name>
                 <desc>Select weapon type</desc>
             </key>
