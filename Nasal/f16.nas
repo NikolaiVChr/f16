@@ -1954,7 +1954,6 @@ setlistener("f16/avionics/ew-disp-switch", click1, nil, 0);
 setlistener("f16/avionics/ew-rwr-switch", click1, nil, 0);
 setlistener("f16/avionics/ew-mws-switch", click1, nil, 0);
 setlistener("f16/avionics/ew-jmr-switch", click1, nil, 0);
-setlistener("f16/avionics/ins-knob", knob, nil, 0);
 setlistener("controls/ventilation/airconditioning-enabled", knob, nil, 0);
 setlistener("controls/ventilation/airconditioning-source", knob, nil, 0);
 setlistener("f16/avionics/o2-switch", click3, nil, 0);
