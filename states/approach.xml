@@ -59,6 +59,7 @@
                 <power-gps type="bool">true</power-gps>
                 <power-dl type="bool">true</power-dl>
                 <ins-knob type="int">3</ins-knob>
+                <hud-sym type="double">1.0</hud-sym>
             </avionics>
         </f16>
         <instrumentation>

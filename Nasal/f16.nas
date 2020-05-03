@@ -964,6 +964,7 @@ var autostart = func {
   setprop("fdm/jsbsim/fcs/canopy-engage", 0);
   setprop("instrumentation/radar/radar-standby", 0);
   setprop("f16/avionics/ins-knob", 2);#ALIGN NORM
+  setprop("f16/avionics/hud-sym", 1);
   if (getprop("engines/engine[0]/running")!=1) {
     if (eng.accu_1_psi < eng.accu_psi_max and eng.accu_2_psi < eng.accu_psi_max) {
       screen.log.write("Both JFS accumulators de-pressurized. Engine start aborted.");
@@ -1897,6 +1898,7 @@ setlistener("instrumentation/radar/iff", doubleClick, nil, 0);
 setlistener("f16/avionics/hud-test", button2, nil, 0);
 setlistener("f16/avionics/hud-ded", button2, nil, 0);
 setlistener("f16/avionics/hud-brt", button2, nil, 0);
+setlistener("f16/avionics/hud-sym", button2, nil, 0);
 setlistener("f16/avionics/hud-alt", button2, nil, 0);
 setlistener("f16/avionics/hud-velocity", button2, nil, 0);
 setlistener("f16/avionics/hud-fpm", click1, nil, 0);
@@ -1907,6 +1909,7 @@ setlistener("f16/engine/jfs-start-switch", button2, nil, 0);
 setlistener("fdm/jsbsim/elec/switches/epu", click2, nil, 0);
 setlistener("f16/engine/max-power", button2, nil, 0);
 setlistener("f16/avionics/hud-brt", scroll, nil, 0);
+setlistener("f16/avionics/hud-sym", scroll, nil, 0);
 setlistener("f16/avionics/rwr-int", click3, nil, 0);
 setlistener("f16/avionics/mfd-l-con", click3, nil, 0);
 setlistener("f16/avionics/mfd-l-brt", click3, nil, 0);

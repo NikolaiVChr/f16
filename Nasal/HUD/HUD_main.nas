@@ -503,7 +503,7 @@ append(obj.total, obj.speed_curr);
 
         obj.initUpdate =1;
         
-        obj.alpha = getprop("f16/avionics/hud-brt");
+        obj.alpha = getprop("f16/avionics/hud-sym");
         obj.power = getprop("f16/avionics/hud-power");
 
         obj.dlzX      = sx*0.695633*0.75-6;
