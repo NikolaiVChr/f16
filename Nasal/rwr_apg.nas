@@ -60,7 +60,7 @@ var SubSystem_RWR_APG = {
 	},
     update : func(notification) {
             #printf("clist %d", size(notification.completeList));
-            if (!getprop("instrumentation/rwr/serviceable") or getprop("f16/avionics/power-ufc-warm") != 1) {
+            if (!getprop("instrumentation/rwr/serviceable") or getprop("f16/avionics/power-ufc-warm") != 1 or getprop("f16/avionics/ew-rwr-switch") != 1) {
                 setprop("sound/rwr-lck", 0);
                 return;
             }

@@ -144,6 +144,7 @@
                 <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
                 <value>20</value>
             </greater-than-equals>
+            <property>f16/avionics/ew-disp-switch</property>
           </condition>
         <emission>
             <red>1</red>
@@ -509,6 +510,106 @@
             <binding>
                 <command>property-adjust</command>
                 <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
+                <factor>1</factor>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>DISP_switch</object-name>
+        <property>f16/avionics/ew-disp-switch</property>
+        <factor>60</factor>
+        <offset-deg>-30</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>-0.04172</x-m><y-m>-0.32962</y-m><z-m>0.00546</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>-1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ew-disp-switch</property>
+                <factor>1</factor>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>RWR_switch</object-name>
+        <property>f16/avionics/ew-rwr-switch</property>
+        <factor>60</factor>
+        <offset-deg>-30</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>-0.04172</x-m><y-m>-0.32962</y-m><z-m>0.00546</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>-1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ew-rwr-switch</property>
+                <factor>1</factor>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>MWS_switch</object-name>
+        <property>f16/avionics/ew-mws-switch</property>
+        <factor>60</factor>
+        <offset-deg>-30</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>-0.04172</x-m><y-m>-0.32962</y-m><z-m>0.00546</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>-1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ew-mws-switch</property>
+                <factor>1</factor>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>JMR_switch</object-name>
+        <property>f16/avionics/ew-jmr-switch</property>
+        <factor>60</factor>
+        <offset-deg>-30</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>-0.04172</x-m><y-m>-0.32962</y-m><z-m>0.00546</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>-1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ew-jmr-switch</property>
                 <factor>1</factor>
                 <min>0</min>
                 <max>1</max>

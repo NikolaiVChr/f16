@@ -965,6 +965,12 @@ var autostart = func {
   setprop("instrumentation/radar/radar-standby", 0);
   setprop("f16/avionics/ins-knob", 2);#ALIGN NORM
   setprop("f16/avionics/hud-sym", 1);
+  setprop("controls/lighting/ext-lighting-panel/master", 1);
+  setprop("f16/avionics/ew-rwr-switch",1);
+  setprop("f16/avionics/ew-disp-switch",1);
+  setprop("f16/avionics/ew-mws-switch",1);
+  setprop("f16/avionics/ew-jmr-switch",1);
+  setprop("controls/ventilation/airconditioning-source",1);
   if (getprop("engines/engine[0]/running")!=1) {
     if (eng.accu_1_psi < eng.accu_psi_max and eng.accu_2_psi < eng.accu_psi_max) {
       screen.log.write("Both JFS accumulators de-pressurized. Engine start aborted.");

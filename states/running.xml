@@ -41,6 +41,7 @@
             </seat>
             <ventilation>
                 <airconditioning-enabled type="bool">true</airconditioning-enabled>
+                <airconditioning-source type="bool">true</airconditioning-source>
             </ventilation>
         </controls>
         <engines>
@@ -68,6 +69,10 @@
                 <power-dl type="bool">true</power-dl>
                 <ins-knob type="int">3</ins-knob>
                 <hud-sym type="double">1.0</hud-sym>
+                <ew-disp-switch type="bool">true</ew-disp-switch>
+                <ew-rwr-switch type="bool">true</ew-rwr-switch>
+                <ew-mws-switch type="bool">true</ew-mws-switch>
+                <ew-jmr-switch type="bool">true</ew-jmr-switch>
             </avionics>
         </f16>
         <instrumentation>

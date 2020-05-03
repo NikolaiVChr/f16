@@ -1824,6 +1824,7 @@ There is also small changes in tail for different variants with and without brak
         <ventilation>
             <airconditioning-type type="int">0</airconditioning-type><!-- cold for 12s: -1 auto: 0 warm for 12s: 1 -->
             <airconditioning-enabled type="bool">false</airconditioning-enabled>
+            <airconditioning-source type="bool">false</airconditioning-source>
             <airconditioning-temperature type="double">16.0</airconditioning-temperature>
             <windshield-hot-air-knob type="double">0.0</windshield-hot-air-knob>
         </ventilation>
@@ -3372,6 +3373,10 @@ value. 18000=standard US transition altitude -->
             <power-right-hdpt-warming type="bool">true</power-right-hdpt-warming>
             <le-flaps-switch type="bool">true</le-flaps-switch>
             <ins-knob type="int">0</ins-knob>            
+            <ew-disp-switch type="bool">false</ew-disp-switch>
+            <ew-rwr-switch type="bool">false</ew-rwr-switch>
+            <ew-mws-switch type="bool">false</ew-mws-switch>
+            <ew-jmr-switch type="bool">false</ew-jmr-switch>
         </avionics>
         <fcs>
             <stby-mode type="bool">false</stby-mode>
