@@ -319,7 +319,9 @@ return;
 		}
         armament.contact = nil;
         setprop("sim/multiplay/generic/string[6]", "");
-	}
+	} else {
+        setprop("sim/multiplay/generic/string[6]", "");
+    }
 }
 
 var sweep_frame_inc = 0.2;
