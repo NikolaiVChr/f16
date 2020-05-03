@@ -692,13 +692,13 @@
                 <condition>
                     <equals>
                         <property>f16/avionics/ins-knob</property>
-                        <value>1</value>
+                        <value>2</value>
                     </equals>
                 </condition>
                 <binding>
                     <command>property-assign</command>
                     <property>f16/avionics/ins-knob</property>
-                    <value>1</value>
+                    <value>2</value>
                 </binding>
             </item>
             <item>
@@ -1006,13 +1006,13 @@
                 <condition>
                     <equals>
                         <property>f16/avionics/ins-knob</property>
-                        <value>2</value>
+                        <value>3</value>
                     </equals>
                 </condition>
                 <binding>
                     <command>property-assign</command>
                     <property>f16/avionics/ins-knob</property>
-                    <value>2</value>
+                    <value>3</value>
                 </binding>
             </item>
             <item>
