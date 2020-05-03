@@ -965,6 +965,7 @@ var autostart = func {
   setprop("instrumentation/radar/radar-standby", 0);
   setprop("f16/avionics/ins-knob", 2);#ALIGN NORM
   setprop("f16/avionics/hud-sym", 1);
+  setprop("f16/avionics/hud-brt", 1);
   setprop("controls/lighting/ext-lighting-panel/master", 1);
   setprop("f16/avionics/ew-rwr-switch",1);
   setprop("f16/avionics/ew-disp-switch",1);
@@ -1855,7 +1856,6 @@ var lift_cover = func {
 }
 
 # cockpit control sounds: (don't add ICP buttons to this list, they are calling the functions directly)
-setlistener("controls/lighting/ext-lighting-panel/master", button2, nil, 0);
 setlistener("controls/armament/master-arm", button2, nil, 0);
 setlistener("controls/armament/master-arm-cover-open", lift_cover, nil, 0);
 setlistener("controls/armament/laser-arm-dmd", click2, nil, 0);
@@ -1905,8 +1905,6 @@ setlistener("controls/MFD[2]/button-pressed", doubleClick, nil, 0);
 setlistener("instrumentation/radar/iff", doubleClick, nil, 0);
 setlistener("f16/avionics/hud-test", button2, nil, 0);
 setlistener("f16/avionics/hud-ded", button2, nil, 0);
-setlistener("f16/avionics/hud-brt", button2, nil, 0);
-setlistener("f16/avionics/hud-sym", button2, nil, 0);
 setlistener("f16/avionics/hud-alt", button2, nil, 0);
 setlistener("f16/avionics/hud-velocity", button2, nil, 0);
 setlistener("f16/avionics/hud-fpm", click1, nil, 0);
@@ -1931,6 +1929,11 @@ setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-4", knob, nil,
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-5", knob, nil, 0);
 setlistener("instrumentation/comm[0]/volume", click3, nil, 0);
 setlistener("instrumentation/comm[1]/volume", click3, nil, 0);
+setlistener("instrumentation/tacan/volume", click3, nil, 0);
+setlistener("f16/avionics/msl-vol-knob", click3, nil, 0);
+setlistener("instrumentation/nav[0]/volume", click3, nil, 0);
+setlistener("f16/avionics/rwr-volume", click3, nil, 0);
+setlistener("f16/avionics/intercom-volume", click3, nil, 0);
 setlistener("controls/lighting/lighting-panel/console-flood-knob", click3, nil, 0);
 setlistener("controls/lighting/lighting-panel/flood-inst-pnl-knob", click3, nil, 0);
 setlistener("controls/lighting/lighting-panel/pri-inst-pnl-knob", click3, nil, 0);
@@ -1947,7 +1950,13 @@ setlistener("f16/avionics/power-ufc", click1, nil, 0);
 setlistener("f16/avionics/power-gps", click1, nil, 0);
 setlistener("f16/avionics/power-dl", click1, nil, 0);
 setlistener("f16/avionics/ins-knob", knob, nil, 0);
+setlistener("f16/avionics/ew-disp-switch", click1, nil, 0);
+setlistener("f16/avionics/ew-rwr-switch", click1, nil, 0);
+setlistener("f16/avionics/ew-mws-switch", click1, nil, 0);
+setlistener("f16/avionics/ew-jmr-switch", click1, nil, 0);
+setlistener("f16/avionics/ins-knob", knob, nil, 0);
 setlistener("controls/ventilation/airconditioning-enabled", knob, nil, 0);
+setlistener("controls/ventilation/airconditioning-source", knob, nil, 0);
 setlistener("f16/avionics/o2-switch", click3, nil, 0);
 setlistener("f16/avionics/em-no-te-switch", click3, nil, 0);
 setlistener("f16/avionics/pbg-switch", click3, nil, 0);

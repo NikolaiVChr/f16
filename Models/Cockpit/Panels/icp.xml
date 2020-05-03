@@ -135,7 +135,7 @@
     
     <animation>
         <type>knob</type>
-        <object-name>brt</object-name>
+        <object-name>sym</object-name>
         <property>f16/avionics/hud-sym</property>
         <factor>150</factor>
         <offset-deg>0</offset-deg>

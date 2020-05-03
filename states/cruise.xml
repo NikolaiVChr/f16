@@ -73,6 +73,7 @@
                 <power-dl type="bool">true</power-dl>
                 <ins-knob type="int">3</ins-knob>
                 <hud-sym type="double">1.0</hud-sym>
+                <hud-brt type="double">1.0</hud-brt>
                 <ew-disp-switch type="bool">true</ew-disp-switch>
                 <ew-rwr-switch type="bool">true</ew-rwr-switch>
                 <ew-mws-switch type="bool">true</ew-mws-switch>
