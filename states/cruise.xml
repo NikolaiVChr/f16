@@ -78,6 +78,7 @@
                 <ew-rwr-switch type="bool">true</ew-rwr-switch>
                 <ew-mws-switch type="bool">true</ew-mws-switch>
                 <ew-jmr-switch type="bool">true</ew-jmr-switch>
+                <ew-mode-knob type="bool">true</ew-mode-knob>
             </avionics>
         </f16>
         <instrumentation>

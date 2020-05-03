@@ -187,7 +187,7 @@ var loop_flare = func {
         setprop("ai/submodels/submodel[0]/flare-release-snd", FALSE);
         setprop("ai/submodels/submodel[0]/flare-release-out-snd", FALSE);
     }
-    var flareOn = getprop("ai/submodels/submodel[0]/flare-release-cmd");
+    var flareOn = getprop("ai/submodels/submodel[0]/flare-release-cmd") and getprop("f16/avionics/ew-mode-knob");
     if (flareOn == TRUE and getprop("ai/submodels/submodel[0]/flare-release") == FALSE
             and getprop("ai/submodels/submodel[0]/flare-release-out-snd") == FALSE
             and getprop("ai/submodels/submodel[0]/flare-release-snd") == FALSE) {
@@ -974,6 +974,7 @@ var autostart = func {
   setprop("controls/ventilation/airconditioning-source",1);
   setprop("instrumentation/comm[0]/volume",1);
   setprop("instrumentation/comm[1]/volume",1);
+  setprop("f16/avionics/ew-mode-knob",1);
   if (getprop("engines/engine[0]/running")!=1) {
     if (eng.accu_1_psi < eng.accu_psi_max and eng.accu_2_psi < eng.accu_psi_max) {
       screen.log.write("Both JFS accumulators de-pressurized. Engine start aborted.");

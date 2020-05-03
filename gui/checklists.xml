@@ -948,6 +948,21 @@
                 </binding>
             </item>
             <item>
+                <name>EW MODE knob</name>
+                <value>MAN</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/ew-mode-knob</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/ew-mode-knob</property>
+                    <value>1</value>
+                </binding>
+            </item>
+            <item>
                 <name>COMM 1 knob</name>
                 <value>ON</value>
                 <condition>

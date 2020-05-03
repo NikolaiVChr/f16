@@ -3393,6 +3393,7 @@ value. 18000=standard US transition altitude -->
             <ew-rwr-switch type="bool">false</ew-rwr-switch>
             <ew-mws-switch type="bool">false</ew-mws-switch>
             <ew-jmr-switch type="bool">false</ew-jmr-switch>
+            <ew-mode-knob type="bool">false</ew-mode-knob>
             <msl-vol-knob type="double">0.5</msl-vol-knob>
             <rwr-volume type="double">0.7</rwr-volume>
         </avionics>
