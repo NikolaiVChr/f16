@@ -395,7 +395,7 @@
         
         <lag_filter name="/f16/avionics/oxy-psi">
             <input> /f16/avionics/oxy-psi-direct </input>
-            <c1> 0.35 </c1>
+            <c1> 2.5 </c1>
         </lag_filter>
                 
     </channel>
