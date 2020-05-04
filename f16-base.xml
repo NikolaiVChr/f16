@@ -3302,6 +3302,16 @@ There is also small changes in tail for different variants with and without brak
             <thunder2 type="bool">false</thunder2>
             <thunder3 type="bool">false</thunder3>
             <thunder4 type="bool">false</thunder4>
+            <thunder5 type="bool">false</thunder5>
+            <thunder6 type="bool">false</thunder6>
+            <thunder7 type="bool">false</thunder7>
+            <dist-thunder1 type="double">0</dist-thunder1>
+            <dist-thunder2 type="double">0</dist-thunder2>
+            <dist-thunder3 type="double">0</dist-thunder3>
+            <dist-thunder4 type="double">0</dist-thunder4>
+            <dist-thunder5 type="double">0</dist-thunder5>
+            <dist-thunder6 type="double">0</dist-thunder6>
+            <dist-thunder7 type="double">0</dist-thunder7>
             <button type="bool">false</button>
             <button2 type="bool">false</button2>
             <clamp type="bool">false</clamp>
@@ -3597,6 +3607,9 @@ value. 18000=standard US transition altitude -->
         <eng>
             <file>Aircraft/f16/Nasal/engine.nas</file>
         </eng>
+        <sound>
+            <file>Aircraft/f16/Nasal/sound.nas</file>
+        </sound>
     </nasal>
     
 </PropertyList>
