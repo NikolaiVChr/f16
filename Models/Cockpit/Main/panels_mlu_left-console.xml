@@ -1639,7 +1639,7 @@
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>ilsv</tooltip-id>
-                <label>ILS VOLUME</label>
+                <label>ILS/VOR volume</label>
             </binding>
         </hovered>
     </animation>
@@ -1685,7 +1685,7 @@
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>mslv</tooltip-id>
-                <label>MSL VOLUME</label>
+                <label>Sidewinder volume</label>
             </binding>
         </hovered>
     </animation>
@@ -1777,7 +1777,7 @@
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>tvol</tooltip-id>
-                <label>THREAT VOLUME</label>
+                <label>RWR volume</label>
             </binding>
         </hovered>
     </animation>
