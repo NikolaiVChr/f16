@@ -3396,6 +3396,8 @@ value. 18000=standard US transition altitude -->
             <ew-mode-knob type="bool">false</ew-mode-knob>
             <msl-vol-knob type="double">0.5</msl-vol-knob>
             <rwr-volume type="double">0.7</rwr-volume>
+            <oxy-psi type="double">0.0</oxy-psi>
+            <pbg-switch type="int">-1</pbg-switch>
         </avionics>
         <fcs>
             <stby-mode type="bool">false</stby-mode>

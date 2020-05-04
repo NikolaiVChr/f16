@@ -792,6 +792,21 @@
                 </binding>
             </item>
             <item>
+                <name>OXYGEN lever</name>
+                <value>ON</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/pbg-switch</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/pbg-switch</property>
+                    <value>0</value>
+                </binding>
+            </item>
+            <item>
                 <name>LEFT HDPT switch</name>
                 <value>OFF, unless required</value>
                 <condition>

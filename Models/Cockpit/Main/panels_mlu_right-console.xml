@@ -1043,6 +1043,35 @@
             </binding>
         </hovered>
     </animation>
+    
+    <animation>
+    <type>rotate</type>
+    <object-name>oxy_needle</object-name>
+    <property>f16/avionics/oxy-psi</property>
+    <factor>-0.6</factor>
+    <offset-deg>60</offset-deg>
+    <center>
+      <x-m>0.771487</x-m>
+      <y-m>0.529611</y-m>
+      <z-m>0.005117</z-m>
+    </center>
+    <axis>
+      <x>0</x>
+      <y>0</y>
+      <z>1</z>
+    </axis>
+  </animation>
+ 
+ <animation> 
+  <type>material</type>
+  <object-name>oxy_needle</object-name>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.6</red>
+   <green>0.4</green>
+   <blue>0.3</blue>
+  </emission>
+ </animation>
 
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>

@@ -2139,8 +2139,8 @@
             <mode>looped</mode>
             <condition>
                 <greater-than>
-                    <property>f16/avionics/pbg-switch</property><!-- Should be binded to actual oxygen sys -->
-                    <value>-1</value>
+                    <property>f16/avionics/oxy-psi</property>
+                    <value>50</value>
                 </greater-than>
             </condition>
             <volume>
