@@ -104,74 +104,47 @@ var thunder_listener = func {
         var thunder7 = getprop("f16/sound/thunder7");
         var vol = 0;
         if(getprop("sim/current-view/internal") != nil and getprop("canopy/position-norm") != nil) {
-          vol = math.clamp(1-(getprop("sim/current-view/internal")*0.5)+(getprop("canopy/position-norm")*0.5), 0, 1);
+          vol = math.clamp(1-(getprop("sim/current-view/internal")*0.5)+(getprop("canopy/position-norm")*0.5), 0, 1) * lightning_distance_norm;
         } else {
           vol = 0;
         }
         if (rand() > 0.5) {
           if (!thunder1) {
               thunderCalls = 1;
-              setprop("f16/sound/dist-thunder1", lightning_distance_norm * vol);
-          }
-          else if (!thunder2) {
+          } elsif (!thunder2) {
               thunderCalls = 2;
-              setprop("f16/sound/dist-thunder2", lightning_distance_norm * vol);
-          }
-          else if (!thunder3) {
+          } elsif (!thunder3) {
               thunderCalls = 3;
-              setprop("f16/sound/dist-thunder3", lightning_distance_norm * vol);
-          }
-          else if (!thunder4) {
+          } elsif (!thunder4) {
               thunderCalls = 4;
-              setprop("f16/sound/dist-thunder4", lightning_distance_norm * vol);
-          }
-          else if (!thunder5) {
+          } elsif (!thunder5) {
               thunderCalls = 5;
-              setprop("f16/sound/dist-thunder5", lightning_distance_norm * vol);
-          }
-          else if (!thunder6) {
+          } elsif (!thunder6) {
               thunderCalls = 6;
-              setprop("f16/sound/dist-thunder6", lightning_distance_norm * vol);
-          }
-          else if (!thunder7) {
+          } elsif (!thunder7) {
               thunderCalls = 7;
-              setprop("f16/sound/dist-thunder7", lightning_distance_norm * vol);
-          }
-          else
+          } else
               return;
         } else {
           if (!thunder7) {
               thunderCalls = 7;
-              setprop("f16/sound/dist-thunder7", lightning_distance_norm * vol);
-          }
-          else if (!thunder6) {
+          } elsif (!thunder6) {
               thunderCalls = 6;
-              setprop("f16/sound/dist-thunder6", lightning_distance_norm * vol);
-          }
-          else if (!thunder5) {
+          } elsif (!thunder5) {
               thunderCalls = 5;
-              setprop("f16/sound/dist-thunder5", lightning_distance_norm * vol);
-          }
-          else if (!thunder4) {
+          } elsif (!thunder4) {
               thunderCalls = 4;
-              setprop("f16/sound/dist-thunder4", lightning_distance_norm * vol);
-          }
-          else if (!thunder3) {
+          } elsif (!thunder3) {
               thunderCalls = 3;
-              setprop("f16/sound/dist-thunder3", lightning_distance_norm * vol);
-          }
-          else if (!thunder2) {
+          } elsif (!thunder2) {
               thunderCalls = 2;
-              setprop("f16/sound/dist-thunder2", lightning_distance_norm * vol);
-          }
-          else if (!thunder1) {
+          } elsif (!thunder1) {
               thunderCalls = 1;
-              setprop("f16/sound/dist-thunder1", lightning_distance_norm * vol);
-          }
-          else
+          } else
               return;
         }
         # Play the sound (sound files are about 9 to 12 seconds)
+        setprop("f16/sound/dist-thunder"~thunderCalls, vol);
         play_thunder("thunder" ~ thunderCalls, 14.0);
     }, delay_seconds);
 };
