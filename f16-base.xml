@@ -1907,7 +1907,7 @@ There is also small changes in tail for different variants with and without brak
                     <batt-2 type="double">0</batt-2>
                     <charger type="double">0</charger>
                     <emergency-ac-1 type="double">0</emergency-ac-1>
-                    <emergency-ac-2 type="double">0</emergency-ac-2>                    
+                    <emergency-ac-2 type="double">0</emergency-ac-2>            
                     <emergency-dc-1 type="double">0</emergency-dc-1>
                     <emergency-dc-2 type="double">0</emergency-dc-2>
                     <ess-ac type="double">0</ess-ac>
@@ -1919,6 +1919,18 @@ There is also small changes in tail for different variants with and without brak
                     <noness-ac-1 type="double">0</noness-ac-1>
                     <noness-ac-2 type="double">0</noness-ac-2>
                     <noness-dc type="double">0</noness-dc>
+                    <flcc>
+                        <a type="double">0</a>
+                        <b type="double">0</b>
+                        <c type="double">0</c>
+                        <d type="double">0</d>
+                        <ab-regulator type="double">0</ab-regulator>            
+                        <cd-regulator type="double">0</cd-regulator>
+                    </flcc>
+                    <switch>
+                        <ab-regulator type="double">0</ab-regulator>            
+                        <cd-regulator type="double">0</cd-regulator>
+                    </switch>
                 </bus>
                 <failures>
                     <battery>
@@ -2026,6 +2038,9 @@ There is also small changes in tail for different variants with and without brak
                         </control-c>
                         <ground-input type="double">0</ground-input>
                     </pitch>
+                    <lef>
+                        <lef-pos-deg type="double">0</lef-pos-deg>
+                    </lef>
                 </fly-by-wire>
                 <gear-control type="double">1</gear-control>
                 <gear-wow type="bool">true</gear-wow>
