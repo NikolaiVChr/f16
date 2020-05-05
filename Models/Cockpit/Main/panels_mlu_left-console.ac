@@ -1,26 +1,26 @@
 AC3Db
-MATERIAL "unlitMat" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 12 trans 0.000
+MATERIAL "unlitMat1" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 12 trans 0.000
 MATERIAL "MainPanel" rgb 1.000 1.000 1.000  amb 0.700 0.700 0.700  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 32 trans 0.000
-MATERIAL "Material.001" rgb 0.063 0.063 0.063  amb 0.005 0.005 0.005  emis 0.000 0.000 0.000  spec 0.102 0.102 0.102  shi 32 trans 0.000
-MATERIAL "Material.000" rgb 0.063 0.063 0.063  amb 0.005 0.005 0.005  emis 0.000 0.000 0.000  spec 0.102 0.102 0.102  shi 32 trans 0.000
-MATERIAL "ac3dmat1" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 20 trans 0.000
-MATERIAL "ac3dmat1.003" rgb 1.000 1.000 1.000  amb 0.400 0.400 0.400  emis 0.000 0.000 0.000  spec 0.200 0.200 0.200  shi 128 trans 0.000
-MATERIAL "ac3dmat13" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.298 0.298 0.298  shi 37 trans 0.000
-MATERIAL "ac3dmat1.020" rgb 1.000 1.000 1.000  amb 0.600 0.600 0.600  emis 0.000 0.000 0.000  spec 0.200 0.200 0.200  shi 128 trans 0.000
+MATERIAL "hiddenPanel" rgb 0.063 0.063 0.063  amb 0.005 0.005 0.005  emis 0.000 0.000 0.000  spec 0.102 0.102 0.102  shi 32 trans 0.000
+MATERIAL "PanelSides" rgb 0.063 0.063 0.063  amb 0.005 0.005 0.005  emis 0.000 0.000 0.000  spec 0.102 0.102 0.102  shi 32 trans 0.000
+MATERIAL "Knobs5" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "Knobs6" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "unlitMatReadable" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.298 0.298 0.298  shi 37 trans 0.000
+MATERIAL "Knobs7" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
 MATERIAL "lightMat" rgb 0.200 0.200 0.200  amb 0.200 0.200 0.200  emis 0.000 0.000 0.000  spec 0.095 0.095 0.095  shi 12 trans 0.000
 MATERIAL "freqMat" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.286 0.286 0.286  shi 64 trans 0.000
-MATERIAL "ac3dmat1.001" rgb 1.000 1.000 1.000  amb 0.200 0.200 0.200  emis 0.000 0.000 0.000  spec 0.200 0.200 0.200  shi 128 trans 0.000
-MATERIAL "newKnobMat.007" rgb 0.800 0.800 0.800  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 12 trans 0.000
-MATERIAL "ac3dmat1.006" rgb 1.000 1.000 1.000  amb 0.400 0.400 0.400  emis 0.000 0.000 0.000  spec 0.200 0.200 0.200  shi 128 trans 0.000
-MATERIAL "ac3dmat1.002" rgb 1.000 1.000 1.000  amb 0.400 0.400 0.400  emis 0.000 0.000 0.000  spec 0.200 0.200 0.200  shi 128 trans 0.000
-MATERIAL "Material.004" rgb 0.063 0.063 0.063  amb 0.300 0.300 0.300  emis 0.000 0.000 0.000  spec 0.176 0.176 0.176  shi 32 trans 0.000
-MATERIAL "Knobs" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
-MATERIAL "ac3dmat16" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.200 0.200 0.200  shi 0 trans 0.000
-MATERIAL "newKnobMat.002" rgb 0.640 0.640 0.640  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 12 trans 0.000
-MATERIAL "ac3dmat1.004" rgb 1.000 1.000 1.000  amb 0.400 0.400 0.400  emis 0.000 0.000 0.000  spec 0.200 0.200 0.200  shi 128 trans 0.000
-MATERIAL "ac3dmat1.005" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 0 trans 1.000
-MATERIAL "Knobs.001" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
-MATERIAL "chanMat" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.095 0.095 0.095  shi 12 trans 0.000
+MATERIAL "BackPanel" rgb 1.000 1.000 1.000  amb 0.200 0.200 0.200  emis 0.000 0.000 0.000  spec 0.200 0.200 0.200  shi 128 trans 0.000
+MATERIAL "Knobs3" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "Knobs8" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "Knobs9" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "UnknownMat" rgb 0.063 0.063 0.063  amb 0.300 0.300 0.300  emis 0.000 0.000 0.000  spec 0.176 0.176 0.176  shi 32 trans 0.000
+MATERIAL "Knobs1" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "Knobs10" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "Knobs2" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "Knobs11" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "invis" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 0 trans 1.000
+MATERIAL "Knobs3" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "unlitMat2" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 12 trans 0.000
 OBJECT world
 name "Blender_exporter_v2.26__panels_mlu_left-console.ac"
 kids 118

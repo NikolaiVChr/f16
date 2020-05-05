@@ -1,25 +1,25 @@
 AC3Db
 MATERIAL "altGearMat" rgb 0.640 0.640 0.640  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 12 trans 0.000
-MATERIAL "Material.006" rgb 0.063 0.063 0.063  amb 0.005 0.005 0.005  emis 0.000 0.000 0.000  spec 0.102 0.102 0.102  shi 32 trans 0.000
+MATERIAL "dark1" rgb 0.063 0.063 0.063  amb 0.005 0.005 0.005  emis 0.000 0.000 0.000  spec 0.102 0.102 0.102  shi 32 trans 0.000
 MATERIAL "MainPanel" rgb 1.000 1.000 1.000  amb 0.700 0.700 0.700  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 32 trans 0.000
-MATERIAL "ac3dmat13" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.298 0.298 0.298  shi 37 trans 0.000
-MATERIAL "ac3dmat1" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 20 trans 0.000
-MATERIAL "ac3dmat1.001" rgb 1.000 1.000 1.000  amb 0.400 0.400 0.400  emis 0.000 0.000 0.000  spec 0.200 0.200 0.200  shi 128 trans 0.000
-MATERIAL "Knobs" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "Knobs1" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "Knobs2" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "Knobs10" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "Knobs3" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
 MATERIAL "Display" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 64 trans 0.000
-MATERIAL "newKnobMat.002" rgb 0.640 0.640 0.640  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 12 trans 0.000
-MATERIAL "Material.001" rgb 0.063 0.063 0.063  amb 0.005 0.005 0.005  emis 0.000 0.000 0.000  spec 0.102 0.102 0.102  shi 32 trans 0.000
+MATERIAL "Knobs4" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "dark2" rgb 0.063 0.063 0.063  amb 0.005 0.005 0.005  emis 0.000 0.000 0.000  spec 0.102 0.102 0.102  shi 32 trans 0.000
 MATERIAL "GreenLight" rgb 0.200 0.200 0.200  amb 0.200 0.200 0.200  emis 0.000 0.000 0.000  spec 0.200 0.200 0.200  shi 32 trans 0.000
-MATERIAL "ac3dmat12" rgb 0.267 0.267 0.267  amb 0.267 0.267 0.267  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 10 trans 0.000
-MATERIAL "ac3dmat3" rgb 1.000 0.000 0.000  amb 0.333 0.333 0.333  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 10 trans 0.000
-MATERIAL "ac3dmat0" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.286 0.286 0.286  shi 10 trans 0.000
-MATERIAL "ac3dmat1.002" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 20 trans 0.000
-MATERIAL "ac3dmat1.004" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.200 0.200 0.200  shi 115 trans 0.000
-MATERIAL "Material" rgb 0.063 0.063 0.063  amb 0.300 0.300 0.300  emis 0.000 0.000 0.000  spec 0.176 0.176 0.176  shi 32 trans 0.000
-MATERIAL "ac3dmat0.004" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 10 trans 0.000
-MATERIAL "DefaultWhite" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 64 trans 0.000
-MATERIAL "ac3dmat1.012" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.200 0.200 0.200  shi 128 trans 0.000
-MATERIAL "ac3dmat1.003" rgb 1.000 1.000 1.000  amb 0.400 0.400 0.400  emis 0.000 0.000 0.000  spec 0.200 0.200 0.200  shi 128 trans 0.000
+MATERIAL "gearLeverGrey1" rgb 0.267 0.267 0.267  amb 0.267 0.267 0.267  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 10 trans 0.000
+MATERIAL "gearLeverGrey2" rgb 1.000 0.000 0.000  amb 0.333 0.333 0.333  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 10 trans 0.000
+MATERIAL "gearLeverBlack" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.286 0.286 0.286  shi 10 trans 0.000
+MATERIAL "Knobs5" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "Knobs6" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "dark3" rgb 0.063 0.063 0.063  amb 0.300 0.300 0.300  emis 0.000 0.000 0.000  spec 0.176 0.176 0.176  shi 32 trans 0.000
+MATERIAL "unlit" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 10 trans 0.000
+MATERIAL "Knobs7" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "Knobs8" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
+MATERIAL "Knobs9" rgb 0.827 0.827 0.827  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 50 trans 0.000
 OBJECT world
 name "Blender_exporter_v2.26__panels_mlu_left-aux-console.ac"
 kids 31
