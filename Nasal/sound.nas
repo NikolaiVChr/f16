@@ -99,9 +99,9 @@ var thunder_listener = func {
         var thunder2 = getprop("f16/sound/thunder2");
         var thunder3 = getprop("f16/sound/thunder3");
         var thunder4 = getprop("f16/sound/thunder4");
-        var thunder5 = getprop("f16/sound/thunder2");
-        var thunder6 = getprop("f16/sound/thunder3");
-        var thunder7 = getprop("f16/sound/thunder4");
+        var thunder5 = getprop("f16/sound/thunder5");
+        var thunder6 = getprop("f16/sound/thunder6");
+        var thunder7 = getprop("f16/sound/thunder7");
         var vol = 0;
         if(getprop("sim/current-view/internal") != nil and getprop("canopy/position-norm") != nil) {
           vol = math.clamp(1-(getprop("sim/current-view/internal")*0.5)+(getprop("canopy/position-norm")*0.5), 0, 1);
