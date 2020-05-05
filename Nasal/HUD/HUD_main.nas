@@ -1007,6 +1007,7 @@ append(obj.total, obj.speed_curr);
                  #cross                     : "instrumentation/nav[0]/crosstrack-heading-error-deg",
                  #cross                     : "instrumentation/nav[0]/heading-deg",
                  cross                     : "instrumentation/nav[0]/radials/target-auto-hdg-deg",
+                 ins_knob                  : "f16/avionics/ins-knob",
                 };
 
         foreach (var name; keys(input)) {
@@ -1444,7 +1445,13 @@ append(obj.total, obj.speed_curr);
                                                      obj.window2.setText(" ILS");
                                                      obj.window2.setVisible(1);
                                                  } else {
-                                                     obj.window2.setText(" NAV");
+                                                    if (hdp.ins_knob==3) {
+                                                        obj.window2.setText(" NAV");
+                                                    } elsif (hdp.ins_knob==2 or hdp.ins_knob==4) {
+                                                        obj.window2.setText(" ALIGN");
+                                                    } else {
+                                                        obj.window2.setText(" ");
+                                                    }
                                                      obj.window2.setVisible(1);
                                                  }
                                              }
