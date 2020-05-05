@@ -43,6 +43,7 @@
  <effect>
         <inherits-from>Effects/model-combined-deferred</inherits-from>
         <parameters>
+          <ambient-correction type="float">0.00</ambient-correction>
         </parameters>        
         <object-name>box_left</object-name>
         <object-name>box_right</object-name>
