@@ -3425,6 +3425,19 @@ value. 18000=standard US transition altitude -->
             <rwr-volume type="double">0.7</rwr-volume>
             <oxy-psi type="double">0.0</oxy-psi>
             <pbg-switch type="int">-1</pbg-switch>
+            <caution>
+                <master type="bool">false</master>
+                <seat-not-armed type="bool">false</seat-not-armed>
+                <stores-config type="bool">false</stores-config>
+                <oxy-low type="bool">false</oxy-low>
+                <le-flaps type="bool">false</le-flaps>
+                <hook type="bool">false</hook>
+                <fwd-fuel-low type="bool">false</fwd-fuel-low>
+                <aft-fuel-low type="bool">false</aft-fuel-low>
+                <elec-sys type="bool">false</elec-sys>
+                <cabin-press type="bool">false</cabin-press>
+                <adc type="bool">false</adc>
+            </caution>
         </avionics>
         <fcs>
             <stby-mode type="bool">false</stby-mode>

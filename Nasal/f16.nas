@@ -999,6 +999,7 @@ var autostart = func {
     inAutostart = 0;
   }
   setprop("f16/avionics/ins-knob", 3);#NAV
+  fail.master_caution();
 }
 
 var re_init_listener = setlistener("/sim/signals/reinit", func {

@@ -18,7 +18,6 @@
 
  <animation>
   <type>select</type>
-  <object-name>master_caution</object-name>
   <object-name>unused1</object-name>
   <object-name>unused2</object-name>
   <object-name>none</object-name>
@@ -32,10 +31,32 @@
  </animation>
  
  <animation>
+  <type>select</type>
+  <object-name>master_caution</object-name>
+  <condition>
+    <or>
+        <property>f16/avionics/caution/master</property>
+        <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+ </animation>
+ 
+ <animation>
   <object-name>iff</object-name>
   <type>material</type>
   <emission>
    <factor-prop>instrumentation/radar/iff</factor-prop>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>
+ 
+ <animation>
+  <object-name>master_caution</object-name>
+  <type>material</type>
+  <emission>
+   <factor-prop>f16/avionics/caution/master</factor-prop>
    <red>1</red>
    <green>1</green>
    <blue>1</blue>
@@ -53,6 +74,20 @@
       <command>property-assign</command>
       <property>instrumentation/radar/iff</property>
       <value>1</value>
+     </binding>
+    </action>
+   </animation>
+   
+   <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>master_caution</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>false</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>fail.master_caution();</script>
      </binding>
     </action>
    </animation>
