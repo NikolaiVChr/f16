@@ -809,31 +809,17 @@
             <item>
                 <name>LEFT HDPT switch</name>
                 <value>OFF, unless required</value>
-                <condition>
-                    <equals>
-                        <property>f16/avionics/power-left-hdpt</property>
-                        <value>1</value>
-                    </equals>
-                </condition>
                 <binding>
-                    <command>property-assign</command>
+                    <command>property-toggle</command>
                     <property>f16/avionics/power-left-hdpt</property>
-                    <value>1</value>
                 </binding>
             </item>
             <item>
                 <name>RIGHT HDPT switch</name>
                 <value>As desired</value>
-                <condition>
-                    <equals>
-                        <property>f16/avionics/power-right-hdpt</property>
-                        <value>1</value>
-                    </equals>
-                </condition>
                 <binding>
-                    <command>property-assign</command>
+                    <command>property-toggle</command>
                     <property>f16/avionics/power-right-hdpt</property>
-                    <value>1</value>
                 </binding>
             </item>                   
             <item>
