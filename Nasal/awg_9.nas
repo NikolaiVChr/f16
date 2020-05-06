@@ -318,7 +318,10 @@ return;
 			u.set_display(0);
 		}
         armament.contact = nil;
-	}
+        setprop("sim/multiplay/generic/string[6]", "");
+	} else {
+        setprop("sim/multiplay/generic/string[6]", "");
+    }
 }
 
 var sweep_frame_inc = 0.2;
@@ -763,6 +766,11 @@ var az_scan = func(notification) {
     # finally ensure that the active target is still in the targets list.
     if (!containsV(tgts_list, active_u)) {
         active_u = nil; armament.contact = active_u; active_u_callsign = nil;
+    }
+    if (active_u != nil and active_u.get_display() and getprop("controls/armament/master-arm") and active_u_callsign != nil and active_u_callsign != "") {
+        setprop("sim/multiplay/generic/string[6]", left(md5(active_u_callsign), 4));
+    } else {
+        setprop("sim/multiplay/generic/string[6]", "");
     }
 }
 

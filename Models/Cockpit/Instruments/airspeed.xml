@@ -34,7 +34,11 @@
   <type>rotate</type>
   <object-name>needle</object-name>
   <object-name>mach_scale</object-name>
-  <property>instrumentation/airspeed-indicator/indicated-speed-kt</property>
+  <condition>
+    <property>systems/pitot/serviceable</property>
+    <property>systems/static/serviceable</property>
+  </condition>
+  <property>fdm/jsbsim/velocities/vc-kts</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
    <entry><ind>40</ind><dep>16</dep></entry>

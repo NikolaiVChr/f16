@@ -187,7 +187,7 @@ var loop_flare = func {
         setprop("ai/submodels/submodel[0]/flare-release-snd", FALSE);
         setprop("ai/submodels/submodel[0]/flare-release-out-snd", FALSE);
     }
-    var flareOn = getprop("ai/submodels/submodel[0]/flare-release-cmd");
+    var flareOn = getprop("ai/submodels/submodel[0]/flare-release-cmd") and getprop("f16/avionics/ew-mode-knob");
     if (flareOn == TRUE and getprop("ai/submodels/submodel[0]/flare-release") == FALSE
             and getprop("ai/submodels/submodel[0]/flare-release-out-snd") == FALSE
             and getprop("ai/submodels/submodel[0]/flare-release-snd") == FALSE) {
@@ -632,16 +632,16 @@ var cockpit_temperature_control = {
         me.tempInsideDewTarget = me.tempOutsideDew;
       }
       if (me.tempInsideDewTarget > me.tempInsideDew) {
-        me.tempInsideDew = clamp(me.tempInsideDew + 0.15, -1000, me.tempInsideDewTarget);
+        me.tempInsideDew = math.clamp(me.tempInsideDew + 0.15, -1000, me.tempInsideDewTarget);
       } else {
-        me.tempInsideDew = clamp(me.tempInsideDew - 0.15, me.tempInsideDewTarget, 1000);
+        me.tempInsideDew = math.clamp(me.tempInsideDew - 0.15, me.tempInsideDewTarget, 1000);
       }
     }
     
 
     # calc fogging outside and inside on glass
-    me.fogNormOutside = clamp((me.tempOutsideDew-me.tempGlass)*0.05, 0, 1);
-    me.fogNormInside = clamp((me.tempInsideDew-me.tempGlass)*0.05, 0, 1);
+    me.fogNormOutside = math.clamp((me.tempOutsideDew-me.tempGlass)*0.05, 0, 1);
+    me.fogNormInside =math.clamp((me.tempInsideDew-me.tempGlass)*0.05, 0, 1);
     
     # calc frost
     me.frostNormOutside = getprop("/environment/aircraft-effects/frost-outside");
@@ -650,18 +650,18 @@ var cockpit_temperature_control = {
     if (me.rain == nil) {
       me.rain = 0;
     }
-    me.frostSpeedInside = clamp(-me.tempGlass, -60, 60)/600 + (me.tempGlass<0?me.fogNormInside/50:0);
-    me.frostSpeedOutside = clamp(-me.tempGlass, -60, 60)/600 + (me.tempGlass<0?(me.fogNormOutside/50 + me.rain/50):0);
-    me.maxFrost = clamp(1 + ((me.tempGlass + 5) / (0 + 5)) * (0 - 1), 0, 1);# -5 is full frost, 0 is no frost
-    me.maxFrostInside = clamp(me.maxFrost - clamp(me.tempInside/30,0,1), 0, 1);# frost having harder time to form while being constantly thawed.
-    me.frostNormOutside = clamp(me.frostNormOutside + me.frostSpeedOutside, 0, me.maxFrost);
-    me.frostNormInside = clamp(me.frostNormInside + me.frostSpeedInside, 0, me.maxFrostInside);
+    me.frostSpeedInside = math.clamp(-me.tempGlass, -60, 60)/600 + (me.tempGlass<0?me.fogNormInside/50:0);
+    me.frostSpeedOutside = math.clamp(-me.tempGlass, -60, 60)/600 + (me.tempGlass<0?(me.fogNormOutside/50 + me.rain/50):0);
+    me.maxFrost = math.clamp(1 + ((me.tempGlass + 5) / (0 + 5)) * (0 - 1), 0, 1);# -5 is full frost, 0 is no frost
+    me.maxFrostInside = math.clamp(me.maxFrost - math.clamp(me.tempInside/30,0,1), 0, 1);# frost having harder time to form while being constantly thawed.
+    me.frostNormOutside = math.clamp(me.frostNormOutside + me.frostSpeedOutside, 0, me.maxFrost);
+    me.frostNormInside = math.clamp(me.frostNormInside + me.frostSpeedInside, 0, me.maxFrostInside);
     me.frostNorm = me.frostNormOutside>me.frostNormInside?me.frostNormOutside:me.frostNormInside;
-    #var frostNorm = clamp((tempGlass-0)*-0.05, 0, 1);# will freeze below 0
+    #var frostNorm = math.clamp((tempGlass-0)*-0.05, 0, 1);# will freeze below 0
 
     # recalc fogging from frost levels, frost will lower the fogging
-    me.fogNormOutside = clamp(me.fogNormOutside - me.frostNormOutside / 4, 0, 1);
-    me.fogNormInside = clamp(me.fogNormInside - me.frostNormInside / 4, 0, 1);
+    me.fogNormOutside = math.clamp(me.fogNormOutside - me.frostNormOutside / 4, 0, 1);
+    me.fogNormInside = math.clamp(me.fogNormInside - me.frostNormInside / 4, 0, 1);
     me.fogNorm = me.fogNormOutside>me.fogNormInside?me.fogNormOutside:me.fogNormInside;
 
     # If the hot air on windshield is enabled and its setting is high enough, then apply the mask which will defog the windshield.
@@ -946,10 +946,11 @@ var autostart = func {
   }
   inAutostart = 1;
   screen.log.write("Starting, standby..");
+  setprop("fdm/jsbsim/fcs/canopy-engage", 0);
   setprop("fdm/jsbsim/elec/switches/epu",1);
+  setprop("fdm/jsbsim/elec/switches/epu-cover",0);
   eng.JFS.start_switch_last = 0;# bypass check for switch was in OFF
   setprop("fdm/jsbsim/elec/switches/main-pwr",2);
-  setprop("controls/seat/ejection-safety-lever",1);
   setprop("f16/avionics/power-rdr-alt",2);
   setprop("f16/avionics/power-fcr",1);
   setprop("f16/avionics/power-right-hdpt",1);
@@ -960,10 +961,22 @@ var autostart = func {
   setprop("f16/avionics/power-gps",1);
   setprop("f16/avionics/power-dl",1);
   setprop("f16/avionics/power-st-sta",1);
-  setprop("controls/ventilation/airconditioning-enabled",1);
-  setprop("fdm/jsbsim/fcs/canopy-engage", 0);
-  setprop("instrumentation/radar/radar-standby", 0);
   setprop("f16/avionics/ins-knob", 2);#ALIGN NORM
+  setprop("f16/avionics/hud-sym", 1);
+  setprop("f16/avionics/hud-brt", 1);
+  setprop("f16/avionics/ew-rwr-switch",1);
+  setprop("f16/avionics/ew-disp-switch",1);
+  setprop("f16/avionics/ew-mws-switch",1);
+  setprop("f16/avionics/ew-jmr-switch",1);
+  setprop("f16/avionics/ew-mode-knob",1);
+  setprop("f16/avionics/pbg-switch",0);
+  setprop("controls/ventilation/airconditioning-enabled",1);
+  setprop("controls/lighting/ext-lighting-panel/master", 1);
+  setprop("controls/ventilation/airconditioning-source",1);
+  setprop("instrumentation/radar/radar-standby", 0);
+  setprop("instrumentation/comm[0]/volume",1);
+  setprop("instrumentation/comm[1]/volume",1);
+  setprop("controls/seat/ejection-safety-lever",1);
   if (getprop("engines/engine[0]/running")!=1) {
     if (eng.accu_1_psi < eng.accu_psi_max and eng.accu_2_psi < eng.accu_psi_max) {
       screen.log.write("Both JFS accumulators de-pressurized. Engine start aborted.");
@@ -1104,58 +1117,7 @@ var hitmessage = func(typeOrd) {
 # setup impact listener
 setlistener("/ai/models/model-impact", impact_listener, 0, 0);
 
-#sound for hydra:
-var h3ltrigger = func {
-  if (getprop("fdm/jsbsim/fcs/hydra3ltrigger") and !getprop("fdm/jsbsim/fcs/hydra3ltriggers") and getprop("ai/submodels/submodel[4]/count") > 0) {
-    setprop("fdm/jsbsim/fcs/hydra3ltriggers",1);
-    settimer(h3ltrigger2, 0.45);# soundclip is 0.36 secs
-  }
-}
 
-var h3ltrigger2 = func {
-  setprop("fdm/jsbsim/fcs/hydra3ltriggers",0);
-}
-
-setlistener("controls/armament/trigger", h3ltrigger, 0, 0);# listen to main trigger since direct trigger gets aliased on/off all the time so wont work.
-
-var h3rtrigger = func {
-  if (getprop("fdm/jsbsim/fcs/hydra3rtrigger") and !getprop("fdm/jsbsim/fcs/hydra3rtriggers") and getprop("ai/submodels/submodel[5]/count") > 0) {
-    setprop("fdm/jsbsim/fcs/hydra3rtriggers",1);
-    settimer(h3rtrigger2, 0.45);
-  }
-}
-
-var h3rtrigger2 = func {
-  setprop("fdm/jsbsim/fcs/hydra3rtriggers",0);
-}
-
-setlistener("controls/armament/trigger", h3rtrigger, 0, 0);
-
-var h7ltrigger = func {
-  if (getprop("fdm/jsbsim/fcs/hydra7ltrigger") and !getprop("fdm/jsbsim/fcs/hydra7ltriggers") and getprop("ai/submodels/submodel[6]/count") > 0) {
-    setprop("fdm/jsbsim/fcs/hydra7ltriggers",1);
-    settimer(h7ltrigger2, 0.45);
-  }
-}
-
-var h7ltrigger2 = func {
-  setprop("fdm/jsbsim/fcs/hydra7ltriggers",0);
-}
-
-setlistener("controls/armament/trigger", h7ltrigger, 0, 0);
-
-var h7rtrigger = func {
-  if (getprop("fdm/jsbsim/fcs/hydra7rtrigger") and !getprop("fdm/jsbsim/fcs/hydra7rtriggers") and getprop("ai/submodels/submodel[7]/count") > 0) {
-    setprop("fdm/jsbsim/fcs/hydra7rtriggers",1);
-    settimer(h7rtrigger2, 0.45);
-  }
-}
-
-var h7rtrigger2 = func {
-  setprop("fdm/jsbsim/fcs/hydra7rtriggers",0);
-}
-
-setlistener("controls/armament/trigger", h7rtrigger, 0, 0);
 
 
 
@@ -1246,91 +1208,7 @@ var SubSystem_Main = {
 
 subsystem = SubSystem_Main.new("SubSystem_Main");
 
-########### Thunder sounds (from c172p) ###################
 
-var clamp = func(v, min, max) { v < min ? min : v > max ? max : v };
-
-var speed_of_sound = func (t, re) {
-    # Compute speed of sound in m/s
-    #
-    # t = temperature in Celsius
-    # re = amount of water vapor in the air
-
-    # Compute virtual temperature using mixing ratio (amount of water vapor)
-    # Ratio of gas constants of dry air and water vapor: 287.058 / 461.5 = 0.622
-    var T = 273.15 + t;
-    var v_T = T * (1 + re/0.622)/(1 + re);
-
-    # Compute speed of sound using adiabatic index, gas constant of air,
-    # and virtual temperature in Kelvin.
-    return math.sqrt(1.4 * 287.058 * v_T);
-};
-
-var thunder_listener = func {
-    var thunderCalls = 0;
-
-    var lightning_pos_x = getprop("/environment/lightning/lightning-pos-x");
-    var lightning_pos_y = getprop("/environment/lightning/lightning-pos-y");
-    var lightning_distance = math.sqrt(math.pow(lightning_pos_x, 2) + math.pow(lightning_pos_y, 2));
-
-    # On the ground, thunder can be heard up to 16 km. Increase this value
-    # a bit because the aircraft is usually in the air.
-    if (lightning_distance > 20000)
-        return;
-
-    var t = getprop("/environment/temperature-degc");
-    var re = getprop("/environment/relative-humidity") / 100;
-    var delay_seconds = lightning_distance / speed_of_sound(t, re);
-
-    # Maximum volume at 5000 meter
-    var lightning_distance_norm = std.min(1.0, 1 / math.pow(lightning_distance / 5000.0, 2));
-
-    settimer(func {
-        var thunder1 = getprop("f16/sound/thunder1");
-        var thunder2 = getprop("f16/sound/thunder2");
-        var thunder3 = getprop("f16/sound/thunder3");
-        var vol = 0;
-        if(getprop("sim/current-view/internal") != nil and getprop("canopy/position-norm") != nil) {
-          vol = clamp(1-(getprop("sim/current-view/internal")*0.5)+(getprop("canopy/position-norm")*0.5), 0, 1);
-        } else {
-          vol = 0;
-        }
-        if (!thunder1) {
-            thunderCalls = 1;
-            setprop("f16/sound/dist-thunder1", lightning_distance_norm * vol * 2.25);
-        }
-        else if (!thunder2) {
-            thunderCalls = 2;
-            setprop("f16/sound/dist-thunder2", lightning_distance_norm * vol * 2.25);
-        }
-        else if (!thunder3) {
-            thunderCalls = 3;
-            setprop("f16/sound/dist-thunder3", lightning_distance_norm * vol * 2.25);
-        }
-        else
-            return;
-
-        # Play the sound (sound files are about 9 seconds)
-        play_thunder("thunder" ~ thunderCalls, 9.0, 0);
-    }, delay_seconds);
-};
-
-var play_thunder = func (name, timeout=0.1, delay=0) {
-    var sound_prop = "/f16/sound/" ~ name;
-
-    settimer(func {
-        # Play the sound
-        setprop(sound_prop, TRUE);
-
-        # Reset the property after timeout so that the sound can be
-        # played again.
-        settimer(func {
-            setprop(sound_prop, FALSE);
-        }, timeout);
-    }, delay);
-};
-
-setlistener("/environment/lightning/lightning-pos-y", thunder_listener);
 
 var reloadCannon = func {
     setprop("ai/submodels/submodel[0]/count", 100);#flares
@@ -1780,162 +1658,7 @@ gui.showHelpDialog = func(path, toggle=0) {
 }
 
 
-var button = func {
-  setprop("f16/sound/button",1);
-  settimer(func {setprop("f16/sound/button",0);},0.35);
-}
 
-var button2 = func {
-  setprop("f16/sound/button2",1);
-  settimer(func {setprop("f16/sound/button2",0);},0.20);#0.10 but on some pc dont get time to play
-}
-
-var clamp0 = func {
-  setprop("f16/sound/clamp",1);
-  settimer(func {setprop("f16/sound/clamp",0);},0.40);
-}
-
-var click1 = func {
-  setprop("f16/sound/click1",1);
-  settimer(func {setprop("f16/sound/click1",0);},0.20);
-}
-
-var click2 = func {
-  setprop("f16/sound/click2",1);
-  settimer(func {setprop("f16/sound/click2",0);},0.15);
-}
-
-var click3 = func {
-  setprop("f16/sound/click3",1);
-  settimer(func {setprop("f16/sound/click3",0);},0.075);
-}
-
-var doubleClick = func {
-  setprop("f16/sound/double-click",1);
-  settimer(func {setprop("f16/sound/double-click",0);},0.30);
-}
-
-var doubleClick2 = func {
-  setprop("f16/sound/double-click2",1);
-  settimer(func {setprop("f16/sound/double-click2",0);},0.40);
-}
-
-var scroll = func {
-  setprop("f16/sound/scroll",1);
-  settimer(func {setprop("f16/sound/scroll",0);},0.35);
-}
-
-var knob = func {
-  setprop("f16/sound/knob",1);
-  settimer(func {setprop("f16/sound/knob",0);},0.20);
-}
-
-var knob2 = func {
-  setprop("f16/sound/knob2",1);
-  settimer(func {setprop("f16/sound/knob2",0);},0.30);
-}
-
-var lift_cover = func {
-  setprop("f16/sound/lift_cover",1);
-  settimer(func {setprop("f16/sound/lift_cover",0);},0.15);
-}
-
-# cockpit control sounds: (don't add ICP buttons to this list, they are calling the functions directly)
-setlistener("controls/lighting/ext-lighting-panel/master", button2, nil, 0);
-setlistener("controls/armament/master-arm", button2, nil, 0);
-setlistener("controls/armament/master-arm-cover-open", lift_cover, nil, 0);
-setlistener("controls/armament/laser-arm-dmd", click2, nil, 0);
-setlistener("controls/gear/brake-parking", button2, nil, 0);
-setlistener("controls/gear/gear-down", clamp0, nil, 0);
-setlistener("f16/avionics/gnd-jett", button2, nil, 0);
-setlistener("fdm/jsbsim/systems/hook/tailhook-cmd-norm", clamp0, nil, 0);
-setlistener("controls/seat/ejection-safety-lever", clamp0, nil, 0);
-setlistener("instrumentation/radar/radar-standby", button2, nil, 0);
-setlistener("controls/fuel/external-transfer", click2, nil, 0);
-setlistener("instrumentation/heading-indicator-fg/offset-deg", click3, nil, 0);
-setlistener("instrumentation/nav[0]/radials/selected-deg", click3, nil, 0);
-setlistener("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob", knob, nil, 0);
-setlistener("controls/fuel/qty-selector", knob, nil, 0);
-setlistener("sim/model/f16/instrumentation/radar-awg-9/select-target", knob2, nil, 0);
-setlistener("f16/engine/feed", knob, nil, 0);
-setlistener("systems/refuel/serviceable", button2, nil, 0);
-setlistener("controls/flight/flaps", button2, nil, 0);
-setlistener("controls/test/test-panel/mal-ind-lts", doubleClick2, nil, 0);
-setlistener("fdm/jsbsim/elec/switches/flcs-pwr-test", click2, nil, 0);
-setlistener("f16/avionics/le-flaps-switch", button2, nil, 0);
-setlistener("f16/fail/servo-rudder-switch", button2, nil, 0);
-setlistener("f16/fail/servo-flaperon-switch", button2, nil, 0);
-setlistener("f16/fail/servo-tail-switch", button2, nil, 0);
-setlistener("f16/avionics/anti-ice-switch", click2, nil, 0);
-setlistener("f16/avionics/ant-sel-iff-switch", click2, nil, 0);
-setlistener("f16/avionics/ant-sel-uhf-switch", click2, nil, 0);
-setlistener("controls/lighting/ext-lighting-panel/master", button2, nil, 0);
-setlistener("controls/lighting/ext-lighting-panel/anti-collision", button2, nil, 0);
-setlistener("controls/lighting/ext-lighting-panel/pos-lights-flash", button2, nil, 0);
-setlistener("controls/lighting/ext-lighting-panel/wing-tail", button2, nil, 0);
-setlistener("controls/lighting/ext-lighting-panel/fuselage", button2, nil, 0);
-setlistener("controls/lighting/ext-lighting-panel/form-knob", click3, nil, 0);
-setlistener("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III", button2, nil, 0);
-setlistener("f16/fcs/switch-pitch-block20", button2, nil, 0);
-setlistener("f16/fcs/switch-roll-block20", button2, nil, 0);
-setlistener("f16/fcs/autopilot-off", button2, nil, 0);
-setlistener("f16/fcs/autopilot-on", button2, nil, 0);
-setlistener("f16/fcs/switch-pitch-block15", button2, nil, 0);
-setlistener("f16/fcs/switch-roll-block15", button2, nil, 0);
-setlistener("fdm/jsbsim/fcs/fbw-override", button2, nil, 0);
-setlistener("controls/lighting/landing-light", click2, nil, 0);
-setlistener("controls/MFD[0]/button-pressed", doubleClick, nil, 0);
-setlistener("controls/MFD[1]/button-pressed", doubleClick, nil, 0);
-setlistener("controls/MFD[2]/button-pressed", doubleClick, nil, 0);
-setlistener("instrumentation/radar/iff", doubleClick, nil, 0);
-setlistener("f16/avionics/hud-test", button2, nil, 0);
-setlistener("f16/avionics/hud-ded", button2, nil, 0);
-setlistener("f16/avionics/hud-brt", button2, nil, 0);
-setlistener("f16/avionics/hud-alt", button2, nil, 0);
-setlistener("f16/avionics/hud-velocity", button2, nil, 0);
-setlistener("f16/avionics/hud-fpm", click1, nil, 0);
-setlistener("f16/avionics/hud-scales", click1, nil, 0);
-setlistener("f16/avionics/hud-drift", button2, nil, 0);
-setlistener("fdm/jsbsim/elec/switches/main-pwr", click2, nil, 0);
-setlistener("f16/engine/jfs-start-switch", button2, nil, 0);
-setlistener("fdm/jsbsim/elec/switches/epu", click2, nil, 0);
-setlistener("f16/engine/max-power", button2, nil, 0);
-setlistener("f16/avionics/hud-brt", scroll, nil, 0);
-setlistener("f16/avionics/rwr-int", click3, nil, 0);
-setlistener("f16/avionics/mfd-l-con", click3, nil, 0);
-setlistener("f16/avionics/mfd-l-brt", click3, nil, 0);
-setlistener("f16/avionics/mfd-r-con", click3, nil, 0);
-setlistener("f16/avionics/mfd-r-brt", click3, nil, 0);
-setlistener("f16/fcs/adv-mode-sel", doubleClick2, nil, 0);
-setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-1", knob, nil, 0);
-setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-2", knob, nil, 0);
-setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-3", knob, nil, 0);
-setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-4", knob, nil, 0);
-setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-5", knob, nil, 0);
-setlistener("instrumentation/comm[0]/volume", click3, nil, 0);
-setlistener("instrumentation/comm[1]/volume", click3, nil, 0);
-setlistener("controls/lighting/lighting-panel/console-flood-knob", click3, nil, 0);
-setlistener("controls/lighting/lighting-panel/flood-inst-pnl-knob", click3, nil, 0);
-setlistener("controls/lighting/lighting-panel/pri-inst-pnl-knob", click3, nil, 0);
-setlistener("controls/lighting/lighting-panel/data-entry-display", click3, nil, 0);
-setlistener("controls/lighting/lighting-panel/console-primary-knob", click3, nil, 0);
-setlistener("f16/avionics/power-rdr-alt", click1, nil, 0);
-setlistener("f16/avionics/power-fcr", click1, nil, 0);
-setlistener("f16/avionics/power-right-hdpt", click1, nil, 0);
-setlistener("f16/avionics/power-left-hdpt", click1, nil, 0);
-setlistener("f16/avionics/power-mfd", click1, nil, 0);
-setlistener("f16/avionics/power-mmc", click1, nil, 0);
-setlistener("f16/avionics/power-st-sta", click1, nil, 0);
-setlistener("f16/avionics/power-ufc", click1, nil, 0);
-setlistener("f16/avionics/power-gps", click1, nil, 0);
-setlistener("f16/avionics/power-dl", click1, nil, 0);
-setlistener("f16/avionics/ins-knob", knob, nil, 0);
-setlistener("controls/ventilation/airconditioning-enabled", knob, nil, 0);
-setlistener("f16/avionics/o2-switch", click3, nil, 0);
-setlistener("f16/avionics/em-no-te-switch", click3, nil, 0);
-setlistener("f16/avionics/pbg-switch", click3, nil, 0);
-# valid methods: button, button2, knob, knob2, clamp0, click3, lift_cover
-#                click1, click2, doubleClick, doubleClick2, scroll
 
 
 ## Following code adapted from script shared by Warty at https://forum.flightgear.org/viewtopic.php?f=10&t=28665

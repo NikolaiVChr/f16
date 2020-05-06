@@ -145,10 +145,59 @@
                     <value>1</value>
                 </binding>
             </item>
+            <item>
+                <name>GND JETT switch</name>
+                <value>OFF</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/gnd-jett</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/gnd-jett</property>
+                    <value>0</value>
+                </binding>
+            </item>
+            <item>
+                <name>AIR COND TEMP knob</name>
+                <value>AUTO</value>
+                <condition>
+                    <equals>
+                        <property>controls/ventilation/airconditioning-enabled</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/ventilation/airconditioning-enabled</property>
+                    <value>1</value>
+                </binding>
+            </item>
+            <item>
+                <name>AIR SOURCE knob</name>
+                <value>NORM</value>
+                <condition>
+                    <equals>
+                        <property>controls/ventilation/airconditioning-source</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/ventilation/airconditioning-source</property>
+                    <value>1</value>
+                </binding>
+            </item>
         </checklist>
         
         <checklist>
             <title>Before starting engine</title>
+            <item>
+                <name>Canopy</name>
+                <value>As desired</value>
+            </item>
             <item>
                 <name>MAIN PWR switch</name>
                 <value>BATT</value>
@@ -406,10 +455,6 @@
                     </and>
                 </condition>
             </item>
-            <item>
-                <name>Canopy</name>
-                <value>As desired</value>
-            </item>
         </checklist>
 
         <checklist>
@@ -642,6 +687,21 @@
                 </binding>
             </item>
             <item>
+                <name>INS knob</name>
+                <value>ALIGN NORM</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/ins-knob</property>
+                        <value>2</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/ins-knob</property>
+                    <value>2</value>
+                </binding>
+            </item>
+            <item>
                 <name>MMC</name>
                 <value>MMC</value>
                 <condition>
@@ -732,6 +792,21 @@
                 </binding>
             </item>
             <item>
+                <name>OXYGEN lever</name>
+                <value>ON</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/pbg-switch</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/pbg-switch</property>
+                    <value>0</value>
+                </binding>
+            </item>
+            <item>
                 <name>LEFT HDPT switch</name>
                 <value>OFF, unless required</value>
                 <condition>
@@ -792,21 +867,6 @@
                 </binding>
             </item>
             <item>
-                <name>AIR COND</name>
-                <value>AUTO</value>
-                <condition>
-                    <equals>
-                        <property>controls/ventilation/airconditioning-enabled</property>
-                        <value>1</value>
-                    </equals>
-                </condition>
-                <binding>
-                    <command>property-assign</command>
-                    <property>controls/ventilation/airconditioning-enabled</property>
-                    <value>1</value>
-                </binding>
-            </item>
-            <item>
                 <name>WHEEL down light</name>
                 <value>Three green</value>
                 <condition>
@@ -842,6 +902,111 @@
                 <name>Move controls</name>
                 <value>Verify they respond</value>
             </item>
+            <item>
+                <name>EW MWS switch</name>
+                <value>ON</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/ew-mws-switch</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/ew-mws-switch</property>
+                    <value>1</value>
+                </binding>
+            </item>
+            <item>
+                <name>EW JMR switch</name>
+                <value>ON</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/ew-jmr-switch</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/ew-jmr-switch</property>
+                    <value>1</value>
+                </binding>
+            </item>
+            <item>
+                <name>EW RWR switch</name>
+                <value>ON</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/ew-rwr-switch</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/ew-rwr-switch</property>
+                    <value>1</value>
+                </binding>
+            </item>
+            <item>
+                <name>EW DISP switch</name>
+                <value>ON</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/ew-disp-switch</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/ew-disp-switch</property>
+                    <value>1</value>
+                </binding>
+            </item>
+            <item>
+                <name>EW MODE knob</name>
+                <value>MAN</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/ew-mode-knob</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/ew-mode-knob</property>
+                    <value>1</value>
+                </binding>
+            </item>
+            <item>
+                <name>COMM 1 knob</name>
+                <value>ON</value>
+                <condition>
+                    <equals>
+                        <property>instrumentation/comm[0]/volume</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>instrumentation/comm[0]/volume</property>
+                    <value>1</value>
+                </binding>
+            </item>
+            <item>
+                <name>COMM 2 knob</name>
+                <value>ON</value>
+                <condition>
+                    <equals>
+                        <property>instrumentation/comm[1]/volume</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>instrumentation/comm[1]/volume</property>
+                    <value>1</value>
+                </binding>
+            </item>
         </checklist>
         
         
@@ -865,8 +1030,38 @@
                 <name>Exterior lights</name>
                 <value>As required</value>
             </item>
+            <item>
+                <name>INS knob</name>
+                <value>NAV</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/ins-knob</property>
+                        <value>3</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/ins-knob</property>
+                    <value>3</value>
+                </binding>
+            </item>
+            <item>
+                <name>HUD SYM knob</name>
+                <value>ON</value>
+                <condition>
+                    <equals>
+                        <property>f16/avionics/hud-sym</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <binding>
+                    <command>property-assign</command>
+                    <property>f16/avionics/hud-sym</property>
+                    <value>1</value>
+                </binding>
+            </item>
         </checklist>
-        
+                
         <checklist>
             <title>Taxi</title> 
             <item>

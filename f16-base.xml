@@ -58,6 +58,9 @@
             <path>/instrumentation/tacan/frequencies/selected-channel[3]</path>
             <path>/instrumentation/tacan/frequencies/selected-channel[4]</path>
             <path>/instrumentation/iff/channel-selection</path>
+            <path>/f16/avionics/msl-vol-knob</path>
+            <path>/instrumentation/nav[0]/volume</path>
+            <path>/f16/avionics/rwr-volume</path>
         </aircraft-data>
         <tags>
             <tag>fighter</tag>
@@ -564,6 +567,7 @@
                 <short n="7" type="int">0</short><!-- turbine emission color from afterburner -->
                 <string n="5" type="string">00--++00--Empty</string><!-- mp stores -->
                 <string n="4" type="string"></string><!-- string 4 used by IFF -->
+                <string n="6" type="string"></string><!-- string 6 used by radar lock RWR warning -->
             </generic>
             <visibility-range-nm type="int">160</visibility-range-nm>
         </multiplay>
@@ -647,6 +651,10 @@
             <key>
                 <name>m</name>
                 <desc>Masterarm</desc>
+            </key>
+            <key>
+                <name>d</name>
+                <desc>Dogfight mode toggle</desc>
             </key>
             <key>
                 <name>w</name>
@@ -806,18 +814,22 @@ Here's a brief list including the most common symbols and what they refer to:
     - 18:   F/A-18
     - 37:   J-37 Viggen
     - 21:   MiG-21
-    - 27:   Su-27
+    - 27:   Su-27, J-11A
     - 29:   MiG-29
     - 71:   SR-71
     - M2:   Mirage-2000
     - EF:   Eurofighter
     - JA:   Jaguar
+    - TO:   Tornado
     - RF:   Rafale (brsq)
+    - 35:   F-35
     - S:    AWACS, GCI or Recon
-    - 11:   BUK M2 (SAM)
-    - 20:   S-300 (SAM)
-    - SH:   Frigate/Carrier
+    - 11:   SA-11 (BUK M2,SAM)
+    - 20:   SA-20 (S-300, SAM)
+    - SH:   Frigate/Carrier/Ship
+    - 28:   Training scenario opponent
     - AI:   AI scenario
+    - UK:   Unknown threat
             ]]></text-3>
             <text-4><![CDATA[
 MFDs (Multi Function Displays)
@@ -1782,7 +1794,7 @@ There is also small changes in tail for different variants with and without brak
         <indicators />
         <lighting>
             <ext-lighting-panel>
-                <master type="bool">true</master>
+                <master type="bool">false</master>
                 <anti-collision type="bool">true</anti-collision>
                 <!--<anti-collision2 type="bool">true</anti-collision2>-->
                 <pos-lights-flash type="bool">false</pos-lights-flash>
@@ -1792,12 +1804,12 @@ There is also small changes in tail for different variants with and without brak
                 <ar-knob type="double">1</ar-knob>
             </ext-lighting-panel>
             <lighting-panel>
-                <pri-inst-pnl type="double">0.2</pri-inst-pnl>
-                <pri-inst-pnl-knob type="double">0.2</pri-inst-pnl-knob>
-                <flood-inst-pnl type="double">0</flood-inst-pnl>
-                <flood-inst-pnl-knob type="double">0</flood-inst-pnl-knob>
-                <console-primary-knob type="double">0.1</console-primary-knob>
-                <console-primary type="double">0.1</console-primary>
+                <pri-inst-pnl type="double">0.0</pri-inst-pnl>
+                <pri-inst-pnl-knob type="double">0.0</pri-inst-pnl-knob>
+                <flood-inst-pnl type="double">0.0</flood-inst-pnl>
+                <flood-inst-pnl-knob type="double">0.0</flood-inst-pnl-knob>
+                <console-primary-knob type="double">0.0</console-primary-knob>
+                <console-primary type="double">0.0</console-primary>
                 <data-entry-display type="double">1.0</data-entry-display>
             </lighting-panel>
             <landing-light type="int">0</landing-light>
@@ -1819,6 +1831,7 @@ There is also small changes in tail for different variants with and without brak
         <ventilation>
             <airconditioning-type type="int">0</airconditioning-type><!-- cold for 12s: -1 auto: 0 warm for 12s: 1 -->
             <airconditioning-enabled type="bool">false</airconditioning-enabled>
+            <airconditioning-source type="bool">false</airconditioning-source>
             <airconditioning-temperature type="double">16.0</airconditioning-temperature>
             <windshield-hot-air-knob type="double">0.0</windshield-hot-air-knob>
         </ventilation>
@@ -1894,7 +1907,7 @@ There is also small changes in tail for different variants with and without brak
                     <batt-2 type="double">0</batt-2>
                     <charger type="double">0</charger>
                     <emergency-ac-1 type="double">0</emergency-ac-1>
-                    <emergency-ac-2 type="double">0</emergency-ac-2>                    
+                    <emergency-ac-2 type="double">0</emergency-ac-2>            
                     <emergency-dc-1 type="double">0</emergency-dc-1>
                     <emergency-dc-2 type="double">0</emergency-dc-2>
                     <ess-ac type="double">0</ess-ac>
@@ -1906,6 +1919,18 @@ There is also small changes in tail for different variants with and without brak
                     <noness-ac-1 type="double">0</noness-ac-1>
                     <noness-ac-2 type="double">0</noness-ac-2>
                     <noness-dc type="double">0</noness-dc>
+                    <flcc>
+                        <a type="double">0</a>
+                        <b type="double">0</b>
+                        <c type="double">0</c>
+                        <d type="double">0</d>
+                        <ab-regulator type="double">0</ab-regulator>            
+                        <cd-regulator type="double">0</cd-regulator>
+                    </flcc>
+                    <switch>
+                        <ab-regulator type="double">0</ab-regulator>            
+                        <cd-regulator type="double">0</cd-regulator>
+                    </switch>
                 </bus>
                 <failures>
                     <battery>
@@ -2013,6 +2038,9 @@ There is also small changes in tail for different variants with and without brak
                         </control-c>
                         <ground-input type="double">0</ground-input>
                     </pitch>
+                    <lef>
+                        <lef-pos-deg type="double">0</lef-pos-deg>
+                    </lef>
                 </fly-by-wire>
                 <gear-control type="double">1</gear-control>
                 <gear-wow type="bool">true</gear-wow>
@@ -2157,6 +2185,15 @@ There is also small changes in tail for different variants with and without brak
             </frequencies>
             <volume type="double">0</volume>
         </dme>
+        <nav n="0">
+            <volume type="double">0.1</volume>
+        </nav>
+        <comm n="0">
+            <volume type="double">0</volume>
+        </comm>
+        <comm n="1">
+            <volume type="double">0</volume>
+        </comm>
         <gci>
             <picture type="bool">false</picture>
             <bogeydope type="bool">false</bogeydope>
@@ -2239,8 +2276,8 @@ There is also small changes in tail for different variants with and without brak
             <aim-9>
                 <short-name type="string">A-9L</short-name>
                 <long-name type="string">AIM-9L Sidewinder</long-name>
-                <vol-search type="double">0.075</vol-search>
-                <vol-track type="double">0.25</vol-track>
+                <vol-search type="double">0.15</vol-search>
+                <vol-track type="double">0.50</vol-track>
                 <guidance type="string">heat</guidance>                       <!-- heat, radar or semi-radar -->
                 <navigation type="string">PN</navigation>
                 <all-aspect type="bool">true</all-aspect>                     <!-- all or rear-only -->
@@ -2289,7 +2326,7 @@ There is also small changes in tail for different variants with and without brak
             <aim-120>
                 <short-name type="string">A120B</short-name>
                 <long-name type="string">AIM-120B AMRAAM</long-name>
-                <guidance type="string">radar</guidance>
+                <guidance type="string">inertial</guidance>
                 <vol-search type="double">0.00</vol-search>
                 <vol-track type="double">1.00</vol-track>
                 <max-fire-range-nm type="int">38.8</max-fire-range-nm>
@@ -2824,7 +2861,7 @@ There is also small changes in tail for different variants with and without brak
             <agm-154a>
                 <short-name type="string">AG154</short-name>
                 <long-name type="string">AGM-154A-1 JSOW</long-name> <!-- Unitary warhead variant -->
-                <fire-msg type="string">Greyhound</fire-msg>
+                <fire-msg type="string">Greyhound</fire-msg><!--Pigs away-->
                 <class type="string">GMP</class>
                 <max-fire-range-nm type="double">70</max-fire-range-nm>
                 <min-fire-range-nm type="double">0.5</min-fire-range-nm>
@@ -2949,7 +2986,7 @@ There is also small changes in tail for different variants with and without brak
                 <prowl-flight type="string">gyro-pitch</prowl-flight>
                 <switch-time-sec type="double">5</switch-time-sec>
                 <class type="string">GM</class>
-                <fire-msg type="string">Sniper</fire-msg>
+                <fire-msg type="string">Sniper</fire-msg><!--Magnum-->
                 <ready-time type="double">0.25</ready-time>
             </agm-88>
             <cbu-87> 
@@ -3279,6 +3316,17 @@ There is also small changes in tail for different variants with and without brak
             <thunder1 type="bool">false</thunder1>
             <thunder2 type="bool">false</thunder2>
             <thunder3 type="bool">false</thunder3>
+            <thunder4 type="bool">false</thunder4>
+            <thunder5 type="bool">false</thunder5>
+            <thunder6 type="bool">false</thunder6>
+            <thunder7 type="bool">false</thunder7>
+            <dist-thunder1 type="double">0</dist-thunder1>
+            <dist-thunder2 type="double">0</dist-thunder2>
+            <dist-thunder3 type="double">0</dist-thunder3>
+            <dist-thunder4 type="double">0</dist-thunder4>
+            <dist-thunder5 type="double">0</dist-thunder5>
+            <dist-thunder6 type="double">0</dist-thunder6>
+            <dist-thunder7 type="double">0</dist-thunder7>
             <button type="bool">false</button>
             <button2 type="bool">false</button2>
             <clamp type="bool">false</clamp>
@@ -3304,7 +3352,8 @@ value. 18000=standard US transition altitude -->
             <dgft type="bool">false</dgft>
             <emer-jett-switch type="bool">false</emer-jett-switch>            
             <hud-drift type="bool">true</hud-drift>
-            <hud-brt type="double">1.0</hud-brt>
+            <hud-brt type="double">0.0</hud-brt>
+            <hud-sym type="double">0.0</hud-sym>
             <rwr-int type="double">1.0</rwr-int>
             <mfd-l-brt type="double">1.0</mfd-l-brt>
             <mfd-l-con type="double">1.0</mfd-l-con>
@@ -3365,6 +3414,15 @@ value. 18000=standard US transition altitude -->
             <power-right-hdpt-warming type="bool">true</power-right-hdpt-warming>
             <le-flaps-switch type="bool">true</le-flaps-switch>
             <ins-knob type="int">0</ins-knob>            
+            <ew-disp-switch type="bool">false</ew-disp-switch>
+            <ew-rwr-switch type="bool">false</ew-rwr-switch>
+            <ew-mws-switch type="bool">false</ew-mws-switch>
+            <ew-jmr-switch type="bool">false</ew-jmr-switch>
+            <ew-mode-knob type="bool">false</ew-mode-knob>
+            <msl-vol-knob type="double">0.5</msl-vol-knob>
+            <rwr-volume type="double">0.7</rwr-volume>
+            <oxy-psi type="double">0.0</oxy-psi>
+            <pbg-switch type="int">-1</pbg-switch>
         </avionics>
         <fcs>
             <stby-mode type="bool">false</stby-mode>
@@ -3564,6 +3622,9 @@ value. 18000=standard US transition altitude -->
         <eng>
             <file>Aircraft/f16/Nasal/engine.nas</file>
         </eng>
+        <sound>
+            <file>Aircraft/f16/Nasal/sound.nas</file>
+        </sound>
     </nasal>
     
 </PropertyList>

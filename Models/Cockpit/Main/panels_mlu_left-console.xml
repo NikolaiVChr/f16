@@ -164,6 +164,11 @@
         <object-name>SW_TRIM_DISC</object-name>
         <object-name>SW_WING-TAIL</object-name>
         <object-name>TF_KNOB</object-name>
+        <object-name>ils-vol-knob</object-name>
+        <object-name>msl-vol-knob</object-name>
+        <object-name>tacan-vol-knob</object-name>
+        <object-name>threat-vol-knob</object-name>
+        <object-name>intercom-knob</object-name>
   </animation>
     
 
@@ -247,7 +252,11 @@
         <object-name>COMM1_KNOB</object-name>
         <object-name>COMM2_KNOB</object-name>
         <object-name>CAUTION_RESET</object-name>
-        
+        <object-name>ils-vol-knob</object-name>
+        <object-name>msl-vol-knob</object-name>
+        <object-name>tacan-vol-knob</object-name>
+        <object-name>threat-vol-knob</object-name>
+        <object-name>intercom-knob</object-name>
     </effect>
 
     <effect>
@@ -1589,6 +1598,237 @@
   </axis>
  </animation>
  
+  <animation>
+        <type>knob</type>
+        <object-name>ils-vol-knob</object-name>
+        <property>instrumentation/nav[0]/volume</property>
+        <factor>250</factor>
+        <offset-deg>-120</offset-deg>
+        <interval-sec>0.10</interval-sec>
+        <center>
+         <x-m>0.29047</x-m>
+         <y-m>-0.32466</y-m>
+         <z-m>0.024704</z-m>
+        </center>
+        <axis>
+         <x>0</x>
+         <y>0</y>
+         <z>-1</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>instrumentation/nav[0]/volume</property>
+                <step>0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>instrumentation/nav[0]/volume</property>
+                <step>-0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>ilsv</tooltip-id>
+                <label>ILS/VOR volume</label>
+            </binding>
+        </hovered>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>msl-vol-knob</object-name>
+        <property>f16/avionics/msl-vol-knob</property>
+        <factor>250</factor>
+        <offset-deg>-170</offset-deg>
+        <interval-sec>0.10</interval-sec>
+        <center>
+         <x-m>0.219769</x-m>
+         <y-m>-0.294102</y-m>
+         <z-m>0.025639</z-m>
+        </center>
+        <axis>
+         <x>0</x>
+         <y>0</y>
+         <z>-1</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/msl-vol-knob</property>
+                <step>0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/msl-vol-knob</property>
+                <step>-0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>mslv</tooltip-id>
+                <label>Sidewinder volume</label>
+            </binding>
+        </hovered>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>tacan-vol-knob</object-name>
+        <property>instrumentation/tacan/volume</property>
+        <factor>250</factor>
+        <offset-deg>-120</offset-deg>
+        <interval-sec>0.10</interval-sec>
+        <center>
+         <x-m>0.29038</x-m>
+         <y-m>-0.355711</y-m>
+         <z-m>0.024848</z-m>
+        </center>
+        <axis>
+         <x>0</x>
+         <y>0</y>
+         <z>-1</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>instrumentation/tacan/volume</property>
+                <step>0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>instrumentation/tacan/volume</property>
+                <step>-0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>tcnv</tooltip-id>
+                <label>TACAN VOLUME</label>
+            </binding>
+        </hovered>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>threat-vol-knob</object-name>
+        <property>f16/avionics/rwr-volume</property>
+        <factor>250</factor>
+        <offset-deg>-170</offset-deg>
+        <interval-sec>0.10</interval-sec>
+        <center>
+         <x-m>0.257074</x-m>
+         <y-m>-0.293849</y-m>
+         <z-m>0.022549</z-m>
+        </center>
+        <axis>
+         <x>0</x>
+         <y>0</y>
+         <z>-1</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/rwr-volume</property>
+                <step>0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/rwr-volume</property>
+                <step>-0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>tvol</tooltip-id>
+                <label>RWR volume</label>
+            </binding>
+        </hovered>
+    </animation>
+    
+          
+  <animation>
+        <type>knob</type>
+        <object-name>intercom-knob</object-name>
+        <property>f16/avionics/intercom-volume</property>
+        <factor>250</factor>
+        <offset-deg>-120</offset-deg>
+        <interval-sec>0.10</interval-sec>
+        <center>
+         <x-m>0.293586</x-m>
+         <y-m>-0.386796</y-m>
+         <z-m>0.026526</z-m>
+        </center>
+        <axis>
+         <x>0</x>
+         <y>0</y>
+         <z>-1</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/intercom-volume</property>
+                <step>0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/intercom-volume</property>
+                <step>-0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>icv</tooltip-id>
+                <label>INTERCOM VOLUME</label>
+            </binding>
+        </hovered>
+    </animation>        
+        
  <animation>
         <type>knob</type>
         <object-name>COMM1_KNOB</object-name>

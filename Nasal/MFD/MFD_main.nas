@@ -910,8 +910,7 @@ var MFD_Device =
                     me.linesFrame -= 1;
                 }
                 #me.root.gmPic.update();
-                me.root.gmPic.set("src", "Aircraft/f16/Nasal/MFD/gm2.png");
-                me.root.gmPic.set("src", "Aircraft/f16/Nasal/MFD/gm.png");
+                me.root.gmPic.dirtyPixels();
             }
             
             me.root.az1.setVisible(!rdrMode);

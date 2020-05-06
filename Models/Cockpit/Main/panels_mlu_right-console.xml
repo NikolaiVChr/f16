@@ -13,6 +13,7 @@
         <object-name>mmc-switch</object-name>
         <object-name>st-sta-switch</object-name>
         <object-name>ufc-switch</object-name>
+        <object-name>plug</object-name>
         <object-name>AIR_COND</object-name>
         <object-name>TEMP_knob</object-name>
         <object-name>AirSource_knob</object-name>
@@ -289,6 +290,31 @@
             </binding>
         </action>
     </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>AirSource_knob</object-name>
+        <property>controls/ventilation/airconditioning-source</property>
+        <factor>45</factor>
+        <offset-deg>-45</offset-deg>
+        <drag-direction>horizontal</drag-direction>
+        <center>
+            <x-m>0.348258</x-m><y-m>0.460441</y-m><z-m>0.0093</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>0</y><z>-1</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/ventilation/airconditioning-source</property>
+                <factor>1</factor>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
 
     <animation>
         <type>knob</type>
@@ -393,7 +419,7 @@
     <animation>
         <type>knob</type>
         <object-name>autobrt-switch</object-name>
-        <property>f16/avionics/hud-brt</property>
+        <property>f16/avionics/hud-daytime</property>
         <factor>45</factor>
         <offset-deg>-45.0</offset-deg>
         <drag-direction>vertical</drag-direction>
@@ -406,7 +432,7 @@
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>f16/avionics/hud-brt</property>
+                <property>f16/avionics/hud-daytime</property>
                 <factor>1</factor>
                 <min>0</min>
                 <max>2</max>
@@ -1017,6 +1043,35 @@
             </binding>
         </hovered>
     </animation>
+    
+    <animation>
+    <type>rotate</type>
+    <object-name>oxy_needle</object-name>
+    <property>f16/avionics/oxy-psi</property>
+    <factor>-0.6</factor>
+    <offset-deg>60</offset-deg>
+    <center>
+      <x-m>0.771487</x-m>
+      <y-m>0.529611</y-m>
+      <z-m>0.005117</z-m>
+    </center>
+    <axis>
+      <x>0</x>
+      <y>0</y>
+      <z>1</z>
+    </axis>
+  </animation>
+ 
+ <animation> 
+  <type>material</type>
+  <object-name>oxy_needle</object-name>
+  <emission>
+   <factor-prop>controls/lighting/lighting-panel/pri-inst-pnl</factor-prop>
+   <red>0.6</red>
+   <green>0.4</green>
+   <blue>0.3</blue>
+  </emission>
+ </animation>
 
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>

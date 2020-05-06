@@ -3,11 +3,6 @@
 <PropertyList>
 
  <path>cockpit.ac</path>
-  <offsets>
-   <x-m></x-m>
-   <y-m></y-m>
-   <z-m>0.0</z-m>
-  </offsets>
 
   <effect>
       <inherits-from>Effects/model-combined-transparent</inherits-from>
@@ -44,6 +39,33 @@
       </parameters>
       <object-name>hud-optics</object-name>
  </effect>
+ 
+ <effect>
+        <inherits-from>Effects/model-combined-deferred</inherits-from>
+        <parameters>
+          <ambient-correction type="float">0.00</ambient-correction>
+        </parameters>        
+        <object-name>box_left</object-name>
+        <object-name>box_right</object-name>
+        <object-name>center-console</object-name>
+        <object-name>center_console</object-name>
+        <object-name>Centre</object-name>
+        <object-name>COCKPIT</object-name>
+        <object-name>cockpit_border</object-name>
+        <object-name>cylinder.005</object-name>
+        <object-name>cylinder.006</object-name>
+        <object-name>floor</object-name>
+        <object-name>frontpart</object-name>
+        <object-name>Housing</object-name>
+        <object-name>object.002</object-name>
+        <object-name>object.003</object-name>
+        <object-name>object.005</object-name>
+        <object-name>object.006</object-name>
+        <object-name>object.007</object-name>
+        <object-name>PedalAdj</object-name>
+        <object-name>poly</object-name>
+        <object-name>screws</object-name>
+    </effect>
 
  <model>
   <name>HUD</name>
@@ -110,85 +132,7 @@
    <z-m> 0.239</z-m><!--z-m> 0.200</z-m-->
   </offsets>
  </model>
-<!--
- <animation>
-  <type>rotate</type>
-  <object-name>side_stick</object-name>
-  <object-name>cylinder.004</object-name>
-  <object-name>cylinder.002</object-name>
-  <object-name>cylinder.003</object-name>
-  <object-name>box</object-name>
-  <object-name>disk.002</object-name>
-  <object-name>side_stick</object-name>
-  <property>sim/current-view/internal</property>
-  <factor>15.0</factor>
-  <center>
-   <x-m>-4.43221</x-m>
-   <y-m>0.274842</y-m>
-   <z-m>0.180894</z-m>
-  </center>
-  <axis>
-   <x>0.0</x>
-   <y>1.0</y>
-   <z>0.0</z>
-  </axis>
- </animation>
 
- <animation>
-        <type>rotate</type>
-        <object-name>side_stick</object-name>
-        <object-name>cylinder.004</object-name>
-        <object-name>cylinder.002</object-name>
-        <object-name>cylinder.003</object-name>
-        <object-name>box</object-name>
-        <object-name>disk.002</object-name>
-        <object-name>side_stick</object-name>
-        <property>controls/flight/elevator</property>
-        <factor>0.75</factor>
-        <center>
-         <x-m>-4.43221</x-m>
-         <y-m>0.274842</y-m>
-         <z-m>0.180894</z-m>
-        </center>
-        <axis>
-            <y>-1</y>
-        </axis>
-    </animation>
-
-    <animation>
-        <type>rotate</type>
-        <object-name>side_stick</object-name>
-        <object-name>cylinder.004</object-name>
-        <object-name>cylinder.002</object-name>
-        <object-name>cylinder.003</object-name>
-        <object-name>box</object-name>
-        <object-name>disk.002</object-name>
-        <object-name>side_stick</object-name>
-        <property>controls/flight/aileron</property>
-        <factor>0.75</factor>
-        <center>
-         <x-m>-4.43221</x-m>
-         <y-m>0.274842</y-m>
-         <z-m>0.180894</z-m>
-        </center>
-        <axis>
-            <x>-1</x>
-        </axis>
-    </animation>
--->
- <animation>
-        <type>select</type>
-        <object-name>side_stick</object-name>
-        <object-name>cylinder.004</object-name>
-        <object-name>cylinder.002</object-name>
-        <object-name>cylinder.003</object-name>
-        <object-name>box</object-name>
-        <object-name>disk.002</object-name>
-        <object-name>side_stick</object-name>
-        <condition>
-    <equals><value>10</value><value>20</value></equals>
-   </condition>
-  </animation>
 
  <animation>
   <type>translate</type>
@@ -684,16 +628,6 @@
   </offsets>
  </model>
 
- <model>
-  <name>RADAR_SCREEN</name>
-  <path>Aircraft/Instruments-3d/radar2/radar-screen.xml</path>
-  <offsets>
-   <x-m>-4.760</x-m>
-   <y-m>-0.158</y-m>
-   <z-m>0.4793</z-m>
-   <pitch-deg>-13.8</pitch-deg>
-  </offsets>
- </model>
 <!-- ======= END AVIONICS ======= -->
 
 
@@ -704,19 +638,6 @@
    <x-m>-4.555</x-m>
    <y-m>0.0</y-m>
    <z-m>0.65</z-m>
-  </offsets>
- </model>
-
-
- <model>
-  <!-- Just a diamond displayed in the HUD above the nearest target -->
-  <name>HUD_ADDS</name>
-  <path>Aircraft/Instruments-3d/radar2/hud.xml</path>
-  <offsets>
-   <x-m>-4.7061</x-m>
-   <y-m>0</y-m>
-   <z-m>0.803</z-m>
-   <pitch-deg>-5</pitch-deg>
   </offsets>
  </model>
 

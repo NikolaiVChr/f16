@@ -2139,8 +2139,8 @@
             <mode>looped</mode>
             <condition>
                 <greater-than>
-                    <property>accelerations/pilot-g</property>
-                    <value>5</value>
+                    <property>f16/avionics/oxy-psi</property>
+                    <value>50</value>
                 </greater-than>
             </condition>
             <volume>
@@ -2358,7 +2358,7 @@
                 <max>1</max>
             </volume>
         </nearby-explode>
-        <thunder1>
+        <thunder>
             <name>thunder1</name>
             <mode>once</mode>
             <path>Aircraft/f16/Sounds/Effects/thunder1.wav</path>
@@ -2367,15 +2367,15 @@
             <pitch>
                 <property>f16/sound/dist-thunder1</property>
                 <factor>2</factor>
-                <offset>0.50</offset>
-                <min>1.00</min>
+                <offset>0.00</offset>
+                <min>0.00</min>
                 <max>2.00</max>
             </pitch>
             <volume>
                 <property>f16/sound/dist-thunder1</property>
             </volume>
-        </thunder1>
-        <thunder2>
+        </thunder>
+        <thunder>
             <name>thunder2</name>
             <mode>once</mode>
             <path>Aircraft/f16/Sounds/Effects/thunder2.wav</path>
@@ -2384,15 +2384,15 @@
             <pitch>
                 <property>f16/sound/dist-thunder2</property>
                 <factor>2</factor>
-                <offset>0.50</offset>
-                <min>1.00</min>
+                <offset>0.00</offset>
+                <min>0.00</min>
                 <max>2.00</max>
             </pitch>
             <volume>
                 <property>f16/sound/dist-thunder2</property>
             </volume>
-        </thunder2>
-        <thunder3>
+        </thunder>
+        <thunder>
             <name>thunder3</name>
             <mode>once</mode>
             <path>Aircraft/f16/Sounds/Effects/thunder3.wav</path>
@@ -2400,15 +2400,83 @@
             <property>f16/sound/thunder3</property>
             <pitch>
                 <property>f16/sound/dist-thunder3</property>
-                <factor>1</factor>
-                <offset>0.50</offset>
-                <min>1.00</min>
+                <factor>2</factor>
+                <offset>0.00</offset>
+                <min>0.00</min>
                 <max>2.00</max>
             </pitch>
             <volume>
                 <property>f16/sound/dist-thunder3</property>
             </volume>
-        </thunder3>
+        </thunder>
+        <thunder>
+            <name>thunder4</name>
+            <mode>once</mode>
+            <path>Aircraft/f16/Sounds/Effects/thunder4.wav</path>
+            <type>avionics</type>
+            <property>f16/sound/thunder4</property>
+            <pitch>
+                <property>f16/sound/dist-thunder4</property>
+                <factor>2</factor>
+                <offset>0.00</offset>
+                <min>0.00</min>
+                <max>2.00</max>
+            </pitch>
+            <volume>
+                <property>f16/sound/dist-thunder4</property>
+            </volume>
+        </thunder>
+        <thunder>
+            <name>thunder5</name>
+            <mode>once</mode>
+            <path>Aircraft/f16/Sounds/Effects/thunder5.wav</path>
+            <type>avionics</type>
+            <property>f16/sound/thunder5</property>
+            <pitch>
+                <property>f16/sound/dist-thunder5</property>
+                <factor>2</factor>
+                <offset>0.00</offset>
+                <min>0.00</min>
+                <max>2.00</max>
+            </pitch>
+            <volume>
+                <property>f16/sound/dist-thunder5</property>
+            </volume>
+        </thunder>
+        <thunder>
+            <name>thunder6</name>
+            <mode>once</mode>
+            <path>Aircraft/f16/Sounds/Effects/thunder6.wav</path>
+            <type>avionics</type>
+            <property>f16/sound/thunder6</property>
+            <pitch>
+                <property>f16/sound/dist-thunder6</property>
+                <factor>2</factor>
+                <offset>0.00</offset>
+                <min>0.00</min>
+                <max>2.00</max>
+            </pitch>
+            <volume>
+                <property>f16/sound/dist-thunder6</property>
+            </volume>
+        </thunder>
+        <thunder>
+            <name>thunder7</name>
+            <mode>once</mode>
+            <path>Aircraft/f16/Sounds/Effects/thunder7.wav</path>
+            <type>avionics</type>
+            <property>f16/sound/thunder7</property>
+            <pitch>
+                <property>f16/sound/dist-thunder7</property>
+                <factor>2</factor>
+                <offset>0.00</offset>
+                <min>0.00</min>
+                <max>2.00</max>
+            </pitch>
+            <volume>
+                <property>f16/sound/dist-thunder7</property>
+            </volume>
+        </thunder>
         <brake>
             <name>speedbrake</name>
             <path>Aircraft/f16/Sounds/speedbrake.wav</path>
@@ -2661,7 +2729,10 @@
             </condition>
             <volume>
                 <property>/sim/current-view/internal</property>
-                <factor>0.4</factor>
+                <factor>0.6</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -2687,7 +2758,10 @@
             </condition>
             <volume>
                 <property>/sim/current-view/internal</property>
-                <factor>0.4</factor>
+                <factor>0.6</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/rwr-volume</property>
             </volume>
         </rwr>
         <rwr>
@@ -2723,6 +2797,9 @@
                 <property>/sim/current-view/internal</property>
                 <factor>1</factor>
             </volume>
+            <volume>
+                <property>f16/avionics/rwr-volume</property>
+            </volume>
         </rwr>
         <rwr>
             <name>rwr-sam-launch</name>
@@ -2756,6 +2833,38 @@
             <volume>
                 <property>/sim/current-view/internal</property>
                 <factor>1</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/rwr-volume</property>
+            </volume>
+        </rwr>
+        <rwr>
+            <name>rwr-lock</name>
+            <path>Aircraft/f16/Sounds/rwr-lock-01.wav</path>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <condition>
+                <or>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                        <value>20</value>
+                    </greater-than>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                        <value>20</value>
+                    </greater-than>
+                </or>
+                <equals>
+                    <property>sound/rwr-lck</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <volume>
+                <property>/sim/current-view/internal</property>
+                <factor>1.00</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/rwr-volume</property>
             </volume>
         </rwr>
         <radar-active>
@@ -3170,22 +3279,22 @@
                 <factor>0.04</factor>
             </volume>
         </avionics>
-        <main-pwr>
-            <name>Main Power</name>
+        <altimeter>
+            <name>altimeter-vibrator</name>
             <path>Sounds/Timi/f16-battery.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
             <condition>
                 <greater-than>
-                    <property>fdm/jsbsim/elec/switches/main-pwr</property>
-                    <value>0</value> <!-- For now tied to MAIN PWR switch until futher info is found -->
+                    <property>fdm/jsbsim/elec/bus/batt-2</property>
+                    <value>20</value>
                 </greater-than>
             </condition>
             <volume>
                 <property>/sim/current-view/internal</property>
-                <factor>0.075</factor>
+                <factor>0.09</factor>
             </volume>
-        </main-pwr>
+        </altimeter>
         <boom-report>
             <name>boom-report</name>
             <mode>once</mode>
@@ -3261,6 +3370,9 @@
             </volume>
             <volume>
                 <property>sim/current-view/internal</property>
+            </volume>
+            <volume>
+                <property>f16/avionics/msl-vol-knob</property>
             </volume>
         </lock-tone>
         <lock-tone>
@@ -3617,7 +3729,7 @@
                 <z>-0.67645</z>
             </position>
             <volume>
-                <factor>0.75</factor>
+                <factor>0.65</factor>
                 <max>1</max>
             </volume>
         </missile1>
@@ -3636,7 +3748,7 @@
                 <z>-0.67645</z>
             </position>
             <volume>
-                <factor>0.75</factor>
+                <factor>0.65</factor>
                 <max>1</max>
             </volume>
         </missile1>
@@ -3655,7 +3767,7 @@
                 <z>-0.67645</z>
             </position>
             <volume>
-                <factor>0.75</factor>
+                <factor>0.65</factor>
                 <max>1</max>
             </volume>
         </missile1>
@@ -3674,7 +3786,7 @@
                 <z>-0.67645</z>
             </position>
             <volume>
-                <factor>0.75</factor>
+                <factor>0.65</factor>
                 <max>1</max>
             </volume>
         </missile1>
@@ -3693,7 +3805,7 @@
                 <z>-0.67645</z>
             </position>
             <volume>
-                <factor>0.75</factor>
+                <factor>0.65</factor>
                 <max>1</max>
             </volume>
         </missile1>
@@ -3712,7 +3824,7 @@
                 <z>-0.67645</z>
             </position>
             <volume>
-                <factor>0.75</factor>
+                <factor>0.65</factor>
                 <max>1</max>
             </volume>
         </missile1>
@@ -3731,7 +3843,7 @@
                 <z>-0.67645</z>
             </position>
             <volume>
-                <factor>0.75</factor>
+                <factor>0.65</factor>
                 <max>1</max>
             </volume>
         </missile1>
@@ -4170,6 +4282,18 @@
                 <factor>1</factor>
             </volume>
         </missile-hit>
+        <flare-release>
+            <name>flare-release</name>
+            <mode>once</mode>
+            <path>Aircraft/f16/Sounds/Effects/cmds-release.wav</path>
+            <condition>
+                <property>ai/submodels/submodel[0]/flare-release-snd</property>
+            </condition>
+            <volume>
+                <property>fdm/jsbsim/elec/bus/batt-1</property>
+                <factor>0.10</factor>
+            </volume>
+        </flare-release>
         
         <!-- ********************************************************************************* -->
         <!-- ********************************************************************************* -->

@@ -27,11 +27,25 @@
             <gear>
                 <gear-down type="double">0</gear-down>
             </gear>
+            <lighting>
+                <ext-lighting-panel>
+                    <master type="bool">true</master>
+                </ext-lighting-panel>
+                <lighting-panel>
+                    <pri-inst-pnl type="double">0.3</pri-inst-pnl>
+                    <pri-inst-pnl-knob type="double">0.3</pri-inst-pnl-knob>
+                    <flood-inst-pnl type="double">0.1</flood-inst-pnl>
+                    <flood-inst-pnl-knob type="double">0.1</flood-inst-pnl-knob>
+                    <console-primary-knob type="double">0.2</console-primary-knob>
+                    <console-primary type="double">0.2</console-primary>
+                </lighting-panel>
+            </lighting>
             <seat>
                 <ejection-safety-lever type="bool">true</ejection-safety-lever>
             </seat>
             <ventilation>
                 <airconditioning-enabled type="bool">true</airconditioning-enabled>
+                <airconditioning-source type="bool">true</airconditioning-source>
             </ventilation>
         </controls>
         <engines>
@@ -58,12 +72,26 @@
                 <power-gps type="bool">true</power-gps>
                 <power-dl type="bool">true</power-dl>
                 <ins-knob type="int">3</ins-knob>
+                <hud-sym type="double">1.0</hud-sym>
+                <hud-brt type="double">1.0</hud-brt>
+                <ew-disp-switch type="bool">true</ew-disp-switch>
+                <ew-rwr-switch type="bool">true</ew-rwr-switch>
+                <ew-mws-switch type="bool">true</ew-mws-switch>
+                <ew-jmr-switch type="bool">true</ew-jmr-switch>
+                <ew-mode-knob type="bool">true</ew-mode-knob>
+                <pbg-switch type="int">0</pbg-switch>
             </avionics>
         </f16>
         <instrumentation>
             <radar>
                 <radar-standby type="bool">false</radar-standby>
             </radar>
+            <comm n="0">
+                <volume type="double">1</volume>
+            </comm>
+            <comm n="1">
+                <volume type="double">1</volume>
+            </comm>
         </instrumentation>    
     </overlay>
 

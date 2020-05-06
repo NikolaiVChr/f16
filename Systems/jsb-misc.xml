@@ -325,7 +325,9 @@
     
     
 
-    <channel name="oxygen" execrate="7200">
+    
+    
+    <channel name="oxygen 1" execrate="7200">
                 
         <fcs_function name="systems/oxy-mins">
             <function>
@@ -372,6 +374,29 @@
             </function>
             <output>/f16/cockpit/oxygen-liters</output>
         </fcs_function>
+                
+    </channel>
+    
+    <channel name="oxygen 2" execrate="8">
+                
+        <switch name="/f16/avionics/oxy-psi-direct">
+         <default value="0"/>
+         <test  logic="AND" value="150">
+           /f16/cockpit/oxygen-liters gt 1
+           /f16/avionics/pbg-switch == 0
+           elec/bus/batt-2 gt 20
+         </test>
+         <test  logic="AND" value="110">
+           /f16/cockpit/oxygen-liters gt 0.5
+           /f16/avionics/pbg-switch == 0
+           elec/bus/batt-2 gt 20
+         </test>
+        </switch>
+        
+        <lag_filter name="/f16/avionics/oxy-psi">
+            <input> /f16/avionics/oxy-psi-direct </input>
+            <c1> 2.5 </c1>
+        </lag_filter>
                 
     </channel>
     
@@ -569,7 +594,21 @@
                     </tableData>
                 </table>
             </function>
-        </fcs_function>  
+        </fcs_function>
+        
+        <fcs_function name="/engines/engine[0]/n2-60-to-80-log">
+            <function>
+                <log10>
+                    <table>
+                        <independentVar lookup="row">/engines/engine/n2</independentVar>
+                        <tableData>
+                              60          1.0
+                              80          10.0
+                        </tableData>
+                    </table>
+                </log10>
+            </function>
+        </fcs_function>
 
     </channel>
     

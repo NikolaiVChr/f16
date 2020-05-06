@@ -32,6 +32,7 @@
                 <property>f16/avionics/power-ufc-warm</property>
                 <value>0.90</value>
             </greater-than-equals>
+            <property>f16/avionics/ew-rwr-switch</property>
         </condition>
         <emission>
             <red>  1</red>

@@ -101,8 +101,8 @@
         <offset-deg>0</offset-deg>
         <center>
             <x-m>  -0.0062 </x-m>
-            <y-m>  -0.074119 </y-m>
-            <z-m>  -0.023917 </z-m>
+            <y-m>  -0.07268 </y-m>
+            <z-m>  -0.02396 </z-m>
         </center>
         <axis>
             <x> 0.0 </x>
@@ -124,6 +124,46 @@
             <binding>
                 <command>property-adjust</command>
                 <property>f16/avionics/hud-brt</property>
+                <factor>1</factor>
+                <step>0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </decrease>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>sym</object-name>
+        <property>f16/avionics/hud-sym</property>
+        <factor>-150</factor>
+        <offset-deg>0</offset-deg>
+        <center>
+            <x-m>  -0.00616 </x-m>
+            <y-m>  -0.07268 </y-m>
+            <z-m>   0.02306 </z-m>
+        </center>
+        <axis>
+            <x> 0.0 </x>
+            <y> 1.0 </y>
+            <z> 0.0 </z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hud-sym</property>
+                <factor>1</factor>
+                <step>-0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hud-sym</property>
                 <factor>1</factor>
                 <step>0.1</step>
                 <min>0</min>
@@ -474,7 +514,7 @@
         <condition>
             <greater-than-equals>
                 <property>sim/variant-id</property>
-                <value>5</value>
+                <value>4</value>
             </greater-than-equals>
         </condition>
         <object-name>wx</object-name>

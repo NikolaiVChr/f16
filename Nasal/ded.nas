@@ -275,8 +275,12 @@ var loop_ded = func {# one line is max 24 chars
       var pond   = getprop("instrumentation/transponder/inputs/knob-mode")==0?0:1;
       if (pond) pond = sprintf("%04d",getprop("instrumentation/transponder/id-code"));
       else pond = "----";
+      var off = "   ";
+      if (getprop("instrumentation/comm["~comm~"]/volume") == 0) {
+        off = "OFF";
+      }
       text[0] = sprintf("UHF    --    STPT %s",no);
-      text[1] = sprintf(" COMM%d                   ",comm+1);
+      text[1] = sprintf(" COMM%d  %s              ",comm+1,off);
       text[2] = sprintf("VHF  %6.2f   %s",freq,time);
       text[3] = sprintf("                        ");
       text[4] = sprintf("M34   %s    MAN  T%s",pond,t);
@@ -360,7 +364,7 @@ var loop_ded = func {# one line is max 24 chars
 #loop_ded();
 
 var cursorUp = func {
-  f16.doubleClick();
+  sound.doubleClick();
   var active = getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc");
   var wp = getprop("autopilot/route-manager/current-wp");
   var max = getprop("autopilot/route-manager/route/num");
@@ -375,7 +379,7 @@ var cursorUp = func {
 }
 
 var cursorDown = func {
-  f16.doubleClick();
+  sound.doubleClick();
   var active = getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc");
   var wp = getprop("autopilot/route-manager/current-wp");
   var max = getprop("autopilot/route-manager/route/num");
@@ -390,79 +394,79 @@ var cursorDown = func {
 }
 
 var stpt = func {
-  f16.doubleClick();
+  sound.doubleClick();
   page = pSTPT;
 }
 
 var alow = func {
-  f16.doubleClick();
+  sound.doubleClick();
   page = pALOW;
 }
 
 var tacan = func {
-  f16.doubleClick();
+  sound.doubleClick();
   page = pTACAN;
 }
 
 var iff = func {
-  f16.doubleClick();
+  sound.doubleClick();
   page = pIFF;
 }
 
 var comm1 = func {
-  f16.doubleClick();
+  sound.doubleClick();
   comm = 0;
   page = pCNI;
 }
 
 var comm2 = func {
-  f16.doubleClick();
+  sound.doubleClick();
   comm = 1;
   page = pCNI;
 }
 
 var bingo = func {
-  f16.doubleClick();
+  sound.doubleClick();
   page = pBINGO;
 }
 
 var magv = func {
-  f16.doubleClick();
+  sound.doubleClick();
   page = pMAGV;
 }
 
 var f_ack = func {
-  f16.doubleClick();
+  sound.doubleClick();
   page = pFACK;
 }
 
 var link16 = func {
-  f16.doubleClick();
+  sound.doubleClick();
   page = pLINK;
 }
 
 var laser = func {
-  f16.doubleClick();
+  sound.doubleClick();
   page = pLASER;
 }
 
 var time = func {
-  f16.doubleClick();
+  sound.doubleClick();
   page = pTIME;
 }
 
 var list = func {
-  f16.doubleClick();
+  sound.doubleClick();
   page = pLIST;
 }
 
 var counter = func {
-  f16.doubleClick();
+  sound.doubleClick();
   page = pCM;
 }
 
 var cruise = func {
-  f16.doubleClick();
+  sound.doubleClick();
   page = pCRUS;
 }
 
