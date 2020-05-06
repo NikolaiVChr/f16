@@ -500,6 +500,18 @@
     
     <animation>
         <type>knob</type>
+        <object-name>KY_58_1</object-name>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>svm</tooltip-id>
+                <label>KY 58 Secure Voice Module</label>
+            </binding>
+        </hovered>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
         <object-name>r-hdpt-switch</object-name>
         <property>f16/avionics/power-right-hdpt</property>
         <factor>40</factor>
