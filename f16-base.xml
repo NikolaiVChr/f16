@@ -1808,6 +1808,8 @@ There is also small changes in tail for different variants with and without brak
                 <pri-inst-pnl-knob type="double">0.0</pri-inst-pnl-knob>
                 <flood-inst-pnl type="double">0.0</flood-inst-pnl>
                 <flood-inst-pnl-knob type="double">0.0</flood-inst-pnl-knob>
+                <console-flood-knob type="double">0.0</console-flood-knob>
+                <console-flood type="double">0.0</console-flood>
                 <console-primary-knob type="double">0.0</console-primary-knob>
                 <console-primary type="double">0.0</console-primary>
                 <data-entry-display type="double">1.0</data-entry-display>

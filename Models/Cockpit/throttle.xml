@@ -12,6 +12,7 @@
             <reflection-fresnel type="float">0</reflection-fresnel>
             <reflection-rainbow type="float">0</reflection-rainbow>
             <reflection-noise type="float">0.0</reflection-noise>
+            <lightmap-factor n="0">0</lightmap-factor>
         </parameters>
         <object-name>BASE</object-name>
         <object-name>THROTTLE</object-name>

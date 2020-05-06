@@ -261,6 +261,11 @@ var loop_flare = func {
     } else {
       setprop("controls/lighting/lighting-panel/flood-inst-pnl", getprop("controls/lighting/lighting-panel/flood-inst-pnl-knob"));
     }
+    if (getprop("fdm/jsbsim/elec/bus/noness-ac-2")<100) {
+      setprop("controls/lighting/lighting-panel/console-flood", 0);
+    } else {
+      setprop("controls/lighting/lighting-panel/console-flood", getprop("controls/lighting/lighting-panel/console-flood-knob"));
+    }
     if (getprop("fdm/jsbsim/elec/bus/emergency-ac-1")<100) {
       setprop("controls/lighting/lighting-panel/console-primary", 0);
       setprop("controls/lighting/lighting-panel/pri-inst-pnl", 0);
