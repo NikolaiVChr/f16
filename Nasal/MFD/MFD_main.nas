@@ -808,8 +808,8 @@ var MFD_Device =
                 cursor_destination = nil;
                 cursor_pos[0] += me.slew_x*125*me.dt;
                 cursor_pos[1] -= me.slew_y*125*me.dt;
-                cursor_pos[0] = clamp(cursor_pos[0], -552*0.5*0.795, 552*0.5*0.795);
-                cursor_pos[1] = clamp(cursor_pos[1], -482, 0);
+                cursor_pos[0] = math.clamp(cursor_pos[0], -552*0.5*0.795, 552*0.5*0.795);
+                cursor_pos[1] = math.clamp(cursor_pos[1], -482, 0);
                 cursor_click = (slew_c and !me.slew_c_last)?me.root.index:-1;
                 cursor_lock = me.root.index;
             } elsif (cursor_lock == me.root.index or (me.slew_x == 0 or me.slew_y == 0 or slew_c == 0)) {
