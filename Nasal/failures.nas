@@ -190,7 +190,7 @@ var caution = func (node) {
     var ignore = caution_ignore[path];
     if (ignore == nil) {
         ignore = 0;
-        if (value and node.name() != "elec-sys") {
+        if (value and node.getName() != "elec-sys") {
             caution_ignore[path] = 0;
         }
     }
