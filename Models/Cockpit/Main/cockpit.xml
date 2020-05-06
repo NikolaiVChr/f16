@@ -565,8 +565,13 @@
   <condition>
     <or>
     <and><greater-than><property>fdm/jsbsim/elec/bus/emergency-dc-2</property><value>20</value></greater-than>   
-      <property>/systems/refuel/contact</property>
-      <property>/systems/refuel/serviceable</property>
+    <or>
+      <and>
+        <property>/systems/refuel/contact</property>
+        <property>/systems/refuel/serviceable</property>
+      </and>
+      <property>gear/gear[0]/wow</property>
+    </or>
     </and>
     <property>controls/test/test-panel/mal-ind-lts</property>
     </or>
