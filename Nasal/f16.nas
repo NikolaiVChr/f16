@@ -976,8 +976,9 @@ var autostart = func {
   setprop("f16/avionics/ew-mode-knob",1);
   setprop("f16/avionics/pbg-switch",0);
   setprop("controls/ventilation/airconditioning-enabled",1);
-  setprop("controls/lighting/ext-lighting-panel/master", 1);
   setprop("controls/ventilation/airconditioning-source",1);
+  setprop("controls/lighting/ext-lighting-panel/master", 1);
+  setprop("controls/lighting/lighting-panel/pri-inst-pnl-knob", 0.5);  
   setprop("instrumentation/radar/radar-standby", 0);
   setprop("instrumentation/comm[0]/volume",1);
   setprop("instrumentation/comm[1]/volume",1);
@@ -991,8 +992,7 @@ var autostart = func {
     } else {
       setprop("f16/engine/feed",1);
       setprop("f16/engine/cutoff-release-lever",1);
-      setprop("f16/engine/jfs-start-switch",1);    
-      settimer(repair3, 40);
+      settimer(autostart2, 0.5);
     }
   } else {
     screen.log.write("Done.");
@@ -1001,6 +1001,11 @@ var autostart = func {
   setprop("f16/avionics/ins-knob", 3);#NAV
   fail.master_caution();
 }
+
+var autostart2 = func {
+  setprop("f16/engine/jfs-start-switch",1);    
+  settimer(repair3, 40);
+};
 
 var re_init_listener = setlistener("/sim/signals/reinit", func {
   if (getprop("/sim/signals/reinit") != 0) {

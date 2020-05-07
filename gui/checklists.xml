@@ -1021,6 +1021,10 @@
                 <value>As required</value>
             </item>
             <item>
+                <name>Interior lights</name>
+                <value>As required</value>
+            </item>
+            <item>
                 <name>INS knob</name>
                 <value>NAV</value>
                 <condition>

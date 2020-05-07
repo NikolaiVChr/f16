@@ -12,6 +12,8 @@ var cutoff       = props.globals.getNode("controls/engines/engine[0]/cutoff", 0)
 var feed         = props.globals.getNode("f16/engine/feed", 0);
 var running      = props.globals.getNode("engines/engine[0]/running", 0);
 var fuel         = props.globals.getNode("consumables/fuel/total-fuel-lbs", 0);
+var batt          = props.globals.getNode("fdm/jsbsim/elec/bus/batt-1", 0);
+
 
 var accu_psi_max = 3000;
 var accu_psi_both_max = 2800;
@@ -46,7 +48,7 @@ var JFS = {
 			jfs_start.setIntValue(0);
 		}
 		
-		if (me.start_switch != 0 and me.start_switch != me.start_switch_last) {
+		if (me.start_switch != 0 and me.start_switch != me.start_switch_last and batt.getValue() >= 20) {
 			#print("JFS start requested");
 			me.psi_for_start = 0;
 			if (me.start_switch == 1) {
