@@ -3184,10 +3184,13 @@
             <condition>
                 <not><property>gear/gear[2]/wow</property></not>
                 <property>ai/submodels/submodel[0]/flare-release-snd</property>
-                <property>sim/current-view/internal</property>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
             </condition>
             <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
+                <property>sim/current-view/internal</property>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -3203,10 +3206,13 @@
             <condition>
                 <not><property>gear/gear[2]/wow</property></not>
                 <property>ai/submodels/submodel[0]/flare-release-out-snd</property>
-                <property>sim/current-view/internal</property>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
             </condition>
             <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
+                <property>sim/current-view/internal</property>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -3221,6 +3227,10 @@
             <type>avionics</type>
             <condition>
                 <property>controls/test/test-panel/mal-ind-lts</property>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
             </condition>
             <volume>
                 <property>sim/current-view/internal</property>
@@ -3248,13 +3258,13 @@
                         <value>8</value>
                     </less-than>
                 </and>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
             </condition>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -3270,13 +3280,13 @@
             <condition>
                 <not><property>gear/gear[2]/wow</property></not>
                 <property>f16/avionics/bingo</property>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
             </condition>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -3300,13 +3310,13 @@
                     <property>position/altitude-agl-ft</property>
                 </greater-than>
                 <property>f16/avionics/cara-on</property>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
             </condition>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -3325,13 +3335,13 @@
                     <property>instrumentation/altimeter/indicated-altitude-ft</property>
                     <property>f16/settings/msl-floor</property>
                 </greater-than>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
             </condition>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -3350,13 +3360,13 @@
                     <property>f16/settings/msl-floor</property>
                     <property>instrumentation/altimeter/indicated-altitude-ft</property>
                 </greater-than>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
             </condition>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -3372,15 +3382,14 @@
             <condition>
                     <not><property>gear/gear[2]/wow</property></not>
                     <property>f16/avionics/caution/master</property>
+                    <greater-than>
+                      <property>fdm/jsbsim/elec/bus/batt-1</property>
+                      <value>20</value>
+                    </greater-than>
             </condition>
+            <delay-sec>7</delay-sec>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
-                <max>1</max>
-            </volume>
-            <volume>
-                <internal>dt_play</internal>
-                <offset>-7</offset><!-- as per manual -->
                 <factor>1</factor>
             </volume>
             <volume>
@@ -3437,15 +3446,14 @@
                         </or>
                     </and>
                 </or>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
             </condition>
+            <delay-sec>1.5</delay-sec>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
-                <max>1</max>
-            </volume>
-            <volume>
-                <internal>dt_play</internal>
-                <offset>-1.5</offset><!-- as per manual -->
                 <factor>1</factor>
             </volume>
             <volume>
