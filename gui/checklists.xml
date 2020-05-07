@@ -672,6 +672,10 @@
                 <value>ON</value>
             </item>
             <item>
+                <name>INTERCOM VOL</name>
+                <value>ADJUST</value>
+            </item>
+            <item>
                 <name>MAL and IND LTS</name>
                 <value>OFF</value>
                 <condition>

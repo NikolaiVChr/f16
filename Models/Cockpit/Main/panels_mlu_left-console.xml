@@ -341,6 +341,21 @@
         <object-name>BIT</object-name>
         <object-name>LEFT_CONSOLE.001</object-name>
     </effect>
+    
+    
+    <animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>CAUTION_RESET</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>false</repeatable>
+     <binding>
+      <command>nasal</command>
+      <script>fail.elec_caution_reset();</script>
+     </binding>
+    </action>
+   </animation>
 
   <animation>
   <object-name>EPU_RUN_light</object-name>
@@ -1805,7 +1820,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>f16/avionics/intercom-volume</property>
-                <step>0.1</step>
+                <step>0.05</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -1815,7 +1830,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>f16/avionics/intercom-volume</property>
-                <step>-0.1</step>
+                <step>-0.05</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>

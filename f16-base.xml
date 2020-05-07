@@ -61,6 +61,7 @@
             <path>/f16/avionics/msl-vol-knob</path>
             <path>/instrumentation/nav[0]/volume</path>
             <path>/f16/avionics/rwr-volume</path>
+            <path>/f16/avionics/intercom-volume</path>
         </aircraft-data>
         <tags>
             <tag>fighter</tag>
@@ -3343,6 +3344,7 @@ There is also small changes in tail for different variants with and without brak
             <lift_cover type="bool">false</lift_cover>
             <front-on type="bool">true</front-on>
             <front-off type="bool">false</front-off>
+            <helmet-damping type="double">0.25</helmet-damping>
         </sound>
         <settings>
             <bingo type="int">1250</bingo>
@@ -3425,6 +3427,7 @@ value. 18000=standard US transition altitude -->
             <rwr-volume type="double">0.7</rwr-volume>
             <oxy-psi type="double">0.0</oxy-psi>
             <pbg-switch type="int">-1</pbg-switch>
+            <intercom-volume type="double">0.10</intercom-volume>
             <caution>
                 <master type="bool">false</master>
                 <seat-not-armed type="bool">false</seat-not-armed>

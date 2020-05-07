@@ -178,10 +178,6 @@ var f_ack = func {
 }
 
 
-
-
-#return;
-
 var caution_ignore = {};
 
 var caution = func (node) {
@@ -190,7 +186,7 @@ var caution = func (node) {
     var ignore = caution_ignore[path];
     if (ignore == nil) {
         ignore = 0;
-        if (value and node.getName() != "elec-sys") {
+        if (value and !getprop("controls/test/test-panel/mal-ind-lts")) {#TODO the check for MAL IND LTS here is not ideal. What if an error occurs while it is on?
             caution_ignore[path] = 0;
         }
     }
@@ -201,11 +197,22 @@ var caution = func (node) {
 };
 
 var master_caution = func {
+    if (getprop("controls/test/test-panel/mal-ind-lts")) {
+        return;
+    }
     foreach(key;keys(caution_ignore)) {
-        caution_ignore[key] = 1;
+        if (key != "/f16/avionics/caution/elec-sys") {
+            caution_ignore[key] = 1;
+        }
     }
     setprop("f16/avionics/caution/master", 0);
 };
+
+var elec_caution_reset = func {
+    if (getprop("f16/avionics/caution/elec-sys")) {
+        caution_ignore["/f16/avionics/caution/elec-sys"] = 1;
+    }
+}
 
 var update_master = func {
     var new = 0;
@@ -217,7 +224,7 @@ var update_master = func {
     setprop("f16/avionics/caution/master", new);
 };
 
-var loop_caution = func {
+var loop_caution = func {# TODO: unlit the caution lights except elec-sys when master is pressed.
     var batt2 = getprop("fdm/jsbsim/elec/bus/batt-2") >= 20;
     var test  = getprop("controls/test/test-panel/mal-ind-lts");
     setprop("f16/avionics/caution/stores-config",     test or (batt2 and ((getprop("f16/stores-cat")>1 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III") < 1) or (getprop("f16/stores-cat")==1 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III") == 1))));

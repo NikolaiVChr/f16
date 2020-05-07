@@ -55,8 +55,13 @@
  <animation>
   <object-name>master_caution</object-name>
   <type>material</type>
+  <condition>
+    <or>
+        <property>f16/avionics/caution/master</property>
+        <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
   <emission>
-   <factor-prop>f16/avionics/caution/master</factor-prop>
    <red>1</red>
    <green>1</green>
    <blue>1</blue>
