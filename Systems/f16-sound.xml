@@ -3776,13 +3776,13 @@
                     <property>payload/armament/aim-9/sound-volume</property>
                     <value>0.50</value>
                 </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -3801,6 +3801,10 @@
                     <property>payload/armament/aim-7/sound-volume</property>
                     <value>1</value>
                 </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
             <!--<pitch>
                 <factor>1.8</factor>
@@ -3808,10 +3812,6 @@
             </pitch>-->
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -3829,7 +3829,10 @@
                 <equals>
                     <property>payload/armament/aim-120/sound-volume</property>
                     <value>1</value>
-                </equals>
+                </equals><greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
             <!--<pitch>
                 <factor>1.8</factor>
@@ -3837,10 +3840,6 @@
             </pitch>-->
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -3859,6 +3858,10 @@
                     <property>payload/armament/agm-65/sound-volume</property>
                     <value>1</value>
                 </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
             <!--<pitch>
                 <factor>1.8</factor>
@@ -3866,10 +3869,6 @@
             </pitch>-->
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -3888,6 +3887,10 @@
                     <property>payload/armament/agm-84/sound-volume</property>
                     <value>1</value>
                 </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
             <!--<pitch>
                 <factor>1.8</factor>
@@ -3895,10 +3898,6 @@
             </pitch>-->
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -3917,6 +3916,10 @@
                     <property>payload/armament/agm-88/sound-volume</property>
                     <value>1</value>
                 </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
             <!--<pitch>
                 <factor>1.8</factor>
@@ -3924,10 +3927,6 @@
             </pitch>-->
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -3946,6 +3945,10 @@
                     <property>payload/armament/agm-119/sound-volume</property>
                     <value>1</value>
                 </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
             <!--<pitch>
                 <factor>1.8</factor>
@@ -3953,10 +3956,6 @@
             </pitch>-->
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -3975,6 +3974,10 @@
                     <property>payload/armament/agm-154a/sound-volume</property>
                     <value>1</value>
                 </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
             <!--<pitch>
                 <factor>1.8</factor>
@@ -3982,10 +3985,6 @@
             </pitch>-->
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -4004,6 +4003,10 @@
                     <property>payload/armament/agm-158/sound-volume</property>
                     <value>1</value>
                 </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
             <!--<pitch>
                 <factor>1.8</factor>
@@ -4011,10 +4014,6 @@
             </pitch>-->
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
                 <factor>1</factor>
             </volume>
             <volume>
