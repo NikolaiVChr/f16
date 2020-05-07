@@ -229,7 +229,7 @@
         <object-name>GROWTH.002_1</object-name>
         <object-name>GROWTH.003_1</object-name>
         <object-name>GROWTH.004</object-name>
-        <object-name>IFF.001_1</object-name>
+        <object-name>IFF.001</object-name>
         <object-name>JET_FUEL_1</object-name>
         <object-name>MANUAL_PITCH_1</object-name>
         <object-name>MANUAL_TRIM_1</object-name>
@@ -354,6 +354,18 @@
       <command>nasal</command>
       <script>fail.elec_caution_reset();</script>
      </binding>
+     <binding>
+        <command>property-assign</command>
+        <property>f16/avionics/caution/elec-reset-btn</property>
+        <value>1</value>
+      </binding>
+      <mod-up>
+        <binding>
+          <command>property-assign</command>
+          <property>f16/avionics/caution/elec-reset-btn</property>
+          <value>0</value>
+        </binding>
+      </mod-up>
     </action>
    </animation>
 

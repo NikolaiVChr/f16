@@ -3444,6 +3444,7 @@ value. 18000=standard US transition altitude -->
                 <equip-hot type="bool">false</equip-hot>
                 <overheat type="bool">false</overheat>
                 <avionics type="bool">false</avionics>
+                <elec-reset-btn type="bool">false</elec-reset-btn>
             </caution>
         </avionics>
         <fcs>
