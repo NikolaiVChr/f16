@@ -3423,7 +3423,7 @@
                           <value>4.17</value>
                         </greater-than>
                     </and>
-                    <and><!-- engine -->
+                    <and><!-- ENGINE -->
                         <greater-than>
                             <property>fdm/jsbsim/elec/bus/batt-1</property>
                             <value>20</value>
@@ -3432,7 +3432,7 @@
                             <property>engines/engine[0]/running</property>
                         </not>
                     </and>
-                    <and><!-- hyd oil press -->
+                    <and><!-- HYD OIL PRESS -->
                         <greater-than><property>fdm/jsbsim/elec/bus/batt-1</property><value>20</value></greater-than>
                         <or>
                             <less-than>
@@ -3462,7 +3462,7 @@
             </volume>
         </betty>
         <!--avionics>
-            <name>Avionics too low to be heard, so disabled it</name>
+            <name>Avionics too low to be heard, so disabled it. Also it loops badly.</name>
             <path>Sounds/avionics-400Hz.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
@@ -3484,8 +3484,8 @@
                 <factor>0.04</factor>
             </volume>
         </avionics-->
-        <altimeter>
-            <name>altimeter-vibrator unk</name>
+        <adi>
+            <name>ADI startup</name>
             <path>Aircraft/f16/Sounds/Timi/f16-battery.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
@@ -3500,9 +3500,9 @@
             </condition>
             <volume>
                 <property>/sim/current-view/internal</property>
-                <factor>0.2</factor>
+                <factor>0.3</factor>
             </volume>
-        </altimeter>
+        </adi>
         <boom-report>
             <name>boom-report</name>
             <mode>once</mode>
