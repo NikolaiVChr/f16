@@ -205,7 +205,7 @@ var master_caution = func {
             caution_ignore[key] = 1;
         }
     }
-    setprop("f16/avionics/caution/master", 0);
+    update_master();
 };
 
 var elec_caution_reset = func {
