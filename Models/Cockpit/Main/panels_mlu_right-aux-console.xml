@@ -686,7 +686,7 @@
   <type>select</type>
   <object-name>AVIONICS_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not><property>f16/avionics/caution/avionics</property></not>
   </condition>
  </animation> 
 
@@ -750,7 +750,7 @@
   <type>select</type>
   <object-name>EQUIP_HOT_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not><property>f16/avionics/caution/equip-hot</property></not>
   </condition>
  </animation> 
 
@@ -830,7 +830,7 @@
   <type>select</type>
   <object-name>OVERHEAT_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not><property>f16/avionics/caution/overheat</property></not>
   </condition>
  </animation> 
 
@@ -946,7 +946,7 @@
   <type>select</type>
   <object-name>AVIONICS_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <property>f16/avionics/caution/avionics</property>
   </condition>
  </animation> 
 
@@ -1010,7 +1010,7 @@
   <type>select</type>
   <object-name>EQUIP_HOT_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <property>f16/avionics/caution/equip-hot</property>
   </condition>
  </animation> 
 
@@ -1090,7 +1090,7 @@
   <type>select</type>
   <object-name>OVERHEAT_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <property>f16/avionics/caution/overheat</property>
   </condition>
  </animation> 
 
