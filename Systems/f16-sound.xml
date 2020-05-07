@@ -3478,7 +3478,7 @@
         </avionics-->
         <altimeter>
             <name>altimeter-vibrator unk</name>
-            <path>Sounds/Timi/f16-battery.wav</path>
+            <path>Aircraft/f16/Sounds/Timi/f16-battery.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
             <condition>
