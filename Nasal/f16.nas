@@ -273,6 +273,8 @@ var loop_flare = func {
       setprop("controls/lighting/lighting-panel/console-primary", getprop("controls/lighting/lighting-panel/console-primary-knob"));
       setprop("controls/lighting/lighting-panel/pri-inst-pnl", getprop("controls/lighting/lighting-panel/pri-inst-pnl-knob"));
     }
+    
+    setprop("/instrumentation/nav[0]/volume", getprop("/f16/avionics/ils-volume")*getprop("sim/current-view/internal"));
 
     setprop("f16/external", !getprop("sim/current-view/internal"));
     

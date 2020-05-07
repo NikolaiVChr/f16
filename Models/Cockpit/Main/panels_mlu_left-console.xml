@@ -1617,7 +1617,7 @@
   <animation>
         <type>knob</type>
         <object-name>ils-vol-knob</object-name>
-        <property>instrumentation/nav[0]/volume</property>
+        <property>f16/avionics/ils-volume</property>
         <factor>250</factor>
         <offset-deg>-120</offset-deg>
         <interval-sec>0.10</interval-sec>
@@ -1634,7 +1634,7 @@
         <increase>
             <binding>
                 <command>property-adjust</command>
-                <property>instrumentation/nav[0]/volume</property>
+                <property>f16/avionics/ils-volume</property>
                 <step>0.1</step>
                 <min>0</min>
                 <max>1</max>
@@ -1644,7 +1644,7 @@
         <decrease>
             <binding>
                 <command>property-adjust</command>
-                <property>instrumentation/nav[0]/volume</property>
+                <property>f16/avionics/ils-volume</property>
                 <step>-0.1</step>
                 <min>0</min>
                 <max>1</max>

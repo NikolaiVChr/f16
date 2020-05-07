@@ -59,7 +59,7 @@
             <path>/instrumentation/tacan/frequencies/selected-channel[4]</path>
             <path>/instrumentation/iff/channel-selection</path>
             <path>/f16/avionics/msl-vol-knob</path>
-            <path>/instrumentation/nav[0]/volume</path>
+            <path>/f16/avionics/ils-volume</path>
             <path>/f16/avionics/rwr-volume</path>
             <path>/f16/avionics/intercom-volume</path>
         </aircraft-data>
@@ -3428,6 +3428,7 @@ value. 18000=standard US transition altitude -->
             <oxy-psi type="double">0.0</oxy-psi>
             <pbg-switch type="int">-1</pbg-switch>
             <intercom-volume type="double">0.10</intercom-volume>
+            <ils-volume type="double">0.10</ils-volume>
             <caution>
                 <master type="bool">false</master>
                 <seat-not-armed type="bool">false</seat-not-armed>
