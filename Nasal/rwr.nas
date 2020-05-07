@@ -429,7 +429,7 @@ RWRCanvas = {
             
             if (me.threat > 0.5 and me.typ != me.AIRCRAFT_UNKNOWN and me.typ != me.ASSET_AI) {
                 me.threat = me.inner_radius;# inner circle
-            } elsif (me.threat > 0) {
+            } elsif (me.threat > 0 and me.typ != me.ASSET_AI) {
                 me.threat = me.outer_radius;# outer circle
             } else {
                 continue;
