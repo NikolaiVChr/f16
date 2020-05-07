@@ -4712,11 +4712,11 @@
             <path>Aircraft/f16/Sounds/Effects/cmds-release.wav</path>
             <condition>
                 <property>ai/submodels/submodel[0]/flare-release-snd</property>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
-                <factor>0.10</factor>
-            </volume>
         </flare-release>
         
         <!-- ********************************************************************************* -->
