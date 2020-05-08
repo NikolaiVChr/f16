@@ -24,11 +24,11 @@
                 <y>0.0</y>
                 <z>0.195</z>
             </position>
-            <pitch>
+            <!--pitch>
                 <internal>dt_play</internal>
                 <offset>1.25</offset>
                 <factor>0.15</factor>
-            </pitch>
+            </pitch-->
             <volume>
                 <max>0.55</max>
             </volume>
