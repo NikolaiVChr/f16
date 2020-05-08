@@ -100,11 +100,11 @@
         </previews>
         <hud>
             <visibility n="1">false</visibility>
-            
             <path n="1">Aircraft/f16/Systems/nohud.xml</path>
-            <path n="2">Aircraft/f16/Systems/nohud.xml</path>
-            <path n="3">Aircraft/f16/Systems/nohud.xml</path>
-            <!--<visibility n="1">true</visibility>
+            <path n="2">Huds/default.xml</path>
+            <path n="3">Huds/NTPS.xml</path>
+	    <path n="4">Huds/minimal.xml</path>
+            <visibility n="1">true</visibility>
             <palette>
             <color n="0">
              <alpha type="float">0.85</alpha>
@@ -131,7 +131,6 @@
             <top type="double">33</top>
             <bottom type="double">-88</bottom>
             </clipping>
-            -->
         </hud>
         <instrumentation>
             <path>Aircraft/f16/Systems/instrumentation.xml</path>
