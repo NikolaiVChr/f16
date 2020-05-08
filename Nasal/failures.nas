@@ -212,6 +212,7 @@ var elec_caution_reset = func {
     if (getprop("f16/avionics/caution/elec-sys")) {
         caution_ignore["/f16/avionics/caution/elec-sys"] = 1;
     }
+    update_master();
 }
 
 var update_master = func {
