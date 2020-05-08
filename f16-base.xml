@@ -3431,6 +3431,7 @@ value. 18000=standard US transition altitude -->
             <ils-volume type="double">0.10</ils-volume>
             <caution>
                 <master type="bool">false</master>
+                <master-btn type="bool">false</master-btn>
                 <seat-not-armed type="bool">false</seat-not-armed>
                 <stores-config type="bool">false</stores-config>
                 <oxy-low type="bool">false</oxy-low>

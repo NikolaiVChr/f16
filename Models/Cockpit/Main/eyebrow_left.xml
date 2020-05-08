@@ -94,6 +94,18 @@
       <command>nasal</command>
       <script>fail.master_caution();</script>
      </binding>
+     <binding>
+        <command>property-assign</command>
+        <property>f16/avionics/caution/master-btn</property>
+        <value>1</value>
+      </binding>
+      <mod-up>
+        <binding>
+          <command>property-assign</command>
+          <property>f16/avionics/caution/master-btn</property>
+          <value>0</value>
+        </binding>
+      </mod-up>
     </action>
    </animation>
    

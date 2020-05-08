@@ -300,7 +300,7 @@ setlistener("f16/avionics/mfd-l-brt", click3, nil, 0);
 setlistener("f16/avionics/mfd-r-con", click3, nil, 0);
 setlistener("f16/avionics/mfd-r-brt", click3, nil, 0);
 setlistener("f16/fcs/adv-mode-sel", doubleClick2, nil, 0);
-setlistener("f16/avionics/caution/master", doubleClick2, nil, 0);
+setlistener("f16/avionics/caution/master-btn", doubleClick2, nil, 0);
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-1", knob, nil, 0);
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-2", knob, nil, 0);
 setlistener("instrumentation/nav[0]/frequencies/current-mhz-digit-3", knob, nil, 0);
