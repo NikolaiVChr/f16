@@ -86,7 +86,7 @@
    <animation>
     <type>pick</type>
     <visible>true</visible>
-    <object-name>master_caution</object-name>
+    <object-name>master_reset</object-name>
     <action>
      <button>0</button>
      <repeatable>false</repeatable>
