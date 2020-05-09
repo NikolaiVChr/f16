@@ -251,22 +251,7 @@
 
 <!-- PICK ANIMATIONS -->
 
-  <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>light-land-switch</object-name>
-    <object-name>light-land-switch.01</object-name>
-    <action>
-     <button>0</button>
-     <repeatable>true</repeatable>
-     <binding>
-      <command>nasal</command>
-      <script>
-                f16_switches.toggleLandlight();
-      </script>
-     </binding>
-    </action>
-   </animation>
+    
    
    
    <animation>
@@ -322,23 +307,7 @@
     </action>
    </animation>
 
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>light-land-switch</object-name>
-  <object-name>light-land-switch.01</object-name>
-    <action>
-     <button>0</button>
-     <repeatable>true</repeatable>
-     <binding>
-      <command>nasal</command>
-      <script>
-                f16_switches.toggleLandlight();
-      </script>
-     </binding>
-    </action>
-   </animation>
-   
+     
 <!-- FIXME should be 3-way switch -->  
    <animation>
     <type>pick</type>
@@ -435,26 +404,51 @@
   </axis>
  </animation>
  
- <animation>
-  <type>rotate</type>
-  <object-name>light-land-switch</object-name>
-  <object-name>light-land-switch.01</object-name>
-  <property>controls/lighting/landing-light</property>
-  <factor>-25</factor>
-  <offset-deg>0</offset-deg>
-  <roll-deg>-10</roll-deg>
-  <heading-deg>7.3</heading-deg> 
-  <center>
-   <x-m>-0.143816</x-m>
-   <y-m>-0.341516</y-m>
-   <z-m>0.002053</z-m>
-  </center>
-  <axis>
-   <x>0</x>
-   <y>1</y>
-   <z>0</z>
-  </axis>
- </animation>
+  <animation>
+        <type>knob</type>
+        <object-name>light-land-switch</object-name>
+        <object-name>light-land-switch.01</object-name>
+        <visible>true</visible>
+        <property>controls/lighting/landing-light</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>-25</factor>
+        <offset-deg>0</offset-deg>
+        <roll-deg>-10</roll-deg>
+        <heading-deg>7.3</heading-deg> 
+        <center>
+         <x-m>-0.143816</x-m>
+         <y-m>-0.341516</y-m>
+         <z-m>0.002053</z-m>
+        </center>
+        <axis>
+         <x>0</x>
+         <y>1</y>
+         <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/lighting/landing-light</property>
+                <step>1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/lighting/landing-light</property>
+                <step>-1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
 
  <animation>
   <type>rotate</type>
