@@ -352,7 +352,7 @@ light: ecm lamp off
             <binding>
                 <command>property-adjust</command>
                 <property>instrumentation/radar/radar-standby</property>
-                <factor>1</factor>
+                <factor>-1</factor>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>

@@ -1228,6 +1228,8 @@
         <type>knob</type>
         <object-name>SW_JET_FUEL</object-name>
         <property>f16/engine/jfs-start-switch</property>
+        <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>-10</drag-scale-px><!-- 10 is default -->
         <factor>20</factor>
         <offset-deg>0</offset-deg>
         <center>
@@ -1261,52 +1263,6 @@
            </binding>
         </decrease>
     </animation>
-   
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_MPO</object-name>
-    <action>
-      <button>0</button>
-      <repeatable>false</repeatable>
-      <binding>
-        <command>property-toggle</command>
-        <property>/fdm/jsbsim/fcs/fbw-override</property>
-      </binding>
-    </action>
-   </animation> 
-   
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_MAIN_POWER</object-name>
-    <action>
-      <button>0</button>
-      <repeatable>false</repeatable>
-      <binding>
-        <command>property-cycle</command>
-        <property>fdm/jsbsim/elec/switches/main-pwr</property>
-        <value type="int">0</value>
-        <value type="int">1</value>
-        <value type="int">2</value>
-        <wrap>true</wrap>
-      </binding>
-    </action>
-   </animation>
-   
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_MAX_POWER</object-name>
-    <action>
-      <button>0</button>
-      <repeatable>false</repeatable>
-      <binding>
-        <command>property-toggle</command>
-        <property>f16/engine/max-power</property>
-      </binding>
-    </action>
-   </animation>
    
    <animation>
     <type>pick</type>
@@ -1370,41 +1326,90 @@
 
   
   
-  <animation>
-    <type>rotate</type>
-    <object-name>SW_MPO</object-name>
-    <property>/fdm/jsbsim/fcs/fbw-override</property>
-    <factor>40</factor>
-    <offset-deg>-20</offset-deg>
-    <center>
-      <x-m>0.101036</x-m>
-      <y-m>-0.451225</y-m>
-      <z-m>0.035954</z-m>
-    </center>
-    <axis>
-      <x>1</x>
-      <y>0</y>
-      <z>0</z>
-    </axis>
-  </animation>
+    <animation>
+        <type>knob</type>
+        <object-name>SW_MPO</object-name>
+        <visible>true</visible>
+        <property>/fdm/jsbsim/fcs/fbw-override</property>
+        <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>-10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.5</interval-sec>
+        <factor>40</factor>
+        <offset-deg>-20</offset-deg>
+        <center>
+          <x-m>0.101036</x-m>
+          <y-m>-0.451225</y-m>
+          <z-m>0.035954</z-m>
+        </center>
+        <axis>
+          <x>1</x>
+          <y>0</y>
+          <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>/fdm/jsbsim/fcs/fbw-override</property>
+                <step>1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>/fdm/jsbsim/fcs/fbw-override</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation> 
     
-  <animation>
-    <type>rotate</type>
-    <object-name>SW_MAIN_POWER</object-name>
-    <property>fdm/jsbsim/elec/switches/main-pwr</property>
-    <factor>20</factor>
-    <offset-deg>-20</offset-deg>
-    <center>
-      <x-m>0.358164</x-m>
-      <y-m>-0.468688</y-m>
-      <z-m>0.014365</z-m>
-    </center>
-    <axis>
-      <x>0</x>
-      <y>-1</y>
-      <z>0</z>
-    </axis>
-  </animation>
+    <animation>
+        <type>knob</type>
+        <object-name>SW_MAIN_POWER</object-name>
+        <property>fdm/jsbsim/elec/switches/main-pwr</property>
+        <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.5</interval-sec>
+        <factor>20</factor>
+        <offset-deg>-20</offset-deg>
+        <center>
+          <x-m>0.358164</x-m>
+          <y-m>-0.468688</y-m>
+          <z-m>0.014365</z-m>
+        </center>
+        <axis>
+          <x>0</x>
+          <y>-1</y>
+          <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>fdm/jsbsim/elec/switches/main-pwr</property>
+                <step>1</step>
+                <min>0</min>
+                <max>2</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>fdm/jsbsim/elec/switches/main-pwr</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>2</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
   
   <animation>
   <type>rotate</type>
@@ -1442,23 +1447,48 @@
     </axis>
   </animation>
   
-  <animation>
-    <type>rotate</type>
-    <object-name>SW_MAX_POWER</object-name>
-    <property>f16/engine/max-power</property>
-    <factor>-40</factor>
-    <offset-deg>20</offset-deg>
-    <center>
-      <x-m>0.31965</x-m>
-      <y-m>-0.45225</y-m>
-      <z-m>0.0176</z-m>
-    </center>
-    <axis>
-      <x>0</x>
-      <y>1</y>
-      <z>0</z>
-    </axis>
-  </animation>
+    <animation>
+        <type>knob</type>
+        <object-name>SW_MAX_POWER</object-name>
+        <visible>true</visible>
+        <property>f16/engine/max-power</property>
+        <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.5</interval-sec>
+        <factor>-40</factor>
+        <offset-deg>20</offset-deg>
+        <center>
+          <x-m>0.31965</x-m>
+          <y-m>-0.45225</y-m>
+          <z-m>0.0176</z-m>
+        </center>
+        <axis>
+          <x>0</x>
+          <y>1</y>
+          <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/engine/max-power</property>
+                <step>1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/engine/max-power</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
   
   <animation>
     <type>rotate</type>
