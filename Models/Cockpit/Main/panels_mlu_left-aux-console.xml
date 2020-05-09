@@ -65,6 +65,7 @@
         <parameters>
             <implicit-lightmap-threshold-low type="float">0.2</implicit-lightmap-threshold-low>
             <implicit-lightmap-threshold-high type="float">0.7</implicit-lightmap-threshold-high>
+            <lightmap-factor n="0"><use>controls/lighting/lighting-panel/console-flood</use></lightmap-factor>
         </parameters>
         <!-- objects added to this will have all white in texture lit up green when console is high. They will also get flood light. -->
         <object-name>EW_LEFT_1</object-name>
@@ -76,7 +77,7 @@
         <object-name>GEAR</object-name>
         <object-name>ALT_GEAR_1</object-name>
         <object-name>SPEED_BRAKE_drum</object-name>
-        <object-name>horn_silencer</object-name>
+        
         <object-name>ew-set1</object-name>
         <object-name>ew-set2</object-name>
         <object-name>ew-set3</object-name>
@@ -88,6 +89,7 @@
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
         <parameters>
             <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+            <lightmap-factor n="0"><use>controls/lighting/lighting-panel/console-flood</use></lightmap-factor>
         </parameters>
         <!-- objects added to this will NOT have all white in texture lit up green when console is high. They will get flood light though. -->
         <!-- mainly for switches -->
@@ -107,6 +109,7 @@
         <object-name>DN-LOCK-REL</object-name>
         <object-name>SW_HOOK</object-name>
         <object-name>EMER_JETT</object-name>
+        <object-name>horn_silencer</object-name>
     </effect>
 
   <!--<animation>

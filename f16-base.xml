@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PropertyList include="Systems/walker-include.xml">
     <sim>
-        <aircraft-version>3.19</aircraft-version>
+        <aircraft-version>3.20</aircraft-version>
         <minimum-fg-version>2018.3</minimum-fg-version>
         <!-- enable "parkpos=AVAILABLE" option for the F-16 -->
         <dimensions>
@@ -59,8 +59,9 @@
             <path>/instrumentation/tacan/frequencies/selected-channel[4]</path>
             <path>/instrumentation/iff/channel-selection</path>
             <path>/f16/avionics/msl-vol-knob</path>
-            <path>/instrumentation/nav[0]/volume</path>
+            <path>/f16/avionics/ils-volume</path>
             <path>/f16/avionics/rwr-volume</path>
+            <path>/f16/avionics/intercom-volume</path>
         </aircraft-data>
         <tags>
             <tag>fighter</tag>
@@ -1241,7 +1242,7 @@ There is also small changes in tail for different variants with and without brak
                                     <value>Walker Orbit View</value>
                                 </not-equals>
                             </and>
-                     </condition>
+                    </condition>
                     <script>
                         if (getprop("payload/armament/msg")==1) {
                             screen.log.write("Speed-up disabled at the moment.");
@@ -1808,6 +1809,8 @@ There is also small changes in tail for different variants with and without brak
                 <pri-inst-pnl-knob type="double">0.0</pri-inst-pnl-knob>
                 <flood-inst-pnl type="double">0.0</flood-inst-pnl>
                 <flood-inst-pnl-knob type="double">0.0</flood-inst-pnl-knob>
+                <console-flood-knob type="double">0.0</console-flood-knob>
+                <console-flood type="double">0.0</console-flood>
                 <console-primary-knob type="double">0.0</console-primary-knob>
                 <console-primary type="double">0.0</console-primary>
                 <data-entry-display type="double">1.0</data-entry-display>
@@ -3341,6 +3344,7 @@ There is also small changes in tail for different variants with and without brak
             <lift_cover type="bool">false</lift_cover>
             <front-on type="bool">true</front-on>
             <front-off type="bool">false</front-off>
+            <helmet-damping type="double">0.25</helmet-damping>
         </sound>
         <settings>
             <bingo type="int">1250</bingo>
@@ -3423,6 +3427,26 @@ value. 18000=standard US transition altitude -->
             <rwr-volume type="double">0.7</rwr-volume>
             <oxy-psi type="double">0.0</oxy-psi>
             <pbg-switch type="int">-1</pbg-switch>
+            <intercom-volume type="double">0.5</intercom-volume>
+            <ils-volume type="double">0.10</ils-volume>
+            <caution>
+                <master type="bool">false</master>
+                <master-btn type="bool">false</master-btn>
+                <seat-not-armed type="bool">false</seat-not-armed>
+                <stores-config type="bool">false</stores-config>
+                <oxy-low type="bool">false</oxy-low>
+                <le-flaps type="bool">false</le-flaps>
+                <hook type="bool">false</hook>
+                <fwd-fuel-low type="bool">false</fwd-fuel-low>
+                <aft-fuel-low type="bool">false</aft-fuel-low>
+                <elec-sys type="bool">false</elec-sys>
+                <cabin-press type="bool">false</cabin-press>
+                <adc type="bool">false</adc>
+                <equip-hot type="bool">false</equip-hot>
+                <overheat type="bool">false</overheat>
+                <avionics type="bool">false</avionics>
+                <elec-reset-btn type="bool">false</elec-reset-btn>
+            </caution>
         </avionics>
         <fcs>
             <stby-mode type="bool">false</stby-mode>

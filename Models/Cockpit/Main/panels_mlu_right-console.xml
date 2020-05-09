@@ -500,6 +500,93 @@
     
     <animation>
         <type>knob</type>
+        <object-name>mal-ind-lts-switch</object-name>
+        <property>f16/avionics/mal-ind-lts-brightness-switch</property>
+        <factor>60</factor>
+        <offset-deg>-30.0</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.25494</x-m><y-m>0.46522</y-m><z-m>0.01455</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>-1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/mal-ind-lts-brightness-switch</property>
+                <factor>1</factor>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>mms-switch</object-name>
+        <property>f16/avionics/nvis</property>
+        <factor>60</factor>
+        <offset-deg>-30.0</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.29899</x-m><y-m>0.46519</y-m><z-m>0.01367</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>-1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/nvis</property>
+                <factor>1</factor>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>indv-lgt-cont</object-name>
+        <property>f16/avionics/indv-ltg-brightness-switch</property>
+        <factor>60</factor>
+        <offset-deg>-30.0</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.29801</x-m><y-m>0.42611</y-m><z-m>0.01178</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>-1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/indv-ltg-brightness-switch</property>
+                <factor>1</factor>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
+        <object-name>KY_58_1</object-name>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>svm</tooltip-id>
+                <label>KY 58 Secure Voice Module</label>
+            </binding>
+        </hovered>
+    </animation>
+    
+    <animation>
+        <type>knob</type>
         <object-name>r-hdpt-switch</object-name>
         <property>f16/avionics/power-right-hdpt</property>
         <factor>40</factor>
@@ -996,6 +1083,142 @@
         </decrease>
     </animation>
     
+    <animation>
+        <type>knob</type>
+        <object-name>KY_58_VOL_KNOB</object-name>
+        <property>f16/avionics/ky58-volume</property>
+        <factor>-200</factor>
+        <offset-deg>10</offset-deg>
+        <drag-direction>horizontal</drag-direction>
+        <center>
+            <x-m>0.415715</x-m><y-m>0.463667</y-m><z-m>0.00386</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>0</y><z>1</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ky58-volume</property>
+                <step>0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ky58-volume</property>
+                <step>-0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+    <animation>
+        <type>knob</type>
+        <object-name>KY_58_KNOB_MODE</object-name>
+        <property>f16/avionics/ky58-mode</property>
+        <factor>-55</factor>
+        <offset-deg>60</offset-deg>
+        <drag-direction>horizontal</drag-direction>
+        <center>
+            <x-m>0.415091</x-m><y-m>0.506571</y-m><z-m>0.00729</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>0</y><z>1</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ky58-mode</property>
+                <step>1</step>
+                <min>0</min>
+                <max>3</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ky58-mode</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>3</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+    <animation>
+        <type>knob</type>
+        <object-name>KY_58_KNOB_PULL</object-name>
+        <property>f16/avionics/ky58-z</property>
+        <factor>-37</factor>
+        <offset-deg>0</offset-deg>
+        <drag-direction>horizontal</drag-direction>
+        <center>
+            <x-m>0.492617</x-m><y-m>0.507487</y-m><z-m>0.00729</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>0</y><z>1</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ky58-z</property>
+                <step>1</step>
+                <min>0</min>
+                <max>7</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ky58-z</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>7</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+    <animation>
+        <type>knob</type>
+        <object-name>TD_knob</object-name>
+        <property>f16/avionics/ky58-enable</property>
+        <factor>-35</factor>
+        <offset-deg>60</offset-deg>
+        <drag-direction>horizontal</drag-direction>
+        <center>
+            <x-m>0.492985</x-m><y-m>0.466486</y-m><z-m>0.00758</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>0</y><z>1</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ky58-enable</property>
+                <step>1</step>
+                <min>0</min>
+                <max>2</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/ky58-enable</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>2</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
     
     <animation>
         <type>knob</type>
@@ -1078,6 +1301,7 @@
         <parameters>
             <implicit-lightmap-threshold-low type="float">0.2</implicit-lightmap-threshold-low>
             <implicit-lightmap-threshold-high type="float">0.7</implicit-lightmap-threshold-high>
+            <lightmap-factor n="0"><use>controls/lighting/lighting-panel/console-flood</use></lightmap-factor>
         </parameters>
         <!-- objects added to this will have all white in texture lit up green when console is high. They will also get flood light -->
         <object-name>LIGHTING_1</object-name>
@@ -1106,6 +1330,7 @@
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
         <parameters>
             <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+            <lightmap-factor n="0"><use>controls/lighting/lighting-panel/console-flood</use></lightmap-factor>
         </parameters>
         <!-- objects added to this will NOT have all white in texture lit up green when console is high. They will get flood light though. -->
         <!-- mainly for switches -->
@@ -1151,6 +1376,7 @@
         <parameters>
             <implicit-lightmap-threshold-low type="float">0.2</implicit-lightmap-threshold-low>
             <implicit-lightmap-threshold-high type="float">0.7</implicit-lightmap-threshold-high>
+            <lightmap-factor n="0"><use>controls/lighting/lighting-panel/console-flood</use></lightmap-factor>
         </parameters>
         <!-- objects added to this will have all white in texture lit up green when console is high. They will also get flood light -->
         <!-- only for knobs -->

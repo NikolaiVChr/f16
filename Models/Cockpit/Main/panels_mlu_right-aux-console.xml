@@ -200,6 +200,7 @@
         <parameters>
             <implicit-lightmap-threshold-low type="float">0.2</implicit-lightmap-threshold-low>
             <implicit-lightmap-threshold-high type="float">0.7</implicit-lightmap-threshold-high>
+            <lightmap-factor n="0"><use>controls/lighting/lighting-panel/console-flood</use></lightmap-factor>
         </parameters>
         <!-- objects added to this will have all white in texture lit up green when console is high. They will also get flood light. -->
         <object-name>HYD_PRESS_1</object-name>
@@ -208,6 +209,7 @@
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
         <parameters>
             <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+            <lightmap-factor n="0"><use>controls/lighting/lighting-panel/console-flood</use></lightmap-factor>
         </parameters>
         <!-- objects added to this will NOT have all white in texture lit up green when console is high. They will get flood light though. -->
         <object-name>RIGHT_AUX_CONSOLE</object-name><!-- this dont show due to cockpit panel hides it I think -->
@@ -652,15 +654,7 @@
   <type>select</type>
   <object-name>ADC_unlit</object-name>
   <condition>
-   <not><or>
-     <property>controls/test/test-panel/mal-ind-lts</property>
-     <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-     <equals> 
-      <property>fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains</property>
-      <value>1</value>
-     </equals> 
-   </and>
-   </or></not>
+   <not><property>f16/avionics/caution/adc</property></not>
   </condition>
  </animation> 
 
@@ -668,13 +662,7 @@
   <type>select</type>
   <object-name>AFT_FUEL_LOW_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
-   <or><not><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than></not>
-   <greater-than> 
-    <property>consumables/fuel/tank[1]/level-lbs</property>
-    <value>400</value>
-   </greater-than> 
- </or>
+   <not><property>f16/avionics/caution/aft-fuel-low</property></not>
   </condition>
  </animation> 
 
@@ -698,7 +686,7 @@
   <type>select</type>
   <object-name>AVIONICS_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not><property>f16/avionics/caution/avionics</property></not>
   </condition>
  </animation> 
 
@@ -714,16 +702,7 @@
   <type>select</type>
   <object-name>CABIN_PRESS_unlit</object-name>
   <condition>
-   <not><or>
-      <property>controls/test/test-panel/mal-ind-lts</property><!-- should lit up when f16/cockpit/pressure-ft is above 27000 -->
-      <and>
-        <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-        <greater-than>
-          <property>/f16/cockpit/pressure-ft</property>
-          <value>27000</value>
-        </greater-than>
-      </and>
-    </or></not>
+   <not><property>f16/avionics/caution/cabin-press</property></not>
   </condition>
  </animation> 
 
@@ -755,17 +734,10 @@
   <type>select</type>
   <object-name>ELEC_SYS_unlit</object-name>
   <condition>
-   <not>
-    <or>
-    <and>
-      <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-      <equals><property>fdm/jsbsim/elec/bus/light/elec-sys</property><value>1</value></equals>
-    </and>
-    <property>controls/test/test-panel/mal-ind-lts</property>
-  </or>
-  </not>
+   <not><property>f16/avionics/caution/elec-sys</property></not>
   </condition>
  </animation> 
+ 
  <animation>
   <type>select</type>
   <object-name>ENGINE_FAULT_unlit</object-name>
@@ -778,7 +750,7 @@
   <type>select</type>
   <object-name>EQUIP_HOT_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not><property>f16/avionics/caution/equip-hot</property></not>
   </condition>
  </animation> 
 
@@ -802,13 +774,7 @@
   <type>select</type>
   <object-name>FWD_FUEL_LOW_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
-   <or><not><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than></not>
-   <greater-than> 
-    <property>consumables/fuel/tank/level-lbs</property>
-    <value>400</value>
-   </greater-than> 
- </or>
+   <not><property>f16/avionics/caution/fwd-fuel-low</property></not>
   </condition>
  </animation> 
 
@@ -816,13 +782,7 @@
   <type>select</type>
   <object-name>HOOK_unlit</object-name>
   <condition>
-   <not><or>
-   <property>controls/test/test-panel/mal-ind-lts</property>
-   <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-   <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
- </and>
-   </or>
- </not>
+   <not><property>f16/avionics/caution/hook</property></not>
   </condition>
  </animation> 
 
@@ -846,21 +806,7 @@
   <type>select</type>
   <object-name>LE_FLAPS_unlit</object-name>
   <condition>
-   <not>
-    <or>
-    <and>
-      <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-      <or>
-        <equals><property>f16/avionics/le-flaps-switch</property><value>0</value></equals>
-        <equals> 
-          <property>fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains</property>
-          <value>1</value>
-       </equals>
-     </or>
-    </and>
-    <property>controls/test/test-panel/mal-ind-lts</property>
-  </or>
-   </not>
+   <not><property>f16/avionics/caution/le-flaps</property></not>
   </condition>
  </animation> 
 
@@ -884,7 +830,7 @@
   <type>select</type>
   <object-name>OVERHEAT_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not><property>f16/avionics/caution/overheat</property></not>
   </condition>
  </animation> 
 
@@ -892,16 +838,7 @@
   <type>select</type>
   <object-name>OXY_LOW_unlit</object-name>
   <condition>
-   <not><or>
-      <property>controls/test/test-panel/mal-ind-lts</property><!-- should lit up when f16/cockpit/pressure-ft is above 27000 -->
-      <and>
-        <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-        <less-than>
-          <property>/f16/cockpit/oxygen-liters</property>
-          <value>0.5</value>
-        </less-than>
-      </and>
-    </or></not>
+   <not><property>f16/avionics/caution/oxy-low</property></not>
   </condition>
  </animation> 
 
@@ -925,14 +862,7 @@
   <type>select</type>
   <object-name>SEAT_NOT_ARMED_unlit</object-name>
   <condition>
-   <not>
-    <or>
-         <property>controls/test/test-panel/mal-ind-lts</property>
-         <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-         <not><property>controls/seat/ejection-safety-lever</property></not>
-       </and>
-     </or>
-   </not>
+   <not><property>f16/avionics/caution/seat-not-armed</property></not>
   </condition>
  </animation> 
 
@@ -948,39 +878,7 @@
   <type>select</type>
   <object-name>STORES_CONFIG_unlit</object-name>
   <condition>
-   <not>
-      <or>
-          <and>
-              <greater-than>
-                  <property>fdm/jsbsim/elec/bus/batt-2</property>
-                  <value>20</value>
-              </greater-than>
-              <or>
-                  <and>
-                      <greater-than>
-                        <property>f16/stores-cat</property>
-                        <value>1</value>
-                      </greater-than>
-                      <less-than>
-                        <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
-                        <value>1</value>
-                      </less-than>
-                  </and>
-                  <and>
-                    <equals>
-                      <property>f16/stores-cat</property>
-                      <value>1</value>
-                    </equals>
-                    <equals>
-                      <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
-                      <value>1</value>
-                    </equals>
-                  </and>
-              </or>
-          </and>
-          <property>controls/test/test-panel/mal-ind-lts</property>
-      </or>
-   </not>
+   <not><property>f16/avionics/caution/stores-config</property></not>
   </condition>
  </animation> 
 
@@ -1016,15 +914,7 @@
   <type>select</type>
   <object-name>ADC_lit</object-name>
   <condition>
-   <or>
-     <property>controls/test/test-panel/mal-ind-lts</property>
-     <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-     <equals> 
-      <property>fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains</property>
-      <value>1</value>
-     </equals> 
-   </and>
-   </or>
+     <property>f16/avionics/caution/adc</property>
   </condition>
  </animation> 
 
@@ -1032,15 +922,7 @@
   <type>select</type>
   <object-name>AFT_FUEL_LOW_lit</object-name>
   <condition>
-   <or>
-   <property>controls/test/test-panel/mal-ind-lts</property>
-   <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-   <less-than> 
-    <property>consumables/fuel/tank[1]/level-lbs</property>
-    <value>400</value>
-   </less-than> 
- </and>
-   </or>
+   <property>f16/avionics/caution/aft-fuel-low</property>
   </condition>
  </animation> 
 
@@ -1064,7 +946,7 @@
   <type>select</type>
   <object-name>AVIONICS_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <property>f16/avionics/caution/avionics</property>
   </condition>
  </animation> 
 
@@ -1080,16 +962,7 @@
   <type>select</type>
   <object-name>CABIN_PRESS_lit</object-name>
   <condition>
-    <or>
-      <property>controls/test/test-panel/mal-ind-lts</property>
-      <and>
-        <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-        <greater-than>
-          <property>/f16/cockpit/pressure-ft</property>
-          <value>27000</value>
-        </greater-than>
-      </and>
-    </or>
+      <property>f16/avionics/caution/cabin-press</property>
   </condition>
  </animation> 
 
@@ -1121,13 +994,7 @@
   <type>select</type>
   <object-name>ELEC_SYS_lit</object-name>
   <condition>
-    <or>
-    <and>
-      <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-      <equals><property>fdm/jsbsim/elec/bus/light/elec-sys</property><value>1</value></equals>
-    </and>
-    <property>controls/test/test-panel/mal-ind-lts</property>
-  </or>
+    <property>f16/avionics/caution/elec-sys</property>
   </condition>
  </animation> 
 
@@ -1143,7 +1010,7 @@
   <type>select</type>
   <object-name>EQUIP_HOT_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <property>f16/avionics/caution/equip-hot</property>
   </condition>
  </animation> 
 
@@ -1167,15 +1034,7 @@
   <type>select</type>
   <object-name>FWD_FUEL_LOW_lit</object-name>
   <condition>
-   <or>
-   <property>controls/test/test-panel/mal-ind-lts</property>
-   <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-   <less-than> 
-    <property>consumables/fuel/tank[0]/level-lbs</property>
-    <value>400</value>
-   </less-than> 
- </and>
-   </or>
+   <property>f16/avionics/caution/fwd-fuel-low</property>
   </condition>
  </animation> 
 
@@ -1183,12 +1042,7 @@
   <type>select</type>
   <object-name>HOOK_lit</object-name>
   <condition>
-   <or>
-   <property>controls/test/test-panel/mal-ind-lts</property>
-   <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-   <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
- </and>
-   </or>
+   <property>f16/avionics/caution/hook</property>
   </condition>
  </animation> 
 
@@ -1212,19 +1066,7 @@
   <type>select</type>
   <object-name>LE_FLAPS_lit</object-name>
   <condition>
-    <or>
-    <and>
-      <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-      <or>
-        <equals><property>f16/avionics/le-flaps-switch</property><value>0</value></equals>
-        <equals> 
-          <property>fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains</property>
-          <value>1</value>
-       </equals>
-     </or>
-    </and>
-    <property>controls/test/test-panel/mal-ind-lts</property>
-  </or>
+    <property>f16/avionics/caution/le-flaps</property>
   </condition>
  </animation> 
 
@@ -1248,7 +1090,7 @@
   <type>select</type>
   <object-name>OVERHEAT_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+   <property>f16/avionics/caution/overheat</property>
   </condition>
  </animation> 
 
@@ -1256,16 +1098,7 @@
   <type>select</type>
   <object-name>OXY_LOW_lit</object-name>
   <condition>
-   <or>
-      <property>controls/test/test-panel/mal-ind-lts</property><!-- should lit up when f16/cockpit/pressure-ft is above 27000 -->
-      <and>
-        <greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-        <less-than>
-          <property>/f16/cockpit/oxygen-liters</property>
-          <value>0.5</value>
-        </less-than>
-      </and>
-    </or>
+      <property>f16/avionics/caution/oxy-low</property>
   </condition>
  </animation> 
 
@@ -1289,12 +1122,7 @@
   <type>select</type>
   <object-name>SEAT_NOT_ARMED_lit</object-name>
   <condition>
-   <or>
-   <property>controls/test/test-panel/mal-ind-lts</property>
-   <and><greater-than><property>fdm/jsbsim/elec/bus/batt-2</property><value>20</value></greater-than>
-   <not><property>controls/seat/ejection-safety-lever</property></not>
- </and>
-   </or>
+       <property>f16/avionics/caution/seat-not-armed</property>
   </condition>
  </animation> 
 
@@ -1310,39 +1138,11 @@
   <type>select</type>
   <object-name>STORES_CONFIG_lit</object-name>
   <condition>
-      <or>
-          <and>
-              <greater-than>
-                  <property>fdm/jsbsim/elec/bus/batt-2</property>
-                  <value>20</value>
-              </greater-than>
-              <or>
-                  <and>
-                      <greater-than>
-                        <property>f16/stores-cat</property>
-                        <value>1</value>
-                      </greater-than>
-                      <less-than>
-                        <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
-                        <value>1</value>
-                      </less-than>
-                  </and>
-                  <and>
-                    <equals>
-                      <property>f16/stores-cat</property>
-                      <value>1</value>
-                    </equals>
-                    <equals>
-                      <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
-                      <value>1</value>
-                    </equals>
-                  </and>
-              </or>
-          </and>
-          <property>controls/test/test-panel/mal-ind-lts</property>
-      </or>
+      <property>f16/avionics/caution/stores-config</property>
   </condition>
  </animation> 
+ 
+ 
 
   <animation>
   <object-name>STORES_CONFIG_lit</object-name>

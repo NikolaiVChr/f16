@@ -66,8 +66,8 @@ var rtExec_loop = func
 #        print("[EMEXEC]: Adjust frequency to ",1/frame_inc);
         cur_frame_inc = frame_inc;
     }
-    execTimer.restart(cur_frame_inc);
-
+    #execTimer.restart(cur_frame_inc);
+    settimer(rtExec_loop, cur_frame_inc);
 }
 
 # setup the properties to monitor for this system
@@ -82,5 +82,5 @@ foreach (var name; keys(input)) {
     emesary.GlobalTransmitter.NotifyAll(notifications.FrameNotificationAddProperty.new("EXEC", name, input[name]));
 }
 
-var execTimer = maketimer(1, rtExec_loop);
+#var execTimer = maketimer(1, rtExec_loop);
 #execTimer.start();

@@ -261,6 +261,11 @@ var loop_flare = func {
     } else {
       setprop("controls/lighting/lighting-panel/flood-inst-pnl", getprop("controls/lighting/lighting-panel/flood-inst-pnl-knob"));
     }
+    if (getprop("fdm/jsbsim/elec/bus/noness-ac-2")<100) {
+      setprop("controls/lighting/lighting-panel/console-flood", 0);
+    } else {
+      setprop("controls/lighting/lighting-panel/console-flood", getprop("controls/lighting/lighting-panel/console-flood-knob"));
+    }
     if (getprop("fdm/jsbsim/elec/bus/emergency-ac-1")<100) {
       setprop("controls/lighting/lighting-panel/console-primary", 0);
       setprop("controls/lighting/lighting-panel/pri-inst-pnl", 0);
@@ -268,6 +273,8 @@ var loop_flare = func {
       setprop("controls/lighting/lighting-panel/console-primary", getprop("controls/lighting/lighting-panel/console-primary-knob"));
       setprop("controls/lighting/lighting-panel/pri-inst-pnl", getprop("controls/lighting/lighting-panel/pri-inst-pnl-knob"));
     }
+    
+    setprop("/instrumentation/nav[0]/volume", getprop("/f16/avionics/ils-volume")*getprop("sim/current-view/internal"));
 
     setprop("f16/external", !getprop("sim/current-view/internal"));
     
@@ -842,7 +849,8 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     emesary.GlobalTransmitter.Register(f16_mfd);
     emesary.GlobalTransmitter.Register(f16_hud);
     emesary.GlobalTransmitter.Register(awg_9.aircraft_radar);
-    execTimer.start();
+    #execTimer.start();
+    rtExec_loop();
     if (getprop("f16/engine/running-state")) {
       #skip warmup if not cold and dark selected from launcher.
       setprop("/f16/avionics/power-fcr-warm", 1);
@@ -971,8 +979,9 @@ var autostart = func {
   setprop("f16/avionics/ew-mode-knob",1);
   setprop("f16/avionics/pbg-switch",0);
   setprop("controls/ventilation/airconditioning-enabled",1);
-  setprop("controls/lighting/ext-lighting-panel/master", 1);
   setprop("controls/ventilation/airconditioning-source",1);
+  setprop("controls/lighting/ext-lighting-panel/master", 1);
+  setprop("controls/lighting/lighting-panel/pri-inst-pnl-knob", 0.5);  
   setprop("instrumentation/radar/radar-standby", 0);
   setprop("instrumentation/comm[0]/volume",1);
   setprop("instrumentation/comm[1]/volume",1);
@@ -986,15 +995,20 @@ var autostart = func {
     } else {
       setprop("f16/engine/feed",1);
       setprop("f16/engine/cutoff-release-lever",1);
-      setprop("f16/engine/jfs-start-switch",1);    
-      settimer(repair3, 40);
+      settimer(autostart2, 0.5);
     }
   } else {
     screen.log.write("Done.");
     inAutostart = 0;
   }
   setprop("f16/avionics/ins-knob", 3);#NAV
+  fail.master_caution();
 }
+
+var autostart2 = func {
+  setprop("f16/engine/jfs-start-switch",1);    
+  settimer(repair3, 40);
+};
 
 var re_init_listener = setlistener("/sim/signals/reinit", func {
   if (getprop("/sim/signals/reinit") != 0) {
@@ -1802,3 +1816,5 @@ var flexer = func {
     
   settimer(flexer,0);
 }
+
+setlistener("controls/flight/alt-rel-button", func (node) {setprop("controls/armament/trigger", node.getValue());});

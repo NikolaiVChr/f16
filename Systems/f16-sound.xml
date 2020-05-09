@@ -24,11 +24,11 @@
                 <y>0.0</y>
                 <z>0.195</z>
             </position>
-            <pitch>
-                <internal>dt_start</internal>
+            <!--pitch>
+                <internal>dt_play</internal>
                 <offset>1.25</offset>
-                <factor>-0.25</factor>
-            </pitch>
+                <factor>0.15</factor>
+            </pitch-->
             <volume>
                 <max>0.55</max>
             </volume>
@@ -109,6 +109,1283 @@
         <!-- ********************************************************************************* -->
         
         
+        
+
+        <jfs>
+            <name>jfs-front-left</name>
+            <path>Aircraft/f16/Sounds/Timi/engine_low_int-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+                <greater-than>
+                    <property>f16/engine/jfs-rpm-normalized</property>
+                    <value>0.0</value>
+                </greater-than>
+            </condition>
+            <position>
+                <x>-4.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <pitch>
+                <property>f16/engine/jfs-rpm-normalized</property>
+                <offset>1</offset>
+                <factor>1</factor>
+                <min>0</min>
+                <max>2</max>
+            </pitch>
+            <volume>
+                <property>f16/engine/jfs-rpm-normalized</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+            <volume>
+                <factor>0.15</factor>
+            </volume>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </jfs>
+
+        <jfs>
+            <name>jfs-front-right</name>
+            <path>Aircraft/f16/Sounds/Timi/engine_low_int-right.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+                <greater-than>
+                    <property>f16/engine/jfs-rpm-normalized</property>
+                    <value>0.0</value>
+                </greater-than>
+            </condition>
+            <position>
+                <x>-4.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
+            <pitch>
+                <property>f16/engine/jfs-rpm-normalized</property>
+                <offset>1</offset>
+                <factor>1</factor>
+                <min>0</min>
+                <max>2</max>
+            </pitch>
+            <volume>
+                <property>f16/engine/jfs-rpm-normalized</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+            <volume>
+                <factor>0.15</factor>
+            </volume>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </jfs>
+
+        <jfs>
+            <name>jfs-rear-left</name>
+            <path>Aircraft/f16/Sounds/Timi/engine_low_int-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+                <greater-than>
+                    <property>f16/engine/jfs-rpm-normalized</property>
+                    <value>0.0</value>
+                </greater-than>
+            </condition>
+            <position>
+                <x>-3.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <pitch>
+                <property>f16/engine/jfs-rpm-normalized</property>
+                <offset>1</offset>
+                <factor>1</factor>
+                <min>0</min>
+                <max>2</max>
+            </pitch>
+            <volume>
+                <property>f16/engine/jfs-rpm-normalized</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+            <volume>
+                <factor>0.15</factor>
+            </volume>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </jfs>
+
+        <jfs>
+            <name>jfs-rear-right</name>
+            <path>Aircraft/f16/Sounds/Timi/engine_low_int-right.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+                <greater-than>
+                    <property>f16/engine/jfs-rpm-normalized</property>
+                    <value>0.0</value>
+                </greater-than>
+            </condition>
+            <position>
+                <x>-3.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
+            <pitch>
+                <property>f16/engine/jfs-rpm-normalized</property>
+                <offset>1</offset>
+                <factor>1</factor>
+                <min>0</min>
+                <max>2</max>
+            </pitch>
+            <volume>
+                <property>f16/engine/jfs-rpm-normalized</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+            <volume>
+                <factor>0.15</factor>
+            </volume>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </jfs>
+
+        <engine>
+            <name>engine0-front-left-low</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_Low-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/n2</property>
+                <offset>0</offset>
+                <factor>0.01666666667</factor>
+            </volume>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-a</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n1</property>
+                <offset>0.86349949816</offset>
+                <factor>0.00455001673</factor>
+            </pitch>
+            <position>
+                <x>-4.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0-front-right-low</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_Low-right.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/n2</property>
+                <offset>0</offset>
+                <factor>0.01666666667</factor>
+            </volume>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-a</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n1</property>
+                <offset>0.86349949816</offset>
+                <factor>0.00455001673</factor>
+            </pitch>
+            <position>
+                <x>-4.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0-rear-left-low</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_Low-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/n2</property>
+                <offset>0</offset>
+                <factor>0.01666666667</factor>
+            </volume>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-a</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n1</property>
+                <offset>0.86349949816</offset>
+                <factor>0.00455001673</factor>
+            </pitch>
+            <position>
+                <x>-3.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0-rear-right-low</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_Low-right.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/n2</property>
+                <offset>0</offset>
+                <factor>0.01666666667</factor>
+            </volume>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-a</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n1</property>
+                <offset>0.86349949816</offset>
+                <factor>0.00455001673</factor>
+            </pitch>
+            <position>
+                <x>-3.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0-front-left-high</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_High-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/n2</property>
+                <offset>0</offset>
+                <factor>0.01666666667</factor>
+            </volume>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-a</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n2</property>
+                <offset>-0.84676252872</offset>
+                <factor>0.03077937548</factor>
+            </pitch>
+            <position>
+                <x>-4.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0-front-right-high</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_High-right.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/n2</property>
+                <offset>0</offset>
+                <factor>0.01666666667</factor>
+            </volume>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-a</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n2</property>
+                <offset>-0.84676252872</offset>
+                <factor>0.03077937548</factor>
+            </pitch>
+            <position>
+                <x>-4.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0-rear-left-high</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_High-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/n2</property>
+                <offset>0</offset>
+                <factor>0.01666666667</factor>
+            </volume>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-a</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n2</property>
+                <offset>-0.84676252872</offset>
+                <factor>0.03077937548</factor>
+            </pitch>
+            <position>
+                <x>-3.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0-rear-right-high</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_High-right.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/n2</property>
+                <offset>0</offset>
+                <factor>0.01666666667</factor>
+            </volume>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-a</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n2</property>
+                <offset>-0.84676252872</offset>
+                <factor>0.03077937548</factor>
+            </pitch>
+            <position>
+                <x>-3.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0n2-front-left-low</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_N2_88_Low-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-b</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-c</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n1</property>
+                <offset>0.91931571556</offset>
+                <factor>0.00102132006</factor>
+            </pitch>
+            <position>
+                <x>-4.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0n2-front-right-low</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_N2_88_Low-right.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-b</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-c</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n1</property>
+                <offset>0.91931571556</offset>
+                <factor>0.00102132006</factor>
+            </pitch>
+            <position>
+                <x>-4.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0n2-rear-left-low</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_N2_88_Low-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-b</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-c</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n1</property>
+                <offset>0.91931571556</offset>
+                <factor>0.00102132006</factor>
+            </pitch>
+            <position>
+                <x>-3.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0n2-rear-right-low</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_N2_88_Low-right.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-b</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-c</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n1</property>
+                <offset>0.91931571556</offset>
+                <factor>0.00102132006</factor>
+            </pitch>
+            <position>
+                <x>-3.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0n2-front-left-high</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_N2_88_High-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-b</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-c</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n2</property>
+                <offset>-2.15291106846</offset>
+                <factor>0.03582853487</factor>
+            </pitch>
+            <position>
+                <x>-4.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0n2-front-right-high</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_N2_88_High-right.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-b</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-c</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n2</property>
+                <offset>-2.15291106846</offset>
+                <factor>0.03582853487</factor>
+            </pitch>
+            <position>
+                <x>-4.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0n2-rear-left-high</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_N2_88_High-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-b</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-c</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n2</property>
+                <offset>-2.15291106846</offset>
+                <factor>0.03582853487</factor>
+            </pitch>
+            <position>
+                <x>-3.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0n2-rear-right-high</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_N2_88_High-right.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-b</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-c</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n2</property>
+                <offset>-2.15291106846</offset>
+                <factor>0.03582853487</factor>
+            </pitch>
+            <position>
+                <x>-3.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0n100-front-left-low</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_N100_Low-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-d</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n1</property>
+                <offset>0.90001249844</offset>
+                <factor>0.00099987502</factor>
+            </pitch>
+            <position>
+                <x>-4.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0n100-front-right-low</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_N100_Low-right.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-d</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n1</property>
+                <offset>0.90001249844</offset>
+                <factor>0.00099987502</factor>
+            </pitch>
+            <position>
+                <x>-4.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0n100-rear-left-low</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_N100_Low-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-d</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n1</property>
+                <offset>0.90001249844</offset>
+                <factor>0.00099987502</factor>
+            </pitch>
+            <position>
+                <x>-3.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0n100-rear-right-low</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_N100_Low-right.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-d</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n1</property>
+                <offset>0.90001249844</offset>
+                <factor>0.00099987502</factor>
+            </pitch>
+            <position>
+                <x>-3.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0n100-front-left-high</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_N100_High-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-d</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n2</property>
+                <offset>-1.50559284116</offset>
+                <factor>0.02505592841</factor>
+            </pitch>
+            <position>
+                <x>-4.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0n100-front-right-high</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_N100_High-right.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-d</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n2</property>
+                <offset>-1.50559284116</offset>
+                <factor>0.02505592841</factor>
+            </pitch>
+            <position>
+                <x>-4.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0n100-rear-left-high</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_N100_High-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-d</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n2</property>
+                <offset>-1.50559284116</offset>
+                <factor>0.02505592841</factor>
+            </pitch>
+            <position>
+                <x>-3.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>engine0n100-rear-right-high</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_N100_High-right.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-d</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n2</property>
+                <offset>-1.50559284116</offset>
+                <factor>0.02505592841</factor>
+            </pitch>
+            <position>
+                <x>-3.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>burner0-front-left</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_Afterburner-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+                <greater-than-equals>
+                    <property>engines/engine[0]/n2</property>
+                    <value>100</value>
+                </greater-than-equals>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/nozzle-pos-norm</property>
+                <factor>1</factor>
+            </volume>
+            <position>
+                <x>-4.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>burner0-front-right</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_Afterburner-right.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+                <greater-than-equals>
+                    <property>engines/engine[0]/n2</property>
+                    <value>100</value>
+                </greater-than-equals>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/nozzle-pos-norm</property>
+                <factor>1</factor>
+            </volume>
+            <position>
+                <x>-4.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>burner0-rear-left</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_Afterburner-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+                <greater-than-equals>
+                    <property>engines/engine[0]/n2</property>
+                    <value>100</value>
+                </greater-than-equals>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/nozzle-pos-norm</property>
+                <factor>1</factor>
+            </volume>
+            <position>
+                <x>-3.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
+            <name>burner0-rear-right</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_Afterburner-right.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+                <greater-than-equals>
+                    <property>engines/engine[0]/n2</property>
+                    <value>100</value>
+                </greater-than-equals>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/nozzle-pos-norm</property>
+                <factor>1</factor>
+            </volume>
+            <position>
+                <x>-3.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <g>
+            <name>g-front-left</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_G-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>accelerations/pilot-gdamped</property>
+                <offset>-0.33333333333</offset>
+                <factor>0.33333333333</factor>
+            </volume>
+            <volume>
+                <property>fdm/jsbsim/fcs/fly-by-wire/model/lef-pos-deg</property>
+                <factor>0.04</factor>
+            </volume>
+            <position>
+                <x>-4.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </g>
+
+        <g>
+            <name>g-front-right</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_G-right.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>accelerations/pilot-gdamped</property>
+                <offset>-0.33333333333</offset>
+                <factor>0.33333333333</factor>
+            </volume>
+            <volume>
+                <property>fdm/jsbsim/fcs/fly-by-wire/model/lef-pos-deg</property>
+                <factor>0.04</factor>
+            </volume>
+            <position>
+                <x>-4.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </g>
+
+        <g>
+            <name>g-rear-left</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_G-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>accelerations/pilot-gdamped</property>
+                <offset>-0.33333333333</offset>
+                <factor>0.33333333333</factor>
+            </volume>
+            <volume>
+                <property>fdm/jsbsim/fcs/fly-by-wire/model/lef-pos-deg</property>
+                <factor>0.04</factor>
+            </volume>
+            <position>
+                <x>-3.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </g>
+
+        <g>
+            <name>g-rear-right</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_G-right.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>accelerations/pilot-gdamped</property>
+                <offset>-0.33333333333</offset>
+                <factor>0.33333333333</factor>
+            </volume>
+            <volume>
+                <property>fdm/jsbsim/fcs/fly-by-wire/model/lef-pos-deg</property>
+                <factor>0.04</factor>
+            </volume>
+            <position>
+                <x>-3.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </g>
+        
+        <!-- ********************************************************************************* -->
+        <!-- ********************************************************************************* -->
+        <!--                                 ENGINE EXTERNAL                                   -->
+        <!-- ********************************************************************************* -->
+        <!-- ********************************************************************************* -->
+        
+        
         <jfs>
             <name>JFS</name>
             <path>Aircraft/f16/Sounds/Timi/engine_low_int-left.wav</path>
@@ -153,995 +1430,6 @@
                 <factor>0.15</factor>
             </volume>
         </jfs>
-
-        <jfs>
-            <name>jfs-front-left</name>
-            <path>Aircraft/f16/Sounds/Timi/engine_low_int-left.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-                <greater-than>
-                    <property>f16/engine/jfs-rpm-normalized</property>
-                    <value>0.0</value>
-                </greater-than>
-            </condition>
-            <position>
-                <x>-4.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
-            <pitch>
-                <property>f16/engine/jfs-rpm-normalized</property>
-                <offset>1</offset>
-                <factor>1</factor>
-                <min>0</min>
-                <max>2</max>
-            </pitch>
-            <volume>
-                <property>f16/engine/jfs-rpm-normalized</property>
-                <offset>0</offset>
-                <factor>1</factor>
-                <type>lin</type>
-                <min>0</min>
-                <max>1</max>
-            </volume>
-            <volume>
-                <factor>0.15</factor>
-            </volume>
-        </jfs>
-
-        <jfs>
-            <name>jfs-front-right</name>
-            <path>Aircraft/f16/Sounds/Timi/engine_low_int-right.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-                <greater-than>
-                    <property>f16/engine/jfs-rpm-normalized</property>
-                    <value>0.0</value>
-                </greater-than>
-            </condition>
-            <position>
-                <x>-4.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
-            <pitch>
-                <property>f16/engine/jfs-rpm-normalized</property>
-                <offset>1</offset>
-                <factor>1</factor>
-                <min>0</min>
-                <max>2</max>
-            </pitch>
-            <volume>
-                <property>f16/engine/jfs-rpm-normalized</property>
-                <offset>0</offset>
-                <factor>1</factor>
-                <type>lin</type>
-                <min>0</min>
-                <max>1</max>
-            </volume>
-            <volume>
-                <factor>0.15</factor>
-            </volume>
-        </jfs>
-
-        <jfs>
-            <name>jfs-rear-left</name>
-            <path>Aircraft/f16/Sounds/Timi/engine_low_int-left.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-                <greater-than>
-                    <property>f16/engine/jfs-rpm-normalized</property>
-                    <value>0.0</value>
-                </greater-than>
-            </condition>
-            <position>
-                <x>-3.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
-            <pitch>
-                <property>f16/engine/jfs-rpm-normalized</property>
-                <offset>1</offset>
-                <factor>1</factor>
-                <min>0</min>
-                <max>2</max>
-            </pitch>
-            <volume>
-                <property>f16/engine/jfs-rpm-normalized</property>
-                <offset>0</offset>
-                <factor>1</factor>
-                <type>lin</type>
-                <min>0</min>
-                <max>1</max>
-            </volume>
-            <volume>
-                <factor>0.15</factor>
-            </volume>
-        </jfs>
-
-        <jfs>
-            <name>jfs-rear-right</name>
-            <path>Aircraft/f16/Sounds/Timi/engine_low_int-right.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-                <greater-than>
-                    <property>f16/engine/jfs-rpm-normalized</property>
-                    <value>0.0</value>
-                </greater-than>
-            </condition>
-            <position>
-                <x>-3.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
-            <pitch>
-                <property>f16/engine/jfs-rpm-normalized</property>
-                <offset>1</offset>
-                <factor>1</factor>
-                <min>0</min>
-                <max>2</max>
-            </pitch>
-            <volume>
-                <property>f16/engine/jfs-rpm-normalized</property>
-                <offset>0</offset>
-                <factor>1</factor>
-                <type>lin</type>
-                <min>0</min>
-                <max>1</max>
-            </volume>
-            <volume>
-                <factor>0.15</factor>
-            </volume>
-        </jfs>
-
-        <engine>
-            <name>engine0-front-left-low</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_Low-left.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/n2</property>
-                <offset>0</offset>
-                <factor>0.01666666667</factor>
-            </volume>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-a</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n1</property>
-                <offset>0.86349949816</offset>
-                <factor>0.00455001673</factor>
-            </pitch>
-            <position>
-                <x>-4.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0-front-right-low</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_Low-right.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/n2</property>
-                <offset>0</offset>
-                <factor>0.01666666667</factor>
-            </volume>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-a</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n1</property>
-                <offset>0.86349949816</offset>
-                <factor>0.00455001673</factor>
-            </pitch>
-            <position>
-                <x>-4.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0-rear-left-low</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_Low-left.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/n2</property>
-                <offset>0</offset>
-                <factor>0.01666666667</factor>
-            </volume>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-a</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n1</property>
-                <offset>0.86349949816</offset>
-                <factor>0.00455001673</factor>
-            </pitch>
-            <position>
-                <x>-3.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0-rear-right-low</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_Low-right.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/n2</property>
-                <offset>0</offset>
-                <factor>0.01666666667</factor>
-            </volume>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-a</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n1</property>
-                <offset>0.86349949816</offset>
-                <factor>0.00455001673</factor>
-            </pitch>
-            <position>
-                <x>-3.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0-front-left-high</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_High-left.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/n2</property>
-                <offset>0</offset>
-                <factor>0.01666666667</factor>
-            </volume>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-a</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n2</property>
-                <offset>-0.84676252872</offset>
-                <factor>0.03077937548</factor>
-            </pitch>
-            <position>
-                <x>-4.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0-front-right-high</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_High-right.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/n2</property>
-                <offset>0</offset>
-                <factor>0.01666666667</factor>
-            </volume>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-a</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n2</property>
-                <offset>-0.84676252872</offset>
-                <factor>0.03077937548</factor>
-            </pitch>
-            <position>
-                <x>-4.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0-rear-left-high</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_High-left.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/n2</property>
-                <offset>0</offset>
-                <factor>0.01666666667</factor>
-            </volume>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-a</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n2</property>
-                <offset>-0.84676252872</offset>
-                <factor>0.03077937548</factor>
-            </pitch>
-            <position>
-                <x>-3.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0-rear-right-high</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_High-right.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/n2</property>
-                <offset>0</offset>
-                <factor>0.01666666667</factor>
-            </volume>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-a</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n2</property>
-                <offset>-0.84676252872</offset>
-                <factor>0.03077937548</factor>
-            </pitch>
-            <position>
-                <x>-3.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0n2-front-left-low</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_N2_88_Low-left.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-b</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-c</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n1</property>
-                <offset>0.91931571556</offset>
-                <factor>0.00102132006</factor>
-            </pitch>
-            <position>
-                <x>-4.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0n2-front-right-low</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_N2_88_Low-right.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-b</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-c</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n1</property>
-                <offset>0.91931571556</offset>
-                <factor>0.00102132006</factor>
-            </pitch>
-            <position>
-                <x>-4.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0n2-rear-left-low</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_N2_88_Low-left.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-b</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-c</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n1</property>
-                <offset>0.91931571556</offset>
-                <factor>0.00102132006</factor>
-            </pitch>
-            <position>
-                <x>-3.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0n2-rear-right-low</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_N2_88_Low-right.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-b</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-c</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n1</property>
-                <offset>0.91931571556</offset>
-                <factor>0.00102132006</factor>
-            </pitch>
-            <position>
-                <x>-3.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0n2-front-left-high</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_N2_88_High-left.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-b</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-c</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n2</property>
-                <offset>-2.15291106846</offset>
-                <factor>0.03582853487</factor>
-            </pitch>
-            <position>
-                <x>-4.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0n2-front-right-high</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_N2_88_High-right.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-b</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-c</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n2</property>
-                <offset>-2.15291106846</offset>
-                <factor>0.03582853487</factor>
-            </pitch>
-            <position>
-                <x>-4.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0n2-rear-left-high</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_N2_88_High-left.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-b</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-c</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n2</property>
-                <offset>-2.15291106846</offset>
-                <factor>0.03582853487</factor>
-            </pitch>
-            <position>
-                <x>-3.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0n2-rear-right-high</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_N2_88_High-right.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-b</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-c</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n2</property>
-                <offset>-2.15291106846</offset>
-                <factor>0.03582853487</factor>
-            </pitch>
-            <position>
-                <x>-3.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0n100-front-left-low</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_N100_Low-left.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-d</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n1</property>
-                <offset>0.90001249844</offset>
-                <factor>0.00099987502</factor>
-            </pitch>
-            <position>
-                <x>-4.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0n100-front-right-low</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_N100_Low-right.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-d</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n1</property>
-                <offset>0.90001249844</offset>
-                <factor>0.00099987502</factor>
-            </pitch>
-            <position>
-                <x>-4.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0n100-rear-left-low</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_N100_Low-left.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-d</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n1</property>
-                <offset>0.90001249844</offset>
-                <factor>0.00099987502</factor>
-            </pitch>
-            <position>
-                <x>-3.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0n100-rear-right-low</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_N100_Low-right.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-d</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n1</property>
-                <offset>0.90001249844</offset>
-                <factor>0.00099987502</factor>
-            </pitch>
-            <position>
-                <x>-3.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0n100-front-left-high</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_N100_High-left.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-d</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n2</property>
-                <offset>-1.50559284116</offset>
-                <factor>0.02505592841</factor>
-            </pitch>
-            <position>
-                <x>-4.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0n100-front-right-high</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_N100_High-right.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-d</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n2</property>
-                <offset>-1.50559284116</offset>
-                <factor>0.02505592841</factor>
-            </pitch>
-            <position>
-                <x>-4.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0n100-rear-left-high</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_N100_High-left.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-d</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n2</property>
-                <offset>-1.50559284116</offset>
-                <factor>0.02505592841</factor>
-            </pitch>
-            <position>
-                <x>-3.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>engine0n100-rear-right-high</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_N100_High-right.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-d</property>
-                <offset>0</offset>
-                <factor>1</factor>
-            </volume>
-            <pitch>
-                <property>engines/engine[0]/n2</property>
-                <offset>-1.50559284116</offset>
-                <factor>0.02505592841</factor>
-            </pitch>
-            <position>
-                <x>-3.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>burner0-front-left</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_Afterburner-left.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-                <greater-than-equals>
-                    <property>engines/engine[0]/n2</property>
-                    <value>100</value>
-                </greater-than-equals>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/nozzle-pos-norm</property>
-                <factor>1</factor>
-            </volume>
-            <position>
-                <x>-4.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>burner0-front-right</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_Afterburner-right.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-                <greater-than-equals>
-                    <property>engines/engine[0]/n2</property>
-                    <value>100</value>
-                </greater-than-equals>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/nozzle-pos-norm</property>
-                <factor>1</factor>
-            </volume>
-            <position>
-                <x>-4.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>burner0-rear-left</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_Afterburner-left.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-                <greater-than-equals>
-                    <property>engines/engine[0]/n2</property>
-                    <value>100</value>
-                </greater-than-equals>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/nozzle-pos-norm</property>
-                <factor>1</factor>
-            </volume>
-            <position>
-                <x>-3.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <engine>
-            <name>burner0-rear-right</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_Afterburner-right.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-                <greater-than-equals>
-                    <property>engines/engine[0]/n2</property>
-                    <value>100</value>
-                </greater-than-equals>
-            </condition>
-            <volume>
-                <property>engines/engine[0]/nozzle-pos-norm</property>
-                <factor>1</factor>
-            </volume>
-            <position>
-                <x>-3.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
-        </engine>
-
-        <g>
-            <name>g-front-left</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_G-left.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>accelerations/pilot-gdamped</property>
-                <offset>-0.33333333333</offset>
-                <factor>0.33333333333</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/fcs/fly-by-wire/model/lef-pos-deg</property>
-                <factor>0.04</factor>
-            </volume>
-            <position>
-                <x>-4.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
-        </g>
-
-        <g>
-            <name>g-front-right</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_G-right.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>accelerations/pilot-gdamped</property>
-                <offset>-0.33333333333</offset>
-                <factor>0.33333333333</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/fcs/fly-by-wire/model/lef-pos-deg</property>
-                <factor>0.04</factor>
-            </volume>
-            <position>
-                <x>-4.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
-        </g>
-
-        <g>
-            <name>g-rear-left</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_G-left.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>accelerations/pilot-gdamped</property>
-                <offset>-0.33333333333</offset>
-                <factor>0.33333333333</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/fcs/fly-by-wire/model/lef-pos-deg</property>
-                <factor>0.04</factor>
-            </volume>
-            <position>
-                <x>-3.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
-        </g>
-
-        <g>
-            <name>g-rear-right</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_G-right.wav</path>
-            <mode>looped</mode>
-            <condition>
-                <property>sim/current-view/internal</property>
-            </condition>
-            <volume>
-                <property>accelerations/pilot-gdamped</property>
-                <offset>-0.33333333333</offset>
-                <factor>0.33333333333</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/fcs/fly-by-wire/model/lef-pos-deg</property>
-                <factor>0.04</factor>
-            </volume>
-            <position>
-                <x>-3.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
-        </g>
-        
-        <!-- ********************************************************************************* -->
-        <!-- ********************************************************************************* -->
-        <!--                                 ENGINE EXTERNAL                                   -->
-        <!-- ********************************************************************************* -->
-        <!-- ********************************************************************************* -->
-        
-        
-        
         <engine_fan>
             <name>external fan</name>
             <path>Aircraft/f16/Sounds/turbojet_fan.wav</path>
@@ -2103,12 +2391,11 @@
         <!-- ********************************************************************************* -->
         
         
-        
-        <!-- buffet -->
         <high-alpha-airflow>
             <name>high-alpha-airflow</name>
             <mode>looped</mode>
             <path>Aircraft/f16/Sounds/stall-buffet.wav</path>
+            <type>avionics</type>
             <condition>
                 <property>sim/current-view/internal</property>
                 <greater-than>
@@ -2129,8 +2416,14 @@
                 <property>orientation/alpha-deg</property>
                 <factor>0.035</factor>
             </volume>
-            <reference-dist>200.0</reference-dist>
-            <max-dist>1000.0</max-dist>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
         </high-alpha-airflow>
         <voice>
             <name>breathing</name>
@@ -2839,7 +3132,7 @@
             </volume>
         </rwr>
         <rwr>
-            <name>rwr-lock</name>
+            <name>rwr-spike</name>
             <path>Aircraft/f16/Sounds/rwr-lock-01.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
@@ -2883,36 +3176,369 @@
                 <factor>0.75</factor>
             </volume>
         </radar-active>
-        <flare>
+        <betty>
             <name>flare</name>
             <mode>once</mode>
             <type>avionics</type>
             <path>Aircraft/f16/Sounds/betty/chaff-flare.wav</path>
             <condition>
+                <not><property>gear/gear[2]/wow</property></not>
                 <property>ai/submodels/submodel[0]/flare-release-snd</property>
-                <property>sim/current-view/internal</property>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
             </condition>
             <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
-                <factor>0.05</factor>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
             </volume>
-        </flare>
-        <flare>
+            <volume>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
+            </volume>
+        </betty>
+        <betty>
             <name>flareOut</name>
             <mode>once</mode>
             <type>avionics</type>
             <path>Aircraft/f16/Sounds/betty/chaff-flare-out.wav</path>
             <condition>
+                <not><property>gear/gear[2]/wow</property></not>
                 <property>ai/submodels/submodel[0]/flare-release-out-snd</property>
-                <property>sim/current-view/internal</property>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
             </condition>
             <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
-                <factor>0.05</factor>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
             </volume>
-        </flare>
+            <volume>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
+            </volume>
+        </betty>
+        <betty>
+            <name>betty</name>
+            <path>Aircraft/f16/Sounds/betty/combined.wav</path>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <condition>
+                <property>controls/test/test-panel/mal-ind-lts</property>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
+            </volume>
+        </betty>
+        <betty>
+            <name>pullUp</name>
+            <path>Aircraft/f16/Sounds/betty/pullup.wav</path>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <condition>
+                <not><property>gear/gear[2]/wow</property></not>
+                <and>
+                    <greater-than>
+                        <property>instrumentation/radar/time-till-crash</property>
+                        <value>0</value>
+                    </greater-than>
+                    <less-than>
+                        <property>instrumentation/radar/time-till-crash</property>
+                        <value>8</value>
+                    </less-than>
+                </and>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
+            </volume>
+        </betty>
+        <betty>
+            <name>bingo</name>
+            <path>Aircraft/f16/Sounds/betty/bingo.wav</path>
+            <mode>once</mode>
+            <type>avionics</type>
+            <condition>
+                <not><property>gear/gear[2]/wow</property></not>
+                <property>f16/avionics/bingo</property>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
+            </volume>
+        </betty>
+        <betty>
+            <name>alow</name>
+            <path>Aircraft/f16/Sounds/betty/altitude.wav</path>
+            <mode>once</mode>
+            <type>avionics</type>
+            <condition>
+                <not><property>gear/gear[2]/wow</property></not>
+                <equals>
+                    <property>gear/gear/position-norm</property>
+                    <value>0</value>
+                </equals>
+                <greater-than>
+                    <property>f16/settings/cara-alow</property>
+                    <property>position/altitude-agl-ft</property>
+                </greater-than>
+                <property>f16/avionics/cara-on</property>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
+            </volume>
+        </betty>
+        <betty>
+            <name>msl-floor</name>
+            <path>Aircraft/f16/Sounds/betty/altitude.wav</path>
+            <mode>once</mode>
+            <type>avionics</type>
+            <condition>
+                <not><property>gear/gear[2]/wow</property></not>
+                <greater-than>
+                    <property>instrumentation/altimeter/indicated-altitude-ft</property>
+                    <property>f16/settings/msl-floor</property>
+                </greater-than>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
+            </volume>
+        </betty>
+        <betty>
+            <name>msl-floor2</name>
+            <path>Aircraft/f16/Sounds/betty/altitude.wav</path>
+            <mode>once</mode>
+            <type>avionics</type>
+            <condition>
+                <not><property>gear/gear[2]/wow</property></not>
+                <greater-than>
+                    <property>f16/settings/msl-floor</property>
+                    <property>instrumentation/altimeter/indicated-altitude-ft</property>
+                </greater-than>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
+            </volume>
+        </betty>
+        <betty>
+            <name>caution</name>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/betty/caution.wav</path>
+            <condition>
+                    <not><property>gear/gear[2]/wow</property></not>
+                    <property>f16/avionics/caution/master</property>
+                    <greater-than>
+                      <property>fdm/jsbsim/elec/bus/batt-1</property>
+                      <value>20</value>
+                    </greater-than>
+            </condition>
+            <delay-sec>7</delay-sec>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
+            </volume>
+        </betty>
+        <betty>
+            <name>warning</name>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/betty/warning.wav</path>
+            <condition>
+                <not><property>gear/gear[2]/wow</property></not>
+                <or>
+                    <and><!-- TO LDG -->
+                        <less-than>
+                          <property>controls/gear/gear-down</property>
+                          <value>1</value>
+                        </less-than>
+                        <less-than>
+                          <property>position/altitude-agl-ft</property>
+                          <value>10000</value>
+                        </less-than>
+                        <less-than>
+                          <property>velocities/airspeed-kt</property>
+                          <value>190</value>
+                        </less-than>
+                        <greater-than>
+                          <property>velocities/speed-down-fps</property>
+                          <value>4.17</value>
+                        </greater-than>
+                    </and>
+                    <and><!-- ENGINE -->
+                        <greater-than>
+                            <property>fdm/jsbsim/elec/bus/batt-1</property>
+                            <value>20</value>
+                        </greater-than>
+                        <not>
+                            <property>engines/engine[0]/running</property>
+                        </not>
+                    </and>
+                    <and><!-- HYD OIL PRESS -->
+                        <greater-than><property>fdm/jsbsim/elec/bus/batt-1</property><value>20</value></greater-than>
+                        <or>
+                            <less-than>
+                              <property>fdm/jsbsim/systems/hydraulics/sysa-psi</property>
+                              <value>2000</value>
+                            </less-than>
+                            <less-than>
+                              <property>fdm/jsbsim/systems/hydraulics/sysb-psi</property>
+                              <value>2000</value>
+                            </less-than>
+                        </or>
+                    </and>
+                </or>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
+            </condition>
+            <delay-sec>1.5</delay-sec>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
+            </volume>
+        </betty>
+        <!--avionics>
+            <name>Avionics too low to be heard, so disabled it. Also it loops badly.</name>
+            <path>Sounds/avionics-400Hz.wav</path>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <condition>
+                <property>f16/avionics/power-ufc</property>
+                <or>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                        <value>20</value>
+                    </greater-than>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                        <value>20</value>
+                    </greater-than>
+                </or>
+            </condition>
+            <volume>
+                <property>/sim/current-view/internal</property>
+                <factor>0.04</factor>
+            </volume>
+        </avionics-->
+        <adi>
+            <name>ADI startup</name>
+            <path>Aircraft/f16/Sounds/Timi/f16-battery.wav</path>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <condition>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-2</property>
+                    <value>20</value>
+                </greater-than>
+                <not>
+                    <property>engines/engine/running</property>
+                </not>
+            </condition>
+            <volume>
+                <property>/sim/current-view/internal</property>
+                <factor>0.3</factor>
+            </volume>
+        </adi>
+        <boom-report>
+            <name>boom-report</name>
+            <mode>once</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/caution.wav</path>
+            <condition>
+                <equals>
+                    <property>systems/refuel/contact</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+                <max>1</max>
+            </volume>
+        </boom-report>
+        <boom-disc>
+            <name>boom-disc</name>
+            <mode>once</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/caution.wav</path>
+            <condition>
+                <equals>
+                    <property>systems/refuel/contact</property>
+                    <value>0</value>
+                </equals>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+                <max>1</max>
+            </volume>
+        </boom-disc>
         <stall>
-            <name>stall</name>
+            <name>stall fdm</name>
             <path>Aircraft/f16/Sounds/stall.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
@@ -2952,63 +3578,21 @@
                 </and>
             </condition>
         </stall>
-        <stall>
-            <name>gear not down</name>
-            <path>Aircraft/f16/Sounds/250hz-square.wav</path>
+        <!--stall>
+            <name>test</name>
+            <path>Aircraft/f16/Sounds/250hz-square-steady.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
-            <condition>
-                <or>
-                    <greater-than>
-                        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
-                        <value>20</value>
-                    </greater-than>
-                    <greater-than>
-                        <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
-                        <value>20</value>
-                    </greater-than>
-                </or>
-                <and>
-                    <!-- eyebrow TO LDG CONFIG warning (gears not down warning) -->
-                    <less-than>
-                        <property>controls/gear/gear-down</property>
-                        <value>1</value>
-                    </less-than>
-                    <less-than>
-                        <property>position/altitude-agl-ft</property>
-                        <value>10000</value>
-                    </less-than>
-                    <less-than>
-                        <property>velocities/airspeed-kt</property>
-                        <value>190</value>
-                    </less-than>
-                    <greater-than>
-                        <property>velocities/speed-down-fps</property>
-                        <value>4.17</value>
-                    </greater-than>
-                    <!-- 250 fpm -->
-                </and>
-            </condition>
+            <property>sim/current-view/internal</property>
             <volume>
-                <property>sim/current-view/internal</property>
-                <factor>0.3</factor>
+                <property>a</property>
+                <factor>1</factor>
+                <offset>0.0</offset>
+                <type>log</type>
             </volume>
-        </stall>
-        <!--<stall>
-			<name>test</name>
-			<path>Aircraft/f16/Sounds/250hz-square-steady.wav</path>
-			<mode>looped</mode>
-			<type>avionics</type>
-			<property>sim/current-view/internal</property>
-			<volume>
-				<property>a</property>
-				<factor>1</factor>
-				<offset>0.0</offset>
-				<type>log</type>
-			</volume>
-		</stall>-->
+        </stall-->
         <stall>
-            <name>lowspeed</name>
+            <name>lowspeed auth</name>
             <path>Aircraft/f16/Sounds/250hz-square-steady.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
@@ -3065,7 +3649,7 @@
             </volume>
         </stall>
         <stall>
-            <name>AoA 1hz</name>
+            <name>AoA 1hz auth</name>
             <path>Aircraft/f16/Sounds/800hz-square.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
@@ -3102,7 +3686,7 @@
             </volume>
         </stall>
         <stall>
-            <name>AoA steady</name>
+            <name>AoA steady auth</name>
             <path>Aircraft/f16/Sounds/800hz-square-steady.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
@@ -3134,201 +3718,6 @@
                 <factor>0.3</factor>
             </volume>
         </stall>
-        <impact>
-            <name>betty</name>
-            <path>Aircraft/f16/Sounds/betty/combined.wav</path>
-            <mode>looped</mode>
-            <type>avionics</type>
-            <condition>
-                <property>controls/test/test-panel/mal-ind-lts</property>
-            </condition>
-            <volume>
-                <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-        </impact>
-        <!-- CRASH -->
-        <impact>
-            <name>pullUp</name>
-            <path>Aircraft/f16/Sounds/betty/pullup.wav</path>
-            <mode>looped</mode>
-            <type>avionics</type>
-            <condition>
-                <and>
-                    <greater-than>
-                        <property>instrumentation/radar/time-till-crash</property>
-                        <value>0</value>
-                    </greater-than>
-                    <less-than>
-                        <property>instrumentation/radar/time-till-crash</property>
-                        <value>8</value>
-                    </less-than>
-                </and>
-            </condition>
-            <volume>
-                <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
-                <factor>0.05</factor>
-            </volume>
-        </impact>
-        <bingo>
-            <name>bingo</name>
-            <path>Aircraft/f16/Sounds/betty/bingo.wav</path>
-            <mode>once</mode>
-            <type>avionics</type>
-            <condition>
-                <property>f16/avionics/bingo</property>
-            </condition>
-            <volume>
-                <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
-                <factor>0.05</factor>
-            </volume>
-        </bingo>
-        <alow>
-            <name>alow</name>
-            <path>Aircraft/f16/Sounds/betty/altitude.wav</path>
-            <mode>once</mode>
-            <type>avionics</type>
-            <condition>
-                <equals>
-                    <property>gear/gear/position-norm</property>
-                    <value>0</value>
-                </equals>
-                <greater-than>
-                    <property>f16/settings/cara-alow</property>
-                    <property>position/altitude-agl-ft</property>
-                </greater-than>
-                <property>f16/avionics/cara-on</property>
-            </condition>
-            <volume>
-                <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
-                <factor>0.05</factor>
-            </volume>
-        </alow>
-        <msl>
-            <name>msl-floor</name>
-            <path>Aircraft/f16/Sounds/betty/altitude.wav</path>
-            <mode>once</mode>
-            <type>avionics</type>
-            <condition>
-                <greater-than>
-                    <property>instrumentation/altimeter/indicated-altitude-ft</property>
-                    <property>f16/settings/msl-floor</property>
-                </greater-than>
-            </condition>
-            <volume>
-                <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
-                <factor>0.05</factor>
-            </volume>
-        </msl>
-        <msl>
-            <name>msl-floor2</name>
-            <path>Aircraft/f16/Sounds/betty/altitude.wav</path>
-            <mode>once</mode>
-            <type>avionics</type>
-            <condition>
-                <greater-than>
-                    <property>f16/settings/msl-floor</property>
-                    <property>instrumentation/altimeter/indicated-altitude-ft</property>
-                </greater-than>
-            </condition>
-            <volume>
-                <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
-                <factor>0.05</factor>
-            </volume>
-        </msl>
-        <avionics>
-            <name>Avionics</name>
-            <path>Sounds/avionics-400Hz.wav</path>
-            <mode>looped</mode>
-            <type>avionics</type>
-            <condition>
-                <property>f16/avionics/power-ufc</property>
-                <or>
-                    <greater-than>
-                        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
-                        <value>20</value>
-                    </greater-than>
-                    <greater-than>
-                        <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
-                        <value>20</value>
-                    </greater-than>
-                </or>
-            </condition>
-            <volume>
-                <property>/sim/current-view/internal</property>
-                <factor>0.04</factor>
-            </volume>
-        </avionics>
-        <altimeter>
-            <name>altimeter-vibrator</name>
-            <path>Sounds/Timi/f16-battery.wav</path>
-            <mode>looped</mode>
-            <type>avionics</type>
-            <condition>
-                <greater-than>
-                    <property>fdm/jsbsim/elec/bus/batt-2</property>
-                    <value>20</value>
-                </greater-than>
-            </condition>
-            <volume>
-                <property>/sim/current-view/internal</property>
-                <factor>0.09</factor>
-            </volume>
-        </altimeter>
-        <boom-report>
-            <name>boom-report</name>
-            <mode>once</mode>
-            <type>avionics</type>
-            <path>Aircraft/f16/Sounds/caution.wav</path>
-            <condition>
-                <equals>
-                    <property>systems/refuel/contact</property>
-                    <value>1</value>
-                </equals>
-            </condition>
-            <volume>
-                <property>sim/current-view/internal</property>
-                <factor>1</factor>
-                <max>1</max>
-            </volume>
-        </boom-report>
-        <boom-disc>
-            <name>boom-disc</name>
-            <mode>once</mode>
-            <type>avionics</type>
-            <path>Aircraft/f16/Sounds/caution.wav</path>
-            <condition>
-                <equals>
-                    <property>systems/refuel/contact</property>
-                    <value>0</value>
-                </equals>
-            </condition>
-            <volume>
-                <property>sim/current-view/internal</property>
-                <factor>1</factor>
-                <max>1</max>
-            </volume>
-        </boom-disc>
         
         
         
@@ -3381,20 +3770,23 @@
             <type>avionics</type>
             <path>Aircraft/f16/Sounds/betty/lock.wav</path>
             <condition>
-                <property>sim/current-view/internal</property>
                 <property>payload/armament/aim-9/sound-on-off</property>
                 <equals>
                     <property>payload/armament/aim-9/sound-volume</property>
-                    <value>0.25</value>
+                    <value>0.50</value>
                 </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
             <volume>
                 <property>sim/current-view/internal</property>
                 <factor>1</factor>
             </volume>
             <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
-                <factor>0.05</factor>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
             </volume>
         </lock-tone>
         <lock-tone>
@@ -3408,6 +3800,10 @@
                     <property>payload/armament/aim-7/sound-volume</property>
                     <value>1</value>
                 </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
             <!--<pitch>
                 <factor>1.8</factor>
@@ -3418,8 +3814,8 @@
                 <factor>1</factor>
             </volume>
             <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
-                <factor>0.05</factor>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
             </volume>
         </lock-tone>
         <lock-tone>
@@ -3432,7 +3828,10 @@
                 <equals>
                     <property>payload/armament/aim-120/sound-volume</property>
                     <value>1</value>
-                </equals>
+                </equals><greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
             <!--<pitch>
                 <factor>1.8</factor>
@@ -3443,8 +3842,8 @@
                 <factor>1</factor>
             </volume>
             <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
-                <factor>0.05</factor>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
             </volume>
         </lock-tone>
         <lock-tone>
@@ -3458,6 +3857,10 @@
                     <property>payload/armament/agm-65/sound-volume</property>
                     <value>1</value>
                 </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
             <!--<pitch>
                 <factor>1.8</factor>
@@ -3468,8 +3871,8 @@
                 <factor>1</factor>
             </volume>
             <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
-                <factor>0.05</factor>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
             </volume>
         </lock-tone>
         <lock-tone>
@@ -3483,6 +3886,10 @@
                     <property>payload/armament/agm-84/sound-volume</property>
                     <value>1</value>
                 </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
             <!--<pitch>
                 <factor>1.8</factor>
@@ -3493,8 +3900,8 @@
                 <factor>1</factor>
             </volume>
             <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
-                <factor>0.05</factor>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
             </volume>
         </lock-tone>
         <lock-tone>
@@ -3508,6 +3915,10 @@
                     <property>payload/armament/agm-88/sound-volume</property>
                     <value>1</value>
                 </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
             <!--<pitch>
                 <factor>1.8</factor>
@@ -3518,8 +3929,8 @@
                 <factor>1</factor>
             </volume>
             <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
-                <factor>0.05</factor>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
             </volume>
         </lock-tone>
         <lock-tone>
@@ -3533,6 +3944,10 @@
                     <property>payload/armament/agm-119/sound-volume</property>
                     <value>1</value>
                 </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
             <!--<pitch>
                 <factor>1.8</factor>
@@ -3543,8 +3958,8 @@
                 <factor>1</factor>
             </volume>
             <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
-                <factor>0.05</factor>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
             </volume>
         </lock-tone>
         <lock-tone>
@@ -3558,6 +3973,10 @@
                     <property>payload/armament/agm-154a/sound-volume</property>
                     <value>1</value>
                 </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
             <!--<pitch>
                 <factor>1.8</factor>
@@ -3568,8 +3987,8 @@
                 <factor>1</factor>
             </volume>
             <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
-                <factor>0.05</factor>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
             </volume>
         </lock-tone>
         <lock-tone>
@@ -3583,6 +4002,10 @@
                     <property>payload/armament/agm-158/sound-volume</property>
                     <value>1</value>
                 </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
             <!--<pitch>
                 <factor>1.8</factor>
@@ -3593,8 +4016,8 @@
                 <factor>1</factor>
             </volume>
             <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
-                <factor>0.05</factor>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
             </volume>
         </lock-tone>
         
@@ -4288,11 +4711,11 @@
             <path>Aircraft/f16/Sounds/Effects/cmds-release.wav</path>
             <condition>
                 <property>ai/submodels/submodel[0]/flare-release-snd</property>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
             </condition>
-            <volume>
-                <property>fdm/jsbsim/elec/bus/batt-1</property>
-                <factor>0.10</factor>
-            </volume>
         </flare-release>
         
         <!-- ********************************************************************************* -->

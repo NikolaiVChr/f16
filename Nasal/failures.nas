@@ -118,6 +118,7 @@ var loop = func {
         #print(sys[1]~" "~sys[2]);
     }
     fail_list["eng"][2] = !FailureMgr.get_failure_level("engines/engine");
+    loop_caution();
     settimer(loop,1);
 }
 
@@ -175,5 +176,85 @@ var f_ack = func {
         }
     }
 }
+
+
+var caution_ignore = {};
+
+var caution = func (node) {
+    var path = node.getPath();
+    var value = node.getValue();
+    var ignore = caution_ignore[path];
+    if (ignore == nil) {
+        ignore = 0;
+        if (value and !getprop("controls/test/test-panel/mal-ind-lts")) {#TODO the check for MAL IND LTS here is not ideal. What if an error occurs while it is on?
+            caution_ignore[path] = 0;
+        }
+    }
+    if (!value) {
+        delete(caution_ignore,path);
+    }
+    update_master();
+};
+
+var master_caution = func {
+    if (getprop("controls/test/test-panel/mal-ind-lts")) {
+        return;
+    }
+    foreach(key;keys(caution_ignore)) {
+        if (key != "/f16/avionics/caution/elec-sys") {
+            caution_ignore[key] = 1;
+        }
+    }
+    update_master();
+};
+
+var elec_caution_reset = func {
+    if (getprop("f16/avionics/caution/elec-sys")) {
+        caution_ignore["/f16/avionics/caution/elec-sys"] = 1;
+    }
+    update_master();
+}
+
+var update_master = func {
+    var new = 0;
+    foreach(key;keys(caution_ignore)) {
+        if (caution_ignore[key] == 0) {
+            new = 1;
+        }
+    }
+    setprop("f16/avionics/caution/master", new);
+};
+
+var loop_caution = func {# TODO: unlit the caution lights except elec-sys when master is pressed.
+    var batt2 = getprop("fdm/jsbsim/elec/bus/batt-2") >= 20;
+    var test  = getprop("controls/test/test-panel/mal-ind-lts");
+    setprop("f16/avionics/caution/stores-config",     test or (batt2 and ((getprop("f16/stores-cat")>1 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III") < 1) or (getprop("f16/stores-cat")==1 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III") == 1))));
+    setprop("f16/avionics/caution/seat-not-armed",    test or (batt2 and !getprop("controls/seat/ejection-safety-lever")));
+    setprop("f16/avionics/caution/oxy-low",           test or (batt2 and getprop("f16/cockpit/oxygen-liters")<0.5));
+    setprop("f16/avionics/caution/le-flaps",          test or (batt2 and (!getprop("f16/avionics/le-flaps-switch") or getprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains"))));
+    setprop("f16/avionics/caution/hook",              test or (batt2 and getprop("fdm/jsbsim/systems/hook/tailhook-cmd-norm")));
+    setprop("f16/avionics/caution/fwd-fuel-low",      test or (batt2 and getprop("consumables/fuel/tank[0]/level-lbs")<400));
+    setprop("f16/avionics/caution/aft-fuel-low",      test or (batt2 and getprop("consumables/fuel/tank[1]/level-lbs")<400));
+    setprop("f16/avionics/caution/elec-sys",          test or (batt2 and getprop("fdm/jsbsim/elec/bus/light/elec-sys")));
+    setprop("f16/avionics/caution/cabin-press",       test or (batt2 and getprop("f16/cockpit/pressure-ft")>27000));
+    setprop("f16/avionics/caution/adc",               test or (batt2 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains")));
+    setprop("f16/avionics/caution/equip-hot",         test or (batt2 and (!getprop("controls/ventilation/airconditioning-source") and getprop("f16/avionics/power-ufc-warm"))));
+    setprop("f16/avionics/caution/overheat",          test or (batt2 and !getprop("damage/fire/serviceable")));
+    setprop("f16/avionics/caution/avionics",          test or (batt2 and (!getprop("instrumentation/hud/serviceable") or !getprop("instrumentation/radar/serviceable") or !getprop("instrumentation/rwr/serviceable") or !getprop("instrumentation/tacan/serviceable"))));
+};
+
+setlistener("f16/avionics/caution/stores-config",caution,0,0);
+setlistener("f16/avionics/caution/seat-not-armed",caution,0,0);
+setlistener("f16/avionics/caution/oxy-low",caution,0,0);
+setlistener("f16/avionics/caution/le-flaps",caution,0,0);
+setlistener("f16/avionics/caution/hook",caution,0,0);
+setlistener("f16/avionics/caution/fwd-fuel-low",caution,0,0);
+setlistener("f16/avionics/caution/aft-fuel-low",caution,0,0);
+setlistener("f16/avionics/caution/elec-sys",caution,0,0);
+setlistener("f16/avionics/caution/cabin-press",caution,0,0);
+setlistener("f16/avionics/caution/adc",caution,0,0);
+setlistener("f16/avionics/caution/equip-hot",caution,0,0);
+setlistener("f16/avionics/caution/overheat",caution,0,0);
+setlistener("f16/avionics/caution/avionics",caution,0,0);
 
 loop();

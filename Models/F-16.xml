@@ -224,6 +224,24 @@
    <z>0.0</z>
   </axis>
  </animation>
+ 
+ <animation>
+    <type>spin</type>
+    <object-name>FanRCentre</object-name>
+    <object-name>FanR</object-name>
+    <property>engines/engine[0]/n1</property>
+    <factor>100</factor>
+    <center>
+        <x-m>0.407444</x-m>
+        <y-m>-0.00719</y-m>
+        <z-m>0.022371</z-m>
+    </center>
+    <axis>
+        <x>1</x>
+        <y>0</y>
+        <z>0</z>
+    </axis>
+</animation>
 
   <animation>
   <type>scale</type>

@@ -47,6 +47,11 @@
                 <splash type="bool">true</splash>
                 <path>gui/splash/yf16-2.png</path>
             </preview>
+            <preview>
+                <type>exterior</type>
+                <splash type="bool">true</splash>
+                <path>gui/splash/yf16-3.png</path>
+            </preview>
   </previews>
 
   
