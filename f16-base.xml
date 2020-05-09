@@ -1844,6 +1844,7 @@ There is also small changes in tail for different variants with and without brak
             <running type="bool">true</running>
             <ftit-degc type="double">0</ftit-degc>
             <egt-degf type="double">0</egt-degf>
+            <thrust_lb type="double">0</thrust_lb>
         </engine>
     </engines>
     <consumables>
