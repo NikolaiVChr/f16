@@ -504,7 +504,7 @@
         <condition>
                 <less-than-equals>
                     <property>sim/variant-id</property>
-                    <value>2</value>
+                    <value>3</value>
                 </less-than-equals>
         </condition>
         <object-name>plrt</object-name>
