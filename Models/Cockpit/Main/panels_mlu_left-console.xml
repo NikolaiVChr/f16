@@ -1278,34 +1278,7 @@
     </action>
    </animation> 
    
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_EPU</object-name>
-    <object-name>SW_EPU_COVER</object-name>
-    <action>
-      <button>0</button>
-      <repeatable>false</repeatable>
-      <binding>
-        <command>property-cycle</command>
-        <property>fdm/jsbsim/elec/switches/epu</property>
-        <value type="int">0</value>
-        <value type="int">1</value>
-        <value type="int">2</value>
-        <wrap>true</wrap>
-      </binding>
-      <binding>
-        <command>nasal</command>
-        <script>
-          if (getprop("fdm/jsbsim/elec/switches/epu")==1) {
-            setprop("fdm/jsbsim/elec/switches/epu-cover",0);
-          } else {
-            setprop("fdm/jsbsim/elec/switches/epu-cover",1);
-          }
-        </script>
-      </binding>
-    </action>
-   </animation>
+   
    
    <animation>
     <type>pick</type>
@@ -1455,7 +1428,7 @@
         <drag-direction>horizontal</drag-direction>
         <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
         <repeatable>true</repeatable>
-        <interval-sec>0.5</interval-sec>
+        <interval-sec>0.75</interval-sec>
         <factor>-40</factor>
         <offset-deg>20</offset-deg>
         <center>
@@ -1491,23 +1464,68 @@
     </animation>
   
   <animation>
-    <type>rotate</type>
-    <object-name>SW_EPU</object-name>
-    <property>fdm/jsbsim/elec/switches/epu</property>
-    <factor>20</factor>
-    <offset-deg>-20</offset-deg>
-    <center>
-      <x-m>0.401976</x-m>
-      <y-m>-0.515748</y-m>
-      <z-m>0.010365</z-m>
-    </center>
-    <axis>
-      <x>0</x>
-      <y>-1</y>
-      <z>0</z>
-    </axis>
-  </animation>
-  
+        <type>knob</type>
+        <object-name>SW_EPU</object-name>
+        <visible>true</visible>
+        <property>fdm/jsbsim/elec/switches/epu</property>
+        <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>20</factor>
+        <offset-deg>-20</offset-deg>
+        <center>
+          <x-m>0.401976</x-m>
+          <y-m>-0.515748</y-m>
+          <z-m>0.010365</z-m>
+        </center>
+        <axis>
+          <x>0</x>
+          <y>-1</y>
+          <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>fdm/jsbsim/elec/switches/epu</property>
+                <step>1</step>
+                <min>0</min>
+                <max>2</max>
+                <wrap>false</wrap>
+           </binding>
+           <binding>
+            <command>nasal</command>
+            <script>
+              if (getprop("fdm/jsbsim/elec/switches/epu")==1) {
+                setprop("fdm/jsbsim/elec/switches/epu-cover",0);
+              } else {
+                setprop("fdm/jsbsim/elec/switches/epu-cover",1);
+              }
+            </script>
+          </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>fdm/jsbsim/elec/switches/epu</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>2</max>
+                <wrap>false</wrap>
+           </binding>
+           <binding>
+            <command>nasal</command>
+            <script>
+              if (getprop("fdm/jsbsim/elec/switches/epu")==1) {
+                setprop("fdm/jsbsim/elec/switches/epu-cover",0);
+              } else {
+                setprop("fdm/jsbsim/elec/switches/epu-cover",1);
+              }
+            </script>
+      </binding>
+        </decrease>
+    </animation>
+    
   <animation>
     <type>rotate</type>
     <object-name>SW_EPU_COVER</object-name>

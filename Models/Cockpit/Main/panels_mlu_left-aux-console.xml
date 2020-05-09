@@ -151,27 +151,7 @@
     </animation>
     
     
-    <animation>
-        <type>material</type>
-        <object-name>gear_lever_light</object-name>
-        <condition>
-          <greater-than-equals>
-                <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
-                <value>20</value>
-            </greater-than-equals>
-          <not>
-            <equals>
-                <property>controls/gear/gear-down</property>
-                <property>gear/gear[0]/position-norm</property>
-            </equals>
-          </not>
-        </condition>
-        <emission>
-            <red>1</red>
-            <green>0</green>
-            <blue>0</blue>
-        </emission>
-    </animation>
+    
 
  <animation>
   <type>material</type>
@@ -275,134 +255,172 @@
 
   <!-- Landing Gear Panel -->
 
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_HOOK</object-name>
-    <action>
-     <button>0</button>
-     <repeatable>true</repeatable>
-     <binding>
-      <command>nasal</command>
-      <script>
-                f16_switches.toggleHook();
-      </script>
-     </binding>
-    </action>
-   </animation>
-
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>gear_lever</object-name>
-    <action>
-     <button>0</button>
-     <repeatable>true</repeatable>
-     <binding>
-      <command>nasal</command>
-      <script>
-                f16_switches.toggleLandingGear();
-      </script>
-     </binding>
-    </action>
-   </animation>
-
-     
-<!-- FIXME should be 3-way switch -->  
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_PARKING_BRAKE</object-name>
-    <action>
-     <button>0</button>
-     <repeatable>true</repeatable>
-     <binding>
-      <command>nasal</command>
-      <script>
-                f16_switches.toggleParkingBrake();
-      </script>
-     </binding>
-    </action>
-   </animation>
    
    <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_GND_JETT</object-name>
-    <action>
-     <button>0</button>
-     <repeatable>false</repeatable>
-     <binding>
-      <command>property-toggle</command>
+        <type>knob</type>
+        <object-name>SW_HOOK</object-name>
+        <visible>true</visible>
+        <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>50</factor>
+        <offset-deg>10</offset-deg>
+        <roll-deg>-10</roll-deg>
+        <heading-deg>7.3</heading-deg> 
+        <center>
+         <x-m>-0.249596</x-m>
+         <y-m>-0.281688</y-m>
+         <z-m>0.003061</z-m>
+        </center>
+        <axis>
+         <x>0</x>
+         <y>1</y>
+         <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
+                <step>1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+
+   
+
+     
+   
+   
+ <animation>
+        <type>knob</type>
+        <object-name>SW_GND_JETT</object-name>
+        <visible>true</visible>
         <property>f16/avionics/gnd-jett</property>
-     </binding>
-    </action>
-   </animation>
-
-
-<!-- SWITCH ANIMATIONS -->
-
-<animation>
-  <type>rotate</type>
-  <object-name>SW_GND_JETT</object-name>
-  <property>f16/avionics/gnd-jett</property>
-  <factor>-50</factor>
-  <offset-deg>25</offset-deg>
-  <roll-deg>-10</roll-deg>
-  <heading-deg>7.3</heading-deg> 
-  <center>
-   <x-m>-0.190538</x-m>
-   <y-m>-0.402386</y-m>
-   <z-m>0.002988</z-m>
-  </center>
-  <axis>
-   <x>0</x>
-   <y>1</y>
-   <z>0</z>
-  </axis>
- </animation>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>-50</factor>
+        <offset-deg>25</offset-deg>
+        <roll-deg>-10</roll-deg>
+        <heading-deg>7.3</heading-deg> 
+        <center>
+         <x-m>-0.190538</x-m>
+         <y-m>-0.402386</y-m>
+         <z-m>0.002988</z-m>
+        </center>
+        <axis>
+         <x>0</x>
+         <y>1</y>
+         <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/gnd-jett</property>
+                <step>1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/gnd-jett</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
     
 
-<animation>
-  <type>rotate</type>
-  <object-name>SW_HOOK</object-name>
-  <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
-  <factor>50</factor>
-  <offset-deg>10</offset-deg>
-  <roll-deg>-10</roll-deg>
-  <heading-deg>7.3</heading-deg> 
-  <center>
-   <x-m>-0.249596</x-m>
-   <y-m>-0.281688</y-m>
-   <z-m>0.003061</z-m>
-  </center>
-  <axis>
-   <x>0</x>
-   <y>1</y>
-   <z>0</z>
-  </axis>
- </animation>
 
-<animation>
-  <type>rotate</type>
-  <object-name>gear_lever</object-name>
-  <object-name>gear_lever_light</object-name>
-  <property>controls/gear/gear-down</property>
-  <factor>90</factor>
-  <offset-deg>-45</offset-deg>
-  <roll-deg>-10</roll-deg>
-  <heading-deg>7.3</heading-deg> 
-  <center>
-   <x-m>-0.18</x-m>
-   <y-m>-0.28</y-m>
-   <z-m>0.0</z-m>
-  </center>
-  <axis>
-   <x>0</x>
-   <y>1</y>
-   <z>0</z>
-  </axis>
- </animation>
+
+ <animation>
+        <type>knob</type>
+        <object-name>gear_lever</object-name>
+        <object-name>gear_lever_light</object-name>
+        <visible>true</visible>
+        <property>controls/gear/gear-down</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>90</factor>
+        <offset-deg>-45</offset-deg>
+        <roll-deg>-10</roll-deg>
+        <heading-deg>7.3</heading-deg> 
+        <center>
+         <x-m>-0.18</x-m>
+         <y-m>-0.28</y-m>
+         <z-m>0.0</z-m>
+        </center>
+        <axis>
+         <x>0</x>
+         <y>1</y>
+         <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/gear/gear-down</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/gear/gear-down</property>
+                <step>1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+    
+    <animation>
+        <type>material</type>
+        <object-name>gear_lever_light</object-name>
+        <condition>
+          <greater-than-equals>
+                <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                <value>20</value>
+            </greater-than-equals>
+          <not>
+            <equals>
+                <property>controls/gear/gear-down</property>
+                <property>gear/gear[0]/position-norm</property>
+            </equals>
+          </not>
+        </condition>
+        <emission>
+            <red>1</red>
+            <green>0</green>
+            <blue>0</blue>
+        </emission>
+    </animation>
  
   <animation>
         <type>knob</type>
@@ -451,21 +469,51 @@
     </animation>
 
  <animation>
-  <type>rotate</type>
-  <object-name>SW_PARKING_BRAKE</object-name>
-  <property>controls/gear/brake-parking</property>
-  <factor>40</factor>
-  <center>
-   <x-m>-0.19</x-m>
-   <y-m>-0.35</y-m>
-   <z-m>0.0</z-m>
-  </center>
-  <axis>
-   <x>0</x>
-   <y>-1</y>
-   <z>0</z>
-  </axis>
- </animation>
+        <type>knob</type>
+        <object-name>SW_PARKING_BRAKE</object-name>
+        <visible>true</visible>
+        <property>controls/gear/brake-parking</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>40</factor>
+        <center>
+         <x-m>-0.19</x-m>
+         <y-m>-0.35</y-m>
+         <z-m>0.0</z-m>
+        </center>
+        <axis>
+         <x>0</x>
+         <y>-1</y>
+         <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/gear/brake-parking</property>
+                <step>1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/gear/brake-parking</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+ 
+ 
+ 
+ 
+ 
 <!-- -35 = closed -165 = stripes -270 = dots -->
  <animation>
   <type>rotate</type>
@@ -488,20 +536,21 @@
         <type>knob</type>
         <object-name>SW_STORES_CONFIG</object-name>
         <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
-        <factor>60</factor>
-        <offset-deg>-30</offset-deg>
+        <factor>-60</factor>
+        <offset-deg>30</offset-deg>
         <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
         <center>
             <x-m>-0.14374</x-m><y-m>-0.414017</y-m><z-m>0.002988</z-m>
         </center>
         <axis>
-            <x>0</x><y>1</y><z>0</z>
+            <x>0</x><y>-1</y><z>0</z>
         </axis>
         <action>
             <binding>
                 <command>property-adjust</command>
                 <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
-                <factor>1</factor>
+                <factor>-1</factor>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
