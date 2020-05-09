@@ -687,7 +687,7 @@
         <property>f16/avionics/power-mmc</property>
         <factor>50</factor>
         <offset-deg>-25</offset-deg>
-        <drag-direction>horizontal</drag-direction>
+        <drag-direction>vertical</drag-direction>
         <center>
             <x-m>0.55436</x-m><y-m>0.49429</y-m><z-m>0.00769</z-m>
         </center>
@@ -719,7 +719,7 @@
         <property>f16/avionics/power-st-sta</property>
         <factor>50</factor>
         <offset-deg>-25</offset-deg>
-        <drag-direction>horizontal</drag-direction>
+        <drag-direction>vertical</drag-direction>
         <center>
             <x-m>0.58532</x-m><y-m>0.49429</y-m><z-m>0.00769</z-m>
         </center>
@@ -751,7 +751,7 @@
         <property>f16/avionics/power-mfd</property>
         <factor>50</factor>
         <offset-deg>-25</offset-deg>
-        <drag-direction>horizontal</drag-direction>
+        <drag-direction>vertical</drag-direction>
         <center>
             <x-m>0.61783</x-m><y-m>0.49429</y-m><z-m>0.00769</z-m>
         </center>
@@ -783,7 +783,7 @@
         <property>f16/avionics/power-ufc</property>
         <factor>50</factor>
         <offset-deg>-25</offset-deg>
-        <drag-direction>horizontal</drag-direction>
+        <drag-direction>vertical</drag-direction>
         <center>
             <x-m>0.64932</x-m><y-m>0.49429</y-m><z-m>0.00769</z-m>
         </center>
@@ -815,7 +815,7 @@
         <property>f16/avionics/power-dl</property>
         <factor>50</factor>
         <offset-deg>-25</offset-deg>
-        <drag-direction>horizontal</drag-direction>
+        <drag-direction>vertical</drag-direction>
         <center>
             <x-m>0.64932</x-m><y-m>0.44329</y-m><z-m>0.00769</z-m>
         </center>
@@ -847,7 +847,7 @@
         <property>f16/avionics/power-gps</property>
         <factor>50</factor>
         <offset-deg>-25</offset-deg>
-        <drag-direction>horizontal</drag-direction>
+        <drag-direction>vertical</drag-direction>
         <center>
             <x-m>0.61781</x-m><y-m>0.44329</y-m><z-m>0.00769</z-m>
         </center>
