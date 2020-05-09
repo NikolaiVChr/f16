@@ -3770,7 +3770,6 @@
             <type>avionics</type>
             <path>Aircraft/f16/Sounds/betty/lock.wav</path>
             <condition>
-                <property>sim/current-view/internal</property>
                 <property>payload/armament/aim-9/sound-on-off</property>
                 <equals>
                     <property>payload/armament/aim-9/sound-volume</property>

@@ -197,7 +197,7 @@ var click2 = func {
   settimer(func {setprop("f16/sound/click2",0);},0.15);
 }
 
-var click3 = func {
+var click3 = func () {
   setprop("f16/sound/click3",1);
   settimer(func {setprop("f16/sound/click3",0);},0.075);
 }
@@ -310,7 +310,7 @@ setlistener("instrumentation/comm[0]/volume", click3, nil, 0);
 setlistener("instrumentation/comm[1]/volume", click3, nil, 0);
 setlistener("instrumentation/tacan/volume", click3, nil, 0);
 setlistener("f16/avionics/msl-vol-knob", click3, nil, 0);
-setlistener("instrumentation/nav[0]/volume", click3, nil, 0);
+setlistener("f16/avionics/ils-volume", click3, nil, 0);
 setlistener("f16/avionics/rwr-volume", click3, nil, 0);
 setlistener("f16/avionics/intercom-volume", click3, nil, 0);
 setlistener("controls/lighting/lighting-panel/console-flood-knob", click3, nil, 0);
@@ -346,5 +346,6 @@ setlistener("controls/ventilation/airconditioning-source", knob, nil, 0);
 setlistener("f16/avionics/o2-switch", click3, nil, 0);
 setlistener("f16/avionics/em-no-te-switch", click3, nil, 0);
 setlistener("f16/avionics/pbg-switch", click3, nil, 0);
+setlistener("controls/flight/alt-rel-button", click1, nil, 0);
 # valid methods: button, button2, knob, knob2, clamp0, click3, lift_cover
 #                click1, click2, doubleClick, doubleClick2, scroll

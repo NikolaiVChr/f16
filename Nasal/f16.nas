@@ -1816,3 +1816,5 @@ var flexer = func {
     
   settimer(flexer,0);
 }
+
+setlistener("controls/flight/alt-rel-button", func (node) {setprop("controls/armament/trigger", node.getValue());});
