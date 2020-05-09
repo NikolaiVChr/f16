@@ -9,7 +9,7 @@
                 <owner type="string">RAAF</owner>
             </livery>
             <livery-logo>
-                <texture type="string">Liveries/standard.logos.red.png</texture>
+                <texture type="string">Liveries/Block60/logos.12787.png</texture>
             </livery-logo>
 
             <livery-patch>
