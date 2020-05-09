@@ -1242,7 +1242,7 @@ There is also small changes in tail for different variants with and without brak
                                     <value>Walker Orbit View</value>
                                 </not-equals>
                             </and>
-                     </condition>
+                    </condition>
                     <script>
                         if (getprop("payload/armament/msg")==1) {
                             screen.log.write("Speed-up disabled at the moment.");
