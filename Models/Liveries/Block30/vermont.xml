@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+    <sim>
+        <model> 
+            <livery>
+                <name type="string">Vermont National Guard</name>
+                <texture type="string">Liveries/Block30/vermont.png</texture>
+                <owner type="string">USNG</owner>
+            </livery>
+            <livery-logo>
+                <texture>Liveries/standard.logos.png</texture>
+            </livery-logo>
+            <livery-patch>
+                <texture>Liveries/patch.default.png</texture>
+            </livery-patch>
+            <livery-pod>
+                <texture>Armament/External-stores/MXU-648.png</texture>
+            </livery-pod>
+        </model>
+    </sim>
+</PropertyList>
