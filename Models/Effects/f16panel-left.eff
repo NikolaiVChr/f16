@@ -23,7 +23,7 @@
         <light-filter-one type="vec3d">0.5 0.5 0.5</light-filter-one>
         <light-filter-two type="vec3d">0.9 0.2 0.2</light-filter-two>
         <implicit-lightmap-enabled type="int">1</implicit-lightmap-enabled>
-        <implicit-lightmap-tag-color type="vec3d">1.0 1.0 1.0</implicit-lightmap-tag-color>
+        <implicit-lightmap-tag-color type="vec3d">0.87 0.9 0.91</implicit-lightmap-tag-color>
         <implicit-lightmap-emit-color type="vec3d">0.476 0.9 0.161</implicit-lightmap-emit-color>
         <implicit-lightmap-threshold-low type="float">0.1</implicit-lightmap-threshold-low>
         <implicit-lightmap-threshold-high type="float">0.7</implicit-lightmap-threshold-high>
