@@ -120,7 +120,7 @@
     </animation>
 
     <!-- used to turn the display off when no power, or device powered down-->
-    <animation>
+    <!--<animation>
         <type>select</type>
         <object-name>MFDimage2</object-name>
         <condition>
@@ -138,7 +138,7 @@
                 <value>100</value>
             </greater-than-equals>
         </condition>
-    </animation>
+    </animation>-->
     <animation>
         <type>translate</type>
         <object-name>MFDButtonL1</object-name>
@@ -867,6 +867,21 @@
     <animation>
         <object-name>MFDimage2</object-name>
         <type>material</type>
+        <condition>
+            <property>controls/MFD[1]/mode</property>
+            <greater-than-equals>
+                <property>f16/avionics/power-ufc-warm</property>
+                <value>1</value>
+            </greater-than-equals>
+            <equals>
+                <property>f16/avionics/power-mfd</property>
+                <value>1</value>
+            </equals>
+            <greater-than-equals>
+                <property>fdm/jsbsim/elec/bus/ess-ac</property>
+                <value>100</value>
+            </greater-than-equals>
+        </condition>
         <emission>
             <factor-prop>f16/avionics/mfd-r-brt</factor-prop>
             <red>  1</red>
