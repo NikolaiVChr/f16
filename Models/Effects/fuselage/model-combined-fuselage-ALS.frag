@@ -113,6 +113,12 @@ uniform vec3 dirt_b_color;
 
 varying vec3 upInView;
 
+varying float   flogz;
+uniform float   fg_Fcoef;
+varying vec4 ecPosition;//Compositor
+
+float getShadowing();//Compositor
+
 float DotNoise2D(in vec2 coord, in float wavelength, in float fractionalMaxDotSize, in float dot_density);
 float Noise2D(in vec2 coord, in float wavelength);
 float shadow_func (in float x, in float y, in float noise, in float dist);
@@ -387,7 +393,8 @@ void main (void)
     vec4 ambient_color = gl_FrontMaterial.ambient * (gl_LightSource[0].ambient * gl_LightSource[0].ambient+light_ambient*light_ambient) * 2 * ((1.0-ambient_factor)+occlusion.a*ambient_factor);//combineMe //light_ambient is only moonlight
     // gl_LightModel.ambient gl_LightSource[0].ambient light_ambient
     
-    vec4 color = Diffuse * gl_FrontMaterial.diffuse + ambient_color;
+    //vec4 color = Diffuse * gl_FrontMaterial.diffuse + ambient_color;//non-compositor
+    vec4 color = Diffuse * gl_FrontMaterial.diffuse * getShadowing() + ambient_color;//Compositor
     color = clamp( color, 0.0, 1.0 );
 
     ////////////////////////////////////////////////////////////////////
@@ -495,7 +502,8 @@ void main (void)
     //color.a = alpha;//combineMe
     vec4 fragColor = vec4(color.rgb * mixedcolor.rgb, color.a);//CombineMe  + ambient_Correction.rgb
 
-    fragColor += Specular * nmap.a;
+    //fragColor += Specular * nmap.a;//non-compositor
+    fragColor.rgb += Specular.rgb * nmap.a * getShadowing();//Compositor
 
     //////////////////////////////////////////////////////////////////////
     // BEGIN lightmap
@@ -672,15 +680,17 @@ void main (void)
     
 
 
-    fragColor.rgb = filter_combined(fragColor.rgb);
+    
     // gamma correction
     fragColor.rgb = pow(fragColor.rgb, gamma);
+    fragColor.rgb = filter_combined(fragColor.rgb);
     fragColor.rgb = mix(hazeColor +secondary_light * fog_backscatter(mvisibility), fragColor.rgb,transmission);
     fragColor.rgb = max(gl_FrontMaterial.emission.rgb * texel.rgb, fragColor.rgb);
     fragColor.a = gl_FrontMaterial.diffuse.a * texel.a;//combineMe 
-    gl_FragColor = fragColor;
+    gl_FragColor = clamp(fragColor,0,1);
     
     // test stuff
     //float c = max(0,dot(up, N));
     //gl_FragColor.rgb=vec3(c,c,c);
+    gl_FragDepth = log2(flogz) * fg_Fcoef * 0.5;
 }

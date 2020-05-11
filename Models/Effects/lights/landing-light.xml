@@ -2,7 +2,10 @@
 
 <PropertyList>
   <path>Models/Effects/procedural_light.ac</path>
-
+<animation>
+      <type>noshadow</type>
+      <object-name>procedural_light</object-name>
+  </animation> 
   <effect>
     <inherits-from>Aircraft/f16/Models/Effects/lights/landing-light</inherits-from>
     <object-name>procedural_light</object-name>

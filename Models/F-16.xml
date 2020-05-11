@@ -336,7 +336,15 @@
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
           <transparent type="int">1</transparent>
-          <rendering-hint>transparent</rendering-hint>
+          <render-bin>
+            <bin-number>111</bin-number>
+            <bin-name>DepthSortedBin</bin-name>
+          </render-bin>
+          <!--<blend>
+              <active>1</active>
+              <source-alpha>one-minus-src-alpha</source-alpha>
+              <destination>zero</destination>
+          </blend>-->
       </parameters>
       <!-- logos -->
       <object-name>VstabBandLeftAft</object-name>
@@ -355,6 +363,30 @@
       <object-name>FuselageLogoRight</object-name>
       <object-name>FuselageLogoLeft</object-name>
   </effect>
+  
+  <animation>
+      <type>noshadow</type>
+      <!-- logos -->
+      <object-name>VstabBandLeftAft</object-name>
+      <object-name>VstabBandLeftFront</object-name>
+      <object-name>VstabBandRightAft</object-name>
+      <object-name>VstabBandRightFront</object-name>
+      <object-name>VstabLogoLeftBottom</object-name>
+      <object-name>VstabLogoLeftTop</object-name>
+      <object-name>VstabLogoRightBottom</object-name>
+      <object-name>VstabLogoRightTop</object-name>
+      <object-name>WinglogoLeftTop</object-name>
+      <object-name>WinglogoRightBottom</object-name>
+      <object-name>WinglogoRightTop</object-name>
+      <object-name>Rect</object-name>
+      <object-name>LogoPilotRight</object-name>
+      <object-name>FuselageLogoRight</object-name>
+      <object-name>FuselageLogoLeft</object-name>
+      <object-name>CanopyForwardOutside</object-name>
+      <object-name>CanopyBackOutside</object-name>
+      <object-name>CanopyForwardInside</object-name>
+      <object-name>CanopyBackInside</object-name>
+  </animation>
   
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
@@ -378,6 +410,22 @@
           <snow-enabled type="int">0</snow-enabled>
           <reflection-enabled type="int">1</reflection-enabled>
           <reflection-correction type="float">-0.45</reflection-correction>
+          <!--<blend>
+              <active>1</active>
+              <source>one</source>
+              <destination>zero</destination>
+          </blend>
+          <alpha-test type="int">0</alpha-test>-->
+          <!--<render-bin>
+            <bin-number>10</bin-number>
+            <bin-name>RenderBin</bin-name>
+          </render-bin>-->
+          <!--<render-bin>
+            <bin-number>111</bin-number>
+            <bin-name>DepthSortedBin</bin-name>
+          </render-bin>-->
+          <!--<shade-model>smooth</shade-model>
+          <cull-face>back</cull-face>-->
       </parameters>
       <!-- fuselage -->
       <object-name>RadarDomeTop</object-name>

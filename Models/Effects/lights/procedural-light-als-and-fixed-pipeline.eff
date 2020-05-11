@@ -33,9 +33,9 @@
 </parameters>
 
 <technique n="4">
+  <scheme>als-lighting</scheme>
     <predicate>
       <and>
-        <property>/sim/rendering/shaders/skydome</property>
         <or>
           <less-equal>
             <value type="float">2.0</value>
