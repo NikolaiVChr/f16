@@ -21,11 +21,11 @@
   <variant-id type="int">5</variant-id>
   <tags>
       <tag>general-dynamics</tag>
+      <tag>lockheed-martin</tag>
       <tag>1970s</tag>
       <tag>1980s</tag>
       <tag>1990s</tag>
       <tag>2000s</tag>
-      <tag>yf-16</tag>
       <tag>low-wing</tag>
       <tag>tricycle</tag>
       <tag>retractable-gear</tag>
@@ -34,7 +34,7 @@
       <tag>hud</tag>
       <tag>refuel</tag>
       <tag>supersonic</tag>
-      <tag>tail-hook</tag>
+      <tag>prototype</tag>
     </tags>
 
   <startup>

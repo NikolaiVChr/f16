@@ -21,8 +21,8 @@
   <variant-id type="int">6</variant-id>
   <variant-of>f16-block-52</variant-of>
   <tags>
-      <tag>general-dynamics</tag>
-      <tag>1970s</tag>
+      <tag>lockheed-martin</tag>
+      <tag>2000s</tag>
       <tag>f-16</tag>
       <tag>low-wing</tag>
       <tag>tricycle</tag>
@@ -32,7 +32,6 @@
       <tag>hud</tag>
       <tag>refuel</tag>
       <tag>supersonic</tag>
-      <tag>prototype</tag>
     </tags>
 
   <startup>
