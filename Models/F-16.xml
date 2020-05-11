@@ -88,24 +88,7 @@
   <path>Aircraft/f16/Models/Cockpit/Main/cockpit.xml</path>
 </model>
 
-<animation>
-    <type>noshadow</type>
-    <object-name>Rect</object-name>
-    <object-name>LogoPilotRight</object-name>
-    <object-name>VstabBandLeftAft</object-name>
-    <object-name>VstabBandLeftFront</object-name>
-    <object-name>VstabBandRightAft</object-name>
-    <object-name>VstabBandRightFront</object-name>
-    <object-name>VstabLogoLeftBottom</object-name>
-    <object-name>VstabLogoLeftTop</object-name>
-    <object-name>VstabLogoRightBottom</object-name>
-    <object-name>VstabLogoRightTop</object-name>
-    <object-name>LogoPilotRight</object-name>
-    <object-name>FuselageLogoRight</object-name>
-    <object-name>FuselageLogoLeft</object-name>
-    <object-name>CanopyForwardInside</object-name>
-    <object-name>CanopyForwardOutside</object-name>
-  </animation>
+
 
 <animation>
   <type>translate</type>
@@ -388,6 +371,56 @@
       <object-name>FuselageLogoRight</object-name>
       <object-name>FuselageLogoLeft</object-name>
   </effect>
+  
+  <animation>
+    <type>noshadow</type>
+    <object-name>WinglogoLeftTop</object-name>
+    <object-name>WinglogoRightBottom</object-name>
+    <object-name>WinglogoRightTop</object-name>
+    <object-name>Rect</object-name>
+    <object-name>VstabBandLeftAft</object-name>
+    <object-name>VstabBandLeftFront</object-name>
+    <object-name>VstabBandRightAft</object-name>
+    <object-name>VstabBandRightFront</object-name>
+    <object-name>VstabLogoLeftBottom</object-name>
+    <object-name>VstabLogoLeftTop</object-name>
+    <object-name>VstabLogoRightBottom</object-name>
+    <object-name>VstabLogoRightTop</object-name>
+    <object-name>LogoPilotRight</object-name>
+    <object-name>FuselageLogoRight</object-name>
+    <object-name>FuselageLogoLeft</object-name>
+    <object-name>CanopyForwardOutside</object-name>
+    <object-name>CanopyBackOutside</object-name>
+    <object-name>CanopyForwardInside</object-name>
+    <object-name>CanopyBackInside</object-name>
+  </animation>
+  
+  <animation>
+    <type>select</type>
+      <inherits-from>Effects/model-transparent</inherits-from>
+      <condition>
+        <equals>
+          <property>/sim/rendering/rembrandt/enabled</property>
+          <value>0</value>
+        </equals>
+      </condition>
+      <!-- logos -->
+      <object-name>WinglogoLeftTop</object-name>
+      <object-name>WinglogoRightBottom</object-name>
+      <object-name>WinglogoRightTop</object-name>
+      <object-name>Rect</object-name>
+      <object-name>VstabBandLeftAft</object-name>
+      <object-name>VstabBandLeftFront</object-name>
+      <object-name>VstabBandRightAft</object-name>
+      <object-name>VstabBandRightFront</object-name>
+      <object-name>VstabLogoLeftBottom</object-name>
+      <object-name>VstabLogoLeftTop</object-name>
+      <object-name>VstabLogoRightBottom</object-name>
+      <object-name>VstabLogoRightTop</object-name>
+      <object-name>LogoPilotRight</object-name>
+      <object-name>FuselageLogoRight</object-name>
+      <object-name>FuselageLogoLeft</object-name>
+  </animation>
   
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
