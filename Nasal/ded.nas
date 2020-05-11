@@ -14,7 +14,7 @@ var callInit = func {
         "name": "DED",
         "size": [256, 128],
         "view": [256, 128],
-        "mipmapping": 1
+        "mipmapping": 0
   });
       
   canvasded.addPlacement({"node": "poly.003", "texture": "canvas.png"});
