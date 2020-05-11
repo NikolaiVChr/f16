@@ -87,7 +87,8 @@ Author: Nikolai V. Chr.
 				</color-mode>
 			</material>
 			<blend>
-				<active>
+				0
+				<!--<active>
 					<use>blend/active</use>
 				</active>
 				<source>
@@ -95,7 +96,7 @@ Author: Nikolai V. Chr.
 				</source>
 				<destination>
 					<use>blend/destination</use>
-				</destination>
+				</destination>-->
 			</blend>
 			<shade-model>
 				<use>shade-model</use>
@@ -105,7 +106,7 @@ Author: Nikolai V. Chr.
 			</cull-face>
 				<render-bin>
 					<bin-number>1</bin-number>
-					<bin-name>DepthSortedBin</bin-name>
+					<bin-name>RenderBin</bin-name>
 				</render-bin>
 			<texture-unit>
 				<unit>0</unit>
