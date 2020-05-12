@@ -330,7 +330,7 @@ var MFD_Device =
 
         obj.canvas = dev_canvas;
         dev_canvas.addPlacement({"node": model_element});
-        dev_canvas.setColorBackground(0.0,0.0,0, 0);
+        dev_canvas.setColorBackground(0.0,0.0,0, 1);
 # Create a group for the parsed elements
         obj.PFDsvg = dev_canvas.createGroup();
         var pres = canvas.parsesvg(obj.PFDsvg, "Nasal/MFD/MFD.svg");
