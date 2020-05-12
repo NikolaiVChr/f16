@@ -198,6 +198,7 @@ Author: Nikolai V. Chr.
 				   <use>blend/destination</use>
 			   </destination>
 			</blend>
+			<blend>0</blend>
 			<shade-model>
 			   <use>shade-model</use>
 			</shade-model>
@@ -406,6 +407,7 @@ Author: Nikolai V. Chr.
 					<use>blend/destination</use>
 				</destination>
 			</blend>
+			<blend>0</blend>
 			<shade-model>
 				<use>shade-model</use>
 			</shade-model>
