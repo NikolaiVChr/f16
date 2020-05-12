@@ -419,6 +419,227 @@
         </fcs_function>
         
     </channel>
+    
+    <channel name="fuel-flow" execrate="8">
+        <!--
+          Simulates an oldstyle mechanical drum digit readout. It could use a max speed on digit rotation, but I dont want it to be too complex.
+          -->
+        <fcs_function name="flow/digit-1-value">
+            <function>
+              <product>
+                <v>10</v>
+                <difference>
+                  <product>
+                      <v>0.1</v>
+                      <p>/engines/engine[0]/fuel-flow_pph</p>
+                  </product>
+                  <floor>
+                      <product>
+                          <v>0.1</v>
+                          <p>/engines/engine[0]/fuel-flow_pph</p>
+                      </product>
+                  </floor>
+                </difference>
+              </product>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="flow/digit-1">
+            <function>
+                <sum>
+                  <floor>
+                    <p>flow/digit-1-value</p>
+                  </floor>
+                  <product>
+                    <max>
+                      <v>0</v>
+                      <difference>
+                        <fraction>
+                            <p>flow/digit-1-value</p>
+                        </fraction>
+                        <v>0.9</v>
+                      </difference>
+                    </max>
+                    <v>10</v>
+                  </product>
+                </sum>
+            </function>
+            <output>/f16/cockpit/fuel-flow-digit-1</output>
+        </fcs_function>
+        
+        <fcs_function name="flow/digit-2-value">
+            <function>
+              <product>
+                <v>10</v>
+                <difference>
+                  <product>
+                      <v>0.01</v>
+                      <p>/engines/engine[0]/fuel-flow_pph</p>
+                  </product>
+                  <floor>
+                      <product>
+                          <v>0.01</v>
+                          <p>/engines/engine[0]/fuel-flow_pph</p>
+                      </product>
+                  </floor>
+                </difference>
+              </product>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="flow/digit-2">
+            <function>
+                <sum>
+                  <floor>
+                    <p>flow/digit-2-value</p>
+                  </floor>
+                  <product>
+                    <max>
+                      <v>0</v>
+                      <difference>
+                        <fraction>
+                            <p>flow/digit-2-value</p>
+                        </fraction>
+                        <v>0.99</v>
+                      </difference>
+                    </max>
+                    <v>100</v>
+                  </product>
+                </sum>
+            </function>
+            <output>/f16/cockpit/fuel-flow-digit-2</output>
+        </fcs_function>
+        
+        <fcs_function name="flow/digit-3-value">
+            <function>
+              <product>
+                <v>10</v>
+                <difference>
+                  <product>
+                      <v>0.001</v>
+                      <p>/engines/engine[0]/fuel-flow_pph</p>
+                  </product>
+                  <floor>
+                      <product>
+                          <v>0.001</v>
+                          <p>/engines/engine[0]/fuel-flow_pph</p>
+                      </product>
+                  </floor>
+                </difference>
+              </product>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="flow/digit-3">
+            <function>
+                <sum>
+                  <floor>
+                    <p>flow/digit-3-value</p>
+                  </floor>
+                  <product>
+                    <max>
+                      <v>0</v>
+                      <difference>
+                        <fraction>
+                            <p>flow/digit-3-value</p>
+                        </fraction>
+                        <v>0.999</v>
+                      </difference>
+                    </max>
+                    <v>1000</v>
+                  </product>
+                </sum>
+            </function>
+            <output>/f16/cockpit/fuel-flow-digit-3</output>
+        </fcs_function>
+        
+        <fcs_function name="flow/digit-4-value">
+            <function>
+              <product>
+                <v>10</v>
+                <difference>
+                  <product>
+                      <v>0.0001</v>
+                      <p>/engines/engine[0]/fuel-flow_pph</p>
+                  </product>
+                  <floor>
+                      <product>
+                          <v>0.0001</v>
+                          <p>/engines/engine[0]/fuel-flow_pph</p>
+                      </product>
+                  </floor>
+                </difference>
+              </product>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="flow/digit-4">
+            <function>
+                <sum>
+                  <floor>
+                    <p>flow/digit-4-value</p>
+                  </floor>
+                  <product>
+                    <max>
+                      <v>0</v>
+                      <difference>
+                        <fraction>
+                            <p>flow/digit-4-value</p>
+                        </fraction>
+                        <v>0.9999</v>
+                      </difference>
+                    </max>
+                    <v>10000</v>
+                  </product>
+                </sum>
+            </function>
+            <output>/f16/cockpit/fuel-flow-digit-4</output>
+        </fcs_function>
+        
+        <fcs_function name="flow/digit-5-value">
+            <function>
+              <product>
+                <v>10</v>
+                <difference>
+                  <product>
+                      <v>0.00001</v>
+                      <p>/engines/engine[0]/fuel-flow_pph</p>
+                  </product>
+                  <floor>
+                      <product>
+                          <v>0.00001</v>
+                          <p>/engines/engine[0]/fuel-flow_pph</p>
+                      </product>
+                  </floor>
+                </difference>
+              </product>
+            </function>
+        </fcs_function>
+        
+        <fcs_function name="flow/digit-5">
+            <function>
+                <sum>
+                  <floor>
+                    <p>flow/digit-5-value</p>
+                  </floor>
+                  <product>
+                    <max>
+                      <v>0</v>
+                      <difference>
+                        <fraction>
+                            <p>flow/digit-5-value</p>
+                        </fraction>
+                        <v>0.99999</v>
+                      </difference>
+                    </max>
+                    <v>100000</v>
+                  </product>
+                </sum>
+            </function>
+            <output>/f16/cockpit/fuel-flow-digit-5</output>
+        </fcs_function>
+        
+    </channel>
 
     <channel name="sound" execrate="8">
         

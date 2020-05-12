@@ -1845,6 +1845,7 @@ There is also small changes in tail for different variants with and without brak
             <ftit-degc type="double">0</ftit-degc>
             <egt-degf type="double">0</egt-degf>
             <thrust_lb type="double">0</thrust_lb>
+            <fuel-flow_pph type="double">0</fuel-flow_pph>
         </engine>
     </engines>
     <consumables>
