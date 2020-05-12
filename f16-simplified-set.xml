@@ -21,20 +21,30 @@
   <variant-id type="int">5</variant-id>
   <variant-of>f16-block-52</variant-of>
   <tags>
+      <tag>fighter</tag>
       <tag>general-dynamics</tag>
       <tag>1970s</tag>
       <tag>1980s</tag>
       <tag>1990s</tag>
       <tag>2000s</tag>
-      <tag>yf-16</tag>
+      <tag>coldwar</tag>
+      <tag>gulfwar1</tag>
+      <tag>gulfwar2</tag>
+      <tag>combat</tag>
       <tag>low-wing</tag>
-      <tag>tricycle</tag>
-      <tag>retractable-gear</tag>
-      <tag>single-engine</tag>
-      <tag>fighter</tag>
       <tag>hud</tag>
+      <tag>ifr</tag>
+      <tag>prototype</tag>
       <tag>refuel</tag>
+      <tag>retractable-gear</tag>
       <tag>supersonic</tag>
+      <tag>tricycle</tag>
+      <tag>afterburner</tag>
+      <tag>jet</tag>
+      <tag>single-engine</tag>
+      <tag>tail-hook</tag>
+      <tag>f-16</tag>
+      <tag>yf-16</tag>
       <tag>tail-hook</tag>
     </tags>
 

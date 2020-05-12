@@ -21,17 +21,22 @@
   <variant-id type="int">6</variant-id>
   <variant-of>f16-block-52</variant-of>
   <tags>
+      <tag>fighter</tag>
       <tag>lockheed-martin</tag>
       <tag>2000s</tag>
-      <tag>f-16</tag>
+      <tag>combat</tag>
       <tag>low-wing</tag>
-      <tag>tricycle</tag>
-      <tag>retractable-gear</tag>
-      <tag>single-engine</tag>
-      <tag>fighter</tag>
       <tag>hud</tag>
+      <tag>ifr</tag>
       <tag>refuel</tag>
+      <tag>retractable-gear</tag>
       <tag>supersonic</tag>
+      <tag>tricycle</tag>
+      <tag>afterburner</tag>
+      <tag>jet</tag>
+      <tag>single-engine</tag>
+      <tag>tail-hook</tag>
+      <tag>f-16</tag>
     </tags>
 
   <startup>
