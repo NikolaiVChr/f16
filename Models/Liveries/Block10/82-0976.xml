@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery> 
+    <name type="string">NASA F-16, 82-0976 (N516NA)</name>
+    <texture>Liveries/Block50/82-0976.png</texture>
+    
+    <owner type="string">NASA</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/standard.logos.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/patch.default.png</texture>
+  </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/Block50/pod.NASA.png</texture>
+    </livery-pod>
+  </model>
+ </sim>
+</PropertyList>
