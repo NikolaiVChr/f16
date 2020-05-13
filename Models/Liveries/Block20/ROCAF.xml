@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">ROCAF</name>
+    <texture>Liveries/Block20/ROCAF.png</texture>
+    <owner type="string">ROCAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/standard.logos.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block20/patch.default.png</texture>
+  </livery-patch>
+  </model>
+ </sim>
+</PropertyList>
