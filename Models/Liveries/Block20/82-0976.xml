@@ -4,22 +4,22 @@
  <sim>
   <model>
    <livery> 
-    <name type="string">NASA F-16, 82-0976 (N516NA)</name>
-    <texture>Liveries/Block50/82-0976.png</texture>
-    
+    <name type="string">NASA Testbed, #N816NA</name>
+    <texture>Liveries/Block20/82-0976.png</texture>
     <owner type="string">NASA</owner>
    </livery>
+
    <livery-logo>
     <texture>Liveries/standard.logos.png</texture>
    </livery-logo>
 
    <livery-patch>
       <texture>Liveries/patch.default.png</texture>
-  </livery-patch>
+   </livery-patch>
 
-  <livery-pod>
-        <texture>Liveries/Block50/pod.NASA.png</texture>
-    </livery-pod>
+   <livery-pod>
+     <texture>Liveries/Block20/pod.NASA.png</texture>
+   </livery-pod>
   </model>
  </sim>
 </PropertyList>

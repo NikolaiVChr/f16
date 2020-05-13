@@ -15,6 +15,10 @@
    <livery-patch>
       <texture>Liveries/Block20/patch.itaf.png</texture>
   </livery-patch>
+
+    <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+    </livery-pod>
   </model>
  </sim>
 </PropertyList>
