@@ -66,6 +66,23 @@ Modifications author: Nikolai V. Chr.
             </images>
             <filter>linear</filter>
           </texture>
+          
+        <a><use>rendering/aircraft/mat4-0</use></a>
+        <b><use>rendering/aircraft/mat4-1</use></b>
+        <c><use>rendering/aircraft/mat4-2</use></c>
+        <d><use>rendering/aircraft/mat4-3</use></d>
+        <e><use>rendering/aircraft/mat4-4</use></e>
+        <f><use>rendering/aircraft/mat4-5</use></f>
+        <g><use>rendering/aircraft/mat4-6</use></g>
+        <h><use>rendering/aircraft/mat4-7</use></h>
+        <i><use>rendering/aircraft/mat4-8</use></i>
+        <j><use>rendering/aircraft/mat4-9</use></j>
+        <k><use>rendering/aircraft/mat4-10</use></k>
+        <l><use>rendering/aircraft/mat4-11</use></l>
+        <m><use>rendering/aircraft/mat4-12</use></m>
+        <n><use>rendering/aircraft/mat4-13</use></n>
+        <o><use>rendering/aircraft/mat4-14</use></o>
+        <p><use>rendering/aircraft/mat4-15</use></p>
 	</parameters>
 	<!--
 		Textures:
@@ -1247,6 +1264,91 @@ Modifications author: Nikolai V. Chr.
 				   <type>float</type>
 				   <value><use>rotation-z2</use></value>
 			   </uniform>
+			   
+			   
+			   
+			   <uniform>
+				   <name>a</name>
+				   <type>float</type>
+				   <value><use>a</use></value>
+			   </uniform>
+			   <uniform>
+				   <name>b</name>
+				   <type>float</type>
+				   <value><use>b</use></value>
+			   </uniform>
+			   <uniform>
+				   <name>c</name>
+				   <type>float</type>
+				   <value><use>c</use></value>
+			   </uniform>
+			   <uniform>
+				   <name>d</name>
+				   <type>float</type>
+				   <value><use>d</use></value>
+			   </uniform>
+			   <uniform>
+				   <name>e</name>
+				   <type>float</type>
+				   <value><use>e</use></value>
+			   </uniform>
+			   <uniform>
+				   <name>f</name>
+				   <type>float</type>
+				   <value><use>f</use></value>
+			   </uniform>
+			   <uniform>
+				   <name>g</name>
+				   <type>float</type>
+				   <value><use>g</use></value>
+			   </uniform>
+			   <uniform>
+				   <name>h</name>
+				   <type>float</type>
+				   <value><use>h</use></value>
+			   </uniform>
+			   <uniform>
+				   <name>i</name>
+				   <type>float</type>
+				   <value><use>i</use></value>
+			   </uniform>
+			   <uniform>
+				   <name>j</name>
+				   <type>float</type>
+				   <value><use>j</use></value>
+			   </uniform>
+			   <uniform>
+				   <name>k</name>
+				   <type>float</type>
+				   <value><use>k</use></value>
+			   </uniform>
+			   <uniform>
+				   <name>l</name>
+				   <type>float</type>
+				   <value><use>l</use></value>
+			   </uniform>
+			   <uniform>
+				   <name>m</name>
+				   <type>float</type>
+				   <value><use>m</use></value>
+			   </uniform>
+			   <uniform>
+				   <name>n</name>
+				   <type>float</type>
+				   <value><use>n</use></value>
+			   </uniform>
+			   <uniform>
+				   <name>o</name>
+				   <type>float</type>
+				   <value><use>o</use></value>
+			   </uniform>
+			   <uniform>
+				   <name>p</name>
+				   <type>float</type>
+				   <value><use>p</use></value>
+			   </uniform>
+			   
+			   
 
 		  <!-- 			END fog include -->
 		  <!--<uniform>

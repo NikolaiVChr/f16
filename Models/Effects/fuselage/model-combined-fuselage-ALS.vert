@@ -71,6 +71,16 @@ vec2 calc_deflection(float y){
 // void	fog_Func(int type);
 ////////////////////////////
 
+mat3 rotX(in float angle)
+{
+	mat3 rotmat = mat3(
+						1.0,	0.0,		0.0,
+						0.0,	cos(angle),	-sin(angle),
+						0.0,	sin(angle),	cos(angle)
+	);
+	return rotmat;
+}
+
 mat3 rotY(in float angle)
 {
     mat3 rotmat = mat3(

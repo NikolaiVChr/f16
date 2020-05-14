@@ -96,6 +96,21 @@ var Math = {
                 a[3]*b[0]+a[4]*b[3]+a[5]*b[6], a[3]*b[1]+a[4]*b[4]+a[5]*b[7], a[3]*b[2]+a[4]*b[5]+a[5]*b[8],
                 a[6]*b[0]+a[7]*b[3]+a[8]*b[6], a[6]*b[1]+a[7]*b[4]+a[8]*b[7], a[6]*b[2]+a[7]*b[5]+a[8]*b[8]];
     },
+    
+    # multiply 2 4x4 matrices
+    multiplyMatrices4: func (a,b) {
+        me.result = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        for(var k=0; k<=12; k+=4) {
+            for(var i=0; i<4; i+=1) {
+                var bCount=0;
+                for (var j=0; j<4; j+=1) {
+                    me.result[k+i] += a[k+math.mod(j,4)] * b[bCount+math.mod(i,4)];
+                    bCount+=4;
+                }
+            }
+        }
+        return me.result;
+    },
 
     # matrix for rolling
     rollMatrix: func (roll) {
@@ -112,12 +127,28 @@ var Math = {
                 0,1,0,
                 math.sin(pitch),0,math.cos(pitch)];
     },
-
+    
     # matrix for yawing
     yawMatrix: func (yaw) {
         yaw = yaw * D2R;
         return [math.cos(yaw),-math.sin(yaw),0,
                 math.sin(yaw),math.cos(yaw),0,
+                0,0,1];
+    },
+    
+    # matrix for geo y
+    yMatrix: func (angle) {
+        angle = angle * D2R;
+        return [math.cos(angle),0,-math.sin(angle),
+                0,1,0,
+                math.sin(angle),0,math.cos(angle)];
+    },
+    
+    # matrix for geo z
+    zMatrix: func (angle) {
+        angle = angle * D2R;
+        return [math.cos(angle),math.sin(angle),0,
+               -math.sin(angle),math.cos(angle),0,
                 0,0,1];
     },
 
@@ -269,6 +300,13 @@ var Math = {
     normalize: func (v) {
       me.mag = me.magnitudeVector(v);
       return [v[0]/me.mag, v[1]/me.mag, v[2]/me.mag];
+    },
+    
+    rotationMatrix3to4: func (mat3) {
+        return [mat3[0],mat3[1],mat3[2],0,
+                mat3[3],mat3[4],mat3[5],0,
+                mat3[6],mat3[7],mat3[8],0,
+                   0,     0    ,  0    ,1];
     },
 
 # rotation matrices

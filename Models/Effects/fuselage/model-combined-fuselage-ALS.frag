@@ -8,7 +8,7 @@
 // The fuselage effect is a modified version of model-combined-deffered.
 // Modifications author: Nikolai V. Chr. 2017
 #version 120
-//#extension GL_ARB_gpu_shader5 : enable
+#extension GL_ARB_gpu_shader5 : enable
 
 varying vec3    VBinormal;
 varying vec3    VNormal;
@@ -111,6 +111,25 @@ uniform vec3 dirt_r_color;
 uniform vec3 dirt_g_color;
 uniform vec3 dirt_b_color;
 
+uniform float a;
+uniform float b;
+uniform float c;
+uniform float d;
+uniform float e;
+uniform float f;
+uniform float g;
+uniform float h;
+uniform float i;
+uniform float j;
+uniform float k;
+uniform float l;
+uniform float m;
+uniform float n;
+uniform float o;
+uniform float p;
+uniform mat4 osg_ViewMatrixInverse;
+uniform mat4 osg_ViewMatrix;
+
 varying vec3 upInView;
 
 float DotNoise2D(in vec2 coord, in float wavelength, in float fractionalMaxDotSize, in float dot_density);
@@ -141,6 +160,23 @@ float light_func (in float x, in float a, in float b, in float c, in float d, in
 
 void main (void)
 {
+    mat4 WorldAircraftMatrix = mat4(vec4(a,e,i,m),vec4(b,f,j,n),vec4(c,g,k,o),vec4(d,h,l,p));//column major
+    //vec4 vertex = vec4(vertVec,1.0);//view
+    
+    //vec4 vertex = normalize(inverse(WorldAircraftMatrix)*(osg_ViewMatrixInverse*(gl_ModelViewMatrix*vec4(0.0,0.0,1.0,0.0))));//somewhere on X
+    //vec4 vertex = osg_ViewMatrix*(WorldAircraftMatrix*vec4(0.0,0.0,1.0,0.0));//
+    vec4 vertex = osg_ViewMatrix*(WorldAircraftMatrix*vec4(0.0,0.0,0.0,1.0));//
+    
+    //vec4 nose = vec4(4.84256, 0, 3.191,1);// top of vtail  (+y,)
+    vec4 nose = gl_ModelViewMatrix* vec4(rawpos,1);//
+    
+    gl_FragColor = clamp(vec4(distance(vertex.xyz,nose.xyz)/5,distance(vertex.xyz,nose.xyz)/5,distance(vertex.xyz,nose.xyz)/5,1),0,1);
+    //gl_FragColor = clamp(vec4(vertex.z>0?1.0:0.0,vertex.z>0?1.0:0.0,vertex.z>0?1.0:0.0,1.0),0.0,1.0);
+    //  -2212544 -4580073 3837507
+    //  - - +
+    return;
+    
+    
     vec3 gamma      = vec3(1.0/2.2);// standard monitor gamma correction
     vec3 gammaInv   = vec3(2.2);
     vec4 texel      = texture2D(BaseTex, gl_TexCoord[0].st);
