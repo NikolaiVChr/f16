@@ -4,9 +4,9 @@
  <sim>
   <model>
    <livery>
-    <name type="string">ROCAF 455TFW #6071</name>
-    <texture>Liveries/Block20/ROCAF.png</texture>
-    <owner type="string">ROCAF</owner>
+    <name type="string">RoCAF 455TFW, #6071</name>
+    <texture>Liveries/Block20/93-0802.png</texture>
+    <owner type="string">RoCAF</owner>
    </livery>
    <livery-logo>
     <texture>Liveries/standard.logos.png</texture>
@@ -15,6 +15,10 @@
    <livery-patch>
       <texture>Liveries/Block20/patch.default.png</texture>
   </livery-patch>
+
+  <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+    </livery-pod>
   </model>
  </sim>
 </PropertyList>
