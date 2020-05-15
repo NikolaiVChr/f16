@@ -453,7 +453,9 @@
     
     <hrule/>
     
-    <button>
+    <group>
+		<layout>hbox</layout>
+    	<button>
 			<legend>Load Left kneeboard</legend>
 			<binding>
 				<command>nasal</command>
@@ -461,9 +463,20 @@
 					knee.get_knee_file_gui_l();
 				]]></script>
 			</binding>
-	</button>
-	
-	<button>
+		</button>
+		<checkbox>
+			<label>Visible</label>
+			<halign>center</halign>
+			<live>true</live>
+			<property>f16/cockpit/kneeboard-left-visible</property>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+		</checkbox>
+	</group>
+	<group>
+		<layout>hbox</layout>
+		<button>
 			<legend>Load Right kneeboard</legend>
 			<binding>
 				<command>nasal</command>
@@ -471,6 +484,16 @@
 					knee.get_knee_file_gui_r();
 				]]></script>
 			</binding>
-	</button>
+		</button>
+		<checkbox>
+			<label>Visible</label>
+			<halign>center</halign>
+			<live>true</live>
+			<property>f16/cockpit/kneeboard-right-visible</property>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+		</checkbox>
+	</group>
 
 </PropertyList>

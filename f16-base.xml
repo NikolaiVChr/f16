@@ -3478,6 +3478,8 @@ value. 18000=standard US transition altitude -->
             <oxygen-liters type="double">5.0</oxygen-liters>
             <oxygen-minutes type="double">10000</oxygen-minutes>
             <hydrazine-minutes type="double">10</hydrazine-minutes>
+            <kneeboard-left-visible type="bool">false</kneeboard-left-visible>
+            <kneeboard-right-visible type="bool">false</kneeboard-right-visible>
         </cockpit>
         <stores>
             <tgp-mounted type="bool">false</tgp-mounted>
