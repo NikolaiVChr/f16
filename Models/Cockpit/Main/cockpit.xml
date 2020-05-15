@@ -78,14 +78,44 @@
  </model>
  
  <model>
-  <name>knee</name>
+  <name>knee1</name>
   <path>Aircraft/f16/Models/Cockpit/pilot/kneeboard-left.xml</path>
  </model>
  
  <model>
-  <name>knee</name>
+  <name>knee2</name>
   <path>Aircraft/f16/Models/Cockpit/pilot/kneeboard-right.xml</path>
  </model>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>knee1</object-name>
+  <object-name>knee2</object-name>
+  <condition>
+    <and>
+      <not>
+          <property>f16/done</property>
+      </not>
+      <property>sim/current-view/internal</property><!-- without a leading slash this property wont exist over MP, and so will always default to not internal -->
+      <not>
+        <or>
+          <equals>
+            <property>sim/current-view/name</property>
+            <value type="string">GoPro #1 View</value>
+          </equals>
+          <equals>
+            <property>sim/current-view/name</property>
+            <value type="string">GoPro #2 View</value>
+          </equals>
+          <equals>
+            <property>sim/current-view/name</property>
+            <value type="string">GoPro #3 View</value>
+          </equals>
+        </or>
+      </not>
+    </and>
+  </condition>
+ </animation>
 
  <animation>
   <type>select</type>
