@@ -3475,6 +3475,8 @@ value. 18000=standard US transition altitude -->
             <enable type="bool">false</enable>
         </chute>
         <cockpit>
+            <alt-gear-handle type="bool">false</alt-gear-handle>
+            <alt-gear-pneu type="bool">true</alt-gear-pneu>
             <oxygen-liters type="double">5.0</oxygen-liters>
             <oxygen-minutes type="double">10000</oxygen-minutes>
             <hydrazine-minutes type="double">10</hydrazine-minutes>

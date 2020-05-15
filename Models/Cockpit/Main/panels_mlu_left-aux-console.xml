@@ -253,6 +253,31 @@
     </action>
    </animation>
 
+
+<animation>
+    <type>pick</type>
+    <visible>true</visible>
+    <object-name>alt-gear</object-name>
+    <action>
+     <button>0</button>
+     <repeatable>false</repeatable>
+     <binding>
+      <command>property-toggle</command>
+      <property>/f16/cockpit/alt-gear-handle</property>
+     </binding>
+    </action>
+   </animation>
+   <animation>
+    <type>translate</type>
+    <object-name>alt-gear</object-name>
+    <property>/f16/cockpit/alt-gear-handle</property>
+    <factor>0.025</factor>
+    <axis>
+     <x>0</x>
+     <y>0</y>
+     <z>1</z>
+    </axis>
+   </animation>
   <!-- Landing Gear Panel -->
 
    
