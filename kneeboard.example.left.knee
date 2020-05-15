@@ -1,5 +1,12 @@
 # kneeboard example
-
+#  #           = comment
+#  *           = means draw an border around whole page
+#  text        = just text
+#  text with | = text with vertical center line
+#  +text       = bold text
+#  =           = fat line
+#  -           = thin line
+#  !img.png    = load image
 *
 nav
 -
@@ -12,14 +19,14 @@ nav
 comm
 =
 123.45 UNIV
-155.55 OOB
++155.55 OOB
 
 ils
 -
 109.9 SUMTN
 -
 ils|adf
-109.9|-
++109.9|-
 |360 DNU
 SUMTN|
 -
