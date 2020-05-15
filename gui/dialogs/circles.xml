@@ -421,6 +421,8 @@
 	<empty><stretch>1</stretch></empty>
 	<text><label>Input lat,lon and radius (nm) to get circled threat areas in HSD.</label></text>
 	
+	<hrule/>
+	
 	<text>
         <label></label>
     </text>
@@ -448,5 +450,27 @@
     </group>
     <empty><stretch>1</stretch></empty>
     <text><label>Load route file to enable lines in HSD.</label></text>
+    
+    <hrule/>
+    
+    <button>
+			<legend>Load Left kneeboard</legend>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					knee.get_knee_file_gui_l();
+				]]></script>
+			</binding>
+	</button>
+	
+	<button>
+			<legend>Load Right kneeboard</legend>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					knee.get_knee_file_gui_r();
+				]]></script>
+			</binding>
+	</button>
 
 </PropertyList>

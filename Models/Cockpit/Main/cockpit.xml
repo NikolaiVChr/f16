@@ -76,6 +76,16 @@
   <name>chair</name>
   <path>Aircraft/f16/Models/Cockpit/chair/chair.xml</path>
  </model>
+ 
+ <model>
+  <name>knee</name>
+  <path>Aircraft/f16/Models/Cockpit/pilot/kneeboard-left.xml</path>
+ </model>
+ 
+ <model>
+  <name>knee</name>
+  <path>Aircraft/f16/Models/Cockpit/pilot/kneeboard-right.xml</path>
+ </model>
 
  <animation>
   <type>select</type>
