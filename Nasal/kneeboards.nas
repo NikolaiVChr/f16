@@ -62,6 +62,8 @@ var knee_paper = {
     },
 
     update_text: func(path, data) {
+        # 0.0847m x 0.2286m
+        # 3" 1/3 x 9"
         me.notes.removeAllChildren();
         
         me.fs = 40;
@@ -75,15 +77,7 @@ var knee_paper = {
         me.x_margin = 15;
         me.center_margin = me.x_line*0.5;
         
-        me.notes.createChild("path")
-                    .moveTo(me.curr_x,me.curr_y)
-                    .vert(me.y_line)
-                    .horiz(me.x_line)
-                    .vert(-me.y_line)
-                    .horiz(-me.x_line)
-                    .setColor(me.color)
-                    .set("z-index",10)
-                    .setStrokeLineWidth(3);
+        
         foreach (var datum; data) {
             if (left(datum,1) == "#") { continue; }
             me.curr_y += me.y_delta;
@@ -102,6 +96,18 @@ var knee_paper = {
                     .setColor(me.color)
                     .set("z-index",10)
                     .setStrokeLineWidth(3);
+                continue;
+            } elsif (datum == "*") { 
+                me.notes.createChild("path")
+                    .moveTo(me.curr_x,me.curr_y)
+                    .vert(me.y_line)
+                    .horiz(me.x_line)
+                    .vert(-me.y_line)
+                    .horiz(-me.x_line)
+                    .setColor(me.color)
+                    .set("z-index",10)
+                    .setStrokeLineWidth(3);
+                me.curr_y -= me.y_delta;
                 continue;
             } elsif (datum == "") {
                 continue;
