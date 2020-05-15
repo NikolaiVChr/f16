@@ -77,7 +77,6 @@ var knee_paper = {
         me.x_margin = 15;
         me.center_margin = me.x_line*0.5;
         
-        
         foreach (var datum; data) {
             if (left(datum,1) == "#") { continue; }
             me.curr_y += me.y_delta;
@@ -99,7 +98,7 @@ var knee_paper = {
                 continue;
             } elsif (datum == "*") { 
                 me.notes.createChild("path")
-                    .moveTo(me.curr_x,me.curr_y)
+                    .moveTo(225,225)
                     .vert(me.y_line)
                     .horiz(me.x_line)
                     .vert(-me.y_line)
