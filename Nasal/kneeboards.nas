@@ -10,7 +10,7 @@ var load_knee_l = func(path) {
     var data = split("\n",string.replace(io.readfile(path),"\r",""));
     
     
-    leftK.update_text(data);
+    leftK.update_text(path,data);
 }
 
 var load_knee_r = func(path) {
@@ -22,7 +22,7 @@ var load_knee_r = func(path) {
     var data = split("\n",string.replace(io.readfile(path),"\r",""));
 
     
-    rightK.update_text(data);
+    rightK.update_text(path,data);
 }
 
 var get_knee_file_gui_l = func() {
@@ -61,7 +61,7 @@ var knee_paper = {
         return m;
     },
 
-    update_text: func(data) {
+    update_text: func(path, data) {
         me.notes.removeAllChildren();
         
         me.fs = 40;
@@ -82,6 +82,7 @@ var knee_paper = {
                     .vert(-me.y_line)
                     .horiz(-me.x_line)
                     .setColor(me.color)
+                    .set("z-index",10)
                     .setStrokeLineWidth(3);
         foreach (var datum; data) {
             if (left(datum,1) == "#") { continue; }
@@ -91,6 +92,7 @@ var knee_paper = {
                     .moveTo(me.curr_x,me.curr_y)
                     .horiz(me.x_line)
                     .setColor(me.color)
+                    .set("z-index",10)
                     .setStrokeLineWidth(1);
                 continue;
             } elsif (datum == "=") { 
@@ -98,15 +100,30 @@ var knee_paper = {
                     .moveTo(me.curr_x,me.curr_y)
                     .horiz(me.x_line)
                     .setColor(me.color)
+                    .set("z-index",10)
                     .setStrokeLineWidth(3);
                 continue;
             } elsif (datum == "") {
+                continue;
+            } elsif (left(datum,1) == "!") {
+                var p = split("/",path);
+                p[size(p)-1] = "";
+                var img = "";
+                foreach(var pp;p) {
+                    img = img ~ pp ~"/";
+                }
+                print(img~right(datum,size(datum)-1));
+                me.notes.createChild("image")
+                    .set("src", img~right(datum,size(datum)-1))
+                    .set("z-index",1);
+                me.curr_y -= me.y_delta;
                 continue;
             } elsif (find("|",datum) != -1) {
                 me.notes.createChild("path")
                     .moveTo(me.curr_x+me.center_margin,me.curr_y-me.y_delta)
                     .vert(me.y_delta*2)
                     .setColor(me.color)
+                    .set("z-index",10)
                     .setStrokeLineWidth(1);
                 me.notes.createChild("text")
                     .setTranslation(me.curr_x+me.x_margin+me.center_margin,me.curr_y)
@@ -114,6 +131,7 @@ var knee_paper = {
                     .setFont("helvetica_bold.txf")
                     .setFontSize(me.fs)
                     .setText(right(datum,size(datum)-find("|",datum)))
+                    .set("z-index",10)
                     .setColor(me.color);
                 datum = left(datum,find("|",datum));
             }
@@ -123,6 +141,7 @@ var knee_paper = {
                 .setFont("helvetica_bold.txf")
                 .setFontSize(me.fs)
                 .setText(datum)
+                .set("z-index",10)
                 .setColor(me.color);
         }
     }
