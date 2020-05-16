@@ -43,7 +43,7 @@
                 <wrap-s>clamp</wrap-s>
                 <wrap-t>clamp</wrap-t>
                 <internal-format>normalized</internal-format>
-                <image>Aircraft/f16/Models/Effects/dust2.png</image>
+                <image>Aircraft/f16/Models/Effects/dust3.png</image>
             </texture>
             <dirt-factor>0.02</dirt-factor>
         </parameters>

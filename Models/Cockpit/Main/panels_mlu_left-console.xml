@@ -212,7 +212,7 @@
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
         <parameters>
             <implicit-lightmap-threshold-low type="float">0.2</implicit-lightmap-threshold-low>
-            <implicit-lightmap-threshold-high type="float">0.7</implicit-lightmap-threshold-high>
+            <implicit-lightmap-threshold-high type="float">0.5</implicit-lightmap-threshold-high>
             <lightmap-factor n="0"><use>controls/lighting/lighting-panel/console-flood</use></lightmap-factor>
         </parameters>
         <!-- objects added to this will have all white in texture lit up green when console is high. They will also get flood light -->
@@ -895,109 +895,400 @@
   </emission>
  </animation>
 
- <!-- PICK ANIMATIONS -->
-
+   
+    <animation>
+        <type>knob</type>
+        <object-name>SW_KNOB_ENG_FEED</object-name>
+        <visible>true</visible>
+        <property>f16/engine/feed</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>-40</factor>
+        <offset-deg>40</offset-deg>
+        <center>
+          <x-m>0.498453</x-m>
+          <y-m>-0.511119</y-m>
+          <z-m>0.00765</z-m>
+        </center>
+        <axis>
+          <x>0</x>
+          <y>0</y>
+          <z>1</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/engine/feed</property>
+                <step>1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/engine/feed</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+   
+   
+   <animation>
+        <type>knob</type>
+        <object-name>SW_FLCS_TEST</object-name>
+        <visible>true</visible>
+        <property>fdm/jsbsim/elec/switches/flcs-pwr-test</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>false</repeatable>
+        <interval-sec>0.2</interval-sec>
+        <factor>20</factor>
+        <offset-deg>0</offset-deg>
+        <center>
+            <x-m>0.75385</x-m>
+            <y-m>-0.46326</y-m>
+            <z-m>0.00768</z-m>
+        </center>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-assign</command>
+                <property>fdm/jsbsim/elec/switches/flcs-pwr-test</property>
+                <value>1</value>
+            </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-assign</command>
+                <property>fdm/jsbsim/elec/switches/flcs-pwr-test</property>
+                <value>0</value>
+            </binding>
+        </decrease>
+        <release>
+            <binding>
+              <command>property-assign</command>
+              <property>fdm/jsbsim/elec/switches/flcs-pwr-test</property>
+              <value>0</value>
+            </binding>
+        </release>
+    </animation>
+  
+    <animation>
+        <type>knob</type>
+        <object-name>SW_AIR_REFUEL</object-name>
+        <visible>true</visible>
+        <property>systems/refuel/serviceable</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>40</factor>
+        <offset-deg>-20</offset-deg>
+        <center>
+          <x-m>0.464076</x-m>
+          <y-m>-0.519761</y-m>
+          <z-m>0.007677</z-m>
+        </center>
+        <axis>
+          <x>1</x>
+          <y>0</y>
+          <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>systems/refuel/serviceable</property>
+                <step>1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>systems/refuel/serviceable</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+  
+  
+  
+   <animation>
+        <type>knob</type>
+        <object-name>SW_ALT_FLAPS</object-name>
+        <visible>true</visible>
+        <property>controls/flight/flaps</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>40</factor>
+        <offset-deg>-20</offset-deg>
+        <center>
+          <x-m>0.620419</x-m>
+          <y-m>-0.459266</y-m>
+          <z-m>0.007677</z-m>
+        </center>
+        <axis>
+          <x>-1</x>
+          <y>0</y>
+          <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/flight/flaps</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/flight/flaps</property>
+                <step>1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+  
   <!-- External Lighting Panel -->
+
+ <animation>
+        <type>knob</type>
+        <object-name>SW_MASTER</object-name>
+        <visible>true</visible>
+        <property>controls/lighting/ext-lighting-panel/master</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>40</factor>
+        <offset-deg>-20</offset-deg>
+        <center>
+        <x-m>0.66</x-m>
+        <y-m>-0.32</y-m>
+        <z-m>0.0</z-m>
+        </center>
+        <axis>
+        <x>1</x>
+        <y>0</y>
+        <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/lighting/ext-lighting-panel/master</property>
+                <step>1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/lighting/ext-lighting-panel/master</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+
+    <animation>
+        <type>knob</type>
+        <object-name>SW_ANTI_COLLISION</object-name>
+        <visible>true</visible>
+        <property>controls/lighting/ext-lighting-panel/anti-collision</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>40</factor>
+        <offset-deg>-20</offset-deg>
+        <center>
+        <x-m>0.71</x-m>
+        <y-m>-0.37</y-m>
+        <z-m>0.0</z-m>
+        </center>
+        <axis>
+        <x>1</x>
+        <y>0</y>
+        <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/lighting/ext-lighting-panel/anti-collision</property>
+                <step>1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/lighting/ext-lighting-panel/anti-collision</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
  
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_MASTER</object-name>
-    <action>
-     <button>0</button>
-     <repeatable>true</repeatable>
-     <binding>
-      <command>nasal</command>
-      <script>
-                f16_switches.toggleMaster();
-      </script>
-     </binding>
-    </action>
-   </animation>
-   
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_ANTI_COLLISION</object-name>
-    <action>
-     <button>0</button>
-     <repeatable>true</repeatable>
-     <binding>
-      <command>nasal</command>
-      <script>
-                f16_switches.toggleAntiCollision();
-      </script>
-     </binding>
-    </action>
-   </animation>
-
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_POS_LIGHTS</object-name>
-    <action>
-     <button>0</button>
-     <repeatable>true</repeatable>
-     <binding>
-      <command>nasal</command>
-      <script>
-                f16_switches.togglePosLightsFlash();
-      </script>
-     </binding>
-    </action>
-   </animation>
-   
-
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_WING-TAIL</object-name>
-    <action>
-     <button>0</button>
-     <repeatable>true</repeatable>
-     <binding>
-      <command>nasal</command>
-      <script>
-                f16_switches.toggleWingTail();
-      </script>
-     </binding>
-    </action>
-   </animation>
+    <animation>
+        <type>knob</type>
+        <object-name>SW_POS_LIGHTS</object-name>
+        <visible>true</visible>
+        <property>controls/lighting/ext-lighting-panel/pos-lights-flash</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>40</factor>
+        <offset-deg>-20</offset-deg>
+        <center>
+        <x-m>0.67</x-m>
+        <y-m>-0.37</y-m>
+        <z-m>0.0</z-m>
+        </center>
+        <axis>
+        <x>1</x>
+        <y>0</y>
+        <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/lighting/ext-lighting-panel/pos-lights-flash</property>
+                <step>1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/lighting/ext-lighting-panel/pos-lights-flash</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
  
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_FUSELAGE</object-name>
-    <action>
-     <button>0</button>
-     <repeatable>true</repeatable>
-     <binding>
-      <command>nasal</command>
-      <script>
-                f16_switches.toggleFuselage();
-      </script>
-     </binding>
-    </action>
-   </animation>
+    <animation>
+        <type>knob</type>
+        <object-name>SW_WING-TAIL</object-name>
+        <visible>true</visible>
+        <property>controls/lighting/ext-lighting-panel/wing-tail</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>20</factor>
+        <offset-deg>0</offset-deg>
+        <center>
+        <x-m>0.65</x-m>
+        <y-m>-0.36</y-m>
+        <z-m>0.0</z-m>
+        </center>
+        <axis>
+        <x>1</x>
+        <y>0</y>
+        <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/lighting/ext-lighting-panel/wing-tail</property>
+                <step>1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/lighting/ext-lighting-panel/wing-tail</property>
+                <step>-1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+ 
+    <animation>
+        <type>knob</type>
+        <object-name>SW_FUSELAGE</object-name>
+        <visible>true</visible>
+        <property>controls/lighting/ext-lighting-panel/fuselage</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>20</factor>
+        <offset-deg>0</offset-deg>
+        <center>
+        <x-m>0.61</x-m>
+        <y-m>-0.36</y-m>
+        <z-m>0.0</z-m>
+        </center>
+        <axis>
+        <x>1</x>
+        <y>0</y>
+        <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/lighting/ext-lighting-panel/fuselage</property>
+                <step>1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/lighting/ext-lighting-panel/fuselage</property>
+                <step>-1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
    
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_KNOB_REFUEL</object-name>
-    <action>
-     <button>0</button>
-     <repeatable>true</repeatable>
-     <binding>
-      <command>nasal</command>
-      <script>
-                f16_switches.toggleAerialRefuelingUp();
-      </script>
-     </binding>
-    </action>
-   </animation>
-   
-
-  <!-- Test Panel -->
 
    <animation>
     <type>pick</type>
@@ -1027,41 +1318,7 @@
     </axis>
    </animation>
 
-  <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_ALT_FLAPS</object-name>
-    <action>
-      <button>0</button>
-      <repeatable>false</repeatable>
-      <binding>
-        <command>property-toggle</command>
-        <property>controls/flight/flaps</property>
-      </binding>
-    </action>
-   </animation> 
-   
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_FLCS_TEST</object-name>
-    <action>
-      <button>0</button>
-      <repeatable>false</repeatable>
-      <binding>
-        <command>property-assign</command>
-        <property>fdm/jsbsim/elec/switches/flcs-pwr-test</property>
-        <value>1</value>
-      </binding>
-      <mod-up>
-        <binding>
-          <command>property-assign</command>
-          <property>fdm/jsbsim/elec/switches/flcs-pwr-test</property>
-          <value>0</value>
-        </binding>
-      </mod-up>
-    </action>
-   </animation>
+  
    
    <animation>
         <type>knob</type>
@@ -1228,6 +1485,8 @@
         <type>knob</type>
         <object-name>SW_JET_FUEL</object-name>
         <property>f16/engine/jfs-start-switch</property>
+        <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>-10</drag-scale-px><!-- 10 is default -->
         <factor>20</factor>
         <offset-deg>0</offset-deg>
         <center>
@@ -1262,222 +1521,204 @@
         </decrease>
     </animation>
    
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_MPO</object-name>
-    <action>
-      <button>0</button>
-      <repeatable>false</repeatable>
-      <binding>
-        <command>property-toggle</command>
-        <property>/fdm/jsbsim/fcs/fbw-override</property>
-      </binding>
-    </action>
-   </animation> 
    
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_MAIN_POWER</object-name>
-    <action>
-      <button>0</button>
-      <repeatable>false</repeatable>
-      <binding>
-        <command>property-cycle</command>
-        <property>fdm/jsbsim/elec/switches/main-pwr</property>
-        <value type="int">0</value>
-        <value type="int">1</value>
-        <value type="int">2</value>
-        <wrap>true</wrap>
-      </binding>
-    </action>
-   </animation>
-   
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_MAX_POWER</object-name>
-    <action>
-      <button>0</button>
-      <repeatable>false</repeatable>
-      <binding>
-        <command>property-toggle</command>
-        <property>f16/engine/max-power</property>
-      </binding>
-    </action>
-   </animation>
-   
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_AIR_REFUEL</object-name>
-    <action>
-      <button>0</button>
-      <repeatable>false</repeatable>
-      <binding>
-        <command>property-toggle</command>
-        <property>systems/refuel/serviceable</property>
-      </binding>
-    </action>
-   </animation> 
-   
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_EPU</object-name>
-    <object-name>SW_EPU_COVER</object-name>
-    <action>
-      <button>0</button>
-      <repeatable>false</repeatable>
-      <binding>
-        <command>property-cycle</command>
-        <property>fdm/jsbsim/elec/switches/epu</property>
-        <value type="int">0</value>
-        <value type="int">1</value>
-        <value type="int">2</value>
-        <wrap>true</wrap>
-      </binding>
-      <binding>
-        <command>nasal</command>
-        <script>
-          if (getprop("fdm/jsbsim/elec/switches/epu")==1) {
-            setprop("fdm/jsbsim/elec/switches/epu-cover",0);
-          } else {
-            setprop("fdm/jsbsim/elec/switches/epu-cover",1);
-          }
-        </script>
-      </binding>
-    </action>
-   </animation>
-   
-   <animation>
-    <type>pick</type>
-    <visible>true</visible>
-    <object-name>SW_KNOB_ENG_FEED</object-name>
-    <action>
-      <button>0</button>
-      <repeatable>false</repeatable>
-      <binding>
-        <command>property-toggle</command>
-        <property>f16/engine/feed</property>
-      </binding>
-    </action>
-   </animation> 
 
 
  <!-- SWITCH ANIMATIONS -->
 
   
   
-  <animation>
-    <type>rotate</type>
-    <object-name>SW_MPO</object-name>
-    <property>/fdm/jsbsim/fcs/fbw-override</property>
-    <factor>40</factor>
-    <offset-deg>-20</offset-deg>
-    <center>
-      <x-m>0.101036</x-m>
-      <y-m>-0.451225</y-m>
-      <z-m>0.035954</z-m>
-    </center>
-    <axis>
-      <x>1</x>
-      <y>0</y>
-      <z>0</z>
-    </axis>
-  </animation>
+    <animation>
+        <type>knob</type>
+        <object-name>SW_MPO</object-name>
+        <visible>true</visible>
+        <property>/fdm/jsbsim/fcs/fbw-override</property>
+        <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>-10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.5</interval-sec>
+        <factor>40</factor>
+        <offset-deg>-20</offset-deg>
+        <center>
+          <x-m>0.101036</x-m>
+          <y-m>-0.451225</y-m>
+          <z-m>0.035954</z-m>
+        </center>
+        <axis>
+          <x>1</x>
+          <y>0</y>
+          <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>/fdm/jsbsim/fcs/fbw-override</property>
+                <step>1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>/fdm/jsbsim/fcs/fbw-override</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation> 
     
-  <animation>
-    <type>rotate</type>
-    <object-name>SW_MAIN_POWER</object-name>
-    <property>fdm/jsbsim/elec/switches/main-pwr</property>
-    <factor>20</factor>
-    <offset-deg>-20</offset-deg>
-    <center>
-      <x-m>0.358164</x-m>
-      <y-m>-0.468688</y-m>
-      <z-m>0.014365</z-m>
-    </center>
-    <axis>
-      <x>0</x>
-      <y>-1</y>
-      <z>0</z>
-    </axis>
-  </animation>
+    <animation>
+        <type>knob</type>
+        <object-name>SW_MAIN_POWER</object-name>
+        <property>fdm/jsbsim/elec/switches/main-pwr</property>
+        <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.5</interval-sec>
+        <factor>20</factor>
+        <offset-deg>-20</offset-deg>
+        <center>
+          <x-m>0.358164</x-m>
+          <y-m>-0.468688</y-m>
+          <z-m>0.014365</z-m>
+        </center>
+        <axis>
+          <x>0</x>
+          <y>-1</y>
+          <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>fdm/jsbsim/elec/switches/main-pwr</property>
+                <step>1</step>
+                <min>0</min>
+                <max>2</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>fdm/jsbsim/elec/switches/main-pwr</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>2</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+  
+    <animation>
+        <type>knob</type>
+        <object-name>SW_MAX_POWER</object-name>
+        <visible>true</visible>
+        <property>f16/engine/max-power</property>
+        <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>-40</factor>
+        <offset-deg>20</offset-deg>
+        <center>
+          <x-m>0.31965</x-m>
+          <y-m>-0.45225</y-m>
+          <z-m>0.0176</z-m>
+        </center>
+        <axis>
+          <x>0</x>
+          <y>1</y>
+          <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/engine/max-power</property>
+                <step>1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/engine/max-power</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
   
   <animation>
-  <type>rotate</type>
-  <object-name>SW_FLCS_TEST</object-name>
-  <property>fdm/jsbsim/elec/switches/flcs-pwr-test</property>
-  <factor>20</factor>
-  <offset-deg>0</offset-deg>
-  <center>
-   <x-m>0.75385</x-m>
-   <y-m>-0.46326</y-m>
-   <z-m>0.00768</z-m>
-  </center>
-  <axis>
-   <x>1</x>
-   <y>0</y>
-   <z>0</z>
-  </axis>
- </animation>
-  
-  <animation>
-    <type>rotate</type>
-    <object-name>SW_AIR_REFUEL</object-name>
-    <property>systems/refuel/serviceable</property>
-    <factor>40</factor>
-    <offset-deg>-20</offset-deg>
-    <center>
-      <x-m>0.464076</x-m>
-      <y-m>-0.519761</y-m>
-      <z-m>0.007677</z-m>
-    </center>
-    <axis>
-      <x>1</x>
-      <y>0</y>
-      <z>0</z>
-    </axis>
-  </animation>
-  
-  <animation>
-    <type>rotate</type>
-    <object-name>SW_MAX_POWER</object-name>
-    <property>f16/engine/max-power</property>
-    <factor>-40</factor>
-    <offset-deg>20</offset-deg>
-    <center>
-      <x-m>0.31965</x-m>
-      <y-m>-0.45225</y-m>
-      <z-m>0.0176</z-m>
-    </center>
-    <axis>
-      <x>0</x>
-      <y>1</y>
-      <z>0</z>
-    </axis>
-  </animation>
-  
-  <animation>
-    <type>rotate</type>
-    <object-name>SW_EPU</object-name>
-    <property>fdm/jsbsim/elec/switches/epu</property>
-    <factor>20</factor>
-    <offset-deg>-20</offset-deg>
-    <center>
-      <x-m>0.401976</x-m>
-      <y-m>-0.515748</y-m>
-      <z-m>0.010365</z-m>
-    </center>
-    <axis>
-      <x>0</x>
-      <y>-1</y>
-      <z>0</z>
-    </axis>
-  </animation>
-  
+        <type>knob</type>
+        <object-name>SW_EPU</object-name>
+        <visible>true</visible>
+        <property>fdm/jsbsim/elec/switches/epu</property>
+        <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>20</factor>
+        <offset-deg>-20</offset-deg>
+        <center>
+          <x-m>0.401976</x-m>
+          <y-m>-0.515748</y-m>
+          <z-m>0.010365</z-m>
+        </center>
+        <axis>
+          <x>0</x>
+          <y>-1</y>
+          <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>fdm/jsbsim/elec/switches/epu</property>
+                <step>1</step>
+                <min>0</min>
+                <max>2</max>
+                <wrap>false</wrap>
+           </binding>
+           <binding>
+            <command>nasal</command>
+            <script>
+              if (getprop("fdm/jsbsim/elec/switches/epu")==1) {
+                setprop("fdm/jsbsim/elec/switches/epu-cover",0);
+              } else {
+                setprop("fdm/jsbsim/elec/switches/epu-cover",1);
+              }
+            </script>
+          </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>fdm/jsbsim/elec/switches/epu</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>2</max>
+                <wrap>false</wrap>
+           </binding>
+           <binding>
+            <command>nasal</command>
+            <script>
+              if (getprop("fdm/jsbsim/elec/switches/epu")==1) {
+                setprop("fdm/jsbsim/elec/switches/epu-cover",0);
+              } else {
+                setprop("fdm/jsbsim/elec/switches/epu-cover",1);
+              }
+            </script>
+      </binding>
+        </decrease>
+    </animation>
+    
   <animation>
     <type>rotate</type>
     <object-name>SW_EPU_COVER</object-name>
@@ -1495,136 +1736,6 @@
       <z>0</z>
     </axis>
   </animation>
-  
-  <animation>
-    <type>rotate</type>
-    <object-name>SW_KNOB_ENG_FEED</object-name>
-    <property>f16/engine/feed</property>
-    <factor>-40</factor>
-    <offset-deg>40</offset-deg>
-    <center>
-      <x-m>0.498453</x-m>
-      <y-m>-0.511119</y-m>
-      <z-m>0.00765</z-m>
-    </center>
-    <axis>
-      <x>0</x>
-      <y>0</y>
-      <z>1</z>
-    </axis>
-  </animation>
-  
-  <animation>
-    <type>rotate</type>
-    <object-name>SW_ALT_FLAPS</object-name>
-    <property>controls/flight/flaps</property>
-    <factor>40</factor>
-    <offset-deg>-20</offset-deg>
-    <center>
-      <x-m>0.620419</x-m>
-      <y-m>-0.459266</y-m>
-      <z-m>0.007677</z-m>
-    </center>
-    <axis>
-      <x>-1</x>
-      <y>0</y>
-      <z>0</z>
-    </axis>
-  </animation>
-  
-  <!-- External Lighting Panel -->
-
- <animation>
-  <type>rotate</type>
-  <object-name>SW_MASTER</object-name>
-  <property>controls/lighting/ext-lighting-panel/master</property>
-  <factor>40</factor>
-  <offset-deg>-20</offset-deg>
-  <center>
-   <x-m>0.66</x-m>
-   <y-m>-0.32</y-m>
-   <z-m>0.0</z-m>
-  </center>
-  <axis>
-   <x>1</x>
-   <y>0</y>
-   <z>0</z>
-  </axis>
- </animation>
-
- <animation>
-  <type>rotate</type>
-  <object-name>SW_ANTI_COLLISION</object-name>
-  <property>controls/lighting/ext-lighting-panel/anti-collision</property>
-  <factor>40</factor>
-  <offset-deg>-20</offset-deg>
-  <center>
-   <x-m>0.71</x-m>
-   <y-m>-0.37</y-m>
-   <z-m>0.0</z-m>
-  </center>
-  <axis>
-   <x>1</x>
-   <y>0</y>
-   <z>0</z>
-  </axis>
- </animation>
- 
- 
-
- <animation>
-  <type>rotate</type>
-  <object-name>SW_POS_LIGHTS</object-name>
-  <property>controls/lighting/ext-lighting-panel/pos-lights-flash</property>
-  <factor>40</factor>
-  <offset-deg>-20</offset-deg>
-  <center>
-   <x-m>0.67</x-m>
-   <y-m>-0.37</y-m>
-   <z-m>0.0</z-m>
-  </center>
-  <axis>
-   <x>1</x>
-   <y>0</y>
-   <z>0</z>
-  </axis>
- </animation>
- 
- <animation>
-  <type>rotate</type>
-  <object-name>SW_WING-TAIL</object-name>
-  <property>controls/lighting/ext-lighting-panel/wing-tail</property>
-  <factor>20</factor>
-  <offset-deg>0</offset-deg>
-  <center>
-   <x-m>0.65</x-m>
-   <y-m>-0.36</y-m>
-   <z-m>0.0</z-m>
-  </center>
-  <axis>
-   <x>1</x>
-   <y>0</y>
-   <z>0</z>
-  </axis>
- </animation>
- 
- <animation>
-  <type>rotate</type>
-  <object-name>SW_FUSELAGE</object-name>
-  <property>controls/lighting/ext-lighting-panel/fuselage</property>
-  <factor>20</factor>
-  <offset-deg>0</offset-deg>
-  <center>
-   <x-m>0.61</x-m>
-   <y-m>-0.36</y-m>
-   <z-m>0.0</z-m>
-  </center>
-  <axis>
-   <x>1</x>
-   <y>0</y>
-   <z>0</z>
-  </axis>
- </animation>
  
   <animation>
         <type>knob</type>

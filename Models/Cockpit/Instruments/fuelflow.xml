@@ -14,7 +14,7 @@
                             <value>100</value>
                         </greater-than-equals>
   </condition>
-  <property>/engines/engine[0]/fuel-flow_pph</property>
+  <property>/f16/cockpit/fuel-flow-digit-1</property>
   <factor>36</factor>
   <axis>
    <x>0</x>
@@ -32,8 +32,8 @@
                             <value>100</value>
                         </greater-than-equals>
   </condition>
-  <property>/engines/engine[0]/fuel-flow_pph</property>
-  <factor>3.6</factor>
+  <property>/f16/cockpit/fuel-flow-digit-2</property>
+  <factor>36</factor>
   <axis>
    <x>0</x>
    <y>-1</y>
@@ -50,8 +50,8 @@
                             <value>100</value>
                         </greater-than-equals>
   </condition>
-  <property>/engines/engine[0]/fuel-flow_pph</property>
-  <factor>0.36</factor>
+  <property>/f16/cockpit/fuel-flow-digit-3</property>
+  <factor>36</factor>
   <axis>
    <x>0</x>
    <y>-1</y>
@@ -68,8 +68,8 @@
                             <value>100</value>
                         </greater-than-equals>
   </condition>
-  <property>/engines/engine[0]/fuel-flow_pph</property>
-  <factor>0.036</factor>
+  <property>/f16/cockpit/fuel-flow-digit-4</property>
+  <factor>36</factor>
   <axis>
    <x>0</x>
    <y>-1</y>
@@ -86,8 +86,8 @@
                             <value>100</value>
                         </greater-than-equals>
   </condition>
-  <property>/engines/engine[0]/fuel-flow_pph</property>
-  <factor>0.0036</factor>
+  <property>/f16/cockpit/fuel-flow-digit-5</property>
+  <factor>36</factor>
   <axis>
    <x>0</x>
    <y>-1</y>

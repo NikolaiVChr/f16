@@ -1,8 +1,8 @@
 AC3Db
-MATERIAL "ac3dmat0" rgb 0 0 0  amb 0.2 0.2 0.2  emis 0 0 0  spec 0.2 0.2 0.2  shi 128  trans 0
-MATERIAL "ac3dmat1" rgb 1 1 1  amb 0.2 0.2 0.2  emis 0 0 0  spec 0.2 0.2 0.2  shi 128  trans 0
-MATERIAL "ac3dmat1" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.05 0.05 0.05  shi 0  trans 0
-MATERIAL "TopBottom1.3" rgb 0.0 0.0 0.0  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.25 0.25 0.25  shi 128 trans 0.000
+MATERIAL "mount1" rgb 1 1 1  amb 0.8 0.8 0.8  emis 0 0 0  spec 0.4 0.4 0.4  shi 64  trans 0
+MATERIAL "buttons" rgb 1 1 1  amb 0.8 0.8 0.8  emis 0 0 0  spec 0.4 0.4 0.4  shi 48  trans 0
+MATERIAL "mount2" rgb 1 1 1  amb 0.8 0.8 0.8  emis 0 0 0  spec 0.4 0.4 0.4  shi 64  trans 0
+MATERIAL "canvas" rgb 0.0 0.0 0.0  amb 0.000 0.000 0.000  emis 0.000 0.000 0.000  spec 0.25 0.25 0.25 shi 128 trans 0.000
 OBJECT world
 kids 26
 OBJECT group

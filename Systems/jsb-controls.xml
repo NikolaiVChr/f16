@@ -2746,6 +2746,19 @@
       <test  logic="OR" value="fcs/gear-wow-cmd-norm">
         systems/hydraulics/sysb-psi ge 2000
       </test>
+      <test  logic="AND" value="1">
+        /f16/cockpit/alt-gear-handle == 1
+        /f16/cockpit/alt-gear-pneu == 1
+      </test>
+   </switch>
+   
+   <switch name="f16/cockpit/alt-gear-pneu">
+      <default value="/f16/cockpit/alt-gear-pneu"/>
+      <test  logic="AND" value="0">
+        /f16/cockpit/alt-gear-handle == 1
+        fcs/gear-control == 1
+      </test>
+      <output>/f16/cockpit/alt-gear-pneu</output>
    </switch>
          
    <kinematic name="fcs/gear-control">

@@ -330,7 +330,7 @@ var MFD_Device =
 
         obj.canvas = dev_canvas;
         dev_canvas.addPlacement({"node": model_element});
-        dev_canvas.setColorBackground(0.002,0.09,0, 0);
+        dev_canvas.setColorBackground(0.0,0.0,0, 1);
 # Create a group for the parsed elements
         obj.PFDsvg = dev_canvas.createGroup();
         var pres = canvas.parsesvg(obj.PFDsvg, "Nasal/MFD/MFD.svg");
@@ -712,8 +712,8 @@ var MFD_Device =
         };
         me.p_RDR.update = func (noti) {
             me.modeSw = getprop("instrumentation/radar/mode-switch");
-            if (me.modeSw == 1) {
-                #rdrMode = !rdrMode;
+            if (me.modeSw == 1 and num(split(".", getprop("sim/version/flightgear"))[0]) >= 2020) {
+                rdrMode = !rdrMode;
             }
             if (rdrMode) {
                 me.root.mod.setText("GM");
@@ -860,7 +860,7 @@ var MFD_Device =
             
             if (getprop("sim/multiplay/generic/int[2]")!=1 and rdrMode) {
                 # GM mode
-                me.linesFrame = 2;
+                me.linesFrame = 1;
                 while (me.linesFrame > 0) {
                     me.gmLine += 1;
                     if (me.gmLine > 127) {

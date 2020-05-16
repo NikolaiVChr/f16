@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PropertyList include="Systems/walker-include.xml">
     <sim>
-        <aircraft-version>3.20</aircraft-version>
+        <aircraft-version>3.21</aircraft-version>
         <minimum-fg-version>2018.3</minimum-fg-version>
         <!-- enable "parkpos=AVAILABLE" option for the F-16 -->
         <dimensions>
@@ -1844,6 +1844,8 @@ There is also small changes in tail for different variants with and without brak
             <running type="bool">true</running>
             <ftit-degc type="double">0</ftit-degc>
             <egt-degf type="double">0</egt-degf>
+            <thrust_lb type="double">0</thrust_lb>
+            <fuel-flow_pph type="double">0</fuel-flow_pph>
         </engine>
     </engines>
     <consumables>
@@ -3473,9 +3475,13 @@ value. 18000=standard US transition altitude -->
             <enable type="bool">false</enable>
         </chute>
         <cockpit>
+            <alt-gear-handle type="bool">false</alt-gear-handle>
+            <alt-gear-pneu type="bool">true</alt-gear-pneu>
             <oxygen-liters type="double">5.0</oxygen-liters>
             <oxygen-minutes type="double">10000</oxygen-minutes>
             <hydrazine-minutes type="double">10</hydrazine-minutes>
+            <kneeboard-left-visible type="bool">false</kneeboard-left-visible>
+            <kneeboard-right-visible type="bool">false</kneeboard-right-visible>
         </cockpit>
         <stores>
             <tgp-mounted type="bool">false</tgp-mounted>
@@ -3649,6 +3655,9 @@ value. 18000=standard US transition altitude -->
         <sound>
             <file>Aircraft/f16/Nasal/sound.nas</file>
         </sound>
+        <knee>
+            <file>Aircraft/f16/Nasal/kneeboards.nas</file>
+        </knee>
     </nasal>
     
 </PropertyList>

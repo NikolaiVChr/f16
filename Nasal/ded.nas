@@ -14,11 +14,11 @@ var callInit = func {
         "name": "DED",
         "size": [256, 128],
         "view": [256, 128],
-        "mipmapping": 1
+        "mipmapping": 0
   });
       
   canvasded.addPlacement({"node": "poly.003", "texture": "canvas.png"});
-  canvasded.setColorBackground(0.00, 0.10, 0.00, 1.00);
+  canvasded.setColorBackground(0.00, 0.05, 0.00, 1.00);
 
   dedGroup = canvasded.createGroup();
   dedGroup.show();

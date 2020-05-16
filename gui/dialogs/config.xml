@@ -118,6 +118,25 @@
   
   <hrule/>
   
+  <text><label>Interior engine volume</label></text>
+  
+  <slider>
+                  <halign>left</halign>
+                  <property>f16/sound/helmet-damping</property>
+                  <min>0</min>
+                  <max>1</max>
+                  <step>0.025</step>
+                  <live>true</live>
+                  <vertical>false</vertical>
+                  <pref-height>40</pref-height>
+                  <pref-width>250</pref-width>
+                  <binding>
+                    <command>dialog-apply</command>
+                  </binding>
+                </slider>
+                
+    <hrule/>
+  
     <group>
     <layout>hbox</layout>
     <text><label>Activate Auto ordnance view</label></text>
