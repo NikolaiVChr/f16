@@ -46,7 +46,7 @@ var startwrite = func() {
     thread.lock(mutexWrite);
     write("FileType=text/acmi/tacview\nFileVersion=2.1\n");
     write("0,ReferenceTime=" ~ timestamp ~ "\n#0\n");
-    write(myplaneID ~ ",T=" ~ getLon() ~ "|" ~ getLat() ~ "|" ~ getAlt() ~ "|" ~ getRoll() ~ "|" ~ getPitch() ~ "|" ~ getHeading() ~ ",Name=MiG-29_9-12,CallSign="~getprop("/sim/multiplay/callsign")~"\n"); #
+    write(myplaneID ~ ",T=" ~ getLon() ~ "|" ~ getLat() ~ "|" ~ getAlt() ~ "|" ~ getRoll() ~ "|" ~ getPitch() ~ "|" ~ getHeading() ~ ",Name=F-16,CallSign="~getprop("/sim/multiplay/callsign")~"\n"); #
     thread.unlock(mutexWrite);
     starttime = systime();
     setprop("/sim/screen/black","Starting tacview recording");
