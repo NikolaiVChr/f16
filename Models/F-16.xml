@@ -2560,6 +2560,15 @@
     <object-name>tip-pay</object-name>
     <object-name>posright1</object-name>
     <object-name>posleft1</object-name>
+    <condition>
+      <and>
+        <not>
+            <property>sim/rendering/rembrandt/enabled</property>
+        </not>
+        <property>/sim/rendering/shaders/quality-level</property>
+        <property>/sim/rendering/shaders/model</property>
+      </and>
+    </condition>         
     <property>sim/systems/wingflexer/z-m-tip</property><!-- can be: tip, outer, middle or inner -->
     <factor>1</factor>
     <axis>
@@ -2574,6 +2583,15 @@
     <object-name>outer-pay</object-name>
     <object-name>LWStation3</object-name>
     <object-name>RWStation3</object-name>
+    <condition>
+      <and>
+        <not>
+            <property>sim/rendering/rembrandt/enabled</property>
+        </not>
+        <property>/sim/rendering/shaders/quality-level</property>
+        <property>/sim/rendering/shaders/model</property>
+      </and>
+    </condition> 
     <property>sim/systems/wingflexer/z-m-outer</property><!-- can be: tip, outer, middle or inner -->
     <factor>1</factor>
     <axis>
@@ -2585,6 +2603,15 @@
   
   <animation>
     <type>translate</type>
+    <condition>
+      <and>
+        <not>
+            <property>sim/rendering/rembrandt/enabled</property>
+        </not>
+        <property>/sim/rendering/shaders/quality-level</property>
+        <property>/sim/rendering/shaders/model</property>
+      </and>
+    </condition> 
     <object-name>middle-pay</object-name>
     <object-name>LWStation2</object-name>
     <object-name>RWStation2</object-name>
@@ -2599,6 +2626,15 @@
   
   <animation>
     <type>translate</type>
+    <condition>
+      <and>
+        <not>
+            <property>sim/rendering/rembrandt/enabled</property>
+        </not>
+        <property>/sim/rendering/shaders/quality-level</property>
+        <property>/sim/rendering/shaders/model</property>
+      </and>
+    </condition> 
     <object-name>inner-pay</object-name>
     <object-name>LWStation1</object-name>
     <object-name>RWStation1</object-name>
