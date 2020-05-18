@@ -511,6 +511,19 @@
                             <dialog-name>circles</dialog-name>
                         </binding>
                     </item> 
+		    <item>
+      			<label>Tacview Record</label>
+     		        <binding>
+                        <command>nasal</command>
+                        <script>
+                             if (tacview.starttime == 0) {
+                             tacview.startwrite();
+                          } else {
+                             tacview.stopwrite();
+                          }
+                       </script>
+                       </binding>
+                    </item>
                 </menu>
             </default>
         </menubar>
@@ -3658,6 +3671,12 @@ value. 18000=standard US transition altitude -->
         <knee>
             <file>Aircraft/f16/Nasal/kneeboards.nas</file>
         </knee>
+	<mpdb>
+   	    <file>Aircraft/f16/Nasal/mp_db.nas</file>
+        </mpdb>
+        <tacview>
+            <file>Aircraft/f16/Nasal/tacview.nas</file>
+        </tacview>
     </nasal>
     
 </PropertyList>
