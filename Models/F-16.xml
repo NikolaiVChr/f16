@@ -1380,23 +1380,6 @@
   </axis>
  </animation>
 
- <!--<animation>
-  <type>rotate</type>
-  <object-name>RightUpperAileron</object-name>
-  <object-name>RightLowerAileron</object-name>
-  <property>surface-positions/right-aileron-pos-norm</property>
-  <factor>21.5</factor>
-  <center>
-   <x-m>1.815</x-m>
-   <y-m>4.11</y-m>
-   <z-m>0.05</z-m>
-  </center>
-  <axis>
-   <x>0.167465</x>
-   <y>0.985090</y>
-   <z>-0.039404</z>
-  </axis>
- </animation>-->
  
  <effect>
   <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
@@ -1488,12 +1471,52 @@
   <object-name>RightLowerLef</object-name>
 </effect>
 
- <!--<animation>
+<animation>
+  <type>rotate</type>
+  <object-name>RightUpperAileron</object-name>
+  <object-name>RightLowerAileron</object-name>
+  <property>surface-positions/right-aileron-pos-norm</property>
+  <condition>
+    <not>
+      <and>
+        <not>
+            <property>sim/rendering/rembrandt/enabled</property>
+        </not>
+        <property>/sim/rendering/shaders/quality-level</property>
+        <property>/sim/rendering/shaders/model</property>
+      </and>
+    </not>
+  </condition>
+  <factor>21.5</factor>
+  <center>
+   <x-m>1.815</x-m>
+   <y-m>4.11</y-m>
+   <z-m>0.05</z-m>
+  </center>
+  <axis>
+   <x>0.167465</x>
+   <y>0.985090</y>
+   <z>-0.039404</z>
+  </axis>
+ </animation>
+
+ <animation>
   <type>rotate</type>
   <object-name>LeftUpperAileron</object-name>
   <object-name>LeftLowerAileron</object-name>
+  <condition>
+    <not>
+      <and>
+        <not>
+            <property>sim/rendering/rembrandt/enabled</property>
+        </not>
+        <property>/sim/rendering/shaders/quality-level</property>
+        <property>/sim/rendering/shaders/model</property>
+      </and>
+    </not>
+  </condition>
   <property>surface-positions/left-aileron-pos-norm</property>
-  <factor>-21.5</factor>
+  <factor>21.5</factor>
   <axis>
    <x1-m>1.71989</x1-m>
    <y1-m>-3.5817</y1-m>
@@ -1502,12 +1525,23 @@
    <y2-m>-1.0652</y2-m>
    <z2-m>0.170853</z2-m>
   </axis>
- </animation>-->
+ </animation>
 
- <!--<animation>
+ <animation>
   <type>rotate</type>
   <object-name>RightUpperFlap</object-name>
   <object-name>RightLowerFlap</object-name>
+  <condition>
+    <not>
+      <and>
+        <not>
+            <property>sim/rendering/rembrandt/enabled</property>
+        </not>
+        <property>/sim/rendering/shaders/quality-level</property>
+        <property>/sim/rendering/shaders/model</property>
+      </and>
+    </not>
+  </condition>
   <property>sim/multiplay/generic/float[6]</property>
   <factor>20.0</factor>
   <center>
@@ -1520,12 +1554,23 @@
    <y>0.987872</y>
    <z>-0.039515</z>
   </axis>
- </animation>-->
+ </animation>
 
- <!--<animation>
+ <animation>
   <type>rotate</type>
   <object-name>LeftUpperFlap</object-name>
   <object-name>LeftLowerFlap</object-name>
+  <condition>
+    <not>
+      <and>
+        <not>
+            <property>sim/rendering/rembrandt/enabled</property>
+        </not>
+        <property>/sim/rendering/shaders/quality-level</property>
+        <property>/sim/rendering/shaders/model</property>
+      </and>
+    </not>
+  </condition>
   <property>sim/multiplay/generic/float[5]</property>
   <factor>20.0</factor>
   <center>
@@ -1538,12 +1583,23 @@
    <y>-0.987872</y>
    <z>-0.039515</z>
   </axis>
- </animation>-->
+ </animation>
 
- <!--<animation>
+ <animation>
   <type>rotate</type>
   <object-name>RightUpperLef</object-name>
   <object-name>RightLowerLef</object-name>
+  <condition>
+    <not>
+      <and>
+        <not>
+            <property>sim/rendering/rembrandt/enabled</property>
+        </not>
+        <property>/sim/rendering/shaders/quality-level</property>
+        <property>/sim/rendering/shaders/model</property>
+      </and>
+    </not>
+  </condition>
   <property>surface-positions/flap-pos-norm</property>
   <factor>-1</factor>
   <center>
@@ -1562,6 +1618,17 @@
   <type>rotate</type>
   <object-name>LeftUpperLef</object-name>
   <object-name>LeftLowerLef</object-name>
+  <condition>
+    <not>
+      <and>
+        <not>
+            <property>sim/rendering/rembrandt/enabled</property>
+        </not>
+        <property>/sim/rendering/shaders/quality-level</property>
+        <property>/sim/rendering/shaders/model</property>
+      </and>
+    </not>
+  </condition>
   <property>surface-positions/flap-pos-norm</property>
   <center>
    <x-m>0.24</x-m>
@@ -1573,7 +1640,7 @@
    <y>-0.834983</y>
    <z>-0.031988</z>
   </axis>
- </animation>-->
+ </animation>
 
  <animation>
   <type>rotate</type>
