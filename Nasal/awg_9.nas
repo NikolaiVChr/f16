@@ -1550,6 +1550,11 @@ var Target = {
         obj.elevation = nil;
         obj.virtual = 0;
         obj.iff = -1000;
+        
+        obj.tacobj = {parents: [tacview.tacobj]};
+        obj.tacobj.tacviewID = left(md5(obj.unique),5);
+        obj.tacobj.valid = 1;
+        
 		return obj;
 	},
 #
@@ -1821,10 +1826,26 @@ var Target = {
       if (valid == nil) {
         valid = FALSE;
       }
+      if (!valid and me.tacobj.valid) {
+          if (tacview.starttime) {
+#            thread.lock(tacview.mutexWrite);
+#            tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
+#            tacview.write("0,Event=LeftArea|"~me.tacobj.tacviewID~"|\n");
+#            tacview.write("-"~me.tacobj.tacviewID~"\n");
+#            thread.unlock(tacview.mutexWrite);
+            me.tacobj.valid = 0;
+          }
+      }
       return valid;
     },
     getUnique: func {
         return me.unique;
+    },
+    get_Longitude: func {
+        return me.lon.getValue();
+    },
+    get_Latitude: func {
+        return me.lat.getValue();
     },
 	get_bearing: func(){
         var n = nil;

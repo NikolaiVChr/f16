@@ -268,6 +268,8 @@ var AIM = {
 		m.speed_m           = -1;
 
 		m.nodeString = "payload/armament/"~m.type_lc~"/";
+		
+		m.tacviewID = 11000 + int(math.floor(rand()*10000));
 
 		###############
 		# Weapon specs:
@@ -795,6 +797,13 @@ var AIM = {
 		me.ai.remove();
 		if (me.status == MISSILE_FLYING) {
 			delete(AIM.flying, me.flyID);
+			if (tacview.starttime) {
+				thread.lock(tacview.mutexWrite);
+				tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
+				tacview.write("0,Event=Destroyed|"~me.tacviewID~"\n");
+				tacview.write("-"~me.tacviewID~"\n");
+				thread.unlock(tacview.mutexWrite);
+			}
 		} else {
 			delete(AIM.active, me.ID);
 		}
@@ -2249,6 +2258,13 @@ var AIM = {
 		#setprop("/logging/missile/t-latitude-deg", me.t_coord.lat());
 		#setprop("/logging/missile/t-longitude-deg", me.t_coord.lon());
 		#setprop("/logging/missile/t-altitude-ft", me.t_coord.alt()*M2FT);
+		
+		if (tacview.starttime and math.mod(me.counter, 3) == 0) {
+			thread.lock(tacview.mutexWrite);
+			tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
+			tacview.write(me.tacviewID~",T="~me.coord.lon()~"|"~me.coord.lat()~"|"~(me.alt_ft*FT2M)~",Name="~me.type~",Parent="~tacview.myplaneID~",Type=Weapon+Missile\n");
+			thread.unlock(tacview.mutexWrite);
+		}
 
 		##############################
 		#### Proximity detection.#####
