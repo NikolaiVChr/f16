@@ -80,9 +80,9 @@ var mainloop = func() {
     }
     thread.lock(mutexWrite);
     write("#" ~ (systime() - starttime)~"\n");
-    writeMyPlanePos();
-    writeMyPlaneAttributes();
     thread.unlock(mutexWrite);
+    writeMyPlanePos();
+    writeMyPlaneAttributes();    
     foreach (var cx; awg_9.completeList) {
         var color = ",Color=Blue";
         if (left(cx.get_Callsign(),5)=="OPFOR" or left(cx.get_Callsign(),4)=="OPFR") {
