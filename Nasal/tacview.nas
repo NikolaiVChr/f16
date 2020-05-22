@@ -42,7 +42,7 @@ var startwrite = func() {
     filetimestamp = string.replace(timestamp,":","-");
     output_file = getprop("/sim/fg-home") ~ "/Export/tacview-f16-" ~ filetimestamp ~ ".acmi";
     # create the file
-    f = io.open(output_file, "w+");
+    f = io.open(output_file, "w");
     io.close(f);
     var ownship = "F-16C";
     if (getprop("sim/variant-id")<3) {
@@ -176,7 +176,7 @@ var writetofile = func() {
         return;
     }
     writetime = systime();
-    f = io.open(output_file, "a+");
+    f = io.open(output_file, "a");
     io.write(f, outstr);
     io.close(f);
     outstr = "";
