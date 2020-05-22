@@ -2262,7 +2262,7 @@ var AIM = {
 		if (tacview.starttime and math.mod(me.counter, 3) == 0) {
 			thread.lock(tacview.mutexWrite);
 			tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
-			tacview.write(me.tacviewID~",T="~me.coord.lon()~"|"~me.coord.lat()~"|"~(me.alt_ft*FT2M)~",Name="~me.type~",Parent="~tacview.myplaneID~",Type=Weapon+Missile\n");
+			tacview.write(me.tacviewID~",T="~me.coord.lon()~"|"~me.coord.lat()~"|"~(me.alt_ft*FT2M)~",Name="~me.type~",Parent="~tacview.myplaneID~"\n");#,Type=Weapon+Missile
 			thread.unlock(tacview.mutexWrite);
 		}
 
