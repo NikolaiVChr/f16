@@ -1326,15 +1326,15 @@ append(obj.total, obj.speed_curr);
                                           if (hdp.HUD_VEL == 1 or hdp.gear_down) {
                                             obj.ias_range.setTranslation(0, hdp.calibrated * ias_range_factor * pitot);
                                             obj.speed_type.setText("C");
-                                            obj.speed_curr.setText(!pitot?0:sprintf("%d",hdp.calibrated));
+                                            obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.calibrated));
                                           } elsif (hdp.HUD_VEL == 0) {
                                             obj.ias_range.setTranslation(0, hdp.TAS * ias_range_factor * pitot);
                                             obj.speed_type.setText("T");
-                                            obj.speed_curr.setText(!pitot?0:sprintf("%d",hdp.TAS));
+                                            obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.TAS));
                                           } else {
                                             obj.ias_range.setTranslation(0, hdp.GND_SPD * ias_range_factor * pitot);
                                             obj.speed_type.setText("G");
-                                            obj.speed_curr.setText(!pitot?0:sprintf("%d",hdp.GND_SPD));
+                                            obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.GND_SPD));
                                           }
                                       }),
             props.UpdateManager.FromHashValue("range_rate", 0.01, func(range_rate)

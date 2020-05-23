@@ -1045,6 +1045,11 @@ var ContactTGP = {
     obj.coord.set_alt(coord.alt()+1);#avoid z fighting
     obj.callsign        = callsign;
     obj.unique          = rand();
+    
+    obj.tacobj = {parents: [tacview.tacobj]};
+    obj.tacobj.tacviewID = right((obj.unique~""),5);
+    obj.tacobj.valid = 1;
+    
     obj.laser = laser;
     return obj;
   },
@@ -1159,6 +1164,13 @@ var ContactTGP = {
       #Return Alt in feet
       return me.coord.alt()*M2FT;
   },
+  
+  get_Longitude: func {
+        return me.coord.lon()*M2FT;
+	},
+	get_Latitude: func {
+	    return me.coord.lat();
+	},
 
   get_range: func() {
       var r = me.coord.direct_distance_to(geo.aircraft_position()) * M2NM;

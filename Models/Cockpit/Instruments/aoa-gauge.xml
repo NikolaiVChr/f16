@@ -27,6 +27,10 @@
                             <property>fdm/jsbsim/elec/bus/emergency-ac-1</property>
                             <value>100</value>
                         </greater-than-equals>
+                        <greater-than-equals>
+                            <property>velocities/groundspeed-kt</property>
+                            <value>20</value>
+                        </greater-than-equals>
   </condition>
   <factor>0.0235</factor>
   <axis>
