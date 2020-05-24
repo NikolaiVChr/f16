@@ -2260,9 +2260,11 @@ var AIM = {
 		#setprop("/logging/missile/t-altitude-ft", me.t_coord.alt()*M2FT);
 		
 		if (tacview.starttime and math.mod(me.counter, 3) == 0) {
+			me.nme = me.type=="es"?"Parachutist":me.type;
+			me.extra = me.type=="es"?"|0|0|0":"";
 			thread.lock(tacview.mutexWrite);
 			tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
-			tacview.write(me.tacviewID~",T="~me.coord.lon()~"|"~me.coord.lat()~"|"~(me.alt_ft*FT2M)~",Name="~me.type~",Parent="~tacview.myplaneID~"\n");#,Type=Weapon+Missile
+			tacview.write(me.tacviewID~",T="~me.coord.lon()~"|"~me.coord.lat()~"|"~(me.alt_ft*FT2M)~me.extra~",Name="~me.nme~",Parent="~tacview.myplaneID~"\n");#,Type=Weapon+Missile
 			thread.unlock(tacview.mutexWrite);
 		}
 
