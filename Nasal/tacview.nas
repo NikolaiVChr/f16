@@ -280,7 +280,7 @@ setlistener("/sim/multiplay/chat-history", func(p) {
     var hist_vector = split("\n",p.getValue());
     if (size(hist_vector) > 0) {
         var last = hist_vector[size(hist_vector)-1];
-        last = string.replace(last,",","\\,");
+        last = string.replace(last,",",";");#"\x5C"~"\x2C"   chr(92)~chr(44)
         thread.lock(mutexWrite);
         write("#" ~ (systime() - tacview.starttime)~"\n");
         write("0,Event=Message|Chat ["~hist_vector[size(hist_vector)-1]~"]\n");
