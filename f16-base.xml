@@ -3483,6 +3483,7 @@ value. 18000=standard US transition altitude -->
             <running-state type="bool">false</running-state>
             <max-power type="bool">true</max-power>
             <jfs-rpm-normalized type="double">0</jfs-rpm-normalized>
+            <cutoff-release-lever type="bool">true</cutoff-release-lever>
         </engine>
         <done type="bool">false</done>
         <chute>

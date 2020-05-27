@@ -15,6 +15,10 @@
    <livery-patch>
       <texture>Liveries/patch.default.png</texture>
   </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/Block10/pod.25yrsRNLAF.png</texture>
+    </livery-pod>
   </model>
  </sim>
 </PropertyList>

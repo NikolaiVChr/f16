@@ -5,7 +5,7 @@
   <model>
    <livery> 
     <name type="string">NASA Testbed, #N816NA</name>
-    <texture>Liveries/Block20/82-0976.png</texture>
+    <texture>Liveries/Block10/82-0976.png</texture>
     <owner type="string">NASA</owner>
    </livery>
 
@@ -18,7 +18,7 @@
    </livery-patch>
 
    <livery-pod>
-     <texture>Liveries/Block20/pod.NASA.png</texture>
+     <texture>Liveries/Block10/pod.NASA.png</texture>
    </livery-pod>
   </model>
  </sim>

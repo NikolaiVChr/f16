@@ -433,12 +433,12 @@
                       <v>0.1</v>
                       <p>/engines/engine[0]/fuel-flow_pph</p>
                   </product>
-                  <floor>
+                  <integer>
                       <product>
                           <v>0.1</v>
                           <p>/engines/engine[0]/fuel-flow_pph</p>
                       </product>
-                  </floor>
+                  </integer>
                 </difference>
               </product>
             </function>
@@ -447,9 +447,9 @@
         <fcs_function name="flow/digit-1">
             <function>
                 <sum>
-                  <floor>
+                  <integer>
                     <p>flow/digit-1-value</p>
-                  </floor>
+                  </integer>
                   <product>
                     <max>
                       <v>0</v>
@@ -476,12 +476,12 @@
                       <v>0.01</v>
                       <p>/engines/engine[0]/fuel-flow_pph</p>
                   </product>
-                  <floor>
+                  <integer>
                       <product>
                           <v>0.01</v>
                           <p>/engines/engine[0]/fuel-flow_pph</p>
                       </product>
-                  </floor>
+                  </integer>
                 </difference>
               </product>
             </function>
@@ -490,9 +490,9 @@
         <fcs_function name="flow/digit-2">
             <function>
                 <sum>
-                  <floor>
+                  <integer>
                     <p>flow/digit-2-value</p>
-                  </floor>
+                  </integer>
                   <product>
                     <max>
                       <v>0</v>
@@ -519,12 +519,12 @@
                       <v>0.001</v>
                       <p>/engines/engine[0]/fuel-flow_pph</p>
                   </product>
-                  <floor>
+                  <integer>
                       <product>
                           <v>0.001</v>
                           <p>/engines/engine[0]/fuel-flow_pph</p>
                       </product>
-                  </floor>
+                  </integer>
                 </difference>
               </product>
             </function>
@@ -533,9 +533,9 @@
         <fcs_function name="flow/digit-3">
             <function>
                 <sum>
-                  <floor>
+                  <integer>
                     <p>flow/digit-3-value</p>
-                  </floor>
+                  </integer>
                   <product>
                     <max>
                       <v>0</v>
@@ -562,12 +562,12 @@
                       <v>0.0001</v>
                       <p>/engines/engine[0]/fuel-flow_pph</p>
                   </product>
-                  <floor>
+                  <integer>
                       <product>
                           <v>0.0001</v>
                           <p>/engines/engine[0]/fuel-flow_pph</p>
                       </product>
-                  </floor>
+                  </integer>
                 </difference>
               </product>
             </function>
@@ -576,9 +576,9 @@
         <fcs_function name="flow/digit-4">
             <function>
                 <sum>
-                  <floor>
+                  <integer>
                     <p>flow/digit-4-value</p>
-                  </floor>
+                  </integer>
                   <product>
                     <max>
                       <v>0</v>
@@ -605,12 +605,12 @@
                       <v>0.00001</v>
                       <p>/engines/engine[0]/fuel-flow_pph</p>
                   </product>
-                  <floor>
+                  <integer>
                       <product>
                           <v>0.00001</v>
                           <p>/engines/engine[0]/fuel-flow_pph</p>
                       </product>
-                  </floor>
+                  </integer>
                 </difference>
               </product>
             </function>
@@ -619,9 +619,9 @@
         <fcs_function name="flow/digit-5">
             <function>
                 <sum>
-                  <floor>
+                  <integer>
                     <p>flow/digit-5-value</p>
-                  </floor>
+                  </integer>
                   <product>
                     <max>
                       <v>0</v>
