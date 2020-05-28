@@ -9,7 +9,7 @@ var outstr = "";
 var timestamp = "";
 var output_file = "";
 var f = "";
-var myplaneID = 999;
+var myplaneID = int(rand()*10000);
 var starttime = 0;
 var writetime = 0;
 
@@ -82,8 +82,11 @@ var mainloop = func() {
     write("#" ~ (systime() - starttime)~"\n");
     thread.unlock(mutexWrite);
     writeMyPlanePos();
-    writeMyPlaneAttributes();    
+    writeMyPlaneAttributes();
     foreach (var cx; awg_9.completeList) {
+        if (cx["propNode"] != nil and cx.propNode.getName() == "multiplayer" and getprop("sim/multiplay/txhost") == "mpserver.opredflag.com") {
+            continue;
+        }
         var color = ",Color=Blue";
         if (left(cx.get_Callsign(),5)=="OPFOR" or left(cx.get_Callsign(),4)=="OPFR") {
             color=",Color=Red";
