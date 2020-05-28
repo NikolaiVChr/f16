@@ -513,6 +513,10 @@
                     </item> 
                 </menu>
                 <menu n="102">
+                    <label>|</label>
+                    <enabled type="bool">false</enabled>
+                </menu>
+                <menu n="103">
                     <label>Tacview</label>
                     <enabled type="bool">true</enabled>
                     <item>
