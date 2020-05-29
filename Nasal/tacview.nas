@@ -94,7 +94,9 @@ var mainloop = func() {
         thread.lock(mutexWrite);
         if (find_in_array(seen_ids, cx.tacobj.tacviewID) == -1) {
             append(seen_ids, cx.tacobj.tacviewID);
-            write(cx.tacobj.tacviewID ~ ",Name="~cx.get_model() ~ ",CallSign=" ~ cx.get_Callsign() ~color~"\n")
+            var model_is = cx.get_model();
+            if (model_is=="Mig-28") model_is = "F-16C";
+            write(cx.tacobj.tacviewID ~ ",Name="~ model_is~ ",CallSign=" ~ cx.get_Callsign() ~color~"\n")
         }
         if (cx.tacobj.valid) {
             lon = cx.get_Longitude();
