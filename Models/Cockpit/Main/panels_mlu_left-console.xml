@@ -251,6 +251,14 @@
         <object-name>tacan-vol-knob</object-name>
         <object-name>threat-vol-knob</object-name>
         <object-name>intercom-knob</object-name>
+        <object-name>ecm-1</object-name>
+        <object-name>ecm-2</object-name>
+        <object-name>ecm-3</object-name>
+        <object-name>ecm-4</object-name>
+        <object-name>ecm-5</object-name>
+        <object-name>ecm-nil</object-name>
+        <object-name>ecm-frm</object-name>
+        <object-name>ecm-spl</object-name>
     </effect>
 
     <effect>
@@ -326,14 +334,6 @@
         <object-name>mal</object-name>
         <object-name>adv</object-name>
         <object-name>slf-tst-num</object-name>
-        <object-name>ecm-1</object-name>
-        <object-name>ecm-2</object-name>
-        <object-name>ecm-3</object-name>
-        <object-name>ecm-4</object-name>
-        <object-name>ecm-5</object-name>
-        <object-name>ecm-nil</object-name>
-        <object-name>ecm-frm</object-name>
-        <object-name>ecm-spl</object-name>
         <object-name>MAL_IND_LTS</object-name>
         <object-name>FCS_CAUTION_RESET</object-name>
         <object-name>FIRE_OHEAT_DETECT</object-name>

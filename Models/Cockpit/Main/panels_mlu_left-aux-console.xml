@@ -22,6 +22,10 @@
         <object-name>EW_LEFT_0</object-name>
         <object-name>EW_LEFT_1</object-name>
         <object-name>EW_RIGHT</object-name>
+        <object-name>TWA_SEARCH</object-name>
+        <object-name>TWA_ACT-PWR</object-name>
+        <object-name>TWA_POWER</object-name>
+        <object-name>TWA_ALTITUDE</object-name>
         <object-name>DISP_switch</object-name>
         <object-name>EW_CANVAS_DISPLAY</object-name>
         <object-name>EW_KNOB_MODE</object-name>
@@ -83,6 +87,10 @@
         <object-name>ew-set3</object-name>
         <object-name>ew-set4</object-name>
         <object-name>ew-run</object-name>
+        <object-name>TWA_SEARCH</object-name>
+        <object-name>TWA_ACT-PWR</object-name>
+        <object-name>TWA_POWER</object-name>
+        <object-name>TWA_ALTITUDE</object-name>
     </effect>
 
     <effect>
