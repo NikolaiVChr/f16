@@ -58,6 +58,14 @@
         <object-name>FUEL</object-name>
         <object-name>FUEL_0</object-name>
         <object-name>FUEL_1</object-name>
+        <object-name>AVTR</object-name>
+        <object-name>AVTR_SW</object-name>
+        <object-name>AVTR_TEST</object-name>
+        <object-name>AVTR_DISP-SEL</object-name>
+        <object-name>AVTR_CTVS</object-name>
+        <object-name>AVTR_AVTR</object-name>
+        <object-name>AVTR.001_0</object-name>
+        <object-name>AVTR.001_1</object-name>
         <object-name>GROWTH.001</object-name>
         <object-name>GROWTH.001_0</object-name>
         <object-name>GROWTH.001_1</object-name>
@@ -225,6 +233,7 @@
         <object-name>EXT_LIGHTING_1</object-name>
         <object-name>FLIGHT_CONTROL_1</object-name>
         <object-name>FUEL_1</object-name>
+        <object-name>AVTR.001_1</object-name>
         <object-name>GROWTH.001_1</object-name>
         <object-name>GROWTH.002_1</object-name>
         <object-name>GROWTH.003_1</object-name>
@@ -339,6 +348,11 @@
         <object-name>FIRE_OHEAT_DETECT</object-name>
         <object-name>CAUTION_RESET</object-name>
         <object-name>BIT</object-name>
+        <object-name>AVTR_SW</object-name>
+        <object-name>AVTR_TEST</object-name>
+        <object-name>AVTR_DISP-SEL</object-name>
+        <object-name>AVTR_CTVS</object-name>
+        <object-name>AVTR_AVTR</object-name>
         <object-name>LEFT_CONSOLE.001</object-name>
     </effect>
     
@@ -487,6 +501,8 @@
   <object-name>ecm-nil</object-name>
   <object-name>ecm-frm</object-name>
   <object-name>ecm-spl</object-name>
+  <object-name>AVTR_CTVS</object-name>
+  <object-name>AVTR_AVTR</object-name>
   <type>material</type>
   <condition>
       <property>controls/test/test-panel/mal-ind-lts</property>
@@ -519,9 +535,6 @@
    <blue>1</blue>
   </emission>
  </animation>
- 
-
-  
 
   <animation>
   <object-name>light_epu_gen</object-name><!-- EPU commanded on, but does not supply power -->
@@ -2404,6 +2417,35 @@
             <green>1</green>
             <blue>1</blue>
         </emission>
+    </animation>
+
+    <animation>
+        <type>select</type>
+        <object-name>GROWTH.001_0</object-name>
+        <object-name>GROWTH.001_1</object-name>
+        <condition>
+            <less-than-equals>
+                <property>sim/variant-id</property>
+                <value>2</value>
+            </less-than-equals>
+        </condition>
+    </animation>
+
+    <animation>
+        <type>select</type>
+        <object-name>AVTR_SW</object-name>
+        <object-name>AVTR_TEST</object-name>
+        <object-name>AVTR_DISP-SEL</object-name>
+        <object-name>AVTR_CTVS</object-name>
+        <object-name>AVTR_AVTR</object-name>
+        <object-name>AVTR.001_0</object-name>
+        <object-name>AVTR.001_1</object-name>
+        <condition>
+            <greater-than-equals>
+                <property>sim/variant-id</property>
+                <value>3</value>
+            </greater-than-equals>
+        </condition>
     </animation>
 
     <effect>

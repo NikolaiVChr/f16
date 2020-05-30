@@ -101050,7 +101050,7 @@ OBJECT poly
 name "horn_silencer"
 data 18
 horn_silencer.mesh
-texture "../Textures/blck40-panels1.png"
+texture "../Textures/Block-panels/blck50-panels1.png"
 crease 45.000000
 numvert 48
 -0.14384 0.00239 0.381
@@ -107999,7 +107999,7 @@ OBJECT poly
 name "light-land-switch"
 data 22
 light-land-switch.mesh
-texture "../Textures/blck40-panels1.png"
+texture "../Textures/Block-panels/blck50-panels1.png"
 crease 45.000000
 numvert 40
 -0.14721 0.02765 0.34152
@@ -108203,7 +108203,7 @@ OBJECT poly
 name "light-land-switch.01"
 data 25
 light-land-switch.01.mesh
-texture "../Textures/blck40-panels1.png"
+texture "../Textures/Block-panels/blck50-panels1.png"
 crease 45.000000
 numvert 219
 -0.14254 0.03278 0.34992
