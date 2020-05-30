@@ -17,7 +17,7 @@ name "TWA_ALTITUDE"
 loc 0.0881539 0 -0.165332
 data 12
 ew-set1.mesh
-texture "../Textures/panels-MLU-left_right-aux-consoles.png"
+texture "../Textures/panels-B50-left_right-aux-consoles.png"
 crease 45.000000
 numvert 8
 -0.108831 0.00556 0.608406
@@ -70,7 +70,7 @@ name "TWA_POWER"
 loc 0.0881539 0 -0.184738
 data 12
 ew-set1.mesh
-texture "../Textures/panels-MLU-left_right-aux-consoles.png"
+texture "../Textures/panels-B50-left_right-aux-consoles.png"
 crease 45.000000
 numvert 8
 -0.125052 0.00552 0.608406
@@ -123,7 +123,7 @@ name "TWA_ACT-PWR"
 loc 0.0690955 0 -0.184741
 data 12
 ew-set1.mesh
-texture "../Textures/panels-MLU-left_right-aux-consoles.png"
+texture "../Textures/panels-B50-left_right-aux-consoles.png"
 crease 45.000000
 numvert 8
 -0.108831 0.00556 0.608406
@@ -176,7 +176,7 @@ name "TWA_SEARCH"
 loc 0.069098 0 -0.1653
 data 12
 ew-set1.mesh
-texture "../Textures/panels-MLU-left_right-aux-consoles.png"
+texture "../Textures/panels-B50-left_right-aux-consoles.png"
 crease 45.000000
 numvert 8
 -0.125052 0.00552 0.608406
@@ -32489,6 +32489,7 @@ OBJECT poly
 name "EW_LEFT_0"
 data 7
 EW_LEFT
+texture "../Textures/panels-B50-left_right-aux-consoles.png"
 crease 30.000000
 numvert 8
 0.01512 0.00193 0.41781
@@ -32540,7 +32541,7 @@ OBJECT poly
 name "EW_LEFT_1"
 data 11
 EW_LEFT.001
-texture "../Textures/panels-MLU-left_right-aux-consoles.png"
+texture "../Textures/panels-B50-left_right-aux-consoles.png"
 crease 30.000000
 numvert 4
 -0.07431 0.00555 0.41781

@@ -111176,7 +111176,7 @@ name "AVTR_DISP-SEL"
 loc 0.176483 0.00893323 0.113374
 data 13
 INS_knob.mesh
-texture "/Users/utente/Desktop/GitHub/Aircrafts/f16/Models/Cockpit/Textures/panels-B50-left_console.png"
+texture "../Textures/panels-B50-left_console.png"
 crease 45.000000
 numvert 52
 0.0110186 -0.00707726 0.00742531
@@ -111539,7 +111539,7 @@ name "AVTR_CTVS"
 loc 0.157304 0.00489571 0.201457
 data 16
 slf-tst-num.mesh
-texture "/Users/utente/Desktop/GitHub/Aircrafts/f16/Models/Cockpit/Textures/panels-B50-left_console.png"
+texture "../Textures/panels-B50-left_console.png"
 crease 45.000000
 numvert 8
 0.00494355 -0.000876246 -0.00496694
@@ -111592,7 +111592,7 @@ name "AVTR_AVTR"
 loc 0.157302 0.00490451 0.181626
 data 16
 slf-tst-num.mesh
-texture "/Users/utente/Desktop/GitHub/Aircrafts/f16/Models/Cockpit/Textures/panels-B50-left_console.png"
+texture "../Textures/panels-B50-left_console.png"
 crease 45.000000
 numvert 8
 -0.00488776 8.08388e-07 -0.00496694
@@ -111645,7 +111645,7 @@ name "AVTR.001_0"
 loc -0.240139 -0.00657519 -0.187429
 data 10
 GROWTH.001
-texture "/Users/utente/Desktop/GitHub/Aircrafts/f16/Models/Cockpit/Textures/panels-B50-left_console.png"
+texture "../Textures/panels-B50-left_console.png"
 crease 30.000000
 numvert 8
 0.37896 0.00874 0.41357
@@ -111691,7 +111691,7 @@ name "AVTR.001_1"
 loc -0.240139 -0.00657519 -0.187429
 data 10
 GROWTH.002
-texture "/Users/utente/Desktop/GitHub/Aircrafts/f16/Models/Cockpit/Textures/panels-B50-left_console.png"
+texture "../Textures/panels-B50-left_console.png"
 crease 30.000000
 numvert 4
 0.37929 0.01256 0.41357

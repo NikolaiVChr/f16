@@ -158,8 +158,6 @@
         </emission>
     </animation>
     
-    
-    
 
  <animation>
   <type>material</type>
@@ -716,5 +714,34 @@
         </action>
     </animation>
 
+    <!--animation>
+        <type>material</type>
+        <condition>
+            <not-equals>
+                <property>sim/variant-id</property>
+                <value>2</value>
+            </not-equals>
+        </condition>
+        <object-name>EW_LEFT</object-name>
+        <object-name>EW_LEFT_0</object-name>
+        <object-name>EW_LEFT_1</object-name>
+        <property-base>f16/texture</property-base>
+        <texture-prop>ew-panel-texture</texture-prop>
+        <texture>Aircraft/f16/Models/Cockpit/Textures/panels-B50-left_right-aux-consoles.png</texture>
+    </animation>
+
+    <animation>
+        <type>select</type>
+        <object-name>TWA_SEARCH</object-name>
+        <object-name>TWA_ACT-PWR</object-name>
+        <object-name>TWA_POWER</object-name>
+        <object-name>TWA_ALTITUDE</object-name>
+        <condition>
+            <not-equals>
+                <property>sim/variant-id</property>
+                <value>2</value>
+            </not-equals>
+        </condition>
+    </animation-->
 
 </PropertyList>

@@ -6,6 +6,7 @@
 
  <animation>
   <object-name>rect</object-name>
+  <object-name>brt-knob</object-name>
   <type>material</type>
   <emission>
    <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>

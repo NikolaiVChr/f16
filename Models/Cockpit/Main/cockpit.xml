@@ -529,14 +529,20 @@
    <pitch-deg>-15</pitch-deg><!-- needs verification! -->
   </offsets>
   <condition>
-   <less-than>
+  <or>
+   <equals>
     <property>sim/variant-id</property>
-    <value>3</value>
-   </less-than>
+    <value>2</value>
+   </equals>
+   <equals>
+    <property>sim/variant-id</property>
+    <value>6</value>
+   </equals>
+  </or>
   </condition>
  </model>
 
-  <model>
+ <model>
   <name>THREAT</name>
   <path>Aircraft/f16/Models/Cockpit/Avionics/EWS/US_threat_warning_prime.xml</path>
   <offsets>
@@ -546,13 +552,19 @@
    <pitch-deg>-15</pitch-deg><!-- needs verification! -->
   </offsets>
   <condition>
-    <not>
-   <less-than>
-    <property>sim/variant-id</property>
-    <value>3</value>
-   </less-than>
- </not>
-  </condition>
+   <not>
+    <or>
+    <equals>
+     <property>sim/variant-id</property>
+     <value>2</value>
+    </equals>
+    <equals>
+     <property>sim/variant-id</property>
+     <value>6</value>
+    </equals>
+   </or>
+  </not>
+ </condition>
  </model>
  
 <!-- AOA indexer animations -->
