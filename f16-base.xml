@@ -1640,7 +1640,7 @@ There is also small changes in tail for different variants with and without brak
                 <binding>
                     <command>nasal</command>
                     <script><![CDATA[
-                        if (getprop("sim/variant-id") <= 5 and getprop("controls/armament/master-arm") == 0 and getprop("controls/armament/master-arm-cover-open") == 0) {
+                        if (getprop("sim/variant-id") <= 4 and getprop("controls/armament/master-arm") == 0 and getprop("controls/armament/master-arm-cover-open") == 0) {
                             setprop("controls/armament/master-arm-cover-open",1);
                             screen.log.write("Master-arm cover open.", 0.5, 0.5, 1);
                         } else {

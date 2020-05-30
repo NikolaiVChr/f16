@@ -234,7 +234,7 @@ light: ecm lamp off
                 </greater-than>
                 <greater-than>
                     <property>sim/variant-id</property>
-                    <value>5</value>
+                    <value>4</value>
                 </greater-than>
             </or>
         </condition>
@@ -536,7 +536,7 @@ light: ecm lamp off
         <condition>
             <less-than-equals>
                 <property>sim/variant-id</property>
-                <value>5</value>
+                <value>4</value>
             </less-than-equals>
         </condition>
     </animation>
