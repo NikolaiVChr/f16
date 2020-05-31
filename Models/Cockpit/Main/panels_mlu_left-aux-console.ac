@@ -11,7 +11,82 @@ MATERIAL "gearLeverBlack" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0.286 0.286 0.2
 MATERIAL "dark3" rgb 0.063 0.063 0.063  amb 0.3 0.3 0.3  emis 0 0 0  spec 0.176 0.176 0.176  shi 32  trans 0
 MATERIAL "unlit" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0.5 0.5 0.5  shi 10  trans 0
 OBJECT world
-kids 35
+kids 36
+OBJECT group
+name "TWA_LEFT"
+kids 2
+OBJECT poly
+name "TWA_LEFT_0"
+data 7
+EW_LEFT
+texture "../Textures/panels-B50-left_right-aux-consoles.png"
+crease 30.000000
+numvert 8
+0.01512 0.00555 0.41781
+0.01512 0.00555 0.46538
+-0.07431 0.00555 0.46538
+-0.07431 0.00555 0.41781
+-0.07431 0.00193 0.41781
+-0.07431 0.00193 0.46538
+0.01512 0.00193 0.46538
+0.01512 0.00193 0.41781
+numsurf 5
+SURF 0x10
+mat 1
+refs 4
+6 0 0
+5 1 0
+2 1 1
+1 0 1
+SURF 0x10
+mat 1
+refs 4
+7 0 0
+6 1 0
+1 1 1
+0 0 1
+SURF 0x10
+mat 1
+refs 4
+4 0 0
+7 1 0
+0 1 1
+3 0 1
+SURF 0x10
+mat 1
+refs 4
+5 0 0
+4 1 0
+3 1 1
+2 0 1
+SURF 0x10
+mat 1
+refs 4
+7 0 0
+4 1 0
+5 1 1
+6 0 1
+kids 0
+OBJECT poly
+name "TWA_LEFT_1"
+data 11
+EW_LEFT.001
+texture "../Textures/panels-B50-left_right-aux-consoles.png"
+crease 30.000000
+numvert 4
+0.01512 0.00555 0.41781
+0.01512 0.00555 0.46538
+-0.07431 0.00555 0.46538
+-0.07431 0.00555 0.41781
+numsurf 1
+SURF 0x10
+mat 2
+refs 4
+2 0.010802 0.441404
+1 0.010801 0.202168
+0 0.13961 0.202168
+3 0.139612 0.441402
+kids 0
 OBJECT poly
 name "TWA_ALTITUDE"
 loc 0.0881539 0 -0.165332
@@ -32481,81 +32556,6 @@ refs 3
 284 0.495092 0.434382
 70 0.481974 0.431504
 0 0.499979 0.435477
-kids 0
-OBJECT group
-name "EW_LEFT"
-kids 2
-OBJECT poly
-name "EW_LEFT_0"
-data 7
-EW_LEFT
-texture "../Textures/panels-B50-left_right-aux-consoles.png"
-crease 30.000000
-numvert 8
-0.01512 0.00193 0.41781
-0.01512 0.00193 0.46538
--0.07431 0.00193 0.46538
--0.07431 0.00193 0.41781
--0.07431 0.00555 0.41781
--0.07431 0.00555 0.46538
-0.01512 0.00555 0.46538
-0.01512 0.00555 0.41781
-numsurf 5
-SURF 0x10
-mat 1
-refs 4
-0 0 0
-3 1 0
-2 1 1
-1 0 1
-SURF 0x10
-mat 1
-refs 4
-2 0 0
-3 1 0
-4 1 1
-5 0 1
-SURF 0x10
-mat 1
-refs 4
-3 0 0
-0 1 0
-7 1 1
-4 0 1
-SURF 0x10
-mat 1
-refs 4
-0 0 0
-1 1 0
-6 1 1
-7 0 1
-SURF 0x10
-mat 1
-refs 4
-1 0 0
-2 1 0
-5 1 1
-6 0 1
-kids 0
-OBJECT poly
-name "EW_LEFT_1"
-data 11
-EW_LEFT.001
-texture "../Textures/panels-B50-left_right-aux-consoles.png"
-crease 30.000000
-numvert 4
--0.07431 0.00555 0.41781
--0.07431 0.00555 0.46538
-0.01512 0.00555 0.46538
-0.01512 0.00555 0.41781
-numsurf 1
-SURF 0x10
-mat 2
-refs 4
-1 0.010802 0.441404
-2 0.010801 0.202168
-3 0.13961 0.202168
-0 0.139612 0.441402
 kids 0
 OBJECT group
 name "EW_RIGHT"
@@ -115320,4 +115320,79 @@ refs 3
 284 0.55957 0.937989
 70 0.55957 0.937989
 0 0.55957 0.937989
+kids 0
+OBJECT group
+name "EW_LEFT"
+kids 2
+OBJECT poly
+name "EW_LEFT_0"
+data 7
+EW_LEFT
+texture "../Textures/panels-B50-left_right-aux-consoles.png"
+crease 30.000000
+numvert 8
+0.01512 0.00193 0.41781
+0.01512 0.00193 0.46538
+-0.07431 0.00193 0.46538
+-0.07431 0.00193 0.41781
+-0.07431 0.00555 0.41781
+-0.07431 0.00555 0.46538
+0.01512 0.00555 0.46538
+0.01512 0.00555 0.41781
+numsurf 5
+SURF 0x10
+mat 1
+refs 4
+0 0 0
+3 1 0
+2 1 1
+1 0 1
+SURF 0x10
+mat 1
+refs 4
+2 0 0
+3 1 0
+4 1 1
+5 0 1
+SURF 0x10
+mat 1
+refs 4
+3 0 0
+0 1 0
+7 1 1
+4 0 1
+SURF 0x10
+mat 1
+refs 4
+0 0 0
+1 1 0
+6 1 1
+7 0 1
+SURF 0x10
+mat 1
+refs 4
+1 0 0
+2 1 0
+5 1 1
+6 0 1
+kids 0
+OBJECT poly
+name "EW_LEFT_1"
+data 11
+EW_LEFT.001
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
+crease 30.000000
+numvert 4
+-0.07431 0.00555 0.41781
+-0.07431 0.00555 0.46538
+0.01512 0.00555 0.46538
+0.01512 0.00555 0.41781
+numsurf 1
+SURF 0x10
+mat 2
+refs 4
+1 0.010802 0.441404
+2 0.010801 0.202168
+3 0.13961 0.202168
+0 0.139612 0.441402
 kids 0

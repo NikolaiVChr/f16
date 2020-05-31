@@ -22,6 +22,8 @@
         <object-name>EW_LEFT_0</object-name>
         <object-name>EW_LEFT_1</object-name>
         <object-name>EW_RIGHT</object-name>
+        <object-name>TWA_LEFT_0</object-name>
+        <object-name>TWA_LEFT_1</object-name>
         <object-name>TWA_SEARCH</object-name>
         <object-name>TWA_ACT-PWR</object-name>
         <object-name>TWA_POWER</object-name>
@@ -73,6 +75,7 @@
         </parameters>
         <!-- objects added to this will have all white in texture lit up green when console is high. They will also get flood light. -->
         <object-name>EW_LEFT_1</object-name>
+        <object-name>TWA_LEFT_1</object-name>
         <object-name>HMD_1</object-name>
         <object-name>EW_RIGHT_1</object-name>
         <object-name>EW_KNOB_MODE</object-name>
@@ -726,12 +729,14 @@
         <object-name>EW_LEFT_0</object-name>
         <object-name>EW_LEFT_1</object-name>
         <property-base>f16/texture</property-base>
-        <texture-prop>ew-panel-texture</texture-prop>
-        <texture>Aircraft/f16/Models/Cockpit/Textures/panels-B50-left_right-aux-consoles.png</texture>
-    </animation>
+        <texture-prop>ew-panel</texture-prop>
+        <texture>Cockpit/Textures/panels-MLU-left_right-aux-consoles.png</texture>
+    </animation-->
 
     <animation>
         <type>select</type>
+        <object-name>TWA_LEFT_0</object-name>
+        <object-name>TWA_LEFT_1</object-name>
         <object-name>TWA_SEARCH</object-name>
         <object-name>TWA_ACT-PWR</object-name>
         <object-name>TWA_POWER</object-name>
@@ -742,6 +747,6 @@
                 <value>2</value>
             </not-equals>
         </condition>
-    </animation-->
+    </animation>
 
 </PropertyList>
