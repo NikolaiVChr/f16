@@ -11,6 +11,8 @@
         <object-name>CAUTION_RESET</object-name>
         <object-name>COMM1_KNOB</object-name>
         <object-name>COMM2_KNOB</object-name>
+        <object-name>PUSH-TONE_1</object-name>
+        <object-name>PUSH-TONE_2</object-name>
         <object-name>dim-reset</object-name>
         <object-name>ecm-1</object-name>
         <object-name>ecm-2</object-name>
@@ -255,11 +257,14 @@
         <object-name>TF_KNOB</object-name>
         <object-name>COMM1_KNOB</object-name>
         <object-name>COMM2_KNOB</object-name>
+        <object-name>PUSH-TONE_1</object-name>
+        <object-name>PUSH-TONE_2</object-name>
         <object-name>ils-vol-knob</object-name>
         <object-name>msl-vol-knob</object-name>
         <object-name>tacan-vol-knob</object-name>
         <object-name>threat-vol-knob</object-name>
         <object-name>intercom-knob</object-name>
+        <object-name>AVTR_DISP-SEL</object-name>
         <object-name>ecm-1</object-name>
         <object-name>ecm-2</object-name>
         <object-name>ecm-3</object-name>
@@ -350,7 +355,6 @@
         <object-name>BIT</object-name>
         <object-name>AVTR_SW</object-name>
         <object-name>AVTR_TEST</object-name>
-        <object-name>AVTR_DISP-SEL</object-name>
         <object-name>AVTR_CTVS</object-name>
         <object-name>AVTR_AVTR</object-name>
         <object-name>LEFT_CONSOLE.001</object-name>

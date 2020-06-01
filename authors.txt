@@ -1,5 +1,5 @@
 #
-# Authors of FlightGear F-16
+# Authors of FlightGear F-16 Fighting Falcon
 #
 
 
@@ -65,7 +65,7 @@ Martien Van Der Plas
 - 3D modeling/texturing for weapons, stores, racks
 
 NC-687
-- Side stick
+- Side stick and air vent
 
 Barszczisbad (BARS1)
 - Side stick improvement
@@ -103,3 +103,6 @@ FGUK
 
 Petar Jedvaj
 - F-16D 3D model
+
+Marsdolphin
+- Some liveries

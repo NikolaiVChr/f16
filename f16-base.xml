@@ -302,7 +302,7 @@
                 <x-offset-m archive="y">0</x-offset-m>
                 <y-offset-m archive="y">0.85</y-offset-m>
                 <z-offset-m archive="y">-4</z-offset-m>
-                <default-field-of-view-deg>60</default-field-of-view-deg>
+                <default-field-of-view-deg>62</default-field-of-view-deg>
                 <limits>
                     <right>
                         <heading-max-deg>170</heading-max-deg>
@@ -3367,7 +3367,7 @@ There is also small changes in tail for different variants with and without brak
             <lift_cover type="bool">false</lift_cover>
             <front-on type="bool">true</front-on>
             <front-off type="bool">false</front-off>
-            <helmet-damping type="double">0.25</helmet-damping>
+            <helmet-damping type="double">0.325</helmet-damping>
         </sound>
         <settings>
             <bingo type="int">1250</bingo>
