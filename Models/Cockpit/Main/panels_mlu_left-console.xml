@@ -33,6 +33,7 @@
         <object-name>horiz-r</object-name>
         <object-name>LEFT_CONSOLE</object-name>
         <object-name>ANTI_G</object-name>
+        <object-name>HF-PBG_TEST</object-name>
         <object-name>AUDIO-1</object-name>
         <object-name>AUDIO-1_0</object-name>
         <object-name>AUDIO-1_1</object-name>
@@ -227,6 +228,7 @@
         </parameters>
         <!-- objects added to this will have all white in texture lit up green when console is high. They will also get flood light -->
         <object-name>ANTI_G</object-name>
+        <object-name>HF-PBG_TEST</object-name>
         <object-name>AUDIO-1_1</object-name>
         <object-name>AUDIO-2_1</object-name>
         <object-name>ECM_1</object-name>

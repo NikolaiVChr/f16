@@ -1,5 +1,5 @@
 AC3Db
-MATERIAL "ac3dmat1" rgb 1 1 1  amb 0.3 0.3 0.3  emis 0 0 0  spec 0.05 0.05 0.05  shi 10  trans 0
+MATERIAL "ac3dmat1" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.5 0.5 0.5  shi 10  trans 0
 MATERIAL "Knobs9" rgb 0.827 0.827 0.827  amb 1 1 1  emis 0 0 0  spec 0.5 0.5 0.5  shi 50  trans 0
 OBJECT world
 kids 5
