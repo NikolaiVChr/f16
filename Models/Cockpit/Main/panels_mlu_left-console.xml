@@ -46,6 +46,7 @@
         <object-name>eec-cover</object-name>
         <object-name>eec-switch</object-name>
         <object-name>ELEC</object-name>
+        <object-name>ELEC_50</object-name>
         <object-name>EPU</object-name>
         <object-name>EPU_0</object-name>
         <object-name>EPU_1</object-name>
@@ -233,6 +234,7 @@
         <object-name>AUDIO-2_1</object-name>
         <object-name>ECM_1</object-name>
         <object-name>ELEC</object-name>
+        <object-name>ELEC_50</object-name>
         <object-name>EPU_1</object-name>
         <object-name>EXT_LIGHTING_1</object-name>
         <object-name>FLIGHT_CONTROL_1</object-name>
@@ -2450,6 +2452,28 @@
             <greater-than-equals>
                 <property>sim/variant-id</property>
                 <value>3</value>
+            </greater-than-equals>
+        </condition>
+    </animation>
+
+    <animation>
+        <type>select</type>
+        <object-name>ELEC</object-name>
+        <condition>
+            <less-than-equals>
+                <property>sim/variant-id</property>
+                <value>3</value>
+            </less-than-equals>
+        </condition>
+    </animation>
+
+    <animation>
+        <type>select</type>
+        <object-name>ELEC_50</object-name>
+        <condition>
+            <greater-than-equals>
+                <property>sim/variant-id</property>
+                <value>4</value>
             </greater-than-equals>
         </condition>
     </animation>
