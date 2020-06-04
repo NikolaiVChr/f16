@@ -1351,7 +1351,7 @@ var MFD_Device =
                     pylons.fcs.setDropMode(!pylons.fcs.getDropMode());
                 } elsif (eventi == 16) {
                     me.ppp.selectPage(me.my.p_HSD);
-                } elsif (eventi = 18) {
+                } elsif (eventi == 18) {
                     swap();
                 }
 # Menu Id's
