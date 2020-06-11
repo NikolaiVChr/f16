@@ -123,6 +123,11 @@
                 <command>dialog-apply</command>
                 <object-name>typ1</object-name>
             </binding>
+            <color>
+	      		<red>1.0</red>
+	      		<green>0.5</green>
+	      		<blue>0.5</blue>
+	      	</color>
         </combo>
 		<button>
 			<legend>Clear</legend>
@@ -201,6 +206,11 @@
                 <command>dialog-apply</command>
                 <object-name>typ2</object-name>
             </binding>
+            <color>
+	      		<red>1.0</red>
+	      		<green>0.5</green>
+	      		<blue>0.5</blue>
+	      	</color>
         </combo>
 		<button>
 			<legend>Clear</legend>
@@ -261,9 +271,9 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>1</red>
-	      		<green>1</green>
-	      		<blue>0.5</blue>
+	      		<red>0.44</red>
+				<green>0.55</green>
+				<blue>0.8</blue>
 	      	</color>
 		</input>
 		<combo>
@@ -279,6 +289,11 @@
                 <command>dialog-apply</command>
                 <object-name>typ3</object-name>
             </binding>
+            <color>
+	      		<red>0.44</red>
+				<green>0.55</green>
+				<blue>0.8</blue>
+	      	</color>
         </combo>
 		<button>
 			<legend>Clear</legend>
@@ -339,9 +354,9 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>0.5</red>
-	      		<green>1</green>
-	      		<blue>0.5</blue>
+	      		<red>0.44</red>
+				<green>0.55</green>
+				<blue>0.8</blue>
 	      	</color>
 		</input>
 		<combo>
@@ -357,6 +372,11 @@
                 <command>dialog-apply</command>
                 <object-name>typ4</object-name>
             </binding>
+            <color>
+	      		<red>0.44</red>
+				<green>0.55</green>
+				<blue>0.8</blue>
+	      	</color>
         </combo>
 		<button>
 			<legend>Clear</legend>
@@ -427,7 +447,7 @@
         <label></label>
     </text>
 	<text>
-        <label>HSD Preloaded HSD Lines:</label>
+        <label>Preloaded HSD Lines:</label>
     </text>
     <group>
 		<layout>hbox</layout>
