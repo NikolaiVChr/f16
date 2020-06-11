@@ -9,7 +9,7 @@ var outstr = "";
 var timestamp = "";
 var output_file = "";
 var f = "";
-var myplaneID = 999;
+var myplaneID = int(rand()*10000);
 var starttime = 0;
 var writetime = 0;
 
@@ -82,8 +82,11 @@ var mainloop = func() {
     write("#" ~ (systime() - starttime)~"\n");
     thread.unlock(mutexWrite);
     writeMyPlanePos();
-    writeMyPlaneAttributes();    
+    writeMyPlaneAttributes();
     foreach (var cx; awg_9.completeList) {
+        if (cx["propNode"] != nil and cx.propNode.getName() == "multiplayer" and getprop("sim/multiplay/txhost") == "mpserver.opredflag.com") {
+            continue;
+        }
         var color = ",Color=Blue";
         if (left(cx.get_Callsign(),5)=="OPFOR" or left(cx.get_Callsign(),4)=="OPFR") {
             color=",Color=Red";
@@ -91,7 +94,9 @@ var mainloop = func() {
         thread.lock(mutexWrite);
         if (find_in_array(seen_ids, cx.tacobj.tacviewID) == -1) {
             append(seen_ids, cx.tacobj.tacviewID);
-            write(cx.tacobj.tacviewID ~ ",Name="~cx.get_model() ~ ",CallSign=" ~ cx.get_Callsign() ~color~"\n")
+            var model_is = cx.get_model();
+            if (model_is=="Mig-28") model_is = "F-16C";
+            write(cx.tacobj.tacviewID ~ ",Name="~ model_is~ ",CallSign=" ~ cx.get_Callsign() ~color~"\n")
         }
         if (cx.tacobj.valid) {
             lon = cx.get_Longitude();

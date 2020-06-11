@@ -2438,7 +2438,7 @@
             </condition>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>1</factor>
+                <factor>0.85</factor>
             </volume>
         </voice>
         <voice>

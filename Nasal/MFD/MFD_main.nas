@@ -543,7 +543,14 @@ var MFD_Device =
                 .setAlignment("center-top")
                 .setColor(1,1,1)
                 .hide()
-                .setFontSize(16, 1.0); 
+                .setFontSize(16, 1.0);
+        svg.swap = svg.p_RDR.createChild("text")
+                .setTranslation(276*0.795*0.30, -482*0.5+225)
+                .setText("SWAP")
+                .setAlignment("center-bottom")
+                .setColor(1,1,1)
+                .set("z-index",1)
+                .setFontSize(13, 1.0); 
         svg.exp = svg.p_RDR.createChild("path")
                     .moveTo(-100,-100)
                     .vert(200)
@@ -696,6 +703,8 @@ var MFD_Device =
                     setprop("instrumentation/radar/ho-field", ho);
                 } elsif (eventi == 4) {
                     setprop("instrumentation/radar/mode-switch", 1);
+                } elsif (eventi == 18) {
+                    swap();
                 }
             }
 
@@ -1251,6 +1260,13 @@ var MFD_Device =
                 .setAlignment("right-center")
                 .setColor(1,1,1)
                 .setFontSize(20, 1.0);
+        svg.swap = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.30, -482*0.5+225)
+                .setText("SWAP")
+                .setAlignment("center-bottom")
+                .setColor(1,1,1)
+                .set("z-index",1)
+                .setFontSize(13, 1.0);
     },
 
     addSMS: func {
@@ -1335,6 +1351,8 @@ var MFD_Device =
                     pylons.fcs.setDropMode(!pylons.fcs.getDropMode());
                 } elsif (eventi == 16) {
                     me.ppp.selectPage(me.my.p_HSD);
+                } elsif (eventi == 18) {
+                    swap();
                 }
 # Menu Id's
 #  CRM
@@ -1554,6 +1572,14 @@ var MFD_Device =
            .setColor(1,1,1)
            .setStrokeLineWidth(1)
            .hide();
+           
+        svg.swap = svg.p_WPN.createChild("text")
+                .setTranslation(276*0.795*0.30, -482*0.5+225)
+                .setText("SWAP")
+                .setAlignment("center-bottom")
+                .setColor(1,1,1)
+                .set("z-index",1)
+                .setFontSize(13, 1.0);
     },
     
     addWPN: func {
@@ -1652,6 +1678,8 @@ var MFD_Device =
                     }
                 } elsif (eventi == 16) {
                     me.ppp.selectPage(me.my.p_HSD);
+                } elsif (eventi == 18) {
+                    swap();
                 }
 # Menu Id's
 #  CRM
@@ -2096,6 +2124,14 @@ var MFD_Device =
                 .setTranslation(-190, -30)
                 .setText("270")
                 .setFontSize(18, 1.0);
+                
+        svg.swap = svg.buttonView.createChild("text")
+                .setTranslation(276*0.795*0.30, -482*0.5+225)
+                .setText("SWAP")
+                .setAlignment("center-bottom")
+                .setColor(1,1,1)
+                .set("z-index",1)
+                .setFontSize(13, 1.0);
 
         svg.centered = 0;
         svg.coupled = 0;
@@ -2194,6 +2230,8 @@ var MFD_Device =
                 } elsif (eventi == 3) {
                     me.root.coupled = !me.root.coupled;
                     me.root.cpl.setText(me.root.coupled==1?"CPL":"DCPL");
+                } elsif (eventi == 18) {
+                    swap();
                 }
             }
 
@@ -2664,6 +2702,8 @@ var MFD_Device =
             }
         }
     },
+    
+    
 
     # Add the menus to each page. 
     setupMenus : func
@@ -2828,7 +2868,7 @@ PFD_Device.update = func(notification=nil)
     };
 
 #F16MfdRecipient.new("BAe-F16b-MFD");
-f16_mfd = F16MfdRecipient.new("F16-MFD");
+var f16_mfd = F16MfdRecipient.new("F16-MFD");
 #UpperMFD = f16_mfd.UpperMFD;
 #LowerMFD = f16_mfd.LowerMFD;
 
@@ -2861,4 +2901,20 @@ var setCursor = func (x, y, screen) {
     #552,482 , 0.795 is for UV map
     uv = [x*552-552*0.5*0.795,-y*486,screen, systime()];
     #printf("slew %d,%d on screen %d", uv[0],uv[1],uv[2]);
+};
+
+var swap = func {
+    var left_page = f16_mfd.MFDl.PFD.current_page.title;
+    var right_page = f16_mfd.MFDr.PFD.current_page.title;
+    
+    foreach(var page ; f16_mfd.MFDr.PFD.pages) {
+        if (page.title == left_page) {
+            f16_mfd.MFDr.PFD.selectPage(page);
+        }
+    }
+    foreach(var page ; f16_mfd.MFDl.PFD.pages) {
+        if (page.title == right_page) {
+            f16_mfd.MFDl.PFD.selectPage(page);
+        }
+    }
 };

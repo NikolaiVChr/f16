@@ -11,6 +11,8 @@
         <object-name>CAUTION_RESET</object-name>
         <object-name>COMM1_KNOB</object-name>
         <object-name>COMM2_KNOB</object-name>
+        <object-name>PUSH-TONE_1</object-name>
+        <object-name>PUSH-TONE_2</object-name>
         <object-name>dim-reset</object-name>
         <object-name>ecm-1</object-name>
         <object-name>ecm-2</object-name>
@@ -31,6 +33,7 @@
         <object-name>horiz-r</object-name>
         <object-name>LEFT_CONSOLE</object-name>
         <object-name>ANTI_G</object-name>
+        <object-name>HF-PBG_TEST</object-name>
         <object-name>AUDIO-1</object-name>
         <object-name>AUDIO-1_0</object-name>
         <object-name>AUDIO-1_1</object-name>
@@ -43,6 +46,7 @@
         <object-name>eec-cover</object-name>
         <object-name>eec-switch</object-name>
         <object-name>ELEC</object-name>
+        <object-name>ELEC_50</object-name>
         <object-name>EPU</object-name>
         <object-name>EPU_0</object-name>
         <object-name>EPU_1</object-name>
@@ -58,6 +62,14 @@
         <object-name>FUEL</object-name>
         <object-name>FUEL_0</object-name>
         <object-name>FUEL_1</object-name>
+        <object-name>AVTR</object-name>
+        <object-name>AVTR_SW</object-name>
+        <object-name>AVTR_TEST</object-name>
+        <object-name>AVTR_DISP-SEL</object-name>
+        <object-name>AVTR_CTVS</object-name>
+        <object-name>AVTR_AVTR</object-name>
+        <object-name>AVTR.001_0</object-name>
+        <object-name>AVTR.001_1</object-name>
         <object-name>GROWTH.001</object-name>
         <object-name>GROWTH.001_0</object-name>
         <object-name>GROWTH.001_1</object-name>
@@ -217,14 +229,17 @@
         </parameters>
         <!-- objects added to this will have all white in texture lit up green when console is high. They will also get flood light -->
         <object-name>ANTI_G</object-name>
+        <object-name>HF-PBG_TEST</object-name>
         <object-name>AUDIO-1_1</object-name>
         <object-name>AUDIO-2_1</object-name>
         <object-name>ECM_1</object-name>
         <object-name>ELEC</object-name>
+        <object-name>ELEC_50</object-name>
         <object-name>EPU_1</object-name>
         <object-name>EXT_LIGHTING_1</object-name>
         <object-name>FLIGHT_CONTROL_1</object-name>
         <object-name>FUEL_1</object-name>
+        <object-name>AVTR.001_1</object-name>
         <object-name>GROWTH.001_1</object-name>
         <object-name>GROWTH.002_1</object-name>
         <object-name>GROWTH.003_1</object-name>
@@ -246,11 +261,22 @@
         <object-name>TF_KNOB</object-name>
         <object-name>COMM1_KNOB</object-name>
         <object-name>COMM2_KNOB</object-name>
+        <object-name>PUSH-TONE_1</object-name>
+        <object-name>PUSH-TONE_2</object-name>
         <object-name>ils-vol-knob</object-name>
         <object-name>msl-vol-knob</object-name>
         <object-name>tacan-vol-knob</object-name>
         <object-name>threat-vol-knob</object-name>
         <object-name>intercom-knob</object-name>
+        <object-name>AVTR_DISP-SEL</object-name>
+        <object-name>ecm-1</object-name>
+        <object-name>ecm-2</object-name>
+        <object-name>ecm-3</object-name>
+        <object-name>ecm-4</object-name>
+        <object-name>ecm-5</object-name>
+        <object-name>ecm-nil</object-name>
+        <object-name>ecm-frm</object-name>
+        <object-name>ecm-spl</object-name>
     </effect>
 
     <effect>
@@ -326,19 +352,15 @@
         <object-name>mal</object-name>
         <object-name>adv</object-name>
         <object-name>slf-tst-num</object-name>
-        <object-name>ecm-1</object-name>
-        <object-name>ecm-2</object-name>
-        <object-name>ecm-3</object-name>
-        <object-name>ecm-4</object-name>
-        <object-name>ecm-5</object-name>
-        <object-name>ecm-nil</object-name>
-        <object-name>ecm-frm</object-name>
-        <object-name>ecm-spl</object-name>
         <object-name>MAL_IND_LTS</object-name>
         <object-name>FCS_CAUTION_RESET</object-name>
         <object-name>FIRE_OHEAT_DETECT</object-name>
         <object-name>CAUTION_RESET</object-name>
         <object-name>BIT</object-name>
+        <object-name>AVTR_SW</object-name>
+        <object-name>AVTR_TEST</object-name>
+        <object-name>AVTR_CTVS</object-name>
+        <object-name>AVTR_AVTR</object-name>
         <object-name>LEFT_CONSOLE.001</object-name>
     </effect>
     
@@ -487,6 +509,8 @@
   <object-name>ecm-nil</object-name>
   <object-name>ecm-frm</object-name>
   <object-name>ecm-spl</object-name>
+  <object-name>AVTR_CTVS</object-name>
+  <object-name>AVTR_AVTR</object-name>
   <type>material</type>
   <condition>
       <property>controls/test/test-panel/mal-ind-lts</property>
@@ -519,9 +543,6 @@
    <blue>1</blue>
   </emission>
  </animation>
- 
-
-  
 
   <animation>
   <object-name>light_epu_gen</object-name><!-- EPU commanded on, but does not supply power -->
@@ -2404,6 +2425,57 @@
             <green>1</green>
             <blue>1</blue>
         </emission>
+    </animation>
+
+    <animation>
+        <type>select</type>
+        <object-name>GROWTH.001_0</object-name>
+        <object-name>GROWTH.001_1</object-name>
+        <condition>
+            <less-than-equals>
+                <property>sim/variant-id</property>
+                <value>2</value>
+            </less-than-equals>
+        </condition>
+    </animation>
+
+    <animation>
+        <type>select</type>
+        <object-name>AVTR_SW</object-name>
+        <object-name>AVTR_TEST</object-name>
+        <object-name>AVTR_DISP-SEL</object-name>
+        <object-name>AVTR_CTVS</object-name>
+        <object-name>AVTR_AVTR</object-name>
+        <object-name>AVTR.001_0</object-name>
+        <object-name>AVTR.001_1</object-name>
+        <condition>
+            <greater-than-equals>
+                <property>sim/variant-id</property>
+                <value>3</value>
+            </greater-than-equals>
+        </condition>
+    </animation>
+
+    <animation>
+        <type>select</type>
+        <object-name>ELEC</object-name>
+        <condition>
+            <less-than-equals>
+                <property>sim/variant-id</property>
+                <value>3</value>
+            </less-than-equals>
+        </condition>
+    </animation>
+
+    <animation>
+        <type>select</type>
+        <object-name>ELEC_50</object-name>
+        <condition>
+            <greater-than-equals>
+                <property>sim/variant-id</property>
+                <value>4</value>
+            </greater-than-equals>
+        </condition>
     </animation>
 
     <effect>
