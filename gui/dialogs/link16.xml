@@ -6,7 +6,7 @@
   	<draggable>true</draggable>
     <resizable>true</resizable>
     <width>250</width>
-    <height>555</height>
+    <height>560</height>
 
     <group>
 		<layout>hbox</layout>
@@ -50,9 +50,9 @@
             <command>dialog-apply</command>
       	</binding>
       	<color>
-			<red>0.44</red>
-			<green>0.55</green>
-			<blue>0.8</blue>
+			<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
       	</color>
 	</input>
 	<input>
@@ -66,9 +66,9 @@
             <command>dialog-apply</command>
       	</binding>
       	<color>
-      		<red>0.44</red>
-			<green>0.55</green>
-			<blue>0.8</blue>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
       	</color>
 	</input>
 	<input>
@@ -82,9 +82,9 @@
             <command>dialog-apply</command>
       	</binding>
       	<color>
-      		<red>0.44</red>
-			<green>0.55</green>
-			<blue>0.8</blue>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
       	</color>
 	</input>
 	<input>
@@ -98,9 +98,9 @@
             <command>dialog-apply</command>
       	</binding>
       	<color>
-      		<red>0.44</red>
-			<green>0.55</green>
-			<blue>0.8</blue>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
       	</color>
 	</input>
 	<input>
@@ -114,9 +114,9 @@
             <command>dialog-apply</command>
       	</binding>
       	<color>
-      		<red>0.44</red>
-			<green>0.55</green>
-			<blue>0.8</blue>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
       	</color>
 	</input>
 	<input>
@@ -130,9 +130,9 @@
             <command>dialog-apply</command>
       	</binding>
       	<color>
-      		<red>0.44</red>
-			<green>0.55</green>
-			<blue>0.8</blue>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
       	</color>
 	</input>
 	<input>
@@ -146,9 +146,9 @@
             <command>dialog-apply</command>
       	</binding>
       	<color>
-      		<red>0.44</red>
-			<green>0.55</green>
-			<blue>0.8</blue>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
       	</color>
 	</input>
 	<input>
@@ -162,9 +162,9 @@
             <command>dialog-apply</command>
       	</binding>
       	<color>
-      		<red>0.44</red>
-			<green>0.55</green>
-			<blue>0.8</blue>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
       	</color>
 	</input>
 	<input>
@@ -178,9 +178,9 @@
             <command>dialog-apply</command>
       	</binding>
       	<color>
-      		<red>0.44</red>
-			<green>0.55</green>
-			<blue>0.8</blue>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
       	</color>
 	</input>
 	<input>
@@ -194,9 +194,9 @@
             <command>dialog-apply</command>
       	</binding>
       	<color>
-      		<red>0.44</red>
-			<green>0.55</green>
-			<blue>0.8</blue>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
       	</color>
 	</input>
 	<input>
@@ -210,13 +210,16 @@
             <command>dialog-apply</command>
       	</binding>
       	<color>
-      		<red>0.44</red>
-			<green>0.55</green>
-			<blue>0.8</blue>
+      		<red>0.5</red>
+      		<green>1</green>
+      		<blue>0.5</blue>
       	</color>
 	</input>
 	<!-- wingman #4 is only used for the Mig28 scenario aircraft -->
 	<empty><stretch>1</stretch></empty>
+
+	<hrule/>
+
 	<text><label>Wingmen only show up in RWR</label></text>
 	<text><label>when no other threats are present.</label></text>
 	<text><label>Wingman #4 is reserved for scenario.</label></text>

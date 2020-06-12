@@ -271,9 +271,9 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>0.44</red>
-				<green>0.55</green>
-				<blue>0.8</blue>
+	      		<red>0.5</red>
+      			<green>1</green>
+      			<blue>0.5</blue>
 	      	</color>
 		</input>
 		<combo>
@@ -290,9 +290,9 @@
                 <object-name>typ3</object-name>
             </binding>
             <color>
-	      		<red>0.44</red>
-				<green>0.55</green>
-				<blue>0.8</blue>
+	      		<red>0.5</red>
+      			<green>1</green>
+      			<blue>0.5</blue>
 	      	</color>
         </combo>
 		<button>
@@ -354,9 +354,9 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>0.44</red>
-				<green>0.55</green>
-				<blue>0.8</blue>
+	      		<red>0.5</red>
+      			<green>1</green>
+      			<blue>0.5</blue>
 	      	</color>
 		</input>
 		<combo>
@@ -373,9 +373,9 @@
                 <object-name>typ4</object-name>
             </binding>
             <color>
-	      		<red>0.44</red>
-				<green>0.55</green>
-				<blue>0.8</blue>
+	      		<red>0.5</red>
+      			<green>1</green>
+      			<blue>0.5</blue>
 	      	</color>
         </combo>
 		<button>
@@ -404,11 +404,11 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<!--<color>
-	      		<red>0.5</red>
-	      		<green>1</green>
-	      		<blue>0.5</blue>
-	      	</color>-->
+	      	<color>
+	      		<red>0.44</red>
+				<green>0.55</green>
+				<blue>0.8</blue>
+	      	</color>
 		</input>
 		<input>
 		  	<width>150</width>
@@ -420,11 +420,11 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<!--<color>
-	      		<red>0.5</red>
-	      		<green>1</green>
-	      		<blue>0.5</blue>
-	      	</color>-->
+	      	<color>
+	      		<red>0.44</red>
+				<green>0.55</green>
+				<blue>0.8</blue>
+	      	</color>
 		</input>
 		<checkbox>
 			<label>Bullseye defined</label>
@@ -447,7 +447,7 @@
         <label></label>
     </text>
 	<text>
-        <label>Preloaded HSD Lines:</label>
+        <label>DTU preloaded HSD Lines:</label>
     </text>
     <group>
 		<layout>hbox</layout>

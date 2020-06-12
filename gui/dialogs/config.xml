@@ -121,7 +121,7 @@
   <text><label>Interior engine volume</label></text>
   
   <slider>
-                  <halign>left</halign>
+                  <halign>center</halign>
                   <property>f16/sound/helmet-damping</property>
                   <min>0</min>
                   <max>1</max>

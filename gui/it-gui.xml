@@ -10,9 +10,9 @@
 		<colors n="0">
 			<background n="0">
 				<alpha>0.95</alpha>
-				<blue>0.213</blue>
-				<green>0.199</green>
-				<red>0.191</red>
+				<blue>0.216</blue>
+				<green>0.202</green>
+				<red>0.192</red>
 			</background>
 			<button n="0">
 				<alpha>0.95</alpha>
@@ -29,20 +29,20 @@
 			<checkbox-highlight n="0">
 				<alpha>0.95</alpha>
 				<blue>0.68</blue>
-				<green>0.61</green>
+				<green>0.60</green>
 				<red>0.55</red>
 			</checkbox-highlight>
 			<checkbox-misc n="0">
 				<alpha>0.95</alpha>
 				<blue>0.68</blue>
-				<green>0.61</green>
+				<green>0.60</green>
 				<red>0.55</red>
 			</checkbox-misc>
 			<combo-editfield n="0">
 				<alpha>0.95</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.42</blue>
+				<green>0.42</green>
+				<red>0.42</red>
 			</combo-editfield>
 			<dial-misc n="0">
 				<alpha>0.95</alpha>
@@ -53,20 +53,20 @@
 			<hrule n="0">
 				<alpha>0.95</alpha>
 				<blue>0.68</blue>
-				<green>0.61</green>
+				<green>0.60</green>
 				<red>0.55</red>
 			</hrule>
 			<input n="0">
 				<alpha>0.95</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.42</blue>
+				<green>0.42</green>
+				<red>0.42</red>
 			</input>
 			<input-legend n="0">
 				<alpha>0.95</alpha>
-				<blue>0.9</blue>
-				<green>0.9</green>
-				<red>0.9</red>
+				<blue>0.0</blue>
+				<green>0.0</green>
+				<red>0.0</red>
 			</input-legend>
 			<input-misc n="0">
 				<alpha>0.95</alpha>
@@ -88,20 +88,20 @@
 			</select-editfield>
 			<slider n="0">
 				<alpha>1.0</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.42</blue>
+				<green>0.42</green>
+				<red>0.42</red>
 			</slider>
 			<textbox-editable n="0">
 				<alpha>0.95</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.42</blue>
+				<green>0.42</green>
+				<red>0.42</red>
 			</textbox-editable>
 			<vrule n="0">
 				<alpha>0.95</alpha>
 				<blue>0.68</blue>
-				<green>0.61</green>
+				<green>0.60</green>
 				<red>0.55</red>
 			</vrule>
 		</colors>
@@ -111,9 +111,9 @@
 		<colors n="0">
 			<background n="0">
 				<alpha>0.95</alpha>
-				<blue>0.213</blue>
-				<green>0.199</green>
-				<red>0.191</red>
+				<blue>0.216</blue>
+				<green>0.202</green>
+				<red>0.192</red>
 			</background>
 			<button n="0">
 				<alpha>0.95</alpha>
@@ -130,20 +130,20 @@
 			<checkbox-highlight n="0">
 				<alpha>0.95</alpha>
 				<blue>0.68</blue>
-				<green>0.61</green>
+				<green>0.60</green>
 				<red>0.55</red>
 			</checkbox-highlight>
 			<checkbox-misc n="0">
 				<alpha>0.95</alpha>
 				<blue>0.68</blue>
-				<green>0.61</green>
+				<green>0.60</green>
 				<red>0.55</red>
 			</checkbox-misc>
 			<combo-editfield n="0">
 				<alpha>0.95</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.42</blue>
+				<green>0.42</green>
+				<red>0.42</red>
 			</combo-editfield>
 			<dial-misc n="0">
 				<alpha>0.95</alpha>
@@ -154,20 +154,20 @@
 			<hrule n="0">
 				<alpha>0.95</alpha>
 				<blue>0.68</blue>
-				<green>0.61</green>
+				<green>0.60</green>
 				<red>0.55</red>
 			</hrule>
 			<input n="0">
 				<alpha>0.95</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.42</blue>
+				<green>0.42</green>
+				<red>0.42</red>
 			</input>
 			<input-legend n="0">
 				<alpha>0.95</alpha>
-				<blue>0.9</blue>
-				<green>0.9</green>
-				<red>0.9</red>
+				<blue>0.0</blue>
+				<green>0.0</green>
+				<red>0.0</red>
 			</input-legend>
 			<input-misc n="0">
 				<alpha>0.95</alpha>
@@ -183,26 +183,26 @@
 			</radio-foreground>
 			<select-editfield n="0">
 				<alpha>0.95</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.42</blue>
+				<green>0.42</green>
+				<red>0.42</red>
 			</select-editfield>
 			<slider n="0">
 				<alpha>1.0</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.42</blue>
+				<green>0.42</green>
+				<red>0.42</red>
 			</slider>
 			<textbox-editable n="0">
 				<alpha>0.95</alpha>
-				<blue>0.4</blue>
-				<green>0.4</green>
-				<red>0.4</red>
+				<blue>0.42</blue>
+				<green>0.42</green>
+				<red>0.42</red>
 			</textbox-editable>
 			<vrule n="0">
 				<alpha>0.95</alpha>
 				<blue>0.68</blue>
-				<green>0.61</green>
+				<green>0.60</green>
 				<red>0.55</red>
 			</vrule>
 		</colors>

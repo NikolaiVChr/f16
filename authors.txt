@@ -36,6 +36,7 @@ J Maverick 16
 - RWR/RCS data research and update
 - Effects improvement
 - GoPro views
+- Custom GUI
 - Various fixes and improvements
 - Splashes
 
