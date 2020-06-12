@@ -594,7 +594,7 @@
             <visibility-range-nm type="int">160</visibility-range-nm>
         </multiplay>
 
-        <gui n="0" include="gui/it-gui.xml"/>
+        <gui n="0" include="gui/f16-gui.xml"/>
         
         <help>
             <key>

@@ -85,7 +85,7 @@
     <menu n="101">
      <label>F-16C Block 30</label>
         <item n="10">
-          <label>Payload quick select</label>
+          <label>Payload quick setup</label>
           <binding>
             <command>dialog-show</command>
             <dialog-name>payload</dialog-name>
