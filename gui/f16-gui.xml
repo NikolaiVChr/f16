@@ -11,9 +11,9 @@
 		<colors n="0">
 			<background n="0">
 				<alpha>0.95</alpha>
-				<blue>0.216</blue>
-				<green>0.202</green>
-				<red>0.192</red>
+				<blue>0.22</blue>
+				<green>0.205</green>
+				<red>0.195</red>
 			</background>
 			<button n="0">
 				<alpha>0.95</alpha>
@@ -23,9 +23,9 @@
 			</button>
 			<checkbox-foreground n="0">
 				<alpha>0.95</alpha>
-				<blue>0.173</blue>
-				<green>0.169</green>
-				<red>0.161</red>
+				<blue>0.16</blue>
+				<green>0.16</green>
+				<red>0.16</red>
 			</checkbox-foreground>
 			<checkbox-highlight n="0">
 				<alpha>0.95</alpha>
@@ -112,9 +112,9 @@
 		<colors n="0">
 			<background n="0">
 				<alpha>0.95</alpha>
-				<blue>0.216</blue>
-				<green>0.202</green>
-				<red>0.192</red>
+				<blue>0.22</blue>
+				<green>0.205</green>
+				<red>0.195</red>
 			</background>
 			<button n="0">
 				<alpha>0.95</alpha>
@@ -124,9 +124,9 @@
 			</button>
 			<checkbox-foreground n="0">
 				<alpha>0.95</alpha>
-				<blue>0.173</blue>
-				<green>0.169</green>
-				<red>0.161</red>
+				<blue>0.16</blue>
+				<green>0.16</green>
+				<red>0.16</red>
 			</checkbox-foreground>
 			<checkbox-highlight n="0">
 				<alpha>0.95</alpha>
