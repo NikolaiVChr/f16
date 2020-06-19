@@ -12,8 +12,8 @@
 			<background n="0">
 				<alpha>0.95</alpha>
 				<blue>0.22</blue>
-				<green>0.205</green>
-				<red>0.195</red>
+				<green>0.21</green>
+				<red>0.20</red>
 			</background>
 			<button n="0">
 				<alpha>0.95</alpha>
@@ -113,8 +113,8 @@
 			<background n="0">
 				<alpha>0.95</alpha>
 				<blue>0.22</blue>
-				<green>0.205</green>
-				<red>0.195</red>
+				<green>0.21</green>
+				<red>0.20</red>
 			</background>
 			<button n="0">
 				<alpha>0.95</alpha>

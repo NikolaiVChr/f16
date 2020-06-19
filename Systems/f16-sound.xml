@@ -2438,7 +2438,7 @@
             </condition>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>0.85</factor>
+                <factor>0.80</factor>
             </volume>
         </voice>
         <voice>
@@ -2504,7 +2504,7 @@
             </condition>
             <volume>
                 <property>/environment/rain-norm</property>
-                <factor>0.39</factor>
+                <factor>0.37</factor>
             </volume>
             <volume>
                 <property>fdm/jsbsim/fcs/canopy-pos-norm</property>
