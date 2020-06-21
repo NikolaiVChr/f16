@@ -725,6 +725,11 @@
 			        <binding>
 			            <command>dialog-apply</command>
 			      	</binding>
+			      	<color>
+	      				<red>0.44</red>
+						<green>0.55</green>
+						<blue>0.8</blue>
+	      			</color>
 				</input>
 			</group>
 		</group>

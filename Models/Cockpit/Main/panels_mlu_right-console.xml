@@ -1370,6 +1370,7 @@
         <object-name>PBG</object-name>
         <object-name>O2</object-name>
         <object-name>EM-NO-TE</object-name>
+        <object-name>plug</object-name>
     </effect>
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-knob</inherits-from>

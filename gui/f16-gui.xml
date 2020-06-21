@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- F-16 Viper GUI -->
+<!-- Based on IT-GUI -->
+
+<!-- Copyright (c) 2020 Josh Davidson (Octal450) -->
+
+<PropertyList>
+	
+	<style n="0">
+		<colors n="0">
+			<background n="0">
+				<alpha>0.95</alpha>
+				<blue>0.22</blue>
+				<green>0.21</green>
+				<red>0.20</red>
+			</background>
+			<button n="0">
+				<alpha>0.95</alpha>
+				<blue>0.15</blue>
+				<green>0.15</green>
+				<red>0.15</red>
+			</button>
+			<checkbox-foreground n="0">
+				<alpha>0.95</alpha>
+				<blue>0.16</blue>
+				<green>0.16</green>
+				<red>0.16</red>
+			</checkbox-foreground>
+			<checkbox-highlight n="0">
+				<alpha>0.95</alpha>
+				<blue>0.68</blue>
+				<green>0.60</green>
+				<red>0.55</red>
+			</checkbox-highlight>
+			<checkbox-misc n="0">
+				<alpha>0.95</alpha>
+				<blue>0.68</blue>
+				<green>0.60</green>
+				<red>0.55</red>
+			</checkbox-misc>
+			<combo-editfield n="0">
+				<alpha>0.95</alpha>
+				<blue>0.42</blue>
+				<green>0.42</green>
+				<red>0.42</red>
+			</combo-editfield>
+			<dial-misc n="0">
+				<alpha>0.95</alpha>
+				<blue>0.9</blue>
+				<green>0.9</green>
+				<red>0.9</red>
+			</dial-misc>
+			<hrule n="0">
+				<alpha>0.95</alpha>
+				<blue>0.68</blue>
+				<green>0.60</green>
+				<red>0.55</red>
+			</hrule>
+			<input n="0">
+				<alpha>0.95</alpha>
+				<blue>0.42</blue>
+				<green>0.42</green>
+				<red>0.42</red>
+			</input>
+			<input-legend n="0">
+				<alpha>0.95</alpha>
+				<blue>0.0</blue>
+				<green>0.0</green>
+				<red>0.0</red>
+			</input-legend>
+			<input-misc n="0">
+				<alpha>0.95</alpha>
+				<blue>0.0</blue>
+				<green>0.0</green>
+				<red>0.0</red>
+			</input-misc>
+			<radio-foreground n="0">
+				<alpha>0.95</alpha>
+				<blue>0.0</blue>
+				<green>0.0</green>
+				<red>0.0</red>
+			</radio-foreground>
+			<select-editfield n="0">
+				<alpha>0.95</alpha>
+				<blue>0.2</blue>
+				<green>0.2</green>
+				<red>0.2</red>
+			</select-editfield>
+			<slider n="0">
+				<alpha>1.0</alpha>
+				<blue>0.42</blue>
+				<green>0.42</green>
+				<red>0.42</red>
+			</slider>
+			<textbox-editable n="0">
+				<alpha>0.95</alpha>
+				<blue>0.42</blue>
+				<green>0.42</green>
+				<red>0.42</red>
+			</textbox-editable>
+			<vrule n="0">
+				<alpha>0.95</alpha>
+				<blue>0.68</blue>
+				<green>0.60</green>
+				<red>0.55</red>
+			</vrule>
+		</colors>
+	</style>
+	
+	<style n="1">
+		<colors n="0">
+			<background n="0">
+				<alpha>0.95</alpha>
+				<blue>0.22</blue>
+				<green>0.21</green>
+				<red>0.20</red>
+			</background>
+			<button n="0">
+				<alpha>0.95</alpha>
+				<blue>0.15</blue>
+				<green>0.15</green>
+				<red>0.15</red>
+			</button>
+			<checkbox-foreground n="0">
+				<alpha>0.95</alpha>
+				<blue>0.16</blue>
+				<green>0.16</green>
+				<red>0.16</red>
+			</checkbox-foreground>
+			<checkbox-highlight n="0">
+				<alpha>0.95</alpha>
+				<blue>0.68</blue>
+				<green>0.60</green>
+				<red>0.55</red>
+			</checkbox-highlight>
+			<checkbox-misc n="0">
+				<alpha>0.95</alpha>
+				<blue>0.68</blue>
+				<green>0.60</green>
+				<red>0.55</red>
+			</checkbox-misc>
+			<combo-editfield n="0">
+				<alpha>0.95</alpha>
+				<blue>0.42</blue>
+				<green>0.42</green>
+				<red>0.42</red>
+			</combo-editfield>
+			<dial-misc n="0">
+				<alpha>0.95</alpha>
+				<blue>0.9</blue>
+				<green>0.9</green>
+				<red>0.9</red>
+			</dial-misc>
+			<hrule n="0">
+				<alpha>0.95</alpha>
+				<blue>0.68</blue>
+				<green>0.60</green>
+				<red>0.55</red>
+			</hrule>
+			<input n="0">
+				<alpha>0.95</alpha>
+				<blue>0.42</blue>
+				<green>0.42</green>
+				<red>0.42</red>
+			</input>
+			<input-legend n="0">
+				<alpha>0.95</alpha>
+				<blue>0.0</blue>
+				<green>0.0</green>
+				<red>0.0</red>
+			</input-legend>
+			<input-misc n="0">
+				<alpha>0.95</alpha>
+				<blue>0.9</blue>
+				<green>0.9</green>
+				<red>0.9</red>
+			</input-misc>
+			<radio-foreground n="0">
+				<alpha>0.95</alpha>
+				<blue>0.0</blue>
+				<green>0.0</green>
+				<red>0.0</red>
+			</radio-foreground>
+			<select-editfield n="0">
+				<alpha>0.95</alpha>
+				<blue>0.42</blue>
+				<green>0.42</green>
+				<red>0.42</red>
+			</select-editfield>
+			<slider n="0">
+				<alpha>1.0</alpha>
+				<blue>0.42</blue>
+				<green>0.42</green>
+				<red>0.42</red>
+			</slider>
+			<textbox-editable n="0">
+				<alpha>0.95</alpha>
+				<blue>0.42</blue>
+				<green>0.42</green>
+				<red>0.42</red>
+			</textbox-editable>
+			<vrule n="0">
+				<alpha>0.95</alpha>
+				<blue>0.68</blue>
+				<green>0.60</green>
+				<red>0.55</red>
+			</vrule>
+		</colors>
+	</style>
+
+</PropertyList>

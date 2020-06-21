@@ -32,6 +32,8 @@
 		</button>
 	</group>
 
+	<hrule/>
+
   	<text>
 	    <label>Coordinates</label>
 	    <height>25</height>
