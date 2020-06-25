@@ -198,28 +198,31 @@ RWRCanvas = {
 #                   .hide();
 #        }
 # Threat list ID:
-        rwr.AIRCRAFT_VIGGEN   = "37";
-        rwr.AIRCRAFT_EAGLE    = "15";
+        #REVISION: 2020/06/25
+        #OPRF Fleet
+        rwr.AIRCRAFT_WARTHOG  = "10";
         rwr.AIRCRAFT_TOMCAT   = "14";
+        rwr.AIRCRAFT_EAGLE    = "15";
+        rwr.AIRCRAFT_FALCON   = "16";
+        rwr.AIRCRAFT_FISHBED  = "21";
+        rwr.AIRCRAFT_FLANKER  = "27";
+        rwr.AIRCRAFT_FULCRUM  = "29";
+        rwr.AIRCRAFT_VIGGEN   = "37";
+        rwr.AIRCRAFT_BLACKBIRD = "71";
+        rwr.AIRCRAFT_JAGUAR   = "JA";
+        rwr.AIRCRAFT_MIRAGE   = "M2";
+        rwr.AIRCRAFT_SEARCH   = "S";
         rwr.ASSET_BUK         = "11";
         rwr.ASSET_GARGOYLE    = "20"; # Other namings for tracking and radar: BB, CS.
+        rwr.ASSET_FRIGATE     = "SH";
+        rwr.SCENARIO_OPPONENT = "28";
+        #MISC
         rwr.AIRCRAFT_FAGOT    = "MG";
-        rwr.AIRCRAFT_FISHBED  = "21";
-        rwr.AIRCRAFT_FULCRUM  = "29";
-        rwr.AIRCRAFT_FLANKER  = "27";
         rwr.AIRCRAFT_FULLBACK = "34";
         rwr.AIRCRAFT_PAKFA    = "57";
-        rwr.AIRCRAFT_MIRAGE   = "M2";
-        rwr.AIRCRAFT_FALCON   = "16";
-        rwr.AIRCRAFT_WARTHOG  = "10";
-        rwr.ASSET_FRIGATE     = "SH";
-        rwr.AIRCRAFT_SEARCH   = "S";
-        rwr.AIRCRAFT_BLACKBIRD = "71";
         rwr.AIRCRAFT_TYPHOON  = "EF";
         rwr.AIRCRAFT_HORNET   = "18";
         rwr.AIRCRAFT_FLAGON   = "SU";
-        rwr.SCENARIO_OPPONENT = "28";
-        rwr.AIRCRAFT_JAGUAR   = "JA";
         rwr.AIRCRAFT_PHANTOM  = "F4";
         rwr.AIRCRAFT_SKYHAWK  = "A4";
         rwr.AIRCRAFT_TIGER    = "F5";
@@ -300,6 +303,7 @@ RWRCanvas = {
                 "F-111C":                   rwr.AIRCRAFT_AARDVARK,
                 "A-10-modelB":              rwr.AIRCRAFT_WARTHOG,
                 "Su-15":                    rwr.AIRCRAFT_FLAGON,
+                "jaguar":                   rwr.AIRCRAFT_JAGUAR,
                 "Jaguar-GR3":               rwr.AIRCRAFT_JAGUAR,
                 "E3B":                      rwr.AIRCRAFT_SEARCH,
                 "E-2C-Hawkeye":             rwr.AIRCRAFT_SEARCH,
@@ -360,6 +364,8 @@ RWRCanvas = {
                 "mp-clemenceau":            rwr.ASSET_FRIGATE,
                 "ufo":                      rwr.AIRCRAFT_UFO,
                 "bluebird-osg":             rwr.AIRCRAFT_UFO,
+                "Vostok-1":                 rwr.AIRCRAFT_UFO,
+                "SpaceShuttle":             rwr.AIRCRAFT_UFO,
                 "F-23C_BlackWidow-II":      rwr.AIRCRAFT_UFO,
         };
         rwr.shownList = [];

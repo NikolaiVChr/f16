@@ -432,32 +432,18 @@
                 <menu n="101">
                     <enabled type="bool">true</enabled>
                     <item>
-                        <label>Autostart</label>
+                        <label>Configuration</label>
+                        <name>f16config</name>
                         <binding>
-                            <command>nasal</command>
-                            <script>f16.autostart();</script>
+                          <command>dialog-show</command>
+                          <dialog-name>f16config</dialog-name>
                         </binding>
-                    </item>
-                    <item>
-                        <label>Repair</label>
-                        <binding>
-                            <command>nasal</command>
-                            <script>f16.repair();</script>
-                        </binding>
-                    </item>
+                      </item>
                     <item>
                         <label>Select Livery</label>
                         <binding>
                             <command>nasal</command>
                             <script>aircraft.livery.dialog.toggle();</script>
-                        </binding>
-                    </item>
-                    <item>
-                        <label>Link 16</label>
-                        <name>link16</name>
-                        <binding>
-                          <command>dialog-show</command>
-                          <dialog-name>link16</dialog-name>
                         </binding>
                     </item>
                     <item>
@@ -476,14 +462,14 @@
                           <dialog-name>controlPanel2</dialog-name>
                         </binding>
                       </item>
-                    <item>
-                        <label>Config</label>
-                        <name>f16config</name>
+                      <item>
+                        <label>Link 16</label>
+                        <name>link16</name>
                         <binding>
                           <command>dialog-show</command>
-                          <dialog-name>f16config</dialog-name>
+                          <dialog-name>link16</dialog-name>
                         </binding>
-                      </item> 
+                    </item>
                     <item>
                         <label>Pushback</label>
                         <enabled type="bool">true</enabled>
@@ -492,7 +478,7 @@
                             <command>dialog-show</command>
                             <dialog-name>pushback</dialog-name>
                         </binding>
-                    </item>                   
+                    </item>
                     <item>
                         <label>Training Scenario</label>
                         <enabled type="bool">true</enabled>
