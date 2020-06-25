@@ -17,7 +17,7 @@ var test = func (echoHeading, echoPitch, echoRoll, bearing, frontRCS) {
 };
 
 var rcs_database = {
-	#REVISION: 2020/06/25
+	#REVISION: 2020/06/25_2
     "default":                  150,    #default value if target's model isn't listed
     #OPRF Fleet and related
     "A-10":                     23.5,
@@ -42,7 +42,7 @@ var rcs_database = {
     "Mig-29":                   6,      #guess
     "m2000-5":                  1.5,    #average
     "m2000-5B":                 1.5,    #average
-    "m2000-5B-backseat":        0.0001, low so it doesn't show up on radar
+    "m2000-5B-backseat":        0.0001, #low so it doesn't show up on radar
     "SU-27":                    15,     #some data shows 22
     "J-11A":                    15,     #same as Su-27
     "Jaguar-GR1":               6,      #guess
