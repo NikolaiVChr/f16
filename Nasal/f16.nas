@@ -1692,8 +1692,7 @@ var ignoreLoop = func () {
                   getprop("ignore-list/troll-5"),
                   getprop("ignore-list/troll-6"),
                   getprop("ignore-list/troll-7"),
-                  getprop("ignore-list/troll-8"),
-                  getprop("ignore-list/troll-9")];
+                  getprop("ignore-list/troll-8")];
     var listMP = props.globals.getNode("ai/models/").getChildren("multiplayer");
     foreach (m; listMP) {
       var thisCallsign = m.getValue("callsign");

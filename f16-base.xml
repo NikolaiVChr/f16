@@ -62,6 +62,10 @@
             <path>/f16/avionics/ils-volume</path>
             <path>/f16/avionics/rwr-volume</path>
             <path>/f16/avionics/intercom-volume</path>
+            <path>/ignore-list/troll-1</path>
+            <path>/ignore-list/troll-2</path>
+            <path>/ignore-list/troll-3</path>
+            <path>/ignore-list/troll-4</path>
         </aircraft-data>
         <tags>
             <tag>fighter</tag>

@@ -6,13 +6,13 @@
   	<draggable>true</draggable>
     <resizable>true</resizable>
     <width>250</width>
-    <height>475</height>
+    <height>425</height>
 
     <group>
 		<layout>hbox</layout>
 		<empty><stretch>1</stretch></empty>
 
-		<text><label>Ignore trolls</label></text>
+		<text><label>Troll Blacklist</label></text>
 
 		<empty><stretch>1</stretch></empty>
 
@@ -32,8 +32,10 @@
 		</button>
 	</group>
 
+	<hrule/>
+
   	<text>
-	    <label>Block callsigns:</label>
+	    <label>Ignored callsigns:</label>
 	    <height>25</height>
 	</text>
 
@@ -165,25 +167,11 @@
       		<blue>0.5</blue>
       	</color>
 	</input>
-	<input>
-	  	<width>250</width>
-	  	<height>25</height>
-	  	<label>Troll 9</label>
-	  	<property>ignore-list/troll-9</property>
-	  	<live>true</live>
-	  	<halign>left</halign>
-        <binding>
-            <command>dialog-apply</command>
-      	</binding>
-      	<color>
-      		<red>1</red>
-      		<green>0.5</green>
-      		<blue>0.5</blue>
-      	</color>
-	</input>
 	<empty><stretch>1</stretch></empty>
-	<text><label></label></text>
-	<text><label></label></text>
-	<text><label></label></text>
+
+	<hrule/>
+
+	<text><label>Block chat messages from trolls when</label></text>
+	<text><label>having Weapons MP damage active.</label></text>
 
 </PropertyList>
