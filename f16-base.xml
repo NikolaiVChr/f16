@@ -62,10 +62,6 @@
             <path>/f16/avionics/ils-volume</path>
             <path>/f16/avionics/rwr-volume</path>
             <path>/f16/avionics/intercom-volume</path>
-            <path>/ignore-list/troll-1</path>
-            <path>/ignore-list/troll-2</path>
-            <path>/ignore-list/troll-3</path>
-            <path>/ignore-list/troll-4</path>
         </aircraft-data>
         <tags>
             <tag>fighter</tag>
@@ -1338,6 +1334,21 @@ There is also small changes in tail for different variants with and without brak
                 <mod-up>
                 </mod-up>
              </key>
+             <key n="112">
+              <name>p</name>
+              <desc>Toggle the pause state of the sim</desc>
+              <binding>
+                    <command>nasal</command>
+                    <script>
+                        if (getprop("payload/armament/msg")) {
+                            screen.log.write("Please do not pause while in combat over MP!");
+                        } else {
+                            setprop("/sim/freeze/master", !getprop("/sim/freeze/master"));
+                            screen.log.write("Sim is paused");
+                        }
+                    </script>
+              </binding>
+            </key>
             <key n="87">
                 <name>SHIFT-W</name>
                 <desc>View RWR</desc>

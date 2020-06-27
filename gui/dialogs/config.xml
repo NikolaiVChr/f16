@@ -64,9 +64,10 @@
   <hrule/>
 
   <group>
-    <layout>hbox</layout>
-    <text><label>Weapons MP discharge messages</label></text>
+    <layout>vbox</layout>
     <checkbox>
+      <label>Weapons MP discharge messages</label>
+      <halign>left</halign>
       <property>payload/armament/msg</property>
       <live>true</live>
       <binding>
@@ -75,25 +76,28 @@
             if(getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
               setprop("payload/armament/msg", !getprop("payload/armament/msg"));
             }
-          </script>
+            screen.log.write("Weapons MP messages " ~ (getprop("/payload/armament/msg") ? "ON" : "OFF")  , 0.5, 0.5, 1);</script>
       </binding>
     </checkbox>
   </group>
-  <text><label>Enable this to let your weapons and</label></text>
-  <text><label>cannon fire messages be visible over MP.</label></text>
-  <text><label>WARNING: This will also allow others to damage you</label></text>
-  <text><label>and cannot be toggled in-air.</label></text>
-  <text><label>Avoid using against other players if not agreed upon.</label></text>
-  <text><label>Note this will force blackout to be enabled.</label></text>
-  <text><label>Simulation speed will be set to normal.</label></text>
-  <text><label>It will also remove the payload window in air and MP pilot-list.</label></text>
+  <text><halign>left</halign><label>Enable this feature on ground to let your weapons</label></text>
+  <text><halign>left</halign><label>and cannon fire messages be visible over MP.</label></text>
+  <text><halign>left</halign><label>WARNING: You will be able to both inflict and receive</label></text>
+  <text><halign>left</halign><label>damage from other compatible aircraft.</label></text>
+  <text><halign>left</halign><label>Avoid using against players without mutual consent.</label></text>
+  <text><halign>left</halign><label>- Blackout/Redout will always be on.</label></text>
+  <text><halign>left</halign><label>- Simulation rate will be normal.</label></text>
+  <text><halign>left</halign><label>- Emergency altitude increase will be disabled.</label></text>
+  <text><halign>left</halign><label>- Payload window will not be available in air.</label></text>
+  <text><halign>left</halign><label>- Map traffic and pilot list will be disabled.</label></text>
 
   <hrule/>
 
   <group>
-    <layout>hbox</layout>
-    <text><label>1997 G-suit</label></text>
+    <layout>vbox</layout>
     <checkbox>
+      <label>Wear 1997 G-suit</label>
+      <halign>left</halign>
       <property>sim/rendering/redout/new</property>
       <live>true</live>
         <binding>
@@ -102,16 +106,15 @@
         </binding>
     </checkbox>
   </group>
-  <text><label>Enable this to use a newer more capable G-suit.</label></text>
-  <text><label>Disabled means G-suit anno 1979.</label></text>
+  <text><halign>left</halign><label>Enable this to use a newer more capable G-suit.</label></text>
+  <text><halign>left</halign><label>Disabled means G-suit year 1979.</label></text>
 
   <hrule/>
   
   <group>
           <layout>hbox</layout>
-          <text><label>Ask crew chief to charge JFS accumulators</label></text>
           <button>
-            <legend>Request</legend>
+            <legend>Ask crew chief to charge JFS accumulators</legend>
             <binding>
               <command>nasal</command>
               <script>
@@ -130,9 +133,10 @@
   <hrule/>
 
   <group>
-    <layout>hbox</layout>
-    <text><label>Activate external power</label></text>
+    <layout>vbox</layout>
     <checkbox>
+      <label>Activate external power unit</label>
+      <halign>left</halign>
       <property>fdm/jsbsim/elec/sources/external-pwr</property>
       <live>true</live>
         <binding>
@@ -155,7 +159,7 @@
                   <live>true</live>
                   <vertical>false</vertical>
                   <pref-height>40</pref-height>
-                  <pref-width>250</pref-width>
+                  <pref-width>225</pref-width>
                   <binding>
                     <command>dialog-apply</command>
                   </binding>
@@ -164,9 +168,10 @@
     <hrule/>
   
     <group>
-    <layout>hbox</layout>
-    <text><label>Activate Auto ordnance view</label></text>
+    <layout>vbox</layout>
     <checkbox>
+      <label>Activate Auto ordnance view</label>
+      <halign>left</halign>
       <property>/controls/armament/automissileview</property>
       <live>true</live>
         <binding>
@@ -175,6 +180,6 @@
         </binding>
     </checkbox>
   </group>
-  <text><label>Will follow released weapon.</label></text>
+  <text><halign>left</halign><label>Will follow released weapon.</label></text>
 
 </PropertyList>

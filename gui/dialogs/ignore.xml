@@ -6,7 +6,7 @@
   	<draggable>true</draggable>
     <resizable>true</resizable>
     <width>250</width>
-    <height>425</height>
+    <height>345</height>
 
     <group>
 		<layout>hbox</layout>
@@ -124,38 +124,6 @@
 	  	<height>25</height>
 	  	<label>Troll 6</label>
 	  	<property>ignore-list/troll-6</property>
-	  	<live>true</live>
-	  	<halign>left</halign>
-        <binding>
-            <command>dialog-apply</command>
-      	</binding>
-      	<color>
-      		<red>1</red>
-      		<green>0.5</green>
-      		<blue>0.5</blue>
-      	</color>
-	</input>
-	<input>
-	  	<width>250</width>
-	  	<height>25</height>
-	  	<label>Troll 7</label>
-	  	<property>ignore-list/troll-7</property>
-	  	<live>true</live>
-	  	<halign>left</halign>
-        <binding>
-            <command>dialog-apply</command>
-      	</binding>
-      	<color>
-      		<red>1</red>
-      		<green>0.5</green>
-      		<blue>0.5</blue>
-      	</color>
-	</input>
-	<input>
-	  	<width>250</width>
-	  	<height>25</height>
-	  	<label>Troll 8</label>
-	  	<property>ignore-list/troll-8</property>
 	  	<live>true</live>
 	  	<halign>left</halign>
         <binding>

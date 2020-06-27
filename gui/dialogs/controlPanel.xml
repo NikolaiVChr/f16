@@ -695,6 +695,11 @@
 							}
 						</script>
 			      	</binding>
+			      	<color>
+      		            <red>1</red>
+      		            <green>0.35</green>
+      		            <blue>0.35</blue>
+      	            </color>
 			    </button>
 			    <text><label>EMER STORES JETTISON</label></text>
 			</group>
