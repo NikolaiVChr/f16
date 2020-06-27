@@ -38,7 +38,7 @@
 
   <hrule/>
 
-  <group>
+  <!--group>
     <layout>table</layout>
     <button>
       <row>0</row>
@@ -47,6 +47,19 @@
       <binding>
         <command>nasal</command>
         <script>f16.autostart();</script>
+      </binding>
+    </button-->
+
+    <group>
+    <layout>table</layout>
+    <button>
+      <row>0</row>
+      <col>0</col>
+      <legend>Checklists</legend>
+      <binding>
+        <command>dialog-show</command>
+        <dialog-name>checklist</dialog-name>
+        <offset>1</offset>
       </binding>
     </button>
 
