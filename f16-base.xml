@@ -471,15 +471,6 @@
                         </binding>
                     </item>
                     <item>
-                        <label>Pushback</label>
-                        <enabled type="bool">true</enabled>
-                        <name>pushback</name>
-                        <binding>
-                            <command>dialog-show</command>
-                            <dialog-name>pushback</dialog-name>
-                        </binding>
-                    </item>
-                    <item>
                         <label>Training Scenario</label>
                         <enabled type="bool">true</enabled>
                         <name>scenario28</name>

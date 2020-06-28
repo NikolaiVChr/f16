@@ -74,6 +74,18 @@
     </button>
   </group>
 
+  <group>
+    <layout>hbox</layout>
+    <button>
+    <legend>Call pushback</legend>
+      <binding>
+         <command>dialog-show</command>
+         <dialog-name>pushback</dialog-name>
+         <offset>1</offset>
+      </binding>
+    </button>
+  </group>
+
   <hrule/>
 
   <group>
