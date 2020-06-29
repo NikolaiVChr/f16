@@ -38,10 +38,61 @@
 
   <hrule/>
 
+  <!--group>
+    <layout>table</layout>
+    <button>
+      <row>0</row>
+      <col>0</col>
+      <legend>Quick autostart</legend>
+      <binding>
+        <command>nasal</command>
+        <script>f16.autostart();</script>
+      </binding>
+    </button-->
+
+    <group>
+    <layout>table</layout>
+    <button>
+      <row>0</row>
+      <col>0</col>
+      <legend>Checklists</legend>
+      <binding>
+        <command>dialog-show</command>
+        <dialog-name>checklist</dialog-name>
+        <offset>1</offset>
+      </binding>
+    </button>
+
+    <button>
+      <row>0</row>
+      <col>1</col>
+      <legend>Repair damage</legend>
+      <binding>
+        <command>nasal</command>
+        <script>f16.repair();</script>
+      </binding>
+    </button>
+  </group>
+
   <group>
     <layout>hbox</layout>
-    <text><label>MP discharge messages</label></text>
+    <button>
+    <legend>Call pushback</legend>
+      <binding>
+         <command>dialog-show</command>
+         <dialog-name>pushback</dialog-name>
+         <offset>1</offset>
+      </binding>
+    </button>
+  </group>
+
+  <hrule/>
+
+  <group>
+    <layout>vbox</layout>
     <checkbox>
+      <label>Weapons MP discharge messages</label>
+      <halign>left</halign>
       <property>payload/armament/msg</property>
       <live>true</live>
       <binding>
@@ -50,24 +101,28 @@
             if(getprop("fdm/jsbsim/gear/unit[0]/WOW")) {
               setprop("payload/armament/msg", !getprop("payload/armament/msg"));
             }
-          </script>
+            screen.log.write("Weapons MP messages " ~ (getprop("/payload/armament/msg") ? "ON" : "OFF")  , 0.5, 0.5, 1);</script>
       </binding>
     </checkbox>
   </group>
-  <text><label>Enable this to let your missile and</label></text>
-  <text><label>cannon fire messages be visible over MP.</label></text>
-  <text><label>Warning this will also allow others to damage you.</label></text>
-  <text><label>Note this will force blackout to be enabled.</label></text>
-  <text><label>Simulation speed will be set to normal.</label></text>
-  <text><label>It will also remove the payload window in air and MP pilot-list.</label></text>
-  <text><label>Cannot be toggled in-air.</label></text>
+  <text><halign>left</halign><label>Enable this feature on ground to let your weapons</label></text>
+  <text><halign>left</halign><label>and cannon fire messages be visible over MP.</label></text>
+  <text><halign>left</halign><label>WARNING: You will be able to both inflict and receive</label></text>
+  <text><halign>left</halign><label>damage from other compatible aircraft.</label></text>
+  <text><halign>left</halign><label>Avoid using against players without mutual consent.</label></text>
+  <text><halign>left</halign><label>- Blackout/Redout will always be on.</label></text>
+  <text><halign>left</halign><label>- Simulation rate will be normal.</label></text>
+  <text><halign>left</halign><label>- Emergency altitude increase will be disabled.</label></text>
+  <text><halign>left</halign><label>- Payload window will not be available in air.</label></text>
+  <text><halign>left</halign><label>- Map traffic and pilot list will be disabled.</label></text>
 
   <hrule/>
 
   <group>
-    <layout>hbox</layout>
-    <text><label>1997 G-suit</label></text>
+    <layout>vbox</layout>
     <checkbox>
+      <label>Wear 1997 G-suit</label>
+      <halign>left</halign>
       <property>sim/rendering/redout/new</property>
       <live>true</live>
         <binding>
@@ -76,30 +131,15 @@
         </binding>
     </checkbox>
   </group>
-  <text><label>Enable this to use a newer more capable G-suit.</label></text>
-  <text><label>Disabled means G-suit anno 1979.</label></text>
+  <text><halign>left</halign><label>Enable this to use a newer more capable G-suit.</label></text>
+  <text><halign>left</halign><label>Disabled means G-suit year 1979.</label></text>
 
-  <hrule/>
-  
-  <group>
-    <layout>hbox</layout>
-    <text><label>Activate external power</label></text>
-    <checkbox>
-      <property>fdm/jsbsim/elec/sources/external-pwr</property>
-      <live>true</live>
-        <binding>
-          <command>property-toggle</command>
-          <property>fdm/jsbsim/elec/sources/external-pwr</property>
-        </binding>
-    </checkbox>
-  </group>
-  
   <hrule/>
   
   <group>
           <layout>hbox</layout>
           <button>
-            <legend>Request</legend>
+            <legend>Ask crew chief to charge JFS accumulators</legend>
             <binding>
               <command>nasal</command>
               <script>
@@ -113,8 +153,23 @@
               </script>
             </binding>
           </button>
-          <text><label>Ask crew chief to charge JFS accumulators</label></text>
       </group>
+  
+  <hrule/>
+
+  <group>
+    <layout>vbox</layout>
+    <checkbox>
+      <label>Activate external power unit</label>
+      <halign>left</halign>
+      <property>fdm/jsbsim/elec/sources/external-pwr</property>
+      <live>true</live>
+        <binding>
+          <command>property-toggle</command>
+          <property>fdm/jsbsim/elec/sources/external-pwr</property>
+        </binding>
+    </checkbox>
+  </group>
   
   <hrule/>
   
@@ -129,7 +184,7 @@
                   <live>true</live>
                   <vertical>false</vertical>
                   <pref-height>40</pref-height>
-                  <pref-width>250</pref-width>
+                  <pref-width>225</pref-width>
                   <binding>
                     <command>dialog-apply</command>
                   </binding>
@@ -138,9 +193,10 @@
     <hrule/>
   
     <group>
-    <layout>hbox</layout>
-    <text><label>Activate Auto ordnance view</label></text>
+    <layout>vbox</layout>
     <checkbox>
+      <label>Activate Auto ordnance view</label>
+      <halign>left</halign>
       <property>/controls/armament/automissileview</property>
       <live>true</live>
         <binding>
@@ -149,5 +205,6 @@
         </binding>
     </checkbox>
   </group>
+  <text><halign>left</halign><label>Will follow released weapon.</label></text>
 
 </PropertyList>

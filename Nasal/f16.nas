@@ -246,6 +246,7 @@ var loop_flare = func {
       setprop("/gui/map/draw-traffic", 0);
       setprop("/sim/gui/dialogs/map-canvas/draw-TFC", 0);
       setprop("/sim/rendering/als-filters/use-filtering", 1);
+      setprop("/sim/freeze/master", 0);
       call(func{var interfaceController = fg1000.GenericInterfaceController.getOrCreateInstance();
       interfaceController.stop();},nil,var err2=[]);
     }
@@ -1690,10 +1691,7 @@ var ignoreLoop = func () {
                   getprop("ignore-list/troll-3"),
                   getprop("ignore-list/troll-4"),
                   getprop("ignore-list/troll-5"),
-                  getprop("ignore-list/troll-6"),
-                  getprop("ignore-list/troll-7"),
-                  getprop("ignore-list/troll-8"),
-                  getprop("ignore-list/troll-9")];
+                  getprop("ignore-list/troll-6")];
     var listMP = props.globals.getNode("ai/models/").getChildren("multiplayer");
     foreach (m; listMP) {
       var thisCallsign = m.getValue("callsign");

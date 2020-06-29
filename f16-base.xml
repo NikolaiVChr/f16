@@ -72,8 +72,8 @@
             <tag>hud</tag>
             <tag>refuel</tag>
         </tags>
-        <state include="states/running.xml" n="0"/>
-        <state include="states/ramp.xml" n="1"/>
+        <state include="states/ramp.xml" n="0"/>
+        <!--state include="states/running.xml" n="1"/-->
         <state include="states/cruise.xml" n="2"/>
         <state include="states/approach.xml" n="3"/>
         <checklists include="gui/checklists.xml"/>
@@ -432,32 +432,18 @@
                 <menu n="101">
                     <enabled type="bool">true</enabled>
                     <item>
-                        <label>Autostart</label>
+                        <label>Configuration</label>
+                        <name>f16config</name>
                         <binding>
-                            <command>nasal</command>
-                            <script>f16.autostart();</script>
+                          <command>dialog-show</command>
+                          <dialog-name>f16config</dialog-name>
                         </binding>
-                    </item>
-                    <item>
-                        <label>Repair</label>
-                        <binding>
-                            <command>nasal</command>
-                            <script>f16.repair();</script>
-                        </binding>
-                    </item>
+                      </item>
                     <item>
                         <label>Select Livery</label>
                         <binding>
                             <command>nasal</command>
                             <script>aircraft.livery.dialog.toggle();</script>
-                        </binding>
-                    </item>
-                    <item>
-                        <label>Link 16</label>
-                        <name>link16</name>
-                        <binding>
-                          <command>dialog-show</command>
-                          <dialog-name>link16</dialog-name>
                         </binding>
                     </item>
                     <item>
@@ -476,23 +462,14 @@
                           <dialog-name>controlPanel2</dialog-name>
                         </binding>
                       </item>
-                    <item>
-                        <label>Config</label>
-                        <name>f16config</name>
+                      <item>
+                        <label>Link 16</label>
+                        <name>link16</name>
                         <binding>
                           <command>dialog-show</command>
-                          <dialog-name>f16config</dialog-name>
+                          <dialog-name>link16</dialog-name>
                         </binding>
-                      </item> 
-                    <item>
-                        <label>Pushback</label>
-                        <enabled type="bool">true</enabled>
-                        <name>pushback</name>
-                        <binding>
-                            <command>dialog-show</command>
-                            <dialog-name>pushback</dialog-name>
-                        </binding>
-                    </item>                   
+                    </item>
                     <item>
                         <label>Training Scenario</label>
                         <enabled type="bool">true</enabled>
@@ -1348,6 +1325,21 @@ There is also small changes in tail for different variants with and without brak
                 <mod-up>
                 </mod-up>
              </key>
+             <key n="112">
+              <name>p</name>
+              <desc>Toggle the pause state of the sim</desc>
+              <binding>
+                    <command>nasal</command>
+                    <script>
+                        if (getprop("payload/armament/msg")) {
+                            screen.log.write("Please do not pause while in combat over MP!");
+                        } else {
+                            setprop("/sim/freeze/master", !getprop("/sim/freeze/master"));
+                            screen.log.write("Sim is paused");
+                        }
+                    </script>
+              </binding>
+            </key>
             <key n="87">
                 <name>SHIFT-W</name>
                 <desc>View RWR</desc>
