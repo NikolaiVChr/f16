@@ -43,10 +43,20 @@
     <button>
       <row>0</row>
       <col>0</col>
-      <legend>Quick autostart</legend>
+      <legend>Quick start</legend>
       <binding>
         <command>nasal</command>
-        <script>f16.autostart();</script>
+        <script>f16.autostart()</script>
+      </binding>
+    </button>
+
+    <button>
+      <row>0</row>
+      <col>1</col>
+      <legend>Cold and Dark</legend>
+      <binding>
+        <command>nasal</command>
+        <script>f16.coldndark()</script>
       </binding>
     </button-->
 
@@ -154,8 +164,8 @@
             </binding>
           </button>
       </group>
-  
-  <hrule/>
+
+  <empty><stretch>1</stretch></empty>
 
   <group>
     <layout>vbox</layout>
@@ -176,19 +186,19 @@
   <text><label>Interior engine volume</label></text>
   
   <slider>
-                  <halign>center</halign>
-                  <property>f16/sound/helmet-damping</property>
-                  <min>0</min>
-                  <max>1</max>
-                  <step>0.025</step>
-                  <live>true</live>
-                  <vertical>false</vertical>
-                  <pref-height>40</pref-height>
-                  <pref-width>225</pref-width>
-                  <binding>
-                    <command>dialog-apply</command>
-                  </binding>
-                </slider>
+     <halign>center</halign>
+     <property>f16/sound/helmet-damping</property>
+     <min>0</min>
+     <max>1</max>
+     <step>0.025</step>
+     <live>true</live>
+     <vertical>false</vertical>
+     <pref-height>40</pref-height>
+     <pref-width>225</pref-width>
+     <binding>
+        <command>dialog-apply</command>
+     </binding>
+  </slider>
                 
     <hrule/>
   
@@ -206,5 +216,7 @@
     </checkbox>
   </group>
   <text><halign>left</halign><label>Will follow released weapon.</label></text>
+  
+  <empty><stretch>1</stretch></empty>
 
 </PropertyList>

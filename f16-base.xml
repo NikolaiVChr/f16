@@ -487,28 +487,16 @@
                             <command>dialog-show</command>
                             <dialog-name>circles</dialog-name>
                         </binding>
-                    </item> 
-                </menu>
-                <menu n="102">
-                    <label>|</label>
-                    <enabled type="bool">false</enabled>
-                </menu>
-                <menu n="103">
-                    <label>Tacview</label>
-                    <enabled type="bool">true</enabled>
-                    <item>
-                        <label>Toggle Record</label>
-                        <binding>
-                            <command>nasal</command>
-                            <script>
-                                if (tacview.starttime == 0) {
-                                    tacview.startwrite();
-                                } elsif (tacview.starttime != 0) {
-                                    tacview.stopwrite();
-                                }
-                            </script>
-                        </binding>
                     </item>
+                    <item>
+                        <label>Tacview Options</label>
+                        <enabled type="bool">true</enabled>
+                        <name>tacview</name>
+                        <binding>
+                            <command>dialog-show</command>
+                            <dialog-name>tacview</dialog-name>
+                        </binding>
+                    </item> 
                 </menu>
             </default>
         </menubar>
@@ -1016,6 +1004,7 @@ There is also small changes in tail for different variants with and without brak
                 <payload-reload type="bool">false</payload-reload><!-- need to be defined to be backward compat with 2018.3 -->
             </dialogs>
         </gui>
+        <tacview-recording type="bool">0</tacview-recording>
     </sim>
     <input n="0">
         <mice n="0">

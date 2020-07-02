@@ -698,4 +698,6 @@
             <colspan>6</colspan>
         </hrule>
     </group>
+
+    <empty><stretch>1</stretch></empty>
 </PropertyList>
