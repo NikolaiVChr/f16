@@ -242,11 +242,12 @@ var loop_flare = func {
         call(func{fgcommand('dialog-close', props.Node.new({"dialog-name": "instrument-failures"}))},nil,var err2 = []);
       }      
       setprop("sim/freeze/fuel",0);
+      setprop("/sim/freeze/master", 0);
+      setprop("/sim/freeze/clock", 0);
       setprop("/sim/speed-up", 1);
       setprop("/gui/map/draw-traffic", 0);
       setprop("/sim/gui/dialogs/map-canvas/draw-TFC", 0);
       setprop("/sim/rendering/als-filters/use-filtering", 1);
-      setprop("/sim/freeze/master", 0);
       call(func{var interfaceController = fg1000.GenericInterfaceController.getOrCreateInstance();
       interfaceController.stop();},nil,var err2=[]);
     }

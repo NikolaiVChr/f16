@@ -4,7 +4,7 @@
  <sim>
   <model>
    <livery>
-    <name type="string">USAF 31FW, 510FS AV "Cordenons"</name>
+    <name type="string">USAF 31FW, 510FS AV "Have Glass V"</name>
     <texture>Liveries/Block40/90-0709.png</texture>
     <owner type="string">USAF</owner>
    </livery>
