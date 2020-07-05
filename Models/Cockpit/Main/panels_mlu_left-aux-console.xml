@@ -36,6 +36,18 @@
         <object-name>JMR_switch</object-name>
         <object-name>MWS_switch</object-name>
         <object-name>RWR_switch</object-name>
+        <object-name>CMDS_RIGHT</object-name>
+        <object-name>EW_RIGHT_50_0</object-name>
+        <object-name>EW_RIGHT_50_1</object-name>
+        <object-name>MODE_50_knob</object-name>
+        <object-name>MWS_50_switch</object-name>
+        <object-name>RWR_50_switch</object-name>
+        <object-name>JETT_50_switch</object-name>
+        <object-name>JMR_50_switch</object-name>
+        <object-name>01_50_switch</object-name>
+        <object-name>02_50_switch</object-name>
+        <object-name>CH_50_switch</object-name>
+        <object-name>FL_50_switch</object-name>
         <object-name>GEAR</object-name>
         <object-name>GEAR-left</object-name>
         <object-name>GEAR-nose</object-name>
@@ -84,7 +96,6 @@
         <object-name>GEAR</object-name>
         <object-name>ALT_GEAR_1</object-name>
         <object-name>SPEED_BRAKE_drum</object-name>
-        
         <object-name>ew-set1</object-name>
         <object-name>ew-set2</object-name>
         <object-name>ew-set3</object-name>
@@ -94,6 +105,8 @@
         <object-name>TWA_ACT-PWR</object-name>
         <object-name>TWA_POWER</object-name>
         <object-name>TWA_ALTITUDE</object-name>
+        <object-name>EW_RIGHT_50_1</object-name>
+        <object-name>MODE_50_knob</object-name>
     </effect>
 
     <effect>
@@ -121,6 +134,14 @@
         <object-name>SW_HOOK</object-name>
         <object-name>EMER_JETT</object-name>
         <object-name>horn_silencer</object-name>
+        <object-name>MWS_50_switch</object-name>
+        <object-name>RWR_50_switch</object-name>
+        <object-name>JETT_50_switch</object-name>
+        <object-name>JMR_50_switch</object-name>
+        <object-name>01_50_switch</object-name>
+        <object-name>02_50_switch</object-name>
+        <object-name>CH_50_switch</object-name>
+        <object-name>FL_50_switch</object-name>
     </effect>
 
   <!--<animation>
@@ -733,6 +754,84 @@
         <texture>Cockpit/Textures/panels-MLU-left_right-aux-consoles.png</texture>
     </animation-->
 
+    <!--animation>
+        <type>select</type>
+        <object-name>ew-run</object-name>
+        <object-name>ew-set1</object-name>
+        <object-name>ew-set2</object-name>
+        <object-name>ew-set3</object-name>
+        <object-name>ew-set4</object-name>
+        <object-name>EW_BRT_KNOB</object-name>
+        <object-name>DISP_switch</object-name>
+        <object-name>EW_CANVAS_DISPLAY</object-name>
+        <object-name>EW_KNOB_MODE</object-name>
+        <object-name>EW_RIGHT_0</object-name>
+        <object-name>EW_RIGHT_1</object-name>
+        <object-name>JMR_switch</object-name>
+        <object-name>MWS_switch</object-name>
+        <object-name>RWR_switch</object-name>
+        <object-name>JTSN_switch</object-name>
+        <condition>
+          <or>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>2</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>6</value>
+            </equals>
+          </or>
+        </condition>
+    </animation-->
+
+    <animation>
+        <type>select</type>
+        <object-name>EW_RIGHT_50_0</object-name>
+        <object-name>EW_RIGHT_50_1</object-name>
+        <object-name>MODE_50_knob</object-name>
+        <object-name>MWS_50_switch</object-name>
+        <object-name>RWR_50_switch</object-name>
+        <object-name>JETT_50_switch</object-name>
+        <object-name>JMR_50_switch</object-name>
+        <object-name>01_50_switch</object-name>
+        <object-name>02_50_switch</object-name>
+        <object-name>CH_50_switch</object-name>
+        <object-name>FL_50_switch</object-name>
+        <condition>
+          <or>
+            <not>
+                <property>sim/variant-id</property>
+                <value>0</value>
+            </not>
+            <not>
+                <property>sim/variant-id</property>
+                <value>1</value>
+            </not>
+            <not>
+                <property>sim/variant-id</property>
+                <value>2</value>
+            </not>
+            <not>
+                <property>sim/variant-id</property>
+                <value>3</value>
+            </not>
+            <not>
+                <property>sim/variant-id</property>
+                <value>4</value>
+            </not>
+            <not>
+                <property>sim/variant-id</property>
+                <value>5</value>
+            </not>
+            <not>
+                <property>sim/variant-id</property>
+                <value>6</value>
+            </not>
+          </or>
+        </condition>
+    </animation>
+
     <animation>
         <type>select</type>
         <object-name>TWA_LEFT_0</object-name>
@@ -742,10 +841,16 @@
         <object-name>TWA_POWER</object-name>
         <object-name>TWA_ALTITUDE</object-name>
         <condition>
-            <not-equals>
+          <or>
+            <not>
                 <property>sim/variant-id</property>
                 <value>2</value>
-            </not-equals>
+            </not>
+            <not>
+                <property>sim/variant-id</property>
+                <value>6</value>
+            </not>
+          </or>
         </condition>
     </animation>
 

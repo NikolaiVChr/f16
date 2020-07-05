@@ -86,6 +86,9 @@
         <object-name>JET_FUEL</object-name>
         <object-name>JET_FUEL_0</object-name>
         <object-name>JET_FUEL_1</object-name>
+        <object-name>JET_FUEL_50</object-name>
+        <object-name>JET_FUEL_50_0</object-name>
+        <object-name>JET_FUEL_50_1</object-name>
         <object-name>JFS_RUN_light</object-name>
         <object-name>LEFT_CONSOLE.001</object-name>
         <object-name>light_a</object-name>
@@ -246,6 +249,7 @@
         <object-name>GROWTH.004</object-name>
         <object-name>IFF.001</object-name>
         <object-name>JET_FUEL_1</object-name>
+        <object-name>JET_FUEL_50_1</object-name>
         <object-name>MANUAL_PITCH_1</object-name>
         <object-name>MANUAL_TRIM_1</object-name>
         <object-name>TEST_1</object-name>
@@ -2475,6 +2479,70 @@
                 <property>sim/variant-id</property>
                 <value>4</value>
             </greater-than-equals>
+        </condition>
+    </animation>
+
+    <animation>
+        <type>select</type>
+        <object-name>JET_FUEL_0</object-name>
+        <object-name>JET_FUEL_1</object-name>
+        <condition>
+            <or>
+                <equals>
+                    <property>sim/aircraft</property>
+                    <value>YF-16</value>
+                </equals>
+                <equals>
+                    <property>sim/aircraft</property>
+                    <value>f16-block-10</value>
+                </equals>
+                <equals>
+                    <property>sim/aircraft</property>
+                    <value>f16-block-20</value>
+                </equals>
+                <equals>
+                    <property>sim/aircraft</property>
+                    <value>f16-block-32</value>
+                </equals>
+                <equals>
+                    <property>sim/aircraft</property>
+                    <value>f16-block-42</value>
+                </equals>
+                <equals>
+                    <property>sim/aircraft</property>
+                    <value>f16-block-52</value>
+                </equals>
+                <equals>
+                    <property>sim/aircraft</property>
+                    <value>f16-simplified</value>
+                </equals>
+            </or>
+        </condition>
+    </animation>
+
+    <animation>
+        <type>select</type>
+        <object-name>JET_FUEL_50_0</object-name>
+        <object-name>JET_FUEL_50_1</object-name>
+        <condition>
+            <or>
+                <equals>
+                    <property>sim/aircraft</property>
+                    <value>f16-block-30</value>
+                </equals>
+                <equals>
+                    <property>sim/aircraft</property>
+                    <value>f16-block-40</value>
+                </equals>
+                <equals>
+                    <property>sim/aircraft</property>
+                    <value>f16-block-50</value>
+                </equals>
+                <equals>
+                    <property>sim/aircraft</property>
+                    <value>f16-block-60</value>
+                </equals>
+            </or>
         </condition>
     </animation>
 
