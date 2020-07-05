@@ -35,7 +35,9 @@
                     <pri-inst-pnl-knob type="double">0.5</pri-inst-pnl-knob>
                     <flood-inst-pnl-knob type="double">0.1</flood-inst-pnl-knob>
                     <console-primary-knob type="double">0.2</console-primary-knob>
+                    <console-flood-knob type="double">0.3</console-flood-knob>
                 </lighting-panel>
+                <landing-light type="int">1</landing-light>
             </lighting>
             <seat>
                 <ejection-safety-lever type="bool">true</ejection-safety-lever>

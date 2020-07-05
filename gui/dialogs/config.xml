@@ -38,17 +38,17 @@
 
   <hrule/>
 
-  <!--group>
+  <group>
     <layout>table</layout>
-    <button>
+    <!--button>
       <row>0</row>
       <col>0</col>
       <legend>Quick start</legend>
       <binding>
         <command>nasal</command>
-        <script>f16.autostart()</script>
+        <script>f16.autostart();</script>
       </binding>
-    </button>
+    </button-->
 
     <button>
       <row>0</row>
@@ -56,12 +56,10 @@
       <legend>Cold and Dark</legend>
       <binding>
         <command>nasal</command>
-        <script>f16.coldndark()</script>
+        <script>f16.coldndark();</script>
       </binding>
-    </button-->
+    </button>
 
-    <group>
-    <layout>table</layout>
     <button>
       <row>0</row>
       <col>0</col>
@@ -74,19 +72,18 @@
     </button>
 
     <button>
-      <row>0</row>
-      <col>1</col>
+      <row>1</row>
+      <col>0</col>
       <legend>Repair damage</legend>
       <binding>
         <command>nasal</command>
         <script>f16.repair();</script>
       </binding>
     </button>
-  </group>
 
-  <group>
-    <layout>hbox</layout>
     <button>
+    <row>1</row>
+    <col>1</col>
     <legend>Call pushback</legend>
       <binding>
          <command>dialog-show</command>

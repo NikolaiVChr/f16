@@ -984,7 +984,10 @@ var autostart = func {
   setprop("controls/ventilation/airconditioning-enabled",1);
   setprop("controls/ventilation/airconditioning-source",1);
   setprop("controls/lighting/ext-lighting-panel/master", 1);
-  setprop("controls/lighting/lighting-panel/pri-inst-pnl-knob", 0.5);  
+  setprop("controls/lighting/lighting-panel/console-flood-knob", 0.3);
+  setprop("controls/lighting/lighting-panel/pri-inst-pnl-knob", 0.5);
+  setprop("controls/lighting/lighting-panel/flood-inst-pnl-knob", 0.1);
+  setprop("controls/lighting/lighting-panel/console-primary-knob", 0.2);
   setprop("instrumentation/radar/radar-standby", 0);
   setprop("instrumentation/comm[0]/volume",1);
   setprop("instrumentation/comm[1]/volume",1);
@@ -1011,6 +1014,49 @@ var autostart = func {
 var autostart2 = func {
   setprop("f16/engine/jfs-start-switch",1);    
   settimer(repair3, 40);
+};
+
+var coldndark = func {
+  screen.log.write("Shutting down, standby..");
+  setprop("fdm/jsbsim/fcs/canopy-engage", 1);
+  setprop("fdm/jsbsim/elec/switches/epu",0);
+  setprop("fdm/jsbsim/elec/switches/epu-cover",1);
+  eng.JFS.start_switch_last = 0;# bypass check for switch was in OFF
+  setprop("fdm/jsbsim/elec/switches/main-pwr",0);
+  setprop("f16/avionics/power-rdr-alt",0);
+  setprop("f16/avionics/power-fcr",0);
+  setprop("f16/avionics/power-right-hdpt",0);
+  setprop("f16/avionics/power-left-hdpt",0);
+  setprop("f16/avionics/power-mfd",0);
+  setprop("f16/avionics/power-ufc",0);
+  setprop("f16/avionics/power-mmc",0);
+  setprop("f16/avionics/power-gps",0);
+  setprop("f16/avionics/power-dl",0);
+  setprop("f16/avionics/power-st-sta",0);
+  setprop("f16/avionics/ins-knob", 0);#OFF
+  setprop("f16/avionics/hud-sym", 0);
+  setprop("f16/avionics/hud-brt", 0);
+  setprop("f16/avionics/ew-rwr-switch",0);
+  setprop("f16/avionics/ew-disp-switch",0);
+  setprop("f16/avionics/ew-mws-switch",0);
+  setprop("f16/avionics/ew-jmr-switch",0);
+  setprop("f16/avionics/ew-mode-knob",0);
+  setprop("f16/avionics/pbg-switch",-1);
+  setprop("controls/ventilation/airconditioning-enabled",0);
+  setprop("controls/ventilation/airconditioning-source",0);
+  setprop("controls/lighting/ext-lighting-panel/master", 0);
+  setprop("controls/lighting/landing-light",0);
+  setprop("controls/lighting/lighting-panel/console-flood-knob", 0.0);
+  setprop("controls/lighting/lighting-panel/pri-inst-pnl-knob", 0.0);
+  setprop("controls/lighting/lighting-panel/flood-inst-pnl-knob", 0.0);
+  setprop("controls/lighting/lighting-panel/console-primary-knob", 0.0);
+  setprop("instrumentation/radar/radar-standby", 1);
+  setprop("instrumentation/comm[0]/volume",0);
+  setprop("instrumentation/comm[1]/volume",0);
+  setprop("controls/seat/ejection-safety-lever",0);
+  setprop("f16/engine/feed",0);
+  setprop("f16/engine/cutoff-release-lever",1);
+  setprop("f16/engine/jfs-start-switch",0);
 };
 
 var re_init_listener = setlistener("/sim/signals/reinit", func {
