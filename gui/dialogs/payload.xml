@@ -46,7 +46,7 @@
         <text>
             <row>0</row>
             <col>0</col>
-            <label>Standard Air Patrol</label>
+            <label>Combat Air Patrol</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>0</row>
@@ -54,7 +54,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_patrol();</script>
+                <script>pylons.a2a_cap();</script>
             </binding>
         </button>
 
@@ -67,7 +67,7 @@
         <text>
             <row>2</row>
             <col>0</col>
-            <label>Combat Air Patrol</label>
+            <label>Combat Air Patrol (ER)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>2</row>
@@ -75,7 +75,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_cap();</script>
+                <script>pylons.a2a_capext();</script>
             </binding>
         </button>
 
@@ -88,7 +88,7 @@
         <text>
             <row>4</row>
             <col>0</col>
-            <label>Combat Air Patrol (ER)</label>
+            <label>Counter-Air Patrol</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>4</row>
@@ -96,7 +96,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_capext();</script>
+                <script>pylons.a2a_cpatrol();</script>
             </binding>
         </button>
 
@@ -130,7 +130,7 @@
         <text>
             <row>8</row>
             <col>0</col>
-            <label>Defensive CAP</label>
+            <label>Defensive Counter Air</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>8</row>
@@ -138,7 +138,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_dcap();</script>
+                <script>pylons.a2a_dca();</script>
             </binding>
         </button>
 
@@ -151,7 +151,7 @@
         <text>
             <row>10</row>
             <col>0</col>
-            <label>No Fly Zone (ER)</label>
+            <label>BARCAP (ER)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>10</row>
@@ -159,7 +159,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_nfz();</script>
+                <script>pylons.a2a_barcap();</script>
             </binding>
         </button>
 
