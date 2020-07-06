@@ -23872,7 +23872,7 @@ OBJECT poly
 name "JET_FUEL_50_0"
 data 12
 JET_FUEL.001
-texture "/Users/utente/Desktop/GitHub/Aircrafts/f16/Models/Cockpit/Textures/panels-B50-left_console.png"
+texture "../Textures/panels-B50-left_console.png"
 crease 30.000000
 numvert 8
 0.13964 0.02884 0.49049
@@ -23917,7 +23917,7 @@ OBJECT poly
 name "JET_FUEL_50_1"
 data 12
 JET_FUEL.002
-texture "/Users/utente/Desktop/GitHub/Aircrafts/f16/Models/Cockpit/Textures/panels-B50-left_console.png"
+texture "../Textures/panels-B50-left_console.png"
 crease 30.000000
 numvert 13
 0.16982 0.03015 0.47179

@@ -331,13 +331,13 @@ var MFD_Device =
         obj.canvas = dev_canvas;
         dev_canvas.addPlacement({"node": model_element});
         if (getprop("sim/variant-id") == 2) {
-        dev_canvas.setColorBackground(0.0,0.0,0.04, 1);
+        dev_canvas.setColorBackground(0.0,0.0,0.03, 1);
         } else if (getprop("sim/variant-id") == 4) {
-        dev_canvas.setColorBackground(0.0,0.0,0.06, 1);
+        dev_canvas.setColorBackground(0.0,0.0,0.05, 1);
         } else if (getprop("sim/variant-id") == 5) {
-        dev_canvas.setColorBackground(0.0,0.0,0.06, 1);
+        dev_canvas.setColorBackground(0.0,0.0,0.05, 1);
         } else if (getprop("sim/variant-id") == 6) {
-        dev_canvas.setColorBackground(0.0,0.0,0.06, 1);
+        dev_canvas.setColorBackground(0.0,0.0,0.05, 1);
         } else {
         dev_canvas.setColorBackground(0.002,0.1,0, 0);
         };

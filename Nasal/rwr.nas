@@ -517,11 +517,11 @@ RWRCanvas = {
                 if (getprop("sim/variant-id") == 2) {
                 cv.setColorBackground(0, 0.09, 0);
                 } else if (getprop("sim/variant-id") == 4) {
-                cv.setColorBackground(0, 0.06, 0);
+                cv.setColorBackground(0, 0.065, 0);
                 } else if (getprop("sim/variant-id") == 5) {
-                cv.setColorBackground(0, 0.06, 0);
+                cv.setColorBackground(0, 0.065, 0);
                 } else if (getprop("sim/variant-id") == 6) {
-                cv.setColorBackground(0, 0.06, 0);
+                cv.setColorBackground(0, 0.065, 0);
                 } else {
                 cv.setColorBackground(0, 0.12, 0);
                 };
