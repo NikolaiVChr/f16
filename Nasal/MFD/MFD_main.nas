@@ -330,7 +330,17 @@ var MFD_Device =
 
         obj.canvas = dev_canvas;
         dev_canvas.addPlacement({"node": model_element});
+        if (getprop("sim/variant-id") == 2) {
         dev_canvas.setColorBackground(0.0,0.0,0, 1);
+        } else if (getprop("sim/variant-id") == 4) {
+        dev_canvas.setColorBackground(0.0,0.0,0, 1);
+        } else if (getprop("sim/variant-id") == 5) {
+        dev_canvas.setColorBackground(0.0,0.0,0, 1);
+        } else if (getprop("sim/variant-id") == 6) {
+        dev_canvas.setColorBackground(0.0,0.0,0, 1);
+        } else {
+        dev_canvas.setColorBackground(0.002,0.1,0, 0);
+        };
 # Create a group for the parsed elements
         obj.PFDsvg = dev_canvas.createGroup();
         var pres = canvas.parsesvg(obj.PFDsvg, "Nasal/MFD/MFD.svg");

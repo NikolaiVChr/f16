@@ -18,7 +18,17 @@ var callInit = func {
   });
       
   canvasded.addPlacement({"node": "poly.003", "texture": "canvas.png"});
-  canvasded.setColorBackground(0.00, 0.05, 0.00, 1.00);
+  if (getprop("sim/variant-id") == 2) {
+        canvasded.setColorBackground(0.00, 0.05, 0.00, 1.00);
+        } else if (getprop("sim/variant-id") == 4) {
+        canvasded.setColorBackground(0.00, 0.05, 0.00, 1.00);
+        } else if (getprop("sim/variant-id") == 5) {
+        canvasded.setColorBackground(0.00, 0.05, 0.00, 1.00);
+        } else if (getprop("sim/variant-id") == 6) {
+        canvasded.setColorBackground(0.00, 0.05, 0.00, 1.00);
+        } else {
+        canvasded.setColorBackground(0.00, 0.10, 0.00, 1.00);
+        };
 
   dedGroup = canvasded.createGroup();
   dedGroup.show();

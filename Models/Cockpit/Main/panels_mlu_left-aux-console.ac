@@ -85021,6 +85021,8 @@ name "EW_CANVAS_DISPLAY"
 data 12
 EW_RIGHT.002
 crease 30.000000
+texture "../Textures/panels-MLU-left_right-aux-consoles.png"
+texrep 1 1
 numvert 8
 -0.08921 0.00554 0.39802
 -0.08942 0.00554 0.3204
