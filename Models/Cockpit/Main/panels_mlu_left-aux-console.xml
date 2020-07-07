@@ -55,10 +55,14 @@
         <object-name>GEAR-right</object-name>
         <object-name>gear_lever</object-name>
         <object-name>gear_lever_light</object-name>
-        <object-name>HMD</object-name>
+        <object-name>e</object-name>
         <object-name>HMD_0</object-name>
         <object-name>HMD_1</object-name>
         <object-name>RF_switch</object-name>
+        <object-name>HMCS</object-name>
+        <object-name>HMCS_0</object-name>
+        <object-name>HMCS_1</object-name>
+        <object-name>HMCS_SYM_INT_KNOB</object-name>
         <object-name>horn_silencer</object-name>
         <object-name>JTSN_switch</object-name>
         <object-name>landlight_switch</object-name>
@@ -91,10 +95,12 @@
         <object-name>EW_LOCK</object-name>
         <object-name>TWA_LEFT_1</object-name>
         <object-name>HMD_1</object-name>
+        <object-name>HMCS_1</object-name>
         <object-name>EW_RIGHT_1</object-name>
         <object-name>EW_KNOB_MODE</object-name>
         <object-name>EW_BRT_KNOB</object-name>
         <object-name>SYMBOLOGY_INT_KNOB</object-name>
+        <object-name>HMCS_SYM_INT_KNOB</object-name>
         <object-name>GEAR</object-name>
         <object-name>ALT_GEAR_1</object-name>
         <object-name>SPEED_BRAKE_drum</object-name>
@@ -882,6 +888,55 @@
             <equals>
                 <property>sim/variant-id</property>
                 <value>5</value>
+            </equals>
+          </or>
+        </condition>
+    </animation>
+
+    <animation>
+        <type>select</type>
+        <object-name>HMD_0</object-name>
+        <object-name>HMD_1</object-name>
+        <object-name>RF_switch</object-name>
+        <object-name>SYMBOLOGY_INT_KNOB</object-name>
+        <condition>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>2</value>
+            </equals>
+        </condition>
+    </animation>
+
+    <animation>
+        <type>select</type>
+        <object-name>HMCS_0</object-name>
+        <object-name>HMCS_1</object-name>
+        <object-name>HMCS_SYM_INT_KNOB</object-name>
+        <condition>
+          <or>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>0</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>1</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>3</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>4</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>5</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>6</value>
             </equals>
           </or>
         </condition>
