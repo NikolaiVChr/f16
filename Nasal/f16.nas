@@ -483,7 +483,7 @@ var sendLightsToMp = func {
   var ac_non_ess_2 = getprop("fdm/jsbsim/elec/bus/noness-ac-2");# FORM and TAXI (I added fuselage to this as well)
   var ac_em_2 = getprop("fdm/jsbsim/elec/bus/emergency-ac-2");# POS, ANTICOLL and LAND
 
-  var vi = getprop("sim/model/f16/dragchute");#elongated tailroot
+  var dragChuteRoot = getprop("sim/model/f16/dragchute");#elongated tailroot
   var gear = getprop("fdm/jsbsim/gear/gear-pos-norm");
 
   # TODO: review elec
@@ -505,14 +505,14 @@ var sendLightsToMp = func {
   if ((wing == -1 or wing == 1) and master and ac_em_2 > 100 and (!getprop("sim/multiplay/generic/bool[40]") or !flash)) {
     setprop("sim/multiplay/generic/bool[40]",1);#on/off for wingtip and inlet sides.
     setprop("sim/multiplay/generic/float[9]",0.60+wing*0.40);#brightness for wingtip, back of tail and inlet sides.
-      if (vi) {
+      if (dragChuteRoot) {
         # tail light with dragchute
         setprop("sim/multiplay/generic/bool[42]",1);
       } else {
         setprop("sim/multiplay/generic/bool[42]",0);
       }
 
-      if (!vi) {
+      if (!dragChuteRoot) {
         # tail light without dragchute
         setprop("sim/multiplay/generic/bool[43]",1);
       } else {
@@ -1300,42 +1300,46 @@ var eject = func{
 }
 
 var chute = func{
-  if (getprop("f16/chute/done")==1 or getprop("fdm/jsbsim/elec/bus/batt-1")<20) {
+  if (getprop("f16/chute/done") or getprop("fdm/jsbsim/elec/bus/batt-1") < 20) {
       return;
   }
-  chute1();
+  chuteLoop.start();
 }
 
-var chute1 = func{
-  if (!getprop("sim/model/f16/dragchute") or (getprop("f16/chute/enable")==0 and getprop("f16/chute/done")==1)) {
+var chuteLoopFunc = func{
+  if (getprop("f16/chute/repack")) {
+    setprop("f16/chute/repack", 0);
+	return;
+  }
+  if (!getprop("sim/model/f16/dragchute") or (!getprop("f16/chute/enable") and getprop("f16/chute/done"))) {
+	  chuteLoop.stop();
       return;
-  } elsif (getprop("f16/chute/enable")==0) {
-    setprop("f16/chute/done",1);
-    setprop("f16/chute/enable",1);
-    setprop("f16/chute/force",2);
-    setprop("f16/chute/fold",0);
+  } elsif (!getprop("f16/chute/enable")) {
+    setprop("f16/chute/done", 1);
+    setprop("f16/chute/enable", 1);
+    setprop("f16/chute/force", 2);
+    setprop("f16/chute/fold", 0);
   } else {
-    if (getprop("/velocities/groundspeed-kt")<=3 or getprop("/velocities/airspeed-kt")>250) {
-      setprop("f16/chute/fold",1);
+    if (getprop("/velocities/airspeed-kt") > 250) {
+      setprop("f16/chute/fold", 1);
       setprop("fdm/jsbsim/external_reactions/chute/magnitude", 0);
-      settimer(chute2,2.0);
+      settimer(chuteRelease, 2.0);
+	  chuteLoop.stop();
       return;
-    } elsif (getprop("/velocities/groundspeed-kt")<=25) {
-      setprop("f16/chute/fold",1-getprop("/velocities/groundspeed-kt")/25);
+    } elsif (getprop("/velocities/groundspeed-kt") <= 25) {
+      setprop("f16/chute/fold",1-getprop("/velocities/groundspeed-kt") / 25);
     }
-    var pressure = getprop("fdm/jsbsim/aero/qbar-psf");#dynamic
-    var chuteArea = 200;#squarefeet of chute canopy
+    var pressure = getprop("fdm/jsbsim/aero/qbar-psf"); # dynamic pressure
+    var chuteArea = 200; # squarefeet of chute canopy
     var dragCoeff = 0.50;
-    var force     = pressure*chuteArea*dragCoeff;
+    var force     = pressure * chuteArea * dragCoeff;
     setprop("fdm/jsbsim/external_reactions/chute/magnitude", force);
-    setprop("f16/chute/force", 0,force*0.000154);
+    setprop("f16/chute/force", 0, force * 0.000154);
   }
-  settimer(chute1,0.05);
 }
 
-var chute2 = func{
-  setprop("fdm/jsbsim/external_reactions/chute/magnitude", 0);
-  setprop("f16/chute/enable",0);
+var chuteRelease = func{
+  setprop("f16/chute/enable", 0);
 }
 
 # used in left panel knobs anims.
@@ -1864,3 +1868,5 @@ var flexer = func {
 }
 
 setlistener("controls/flight/alt-rel-button", func (node) {setprop("controls/armament/trigger", node.getValue());});
+
+var chuteLoop = maketimer(0.05, chuteLoopFunc);

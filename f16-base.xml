@@ -1692,6 +1692,19 @@ There is also small changes in tail for different variants with and without brak
                 f16.chute();
                </script>
               </binding>
+              <mod-ctrl>
+			    <binding>
+				  <command>nasal</command>
+				   <script>
+					if (getprop("f16/chute/done")) {
+					  setprop("f16/chute/enable", 0);
+					  setprop("f16/chute/fold", 1);
+					  setprop("fdm/jsbsim/external_reactions/chute/magnitude", 0);
+					  f16.chuteRelease();
+					}
+				   </script>
+				  </binding>
+              </mod-ctrl>
              </key>
              <!--<key n="261">
               <name>F5</name>
