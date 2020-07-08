@@ -56,9 +56,9 @@
 	<group>
 		<visible>
 			<less-than>
-				<property>/sim/variant-id</property>
-				<value>2</value>
-			</less-than>
+                <property>sim/variant-id</property>
+                <value>4</value>
+            </less-than>
 		</visible>
 		<row>2</row>
 		<col>0</col>
@@ -176,10 +176,10 @@
 	
 	<group>
 		<visible>
-			<greater-than-equals>
+			<greater-than>
 				<property>/sim/variant-id</property>
-				<value>2</value>
-			</greater-than-equals>
+				<value>3</value>
+			</greater-than>
 		</visible>
 		<row>2</row>
 		<col>0</col>
