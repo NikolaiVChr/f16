@@ -39,61 +39,85 @@
   <hrule/>
 
   <group>
-    <layout>table</layout>
-    <!--button>
-      <row>0</row>
-      <col>0</col>
-      <legend>Quick start</legend>
-      <binding>
-        <command>nasal</command>
-        <script>f16.autostart();</script>
-      </binding>
-    </button-->
+    <layout>hbox</layout>
 
-    <button>
-      <row>0</row>
-      <col>1</col>
-      <legend>Cold and Dark</legend>
-      <binding>
-        <command>nasal</command>
-        <script>f16.coldndark();</script>
-      </binding>
-    </button>
+    <group>
+      <layout>vbox</layout>
 
-    <button>
-      <row>0</row>
-      <col>0</col>
-      <legend>Checklists</legend>
-      <binding>
-        <command>dialog-show</command>
-        <dialog-name>checklist</dialog-name>
-        <offset>1</offset>
-      </binding>
-    </button>
+    <group>
+      <layout>vbox</layout>
+        <!--button>
+          <legend>Quick start</legend>
+          <binding>
+            <command>nasal</command>
+            <script>f16.autostart();</script>
+          </binding>
+        </button-->
 
-    <button>
+      <button>
+        <legend>Cold and Dark</legend>
+        <binding>
+          <command>nasal</command>
+          <script>f16.coldndark();</script>
+        </binding>
+      </button>
+
+      <button>
+        <legend>Checklists</legend>
+        <binding>
+          <command>dialog-show</command>
+          <dialog-name>checklist</dialog-name>
+          <offset>1</offset>
+        </binding>
+      </button>
+
+      <hrule/>
+
+      <button>
+        <legend>Repair damage</legend>
+        <binding>
+          <command>nasal</command>
+          <script>f16.repair();</script>
+        </binding>
+      </button>
+
+       <button>
+        <legend>Repack chute</legend>
+        <binding>
+          <command>nasal</command>
+          <script>
+          if (!getprop("gear/gear[0]/wow")) {
+            screen.log.write("This is only possible on ground.");
+            return;
+          }
+          if (getprop("f16/chute/done")) {
+            setprop("f16/chute/repack", 1);
+            setprop("f16/chute/done", 0);
+            setprop("f16/chute/enable", 0);
+            setprop("f16/chute/force", 2);
+            setprop("f16/chute/fold", 0);
+            screen.log.write("Drag chute repacked.");
+            setprop("f16/chute/repack", 0);
+            f16.chuteLoop.stop();
+          }
+          </script>
+        </binding>
+      </button>
+
+      <button>
       <row>1</row>
-      <col>0</col>
-      <legend>Repair damage</legend>
-      <binding>
-        <command>nasal</command>
-        <script>f16.repair();</script>
-      </binding>
-    </button>
-
-    <button>
-    <row>1</row>
-    <col>1</col>
-    <legend>Call pushback</legend>
-      <binding>
-         <command>dialog-show</command>
-         <dialog-name>pushback</dialog-name>
-         <offset>1</offset>
-      </binding>
-    </button>
+      <col>1</col>
+      <legend>Call pushback</legend>
+        <binding>
+           <command>dialog-show</command>
+           <dialog-name>pushback</dialog-name>
+           <offset>1</offset>
+        </binding>
+      </button>
   </group>
+</group>
 
-  <hrule/>
+  <vrule/>
 
   <group>
     <layout>vbox</layout>
@@ -111,7 +135,6 @@
             screen.log.write("Weapons MP messages " ~ (getprop("/payload/armament/msg") ? "ON" : "OFF")  , 0.5, 0.5, 1);</script>
       </binding>
     </checkbox>
-  </group>
   <text><halign>left</halign><label>Enable this feature on ground to let your weapons</label></text>
   <text><halign>left</halign><label>and cannon fire messages be visible over MP.</label></text>
   <text><halign>left</halign><label>WARNING: You will be able to both inflict and receive</label></text>
@@ -122,6 +145,8 @@
   <text><halign>left</halign><label>- Emergency altitude increase will be disabled.</label></text>
   <text><halign>left</halign><label>- Payload window will not be available in air.</label></text>
   <text><halign>left</halign><label>- Map traffic and pilot list will be disabled.</label></text>
+  </group>
+  </group>
 
   <hrule/>
 
@@ -137,14 +162,11 @@
           <property>sim/rendering/redout/new</property>
         </binding>
     </checkbox>
-  </group>
   <text><halign>left</halign><label>Enable this to use a newer more capable G-suit.</label></text>
   <text><halign>left</halign><label>Disabled means G-suit year 1979.</label></text>
 
   <hrule/>
   
-  <group>
-	  <layout>hbox</layout>
 	  <button>
 		<legend>Ask crew chief to charge JFS accumulators</legend>
 		<binding>
@@ -160,41 +182,9 @@
 		  </script>
 		</binding>
 	  </button>
-  </group>
-  
-  <group>
-	  <layout>hbox</layout>
-	  <button>
-		<legend>Repack drag chute</legend>
-		<binding>
-		  <command>nasal</command>
-		  <script>
-			if (!getprop("gear/gear[0]/wow")) {
-			  screen.log.write("This is only possible on ground.");
-			  return;
-			}
-			if (getprop("f16/chute/done")) {
-			  setprop("f16/chute/repack", 1);
-			  setprop("f16/chute/done", 0);
-			  setprop("f16/chute/enable", 0);
-			  setprop("f16/chute/force", 2);
-			  setprop("f16/chute/fold", 0);
-			  screen.log.write("Drag chute repacked.");
-			  setprop("f16/chute/repack", 0);
-			  f16.chuteLoop.stop();
-			}
-		  </script>
-		</binding>
-	  </button>
-  </group>
-	  
-	  
-	  
 
   <empty><stretch>1</stretch></empty>
 
-  <group>
-    <layout>vbox</layout>
     <checkbox>
       <label>Activate external power unit</label>
       <halign>left</halign>
@@ -205,8 +195,7 @@
           <property>fdm/jsbsim/elec/sources/external-pwr</property>
         </binding>
     </checkbox>
-  </group>
-  
+
   <hrule/>
   
   <text><label>Interior engine volume</label></text>
@@ -228,8 +217,6 @@
                 
     <hrule/>
   
-    <group>
-    <layout>vbox</layout>
     <checkbox>
       <label>Activate Auto ordnance view</label>
       <halign>left</halign>
@@ -240,8 +227,8 @@
           <property>/controls/armament/automissileview</property>
         </binding>
     </checkbox>
-  </group>
   <text><halign>left</halign><label>Will follow released weapon.</label></text>
+  </group>
   
   <empty><stretch>1</stretch></empty>
 
