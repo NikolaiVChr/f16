@@ -683,6 +683,10 @@
                 <desc>Deploy dragchute</desc>
             </key>
             <key>
+                <name>Ctrl-F5</name>
+                <desc>Release dragchute</desc>
+            </key>
+            <key>
                 <name>F6</name>
                 <desc>Eject</desc>
             </key>
