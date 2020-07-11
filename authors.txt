@@ -12,7 +12,10 @@ Pensacola
 - Liveries
 
 Martin "Pegasus" Schmitt
-- Cockpit textures
+- Cockpit textures and layout
+
+Prohm “Rama” Snitwong
+- Cockpit textures and layout
 
 Nikolai V. Chr.
 - F16 block 10, 20 and YF-16 aerodynamics
@@ -35,6 +38,7 @@ J Maverick 16
 - 3D works (pilot model, weapons/stores, cockpit, misc)
 - RWR/RCS data research and update
 - Effects improvement
+- Systems tweaking
 - GoPro views
 - Custom GUI
 - Various fixes and improvements
@@ -60,7 +64,7 @@ Fabien Barbier
 Jonathan Redpath
 - Hydraulics
 - Splash
-- Bug reporting
+- Bug reporting and fixing
 
 Martien Van Der Plas
 - 3D modeling/texturing for weapons, stores, racks

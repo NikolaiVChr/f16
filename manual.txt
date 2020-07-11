@@ -212,15 +212,15 @@ Some of the settings will give you a wingman.
 To view the AI flying, switch to missile view and click the arrows in lower left corner.
 
 VARIANTS
-- F-16E block 60         : 19000/32500 lbf. Large horz. tail (mod. aero data).
-- F-16CJ block 52        : 17800/29000 lbf. Large horz. tail (mod. aero data).
-- F-16CJ block 50        : 17000/29000 lbf. Large horz. tail (mod. aero data).
-- F-16CG block 42        : 14670/23830 lbf. Large horz. tail (mod. aero data).
-- F-16CG block 40        : 18330/28620 lbf. Large horz. tail (mod. aero data).
-- F-16C block 32         : 14670/23830 lbf. Large horz. tail (mod. aero data).
-- F-16C block 30         : 18330/28620 lbf. Large horz. tail (mod. aero data).
-- F-16AM block 20 (MLU)  : 14670/23830 lbf. Small horz. tail (auth. aero data).
-- F-16A  block 10        : 14670/23830 lbf. Small horz. tail (auth. aero data). Engine has auth. power curves.
+- F-16E Block 60         : 19000/32500 lbf. Large horz. tail (mod. aero data).
+- F-16CJ Block 52        : 17800/29000 lbf. Large horz. tail (mod. aero data).
+- F-16CJ Block 50        : 17000/29000 lbf. Large horz. tail (mod. aero data).
+- F-16CG Block 42        : 14670/23830 lbf. Large horz. tail (mod. aero data).
+- F-16CG Block 40        : 18330/28620 lbf. Large horz. tail (mod. aero data).
+- F-16C Block 32         : 14670/23830 lbf. Large horz. tail (mod. aero data).
+- F-16C Block 30         : 18330/28620 lbf. Large horz. tail (mod. aero data).
+- F-16AM Block 20 (MLU)  : 14670/23830 lbf. Small horz. tail (auth. aero data).
+- F-16A  Block 10        : 14670/23830 lbf. Small horz. tail (auth. aero data). Engine has auth. power curves.
 - YF-16                  : 14670/23830 lbf. The FBW in this variant has no spin, nose-slide or deep stall protection. Small horz. tail (auth. aero data). Engine has auth. power curves.
 - F-16 Simplified        : 17800/29000 lbf. The FBW can be switched off. Uses custom FBW made for FG and aero data is simplified version of the other other versions.
 

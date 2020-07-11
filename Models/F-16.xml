@@ -1002,9 +1002,9 @@
   <name>tl2</name>
   <path>Aircraft/f16/Models/Effects/lights/tail-light.xml</path> 
   <offsets>
-            <x-m> 5.03444 </x-m>
+            <x-m> 5.05444 </x-m>
             <y-m> 0 </y-m>
-            <z-m> 0.853577 </z-m>
+            <z-m> 0.855577 </z-m>
         </offsets>   
  </model>
 
@@ -2373,10 +2373,34 @@
  <animation>
   <type>select</type>
   <object-name>Link16Antennas</object-name>
-  <object-name>Tail-antenna</object-name>
   <condition>
    <property>sim/model/f16/link16</property>
   </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Tail-antenna</object-name>
+  <condition>
+          <or>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>3</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>4</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>5</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>6</value>
+            </equals>
+          </or>
+        </condition>
  </animation>
 
  <animation>

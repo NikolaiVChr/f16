@@ -211,8 +211,8 @@ var cannon_load = func {
     }
 }
 
-# Standard Air patrol (AIM-9, AIM-120, AIM-7)
-var a2a_patrol = func {
+# Counter-Air patrol (AIM-9, AIM-120, AIM-7)
+var a2a_cpatrol = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.aim9WT);
         pylon2.loadSet(pylonSets.aim120);
@@ -291,8 +291,8 @@ var a2a_capext = func {
     }
 }
 
-# NFZ (AIM-120, AIM-7, AIM-9, ECM)
-var a2a_nfz = func {
+# BARCAP (AIM-120, AIM-7, AIM-9, ECM)
+var a2a_barcap = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim120);
@@ -311,8 +311,8 @@ var a2a_nfz = func {
     }
 }
 
-# D/CAP (AIM-9, AIM-120)
-var a2a_dcap = func {
+# DCA (AIM-9, AIM-120)
+var a2a_dca = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim9);

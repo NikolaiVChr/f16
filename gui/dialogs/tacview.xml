@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<PropertyList>
+  
+  <name>tacview</name>
+  <modal type="bool">false</modal>
+  <layout>vbox</layout>
+  
+  <group>
+    <layout>hbox</layout>
+    <empty><stretch>1</stretch></empty>
+    
+    <text>
+      <label>Tacview Options</label>
+    </text>
+    
+    <empty>
+      <stretch>1</stretch>
+    </empty>
+    
+    <button>
+      <pref-width>16</pref-width>
+      <pref-height>16</pref-height>
+      <legend></legend>
+      
+      <default>1</default>
+      <keynum>27</keynum>
+      <border>2</border>
+      <binding>
+        <command>dialog-close</command>
+      </binding>
+      <binding>
+        <command>dialog-apply</command>
+      </binding>
+    </button>
+  </group>
+
+  <hrule/>
+
+  <text><halign>center</halign><label>Record flight data</label></text>
+
+    <group>
+    <layout>table</layout>
+    <button>
+      <row>0</row>
+      <col>0</col>
+      <legend>Start</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          tacview.startwrite();
+          setprop("/sim/tacview-recording", 1);
+        </script>
+        <offset>1</offset>
+      </binding>
+    </button>
+
+    <button>
+      <row>0</row>
+      <col>1</col>
+      <legend>Stop</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          tacview.stopwrite();
+          setprop("/sim/tacview-recording", 0);
+        </script>
+      </binding>
+      <color>
+        <red>1</red>
+        <green>0.35</green>
+        <blue>0.35</blue>
+      </color>
+    </button>
+  </group>
+
+  <hrule/>
+
+  <group>
+   <layout>table</layout>
+   <text>
+    <halign>left</halign>
+    <label>RECORDING:</label>
+    <row>0</row>
+    <col>0</col>
+   </text>
+
+  <text>
+    <halign>left</halign>
+    <visible>
+    <equals>
+      <property>/sim/tacview-recording</property>
+      <value>0</value>
+    </equals>
+    </visible>
+    <row>0</row>
+    <col>1</col>
+    <format>%s</format>
+    <property>/sim/tacview-recording</property>
+    <live>true</live>
+  </text>
+
+    <text>
+      <halign>left</halign>
+      <visible>
+      <equals>
+        <property>/sim/tacview-recording</property>
+        <value>1</value>
+      </equals>
+      </visible>
+      <row>0</row>
+      <col>1</col>
+      <format>%s</format>
+      <property>/sim/tacview-recording</property>
+      <live>true</live>
+    </text>
+   </group>
+
+ <empty><stretch>1</stretch></empty>
+
+</PropertyList>

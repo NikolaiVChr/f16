@@ -13,16 +13,16 @@ The Fighting Falcon has key features including a frameless bubble canopy for bet
 
 Includes the following Aircraft variants:
 
-- F-16E block 60
-- F-16CJ block 52
-- F-16CJ block 50
-- F-16CG block 42
-- F-16CG block 40
-- F-16C block 32
-- F-16C block 30
-- F-16AM block 20 (MLU)
-- F-16A  block 10
-- YF-16
+- YF-16 Prototype
+- F-16A Block 10
+- F-16AM Block 20 (MLU)
+- F-16C Block 30
+- F-16C Block 32
+- F-16CG Block 40
+- F-16CG Block 42
+- F-16CJ Block 50
+- F-16CJ Block 52 (default version)
+- F-16E Block 60
 - F-16 Simplified (a simpler FDM, yet still complex)
 
 The liveries you get available depends on which variant you choose to fly.

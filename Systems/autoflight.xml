@@ -10,14 +10,14 @@
 		<switch name="autoflight/switch-roll-min"> <!-- Allow STRG SEL on Block 20+ only -->
 			<default value="-1"/>
 			<test value="0">
-				/sim/variant-id lt 2
+				/sim/variant-id lt 4
 			</test>
 		</switch>
 		
 		<switch name="autoflight/switch-roll">
 			<default value="/f16/fcs/switch-roll-block20"/>
 			<test value="/f16/fcs/switch-roll-block15">
-				/sim/variant-id lt 2
+				/sim/variant-id lt 4
 			</test>
 			<clipto>
 				<min>autoflight/switch-roll-min</min>
@@ -28,15 +28,15 @@
 		<switch name="autoflight/switch-pitch"> <!-- /f16/fcs/autopilot-on is ignored on Block 20+ -->
 			<default value="0"/>
 			<test logic="AND" value="/f16/fcs/switch-pitch-block20">
-				/sim/variant-id ge 2
+				/sim/variant-id ge 4
 			</test>
 			<test logic="AND" value="-1">
-				/sim/variant-id lt 2
+				/sim/variant-id lt 4
 				/f16/fcs/autopilot-on eq 1
 				/f16/fcs/switch-pitch-block15 eq 0
 			</test>
 			<test logic="AND" value="1">
-				/sim/variant-id lt 2
+				/sim/variant-id lt 4
 				/f16/fcs/autopilot-on eq 1
 				/f16/fcs/switch-pitch-block15 eq 1
 			</test>

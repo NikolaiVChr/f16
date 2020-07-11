@@ -262,7 +262,7 @@ light: ecm lamp off
         <condition>
             <less-than>
                 <property>sim/variant-id</property>
-                <value>2</value>
+                <value>4</value>
             </less-than>
         </condition>
         <property>f16/fcs/switch-pitch-block15</property>
@@ -289,7 +289,7 @@ light: ecm lamp off
         <condition>
             <less-than>
                 <property>sim/variant-id</property>
-                <value>2</value>
+                <value>4</value>
             </less-than>
         </condition>
         <property>f16/fcs/switch-roll-block15</property>
@@ -366,7 +366,7 @@ light: ecm lamp off
         <condition>
             <greater-than-equals>
                 <property>sim/variant-id</property>
-                <value>2</value>
+                <value>4</value>
             </greater-than-equals>
         </condition>
         <property>f16/fcs/switch-pitch-block20</property>
@@ -393,7 +393,7 @@ light: ecm lamp off
         <condition>
             <greater-than-equals>
                 <property>sim/variant-id</property>
-                <value>2</value>
+                <value>4</value>
             </greater-than-equals>
         </condition>
         <property>f16/fcs/switch-roll-block20</property>
@@ -478,7 +478,7 @@ light: ecm lamp off
         <condition>
             <less-than>
                 <property>sim/variant-id</property>
-                <value>2</value>
+                <value>4</value>
             </less-than>
         </condition>
     </animation>
@@ -488,7 +488,7 @@ light: ecm lamp off
         <condition>
             <less-than>
                 <property>sim/variant-id</property>
-                <value>2</value>
+                <value>4</value>
             </less-than>
         </condition>
     </animation>
@@ -498,7 +498,7 @@ light: ecm lamp off
         <condition>
             <greater-than-equals>
                 <property>sim/variant-id</property>
-                <value>2</value>
+                <value>4</value>
             </greater-than-equals>
         </condition>
     </animation>
@@ -532,6 +532,18 @@ light: ecm lamp off
     </animation>
     <animation>
         <type>select</type>
+        <object-name>ecm-enbl</object-name>
+        <object-name>ecm-enbl-off</object-name>
+        <object-name>ecm-enbl-on</object-name>
+        <condition>
+            <greater-than>
+                <property>sim/variant-id</property>
+                <value>3</value>
+            </greater-than>
+        </condition>
+    </animation>
+    <animation>
+        <type>select</type>
         <object-name>master-arm-cover</object-name>
         <condition>
             <less-than-equals>
@@ -546,7 +558,7 @@ light: ecm lamp off
         <condition>
             <greater-than-equals>
                 <property>sim/variant-id</property>
-                <value>2</value>
+                <value>3</value>
             </greater-than-equals>
         </condition>
     </animation>
@@ -554,30 +566,30 @@ light: ecm lamp off
         <type>select</type>
         <object-name>pitch-switch-b15</object-name>
         <condition>
-            <less-than>
+            <less-than-equals>
                 <property>sim/variant-id</property>
-                <value>2</value>
-            </less-than>
+                <value>3</value>
+            </less-than-equals>
         </condition>
     </animation>
     <animation>
         <type>select</type>
         <object-name>roll-hold-switch</object-name>
         <condition>
-            <greater-than-equals>
+            <greater-than>
                 <property>sim/variant-id</property>
-                <value>2</value>
-            </greater-than-equals>
+                <value>3</value>
+            </greater-than>
         </condition>
     </animation>
     <animation>
         <type>select</type>
         <object-name>roll-switch-b15</object-name>
         <condition>
-            <less-than>
+            <less-than-equals>
                 <property>sim/variant-id</property>
-                <value>2</value>
-            </less-than>
+                <value>3</value>
+            </less-than-equals>
         </condition>
     </animation>
     <animation>
