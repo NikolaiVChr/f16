@@ -166,7 +166,7 @@
   <condition>
     <equals>
         <property>payload/armament/station/id-2-set</property>
-        <value>2 x GBU-12</value>
+        <value>3 x GBU-12</value>
       </equals>
   </condition>
  </animation>
@@ -382,7 +382,7 @@
   <condition>
     <equals>
         <property>payload/armament/station/id-6-set</property>
-        <value>2 x GBU-12</value>
+        <value>3 x GBU-12</value>
       </equals>
   </condition>
  </animation>
