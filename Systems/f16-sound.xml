@@ -3461,8 +3461,8 @@
                 <factor>1</factor>
             </volume>
         </betty>
-        <!--avionics>
-            <name>Avionics too low to be heard, so disabled it. Also it loops badly.</name>
+        <avionics>
+            <name>UFC Power</name>
             <path>Sounds/avionics-400Hz.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
@@ -3479,11 +3479,17 @@
                     </greater-than>
                 </or>
             </condition>
+            <pitch>
+                <factor>0.88</factor>
+                <offset>0.07</offset>
+                <min>0</min>
+                <max>1</max>
+            </pitch>
             <volume>
                 <property>/sim/current-view/internal</property>
-                <factor>0.04</factor>
+                <factor>0.075</factor>
             </volume>
-        </avionics-->
+        </avionics>
         <adi>
             <name>ADI startup</name>
             <path>Aircraft/f16/Sounds/Timi/f16-battery.wav</path>
