@@ -83,6 +83,9 @@
         <object-name>IFF.001</object-name>
         <object-name>IFF_0</object-name>
         <object-name>IFF_1</object-name>
+        <object-name>AUX_COMM.001</object-name>
+        <object-name>AUX_COMM_0</object-name>
+        <object-name>AUX_COMM_1</object-name>
         <object-name>JET_FUEL</object-name>
         <object-name>JET_FUEL_0</object-name>
         <object-name>JET_FUEL_1</object-name>
@@ -148,6 +151,11 @@
         <object-name>SW_IFF_ENABLE</object-name>
         <object-name>SW_IFF_MONITOR</object-name>
         <object-name>SW_IFF_REPLY</object-name>
+        <object-name>SW_IFF_CODE_50</object-name>
+        <object-name>SW_KNOB_IFF_MASTER_50</object-name>
+        <object-name>SW_IFF_REPLY_50</object-name>
+        <object-name>SW_IFF_MONITOR_50</object-name>
+        <object-name>SW_TCN_TR_50</object-name>
         <object-name>SW_JET_FUEL</object-name>
         <object-name>SW_KNOB_ENG_FEED</object-name>
         <object-name>SW_KNOB_EXT_FORMATION_LIGHT</object-name>
@@ -248,6 +256,7 @@
         <object-name>GROWTH.003_1</object-name>
         <object-name>GROWTH.004</object-name>
         <object-name>IFF.001</object-name>
+        <object-name>AUX_COMM.001</object-name>
         <object-name>JET_FUEL_1</object-name>
         <object-name>JET_FUEL_50_1</object-name>
         <object-name>MANUAL_PITCH_1</object-name>
@@ -259,6 +268,7 @@
         <object-name>SW_KNOB_REFUEL</object-name>
         <object-name>SW_KNOB_IFF_MASTER</object-name>
         <object-name>SW_KNOB_IFF_C_AND_I</object-name>
+        <object-name>SW_KNOB_IFF_MASTER_50</object-name>
         <object-name>SW_KNOB_MAN_TRIM_YAW</object-name>
         <object-name>dim-reset</object-name>
         <object-name>SECURE_VOICE_KNOB</object-name>
@@ -308,6 +318,10 @@
         <object-name>SW_IFF_ENABLE</object-name>
         <object-name>SW_IFF_MONITOR</object-name>
         <object-name>SW_IFF_REPLY</object-name>
+        <object-name>SW_IFF_CODE_50</object-name>
+        <object-name>SW_IFF_REPLY_50</object-name>
+        <object-name>SW_IFF_MONITOR_50</object-name>
+        <object-name>SW_TCN_TR_50</object-name>
         <object-name>SW_JET_FUEL</object-name>
         <object-name>SW_LE_FLAPS</object-name>
         <object-name>SW_MAIN_POWER</object-name>
@@ -2543,6 +2557,64 @@
                     <value>f16-block-60</value>
                 </equals>
             </or>
+        </condition>
+    </animation>
+
+    <animation>
+    	<object-name>AUX_COMM_0</object-name>
+        <object-name>AUX_COMM_1</object-name>
+        <object-name>SW_IFF_CODE_50</object-name>
+        <object-name>SW_KNOB_IFF_MASTER_50</object-name>
+        <object-name>SW_IFF_REPLY_50</object-name>
+        <object-name>SW_IFF_MONITOR_50</object-name>
+        <object-name>SW_TCN_TR_50</object-name>
+        <type>select</type>
+        <condition>
+          <or>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>0</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>1</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>3</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>4</value>
+            </equals>
+          </or>
+        </condition>
+    </animation>
+
+    <animation>
+    	<object-name>IFF_0</object-name>
+        <object-name>IFF_1</object-name>
+        <object-name>SW_KNOB_IFF_MASTER</object-name>
+        <object-name>SW_IFF_CODE</object-name>
+        <object-name>SW_IFF_ENABLE</object-name>
+        <object-name>SW_IFF_MONITOR</object-name>
+        <object-name>SW_IFF_REPLY</object-name>
+        <type>select</type>
+        <condition>
+          <or>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>2</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>5</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>6</value>
+            </equals>
+          </or>
         </condition>
     </animation>
 
