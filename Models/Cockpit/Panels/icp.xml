@@ -16,7 +16,7 @@
             <!--<implicit-lightmap-intensity><use>controls/lighting/lighting-panel/data-entry-display</use></implicit-lightmap-intensity> this is ICP not DED panel, so should not have DED control -->
             <lightmap-enabled type="int">1</lightmap-enabled>
         </parameters>
-        
+        <object-name>DED_panel</object-name>
         <object-name>com1</object-name>
         <object-name>0</object-name>
         <object-name>9</object-name>
@@ -48,7 +48,6 @@
             <lightmap-enabled type="int">1</lightmap-enabled>
             <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
         </parameters>
-        
         <object-name>DED_panel</object-name>
     </effect>
 

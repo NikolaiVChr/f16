@@ -55,19 +55,19 @@
         </button-->
 
       <button>
-        <legend>Cold and Dark</legend>
-        <binding>
-          <command>nasal</command>
-          <script>f16.coldndark();</script>
-        </binding>
-      </button>
-
-      <button>
         <legend>Checklists</legend>
         <binding>
           <command>dialog-show</command>
           <dialog-name>checklist</dialog-name>
           <offset>1</offset>
+        </binding>
+      </button>
+
+      <button>
+        <legend>Cold and Dark</legend>
+        <binding>
+          <command>nasal</command>
+          <script>f16.coldndark();</script>
         </binding>
       </button>
 
