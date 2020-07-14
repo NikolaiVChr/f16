@@ -331,15 +331,15 @@ var MFD_Device =
         obj.canvas = dev_canvas;
         dev_canvas.addPlacement({"node": model_element});
         if (getprop("sim/variant-id") == 2) {
-        dev_canvas.setColorBackground(0.0,0.0,0.052, 1);
+        dev_canvas.setColorBackground(0.01,0.01,0.07, 1);
         } else if (getprop("sim/variant-id") == 4) {
-        dev_canvas.setColorBackground(0.0,0.0,0.052, 1);
+        dev_canvas.setColorBackground(0.01,0.01,0.07, 1);
         } else if (getprop("sim/variant-id") == 5) {
-        dev_canvas.setColorBackground(0.0,0.0,0.052, 1);
+        dev_canvas.setColorBackground(0.01,0.01,0.07, 1);
         } else if (getprop("sim/variant-id") == 6) {
-        dev_canvas.setColorBackground(0.0,0.0,0.052, 1);
+        dev_canvas.setColorBackground(0.01,0.01,0.07, 1);
         } else {
-        dev_canvas.setColorBackground(0.002,0.1,0, 0);
+        dev_canvas.setColorBackground(0.005,0.1,0.005, 0);
         };
 # Create a group for the parsed elements
         obj.PFDsvg = dev_canvas.createGroup();
@@ -433,7 +433,7 @@ var MFD_Device =
                     .horiz(20)
                     .setStrokeLineWidth(1)
                     .set("z-index",1)
-                    .setColor(0.5,0.5,1);
+                    .setColor(0.55,0.55,1);
         svg.distl = svg.p_RDR.createChild("path")
                     .moveTo(-276*0.795+40,-482*0.25)
                     .horiz(20)
@@ -449,7 +449,7 @@ var MFD_Device =
                     .vert(-20)
                     .setStrokeLineWidth(1)
                     .set("z-index",1)
-                    .setColor(0.5,0.5,1);
+                    .setColor(0.55,0.55,1);
         #svg.lock = setsize([],svg.maxB);
         #for (var i = 0;i<svg.maxB;i+=1) {
             svg.lock = svg.p_RDR.createChild("group")
@@ -510,13 +510,13 @@ var MFD_Device =
         svg.az1 = svg.p_RDR.createChild("path")
            .moveTo(0, 0)
            .lineTo(0, -482)
-           .setColor(0.5,0.5,1)
+           .setColor(0.55,0.55,1)
            .set("z-index",1)
            .setStrokeLineWidth(1);
         svg.az2 = svg.p_RDR.createChild("path")
            .moveTo(0, 0)
            .lineTo(0, -482)
-           .setColor(0.5,0.5,1)
+           .setColor(0.55,0.55,1)
            .set("z-index",1)
            .setStrokeLineWidth(1);
         svg.horiz = svg.p_RDR.createChild("path")
@@ -529,7 +529,7 @@ var MFD_Device =
            .moveTo(276*0.795*0.5, -482*0.5)
            .horiz(-276*0.795*0.4)
            .setCenter(0, -482*0.5)
-           .setColor(0.5,0.5,1)
+           .setColor(0.55,0.55,1)
            .set("z-index",11)
            .setStrokeLineWidth(1);
         svg.silent = svg.p_RDR.createChild("text")
@@ -568,7 +568,7 @@ var MFD_Device =
                     .vert(-200)
                     .horiz(-200)
                     .setStrokeLineWidth(1.5)
-                    .setColor(0.5,0.5,1)
+                    .setColor(0.55,0.55,1)
                     .set("z-index",1)
                     .hide();
         
@@ -593,7 +593,7 @@ var MFD_Device =
             .arcSmallCW(5,5, 0, -5*2, 0)
             .setStrokeLineWidth(2)
             .set("z-index",1)
-            .setColor(0.5,0.5,1);
+            .setColor(0.55,0.55,1);
         svg.bullOwnRing = svg.p_RDR.createChild("path")
             .moveTo(-15,0)
             .arcSmallCW(15,15, 0,  15*2, 0)
@@ -608,17 +608,17 @@ var MFD_Device =
             .setStrokeLineCap("round")
             .setTranslation(-190, -50)
             .set("z-index",1)
-            .setColor(0.5,0.5,1);
+            .setColor(0.55,0.55,1);
         svg.bullOwnDist = svg.p_RDR.createChild("text")
                 .setAlignment("center-center")
-                .setColor(0.5,0.5,1)
+                .setColor(0.55,0.55,1)
                 .setTranslation(-190, -50)
                 .setText("12")
                 .set("z-index",1)
                 .setFontSize(18, 1.0);            
         svg.bullOwnDir = svg.p_RDR.createChild("text")
                 .setAlignment("center-top")
-                .setColor(0.5,0.5,1)
+                .setColor(0.55,0.55,1)
                 .setTranslation(-190, -30)
                 .setText("270")
                 .set("z-index",1)
@@ -2032,12 +2032,12 @@ var MFD_Device =
            .horiz(20)
            .moveTo(-5, 20)
            .horiz(10)
-           .setColor(0.5,0.5,1)
+           .setColor(0.55,0.55,1)
            .setStrokeLineWidth(1);
 #        svg.az2 = svg.p_HSDc.createChild("path")
 #           .moveTo(0, 0)
 #           .lineTo(0, -482)
-#           .setColor(0.5,0.5,1)
+#           .setColor(0.55,0.55,1)
 #           .setStrokeLineWidth(1);
 
 
@@ -2108,7 +2108,7 @@ var MFD_Device =
             .arcSmallCW(5,5, 0,  5*2, 0)
             .arcSmallCW(5,5, 0, -5*2, 0)
             .setStrokeLineWidth(2)
-            .setColor(0.5,0.5,1);
+            .setColor(0.55,0.55,1);
         svg.bullOwnRing = svg.buttonView.createChild("path")
             .moveTo(-15,0)
             .arcSmallCW(15,15, 0,  15*2, 0)
@@ -2121,16 +2121,16 @@ var MFD_Device =
             .close()
             .setStrokeLineWidth(2)
             .setTranslation(-190, -50)
-            .setColor(0.5,0.5,1);
+            .setColor(0.55,0.55,1);
         svg.bullOwnDist = svg.buttonView.createChild("text")
                 .setAlignment("center-center")
-                .setColor(0.5,0.5,1)
+                .setColor(0.55,0.55,1)
                 .setTranslation(-190, -50)
                 .setText("12")
                 .setFontSize(18, 1.0);            
         svg.bullOwnDir = svg.buttonView.createChild("text")
                 .setAlignment("center-top")
-                .setColor(0.5,0.5,1)
+                .setColor(0.55,0.55,1)
                 .setTranslation(-190, -30)
                 .setText("270")
                 .setFontSize(18, 1.0);
@@ -2346,7 +2346,7 @@ var MFD_Device =
                         .arcSmallCW(me.rdrRangePixels,me.rdrRangePixels, 0, me.radarX*2, 0)
                         .setStrokeLineWidth(1)
                         .set("z-index",5)
-                        .setColor(0.5,0.5,1)
+                        .setColor(0.55,0.55,1)
                         .update();
                 }
                 if (getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc")) {
