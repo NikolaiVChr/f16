@@ -592,15 +592,15 @@ var a2g_jgps = func {
     }
 }
 
-# A/S Anti-Ship (AGM-84, MK-84)
+# A/S Anti-Ship ER (AGM-84D)
 var a2s_antiship = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim9);
         pylon3.loadSet(pylonSets.a84);
-        pylon4.loadSet(pylonSets.m84);
-        pylon5.loadSet(pylonSets.fuel30);
-        pylon6.loadSet(pylonSets.m84);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.a84);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);

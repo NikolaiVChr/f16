@@ -587,7 +587,7 @@
         <text>
             <row>20</row>
             <col>4</col>
-            <label>A/S Anti-Ship (Multi-mode)</label>
+            <label>A/S Anti-Ship (Mode 1)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>20</row>
@@ -602,7 +602,7 @@
         <text>
             <row>22</row>
             <col>4</col>
-            <label>A/S Anti-Ship (Single-mode)</label>
+            <label>A/S Anti-Ship (Mode 2)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>22</row>

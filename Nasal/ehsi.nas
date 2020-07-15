@@ -915,7 +915,7 @@ var cv = canvas.new({
                     });
 
 cv.addPlacement({"node": "EHSI-Display", "texture":"ehsi-display.png"});
-cv.setColorBackground(0, 0, 0.02);
+cv.setColorBackground(0, 0, 0.03);
 var root = cv.createGroup();
 var ehsi = nil;
 var init = func {
