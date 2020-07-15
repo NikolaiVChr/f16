@@ -2838,7 +2838,7 @@ There is also small changes in tail for different variants with and without brak
                 <navigation type="string">direct</navigation>                           
                 <all-aspect type="bool">true</all-aspect>
                 <max-fire-range-nm type="double">120</max-fire-range-nm>              <!-- D variant -->
-                <FCS-field-deg type="int">25</FCS-field-deg>            
+                <FCS-field-deg type="int">30</FCS-field-deg>            
                 <seeker-field-deg type="int">180</seeker-field-deg>     
                 <max-g type="int">5</max-g>
                 <max-launch-g type="int">7</max-launch-g>               
@@ -2849,7 +2849,7 @@ There is also small changes in tail for different variants with and without brak
                 <weight-launch-lbs type="double">1190</weight-launch-lbs>              <!--  -->
                 <weight-warhead-lbs type="double">500</weight-warhead-lbs>            <!--  -->
                 <weight-fuel-lbm type="double"> 113 </weight-fuel-lbm>
-                <drag-coeff type="double">0.15</drag-coeff>
+                <drag-coeff type="double">0.14</drag-coeff>
                 <cross-section-sqft type="double">0.994</cross-section-sqft>                             <!--  -->
                 <arming-time-sec type="double">5.0</arming-time-sec>          
                 <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>

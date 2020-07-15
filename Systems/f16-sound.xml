@@ -3487,7 +3487,7 @@
             </pitch>
             <volume>
                 <property>/sim/current-view/internal</property>
-                <factor>0.075</factor>
+                <factor>0.07</factor>
             </volume>
         </avionics>
         <adi>
