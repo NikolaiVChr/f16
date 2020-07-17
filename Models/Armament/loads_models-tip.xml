@@ -17,8 +17,8 @@
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L_LW.xml</path>
   <offsets>
    <x-m>1.16</x-m>
-   <y-m>-4.87</y-m>
-   <z-m>0.00</z-m>
+   <y-m>-4.865</y-m>
+   <z-m>-0.01</z-m>
    <pitch-deg>-3.5</pitch-deg>
   </offsets>
  </model>
@@ -28,8 +28,8 @@
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/CATM-9L_LW.xml</path>
   <offsets>
    <x-m>1.16</x-m>
-   <y-m>-4.87</y-m>
-   <z-m>0.00</z-m>
+   <y-m>-4.865</y-m>
+   <z-m>-0.01</z-m>
    <pitch-deg>-3.5</pitch-deg>
   </offsets>
  </model>
@@ -39,8 +39,8 @@
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AN-T-17_LW.xml</path>
   <offsets>
    <x-m>1.16</x-m>
-   <y-m>-4.87</y-m>
-   <z-m>0.00</z-m>
+   <y-m>-4.865</y-m>
+   <z-m>-0.01</z-m>
    <pitch-deg>-3.5</pitch-deg>
   </offsets>
  </model>
@@ -72,7 +72,7 @@
   <path>Aircraft/f16/Models/Armament/red.xml</path>
   <offsets>
    <x-m>1.5</x-m>
-   <y-m>-4.87</y-m>
+   <y-m>-4.865</y-m>
    <z-m>0.0</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
@@ -83,7 +83,7 @@
   <path>Aircraft/f16/Models/Armament/green.xml</path>
   <offsets>
    <x-m>1.5</x-m>
-   <y-m>-4.87</y-m>
+   <y-m>-4.865</y-m>
    <z-m>0.0</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
@@ -94,7 +94,7 @@
   <path>Aircraft/f16/Models/Armament/blue.xml</path>
   <offsets>
    <x-m>1.5</x-m>
-   <y-m>-4.87</y-m>
+   <y-m>-4.865</y-m>
    <z-m>0.0</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
@@ -105,9 +105,20 @@
   <path>Aircraft/f16/Models/Armament/white.xml</path>
   <offsets>
    <x-m>1.5</x-m>
-   <y-m>-4.87</y-m>
+   <y-m>-4.865</y-m>
    <z-m>0.0</z-m>
    <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station_ACMIpod</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/ACMIpod/AN_ASQ-T50_LW.xml</path>
+  <offsets>
+   <x-m>1.07</x-m>
+   <y-m>-4.865</y-m>
+   <z-m>-0.01</z-m>
+   <pitch-deg>-3.25</pitch-deg>
   </offsets>
  </model>
  
@@ -119,8 +130,8 @@
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AIM-9L_RW.xml</path>
   <offsets>
    <x-m>1.16</x-m>
-   <y-m>4.87</y-m>
-   <z-m>0.00</z-m>
+   <y-m>4.865</y-m>
+   <z-m>-0.01</z-m>
    <pitch-deg>-3.5</pitch-deg>
   </offsets>
  </model>
@@ -130,8 +141,8 @@
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/CATM-9L_RW.xml</path>
   <offsets>
    <x-m>1.16</x-m>
-   <y-m>4.87</y-m>
-   <z-m>0.00</z-m>
+   <y-m>4.865</y-m>
+   <z-m>-0.01</z-m>
    <pitch-deg>-3.5</pitch-deg>
   </offsets>
  </model>
@@ -141,8 +152,8 @@
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/AN-T-17_RW.xml</path>
   <offsets>
    <x-m>1.16</x-m>
-   <y-m>4.87</y-m>
-   <z-m>0.00</z-m>
+   <y-m>4.865</y-m>
+   <z-m>-0.01</z-m>
    <pitch-deg>-3.5</pitch-deg>
   </offsets>
  </model>
@@ -174,7 +185,7 @@
   <path>Aircraft/f16/Models/Armament/red.xml</path>
   <offsets>
    <x-m>1.5</x-m>
-   <y-m>4.87</y-m>
+   <y-m>4.865</y-m>
    <z-m>0.0</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
@@ -185,7 +196,7 @@
   <path>Aircraft/f16/Models/Armament/green.xml</path>
   <offsets>
    <x-m>1.5</x-m>
-   <y-m>4.87</y-m>
+   <y-m>4.865</y-m>
    <z-m>0.0</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
@@ -197,7 +208,7 @@
   <path>Aircraft/f16/Models/Armament/blue.xml</path>
   <offsets>
    <x-m>1.5</x-m>
-   <y-m>4.87</y-m>
+   <y-m>4.865</y-m>
    <z-m>0.0</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
@@ -208,12 +219,22 @@
   <path>Aircraft/f16/Models/Armament/white.xml</path>
   <offsets>
    <x-m>1.5</x-m>
-   <y-m>4.87</y-m>
+   <y-m>4.865</y-m>
    <z-m>0.0</z-m>
    <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
 
+ <model>
+  <name>Station9_ACMIpod</name>
+  <path>Aircraft/f16/Models/Armament/External-stores/ACMIpod/AN_ASQ-T50_RW.xml</path>
+  <offsets>
+   <x-m>1.07</x-m>
+   <y-m>4.865</y-m>
+   <z-m>-0.01</z-m>
+   <pitch-deg>-3.25</pitch-deg>
+  </offsets>
+ </model>
 
 <!-- ======================= END ARMAMENT =========================== -->
 </PropertyList>

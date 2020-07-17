@@ -49,12 +49,12 @@ var nav = stations.Smoker.new("AN/AAQ-13 LANTIRN Nav Pod", "AAQ-13", "f16/stores
 var lite = stations.Smoker.new("AN/AAQ-28 LITENING Advanced Targeting", "AAQ-28", "f16/stores/tgp-mounted");
 var irst = stations.Smoker.new("Legion Pod IRST", "IRST", "f16/stores/irst-mounted");
 var harm = stations.Smoker.new("AN/ASQ-213 HARM TS Pod", "ASQ-213", "f16/stores/harm-mounted");
-var acmi = stations.Smoker.new("AN/ASQ-T50(V)1 ACMI Pod", "ACMI", "f16/stores/acmi-mounted");
+var acmi = stations.Smoker.new("AN/ASQ-T50(V)2 ACMI Pod", "ACMI", "f16/stores/acmi-mounted");
 var ecm131 = stations.Smoker.new("AN/ALQ-131(V) ECM Pod", "AL131", "f16/stores/ecm-mounted");
 var ecm184 = stations.Smoker.new("AN/ALQ-184(V) ECM Pod", "AL184", "f16/stores/ecm-mounted");
-var catm9 = stations.Dummy.new("CATM-9L", nil);
+var catm9 = stations.Dummy.new("CATM-9L", "CATM");
 var ant17 = stations.Dummy.new("AN-T-17", nil);# nil for shortname makes them not show up in MFD SMS page. If shortname is nil it MUST have showLongTypeInsteadOfCount: 1
-var catm120 = stations.Dummy.new("CATM-120B", nil);
+var catm120 = stations.Dummy.new("CATM-120B", "CATM");
 var crgpd = stations.Dummy.new("MXU-648 Cargopod", "TRVL");
 
 var pylonSets = {
@@ -111,7 +111,7 @@ var pylonSets = {
     podLite: {name: "AN/AAQ-28 LITENING Advanced Targeting", content: [lite], fireOrder: [0], launcherDragArea: 0.08, launcherMass: 460, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
     podIrst: {name: "Legion Pod IRST", content: [irst], fireOrder: [0], launcherDragArea: 0.08, launcherMass: 500, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1}, #mass guess based on available data
     podHarm: {name: "AN/ASQ-213 HARM TS Pod", content: [harm], fireOrder: [0], launcherDragArea: 0.03, launcherMass: 100, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-    podACMI: {name: "AN/ASQ-T50(V)1 ACMI Pod", content: [acmi], fireOrder: [0], launcherDragArea: -0.015, launcherMass: 138, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
+    podACMI: {name: "AN/ASQ-T50(V)2 ACMI Pod", content: [acmi], fireOrder: [0], launcherDragArea: -0.015, launcherMass: 144, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 };
 
 if (getprop("sim/model/f16/wingmounts") != 0) {
@@ -122,8 +122,8 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 	# sets. The first in the list is the default. Earlier in the list means higher up in dropdown menu.
 	var pylon2set = [pylonSets.empty, pylonSets.aim9, pylonSets.aim120, pylonSets.dumb1, pylonSets.podACMI];
 	var pylon8set = [pylonSets.empty, pylonSets.aim9, pylonSets.aim120, pylonSets.dumb1, pylonSets.podACMI];
-	var pylon1set = [pylonSets.dumb1,pylonSets.dumb2,pylonSets.dumb3, pylonSets.aim9WT, pylonSets.aim120WT,pylonSets.smokeRL,pylonSets.smokeGL,pylonSets.smokeBL,pylonSets.smokeWL];# wingtips are normally not empty, so CATM-9L dummy aim9 is loaded instead.
-	var pylon9set = [pylonSets.dumb1,pylonSets.dumb2,pylonSets.dumb3, pylonSets.aim9WT, pylonSets.aim120WT,pylonSets.smokeRR,pylonSets.smokeGR,pylonSets.smokeBR,pylonSets.smokeWR];# wingtips are normally not empty, so CATM-9L dummy aim9 is loaded instead.
+	var pylon1set = [pylonSets.dumb1,pylonSets.dumb2,pylonSets.dumb3, pylonSets.aim9WT, pylonSets.aim120WT,pylonSets.smokeRL,pylonSets.smokeGL,pylonSets.smokeBL,pylonSets.smokeWL,pylonSets.podACMI];# wingtips are normally not empty, so CATM-9L dummy aim9 is loaded instead.
+	var pylon9set = [pylonSets.dumb1,pylonSets.dumb2,pylonSets.dumb3, pylonSets.aim9WT, pylonSets.aim120WT,pylonSets.smokeRR,pylonSets.smokeGR,pylonSets.smokeBR,pylonSets.smokeWR,pylonSets.podACMI];# wingtips are normally not empty, so CATM-9L dummy aim9 is loaded instead.
 	var pylon3set = [pylonSets.empty, pylonSets.hyd70h3, pylonSets.a158, pylonSets.a119, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65x3, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x3, pylonSets.m84, pylonSets.m83, pylonSets.m82, pylonSets.aim9, pylonSets.aim7, pylonSets.aim120];
 	var pylon7set = [pylonSets.empty, pylonSets.hyd70h7, pylonSets.a158, pylonSets.a119, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65x3, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x3, pylonSets.m84, pylonSets.m83, pylonSets.m82, pylonSets.aim9, pylonSets.aim7, pylonSets.aim120];
 	var pylon4set = [pylonSets.empty, pylonSets.g12x2, pylonSets.fuel37L, pylonSets.fuel60L, pylonSets.m82, pylonSets.a119, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.a88, pylonSets.m83, pylonSets.c87, pylonSets.c105, pylonSets.m84];
