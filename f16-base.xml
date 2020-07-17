@@ -2693,7 +2693,7 @@ There is also small changes in tail for different variants with and without brak
                 <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
                 <ejector-speed-fps type="double">20</ejector-speed-fps>
-                <ready-time type="double">0.5</ready-time>
+                <ready-time type="double">3.5</ready-time>
             </gbu-54>
             <gbu-31>
                 <short-name type="string">GB31</short-name>
@@ -2743,7 +2743,7 @@ There is also small changes in tail for different variants with and without brak
                 <mounted-limit-g type="double"> 7.5 </mounted-limit-g>
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
                 <ejector-speed-fps type="double">5</ejector-speed-fps>
-                <ready-time type="double">0.5</ready-time>
+                <ready-time type="double">3.5</ready-time>
             </gbu-31>
             <gbu-24>
                 <short-name type="string">GB24</short-name>
@@ -2861,7 +2861,7 @@ There is also small changes in tail for different variants with and without brak
                 <class type="string">M</class>
                 <terrain-follow type="bool">true</terrain-follow>
                 <fire-msg type="string">Bruiser</fire-msg>
-                <ready-time type="double">0.25</ready-time>
+                <ready-time type="double">25</ready-time> <!-- INS alignment -->
             </agm-84>
             <agm-119>
                 <short-name type="string">AG119</short-name>
@@ -3116,7 +3116,7 @@ There is also small changes in tail for different variants with and without brak
                 <max-pitch-deg type="double">-45</max-pitch-deg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
                 <require-lock-to-fire type="bool">false</require-lock-to-fire>
-                <ready-time type="double">0.5</ready-time>
+                <ready-time type="double">3.5</ready-time>
                 <ejector-speed-fps type="double">10</ejector-speed-fps>
             </cbu-105>
             <!--lau-68>
@@ -3155,7 +3155,7 @@ There is also small changes in tail for different variants with and without brak
                 <fire-msg type="string">Rifle</fire-msg>
                 <hit-everything-nearby type="bool">true</hit-everything-nearby>
             </lau-68-->
-            <b61-7>
+            <!--b61-7>
                 <short-name type="string">B61-7</short-name>
                 <long-name type="string">B61-7 Inert Training Body</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
@@ -3175,7 +3175,7 @@ There is also small changes in tail for different variants with and without brak
                 <stage-1-duration-sec type="double">0</stage-1-duration-sec>
                 <stage-2-duration-sec type="double">0</stage-2-duration-sec>
                 <weight-launch-lbs type="double">700</weight-launch-lbs>
-                <weight-warhead-lbs type="double">0</weight-warhead-lbs> <!-- Dummy version -->
+                <weight-warhead-lbs type="double">0</weight-warhead-lbs> <!- Dummy version ->
                 <weight-fuel-lbm type="double">0</weight-fuel-lbm>
                 <drag-coeff type="double">0.125</drag-coeff>
                 <delta-drag-coeff-deploy type="double">20.00</delta-drag-coeff-deploy>
@@ -3200,8 +3200,8 @@ There is also small changes in tail for different variants with and without brak
                 <ready-time type="double">1320</ready-time>
                 <require-lock-to-fire type="bool">true</require-lock-to-fire>
                 <ejector-speed-fps type="double">15</ejector-speed-fps>
-            </b61-7>
-            <b61-12>
+            </b61-7-->
+            <!--b61-12>
                 <short-name type="string">B61-12</short-name>
                 <long-name type="string">B61-12 Test Flight Body</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
@@ -3221,7 +3221,7 @@ There is also small changes in tail for different variants with and without brak
                 <stage-1-duration-sec type="double">0</stage-1-duration-sec>
                 <stage-2-duration-sec type="double">0</stage-2-duration-sec>
                 <weight-launch-lbs type="double">700</weight-launch-lbs>
-                <weight-warhead-lbs type="double">0</weight-warhead-lbs> <!-- Dummy version -->
+                <weight-warhead-lbs type="double">0</weight-warhead-lbs> <!- Dummy version ->
                 <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
                 <drag-coeff type="double">0.125</drag-coeff>
                 <cross-section-sqft type="double">1.1722</cross-section-sqft>
@@ -3245,8 +3245,8 @@ There is also small changes in tail for different variants with and without brak
                 <ready-time type="double">900</ready-time>
                 <require-lock-to-fire type="bool">true</require-lock-to-fire>
                 <ejector-speed-fps type="double">15</ejector-speed-fps>
-            </b61-12>
-            <es>                    <!-- Ejection seat -->
+            </b61-12-->
+            <es>                   <!-- Ejection seat -->
                     <vol-search type="double">0.075</vol-search>
                     <vol-track type="double">0.25</vol-track>
                     <vol-track-weak type="double">0.175</vol-track-weak>
