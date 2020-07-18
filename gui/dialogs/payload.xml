@@ -65,7 +65,7 @@
     <vrule/>
 
     <button>
-        <legend>Rearm cannon</legend>
+        <legend>Rearm 20mm cannon</legend>
         <binding>
           <command>nasal</command>
           <script>pylons.cannon_load();</script>
