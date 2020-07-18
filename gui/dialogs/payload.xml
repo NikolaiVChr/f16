@@ -41,6 +41,40 @@
   </group>
 
   <hrule/>
+
+  <group>
+    <layout>hbox</layout>
+    <button>
+        <legend>Clean load</legend>
+        <binding>
+          <command>nasal</command>
+          <script>pylons.clean();</script>
+        </binding>
+    </button>
+
+    <vrule/>
+
+    <button>
+        <legend>Refuel all tanks</legend>
+        <binding>
+          <command>nasal</command>
+          <script>pylons.refuel();</script>
+        </binding>
+    </button>
+
+    <vrule/>
+
+    <button>
+        <legend>Rearm cannon</legend>
+        <binding>
+          <command>nasal</command>
+          <script>pylons.cannon_load();</script>
+        </binding>
+    </button>
+  </group>
+
+  <hrule/>
+
     <group>
         <layout>table</layout>
         <text>
@@ -217,7 +251,7 @@
         <text>
             <row>18</row>
             <col>0</col>
-            <label>Clean</label>
+            <label>Ferry Loadout 1</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>18</row>
@@ -225,7 +259,22 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.clean();</script>
+                <script>pylons.ferrycargo1();</script>
+            </binding>
+        </button>
+
+        <text>
+            <row>20</row>
+            <col>0</col>
+            <label>Ferry Loadout 2</label>
+        </text>
+        <button><pref-width>45</pref-width><pref-height>20</pref-height>
+            <row>20</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.ferrycargo2();</script>
             </binding>
         </button>
 
@@ -401,7 +450,7 @@
         <text>
             <row>20</row>
             <col>2</col>
-            <label>Ferry Loadout 1</label>
+            <label>A/S Anti-Ship (Mode 1)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>20</row>
@@ -409,14 +458,14 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.ferrycargo1();</script>
+                <script>pylons.a2s_antiship();</script>
             </binding>
         </button>
 
         <text>
             <row>22</row>
             <col>2</col>
-            <label>Ferry Loadout 2</label>
+            <label>A/S Anti-Ship (Mode 2)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>22</row>
@@ -424,7 +473,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.ferrycargo2();</script>
+                <script>pylons.a2s_antiship2();</script>
             </binding>
         </button>
 
@@ -583,36 +632,6 @@
                 <script>pylons.a2g_jgps();</script>
             </binding>
         </button>
-
-        <text>
-            <row>20</row>
-            <col>4</col>
-            <label>A/S Anti-Ship (Mode 1)</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>20</row>
-            <col>5</col>
-            <legend>Mount</legend>
-            <binding>
-                <command>nasal</command>
-                <script>pylons.a2s_antiship();</script>
-            </binding>
-        </button>
-
-        <text>
-            <row>22</row>
-            <col>4</col>
-            <label>A/S Anti-Ship (Mode 2)</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>22</row>
-            <col>5</col>
-            <legend>Mount</legend>
-            <binding>
-                <command>nasal</command>
-                <script>pylons.a2s_antiship2();</script>
-            </binding>
-        </button>
         
         <hrule>
             <row>19</row>
@@ -621,12 +640,12 @@
         </hrule>
 
         <text>
-            <row>24</row>
+            <row>20</row>
             <col>4</col>
             <label>A/G Strategic Strike (Unguided)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>24</row>
+            <row>20</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
@@ -636,12 +655,12 @@
         </button>
 
          <text>
-            <row>26</row>
+            <row>22</row>
             <col>4</col>
             <label>A/G Tactical Strike (Guided)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>26</row>
+            <row>22</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
@@ -655,48 +674,7 @@
             <col>0</col>
             <colspan>6</colspan>
         </hrule>
-        
-        <text>
-            <row>20</row>
-            <col>0</col>
-            <label>Internal and mounted tanks</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>20</row>
-            <col>1</col>
-            <legend>Refuel</legend>
-            <binding>
-                <command>nasal</command>
-                <script>pylons.refuel();</script>
-            </binding>
-        </button>
 
-        <hrule>
-            <row>23</row>
-            <col>0</col>
-            <colspan>6</colspan>
-        </hrule>
-        
-        <text>
-            <row>22</row>
-            <col>0</col>
-            <label>Cannon</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>22</row>
-            <col>1</col>
-            <legend>Rearm</legend>
-            <binding>
-                <command>nasal</command>
-                <script>pylons.cannon_load();</script>
-            </binding>
-        </button>
-
-        <hrule>
-            <row>25</row>
-            <col>0</col>
-            <colspan>6</colspan>
-        </hrule>
     </group>
 
     <empty><stretch>1</stretch></empty>
