@@ -480,7 +480,7 @@
                         </binding>
                     </item> 
                     <item>
-                        <label>Preplanning</label>
+                        <label>Mission Preplanning</label>
                         <enabled type="bool">true</enabled>
                         <name>circles</name>
                         <binding>

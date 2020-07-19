@@ -39,7 +39,7 @@
 		<layout>hbox</layout>
 		<empty><stretch>1</stretch></empty>
 
-		<text><label>Preplanned Threats:</label></text>
+		<text><label>Mission Preplanning</label></text>
 
 		<empty><stretch>1</stretch></empty>
 
@@ -61,6 +61,9 @@
 
 	<hrule/>
 
+	<text><halign>left</halign><label>Input coordinates (Lat, Lon and Radius in NM) to display threat or friendly circled areas on HSD page.</label></text>
+	<empty><stretch>1</stretch></empty>
+
   	<group>
 		<layout>hbox</layout>
 
@@ -74,11 +77,11 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<!--<color>
-	      		<red>0.5</red>
-	      		<green>1</green>
+	      	<color>
+	      		<red>1.0</red>
+	      		<green>0.5</green>
 	      		<blue>0.5</blue>
-	      	</color>-->
+	      	</color>
 		</input>
 		<input>
 		  	<width>150</width>
@@ -90,11 +93,11 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<!--<color>
-	      		<red>0.5</red>
-	      		<green>1</green>
+	      	<color>
+	      		<red>1.0</red>
+	      		<green>0.5</green>
 	      		<blue>0.5</blue>
-	      	</color>-->
+	      	</color>
 		</input>
 		<input>
 		  	<width>100</width>
@@ -157,11 +160,11 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<!--<color>
-	      		<red>0.5</red>
-	      		<green>1</green>
+	      	<color>
+	      		<red>1.0</red>
+	      		<green>0.5</green>
 	      		<blue>0.5</blue>
-	      	</color>-->
+	      	</color>
 		</input>
 		<input>
 		  	<width>150</width>
@@ -173,11 +176,11 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<!--<color>
-	      		<red>0.5</red>
-	      		<green>1</green>
+	      	<color>
+	      		<red>1.0</red>
+	      		<green>0.5</green>
 	      		<blue>0.5</blue>
-	      	</color>-->
+	      	</color>
 		</input>
 		<input>
 		  	<width>100</width>
@@ -240,11 +243,11 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<!--<color>
+	      	<color>
 	      		<red>0.5</red>
-	      		<green>1</green>
-	      		<blue>0.5</blue>
-	      	</color>-->
+      			<green>1</green>
+      			<blue>0.5</blue>
+	      	</color>
 		</input>
 		<input>
 		  	<width>150</width>
@@ -256,11 +259,11 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<!--<color>
+	      	<color>
 	      		<red>0.5</red>
-	      		<green>1</green>
-	      		<blue>0.5</blue>
-	      	</color>-->
+      			<green>1</green>
+      			<blue>0.5</blue>
+	      	</color>
 		</input>
 		<input>
 		  	<width>100</width>
@@ -323,11 +326,11 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<!--<color>
+	      	<color>
 	      		<red>0.5</red>
-	      		<green>1</green>
-	      		<blue>0.5</blue>
-	      	</color>-->
+      			<green>1</green>
+      			<blue>0.5</blue>
+	      	</color>
 		</input>
 		<input>
 		  	<width>150</width>
@@ -339,11 +342,11 @@
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
-	      	<!--<color>
+	      	<color>
 	      		<red>0.5</red>
-	      		<green>1</green>
-	      		<blue>0.5</blue>
-	      	</color>-->
+      			<green>1</green>
+      			<blue>0.5</blue>
+	      	</color>
 		</input>
 		<input>
 		  	<width>100</width>
@@ -392,6 +395,12 @@
 			</binding>
 		</button>
 	</group>
+
+	<empty><stretch>1</stretch></empty>
+	<hrule/>
+
+	<text><halign>left</halign><label>Bullseye designation</label></text>
+	<empty><stretch>1</stretch></empty>
 	
 	<group>
 		<layout>hbox</layout>
@@ -429,7 +438,7 @@
 	      	</color>
 		</input>
 		<checkbox>
-			<label>Bullseye defined</label>
+			<label>Display BE</label>
 			<halign>center</halign>
 			<live>true</live>
 			<property>f16/avionics/bulls-eye-defined</property>
@@ -438,18 +447,12 @@
 			</binding>
 		</checkbox>
 	</group>
-	
 
 	<empty><stretch>1</stretch></empty>
-	<text><label>Input lat,lon and radius (nm) to get circled threat areas in HSD.</label></text>
-	
 	<hrule/>
 	
 	<text>
-        <label></label>
-    </text>
-	<text>
-        <label>DTU preloaded HSD Lines:</label>
+        <label>DTU preloaded HSD Lines</label>
     </text>
     <group>
 		<layout>hbox</layout>
@@ -471,14 +474,16 @@
 	    </button>
     </group>
     <empty><stretch>1</stretch></empty>
-    <text><label>Load route file to enable lines in HSD.</label></text>
+    <text><label>Load .fgfp or .gpx route file to enable lines on HSD page.</label></text>
     
     <hrule/>
+
+    <text><label>Kneeboards</label></text>
     
     <group>
 		<layout>hbox</layout>
     	<button>
-			<legend>Load Left kneeboard</legend>
+			<legend>Load Left MDC</legend>
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
@@ -499,7 +504,7 @@
 	<group>
 		<layout>hbox</layout>
 		<button>
-			<legend>Load Right kneeboard</legend>
+			<legend>Load Right MDC</legend>
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
@@ -517,5 +522,7 @@
 			</binding>
 		</checkbox>
 	</group>
+
+	<empty><stretch>1</stretch></empty>
 
 </PropertyList>
