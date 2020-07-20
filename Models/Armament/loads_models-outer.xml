@@ -99,9 +99,9 @@
   <name>Station8_IRIS-T</name>
   <path>Aircraft/f16/Models/Armament/Weapons/IRIS-T/IRIS-T.xml</path>
   <offsets>
-   <x-m>1.275</x-m>
+   <x-m>1.4</x-m>
    <y-m>3.7</y-m>
-   <z-m>-0.33</z-m>
+   <z-m>-0.315</z-m>
    <pitch-deg>-3.5</pitch-deg>
   </offsets>
  </model>
@@ -110,9 +110,9 @@
   <name>Station8_CATM-9L</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AIM-9/CATM-9L.xml</path>
   <offsets>
-   <x-m>1.4</x-m>
+   <x-m>1.275</x-m>
    <y-m>3.7</y-m>
-   <z-m>-0.315</z-m>
+   <z-m>-0.32</z-m>
    <pitch-deg>-3.5</pitch-deg>
   </offsets>
  </model>
