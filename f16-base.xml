@@ -2461,6 +2461,57 @@ There is also small changes in tail for different variants with and without brak
                 <ejector-speed-fps type="double">20</ejector-speed-fps>
                 <drop-time type="double">0.5</drop-time>
             </aim-7>
+            <iris-t>
+                <short-name type="string">IRIS-T</short-name>
+                <long-name type="string">IRIS-T</long-name>
+                <vol-search type="double">0.15</vol-search>
+                <vol-track type="double">0.50</vol-track>
+                <guidance type="string">heat</guidance>                       <!-- heat, radar or semi-radar -->
+                <navigation type="string">PN</navigation>
+                <all-aspect type="bool">true</all-aspect>                     <!-- all or rear-only -->
+                <max-fire-range-nm type="double">13.5</max-fire-range-nm> 
+                <FCS-field-deg type="int">60</FCS-field-deg>
+                <seeker-field-deg type="int">180</seeker-field-deg>
+                <max-g type="int">60</max-g>                                  <!-- thrust vectoring -->
+                <thrust-lbf-stage-1 type="double">2900</thrust-lbf-stage-1>
+                <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>
+                <stage-1-duration-sec type="double">12</stage-1-duration-sec>
+                <stage-2-duration-sec type="double">0.0</stage-2-duration-sec>
+                <weight-launch-lbs type="double">193</weight-launch-lbs>
+                <weight-warhead-lbs type="double">30</weight-warhead-lbs>
+                <weight-fuel-lbm type="double">70</weight-fuel-lbm>           <!-- guess -->
+                <drag-coeff type="double">0.45</drag-coeff>                   <!-- guesstimate. The python program estimates 1.15 to 1.30. But since RB24 and RB24J have to be adjust also I'll wait till I got their numbers. -->
+                <cross-section-sqft type="double">0.18</cross-section-sqft>                    <!-- sq ft -->
+                <arming-time-sec type="double">1.2</arming-time-sec>          <!-- guess -->
+                <min-speed-for-guiding-mach type="double">0.7</min-speed-for-guiding-mach><!-- guess -->
+                <self-destruct-time-sec type="double">60</self-destruct-time-sec>         <!-- guess -->
+                <seeker-angular-speed-dps type="double">40</seeker-angular-speed-dps><!-- deg/sec guess-->
+                <lock-on-sun-deg type="double">5</lock-on-sun-deg>
+                <loft-altitude type="int">0</loft-altitude>
+                <min-fire-range-nm type="double">0.15</min-fire-range-nm>
+                <rail type="bool">true</rail>
+                <rail-length-m type="double">2.667</rail-length-m><!-- 16S210 AIM-9 Missile Launcher -->
+                <rail-point-forward type="bool">true</rail-point-forward>
+                <max-report-distance type="double">65</max-report-distance>
+                <class type="string">A</class>
+                <fire-msg type="string">Fox 2</fire-msg>
+                <DLZ type="bool">true</DLZ>
+                <DLZ-optimal-alt-feet type="double">15000</DLZ-optimal-alt-feet>
+                <DLZ-optimal-closing-mach type="double">1.75</DLZ-optimal-closing-mach>
+                <seeker-beam-width-deg type="double">4</seeker-beam-width-deg>
+                <reaquire type="bool">true</reaquire>
+                <lock-on-after-launch type="bool">true</lock-on-after-launch>
+                <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed>
+                <prowl-flight type="string">gyro-pitch</prowl-flight>
+                <switch-time-sec type="double">5</switch-time-sec>
+                <vector-thrust type="bool">true</vector-thrust>
+                <coolable type="bool">true</coolable>
+                <cool-time type="double">4</cool-time>
+                <cool-duration type="int">3600</cool-duration>
+                <warm-detect-range-nm type="double">8</warm-detect-range-nm>
+                <detect-range-nm type="double">13.5</detect-range-nm>
+                <ready-time type="double">0.5</ready-time>
+            </iris-t>
             <mk-82> 
                 <short-name type="string">B82</short-name>
                 <long-name type="string">MK-82 General Purpose Bomb</long-name>
