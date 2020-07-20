@@ -45,10 +45,10 @@
   <group>
     <layout>hbox</layout>
     <button>
-        <legend>Clean load</legend>
+        <legend>Default load</legend>
         <binding>
           <command>nasal</command>
-          <script>pylons.clean();</script>
+          <script>pylons.default();</script>
         </binding>
     </button>
 
@@ -275,6 +275,21 @@
             <binding>
                 <command>nasal</command>
                 <script>pylons.ferrycargo2();</script>
+            </binding>
+        </button>
+
+        <text>
+            <row>22</row>
+            <col>0</col>
+            <label>Clean load</label>
+        </text>
+        <button><pref-width>45</pref-width><pref-height>20</pref-height>
+            <row>22</row>
+            <col>1</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.clean();</script>
             </binding>
         </button>
 

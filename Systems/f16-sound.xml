@@ -3796,6 +3796,66 @@
             </volume>
         </lock-tone>
         <lock-tone>
+            <name>iris-t-signal</name>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/aim-9-growl.wav</path>
+            <condition>
+                <or>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                        <value>20</value>
+                    </greater-than>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                        <value>20</value>
+                    </greater-than>
+                </or>
+                <property>payload/armament/iris-t/sound-on-off</property>
+            </condition>
+            <pitch>
+                <property>payload/armament/iris-t/sound-volume</property>
+                <factor>1.00</factor>
+                <offset>1.60</offset>
+                <min>0</min>
+                <max>2</max>
+            </pitch>
+            <volume>
+                <property>payload/armament/iris-t/sound-volume</property>
+            </volume>
+            <volume>
+                <property>sim/current-view/internal</property>
+            </volume>
+            <volume>
+                <property>f16/avionics/msl-vol-knob</property>
+            </volume>
+        </lock-tone>
+        <lock-tone>
+            <name>iris-t-signal2</name>
+            <mode>once</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/betty/lock.wav</path>
+            <condition>
+                <property>payload/armament/iris-t/sound-on-off</property>
+                <equals>
+                    <property>payload/armament/iris-t/sound-volume</property>
+                    <value>0.50</value>
+                </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
+            </volume>
+        </lock-tone>
+        <lock-tone>
             <name>aim-7-signal</name>
             <type>avionics</type>
             <path>Aircraft/f16/Sounds/betty/lock.wav</path>
@@ -4187,6 +4247,25 @@
             <mode>once</mode>
             <condition>
                 <property>payload/armament/aim-9/sound-fire-on-off</property>
+            </condition>
+            <reference-dist>25</reference-dist>
+            <max-dist>10000</max-dist>
+            <position>
+                <x>3.15986</x>
+                <y>-2.70311</y>
+                <z>-0.67645</z>
+            </position>
+            <volume>
+                <factor>0.65</factor>
+                <max>1</max>
+            </volume>
+        </missile1>
+        <missile1>
+            <name>missile7</name>
+            <path>Aircraft/f16/Sounds/missile.wav</path>
+            <mode>once</mode>
+            <condition>
+                <property>payload/armament/iris-t/sound-fire-on-off</property>
             </condition>
             <reference-dist>25</reference-dist>
             <max-dist>10000</max-dist>

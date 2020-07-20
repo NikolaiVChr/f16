@@ -102,6 +102,7 @@ var pylonSets = {
 	aim120:  {name: "1 x AIM-120", content: ["AIM-120"], fireOrder: [0], launcherDragArea: -0.025, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#non wingtip
 	aim120WT:{name: "1 x AIM-120", content: ["AIM-120"], fireOrder: [0], launcherDragArea: -0.05, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#wingtip
 	aim7:    {name: "1 x AIM-7",   content: ["AIM-7"], fireOrder: [0], launcherDragArea: -0.025, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
+	irisT:   {name: "1 x IRIS-T",   content: ["IRIS-T"], fireOrder: [0], launcherDragArea: -0.020, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#non wingtip
 	podEcm131: {name: "AN/ALQ-131(V) ECM Pod", content: [ecm131], fireOrder: [0], launcherDragArea: 0.16, launcherMass: 410, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
 	podEcm184: {name: "AN/ALQ-184(V) ECM Pod", content: [ecm184], fireOrder: [0], launcherDragArea: 0.1, launcherMass: 635, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 2},
     podTrvl: {name: "MXU-648 Cargopod", content: [crgpd], fireOrder: [], launcherDragArea: 0.14, launcherMass: 104, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 2},
@@ -157,7 +158,7 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
     var pylons = [pylon1,pylon2,pylon3,pylon4,pylon5,pylon6,pylon7,pylon8,pylon9,pylonI,pylon10,pylon11];
 
     # The order in this line is the order key 'w' will cycle through the weapons:
-	fcs = fc.FireControl.new(pylons, [9,0,8,1,7,2,6,3,5,4], ["20mm Cannon","LAU-68","AIM-9","AIM-120","AIM-7","AGM-65","GBU-12","AGM-84","MK-82","AGM-88","GBU-31","GBU-24","MK-83","MK-84","AGM-158","CBU-87","CBU-105","AGM-154A","GBU-54","AGM-119"]);
+	fcs = fc.FireControl.new(pylons, [9,0,8,1,7,2,6,3,5,4], ["20mm Cannon","LAU-68","AIM-9","AIM-120","AIM-7","IRIS-T","AGM-65","GBU-12","AGM-84","MK-82","AGM-88","GBU-31","GBU-24","MK-83","MK-84","AGM-158","CBU-87","CBU-105","AGM-154A","GBU-54","AGM-119"]);
 
 	var aimListener = func (obj) {
 		#If auto focus on missile is activated the we call the function
@@ -925,8 +926,8 @@ var refuel = func {
       screen.log.write(f16.msgC);
     }
 }
-# Clean configuration
-var clean = func {
+# Default configuration
+var default = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.dumb1);# F16 never has nothing on wingtips unless its fired off, its aerodynamics is designed to work better with something there.
         pylon2.loadSet(pylonSets.empty);
@@ -937,6 +938,26 @@ var clean = func {
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.dumb1);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# Clean configuration
+var clean = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.empty);
+        pylon2.loadSet(pylonSets.empty);
+        pylon3.loadSet(pylonSets.empty);
+        pylon4.loadSet(pylonSets.empty);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.empty);
+        pylon7.loadSet(pylonSets.empty);
+        pylon8.loadSet(pylonSets.empty);
+        pylon9.loadSet(pylonSets.empty);
         pylon10.loadSet(pylonSets.empty);
         pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
