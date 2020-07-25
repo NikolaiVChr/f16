@@ -477,8 +477,6 @@
 							
 					</group>
 			</group>
-
-			<hrule/>
 			
 		</group>
 
@@ -703,8 +701,6 @@
 			    </button>
 			    <text><label>EMER STORES JETTISON</label></text>
 			</group>
-
-			<hrule/>
 		
 		</group>
 		
@@ -872,8 +868,8 @@
 	<text><label>change how the fly-by-wire reacts to your stick inputs, so that you easier can make minute corrections</label></text>
 	<text><label>when close to the tanker.</label></text>
 	
-	<hrule/>
-
-  
+	<empty>
+		<stretch>1</stretch>
+	</empty>
 
 </PropertyList>
