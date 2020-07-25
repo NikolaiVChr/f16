@@ -35,7 +35,7 @@
 	<hrule/>
 
   	<text>
-	    <label>Coordinates</label>
+	    <label>Set coordinates for standoff GPS-guided munitions (JSOW, JASSM)</label>
 	    <height>25</height>
 	</text>
 
@@ -87,6 +87,9 @@
       		<blue>0.5</blue>
       	</color>-->
 	</input>
+
+ <group>
+	<layout>hbox</layout>
 	<button>
 		<legend>Apply to current weapon</legend>
 		<binding>
@@ -138,8 +141,8 @@
 			]]></script>
 		</binding>
 	</button>
+ </group>
 
-	<empty><stretch>1</stretch></empty>
-	<text><label>Used for programming GPS guided munitions like JASSM and JSOW.</label></text>
+ <empty><stretch>1</stretch></empty>
 
 </PropertyList>

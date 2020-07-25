@@ -74,7 +74,7 @@
 
        <counter>
          <particles-per-sec>
-           <value>50</value>
+           <value>60</value>
            <spread>0</spread>
          </particles-per-sec>
        </counter>
@@ -87,10 +87,10 @@
              <red><value>   0.8 </value></red>
              <green><value> 0.8 </value></green>
              <blue><value>  0.8 </value></blue>
-             <alpha><value> 0.5 </value></alpha>
+             <alpha><value> 0.01 </value></alpha>
            </color>
            <size>
-             <value>1.0</value>
+             <value>0.5</value>
            </size>
          </start>
 
@@ -99,15 +99,15 @@
              <red><value>   0.8 </value></red>
              <green><value> 0.8 </value></green>
              <blue><value>  0.8 </value></blue>
-             <alpha><value> 0.1 </value></alpha>
+             <alpha><value> 0.0 </value></alpha>
            </color>
            <size>
-             <value>6</value>
+             <value>4</value>
            </size>
          </end>
 
          <life-sec>
-           <value>30</value>
+           <value>7.5</value>
          </life-sec>
             
          <mass-kg>  0.5 </mass-kg>

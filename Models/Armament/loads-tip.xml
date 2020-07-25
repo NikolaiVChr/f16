@@ -119,6 +119,21 @@
    <property>sim/multiplay/generic/bool[17]</property>
   </condition>
  </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station_ACMIpod</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-0-type</property>
+      <value>AN/ASQ-T50(V)2 ACMI Pod</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-0-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
  
 <!--  ===========================================================================================================-->
 <!--  ================================================= id-8   ==================================================-->
@@ -226,6 +241,21 @@
   <object-name>Station_AIM-9_smokewinderW9</object-name>
   <condition>
    <property>sim/multiplay/generic/bool[18]</property>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station9_ACMIpod</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-8-type</property>
+      <value>AN/ASQ-T50(V)2 ACMI Pod</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-8-count</property>
+      <value>0</value>
+    </greater-than>
   </condition>
  </animation>
 

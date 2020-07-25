@@ -8,7 +8,7 @@
       The General Dynamics F-16 Fighting Falcon is a single-engine supersonic multirole fighter aircraft originally developed by General Dynamics (now Lockheed Martin) for the United States Air Force (USAF). Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
       The Fighting Falcon has key features including a frameless bubble canopy for better visibility, side-mounted control stick to ease control while maneuvering, a seat reclined 30 degrees to reduce the effect of g-forces on the pilot, and the first use of a relaxed static stability/fly-by-wire flight control system which helps to make it a nimble aircraft.
   </long-description>
-  <author>Erik Hofman, Pensacola (skin textures), Martin "Pegasus" Schmitt (panel textures), Richard Harrison (MFD, HUD)</author>
+  <author>Erik Hofman, Pensacola, Martin "Pegasus" Schmitt, Nikolai V. Chr., J Maverick 16, Richard Harrison, Josh Davidson, Martien Van Der P., Gary Brown, Justin Nicholson, Jonathan Redpath, Timi, Enrico Castaldi</author>
   <status>production</status>
   <rating>
     <FDM type="int">3</FDM>
@@ -68,21 +68,6 @@
                 <splash type="bool">true</splash>
                 <path>gui/splash/f16_b50_3.png</path>
             </preview>
-            <preview>
-                <type>exterior</type>
-                <splash type="bool">true</splash>
-                <path>gui/splash/f16_b50_4.png</path>
-            </preview>
-            <preview>
-                <type>exterior</type>
-                <splash type="bool">true</splash>
-                <path>gui/splash/f16_b50_5.png</path>
-            </preview>
-            <preview>
-                <type>exterior</type>
-                <splash type="bool">true</splash>
-                <path>gui/splash/f16_b50_6.png</path>
-            </preview>
   </previews>
 
   <model>
@@ -93,7 +78,7 @@
    <path archive="y">Aircraft/f16/Models/F-16.xml</path>
    <livery>
     <file type="string"/>
-    <name type="string">USAF 52FW, 480FS SP</name>
+    <name type="string">USAF #568 "Ghost Gray" (concept)</name>
     <folder type="string">Aircraft/f16/Models/Liveries/Block50</folder>
    </livery>
   </model>

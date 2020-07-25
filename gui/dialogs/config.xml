@@ -46,21 +46,13 @@
 
     <group>
       <layout>vbox</layout>
-        <!--button>
+        <button>
           <legend>Quick start</legend>
           <binding>
             <command>nasal</command>
             <script>f16.autostart();</script>
           </binding>
-        </button-->
-
-      <button>
-        <legend>Cold and Dark</legend>
-        <binding>
-          <command>nasal</command>
-          <script>f16.coldndark();</script>
-        </binding>
-      </button>
+        </button>
 
       <button>
         <legend>Checklists</legend>
@@ -68,6 +60,14 @@
           <command>dialog-show</command>
           <dialog-name>checklist</dialog-name>
           <offset>1</offset>
+        </binding>
+      </button>
+
+      <button>
+        <legend>Cold and Dark</legend>
+        <binding>
+          <command>nasal</command>
+          <script>f16.coldndark();</script>
         </binding>
       </button>
 

@@ -58,7 +58,7 @@
   <condition>
     <equals>
       <property>payload/armament/station/id-1-type</property>
-      <value>AN/ASQ-T50(V)1 ACMI Pod</value>
+      <value>AN/ASQ-T50(V)2 ACMI Pod</value>
     </equals>
     <greater-than>
       <property>payload/armament/station/id-1-count</property>
@@ -117,7 +117,7 @@
   <condition>
     <equals>
       <property>payload/armament/station/id-7-type</property>
-      <value>AN/ASQ-T50(V)1 ACMI Pod</value>
+      <value>AN/ASQ-T50(V)2 ACMI Pod</value>
     </equals>
     <greater-than>
       <property>payload/armament/station/id-7-count</property>

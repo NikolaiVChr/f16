@@ -19,20 +19,20 @@ var callInit = func {
       
   canvasded.addPlacement({"node": "poly.003", "texture": "canvas.png"});
   if (getprop("sim/variant-id") == 2) {
-        canvasded.setColorBackground(0.00, 0.02, 0.00, 1.00);
+        canvasded.setColorBackground(0.00, 0.04, 0.01, 1.00);
         } else if (getprop("sim/variant-id") == 4) {
-        canvasded.setColorBackground(0.00, 0.02, 0.00, 1.00);
+        canvasded.setColorBackground(0.00, 0.04, 0.01, 1.00);
         } else if (getprop("sim/variant-id") == 5) {
-        canvasded.setColorBackground(0.00, 0.02, 0.00, 1.00);
+        canvasded.setColorBackground(0.00, 0.04, 0.01, 1.00);
         } else if (getprop("sim/variant-id") == 6) {
-        canvasded.setColorBackground(0.00, 0.02, 0.00, 1.00);
+        canvasded.setColorBackground(0.00, 0.04, 0.01, 1.00);
         } else {
-        canvasded.setColorBackground(0.00, 0.04, 0.00, 1.00);
+        canvasded.setColorBackground(0.01, 0.08, 0.00, 1.00);
         };
 
   dedGroup = canvasded.createGroup();
   dedGroup.show();
-  var color = [0.82,0.85,0,1];
+  var color = [0.78,0.85,0,1];
   line1 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)

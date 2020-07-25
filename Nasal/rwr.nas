@@ -5,6 +5,7 @@ RWRCanvas = {
         var radius = diameter/2;
         rwr.inner_radius = radius*0.30;# field where inner IDs are placed
         rwr.outer_radius = radius*0.65;# field where outer IDs are placed
+        rwr.circle_radius_full = radius*0.974;
         rwr.circle_radius_big = radius*0.5;
         rwr.circle_radius_small = radius*0.125;
         var tick_long = radius*0.25;
@@ -24,19 +25,25 @@ RWRCanvas = {
 #           .moveTo(0, diameter/2)
 #           .arcSmallCW(diameter/2, diameter/2, 0, diameter, 0)
 #           .arcSmallCW(diameter/2, diameter/2, 0, -diameter, 0)
-#           .setStrokeLineWidth(rwr.stroke*1.7)
+#           .setStrokeLineWidth(rwr.stroke*1.8)
 #           .setColor(1, 1, 1);
         root.createChild("path")# inner circle
            .moveTo(diameter/2-rwr.circle_radius_small, diameter/2)
            .arcSmallCW(rwr.circle_radius_small, rwr.circle_radius_small, 0, rwr.circle_radius_small*2, 0)
            .arcSmallCW(rwr.circle_radius_small, rwr.circle_radius_small, 0, -rwr.circle_radius_small*2, 0)
-           .setStrokeLineWidth(rwr.stroke*1.7)
+           .setStrokeLineWidth(rwr.stroke*1.8)
            .setColor(colorBG);
         root.createChild("path")# outer circle
            .moveTo(diameter/2-rwr.circle_radius_big, diameter/2)
            .arcSmallCW(rwr.circle_radius_big, rwr.circle_radius_big, 0, rwr.circle_radius_big*2, 0)
            .arcSmallCW(rwr.circle_radius_big, rwr.circle_radius_big, 0, -rwr.circle_radius_big*2, 0)
-           .setStrokeLineWidth(rwr.stroke*1.7)
+           .setStrokeLineWidth(rwr.stroke*1.8)
+           .setColor(colorBG);
+        root.createChild("path")# full circle
+           .moveTo(diameter/2-rwr.circle_radius_full, diameter/2)
+           .arcSmallCW(rwr.circle_radius_full, rwr.circle_radius_full, 0, rwr.circle_radius_full*2, 0)
+           .arcSmallCW(rwr.circle_radius_full, rwr.circle_radius_full, 0, -rwr.circle_radius_full*2, 0)
+           .setStrokeLineWidth(rwr.stroke*1.8)
            .setColor(colorBG);
         root.createChild("path")#middle cross
            .moveTo(diameter/2-rwr.circle_radius_small, diameter/2)
@@ -63,7 +70,7 @@ RWRCanvas = {
            .vert(tick_full)
            .moveTo(diameter*0.5,diameter)
            .vert(-tick_full)
-           .setStrokeLineWidth(rwr.stroke*1.7)
+           .setStrokeLineWidth(rwr.stroke*1.8)
            .setColor(colorBG);
         rwr.rootCenter.createChild("path")# minor ticks
            .moveTo(radius*math.cos(30*D2R),radius*math.sin(-30*D2R))
@@ -109,7 +116,7 @@ RWRCanvas = {
            .lineTo(-(radius-tick_short)*math.cos(60*D2R),(radius-tick_short)*math.sin(60*D2R))
            .moveTo(-radius*math.cos(75*D2R),radius*math.sin(75*D2R))
            .lineTo(-(radius-tick_short)*math.cos(75*D2R),(radius-tick_short)*math.sin(75*D2R))
-           .setStrokeLineWidth(rwr.stroke*1.7)
+           .setStrokeLineWidth(rwr.stroke*1.8)
            .setColor(colorBG);
         rwr.texts = setsize([],rwr.max_icons);# aircraft ID
         for (var i = 0;i<rwr.max_icons;i+=1) {
@@ -515,7 +522,7 @@ RWRCanvas = {
 
                 cv.addPlacement({"node": "bkg", "texture":"rwr-bkg.png"});
                 if (getprop("sim/variant-id") == 2) {
-                cv.setColorBackground(0, 0.09, 0);
+                cv.setColorBackground(0, 0.065, 0);
                 } else if (getprop("sim/variant-id") == 4) {
                 cv.setColorBackground(0, 0.065, 0);
                 } else if (getprop("sim/variant-id") == 5) {
@@ -523,7 +530,7 @@ RWRCanvas = {
                 } else if (getprop("sim/variant-id") == 6) {
                 cv.setColorBackground(0, 0.065, 0);
                 } else {
-                cv.setColorBackground(0, 0.12, 0);
+                cv.setColorBackground(0.01, 0.11, 0);
                 };
                 var root = cv.createGroup();
                 rwr = RWRCanvas.new("RWRCanvas", root, [diam/2,diam/2],diam);

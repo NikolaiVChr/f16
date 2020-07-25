@@ -5,8 +5,8 @@
   	<layout>vbox</layout>
   	<draggable>true</draggable>
     <resizable>true</resizable>
-    <width>250</width>
-    <height>560</height>
+    <width>240</width>
+    <height>570</height>
 
     <group>
 		<layout>hbox</layout>
@@ -223,5 +223,6 @@
 	<text><label>Wingmen only show up in RWR</label></text>
 	<text><label>when no other threats are present.</label></text>
 	<text><label>Wingman #4 is reserved for scenario.</label></text>
+	<empty><stretch>1</stretch></empty>
 
 </PropertyList>

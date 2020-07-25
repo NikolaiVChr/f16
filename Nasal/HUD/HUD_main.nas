@@ -1732,6 +1732,17 @@ append(obj.total, obj.speed_curr);
                                 currASEC = nil;#[me.sx*0.5,me.sy*0.25];
                             }
                         }
+                    } elsif (hdp.weapon_selected == "IRIS-T") {
+                        hdp.window9_txt = sprintf("%d ASM", pylons.fcs.getAmmo());#short range missile
+                        if (hdp.weapn != nil) {
+                            if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
+                                me.ASEC65.show();
+                                currASEC = nil;#[me.sx*0.5,me.sy*0.25];
+                            } elsif (!hdp.standby) {
+                                me.ASEC100.show();
+                                currASEC = nil;#[me.sx*0.5,me.sy*0.25];
+                            }
+                        }
                     } elsif (hdp.weapon_selected == "AIM-120") {
                         hdp.window9_txt = sprintf("%d AMM", pylons.fcs.getAmmo());#adv. medium range missile
                         if (hdp.weapn != nil) {
@@ -1957,7 +1968,7 @@ append(obj.total, obj.speed_curr);
                     me.radarLock.setTranslation(0, -me.sy*0.25+262*0.3*0.5);
                     me.rdL = 1;
                 }                
-            } elsif (!pylons.fcs.isLock() and hdp.weapon_selected == "AIM-9") {
+            } elsif (!pylons.fcs.isLock() and hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
                 if (pylons.bore) {
                     var aim = pylons.fcs.getSelectedWeapon();
                     if (aim != nil) {
@@ -1971,7 +1982,7 @@ append(obj.total, obj.speed_curr);
                     me.irS = 1;
                     me.irSearch.setTranslation(0, -me.sy*0.25);
                 }
-            } elsif (pylons.fcs.isLock() and hdp.weapon_selected == "AIM-9" and pylons.bore) {
+            } elsif (pylons.fcs.isLock() and hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T" and pylons.bore) {
                 var aim = pylons.fcs.getSelectedWeapon();
                 if (aim != nil) {
                     var coords = aim.getSeekerInfo();
@@ -2042,7 +2053,7 @@ append(obj.total, obj.speed_curr);
                                 }
                                 if (pylons.fcs != nil and pylons.fcs.isLock()) {
                                     #me.target_locked.setRotation(45*D2R);
-                                    if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7" or hdp.weapon_selected == "AIM-9") {
+                                    if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7" or hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
                                         var aim = pylons.fcs.getSelectedWeapon();
                                         if (aim != nil) {
                                             var coords = aim.getSeekerInfo();
@@ -2060,7 +2071,7 @@ append(obj.total, obj.speed_curr);
                                         me.ASEC120Aspect.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading+180));
                                         me.rdL = 1;
                                         me.rdT = 1;
-                                    } elsif (hdp.weapon_selected == "AIM-9") {
+                                    } elsif (hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
                                         #me.irLock.setTranslation(me.xcS, me.ycS);
                                         me.ASEC65Aspect.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading+180));
                                         me.irL = 1;

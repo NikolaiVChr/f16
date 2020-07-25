@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <PropertyList>
 
-	<path>/Aircraft/Instruments-3d/standby-adi/stdby-adi.ac</path>
+	<path>stdby-adi.ac</path>
 
 	<animation>
 		<type>rotate</type>

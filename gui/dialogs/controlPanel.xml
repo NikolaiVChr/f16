@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- General Dynamics F-16 Autoflight System -->
-<!-- (c) 2018 Joshua Davidson (Octal450) -->
+<!-- (c) 2018 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
@@ -46,9 +46,9 @@
 				<group>
 					<visible>
 						<less-than>
-							<property>/sim/variant-id</property>
-							<value>2</value>
-						</less-than>
+                			<property>sim/variant-id</property>
+                			<value>4</value>
+            			</less-than>
 					</visible>
 					<row>0</row>
 					<col>0</col>
@@ -161,10 +161,10 @@
 				
 				<group>
 					<visible>
-						<greater-than-equals>
+						<greater-than>
 							<property>/sim/variant-id</property>
-							<value>2</value>
-						</greater-than-equals>
+							<value>3</value>
+						</greater-than>
 					</visible>
 					<row>0</row>
 					<col>0</col>
@@ -477,8 +477,6 @@
 							
 					</group>
 			</group>
-
-			<hrule/>
 			
 		</group>
 
@@ -703,8 +701,6 @@
 			    </button>
 			    <text><label>EMER STORES JETTISON</label></text>
 			</group>
-
-			<hrule/>
 		
 		</group>
 		
@@ -872,8 +868,8 @@
 	<text><label>change how the fly-by-wire reacts to your stick inputs, so that you easier can make minute corrections</label></text>
 	<text><label>when close to the tanker.</label></text>
 	
-	<hrule/>
-
-  
+	<empty>
+		<stretch>1</stretch>
+	</empty>
 
 </PropertyList>
