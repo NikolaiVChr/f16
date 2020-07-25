@@ -73,7 +73,7 @@
             <tag>refuel</tag>
         </tags>
         <state include="states/ramp.xml" n="0"/>
-        <state include="states/running.xml" n="1">
+        <state include="states/running.xml" n="1"/>
         <state include="states/cruise.xml" n="2"/>
         <state include="states/approach.xml" n="3"/>
         <checklists include="gui/checklists.xml"/>
