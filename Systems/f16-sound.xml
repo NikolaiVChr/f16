@@ -2438,7 +2438,7 @@
             </condition>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>0.80</factor>
+                <factor>0.75</factor>
             </volume>
         </voice>
         <voice>
@@ -3487,7 +3487,7 @@
             </pitch>
             <volume>
                 <property>/sim/current-view/internal</property>
-                <factor>0.065</factor>
+                <factor>0.060</factor>
             </volume>
         </avionics>
         <adi>
