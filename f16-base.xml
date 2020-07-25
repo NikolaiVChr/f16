@@ -73,7 +73,7 @@
             <tag>refuel</tag>
         </tags>
         <state include="states/ramp.xml" n="0"/>
-        <!--state include="states/running.xml" n="1"/-->
+        <state include="states/running.xml" n="1">
         <state include="states/cruise.xml" n="2"/>
         <state include="states/approach.xml" n="3"/>
         <checklists include="gui/checklists.xml"/>
@@ -151,7 +151,6 @@
                 <smokewinderB9 type="int">0</smokewinderB9>
                 <smokewinderW1 type="int">0</smokewinderW1>
                 <smokewinderW9 type="int">0</smokewinderW9>
-                <IRIS-T type="bool">false</IRIS-T>
                 <AIM-120B type="bool">false</AIM-120B>
                 <wingmounts type="bool">true</wingmounts>
                 <ventraltank type="bool">false</ventraltank>
@@ -2462,59 +2461,8 @@ There is also small changes in tail for different variants with and without brak
                 <ejector-speed-fps type="double">20</ejector-speed-fps>
                 <drop-time type="double">0.5</drop-time>
             </aim-7>
-            <iris-t>
-                <short-name type="string">IRIS</short-name>
-                <long-name type="string">IRIS-T</long-name>
-                <vol-search type="double">0.15</vol-search>
-                <vol-track type="double">0.50</vol-track>
-                <guidance type="string">heat</guidance>                       <!-- heat, radar or semi-radar -->
-                <navigation type="string">PN</navigation>
-                <all-aspect type="bool">true</all-aspect>                     <!-- all or rear-only -->
-                <max-fire-range-nm type="double">13.5</max-fire-range-nm> 
-                <FCS-field-deg type="int">70</FCS-field-deg>
-                <seeker-field-deg type="int">240</seeker-field-deg>
-                <max-g type="int">60</max-g>                                  <!-- thrust vectoring -->
-                <thrust-lbf-stage-1 type="double">2900</thrust-lbf-stage-1>
-                <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>
-                <stage-1-duration-sec type="double">12</stage-1-duration-sec>
-                <stage-2-duration-sec type="double">0.0</stage-2-duration-sec>
-                <weight-launch-lbs type="double">193</weight-launch-lbs>
-                <weight-warhead-lbs type="double">30</weight-warhead-lbs>
-                <weight-fuel-lbm type="double">70</weight-fuel-lbm>           <!-- guess -->
-                <drag-coeff type="double">0.45</drag-coeff>                   <!-- guesstimate. The python program estimates 1.15 to 1.30. But since RB24 and RB24J have to be adjust also I'll wait till I got their numbers. -->
-                <cross-section-sqft type="double">0.18</cross-section-sqft>                    <!-- sq ft -->
-                <arming-time-sec type="double">1.2</arming-time-sec>          <!-- guess -->
-                <min-speed-for-guiding-mach type="double">0.7</min-speed-for-guiding-mach><!-- guess -->
-                <self-destruct-time-sec type="double">60</self-destruct-time-sec>         <!-- guess -->
-                <seeker-angular-speed-dps type="double">40</seeker-angular-speed-dps><!-- deg/sec guess-->
-                <lock-on-sun-deg type="double">5</lock-on-sun-deg>
-                <loft-altitude type="int">0</loft-altitude>
-                <min-fire-range-nm type="double">0.15</min-fire-range-nm>
-                <rail type="bool">true</rail>
-                <rail-length-m type="double">2.667</rail-length-m><!-- 16S210 AIM-9 Missile Launcher -->
-                <rail-point-forward type="bool">true</rail-point-forward>
-                <max-report-distance type="double">65</max-report-distance>
-                <class type="string">A</class>
-                <fire-msg type="string">Fox 2</fire-msg>
-                <DLZ type="bool">true</DLZ>
-                <DLZ-optimal-alt-feet type="double">15000</DLZ-optimal-alt-feet>
-                <DLZ-optimal-closing-mach type="double">1.75</DLZ-optimal-closing-mach>
-                <seeker-beam-width-deg type="double">2.5</seeker-beam-width-deg>
-                <reaquire type="bool">true</reaquire>
-                <lock-on-after-launch type="bool">true</lock-on-after-launch>
-                <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed>
-                <prowl-flight type="string">gyro-pitch</prowl-flight>
-                <switch-time-sec type="double">5</switch-time-sec>
-                <vector-thrust type="bool">true</vector-thrust>
-                <coolable type="bool">true</coolable>
-                <cool-time type="double">4</cool-time>
-                <cool-duration type="int">3600</cool-duration>
-                <warm-detect-range-nm type="double">9</warm-detect-range-nm>
-                <detect-range-nm type="double">13.5</detect-range-nm>
-                <ready-time type="double">0.5</ready-time>
-            </iris-t>
             <mk-82> 
-                <short-name type="string">B82</short-name>
+                <short-name type="string">M82</short-name>
                 <long-name type="string">MK-82 General Purpose Bomb</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
                 <class type="string">GMP</class>
@@ -2556,7 +2504,7 @@ There is also small changes in tail for different variants with and without brak
                 <ready-time type="double">0.5</ready-time>               
             </mk-82>
             <mk-83> 
-                <short-name type="string">B83</short-name>
+                <short-name type="string">M83</short-name>
                 <long-name type="string">MK-83 General Purpose Bomb</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
                 <class type="string">GMP</class>
@@ -2598,7 +2546,7 @@ There is also small changes in tail for different variants with and without brak
                 <ready-time type="double">0.5</ready-time>
             </mk-83>
             <mk-84>
-                <short-name type="string">B84</short-name>
+                <short-name type="string">M84</short-name>
                 <long-name type="string">MK-84 General Purpose Bomb</long-name>
                 <fire-msg type="string">Bombs away</fire-msg>
                 <class type="string">GMP</class>
@@ -2848,7 +2796,7 @@ There is also small changes in tail for different variants with and without brak
                 <ready-time type="double">0.5</ready-time>
             </gbu-24>
             <agm-65>
-                <short-name type="string">AG65</short-name>
+                <short-name type="string">AG65B</short-name>
                 <long-name type="string">AGM-65B Maverick</long-name>
                 <vol-search type="double">0.00</vol-search>
                 <vol-track type="double">1.00</vol-track>
@@ -2915,6 +2863,43 @@ There is also small changes in tail for different variants with and without brak
                 <fire-msg type="string">Bruiser</fire-msg>
                 <ready-time type="double">25</ready-time> <!-- INS alignment -->
             </agm-84>
+            <agm-88>
+                <short-name type="string">AG88</short-name>
+                <long-name type="string">AGM-88B HARM</long-name>
+                <vol-search type="double">0.00</vol-search>
+                <vol-track type="double">1.00</vol-track>
+                <guidance type="string">radiation</guidance>
+                <navigation type="string">PN</navigation>                           
+                <all-aspect type="bool">true</all-aspect>
+                <max-fire-range-nm type="double">30</max-fire-range-nm>              <!--  -->
+                <FCS-field-deg type="int">25</FCS-field-deg>            
+                <seeker-field-deg type="int">100</seeker-field-deg>     
+                <max-g type="int">15</max-g>
+                <thrust-lbf-stage-1 type="double">3000</thrust-lbf-stage-1><!-- Boost Sustain 64,000 lbs./sec     630 mps/mach 2+ -->
+                <thrust-lbf-stage-2 type="double">575</thrust-lbf-stage-2>
+                <stage-1-duration-sec type="double">10</stage-1-duration-sec>
+                <stage-2-duration-sec type="double">50</stage-2-duration-sec>
+                <weight-launch-lbs type="double">800</weight-launch-lbs>              <!--  -->
+                <weight-warhead-lbs type="double">143.51</weight-warhead-lbs>            <!--  -->
+                <weight-fuel-lbm type="double">250</weight-fuel-lbm>
+                <drag-coeff type="double">0.25</drag-coeff>
+                <cross-section-sqft type="double">0.53</cross-section-sqft>                             <!-- 9.84 inch diam -->
+                <arming-time-sec type="double">4.0</arming-time-sec>          
+                <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>
+                <self-destruct-time-sec type="double">150</self-destruct-time-sec>  
+                <loft-altitude type="int">0</loft-altitude>
+                <min-fire-range-nm type="double">0.25</min-fire-range-nm>
+                <rail type="bool">false</rail>
+                <max-report-distance type="double">65</max-report-distance>
+                <reaquire type="bool">true</reaquire>
+                <lock-on-after-launch type="bool">true</lock-on-after-launch>
+                <auto-switch-target-allowed type="bool">false</auto-switch-target-allowed>
+                <prowl-flight type="string">gyro-pitch</prowl-flight>
+                <switch-time-sec type="double">5</switch-time-sec>
+                <class type="string">GM</class>
+                <fire-msg type="string">Sniper</fire-msg><!--Magnum-->
+                <ready-time type="double">0.25</ready-time>
+            </agm-88>
             <agm-119>
                 <short-name type="string">AG119</short-name>
                 <long-name type="string">AGM-119A Penguin MK3</long-name>
@@ -3048,43 +3033,6 @@ There is also small changes in tail for different variants with and without brak
                 <ready-time type="double">3.5</ready-time>
                 <ejector-speed-fps type="double">5</ejector-speed-fps>
             </agm-158>
-            <agm-88>
-                <short-name type="string">AG88</short-name>
-                <long-name type="string">AGM-88B HARM</long-name>
-                <vol-search type="double">0.00</vol-search>
-                <vol-track type="double">1.00</vol-track>
-                <guidance type="string">radiation</guidance>
-                <navigation type="string">PN</navigation>                           
-                <all-aspect type="bool">true</all-aspect>
-                <max-fire-range-nm type="double">30</max-fire-range-nm>              <!--  -->
-                <FCS-field-deg type="int">25</FCS-field-deg>            
-                <seeker-field-deg type="int">100</seeker-field-deg>     
-                <max-g type="int">15</max-g>
-                <thrust-lbf-stage-1 type="double">3000</thrust-lbf-stage-1><!-- Boost Sustain 64,000 lbs./sec     630 mps/mach 2+ -->
-                <thrust-lbf-stage-2 type="double">575</thrust-lbf-stage-2>
-                <stage-1-duration-sec type="double">10</stage-1-duration-sec>
-                <stage-2-duration-sec type="double">50</stage-2-duration-sec>
-                <weight-launch-lbs type="double">800</weight-launch-lbs>              <!--  -->
-                <weight-warhead-lbs type="double">143.51</weight-warhead-lbs>            <!--  -->
-                <weight-fuel-lbm type="double">250</weight-fuel-lbm>
-                <drag-coeff type="double">0.25</drag-coeff>
-                <cross-section-sqft type="double">0.53</cross-section-sqft>                             <!-- 9.84 inch diam -->
-                <arming-time-sec type="double">4.0</arming-time-sec>          
-                <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>
-                <self-destruct-time-sec type="double">150</self-destruct-time-sec>  
-                <loft-altitude type="int">0</loft-altitude>
-                <min-fire-range-nm type="double">0.25</min-fire-range-nm>
-                <rail type="bool">false</rail>
-                <max-report-distance type="double">65</max-report-distance>
-                <reaquire type="bool">true</reaquire>
-                <lock-on-after-launch type="bool">true</lock-on-after-launch>
-                <auto-switch-target-allowed type="bool">false</auto-switch-target-allowed>
-                <prowl-flight type="string">gyro-pitch</prowl-flight>
-                <switch-time-sec type="double">5</switch-time-sec>
-                <class type="string">GM</class>
-                <fire-msg type="string">Sniper</fire-msg><!--Magnum-->
-                <ready-time type="double">0.25</ready-time>
-            </agm-88>
             <cbu-87> 
                 <short-name type="string">CB87</short-name>
                 <long-name type="string">CBU-87 Combined Effects Munition</long-name>

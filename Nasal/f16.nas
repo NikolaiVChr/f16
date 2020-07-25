@@ -1072,8 +1072,7 @@ var re_init_listener = setlistener("/sim/signals/reinit", func {
     if (pylons.fcs != nil) {
       # replenish cooling fluid on all aim-9:
       var aim9s = pylons.fcs.getAllOfType("AIM-9");
-      var irist = pylons.fcs.getAllOfType("IRIS-T");
-      foreach(aim;aim9s;irist) {
+      foreach(aim;aim9s) {
         aim.cool_total_time = 0;#consider making a method in AIM for this!
         aim.setCooling(0);
       }

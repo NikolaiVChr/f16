@@ -68,17 +68,6 @@ var MFD_Station =
                 }
                 else mode = "SRM";
             }
-            elsif (na == "IRIS-T") 
-            {
-                na = "IRIS-T";
-                if (weapon_mode == 1)
-                {
-                    sel = getprop(sel_node);
-                    if (sel and master_arm)
-                        mode = "RDY";
-                }
-                else mode = "ASM";
-            }
             elsif (na == "AIM-120") 
             {
                 na = "120A";
@@ -1676,7 +1665,7 @@ var MFD_Device =
                     }                    
                     if (me.wpnType=="heat") {
                         me.cooling = !pylons.fcs.getSelectedWeapon().isCooling();
-                        foreach(var snake;pylons.fcs.getAllOfType("AIM-9","IRIS-T")) {
+                        foreach(var snake;pylons.fcs.getAllOfType("AIM-9")) {
                             snake.setCooling(me.cooling);
                         }                        
                     } elsif (me.wpnType == "fall") {
@@ -1821,21 +1810,6 @@ var MFD_Device =
                         me.ready = "RDY";
                     }
                 } elsif (me.wpn.type == "AIM-9") {
-                    me.wpnType ="heat";
-                    me.cool = me.wpn.getWarm()==0?"COOL":"WARM";
-                    me.eegs = "A-A";
-                    me.coolFrame = me.wpn.isCooling()==1?1:0;                    
-                    me.drop = getprop("instrumentation/radar/radar-standby")==1?"BORE":"SLAV";
-                    if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "FAIL";
-                    } elsif (me.wpn.status < armament.MISSILE_STARTING) {
-                        me.ready = "OFF";
-                    } elsif (me.wpn.status == armament.MISSILE_STARTING) {
-                        me.ready = "INIT";
-                    } else {
-                        me.ready = "RDY";
-                    }
-                } elsif (me.wpn.type == "IRIS-T") {
                     me.wpnType ="heat";
                     me.cool = me.wpn.getWarm()==0?"COOL":"WARM";
                     me.eegs = "A-A";
