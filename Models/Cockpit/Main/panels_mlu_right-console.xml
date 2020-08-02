@@ -29,6 +29,7 @@
         <object-name>INS_knob</object-name>
         <object-name>AVIONICS_POWER_0</object-name>
         <object-name>AVIONICS_POWER_1</object-name>
+        <object-name>AVIONICS_PWR_B10_1</object-name>
         <object-name>DTU</object-name>
         <object-name>DTU_0</object-name>
         <object-name>DTU_1</object-name>
@@ -1311,6 +1312,7 @@
         <object-name>OXYGEN_REGULATOR_1</object-name>
         <object-name>GROWTH.103_1</object-name>
         <object-name>AVIONICS_POWER_1</object-name>
+        <object-name>AVIONICS_PWR_B10_1</object-name>
         <object-name>ANTI_ICE_1</object-name>
         <object-name>GROWTH.102_1</object-name>
         <object-name>GROWTH.101_1</object-name>
@@ -1422,6 +1424,52 @@
                 <property>sim/variant-id</property>
                 <value>2</value>
             </greater-than-equals>
+        </condition>
+    </animation>
+
+    <animation>
+        <object-name>AVIONICS_PWR_B10_1</object-name>
+        <type>select</type>
+        <condition>
+          <or>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>0</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>1</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>3</value>
+            </equals>
+          </or>
+        </condition>
+    </animation>
+
+    <animation>
+        <object-name>AVIONICS_POWER_1</object-name>
+        <type>select</type>
+        <condition>
+          <or>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>2</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>4</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>5</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>6</value>
+            </equals>
+          </or>
         </condition>
     </animation>
 
