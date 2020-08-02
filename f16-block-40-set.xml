@@ -79,6 +79,13 @@
     <name type="string">USAF 31FW, 555FS AV "31st Markings"</name>
     <folder type="string">Aircraft/f16/Models/Liveries/Block40</folder>
    </livery>
+   <screen-color>
+    <MFD>
+      <red type="double">0.99</red>
+      <green type="double">0.99</green>
+      <blue type="double">0.01</blue>
+    </MFD>
+   </screen-color>
   </model>
 
   <menubar>
