@@ -45,6 +45,7 @@
         <object-name>GROWTH.104_0</object-name>
         <object-name>GROWTH.104_1</object-name>
         <object-name>GROWTH.105</object-name>
+        <object-name>GROWTH.KY58</object-name>
         <object-name>HUD</object-name>
         <object-name>altrad-switch</object-name>
         <object-name>att_fpm-switch</object-name>
@@ -1313,6 +1314,7 @@
         <object-name>ANTI_ICE_1</object-name>
         <object-name>GROWTH.102_1</object-name>
         <object-name>GROWTH.101_1</object-name>
+        <object-name>GROWTH.KY58</object-name>
         <object-name>KY_58_1</object-name>
         <object-name>KY_58_KNOB_MODE</object-name>
         <object-name>KY_58_KNOB_PULL</object-name>
@@ -1395,5 +1397,32 @@
         <object-name>O2</object-name>
         <object-name>EM-NO-TE</object-name>
     </effect>
+
+    <animation>
+        <object-name>GROWTH.KY58</object-name>
+        <type>select</type>
+        <condition>
+            <less-than>
+                <property>sim/variant-id</property>
+                <value>2</value>
+            </less-than>
+        </condition>
+    </animation>
+
+    <animation>
+        <object-name>KY_58_1</object-name>
+        <object-name>KY_58_KNOB_MODE</object-name>
+        <object-name>KY_58_KNOB_PULL</object-name>
+        <object-name>KY_58_VOL_KNOB</object-name>
+        <object-name>TD_knob</object-name>
+        <object-name>plug</object-name>
+        <type>select</type>
+        <condition>
+          <greater-than-equals>
+                <property>sim/variant-id</property>
+                <value>2</value>
+            </greater-than-equals>
+        </condition>
+    </animation>
 
 </PropertyList>
