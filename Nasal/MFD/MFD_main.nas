@@ -510,13 +510,13 @@ var MFD_Device =
         svg.az1 = svg.p_RDR.createChild("path")
            .moveTo(0, 0)
            .lineTo(0, -482)
-           .setColor(getprop("/sim/model/MFD-color/line2/red"),getprop("/sim/model/MFD-color/line4/green"),getprop("/sim/model/MFD-color/line4/blue"))
+           .setColor(getprop("/sim/model/MFD-color/line1/red"),getprop("/sim/model/MFD-color/line1/green"),getprop("/sim/model/MFD-color/line1/blue"))
            .set("z-index",1)
            .setStrokeLineWidth(1);
         svg.az2 = svg.p_RDR.createChild("path")
            .moveTo(0, 0)
            .lineTo(0, -482)
-           .setColor(getprop("/sim/model/MFD-color/line2/red"),getprop("/sim/model/MFD-color/line4/green"),getprop("/sim/model/MFD-color/line4/blue"))
+           .setColor(getprop("/sim/model/MFD-color/line1/red"),getprop("/sim/model/MFD-color/line1/green"),getprop("/sim/model/MFD-color/line1/blue"))
            .set("z-index",1)
            .setStrokeLineWidth(1);
         svg.horiz = svg.p_RDR.createChild("path")
@@ -568,7 +568,7 @@ var MFD_Device =
                     .vert(-200)
                     .horiz(-200)
                     .setStrokeLineWidth(1.5)
-                    .setColor(1,1,1)
+                    .setColor(getprop("/sim/model/MFD-color/line4/red"),getprop("/sim/model/MFD-color/line4/green"),getprop("/sim/model/MFD-color/line4/blue"))
                     .set("z-index",1)
                     .hide();
         
@@ -2032,12 +2032,12 @@ var MFD_Device =
            .horiz(20)
            .moveTo(-5, 20)
            .horiz(10)
-           .setColor(getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue"))
+           .setColor(getprop("/sim/model/MFD-color/line1/red"),getprop("/sim/model/MFD-color/line1/green"),getprop("/sim/model/MFD-color/line1/blue"))
            .setStrokeLineWidth(1);
 #        svg.az2 = svg.p_HSDc.createChild("path")
 #           .moveTo(0, 0)
 #           .lineTo(0, -482)
-#           .setColor(getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue"))
+#           .setColor(getprop("/sim/model/MFD-color/line1/red"),getprop("/sim/model/MFD-color/line1/green"),getprop("/sim/model/MFD-color/line1/blue"))
 #           .setStrokeLineWidth(1);
 
 
@@ -2346,7 +2346,7 @@ var MFD_Device =
                         .arcSmallCW(me.rdrRangePixels,me.rdrRangePixels, 0, me.radarX*2, 0)
                         .setStrokeLineWidth(1)
                         .set("z-index",5)
-                        .setColor(getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue"))
+                        .setColor(getprop("/sim/model/MFD-color/line1/red"),getprop("/sim/model/MFD-color/line1/green"),getprop("/sim/model/MFD-color/line1/blue"))
                         .update();
                 }
                 if (getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc")) {
