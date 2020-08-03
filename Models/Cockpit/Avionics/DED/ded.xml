@@ -24,6 +24,26 @@
   </top-left>
  </panel>-->
 
+  <animation>
+        <object-name>poly.002</object-name>
+        <object-name>poly.003</object-name>
+        <type>select</type>
+        <condition>
+          <not>
+          <or>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>0</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>1</value>
+            </equals>
+          </or>
+          </not>
+        </condition>
+  </animation>
+
  <animation>
         <!--<object-name>poly.002</object-name>-->
         <object-name>poly.003</object-name>
