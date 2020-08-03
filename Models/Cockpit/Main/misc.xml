@@ -232,10 +232,22 @@ light: ecm lamp off
                     <property>controls/armament/master-arm-cover-open</property>
                     <value>0</value>
                 </greater-than>
-                <greater-than>
-                    <property>sim/variant-id</property>
-                    <value>4</value>
-                </greater-than>
+                <equals>
+                	<property>sim/variant-id</property>
+                	<value>2</value>
+            	</equals>
+            	<equals>
+                	<property>sim/variant-id</property>
+                	<value>4</value>
+            	</equals>
+            	<equals>
+                	<property>sim/variant-id</property>
+                	<value>5</value>
+            	</equals>
+            	<equals>
+                	<property>sim/variant-id</property>
+                	<value>6</value>
+            	</equals>
             </or>
         </condition>
         <property>controls/armament/master-arm</property>
@@ -546,10 +558,20 @@ light: ecm lamp off
         <type>select</type>
         <object-name>master-arm-cover</object-name>
         <condition>
-            <less-than-equals>
+           <or>
+            <equals>
                 <property>sim/variant-id</property>
-                <value>4</value>
-            </less-than-equals>
+                <value>0</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>1</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>3</value>
+            </equals>
+          </or>
         </condition>
     </animation>
     <animation>

@@ -81,6 +81,68 @@
     <name type="string">USAF #568 "Ghost Gray" (concept)</name>
     <folder type="string">Aircraft/f16/Models/Liveries/Block50</folder>
    </livery>
+   <MFD-color>
+    <text1><!--Main text color-->
+      <red type="double">1.00</red>
+      <green type="double">1.00</green>
+      <blue type="double">1.00</blue>
+    </text1>
+    <line1><!--CRM scan lines + lat range + HSD acft, rdr scope color -->
+      <red type="double">0.70</red>
+      <green type="double">0.70</green>
+      <blue type="double">1.00</blue>
+    </line1>
+    <line2><!--CRM horizon color-->
+      <red type="double">0.25</red>
+      <green type="double">0.25</green>
+      <blue type="double">1.00</blue>
+    </line2>
+    <line3><!--CRM DLZ path + cursor + wpt + lock info + data-->
+      <red type="double">1.00</red>
+      <green type="double">1.00</green>
+      <blue type="double">1.00</blue>
+    </line3>
+    <line4><!--CRM EXP color-->
+      <red type="double">1.00</red>
+      <green type="double">1.00</green>
+      <blue type="double">1.00</blue>
+    </line4>
+    <line5><!--HSD radius color-->
+      <red type="double">1.00</red>
+      <green type="double">0.06</green>
+      <blue type="double">1.00</blue>
+    </line5>
+    <bullseye><!--Bullseye color-->
+      <red type="double">0.70</red>
+      <green type="double">0.70</green>
+      <blue type="double">1.00</blue>
+    </bullseye>
+    <betxt><!--Bullseye cursor color-->
+      <red type="double">1.00</red>
+      <green type="double">1.00</green>
+      <blue type="double">1.00</blue>
+    </betxt>
+    <lines><!--HSD lines color-->
+      <red type="double">0.90</red>
+      <green type="double">0.90</green>
+      <blue type="double">0.90</blue>
+    </lines>
+    <circle1><!--HSD red circles color-->
+      <red type="double">1.00</red>
+      <green type="double">0.00</green>
+      <blue type="double">0.00</blue>
+    </circle1>
+    <circle2><!--HSD yellow circles color-->
+      <red type="double">1.00</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.00</blue>
+    </circle2>
+    <circle3><!--HSD green circles color-->
+      <red type="double">0.00</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.00</blue>
+    </circle3>
+   </MFD-color>
   </model>
 
   <menubar>

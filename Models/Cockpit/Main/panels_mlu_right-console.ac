@@ -4,7 +4,7 @@ MATERIAL "PanelSides" rgb 0.063 0.063 0.063  amb 0.005 0.005 0.005  emis 0 0 0  
 MATERIAL "MainPanel" rgb 1 1 1  amb 0.7 0.7 0.7  emis 0 0 0  spec 0.5 0.5 0.5  shi 32  trans 0
 MATERIAL "Knobs8" rgb 0.827 0.827 0.827  amb 1 1 1  emis 0 0 0  spec 0.5 0.5 0.5  shi 50  trans 0
 OBJECT world
-kids 26
+kids 28
 OBJECT group
 name "AIR_COND"
 kids 4
@@ -2360,18 +2360,18 @@ AVIONICS_POWER.002
 texture "../Textures/panels-MLU-right_console.png"
 crease 30.000000
 numvert 4
-0.52779 0.00767 -0.51501
-0.67471 0.00767 -0.51501
-0.67471 0.00767 -0.41944
 0.52779 0.00767 -0.41944
+0.67471 0.00767 -0.41944
+0.67471 0.00767 -0.51501
+0.52779 0.00767 -0.51501
 numsurf 1
 SURF 0x30
 mat 2
 refs 4
-0 0.874008 0.398428
-3 0.618302 0.398429
-2 0.618301 0.202301
-1 0.874008 0.2023
+3 0.874008 0.398428
+0 0.618302 0.398429
+1 0.618301 0.202301
+2 0.874008 0.2023
 kids 0
 OBJECT poly
 name "INS_knob"
@@ -2734,6 +2734,26 @@ refs 4
 23 0.698761 0.349416
 18 0.693659 0.351876
 34 0.676824 0.335593
+kids 0
+OBJECT poly
+name "AVIONICS_PWR_B10_1"
+data 18
+AVIONICS_POWER.002
+texture "../Textures/panels-B10-right_console.png"
+crease 30.000000
+numvert 4
+0.52779 0.00767 -0.51501
+0.67471 0.00767 -0.51501
+0.67471 0.00767 -0.41944
+0.52779 0.00767 -0.41944
+numsurf 1
+SURF 0x30
+mat 2
+refs 4
+0 0.874008 0.398428
+3 0.618302 0.398429
+2 0.618301 0.202301
+1 0.874008 0.2023
 kids 0
 OBJECT poly
 name "dl-switch"
@@ -48233,6 +48253,26 @@ refs 4
 24 0.751406 0.445951
 19 0.751406 0.445951
 27 0.726951 0.440558
+kids 0
+OBJECT poly
+name "GROWTH.KY58"
+data 9
+KY_58.002
+texture "../Textures/panels-B10-right_console.png"
+crease 30.000000
+numvert 4
+0.38054 0.00767 -0.41029
+0.52745 0.00767 -0.41029
+0.52745 0.00767 -0.53489
+0.38054 0.00767 -0.53489
+numsurf 1
+SURF 0x30
+mat 2
+refs 4
+3 0.929681 0.605955
+0 0.596758 0.605955
+1 0.596758 0.409695
+2 0.929681 0.409695
 kids 0
 OBJECT group
 name "LIGHTING"

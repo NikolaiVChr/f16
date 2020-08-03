@@ -706,8 +706,8 @@
                 </binding>
             </item>
             <item>
-                <name>MMC</name>
-                <value>MMC</value>
+                <name>FCC/MMC</name>
+                <value>FCC/MMC</value>
                 <condition>
                     <equals>
                         <property>f16/avionics/power-mmc</property>
@@ -721,8 +721,8 @@
                 </binding>
             </item>
             <item>
-                <name>ST STA</name>
-                <value>ST STA</value>
+                <name>SMS/ST STA</name>
+                <value>SMS/ST STA</value>
                 <condition>
                     <equals>
                         <property>f16/avionics/power-st-sta</property>
