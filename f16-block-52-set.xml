@@ -90,7 +90,7 @@
       <green type="double">0.25</green>
       <blue type="double">1.00</blue>
     </line2>
-    <line3><!--CRM DLZ path-->
+    <line3><!--CRM DLZ path + cursor + wpt + lock info + data-->
       <red type="double">1.00</red>
       <green type="double">1.00</green>
       <blue type="double">1.00</blue>
@@ -115,6 +115,26 @@
       <green type="double">1.00</green>
       <blue type="double">1.00</blue>
     </betxt>
+    <lines><!--HSD lines color-->
+      <red type="double">0.90</red>
+      <green type="double">0.90</green>
+      <blue type="double">0.90</blue>
+    </lines>
+    <circle1><!--HSD red circles color-->
+      <red type="double">1.00</red>
+      <green type="double">0.00</green>
+      <blue type="double">0.00</blue>
+    </circle1>
+    <circle2><!--HSD yellow circles color-->
+      <red type="double">1.00</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.00</blue>
+    </circle2>
+    <circle3><!--HSD green circles color-->
+      <red type="double">0.00</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.00</blue>
+    </circle3>
    </MFD-color>
   </model>
 
