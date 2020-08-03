@@ -77,13 +77,33 @@
     <name type="string">USAF 31FW, 31 MOS AV</name>
     <folder type="string">Aircraft/f16/Models/Liveries/Block10</folder>
    </livery>
-   <screen-color>
-    <MFD>
+   <MFD-color>
+    <text1>
       <red type="double">1.00</red>
       <green type="double">1.00</green>
       <blue type="double">1.00</blue>
-    </MFD>
-   </screen-color>
+    </text1>
+    <line1>
+      <red type="double">0.55</red>
+      <green type="double">0.55</green>
+      <blue type="double">1.00</blue>
+    </line1>
+    <line2>
+      <red type="double">0.55</red>
+      <green type="double">0.55</green>
+      <blue type="double">1.00</blue>
+    </line2>
+    <line3>
+      <red type="double">0.55</red>
+      <green type="double">0.55</green>
+      <blue type="double">1.00</blue>
+    </line3>
+    <line4>
+      <red type="double">0.55</red>
+      <green type="double">0.55</green>
+      <blue type="double">1.00</blue>
+    </line4>
+   </MFD-color>
   </model>
 
   <menubar>

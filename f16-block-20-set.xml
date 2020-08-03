@@ -76,13 +76,33 @@
     <name type="string">RDAF Esk 730, E-602</name>
     <folder type="string">Aircraft/f16/Models/Liveries/Block20</folder>
    </livery>
-   <screen-color>
-    <MFD>
+   <MFD-color>
+    <text1>
+      <red type="double">0.99</red>
+      <green type="double">0.99</green>
+      <blue type="double">0.01</blue>
+    </text1>
+    <line1>
       <red type="double">1.00</red>
       <green type="double">1.00</green>
       <blue type="double">1.00</blue>
-    </MFD>
-   </screen-color>
+    </line1>
+    <line2>
+      <red type="double">1.00</red>
+      <green type="double">0.06</green>
+      <blue type="double">1.00</blue>
+    </line2>
+    <line3>
+      <red type="double">1.00</red>
+      <green type="double">0.98</green>
+      <blue type="double">0.98</blue>
+    </line3>
+    <line4>
+      <red type="double">1.00</red>
+      <green type="double">1.00</green>
+      <blue type="double">1.00</blue>
+    </line4>
+   </MFD-color>
   </model>
 
   <menubar>
