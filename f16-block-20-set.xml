@@ -92,10 +92,20 @@
       <green type="double">0.06</green>
       <blue type="double">1.00</blue>
     </line2>
+    <bullseye>
+      <red type="double">0.03</red>
+      <green type="double">0.97</green>
+      <blue type="double">1.00</blue>
+    </bullseye>
+    <betxt>
+      <red type="double">0.03</red>
+      <green type="double">0.97</green>
+      <blue type="double">1.00</blue>
+    </betxt>
     <line3>
-      <red type="double">1.00</red>
-      <green type="double">0.98</green>
-      <blue type="double">0.98</blue>
+      <red type="double">0.03</red>
+      <green type="double">0.97</green>
+      <blue type="double">1.00</blue>
     </line3>
     <line4>
       <red type="double">1.00</red>

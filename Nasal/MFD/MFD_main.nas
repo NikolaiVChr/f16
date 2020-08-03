@@ -123,7 +123,7 @@ var MFD_Station =
 #         aircraft.f16_mfd.MFD.PFDsvg.setTranslation (0.0, 17.0);
 var PFD_VSD =
 {
-#MFD>
+#
 # Instantiate parameters:
 # 1. pfd_device (instance of PFD_Device)
 # 2. instrument display ident (e.g. mfd-map, or mfd-map-left mfd-map-right for multiple displays)
@@ -593,7 +593,7 @@ var MFD_Device =
             .arcSmallCW(5,5, 0, -5*2, 0)
             .setStrokeLineWidth(2)
             .set("z-index",1)
-            .setColor(getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue"));
+            .setColor(getprop("/sim/model/MFD-color/bullseye/red"),getprop("/sim/model/MFD-color/bullseye/green"),getprop("/sim/model/MFD-color/bullseye/blue"));
         svg.bullOwnRing = svg.p_RDR.createChild("path")
             .moveTo(-15,0)
             .arcSmallCW(15,15, 0,  15*2, 0)
@@ -608,24 +608,24 @@ var MFD_Device =
             .setStrokeLineCap("round")
             .setTranslation(-190, -50)
             .set("z-index",1)
-            .setColor(getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue"));
+            .setColor(getprop("/sim/model/MFD-color/bullseye/red"),getprop("/sim/model/MFD-color/bullseye/green"),getprop("/sim/model/MFD-color/bullseye/blue"));
         svg.bullOwnDist = svg.p_RDR.createChild("text")
                 .setAlignment("center-center")
-                .setColor(getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue"))
+                .setColor(getprop("/sim/model/MFD-color/bullseye/red"),getprop("/sim/model/MFD-color/bullseye/green"),getprop("/sim/model/MFD-color/bullseye/blue"))
                 .setTranslation(-190, -50)
                 .setText("12")
                 .set("z-index",1)
                 .setFontSize(18, 1.0);            
         svg.bullOwnDir = svg.p_RDR.createChild("text")
                 .setAlignment("center-top")
-                .setColor(getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue"))
+                .setColor(getprop("/sim/model/MFD-color/bullseye/red"),getprop("/sim/model/MFD-color/bullseye/green"),getprop("/sim/model/MFD-color/bullseye/blue"))
                 .setTranslation(-190, -30)
                 .setText("270")
                 .set("z-index",1)
                 .setFontSize(18, 1.0);
         svg.cursorLoc = svg.p_RDR.createChild("text")
                 .setAlignment("left-bottom")
-                .setColor(1,1,1)
+                .setColor(getprop("/sim/model/MFD-color/betxt/red"),getprop("/sim/model/MFD-color/betxt/green"),getprop("/sim/model/MFD-color/betxt/blue"))
                 .setTranslation(-200, -75)
                 .setText("12")
                 .set("z-index",1)
@@ -2108,7 +2108,7 @@ var MFD_Device =
             .arcSmallCW(5,5, 0,  5*2, 0)
             .arcSmallCW(5,5, 0, -5*2, 0)
             .setStrokeLineWidth(2)
-            .setColor(getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue"));
+            .setColor(getprop("/sim/model/MFD-color/bullseye/red"),getprop("/sim/model/MFD-color/bullseye/green"),getprop("/sim/model/MFD-color/bullseye/blue"));
         svg.bullOwnRing = svg.buttonView.createChild("path")
             .moveTo(-15,0)
             .arcSmallCW(15,15, 0,  15*2, 0)
@@ -2121,16 +2121,16 @@ var MFD_Device =
             .close()
             .setStrokeLineWidth(2)
             .setTranslation(-190, -50)
-            .setColor(getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue"));
+            .setColor(getprop("/sim/model/MFD-color/bullseye/red"),getprop("/sim/model/MFD-color/bullseye/green"),getprop("/sim/model/MFD-color/bullseye/blue"));
         svg.bullOwnDist = svg.buttonView.createChild("text")
                 .setAlignment("center-center")
-                .setColor(getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue"))
+                .setColor(getprop("/sim/model/MFD-color/bullseye/red"),getprop("/sim/model/MFD-color/bullseye/green"),getprop("/sim/model/MFD-color/bullseye/blue"))
                 .setTranslation(-190, -50)
                 .setText("12")
                 .setFontSize(18, 1.0);            
         svg.bullOwnDir = svg.buttonView.createChild("text")
                 .setAlignment("center-top")
-                .setColor(getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue"))
+                .setColor(getprop("/sim/model/MFD-color/bullseye/red"),getprop("/sim/model/MFD-color/bullseye/green"),getprop("/sim/model/MFD-color/bullseye/blue"))
                 .setTranslation(-190, -30)
                 .setText("270")
                 .setFontSize(18, 1.0);

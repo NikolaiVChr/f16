@@ -95,10 +95,20 @@
       <green type="double">0.06</green>
       <blue type="double">1.00</blue>
     </line2>
-    <line3><!--Bullseyem HSD path color-->
+    <bullseye><!--Bullseye color-->
       <red type="double">0.03</red>
-      <green type="double">0.98</green>
-      <blue type="double">0.98</blue>
+      <green type="double">0.97</green>
+      <blue type="double">1.00</blue>
+    </bullseye>
+    <betxt><!--Bullseye cursor color-->
+      <red type="double">0.03</red>
+      <green type="double">0.97</green>
+      <blue type="double">1.00</blue>
+    </betxt>
+    <line3><!--HSD path-->
+      <red type="double">0.03</red>
+      <green type="double">0.97</green>
+      <blue type="double">1.00</blue>
     </line3>
     <line4><!--Radar lateral rng color-->
       <red type="double">1.00</red>
