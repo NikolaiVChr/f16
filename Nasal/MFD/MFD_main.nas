@@ -531,7 +531,7 @@ var MFD_Device =
            .setCenter(0, -482*0.5)
            .setColor(getprop("/sim/model/MFD-color/line2/red"),getprop("/sim/model/MFD-color/line2/green"),getprop("/sim/model/MFD-color/line2/blue"))
            .set("z-index",11)
-           .setStrokeLineWidth(1);
+           .setStrokeLineWidth(2);
         svg.silent = svg.p_RDR.createChild("text")
            .setTranslation(0, -482*0.25)
            .setAlignment("center-center")
@@ -1937,7 +1937,7 @@ var MFD_Device =
             .horiz(15)
             .setStrokeLineWidth(1)
             .set("z-index",2)
-            .setColor(1,1,1);
+            .setColor(getprop("/sim/model/MFD-color/line5/red"),getprop("/sim/model/MFD-color/line5/green"),getprop("/sim/model/MFD-color/line5/blue"));
 
 
 

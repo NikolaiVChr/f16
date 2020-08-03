@@ -82,41 +82,46 @@
     <folder type="string">Aircraft/f16/Models/Liveries/Block50</folder>
    </livery>
    <MFD-color>
-    <text1>
+    <text1><!--Main text color-->
       <red type="double">1.00</red>
       <green type="double">1.00</green>
       <blue type="double">1.00</blue>
     </text1>
-    <line1>
-      <red type="double">0.65</red>
-      <green type="double">0.65</green>
+    <line1><!--CRM scan lines + lat range + HSD acft, rdr scope color -->
+      <red type="double">0.70</red>
+      <green type="double">0.70</green>
       <blue type="double">1.00</blue>
     </line1>
-    <line2>
-      <red type="double">0.50</red>
-      <green type="double">0.50</green>
+    <line2><!--CRM horizon color-->
+      <red type="double">0.25</red>
+      <green type="double">0.25</green>
       <blue type="double">1.00</blue>
     </line2>
-    <bullseye>
-      <red type="double">0.65</red>
-      <green type="double">0.65</green>
+    <line3><!--CRM DLZ path-->
+      <red type="double">1.00</red>
+      <green type="double">1.00</green>
+      <blue type="double">1.00</blue>
+    </line3>
+    <line4><!--CRM EXP color-->
+      <red type="double">1.00</red>
+      <green type="double">1.00</green>
+      <blue type="double">1.00</blue>
+    </line4>
+    <line5><!--HSD radius color-->
+      <red type="double">1.00</red>
+      <green type="double">0.06</green>
+      <blue type="double">1.00</blue>
+    </line5>
+    <bullseye><!--Bullseye color-->
+      <red type="double">0.70</red>
+      <green type="double">0.70</green>
       <blue type="double">1.00</blue>
     </bullseye>
-    <betxt>
+    <betxt><!--Bullseye cursor color-->
       <red type="double">1.00</red>
       <green type="double">1.00</green>
       <blue type="double">1.00</blue>
     </betxt>
-    <line3>
-      <red type="double">0.65</red>
-      <green type="double">0.65</green>
-      <blue type="double">1.00</blue>
-    </line3>
-    <line4>
-      <red type="double">0.65</red>
-      <green type="double">0.65</green>
-      <blue type="double">1.00</blue>
-    </line4>
    </MFD-color>
   </model>
 
