@@ -244,7 +244,7 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>0.5</red>
+	      		<red>1</red>
       			<green>1</green>
       			<blue>0.5</blue>
 	      	</color>
