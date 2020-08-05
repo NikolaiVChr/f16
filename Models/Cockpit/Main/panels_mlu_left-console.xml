@@ -978,6 +978,38 @@
         </decrease>
     </animation>
    
+   <!-- Probe Heat Sw -->
+   <animation>
+        <type>knob</type>
+        <object-name>SW_PROBE_HEAT</object-name>
+        <visible>true</visible>
+        <property>f16/avionics/probe-heat-switch</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>false</repeatable>
+        <interval-sec>0.2</interval-sec>
+        <factor>20</factor>
+        <offset-deg>0</offset-deg>
+        <center>
+            <x-m>0.799362</x-m>
+            <y-m>-0.489543</y-m>
+            <z-m>0.007677</z-m>
+        </center>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/probe-heat-switch</property>
+                <min>-1</min>
+                <max>1</max>                
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
    
    <animation>
         <type>knob</type>

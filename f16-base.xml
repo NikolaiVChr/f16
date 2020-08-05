@@ -3395,6 +3395,8 @@ value. 18000=standard US transition altitude -->
             <cara-alow type="int">500</cara-alow><!-- Combined Altitude Radar Altimeter Automatic LOw altitude Warning -->
         </settings>
         <avionics>
+			<probe-heat-switch type="int">0</probe-heat-switch>
+			<probe-heat-light type="bool">false</probe-heat-light>
             <dgft type="bool">false</dgft>
             <emer-jett-switch type="bool">false</emer-jett-switch>            
             <hud-drift type="bool">true</hud-drift>

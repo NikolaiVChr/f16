@@ -846,7 +846,12 @@
   <type>select</type>
   <object-name>PROBE_HEAT_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not>
+	<or>
+		<property>controls/test/test-panel/mal-ind-lts</property>
+		<property>f16/avionics/probe-heat-light</property>
+	</or>
+	</not>
   </condition>
  </animation> 
 
@@ -1106,7 +1111,10 @@
   <type>select</type>
   <object-name>PROBE_HEAT_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+	<or>
+		<property>controls/test/test-panel/mal-ind-lts</property>
+		<property>f16/avionics/probe-heat-light</property>
+	</or>
   </condition>
  </animation>
  

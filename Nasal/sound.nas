@@ -261,6 +261,7 @@ setlistener("f16/fail/servo-rudder-switch", button2, nil, 0);
 setlistener("f16/fail/servo-flaperon-switch", button2, nil, 0);
 setlistener("f16/fail/servo-tail-switch", button2, nil, 0);
 setlistener("f16/avionics/anti-ice-switch", click2, nil, 0);
+setlistener("f16/avionics/probe-heat-switch", click2, nil, 0);
 setlistener("f16/avionics/ant-sel-iff-switch", click2, nil, 0);
 setlistener("f16/avionics/ant-sel-uhf-switch", click2, nil, 0);
 setlistener("controls/lighting/ext-lighting-panel/master", button2, nil, 0);
