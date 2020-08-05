@@ -231,7 +231,7 @@ var loop_caution = func {# TODO: unlit the caution lights except elec-sys when m
 	var testFire = getprop("controls/test/test-panel/fire-ovht-test");
     setprop("f16/avionics/caution/stores-config",     test or (batt2 and ((getprop("f16/stores-cat")>1 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III") < 1) or (getprop("f16/stores-cat")==1 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III") == 1))));
     setprop("f16/avionics/caution/seat-not-armed",    test or (batt2 and !getprop("controls/seat/ejection-safety-lever")));
-    setprop("f16/avionics/caution/oxy-low",           test or (batt2 and getprop("f16/cockpit/oxygen-liters")<0.5));
+    setprop("f16/avionics/caution/oxy-low",           test or (batt2 and getprop("f16/cockpit/oxygen-liters-output")<0.5));
     setprop("f16/avionics/caution/le-flaps",          test or (batt2 and (!getprop("f16/avionics/le-flaps-switch") or getprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains"))));
     setprop("f16/avionics/caution/hook",              test or (batt2 and getprop("fdm/jsbsim/systems/hook/tailhook-cmd-norm")));
     setprop("f16/avionics/caution/fwd-fuel-low",      test or (batt2 and getprop("consumables/fuel/tank[0]/level-lbs")<400));

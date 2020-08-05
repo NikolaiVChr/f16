@@ -374,7 +374,6 @@
             </function>
             <output>/f16/cockpit/oxygen-liters</output>
         </fcs_function>
-                
     </channel>
     
     <channel name="oxygen 2" execrate="8">
@@ -397,6 +396,18 @@
             <input> /f16/avionics/oxy-psi-direct </input>
             <c1> 2.5 </c1>
         </lag_filter>
+		
+		<switch name="/f16/cockpit/oxygen-liters-switch">
+			<default value="/f16/cockpit/oxygen-liters"/>
+			<test value="0">
+				/controls/test/test-panel/oxy-test eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/f16/cockpit/oxygen-liters-output">
+			<input>/f16/cockpit/oxygen-liters-switch</input>
+			<rate_limit>1</rate_limit>
+		</actuator>
                 
     </channel>
     

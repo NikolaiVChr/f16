@@ -327,7 +327,7 @@
                   <value>100</value>
               </greater-than-equals>
   </condition>
-  <property>/f16/cockpit/oxygen-liters</property>
+  <property>/f16/cockpit/oxygen-liters-output</property>
   <factor>36</factor>
   <offset-deg>-160</offset-deg>
   <center>
