@@ -360,6 +360,10 @@ var MFD_Device =
         return obj;
     },
 
+    setFontSizeMFDEdgeButton: func(index, size) {
+		me.PFD.buttons[index].setFontSize(size);
+	},
+	
     setupRadar: func (svg, index) {
         svg.p_RDR = me.canvas.createGroup()
                 .setTranslation(276*0.795,482)
@@ -537,7 +541,7 @@ var MFD_Device =
            .setAlignment("center-center")
            .setText("SILENT")
            .set("z-index",12)
-           .setFontSize(15, 1.0)
+           .setFontSize(18, 1.0)
            .setColor(getprop("/sim/model/MFD-color/text2/red"),getprop("/sim/model/MFD-color/text2/green"),getprop("/sim/model/MFD-color/text2/blue"));
            
         svg.norm = svg.p_RDR.createChild("text")
@@ -546,21 +550,21 @@ var MFD_Device =
                 .setAlignment("center-top")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .set("z-index",1)
-                .setFontSize(16, 1.0);
+                .setFontSize(18, 1.0);
         svg.acm = svg.p_RDR.createChild("text")
                 .setTranslation(276*0.795*-0.30, -482*0.5-225)
                 .setText("ACM")
                 .setAlignment("center-top")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .hide()
-                .setFontSize(16, 1.0);
+                .setFontSize(18, 1.0);
         svg.swap = svg.p_RDR.createChild("text")
                 .setTranslation(276*0.795*0.30, -482*0.5+225)
                 .setText("SWAP")
                 .setAlignment("center-bottom")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .set("z-index",1)
-                .setFontSize(13, 1.0); 
+                .setFontSize(18, 1.0); 
         svg.exp = svg.p_RDR.createChild("path")
                     .moveTo(-100,-100)
                     .vert(200)
@@ -1276,7 +1280,7 @@ var MFD_Device =
                 .setAlignment("center-bottom")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .set("z-index",1)
-                .setFontSize(13, 1.0);
+                .setFontSize(18, 1.0);
     },
 
     addSMS: func {
@@ -1480,21 +1484,21 @@ var MFD_Device =
                 .setText("")
                 .setAlignment("center-top")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
-                .setFontSize(16, 1.0);    
+                .setFontSize(18, 1.0);    
                 
         svg.pre = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795*0.0, -482*0.5-225)
                 .setText("")
                 .setAlignment("center-top")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
-                .setFontSize(16, 1.0);
+                .setFontSize(18, 1.0);
                 
         svg.eegs = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795*0.325, -482*0.5-225)
                 .setText("")
                 .setAlignment("center-top")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
-                .setFontSize(16, 1.0);       
+                .setFontSize(18, 1.0);       
         
         svg.weap = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5-135)
@@ -1589,7 +1593,7 @@ var MFD_Device =
                 .setAlignment("center-bottom")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .set("z-index",1)
-                .setFontSize(13, 1.0);
+                .setFontSize(18, 1.0);
     },
     
     addWPN: func {
@@ -2141,7 +2145,7 @@ var MFD_Device =
                 .setAlignment("center-bottom")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .set("z-index",1)
-                .setFontSize(13, 1.0);
+                .setFontSize(18, 1.0);
 
         svg.centered = 0;
         svg.coupled = 0;
@@ -2803,6 +2807,27 @@ var MFD_Device =
         #me.p_VSD.addMenuItem(17, "SMS", me.p_SMS);
         #me.p_VSD.addMenuItem(16, "HSD", me.p_HSD);
         #me.p_VSD.addMenuItem(19, "TGP", nil);
+		
+		me.setFontSizeMFDEdgeButton(0, 18);
+		me.setFontSizeMFDEdgeButton(1, 18);
+		me.setFontSizeMFDEdgeButton(2, 18);
+		me.setFontSizeMFDEdgeButton(3, 18);
+		me.setFontSizeMFDEdgeButton(4, 18);
+		me.setFontSizeMFDEdgeButton(5, 18);
+		me.setFontSizeMFDEdgeButton(6, 18);
+		me.setFontSizeMFDEdgeButton(7, 18);
+		me.setFontSizeMFDEdgeButton(8, 18);
+		me.setFontSizeMFDEdgeButton(9, 18);
+		me.setFontSizeMFDEdgeButton(10, 18);
+		me.setFontSizeMFDEdgeButton(11, 18);
+		me.setFontSizeMFDEdgeButton(12, 18);
+		me.setFontSizeMFDEdgeButton(13, 18);
+		me.setFontSizeMFDEdgeButton(14, 18);
+		me.setFontSizeMFDEdgeButton(15, 18);
+		me.setFontSizeMFDEdgeButton(16, 18);
+		me.setFontSizeMFDEdgeButton(17, 18);
+		me.setFontSizeMFDEdgeButton(18, 18);
+		me.setFontSizeMFDEdgeButton(19, 18);
     },
 
     update : func(notification)
