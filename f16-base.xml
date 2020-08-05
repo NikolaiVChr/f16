@@ -1862,7 +1862,10 @@ There is also small changes in tail for different variants with and without brak
         </seat>
         <test>
             <test-panel>
+				<fire-ovht-test type="bool">false</fire-ovht-test>
                 <mal-ind-lts type="bool">false</mal-ind-lts>
+				<oxy-test type="bool">false</oxy-test>
+				<pbg-test type="bool">false</pbg-test>
             </test-panel>
         </test>
         <smoke type="bool">false</smoke>
@@ -3395,6 +3398,8 @@ value. 18000=standard US transition altitude -->
             <cara-alow type="int">500</cara-alow><!-- Combined Altitude Radar Altimeter Automatic LOw altitude Warning -->
         </settings>
         <avionics>
+			<probe-heat-switch type="int">0</probe-heat-switch>
+			<probe-heat-light type="bool">false</probe-heat-light>
             <dgft type="bool">false</dgft>
             <emer-jett-switch type="bool">false</emer-jett-switch>            
             <hud-drift type="bool">true</hud-drift>
@@ -3488,6 +3493,7 @@ value. 18000=standard US transition altitude -->
                 <overheat type="bool">false</overheat>
                 <avionics type="bool">false</avionics>
                 <elec-reset-btn type="bool">false</elec-reset-btn>
+                <probe-heat type="bool">false</probe-heat>
             </caution>
         </avionics>
         <fcs>

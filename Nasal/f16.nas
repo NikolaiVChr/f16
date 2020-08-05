@@ -1724,7 +1724,23 @@ gui.showHelpDialog = func(path, toggle=0) {
     gui.showDialog(name);
 }
 
+# Probe heat switch
+var probe_heat_switch = props.globals.getNode("/f16/avionics/probe-heat-switch");
+var probe_heat_light = props.globals.getNode("/f16/avionics/caution/probe-heat");
+setlistener("/f16/avionics/probe-heat-switch", func() {
+	if (probe_heat_switch.getValue() == -1) {
+		flashTimer.start();
+	} else {
+		flashTimer.stop();
+		probe_heat_light.setBoolValue(0);
+	}
+}, 0, 0);
 
+var flashLoop = func() {
+	probe_heat_light.setBoolValue(!probe_heat_light.getBoolValue());
+}
+
+var flashTimer = maketimer(0.15, flashLoop);
 
 
 

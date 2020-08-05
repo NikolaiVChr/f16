@@ -97,7 +97,7 @@ var MFD_Station =
             if (mode == "RDY")
             {
                 me.selected.setVisible(sel);
-                me.status.setColor(0,1,0);
+                me.status.setColor(getprop("/sim/model/MFD-color/circle3/red"),getprop("/sim/model/MFD-color/circle3/green"),getprop("/sim/model/MFD-color/circle3/blue"));
             }
             else
             {
@@ -360,6 +360,10 @@ var MFD_Device =
         return obj;
     },
 
+    setFontSizeMFDEdgeButton: func(index, size) {
+		me.PFD.buttons[index].setFontSize(size);
+	},
+	
     setupRadar: func (svg, index) {
         svg.p_RDR = me.canvas.createGroup()
                 .setTranslation(276*0.795,482)
@@ -379,7 +383,7 @@ var MFD_Device =
             svg.iff[i] = svg.p_RDR.createChild("text")
                     .setText("4")
                     .setAlignment("center-center")
-                    .setColor(0,1,0)
+                    .setColor(getprop("/sim/model/MFD-color/circle3/red"),getprop("/sim/model/MFD-color/circle3/green"),getprop("/sim/model/MFD-color/circle3/blue"))
                     .set("z-index",1)
                     .setFontSize(22, 1.0);
         }
@@ -461,7 +465,7 @@ var MFD_Device =
                             .lineTo(10,10)
                             .moveTo(0,-10)
                             .vert(-10)
-                            .setColor(1,1,0)
+                            .setColor(getprop("/sim/model/MFD-color/circle2/red"),getprop("/sim/model/MFD-color/circle2/green"),getprop("/sim/model/MFD-color/circle2/blue"))
                             .set("z-index",20)
                             .setStrokeLineWidth(3);
             svg.lockAlt = svg.lock.createChild("text")
@@ -487,7 +491,7 @@ var MFD_Device =
                             .horiz(-20)
                             .moveTo(0,-10)
                             .vert(-10)
-                            .setColor(0.5,1,0.5)
+                            .setColor(getprop("/sim/model/MFD-color/dot1/red"),getprop("/sim/model/MFD-color/dot1/green"),getprop("/sim/model/MFD-color/dot1/blue"))
                             .setStrokeLineWidth(3);
         #}
         svg.dlzX      = 276*0.795*0.75;
@@ -537,8 +541,8 @@ var MFD_Device =
            .setAlignment("center-center")
            .setText("SILENT")
            .set("z-index",12)
-           .setFontSize(15, 1.0)
-           .setColor(1.0,1.0,0.5);
+           .setFontSize(18, 1.0)
+           .setColor(getprop("/sim/model/MFD-color/text2/red"),getprop("/sim/model/MFD-color/text2/green"),getprop("/sim/model/MFD-color/text2/blue"));
            
         svg.norm = svg.p_RDR.createChild("text")
                 .setTranslation(276*0.795*0.0, -482*0.5-225)
@@ -546,21 +550,21 @@ var MFD_Device =
                 .setAlignment("center-top")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .set("z-index",1)
-                .setFontSize(16, 1.0);
+                .setFontSize(18, 1.0);
         svg.acm = svg.p_RDR.createChild("text")
                 .setTranslation(276*0.795*-0.30, -482*0.5-225)
                 .setText("ACM")
                 .setAlignment("center-top")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .hide()
-                .setFontSize(16, 1.0);
+                .setFontSize(18, 1.0);
         svg.swap = svg.p_RDR.createChild("text")
                 .setTranslation(276*0.795*0.30, -482*0.5+225)
                 .setText("SWAP")
                 .setAlignment("center-bottom")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .set("z-index",1)
-                .setFontSize(13, 1.0); 
+                .setFontSize(18, 1.0); 
         svg.exp = svg.p_RDR.createChild("path")
                     .moveTo(-100,-100)
                     .vert(200)
@@ -921,7 +925,7 @@ var MFD_Device =
                             me.root.gmPic.setPixel(me.gmLine, me.gmi, [me.gmColor,me.gmColor,me.gmColor,1]);
                             
                             #me.root.gmPic.update();
-                            #f16.f16_mfd.MFDl.p_RDR.root.gmPic.setPixel(50, 50, [1,0,0,1]);
+                            #f16.f16_mfd.MFDl.p_RDR.root.gmPic.setPixel(50, 50, [getprop("/sim/model/MFD-color/circle1/red"),getprop("/sim/model/MFD-color/circle1/green"),getprop("/sim/model/MFD-color/circle1/blue"),1]);
                             #f16.f16_mfd.MFDl.p_RDR.root.gmPicG.update();
                         }
                         me.gmCoord.apply_course_distance(me.gmHead, NM2M*getprop("instrumentation/radar/radar2-range")/128);
@@ -1018,7 +1022,7 @@ var MFD_Device =
                         me.root.iff[me.i].update();
                         me.root.blep[me.i].hide();
                     } else {
-                        me.root.blep[me.i].setColor(me.blue?[0.5,1,0.5]:[getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue")]);
+                        me.root.blep[me.i].setColor(me.blue?[getprop("/sim/model/MFD-color/dot1/red"),getprop("/sim/model/MFD-color/dot1/green"),getprop("/sim/model/MFD-color/dot1/blue")]:[getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue")]);
                         me.root.blep[me.i].setTranslation(me.echoPos);
                         me.root.blep[me.i].show();
                         me.root.blep[me.i].update();
@@ -1276,7 +1280,7 @@ var MFD_Device =
                 .setAlignment("center-bottom")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .set("z-index",1)
-                .setFontSize(13, 1.0);
+                .setFontSize(18, 1.0);
     },
 
     addSMS: func {
@@ -1480,21 +1484,21 @@ var MFD_Device =
                 .setText("")
                 .setAlignment("center-top")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
-                .setFontSize(16, 1.0);    
+                .setFontSize(18, 1.0);    
                 
         svg.pre = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795*0.0, -482*0.5-225)
                 .setText("")
                 .setAlignment("center-top")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
-                .setFontSize(16, 1.0);
+                .setFontSize(18, 1.0);
                 
         svg.eegs = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795*0.325, -482*0.5-225)
                 .setText("")
                 .setAlignment("center-top")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
-                .setFontSize(16, 1.0);       
+                .setFontSize(18, 1.0);       
         
         svg.weap = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5-135)
@@ -1589,7 +1593,7 @@ var MFD_Device =
                 .setAlignment("center-bottom")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .set("z-index",1)
-                .setFontSize(13, 1.0);
+                .setFontSize(18, 1.0);
     },
     
     addWPN: func {
@@ -2001,7 +2005,7 @@ var MFD_Device =
                             .lineTo(10,10)
                             .moveTo(0,-10)
                             .vert(-10)
-                            .setColor(1,1,0)
+                            .setColor(getprop("/sim/model/MFD-color/circle2/red"),getprop("/sim/model/MFD-color/circle2/green"),getprop("/sim/model/MFD-color/circle2/blue"))
                             .setStrokeLineWidth(3);
         svg.lockAlt = svg.lock.createChild("text")
                 .setTranslation(0, 25)
@@ -2022,7 +2026,7 @@ var MFD_Device =
                             .horiz(-20)
                             .moveTo(0,-10)
                             .vert(-10)
-                            .setColor(0.5,1,0.5)
+                            .setColor(getprop("/sim/model/MFD-color/dot1/red"),getprop("/sim/model/MFD-color/dot1/green"),getprop("/sim/model/MFD-color/dot1/blue"))
                             .setStrokeLineWidth(3);
 
         svg.myself = svg.p_HSDc.createChild("path")#own ship
@@ -2141,7 +2145,7 @@ var MFD_Device =
                 .setAlignment("center-bottom")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .set("z-index",1)
-                .setFontSize(13, 1.0);
+                .setFontSize(18, 1.0);
 
         svg.centered = 0;
         svg.coupled = 0;
@@ -2498,7 +2502,7 @@ var MFD_Device =
                 }
                 me.distPixels = (contact.get_range()/awg_9.range_radar2)*me.rdrRangePixels;
 
-                me.root.blep[me.i].setColor(me.blue?[0,0,1]:[getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue")]);
+                me.root.blep[me.i].setColor(me.blue?[getprop("/sim/model/MFD-color/dot4/red"),getprop("/sim/model/MFD-color/dot4/green"),getprop("/sim/model/MFD-color/dot4/blue")]:[getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue")]);
                 me.root.blep[me.i].setTranslation(me.distPixels*math.sin(contact.get_relative_bearing()*D2R),-me.distPixels*math.cos(contact.get_relative_bearing()*D2R));
                 me.root.blep[me.i].show();
                 me.root.blep[me.i].update();
@@ -2803,6 +2807,27 @@ var MFD_Device =
         #me.p_VSD.addMenuItem(17, "SMS", me.p_SMS);
         #me.p_VSD.addMenuItem(16, "HSD", me.p_HSD);
         #me.p_VSD.addMenuItem(19, "TGP", nil);
+		
+		me.setFontSizeMFDEdgeButton(0, 18);
+		me.setFontSizeMFDEdgeButton(1, 18);
+		me.setFontSizeMFDEdgeButton(2, 18);
+		me.setFontSizeMFDEdgeButton(3, 18);
+		me.setFontSizeMFDEdgeButton(4, 18);
+		me.setFontSizeMFDEdgeButton(5, 18);
+		me.setFontSizeMFDEdgeButton(6, 18);
+		me.setFontSizeMFDEdgeButton(7, 18);
+		me.setFontSizeMFDEdgeButton(8, 18);
+		me.setFontSizeMFDEdgeButton(9, 18);
+		me.setFontSizeMFDEdgeButton(10, 18);
+		me.setFontSizeMFDEdgeButton(11, 18);
+		me.setFontSizeMFDEdgeButton(12, 18);
+		me.setFontSizeMFDEdgeButton(13, 18);
+		me.setFontSizeMFDEdgeButton(14, 18);
+		me.setFontSizeMFDEdgeButton(15, 18);
+		me.setFontSizeMFDEdgeButton(16, 18);
+		me.setFontSizeMFDEdgeButton(17, 18);
+		me.setFontSizeMFDEdgeButton(18, 18);
+		me.setFontSizeMFDEdgeButton(19, 18);
     },
 
     update : func(notification)

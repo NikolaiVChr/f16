@@ -6,7 +6,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>drum</object-name>
-		<property>orientation/roll-deg</property>
+		<property>instrumentation/attitude-indicator[2]/indicated-roll-deg</property>
 		<center>
 			<x-m>-0.0113</x-m>
 			<y-m>0.0</y-m>
@@ -22,7 +22,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>bkg</object-name>
-		<property>orientation/roll-deg</property>
+		<property>instrumentation/attitude-indicator[2]/indicated-roll-deg</property>
 		<center>
 			<x-m>0.0</x-m>
 			<y-m>0.0</y-m>
@@ -38,8 +38,9 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>drum</object-name>
-		<property>orientation/pitch-deg</property>
-		<factor>1.5</factor>
+		<property>instrumentation/attitude-indicator[2]/indicated-pitch-deg</property>
+		<factor>2</factor>
+		<offset-deg>-8</offset-deg>
 		<center>
 			<x-m>-0.0117</x-m>
 			<y-m>0.0</y-m>
@@ -55,7 +56,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>bank-index</object-name>
-		<property>orientation/roll-deg</property>
+		<property>instrumentation/attitude-indicator[2]/indicated-roll-deg</property>
 		<center>
 			<x-m>0</x-m>
 			<y-m>0</y-m>

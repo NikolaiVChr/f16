@@ -978,6 +978,115 @@
         </decrease>
     </animation>
    
+   <!-- Probe Heat Sw -->
+   <animation>
+        <type>knob</type>
+        <object-name>SW_PROBE_HEAT</object-name>
+        <visible>true</visible>
+        <property>f16/avionics/probe-heat-switch</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>false</repeatable>
+        <interval-sec>0.2</interval-sec>
+        <factor>20</factor>
+        <offset-deg>0</offset-deg>
+        <center>
+            <x-m>0.799362</x-m>
+            <y-m>-0.489543</y-m>
+            <z-m>0.007677</z-m>
+        </center>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/probe-heat-switch</property>
+                <min>-1</min>
+                <max>1</max>                
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+   
+   <!-- Oxy Test -->
+   <animation>
+        <type>knob</type>
+        <object-name>SW_TEST_OXY</object-name>
+        <visible>true</visible>
+        <property>controls/test/test-panel/oxy-test</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>false</repeatable>
+        <interval-sec>0.2</interval-sec>
+        <factor>40</factor>
+        <offset-deg>-20</offset-deg>
+        <center>
+            <x-m>0.772422</x-m>
+            <y-m>-0.529793</y-m>
+            <z-m>0.007677</z-m>
+        </center>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+				<property>controls/test/test-panel/oxy-test</property>
+                <min>0</min>
+                <max>1</max>                
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+	
+	<animation>
+        <type>pick</type>
+        <object-name>FIRE_OHEAT_DETECT</object-name>
+        <action>
+			<button>0</button>
+            <binding>
+                <command>property-toggle</command>
+                <property>/controls/test/test-panel/fire-ovht-test</property>
+            </binding>
+        </action>
+    </animation>
+	
+	<animation>
+        <type>translate</type>
+        <object-name>FIRE_OHEAT_DETECT</object-name>
+		<property>/controls/test/test-panel/fire-ovht-test</property>
+        <factor>-0.0035</factor>
+        <axis>
+		  <z>1</z>
+	    </axis>
+    </animation>
+	
+	<animation>
+        <type>pick</type>
+        <object-name>HF-PBG_TEST</object-name>
+        <action>
+			<button>0</button>
+            <binding>
+                <command>property-toggle</command>
+                <property>/controls/test/test-panel/pbg-test</property>
+            </binding>
+        </action>
+    </animation>
+	
+	<animation>
+        <type>translate</type>
+        <object-name>HF-PBG_TEST</object-name>
+		<property>/controls/test/test-panel/pbg-test</property>
+        <factor>-0.0035</factor>
+        <axis>
+		  <z>1</z>
+	    </axis>
+    </animation>
    
    <animation>
         <type>knob</type>

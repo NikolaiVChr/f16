@@ -374,21 +374,46 @@
             </function>
             <output>/f16/cockpit/oxygen-liters</output>
         </fcs_function>
-                
     </channel>
     
     <channel name="oxygen 2" execrate="8">
                 
         <switch name="/f16/avionics/oxy-psi-direct">
          <default value="0"/>
-         <test  logic="AND" value="150">
+		 <test  logic="AND" value="150">
            /f16/cockpit/oxygen-liters gt 1
-           /f16/avionics/pbg-switch == 0
+		    <test logic="OR">
+			   <test logic="AND">
+		           /f16/avionics/pbg-switch eq 1
+			       /accelerations/pilot-g ge 4
+			   </test>
+		       /controls/test/test-panel/pbg-test == 1
+		   </test>
            elec/bus/batt-2 gt 20
          </test>
-         <test  logic="AND" value="110">
+		  <test  logic="AND" value="110">
            /f16/cockpit/oxygen-liters gt 0.5
-           /f16/avionics/pbg-switch == 0
+		   <test logic="OR">
+			   <test logic="AND">
+		           /f16/avionics/pbg-switch eq 1
+			       /accelerations/pilot-g ge 4
+			   </test>
+		       /controls/test/test-panel/pbg-test == 1
+		   </test>
+           elec/bus/batt-2 gt 20
+         </test>
+         <test  logic="AND" value="75">
+           /f16/cockpit/oxygen-liters gt 1
+		   <test logic="OR">
+		       /f16/avionics/pbg-switch ne -1
+		   </test>
+           elec/bus/batt-2 gt 20
+         </test>
+         <test  logic="AND" value="55">
+           /f16/cockpit/oxygen-liters gt 0.5
+		   <test logic="OR">
+		       /f16/avionics/pbg-switch ne -1
+		   </test>
            elec/bus/batt-2 gt 20
          </test>
         </switch>
@@ -397,6 +422,18 @@
             <input> /f16/avionics/oxy-psi-direct </input>
             <c1> 2.5 </c1>
         </lag_filter>
+		
+		<switch name="/f16/cockpit/oxygen-liters-switch">
+			<default value="/f16/cockpit/oxygen-liters"/>
+			<test value="0">
+				/controls/test/test-panel/oxy-test eq 1
+			</test>
+		</switch>
+		
+		<actuator name="/f16/cockpit/oxygen-liters-output">
+			<input>/f16/cockpit/oxygen-liters-switch</input>
+			<rate_limit>1</rate_limit>
+		</actuator>
                 
     </channel>
     
