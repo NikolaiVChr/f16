@@ -256,5 +256,6 @@ setlistener("f16/avionics/caution/adc",caution,0,0);
 setlistener("f16/avionics/caution/equip-hot",caution,0,0);
 setlistener("f16/avionics/caution/overheat",caution,0,0);
 setlistener("f16/avionics/caution/avionics",caution,0,0);
+setlistener("f16/avionics/caution/probe-heat",caution,0,0);
 
 loop();

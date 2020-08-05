@@ -1726,7 +1726,7 @@ gui.showHelpDialog = func(path, toggle=0) {
 
 # Probe heat switch
 var probe_heat_switch = props.globals.getNode("/f16/avionics/probe-heat-switch");
-var probe_heat_light = props.globals.getNode("/f16/avionics/probe-heat-light");
+var probe_heat_light = props.globals.getNode("/f16/avionics/caution/probe-heat");
 setlistener("/f16/avionics/probe-heat-switch", func() {
 	if (probe_heat_switch.getValue() == -1) {
 		flashTimer.start();
