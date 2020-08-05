@@ -1865,6 +1865,7 @@ There is also small changes in tail for different variants with and without brak
 				<fire-ovht-test type="bool">false</fire-ovht-test>
                 <mal-ind-lts type="bool">false</mal-ind-lts>
 				<oxy-test type="bool">false</oxy-test>
+				<pbg-test type="bool">false</pbg-test>
             </test-panel>
         </test>
         <smoke type="bool">false</smoke>

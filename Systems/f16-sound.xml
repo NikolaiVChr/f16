@@ -2433,9 +2433,15 @@
             <condition>
                 <greater-than>
                     <property>f16/avionics/oxy-psi</property>
-                    <value>50</value>
+                    <value>30</value>
                 </greater-than>
             </condition>
+            <volume>
+                <property>f16/avionics/oxy-psi</property>
+                <factor>0.01</factor>
+				<offset>-0.25</offset>
+				<min>0</min>
+            </volume>
             <volume>
                 <property>sim/current-view/internal</property>
                 <factor>0.75</factor>
