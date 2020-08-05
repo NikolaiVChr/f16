@@ -388,7 +388,7 @@ var MFD_Device =
                     .horiz(30)
                     .lineTo(-276*0.795+15,-482*0.5-105-27.5-15)
                     .lineTo(-276*0.795,-482*0.5-105-27.5)
-                    .setStrokeLineWidth(2)
+                    .setStrokeLineWidth(3)
                     .set("z-index",1)
                     .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
         svg.rang = svg.p_RDR.createChild("text")
@@ -402,7 +402,7 @@ var MFD_Device =
                     .horiz(30)
                     .lineTo(-276*0.795+15,-482*0.5-105+27.5+15)
                     .lineTo(-276*0.795,-482*0.5-105+27.5)
-                    .setStrokeLineWidth(2)
+                    .setStrokeLineWidth(3)
                     .set("z-index",1)
                     .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
         svg.az = svg.p_RDR.createChild("text")
@@ -431,7 +431,7 @@ var MFD_Device =
                     .vert(-10)
                     .moveTo(-276*0.795-10,-10)
                     .horiz(20)
-                    .setStrokeLineWidth(1)
+                    .setStrokeLineWidth(2)
                     .set("z-index",1)
                     .setColor(getprop("/sim/model/MFD-color/line1/red"),getprop("/sim/model/MFD-color/line1/green"),getprop("/sim/model/MFD-color/line1/blue"));
         svg.distl = svg.p_RDR.createChild("path")
@@ -447,7 +447,7 @@ var MFD_Device =
                     .vert(-30)
                     .moveTo(276*0.795*0.5,0)
                     .vert(-20)
-                    .setStrokeLineWidth(1)
+                    .setStrokeLineWidth(2)
                     .set("z-index",1)
                     .setColor(getprop("/sim/model/MFD-color/line1/red"),getprop("/sim/model/MFD-color/line1/green"),getprop("/sim/model/MFD-color/line1/blue"));
         #svg.lock = setsize([],svg.maxB);
@@ -463,7 +463,7 @@ var MFD_Device =
                             .vert(-10)
                             .setColor(1,1,0)
                             .set("z-index",20)
-                            .setStrokeLineWidth(2);
+                            .setStrokeLineWidth(3);
             svg.lockAlt = svg.lock.createChild("text")
                 .setTranslation(0, 25)
                 .setText("20")
@@ -488,7 +488,7 @@ var MFD_Device =
                             .moveTo(0,-10)
                             .vert(-10)
                             .setColor(0.5,1,0.5)
-                            .setStrokeLineWidth(2);
+                            .setStrokeLineWidth(3);
         #}
         svg.dlzX      = 276*0.795*0.75;
         svg.dlzY      =-482*0.25;
@@ -512,13 +512,13 @@ var MFD_Device =
            .lineTo(0, -482)
            .setColor(getprop("/sim/model/MFD-color/line1/red"),getprop("/sim/model/MFD-color/line1/green"),getprop("/sim/model/MFD-color/line1/blue"))
            .set("z-index",1)
-           .setStrokeLineWidth(1);
+           .setStrokeLineWidth(2);
         svg.az2 = svg.p_RDR.createChild("path")
            .moveTo(0, 0)
            .lineTo(0, -482)
            .setColor(getprop("/sim/model/MFD-color/line1/red"),getprop("/sim/model/MFD-color/line1/green"),getprop("/sim/model/MFD-color/line1/blue"))
            .set("z-index",1)
-           .setStrokeLineWidth(1);
+           .setStrokeLineWidth(2);
         svg.horiz = svg.p_RDR.createChild("path")
            .moveTo(-276*0.795*0.5, -482*0.5)
            .vert(10)
@@ -531,7 +531,7 @@ var MFD_Device =
            .setCenter(0, -482*0.5)
            .setColor(getprop("/sim/model/MFD-color/line2/red"),getprop("/sim/model/MFD-color/line2/green"),getprop("/sim/model/MFD-color/line2/blue"))
            .set("z-index",11)
-           .setStrokeLineWidth(2);
+           .setStrokeLineWidth(3);
         svg.silent = svg.p_RDR.createChild("text")
            .setTranslation(0, -482*0.25)
            .setAlignment("center-center")
@@ -567,7 +567,7 @@ var MFD_Device =
                     .horiz(200)
                     .vert(-200)
                     .horiz(-200)
-                    .setStrokeLineWidth(1.5)
+                    .setStrokeLineWidth(2.0)
                     .setColor(getprop("/sim/model/MFD-color/line4/red"),getprop("/sim/model/MFD-color/line4/green"),getprop("/sim/model/MFD-color/line4/blue"))
                     .set("z-index",1)
                     .hide();
@@ -577,7 +577,7 @@ var MFD_Device =
                     .vert(18)
                     .moveTo(8,-9)
                     .vert(18)
-                    .setStrokeLineWidth(1.5)
+                    .setStrokeLineWidth(2.0)
                     .setColor(getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue"))
                     .set("z-index",1000);
         
@@ -591,7 +591,7 @@ var MFD_Device =
             .moveTo(-5,0)
             .arcSmallCW(5,5, 0,  5*2, 0)
             .arcSmallCW(5,5, 0, -5*2, 0)
-            .setStrokeLineWidth(2)
+            .setStrokeLineWidth(3)
             .set("z-index",1)
             .setColor(getprop("/sim/model/MFD-color/bullseye/red"),getprop("/sim/model/MFD-color/bullseye/green"),getprop("/sim/model/MFD-color/bullseye/blue"));
         svg.bullOwnRing = svg.p_RDR.createChild("path")
@@ -604,7 +604,7 @@ var MFD_Device =
             .moveTo(0,-18)
             .lineTo(-8,-12.5)
             .close()
-            .setStrokeLineWidth(2)
+            .setStrokeLineWidth(2.5)
             .setStrokeLineCap("round")
             .setTranslation(-190, -50)
             .set("z-index",1)
@@ -1190,7 +1190,7 @@ var MFD_Device =
            .vert(30)
            .horiz(-130)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
-           .setStrokeLineWidth(1)
+           .setStrokeLineWidth(2)
            .hide();
         svg.p2f = svg.p_SMS.createChild("path")
            .moveTo(-276*0.795*0.85, -482*0.5+10)
@@ -1199,7 +1199,7 @@ var MFD_Device =
            .vert(30)
            .horiz(-130)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
-           .setStrokeLineWidth(1)
+           .setStrokeLineWidth(2)
            .hide();
         svg.p3f = svg.p_SMS.createChild("path")
            .moveTo(-276*0.795*0.7, -482*0.5-55)
@@ -1208,7 +1208,7 @@ var MFD_Device =
            .vert(30)
            .horiz(-130)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
-           .setStrokeLineWidth(1)
+           .setStrokeLineWidth(2)
            .hide();
         svg.p4f = svg.p_SMS.createChild("path")
            .moveTo(-276*0.795*0.55, -482*0.5-120)
@@ -1217,7 +1217,7 @@ var MFD_Device =
            .vert(30)
            .horiz(-130)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
-           .setStrokeLineWidth(1)
+           .setStrokeLineWidth(2)
            .hide();
         svg.p5f = svg.p_SMS.createChild("path")
            .moveTo(-75, -482*0.5-185)
@@ -1226,7 +1226,7 @@ var MFD_Device =
            .vert(30)
            .horiz(-130)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
-           .setStrokeLineWidth(1)
+           .setStrokeLineWidth(2)
            .hide();
         svg.p6f = svg.p_SMS.createChild("path")
            .moveTo(276*0.795*0.55, -482*0.5-120)
@@ -1235,7 +1235,7 @@ var MFD_Device =
            .vert(30)
            .horiz(130)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
-           .setStrokeLineWidth(1)
+           .setStrokeLineWidth(2)
            .hide();
         svg.p7f = svg.p_SMS.createChild("path")
            .moveTo(276*0.795*0.7, -482*0.5-55)
@@ -1244,7 +1244,7 @@ var MFD_Device =
            .vert(30)
            .horiz(130)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
-           .setStrokeLineWidth(1)
+           .setStrokeLineWidth(2)
            .hide();
         svg.p8f = svg.p_SMS.createChild("path")
            .moveTo(276*0.795*0.85, -482*0.5+10)
@@ -1253,7 +1253,7 @@ var MFD_Device =
            .vert(30)
            .horiz(130)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
-           .setStrokeLineWidth(1)
+           .setStrokeLineWidth(2)
            .hide();
         svg.p9f = svg.p_SMS.createChild("path")
            .moveTo(276*0.795, -482*0.5+75)
@@ -1262,7 +1262,7 @@ var MFD_Device =
            .vert(30)
            .horiz(130)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
-           .setStrokeLineWidth(1)
+           .setStrokeLineWidth(2)
            .hide();
         svg.jett = svg.p_SMS.createChild("text")
                 .setTranslation(276*0.795, -482*0.5+125)
@@ -1529,7 +1529,7 @@ var MFD_Device =
                     .horiz(30)
                     .lineTo(-276*0.795+15,-482*0.5-105-27.5-15)
                     .lineTo(-276*0.795,-482*0.5-105-27.5)
-                    .setStrokeLineWidth(2)
+                    .setStrokeLineWidth(3)
                     .hide()
                     .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
         svg.rangA = svg.p_WPN.createChild("text")
@@ -1543,7 +1543,7 @@ var MFD_Device =
                     .horiz(30)
                     .lineTo(-276*0.795+15,-482*0.5-105+27.5+15)
                     .lineTo(-276*0.795,-482*0.5-105+27.5)
-                    .setStrokeLineWidth(2)
+                    .setStrokeLineWidth(3)
                     .hide()
                     .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
                     
@@ -1552,7 +1552,7 @@ var MFD_Device =
                     .horiz(30)
                     .lineTo(-276*0.795+15,-482*0.5-105-27.5-15)
                     .lineTo(-276*0.795,-482*0.5-105-27.5)
-                    .setStrokeLineWidth(2)
+                    .setStrokeLineWidth(3)
                     .hide()
                     .setTranslation(0,140)
                     .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
@@ -1567,7 +1567,7 @@ var MFD_Device =
                     .horiz(30)
                     .lineTo(-276*0.795+15,-482*0.5-105+27.5+15)
                     .lineTo(-276*0.795,-482*0.5-105+27.5)
-                    .setStrokeLineWidth(2)
+                    .setStrokeLineWidth(3)
                     .hide()
                     .setTranslation(0,140)
                     .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));         
@@ -1580,7 +1580,7 @@ var MFD_Device =
            .vert(24)
            .horiz(60)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
-           .setStrokeLineWidth(1)
+           .setStrokeLineWidth(2)
            .hide();
            
         svg.swap = svg.p_WPN.createChild("text")
@@ -1935,7 +1935,7 @@ var MFD_Device =
             .horiz(-15)
             .moveTo(svg.innerRadius,0)#east
             .horiz(15)
-            .setStrokeLineWidth(1)
+            .setStrokeLineWidth(2)
             .set("z-index",2)
             .setColor(getprop("/sim/model/MFD-color/line5/red"),getprop("/sim/model/MFD-color/line5/green"),getprop("/sim/model/MFD-color/line5/blue"));
 
@@ -1957,7 +1957,7 @@ var MFD_Device =
                     .horiz(30)
                     .lineTo(-276*0.795+15,-482*0.5-105-27.5-15)
                     .lineTo(-276*0.795,-482*0.5-105-27.5)
-                    .setStrokeLineWidth(2)
+                    .setStrokeLineWidth(3)
                     .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
         svg.rang = svg.buttonView.createChild("text")
                 .setTranslation(-276*0.795, -482*0.5-105)
@@ -1970,7 +1970,7 @@ var MFD_Device =
                     .horiz(30)
                     .lineTo(-276*0.795+15,-482*0.5-105+27.5+15)
                     .lineTo(-276*0.795,-482*0.5-105+27.5)
-                    .setStrokeLineWidth(2)
+                    .setStrokeLineWidth(3)
                     .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
 
         svg.depcen = svg.buttonView.createChild("text")#DEP/CEN
@@ -2002,7 +2002,7 @@ var MFD_Device =
                             .moveTo(0,-10)
                             .vert(-10)
                             .setColor(1,1,0)
-                            .setStrokeLineWidth(2);
+                            .setStrokeLineWidth(3);
         svg.lockAlt = svg.lock.createChild("text")
                 .setTranslation(0, 25)
                 .setText("20")
@@ -2023,7 +2023,7 @@ var MFD_Device =
                             .moveTo(0,-10)
                             .vert(-10)
                             .setColor(0.5,1,0.5)
-                            .setStrokeLineWidth(2);
+                            .setStrokeLineWidth(3);
 
         svg.myself = svg.p_HSDc.createChild("path")#own ship
            .moveTo(0, 0)
@@ -2033,12 +2033,12 @@ var MFD_Device =
            .moveTo(-5, 20)
            .horiz(10)
            .setColor(getprop("/sim/model/MFD-color/line1/red"),getprop("/sim/model/MFD-color/line1/green"),getprop("/sim/model/MFD-color/line1/blue"))
-           .setStrokeLineWidth(1);
+           .setStrokeLineWidth(2);
 #        svg.az2 = svg.p_HSDc.createChild("path")
 #           .moveTo(0, 0)
 #           .lineTo(0, -482)
 #           .setColor(getprop("/sim/model/MFD-color/line1/red"),getprop("/sim/model/MFD-color/line1/green"),getprop("/sim/model/MFD-color/line1/blue"))
-#           .setStrokeLineWidth(1);
+#           .setStrokeLineWidth(2);
 
 
         
@@ -2047,7 +2047,7 @@ var MFD_Device =
             .moveTo(-50,0)
             .arcSmallCW(50,50, 0,  50*2, 0)
             .arcSmallCW(50,50, 0, -50*2, 0)
-            .setStrokeLineWidth(1)
+            .setStrokeLineWidth(3)
             .set("z-index",2)
             .hide()
             .setColor(getprop("/sim/model/MFD-color/circle1/red"),getprop("/sim/model/MFD-color/circle1/green"),getprop("/sim/model/MFD-color/circle1/blue"));
@@ -2055,7 +2055,7 @@ var MFD_Device =
             .moveTo(-50,0)
             .arcSmallCW(50,50, 0,  50*2, 0)
             .arcSmallCW(50,50, 0, -50*2, 0)
-            .setStrokeLineWidth(1)
+            .setStrokeLineWidth(3)
             .set("z-index",2)
             .hide()
             .setColor(getprop("/sim/model/MFD-color/circle1/red"),getprop("/sim/model/MFD-color/circle1/green"),getprop("/sim/model/MFD-color/circle1/blue"));
@@ -2063,7 +2063,7 @@ var MFD_Device =
             .moveTo(-50,0)
             .arcSmallCW(50,50, 0,  50*2, 0)
             .arcSmallCW(50,50, 0, -50*2, 0)
-            .setStrokeLineWidth(1)
+            .setStrokeLineWidth(3)
             .set("z-index",2)
             .hide()
             .setColor(getprop("/sim/model/MFD-color/circle2/red"),getprop("/sim/model/MFD-color/circle2/green"),getprop("/sim/model/MFD-color/circle2/blue"));
@@ -2071,29 +2071,29 @@ var MFD_Device =
             .moveTo(-50,0)
             .arcSmallCW(50,50, 0,  50*2, 0)
             .arcSmallCW(50,50, 0, -50*2, 0)
-            .setStrokeLineWidth(1)
+            .setStrokeLineWidth(3)
             .set("z-index",2)
             .hide()
             .setColor(getprop("/sim/model/MFD-color/circle3/red"),getprop("/sim/model/MFD-color/circle3/green"),getprop("/sim/model/MFD-color/circle3/blue"));
         
         svg.ct1 = svg.p_HSDc.createChild("text")
                 .setAlignment("center-center")
-                .setColor(1,0,0)
+                .setColor(getprop("/sim/model/MFD-color/circle1/red"),getprop("/sim/model/MFD-color/circle1/green"),getprop("/sim/model/MFD-color/circle1/blue"))
                 .set("z-index",2)
                 .setFontSize(15, 1.0);
         svg.ct2 = svg.p_HSDc.createChild("text")
                 .setAlignment("center-center")
-                .setColor(1,0,0)
+                .setColor(getprop("/sim/model/MFD-color/circle1/red"),getprop("/sim/model/MFD-color/circle1/green"),getprop("/sim/model/MFD-color/circle1/blue"))
                 .set("z-index",2)
                 .setFontSize(15, 1.0);
         svg.ct3 = svg.p_HSDc.createChild("text")
                 .setAlignment("center-center")
-                .setColor(1,1,0)
+                .setColor(getprop("/sim/model/MFD-color/circle2/red"),getprop("/sim/model/MFD-color/circle2/green"),getprop("/sim/model/MFD-color/circle2/blue"))
                 .set("z-index",2)
                 .setFontSize(15, 1.0);
         svg.ct4 = svg.p_HSDc.createChild("text")
                 .setAlignment("center-center")
-                .setColor(0,1,0)
+                .setColor(getprop("/sim/model/MFD-color/circle3/red"),getprop("/sim/model/MFD-color/circle3/green"),getprop("/sim/model/MFD-color/circle3/blue"))
                 .set("z-index",2)
                 .setFontSize(15, 1.0);        
         
@@ -2107,7 +2107,7 @@ var MFD_Device =
             .moveTo(-5,0)
             .arcSmallCW(5,5, 0,  5*2, 0)
             .arcSmallCW(5,5, 0, -5*2, 0)
-            .setStrokeLineWidth(2)
+            .setStrokeLineWidth(3)
             .setColor(getprop("/sim/model/MFD-color/bullseye/red"),getprop("/sim/model/MFD-color/bullseye/green"),getprop("/sim/model/MFD-color/bullseye/blue"));
         svg.bullOwnRing = svg.buttonView.createChild("path")
             .moveTo(-15,0)
@@ -2119,7 +2119,7 @@ var MFD_Device =
             .moveTo(0,-18)
             .lineTo(-7,-13)
             .close()
-            .setStrokeLineWidth(2)
+            .setStrokeLineWidth(2.5)
             .setTranslation(-190, -50)
             .setColor(getprop("/sim/model/MFD-color/bullseye/red"),getprop("/sim/model/MFD-color/bullseye/green"),getprop("/sim/model/MFD-color/bullseye/blue"));
         svg.bullOwnDist = svg.buttonView.createChild("text")
@@ -2344,7 +2344,7 @@ var MFD_Device =
                         .moveTo(0,0)
                         .lineTo(-me.radarX,me.radarY)
                         .arcSmallCW(me.rdrRangePixels,me.rdrRangePixels, 0, me.radarX*2, 0)
-                        .setStrokeLineWidth(1)
+                        .setStrokeLineWidth(2)
                         .set("z-index",5)
                         .setColor(getprop("/sim/model/MFD-color/line1/red"),getprop("/sim/model/MFD-color/line1/green"),getprop("/sim/model/MFD-color/line1/blue"))
                         .update();
@@ -2371,7 +2371,7 @@ var MFD_Device =
                             .moveTo(me.legX-5,me.legY)
                             .arcSmallCW(5,5, 0, 5*2, 0)
                             .arcSmallCW(5,5, 0,-5*2, 0)
-                            .setStrokeLineWidth(1)
+                            .setStrokeLineWidth(2)
                             .set("z-index",4)
                             .setColor(getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue"))
                             .update();
@@ -2382,7 +2382,7 @@ var MFD_Device =
                             me.root.cone.createChild("path")
                                 .moveTo(me.legX,me.legY)
                                 .lineTo(me.prevX,me.prevY)
-                                .setStrokeLineWidth(1)
+                                .setStrokeLineWidth(2)
                                 .set("z-index",4)
                                 .setColor(getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue"))
                                 .update();
@@ -2424,7 +2424,7 @@ var MFD_Device =
                                 me.root.cone.createChild("path")
                                     .moveTo(me.legX,me.legY)
                                     .lineTo(me.prevX,me.prevY)
-                                    .setStrokeLineWidth(1)
+                                    .setStrokeLineWidth(2)
                                     .setStrokeDashArray([10, 10])
                                     .set("z-index",4)
                                     .setColor(getprop("/sim/model/MFD-color/lines/red"),getprop("/sim/model/MFD-color/lines/green"),getprop("/sim/model/MFD-color/lines/blue"))
