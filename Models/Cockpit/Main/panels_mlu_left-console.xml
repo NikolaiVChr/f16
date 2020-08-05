@@ -527,8 +527,6 @@
   <object-name>ecm-nil</object-name>
   <object-name>ecm-frm</object-name>
   <object-name>ecm-spl</object-name>
-  <object-name>AVTR_CTVS</object-name>
-  <object-name>AVTR_AVTR</object-name>
   <type>material</type>
   <condition>
       <property>controls/test/test-panel/mal-ind-lts</property>
@@ -539,6 +537,46 @@
    <blue>1</blue>
   </emission>
  </animation>
+ 
+ <animation>
+  <type>textranslate</type>
+  <object-name>AVTR_CTVS</object-name>
+  <object-name>AVTR_AVTR</object-name>
+  <type>material</type>
+  <condition>
+	<or>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+	  <property>controls/test/avtr-test</property>
+	</or>
+  </condition>
+  <emission>
+   <red>0</red>
+   <green>1</green>
+   <blue>0</blue>
+  </emission>
+ </animation>
+ 
+ <animation>
+	<type>pick</type>
+	<object-name>AVTR_TEST</object-name>
+	<action>
+		<button>0</button>
+		<binding>
+			<command>property-toggle</command>
+			<property>controls/test/avtr-test</property>
+		</binding>
+	</action>
+</animation>
+
+<animation>
+	<type>translate</type>
+	<object-name>AVTR_TEST</object-name>
+	<property>controls/test/avtr-test</property>
+	<factor>-0.0035</factor>
+	<axis>
+	  <z>1</z>
+	</axis>
+</animation>
  
  <animation>
   <object-name>light_epu_hydrazine</object-name>
@@ -1906,7 +1944,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>f16/avionics/ils-volume</property>
-                <step>0.1</step>
+                <step>0.05</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -1916,7 +1954,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>f16/avionics/ils-volume</property>
-                <step>-0.1</step>
+                <step>-0.05</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -1952,7 +1990,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>f16/avionics/msl-vol-knob</property>
-                <step>0.1</step>
+                <step>0.05</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -1962,7 +2000,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>f16/avionics/msl-vol-knob</property>
-                <step>-0.1</step>
+                <step>-0.05</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -1998,7 +2036,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>instrumentation/tacan/volume</property>
-                <step>0.1</step>
+                <step>0.05</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -2008,7 +2046,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>instrumentation/tacan/volume</property>
-                <step>-0.1</step>
+                <step>-0.05</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -2044,7 +2082,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>f16/avionics/rwr-volume</property>
-                <step>0.1</step>
+                <step>0.05</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -2054,7 +2092,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>f16/avionics/rwr-volume</property>
-                <step>-0.1</step>
+                <step>-0.05</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -2129,7 +2167,7 @@
          <z-m>0.024669</z-m>
         </center>
         <axis>
-         <x>0</x>
+         <x>-0.1</x>
          <y>0</y>
          <z>-1</z>
         </axis>
@@ -2137,7 +2175,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>instrumentation/comm[0]/volume</property>
-                <step>0.1</step>
+                <step>0.05</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -2147,7 +2185,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>instrumentation/comm[0]/volume</property>
-                <step>-0.1</step>
+                <step>-0.05</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -2175,7 +2213,7 @@
          <z-m>0.024669</z-m>
         </center>
         <axis>
-         <x>0</x>
+         <x>-0.1</x>
          <y>0</y>
          <z>-1</z>
         </axis>
@@ -2183,7 +2221,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>instrumentation/comm[1]/volume</property>
-                <step>0.1</step>
+                <step>0.05</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -2193,7 +2231,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>instrumentation/comm[1]/volume</property>
-                <step>-0.1</step>
+                <step>-0.05</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>

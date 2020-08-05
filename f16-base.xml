@@ -1861,6 +1861,7 @@ There is also small changes in tail for different variants with and without brak
             <ejection-safety-lever type="bool">false</ejection-safety-lever>
         </seat>
         <test>
+			<avtr-test type="bool">false</avtr-test>
             <test-panel>
 				<fire-ovht-test type="bool">false</fire-ovht-test>
                 <mal-ind-lts type="bool">false</mal-ind-lts>
