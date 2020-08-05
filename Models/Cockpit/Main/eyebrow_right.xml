@@ -22,6 +22,16 @@
  <animation>
   <type>select</type>
   <object-name>eng_fire</object-name>
+  <condition>
+    <or>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    <property>controls/test/test-panel/fire-ovht-test</property>
+    </or>
+  </condition>
+ </animation>
+ 
+ <animation>
+  <type>select</type>
   <object-name>flcs</object-name>
   <object-name>dbu_on</object-name>
   <object-name>unused</object-name>

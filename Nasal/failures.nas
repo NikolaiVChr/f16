@@ -228,6 +228,7 @@ var update_master = func {
 var loop_caution = func {# TODO: unlit the caution lights except elec-sys when master is pressed.
     var batt2 = getprop("fdm/jsbsim/elec/bus/batt-2") >= 20;
     var test  = getprop("controls/test/test-panel/mal-ind-lts");
+	var testFire = getprop("controls/test/test-panel/fire-ovht-test");
     setprop("f16/avionics/caution/stores-config",     test or (batt2 and ((getprop("f16/stores-cat")>1 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III") < 1) or (getprop("f16/stores-cat")==1 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III") == 1))));
     setprop("f16/avionics/caution/seat-not-armed",    test or (batt2 and !getprop("controls/seat/ejection-safety-lever")));
     setprop("f16/avionics/caution/oxy-low",           test or (batt2 and getprop("f16/cockpit/oxygen-liters")<0.5));
@@ -239,7 +240,7 @@ var loop_caution = func {# TODO: unlit the caution lights except elec-sys when m
     setprop("f16/avionics/caution/cabin-press",       test or (batt2 and getprop("f16/cockpit/pressure-ft")>27000));
     setprop("f16/avionics/caution/adc",               test or (batt2 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains")));
     setprop("f16/avionics/caution/equip-hot",         test or (batt2 and (!getprop("controls/ventilation/airconditioning-source") and getprop("f16/avionics/power-ufc-warm"))));
-    setprop("f16/avionics/caution/overheat",          test or (batt2 and !getprop("damage/fire/serviceable")));
+    setprop("f16/avionics/caution/overheat",          test or testFire or (batt2 and !getprop("damage/fire/serviceable")));
     setprop("f16/avionics/caution/avionics",          test or (batt2 and (!getprop("instrumentation/hud/serviceable") or !getprop("instrumentation/radar/serviceable") or !getprop("instrumentation/rwr/serviceable") or !getprop("instrumentation/tacan/serviceable"))));
 };
 

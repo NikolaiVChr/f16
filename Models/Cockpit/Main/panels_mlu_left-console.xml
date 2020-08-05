@@ -1010,6 +1010,28 @@
             </binding>
         </action>
     </animation>
+	
+	<animation>
+        <type>pick</type>
+        <object-name>FIRE_OHEAT_DETECT</object-name>
+        <action>
+			<button>0</button>
+            <binding>
+                <command>property-toggle</command>
+                <property>/controls/test/test-panel/fire-ovht-test</property>
+            </binding>
+        </action>
+    </animation>
+	
+	<animation>
+        <type>translate</type>
+        <object-name>FIRE_OHEAT_DETECT</object-name>
+		<property>/controls/test/test-panel/fire-ovht-test</property>
+        <factor>-0.0035</factor>
+        <axis>
+		  <z>1</z>
+	    </axis>
+    </animation>
    
    <animation>
         <type>knob</type>

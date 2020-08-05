@@ -1740,7 +1740,7 @@ var flashLoop = func() {
 	probe_heat_light.setBoolValue(!probe_heat_light.getBoolValue());
 }
 
-var flashTimer = maketimer(0.1, flashLoop);
+var flashTimer = maketimer(0.15, flashLoop);
 
 
 
