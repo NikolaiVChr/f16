@@ -97,7 +97,7 @@ var MFD_Station =
             if (mode == "RDY")
             {
                 me.selected.setVisible(sel);
-                me.status.setColor(0,1,0);
+                me.status.setColor(getprop("/sim/model/MFD-color/circle3/red"),getprop("/sim/model/MFD-color/circle3/green"),getprop("/sim/model/MFD-color/circle3/blue"));
             }
             else
             {
@@ -379,7 +379,7 @@ var MFD_Device =
             svg.iff[i] = svg.p_RDR.createChild("text")
                     .setText("4")
                     .setAlignment("center-center")
-                    .setColor(0,1,0)
+                    .setColor(getprop("/sim/model/MFD-color/circle3/red"),getprop("/sim/model/MFD-color/circle3/green"),getprop("/sim/model/MFD-color/circle3/blue"))
                     .set("z-index",1)
                     .setFontSize(22, 1.0);
         }
@@ -461,7 +461,7 @@ var MFD_Device =
                             .lineTo(10,10)
                             .moveTo(0,-10)
                             .vert(-10)
-                            .setColor(1,1,0)
+                            .setColor(getprop("/sim/model/MFD-color/circle2/red"),getprop("/sim/model/MFD-color/circle2/green"),getprop("/sim/model/MFD-color/circle2/blue"))
                             .set("z-index",20)
                             .setStrokeLineWidth(3);
             svg.lockAlt = svg.lock.createChild("text")
@@ -487,7 +487,7 @@ var MFD_Device =
                             .horiz(-20)
                             .moveTo(0,-10)
                             .vert(-10)
-                            .setColor(0.5,1,0.5)
+                            .setColor(getprop("/sim/model/MFD-color/dot1/red"),getprop("/sim/model/MFD-color/dot1/green"),getprop("/sim/model/MFD-color/dot1/blue"))
                             .setStrokeLineWidth(3);
         #}
         svg.dlzX      = 276*0.795*0.75;
@@ -538,7 +538,7 @@ var MFD_Device =
            .setText("SILENT")
            .set("z-index",12)
            .setFontSize(15, 1.0)
-           .setColor(1.0,1.0,0.5);
+           .setColor(getprop("/sim/model/MFD-color/text2/red"),getprop("/sim/model/MFD-color/text2/green"),getprop("/sim/model/MFD-color/text2/blue"));
            
         svg.norm = svg.p_RDR.createChild("text")
                 .setTranslation(276*0.795*0.0, -482*0.5-225)
@@ -921,7 +921,7 @@ var MFD_Device =
                             me.root.gmPic.setPixel(me.gmLine, me.gmi, [me.gmColor,me.gmColor,me.gmColor,1]);
                             
                             #me.root.gmPic.update();
-                            #f16.f16_mfd.MFDl.p_RDR.root.gmPic.setPixel(50, 50, [1,0,0,1]);
+                            #f16.f16_mfd.MFDl.p_RDR.root.gmPic.setPixel(50, 50, [getprop("/sim/model/MFD-color/circle1/red"),getprop("/sim/model/MFD-color/circle1/green"),getprop("/sim/model/MFD-color/circle1/blue"),1]);
                             #f16.f16_mfd.MFDl.p_RDR.root.gmPicG.update();
                         }
                         me.gmCoord.apply_course_distance(me.gmHead, NM2M*getprop("instrumentation/radar/radar2-range")/128);
@@ -1018,7 +1018,7 @@ var MFD_Device =
                         me.root.iff[me.i].update();
                         me.root.blep[me.i].hide();
                     } else {
-                        me.root.blep[me.i].setColor(me.blue?[0.5,1,0.5]:[getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue")]);
+                        me.root.blep[me.i].setColor(me.blue?[getprop("/sim/model/MFD-color/dot1/red"),getprop("/sim/model/MFD-color/dot1/green"),getprop("/sim/model/MFD-color/dot1/blue")]:[getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue")]);
                         me.root.blep[me.i].setTranslation(me.echoPos);
                         me.root.blep[me.i].show();
                         me.root.blep[me.i].update();
@@ -2001,7 +2001,7 @@ var MFD_Device =
                             .lineTo(10,10)
                             .moveTo(0,-10)
                             .vert(-10)
-                            .setColor(1,1,0)
+                            .setColor(getprop("/sim/model/MFD-color/circle2/red"),getprop("/sim/model/MFD-color/circle2/green"),getprop("/sim/model/MFD-color/circle2/blue"))
                             .setStrokeLineWidth(3);
         svg.lockAlt = svg.lock.createChild("text")
                 .setTranslation(0, 25)
@@ -2022,7 +2022,7 @@ var MFD_Device =
                             .horiz(-20)
                             .moveTo(0,-10)
                             .vert(-10)
-                            .setColor(0.5,1,0.5)
+                            .setColor(getprop("/sim/model/MFD-color/dot1/red"),getprop("/sim/model/MFD-color/dot1/green"),getprop("/sim/model/MFD-color/dot1/blue"))
                             .setStrokeLineWidth(3);
 
         svg.myself = svg.p_HSDc.createChild("path")#own ship
@@ -2498,7 +2498,7 @@ var MFD_Device =
                 }
                 me.distPixels = (contact.get_range()/awg_9.range_radar2)*me.rdrRangePixels;
 
-                me.root.blep[me.i].setColor(me.blue?[0,0,1]:[getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue")]);
+                me.root.blep[me.i].setColor(me.blue?[getprop("/sim/model/MFD-color/dot4/red"),getprop("/sim/model/MFD-color/dot4/green"),getprop("/sim/model/MFD-color/dot4/blue")]:[getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue")]);
                 me.root.blep[me.i].setTranslation(me.distPixels*math.sin(contact.get_relative_bearing()*D2R),-me.distPixels*math.cos(contact.get_relative_bearing()*D2R));
                 me.root.blep[me.i].show();
                 me.root.blep[me.i].update();

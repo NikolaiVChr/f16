@@ -77,6 +77,11 @@
       <green type="double">1.00</green>
       <blue type="double">0.07</blue>
     </text1>
+    <text2><!--BIT/SILENT color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </text2>
     <line1><!--CRM scan lines + lat range + HSD acft, rdr scope color -->
       <red type="double">0.01</red>
       <green type="double">1.00</green>
@@ -117,21 +122,36 @@
       <green type="double">1.00</green>
       <blue type="double">0.07</blue>
     </lines>
-    <circle1><!--HSD red circles color-->
+    <circle1><!--HSD red circles + GM Pic color-->
       <red type="double">0.01</red>
       <green type="double">1.00</green>
       <blue type="double">0.07</blue>
     </circle1>
-    <circle2><!--HSD yellow circles color-->
+    <circle2><!--HSD yellow circles + Lock 2 color-->
       <red type="double">0.01</red>
       <green type="double">1.00</green>
       <blue type="double">0.07</blue>
     </circle2>
-    <circle3><!--HSD green circles color-->
+    <circle3><!--HSD green circles + CRM IFF + WPN RDY color-->
       <red type="double">0.01</red>
       <green type="double">1.00</green>
       <blue type="double">0.07</blue>
     </circle3>
+    <dot1><!--Lock 1 + cntct blep color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </dot1>
+    <dot3><!--Lock 2 color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </dot3>
+    <dot4><!--HSD DL cntct color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </dot4>
    </MFD-color>
   </model>
 
