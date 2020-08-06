@@ -393,36 +393,36 @@ var MFD_Device =
                     .setFontSize(22, 1.0);
         }
         svg.rangUp = svg.p_RDR.createChild("path")
-                    .moveTo(-276*0.795,-482*0.5-105-27.5)
+                    .moveTo(-276*0.775,-482*0.5-95-20.5)
                     .horiz(30)
-                    .lineTo(-276*0.795+15,-482*0.5-105-27.5-15)
-                    .lineTo(-276*0.795,-482*0.5-105-27.5)
+                    .lineTo(-276*0.775+15,-482*0.5-95-20.5-20)
+                    .lineTo(-276*0.775,-482*0.5-95-20.5)
                     .setStrokeLineWidth(3)
                     .set("z-index",1)
                     .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
         svg.rang = svg.p_RDR.createChild("text")
-                .setTranslation(-276*0.795, -482*0.5-105)
+                .setTranslation(-276*0.770, -482*0.5-95)
                 .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .set("z-index",1)
                 .setFontSize(20, 1.0);
         svg.rangDown = svg.p_RDR.createChild("path")
-                    .moveTo(-276*0.795,-482*0.5-105+27.5)
+                    .moveTo(-276*0.775,-482*0.5-95+20.5)
                     .horiz(30)
-                    .lineTo(-276*0.795+15,-482*0.5-105+27.5+15)
-                    .lineTo(-276*0.795,-482*0.5-105+27.5)
+                    .lineTo(-276*0.775+15,-482*0.5-95+20.5+20)
+                    .lineTo(-276*0.775,-482*0.5-95+20.5)
                     .setStrokeLineWidth(3)
                     .set("z-index",1)
                     .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
         svg.az = svg.p_RDR.createChild("text")
-                .setTranslation(-276*0.795, -482*0.5-5)
+                .setTranslation(-276*0.775, -482*0.5+10)
                 .setText("A4")
                 .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .set("z-index",1)
                 .setFontSize(20, 1.0);
         svg.bars = svg.p_RDR.createChild("text")
-                .setTranslation(-276*0.795, -482*0.5+60)
+                .setTranslation(-276*0.775, -482*0.5+75)
                 .setText("8B")
                 .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
@@ -981,25 +981,25 @@ var MFD_Device =
             me.azt = "";
             me.hot = "";
             if (me.az==15) {
-                me.azt = "A1";
+                me.azt = "A\n1";
             } elsif (me.az==30) {
-                me.azt = "A2";
+                me.azt = "A\n2";
             } elsif (me.az==60) {
-                me.azt = "A3";
+                me.azt = "A\n3";
             } else {
-                me.azt = "A4";
+                me.azt = "A\n4";
             }
             me.root.az.setText(me.azt);
             if (me.ho==15) {
-                me.hot = "2B";
+                me.hot = "2\nB";
             } elsif (me.ho==20) {
-                me.hot = "3B";#DGFT mode
+                me.hot = "3\nB";#DGFT mode
             } elsif (me.ho==30) {
-                me.hot = "4B";
+                me.hot = "4\nB";
             } elsif (me.ho==60) {
-                me.hot = "6B";
+                me.hot = "6\nB";
             } else {
-                me.hot = "8B";
+                me.hot = "8\nB";
             }
             me.root.bars.setText(me.hot);
             me.root.az1.setTranslation(-(me.az/120)*me.wdt*0.5,0);
