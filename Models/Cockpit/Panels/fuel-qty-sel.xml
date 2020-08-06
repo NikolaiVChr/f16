@@ -76,46 +76,33 @@
         </hovered>
     </animation>
 
- <animation>
-    <type>select</type>
-    <object-name>FQS_sel-knob-right</object-name>
-    <object-name>FQS_sel-knob-left</object-name>
-    <condition>
-    <equals><value>0</value><value>1</value></equals>
-  </condition>
- </animation>
-
 
  <!-- Ext Fuel Trans Switch -->
  <animation>
-  <object-name>FQS_fuel-trans-switch</object-name>
-  <type>rotate</type>
-  <property>controls/fuel/external-transfer</property>
-  <factor>50</factor>
-  <center>
-   <x-m>0.0059</x-m>
-   <y-m>0.0083</y-m>
-   <z-m>-0.0298</z-m>
-  </center>
-  <axis>
-   <x>0</x>
-   <y>-1</y>
-   <z>0</z>
-  </axis>
- </animation>
-
- <animation>
-  <name>ext-trans-toggle</name>
-  <type>pick</type>
-  <visible>true</visible>
-  <object-name>FQS_ext-trans-toggle</object-name>
-  <action>
-   <button>0</button>
-   <binding>
-    <command>property-toggle</command>
-    <property>controls/fuel/external-transfer</property>
-   </binding>
-  </action>
+	<object-name>FQS_fuel-trans-switch</object-name>
+	<type>knob</type>
+	<visible>true</visible>
+	<property>controls/fuel/external-transfer</property>
+	<factor>50</factor>
+	<drag-direction>vertical</drag-direction>
+	<drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+	<repeatable>false</repeatable>
+	<center>
+		<x-m>0.0059</x-m>
+		<y-m>0.0083</y-m>
+		<z-m>-0.0298</z-m>
+	</center>
+	<axis>
+		<x>0</x>
+		<y>-1</y>
+		<z>0</z>
+	</axis>
+	<action>
+		<binding>
+			<command>property-toggle</command>
+			<property>controls/fuel/external-transfer</property>
+		</binding>
+	</action>
  </animation>
 
  <!--lighting -->
@@ -124,41 +111,17 @@
   <object-name>FQS_marker-beacon-on</object-name>
   <type>material</type>
   <condition>
-    <property>instrumentation/marker-beacon/middle</property>
-  </condition>
-  <emission>
-   <red>1</red>
-   <green>1</green>
-   <blue>0</blue>
-  </emission>
- </animation>
- 
- <animation>
-  <object-name>FQS_marker-beacon-on</object-name>
-  <type>material</type>
-  <condition>
-    <property>instrumentation/marker-beacon/outer</property>
-  </condition>
-  <emission>
-   <red>0</red>
-   <green>0</green>
-   <blue>1</blue>
-  </emission>
- </animation>
- 
- <animation>
-  <object-name>FQS_marker-beacon-on</object-name>
-  <type>material</type>
-  <condition>
     <or>
     <property>controls/test/test-panel/mal-ind-lts</property>
     <property>instrumentation/marker-beacon/inner</property>
+    <property>instrumentation/marker-beacon/outer</property>
+    <property>instrumentation/marker-beacon/middle</property>
   </or>
   </condition>
   <emission>
-   <red>1</red>
-   <green>1</green>
-   <blue>1</blue>
+   <red>0</red>
+   <green>0.8</green>
+   <blue>0</blue>
   </emission>
  </animation>
 

@@ -21,20 +21,33 @@
  <!-- Mode knob -->
  
  <animation>
-  <type>rotate</type>
-  <object-name>INSTR_mode-knob</object-name>
-  <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
-  <factor>40</factor>
-  <center>
-   <x-m>0</x-m>
-   <y-m>0</y-m>
-   <z-m>0.0188</z-m>
-  </center>
-  <axis>
-   <x>-1</x>
-   <y>0</y>
-   <z>0</z>
-  </axis>
+	<type>knob</type>
+	<object-name>INSTR_mode-knob</object-name>
+	<property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
+	<factor>40</factor>
+	<repeatable>true</repeatable>
+	<drag-direction>horizontal</drag-direction>
+	<drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+	<center>
+	   <x-m>0</x-m>
+	   <y-m>0</y-m>
+	   <z-m>0.0188</z-m>
+	</center>
+	<axis>
+	   <x>-1</x>
+	   <y>0</y>
+	   <z>0</z>
+	</axis>
+	<action>
+		<binding>
+			<command>property-adjust</command>
+			<property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
+			<factor>1</factor>
+			<min>0</min>
+			<max>3</max>
+			<wrap>false</wrap>
+		</binding>
+	</action>
  </animation>
  
   <animation>
@@ -42,8 +55,6 @@
   <object-name>INSTR_mode-knob</object-name>
   <object-name>INSTR_hdg-knob</object-name>
   <object-name>INSTR_mount</object-name>
-  <object-name>INSTR_mode-knob-left</object-name>
-  <object-name>INSTR_mode-knob-right</object-name>
   <condition>
     <or>
       <equals>
@@ -87,45 +98,7 @@
    </condition>
  </animation>
 
- <!-- Mode knob - pick animation-->
- <animation>
-  <name>mode-left</name>
-  <type>pick</type>
-  <visible>true</visible>
-  <object-name>INSTR_mode-knob-left</object-name>
-  <action>
-   <button>0</button>
-   <repeatable>false</repeatable>
-   <binding>
-    <command>property-adjust</command>
-    <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
-    <step>-1</step>
-    <min>0</min>
-    <max>3</max>
-    <wrap>false</wrap>
-   </binding>
-  </action>
- </animation>
-
- <animation>
-  <name>mode-right</name>
-  <type>pick</type>
-  <visible>true</visible>
-  <object-name>INSTR_mode-knob-right</object-name>
-  <action>
-   <button>0</button>
-   <repeatable>false</repeatable>
-   <binding>
-    <command>property-adjust</command>
-    <property>sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob</property>
-    <step>1</step>
-    <min>0</min>
-    <max>3</max>
-    <wrap>false</wrap>
-   </binding>
-  </action>
- </animation>
-
+ 
  <!-- HDG knob - pick animation-->
 
  <!-- Set the INS heading to a known magnetic heading in the event of an INS

@@ -20,6 +20,10 @@
     <y2>0.484</y2>
    </texture>
    <condition>
+   <greater-than>
+		<property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+		<value>100</value>
+	</greater-than>
     <property>/controls/gear/gear-down</property>
     <greater-than>
      <property>/velocities/glideslope</property>
@@ -46,6 +50,10 @@
     <y2>0.496</y2>
    </texture>
    <condition>
+   <greater-than>
+		<property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+		<value>100</value>
+	</greater-than>
     <property>/controls/gear/gear-down</property>
     <greater-than>
      <property>/velocities/glideslope</property>
@@ -69,6 +77,10 @@
    <w>10</w>
    <h>10</h>
    <texture>
+   <greater-than>
+		<property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+		<value>100</value>
+	</greater-than>
     <path>Aircraft/f16/Models/Cockpit/Textures/misc1.png</path>
     <x1>0.824</x1>
     <y1>0.402</y1>
