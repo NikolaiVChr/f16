@@ -705,10 +705,10 @@ var MFD_Device =
                     me.selectionBox.setTranslation(208,450);
                     me.setSelectionColor(me.ppp.buttons[17]);
                     me.resetColor(me.ppp.buttons[10]);
-                } elsif (eventi == 15) {
+                } elsif (eventi == 18) {
                     me.ppp.selectPage(me.my.p_WPN);
-                    me.selectionBox.setTranslation(65,450);
-                    me.setSelectionColor(me.ppp.buttons[15]);
+                    me.selectionBox.setTranslation(272,450);
+                    me.setSelectionColor(me.ppp.buttons[18]);
                     me.resetColor(me.ppp.buttons[10]);
                 #} elsif (eventi == 18) {
                 #    me.ppp.selectPage(me.my.pjitds_1);
@@ -743,7 +743,7 @@ var MFD_Device =
                     setprop("instrumentation/radar/ho-field", ho);
                 } elsif (eventi == 4) {
                     setprop("instrumentation/radar/mode-switch", 1);
-                } elsif (eventi == 18) {
+                } elsif (eventi == 15) {
                     swap();
                 }
             }
@@ -1301,7 +1301,6 @@ var MFD_Device =
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
     },
-
     addSMS: func {
         var svg = {getElementById: func (id) {return me[id]},};
         me.setupSMS(svg);
@@ -1379,10 +1378,10 @@ var MFD_Device =
                         return;
                     }
                     pylons.fcs.selectPylon(4);
-                } elsif (eventi == 15) {
+                } elsif (eventi == 18) {
                     me.ppp.selectPage(me.my.p_WPN);
-                    me.selectionBox.setTranslation(65,450);
-                    me.setSelectionColor(me.ppp.buttons[15]);
+                    me.selectionBox.setTranslation(272,450);
+                    me.setSelectionColor(me.ppp.buttons[18]);
                     me.resetColor(me.ppp.buttons[17]);
                 #} elsif (eventi == 18) {
                 #    me.ppp.selectPage(me.my.pjitds_1);
@@ -1396,7 +1395,7 @@ var MFD_Device =
                     me.selectionBox.setTranslation(135,450);
                     me.setSelectionColor(me.ppp.buttons[16]);
                     me.resetColor(me.ppp.buttons[17]);
-                } elsif (eventi == 18) {
+                } elsif (eventi == 15) {
                     swap();
                 }
 # Menu Id's
@@ -1645,7 +1644,7 @@ var MFD_Device =
                     me.ppp.selectPage(me.my.p_RDR);
                     me.selectionBox.setTranslation(65,7);
                     me.setSelectionColor(me.ppp.buttons[10]);
-                    me.resetColor(me.ppp.buttons[15]);
+                    me.resetColor(me.ppp.buttons[18]);
                 } elsif (eventi == 5) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
@@ -1712,7 +1711,7 @@ var MFD_Device =
                     me.ppp.selectPage(me.my.p_SMS);
                     me.selectionBox.setTranslation(208,450);
                     me.setSelectionColor(me.ppp.buttons[17]);
-                    me.resetColor(me.ppp.buttons[15]);
+                    me.resetColor(me.ppp.buttons[18]);
                 #} elsif (eventi == 18) {
                 #    me.ppp.selectPage(me.my.pjitds_1);
                 } elsif (eventi == 11) {
@@ -1726,8 +1725,8 @@ var MFD_Device =
                     me.ppp.selectPage(me.my.p_HSD);
                     me.selectionBox.setTranslation(135,450);
                     me.setSelectionColor(me.ppp.buttons[16]);
-                    me.resetColor(me.ppp.buttons[15]);
-                } elsif (eventi == 18) {
+                    me.resetColor(me.ppp.buttons[18]);
+                } elsif (eventi == 15) {
                     swap();
                 }
 # Menu Id's
@@ -2265,10 +2264,10 @@ var MFD_Device =
                     me.selectionBox.setTranslation(208,450);
                     me.setSelectionColor(me.ppp.buttons[17]);
                     me.resetColor(me.ppp.buttons[16]);
-                } elsif (eventi == 15) {
+                } elsif (eventi == 18) {
                     me.ppp.selectPage(me.my.p_WPN);
-                    me.selectionBox.setTranslation(65,450);
-                    me.setSelectionColor(me.ppp.buttons[15]);
+                    me.selectionBox.setTranslation(272,450);
+                    me.setSelectionColor(me.ppp.buttons[18]);
                     me.resetColor(me.ppp.buttons[16]);
                 #} elsif (eventi == 18) {
                 #    me.ppp.selectPage(me.my.pjitds_1);
@@ -2283,7 +2282,7 @@ var MFD_Device =
                 } elsif (eventi == 3) {
                     me.root.coupled = !me.root.coupled;
                     me.root.cpl.setText(me.root.coupled==1?"CPL":"DCPL");
-                } elsif (eventi == 18) {
+                } elsif (eventi == 15) {
                     swap();
                 }
             }
@@ -2808,33 +2807,33 @@ var MFD_Device =
 
         #me.p_RDR.addMenuItem(18, "SIT", me.pjitds_1);
         me.p_RDR.addMenuItem(10, "CRM", me.p_RDR); #selectionColored
-        me.p_RDR.addMenuItem(15, "WPN", me.p_WPN);
+        me.p_RDR.addMenuItem(15, "SWAP", me.p_RDR);
         me.p_RDR.addMenuItem(16, "HSD", me.p_HSD);
         me.p_RDR.addMenuItem(17, "SMS", me.p_SMS);
-        me.p_RDR.addMenuItem(18, "SWAP", me.p_RDR);
+        me.p_RDR.addMenuItem(18, "WPN", me.p_WPN);
         me.p_RDR.addMenuItem(19, "TGP", nil);
 
         #me.p_HSD.addMenuItem(18, "SIT", me.pjitds_1);
         me.p_HSD.addMenuItem(10, "CRM", me.p_RDR);
-        me.p_HSD.addMenuItem(15, "WPN", me.p_WPN);
+        me.p_HSD.addMenuItem(15, "SWAP", me.p_HSD);
         me.p_HSD.addMenuItem(16, "HSD", me.p_HSD); #selectionColored
         me.p_HSD.addMenuItem(17, "SMS", me.p_SMS);
-        me.p_HSD.addMenuItem(18, "SWAP", me.p_HSD);
+        me.p_HSD.addMenuItem(18, "WPN", me.p_WPN);
         me.p_HSD.addMenuItem(19, "TGP", nil);
         
         me.p_WPN.addMenuItem(10, "CRM", me.p_RDR);
-        me.p_WPN.addMenuItem(15, "WPN", me.p_WPN); #selectionColored
+        me.p_WPN.addMenuItem(15, "SWAP", me.p_WPN);
         me.p_WPN.addMenuItem(16, "HSD", me.p_HSD);
         me.p_WPN.addMenuItem(17, "SMS", me.p_SMS);
-        me.p_WPN.addMenuItem(18, "SWAP", me.p_WPN);
+        me.p_WPN.addMenuItem(18, "WPN", me.p_WPN); #selectionColored
         me.p_WPN.addMenuItem(19, "TGP", nil);
 
         #me.p_SMS.addMenuItem(18, "SIT", me.pjitds_1);
         me.p_SMS.addMenuItem(10, "CRM", me.p_RDR);
-        me.p_SMS.addMenuItem(15, "WPN", me.p_WPN);
+        me.p_SMS.addMenuItem(15, "SWAP", me.p_SMS);
         me.p_SMS.addMenuItem(16, "HSD", me.p_HSD);
         me.p_SMS.addMenuItem(17, "SMS", me.p_SMS); #selectionColored
-        me.p_SMS.addMenuItem(18, "SWAP", me.p_SMS);
+        me.p_SMS.addMenuItem(18, "WPN", me.p_WPN);
         me.p_SMS.addMenuItem(19, "TGP", nil);
 #        me.p_SMS.addMenuItem(16, "TIM", me.p1_1);
 
