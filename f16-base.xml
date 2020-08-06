@@ -1810,6 +1810,7 @@ There is also small changes in tail for different variants with and without brak
         <fuel>
             <qty-selector type="int">1</qty-selector>
             <external-transfer type="bool">true</external-transfer>
+			<tank-inerting type="bool">false</tank-inerting>
         </fuel>
         <gear>
             <brake-parking type="bool">true</brake-parking>
@@ -1861,6 +1862,7 @@ There is also small changes in tail for different variants with and without brak
             <ejection-safety-lever type="bool">false</ejection-safety-lever>
         </seat>
         <test>
+			<avtr-test type="bool">false</avtr-test>
             <test-panel>
 				<fire-ovht-test type="bool">false</fire-ovht-test>
                 <mal-ind-lts type="bool">false</mal-ind-lts>

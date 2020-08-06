@@ -2,7 +2,7 @@ AC3Db
 MATERIAL "ac3dmat1" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.2 0.2 0.2  shi 128  trans 0
 MATERIAL "ac3dmat1.001" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0 0 0  shi 0  trans 1
 OBJECT world
-kids 8
+kids 4
 OBJECT poly
 name "INSTR_hdg-knob"
 data 8
@@ -380,44 +380,6 @@ refs 3
 47 0.718642 0.0346735
 32 0.722656 0.0283203
 48 0.669922 0.0283203
-kids 0
-OBJECT poly
-name "INSTR_hdg-knob-left"
-data 8
-Mesh.005
-crease 45.000000
-numvert 4
-0.006526 -0.013235 0.001177
-0.006526 -0.013235 0.012972
-0.006526 -0.030488 0.012972
-0.006526 -0.030488 0.001177
-numsurf 1
-SURF 0x30
-mat 1
-refs 4
-0 1 1
-1 0 1
-2 0 0
-3 1 0
-kids 0
-OBJECT poly
-name "INSTR_hdg-knob-right"
-data 8
-Mesh.006
-crease 45.000000
-numvert 4
-0.006526 -0.030488 -0.011965
-0.006526 -0.030488 -0.00017
-0.006526 -0.013235 -0.00017
-0.006526 -0.013235 -0.011965
-numsurf 1
-SURF 0x30
-mat 1
-refs 4
-1 0 0
-0 1 0
-3 1 1
-2 0 1
 kids 0
 OBJECT poly
 name "INSTR_mode-knob"
@@ -990,44 +952,6 @@ refs 3
 2 0.587438 0.0247107
 0 0.582435 0.0285027
 41 0.6314 0.017892
-kids 0
-OBJECT poly
-name "INSTR_mode-knob-left"
-data 8
-Mesh.003
-crease 45.000000
-numvert 4
-0.006526 0.005164 0.001319
-0.006526 0.005164 0.015592
-0.006526 0.030091 0.015592
-0.006526 0.030091 0.001319
-numsurf 1
-SURF 0x30
-mat 1
-refs 4
-1 0 0
-0 1 0
-3 1 1
-2 0 1
-kids 0
-OBJECT poly
-name "INSTR_mode-knob-right"
-data 8
-Mesh.004
-crease 45.000000
-numvert 4
-0.006526 0.030091 -0.014586
-0.006526 0.030091 -0.000312
-0.006526 0.005164 -0.000312
-0.006526 0.005164 -0.014586
-numsurf 1
-SURF 0x30
-mat 1
-refs 4
-0 1 1
-1 0 1
-2 0 0
-3 1 0
 kids 0
 OBJECT poly
 name "INSTR_mount"

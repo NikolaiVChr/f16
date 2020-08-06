@@ -4,39 +4,56 @@
  <path>aoa-gauge.ac</path>
 
  <animation>
-  <type>select</type>
-  <object-name>AOA_off-flag</object-name>
-  <condition>
-   <equals>
-    <property type="bool">systems/static/serviceable</property>
-    <value>false</value>
-   </equals>
-                        <greater-than-equals>
-                            <property>fdm/jsbsim/elec/bus/emergency-ac-1</property>
-                            <value>100</value>
-                        </greater-than-equals>
-  </condition>
+	<type>select</type>
+	<object-name>AOA_off-flag</object-name>
+	<condition>
+		<or>
+			<not>
+				<property>systems/static/serviceable</property>
+			</not>
+			<less-than-equals>
+				<property>fdm/jsbsim/elec/bus/emergency-ac-1</property>
+				<value>100</value>
+			</less-than-equals>
+		</or>
+	</condition>
+ </animation>
+ 
+ <animation>
+	<type>select</type>
+	<object-name>AOA_tape</object-name>
+	<condition>
+		<and>
+			<property>systems/static/serviceable</property>
+			<greater-than>
+				<property>fdm/jsbsim/elec/bus/emergency-ac-1</property>
+				<value>100</value>
+			</greater-than>
+		</and>
+	</condition>
  </animation>
 
  <animation>
-  <type>textranslate</type>
-  <object-name>AOA_tape</object-name>
-  <property>orientation/alpha-deg</property>
-  <condition>
-                        <greater-than-equals>
-                            <property>fdm/jsbsim/elec/bus/emergency-ac-1</property>
-                            <value>100</value>
-                        </greater-than-equals>
-                        <greater-than-equals>
-                            <property>velocities/groundspeed-kt</property>
-                            <value>20</value>
-                        </greater-than-equals>
-  </condition>
-  <factor>0.0235</factor>
-  <axis>
-   <x>0</x>
-   <y>1</y>
-  </axis>
+	<type>textranslate</type>
+	<object-name>AOA_tape</object-name>
+	<property>orientation/alpha-deg</property>
+	<condition>
+		<and>
+			<greater-than-equals>
+				<property>fdm/jsbsim/elec/bus/emergency-ac-1</property>
+				<value>100</value>
+			</greater-than-equals>
+			<greater-than-equals>
+				<property>velocities/groundspeed-kt</property>
+				<value>20</value>
+			</greater-than-equals>
+		</and>
+	</condition>
+	<factor>0.0235</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+	</axis>
  </animation>
 
 
