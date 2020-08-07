@@ -30,11 +30,11 @@ hyd70lh7.brevity = "Rockets away";
 var hyd70rh7 = stations.SubModelWeapon.new("LAU-68", 23.6, 7, [7], [], props.globals.getNode("fdm/jsbsim/fcs/hydra7rtrigger",1), 1, func{return getprop("payload/armament/fire-control/serviceable");},1);
 hyd70rh7.typeShort = "LAU-68";
 hyd70rh7.brevity = "Rockets away";
-var fuelTankCenter = stations.FuelTank.new("Center 300 Gal Tank", "TK300", 4, 300, "sim/model/f16/ventraltank");
-var fuelTank370Left = stations.FuelTank.new("Left 370 Gal Tank", "TK370", 3, 370, "sim/model/f16/wingtankL");
-var fuelTank370Right = stations.FuelTank.new("Right 370 Gal Tank", "TK370", 2, 370, "sim/model/f16/wingtankR");
-var fuelTank600Left = stations.FuelTank.new("Left 600 Gal Tank", "TK600", 3, 600, "sim/model/f16/wingtankL6");
-var fuelTank600Right = stations.FuelTank.new("Right 600 Gal Tank", "TK600", 2, 600, "sim/model/f16/wingtankR6");
+var fuelTankCenter = stations.FuelTank.new("Center 300 Gal Tank", "TK300", 8, 300, "sim/model/f16/ventraltank");
+var fuelTank370Left = stations.FuelTank.new("Left 370 Gal Tank", "TK370", 6, 370, "sim/model/f16/wingtankL");
+var fuelTank370Right = stations.FuelTank.new("Right 370 Gal Tank", "TK370", 7, 370, "sim/model/f16/wingtankR");
+var fuelTank600Left = stations.FuelTank.new("Left 600 Gal Tank", "TK600", 6, 600, "sim/model/f16/wingtankL6");
+var fuelTank600Right = stations.FuelTank.new("Right 600 Gal Tank", "TK600", 7, 600, "sim/model/f16/wingtankR6");
 var smokewinderRed1 = stations.Smoker.new("Smokewinder Red", "SmokeR", "sim/model/f16/smokewinderR1");
 var smokewinderGreen1 = stations.Smoker.new("Smokewinder Green", "SmokeG", "sim/model/f16/smokewinderG1");
 var smokewinderBlue1 = stations.Smoker.new("Smokewinder Blue", "SmokeB", "sim/model/f16/smokewinderB1");
@@ -916,11 +916,13 @@ var refuel = func {
 	if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
 		setprop("consumables/fuel/tank[0]/level-norm", 1);
 		setprop("consumables/fuel/tank[1]/level-norm", 1);
-		if (getprop("consumables/fuel/tank[2]/name") != "Not attached") setprop("consumables/fuel/tank[2]/level-norm", 1);
-		if (getprop("consumables/fuel/tank[3]/name") != "Not attached") setprop("consumables/fuel/tank[3]/level-norm", 1);
-		if (getprop("consumables/fuel/tank[4]/name") != "Not attached") setprop("consumables/fuel/tank[4]/level-norm", 1);
+		setprop("consumables/fuel/tank[2]/level-norm", 1);
+		setprop("consumables/fuel/tank[3]/level-norm", 1);
+		setprop("consumables/fuel/tank[4]/level-norm", 1);
 		setprop("consumables/fuel/tank[5]/level-norm", 1);
-		setprop("consumables/fuel/tank[6]/level-norm", 1);
+		if (getprop("consumables/fuel/tank[6]/name") != "Not attached") setprop("consumables/fuel/tank[6]/level-norm", 1);
+		if (getprop("consumables/fuel/tank[7]/name") != "Not attached") setprop("consumables/fuel/tank[7]/level-norm", 1);
+		if (getprop("consumables/fuel/tank[8]/name") != "Not attached") setprop("consumables/fuel/tank[8]/level-norm", 1);
 	} else {
       screen.log.write(f16.msgC);
     }

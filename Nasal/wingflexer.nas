@@ -157,8 +157,8 @@ var WingFlexer = {
     #        the 777, use them here.
 
     new: func(enable = 1, K=259., D=12., mass_dry_wing_kg = 12000., fuel_fraction = 0.75,
-              fuel_node_left = "consumables/fuel/tank/level-kg",
-              fuel_node_right = "consumables/fuel/tank[1]/level-kg",
+              fuel_node_left = "consumables/fuel/tank[1]/level-kg", # left wing
+              fuel_node_right = "consumables/fuel/tank[2]/level-kg", # right wing
               node = "sim/model/wing-flex/", lift_node = "fdm/jsbsim/forces/fbz-aero-lbs") {
         var m = { parents: [WingFlexer] };
         m.node = node;
