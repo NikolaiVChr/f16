@@ -1299,9 +1299,137 @@
         </decrease>
     </animation>
   
+	<!-- Trim panel -->
+	
+	<animation>
+        <type>knob</type>
+        <object-name>SW_KNOB_MAN_TRIM_YAW</object-name>
+        <visible>true</visible>
+        <property>controls/flight/rudder-trim</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>2</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>-90</factor>
+        <center>
+        <x-m>0.551937</x-m>
+        <y-m>-0.305632</y-m>
+        <z-m>0.01009</z-m>
+        </center>
+        <axis>
+        <x>0</x>
+        <y>0</y>
+        <z>1</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/flight/rudder-trim</property>
+                <step>0.025</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/flight/rudder-trim</property>
+                <step>-0.025</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+	
+	<animation>
+        <type>knob</type>
+        <object-name>roll-trim-wheel</object-name>
+        <visible>true</visible>
+        <property>controls/flight/aileron-trim</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>2.5</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>-90</factor>
+        <center>
+        <x-m>0.56569</x-m>
+        <y-m>-0.35829</y-m>
+        <z-m>-0.00646</z-m>
+        </center>
+        <axis>
+        <x>1</x>
+        <y>0</y>
+        <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/flight/aileron-trim</property>
+                <step>0.025</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/flight/aileron-trim</property>
+                <step>-0.025</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+	
+	<animation>
+        <type>knob</type>
+        <object-name>pitch-trim-wheel</object-name>
+        <visible>true</visible>
+        <property>controls/flight/elevator-trim</property>
+        <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>2.5</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>-90</factor>
+        <center>
+        <x-m>0.48318</x-m>
+        <y-m>-0.2992</y-m>
+        <z-m>-0.00646</z-m>
+        </center>
+        <axis>
+        <x>0</x>
+        <y>1</y>
+        <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/flight/elevator-trim</property>
+                <step>-0.025</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>controls/flight/elevator-trim</property>
+                <step>0.025</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+    </animation>
+	
   <!-- External Lighting Panel -->
 
- <animation>
+	<animation>
         <type>knob</type>
         <object-name>SW_MASTER</object-name>
         <visible>true</visible>
@@ -1313,9 +1441,9 @@
         <factor>40</factor>
         <offset-deg>-20</offset-deg>
         <center>
-        <x-m>0.66</x-m>
-        <y-m>-0.32</y-m>
-        <z-m>0.0</z-m>
+        <x-m>0.661082</x-m>
+        <y-m>-0.323034</y-m>
+        <z-m>0.007677</z-m>
         </center>
         <axis>
         <x>1</x>
@@ -1356,9 +1484,9 @@
         <factor>40</factor>
         <offset-deg>-20</offset-deg>
         <center>
-        <x-m>0.71</x-m>
-        <y-m>-0.37</y-m>
-        <z-m>0.0</z-m>
+        <x-m>0.705742</x-m>
+        <y-m>-0.367124</y-m>
+        <z-m>0.007677</z-m>
         </center>
         <axis>
         <x>1</x>
@@ -1399,9 +1527,9 @@
         <factor>40</factor>
         <offset-deg>-20</offset-deg>
         <center>
-        <x-m>0.67</x-m>
-        <y-m>-0.37</y-m>
-        <z-m>0.0</z-m>
+        <x-m>0.674612</x-m>
+        <y-m>-0.366714</y-m>
+        <z-m>0.007677</z-m>
         </center>
         <axis>
         <x>1</x>
@@ -1442,9 +1570,9 @@
         <factor>20</factor>
         <offset-deg>0</offset-deg>
         <center>
-        <x-m>0.65</x-m>
-        <y-m>-0.36</y-m>
-        <z-m>0.0</z-m>
+        <x-m>0.647182</x-m>
+        <y-m>-0.361964</y-m>
+        <z-m>0.007677</z-m>
         </center>
         <axis>
         <x>1</x>
@@ -1485,9 +1613,9 @@
         <factor>20</factor>
         <offset-deg>0</offset-deg>
         <center>
-        <x-m>0.61</x-m>
-        <y-m>-0.36</y-m>
-        <z-m>0.0</z-m>
+        <x-m>0.613272</x-m>
+        <y-m>-0.361764</y-m>
+        <z-m>0.007677</z-m>
         </center>
         <axis>
         <x>1</x>
@@ -2308,7 +2436,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>controls/lighting/ext-lighting-panel/form-knob</property>
-                <step>0.2</step>
+                <step>0.05</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -2318,7 +2446,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>controls/lighting/ext-lighting-panel/form-knob</property>
-                <step>-0.2</step>
+                <step>-0.05</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
