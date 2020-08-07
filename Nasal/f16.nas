@@ -739,8 +739,9 @@ var CARA = func {
 var fuelqty = func {
   var sel = getprop("controls/fuel/qty-selector");
   var fuel = getprop("/consumables/fuel/total-fuel-lbs");
+  var fuseFuel = getprop("consumables/fuel/tank[0]/level-lbs") + getprop("consumables/fuel/tank[3]/level-lbs") + getprop("consumables/fuel/tank[4]/level-lbs") + getprop("consumables/fuel/tank[5]/level-lbs");
 
-  if (fuel<getprop("f16/settings/bingo")) {
+  if (fuel<getprop("f16/settings/bingo") or (sel == 1 and fuseFuel<getprop("f16/settings/bingo"))) {
     setprop("f16/avionics/bingo", 1);
   } else {
     setprop("f16/avionics/bingo", 0);
