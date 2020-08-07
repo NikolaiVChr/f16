@@ -3403,6 +3403,29 @@
                 <factor>1</factor>
             </volume>
         </betty>
+		<betty>
+            <name>gear horn</name>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <path>Sounds/gear-hrn.wav</path>
+            <condition>
+                <not><property>gear/gear[2]/wow</property></not>
+                <property>/f16/avionics/gear-horn</property>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
+            </condition>
+            <delay-sec>1.5</delay-sec>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>0.5</factor>
+            </volume>
+        </betty>
         <betty>
             <name>warning</name>
             <mode>looped</mode>
@@ -3413,7 +3436,15 @@
                 <or>
                     <and><!-- TO LDG -->
                         <less-than>
-                          <property>controls/gear/gear-down</property>
+                          <property>gear/gear[0]/position-norm</property>
+                          <value>1</value>
+                        </less-than>
+                        <less-than>
+                          <property>gear/gear[1]/position-norm</property>
+                          <value>1</value>
+                        </less-than>
+                        <less-than>
+                          <property>gear/gear[2]/position-norm</property>
                           <value>1</value>
                         </less-than>
                         <less-than>

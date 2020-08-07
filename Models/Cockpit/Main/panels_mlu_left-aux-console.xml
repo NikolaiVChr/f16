@@ -269,6 +269,37 @@
 
 <!-- PICK ANIMATIONS -->
 
+	<animation>
+		<type>pick</type>
+		<visible>true</visible>
+		<object-name>horn_silencer</object-name>
+		<action>
+			<button>0</button>
+			<binding>
+				<command>property-assign</command>
+				<property>/controls/gear/gear-horn-cutout</property>
+				<value>1</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>/controls/gear/gear-horn-cutout</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+	</animation>
+	<animation>
+		<type>translate</type>
+		<object-name>horn_silencer</object-name>
+		<factor>-0.3</factor>
+		<property>/controls/gear/gear-horn-cutout</property>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>
     
    
    

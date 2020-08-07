@@ -1813,6 +1813,7 @@ There is also small changes in tail for different variants with and without brak
 			<tank-inerting type="bool">false</tank-inerting>
         </fuel>
         <gear>
+			<gear-horn-cutout type="bool">false</gear-horn-cutout>
             <brake-parking type="bool">true</brake-parking>
         </gear>
         <MFD n="0">

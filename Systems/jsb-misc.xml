@@ -869,5 +869,60 @@
         </fcs_function>
 
     </channel>
+	
+	<channel name="Betty">
+		<switch name="/f16/avionics/gear-horn-cancel">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/f16/avionics/gear-horn-cancel eq 1
+				/velocities/speed-down-fps ge 4.17
+				/velocities/airspeed-kt lt 190
+				/position/altitude-agl-ft lt 10000
+				/gear/gear[0]/position-norm ne 1
+			</test>
+			<test logic="AND" value="1">
+				/f16/avionics/gear-horn-cancel eq 1
+				/velocities/speed-down-fps ge 4.17
+				/velocities/airspeed-kt lt 190
+				/position/altitude-agl-ft lt 10000
+				/gear/gear[1]/position-norm ne 1
+			</test>
+			<test logic="AND" value="1">
+				/f16/avionics/gear-horn-cancel eq 1
+				/velocities/speed-down-fps ge 4.17
+				/velocities/airspeed-kt lt 190
+				/position/altitude-agl-ft lt 10000
+				/gear/gear[2]/position-norm ne 1
+			</test>
+			<test logic="AND" value="1">
+				/controls/gear/gear-horn-cutout eq 1
+			</test>
+		</switch>
+		
+		<switch name="/f16/avionics/gear-horn">
+			<default value="0"/>
+			<test logic="AND" value="0">
+				/f16/avionics/gear-horn-cancel eq 1
+			</test>
+			<test logic="AND" value="1">
+				/velocities/speed-down-fps ge 4.17
+				/velocities/airspeed-kt lt 190
+				/position/altitude-agl-ft lt 10000
+				/gear/gear[0]/position-norm ne 1
+			</test>
+			<test logic="AND" value="1">
+				/velocities/speed-down-fps ge 4.17
+				/velocities/airspeed-kt lt 190
+				/position/altitude-agl-ft lt 10000
+				/gear/gear[1]/position-norm ne 1
+			</test>
+			<test logic="AND" value="1">
+				/velocities/speed-down-fps ge 4.17
+				/velocities/airspeed-kt lt 190
+				/position/altitude-agl-ft lt 10000
+				/gear/gear[2]/position-norm ne 1
+			</test>
+		</switch>
+	</channel>
     
 </system>
