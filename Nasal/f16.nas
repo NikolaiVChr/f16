@@ -1813,11 +1813,11 @@ var flexer = func {
     setprop("surface-positions/radlefl", -getprop("fdm/jsbsim/fcs/lef-pos-deg")*D2R);
 
     var wingcontent = 0;
-    if (getprop("consumables/fuel/tank[5]/level-kg")!=nil) {
-      wingcontent += getprop("consumables/fuel/tank[5]/level-kg");
+    if (getprop("consumables/fuel/tank[1]/level-kg")!=nil) {
+      wingcontent += getprop("consumables/fuel/tank[1]/level-kg");
     }
-    if (getprop("consumables/fuel/tank[6]/level-kg")!=nil) {
-      wingcontent += getprop("consumables/fuel/tank[6]/level-kg");
+    if (getprop("consumables/fuel/tank[2]/level-kg")!=nil) {
+      wingcontent += getprop("consumables/fuel/tank[2]/level-kg");
     }
     if (getprop("payload/weight[0]/weight-lb") !=nil
         and getprop("payload/weight[1]/weight-lb") !=nil 
