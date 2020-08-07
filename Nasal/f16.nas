@@ -935,19 +935,21 @@ var repair4 = func {
   # this pps settings is for when reinit with non zero fuel dump value in jsb propulsion, that value gets set on non-mounted tanks.
     setprop("fdm/jsbsim/propulsion/tank[0]/external-flow-rate-pps", 0);
     setprop("fdm/jsbsim/propulsion/tank[1]/external-flow-rate-pps", 0);
-    if (getprop("/consumables/fuel/tank[2]/name") != "Not attached") {
-      setprop("fdm/jsbsim/propulsion/tank[2]/external-flow-rate-pps", 0);
-    }
-    if (getprop("/consumables/fuel/tank[3]/name") != "Not attached") {
-      setprop("fdm/jsbsim/propulsion/tank[3]/external-flow-rate-pps", 0);
-    }
-    if (getprop("/consumables/fuel/tank[4]/name") != "Not attached") {
-      setprop("fdm/jsbsim/propulsion/tank[4]/external-flow-rate-pps", 0);
-    }
+    setprop("fdm/jsbsim/propulsion/tank[2]/external-flow-rate-pps", 0);
+    setprop("fdm/jsbsim/propulsion/tank[3]/external-flow-rate-pps", 0);
+    setprop("fdm/jsbsim/propulsion/tank[4]/external-flow-rate-pps", 0);
     setprop("fdm/jsbsim/propulsion/tank[5]/external-flow-rate-pps", 0);
-    setprop("fdm/jsbsim/propulsion/tank[6]/external-flow-rate-pps", 0);
-    if (getprop("/consumables/fuel/tank[0]/level-norm")<0.5 and getprop("f16/engine/running-state")) {
-      setprop("/consumables/fuel/tank[0]/level-norm", 0.55);
+    if (getprop("/consumables/fuel/tank[6]/name") != "Not attached") {
+      setprop("fdm/jsbsim/propulsion/tank[6]/external-flow-rate-pps", 0);
+    }
+    if (getprop("/consumables/fuel/tank[7]/name") != "Not attached") {
+      setprop("fdm/jsbsim/propulsion/tank[7]/external-flow-rate-pps", 0);
+    }
+    if (getprop("/consumables/fuel/tank[8]/name") != "Not attached") {
+      setprop("fdm/jsbsim/propulsion/tank[8]/external-flow-rate-pps", 0);
+    }
+    if (getprop("/consumables/fuel/tank[4]/level-norm")<0.5 and getprop("f16/engine/running-state")) {
+      setprop("/consumables/fuel/tank[4]/level-norm", 0.55);
     }
     fail.fail_reset();
 }
