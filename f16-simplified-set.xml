@@ -169,7 +169,7 @@
    <default>
     <menu n="101">
      <label>F-16</label>
-        <item n="10">
+        <!--item n="10">
           <label>Payload quick setup</label>
           <binding>
             <command>dialog-show</command>
@@ -184,7 +184,7 @@
               <command>dialog-show</command>
               <dialog-name>programGPS</dialog-name>
           </binding>
-      </item> 
+      </item--> 
     </menu>
    </default>
   </menubar>
