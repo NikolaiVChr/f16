@@ -67,6 +67,30 @@
   <function name="AugThrust">
     <product>
      <v>0.0000419639110365086</v>
+	 <ifthen>
+		<and>
+			<ge>
+				<property>elec/bus/nacelle-noness-dc-1</property>
+				<v>25</v>
+			</ge>
+			<ge>
+				<property>velocities/mach</property>
+				<v>1.1</v>
+			</ge>
+			<ge>
+				<property>/controls/engines/engine[0]/throttle</property>
+				<v>0.99</v>
+			</ge>
+		</and>
+		 <sum>	
+			<v>1.0</v>
+			<product>
+				<property>/f16/engine/max-power</property>
+				<v>0.05</v>
+			</product>
+		 </sum>
+		 <v>1.0</v>
+	 </ifthen>
    <table>
     <independentVar lookup="row">velocities/mach</independentVar>
     <independentVar lookup="column">atmosphere/density-altitude</independentVar>

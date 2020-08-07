@@ -2011,6 +2011,75 @@
         </decrease>
     </animation>
   
+    <animation>
+        <type>knob</type>
+        <object-name>SW_STARTING_FUEL</object-name>
+        <visible>true</visible>
+        <property>f16/engine/ab-reset</property>
+        <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>-25</factor>
+        <center>
+          <x-m>0.26713</x-m>
+          <y-m>-0.452864</y-m>
+          <z-m>0.021975</z-m>
+        </center>
+        <axis>
+          <x>0</x>
+          <y>1</y>
+          <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/engine/ab-reset</property>
+                <step>1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/engine/ab-reset</property>
+                <step>-1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+           </binding>
+        </decrease>
+		<release>
+			<binding>
+				<condition>
+					<or>
+						<equals>
+							<property>sim/aircraft</property>
+							<value>f16-block-30</value>
+						</equals>
+						<equals>
+							<property>sim/aircraft</property>
+							<value>f16-block-40</value>
+						</equals>
+						<equals>
+							<property>sim/aircraft</property>
+							<value>f16-block-50</value>
+						</equals>
+						<equals>
+							<property>sim/aircraft</property>
+							<value>f16-block-60</value>
+						</equals>
+					</or>
+				</condition>
+                <command>property-assign</command>
+                <property>f16/engine/ab-reset</property>
+                <value>0</value>
+           </binding>
+		</release>
+    </animation>
+	
   <animation>
         <type>knob</type>
         <object-name>SW_EPU</object-name>

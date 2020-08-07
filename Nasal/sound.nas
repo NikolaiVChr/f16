@@ -297,6 +297,7 @@ setlistener("f16/avionics/hud-drift", button2, nil, 0);
 setlistener("fdm/jsbsim/elec/switches/main-pwr", click2, nil, 0);
 setlistener("f16/engine/jfs-start-switch", button2, nil, 0);
 setlistener("fdm/jsbsim/elec/switches/epu", click2, nil, 0);
+setlistener("f16/engine/ab-reset", button2, nil, 0);
 setlistener("f16/engine/max-power", button2, nil, 0);
 setlistener("f16/avionics/hud-brt", scroll, nil, 0);
 setlistener("f16/avionics/hud-sym", scroll, nil, 0);
