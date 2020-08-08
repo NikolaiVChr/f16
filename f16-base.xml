@@ -1927,6 +1927,9 @@ There is also small changes in tail for different variants with and without brak
                 <name>Left Wing Tank</name>
             </tank>
         </fuel>
+		<fuel-tanks>
+			<serviceable type="bool">true</serviceable>
+		</fuel-tanks>
     </consumables>
     <fdm>
         <jsbsim>
@@ -3471,6 +3474,7 @@ value. 18000=standard US transition altitude -->
             <ew-disp-switch type="bool">false</ew-disp-switch>
             <ew-rwr-switch type="bool">false</ew-rwr-switch>
             <ew-mws-switch type="bool">false</ew-mws-switch>
+            <ew-jett-switch type="bool">false</ew-jett-switch>
             <ew-jmr-switch type="bool">false</ew-jmr-switch>
             <ew-mode-knob type="bool">false</ew-mode-knob>
             <cmds-01-switch type="bool">false</cmds-01-switch>

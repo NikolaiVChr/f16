@@ -348,6 +348,7 @@ setlistener("f16/avionics/ew-disp-switch", click1, nil, 0);
 setlistener("f16/avionics/ew-rwr-switch", click1, nil, 0);
 setlistener("f16/avionics/ew-mws-switch", click1, nil, 0);
 setlistener("f16/avionics/ew-jmr-switch", click1, nil, 0);
+setlistener("f16/avionics/ew-jett-switch", click1, nil, 0);
 setlistener("f16/avionics/ew-mode-knob", knob, nil, 0);
 setlistener("f16/avionics/cmds-01-switch", button2, nil, 0);
 setlistener("f16/avionics/cmds-02-switch", button2, nil, 0);
