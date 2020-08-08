@@ -238,7 +238,7 @@ setlistener("controls/armament/master-arm-cover-open", lift_cover, nil, 0);
 setlistener("controls/armament/laser-arm-dmd", click2, nil, 0);
 setlistener("controls/gear/brake-parking", button2, nil, 0);
 setlistener("controls/gear/gear-down", clamp0, nil, 0);
-setlistener("controls/gear/gear-horn-cutout", button2, nil, 0);
+setlistener("controls/gear/gear-horn-cutout", doubleClick2, nil, 0);
 setlistener("f16/avionics/gnd-jett", button2, nil, 0);
 setlistener("fdm/jsbsim/systems/hook/tailhook-cmd-norm", clamp0, nil, 0);
 setlistener("controls/seat/ejection-safety-lever", clamp0, nil, 0);

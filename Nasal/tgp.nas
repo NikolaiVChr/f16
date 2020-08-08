@@ -685,7 +685,7 @@ var callInit = func {
 
   dedGroup = canvasMFDext.createGroup();
   dedGroup.show();
-  var color = [1,1,1,1];
+  var color = [getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"),1];
   line1 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
@@ -700,7 +700,7 @@ var callInit = func {
         .vert(-14)
         .horiz(-35)
         .setStrokeLineWidth(1)
-        .setColor(1,1,1)
+        .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
         .hide()
         .setTranslation(5, 256*0.20);
   line2 = dedGroup.createChild("text")
@@ -784,21 +784,21 @@ var callInit = func {
 
     zoom = dedGroup.createChild("text")
         .setFontSize(13, 1)
-        .setColor(1,1,1)
+        .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
         .setAlignment("center-top")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("1.0X")
         .setTranslation(256*0.5, 20);
     midl = dedGroup.createChild("text")
         .setFontSize(13, 1)
-        .setColor(1,1,1)
+        .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
         .setAlignment("center-bottom")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("IR POINT    L")
         .setTranslation(256*0.5, 256*0.8);
     bott = dedGroup.createChild("text")
         .setFontSize(13, 1)
-        .setColor(1,1,1)
+        .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
         .setAlignment("center-bottom")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("13.0  CMBT  1538")
@@ -814,7 +814,7 @@ var callInit = func {
             .moveTo(256,128)
             .horiz(-120)
             .setStrokeLineWidth(1)
-            .setColor(1,1,1);
+            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
     lock = dedGroup.createChild("path")
             #.setCenter(128,128)
             .moveTo(48,48)
@@ -825,7 +825,7 @@ var callInit = func {
             .hide()
             .setTranslation(128,128)
             .setStrokeLineWidth(1)
-            .setColor(1,1,1);
+            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
 };
 
 #callInit();
