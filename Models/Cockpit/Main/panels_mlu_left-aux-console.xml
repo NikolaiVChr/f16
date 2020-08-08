@@ -310,7 +310,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>horn_silencer</object-name>
-		<factor>-0.3</factor>
+        <factor>-0.0025</factor>
 		<property>/controls/gear/gear-horn-cutout</property>
 		<axis>
 			<x>0</x>

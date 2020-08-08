@@ -1119,7 +1119,7 @@
         <type>translate</type>
         <object-name>HF-PBG_TEST</object-name>
 		<property>/controls/test/test-panel/pbg-test</property>
-        <factor>-0.0035</factor>
+        <factor>-0.0005</factor>
         <axis>
 		  <z>1</z>
 	    </axis>
