@@ -37,6 +37,8 @@ J Maverick 16
 - Addition and implementation of weapons, stores
 - 3D works (pilot model, weapons/stores, cockpit, misc)
 - RWR/RCS data research and update
+- Block-specific changes
+- MFD updates
 - Effects improvement
 - Systems tweaking
 - GoPro views
@@ -53,27 +55,30 @@ Richard Harrison
 
 Justin Nicholson
 - Splashes
-- AIM-9 growl sound
-- AIM-9 and AIM-120 models
+- AIM-9 growl, lock sounds
+- AIM-9 and AIM-120 original models
 - Radar RCS system
 
 Fabien Barbier
 - Work on stores
 - Missile view
+- Radar work
 
 Jonathan Redpath
 - Hydraulics
-- Splash
+- Cockpit work
+- Various improvements
 - Bug reporting and fixing
 
 Martien Van Der Plas
 - 3D modeling/texturing for weapons, stores, racks
 
 NC-687
-- Side stick and air vent
+- Side stick and air vent 3D
 
-Barszczisbad (BARS1)
-- Side stick improvement
+Adam Barszczak (BARS1)
+- 3D Side stick improvement
+- Canvas MFD rework
 
 Josh Davidson (Octal450)
 - Autopilot
