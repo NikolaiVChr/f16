@@ -472,10 +472,11 @@
                 <object-name>HourHand</object-name>
                 <property>instrumentation/clock/indicated-sec</property>
                 <factor>0.00833333333333333</factor>
+                <offset-deg>66</offset-deg>
                 <center>
-                 <x-m>-0.002</x-m>
-                 <y-m>0.466</y-m>
-                 <z-m>0</z-m>
+                 <x-m>-0.00153</x-m>
+                 <y-m>0.46606</y-m>
+                 <z-m>0.00754</z-m>
                 </center>
                 <axis>
                         <x>0</x>
@@ -489,10 +490,11 @@
                 <object-name>MinuteHand</object-name>
                 <property>instrumentation/clock/indicated-sec</property>
                 <factor>0.1</factor>
+                <offset-deg>120</offset-deg>
                 <center>
-                 <x-m>-0.002</x-m>
-                 <y-m>0.466</y-m>
-                 <z-m>0</z-m>
+                 <x-m>-0.00153</x-m>
+                 <y-m>0.46606</y-m>
+                 <z-m>0.00754</z-m>
                 </center>
                 <axis>
                         <x>0</x>
@@ -504,12 +506,13 @@
         <animation>
                 <type>rotate</type>
                 <object-name>SecondHand</object-name>
-                <property>instrumentation/clock/elapsed-sec</property>
+                <property>instrumentation/clock/indicated-sec</property>
                 <factor>6</factor>
+                <offset-deg>144</offset-deg>
                 <center>
-                 <x-m>-0.002</x-m>
-                 <y-m>0.466</y-m>
-                 <z-m>0</z-m>
+                 <x-m>-0.00153</x-m>
+                 <y-m>0.46606</y-m>
+                 <z-m>0.00754</z-m>
                 </center>
                 <axis>
                         <x>0</x>
@@ -517,15 +520,16 @@
                         <z>-1</z>
                 </axis>
         </animation>
+		
         <animation>
                 <type>rotate</type>
                 <object-name>ElapsedMinutesHand</object-name>
                 <property>instrumentation/clock/elapsed-sec</property>
                 <factor>0.1</factor>
                 <center>
-                 <x-m>-0.002</x-m>
-                 <y-m>0.466</y-m>
-                 <z-m>0</z-m>
+                 <x-m>-0.00153</x-m>
+                 <y-m>0.46606</y-m>
+                 <z-m>0.00754</z-m>
                 </center>
                 <axis>
                         <x>0</x>

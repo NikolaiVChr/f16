@@ -3487,6 +3487,7 @@ value. 18000=standard US transition altitude -->
             <pbg-switch type="int">-1</pbg-switch>
             <intercom-volume type="double">0.5</intercom-volume>
             <ils-volume type="double">0.10</ils-volume>
+			<vvi-indicated-speed-fps type="double">0</vvi-indicated-speed-fps>
             <caution>
                 <master type="bool">false</master>
                 <master-btn type="bool">false</master-btn>

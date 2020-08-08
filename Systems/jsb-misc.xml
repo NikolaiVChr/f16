@@ -924,5 +924,25 @@
 			</test>
 		</switch>
 	</channel>
+	
+	<channel name="VVI">
+		
+		<fcs_function name="/f16/avionics/vvi-indicated-speed-fps">
+			<function>
+				<ifthen>
+					<and>
+						<property>/systems/static/serviceable</property>
+						<gt>
+							<property>elec/bus/emergency-ac-1</property>
+							<value>100</value>
+						</gt>
+					</and>
+					<property>/velocities/vertical-speed-fps</property>
+					<v>-6000</v>
+				</ifthen>
+			</function>
+		</fcs_function>
+		
+	</channel>
     
 </system>
