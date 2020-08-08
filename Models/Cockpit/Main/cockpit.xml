@@ -682,6 +682,17 @@
   <path>Aircraft/f16/Models/Cockpit/Avionics/DED/ded.xml</path>
  </model>
 
+ <!--model>
+  <name>PFD</name>
+  <path>Aircraft/f16/Models/Cockpit/Avionics/DED/pfd.xml</path>
+  <offsets>
+   <x-m>0.05</x-m>
+   <y-m>0.18</y-m>
+   <z-m>-0.375</z-m>
+   <pitch-deg>0.0</pitch-deg>
+  </offsets>
+ </model-->
+
  <model>
   <name>IFF</name>
   <path>Aircraft/f16/Models/Cockpit/Avionics/EWS/rwr.xml</path>
