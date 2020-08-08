@@ -71,7 +71,7 @@
         <object-name>drift</object-name>
         <property>f16/avionics/hud-drift</property>
         <factor>40</factor>
-        <offset-deg>-40</offset-deg>
+		<offset-deg>-40</offset-deg>
         <drag-direction>vertical</drag-direction>
         <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
         <center>
