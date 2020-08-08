@@ -727,11 +727,11 @@
         <factor>60</factor>
         <offset-deg>-30</offset-deg>
         <drag-direction>vertical</drag-direction>
-        <!---center>
-            <x-m>-0.038947</x-m>
-            <y-m>-0.363772</y-m>
-            <z-m>0.008776</z-m>
-        </center-->
+        <center>
+            <x-m>-0.072833</x-m>
+            <y-m>-0.307803</y-m>
+            <z-m>0.005537</z-m>
+        </center>
         <axis>
             <x>0</x>
             <y>-1</y>
