@@ -12,12 +12,12 @@ var callInit = func {
 
   dedGroup = canvasded.createGroup();
   dedGroup.show();
-  var color = [0.4,1,0.4];
+  var color = [0.45,0.95,0.3];
   line1 = dedGroup.createChild("text")
         .setFontSize(47, 0.90)#higher aspect = thinner font
         .setColor(color)
         .setAlignment("right-bottom-baseline")
-        .setFont("DSEG/DSEG7/Classic/DSEG7Classic-Bold.ttf")
+        .setFont("DSEG/DSEG14/Classic/DSEG14Classic-Regular.ttf")
         .setText("120.25")
         .setTranslation(256, 60);
   dedGroup.createChild("path")

@@ -115,8 +115,8 @@
       <blue type="double">1.00</blue>
     </line5>
     <bullseye><!--Bullseye color-->
-      <red type="double">0.70</red>
-      <green type="double">0.70</green>
+      <red type="double">0.40</red>
+      <green type="double">0.80</green>
       <blue type="double">1.00</blue>
     </bullseye>
     <betxt><!--Bullseye cursor color-->
