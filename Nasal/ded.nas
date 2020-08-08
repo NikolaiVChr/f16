@@ -32,7 +32,7 @@ var callInit = func {
 
   dedGroup = canvasded.createGroup();
   dedGroup.show();
-  var color = [0.78,0.85,0,1];
+  var color = [0.45,0.98,0,06];
   line1 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
