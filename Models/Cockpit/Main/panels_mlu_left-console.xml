@@ -539,7 +539,6 @@
  </animation>
  
  <animation>
-  <type>textranslate</type>
   <object-name>AVTR_CTVS</object-name>
   <object-name>AVTR_AVTR</object-name>
   <type>material</type>

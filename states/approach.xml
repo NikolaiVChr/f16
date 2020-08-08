@@ -79,6 +79,10 @@
                 <ew-mws-switch type="bool">true</ew-mws-switch>
                 <ew-jmr-switch type="bool">true</ew-jmr-switch>
                 <ew-mode-knob type="bool">true</ew-mode-knob>
+                <cmds-01-switch type="bool">true</cmds-01-switch>
+                <cmds-02-switch type="bool">true</cmds-02-switch>
+                <cmds-ch-switch type="bool">true</cmds-ch-switch>
+                <cmds-fl-switch type="bool">true</cmds-fl-switch>
                 <pbg-switch type="int">0</pbg-switch>
             </avionics>
         </f16>

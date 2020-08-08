@@ -1863,12 +1863,12 @@ There is also small changes in tail for different variants with and without brak
             <ejection-safety-lever type="bool">false</ejection-safety-lever>
         </seat>
         <test>
-			<avtr-test type="bool">false</avtr-test>
+            <avtr-test type="bool">false</avtr-test>
             <test-panel>
-				<fire-ovht-test type="bool">false</fire-ovht-test>
+                <fire-ovht-test type="bool">false</fire-ovht-test>
                 <mal-ind-lts type="bool">false</mal-ind-lts>
-				<oxy-test type="bool">false</oxy-test>
-				<pbg-test type="bool">false</pbg-test>
+                <oxy-test type="bool">false</oxy-test>
+                <pbg-test type="bool">false</pbg-test>
             </test-panel>
         </test>
         <smoke type="bool">false</smoke>
@@ -3473,6 +3473,10 @@ value. 18000=standard US transition altitude -->
             <ew-mws-switch type="bool">false</ew-mws-switch>
             <ew-jmr-switch type="bool">false</ew-jmr-switch>
             <ew-mode-knob type="bool">false</ew-mode-knob>
+            <cmds-01-switch type="bool">false</cmds-01-switch>
+            <cmds-02-switch type="bool">false</cmds-02-switch>
+            <cmds-ch-switch type="bool">false</cmds-ch-switch>
+            <cmds-fl-switch type="bool">false</cmds-fl-switch>
             <msl-vol-knob type="double">0.5</msl-vol-knob>
             <rwr-volume type="double">0.7</rwr-volume>
             <oxy-psi type="double">0.0</oxy-psi>
