@@ -1855,7 +1855,7 @@ There is also small changes in tail for different variants with and without brak
                 <console-flood type="double">0.0</console-flood>
                 <console-primary-knob type="double">0.0</console-primary-knob>
                 <console-primary type="double">0.0</console-primary>
-                <data-entry-display type="double">1.0</data-entry-display>
+                <data-entry-display type="double">0.0</data-entry-display>
             </lighting-panel>
             <landing-light type="int">0</landing-light>
         </lighting>

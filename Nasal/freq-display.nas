@@ -8,11 +8,11 @@ var callInit = func {
   });
       
   canvasded.addPlacement({"node": "freqDisplay", "texture": "navFreq.png"});
-  canvasded.setColorBackground(0.00, 0.00, 0.00, 1.00);
+  canvasded.setColorBackground(0.015, 0.015, 0.06, 1.00);
 
   dedGroup = canvasded.createGroup();
   dedGroup.show();
-  var color = [0.45,0.95,0.3];
+  var color = [0.45,0.85,0.45];
   line1 = dedGroup.createChild("text")
         .setFontSize(47, 0.90)#higher aspect = thinner font
         .setColor(color)
