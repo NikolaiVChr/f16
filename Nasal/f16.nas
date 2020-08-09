@@ -980,6 +980,10 @@ var autostart = func {
   setprop("f16/avionics/ew-mws-switch",1);
   setprop("f16/avionics/ew-jmr-switch",1);
   setprop("f16/avionics/ew-mode-knob",1);
+  setprop("f16/avionics/cmds-01-switch",1);
+  setprop("f16/avionics/cmds-02-switch",1);
+  setprop("f16/avionics/cmds-ch-switch",1);
+  setprop("f16/avionics/cmds-fl-switch",1);
   setprop("f16/avionics/pbg-switch",0);
   setprop("controls/ventilation/airconditioning-enabled",1);
   setprop("controls/ventilation/airconditioning-source",1);
@@ -1041,6 +1045,10 @@ var coldndark = func {
   setprop("f16/avionics/ew-mws-switch",0);
   setprop("f16/avionics/ew-jmr-switch",0);
   setprop("f16/avionics/ew-mode-knob",0);
+  setprop("f16/avionics/cmds-01-switch",0);
+  setprop("f16/avionics/cmds-02-switch",0);
+  setprop("f16/avionics/cmds-ch-switch",0);
+  setprop("f16/avionics/cmds-fl-switch",0);
   setprop("f16/avionics/pbg-switch",-1);
   setprop("controls/ventilation/airconditioning-enabled",0);
   setprop("controls/ventilation/airconditioning-source",0);

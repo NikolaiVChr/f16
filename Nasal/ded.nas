@@ -27,7 +27,7 @@ var callInit = func {
         } else if (getprop("sim/variant-id") == 6) {
         canvasded.setColorBackground(0.00, 0.04, 0.01, 1.00);
         } else {
-        canvasded.setColorBackground(0.01, 0.08, 0.00, 1.00);
+        canvasded.setColorBackground(0.01, 0.075, 0.00, 1.00);
         };
 
   dedGroup = canvasded.createGroup();
