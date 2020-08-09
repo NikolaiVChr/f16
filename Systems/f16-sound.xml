@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PropertyList>
     <fx>
-    	
-    	
-    	
+        
+        
+        
         <!-- ********************************************************************************* -->
         <!-- ********************************************************************************* -->
         <!--                                 CANOPY                                            -->
@@ -123,10 +123,10 @@
                 </greater-than>
             </condition>
             <position>
-				<x>-4.5</x>
-				<y>.5</y>
-				<z>0.85</z>
-			</position>
+                <x>-4.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
             <pitch>
                 <property>f16/engine/jfs-rpm-normalized</property>
                 <offset>1</offset>
@@ -156,10 +156,10 @@
                 </greater-than>
             </condition>
             <position>
-				<x>-4.5</x>
-				<y>-.5</y>
-				<z>0.85</z>
-			</position>
+                <x>-4.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
             <pitch>
                 <property>f16/engine/jfs-rpm-normalized</property>
                 <offset>1</offset>
@@ -189,10 +189,10 @@
                 </greater-than>
             </condition>
             <position>
-				<x>-3.5</x>
-				<y>.5</y>
-				<z>0.85</z>
-			</position>
+                <x>-3.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
             <pitch>
                 <property>f16/engine/jfs-rpm-normalized</property>
                 <offset>1</offset>
@@ -222,10 +222,10 @@
                 </greater-than>
             </condition>
             <position>
-				<x>-3.5</x>
-				<y>-.5</y>
-				<z>0.85</z>
-			</position>
+                <x>-3.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
             <pitch>
                 <property>f16/engine/jfs-rpm-normalized</property>
                 <offset>1</offset>
@@ -248,18 +248,19 @@
             <path>Aircraft/f16/Sounds/Timi/F-16_In_JFS_Start-left.wav</path>
             <mode>once</mode>
             <condition>
-                <property>sim/current-view/internal</property>
                 <greater-than>
                     <property>f16/engine/jfs-rpm-normalized</property>
                     <value>0.0</value>
                 </greater-than>
             </condition>
             <position>
-				<x>-4.5</x>
-				<y>.5</y>
-				<z>0.85</z>
-			</position>
+                <x>-4.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
             <volume>
+                <property>sim/current-view/internal</property>
+                <offset>0</offset>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -274,18 +275,19 @@
             <path>Aircraft/f16/Sounds/Timi/F-16_In_JFS_Start-right.wav</path>
             <mode>once</mode>
             <condition>
-                <property>sim/current-view/internal</property>
                 <greater-than>
                     <property>f16/engine/jfs-rpm-normalized</property>
                     <value>0.0</value>
                 </greater-than>
             </condition>
             <position>
-				<x>-4.5</x>
-				<y>-.5</y>
-				<z>0.85</z>
-			</position>
+                <x>-4.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
             <volume>
+                <property>sim/current-view/internal</property>
+                <offset>0</offset>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -300,18 +302,19 @@
             <path>Aircraft/f16/Sounds/Timi/F-16_In_JFS_Start-left.wav</path>
             <mode>once</mode>
             <condition>
-                <property>sim/current-view/internal</property>
                 <greater-than>
                     <property>f16/engine/jfs-rpm-normalized</property>
                     <value>0.0</value>
                 </greater-than>
             </condition>
             <position>
-				<x>-3.5</x>
-				<y>.5</y>
-				<z>0.85</z>
-			</position>
+                <x>-3.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
             <volume>
+                <property>sim/current-view/internal</property>
+                <offset>0</offset>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -326,18 +329,19 @@
             <path>Aircraft/f16/Sounds/Timi/F-16_In_JFS_Start-right.wav</path>
             <mode>once</mode>
             <condition>
-                <property>sim/current-view/internal</property>
                 <greater-than>
                     <property>f16/engine/jfs-rpm-normalized</property>
                     <value>0.0</value>
                 </greater-than>
             </condition>
             <position>
-				<x>-3.5</x>
-				<y>-.5</y>
-				<z>0.85</z>
-			</position>
+                <x>-3.5</x>
+                <y>-.5</y>
+                <z>0.85</z>
+            </position>
             <volume>
+                <property>sim/current-view/internal</property>
+                <offset>0</offset>
                 <factor>1</factor>
             </volume>
             <volume>
@@ -2499,8 +2503,8 @@
             <volume>
                 <property>f16/avionics/oxy-psi</property>
                 <factor>0.01</factor>
-				<offset>-0.25</offset>
-				<min>0</min>
+                <offset>-0.25</offset>
+                <min>0</min>
             </volume>
             <volume>
                 <property>sim/current-view/internal</property>
@@ -2937,27 +2941,27 @@
             </volume>
         </gamma>
         <!--<boom>
-			<name>boom</name>
-			<path>Aircraft/f16/Sounds/Effects/Sonic-Boom.wav</path>
-			<mode>once</mode>
-			<condition>
-				<greater-than>
-					<property>velocities/mach</property>
-					<value>1.00</value>
-				</greater-than>
-			</condition>
-			<reference-dist>3000</reference-dist>
-			<max-dist>15000</max-dist>
-			<position>
-				<x>0.1</x>
-				<y>0.1</y>
-				<z>0.1</z>
-			</position>
-			<volume>
-				<property>f16/external</property>
-				<factor>1</factor>
-			</volume>
-		</boom>-->
+            <name>boom</name>
+            <path>Aircraft/f16/Sounds/Effects/Sonic-Boom.wav</path>
+            <mode>once</mode>
+            <condition>
+                <greater-than>
+                    <property>velocities/mach</property>
+                    <value>1.00</value>
+                </greater-than>
+            </condition>
+            <reference-dist>3000</reference-dist>
+            <max-dist>15000</max-dist>
+            <position>
+                <x>0.1</x>
+                <y>0.1</y>
+                <z>0.1</z>
+            </position>
+            <volume>
+                <property>f16/external</property>
+                <factor>1</factor>
+            </volume>
+        </boom>-->
         <gpu>
             <name>GPU_outside</name>
             <mode>looped</mode>
@@ -3463,7 +3467,7 @@
                 <factor>1</factor>
             </volume>
         </betty>
-		<betty>
+        <betty>
             <name>gear horn</name>
             <mode>looped</mode>
             <type>avionics</type>
