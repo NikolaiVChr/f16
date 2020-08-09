@@ -112,8 +112,8 @@
         
 
         <jfs>
-            <name>jfs-front-left</name>
-            <path>Aircraft/f16/Sounds/Timi/engine_low_int-left.wav</path>
+            <name>jfs-idle-front-left</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_JFS_Idle-left.wav</path>
             <mode>looped</mode>
             <condition>
                 <property>sim/current-view/internal</property>
@@ -123,41 +123,30 @@
                 </greater-than>
             </condition>
             <position>
-                <x>-4.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
+				<x>-4.5</x>
+				<y>.5</y>
+				<z>0.85</z>
+			</position>
             <pitch>
                 <property>f16/engine/jfs-rpm-normalized</property>
                 <offset>1</offset>
                 <factor>1</factor>
-                <min>0</min>
-                <max>2</max>
             </pitch>
             <volume>
                 <property>f16/engine/jfs-rpm-normalized</property>
                 <offset>0</offset>
                 <factor>1</factor>
-                <type>lin</type>
-                <min>0</min>
-                <max>1</max>
-            </volume>
-            <volume>
-                <factor>0.15</factor>
             </volume>
             <volume>
                 <property>f16/sound/helmet-damping</property>
                 <offset>0</offset>
                 <factor>1</factor>
-                <type>lin</type>
-                <min>0</min>
-                <max>1</max>
             </volume>
         </jfs>
 
         <jfs>
-            <name>jfs-front-right</name>
-            <path>Aircraft/f16/Sounds/Timi/engine_low_int-right.wav</path>
+            <name>jfs-idle-front-right</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_JFS_Idle-right.wav</path>
             <mode>looped</mode>
             <condition>
                 <property>sim/current-view/internal</property>
@@ -167,41 +156,30 @@
                 </greater-than>
             </condition>
             <position>
-                <x>-4.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
+				<x>-4.5</x>
+				<y>-.5</y>
+				<z>0.85</z>
+			</position>
             <pitch>
                 <property>f16/engine/jfs-rpm-normalized</property>
                 <offset>1</offset>
                 <factor>1</factor>
-                <min>0</min>
-                <max>2</max>
             </pitch>
             <volume>
                 <property>f16/engine/jfs-rpm-normalized</property>
                 <offset>0</offset>
                 <factor>1</factor>
-                <type>lin</type>
-                <min>0</min>
-                <max>1</max>
-            </volume>
-            <volume>
-                <factor>0.15</factor>
             </volume>
             <volume>
                 <property>f16/sound/helmet-damping</property>
                 <offset>0</offset>
                 <factor>1</factor>
-                <type>lin</type>
-                <min>0</min>
-                <max>1</max>
             </volume>
         </jfs>
 
         <jfs>
-            <name>jfs-rear-left</name>
-            <path>Aircraft/f16/Sounds/Timi/engine_low_int-left.wav</path>
+            <name>jfs-idle-rear-left</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_JFS_Idle-left.wav</path>
             <mode>looped</mode>
             <condition>
                 <property>sim/current-view/internal</property>
@@ -211,41 +189,30 @@
                 </greater-than>
             </condition>
             <position>
-                <x>-3.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
+				<x>-3.5</x>
+				<y>.5</y>
+				<z>0.85</z>
+			</position>
             <pitch>
                 <property>f16/engine/jfs-rpm-normalized</property>
                 <offset>1</offset>
                 <factor>1</factor>
-                <min>0</min>
-                <max>2</max>
             </pitch>
             <volume>
                 <property>f16/engine/jfs-rpm-normalized</property>
                 <offset>0</offset>
                 <factor>1</factor>
-                <type>lin</type>
-                <min>0</min>
-                <max>1</max>
-            </volume>
-            <volume>
-                <factor>0.15</factor>
             </volume>
             <volume>
                 <property>f16/sound/helmet-damping</property>
                 <offset>0</offset>
                 <factor>1</factor>
-                <type>lin</type>
-                <min>0</min>
-                <max>1</max>
             </volume>
         </jfs>
 
         <jfs>
-            <name>jfs-rear-right</name>
-            <path>Aircraft/f16/Sounds/Timi/engine_low_int-right.wav</path>
+            <name>jfs-idle-rear-right</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_JFS_Idle-right.wav</path>
             <mode>looped</mode>
             <condition>
                 <property>sim/current-view/internal</property>
@@ -255,74 +222,130 @@
                 </greater-than>
             </condition>
             <position>
-                <x>-3.5</x>
-                <y>-.5</y>
-                <z>0.85</z>
-            </position>
+				<x>-3.5</x>
+				<y>-.5</y>
+				<z>0.85</z>
+			</position>
             <pitch>
                 <property>f16/engine/jfs-rpm-normalized</property>
                 <offset>1</offset>
                 <factor>1</factor>
-                <min>0</min>
-                <max>2</max>
             </pitch>
             <volume>
                 <property>f16/engine/jfs-rpm-normalized</property>
                 <offset>0</offset>
                 <factor>1</factor>
-                <type>lin</type>
-                <min>0</min>
-                <max>1</max>
-            </volume>
-            <volume>
-                <factor>0.15</factor>
             </volume>
             <volume>
                 <property>f16/sound/helmet-damping</property>
                 <offset>0</offset>
                 <factor>1</factor>
-                <type>lin</type>
-                <min>0</min>
-                <max>1</max>
             </volume>
         </jfs>
 
-        <engine>
-            <name>engine0-front-left-low</name>
-            <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_Low-left.wav</path>
-            <mode>looped</mode>
+        <jfs>
+            <name>jfs-start-front-left</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_JFS_Start-left.wav</path>
+            <mode>once</mode>
             <condition>
                 <property>sim/current-view/internal</property>
+                <greater-than>
+                    <property>f16/engine/jfs-rpm-normalized</property>
+                    <value>0.0</value>
+                </greater-than>
             </condition>
+            <position>
+				<x>-4.5</x>
+				<y>.5</y>
+				<z>0.85</z>
+			</position>
             <volume>
-                <property>engines/engine[0]/n2</property>
-                <offset>0</offset>
-                <factor>0.01666666667</factor>
-            </volume>
-            <volume>
-                <property>engines/engine[0]/sound-n2-vol-a</property>
-                <offset>0</offset>
                 <factor>1</factor>
             </volume>
-            <pitch>
-                <property>engines/engine[0]/n1</property>
-                <offset>0.86349949816</offset>
-                <factor>0.00455001673</factor>
-            </pitch>
-            <position>
-                <x>-4.5</x>
-                <y>.5</y>
-                <z>0.85</z>
-            </position>
             <volume>
                 <property>f16/sound/helmet-damping</property>
                 <offset>0</offset>
                 <factor>1</factor>
-                <type>lin</type>
-                <min>0</min>
-                <max>1</max>
             </volume>
-        </engine>
+        </jfs>
+
+        <jfs>
+            <name>jfs-start-front-right</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_JFS_Start-right.wav</path>
+            <mode>once</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+                <greater-than>
+                    <property>f16/engine/jfs-rpm-normalized</property>
+                    <value>0.0</value>
+                </greater-than>
+            </condition>
+            <position>
+				<x>-4.5</x>
+				<y>-.5</y>
+				<z>0.85</z>
+			</position>
+            <volume>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+        </jfs>
+
+        <jfs>
+            <name>jfs-start-rear-left</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_JFS_Start-left.wav</path>
+            <mode>once</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+                <greater-than>
+                    <property>f16/engine/jfs-rpm-normalized</property>
+                    <value>0.0</value>
+                </greater-than>
+            </condition>
+            <position>
+				<x>-3.5</x>
+				<y>.5</y>
+				<z>0.85</z>
+			</position>
+            <volume>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+        </jfs>
+
+        <jfs>
+            <name>jfs-start-rear-right</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_JFS_Start-right.wav</path>
+            <mode>once</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+                <greater-than>
+                    <property>f16/engine/jfs-rpm-normalized</property>
+                    <value>0.0</value>
+                </greater-than>
+            </condition>
+            <position>
+				<x>-3.5</x>
+				<y>-.5</y>
+				<z>0.85</z>
+			</position>
+            <volume>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+        </jfs>
 
         <engine>
             <name>engine0-front-right-low</name>
