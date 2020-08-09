@@ -348,6 +348,43 @@
         </jfs>
 
         <engine>
+            <name>engine0-front-left-low</name>
+            <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_Low-left.wav</path>
+            <mode>looped</mode>
+            <condition>
+                <property>sim/current-view/internal</property>
+            </condition>
+            <volume>
+                <property>engines/engine[0]/n2</property>
+                <offset>0</offset>
+                <factor>0.01666666667</factor>
+            </volume>
+            <volume>
+                <property>engines/engine[0]/sound-n2-vol-a</property>
+                <offset>0</offset>
+                <factor>1</factor>
+            </volume>
+            <pitch>
+                <property>engines/engine[0]/n1</property>
+                <offset>0.86349949816</offset>
+                <factor>0.00455001673</factor>
+            </pitch>
+            <position>
+                <x>-4.5</x>
+                <y>.5</y>
+                <z>0.85</z>
+            </position>
+            <volume>
+                <property>f16/sound/helmet-damping</property>
+                <offset>0</offset>
+                <factor>1</factor>
+                <type>lin</type>
+                <min>0</min>
+                <max>1</max>
+            </volume>
+        </engine>
+
+        <engine>
             <name>engine0-front-right-low</name>
             <path>Aircraft/f16/Sounds/Timi/F-16_In_Idle_Low-right.wav</path>
             <mode>looped</mode>
@@ -2467,7 +2504,7 @@
             </volume>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>0.80</factor>
+                <factor>0.75</factor>
             </volume>
         </voice>
         <voice>
@@ -3566,7 +3603,7 @@
             </condition>
             <volume>
                 <property>/sim/current-view/internal</property>
-                <factor>0.4</factor>
+                <factor>0.3</factor>
             </volume>
         </adi>
         <boom-report>
