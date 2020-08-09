@@ -2444,7 +2444,7 @@
             </volume>
             <volume>
                 <property>sim/current-view/internal</property>
-                <factor>0.75</factor>
+                <factor>0.80</factor>
             </volume>
         </voice>
         <voice>
@@ -3543,7 +3543,7 @@
             </condition>
             <volume>
                 <property>/sim/current-view/internal</property>
-                <factor>0.3</factor>
+                <factor>0.4</factor>
             </volume>
         </adi>
         <boom-report>
