@@ -205,16 +205,13 @@ var loop_ded = func {# one line is max 24 chars
       #if (course == -1) {
       #  course = "---.--";
       #} else {
-      var course = sprintf("%06.2f\xc2\xb0",getprop("f16/crs-ils"));
+      var course = sprintf("%03.0f\xc2\xb0",getprop("f16/crs-ils"));
       #}
-      var ident = getprop("instrumentation/tacan/ident");
-      var inrng = getprop("instrumentation/tacan/in-range");
-      if (!inrng or ident == nil or ident == "") ident = "   ";
-      text[0] = sprintf("    TCN REC      ILS %s",ilsOn);
+      text[0] = sprintf("TCN REC          ILS %s",ilsOn);
       text[1] = sprintf("                        ");
-      text[2] = sprintf("BCN     %s    CMD STRG ",ident);
-      text[3] = sprintf("CHAN    %03d FREQ %6.2f",chan,freq);
-      text[4] = sprintf("BAND      %s CRS %s",band,course);
+      text[2] = sprintf("                 CMD STRG ");
+      text[3] = sprintf("CHAN    %-3d FRQ  %6.2f",chan,freq);
+      text[4] = sprintf("BAND    %s   CRS  %s",band,course);
     } elsif (page == pIFF) {
       var target = awg_9.active_u;
       var sign = "";
@@ -240,12 +237,11 @@ var loop_ded = func {# one line is max 24 chars
       var pond   = getprop("instrumentation/transponder/inputs/knob-mode")==0?0:1;
       if (pond) pond = sprintf("%04d",getprop("instrumentation/transponder/id-code"));
       else pond = "----";
-      text[0] = sprintf("     IFF   MAN          ");
+      text[0] = sprintf("IFF   ON   MAN          ");
       text[1] = sprintf("M3     %s             ", pond);
-      text[1] = sprintf("M4     %04d             ", iffcode);
-      text[2] = sprintf("PILOT   %s",sign);
-      text[3] = sprintf("TYPE    %s",type);
-      text[4] = sprintf("                        ");
+      text[2] = sprintf("M4     %04d             ", iffcode);
+      text[3] = sprintf("PILOT   %s",sign);
+      text[4] = sprintf("TYPE    %s",type);
     } elsif (page == pLINK) {
       text[0] = sprintf(" XMT 40 INTRAFLIGHT  %s ",no);
       
@@ -328,11 +324,11 @@ var loop_ded = func {# one line is max 24 chars
       text[4] = sprintf("   LASER ST TIME  16 SEC");
     } elsif (page == pTIME) {
       var time   = getprop("/sim/time/gmt-string");
-      text[0] = sprintf("        TIME      %s     ",no);
-      text[1] = sprintf("  SYSTEM     %s",time);
-      text[2] = sprintf("  HACK       00:00:00   ");
-      text[3] = sprintf("  DELTA TOS  00:00:00   ");
-      text[4] = sprintf("                        ");
+      text[0] = sprintf("          TIME      %s  ",no);
+      text[1] = sprintf("   SYSTEM      %s",time);
+      text[2] = sprintf("     HACK      00:00:00   ");
+      text[3] = sprintf("DELTA TOS      00:00:00   ");
+      text[4] = sprintf("                          ");
     } elsif (page == pCM) {
       # this page is not authentic, but since the in cockpit display is defunc, pilot need to know these values so I put them into a DED page.
       var flares   = getprop("ai/submodels/submodel[0]/count");
@@ -357,11 +353,11 @@ var loop_ded = func {# one line is max 24 chars
       if (size(used)>2) text[4] = sprintf(" %s ",used[2]);
       else text[4] = "";
     } elsif (page == pLIST) {
-      text[0] = sprintf("        LIST      %s     ",no);
-      text[1] = sprintf(" 1ILS  2ALOW 3FACK COM1 ");
-      text[2] = sprintf(" 4STPT 5CRUS 6TIME COM2 ");
-      text[3] = sprintf(" 7DLNK 8LASR 9CMDS IFF  ");
-      text[4] = sprintf(" RMAGV       0BNGO LIST ");
+      text[0] = sprintf("           LIST      12 ");
+      text[1] = sprintf(" 1DEST 2BNGO 3VIP RINTG ");
+      text[2] = sprintf(" 4NAV  5MAN  6INS EDLNK ");
+      text[3] = sprintf(" 7EWS  8MODE 9VRP OMISC ");
+      text[4] = sprintf("                        ");
     }
     line1.setText(text[0]);
     line2.setText(text[1]);
