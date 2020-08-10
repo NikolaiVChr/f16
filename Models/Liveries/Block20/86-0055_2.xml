@@ -2,14 +2,14 @@
 
 <PropertyList>
  <sim>
-  <model>
-   <livery> 
-    <name type="string">RNLAF 313 Sqn, J-646</name>
-    <texture>Liveries/Block20/80-3646.png</texture>
+  <model> 
+   <livery>
+    <name type="string">RNLAF 313 Sqn, "Tiger Meet 2010"</name>
+    <texture>Liveries/Block20/86-0055_2.png</texture>
     <owner type="string">RNLAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/Block20/J-646.png</texture>
+    <texture>Liveries/Block20/E-602.png</texture>
    </livery-logo>
 
    <livery-patch>
