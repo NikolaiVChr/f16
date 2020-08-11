@@ -76,7 +76,7 @@ Martien Van Der Plas
 NC-687
 - Side stick and air vent 3D
 
-Adam Barszczak (BARS1)
+Adam Barszczak (barszczisbad)
 - 3D Side stick improvement
 - Canvas MFD rework
 

@@ -1398,7 +1398,7 @@ var MFD_Device =
            .hide();
         svg.jett = svg.p_SMS.createChild("text")
                 .setTranslation(276*0.795*0.95, -482*0.5-145)
-                .setText("J-S")
+                .setText("S-J")
                 .setAlignment("right-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
