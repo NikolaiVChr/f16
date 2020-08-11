@@ -1146,56 +1146,162 @@ var MFD_Device =
                 .setAlignment("center-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+
+        svg.gun = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.95, -482*0.5-155)
+                .setText("-----")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+        svg.gun2 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.95, -482*0.5-130)
+                .setText("-----")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+
         svg.p6 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.55, -482*0.5-135)
+                .setTranslation(276*0.795*0.45, -482*0.5-90)
                 .setText("--------")
                 .setAlignment("right-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+        svg.p6l1 = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.45, -482*0.5-65)
+                .setText("--------")
+                .setAlignment("right-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+        svg.p6l2 = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.45, -482*0.5-40)
+                .setText("--------")
+                .setAlignment("right-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+        
         svg.p7 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.7, -482*0.5-70)
+                .setTranslation(276*0.795*0.8, -482*0.5-15)
                 .setText("--------")
                 .setAlignment("right-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+        svg.p7l1 = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.8, -482*0.5+10)
+                .setText("--------")
+                .setAlignment("right-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+        svg.p7l2 = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.8, -482*0.5+35)
+                .setText("--------")
+                .setAlignment("right-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+
         svg.p8 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.85, -482*0.5-5)
+                .setTranslation(276*0.795*0.95, -482*0.5+60)
                 .setText("--------")
                 .setAlignment("right-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+        svg.p8l1 = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.95, -482*0.5+85)
+                .setText("--------")
+                .setAlignment("right-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+        
         svg.p9 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795, -482*0.5+60)
+                .setTranslation(276*0.795*0.95, -482*0.5+125)
                 .setText("--------")
                 .setAlignment("right-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+        svg.p9l1 = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.95, -482*0.5+150)
+                .setText("--------")
+                .setAlignment("right-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+
         svg.p5 = svg.p_SMS.createChild("text")
-                .setTranslation(0.0, -482*0.5-200)
+                .setTranslation(276*0.795*0.05, -482*0.5-190)
                 .setText("--------")
                 .setAlignment("center-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+        svg.p5l1 = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.05, -482*0.5-165)
+                .setText("--------")
+                .setAlignment("center-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+        svg.p5l2 = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.05, -482*0.5-140)
+                .setText("--------")
+                .setAlignment("center-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+
         svg.p4 = svg.p_SMS.createChild("text")
-                .setTranslation(-276*0.795*0.55, -482*0.5-135)
+                .setTranslation(-276*0.795*0.55, -482*0.5-90)
                 .setText("--------")
                 .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+        svg.p4l1 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.55, -482*0.5-65)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+        svg.p4l2 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.55, -482*0.5-40)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+
         svg.p3 = svg.p_SMS.createChild("text")
-                .setTranslation(-276*0.795*0.7, -482*0.5-70)
+                .setTranslation(-276*0.795*0.8, -482*0.5-15)
                 .setText("--------")
                 .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+        svg.p3l1 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.8, -482*0.5+10)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+        svg.p3l2 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.8, -482*0.5+35)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+
         svg.p2 = svg.p_SMS.createChild("text")
-                .setTranslation(-276*0.795*0.85, -482*0.5-5)
+                .setTranslation(-276*0.795*0.95, -482*0.5+60)
                 .setText("--------")
                 .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+        svg.p2l1 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.95, -482*0.5+85)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+
         svg.p1 = svg.p_SMS.createChild("text")
-                .setTranslation(-276*0.795, -482*0.5+60)
+                .setTranslation(-276*0.795*0.95, -482*0.5+125)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+        svg.p1l1 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.95, -482*0.5+150)
                 .setText("--------")
                 .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
@@ -1209,88 +1315,89 @@ var MFD_Device =
         #        .setFontSize(16, 1.0);        
         
         svg.p1f = svg.p_SMS.createChild("path")
-           .moveTo(-276*0.795, -482*0.5+75)
-           .vert(-30)
-           .horiz(130)
-           .vert(30)
-           .horiz(-130)
+           .moveTo(-276*0.795*0.95, -482*0.5+115)
+           .vert(60)
+           .horiz(100)
+           .vert(-60)
+           .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p2f = svg.p_SMS.createChild("path")
-           .moveTo(-276*0.795*0.85, -482*0.5+10)
-           .vert(-30)
-           .horiz(130)
-           .vert(30)
-           .horiz(-130)
+           .moveTo(-276*0.795*0.95, -482*0.5+50)
+           .vert(60)
+           .horiz(100)
+           .vert(-60)
+           .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p3f = svg.p_SMS.createChild("path")
-           .moveTo(-276*0.795*0.7, -482*0.5-55)
-           .vert(-30)
-           .horiz(130)
-           .vert(30)
-           .horiz(-130)
+           .moveTo(-276*0.795*0.8, -482*0.5-25)
+           .vert(80)
+           .horiz(100)
+           .vert(-80)
+           .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p4f = svg.p_SMS.createChild("path")
-           .moveTo(-276*0.795*0.55, -482*0.5-120)
-           .vert(-30)
-           .horiz(130)
-           .vert(30)
-           .horiz(-130)
+           .moveTo(-276*0.795*0.55, -482*0.5-100)
+           .vert(80)
+           .horiz(100)
+           .vert(-80)
+           .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p5f = svg.p_SMS.createChild("path")
-           .moveTo(-75, -482*0.5-185)
-           .vert(-30)
-           .horiz(130)
-           .vert(30)
-           .horiz(-130)
+           .moveTo(276*0.795*0.05, -482*0.5-200)
+           .horiz(50)
+           .vert(80)
+           .horiz(-100)
+           .vert(-80)
+           .horiz(50)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p6f = svg.p_SMS.createChild("path")
-           .moveTo(276*0.795*0.55, -482*0.5-120)
-           .vert(-30)
-           .horiz(-130)
-           .vert(30)
-           .horiz(130)
+           .moveTo(276*0.795*0.45, -482*0.5-100)
+           .vert(80)
+           .horiz(-100)
+           .vert(-80)
+           .horiz(100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p7f = svg.p_SMS.createChild("path")
-           .moveTo(276*0.795*0.7, -482*0.5-55)
-           .vert(-30)
-           .horiz(-130)
-           .vert(30)
-           .horiz(130)
+           .moveTo(276*0.795*0.8, -482*0.5-25)
+           .vert(80)
+           .horiz(-100)
+           .vert(-80)
+           .horiz(100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p8f = svg.p_SMS.createChild("path")
-           .moveTo(276*0.795*0.85, -482*0.5+10)
-           .vert(-30)
-           .horiz(-130)
-           .vert(30)
-           .horiz(130)
+           .moveTo(276*0.795*0.95, -482*0.5+50)
+           .vert(60)
+           .horiz(-100)
+           .vert(-60)
+           .horiz(100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p9f = svg.p_SMS.createChild("path")
-           .moveTo(276*0.795, -482*0.5+75)
-           .vert(-30)
-           .horiz(-130)
-           .vert(30)
-           .horiz(130)
+           .moveTo(276*0.795*0.95, -482*0.5+115)
+           .vert(60)
+           .horiz(-100)
+           .vert(-60)
+           .horiz(100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.jett = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795, -482*0.5+125)
+                .setTranslation(276*0.795*0.95, -482*0.5-145)
                 .setText("J-S")
                 .setAlignment("right-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
@@ -1322,22 +1429,22 @@ var MFD_Device =
                 if (eventi == 10) {
                     me.ppp.selectPage(me.my.p_RDR);
                     me.setSelection(me.ppp.buttons[17], me.ppp.buttons[10], 10);
-                } elsif (eventi == 0) {
-                    if (getprop("sim/variant-id") == 0) {
-                        return;
-                    }
-                    pylons.fcs.selectPylon(3);
                 } elsif (eventi == 1) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    pylons.fcs.selectPylon(2);
+                    pylons.fcs.selectPylon(3);
                 } elsif (eventi == 2) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    pylons.fcs.selectPylon(1);
+                    pylons.fcs.selectPylon(2);
                 } elsif (eventi == 3) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    pylons.fcs.selectPylon(1);
+                } elsif (eventi == 4) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
@@ -1346,27 +1453,27 @@ var MFD_Device =
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    pylons.fcs.selectPylon(5);
+                    pylons.fcs.jettisonSelectedPylonContent();
                 } elsif (eventi == 6) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    pylons.fcs.selectPylon(6);
+                    pylons.fcs.selectPylon(5);
                 } elsif (eventi == 7) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    pylons.fcs.selectPylon(7);
+                    pylons.fcs.selectPylon(6);
                 } elsif (eventi == 8) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    pylons.fcs.selectPylon(8);
+                    pylons.fcs.selectPylon(7);
                 } elsif (eventi == 9) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    pylons.fcs.jettisonSelectedPylonContent();
+                    pylons.fcs.selectPylon(8);
                 } elsif (eventi == 12) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
@@ -1427,68 +1534,134 @@ var MFD_Device =
             #}
             #me.root.drop.setText(pT);
 
+            var gunAmmo = "-----";
+            if (getprop("sim/model/f16/wingmounts") != 0) {
+                gunAmmo = pylons.pylonI.getAmmo("20mm Cannon");
+                if (gunAmmo ==0) gunAmmo = "0";
+                elsif (gunAmmo <10) gunAmmo = "1";
+                else gunAmmo = ""~int(gunAmmo*0.1);
+            }
+            me.root.gun.setText(gunAmmo~"GUN");
+            me.root.gun2.setText("M56");
+
             var pT = "--------";
             if (pylons.pylon1 != nil) {
                 var nm = pylons.pylon1.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            me.root.p1.setText(pT);
+            me.root.p1.setText("1 MRLW");
+            me.root.p1l1.setText(pT);
 
             pT = "--------";
             if (pylons.pylon2 != nil) {
                 var nm = pylons.pylon2.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            me.root.p2.setText(pT);
+            if (getprop("payload/armament/station/id-1-set") != "Empty") {
+                me.root.p2.setText("1 MRLW");
+            }
+            else {
+                me.root.p2.setText("--------");
+            }
+            me.root.p2l1.setText(pT);
 
             pT = "--------";
             if (pylons.pylon3 != nil) {
                 var nm = pylons.pylon3.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            me.root.p3.setText(pT);
+            var idset = getprop("payload/armament/station/id-2-set");
+            if (idset != "Empty") {
+                if (idset == "1 x AIM-120" or idset == "1 x AIM-7" or idset == "1 x AIM-9") {
+                    me.root.p3.setText("1 MRLW");
+                }
+                else {
+                    me.root.p3.setText("1 MAU");
+                }
+            }
+            else {
+                me.root.p3.setText("--------");
+            }
+            me.root.p3l1.setText(pT);
 
             pT = "--------";
             if (pylons.pylon4 != nil) {
                 var nm = pylons.pylon4.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            me.root.p4.setText(pT);
+            if (getprop("payload/armament/station/id-3-set") != "Empty") {
+                me.root.p4.setText("1 MAU");
+            }
+            else {
+                me.root.p4.setText("--------");
+            }
+            me.root.p4l1.setText(pT);
 
             pT = "--------";
             if (pylons.pylon5 != nil) {
                 var nm = pylons.pylon5.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            me.root.p5.setText(pT);
+            if (getprop("payload/armament/station/id-4-set") != "Empty") {
+                me.root.p5.setText("1 MAU");
+            }
+            else {
+                me.root.p5.setText("--------");
+            }
+            me.root.p5l1.setText(pT);
 
             pT = "--------";
             if (pylons.pylon6 != nil) {
                 var nm = pylons.pylon6.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            me.root.p6.setText(pT);
+            if (getprop("payload/armament/station/id-5-set") != "Empty") {
+                me.root.p6.setText("1 MAU");
+            }
+            else {
+                me.root.p6.setText("--------");
+            }
+            me.root.p6l1.setText(pT);
 
             pT = "--------";
             if (pylons.pylon7 != nil) {
                 var nm = pylons.pylon7.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            me.root.p7.setText(pT);
+            idset = getprop("payload/armament/station/id-6-set");
+            if (idset != "Empty") {
+                if (idset == "1 x AIM-120" or idset == "1 x AIM-7" or idset == "1 x AIM-9") {
+                    me.root.p7.setText("1 MRLW");
+                }
+                else {
+                    me.root.p7.setText("1 MAU");
+                }
+            }
+            else {
+                me.root.p7.setText("--------");
+            }
+            me.root.p7l1.setText(pT);
 
             pT = "--------";
             if (pylons.pylon8 != nil) {
                 var nm = pylons.pylon8.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            me.root.p8.setText(pT);
+            if (getprop("payload/armament/station/id-7-set") != "Empty") {
+                me.root.p8.setText("1 MRLW");
+            }
+            else {
+                me.root.p8.setText("--------");
+            }
+            me.root.p8l1.setText(pT);
 
             pT = "--------";
             if (pylons.pylon9 != nil) {
                 var nm = pylons.pylon9.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            me.root.p9.setText(pT);
+            me.root.p9.setText("1 MRLW");
+            me.root.p9l1.setText(pT);
         };
     },
     
