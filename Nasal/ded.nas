@@ -207,9 +207,16 @@ var loop_ded = func {# one line is max 24 chars
       #} else {
       var course = sprintf("%03.0f\xc2\xb0",getprop("f16/crs-ils"));
       #}
+	  var ident = getprop("instrumentation/tacan/ident");
+      var inrng = getprop("instrumentation/tacan/in-range");	
+	  
       text[0] = sprintf("TCN REC          ILS %s",ilsOn);
       text[1] = sprintf("                        ");
-      text[2] = sprintf("                 CMD STRG ");
+	  if (!inrng or ident == nil or ident == "") {
+          text[2] = sprintf("            CMD STRG ", ident);
+	  } else {
+          text[2] = sprintf("BCN     %s CMD STRG ", ident);
+	  }
       text[3] = sprintf("CHAN    %-3d FRQ  %6.2f",chan,freq);
       text[4] = sprintf("BAND    %s   CRS  %s",band,course);
     } elsif (page == pIFF) {
