@@ -250,6 +250,7 @@ setlistener("instrumentation/nav[0]/radials/selected-deg", click3, nil, 0);
 setlistener("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob", knob, nil, 0);
 setlistener("controls/fuel/qty-selector", knob, nil, 0);
 setlistener("sim/model/f16/instrumentation/radar-awg-9/select-target", knob2, nil, 0);
+setlistener("controls/fuel/tank-inerting", button2, nil, 0);
 setlistener("f16/engine/feed", knob, nil, 0);
 setlistener("systems/refuel/serviceable", button2, nil, 0);
 setlistener("controls/flight/flaps", button2, nil, 0);
