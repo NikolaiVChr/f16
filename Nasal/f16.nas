@@ -210,7 +210,7 @@ var loop_flare = func {
         setprop("rotors/main/blade[3]/flap-deg", 0);
         setprop("rotors/main/blade[3]/position-deg", 0);#MP interpolates between numbers, so nil is better than 0.
     }
-    if (getprop("ai/submodels/submodel[0]/flare-release-out-snd") == TRUE and (flareStart + 1) < getprop("sim/time/elapsed-sec")) {
+    if (getprop("ai/submodels/submodel[0]/flare-release-out-snd") == TRUE and (flareStart + 1.5) < getprop("sim/time/elapsed-sec")) {
         setprop("ai/submodels/submodel[0]/flare-release-out-snd", FALSE);
     }
     if (flareCount > getprop("ai/submodels/submodel[0]/count")) {
