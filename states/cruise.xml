@@ -24,6 +24,9 @@
                     <throttle type="double">0.75</throttle>
                 </engine>
             </engines>
+			<fuel>
+				<tank-inerting type="bool">true</tank-inerting>
+			</fuel>
             <gear>
                 <gear-down type="double">0</gear-down>
             </gear>
