@@ -8,11 +8,11 @@ var callInit = func {
   });
       
   canvasFreqDsply.addPlacement({"node": "freqDisplay", "texture": "navFreq.png"});
-  canvasFreqDsply.setColorBackground(0.015, 0.015, 0.06, 1.00);
+  canvasFreqDsply.setColorBackground(0.018, 0.020, 0.05, 1.00);
 
   freqDsplyGroup = canvasFreqDsply.createGroup();
   freqDsplyGroup.show();
-  var color = [0.45,0.85,0.45];
+  var color = [0.96,0.99,0.34];
   line1 = freqDsplyGroup.createChild("text")
         .setFontSize(47, 0.90)#higher aspect = thinner font
         .setColor(color)
