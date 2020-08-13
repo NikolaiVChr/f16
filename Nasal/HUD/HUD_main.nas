@@ -262,6 +262,14 @@ var F16_HUD = {
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(9, 1.1);
+        obj.soi_indicator = obj.svg.createChild("text") # SOI indicator on HUD upper left
+                .setText("*")
+                .setTranslation(1+0.25*sx*0.60,sy*0.14)
+                .setAlignment("left-bottom")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(11, 1.1);
+        append(obj.total, obj.soi_indicator);
         obj.alt_type = obj.svg.createChild("text")
                 .setText("R")
                 .setTranslation(4+0.75*sx*0.695633,sy*0.24)
@@ -2240,6 +2248,12 @@ append(obj.total, obj.speed_curr);
         } else {
             me.tgpPointF.hide();
             me.tgpPointC.hide();
+        }
+		
+        if (f16.SOI == 1) {
+		    me.soi_indicator.show();
+        } else {
+		    me.soi_indicator.hide();
         }
 
 

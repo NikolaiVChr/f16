@@ -842,6 +842,7 @@ var MFD_Device =
                 uv = nil;
             }
             me.exp_modi = exp?0.25:1;
+			
             me.slew_x = getprop("controls/displays/cursor-slew-x")*me.exp_modi;
             me.slew_y = -getprop("controls/displays/cursor-slew-y")*me.exp_modi;
             

@@ -1895,4 +1895,33 @@ var flexer = func {
 
 setlistener("controls/flight/alt-rel-button", func (node) {setprop("controls/armament/trigger", node.getValue());});
 
+var MFDControlsNodes = {
+	dmsX: props.globals.getNode("/controls/displays/display-management-switch-x"),
+	dmsY: props.globals.getNode("/controls/displays/display-management-switch-y"),
+};
+
+setlistener("/controls/displays/display-management-switch-x", func() {
+	if (MFDControlsNodes.dmsY.getValue() != 0) { return; }
+	if (MFDControlsNodes.dmsX.getValue() == 0) { return; }
+}, 0, 0);
+
+var SOI = math.ceil(int(rand() * 3)); 
+
+setlistener("/controls/displays/display-management-switch-y", func() {
+	if (MFDControlsNodes.dmsX.getValue() != 0) { return; }
+	if (MFDControlsNodes.dmsY.getValue() == 0) { return; }
+	if (MFDControlsNodes.dmsY.getValue() == -1) {
+		SOI = 1;
+	} else {
+		if (SOI == 1) {
+			SOI = 2;
+		} elsif (SOI == 2) {
+			SOI = 3;
+		} else {
+			SOI = 2;
+		}
+	}
+}, 0, 0);
+
+
 var chuteLoop = maketimer(0.05, chuteLoopFunc);
