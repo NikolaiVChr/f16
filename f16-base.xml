@@ -667,6 +667,10 @@
                 <desc>Slew cursor on CRM</desc>
             </key>
             <key>
+                <name>Ctrl + Arrow keys</name>
+                <desc>Display Management Switch</desc>
+            </key>
+            <key>
                 <name>l</name>
                 <desc>Cursor designate</desc>
             </key>
@@ -840,6 +844,10 @@ page HSD: Horizontal situation display. Shows route and radar echoes.
           CPL: Range will follow (approx) radar distance
           DCPL: Range can be set independently of radar range by clicking on the up/down arrows.
 page WPN: Details about current selected weapon(s).
+
+The Sensor of Interest is selected using DMS (Ctrl + Arrow Key). DMS Forward selects HUD as SOI. DMS Aft 
+selects the left MFD as SOI, and further DMS Aft toggles between left / right MFD. The SOI may then be manipulated
+with the cursor.
 
 DED
 The DED is the small display above the right color MFD.
