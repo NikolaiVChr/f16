@@ -1161,85 +1161,85 @@ var MFD_Device =
                 .setFontSize(20, 1.0);
 
         svg.p6 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.45, -482*0.5-90)
+                .setTranslation(276*0.795*0.02, -482*0.5-90)
                 .setText("--------")
-                .setAlignment("right-center")
+                .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
         svg.p6l1 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.45, -482*0.5-65)
+                .setTranslation(276*0.795*0.02, -482*0.5-65)
                 .setText("--------")
-                .setAlignment("right-center")
+                .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
         svg.p6l2 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.45, -482*0.5-40)
+                .setTranslation(276*0.795*0.02, -482*0.5-40)
                 .setText("--------")
-                .setAlignment("right-center")
+                .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
         
         svg.p7 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.8, -482*0.5-15)
+                .setTranslation(276*0.795*0.37, -482*0.5-15)
                 .setText("--------")
-                .setAlignment("right-center")
+                .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
         svg.p7l1 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.8, -482*0.5+10)
+                .setTranslation(276*0.795*0.37, -482*0.5+10)
                 .setText("--------")
-                .setAlignment("right-center")
+                .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
         svg.p7l2 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.8, -482*0.5+35)
+                .setTranslation(276*0.795*0.37, -482*0.5+35)
                 .setText("--------")
-                .setAlignment("right-center")
+                .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
 
         svg.p8 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.95, -482*0.5+60)
+                .setTranslation(276*0.795*0.52, -482*0.5+60)
                 .setText("--------")
-                .setAlignment("right-center")
+                .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
         svg.p8l1 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.95, -482*0.5+85)
+                .setTranslation(276*0.795*0.52, -482*0.5+85)
                 .setText("--------")
-                .setAlignment("right-center")
+                .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
         
         svg.p9 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.95, -482*0.5+125)
+                .setTranslation(276*0.795*0.52, -482*0.5+125)
                 .setText("--------")
-                .setAlignment("right-center")
+                .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
         svg.p9l1 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.95, -482*0.5+150)
+                .setTranslation(276*0.795*0.52, -482*0.5+150)
                 .setText("--------")
-                .setAlignment("right-center")
+                .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
 
         svg.p5 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.05, -482*0.5-190)
+                .setTranslation(-276*0.795*0.16, -482*0.5-190)
                 .setText("--------")
-                .setAlignment("center-center")
+                .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
         svg.p5l1 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.05, -482*0.5-165)
+                .setTranslation(-276*0.795*0.16, -482*0.5-165)
                 .setText("--------")
-                .setAlignment("center-center")
+                .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
         svg.p5l2 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.05, -482*0.5-140)
+                .setTranslation(-276*0.795*0.16, -482*0.5-140)
                 .setText("--------")
-                .setAlignment("center-center")
+                .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
 
@@ -1315,84 +1315,83 @@ var MFD_Device =
         #        .setFontSize(16, 1.0);        
         
         svg.p1f = svg.p_SMS.createChild("path")
-           .moveTo(-276*0.795*0.95, -482*0.5+115)
-           .vert(60)
+           .moveTo(-276*0.795*0.97, -482*0.5+115)
+           .vert(50)
            .horiz(100)
-           .vert(-60)
+           .vert(-50)
            .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p2f = svg.p_SMS.createChild("path")
-           .moveTo(-276*0.795*0.95, -482*0.5+50)
-           .vert(60)
+           .moveTo(-276*0.795*0.97, -482*0.5+50)
+           .vert(50)
            .horiz(100)
-           .vert(-60)
+           .vert(-50)
            .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p3f = svg.p_SMS.createChild("path")
-           .moveTo(-276*0.795*0.8, -482*0.5-25)
-           .vert(80)
+           .moveTo(-276*0.795*0.82, -482*0.5-25)
+           .vert(70)
            .horiz(100)
-           .vert(-80)
+           .vert(-70)
            .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p4f = svg.p_SMS.createChild("path")
-           .moveTo(-276*0.795*0.55, -482*0.5-100)
-           .vert(80)
+           .moveTo(-276*0.795*0.57, -482*0.5-100)
+           .vert(70)
            .horiz(100)
-           .vert(-80)
+           .vert(-70)
            .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p5f = svg.p_SMS.createChild("path")
-           .moveTo(276*0.795*0.05, -482*0.5-200)
-           .horiz(50)
-           .vert(80)
+           .moveTo(-276*0.795*0.18, -482*0.5-200)
+           .vert(70)
+           .horiz(100)
+           .vert(-70)
            .horiz(-100)
-           .vert(-80)
-           .horiz(50)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p6f = svg.p_SMS.createChild("path")
-           .moveTo(276*0.795*0.45, -482*0.5-100)
-           .vert(80)
-           .horiz(-100)
-           .vert(-80)
+           .moveTo(0, -482*0.5-100)
+           .vert(70)
            .horiz(100)
+           .vert(-70)
+           .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p7f = svg.p_SMS.createChild("path")
-           .moveTo(276*0.795*0.8, -482*0.5-25)
-           .vert(80)
-           .horiz(-100)
-           .vert(-80)
+           .moveTo(276*0.795*0.35, -482*0.5-25)
+           .vert(70)
            .horiz(100)
+           .vert(-70)
+           .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p8f = svg.p_SMS.createChild("path")
-           .moveTo(276*0.795*0.95, -482*0.5+50)
-           .vert(60)
-           .horiz(-100)
-           .vert(-60)
+           .moveTo(276*0.795*0.5, -482*0.5+50)
+           .vert(50)
            .horiz(100)
+           .vert(-50)
+           .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p9f = svg.p_SMS.createChild("path")
-           .moveTo(276*0.795*0.95, -482*0.5+115)
-           .vert(60)
-           .horiz(-100)
-           .vert(-60)
+           .moveTo(276*0.795*0.5, -482*0.5+115)
+           .vert(50)
            .horiz(100)
+           .vert(-50)
+           .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
@@ -1558,7 +1557,7 @@ var MFD_Device =
                 if (nm != nil) pT = nm;
             }
             if (getprop("payload/armament/station/id-1-set") != "Empty") {
-                me.root.p2.setText("1 MRLW");
+                me.root.p2.setText("1 MRL");
             }
             else {
                 me.root.p2.setText("--------");
@@ -1573,7 +1572,7 @@ var MFD_Device =
             var idset = getprop("payload/armament/station/id-2-set");
             if (idset != "Empty") {
                 if (idset == "1 x AIM-120" or idset == "1 x AIM-7" or idset == "1 x AIM-9") {
-                    me.root.p3.setText("1 MRLW");
+                    me.root.p3.setText("1 MRL");
                 }
                 else {
                     me.root.p3.setText("1 MAU");
@@ -1631,7 +1630,7 @@ var MFD_Device =
             idset = getprop("payload/armament/station/id-6-set");
             if (idset != "Empty") {
                 if (idset == "1 x AIM-120" or idset == "1 x AIM-7" or idset == "1 x AIM-9") {
-                    me.root.p7.setText("1 MRLW");
+                    me.root.p7.setText("1 MRL");
                 }
                 else {
                     me.root.p7.setText("1 MAU");
@@ -1648,7 +1647,7 @@ var MFD_Device =
                 if (nm != nil) pT = nm;
             }
             if (getprop("payload/armament/station/id-7-set") != "Empty") {
-                me.root.p8.setText("1 MRLW");
+                me.root.p8.setText("1 MRL");
             }
             else {
                 me.root.p8.setText("--------");
