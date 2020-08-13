@@ -360,6 +360,7 @@ setlistener("controls/ventilation/airconditioning-source", knob, nil, 0);
 setlistener("f16/avionics/o2-switch", click3, nil, 0);
 setlistener("f16/avionics/em-no-te-switch", click3, nil, 0);
 setlistener("f16/avionics/pbg-switch", click3, nil, 0);
+setlistener("f16/avionics/uhf-radio-display-test", click3, nil, 0);
 setlistener("controls/flight/alt-rel-button", click1, nil, 0);
 # valid methods: button, button2, knob, knob2, clamp0, click3, lift_cover
 #                click1, click2, doubleClick, doubleClick2, scroll

@@ -1,26 +1,26 @@
 var line1 = nil;
 var callInit = func {
-  canvasded = canvas.new({
+  canvasFreqDsply = canvas.new({
         "name": "FRD",
         "size": [256, 64],
         "view": [256, 64],
         "mipmapping": 1
   });
       
-  canvasded.addPlacement({"node": "freqDisplay", "texture": "navFreq.png"});
-  canvasded.setColorBackground(0.015, 0.015, 0.06, 1.00);
+  canvasFreqDsply.addPlacement({"node": "freqDisplay", "texture": "navFreq.png"});
+  canvasFreqDsply.setColorBackground(0.015, 0.015, 0.06, 1.00);
 
-  dedGroup = canvasded.createGroup();
-  dedGroup.show();
+  freqDsplyGroup = canvasFreqDsply.createGroup();
+  freqDsplyGroup.show();
   var color = [0.45,0.85,0.45];
-  line1 = dedGroup.createChild("text")
+  line1 = freqDsplyGroup.createChild("text")
         .setFontSize(47, 0.90)#higher aspect = thinner font
         .setColor(color)
         .setAlignment("right-bottom-baseline")
         .setFont("DSEG/DSEG14/Classic/DSEG14Classic-Regular.ttf")
         .setText("120.25")
         .setTranslation(256, 60);
-  dedGroup.createChild("path")
+  freqDsplyGroup.createChild("path")
                 .moveTo(127,60)
                 .horiz(3)
                 .vert(-4)
@@ -31,9 +31,13 @@ var callInit = func {
                 .setColorFill(color);
 };
 
-var loop_ded = func {# one line is max 24 chars
+var loop_freqDsply = func {# one line is max 24 chars
+	if (!getprop("f16/avionics/uhf-radio-display-test")) {
       var freq   = getprop("instrumentation/nav[0]/frequencies/selected-mhz");
       freq *= 1000;
       line1.setText(sprintf("%06d",math.round(freq)));
-    settimer(loop_ded, 0.25);
+	} else {
+	  line1.setText(sprintf("888888"));
+	}
+    settimer(loop_freqDsply, 0.25);
 };

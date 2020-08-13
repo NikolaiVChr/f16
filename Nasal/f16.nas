@@ -838,7 +838,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     ded.callInit();
     ded.loop_ded();
     frd.callInit();
-    frd.loop_ded();
+    frd.loop_freqDsply();
     mps.loop();
     enableViews();
     fail.start();
