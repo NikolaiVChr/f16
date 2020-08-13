@@ -717,10 +717,10 @@ var MFD_Device =
                 } elsif (eventi == 2) {
                     var az = getprop("instrumentation/radar/az-field");
                     if(az==120)
-                        az = 15;
-                    elsif(az==15)
-                        az = 30;
-                    elsif(az==30)
+                        az = 20;
+                    elsif(az==20)
+                        az = 50;
+                    elsif(az==50)
                         az = 60;
                     else
                         az = 120;
@@ -975,14 +975,14 @@ var MFD_Device =
             
             me.azt = "";
             me.hot = "";
-            if (me.az==15) {
+            if (me.az==20) {
                 me.azt = "A\n1";
-            } elsif (me.az==30) {
+            } elsif (me.az==50) {
                 me.azt = "A\n2";
             } elsif (me.az==60) {
                 me.azt = "A\n3";
             } else {
-                me.azt = "A\n4";
+                me.azt = "A\n6";
             }
             me.root.az.setText(me.azt);
             if (me.ho==15) {
