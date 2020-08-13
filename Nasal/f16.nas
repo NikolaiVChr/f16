@@ -1895,9 +1895,12 @@ var flexer = func {
 
 setlistener("controls/flight/alt-rel-button", func (node) {setprop("controls/armament/trigger", node.getValue());});
 
+var SOI = math.ceil(int(rand() * 3)); 
 var MFDControlsNodes = {
-	dmsX: props.globals.getNode("/controls/displays/display-management-switch-x"),
-	dmsY: props.globals.getNode("/controls/displays/display-management-switch-y"),
+	dmsX: props.globals.getNode("controls/displays/display-management-switch-x"),
+	dmsY: props.globals.getNode("controls/displays/display-management-switch-y"),
+	tgtX: props.globals.getNode("controls/displays/target-management-switch-x"),
+	tgtY: props.globals.getNode("controls/displays/target-management-switch-y"),
 };
 
 setlistener("/controls/displays/display-management-switch-x", func() {
@@ -1905,9 +1908,12 @@ setlistener("/controls/displays/display-management-switch-x", func() {
 	if (MFDControlsNodes.dmsX.getValue() == 0) { return; }
 }, 0, 0);
 
-var SOI = math.ceil(int(rand() * 3)); 
+setlistener("controls/displays/target-management-switch-x", func() {
+	if (SOI == 1) { return; }
+	setprop("controls/displays/cursor-slew-x[" ~ (SOI - 2) ~ "]", MFDControlsNodes.tgtX.getValue());
+}, 0, 0);
 
-setlistener("/controls/displays/display-management-switch-y", func() {
+setlistener("controls/displays/display-management-switch-y", func() {
 	if (MFDControlsNodes.dmsX.getValue() != 0) { return; }
 	if (MFDControlsNodes.dmsY.getValue() == 0) { return; }
 	if (MFDControlsNodes.dmsY.getValue() == -1) {
@@ -1921,6 +1927,15 @@ setlistener("/controls/displays/display-management-switch-y", func() {
 			SOI = 2;
 		}
 	}
+}, 0, 0);
+
+setlistener("controls/displays/target-management-switch-y", func() {
+	if (SOI == 1) { return; }
+	setprop("controls/displays/cursor-slew-y[" ~ (SOI - 2) ~ "]", MFDControlsNodes.tgtY.getValue());
+}, 0, 0);
+
+setlistener("controls/displays/cursor-click", func() {
+	if (SOI == 1) { return; }
 }, 0, 0);
 
 

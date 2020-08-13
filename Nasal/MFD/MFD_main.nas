@@ -678,6 +678,7 @@ var MFD_Device =
             return np;
         };
         me.p_RDR = me.PFD.addRadarPage(svg, "Radar", "p_RDR");
+		me.p_RDR.model_index = me.model_index;
         me.p_RDR.root = svg;
         me.p_RDR.wdt = 552*0.795;
         me.p_RDR.fwd = 0;
@@ -843,8 +844,8 @@ var MFD_Device =
             }
             me.exp_modi = exp?0.25:1;
 			
-            me.slew_x = getprop("controls/displays/cursor-slew-x")*me.exp_modi;
-            me.slew_y = -getprop("controls/displays/cursor-slew-y")*me.exp_modi;
+            me.slew_x = getprop("controls/displays/cursor-slew-x[" ~ me.model_index ~ "]")*me.exp_modi;
+            me.slew_y = -getprop("controls/displays/cursor-slew-y[" ~ me.model_index ~ "]")*me.exp_modi;
             
             #me.dt = math.min(noti.ElapsedSeconds - me.elapsed, 0.05);
             me.dt = noti.ElapsedSeconds - me.elapsed;
