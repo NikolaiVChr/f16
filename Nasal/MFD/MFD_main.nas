@@ -1543,7 +1543,11 @@ var MFD_Device =
                 else gunAmmo = ""~int(gunAmmo*0.1);
             }
             me.root.gun.setText(gunAmmo~"GUN");
+            if (getprop("sim/variant-id") == 0 or getprop("sim/variant-id") == 1 or getprop("sim/variant-id") == 3) {
+            me.root.gun2.setText("M56");
+            } else {
             me.root.gun2.setText("PGU28");
+            }
 
             var pT = "--------";
             if (pylons.pylon1 != nil) {
@@ -1576,6 +1580,9 @@ var MFD_Device =
                 if (idset == "1 x AIM-120" or idset == "1 x AIM-7" or idset == "1 x AIM-9") {
                     me.root.p3.setText("1 MRL");
                 }
+                else if (idset == "2 x LAU-68" or idset == "3 x AGM-65" or idset == "2 x GBU-54" or idset == "3 x GBU-12" or idset == "3 x MK-82" or idset == "2 x MK-83" or idset == "2 x CBU-87" or idset == "2 x CBU-105") {
+                    me.root.p3.setText("1 TER");
+                }
                 else {
                     me.root.p3.setText("1 MAU");
                 }
@@ -1590,11 +1597,15 @@ var MFD_Device =
                 var nm = pylons.pylon4.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            if (getprop("payload/armament/station/id-3-set") != "Empty") {
-                me.root.p4.setText("1 MAU");
+            var idset = getprop("payload/armament/station/id-3-set");
+            if (idset != "Empty") {
+            if (idset == "2 x LAU-68" or idset == "2 x GBU-12" or idset == "3 x MK-82" or idset == "2 x MK-83" or idset == "2 x CBU-87" or idset == "2 x CBU-105") {
+                me.root.p4.setText("1 TER");
+            } else {
+            me.root.p4.setText("1 MAU");
             }
-            else {
-                me.root.p4.setText("--------");
+            } else {
+            me.root.p4.setText("--------");
             }
             me.root.p4l1.setText(pT);
 
@@ -1616,11 +1627,15 @@ var MFD_Device =
                 var nm = pylons.pylon6.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            if (getprop("payload/armament/station/id-5-set") != "Empty") {
-                me.root.p6.setText("1 MAU");
+            var idset = getprop("payload/armament/station/id-5-set");
+            if (idset != "Empty") {
+            if (idset == "2 x LAU-68" or idset == "2 x GBU-12" or idset == "3 x MK-82" or idset == "2 x MK-83" or idset == "2 x CBU-87" or idset == "2 x CBU-105") {
+                me.root.p6.setText("1 TER");
+            } else {
+            me.root.p6.setText("1 MAU");
             }
-            else {
-                me.root.p6.setText("--------");
+            } else {
+            me.root.p6.setText("--------");
             }
             me.root.p6l1.setText(pT);
 
@@ -1634,7 +1649,9 @@ var MFD_Device =
                 if (idset == "1 x AIM-120" or idset == "1 x AIM-7" or idset == "1 x AIM-9") {
                     me.root.p7.setText("1 MRL");
                 }
-                else {
+                else if (idset == "2 x LAU-68" or idset == "3 x AGM-65" or idset == "2 x GBU-54" or idset == "3 x GBU-12" or idset == "3 x MK-82" or idset == "2 x MK-83" or idset == "2 x CBU-87" or idset == "2 x CBU-105") {
+                    me.root.p7.setText("1 TER");
+                } else {
                     me.root.p7.setText("1 MAU");
                 }
             }
