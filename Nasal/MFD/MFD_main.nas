@@ -1543,7 +1543,7 @@ var MFD_Device =
                 else gunAmmo = ""~int(gunAmmo*0.1);
             }
             me.root.gun.setText(gunAmmo~"GUN");
-            me.root.gun2.setText("M56");
+            me.root.gun2.setText("PGU28");
 
             var pT = "--------";
             if (pylons.pylon1 != nil) {
