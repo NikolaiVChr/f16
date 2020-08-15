@@ -3117,7 +3117,7 @@ var MFD_Device =
     },
 
     #Update this when adding new buttons or changing button order/positions.
-    setSelection : func(curPage, nextPage, nextPageIndex) {
+    setSelection: func(curPage, nextPage, nextPageIndex) {
         if (nextPageIndex == 10) {
             me.selectionBox.setTranslation(65,7);
         } else if (nextPageIndex == 16) {
@@ -3427,6 +3427,21 @@ var swap = func {
     } elsif (f16.SOI == 3) {
         f16.SOI = 2;
     }
+	
+	if (right_page == "LIST") { # right page was list
+		f16_mfd.MFDl.selectionBox.hide();
+		if (left_page != "LIST") {
+			f16_mfd.MFDr.selectionBox.show();
+			f16_mfd.MFDr.setSelection(nil, f16_mfd.MFDr.PFD.buttons[left_button], left_button);
+		}
+	} elsif (left_page == "LIST") {
+		f16_mfd.MFDr.selectionBox.hide();
+		if (right_page != "LIST") {
+			f16_mfd.MFDl.selectionBox.show();
+			f16_mfd.MFDl.setSelection(nil, f16_mfd.MFDl.PFD.buttons[right_button], right_button);
+		}
+	}
+	
     if (left_button != nil and right_button != nil) {
         f16_mfd.MFDl.setSelection(f16_mfd.MFDl.PFD.buttons[left_button], f16_mfd.MFDl.PFD.buttons[right_button], right_button);
         f16_mfd.MFDr.setSelection(f16_mfd.MFDr.PFD.buttons[right_button], f16_mfd.MFDr.PFD.buttons[left_button], left_button);
