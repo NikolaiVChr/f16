@@ -4,6 +4,10 @@
 #    callInit();
 #  }
 #}, 1, 0);
+
+
+var chrono = aircraft.timer.new("f16/avionics/hack/elapsed-time-sec", 1);
+
 var line1 = nil;
 var line2 = nil;
 var line3 = nil;
@@ -340,7 +344,7 @@ var loop_ded = func {# one line is max 24 chars
 	  }
       text[2] = sprintf("      HACK      00:00:00   ");
       text[3] = sprintf(" DELTA TOS      00:00:00   ");
-	  if (getprop("sim/variant-id") != 1 and and getprop("sim/variant-id") != 3) {
+	  if (getprop("sim/variant-id") != 1 and getprop("sim/variant-id") != 3) {
         text[4] = sprintf("  MM/DD/YY      %s", date);
 	  } else {
 	    text[4] = sprintf("                          ");
@@ -385,33 +389,54 @@ var loop_ded = func {# one line is max 24 chars
 #callInit();
 #loop_ded();
 
+var toggleHack = func() {
+	if (chrono.running) {
+		chrono.stop();
+	} else {
+		chrono.start();
+	}
+};
+
+var resetHack = func() {
+	chrono.stop();
+	chrono.reset();
+};
+
 var cursorUp = func {
   sound.doubleClick();
-  var active = getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc");
-  var wp = getprop("autopilot/route-manager/current-wp");
-  var max = getprop("autopilot/route-manager/route/num");
+  if (page == pTIME) {
+	toggleHack();
+  } else {
+    var active = getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc");
+    var wp = getprop("autopilot/route-manager/current-wp");
+    var max = getprop("autopilot/route-manager/route/num");
   
-  if (active and wp != nil and wp > -1) {
-    wp += 1;
-    if (wp>max-1) {
-      wp = 0;
-    }
-    setprop("autopilot/route-manager/current-wp", wp);
-  }
+    if (active and wp != nil and wp > -1) {
+      wp += 1;
+      if (wp>max-1) {
+        wp = 0;
+      }
+      setprop("autopilot/route-manager/current-wp", wp);
+   }
+ }
 }
 
 var cursorDown = func {
   sound.doubleClick();
-  var active = getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc");
-  var wp = getprop("autopilot/route-manager/current-wp");
-  var max = getprop("autopilot/route-manager/route/num");
+  if (page == pTIME) {
+	resetHack();
+  } else {
+    var active = getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc");
+    var wp = getprop("autopilot/route-manager/current-wp");
+    var max = getprop("autopilot/route-manager/route/num");
   
-  if (active and wp != nil and wp > -1) {
-    wp -= 1;
-    if (wp<0) {
-      wp = max-1;
+    if (active and wp != nil and wp > -1) {
+      wp -= 1;
+      if (wp<0) {
+        wp = max-1;
+      }
+      setprop("autopilot/route-manager/current-wp", wp);
     }
-    setprop("autopilot/route-manager/current-wp", wp);
   }
 }
 
