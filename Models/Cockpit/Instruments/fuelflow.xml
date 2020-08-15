@@ -4,43 +4,7 @@
 
  <path>fuelflow.ac</path>
   <texture-path>../Panels/Textures</texture-path>
-
- <animation>
-  <type>rotate</type>
-  <object-name>drum5</object-name>
-  <condition>
-                        <greater-than-equals>
-                            <property>fdm/jsbsim/elec/bus/emergency-ac-1</property>
-                            <value>100</value>
-                        </greater-than-equals>
-  </condition>
-  <property>/f16/cockpit/fuel-flow-digit-1</property>
-  <factor>36</factor>
-  <axis>
-   <x>0</x>
-   <y>-1</y>
-   <z>0</z>
-  </axis>
- </animation>
-
- <animation>
-  <type>rotate</type>
-  <object-name>drum4</object-name>
-  <condition>
-                        <greater-than-equals>
-                            <property>fdm/jsbsim/elec/bus/emergency-ac-1</property>
-                            <value>100</value>
-                        </greater-than-equals>
-  </condition>
-  <property>/f16/cockpit/fuel-flow-digit-2</property>
-  <factor>36</factor>
-  <axis>
-   <x>0</x>
-   <y>-1</y>
-   <z>0</z>
-  </axis>
- </animation>
-
+  
  <animation>
   <type>rotate</type>
   <object-name>drum3</object-name>
