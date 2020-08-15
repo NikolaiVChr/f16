@@ -833,6 +833,13 @@ var MFD_Device =
                 me.root.silent.setText("  OFF  ");
                 me.root.silent.show();
             }
+			
+			if (getprop("/f16/avionics/power-fcr-bit") == 1) {
+				me.root.silent.setTranslation(0, -482*0.80);
+			} else {
+				me.root.silent.setTranslation(0, -482*0.25);
+			}
+			
             if (uv != nil and me.root.index == uv[2]) {
                 if (systime()-uv[3] < 0.5) {
                     # the time check is to prevent click on other pages to carry over to CRM when that is selected.
