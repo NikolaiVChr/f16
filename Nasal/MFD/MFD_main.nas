@@ -3201,10 +3201,12 @@ var MFD_Device =
 #   15  16  17  18  19
 #  VSD HSD SMS SIT
 
-        me.p_LIST.addMenuItem(10, "PROG\nDCLT\nRST", nil);
-        me.p_LIST.addMenuItem(14, "RESET\nMENU", nil);
+        me.p_LIST.addMenuItem(10, "BLANK", nil);
+        me.p_LIST.addMenuItem(11, "HAD", nil);
+        me.p_LIST.addMenuItem(13, "RCCE", nil);
+        me.p_LIST.addMenuItem(14, "RESET\n MENU", nil);
         me.p_LIST.addMenuItem(15, "SWAP", nil);
-        me.p_LIST.addMenuItem(19, "DCLT", nil);
+        me.p_LIST.addMenuItem(19, "TCN", nil);
         me.p_LIST.addMenuItem(0, "FCR", me.p_RDR);
         me.p_LIST.addMenuItem(1, "TGP", nil);
         me.p_LIST.addMenuItem(2, "WPN", me.p_WPN);
