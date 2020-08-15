@@ -330,12 +330,21 @@ var loop_ded = func {# one line is max 24 chars
       text[3] = sprintf("   A-G: CMBT  A-A: TRNG ");
       text[4] = sprintf("   LASER ST TIME  16 SEC");
     } elsif (page == pTIME) {
-      var time   = getprop("/sim/time/gmt-string");
+      var time = getprop("/sim/time/gmt-string");
+	  var date = sprintf("%02.0f", getprop("/sim/time/utc/month")) ~ "/" ~ sprintf("%02.0f", getprop("/sim/time/utc/day")) ~ "/" ~ right(sprintf("%s", getprop("/sim/time/utc/year")), 2);
       text[0] = sprintf("          TIME      %s  ",no);
-      text[1] = sprintf("   SYSTEM      %s",time);
-      text[2] = sprintf("     HACK      00:00:00   ");
-      text[3] = sprintf("DELTA TOS      00:00:00   ");
-      text[4] = sprintf("                          ");
+	  if (getprop("sim/variant-id") != 1 and getprop("sim/variant-id") != 3) {
+        text[1] = sprintf("GPS SYSTEM      %s",time);
+	  } else {
+        text[1] = sprintf("    SYSTEM      %s",time);
+	  }
+      text[2] = sprintf("      HACK      00:00:00   ");
+      text[3] = sprintf(" DELTA TOS      00:00:00   ");
+	  if (getprop("sim/variant-id") != 1 and getprop("sim/variant-id") != 3) {
+        text[4] = sprintf("  MM/DD/YY      %s", date);
+	  } else {
+	    text[4] = sprintf("                          ");
+	  }
     } elsif (page == pCM) {
       # this page is not authentic, but since the in cockpit display is defunc, pilot need to know these values so I put them into a DED page.
       var flares   = getprop("ai/submodels/submodel[0]/count");
