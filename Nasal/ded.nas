@@ -6,7 +6,7 @@
 #}, 1, 0);
 
 
-var chrono = aircraft.timer.new("f16/avionics/hack/elapsed-time-sec", 1);
+var chrono = aircraft.timer.new("f16/avionics/hack/elapsed-time-sec", 1, 0);
 
 var line1 = nil;
 var line2 = nil;
@@ -335,6 +335,10 @@ var loop_ded = func {# one line is max 24 chars
       text[4] = sprintf("   LASER ST TIME  16 SEC");
     } elsif (page == pTIME) {
       var time = getprop("/sim/time/gmt-string");
+	  var hackHour = int(getprop("f16/avionics/hack/elapsed-time-sec") / 3600);
+	  var hackMin = int((getprop("f16/avionics/hack/elapsed-time-sec") - (hackHour * 3600)) / 60);
+	  var hackSec = int(getprop("f16/avionics/hack/elapsed-time-sec") - (hackHour * 3600) - (hackMin * 60));
+	  var hackTime = sprintf("%02.0f", hackHour) ~ ":" ~ sprintf("%02.0f", hackMin) ~ ":" ~ sprintf("%02.0f", hackSec);
 	  var date = sprintf("%02.0f", getprop("/sim/time/utc/month")) ~ "/" ~ sprintf("%02.0f", getprop("/sim/time/utc/day")) ~ "/" ~ right(sprintf("%s", getprop("/sim/time/utc/year")), 2);
       text[0] = sprintf("          TIME      %s  ",no);
 	  if (getprop("f16/avionics/power-gps") and getprop("sim/variant-id") != 1 and getprop("sim/variant-id") != 3) {
@@ -342,7 +346,7 @@ var loop_ded = func {# one line is max 24 chars
 	  } else {
         text[1] = sprintf("    SYSTEM      %s",time);
 	  }
-      text[2] = sprintf("      HACK      00:00:00   ");
+      text[2] = sprintf("      HACK      %s", hackTime);
       text[3] = sprintf(" DELTA TOS      00:00:00   ");
 	  if (getprop("sim/variant-id") != 1 and getprop("sim/variant-id") != 3) {
         text[4] = sprintf("  MM/DD/YY      %s", date);

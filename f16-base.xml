@@ -853,6 +853,10 @@ DED
 The DED is the small display above the right color MFD.
 Clicking on certain buttons on the ICP (the panel below the HUD) can bring up different pages.
 The DED can also be brought up on the HUD in the controlpanel.
+
+HACK Timer
+The DED has a built-in stopwatch. To access this, use key 6 ("TIME") on the ICP to select TIME page.
+Then, use the up arrow on the ICP to start the HACK timer. The up arrow toggles the timer while the down arrow resets it.
             ]]></text-4>
             <text-5><![CDATA[
 AUTOPILOT
