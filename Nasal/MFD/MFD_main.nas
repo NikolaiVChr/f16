@@ -3110,11 +3110,16 @@ var MFD_Device =
         }
     },
 
-    resetColor : func(text) {
+    resetColor: func(text) {
         if (text != nil) {
             text.setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
         }
     },
+	resetColorAll: func() {
+		foreach (var button; me.PFD.buttons) {
+			me.resetColor(button);
+		}
+	},
 
     #Update this when adding new buttons or changing button order/positions.
     setSelection: func(curPage, nextPage, nextPageIndex) {
@@ -3415,11 +3420,13 @@ var swap = func {
     foreach(var page ; f16_mfd.MFDr.PFD.pages) {
         if (page.title == left_page) {
             f16_mfd.MFDr.PFD.selectPage(page);
+			break;
         }
     }
     foreach(var page ; f16_mfd.MFDl.PFD.pages) {
         if (page.title == right_page) {
             f16_mfd.MFDl.PFD.selectPage(page);
+			break;
         }
     }
     if (f16.SOI == 2) { 
@@ -3430,12 +3437,14 @@ var swap = func {
 	
 	if (right_page == "LIST") { # right page was list
 		f16_mfd.MFDl.selectionBox.hide();
+		f16_mfd.MFDl.resetColorAll();
 		if (left_page != "LIST") {
 			f16_mfd.MFDr.selectionBox.show();
 			f16_mfd.MFDr.setSelection(nil, f16_mfd.MFDr.PFD.buttons[left_button], left_button);
 		}
 	} elsif (left_page == "LIST") {
 		f16_mfd.MFDr.selectionBox.hide();
+		f16_mfd.MFDr.resetColorAll();
 		if (right_page != "LIST") {
 			f16_mfd.MFDl.selectionBox.show();
 			f16_mfd.MFDl.setSelection(nil, f16_mfd.MFDl.PFD.buttons[right_button], right_button);
