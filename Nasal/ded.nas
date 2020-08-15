@@ -333,14 +333,14 @@ var loop_ded = func {# one line is max 24 chars
       var time = getprop("/sim/time/gmt-string");
 	  var date = sprintf("%02.0f", getprop("/sim/time/utc/month")) ~ "/" ~ sprintf("%02.0f", getprop("/sim/time/utc/day")) ~ "/" ~ right(sprintf("%s", getprop("/sim/time/utc/year")), 2);
       text[0] = sprintf("          TIME      %s  ",no);
-	  if (getprop("f16/avionics/power-gps") and getprop("sim/variant-id") > 3) {
+	  if (getprop("f16/avionics/power-gps") and getprop("sim/variant-id") != 1 and getprop("sim/variant-id") != 3) {
         text[1] = sprintf("GPS SYSTEM      %s",time);
 	  } else {
         text[1] = sprintf("    SYSTEM      %s",time);
 	  }
       text[2] = sprintf("      HACK      00:00:00   ");
       text[3] = sprintf(" DELTA TOS      00:00:00   ");
-	  if (getprop("sim/variant-id") != 1 and getprop("sim/variant-id") > 3) {
+	  if (getprop("sim/variant-id") != 1 and and getprop("sim/variant-id") != 3) {
         text[4] = sprintf("  MM/DD/YY      %s", date);
 	  } else {
 	    text[4] = sprintf("                          ");
