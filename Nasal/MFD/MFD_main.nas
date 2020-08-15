@@ -826,8 +826,8 @@ var MFD_Device =
                 me.root.silent.setText("SILENT");
                 me.root.silent.show();
             } elsif (getprop("/f16/avionics/power-fcr-bit") == 1) {
-                me.fcrBITsecs = (1.0-getprop("/f16/avionics/power-fcr-warm"))120;
-                me.root.silent.setText(sprintf("  BIT TIME REMAINING IS %3d  SEC", me.fcrBITsecs));
+                me.fcrBITsecs = (1.0-getprop("/f16/avionics/power-fcr-warm"))*120;
+                me.root.silent.setText(sprintf("  BIT TIME REMAINING IS %-3d  SEC", me.fcrBITsecs));
                 me.root.silent.show();
             } elsif (getprop("/f16/avionics/power-fcr-bit") == 0) {
                 me.root.silent.setText("  OFF  ");
