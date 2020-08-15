@@ -79,6 +79,7 @@
             <outer-angle type="float">60</outer-angle><!-- 0-90, but greater than inner -->
             <black-angle type="float">80</black-angle><!-- 0-90, but greater than outer -->
             <contrast type="float">1</contrast>
+            <dirt-factor>0.04</dirt-factor>
             <texture n="1">
                 <type>2d</type>
                 <filter>linear-mipmap-linear</filter>

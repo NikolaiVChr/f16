@@ -564,6 +564,13 @@ var MFD_Device =
            .set("z-index",12)
            .setFontSize(18, 1.0)
            .setColor(getprop("/sim/model/MFD-color/text2/red"),getprop("/sim/model/MFD-color/text2/green"),getprop("/sim/model/MFD-color/text2/blue"));
+        svg.bitText = svg.p_RDR.createChild("text")
+           .setTranslation(0, -482*0.75)
+           .setAlignment("center-center")
+           .setText("    VERSION C021-IPOO-MRO3258674  ")
+           .set("z-index",12)
+           .setFontSize(18, 1.0)
+           .setColor(getprop("/sim/model/MFD-color/text2/red"),getprop("/sim/model/MFD-color/text2/green"),getprop("/sim/model/MFD-color/text2/blue"));
            
         svg.norm = svg.p_RDR.createChild("text")
                 .setTranslation(276*0.795*0.0, -482*0.5-225)
@@ -827,7 +834,7 @@ var MFD_Device =
                 me.root.silent.show();
             } elsif (getprop("/f16/avionics/power-fcr-bit") == 1) {
                 me.fcrBITsecs = (1.0-getprop("/f16/avionics/power-fcr-warm"))*120;
-                me.root.silent.setText(sprintf("  BIT TIME REMAINING IS %-3d  SEC", me.fcrBITsecs));
+                me.root.silent.setText(sprintf("  BIT TIME REMAINING IS %-3d SEC", me.fcrBITsecs));
                 me.root.silent.show();
             } elsif (getprop("/f16/avionics/power-fcr-bit") == 0) {
                 me.root.silent.setText("  OFF  ");
@@ -835,10 +842,12 @@ var MFD_Device =
             }
 			
 			if (getprop("/f16/avionics/power-fcr-bit") == 1) {
-				me.root.silent.setTranslation(0, -482*0.80);
-			} else {
-				me.root.silent.setTranslation(0, -482*0.25);
-			}
+                me.root.silent.setTranslation(0, -482*0.825);
+                me.root.bitText.show();
+            } else {
+                me.root.silent.setTranslation(0, -482*0.25);
+                me.root.bitText.hide();
+            }
 			
             if (uv != nil and me.root.index == uv[2]) {
                 if (systime()-uv[3] < 0.5) {
