@@ -709,6 +709,10 @@ var MFD_Device =
                     awg_9.range_control(1);
                 } elsif (eventi == 1) {
                     awg_9.range_control(-1);
+				} elsif (eventi == 10) {
+                    me.ppp.selectPage(me.my.p_LIST);
+					me.resetColor(me.ppp.buttons[10]);
+					me.selectionBox.hide();
                 } elsif (eventi == 17) {
                     me.ppp.selectPage(me.my.p_SMS);
                     me.setSelection(me.ppp.buttons[10], me.ppp.buttons[17], 17);
@@ -1151,6 +1155,76 @@ var MFD_Device =
         };
     },
 
+	setupList: func(svg) {
+		svg.p_LIST = me.canvas.createGroup()
+			.setTranslation(276*0.795,482)
+			.set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,482 , 0.795 is for UV map
+	},
+	addList: func {
+        var svg = {getElementById: func (id) {return me[id]},};
+        me.setupList(svg);
+        me.PFD.addListPage = func(svg, title, layer_id) {   
+            var np = PFD_Page.new(svg, title, layer_id, me);
+            append(me.pages, np);
+            me.page_index[layer_id] = np;
+            np.setVisible(0);
+            return np;
+        };
+        me.p_LIST = me.PFD.addListPage(svg, "LIST", "p_LIST");
+        me.p_LIST.root = svg;
+        me.p_LIST.wdt = 552*0.795;
+        me.p_LIST.fwd = 0;
+        me.p_LIST.plc = 0;
+        me.p_LIST.ppp = me.PFD;
+        me.p_LIST.my = me;
+        me.p_LIST.selectionBox = me.selectionBox;
+        me.p_LIST.setSelectionColor = me.setSelectionColor;
+        me.p_LIST.resetColor = me.resetColor;
+        me.p_LIST.setSelection = me.setSelection;
+        me.p_LIST.notifyButton = func (eventi) {
+            if (eventi != nil) {
+                
+# Menu Id's
+#  CRM
+#   10  11  12  13  14
+# 0                    5            
+# 1                    6            
+# 2                    7            
+# 3                    8            
+# 4                    9            
+#   15  16  17  18  19
+#  VSD HSD SMS SIT
+				if (eventi == 0) {
+                    me.ppp.selectPage(me.my.p_RDR);
+					me.selectionBox.show();
+					me.setSelection(nil, me.ppp.buttons[10], 10);
+                } elsif (eventi == 1) {
+                    if(getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
+						screen.log.write("Click BACK to get back to cockpit view",1,1,1);
+						setprop("sim/current-view/view-number",12);
+					}
+                } elsif (eventi == 2) {
+                    me.ppp.selectPage(me.my.p_WPN);
+					me.selectionBox.show();
+					me.setSelection(nil, me.ppp.buttons[18], 18);
+                } elsif (eventi == 5) {
+                    me.ppp.selectPage(me.my.p_SMS);
+					me.selectionBox.show();
+					me.setSelection(nil, me.ppp.buttons[17], 17);
+                } elsif (eventi == 6) {
+                    me.ppp.selectPage(me.my.p_HSD);
+					me.selectionBox.show();
+					me.setSelection(nil, me.ppp.buttons[16], 16);
+                } elsif (eventi == 15) {
+					swap();
+				}
+            }
+        };
+        me.p_LIST.update = func (noti) {
+            
+        };
+    },
+	
     setupSMS: func (svg) {
         svg.p_SMS = me.canvas.createGroup()
                 .setTranslation(276*0.795,482)
@@ -1494,6 +1568,10 @@ var MFD_Device =
                         return;
                     }
                     pylons.fcs.selectPylon(4);
+				} elsif (eventi == 17) {
+                    me.ppp.selectPage(me.my.p_LIST);
+					me.resetColor(me.ppp.buttons[17]);
+					me.selectionBox.hide();
                 } elsif (eventi == 18) {
                     me.ppp.selectPage(me.my.p_WPN);
                     me.setSelection(me.ppp.buttons[17], me.ppp.buttons[18], 18);
@@ -1906,6 +1984,11 @@ var MFD_Device =
                     me.setSelection(me.ppp.buttons[18], me.ppp.buttons[17], 17);
                 #} elsif (eventi == 18) {
                 #    me.ppp.selectPage(me.my.pjitds_1);
+                
+				} elsif (eventi == 18) {
+                    me.ppp.selectPage(me.my.p_LIST);
+					me.resetColor(me.ppp.buttons[18]);
+					me.selectionBox.hide();
                 } elsif (eventi == 11) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
@@ -2453,6 +2536,10 @@ var MFD_Device =
                 } elsif (eventi == 17) {
                     me.ppp.selectPage(me.my.p_SMS);
                     me.setSelection(me.ppp.buttons[16], me.ppp.buttons[17], 17);
+                } elsif (eventi == 16) {
+                    me.ppp.selectPage(me.my.p_LIST);
+					me.resetColor(me.ppp.buttons[16]);
+					me.selectionBox.hide();
                 } elsif (eventi == 18) {
                     me.ppp.selectPage(me.my.p_WPN);
                     me.setSelection(me.ppp.buttons[16], me.ppp.buttons[18], 18);
@@ -2776,6 +2863,7 @@ var MFD_Device =
         me.addSMS();
         me.addHSD();
         me.addWPN();
+        me.addList();
         me.p1_1 = me.PFD.addPage("Aircraft Menu", "p1_1");
 
         me.p1_1.update = func(notification)
@@ -2958,8 +3046,10 @@ var MFD_Device =
     },
 
     resetColor : func(text) {
-        text.setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
-    },
+		if (text != nil) {
+			text.setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
+		}
+	},
 
     #Update this when adding new buttons or changing button order/positions.
     setSelection : func(curPage, nextPage, nextPageIndex) {
@@ -3006,8 +3096,8 @@ var MFD_Device =
 #        me.p1_1.addMenuItem(12, "HSD", me.p_HSD);
 
         #me.p_RDR.addMenuItem(18, "SIT", me.pjitds_1);
-        me.p_RDR.addMenuItem(10, "CRM", me.p_RDR); #selectionColored
-        me.p_RDR.addMenuItem(15, "SWAP", me.p_RDR);
+        me.p_RDR.addMenuItem(10, "CRM", me.p_LIST); #selectionColored
+        me.p_RDR.addMenuItem(15, "SWAP", nil);
         me.p_RDR.addMenuItem(16, "HSD", me.p_HSD);
         me.p_RDR.addMenuItem(17, "SMS", me.p_SMS);
         me.p_RDR.addMenuItem(18, "WPN", me.p_WPN);
@@ -3015,26 +3105,51 @@ var MFD_Device =
 
         #me.p_HSD.addMenuItem(18, "SIT", me.pjitds_1);
         me.p_HSD.addMenuItem(10, "CRM", me.p_RDR);
-        me.p_HSD.addMenuItem(15, "SWAP", me.p_HSD);
-        me.p_HSD.addMenuItem(16, "HSD", me.p_HSD); #selectionColored
+        me.p_HSD.addMenuItem(15, "SWAP", nil);
+        me.p_HSD.addMenuItem(16, "HSD", me.p_LIST); #selectionColored
         me.p_HSD.addMenuItem(17, "SMS", me.p_SMS);
         me.p_HSD.addMenuItem(18, "WPN", me.p_WPN);
         me.p_HSD.addMenuItem(19, "TGP", nil);
         
         me.p_WPN.addMenuItem(10, "CRM", me.p_RDR);
-        me.p_WPN.addMenuItem(15, "SWAP", me.p_WPN);
+        me.p_WPN.addMenuItem(15, "SWAP", nil);
         me.p_WPN.addMenuItem(16, "HSD", me.p_HSD);
         me.p_WPN.addMenuItem(17, "SMS", me.p_SMS);
-        me.p_WPN.addMenuItem(18, "WPN", me.p_WPN); #selectionColored
+        me.p_WPN.addMenuItem(18, "WPN", me.p_LIST); #selectionColored
         me.p_WPN.addMenuItem(19, "TGP", nil);
 
         #me.p_SMS.addMenuItem(18, "SIT", me.pjitds_1);
         me.p_SMS.addMenuItem(10, "CRM", me.p_RDR);
-        me.p_SMS.addMenuItem(15, "SWAP", me.p_SMS);
+        me.p_SMS.addMenuItem(15, "SWAP", nil);
         me.p_SMS.addMenuItem(16, "HSD", me.p_HSD);
-        me.p_SMS.addMenuItem(17, "SMS", me.p_SMS); #selectionColored
+        me.p_SMS.addMenuItem(17, "SMS", me.p_LIST); #selectionColored
         me.p_SMS.addMenuItem(18, "WPN", me.p_WPN);
         me.p_SMS.addMenuItem(19, "TGP", nil);
+		
+		#  CRM
+#   10  11  12  13  14
+# 0                    5            
+# 1                    6            
+# 2                    7            
+# 3                    8            
+# 4                    9            
+#   15  16  17  18  19
+#  VSD HSD SMS SIT
+
+        me.p_LIST.addMenuItem(10, "PROG\nDCLT\nRST", nil);
+        me.p_LIST.addMenuItem(14, "RESET\nMENU", nil);
+        me.p_LIST.addMenuItem(15, "SWAP", nil);
+        me.p_LIST.addMenuItem(19, "DCLT", nil);
+        me.p_LIST.addMenuItem(0, "FCR", me.p_RDR);
+        me.p_LIST.addMenuItem(1, "TGP", nil);
+        me.p_LIST.addMenuItem(2, "WPN", me.p_WPN);
+        me.p_LIST.addMenuItem(3, "TFR", nil);
+        me.p_LIST.addMenuItem(4, "FLIR", nil);
+        me.p_LIST.addMenuItem(5, "SMS", me.p_SMS);
+        me.p_LIST.addMenuItem(6, "HSD", me.p_HSD);
+        me.p_LIST.addMenuItem(7, "DTE", nil);
+        me.p_LIST.addMenuItem(8, "TEST", nil);
+        me.p_LIST.addMenuItem(9, "FLCS", nil);
 #        me.p_SMS.addMenuItem(16, "TIM", me.p1_1);
 
 #        me.p1_2.addMenuItem(0, "VSD", me.p_VSD);
@@ -3216,8 +3331,11 @@ var getMenuButton = func (pageName) {
         return 16;
     } else if (pageName == "WPN") {
         return 18;
-    } else {
-        print("Make sure button assignment is set correctly in getMenuButton() in MFD_main.nas")
+    } elsif (pageName == "LIST") {
+		return nil;
+	} else {
+        print("Make sure button assignment is set correctly in getMenuButton() in MFD_main.nas");
+		return nil;
     }
 };
 
@@ -3237,7 +3355,13 @@ var swap = func {
             f16_mfd.MFDl.PFD.selectPage(page);
         }
     }
-
-    f16_mfd.MFDl.setSelection(f16_mfd.MFDl.PFD.buttons[left_button], f16_mfd.MFDl.PFD.buttons[right_button], right_button);
-    f16_mfd.MFDr.setSelection(f16_mfd.MFDr.PFD.buttons[right_button], f16_mfd.MFDr.PFD.buttons[left_button], left_button);
+	if (f16.SOI == 2) { 
+		f16.SOI = 3;
+	} elsif (f16.SOI == 3) {
+		f16.SOI = 2;
+	}
+	if (left_button != nil and right_button != nil) {
+		f16_mfd.MFDl.setSelection(f16_mfd.MFDl.PFD.buttons[left_button], f16_mfd.MFDl.PFD.buttons[right_button], right_button);
+		f16_mfd.MFDr.setSelection(f16_mfd.MFDr.PFD.buttons[right_button], f16_mfd.MFDr.PFD.buttons[left_button], left_button);
+	}
 };
