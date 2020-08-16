@@ -54,7 +54,7 @@
    <capacity unit="LBS"> 2640.0 </capacity>
    <contents unit="LBS"> 2640.0 </contents>
    <type>JP-4</type>
-   <priority> 3 </priority>
+   <priority> 4 </priority>
   </tank>
   <tank type="FUEL"> <!-- Left wing tank -->
    <location unit="IN">
@@ -65,7 +65,7 @@
    <capacity unit="LBS"> 525 </capacity>
    <contents unit="LBS"> 525 </contents>
    <type>JP-4</type>
-   <priority> 2 </priority>
+   <priority> 3 </priority>
   </tank>
   <tank type="FUEL"> <!-- Right wing tank -->
    <location unit="IN">
@@ -76,7 +76,7 @@
    <capacity unit="LBS"> 525 </capacity>
    <contents unit="LBS"> 525 </contents>
    <type>JP-4</type>
-   <priority> 2 </priority>
+   <priority> 3 </priority>
   </tank>
   <tank type="FUEL"> <!-- AFT Tank A-1 -->
    <location unit="IN">
@@ -87,7 +87,7 @@
    <capacity unit="LBS"> 2215.0 </capacity>
    <contents unit="LBS"> 2215.0 </contents>
    <type>JP-4</type>
-   <priority> 3 </priority>
+   <priority> 4 </priority>
   </tank>
   <tank type="FUEL"> <!-- FWD Reservoir -->
     <location unit="IN">
@@ -98,7 +98,7 @@
    <capacity unit="LBS"> 460.0 </capacity>
    <contents unit="LBS"> 460.0 </contents>
    <type>JP-4</type>
-   <priority> 4 </priority>
+   <priority> 5 </priority>
   </tank>
   <tank type="FUEL"> <!-- AFT Reservoir -->
     <location unit="IN">
@@ -109,7 +109,7 @@
    <capacity unit="LBS"> 460.0 </capacity>
    <contents unit="LBS"> 460.0 </contents>
    <type>JP-4</type>
-   <priority> 4 </priority>
+   <priority> 5 </priority>
   </tank>
   <tank type="FUEL"> <!-- Left External Tank -->
    <location unit="IN">
@@ -120,7 +120,7 @@
    <capacity unit="LBS"> 3750 </capacity>
    <contents unit="LBS"> 0 </contents>
    <type>JP-4</type>
-   <priority> 1 </priority>
+   <priority> 2 </priority>
   </tank>
   <tank type="FUEL"> <!-- Right External Tank -->
    <location unit="IN">
@@ -131,7 +131,7 @@
    <capacity unit="LBS"> 3750 </capacity>
    <contents unit="LBS"> 0 </contents>
    <type>JP-4</type>
-   <priority> 1 </priority>
+   <priority> 2 </priority>
   </tank>
   <tank type="FUEL"> <!-- Center External Tank -->
    <location unit="IN">
