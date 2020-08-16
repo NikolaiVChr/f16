@@ -4,29 +4,9 @@
 
  <path>pfd.ac</path>
 
- <!--<panel>
-  <name>Panel3D</name>
-  <path>Aircraft/f16/Models/Cockpit/Avionics/DED/ded-display.xml</path>
-  <bottom-left>
-   <x-m>-4.675</x-m>
-   <y-m>0.092</y-m>
-   <z-m>0.626</z-m>
-  </bottom-left>
-  <bottom-right>
-   <x-m>-4.675</x-m>
-   <y-m>0.172</y-m>
-   <z-m>0.626</z-m>
-  </bottom-right>
-  <top-left>
-   <x-m>-4.675</x-m>
-   <y-m>0.092</y-m>
-   <z-m>0.686</z-m>
-  </top-left>
- </panel>-->
-
   <animation>
         <object-name>poly.004</object-name>
-        <object-name>poly.005</object-name>
+        <object-name>PFDscreen</object-name>
         <type>select</type>
         <condition>
           <not>
@@ -50,7 +30,7 @@
 
  <animation>
         <!--<object-name>poly.004</object-name>-->
-        <object-name>poly.005</object-name>
+        <object-name>PFDscreen</object-name>
         <type>material</type>
         <condition>
             <greater-than-equals>
@@ -93,7 +73,7 @@
                 <image>Aircraft/f16/Models/Effects/dust3.png</image>
             </texture>
         </parameters>
-        <object-name>poly.005</object-name>
+        <object-name>PFDscreen</object-name>
     </effect>
 
 </PropertyList>

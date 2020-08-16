@@ -837,6 +837,8 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     tgp.fast_loop();
     ded.callInit();
     ded.loop_ded();
+    pfd.callInit();
+    pfd.loop_pfd();
     frd.callInit();
     frd.loop_freqDsply();
     mps.loop();

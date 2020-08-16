@@ -3739,6 +3739,9 @@ value. 18000=standard US transition altitude -->
         <ded>
           <file>Aircraft/f16/Nasal/ded.nas</file>
         </ded>
+        <pfd>
+          <file>Aircraft/f16/Nasal/pfd.nas</file>
+        </pfd>
         <frd>
           <file>Aircraft/f16/Nasal/freq-display.nas</file>
         </frd>
