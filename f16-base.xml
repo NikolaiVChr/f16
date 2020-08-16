@@ -3737,10 +3737,8 @@ value. 18000=standard US transition altitude -->
             <file>Aircraft/f16/Nasal/mig28.nas</file>
         </mig28>
         <ded>
-          <file>Aircraft/f16/Nasal/dedStringFuncs.nas</file>
           <file>Aircraft/f16/Nasal/dedFuncs.nas</file>
-          <!--<file>Aircraft/f16/Nasal/ded.nas</file>-->
-          <file>Aircraft/f16/Nasal/ded2.nas</file>
+          <file>Aircraft/f16/Nasal/ded.nas</file>
         </ded>
         <pfd>
           <file>Aircraft/f16/Nasal/pfd.nas</file>

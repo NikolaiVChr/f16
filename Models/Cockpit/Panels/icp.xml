@@ -195,7 +195,7 @@
         </hovered>-->
     </animation>
     
-        
+    <!-- Cursor -->
     <animation>
         <type>pick</type>
         <object-name>cursor-up</object-name>
@@ -203,14 +203,14 @@
             <button>0</button>
             <binding>
                 <command>nasal</command>
-                <script>ded.cursorUp();</script>
+                <script>ded.Buttons.buttonup.doAction();</script>
             </binding>
         </action>
         <hovered>
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>button-cu</tooltip-id>
-                <label>Next steerpoint</label>
+                <label>Cursor up (next stpt)</label>
             </binding>
         </hovered>
     </animation>
@@ -221,17 +221,93 @@
             <button>0</button>
             <binding>
                 <command>nasal</command>
-                <script>ded.cursorDown();</script>
+                <script>ded.Buttons.buttondown.doAction();</script>
             </binding>
         </action>
         <hovered>
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>button-cd</tooltip-id>
-                <label>Previous steerpoint</label>
+                <label>Cursor down (prev stpt)</label>
             </binding>
         </hovered>
     </animation>
+	
+	<!-- Top Row -->
+    <animation>
+        <type>pick</type>
+        <object-name>com1</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.Buttons.buttoncomm1.doAction();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-c1</tooltip-id>
+                <label>Comm 1</label>
+            </binding>
+        </hovered>
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>com2</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.Buttons.buttoncomm2.doAction();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-c2</tooltip-id>
+                <label>Comm 2</label>
+            </binding>
+        </hovered>
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>iff</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.Buttons.buttoniff.doAction();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-iff</tooltip-id>
+                <label>Identification Friend or Foe</label>
+            </binding>
+        </hovered>
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>list</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.Buttons.buttonlist.doAction();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-list</tooltip-id>
+                <label>LIST</label>
+            </binding>
+        </hovered>
+    </animation>
+	
+	<!-- Numeric Keys -->
     <animation>
         <type>pick</type>
         <object-name>1</object-name><!-- 1 -->
@@ -239,14 +315,14 @@
             <button>0</button>
             <binding>
                 <command>nasal</command>
-                <script>ded.tacan();</script>
+                <script>ded.Buttons.button1.doAction();</script>
             </binding>
         </action>
         <hovered>
             <binding>
                 <command>set-tooltip</command>
-                <tooltip-id>button-tacan</tooltip-id>
-                <label>TACAN/ILS</label>
+                <tooltip-id>button-1</tooltip-id>
+                <label>TACAN-ILS / 1</label>
             </binding>
         </hovered>
     </animation>
@@ -257,14 +333,14 @@
             <button>0</button>
             <binding>
                 <command>nasal</command>
-                <script>ded.button2();</script>
+                <script>ded.Buttons.button2.doAction();</script>
             </binding>
         </action>
         <hovered>
             <binding>
                 <command>set-tooltip</command>
-                <tooltip-id>button-alow</tooltip-id>
-                <label>ALOW</label>
+                <tooltip-id>button-2</tooltip-id>
+                <label>ALOW / 2</label>
             </binding>
         </hovered>
     </animation>
@@ -275,17 +351,144 @@
             <button>0</button>
             <binding>
                 <command>nasal</command>
-                <script>ded.f_ack();</script>
+                <script>ded.Buttons.button3.doAction();</script>
             </binding>
         </action>
         <hovered>
             <binding>
                 <command>set-tooltip</command>
-                <tooltip-id>button-fack</tooltip-id>
-                <label>F-ACK</label>
+                <tooltip-id>button-3</tooltip-id>
+                <label>F-ACK / 3</label>
             </binding>
         </hovered>
     </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>4</object-name><!-- 4 -->
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.Buttons.button4.doAction();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-4</tooltip-id>
+                <label>Steerpoint / 4</label>
+            </binding>
+        </hovered>
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>5</object-name><!-- 5 -->
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.Buttons.button5.doAction();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-5</tooltip-id>
+                <label>Cruise / 5</label>
+            </binding>
+        </hovered>
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>6</object-name><!-- 6 -->
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.Buttons.button6.doAction();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-6</tooltip-id>
+                <label>Time / 6</label>
+            </binding>
+        </hovered>
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>7</object-name><!-- 7 -->
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.Buttons.button7.doAction();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-l16</tooltip-id>
+                <label>Mark / 7</label>
+            </binding>
+        </hovered>
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>8</object-name><!-- 8 -->
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.Buttons.button8.doAction();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-8</tooltip-id>
+                <label>Fix / 8</label>
+            </binding>
+        </hovered>
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>9</object-name><!-- 9 -->
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.Buttons.button9.doAction();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-9</tooltip-id>
+                <label>Altitude Calibration / 9</label>
+            </binding>
+        </hovered>
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>0</object-name><!-- 0 -->
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.Buttons.button0.doAction();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-0</tooltip-id>
+                <label>Mode Select / 0</label>
+            </binding>
+        </hovered>
+    </animation>
+	
     <!--<animation>
         <type>pick</type>
         <object-name>rcl</object-name>
@@ -304,204 +507,7 @@
             </binding>
         </hovered>
     </animation>-->
-    <animation>
-        <type>pick</type>
-        <object-name>4</object-name><!-- 4 -->
-        <action>
-            <button>0</button>
-            <binding>
-                <command>nasal</command>
-                <script>ded.stpt();</script>
-            </binding>
-        </action>
-        <hovered>
-            <binding>
-                <command>set-tooltip</command>
-                <tooltip-id>button-stpt</tooltip-id>
-                <label>Steerpoint</label>
-            </binding>
-        </hovered>
-    </animation>
-    <animation>
-        <type>pick</type>
-        <object-name>7</object-name><!-- 7 -->
-        <action>
-            <button>0</button>
-            <binding>
-                <command>nasal</command>
-                <script>ded.link16();</script>
-            </binding>
-        </action>
-        <hovered>
-            <binding>
-                <command>set-tooltip</command>
-                <tooltip-id>button-l16</tooltip-id>
-                <label>Link 16</label>
-            </binding>
-        </hovered>
-    </animation>
-    <animation>
-        <type>pick</type>
-        <object-name>iff</object-name>
-        <action>
-            <button>0</button>
-            <binding>
-                <command>nasal</command>
-                <script>ded.iff();</script>
-            </binding>
-        </action>
-        <hovered>
-            <binding>
-                <command>set-tooltip</command>
-                <tooltip-id>button-iff</tooltip-id>
-                <label>Identification Friend or Foe</label>
-            </binding>
-        </hovered>
-    </animation>
-    <animation>
-        <type>pick</type>
-        <object-name>com1</object-name>
-        <action>
-            <button>0</button>
-            <binding>
-                <command>nasal</command>
-                <script>ded.comm1();</script>
-            </binding>
-        </action>
-        <hovered>
-            <binding>
-                <command>set-tooltip</command>
-                <tooltip-id>button-c1</tooltip-id>
-                <label>Comm 1</label>
-            </binding>
-        </hovered>
-    </animation>
-    <animation>
-        <type>pick</type>
-        <object-name>com2</object-name>
-        <action>
-            <button>0</button>
-            <binding>
-                <command>nasal</command>
-                <script>ded.comm2();</script>
-            </binding>
-        </action>
-        <hovered>
-            <binding>
-                <command>set-tooltip</command>
-                <tooltip-id>button-c2</tooltip-id>
-                <label>Comm 2</label>
-            </binding>
-        </hovered>
-    </animation>
-    <animation>
-        <type>pick</type>
-        <object-name>list</object-name>
-        <action>
-            <button>0</button>
-            <binding>
-                <command>nasal</command>
-                <script>ded.list();</script>
-            </binding>
-        </action>
-        <hovered>
-            <binding>
-                <command>set-tooltip</command>
-                <tooltip-id>button-list</tooltip-id>
-                <label>LIST</label>
-            </binding>
-        </hovered>
-    </animation>
-    <animation>
-        <type>pick</type>
-        <object-name>0</object-name><!-- 0 -->
-        <action>
-            <button>0</button>
-            <binding>
-                <command>nasal</command>
-                <script>ded.button0();</script>
-            </binding>
-        </action>
-        <hovered>
-            <binding>
-                <command>set-tooltip</command>
-                <tooltip-id>button-7</tooltip-id>
-                <label>Zero</label>
-            </binding>
-        </hovered>
-    </animation>
-    <animation>
-        <type>pick</type>
-        <object-name>8</object-name><!-- 8 -->
-        <action>
-            <button>0</button>
-            <binding>
-                <command>nasal</command>
-                <script>ded.laser();</script>
-            </binding>
-        </action>
-        <hovered>
-            <binding>
-                <command>set-tooltip</command>
-                <tooltip-id>button-laser</tooltip-id>
-                <label>Laser</label>
-            </binding>
-        </hovered>
-    </animation>
-    <animation>
-        <type>pick</type>
-        <object-name>6</object-name><!-- 6 -->
-        <action>
-            <button>0</button>
-            <binding>
-                <command>nasal</command>
-                <script>ded.time();</script>
-            </binding>
-        </action>
-        <hovered>
-            <binding>
-                <command>set-tooltip</command>
-                <tooltip-id>button-time</tooltip-id>
-                <label>Time</label>
-            </binding>
-        </hovered>
-    </animation>
-    <animation>
-        <type>pick</type>
-        <object-name>9</object-name><!-- 9 -->
-        <action>
-            <button>0</button>
-            <binding>
-                <command>nasal</command>
-                <script>ded.counter();</script>
-            </binding>
-        </action>
-        <hovered>
-            <binding>
-                <command>set-tooltip</command>
-                <tooltip-id>button-cm</tooltip-id>
-                <label>Countermeasures</label>
-            </binding>
-        </hovered>
-    </animation>
-    <animation>
-        <type>pick</type>
-        <object-name>5</object-name><!-- 5 -->
-        <action>
-            <button>0</button>
-            <binding>
-                <command>nasal</command>
-                <script>ded.cruise();</script>
-            </binding>
-        </action>
-        <hovered>
-            <binding>
-                <command>set-tooltip</command>
-                <tooltip-id>button-crus</tooltip-id>
-                <label>Cruise</label>
-            </binding>
-        </hovered>
-    </animation>
+	
     <animation>
         <type>select</type>
         <condition>
