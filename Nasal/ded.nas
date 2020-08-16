@@ -1,110 +1,6 @@
-#var theInit = setlistener("ja37/supported/initialized", func {
-#  if(getprop("ja37/supported/radar") == 1) {
-#    removelistener(theInit);
-#    callInit();
-#  }
-#}, 1, 0);
-
-
-var chrono = aircraft.timer.new("f16/avionics/hack/elapsed-time-sec", 1, 0);
-
-var line1 = nil;
-var line2 = nil;
-var line3 = nil;
-var line4 = nil;
-var line5 = nil;
-var callInit = func {
-  canvasded = canvas.new({
-        "name": "DED",
-        "size": [256, 128],
-        "view": [256, 128],
-        "mipmapping": 0
-  });
-      
-  canvasded.addPlacement({"node": "poly.003", "texture": "canvas.png"});
-  if (getprop("sim/variant-id") == 2) {
-        canvasded.setColorBackground(0.00, 0.04, 0.01, 1.00);
-        } else if (getprop("sim/variant-id") == 4) {
-        canvasded.setColorBackground(0.00, 0.04, 0.01, 1.00);
-        } else if (getprop("sim/variant-id") == 5) {
-        canvasded.setColorBackground(0.00, 0.04, 0.01, 1.00);
-        } else if (getprop("sim/variant-id") == 6) {
-        canvasded.setColorBackground(0.00, 0.04, 0.01, 1.00);
-        } else {
-        canvasded.setColorBackground(0.01, 0.075, 0.00, 1.00);
-        };
-
-  dedGroup = canvasded.createGroup();
-  dedGroup.show();
-  var color = [0.45,0.98,0.06];
-  line1 = dedGroup.createChild("text")
-        .setFontSize(13, 1)
-        .setColor(color)
-        .setAlignment("left-bottom-baseline")
-        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
-        .setText("LINE 1            LINE 1")
-        .setTranslation(55, 128*0.2);
-  line2 = dedGroup.createChild("text")
-        .setFontSize(13, 1)
-        .setColor(color)
-        .setAlignment("left-bottom-baseline")
-        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
-        .setText("LINE 2            LINE 2")
-        .setTranslation(55, 128*0.3);
-  line3 = dedGroup.createChild("text")
-        .setFontSize(13, 1)
-        .setColor(color)
-        .setAlignment("left-bottom-baseline")
-        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
-        .setText("LINE 3            LINE 3")
-        .setTranslation(55, 128*0.4);
-  line4 = dedGroup.createChild("text")
-        .setFontSize(13, 1)
-        .setColor(color)
-        .setAlignment("left-bottom-baseline")
-        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
-        .setText("LINE 4            LINE 4")
-        .setTranslation(55, 128*0.5);
-  line5 = dedGroup.createChild("text")
-        .setFontSize(13, 1)
-        .setColor(color)
-        .setAlignment("left-bottom-baseline")
-        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
-        .setText("LINE 5            LINE 5")
-        .setTranslation(55, 128*0.6);
-};
-
-var pTACAN= 0;
-var pALOW = 1;
-var pSTPT = 2;
-var pTIME = 3;
-var pIFF  = 4;
-var pCNI  = 5;
-var pBINGO= 6;
-var pMAGV = 7;
-var pLINK = 8;
-var pLASER= 9;
-var pCM   = 10;
-var pCRUS = 11;
-var pFACK = 12;
-var pLIST = 100;#excluded from random
-var pMISC = 101;#excluded from random
-
-var page = int(rand()*11.99);#random page at startup
-var comm = 0;
-
-var text = ["","","","",""];
-
-var scroll = 0;
-var scrollF = 0;
 
 var loop_ded = func {# one line is max 24 chars
-    var no = getprop("autopilot/route-manager/current-wp")+1;
-    if (no == 0) {
-      no = "";
-    } else {
-      no = sprintf("%2d",no);
-    }
+    
     if (page == pSTPT) {
       var fp = flightplan();
       var TOS = "--:--:--";
@@ -390,27 +286,6 @@ var loop_ded = func {# one line is max 24 chars
       text[3] = sprintf(" 7DRNG 8BULL 9WPT OHARM ");
       text[4] = sprintf("                        ");
     }
-    line1.setText(text[0]);
-    line2.setText(text[1]);
-    line3.setText(text[2]);
-    line4.setText(text[3]);
-    line5.setText(text[4]);
-    settimer(loop_ded, 0.5);
-};
-#callInit();
-#loop_ded();
-
-var toggleHack = func() {
-	if (chrono.running) {
-		chrono.stop();
-	} else {
-		chrono.start();
-	}
-};
-
-var resetHack = func() {
-	chrono.stop();
-	chrono.reset();
 };
 
 var cursorUp = func {
