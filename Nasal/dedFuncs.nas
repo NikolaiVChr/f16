@@ -1,15 +1,15 @@
 # Classes
 var Button = {
-	new: func(routerVec = nil, actionVec = nil, 1To9 = 0) {
+	new: func(routerVec = nil, actionVec = nil, To9 = 0) {
 		var button = {parents: [Button]};
 		button.routerVec = routerVec;
 		button.actionVec = actionVec;
-		button.1To9 = 1To9;
+		button.To9 = To9;
 		return button;
 	},
 	doAction: func() {
 		sound.doubleClick();
-		if (me.1To9) {
+		if (me.To9) {
 			if (dataEntryDisplay.page == pMARK or dataEntryDisplay.page == pFIX or dataEntryDisplay.page == pACAL) {
 				if (dataEntryDisplay.page == pMARK and dataEntryDisplay.markModeSelected) {
 					if (dataEntryDisplay.markMode == "OFLY") {
