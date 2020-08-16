@@ -2193,11 +2193,11 @@ append(obj.total, obj.speed_curr);
         me.irLock.update();
 
         if (hdp.ded and !hdp.dgft) {
-            me.ded0.setText(ded.text[0]);
-            me.ded1.setText(ded.text[1]);
-            me.ded2.setText(ded.text[2]);
-            me.ded3.setText(ded.text[3]);
-            me.ded4.setText(ded.text[4]);
+            me.ded0.setText(ded.dataEntryDisplay.text[0]);
+            me.ded1.setText(ded.dataEntryDisplay.text[1]);
+            me.ded2.setText(ded.dataEntryDisplay.text[2]);
+            me.ded3.setText(ded.dataEntryDisplay.text[3]);
+            me.ded4.setText(ded.dataEntryDisplay.text[4]);
             me.ded0.show();
             me.ded1.show();
             me.ded2.show();

@@ -1,19 +1,47 @@
 # Classes
 var Button = {
-	new: func(routerVec = nil, specificAction = nil) {
+	new: func(routerVec = nil, actionVec = nil) {
 		var button = {parents: [Button]};
 		button.routerVec = routerVec;
-		button.specificAction = specificAction;
+		button.actionVec = actionVec;
 		return button;
 	},
 	doAction: func() {
 		sound.doubleClick();
-		if (me.specificAction != nil) {
-			me.specificAction.run();
+		if (dataEntryDisplay.page == pMARK or dataEntryDisplay.page == pFIX or dataEntryDisplay.page == pACAL) {
+			if (dataEntryDisplay.page == pMARK and dataEntryDisplay.markModeSelected) {
+				if (dataEntryDisplay.markMode == "OFLY") {
+					dataEntryDisplay.markMode = "FCR";
+				} elsif (dataEntryDisplay.markMode == "FCR") {
+					dataEntryDisplay.markMode = "HUD";
+				} else {
+					dataEntryDisplay.markMode = "OFLY";
+				}
+				return;
+			}
+			
+			if (dataEntryDisplay.page == pFIX and dataEntryDisplay.fixTakingModeSelected) {
+			
+				return;
+			}
+			
+			if (dataEntryDisplay.page == pACAL and dataEntryDisplay.acalModeSelected) {
+			
+				return;
+			}
+		}
+		if (me.actionVec != nil) {
+			foreach (var action; me.actionVec) {
+				if (action.run() != -1) {
+					return;
+				}
+			}
 		}
 		if (me.routerVec != nil) {
 			foreach (var router; me.routerVec) {
-				router.run();
+				if (router.run() != -1) {
+					return;
+				}
 			}
 		}
 	},
@@ -29,7 +57,9 @@ var Action = {
 	run: func() {
 		if (dataEntryDisplay.page == me.page or me.page == nil) {
 			call(me.funcCallback);
+			return 1;
 		}
+		return -1;
 	},
 };
 
@@ -43,7 +73,9 @@ var Router = {
 	run: func() {
 		if (dataEntryDisplay.page == me.start or me.start == nil) {
 			dataEntryDisplay.page = me.finish;
+			return 1;
 		}
+		return -1;
 	},
 };
 
@@ -60,6 +92,10 @@ var resetHack = func() {
 	dataEntryDisplay.chrono.stop();
 	dataEntryDisplay.chrono.reset();
 };
+
+var modeSelMark = func() { dataEntryDisplay.markModeSelected = !dataEntryDisplay.markModeSelected; };
+var modeSelFix = func() { dataEntryDisplay.fixTakingModeSelected = !dataEntryDisplay.fixTakingModeSelected; };
+var modeSelAcal = func() { dataEntryDisplay.acalModeSelected = !dataEntryDisplay.acalModeSelected; };
 
 
 ## these methods taken from JA37:
