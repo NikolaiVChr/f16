@@ -1,33 +1,48 @@
 # Classes
 var Button = {
-	new: func(routerVec = nil, actionVec = nil) {
+	new: func(routerVec = nil, actionVec = nil, 1To9 = 0) {
 		var button = {parents: [Button]};
 		button.routerVec = routerVec;
 		button.actionVec = actionVec;
+		button.1To9 = 1To9;
 		return button;
 	},
 	doAction: func() {
 		sound.doubleClick();
-		if (dataEntryDisplay.page == pMARK or dataEntryDisplay.page == pFIX or dataEntryDisplay.page == pACAL) {
-			if (dataEntryDisplay.page == pMARK and dataEntryDisplay.markModeSelected) {
-				if (dataEntryDisplay.markMode == "OFLY") {
-					dataEntryDisplay.markMode = "FCR";
-				} elsif (dataEntryDisplay.markMode == "FCR") {
-					dataEntryDisplay.markMode = "HUD";
-				} else {
-					dataEntryDisplay.markMode = "OFLY";
+		if (me.1To9) {
+			if (dataEntryDisplay.page == pMARK or dataEntryDisplay.page == pFIX or dataEntryDisplay.page == pACAL) {
+				if (dataEntryDisplay.page == pMARK and dataEntryDisplay.markModeSelected) {
+					if (dataEntryDisplay.markMode == "OFLY") {
+						dataEntryDisplay.markMode = "FCR";
+					} elsif (dataEntryDisplay.markMode == "FCR") {
+						dataEntryDisplay.markMode = "HUD";
+					} else {
+						dataEntryDisplay.markMode = "OFLY";
+					}
+					return;
 				}
-				return;
-			}
-			
-			if (dataEntryDisplay.page == pFIX and dataEntryDisplay.fixTakingModeSelected) {
-			
-				return;
-			}
-			
-			if (dataEntryDisplay.page == pACAL and dataEntryDisplay.acalModeSelected) {
-			
-				return;
+				
+				if (dataEntryDisplay.page == pFIX and dataEntryDisplay.fixTakingModeSelected) {
+					if (dataEntryDisplay.fixTakingMode == "OFLY") {
+						dataEntryDisplay.fixTakingMode = "FCR";
+					} elsif (dataEntryDisplay.fixTakingMode == "FCR") {
+						dataEntryDisplay.fixTakingMode = "HUD";
+					} else {
+						dataEntryDisplay.fixTakingMode = "OFLY";
+					}
+					return;
+				}
+				
+				if (dataEntryDisplay.page == pACAL and dataEntryDisplay.acalModeSelected) {
+					if (dataEntryDisplay.fixTakingMode == "GPS") {
+						dataEntryDisplay.fixTakingMode = "DTS";
+					} elsif (dataEntryDisplay.fixTakingMode == "DTS") {
+						dataEntryDisplay.fixTakingMode = "BOTH";
+					} else {
+						dataEntryDisplay.fixTakingMode = "GPS";
+					}
+					return;
+				}
 			}
 		}
 		if (me.actionVec != nil) {
