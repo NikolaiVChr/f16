@@ -257,7 +257,7 @@
             <button>0</button>
             <binding>
                 <command>nasal</command>
-                <script>ded.alow();</script>
+                <script>ded.button2();</script>
             </binding>
         </action>
         <hovered>
@@ -286,24 +286,24 @@
             </binding>
         </hovered>
     </animation>
-    <animation>
+    <!--<animation>
         <type>pick</type>
-        <object-name>rcl</object-name><!-- 3 -->
+        <object-name>rcl</object-name>
         <action>
             <button>0</button>
             <binding>
                 <command>nasal</command>
-                <script>ded.magv();</script>
+                <script>ded.rcl();</script>
             </binding>
         </action>
         <hovered>
             <binding>
                 <command>set-tooltip</command>
-                <tooltip-id>button-magv</tooltip-id>
-                <label>MAGV</label>
+                <tooltip-id>button-recall</tooltip-id>
+                <label>RECALL</label>
             </binding>
         </hovered>
-    </animation>
+    </animation>-->
     <animation>
         <type>pick</type>
         <object-name>4</object-name><!-- 4 -->
@@ -419,14 +419,14 @@
             <button>0</button>
             <binding>
                 <command>nasal</command>
-                <script>ded.bingo();</script>
+                <script>ded.button0();</script>
             </binding>
         </action>
         <hovered>
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>button-7</tooltip-id>
-                <label>BINGO</label>
+                <label>Zero</label>
             </binding>
         </hovered>
     </animation>
