@@ -2,7 +2,7 @@
 
 <PropertyList>
 
- <path>ded.ac</path>
+ <path>pfd.ac</path>
 
  <!--<panel>
   <name>Panel3D</name>
@@ -25,8 +25,8 @@
  </panel>-->
 
   <animation>
-        <object-name>poly.002</object-name>
-        <object-name>poly.003</object-name>
+        <object-name>poly.004</object-name>
+        <object-name>poly.005</object-name>
         <type>select</type>
         <condition>
           <not>
@@ -49,8 +49,8 @@
   </animation>
 
  <animation>
-        <!--<object-name>poly.002</object-name>-->
-        <object-name>poly.003</object-name>
+        <!--<object-name>poly.004</object-name>-->
+        <object-name>poly.005</object-name>
         <type>material</type>
         <condition>
             <greater-than-equals>
@@ -93,7 +93,7 @@
                 <image>Aircraft/f16/Models/Effects/dust3.png</image>
             </texture>
         </parameters>
-        <object-name>poly.003</object-name>
+        <object-name>poly.005</object-name>
     </effect>
 
 </PropertyList>
