@@ -54,6 +54,7 @@
         <object-name>deddata-switch</object-name>
         <object-name>HUD_0</object-name>
         <object-name>HUD_1</object-name>
+        <object-name>HUD_50_1</object-name>
         <object-name>tas-switch</object-name>
         <object-name>test-step-switch</object-name>
         <object-name>w_vah-switch</object-name>
@@ -1325,6 +1326,7 @@
         <object-name>GROWTH.102_1</object-name>
         <object-name>NUCLEAR_CONSENT_1</object-name>
         <object-name>HUD_1</object-name>
+        <object-name>HUD_50_1</object-name>
         <object-name>SNSR_PWR_1</object-name>
         <object-name>VOICE_MESSAGE_1</object-name>
         <object-name>ZEROIZE_1</object-name>
@@ -1457,6 +1459,52 @@
                 <property>sim/variant-id</property>
                 <value>2</value>
             </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>4</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>5</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>6</value>
+            </equals>
+          </or>
+        </condition>
+    </animation>
+
+    <animation>
+        <object-name>HUD_1</object-name>
+        <type>select</type>
+        <condition>
+          <or>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>0</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>1</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>2</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>3</value>
+            </equals>
+          </or>
+        </condition>
+    </animation>
+
+    <animation>
+        <object-name>HUD_50_1</object-name>
+        <type>select</type>
+        <condition>
+          <or>
             <equals>
                 <property>sim/variant-id</property>
                 <value>4</value>

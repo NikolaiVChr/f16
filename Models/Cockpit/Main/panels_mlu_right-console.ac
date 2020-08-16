@@ -3858,7 +3858,7 @@ refs 4
 kids 0
 OBJECT group
 name "HUD"
-kids 10
+kids 11
 OBJECT poly
 name "altrad-switch"
 data 25
@@ -5409,6 +5409,26 @@ refs 4
 3 0.011775 0.825672
 2 0.011775 0.734873
 1 0.404256 0.734873
+kids 0
+OBJECT poly
+name "HUD_50_1"
+data 7
+HUD.002
+texture "../Textures/panels-B10-right_console.png"
+crease 30.000000
+numvert 4
+0.10872 0.03228 -0.34937
+0.17557 0.02585 -0.34937
+0.17557 0.02585 -0.49638
+0.10872 0.03228 -0.49638
+numsurf 1
+SURF 0x30
+mat 2
+refs 4
+3 0.404256 0.825672
+0 0.011775 0.825672
+1 0.011775 0.734873
+2 0.404256 0.734873
 kids 0
 OBJECT poly
 name "tas-switch"
