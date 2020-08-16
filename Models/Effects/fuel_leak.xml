@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!--###################################################################################
+		Lake of Constance Hangar :: M.Kraus
+		Boeing 707 for Flightgear Septemper 2013
+		This file is licenced under the terms of the GNU General Public Licence V2 or later
+		###################################################################################
+-->
+<PropertyList>
+  <particlesystem>
+    <name>fuel_leak</name>
+		<texture>../Armament/Weapons/smoke.png</texture>
+    <emissive>false</emissive>
+    <lighting>false</lighting>
+    <condition>
+      <equals>
+          <property>consumables/fuel-tanks/serviceable</property> 
+          <value>0</value>
+      </equals> 
+    </condition>
+		<align>billboard</align>
+		<attach>world</attach>
+		<placer>
+			<type>point</type>
+		</placer>
+    <shooter>
+      <theta-min-deg>-11.25</theta-min-deg>
+      <theta-max-deg>+11.25</theta-max-deg>
+      <phi-min-deg>-11.25</phi-min-deg>
+      <phi-max-deg>+11.25</phi-max-deg>
+      <speed-mps>
+        <value>8.0</value>
+        <spread>2.0</spread>
+      </speed-mps>
+      <rotation-speed>
+        <x-min-deg-sec>0.0</x-min-deg-sec>
+        <y-min-deg-sec>0.0</y-min-deg-sec>
+        <z-min-deg-sec>0.0</z-min-deg-sec>
+        <x-max-deg-sec>45.0</x-max-deg-sec>
+        <y-max-deg-sec>45.0</y-max-deg-sec>
+        <z-max-deg-sec>45.0</z-max-deg-sec>
+      </rotation-speed>
+    </shooter>
+		<counter>
+			<particles-per-sec>
+				<value>50</value>
+				<spread>2.5</spread>
+			</particles-per-sec>
+		</counter>
+    <particle>
+      <start>
+				<color>
+					<red><value>0.6</value></red>
+					<green><value>0.6</value></green>
+					<blue><value>0.75</value></blue>
+					<alpha><value>0.1</value></alpha>
+				</color>
+        <size>
+          <value>0.25</value>
+        </size>
+      </start>
+      <end>
+				<color>
+					<red><value>1</value></red>
+					<green><value>1</value></green>
+					<blue><value>1</value></blue>
+					<alpha><value>0</value></alpha>
+				</color>
+        <size>
+          <value>30.0</value>
+        </size>
+      </end>
+      <life-sec>
+        <value>5.0</value>
+      </life-sec>
+      <mass-kg>350</mass-kg>
+      <radius-m>1.0</radius-m>
+    </particle>
+    <program>
+      <fluid>air</fluid>
+      <gravity type="bool">true</gravity>
+      <wind type="bool">true</wind>
+    </program>
+  </particlesystem>
+</PropertyList>

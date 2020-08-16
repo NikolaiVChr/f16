@@ -667,6 +667,10 @@
                 <desc>Slew cursor on CRM</desc>
             </key>
             <key>
+                <name>Ctrl + Arrow keys</name>
+                <desc>Display Management Switch</desc>
+            </key>
+            <key>
                 <name>l</name>
                 <desc>Cursor designate</desc>
             </key>
@@ -841,10 +845,18 @@ page HSD: Horizontal situation display. Shows route and radar echoes.
           DCPL: Range can be set independently of radar range by clicking on the up/down arrows.
 page WPN: Details about current selected weapon(s).
 
+The Sensor of Interest is selected using DMS (Ctrl + Arrow Key). DMS Forward selects HUD as SOI. DMS Aft 
+selects the left MFD as SOI, and further DMS Aft toggles between left / right MFD. The SOI may then be manipulated
+with the cursor.
+
 DED
 The DED is the small display above the right color MFD.
 Clicking on certain buttons on the ICP (the panel below the HUD) can bring up different pages.
 The DED can also be brought up on the HUD in the controlpanel.
+
+HACK Timer
+The DED has a built-in stopwatch. To access this, use key 6 ("TIME") on the ICP to select TIME page.
+Then, use the up arrow on the ICP to start the HACK timer. The up arrow toggles the timer while the down arrow resets it.
             ]]></text-4>
             <text-5><![CDATA[
 AUTOPILOT
@@ -1054,13 +1066,25 @@ There is also small changes in tail for different variants with and without brak
                 <desc>slew</desc>
                 <binding>
                     <command>property-assign</command>
-                    <property>controls/displays/cursor-slew-x</property>
+                    <property>controls/displays/target-management-switch-x</property>
                     <value type="int">-1</value>
                 </binding>
+                <mod-ctrl>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/display-management-switch-x</property>
+                        <value type="int">-1</value>
+                    </binding>
+                </mod-ctrl>
                 <mod-up>
                     <binding>
                         <command>property-assign</command>
-                        <property>controls/displays/cursor-slew-x</property>
+                        <property>controls/displays/target-management-switch-x</property>
+                        <value type="int">0</value>
+                    </binding>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/display-management-switch-x</property>
                         <value type="int">0</value>
                     </binding>
                 </mod-up>
@@ -1072,13 +1096,25 @@ There is also small changes in tail for different variants with and without brak
                 <desc>slew</desc>
                 <binding>
                     <command>property-assign</command>
-                    <property>controls/displays/cursor-slew-x</property>
+                    <property>controls/displays/target-management-switch-x</property>
                     <value type="int">1</value>
                 </binding>
+                <mod-ctrl>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/display-management-switch-x</property>
+                        <value type="int">1</value>
+                    </binding>
+                </mod-ctrl>
                 <mod-up>
                     <binding>
                         <command>property-assign</command>
-                        <property>controls/displays/cursor-slew-x</property>
+                        <property>controls/displays/target-management-switch-x</property>
+                        <value type="int">0</value>
+                    </binding>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/display-management-switch-x</property>
                         <value type="int">0</value>
                     </binding>
                 </mod-up>
@@ -1090,13 +1126,25 @@ There is also small changes in tail for different variants with and without brak
                 <desc>slew</desc>
                 <binding>
                     <command>property-assign</command>
-                    <property>controls/displays/cursor-slew-y</property>
+                    <property>controls/displays/target-management-switch-y</property>
                     <value type="int">-1</value>
                 </binding>
+                <mod-ctrl>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/display-management-switch-y</property>
+                        <value type="int">-1</value>
+                    </binding>
+                </mod-ctrl>
                 <mod-up>
                     <binding>
                         <command>property-assign</command>
-                        <property>controls/displays/cursor-slew-y</property>
+                        <property>controls/displays/target-management-switch-y</property>
+                        <value type="int">0</value>
+                    </binding>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/display-management-switch-y</property>
                         <value type="int">0</value>
                     </binding>
                 </mod-up>
@@ -1108,13 +1156,25 @@ There is also small changes in tail for different variants with and without brak
                 <desc>slew</desc>
                 <binding>
                     <command>property-assign</command>
-                    <property>controls/displays/cursor-slew-y</property>
+                    <property>controls/displays/target-management-switch-y</property>
                     <value type="int">1</value>
                 </binding>
+                <mod-ctrl>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/display-management-switch-y</property>
+                        <value type="int">1</value>
+                    </binding>
+                </mod-ctrl>
                 <mod-up>
                     <binding>
                         <command>property-assign</command>
-                        <property>controls/displays/cursor-slew-y</property>
+                        <property>controls/displays/target-management-switch-y</property>
+                        <value type="int">0</value>
+                    </binding>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/display-management-switch-y</property>
                         <value type="int">0</value>
                     </binding>
                 </mod-up>
@@ -1697,19 +1757,6 @@ There is also small changes in tail for different variants with and without brak
                 f16.chute();
                </script>
               </binding>
-              <mod-ctrl>
-			    <binding>
-				  <command>nasal</command>
-				   <script>
-					if (getprop("f16/chute/done")) {
-					  setprop("f16/chute/enable", 0);
-					  setprop("f16/chute/fold", 1);
-					  setprop("fdm/jsbsim/external_reactions/chute/magnitude", 0);
-					  f16.chuteRelease();
-					}
-				   </script>
-				  </binding>
-              </mod-ctrl>
              </key>
              <key n="79">
               <name>O</name>
@@ -1832,6 +1879,12 @@ There is also small changes in tail for different variants with and without brak
         <displays>
             <cursor-slew-x type="float">0</cursor-slew-x>
             <cursor-slew-y type="float">0</cursor-slew-y>
+            <cursor-slew-x n="1" type="float">0</cursor-slew-x>
+            <cursor-slew-y n="1" type="float">0</cursor-slew-y>
+            <display-management-switch-x type="float">0</display-management-switch-x>
+            <display-management-switch-y type="float">0</display-management-switch-y>
+            <target-management-switch-x type="float">0</target-management-switch-x>
+            <target-management-switch-y type="float">0</target-management-switch-y>
             <cursor-click type="bool">false</cursor-click>
         </displays>
         <indicators />
@@ -1855,7 +1908,7 @@ There is also small changes in tail for different variants with and without brak
                 <console-flood type="double">0.0</console-flood>
                 <console-primary-knob type="double">0.0</console-primary-knob>
                 <console-primary type="double">0.0</console-primary>
-                <data-entry-display type="double">1.0</data-entry-display>
+                <data-entry-display type="double">0.0</data-entry-display>
             </lighting-panel>
             <landing-light type="int">0</landing-light>
         </lighting>
@@ -1863,12 +1916,12 @@ There is also small changes in tail for different variants with and without brak
             <ejection-safety-lever type="bool">false</ejection-safety-lever>
         </seat>
         <test>
-			<avtr-test type="bool">false</avtr-test>
+            <avtr-test type="bool">false</avtr-test>
             <test-panel>
-				<fire-ovht-test type="bool">false</fire-ovht-test>
+                <fire-ovht-test type="bool">false</fire-ovht-test>
                 <mal-ind-lts type="bool">false</mal-ind-lts>
-				<oxy-test type="bool">false</oxy-test>
-				<pbg-test type="bool">false</pbg-test>
+                <oxy-test type="bool">false</oxy-test>
+                <pbg-test type="bool">false</pbg-test>
             </test-panel>
         </test>
         <smoke type="bool">false</smoke>
@@ -1933,6 +1986,9 @@ There is also small changes in tail for different variants with and without brak
                 <level-norm type="double">0</level-norm>
             </tank>
         </fuel>
+		<fuel-tanks>
+			<serviceable type="bool">true</serviceable>
+		</fuel-tanks>
     </consumables>
     <fdm>
         <jsbsim>
@@ -3477,14 +3533,21 @@ value. 18000=standard US transition altitude -->
             <ew-disp-switch type="bool">false</ew-disp-switch>
             <ew-rwr-switch type="bool">false</ew-rwr-switch>
             <ew-mws-switch type="bool">false</ew-mws-switch>
+            <ew-jett-switch type="bool">false</ew-jett-switch>
             <ew-jmr-switch type="bool">false</ew-jmr-switch>
             <ew-mode-knob type="bool">false</ew-mode-knob>
+            <cmds-01-switch type="bool">false</cmds-01-switch>
+            <cmds-02-switch type="bool">false</cmds-02-switch>
+            <cmds-ch-switch type="bool">false</cmds-ch-switch>
+            <cmds-fl-switch type="bool">false</cmds-fl-switch>
             <msl-vol-knob type="double">0.5</msl-vol-knob>
             <rwr-volume type="double">0.7</rwr-volume>
             <oxy-psi type="double">0.0</oxy-psi>
             <pbg-switch type="int">-1</pbg-switch>
             <intercom-volume type="double">0.5</intercom-volume>
             <ils-volume type="double">0.10</ils-volume>
+			<uhf-radio-display-test type="bool">false</uhf-radio-display-test>
+			<vvi-indicated-speed-fps type="double">0</vvi-indicated-speed-fps>
             <caution>
                 <master type="bool">false</master>
                 <master-btn type="bool">false</master-btn>
@@ -3682,6 +3745,9 @@ value. 18000=standard US transition altitude -->
         <ded>
           <file>Aircraft/f16/Nasal/ded.nas</file>
         </ded>
+        <pfd>
+          <file>Aircraft/f16/Nasal/pfd.nas</file>
+        </pfd>
         <frd>
           <file>Aircraft/f16/Nasal/freq-display.nas</file>
         </frd>

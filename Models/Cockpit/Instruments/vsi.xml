@@ -7,7 +7,15 @@
   <type>select</type>
   <object-name>VSI_off-flag-inverted</object-name>
   <condition>
-    <property>systems/static/serviceable</property><!-- FIXME -->
+   <not><or>
+		<not>
+			<property>systems/static/serviceable</property>
+		</not>
+		<less-than-equals>
+			<property>fdm/jsbsim/elec/bus/emergency-ac-1</property>
+			<value>100</value>
+		</less-than-equals>
+	</or></not>
   </condition>
  </animation>
 
@@ -15,7 +23,7 @@
   <name>needle</name>
   <type>rotate</type>
   <object-name>VSI_needle</object-name>
-  <property>velocities/vertical-speed-fps</property>
+  <property>f16/avionics/vvi-indicated-speed-fps</property>
   <interpolation>
    <entry><ind>-100.0</ind><dep>-90</dep></entry>
    <entry><ind>-66.667</ind><dep>-74</dep></entry>

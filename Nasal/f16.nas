@@ -210,7 +210,7 @@ var loop_flare = func {
         setprop("rotors/main/blade[3]/flap-deg", 0);
         setprop("rotors/main/blade[3]/position-deg", 0);#MP interpolates between numbers, so nil is better than 0.
     }
-    if (getprop("ai/submodels/submodel[0]/flare-release-out-snd") == TRUE and (flareStart + 1) < getprop("sim/time/elapsed-sec")) {
+    if (getprop("ai/submodels/submodel[0]/flare-release-out-snd") == TRUE and (flareStart + 1.5) < getprop("sim/time/elapsed-sec")) {
         setprop("ai/submodels/submodel[0]/flare-release-out-snd", FALSE);
     }
     if (flareCount > getprop("ai/submodels/submodel[0]/count")) {
@@ -838,8 +838,10 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     tgp.fast_loop();
     ded.callInit();
     ded.loop_ded();
+    pfd.callInit();
+    pfd.loop_pfd();
     frd.callInit();
-    frd.loop_ded();
+    frd.loop_freqDsply();
     mps.loop();
     enableViews();
     fail.start();
@@ -983,6 +985,10 @@ var autostart = func {
   setprop("f16/avionics/ew-mws-switch",1);
   setprop("f16/avionics/ew-jmr-switch",1);
   setprop("f16/avionics/ew-mode-knob",1);
+  setprop("f16/avionics/cmds-01-switch",1);
+  setprop("f16/avionics/cmds-02-switch",1);
+  setprop("f16/avionics/cmds-ch-switch",1);
+  setprop("f16/avionics/cmds-fl-switch",1);
   setprop("f16/avionics/pbg-switch",0);
   setprop("controls/ventilation/airconditioning-enabled",1);
   setprop("controls/ventilation/airconditioning-source",1);
@@ -991,6 +997,7 @@ var autostart = func {
   setprop("controls/lighting/lighting-panel/pri-inst-pnl-knob", 0.5);
   setprop("controls/lighting/lighting-panel/flood-inst-pnl-knob", 0.1);
   setprop("controls/lighting/lighting-panel/console-primary-knob", 0.2);
+  setprop("controls/lighting/lighting-panel/data-entry-display", 1.0);
   setprop("instrumentation/radar/radar-standby", 0);
   setprop("instrumentation/comm[0]/volume",1);
   setprop("instrumentation/comm[1]/volume",1);
@@ -1044,6 +1051,10 @@ var coldndark = func {
   setprop("f16/avionics/ew-mws-switch",0);
   setprop("f16/avionics/ew-jmr-switch",0);
   setprop("f16/avionics/ew-mode-knob",0);
+  setprop("f16/avionics/cmds-01-switch",0);
+  setprop("f16/avionics/cmds-02-switch",0);
+  setprop("f16/avionics/cmds-ch-switch",0);
+  setprop("f16/avionics/cmds-fl-switch",0);
   setprop("f16/avionics/pbg-switch",-1);
   setprop("controls/ventilation/airconditioning-enabled",0);
   setprop("controls/ventilation/airconditioning-source",0);
@@ -1053,6 +1064,7 @@ var coldndark = func {
   setprop("controls/lighting/lighting-panel/pri-inst-pnl-knob", 0.0);
   setprop("controls/lighting/lighting-panel/flood-inst-pnl-knob", 0.0);
   setprop("controls/lighting/lighting-panel/console-primary-knob", 0.0);
+  setprop("controls/lighting/lighting-panel/data-entry-display", 0.0);
   setprop("instrumentation/radar/radar-standby", 1);
   setprop("instrumentation/comm[0]/volume",0);
   setprop("instrumentation/comm[1]/volume",0);
@@ -1887,5 +1899,49 @@ var flexer = func {
 }
 
 setlistener("controls/flight/alt-rel-button", func (node) {setprop("controls/armament/trigger", node.getValue());});
+
+var SOI = math.ceil(int(rand() * 3)); 
+var MFDControlsNodes = {
+	dmsX: props.globals.getNode("controls/displays/display-management-switch-x"),
+	dmsY: props.globals.getNode("controls/displays/display-management-switch-y"),
+	tgtX: props.globals.getNode("controls/displays/target-management-switch-x"),
+	tgtY: props.globals.getNode("controls/displays/target-management-switch-y"),
+};
+
+setlistener("/controls/displays/display-management-switch-x", func() {
+	if (MFDControlsNodes.dmsY.getValue() != 0) { return; }
+	if (MFDControlsNodes.dmsX.getValue() == 0) { return; }
+}, 0, 0);
+
+setlistener("controls/displays/target-management-switch-x", func() {
+	if (SOI == 1) { return; }
+	setprop("controls/displays/cursor-slew-x[" ~ (SOI - 2) ~ "]", MFDControlsNodes.tgtX.getValue());
+}, 0, 0);
+
+setlistener("controls/displays/display-management-switch-y", func() {
+	if (MFDControlsNodes.dmsX.getValue() != 0) { return; }
+	if (MFDControlsNodes.dmsY.getValue() == 0) { return; }
+	if (MFDControlsNodes.dmsY.getValue() == -1) {
+		SOI = 1;
+	} else {
+		if (SOI == 1) {
+			SOI = 2;
+		} elsif (SOI == 2) {
+			SOI = 3;
+		} else {
+			SOI = 2;
+		}
+	}
+}, 0, 0);
+
+setlistener("controls/displays/target-management-switch-y", func() {
+	if (SOI == 1) { return; }
+	setprop("controls/displays/cursor-slew-y[" ~ (SOI - 2) ~ "]", MFDControlsNodes.tgtY.getValue());
+}, 0, 0);
+
+setlistener("controls/displays/cursor-click", func() {
+	if (SOI == 1) { return; }
+}, 0, 0);
+
 
 var chuteLoop = maketimer(0.05, chuteLoopFunc);

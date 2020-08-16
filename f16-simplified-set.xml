@@ -8,7 +8,7 @@
       The General Dynamics F-16 Fighting Falcon is a single-engine supersonic multirole fighter aircraft originally developed by General Dynamics (now Lockheed Martin) for the United States Air Force (USAF). Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
       The Fighting Falcon has key features including a frameless bubble canopy for better visibility, side-mounted control stick to ease control while maneuvering, a seat reclined 30 degrees to reduce the effect of g-forces on the pilot, and the first use of a relaxed static stability/fly-by-wire flight control system which helps to make it a nimble aircraft.
   </long-description>
-  <author>Erik Hofman, Pensacola, Martin "Pegasus" Schmitt, Nikolai V. Chr., J Maverick 16, Richard Harrison, Josh Davidson, Martien Van Der P., Gary Brown, Justin Nicholson, Jonathan Redpath, Timi, Enrico Castaldi</author>
+  <author>Erik Hofman, Pensacola, Martin "Pegasus" Schmitt, Nikolai V. Chr., J Maverick 16, Richard Harrison, Josh Davidson, Martien Van Der P., Gary Brown, Justin Nicholson, Jonathan Redpath, Timi, Barszczisbad, Enrico Castaldi</author>
   <status>production</status>
   <rating>
     <FDM type="int">3</FDM>
@@ -90,7 +90,7 @@
     <text2><!--BIT/SILENT color-->
       <red type="double">1.00</red>
       <green type="double">1.00</green>
-      <blue type="double">0.50</blue>
+      <blue type="double">1.00</blue>
     </text2>
     <line1><!--CRM scan lines + lat range + HSD acft, rdr scope color -->
       <red type="double">0.70</red>
@@ -118,8 +118,8 @@
       <blue type="double">1.00</blue>
     </line5>
     <bullseye><!--Bullseye color-->
-      <red type="double">0.70</red>
-      <green type="double">0.70</green>
+      <red type="double">0.40</red>
+      <green type="double">0.80</green>
       <blue type="double">1.00</blue>
     </bullseye>
     <betxt><!--Bullseye cursor color-->
@@ -169,7 +169,7 @@
    <default>
     <menu n="101">
      <label>F-16</label>
-        <item n="10">
+        <!--item n="10">
           <label>Payload quick setup</label>
           <binding>
             <command>dialog-show</command>
@@ -184,7 +184,7 @@
               <command>dialog-show</command>
               <dialog-name>programGPS</dialog-name>
           </binding>
-      </item> 
+      </item--> 
     </menu>
    </default>
   </menubar>

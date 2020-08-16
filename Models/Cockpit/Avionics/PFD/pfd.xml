@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>pfd.ac</path>
+
+  <animation>
+        <object-name>poly.004</object-name>
+        <object-name>PFDscreen</object-name>
+        <type>select</type>
+        <condition>
+          <not>
+          <or>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>0</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>1</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>1</value>
+            </equals>
+          </or>
+          </not>
+        </condition>
+  </animation>
+
+ <animation>
+        <!--<object-name>poly.004</object-name>-->
+        <object-name>PFDscreen</object-name>
+        <type>material</type>
+        <condition>
+            <greater-than-equals>
+                <property>f16/avionics/power-ufc-warm</property>
+                <value>0.95</value>
+            </greater-than-equals>
+            <or>
+              <greater-than-equals>
+                  <property>fdm/jsbsim/elec/bus/emergency-ac-1</property>
+                  <value>100</value>
+              </greater-than-equals>
+              <greater-than-equals>
+                  <property>fdm/jsbsim/elec/bus/emergency-ac-2</property>
+                  <value>100</value>
+              </greater-than-equals>
+            </or>
+        </condition>
+        <emission>
+            <factor-prop>controls/lighting/lighting-panel/data-entry-display</factor-prop>
+            <red>  1</red>
+            <green>1</green>
+            <blue> 1</blue>
+        </emission>
+    </animation>
+
+    <effect>
+        <inherits-from>Aircraft/f16/Models/Effects/displays/lcd</inherits-from>
+        <parameters><!-- RWR is a CRT display, hence the big angles -->
+            <inner-angle type="float">45</inner-angle><!-- 0-90, use 90 for LED or plasma display-->
+            <outer-angle type="float">60</outer-angle><!-- 0-90, but greater than inner -->
+            <black-angle type="float">80</black-angle><!-- 0-90, but greater than outer -->
+            <contrast type="float">1</contrast>
+            <dirt-factor>0.04</dirt-factor>
+            <texture n="1">
+                <type>2d</type>
+                <filter>linear-mipmap-linear</filter>
+                <wrap-s>clamp</wrap-s>
+                <wrap-t>clamp</wrap-t>
+                <internal-format>normalized</internal-format>
+                <image>Aircraft/f16/Models/Effects/dust3.png</image>
+            </texture>
+        </parameters>
+        <object-name>PFDscreen</object-name>
+    </effect>
+
+</PropertyList>

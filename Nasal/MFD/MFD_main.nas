@@ -8,9 +8,9 @@
 
 var MFD_Station =
 {
-	new : func (svg, ident)
+    new : func (svg, ident)
     {
-		var obj = {parents : [MFD_Station] };
+        var obj = {parents : [MFD_Station] };
 
         obj.status = svg.getElementById("PACS_L_"~ident);
         if (obj.status == nil)
@@ -132,9 +132,9 @@ var PFD_VSD =
 # 4. nd_group_ident : group (usually within the main layer) to place the NavDisplay
 # 5. switches - used to connect the property tree to the nav display. see the canvas nav display
 #    documentation
-	new : func (pfd_device, title, instrument_ident, layer_id)
+    new : func (pfd_device, title, instrument_ident, layer_id)
     {
-		var obj = pfd_device.addPage(title, layer_id);
+        var obj = pfd_device.addPage(title, layer_id);
 
         obj.pfd_device = pfd_device;
 
@@ -366,9 +366,13 @@ var MFD_Device =
     },
 
     setFontSizeMFDEdgeButton: func(index, size) {
-		me.PFD.buttons[index].setFontSize(size);
-	},
-	
+        me.PFD.buttons[index].setFontSize(size);
+    },
+    
+    setTextMFDEdgeButton: func(index, text) {
+        me.PFD.buttons[index].setText(text);
+    },
+    
     setupRadar: func (svg, index) {
         svg.p_RDR = me.canvas.createGroup()
                 .setTranslation(276*0.795,482)
@@ -564,6 +568,13 @@ var MFD_Device =
            .set("z-index",12)
            .setFontSize(18, 1.0)
            .setColor(getprop("/sim/model/MFD-color/text2/red"),getprop("/sim/model/MFD-color/text2/green"),getprop("/sim/model/MFD-color/text2/blue"));
+        svg.bitText = svg.p_RDR.createChild("text")
+           .setTranslation(0, -482*0.75)
+           .setAlignment("center-center")
+           .setText("    VERSION C021-IPOO-MRO3258674  ")
+           .set("z-index",12)
+           .setFontSize(18, 1.0)
+           .setColor(getprop("/sim/model/MFD-color/text2/red"),getprop("/sim/model/MFD-color/text2/green"),getprop("/sim/model/MFD-color/text2/blue"));
            
         svg.norm = svg.p_RDR.createChild("text")
                 .setTranslation(276*0.795*0.0, -482*0.5-225)
@@ -678,6 +689,7 @@ var MFD_Device =
             return np;
         };
         me.p_RDR = me.PFD.addRadarPage(svg, "Radar", "p_RDR");
+        me.p_RDR.model_index = me.model_index;
         me.p_RDR.root = svg;
         me.p_RDR.wdt = 552*0.795;
         me.p_RDR.fwd = 0;
@@ -694,38 +706,37 @@ var MFD_Device =
         me.p_RDR.selectionBox = me.selectionBox;
         me.p_RDR.setSelectionColor = me.setSelectionColor;
         me.p_RDR.resetColor = me.resetColor;
+        me.p_RDR.setSelection = me.setSelection;
         me.p_RDR.notifyButton = func (eventi) {
             if (eventi != nil) {
                 if (eventi == 0) {
                     awg_9.range_control(1);
                 } elsif (eventi == 1) {
                     awg_9.range_control(-1);
+                } elsif (eventi == 10) {
+                    me.ppp.selectPage(me.my.p_LIST);
+                    me.resetColor(me.ppp.buttons[10]);
+                    me.selectionBox.hide();
                 } elsif (eventi == 17) {
                     me.ppp.selectPage(me.my.p_SMS);
-                    me.selectionBox.setTranslation(208,450);
-                    me.setSelectionColor(me.ppp.buttons[17]);
-                    me.resetColor(me.ppp.buttons[10]);
+                    me.setSelection(me.ppp.buttons[10], me.ppp.buttons[17], 17);
                 } elsif (eventi == 18) {
                     me.ppp.selectPage(me.my.p_WPN);
-                    me.selectionBox.setTranslation(272,450);
-                    me.setSelectionColor(me.ppp.buttons[18]);
-                    me.resetColor(me.ppp.buttons[10]);
+                    me.setSelection(me.ppp.buttons[10], me.ppp.buttons[18], 18);
                 #} elsif (eventi == 18) {
                 #    me.ppp.selectPage(me.my.pjitds_1);
                 } elsif (eventi == 16) {
                     me.ppp.selectPage(me.my.p_HSD);
-                    me.selectionBox.setTranslation(135,450);
-                    me.setSelectionColor(me.ppp.buttons[16]);
-                    me.resetColor(me.ppp.buttons[10]);
+                    me.setSelection(me.ppp.buttons[10], me.ppp.buttons[16], 16);
                 } elsif (eventi == 12) {
                     me.pressEXP = 1;
                 } elsif (eventi == 2) {
                     var az = getprop("instrumentation/radar/az-field");
                     if(az==120)
-                        az = 15;
-                    elsif(az==15)
-                        az = 30;
-                    elsif(az==30)
+                        az = 20;
+                    elsif(az==20)
+                        az = 50;
+                    elsif(az==50)
                         az = 60;
                     else
                         az = 120;
@@ -831,14 +842,21 @@ var MFD_Device =
                 me.root.silent.show();
             } elsif (getprop("/f16/avionics/power-fcr-bit") == 1) {
                 me.fcrBITsecs = (1.0-getprop("/f16/avionics/power-fcr-warm"))*120;
-                var mins = int(me.fcrBITsecs/60);
-                var secs = me.fcrBITsecs-mins*60;
-                me.root.silent.setText(sprintf("  BIT  %1d:%02d  ", mins, secs));
+                me.root.silent.setText(sprintf("  BIT TIME REMAINING IS %-3d SEC", me.fcrBITsecs));
                 me.root.silent.show();
             } elsif (getprop("/f16/avionics/power-fcr-bit") == 0) {
                 me.root.silent.setText("  OFF  ");
                 me.root.silent.show();
             }
+            
+            if (getprop("/f16/avionics/power-fcr-bit") == 1) {
+                me.root.silent.setTranslation(0, -482*0.825);
+                me.root.bitText.show();
+            } else {
+                me.root.silent.setTranslation(0, -482*0.25);
+                me.root.bitText.hide();
+            }
+            
             if (uv != nil and me.root.index == uv[2]) {
                 if (systime()-uv[3] < 0.5) {
                     # the time check is to prevent click on other pages to carry over to CRM when that is selected.
@@ -847,8 +865,9 @@ var MFD_Device =
                 uv = nil;
             }
             me.exp_modi = exp?0.25:1;
-            me.slew_x = getprop("controls/displays/cursor-slew-x")*me.exp_modi;
-            me.slew_y = -getprop("controls/displays/cursor-slew-y")*me.exp_modi;
+            
+            me.slew_x = getprop("controls/displays/cursor-slew-x[" ~ me.model_index ~ "]")*me.exp_modi;
+            me.slew_y = -getprop("controls/displays/cursor-slew-y[" ~ me.model_index ~ "]")*me.exp_modi;
             
             #me.dt = math.min(noti.ElapsedSeconds - me.elapsed, 0.05);
             me.dt = noti.ElapsedSeconds - me.elapsed;
@@ -980,14 +999,14 @@ var MFD_Device =
             
             me.azt = "";
             me.hot = "";
-            if (me.az==15) {
+            if (me.az==20) {
                 me.azt = "A\n1";
-            } elsif (me.az==30) {
+            } elsif (me.az==50) {
                 me.azt = "A\n2";
             } elsif (me.az==60) {
                 me.azt = "A\n3";
             } else {
-                me.azt = "A\n4";
+                me.azt = "A\n6";
             }
             me.root.az.setText(me.azt);
             if (me.ho==15) {
@@ -1137,9 +1156,91 @@ var MFD_Device =
                 me.root.dlz2.update();
                 me.root.dlz.show();
             }
+            
+            if (getprop("instrumentation/radar/radar2-range") == 5) {
+                me.root.rangDown.hide();
+            } else {
+                me.root.rangDown.show();
+            }
+            
+            if (getprop("instrumentation/radar/radar2-range") == 160) {
+                me.root.rangUp.hide();
+            } else {
+                me.root.rangUp.show();
+            }
         };
     },
 
+    setupList: func(svg) {
+        svg.p_LIST = me.canvas.createGroup()
+            .setTranslation(276*0.795,482)
+            .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,482 , 0.795 is for UV map
+    },
+    addList: func {
+        var svg = {getElementById: func (id) {return me[id]},};
+        me.setupList(svg);
+        me.PFD.addListPage = func(svg, title, layer_id) {   
+            var np = PFD_Page.new(svg, title, layer_id, me);
+            append(me.pages, np);
+            me.page_index[layer_id] = np;
+            np.setVisible(0);
+            return np;
+        };
+        me.p_LIST = me.PFD.addListPage(svg, "LIST", "p_LIST");
+        me.p_LIST.root = svg;
+        me.p_LIST.wdt = 552*0.795;
+        me.p_LIST.fwd = 0;
+        me.p_LIST.plc = 0;
+        me.p_LIST.ppp = me.PFD;
+        me.p_LIST.my = me;
+        me.p_LIST.selectionBox = me.selectionBox;
+        me.p_LIST.setSelectionColor = me.setSelectionColor;
+        me.p_LIST.resetColor = me.resetColor;
+        me.p_LIST.setSelection = me.setSelection;
+        me.p_LIST.notifyButton = func (eventi) {
+            if (eventi != nil) {
+                
+# Menu Id's
+#  CRM
+#   10  11  12  13  14
+# 0                    5            
+# 1                    6            
+# 2                    7            
+# 3                    8            
+# 4                    9            
+#   15  16  17  18  19
+#  VSD HSD SMS SIT
+                if (eventi == 0) {
+                    me.ppp.selectPage(me.my.p_RDR);
+                    me.selectionBox.show();
+                    me.setSelection(nil, me.ppp.buttons[10], 10);
+                } elsif (eventi == 1) {
+                    if(getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
+                        screen.log.write("Click BACK to get back to cockpit view",1,1,1);
+                        setprop("sim/current-view/view-number",12);
+                    }
+                } elsif (eventi == 2) {
+                    me.ppp.selectPage(me.my.p_WPN);
+                    me.selectionBox.show();
+                    me.setSelection(nil, me.ppp.buttons[18], 18);
+                } elsif (eventi == 5) {
+                    me.ppp.selectPage(me.my.p_SMS);
+                    me.selectionBox.show();
+                    me.setSelection(nil, me.ppp.buttons[17], 17);
+                } elsif (eventi == 6) {
+                    me.ppp.selectPage(me.my.p_HSD);
+                    me.selectionBox.show();
+                    me.setSelection(nil, me.ppp.buttons[16], 16);
+                } elsif (eventi == 15) {
+                    swap();
+                }
+            }
+        };
+        me.p_LIST.update = func (noti) {
+            
+        };
+    },
+    
     setupSMS: func (svg) {
         svg.p_SMS = me.canvas.createGroup()
                 .setTranslation(276*0.795,482)
@@ -1151,56 +1252,162 @@ var MFD_Device =
                 .setAlignment("center-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+
+        svg.gun = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.95, -482*0.5-155)
+                .setText("-----")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+        svg.gun2 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.95, -482*0.5-130)
+                .setText("-----")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+
         svg.p6 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.55, -482*0.5-135)
+                .setTranslation(276*0.795*0.02, -482*0.5-90)
                 .setText("--------")
-                .setAlignment("right-center")
+                .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+        svg.p6l1 = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.02, -482*0.5-65)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+        svg.p6l2 = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.02, -482*0.5-40)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+        
         svg.p7 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.7, -482*0.5-70)
+                .setTranslation(276*0.795*0.37, -482*0.5-15)
                 .setText("--------")
-                .setAlignment("right-center")
+                .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+        svg.p7l1 = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.37, -482*0.5+10)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+        svg.p7l2 = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.37, -482*0.5+35)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+
         svg.p8 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.85, -482*0.5-5)
+                .setTranslation(276*0.795*0.52, -482*0.5+60)
                 .setText("--------")
-                .setAlignment("right-center")
+                .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+        svg.p8l1 = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.52, -482*0.5+85)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+        
         svg.p9 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795, -482*0.5+60)
+                .setTranslation(276*0.795*0.52, -482*0.5+125)
                 .setText("--------")
-                .setAlignment("right-center")
+                .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+        svg.p9l1 = svg.p_SMS.createChild("text")
+                .setTranslation(276*0.795*0.52, -482*0.5+150)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+
         svg.p5 = svg.p_SMS.createChild("text")
-                .setTranslation(0.0, -482*0.5-200)
+                .setTranslation(-276*0.795*0.16, -482*0.5-190)
                 .setText("--------")
-                .setAlignment("center-center")
+                .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+        svg.p5l1 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.16, -482*0.5-165)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+        svg.p5l2 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.16, -482*0.5-140)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+
         svg.p4 = svg.p_SMS.createChild("text")
-                .setTranslation(-276*0.795*0.55, -482*0.5-135)
+                .setTranslation(-276*0.795*0.55, -482*0.5-90)
                 .setText("--------")
                 .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+        svg.p4l1 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.55, -482*0.5-65)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+        svg.p4l2 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.55, -482*0.5-40)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+
         svg.p3 = svg.p_SMS.createChild("text")
-                .setTranslation(-276*0.795*0.7, -482*0.5-70)
+                .setTranslation(-276*0.795*0.8, -482*0.5-15)
                 .setText("--------")
                 .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+        svg.p3l1 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.8, -482*0.5+10)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+        svg.p3l2 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.8, -482*0.5+35)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+
         svg.p2 = svg.p_SMS.createChild("text")
-                .setTranslation(-276*0.795*0.85, -482*0.5-5)
+                .setTranslation(-276*0.795*0.95, -482*0.5+60)
                 .setText("--------")
                 .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+        svg.p2l1 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.95, -482*0.5+85)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+
         svg.p1 = svg.p_SMS.createChild("text")
-                .setTranslation(-276*0.795, -482*0.5+60)
+                .setTranslation(-276*0.795*0.95, -482*0.5+125)
+                .setText("--------")
+                .setAlignment("left-center")
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .setFontSize(20, 1.0);
+        svg.p1l1 = svg.p_SMS.createChild("text")
+                .setTranslation(-276*0.795*0.95, -482*0.5+150)
                 .setText("--------")
                 .setAlignment("left-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
@@ -1214,89 +1421,89 @@ var MFD_Device =
         #        .setFontSize(16, 1.0);        
         
         svg.p1f = svg.p_SMS.createChild("path")
-           .moveTo(-276*0.795, -482*0.5+75)
-           .vert(-30)
-           .horiz(130)
-           .vert(30)
-           .horiz(-130)
+           .moveTo(-276*0.795*0.97, -482*0.5+115)
+           .vert(50)
+           .horiz(100)
+           .vert(-50)
+           .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p2f = svg.p_SMS.createChild("path")
-           .moveTo(-276*0.795*0.85, -482*0.5+10)
-           .vert(-30)
-           .horiz(130)
-           .vert(30)
-           .horiz(-130)
+           .moveTo(-276*0.795*0.97, -482*0.5+50)
+           .vert(50)
+           .horiz(100)
+           .vert(-50)
+           .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p3f = svg.p_SMS.createChild("path")
-           .moveTo(-276*0.795*0.7, -482*0.5-55)
-           .vert(-30)
-           .horiz(130)
-           .vert(30)
-           .horiz(-130)
+           .moveTo(-276*0.795*0.82, -482*0.5-25)
+           .vert(70)
+           .horiz(100)
+           .vert(-70)
+           .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p4f = svg.p_SMS.createChild("path")
-           .moveTo(-276*0.795*0.55, -482*0.5-120)
-           .vert(-30)
-           .horiz(130)
-           .vert(30)
-           .horiz(-130)
+           .moveTo(-276*0.795*0.57, -482*0.5-100)
+           .vert(70)
+           .horiz(100)
+           .vert(-70)
+           .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p5f = svg.p_SMS.createChild("path")
-           .moveTo(-75, -482*0.5-185)
-           .vert(-30)
-           .horiz(130)
-           .vert(30)
-           .horiz(-130)
+           .moveTo(-276*0.795*0.18, -482*0.5-200)
+           .vert(70)
+           .horiz(100)
+           .vert(-70)
+           .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p6f = svg.p_SMS.createChild("path")
-           .moveTo(276*0.795*0.55, -482*0.5-120)
-           .vert(-30)
-           .horiz(-130)
-           .vert(30)
-           .horiz(130)
+           .moveTo(0, -482*0.5-100)
+           .vert(70)
+           .horiz(100)
+           .vert(-70)
+           .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p7f = svg.p_SMS.createChild("path")
-           .moveTo(276*0.795*0.7, -482*0.5-55)
-           .vert(-30)
-           .horiz(-130)
-           .vert(30)
-           .horiz(130)
+           .moveTo(276*0.795*0.35, -482*0.5-25)
+           .vert(70)
+           .horiz(100)
+           .vert(-70)
+           .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p8f = svg.p_SMS.createChild("path")
-           .moveTo(276*0.795*0.85, -482*0.5+10)
-           .vert(-30)
-           .horiz(-130)
-           .vert(30)
-           .horiz(130)
+           .moveTo(276*0.795*0.5, -482*0.5+50)
+           .vert(50)
+           .horiz(100)
+           .vert(-50)
+           .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.p9f = svg.p_SMS.createChild("path")
-           .moveTo(276*0.795, -482*0.5+75)
-           .vert(-30)
-           .horiz(-130)
-           .vert(30)
-           .horiz(130)
+           .moveTo(276*0.795*0.5, -482*0.5+115)
+           .vert(50)
+           .horiz(100)
+           .vert(-50)
+           .horiz(-100)
            .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
            .setStrokeLineWidth(2)
            .hide();
         svg.jett = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795, -482*0.5+125)
-                .setText("J-S")
+                .setTranslation(276*0.795*0.95, -482*0.5-145)
+                .setText("S-J")
                 .setAlignment("right-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
@@ -1321,29 +1528,28 @@ var MFD_Device =
         me.p_SMS.selectionBox = me.selectionBox;
         me.p_SMS.setSelectionColor = me.setSelectionColor;
         me.p_SMS.resetColor = me.resetColor;
+        me.p_SMS.setSelection = me.setSelection;
         me.p_SMS.notifyButton = func (eventi) {
             if (eventi != nil) {
                 if (eventi == 10) {
                     me.ppp.selectPage(me.my.p_RDR);
-                    me.selectionBox.setTranslation(65,7);
-                    me.setSelectionColor(me.ppp.buttons[10]);
-                    me.resetColor(me.ppp.buttons[17]);
-                } elsif (eventi == 0) {
-                    if (getprop("sim/variant-id") == 0) {
-                        return;
-                    }
-                    pylons.fcs.selectPylon(3);
+                    me.setSelection(me.ppp.buttons[17], me.ppp.buttons[10], 10);
                 } elsif (eventi == 1) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    pylons.fcs.selectPylon(2);
+                    pylons.fcs.selectPylon(3);
                 } elsif (eventi == 2) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    pylons.fcs.selectPylon(1);
+                    pylons.fcs.selectPylon(2);
                 } elsif (eventi == 3) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    pylons.fcs.selectPylon(1);
+                } elsif (eventi == 4) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
@@ -1352,37 +1558,39 @@ var MFD_Device =
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    pylons.fcs.selectPylon(5);
+                    pylons.fcs.jettisonSelectedPylonContent();
                 } elsif (eventi == 6) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    pylons.fcs.selectPylon(6);
+                    pylons.fcs.selectPylon(5);
                 } elsif (eventi == 7) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    pylons.fcs.selectPylon(7);
+                    pylons.fcs.selectPylon(6);
                 } elsif (eventi == 8) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    pylons.fcs.selectPylon(8);
+                    pylons.fcs.selectPylon(7);
                 } elsif (eventi == 9) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
-                    pylons.fcs.jettisonSelectedPylonContent();
+                    pylons.fcs.selectPylon(8);
                 } elsif (eventi == 12) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
                     }
                     pylons.fcs.selectPylon(4);
+                } elsif (eventi == 17) {
+                    me.ppp.selectPage(me.my.p_LIST);
+                    me.resetColor(me.ppp.buttons[17]);
+                    me.selectionBox.hide();
                 } elsif (eventi == 18) {
                     me.ppp.selectPage(me.my.p_WPN);
-                    me.selectionBox.setTranslation(272,450);
-                    me.setSelectionColor(me.ppp.buttons[18]);
-                    me.resetColor(me.ppp.buttons[17]);
+                    me.setSelection(me.ppp.buttons[17], me.ppp.buttons[18], 18);
                 #} elsif (eventi == 18) {
                 #    me.ppp.selectPage(me.my.pjitds_1);
                 } elsif (eventi == 14) {
@@ -1392,9 +1600,7 @@ var MFD_Device =
                     pylons.fcs.setDropMode(!pylons.fcs.getDropMode());
                 } elsif (eventi == 16) {
                     me.ppp.selectPage(me.my.p_HSD);
-                    me.selectionBox.setTranslation(135,450);
-                    me.setSelectionColor(me.ppp.buttons[16]);
-                    me.resetColor(me.ppp.buttons[17]);
+                    me.setSelection(me.ppp.buttons[17], me.ppp.buttons[16], 16);
                 } elsif (eventi == 15) {
                     swap();
                 }
@@ -1437,68 +1643,187 @@ var MFD_Device =
             #}
             #me.root.drop.setText(pT);
 
+            var gunAmmo = "-----";
+            if (getprop("sim/model/f16/wingmounts") != 0) {
+                gunAmmo = pylons.pylonI.getAmmo("20mm Cannon");
+                if (gunAmmo ==0) gunAmmo = "0";
+                elsif (gunAmmo <10) gunAmmo = "1";
+                else gunAmmo = ""~int(gunAmmo*0.1);
+            }
+            me.root.gun.setText(gunAmmo~"GUN");
+            if (getprop("sim/variant-id") == 0 or getprop("sim/variant-id") == 1 or getprop("sim/variant-id") == 3) {
+            me.root.gun2.setText("M56");
+            } else {
+            me.root.gun2.setText("PGU28");
+            }
+
             var pT = "--------";
             if (pylons.pylon1 != nil) {
                 var nm = pylons.pylon1.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            me.root.p1.setText(pT);
+            me.root.p1.setText("1 MRLW");
+            if (find("x", pT) != -1) {
+                me.root.p1l1.setText(split("x", pT)[0] ~ " " ~ split("x", pT)[1])
+            } else {
+                me.root.p1l1.setText(pT)
+            }
 
             pT = "--------";
             if (pylons.pylon2 != nil) {
                 var nm = pylons.pylon2.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            me.root.p2.setText(pT);
+            if (getprop("payload/armament/station/id-1-set") != "Empty") {
+                me.root.p2.setText("1 MRL");
+            }
+            else {
+                me.root.p2.setText("--------");
+            }
+            if (find("x", pT) != -1) {
+                me.root.p2l1.setText(split("x", pT)[0] ~ " " ~ split("x", pT)[1])
+            } else {
+                me.root.p2l1.setText(pT)
+            }
 
             pT = "--------";
             if (pylons.pylon3 != nil) {
                 var nm = pylons.pylon3.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            me.root.p3.setText(pT);
+            var idset = getprop("payload/armament/station/id-2-set");
+            if (idset != "Empty") {
+                if (idset == "1 x AIM-120" or idset == "1 x AIM-7" or idset == "1 x AIM-9") {
+                    me.root.p3.setText("1 MRL");
+                }
+                else if (idset == "2 x LAU-68" or idset == "3 x AGM-65" or idset == "2 x GBU-54" or idset == "3 x GBU-12" or idset == "3 x MK-82" or idset == "2 x MK-83" or idset == "2 x CBU-87" or idset == "2 x CBU-105") {
+                    me.root.p3.setText("1 TER");
+                }
+                else {
+                    me.root.p3.setText("1 MAU");
+                }
+            }
+            else {
+                me.root.p3.setText("--------");
+            }
+            if (find("x", pT) != -1) {
+                me.root.p3l1.setText(split("x", pT)[0] ~ " " ~ split("x", pT)[1])
+            } else {
+                me.root.p3l1.setText(pT)
+            }
 
             pT = "--------";
             if (pylons.pylon4 != nil) {
                 var nm = pylons.pylon4.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            me.root.p4.setText(pT);
+            var idset = getprop("payload/armament/station/id-3-set");
+            if (idset != "Empty") {
+            if (idset == "2 x LAU-68" or idset == "2 x GBU-12" or idset == "3 x MK-82" or idset == "2 x MK-83" or idset == "2 x CBU-87" or idset == "2 x CBU-105") {
+                me.root.p4.setText("1 TER");
+            } else {
+            me.root.p4.setText("1 MAU");
+            }
+            } else {
+            me.root.p4.setText("--------");
+            }
+            if (find("x", pT) != -1) {
+                me.root.p4l1.setText(split("x", pT)[0] ~ " " ~ split("x", pT)[1])
+            } else {
+                me.root.p4l1.setText(pT)
+            }
 
             pT = "--------";
             if (pylons.pylon5 != nil) {
                 var nm = pylons.pylon5.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            me.root.p5.setText(pT);
+            if (getprop("payload/armament/station/id-4-set") != "Empty") {
+                me.root.p5.setText("1 MAU");
+            }
+            else {
+                me.root.p5.setText("--------");
+            }
+            if (find("x", pT) != -1) {
+                me.root.p5l1.setText(split("x", pT)[0] ~ " " ~ split("x", pT)[1])
+            } else {
+                me.root.p5l1.setText(pT)
+            }
 
             pT = "--------";
             if (pylons.pylon6 != nil) {
                 var nm = pylons.pylon6.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            me.root.p6.setText(pT);
+            var idset = getprop("payload/armament/station/id-5-set");
+            if (idset != "Empty") {
+            if (idset == "2 x LAU-68" or idset == "2 x GBU-12" or idset == "3 x MK-82" or idset == "2 x MK-83" or idset == "2 x CBU-87" or idset == "2 x CBU-105") {
+                me.root.p6.setText("1 TER");
+            } else {
+            me.root.p6.setText("1 MAU");
+            }
+            } else {
+            me.root.p6.setText("--------");
+            }
+            if (find("x", pT) != -1) {
+                me.root.p6l1.setText(split("x", pT)[0] ~ " " ~ split("x", pT)[1])
+            } else {
+                me.root.p6l1.setText(pT)
+            }
 
             pT = "--------";
             if (pylons.pylon7 != nil) {
                 var nm = pylons.pylon7.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            me.root.p7.setText(pT);
+            idset = getprop("payload/armament/station/id-6-set");
+            if (idset != "Empty") {
+                if (idset == "1 x AIM-120" or idset == "1 x AIM-7" or idset == "1 x AIM-9") {
+                    me.root.p7.setText("1 MRL");
+                }
+                else if (idset == "2 x LAU-68" or idset == "3 x AGM-65" or idset == "2 x GBU-54" or idset == "3 x GBU-12" or idset == "3 x MK-82" or idset == "2 x MK-83" or idset == "2 x CBU-87" or idset == "2 x CBU-105") {
+                    me.root.p7.setText("1 TER");
+                } else {
+                    me.root.p7.setText("1 MAU");
+                }
+            }
+            else {
+                me.root.p7.setText("--------");
+            }
+            if (find("x", pT) != -1) {
+                me.root.p7l1.setText(split("x", pT)[0] ~ " " ~ split("x", pT)[1])
+            } else {
+                me.root.p7l1.setText(pT)
+            }
 
             pT = "--------";
             if (pylons.pylon8 != nil) {
                 var nm = pylons.pylon8.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            me.root.p8.setText(pT);
+            if (getprop("payload/armament/station/id-7-set") != "Empty") {
+                me.root.p8.setText("1 MRL");
+            }
+            else {
+                me.root.p8.setText("--------");
+            }
+            if (find("x", pT) != -1) {
+                me.root.p8l1.setText(split("x", pT)[0] ~ " " ~ split("x", pT)[1])
+            } else {
+                me.root.p8l1.setText(pT)
+            }
 
             pT = "--------";
             if (pylons.pylon9 != nil) {
                 var nm = pylons.pylon9.getCurrentShortName();
                 if (nm != nil) pT = nm;
             }
-            me.root.p9.setText(pT);
+            me.root.p9.setText("1 MRLW");
+            if (find("x", pT) != -1) {
+                me.root.p9l1.setText(split("x", pT)[0] ~ " " ~ split("x", pT)[1])
+            } else {
+                me.root.p9l1.setText(pT)
+            }
         };
     },
     
@@ -1638,13 +1963,12 @@ var MFD_Device =
         me.p_WPN.selectionBox = me.selectionBox;
         me.p_WPN.setSelectionColor = me.setSelectionColor;
         me.p_WPN.resetColor = me.resetColor;
+        me.p_WPN.setSelection = me.setSelection;
         me.p_WPN.notifyButton = func (eventi) {
             if (eventi != nil) {
                 if (eventi == 10) {
                     me.ppp.selectPage(me.my.p_RDR);
-                    me.selectionBox.setTranslation(65,7);
-                    me.setSelectionColor(me.ppp.buttons[10]);
-                    me.resetColor(me.ppp.buttons[18]);
+                    me.setSelection(me.ppp.buttons[18], me.ppp.buttons[10], 10);
                 } elsif (eventi == 5) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
@@ -1709,11 +2033,14 @@ var MFD_Device =
                     }               
                 } elsif (eventi == 17) {
                     me.ppp.selectPage(me.my.p_SMS);
-                    me.selectionBox.setTranslation(208,450);
-                    me.setSelectionColor(me.ppp.buttons[17]);
-                    me.resetColor(me.ppp.buttons[18]);
+                    me.setSelection(me.ppp.buttons[18], me.ppp.buttons[17], 17);
                 #} elsif (eventi == 18) {
                 #    me.ppp.selectPage(me.my.pjitds_1);
+                
+                } elsif (eventi == 18) {
+                    me.ppp.selectPage(me.my.p_LIST);
+                    me.resetColor(me.ppp.buttons[18]);
+                    me.selectionBox.hide();
                 } elsif (eventi == 11) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
@@ -1723,9 +2050,7 @@ var MFD_Device =
                     }
                 } elsif (eventi == 16) {
                     me.ppp.selectPage(me.my.p_HSD);
-                    me.selectionBox.setTranslation(135,450);
-                    me.setSelectionColor(me.ppp.buttons[16]);
-                    me.resetColor(me.ppp.buttons[18]);
+                    me.setSelection(me.ppp.buttons[18], me.ppp.buttons[16], 16);
                 } elsif (eventi == 15) {
                     swap();
                 }
@@ -2199,6 +2524,7 @@ var MFD_Device =
         me.p_HSD.selectionBox = me.selectionBox;
         me.p_HSD.setSelectionColor = me.setSelectionColor;
         me.p_HSD.resetColor = me.resetColor;
+        me.p_HSD.setSelection = me.setSelection;
         me.p_HSD.notifyButton = func (eventi) {
             if (eventi != nil) {
                 if (eventi == 0) {
@@ -2261,21 +2587,19 @@ var MFD_Device =
                     }
                 } elsif (eventi == 17) {
                     me.ppp.selectPage(me.my.p_SMS);
-                    me.selectionBox.setTranslation(208,450);
-                    me.setSelectionColor(me.ppp.buttons[17]);
+                    me.setSelection(me.ppp.buttons[16], me.ppp.buttons[17], 17);
+                } elsif (eventi == 16) {
+                    me.ppp.selectPage(me.my.p_LIST);
                     me.resetColor(me.ppp.buttons[16]);
+                    me.selectionBox.hide();
                 } elsif (eventi == 18) {
                     me.ppp.selectPage(me.my.p_WPN);
-                    me.selectionBox.setTranslation(272,450);
-                    me.setSelectionColor(me.ppp.buttons[18]);
-                    me.resetColor(me.ppp.buttons[16]);
+                    me.setSelection(me.ppp.buttons[16], me.ppp.buttons[18], 18);
                 #} elsif (eventi == 18) {
                 #    me.ppp.selectPage(me.my.pjitds_1);
                 } elsif (eventi == 10) {
                     me.ppp.selectPage(me.my.p_RDR);
-                    me.selectionBox.setTranslation(65,7);
-                    me.setSelectionColor(me.ppp.buttons[10]);
-                   me.resetColor(me.ppp.buttons[16]);
+                    me.setSelection(me.ppp.buttons[16], me.ppp.buttons[10], 10);
                 } elsif (eventi == 2) {
                     me.root.centered = !me.root.centered;
                     me.root.depcen.setText(me.root.centered==1?"CEN":"DEP");
@@ -2325,8 +2649,21 @@ var MFD_Device =
                     me.root.range_dep = 256;
                 }
             } else {
-                me.root.rangDown.show();
-                me.root.rangUp.show();
+                if (me.root.centered and me.root.range_cen == 160) {
+                    me.root.rangUp.hide();
+                } elsif (!me.root.centered and me.root.range_dep == 256) {
+                    me.root.rangUp.hide();
+                } else {
+                    me.root.rangUp.show();
+                }
+                
+                if (me.root.centered and me.root.range_cen == 5) {
+                    me.root.rangDown.hide();
+                } elsif (!me.root.centered and me.root.range_dep == 8) {
+                    me.root.rangDown.hide();
+                } else {
+                    me.root.rangDown.show();
+                }
             }
             if (me.root.centered) {
                 me.root.p_HSDc.setTranslation(276*0.795,482*0.50);
@@ -2591,6 +2928,7 @@ var MFD_Device =
         me.addSMS();
         me.addHSD();
         me.addWPN();
+        me.addList();
         me.p1_1 = me.PFD.addPage("Aircraft Menu", "p1_1");
 
         me.p1_1.update = func(notification)
@@ -2746,17 +3084,14 @@ var MFD_Device =
         me.setupMenus();
         if (me.model_element == "MFDimage1") {
             me.PFD.selectPage(me.p_RDR);
-            me.selectionBox.setTranslation(65,7);
-            me.setSelectionColor(me.PFD.buttons[10]);
+            me.setSelection(me.PFD.buttons[1], me.PFD.buttons[10], 10);
         } else {
             if (getprop("sim/variant-id") == 0) {
                 me.PFD.selectPage(me.p_HSD);
-                me.selectionBox.setTranslation(135,450);
-                me.setSelectionColor(me.PFD.buttons[16]);
+                me.setSelection(me.PFD.buttons[1], me.PFD.buttons[16], 16);
             } else {
                 me.PFD.selectPage(me.p_SMS);
-                me.selectionBox.setTranslation(208,450);
-                me.setSelectionColor(me.PFD.buttons[17]);
+                me.setSelection(me.PFD.buttons[1], me.PFD.buttons[17], 17);
             }
         }
     },
@@ -2775,8 +3110,33 @@ var MFD_Device =
         }
     },
 
-    resetColor : func(text) {
-        text.setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
+    resetColor: func(text) {
+        if (text != nil) {
+            text.setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
+        }
+    },
+	resetColorAll: func() {
+		foreach (var button; me.PFD.buttons) {
+			me.resetColor(button);
+		}
+	},
+
+    #Update this when adding new buttons or changing button order/positions.
+    setSelection: func(curPage, nextPage, nextPageIndex) {
+        if (nextPageIndex == 10) {
+            me.selectionBox.setTranslation(65,7);
+        } else if (nextPageIndex == 16) {
+            me.selectionBox.setTranslation(135,450);
+        } else if (nextPageIndex == 17) {
+             me.selectionBox.setTranslation(208,450);
+        } else if (nextPageIndex == 18) {
+            me.selectionBox.setTranslation(272,450);
+        } else {
+            print("Make sure buttons are correctly set in setSelection() in MFD_main.nas");
+            return;
+        }
+        me.setSelectionColor(nextPage);
+        me.resetColor(curPage);
     },
 
     # Add the menus to each page. 
@@ -2806,8 +3166,8 @@ var MFD_Device =
 #        me.p1_1.addMenuItem(12, "HSD", me.p_HSD);
 
         #me.p_RDR.addMenuItem(18, "SIT", me.pjitds_1);
-        me.p_RDR.addMenuItem(10, "CRM", me.p_RDR); #selectionColored
-        me.p_RDR.addMenuItem(15, "SWAP", me.p_RDR);
+        me.p_RDR.addMenuItem(10, "CRM", me.p_LIST); #selectionColored
+        me.p_RDR.addMenuItem(15, "SWAP", nil);
         me.p_RDR.addMenuItem(16, "HSD", me.p_HSD);
         me.p_RDR.addMenuItem(17, "SMS", me.p_SMS);
         me.p_RDR.addMenuItem(18, "WPN", me.p_WPN);
@@ -2815,26 +3175,53 @@ var MFD_Device =
 
         #me.p_HSD.addMenuItem(18, "SIT", me.pjitds_1);
         me.p_HSD.addMenuItem(10, "CRM", me.p_RDR);
-        me.p_HSD.addMenuItem(15, "SWAP", me.p_HSD);
-        me.p_HSD.addMenuItem(16, "HSD", me.p_HSD); #selectionColored
+        me.p_HSD.addMenuItem(15, "SWAP", nil);
+        me.p_HSD.addMenuItem(16, "HSD", me.p_LIST); #selectionColored
         me.p_HSD.addMenuItem(17, "SMS", me.p_SMS);
         me.p_HSD.addMenuItem(18, "WPN", me.p_WPN);
         me.p_HSD.addMenuItem(19, "TGP", nil);
         
         me.p_WPN.addMenuItem(10, "CRM", me.p_RDR);
-        me.p_WPN.addMenuItem(15, "SWAP", me.p_WPN);
+        me.p_WPN.addMenuItem(15, "SWAP", nil);
         me.p_WPN.addMenuItem(16, "HSD", me.p_HSD);
         me.p_WPN.addMenuItem(17, "SMS", me.p_SMS);
-        me.p_WPN.addMenuItem(18, "WPN", me.p_WPN); #selectionColored
+        me.p_WPN.addMenuItem(18, "WPN", me.p_LIST); #selectionColored
         me.p_WPN.addMenuItem(19, "TGP", nil);
 
         #me.p_SMS.addMenuItem(18, "SIT", me.pjitds_1);
         me.p_SMS.addMenuItem(10, "CRM", me.p_RDR);
-        me.p_SMS.addMenuItem(15, "SWAP", me.p_SMS);
+        me.p_SMS.addMenuItem(15, "SWAP", nil);
         me.p_SMS.addMenuItem(16, "HSD", me.p_HSD);
-        me.p_SMS.addMenuItem(17, "SMS", me.p_SMS); #selectionColored
+        me.p_SMS.addMenuItem(17, "SMS", me.p_LIST); #selectionColored
         me.p_SMS.addMenuItem(18, "WPN", me.p_WPN);
         me.p_SMS.addMenuItem(19, "TGP", nil);
+        
+        #  CRM
+#   10  11  12  13  14
+# 0                    5            
+# 1                    6            
+# 2                    7            
+# 3                    8            
+# 4                    9            
+#   15  16  17  18  19
+#  VSD HSD SMS SIT
+
+        me.p_LIST.addMenuItem(10, "BLANK", nil);
+        me.p_LIST.addMenuItem(11, "HAD", nil);
+        me.p_LIST.addMenuItem(13, "RCCE", nil);
+        me.p_LIST.addMenuItem(14, "RESET\n MENU", nil);
+        me.p_LIST.addMenuItem(15, "SWAP", nil);
+        me.p_LIST.addMenuItem(19, "TCN", nil);
+        me.p_LIST.addMenuItem(0, "FCR", me.p_RDR);
+        me.p_LIST.addMenuItem(1, "TGP", nil);
+        me.p_LIST.addMenuItem(2, "WPN", me.p_WPN);
+        me.p_LIST.addMenuItem(3, "TFR", nil);
+        me.p_LIST.addMenuItem(4, "FLIR", nil);
+        me.p_LIST.addMenuItem(5, "SMS", me.p_SMS);
+        me.p_LIST.addMenuItem(6, "HSD", me.p_HSD);
+        me.p_LIST.addMenuItem(7, "DTE", nil);
+        me.p_LIST.addMenuItem(8, "TEST", nil);
+        me.p_LIST.addMenuItem(9, "FLCS", nil);
 #        me.p_SMS.addMenuItem(16, "TIM", me.p1_1);
 
 #        me.p1_2.addMenuItem(0, "VSD", me.p_VSD);
@@ -2875,27 +3262,27 @@ var MFD_Device =
         #me.p_VSD.addMenuItem(17, "SMS", me.p_SMS);
         #me.p_VSD.addMenuItem(16, "HSD", me.p_HSD);
         #me.p_VSD.addMenuItem(19, "TGP", nil);
-		
-		me.setFontSizeMFDEdgeButton(0, 18);
-		me.setFontSizeMFDEdgeButton(1, 18);
-		me.setFontSizeMFDEdgeButton(2, 18);
-		me.setFontSizeMFDEdgeButton(3, 18);
-		me.setFontSizeMFDEdgeButton(4, 18);
-		me.setFontSizeMFDEdgeButton(5, 18);
-		me.setFontSizeMFDEdgeButton(6, 18);
-		me.setFontSizeMFDEdgeButton(7, 18);
-		me.setFontSizeMFDEdgeButton(8, 18);
-		me.setFontSizeMFDEdgeButton(9, 18);
-		me.setFontSizeMFDEdgeButton(10, 18);
-		me.setFontSizeMFDEdgeButton(11, 18);
-		me.setFontSizeMFDEdgeButton(12, 18);
-		me.setFontSizeMFDEdgeButton(13, 18);
-		me.setFontSizeMFDEdgeButton(14, 18);
-		me.setFontSizeMFDEdgeButton(15, 18);
-		me.setFontSizeMFDEdgeButton(16, 18);
-		me.setFontSizeMFDEdgeButton(17, 18);
-		me.setFontSizeMFDEdgeButton(18, 18);
-		me.setFontSizeMFDEdgeButton(19, 18);
+        
+        me.setFontSizeMFDEdgeButton(0, 18);
+        me.setFontSizeMFDEdgeButton(1, 18);
+        me.setFontSizeMFDEdgeButton(2, 18);
+        me.setFontSizeMFDEdgeButton(3, 18);
+        me.setFontSizeMFDEdgeButton(4, 18);
+        me.setFontSizeMFDEdgeButton(5, 18);
+        me.setFontSizeMFDEdgeButton(6, 18);
+        me.setFontSizeMFDEdgeButton(7, 18);
+        me.setFontSizeMFDEdgeButton(8, 18);
+        me.setFontSizeMFDEdgeButton(9, 18);
+        me.setFontSizeMFDEdgeButton(10, 18);
+        me.setFontSizeMFDEdgeButton(11, 18);
+        me.setFontSizeMFDEdgeButton(12, 18);
+        me.setFontSizeMFDEdgeButton(13, 18);
+        me.setFontSizeMFDEdgeButton(14, 18);
+        me.setFontSizeMFDEdgeButton(15, 18);
+        me.setFontSizeMFDEdgeButton(16, 18);
+        me.setFontSizeMFDEdgeButton(17, 18);
+        me.setFontSizeMFDEdgeButton(18, 18);
+        me.setFontSizeMFDEdgeButton(19, 18);
     },
 
     update : func(notification)
@@ -3006,18 +3393,66 @@ var setCursor = func (x, y, screen) {
     #printf("slew %d,%d on screen %d", uv[0],uv[1],uv[2]);
 };
 
+#update this when adding a new button/updating button order
+var getMenuButton = func (pageName) {
+    if (pageName == "Radar") {
+        return 10;
+    } else if (pageName == "SMS") {
+        return 17;
+    } else if (pageName == "HSD") {
+        return 16;
+    } else if (pageName == "WPN") {
+        return 18;
+    } elsif (pageName == "LIST") {
+        return nil;
+    } else {
+        print("Make sure button assignment is set correctly in getMenuButton() in MFD_main.nas");
+        return nil;
+    }
+};
+
 var swap = func {
     var left_page = f16_mfd.MFDl.PFD.current_page.title;
     var right_page = f16_mfd.MFDr.PFD.current_page.title;
+    var left_button = getMenuButton(left_page);
+    var right_button = getMenuButton(right_page);
     
     foreach(var page ; f16_mfd.MFDr.PFD.pages) {
         if (page.title == left_page) {
             f16_mfd.MFDr.PFD.selectPage(page);
+			break;
         }
     }
     foreach(var page ; f16_mfd.MFDl.PFD.pages) {
         if (page.title == right_page) {
             f16_mfd.MFDl.PFD.selectPage(page);
+			break;
         }
+    }
+    if (f16.SOI == 2) { 
+        f16.SOI = 3;
+    } elsif (f16.SOI == 3) {
+        f16.SOI = 2;
+    }
+	
+	if (right_page == "LIST") { # right page was list
+		f16_mfd.MFDl.selectionBox.hide();
+		f16_mfd.MFDl.resetColorAll();
+		if (left_page != "LIST") {
+			f16_mfd.MFDr.selectionBox.show();
+			f16_mfd.MFDr.setSelection(nil, f16_mfd.MFDr.PFD.buttons[left_button], left_button);
+		}
+	} elsif (left_page == "LIST") {
+		f16_mfd.MFDr.selectionBox.hide();
+		f16_mfd.MFDr.resetColorAll();
+		if (right_page != "LIST") {
+			f16_mfd.MFDl.selectionBox.show();
+			f16_mfd.MFDl.setSelection(nil, f16_mfd.MFDl.PFD.buttons[right_button], right_button);
+		}
+	}
+	
+    if (left_button != nil and right_button != nil) {
+        f16_mfd.MFDl.setSelection(f16_mfd.MFDl.PFD.buttons[left_button], f16_mfd.MFDl.PFD.buttons[right_button], right_button);
+        f16_mfd.MFDr.setSelection(f16_mfd.MFDr.PFD.buttons[right_button], f16_mfd.MFDr.PFD.buttons[left_button], left_button);
     }
 };

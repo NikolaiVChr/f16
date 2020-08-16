@@ -539,7 +539,6 @@
  </animation>
  
  <animation>
-  <type>textranslate</type>
   <object-name>AVTR_CTVS</object-name>
   <object-name>AVTR_AVTR</object-name>
   <type>material</type>
@@ -1120,7 +1119,7 @@
         <type>translate</type>
         <object-name>HF-PBG_TEST</object-name>
 		<property>/controls/test/test-panel/pbg-test</property>
-        <factor>-0.0035</factor>
+        <factor>-0.0005</factor>
         <axis>
 		  <z>1</z>
 	    </axis>
@@ -2797,17 +2796,15 @@
     </animation>
     
      <animation>
-        <!--<object-name>poly.002</object-name>-->
         <object-name>freqDisplay</object-name>
         <type>material</type>
         <condition>
             <greater-than-equals>
-                <property>fdm/jsbsim/elec/bus/noness-dc</property>
+                <property>fdm/jsbsim/elec/bus/batt-1</property>
                 <value>20</value>
             </greater-than-equals>
         </condition>
         <emission>
-            <factor-prop>controls/lighting/lighting-panel/data-entry-display</factor-prop>
             <red>  1</red>
             <green>1</green>
             <blue> 1</blue>
@@ -2819,7 +2816,7 @@
         <object-name>CHAN_CANVAS_DISPLAY</object-name>
         <condition>
             <greater-than-equals>
-                <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                <property>fdm/jsbsim/elec/bus/batt-1</property>
                 <value>20</value>
             </greater-than-equals>
           </condition>

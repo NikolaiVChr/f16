@@ -297,6 +297,16 @@
       </offsets>
   </model>
 
+ <model>
+  <name>fuel_leak</name>
+  <path>Aircraft/f16/Models/Effects/fuel_leak.xml</path>
+  <offsets>
+    <x-m>0.0</x-m>
+    <y-m>0.15</y-m>
+    <z-m>-1.00</z-m>
+  </offsets>
+ </model>
+
  <!--<model>
   <name>Cockpit</name>
   <path>Aircraft/f16/Models/Cockpit/F-16C-40/cockpit.xml</path>

@@ -8,7 +8,7 @@
    The General Dynamics F-16C Fighting Falcon is a single-engine supersonic multirole fighter aircraft originally developed by General Dynamics (now Lockheed Martin) for the United States Air Force (USAF). Powered by F100-PW-220. Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
    The Fighting Falcon has key features including a frameless bubble canopy for better visibility, side-mounted control stick to ease control while maneuvering, a seat reclined 30 degrees to reduce the effect of g-forces on the pilot, and the first use of a relaxed static stability/fly-by-wire flight control system which helps to make it a nimble aircraft.
   </long-description>
-  <author>Erik Hofman, Pensacola, Martin "Pegasus" Schmitt, Nikolai V. Chr., J Maverick 16, Richard Harrison, Josh Davidson, Martien Van Der P., Gary Brown, Justin Nicholson, Jonathan Redpath, Timi, Enrico Castaldi</author>
+  <author>Erik Hofman, Pensacola, Martin "Pegasus" Schmitt, Nikolai V. Chr., J Maverick 16, Richard Harrison, Josh Davidson, Martien Van Der P., Gary Brown, Justin Nicholson, Jonathan Redpath, Timi, Barszczisbad, Enrico Castaldi</author>
   <status>production</status>
   <rating>
     <FDM type="int">5</FDM>
@@ -84,6 +84,11 @@
       <green type="double">1.00</green>
       <blue type="double">0.07</blue>
     </text1>
+    <text2><!--BIT/SILENT color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </text2>
     <line1><!--CRM scan lines + lat range + HSD acft, rdr scope color -->
       <red type="double">0.01</red>
       <green type="double">1.00</green>
@@ -124,21 +129,36 @@
       <green type="double">1.00</green>
       <blue type="double">0.07</blue>
     </lines>
-    <circle1><!--HSD red circles color-->
+    <circle1><!--HSD red circles + GM Pic color-->
       <red type="double">0.01</red>
       <green type="double">1.00</green>
       <blue type="double">0.07</blue>
     </circle1>
-    <circle2><!--HSD yellow circles color-->
+    <circle2><!--HSD yellow circles + Lock 2 color-->
       <red type="double">0.01</red>
       <green type="double">1.00</green>
       <blue type="double">0.07</blue>
     </circle2>
-    <circle3><!--HSD green circles color-->
+    <circle3><!--HSD green circles + CRM IFF + WPN RDY color-->
       <red type="double">0.01</red>
       <green type="double">1.00</green>
       <blue type="double">0.07</blue>
     </circle3>
+    <dot1><!--Lock 1 + cntct blep color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </dot1>
+    <dot3><!--Lock 2 color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </dot3>
+    <dot4><!--HSD DL cntct color-->
+      <red type="double">0.01</red>
+      <green type="double">1.00</green>
+      <blue type="double">0.07</blue>
+    </dot4>
    </MFD-color>
   </model>
 

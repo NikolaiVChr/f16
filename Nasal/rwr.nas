@@ -522,15 +522,15 @@ RWRCanvas = {
 
                 cv.addPlacement({"node": "bkg", "texture":"rwr-bkg.png"});
                 if (getprop("sim/variant-id") == 2) {
-                cv.setColorBackground(0, 0.065, 0);
+                cv.setColorBackground(0, 0.0625, 0);
                 } else if (getprop("sim/variant-id") == 4) {
-                cv.setColorBackground(0, 0.065, 0);
+                cv.setColorBackground(0, 0.0625, 0);
                 } else if (getprop("sim/variant-id") == 5) {
-                cv.setColorBackground(0, 0.065, 0);
+                cv.setColorBackground(0, 0.0625, 0);
                 } else if (getprop("sim/variant-id") == 6) {
-                cv.setColorBackground(0, 0.065, 0);
+                cv.setColorBackground(0, 0.0625, 0);
                 } else {
-                cv.setColorBackground(0.01, 0.11, 0);
+                cv.setColorBackground(0.01, 0.105, 0);
                 };
                 var root = cv.createGroup();
                 rwr = RWRCanvas.new("RWRCanvas", root, [diam/2,diam/2],diam);

@@ -24,6 +24,9 @@
                     <throttle type="double">0.75</throttle>
                 </engine>
             </engines>
+			<fuel>
+				<tank-inerting type="bool">true</tank-inerting>
+			</fuel>
             <gear>
                 <gear-down type="double">0</gear-down>
             </gear>
@@ -36,6 +39,7 @@
                     <flood-inst-pnl-knob type="double">0.1</flood-inst-pnl-knob>
                     <console-primary-knob type="double">0.2</console-primary-knob>
                     <console-flood-knob type="double">0.3</console-flood-knob>
+                    <data-entry-display type="double">1.0</data-entry-display>
                 </lighting-panel>
             </lighting>
             <seat>
@@ -76,6 +80,10 @@
                 <ew-rwr-switch type="bool">true</ew-rwr-switch>
                 <ew-mws-switch type="bool">true</ew-mws-switch>
                 <ew-jmr-switch type="bool">true</ew-jmr-switch>
+                <cmds-01-switch type="bool">true</cmds-01-switch>
+                <cmds-02-switch type="bool">true</cmds-02-switch>
+                <cmds-ch-switch type="bool">true</cmds-ch-switch>
+                <cmds-fl-switch type="bool">true</cmds-fl-switch>
                 <ew-mode-knob type="bool">true</ew-mode-knob>
                 <pbg-switch type="int">0</pbg-switch>
             </avionics>
