@@ -21,7 +21,11 @@
             </equals>
             <equals>
                 <property>sim/variant-id</property>
-                <value>1</value>
+                <value>2</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>3</value>
             </equals>
           </or>
           </not>
