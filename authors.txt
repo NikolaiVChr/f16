@@ -67,6 +67,8 @@ Fabien Barbier
 Jonathan Redpath
 - Hydraulics
 - Cockpit work
+- MFD, DED improvements
+- Revised fuel system
 - Various improvements
 - Bug reporting and fixing
 

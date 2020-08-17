@@ -5,7 +5,7 @@
  <sim>
   <description>General Dynamics YF-16</description>
   <long-description>The YF-16 is a 1975 prototype of a 4th generation fighter aircraft with a fly by wire system. Powered by F100-PW-200. The fly-by-wire in this variant offers no spin, nose-slide or deep stall protection.</long-description>
-  <author>Erik Hofman, Pensacola, Martin "Pegasus" Schmitt, Nikolai V. Chr., J Maverick 16, Richard Harrison, Josh Davidson, Martien Van Der P., Gary Brown, Justin Nicholson, Jonathan Redpath, Timi, Barszczisbad, Enrico Castaldi</author>
+  <author>Erik Hofman, Pensacola, Martin "Pegasus" Schmitt, Nikolai V. Chr., J Maverick 16, Richard Harrison, Josh Davidson, Martien Van Der P., Jonathan Redpath, Gary Brown, Justin Nicholson, Timi, Barszczisbad, Enrico Castaldi</author>
   <status>production</status>
   <rating>
     <FDM type="int">5</FDM>
