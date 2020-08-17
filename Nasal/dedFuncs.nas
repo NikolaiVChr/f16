@@ -34,12 +34,12 @@ var Button = {
 				}
 				
 				if (dataEntryDisplay.page == pACAL and dataEntryDisplay.acalModeSelected) {
-					if (dataEntryDisplay.fixTakingMode == "GPS") {
-						dataEntryDisplay.fixTakingMode = "DTS";
-					} elsif (dataEntryDisplay.fixTakingMode == "DTS") {
-						dataEntryDisplay.fixTakingMode = "BOTH";
+					if (dataEntryDisplay.acalMode == "GPS") {
+						dataEntryDisplay.acalMode = "DTS";
+					} elsif (dataEntryDisplay.acalMode == "DTS") {
+						dataEntryDisplay.acalMode = "BOTH";
 					} else {
-						dataEntryDisplay.fixTakingMode = "GPS";
+						dataEntryDisplay.acalMode = "GPS";
 					}
 					return;
 				}
