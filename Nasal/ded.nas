@@ -600,5 +600,38 @@ var dataEntryDisplay = {
 setlistener("f16/avionics/rtn-seq", func() {
 	if (getprop("f16/avionics/rtn-seq") == -1) {
 		dataEntryDisplay.page = pCNI;
+	} elsif (getprop("f16/avionics/rtn-seq") == 1) {
+		if (dataEntryDisplay.page == pMARK and dataEntryDisplay.markModeSelected) {
+			if (dataEntryDisplay.markMode == "OFLY") {
+				dataEntryDisplay.markMode = "FCR";
+			} elsif (dataEntryDisplay.markMode == "FCR") {
+				dataEntryDisplay.markMode = "HUD";
+			} else {
+				dataEntryDisplay.markMode = "OFLY";
+			}
+			return;
+		}
+		
+		if (dataEntryDisplay.page == pFIX and dataEntryDisplay.fixTakingModeSelected) {
+			if (dataEntryDisplay.fixTakingMode == "OFLY") {
+				dataEntryDisplay.fixTakingMode = "FCR";
+			} elsif (dataEntryDisplay.fixTakingMode == "FCR") {
+				dataEntryDisplay.fixTakingMode = "HUD";
+			} else {
+				dataEntryDisplay.fixTakingMode = "OFLY";
+			}
+			return;
+		}
+		
+		if (dataEntryDisplay.page == pACAL and dataEntryDisplay.acalModeSelected) {
+			if (dataEntryDisplay.acalMode == "GPS") {
+				dataEntryDisplay.acalMode = "DTS";
+			} elsif (dataEntryDisplay.acalMode == "DTS") {
+				dataEntryDisplay.acalMode = "BOTH";
+			} else {
+				dataEntryDisplay.acalMode = "GPS";
+			}
+			return;
+		}
 	}
 }, 0, 0);
