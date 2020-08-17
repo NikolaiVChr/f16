@@ -77,6 +77,9 @@ var Routers = {
 	Misc: {
 		magvRouter: Router.new(pMISC, pMAGV),
 	},
+	comm1Router: Router.new(nil, pCOMM1),
+	comm2Router: Router.new(nil, pCOMM2),
+	iffRouter: Router.new(nil, pIFF),
 	listRouter: Router.new(nil, pLIST),
 };
 
@@ -91,6 +94,9 @@ var RouterVectors = {
 	button8: [Routers.List.modeRouter, Routers.fixRouter],
 	button9: [Routers.acalRouter],
 	button0: [Routers.List.miscRouter],
+	buttonComm1: [Routers.comm1Router],
+	buttonComm2: [Routers.comm2Router],
+	buttonIFF: [Routers.iffRouter],
 	buttonList: [Routers.listRouter],
 };
 
@@ -120,9 +126,9 @@ var Buttons = {
 	button8: Button.new(routerVec: RouterVectors.button8, To9: 1),
 	button9: Button.new(routerVec: RouterVectors.button9, To9: 1),
 	button0: Button.new(actionVec: ActionVectors.button0, routerVec: RouterVectors.button0),
-	buttoncomm1: Button.new(),
-	buttoncomm2: Button.new(),
-	buttoniff: Button.new(),
+	buttoncomm1: Button.new(routerVec: RouterVectors.buttonComm1),
+	buttoncomm2: Button.new(routerVec: RouterVectors.buttonComm2),
+	buttoniff: Button.new(routerVec: RouterVectors.buttonIFF),
 	buttonlist: Button.new(routerVec: RouterVectors.buttonList),
 	buttonup: Button.new(actionVec: ActionVectors.buttonup),
 	buttondown: Button.new(actionVec: ActionVectors.buttondown),
@@ -228,10 +234,16 @@ var dataEntryDisplay = {
 			me.updateEWS();
 		} elsif (me.page == pMODE) {
 			me.updateMode();
+		} elsif (me.page == pINTG) {
+			me.updateIntg();
+		} elsif (me.page == pDLNK) {
+			me.updateDlnk();
 		} elsif (me.page == pMISC) {
 			me.updateMisc();
 		} elsif (me.page == pCNI) {
 			me.updateCNI();
+		} elsif (me.page == pIFF) {
+			me.updateIFF();
 		}
 		
 		me.line1.setText(me.text[0]);
@@ -572,6 +584,14 @@ var dataEntryDisplay = {
 		me.text[4] = sprintf("                        ");
 	},
 	
+	updateIntg: func() {
+	
+	},
+	
+	updateDlnk: func() {
+	
+	},
+	
 	updateMisc: func() {
 		me.text[0] = sprintf("           MISC      %s ", me.no);
 		me.text[1] = sprintf(" 1CORR 2MAGV 3OFP R     ");
@@ -581,8 +601,10 @@ var dataEntryDisplay = {
 	},
 	
 	updateCNI: func() {
-		me.text[0] = sprintf("UHF   242.1     STPT %s ", me.no);
-		me.text[1] = sprintf(" ");
+		winddir = sprintf("%03d\xc2\xb0",getprop("environment/wind-from-heading-deg"));
+		windkts = sprintf("%03d",getprop("environment/wind-speed-kt"));
+		me.text[0] = sprintf("UHF   242.10    STPT %s ", me.no);
+		me.text[1] = sprintf("                %s %s", winddir, windkts);
 		me.text[2] = sprintf("VHF   10        %s", getprop("/sim/time/gmt-string"));
 		if (me.chrono.running) {
 			var hackHour = int(getprop("f16/avionics/hack/elapsed-time-sec") / 3600);
@@ -593,7 +615,40 @@ var dataEntryDisplay = {
 		} else {
 			me.text[3] = sprintf(" ");
 		}
-		me.text[4] = sprintf("M1 3C4 M4 %04d    T%03.0f%s",getprop("instrumentation/transponder/id-code"), getprop("instrumentation/tacan/frequencies/selected-channel"), getprop("instrumentation/tacan/frequencies/selected-channel[4]"));
+		me.text[4] = sprintf("M1 3C4 M4 %04d     T%03.0f%s",getprop("instrumentation/transponder/id-code"), getprop("instrumentation/tacan/frequencies/selected-channel"), getprop("instrumentation/tacan/frequencies/selected-channel[4]"));
+	},
+	
+	updateComm1: func() {
+	
+	},
+	
+	updateComm2: func() {
+	
+	},
+	
+	updateIFF: func() {
+		var target = awg_9.active_u;
+		var sign = "";
+		var type = "";
+		var friend = "";
+		if (target != nil) {
+			sign = target.get_Callsign();
+			type = target.get_model();
+		}
+		if (getprop("f16/avionics/power-dl") and sign != "" and (sign == getprop("link16/wingman-1") or sign == getprop("link16/wingman-2") or sign == getprop("link16/wingman-3") or sign == getprop("link16/wingman-4") or sign == getprop("link16/wingman-5") or sign == getprop("link16/wingman-6") or sign == getprop("link16/wingman-7") or sign == getprop("link16/wingman-8") or sign == getprop("link16/wingman-9") or sign == getprop("link16/wingman-10") or sign == getprop("link16/wingman-11") or sign == getprop("link16/wingman-12"))) {
+			friend = "WINGMAN";
+		} elsif (sign != "") {
+			friend = "NO CONN";
+		}
+		var iffcode = getprop("instrumentation/iff/channel-selection");
+		var pond   = getprop("instrumentation/transponder/inputs/knob-mode")==0?0:1;
+		if (pond) pond = sprintf("%04d",getprop("instrumentation/transponder/id-code"));
+		else pond = "----";
+		me.text[0] = sprintf("IFF   ON   MAN          ");
+		me.text[1] = sprintf("M3     %s             ", pond);
+		me.text[2] = sprintf("M4     %04d             ", iffcode);
+		me.text[3] = sprintf("PILOT   %s",sign);
+		me.text[4] = sprintf("TYPE    %s",type);
 	},
 };
 

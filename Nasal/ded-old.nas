@@ -6,35 +6,7 @@ var loop_ded = func {# one line is max 24 chars
     } elsif (page == pCRUS) {
       
     } elsif (page == pIFF) {
-      var target = awg_9.active_u;
-      var sign = "";
-      if (target != nil) {
-        sign = target.get_Callsign();
-      }
-      var type = "";
-      if (target != nil) {
-        type = target.get_model();
-      }
-      var friend = "";
-      if (getprop("f16/avionics/power-dl") and sign != "" and (sign == getprop("link16/wingman-1") or sign == getprop("link16/wingman-2") or sign == getprop("link16/wingman-3") or sign == getprop("link16/wingman-4") or sign == getprop("link16/wingman-5") or sign == getprop("link16/wingman-6") or sign == getprop("link16/wingman-7") or sign == getprop("link16/wingman-8") or sign == getprop("link16/wingman-9") or sign == getprop("link16/wingman-10") or sign == getprop("link16/wingman-11") or sign == getprop("link16/wingman-12"))) {
-        friend = "WINGMAN";
-      } elsif (sign != "") {
-        friend = "NO CONN";
-      }
-      #if (type != "") {
-      #  friend  = getprop("instrumentation/iff/response")?"M4":"UNKWN";
-      #} else {
-      #  friend = "";
-      #}
-      var iffcode = getprop("instrumentation/iff/channel-selection");
-      var pond   = getprop("instrumentation/transponder/inputs/knob-mode")==0?0:1;
-      if (pond) pond = sprintf("%04d",getprop("instrumentation/transponder/id-code"));
-      else pond = "----";
-      text[0] = sprintf("IFF   ON   MAN          ");
-      text[1] = sprintf("M3     %s             ", pond);
-      text[2] = sprintf("M4     %04d             ", iffcode);
-      text[3] = sprintf("PILOT   %s",sign);
-      text[4] = sprintf("TYPE    %s",type);
+      
     } elsif (page == pLINK) {
       text[0] = sprintf(" XMT 40 INTRAFLIGHT  %s ",no);
       
