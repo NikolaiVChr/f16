@@ -3501,6 +3501,7 @@ value. 18000=standard US transition altitude -->
             <bulls-eye-defined type="bool">true</bulls-eye-defined>
             <bulls-eye-lat type="double">37.20</bulls-eye-lat>
             <bulls-eye-lon type="double">-115.60</bulls-eye-lon>
+			<rtn-seq type="int">0</rtn-seq>
             <laser-code type="int">0000</laser-code>
             <eegs-wingspan-ft type="int">35</eegs-wingspan-ft>
             <power-mmc type="bool">false</power-mmc>

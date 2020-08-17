@@ -55,34 +55,43 @@ var Actions = {
 };
 
 var Routers = {
-	tacanRouter: Router.new(nil, pTACAN),
-	alowRouter: Router.new(nil, pALOW),
-	fackRouter: Router.new(nil, pFACK),
-	stptRouter: Router.new(nil, pSTPT),
-	crusRouter: Router.new(nil, pCRUS),
-	timeRouter: Router.new(nil, pTIME),
-	fixRouter: Router.new(nil, pFIX),
-	markRouter: Router.new(nil, pMARK),
-	acalRouter: Router.new(nil, pACAL),
+	tacanRouter: Router.new(pCNI, pTACAN),
+	alowRouter: Router.new(pCNI, pALOW),
+	fackRouter: Router.new(pCNI, pFACK),
+	stptRouter: Router.new(pCNI, pSTPT),
+	crusRouter: Router.new(pCNI, pCRUS),
+	timeRouter: Router.new(pCNI, pTIME),
+	fixRouter: Router.new(pCNI, pFIX),
+	markRouter: Router.new(pCNI, pMARK),
+	acalRouter: Router.new(pCNI, pACAL),
 	List: {
+		destRouter: Router.new(pLIST, pDEST),
 		bingoRouter: Router.new(pLIST, pBINGO),
+		navRouter: Router.new(pLIST, pNAV),
+		manRouter: Router.new(pLIST, pMAN),
+		insRouter: Router.new(pLIST, pINS),
+		ewsRouter: Router.new(pLIST, pEWS),
+		modeRouter: Router.new(pLIST, pMODE),
+		miscRouter: Router.new(pLIST, pMISC),
 	},
 	Misc: {
 		magvRouter: Router.new(pMISC, pMAGV),
 	},
+	listRouter: Router.new(nil, pLIST),
 };
 
 var RouterVectors = {
-	button1: [Routers.tacanRouter],
+	button1: [Routers.List.destRouter, Routers.tacanRouter],
 	button2: [Routers.List.bingoRouter, Routers.Misc.magvRouter,Routers.alowRouter],
 	button3: [Routers.fackRouter],
-	button4: [Routers.stptRouter],
-	button5: [Routers.crusRouter],
-	button6: [Routers.timeRouter],
-	button7: [Routers.markRouter],
-	button8: [Routers.fixRouter],
+	button4: [Routers.List.navRouter, Routers.stptRouter],
+	button5: [Routers.List.manRouter, Routers.crusRouter],
+	button6: [Routers.List.insRouter, Routers.timeRouter],
+	button7: [Routers.List.ewsRouter, Routers.markRouter],
+	button8: [Routers.List.modeRouter, Routers.fixRouter],
 	button9: [Routers.acalRouter],
-	button0: [],
+	button0: [Routers.List.miscRouter],
+	buttonList: [Routers.listRouter],
 };
 
 var ActionVectors = {
@@ -114,7 +123,7 @@ var Buttons = {
 	buttoncomm1: Button.new(),
 	buttoncomm2: Button.new(),
 	buttoniff: Button.new(),
-	buttonlist: Button.new(),
+	buttonlist: Button.new(routerVec: RouterVectors.buttonList),
 	buttonup: Button.new(actionVec: ActionVectors.buttonup),
 	buttondown: Button.new(actionVec: ActionVectors.buttondown),
 };
@@ -132,7 +141,7 @@ var dataEntryDisplay = {
 	text: ["","","","",""],
 	scroll: 0,
 	scrollF: 0,
-	page: int(rand()*32.99),
+	page: 30,
 	init: func() {
 		me.canvasNode = canvas.new({
 			"name": "DED",
@@ -203,6 +212,26 @@ var dataEntryDisplay = {
 			me.updateFix();
 		} elsif (me.page == pACAL) {
 			me.updateAcal();
+		} elsif (me.page == pLIST) {
+			me.updateList();
+		} elsif (me.page == pDEST) {
+			me.updateDest();
+		} elsif (me.page == pBINGO) {
+			me.updateBingo();
+		} elsif (me.page == pNAV) {
+			me.updateNav();
+		} elsif (me.page == pMAN) {
+			me.updateMan();
+		} elsif (me.page == pINS) {
+			me.updateINS();
+		} elsif (me.page == pEWS) {
+			me.updateEWS();
+		} elsif (me.page == pMODE) {
+			me.updateMode();
+		} elsif (me.page == pMISC) {
+			me.updateMisc();
+		} elsif (me.page == pCNI) {
+			me.updateCNI();
 		}
 		
 		me.line1.setText(me.text[0]);
@@ -415,9 +444,161 @@ var dataEntryDisplay = {
 		} else {
 			me.text[0] = sprintf(" ACAL     %s  %s", me.acalMode, me.no);
 		}
-			me.text[1] = sprintf("          AUTO");
+		me.text[1] = sprintf("          AUTO");
 		me.text[2] = sprintf("                 ");
 		me.text[3] = sprintf("                 ");
 		me.text[4] = sprintf("                 ");
 	},
+	
+	updateList: func() {
+		me.text[0] = sprintf("           LIST      12 ");
+		me.text[1] = sprintf(" 1DEST 2BNGO 3VIP RINTG ");
+		me.text[2] = sprintf(" 4NAV  5MAN  6INS EDLNK ");
+		me.text[3] = sprintf(" 7EWS  8MODE 9VRP OMISC ");
+		me.text[4] = sprintf("                        ");
+	},
+	
+	updateDest: func() {
+		var fp = flightplan();
+		var TOS = "--:--:--";
+		var lat = "";
+		var lon = "";
+		var alt = -1;
+		if (fp != nil) {
+			var wp = fp.destination;
+			if (wp != nil and getprop("f16/avionics/power-mmc")) {
+				lat = convertDegreeToStringLat(wp.lat);
+				lon = convertDegreeToStringLon(wp.lon);
+				alt = wp.elevation * M2FT;
+				var hour   = getprop("sim/time/utc/hour"); 
+				var minute = getprop("sim/time/utc/minute");
+				var second = getprop("sim/time/utc/second");
+				var eta    = getprop("autopilot/route-manager/wp/eta");
+				if (eta == nil or getprop("autopilot/route-manager/wp/eta-seconds")>3600*24) {
+					#
+				} elsif (getprop("autopilot/route-manager/wp/eta-seconds")>3600) {
+					eta = split(":",eta);
+					minute += num(eta[1]);
+					var addOver = 0;
+					if (minute > 59) {
+						addOver = 1;
+						minute -= 60;
+					}
+					hour += num(eta[0])+addOver;
+					while (hour > 23) {
+						hour -= 24;
+					}
+					TOS = sprintf("%02d:%02d:%02d",hour,minute,second);
+				} else {
+					eta = split(":",eta);
+					second += num(eta[1]);
+					var addOver = 0;
+					if (second > 59) {
+						addOver = 1;
+						second -= 60;
+					}
+					minute += num(eta[0])+addOver;
+					addOver = 0;
+					if (minute > 59) {
+						addOver = 1;
+						minute -= 60;
+					}
+					hour += addOver;
+					while (hour > 23) {
+						hour -= 24;
+					}
+					TOS = sprintf("%02d:%02d:%02d",hour,minute,second);   
+				}          
+			}
+		}
+      
+		me.text[0] = sprintf("         DEST  DIR  %s",me.no);
+		me.text[1] = sprintf("      LAT  %s",lat);
+		me.text[2] = sprintf("      LNG  %s",lon);
+		me.text[3] = sprintf("     ELEV  % 5dFT",alt);
+		me.text[4] = sprintf("      TOS  %s",TOS);
+	},
+	
+	updateBingo: func() {
+		var bingo = getprop("f16/settings/bingo");
+		me.text[0] = sprintf("        BINGO       %s  ",me.no);
+		me.text[1] = sprintf("                        ");
+		me.text[2] = sprintf("    SET    %5dLBS      ",bingo);
+		me.text[3] = sprintf("  TOTAL    %5dLBS      ",getprop("consumables/fuel/total-fuel-lbs"));
+		me.text[4] = sprintf("                        ");
+	},
+	
+	updateNav: func() {
+		var days = 31 - getprop("/sim/time/utc/day");
+		me.text[0] = sprintf("    NAV STATUS        %s",me.no);
+		me.text[1] = sprintf("SYS ACCUR     HIGH");
+		me.text[2] = sprintf("GPS ACCUR     HIGH");
+		me.text[3] = sprintf("MSN DUR       %s  DAYS", days);
+		me.text[4] = sprintf("KEYS          VERIFIED");
+	},
+	
+	updateMan: func() {
+		me.text[0] = sprintf("      MAN        %s",me.no);
+		me.text[1] = sprintf("WSPAN     30FT");
+		me.text[2] = sprintf("      MBAL    ");
+		me.text[3] = sprintf("RNG      2000FT  ");
+		me.text[4] = sprintf("TOF      5.4SEC ");
+	},
+	
+	updateINS: func() {
+		lat = convertDegreeToStringLat(getprop("position/latitude-deg"));
+		lon = convertDegreeToStringLon(getprop("position/longitude-deg"));
+		me.text[0] = sprintf("  INS   10.2/10  %s",me.no);
+		me.text[1] = sprintf("  LAT  %s",lat);
+		me.text[2] = sprintf("  LNG  %s",lon);
+		me.text[3] = sprintf("  SALT  %5dFT",getprop("position/altitude-ft"));
+		me.text[3] = sprintf("THDG %5.1f\xc2\xb0     G/S %3d",getprop("orientation/true-heading-deg"),getprop("velocities/groundspeed-kt"));
+	},
+	
+	updateEWS: func() {
+		var flares = getprop("ai/submodels/submodel[0]/count");
+		me.text[0] = sprintf("        EWS CONTROLS  %s",me.no);
+		me.text[1] = sprintf(" CH %3d     REQJAM", flares);
+		me.text[2] = sprintf(" FL %3d     FDBK      ON", flares);
+		me.text[3] = sprintf(" MODE %s  REQCTR    ON", getprop("f16/avionics/ew-mode-knob") == 1 ? "AUTO" : "OFF ");
+		me.text[4] = sprintf("            BINGO     ON");
+	},
+	
+	updateMode: func() {
+		me.text[0] = sprintf("        MODE *NAV*     %s",me.no);
+		me.text[1] = sprintf("                        ");
+		me.text[2] = sprintf("                        ");
+		me.text[3] = sprintf("                        ");
+		me.text[4] = sprintf("                        ");
+	},
+	
+	updateMisc: func() {
+		me.text[0] = sprintf("           MISC      %s ", me.no);
+		me.text[1] = sprintf(" 1CORR 2MAGV 3OFP R     ");
+		me.text[2] = sprintf(" 4INSM 5LASR 6GPS E     ");
+		me.text[3] = sprintf(" 7DRNG 8BULL 9WPT OHARM ");
+		me.text[4] = sprintf("                        ");
+	},
+	
+	updateCNI: func() {
+		me.text[0] = sprintf("UHF   242.1     STPT %s ", me.no);
+		me.text[1] = sprintf(" ");
+		me.text[2] = sprintf("VHF   10        %s", getprop("/sim/time/gmt-string"));
+		if (me.chrono.running) {
+			var hackHour = int(getprop("f16/avionics/hack/elapsed-time-sec") / 3600);
+			var hackMin = int((getprop("f16/avionics/hack/elapsed-time-sec") - (hackHour * 3600)) / 60);
+			var hackSec = int(getprop("f16/avionics/hack/elapsed-time-sec") - (hackHour * 3600) - (hackMin * 60));
+			var hackTime = sprintf("%02.0f", hackHour) ~ ":" ~ sprintf("%02.0f", hackMin) ~ ":" ~ sprintf("%02.0f", hackSec);
+			me.text[3] = sprintf("                %s", hackTime);
+		} else {
+			me.text[3] = sprintf(" ");
+		}
+		me.text[4] = sprintf("M1 3C4 M4 %04d    T%03.0f%s",getprop("instrumentation/transponder/id-code"), getprop("instrumentation/tacan/frequencies/selected-channel"), getprop("instrumentation/tacan/frequencies/selected-channel[4]"));
+	},
 };
+
+setlistener("f16/avionics/rtn-seq", func() {
+	if (getprop("f16/avionics/rtn-seq") == -1) {
+		dataEntryDisplay.page = pCNI;
+	}
+}, 0, 0);

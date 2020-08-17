@@ -546,6 +546,128 @@
             </binding>
         </hovered>-->
     </animation>
+	
+	<animation>
+        <type>knob</type>
+        <object-name>rtn_seq</object-name>
+        <property>f16/avionics/rtn-seq</property>
+        <drag-direction>horizontal</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <factor>30</factor>
+        <offset-deg>0</offset-deg>
+        <center>
+            <x-m>  -0.000881 </x-m>
+            <y-m>  -0.016331 </y-m>
+            <z-m>  -0.039963 </z-m>
+        </center>
+        <axis>
+            <x> 0.0 </x>
+            <y> 0.0 </y>
+            <z> 1.0 </z>
+        </axis>
+        <increase>
+            <binding>
+				<!--<condition>
+					<equals>
+						<property>f16/avionics/ded-up-down</property>
+						<value>0</value>
+					</equals>
+				</condition>-->
+                <command>property-adjust</command>
+                <property>f16/avionics/rtn-seq</property>
+                <factor>1</factor>
+                <step>1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </increase>
+        <decrease>
+            <binding>
+				<!--<condition>
+					<equals>
+						<property>f16/avionics/ded-up-down</property>
+						<value>0</value>
+					</equals>
+				</condition>-->
+                <command>property-adjust</command>
+                <property>f16/avionics/rtn-seq</property>
+                <factor>1</factor>
+                <step>-1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </decrease>
+		<release>
+			 <binding>
+                <command>property-assign</command>
+                <property>f16/avionics/rtn-seq</property>
+                <value>0</value>
+            </binding>
+		</release>
+    </animation>
+	
+	<!--<animation>
+        <type>knob</type>
+        <object-name>rtn_seq</object-name>
+        <property>f16/avionics/ded-up-down</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px>
+        <factor>30</factor>
+        <offset-deg>0</offset-deg>
+        <center>
+            <x-m>  -0.000881 </x-m>
+            <y-m>  -0.016331 </y-m>
+            <z-m>  -0.039963 </z-m>
+        </center>
+        <axis>
+            <x> 0.0 </x>
+            <y> 1.0 </y>
+            <z> 0.0 </z>
+        </axis>
+        <increase>
+            <binding>
+				<condition>
+					<equals>
+						<property>f16/avionics/rtn-seq</property>
+						<value>0</value>
+					</equals>
+				</condition>
+                <command>property-adjust</command>
+                <property>f16/avionics/ded-up-down</property>
+                <factor>1</factor>
+                <step>1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </increase>
+        <decrease>
+            <binding>
+				<condition>
+					<equals>
+						<property>f16/avionics/rtn-seq</property>
+						<value>0</value>
+					</equals>
+				</condition>
+                <command>property-adjust</command>
+                <property>f16/avionics/ded-up-down</property>
+                <factor>1</factor>
+                <step>-1</step>
+                <min>-1</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </decrease>
+		<release>
+			 <binding>
+                <command>property-assign</command>
+                <property>f16/avionics/ded-up-down</property>
+                <value>0</value>
+            </binding>
+		</release>
+    </animation>-->
     
     <animation>
         <object-name>DED_panel</object-name>

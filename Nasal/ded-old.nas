@@ -76,13 +76,7 @@ var loop_ded = func {# one line is max 24 chars
       text[3] = sprintf("                        ");
       text[4] = sprintf("M34   %s    MAN  T%s",pond,t);
     } elsif (page == pBINGO) {
-      var total = getprop("consumables/fuel/total-fuel-lbs");
-      var bingo = getprop("f16/settings/bingo");
-      text[0] = sprintf("        BINGO       %s  ",no);
-      text[1] = sprintf("                        ");
-      text[2] = sprintf("    SET    %5dLBS      ",bingo);
-      text[3] = sprintf("  TOTAL    %5dLBS      ",total);
-      text[4] = sprintf("                        ");
+     
     } elsif (page == pMAGV) {
       var amount = geo.normdeg180(getprop("orientation/heading-deg")-getprop("orientation/heading-magnetic-deg"));
       if (amount != nil) {
@@ -110,26 +104,11 @@ var loop_ded = func {# one line is max 24 chars
     } elsif (page == pTIME) {
       
     } elsif (page == pCM) {
-      # this page is not authentic, but since the in cockpit display is defunc, pilot need to know these values so I put them into a DED page.
-      var flares   = getprop("ai/submodels/submodel[0]/count");
-      text[0] = sprintf("      CMDS       %s    ",no);
-      text[1] = sprintf("  CHAFF     %3d",flares);
-      text[2] = sprintf("  FLARE     %3d",flares);
-      text[3] = sprintf("                        ");
-      text[4] = sprintf("                        ");
     
     } elsif (page == pLIST) {
-      text[0] = sprintf("           LIST      12 ");
-      text[1] = sprintf(" 1DEST 2BNGO 3VIP RINTG ");
-      text[2] = sprintf(" 4NAV  5MAN  6INS EDLNK ");
-      text[3] = sprintf(" 7EWS  8MODE 9VRP OMISC ");
-      text[4] = sprintf("                        ");
+      
     } elsif (page == pMISC) {
-      text[0] = sprintf("           MISC      12 ");
-      text[1] = sprintf(" 1CORR 2MAGV 3OFP R     ");
-      text[2] = sprintf(" 4INSM 5LASR 6GPS E     ");
-      text[3] = sprintf(" 7DRNG 8BULL 9WPT OHARM ");
-      text[4] = sprintf("                        ");
+      
     }
 };
 
