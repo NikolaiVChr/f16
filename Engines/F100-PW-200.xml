@@ -86,7 +86,7 @@
 			<v>1.0</v>
 			<product>
 				<property>/f16/engine/max-power</property>
-				<v>0.05</v>
+				<v>0.033</v>
 			</product>
 		 </sum>
 		 <v>1.0</v>

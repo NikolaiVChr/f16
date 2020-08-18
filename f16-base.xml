@@ -989,9 +989,9 @@ VARIANTS
 - YF-16                  : 14670/23830 lbf. The FBW in this variant has no spin, nose-slide or deep stall protection. Small horz. tail (auth. aero data). Engine has auth. power curves.
 - F-16 Simplified        : 17800/29000 lbf. The FBW can be switched off. Uses custom FBW made for FG and aero data is simplified version of the other other versions.
 
-The engines wary not only in thrust, but also in fuel consumption.
+The engines vary not only in thrust, but also in fuel consumption. Furthermore they differ in empty weight.
+Different Blocks have different sets of cockpit panels, MFDs and HSI/EHSI, alongside other changes.
 Variants will also have different sets of liveries that can be selected.
-Furthermore they differ in empty weight. And some block have HSI gauge while others have EHSI display.
 There is also small changes in tail for different variants with and without braking chute.
             ]]></text-9>
         </help>
