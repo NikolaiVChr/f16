@@ -39,6 +39,9 @@ var pCOMM2 = 32;
 var pIFF   = 33;
 
 var Actions = {
+	Tacan: {
+		mSel: Action.new(pTACAN, toggleTACANBand),
+	},
 	Time: {
 		toggleHack: Action.new(pTIME, toggleHack),
 		resetHack: Action.new(pTIME, resetHack),
@@ -110,7 +113,7 @@ var ActionVectors = {
 	button7: [],
 	button8: [],
 	button9: [],
-	button0: [Actions.Mark.mSel,Actions.Fix.mSel,Actions.Acal.mSel],
+	button0: [Actions.Tacan.mSel,Actions.Mark.mSel,Actions.Fix.mSel,Actions.Acal.mSel],
 	buttonup: [Actions.Time.toggleHack],
 	buttondown: [Actions.Time.resetHack],
 };
@@ -255,20 +258,22 @@ var dataEntryDisplay = {
 		settimer(func() { me.update(); }, 0.5);
 	},
 	
+	tacanMode: "REC    ",
 	updateTacan: func() {
 		var ilsOn  = (getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 0 or getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 3)?"ON ":"OFF";
 		var ident = getprop("instrumentation/tacan/ident");
 		var inrng = getprop("instrumentation/tacan/in-range");	
 		  
-		me.text[0] = sprintf("TCN REC          ILS %s",ilsOn);
+		me.text[0] = sprintf("TCN %s  ILS %s",me.tacanMode,ilsOn);
 		me.text[1] = sprintf("                        ");
 		if (!inrng or ident == nil or ident == "") {
-			me.text[2] = sprintf("            CMD STRG ", ident);
+			me.text[2] = sprintf("               CMD STRG ", ident);
 		} else {
-			me.text[2] = sprintf("BCN     %s CMD STRG ", ident);
+			me.text[2] = sprintf("BCN %s        CMD STRG ", ident);
 		}
-		me.text[3] = sprintf("CHAN    %-3d FRQ  %6.2f",getprop("instrumentation/tacan/frequencies/selected-channel"),getprop("instrumentation/nav[0]/frequencies/selected-mhz"));
-		me.text[4] = sprintf("BAND    %s   CRS  %03.0f\xc2\xb0",getprop("instrumentation/tacan/frequencies/selected-channel[4]"),getprop("f16/crs-ils"));
+		
+		me.text[3] = sprintf("CHAN %-3d   FRQ  %6.2f",getprop("instrumentation/tacan/frequencies/selected-channel"),getprop("instrumentation/nav[0]/frequencies/selected-mhz"));
+		me.text[4] = sprintf("BAND %s(0)   CRS  %03.0f\xc2\xb0",getprop("instrumentation/tacan/frequencies/selected-channel[4]"),getprop("f16/crs-ils"));
 	},
 	
 	updateAlow: func() {
@@ -656,6 +661,11 @@ setlistener("f16/avionics/rtn-seq", func() {
 	if (getprop("f16/avionics/rtn-seq") == -1) {
 		dataEntryDisplay.page = pCNI;
 	} elsif (getprop("f16/avionics/rtn-seq") == 1) {
+		if (dataEntryDisplay.page == pTACAN) {
+			toggleTACANMode();
+			return;
+		}
+		
 		if (dataEntryDisplay.page == pMARK and dataEntryDisplay.markModeSelected) {
 			if (dataEntryDisplay.markMode == "OFLY") {
 				dataEntryDisplay.markMode = "FCR";

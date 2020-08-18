@@ -112,6 +112,29 @@ var modeSelMark = func() { dataEntryDisplay.markModeSelected = !dataEntryDisplay
 var modeSelFix = func() { dataEntryDisplay.fixTakingModeSelected = !dataEntryDisplay.fixTakingModeSelected; };
 var modeSelAcal = func() { dataEntryDisplay.acalModeSelected = !dataEntryDisplay.acalModeSelected; };
 
+toggleTACANBand = func() {
+	if (getprop("instrumentation/tacan/frequencies/selected-channel[4]") == "X") {
+		setprop("instrumentation/tacan/frequencies/selected-channel[4]", "Y");
+	} else {
+		setprop("instrumentation/tacan/frequencies/selected-channel[4]", "X");
+	}
+};
+
+toggleTACANMode = func() {
+	if (dataEntryDisplay.tacanMode == "REC    ") {
+		dataEntryDisplay.tacanMode = "T/R    ";
+		setprop("f16/avionics/tacan-receive-only", 0);
+	} elsif (dataEntryDisplay.tacanMode == "T/R    ") {
+		dataEntryDisplay.tacanMode = "A/A REC";
+		setprop("f16/avionics/tacan-receive-only", 1);
+	} elsif (dataEntryDisplay.tacanMode == "A/A REC") {
+		dataEntryDisplay.tacanMode = "A/A T/R";
+		setprop("f16/avionics/tacan-receive-only", 0);
+	} else {
+		dataEntryDisplay.tacanMode = "REC    ";
+		setprop("f16/avionics/tacan-receive-only", 1);
+	}
+};
 
 ## these methods taken from JA37:
 var convertDoubleToDegree = func (value) {

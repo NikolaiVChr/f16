@@ -314,7 +314,7 @@ var medium = {
 #    }
     if (getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 0 or getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob") == 1) {
       #tacan
-      if (!getprop("instrumentation/tacan/in-range")) {
+      if (!getprop("instrumentation/tacan/in-range") or getprop("f16/avionics/tacan-receive-only")) {
           setprop("f16/avionics/hsi-dist",-1);
         } else {
           setprop("f16/avionics/hsi-dist",getprop("instrumentation/tacan/indicated-distance-nm"));
