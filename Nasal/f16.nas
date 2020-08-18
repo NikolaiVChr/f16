@@ -1947,6 +1947,7 @@ setlistener("f16/engine/cutoff-release-lever", func() {
 		setprop("f16/engine/sec-self-test", 1);
 		settimer(func() {
 			setprop("f16/engine/sec-self-test", 0);
+			secSelfTest = 0;
 		}, 3);
 	}
 }, 0, 0);
