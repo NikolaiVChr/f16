@@ -136,6 +136,34 @@ toggleTACANMode = func() {
 	}
 };
 
+stptNext = func() {
+	var active = getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc");
+    var wp = getprop("autopilot/route-manager/current-wp");
+    var max = getprop("autopilot/route-manager/route/num");
+  
+    if (active and wp != nil and wp > -1) {
+		wp += 1;
+		if (wp>max-1) {
+			wp = 0;
+		}
+		setprop("autopilot/route-manager/current-wp", wp);
+	}
+};
+
+stptLast = func() {
+	var active = getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc");
+    var wp = getprop("autopilot/route-manager/current-wp");
+    var max = getprop("autopilot/route-manager/route/num");
+  
+    if (active and wp != nil and wp > -1) {
+		wp -= 1;
+		if (wp<0) {
+			wp = max-1;
+		}
+		setprop("autopilot/route-manager/current-wp", wp);
+    }
+};
+
 ## these methods taken from JA37:
 var convertDoubleToDegree = func (value) {
         var sign = value < 0 ? -1 : 1;

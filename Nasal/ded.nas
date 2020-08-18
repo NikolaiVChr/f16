@@ -55,6 +55,8 @@ var Actions = {
 	Acal: {
 		mSel: Action.new(pACAL, modeSelAcal),
 	},	
+	stptNext: Action.new(nil, stptNext),
+	stptLast: Action.new(nil, stptLast),
 };
 
 var Routers = {
@@ -74,12 +76,17 @@ var Routers = {
 		manRouter: Router.new(pLIST, pMAN),
 		insRouter: Router.new(pLIST, pINS),
 		ewsRouter: Router.new(pLIST, pEWS),
+		intgRouter: Router.new(pLIST, pINTG),
 		dlnkRouter: Router.new(pLIST, pDLNK),
 		modeRouter: Router.new(pLIST, pMODE),
 		miscRouter: Router.new(pLIST, pMISC),
 	},
 	Misc: {
 		magvRouter: Router.new(pMISC, pMAGV),
+		ofpRouter: Router.new(pMISC, pOFP),
+		insmRouter: Router.new(pMISC, pINSM),
+		laserRouter: Router.new(pMISC, pLASR),
+		gpsRouter: Router.new(pMISC, pGPS),
 	},
 	comm1Router: Router.new(nil, pCOMM1),
 	comm2Router: Router.new(nil, pCOMM2),
@@ -90,10 +97,10 @@ var Routers = {
 var RouterVectors = {
 	button1: [Routers.List.destRouter, Routers.tacanRouter],
 	button2: [Routers.List.bingoRouter, Routers.Misc.magvRouter,Routers.alowRouter],
-	button3: [Routers.fackRouter],
-	button4: [Routers.List.navRouter, Routers.stptRouter],
-	button5: [Routers.List.manRouter, Routers.crusRouter],
-	button6: [Routers.List.insRouter, Routers.timeRouter],
+	button3: [Routers.Misc.ofpRouter,Routers.fackRouter],
+	button4: [Routers.List.navRouter,Routers.Misc.insmRouter, Routers.stptRouter],
+	button5: [Routers.List.manRouter,Routers.Misc.laserRouter, Routers.crusRouter],
+	button6: [Routers.List.insRouter,Routers.Misc.gpsRouter, Routers.timeRouter],
 	button7: [Routers.List.ewsRouter, Routers.markRouter],
 	button8: [Routers.List.modeRouter, Routers.fixRouter],
 	button9: [Routers.acalRouter],
@@ -103,6 +110,7 @@ var RouterVectors = {
 	buttonIFF: [Routers.iffRouter],
 	buttonList: [Routers.listRouter],
 	buttonEnter: [Routers.List.dlnkRouter],
+	buttonRecall: [Routers.List.intgRouter],
 };
 
 var ActionVectors = {
@@ -116,8 +124,8 @@ var ActionVectors = {
 	button8: [],
 	button9: [],
 	button0: [Actions.Tacan.mSel,Actions.Mark.mSel,Actions.Fix.mSel,Actions.Acal.mSel],
-	buttonup: [Actions.Time.toggleHack],
-	buttondown: [Actions.Time.resetHack],
+	buttonup: [Actions.Time.toggleHack, Actions.stptNext],
+	buttondown: [Actions.Time.resetHack,  Actions.stptLast],
 };
 
 var Buttons = {
@@ -138,7 +146,7 @@ var Buttons = {
 	buttonup: Button.new(actionVec: ActionVectors.buttonup),
 	buttondown: Button.new(actionVec: ActionVectors.buttondown),
 	entr: Button.new(routerVec: RouterVectors.buttonEnter),
-	rcl: Button.new(),
+	rcl: Button.new(routerVec: RouterVectors.buttonRecall),
 };
 
 var dataEntryDisplay = {
@@ -247,6 +255,16 @@ var dataEntryDisplay = {
 			me.updateDlnk();
 		} elsif (me.page == pMISC) {
 			me.updateMisc();
+		} elsif (me.page == pMAGV) {
+			me.updateMagv();
+		} elsif (me.page == pOFP) {
+			me.updateOFP();
+		} elsif (me.page == pINSM) {
+			me.updateINSM();
+		} elsif (me.page == pLASR) {
+			me.updateLaser();
+		} elsif (me.page == pGPS) {
+			me.updateGPS();
 		} elsif (me.page == pCNI) {
 			me.updateCNI();
 		} elsif (me.page == pIFF) {
@@ -452,7 +470,7 @@ var dataEntryDisplay = {
 			me.text[0] = sprintf("          FIX   %s", me.fixTakingMode);
 		}
 		me.text[1] = sprintf("     STPT   %s", me.no);
-		me.text[2] = sprintf("    DELTA       0NM", );
+		me.text[2] = sprintf("    DELTA     0.1NM", );
 		me.text[3] = sprintf("SYS ACCUR     HIGH");
 		me.text[4] = sprintf("GPS ACCUR     HIGH");
 	},
@@ -472,7 +490,7 @@ var dataEntryDisplay = {
 	},
 	
 	updateList: func() {
-		me.text[0] = sprintf("           LIST      12 ");
+		me.text[0] = sprintf("           LIST      %s ", me.no);
 		me.text[1] = sprintf(" 1DEST 2BNGO 3VIP RINTG ");
 		me.text[2] = sprintf(" 4NAV  5MAN  6INS EDLNK ");
 		me.text[3] = sprintf(" 7EWS  8MODE 9VRP OMISC ");
@@ -551,11 +569,21 @@ var dataEntryDisplay = {
 	
 	updateNav: func() {
 		var days = 31 - getprop("/sim/time/utc/day");
+		var GPSstatus = "";
+		var keyString = "";
+		if (getprop("f16/avionics/power-gps")) {
+			GPSstatus = "HIGH";
+			if (days == 0) {
+				keyString = "EXPIRE AT 2400 HOURS";
+			} else {
+				keyString = "KEY VALID";
+			}
+		}
 		me.text[0] = sprintf("    NAV STATUS        %s",me.no);
 		me.text[1] = sprintf("SYS ACCUR     HIGH");
-		me.text[2] = sprintf("GPS ACCUR     HIGH");
+		me.text[2] = sprintf("GPS ACCUR     %s", GPSstatus);
 		me.text[3] = sprintf("MSN DUR       %s  DAYS", days);
-		me.text[4] = sprintf("KEYS          VERIFIED");
+		me.text[4] = sprintf("%s", keyString);
 	},
 	
 	updateMan: func() {
@@ -595,7 +623,7 @@ var dataEntryDisplay = {
 	},
 	
 	updateIntg: func() {
-	
+		me.updateIFF();
 	},
 	
 	updateDlnk: func() {
@@ -614,14 +642,14 @@ var dataEntryDisplay = {
 			elsif (getprop("link16/wingman-3")!="") last = 3;
 			elsif (getprop("link16/wingman-2")!="") last = 2;
 			elsif (getprop("link16/wingman-1")!="") last = 1;
-			scroll += 0.25;
-			if (scroll >= last-3) scroll = 0;
+			me.scroll += 0.25;
+			if (me.scroll >= last-3) me.scroll = 0;
 			var wingmen = [getprop("link16/wingman-1"),getprop("link16/wingman-2"),getprop("link16/wingman-3"),getprop("link16/wingman-4"),getprop("link16/wingman-5"),getprop("link16/wingman-6"),getprop("link16/wingman-7"),getprop("link16/wingman-8"),getprop("link16/wingman-9"),getprop("link16/wingman-10"),getprop("link16/wingman-11"),getprop("link16/wingman-12")];
-			var used = subvec(wingmen,int(scroll),4);
-			me.text[1] = sprintf("#%d %7s      COMM VHF",int(scroll+1),used[0]);
-			me.text[2] = sprintf("#%d %7s      DATA 16K",int(scroll+2),used[1]);
-			me.text[3] = sprintf("#%d %7s      OWN  #0 ",int(scroll+3),used[2]);
-			me.text[4] = sprintf("#%d %7s      LAST #%d ",int(scroll+4),used[3],last);
+			var used = subvec(wingmen,int(me.scroll),4);
+			me.text[1] = sprintf("#%d %7s      COMM VHF",int(me.scroll+1),used[0]);
+			me.text[2] = sprintf("#%d %7s      DATA 16K",int(me.scroll+2),used[1]);
+			me.text[3] = sprintf("#%d %7s      OWN  #0 ",int(me.scroll+3),used[2]);
+			me.text[4] = sprintf("#%d %7s      LAST #%d ",int(me.scroll+4),used[3],last);
 		} else {
 			me.text[1] = sprintf("  NO DLINK DATA ");
 			me.text[2] = sprintf("                        ");
@@ -632,17 +660,106 @@ var dataEntryDisplay = {
 	
 	updateMisc: func() {
 		me.text[0] = sprintf("           MISC      %s ", me.no);
-		me.text[1] = sprintf(" 1CORR 2MAGV 3OFP R     ");
+		me.text[1] = sprintf(" 1CORR 2MAGV 3OFP RHMCS ");
 		me.text[2] = sprintf(" 4INSM 5LASR 6GPS E     ");
 		me.text[3] = sprintf(" 7DRNG 8BULL 9WPT OHARM ");
 		me.text[4] = sprintf("                        ");
 	},
 	
+	updateMagv: func() {
+		var amount = geo.normdeg180(getprop("orientation/heading-deg")-getprop("orientation/heading-magnetic-deg"));
+		if (amount != nil) {
+			var letter = "W";
+			if (amount <0) {#no longer sure, this is correct..
+				letter = "E";
+				amount = math.abs(amount);
+			}
+			me.text[2] = sprintf("         %s %.1f\xc2\xb0",letter, amount);
+		} else {
+			me.text[2] = sprintf("         GPS OFFLINE");
+		}
+		me.text[0] = sprintf("       MAGV  AUTO   %s  ",me.no);
+		me.text[1] = sprintf("                        ");
+		me.text[3] = sprintf("                        ");
+		me.text[4] = sprintf("                        ");
+	}, 
+	
+	OFPpage: 0,
+	updateOFP: func() {
+		if (me.OFPpage == 0) {
+			me.text[0] = sprintf("         OFP1   ",me.no);
+			me.text[1] = sprintf("  UFC  P07A   FCR  7010");
+			me.text[2] = sprintf("  MFD  P07A   FCC  P07B");
+			me.text[3] = sprintf("  SMS  P07A   DTE  P010");
+			me.text[4] = sprintf("  FDR  P30A   HUD  002e");
+		} elsif (me.OFPpage == 1) {
+			me.text[0] = sprintf("         OFP2   ",me.no);
+			me.text[1] = sprintf("  GPS  P07B   IFF  P03A");
+			me.text[2] = sprintf("  HK3  P07A   TGP  P07A");
+			me.text[3] = sprintf("  HK7  P07A  BLKR  P07B");
+			me.text[4] = sprintf(" FLCS  7072   NVP  P07A");
+		} else {
+			me.text[0] = sprintf("         OFP3   ",me.no);
+			me.text[1] = sprintf("  RWR  P07A  IECM  P07A");
+			me.text[2] = sprintf("  EID  P07B   MDF  M074");
+			me.text[3] = sprintf(" CMDS  P040  DLNK  P07B");
+			me.text[4] = sprintf("  MDF  M074   );
+		}
+	}, 
+	
+	updateINSM: func() {
+	
+	}, 
+	
+	updateLaser: func() {
+		var code = getprop("f16/avionics/laser-code");
+		me.text[0] = sprintf("         LASER      %s   ",me.no);
+		me.text[1] = sprintf("   TGP CODE    %04d     ",code);
+		me.text[2] = sprintf("   LST CODE    %04d     ",code);
+		me.text[3] = sprintf("   A-G: CMBT  A-A: TRNG ");
+		me.text[4] = sprintf("   LASER ST TIME  16 SEC");
+	}, 
+	
+	GPSpage: 0,
+	updateGPS: func() {
+		if (getprop("f16/avionics/power-gps")) {
+			if (me.GPSpage == 0) {
+				var date = sprintf("%02.0f", getprop("/sim/time/utc/month")) ~ "/" ~ sprintf("%02.0f", getprop("/sim/time/utc/day")) ~ "/" ~ right(sprintf("%s", getprop("/sim/time/utc/year")), 2);
+				me.text[0] = sprintf(" GPS INIT1   DSPL/ENTR");
+				me.text[1] = sprintf("      TIME   %s    ", getprop("/sim/time/gmt-string"));
+				me.text[2] = sprintf("  MM/DD/YY   %s    ", date);
+				me.text[3] = sprintf("       G/S   %-4dKTS", getprop("/instrumentation/gps/indicated-ground-speed-kt"));
+				me.text[4] = sprintf("      MTRK   %03d\xc2\xb0", getprop("/instrumentation/gps/indicated-track-magnetic-deg"));
+			} else {
+				me.text[0] = sprintf(" GPS INIT2   DSPL/ENTR");
+				me.text[1] = sprintf("                        ");
+				me.text[2] = sprintf("       LAT   %s    ", convertDegreeToStringLat(getprop("/instrumentation/gps/indicated-latitude-deg")));
+				me.text[3] = sprintf("       LON   %s", convertDegreeToStringLat(getprop("/instrumentation/gps/indicated-longitude-deg")));
+				me.text[4] = sprintf("       ALT   %5dFT", getprop("/instrumentation/gps/indicated-altitude-ft"));
+			}
+		} else {
+			me.text[0] = sprintf(" GPS OFFLINE   DSPL/ENTR");
+			me.text[1] = sprintf("                        ");
+			me.text[2] = sprintf("                        ");
+			me.text[3] = sprintf("                        ");
+			me.text[4] = sprintf("                        ");
+		}
+	}, 
+	
+	CNIshowWind: 0,
 	updateCNI: func() {
 		winddir = sprintf("%03d\xc2\xb0",getprop("environment/wind-from-heading-deg"));
 		windkts = sprintf("%03d",getprop("environment/wind-speed-kt"));
-		me.text[0] = sprintf("UHF   242.10    STPT %s ", me.no);
-		me.text[1] = sprintf("                %s %s", winddir, windkts);
+		if (me.no != "") 
+			me.text[0] = sprintf("UHF   242.10    STPT %sA", me.no);
+		} else {
+			me.text[0] = sprintf("UHF   242.10    STPT %s", me.no);
+		}
+		if (me.CNIshowWind) {
+			me.text[1] = sprintf("                %s %s", winddir, windkts);
+		} else {
+			me.text[1] = sprintf("                ");
+		}
 		me.text[2] = sprintf("VHF   10        %s", getprop("/sim/time/gmt-string"));
 		if (me.chrono.running) {
 			var hackHour = int(getprop("f16/avionics/hack/elapsed-time-sec") / 3600);
@@ -694,8 +811,26 @@ setlistener("f16/avionics/rtn-seq", func() {
 	if (getprop("f16/avionics/rtn-seq") == -1) {
 		dataEntryDisplay.page = pCNI;
 	} elsif (getprop("f16/avionics/rtn-seq") == 1) {
+		if (dataEntryDisplay.page == pCNI) {
+			dataEntryDisplay.CNIshowWind = !dataEntryDisplay.CNIshowWind;
+			return;
+		}
+		
 		if (dataEntryDisplay.page == pTACAN) {
 			toggleTACANMode();
+			return;
+		}
+		
+		if (dataEntryDisplay.page == pOFP) {
+			dataEntryDisplay.OFPpage = dataEntryDisplay.OFPpage + 1;
+			if (dataEntryDisplay.OFPpage == 3) {
+				dataEntryDisplay.OFPpage = 0;
+			}
+			return;
+		}
+		
+		if (dataEntryDisplay.page == pGPS and getprop("f16/avionics/power-gps")) {
+			dataEntryDisplay.GPSpage = !dataEntryDisplay.GPSpage;
 			return;
 		}
 		
