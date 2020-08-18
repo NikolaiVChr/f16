@@ -782,6 +782,7 @@ var MFD_Device =
                 me.root.mod.setText("");
                 me.root.gmPic.hide();
             }
+			
             setprop("instrumentation/radar/mode-switch", 0);
             me.bullOn = getprop("f16/avionics/bulls-eye-defined") and ded.dataEntryDisplay.bullMode;
             if (me.bullOn) {
@@ -2672,7 +2673,8 @@ var MFD_Device =
                 me.root.p_HSDc.setTranslation(276*0.795,482*0.75);
                 me.root.rang.setText(""~me.root.range_dep);
             }
-            me.bullOn = getprop("f16/avionics/bulls-eye-defined");
+			
+            me.bullOn = getprop("f16/avionics/bulls-eye-defined") and ded.dataEntryDisplay.bullMode;
             if (me.bullOn) {
                 me.bullLat = getprop("f16/avionics/bulls-eye-lat");
                 me.bullLon = getprop("f16/avionics/bulls-eye-lon");
