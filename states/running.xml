@@ -23,9 +23,6 @@
                     <starter type="bool">false</starter>
                 </engine>
             </engines>
-			<fuel>
-				<tank-inerting type="bool">true</tank-inerting>
-			</fuel>
             <lighting>
                 <ext-lighting-panel>
                     <master type="bool">true</master>

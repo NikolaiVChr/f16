@@ -1940,5 +1940,15 @@ setlistener("controls/displays/cursor-click", func() {
 	if (SOI == 1) { return; }
 }, 0, 0);
 
+var secSelfTest = 0;
+setlistener("f16/engine/cutoff-release-lever", func() {
+	if (!getprop("f16/engine/cutoff-release-lever") and !secSelfTest) {
+		secSelfTest = 1;
+		setprop("f16/engine/sec-self-test", 1);
+		settimer(func() {
+			setprop("f16/engine/sec-self-test", 0);
+		}, 3);
+	}
+}, 0, 0);
 
 var chuteLoop = maketimer(0.05, chuteLoopFunc);
