@@ -575,6 +575,15 @@ var MFD_Device =
            .set("z-index",12)
            .setFontSize(18, 1.0)
            .setColor(getprop("/sim/model/MFD-color/text2/red"),getprop("/sim/model/MFD-color/text2/green"),getprop("/sim/model/MFD-color/text2/blue"));
+		   
+		svg.notSOI = svg.p_RDR.createChild("text")
+           .setTranslation(0, -482*0.55)
+           .setAlignment("center-center")
+           .setText("NOT SOI")
+           .set("z-index",12)
+		   .hide()
+           .setFontSize(18, 1.0)
+           .setColor(getprop("/sim/model/MFD-color/text2/red"),getprop("/sim/model/MFD-color/text2/green"),getprop("/sim/model/MFD-color/text2/blue"));
            
         svg.norm = svg.p_RDR.createChild("text")
                 .setTranslation(276*0.795*0.0, -482*0.5-225)
@@ -771,6 +780,13 @@ var MFD_Device =
 #  VSD HSD SMS SIT
         };
         me.p_RDR.update = func (noti) {
+			if (f16.SOI == 2 and me.model_index == 1) {
+				me.root.notSOI.show();
+			} elsif (f16.SOI == 3 and me.model_index == 0) {
+				me.root.notSOI.show();
+			} else {
+				me.root.notSOI.hide();
+			}
             me.modeSw = getprop("instrumentation/radar/mode-switch");
             if (me.modeSw == 1 and num(split(".", getprop("sim/version/flightgear"))[0]) >= 2020) {
                 rdrMode = !rdrMode;
@@ -1508,6 +1524,14 @@ var MFD_Device =
                 .setAlignment("right-center")
                 .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
                 .setFontSize(20, 1.0);
+		svg.notSOI = svg.p_SMS.createChild("text")
+           .setTranslation(0, -482*0.55)
+           .setAlignment("center-center")
+           .setText("NOT SOI")
+           .set("z-index",12)
+		   .hide()
+           .setFontSize(18, 1.0)
+           .setColor(getprop("/sim/model/MFD-color/text2/red"),getprop("/sim/model/MFD-color/text2/green"),getprop("/sim/model/MFD-color/text2/blue"));
     },
     addSMS: func {
         var svg = {getElementById: func (id) {return me[id]},};
@@ -1520,6 +1544,7 @@ var MFD_Device =
             return np;
         };
         me.p_SMS = me.PFD.addSMSPage(svg, "SMS", "p_SMS");
+        me.p_SMS.model_index = me.model_index;
         me.p_SMS.root = svg;
         me.p_SMS.wdt = 552*0.795;
         me.p_SMS.fwd = 0;
@@ -1623,6 +1648,14 @@ var MFD_Device =
             if (getprop("sim/variant-id") == 0) {
                 return;
             }
+			if (f16.SOI == 2 and me.model_index == 1) {
+				me.root.notSOI.show();
+			} elsif (f16.SOI == 3 and me.model_index == 0) {
+				me.root.notSOI.show();
+			} else {
+				me.root.notSOI.hide();
+			}
+			
             me.cat = pylons.fcs.getCategory();
             me.root.cat.setText(sprintf("CAT %s", me.cat==1?"I":(me.cat==2?"II":"III")));
 
@@ -1931,6 +1964,14 @@ var MFD_Device =
                     .hide()
                     .setTranslation(0,140)
                     .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));         
+		svg.notSOI = svg.p_WPN.createChild("text")
+           .setTranslation(0, -482*0.55)
+           .setAlignment("center-center")
+           .setText("NOT SOI")
+           .set("z-index",12)
+		   .hide()
+           .setFontSize(18, 1.0)
+           .setColor(getprop("/sim/model/MFD-color/text2/red"),getprop("/sim/model/MFD-color/text2/green"),getprop("/sim/model/MFD-color/text2/blue"));
         
                 
         svg.coolFrame = svg.p_WPN.createChild("path")
@@ -1955,6 +1996,7 @@ var MFD_Device =
             return np;
         };
         me.p_WPN = me.PFD.addWPNPage(svg, "WPN", "p_WPN");
+        me.p_WPN.model_index = me.model_index;
         me.p_WPN.root = svg;
         me.p_WPN.wdt = 552*0.795;
         me.p_WPN.fwd = 0;
@@ -2073,7 +2115,15 @@ var MFD_Device =
             if (getprop("sim/variant-id") == 0) {
                 return;
             }
-            
+			
+			if (f16.SOI == 2 and me.model_index == 1) {
+				me.root.notSOI.show();
+			} elsif (f16.SOI == 3 and me.model_index == 0) {
+				me.root.notSOI.show();
+			} else {
+				me.root.notSOI.hide();
+			}
+			
             if (me["at"]== nil) {
                 me.at = 0;
             }
@@ -2498,6 +2548,14 @@ var MFD_Device =
                 .setTranslation(-190, -30)
                 .setText("270")
                 .setFontSize(18, 1.0);
+		svg.notSOI = svg.buttonView.createChild("text")
+           .setTranslation(0, -482*0.55)
+           .setAlignment("center-center")
+           .setText("NOT SOI")
+           .set("z-index",12)
+		   .hide()
+           .setFontSize(18, 1.0)
+           .setColor(getprop("/sim/model/MFD-color/text2/red"),getprop("/sim/model/MFD-color/text2/green"),getprop("/sim/model/MFD-color/text2/blue"));
 
         svg.centered = 0;
         svg.coupled = 0;
@@ -2516,6 +2574,7 @@ var MFD_Device =
             return np;
         };
         me.p_HSD = me.PFD.addHSDPage(svg, "HSD", "p_HSD");
+        me.p_HSD.model_index = me.model_index;
         me.p_HSD.root = svg;
         me.p_HSD.wdt = 552*0.795;
         me.p_HSD.fwd = 0;
@@ -2627,6 +2686,14 @@ var MFD_Device =
             me.root.conc.setRotation(-getprop("orientation/heading-deg")*D2R);
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
+				
+			if (f16.SOI == 2 and me.model_index == 1) {
+				me.root.notSOI.show();
+			} elsif (f16.SOI == 3 and me.model_index == 0) {
+				me.root.notSOI.show();
+			} else {
+				me.root.notSOI.hide();
+			}
             if (me.root.coupled) {
                 me.root.rangDown.hide();
                 me.root.rangUp.hide();
