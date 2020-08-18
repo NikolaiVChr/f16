@@ -272,7 +272,7 @@ var dataEntryDisplay = {
 			me.text[2] = sprintf("BCN %s        CMD STRG ", ident);
 		}
 		
-		me.text[3] = sprintf("CHAN %-3d   FRQ  %6.2f",getprop("instrumentation/tacan/frequencies/selected-channel"),getprop("instrumentation/nav[0]/frequencies/selected-mhz"));
+		me.text[3] = sprintf("CHAN %-3d    FRQ  %6.2f",getprop("instrumentation/tacan/frequencies/selected-channel"),getprop("instrumentation/nav[0]/frequencies/selected-mhz"));
 		me.text[4] = sprintf("BAND %s(0)   CRS  %03.0f\xc2\xb0",getprop("instrumentation/tacan/frequencies/selected-channel[4]"),getprop("f16/crs-ils"));
 	},
 	
@@ -281,7 +281,7 @@ var dataEntryDisplay = {
 		me.text[1] = sprintf("                        ");
 		me.text[2] = sprintf("   CARA ALOW %5dFT    ", getprop("f16/settings/cara-alow"));
 		me.text[3] = sprintf("   MSL FLOOR %5dFT    ", getprop("f16/settings/msl-floor"));
-		me.text[4] = sprintf("TF ADV (MSL)  8500FT    ");
+		me.text[4] = sprintf("TF ADV (MSL)   400FT    ");
 	},	
 	
 	updateFack: func() {
@@ -574,10 +574,11 @@ var dataEntryDisplay = {
 	
 	updateEWS: func() {
 		var flares = getprop("ai/submodels/submodel[0]/count");
+		var jammer = getprop("f16/avionics/ew-jmr-switch") ? " ON" : "OFF";
 		me.text[0] = sprintf("        EWS CONTROLS  %s",me.no);
-		me.text[1] = sprintf(" CH %3d     REQJAM", flares);
+		me.text[1] = sprintf(" CH %3d     REQJAM   %s", flares, jammer);
 		me.text[2] = sprintf(" FL %3d     FDBK      ON", flares);
-		me.text[3] = sprintf(" MODE %s  REQCTR    ON", getprop("f16/avionics/ew-mode-knob") == 1 ? "AUTO" : "OFF ");
+		me.text[3] = sprintf(" MODE %s  REQCTR    ON", getprop("f16/avionics/ew-mode-knob") == 1 ? "MAN " : "OFF ");
 		me.text[4] = sprintf("            BINGO     ON");
 	},
 	
