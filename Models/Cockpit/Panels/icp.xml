@@ -489,14 +489,14 @@
         </hovered>
     </animation>
 	
-    <!--<animation>
+    <animation>
         <type>pick</type>
         <object-name>rcl</object-name>
         <action>
             <button>0</button>
             <binding>
                 <command>nasal</command>
-                <script>ded.rcl();</script>
+                <script>ded.Buttons.rcl.doAction();</script>
             </binding>
         </action>
         <hovered>
@@ -506,7 +506,26 @@
                 <label>RECALL</label>
             </binding>
         </hovered>
-    </animation>-->
+    </animation>
+	
+    <animation>
+        <type>pick</type>
+        <object-name>entr</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.Buttons.entr.doAction();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-recall</tooltip-id>
+                <label>ENTER</label>
+            </binding>
+        </hovered>
+    </animation>
 	
     <animation>
         <type>select</type>

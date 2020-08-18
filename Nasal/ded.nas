@@ -74,6 +74,7 @@ var Routers = {
 		manRouter: Router.new(pLIST, pMAN),
 		insRouter: Router.new(pLIST, pINS),
 		ewsRouter: Router.new(pLIST, pEWS),
+		dlnkRouter: Router.new(pLIST, pDLNK),
 		modeRouter: Router.new(pLIST, pMODE),
 		miscRouter: Router.new(pLIST, pMISC),
 	},
@@ -101,6 +102,7 @@ var RouterVectors = {
 	buttonComm2: [Routers.comm2Router],
 	buttonIFF: [Routers.iffRouter],
 	buttonList: [Routers.listRouter],
+	buttonEnter: [Routers.List.dlnkRouter],
 };
 
 var ActionVectors = {
@@ -135,6 +137,8 @@ var Buttons = {
 	buttonlist: Button.new(routerVec: RouterVectors.buttonList),
 	buttonup: Button.new(actionVec: ActionVectors.buttonup),
 	buttondown: Button.new(actionVec: ActionVectors.buttondown),
+	entr: Button.new(routerVec: RouterVectors.buttonEnter),
+	rcl: Button.new(),
 };
 
 var dataEntryDisplay = {
@@ -595,7 +599,35 @@ var dataEntryDisplay = {
 	},
 	
 	updateDlnk: func() {
-	
+		me.text[0] = sprintf("        DLNK           %s",me.no);
+		if (getprop("f16/avionics/power-dl")) {
+			var last = 0;
+			if (getprop("link16/wingman-12")!="") last = 12;
+			elsif (getprop("link16/wingman-11")!="") last = 11;
+			elsif (getprop("link16/wingman-10")!="") last = 10;
+			elsif (getprop("link16/wingman-9")!="") last = 9;
+			elsif (getprop("link16/wingman-8")!="") last = 8;
+			elsif (getprop("link16/wingman-7")!="") last = 7;
+			elsif (getprop("link16/wingman-6")!="") last = 6;
+			elsif (getprop("link16/wingman-5")!="") last = 5;
+			elsif (getprop("link16/wingman-4")!="") last = 4;
+			elsif (getprop("link16/wingman-3")!="") last = 3;
+			elsif (getprop("link16/wingman-2")!="") last = 2;
+			elsif (getprop("link16/wingman-1")!="") last = 1;
+			scroll += 0.25;
+			if (scroll >= last-3) scroll = 0;
+			var wingmen = [getprop("link16/wingman-1"),getprop("link16/wingman-2"),getprop("link16/wingman-3"),getprop("link16/wingman-4"),getprop("link16/wingman-5"),getprop("link16/wingman-6"),getprop("link16/wingman-7"),getprop("link16/wingman-8"),getprop("link16/wingman-9"),getprop("link16/wingman-10"),getprop("link16/wingman-11"),getprop("link16/wingman-12")];
+			var used = subvec(wingmen,int(scroll),4);
+			me.text[1] = sprintf("#%d %7s      COMM VHF",int(scroll+1),used[0]);
+			me.text[2] = sprintf("#%d %7s      DATA 16K",int(scroll+2),used[1]);
+			me.text[3] = sprintf("#%d %7s      OWN  #0 ",int(scroll+3),used[2]);
+			me.text[4] = sprintf("#%d %7s      LAST #%d ",int(scroll+4),used[3],last);
+		} else {
+			me.text[1] = sprintf("  NO DLINK DATA ");
+			me.text[2] = sprintf("                        ");
+			me.text[3] = sprintf("                        ");
+			me.text[4] = sprintf("                        ");
+		}
 	},
 	
 	updateMisc: func() {

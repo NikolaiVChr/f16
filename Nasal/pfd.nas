@@ -76,17 +76,25 @@ var loop_pfd = func {
     }
   var fails = fail.getList();
 	var last = size(fails);
-	scrollF += 0.25;
-	if (scrollF >= last-2) scrollF = 0;     
-	var used = subvec(fails,int(scrollF),3);
-	text[0] = sprintf("       F-ACK     %s     ",no);
-	text[1] = sprintf("                        ");
-	if (size(used)>0) text[2] = sprintf(" %s ",used[0]);
-	else text[2] = "";
-	if (size(used)>1) text[3] = sprintf(" %s ",used[1]);
-	else text[3] = "";
-	if (size(used)>2) text[4] = sprintf(" %s ",used[2]);
-	else text[4] = "";
+	if (last == 0) {
+		text[0] = sprintf("     NO FAULTS     ");
+		text[1] = sprintf("    ALL SYS OK     ");
+		text[2] = "";
+		text[3] = "";
+		text[4] = "";
+	} else {
+		scrollF += 0.25;
+		if (scrollF >= last-2) scrollF = 0;     
+		var used = subvec(fails,int(scrollF),3);
+		text[0] = sprintf("       FAULT           ");
+		text[1] = sprintf("                        ");
+		if (size(used)>0) text[2] = sprintf(" %s ",used[0]);
+		else text[2] = "";
+		if (size(used)>1) text[3] = sprintf(" %s ",used[1]);
+		else text[3] = "";
+		if (size(used)>2) text[4] = sprintf(" %s ",used[2]);
+		else text[4] = "";
+	}
     line1.setText(text[0]);
     line2.setText(text[1]);
     line3.setText(text[2]);

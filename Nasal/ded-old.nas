@@ -10,27 +10,7 @@ var loop_ded = func {# one line is max 24 chars
     } elsif (page == pLINK) {
       text[0] = sprintf(" XMT 40 INTRAFLIGHT  %s ",no);
       
-      var last = 0;
-      if (getprop("link16/wingman-12")!="") last = 12;
-      elsif (getprop("link16/wingman-11")!="") last = 11;
-      elsif (getprop("link16/wingman-10")!="") last = 10;
-      elsif (getprop("link16/wingman-9")!="") last = 9;
-      elsif (getprop("link16/wingman-8")!="") last = 8;
-      elsif (getprop("link16/wingman-7")!="") last = 7;
-      elsif (getprop("link16/wingman-6")!="") last = 6;
-      elsif (getprop("link16/wingman-5")!="") last = 5;
-      elsif (getprop("link16/wingman-4")!="") last = 4;
-      elsif (getprop("link16/wingman-3")!="") last = 3;
-      elsif (getprop("link16/wingman-2")!="") last = 2;
-      elsif (getprop("link16/wingman-1")!="") last = 1;
-      scroll += 0.25;
-      if (scroll >= last-3) scroll = 0;
-      var wingmen = [getprop("link16/wingman-1"),getprop("link16/wingman-2"),getprop("link16/wingman-3"),getprop("link16/wingman-4"),getprop("link16/wingman-5"),getprop("link16/wingman-6"),getprop("link16/wingman-7"),getprop("link16/wingman-8"),getprop("link16/wingman-9"),getprop("link16/wingman-10"),getprop("link16/wingman-11"),getprop("link16/wingman-12")];
-      var used = subvec(wingmen,int(scroll),4);
-      text[1] = sprintf("#%d %7s      COMM VHF",int(scroll+1),used[0]);
-      text[2] = sprintf("#%d %7s      DATA 16K",int(scroll+2),used[1]);
-      text[3] = sprintf("#%d %7s      OWN  #0 ",int(scroll+3),used[2]);
-      text[4] = sprintf("#%d %7s      LAST #%d ",int(scroll+4),used[3],last);
+      
     } elsif (page == pCNI) {
       var freq   = getprop("instrumentation/comm["~comm~"]/frequencies/selected-mhz");
       var time   = getprop("/sim/time/gmt-string");
