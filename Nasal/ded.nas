@@ -273,6 +273,10 @@ var dataEntryDisplay = {
 			me.updateBull();
 		} elsif (me.page == pCNI) {
 			me.updateCNI();
+		} elsif (me.page == pCOMM1) {
+			me.updateComm1();
+		} elsif (me.page == pCOMM2) {
+			me.updateComm2();
 		} elsif (me.page == pIFF) {
 			me.updateIFF();
 		}
@@ -783,7 +787,7 @@ var dataEntryDisplay = {
 		} else {
 			me.text[1] = sprintf("                ");
 		}
-		me.text[2] = sprintf("VHF   10        %s", getprop("/sim/time/gmt-string"));
+		me.text[2] = sprintf("VHF   %5.2f        %s",getprop("/instrumentation/comm[1]/frequencies/selected-mhz"), getprop("/sim/time/gmt-string"));
 		if (me.chrono.running) {
 			var hackHour = int(getprop("f16/avionics/hack/elapsed-time-sec") / 3600);
 			var hackMin = int((getprop("f16/avionics/hack/elapsed-time-sec") - (hackHour * 3600)) / 60);
@@ -797,11 +801,19 @@ var dataEntryDisplay = {
 	},
 	
 	updateComm1: func() {
-	
+		me.text[0] = sprintf("         UHF MAIN  ");
+		me.text[1] = sprintf("  %5.2f", 305.00);
+		me.text[2] = sprintf("  ");
+		me.text[3] = sprintf("  PRE  1");
+		me.text[4] = sprintf("  %5.2f         NB", 242.10);
 	},
 	
 	updateComm2: func() {
-	
+		me.text[0] = sprintf("         VHF ON  ");
+		me.text[1] = sprintf("  %5.2f", getprop("/instrumentation/comm[1]/frequencies/selected-mhz"));
+		me.text[2] = sprintf("  ");
+		me.text[3] = sprintf("  PRE  1");
+		me.text[4] = sprintf("  %5.2f         NB", getprop("/instrumentation/comm[1]/frequencies/standby-mhz"));
 	},
 	
 	updateIFF: func() {
