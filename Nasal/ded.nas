@@ -55,6 +55,9 @@ var Actions = {
 	Acal: {
 		mSel: Action.new(pACAL, modeSelAcal),
 	},	
+	Bullseye: {
+		mSel: Action.new(pBULL, modeSelBull),
+	},
 	stptNext: Action.new(nil, stptNext),
 	stptLast: Action.new(nil, stptLast),
 };
@@ -87,6 +90,7 @@ var Routers = {
 		insmRouter: Router.new(pMISC, pINSM),
 		laserRouter: Router.new(pMISC, pLASR),
 		gpsRouter: Router.new(pMISC, pGPS),
+		bullRouter: Router.new(pMISC, pBULL),
 	},
 	comm1Router: Router.new(nil, pCOMM1),
 	comm2Router: Router.new(nil, pCOMM2),
@@ -102,7 +106,7 @@ var RouterVectors = {
 	button5: [Routers.List.manRouter,Routers.Misc.laserRouter, Routers.crusRouter],
 	button6: [Routers.List.insRouter,Routers.Misc.gpsRouter, Routers.timeRouter],
 	button7: [Routers.List.ewsRouter, Routers.markRouter],
-	button8: [Routers.List.modeRouter, Routers.fixRouter],
+	button8: [Routers.List.modeRouter,Routers.Misc.bullRouter, Routers.fixRouter],
 	button9: [Routers.acalRouter],
 	button0: [Routers.List.miscRouter],
 	buttonComm1: [Routers.comm1Router],
@@ -123,7 +127,7 @@ var ActionVectors = {
 	button7: [],
 	button8: [],
 	button9: [],
-	button0: [Actions.Tacan.mSel,Actions.Mark.mSel,Actions.Fix.mSel,Actions.Acal.mSel],
+	button0: [Actions.Bullseye.mSel,Actions.Tacan.mSel,Actions.Mark.mSel,Actions.Fix.mSel,Actions.Acal.mSel],
 	buttonup: [Actions.Time.toggleHack, Actions.stptNext],
 	buttondown: [Actions.Time.resetHack,  Actions.stptLast],
 };
@@ -265,6 +269,8 @@ var dataEntryDisplay = {
 			me.updateLaser();
 		} elsif (me.page == pGPS) {
 			me.updateGPS();
+		} elsif (me.page == pBULL) {
+			me.updateBull();
 		} elsif (me.page == pCNI) {
 			me.updateCNI();
 		} elsif (me.page == pIFF) {
@@ -703,7 +709,7 @@ var dataEntryDisplay = {
 			me.text[1] = sprintf("  RWR  P07A  IECM  P07A");
 			me.text[2] = sprintf("  EID  P07B   MDF  M074");
 			me.text[3] = sprintf(" CMDS  P040  DLNK  P07B");
-			me.text[4] = sprintf("  MDF  M074   );
+			me.text[4] = sprintf("  MDF  M074   ");
 		}
 	}, 
 	
@@ -746,11 +752,28 @@ var dataEntryDisplay = {
 		}
 	}, 
 	
+	updateDRNG: func() {
+	
+	}, 
+	
+	bullMode: 1,
+	updateBull: func() {
+		if (me.bullMode) {
+			me.text[0] = sprintf("      *BULLSEYE*        ");
+		} else {
+			me.text[0] = sprintf("       BULLSEYE         ");
+		}
+		me.text[1] = sprintf("       BULL 25     ");
+		me.text[2] = sprintf("                        ");
+		me.text[3] = sprintf("                        ");
+		me.text[4] = sprintf("                        ");
+	}, 
+	
 	CNIshowWind: 0,
 	updateCNI: func() {
 		winddir = sprintf("%03d\xc2\xb0",getprop("environment/wind-from-heading-deg"));
 		windkts = sprintf("%03d",getprop("environment/wind-speed-kt"));
-		if (me.no != "") 
+		if (me.no != "") {
 			me.text[0] = sprintf("UHF   242.10    STPT %sA", me.no);
 		} else {
 			me.text[0] = sprintf("UHF   242.10    STPT %s", me.no);

@@ -1929,7 +1929,21 @@ append(obj.total, obj.speed_curr);
               hdp.window11_txt = "FUEL";
             } elsif (hdp.total_fuel_lbs < hdp.bingo) {
               hdp.window11_txt = "";
-            }
+            } elsif (ded.dataEntryDisplay.bullMode) {
+				me.bullLat = getprop("f16/avionics/bulls-eye-lat");
+                me.bullLon = getprop("f16/avionics/bulls-eye-lon");
+                me.bullCoord = geo.Coord.new().set_latlon(me.bullLat,me.bullLon);
+                me.ownCoord = geo.aircraft_position();
+                me.bullDirToMe = me.bullCoord.course_to(me.ownCoord);
+                me.bullDistToMe = me.bullCoord.distance_to(me.ownCoord)*M2NM;
+                
+                me.bullDirToMe = sprintf("%03d", me.bullDirToMe);
+				me.bullDistToMe = sprintf("%02d", me.bullDistToMe);
+			    hdp.window11_txt = sprintf("%s %s", me.bullDirToMe, me.bullDistToMe); 
+			} else {
+                hdp.window11_txt = "";
+			}
+			
             if (!hdp.cara) {
                 hdp.window10_txt = "AL";
             } elsif (hdp.alow<hdp.altitude_agl_ft or math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0 or hdp.gear_down) {

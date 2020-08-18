@@ -112,7 +112,7 @@ var modeSelMark = func() { dataEntryDisplay.markModeSelected = !dataEntryDisplay
 var modeSelFix = func() { dataEntryDisplay.fixTakingModeSelected = !dataEntryDisplay.fixTakingModeSelected; };
 var modeSelAcal = func() { dataEntryDisplay.acalModeSelected = !dataEntryDisplay.acalModeSelected; };
 
-toggleTACANBand = func() {
+var toggleTACANBand = func() {
 	if (getprop("instrumentation/tacan/frequencies/selected-channel[4]") == "X") {
 		setprop("instrumentation/tacan/frequencies/selected-channel[4]", "Y");
 	} else {
@@ -120,7 +120,7 @@ toggleTACANBand = func() {
 	}
 };
 
-toggleTACANMode = func() {
+var toggleTACANMode = func() {
 	if (dataEntryDisplay.tacanMode == "REC    ") {
 		dataEntryDisplay.tacanMode = "T/R    ";
 		setprop("f16/avionics/tacan-receive-only", 0);
@@ -136,7 +136,9 @@ toggleTACANMode = func() {
 	}
 };
 
-stptNext = func() {
+var modeSelBull = func() { dataEntryDisplay.bullMode = !dataEntryDisplay.bullMode; };
+
+var stptNext = func() {
 	var active = getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc");
     var wp = getprop("autopilot/route-manager/current-wp");
     var max = getprop("autopilot/route-manager/route/num");
@@ -150,7 +152,7 @@ stptNext = func() {
 	}
 };
 
-stptLast = func() {
+var stptLast = func() {
 	var active = getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc");
     var wp = getprop("autopilot/route-manager/current-wp");
     var max = getprop("autopilot/route-manager/route/num");

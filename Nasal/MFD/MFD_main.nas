@@ -784,7 +784,7 @@ var MFD_Device =
             }
             setprop("instrumentation/radar/mode-switch", 0);
             me.bullOn = getprop("f16/avionics/bulls-eye-defined");
-            if (me.bullOn) {
+            if (me.bullOn and ded.dataEntryDisplay.bullMode) {
                 me.bullLat = getprop("f16/avionics/bulls-eye-lat");
                 me.bullLon = getprop("f16/avionics/bulls-eye-lon");
                 me.bullCoord = geo.Coord.new().set_latlon(me.bullLat,me.bullLon);
