@@ -783,8 +783,8 @@ var MFD_Device =
                 me.root.gmPic.hide();
             }
             setprop("instrumentation/radar/mode-switch", 0);
-            me.bullOn = getprop("f16/avionics/bulls-eye-defined");
-            if (me.bullOn and ded.dataEntryDisplay.bullMode) {
+            me.bullOn = getprop("f16/avionics/bulls-eye-defined") and ded.dataEntryDisplay.bullMode;
+            if (me.bullOn) {
                 me.bullLat = getprop("f16/avionics/bulls-eye-lat");
                 me.bullLon = getprop("f16/avionics/bulls-eye-lon");
                 me.bullCoord = geo.Coord.new().set_latlon(me.bullLat,me.bullLon);
