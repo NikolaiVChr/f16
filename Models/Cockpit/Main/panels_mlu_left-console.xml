@@ -29,6 +29,7 @@
         <object-name>flcs-pwr</object-name>
         <object-name>freqDisplay</object-name>
         <object-name>Guards</object-name>
+        <object-name>Guards_trim_50</object-name>
         <object-name>horiz-l</object-name>
         <object-name>horiz-r</object-name>
         <object-name>LEFT_CONSOLE</object-name>
@@ -76,9 +77,15 @@
         <object-name>GROWTH.002</object-name>
         <object-name>GROWTH.002_0</object-name>
         <object-name>GROWTH.002_1</object-name>
+        <object-name>GROWTH.002_50</object-name>
+        <object-name>GROWTH.002_50_0</object-name>
+        <object-name>GROWTH.002_50_1</object-name>
         <object-name>GROWTH.003</object-name>
         <object-name>GROWTH.003_0</object-name>
         <object-name>GROWTH.003_1</object-name>
+        <object-name>GROWTH.003_50</object-name>
+        <object-name>GROWTH.003_50_0</object-name>
+        <object-name>GROWTH.003_50_1</object-name>
         <object-name>GROWTH.004</object-name>
         <object-name>IFF.001</object-name>
         <object-name>IFF_0</object-name>
@@ -138,8 +145,10 @@
         <object-name>stbygains-r</object-name>
         <object-name>stbygains-y</object-name>
         <object-name>SW_AIR_REFUEL</object-name>
+        <object-name>SW_AIR_REFUEL_50</object-name>
         <object-name>SW_ALT_FLAPS</object-name>
         <object-name>SW_ANTI_COLLISION</object-name>
+        <object-name>SW_ANTI_COLLISION_50</object-name>
         <object-name>SW_AUDIO</object-name>
         <object-name>SW_ECM</object-name>
         <object-name>SW_ECM_XMIT</object-name>
@@ -147,6 +156,7 @@
         <object-name>SW_EPU_COVER</object-name>
         <object-name>SW_FLCS_TEST</object-name>
         <object-name>SW_FUSELAGE</object-name>
+        <object-name>SW_FUSELAGE_50</object-name>
         <object-name>SW_IFF_CODE</object-name>
         <object-name>SW_IFF_ENABLE</object-name>
         <object-name>SW_IFF_MONITOR</object-name>
@@ -159,6 +169,7 @@
         <object-name>SW_JET_FUEL</object-name>
         <object-name>SW_KNOB_ENG_FEED</object-name>
         <object-name>SW_KNOB_EXT_FORMATION_LIGHT</object-name>
+        <object-name>SW_KNOB_EXT_FORM_LIGHT_50</object-name>
         <object-name>SW_KNOB_IFF_C_AND_I</object-name>
         <object-name>SW_KNOB_IFF_MASTER</object-name>
         <object-name>SW_KNOB_MAN_TRIM_YAW</object-name>
@@ -166,11 +177,13 @@
         <object-name>SW_LE_FLAPS</object-name>
         <object-name>SW_MAIN_POWER</object-name>
         <object-name>SW_MASTER</object-name>
+        <object-name>SW_MASTER_50</object-name>
         <object-name>SW_MASTER_FUEL</object-name>
         <object-name>SW_MASTER_FUEL_COVER</object-name>
         <object-name>SW_MAX_POWER</object-name>
         <object-name>SW_MPO</object-name>
         <object-name>SW_POS_LIGHTS</object-name>
+        <object-name>SW_POS_LIGHTS_50</object-name>
         <object-name>SW_PROBE_HEAT</object-name>
         <object-name>SW_SELF_TEST_ADV</object-name>
         <object-name>SW_SELF_TEST_MAIN</object-name>
@@ -186,6 +199,7 @@
         <object-name>SW_TONE</object-name>
         <object-name>SW_TRIM_DISC</object-name>
         <object-name>SW_WING-TAIL</object-name>
+        <object-name>SW_WING-TAIL_50</object-name>
         <object-name>TF_KNOB</object-name>
         <object-name>ils-vol-knob</object-name>
         <object-name>msl-vol-knob</object-name>

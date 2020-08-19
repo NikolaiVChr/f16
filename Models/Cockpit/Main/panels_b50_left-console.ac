@@ -10,7 +10,7 @@ MATERIAL "freqMat" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0.286 0.286 0.286  shi
 MATERIAL "UnknownMat" rgb 0.063 0.063 0.063  amb 0.3 0.3 0.3  emis 0 0 0  spec 0.176 0.176 0.176  shi 32  trans 0
 MATERIAL "invis" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0 0 0  shi 0  trans 1
 OBJECT world
-kids 158
+kids 157
 OBJECT group
 name "GROWTH.002_50"
 loc 0 0 -0.263388
@@ -13905,78 +13905,6 @@ refs 4
 5 0.302084 0.195673
 6 0.34823 0.195673
 1 0.34823 0.218589
-kids 0
-OBJECT group
-name "FLT_CONTROL"
-loc 0 0 0.129983
-hidden
-kids 2
-OBJECT poly
-name "FLT_CONTROL_0"
-data 15
-FLT_CONTROL.001
-texture "../Textures/panels-B50-left_console.png"
-crease 30.000000
-hidden
-numvert 8
-0.58725 0.00765 0.299261
-0.7337 0.00765 0.299261
-0.7337 0.00765 0.423507
-0.58725 0.00765 0.423507
-0.7337 0.00382 0.299261
-0.7337 0.00382 0.423507
-0.58725 0.00382 0.299261
-0.58725 0.00382 0.423507
-numsurf 4
-SURF 0x30
-mat 3
-refs 4
-1 0.11642 0
-2 0.11642 0
-5 0.11642 0
-4 0.11642 0
-SURF 0x30
-mat 3
-refs 4
-0 0.11642 0
-1 0.11642 0
-4 0.11642 0
-6 0.11642 0
-SURF 0x30
-mat 3
-refs 4
-3 0.11642 0
-0 0.11642 0
-6 0.11642 0
-7 0.11642 0
-SURF 0x30
-mat 3
-refs 4
-2 0.11642 0
-3 0.11642 0
-7 0.11642 0
-5 0.11642 0
-kids 0
-OBJECT poly
-name "FLT_CONTROL_1"
-data 15
-FLT_CONTROL.002
-texture "../Textures/panels-B50-left_console.png"
-crease 30.000000
-hidden
-numvert 4
-0.58725 0.00765 0.423507
-0.7337 0.00765 0.423507
-0.7337 0.00765 0.299261
-0.58725 0.00765 0.299261
-numsurf 1
-SURF 0x30
-mat 2
-refs 4
-3 0.49029 0.254882
-0 0.158258 0.254882
-1 0.158153 0.058615
-2 0.490185 0.058615
 kids 0
 OBJECT group
 name "FLT_CONTROL"
@@ -35537,7 +35465,6 @@ data 8
 adv.mesh
 texture "../Textures/panels-MLU-left_console.png"
 crease 45.000000
-hidden
 numvert 8
 0.70423 0.00759 0.45077
 0.70392 0.00847 0.45108
@@ -43267,14 +43194,12 @@ refs 4
 kids 0
 OBJECT group
 name "EXT_LIGHTING"
-hidden
 kids 2
 OBJECT poly
 name "EXT_LIGHTING_0"
 data 16
 EXT_LIGHTING.001
 crease 30.000000
-hidden
 numvert 8
 0.58725 0.00765 0.30474
 0.7337 0.00765 0.30474
@@ -43320,7 +43245,6 @@ data 16
 EXT_LIGHTING.002
 texture "../Textures/panels-MLU-left_console.png"
 crease 30.000000
-hidden
 numvert 4
 0.58725 0.00765 0.30474
 0.7337 0.00765 0.30474
@@ -43341,7 +43265,6 @@ data 22
 FCS_CAUTION_RESET.mesh
 texture "../Textures/panels-MLU-left_console.png"
 crease 45.000000
-hidden
 numvert 48
 0.65192 0.00553 0.49499
 0.65396 0.00553 0.49458
@@ -43942,7 +43865,6 @@ data 16
 flaperons-l.mesh
 texture "../Textures/panels-MLU-left_console.png"
 crease 45.000000
-hidden
 numvert 8
 0.67515 0.00759 0.53292
 0.67482 0.00847 0.53325
@@ -43995,7 +43917,6 @@ data 16
 flaperons-r.mesh
 texture "../Textures/panels-MLU-left_console.png"
 crease 45.000000
-hidden
 numvert 8
 0.64628 0.00755 0.53294
 0.64661 0.00843 0.53328
@@ -44096,14 +44017,12 @@ refs 4
 kids 0
 OBJECT group
 name "FLIGHT_CONTROL"
-hidden
 kids 2
 OBJECT poly
 name "FLIGHT_CONTROL_0"
 data 18
 FLIGHT_CONTROL.001
 crease 30.000000
-hidden
 numvert 8
 0.58725 0.00765 0.39111
 0.7337 0.00765 0.39111
@@ -44149,7 +44068,6 @@ data 18
 FLIGHT_CONTROL.002
 texture "../Textures/panels-MLU-left_console.png"
 crease 30.000000
-hidden
 numvert 4
 0.58725 0.00765 0.39111
 0.7337 0.00765 0.39111
@@ -44511,7 +44429,6 @@ data 12
 horiz-l.mesh
 texture "../Textures/panels-MLU-left_console.png"
 crease 45.000000
-hidden
 numvert 8
 0.7051 0.00755 0.53289
 0.70543 0.00843 0.53323
@@ -44564,7 +44481,6 @@ data 12
 horiz-r.mesh
 texture "../Textures/panels-MLU-left_console.png"
 crease 45.000000
-hidden
 numvert 8
 0.69861 0.00759 0.53292
 0.69828 0.00847 0.53326
@@ -48201,7 +48117,6 @@ data 8
 mal.mesh
 texture "../Textures/panels-MLU-left_console.png"
 crease 45.000000
-hidden
 numvert 8
 0.68231 0.00755 0.45078
 0.68263 0.00843 0.4511
@@ -48617,14 +48532,12 @@ refs 4
 kids 0
 OBJECT group
 name "MANUAL_TRIM"
-hidden
 kids 2
 OBJECT poly
 name "MANUAL_TRIM_0"
 data 15
 MANUAL_TRIM.001
 crease 30.000000
-hidden
 numvert 8
 0.43995 0.00765 0.28604
 0.58684 0.00765 0.28604
@@ -48670,7 +48583,6 @@ data 15
 MANUAL_TRIM.002
 texture "../Textures/panels-MLU-left_console.png"
 crease 30.000000
-hidden
 numvert 86
 0.43995 0.00765 0.28604
 0.58684 0.00765 0.28604
@@ -49618,7 +49530,6 @@ data 21
 pitch-trim-wheel.mesh
 texture "../Textures/panels-MLU-left_console.png"
 crease 45.000000
-hidden
 numvert 62
 0.49697 0.00859 0.29405
 0.48951 0.01283 0.29405
@@ -49975,7 +49886,6 @@ data 25
 pitch-trim-wheel.mesh.001
 texture "../Textures/panels-MLU-left_console.png"
 crease 45.000000
-hidden
 numvert 62
 0.56105 0.00859 0.3445
 0.56105 0.01283 0.35196
@@ -50332,7 +50242,6 @@ data 15
 rudder-dot.mesh
 texture "../Textures/panels-MLU-left_console.png"
 crease 45.000000
-hidden
 numvert 8
 0.62522 0.00759 0.533
 0.62489 0.00847 0.53333
@@ -52393,7 +52302,6 @@ data 16
 slf-tst-num.mesh
 texture "../Textures/panels-MLU-left_console.png"
 crease 45.000000
-hidden
 numvert 8
 0.68179 0.00755 0.42849
 0.68244 0.00843 0.42901
@@ -52446,7 +52354,6 @@ data 18
 stbygains-dot.mesh
 texture "../Textures/panels-MLU-left_console.png"
 crease 45.000000
-hidden
 numvert 8
 0.63219 0.00755 0.40294
 0.63252 0.00843 0.40327
@@ -52499,7 +52406,6 @@ data 16
 stbygains-p.mesh
 texture "../Textures/panels-MLU-left_console.png"
 crease 45.000000
-hidden
 numvert 8
 0.6576 0.00755 0.4319
 0.65792 0.00843 0.43222
@@ -52552,7 +52458,6 @@ data 16
 stbygains-r.mesh
 texture "../Textures/panels-MLU-left_console.png"
 crease 45.000000
-hidden
 numvert 8
 0.65739 0.00759 0.4319
 0.65708 0.00847 0.43222
@@ -52605,7 +52510,6 @@ data 16
 stbygains-y.mesh
 texture "../Textures/panels-MLU-left_console.png"
 crease 45.000000
-hidden
 numvert 8
 0.63543 0.00755 0.43189
 0.63575 0.00843 0.43221
@@ -52988,7 +52892,6 @@ data 25
 hud-displ-switch.mesh.006
 texture "../Textures/panels-MLU-right_console.png"
 crease 45.000000
-hidden
 numvert 35
 0.62062 0.02482 0.45942
 0.62143 0.02462 0.45956
@@ -53319,7 +53222,6 @@ data 25
 hud-displ-switch.mesh.003
 texture "../Textures/panels-MLU-right_console.png"
 crease 45.000000
-hidden
 numvert 35
 0.70594 0.02482 0.36728
 0.70675 0.02462 0.36742
@@ -55834,7 +55736,6 @@ data 25
 hud-displ-switch.mesh.002
 texture "../Textures/panels-MLU-right_console.png"
 crease 45.000000
-hidden
 numvert 35
 0.61347 0.02482 0.36192
 0.61428 0.02462 0.36206
@@ -77605,7 +77506,6 @@ data 32
 data-entry-display-knob.mesh.003
 texture "../Textures/panels-MLU-right_console.png"
 crease 45.000000
-hidden
 numvert 286
 0.70308 0.02574 0.32436
 0.70844 0.02374 0.32436
@@ -119196,7 +119096,6 @@ data 32
 data-entry-display-knob.mesh.005
 texture "../Textures/panels-MLU-right_console.png"
 crease 45.000000
-hidden
 numvert 286
 0.55463 0.01953 0.30563
 0.55971 0.01849 0.30563
@@ -121205,7 +121104,6 @@ data 28
 inst-pnl-flood-knob.mesh.001
 texture "../Textures/panels-MLU-right_console.png"
 crease 45.000000
-hidden
 numvert 152
 0.61098 0.01187 0.32417
 0.61107 0.01187 0.32275
@@ -122444,7 +122342,6 @@ data 25
 hud-displ-switch.mesh.004
 texture "../Textures/panels-MLU-right_console.png"
 crease 45.000000
-hidden
 numvert 35
 0.65841 0.02375 0.40945
 0.65922 0.02355 0.40959
@@ -123105,7 +123002,6 @@ data 25
 hud-displ-switch.mesh.005
 texture "../Textures/panels-MLU-right_console.png"
 crease 45.000000
-hidden
 numvert 35
 0.66128 0.02482 0.32319
 0.66209 0.02462 0.32333
@@ -124845,7 +124741,6 @@ data 25
 hud-displ-switch.mesh.007
 texture "../Textures/panels-MLU-right_console.png"
 crease 45.000000
-hidden
 numvert 35
 0.67481 0.02482 0.36687
 0.67562 0.02462 0.36701
@@ -125506,7 +125401,6 @@ data 25
 hud-displ-switch.mesh.012
 texture "../Textures/panels-MLU-right_console.png"
 crease 45.000000
-hidden
 numvert 35
 0.68163 0.02482 0.48173
 0.68244 0.02462 0.48187
@@ -125837,7 +125731,6 @@ data 25
 hud-displ-switch.mesh.011
 texture "../Textures/panels-MLU-right_console.png"
 crease 45.000000
-hidden
 numvert 35
 0.7065 0.02482 0.48218
 0.70731 0.02462 0.48232
@@ -126168,7 +126061,6 @@ data 25
 hud-displ-switch.mesh.008
 texture "../Textures/panels-MLU-right_console.png"
 crease 45.000000
-hidden
 numvert 35
 0.65222 0.02482 0.45904
 0.65303 0.02462 0.45918
@@ -126499,7 +126391,6 @@ data 25
 hud-displ-switch.mesh.009
 texture "../Textures/panels-MLU-right_console.png"
 crease 45.000000
-hidden
 numvert 35
 0.66123 0.02482 0.51589
 0.66204 0.02462 0.51603
@@ -126830,7 +126721,6 @@ data 25
 hud-displ-switch.mesh.010
 texture "../Textures/panels-MLU-right_console.png"
 crease 45.000000
-hidden
 numvert 35
 0.70162 0.02482 0.51606
 0.70243 0.02462 0.5162
@@ -127161,7 +127051,6 @@ data 25
 hud-displ-switch.mesh.014
 texture "../Textures/panels-MLU-right_console.png"
 crease 45.000000
-hidden
 numvert 35
 0.61947 0.02482 0.5159
 0.62028 0.02462 0.51604
@@ -129472,7 +129361,6 @@ data 25
 hud-displ-switch.mesh.032
 texture "../Textures/panels-MLU-right_console.png"
 crease 45.000000
-hidden
 numvert 35
 0.47987 0.02482 0.37079
 0.48068 0.02462 0.37093
@@ -129803,7 +129691,6 @@ data 25
 hud-displ-switch.mesh.033
 texture "../Textures/panels-MLU-right_console.png"
 crease 45.000000
-hidden
 numvert 35
 0.64738 0.02482 0.36212
 0.64819 0.02462 0.36226
@@ -139520,7 +139407,6 @@ data 9
 Torus.006
 texture "temp.zKnob.png"
 crease 40.000000
-hidden
 numvert 408
 0.66734 0.00602 0.44396
 0.66808 0.00602 0.44416
@@ -148251,7 +148137,6 @@ data 9
 Torus.006
 texture "temp.zKnob.png"
 crease 40.000000
-hidden
 numvert 408
 0.56802 0.00416 0.29176
 0.56876 0.00416 0.29191
