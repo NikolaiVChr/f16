@@ -88,6 +88,7 @@ var pCM   = 10;
 var pCRUS = 11;
 var pFACK = 12;
 var pLIST = 100;#excluded from random
+var pMISC = 101;#excluded from random
 
 var page = int(rand()*11.99);#random page at startup
 var comm = 0;
@@ -382,6 +383,12 @@ var loop_ded = func {# one line is max 24 chars
       text[2] = sprintf(" 4NAV  5MAN  6INS EDLNK ");
       text[3] = sprintf(" 7EWS  8MODE 9VRP OMISC ");
       text[4] = sprintf("                        ");
+    } elsif (page == pMISC) {
+      text[0] = sprintf("           MISC      12 ");
+      text[1] = sprintf(" 1CORR 2MAGV 3OFP R     ");
+      text[2] = sprintf(" 4INSM 5LASR 6GPS E     ");
+      text[3] = sprintf(" 7DRNG 8BULL 9WPT OHARM ");
+      text[4] = sprintf("                        ");
     }
     line1.setText(text[0]);
     line2.setText(text[1]);
@@ -449,11 +456,6 @@ var stpt = func {
   page = pSTPT;
 }
 
-var alow = func {
-  sound.doubleClick();
-  page = pALOW;
-}
-
 var tacan = func {
   sound.doubleClick();
   page = pTACAN;
@@ -476,12 +478,25 @@ var comm2 = func {
   page = pCNI;
 }
 
-var bingo = func {
+var button0 = func {
   sound.doubleClick();
-  page = pBINGO;
+  if (page == pLIST) {
+    page = pMISC;
+  }
 }
 
-var magv = func {
+var button2 = func {
+  sound.doubleClick();
+  if (page == pLIST) {
+    page = pBINGO;
+  } elsif (page == pMISC) {
+    page = pMAGV;
+  } else {
+    page = pALOW;
+  }
+}
+
+var rcl = func {
   sound.doubleClick();
   page = pMAGV;
 }

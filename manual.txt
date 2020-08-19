@@ -97,6 +97,31 @@ For something to show up in the RWR at all these conditions must be met:
 
 Notice that the RWR can sometimes pick up threat much further away than your radar is capable off.
 
+Here's a brief list including the most common symbols and what they refer to:
+    - 16:   F-16
+    - 10:   A-10
+    - 14:   F-14
+    - 15:   F-15
+    - 18:   F/A-18
+    - 37:   J-37 Viggen
+    - 21:   MiG-21
+    - 27:   Su-27, J-11A
+    - 29:   MiG-29
+    - 71:   SR-71
+    - M2:   Mirage-2000
+    - EF:   Eurofighter
+    - JA:   Jaguar
+    - TO:   Tornado
+    - RF:   Rafale (brsq)
+    - 35:   F-35
+    - S:    AWACS, GCI or Recon
+    - 11:   SA-11 (BUK M2,SAM)
+    - 20:   SA-20 (S-300, SAM)
+    - SH:   Frigate/Carrier/Ship
+    - 28:   Training scenario opponent
+    - AI:   AI scenario
+    - UK:   Unknown threat
+
 MFDs (Multi Function Displays)
 page SMS: Clicking on button next to a station will select it. 
           J-S will jettison the selected station.
@@ -116,6 +141,10 @@ DED
 The DED is the small display above the right color MFD.
 Clicking on certain buttons on the ICP (the panel below the HUD) can bring up different pages.
 The DED can also be brought up on the HUD in the controlpanel.
+
+HACK Timer
+The DED has a built-in stopwatch. To access this, use key 6 ("TIME") on the ICP to select TIME page.
+Then, use the up arrow on the ICP to start the HACK timer. The up arrow toggles the timer while the down arrow resets it.
 
 AUTOPILOT
 Notice that even when A/P is enabled you can control the airplane with the stick. When you let go of stick A/P will recalculate from current situation.
@@ -150,6 +179,11 @@ Bombs
     If RP is greater than 1, then you can also in same MFD page set distance in Feet between ripples.
 AIM120/AIM9
   The trigger can be held for 2 second to fire it without a lock in MADDOG mode, where it will lock onto anyone it sees.
+AGM-154A JSOW (Joint Standoff Weapon)
+   Long range guided glide bomb. Can be launched by either inputing GPS coordinates in the "Program Target" dialog for a desired spot or against a TOO (Target Of Opportunity) with a targeting pod lock (see section below). Operational range varies from 70NM max with GPS to about 34NM max with TGP lock.
+   Optimal release envelopes are as follows:
+        GPS lock - Release at or above FL420 with speed at or above M1.6 (70NM and closer).
+        TGP lock (TOO) - Release at or above FL340 with speed at or above M1.3 (34NM and closer).
 
 TARGETPODS
 On the MFDs you can select TGP. This however only works if you have mounted one of the target-pods.
@@ -224,7 +258,7 @@ VARIANTS
 - YF-16                  : 14670/23830 lbf. The FBW in this variant has no spin, nose-slide or deep stall protection. Small horz. tail (auth. aero data). Engine has auth. power curves.
 - F-16 Simplified        : 17800/29000 lbf. The FBW can be switched off. Uses custom FBW made for FG and aero data is simplified version of the other other versions.
 
-The engines wary not only in thrust, but also in fuel consumption.
+The engines vary not only in thrust, but also in fuel consumption. Furthermore they differ in empty weight.
+Different Blocks have different sets of cockpit panels, MFDs and HSI/EHSI, alongside other changes.
 Variants will also have different sets of liveries that can be selected.
-Furthermore they differ in empty weight. And some block have HSI gauge while others have EHSI display.
 There is also small changes in tail for different variants with and without braking chute.

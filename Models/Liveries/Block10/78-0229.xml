@@ -19,6 +19,10 @@
   <livery-pod>
         <texture>Liveries/Block10/pod.25yrsRNLAF.png</texture>
     </livery-pod>
+
+  <f16>
+     <dragchute type="bool">false</dragchute>
+  </f16>
   </model>
  </sim>
 </PropertyList>

@@ -242,6 +242,7 @@ var loop_caution = func {# TODO: unlit the caution lights except elec-sys when m
     setprop("f16/avionics/caution/adc",               test or (batt2 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains")));
     setprop("f16/avionics/caution/equip-hot",         test or (batt2 and (!getprop("controls/ventilation/airconditioning-source") and getprop("f16/avionics/power-ufc-warm"))));
     setprop("f16/avionics/caution/overheat",          test or testFire or (batt2 and !getprop("damage/fire/serviceable")));
+	setprop("f16/avionics/caution/sec",               test or getprop("f16/engine/sec-self-test") or (batt2 and getprop("f16/engine/ctl-sec")));
     setprop("f16/avionics/caution/avionics",          test or (batt2 and (!getprop("instrumentation/hud/serviceable") or !getprop("instrumentation/radar/serviceable") or !getprop("instrumentation/rwr/serviceable") or !getprop("instrumentation/tacan/serviceable"))));
 };
 

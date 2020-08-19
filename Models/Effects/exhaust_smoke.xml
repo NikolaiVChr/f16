@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+
+  <particlesystem>
+    <name>smoke-moving</name>
+    <texture>exhaustheath.png</texture>
+    <emissive>false</emissive>
+    <lighting>false</lighting>
+
+    <offsets>
+      <x-m>0</x-m>
+      <y-m>0</y-m>
+      <z-m>0</z-m>
+    </offsets>
+
+    <condition>
+      <and>
+        <not>
+          <property>sim/multiplay/generic/bool[10]</property><!-- smoke -->
+        </not>
+        <equals>
+          <property>sim/multiplay/generic/bool[39]</property><!-- AB -->
+          <value>0</value>
+        </equals>
+        <greater-than>
+          <property>sim/multiplay/generic/short[6]</property><!-- N2 -->
+          <value>96</value>
+        </greater-than>
+        <greater-than>
+          <property>/environment/temperature-degc</property>
+          <value>-38</value>
+        </greater-than>
+        <greater-than>
+          <property>sim/multiplay/generic/float[3]</property><!-- kts -->
+          <value>25</value>
+        </greater-than>
+      </and>
+    </condition>
+
+    <attach>world</attach>
+
+    <placer>
+      <type>point</type>
+    </placer>
+
+    <shooter>
+      <theta-min-deg>83</theta-min-deg>
+      <theta-max-deg>87</theta-max-deg>
+      <phi-min-deg>-1.5</phi-min-deg>
+      <phi-max-deg>1.5</phi-max-deg>
+      <speed-mps>
+        <property>sim/multiplay/generic/short[5]</property><!-- N1 -->
+        <factor>5</factor>
+      </speed-mps>
+      <rotation-speed>
+        <x-min-deg-sec>10</x-min-deg-sec>
+        <y-min-deg-sec>10</y-min-deg-sec>
+        <z-min-deg-sec>10</z-min-deg-sec>
+        <x-max-deg-sec>50</x-max-deg-sec>
+        <y-max-deg-sec>50</y-max-deg-sec>
+        <z-max-deg-sec>50</z-max-deg-sec>
+      </rotation-speed>
+    </shooter>
+
+    <counter>
+      <particles-per-sec>
+        <property>sim/multiplay/generic/short[5]</property><!-- N1 -->
+        <factor>3</factor>
+        <spread>20</spread>
+      </particles-per-sec>
+    </counter>
+
+    <align>billboard</align>
+
+        <particle>
+            <start>
+                <color>
+                    <red>
+                        <expression>
+                            <product>
+                                <value>0.95</value>
+                                <property>/rendering/scene/diffuse/red</property>
+                            </product>
+                        </expression>
+                    </red>
+                    <green>
+                        <expression>
+                            <product>
+                                <value>0.94</value>
+                                <property>/rendering/scene/diffuse/red</property>
+                            </product>
+                        </expression>
+                    </green>
+                    <blue>
+                        <expression>
+                            <product>
+                                <value>0.93</value>
+                                <property>/rendering/scene/diffuse/red</property>
+                            </product>
+                        </expression>
+                    </blue>
+                    <alpha>
+                        <value>0.026</value>
+                    </alpha>
+                </color>
+                <size>
+                    <value>0.4</value>
+                </size>
+            </start>
+
+            <end>
+                <color>
+                    <red>
+                        <expression>
+                            <product>
+                                <value>0.99</value>
+                                <property>/rendering/scene/diffuse/red</property>
+                            </product>
+                        </expression>
+                    </red>
+                    <green>
+                        <expression>
+                            <product>
+                                <value>0.98</value>
+                                <property>/rendering/scene/diffuse/red</property>
+                            </product>
+                        </expression>
+                    </green>
+                    <blue>
+                        <expression>
+                            <product>
+                                <value>0.97</value>
+                                <property>/rendering/scene/diffuse/red</property>
+                            </product>
+                        </expression>
+                    </blue>
+                    <alpha>
+                        <value>0.001</value>
+                    </alpha>
+                </color>
+                <size>
+                    <value>17.5</value>
+                </size>
+            </end>
+
+      <life-sec>
+        <value>7</value>
+      </life-sec>
+
+      <mass-kg>0.15</mass-kg>
+      <radius-m>0.3</radius-m>
+    </particle>
+
+    <program>
+      <fluid>air</fluid>
+      <gravity type="bool">true</gravity>
+      <wind type="bool">true</wind>
+    </program>
+
+  </particlesystem>
+
+</PropertyList>

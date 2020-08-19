@@ -879,7 +879,7 @@
   <type>select</type>
   <object-name>SEC_unlit</object-name>
   <condition>
-   <not><property>controls/test/test-panel/mal-ind-lts</property></not>
+   <not><property>f16/avionics/caution/sec</property></not>
   </condition>
  </animation> 
 
@@ -1142,7 +1142,7 @@
   <type>select</type>
   <object-name>SEC_lit</object-name>
   <condition>
-   <property>controls/test/test-panel/mal-ind-lts</property>
+       <property>f16/avionics/caution/sec</property>
   </condition>
  </animation> 
 

@@ -629,14 +629,25 @@
   </offsets>
  </model>
 
-<!-- the "jelly" generated when engine is above 98 N2 -->
+<!-- the smoke generated when engine is above 96 N2 -->
+ <model>
+  <name>exhaust_smoke</name>
+  <path>Aircraft/f16/Models/Effects/exhaust_smoke.xml</path>
+    <offsets>
+      <x-m>1.7</x-m>
+      <y-m>0.0</y-m>
+      <z-m>-0.4</z-m>
+      </offsets>
+ </model>
+
+ <!-- the "jelly" generated when engine is in reheat -->
  <model>
   <name>exhaust_jelly</name>
-  <path>Aircraft/f16/Models/Effects/jelly.xml</path>
+  <path>Aircraft/f16/Models/Effects/exhaust_jelly.xml</path>
     <offsets>
-      <x-m>4.25</x-m>
+      <x-m>3.5</x-m>
       <y-m>0.0</y-m>
-      <z-m>0.0</z-m>
+      <z-m>-0.4</z-m>
       </offsets>
  </model>
  

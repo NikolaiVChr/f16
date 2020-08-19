@@ -6,9 +6,9 @@
   <description>General Dynamics F-16CG Block 40</description>
   <long-description>
    The General Dynamics F-16CG Fighting Falcon (or Night Falcon) is a single-engine supersonic multirole fighter aircraft originally developed by General Dynamics (now Lockheed Martin) for the United States Air Force (USAF). Powered by F110-GE-100. Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
-   The Fighting Falcon has key features including a frameless bubble canopy for better visibility, side-mounted control stick to ease control while maneuvering, a seat reclined 30 degrees to reduce the effect of g-forces on the pilot, and the first use of a relaxed static stability/fly-by-wire flight control system which helps to make it a nimble aircraft.
+   The Fighting Falcon has key features including a frameless bubble canopy for better visibility, side-mounted control stick to ease control while maneuvering, a seat reclined 30 degrees to reduce the effect of g-forces on the pilot, and the first use of a relaxed static stability/fly-by-wire flight control system which helps to make it a nimble aircraft. Block 40/42 introduced LANTIRN pods, GPS, upgraded APG-68 radar,ATF, PBG and more.
   </long-description>
-  <author>Erik Hofman, Pensacola, Martin "Pegasus" Schmitt, Nikolai V. Chr., J Maverick 16, Richard Harrison, Josh Davidson, Martien Van Der P., Gary Brown, Justin Nicholson, Jonathan Redpath, Timi, Barszczisbad, Enrico Castaldi</author>
+  <author>Erik Hofman, Pensacola, Martin "Pegasus" Schmitt, Nikolai V. Chr., J Maverick 16, Richard Harrison, Josh Davidson, Martien Van Der P., Jonathan Redpath, Gary Brown, Justin Nicholson, Timi, Barszczisbad, Enrico Castaldi</author>
   <status>production</status>
   <rating>
     <FDM type="int">5</FDM>
@@ -25,6 +25,7 @@
       <tag>general-dynamics</tag>
       <tag>1980s</tag>
       <tag>1990s</tag>
+      <tag>2000s</tag>
       <tag>coldwar</tag>
       <tag>gulfwar1</tag>
       <tag>gulfwar2</tag>
