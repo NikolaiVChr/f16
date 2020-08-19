@@ -40,7 +40,7 @@
           including possibility for 3 droptanks.
           And engine only draws fuel from 2 of them.
 
-          Total internal JP-4 should be: 6625
+          Total internal JP-4 should be: 6825
           Total external JP-4 should be: 9300 (the big tanks, there is 2 sizes)
   -->
   <refuel-rate unit="LBS/MIN"> 6000 </refuel-rate>
