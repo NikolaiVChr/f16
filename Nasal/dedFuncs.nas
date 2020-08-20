@@ -78,6 +78,89 @@ var Action = {
 	},
 };
 
+var EditableField = {
+	new: func(text) {
+		var editableField = {parents: [EditableField]};
+		editableField.text = text;
+		editableField.lastText1 = "";
+		editableField.lastText2 = "";
+		editableField.recallStatus = 0;
+		editableField.selected = 0;
+		return editableField;
+	},
+	append: func(letter) {
+		if (me.lastText2 == "") {
+			me.lastText2 = me.text;
+		}
+		me.lastText1 = me.text;
+		me.text = me.text ~ letter;
+	},
+	recall: func() {
+		if (me.recallStatus == 0) {
+			me.text = me.lastText1;
+			me.lastText1 = "";
+			me.recallStatus = 1;
+		} else {
+			me.recallStatus = 0;
+			me.text = me.lastText2;
+			me.lastText1 = "";
+			me.lastText2 = "";
+		}
+	},
+	enter: func() {
+		me.recallStatus = 0;
+		me.lastText1 = "";
+		me.lastText2 = "";
+	},
+	getText: func() {
+		if (me.selected) {
+			return "*" ~ me.text ~ "*";
+		} else {
+			return " " ~ me.text ~ " ";
+		}
+	},
+};
+
+var EditableFieldPage = func() {
+	new: func() {
+		var efp = {parents: [EditableFieldPage]};
+		efp.vector = [];
+		efp.index = 0;
+		return efp;
+	},
+	init: func() {
+		if (size(me.vector) != 0) {
+			me.vector[0].selected = 1;
+		}
+	},
+	getNext: func() {
+		me.vector[me.index].selected = 0;
+		me.index += 1;
+		if (me.index == size(me.vector)) {
+			me.index = 0;
+		}
+		me.vector[me.index].selected = 1;
+	},
+	append: func(letter) {
+		me.vector[me.index].append(letter);
+	},
+	enter: func() {
+		me.vector[me.index].enter();
+	},
+	recall: func() {
+		me.vector[me.index].recall();
+	},
+	getText: func(index) {
+		return me.vector[index].getText();
+	},
+	isSelected: func(index) {
+		return me.vector[index].selected;
+	},
+	selectedIndex: func() {
+		return me.index;
+	},
+};	
+
 var Router = {
 	new: func(start, finish) {
 		var router = {parents: [Router]};
