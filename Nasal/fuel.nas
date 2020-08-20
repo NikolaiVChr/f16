@@ -6,11 +6,11 @@
 
 var initExtTankFuel = func {
         var checkWingtanks = props.globals.getNode("sim/model/f16/wingtanks");
-        var initFuelRightWingtank = props.globals.getNode("consumables/fuel/tank[2]/level-gal_us");
-        var initFuelLeftWingtank = props.globals.getNode("consumables/fuel/tank[3]/level-gal_us");
+        var initFuelRightWingtank = props.globals.getNode("consumables/fuel/tank[6]/level-gal_us");
+        var initFuelLeftWingtank = props.globals.getNode("consumables/fuel/tank[7]/level-gal_us");
 
         var checkVentraltank = props.globals.getNode("sim/model/f16/ventraltank");
-        var initFuelVentraltank = props.globals.getNode("consumables/fuel/tank[4]/level-gal_us");
+        var initFuelVentraltank = props.globals.getNode("consumables/fuel/tank[8]/level-gal_us");
 
 
         if (checkWingtanks.getBoolValue()) {

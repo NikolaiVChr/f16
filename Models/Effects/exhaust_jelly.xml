@@ -3,7 +3,7 @@
 <PropertyList>
 
   <particlesystem>
-    <name>heat-blur-moving</name>
+    <name>jelly-moving</name>
     <texture>exhaustheath.png</texture>
     <emissive>false</emissive>
     <lighting>false</lighting>
@@ -19,10 +19,10 @@
         <not>
           <property>sim/multiplay/generic/bool[10]</property><!-- smoke -->
         </not>
-        <greater-than>
-          <property>sim/multiplay/generic/short[6]</property><!-- N2 -->
-          <value>97</value>
-        </greater-than>
+        <equals>
+          <property>sim/multiplay/generic/bool[39]</property><!-- AB -->
+          <value>1</value>
+        </equals>
         <greater-than>
           <property>/environment/temperature-degc</property>
           <value>-38</value>
@@ -62,7 +62,7 @@
     <counter>
       <particles-per-sec>
         <property>sim/multiplay/generic/short[5]</property><!-- N1 -->
-        <factor>2</factor>
+        <factor>3</factor>
         <spread>20</spread>
       </particles-per-sec>
     </counter>
@@ -75,7 +75,7 @@
                     <red>
                         <expression>
                             <product>
-                                <value>0.98</value>
+                                <value>1.0</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -83,7 +83,7 @@
                     <green>
                         <expression>
                             <product>
-                                <value>0.97</value>
+                                <value>1.0</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -91,17 +91,17 @@
                     <blue>
                         <expression>
                             <product>
-                                <value>0.95</value>
+                                <value>1.0</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
                     </blue>
                     <alpha>
-                        <value>0.026</value>
+                        <value>0.015</value>
                     </alpha>
                 </color>
                 <size>
-                    <value>0.75</value>
+                    <value>0.7</value>
                 </size>
             </start>
 
@@ -110,7 +110,7 @@
                     <red>
                         <expression>
                             <product>
-                                <value>0.97</value>
+                                <value>1.0</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -118,7 +118,7 @@
                     <green>
                         <expression>
                             <product>
-                                <value>0.96</value>
+                                <value>1.0</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
@@ -126,13 +126,13 @@
                     <blue>
                         <expression>
                             <product>
-                                <value>0.95</value>
+                                <value>1.0</value>
                                 <property>/rendering/scene/diffuse/red</property>
                             </product>
                         </expression>
                     </blue>
                     <alpha>
-                        <value>0.0025</value>
+                        <value>0.0</value>
                     </alpha>
                 </color>
                 <size>
@@ -141,10 +141,10 @@
             </end>
 
       <life-sec>
-        <value>7</value>
+        <value>5</value>
       </life-sec>
 
-      <mass-kg>0.15</mass-kg>
+      <mass-kg>0.25</mass-kg>
       <radius-m>0.3</radius-m>
     </particle>
 

@@ -19,6 +19,8 @@
    <feed>4</feed>
    <feed>5</feed>
    <feed>6</feed>
+   <feed>7</feed>
+   <feed>8</feed>
    <thruster file="direct">
     <location unit="M">
      <x> 4.2077 </x>
@@ -38,76 +40,21 @@
           including possibility for 3 droptanks.
           And engine only draws fuel from 2 of them.
 
-          Total internal JP-4 should be: 6625
+          Total internal JP-4 should be: 6825
           Total external JP-4 should be: 9300 (the big tanks, there is 2 sizes)
   -->
   <refuel-rate unit="LBS/MIN"> 6000 </refuel-rate>
   <dump-rate unit="LBS/MIN"> 1000 </dump-rate>
-  <tank type="FUEL"> <!-- FWD Tank -->
+  <tank type="FUEL"> <!-- FWD Tank F-1 / F-2 -->
    <location unit="IN">
     <x> -128.5 </x>
    <y> 0 </y>
    <z> 0 </z>
    </location>
-   <capacity unit="LBS"> 2812.5 </capacity>
-   <contents unit="LBS"> 2812.5 </contents>
+   <capacity unit="LBS"> 2640.0 </capacity>
+   <contents unit="LBS"> 2640.0 </contents>
    <type>JP-4</type>
-   <priority> 3 </priority>
-  </tank>
-  <tank type="FUEL"> <!-- AFT Tank -->
-   <location unit="IN">
-    <x> 56.5 </x>
-   <y> 0 </y>
-   <z> 0 </z>
-   </location>
-   <capacity unit="LBS"> 2812.5 </capacity>
-   <contents unit="LBS"> 2812.5 </contents>
-   <type>JP-4</type>
-   <priority> 3 </priority>
-  </tank>
-  <tank type="FUEL"> <!-- Right External Tank -->
-   <location unit="IN">
-    <x> -16.5 </x>
-   <y> 80 </y>
-   <z> -40 </z>
-   </location>
-   <capacity unit="LBS"> 3996 </capacity>
-   <contents unit="LBS"> 0 </contents>
-   <type>JP-8</type>
-   <priority> 1 </priority>
-  </tank>
-  <tank type="FUEL"> <!-- Left External Tank -->
-   <location unit="IN">
-    <x> -16.5 </x>
-   <y> -80 </y>
-   <z> -40 </z>
-   </location>
-   <capacity unit="LBS"> 3996 </capacity>
-   <contents unit="LBS"> 0 </contents>
-   <type>JP-8</type>
-   <priority> 1 </priority>
-  </tank>
-  <tank type="FUEL"> <!-- Center External Tank -->
-   <location unit="IN">
-    <x> -16.5 </x>
-   <y>   0 </y>
-   <z> -50 </z>
-   </location>
-   <capacity unit="LBS"> 2040 </capacity>
-   <contents unit="LBS"> 0 </contents>
-   <type>JP-8</type>
-   <priority> 1 </priority>
-  </tank>
-  <tank type="FUEL"> <!-- Right wing tank -->
-   <location unit="IN">
-    <x> 16.5 </x>
-   <y>  80 </y>
-   <z>   0 </z>
-   </location>
-   <capacity unit="LBS"> 500 </capacity>
-   <contents unit="LBS"> 500 </contents>
-   <type>JP-4</type>
-   <priority> 2 </priority>
+   <priority> 4 </priority>
   </tank>
   <tank type="FUEL"> <!-- Left wing tank -->
    <location unit="IN">
@@ -115,9 +62,86 @@
    <y> -80 </y>
    <z>   0 </z>
    </location>
-   <capacity unit="LBS"> 500 </capacity>
-   <contents unit="LBS"> 500 </contents>
+   <capacity unit="LBS"> 525 </capacity>
+   <contents unit="LBS"> 525 </contents>
+   <type>JP-4</type>
+   <priority> 3 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- Right wing tank -->
+   <location unit="IN">
+    <x> 16.5 </x>
+   <y>  80 </y>
+   <z>   0 </z>
+   </location>
+   <capacity unit="LBS"> 525 </capacity>
+   <contents unit="LBS"> 525 </contents>
+   <type>JP-4</type>
+   <priority> 3 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- AFT Tank A-1 -->
+   <location unit="IN">
+    <x> 56.5 </x>
+   <y> 0 </y>
+   <z> 0 </z>
+   </location>
+   <capacity unit="LBS"> 2215.0 </capacity>
+   <contents unit="LBS"> 2215.0 </contents>
+   <type>JP-4</type>
+   <priority> 4 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- FWD Reservoir -->
+    <location unit="IN">
+    <x> -128.5 </x>
+   <y> 0 </y>
+   <z> 0 </z>
+   </location>
+   <capacity unit="LBS"> 460.0 </capacity>
+   <contents unit="LBS"> 460.0 </contents>
+   <type>JP-4</type>
+   <priority> 5 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- AFT Reservoir -->
+    <location unit="IN">
+    <x> 56.5 </x>
+   <y> 0 </y>
+   <z> 0 </z>
+   </location>
+   <capacity unit="LBS"> 460.0 </capacity>
+   <contents unit="LBS"> 460.0 </contents>
+   <type>JP-4</type>
+   <priority> 5 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- Left External Tank -->
+   <location unit="IN">
+    <x> -16.5 </x>
+   <y> -80 </y>
+   <z> -40 </z>
+   </location>
+   <capacity unit="LBS"> 3750 </capacity>
+   <contents unit="LBS"> 0 </contents>
    <type>JP-4</type>
    <priority> 2 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- Right External Tank -->
+   <location unit="IN">
+    <x> -16.5 </x>
+   <y> 80 </y>
+   <z> -40 </z>
+   </location>
+   <capacity unit="LBS"> 3750 </capacity>
+   <contents unit="LBS"> 0 </contents>
+   <type>JP-4</type>
+   <priority> 2 </priority>
+  </tank>
+  <tank type="FUEL"> <!-- Center External Tank -->
+   <location unit="IN">
+    <x> -16.5 </x>
+   <y>   0 </y>
+   <z> -50 </z>
+   </location>
+   <capacity unit="LBS"> 1800 </capacity>
+   <contents unit="LBS"> 0 </contents>
+   <type>JP-4</type>
+   <priority> 1 </priority>
   </tank>
  </propulsion>

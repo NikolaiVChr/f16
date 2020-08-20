@@ -315,6 +315,14 @@
                     </table>
             </function>
         </fcs_function>
+		
+		<switch name="/f16/engine/ctl-sec">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/engines/engine/n2 lt 18
+				/f16/engine/sec-self-test eq 1
+			</test>
+		</switch>
         
         <lag_filter name="/f16/cockpit/pressure-ft">
             <input> /f16/cockpit/pressure-ft-direct </input>

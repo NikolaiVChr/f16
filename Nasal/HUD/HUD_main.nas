@@ -989,8 +989,7 @@ append(obj.total, obj.speed_curr);
                  vne                       : "f16/vne",
                  texUp                     : "f16/hud/texels-up",
                  wp_bearing_deg            : "autopilot/route-manager/wp/true-bearing-deg",
-                 total_fuel_lbs            : "/consumables/fuel/total-fuel-lbs",
-                 bingo                     : "f16/settings/bingo",
+                 bingo                     : "f16/avionics/bingo",
                  alow                      : "f16/settings/cara-alow",
                  altitude_agl_ft           : "position/altitude-agl-ft",
                  wp0_eta                   : "autopilot/route-manager/wp[0]/eta",
@@ -1925,9 +1924,9 @@ append(obj.total, obj.speed_curr);
             }
             
 
-            if (hdp.total_fuel_lbs < hdp.bingo and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
+            if (hdp.bingo and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
               hdp.window11_txt = "FUEL";
-            } elsif (hdp.total_fuel_lbs < hdp.bingo) {
+            } elsif (hdp.bingo) {
               hdp.window11_txt = "";
             } elsif (ded.dataEntryDisplay.bullMode) {
 				me.bullLat = getprop("f16/avionics/bulls-eye-lat");

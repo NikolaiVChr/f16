@@ -227,20 +227,23 @@ var update_master = func {
 
 var loop_caution = func {# TODO: unlit the caution lights except elec-sys when master is pressed.
     var batt2 = getprop("fdm/jsbsim/elec/bus/batt-2") >= 20;
+    var dc1 = getprop("fdm/jsbsim/elec/bus/emergency-dc-1") >= 20;
     var test  = getprop("controls/test/test-panel/mal-ind-lts");
 	var testFire = getprop("controls/test/test-panel/fire-ovht-test");
+	var fuelTest = !getprop("controls/fuel/qty-selector");
     setprop("f16/avionics/caution/stores-config",     test or (batt2 and ((getprop("f16/stores-cat")>1 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III") < 1) or (getprop("f16/stores-cat")==1 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III") == 1))));
     setprop("f16/avionics/caution/seat-not-armed",    test or (batt2 and !getprop("controls/seat/ejection-safety-lever")));
     setprop("f16/avionics/caution/oxy-low",           test or (batt2 and getprop("f16/cockpit/oxygen-liters-output")<0.5) or (batt2 and getprop("f16/avionics/oxy-psi")<42));
     setprop("f16/avionics/caution/le-flaps",          test or (batt2 and (!getprop("f16/avionics/le-flaps-switch") or getprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains"))));
     setprop("f16/avionics/caution/hook",              test or (batt2 and getprop("fdm/jsbsim/systems/hook/tailhook-cmd-norm")));
-    setprop("f16/avionics/caution/fwd-fuel-low",      test or (batt2 and getprop("consumables/fuel/tank[0]/level-lbs")<400));
-    setprop("f16/avionics/caution/aft-fuel-low",      test or (batt2 and getprop("consumables/fuel/tank[1]/level-lbs")<400));
+    setprop("f16/avionics/caution/fwd-fuel-low",      test or fuelTest or (dc1 and getprop("consumables/fuel/tank[4]/level-lbs")<400));
+    setprop("f16/avionics/caution/aft-fuel-low",      test or fuelTest or (dc1 and getprop("consumables/fuel/tank[5]/level-lbs")<400));
     setprop("f16/avionics/caution/elec-sys",          test or (batt2 and getprop("fdm/jsbsim/elec/bus/light/elec-sys")));
     setprop("f16/avionics/caution/cabin-press",       test or (batt2 and getprop("f16/cockpit/pressure-ft")>27000));
     setprop("f16/avionics/caution/adc",               test or (batt2 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains")));
     setprop("f16/avionics/caution/equip-hot",         test or (batt2 and (!getprop("controls/ventilation/airconditioning-source") and getprop("f16/avionics/power-ufc-warm"))));
     setprop("f16/avionics/caution/overheat",          test or testFire or (batt2 and !getprop("damage/fire/serviceable")));
+	setprop("f16/avionics/caution/sec",               test or getprop("f16/engine/sec-self-test") or (batt2 and getprop("f16/engine/ctl-sec")));
     setprop("f16/avionics/caution/avionics",          test or (batt2 and (!getprop("instrumentation/hud/serviceable") or !getprop("instrumentation/radar/serviceable") or !getprop("instrumentation/rwr/serviceable") or !getprop("instrumentation/tacan/serviceable"))));
 };
 

@@ -1953,31 +1953,37 @@ There is also small changes in tail for different variants with and without brak
                 <name>Fuselage FWD Tank</name>
             </tank>
             <tank n="1">
-                <name>Fuselage AFT Tank</name>
+                <name>Left Wing Tank</name>
             </tank>
             <tank n="2">
-                <name>Not attached</name>
-                <selected type="bool">false</selected>
-                <capacity-gal_us type="double">0</capacity-gal_us>
-                <level-norm type="double">0</level-norm>
-            </tank>
-            <tank n="3">
-                <name>Not attached</name>
-                <selected type="bool">false</selected>
-                <capacity-gal_us type="double">0</capacity-gal_us>
-                <level-norm type="double">0</level-norm>
-            </tank>
-            <tank n="4">
-                <name>Not attached</name>
-                <selected type="bool">false</selected>
-                <capacity-gal_us type="double">0</capacity-gal_us>
-                <level-norm type="double">0</level-norm>
-            </tank>
-            <tank n="5">
                 <name>Right Wing Tank</name>
             </tank>
+            <tank n="3">
+                <name>Fuselage AFT Tank</name>
+            </tank>
+            <tank n="4">
+                <name>Fuselage FWD Reservoir</name>
+            </tank>
+            <tank n="5">
+                <name>Fuselage AFT Reservoir</name>
+            </tank>
             <tank n="6">
-                <name>Left Wing Tank</name>
+                <name>Not attached</name>
+                <selected type="bool">false</selected>
+                <capacity-gal_us type="double">0</capacity-gal_us>
+                <level-norm type="double">0</level-norm>
+            </tank>
+            <tank n="7">
+                <name>Not attached</name>
+                <selected type="bool">false</selected>
+                <capacity-gal_us type="double">0</capacity-gal_us>
+                <level-norm type="double">0</level-norm>
+            </tank>
+            <tank n="8">
+                <name>Not attached</name>
+                <selected type="bool">false</selected>
+                <capacity-gal_us type="double">0</capacity-gal_us>
+                <level-norm type="double">0</level-norm>
             </tank>
         </fuel>
 		<fuel-tanks>
@@ -2166,13 +2172,13 @@ There is also small changes in tail for different variants with and without brak
                 <hydra7rtriggers type="bool">false</hydra7rtriggers>
             </fcs>
             <propulsion>
-                <tank n="2">
+                <tank n="6">
                     <external-flow-rate-pps type="double">-1000</external-flow-rate-pps>
                 </tank>
-                <tank n="3">
+                <tank n="7">
                     <external-flow-rate-pps type="double">-1000</external-flow-rate-pps>
                 </tank>
-                <tank n="4">
+                <tank n="8">
                     <external-flow-rate-pps type="double">-1000</external-flow-rate-pps>
                 </tank>
             </propulsion>
@@ -3574,6 +3580,7 @@ value. 18000=standard US transition altitude -->
             <switch-roll-block20 type="int">0</switch-roll-block20>
         </fcs>
         <engine>
+			<ctl-sec type="bool">false</ctl-sec>
             <feed type="bool">false</feed><!-- OFF/NORM prevents starter, cutoff -->
             <jet-fuel type="int">0</jet-fuel><!-- starter -1=1 1=2 0=off  goes to off at 55% rpm -->
             <jfs-start type="bool">false</jfs-start><!-- inverse cutoff -->
@@ -3581,6 +3588,7 @@ value. 18000=standard US transition altitude -->
             <ab-reset type="int">0</ab-reset>
             <max-power type="bool">false</max-power>
             <jfs-rpm-normalized type="double">0</jfs-rpm-normalized>
+			<sec-self-test type="bool">false</sec-self-test>
             <cutoff-release-lever type="bool">true</cutoff-release-lever>
         </engine>
         <done type="bool">false</done>

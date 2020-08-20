@@ -739,8 +739,9 @@ var CARA = func {
 var fuelqty = func {
   var sel = getprop("controls/fuel/qty-selector");
   var fuel = getprop("/consumables/fuel/total-fuel-lbs");
+  var fuseFuel = getprop("consumables/fuel/tank[0]/level-lbs") + getprop("consumables/fuel/tank[3]/level-lbs") + getprop("consumables/fuel/tank[4]/level-lbs") + getprop("consumables/fuel/tank[5]/level-lbs");
 
-  if (fuel<getprop("f16/settings/bingo")) {
+  if (fuel<getprop("f16/settings/bingo") or (sel == 1 and fuseFuel<getprop("f16/settings/bingo"))) {
     setprop("f16/avionics/bingo", 1);
   } else {
     setprop("f16/avionics/bingo", 0);
@@ -760,23 +761,23 @@ var fuelqty = func {
     fuel = 6000;
   } elsif (sel == 1) {
     #norm
-    setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[0]/level-lbs"));
-    setprop("f16/fuel/hand-aft", getprop("consumables/fuel/tank[1]/level-lbs"));
+    setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[0]/level-lbs") + getprop("consumables/fuel/tank[4]/level-lbs"));
+    setprop("f16/fuel/hand-aft", getprop("consumables/fuel/tank[3]/level-lbs") + getprop("consumables/fuel/tank[5]/level-lbs"));
   } elsif (sel == 2) {
     #reservoir tanks
-    setprop("f16/fuel/hand-fwd", 0);
-    setprop("f16/fuel/hand-aft", 0);
+    setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[4]/level-lbs"));
+    setprop("f16/fuel/hand-aft", getprop("consumables/fuel/tank[5]/level-lbs"));
   } elsif (sel == 3) {
     # int wing
-    setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[6]/level-lbs"));
-    setprop("f16/fuel/hand-aft", getprop("consumables/fuel/tank[5]/level-lbs"));
+    setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[2]/level-lbs")); # right
+    setprop("f16/fuel/hand-aft", getprop("consumables/fuel/tank[1]/level-lbs")); # left
   } elsif (sel == 4) {
     # ext wing
-    setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[3]/level-lbs"));
-    setprop("f16/fuel/hand-aft", getprop("consumables/fuel/tank[2]/level-lbs"));
+    setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[7]/level-lbs")); 
+    setprop("f16/fuel/hand-aft", getprop("consumables/fuel/tank[6]/level-lbs"));
   } elsif (sel == 5) {
     # ext center
-    setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[4]/level-lbs"));
+    setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[8]/level-lbs"));
     setprop("f16/fuel/hand-aft", 0);
   }
   setprop("/consumables/fuel/total-fuel-lbs-1",     int(fuel       )     -int(fuel*0.1)*10);
@@ -846,9 +847,9 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     fail.start();
     awg_9.loopDGFT();
     eng.JFS.init();
-    setprop("consumables/fuel/tank[2]/capacity-gal_us",0);
-    setprop("consumables/fuel/tank[3]/capacity-gal_us",0);
-    setprop("consumables/fuel/tank[4]/capacity-gal_us",0);
+    setprop("consumables/fuel/tank[6]/capacity-gal_us",0);
+    setprop("consumables/fuel/tank[7]/capacity-gal_us",0);
+    setprop("consumables/fuel/tank[8]/capacity-gal_us",0);
     if (getprop("f16/disable-custom-view") != 1) view.manager.register("Cockpit View", pilot_view_limiter);
     emesary.GlobalTransmitter.Register(f16_mfd);
     emesary.GlobalTransmitter.Register(f16_hud);
@@ -936,19 +937,21 @@ var repair4 = func {
   # this pps settings is for when reinit with non zero fuel dump value in jsb propulsion, that value gets set on non-mounted tanks.
     setprop("fdm/jsbsim/propulsion/tank[0]/external-flow-rate-pps", 0);
     setprop("fdm/jsbsim/propulsion/tank[1]/external-flow-rate-pps", 0);
-    if (getprop("/consumables/fuel/tank[2]/name") != "Not attached") {
-      setprop("fdm/jsbsim/propulsion/tank[2]/external-flow-rate-pps", 0);
-    }
-    if (getprop("/consumables/fuel/tank[3]/name") != "Not attached") {
-      setprop("fdm/jsbsim/propulsion/tank[3]/external-flow-rate-pps", 0);
-    }
-    if (getprop("/consumables/fuel/tank[4]/name") != "Not attached") {
-      setprop("fdm/jsbsim/propulsion/tank[4]/external-flow-rate-pps", 0);
-    }
+    setprop("fdm/jsbsim/propulsion/tank[2]/external-flow-rate-pps", 0);
+    setprop("fdm/jsbsim/propulsion/tank[3]/external-flow-rate-pps", 0);
+    setprop("fdm/jsbsim/propulsion/tank[4]/external-flow-rate-pps", 0);
     setprop("fdm/jsbsim/propulsion/tank[5]/external-flow-rate-pps", 0);
-    setprop("fdm/jsbsim/propulsion/tank[6]/external-flow-rate-pps", 0);
-    if (getprop("/consumables/fuel/tank[0]/level-norm")<0.5 and getprop("f16/engine/running-state")) {
-      setprop("/consumables/fuel/tank[0]/level-norm", 0.55);
+    if (getprop("/consumables/fuel/tank[6]/name") != "Not attached") {
+      setprop("fdm/jsbsim/propulsion/tank[6]/external-flow-rate-pps", 0);
+    }
+    if (getprop("/consumables/fuel/tank[7]/name") != "Not attached") {
+      setprop("fdm/jsbsim/propulsion/tank[7]/external-flow-rate-pps", 0);
+    }
+    if (getprop("/consumables/fuel/tank[8]/name") != "Not attached") {
+      setprop("fdm/jsbsim/propulsion/tank[8]/external-flow-rate-pps", 0);
+    }
+    if (getprop("/consumables/fuel/tank[4]/level-norm")<0.5 and getprop("f16/engine/running-state")) {
+      setprop("/consumables/fuel/tank[4]/level-norm", 0.55);
     }
     fail.fail_reset();
 }
@@ -1497,7 +1500,7 @@ dynamic_view.register(func {me.noGforce();});# no G-force head movement in goPro
 
 
 var fuelDigits = func {
-  var maxtank = 7;
+  var maxtank = 8;
   for (var i=0;i<=maxtank;i+=1) {
     var fuel = getprop("consumables/fuel/tank["~i~"]/level-lbs"); 
     fuel = roundabout(fuel);
@@ -1824,11 +1827,11 @@ var flexer = func {
     setprop("surface-positions/radlefl", -getprop("fdm/jsbsim/fcs/lef-pos-deg")*D2R);
 
     var wingcontent = 0;
-    if (getprop("consumables/fuel/tank[5]/level-kg")!=nil) {
-      wingcontent += getprop("consumables/fuel/tank[5]/level-kg");
+    if (getprop("consumables/fuel/tank[1]/level-kg")!=nil) {
+      wingcontent += getprop("consumables/fuel/tank[1]/level-kg");
     }
-    if (getprop("consumables/fuel/tank[6]/level-kg")!=nil) {
-      wingcontent += getprop("consumables/fuel/tank[6]/level-kg");
+    if (getprop("consumables/fuel/tank[2]/level-kg")!=nil) {
+      wingcontent += getprop("consumables/fuel/tank[2]/level-kg");
     }
     if (getprop("payload/weight[0]/weight-lb") !=nil
         and getprop("payload/weight[1]/weight-lb") !=nil 
@@ -1940,5 +1943,16 @@ setlistener("controls/displays/cursor-click", func() {
 	if (SOI == 1) { return; }
 }, 0, 0);
 
+var secSelfTest = 0;
+setlistener("f16/engine/cutoff-release-lever", func() {
+	if (!getprop("f16/engine/cutoff-release-lever") and !secSelfTest) {
+		secSelfTest = 1;
+		setprop("f16/engine/sec-self-test", 1);
+		settimer(func() {
+			setprop("f16/engine/sec-self-test", 0);
+			secSelfTest = 0;
+		}, 3);
+	}
+}, 0, 0);
 
 var chuteLoop = maketimer(0.05, chuteLoopFunc);
