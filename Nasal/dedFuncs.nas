@@ -1,9 +1,10 @@
 # Classes
 var Button = {
-	new: func(routerVec = nil, actionVec = nil, To9 = 0) {
+	new: func(btnText = "-99", routerVec = nil, actionVec = nil, To9 = 0) {
 		var button = {parents: [Button]};
 		button.routerVec = routerVec;
 		button.actionVec = actionVec;
+		button.btnText = btnText;
 		button.To9 = To9;
 		return button;
 	},
@@ -44,6 +45,11 @@ var Button = {
 					return;
 				}
 			}
+				
+			if (size(dataEntryDisplay.page.vector) != 0) {
+				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].append(me.btnText);
+				return;
+			}
 		}
 		if (me.actionVec != nil) {
 			foreach (var action; me.actionVec) {
@@ -71,7 +77,7 @@ var Action = {
 	},
 	run: func() {
 		if (dataEntryDisplay.page == me.page or me.page == nil) {
-			call(me.funcCallback);
+			call(me.funcCallback, nil, dataEntryDisplay.page);
 			return 1;
 		}
 		return -1;
@@ -79,9 +85,11 @@ var Action = {
 };
 
 var EditableField = {
-	new: func(text) {
+	new: func(prop, stringFormat) {
 		var editableField = {parents: [EditableField]};
-		editableField.text = text;
+		editableField.text = getprop(prop);
+		editableField.prop = prop;
+		editableField.stringFormat = stringFormat;
 		editableField.lastText1 = "";
 		editableField.lastText2 = "";
 		editableField.recallStatus = 0;
@@ -91,41 +99,58 @@ var EditableField = {
 	append: func(letter) {
 		if (me.lastText2 == "") {
 			me.lastText2 = me.text;
+			me.text = "";
 		}
 		me.lastText1 = me.text;
 		me.text = me.text ~ letter;
 	},
 	recall: func() {
 		if (me.recallStatus == 0) {
-			me.text = me.lastText1;
-			me.lastText1 = "";
-			me.recallStatus = 1;
+			if (me.lastText1 != "") {
+				me.text = me.lastText1;
+				me.recallStatus = 1;
+			}
 		} else {
-			me.recallStatus = 0;
-			me.text = me.lastText2;
-			me.lastText1 = "";
-			me.lastText2 = "";
+			if (me.lastText2 != "") {
+				me.recallStatus = 0;
+				me.text = me.lastText2;
+				me.lastText1 = "";
+				me.lastText2 = "";
+			}
 		}
 	},
 	enter: func() {
 		me.recallStatus = 0;
 		me.lastText1 = "";
 		me.lastText2 = "";
+		setprop(me.prop, me.text);
 	},
 	getText: func() {
 		if (me.selected) {
-			return "*" ~ me.text ~ "*";
+			return "*" ~ sprintf(me.text,me.stringFormat) ~ "*";
 		} else {
-			return " " ~ me.text ~ " ";
+			return " " ~ sprintf(me.text,me.stringFormat) ~ " ";
 		}
+	},
+	setText: func(text) {
+		me.recallStatus = 0;
+		me.lastText1 = "";
+		me.lastText2 = "";
+		me.text = text;
 	},
 };
 
-var EditableFieldPage = func() {
-	new: func() {
+var EditableFieldPage = {
+	new: func(number, vector = nil) {
 		var efp = {parents: [EditableFieldPage]};
-		efp.vector = [];
+		if (vector == nil) {
+			efp.vector = [];
+		} else {
+			efp.vector = vector;
+		}
+		efp.number = number;
 		efp.index = 0;
+		efp.init();
 		return efp;
 	},
 	init: func() {

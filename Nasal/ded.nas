@@ -1,157 +1,45 @@
-var pTACAN = 0;
-var pALOW  = 1;
-var pFACK  = 2;
-var pSTPT  = 3;
-var pCRUS  = 4;
-var pTIME  = 5;
-var pMARK  = 6;
-var pFIX   = 7;
-var pACAL  = 8;
+# Setup editable pages:
+var bingoEF = EditableField.new("f16/settings/bingo", "%-d");
 
-var pLIST  = 100; # excluded from random
-var pDEST  = 9;
-var pBINGO = 10;
-var pVIP   = 11;
-var pNAV   = 12;
-var pMAN   = 13;
-var pINS   = 14;
-var pEWS   = 15;
-var pMODE  = 16;
-var pVRP   = 17;
-var pINTG  = 18;
-var pDLNK  = 19;
+var pTACAN = EditableFieldPage.new(0);
+var pALOW  = EditableFieldPage.new(1);
+var pFACK  = EditableFieldPage.new(2);
+var pSTPT  = EditableFieldPage.new(3);
+var pCRUS  = EditableFieldPage.new(4);
+var pTIME  = EditableFieldPage.new(5);
+var pMARK  = EditableFieldPage.new(6);
+var pFIX   = EditableFieldPage.new(7);
+var pACAL  = EditableFieldPage.new(8);
 
-var pMISC  = 201; # excluded from random
-var pCORR  = 20;
-var pMAGV  = 21;
-var pOFP   = 22;
-var pINSM  = 23;
-var pLASR  = 24;
-var pGPS   = 25;
-var pDRNG  = 26;
-var pBULL  = 27;
-var pWPT   = 28;
-var pHARM  = 29;
+var pLIST  = EditableFieldPage.new(100);
+var pDEST  = EditableFieldPage.new(9);
+var pBINGO = EditableFieldPage.new(10, [bingoEF]);
+var pVIP   = EditableFieldPage.new(11);
+var pNAV   = EditableFieldPage.new(12);
+var pMAN   = EditableFieldPage.new(13);
+var pINS   = EditableFieldPage.new(14);
+var pEWS   = EditableFieldPage.new(15);
+var pMODE  = EditableFieldPage.new(16);
+var pVRP   = EditableFieldPage.new(17);
+var pINTG  = EditableFieldPage.new(18);
+var pDLNK  = EditableFieldPage.new(19);
 
-var pCNI   = 30;
-var pCOMM1 = 31;
-var pCOMM2 = 32;
-var pIFF   = 33;
+var pMISC  = EditableFieldPage.new(201);
+var pCORR  = EditableFieldPage.new(20);
+var pMAGV  = EditableFieldPage.new(21);
+var pOFP   = EditableFieldPage.new(22);
+var pINSM  = EditableFieldPage.new(23);
+var pLASR  = EditableFieldPage.new(24);
+var pGPS   = EditableFieldPage.new(25);
+var pDRNG  = EditableFieldPage.new(26);
+var pBULL  = EditableFieldPage.new(27);
+var pWPT   = EditableFieldPage.new(28);
+var pHARM  = EditableFieldPage.new(29);
 
-var Actions = {
-	Tacan: {
-		mSel: Action.new(pTACAN, toggleTACANBand),
-	},
-	Time: {
-		toggleHack: Action.new(pTIME, toggleHack),
-		resetHack: Action.new(pTIME, resetHack),
-	},
-	Mark: {
-		mSel: Action.new(pMARK, modeSelMark),
-	},	
-	Fix: {
-		mSel: Action.new(pFIX, modeSelFix),
-	},	
-	Acal: {
-		mSel: Action.new(pACAL, modeSelAcal),
-	},	
-	Bullseye: {
-		mSel: Action.new(pBULL, modeSelBull),
-	},
-	stptNext: Action.new(nil, stptNext),
-	stptLast: Action.new(nil, stptLast),
-};
-
-var Routers = {
-	tacanRouter: Router.new(pCNI, pTACAN),
-	alowRouter: Router.new(pCNI, pALOW),
-	fackRouter: Router.new(pCNI, pFACK),
-	stptRouter: Router.new(pCNI, pSTPT),
-	crusRouter: Router.new(pCNI, pCRUS),
-	timeRouter: Router.new(pCNI, pTIME),
-	fixRouter: Router.new(pCNI, pFIX),
-	markRouter: Router.new(pCNI, pMARK),
-	acalRouter: Router.new(pCNI, pACAL),
-	List: {
-		destRouter: Router.new(pLIST, pDEST),
-		bingoRouter: Router.new(pLIST, pBINGO),
-		navRouter: Router.new(pLIST, pNAV),
-		manRouter: Router.new(pLIST, pMAN),
-		insRouter: Router.new(pLIST, pINS),
-		ewsRouter: Router.new(pLIST, pEWS),
-		intgRouter: Router.new(pLIST, pINTG),
-		dlnkRouter: Router.new(pLIST, pDLNK),
-		modeRouter: Router.new(pLIST, pMODE),
-		miscRouter: Router.new(pLIST, pMISC),
-	},
-	Misc: {
-		magvRouter: Router.new(pMISC, pMAGV),
-		ofpRouter: Router.new(pMISC, pOFP),
-		insmRouter: Router.new(pMISC, pINSM),
-		laserRouter: Router.new(pMISC, pLASR),
-		gpsRouter: Router.new(pMISC, pGPS),
-		bullRouter: Router.new(pMISC, pBULL),
-	},
-	comm1Router: Router.new(nil, pCOMM1),
-	comm2Router: Router.new(nil, pCOMM2),
-	iffRouter: Router.new(nil, pIFF),
-	listRouter: Router.new(nil, pLIST),
-};
-
-var RouterVectors = {
-	button1: [Routers.List.destRouter, Routers.tacanRouter],
-	button2: [Routers.List.bingoRouter, Routers.Misc.magvRouter,Routers.alowRouter],
-	button3: [Routers.Misc.ofpRouter,Routers.fackRouter],
-	button4: [Routers.List.navRouter,Routers.Misc.insmRouter, Routers.stptRouter],
-	button5: [Routers.List.manRouter,Routers.Misc.laserRouter, Routers.crusRouter],
-	button6: [Routers.List.insRouter,Routers.Misc.gpsRouter, Routers.timeRouter],
-	button7: [Routers.List.ewsRouter, Routers.markRouter],
-	button8: [Routers.List.modeRouter,Routers.Misc.bullRouter, Routers.fixRouter],
-	button9: [Routers.acalRouter],
-	button0: [Routers.List.miscRouter],
-	buttonComm1: [Routers.comm1Router],
-	buttonComm2: [Routers.comm2Router],
-	buttonIFF: [Routers.iffRouter],
-	buttonList: [Routers.listRouter],
-	buttonEnter: [Routers.List.dlnkRouter],
-	buttonRecall: [Routers.List.intgRouter],
-};
-
-var ActionVectors = {
-	button1: [],
-	button2: [],
-	button3: [],
-	button4: [],
-	button5: [],
-	button6: [],
-	button7: [],
-	button8: [],
-	button9: [],
-	button0: [Actions.Bullseye.mSel,Actions.Tacan.mSel,Actions.Mark.mSel,Actions.Fix.mSel,Actions.Acal.mSel],
-	buttonup: [Actions.Time.toggleHack, Actions.stptNext],
-	buttondown: [Actions.Time.resetHack,  Actions.stptLast],
-};
-
-var Buttons = {
-	button1: Button.new(routerVec: RouterVectors.button1, To9: 1),
-	button2: Button.new(routerVec: RouterVectors.button2, To9: 1),
-	button3: Button.new(routerVec: RouterVectors.button3, To9: 1),
-	button4: Button.new(routerVec: RouterVectors.button4, To9: 1),
-	button5: Button.new(routerVec: RouterVectors.button5, To9: 1),
-	button6: Button.new(routerVec: RouterVectors.button6, To9: 1),
-	button7: Button.new(routerVec: RouterVectors.button7, To9: 1),
-	button8: Button.new(routerVec: RouterVectors.button8, To9: 1),
-	button9: Button.new(routerVec: RouterVectors.button9, To9: 1),
-	button0: Button.new(actionVec: ActionVectors.button0, routerVec: RouterVectors.button0),
-	buttoncomm1: Button.new(routerVec: RouterVectors.buttonComm1),
-	buttoncomm2: Button.new(routerVec: RouterVectors.buttonComm2),
-	buttoniff: Button.new(routerVec: RouterVectors.buttonIFF),
-	buttonlist: Button.new(routerVec: RouterVectors.buttonList),
-	buttonup: Button.new(actionVec: ActionVectors.buttonup),
-	buttondown: Button.new(actionVec: ActionVectors.buttondown),
-	entr: Button.new(routerVec: RouterVectors.buttonEnter),
-	rcl: Button.new(routerVec: RouterVectors.buttonRecall),
-};
+var pCNI   = EditableFieldPage.new(30);
+var pCOMM1 = EditableFieldPage.new(31);
+var pCOMM2 = EditableFieldPage.new(32);
+var pIFF   = EditableFieldPage.new(33);
 
 var dataEntryDisplay = {
 	line1: nil,
@@ -166,7 +54,7 @@ var dataEntryDisplay = {
 	text: ["","","","",""],
 	scroll: 0,
 	scrollF: 0,
-	page: 30,
+	page: pCNI,
 	init: func() {
 		me.canvasNode = canvas.new({
 			"name": "DED",
@@ -569,10 +457,9 @@ var dataEntryDisplay = {
 	},
 	
 	updateBingo: func() {
-		var bingo = getprop("f16/settings/bingo");
 		me.text[0] = sprintf("        BINGO       %s  ",me.no);
 		me.text[1] = sprintf("                        ");
-		me.text[2] = sprintf("    SET    %5dLBS      ",bingo);
+		me.text[2] = sprintf("    SET    %sLBS  ",pBINGO.vector[0].getText());
 		me.text[3] = sprintf("  TOTAL    %5dLBS      ",getprop("consumables/fuel/total-fuel-lbs"));
 		me.text[4] = sprintf("                        ");
 	},
@@ -840,6 +727,125 @@ var dataEntryDisplay = {
 		me.text[3] = sprintf("PILOT   %s",sign);
 		me.text[4] = sprintf("TYPE    %s",type);
 	},
+};
+
+var Actions = {
+	Tacan: {
+		mSel: Action.new(pTACAN, toggleTACANBand),
+	},
+	Time: {
+		toggleHack: Action.new(pTIME, toggleHack),
+		resetHack: Action.new(pTIME, resetHack),
+	},
+	Mark: {
+		mSel: Action.new(pMARK, modeSelMark),
+	},	
+	Fix: {
+		mSel: Action.new(pFIX, modeSelFix),
+	},	
+	Acal: {
+		mSel: Action.new(pACAL, modeSelAcal),
+	},	
+	Bullseye: {
+		mSel: Action.new(pBULL, modeSelBull),
+	},
+	enter: Action.new(nil, dataEntryDisplay.page.enter),
+	recall: Action.new(nil, dataEntryDisplay.page.recall),
+	stptNext: Action.new(nil, stptNext),
+	stptLast: Action.new(nil, stptLast),
+};
+
+var Routers = {
+	tacanRouter: Router.new(pCNI, pTACAN),
+	alowRouter: Router.new(pCNI, pALOW),
+	fackRouter: Router.new(pCNI, pFACK),
+	stptRouter: Router.new(pCNI, pSTPT),
+	crusRouter: Router.new(pCNI, pCRUS),
+	timeRouter: Router.new(pCNI, pTIME),
+	fixRouter: Router.new(pCNI, pFIX),
+	markRouter: Router.new(pCNI, pMARK),
+	acalRouter: Router.new(pCNI, pACAL),
+	List: {
+		destRouter: Router.new(pLIST, pDEST),
+		bingoRouter: Router.new(pLIST, pBINGO),
+		navRouter: Router.new(pLIST, pNAV),
+		manRouter: Router.new(pLIST, pMAN),
+		insRouter: Router.new(pLIST, pINS),
+		ewsRouter: Router.new(pLIST, pEWS),
+		intgRouter: Router.new(pLIST, pINTG),
+		dlnkRouter: Router.new(pLIST, pDLNK),
+		modeRouter: Router.new(pLIST, pMODE),
+		miscRouter: Router.new(pLIST, pMISC),
+	},
+	Misc: {
+		magvRouter: Router.new(pMISC, pMAGV),
+		ofpRouter: Router.new(pMISC, pOFP),
+		insmRouter: Router.new(pMISC, pINSM),
+		laserRouter: Router.new(pMISC, pLASR),
+		gpsRouter: Router.new(pMISC, pGPS),
+		bullRouter: Router.new(pMISC, pBULL),
+	},
+	comm1Router: Router.new(nil, pCOMM1),
+	comm2Router: Router.new(nil, pCOMM2),
+	iffRouter: Router.new(nil, pIFF),
+	listRouter: Router.new(nil, pLIST),
+};
+
+var RouterVectors = {
+	button1: [Routers.List.destRouter, Routers.tacanRouter],
+	button2: [Routers.List.bingoRouter, Routers.Misc.magvRouter,Routers.alowRouter],
+	button3: [Routers.Misc.ofpRouter,Routers.fackRouter],
+	button4: [Routers.List.navRouter,Routers.Misc.insmRouter, Routers.stptRouter],
+	button5: [Routers.List.manRouter,Routers.Misc.laserRouter, Routers.crusRouter],
+	button6: [Routers.List.insRouter,Routers.Misc.gpsRouter, Routers.timeRouter],
+	button7: [Routers.List.ewsRouter, Routers.markRouter],
+	button8: [Routers.List.modeRouter,Routers.Misc.bullRouter, Routers.fixRouter],
+	button9: [Routers.acalRouter],
+	button0: [Routers.List.miscRouter],
+	buttonComm1: [Routers.comm1Router],
+	buttonComm2: [Routers.comm2Router],
+	buttonIFF: [Routers.iffRouter],
+	buttonList: [Routers.listRouter],
+	buttonEnter: [Routers.List.dlnkRouter],
+	buttonRecall: [Routers.List.intgRouter],
+};
+
+var ActionVectors = {
+	button1: [],
+	button2: [],
+	button3: [],
+	button4: [],
+	button5: [],
+	button6: [],
+	button7: [],
+	button8: [],
+	button9: [],
+	button0: [Actions.Bullseye.mSel,Actions.Tacan.mSel,Actions.Mark.mSel,Actions.Fix.mSel,Actions.Acal.mSel],
+	buttonup: [Actions.Time.toggleHack, Actions.stptNext],
+	buttondown: [Actions.Time.resetHack,  Actions.stptLast],
+	buttonEnter: [Actions.enter],
+	buttonRecall: [Actions.recall],
+};
+
+var Buttons = {
+	button1: Button.new(btnText: "1", routerVec: RouterVectors.button1, To9: 1),
+	button2: Button.new(btnText: "2", routerVec: RouterVectors.button2, To9: 1),
+	button3: Button.new(btnText: "3", routerVec: RouterVectors.button3, To9: 1),
+	button4: Button.new(btnText: "4", routerVec: RouterVectors.button4, To9: 1),
+	button5: Button.new(btnText: "5", routerVec: RouterVectors.button5, To9: 1),
+	button6: Button.new(btnText: "6", routerVec: RouterVectors.button6, To9: 1),
+	button7: Button.new(btnText: "7", routerVec: RouterVectors.button7, To9: 1),
+	button8: Button.new(btnText: "8", routerVec: RouterVectors.button8, To9: 1),
+	button9: Button.new(btnText: "9", routerVec: RouterVectors.button9, To9: 1),
+	button0: Button.new(btnText: "0", actionVec: ActionVectors.button0, routerVec: RouterVectors.button0),
+	buttoncomm1: Button.new(routerVec: RouterVectors.buttonComm1),
+	buttoncomm2: Button.new(routerVec: RouterVectors.buttonComm2),
+	buttoniff: Button.new(routerVec: RouterVectors.buttonIFF),
+	buttonlist: Button.new(routerVec: RouterVectors.buttonList),
+	buttonup: Button.new(actionVec: ActionVectors.buttonup),
+	buttondown: Button.new(actionVec: ActionVectors.buttondown),
+	entr: Button.new(actionVec: ActionVectors.buttonEnter, routerVec: RouterVectors.buttonEnter),
+	rcl: Button.new(actionVec: ActionVectors.buttonRecall, routerVec: RouterVectors.buttonRecall),
 };
 
 setlistener("f16/avionics/rtn-seq", func() {
