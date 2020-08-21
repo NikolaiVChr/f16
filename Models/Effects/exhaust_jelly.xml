@@ -63,7 +63,7 @@
       <particles-per-sec>
         <property>sim/multiplay/generic/short[5]</property><!-- N1 -->
         <factor>3</factor>
-        <spread>20</spread>
+        <spread>25</spread>
       </particles-per-sec>
     </counter>
 
@@ -136,7 +136,7 @@
                     </alpha>
                 </color>
                 <size>
-                    <value>15.0</value>
+                    <value>20.0</value>
                 </size>
             </end>
 

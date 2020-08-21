@@ -25,7 +25,7 @@
         </equals>
         <greater-than>
           <property>sim/multiplay/generic/short[6]</property><!-- N2 -->
-          <value>96</value>
+          <value>96.5</value>
         </greater-than>
         <greater-than>
           <property>/environment/temperature-degc</property>
