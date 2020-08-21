@@ -1,5 +1,5 @@
 # Setup editable pages:
-var bingoEF = EditableField.new("f16/settings/bingo", "%-d");
+var bingoEF = EditableField.new("f16/settings/bingo", "%-d", 5);
 
 var pTACAN = EditableFieldPage.new(0);
 var pALOW  = EditableFieldPage.new(1);
@@ -849,6 +849,14 @@ var Buttons = {
 };
 
 setlistener("f16/avionics/rtn-seq", func() {
+	if (size(dataEntryDisplay.page.vector) != 0) {
+		if (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 != "") {
+			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].recallStatus = 0;
+			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].text = dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2;
+			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText1 = "";
+			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 = "";
+		}
+	}
 	if (getprop("f16/avionics/rtn-seq") == -1) {
 		dataEntryDisplay.page = pCNI;
 	} elsif (getprop("f16/avionics/rtn-seq") == 1) {

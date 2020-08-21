@@ -45,7 +45,8 @@ var Button = {
 					return;
 				}
 			}
-				
+		}
+		if (me.To9 or me.btnText == "0") {
 			if (size(dataEntryDisplay.page.vector) != 0) {
 				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].append(me.btnText);
 				return;
@@ -61,6 +62,14 @@ var Button = {
 		if (me.routerVec != nil) {
 			foreach (var router; me.routerVec) {
 				if (router.run() != -1) {
+					if (size(dataEntryDisplay.page.vector) != 0) {
+						if (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 != "") {
+							dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].recallStatus = 0;
+							dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].text = dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2;
+							dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText1 = "";
+							dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 = "";
+						}
+					}
 					return;
 				}
 			}
@@ -85,10 +94,11 @@ var Action = {
 };
 
 var EditableField = {
-	new: func(prop, stringFormat) {
+	new: func(prop, stringFormat, maxSize) {
 		var editableField = {parents: [EditableField]};
 		editableField.text = getprop(prop);
 		editableField.prop = prop;
+		editableField.maxSize = maxSize;
 		editableField.stringFormat = stringFormat;
 		editableField.lastText1 = "";
 		editableField.lastText2 = "";
@@ -101,6 +111,7 @@ var EditableField = {
 			me.lastText2 = me.text;
 			me.text = "";
 		}
+		if (size(me.text) == me.maxSize) { return; }
 		me.lastText1 = me.text;
 		me.text = me.text ~ letter;
 	},
