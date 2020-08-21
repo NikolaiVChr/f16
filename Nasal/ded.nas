@@ -1,7 +1,10 @@
 # Setup editable pages:
 var bingoEF = EditableField.new("f16/settings/bingo", "%-d", 5);
+var tacanChanEF = EditableField.new("instrumentation/tacan/frequencies/selected-channel", "%-3d", 3);
+var ilsFrqEF = EditableField.new("instrumentation/nav[0]/frequencies/selected-mhz", "%6.2f", 3);
+var ilsCrsEF = EditableField.new("f16/crs-ils", "%03.0f", 3);
 
-var pTACAN = EditableFieldPage.new(0);
+var pTACAN = EditableFieldPage.new(0, [tacanChanEF,ilsFrqEF,ilsCrsEF]);
 var pALOW  = EditableFieldPage.new(1);
 var pFACK  = EditableFieldPage.new(2);
 var pSTPT  = EditableFieldPage.new(3);
@@ -192,8 +195,8 @@ var dataEntryDisplay = {
 			me.text[2] = sprintf("BCN %s        CMD STRG ", ident);
 		}
 		
-		me.text[3] = sprintf("CHAN %-3d    FRQ  %6.2f",getprop("instrumentation/tacan/frequencies/selected-channel"),getprop("instrumentation/nav[0]/frequencies/selected-mhz"));
-		me.text[4] = sprintf("BAND %s(0)   CRS  %03.0f\xc2\xb0",getprop("instrumentation/tacan/frequencies/selected-channel[4]"),getprop("f16/crs-ils"));
+		me.text[3] = sprintf("CHAN %s    FRQ  %s",pTACAN.vector[0].getText(),pTACAN.vector[1].getText());
+		me.text[4] = sprintf("BAND %s(0)   CRS  %s\xc2\xb0",getprop("instrumentation/tacan/frequencies/selected-channel[4]"),pTACAN.vector[2].getText());
 	},
 	
 	updateAlow: func() {
@@ -849,15 +852,15 @@ var Buttons = {
 };
 
 setlistener("f16/avionics/rtn-seq", func() {
-	if (size(dataEntryDisplay.page.vector) != 0) {
-		if (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 != "") {
-			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].recallStatus = 0;
-			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].text = dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2;
-			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText1 = "";
-			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 = "";
-		}
-	}
 	if (getprop("f16/avionics/rtn-seq") == -1) {
+		if (size(dataEntryDisplay.page.vector) != 0) {
+			if (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 != "") {
+				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].recallStatus = 0;
+				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].text = dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2;
+				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText1 = "";
+				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 = "";
+			}
+		}
 		dataEntryDisplay.page = pCNI;
 	} elsif (getprop("f16/avionics/rtn-seq") == 1) {
 		if (dataEntryDisplay.page == pCNI) {

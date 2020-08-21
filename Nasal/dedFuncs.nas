@@ -104,7 +104,16 @@ var EditableField = {
 		editableField.lastText2 = "";
 		editableField.recallStatus = 0;
 		editableField.selected = 0;
+		editableField.listener = nil;
+		editableField.init();
 		return editableField;
+	},
+	init: func() {
+		if (me.listener == nil) {
+			me.listener = setlistener(me.prop, func() {
+				me.setText(getprop(me.prop));
+			}, 0, 0);
+		}
 	},
 	append: func(letter) {
 		if (me.lastText2 == "") {
