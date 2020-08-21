@@ -186,6 +186,14 @@ var EditableFieldPage = {
 		}
 		me.vector[me.index].selected = 1;
 	},
+	getPrev: func() {
+		me.vector[me.index].selected = 0;
+		me.index -= 1;
+		if (me.index == -1) {
+			me.index = size(me.vector) - 1;
+		}
+		me.vector[me.index].selected = 1;
+	},
 	append: func(letter) {
 		me.vector[me.index].append(letter);
 	},
