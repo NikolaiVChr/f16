@@ -920,3 +920,20 @@ setlistener("f16/avionics/rtn-seq", func() {
 		}
 	}
 }, 0, 0);
+
+setlistener("f16/avionics/ded-up-down", func() {
+	if (size(dataEntryDisplay.page.vector) != 0) {
+		if (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 != "") {
+			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].recallStatus = 0;
+			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].text = dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2;
+			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText1 = "";
+			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 = "";
+		}
+	}
+	
+	if (getprop("f16/avionics/ded-up-down") == -1) {
+		dataEntryDisplay.page.getNext();
+	} elsif (getprop("f16/avionics/ded-up-down") == 1) {
+		dataEntryDisplay.page.getPrev();
+	}
+}, 0, 0);

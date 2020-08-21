@@ -5,7 +5,7 @@ MATERIAL "ac3dmat1.001" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0 0 0  shi 0  tra
 OBJECT world
 kids 11
 OBJECT poly
-name "down"
+name "downDED"
 loc 0.000481025 -0.0264651 0.0313856
 data 8
 Mesh.008
@@ -25,7 +25,7 @@ refs 4
 0 1 0
 kids 0
 OBJECT poly
-name "up"
+name "upDED"
 loc 0.000481025 -0.0143258 0.0313424
 data 8
 Mesh.008

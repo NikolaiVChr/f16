@@ -631,7 +631,7 @@
         <type>rotate</type>
         <object-name>rtn_seq</object-name>
         <property>f16/avionics/ded-up-down</property>
-        <factor>30</factor>
+        <factor>-30</factor>
         <offset-deg>0</offset-deg>
         <center>
             <x-m>  -0.000881 </x-m>
@@ -647,7 +647,7 @@
 	
 	<animation>
         <type>pick</type>
-        <object-name>up</object-name>
+        <object-name>upDED</object-name>
 		<action>
 			<button>0</button>
 			<binding>
@@ -673,7 +673,7 @@
 	
 	<animation>
         <type>pick</type>
-        <object-name>down</object-name>
+        <object-name>downDED</object-name>
 		<action>
 			<button>0</button>
 			<binding>
