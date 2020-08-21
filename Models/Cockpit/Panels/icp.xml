@@ -586,12 +586,12 @@
         </axis>
         <increase>
             <binding>
-				<!--<condition>
+				<condition>
 					<equals>
 						<property>f16/avionics/ded-up-down</property>
 						<value>0</value>
 					</equals>
-				</condition>-->
+				</condition>
                 <command>property-adjust</command>
                 <property>f16/avionics/rtn-seq</property>
                 <factor>1</factor>
@@ -603,12 +603,12 @@
         </increase>
         <decrease>
             <binding>
-				<!--<condition>
+				<condition>
 					<equals>
 						<property>f16/avionics/ded-up-down</property>
 						<value>0</value>
 					</equals>
-				</condition>-->
+				</condition>
                 <command>property-adjust</command>
                 <property>f16/avionics/rtn-seq</property>
                 <factor>1</factor>
@@ -627,12 +627,10 @@
 		</release>
     </animation>
 	
-	<!--<animation>
-        <type>knob</type>
+	<animation>
+        <type>rotate</type>
         <object-name>rtn_seq</object-name>
         <property>f16/avionics/ded-up-down</property>
-        <drag-direction>vertical</drag-direction>
-        <drag-scale-px>10</drag-scale-px>
         <factor>30</factor>
         <offset-deg>0</offset-deg>
         <center>
@@ -645,48 +643,59 @@
             <y> 1.0 </y>
             <z> 0.0 </z>
         </axis>
-        <increase>
-            <binding>
+	</animation>
+	
+	<animation>
+        <type>pick</type>
+        <object-name>up</object-name>
+		<action>
+			<button>0</button>
+			<binding>
 				<condition>
 					<equals>
 						<property>f16/avionics/rtn-seq</property>
 						<value>0</value>
 					</equals>
 				</condition>
-                <command>property-adjust</command>
-                <property>f16/avionics/ded-up-down</property>
-                <factor>1</factor>
-                <step>1</step>
-                <min>-1</min>
-                <max>1</max>
-                <wrap>false</wrap>
-            </binding>
-        </increase>
-        <decrease>
-            <binding>
+				<command>property-assign</command>
+				<property>f16/avionics/ded-up-down</property>
+				<value>1</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>f16/avionics/ded-up-down</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+	</animation>
+	
+	<animation>
+        <type>pick</type>
+        <object-name>down</object-name>
+		<action>
+			<button>0</button>
+			<binding>
 				<condition>
 					<equals>
 						<property>f16/avionics/rtn-seq</property>
 						<value>0</value>
 					</equals>
 				</condition>
-                <command>property-adjust</command>
-                <property>f16/avionics/ded-up-down</property>
-                <factor>1</factor>
-                <step>-1</step>
-                <min>-1</min>
-                <max>1</max>
-                <wrap>false</wrap>
-            </binding>
-        </decrease>
-		<release>
-			 <binding>
-                <command>property-assign</command>
-                <property>f16/avionics/ded-up-down</property>
-                <value>0</value>
-            </binding>
-		</release>
-    </animation>-->
+				<command>property-assign</command>
+				<property>f16/avionics/ded-up-down</property>
+				<value>-1</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>f16/avionics/ded-up-down</property>
+					<value>0</value>
+				</binding>
+			</mod-up>
+		</action>
+	</animation>
     
     <animation>
         <object-name>DED_panel</object-name>
