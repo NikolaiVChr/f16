@@ -1,7 +1,7 @@
 # Setup editable pages:
 var bingoEF = EditableField.new("f16/settings/bingo", "%-d", 5);
 var tacanChanEF = EditableField.new("instrumentation/tacan/frequencies/selected-channel", "%-3d", 3);
-var ilsFrqEF = EditableField.new("instrumentation/nav[0]/frequencies/selected-mhz", "%6.2f", 3);
+var ilsFrqEF = EditableField.new("instrumentation/nav[0]/frequencies/selected-mhz", "%6.2f", 5);
 var ilsCrsEF = EditableField.new("f16/crs-ils", "%3.0f", 3);
 
 var pTACAN = EditableFieldPage.new(0, [tacanChanEF,ilsFrqEF,ilsCrsEF]);
@@ -677,7 +677,7 @@ var dataEntryDisplay = {
 		} else {
 			me.text[1] = sprintf("                ");
 		}
-		me.text[2] = sprintf("VHF   %5.2f        %s",getprop("/instrumentation/comm[1]/frequencies/selected-mhz"), getprop("/sim/time/gmt-string"));
+		me.text[2] = sprintf("VHF   %5.2f    %s",getprop("/instrumentation/comm[1]/frequencies/selected-mhz"), getprop("/sim/time/gmt-string"));
 		if (me.chrono.running) {
 			var hackHour = int(getprop("f16/avionics/hack/elapsed-time-sec") / 3600);
 			var hackMin = int((getprop("f16/avionics/hack/elapsed-time-sec") - (hackHour * 3600)) / 60);

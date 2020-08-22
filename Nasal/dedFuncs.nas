@@ -179,6 +179,7 @@ var EditableFieldPage = {
 		}
 	},
 	getNext: func() {
+		if (size(me.vector) < 2) { return; }
 		me.vector[me.index].selected = 0;
 		me.index += 1;
 		if (me.index == size(me.vector)) {
@@ -187,6 +188,7 @@ var EditableFieldPage = {
 		me.vector[me.index].selected = 1;
 	},
 	getPrev: func() {
+		if (size(me.vector) < 2) { return; }
 		me.vector[me.index].selected = 0;
 		me.index -= 1;
 		if (me.index == -1) {
