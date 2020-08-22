@@ -1,7 +1,7 @@
 # Setup editable pages:
 var bingoEF = EditableField.new("f16/settings/bingo", "%-d", 5);
 var tacanChanEF = EditableField.new("instrumentation/tacan/frequencies/selected-channel", "%-3d", 3);
-var ilsFrqEF = EditableField.new("instrumentation/nav[0]/frequencies/selected-mhz", "%6.2f", 5);
+var ilsFrqEF = EditableField.new("instrumentation/nav[0]/frequencies/selected-mhz", "%6.2f", 6);
 var ilsCrsEF = EditableField.new("f16/crs-ils", "%3.0f", 3);
 
 var pTACAN = EditableFieldPage.new(0, [tacanChanEF,ilsFrqEF,ilsCrsEF]);
@@ -178,7 +178,7 @@ var dataEntryDisplay = {
 		me.line4.setText(me.text[3]);
 		me.line5.setText(me.text[4]);
 		
-		settimer(func() { me.update(); }, 0.5);
+		settimer(func() { me.update(); }, 0.25);
 	},
 	
 	tacanMode: "REC    ",
@@ -792,6 +792,10 @@ var Routers = {
 	comm2Router: Router.new(nil, pCOMM2),
 	iffRouter: Router.new(nil, pIFF),
 	listRouter: Router.new(nil, pLIST),
+	comm1Router2: Router.new(pCOMM1, pCNI),
+	comm2Router2: Router.new(pCOMM2, pCNI),
+	iffRouter2: Router.new(pIFF, pCNI),
+	listRouter2: Router.new(pLIST, pCNI),
 };
 
 var RouterVectors = {
@@ -805,10 +809,10 @@ var RouterVectors = {
 	button8: [Routers.List.modeRouter,Routers.Misc.bullRouter, Routers.fixRouter],
 	button9: [Routers.acalRouter],
 	button0: [Routers.List.miscRouter],
-	buttonComm1: [Routers.comm1Router],
-	buttonComm2: [Routers.comm2Router],
-	buttonIFF: [Routers.iffRouter],
-	buttonList: [Routers.listRouter],
+	buttonComm1: [Routers.comm1Router2,Routers.comm1Router],
+	buttonComm2: [Routers.comm2Router2,Routers.comm2Router],
+	buttonIFF: [Routers.iffRouter2,Routers.iffRouter],
+	buttonList: [Routers.listRouter2, Routers.listRouter],
 	buttonEnter: [Routers.List.dlnkRouter],
 	buttonRecall: [Routers.List.intgRouter],
 };
