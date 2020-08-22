@@ -195,7 +195,7 @@ var dataEntryDisplay = {
 			me.text[2] = sprintf("BCN %s        CMD STRG ", ident);
 		}
 		
-		me.text[3] = sprintf("CHAN %s    FRQ  %s",pTACAN.vector[0].getText(),pTACAN.vector[1].getText());
+		me.text[3] = sprintf("CHAN %s  FRQ  %s",pTACAN.vector[0].getText(),pTACAN.vector[1].getText());
 		me.text[4] = sprintf("BAND %s(0)   CRS  %s\xc2\xb0",getprop("instrumentation/tacan/frequencies/selected-channel[4]"),pTACAN.vector[2].getText());
 	},
 	

@@ -116,13 +116,24 @@ var EditableField = {
 		}
 	},
 	append: func(letter) {
+		# check decimal
+		var numBeforeDecimal = -99;
+		var numDecimalPlaces = -99;
+		if (find(".", me.stringFormat) != -1) {
+			var string = split(".", me.stringFormat);
+			numBeforeDecimal = substr(string[0], 1) - (left(string[1], 1) + 1);
+			numDecimalPlaces = string[1];
+		}
 		if (me.lastText2 == "") {
 			me.lastText2 = me.text;
 			me.text = "";
 		}
 		if (size(me.text) == me.maxSize) { return; }
 		me.lastText1 = me.text;
-		me.text = me.text ~ letter;
+		if (size(me.text) == numBeforeDecimal) {
+			me.text ~= ".";
+		}
+		me.text ~= letter;
 	},
 	recall: func() {
 		if (me.recallStatus == 0) {
