@@ -208,18 +208,23 @@ var EditableFieldPage = {
 		me.vector[me.index].selected = 1;
 	},
 	append: func(letter) {
+		if (size(me.vector) == 0) { return; }
 		me.vector[me.index].append(letter);
 	},
 	enter: func() {
+		if (size(me.vector) == 0) { return; }
 		me.vector[me.index].enter();
 	},
 	recall: func() {
+		if (size(me.vector) == 0) { return; }
 		me.vector[me.index].recall();
 	},
 	getText: func(index) {
+		if (size(me.vector) == 0) { return; }
 		return me.vector[index].getText();
 	},
 	isSelected: func(index) {
+		if (size(me.vector) == 0) { return; }
 		return me.vector[index].selected;
 	},
 	selectedIndex: func() {
