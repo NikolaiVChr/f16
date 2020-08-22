@@ -2,7 +2,7 @@
 var bingoEF = EditableField.new("f16/settings/bingo", "%-d", 5);
 var tacanChanEF = EditableField.new("instrumentation/tacan/frequencies/selected-channel", "%-3d", 3);
 var ilsFrqEF = EditableField.new("instrumentation/nav[0]/frequencies/selected-mhz", "%6.2f", 3);
-var ilsCrsEF = EditableField.new("f16/crs-ils", "%03.0f", 3);
+var ilsCrsEF = EditableField.new("f16/crs-ils", "%3.0f", 3);
 
 var pTACAN = EditableFieldPage.new(0, [tacanChanEF,ilsFrqEF,ilsCrsEF]);
 var pALOW  = EditableFieldPage.new(1);

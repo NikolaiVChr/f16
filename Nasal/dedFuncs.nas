@@ -147,9 +147,9 @@ var EditableField = {
 	},
 	getText: func() {
 		if (me.selected) {
-			return "*" ~ sprintf(me.text,me.stringFormat) ~ "*";
+			return sprintf("*" ~ me.stringFormat ~ "*", me.text);
 		} else {
-			return " " ~ sprintf(me.text,me.stringFormat) ~ " ";
+			return sprintf(" " ~ me.stringFormat ~ " ", me.text);
 		}
 	},
 	setText: func(text) {
