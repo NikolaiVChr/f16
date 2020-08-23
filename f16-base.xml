@@ -1324,7 +1324,7 @@ There is also small changes in tail for different variants with and without brak
                             setprop("instrumentation/radar/ho-field-std", getprop("instrumentation/radar/ho-field"));
                             setprop("instrumentation/radar/az-field", 30);
                             setprop("instrumentation/radar/ho-field", 20);
-                            ded.page = ded.pCM;
+                            ded.page = ded.pEWS;
                             f16.f16_mfd.MFDl.PFD.selectPage(f16.f16_mfd.MFDl.p_RDR);
                             f16.f16_mfd.MFDr.PFD.selectPage(f16.f16_mfd.MFDr.p_WPN);
                         } else {
