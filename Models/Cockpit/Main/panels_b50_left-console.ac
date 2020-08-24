@@ -11868,7 +11868,7 @@ refs 4
 3 0.090349 0.992819
 kids 0
 OBJECT poly
-name "SW_LE_FLAPS_50"
+name "SW_ALT_FLAPS_50"
 loc 0.0215209 0 0.170361
 data 25
 hud-displ-switch.mesh.002
