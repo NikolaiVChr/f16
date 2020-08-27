@@ -815,6 +815,89 @@ var batteryChargeDischarge = func {
     }
 }
 
+
+var flexer = func {
+  # this function needs to become optimized using Nodes
+  if (getprop("sim/multiplay/generic/float[5]")!=nil) {
+    setprop("surface-positions/leftrad", getprop("sim/multiplay/generic/float[5]")*20*D2R);  
+    setprop("surface-positions/leftrad2", -getprop("surface-positions/left-aileron-pos-norm")*21.5*D2R);  
+    setprop("surface-positions/rightrad", getprop("sim/multiplay/generic/float[6]")*20*D2R);  
+    setprop("surface-positions/rightrad2", getprop("surface-positions/right-aileron-pos-norm")*21.5*D2R);  
+    setprop("surface-positions/radlefr", getprop("fdm/jsbsim/fcs/lef-pos-deg")*D2R);
+    setprop("surface-positions/radlefl", -getprop("fdm/jsbsim/fcs/lef-pos-deg")*D2R);
+
+    var wingcontent = 0;
+    if (getprop("consumables/fuel/tank[1]/level-kg")!=nil) {
+      wingcontent += getprop("consumables/fuel/tank[1]/level-kg");
+    }
+    if (getprop("consumables/fuel/tank[2]/level-kg")!=nil) {
+      wingcontent += getprop("consumables/fuel/tank[2]/level-kg");
+    }
+    if (getprop("payload/weight[0]/weight-lb") !=nil
+        and getprop("payload/weight[1]/weight-lb") !=nil 
+        and getprop("payload/weight[2]/weight-lb") !=nil 
+        and getprop("payload/weight[3]/weight-lb") !=nil 
+        and getprop("payload/weight[7]/weight-lb") !=nil 
+        and getprop("payload/weight[8]/weight-lb") !=nil 
+        and getprop("payload/weight[9]/weight-lb") !=nil 
+        and getprop("payload/weight[10]/weight-lb") !=nil ) {
+      setprop("f16/wings/fuel-and-stores-kg", 
+      (getprop("payload/weight[0]/weight-lb")
+      +getprop("payload/weight[1]/weight-lb")
+      +getprop("payload/weight[2]/weight-lb")
+      +getprop("payload/weight[3]/weight-lb")
+      +getprop("payload/weight[7]/weight-lb")
+      +getprop("payload/weight[8]/weight-lb")
+      +getprop("payload/weight[9]/weight-lb")
+      +getprop("payload/weight[10]/weight-lb"))*LBM2KG
+      +wingcontent);
+    } elsif (getprop("payload/weight[0]/weight-lb") !=nil
+        and getprop("payload/weight[1]/weight-lb") !=nil) {
+      # for prototype
+      setprop("f16/wings/fuel-and-stores-kg", (getprop("payload/weight[0]/weight-lb")+getprop("payload/weight[1]/weight-lb"))*LBM2KG+wingcontent);
+    }
+    #setprop("f16/wings/fuel-and-stores-kg", ground*(getprop("f16/wings/fuel-and-stores-kg-a")));
+    
+    # since the wingflexer works wrong in air we make the wing more stiff in air:
+    #if (ground) {
+      #setprop("sim/systems/wingflexer/params/K",250);
+    #} else {
+      #setprop("sim/systems/wingflexer/params/K",2500);
+    #}
+  }
+  #setprop("f16/wings/normal-lbf", -getprop("fdm/jsbsim/aero/coefficient/force/Z_t-lbf"));
+  
+  var errors = [];
+  call(func {var z = getprop("sim/systems/wingflexer/z-m");
+      #var max2 = (9.2-2.84)*0.5;
+      #max2 = max2 * max2;
+      setprop("sim/systems/wingflexer/NaN", z);# this line will fail if NaN, so that an error is raised.
+      #setprop("sim/systems/wingflexer/z-m-tip",z);
+      #setprop("sim/systems/wingflexer/z-m-outer", z*((3.70-1.42)*(3.70-1.42))/(max2));
+      #setprop("sim/systems/wingflexer/z-m-middle",z*((2.88-1.42)*(2.88-1.42))/(max2));
+      #setprop("sim/systems/wingflexer/z-m-inner", z*((1.63-1.42)*(1.63-1.42))/(max2));
+      },nil,nil, errors);
+  if (size(errors)) {
+    fgcommand('reinit', props.Node.new({ subsystem: "xml-autopilot" }));
+  }
+  #if (getprop("/sim/frame-rate-worst")<12) {
+  #  setprop("/sim/systems/property-rule[100]/serviceable",0);
+  #  setprop("sim/systems/wingflexer/z-m",0);
+  #} else {
+  #  setprop("/sim/systems/property-rule[100]/serviceable",1);
+  #}
+  
+  var mach = getprop("velocities/mach") >= 1;
+  var cam = getprop("sim/current-view/name");
+  var still = cam == "Fly-By View" or cam == "Tower View" or cam == "Tower View Look From";
+  var nofrontsound = still and mach;
+  
+  setprop("f16/sound/front-on", !nofrontsound);
+  setprop("f16/sound/front-off", nofrontsound);
+    
+  settimer(flexer,0);
+}
+
 var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
   if (getprop("sim/signals/fdm-initialized") == 1) {
     removelistener(main_init_listener);
@@ -1815,88 +1898,6 @@ settimer( func { ignoreLoop(); }, 5);
 var LBM2KG = 0.4535;
 
 var fx = nil;
-
-var flexer = func {
-  # this function needs to become optimized using Nodes
-  if (getprop("sim/multiplay/generic/float[5]")!=nil) {
-    setprop("surface-positions/leftrad", getprop("sim/multiplay/generic/float[5]")*20*D2R);  
-    setprop("surface-positions/leftrad2", -getprop("surface-positions/left-aileron-pos-norm")*21.5*D2R);  
-    setprop("surface-positions/rightrad", getprop("sim/multiplay/generic/float[6]")*20*D2R);  
-    setprop("surface-positions/rightrad2", getprop("surface-positions/right-aileron-pos-norm")*21.5*D2R);  
-    setprop("surface-positions/radlefr", getprop("fdm/jsbsim/fcs/lef-pos-deg")*D2R);
-    setprop("surface-positions/radlefl", -getprop("fdm/jsbsim/fcs/lef-pos-deg")*D2R);
-
-    var wingcontent = 0;
-    if (getprop("consumables/fuel/tank[1]/level-kg")!=nil) {
-      wingcontent += getprop("consumables/fuel/tank[1]/level-kg");
-    }
-    if (getprop("consumables/fuel/tank[2]/level-kg")!=nil) {
-      wingcontent += getprop("consumables/fuel/tank[2]/level-kg");
-    }
-    if (getprop("payload/weight[0]/weight-lb") !=nil
-        and getprop("payload/weight[1]/weight-lb") !=nil 
-        and getprop("payload/weight[2]/weight-lb") !=nil 
-        and getprop("payload/weight[3]/weight-lb") !=nil 
-        and getprop("payload/weight[7]/weight-lb") !=nil 
-        and getprop("payload/weight[8]/weight-lb") !=nil 
-        and getprop("payload/weight[9]/weight-lb") !=nil 
-        and getprop("payload/weight[10]/weight-lb") !=nil ) {
-      setprop("f16/wings/fuel-and-stores-kg", 
-      (getprop("payload/weight[0]/weight-lb")
-      +getprop("payload/weight[1]/weight-lb")
-      +getprop("payload/weight[2]/weight-lb")
-      +getprop("payload/weight[3]/weight-lb")
-      +getprop("payload/weight[7]/weight-lb")
-      +getprop("payload/weight[8]/weight-lb")
-      +getprop("payload/weight[9]/weight-lb")
-      +getprop("payload/weight[10]/weight-lb"))*LBM2KG
-      +wingcontent);
-    } elsif (getprop("payload/weight[0]/weight-lb") !=nil
-        and getprop("payload/weight[1]/weight-lb") !=nil) {
-      # for prototype
-      setprop("f16/wings/fuel-and-stores-kg", (getprop("payload/weight[0]/weight-lb")+getprop("payload/weight[1]/weight-lb"))*LBM2KG+wingcontent);
-    }
-    #setprop("f16/wings/fuel-and-stores-kg", ground*(getprop("f16/wings/fuel-and-stores-kg-a")));
-    
-    # since the wingflexer works wrong in air we make the wing more stiff in air:
-    #if (ground) {
-      #setprop("sim/systems/wingflexer/params/K",250);
-    #} else {
-      #setprop("sim/systems/wingflexer/params/K",2500);
-    #}
-  }
-  #setprop("f16/wings/normal-lbf", -getprop("fdm/jsbsim/aero/coefficient/force/Z_t-lbf"));
-  
-  var errors = [];
-  call(func {var z = getprop("sim/systems/wingflexer/z-m");
-      #var max2 = (9.2-2.84)*0.5;
-      #max2 = max2 * max2;
-      setprop("sim/systems/wingflexer/NaN", z);# this line will fail if NaN, so that an error is raised.
-      #setprop("sim/systems/wingflexer/z-m-tip",z);
-      #setprop("sim/systems/wingflexer/z-m-outer", z*((3.70-1.42)*(3.70-1.42))/(max2));
-      #setprop("sim/systems/wingflexer/z-m-middle",z*((2.88-1.42)*(2.88-1.42))/(max2));
-      #setprop("sim/systems/wingflexer/z-m-inner", z*((1.63-1.42)*(1.63-1.42))/(max2));
-      },nil,nil, errors);
-  if (size(errors)) {
-    fgcommand('reinit', props.Node.new({ subsystem: "xml-autopilot" }));
-  }
-  #if (getprop("/sim/frame-rate-worst")<12) {
-  #  setprop("/sim/systems/property-rule[100]/serviceable",0);
-  #  setprop("sim/systems/wingflexer/z-m",0);
-  #} else {
-  #  setprop("/sim/systems/property-rule[100]/serviceable",1);
-  #}
-  
-  var mach = getprop("velocities/mach") >= 1;
-  var cam = getprop("sim/current-view/name");
-  var still = cam == "Fly-By View" or cam == "Tower View" or cam == "Tower View Look From";
-  var nofrontsound = still and mach;
-  
-  setprop("f16/sound/front-on", !nofrontsound);
-  setprop("f16/sound/front-off", nofrontsound);
-    
-  settimer(flexer,0);
-}
 
 setlistener("controls/flight/alt-rel-button", func (node) {setprop("controls/armament/trigger", node.getValue());});
 
