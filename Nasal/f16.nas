@@ -816,6 +816,7 @@ var batteryChargeDischarge = func {
 }
 
 
+var LBM2KG = 0.4535;
 var flexer = func {
   # this function needs to become optimized using Nodes
   if (getprop("sim/multiplay/generic/float[5]")!=nil) {
@@ -1894,10 +1895,6 @@ var setInvisible = func (m) {
 }
 
 settimer( func { ignoreLoop(); }, 5);
-
-var LBM2KG = 0.4535;
-
-var fx = nil;
 
 setlistener("controls/flight/alt-rel-button", func (node) {setprop("controls/armament/trigger", node.getValue());});
 
