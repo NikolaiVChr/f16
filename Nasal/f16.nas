@@ -899,62 +899,6 @@ var flexer = func {
   settimer(flexer,0);
 }
 
-var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
-  if (getprop("sim/signals/fdm-initialized") == 1) {
-    removelistener(main_init_listener);
-    print();
-    print("********************************************************************");
-    print("      Initializing "~getprop("sim/description")~" systems.           ");
-    print("                Version "~getprop("sim/aircraft-version")~" on FlightGear "~getprop("sim/version/flightgear"));
-    print("********************************************************************");
-    print();
-    screen.log.write("Welcome to the "~getprop("sim/description")~", version "~getprop("sim/aircraft-version"), 1.0, 0.2, 0.2);
-    
-    hack.init();
-    loop_flare();
-    slow.loop();
-    #fx = flex.WingFlexer.new(1, 250, 25, 500, 0.375, "f16/wings/fuel-and-stores-kg","f16/wings/fuel-and-stores-kg","sim/systems/wingflexer/","f16/wings/lift-lbf");
-    flexer();
-    medium.loop();
-    fast.loop();
-    ehsi.init();
-    tgp.callInit();
-    tgp.fast_loop();
-    ded.dataEntryDisplay.init();
-    ded.dataEntryDisplay.update();
-    pfd.callInit();
-    pfd.loop_pfd();
-    frd.callInit();
-    frd.loop_freqDsply();
-    mps.loop();
-    enableViews();
-    fail.start();
-    awg_9.loopDGFT();
-    eng.JFS.init();
-    setprop("consumables/fuel/tank[6]/capacity-gal_us",0);
-    setprop("consumables/fuel/tank[7]/capacity-gal_us",0);
-    setprop("consumables/fuel/tank[8]/capacity-gal_us",0);
-    if (getprop("f16/disable-custom-view") != 1) view.manager.register("Cockpit View", pilot_view_limiter);
-    emesary.GlobalTransmitter.Register(f16_mfd);
-    emesary.GlobalTransmitter.Register(f16_hud);
-    emesary.GlobalTransmitter.Register(awg_9.aircraft_radar);
-    #execTimer.start();
-    rtExec_loop();
-    if (getprop("f16/engine/running-state")) {
-      #skip warmup if not cold and dark selected from launcher.
-      setprop("/f16/avionics/power-fcr-warm", 1);
-      setprop("/f16/avionics/power-rdr-alt-warm", 1);
-    }
-    setprop("/f16/cockpit/oxygen-liters", 5.0);
-    setprop("f16/cockpit/hydrazine-minutes", 10);
-    
-    # debug:
-    #
-    #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/pitch-rate-lower-lag");
-    #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/bias-final");
-  }
- }, 0, 0);
-
 var enableViews = func {
   setprop("sim/view[101]/enabled",1);
   setprop("sim/view[102]/enabled",1);
@@ -1952,5 +1896,62 @@ setlistener("f16/engine/cutoff-release-lever", func() {
 		}, 3);
 	}
 }, 0, 0);
+
+
+var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
+  if (getprop("sim/signals/fdm-initialized") == 1) {
+    removelistener(main_init_listener);
+    print();
+    print("********************************************************************");
+    print("      Initializing "~getprop("sim/description")~" systems.           ");
+    print("                Version "~getprop("sim/aircraft-version")~" on FlightGear "~getprop("sim/version/flightgear"));
+    print("********************************************************************");
+    print();
+    screen.log.write("Welcome to the "~getprop("sim/description")~", version "~getprop("sim/aircraft-version"), 1.0, 0.2, 0.2);
+    
+    hack.init();
+    loop_flare();
+    slow.loop();
+    #fx = flex.WingFlexer.new(1, 250, 25, 500, 0.375, "f16/wings/fuel-and-stores-kg","f16/wings/fuel-and-stores-kg","sim/systems/wingflexer/","f16/wings/lift-lbf");
+    flexer();
+    medium.loop();
+    fast.loop();
+    ehsi.init();
+    tgp.callInit();
+    tgp.fast_loop();
+    ded.dataEntryDisplay.init();
+    ded.dataEntryDisplay.update();
+    pfd.callInit();
+    pfd.loop_pfd();
+    frd.callInit();
+    frd.loop_freqDsply();
+    mps.loop();
+    enableViews();
+    fail.start();
+    awg_9.loopDGFT();
+    eng.JFS.init();
+    setprop("consumables/fuel/tank[6]/capacity-gal_us",0);
+    setprop("consumables/fuel/tank[7]/capacity-gal_us",0);
+    setprop("consumables/fuel/tank[8]/capacity-gal_us",0);
+    if (getprop("f16/disable-custom-view") != 1) view.manager.register("Cockpit View", pilot_view_limiter);
+    emesary.GlobalTransmitter.Register(f16_mfd);
+    emesary.GlobalTransmitter.Register(f16_hud);
+    emesary.GlobalTransmitter.Register(awg_9.aircraft_radar);
+    #execTimer.start();
+    rtExec_loop();
+    if (getprop("f16/engine/running-state")) {
+      #skip warmup if not cold and dark selected from launcher.
+      setprop("/f16/avionics/power-fcr-warm", 1);
+      setprop("/f16/avionics/power-rdr-alt-warm", 1);
+    }
+    setprop("/f16/cockpit/oxygen-liters", 5.0);
+    setprop("f16/cockpit/hydrazine-minutes", 10);
+    
+    # debug:
+    #
+    #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/pitch-rate-lower-lag");
+    #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/bias-final");
+  }
+ }, 0, 0);
 
 var chuteLoop = maketimer(0.05, chuteLoopFunc);
