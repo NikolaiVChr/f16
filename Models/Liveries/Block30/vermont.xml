@@ -16,6 +16,7 @@
             </livery-patch>
             <livery-pod>
                 <texture>Armament/External-stores/MXU-648.png</texture>
+            </livery-pod>
             <f16>
                 <dragchute type="bool">false</dragchute>
             </f16>

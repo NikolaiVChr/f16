@@ -71,7 +71,7 @@
     <f16>
     <dragchute type="bool">false</dragchute>
     <link16 type="bool">false</link16>
-  </f16>
+    </f16>
    <path archive="y">Aircraft/f16/Models/F-16.xml</path>
    <livery>
     <file type="string"/>
@@ -166,7 +166,7 @@
    <default>
     <menu n="101">
      <label>F-16C Block 30</label>
-        <item n="10">
+      <item n="10">
           <label>Payload quick setup</label>
           <binding>
             <command>dialog-show</command>
