@@ -3496,6 +3496,26 @@
         </condition>
     </animation>
 
+    <!--animation>
+        <type>select</type>
+        <condition>
+          <greater-than>
+                <property>sim/variant-id</property>
+                <value>3</value>
+            </greater-than>
+        </condition>
+    </animation>
+
+    <animation>
+        <type>select</type>
+        <condition>
+          	<less-than-equals>
+                <property>sim/variant-id</property>
+                <value>3</value>
+            </less-than-equals>
+        </condition>
+    </animation-->
+
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/displays/lcd</inherits-from>
         <parameters><!-- RWR is a CRT display, hence the big angles -->
