@@ -1389,7 +1389,11 @@ There is also small changes in tail for different variants with and without brak
                         } else {
                             setprop("/sim/freeze/master", !getprop("/sim/freeze/master"));
                             setprop("/sim/freeze/clock", !getprop("/sim/freeze/clock"));
-                            screen.log.write("Sim is paused");
+                            if (getprop("/sim/freeze/master")) {
+                                screen.log.write("Sim is paused");
+                            } else {
+                                screen.log.write("Sim is resumed");
+                            }
                         }
                     </script>
               </binding>
