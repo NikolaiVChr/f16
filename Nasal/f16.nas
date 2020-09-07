@@ -1897,6 +1897,25 @@ setlistener("f16/engine/cutoff-release-lever", func() {
 	}
 }, 0, 0);
 
+# Engine feed knob handler
+setlistener("f16/engine/feed", func(feedNode) {
+    var feed = feedNode.getValue();
+    if (feed == 1) # NORM
+    {
+        setprop("/fdm/jsbsim/propulsion/tank[0]/priority", 5);
+        setprop("/fdm/jsbsim/propulsion/tank[3]/priority", 5);
+    }
+    if (feed == 2) # AFT
+    {
+        setprop("/fdm/jsbsim/propulsion/tank[0]/priority", 5);
+        setprop("/fdm/jsbsim/propulsion/tank[3]/priority", 1);
+    }
+    if (feed == 3) # FWD
+    {
+        setprop("/fdm/jsbsim/propulsion/tank[0]/priority", 1);
+        setprop("/fdm/jsbsim/propulsion/tank[3]/priority", 5);
+    }
+}, 0, 0);
 
 var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
   if (getprop("sim/signals/fdm-initialized") == 1) {

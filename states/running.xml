@@ -50,7 +50,7 @@
         </engines>
         <f16>
             <engine>
-                <feed type="bool">true</feed><!-- OFF/NORM prevents starter, cutoff -->
+                <feed type="int">1</feed><!-- OFF/NORM prevents starter, cutoff -->
                 <jfs-start-switch type="int">0</jfs-start-switch><!-- starter -1=1 1=2 0=off  goes to off at 55% rpm -->
                 <cutoff-release-lever type="bool">false</cutoff-release-lever><!-- cutoff -->
                 <running-state type="bool">true</running-state>

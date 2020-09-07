@@ -1032,8 +1032,8 @@
         <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
         <repeatable>true</repeatable>
         <interval-sec>0.75</interval-sec>
-        <factor>-40</factor>
-        <offset-deg>40</offset-deg>
+        <factor>-47</factor>
+        <offset-deg>45</offset-deg>
         <center>
           <x-m>0.498453</x-m>
           <y-m>-0.511119</y-m>
@@ -1050,7 +1050,7 @@
                 <property>f16/engine/feed</property>
                 <step>1</step>
                 <min>0</min>
-                <max>1</max>
+                <max>3</max>
                 <wrap>false</wrap>
            </binding>
         </increase>
@@ -1060,7 +1060,7 @@
                 <property>f16/engine/feed</property>
                 <step>-1</step>
                 <min>0</min>
-                <max>1</max>
+                <max>3</max>
                 <wrap>false</wrap>
            </binding>
         </decrease>
