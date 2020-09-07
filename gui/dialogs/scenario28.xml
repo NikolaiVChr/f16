@@ -9,7 +9,7 @@
 		<layout>hbox</layout>
 		<text>
 			<halign>left</halign>
-			<label>Mock BFM dogfight training Scenario</label>
+			<label>Mock dogfight training Scenario</label>
 			<!--<format>%s Control Panel</format>
 			<property>sim/description</property>-->
 		</text>

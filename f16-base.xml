@@ -471,7 +471,7 @@
                         </binding>
                     </item>
                     <item>
-                        <label>BFM Training Scenario</label>
+                        <label>Training Scenario</label>
                         <enabled type="bool">true</enabled>
                         <name>scenario28</name>
                         <binding>
