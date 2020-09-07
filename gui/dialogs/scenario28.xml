@@ -9,7 +9,7 @@
 		<layout>hbox</layout>
 		<text>
 			<halign>left</halign>
-			<label>Mock dogfight training Scenario</label>
+			<label>Mock BFM dogfight training Scenario</label>
 			<!--<format>%s Control Panel</format>
 			<property>sim/description</property>-->
 		</text>
@@ -116,7 +116,7 @@
 	<text><label>Veterans will have transponder off, so wont all the time be in the RWR.</label></text>
 	<hrule/>
 
-	<text><label>The opponent(s) will fly block 52.</label></text>
+	<text><label>The opponent(s) will fly Block 52.</label></text>
 	<text><label>0 - One bandit, one wingman (beginners)</label></text>
 	<text><label>1 - One bandit (beginner)</label></text>
 	<text><label>2 - One bandit (experienced)</label></text>
@@ -124,5 +124,7 @@
 	<text><label>4 - Two bandits (beginners)</label></text>
 	<text><label>5 - Two bandits (veterans)</label></text>
 	<text><label>6 - Three bandits, one wingman (veterans)</label></text>
+
+	<empty><stretch>1</stretch></empty>
 
 </PropertyList>
