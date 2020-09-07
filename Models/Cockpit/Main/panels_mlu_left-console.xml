@@ -29,7 +29,10 @@
         <object-name>flcs-pwr</object-name>
         <object-name>freqDisplay</object-name>
         <object-name>Guards</object-name>
+        <object-name>Guards_trim</object-name>
         <object-name>Guards_trim_50</object-name>
+        <object-name>FLCS_Guards</object-name>
+        <object-name>FLT_CTR_Guards</object-name>
         <object-name>horiz-l</object-name>
         <object-name>horiz-r</object-name>
         <object-name>LEFT_CONSOLE</object-name>
@@ -57,6 +60,9 @@
         <object-name>EXT_LIGHTING</object-name>
         <object-name>EXT_LIGHTING_0</object-name>
         <object-name>EXT_LIGHTING_1</object-name>
+        <object-name>EXT_LIGHTING_50</object-name>
+        <object-name>EXT_LIGHTING_50_0</object-name>
+        <object-name>EXT_LIGHTING_50_1</object-name>
         <object-name>FLIGHT_CONTROL</object-name>
         <object-name>FLIGHT_CONTROL_0</object-name>
         <object-name>FLIGHT_CONTROL_1</object-name>
@@ -164,7 +170,7 @@
         <object-name>SW_EPU</object-name>
         <object-name>SW_EPU_COVER</object-name>
         <object-name>SW_FLCS-BIT</object-name>
-        <object-name>SW_FLCS_RESET</object-name>
+        <object-name>SW_FLCS-RESET</object-name>
         <object-name>SW_FLCS_TEST</object-name>
         <object-name>SW_FUSELAGE</object-name>
         <object-name>SW_FUSELAGE_50</object-name>
@@ -186,6 +192,7 @@
         <object-name>SW_KNOB_MAN_TRIM_YAW</object-name>
         <object-name>SW_KNOB_MAN_TRIM_YAW_50</object-name>
         <object-name>SW_KNOB_REFUEL</object-name>
+        <object-name>SW_KNOB_REFUEL_50</object-name>
         <object-name>SW_LE_FLAPS</object-name>
         <object-name>SW_LE_FLAPS_50</object-name>
         <object-name>SW_MAIN_POWER</object-name>
@@ -277,6 +284,7 @@
         <object-name>ELEC_50</object-name>
         <object-name>EPU_1</object-name>
         <object-name>EXT_LIGHTING_1</object-name>
+        <object-name>EXT_LIGHTING_50_1</object-name>
         <object-name>FLIGHT_CONTROL_1</object-name>
         <object-name>FLT_CONTROL_1</object-name>
         <object-name>FUEL_1</object-name>
@@ -300,6 +308,7 @@
         <object-name>SW_KNOB_EXT_FORMATION_LIGHT</object-name>
         <object-name>SW_KNOB_EXT_FORM_LIGHT_50</object-name>
         <object-name>SW_KNOB_REFUEL</object-name>
+        <object-name>SW_KNOB_REFUEL_50</object-name>
         <object-name>SW_KNOB_IFF_MASTER</object-name>
         <object-name>SW_KNOB_IFF_C_AND_I</object-name>
         <object-name>SW_KNOB_IFF_MASTER_50</object-name>
@@ -336,7 +345,10 @@
         </parameters>
         <!-- objects added to this will NOT have all white in texture lit up green when console is high. They will get flood light though. -->
         <object-name>Guards</object-name>
+        <object-name>Guards_trim</object-name>
         <object-name>Guards_trim_50</object-name>
+        <object-name>FLCS_Guards</object-name>
+        <object-name>FLT_CTR_Guards</object-name>
         <object-name>SW_MASTER</object-name>
         <object-name>SW_FUSELAGE</object-name>
         <object-name>SW_ANTI_COLLISION</object-name>
@@ -358,7 +370,6 @@
         <object-name>SW_FLCS_TEST</object-name>
         <object-name>SW_FLCS-BIT</object-name>
         <object-name>SW_FLCS_RESET</object-name>
-        <object-name>SW_FLCS_TEST</object-name>
         <object-name>SW_FUSELAGE_50</object-name>
         <object-name>SW_IFF_CODE</object-name>
         <object-name>SW_IFF_ENABLE</object-name>
@@ -3496,25 +3507,101 @@
         </condition>
     </animation>
 
-    <!--animation>
+    <animation>
+        <object-name>FLT_CTR_Guards</object-name>
+        <object-name>Guards_trim_50</object-name>
+        <object-name>SW_FUSELAGE_50</object-name>
+        <object-name>SW_ALT_FLAPS_50</object-name>
+        <object-name>SW_LE_FLAPS_50</object-name>
+        <object-name>SW_MAN_TF_FLYUP</object-name>
+        <object-name>SW_DBU</object-name>
+        <object-name>SW_FLCS-BIT</object-name>
+        <object-name>SW_FLCS-RESET</object-name>
+        <object-name>SW_KNOB_EXT_FORM_LIGHT_50</object-name>
+        <object-name>SW_KNOB_REFUEL_50</object-name>
+        <object-name>SW_MASTER_50</object-name>
+        <object-name>SW_WING-TAIL_50</object-name>
+        <object-name>SW_POS_LIGHTS_50</object-name>
+        <object-name>SW_ANTI_COLLISION_50</object-name>
+        <object-name>SW_KNOB_MAN_TRIM_YAW_50</object-name>
+        <object-name>SW_TRIM_DISC_50</object-name>
+        <object-name>EXT_LIGHTING_50_0</object-name>
+        <object-name>EXT_LIGHTING_50_1</object-name>
+        <object-name>GROWTH.002_50</object-name>
+        <object-name>GROWTH.002_50_0</object-name>
+        <object-name>GROWTH.002_50_1</object-name>
+        <object-name>GROWTH.003_50</object-name>
+        <object-name>GROWTH.003_50_0</object-name>
+        <object-name>GROWTH.003_50_1</object-name>
+        <object-name>FLT_CONTROL_0</object-name>
+        <object-name>FLT_CONTROL_1</object-name>
+        <object-name>MANUAL_TRIM_50_0</object-name>
+        <object-name>MANUAL_TRIM_50_1</object-name>
+        <object-name>pitch-trim-wheel_50</object-name>
+        <object-name>roll-trim-wheel_50</object-name>
         <type>select</type>
         <condition>
           <greater-than>
                 <property>sim/variant-id</property>
-                <value>3</value>
+                <value>6</value><!--3-->
             </greater-than>
         </condition>
     </animation>
 
     <animation>
+        <object-name>mal</object-name>
+        <object-name>adv</object-name>
+        <object-name>FLCS_Guards</object-name>
+        <object-name>Guards_trim</object-name>
+        <object-name>SW_FUSELAGE</object-name>
+        <object-name>SW_ALT_FLAPS</object-name>
+        <object-name>SW_SERVO_RUDDER</object-name>
+        <object-name>SW_SERVO_FLAPERON</object-name>
+        <object-name>SW_SERVO_HORIZ</object-name>
+        <object-name>SW_SELF_TEST_ADV</object-name>
+        <object-name>SW_SELF_TEST_MAIN</object-name>
+        <object-name>SW_SERVO_ELEC</object-name>
+        <object-name>SW_SERVO_HORIZ</object-name>
+        <object-name>SW_LE_FLAPS</object-name>
+        <object-name>SW_KNOB_EXT_FORMATION_LIGHT</object-name>
+        <object-name>SW_KNOB_REFUEL</object-name>
+        <object-name>SW_MASTER</object-name>
+        <object-name>SW_WING-TAIL</object-name>
+        <object-name>SW_POS_LIGHTS</object-name>
+        <object-name>SW_ANTI_COLLISION</object-name>
+        <object-name>SW_KNOB_MAN_TRIM_YAW</object-name>
+        <object-name>SW_TRIM_DISC</object-name>
+        <object-name>slf-tst-num</object-name>
+        <object-name>stbygains-p</object-name>
+        <object-name>stbygains-r</object-name>
+        <object-name>stbygains-y</object-name>
+        <object-name>stbygains-dot</object-name>
+        <object-name>flaperons-l</object-name>
+        <object-name>flaperons-r</object-name>
+        <object-name>rudder-dot</object-name>
+        <object-name>horiz-l</object-name>
+        <object-name>horiz-r</object-name>
+        <object-name>FCS_CAUTION_RESET</object-name>
+        <object-name>EXT_LIGHTING_0</object-name>
+        <object-name>EXT_LIGHTING_1</object-name>
+        <object-name>GROWTH.002_0</object-name>
+        <object-name>GROWTH.002_1</object-name>
+        <object-name>GROWTH.003_0</object-name>
+        <object-name>GROWTH.003_1</object-name>
+        <object-name>FLIGHT_CONTROL_0</object-name>
+        <object-name>FLIGHT_CONTROL_1</object-name>
+        <object-name>MANUAL_TRIM_0</object-name>
+        <object-name>MANUAL_TRIM_1</object-name>
+        <object-name>pitch-trim-wheel</object-name>
+        <object-name>roll-trim-wheel</object-name>
         <type>select</type>
         <condition>
           	<less-than-equals>
                 <property>sim/variant-id</property>
-                <value>3</value>
+                <value>6</value><!--3-->
             </less-than-equals>
         </condition>
-    </animation-->
+    </animation>
 
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/displays/lcd</inherits-from>
