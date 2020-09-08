@@ -114,6 +114,7 @@ Enrico Castaldi (Spectre)
 - Texture improvements
 
 PH-JAKE
+- Refactored autostart
 - Bug fixes and improvements
 
 FGUK
