@@ -47,7 +47,7 @@
     <group>
       <layout>vbox</layout>
         <button>
-          <legend>Quick start</legend>
+          <legend>Auto start</legend>
           <binding>
             <command>nasal</command>
             <script>f16.autostart();</script>
