@@ -1324,7 +1324,7 @@ There is also small changes in tail for different variants with and without brak
                             setprop("instrumentation/radar/ho-field-std", getprop("instrumentation/radar/ho-field"));
                             setprop("instrumentation/radar/az-field", 30);
                             setprop("instrumentation/radar/ho-field", 20);
-                            ded.page = ded.pEWS;
+                            ded.page = ded.pEWS; #This doesn't work, I tried using dataEntryDisplay instead of ded but no joy
                             f16.f16_mfd.MFDl.PFD.selectPage(f16.f16_mfd.MFDl.p_RDR);
                             f16.f16_mfd.MFDr.PFD.selectPage(f16.f16_mfd.MFDr.p_WPN);
                         } else {
