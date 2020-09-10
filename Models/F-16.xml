@@ -645,7 +645,7 @@
   <name>exhaust_jelly</name>
   <path>Aircraft/f16/Models/Effects/exhaust_jelly.xml</path>
     <offsets>
-      <x-m>3.5</x-m>
+      <x-m>1.7</x-m>
       <y-m>0.0</y-m>
       <z-m>-0.4</z-m>
       </offsets>
