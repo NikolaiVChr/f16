@@ -34,6 +34,7 @@
             <path>/f16/avionics/bulls-eye-defined</path>
             <path>/f16/avionics/bulls-eye-lat</path>
             <path>/f16/avionics/bulls-eye-lon</path>
+            <path>f16/settings/bingo</path>
             <path>/link16/wingman-1</path>
             <path>/link16/wingman-2</path>
             <path>/link16/wingman-3</path>
