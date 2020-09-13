@@ -650,10 +650,6 @@
           <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
           <value>20</value>
         </greater-than>
-        <equals>
-          <property>fdm/jsbsim/elec/sources/epu-cmd</property>
-          <value>1</value>
-        </equals>
         <property>fdm/jsbsim/elec/sources/epu-require-hydrazine</property>
       </and>
     </or>
@@ -680,9 +676,6 @@
           <property>fdm/jsbsim/elec/sources/epu-cmd</property>
           <value>1</value>
         </equals>
-        <not>
-          <property>fdm/jsbsim/elec/sources/epu-require-hydrazine</property>
-        </not>
       </and>
     </or>
   </condition>
