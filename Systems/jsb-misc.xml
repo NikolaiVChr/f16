@@ -455,7 +455,7 @@
                         <p>/f16/cockpit/hydrazine-minutes</p>
                         <product>
                             <v>-0.1</v><!-- channel execrate set to 0.1 minute -->
-                            <p>elec/sources/epu-starting</p>
+                            <p>elec/sources/epu-require-hydrazine</p>
                         </product>
                       </sum>
               </max>
