@@ -2081,6 +2081,7 @@ There is also small changes in tail for different variants with and without brak
                 <switches>
                     <epu type="int">0</epu>
                     <epu-cover type="int">1</epu-cover>
+                    <epu-pin type="bool">1</epu-pin>
                     <main-pwr type="int">0</main-pwr>
                     <flcs-pwr-test type="bool">false</flcs-pwr-test>
                 </switches>
