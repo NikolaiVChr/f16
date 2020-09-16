@@ -1963,6 +1963,17 @@ setlistener("f16/engine/feed", func(feedNode) {
     }
 }, 0, 0);
 
+# EPU pin handler
+var epu_pin_listener = setlistener("engines/engine[0]/running", func(runningNode) {
+    var running = runningNode.getValue();
+    if (running == 1)
+    {
+        # Simulate pulling of EPU safety pin after engine start.
+        setprop("fdm/jsbsim/elec/switches/epu-pin", 0);
+        removelistener(epu_pin_listener);
+    }
+}, 0, 0);
+
 var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
   if (getprop("sim/signals/fdm-initialized") == 1) {
     removelistener(main_init_listener);

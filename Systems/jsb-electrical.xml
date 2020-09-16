@@ -8,7 +8,7 @@
 	Stby gen: 10 KVA
 	EPU: 5 KVA
 	
-	KVA = kilo watt ampere
+	KVA = kilo volt ampere
 	
 	ADG = assessory drive gearbox
 	
@@ -194,6 +194,9 @@
 			<test logic="AND" value="0">
 				/f16/engine/cutoff-release-lever == 1
 				gear/unit[0]/WOW == 1
+			</test>
+			<test value="0">
+				elec/switches/epu-pin == 1
 			</test>
 		</switch>
 		
