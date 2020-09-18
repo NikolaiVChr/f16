@@ -1004,11 +1004,18 @@ var autostart = func {
   }
   inAutostart = 1;
   screen.log.write("Starting, standby..");
+
+  setprop("f16/engine/feed",1);
   setprop("fdm/jsbsim/elec/switches/epu",1);
   setprop("fdm/jsbsim/elec/switches/epu-cover",0);
+  setprop("controls/ventilation/airconditioning-enabled",1);
+  setprop("controls/ventilation/airconditioning-source",1);
+  setprop("f16/avionics/pbg-switch",0);
+  setprop("f16/engine/cutoff-release-lever",1);
+  
   setprop("fdm/jsbsim/elec/switches/main-pwr",1);
-  setprop("f16/avionics/ins-knob", 2);#ALIGN NORM
-  eng.JFS.start_switch_last = 0;# bypass check for switch was in OFF
+
+  eng.JFS.start_switch_last = 0; # bypass check for switch was in OFF
 
   if (eng.accu_1_psi < eng.accu_psi_max and eng.accu_2_psi < eng.accu_psi_max) {
       screen.log.write("Both JFS accumulators de-pressurized. Engine start aborted.");
@@ -1018,14 +1025,13 @@ var autostart = func {
       return;
   }
 
-  setprop("f16/engine/feed",1);
-  setprop("f16/engine/cutoff-release-lever",1);
+  setprop("fdm/jsbsim/elec/switches/main-pwr",2);
 
-  # Wait a second for the battery power to stabilize
-  settimer(autostartbatt, 1);
+  # Wait a second for the elec bus to stabilize
+  settimer(autostartelec, 1);
 }
 
-var autostartbatt = func {
+var autostartelec = func {
   setprop("f16/engine/jfs-start-switch",1);
 
   # Wait for the JFS to spool up
@@ -1034,10 +1040,12 @@ var autostartbatt = func {
 }
 
 var autostartjfs = func(N2) {
-  # Wait for 23% core speed
-  if (N2.getValue() < 23)
+  # Wait for 20% core speed
+  if (N2.getValue() < 20)
     return;
 
+  # Check f16/avionics/caution/sec too?
+    
   removelistener(autostart_listener);
 
   setprop("f16/engine/cutoff-release-lever",0);
@@ -1055,47 +1063,52 @@ var autostartengine = func(running) {
   autostart_watchdog.stop();
   removelistener(autostart_listener);
 
-  # Switch on main generator and avionics
-  setprop("fdm/jsbsim/elec/switches/main-pwr",2);
+  setprop("f16/avionics/power-mmc",1);
+  setprop("f16/avionics/power-st-sta",1);
+  setprop("f16/avionics/power-mfd",1);
+  setprop("f16/avionics/power-ufc",1);
+  setprop("f16/avionics/power-gps",1);
+  setprop("f16/avionics/power-dl",1);
+
+  setprop("f16/avionics/ins-knob", 2); #ALIGN NORM
+
   setprop("f16/avionics/power-rdr-alt",2);
   setprop("f16/avionics/power-fcr",1);
   setprop("f16/avionics/power-right-hdpt",1);
   setprop("f16/avionics/power-left-hdpt",1);
-  setprop("f16/avionics/power-mfd",1);
-  setprop("f16/avionics/power-ufc",1);
-  setprop("f16/avionics/power-mmc",1);
-  setprop("f16/avionics/power-gps",1);
-  setprop("f16/avionics/power-dl",1);
-  setprop("f16/avionics/power-st-sta",1);
+
   setprop("f16/avionics/hud-sym", 1);
   setprop("f16/avionics/hud-brt", 1);
-  setprop("f16/avionics/ew-rwr-switch",1);
-  setprop("f16/avionics/ew-disp-switch",1);
+
   setprop("f16/avionics/ew-mws-switch",1);
   setprop("f16/avionics/ew-jmr-switch",1);
+  setprop("f16/avionics/ew-rwr-switch",1);
+  setprop("f16/avionics/ew-disp-switch",1);
   setprop("f16/avionics/ew-mode-knob",1);
   setprop("f16/avionics/cmds-01-switch",1);
   setprop("f16/avionics/cmds-02-switch",1);
   setprop("f16/avionics/cmds-ch-switch",1);
   setprop("f16/avionics/cmds-fl-switch",1);
-  setprop("f16/avionics/pbg-switch",0);
-  setprop("controls/ventilation/airconditioning-enabled",1);
-  setprop("controls/ventilation/airconditioning-source",1);
+
   setprop("controls/lighting/ext-lighting-panel/form-knob", 0);
   setprop("controls/lighting/ext-lighting-panel/master", 1);
+
   setprop("controls/lighting/lighting-panel/console-flood-knob", 0.6);
   setprop("controls/lighting/lighting-panel/pri-inst-pnl-knob", 0.6);
   setprop("controls/lighting/lighting-panel/flood-inst-pnl-knob", 0.6);
   setprop("controls/lighting/lighting-panel/console-primary-knob", 0.6);
   setprop("controls/lighting/lighting-panel/data-entry-display", 0.6);
+
   setprop("instrumentation/radar/radar-standby", 0);
   setprop("instrumentation/comm[0]/volume",1);
   setprop("instrumentation/comm[1]/volume",1);
-  # Leave canopy and ejection seat lever for the pilot? Not now.
+
   setprop("fdm/jsbsim/fcs/canopy-engage", 0);
   setprop("controls/seat/ejection-safety-lever",1);
-  setprop("f16/avionics/ins-knob", 3);#NAV
-  #fail.master_caution();
+  setprop("f16/avionics/ins-knob", 3); #NAV
+
+  fail.master_caution();
+
   screen.log.write("Done.");
   inAutostart = 0;
 }
