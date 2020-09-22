@@ -186,7 +186,7 @@
   <empty><stretch>1</stretch></empty>
 
     <checkbox>
-      <label>Activate Ground Power Unit</label>
+      <label>Connect Ground Power Unit</label>
       <halign>left</halign>
       <property>fdm/jsbsim/elec/sources/external-pwr</property>
       <live>true</live>
