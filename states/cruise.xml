@@ -27,6 +27,7 @@
             </engines>
             <gear>
                 <gear-down type="double">0</gear-down>
+                <brake-parking type="bool">false</brake-parking>
             </gear>
             <lighting>
                 <ext-lighting-panel>
