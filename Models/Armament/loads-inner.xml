@@ -49,7 +49,7 @@
   </condition>
  </animation>
 
- <animation>
+ <!--animation>
   <type>select</type>
   <object-name>Station4_AGM-88</object-name>
   <condition>
@@ -62,7 +62,7 @@
       <value>0</value>
     </greater-than>
   </condition>
- </animation>
+ </animation-->
 
   <animation>
   <type>select</type>
@@ -248,7 +248,7 @@
   </condition>
  </animation>
 
- <animation>
+ <!--animation>
   <type>select</type>
   <object-name>Station6_AGM-88</object-name>
   <condition>
@@ -261,7 +261,7 @@
       <value>0</value>
     </greater-than>
   </condition>
- </animation>
+ </animation-->
 
   <animation>
   <type>select</type>

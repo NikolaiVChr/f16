@@ -296,7 +296,7 @@
         <text>
             <row>0</row>
             <col>2</col>
-            <label>SEAD "Wild Weasel"</label>
+            <label>SEAD "Wild Weasel" 1</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>0</row>
@@ -311,7 +311,7 @@
         <text>
             <row>2</row>
             <col>2</col>
-            <label>SEAD/DEAD (Mode 1)</label>
+            <label>SEAD "Wild Weasel" 2</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>2</row>
@@ -319,14 +319,14 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_dead1();</script>
+                <script>pylons.a2g_sead2();</script>
             </binding>
         </button>
 
         <text>
             <row>4</row>
             <col>2</col>
-            <label>SEAD/DEAD (Mode 2)</label>
+            <label>SEAD/DEAD Strike</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>4</row>
@@ -334,7 +334,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_dead2();</script>
+                <script>pylons.a2g_dead();</script>
             </binding>
         </button>
 
@@ -404,7 +404,7 @@
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>12</row>
             <col>3</col>
-            <legend>Mount</legend>
+            <legend>INOP</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2g_ca2ad();</script>
@@ -606,7 +606,7 @@
         <text>
             <row>14</row>
             <col>4</col>
-            <label>A/G GPS Strike (Single-mode)</label>
+            <label>A/G GPS Strike (JDAM)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>14</row>
@@ -614,14 +614,14 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_gps1();</script>
+                <script>pylons.a2g_gps2();</script>
             </binding>
         </button>
 
         <text>
             <row>16</row>
             <col>4</col>
-            <label>A/G GPS Strike (Multi-mode)</label>
+            <label>A/G GPS Strike (L-JDAM)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>16</row>
@@ -629,7 +629,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_gps2();</script>
+                <script>pylons.a2g_gps1();</script>
             </binding>
         </button>
 

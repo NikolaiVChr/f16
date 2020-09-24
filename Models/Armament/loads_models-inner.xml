@@ -34,7 +34,7 @@
   </offsets>
  </model>
 
- <model>
+ <!--model>
   <name>Station4_AGM-88</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AGM-88/AGM-88.xml</path>
   <offsets>
@@ -43,7 +43,7 @@
     <z-m>-0.432</z-m>
     <pitch-deg>-4.55</pitch-deg>
   </offsets>
-</model>
+</model-->
 
  <model>
   <name>Station4_AGM-119</name>
@@ -196,7 +196,7 @@
   </offsets>
  </model>
 
- <model>
+ <!--model>
   <name>Station6_AGM-88</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AGM-88/AGM-88.xml</path>
   <offsets>
@@ -205,7 +205,7 @@
     <z-m>-0.432</z-m>
     <pitch-deg>-4.55</pitch-deg>
   </offsets>
-</model>
+ </model-->
 
  <model>
   <name>Station6_AGM-119</name>
