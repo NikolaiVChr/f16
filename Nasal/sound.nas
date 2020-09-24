@@ -257,6 +257,7 @@ setlistener("controls/flight/flaps", button2, nil, 0);
 setlistener("controls/test/test-panel/mal-ind-lts", doubleClick2, nil, 0);
 setlistener("controls/test/test-panel/fire-ovht-test", doubleClick2, nil, 0);
 setlistener("controls/test/test-panel/oxy-test", click2, nil, 0);
+setlistener("controls/test/test-panel/epu-test", click2, nil, 0);
 setlistener("controls/test/test-panel/pbg-test", doubleClick2, nil, 0);
 setlistener("controls/test/avtr-test", doubleClick2, nil, 0);
 setlistener("f16/avionics/emer-jett-switch", doubleClick2, nil, 0);

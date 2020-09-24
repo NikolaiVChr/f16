@@ -45,7 +45,7 @@
 	  	  Lit when stby power not available
 	  		lit when switch in BATT
 	  			goes unlit at 60% rpm
-	  				lit during shutdown when engine spools down.
+	  		lit during shutdown when engine spools down.
 	  	FLCS RLY
 	  	  Batt gives less than 20V to one or more FLCS systems. (might be because relays are not closed and latched)
 	  		lit when switch in BATT, to show the relays prevent BATT from powering FLCC until a JFS start has been initiated.
@@ -224,6 +224,13 @@
 				elec/sources/batt-bus eq 1
 				elec/failures/epu/serviceable eq 1
 			</test>
+			<test logic="AND" value="1">
+				elec/switches/epu ne 0
+				elec/sources/batt-bus eq 1
+				elec/switches/main-pwr eq 2
+				elec/failures/epu/serviceable eq 1
+				/controls/test/test-panel/epu-test eq 1
+			</test>
 		</switch>
 		
 		<switch name="elec/sources/epu-require-hydrazine">
@@ -231,6 +238,7 @@
 			<test logic="AND" value="1">
 				elec/sources/epu-cmd == 1
 				/engines/engine/n2 lt 75
+				/controls/test/test-panel/epu-test eq 0
 			</test>
 		</switch>
 		
@@ -611,7 +619,7 @@
 			FLCS PWR (test panel)
 		  		lit when switch in BATT after holding FLCS PWR TEST in TEST to show FBW is getting good power
 		  		lit when holding FLCS PWR TEST in TEST to show FBW is getting good power when in MAIN PWR
-		  		lit when doing EPU test (TODO)
+		  		lit when doing EPU test
 	  		</description>
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -621,6 +629,9 @@
 				elec/bus/flcc/b gt 22
 				elec/bus/flcc/c gt 22
 				elec/bus/flcc/d gt 22
+			</test>
+			<test value="1">
+				/controls/test/test-panel/epu-test == 1
 			</test>
 		</switch>
 		

@@ -1168,6 +1168,39 @@
         </action>
     </animation>
 	
+   <!-- EPU Test -->
+   <animation>
+        <type>knob</type>
+        <object-name>SW_TEST_EPU</object-name>
+        <visible>true</visible>
+        <property>controls/test/test-panel/epu-test</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>false</repeatable>
+        <interval-sec>0.2</interval-sec>
+        <factor>40</factor>
+        <offset-deg>-20</offset-deg>
+        <center>
+            <x-m>0.774</x-m>
+            <y-m>-0.49</y-m>
+            <z-m>0.007677</z-m>
+        </center>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+				<property>controls/test/test-panel/epu-test</property>
+                <min>0</min>
+                <max>1</max>                
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+
 	<animation>
         <type>pick</type>
         <object-name>FIRE_OHEAT_DETECT</object-name>
