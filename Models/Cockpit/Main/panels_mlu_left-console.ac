@@ -13854,10 +13854,10 @@ refs 4
 3 0.090349 0.992819
 kids 0
 OBJECT poly
-name "flcs-pwr"
+name "flcs-run-fail"
 loc -0.126904 0 -0.00335875
 data 13
-flcs-pwr.mesh
+flcs-run-fail.mesh
 texture "../Textures/panels-B50-left_console.png"
 crease 45.000000
 numvert 8
