@@ -205,7 +205,7 @@ RWRCanvas = {
 #                   .hide();
 #        }
 # Threat list ID:
-        #REVISION: 2020/06/25
+        #REVISION: 2020/09/27
         #OPRF Fleet
         rwr.AIRCRAFT_WARTHOG  = "10";
         rwr.AIRCRAFT_TOMCAT   = "14";
@@ -355,6 +355,8 @@ RWRCanvas = {
                 "F-35A":                    rwr.AIRCRAFT_JSF,
                 "F-35B":                    rwr.AIRCRAFT_JSF,
                 "F-35C":                    rwr.AIRCRAFT_JSF,
+                "daVinci_F-35A":            rwr.AIRCRAFT_JSF,
+                "daVinci_F-35B":            rwr.AIRCRAFT_JSF,
                 "JAS-39C_Gripen":           rwr.AIRCRAFT_GRIPEN,
                 "gripen":                   rwr.AIRCRAFT_GRIPEN,
                 "Yak-130":                  rwr.AIRCRAFT_MITTEN,
