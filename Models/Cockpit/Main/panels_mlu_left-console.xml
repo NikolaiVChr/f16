@@ -27,6 +27,7 @@
         <object-name>flaperons-l</object-name>
         <object-name>flaperons-r</object-name>
         <object-name>flcs-pwr</object-name>
+        <object-name>flcs-run-fail</object-name>
         <object-name>freqDisplay</object-name>
         <object-name>Guards</object-name>
         <object-name>Guards_trim</object-name>
@@ -419,6 +420,7 @@
         <object-name>eec-cover</object-name>
         <object-name>eec-switch</object-name>
         <object-name>flcs-pwr</object-name>
+        <object-name>flcs-run-fail</object-name>
         <object-name>horiz-l</object-name>
         <object-name>horiz-r</object-name>
         <object-name>flaperons-l</object-name>
@@ -3597,6 +3599,7 @@
         <object-name>MANUAL_TRIM_50_1</object-name>
         <object-name>pitch-trim-wheel_50</object-name>
         <object-name>roll-trim-wheel_50</object-name>
+        <object-name>flcs-run-fail</object-name>
         <type>select</type>
         <condition>
           <greater-than>
