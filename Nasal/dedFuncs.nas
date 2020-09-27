@@ -130,7 +130,7 @@ var EditableField = {
 		}
 		if (size(me.text) == me.maxSize) { return; }
 		me.lastText1 = me.text;
-		if (size(me.text) == numBeforeDecimal) {
+		if (size(me.text) == numBeforeDecimal + 1) {
 			me.text ~= ".";
 		}
 		me.text ~= letter;
