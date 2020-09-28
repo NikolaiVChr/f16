@@ -20,6 +20,7 @@ var taxiLight = props.globals.getNode("sim/multiplay/generic/bool[46]", 1);
 var landingLight = props.globals.getNode("sim/multiplay/generic/bool[47]", 1);
 var navLight     = props.globals.getNode("sim/multiplay/generic/bool[40]",1);
 
+var navLightBrt = props.globals.getNode("controls/lighting/ext-lighting-panel/wing-tail",1);
 
 var gearPos = props.globals.getNode("gear/gear[0]/position-norm", 1);
 
@@ -36,13 +37,13 @@ var light_manager = {
 		# define your lights here
 
 		# lights ########
-      me.data_light = [
-                        #light_xpos,light_ypos,light_zpos, light_dir,light_size,light_stretch,light_r,light_g,light_b,light_is_on,number
-        ALS_light_spot.new(10,0,-1,  0, 0.35,-3.25, 0.7,0.7,0.7,0,0),#landing
-        ALS_light_spot.new(70,0,-1,  0,12,-7.0, 0.7,0.7,0.7,0,1),#taxi
-        ALS_light_spot.new(1.60236,-4.55165, 0.012629, 0,2,0, 0.5,0,0, 1,2),#left
-        ALS_light_spot.new(1.60236, 4.55165, 0.012629, 0,2,0, 0,0.5,0, 1,3),#right
-      ];
+		me.data_light = [
+			#light_xpos, light_ypos, light_zpos, light_dir, light_size, light_stretch, light_r, light_g, light_b, light_is_on, number
+			ALS_light_spot.new(10, 0, -1, 0, 0.35, -3.25, 0.7, 0.7, 0.7, 0, 0), #landing
+			ALS_light_spot.new(70, 0, -1, 0, 12, -7.0, 0.7, 0.7, 0.7, 0, 1),    #taxi
+			ALS_light_spot.new(1.60236, -4.55165, 0.012629, 0, 2, 0, 0.5, 0, 0, 0, 2),  #left
+			ALS_light_spot.new(1.60236,  4.55165, 0.012629, 0, 2, 0, 0, 0.5, 0, 0, 3),  #right
+		];
 
 		
 		
@@ -91,6 +92,8 @@ var light_manager = {
           if(navLight.getValue() and alt_agl.getValue() < 20.0){
               me.data_light[2].light_on();
               me.data_light[3].light_on();
+              me.data_light[2].light_r = (navLightBrt.getValue() == -1 ? 0.3 : 0.7);
+              me.data_light[3].light_g = (navLightBrt.getValue() == -1 ? 0.3 : 0.7);
           }else{
               me.data_light[2].light_off();
               me.data_light[3].light_off();
