@@ -339,7 +339,7 @@ var MFD_Device =
         } else if (getprop("sim/variant-id") == 6) {
         dev_canvas.setColorBackground(0.01,0.01,0.07, 1);
         } else {
-        dev_canvas.setColorBackground(0.005,0.1,0.005, 0);
+        dev_canvas.setColorBackground(0.005,0.1,0.005, 1);
         };
         var selectionBoxGroup = dev_canvas.createGroup();
         obj.selectionBox = selectionBoxGroup.createChild("path")
