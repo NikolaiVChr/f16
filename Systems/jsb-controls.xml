@@ -12,6 +12,8 @@
     ICAS-90-5.10.2 - used for MPO switch
     AFSC 32657C - has more clean view of Integrator pitch loop.
  -->
+    
+    <property value="1">fcs/fly-by-wire/diagram1987</property>
 
     <channel execrate="1" name="FCS Lookup">
 
@@ -62,6 +64,30 @@
                 fcs/fly-by-wire/q_c lt 646
             </test>
         </switch>
+        
+        <switch name="fcs/fly-by-wire/condition-z-raw">
+            <default value="0"/>
+            <test logic="OR" value="1">
+                fcs/fly-by-wire/condition-a == 1
+            </test>
+        </switch>
+        
+        <lag_filter name="fcs/fly-by-wire/condition-z">
+            <input> fcs/fly-by-wire/condition-z-raw </input>
+            <c1> 0.125 </c1>
+        </lag_filter>
+        
+        <fcs_function name="fcs/fly-by-wire/condition-y">
+            <function>
+                <sum>
+                    <product>
+                        <v>-1</v>
+                        <p>fcs/fly-by-wire/condition-z</p>
+                    </product>
+                    <v>1</v>
+                </sum>
+            </function>
+        </fcs_function>
 
         <fcs_function name="fcs/fly-by-wire/enable-standby-gains-inv">
             <function>
@@ -822,21 +848,81 @@
             <gain> 0.5 </gain>
         </pure_gain>
 
-        <switch name="fcs/fly-by-wire/pitch/q-product">
+        <switch name="fcs/fly-by-wire/pitch/q-product-1975">
             <description></description>
             <default value="0.167"/>
             <test logic="AND" value="0.231">
                 fcs/fly-by-wire/MLG-GND == 1
             </test>
         </switch>
+        
+        <fcs_function name="fcs/fly-by-wire/pitch/q-product-1987">
+            <description>The 1987 diagram has 0.5 gain on condition-z, but its feedback gains is double of the 1975 diagram. So it is halved to 0.25</description>
+            <function>
+                <sum>
+                    <product>
+                        <property> fcs/fly-by-wire/condition-z </property>
+                        <value> 0.25 </value>
+                    </product>
+                    <product>
+                        <property> fcs/fly-by-wire/condition-y </property>
+                        <value> 0.167 </value>
+                    </product>
+                </sum>
+            </function>
+        </fcs_function>
+        
+        <switch name="fcs/fly-by-wire/pitch/q-product">
+            <description></description>
+            <default value="fcs/fly-by-wire/pitch/q-product-1975"/>
+            <test logic="AND" value="fcs/fly-by-wire/pitch/q-product-1987">
+                fcs/fly-by-wire/diagram1987 == 1
+            </test>
+        </switch>
+                
+        <fcs_function name="fcs/fly-by-wire/pitch/q-1987">
+            <function>
+                <sum>
+                    <product>
+                        <property> fcs/fly-by-wire/condition-z </property>
+                        <property> velocities/q-deg_sec </property>
+                    </product>
+                    <product>
+                        <property> fcs/fly-by-wire/condition-y </property>
+                        <property> fcs/fly-by-wire/pitch/q-washout </property>
+                    </product>
+                </sum>
+            </function>
+        </fcs_function>
+        
+        <switch name="fcs/fly-by-wire/pitch/q-washout-final">
+            <description></description>
+            <default value="fcs/fly-by-wire/pitch/q-washout"/>
+            <test logic="AND" value="fcs/fly-by-wire/pitch/q-1987">
+                fcs/fly-by-wire/diagram1987 == 1
+            </test>
+        </switch>
 
         <pure_gain name="fcs/fly-by-wire/pitch/pitch-rate-second-path">
-            <input>fcs/fly-by-wire/pitch/q-washout</input>
+            <input>fcs/fly-by-wire/pitch/q-washout-final </input>
             <gain> fcs/fly-by-wire/pitch/q-product </gain>
         </pure_gain>
         
+        <pure_gain name="fcs/fly-by-wire/pitch/normal-gain-path-1987">
+            <input>fcs/fly-by-wire/pitch/normal-gain </input>
+            <gain> fcs/fly-by-wire/condition-y </gain>
+        </pure_gain>
+        
+        <switch name="fcs/fly-by-wire/pitch/normal-gain-path">
+            <description></description>
+            <default value="fcs/fly-by-wire/pitch/normal-gain"/>
+            <test logic="AND" value="fcs/fly-by-wire/pitch/normal-gain-path-1987">
+                fcs/fly-by-wire/diagram1987 == 1
+            </test>
+        </switch>
+        
         <summer name="fcs/fly-by-wire/pitch/n-and-pitch-rate-combined">
-            <input> fcs/fly-by-wire/pitch/normal-gain </input>
+            <input> fcs/fly-by-wire/pitch/normal-gain-path </input>
             <input> fcs/fly-by-wire/pitch/pitch-rate-second-path </input>
         </summer>
         
@@ -853,13 +939,21 @@
             <c3> 1 </c3>
             <c4> 12 </c4>
         </lead_lag_filter>
+        
+        <switch name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lead-lag-switch">
+            <default value="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lead-lagged"/>
+            <test logic="AND" value="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-combined">
+                fcs/fly-by-wire/MLG-GND == 0
+                fcs/fly-by-wire/diagram1987 == 1
+            </test>
+        </switch>
 
         <second_order_filter name="fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-demand">
             <description>
                 on old diagram looks to be 2.5, not 2 nor 25
                 DNU
             </description>
-            <input> fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lead-lagged </input>
+            <input> fcs/fly-by-wire/pitch/alpha-and-n-and-pitch-rate-lead-lag-switch </input>
             <c1> 2.5 </c1>
             <c2> 20 </c2>
             <c3> 3500 </c3>
@@ -2354,14 +2448,17 @@
         </fcs_function>
 
         <switch name="fcs/fly-by-wire/lef/cmd-pos-elec">
-            <description>                
-            </description>
+            <description>The last condition is from watching videos of take-offs. The 1979 schedule is only for in-air conditions. The number 20 is from the 1987 diagram note 6 switch.</description>
             <default value="fcs/fly-by-wire/lef/cmd-pos"/>
             <test logic="AND" value="0">
                 fcs/fly-by-wire/enable-standby-gains == 1
             </test>
             <test logic="AND" value="fcs/fly-by-wire/lef/cmd-pos-elec">
                 elec/bus/flcc/d lt 20
+            </test>
+            <test logic="AND" value="20">
+                gear/gear-cmd-norm == 1
+                fcs/fly-by-wire/MLG-GND == 0
             </test>
         </switch>
 
@@ -2620,7 +2717,7 @@
             <input>fcs/fly-by-wire/lef/lef-pos-deg</input>
             <gain>1</gain>
             <output>fcs/lef-pos-deg</output>
-            <output>/surface-positions/flap-pos-norm</output>
+            <output>fcs/flap-pos-norm</output>
         </pure_gain>
 
         <!-- the below components rounds flaps position in degrees to zero decimal points: -->
@@ -2752,7 +2849,7 @@
       </test>
    </switch>
    
-   <switch name="f16/cockpit/alt-gear-pneu">
+   <switch name="systems/cockpit/alt-gear-pneu">
       <default value="/f16/cockpit/alt-gear-pneu"/>
       <test  logic="AND" value="0">
         /f16/cockpit/alt-gear-handle == 1
