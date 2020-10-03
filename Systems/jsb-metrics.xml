@@ -10,17 +10,39 @@
   <vtailarm unit="FT"> 0 </vtailarm>
   <wing_incidence unit="DEG"> 0 </wing_incidence>
   <location name="AERORP" unit="IN">
-   <x> -1.9336 </x><!-- -180.4336 = static margin of -4%mac -->
+   <!-- -180.4336 = static margin of -4%mac
+        
+        2020 Sept:
+        
+        CoG is 3.5in, AeroRP is -1.9336in
+        4%mac = 0.4528ft = 5.4336in
+        
+        -1.9336in - 3.5in = 5.4336in
+        
+        Main-wheels is 0.56097m on X, which is 22.08543in
+          18.58543in from CoG
+        
+        
+          
+        2020 Oct:
+                
+        Pseudo fuel system and stores adjusted to not mess too much with static margin.
+        
+        Static margin translated aft 5in to about 14in from MLG, which is about 10% of distance from MLG to NLG.
+        
+    -->
+   <x> 3.0664 </x>
    <y> 0 </y>
    <z> 0 </z>
   </location>
   <location name="EYEPOINT" unit="IN">
+   <!-- This is where pilot g-force is calculated at. -->
    <x> -156.2 </x>
    <y> 0 </y>
    <z> 29.5 </z>
   </location>
   <location name="VRP" unit="IN">
-   <x> 0 </x><!-- -180 inch is -4.572 meter -->
+   <x> 0 </x><!-- Keep this at 0,0,0 to have 1:1 relation to 3D model -->
    <y> 0 </y>
    <z> 0 </z>
   </location>

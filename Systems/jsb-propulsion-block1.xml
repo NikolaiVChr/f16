@@ -47,18 +47,18 @@
   <dump-rate unit="LBS/MIN"> 1000 </dump-rate>
   <tank type="FUEL"> <!-- FWD Tank F-1 / F-2 -->
    <location unit="IN">
-    <x> -128.5 </x>
+    <x> -91.5 </x>
    <y> 0 </y>
    <z> 0 </z>
    </location>
-   <capacity unit="LBS"> 2640.0 </capacity>
-   <contents unit="LBS"> 2640.0 </contents>
+   <capacity unit="LBS"> 2427.5 </capacity>
+   <contents unit="LBS"> 2427.5 </contents>
    <type>JP-4</type>
    <priority> 5 </priority>
   </tank>
   <tank type="FUEL"> <!-- Left wing tank -->
    <location unit="IN">
-    <x> 16.5 </x>
+    <x> 8.5 </x>
    <y> -80 </y>
    <z>   0 </z>
    </location>
@@ -69,7 +69,7 @@
   </tank>
   <tank type="FUEL"> <!-- Right wing tank -->
    <location unit="IN">
-    <x> 16.5 </x>
+    <x> 8.5 </x>
    <y>  80 </y>
    <z>   0 </z>
    </location>
@@ -80,18 +80,18 @@
   </tank>
   <tank type="FUEL"> <!-- AFT Tank A-1 -->
    <location unit="IN">
-    <x> 56.5 </x>
+    <x> 108.5 </x>
    <y> 0 </y>
    <z> 0 </z>
    </location>
-   <capacity unit="LBS"> 2215.0 </capacity>
-   <contents unit="LBS"> 2215.0 </contents>
+   <capacity unit="LBS"> 2427.5 </capacity>
+   <contents unit="LBS"> 2427.5 </contents>
    <type>JP-4</type>
    <priority> 5 </priority>
   </tank>
   <tank type="FUEL"> <!-- FWD Reservoir -->
     <location unit="IN">
-    <x> -128.5 </x>
+    <x> -91.5 </x>
    <y> 0 </y>
    <z> 0 </z>
    </location>
@@ -102,7 +102,7 @@
   </tank>
   <tank type="FUEL"> <!-- AFT Reservoir -->
     <location unit="IN">
-    <x> 56.5 </x>
+    <x> 108.5 </x>
    <y> 0 </y>
    <z> 0 </z>
    </location>

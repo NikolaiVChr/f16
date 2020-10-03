@@ -9,7 +9,7 @@
   <iyz unit="SLUG*FT2"> 0 </iyz>
   <emptywt unit="LBS"> 17200 </emptywt>
   <location name="CG" unit="IN">
-   <x> 3.5 </x><!-- 35%mac = -176.5in with VRP applied; measured by Richard in Blender. Offset -2in due to gears not correct in model? -->
+   <x> 8.5 </x><!-- 35%mac = -176.5in with VRP applied; measured by Richard in Blender. Offset -2in due to gears not correct in model? -->
    <y> 0 </y>
    <z> 0 </z>
   </location>
@@ -25,7 +25,7 @@
   <pointmass name="pylon1">
    <weight unit="LBS"> 0 </weight>
    <location name="POINTMASS" unit="M">
-    <x> 0.082 </x>
+    <x> 0.216 </x>
     <y> -4.79412 </y>
     <z> 0.01109 </z>
    </location>
@@ -34,7 +34,7 @@
   <pointmass name="pylon2">
    <weight unit="LBS"> 0 </weight>
    <location name="POINTMASS" unit="M">
-    <x> 0.082 </x>
+    <x> 0.216 </x>
     <y> -3.95167 </y>
     <z> -0.25696 </z>
    </location>
@@ -43,7 +43,7 @@
   <pointmass name="pylon3">
    <weight unit="LBS"> 0 </weight>
    <location name="POINTMASS" unit="M">
-    <x> 0.082 </x>
+    <x> 0.216 </x>
     <y> -2.88034 </y>
     <z> -0.25696 </z>
    </location>
@@ -52,7 +52,7 @@
   <pointmass name="pylon4">
    <weight unit="LBS"> 0 </weight>
    <location name="POINTMASS" unit="M">
-    <x> 0.082 </x>
+    <x> 0.216 </x>
     <y> -1.62889 </y>
     <z> -0.25696 </z>
    </location>
@@ -61,7 +61,7 @@
   <pointmass name="pylon5">
    <weight unit="LBS"> 0 </weight>
    <location name="POINTMASS" unit="M">
-    <x> 0.082 </x>
+    <x> 0.216 </x>
     <y> 0 </y>
     <z> -0.83778 </z>
    </location>
@@ -70,7 +70,7 @@
   <pointmass name="pylon6">
    <weight unit="LBS"> 0 </weight>
    <location name="POINTMASS" unit="M">
-    <x> 0.082 </x>
+    <x> 0.216 </x>
     <y> 1.62889 </y>
     <z> -0.25696 </z>
    </location>
@@ -79,7 +79,7 @@
   <pointmass name="pylon7">
    <weight unit="LBS"> 0 </weight>
    <location name="POINTMASS" unit="M">
-    <x> 0.082 </x>
+    <x> 0.216 </x>
     <y> 2.88034 </y>
     <z> -0.25696 </z>
    </location>
@@ -88,7 +88,7 @@
   <pointmass name="pylon8">
    <weight unit="LBS"> 0 </weight>
    <location name="POINTMASS" unit="M">
-    <x> 0.082 </x>
+    <x> 0.216 </x>
     <y> 3.95167 </y>
     <z> -0.25696 </z>
    </location>
@@ -97,7 +97,7 @@
   <pointmass name="pylon9">
    <weight unit="LBS"> 0 </weight>
    <location name="POINTMASS" unit="M">
-    <x> 0.082 </x>
+    <x> 0.216 </x>
     <y> 4.79412 </y>
     <z> 0.01109 </z>
    </location>
