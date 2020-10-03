@@ -426,35 +426,34 @@ light: ecm lamp off
         </action>
     </animation>
     <animation>
-        <type>knob</type>
+        <type>pick</type>
+        <visible>true</visible>
+        <object-name>stby-off</object-name>
+        <object-name>stby-on</object-name>
+        <object-name>active-on</object-name>
+        <object-name>active-off</object-name>
+        <object-name>adv-mode-button</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
+            <binding>
+                <command>property-toggle</command>
+                <property>f16/fcs/adv-mode-sel</property>
+            </binding>
+        </action>
+    </animation>
+    <animation>
+        <type>translate</type>
         <object-name>stby-off</object-name>
         <object-name>stby-on</object-name>
         <object-name>active-on</object-name>
         <object-name>active-off</object-name>
         <object-name>adv-mode-button</object-name>
         <property>f16/fcs/adv-mode-sel</property>
-        <factor>1</factor>
-        <drag-direction>vertical</drag-direction>
-        <center>
-            <x-m>1</x-m>
-            <y-m>0</y-m>
-            <z-m>0</z-m>
-        </center>
+        <factor>-0.0035</factor>
         <axis>
-            <x>0.15</x>
-            <y>0</y>
-            <z>0</z>
+            <z>1</z>
         </axis>
-        <action>
-            <binding>
-                <command>property-adjust</command>
-                <property>f16/fcs/adv-mode-sel</property>
-                <factor>1</factor>
-                <min>0</min>
-                <max>1</max>
-                <wrap>false</wrap>
-            </binding>
-        </action>
     </animation>
     <animation>
         <type>select</type>
