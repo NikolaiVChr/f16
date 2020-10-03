@@ -117,7 +117,7 @@
    <y> -80 </y>
    <z> -40 </z>
    </location>
-   <capacity unit="LBS"> 3750 </capacity>
+   <capacity unit="LBS"> 3888 </capacity>
    <contents unit="LBS"> 0 </contents>
    <type>JP-4</type>
    <priority> 3 </priority>
@@ -128,7 +128,7 @@
    <y> 80 </y>
    <z> -40 </z>
    </location>
-   <capacity unit="LBS"> 3750 </capacity>
+   <capacity unit="LBS"> 3888 </capacity>
    <contents unit="LBS"> 0 </contents>
    <type>JP-4</type>
    <priority> 3 </priority>
@@ -139,7 +139,7 @@
    <y>   0 </y>
    <z> -50 </z>
    </location>
-   <capacity unit="LBS"> 1800 </capacity>
+   <capacity unit="LBS"> 1944 </capacity>
    <contents unit="LBS"> 0 </contents>
    <type>JP-4</type>
    <priority> 2 </priority>

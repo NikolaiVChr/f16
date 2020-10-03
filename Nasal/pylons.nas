@@ -391,15 +391,15 @@ var a2g_oca = func {
     }
 }
 
-# A/G Unguided 1: (MK-82, MK-84)
+# A/G Unguided 1: (MK-82)
 var a2g_mk1 = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim9);
         pylon3.loadSet(pylonSets.m82);
-        pylon4.loadSet(pylonSets.m84);
+        pylon4.loadSet(pylonSets.m82);
         pylon5.loadSet(pylonSets.fuel30);
-        pylon6.loadSet(pylonSets.m84);
+        pylon6.loadSet(pylonSets.m82);
         pylon7.loadSet(pylonSets.m82);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
@@ -411,16 +411,16 @@ var a2g_mk1 = func {
     }
 }
 
-# A/G Unguided 2 (MK-83, MK-84)
+# A/G Unguided 2 (MK-84)
 var a2g_mk2 = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim9);
-        pylon3.loadSet(pylonSets.m83);
+        pylon3.loadSet(pylonSets.m84);
         pylon4.loadSet(pylonSets.m84);
         pylon5.loadSet(pylonSets.fuel30);
         pylon6.loadSet(pylonSets.m84);
-        pylon7.loadSet(pylonSets.m83);
+        pylon7.loadSet(pylonSets.m84);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
@@ -512,15 +512,15 @@ var a2g_lgb1 = func {
     }
 }
 
-# A/G LBG Strike 2 (GBU-12, GBU-24)
+# A/G LBG Strike 2 (GBU-24)
 var a2g_lgb2 = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim9);
         pylon3.loadSet(pylonSets.g24);
-        pylon4.loadSet(pylonSets.g12x2);
-        pylon5.loadSet(pylonSets.fuel30);
-        pylon6.loadSet(pylonSets.g12x2);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.g24);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
@@ -652,26 +652,6 @@ var a2g_sead = func {
     }
 }
 
-# SEAD "Wild Weasel" (AGM-88, 131 ECM pod)
-var a2g_sead2 = func {
-    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
-        pylon1.loadSet(pylonSets.aim120WT);
-        pylon2.loadSet(pylonSets.aim9);
-        pylon3.loadSet(pylonSets.a88);
-        pylon4.loadSet(pylonSets.fuel37L);
-        pylon5.loadSet(pylonSets.podEcm131);
-        pylon6.loadSet(pylonSets.fuel37R);
-        pylon7.loadSet(pylonSets.a88);
-        pylon8.loadSet(pylonSets.aim9);
-        pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podHarm);
-        pylon11.loadSet(pylonSets.empty);
-        f16.reloadCannon();
-    } else {
-      screen.log.write(f16.msgB);
-    }
-}
-
 # SEAD/DEAD (CBU-87, AGM-88)
 var a2g_dead = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
@@ -743,26 +723,6 @@ var a2g_jassm = func {
         pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.a158);
         pylon8.loadSet(pylonSets.aim9);
-        pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podSAtp);
-        pylon11.loadSet(pylonSets.podHarm);
-        f16.reloadCannon();
-    } else {
-      screen.log.write(f16.msgB);
-    }
-}
-
-# Counter A2/AD (AGM-84, AGM-88)
-var a2g_ca2ad = func {
-    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
-        pylon1.loadSet(pylonSets.aim120WT);
-        pylon2.loadSet(pylonSets.aim9);
-        pylon3.loadSet(pylonSets.a84);
-        pylon4.loadSet(pylonSets.a88);
-        pylon5.loadSet(pylonSets.fuel30);
-        pylon6.loadSet(pylonSets.a88);
-        pylon7.loadSet(pylonSets.a84);
-        pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.podSAtp);
         pylon11.loadSet(pylonSets.podHarm);
