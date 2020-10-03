@@ -16,7 +16,7 @@
     </empty>
     
     <text>
-      <label>Payload quick setup</label>
+      <label>Payload presets</label>
     </text>
     
     <empty>
@@ -69,6 +69,16 @@
         <binding>
           <command>nasal</command>
           <script>pylons.cannon_load();</script>
+        </binding>
+    </button>
+
+  <vrule/>
+
+    <button>
+        <legend>Clean load</legend>
+        <binding>
+          <command>nasal</command>
+          <script>pylons.clean();</script>
         </binding>
     </button>
   </group>
@@ -279,24 +289,9 @@
         </button>
 
         <text>
-            <row>22</row>
-            <col>0</col>
-            <label>Clean load</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>22</row>
-            <col>1</col>
-            <legend>Mount</legend>
-            <binding>
-                <command>nasal</command>
-                <script>pylons.clean();</script>
-            </binding>
-        </button>
-
-        <text>
             <row>0</row>
             <col>2</col>
-            <label>SEAD "Wild Weasel" 1</label>
+            <label>SEAD "Wild Weasel"</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>0</row>
@@ -311,25 +306,10 @@
         <text>
             <row>2</row>
             <col>2</col>
-            <label>SEAD "Wild Weasel" 2</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>2</row>
-            <col>3</col>
-            <legend>Mount</legend>
-            <binding>
-                <command>nasal</command>
-                <script>pylons.a2g_sead2();</script>
-            </binding>
-        </button>
-
-        <text>
-            <row>4</row>
-            <col>2</col>
             <label>SEAD/DEAD Strike</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>4</row>
+            <row>2</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -339,12 +319,12 @@
         </button>
 
         <text>
-            <row>6</row>
+            <row>4</row>
             <col>2</col>
             <label>SEAD/DEAD (Stand-off)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>6</row>
+            <row>4</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -355,12 +335,12 @@
 
         <layout>hbox</layout>
         <text>
-            <row>8</row>
+            <row>6</row>
             <col>2</col>
             <label>Close Air Support</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>8</row>
+            <row>6</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -376,12 +356,12 @@
         </hrule>
 
         <text>
-            <row>10</row>
+            <row>8</row>
             <col>2</col>
             <label>Close Air Support (ER)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>10</row>
+            <row>8</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -397,27 +377,12 @@
         </hrule>
 
         <text>
-            <row>12</row>
-            <col>2</col>
-            <label>Counter A2/AD</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>12</row>
-            <col>3</col>
-            <legend>INOP</legend>
-            <binding>
-                <command>nasal</command>
-                <script>pylons.a2g_ca2ad();</script>
-            </binding>
-        </button>
-
-        <text>
-            <row>14</row>
+            <row>10</row>
             <col>2</col>
             <label>Offensive Counter Air</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>14</row>
+            <row>10</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -427,12 +392,27 @@
         </button>
 
         <text>
-            <row>16</row>
+            <row>12</row>
+            <col>2</col>
+            <label>A/G Hydra 70 rockets</label>
+        </text>
+        <button><pref-width>45</pref-width><pref-height>20</pref-height>
+            <row>12</row>
+            <col>3</col>
+            <legend>Mount</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_hyd70();</script>
+            </binding>
+        </button>
+
+        <text>
+            <row>14</row>
             <col>2</col>
             <label>A/G JASSM Stand-off Strike</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>16</row>
+            <row>14</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -442,12 +422,12 @@
         </button>
 
         <text>
-            <row>18</row>
+            <row>16</row>
             <col>2</col>
             <label>A/G JSOW Stand-off Strike</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>18</row>
+            <row>16</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -463,12 +443,12 @@
         </hrule>
 
         <text>
-            <row>20</row>
+            <row>18</row>
             <col>2</col>
             <label>A/S Anti-Ship (Mode 1)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>20</row>
+            <row>18</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -478,12 +458,12 @@
         </button>
 
         <text>
-            <row>22</row>
+            <row>20</row>
             <col>2</col>
             <label>A/S Anti-Ship (Mode 2)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>22</row>
+            <row>20</row>
             <col>3</col>
             <legend>Mount</legend>
             <binding>
@@ -501,25 +481,10 @@
         <text>
             <row>0</row>
             <col>4</col>
-            <label>A/G Hydra 70 (Unguided)</label>
+            <label>A/G Unguided (Mode 1)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>0</row>
-            <col>5</col>
-            <legend>Mount</legend>
-            <binding>
-                <command>nasal</command>
-                <script>pylons.a2g_hyd70();</script>
-            </binding>
-        </button>
-
-        <text>
-            <row>2</row>
-            <col>4</col>
-            <label>A/G Unguided (Multi-mode 1)</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>2</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
@@ -529,12 +494,12 @@
         </button>
 
         <text>
-            <row>4</row>
+            <row>2</row>
             <col>4</col>
-            <label>A/G Unguided (Multi-mode 2)</label>
+            <label>A/G Unguided (Mode 2)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>4</row>
+            <row>2</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
@@ -544,12 +509,12 @@
         </button>
 
         <text>
-            <row>6</row>
+            <row>4</row>
             <col>4</col>
             <label>A/G CEM Strike (Unguided)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>6</row>
+            <row>4</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
@@ -559,12 +524,12 @@
         </button>
 
         <text>
-            <row>8</row>
+            <row>6</row>
             <col>4</col>
             <label>A/G SFW Strike (WCMD)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>8</row>
+            <row>6</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
@@ -574,12 +539,12 @@
         </button>
 
         <text>
-            <row>10</row>
+            <row>8</row>
             <col>4</col>
-            <label>A/G LGB Strike (Single-mode)</label>
+            <label>A/G LGB Strike (Paveway II)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>10</row>
+            <row>8</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
@@ -589,12 +554,12 @@
         </button>
 
         <text>
-            <row>12</row>
+            <row>10</row>
             <col>4</col>
-            <label>A/G LGB Strike (Multi-mode)</label>
+            <label>A/G LGB Strike (Paveway III)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>12</row>
+            <row>10</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
@@ -604,12 +569,12 @@
         </button>
 
         <text>
-            <row>14</row>
+            <row>12</row>
             <col>4</col>
             <label>A/G GPS Strike (JDAM)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>14</row>
+            <row>12</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
@@ -619,12 +584,12 @@
         </button>
 
         <text>
-            <row>16</row>
+            <row>14</row>
             <col>4</col>
             <label>A/G GPS Strike (L-JDAM)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>16</row>
+            <row>14</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
@@ -634,12 +599,12 @@
         </button>
 
         <text>
-            <row>18</row>
+            <row>16</row>
             <col>4</col>
             <label>A/G GPS Strike (Joint-mode)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>18</row>
+            <row>16</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
@@ -655,12 +620,12 @@
         </hrule>
 
         <text>
-            <row>20</row>
+            <row>18</row>
             <col>4</col>
             <label>A/G Strategic Strike (Unguided)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>20</row>
+            <row>18</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
@@ -670,12 +635,12 @@
         </button>
 
          <text>
-            <row>22</row>
+            <row>20</row>
             <col>4</col>
             <label>A/G Tactical Strike (Guided)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>22</row>
+            <row>20</row>
             <col>5</col>
             <legend>Mount</legend>
             <binding>
@@ -683,12 +648,6 @@
                 <script>pylons.a2g_tact();</script>
             </binding>
         </button>
-
-        <hrule>
-            <row>21</row>
-            <col>0</col>
-            <colspan>6</colspan>
-        </hrule>
 
     </group>
 
