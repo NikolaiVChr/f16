@@ -34,7 +34,6 @@
             <path>/f16/avionics/bulls-eye-defined</path>
             <path>/f16/avionics/bulls-eye-lat</path>
             <path>/f16/avionics/bulls-eye-lon</path>
-            <path>f16/settings/bingo</path>
             <path>/link16/wingman-1</path>
             <path>/link16/wingman-2</path>
             <path>/link16/wingman-3</path>
@@ -3472,7 +3471,7 @@ There is also small changes in tail for different variants with and without brak
             <helmet-damping type="double">0.325</helmet-damping>
         </sound>
         <settings>
-            <bingo type="int">1250</bingo>
+            <bingo type="int">1500</bingo>
             <msl-floor type="int">18000</msl-floor><!-- Mean Sea Level altitude advisory floor
 value. 18000=standard US transition altitude -->
             <cara-alow type="int">500</cara-alow><!-- Combined Altitude Radar Altimeter Automatic LOw altitude Warning -->
