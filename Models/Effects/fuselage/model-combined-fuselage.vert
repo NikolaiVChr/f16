@@ -67,6 +67,7 @@ void	main(void)
 			vertex.y += deflection[1];
 			
 			if(rotation_rad != 0){
+				float rotation_rad2 = 0.5 * rotation_rad;
 				vec2 defl1=calc_deflection(rotation_y1);
 				vec2 defl2=calc_deflection(rotation_y2);
 				float rot_y1 = rotation_y1;
@@ -83,11 +84,11 @@ void	main(void)
 				normal[1]=rot_y2-rot_y1;
 				normal[2]=rot_z2-rot_z1;
 				normal = normalize(normal);
-				float tmp = (1-cos(rotation_rad));
+				float tmp = (1-cos(rotation_rad2));
 				mat4 rotation_matrix = mat4(
-					pow(normal[0],2)*tmp+cos(rotation_rad),			normal[1]*normal[0]*tmp-normal[2]*sin(rotation_rad),	normal[2]*normal[0]*tmp+normal[1]*sin(rotation_rad),	0.0,
-					normal[0]*normal[1]*tmp+normal[2]*sin(rotation_rad),	pow(normal[1],2)*tmp+cos(rotation_rad),			normal[2]*normal[1]*tmp-normal[0]*sin(rotation_rad),	0.0,
-					normal[0]*normal[2]*tmp-normal[1]*sin(rotation_rad),	normal[1]*normal[2]*tmp+normal[0]*sin(rotation_rad),	pow(normal[2],2)*tmp+cos(rotation_rad),			0.0,
+					pow(normal[0],2)*tmp+cos(rotation_rad2),			normal[1]*normal[0]*tmp-normal[2]*sin(rotation_rad2),	normal[2]*normal[0]*tmp+normal[1]*sin(rotation_rad2),	0.0,
+					normal[0]*normal[1]*tmp+normal[2]*sin(rotation_rad2),	pow(normal[1],2)*tmp+cos(rotation_rad2),			normal[2]*normal[1]*tmp-normal[0]*sin(rotation_rad2),	0.0,
+					normal[0]*normal[2]*tmp-normal[1]*sin(rotation_rad2),	normal[1]*normal[2]*tmp+normal[0]*sin(rotation_rad2),	pow(normal[2],2)*tmp+cos(rotation_rad2),			0.0,
 					0.0,							0.0,							0.0,							1.0
 					);
 				vec4 old_point;
