@@ -3,6 +3,12 @@
 <PropertyList>
 
  <path>hud.ac</path>
+ 
+ <offsets>
+   <x-m> 0.013</x-m>
+   <y-m> 0.000</y-m>
+   <z-m> 0.010</z-m>
+  </offsets>
 
  <effect>
   <inherits-from>Aircraft/f16/Models/Effects/adjustable-hud</inherits-from>

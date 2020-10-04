@@ -7,10 +7,6 @@
 # Richard Harrison (rjh@zaretto.com) 2016-07-01  - based on F-15 HUD
 # ---------------------------
 
-var ht_xcf =  1750;# 340pixels / 0.15m = 2267 texels/meter (in an ideal world where canvas is UV mapped to edges of texture)
-var ht_ycf = -1614;# 260pixels / 0.16m
-var ht_xco =  15;
-var ht_yco = -30;
 var ht_debug = 0;
 
 var pitch_offset = 12;
@@ -33,8 +29,15 @@ var F16_HUD = {
 
         obj.sy = sy;                        
         obj.sx = sx*0.695633;
-                  
-        HudMath.init([-4.53557,-0.07814,0.85608], [-4.72279,0.07924,0.66979], [sx,sy], [0,1.0], [0.695633,0.0], 0);
+        
+        # Real HUD:
+        #
+        # F16C: Optics provides a 25degree Total Field of View and a 20o by 13.5o Instantaneous Field of View
+        #
+        # F16A: Total Field of View of the F-16 A/B PDU is 20deg but the Instantaneous FoV is only 9deg in elevation and 13.38deg in azimuth
+        
+        
+        HudMath.init([-4.53759+0.013,-0.07814,0.85796+0.010], [-4.7148+0.013,0.07924,0.66213+0.010], [sx,sy], [0,1.0], [0.695633,0.0], 0);
                           
         obj.canvas.addPlacement({"node": canvas_item});
         obj.canvas.setColorBackground(0.30, 1, 0.3, 0.00);
@@ -1607,9 +1610,9 @@ append(obj.total, obj.speed_curr);
 
         if (hdp.FrameCount == 2 or me.initUpdate == 1) {
             # calc of pitch_offset (compensates for AC3D model translated and rotated when loaded. Also semi compensates for HUD being at an angle.)
-            me.Hz_b =    0.669786;#0.676226;#0.663711;#0.801701;# HUD position inside ac model after it is loaded, translated (0.08m) and rotated (0.7d).
-            me.Hz_t =    0.85608;#0.86608;#0.841082;#0.976668;
-            me.Hx_m =   -4.62918;#-4.62737;#-4.65453;#-4.6429;# HUD median X pos
+            me.Hz_b =    0.66213+0.010;#0.676226;#0.663711;#0.801701;# HUD position inside ac model after it is loaded, translated (0.08m) and rotated (0.7d).
+            me.Hz_t =    0.85796+0.010;#0.86608;#0.841082;#0.976668;
+            me.Hx_m =   (-4.7148+0.013-4.53759+0.013)*0.5;#-4.62737;#-4.65453;#-4.6429;# HUD median X pos
             me.Vz   =    hdp.current_view_y_offset_m; # view Z position (0.94 meter per default)
             me.Vx   =    hdp.current_view_z_offset_m; # view X position (0.94 meter per default)
 
@@ -1972,10 +1975,6 @@ append(obj.total, obj.speed_curr);
 #        if (hdp.FrameCount == 1 or hdp.FrameCount == 3 or me.initUpdate == 1) {
             me.target_idx = 0;
             me.designated = 0;
-            ht_yco = pitch_offset;
-            ht_xco = 0;
-            ht_xcf = me.pixelPerMeterX;
-            ht_ycf = -me.pixelPerMeterY;
             
         me.target_locked.setVisible(0);
 
