@@ -333,7 +333,7 @@
       <script>
               setprop("f16/avionics/emer-jett-switch",1);
               if (pylons.fcs != nil and (getprop("f16/avionics/gnd-jett") or !getprop("gear/gear[0]/wow"))) {
-                pylons.fcs.jettisonFuelAndAG([0,8]);#drop all fueltanks, dummies and A/G weapons. Except wingtips.
+                pylons.fcs.jettisonFuelAndAG([0,1,7,8]);#drop all fueltanks, dummies and A/G weapons. Except wingtips.
               }
       </script>
      </binding>
