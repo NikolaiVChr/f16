@@ -862,7 +862,7 @@
                 <sum>
                     <product>
                         <property> fcs/fly-by-wire/condition-z </property>
-                        <value> 0.25 </value>
+                        <value> 0.40 </value>
                     </product>
                     <product>
                         <property> fcs/fly-by-wire/condition-y </property>
