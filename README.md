@@ -1,8 +1,8 @@
 # F-16 Fighting Falcon
 General Dynamics F-16 for [FlightGear](http://www.flightgear.org) flight simulator
-------------------
-Current FGAddon version: 3.22
-Suitable for: FlightGear 2018.3 and above.
+
+Current FGAddon version: **3.22**
+Suitable for: FlightGear **2018.3 and above.**
 
 ![Image](https://i.ibb.co/vV9SVfT/fgfs-20200508231145.png)
 
@@ -36,9 +36,13 @@ Weapons available and payload presets are mostly U.S. specific.
 For the full list of contributors see authors.txt.
 
 Useful links:
-------------------
+-----------
 Hangar: https://sourceforge.net/p/flightgear/fgaddon/HEAD/tree/trunk/Aircraft/f16/
+
 Wiki: http://wiki.flightgear.org/General_Dynamics_F-16_Fighting_Falcon  (not up-to date)
+
 GitHub: https://github.com/NikolaiVChr/f16
+
 Forum: https://forum.flightgear.org/viewtopic.php?f=4&t=2003
-Discord: https://discord.gg/CJYTUAQ (Development server)
+
+Discord: https://discord.gg/CJYTUAQ (development server)
