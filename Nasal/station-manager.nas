@@ -29,6 +29,7 @@ var Station = {
 		p.changingGui = 0;
 		p.launcherDA=0;
 		p.launcherMass=0;
+		p.launcherJettisoned=1;
 		p.forceRail = 0;
 		p.guiListener = nil;
 		p.currentName = nil;	
@@ -126,10 +127,17 @@ var Station = {
 			}
 			me.launcherMass = set.launcherMass;
 			me.launcherJettisonable = set.launcherJettisonable;
+			me.weaponJettisonable = set["weaponJettisonable"];
+			if (me.weaponJettisonable == nil) {
+				me.weaponJettisonable = 1;
+			}
+			me.launcherJettisoned = 0;
 			me.currentSet   = set;
 		} else {
 			me.launcherMass = 0;
 			me.launcherJettisonable = 0;
+			me.launcherJettisoned = 1;
+			me.weaponJettisonable = 1;
 			me.currentSet = nil;
 		}
 		me.loadingSet(set);
@@ -409,7 +417,7 @@ var Pylon = {
 	
 	getCurrentPylon: func {
 		me.nameP = nil;
-		if(me.currentSet != nil and me.currentSet["pylon"] != nil and (me.launcherMass != 0 or me.launcherDA != 0)) {
+		if(me.currentSet != nil and me.currentSet["pylon"] != nil) {
 			me.nameP = me.currentSet.pylon;
 		}
 		return me.nameP;
@@ -417,7 +425,7 @@ var Pylon = {
 	
 	getCurrentRack: func {
 		me.nameR = nil;
-		if(me.currentSet != nil and me.currentSet["rack"] != nil and (me.launcherMass != 0 or me.launcherDA != 0)) {
+		if(me.currentSet != nil and me.currentSet["rack"] != nil and me.launcherJettisoned == 0) {
 			me.nameR = me.currentSet.rack;
 		}
 		return me.nameR;
@@ -497,24 +505,28 @@ var Pylon = {
 
 	jettisonAll: func {
 		# drops everything.
-		me.tempWeapons = [];
-		foreach(me.weapon ; me.getWeapons()) {
-			if (me.weapon != nil) {
-				me.weapon.eject();
+		if (me.weaponJettisonable) {
+			me.tempWeapons = [];
+		
+			foreach(me.weapon ; me.getWeapons()) {
+				if (me.weapon != nil) {
+					me.weapon.eject();
+				}
+				append(me.tempWeapons, nil);
 			}
-			append(me.tempWeapons, nil);
+			me.jettisonLauncher();
+			me.weapons = me.tempWeapons;
+			me.calculateMass();
+			me.calculateFDM();
+			me.setGUI();
 		}
-		me.jettisonLauncher();
-		me.weapons = me.tempWeapons;
-		me.calculateMass();
-		me.calculateFDM();
-		me.setGUI();
 	},
 
 	jettisonLauncher: func {
 		if (me.launcherJettisonable) {
 			me.launcherMass = 0;
 			me.launcherDA   = 0;
+			me.launcherJettisoned = 1;
 		}
 	},
 	
