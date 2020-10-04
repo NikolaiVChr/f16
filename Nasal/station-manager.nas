@@ -252,6 +252,9 @@ var Station = {
 	jettisonAll: func {},
 	jettisonLauncher: func {},
 	getCurrentShortName: func {},
+	getCurrentSMSName: func {},
+	getCurrentPylon: func {},
+	getCurrentRack: func {},
 };
 
 var InternalStation = {
@@ -403,6 +406,22 @@ var Pylon = {
 
 		me.changingGui = 0;
 	},
+	
+	getCurrentPylon: func {
+		me.nameP = nil;
+		if(me.currentSet != nil and me.currentSet["pylon"] != nil and me.launcherMass != 0 and me.launcherDA != 0) {
+			me.nameP = me.currentSet.pylon;
+		}
+		return me.nameP;
+	},
+	
+	getCurrentRack: func {
+		me.nameR = nil;
+		if(me.currentSet != nil and me.currentSet["rack"] != nil and me.launcherMass != 0 and me.launcherDA != 0) {
+			me.nameR = me.currentSet.rack;
+		}
+		return me.nameR;
+	},
 
 	getCurrentShortName: func {
 		me.nameS = "";
@@ -426,6 +445,42 @@ var Pylon = {
 			}
 			foreach(key;keys(me.calcName)) {
 				me.nameS = me.nameS~", "~me.calcName[key]~"x"~key;
+			}
+			me.nameS = right(me.nameS, size(me.nameS)-2);#remove initial comma
+		}
+		if(me.nameS == "" and me.currentSet != nil and size(me.currentSet.content)!=0) {
+			me.nameS = nil;
+		} elsif (me.nameS == "" and me.currentSet != nil and size(me.currentSet.content)==0) {
+			me.nameS = me.currentSet.name;
+		}
+		if(me.nameS == "" or me.nameS == "Empty") {
+			me.nameS = nil;
+		}
+		return me.nameS;
+	},
+	
+	getCurrentSMSName: func {
+		me.nameS = "";
+		if (me.currentSet.showLongTypeInsteadOfCount) {
+			foreach(me.wapny;me.weapons) {
+				if (me.wapny != nil) {
+					me.nameS = me.wapny.typeShort;
+				}
+			}
+		} else {
+			me.calcName = {};
+			foreach(me.weapon;me.weapons) {
+				if(me.weapon != nil) {
+					me.type = me.weapon.typeShort;
+					if (me.calcName[me.type]==nil) {
+						me.calcName[me.type]=1;
+					} else {
+						me.calcName[me.type] += 1;
+					}
+				}
+			}
+			foreach(key;keys(me.calcName)) {
+				me.nameS = me.nameS~", "~me.calcName[key]~" "~key;
 			}
 			me.nameS = right(me.nameS, size(me.nameS)-2);#remove initial comma
 		}
