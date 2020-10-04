@@ -29,7 +29,7 @@
         Pseudo fuel system and stores adjusted to not mess too much with static margin.
         
         Static margin translated aft 5in to about 14in from MLG, which is about 10% of distance from MLG to NLG.
-        The real (Block 10/15) CoG is 13in from MLG on X, and about 8.5-9in below engine Z.
+        The real (Block 10/15) CoG is 13in from MLG on X, and about 8.5-9in below engine Z. [Source: TO 1F-16A-1 change 14 2003]
         
     -->
    <x> 3.0664 </x>

@@ -11,7 +11,7 @@
   <location name="CG" unit="IN">
    <x> 8.5 </x><!-- 35%mac = -176.5in with VRP applied; measured by Richard in Blender. Offset -2in due to gears not correct in model? -->
    <y> 0 </y>
-   <z> -0.215 </z>
+   <z> -8.0 </z>
   </location>
   <pointmass name="Pilot">
    <weight unit="LBS"> 159 </weight>
