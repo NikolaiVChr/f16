@@ -1686,177 +1686,49 @@ var MFD_Device =
             }
             me.root.gun.setText(gunAmmo~"GUN");
             if (getprop("sim/variant-id") == 0 or getprop("sim/variant-id") == 1 or getprop("sim/variant-id") == 3) {
-            me.root.gun2.setText("M56");
+                me.root.gun2.setText("M56");
             } else {
-            me.root.gun2.setText("PGU28");
+                me.root.gun2.setText("PGU28");
             }
 
-            var pT = "--------";
-            if (pylons.pylon1 != nil) {
-                var nm = pylons.pylon1.getCurrentShortName();
-                if (nm != nil) pT = nm;
-            }
-            me.root.p1.setText("1 MRLW");
-            if (find("x", pT) != -1) {
-                me.root.p1l1.setText(split("x", pT)[0] ~ " " ~ split("x", pT)[1])
-            } else {
-                me.root.p1l1.setText(pT)
-            }
-
-            pT = "--------";
-            if (pylons.pylon2 != nil) {
-                var nm = pylons.pylon2.getCurrentShortName();
-                if (nm != nil) pT = nm;
-            }
-            if (getprop("payload/armament/station/id-1-set") != "Empty") {
-                me.root.p2.setText("1 MRL");
-            }
-            else {
-                me.root.p2.setText("--------");
-            }
-            if (find("x", pT) != -1) {
-                me.root.p2l1.setText(split("x", pT)[0] ~ " " ~ split("x", pT)[1])
-            } else {
-                me.root.p2l1.setText(pT)
-            }
-
-            pT = "--------";
-            if (pylons.pylon3 != nil) {
-                var nm = pylons.pylon3.getCurrentShortName();
-                if (nm != nil) pT = nm;
-            }
-            var idset = getprop("payload/armament/station/id-2-set");
-            if (idset != "Empty") {
-                if (idset == "1 x AIM-120" or idset == "1 x AIM-7" or idset == "1 x AIM-9") {
-                    me.root.p3.setText("1 MRL");
+            me.setTextOnStation([me.root.p1, me.root.p1l1], pylons.pylon1);
+            me.setTextOnStation([me.root.p2, me.root.p2l1], pylons.pylon2);
+            me.setTextOnStation([me.root.p3, me.root.p3l1, me.root.p3l2], pylons.pylon3);
+            me.setTextOnStation([me.root.p4, me.root.p4l1, me.root.p4l2], pylons.pylon4);
+            me.setTextOnStation([me.root.p5, me.root.p5l1, me.root.p5l2], pylons.pylon5);
+            me.setTextOnStation([me.root.p6, me.root.p6l1, me.root.p6l2], pylons.pylon6);
+            me.setTextOnStation([me.root.p7, me.root.p7l1, me.root.p7l2], pylons.pylon7);
+            me.setTextOnStation([me.root.p8, me.root.p8l1], pylons.pylon8);
+            me.setTextOnStation([me.root.p9, me.root.p9l1], pylons.pylon9);
+        };
+        me.p_SMS.setTextOnStation = func (lines, pylon) {
+            # no check for pylon 1 and 9 if you enter both rack and pylon for them, this method will fail. So take care.
+            if (pylon == nil) {
+                lines[0].setText("--------");
+                lines[1].setText("--------");
+                if (size(lines) == 3) {
+                    lines[2].setText("--------");
                 }
-                else if (idset == "2 x LAU-68" or idset == "3 x AGM-65" or idset == "2 x GBU-54" or idset == "3 x GBU-12" or idset == "3 x MK-82" or idset == "2 x MK-83" or idset == "2 x CBU-87" or idset == "2 x CBU-105") {
-                    me.root.p3.setText("1 TER");
-                }
-                else {
-                    me.root.p3.setText("1 MAU");
-                }
+                return;
             }
-            else {
-                me.root.p3.setText("--------");
+            me.curr = 0;
+            me.pylName = pylon.getCurrentPylon();
+            if (me.pylName != nil) {
+                lines[me.curr].setText(me.pylName);
+                me.curr += 1;
             }
-            if (find("x", pT) != -1) {
-                me.root.p3l1.setText(split("x", pT)[0] ~ " " ~ split("x", pT)[1])
-            } else {
-                me.root.p3l1.setText(pT)
+            me.rackName = pylon.getCurrentRack();
+            if (me.rackName != nil) {
+                lines[me.curr].setText(me.rackName);
+                me.curr += 1;
             }
-
-            pT = "--------";
-            if (pylons.pylon4 != nil) {
-                var nm = pylons.pylon4.getCurrentShortName();
-                if (nm != nil) pT = nm;
+            me.weapName = pylon.getCurrentSMSName();
+            if (me.weapName != nil) {
+                lines[me.curr].setText(me.weapName);
+                me.curr += 1;
             }
-            var idset = getprop("payload/armament/station/id-3-set");
-            if (idset != "Empty") {
-            if (idset == "2 x LAU-68" or idset == "2 x GBU-12" or idset == "3 x MK-82" or idset == "2 x MK-83" or idset == "2 x CBU-87" or idset == "2 x CBU-105") {
-                me.root.p4.setText("1 TER");
-            } else {
-            me.root.p4.setText("1 MAU");
-            }
-            } else {
-            me.root.p4.setText("--------");
-            }
-            if (find("x", pT) != -1) {
-                me.root.p4l1.setText(split("x", pT)[0] ~ " " ~ split("x", pT)[1])
-            } else {
-                me.root.p4l1.setText(pT)
-            }
-
-            pT = "--------";
-            if (pylons.pylon5 != nil) {
-                var nm = pylons.pylon5.getCurrentShortName();
-                if (nm != nil) pT = nm;
-            }
-            if (getprop("payload/armament/station/id-4-set") != "Empty") {
-                me.root.p5.setText("1 MAU");
-            }
-            else {
-                me.root.p5.setText("--------");
-            }
-            if (find("x", pT) != -1) {
-                me.root.p5l1.setText(split("x", pT)[0] ~ " " ~ split("x", pT)[1])
-            } else {
-                me.root.p5l1.setText(pT)
-            }
-
-            pT = "--------";
-            if (pylons.pylon6 != nil) {
-                var nm = pylons.pylon6.getCurrentShortName();
-                if (nm != nil) pT = nm;
-            }
-            var idset = getprop("payload/armament/station/id-5-set");
-            if (idset != "Empty") {
-            if (idset == "2 x LAU-68" or idset == "2 x GBU-12" or idset == "3 x MK-82" or idset == "2 x MK-83" or idset == "2 x CBU-87" or idset == "2 x CBU-105") {
-                me.root.p6.setText("1 TER");
-            } else {
-            me.root.p6.setText("1 MAU");
-            }
-            } else {
-            me.root.p6.setText("--------");
-            }
-            if (find("x", pT) != -1) {
-                me.root.p6l1.setText(split("x", pT)[0] ~ " " ~ split("x", pT)[1])
-            } else {
-                me.root.p6l1.setText(pT)
-            }
-
-            pT = "--------";
-            if (pylons.pylon7 != nil) {
-                var nm = pylons.pylon7.getCurrentShortName();
-                if (nm != nil) pT = nm;
-            }
-            idset = getprop("payload/armament/station/id-6-set");
-            if (idset != "Empty") {
-                if (idset == "1 x AIM-120" or idset == "1 x AIM-7" or idset == "1 x AIM-9") {
-                    me.root.p7.setText("1 MRL");
-                }
-                else if (idset == "2 x LAU-68" or idset == "3 x AGM-65" or idset == "2 x GBU-54" or idset == "3 x GBU-12" or idset == "3 x MK-82" or idset == "2 x MK-83" or idset == "2 x CBU-87" or idset == "2 x CBU-105") {
-                    me.root.p7.setText("1 TER");
-                } else {
-                    me.root.p7.setText("1 MAU");
-                }
-            }
-            else {
-                me.root.p7.setText("--------");
-            }
-            if (find("x", pT) != -1) {
-                me.root.p7l1.setText(split("x", pT)[0] ~ " " ~ split("x", pT)[1])
-            } else {
-                me.root.p7l1.setText(pT)
-            }
-
-            pT = "--------";
-            if (pylons.pylon8 != nil) {
-                var nm = pylons.pylon8.getCurrentShortName();
-                if (nm != nil) pT = nm;
-            }
-            if (getprop("payload/armament/station/id-7-set") != "Empty") {
-                me.root.p8.setText("1 MRL");
-            }
-            else {
-                me.root.p8.setText("--------");
-            }
-            if (find("x", pT) != -1) {
-                me.root.p8l1.setText(split("x", pT)[0] ~ " " ~ split("x", pT)[1])
-            } else {
-                me.root.p8l1.setText(pT)
-            }
-
-            pT = "--------";
-            if (pylons.pylon9 != nil) {
-                var nm = pylons.pylon9.getCurrentShortName();
-                if (nm != nil) pT = nm;
-            }
-            me.root.p9.setText("1 MRLW");
-            if (find("x", pT) != -1) {
-                me.root.p9l1.setText(split("x", pT)[0] ~ " " ~ split("x", pT)[1])
-            } else {
-                me.root.p9l1.setText(pT)
+            for (var i = me.curr ; i < size(lines); i += 1) {
+                lines[i].setText("--------");
             }
         };
     },
