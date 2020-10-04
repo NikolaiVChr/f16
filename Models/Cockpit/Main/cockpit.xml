@@ -4,7 +4,7 @@
 
  <path>cockpit.ac</path>
 
-  <effect>
+  <!--<effect>
       <inherits-from>Effects/model-combined-transparent</inherits-from>
       <parameters>
 			<rain-enabled type="int">0</rain-enabled>
@@ -38,7 +38,18 @@
 			</render-bin>
       </parameters>
       <object-name>hud-optics</object-name>
- </effect>
+ </effect>-->
+ 
+ <animation>
+  <type>select</type>
+  <object-name>hud-optic</object-name>
+  <condition>
+        <equals>
+          <value>0</value>
+          <value>1</value>
+        </equals>
+  </condition>
+ </animation>
  
  <effect>
         <inherits-from>Effects/model-combined-deferred</inherits-from>
