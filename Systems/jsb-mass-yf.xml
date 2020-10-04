@@ -9,7 +9,7 @@
   <iyz unit="SLUG*FT2"> 0 </iyz>
   <emptywt unit="LBS"> 15100 </emptywt>
   <location name="CG" unit="IN">
-   <x> 8.5 </x><!-- 35%mac = -176.5in with VRP applied; measured by Richard in Blender. Offset -2in due to gears not correct in model? -->
+   <x> 8.5 </x><!-- See comment in metrics.xml -->
    <y> 0 </y>
    <z> -8.0 </z>
   </location>
