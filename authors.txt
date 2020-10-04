@@ -11,13 +11,13 @@ Erik Hofman
 Martin "Pegasus" Schmitt
 - Cockpit textures and layout
 
-Prohm “Rama” Snitwong
+Prohm "Rama" Snitwong
 - Cockpit textures and layout
 
 Pensacola
 - Liveries
 
-Nikolai V. Chr.
+Nikolai V. Chr. "Leto","Necolatis"
 - F16 Blocks 10, 20 and YF-16 aerodynamics
 - Fly-by-wire system for all variants except simplified
 - Danish, Ghost Gray, Blue Bandit, 2xUAE, Croatian, Empire, Norwegian and prototype livery
@@ -28,7 +28,7 @@ Nikolai V. Chr.
 - RWR
 - Pylons, counter-measures and missile code
 - Crash and stress code.
-- Splashes
+- Splash screens
 
 J Maverick 16
 - Addition and adaptation of liveries by Gary Brown
@@ -62,7 +62,7 @@ Richard Harrison
 - 3D misc. panel
 - Avionics communication system (Emessary based)
 
-Justin Nicholson
+Justin "pinto" Nicholson
 - Splashes
 - AIM-9 growl, lock sounds
 - AIM-9 and AIM-120 original models
@@ -83,6 +83,7 @@ Fabien Barbier (5H1N0B1)
 - Work on stores
 - Missile view
 - Radar work
+- Base code for TGP
 
 NC-687
 - New 3D side stick and central air vent
@@ -109,13 +110,14 @@ Alan Teeder
 - FDM consulting
 - Fixed wrong aero data for speedbrake
 
-Enrico Castaldi (Spectre)
+Enrico Castaldi "Spectre"
 - Italian and other liveries
 - Texture improvements
 
 PH-JAKE
 - Refactored autostart
 - Bug fixes and improvements
+- Knob selection for draining FWD/AFT tanks
 
 FGUK
 - Sounds
