@@ -122,3 +122,6 @@ FGUK
 
 Marsdolphin
 - Some liveries
+
+Onox
+- Support for onox-tanker
