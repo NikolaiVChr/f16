@@ -409,7 +409,7 @@ var Pylon = {
 	
 	getCurrentPylon: func {
 		me.nameP = nil;
-		if(me.currentSet != nil and me.currentSet["pylon"] != nil and me.launcherMass != 0 and me.launcherDA != 0) {
+		if(me.currentSet != nil and me.currentSet["pylon"] != nil and (me.launcherMass != 0 or me.launcherDA != 0)) {
 			me.nameP = me.currentSet.pylon;
 		}
 		return me.nameP;
@@ -417,7 +417,7 @@ var Pylon = {
 	
 	getCurrentRack: func {
 		me.nameR = nil;
-		if(me.currentSet != nil and me.currentSet["rack"] != nil and me.launcherMass != 0 and me.launcherDA != 0) {
+		if(me.currentSet != nil and me.currentSet["rack"] != nil and (me.launcherMass != 0 or me.launcherDA != 0)) {
 			me.nameR = me.currentSet.rack;
 		}
 		return me.nameR;
