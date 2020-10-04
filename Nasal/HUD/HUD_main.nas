@@ -702,7 +702,7 @@ append(obj.total, obj.speed_curr);
         
         var bracketsize = HudMath.getPosFromDegs(0,-13)[1]-HudMath.getPosFromDegs(0,-9)[1];#fudge factored for when raising seat it gets higher up in HUD where degrees are less. (is really 11 to 15)
         obj.bracket = obj.centerOrigin.createChild("path")
-                .moveTo(0,-34)
+                .moveTo(0,0)
                 .horiz(-10)
                 .vert(bracketsize)
                 .horiz(10)
@@ -1183,7 +1183,7 @@ append(obj.total, obj.speed_curr);
             props.UpdateManager.FromHashList(["fpm","texUp","gear_down","VV_x","VV_y", "wow", "ded", "dgft"], 0.01, func(hdp)
                                       {
                                         if (hdp.gear_down and !hdp.wow) {
-                                          obj.bracket.setTranslation (hdp.VV_x, HudMath.getCenterPosFromDegs(0,-13)[1]);
+                                          obj.bracket.setTranslation (hdp.VV_x, HudMath.getCenterPosFromDegs(0,-11)[1]);
                                           #obj.bracket.setTranslation (obj.sx/2+hdp.VV_x * obj.texelPerDegreeX, obj.sy-obj.texels_up_into_hud+13 * obj.texelPerDegreeY);
                                           obj.bracket.show();
                                           obj.roll_lines.hide();
