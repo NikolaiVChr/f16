@@ -277,7 +277,7 @@
   <condition>
     <equals>
         <property>payload/armament/station/id-2-set</property>
-        <value>2 x LAU-68</value>
+        <value>2 x M151</value>
       </equals>
   </condition>
  </animation>
@@ -598,7 +598,7 @@
   <condition>
     <equals>
         <property>payload/armament/station/id-6-set</property>
-        <value>2 x LAU-68</value>
+        <value>2 x M151</value>
       </equals>
   </condition>
  </animation>
