@@ -148,40 +148,37 @@ light: ecm lamp off
     </animation>-->
 
     <animation>
-        <type>knob</type>
+        <type>pick</type>
+        <visible>true</visible>
         <object-name>alt-rel-button</object-name>
-        <property>controls/flight/alt-rel-button</property>
-        <factor>1</factor>
-        <drag-direction>vertical</drag-direction>
-        <center>
-            <x-m>1</x-m>
-            <y-m>0</y-m>
-            <z-m>0</z-m>
-        </center>
-        <axis>
-            <x>0.15</x>
-            <y>0</y>
-            <z>0</z>
-        </axis>
-        <release>
-            <binding>
-                <command>property-adjust</command>
-                <property>controls/flight/alt-rel-button</property>
-                <min>0</min>
-                <max>0</max>
-            </binding>
-        </release>
         <action>
+            <button>0</button>
             <binding>
-                <command>property-adjust</command>
+                <command>property-assign</command>
                 <property>controls/flight/alt-rel-button</property>
-                <factor>1</factor>
-                <min>0</min>
-                <max>1</max>
-                <wrap>false</wrap>
+                <value>1</value>
             </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/flight/alt-rel-button</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
     </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>alt-rel-button</object-name>
+        <factor>-0.005</factor>
+        <property>controls/flight/alt-rel-button</property>
+        <axis>
+            <x>0</x>
+            <y>0</y>
+            <z>1</z>
+        </axis>
+    </animation>
+
     <animation>
         <type>knob</type>
         <object-name>autopilot-switch</object-name>
