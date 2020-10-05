@@ -742,10 +742,10 @@ var MFD_Device =
                 } elsif (eventi == 2) {
                     var az = getprop("instrumentation/radar/az-field");
                     if(az==120)
-                        az = 20;
-                    elsif(az==20)
-                        az = 50;
-                    elsif(az==50)
+                        az = 15;
+                    elsif(az==15)
+                        az = 30;
+                    elsif(az==30)
                         az = 60;
                     else
                         az = 120;
@@ -843,16 +843,22 @@ var MFD_Device =
             me.time = getprop("sim/time/elapsed-sec");
             me.az = getprop("instrumentation/radar/az-field");
             if (getprop("sim/multiplay/generic/int[2]")!=1) {
-                var plc = me.time*0.5/(me.az/120)-int(me.time*0.5/(me.az/120));
-                if (plc<me.plc) {
-                    me.fwd = !me.fwd;
-                }
-                me.plc = plc;
-                if (!rdrMode) {
-                    me.root.ant_bottom.setTranslation(me.wdt*0.5-(me.az/120)*me.wdt*0.5+(me.az/120)*me.wdt*math.abs(me.fwd-me.plc),0);
+                if (!getprop("f16/avionics/dgft") or awg_9.active_u == nil) {
+                    var plc = me.time*0.5/(me.az/120)-int(me.time*0.5/(me.az/120));
+                    if (plc<me.plc) {
+                        me.fwd = !me.fwd;
+                    }
+                    me.plc = plc;
+                    
+                    if (!rdrMode) {
+                        me.root.ant_bottom.setTranslation(me.wdt*0.5-(me.az/120)*me.wdt*0.5+(me.az/120)*me.wdt*math.abs(me.fwd-me.plc),0);
+                    } else {
+                        me.root.ant_bottom.setTranslation(-192+me.gmLine*3+276*0.795,0);
+                    }
+                    me.root.ant_bottom.show();
                 } else {
-                    me.root.ant_bottom.setTranslation(-192+me.gmLine*3+276*0.795,0);
-                }
+                    me.root.ant_bottom.hide();
+                }                
                 me.root.silent.hide();
             } elsif (getprop("/f16/avionics/power-fcr-bit") == 2) {
                 me.root.silent.setText("SILENT");
@@ -998,8 +1004,8 @@ var MFD_Device =
                 me.root.gmPic.dirtyPixels();
             }
             
-            me.root.az1.setVisible(!rdrMode);
-            me.root.az2.setVisible(!rdrMode);
+            me.root.az1.setVisible(!rdrMode and (!getprop("f16/avionics/dgft") or awg_9.active_u == nil));
+            me.root.az2.setVisible(!rdrMode and (!getprop("f16/avionics/dgft") or awg_9.active_u == nil));
             me.root.bars.setVisible(!rdrMode);
             me.root.az.setVisible(!rdrMode);
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
@@ -1016,14 +1022,14 @@ var MFD_Device =
             
             me.azt = "";
             me.hot = "";
-            if (me.az==20) {
+            if (me.az==15) {
                 me.azt = "A\n1";
-            } elsif (me.az==50) {
+            } elsif (me.az==30) {
                 me.azt = "A\n2";
             } elsif (me.az==60) {
                 me.azt = "A\n3";
             } else {
-                me.azt = "A\n6";
+                me.azt = "A\n4";
             }
             me.root.az.setText(me.azt);
             if (me.ho==15) {
@@ -1068,6 +1074,10 @@ var MFD_Device =
                 }
                 me.cs = contact.get_Callsign();
                 me.blue = getprop("f16/avionics/power-dl") and (me.cs == getprop("link16/wingman-1") or me.cs == getprop("link16/wingman-2") or me.cs == getprop("link16/wingman-3") or me.cs == getprop("link16/wingman-4") or me.cs == getprop("link16/wingman-5") or me.cs == getprop("link16/wingman-6") or me.cs == getprop("link16/wingman-7") or me.cs == getprop("link16/wingman-8") or me.cs == getprop("link16/wingman-9") or me.cs == getprop("link16/wingman-10") or me.cs == getprop("link16/wingman-11") or me.cs == getprop("link16/wingman-12"));
+                if (!me.blue and getprop("f16/avionics/dgft") and !(awg_9.active_u != nil and awg_9.active_u.Callsign != nil and me.cs != nil and me.cs == awg_9.active_u.Callsign.getValue())) {
+                    continue;
+                }
+                
                 me.iff = contact.getIff();
                 me.echoPos = [me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels];
                 me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
@@ -2656,8 +2666,13 @@ var MFD_Device =
             if (noti.FrameCount == 1) {
                 me.root.cone.removeAllChildren();
                 if (getprop("sim/multiplay/generic/int[2]") != 1) {
-                    me.radarX = me.rdrRangePixels*math.cos((90-me.az*0.5)*D2R);
-                    me.radarY = -me.rdrRangePixels*math.sin((90-me.az*0.5)*D2R);
+                    if (!getprop("f16/avionics/dgft") or awg_9.active_u == nil) {
+                        me.radarX = me.rdrRangePixels*math.cos((90-me.az*0.5)*D2R);
+                        me.radarY = -me.rdrRangePixels*math.sin((90-me.az*0.5)*D2R);
+                    } else {
+                        me.radarX = me.rdrRangePixels*math.cos((90-60)*D2R);
+                        me.radarY = -me.rdrRangePixels*math.sin((90-60)*D2R);
+                    }
                     me.cone = me.root.cone.createChild("path")
                         .moveTo(0,0)
                         .lineTo(me.radarX,me.radarY)

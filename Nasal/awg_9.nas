@@ -624,10 +624,14 @@ var az_scan = func(notification) {
             if (getprop("f16/avionics/dgft")) {
                 if (active_u_callsign != nil and u.Callsign != nil and u.Callsign.getValue() == active_u_callsign) {
                     if (radar_mode < 2 and armament.AIM.FOV_check(our_true_heading, OurPitch.getValue(), u.get_deviation(our_true_heading), u.get_total_elevation(OurPitch.getValue()), 60, vector.Math)) {
-                        # the field is 30x20 but due to roll we just take average and use it in all attitudes/directions.
+                        # the field is 120
                         u.set_display(u.get_visible() and !RadarStandbyMP.getValue() and u.get_type() != ORDNANCE);
+                        if (!u.get_display()) {
+                            designate(nil);
+                        }
                     } else {
                         u.set_display(0);
+                        designate(nil);
                     }
                 } elsif (radar_mode < 2 and armament.AIM.FOV_check(our_true_heading, OurPitch.getValue(), u.get_deviation(our_true_heading), u.get_total_elevation(OurPitch.getValue()), 12.5, vector.Math)) {
                     # the field is 30x20 but due to roll we just take average and use it in all attitudes/directions.
@@ -647,6 +651,11 @@ var az_scan = func(notification) {
             }
         } else {
             u.set_display(0);#richard, I added this line.
+            if (getprop("f16/avionics/dgft")) {
+                if (active_u_callsign != nil and u.Callsign != nil and u.Callsign.getValue() == active_u_callsign) {
+                    designate(nil);
+                }
+            }
         }
 
 # RWR 
@@ -1399,7 +1408,8 @@ var Target = {
         obj.name = c.getNode("name");
         obj.TAS = c.getNode("velocities/true-airspeed-kt");
         obj.TransponderId = c.getNode("instrumentation/transponder/transmitted-id");
-
+        obj.displayBool = 0;
+        obj.visibleBool = 0;
         
         obj.Model = c.getNode("model-short");
         var model_short = c.getNode("sim/model/path");
@@ -1687,16 +1697,16 @@ var Target = {
         return nil;
 		},
 	get_display : func() {
-		return me.Display.getValue();
+		return me.displayBool;
 	},
 	set_display : func(n) {
-		me.Display.setBoolValue(n);
+		me.displayBool = n;
 	},
 	get_visible : func() {
-		return me.Visible.getValue();
+		return me.visibleBool;
 	},
 	set_visible : func(n) {
-		me.Visible.setBoolValue(n);
+		me.visibleBool = n;
 	},
 	get_behind_terrain : func() {
 		return me.Behind_terrain.getValue();

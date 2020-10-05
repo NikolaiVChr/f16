@@ -2024,6 +2024,9 @@ append(obj.total, obj.speed_curr);
         me.designatedDistanceFT = nil;
         if (hdp["tgt_list"] != nil) {
             foreach ( me.u; hdp.tgt_list ) {
+                if (hdp.dgft and !(hdp.active_u != nil and hdp.active_u.Callsign != nil and me.u.Callsign != nil and me.u.Callsign.getValue() == hdp.active_u.Callsign.getValue())) {
+                    continue;
+                }
                 me.callsign = "XX";
                 if (me.u.get_display()) {
                     if (me.u.Callsign != nil)
@@ -2170,6 +2173,7 @@ append(obj.total, obj.speed_curr);
                 .setColor(me.color);
             me.orangePeelGroup.setRotation(-hdp.roll*D2R);
             me.orangePeelGroup.show();
+            me.orangePeelGroup.update();
         } else {
             me.orangePeelGroup.hide();
         }
