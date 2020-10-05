@@ -8,9 +8,8 @@
         <signals include="/Aircraft/Generic/flightrecorder/components/gear-retractable.xml">
             <count type="int">3</count>
         </signals>
-<!--
         <signals include="/Aircraft/Generic/flightrecorder/components/environment.xml"/>
-        
+        <!-- <signals include="/Aircraft/Generic/flightrecorder/components/surfaces.xml"/> -->
         <signals include="/Aircraft/Generic/flightrecorder/components/controls.xml"/>
         <signals include="/Aircraft/Generic/flightrecorder/components/engine-jet.xml">
             <count type="int">1</count>
@@ -19,22 +18,16 @@
             <count type="int">1</count>
         </signals>
         <signals include="/Aircraft/Generic/flightrecorder/components/tanks.xml">
-            <count type="int">7</count>
-        </signals>-->
-
-
-        <!-- custom signals here -->
-
-
-
+            <count type="int">9</count>
+        </signals>
 
         <!-- control surfaces -->
 
-        <!--  disabled until work on them is finished and they are all tested.
-        
-        
-        
-        
+        <signal>
+            <type>float</type>
+            <property type="string">surface-positions/elevator-pos-norm</property>
+            <interpolation>linear</interpolation>
+        </signal>
         <signal>
             <type>float</type>
             <property type="string">surface-positions/right-aileron-pos-norm</property>
@@ -67,6 +60,11 @@
         </signal>
         <signal>
             <type>float</type>
+            <property type="string">surface-positions/nose-wheel-pos-norm</property>
+            <interpolation>linear</interpolation>
+        </signal>
+        <signal>
+            <type>float</type>
             <property type="string">fdm/jsbsim/fcs/dht-right-pos-rad</property>
             <interpolation>angular-rad</interpolation>
         </signal>
@@ -86,17 +84,17 @@
             <interpolation>linear</interpolation>
         </signal>
         <signal>
+            <type>bool</type>
+            <property type="string">engines/engine[0]/augmentation</property>
+        </signal>
+
+        <!--
+        
+        <signal>
             <type>float</type>
             <property type="string">engines/engine[0]/augmentation1</property>
             <interpolation>linear</interpolation>
         </signal>
-        <signal>
-            <type>float</type>
-            <property type="string">engines/engine[0]/augmentation</property>
-            <interpolation>linear</interpolation>
-        </signal>
-
-
         <signal>
             <type>bool</type>
             <property type="string">damage/sounds/explode-on</property>
@@ -125,14 +123,25 @@
             <type>float</type>
             <property type="string">damage/sounds/creaking-volume</property>
         </signal>
+        
         <signal>
             <type>float</type>
             <property type="string">sim/systems/wingflexer/z-m</property>
-        </signal>        
+        </signal>
+        
+        -->
+
         <signal>
             <type>float</type>
-            <property type="string">fdm/jsbsim/fcs/canopy-pos-norm</property>
-        </signal>        
+            <property type="string">canopy/position-norm</property>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">/gear/tailhook/position-norm</property>
+        </signal>
+        
+        <!--
+        
         <signal>
             <type>bool</type>
             <property type="string">damage/fire/serviceable</property>
@@ -173,6 +182,9 @@
             <type>bool</type>
             <property type="string">sim/model/f16/smokewinderW9</property>
         </signal>
+        
+        -->
+        
         <signal>
             <type>bool</type>
             <property type="string">f16/chute/enable</property>
@@ -184,6 +196,10 @@
         <signal>
             <type>float</type>
             <property type="string">f16/sound/pow-thrust</property>
+        </signal>
+        <signal>
+            <type>float</type>
+            <property type="string">engines/engine[0]/n2</property>
         </signal>
         <signal>
             <type>float</type>
@@ -199,7 +215,11 @@
         </signal>
         <signal>
             <type>float</type>
-            <property type="string">engines/engine/n1-mid</property>
+            <property type="string">engines/engine[0]/n1-mid</property>
+        </signal>        
+        <signal>
+            <type>float</type>
+            <property type="string">engines/engine[0]/n1</property>
         </signal>        
         <signal>
             <type>bool</type>
@@ -244,7 +264,7 @@
         <signal>
             <type>float</type>
             <property type="string">f16/sound/pow-nozzle</property>
-        </signal>-->
+        </signal>
     </config>
     <!-- 
     - double: 8 byte/sample
