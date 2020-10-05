@@ -622,7 +622,14 @@ var az_scan = func(notification) {
 #1;MP2 within  azimuth -130.0592982116802 field=-60->60  (s->w quadrant)
 #0;MP1 within  azimuth 164.2283073827575 field=-60->60
             if (getprop("f16/avionics/dgft")) {
-                if (radar_mode < 2 and math.abs(u.get_deviation(our_true_heading)) < 12.5 and math.abs(u.get_total_elevation(OurPitch.getValue())) < 12.5) {
+                if (active_u_callsign != nil and u.Callsign != nil and u.Callsign.getValue() == active_u_callsign) {
+                    if (radar_mode < 2 and math.abs(u.get_deviation(our_true_heading)) < 60 and math.abs(u.get_total_elevation(OurPitch.getValue())) < 60) {
+                        # the field is 30x20 but due to roll we just take average and use it in all attitudes/directions.
+                        u.set_display(u.get_visible() and !RadarStandbyMP.getValue() and u.get_type() != ORDNANCE);
+                    } else {
+                        u.set_display(0);
+                    }
+                } elsif (radar_mode < 2 and math.abs(u.get_deviation(our_true_heading)) < 12.5 and math.abs(u.get_total_elevation(OurPitch.getValue())) < 12.5) {
                     # the field is 30x20 but due to roll we just take average and use it in all attitudes/directions.
                     u.set_display(u.get_visible() and !RadarStandbyMP.getValue() and u.get_type() != ORDNANCE);
                 } else {
@@ -905,6 +912,8 @@ var selectCheck = func {
 var selectCheckLimited = func {
     var tgt_cmd = SelectTargetCommand.getValue();
     SelectTargetCommand.setIntValue(0);
+    if (!getprop("f16/avionics/dgft")) return;
+    if (active_u == nil) return;    
     if (tgt_cmd != nil)
     {
         if (tgt_cmd > 0)
@@ -1012,8 +1021,9 @@ var selectCheckLimited = func {
     }
 }
 
-var selectCenterTarget = func () {
-    
+var selectCenterTarget = func (dgft = 0) {
+    if (!getprop("f16/avionics/dgft")) return;
+    if (!dgft) return;
     var sorted_dist = sort (awg_9.tgts_list, func (a,b) {a.getTotalDeviation()-b.getTotalDeviation()});
     
     foreach(var testMe ; sorted_dist) {
@@ -2109,7 +2119,7 @@ var compute_rwr = func(radar_mode, u, u_rng){
 
 var loopDGFT = func {
     if (getprop("f16/avionics/dgft") and active_u == nil) {
-        selectCenterTarget();
+        selectCenterTarget(1);
     }
     settimer(loopDGFT, 0.5);
 }
