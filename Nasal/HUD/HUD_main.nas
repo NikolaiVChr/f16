@@ -517,6 +517,10 @@ append(obj.total, obj.speed_curr);
         obj.alpha = getprop("f16/avionics/hud-sym");
         obj.power = getprop("f16/avionics/hud-power");
 
+        obj.orangePeelGroup = obj.svg.createChild("group")
+                                     .setTranslation(sx*0.695633*0.5, sy*0.245);
+        append(obj.total, obj.orangePeelGroup);
+
         obj.dlzX      = sx*0.695633*0.75-6;
         obj.dlzY      = sy*0.4;
         obj.dlzWidth  =  10;
@@ -2063,7 +2067,8 @@ append(obj.total, obj.speed_curr);
                                 #me.ycS = me.sy-me.texels_up_into_hud - (me.pixelPerMeterY * me.combined_dev_length * math.cos(me.combined_dev_deg*D2R));
                                 #me.target_locked.setTranslation (me.xcS, me.ycS);
                                 me.target_locked.setTranslation (me.echoPos);
-                                if (currASEC != nil) {
+                                if (0 and currASEC != nil) {
+                                    # disabled for now as it has issues
                                     me.cue = nil;
                                     call(func {me.cue = hdp.weapn.getIdealFireSolution();},[], nil, nil, var err = []);
                                     if (me.cue != nil) {
@@ -2149,7 +2154,25 @@ append(obj.total, obj.speed_curr);
         me.locatorLine.setVisible(me.locatorLineShow);
         me.locatorAngle.setVisible(me.locatorLineShow);
 
-        
+        if (hdp.dgft) {
+            me.peelDeg = 90-hdp.pitch;
+            me.peelRadius = 0.25*me.sx;
+            me.peelTickRadius = me.peelRadius+5;
+            me.orangePeelGroup.removeAllChildren();
+            me.peelLeft = me.orangePeelGroup.createChild("path")
+                .moveTo(0,me.peelRadius)
+                .arcSmallCW(me.peelRadius, me.peelRadius, 0,-me.peelRadius*math.sin(me.peelDeg*D2R), me.peelRadius*math.cos(me.peelDeg*D2R)-me.peelRadius)
+                .lineTo(-me.peelTickRadius*math.sin(me.peelDeg*D2R), me.peelTickRadius*math.cos(me.peelDeg*D2R))
+                .moveTo(0,me.peelRadius)
+                .arcSmallCCW(me.peelRadius, me.peelRadius, 0, me.peelRadius*math.sin(me.peelDeg*D2R), me.peelRadius*math.cos(me.peelDeg*D2R)-me.peelRadius)
+                .lineTo(me.peelTickRadius*math.sin(me.peelDeg*D2R), me.peelTickRadius*math.cos(me.peelDeg*D2R))
+                .setStrokeLineWidth(1)
+                .setColor(me.color);
+            me.orangePeelGroup.setRotation(-hdp.roll*D2R);
+            me.orangePeelGroup.show();
+        } else {
+            me.orangePeelGroup.hide();
+        }
 
 
         me.dlzArray = pylons.getDLZ();
