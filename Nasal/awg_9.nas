@@ -623,13 +623,13 @@ var az_scan = func(notification) {
 #0;MP1 within  azimuth 164.2283073827575 field=-60->60
             if (getprop("f16/avionics/dgft")) {
                 if (active_u_callsign != nil and u.Callsign != nil and u.Callsign.getValue() == active_u_callsign) {
-                    if (radar_mode < 2 and math.abs(u.get_deviation(our_true_heading)) < 60 and math.abs(u.get_total_elevation(OurPitch.getValue())) < 60) {
+                    if (radar_mode < 2 and armament.AIM.FOV_check(our_true_heading, OurPitch.getValue(), u.get_deviation(our_true_heading), u.get_total_elevation(OurPitch.getValue()), 60, vector.Math)) {
                         # the field is 30x20 but due to roll we just take average and use it in all attitudes/directions.
                         u.set_display(u.get_visible() and !RadarStandbyMP.getValue() and u.get_type() != ORDNANCE);
                     } else {
                         u.set_display(0);
                     }
-                } elsif (radar_mode < 2 and math.abs(u.get_deviation(our_true_heading)) < 12.5 and math.abs(u.get_total_elevation(OurPitch.getValue())) < 12.5) {
+                } elsif (radar_mode < 2 and armament.AIM.FOV_check(our_true_heading, OurPitch.getValue(), u.get_deviation(our_true_heading), u.get_total_elevation(OurPitch.getValue()), 12.5, vector.Math)) {
                     # the field is 30x20 but due to roll we just take average and use it in all attitudes/directions.
                     u.set_display(u.get_visible() and !RadarStandbyMP.getValue() and u.get_type() != ORDNANCE);
                 } else {
