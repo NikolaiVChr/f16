@@ -1327,7 +1327,11 @@ There is also small changes in tail for different variants with and without brak
                             setprop("instrumentation/radar/ho-field", 20);
                             ded.dataEntryDisplay.page = ded.pEWS;
                             f16.f16_mfd.MFDl.PFD.selectPage(f16.f16_mfd.MFDl.p_RDR);
+                            f16.f16_mfd.MFDl.p_RDR.selectionBox.show();
+                            f16.f16_mfd.MFDl.p_RDR.setSelection(nil, f16.f16_mfd.MFDl.PFD.buttons[10], 10);
                             f16.f16_mfd.MFDr.PFD.selectPage(f16.f16_mfd.MFDr.p_WPN);
+                            f16.f16_mfd.MFDr.p_WPN.selectionBox.show();
+                            f16.f16_mfd.MFDr.p_WPN.setSelection(nil, f16.f16_mfd.MFDr.PFD.buttons[18], 18);
                         } else {
                             setprop("instrumentation/radar/radar2-range", getprop("instrumentation/radar/radar2-range-std"));
                             setprop("instrumentation/radar/az-field", getprop("instrumentation/radar/az-field-std"));
