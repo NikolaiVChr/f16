@@ -1317,6 +1317,7 @@ There is also small changes in tail for different variants with and without brak
                         dg = !dg;
                         setprop("f16/avionics/dgft", dg);
                         if (dg) {
+                            setprop("instrumentation/radar/radar-standby-std", getprop("instrumentation/radar/radar-standby"));
                             setprop("instrumentation/radar/radar-standby", 1);
                             pylons.fcs.selectWeapon("20mm Cannon");
                             setprop("instrumentation/radar/radar2-range-std", getprop("instrumentation/radar/radar2-range"));
@@ -1336,6 +1337,7 @@ There is also small changes in tail for different variants with and without brak
                             setprop("instrumentation/radar/radar2-range", getprop("instrumentation/radar/radar2-range-std"));
                             setprop("instrumentation/radar/az-field", getprop("instrumentation/radar/az-field-std"));
                             setprop("instrumentation/radar/ho-field", getprop("instrumentation/radar/ho-field-std"));
+                            setprop("instrumentation/radar/radar-standby", getprop("instrumentation/radar/radar-standby") and getprop("instrumentation/radar/radar-standby-std"));
                         }
                     </script>
                 </binding>
@@ -2239,6 +2241,7 @@ There is also small changes in tail for different variants with and without brak
             <radar2-range type="int">40</radar2-range><!-- default range -->
             <radar2-range-std type="int">40</radar2-range-std>
             <radar-standby type="bool">true</radar-standby>
+            <radar-standby-std type="bool">true</radar-standby-std>
             <symbols-enabled type="bool">true</symbols-enabled>
             <debug-mode type="bool">true</debug-mode>
             <serviceable type="bool">true</serviceable>
