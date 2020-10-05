@@ -2438,12 +2438,22 @@ var MFD_Device =
 		   .hide()
            .setFontSize(18, 1.0)
            .setColor(getprop("/sim/model/MFD-color/text2/red"),getprop("/sim/model/MFD-color/text2/green"),getprop("/sim/model/MFD-color/text2/blue"));
-
-        svg.centered = 0;
-        svg.coupled = 0;
-        svg.range_cen = 40;
-        svg.range_dep = 32;
     },
+
+    HSD_centered: 0,
+    HSD_coupled: 0,
+    HSD_range_cen: 40,
+    HSD_range_dep: 32,
+
+    set_HSD_centered: func(centered) MFD_Device.HSD_centered = centered,
+    set_HSD_coupled: func(coupled) MFD_Device.HSD_coupled = coupled,
+    set_HSD_range_cen: func(range_cen) MFD_Device.HSD_range_cen = range_cen,
+    set_HSD_range_dep: func(range_dep) MFD_Device.HSD_range_dep = range_dep,
+
+    get_HSD_centered: func MFD_Device.HSD_centered,
+    get_HSD_coupled: func MFD_Device.HSD_coupled,
+    get_HSD_range_cen: func MFD_Device.HSD_range_cen,
+    get_HSD_range_dep: func MFD_Device.HSD_range_dep,
 
     addHSD: func {
         var svg = {getElementById: func (id) {return me[id]},};
@@ -2470,62 +2480,62 @@ var MFD_Device =
         me.p_HSD.notifyButton = func (eventi) {
             if (eventi != nil) {
                 if (eventi == 0) {
-                    if (me.root.coupled) return;
-                    if (me.root.centered) {
-                        if (me.root.range_cen == 5)
-                            me.root.range_cen =10
-                        elsif (me.root.range_cen == 10)
-                            me.root.range_cen =20
-                        elsif (me.root.range_cen == 20)
-                            me.root.range_cen =40
-                        elsif (me.root.range_cen == 40)
-                            me.root.range_cen =80
-                        elsif (me.root.range_cen == 80)
-                            me.root.range_cen =160
+                    if (MFD_Device.get_HSD_coupled()) return;
+                    if (MFD_Device.get_HSD_centered()) {
+                        if (MFD_Device.get_HSD_range_cen() == 5)
+                            MFD_Device.set_HSD_range_cen(10)
+                        elsif (MFD_Device.get_HSD_range_cen() == 10)
+                            MFD_Device.set_HSD_range_cen(20)
+                        elsif (MFD_Device.get_HSD_range_cen() == 20)
+                            MFD_Device.set_HSD_range_cen(40)
+                        elsif (MFD_Device.get_HSD_range_cen() == 40)
+                            MFD_Device.set_HSD_range_cen(80)
+                        elsif (MFD_Device.get_HSD_range_cen() == 80)
+                            MFD_Device.set_HSD_range_cen(160)
                         else
-                            me.root.range_cen = 160;
-                    } elsif (!me.root.centered) {
-                        if (me.root.range_dep == 8)
-                            me.root.range_dep =16
-                        elsif (me.root.range_dep == 16)
-                            me.root.range_dep =32
-                        elsif (me.root.range_dep == 32)
-                            me.root.range_dep =64
-                        elsif (me.root.range_dep == 64)
-                            me.root.range_dep =128
-                        elsif (me.root.range_dep == 128)
-                            me.root.range_dep =256
+                            MFD_Device.set_HSD_range_cen(160);
+                    } elsif (!MFD_Device.get_HSD_centered()) {
+                        if (MFD_Device.get_HSD_range_dep() == 8)
+                            MFD_Device.set_HSD_range_dep(16)
+                        elsif (MFD_Device.get_HSD_range_dep() == 16)
+                            MFD_Device.set_HSD_range_dep(32)
+                        elsif (MFD_Device.get_HSD_range_dep() == 32)
+                            MFD_Device.set_HSD_range_dep(64)
+                        elsif (MFD_Device.get_HSD_range_dep() == 64)
+                            MFD_Device.set_HSD_range_dep(128)
+                        elsif (MFD_Device.get_HSD_range_dep() == 128)
+                            MFD_Device.set_HSD_range_dep(256)
                         else
-                            me.root.range_dep = 256;
+                            MFD_Device.set_HSD_range_dep(256);
                     }
                 } elsif (eventi == 1) {
-                    if (me.root.coupled) return;
-                    if (me.root.centered) {
-                        if (me.root.range_cen == 160)
-                            me.root.range_cen =80
-                        elsif (me.root.range_cen == 80)
-                            me.root.range_cen =40
-                        elsif (me.root.range_cen == 40)
-                            me.root.range_cen =20
-                        elsif (me.root.range_cen == 20)
-                            me.root.range_cen =10
-                        elsif (me.root.range_cen == 10)
-                            me.root.range_cen =5
+                    if (MFD_Device.get_HSD_coupled()) return;
+                    if (MFD_Device.get_HSD_centered()) {
+                        if (MFD_Device.get_HSD_range_cen() == 160)
+                            MFD_Device.set_HSD_range_cen(80)
+                        elsif (MFD_Device.get_HSD_range_cen() == 80)
+                            MFD_Device.set_HSD_range_cen(40)
+                        elsif (MFD_Device.get_HSD_range_cen() == 40)
+                            MFD_Device.set_HSD_range_cen(20)
+                        elsif (MFD_Device.get_HSD_range_cen() == 20)
+                            MFD_Device.set_HSD_range_cen(10)
+                        elsif (MFD_Device.get_HSD_range_cen() == 10)
+                            MFD_Device.set_HSD_range_cen(5)
                         else
-                            me.root.range_cen = 5;
-                    } elsif (!me.root.centered) {
-                        if (me.root.range_dep == 256)
-                            me.root.range_dep =128
-                        elsif (me.root.range_dep == 128)
-                            me.root.range_dep =64
-                        elsif (me.root.range_dep == 64)
-                            me.root.range_dep =32
-                        elsif (me.root.range_dep == 32)
-                            me.root.range_dep =16
-                        elsif (me.root.range_dep == 16)
-                            me.root.range_dep =8
+                            MFD_Device.set_HSD_range_cen(5);
+                    } elsif (!MFD_Device.get_HSD_centered()) {
+                        if (MFD_Device.get_HSD_range_dep() == 256)
+                            MFD_Device.set_HSD_range_dep(128)
+                        elsif (MFD_Device.get_HSD_range_dep() == 128)
+                            MFD_Device.set_HSD_range_dep(64)
+                        elsif (MFD_Device.get_HSD_range_dep() == 64)
+                            MFD_Device.set_HSD_range_dep(32)
+                        elsif (MFD_Device.get_HSD_range_dep() == 32)
+                            MFD_Device.set_HSD_range_dep(16)
+                        elsif (MFD_Device.get_HSD_range_dep() == 16)
+                            MFD_Device.set_HSD_range_dep(8)
                         else
-                            me.root.range_dep = 8;
+                            MFD_Device.set_HSD_range_dep(8);
                     }
                 } elsif (eventi == 17) {
                     me.ppp.selectPage(me.my.p_SMS);
@@ -2543,11 +2553,11 @@ var MFD_Device =
                     me.ppp.selectPage(me.my.p_RDR);
                     me.setSelection(me.ppp.buttons[16], me.ppp.buttons[10], 10);
                 } elsif (eventi == 2) {
-                    me.root.centered = !me.root.centered;
-                    me.root.depcen.setText(me.root.centered==1?"CEN":"DEP");
+                    MFD_Device.set_HSD_centered(!MFD_Device.get_HSD_centered());
+                    me.root.depcen.setText(MFD_Device.get_HSD_centered()==1?"CEN":"DEP");
                 } elsif (eventi == 3) {
-                    me.root.coupled = !me.root.coupled;
-                    me.root.cpl.setText(me.root.coupled==1?"CPL":"DCPL");
+                    MFD_Device.set_HSD_coupled(!MFD_Device.get_HSD_coupled());
+                    me.root.cpl.setText(MFD_Device.get_HSD_coupled()==1?"CPL":"DCPL");
                 } elsif (eventi == 15) {
                     swap();
                 }
@@ -2576,51 +2586,51 @@ var MFD_Device =
 			} else {
 				me.root.notSOI.hide();
 			}
-            if (me.root.coupled) {
+            if (MFD_Device.get_HSD_coupled()) {
                 me.root.rangDown.hide();
                 me.root.rangUp.hide();
                 if (awg_9.range_radar2 == 5) {
-                    me.root.range_cen = 5;
-                    me.root.range_dep = 8;
+                    MFD_Device.set_HSD_range_cen(5);
+                    MFD_Device.set_HSD_range_dep(8);
                 } elsif (awg_9.range_radar2 == 10) {
-                    me.root.range_cen = 10;
-                    me.root.range_dep = 16;
+                    MFD_Device.set_HSD_range_cen(10);
+                    MFD_Device.set_HSD_range_dep(16);
                 } elsif (awg_9.range_radar2 == 20) {
-                    me.root.range_cen = 20;
-                    me.root.range_dep = 32;
+                    MFD_Device.set_HSD_range_cen(20);
+                    MFD_Device.set_HSD_range_dep(32);
                 } elsif (awg_9.range_radar2 == 40) {
-                    me.root.range_cen = 40;
-                    me.root.range_dep = 64;
+                    MFD_Device.set_HSD_range_cen(40);
+                    MFD_Device.set_HSD_range_dep(64);
                 } elsif (awg_9.range_radar2 == 80) {
-                    me.root.range_cen = 80;
-                    me.root.range_dep = 128;
+                    MFD_Device.set_HSD_range_cen(80);
+                    MFD_Device.set_HSD_range_dep(128);
                 } elsif (awg_9.range_radar2 == 160) {
-                    me.root.range_cen = 160;
-                    me.root.range_dep = 256;
+                    MFD_Device.set_HSD_range_cen(160);
+                    MFD_Device.set_HSD_range_dep(256);
                 }
             } else {
-                if (me.root.centered and me.root.range_cen == 160) {
+                if (MFD_Device.get_HSD_centered() and MFD_Device.get_HSD_range_cen() == 160) {
                     me.root.rangUp.hide();
-                } elsif (!me.root.centered and me.root.range_dep == 256) {
+                } elsif (!MFD_Device.get_HSD_centered() and MFD_Device.get_HSD_range_dep() == 256) {
                     me.root.rangUp.hide();
                 } else {
                     me.root.rangUp.show();
                 }
                 
-                if (me.root.centered and me.root.range_cen == 5) {
+                if (MFD_Device.get_HSD_centered() and MFD_Device.get_HSD_range_cen() == 5) {
                     me.root.rangDown.hide();
-                } elsif (!me.root.centered and me.root.range_dep == 8) {
+                } elsif (!MFD_Device.get_HSD_centered() and MFD_Device.get_HSD_range_dep() == 8) {
                     me.root.rangDown.hide();
                 } else {
                     me.root.rangDown.show();
                 }
             }
-            if (me.root.centered) {
+            if (MFD_Device.get_HSD_centered()) {
                 me.root.p_HSDc.setTranslation(276*0.795,482*0.50);
-                me.root.rang.setText(""~me.root.range_cen);
+                me.root.rang.setText(""~MFD_Device.get_HSD_range_cen());
             } else {
                 me.root.p_HSDc.setTranslation(276*0.795,482*0.75);
-                me.root.rang.setText(""~me.root.range_dep);
+                me.root.rang.setText(""~MFD_Device.get_HSD_range_dep());
             }
 			
             me.bullOn = getprop("f16/avionics/bulls-eye-defined") and ded.dataEntryDisplay.bullMode;
@@ -2633,10 +2643,10 @@ var MFD_Device =
                 me.meToBull = ((me.bullDirToMe+180)-noti.heading)*D2R;
                 me.root.bullOwnRing.setRotation(me.meToBull);
                 me.bullDistToMe = me.bullCoord.distance_to(me.ownCoord)*M2NM;
-                if (me.root.centered) {
-                    me.bullRangePixels = me.root.mediumRadius*(me.bullDistToMe/me.root.range_cen);
+                if (MFD_Device.get_HSD_centered()) {
+                    me.bullRangePixels = me.root.mediumRadius*(me.bullDistToMe/MFD_Device.get_HSD_range_cen());
                 } else {
-                    me.bullRangePixels = me.root.outerRadius*(me.bullDistToMe/me.root.range_dep);
+                    me.bullRangePixels = me.root.outerRadius*(me.bullDistToMe/MFD_Device.get_HSD_range_dep());
                 }                
                 me.legX = me.bullRangePixels*math.sin(me.meToBull);
                 me.legY = -me.bullRangePixels*math.cos(me.meToBull);
@@ -2657,10 +2667,10 @@ var MFD_Device =
             me.i=0;
             me.root.lock.hide();
             me.root.lockInfo.hide();
-            if (me.root.centered) {
-                me.rdrRangePixels = me.root.mediumRadius*(awg_9.range_radar2/me.root.range_cen);
+            if (MFD_Device.get_HSD_centered()) {
+                me.rdrRangePixels = me.root.mediumRadius*(awg_9.range_radar2/MFD_Device.get_HSD_range_cen());
             } else {
-                me.rdrRangePixels = me.root.outerRadius*(awg_9.range_radar2/me.root.range_dep);
+                me.rdrRangePixels = me.root.outerRadius*(awg_9.range_radar2/MFD_Device.get_HSD_range_dep());
             }
             me.az = getprop("instrumentation/radar/az-field");
             if (noti.FrameCount == 1) {
@@ -2695,10 +2705,10 @@ var MFD_Device =
                         me.wpC.set_latlon(me.wp.lat,me.wp.lon);
                         me.legBearing = geo.aircraft_position().course_to(me.wpC)-getprop("orientation/heading-deg");#relative
                         me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
-                        if (me.root.centered) {
-                            me.legRangePixels = me.root.mediumRadius*(me.legDistance/me.root.range_cen);
+                        if (MFD_Device.get_HSD_centered()) {
+                            me.legRangePixels = me.root.mediumRadius*(me.legDistance/MFD_Device.get_HSD_range_cen());
                         } else {
-                            me.legRangePixels = me.root.outerRadius*(me.legDistance/me.root.range_dep);
+                            me.legRangePixels = me.root.outerRadius*(me.legDistance/MFD_Device.get_HSD_range_dep());
                         }
                         me.legX = me.legRangePixels*math.sin(me.legBearing*D2R);
                         me.legY = -me.legRangePixels*math.cos(me.legBearing*D2R);
@@ -2748,10 +2758,10 @@ var MFD_Device =
                             me.wpC.set_latlon(me.wp.lat,me.wp.lon);
                             me.legBearing = geo.aircraft_position().course_to(me.wpC)-getprop("orientation/heading-deg");#relative
                             me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
-                            if (me.root.centered) {
-                                me.legRangePixels = me.root.mediumRadius*(me.legDistance/me.root.range_cen);;
+                            if (MFD_Device.get_HSD_centered()) {
+                                me.legRangePixels = me.root.mediumRadius*(me.legDistance/MFD_Device.get_HSD_range_cen());;
                             } else {
-                                me.legRangePixels = me.root.outerRadius*(me.legDistance/me.root.range_dep);;
+                                me.legRangePixels = me.root.outerRadius*(me.legDistance/MFD_Device.get_HSD_range_dep());;
                             }
                             me.legX = me.legRangePixels*math.sin(me.legBearing*D2R);
                             me.legY = -me.legRangePixels*math.cos(me.legBearing*D2R);
@@ -2800,12 +2810,12 @@ var MFD_Device =
                         me.legBearing = geo.aircraft_position().course_to(me.wpC)-getprop("orientation/heading-deg");#relative
                         me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
                         me.legRadius  = me.ra;
-                        if (me.root.centered) {
-                            me.legRangePixels = me.root.mediumRadius*(me.legDistance/me.root.range_cen);
-                            me.legScale = me.root.mediumRadius*(me.legRadius/me.root.range_cen)/50;
+                        if (MFD_Device.get_HSD_centered()) {
+                            me.legRangePixels = me.root.mediumRadius*(me.legDistance/MFD_Device.get_HSD_range_cen());
+                            me.legScale = me.root.mediumRadius*(me.legRadius/MFD_Device.get_HSD_range_cen())/50;
                         } else {
-                            me.legRangePixels = me.root.outerRadius*(me.legDistance/me.root.range_dep);
-                            me.legScale = me.root.outerRadius*(me.legRadius/me.root.range_dep)/50;
+                            me.legRangePixels = me.root.outerRadius*(me.legDistance/MFD_Device.get_HSD_range_dep());
+                            me.legScale = me.root.outerRadius*(me.legRadius/MFD_Device.get_HSD_range_dep())/50;
                         }
                         
                         me.legX = me.legRangePixels*math.sin(me.legBearing*D2R);
