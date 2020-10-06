@@ -1269,6 +1269,8 @@ append(obj.total, obj.speed_curr);
                                         
                                         var result = HudMath.getDynamicHorizon(5,0.5,0.5,0.7,0.5,hdp.drift,-0.25);
                                         obj.h_rot.setRotation(result[1]);
+                                        obj.zenith.setRotation(-result[1]);
+                                        obj.nadir.setRotation(-result[1]);
                                         obj.horizon_group.setTranslation(result[0]);#place it on bore
                                         obj.ladder_group.setTranslation(result[2]);
                                         obj.ladder_group.show();
