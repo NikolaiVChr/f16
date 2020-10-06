@@ -1200,13 +1200,18 @@
         </axis>
         <action>
             <binding>
-                <command>property-adjust</command>
-				<property>controls/test/test-panel/epu-test</property>
-                <min>0</min>
-                <max>1</max>                
-                <wrap>false</wrap>
+                <command>property-assign</command>
+                <property>controls/test/test-panel/epu-test</property>
+                <value>1</value>
             </binding>
         </action>
+        <release>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/test/test-panel/epu-test</property>
+                <value>0</value>
+            </binding>
+        </release>
     </animation>
 
 	<animation>
