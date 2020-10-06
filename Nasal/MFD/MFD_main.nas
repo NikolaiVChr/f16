@@ -465,12 +465,22 @@ var MFD_Device =
                 .set("z-index",1)
                 .setFontSize(20, 1.0);
         svg.mod = svg.p_RDR.createChild("text")
-                .setTranslation(-276*0.795, -482*0.5+125)
+                .setTranslation(-276*0.795+10, -482*0.5+125+10)
                 .setText("")
                 .setAlignment("left-center")
-                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
-                .set("z-index",1)
+                .setColor([0,0,0])
+                .set("z-index",2)
                 .setFontSize(20, 1.0);
+        svg.modBox = svg.p_RDR.createChild("path")
+                .setTranslation(-276*0.795, -482*0.5+125)
+                .moveTo(5,0)
+                .horiz(35)
+                .vert(20)
+                .horiz(-35)
+                .vert(-20)
+                .setColorFill(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))                
+                .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"))
+                .set("z-index",1);
         svg.ant_bottom = svg.p_RDR.createChild("path")
                     .moveTo(-276*0.795,-25)
                     .vert(-13)
@@ -855,12 +865,17 @@ var MFD_Device =
             }
             if (rdrMode) {
                 me.root.mod.setText("GM");# Should be inverted
+                me.root.mod.setColor(0,0,0);
+                me.root.modBox.show();
                 me.root.gmPic.show();
             } elsif (me.ver) {
-                me.root.mod.setText("gm");# Should be uppercase
+                me.root.mod.setText("GM");# Should be uppercase
+                me.root.mod.setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
+                me.root.modBox.hide();
                 me.root.gmPic.hide();
             } else {
                 me.root.mod.setText("");
+                me.root.modBox.hide();
                 me.root.gmPic.hide();
             }
 			
