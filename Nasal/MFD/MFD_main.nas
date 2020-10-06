@@ -829,6 +829,9 @@ var MFD_Device =
         me.p_RDR.gmMintemp = 5000;
         me.p_RDR.gmMaxtemp = 300;
         me.p_RDR.rdrModeGMHD = 0;
+        me.p_RDR.beamSpot = geo.Coord.new();
+        me.p_RDR.terrain = geo.Coord.new();
+        me.p_RDR.gmColor = 0;
         me.p_RDR.selectionBox = me.selectionBox;
         me.p_RDR.setSelectionColor = me.setSelectionColor;
         me.p_RDR.resetColor = me.resetColor;
@@ -1347,13 +1350,28 @@ var MFD_Device =
                                 me.gmEle = 0;
                                 #print("nil");
                             }
-                            if (me.gmEle > me.gmMaxtemp) {
-                                me.gmMaxtemp = me.gmEle;
+                            me.beamSpot.set_latlon(me.gmCoord.lat(),me.gmCoord.lon(),me.gmEle);
+                            me.xyz          = {"x":me.gmMe.x(),                  "y":me.gmMe.y(),                 "z":me.gmMe.z()};
+                            me.directionLOS = {"x":me.beamSpot.x()-me.gmMe.x(),   "y":me.beamSpot.y()-me.gmMe.y(),  "z":me.beamSpot.z()-me.gmMe.z()};
+
+                            # Check for terrain between own weapon and target:
+                            me.terrainGeod = get_cart_ground_intersection(me.xyz, me.directionLOS);
+                            me.gmColor = 0;#black when that terrain hidden behind other terrain
+                            if (me.terrainGeod != nil) {
+                                me.terrain.set_latlon(me.terrainGeod.lat, me.terrainGeod.lon, me.terrainGeod.elevation);
+                                me.dist = me.terrain.direct_distance_to(me.beamSpot);#-1 is to avoid z-fighting distance
+                                if (me.dist < 25) {                                
+                                    if (me.gmEle > me.gmMaxtemp) {
+                                        me.gmMaxtemp = me.gmEle;
+                                    }
+                                    if (me.gmEle < me.gmMintemp) {
+                                        me.gmMintemp = me.gmEle;
+                                    }
+                                    me.gmColor = math.clamp((me.gmEle-me.gmMin)/(me.gmMax-me.gmMin),0,1);#If this line is skipped due to that spot not visible from aircraft it just uses prev color.
+                                }
                             }
-                            if (me.gmEle < me.gmMintemp) {
-                                me.gmMintemp = me.gmEle;
-                            }
-                            me.gmColor = math.clamp((me.gmEle-me.gmMin)/(me.gmMax-me.gmMin),0,1);
+                            
+                            
                             #printf("GM %03d,%03d: %3d %.5f",me.gmLine,me.gmi,me.gmColor*127,me.gmColor);
                             #if (me.gmLine != 0)
                             #print(me.gmLine);
