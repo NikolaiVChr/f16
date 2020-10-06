@@ -861,9 +861,9 @@ var MFD_Device =
             me.modeSw = getprop("instrumentation/radar/mode-switch");
             me.ver = num(split(".", getprop("sim/version/flightgear"))[0]) >= 2020;
             if (me.modeSw == 1 and me.ver) {
-                rdrMode = !rdrMode;
+                rdrModeGM = !rdrModeGM;
             }
-            if (rdrMode) {
+            if (rdrModeGM) {
                 me.root.mod.setText("GM");# Should be inverted
                 me.root.mod.setColor(0,0,0);
                 me.root.modBox.show();
@@ -906,7 +906,7 @@ var MFD_Device =
             me.root.bullOwnDir.setVisible(me.bullOn);
             me.root.bullOwnDist.setVisible(me.bullOn);
             
-            if (rdrMode) {
+            if (rdrModeGM) {
                 exp = 0;
                 me.root.norm.hide();
             } elsif (me.pressEXP) {
@@ -927,7 +927,7 @@ var MFD_Device =
             me.root.horiz.setRotation(-getprop("orientation/roll-deg")*D2R);
             me.time = getprop("sim/time/elapsed-sec");
             me.az = getprop("instrumentation/radar/az-field");
-            if (!rdrMode) {
+            if (!rdrModeGM) {
                 me.root.distl.show();
             } else {
                 me.root.distl.hide();
@@ -940,7 +940,7 @@ var MFD_Device =
                     }
                     me.plc = plc;
                     
-                    if (!rdrMode) {
+                    if (!rdrModeGM) {
                         me.root.ant_bottom.setTranslation(me.wdt*0.5-(me.az/120)*me.wdt*0.5+(me.az/120)*me.wdt*math.abs(me.fwd-me.plc),0);
                     } else {
                         me.root.ant_bottom.setTranslation(-256+me.gmLine*4+276*0.795,0);
@@ -1041,10 +1041,10 @@ var MFD_Device =
             
             
             
-            me.root.az1.setVisible(!rdrMode and (!getprop("f16/avionics/dgft") or awg_9.active_u == nil));
-            me.root.az2.setVisible(!rdrMode and (!getprop("f16/avionics/dgft") or awg_9.active_u == nil));
-            me.root.bars.setVisible(!rdrMode);
-            me.root.az.setVisible(!rdrMode);
+            me.root.az1.setVisible(!rdrModeGM and (!getprop("f16/avionics/dgft") or awg_9.active_u == nil));
+            me.root.az2.setVisible(!rdrModeGM and (!getprop("f16/avionics/dgft") or awg_9.active_u == nil));
+            me.root.bars.setVisible(!rdrModeGM);
+            me.root.az.setVisible(!rdrModeGM);
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
             me.root.rang.setText(sprintf("%d",getprop("instrumentation/radar/radar2-range")));
@@ -1091,7 +1091,7 @@ var MFD_Device =
                     me.bullOn = 0;
                 }
             }
-            me.root.bullseye.setVisible(me.bullOn and !rdrMode);
+            me.root.bullseye.setVisible(me.bullOn and !rdrModeGM);
             if (me.bullOn) {
                 me.root.bullseye.setTranslation(me.bullPos);
             }
@@ -1114,7 +1114,7 @@ var MFD_Device =
                 }
                 me.desig = contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType);
                 me.iff = contact.getIff();
-                if (!rdrMode) {
+                if (!rdrModeGM) {
                     me.echoPos = [me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels];
                     me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
                     if (me.close and exp) {
@@ -1183,7 +1183,7 @@ var MFD_Device =
                 
                 
                 
-                if (me.desig and !me.iff and !rdrMode) {
+                if (me.desig and !me.iff and !rdrModeGM) {
                     me.rot = contact.get_heading();
                     if (me.rot == nil) {
                         #can happen in transition between TWS to RWS
@@ -1223,7 +1223,7 @@ var MFD_Device =
                     #break;
                 #}
             }
-            if (getprop("sim/multiplay/generic/int[2]")!=1 and rdrMode) {
+            if (getprop("sim/multiplay/generic/int[2]")!=1 and rdrModeGM) {
                 var vari = getprop("sim/variant-id");
                 me.mono = !(vari<2 or vari ==3);
                 # GM mode
@@ -1305,7 +1305,7 @@ var MFD_Device =
                 cursor_destination = nil;
                 cursor_click = -1;
             }
-            if (rdrMode) {
+            if (rdrModeGM) {
                 me.i = me.ijk;
             }
             for (;me.i<me.root.maxB;me.i+=1) {
@@ -1314,7 +1314,7 @@ var MFD_Device =
             }
             me.root.dlzArray = pylons.getDLZ();
             #me.dlzArray =[10,8,6,2,9];#test
-            if (me.root.dlzArray == nil or size(me.root.dlzArray) == 0 or rdrMode) {
+            if (me.root.dlzArray == nil or size(me.root.dlzArray) == 0 or rdrModeGM) {
                     me.root.dlz.hide();
             } else {
                 #printf("%d %d %d %d %d",me.root.dlzArray[0],me.root.dlzArray[1],me.root.dlzArray[2],me.root.dlzArray[3],me.root.dlzArray[4]);
@@ -3505,7 +3505,7 @@ var cursor_click = -1;
 var cursor_destination = nil;
 var cursor_lock = -1;
 var exp = 0;
-var rdrMode = 0;
+var rdrModeGM = 0;
 
 var slew_c = 0;
 
