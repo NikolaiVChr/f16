@@ -607,10 +607,16 @@
   <object-name>AVTR_AVTR</object-name>
   <type>material</type>
   <condition>
-	<or>
-      <property>controls/test/test-panel/mal-ind-lts</property>
-	  <property>controls/test/avtr-test</property>
-	</or>
+    <and>
+      <or>
+        <property>controls/test/test-panel/mal-ind-lts</property>
+        <property>controls/test/avtr-test</property>
+      </or>
+      <greater-than>
+        <property>fdm/jsbsim/elec/bus/ess-dc</property>
+        <value>20</value>
+      </greater-than>
+    </and>
   </condition>
   <emission>
    <red>0</red>
