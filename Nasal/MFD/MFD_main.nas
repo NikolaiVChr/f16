@@ -858,7 +858,7 @@ var MFD_Device =
                 me.root.gmPic.show();
             } elsif (me.ver) {
                 me.root.mod.setText("gm");# Should be uppercase
-                me.root.gmPic.show();
+                me.root.gmPic.hide();
             } else {
                 me.root.mod.setText("");
                 me.root.gmPic.hide();
@@ -1076,13 +1076,14 @@ var MFD_Device =
                     me.bullOn = 0;
                 }
             }
-            me.root.bullseye.setVisible(me.bullOn);
+            me.root.bullseye.setVisible(me.bullOn and !rdrMode);
             if (me.bullOn) {
                 me.root.bullseye.setTranslation(me.bullPos);
             }
             
             me.desig_new = nil;
             me.gm_echoPos = {};
+            me.ijk = 0;
             foreach(contact; awg_9.tgts_list) {
                 if (contact.get_display() == 0) {
                     continue;
@@ -1096,7 +1097,7 @@ var MFD_Device =
                 if (!me.blue and getprop("f16/avionics/dgft") and !(awg_9.active_u != nil and awg_9.active_u.Callsign != nil and me.cs != nil and me.cs == awg_9.active_u.Callsign.getValue())) {
                     continue;
                 }
-                
+                me.desig = contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType);
                 me.iff = contact.getIff();
                 if (!rdrMode) {
                     me.echoPos = [me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels];
@@ -1127,19 +1128,46 @@ var MFD_Device =
                         }
                     }
                 } elsif (contact.get_type() != armament.AIR) {
-                    me.distPixelsGM = contact.get_range()*(128/awg_9.range_radar2);
-                    me.echoPos = [int(me.distPixelsGM*math.cos(D2R*(90-geo.normdeg180(contact.get_relative_bearing())))+64), int(me.distPixelsGM*math.sin(D2R*(90-geo.normdeg180(contact.get_relative_bearing())))), contact];
-                    if (me.gm_echoPos["e"~me.echoPos[0]] == nil) {
-                        me.gm_echoPos["e"~me.echoPos[0]] = [me.echoPos];
+                    me.distPixelsGM = contact.get_range()*(120/awg_9.range_radar2);
+                    me.echoPosGM = [int(me.distPixelsGM*math.cos(D2R*(90-geo.normdeg180(contact.get_relative_bearing())))+64), int(me.distPixelsGM*math.sin(D2R*(90-geo.normdeg180(contact.get_relative_bearing())))), contact, me.desig];
+                    if (me.gm_echoPos["e"~me.echoPosGM[0]] == nil) {
+                        me.gm_echoPos["e"~me.echoPosGM[0]] = [me.echoPosGM];
                     } else {
-                        append(me.gm_echoPos["e"~me.echoPos[0]], me.echoPos);
+                        append(me.gm_echoPos["e"~me.echoPosGM[0]], me.echoPosGM);
                     }
                     #printf("GM: Rdr added e"~me.echoPos[0]~" for (%d,%d) %s  (%.1f)",me.echoPos[0],me.echoPos[1],me.cs,geo.normdeg180(contact.get_relative_bearing()));
+                    
+                    me.echoPos = [int((me.echoPosGM[0]-64)*4), -int(me.echoPosGM[1]*(480/120))];#338 x 482
+                    me.newL = 0;
+                    if (cursor_click == me.root.index) {
+                        #printf("Cursor click is (%d,%d) from %s", cursor_pos[0] - me.echoPos[0], cursor_pos[1] - me.echoPos[1], me.cs);
+                        if (math.abs(cursor_pos[0] - me.echoPos[0]) < 10 and math.abs(cursor_pos[1] - me.echoPos[1]) < 11) {
+                            me.desig_new = contact;
+                            me.newL = 1;
+                        }
+                    }
+                    if (me.desig or me.newL) {
+                        me.lockAlt = sprintf("%02d", contact.get_altitude()*0.001);
+                        me.lockInfo = sprintf("%4d   %+4d", contact.get_Speed(), contact.get_closure_rate());
+                        me.root.lockAlt.setText(me.lockAlt);
+                        me.root.lockInfo.setText(me.lockInfo);
+                        me.root.lockInfo.show();
+                        me.root.lock.setTranslation(me.echoPos);
+                        me.root.lockRot.hide();
+                        me.root.lockFRot.hide();
+                        me.root.lock.show();
+                        me.root.lock.update();
+                        me.root.blep[0].setColor(me.blue?[getprop("/sim/model/MFD-color/dot1/red"),getprop("/sim/model/MFD-color/dot1/green"),getprop("/sim/model/MFD-color/dot1/blue")]:[getprop("/sim/model/MFD-color/line3/red"),getprop("/sim/model/MFD-color/line3/green"),getprop("/sim/model/MFD-color/line3/blue")]);
+                        me.root.blep[0].setTranslation(me.echoPos);
+                        me.root.blep[0].show();
+                        me.root.blep[0].update();
+                        me.ijk = 1;
+                    }
                 }
                 
                 
                 
-                me.desig = contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType);
+                
                 if (me.desig and !me.iff and !rdrMode) {
                     me.rot = contact.get_heading();
                     if (me.rot == nil) {
@@ -1174,6 +1202,7 @@ var MFD_Device =
                         }
                     }
                 }
+
                 me.i += 1;
                 #if (me.i > (me.root.maxB-1)) {
                     #break;
@@ -1206,7 +1235,7 @@ var MFD_Device =
                     me.gmHead = getprop("orientation/heading-deg");
                     me.gmCoord.apply_course_distance(me.gmHead-90, NM2M*getprop("instrumentation/radar/radar2-range")*0.5);
                     me.gmCoord.apply_course_distance(me.gmHead+90, NM2M*getprop("instrumentation/radar/radar2-range")*me.gmLine/127);
-                    for(me.gmi = 0; me.gmi < 128; me.gmi += 1) {# me.gmi is the horiz line counter.  0=range*0.0   127=range
+                    for(me.gmi = 0; me.gmi < 120; me.gmi += 1) {# me.gmi is the horiz line counter.  0=range*0.0   119=range
                         
                         if (math.abs(geo.normdeg180(me.gmMe.course_to(me.gmCoord)-me.gmHead)) < 60) {
                             me.echoPos = nil;
@@ -1235,7 +1264,7 @@ var MFD_Device =
                             #print(me.gmLine);
                             #me.root.gmPic.set("src", "Aircraft/f16/Nasal/MFD/gm.png");
                             #me.root.gmPic.setPixel(int(rand()*127), int(rand()*127), [me.gmColor,me.gmColor,me.gmColor,1]);
-                            if (me.echoPos == nil) {
+                            if (me.echoPos == nil or me.echoPos[3]) {
                                 me.root.gmPic.setPixel(me.gmLine, me.gmi, [me.gmColor*me.mono,me.gmColor,me.gmColor*me.mono,1]);
                             } else {
                                 #print("GM: Drawing ground/sea echo");
@@ -1246,7 +1275,10 @@ var MFD_Device =
                             #f16.f16_mfd.MFDl.p_RDR.root.gmPic.setPixel(50, 50, [getprop("/sim/model/MFD-color/circle1/red"),getprop("/sim/model/MFD-color/circle1/green"),getprop("/sim/model/MFD-color/circle1/blue"),1]);
                             #f16.f16_mfd.MFDl.p_RDR.root.gmPicG.update();
                         }
-                        me.gmCoord.apply_course_distance(me.gmHead, NM2M*getprop("instrumentation/radar/radar2-range")/128);
+                        me.gmCoord.apply_course_distance(me.gmHead, NM2M*getprop("instrumentation/radar/radar2-range")/120);#120 because of strange size of display
+                        if (me.gmCoord.distance_to(me.gmMe)*M2NM > getprop("instrumentation/radar/radar2-range")) {
+                            break;
+                        }
                     }
                     me.linesFrame -= 1;
                 }
@@ -1257,6 +1289,9 @@ var MFD_Device =
                 awg_9.designate(me.desig_new);
                 cursor_destination = nil;
                 cursor_click = -1;
+            }
+            if (rdrMode) {
+                me.i = me.ijk;
             }
             for (;me.i<me.root.maxB;me.i+=1) {
                 me.root.blep[me.i].hide();
