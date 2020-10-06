@@ -713,11 +713,12 @@
 
         <lag_filter name="fcs/fly-by-wire/pitch/bias-bottom-lag">
             <description>
-                Diagram say 0.125
+                Diagram say 0.125, but that takes 30 seconds to change.
+                So 1.25 now, thats about 5 seconds.
                 DNU
             </description>
             <input> fcs/fly-by-wire/pitch/bias-bottom </input>
-            <c1> 0.125 </c1>
+            <c1> 1.25 </c1>
         </lag_filter>
 
         <summer name="fcs/fly-by-wire/pitch/bias1">
@@ -781,14 +782,14 @@
                 DNU
                 
                 It makes negative pitch rate (washed out) plus alpha (minus a bias)
-                give zero input on FBW when gear is up. And x0.075 influence with gear down.
+                give zero input on FBW when gear is up. And x0.1 influence with gear down.
                 
                 In diagram relies only on Condition A, but its not helpful during AAR,
                 nor right after take-off, it should really only get into effect when on
                 approach, hence that test.
             </description>
             <default value="0"/>
-            <test logic="AND" value="0.075">
+            <test logic="AND" value="0.1">
                 <!-- fcs/fly-by-wire/condition-a == 1 -->
                 gear/gear-cmd-norm == 1
                 fcs/fly-by-wire/MLG-GND != 1
@@ -807,13 +808,16 @@
         <actuator name="fcs/fly-by-wire/pitch/pitch-rate-lower-lag">
             <description>
                 2 secs to decrease to zero, when retracting gears.
-                100 secs to increase to 0.075, which is time enough to get gear up
+                25 secs to increase to 0.1, which is time enough to get gear up
                 from take-off.
+                
+                In diagram this is 0.125 lag filter.
+                
                 DNU
             </description>
           <input> fcs/fly-by-wire/pitch/pitch-rate-lower-switch </input>
           <lag> 20 </lag>
-          <rate_limit sense="incr"> 0.01 </rate_limit>
+          <rate_limit sense="incr"> 0.04 </rate_limit>
           <rate_limit sense="decr"> 0.50 </rate_limit>
           <bias> 0 </bias>
           <deadband_width> 0 </deadband_width>
