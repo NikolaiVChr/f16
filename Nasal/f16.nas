@@ -1901,7 +1901,8 @@ settimer( func { ignoreLoop(); }, 5);
 
 setlistener("controls/flight/alt-rel-button", func (node) {setprop("controls/armament/trigger", node.getValue());});
 
-var SOI = math.ceil(int(rand() * 3)); 
+var SOI = int(rand() * 3)+1; # 1 to 3
+
 var MFDControlsNodes = {
 	dmsX: props.globals.getNode("controls/displays/display-management-switch-x"),
 	dmsY: props.globals.getNode("controls/displays/display-management-switch-y"),

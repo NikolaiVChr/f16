@@ -851,12 +851,12 @@ var MFD_Device =
 #  VSD HSD SMS SIT
         };
         me.p_RDR.update = func (noti) {
-			if (f16.SOI == 2 and me.model_index == 1) {
-				me.root.notSOI.show();
-			} elsif (f16.SOI == 3 and me.model_index == 0) {
-				me.root.notSOI.show();
-			} else {
+			if (f16.SOI == 3 and me.model_index == 1) {
 				me.root.notSOI.hide();
+			} elsif (f16.SOI == 2 and me.model_index == 0) {
+				me.root.notSOI.hide();
+			} else {
+				me.root.notSOI.show();
 			}
             me.modeSw = getprop("instrumentation/radar/mode-switch");
             me.ver = num(split(".", getprop("sim/version/flightgear"))[0]) >= 2020;
@@ -1814,13 +1814,13 @@ var MFD_Device =
             if (getprop("sim/variant-id") == 0) {
                 return;
             }
-			if (f16.SOI == 2 and me.model_index == 1) {
-				me.root.notSOI.show();
-			} elsif (f16.SOI == 3 and me.model_index == 0) {
-				me.root.notSOI.show();
-			} else {
-				me.root.notSOI.hide();
-			}
+			if (f16.SOI == 3 and me.model_index == 1) {
+                me.root.notSOI.hide();
+            } elsif (f16.SOI == 2 and me.model_index == 0) {
+                me.root.notSOI.hide();
+            } else {
+                me.root.notSOI.show();
+            }
 			
             me.cat = pylons.fcs.getCategory();
             me.root.cat.setText(sprintf("CAT %s", me.cat==1?"I":(me.cat==2?"II":"III")));
@@ -2155,13 +2155,13 @@ var MFD_Device =
                 return;
             }
 			
-			if (f16.SOI == 2 and me.model_index == 1) {
-				me.root.notSOI.show();
-			} elsif (f16.SOI == 3 and me.model_index == 0) {
-				me.root.notSOI.show();
-			} else {
-				me.root.notSOI.hide();
-			}
+			if (f16.SOI == 3 and me.model_index == 1) {
+                me.root.notSOI.hide();
+            } elsif (f16.SOI == 2 and me.model_index == 0) {
+                me.root.notSOI.hide();
+            } else {
+                me.root.notSOI.show();
+            }
 			
             if (me["at"]== nil) {
                 me.at = 0;
@@ -2737,13 +2737,13 @@ var MFD_Device =
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
 				
-			if (f16.SOI == 2 and me.model_index == 1) {
-				me.root.notSOI.show();
-			} elsif (f16.SOI == 3 and me.model_index == 0) {
-				me.root.notSOI.show();
-			} else {
-				me.root.notSOI.hide();
-			}
+			if (f16.SOI == 3 and me.model_index == 1) {
+                me.root.notSOI.hide();
+            } elsif (f16.SOI == 2 and me.model_index == 0) {
+                me.root.notSOI.hide();
+            } else {
+                me.root.notSOI.show();
+            }
             if (MFD_Device.get_HSD_coupled()) {
                 me.root.rangDown.hide();
                 me.root.rangUp.hide();
