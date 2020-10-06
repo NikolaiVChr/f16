@@ -854,6 +854,7 @@ var MFD_Device =
 #  VSD HSD SMS SIT
         };
         me.p_RDR.update = func (noti) {
+            me.DGFT = getprop("f16/avionics/dgft");
 			if (f16.SOI == 3 and me.model_index == 1) {
 				me.root.notSOI.hide();
 			} elsif (f16.SOI == 2 and me.model_index == 0) {
@@ -909,7 +910,7 @@ var MFD_Device =
             me.root.bullOwnDir.setVisible(me.bullOn);
             me.root.bullOwnDist.setVisible(me.bullOn);
             
-            if (rdrModeGM or getprop("f16/avionics/dgft")) {
+            if (rdrModeGM or me.DGFT) {
                 exp = 0;
                 me.root.norm.hide();
             } elsif (me.pressEXP) {
@@ -926,7 +927,7 @@ var MFD_Device =
                 me.root.norm.setText("NORM");
             }
             me.root.exp.setVisible(exp);
-            me.root.acm.setVisible(getprop("f16/avionics/dgft"));
+            me.root.acm.setVisible(me.DGFT);
             me.root.horiz.setRotation(-getprop("orientation/roll-deg")*D2R);
             me.time = getprop("sim/time/elapsed-sec");
             me.az = getprop("instrumentation/radar/az-field");
@@ -936,7 +937,7 @@ var MFD_Device =
                 me.root.distl.hide();
             }
             if (getprop("sim/multiplay/generic/int[2]")!=1) {
-                if (!getprop("f16/avionics/dgft") or awg_9.active_u == nil) {
+                if (!me.DGFT or awg_9.active_u == nil) {
                     var plc = me.time*0.5/(me.az/120)-int(me.time*0.5/(me.az/120));
                     if (plc<me.plc) {
                         me.fwd = !me.fwd;
@@ -1044,8 +1045,8 @@ var MFD_Device =
             
             
             
-            me.root.az1.setVisible(!rdrModeGM and (!getprop("f16/avionics/dgft") or awg_9.active_u == nil));
-            me.root.az2.setVisible(!rdrModeGM and (!getprop("f16/avionics/dgft") or awg_9.active_u == nil));
+            me.root.az1.setVisible(!rdrModeGM and (!me.DGFT or awg_9.active_u == nil));
+            me.root.az2.setVisible(!rdrModeGM and (!me.DGFT or awg_9.active_u == nil));
             me.root.bars.setVisible(!rdrModeGM);
             me.root.az.setVisible(!rdrModeGM);
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
@@ -1112,7 +1113,7 @@ var MFD_Device =
                 }
                 me.cs = contact.get_Callsign();
                 me.blue = getprop("f16/avionics/power-dl") and (me.cs == getprop("link16/wingman-1") or me.cs == getprop("link16/wingman-2") or me.cs == getprop("link16/wingman-3") or me.cs == getprop("link16/wingman-4") or me.cs == getprop("link16/wingman-5") or me.cs == getprop("link16/wingman-6") or me.cs == getprop("link16/wingman-7") or me.cs == getprop("link16/wingman-8") or me.cs == getprop("link16/wingman-9") or me.cs == getprop("link16/wingman-10") or me.cs == getprop("link16/wingman-11") or me.cs == getprop("link16/wingman-12"));
-                if (!me.blue and getprop("f16/avionics/dgft") and !(awg_9.active_u != nil and awg_9.active_u.Callsign != nil and me.cs != nil and me.cs == awg_9.active_u.Callsign.getValue())) {
+                if (!me.blue and me.DGFT and !(awg_9.active_u != nil and awg_9.active_u.Callsign != nil and me.cs != nil and me.cs == awg_9.active_u.Callsign.getValue())) {
                     continue;
                 }
                 me.desig = contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType);
