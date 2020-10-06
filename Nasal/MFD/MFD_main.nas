@@ -476,6 +476,13 @@ var MFD_Device =
                 .setColor(colorText1)
                 .set("z-index",1)
                 .setFontSize(20, 1.0);
+        svg.sp = svg.p_RDR.createChild("text")
+                .setTranslation(276*0.775, -482*0.5+10)
+                .setText("S\nP")
+                .setAlignment("right-center")
+                .setColor(colorText1)
+                .set("z-index",1)
+                .setFontSize(20, 1.0);
         svg.bars = svg.p_RDR.createChild("text")
                 .setTranslation(-276*0.775, -482*0.5+75)
                 .setText("8B")
@@ -891,15 +898,18 @@ var MFD_Device =
                 me.root.mod.setColor(colorBackground);
                 me.root.modBox.show();
                 me.root.gmPic.show();
+                me.root.sp.show();
             } elsif (me.ver) {
                 me.root.mod.setText("GM");
                 me.root.mod.setColor(colorText1);
                 me.root.modBox.hide();
                 me.root.gmPic.hide();
+                me.root.sp.hide();
             } else {
                 me.root.mod.setText("");
                 me.root.modBox.hide();
                 me.root.gmPic.hide();
+                me.root.sp.hide();
             }
 			
             setprop("instrumentation/radar/mode-switch", 0);
