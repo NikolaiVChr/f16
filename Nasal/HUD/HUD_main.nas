@@ -845,7 +845,7 @@ append(obj.total, obj.speed_curr);
         var distance = pixelPerDegreeY * 5;
         var minuss = 0.125*sx*0.695633;
         var minuso = 20*mr;
-        for(var i = 1; i <= 18; i += 1) # full drawn lines
+        for(var i = 1; i <= 17; i += 1) # full drawn lines
           append(obj.total, obj.ladder_group.createChild("path")
              .moveTo(minuso, -i * distance)
              .horiz(minuss)
@@ -858,7 +858,7 @@ append(obj.total, obj.speed_curr);
              .setStrokeLineWidth(1)
              .setColor(0,0,0));
         
-        for(var i = -18; i <= -1; i += 1) { # stipled lines
+        for(var i = -17; i <= -1; i += 1) { # stipled lines
           #var rad = me.extrapolate(-i*5,10,90,8,45)*D2R;#as per US manual pitch lines bend down from 8 to 45 degrees
           append(obj.total, obj.ladder_group.createChild("path")
                          .moveTo(minuso, -i * distance)
@@ -880,6 +880,53 @@ append(obj.total, obj.speed_curr);
                          .setStrokeLineWidth(1)
                          .setColor(0,0,0));
         }
+        
+        obj.zenith = obj.ladder_group.createChild("path")
+                        .setTranslation(0, -18 * distance)
+                        .moveTo(0,-minuso*1.25)
+                        .lineTo(minuso*1/4, -minuso*1.5/3)
+                        .lineTo(minuso*2/3, -minuso*2/3)
+                        .lineTo(minuso*1.5/3, -minuso*1/4)
+                        .lineTo(minuso*1.25,0)
+                        .lineTo(minuso*1.5/3, minuso*1/4)
+                        .lineTo(minuso*2/3, minuso*2/3)
+                        .lineTo(minuso*1/4, minuso*1.5/3)
+                        .lineTo(0, minuso*2)
+                        .lineTo(-minuso*1/4, minuso*1.5/3)
+                        .lineTo(-minuso*2/3, minuso*2/3)
+                        .lineTo(-minuso*1.5/3, minuso*1/4)
+                        .lineTo(-minuso*1.25,0)
+                        .lineTo(-minuso*1.5/3, -minuso*1/4)
+                        .lineTo(-minuso*2/3, -minuso*2/3)
+                        .lineTo(-minuso*1/4, -minuso*1.5/3)
+                        .lineTo(0,-minuso*1.25)
+                        .setStrokeLineWidth(1)
+                        .setColor(1,0,0);
+        append(obj.total, obj.zenith);
+        obj.nadir = obj.ladder_group.createChild("path")
+                        .setTranslation(0, 18 * distance)
+                        .moveTo(-minuso,0)
+                        .arcSmallCW(minuso,minuso, 0, minuso*2, 0)
+                        .arcSmallCW(minuso,minuso, 0, -minuso*2, 0)
+                        .moveTo(0,-minuso)
+                        .vert(-minuso)
+                        .moveTo(-minuso,0)
+                        .horiz(minuso*2)
+                        .moveTo(-minuso*0.6614,minuso*0.75)
+                        .horiz(minuso*0.6614*2)
+                        .moveTo(-minuso*0.6614,-minuso*0.75)
+                        .horiz(minuso*0.6614*2)
+                        .moveTo(-minuso*0.968,-minuso*0.25)
+                        .horiz(minuso*0.968*2)
+                        .moveTo(-minuso*0.968,minuso*0.25)
+                        .horiz(minuso*0.968*2)
+                        .moveTo(-minuso*0.866,minuso*0.5)
+                        .horiz(minuso*0.866*2)
+                        .moveTo(-minuso*0.866,-minuso*0.5)
+                        .horiz(minuso*0.866*2)
+                        .setStrokeLineWidth(1)
+                        .setColor(1,0,0);
+        append(obj.total, obj.nadir);
 
         #pitch line numbers
         for(var i = -18; i <= 0; i += 1) {
