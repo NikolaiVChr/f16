@@ -909,7 +909,7 @@ var MFD_Device =
             me.root.bullOwnDir.setVisible(me.bullOn);
             me.root.bullOwnDist.setVisible(me.bullOn);
             
-            if (rdrModeGM) {
+            if (rdrModeGM or getprop("f16/avionics/dgft")) {
                 exp = 0;
                 me.root.norm.hide();
             } elsif (me.pressEXP) {
