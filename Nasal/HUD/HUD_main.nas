@@ -1483,13 +1483,13 @@ append(obj.total, obj.speed_curr);
                                              {
                                                  if (hdp.brake_parking) {
                                                      obj.window2.setVisible(1);
-                                                     obj.window2.setText(" BRAKES");
+                                                     obj.window2.setText("  BRAKES");
                                                  } elsif (hdp.flap_pos_deg > 0 or hdp.gear_down) {
                                                      obj.window2.setVisible(1);
                                                      obj.gd = "";
                                                      if (hdp.gear_down)
                                                        obj.gd = " G";
-                                                     obj.window2.setText(sprintf(" F %d%s",hdp.flap_pos_deg,obj.gd));
+                                                     obj.window2.setText(sprintf("  F %d%s",hdp.flap_pos_deg,obj.gd));
                                                  } elsif (hdp.master_arm) {
                                                      var submode = "";
                                                      if (hdp.CCRP_active) {
@@ -1502,16 +1502,16 @@ append(obj.total, obj.speed_curr);
                                                         submode = "BORE";
                                                      }
                                                      var dgft = hdp.dgft?"DGFT ":"";
-                                                     obj.window2.setText(" ARM "~dgft~submode);
+                                                     obj.window2.setText("  ARM "~dgft~submode);
                                                      obj.window2.setVisible(1);
                                                  } elsif (hdp.rotary == 0 or hdp.rotary == 3) {
-                                                     obj.window2.setText(" ILS");
+                                                     obj.window2.setText("  ILS");
                                                      obj.window2.setVisible(1);
                                                  } else {
                                                     if (hdp.ins_knob==3) {
-                                                        obj.window2.setText(" NAV");
+                                                        obj.window2.setText("  NAV");
                                                     } elsif (hdp.ins_knob==2 or hdp.ins_knob==4) {
-                                                        obj.window2.setText(" ALIGN");
+                                                        obj.window2.setText("  ALIGN");
                                                     } else {
                                                         obj.window2.setText(" ");
                                                     }
@@ -2018,7 +2018,7 @@ append(obj.total, obj.speed_curr);
             #    hdp.window9_txt = sprintf("AOA %d",me.alphaHUD);
             #}
             
-            hdp.window7_txt = sprintf(" %.2f",hdp.mach);
+            hdp.window7_txt = sprintf("  %.2f",hdp.mach);
         }
 
         
