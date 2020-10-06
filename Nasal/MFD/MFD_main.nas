@@ -811,6 +811,7 @@ var MFD_Device =
                 } elsif (eventi == 12) {
                     me.pressEXP = 1;
                 } elsif (eventi == 2) {
+                    if (getprop("f16/avionics/dgft")) return;
                     var az = getprop("instrumentation/radar/az-field");
                     if(az==120)
                         az = 15;
@@ -822,6 +823,7 @@ var MFD_Device =
                         az = 120;
                     setprop("instrumentation/radar/az-field", az);
                 } elsif (eventi == 3) {
+                    if (getprop("f16/avionics/dgft")) return;
                     var ho = getprop("instrumentation/radar/ho-field");
                     if(ho==120)
                         ho = 15;
@@ -833,6 +835,7 @@ var MFD_Device =
                         ho = 120;
                     setprop("instrumentation/radar/ho-field", ho);
                 } elsif (eventi == 4) {
+                    if (getprop("f16/avionics/dgft")) return;
                     setprop("instrumentation/radar/mode-switch", 1);
                 } elsif (eventi == 15) {
                     swap();
