@@ -648,14 +648,17 @@ var az_scan = func(notification) {
 #                if(awg9_trace)
 #                  print(scan_tgt_idx,";",u.get_Callsign()," out of azimuth ",u.deviation," field=",l_az_fld,"->",r_az_fld);
                 u.set_display(0);
-            }
-        } else {
-            u.set_display(0);#richard, I added this line.
-            if (getprop("f16/avionics/dgft")) {
                 if (active_u_callsign != nil and u.Callsign != nil and u.Callsign.getValue() == active_u_callsign) {
                     designate(nil);
                 }
             }
+        } else {
+            u.set_display(0);#richard, I added this line.
+            #if (getprop("f16/avionics/dgft")) {
+                if (active_u_callsign != nil and u.Callsign != nil and u.Callsign.getValue() == active_u_callsign) {
+                    designate(nil);
+                }
+            #}
         }
 
 # RWR 
