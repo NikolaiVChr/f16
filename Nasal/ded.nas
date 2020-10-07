@@ -688,7 +688,7 @@ var dataEntryDisplay = {
 		} else {
 			me.text[3] = sprintf(" ");
 		}
-		me.text[4] = sprintf("M1 3C4 M4 %04d     T%03.0f%s",getprop("instrumentation/transponder/id-code"), getprop("instrumentation/tacan/frequencies/selected-channel"), getprop("instrumentation/tacan/frequencies/selected-channel[4]"));
+		me.text[4] = sprintf("M  34  %04d    MAN T%03.0f%s",getprop("instrumentation/transponder/id-code"), getprop("instrumentation/tacan/frequencies/selected-channel"), getprop("instrumentation/tacan/frequencies/selected-channel[4]"));
 	},
 	
 	updateComm1: func() {
