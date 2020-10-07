@@ -623,15 +623,15 @@
 	  		</description>
 			<default value="0"/>
 			<test logic="AND" value="1">
-				elec/switches/flcs-pwr-test == 1
+				<test logic="OR" value="1">
+					elec/switches/flcs-pwr-test == 1
+					/controls/test/test-panel/epu-test == 1
+				</test>
 				elec/switches/main-pwr gt 0
 				elec/bus/flcc/a gt 22
 				elec/bus/flcc/b gt 22
 				elec/bus/flcc/c gt 22
 				elec/bus/flcc/d gt 22
-			</test>
-			<test value="1">
-				/controls/test/test-panel/epu-test == 1
 			</test>
 		</switch>
 		
