@@ -1357,7 +1357,8 @@ var MFD_Device =
                             # Check for terrain between own weapon and target:
                             me.terrainGeod = get_cart_ground_intersection(me.xyz, me.directionLOS);
                             me.gmColor = 0;#black when that terrain hidden behind other terrain
-                            if (me.terrainGeod != nil) {
+                            if (me.terrainGeod != nil and vector.Math.getPitch(me.gmMe, me.beamSpot) > -60+noti.pitch) {
+                                # Terrain found and is not below radar field of regard
                                 me.terrain.set_latlon(me.terrainGeod.lat, me.terrainGeod.lon, me.terrainGeod.elevation);
                                 me.dist = me.terrain.direct_distance_to(me.beamSpot);#-1 is to avoid z-fighting distance
                                 if (me.dist < 25) {                                
