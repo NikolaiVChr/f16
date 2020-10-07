@@ -1961,14 +1961,6 @@ setlistener("f16/engine/cutoff-release-lever", func() {
 	}
 }, 0, 0);
 
-setlistener("systems/refuel/serviceable", func() {
-    if (getprop("systems/refuel/serviceable")) { 
-        setprop("controls/lighting/ext-lighting-panel/fuselage", 1);
-    } else {
-        setprop("controls/lighting/ext-lighting-panel/fuselage", 0);
-    }
-}, 0, 0);
-
 # Engine feed knob handler
 setlistener("f16/engine/feed", func(feedNode) {
     var feed = feedNode.getValue();
