@@ -475,6 +475,7 @@ var sendLightsToMp = func {
   var flash = getprop("controls/lighting/ext-lighting-panel/pos-lights-flash");#will flash all light controll by WingTail switch
   var wing = getprop("controls/lighting/ext-lighting-panel/wing-tail");#all red/green plus tail white. BRT (1)/off (0)/dim (-1)
   var fuse = getprop("controls/lighting/ext-lighting-panel/fuselage");#white flood light mounted leading edge of tail
+  var refuel = getprop("systems/refuel/serviceable");
   var form = getprop("controls/lighting/ext-lighting-panel/form-knob");#white formation lights on top and bottom
   var strobe = getprop("controls/lighting/ext-lighting-panel/anti-collision");#white flashing light at top of tail
   var ar = getprop("controls/lighting/ext-lighting-panel/ar-knob");#flood light in hatch of refuel ext. panel
@@ -538,6 +539,9 @@ var sendLightsToMp = func {
     # fuselage flood
     setprop("sim/multiplay/generic/bool[48]",1);
     setprop("sim/multiplay/generic/float[15]",0.60+fuse*0.40);
+  } elsif (refuel and master and ac_non_ess_2 > 100) {
+    setprop("sim/multiplay/generic/bool[48]",1);
+    setprop("sim/multiplay/generic/float[15]",0.60+refuel*0.40);
   } else {
     setprop("sim/multiplay/generic/bool[48]",0);
     setprop("sim/multiplay/generic/float[15]",0.001);
@@ -1955,6 +1959,14 @@ setlistener("f16/engine/cutoff-release-lever", func() {
 			secSelfTest = 0;
 		}, 3);
 	}
+}, 0, 0);
+
+setlistener("systems/refuel/serviceable", func() {
+    if (getprop("systems/refuel/serviceable")) { 
+        setprop("controls/lighting/ext-lighting-panel/fuselage", 1);
+    } else {
+        setprop("controls/lighting/ext-lighting-panel/fuselage", 0);
+    }
 }, 0, 0);
 
 # Engine feed knob handler

@@ -1540,14 +1540,7 @@ There is also small changes in tail for different variants with and without brak
                 </binding>
                 <binding>
                     <command>nasal</command>
-                    <script>screen.log.write("Refuel door "~(getprop("systems/refuel/serviceable")==1?"OPEN":"CLOSED"), 0.5, 0.5, 1);
-                    setlistener("systems/refuel/serviceable", func() {
-                    if (getprop("systems/refuel/serviceable")) { 
-                    setprop("controls/lighting/ext-lighting-panel/fuselage", 1);
-                    } else {
-                    setprop("controls/lighting/ext-lighting-panel/fuselage", 0);
-                    }
-                    }, 0, 0);</script>
+                    <script>screen.log.write("Refuel door "~(getprop("systems/refuel/serviceable")==1?"OPEN":"CLOSED"), 0.5, 0.5, 1);</script>
                 </binding>
             </key>
             <key n="85">
