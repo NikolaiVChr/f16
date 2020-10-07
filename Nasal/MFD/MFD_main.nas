@@ -979,7 +979,7 @@ var MFD_Device =
             }			
             
             
-            me.bullOn = getprop("f16/avionics/bulls-eye-defined") and ded.dataEntryDisplay.bullMode;
+            me.bullOn = getprop("f16/avionics/bulls-eye-defined") and ded.dataEntryDisplay.bullMode and rdrMode != RADAR_MODE_GM;
             if (me.bullOn) {
                 me.bullLat = getprop("f16/avionics/bulls-eye-lat");
                 me.bullLon = getprop("f16/avionics/bulls-eye-lon");
