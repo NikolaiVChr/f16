@@ -930,6 +930,9 @@ var MFD_Device =
                 }
             }
             setprop("instrumentation/radar/mode-switch", 0);
+            if (me.DGFT) {
+                rdrMode = RADAR_MODE_CRM;
+            }
             
             me.modeSwHD = getprop("instrumentation/radar/mode-hd-switch");            
             if (rdrMode == RADAR_MODE_GM and me.modeSwHD == me.model_index) {

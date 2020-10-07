@@ -250,8 +250,8 @@ var F16_HUD = {
                 .setStrokeLineWidth(1)
                 .setColor(1,0,0);
         obj.alti_indicator = obj.svg.createChild("path")
-                .moveTo(3+0.75*sx*0.695633,sy*0.245)
-                .horiz(7)
+                .moveTo(0.75*sx*0.695633,sy*0.245)
+                .horiz(-7)
                 .setStrokeLineWidth(1)
                 .setColor(1,0,0);
         append(obj.scaling, obj.alti_indicator);
@@ -275,8 +275,8 @@ var F16_HUD = {
         append(obj.total, obj.soi_indicator);
         obj.alt_type = obj.svg.createChild("text")
                 .setText("R")
-                .setTranslation(4+0.75*sx*0.695633,sy*0.24)
-                .setAlignment("left-bottom")
+                .setTranslation(-1+0.75*sx*0.695633,sy*0.24)
+                .setAlignment("right-bottom")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(9, 1.1);
@@ -317,7 +317,7 @@ var F16_HUD = {
                 .setFontSize(9, 1.1);
 append(obj.total, obj.speed_curr);
         obj.alt_mask = obj.svg.createChild("image")
-                .setTranslation(5+3+0.79*sx*0.695633,sy*0.245-6)
+                .setTranslation(5+3+0.79*sx*0.695633-10,sy*0.245-6)
                 .set("z-index",10000)
                 #.set("blend-source-rgb","one")
                 #.set("blend-source-alpha","one")
@@ -328,12 +328,12 @@ append(obj.total, obj.speed_curr);
                 .set("src", "Aircraft/f16/Nasal/HUD/alt_mask.png");
         obj.alt_frame = obj.svg.createChild("path")
                 .set("z-index",10001)
-                .moveTo(8-2+0.80*sx*0.695633,sy*0.245)
-                .lineTo(8-2+0.80*sx*0.695633+5,sy*0.245-6)
+                .moveTo(8-2+0.80*sx*0.695633-10,sy*0.245)
+                .lineTo(8-2+0.80*sx*0.695633+5-10,sy*0.245-6)
                 .horiz(28)
                 .vert(12)
                 .horiz(-28)
-                .lineTo(8-2+0.80*sx*0.695633,sy*0.245)
+                .lineTo(8-2+0.80*sx*0.695633-10,sy*0.245)
                 .setStrokeLineWidth(1)
                 .setColor(1,0,0);
                 append(obj.total, obj.alt_frame);
@@ -344,7 +344,7 @@ append(obj.total, obj.speed_curr);
                 .set("blend-destination-rgb","one")
                 .set("blend-destination-alpha","one")
                 .setText("88888")
-                .setTranslation(4+0.82*sx*0.695633,sy*0.245+3.5)
+                .setTranslation(4+0.82*sx*0.695633-10,sy*0.245+3.5)
                 .setAlignment("left-bottom-baseline")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
@@ -521,7 +521,7 @@ append(obj.total, obj.speed_curr);
                                      .setTranslation(sx*0.695633*0.5, sy*0.245);
         append(obj.total, obj.orangePeelGroup);
 
-        obj.dlzX      = sx*0.695633*0.75-6;
+        obj.dlzX      = sx*0.695633*0.75-16;
         obj.dlzY      = sy*0.4;
         obj.dlzWidth  =  10;
         obj.dlzHeight = sy*0.25;
@@ -1356,13 +1356,13 @@ append(obj.total, obj.speed_curr);
                                           }
                                           
                                           if (obj.altScaleMode) {
-                                            obj.alt_range.setTranslation(0, obj.agl * alt_range_factor);
+                                            obj.alt_range.setTranslation(-10, obj.agl * alt_range_factor);
                                             obj.alt_curr.setText(obj.getAltTxt(obj.agl));
                                             obj.alt_type.setText("R");
                                             obj.ralt.hide();
                                             obj.radalt_box.hide();
                                           } else {
-                                            obj.alt_range.setTranslation(0, hdp.measured_altitude * alt_range_factor);
+                                            obj.alt_range.setTranslation(-10, hdp.measured_altitude * alt_range_factor);
                                             obj.alt_curr.setText(obj.getAltTxt(hdp.measured_altitude));
                                             obj.alt_type.setText("");
                                             obj.ralt.show();
@@ -2209,7 +2209,7 @@ append(obj.total, obj.speed_curr);
         if (hdp.dgft) {
             me.peelDeg = 90-hdp.pitch;
             me.peelRadius = 0.25*me.sx;
-            me.peelTickRadius = me.peelRadius+5;
+            me.peelTickRadius = me.peelRadius+8;
             me.orangePeelGroup.removeAllChildren();
             me.peelLeft = me.orangePeelGroup.createChild("path")
                 .moveTo(0,me.peelRadius)
