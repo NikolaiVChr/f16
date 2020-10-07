@@ -2049,3 +2049,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
  }, 0, 0);
 
 var chuteLoop = maketimer(0.05, chuteLoopFunc);
+
+
+screen.property_display.add(props.globals.getNode("controls/flight/aileron-trim"));
+screen.property_display.add(props.globals.getNode("controls/flight/rudder-trim"));
