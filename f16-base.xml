@@ -2239,6 +2239,7 @@ There is also small changes in tail for different variants with and without brak
             <az-field-std type="int">120</az-field-std>
             <ho-field-std type="int">120</ho-field-std><!-- bars -->
             <range type="double">160</range>
+            <mode-hd-switch type="int">-1</mode-hd-switch>
             <range-selected type="double">40</range-selected>
             <display-rdr type="bool">true</display-rdr>
             <radar2-range type="int">40</radar2-range><!-- default range -->

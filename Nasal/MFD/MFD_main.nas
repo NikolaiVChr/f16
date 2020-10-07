@@ -828,7 +828,7 @@ var MFD_Device =
         me.p_RDR.gmMax = 1500;
         me.p_RDR.gmMintemp = 5000;
         me.p_RDR.gmMaxtemp = 300;
-        me.p_RDR.rdrModeGMHD = 0;
+        me.p_RDR.rdrModeHDGM = 0;
         me.p_RDR.beamSpot = geo.Coord.new();
         me.p_RDR.terrain = geo.Coord.new();
         me.p_RDR.gmColor = 0;
@@ -887,8 +887,8 @@ var MFD_Device =
                     if (getprop("f16/avionics/dgft")) return;
                     setprop("instrumentation/radar/mode-switch", 1);
                 } elsif (eventi == 9) {
-                    if (getprop("f16/avionics/dgft")) return;
-                    setprop("instrumentation/radar/mode-hd-switch", 1);
+                    if (rdrMode != RADAR_MODE_GM) return;
+                    setprop("instrumentation/radar/mode-hd-switch", me.model_index);
                 } elsif (eventi == 15) {
                     swap();
                 }
@@ -914,28 +914,41 @@ var MFD_Device =
 			} else {
 				me.root.notSOI.show();
 			}
-            me.modeSw = getprop("instrumentation/radar/mode-switch");
-            me.modeSwHD = getprop("instrumentation/radar/mode-hd-switch");
+            
             me.ver = num(split(".", getprop("sim/version/flightgear"))[0]) >= 2020;
-            if (me.modeSw == 1 and me.ver) {
-                rdrModeGM = !rdrModeGM;
+            
+            me.modeSw = getprop("instrumentation/radar/mode-switch");            
+            if (me.modeSw == 1) {
+                if (rdrMode == RADAR_MODE_CRM) {
+                    rdrMode = RADAR_MODE_SEA;
+                } elsif (rdrMode == RADAR_MODE_SEA and me.ver) {
+                    rdrMode = RADAR_MODE_GM;
+                } elsif (rdrMode == RADAR_MODE_GM) {
+                    rdrMode = RADAR_MODE_CRM;
+                } else {
+                    rdrMode = RADAR_MODE_CRM;
+                }
             }
-            if (rdrModeGM and me.modeSwHD == 1 and me.ver) {
-                me.rdrModeGMHD = !me.rdrModeGMHD;
-                if (me.rdrModeGMHD) {
+            setprop("instrumentation/radar/mode-switch", 0);
+            
+            me.modeSwHD = getprop("instrumentation/radar/mode-hd-switch");            
+            if (rdrMode == RADAR_MODE_GM and me.modeSwHD == me.model_index) {
+                me.rdrModeHDGM = !me.rdrModeHDGM;
+                if (me.rdrModeHDGM) {
                     me.gmLine = 64;
                 } else {
                     me.gmLine = 32;
                 }
+                setprop("instrumentation/radar/mode-hd-switch", -1);
             }
-            setprop("instrumentation/radar/mode-switch", 0);
-            setprop("instrumentation/radar/mode-hd-switch", 0);
             
-            if (rdrModeGM) {
+            
+            
+            if (rdrMode == RADAR_MODE_GM) {
                 me.root.mod.setText("GM");
-                me.root.mod.setColor(colorBackground);
-                me.root.modBox.show();
-                if (me.rdrModeGMHD) {
+                #me.root.mod.setColor(colorBackground);
+                me.root.modBox.hide();
+                if (me.rdrModeHDGM) {
                     me.root.gmPicHD.show();
                     me.root.gmPicSD.hide();
                 } else {
@@ -943,18 +956,18 @@ var MFD_Device =
                     me.root.gmPicSD.show();
                 }
                 me.root.sp.show();
-                me.root.hd.setText(me.rdrModeGMHD?"H\nD":"S\nD");
+                me.root.hd.setText(me.rdrModeHDGM?"H\nD":"S\nD");
                 me.root.hd.show();
-            } elsif (me.ver) {
-                me.root.mod.setText("GM");
-                me.root.mod.setColor(colorText1);
+            } elsif (rdrMode == RADAR_MODE_SEA) {
+                me.root.mod.setText("SEA");
                 me.root.modBox.hide();
-                me.root.gmPicHD.hide();
                 me.root.gmPicSD.hide();
+                me.root.gmPicHD.hide();
                 me.root.sp.hide();
                 me.root.hd.hide();
             } else {
-                me.root.mod.setText("");
+                me.root.mod.setText("CRM");
+                me.root.mod.setColor(colorText1);
                 me.root.modBox.hide();
                 me.root.gmPicHD.hide();
                 me.root.gmPicSD.hide();
@@ -989,7 +1002,7 @@ var MFD_Device =
             me.root.bullOwnDir.setVisible(me.bullOn);
             me.root.bullOwnDist.setVisible(me.bullOn);
             
-            if (rdrModeGM or me.DGFT) {
+            if (rdrMode == RADAR_MODE_GM or me.DGFT) {
                 exp = 0;
                 me.root.norm.hide();
             } elsif (me.pressEXP) {
@@ -1010,7 +1023,7 @@ var MFD_Device =
             me.root.horiz.setRotation(-getprop("orientation/roll-deg")*D2R);
             me.time = getprop("sim/time/elapsed-sec");
             me.az = getprop("instrumentation/radar/az-field");
-            if (!rdrModeGM) {
+            if ((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA)) {
                 me.root.distl.show();
             } else {
                 me.root.distl.hide();
@@ -1023,10 +1036,10 @@ var MFD_Device =
                     }
                     me.plc = plc;
                     
-                    if (!rdrModeGM) {
+                    if ((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA)) {
                         me.root.ant_bottom.setTranslation(me.wdt*0.5-(me.az/120)*me.wdt*0.5+(me.az/120)*me.wdt*math.abs(me.fwd-me.plc),0);
                     } else {
-                        me.root.ant_bottom.setTranslation(-256+(me.gmLine+1)*(me.rdrModeGMHD?4:8)+276*0.795,0);
+                        me.root.ant_bottom.setTranslation(-256+(me.gmLine+1)*(me.rdrModeHDGM?4:8)+276*0.795,0);
                     }
                     me.root.ant_bottom.show();
                 } else {
@@ -1124,10 +1137,10 @@ var MFD_Device =
             
             
             
-            me.root.az1.setVisible(!rdrModeGM and (!me.DGFT or awg_9.active_u == nil));
-            me.root.az2.setVisible(!rdrModeGM and (!me.DGFT or awg_9.active_u == nil));
-            me.root.bars.setVisible(!rdrModeGM);
-            me.root.az.setVisible(!rdrModeGM);
+            me.root.az1.setVisible((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA) and (!me.DGFT or awg_9.active_u == nil));
+            me.root.az2.setVisible((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA) and (!me.DGFT or awg_9.active_u == nil));
+            me.root.bars.setVisible((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA));
+            me.root.az.setVisible((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA));
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
             me.root.rang.setText(sprintf("%d",getprop("instrumentation/radar/radar2-range")));
@@ -1174,7 +1187,7 @@ var MFD_Device =
                     me.bullOn = 0;
                 }
             }
-            me.root.bullseye.setVisible(me.bullOn and !rdrModeGM);
+            me.root.bullseye.setVisible(me.bullOn and (rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA));
             if (me.bullOn) {
                 me.root.bullseye.setTranslation(me.bullPos);
             }
@@ -1183,6 +1196,12 @@ var MFD_Device =
             me.gm_echoPos = {};
             me.ijk = 0;
             foreach(contact; awg_9.tgts_list) {
+                if (rdrMode == RADAR_MODE_SEA and contact.get_type() != armament.MARINE) {
+                    continue;
+                }
+                if (rdrMode == RADAR_MODE_CRM and contact.get_type() == armament.MARINE) {
+                    continue;
+                }
                 if (contact.get_display() == 0) {
                     continue;
                 }
@@ -1197,7 +1216,7 @@ var MFD_Device =
                 }
                 me.desig = contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType);
                 me.iff = contact.getIff();
-                if (!rdrModeGM) {
+                if (rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA) {
                     me.echoPos = [me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels];
                     me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
                     if (me.close and exp) {
@@ -1225,9 +1244,9 @@ var MFD_Device =
                             }
                         }
                     }
-                } elsif (contact.get_type() != armament.AIR) {
-                    me.distPixelsGM = contact.get_range()*((me.rdrModeGMHD?120:60)/awg_9.range_radar2);
-                    me.echoPosGM = [int(me.distPixelsGM*math.cos(D2R*(90-geo.normdeg180(contact.get_relative_bearing())))+(me.rdrModeGMHD?64:32)), int(me.distPixelsGM*math.sin(D2R*(90-geo.normdeg180(contact.get_relative_bearing())))), contact, me.desig];
+                } elsif (contact.get_type() == armament.SURFACE) {
+                    me.distPixelsGM = contact.get_range()*((me.rdrModeHDGM?120:60)/awg_9.range_radar2);
+                    me.echoPosGM = [int(me.distPixelsGM*math.cos(D2R*(90-geo.normdeg180(contact.get_relative_bearing())))+(me.rdrModeHDGM?64:32)), int(me.distPixelsGM*math.sin(D2R*(90-geo.normdeg180(contact.get_relative_bearing())))), contact, me.desig];
                     if (me.gm_echoPos["e"~me.echoPosGM[0]] == nil) {
                         me.gm_echoPos["e"~me.echoPosGM[0]] = [me.echoPosGM];
                     } else {
@@ -1235,11 +1254,11 @@ var MFD_Device =
                     }
                     #printf("GM: Rdr added e"~me.echoPos[0]~" for (%d,%d) %s  (%.1f)",me.echoPos[0],me.echoPos[1],me.cs,geo.normdeg180(contact.get_relative_bearing()));
                     
-                    me.echoPos = [int((me.echoPosGM[0]-(me.rdrModeGMHD?64:32))*(me.rdrModeGMHD?4:8)), -int(me.echoPosGM[1]*(480/(me.rdrModeGMHD?120:60)))];#338 x 482
+                    me.echoPos = [int((me.echoPosGM[0]-(me.rdrModeHDGM?64:32))*(me.rdrModeHDGM?4:8)), -int(me.echoPosGM[1]*(480/(me.rdrModeHDGM?120:60)))];#338 x 482
                     me.newL = 0;
                     if (cursor_click == me.root.index) {
                         #printf("Cursor click is (%d,%d) from %s", cursor_pos[0] - me.echoPos[0], cursor_pos[1] - me.echoPos[1], me.cs);
-                        if (math.abs(cursor_pos[0] - me.echoPos[0]) < (me.rdrModeGMHD?15:20) and math.abs(cursor_pos[1] - me.echoPos[1]) < (me.rdrModeGMHD?17:23)) {
+                        if (math.abs(cursor_pos[0] - me.echoPos[0]) < (me.rdrModeHDGM?15:20) and math.abs(cursor_pos[1] - me.echoPos[1]) < (me.rdrModeHDGM?17:23)) {
                             me.desig_new = contact;
                             me.newL = 1;
                         }
@@ -1266,7 +1285,7 @@ var MFD_Device =
                 
                 
                 
-                if (me.desig and !me.iff and !rdrModeGM) {
+                if (me.desig and !me.iff and (rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA)) {
                     me.rot = contact.get_heading();
                     if (me.rot == nil) {
                         #can happen in transition between TWS to RWS
@@ -1306,15 +1325,15 @@ var MFD_Device =
                     #break;
                 #}
             }
-            if (getprop("sim/multiplay/generic/int[2]")!=1 and rdrModeGM) {
+            if (getprop("sim/multiplay/generic/int[2]")!=1 and rdrMode == RADAR_MODE_GM) {
                 var vari = getprop("sim/variant-id");
                 me.mono = !(vari<2 or vari ==3);
                 # GM mode
-                me.linesFrame = getprop("sim/frame-rate") > 30?1+!me.rdrModeGMHD:1;# This is the horiz line counter when doing more than 1 horiz line at the time.
+                me.linesFrame = getprop("sim/frame-rate") > 30?1+!me.rdrModeHDGM:1;# This is the horiz line counter when doing more than 1 horiz line at the time.
                 while (me.linesFrame > 0) {
                     me.gmLine += 1;# This is the vertical line counter.  0=-range*0.5  127=range*0.5 (perpendicular to true flight heading)
-                    if (me.gmLine > (me.rdrModeGMHD?117:59)) {
-                        me.gmLine = me.rdrModeGMHD?10:5;
+                    if (me.gmLine > (me.rdrModeHDGM?117:59)) {
+                        me.gmLine = me.rdrModeHDGM?10:5;
                         me.gmMin = me.gmMintemp;
                         me.gmMax = me.gmMaxtemp;
                         if (me.gmMin == me.gmMax) {
@@ -1332,8 +1351,8 @@ var MFD_Device =
                     me.gmMe = geo.aircraft_position();
                     me.gmHead = getprop("orientation/heading-deg");
                     me.gmCoord.apply_course_distance(me.gmHead-90, NM2M*getprop("instrumentation/radar/radar2-range")*0.5);
-                    me.gmCoord.apply_course_distance(me.gmHead+90, NM2M*getprop("instrumentation/radar/radar2-range")*me.gmLine/(me.rdrModeGMHD?127:63));
-                    for(me.gmi = 0; me.gmi < (me.rdrModeGMHD?120:60); me.gmi += 1) {# me.gmi is the horiz line counter.  0=range*0.0   119=range
+                    me.gmCoord.apply_course_distance(me.gmHead+90, NM2M*getprop("instrumentation/radar/radar2-range")*me.gmLine/(me.rdrModeHDGM?127:63));
+                    for(me.gmi = 0; me.gmi < (me.rdrModeHDGM?120:60); me.gmi += 1) {# me.gmi is the horiz line counter.  0=range*0.0   119=range
                         
                         if (math.abs(geo.normdeg180(me.gmMe.course_to(me.gmCoord)-me.gmHead)) < 60) {
                             me.echoPos = nil;
@@ -1379,14 +1398,14 @@ var MFD_Device =
                             #me.root.gmPic.set("src", "Aircraft/f16/Nasal/MFD/gm.png");
                             #me.root.gmPic.setPixel(int(rand()*127), int(rand()*127), [me.gmColor,me.gmColor,me.gmColor,1]);
                             if (me.echoPos == nil or me.echoPos[3]) {
-                                if (me.rdrModeGMHD) {
+                                if (me.rdrModeHDGM) {
                                     me.root.gmPicHD.setPixel(me.gmLine, me.gmi, [me.gmColor*me.mono,me.gmColor,me.gmColor*me.mono,1]);
                                 } else  {
                                     me.root.gmPicSD.setPixel(me.gmLine, me.gmi, [me.gmColor*me.mono,me.gmColor,me.gmColor*me.mono,1]);
                                 }
                             } else {
                                 #print("GM: Drawing ground/sea echo");
-                                if (me.rdrModeGMHD) {
+                                if (me.rdrModeHDGM) {
                                     me.root.gmPicHD.setPixel(me.gmLine, me.gmi, [1*me.mono,1,1*me.mono,1]);
                                 } else {
                                     me.root.gmPicSD.setPixel(me.gmLine, me.gmi, [1*me.mono,1,1*me.mono,1]);
@@ -1397,7 +1416,7 @@ var MFD_Device =
                             #f16.f16_mfd.MFDl.p_RDR.root.gmPic.setPixel(50, 50, [colorCircle1,1]);
                             #f16.f16_mfd.MFDl.p_RDR.root.gmPicG.update();
                         }
-                        me.gmCoord.apply_course_distance(me.gmHead, NM2M*getprop("instrumentation/radar/radar2-range")/(me.rdrModeGMHD?120:60));#120 because of strange size of display
+                        me.gmCoord.apply_course_distance(me.gmHead, NM2M*getprop("instrumentation/radar/radar2-range")/(me.rdrModeHDGM?120:60));#120 because of strange size of display
                         if (me.gmCoord.distance_to(me.gmMe)*M2NM > getprop("instrumentation/radar/radar2-range")) {
                             break;
                         }
@@ -1405,7 +1424,7 @@ var MFD_Device =
                     me.linesFrame -= 1;
                 }
                 #me.root.gmPic.update();
-                if (me.rdrModeGMHD) {
+                if (me.rdrModeHDGM) {
                     me.root.gmPicHD.dirtyPixels();
                 } else {
                     me.root.gmPicSD.dirtyPixels();
@@ -1416,7 +1435,7 @@ var MFD_Device =
                 cursor_destination = nil;
                 cursor_click = -1;
             }
-            if (rdrModeGM) {
+            if (rdrMode == RADAR_MODE_GM) {
                 me.i = me.ijk;
             }
             for (;me.i<me.root.maxB;me.i+=1) {
@@ -1425,7 +1444,7 @@ var MFD_Device =
             }
             me.root.dlzArray = pylons.getDLZ();
             #me.dlzArray =[10,8,6,2,9];#test
-            if (me.root.dlzArray == nil or size(me.root.dlzArray) == 0 or rdrModeGM) {
+            if (me.root.dlzArray == nil or size(me.root.dlzArray) == 0 or rdrMode == RADAR_MODE_GM) {
                     me.root.dlz.hide();
             } else {
                 #printf("%d %d %d %d %d",me.root.dlzArray[0],me.root.dlzArray[1],me.root.dlzArray[2],me.root.dlzArray[3],me.root.dlzArray[4]);
@@ -3386,12 +3405,12 @@ var MFD_Device =
 #        me.p1_1.addMenuItem(2, "SIT", me.pjitds_1);
         #me.p1_1.addMenuItem(3, "WPN", me.p1_2);
         #me.p1_1.addMenuItem(4, "DTM", me.p1_2);
-#        me.p1_1.addMenuItem(10, "CRM", me.p_RDR);
+#        me.p1_1.addMenuItem(10, "FCR", me.p_RDR);
 #        me.p1_1.addMenuItem(11, "SMS", me.p_SMS);
 #        me.p1_1.addMenuItem(12, "HSD", me.p_HSD);
 
         #me.p_RDR.addMenuItem(18, "SIT", me.pjitds_1);
-        me.p_RDR.addMenuItem(10, "CRM", me.p_LIST); #selectionColored
+        me.p_RDR.addMenuItem(10, "FCR", me.p_LIST); #selectionColored
         me.p_RDR.addMenuItem(15, "SWAP", nil);
         me.p_RDR.addMenuItem(16, "HSD", me.p_HSD);
         me.p_RDR.addMenuItem(17, "SMS", me.p_SMS);
@@ -3399,14 +3418,14 @@ var MFD_Device =
         me.p_RDR.addMenuItem(19, "TGP", nil);
 
         #me.p_HSD.addMenuItem(18, "SIT", me.pjitds_1);
-        me.p_HSD.addMenuItem(10, "CRM", me.p_RDR);
+        me.p_HSD.addMenuItem(10, "FCR", me.p_RDR);
         me.p_HSD.addMenuItem(15, "SWAP", nil);
         me.p_HSD.addMenuItem(16, "HSD", me.p_LIST); #selectionColored
         me.p_HSD.addMenuItem(17, "SMS", me.p_SMS);
         me.p_HSD.addMenuItem(18, "WPN", me.p_WPN);
         me.p_HSD.addMenuItem(19, "TGP", nil);
         
-        me.p_WPN.addMenuItem(10, "CRM", me.p_RDR);
+        me.p_WPN.addMenuItem(10, "FCR", me.p_RDR);
         me.p_WPN.addMenuItem(15, "SWAP", nil);
         me.p_WPN.addMenuItem(16, "HSD", me.p_HSD);
         me.p_WPN.addMenuItem(17, "SMS", me.p_SMS);
@@ -3414,7 +3433,7 @@ var MFD_Device =
         me.p_WPN.addMenuItem(19, "TGP", nil);
 
         #me.p_SMS.addMenuItem(18, "SIT", me.pjitds_1);
-        me.p_SMS.addMenuItem(10, "CRM", me.p_RDR);
+        me.p_SMS.addMenuItem(10, "FCR", me.p_RDR);
         me.p_SMS.addMenuItem(15, "SWAP", nil);
         me.p_SMS.addMenuItem(16, "HSD", me.p_HSD);
         me.p_SMS.addMenuItem(17, "SMS", me.p_LIST); #selectionColored
@@ -3455,7 +3474,7 @@ var MFD_Device =
         #me.p1_2.addMenuItem(3, "CBT JETT", me.p1_3);
         #me.p1_2.addMenuItem(4, "WPN LOAD", me.p1_3);
 #        me.p1_2.addMenuItem(9, "M", me.p1_1);
-#        me.p1_2.addMenuItem(10, "CRM", me.p_RDR);
+#        me.p1_2.addMenuItem(10, "FCR", me.p_RDR);
 #        me.p1_2.addMenuItem(12, "HSD", me.p_HSD);
 
 
@@ -3468,13 +3487,13 @@ var MFD_Device =
         #me.p1_3.addMenuItem(12, "FUEL", me.p1_3);
         #me.p1_3.addMenuItem(14, "PYLON", me.p1_3);
         #me.p1_3.addMenuItem(15, "MODE S", me.p1_3);
- #       me.p1_3.addMenuItem(10, "CRM", me.p_RDR);
+ #       me.p1_3.addMenuItem(10, "FCR", me.p_RDR);
  #       me.p1_3.addMenuItem(12, "HSD", me.p_HSD);
 
 #        me.pjitds_1.addMenuItem(9, "M", me.p1_1);
         #me.pjitds_1.addMenuItem(0, "ARMT", me.p1_2);
         #me.pjitds_1.addMenuItem(15, "VSD", me.p_VSD);
-        #me.pjitds_1.addMenuItem(10, "CRM", me.p_RDR);
+        #me.pjitds_1.addMenuItem(10, "FCR", me.p_RDR);
         #me.pjitds_1.addMenuItem(16, "HSD", me.p_HSD);
         #me.pjitds_1.addMenuItem(17, "SMS", me.p_SMS);
         #me.pjitds_1.addMenuItem(19, "TGP", nil);
@@ -3483,7 +3502,7 @@ var MFD_Device =
         #me.p_VSD.addMenuItem(18, "SIT", me.pjitds_1);
 #        me.p_VSD.addMenuItem(4, "M", me.p1_1);
 #        me.p_VSD.addMenuItem(9, "M", me.p1_1);
-        #me.p_VSD.addMenuItem(10, "CRM", me.p_RDR);
+        #me.p_VSD.addMenuItem(10, "FCR", me.p_RDR);
         #me.p_VSD.addMenuItem(17, "SMS", me.p_SMS);
         #me.p_VSD.addMenuItem(16, "HSD", me.p_HSD);
         #me.p_VSD.addMenuItem(19, "TGP", nil);
@@ -3606,7 +3625,11 @@ var cursor_click = -1;
 var cursor_destination = nil;
 var cursor_lock = -1;
 var exp = 0;
-var rdrModeGM = 0;
+var rdrMode = 0;
+var RADAR_MODE_CRM = 0;
+var RADAR_MODE_GM  = 1;
+var RADAR_MODE_SEA = 2;
+var RADAR_MODE_GMS = 3;
 
 var slew_c = 0;
 
