@@ -49,7 +49,7 @@ var JFS = {
 		}
 		
 		if (me.start_switch != 0 and me.start_switch != me.start_switch_last and batt.getValue() >= 20) {
-			#print("JFS start requested");
+			if (output_to_console) print("JFS start requested",timesincestart());
 			me.psi_for_start = 0;
 			if (me.start_switch == 1) {
 				if (accu_1_psi == accu_psi_max or accu_2_psi == accu_psi_max or (accu_1_psi >= accu_psi_both_max and accu_2_psi >= accu_psi_both_max)) {
@@ -70,11 +70,13 @@ var JFS = {
 				}
 			}
 			if (me.psi_for_start and jfs_spooling != 1) {
+				if (output_to_console) print("Start spooling JFS",timesincestart());
 				jfs_spooling = 1;
 			}
 			accu_charge_allowed = 0;
 		} elsif (me.start_switch == 0) {
 			if (jfs_n_norm > 0) {
+				if (jfs_spooling != -1) print("JFS spooling down",timesincestart());
 				jfs_spooling = -1;
 			}
 		}
@@ -83,6 +85,7 @@ var JFS = {
 			jfs_n_norm += me.dt / jfs_spool_up_time_s;
 		} elsif (jfs_spooling == 1) {
 			# no fuel to sustain rpm
+			if (output_to_console) print("Stop spooling JFS (too little fuel",timesincestart());
 			jfs_spooling = -1;
 		} elsif (jfs_spooling == -1) {
 			jfs_n_norm -= me.dt / jfs_spool_down_time_s;
@@ -90,11 +93,11 @@ var JFS = {
 		if (jfs_n_norm > 1) {
 			jfs_spooling = 0;
 			jfs_n_norm = 1;
-			#print("JFS full speed");
+			if (output_to_console) print("JFS full speed",timesincestart());
 		} elsif (jfs_n_norm < 0) {
 			jfs_spooling = 0;
 			jfs_n_norm = 0;
-			#print("JFS stopped");
+			if (output_to_console) print("JFS at full stop",timesincestart());
 		}
 		
 		
@@ -123,14 +126,20 @@ var JFS = {
 		jfs_full.setBoolValue(jfs_n_norm == 1);
 		jfs_rpm_norm.setDoubleValue(jfs_n_norm);
 		
-		if (!cutoff_lever.getValue() and feed.getValue()) {
+		if (!cutoff_lever.getValue() and feed.getValue() > 0) {
 			cutoff.setValue(0);
 		} else {
 			cutoff.setValue(1);
 		}
-		if (jfs_n_norm == 1 or (me.n2 >= 55 and !running.getValue() and jfs_spooling == -1)) {
+		if (jfs_n_norm == 1) {
+			if (output_to_console and starter.getValue() == 0) print("Engine being spooled up to low RPM by JFS",timesincestart());
+			starter.setBoolValue(1);
+		} elsif (me.n2 >= 55 and !running.getValue() and jfs_spooling == -1) {
+			# Engine is self-sustaining and still spooling up
+			# Keep the starter on till engine is idle
 			starter.setBoolValue(1);
 		} else {
+			if (output_to_console and starter.getValue() == 1) print("Engine idle or start failed/interupted",timesincestart());
 			starter.setBoolValue(0);
 		}
 		
@@ -139,3 +148,28 @@ var JFS = {
 	},
 };
 
+var starttime = 0; #used for timing autostart
+var output_to_console = 0;# set this to 1 for startup info in console. It can also be set runtime, do it before hitting the START 1/2 switch for best result.
+
+var timesincestart = func {
+	return " ("~int(getprop("sim/time/elapsed-sec")-starttime)~" sec since start)";
+}
+
+setlistener("f16/engine/jfs-start-switch", func (node) {
+	if (output_to_console and node.getValue() == 1) {
+		print("START 2");
+		starttime = getprop("sim/time/elapsed-sec");
+	} elsif (output_to_console and node.getValue() == -1) {
+		print("START 1");
+		starttime = getprop("sim/time/elapsed-sec");
+	}
+});
+
+setlistener("f16/engine/cutoff-release-lever", func (node) {
+	if (!output_to_console) return;
+	if (node.getValue() == 1) {
+		print("Cutoff release lever closed. RPM N1/N2 is "~sprintf("%.2f", getprop("engines/engine[0]/n1"))~"/"~sprintf("%.2f", getprop("engines/engine[0]/n2"))~"%", timesincestart());
+	} else {
+		print("Cutoff release lever open. RPM N1/N2 is "~sprintf("%.2f", getprop("engines/engine[0]/n1"))~"/"~sprintf("%.2f", getprop("engines/engine[0]/n2"))~"%", timesincestart());
+	}
+});
