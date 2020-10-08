@@ -270,6 +270,18 @@ var Math = {
       me.mag = me.magnitudeVector(v);
       return [v[0]/me.mag, v[1]/me.mag, v[2]/me.mag];
     },
+    
+    crossProduct: func (a,b) {
+        return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]];
+    },
+    
+    distance_from_point_to_line: func (coordP, coordL1, coordL2) {
+        var P  = [coordP.x(),  coordP.y(),  coordP.z()];
+        var L1 = [coordL1.x(), coordL1.y(), coordL1.z()];
+        var L2 = [coordL2.x(), coordL2.y(), coordL2.z()];
+        
+        return me.magnitudeVector(me.crossProduct(me.minus(L2,L1), me.minus(L1,P)))/me.magnitudeVector(me.minus(L2,L1));
+    },
 
 # rotation matrices
 #
