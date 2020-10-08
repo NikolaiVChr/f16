@@ -123,7 +123,7 @@ var loop = func {
 }
 
 var fail_list = {
-    #  [WHat is displayed in the F-ACK DED page | serviceable property | working? | if reset has been requested by the pilot so failure remains but is no longer shown to him]
+    #  [String displayed in the F-ACK DED page | serviceable property | working? | if reset has been requested by the pilot so failure remains but is no longer shown to him]
     a: ["TANK LEAK", "consumables/fuel-tanks/serviceable", 1, 0],
     b: ["RWR DEGR", "instrumentation/rwr/serviceable", 1, 0],
     c: ["FCR BUS FAIL", "instrumentation/radar/serviceable", 1, 0],
@@ -243,20 +243,20 @@ var loop_caution = func {# TODO: unlit the caution lights except elec-sys when m
     var dc1 = getprop("fdm/jsbsim/elec/bus/emergency-dc-1") >= 20;
     var test  = getprop("controls/test/test-panel/mal-ind-lts");
 	var testFire = getprop("controls/test/test-panel/fire-ovht-test");
-	var fuelTest = !getprop("controls/fuel/qty-selector");
+	var fuelTest = getprop("controls/fuel/qty-selector") == 0;
     setprop("f16/avionics/caution/stores-config",     test or (batt2 and ((getprop("f16/stores-cat")>1 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III") < 1) or (getprop("f16/stores-cat")==1 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III") == 1))));
     setprop("f16/avionics/caution/seat-not-armed",    test or (batt2 and !getprop("controls/seat/ejection-safety-lever")));
     setprop("f16/avionics/caution/oxy-low",           test or (batt2 and getprop("f16/cockpit/oxygen-liters-output")<0.5) or (batt2 and getprop("f16/avionics/oxy-psi")<42));
     setprop("f16/avionics/caution/le-flaps",          test or (batt2 and (!getprop("f16/avionics/le-flaps-switch") or getprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains"))));
     setprop("f16/avionics/caution/hook",              test or (batt2 and getprop("fdm/jsbsim/systems/hook/tailhook-cmd-norm")));
-    setprop("f16/avionics/caution/fwd-fuel-low",      test or fuelTest or (dc1 and getprop("consumables/fuel/tank[4]/level-lbs")<400));
-    setprop("f16/avionics/caution/aft-fuel-low",      test or fuelTest or (dc1 and getprop("consumables/fuel/tank[5]/level-lbs")<400));
+    setprop("f16/avionics/caution/fwd-fuel-low",      test or (dc1 and (fuelTest or getprop("consumables/fuel/tank[4]/level-lbs")<400)));
+    setprop("f16/avionics/caution/aft-fuel-low",      test or (dc1 and (fuelTest or getprop("consumables/fuel/tank[5]/level-lbs")<400)));
     setprop("f16/avionics/caution/elec-sys",          test or (batt2 and getprop("fdm/jsbsim/elec/bus/light/elec-sys")));
     setprop("f16/avionics/caution/cabin-press",       test or (batt2 and getprop("f16/cockpit/pressure-ft")>27000));
     setprop("f16/avionics/caution/adc",               test or (batt2 and getprop("fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains")));
     setprop("f16/avionics/caution/equip-hot",         test or (batt2 and (!getprop("controls/ventilation/airconditioning-source") and getprop("f16/avionics/power-ufc-warm"))));
-    setprop("f16/avionics/caution/overheat",          test or testFire or (batt2 and !getprop("damage/fire/serviceable")));
-	setprop("f16/avionics/caution/sec",               test or getprop("f16/engine/sec-self-test") or (batt2 and getprop("f16/engine/ctl-sec")));
+    setprop("f16/avionics/caution/overheat",          test or (batt2 and (!getprop("damage/fire/serviceable") or testFire)));
+	setprop("f16/avionics/caution/sec",               test or (batt2 and (getprop("f16/engine/sec-self-test") or getprop("f16/engine/ctl-sec"))));
     setprop("f16/avionics/caution/avionics",          test or (batt2 and (!getprop("instrumentation/hud/serviceable") or !getprop("instrumentation/radar/serviceable") or !getprop("instrumentation/rwr/serviceable") or !getprop("instrumentation/tacan/serviceable"))));
 };
 
@@ -277,3 +277,11 @@ setlistener("f16/avionics/caution/avionics",caution,0,0);
 setlistener("f16/avionics/caution/probe-heat",caution,0,0);
 
 loop();
+ 
+# NOTES:
+#
+# probe heat conditions is in f16.nas
+# sec has conditions but is missing tie into caution light, is it even a caution? If not it should not be here.
+# 
+#
+# ~Leto
