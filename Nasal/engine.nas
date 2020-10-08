@@ -76,7 +76,7 @@ var JFS = {
 			accu_charge_allowed = 0;
 		} elsif (me.start_switch == 0) {
 			if (jfs_n_norm > 0) {
-				if (jfs_spooling != -1) print("JFS spooling down",timesincestart());
+				if (output_to_console and jfs_spooling != -1) print("JFS spooling down",timesincestart());
 				jfs_spooling = -1;
 			}
 		}
