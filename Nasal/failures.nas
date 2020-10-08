@@ -77,11 +77,11 @@ var init = func {
 	var fire_fc = compat_failure_modes.set_unserviceable("damage/fire");
 	FailureMgr.add_failure_mode("damage/fire", "Fire", fire_fc);
 
-	var hyda_fc = compat_failure_modes.set_unserviceable("systems/hydraulics/edpa-pump");
-	FailureMgr.add_failure_mode("systems/hydraulics/edpa-pump", "Hydr. pump A", hyda_fc);
+	var hyda_fc = compat_failure_modes.set_unserviceable("fdm/jsbsim/systems/hydraulics/edpa-pump");
+	FailureMgr.add_failure_mode("fdm/jsbsim/systems/hydraulics/edpa-pump", "Hydr. pump A", hyda_fc);
 
-	var hydb_fc = compat_failure_modes.set_unserviceable("systems/hydraulics/edpb-pump");
-	FailureMgr.add_failure_mode("systems/hydraulics/edpb-pump", "Hydr. pump B", hydb_fc);
+	var hydb_fc = compat_failure_modes.set_unserviceable("fdm/jsbsim/systems/hydraulics/edpb-pump");
+	FailureMgr.add_failure_mode("fdm/jsbsim/systems/hydraulics/edpb-pump", "Hydr. pump B", hydb_fc);
 
 	var radar_fc = compat_failure_modes.set_unserviceable("instrumentation/radar");
 	FailureMgr.add_failure_mode("instrumentation/radar", "Radar", radar_fc);
@@ -127,8 +127,8 @@ var fail_list = {
     a: ["TANK LEAK", "consumables/fuel-tanks/serviceable", 1, 0],
     b: ["RWR DEGR", "instrumentation/rwr/serviceable", 1, 0],
     c: ["FCR BUS FAIL", "instrumentation/radar/serviceable", 1, 0],
-    d: ["HYD B FAIL", "systems/hydraulics/edpb-pump/serviceable", 1, 0],
-    e: ["HYD A FAIL", "systems/hydraulics/edpa-pump/serviceable", 1, 0],
+    d: ["HYD B FAIL", "fdm/jsbsim/systems/hydraulics/edpb-pump/serviceable", 1, 0],
+    e: ["HYD A FAIL", "fdm/jsbsim/systems/hydraulics/edpa-pump/serviceable", 1, 0],
     f: ["FIRE", "damage/fire/serviceable", 1, 0],
     g: ["GEN STBY FAIL", "fdm/jsbsim/elec/failures/stby-gen/serviceable", 1, 0],
     h: ["GEN MAIN FAIL", "fdm/jsbsim/elec/failures/main-gen/serviceable", 1, 0],

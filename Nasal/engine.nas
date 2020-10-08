@@ -85,7 +85,7 @@ var JFS = {
 			jfs_n_norm += me.dt / jfs_spool_up_time_s;
 		} elsif (jfs_spooling == 1) {
 			# no fuel to sustain rpm
-			if (output_to_console) print("Stop spooling JFS (too little fuel",timesincestart());
+			if (output_to_console) print("Stop spooling JFS, too little fuel",timesincestart());
 			jfs_spooling = -1;
 		} elsif (jfs_spooling == -1) {
 			jfs_n_norm -= me.dt / jfs_spool_down_time_s;
