@@ -8996,7 +8996,7 @@ refs 3
 126 18.09 5
 kids 0
 OBJECT group
-name "FUEL_AL_needle"
+name "FUEL_AL_needle_grp"
 kids 2
 OBJECT poly
 name "FUEL_AL_needle1"
@@ -9571,7 +9571,7 @@ refs 4
 13 0.53 0.098605
 kids 0
 OBJECT group
-name "FUEL_FR_needle"
+name "FUEL_FR_needle_grp"
 kids 2
 OBJECT poly
 name "FUEL_FR_needle1"

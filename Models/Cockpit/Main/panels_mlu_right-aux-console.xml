@@ -168,7 +168,7 @@
         <object-name>EPU_FUEL_needle</object-name>
         <object-name>FUEL.001</object-name>
         <object-name>FUEL.000</object-name>
-        <object-name>FUEL_AL_needle</object-name>
+        <object-name>FUEL_AL_needle_grp</object-name>
         <object-name>FUEL_AL_needle1</object-name>
         <object-name>FUEL_AL_needle2</object-name>
         <object-name>FUEL_drum1</object-name>
@@ -176,7 +176,7 @@
         <object-name>FUEL_drum3</object-name>
         <object-name>FUEL_drum4</object-name>
         <object-name>FUEL_drum5</object-name>
-        <object-name>FUEL_FR_needle</object-name>
+        <object-name>FUEL_FR_needle_grp</object-name>
         <object-name>FUEL_FR_needle1</object-name>
         <object-name>FUEL_FR_needle2</object-name>
         <object-name>FUEL_rpm_disk</object-name>
@@ -238,8 +238,8 @@
         <object-name>FUEL_drum3</object-name>
         <object-name>FUEL_drum4</object-name>
         <object-name>FUEL_drum5</object-name>
-        <object-name>FUEL_AL_needle</object-name>
-        <object-name>FUEL_FR_needle</object-name>
+        <object-name>FUEL_AL_needle_grp</object-name>
+        <object-name>FUEL_FR_needle_grp</object-name>
 
         <object-name>CAB_PRESS_face</object-name>
         <object-name>CAB_PRESS_needle</object-name>
@@ -465,7 +465,7 @@
 
  <animation>
   <type>rotate</type>
-  <object-name>FUEL_FR_needle</object-name>
+  <object-name>FUEL_FR_needle_grp</object-name>
   <property>f16/fuel/hand-fwd-lag</property>
   <factor>0.06</factor>
   <max-deg>245</max-deg>
@@ -483,7 +483,7 @@
 
  <animation>
   <type>rotate</type>
-  <object-name>FUEL_AL_needle</object-name>
+  <object-name>FUEL_AL_needle_grp</object-name>
   <property>f16/fuel/hand-aft-lag</property>
   <factor>0.06</factor>
   <max-deg>245</max-deg>
@@ -1211,8 +1211,8 @@
   <object-name>FUEL_drum3</object-name>
   <object-name>FUEL_drum4</object-name>
   <object-name>FUEL_drum5</object-name>
-  <object-name>FUEL_AL_needle</object-name>
-  <object-name>FUEL_FR_needle</object-name>
+  <object-name>FUEL_AL_needle_grp</object-name>
+  <object-name>FUEL_FR_needle_grp</object-name>
 
   <object-name>CAB_PRESS_face</object-name>
   <object-name>CAB_PRESS_needle</object-name>
