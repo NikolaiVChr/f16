@@ -23,7 +23,7 @@ var navLight     = props.globals.getNode("sim/multiplay/generic/bool[40]",1);
 var navLightBrt = props.globals.getNode("controls/lighting/ext-lighting-panel/wing-tail",1);
 
 var gearPos = props.globals.getNode("gear/gear[0]/position-norm", 1);
-
+var sceneLight = props.globals.getNode("rendering/scene/diffuse/red", 1);
 
 var light_manager = {
 
@@ -39,7 +39,7 @@ var light_manager = {
 		# lights ########
 		me.data_light = [
 			#light_xpos, light_ypos, light_zpos, light_dir, light_size, light_stretch, light_r, light_g, light_b, light_is_on, number
-			ALS_light_spot.new(10, 0, -1, 0, 0.35, -3.25, 0.7, 0.7, 0.7, 0, 0), #landing
+			ALS_light_spot.new(10, 0, -1, 0, 0.35, -3.5, 0.7, 0.7, 0.7, 0, 0), #landing
 			ALS_light_spot.new(70, 0, -1, 0, 12, -7.0, 0.7, 0.7, 0.7, 0, 1),    #taxi
 			ALS_light_spot.new(1.60236, -4.55165, 0.012629, 0, 2, 0, 0.5, 0, 0, 0, 2),  #left
 			ALS_light_spot.new(1.60236,  4.55165, 0.012629, 0, 2, 0, 0, 0.5, 0, 0, 3),  #right
@@ -61,6 +61,7 @@ var light_manager = {
 	},
 
 	stop: func {
+    setprop("/sim/rendering/als-secondary-lights/num-lightspots", 0);
 		me.run = 0;
 	},
 
@@ -72,12 +73,9 @@ var light_manager = {
 		cur_alt = alt_agl.getValue();
     if(cur_alt != nil){
       if (als_on.getValue() == 1) {
-          var red = 1-getprop("rendering/scene/diffuse/red");
+        
           #Condition for lights
-          if(gearPos.getValue() > 0.3 and landingLight.getValue() and alt_agl.getValue() < 400.0){
-              me.data_light[0].light_r = 0.8-0.8*alt_agl.getValue()/400;
-              me.data_light[0].light_g = me.data_light[0].light_r;
-              me.data_light[0].light_b = me.data_light[0].light_r;
+          if(gearPos.getValue() > 0.3 and landingLight.getValue() and alt_agl.getValue() < 1000.0){
               me.data_light[0].light_on();    
           }else{
               me.data_light[0].light_off();
@@ -174,7 +172,7 @@ var ALS_light_spot = {
               #print("light_stretch:"~light_stretch);
               
               me.lon_to_m  = 0;
-              me.lat_to_m = 110952.0;
+              
               me.nd_ref_light_x.setValue(me.light_xpos);
               me.nd_ref_light_y.setValue(me.light_ypos);
               me.nd_ref_light_z.setValue(me.light_zpos);
@@ -188,37 +186,63 @@ var ALS_light_spot = {
             return me;
     },
     
+    lat2m: func (lat) {
+      # Nikolai V Chr
+      me.lat_to_nm = [59.7052, 59.7453, 59.8554, 60.0062, 60.1577, 60.2690, 60.3098];# 15 deg intervals
+      me.indexLat = math.abs(lat)/15;
+      if (me.indexLat == 0) {
+        me.lat2nm = me.lat_to_nm[0];
+      } elsif (me.indexLat == 6) {
+        me.lat2nm = me.lat_to_nm[6];
+      } else {
+        me.lat2nm = me.extrapolate(me.indexLat-int(me.indexLat), 0, 1, me.lat_to_nm[int(me.indexLat)], me.lat_to_nm[int(me.indexLat)+1]);
+      }
+      return me.lat2nm*NM2M;
+    },
+    
+    extrapolate: func (x, x1, x2, y1, y2) {
+      return y1 + ((x - x1) / (x2 - x1)) * (y2 - y1);
+    },
+    
     position: func() {
       
       cur_alt = alt_agl.getValue();
       var apos = geo.aircraft_position();
 			var vpos = geo.viewer_position();
 
-			me.lon_to_m = math.cos(apos.lat()*D2R) * me.lat_to_m;
-			var heading = getprop("/orientation/heading-deg")*D2R;
+			me.lon_to_m = math.cos(vpos.lat()*D2R) * me.lat2m(0);
+			var heading = self.getHeading()*D2R;
 
-			var lat = apos.lat();
-			var lon = apos.lon();
-			var alt = apos.alt();
+      var lat = apos.lat();
+      var lon = apos.lon();
+      var alt = apos.alt();
 
 			var sh = math.sin(heading);
 			var ch = math.cos(heading);
       if (me.number == 0) {
         #landing light
         
+        #calc where beam hits ground
         var test = fix.testForDistance();
+        
         if (test != nil) {
+          #grab spot position
           apos = test[1];
+          
+          # light intensity. fade fully out at 500m dist:
+          me.light_r = 0.8-0.8*math.clamp(test[0],0,750)/750;
+          me.light_g = me.light_r;
+          me.light_b = me.light_r;
        
-          var delta_x = (apos.lat() - vpos.lat()) * me.lat_to_m;
+          # calc spot position in relation to view position:
+          var delta_x = (apos.lat() - vpos.lat()) * me.lat2m(vpos.lat());
           var delta_y = -(apos.lon() - vpos.lon()) * me.lon_to_m;
           var delta_z = apos.alt() - vpos.alt();
-          
           me.nd_ref_light_x.setValue(delta_x);
           me.nd_ref_light_y.setValue(delta_y);
           me.nd_ref_light_z.setValue(delta_z);
-          me.nd_ref_light_dir.setValue(heading);  
-          me.nd_ref_light_size.setValue(me.light_size*test[0]);
+          me.nd_ref_light_dir.setValue(heading);  # used to determine spot stretch direction
+          me.nd_ref_light_size.setValue(me.light_size*test[0]);#spot radius grows linear with distance
         } else {
           me.nd_ref_light_r.setValue(0);
           me.nd_ref_light_g.setValue(0);
@@ -230,7 +254,7 @@ var ALS_light_spot = {
         me.lightGPS = aircraftToCart({x:-me.light_xpos, y:me.light_ypos, z: -me.light_zpos});
         apos = geo.Coord.new().set_xyz(me.lightGPS.x,me.lightGPS.y,me.lightGPS.z);
         
-        var delta_x = (apos.lat() - vpos.lat()) * me.lat_to_m;
+        var delta_x = (apos.lat() - vpos.lat()) * me.lat2m(vpos.lat());
         var delta_y = -(apos.lon() - vpos.lon()) * me.lon_to_m;
         var delta_z = apos.alt() - vpos.alt();
 
@@ -247,12 +271,12 @@ var ALS_light_spot = {
         #print("sh:"~sh ~" ch:"~ch~ " proj_x:"~proj_x~ " proj_z:"~proj_z ~" me.light_stretch:"~me.light_stretch);
         #print("me.nd_ref_light_x.getValue():"~me.nd_ref_light_x.getValue() ~ " me.nd_ref_light_y.getValue():"~ me.nd_ref_light_y.getValue());
   	 
-  			apos.set_lat(lat + ((me.light_xpos + proj_x) * ch + me.light_ypos * sh) / me.lat_to_m);
+  			apos.set_lat(lat + ((me.light_xpos + proj_x) * ch + me.light_ypos * sh) / me.lat2m(vpos.lat()));
   			apos.set_lon(lon + ((me.light_xpos + proj_x)* sh - me.light_ypos * ch) / me.lon_to_m);
         
 
   	 
-  			var delta_x = (apos.lat() - vpos.lat()) * me.lat_to_m;
+  			var delta_x = (apos.lat() - vpos.lat()) * me.lat2m(vpos.lat());
   			var delta_y = -(apos.lon() - vpos.lon()) * me.lon_to_m;
   			var delta_z = apos.alt()- proj_z - vpos.alt();
         
@@ -267,7 +291,8 @@ var ALS_light_spot = {
     },
     light_on : func {
       #if (me.light_is_on == 1) {return;}
-        var red = 1-getprop("rendering/scene/diffuse/red");
+        # scene red invrted will dim the light so it dont compete with sun
+        var red = 1-sceneLight.getValue();
         me.nd_ref_light_r.setValue(me.light_r*red);
         me.nd_ref_light_g.setValue(me.light_g*red);
         me.nd_ref_light_b.setValue(me.light_b*red);
@@ -385,7 +410,7 @@ var FixedBeamRadar = {
   computeBeamVector: func {
     me.beamVector = [math.cos(me.beam_pitch_deg*D2R), 0, math.sin(me.beam_pitch_deg*D2R)];
     me.beamVectorFix = vector.Math.yawPitchRollVector(-self.getHeading(), self.getPitch(), self.getRoll(), me.beamVector);
-    me.geoVector = vector.Math.vectorToGeoVector(me.beamVectorFix, self.getLightCoord());
+    me.geoVector = vector.Math.vectorToGeoVector(vector.Math.normalize(me.beamVectorFix), self.getLightCoord());
     return me.geoVector;
   },
   
