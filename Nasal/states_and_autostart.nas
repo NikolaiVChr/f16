@@ -51,7 +51,7 @@ var repair2 = func {
       setprop("f16/engine/feed",1);
       setprop("f16/engine/cutoff-release-lever",1);
       setprop("f16/engine/jfs-start-switch",1);# If airborne while doing this, maybe should set this to -1 (START 1) instead. And only to 1 (START 2) if on ground WOW.
-      settimer(repair3, 10);
+      settimer(repair3, 35);# Needs to allow time to: Spool up JFS and Spool up engine
     } else {
       # Engine is running, lets exit.
       screen.log.write("Done.");
