@@ -13,7 +13,7 @@
     AFSC 32657C - has more clean view of Integrator pitch loop.
  -->
     
-    <property value="1">fcs/fly-by-wire/diagram1987</property>
+    <property value="0">fcs/fly-by-wire/diagram1987</property>
 
     <channel execrate="1" name="FCS Lookup">
 
@@ -866,7 +866,7 @@
                 <sum>
                     <product>
                         <property> fcs/fly-by-wire/condition-z </property>
-                        <value> 0.60 </value>
+                        <value> 0.25 </value>
                     </product>
                     <product>
                         <property> fcs/fly-by-wire/condition-y </property>
