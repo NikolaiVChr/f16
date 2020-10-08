@@ -37,10 +37,10 @@
 			  <bin-name>DepthSortedBin</bin-name>
 			</render-bin>
       </parameters>
-      <object-name>hud-optics</object-name>
+      <object-name>hud-optic</object-name>
  </effect>-->
  
- <animation>
+ <!--animation>
   <type>select</type>
   <object-name>hud-optic</object-name>
   <condition>
@@ -49,7 +49,7 @@
           <value>1</value>
         </equals>
   </condition>
- </animation>
+ </animation-->
  
  <effect>
         <inherits-from>Effects/model-combined-deferred</inherits-from>
