@@ -230,9 +230,33 @@
             <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
             <lightmap-factor n="0">0</lightmap-factor>
         </parameters>
-        <!-- objects added to this will NOT have all white in texture lit up green when console is high. They will NOT get flood light. -->
+        <!-- objects added to this will NOT have all white in texture lit up green when console is high.
+             They will NOT get flood light. -->
+        <object-name>FUEL_rpm_disk</object-name>
+        <object-name>FUEL_drum1</object-name>
+        <object-name>FUEL_drum2</object-name>
+        <object-name>FUEL_drum3</object-name>
+        <object-name>FUEL_drum4</object-name>
+        <object-name>FUEL_drum5</object-name>
         <object-name>FUEL_AL_needle</object-name>
         <object-name>FUEL_FR_needle</object-name>
+
+        <object-name>CAB_PRESS_face</object-name>
+        <object-name>CAB_PRESS_needle</object-name>
+
+        <object-name>CLOCK_face</object-name>
+        <object-name>CLOCK_needles</object-name>
+
+        <object-name>EPU_FUEL_disk</object-name>
+        <object-name>EPU_FUEL_needle</object-name>
+
+        <object-name>HYD_PRESS_A_disk</object-name>
+        <object-name>HYD_PRESS_A_needle</object-name>
+        <object-name>HYD_PRESS_B_disk</object-name>
+        <object-name>HYD_PRESS_B_needle</object-name>
+        
+        <object-name>LIQ_OXY_disk</object-name>
+        <object-name>LIQ_OXY_needle</object-name>
 </effect>
         
         
