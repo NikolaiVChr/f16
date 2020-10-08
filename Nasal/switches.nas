@@ -303,19 +303,6 @@ var floodInstPnl = props.globals.getNode("controls/lighting/lighting-panel/flood
         }
  }
 
-# =====================
-# Throttle
-# =====================
-
-var cutoff = props.globals.getNode("controls/engines/engine/cutoff");
-
- var toggleCutOff = func {
-        if(!cutoff.getBoolValue()) {
-                cutoff.setBoolValue(1);
-        } else {
-                cutoff.setBoolValue(0);
-        }
- }
 
 # =====================
 # F16 Ejection seat

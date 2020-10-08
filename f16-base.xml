@@ -3602,7 +3602,6 @@ value. 18000=standard US transition altitude -->
 			<ctl-sec type="bool">false</ctl-sec>
             <feed type="int">0</feed><!-- OFF/NORM prevents starter, cutoff -->
             <jet-fuel type="int">0</jet-fuel><!-- starter -1=1 1=2 0=off  goes to off at 55% rpm -->
-            <jfs-start type="bool">false</jfs-start><!-- inverse cutoff -->
             <running-state type="bool">false</running-state>
             <ab-reset type="int">0</ab-reset>
             <max-power type="bool">false</max-power>
