@@ -127,7 +127,7 @@
   <condition>
     <and>
       <not>
-          <property>f16/done</property>
+          <property>f16/ejected</property>
       </not>
       <or>
         <not>

@@ -3610,7 +3610,7 @@ value. 18000=standard US transition altitude -->
 			<sec-self-test type="bool">false</sec-self-test>
             <cutoff-release-lever type="bool">true</cutoff-release-lever>
         </engine>
-        <done type="bool">false</done>
+        <ejected type="bool">false</ejected>
         <chute>
             <force type="double">2.0</force>
             <fold type="double">0.0</fold>
@@ -3720,6 +3720,9 @@ value. 18000=standard US transition altitude -->
             <file>Aircraft/f16/Nasal/MFD/MFD_main.nas</file>
             <!--<file>Aircraft/f16/Nasal/blackout.nas</file>-->
         </f16>
+        <start>
+            <file>Aircraft/f16/Nasal/states_and_autostart.nas</file>
+        </start>
         <rwrs>
             <file>Aircraft/f16/Nasal/rwr.nas</file>
         </rwrs>

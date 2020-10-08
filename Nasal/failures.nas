@@ -1,6 +1,6 @@
 var trigger_eng = nil;
 
-var start = func {
+var init = func {
     ##
     # Trigger object that will fire when aircraft air-speed is over
     # min, specified in knots. Probability of failing will
@@ -117,12 +117,13 @@ var loop = func {
         fail_list[key] = sys;
         #print(sys[1]~" "~sys[2]);
     }
-    fail_list["eng"][2] = !FailureMgr.get_failure_level("engines/engine");
+    fail_list["eng"][2] = !FailureMgr.get_failure_level("engines/engine");# Engine works a bit different than those with serviceable properties, so we fix that with this call.
     loop_caution();
     settimer(loop,1);
 }
 
 var fail_list = {
+    #  [WHat is displayed in the F-ACK DED page | serviceable property | working? | if reset has been requested by the pilot so failure remains but is no longer shown to him]
     a: ["TANK LEAK", "consumables/fuel-tanks/serviceable", 1, 0],
     b: ["RWR DEGR", "instrumentation/rwr/serviceable", 1, 0],
     c: ["FCR BUS FAIL", "instrumentation/radar/serviceable", 1, 0],
@@ -151,6 +152,7 @@ var fail_list = {
 };
 
 var getList = func {
+    # Get a list of strings of the current non-acknowledged failures
     var fail_keys = keys(fail_list);
     var fails = [];
     foreach (key;fail_keys) {
@@ -162,6 +164,7 @@ var getList = func {
 }
 
 var fail_reset = func {
+    # Remove all acknowledgements by pilot.
     var fail_keys = keys(fail_list);
     foreach (key;fail_keys) {
         fail_list[key][3] = 0;
@@ -169,6 +172,7 @@ var fail_reset = func {
 }
 
 var f_ack = func {
+    # Pilot acknowledge the failure, so lets stop displaying it.
     var fail_keys = keys(fail_list);
     foreach (key;fail_keys) {
         if (fail_list[key][2] == 0) {
@@ -177,20 +181,25 @@ var f_ack = func {
     }
 }
 
-
+# List of non-ignored/ignored caution warnings
+# entry: property-name: ignored
 var caution_ignore = {};
 
 var caution = func (node) {
+    # Manage the caution list
     var path = node.getPath();
     var value = node.getValue();
     var ignore = caution_ignore[path];
     if (ignore == nil) {
-        ignore = 0;
+        # This is a new caution warning, process it:
+        ignore = 0;# Hmm this line don't seem to be used..
         if (value and !getprop("controls/test/test-panel/mal-ind-lts")) {#TODO the check for MAL IND LTS here is not ideal. What if an error occurs while it is on?
-            caution_ignore[path] = 0;
+            # The caution is active and MAL IND LTS is not active, its a real caution
+            caution_ignore[path] = 0;# add it to the list as a non-ingored item.
         }
     }
     if (!value) {
+        # The cause for the caution is no longer we remove it from the list.
         delete(caution_ignore,path);
     }
     update_master();
@@ -201,7 +210,9 @@ var master_caution = func {
         return;
     }
     foreach(key;keys(caution_ignore)) {
+        # Iterate over all active cautions and mark them as ignored/acknowledged.
         if (key != "/f16/avionics/caution/elec-sys") {
+            # ..except for ELEC-SYS, it has its own caution reset button on the elec panel
             caution_ignore[key] = 1;
         }
     }
@@ -216,6 +227,7 @@ var elec_caution_reset = func {
 }
 
 var update_master = func {
+    # Check if new cautions was added that has yet to be acknowledged, if so; lit up master caution.
     var new = 0;
     foreach(key;keys(caution_ignore)) {
         if (caution_ignore[key] == 0) {
@@ -226,6 +238,7 @@ var update_master = func {
 };
 
 var loop_caution = func {# TODO: unlit the caution lights except elec-sys when master is pressed.
+    # Caution panel main logic
     var batt2 = getprop("fdm/jsbsim/elec/bus/batt-2") >= 20;
     var dc1 = getprop("fdm/jsbsim/elec/bus/emergency-dc-1") >= 20;
     var test  = getprop("controls/test/test-panel/mal-ind-lts");
@@ -247,6 +260,7 @@ var loop_caution = func {# TODO: unlit the caution lights except elec-sys when m
     setprop("f16/avionics/caution/avionics",          test or (batt2 and (!getprop("instrumentation/hud/serviceable") or !getprop("instrumentation/radar/serviceable") or !getprop("instrumentation/rwr/serviceable") or !getprop("instrumentation/tacan/serviceable"))));
 };
 
+# Call caution method when a caution condition changes.
 setlistener("f16/avionics/caution/stores-config",caution,0,0);
 setlistener("f16/avionics/caution/seat-not-armed",caution,0,0);
 setlistener("f16/avionics/caution/oxy-low",caution,0,0);

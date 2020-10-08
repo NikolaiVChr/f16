@@ -50,7 +50,7 @@
           <legend>Auto start</legend>
           <binding>
             <command>nasal</command>
-            <script>f16.autostart();</script>
+            <script>start.autostart();</script>
           </binding>
         </button>
 
@@ -67,7 +67,7 @@
         <legend>Cold and Dark</legend>
         <binding>
           <command>nasal</command>
-          <script>f16.coldndark();</script>
+          <script>start.coldndark();</script>
         </binding>
       </button>
 
@@ -77,7 +77,7 @@
         <legend>Repair damage</legend>
         <binding>
           <command>nasal</command>
-          <script>f16.repair();</script>
+          <script>start.repair();</script>
         </binding>
       </button>
 

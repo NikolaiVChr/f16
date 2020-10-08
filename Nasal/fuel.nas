@@ -53,6 +53,27 @@ var fuelqty = func {
 }
 
 
+# Engine feed knob handler
+setlistener("f16/engine/feed", func(feedNode) {
+    var feed = feedNode.getValue();
+    if (feed == 1) # NORM
+    {
+        setprop("/fdm/jsbsim/propulsion/tank[0]/priority", 5);
+        setprop("/fdm/jsbsim/propulsion/tank[3]/priority", 5);
+    }
+    if (feed == 2) # AFT
+    {
+        setprop("/fdm/jsbsim/propulsion/tank[0]/priority", 5);
+        setprop("/fdm/jsbsim/propulsion/tank[3]/priority", 1);
+    }
+    if (feed == 3) # FWD
+    {
+        setprop("/fdm/jsbsim/propulsion/tank[0]/priority", 1);
+        setprop("/fdm/jsbsim/propulsion/tank[3]/priority", 5);
+    }
+}, 0, 0);
+
+
 var fuelDigits = func {
   var maxtank = 8;
   for (var i=0;i<=maxtank;i+=1) {

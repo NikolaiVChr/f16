@@ -67,6 +67,7 @@ Justin "pinto" Nicholson
 - AIM-9 growl, lock sounds
 - AIM-9 and AIM-120 original models
 - Radar RCS system
+- Tacview recording
 
 Martien Van Der Plas
 - 3D modeling/texturing for weapons, stores, racks, other

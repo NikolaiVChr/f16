@@ -105,7 +105,7 @@
     <and>
       <property>f16/cockpit/kneeboard-left-visible</property>
       <not>
-          <property>f16/done</property>
+          <property>f16/ejected</property>
       </not>
       <property>sim/current-view/internal</property><!-- without a leading slash this property wont exist over MP, and so will always default to not internal -->
       <not>
@@ -135,7 +135,7 @@
     <and>
       <property>f16/cockpit/kneeboard-right-visible</property>
       <not>
-          <property>f16/done</property>
+          <property>f16/ejected</property>
       </not>
       <property>sim/current-view/internal</property><!-- without a leading slash this property wont exist over MP, and so will always default to not internal -->
       <not>
@@ -162,7 +162,7 @@
   <type>select</type>
   <object-name>chair</object-name>
   <condition>
-   <not><property>f16/done</property></not>
+   <not><property>f16/ejected</property></not>
   </condition>
  </animation>
  
