@@ -47,7 +47,7 @@
   <dump-rate unit="LBS/MIN"> 1000 </dump-rate>
   <tank type="FUEL"> <!-- FWD Tank F-1 / F-2 -->
    <location unit="IN">
-    <x> -91.5 </x>
+    <x> -51.5 </x>
    <y> 0 </y>
    <z> 0 </z>
    </location>
@@ -80,7 +80,7 @@
   </tank>
   <tank type="FUEL"> <!-- AFT Tank A-1 -->
    <location unit="IN">
-    <x> 108.5 </x>
+    <x> 68.5 </x>
    <y> 0 </y>
    <z> 0 </z>
    </location>
@@ -91,7 +91,7 @@
   </tank>
   <tank type="FUEL"> <!-- FWD Reservoir -->
     <location unit="IN">
-    <x> -91.5 </x>
+    <x> -51.5 </x>
    <y> 0 </y>
    <z> 0 </z>
    </location>
@@ -102,7 +102,7 @@
   </tank>
   <tank type="FUEL"> <!-- AFT Reservoir -->
     <location unit="IN">
-    <x> 108.5 </x>
+    <x> 68.5 </x>
    <y> 0 </y>
    <z> 0 </z>
    </location>
