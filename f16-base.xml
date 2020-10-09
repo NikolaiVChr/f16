@@ -2000,6 +2000,11 @@ There is also small changes in tail for different variants with and without brak
                 <capacity-gal_us type="double">0</capacity-gal_us>
                 <level-norm type="double">0</level-norm>
             </tank>
+            <total-fuel-lbs-1 type="double">0</total-fuel-lbs-1>
+            <total-fuel-lbs-10 type="double">0</total-fuel-lbs-10>
+            <total-fuel-lbs-100 type="double">0</total-fuel-lbs-100>
+            <total-fuel-lbs-1000 type="double">0</total-fuel-lbs-1000>
+            <total-fuel-lbs-10000 type="double">0</total-fuel-lbs-10000>
         </fuel>
 		<fuel-tanks>
 			<serviceable type="bool">true</serviceable>

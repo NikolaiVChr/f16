@@ -1657,6 +1657,10 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     setprop("consumables/fuel/tank[6]/capacity-gal_us",0);
     setprop("consumables/fuel/tank[7]/capacity-gal_us",0);
     setprop("consumables/fuel/tank[8]/capacity-gal_us",0);
+    setprop("/consumables/fuel/total-fuel-lbs-1", 8); # Show some other, random, value instead of 000000
+    setprop("/consumables/fuel/total-fuel-lbs-10", 20);
+    setprop("/consumables/fuel/total-fuel-lbs-100", 700);
+    setprop("/consumables/fuel/total-fuel-lbs-1000", 1000);
     if (getprop("f16/disable-custom-view") != 1) view.manager.register("Cockpit View", pilot_view_limiter);
     emesary.GlobalTransmitter.Register(f16_mfd);
     emesary.GlobalTransmitter.Register(f16_hud);
