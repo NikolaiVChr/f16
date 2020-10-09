@@ -1097,6 +1097,11 @@ var TerrainManager = {
       # both higher than mt. everest, so not need to check.
       return TRUE;
     }
+    if (node.getName() == "carrier") {
+        # AI carriers are sunk beneath the water, so checking terrain would yield false.
+        return TRUE;
+    }
+    
               me.xyz = {"x":me.myOwnPos.x(),                  "y":me.myOwnPos.y(),                 "z":me.myOwnPos.z()};
               me.dir = {"x":SelectCoord.x()-me.myOwnPos.x(),  "y":SelectCoord.y()-me.myOwnPos.y(), "z":SelectCoord.z()-me.myOwnPos.z()};
 
@@ -1681,6 +1686,7 @@ var Target = {
 		var carrier = 0;
 		if ( me.AcType != nil ) { type = me.AcType.getValue() }
 		if ( type == "MP-Nimitz" or type == "MP-Eisenhower" or type == "MP-Vinson" ) { carrier = 1 }
+        #if (c.propNode.getName() == "carrier") {carrier = 1;}
 		me.Carrier.setBoolValue(carrier);
 		return carrier;
 	},
