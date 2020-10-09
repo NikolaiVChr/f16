@@ -1083,7 +1083,11 @@ var TerrainManager = {
     }
     var SelectCoord = geo.Coord.new().set_xyz(x, y, z);
 
-            
+    if (node.getName() == "carrier") {
+        # AI carriers are sunk beneath the water, so checking terrain would yield false.
+        SelectCoord.set_alt(2);
+        #return TRUE;
+    }        
     me.myOwnPos = geo.aircraft_position();
     me.maxDist = me.myOwnPos.direct_distance_to(SelectCoord);
     me.itsAlt = math.abs(SelectCoord.alt())<0.001?0:SelectCoord.alt();
@@ -1097,10 +1101,7 @@ var TerrainManager = {
       # both higher than mt. everest, so not need to check.
       return TRUE;
     }
-    if (node.getName() == "carrier") {
-        # AI carriers are sunk beneath the water, so checking terrain would yield false.
-        return TRUE;
-    }
+    
     
               me.xyz = {"x":me.myOwnPos.x(),                  "y":me.myOwnPos.y(),                 "z":me.myOwnPos.z()};
               me.dir = {"x":SelectCoord.x()-me.myOwnPos.x(),  "y":SelectCoord.y()-me.myOwnPos.y(), "z":SelectCoord.z()-me.myOwnPos.z()};
