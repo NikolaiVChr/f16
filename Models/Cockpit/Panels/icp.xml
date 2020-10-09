@@ -42,6 +42,73 @@
         <object-name>wx</object-name>
     </effect>
     
+    <animation>
+        <type>translate</type>
+        <object-name>a-a</object-name>
+        <factor>-0.005</factor>
+        <property>controls/icp/button-a-a</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>a-g</object-name>
+        <factor>-0.005</factor>
+        <property>controls/icp/button-a-g</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>iff</object-name>
+        <factor>-0.005</factor>
+        <property>controls/icp/button-iff</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>list</object-name>
+        <factor>-0.005</factor>
+        <property>controls/icp/button-list</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>com2</object-name>
+        <factor>-0.005</factor>
+        <property>controls/icp/button-com2</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>com1</object-name>
+        <factor>-0.005</factor>
+        <property>controls/icp/button-com1</property>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
         <parameters>
@@ -176,24 +243,7 @@
         </decrease>
     </animation>
 
-    <animation>
-        <type>pick</type>
-        <object-name>a-g</object-name>
-        <action>
-            <button>0</button>
-            <binding>
-                <command>nasal</command>
-                <script>sound.doubleClick();if (pylons.fcs!=nil) pylons.fcs.cycleAG();</script>
-            </binding>
-        </action>
-        <!--<hovered>
-            <binding>
-                <command>set-tooltip</command>
-                <tooltip-id>button-droptank</tooltip-id>
-                <label>Jettison drop-tank</label>
-            </binding>
-        </hovered>-->
-    </animation>
+    
     
     <!-- Cursor -->
     <animation>
@@ -236,6 +286,66 @@
 	<!-- Top Row -->
     <animation>
         <type>pick</type>
+        <object-name>a-a</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>sound.doubleClick();if (pylons.fcs!=nil) pylons.fcs.cycleAA();</script>
+            </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/icp/button-a-a</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/icp/button-a-a</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
+        </action>
+        <!--<hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-droptank</tooltip-id>
+                <label>Jettison drop-tank</label>
+            </binding>
+        </hovered>-->
+    </animation>
+    <animation>
+        <type>pick</type>
+        <object-name>a-g</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>sound.doubleClick();if (pylons.fcs!=nil) pylons.fcs.cycleAG();</script>
+            </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/icp/button-a-g</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/icp/button-a-g</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
+        </action>
+        <!--<hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-droptank</tooltip-id>
+                <label>Jettison drop-tank</label>
+            </binding>
+        </hovered>-->
+    </animation>
+    <animation>
+        <type>pick</type>
         <object-name>com1</object-name>
         <action>
             <button>0</button>
@@ -243,6 +353,18 @@
                 <command>nasal</command>
                 <script>ded.Buttons.buttoncomm1.doAction();</script>
             </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/icp/button-com1</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/icp/button-com1</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
         <hovered>
             <binding>
@@ -261,6 +383,18 @@
                 <command>nasal</command>
                 <script>ded.Buttons.buttoncomm2.doAction();</script>
             </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/icp/button-com2</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/icp/button-com2</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
         <hovered>
             <binding>
@@ -279,6 +413,18 @@
                 <command>nasal</command>
                 <script>ded.Buttons.buttoniff.doAction();</script>
             </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/icp/button-iff</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/icp/button-iff</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
         <hovered>
             <binding>
@@ -297,6 +443,18 @@
                 <command>nasal</command>
                 <script>ded.Buttons.buttonlist.doAction();</script>
             </binding>
+            <binding>
+                <command>property-assign</command>
+                <property>controls/icp/button-list</property>
+                <value>1</value>
+            </binding>
+            <mod-up>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/icp/button-list</property>
+                    <value>0</value>
+                </binding>
+            </mod-up>
         </action>
         <hovered>
             <binding>
@@ -547,24 +705,7 @@
         </condition>
         <object-name>wx</object-name>
     </animation>
-    <animation>
-        <type>pick</type>
-        <object-name>a-a</object-name>
-        <action>
-            <button>0</button>
-            <binding>
-                <command>nasal</command>
-                <script>sound.doubleClick();if (pylons.fcs!=nil) pylons.fcs.cycleAA();</script>
-            </binding>
-        </action>
-        <!--<hovered>
-            <binding>
-                <command>set-tooltip</command>
-                <tooltip-id>button-droptank</tooltip-id>
-                <label>Jettison drop-tank</label>
-            </binding>
-        </hovered>-->
-    </animation>
+    
 	
 	<animation>
         <type>knob</type>
