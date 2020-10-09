@@ -256,6 +256,9 @@
                             <!--alt-selected-mhz-000001 type="int">0</alt-selected-mhz-000001>< only for cosmetic use (needed on UHF panel) -->
                         </frequencies>
                     </uhf>
+                    <airspeed-indicator>
+                        <safe-speed-limit-bug type="double">800</safe-speed-limit-bug>
+                    </airspeed-indicator>
                 </instrumentation>
                 <smoke>
                     <color>

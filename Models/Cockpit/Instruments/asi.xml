@@ -48,7 +48,7 @@
  <animation>
   <type>rotate</type>
   <object-name>ASI_safe-speed-bug</object-name>
-  <property>sim/model/f-14b/instrumentation/airspeed-indicator/safe-speed-limit-bug</property>
+  <property>sim/model/f16/instrumentation/airspeed-indicator/safe-speed-limit-bug</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
    <entry><ind>40</ind><dep>16</dep></entry>
@@ -139,7 +139,7 @@
    <interval-sec>0.2</interval-sec>
    <binding>
     <command>property-adjust</command>
-    <property>sim/model/f-14b/instrumentation/airspeed-indicator/safe-speed-limit-bug</property>
+    <property>sim/model/f16/instrumentation/airspeed-indicator/safe-speed-limit-bug</property>
     <step>-10</step>
     <min>225</min>
    </binding>
@@ -156,7 +156,7 @@
    <interval-sec>0.2</interval-sec>
    <binding>
     <command>property-adjust</command>
-    <property>sim/model/f-14b/instrumentation/airspeed-indicator/safe-speed-limit-bug</property>
+    <property>sim/model/f16/instrumentation/airspeed-indicator/safe-speed-limit-bug</property>
     <step>-50</step>
     <min>225</min>
    </binding>
@@ -174,7 +174,7 @@
    <interval-sec>0.2</interval-sec>
    <binding>
     <command>property-adjust</command>
-    <property>sim/model/f-14b/instrumentation/airspeed-indicator/safe-speed-limit-bug</property>
+    <property>sim/model/f16/instrumentation/airspeed-indicator/safe-speed-limit-bug</property>
     <step>10</step>
     <max>850</max>
    </binding>
@@ -191,7 +191,7 @@
    <interval-sec>0.2</interval-sec>
    <binding>
     <command>property-adjust</command>
-    <property>sim/model/f-14b/instrumentation/airspeed-indicator/safe-speed-limit-bug</property>
+    <property>sim/model/f16/instrumentation/airspeed-indicator/safe-speed-limit-bug</property>
     <step>50</step>
     <max>850</max>
    </binding>
