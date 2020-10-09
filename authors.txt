@@ -128,5 +128,8 @@ FGUK
 Marsdolphin
 - Some liveries
 
+Colin Geniet
+- RCS timer
+
 Onox
 - Support for onox-tanker
