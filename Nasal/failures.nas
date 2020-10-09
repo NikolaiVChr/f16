@@ -149,6 +149,7 @@ var fail_list = {
     w: ["HEAD FAIL", "instrumentation/heading-indicator/serviceable", 1, 0],
     x: ["MAGN COMP FAIL", "instrumentation/magnetic-compass/serviceable", 1, 0],
     y: ["IND TURN FAIL", "instrumentation/turn-indicator/serviceable", 1, 0],
+    z: ["IND ATTI FAIL", "instrumentation/attitude-indicator/serviceable", 1, 0],
 };
 
 var getList = func {

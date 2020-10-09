@@ -1256,7 +1256,9 @@ append(obj.total, obj.speed_curr);
             props.UpdateManager.FromHashList(["texUp","pitch","roll","fpm","VV_x","VV_y","gear_down", "dgft", "drift"], 0.001, func(hdp)
                                       {
                                           obj.ladder.hide();
-                                          obj.roll_pointer.setRotation (hdp.roll_rad);
+                                          if (getprop("instrumentation/turn-indicator/serviceable")) {
+                                            obj.roll_pointer.setRotation (hdp.roll_rad);
+                                          }
                                           if ((hdp.fpm != 2 and !hdp.gear_down) or hdp.dgft) {
                                             obj.ladder_group.hide();
                                             return;
@@ -1268,11 +1270,15 @@ append(obj.total, obj.speed_curr);
                                             #obj.ladder.show();
                                         
                                         var result = HudMath.getDynamicHorizon(5,0.5,0.5,0.7,0.5,hdp.drift,-0.25);
-                                        obj.h_rot.setRotation(result[1]);
-                                        obj.zenith.setRotation(-result[1]);
-                                        obj.nadir.setRotation(-result[1]);
+                                        if (getprop("instrumentation/turn-indicator/serviceable")) {
+                                            obj.h_rot.setRotation(result[1]);
+                                            obj.zenith.setRotation(-result[1]);
+                                            obj.nadir.setRotation(-result[1]);
+                                        }
                                         obj.horizon_group.setTranslation(result[0]);#place it on bore
-                                        obj.ladder_group.setTranslation(result[2]);
+                                        if (getprop("instrumentation/attitude-indicator/serviceable")) {
+                                            obj.ladder_group.setTranslation(result[2]);
+                                        }
                                         obj.ladder_group.show();
                                         obj.ladder_group.update();
                                         obj.horizon_group.update();
@@ -1387,17 +1393,23 @@ append(obj.total, obj.speed_curr);
                                           # the real F-16 has calibrated airspeed as default in HUD.
                                           var pitot = getprop("systems/pitot/serviceable") and getprop("systems/static/serviceable");
                                           if (hdp.HUD_VEL == 1 or hdp.gear_down) {
-                                            obj.ias_range.setTranslation(0, hdp.calibrated * ias_range_factor * pitot);
+                                            if (getprop("instrumentation/airspeed-indicator/serviceable")) {
+                                                obj.ias_range.setTranslation(0, hdp.calibrated * ias_range_factor * pitot);
+                                                obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.calibrated));
+                                            }
                                             obj.speed_type.setText("C");
-                                            obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.calibrated));
                                           } elsif (hdp.HUD_VEL == 0) {
-                                            obj.ias_range.setTranslation(0, hdp.TAS * ias_range_factor * pitot);
+                                            if (getprop("instrumentation/airspeed-indicator/serviceable")) {
+                                                obj.ias_range.setTranslation(0, hdp.TAS * ias_range_factor * pitot);
+                                                obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.TAS));
+                                            }
                                             obj.speed_type.setText("T");
-                                            obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.TAS));
                                           } else {
-                                            obj.ias_range.setTranslation(0, hdp.GND_SPD * ias_range_factor * pitot);
+                                            if (getprop("instrumentation/airspeed-indicator/serviceable")) {
+                                                obj.ias_range.setTranslation(0, hdp.GND_SPD * ias_range_factor * pitot);                                            
+                                                obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.GND_SPD));
+                                            }
                                             obj.speed_type.setText("G");
-                                            obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.GND_SPD));
                                           }
                                       }),
             props.UpdateManager.FromHashValue("range_rate", 0.01, func(range_rate)
@@ -1420,7 +1432,7 @@ append(obj.total, obj.speed_curr);
             props.UpdateManager.FromHashList(["heading", "headingMag", "useMag","gear_down"], 0.1, func(hdp)
                                       {
                                           var head = geo.normdeg(hdp.useMag?hdp.headingMag:hdp.heading);
-                                          obj.head_curr.setText(sprintf("%03d",head));
+                                          
                                           if (head < 180)
                                             obj.heading_tape_position = -head*54/10;
                                           else
@@ -1436,8 +1448,10 @@ append(obj.total, obj.speed_curr);
                                               obj.head_mask.setTranslation(-10+0.5*sx*0.695633,sy*0.1-20+105);
                                               obj.head_frame.setTranslation(0,105);
                                           }
-
-                                          obj.heading_tape.setTranslation (obj.heading_tape_position,obj.heading_tape_positionY);
+                                          if (getprop("instrumentation/heading-indicator/serviceable")) {
+                                            obj.head_curr.setText(sprintf("%03d",head));
+                                            obj.heading_tape.setTranslation (obj.heading_tape_position,obj.heading_tape_positionY);
+                                          }
                                           
                                       }
                                             ),
@@ -2220,7 +2234,9 @@ append(obj.total, obj.speed_curr);
                 .lineTo(me.peelTickRadius*math.sin(me.peelDeg*D2R), me.peelTickRadius*math.cos(me.peelDeg*D2R))
                 .setStrokeLineWidth(1)
                 .setColor(me.color);
-            me.orangePeelGroup.setRotation(-hdp.roll*D2R);
+            if (getprop("instrumentation/turn-indicator/serviceable")) {
+                me.orangePeelGroup.setRotation(-hdp.roll*D2R);
+            }
             me.orangePeelGroup.show();
             me.orangePeelGroup.update();
         } else {
