@@ -1,0 +1,549 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <nasal>
+    <open><![CDATA[
+      
+      var curpower = getprop("/sim/gui/dialogs/joystick-config/axis[" ~ getprop("/sim/gui/dialogs/joystick-config/current-axis") ~ "]/power");
+if (curpower == nil)
+  curpower = 1.0;
+setprop("/sim/gui/dialogs/joystick-config/gui-factor",curpower);
+
+var assignAxis = func(cmd) {
+
+  var i = getprop("/sim/gui/dialogs/joystick-config/current-axis");
+  if (cmd != nil)
+    setprop("/sim/gui/dialogs/joystick-config/axis[" ~ i ~ "]/binding", cmd);
+  setprop("/sim/gui/dialogs/joystick-config/axis[" ~ i ~ "]/power", getprop("/sim/gui/dialogs/joystick-config/gui-factor"));
+
+
+  joystick.writeConfig();
+  fgcommand("reinit", props.Node.new({"subsystem": "input"}));
+  fgcommand("dialog-close", props.Node.new({"dialog-name": "button-axis-config"}));
+  fgcommand("dialog-close", props.Node.new({"dialog-name": "joystick-config"}));
+  fgcommand("dialog-show", props.Node.new({"dialog-name": "joystick-config"}));
+}
+    ]]></open>
+
+    <close><![CDATA[
+    ]]></close>
+  </nasal>
+
+
+  <name>button-axis-config</name>
+  <layout>vbox</layout>
+  <resizable>true</resizable>
+  <modal>true</modal>
+  <default-padding>3</default-padding>
+
+  <group>
+    <layout>hbox</layout>
+    <default-padding>1</default-padding>
+
+    <empty><stretch>true</stretch></empty>
+
+    <text>
+      <label>Joystick Axis Configuration</label>
+    </text>
+
+    <empty><stretch>true</stretch></empty>
+
+    <button>
+      <legend></legend>
+      <key>Esc</key>
+      <pref-width>16</pref-width>
+      <pref-height>16</pref-height>
+      <border>2</border>
+      <binding>
+        <command>dialog-close</command>
+      </binding>
+    </button>
+  </group>
+
+  <hrule/>
+
+  <text>
+    <halign>left</halign>
+    <label>Select the operation to assign to this axis.</label>
+  </text>
+
+  <hrule/>
+
+  <group>
+    <layout>table</layout>
+
+    <text>
+      <row>0</row>
+      <col>0</col>
+      <label>Flight Controls</label>
+    </text>
+
+    <button>
+      <row>1</row>
+      <col>0</col>
+      <halign>fill</halign>
+      <legend>Aileron</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Aileron");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>2</row>
+      <col>0</col>
+      <halign>fill</halign>
+      <legend>Elevator</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Elevator");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>3</row>
+      <col>0</col>
+      <halign>fill</halign>
+      <legend>Rudder</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Rudder");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>4</row>
+      <col>0</col>
+      <halign>fill</halign>
+      <legend>Brake Left</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Brake Left");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>5</row>
+      <col>0</col>
+      <halign>fill</halign>
+      <legend>Brake Right</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Brake Right");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>6</row>
+      <col>0</col>
+      <halign>fill</halign>
+      <legend>Flaps</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Flaps");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>7</row>
+      <col>0</col>
+      <halign>fill</halign>
+      <legend>Wings</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Wings");
+        </script>
+      </binding>
+    </button>
+
+ 
+    <text>
+      <row>0</row>
+      <col>3</col>
+      <label>Trim</label>
+    </text>
+
+
+   <button>
+      <row>1</row>
+      <col>3</col>
+      <halign>fill</halign>
+      <legend>Aileron Trim to position</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Aileron Trim");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>2</row>
+      <col>3</col>
+      <halign>fill</halign>
+      <legend>Elevator Trim to position</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Elevator Trim");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>3</row>
+      <col>3</col>
+      <halign>fill</halign>
+      <legend>Rudder Trim to position</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Rudder Trim");
+        </script>
+      </binding>
+    </button>
+
+
+   <button>
+      <row>4</row>
+      <col>3</col>
+      <halign>fill</halign>
+      <legend>Aileron Trim inc.</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Aileron Trim inc.");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>5</row>
+      <col>3</col>
+      <halign>fill</halign>
+      <legend>Elevator Trim inc.</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Elevator Trim inc.");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>6</row>
+      <col>3</col>
+      <halign>fill</halign>
+      <legend>Rudder Trim inc.</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Rudder Trim inc.");
+        </script>
+      </binding>
+    </button>
+
+
+
+    <text>
+      <row>0</row>
+      <col>1</col>
+      <label>Engines</label>
+    </text>
+
+    <button>
+      <row>1</row>
+      <col>1</col>
+      <halign>fill</halign>
+      <legend>Throttle All Engines</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Throttle All Engines");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>2</row>
+      <col>1</col>
+      <halign>fill</halign>
+      <legend>Mixture All Engines</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Mixture All Engines");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>3</row>
+      <col>1</col>
+      <halign>fill</halign>
+      <legend>Propeller All Engines</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Propeller All Engines");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>4</row>
+      <col>1</col>
+      <halign>fill</halign>
+      <legend>Throttle Engine 0</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Throttle Engine 0");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>5</row>
+      <col>1</col>
+      <halign>fill</halign>
+      <legend>Mixture Engine 0</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Mixture Engine 0");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>6</row>
+      <col>1</col>
+      <halign>fill</halign>
+      <legend>Propeller Pitch Engine 0</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Propeller Pitch Engine 0");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>7</row>
+      <col>1</col>
+      <halign>fill</halign>
+      <legend>Throttle Engine 1</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Throttle Engine 1");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>8</row>
+      <col>1</col>
+      <halign>fill</halign>
+      <legend>Mixture Engine 1</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Mixture Engine 1");
+        </script>
+      </binding>
+    </button>
+ 
+    <button>
+      <row>9</row>
+      <col>1</col>
+      <halign>fill</halign>
+      <legend>Propeller Pitch Engine 1</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Propeller Pitch Engine 1");
+        </script>
+      </binding>
+    </button>
+    
+    <button>
+      <row>10</row>
+      <col>1</col>
+      <halign>fill</halign>
+      <legend>Reverser All Engines</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Reverser All Engines");
+        </script>
+      </binding>
+    </button>
+
+ 
+    <text>
+      <row>0</row>
+      <col>2</col>
+      <label>Other</label>
+    </text>
+
+    <button>
+      <row>1</row>
+      <col>2</col>
+      <halign>fill</halign>
+      <legend>View (horizontal)</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("View (horizontal)");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>2</row>
+      <col>2</col>
+      <halign>fill</halign>
+      <legend>View (vertical)</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("View (vertical)");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>3</row>
+      <col>2</col>
+      <halign>fill</halign>
+      <legend>View Horizontal Axis</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("View Horizontal Axis");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>4</row>
+      <col>2</col>
+      <halign>fill</halign>
+      <legend>View Vertical Axis</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("View Vertical Axis");
+        </script>
+      </binding>
+    </button>
+    
+    <slider>
+      <row>11</row>
+      <col>0</col>
+      <colspan>1</colspan>
+      <name>sensitivity</name>
+      <min>0</min>
+      <max>5</max>
+      <step>0.1</step>
+      <live>true</live>
+      <property>/sim/gui/dialogs/joystick-config/gui-factor</property>
+      <binding>
+        <command>dialog-apply</command>
+        <object-name>sensitivity</object-name>
+      </binding>
+    </slider>
+
+    <text>
+      <row>11</row>
+      <col>1</col>
+      <halign>left</halign>
+      <format>Sensitivity Reduction %2.1f</format>
+      <label>0</label>
+      <property>/sim/gui/dialogs/joystick-config/gui-factor</property>
+      <live>true</live>
+    </text>
+
+    <button>
+      <row>11</row>
+      <col>2</col>
+      <halign>fill</halign>
+      <legend>Apply sensitivity</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis(nil);
+        </script>
+      </binding>
+    </button>
+    
+    <button>
+      <row>5</row>
+      <col>2</col>
+      <halign>fill</halign>
+      <legend>Cursor Vertical</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Cursor Vertical");
+        </script>
+      </binding>
+    </button>
+    
+    <button>
+      <row>6</row>
+      <col>2</col>
+      <halign>fill</halign>
+      <legend>Cursor Horizontal</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("Cursor Horizontal");
+        </script>
+      </binding>
+    </button>
+
+
+
+  </group>
+
+  <group>
+    <empty>
+      <stretch>true</stretch>
+    </empty>
+    <layout>hbox</layout>
+
+    <button>
+      <row>5</row>
+      <col>2</col>
+      <halign>fill</halign>
+      <legend>Remove assignment</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignAxis("None");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <legend>Close</legend>
+      <default>true</default>
+      <key>Esc</key>
+      <binding>
+        <command>dialog-close</command>
+      </binding>
+    </button>
+    <empty>
+      <stretch>true</stretch>
+    </empty>
+  </group>
+
+</PropertyList>

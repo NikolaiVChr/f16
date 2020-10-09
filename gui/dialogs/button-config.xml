@@ -1,0 +1,797 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<nasal>
+		<open><![CDATA[
+
+var assignButton = func(cmd) {
+
+  var i = getprop("/sim/gui/dialogs/joystick-config/current-button");
+  setprop("/sim/gui/dialogs/joystick-config/button[" ~ i ~ "]/binding", cmd);
+
+  joystick.writeConfig();
+  fgcommand("reinit", props.Node.new({"subsystem": "input"}));
+  fgcommand("dialog-close", props.Node.new({"dialog-name": "button-config"}));
+  fgcommand("dialog-close", props.Node.new({"dialog-name": "joystick-config"}));
+  fgcommand("dialog-show", props.Node.new({"dialog-name": "joystick-config"}));
+}
+		]]></open>
+
+		<close><![CDATA[
+		]]></close>
+	</nasal>
+
+    
+    <!-- To be implemented
+    tiller axis
+    counter-measures 
+    masterarm toggle
+    radar standby toggle
+    radar slew target selector
+    radar select target.
+    -->
+    
+    <name>button-config</name>
+	<layout>vbox</layout>
+	<resizable>true</resizable>
+	<modal>true</modal>
+	<default-padding>3</default-padding>
+
+	<group>
+		<layout>hbox</layout>
+		<default-padding>1</default-padding>
+
+		<empty><stretch>true</stretch></empty>
+
+		<text>
+			<label>Button Configuration</label>
+		</text>
+
+		<empty><stretch>true</stretch></empty>
+
+		<button>
+			<legend></legend>
+			<key>Esc</key>
+			<pref-width>16</pref-width>
+			<pref-height>16</pref-height>
+			<border>2</border>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+
+	<hrule/>
+
+	<text>
+	  <halign>left</halign>
+	  <label>Select the command you wish to assign to this button.</label>
+  </text>
+
+  <hrule/>
+
+  <group>
+    <layout>table</layout>
+
+    <text>
+      <row>0</row>
+      <col>0</col>
+      <label>Flight Surface Trim</label>
+    </text>
+
+    <button>
+      <row>1</row>
+      <col>0</col>
+      <halign>fill</halign>
+      <legend>Elevator Trim Up</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Elevator Trim Up");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>2</row>
+      <col>0</col>
+      <halign>fill</halign>
+      <legend>Elevator Trim Down</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Elevator Trim Down");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>3</row>
+      <col>0</col>
+      <halign>fill</halign>
+      <legend>Elevator Trim Pos</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Elevator Trim Pos");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>4</row>
+      <col>0</col>
+      <halign>fill</halign>
+      <legend>Rudder Trim Left</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Rudder Trim Left");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>5</row>
+      <col>0</col>
+      <halign>fill</halign>
+      <legend>Rudder Trim Right</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Rudder Trim Right");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>6</row>
+      <col>0</col>
+      <halign>fill</halign>
+      <legend>Aileron Trim Left</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Aileron Trim Left");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>7</row>
+      <col>0</col>
+      <halign>fill</halign>
+      <legend>Aileron Trim Right</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Aileron Trim Right");
+        </script>
+      </binding>
+    </button>
+
+    <text>
+      <row>0</row>
+      <col>1</col>
+      <label>Control Surfaces</label>
+    </text>
+
+    <button>
+      <row>1</row>
+      <col>1</col>
+      <halign>fill</halign>
+      <legend>Flaps Up</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Flaps Up");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>2</row>
+      <col>1</col>
+      <halign>fill</halign>
+      <legend>Flaps Down</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Flaps Down");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>3</row>
+      <col>1</col>
+      <halign>fill</halign>
+      <legend>Gear Up</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Gear Up");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>4</row>
+      <col>1</col>
+      <halign>fill</halign>
+      <legend>Gear Down</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Gear Down");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>5</row>
+      <col>1</col>
+      <halign>fill</halign>
+      <legend>Gear Toggle</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Gear Toggle");
+        </script>
+      </binding>
+    </button>
+
+
+    <button>
+      <row>6</row>
+      <col>1</col>
+      <halign>fill</halign>
+      <legend>Spoilers Retract</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Spoilers Retract");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>7</row>
+      <col>1</col>
+      <halign>fill</halign>
+      <legend>Spoilers Deploy</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Spoilers Deploy");
+        </script>
+      </binding>
+    </button>
+
+    <text>
+      <row>0</row>
+      <col>2</col>
+      <label>Powerplant Controls</label>
+    </text>
+
+    <button>
+      <row>1</row>
+      <col>2</col>
+      <halign>fill</halign>
+      <legend>Throttle Up</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Throttle Up");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>2</row>
+      <col>2</col>
+      <halign>fill</halign>
+      <legend>Throttle Down</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Throttle Down");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>3</row>
+      <col>2</col>
+      <halign>fill</halign>
+      <legend>Mixture Rich</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Mixture Rich");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>4</row>
+      <col>2</col>
+      <halign>fill</halign>
+      <legend>Mixture Lean</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Mixture Lean");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>5</row>
+      <col>2</col>
+      <halign>fill</halign>
+      <legend>Propeller Fine</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Propeller Fine");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>6</row>
+      <col>2</col>
+      <halign>fill</halign>
+      <legend>Propeller Coarse</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Propeller Coarse");
+        </script>
+      </binding>
+    </button>
+    
+    <button>
+      <row>7</row>
+      <col>2</col>
+      <halign>fill</halign>
+      <legend>All Reverser Toggle</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Reverser Toggle");
+        </script>
+      </binding>
+    </button>
+
+
+    <text>
+      <row>0</row>
+      <col>3</col>
+      <label>Other Aircraft Controls</label>
+    </text>
+
+    <button>
+      <row>1</row>
+      <col>3</col>
+      <halign>fill</halign>
+      <legend>Brakes</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Brakes");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>2</row>
+      <col>3</col>
+      <halign>fill</halign>
+      <legend>Auto air/ground brakes</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Brakes (air/wheel)");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>3</row>
+      <col>3</col>
+      <halign>fill</halign>
+      <legend>Brakes (air/wheel)</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Brakes (air/wheel)");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>4</row>
+      <col>3</col>
+      <halign>fill</halign>
+      <legend>Parking brakes</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Parking brakes");
+        </script>
+      </binding>
+    </button>
+    
+    <button>
+      <row>5</row>
+      <col>3</col>
+      <halign>fill</halign>
+      <legend>FGCom PTT(1)</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("FGCom PTT");
+        </script>
+      </binding>
+    </button>
+
+
+    <button>
+      <row>6</row>
+      <col>3</col>
+      <halign>fill</halign>
+      <legend>FGCom PTT(2)</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("FGCom PTT(2)");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>7</row>
+      <col>3</col>
+      <halign>fill</halign>
+      <legend>Trigger</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Trigger");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>8</row>
+      <col>3</col>
+      <halign>fill</halign>
+      <legend>Custom</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Custom");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>9</row>
+      <col>3</col>
+      <halign>fill</halign>
+      <legend>NWS toggle</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("NWS toggle");
+        </script>
+      </binding>
+    </button>
+    
+    <button>
+      <row>10</row>
+      <col>3</col>
+      <halign>fill</halign>
+      <legend>Cursor Click</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Cursor Click");
+        </script>
+      </binding>
+    </button>
+
+    <text>
+      <row>0</row>
+      <col>4</col>
+      <label>Simulator Controls</label>
+    </text>
+
+    <button>
+      <row>1</row>
+      <col>4</col>
+      <halign>fill</halign>
+      <legend>View Decrease</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("View Decrease");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>2</row>
+      <col>4</col>
+      <halign>fill</halign>
+      <legend>View Increase</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("View Increase");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>3</row>
+      <col>4</col>
+      <halign>fill</halign>
+      <legend>View Cycle Forwards</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("View Cycle Forwards");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>4</row>
+      <col>4</col>
+      <halign>fill</halign>
+      <legend>View Cycle Backwards</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("View Cycle Backwards");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>5</row>
+      <col>4</col>
+      <halign>fill</halign>
+      <legend>View Left</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("View Left");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>6</row>
+      <col>4</col>
+      <halign>fill</halign>
+      <legend>View Right</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("View Right");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>7</row>
+      <col>4</col>
+      <halign>fill</halign>
+      <legend>View Up</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("View Up");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <row>8</row>
+      <col>4</col>
+      <halign>fill</halign>
+      <legend>View Down</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("View Down");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>9</row>
+      <col>4</col>
+      <halign>fill</halign>
+      <legend>Total Freeze</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Total Freeze");
+        </script>
+      </binding>
+    </button>
+
+    <text>
+      <row>0</row>
+      <col>5</col>
+      <label>Military</label>
+    </text>
+
+
+    <button>
+      <row>1</row>
+      <col>5</col>
+      <halign>fill</halign>
+      <legend>Trigger</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Trigger");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>2</row>
+      <col>5</col>
+      <halign>fill</halign>
+      <legend>Pickle</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Pickle");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>3</row>
+      <col>5</col>
+      <halign>fill</halign>
+      <legend>Target next</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Target next");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>4</row>
+      <col>5</col>
+      <halign>fill</halign>
+      <legend>Target previous</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Target previous");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>5</row>
+      <col>5</col>
+      <halign>fill</halign>
+      <legend>Weapon next</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Weapon next");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>6</row>
+      <col>5</col>
+      <halign>fill</halign>
+      <legend>Weapon previous</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Weapon previous");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>7</row>
+      <col>5</col>
+      <halign>fill</halign>
+      <legend>Azimuth left</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Azimuth left");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>8</row>
+      <col>5</col>
+      <halign>fill</halign>
+      <legend>Azimuth right</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Azimuth right");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>9</row>
+      <col>5</col>
+      <halign>fill</halign>
+      <legend>Elevation up</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Elevation up");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>10</row>
+      <col>5</col>
+      <halign>fill</halign>
+      <legend>Elevation down</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Elevation down");
+        </script>
+      </binding>
+    </button>
+    <button>
+      <row>11</row>
+      <col>5</col>
+      <halign>fill</halign>
+      <legend>Missile Reject</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("Missile Reject");
+        </script>
+      </binding>
+    </button>
+  </group>
+
+  <group>
+    <empty>
+      <stretch>true</stretch>
+    </empty>
+    <layout>hbox</layout>
+
+    <button>
+      <legend>Remove assignment</legend>
+      <binding>
+        <command>nasal</command>
+        <script>
+          assignButton("None");
+        </script>
+      </binding>
+    </button>
+
+    <button>
+      <legend>Close</legend>
+      <default>true</default>
+      <key>Esc</key>
+      <binding>
+        <command>dialog-close</command>
+      </binding>
+    </button>
+    <empty>
+      <stretch>true</stretch>
+    </empty>
+  </group>
+
+</PropertyList>
