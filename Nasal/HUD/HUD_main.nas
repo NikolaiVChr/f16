@@ -1069,6 +1069,12 @@ append(obj.total, obj.speed_curr);
                  #cross                     : "instrumentation/nav[0]/heading-deg",
                  cross                     : "instrumentation/nav[0]/radials/target-auto-hdg-deg",
                  ins_knob                  : "f16/avionics/ins-knob",
+                 servAtt                   : "instrumentation/attitude-indicator/serviceable",
+                 servHead                  : "instrumentation/heading-indicator/serviceable",
+                 servTurn                  : "instrumentation/turn-indicator/serviceable",
+                 servSpeed                 : "instrumentation/airspeed-indicator/serviceable",
+                 servStatic                : "systems/static/serviceable",
+                 servPitot                 : "systems/pitot/serviceable",
                 };
 
         foreach (var name; keys(input)) {
@@ -1256,7 +1262,7 @@ append(obj.total, obj.speed_curr);
             props.UpdateManager.FromHashList(["texUp","pitch","roll","fpm","VV_x","VV_y","gear_down", "dgft", "drift"], 0.001, func(hdp)
                                       {
                                           obj.ladder.hide();
-                                          if (getprop("instrumentation/turn-indicator/serviceable")) {
+                                          if (hdp.servTurn) {
                                             obj.roll_pointer.setRotation (hdp.roll_rad);
                                           }
                                           if ((hdp.fpm != 2 and !hdp.gear_down) or hdp.dgft) {
@@ -1270,13 +1276,13 @@ append(obj.total, obj.speed_curr);
                                             #obj.ladder.show();
                                         
                                         var result = HudMath.getDynamicHorizon(5,0.5,0.5,0.7,0.5,hdp.drift,-0.25);
-                                        if (getprop("instrumentation/turn-indicator/serviceable")) {
+                                        if (hdp.servTurn) {
                                             obj.h_rot.setRotation(result[1]);
                                             obj.zenith.setRotation(-result[1]);
                                             obj.nadir.setRotation(-result[1]);
                                         }
                                         obj.horizon_group.setTranslation(result[0]);#place it on bore
-                                        if (getprop("instrumentation/attitude-indicator/serviceable")) {
+                                        if (hdp.servAtt) {
                                             obj.ladder_group.setTranslation(result[2]);
                                         }
                                         obj.ladder_group.show();
@@ -1391,21 +1397,21 @@ append(obj.total, obj.speed_curr);
             props.UpdateManager.FromHashList(["calibrated", "GND_SPD", "HUD_VEL", "gear_down"], 0.5, func(hdp)
                                       {   
                                           # the real F-16 has calibrated airspeed as default in HUD.
-                                          var pitot = getprop("systems/pitot/serviceable") and getprop("systems/static/serviceable");
+                                          var pitot = hdp.servPitot and hdp.servStatic;
                                           if (hdp.HUD_VEL == 1 or hdp.gear_down) {
-                                            if (getprop("instrumentation/airspeed-indicator/serviceable")) {
+                                            if (hdp.servSpeed) {
                                                 obj.ias_range.setTranslation(0, hdp.calibrated * ias_range_factor * pitot);
                                                 obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.calibrated));
                                             }
                                             obj.speed_type.setText("C");
                                           } elsif (hdp.HUD_VEL == 0) {
-                                            if (getprop("instrumentation/airspeed-indicator/serviceable")) {
+                                            if (hdp.servSpeed) {
                                                 obj.ias_range.setTranslation(0, hdp.TAS * ias_range_factor * pitot);
                                                 obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.TAS));
                                             }
                                             obj.speed_type.setText("T");
                                           } else {
-                                            if (getprop("instrumentation/airspeed-indicator/serviceable")) {
+                                            if (hdp.servSpeed) {
                                                 obj.ias_range.setTranslation(0, hdp.GND_SPD * ias_range_factor * pitot);                                            
                                                 obj.speed_curr.setText(!pitot?""~0:sprintf("%d",hdp.GND_SPD));
                                             }
@@ -1448,7 +1454,7 @@ append(obj.total, obj.speed_curr);
                                               obj.head_mask.setTranslation(-10+0.5*sx*0.695633,sy*0.1-20+105);
                                               obj.head_frame.setTranslation(0,105);
                                           }
-                                          if (getprop("instrumentation/heading-indicator/serviceable")) {
+                                          if (hdp.servHead) {
                                             obj.head_curr.setText(sprintf("%03d",head));
                                             obj.heading_tape.setTranslation (obj.heading_tape_position,obj.heading_tape_positionY);
                                           }
@@ -2234,7 +2240,7 @@ append(obj.total, obj.speed_curr);
                 .lineTo(me.peelTickRadius*math.sin(me.peelDeg*D2R), me.peelTickRadius*math.cos(me.peelDeg*D2R))
                 .setStrokeLineWidth(1)
                 .setColor(me.color);
-            if (getprop("instrumentation/turn-indicator/serviceable")) {
+            if (hdp.servTurn) {
                 me.orangePeelGroup.setRotation(-hdp.roll*D2R);
             }
             me.orangePeelGroup.show();
