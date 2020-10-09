@@ -407,7 +407,7 @@ var az_scan = func(notification) {
                     #var new_tgt = Target.new(c);# Richard, what is this for? Its important that every target that goes into completelist gets the setClass() called..
                     var u = Target.new(c);
 
-                    if (active_u != nil and u.get_Callsign() == active_u.get_Callsign()) {
+                    if (active_u != nil and u.get_Callsign() == active_u.get_Callsign() and (type != "carrier" or u.getCarrierSign() == active_u.getCarrierSign())) {
                         # replace selection with new, so it can be proper checked for still being visible to radar
                         u.inac_x = active_u.inac_x;
                         u.inac_y = active_u.inac_y;
@@ -641,14 +641,14 @@ var az_scan = func(notification) {
 #                if(awg9_trace)
 #                  print(scan_tgt_idx,";",u.get_Callsign()," out of azimuth ",u.deviation," field=",l_az_fld,"->",r_az_fld);
                 u.set_display(0);
-                if (active_u_callsign != nil and u.Callsign != nil and u.Callsign.getValue() == active_u_callsign) {
+                if (active_u_callsign != nil and u.Callsign != nil and u.Callsign.getValue() == active_u_callsign and (u.get_type() != MARINE or u.getCarrierSign() == active_u.getCarrierSign())) {
                     designate(nil);
                 }
             }
         } else {
             u.set_display(0);#richard, I added this line.
             #if (getprop("f16/avionics/dgft")) {
-                if (active_u_callsign != nil and u.Callsign != nil and u.Callsign.getValue() == active_u_callsign) {
+                if (active_u_callsign != nil and u.Callsign != nil and u.Callsign.getValue() == active_u_callsign and (u.get_type() != MARINE or u.getCarrierSign() == active_u.getCarrierSign())) {
                     designate(nil);
                 }
             #}
@@ -776,7 +776,7 @@ var az_scan = func(notification) {
 	swp_dir_last = swp_dir;
 
     # finally ensure that the active target is still in the targets list.
-    if (!containsV(tgts_list, active_u)) {
+    if (active_u != nil and !containsV(tgts_list, active_u)) {
         designate(nil);
     }
     if (active_u != nil and active_u.get_display() and getprop("controls/armament/master-arm") and active_u_callsign != nil and active_u_callsign != "") {
@@ -1086,7 +1086,7 @@ var TerrainManager = {
     me.itsAlt = math.abs(SelectCoord.alt())<0.001?0:SelectCoord.alt();
     call(func{
         if (me.maxDist*0.001 > 3.57*(math.sqrt(me.myOwnPos.alt())+math.sqrt(me.itsAlt))) {
-          # behind earth curvature
+          # behind earth curvature          
           return FALSE;
         }
     },nil,nil,var err =[]);
@@ -1110,7 +1110,7 @@ var TerrainManager = {
                me.maxDist = me.myOwnPos.direct_distance_to(SelectCoord)-1;
                me.terrainDist = me.myOwnPos.direct_distance_to(me.terrain);
                if (me.terrainDist < me.maxDist) {
-                 #print("terrain found between the planes");
+                 #print("terrain found between the planes "~node.getPath());
                  return FALSE;
        } else {
                   return TRUE;
@@ -1586,6 +1586,24 @@ var Target = {
             return 1;
         }
         return 0;
+    },
+    getCarrierSign: func {
+        # When there is 2 Eisenhovers this can tell them apart:
+        var s = me.propNode.getNode("sign");
+        if (s != nil) {
+            s = s.getValue();
+            if (s=="") {
+                s = nil;
+            }
+            if (s != nil) {
+                var i = me.propNode.getNode("id");
+                if (i != nil) {
+                    i = i.getValue();
+                    s = s ~ i;
+                }
+            }
+        }
+        return s;
     },
     get_az_field : func {
         return 60.0;
