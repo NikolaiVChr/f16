@@ -1078,8 +1078,8 @@ var MFD_Device =
             }
             me.exp_modi = exp?0.25:1;
             
-            me.slew_x = getprop("controls/displays/cursor-slew-x[" ~ me.model_index ~ "]")*me.exp_modi;
-            me.slew_y = -getprop("controls/displays/cursor-slew-y[" ~ me.model_index ~ "]")*me.exp_modi;
+            me.slew_x = getprop("controls/displays/target-management-switch-x[" ~ me.model_index ~ "]")*me.exp_modi;
+            me.slew_y = -getprop("controls/displays/target-management-switch-y[" ~ me.model_index ~ "]")*me.exp_modi;
             
             #me.dt = math.min(noti.ElapsedSeconds - me.elapsed, 0.05);
             me.dt = noti.ElapsedSeconds - me.elapsed;

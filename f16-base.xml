@@ -1067,7 +1067,7 @@ There is also small changes in tail for different variants with and without brak
                 <desc>slew</desc>
                 <binding>
                     <command>property-assign</command>
-                    <property>controls/displays/target-management-switch-x</property>
+                    <property>controls/displays/cursor-slew-x</property>
                     <value type="int">-1</value>
                 </binding>
                 <mod-ctrl>
@@ -1080,7 +1080,7 @@ There is also small changes in tail for different variants with and without brak
                 <mod-up>
                     <binding>
                         <command>property-assign</command>
-                        <property>controls/displays/target-management-switch-x</property>
+                        <property>controls/displays/cursor-slew-x</property>
                         <value type="int">0</value>
                     </binding>
                     <binding>
@@ -1097,7 +1097,7 @@ There is also small changes in tail for different variants with and without brak
                 <desc>slew</desc>
                 <binding>
                     <command>property-assign</command>
-                    <property>controls/displays/target-management-switch-x</property>
+                    <property>controls/displays/cursor-slew-x</property>
                     <value type="int">1</value>
                 </binding>
                 <mod-ctrl>
@@ -1110,7 +1110,7 @@ There is also small changes in tail for different variants with and without brak
                 <mod-up>
                     <binding>
                         <command>property-assign</command>
-                        <property>controls/displays/target-management-switch-x</property>
+                        <property>controls/displays/cursor-slew-x</property>
                         <value type="int">0</value>
                     </binding>
                     <binding>
@@ -1127,7 +1127,7 @@ There is also small changes in tail for different variants with and without brak
                 <desc>slew</desc>
                 <binding>
                     <command>property-assign</command>
-                    <property>controls/displays/target-management-switch-y</property>
+                    <property>controls/displays/cursor-slew-y</property>
                     <value type="int">-1</value>
                 </binding>
                 <mod-ctrl>
@@ -1140,7 +1140,7 @@ There is also small changes in tail for different variants with and without brak
                 <mod-up>
                     <binding>
                         <command>property-assign</command>
-                        <property>controls/displays/target-management-switch-y</property>
+                        <property>controls/displays/cursor-slew-y</property>
                         <value type="int">0</value>
                     </binding>
                     <binding>
@@ -1157,7 +1157,7 @@ There is also small changes in tail for different variants with and without brak
                 <desc>slew</desc>
                 <binding>
                     <command>property-assign</command>
-                    <property>controls/displays/target-management-switch-y</property>
+                    <property>controls/displays/cursor-slew-y</property>
                     <value type="int">1</value>
                 </binding>
                 <mod-ctrl>
@@ -1170,7 +1170,7 @@ There is also small changes in tail for different variants with and without brak
                 <mod-up>
                     <binding>
                         <command>property-assign</command>
-                        <property>controls/displays/target-management-switch-y</property>
+                        <property>controls/displays/cursor-slew-y</property>
                         <value type="int">0</value>
                     </binding>
                     <binding>
@@ -1891,15 +1891,15 @@ There is also small changes in tail for different variants with and without brak
             <!-- declutter -->
         </HUD>
         <displays>
-            <cursor-slew-x type="float">0</cursor-slew-x>
+            <cursor-slew-x type="float">0</cursor-slew-x><!-- These 3 names cannot be changed, they are shared with other aircraft types so people have same stick binding -->
             <cursor-slew-y type="float">0</cursor-slew-y>
-            <cursor-slew-x n="1" type="float">0</cursor-slew-x>
-            <cursor-slew-y n="1" type="float">0</cursor-slew-y>
+            <cursor-click type="bool">false</cursor-click>
             <display-management-switch-x type="float">0</display-management-switch-x>
             <display-management-switch-y type="float">0</display-management-switch-y>
             <target-management-switch-x type="float">0</target-management-switch-x>
             <target-management-switch-y type="float">0</target-management-switch-y>
-            <cursor-click type="bool">false</cursor-click>
+            <target-management-switch-x n="1" type="float">0</target-management-switch-x>
+            <target-management-switch-y n="1" type="float">0</target-management-switch-y>            
         </displays>
         <indicators />
         <lighting>

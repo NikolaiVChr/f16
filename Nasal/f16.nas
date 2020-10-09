@@ -1548,8 +1548,8 @@ var SOI = int(rand() * 3)+1; # 1 to 3
 var MFDControlsNodes = {
 	dmsX: props.globals.getNode("controls/displays/display-management-switch-x"),
 	dmsY: props.globals.getNode("controls/displays/display-management-switch-y"),
-	tgtX: props.globals.getNode("controls/displays/target-management-switch-x"),
-	tgtY: props.globals.getNode("controls/displays/target-management-switch-y"),
+	tgtX: props.globals.getNode("controls/displays/cursor-slew-x"),
+	tgtY: props.globals.getNode("controls/displays/cursor-slew-y"),
 };
 
 setlistener("/controls/displays/display-management-switch-x", func() {
@@ -1557,9 +1557,9 @@ setlistener("/controls/displays/display-management-switch-x", func() {
 	if (MFDControlsNodes.dmsX.getValue() == 0) { return; }
 }, 0, 0);
 
-setlistener("controls/displays/target-management-switch-x", func() {
+setlistener("controls/displays/cursor-slew-x", func() {
 	if (SOI == 1) { return; }
-	setprop("controls/displays/cursor-slew-x[" ~ (SOI - 2) ~ "]", MFDControlsNodes.tgtX.getValue());
+	setprop("controls/displays/target-management-switch-x[" ~ (SOI - 2) ~ "]", MFDControlsNodes.tgtX.getValue());
 }, 0, 0);
 
 setlistener("controls/displays/display-management-switch-y", func() {
@@ -1578,9 +1578,9 @@ setlistener("controls/displays/display-management-switch-y", func() {
 	}
 }, 0, 0);
 
-setlistener("controls/displays/target-management-switch-y", func() {
+setlistener("controls/displays/cursor-slew-y", func() {
 	if (SOI == 1) { return; }
-	setprop("controls/displays/cursor-slew-y[" ~ (SOI - 2) ~ "]", MFDControlsNodes.tgtY.getValue());
+	setprop("controls/displays/target-management-switch-y[" ~ (SOI - 2) ~ "]", MFDControlsNodes.tgtY.getValue());
 }, 0, 0);
 
 setlistener("controls/displays/cursor-click", func() {
@@ -1599,6 +1599,15 @@ setlistener("f16/engine/cutoff-release-lever", func() {
 	}
 }, 0, 0);
 
+var setup_custom_stick_bindings = func {
+  call(func {
+      append(joystick.buttonBindings, joystick.NasalHoldButton.new  ("Cursor Click", 'setprop("controls/displays/cursor-click",1);', 'setprop("controls/displays/cursor-click",0);'));
+      append(joystick.axisBindings,   joystick.PropertyScaleAxis.new("Cursor Vertical", "/controls/displays/cursor-slew-y"));
+      append(joystick.axisBindings,   joystick.PropertyScaleAxis.new("Cursor Horizontal", "/controls/displays/cursor-slew-x"));
+  },nil,var err=[]);
+  var dlg = gui.Dialog.new("/sim/gui/dialogs/button-axis-config/dialog", "Aircraft/f16/gui/dialogs/button-axis-config.xml", "button-axis-config");
+  var dlg = gui.Dialog.new("/sim/gui/dialogs/button-config/dialog", "Aircraft/f16/gui/dialogs/button-config.xml", "button-config");
+}
 
 
 # EPU pin handler
@@ -1644,6 +1653,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     fail.init();
     awg_9.loopDGFT();
     eng.JFS.init();
+    setup_custom_stick_bindings();
     setprop("consumables/fuel/tank[6]/capacity-gal_us",0);
     setprop("consumables/fuel/tank[7]/capacity-gal_us",0);
     setprop("consumables/fuel/tank[8]/capacity-gal_us",0);
