@@ -309,9 +309,7 @@ return;
 			# our radar is scaning or is in stanby. Don't if we are a back-seater.
 		}
         if (our_radar_stanby) {
-            armament.contact = nil;
-            active_u = nil;
-            active_u_callsign = nil;
+            designate(nil);
         }
 	} elsif ( size(tgts_list) > 0 ) {
 		foreach( u; tgts_list ) {
@@ -388,12 +386,7 @@ var az_scan = func(notification) {
 
             if (active_u == nil or active_u.get_Callsign() != active_u_callsign)
             {
-                if (active_u != nil) {
-                    active_u = nil;
-                    print(active_u_callsign);
-                    active_u_callsign = nil;
-                }
-                armament.contact = active_u;
+                designate(nil);
             }
 
             foreach( var c; raw_list )
@@ -784,7 +777,7 @@ var az_scan = func(notification) {
 
     # finally ensure that the active target is still in the targets list.
     if (!containsV(tgts_list, active_u)) {
-        active_u = nil; armament.contact = active_u; active_u_callsign = nil;
+        designate(nil);
     }
     if (active_u != nil and active_u.get_display() and getprop("controls/armament/master-arm") and active_u_callsign != nil and active_u_callsign != "") {
         setprop("sim/multiplay/generic/string[6]", left(md5(active_u_callsign), 4));
@@ -1084,7 +1077,7 @@ var TerrainManager = {
     var SelectCoord = geo.Coord.new().set_xyz(x, y, z);
 
     if (node.getName() == "carrier") {
-        # AI carriers are sunk beneath the water, so checking terrain would yield false.
+        # AI carriers are tall, so increasing their alt
         SelectCoord.set_alt(2);
         #return TRUE;
     }        
