@@ -204,11 +204,11 @@ var autostartengine = func(running) {
   setprop("controls/lighting/ext-lighting-panel/form-knob", 0);
   setprop("controls/lighting/ext-lighting-panel/master", 1);
 
-  setprop("controls/lighting/lighting-panel/console-flood-knob", 0.6);
-  setprop("controls/lighting/lighting-panel/pri-inst-pnl-knob", 0.6);
-  setprop("controls/lighting/lighting-panel/flood-inst-pnl-knob", 0.6);
-  setprop("controls/lighting/lighting-panel/console-primary-knob", 0.6);
-  setprop("controls/lighting/lighting-panel/data-entry-display", 0.6);
+  setprop("controls/lighting/lighting-panel/console-flood-knob", 0.3);
+  setprop("controls/lighting/lighting-panel/pri-inst-pnl-knob", 0.5);
+  setprop("controls/lighting/lighting-panel/flood-inst-pnl-knob", 0.1);
+  setprop("controls/lighting/lighting-panel/console-primary-knob", 0.2);
+  setprop("controls/lighting/lighting-panel/data-entry-display", 1.0);
 
   setprop("instrumentation/radar/radar-standby", 0);
   setprop("instrumentation/comm[0]/volume",1);
