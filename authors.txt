@@ -117,8 +117,10 @@ Enrico Castaldi "Spectre"
 
 PH-JAKE
 - Refactored autostart
-- Bug fixes and improvements
+- EPU rework
 - Knob selection for draining FWD/AFT tanks
+- Fuel indicator updates
+- Bug fixes and improvements
 
 FGUK
 - Sounds
