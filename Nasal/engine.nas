@@ -12,7 +12,8 @@ var cutoff       = props.globals.getNode("controls/engines/engine[0]/cutoff", 0)
 var feed         = props.globals.getNode("f16/engine/feed", 0);
 var running      = props.globals.getNode("engines/engine[0]/running", 0);
 var fuel         = props.globals.getNode("consumables/fuel/total-fuel-lbs", 0);
-var batt          = props.globals.getNode("fdm/jsbsim/elec/bus/batt-1", 0);
+var batt         = props.globals.getNode("fdm/jsbsim/elec/bus/batt-1", 0);
+var speedUp      = props.globals.getNode("sim/speed-up");
 
 
 var accu_psi_max = 3000;
@@ -37,7 +38,7 @@ var JFS = {
 	
 	loop: func {
 		me.elapsed = systime();
-		me.dt = me.elapsed - me.elapsed_last;
+		me.dt = (me.elapsed - me.elapsed_last)*speedUp.getValue();
 		
 		me.start_switch = jfs_start.getValue();
 		me.wow = wow.getValue();
