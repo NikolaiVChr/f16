@@ -2983,6 +2983,9 @@ value. 18000=standard US transition altitude -->
         <tacview>
             <file>Aircraft/f16/Nasal/tacview.nas</file>
         </tacview>
+        <controls_f16>
+            <file>Aircraft/f16/Nasal/controls_f16.nas</file>
+        </controls_f16>
     </nasal>
     
 </PropertyList>
