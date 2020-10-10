@@ -1400,14 +1400,14 @@
         <factor>40</factor>
         <offset-deg>-20</offset-deg>
         <center>
-          <x-m>0.620419</x-m>
-          <y-m>-0.459266</y-m>
-          <z-m>0.007677</z-m>
+            <x-m>0.620419</x-m>
+            <y-m>-0.459266</y-m>
+            <z-m>0.007677</z-m>
         </center>
         <axis>
-          <x>-1</x>
-          <y>0</y>
-          <z>0</z>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
         </axis>
         <increase>
             <binding>
@@ -1442,15 +1442,15 @@
         <interval-sec>0.75</interval-sec>
         <factor>40</factor>
         <offset-deg>-20</offset-deg>
-        <!--center>
-          <x-m>0.620419</x-m>
-          <y-m>-0.459266</y-m>
-          <z-m>0.007677</z-m>
-        </center-->
+        <center>
+            <x-m>0.63494</x-m>
+            <y-m>-0.53211</y-m>
+            <z-m>0.007677</z-m>
+        </center>
         <axis>
-          <x>-1</x>
-          <y>0</y>
-          <z>0</z>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
         </axis>
         <increase>
             <binding>
@@ -2199,14 +2199,14 @@
         <drag-direction>vertical</drag-direction>
         <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
         <center>
-          <x-m>0.65821</x-m>
-          <y-m>-0.40929</y-m>
-          <z-m>0.00661</z-m>
+            <x-m>0.65821</x-m>
+            <y-m>-0.40929</y-m>
+            <z-m>0.00661</z-m>
         </center>
         <axis>
-          <x>1</x>
-          <y>0</y>
-          <z>0</z>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
         </axis>
         <increase>
             <binding>
@@ -2238,15 +2238,15 @@
         <offset-deg>-20</offset-deg>
         <drag-direction>vertical</drag-direction>
         <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
-        <!--center>
-          <x-m>0.65821</x-m>
-          <y-m>-0.40929</y-m>
-          <z-m>0.00661</z-m>
-        </center-->
+        <center>
+            <x-m>0.69518</x-m>
+            <y-m>-0.45127</y-m>
+            <z-m>0.00661</z-m>
+        </center>
         <axis>
-          <x>1</x>
-          <y>0</y>
-          <z>0</z>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
         </axis>
         <increase>
             <binding>
