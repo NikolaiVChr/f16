@@ -621,7 +621,11 @@ var dataEntryDisplay = {
 	}, 
 	
 	updateINSM: func() {
-	
+		me.text[0] = sprintf("         INSM           ");
+		me.text[1] = sprintf("                        ");
+		me.text[2] = sprintf("                        ");
+		me.text[3] = sprintf("                        ");
+		me.text[4] = sprintf("                        ");
 	}, 
 	
 	updateLaser: func() {
@@ -660,7 +664,11 @@ var dataEntryDisplay = {
 	}, 
 	
 	updateDRNG: func() {
-	
+		me.text[0] = sprintf("         DRNG           ");
+		me.text[1] = sprintf("                        ");
+		me.text[2] = sprintf("                        ");
+		me.text[3] = sprintf("                        ");
+		me.text[4] = sprintf("                        ");
 	}, 
 	
 	bullMode: 1,
