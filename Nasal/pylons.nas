@@ -155,6 +155,8 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 	pylonI = stations.InternalStation.new("Internal gun mount", 9, [pylonSets.mm20], props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[10]",1));
 	
 	pylon1.forceRail = 1;# set the missiles mounted on this pylon on a rail.
+	pylon2.forceRail = 1;
+	pylon8.forceRail = 1;
 	pylon9.forceRail = 1;
 
     var pylons = [pylon1,pylon2,pylon3,pylon4,pylon5,pylon6,pylon7,pylon8,pylon9,pylonI,pylon10,pylon11];
