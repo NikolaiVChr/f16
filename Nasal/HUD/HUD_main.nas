@@ -1702,10 +1702,10 @@ append(obj.total, obj.speed_curr);
         
         me.Vy   =    hdp.current_view_x_offset_m;
             
-        me.pixelPerMeterX = (340*0.695633)/0.15627;
+        me.pixelPerMeterX = (340*0.695633)/0.15848;
         me.pixelPerMeterY = 260/(me.Hz_t-me.Hz_b);
         
-        me.pixelside = me.pixelPerMeterY*me.Vy;
+        me.pixelside = me.pixelPerMeterX*me.Vy;
         
         me.svg.setTranslation(me.pixelside, 0);
         me.custom.setTranslation(me.pixelside, 0);
