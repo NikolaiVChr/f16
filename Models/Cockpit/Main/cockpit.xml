@@ -79,9 +79,33 @@
     </effect>
 
  <model>
-  <name>HUD</name>
+  <name>HUDa</name>
   <path>Aircraft/f16/Models/Cockpit/hud.xml</path>
  </model>
+ 
+ <model>
+  <name>HUDb</name>
+  <path>Aircraft/f16/Models/Cockpit/hud_basic.xml</path>
+ </model>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>HUDa</object-name>
+  <condition>
+      <not>
+          <property>f16/avionics/hud-basic</property>
+      </not>
+  </condition>
+ </animation>
+ 
+  <animation>
+  <type>select</type>
+  <object-name>HUDb</object-name>
+  <condition>
+          <property>f16/avionics/hud-basic</property>
+  </condition>
+ </animation>
+
 
  <model>
   <name>chair</name>

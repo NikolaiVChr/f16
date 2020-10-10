@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>hud.ac</path>
+ 
+ <offsets>
+   <x-m> 0.013</x-m>
+   <y-m> 0.000</y-m>
+   <z-m> 0.010</z-m>
+  </offsets>
+
+
+ <!--<animation>
+  <object-name>HUDImage2</object-name>
+  <type>material</type>
+  <emission>
+  	<factor-prop>f16/avionics/hud-brt</factor-prop>
+   <red-prop>f16/avionics/hud-power</red-prop>
+   <green-prop>f16/avionics/hud-power</green-prop>
+   <blue-prop>f16/avionics/hud-power</blue-prop>
+  </emission>
+ </animation>-->
+  
+  <!--<animation>
+  <object-name>HUDImage2</object-name>
+  <type>material</type>
+  <condition>
+        <property>sim/rendering/shaders/skydome</property>
+  </condition>
+  <transparency>
+   <factor-prop>f16/avionics/hud-brt</factor-prop>
+   <factor>1</factor>
+   <offset>0</offset>
+  </transparency>
+  <emission>
+  	<factor-prop>f16/avionics/hud-brt</factor-prop>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+  </emission>
+ </animation>-->
+ 
+ <effect>
+  <inherits-from>Effects/model-transparent</inherits-from>
+  <object-name>HUDedge</object-name>
+  <object-name>HUDImage2</object-name>
+ </effect>
+
+</PropertyList>
