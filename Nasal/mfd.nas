@@ -267,10 +267,6 @@ var PFD_Device =
             if (me.current_page != nil)
             {
                 me.current_page.notifyButton(button_id);
-                if(button_id==19 and getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
-                    screen.log.write("Click BACK to get back to cockpit view",1,1,1);
-                    setprop("sim/current-view/view-number",12);
-                }
 
             }
             else

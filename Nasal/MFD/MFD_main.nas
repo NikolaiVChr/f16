@@ -891,6 +891,11 @@ var MFD_Device =
                     setprop("instrumentation/radar/mode-hd-switch", me.model_index);
                 } elsif (eventi == 15) {
                     swap();
+                } elsif (eventi == 19) {
+                    if(getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
+                        screen.log.write("Click BACK to get back to cockpit view",1,1,1);
+                        setprop("sim/current-view/view-number",12);
+                    }
                 }
             }
 
@@ -1928,6 +1933,11 @@ var MFD_Device =
                     me.setSelection(me.ppp.buttons[17], me.ppp.buttons[16], 16);
                 } elsif (eventi == 15) {
                     swap();
+                } elsif (eventi == 19) {
+                    if(getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
+                        screen.log.write("Click BACK to get back to cockpit view",1,1,1);
+                        setprop("sim/current-view/view-number",12);
+                    }
                 }
 # Menu Id's
 #  CRM
@@ -2268,6 +2278,11 @@ var MFD_Device =
                     me.setSelection(me.ppp.buttons[18], me.ppp.buttons[16], 16);
                 } elsif (eventi == 15) {
                     swap();
+                } elsif (eventi == 19) {
+                    if(getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
+                        screen.log.write("Click BACK to get back to cockpit view",1,1,1);
+                        setprop("sim/current-view/view-number",12);
+                    }
                 }
 # Menu Id's
 #  CRM
@@ -2851,6 +2866,11 @@ var MFD_Device =
                     me.root.cpl.setText(MFD_Device.get_HSD_coupled()==1?"CPL":"DCPL");
                 } elsif (eventi == 15) {
                     swap();
+                } elsif (eventi == 19) {
+                    if(getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
+                        screen.log.write("Click BACK to get back to cockpit view",1,1,1);
+                        setprop("sim/current-view/view-number",12);
+                    }
                 }
             }
 
