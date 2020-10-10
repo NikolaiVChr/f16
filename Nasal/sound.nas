@@ -328,6 +328,9 @@ setlistener("controls/lighting/lighting-panel/flood-inst-pnl-knob", click3, nil,
 setlistener("controls/lighting/lighting-panel/pri-inst-pnl-knob", click3, nil, 0);
 setlistener("controls/lighting/lighting-panel/data-entry-display", click3, nil, 0);
 setlistener("controls/lighting/lighting-panel/console-primary-knob", click3, nil, 0);
+setlistener("controls/flight/rudder-trim", click3, nil, 0);
+setlistener("controls/flight/elevator-trim", click3, nil, 0);
+setlistener("controls/flight/aileron-trim", click3, nil, 0);
 setlistener("f16/avionics/indv-ltg-brightness-switch", click2, nil, 0);
 setlistener("f16/avionics/mal-ind-lts-brightness-switch", button2, nil, 0);
 setlistener("f16/avionics/nvis", button2, nil, 0);
