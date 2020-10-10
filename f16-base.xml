@@ -1736,6 +1736,7 @@ value. 18000=standard US transition altitude -->
 			<tacan-receive-only type="bool">1</tacan-receive-only>
 			<uhf-radio-display-test type="bool">false</uhf-radio-display-test>
 			<vvi-indicated-speed-fps type="double">0</vvi-indicated-speed-fps>
+            <hud-basic type="bool">false</hud-basic>
             <caution>
                 <master type="bool">false</master>
                 <master-btn type="bool">false</master-btn>
