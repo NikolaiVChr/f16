@@ -110,20 +110,21 @@
 	</group>
 
 	<hrule/>
-
-	<text><label>Note: When a scenario is running click stop before starting another.</label></text>
-	<text><label>To score a hit, aim for a second with the HUD bore symbol on a bandit.</label></text>
-	<text><label>Veterans will have transponder off, so wont all the time be in the RWR.</label></text>
+	<text><halign>left</halign><label>Levels description:</label></text>
+	<text><halign>left</halign><label>0 (BFM) - One bandit, one wingman (beginners)</label></text>
+	<text><halign>left</halign><label>1 (BFM) - One bandit (beginner)</label></text>
+	<text><halign>left</halign><label>2 (BFM) - One bandit (experienced)</label></text>
+	<text><halign>left</halign><label>3 (BFM) - One bandit (veteran)</label></text>
+	<text><halign>left</halign><label>4 (ACM) - Two bandits (beginners)</label></text>
+	<text><halign>left</halign><label>5 (ACM) - Two bandits (veterans)</label></text>
+	<text><halign>left</halign><label>6 (ACM) - Three bandits, one wingman (veterans)</label></text>
+	<empty><stretch>1</stretch></empty>
+	<text><halign>left</halign><label>The Automat opponent(s) will fly Block 52.</label></text>
 	<hrule/>
 
-	<text><label>The opponent(s) will fly Block 52.</label></text>
-	<text><label>0 - One bandit, one wingman (beginners)</label></text>
-	<text><label>1 - One bandit (beginner)</label></text>
-	<text><label>2 - One bandit (experienced)</label></text>
-	<text><label>3 - One bandit (veteran)</label></text>
-	<text><label>4 - Two bandits (beginners)</label></text>
-	<text><label>5 - Two bandits (veterans)</label></text>
-	<text><label>6 - Three bandits, one wingman (veterans)</label></text>
+	<text><halign>left</halign><label>Note: When a scenario is running click stop before starting another.</label></text>
+	<text><halign>left</halign><label>To score a hit, aim for a second with the HUD bore symbol on a bandit.</label></text>
+	<text><halign>left</halign><label>Veterans will have transponder off, so won't be in the RWR all the time.</label></text>
 
 	<empty><stretch>1</stretch></empty>
 
