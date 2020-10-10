@@ -1,8 +1,6 @@
 #
 #   State and autostart (and repair and reinit management)
 
-var inAutostart = 0;
-
 var enableViews = func {
   setprop("sim/view[101]/enabled",1);# Missile view
   setprop("sim/view[102]/enabled",1);# GoPro #1 View
@@ -10,6 +8,12 @@ var enableViews = func {
   setprop("sim/view[104]/enabled",1);# GoPro #3 View
   setprop("sim/view[105]/enabled",0);# TGP
 }
+
+###################################################################################################
+# REPAIR
+###################################################################################################
+
+var inAutostart = 0;
 
 var repair = func {
   #
@@ -92,19 +96,9 @@ var repair4 = func {
     fail.fail_reset();# Hmm, should this not be in repair2 also? ~Leto
 }
 
-var autostart_listener = 0;
-
-var autostartfail = func {
-  removelistener(autostart_listener);
-  screen.log.write("Engine start failed.");
-  print("Auto engine start failed.");
-  setprop("f16/engine/jfs-start-switch",0);
-  setprop("f16/engine/cutoff-release-lever",1);
-  inAutostart = 0;
-}
-
-var autostart_watchdog = maketimer(1, autostartfail);
-autostart_watchdog.singleShot = 1;
+###################################################################################################
+# AUTOSTART
+###################################################################################################
 
 var autostart = func {
   #
@@ -147,32 +141,33 @@ var autostartelec = func {
 
   # Wait for the JFS to spool up
   autostart_watchdog.restart(45);
-  autostart_listener = setlistener("engines/engine[0]/n2", autostartjfs);
+  autostart_jfs.start();
 }
 
-var autostartjfs = func(N2) {
+var autostartjfs = func {
   # Wait for 20% core speed
-  if (N2.getValue() < 20)
+  if (getprop("engines/engine[0]/n2") < 20)
     return;
 
   # Check f16/avionics/caution/sec too?
     
-  removelistener(autostart_listener);
+  autostart_jfs.stop();
 
   setprop("f16/engine/cutoff-release-lever",0);
 
   # Wait for the engine to spool up
   autostart_watchdog.restart(25);
-  autostart_listener = setlistener("engines/engine[0]/running", autostartengine);
+  autostart_engine.start();
 }
 
-var autostartengine = func(running) {
+var autostartengine = func {
   # Wait for engine to run
-  if (running.getValue() != 1)
+  if (getprop("engines/engine[0]/running") != 1)
     return;
 
+  autostart_engine.stop();
+
   autostart_watchdog.stop();
-  removelistener(autostart_listener);
 
   setprop("f16/avionics/power-mmc",1);
   setprop("f16/avionics/power-st-sta",1);
@@ -224,6 +219,27 @@ var autostartengine = func(running) {
   inAutostart = 0;
 }
 
+var autostartfail = func {
+  autostart_jfs.stop();
+  autostart_engine.stop();
+  screen.log.write("Engine start failed.");
+  print("Auto engine start failed.");
+  setprop("f16/engine/jfs-start-switch",0);
+  setprop("f16/engine/cutoff-release-lever",1);
+  inAutostart = 0;
+}
+
+var autostart_watchdog = maketimer(1, autostartfail);
+autostart_watchdog.singleShot = 1;
+
+var autostart_jfs = maketimer(1, autostartjfs);
+
+var autostart_engine = maketimer(1, autostartengine);
+
+##################################################################################################
+# Cold and Dark
+##################################################################################################
+
 var coldndark = func {
   #
   # Called from GUI dialog
@@ -274,6 +290,10 @@ var coldndark = func {
   setprop("f16/engine/cutoff-release-lever",1);
   setprop("f16/engine/jfs-start-switch",0);
 };
+
+##################################################################################################
+# Re-initialize
+##################################################################################################
 
 var re_init_listener = setlistener("/sim/signals/reinit", func {
   if (getprop("/sim/signals/reinit") != 0) {
