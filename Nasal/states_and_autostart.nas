@@ -110,12 +110,24 @@ var autostart = func {
   inAutostart = 1;
   screen.log.write("Starting, standby..");
 
+  # If on the ground put in the EPU pin
+  if (getprop("gear/gear/wow")) {
+    setprop("fdm/jsbsim/elec/switches/epu-pin",1);
+  }
+
   setprop("f16/engine/feed",1);
   setprop("fdm/jsbsim/elec/switches/epu",1);
   setprop("fdm/jsbsim/elec/switches/epu-cover",0);
   setprop("controls/ventilation/airconditioning-enabled",1);
   setprop("controls/ventilation/airconditioning-source",1);
   setprop("f16/avionics/pbg-switch",0);
+  
+  # See if the engine is already running, then we can skip this part
+  if (getprop("engines/engine[0]/running") == 1) {
+      autostartengine();
+      return;
+  }
+
   setprop("f16/engine/cutoff-release-lever",1);
   
   setprop("fdm/jsbsim/elec/switches/main-pwr",1);
@@ -168,6 +180,10 @@ var autostartengine = func {
   autostart_engine.stop();
 
   autostart_watchdog.stop();
+
+  # Make sure power is set to main and EPU is not inhibited
+  setprop("fdm/jsbsim/elec/switches/main-pwr",2);
+  setprop("fdm/jsbsim/elec/switches/epu-pin",0);
 
   setprop("f16/avionics/power-mmc",1);
   setprop("f16/avionics/power-st-sta",1);
@@ -248,6 +264,7 @@ var coldndark = func {
   setprop("fdm/jsbsim/fcs/canopy-engage", 1);
   setprop("fdm/jsbsim/elec/switches/epu",0);
   setprop("fdm/jsbsim/elec/switches/epu-cover",1);
+  setprop("fdm/jsbsim/elec/switches/epu-pin",1);
   eng.JFS.start_switch_last = 0;# bypass check for switch was in OFF
   setprop("fdm/jsbsim/elec/switches/main-pwr",0);
   setprop("f16/avionics/power-rdr-alt",0);
