@@ -37,7 +37,7 @@ J Maverick 16
 - Addition and implementation of weapons, stores
 - 3D works (pilot model, weapons/stores, cockpit, exterior, misc)
 - RWR/RCS data research and update
-- Block-specific changes
+- Block-specific changes (including CCIP conversion of Block 40/42)
 - MFD updates
 - Effects improvement
 - Systems tweaking
@@ -120,6 +120,7 @@ PH-JAKE
 - EPU rework
 - Knob selection for draining FWD/AFT tanks
 - Fuel indicator updates
+- Block 50 left panel animations
 - Bug fixes and improvements
 
 FGUK

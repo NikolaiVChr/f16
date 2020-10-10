@@ -3,10 +3,10 @@
 <PropertyList include="f16-base.xml">
 
  <sim>
-  <description>General Dynamics F-16CG Block 42</description>
+  <description>General Dynamics F-16CM Block 42</description>
   <long-description>
-   The General Dynamics F-16CG Fighting Falcon (or Night Falcon) is a single-engine supersonic multirole fighter aircraft originally developed by General Dynamics (now Lockheed Martin) for the United States Air Force (USAF). Powered by F110-GE-100. Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
-   The Fighting Falcon has key features including a frameless bubble canopy for better visibility, side-mounted control stick to ease control while maneuvering, a seat reclined 30 degrees to reduce the effect of g-forces on the pilot, and the first use of a relaxed static stability/fly-by-wire flight control system which helps to make it a nimble aircraft. Block 40/42 introduced LANTIRN pods, GPS, upgraded APG-68 radar,ATF, PBG and more.
+   The General Dynamics F-16CM Fighting Falcon (or Night Falcon) is a single-engine supersonic multirole fighter aircraft originally developed by General Dynamics (now Lockheed Martin) for the United States Air Force (USAF). Powered by F110-GE-100. Designed as an air superiority day fighter, it evolved into a successful all-weather multirole aircraft.
+   The Fighting Falcon has key features including a frameless bubble canopy for better visibility, side-mounted control stick to ease control while maneuvering, a seat reclined 30 degrees to reduce the effect of g-forces on the pilot, and the first use of a relaxed static stability/fly-by-wire flight control system which helps to make it a nimble aircraft. Block 40/42 introduced LANTIRN pods, GPS, upgraded APG-68 radar, ATF and more. The Common Configuration Implementation Program (CCIP) is a modernization effort that seeks to standardize all USAF Block 40/42/50/52 F-16s to a common Block 50/52-based avionics software and hardware configuration. This includes new MMC, CMFD, IFF and Sniper ATP.
   </long-description>
   <author>Erik Hofman, Martin "Pegasus" Schmitt, Pensacola, Nikolai V. Chr., J Maverick 16, Richard Harrison, Josh Davidson, Martien Van Der P., Jonathan Redpath, Gary Brown, Justin Nicholson, Enrico Castaldi, Timi, Barszczisbad, PH-JAKE</author>
   <status>production</status>
@@ -167,7 +167,7 @@
   <menubar>
    <default>
     <menu n="101">
-     <label>F-16CG Block 42</label>
+     <label>F-16CM Block 42</label>
         <item n="10">
           <label>Payload presets</label>
           <binding>

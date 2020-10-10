@@ -3616,7 +3616,7 @@
         <condition>
           <greater-than>
                 <property>sim/variant-id</property>
-                <value>6</value><!--3-->
+                <value>3</value>
             </greater-than>
         </condition>
     </animation>
@@ -3671,7 +3671,7 @@
         <condition>
           	<less-than-equals>
                 <property>sim/variant-id</property>
-                <value>6</value><!--3-->
+                <value>3</value>
             </less-than-equals>
         </condition>
     </animation>
