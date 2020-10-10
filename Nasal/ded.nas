@@ -4,9 +4,13 @@ var tacanChanEF = EditableField.new("instrumentation/tacan/frequencies/selected-
 var tacanBandTF = toggleableField.new(["X", "Y"], "instrumentation/tacan/frequencies/selected-channel[4]");
 var ilsFrqEF = EditableField.new("instrumentation/nav[0]/frequencies/selected-mhz", "%6.2f", 6);
 var ilsCrsEF = EditableField.new("f16/crs-ils", "%3.0f", 3);
+var wingspanEF = EditableField.new("f16/avionics/eegs-wingspan-ft", "%3d", 3);
+var alowEF = EditableField.new("f16/settings/cara-alow", "%5d", 5);
+var mslFloorEF = EditableField.new("f16/settings/msl-floor", "%5d", 5);
+var laserCodeTgpEF = EditableField.new("f16/avionics/laser-code", "%4d", 4);
 
 var pTACAN = EditableFieldPage.new(0, [tacanChanEF,tacanBandTF,ilsFrqEF,ilsCrsEF]);
-var pALOW  = EditableFieldPage.new(1);
+var pALOW  = EditableFieldPage.new(1, [alowEF,mslFloorEF]);
 var pFACK  = EditableFieldPage.new(2);
 var pSTPT  = EditableFieldPage.new(3);
 var pCRUS  = EditableFieldPage.new(4);
@@ -20,7 +24,7 @@ var pDEST  = EditableFieldPage.new(9);
 var pBINGO = EditableFieldPage.new(10, [bingoEF]);
 var pVIP   = EditableFieldPage.new(11);
 var pNAV   = EditableFieldPage.new(12);
-var pMAN   = EditableFieldPage.new(13);
+var pMAN   = EditableFieldPage.new(13, [wingspanEF]);
 var pINS   = EditableFieldPage.new(14);
 var pEWS   = EditableFieldPage.new(15);
 var pMODE  = EditableFieldPage.new(16);
@@ -33,7 +37,7 @@ var pCORR  = EditableFieldPage.new(20);
 var pMAGV  = EditableFieldPage.new(21);
 var pOFP   = EditableFieldPage.new(22);
 var pINSM  = EditableFieldPage.new(23);
-var pLASR  = EditableFieldPage.new(24);
+var pLASR  = EditableFieldPage.new(24, [laserCodeTgpEF]);
 var pGPS   = EditableFieldPage.new(25);
 var pDRNG  = EditableFieldPage.new(26);
 var pBULL  = EditableFieldPage.new(27);
@@ -203,8 +207,8 @@ var dataEntryDisplay = {
 	updateAlow: func() {
 		me.text[0] = sprintf("         ALOW       %s  ",me.no);
 		me.text[1] = sprintf("                        ");
-		me.text[2] = sprintf("   CARA ALOW %5dFT    ", getprop("f16/settings/cara-alow"));
-		me.text[3] = sprintf("   MSL FLOOR %5dFT    ", getprop("f16/settings/msl-floor"));
+		me.text[2] = sprintf("   CARA ALOW %sFT   ", pALOW.vector[0].getText());
+		me.text[3] = sprintf("   MSL FLOOR %sFT   ", pALOW.vector[1].getText());
 		me.text[4] = sprintf("TF ADV (MSL)   400FT    ");
 	},	
 	
@@ -289,6 +293,9 @@ var dataEntryDisplay = {
 	},
 	
 	updateCrus: func() {
+		# Source: F-16 A/B Mid-Life Update Production Tape M1: Pilot's guide to new to new capabilities & cockpit enhancements.
+		# The page is at the moment fixed at RNG.
+		# The steerpoint is currently fixed at last steerpoint.
 		var fuel   = "";
 		var fp = flightplan();
 		var maxS = "";
@@ -300,9 +307,14 @@ var dataEntryDisplay = {
 				if (ete != nil and ete > 0) {
 					var pph = getprop("engines/engine[0]/fuel-flow_pph");
 					if (pph == nil) pph = 0;
-					fuel = sprintf("% 6dLBS",pph*(ete/3600));
+					var remain = getprop("consumables/fuel/total-fuel-lbs")-pph*(ete/3600);
+					fuel = sprintf("% 6dLBS",remain);
 					if (size(fuel)>9) {
-						fuel = "999999LBS";
+						if (remain > 0) {
+							fuel = "999999LBS";
+						} else {
+							fuel = "-99999LBS";
+						}
 					}
 				}
 			}
@@ -317,7 +329,7 @@ var dataEntryDisplay = {
 		winddir = sprintf("%03d\xc2\xb0",getprop("environment/wind-from-heading-deg"));
 		me.text[0] = sprintf("     CRUS  RNG  ",me.no);
 		me.text[1] = sprintf("     STPT  %s  ",maxS);
-		me.text[2] = sprintf("     FUEL %s",fuel);#fuel used to get to last steerpoint at current fuel consumption.
+		me.text[2] = sprintf("     FUEL %s",fuel);#fuel remaining after getting to last steerpoint at current fuel consumption.
 		me.text[3] = sprintf("                        ");
 		me.text[4] = sprintf("     WIND  %s %s",winddir,windkts);
 	},
@@ -489,7 +501,7 @@ var dataEntryDisplay = {
 	
 	updateMan: func() {
 		me.text[0] = sprintf("      MAN        %s",me.no);
-		me.text[1] = sprintf("WSPAN     30FT");
+		me.text[1] = sprintf("WSPAN   %sFT",pMAN.vector[0].getText());
 		me.text[2] = sprintf("      MBAL    ");
 		me.text[3] = sprintf("RNG      2000FT  ");
 		me.text[4] = sprintf("TOF      5.4SEC ");
@@ -615,7 +627,7 @@ var dataEntryDisplay = {
 	updateLaser: func() {
 		var code = getprop("f16/avionics/laser-code");
 		me.text[0] = sprintf("         LASER      %s   ",me.no);
-		me.text[1] = sprintf("   TGP CODE    %04d     ",code);
+		me.text[1] = sprintf("   TGP CODE   %s     ",pLASR.vector[0].getText());
 		me.text[2] = sprintf("   LST CODE    %04d     ",code);
 		me.text[3] = sprintf("   A-G: CMBT  A-A: TRNG ");
 		me.text[4] = sprintf("   LASER ST TIME  16 SEC");
