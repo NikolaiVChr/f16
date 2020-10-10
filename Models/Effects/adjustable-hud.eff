@@ -5,7 +5,7 @@
 
   <parameters>
 	<hud-brightness><use>f16/avionics/hud-sym</use></hud-brightness>
-   	<glass-tint type="vec4d" n="0"> 0.95 1.0 0.95 1.0</glass-tint>
+   	<glass-tint type="vec4d" n="0"> 0.75 1.0 0.75 1.0</glass-tint>
   	<overlay-color type="vec3d" n="0"> 0.8 1.0 0.9</overlay-color>
   	<!--<texture n="2">
 		<image>Aircraft/f16/Effects/hud-mask.png</image>
