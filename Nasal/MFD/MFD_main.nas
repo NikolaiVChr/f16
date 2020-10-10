@@ -1583,19 +1583,19 @@ var MFD_Device =
                 .setFontSize(20, 1.0);
 
         svg.p6 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.02, -482*0.5-90)
+                .setTranslation(276*0.795*0.08, -482*0.5-90)
                 .setText("--------")
                 .setAlignment("left-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
         svg.p6l1 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.02, -482*0.5-65)
+                .setTranslation(276*0.795*0.08, -482*0.5-65)
                 .setText("--------")
                 .setAlignment("left-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
         svg.p6l2 = svg.p_SMS.createChild("text")
-                .setTranslation(276*0.795*0.02, -482*0.5-40)
+                .setTranslation(276*0.795*0.08, -482*0.5-40)
                 .setText("--------")
                 .setAlignment("left-center")
                 .setColor(colorText1)
@@ -1647,38 +1647,38 @@ var MFD_Device =
                 .setFontSize(20, 1.0);
 
         svg.p5 = svg.p_SMS.createChild("text")
-                .setTranslation(-276*0.795*0.16, -482*0.5-190)
+                .setTranslation(-276*0.795*0.20, -482*0.5-190)
                 .setText("--------")
                 .setAlignment("left-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
         svg.p5l1 = svg.p_SMS.createChild("text")
-                .setTranslation(-276*0.795*0.16, -482*0.5-165)
+                .setTranslation(-276*0.795*0.20, -482*0.5-165)
                 .setText("--------")
                 .setAlignment("left-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
         svg.p5l2 = svg.p_SMS.createChild("text")
-                .setTranslation(-276*0.795*0.16, -482*0.5-140)
+                .setTranslation(-276*0.795*0.20, -482*0.5-140)
                 .setText("--------")
                 .setAlignment("left-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
 
         svg.p4 = svg.p_SMS.createChild("text")
-                .setTranslation(-276*0.795*0.55, -482*0.5-90)
+                .setTranslation(-276*0.795*0.51, -482*0.5-90)
                 .setText("--------")
                 .setAlignment("left-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
         svg.p4l1 = svg.p_SMS.createChild("text")
-                .setTranslation(-276*0.795*0.55, -482*0.5-65)
+                .setTranslation(-276*0.795*0.51, -482*0.5-65)
                 .setText("--------")
                 .setAlignment("left-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
         svg.p4l2 = svg.p_SMS.createChild("text")
-                .setTranslation(-276*0.795*0.55, -482*0.5-40)
+                .setTranslation(-276*0.795*0.51, -482*0.5-40)
                 .setText("--------")
                 .setAlignment("left-center")
                 .setColor(colorText1)
