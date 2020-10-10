@@ -440,6 +440,7 @@ var fast_loop = func {
         line6.setText(ir==1?"WHOT":"TV");
         
         if (enable) {
+            lasercode = getprop("f16/avionics/laser-code");
             if (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil) {
                 var dist = flir_updater.click_coord_cam.direct_distance_to(geo.aircraft_position())*M2NM;
                 bott.setText(sprintf("%2.1f  CMBT  %04d",dist,lasercode));
