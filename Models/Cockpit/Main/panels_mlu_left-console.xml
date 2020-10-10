@@ -591,6 +591,7 @@
   <object-name>ecm-nil</object-name>
   <object-name>ecm-frm</object-name>
   <object-name>ecm-spl</object-name>
+  <object-name>flcs-run-fail</object-name>
   <type>material</type>
   <condition>
       <property>controls/test/test-panel/mal-ind-lts</property>
