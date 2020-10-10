@@ -228,6 +228,21 @@
         </binding>
     </checkbox>
   <text><halign>left</halign><label>Will follow released weapon.</label></text>
+
+  <hrule/>
+  
+    <checkbox>
+      <label>Use alternative Head Up Display</label>
+      <halign>left</halign>
+      <property>f16/avionics/hud-basic</property>
+      <live>true</live>
+        <binding>
+          <command>property-toggle</command>
+          <property>f16/avionics/hud-basic</property>
+        </binding>
+    </checkbox>
+  <text><halign>left</halign><label>Enabling this will display an Intel graphics-compatible HUD.</label></text>
+  <text><halign>left</halign><label>This option will be auto-saved.</label></text>
   </group>
   
   <empty><stretch>1</stretch></empty>
