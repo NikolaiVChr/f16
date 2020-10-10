@@ -1609,7 +1609,6 @@ var setup_custom_stick_bindings = func {
   var dlg = gui.Dialog.new("/sim/gui/dialogs/button-config/dialog", "Aircraft/f16/gui/dialogs/button-config.xml", "button-config");
 }
 
-
 # EPU pin handler
 var epu_pin_listener = setlistener("engines/engine[0]/running", func(runningNode) {
     var running = runningNode.getValue();
@@ -1617,7 +1616,6 @@ var epu_pin_listener = setlistener("engines/engine[0]/running", func(runningNode
     {
         # Simulate pulling of EPU safety pin after engine start.
         setprop("fdm/jsbsim/elec/switches/epu-pin", 0);
-        removelistener(epu_pin_listener);
     }
 }, 0, 0);
 
