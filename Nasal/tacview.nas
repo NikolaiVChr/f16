@@ -95,7 +95,10 @@ var mainloop = func() {
         if (find_in_array(seen_ids, cx.tacobj.tacviewID) == -1) {
             append(seen_ids, cx.tacobj.tacviewID);
             var model_is = cx.get_model();
-            if (model_is=="Mig-28") model_is = "F-16C";
+            if (model_is=="Mig-28") {
+                model_is = "F-16C";
+                color=",Color=Red";
+            }
             write(cx.tacobj.tacviewID ~ ",Name="~ model_is~ ",CallSign=" ~ cx.get_Callsign() ~color~"\n")
         }
         if (cx.tacobj.valid) {
