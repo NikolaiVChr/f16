@@ -1688,6 +1688,7 @@ append(obj.total, obj.speed_curr);
             me.Hx_m =   (-4.7148+0.013-4.53759+0.013)*0.5;#-4.62737;#-4.65453;#-4.6429;# HUD median X pos
             me.Vz   =    hdp.current_view_y_offset_m; # view Z position (0.94 meter per default)
             me.Vx   =    hdp.current_view_z_offset_m; # view X position (0.94 meter per default)
+            
 
             me.bore_over_bottom = me.Vz - me.Hz_b;
             me.Hz_height        = me.Hz_t-me.Hz_b;
@@ -1698,6 +1699,21 @@ append(obj.total, obj.speed_curr);
             pitch_offset = -me.texels_over_middle + me.hozizon_line_offset_from_middle_in_svg*me.sy;
             setprop("f16/hud/texels-up",me.texels_up_into_hud);
         }
+        
+        me.Vy   =    hdp.current_view_x_offset_m;
+            
+        me.pixelPerMeterX = (340*0.695633)/0.15627;
+        me.pixelPerMeterY = 260/(me.Hz_t-me.Hz_b);
+        
+        me.pixelside = me.pixelPerMeterY*me.Vy;
+        
+        me.svg.setTranslation(me.pixelside, 0);
+        me.custom.setTranslation(me.pixelside, 0);
+        me.centerOrigin.setTranslation(HudMath.getCenterOrigin()[0]+me.pixelside, HudMath.getCenterOrigin()[1]);
+        me.custom.update();
+        me.centerOrigin.update();
+        me.svg.update();
+        
 #Text windows on the HUD (F-16)
 #               1 
 #                   10 ALOW
@@ -1710,8 +1726,7 @@ append(obj.total, obj.speed_curr);
 # velocity vector
         #340,260
         # 0.078135*2 = width of HUD  = 0.15627m
-        me.pixelPerMeterX = (340*0.695633)/0.15627;
-        me.pixelPerMeterY = 260/(me.Hz_t-me.Hz_b);
+        
         me.submode = 0;
         
         if (1) {
