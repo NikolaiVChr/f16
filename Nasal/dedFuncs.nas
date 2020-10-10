@@ -85,6 +85,9 @@ var Action = {
 		return action;
 	},
 	run: func() {
+		# this is an ugly hack
+		if (dataEntryDisplay.page == pLIST or dataEntryDisplay.page == pMISC) { return -1; }
+
 		if (dataEntryDisplay.page == me.page or me.page == nil) {
 			call(me.funcCallback, nil, dataEntryDisplay.page);
 			return 1;
