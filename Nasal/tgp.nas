@@ -666,6 +666,7 @@ var cross = nil;
 var lock = nil;
 var zoom = nil;
 var bott = nil;
+var ralt = nil;
 var midl = nil;
 var ir = 1;
 var lasercode = int(rand()*1778+1111);setprop("f16/avionics/laser-code",lasercode);
