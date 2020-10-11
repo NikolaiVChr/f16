@@ -619,6 +619,10 @@ EHSI = {
         } elsif (me.ilsOld != me.ils and !me.ils) {
             setprop("instrumentation/nav[0]/radials/selected-deg", me.crsNonILS);
         }
+        if (me.ilsOld == me.ils and me.ils and me.crsILS != me.crsILSold) {
+          # ILS CRS was entered in DED
+          setprop("instrumentation/nav[0]/radials/selected-deg", me.crsILS);
+        }
         me.selectCRS = getprop("instrumentation/nav[0]/radials/selected-deg");
         
         # Text
@@ -757,7 +761,8 @@ EHSI = {
         } else {
             setprop("f16/crs-non-ils", me.selectCRS);
         }
-                
+        
+        me.crsILSold = me.crsILS;
         me.ilsDevOld = me.ilsDev;
         me.ilsOld    = me.ils;
         me.modeOld = me.mode;
