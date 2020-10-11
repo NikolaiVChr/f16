@@ -2414,7 +2414,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>f16/engine/jfs-start-switch</property>
-                <step>1</step>
+                <step>-1</step>
                 <min>-1</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -2424,7 +2424,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>f16/engine/jfs-start-switch</property>
-                <step>-1</step>
+                <step>1</step>
                 <min>-1</min>
                 <max>1</max>
                 <wrap>false</wrap>
