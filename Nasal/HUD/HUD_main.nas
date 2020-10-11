@@ -1250,7 +1250,7 @@ append(obj.total, obj.speed_curr);
                                           obj.roll_pointer.hide();
                                         } else {
                                           obj.bracket.hide();
-                                          if (hdp.fpm==2 and !hdp.ded and !hdp.dgft) {
+                                          if (hdp.fpm==2 and hdp.ded == 0 and !hdp.dgft) {
                                               obj.roll_lines.show();
                                               obj.roll_pointer.show();
                                           } else {
@@ -2321,12 +2321,23 @@ append(obj.total, obj.speed_curr);
         me.radarLock.update();
         me.irLock.update();
 
-        if (hdp.ded and !hdp.dgft) {
+        if (hdp.ded == 2 and !hdp.dgft) {
             me.ded0.setText(ded.dataEntryDisplay.text[0]);
             me.ded1.setText(ded.dataEntryDisplay.text[1]);
             me.ded2.setText(ded.dataEntryDisplay.text[2]);
             me.ded3.setText(ded.dataEntryDisplay.text[3]);
             me.ded4.setText(ded.dataEntryDisplay.text[4]);
+            me.ded0.show();
+            me.ded1.show();
+            me.ded2.show();
+            me.ded3.show();
+            me.ded4.show();
+        } elsif (hdp.ded == 1 and !hdp.dgft) {
+            me.ded0.setText(pfd.text[0]);
+            me.ded1.setText(pfd.text[1]);
+            me.ded2.setText(pfd.text[2]);
+            me.ded3.setText(pfd.text[3]);
+            me.ded4.setText(pfd.text[4]);
             me.ded0.show();
             me.ded1.show();
             me.ded2.show();

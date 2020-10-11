@@ -348,8 +348,8 @@
         <type>knob</type>
         <object-name>deddata-switch</object-name>
         <property>f16/avionics/hud-ded</property>
-        <factor>90</factor>
-        <offset-deg>-45.0</offset-deg>
+        <factor>45</factor>
+        <offset-deg>-45</offset-deg>
         <drag-direction>vertical</drag-direction>
         <center>
             <x-m>0.125163</x-m><y-m>0.439937</y-m><z-m>0.030422</z-m>
@@ -363,7 +363,7 @@
                 <property>f16/avionics/hud-ded</property>
                 <factor>1</factor>
                 <min>0</min>
-                <max>1</max>
+                <max>2</max>
                 <wrap>false</wrap>
             </binding>
         </action>

@@ -14,15 +14,15 @@ var callInit = func {
   canvaspfd.addPlacement({"node": "PFDscreen", "texture": "canvas.png"});
   if (getprop("sim/variant-id") == 2) {
         canvaspfd.setColorBackground(0.00, 0.04, 0.01, 1.00);
-        } else if (getprop("sim/variant-id") == 4) {
+  } else if (getprop("sim/variant-id") == 4) {
         canvaspfd.setColorBackground(0.00, 0.04, 0.01, 1.00);
-        } else if (getprop("sim/variant-id") == 5) {
+  } else if (getprop("sim/variant-id") == 5) {
         canvaspfd.setColorBackground(0.00, 0.04, 0.01, 1.00);
-        } else if (getprop("sim/variant-id") == 6) {
+  } else if (getprop("sim/variant-id") == 6) {
         canvaspfd.setColorBackground(0.00, 0.04, 0.01, 1.00);
-        } else {
+  } else {
         canvaspfd.setColorBackground(0.01, 0.075, 0.00, 1.00);
-        };
+  }
 
   pfdGroup = canvaspfd.createGroup();
   pfdGroup.show();
