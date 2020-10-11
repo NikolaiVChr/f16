@@ -375,6 +375,7 @@ var fast_loop = func {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
             midl.setText("    MFD OFF   ");
             bott.setText("");
+            ralt.setText("");
             line3.setText("");
             cross.hide();
             enable = 0;
@@ -383,6 +384,7 @@ var fast_loop = func {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
             midl.setText("      OFF     ");
             bott.setText("");
+            ralt.setText("");
             line3.setText("");
             cross.hide();
             enable = 0;
@@ -396,6 +398,7 @@ var fast_loop = func {
             var ttxt = sprintf(" %1d:%02d ", mins, secs);
             midl.setText("NOT TIMED OUT");
             bott.setText(ttxt);
+            ralt.setText("");
             line3.setText(masterMode==0?"STBY":(hiddenMode==AG?"A-G":"A-A"));
             cross.hide();
             enable = 0;
@@ -403,6 +406,7 @@ var fast_loop = func {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
             midl.setText("   STANDBY   ");
             bott.setText("");
+            ralt.setText("");
             line3.setText("STBY");
             cross.hide();
             enable = 0;
@@ -446,6 +450,12 @@ var fast_loop = func {
                 bott.setText(sprintf("%2.1f  CMBT  %04d",dist,lasercode));
             } else {
                 bott.setText(sprintf("      CMBT  %04d",lasercode));
+            }
+            if (getprop("f16/avionics/cara-on")) {
+                #1F-F16CJ-34-1 page 1-224
+                ralt.setText(""~getprop("position/altitude-agl-ft"));
+            } else {
+                ralt.setText("");
             }
         }
         if (!getprop("/aircraft/flir/target/auto-track") or flir_updater.click_coord_cam == nil) {
@@ -658,7 +668,7 @@ var zoom = nil;
 var bott = nil;
 var midl = nil;
 var ir = 1;
-var lasercode = int(rand()*10000);setprop("f16/avionics/laser-code",lasercode);
+var lasercode = int(rand()*1778+1111);setprop("f16/avionics/laser-code",lasercode);
 var callsign = nil;
 var lock_tgp = 0;
 var lock_tgp_last = 0;
@@ -804,6 +814,13 @@ var callInit = func {
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("13.0  CMBT  1538")
         .setTranslation(256*0.5, 256*0.9);
+    ralt = dedGroup.createChild("text")
+        .setFontSize(13, 1)
+        .setColor(color)
+        .setAlignment("right-center")
+        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
+        .setText("RALT")
+        .setTranslation(256-25, 256*0.1);
 
   cross = dedGroup.createChild("path")
             .moveTo(128,0)
