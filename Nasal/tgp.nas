@@ -453,7 +453,7 @@ var fast_loop = func {
             }
             if (getprop("f16/avionics/cara-on")) {
                 #1F-F16CJ-34-1 page 1-224
-                ralt.setText(""~getprop("position/altitude-agl-ft"));
+                ralt.setText(sprintf("%4d",getprop("position/altitude-agl-ft")));
             } else {
                 ralt.setText("");
             }
