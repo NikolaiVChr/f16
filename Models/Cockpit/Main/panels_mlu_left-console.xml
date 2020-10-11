@@ -2235,8 +2235,8 @@
         <type>knob</type>
         <object-name>SW_LE_FLAPS_50</object-name>
         <property>f16/avionics/le-flaps-switch</property>
-        <factor>40</factor>
-        <offset-deg>-20</offset-deg>
+        <factor>-40</factor>
+        <offset-deg>20</offset-deg>
         <drag-direction>vertical</drag-direction>
         <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
         <center>
@@ -2253,7 +2253,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>f16/avionics/le-flaps-switch</property>
-                <step>1</step>
+                <step>-1</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -2263,7 +2263,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>f16/avionics/le-flaps-switch</property>
-                <step>-1</step>
+                <step>1</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
