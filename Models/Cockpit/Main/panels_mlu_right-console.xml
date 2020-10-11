@@ -989,7 +989,7 @@
         <offset-deg>0</offset-deg>
         <drag-direction>vertical</drag-direction>
         <center>
-            <x-m>0.705448</x-m><y-m>0.491282</y-m><z-m>0.007586</z-m>
+            <x-m>0.705448</x-m><y-m>0.491282</y-m><z-m>0.00373</z-m>
         </center>
         <axis>
             <x>1</x><y>0</y><z>0</z>
@@ -1024,7 +1024,7 @@
         <offset-deg>0</offset-deg>
         <drag-direction>vertical</drag-direction>
         <center>
-            <x-m>0.705448</x-m><y-m>0.491282</y-m><z-m>0.007586</z-m>
+            <x-m>0.705448</x-m><y-m>0.491282</y-m><z-m>0.00373</z-m>
         </center>
         <axis>
             <x>1</x><y>0</y><z>0</z>
@@ -1059,7 +1059,7 @@
         <offset-deg>0</offset-deg>
         <drag-direction>vertical</drag-direction>
         <center>
-            <x-m>0.705448</x-m><y-m>0.491282</y-m><z-m>0.007586</z-m>
+            <x-m>0.705448</x-m><y-m>0.491282</y-m><z-m>0.00373</z-m>
         </center>
         <axis>
             <x>1</x><y>0</y><z>0</z>
