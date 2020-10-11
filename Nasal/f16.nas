@@ -353,6 +353,7 @@ var medium = {
     sendLightsToMp();
     sendABtoMP();
     CARA();
+    laser();
     buffeting();
     f16_fuel.fuelqty();
     cockpit_temperature_control.loop();
@@ -552,6 +553,18 @@ var sendLightsToMp = func {
     setprop("sim/multiplay/generic/bool[44]",1);
   } else {
     setprop("sim/multiplay/generic/bool[44]",0);
+  }
+}
+
+var laser = func {
+  var lasercode = getprop("f16/avionics/laser-code");
+  lasercode = math.clamp(lasercode,1111,2888);#1F-F16CJ-34-1 page 1-232
+  setprop("f16/avionics/laser-code",lasercode);
+  var laserarm = getprop("controls/armament/laser-arm-dmd");
+  if (laserarm == 1 and getprop("fdm/jsbsim/atmosphere/density-altitude") > 25000) {
+    #1F-F16CJ-34-1 page 1-227
+    screen.log.write("Laser disarm: Above 25000 pressure altitude feet", 1.0, 0.0, 0.0);
+    setprop("controls/armament/laser-arm-dmd", 0);
   }
 }
 
