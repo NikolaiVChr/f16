@@ -1441,8 +1441,8 @@
         <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
         <repeatable>true</repeatable>
         <interval-sec>0.75</interval-sec>
-        <factor>40</factor>
-        <offset-deg>-20</offset-deg>
+        <factor>-40</factor>
+        <offset-deg>20</offset-deg>
         <center>
             <x-m>0.63494</x-m>
             <y-m>-0.53211</y-m>
@@ -1457,7 +1457,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>controls/flight/flaps</property>
-                <step>-1</step>
+                <step>1</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -1467,7 +1467,7 @@
             <binding>
                 <command>property-adjust</command>
                 <property>controls/flight/flaps</property>
-                <step>1</step>
+                <step>-1</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
