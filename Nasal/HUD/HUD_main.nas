@@ -929,7 +929,7 @@ append(obj.total, obj.speed_curr);
         append(obj.total, obj.nadir);
 
         #pitch line numbers
-        for(var i = -18; i <= 0; i += 1) {
+        for(var i = -17; i <= 0; i += 1) {
           if (i==0) continue;
           append(obj.total, obj.ladder_group.createChild("text")
              .setText(i*-5)
@@ -946,7 +946,7 @@ append(obj.total, obj.speed_curr);
              .setTranslation(minuso+minuss+minuss*0.2, -i * distance)
              .setColor(0,0,0));
         }
-        for(var i = 1; i <= 18; i += 1) {
+        for(var i = 1; i <= 17; i += 1) {
           if (i==0) continue;
           append(obj.total, obj.ladder_group.createChild("text")
              .setText(i*5)
