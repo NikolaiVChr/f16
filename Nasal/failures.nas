@@ -113,65 +113,71 @@ var init = func {
     #append(compat_failure_modes.compat_modes,{ id: "instrumentation/hud", type: compat_failure_modes.MTBF, failure: compat_failure_modes.SERV, desc: "HUD" });
 }
 
+
+
+#################################
+#
+#     PILOTS FAULT LIST DISPLAY and F-ACK
+#
+#
 var loop = func {
-    var fail_keys = keys(fail_list);
     fail_master_tmp = [0,0,0,0];
-    foreach (key;fail_keys) {
-        if (key == "eng") continue;
-        var sys = fail_list[key];
-        var status = getprop(sys[2]);
-        sys[3] = status == 1;
-        fail_list[key] = sys;
-        #print(sys[1]~" "~sys[2]);
-        if (status == 0) {
-            fail_master_tmp[sys[0]] = 1;
+    foreach (sys;fail_list) {
+        if (sys[2] != nil) {
+            var status = getprop(sys[2]);
+            sys[3] = status == 1;
+            if (status == 0) {
+                fail_master_tmp[sys[0]] = 1;
+            }
+        } else {
+            var status = !FailureMgr.get_failure_level("engines/engine");# Engine works a bit different than those with serviceable properties, so we fix that with this call.
+            sys[3] = status;
+            fail_master_tmp[2] = !sys[3] or fail_master_tmp[2];
         }
     }
-    fail_list["eng"][3] = !FailureMgr.get_failure_level("engines/engine");# Engine works a bit different than those with serviceable properties, so we fix that with this call.
-    fail_master_tmp[2] = !fail_list["eng"][3] or fail_master_tmp[2];
     fail_master = fail_master_tmp;
     loop_caution();
     settimer(loop,1);
 }
 
 var fail_master = [0,0,0,0];
-var fail_list = {
+var fail_list = [
     #  [System | String displayed in the F-ACK DED page | serviceable property | working? | if reset has been requested by the pilot so failure remains but is no longer shown to him]
-    a:   [2,"TANK LEAK     ", "consumables/fuel-tanks/serviceable", 1, 0],
-    b:   [3,"RWR DEGR      ", "instrumentation/rwr/serviceable", 1, 0],
-    c:   [3,"FCR     FAIL  ", "instrumentation/radar/serviceable", 1, 0],
-    d:   [1,"HYD B FAIL    ", "fdm/jsbsim/systems/hydraulics/edpb-pump/serviceable", 1, 0],
-    e:   [1,"HYD A FAIL    ", "fdm/jsbsim/systems/hydraulics/edpa-pump/serviceable", 1, 0],
-    f:   [0,"FIRE          ", "damage/fire/serviceable", 1, 0],
-    g:   [3,"GEN STBY FAIL ", "fdm/jsbsim/elec/failures/stby-gen/serviceable", 1, 0],
-    h:   [3,"GEN MAIN FAIL ", "fdm/jsbsim/elec/failures/main-gen/serviceable", 1, 0],
-    i:   [3,"EPU FAIL      ", "fdm/jsbsim/elec/failures/epu/serviceable", 1, 0],
-    j:   [3,"BATT HOT      ", "fdm/jsbsim/elec/failures/battery/serviceable", 1, 0],
-    k:   [3,"FCC     FAIL  ", "payload/armament/fire-control/serviceable", 1, 0],
-    l:   [1,"ISA RUD FAIL  ", "sim/failure-manager/controls/flight/rudder/serviceable", 1, 0],
-    m:   [0,">ISA ELV FAIL<", "sim/failure-manager/controls/flight/elevator/serviceable", 1, 0],
-    n:   [0,">ISA ROL FAIL<", "sim/failure-manager/controls/flight/aileron/serviceable", 1, 0],
-    o:   [1,"ISA FLAP FAIL ", "sim/failure-manager/controls/flight/flaps/serviceable", 1, 0],
-    o2:  [1,"SPD BRAK FAIL ", "sim/failure-manager/controls/flight/speedbrake/serviceable", 1, 0],
-    eng: [2,"ENG FAIL      ", "engines/engine/service", 1, 0],
-    q:   [3,"HUD     FAIL  ", "instrumentation/hud/serviceable", 1, 0],
-    r:   [3,"TCN FAIL      ", "instrumentation/tacan/serviceable", 1, 0],
-    s:   [3,"AIR DATA FAIL ", "instrumentation/airspeed-indicator/serviceable", 1, 0],
-    t:   [1,"GEAR FAIL     ", "sim/failure-manager/controls/gear/serviceable", 1, 0],
-    u:   [3,"DME FAIL      ", "instrumentation/dme/serviceable", 1, 0],
-    v:   [3,"ALTI FAIL     ", "instrumentation/altimeter/serviceable", 1, 0],
-    w:   [3,"HEAD FAIL     ", "instrumentation/heading-indicator/serviceable", 1, 0],
-    x:   [3,"MAGN COMP FAIL", "instrumentation/magnetic-compass/serviceable", 1, 0],
-    y:   [3,"IND TURN FAIL ", "instrumentation/turn-indicator/serviceable", 1, 0],
-    z:   [3,"IND ATTI FAIL ", "instrumentation/attitude-indicator/serviceable", 1, 0],
-    a2:  [3,"ADF      FAIL ", "instrumentation/adf/serviceable", 1, 0],
-    b2:  [3,"PLS  GS  FAIL ", "instrumentation/nav/gs/serviceable", 1, 0],
-#   eng: [3,"ENG FAIL      ", "instrumentation/nav/cdi", 1, 0],
-    c2:  [3,"ELEC MAIN FAIL", "systems/electrical/serviceable", 1, 0],    
-    d2:  [0,">STBY    GAIN<", "systems/pitot/serviceable", 1, 0], 
-    e2:  [0,">STBY    GAIN<", "systems/static/serviceable", 1, 0], 
-    f2:  [3,"CADC BUS FAIL ", "systems/vacuum/serviceable", 1, 0], 
-};
+       [2," TANK LEAK      ", "consumables/fuel-tanks/serviceable", 1, 0],
+       [3," RWR  DEGR      ", "instrumentation/rwr/serviceable", 1, 0],
+       [3," FCR       FAIL ", "instrumentation/radar/serviceable", 1, 0],
+       [1," HYD  B    FAIL ", "fdm/jsbsim/systems/hydraulics/edpb-pump/serviceable", 1, 0],
+       [1," HYD  A    FAIL ", "fdm/jsbsim/systems/hydraulics/edpa-pump/serviceable", 1, 0],
+       [0,">FIRE          <", "damage/fire/serviceable", 1, 0],
+       [3," GEN  STBY FAIL ", "fdm/jsbsim/elec/failures/stby-gen/serviceable", 1, 0],
+       [3," GEN  MAIN FAIL ", "fdm/jsbsim/elec/failures/main-gen/serviceable", 1, 0],
+       [3," EPU       FAIL ", "fdm/jsbsim/elec/failures/epu/serviceable", 1, 0],
+       [3," BATT HOT       ", "fdm/jsbsim/elec/failures/battery/serviceable", 1, 0],
+       [3," FCC       FAIL ", "payload/armament/fire-control/serviceable", 1, 0],
+       [1," ISA  RUD  FAIL ", "sim/failure-manager/controls/flight/rudder/serviceable", 1, 0],
+       [0,">ISA  ELV  FAIL<", "sim/failure-manager/controls/flight/elevator/serviceable", 1, 0],
+       [0,">ISA  ROL  FAIL<", "sim/failure-manager/controls/flight/aileron/serviceable", 1, 0],
+       [1," ISA  FLAP FAIL ", "sim/failure-manager/controls/flight/flaps/serviceable", 1, 0],
+       [1," SPD  BRAK FAIL ", "sim/failure-manager/controls/flight/speedbrake/serviceable", 1, 0],
+       [2," ENG       FAIL ", nil, 1, 0],
+       [3," HUD       FAIL ", "instrumentation/hud/serviceable", 1, 0],
+       [3," TCN       FAIL ", "instrumentation/tacan/serviceable", 1, 0],
+       [3," AIR  DATA FAIL ", "instrumentation/airspeed-indicator/serviceable", 1, 0],
+       [1," GEAR      FAIL ", "sim/failure-manager/controls/gear/serviceable", 1, 0],
+       [3," DME       FAIL ", "instrumentation/dme/serviceable", 1, 0],
+       [3," ALTI      FAIL ", "instrumentation/altimeter/serviceable", 1, 0],
+       [3," HEAD      FAIL ", "instrumentation/heading-indicator/serviceable", 1, 0],
+       [3," MAGN COMP FAIL ", "instrumentation/magnetic-compass/serviceable", 1, 0],
+       [3," IND  TURN FAIL ", "instrumentation/turn-indicator/serviceable", 1, 0],
+       [3," IND  ATTI FAIL ", "instrumentation/attitude-indicator/serviceable", 1, 0],
+       [3," ADF       FAIL ", "instrumentation/adf/serviceable", 1, 0],
+       [3," PLS  GS   FAIL ", "instrumentation/nav/gs/serviceable", 1, 0],
+#      [3," ENG FAIL      ", "instrumentation/nav/cdi", 1, 0], not used by F-16
+       [3," ELEC MAIN FAIL ", "systems/electrical/serviceable", 1, 0],    
+       [0,">STBY      GAIN<", "systems/pitot/serviceable", 1, 0], 
+       [0,">STBY      GAIN<", "systems/static/serviceable", 1, 0], 
+       [3," CADC BUS  FAIL ", "systems/vacuum/serviceable", 1, 0]
+]; 
 # Systems:
 # 0: FLCS (Warning)
 # 1: FLCS
@@ -190,37 +196,46 @@ var sorter = func(a, b) {
     }
 }
 
+fail_list = sort(fail_list, sorter);
+
 var getList = func {
     # Get a list of strings of the current non-acknowledged failures
-    var fail_keys = keys(fail_list);
     var fails = [];
-    foreach (key;fail_keys) {
-        if (!fail_list[key][3] and !fail_list[key][4]) {
-            append(fails, fail_list[key][1]);
+    foreach (var sys;fail_list) {
+        if (!sys[3] and !sys[4]) {
+            append(fails, sys[1]);
         }
     }
-    fails = sort(fails, sorter);
     return fails;
 }
 
 var fail_reset = func {
     # Remove all acknowledgements by pilot.
-    var fail_keys = keys(fail_list);
-    foreach (key;fail_keys) {
-        fail_list[key][4] = 0;
+    foreach (var sys;fail_list) {
+        sys[4] = 0;
     }
 }
 
 var f_ack = func {
-    # Pilot acknowledge the failure, so lets stop displaying it.
-    var fail_keys = keys(fail_list);
-    foreach (key;fail_keys) {
-        if (fail_list[key][3] == 0) {
-            fail_list[key][4] = 1;
+    # Pilot acknowledge the top 3 failures, so lets stop displaying them.
+    var ack = 0;
+    foreach (var sys;fail_list) {
+        if (sys[3] == 0 and sys[4] == 0) {
+            sys[4] = 1;
+            ack += 1;
+        }
+        if (ack >= 3) {
+            break;
         }
     }
 }
 
+
+################################
+#
+#     CAUTION SYSTEM
+#
+#
 # List of non-ignored/ignored caution warnings
 # entry: property-name: ignored
 var caution_ignore = {};

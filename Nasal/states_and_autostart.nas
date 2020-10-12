@@ -47,6 +47,7 @@ var repair2 = func {
   eng.accu_2_psi = eng.accu_psi_max;
   crash.repair();
   fail.trigger_eng.arm();
+  fail.fail_reset();
   
   if (getprop("f16/engine/running-state")) {
     # f16/engine/running-state is what the pilot originally chose from the FG launcher.
@@ -96,7 +97,6 @@ var repair4 = func {
     if (getprop("/consumables/fuel/tank[4]/level-norm")<0.5 and getprop("f16/engine/running-state")) {
       setprop("/consumables/fuel/tank[4]/level-norm", 0.55);
     }
-    fail.fail_reset();# Hmm, should this not be in repair2 also? ~Leto
 }
 
 ###################################################################################################
