@@ -4,7 +4,7 @@
 
  <path>cockpit.ac</path>
 
-  <!--<effect>
+  <effect>
       <inherits-from>Effects/model-combined-transparent</inherits-from>
       <parameters>
 			<rain-enabled type="int">0</rain-enabled>
@@ -37,19 +37,8 @@
 			  <bin-name>DepthSortedBin</bin-name>
 			</render-bin>
       </parameters>
-      <object-name>hud-optic</object-name>
- </effect>-->
- 
- <!--animation>
-  <type>select</type>
-  <object-name>hud-optic</object-name>
-  <condition>
-        <equals>
-          <value>0</value>
-          <value>1</value>
-        </equals>
-  </condition>
- </animation-->
+      <object-name>hud-optics</object-name>
+ </effect>
  
  <effect>
         <inherits-from>Effects/model-combined-deferred</inherits-from>
@@ -79,33 +68,9 @@
     </effect>
 
  <model>
-  <name>HUDa</name>
+  <name>HUD</name>
   <path>Aircraft/f16/Models/Cockpit/hud.xml</path>
  </model>
- 
- <model>
-  <name>HUDb</name>
-  <path>Aircraft/f16/Models/Cockpit/hud_basic.xml</path>
- </model>
- 
- <animation>
-  <type>select</type>
-  <object-name>HUDa</object-name>
-  <condition>
-      <not>
-          <property>f16/avionics/hud-basic</property>
-      </not>
-  </condition>
- </animation>
- 
-  <animation>
-  <type>select</type>
-  <object-name>HUDb</object-name>
-  <condition>
-          <property>f16/avionics/hud-basic</property>
-  </condition>
- </animation>
-
 
  <model>
   <name>chair</name>
@@ -129,7 +94,7 @@
     <and>
       <property>f16/cockpit/kneeboard-left-visible</property>
       <not>
-          <property>f16/ejected</property>
+          <property>f16/done</property>
       </not>
       <property>sim/current-view/internal</property><!-- without a leading slash this property wont exist over MP, and so will always default to not internal -->
       <not>
@@ -159,7 +124,7 @@
     <and>
       <property>f16/cockpit/kneeboard-right-visible</property>
       <not>
-          <property>f16/ejected</property>
+          <property>f16/done</property>
       </not>
       <property>sim/current-view/internal</property><!-- without a leading slash this property wont exist over MP, and so will always default to not internal -->
       <not>
@@ -186,7 +151,7 @@
   <type>select</type>
   <object-name>chair</object-name>
   <condition>
-   <not><property>f16/ejected</property></not>
+   <not><property>f16/done</property></not>
   </condition>
  </animation>
  
@@ -229,6 +194,28 @@
 -->
 
  <model>
+  <name>F-16-FS-B10</name>
+  <path>Aircraft/f16/Models/Cockpit/Main/stick-B10.xml</path>
+  <offsets>
+   <x-m>-4.434</x-m><!--x-m>-4.456</x-m-->
+   <y-m> 0.269</y-m>
+   <z-m> 0.239</z-m><!--z-m> 0.200</z-m-->
+  </offsets>
+  <condition>
+    <or>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>0</value>
+      </equals>
+	  <equals>
+       <property>sim/variant-id</property>
+       <value>1</value>
+      </equals>
+    </or>
+   </condition>
+ </model>
+
+ <model>
   <name>F-16-FS</name>
   <path>Aircraft/f16/Models/Cockpit/Main/stick.xml</path>
   <offsets>
@@ -236,6 +223,30 @@
    <y-m> 0.269</y-m>
    <z-m> 0.239</z-m><!--z-m> 0.200</z-m-->
   </offsets>
+  <condition>
+    <or>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>2</value>
+      </equals>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>3</value>
+      </equals>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>4</value>
+      </equals>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>5</value>
+      </equals>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>6</value>
+      </equals>
+    </or>
+   </condition>
  </model>
 
 

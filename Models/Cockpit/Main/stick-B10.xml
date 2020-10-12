@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+
+	<PropertyList>
+
+	<path>F-16-FS-B10.ac</path>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>Counter-Measures</object-name>
+		<object-name>Display-Man</object-name>
+		<object-name>Trim</object-name>
+		<object-name>Grommet</object-name>
+		<object-name>Missile-Step</object-name>
+		<object-name>Pickle</object-name>
+		<object-name>Pinky</object-name>
+		<object-name>Target-Man</object-name>
+		<object-name>Trigger</object-name>
+        <object-name>side_stick2</object-name>
+		<property>controls/flight/elevator</property>
+		<factor>5</factor>
+		<center>
+			<x-m> 0.03886</x-m>
+			<y-m> 0.01819</y-m>
+			<z-m>-0.05173</z-m>
+		</center>
+		<axis>
+             <y>-1</y> 
+         </axis>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>Counter-Measures</object-name>
+		<object-name>Display-Man</object-name>
+		<object-name>Trim</object-name>
+		<object-name>Grommet</object-name>
+		<object-name>Missile-Step</object-name>
+		<object-name>Pickle</object-name>
+		<object-name>Pinky</object-name>
+		<object-name>Target-Man</object-name>
+		<object-name>Trigger</object-name>
+        <object-name>side_stick2</object-name>
+		<factor>5</factor>
+		<property>controls/flight/aileron</property>
+		<center>
+			<x-m> 0.03891</x-m>
+			<y-m> 0.01818</y-m>
+			<z-m>-0.06087</z-m>
+        </center>
+		<axis>
+            <x>-1</x>
+        </axis>
+	</animation>
+	<!--animation>
+		<type>rotate</type>
+		<object-name>stick-roll</object-name>
+		<property>controls/flight/aileron</property>
+		<interpolation>
+		    <entry><ind>1</ind><dep>20</dep></entry>
+			<entry><ind>0</ind><dep>0</dep></entry>
+			<entry><ind>-1</ind><dep>-20</dep></entry>
+		</interpolation>
+		<center>
+			<x-m>0</x-m>
+			<y-m>-0.0536</y-m>
+			<z-m>0.1751</z-m>
+		</center>
+		<axis><x>1</x></axis>
+	</animation-->
+
+
+	<!-- Lighting -->
+	<!--<animation> 
+		<object-name>F-16-FS</object-name>
+		<type>material</type>
+		<emission>
+			<factor-prop>controls/lighting/panel-norm</factor-prop>
+			<red>0.275</red>
+			<green>0.12</green>
+			<blue>0.05</blue>
+		</emission>
+	</animation>-->
+	
+	<effect>
+        <inherits-from>Aircraft/f16/Models/Effects/f16panel-left</inherits-from>
+        <parameters>
+            <implicit-lightmap-enabled type="int">0</implicit-lightmap-enabled>
+            <lightmap-factor n="0">0</lightmap-factor>
+        </parameters>
+        <!-- objects added to this will NOT have all white in texture lit up green when console is high. They will get flood light though. -->
+        <object-name>Counter-Measures</object-name>
+		<object-name>Display-Man</object-name>
+		<object-name>Trim</object-name>
+		<object-name>Grommet</object-name>
+		<object-name>Missile-Step</object-name>
+		<object-name>Pickle</object-name>
+		<object-name>Pinky</object-name>
+		<object-name>Target-Man</object-name>
+		<object-name>Trigger</object-name>
+        <object-name>side_stick2</object-name>
+        <object-name>base</object-name>
+		<object-name>base-connect</object-name>
+    </effect>
+
+</PropertyList>
