@@ -311,6 +311,16 @@ var list = func () {
         }
     } elsif (button == 6) {#TV/IR
         ir = !ir;
+    } elsif (button == 9) {#CZ
+        if (lock_tgp) return;
+        gps = 0;
+        if (getprop("/aircraft/flir/target/auto-track")) {
+            flir_updater.offsetP = 0;
+            flir_updater.offsetH = 0;
+        } else {
+            interpolate("sim/current-view/pitch-offset-deg", -30, 2.5);
+            interpolate("sim/current-view/heading-offset-deg", 0, 2.5);
+        }
     } elsif (button == 11) {#UP
         if (lock_tgp) return;
         gps = 0;
@@ -376,6 +386,7 @@ var fast_loop = func {
             midl.setText("    MFD OFF   ");
             bott.setText("");
             ralt.setText("");
+            line9.hide();
             line3.setText("");
             cross.hide();
             enable = 0;
@@ -385,6 +396,7 @@ var fast_loop = func {
             midl.setText("      OFF     ");
             bott.setText("");
             ralt.setText("");
+            line9.hide();
             line3.setText("");
             cross.hide();
             enable = 0;
@@ -399,6 +411,7 @@ var fast_loop = func {
             midl.setText("NOT TIMED OUT");
             bott.setText(ttxt);
             ralt.setText("");
+            line9.hide();
             line3.setText(masterMode==0?"STBY":(hiddenMode==AG?"A-G":"A-A"));
             cross.hide();
             enable = 0;
@@ -407,6 +420,7 @@ var fast_loop = func {
             midl.setText("   STANDBY   ");
             bott.setText("");
             ralt.setText("");
+            line9.hide();
             line3.setText("STBY");
             cross.hide();
             enable = 0;
@@ -581,12 +595,14 @@ var fast_loop = func {
         lock_tgp_last = lock_tgp;
         if (lock_tgp) {
             line1box.show();
+            line9.hide();
             line11.hide();
             line12.hide();
             line14.hide();
-            line15.hide();
+            line15.hide();            
         } else {
             line1box.hide();
+            line9.show();
             line11.show();
             line12.show();
             line14.show();
@@ -667,6 +683,7 @@ var lock = nil;
 var zoom = nil;
 var bott = nil;
 var ralt = nil;
+var line9 = nil;
 var midl = nil;
 var ir = 1;
 var lasercode = int(rand()*1778+1111);setprop("f16/avionics/laser-code",lasercode);
@@ -751,6 +768,14 @@ var callInit = func {
         .setText("XFER")
         .hide()
         .setTranslation(256-5, 256*0.35);
+  line9 = dedGroup.createChild("text")
+        .setFontSize(13, 1)
+        .setColor(color)
+        .setAlignment("right-center")
+        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
+        .setText("CZ")
+        .hide()
+        .setTranslation(256-5, 256*0.65);
   line11 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
