@@ -1603,6 +1603,7 @@ There is also small changes in tail for different variants with and without brak
         <rwr-unk type="bool">false</rwr-unk>
     </sound>
     <f16>
+        <stores-cat type="int">1</stores-cat>
         <fuel>
             <hand-fwd type="double">1000</hand-fwd>
             <hand-aft type="double">3000</hand-aft>
