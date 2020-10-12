@@ -148,15 +148,15 @@
       <menu><name>Wilco</name></menu><!-- Will comply -->
       <menu><name>Same</name></menu><!-- Same goes for me -->
       <menu>
-	       <name>[Flight]</name> 
-		        <menu><name>Taking off</name></menu> 
-		        <menu><name>Firewalling</name></menu>   		 				
-             <menu><name>Returning to base</name></menu>     		 
-		        <menu><name>Going around</name></menu>
+	     <name>[Flight]</name> 
+		  <menu><name>Taking off</name></menu> 
+		  <menu><name>Firewalling</name></menu>   		 				
+             	  <menu><name>Returning to base</name></menu>     		 
+		  <menu><name>Going around</name></menu>
       </menu>
       <menu>
 	    <name>[Situational Awareness]</name> 
-		     <menu><name>Thumbleweed</name></menu><!-- I am no clue where I am or whats going on around me -->
+		 <menu><name>Thumbleweed</name></menu><!-- I am no clue where I am or whats going on around me -->
      		 <menu><name>Helmet fire</name></menu><!-- I am overloaded (struggling with doing too much at same time) -->
       </menu>
     </menu>
