@@ -85,12 +85,17 @@ var loop_pfd = func {
 	} else {
 		var used = subvec(fails,0,3);
 		text[1] = sprintf("                        ");
-		if (size(used)>0) text[2] = sprintf(" %s ",used[0]);
+		if (size(used)>0) text[2] = sprintf("  %s  ",used[0]);
 		else text[2] = "";
-		if (size(used)>1) text[3] = sprintf(" %s ",used[1]);
+		if (size(used)>1) text[3] = sprintf("  %s  ",used[1]);
 		else text[3] = "";
-		if (size(used)>2) text[4] = sprintf(" %s ",used[2]);
-		else text[4] = "";
+		if (size(used)>2) {
+      if (size(fails)>3) {
+        text[4] = sprintf(utf8.chstr("0x25BC")~" %s "~utf8.chstr("0x25BC"),used[2]);#
+      } else {
+        text[4] = sprintf("  %s  ",used[2]);
+      }
+    }	else text[4] = "";
 	}
   line1.setText(text[0]);
   line2.setText(text[1]);
