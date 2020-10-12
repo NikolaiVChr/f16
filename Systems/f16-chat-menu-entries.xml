@@ -3,7 +3,7 @@
   <!--
   Comprehensive(?) UNICOM and ATC message set for Flightgear F-16.
   Rob Shearman, Jr., January 2008
-  Modified Nikolai V. Chr., Oct 2020
+  Modified Nikolai V. Chr., Marsdolphin, Oct 2020
 
   [ at the start of the <name> tag indicates that the text will not be added to the message.
   Special characters (in place of proper substitutions) :
@@ -117,7 +117,7 @@
     <menu>
       <name>[Training]</name>
       <menu><name>Start</name></menu><!--  -->
-      <menu><name>Knock it off</name></menu><!-- Stop the excersize -->
+      <menu><name>Knock it off</name></menu><!-- Stop the exercise -->
       <menu><name>You are floor mort</name></menu><!-- You hit the training floor -->
       <menu><name>I am floor mort</name></menu><!-- I hit the training floor -->
       <menu><name>Use Mk 1. eyeball</name></menu><!-- Use your eyes to locate -->
@@ -133,7 +133,11 @@
       <menu><name>Going hot</name></menu><!-- Going to wards hostile(s) -->
       <menu><name>Spike</name></menu><!-- Some got a lock on me -->
       <menu><name>Splash one bandit</name></menu><!-- I got a kill -->
-      <menu><name>Winchester</name></menu><!-- Out of ammo -->
+      <menu>
+	    <name>[Ordinance]</name>
+          <menu><name>Dakota</name></menu><!-- Out of AG ordinance -->
+          <menu><name>Winchester</name></menu><!-- Out of ammo -->
+      </menu>
     </menu>    
     <menu>
       <name>[Misc]</name>
@@ -143,8 +147,18 @@
       <menu><name>Roger</name></menu>
       <menu><name>Wilco</name></menu><!-- Will comply -->
       <menu><name>Same</name></menu><!-- Same goes for me -->
-      <menu><name>Thumbleweed</name></menu><!-- I am no clue where I am or whats going on around me -->
-      <menu><name>Helmet fire</name></menu><!-- I am overloaded (struggling with doing too much at same time) -->
+      <menu>
+	     <name>[Flight]</name> 
+		  <menu><name>Taking off</name></menu> 
+		  <menu><name>Firewalling</name></menu>   		 				
+             	  <menu><name>Returning to base</name></menu>     		 
+		  <menu><name>Going around</name></menu>
+      </menu>
+      <menu>
+	    <name>[Situational Awareness]</name> 
+		 <menu><name>Thumbleweed</name></menu><!-- I am no clue where I am or whats going on around me -->
+     		 <menu><name>Helmet fire</name></menu><!-- I am overloaded (struggling with doing too much at same time) -->
+      </menu>
     </menu>
     <menu><name>Buddy spike</name></menu><!-- Someone got a lock on me, probably a friendly -->
     <menu><name>Bingo</name></menu><!-- Only got enough fuel to get back home -->
