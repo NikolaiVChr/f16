@@ -483,6 +483,13 @@ var MFD_Device =
                 .setColor(colorText1)
                 .set("z-index",1)
                 .setFontSize(20, 1.0);
+        svg.cz = svg.p_RDR.createChild("text")
+                .setTranslation(276*0.775, -482*0.5+55+10)
+                .setText("C\nZ")
+                .setAlignment("right-center")
+                .setColor(colorText1)
+                .set("z-index",1)
+                .setFontSize(20, 1.0);
         svg.hd = svg.p_RDR.createChild("text")
                 .setTranslation(276*0.775, -482*0.5+125+10)
                 .setText("H\nD")
@@ -886,6 +893,8 @@ var MFD_Device =
                 } elsif (eventi == 4) {
                     if (getprop("f16/avionics/dgft")) return;
                     setprop("instrumentation/radar/mode-switch", 1);
+                } elsif (eventi == 8) {
+                    cursorZero();
                 } elsif (eventi == 9) {
                     if (rdrMode != RADAR_MODE_GM) return;
                     setprop("instrumentation/radar/mode-hd-switch", me.model_index);
@@ -3657,6 +3666,11 @@ var RADAR_MODE_GMS = 3;
 var slew_c = 0;
 
 setlistener("controls/displays/cursor-click", func {if (getprop("controls/displays/cursor-click")) {slew_c = 1;}});
+
+var cursorZero = func {
+    cursor_pos = [0,-241];
+}
+cursorZero();
 
 var setCursor = func (x, y, screen) {
     #552,482 , 0.795 is for UV map
