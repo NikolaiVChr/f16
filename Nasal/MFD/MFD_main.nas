@@ -1414,6 +1414,9 @@ var MFD_Device =
                             #print(me.gmLine);
                             #me.root.gmPic.set("src", "Aircraft/f16/Nasal/MFD/gm.png");
                             #me.root.gmPic.setPixel(int(rand()*127), int(rand()*127), [me.gmColor,me.gmColor,me.gmColor,1]);
+                            
+                            me.gmColor = math.pow(me.gmColor, 1.4);# RGB color scale is not linear to eye looking at monitor. 2.2 is too much though.
+                            
                             if (me.echoPos == nil or me.echoPos[3]) {
                                 if (me.rdrModeHDGM) {
                                     me.root.gmPicHD.setPixel(me.gmLine, me.gmi, [me.gmColor*me.mono,me.gmColor,me.gmColor*me.mono,1]);
