@@ -1,0 +1,788 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>cockpit.ac</path>
+
+  <effect>
+      <inherits-from>Effects/model-combined-transparent</inherits-from>
+      <parameters>
+			<rain-enabled type="int">0</rain-enabled>
+			<snow-enabled type="int">0</snow-enabled>
+			<ambient-correction type="float">0.00</ambient-correction>
+			<lightmap-enabled type="int">0</lightmap-enabled>
+			<reflection-enabled type="int">1</reflection-enabled>			
+			<reflection-correction type="float">1.00</reflection-correction>
+			<reflection-fresnel type="float">0.01</reflection-fresnel>
+			<reflection-fresnel-factor type="float">0.01</reflection-fresnel-factor>
+			<reflection-rainbow type="float">0.50</reflection-rainbow>
+			<reflection-noise type="float">0.0</reflection-noise>
+			<reflection-dynamic type="int">1</reflection-dynamic>
+			<reflection-type type="int">1</reflection-type>
+			<texture n= "0" ><type>black</type></texture>
+			<texture n= "5" >
+				<type>cubemap</type>
+				<images>
+				  <positive-x>Aircraft/Generic/Effects/fgfs-sky2/1.png</positive-x>
+				  <negative-x>Aircraft/Generic/Effects/fgfs-sky2/4.png</negative-x>
+				  <positive-y>Aircraft/Generic/Effects/fgfs-sky2/2.png</positive-y>
+				  <negative-y>Aircraft/Generic/Effects/fgfs-sky2/3.png</negative-y>
+				  <positive-z>Aircraft/Generic/Effects/fgfs-sky2/6.png</positive-z>
+				  <negative-z>Aircraft/Generic/Effects/fgfs-sky2/5.png</negative-z>
+				</images>
+			</texture>
+			<transparent>true</transparent>
+			<render-bin>
+			  <bin-number>111</bin-number>
+			  <bin-name>DepthSortedBin</bin-name>
+			</render-bin>
+      </parameters>
+      <object-name>hud-optics</object-name>
+ </effect>
+ 
+ <effect>
+        <inherits-from>Effects/model-combined-deferred</inherits-from>
+        <parameters>
+          <ambient-correction type="float">0.00</ambient-correction>
+        </parameters>        
+        <object-name>box_left</object-name>
+        <object-name>box_right</object-name>
+        <object-name>center-console</object-name>
+        <object-name>center_console</object-name>
+        <object-name>Centre</object-name>
+        <object-name>COCKPIT</object-name>
+        <object-name>cockpit_border</object-name>
+        <object-name>cylinder.005</object-name>
+        <object-name>cylinder.006</object-name>
+        <object-name>floor</object-name>
+        <object-name>frontpart</object-name>
+        <object-name>Housing</object-name>
+        <object-name>object.002</object-name>
+        <object-name>object.003</object-name>
+        <object-name>object.005</object-name>
+        <object-name>object.006</object-name>
+        <object-name>object.007</object-name>
+        <object-name>PedalAdj</object-name>
+        <object-name>poly</object-name>
+        <object-name>screws</object-name>
+    </effect>
+
+ <model>
+  <name>HUD</name>
+  <path>Aircraft/f16/Models/Cockpit/hud.xml</path>
+ </model>
+
+ <model>
+  <name>chair</name>
+  <path>Aircraft/f16/Models/Cockpit/chair/chair.xml</path>
+ </model>
+ 
+ <model>
+  <name>knee1</name>
+  <path>Aircraft/f16/Models/Cockpit/pilot/kneeboard-left.xml</path>
+ </model>
+ 
+ <model>
+  <name>knee2</name>
+  <path>Aircraft/f16/Models/Cockpit/pilot/kneeboard-right.xml</path>
+ </model>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>knee1</object-name>
+  <condition>
+    <and>
+      <property>f16/cockpit/kneeboard-left-visible</property>
+      <not>
+          <property>f16/done</property>
+      </not>
+      <property>sim/current-view/internal</property><!-- without a leading slash this property wont exist over MP, and so will always default to not internal -->
+      <not>
+        <or>
+          <equals>
+            <property>sim/current-view/name</property>
+            <value type="string">GoPro #1 View</value>
+          </equals>
+          <equals>
+            <property>sim/current-view/name</property>
+            <value type="string">GoPro #2 View</value>
+          </equals>
+          <equals>
+            <property>sim/current-view/name</property>
+            <value type="string">GoPro #3 View</value>
+          </equals>
+        </or>
+      </not>
+    </and>
+  </condition>
+ </animation>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>knee2</object-name>
+  <condition>
+    <and>
+      <property>f16/cockpit/kneeboard-right-visible</property>
+      <not>
+          <property>f16/done</property>
+      </not>
+      <property>sim/current-view/internal</property><!-- without a leading slash this property wont exist over MP, and so will always default to not internal -->
+      <not>
+        <or>
+          <equals>
+            <property>sim/current-view/name</property>
+            <value type="string">GoPro #1 View</value>
+          </equals>
+          <equals>
+            <property>sim/current-view/name</property>
+            <value type="string">GoPro #2 View</value>
+          </equals>
+          <equals>
+            <property>sim/current-view/name</property>
+            <value type="string">GoPro #3 View</value>
+          </equals>
+        </or>
+      </not>
+    </and>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>chair</object-name>
+  <condition>
+   <not><property>f16/done</property></not>
+  </condition>
+ </animation>
+ 
+<!-- <model>
+  <name>Pilot_ext</name>
+  <path>Aircraft/f16/Models/Pilots/pilot_externalview.xml</path>
+ </model>
+-->
+<!--
+ <model>
+  <name>Pilot_int</name>
+  <path>Aircraft/f16/Models/Pilots/pilot_internalview.xml</path>
+ </model>
+-->
+<!--
+ <animation>
+  <type>range</type>
+  object-name>Pilot_int</object-name
+  <object-name>Pilot_ext</object-name>
+  <min-m>0</min-m>
+  <max-m>5000</max-m>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Pilot_ext</object-name>
+  <condition>
+   <not><property>sim/current-view/internal</property></not>
+  </condition>
+ </animation>
+-->
+<!--
+ <animation>
+  <type>select</type>
+  <object-name>Pilot_int</object-name>
+  <condition>
+   <property>sim/current-view/internal</property>
+  </condition>
+ </animation>
+-->
+
+ <model>
+  <name>F-16-FS-B10</name>
+  <path>Aircraft/f16/Models/Cockpit/Main/stick-B10.xml</path>
+  <offsets>
+   <x-m>-4.434</x-m><!--x-m>-4.456</x-m-->
+   <y-m> 0.269</y-m>
+   <z-m> 0.239</z-m><!--z-m> 0.200</z-m-->
+  </offsets>
+  <condition>
+    <or>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>0</value>
+      </equals>
+	  <equals>
+       <property>sim/variant-id</property>
+       <value>1</value>
+      </equals>
+    </or>
+   </condition>
+ </model>
+
+ <model>
+  <name>F-16-FS</name>
+  <path>Aircraft/f16/Models/Cockpit/Main/stick.xml</path>
+  <offsets>
+   <x-m>-4.434</x-m><!--x-m>-4.456</x-m-->
+   <y-m> 0.269</y-m>
+   <z-m> 0.239</z-m><!--z-m> 0.200</z-m-->
+  </offsets>
+  <condition>
+    <or>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>2</value>
+      </equals>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>3</value>
+      </equals>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>4</value>
+      </equals>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>5</value>
+      </equals>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>6</value>
+      </equals>
+    </or>
+   </condition>
+ </model>
+
+
+ <animation>
+  <type>translate</type>
+  <object-name>chair</object-name>
+  <!-- object-name>Pilot_int</object-name -->
+  <object-name>Pilot_ext</object-name>
+  <property>controls/seat/vertical-adjust</property>
+  <value>1</value>
+  <axis>
+   <x>0.33</x>
+   <y>0</y>
+   <z>1</z>
+  </axis>
+ </animation>
+
+ <model>
+  <name>RudderPedals</name>
+  <path>Aircraft/f16/Models/Cockpit/rudder_pedals.xml</path>
+  <offsets>
+   <x-m>-5.05</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.14</z-m>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Throttle</name>
+  <path>Aircraft/f16/Models/Cockpit/throttle.xml</path>
+  <offsets>
+   <x-m>-4.29</x-m>
+   <y-m>-0.49</y-m>
+   <z-m>0.12</z-m> 
+  </offsets>
+ </model>
+
+ <!--<animation>
+  <type>range</type>
+  <object-name>RudderPedals</object-name>
+  <object-name>Throttle</object-name>
+  <min-m>0</min-m>
+  <max-m>100</max-m>
+ </animation>-->
+
+
+<!-- ======= START CONSOLES ======= -->
+ <model>
+  <name>LeftConsole</name>
+  <path>Aircraft/f16/Models/Cockpit/Main/panels_mlu_left-console.xml</path>
+  <offsets>
+   <x-m>-4.54</x-m>
+   <y-m>-0.005</y-m>
+   <z-m>0.04</z-m> 
+   <roll-deg>-10</roll-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>LeftAuxConsole</name>
+  <path>Aircraft/f16/Models/Cockpit/Main/panels_mlu_left-aux-console.xml</path>
+  <offsets>
+   <x-m>-4.563</x-m>
+   <y-m>-0.005</y-m>
+   <z-m>0.1013</z-m>
+   <pitch-deg>45</pitch-deg>
+   <roll-deg>-10</roll-deg>
+   <heading-deg>7.287</heading-deg> 
+  </offsets>
+ </model>
+
+ <model>
+  <name>MISC</name>
+  <path>Aircraft/f16/Models/Cockpit/Main/misc.xml</path>
+  <offsets>
+   <x-m>-4.665</x-m>
+   <y-m>0.018</y-m>
+   <z-m>0.045</z-m>
+   <pitch-deg>80</pitch-deg>
+  </offsets>
+ </model>
+ 
+
+<!-- center console 1st row -->
+ <model>
+  <name>ASI</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/asi.xml</path>
+  <offsets>
+   <x-m>-4.727</x-m>
+   <y-m>-0.0423</y-m>
+   <z-m>0.443</z-m>
+   <pitch-deg>-20</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>altitude</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/altimeter.xml</path>
+  <offsets>
+   <x-m>-4.727</x-m>
+   <y-m>0.041</y-m>
+   <z-m>0.443</z-m>
+   <pitch-deg>-20</pitch-deg>
+  </offsets>
+ </model>
+
+
+<!-- center console 2nd row -->
+ <model>
+  <name>aoa-gauge</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/aoa-gauge.xml</path>
+  <offsets>
+   <x-m>-4.696</x-m>
+   <y-m>-0.0608</y-m>
+   <z-m>0.363</z-m>
+   <pitch-deg>-20</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>adi</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/adi.xml</path>
+  <offsets>
+   <x-m>-4.696</x-m>
+   <y-m>0</y-m>
+   <z-m>0.363</z-m>
+   <pitch-deg>-20</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>vsi</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/vsi.xml</path>
+  <offsets>
+   <x-m>-4.696</x-m>
+   <y-m>0.0608</y-m>
+   <z-m>0.363</z-m>
+   <pitch-deg>-20</pitch-deg>
+  </offsets>
+ </model>
+
+
+<!-- center console 3rd row -->
+ <model>
+  <name>Instrument Mode</name>
+  <path>Aircraft/f16/Models/Cockpit/Panels/instr.xml</path>
+  <offsets>
+   <x-m>-4.643</x-m>
+   <y-m>-0.0614</y-m>
+   <z-m>0.2931</z-m>
+   <pitch-deg>-53.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>HSI</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/hsi.xml</path>
+  <offsets>
+   <x-m>-4.643</x-m>
+   <y-m>0</y-m>
+   <z-m>0.2915</z-m>
+   <pitch-deg>-53</pitch-deg>
+  </offsets>
+ </model>
+ 
+ <model>
+  <name>EHSI</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/EHSI.xml</path>
+  <offsets>
+   <x-m>-4.643</x-m>
+   <y-m>0</y-m>
+   <z-m>0.2915</z-m>
+   <pitch-deg>-53</pitch-deg>
+  </offsets>
+ </model>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>EHSI</object-name>
+  <condition>
+    <or>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>2</value>
+      </equals>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>4</value>
+      </equals>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>5</value>
+      </equals>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>6</value>
+      </equals>
+    </or>
+   </condition>
+ </animation>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>HSI</object-name>
+  <condition>
+    <or>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>0</value>
+      </equals>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>1</value>
+      </equals>
+      <equals>
+       <property>sim/variant-id</property>
+       <value>3</value>
+      </equals>
+    </or>
+   </condition>
+ </animation>
+
+ <model>
+  <name>Fuel Quantity Sel</name>
+  <path>Aircraft/f16/Models/Cockpit/Panels/fuel-qty-sel.xml</path>
+  <offsets>
+   <x-m>-4.628</x-m>
+   <y-m>0.0537</y-m>
+   <z-m>0.2815</z-m>
+   <pitch-deg>-53</pitch-deg>
+  </offsets>
+ </model>
+
+
+ <model>
+  <name>RightAuxConsole</name>
+  <path>Aircraft/f16/Models/Cockpit/Main/panels_mlu_right-aux-console.xml</path>
+  <offsets>
+   <x-m>-4.563</x-m>
+   <y-m>-0.0</y-m>
+   <z-m>0.101</z-m>
+   <pitch-deg>45</pitch-deg>
+   <roll-deg>10</roll-deg>
+   <heading-deg>-7.3</heading-deg> 
+  </offsets>
+ </model>
+
+
+ <model>
+  <name>RightConsole</name>
+  <path>Aircraft/f16/Models/Cockpit/Main/panels_mlu_right-console.xml</path>
+  <offsets>
+   <x-m>-4.54</x-m>
+   <y-m>-0.0</y-m>
+   <z-m>0.04</z-m>
+   <roll-deg>10</roll-deg>
+  </offsets>
+ </model>
+<!-- ======= END CONSOLES ======= -->
+
+
+<!-- ======= START INSTRUMENTS ======= -->
+ <model>
+  <name>FUELFLOW</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/fuelflow.xml</path>
+  <offsets>
+   <x-m>-4.79</x-m>
+   <y-m>0.20</y-m>
+   <z-m>0.565</z-m>
+   <pitch-deg>-15</pitch-deg><!-- needs verification! -->
+  </offsets>
+ </model>
+
+ <model>
+  <name>AI</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/stdby-adi.xml</path>
+  <offsets>
+   <x-m>-4.795</x-m>
+   <y-m>0.145</y-m>
+   <z-m>0.575</z-m>
+   <pitch-deg>-15</pitch-deg><!-- needs verification! -->
+  </offsets>
+ </model>
+ 
+ <model>
+  <name>ENGINE</name>
+  <path>Aircraft/f16/Models/Cockpit/Main/engine.xml</path>
+  <offsets>
+   <x-m>-4.555</x-m>
+   <y-m>-0.0175</y-m>
+   <z-m>0.082</z-m>
+   <pitch-deg>65</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>COMPASS</name>
+  <path>Aircraft/f16/Models/Cockpit/Instruments/mag-compass.xml</path>
+  <offsets>
+   <x-m>-4.68</x-m>
+   <y-m>0.281</y-m>
+   <z-m>0.332</z-m>
+  </offsets>
+ </model>
+<!-- ======= END INSTRUMENTS ======= -->
+
+
+<!-- ======= START INDICATORS ======= -->
+ <model>
+  <name>EYEBROW_RIGHT</name>
+  <path>Aircraft/f16/Models/Cockpit/Main/eyebrow_right.xml</path>
+ </model>
+
+ <model>
+  <name>EYEBROW_LEFT</name>
+  <path>Aircraft/f16/Models/Cockpit/Main/eyebrow_left.xml</path>
+ </model>
+
+ <model>
+  <name>THREAT</name>
+  <path>Aircraft/f16/Models/Cockpit/Avionics/EWS/MLU_threat_warning_prime.xml</path>
+  <offsets>
+   <x-m>-4.786</x-m>
+   <y-m>-0.203</y-m>
+   <z-m>0.578</z-m>
+   <pitch-deg>-15</pitch-deg><!-- needs verification! -->
+  </offsets>
+  <condition>
+  <or>
+   <equals>
+    <property>sim/variant-id</property>
+    <value>2</value>
+   </equals>
+   <equals>
+    <property>sim/variant-id</property>
+    <value>6</value>
+   </equals>
+  </or>
+  </condition>
+ </model>
+
+ <model>
+  <name>THREAT</name>
+  <path>Aircraft/f16/Models/Cockpit/Avionics/EWS/US_threat_warning_prime.xml</path>
+  <offsets>
+   <x-m>-4.786</x-m>
+   <y-m>-0.203</y-m>
+   <z-m>0.578</z-m>
+   <pitch-deg>-15</pitch-deg><!-- needs verification! -->
+  </offsets>
+  <condition>
+   <not>
+    <or>
+    <equals>
+     <property>sim/variant-id</property>
+     <value>2</value>
+    </equals>
+    <equals>
+     <property>sim/variant-id</property>
+     <value>6</value>
+    </equals>
+   </or>
+  </not>
+ </condition>
+ </model>
+ 
+<!-- AOA indexer animations -->
+ <animation>
+  <type>select</type>
+  <object-name>down</object-name>
+  <condition>
+    <or>
+    <greater-than>
+     <property>orientation/alpha-deg</property>
+     <value>15.0</value>
+    </greater-than>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+    <greater-than>
+    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+    <value>20.0</value>
+    </greater-than>
+   </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>steady</object-name>
+  <condition>
+    <or>
+    <and>
+    <greater-than>
+     <property>orientation/alpha-deg</property> 
+     <value>11.0</value>
+    </greater-than>
+    <less-than>
+     <property>orientation/alpha-deg</property>
+     <value>15.0</value>
+    </less-than>
+    </and>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+    <greater-than>
+    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+    <value>20.0</value>
+    </greater-than>
+   </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>up</object-name>
+  <condition>
+    <or>
+    <less-than>
+     <property>orientation/alpha-deg</property>
+     <value>11.0</value>
+    </less-than>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+    <greater-than>
+    <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+    <value>20.0</value>
+    </greater-than>
+   </condition>
+ </animation>
+ 
+<!-- AAR info animations -->
+ <animation>
+  <type>select</type>
+  <object-name>rdy</object-name>
+   <condition>
+    <or>
+      <and><greater-than><property>fdm/jsbsim/elec/bus/emergency-dc-2</property><value>20</value></greater-than>
+    <property>/systems/refuel/serviceable</property></and>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+   </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>ar_nws</object-name>
+  <condition>
+    <or>
+    <and><greater-than><property>fdm/jsbsim/elec/bus/emergency-dc-2</property><value>20</value></greater-than>   
+    <or>
+      <and>
+        <property>/systems/refuel/contact</property>
+        <property>/systems/refuel/serviceable</property>
+      </and>
+      <property>gear/gear[0]/wow</property>
+    </or>
+    </and>
+    <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>disc</object-name>
+  <condition>
+    <or>
+      <and><greater-than><property>fdm/jsbsim/elec/bus/emergency-dc-2</property><value>20</value></greater-than>
+        <not><property>/systems/refuel/contact</property></not>
+        <property>/systems/refuel/serviceable</property>
+      </and>
+      <property>controls/test/test-panel/mal-ind-lts</property>
+    </or>
+  </condition>
+ </animation>
+<!-- ======= END INDICATORS ======= -->
+
+
+<!-- ======= START AVIONICS ======= -->
+ <model>
+  <name>DED</name>
+  <path>Aircraft/f16/Models/Cockpit/Avionics/DED/ded.xml</path>
+ </model>
+
+ <model>
+  <name>PFD</name>
+  <path>Aircraft/f16/Models/Cockpit/Avionics/PFD/pfd.xml</path>
+  <offsets>
+   <x-m>0.0506</x-m>
+   <y-m>0.179</y-m>
+   <z-m>-0.389</z-m>
+   <pitch-deg>0.0</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>IFF</name>
+  <path>Aircraft/f16/Models/Cockpit/Avionics/EWS/rwr.xml</path>
+  <offsets>
+   <x-m>-4.77</x-m>
+   <y-m>-0.125</y-m>
+   <z-m>0.595</z-m>
+   <pitch-deg>-13.8</pitch-deg>
+  </offsets>
+ </model>
+
+<model>
+  <name>MFD1</name>
+  <path>Aircraft/f16/Models/Cockpit/Avionics/MFD/mfd_left.xml</path>
+  <offsets>
+   <x-m>-4.755</x-m>
+   <y-m>-0.156</y-m>
+   <z-m>0.48</z-m>
+   <pitch-deg>-13.8</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>MFD2</name>
+  <path>Aircraft/f16/Models/Cockpit/Avionics/MFD/mfd_right.xml</path>
+  <offsets>
+   <x-m>-4.755</x-m>
+   <y-m>0.158</y-m>
+   <z-m>0.48</z-m>
+   <pitch-deg>-13.8</pitch-deg>
+  </offsets>
+ </model>
+
+<!-- ======= END AVIONICS ======= -->
+
+
+ <model>
+  <name>ICP</name>
+  <path>Aircraft/f16/Models/Cockpit/Panels/icp.xml</path>
+  <offsets>
+   <x-m>-4.555</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.65</z-m>
+  </offsets>
+ </model>
+
+</PropertyList>
