@@ -110,57 +110,91 @@ var init = func {
 
 var loop = func {
     var fail_keys = keys(fail_list);
+    fail_master_tmp = [0,0,0,0];
     foreach (key;fail_keys) {
+        if (key == "eng") continue;
         var sys = fail_list[key];
-        var status = getprop(sys[1]);
-        sys[2] = status == 1;
+        var status = getprop(sys[2]);
+        sys[3] = status == 1;
         fail_list[key] = sys;
         #print(sys[1]~" "~sys[2]);
+        if (status == 0) {
+            fail_master_tmp[sys[0]] = 1;
+        }
     }
-    fail_list["eng"][2] = !FailureMgr.get_failure_level("engines/engine");# Engine works a bit different than those with serviceable properties, so we fix that with this call.
+    fail_list["eng"][3] = !FailureMgr.get_failure_level("engines/engine");# Engine works a bit different than those with serviceable properties, so we fix that with this call.
+    fail_master_tmp[2] = !fail_list["eng"][3] or fail_master_tmp[2];
+    fail_master = fail_master_tmp;
     loop_caution();
     settimer(loop,1);
 }
 
+var fail_master = [0,0,0,0];
 var fail_list = {
-    #  [String displayed in the F-ACK DED page | serviceable property | working? | if reset has been requested by the pilot so failure remains but is no longer shown to him]
-    a: ["TANK LEAK", "consumables/fuel-tanks/serviceable", 1, 0],
-    b: ["RWR DEGR", "instrumentation/rwr/serviceable", 1, 0],
-    c: ["FCR BUS FAIL", "instrumentation/radar/serviceable", 1, 0],
-    d: ["HYD B FAIL", "fdm/jsbsim/systems/hydraulics/edpb-pump/serviceable", 1, 0],
-    e: ["HYD A FAIL", "fdm/jsbsim/systems/hydraulics/edpa-pump/serviceable", 1, 0],
-    f: ["FIRE", "damage/fire/serviceable", 1, 0],
-    g: ["GEN STBY FAIL", "fdm/jsbsim/elec/failures/stby-gen/serviceable", 1, 0],
-    h: ["GEN MAIN FAIL", "fdm/jsbsim/elec/failures/main-gen/serviceable", 1, 0],
-    i: ["EPU FAIL", "fdm/jsbsim/elec/failures/epu/serviceable", 1, 0],
-    j: ["BATT HOT", "fdm/jsbsim/elec/failures/battery/serviceable", 1, 0],
-    k: ["WPN FAIL", "payload/armament/fire-control/serviceable", 1, 0],
-    l: ["ISA RUD FAIL", "sim/failure-manager/controls/flight/rudder/serviceable", 1, 0],
-    m: ["ISA ELV FAIL", "sim/failure-manager/controls/flight/elevator/serviceable", 1, 0],
-    n: ["ISA ROLL FAIL", "sim/failure-manager/controls/flight/aileron/serviceable", 1, 0],
-    o: ["ISA FLAP FAIL", "sim/failure-manager/controls/flight/flaps/serviceable", 1, 0],
-    eng: ["ENG FAIL", "engines/engine/service", 1, 0],
-    q: ["HUD BUS FAIL", "instrumentation/hud/serviceable", 1, 0],
-    r: ["TCN FAIL", "instrumentation/tacan/serviceable", 1, 0],
-    s: ["AIR DATA FAIL", "instrumentation/airspeed-indicator/serviceable", 1, 0],
-    t: ["GEAR FAIL", "sim/failure-manager/controls/gear/serviceable", 1, 0],
-    u: ["DME FAIL", "instrumentation/dme/serviceable", 1, 0],
-    v: ["ALTI FAIL", "instrumentation/altimeter/serviceable", 1, 0],
-    w: ["HEAD FAIL", "instrumentation/heading-indicator/serviceable", 1, 0],
-    x: ["MAGN COMP FAIL", "instrumentation/magnetic-compass/serviceable", 1, 0],
-    y: ["IND TURN FAIL", "instrumentation/turn-indicator/serviceable", 1, 0],
-    z: ["IND ATTI FAIL", "instrumentation/attitude-indicator/serviceable", 1, 0],
+    #  [System | String displayed in the F-ACK DED page | serviceable property | working? | if reset has been requested by the pilot so failure remains but is no longer shown to him]
+    a:   [2,"TANK LEAK     ", "consumables/fuel-tanks/serviceable", 1, 0],
+    b:   [3,"RWR DEGR      ", "instrumentation/rwr/serviceable", 1, 0],
+    c:   [3,"FCR     FAIL  ", "instrumentation/radar/serviceable", 1, 0],
+    d:   [1,"HYD B FAIL    ", "fdm/jsbsim/systems/hydraulics/edpb-pump/serviceable", 1, 0],
+    e:   [1,"HYD A FAIL    ", "fdm/jsbsim/systems/hydraulics/edpa-pump/serviceable", 1, 0],
+    f:   [0,"FIRE          ", "damage/fire/serviceable", 1, 0],
+    g:   [3,"GEN STBY FAIL ", "fdm/jsbsim/elec/failures/stby-gen/serviceable", 1, 0],
+    h:   [3,"GEN MAIN FAIL ", "fdm/jsbsim/elec/failures/main-gen/serviceable", 1, 0],
+    i:   [3,"EPU FAIL      ", "fdm/jsbsim/elec/failures/epu/serviceable", 1, 0],
+    j:   [3,"BATT HOT      ", "fdm/jsbsim/elec/failures/battery/serviceable", 1, 0],
+    k:   [3,"FCC     FAIL  ", "payload/armament/fire-control/serviceable", 1, 0],
+    l:   [1,"ISA RUD FAIL  ", "sim/failure-manager/controls/flight/rudder/serviceable", 1, 0],
+    m:   [0,">ISA ELV FAIL<", "sim/failure-manager/controls/flight/elevator/serviceable", 1, 0],
+    n:   [0,">ISA ROL FAIL<", "sim/failure-manager/controls/flight/aileron/serviceable", 1, 0],
+    o:   [1,"ISA FLAP FAIL ", "sim/failure-manager/controls/flight/flaps/serviceable", 1, 0],
+    o2:  [1,"SPD BRAK FAIL ", "sim/failure-manager/controls/flight/speedbrake/serviceable", 1, 0],
+    eng: [2,"ENG FAIL      ", "engines/engine/service", 1, 0],
+    q:   [3,"HUD     FAIL  ", "instrumentation/hud/serviceable", 1, 0],
+    r:   [3,"TCN FAIL      ", "instrumentation/tacan/serviceable", 1, 0],
+    s:   [3,"AIR DATA FAIL ", "instrumentation/airspeed-indicator/serviceable", 1, 0],
+    t:   [1,"GEAR FAIL     ", "sim/failure-manager/controls/gear/serviceable", 1, 0],
+    u:   [3,"DME FAIL      ", "instrumentation/dme/serviceable", 1, 0],
+    v:   [3,"ALTI FAIL     ", "instrumentation/altimeter/serviceable", 1, 0],
+    w:   [3,"HEAD FAIL     ", "instrumentation/heading-indicator/serviceable", 1, 0],
+    x:   [3,"MAGN COMP FAIL", "instrumentation/magnetic-compass/serviceable", 1, 0],
+    y:   [3,"IND TURN FAIL ", "instrumentation/turn-indicator/serviceable", 1, 0],
+    z:   [3,"IND ATTI FAIL ", "instrumentation/attitude-indicator/serviceable", 1, 0],
+    a2:  [3,"ADF      FAIL ", "instrumentation/adf/serviceable", 1, 0],
+    b2:  [3,"PLS  GS  FAIL ", "instrumentation/nav/gs/serviceable", 1, 0],
+#   eng: [3,"ENG FAIL      ", "instrumentation/nav/cdi", 1, 0],
+    c2:  [3,"ELEC MAIN FAIL", "systems/electrical/serviceable", 1, 0],    
+    d2:  [0,">STBY    GAIN<", "systems/pitot/serviceable", 1, 0], 
+    e2:  [0,">STBY    GAIN<", "systems/static/serviceable", 1, 0], 
+    f2:  [3,"CADC BUS FAIL ", "systems/vacuum/serviceable", 1, 0], 
 };
+# Systems:
+# 0: FLCS (Warning)
+# 1: FLCS
+# 2: Engine
+# 3: Avionics
+#
+# Source for names and systems: GR1F-F16CJ-34-1 page 1-475
+
+var sorter = func(a, b) {
+    if(a[0] < b[0]){
+        return -1; # A should before b in the returned vector
+    }elsif(a[0] == b[0]){
+        return 0; # A is equivalent to b 
+    }else{
+        return 1; # A should after b in the returned vector
+    }
+}
 
 var getList = func {
     # Get a list of strings of the current non-acknowledged failures
     var fail_keys = keys(fail_list);
     var fails = [];
     foreach (key;fail_keys) {
-        if (!fail_list[key][2] and !fail_list[key][3]) {
-            append(fails, fail_list[key][0]);
+        if (!fail_list[key][3] and !fail_list[key][4]) {
+            append(fails, fail_list[key][1]);
         }
     }
+    fails = sort(fails, sorter);
     return fails;
 }
 
@@ -168,7 +202,7 @@ var fail_reset = func {
     # Remove all acknowledgements by pilot.
     var fail_keys = keys(fail_list);
     foreach (key;fail_keys) {
-        fail_list[key][3] = 0;
+        fail_list[key][4] = 0;
     }
 }
 
@@ -176,8 +210,8 @@ var f_ack = func {
     # Pilot acknowledge the failure, so lets stop displaying it.
     var fail_keys = keys(fail_list);
     foreach (key;fail_keys) {
-        if (fail_list[key][2] == 0) {
-            fail_list[key][3] = 1;
+        if (fail_list[key][3] == 0) {
+            fail_list[key][4] = 1;
         }
     }
 }

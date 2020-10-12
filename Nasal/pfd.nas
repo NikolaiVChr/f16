@@ -77,8 +77,8 @@ var loop_pfd = func {
   var fails = fail.getList();
 	var last = size(fails);
 	if (last == 0) {
-		text[0] = sprintf("     NO FAULTS     ");
-		text[1] = sprintf("    ALL SYS OK     ");
+		text[0] = sprintf("     ");
+		text[1] = sprintf("     ");
 		text[2] = "";
 		text[3] = "";
 		text[4] = "";
@@ -86,7 +86,7 @@ var loop_pfd = func {
 		scrollF += 0.25;
 		if (scrollF >= last-2) scrollF = 0;     
 		var used = subvec(fails,int(scrollF),3);
-		text[0] = sprintf("       FAULT           ");
+		text[0] = sprintf("  %s     %s     %s",(fail.fail_master[0] or fail.fail_master[1])?"FLCS":"   ",fail.fail_master[2]?"ENG":"   ",fail.fail_master[3]?"AV":"  ");# Source: GR1F-F16CJ-34-1 page 1-475
 		text[1] = sprintf("                        ");
 		if (size(used)>0) text[2] = sprintf(" %s ",used[0]);
 		else text[2] = "";
