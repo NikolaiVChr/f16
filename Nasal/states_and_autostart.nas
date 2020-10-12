@@ -33,7 +33,7 @@ var repair2 = func {
   setprop("sim/current-view/view-number",0);
   setprop("f16/cockpit/hydrazine-minutes", 10);
   setprop("f16/cockpit/oxygen-liters", 5);
-  setprop("/f16/cockpit/alt-gear-pneu",1);
+  setprop("f16/cockpit/alt-gear-pneu",1);
   setprop("canopy/not-serviceable", 0);
   
   if (inAutostart) {
@@ -43,6 +43,8 @@ var repair2 = func {
   screen.log.write("Repairing, standby..");
   f16.reloadCannon();
   f16.reloadHydras();
+  eng.accu_1_psi = eng.accu_psi_max;
+  eng.accu_2_psi = eng.accu_psi_max;
   crash.repair();
   fail.trigger_eng.arm();
   
