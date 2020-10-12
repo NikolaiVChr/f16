@@ -201,11 +201,16 @@ fail_list = sort(fail_list, sorter);
 var getList = func {
     # Get a list of strings of the current non-acknowledged failures
     var fails = [];
+    var WARN = 0;
     foreach (var sys;fail_list) {
         if (!sys[3] and !sys[4]) {
             append(fails, sys[1]);
+            if (sys[0] == 0) {
+                WARN = 1;
+            }
         }
     }
+    setprop("f16/avionics/fault-warning", WARN);
     return fails;
 }
 

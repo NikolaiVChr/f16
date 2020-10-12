@@ -1755,6 +1755,7 @@ value. 18000=standard US transition altitude -->
                 <elec-reset-btn type="bool">false</elec-reset-btn>
                 <probe-heat type="bool">false</probe-heat>
             </caution>
+            <fault-warning type="bool">false</fault-warning>
         </avionics>
         <fcs>
             <stby-mode type="bool">false</stby-mode>

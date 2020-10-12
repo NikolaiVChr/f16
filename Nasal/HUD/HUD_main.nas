@@ -1075,6 +1075,7 @@ append(obj.total, obj.speed_curr);
                  servSpeed                 : "instrumentation/airspeed-indicator/serviceable",
                  servStatic                : "systems/static/serviceable",
                  servPitot                 : "systems/pitot/serviceable",
+                 warn                      : "f16/avionics/fault-warning",
                 };
 
         foreach (var name; keys(input)) {
@@ -1461,7 +1462,7 @@ append(obj.total, obj.speed_curr);
                                           
                                       }
                                             ),
-            props.UpdateManager.FromHashList(["time_until_crash","vne"], 0.05, func(hdp)
+            props.UpdateManager.FromHashList(["time_until_crash","vne","warn"], 0.05, func(hdp)
                                              {
                                                  obj.ttc = hdp.time_until_crash;
                                                  if (obj.ttc != nil and obj.ttc>0 and obj.ttc<8) {
@@ -1470,6 +1471,9 @@ append(obj.total, obj.speed_curr);
                                                      obj.flyup.show();
                                                  } elsif (hdp.vne) {
                                                          obj.flyup.setText("LIMIT");
+                                                         obj.flyup.show();
+                                                 } elsif (hdp.warn and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
+                                                         obj.flyup.setText("WARN");
                                                          obj.flyup.show();
                                                  } else {
                                                          obj.flyup.hide();
