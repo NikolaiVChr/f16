@@ -220,13 +220,13 @@ var f_ack = func {
     # Pilot acknowledge the top 3 failures, so lets stop displaying them.
     var ack = 0;
     foreach (var sys;fail_list) {
-        if (sys[3] == 0 and sys[4] == 0) {
+        if (ack < 3 and sys[3] == 0 and sys[4] == 0) {
             sys[4] = 1;
             ack += 1;
         }
-        if (ack >= 3) {
-            break;
-        }
+    }
+    if (ack == 0) {
+        fail_reset();
     }
 }
 
