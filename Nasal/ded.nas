@@ -100,7 +100,7 @@ var dataEntryDisplay = {
 			.setFontSize(13, 1)
 			.setColor(0.45,0.98,0.06)
 			.setAlignment("left-bottom-baseline")
-			.setFont("LiberationFonts/LiberationMono-Bold.ttf")
+			.setFont("F-16-DED.ttf")
 			.setText("LINE                LINE")
 			.setTranslation(50, 128*translationOffset);
 		return obj;
