@@ -3,7 +3,7 @@
 var TRUE = 1;
 var FALSE = 0;
 
-
+# Use: f16.tree("/",0);
 var tree = func(n = "", graph = 1) {
   n = debug.propify(n);
   if (n == nil)
