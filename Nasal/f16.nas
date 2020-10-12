@@ -3,6 +3,55 @@
 var TRUE = 1;
 var FALSE = 0;
 
+
+var tree = func(n = "", graph = 1) {
+  n = debug.propify(n);
+  if (n == nil)
+    return debug.dump(n);
+  _tree(n, graph);
+}
+
+
+var _tree = func(n, graph = 1, prefix = "", level = 0) {
+  var path = n.getPath();
+  var children = n.getChildren();
+  var s = "";
+
+  if (graph) {
+    s = prefix ~ n.getName();
+    var index = n.getIndex();
+    if (index)
+      s ~= "[" ~ index ~ "]";
+  } else {
+    s = n.getPath();
+  }
+
+  if (size(children)) {
+    #s ~= "/";
+    #if (n.getType() != "NONE")
+    #  s ~= " = " ~ debug.string(n.getValue()) ~ " " ~ attributes(n)
+    #      ~ "    " ~ _section(" PARENT-VALUE ");
+  } else {
+    #s ~= " = " ~ debug.string(n.getValue()) ~ " " ~ attributes(n);
+  }
+
+  if ((var a = n.getAliasTarget()) != nil)
+    s ~= "  " ~ debug._title(" alias to ") ~ "  " ~ a.getPath();
+
+  if(n.getName() == "serviceable") print(s);
+
+  if (n.getType() != "ALIAS")
+    forindex (var i; children)
+      _tree(children[i], graph, prefix ~ ".   ", level + 1);
+}
+
+
+
+
+
+
+
+
 # strobes ===========================================================
 #var strobe_switch = props.globals.getNode("controls/lighting/ext-lighting-panel/anti-collision2", 1);
 #aircraft.light.new("sim/model/lighting/strobe", [0.03, 1.9+rand()/5], strobe_switch);
@@ -1055,10 +1104,6 @@ var SubSystem_Main = {
     update : func(notification) {
     },
 };
-#
-# Add failure for HUD to the compatible failures. This will setup the property tree in the normal way; 
-# but it will not add it to the gui dialog.
-#append(compat_failure_modes.compat_modes,{ id: "instrumentation/hud", type: compat_failure_modes.MTBF, failure: compat_failure_modes.SERV, desc: "HUD" });
 
 subsystem = SubSystem_Main.new("SubSystem_Main");
 

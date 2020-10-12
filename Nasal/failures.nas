@@ -60,7 +60,7 @@ var init = func {
     
     var prop = "payload/armament/fire-control";
 	var actuator_fc = compat_failure_modes.set_unserviceable(prop);
-	FailureMgr.add_failure_mode(prop, "Fire control", actuator_fc);
+	FailureMgr.add_failure_mode(prop, "Fire control computer", actuator_fc);
 
 	var battery_fc = compat_failure_modes.set_unserviceable("fdm/jsbsim/elec/failures/battery");
 	FailureMgr.add_failure_mode("fdm/jsbsim/elec/failures/battery", "Battery", battery_fc);
@@ -106,6 +106,11 @@ var init = func {
 	trigger_eng = RandVneTrigger.new(0.25, 1, "f16/vne");
 	FailureMgr.set_trigger("engines/engine", trigger_eng);
 	trigger_eng.arm();
+    
+    #
+    # Add failure for HUD to the compatible failures. This will setup the property tree in the normal way; 
+    # but it will not add it to the gui dialog.
+    #append(compat_failure_modes.compat_modes,{ id: "instrumentation/hud", type: compat_failure_modes.MTBF, failure: compat_failure_modes.SERV, desc: "HUD" });
 }
 
 var loop = func {
