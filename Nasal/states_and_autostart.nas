@@ -32,6 +32,7 @@ var repair2 = func {
   setprop("sim/view[0]/enabled",1);
   setprop("sim/current-view/view-number",0);
   setprop("f16/cockpit/hydrazine-minutes", 10);
+  setprop("f16/cockpit/oxygen-liters", 5);
   setprop("/f16/cockpit/alt-gear-pneu",1);
   setprop("canopy/not-serviceable", 0);
   
@@ -220,6 +221,8 @@ var autostartengine = func {
   setprop("controls/lighting/lighting-panel/flood-inst-pnl-knob", 0.1);
   setprop("controls/lighting/lighting-panel/console-primary-knob", 0.2);
   setprop("controls/lighting/lighting-panel/data-entry-display", 1.0);
+  
+  setprop("controls/test/test-panel/oxy-test", 0);
 
   setprop("instrumentation/radar/radar-standby", 0);
   setprop("instrumentation/comm[0]/volume",1);
