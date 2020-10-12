@@ -557,6 +557,7 @@
                 <string n="6" type="string"></string><!-- string 6 used by radar lock RWR warning -->
             </generic>
             <visibility-range-nm type="int">160</visibility-range-nm>
+            <chat-menu n="0" include="Aircraft/f16/Systems/f16-chat-menu-entries.xml"/>
         </multiplay>
 
         <gui n="0" include="gui/f16-gui.xml"/>

@@ -1,0 +1,153 @@
+<?xml version="1.0" ?>
+<PropertyList>
+  <!--
+  Comprehensive(?) UNICOM and ATC message set for Flightgear F-16.
+  Rob Shearman, Jr., January 2008
+  Modified Nikolai V. Chr., Oct 2020
+
+  [ at the start of the <name> tag indicates that the text will not be added to the message.
+  Special characters (in place of proper substitutions) :
+    ! airport direction
+    ^ airport distance
+    % aircraft type (First word from /sim/description
+    # Callsign
+    $ Current Altitude
+    * Airport ID
+    ( current runway
+  -->
+  <config>
+    <menu>
+      <name>[COM]</name>
+      <menu>
+        <name>[* UNICOM]</name>
+        <menu>
+          <name>[Departing runway (]</name>
+          <menu><name>* Traffic, # taxiing to runway (.</name></menu>
+          <menu><name>* Traffic, # holding short runway (.</name></menu>
+          <menu><name>* Traffic, # departing runway (. Remaining in the pattern.</name></menu>
+          <menu><name>* Traffic, # departing runway (. Departing the pattern to the North.</name></menu>
+          <menu><name>* Traffic, # departing runway (. Departing the pattern to the East.</name></menu>
+          <menu><name>* Traffic, # departing runway (. Departing the pattern to the South.</name></menu>
+          <menu><name>* Traffic, # departing runway (. Departing the pattern to the West.</name></menu>
+        </menu>
+        <menu><name>* UNICOM, # ^ miles ! descending through $ feet, inbound to enter the traffic pattern.</name></menu>
+        <menu><name>* Traffic, # crosswind for runway (.</name></menu>
+        <menu><name>* Traffic, # downwind for runway (.</name></menu>
+        <menu><name>* Traffic, # turning base for runway (.</name></menu>
+        <menu><name>* Traffic, # turning final runway (.</name></menu>
+        <menu><name>* Traffic, # straight in for runway (.</name></menu>
+        <menu><name>* Traffic, # clear of runway (.</name></menu>
+      </menu>
+      <menu>
+        <name>[ATC]</name>
+        <menu>
+          <name>[Responses]</name>
+          <menu><name>Roger, #.</name></menu>
+          <menu><name>Roger, holding short runway (, #.</name></menu>
+          <menu><name>Roger, position and hold runway (, #.</name></menu>
+          <menu><name>Roger, clear for takeoff, #.</name></menu>
+          <menu><name>Roger, cleared to land, #.</name></menu>
+          <menu><name>Roger, # aborting.</name></menu>
+          <menu><name>Roger, # going around.</name></menu>
+          <menu><name>Roger, # switching, good day.</name></menu>
+        </menu>
+        <menu>
+          <name>[* Tower arrival]</name>
+          <menu><name>* Tower, #.</name></menu>
+          <menu><name>* Tower, # $ feet ^ miles ! of * inbound for visual approach.</name></menu>
+          <menu><name>* Tower, # $ feet ^ miles ! of * to transition your airspace.</name></menu>
+          <menu><name>* Tower, # straight in for runway (.</name></menu>
+          <menu><name>* Tower, # clear of runway (.</name></menu>
+        </menu>
+        <menu>
+          <name>[* Tower departure]</name>
+          <menu><name>* Tower, # ready to taxi.</name></menu>
+          <menu><name>* Tower, # ready to taxi, VFR North.</name></menu>
+          <menu><name>* Tower, # ready to taxi, VFR East.</name></menu>
+          <menu><name>* Tower, # ready to taxi, VFR South.</name></menu>
+          <menu><name>* Tower, # ready to taxi, VFR West.</name></menu>
+          <menu><name>* Tower, # holding short runway (.</name></menu>
+        </menu>
+        <menu>
+          <name>[* Ground arrival]</name>
+          <menu><name>* Ground, # request progressive taxi instructions to transient parking.</name></menu>
+          <menu><name>* Ground, # request progressive taxi instructions to the terminal.</name></menu>
+        </menu>
+        <menu>
+          <name>[* Ground departure]</name>
+          <menu><name>* Ground, # request departure information.</name></menu>
+          <menu><name>* Ground, # request startup.</name></menu>
+          <menu><name>* Ground, # request pushback.</name></menu>
+          <menu><name>* Ground, # ready to taxi.</name></menu>
+          <menu><name>* Ground, # ready to taxi, VFR North.</name></menu>
+          <menu><name>* Ground, # ready to taxi, VFR East.</name></menu>
+          <menu><name>* Ground, # ready to taxi, VFR South.</name></menu>
+          <menu><name>* Ground, # ready to taxi, VFR West.</name></menu>
+        </menu>
+        <menu>
+          <name>[Visual Contact Advisories]</name>
+          <menu><name># looking for the traffic.</name></menu>
+          <menu><name># negative contact with the traffic.</name></menu>
+          <menu><name># has the traffic in sight.</name></menu>
+        </menu>
+        <menu>
+          <name>[* Approach]</name>
+          <menu><name>* Approach, # with you, level $.</name></menu>
+          <menu><name>* Approach, #, %, ^ miles ! of *, request VFR flight following.</name></menu>
+        </menu>
+      </menu>
+      <menu><name># going around.</name></menu>
+      <menu><name>Roger, #.</name></menu>
+    </menu>
+    <!--
+      
+           F-16 custom stuff:  (max 8 entries in each menu)
+    
+    -->
+    <menu>
+      <name>[Formation]</name>
+      <menu><name>I am visual</name></menu><!-- I see you -->
+      <menu><name>I am blind $</name></menu><!-- I do not see you -->
+      <menu><name>Form up on me</name></menu>
+      <menu><name>Combat spread $ ft</name></menu>
+      <menu><name>Posit?</name></menu><!-- What is your position and altitude -->
+      <menu><name>I am saddled</name></menu><!-- In the agreed upon formation position -->
+      <menu><name>I am stripped some miles</name></menu><!-- Lagging behind formation -->
+    </menu>
+    <menu>
+      <name>[Training]</name>
+      <menu><name>Start</name></menu><!--  -->
+      <menu><name>Knock it off</name></menu><!-- Stop the excersize -->
+      <menu><name>You are floor mort</name></menu><!-- You hit the training floor -->
+      <menu><name>I am floor mort</name></menu><!-- I hit the training floor -->
+      <menu><name>Use Mk 1. eyeball</name></menu><!-- Use your eyes to locate -->
+      <menu><name>Guns only</name></menu><!--  -->
+      <menu><name>Guns and heat only</name></menu><!--  -->
+    </menu>
+    <menu>
+      <name>[Combat]</name>
+      <menu><name>I am tally</name></menu><!-- Hostile located -->
+      <menu><name>I am no joy $</name></menu><!-- I have no clue about hostile position -->
+      <menu><name>Going defensive</name></menu><!-- I am defending against missile -->
+      <menu><name>Going cold</name></menu><!-- Going away from hostile(s) -->
+      <menu><name>Going hot</name></menu><!-- Going to wards hostile(s) -->
+      <menu><name>Spike</name></menu><!-- Some got a lock on me -->
+      <menu><name>Splash one bandit</name></menu><!-- I got a kill -->
+      <menu><name>Winchester</name></menu><!-- Out of ammo -->
+    </menu>    
+    <menu>
+      <name>[Misc]</name>
+      <menu><name>Rolex 10 minutes</name></menu><!-- I am 10 minutes late/out -->
+      <menu><name>Rolex 5 minutes</name></menu>
+      <menu><name>Unable</name></menu><!-- Cannot do whats requested of me -->
+      <menu><name>Roger</name></menu>
+      <menu><name>Wilco</name></menu><!-- Will comply -->
+      <menu><name>Same</name></menu><!-- Same goes for me -->
+      <menu><name>Thumbleweed</name></menu><!-- I am no clue where I am or whats going on around me -->
+      <menu><name>Helmet fire</name></menu><!-- I am overloaded (struggling with doing too much at same time) -->
+    </menu>
+    <menu><name>Buddy spike</name></menu><!-- Someone got a lock on me, probably a friendly -->
+    <menu><name>Bingo</name></menu><!-- Only got enough fuel to get back home -->
+    <menu><name>Ejecting</name></menu>
+  </config>
+</PropertyList>
