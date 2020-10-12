@@ -1723,6 +1723,13 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     emesary.GlobalTransmitter.Register(awg_9.aircraft_radar);
     #execTimer.start();
     rtExec_loop();
+    
+    # Setup F-16 custom ATC chat menu:
+    var chatNode = props.globals.getNode("/sim/multiplay/chat-menu");
+    chatNode.removeAllChildren();
+    call(func{fgcommand('loadxml', props.Node.new({ filename: getprop("/sim/aircraft-dir") ~ "/Systems/f16-chat-menu-entries.xml", targetnode: "sim/multiplay/chat-menu" }));},nil,var err= []);
+    
+    # Engine running, setup some stuff:
     if (getprop("f16/engine/running-state")) {
       #skip warmup if not cold and dark selected from launcher.
       setprop("/f16/avionics/power-fcr-warm", 1);
