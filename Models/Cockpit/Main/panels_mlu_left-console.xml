@@ -2396,8 +2396,8 @@
         <type>knob</type>
         <object-name>SW_JET_FUEL</object-name>
         <property>f16/engine/jfs-start-switch</property>
-        <drag-direction>horizontal</drag-direction>
-        <drag-scale-px>-10</drag-scale-px><!-- 10 is default -->
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
         <factor>20</factor>
         <offset-deg>0</offset-deg>
         <center>
