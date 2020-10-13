@@ -71,7 +71,7 @@ var dataEntryDisplay = {
 			"name": "DED",
 			"size": [512, 256],
 			"view": [256, 128],
-			"mipmapping": 0
+			"mipmapping": 1
 		});
 		  
 		me.canvasNode.addPlacement({"node": "poly.003", "texture": "canvas.png"});
