@@ -83,13 +83,13 @@
 			</ge>
 		</and>
 		 <sum>	
-			<v>1.0</v>
+			<v>0.97</v>
 			<product>
 				<property>/f16/engine/max-power</property>
-				<v>0.033</v>
+				<v>0.03</v>
 			</product>
 		 </sum>
-		 <v>1.0</v>
+		 <v>0.97</v>
 	 </ifthen>
    <table>
     <independentVar lookup="row">velocities/mach</independentVar>
