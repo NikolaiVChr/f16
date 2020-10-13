@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 
 <PropertyList>
 
@@ -2854,5 +2854,9 @@
   <max-m>10000</max-m>
  </animation>
 -->
+
+  <model>
+    <path>Aircraft/Generic/marker.xml</path>
+  </model>
 
 </PropertyList>

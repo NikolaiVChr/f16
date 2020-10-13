@@ -73,7 +73,6 @@
         <state include="states/running.xml" n="1"/>
         <state include="states/cruise.xml" n="2"/>
         <state include="states/approach.xml" n="3"/>
-        <checklists include="gui/checklists.xml"/>
         <submodels>
             <serviceable type="bool">1</serviceable>
             <path>Aircraft/f16/Systems/f16-submodels.xml</path>

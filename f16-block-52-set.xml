@@ -187,6 +187,8 @@
    <title>General Dynamics F-16 Fighting Falcon</title>
   </help>-->
 
+  <checklists include="gui/checklists-b40.xml"/>
+
  </sim>
 
  <fdm>
