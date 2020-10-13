@@ -8,6 +8,9 @@ var wingspanEF = EditableField.new("f16/avionics/eegs-wingspan-ft", "%3d", 3);
 var alowEF = EditableField.new("f16/settings/cara-alow", "%5d", 5);
 var mslFloorEF = EditableField.new("f16/settings/msl-floor", "%5d", 5);
 var laserCodeTgpEF = EditableField.new("f16/avionics/laser-code", "%4d", 4);
+var iffEF = EditableField.new("instrumentation/iff/channel-selection", "%4d", 4);
+var transpEF = EditableField.new("instrumentation/transponder/id-code", "%4d", 4);
+var transpModeTF = toggleableTransponder.new([0, 1, 2, 3, 4, 5], "instrumentation/transponder/inputs/knob-mode");
 
 var pTACAN = EditableFieldPage.new(0, [tacanChanEF,tacanBandTF,ilsFrqEF,ilsCrsEF]);
 var pALOW  = EditableFieldPage.new(1, [alowEF,mslFloorEF]);
@@ -47,7 +50,7 @@ var pHARM  = EditableFieldPage.new(29);
 var pCNI   = EditableFieldPage.new(30);
 var pCOMM1 = EditableFieldPage.new(31);
 var pCOMM2 = EditableFieldPage.new(32);
-var pIFF   = EditableFieldPage.new(33);
+var pIFF   = EditableFieldPage.new(33, [transpEF,transpModeTF,iffEF]);
 
 var dataEntryDisplay = {
 	line1: nil,
@@ -741,13 +744,11 @@ var dataEntryDisplay = {
 		} elsif (sign != "") {
 			friend = "NO CONN";
 		}
-		var iffcode = getprop("instrumentation/iff/channel-selection");
-		var pond   = getprop("instrumentation/transponder/inputs/knob-mode")==0?0:1;
-		if (pond) pond = sprintf("%04d",getprop("instrumentation/transponder/id-code"));
+		#var pond   = getprop("instrumentation/transponder/inputs/knob-mode")==0?0:1;
 		else pond = "----";
-		me.text[0] = sprintf("IFF   ON   MAN          ");
-		me.text[1] = sprintf("M3     %s             ", pond);
-		me.text[2] = sprintf("M4     %04d             ", iffcode);
+		me.text[0] = sprintf("IFF        MAN          ");# Should have ON between IFF and MAN. But I moved it beside the channels, until we get more transponder/iff in cockpit.
+		me.text[1] = sprintf("M3    %s  %s         ", pIFF.vector[0].getText(), pIFF.vector[1].getText());
+		me.text[2] = sprintf("M4    %s   ON         ", pIFF.vector[2].getText());
 		me.text[3] = sprintf("PILOT   %s",sign);
 		me.text[4] = sprintf("TYPE    %s",type);
 	},

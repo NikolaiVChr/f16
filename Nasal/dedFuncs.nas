@@ -353,6 +353,74 @@ var toggleTACANMode = func() {
 	}
 };
 
+var toggleableTransponder = {
+	new: func(valuesVector, prop) {
+		var tF = {parents: [toggleableTransponder]};
+		tF.valuesVector = valuesVector;
+		tF.value = "";
+		tF.index = 0;
+		tF.prop = prop;
+		tF.selected = 0;
+		tF.text = "";
+		tF.lastText1 = "";
+		tF.lastText2 = "";
+		tF.recallStatus = 0;
+		tF.listener = nil;
+		tF.init();
+		return tF;
+	},
+	init: func() {
+		if (me.listener == nil) {
+			me.listener = setlistener(me.prop, func() {
+				me.updateText();
+			}, 0, 0);
+		}
+		
+		for (var i = 0; i < size(me.valuesVector); i = i + 1) {
+			if (getprop(me.prop) == me.valuesVector[i]) {
+				me.value = me.valuesVector[i];
+				me.index = i;
+			}
+		}
+	},
+	append: func(letter) {
+		if (letter != "0") { return; }
+		me.index += 1;
+		if (me.index >= size(me.valuesVector)) {
+			me.index = 0;
+		}
+		setprop(me.prop, me.valuesVector[me.index]);
+	},
+	recall: func() {
+		return;
+	},
+	enter: func() {
+		return;
+	},
+	getText: func() {
+		me.stat = "OFF";
+		if (me.value == 1) {
+			me.stat = "STBY";
+		} elsif (me.value == 2) {
+			me.stat = "TEST";
+		} elsif (me.value == 3) {
+			me.stat = "GND";
+		} elsif (me.value == 4) {
+			me.stat = "ON";
+		} elsif (me.value == 5) {
+			me.stat = "ALT";
+		}
+		if (me.selected) {
+			return "*" ~ me.stat ~ "*";
+		} else {
+			return " " ~ me.stat ~ " ";
+		}
+	},
+	updateText: func() {
+		me.value = me.valuesVector[me.index];
+	},
+};
+
 var modeSelBull = func() { dataEntryDisplay.bullMode = !dataEntryDisplay.bullMode; };
 
 var stptNext = func() {
