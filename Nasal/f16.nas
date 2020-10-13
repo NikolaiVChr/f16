@@ -396,7 +396,17 @@ var medium = {
       }
       setprop("f16/avionics/hud-power",power);
     }
-    
+    var drift = getprop("f16/avionics/hud-drift");
+    if (drift == 0) {
+      setprop("f16/avionics/hud-drift", 1);
+      if (getprop("f16/avionics/fault-warning") == 1) {
+        setprop("f16/avionics/fault-warning", 2);
+      }
+      if (getprop("f16/avionics/bingo") == 1) {
+        setprop("f16/avionics/bingo", 2);
+      }
+      setprop("f16/avionics/n-reset", 1);# yep, manual dash 34 says it does that.
+    }
     batteryChargeDischarge(); ########## To work optimally, should run at or below 0.5 in a loop ##########
     
     sendLightsToMp();

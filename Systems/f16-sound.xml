@@ -3349,7 +3349,10 @@
             <type>avionics</type>
             <condition>
                 <not><property>gear/gear[2]/wow</property></not>
-                <property>f16/avionics/bingo</property>
+                <equals>
+                    <property>f16/avionics/bingo</property>
+                    <value>1</value>
+                </equals>
                 <greater-than>
                   <property>fdm/jsbsim/elec/bus/batt-1</property>
                   <value>20</value>
@@ -3498,6 +3501,10 @@
             <condition>
                 <not><property>gear/gear[2]/wow</property></not>
                 <or>
+                    <equals>
+                        <property>f16/avionics/fault-warning</property>
+                        <value>1</value><!-- important it dont sound when this is 2 -->
+                    </equals>
                     <and><!-- TO LDG -->
                         <less-than>
                           <property>gear/gear[0]/position-norm</property>

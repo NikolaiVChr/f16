@@ -218,7 +218,9 @@ var getList = func {
             }
         }
     }
-    setprop("f16/avionics/fault-warning", WARN);
+    if (WARN == 0 or getprop("f16/avionics/fault-warning") != 2) {
+        setprop("f16/avionics/fault-warning", WARN);
+    }
     return fails;
 }
 

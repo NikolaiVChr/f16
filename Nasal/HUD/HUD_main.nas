@@ -1276,7 +1276,7 @@ append(obj.total, obj.speed_curr);
                                             
                                             #obj.ladder.show();
                                         
-                                        var result = HudMath.getDynamicHorizon(5,0.5,0.5,0.7,0.5,hdp.drift,-0.25);
+                                        var result = HudMath.getDynamicHorizon(5,0.5,0.5,0.7,0.5,hdp.drift < 2,-0.25);
                                         if (hdp.servTurn) {
                                             obj.h_rot.setRotation(result[1]);
                                             obj.zenith.setRotation(-result[1]);
@@ -1462,7 +1462,7 @@ append(obj.total, obj.speed_curr);
                                           
                                       }
                                             ),
-            props.UpdateManager.FromHashList(["time_until_crash","vne","warn"], 0.05, func(hdp)
+            props.UpdateManager.FromHashList(["time_until_crash","vne","warn", "elapsed"], 0.05, func(hdp)
                                              {
                                                  obj.ttc = hdp.time_until_crash;
                                                  if (obj.ttc != nil and obj.ttc>0 and obj.ttc<8) {
@@ -1472,8 +1472,11 @@ append(obj.total, obj.speed_curr);
                                                  } elsif (hdp.vne) {
                                                          obj.flyup.setText("LIMIT");
                                                          obj.flyup.show();
-                                                 } elsif (hdp.warn and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
+                                                 } elsif (hdp.warn == 1 and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
                                                          obj.flyup.setText("WARN");
+                                                         obj.flyup.show();
+                                                 } elsif (hdp.bingo == 1 and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
+                                                         obj.flyup.setText("FUEL");
                                                          obj.flyup.show();
                                                  } else {
                                                          obj.flyup.hide();
@@ -1735,7 +1738,7 @@ append(obj.total, obj.speed_curr);
         
         if (1) {
             var vvpos = HudMath.getFlightPathIndicatorPos();
-            if (hdp.drift) {
+            if (hdp.drift < 2) {
                 hdp.VV_x = vvpos[0];
             } else {
                 hdp.VV_x = 0;

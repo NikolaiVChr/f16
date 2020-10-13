@@ -145,15 +145,15 @@
             <x-m>-0.000831</x-m><y-m>0.01355</y-m><z-m>-0.039324</z-m>
         </center>
         <axis>
-            <x>0</x><y>1</y><z>0</z>
+            <x>0</x><y>-1</y><z>0</z>
         </axis>
         <action>
             <binding>
                 <command>property-adjust</command>
                 <property>f16/avionics/hud-drift</property>
-                <factor>-1</factor>
+                <factor>1</factor>
                 <min>0</min>
-                <max>1</max>
+                <max>2</max>
                 <wrap>false</wrap>
             </binding>
         </action>

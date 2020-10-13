@@ -7,7 +7,9 @@ var fuelqty = func {
   var fuseFuel = getprop("consumables/fuel/tank[0]/level-lbs") + getprop("consumables/fuel/tank[3]/level-lbs") + getprop("consumables/fuel/tank[4]/level-lbs") + getprop("consumables/fuel/tank[5]/level-lbs");
 
   if (fuel<getprop("f16/settings/bingo") or (sel == 1 and fuseFuel<getprop("f16/settings/bingo"))) {
-    setprop("f16/avionics/bingo", 1);
+    if (getprop("f16/avionics/bingo") == 0) {
+      setprop("f16/avionics/bingo", 1);
+    }
   } else {
     setprop("f16/avionics/bingo", 0);
   }
