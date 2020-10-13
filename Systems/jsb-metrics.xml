@@ -34,7 +34,7 @@
     -->
    <x> 3.0664 </x>
    <y> 0 </y>
-   <z> 0 </z>
+   <z> -8 </z>
   </location>
   <location name="EYEPOINT" unit="IN">
    <!-- This is where pilot g-force is calculated at. -->
