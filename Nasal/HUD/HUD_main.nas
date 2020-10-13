@@ -2033,7 +2033,7 @@ append(obj.total, obj.speed_curr);
                 me.ownCoord = geo.aircraft_position();
                 me.bullDirToMe = me.bullCoord.course_to(me.ownCoord);
                 me.bullDistToMe = me.bullCoord.distance_to(me.ownCoord)*M2NM;
-                
+                if (me.bullDistToMe > 999) me.bullDistToMe = 999;
                 me.bullDirToMe = sprintf("%03d", me.bullDirToMe);
 				me.bullDistToMe = sprintf("%02d", me.bullDistToMe);
 			    hdp.window11_txt = sprintf("%s %s", me.bullDirToMe, me.bullDistToMe); 
