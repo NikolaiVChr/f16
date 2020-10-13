@@ -44,6 +44,7 @@ var F16_HUD = {
 
 # Create a group for the parsed elements
         obj.svg = obj.canvas.createGroup().hide();
+        obj.main_mask = obj.canvas.createGroup().set("z-index",20000);
  
 # Parse an SVG file and add the parsed elements to the given group
         #print("HUD Parse SVG ",
@@ -282,6 +283,15 @@ var F16_HUD = {
                 .setFontSize(9, 1.1);
         append(obj.total, obj.speed_type);
         append(obj.total, obj.alt_type);
+        obj.super_mask = obj.main_mask.createChild("image")
+                .setTranslation(0,0)
+                #.set("blend-source-rgb","one")
+                #.set("blend-source-alpha","one")
+                .set("blend-source","zero")
+                .set("blend-destination-rgb","one")
+                .set("blend-destination-alpha","one-minus-src-alpha")
+                #.set("blend-destination","zero")
+                .set("src", "Aircraft/f16/Nasal/HUD/main_mask.png");
         obj.speed_mask = obj.svg.createChild("image")
                 .setTranslation(-27+0.21*sx*0.695633,sy*0.245-6)
                 .set("z-index",10000)
