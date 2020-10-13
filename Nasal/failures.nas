@@ -128,11 +128,18 @@ var loop = func {
             sys[3] = status == 1;
             if (status == 0) {
                 fail_master_tmp[sys[0]] = 1;
+            } else {
+                # If fault goes away, so does the F-ACK
+                sys[4] = !status;
             }
         } else {
             var status = !FailureMgr.get_failure_level("engines/engine");# Engine works a bit different than those with serviceable properties, so we fix that with this call.
             sys[3] = status;
             fail_master_tmp[2] = !sys[3] or fail_master_tmp[2];
+            if (status == 1) {
+                # If fault goes away, so does the F-ACK
+                sys[4] = !status;
+            }
         }
     }
     fail_master = fail_master_tmp;
@@ -172,11 +179,12 @@ var fail_list = [
        [3," IND  ATTI FAIL ", "instrumentation/attitude-indicator/serviceable", 1, 0],
        [3," ADF       FAIL ", "instrumentation/adf/serviceable", 1, 0],
        [3," PLS  GS   FAIL ", "instrumentation/nav/gs/serviceable", 1, 0],
-#      [3," ENG FAIL      ", "instrumentation/nav/cdi", 1, 0], not used by F-16
+#      [3," IND  CDI  FAIL ", "instrumentation/nav/cdi", 1, 0], not used by F-16
        [3," ELEC MAIN FAIL ", "systems/electrical/serviceable", 1, 0],    
        [0,">STBY      GAIN<", "systems/pitot/serviceable", 1, 0], 
        [0,">STBY      GAIN<", "systems/static/serviceable", 1, 0], 
-       [3," CADC BUS  FAIL ", "systems/vacuum/serviceable", 1, 0]
+       [3," CADC BUS  FAIL ", "systems/vacuum/serviceable", 1, 0],
+#       [1,">FLCS LEF  LOCK<", "fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", 1, 0]
 ]; 
 # Systems:
 # 0: FLCS (Warning)
@@ -184,7 +192,7 @@ var fail_list = [
 # 2: Engine
 # 3: Avionics
 #
-# Source for names and systems: GR1F-F16CJ-34-1 page 1-475
+# Source : GR1F-F16CJ-34-1 page 1-475  and 1F-F16CJ-1-1 page 1-140
 
 var sorter = func(a, b) {
     if(a[0] < b[0]){

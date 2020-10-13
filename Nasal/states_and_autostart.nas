@@ -47,7 +47,6 @@ var repair2 = func {
   eng.accu_2_psi = eng.accu_psi_max;
   crash.repair();
   fail.trigger_eng.arm();
-  fail.fail_reset();
   
   if (getprop("f16/engine/running-state")) {
     # f16/engine/running-state is what the pilot originally chose from the FG launcher.
@@ -58,7 +57,11 @@ var repair2 = func {
       # engine is not running, lets attempt to start it
       setprop("f16/engine/feed",1);
       setprop("f16/engine/cutoff-release-lever",1);
-      setprop("f16/engine/jfs-start-switch",1);# If airborne while doing this, maybe should set this to -1 (START 1) instead. And only to 1 (START 2) if on ground WOW.
+      if (getprop("gear/gear/wow")) {
+        setprop("f16/engine/jfs-start-switch",1);# If airborne while doing this, maybe should set this to -1 (START 1) instead. And only to 1 (START 2) if on ground WOW.
+      } else {
+        setprop("f16/engine/jfs-start-switch",-1);# If airborne while doing this, maybe should set this to -1 (START 1) instead. And only to 1 (START 2) if on ground WOW.
+      }
       settimer(repair3, 35);# Needs to allow time to: Spool up JFS and Spool up engine
     } else {
       # Engine is running, lets exit.
@@ -137,10 +140,16 @@ var autostart = func {
 
   eng.JFS.start_switch_last = 0; # bypass check for switch was in OFF
 
-  if (eng.accu_1_psi < eng.accu_psi_max and eng.accu_2_psi < eng.accu_psi_max) {
+  if (getprop("gear/gear/wow") and !(eng.accu_1_psi == eng.accu_psi_max or eng.accu_2_psi == eng.accu_psi_max or (eng.accu_1_psi >= eng.accu_psi_both_max and eng.accu_2_psi >= eng.accu_psi_both_max))) {
       screen.log.write("Both JFS accumulators de-pressurized. Engine start aborted.");
       print("Both JFS accumulators de-pressurized. Auto engine start aborted.");
-      print("Menu->F-16->Config to fill them up again. Or wait for Hydraulic-B system to do it.");# The 'wait for' part only applies to windmilling when airborne with not running engine. Maybe a if statement and 2 diff print statements here? ~Leto
+      print("Menu->F-16->Config to fill them up again.");
+      inAutostart = 0;
+      return;
+  } elsif  (!getprop("gear/gear/wow") and eng.accu_1_psi < eng.accu_psi_max and eng.accu_2_psi < eng.accu_psi_max) {
+      screen.log.write("Both JFS accumulators de-pressurized. Engine start aborted.");
+      print("Both JFS accumulators de-pressurized. Auto engine start aborted.");
+      print("Menu->F-16->Config to fill them up again. Or wait for Hydraulic-B system to do it.");
       inAutostart = 0;
       return;
   }
@@ -152,7 +161,11 @@ var autostart = func {
 }
 
 var autostartelec = func {
-  setprop("f16/engine/jfs-start-switch",1);
+  if (getprop("gear/gear/wow")) {
+    setprop("f16/engine/jfs-start-switch",1);# Only to 1 (START 2) if on ground WOW.
+  } else {
+    setprop("f16/engine/jfs-start-switch",-1);# If airborne while doing this, set to -1 (START 1) instead.
+  }
 
   # Wait for the JFS to spool up
   autostart_watchdog.restart(45);
