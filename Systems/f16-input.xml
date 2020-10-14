@@ -4,6 +4,8 @@
 # Avoid putting Nasal scripts into this file as people then copy them and put them in their joystick.
 #  And when we change it, they forget to change their joystick, and their aircraft will not work as it should.
 #
+# #setlistener("devices/status/keyboard/event", func(n) debug.dump(n.getValues()));
+# uncomment that to see input in console
 -->
 <PropertyList>
 	<mice n="0">

@@ -607,6 +607,15 @@ var MFD_Device =
                 .setColor(colorLine3)
                 .set("z-index",1)
                 .setFontSize(20, 1.0);
+                
+        svg.interceptCross = svg.p_RDR.createChild("path")
+                            .moveTo(10,0)
+                            .lineTo(-10,0)
+                            .moveTo(0,-10)
+                            .vert(20)
+                            .setColor(colorCircle2)
+                            .set("z-index",20)
+                            .setStrokeLineWidth(2);
         #}
         #svg.lockF = setsize([],3);
         #for (var i = 0;i<3;i+=1) {
@@ -1215,6 +1224,7 @@ var MFD_Device =
             me.desig_new = nil;
             me.gm_echoPos = {};
             me.ijk = 0;
+            me.intercept = nil;
             foreach(contact; awg_9.tgts_list) {
                 if (rdrMode == RADAR_MODE_SEA and contact.get_type() != armament.MARINE) {
                     continue;
@@ -1332,6 +1342,14 @@ var MFD_Device =
                             me.root.lockFRot.hide();
                             me.root.lockRot.update();
                         }
+                        
+                        if (rdrMode == RADAR_MODE_CRM) {
+                            me.intercept = get_intercept(contact.get_bearing(),
+                             contact.get_range()*NM2M, contact.get_heading(),
+                              contact.get_Speed()*KT2MPS,
+                               getprop("velocities/groundspeed-kt")*KT2MPS, geo.aircraft_position(), getprop("orientation/heading-deg"));
+                        }
+                        
                         me.root.lock.show();
                         me.root.lock.update();
                         if (me.i <= (me.root.maxB-1)) {
@@ -1345,6 +1363,18 @@ var MFD_Device =
                     #break;
                 #}
             }
+            
+            if (me.intercept != nil) {
+                me.interceptCoord = me.intercept[2];
+                me.interceptDist = me.intercept[3];
+                me.distPixels = me.interceptDist*M2NM*(482/awg_9.range_radar2);
+                me.echoPos = [me.wdt*0.5*geo.normdeg180(me.intercept[4])/60,-me.distPixels];
+                me.root.interceptCross.setTranslation(me.echoPos);
+                me.root.interceptCross.setVisible(1);
+            } else {
+                me.root.interceptCross.setVisible(0);
+            }
+            
             if (getprop("sim/multiplay/generic/int[2]")!=1 and rdrMode == RADAR_MODE_GM) {
                 var vari = getprop("sim/variant-id");
                 me.mono = !(vari<2 or vari ==3);
@@ -3747,3 +3777,55 @@ var swap = func {
         f16_mfd.MFDr.setSelection(f16_mfd.MFDr.PFD.buttons[right_button], f16_mfd.MFDr.PFD.buttons[left_button], left_button);
     }
 };
+
+var get_intercept = func(bearingToRunner, dist_m, runnerHeading, runnerSpeed, chaserSpeed, chaserCoord, chaserHeading) {
+    # from Leto
+    # needs: bearingToRunner_deg, dist_m, runnerHeading_deg, runnerSpeed_mps, chaserSpeed_mps, chaserCoord
+    #        dist_m > 0 and chaserSpeed > 0
+
+    var trigAngle = 90-bearingToRunner;
+    var RunnerPosition = [dist_m*math.cos(trigAngle*D2R), dist_m*math.sin(trigAngle*D2R),0];
+    var ChaserPosition = [0,0,0];
+
+    var VectorFromRunner = vector.Math.minus(ChaserPosition, RunnerPosition);
+    var runner_heading = 90-runnerHeading;
+    var RunnerVelocity = [runnerSpeed*math.cos(runner_heading*D2R), runnerSpeed*math.sin(runner_heading*D2R),0];
+
+    var a = chaserSpeed * chaserSpeed - runnerSpeed * runnerSpeed;
+    var b = 2 * vector.Math.dotProduct(VectorFromRunner, RunnerVelocity);
+    var c = -dist_m * dist_m;
+
+    if ((b*b-4*a*c)<0) {
+      # intercept not possible
+      return nil;
+    }
+    
+    var t1 = (-b+math.sqrt(b*b-4*a*c))/(2*a);
+    var t2 = (-b-math.sqrt(b*b-4*a*c))/(2*a);
+    
+    if (t1 < 0 and t2 < 0) {
+      # intercept not possible
+      return nil;
+    }
+    
+    var timeToIntercept = 0;
+    if (t1 > 0 and t2 > 0) {
+          timeToIntercept = math.min(t1, t2);
+    } else {
+          timeToIntercept = math.max(t1, t2);
+    }
+    var InterceptPosition = vector.Math.plus(RunnerPosition, vector.Math.product(timeToIntercept, RunnerVelocity));
+
+    var ChaserVelocity = vector.Math.product(1/timeToIntercept, vector.Math.minus(InterceptPosition, ChaserPosition));
+
+    var interceptAngle = vector.Math.angleBetweenVectors([0,1,0], ChaserVelocity);
+    var interceptHeading = geo.normdeg(ChaserVelocity[0]<0?-interceptAngle:interceptAngle);
+    
+    var interceptDist = chaserSpeed*timeToIntercept;
+    
+    var interceptCoord = geo.Coord.new(chaserCoord);
+    interceptCoord = interceptCoord.apply_course_distance(interceptHeading, interceptDist);
+    var interceptRelativeBearing = geo.normdeg180(interceptHeading-chaserHeading);
+    
+    return [timeToIntercept, interceptHeading, interceptCoord, interceptDist, interceptRelativeBearing];
+}
