@@ -184,7 +184,7 @@
    <title>Lockheed Martin F-16 Fighting Falcon</title>
   </help>-->
 
-  <checklists include="gui/checklists-b40.xml"/>
+  <checklists include="gui/checklists-b60.xml"/>
 
  </sim>
 
