@@ -616,6 +616,17 @@ var MFD_Device =
                             .setColor(colorCircle2)
                             .set("z-index",20)
                             .setStrokeLineWidth(2);
+                            
+        svg.lockGM = svg.p_RDR.createChild("path")
+                            .moveTo(10,0)
+                            .lineTo(0,10)
+                            .lineTo(-10,0)
+                            .lineTo(0,-10)
+                            .lineTo(10,0)
+                            .setColorFill(colorCircle2)
+                            .setColor(colorCircle2)
+                            .set("z-index",20)
+                            .setStrokeLineWidth(2);
         #}
         #svg.lockF = setsize([],3);
         #for (var i = 0;i<3;i+=1) {
@@ -1205,6 +1216,7 @@ var MFD_Device =
             me.root.az1.setTranslation(-(me.az/120)*me.wdt*0.5,0);
             me.root.az2.setTranslation((me.az/120)*me.wdt*0.5,0);
             me.root.lock.hide();
+            me.root.lockGM.hide();
             me.root.lockInfo.hide();
             
             if (me.bullOn) {
@@ -1296,19 +1308,17 @@ var MFD_Device =
                     if (me.desig or me.newL) {
                         me.lockAlt = sprintf("%02d", contact.get_altitude()*0.001);
                         me.lockInfo = sprintf("%4d   %+4d", contact.get_Speed(), contact.get_closure_rate());
-                        me.root.lockAlt.setText(me.lockAlt);
                         me.root.lockInfo.setText(me.lockInfo);
                         me.root.lockInfo.show();
-                        me.root.lock.setTranslation(me.echoPos);
-                        me.root.lockRot.hide();
-                        me.root.lockFRot.hide();
-                        me.root.lock.show();
-                        me.root.lock.update();
-                        me.root.blep[0].setColor(me.blue?colorDot1:colorLine3);
-                        me.root.blep[0].setTranslation(me.echoPos);
-                        me.root.blep[0].show();
-                        me.root.blep[0].update();
-                        me.ijk = 1;
+                        me.root.lockGM.setTranslation(me.echoPos);
+                        me.root.lock.hide();
+                        me.root.lockGM.show();
+                        me.root.lockGM.update();
+                        #me.root.blep[0].setColor(me.blue?colorDot1:colorLine3);
+                        #me.root.blep[0].setTranslation(me.echoPos);
+                        #me.root.blep[0].show();
+                        #me.root.blep[0].update();
+                        me.ijk = 0;
                     }
                 }
                 
