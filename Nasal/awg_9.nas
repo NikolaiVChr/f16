@@ -224,6 +224,30 @@ var stby = 0;
 
 var cycle_range    = getprop("instrumentation/radar/cycle-range");# if range should be cycled or only go up/down.
 
+var containsV = func (vector, content) {
+    if (content == nil) {
+        return 0;
+    }
+    foreach(var vari; vector) {
+        if (vari.string == content.string) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+var containsInVector = func (vector, content) {
+    if (content == nil) {
+        return 0;
+    }
+    foreach(var vari; vector) {
+        if (vari == content) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 var setupRanges = func {
     var rdrNode = props.globals.getNode("instrumentation/radar",0);
     var rangeNodes = rdrNode.getChildren("ranges");
@@ -232,6 +256,35 @@ var setupRanges = func {
         foreach(rNode ; rangeNodes) {
             append(radar_ranges, rNode.getNode("entry").getValue());
         }
+    }
+    if (!containsInVector(radar_ranges, RangeRadar2.getValue())) {
+        RangeRadar2.setValue(radar_ranges[0]);
+    }
+};
+var setupRangesGM = func {
+    var rdrNode = props.globals.getNode("instrumentation/radar",0);
+    var rangeNodes = rdrNode.getChildren("rangesGM");
+    if (rangeNodes != nil and size(rangeNodes) > 0) {
+        radar_ranges = [];
+        foreach(rNode ; rangeNodes) {
+            append(radar_ranges, rNode.getNode("entry").getValue());
+        }
+    }
+    if (!containsInVector(radar_ranges, RangeRadar2.getValue())) {
+        RangeRadar2.setValue(radar_ranges[0]);
+    }
+};
+var setupRangesDGFT = func {
+    var rdrNode = props.globals.getNode("instrumentation/radar",0);
+    var rangeNodes = rdrNode.getChildren("rangesDGFT");
+    if (rangeNodes != nil and size(rangeNodes) > 0) {
+        radar_ranges = [];
+        foreach(rNode ; rangeNodes) {
+            append(radar_ranges, rNode.getNode("entry").getValue());
+        }
+    }
+    if (!containsInVector(radar_ranges, RangeRadar2.getValue())) {
+        RangeRadar2.setValue(radar_ranges[0]);
     }
 };
 setupRanges();
@@ -788,17 +841,7 @@ var az_scan = func(notification) {
 
 #setprop("sim/mul"~"tiplay/gen"~"eric/strin"~"g[14]", "o"~""~"7");
 
-var containsV = func (vector, content) {
-    if (content == nil) {
-        return 0;
-    }
-    foreach(var vari; vector) {
-        if (vari.string == content.string) {
-            return 1;
-        }
-    }
-    return 0;
-}
+
 
 var selectCheck = func {
     #

@@ -43,6 +43,7 @@ var dogfight = func {
         setprop("instrumentation/radar/az-field", 30);
         setprop("instrumentation/radar/ho-field", 20);
         ded.dataEntryDisplay.page = ded.pEWS;
+        awg_9.setupRangesDGFT();
         f16.f16_mfd.MFDl.resetColorAll();
         f16.f16_mfd.MFDl.PFD.selectPage(f16.f16_mfd.MFDl.p_RDR);
         f16.f16_mfd.MFDl.p_RDR.selectionBox.show();

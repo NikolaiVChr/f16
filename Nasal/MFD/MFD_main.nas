@@ -932,21 +932,24 @@ var MFD_Device =
             me.ver = num(split(".", getprop("sim/version/flightgear"))[0]) >= 2020;
             
             me.modeSw = getprop("instrumentation/radar/mode-switch");            
-            if (me.modeSw == 1) {
+            if (me.DGFT) {
+                rdrMode = RADAR_MODE_CRM;
+            } elsif (me.modeSw == 1) {
                 if (rdrMode == RADAR_MODE_CRM) {
                     rdrMode = RADAR_MODE_SEA;
+                    awg_9.setupRanges();
                 } elsif (rdrMode == RADAR_MODE_SEA and me.ver) {
                     rdrMode = RADAR_MODE_GM;
+                    awg_9.setupRangesGM();
                 } elsif (rdrMode == RADAR_MODE_GM) {
                     rdrMode = RADAR_MODE_CRM;
+                    awg_9.setupRanges();
                 } else {
                     rdrMode = RADAR_MODE_CRM;
+                    awg_9.setupRanges();
                 }
             }
             setprop("instrumentation/radar/mode-switch", 0);
-            if (me.DGFT) {
-                rdrMode = RADAR_MODE_CRM;
-            }
             
             me.modeSwHD = getprop("instrumentation/radar/mode-hd-switch");            
             if (rdrMode == RADAR_MODE_GM and me.modeSwHD == me.model_index) {

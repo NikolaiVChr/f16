@@ -1420,24 +1420,37 @@ There is also small changes in tail for different variants with and without brak
             <radar-mode type="int">1</radar-mode>
             <ref-range type="double">70</ref-range>
             <ref-strength type="double">3.2</ref-strength>
+            <!-- Source: GR1F-F16CJ-34-1, please dont mess with this -->
             <ranges n="0">
-                <entry type="int">5</entry>
-            </ranges>
-            <ranges n="1">
                 <entry type="int">10</entry>
             </ranges>
-            <ranges n="2">
+            <ranges n="1">
                 <entry type="int">20</entry>
             </ranges>
-            <ranges n="3">
+            <ranges n="2">
                 <entry type="int">40</entry>
             </ranges>
-            <ranges n="4">
+            <ranges n="3">
                 <entry type="int">80</entry>
             </ranges>
-            <ranges n="5">
+            <ranges n="4">
                 <entry type="int">160</entry>
             </ranges>
+            <rangesGM n="0">
+                <entry type="int">10</entry>
+            </rangesGM>
+            <rangesGM n="1">
+                <entry type="int">20</entry>
+            </rangesGM>
+            <rangesGM n="2">
+                <entry type="int">40</entry>
+            </rangesGM>
+            <rangesGM n="3">
+                <entry type="int">80</entry>
+            </rangesGM>
+            <rangesDGFT n="0">
+                <entry type="int">10</entry>
+            </rangesDGFT>
             <cycle-range type="bool">false</cycle-range>
             <scan_visibility_check_interval type="double">1</scan_visibility_check_interval>            
         </radar>
