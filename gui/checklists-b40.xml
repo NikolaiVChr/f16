@@ -1232,10 +1232,10 @@
                     </equals>
                 </condition>
                 <marker>
-                    <x-m>-4.5400</x-m>
-                    <y-m>-0.3835</y-m>
-                    <z-m>0.2000</z-m>
-                    <scale>1.2000</scale>
+                    <x-m>-4.5345</x-m>
+                    <y-m>-0.3775</y-m>
+                    <z-m>0.2035</z-m>
+                    <scale>1.0000</scale>
                 </marker>
                 <binding>
                     <command>property-assign</command>
@@ -1253,10 +1253,10 @@
                     </equals>
                 </condition>
                 <marker>
-                    <x-m>-4.5400</x-m>
-                    <y-m>-0.3635</y-m>
-                    <z-m>0.2000</z-m>
-                    <scale>1.2000</scale>
+                    <x-m>-4.5545</x-m>
+                    <y-m>-0.3785</y-m>
+                    <z-m>0.2180</z-m>
+                    <scale>1.0000</scale>
                 </marker>
                 <binding>
                     <command>property-assign</command>
@@ -1274,35 +1274,14 @@
                     </equals>
                 </condition>
                 <marker>
-                    <x-m>-4.5435</x-m>
-                    <y-m>-0.3435</y-m>
-                    <z-m>0.1950</z-m>
-                    <scale>1.2000</scale>
+                    <x-m>-4.5720</x-m>
+                    <y-m>-0.3770</y-m>
+                    <z-m>0.2370</z-m>
+                    <scale>1.0000</scale>
                 </marker>
                 <binding>
                     <command>property-assign</command>
                     <property>f16/avionics/ew-rwr-switch</property>
-                    <value>1</value>
-                </binding>
-            </item>
-            <item>
-                <name>EW DISP switch</name>
-                <value>ON</value>
-                <condition>
-                    <equals>
-                        <property>f16/avionics/ew-disp-switch</property>
-                        <value>1</value>
-                    </equals>
-                </condition>
-                <marker>
-                    <x-m>-4.5450</x-m>
-                    <y-m>-0.3225</y-m>
-                    <z-m>0.1950</z-m>
-                    <scale>1.2000</scale>
-                </marker>
-                <binding>
-                    <command>property-assign</command>
-                    <property>f16/avionics/ew-disp-switch</property>
                     <value>1</value>
                 </binding>
             </item>
@@ -1317,9 +1296,9 @@
                 </condition>
                 <marker>
                     <x-m>-4.5450</x-m>
-                    <y-m>-0.2900</y-m>
-                    <z-m>0.1950</z-m>
-                    <scale>1.6000</scale>
+                    <y-m>-0.2935</y-m>
+                    <z-m>0.1920</z-m>
+                    <scale>1.4000</scale>
                 </marker>
                 <binding>
                     <command>property-assign</command>
@@ -1383,18 +1362,42 @@
                         <value>0</value>
                     </equals>
                 </condition>
+                <marker>
+                    <x-m>-4.6425</x-m>
+                    <y-m>0.2535</y-m>
+                    <z-m>0.6000</z-m>
+                    <scale>1.0000</scale>
+                </marker>
             </item>
             <item>
                 <name>Altimeter</name>
                 <value>Set and check</value>
+                <marker>
+                    <x-m>-4.7035</x-m>
+                    <y-m>0.0095</y-m>
+                    <z-m>0.4270</z-m>
+                    <scale>1.0000</scale>
+                </marker>
             </item>
             <item>
                 <name>Exterior lights</name>
                 <value>As required</value>
+                <marker>
+                    <x-m>-4.0500</x-m>
+                    <y-m>-0.3475</y-m>
+                    <z-m>0.1165</z-m>
+                    <scale>7.0000</scale>
+                </marker>
             </item>
             <item>
                 <name>Interior lights</name>
                 <value>As required</value>
+                <marker>
+                    <x-m>-4.3190</x-m>
+                    <y-m>0.4185</y-m>
+                    <z-m>0.1305</z-m>
+                    <scale>5.1500</scale>
+                </marker>
             </item>
             <item>
                 <name>INS knob</name>
@@ -1405,6 +1408,12 @@
                         <value>3</value>
                     </equals>
                 </condition>
+                <marker>
+                    <x-m>-3.9700</x-m>
+                    <y-m>0.4400</y-m>
+                    <z-m>0.1300</z-m>
+                    <scale>1.8000</scale>
+                </marker>
                 <binding>
                     <command>property-assign</command>
                     <property>f16/avionics/ins-knob</property>
@@ -1420,6 +1429,12 @@
                         <value>1</value>
                     </equals>
                 </condition>
+                <marker>
+                    <x-m>-4.5490</x-m>
+                    <y-m>-0.0690</y-m>
+                    <z-m>0.6775</z-m>
+                    <scale>1.7000</scale>
+                </marker>
                 <binding>
                     <command>property-assign</command>
                     <property>f16/avionics/hud-sym</property>
@@ -1451,6 +1466,12 @@
                         <value>0</value>
                     </equals>
                 </condition>
+                <marker>
+                    <x-m>-4.7400</x-m>
+                    <y-m>-0.2425</y-m>
+                    <z-m>0.5250</z-m>
+                    <scale>1.0000</scale>
+                </marker>
                 <binding>
                     <command>property-assign</command>
                     <property>instrumentation/radar/radar-standby</property>
@@ -1466,6 +1487,12 @@
                         <value>0</value>
                     </equals>
                 </condition>
+                <marker>
+                    <x-m>-3.9070</x-m>
+                    <y-m>-0.5245</y-m>
+                    <z-m>0.1450</z-m>
+                    <scale>1.0000</scale>
+                </marker>
                 <binding>
                     <command>property-assign</command>
                     <property>controls/flight/flaps</property>
@@ -1481,6 +1508,12 @@
                         <value>0</value>
                     </equals>
                 </condition>
+                <marker>
+                    <x-m>-4.5730</x-m>
+                    <y-m>-0.4185</y-m>
+                    <z-m>0.2455</z-m>
+                    <scale>1.0000</scale>
+                </marker>
             </item>
             <item>
                 <name>Canopy</name>
@@ -1491,6 +1524,12 @@
                         <value>0</value>
                     </equals>
                 </condition>
+                <marker>
+                    <x-m>-4.6425</x-m>
+                    <y-m>0.2535</y-m>
+                    <z-m>0.6000</z-m>
+                    <scale>1.0000</scale>
+                </marker>
             </item>
             <item>
                 <name>FUEL QTY knob</name>
@@ -1501,6 +1540,12 @@
                         <value>1</value>
                     </equals>
                 </condition>
+                <marker>
+                    <x-m>-4.6370</x-m>
+                    <y-m>0.0645</y-m>
+                    <z-m>0.2990</z-m>
+                    <scale>1.4000</scale>
+                </marker>
             </item>
             <item>
                 <name>STORES CONFIG switch</name>
@@ -1531,6 +1576,12 @@
                   </or>
               </not>
                 </condition>
+                <marker>
+                    <x-m>-4.6085</x-m>
+                    <y-m>-0.3975</y-m>
+                    <z-m>0.2850</z-m>
+                    <scale>1.4000</scale>
+                </marker>
             </item>
             <item>
                 <name>Arm ejection chair</name>
@@ -1541,6 +1592,12 @@
                         <value>1</value>
                     </equals>
                 </condition>
+                <marker>
+                    <x-m>-4.4990</x-m>
+                    <y-m>-0.2210</y-m>
+                    <z-m>0.2905</z-m>
+                    <scale>3.4000</scale>
+                </marker>
                 <binding>
                     <command>property-assign</command>
                     <property>controls/seat/ejection-safety-lever</property>
@@ -1550,10 +1607,22 @@
             <item>
                 <name>OIL pressure</name>
                 <value>Check psi</value>
+                <marker>
+                    <x-m>-4.7550</x-m>
+                    <y-m>0.2500</y-m>
+                    <z-m>0.5300</z-m>
+                    <scale>1.4000</scale>
+                </marker>
             </item>
             <item>
                 <name>ALOW MSL FLOOR Data</name>
                 <value>Check</value>
+                <marker>
+                    <x-m>-4.5340</x-m>
+                    <y-m>0.0160</y-m>
+                    <z-m>0.6670</z-m>
+                    <scale>5.0000</scale>
+                </marker>
             </item>
             <item>
                 <name>All warning and caution lights</name>
