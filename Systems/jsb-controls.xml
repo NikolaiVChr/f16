@@ -664,7 +664,7 @@
                 The 6 bias is changed to 11.
                 DNU
             </description>
-            <default value="11"/>
+            <default value="6"/>
             <test logic="AND" value="0">
                 fcs/fly-by-wire/MLG-GND == 1                
             </test>
@@ -685,8 +685,8 @@
                     <independentVar lookup="column">velocities/vc-kts</independentVar>
                     <tableData>
                            100 420
-                        0    4   4
-                        1   -4   4
+                        0    9   9
+                        1    1   9
                     </tableData>
                 </table>
             </function>
@@ -710,6 +710,21 @@
             <input> fcs/fly-by-wire/pitch/bias-top </input>
             <c1> 10 </c1>
         </lag_filter>
+        
+        <!--<actuator name="fcs/fly-by-wire/pitch/bias-top-lag">
+            <description>
+                In diagram this is 10 lag filter.
+                
+                DNU
+            </description>
+          <input> fcs/fly-by-wire/pitch/bias-top </input>
+          <lag> 10 </lag>
+          <rate_limit sense="incr"> 1 </rate_limit>
+          <rate_limit sense="decr"> 3 </rate_limit>
+          <bias> 0 </bias>
+          <deadband_width> 0 </deadband_width>
+          <hysteresis_width> 0 </hysteresis_width>
+        </actuator>-->
 
         <lag_filter name="fcs/fly-by-wire/pitch/bias-bottom-lag">
             <description>
@@ -789,7 +804,7 @@
                 approach, hence that test.
             </description>
             <default value="0"/>
-            <test logic="AND" value="0.1">
+            <test logic="AND" value="1.0">
                 <!-- fcs/fly-by-wire/condition-a == 1 -->
                 gear/gear-cmd-norm == 1
                 fcs/fly-by-wire/MLG-GND != 1
