@@ -998,12 +998,114 @@ append(obj.total, obj.speed_curr);
 
         #Horizon line
         append(obj.total, obj.ladder_group.createChild("path")
-                         .moveTo(-0.40*sx*0.695633, 0)
-                         .horiz(0.40*sx*0.695633-20*mr)
+                         .moveTo(-0.50*sx*0.695633, 0)
+                         .horiz(0.50*sx*0.695633-20*mr)
                          .moveTo(20*mr, 0)
-                         .horiz(0.40*sx*0.695633)
+                         .horiz(0.50*sx*0.695633-20*mr)
                          .setStrokeLineWidth(1)
                          .setColor(0,0,0));
+        
+        
+        obj.thermometerScaleGrp = obj.svg.createChild("group");
+        obj.thermoGroup = obj.thermometerScaleGrp.createChild("group");
+        obj.thermoXstart = 0.80*sx*0.695633;
+        obj.thermoYstart = sy*0.39;
+        obj.thermoY100   = sy*0.015;
+        obj.thermometerText2 = obj.thermometerScaleGrp.createChild("text")
+                .setText("2")
+                .setFontSize(8,1.1)
+                .setFont(HUD_FONT)
+                .setAlignment("left-center")
+                .setTranslation(obj.thermoXstart+5,sy*0.33);
+        obj.thermometerText4 = obj.thermometerScaleGrp.createChild("text")
+                .setText("4")
+                .setFontSize(8,1.1)
+                .setFont(HUD_FONT)
+                .setAlignment("left-center")
+                .setTranslation(obj.thermoXstart+5,sy*0.27);
+        obj.thermometerText6 = obj.thermometerScaleGrp.createChild("text")
+                .setText("6")
+                .setFontSize(8,1.1)
+                .setFont(HUD_FONT)
+                .setAlignment("left-center")
+                .setTranslation(obj.thermoXstart+5,sy*0.21);
+        obj.thermometerText8 = obj.thermometerScaleGrp.createChild("text")
+                .setText("8")
+                .setFontSize(8,1.1)
+                .setFont(HUD_FONT)
+                .setAlignment("left-center")
+                .setTranslation(obj.thermoXstart+5,sy*0.15);
+        obj.thermometerText10 = obj.thermometerScaleGrp.createChild("text")
+                .setText("10")
+                .setFontSize(8,1.1)
+                .setFont(HUD_FONT)
+                .setAlignment("left-center")
+                .setTranslation(obj.thermoXstart+5,sy*0.09);
+        obj.thermometerText15 = obj.thermometerScaleGrp.createChild("text")
+                .setText("15")
+                .setFontSize(8,1.1)
+                .setFont(HUD_FONT)
+                .setAlignment("left-center")
+                .setTranslation(obj.thermoXstart+5,sy*0.06);                
+        obj.thermometerScale = obj.thermometerScaleGrp.createChild("path")
+                .moveTo(obj.thermoXstart,sy*0.39)#0
+                .horiz(5)
+                .moveTo(obj.thermoXstart,sy*0.375)
+                .horiz(3)
+                .moveTo(obj.thermoXstart,sy*0.36)
+                .horiz(5)
+                .moveTo(obj.thermoXstart,sy*0.345)
+                .horiz(3)
+                .moveTo(obj.thermoXstart,sy*0.33)#2
+                .horiz(5)
+                .moveTo(obj.thermoXstart,sy*0.315)
+                .horiz(3)
+                .moveTo(obj.thermoXstart,sy*0.30)
+                .horiz(5)
+                .moveTo(obj.thermoXstart,sy*0.285)
+                .horiz(3)
+                .moveTo(obj.thermoXstart,sy*0.27)#4
+                .horiz(5)
+                .moveTo(obj.thermoXstart,sy*0.255)
+                .horiz(3)
+                .moveTo(obj.thermoXstart,sy*0.24)
+                .horiz(5)
+                .moveTo(obj.thermoXstart,sy*0.225)
+                .horiz(3)
+                .moveTo(obj.thermoXstart,sy*0.21)#6
+                .horiz(5)
+                .moveTo(obj.thermoXstart,sy*0.195)
+                .horiz(3)
+                .moveTo(obj.thermoXstart,sy*0.18)
+                .horiz(5)
+                .moveTo(obj.thermoXstart,sy*0.165)
+                .horiz(3)
+                .moveTo(obj.thermoXstart,sy*0.15)#8
+                .horiz(5)
+                .moveTo(obj.thermoXstart,sy*0.135)
+                .horiz(3)
+                .moveTo(obj.thermoXstart,sy*0.12)
+                .horiz(5)
+                .moveTo(obj.thermoXstart,sy*0.105)
+                .horiz(3)
+                .moveTo(obj.thermoXstart,sy*0.09)#10
+                .horiz(5)
+                .moveTo(obj.thermoXstart,sy*0.075)
+                .horiz(3)
+                .moveTo(obj.thermoXstart,sy*0.06)#15
+                .horiz(5)
+                .setStrokeLineWidth(1)
+                .setColor(1,0,0);
+        
+        append(obj.total, obj.thermometerScale);
+        append(obj.total, obj.thermometerText2);
+        append(obj.total, obj.thermometerText4);
+        append(obj.total, obj.thermometerText6);
+        append(obj.total, obj.thermometerText8);
+        append(obj.total, obj.thermometerText10);
+        append(obj.total, obj.thermometerText15);
+        append(obj.scaling, obj.thermometerScaleGrp);
+        obj.hidingScales = 0;
         
         input = {
                  IAS                       : "/velocities/airspeed-kt",
@@ -1351,58 +1453,115 @@ append(obj.total, obj.speed_curr);
 #            props.UpdateManager.FromHashValue("roll_rad", 1.0, func(roll_rad)
 #                                      {
 #                                      }),
-            props.UpdateManager.FromHashList(["altitude_agl_ft","cara","measured_altitude","altSwitch"], 1.0, func(hdp)
+            props.UpdateManager.FromHashList(["altitude_agl_ft","cara","measured_altitude","altSwitch","alow","dgft"], 1.0, func(hdp)
                                       {
                                           obj.agl=hdp.altitude_agl_ft;
-                                          obj.altScaleMode = 0;#0=baro, 1=radar
+                                          obj.altScaleMode = 0;#0=baro, 1=radar 2=thermo
                                           if (hdp.altSwitch == 2) {#RDR
                                                 obj.altScaleMode = hdp.cara;
                                           } elsif (hdp.altSwitch == 1) {#BARO
                                                 obj.altScaleMode = 0;
                                           } else {#AUTO
                                                 if (obj["altScaleModeOld"] != nil) {
-                                                    if (obj.altScaleModeOld) {
-                                                        obj.altScaleMode = obj.agl < 1500 and hdp.cara;
+                                                    if (obj.altScaleModeOld == 2) {
+                                                        obj.altScaleMode = (obj.agl < 1500 and hdp.cara and !hdp.dgft and !hidingScales)*2;
                                                     } else {
-                                                        obj.altScaleMode = obj.agl < 1200 and hdp.cara;
+                                                        obj.altScaleMode = (obj.agl < 1200 and hdp.cara and !hdp.dgft and !hidingScales)*2;
                                                     }
                                                 } else {
-                                                    obj.altScaleMode = obj.agl < 1300 and hdp.cara;
+                                                    obj.altScaleMode = (obj.agl < 1300 and hdp.cara and !hdp.dgft and !hidingScales)*2;
                                                 }
                                           }
                                           obj.altScaleModeOld = obj.altScaleMode;
                                           #print("UPDATE "~obj.altScaleMode~"  CARA "~hdp.cara~"  AGL "~obj.agl);
-                                          if(hdp.cara and !obj.altScaleMode) {
+                                          if(hdp.cara and obj.altScaleMode == 0) {
                                               obj.ralt.setText(sprintf("R %s", obj.getAltTxt(obj.agl)));
                                           } else {
                                               obj.ralt.setText("    ,   ");
                                           }
-                                          
-                                          if (obj.altScaleMode) {
+                                          if (obj.altScaleMode == 2) {
+                                            #thermometer scale source: GR1F-F16CJ-34-1 page 185
+                                            #print("Thermo");
+                                            obj.alt_type.hide();
+                                            obj.alt_range.hide();
+                                            obj.alt_curr.hide();
+                                            obj.alt_mask.hide();
+                                            obj.alt_frame.hide();
+                                            obj.alti_indicator.hide();
+                                            obj.thermoEnd1 = 10*obj.thermoY100;
+                                            obj.thermoEnd2 = 11*obj.thermoY100;
+                                            if (obj.agl < 1000) {
+                                                obj.thermoEnd = obj.agl*0.01*obj.thermoY100;
+                                            } else {                                                
+                                                obj.thermoEnd = obj.extrapolate(obj.agl, 1000, 1500, obj.thermoEnd1, obj.thermoEnd2);
+                                            }
+                                            if (hdp.alow < 1000) {
+                                                obj.thermoAlow = hdp.alow*0.01*obj.thermoY100;
+                                            } else {                                                
+                                                obj.thermoAlow = obj.extrapolate(hdp.alow, 1000, 1500, obj.thermoEnd1, obj.thermoEnd2);
+                                            }
+                                            obj.thermoGroup.removeAllChildren();
+                                            obj.thermoBar = obj.thermoGroup.createChild("path")
+                                                .moveTo(obj.thermoXstart, obj.thermoYstart)
+                                                .horiz(-5)
+                                                .lineTo(obj.thermoXstart-5, obj.thermoYstart-obj.thermoEnd)
+                                                .horiz(5)
+                                                .setStrokeLineWidth(1)
+                                                .setColor(obj.color);
+                                            if (hdp.gear_down or (obj.agl > hdp.alow or math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0)) {
+                                                obj.thermoBar.moveTo(obj.thermoXstart-5, obj.thermoYstart-obj.thermoAlow)
+                                                .horiz(-4)
+                                                .moveTo(obj.thermoXstart-9, obj.thermoYstart-obj.thermoAlow-2)
+                                                .vert(4);
+                                            }
+                                            obj.thermometerScaleGrp.show();
+                                          } elsif (obj.altScaleMode == 1) {
+                                            #print("radar");
+                                            # radar scale
                                             obj.alt_range.setTranslation(-10, obj.agl * alt_range_factor);
                                             obj.alt_curr.setText(obj.getAltTxt(obj.agl));
                                             obj.alt_type.setText("R");
                                             obj.ralt.hide();
-                                            obj.radalt_box.hide();
+                                            obj.thermometerScaleGrp.hide();
+                                            obj.alt_curr.show();
+                                            obj.alt_mask.show();
+                                            obj.alt_frame.show();
+                                            if (!obj.hidingScales) {
+                                                obj.alti_indicator.show();
+                                                obj.alt_range.show();
+                                            }
                                           } else {
+                                            #print("baro");
+                                            # baro scale
                                             obj.alt_range.setTranslation(-10, hdp.measured_altitude * alt_range_factor);
                                             obj.alt_curr.setText(obj.getAltTxt(hdp.measured_altitude));
                                             obj.alt_type.setText("");
                                             obj.ralt.show();
                                             obj.radalt_box.show();
+                                            obj.thermometerScaleGrp.hide();
+                                            obj.alt_curr.show();
+                                            obj.alt_mask.show();
+                                            obj.alt_frame.show();
+                                            if (!obj.hidingScales) {
+                                                obj.alti_indicator.show();
+                                                obj.alt_range.show();
+                                            }
                                           }
                                       }),
             props.UpdateManager.FromHashList(["HUD_SCA", "DGFT"], 0.5, func(hdp)
                                       {
-                                          if (hdp.HUD_SCA and !hdp.dgft) {
+                                            
+                                          if (hdp.HUD_SCA and !hdp.dgft and obj.hidingScales) {
                                             foreach(tck;obj.scaling) {
                                                 tck.show();
                                               }
-                                          } else {
+                                            obj.hidingScales = 0;
+                                          } elsif (!obj.hidingScales and !(hdp.HUD_SCA and !hdp.dgft)) {
                                               foreach(tck;obj.scaling) {
                                                 tck.hide();
                                               }
                                               obj.heading_tape_pointer.hide();
+                                              obj.hidingScales = 1;
                                           }
                                       }),
             props.UpdateManager.FromHashList(["calibrated", "GND_SPD", "HUD_VEL", "gear_down"], 0.5, func(hdp)
