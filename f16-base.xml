@@ -1658,6 +1658,8 @@ value. 18000=standard US transition altitude -->
             <mfd-l-con type="double">1.0</mfd-l-con>
             <mfd-r-brt type="double">1.0</mfd-r-brt>
             <mfd-r-con type="double">1.0</mfd-r-con>
+            <mfd-l-gain type="double">1.2</mfd-l-gain>
+            <mfd-r-gain type="double">1.2</mfd-r-gain>
             <hud-velocity type="int">1</hud-velocity><!-- 0=TRUE 1=CAL 2=GND -->
             <hud-scales type="int">1</hud-scales><!-- 0=OFF 1=VAH 2=VV/VAH -->
             <hud-fpm type="int">2</hud-fpm><!-- 0=OFF 1=FPM 2=ATT/FPM -->

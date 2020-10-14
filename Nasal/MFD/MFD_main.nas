@@ -1414,8 +1414,8 @@ var MFD_Device =
                             #print(me.gmLine);
                             #me.root.gmPic.set("src", "Aircraft/f16/Nasal/MFD/gm.png");
                             #me.root.gmPic.setPixel(int(rand()*127), int(rand()*127), [me.gmColor,me.gmColor,me.gmColor,1]);
-                            
-                            me.gmColor = math.pow(me.gmColor, 1.2);# RGB color scale is not linear to eye looking at monitor. 2.2 is too much though.
+                            var gain = me.model_index?getprop("f16/avionics/mfd-r-gain"):getprop("f16/avionics/mfd-l-gain");
+                            me.gmColor = math.pow(me.gmColor, gain);# RGB color scale is not linear to eye looking at monitor. 2.2 is too much though.
                             
                             if (me.echoPos == nil or me.echoPos[3]) {
                                 if (me.rdrModeHDGM) {
