@@ -1474,7 +1474,9 @@ append(obj.total, obj.speed_curr);
                                           }
                                           obj.altScaleModeOld = obj.altScaleMode;
                                           #print("UPDATE "~obj.altScaleMode~"  CARA "~hdp.cara~"  AGL "~obj.agl);
-                                          if(hdp.cara and obj.altScaleMode == 0) {
+                                          if(hdp.altSwitch == 0 and hdp.cara and obj.altScaleMode == 0) {
+                                              obj.ralt.setText(sprintf("AR %s", obj.getAltTxt(obj.agl)));
+                                          } elsif(hdp.cara and obj.altScaleMode == 0) {
                                               obj.ralt.setText(sprintf("R %s", obj.getAltTxt(obj.agl)));
                                           } else {
                                               obj.ralt.setText("    ,   ");
@@ -1482,11 +1484,13 @@ append(obj.total, obj.speed_curr);
                                           if (obj.altScaleMode == 2) {
                                             #thermometer scale source: GR1F-F16CJ-34-1 page 185
                                             #print("Thermo");
-                                            obj.alt_type.hide();
+                                            obj.alt_type.setText("");
                                             obj.alt_range.hide();
                                             obj.alt_curr.hide();
                                             obj.alt_mask.hide();
                                             obj.alt_frame.hide();
+                                            obj.ralt.hide();
+                                            obj.radalt_box.hide();
                                             obj.alti_indicator.hide();
                                             obj.thermoEnd1 = 10*obj.thermoY100;
                                             obj.thermoEnd2 = 11*obj.thermoY100;
@@ -1522,6 +1526,7 @@ append(obj.total, obj.speed_curr);
                                             obj.alt_curr.setText(obj.getAltTxt(obj.agl));
                                             obj.alt_type.setText("R");
                                             obj.ralt.hide();
+                                            obj.radalt_box.hide();
                                             obj.thermometerScaleGrp.hide();
                                             obj.alt_curr.show();
                                             obj.alt_mask.show();
