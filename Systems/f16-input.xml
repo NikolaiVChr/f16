@@ -52,22 +52,24 @@
                 <property>controls/displays/cursor-slew-x</property>
                 <value type="int">-1</value>
             </binding>
-            <mod-ctrl>
+            <mod-shift>
                 <binding>
                     <command>property-assign</command>
                     <property>controls/displays/display-management-switch-x</property>
                     <value type="int">-1</value>
                 </binding>
-            </mod-ctrl>
+                <mod-up>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/display-management-switch-x</property>
+                        <value type="int">0</value>
+                    </binding>
+                </mod-up>
+            </mod-shift>
             <mod-up>
                 <binding>
                     <command>property-assign</command>
                     <property>controls/displays/cursor-slew-x</property>
-                    <value type="int">0</value>
-                </binding>
-                <binding>
-                    <command>property-assign</command>
-                    <property>controls/displays/display-management-switch-x</property>
                     <value type="int">0</value>
                 </binding>
             </mod-up>
@@ -82,22 +84,24 @@
                 <property>controls/displays/cursor-slew-x</property>
                 <value type="int">1</value>
             </binding>
-            <mod-ctrl>
+            <mod-shift>
                 <binding>
                     <command>property-assign</command>
                     <property>controls/displays/display-management-switch-x</property>
                     <value type="int">1</value>
                 </binding>
-            </mod-ctrl>
+                <mod-up>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/display-management-switch-x</property>
+                        <value type="int">0</value>
+                    </binding>
+                </mod-up>
+            </mod-shift>
             <mod-up>
                 <binding>
                     <command>property-assign</command>
                     <property>controls/displays/cursor-slew-x</property>
-                    <value type="int">0</value>
-                </binding>
-                <binding>
-                    <command>property-assign</command>
-                    <property>controls/displays/display-management-switch-x</property>
                     <value type="int">0</value>
                 </binding>
             </mod-up>
@@ -112,22 +116,24 @@
                 <property>controls/displays/cursor-slew-y</property>
                 <value type="int">-1</value>
             </binding>
-            <mod-ctrl>
+            <mod-shift>
                 <binding>
                     <command>property-assign</command>
                     <property>controls/displays/display-management-switch-y</property>
                     <value type="int">-1</value>
                 </binding>
-            </mod-ctrl>
+                <mod-up>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/display-management-switch-y</property>
+                        <value type="int">0</value>
+                    </binding>
+                </mod-up>
+            </mod-shift>
             <mod-up>
                 <binding>
                     <command>property-assign</command>
                     <property>controls/displays/cursor-slew-y</property>
-                    <value type="int">0</value>
-                </binding>
-                <binding>
-                    <command>property-assign</command>
-                    <property>controls/displays/display-management-switch-y</property>
                     <value type="int">0</value>
                 </binding>
             </mod-up>
@@ -142,22 +148,24 @@
                 <property>controls/displays/cursor-slew-y</property>
                 <value type="int">1</value>
             </binding>
-            <mod-ctrl>
+            <mod-shift>
                 <binding>
                     <command>property-assign</command>
                     <property>controls/displays/display-management-switch-y</property>
                     <value type="int">1</value>
                 </binding>
-            </mod-ctrl>
+                <mod-up>
+                    <binding>
+                        <command>property-assign</command>
+                        <property>controls/displays/display-management-switch-y</property>
+                        <value type="int">0</value>
+                    </binding>
+                </mod-up>
+            </mod-shift>
             <mod-up>
                 <binding>
                     <command>property-assign</command>
                     <property>controls/displays/cursor-slew-y</property>
-                    <value type="int">0</value>
-                </binding>
-                <binding>
-                    <command>property-assign</command>
-                    <property>controls/displays/display-management-switch-y</property>
                     <value type="int">0</value>
                 </binding>
             </mod-up>
