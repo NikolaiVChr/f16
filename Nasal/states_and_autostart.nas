@@ -48,7 +48,7 @@ var repair2 = func {
   crash.repair();
   fail.trigger_eng.arm();
   
-  if (getprop("f16/engine/running-state")) {
+  if (0 and getprop("f16/engine/running-state")) {
     # f16/engine/running-state is what the pilot originally chose from the FG launcher.
     setprop("fdm/jsbsim/elec/switches/epu",1);
     setprop("fdm/jsbsim/elec/switches/epu-cover",0);
