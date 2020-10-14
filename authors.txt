@@ -132,5 +132,8 @@ Marsdolphin
 Colin Geniet
 - RCS timer
 
+Reaper
+- 3D side stick updates for Block 10
+
 Onox
 - Support for onox-tanker
