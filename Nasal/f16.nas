@@ -1430,6 +1430,7 @@ gui.showHelpDialog = func(path, toggle=0) {
       dialog[name].addChild("hrule");
       var tabbar = dialog[name].addChild("group");
       tabbar.set("layout", "hbox");
+      tabbar.set("default-padding", 3);
       tabbar.addChild("empty").set("stretch", 1);
       var w1 = tabbar.addChild("button");
       w1.set("pref-width", 64);
@@ -1439,7 +1440,7 @@ gui.showHelpDialog = func(path, toggle=0) {
       w1.set("key", "esc");
       #"delete(gui.dialog, \"" ~ name ~ "\")"
       w1.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-1'))");
-      tabbar.addChild("empty").set("stretch", 1);
+      #tabbar.addChild("empty").set("stretch", 1);
       var w2 = tabbar.addChild("button");
       w2.set("pref-width", 64);
       w2.set("pref-height", 16);
@@ -1447,7 +1448,7 @@ gui.showHelpDialog = func(path, toggle=0) {
       w2.set("default", 1);
       w2.set("key", "esc");
       w2.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-2'))");
-      tabbar.addChild("empty").set("stretch", 1);
+      #tabbar.addChild("empty").set("stretch", 1);
       var w3 = tabbar.addChild("button");
       w3.set("pref-width", 64);
       w3.set("pref-height", 16);
@@ -1455,7 +1456,7 @@ gui.showHelpDialog = func(path, toggle=0) {
       w3.set("default", 1);
       w3.set("key", "esc");
       w3.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-3'))");
-      tabbar.addChild("empty").set("stretch", 1);
+      #tabbar.addChild("empty").set("stretch", 1);
       var w4 = tabbar.addChild("button");
       w4.set("pref-width", 64);
       w4.set("pref-height", 16);
@@ -1463,7 +1464,7 @@ gui.showHelpDialog = func(path, toggle=0) {
       w4.set("default", 1);
       w4.set("key", "esc");
       w4.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-4'))");
-      tabbar.addChild("empty").set("stretch", 1);
+      #tabbar.addChild("empty").set("stretch", 1);
       var w5 = tabbar.addChild("button");
       w5.set("pref-width", 64);
       w5.set("pref-height", 16);
@@ -1471,7 +1472,7 @@ gui.showHelpDialog = func(path, toggle=0) {
       w5.set("default", 1);
       w5.set("key", "esc");
       w5.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-5'))");
-      tabbar.addChild("empty").set("stretch", 1);
+      #tabbar.addChild("empty").set("stretch", 1);
       var w6 = tabbar.addChild("button");
       w6.set("pref-width", 64);
       w6.set("pref-height", 16);
@@ -1479,7 +1480,7 @@ gui.showHelpDialog = func(path, toggle=0) {
       w6.set("default", 1);
       w6.set("key", "esc");
       w6.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-6'))");
-      tabbar.addChild("empty").set("stretch", 1);
+      #tabbar.addChild("empty").set("stretch", 1);
       var w7 = tabbar.addChild("button");
       w7.set("pref-width", 64);
       w7.set("pref-height", 16);
@@ -1487,7 +1488,7 @@ gui.showHelpDialog = func(path, toggle=0) {
       w7.set("default", 1);
       w7.set("key", "esc");
       w7.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-7'))");
-      tabbar.addChild("empty").set("stretch", 1);
+      #tabbar.addChild("empty").set("stretch", 1);
       var w8 = tabbar.addChild("button");
       w8.set("pref-width", 64);
       w8.set("pref-height", 16);
@@ -1495,7 +1496,7 @@ gui.showHelpDialog = func(path, toggle=0) {
       w8.set("default", 1);
       w8.set("key", "esc");
       w8.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-8'))");
-      tabbar.addChild("empty").set("stretch", 1);
+      #tabbar.addChild("empty").set("stretch", 1);
       var w9 = tabbar.addChild("button");
       w9.set("pref-width", 64);
       w9.set("pref-height", 16);
@@ -1503,7 +1504,7 @@ gui.showHelpDialog = func(path, toggle=0) {
       w9.set("default", 1);
       w9.set("key", "esc");
       w9.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-9'))");
-      tabbar.addChild("empty").set("stretch", 1);
+      #tabbar.addChild("empty").set("stretch", 1);
       var w10 = tabbar.addChild("button");
       w10.set("pref-width", 64);
       w10.set("pref-height", 16);
@@ -1511,7 +1512,7 @@ gui.showHelpDialog = func(path, toggle=0) {
       w10.set("default", 1);
       w10.set("key", "esc");
       w10.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-10'))");
-      tabbar.addChild("empty").set("stretch", 1);
+      #tabbar.addChild("empty").set("stretch", 1);
       var w11 = tabbar.addChild("button");
       w11.set("pref-width", 64);
       w11.set("pref-height", 16);
@@ -1519,14 +1520,14 @@ gui.showHelpDialog = func(path, toggle=0) {
       w11.set("default", 1);
       w11.set("key", "esc");
       w11.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-11'))");
-      tabbar.addChild("empty").set("stretch", 1);
+      #tabbar.addChild("empty").set("stretch", 1);
       var w12 = tabbar.addChild("button");
       w12.set("pref-width", 64);
       w12.set("pref-height", 16);
       w12.set("legend", "Variants");
       w12.set("default", 1);
       w12.set("key", "esc");
-      w12.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-11'))");
+      w12.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-12'))");
       tabbar.addChild("empty").set("stretch", 1);
     }
  
