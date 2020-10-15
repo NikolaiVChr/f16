@@ -34,10 +34,10 @@ J Maverick 16
 - Addition and adaptation of liveries by Gary Brown
 - Liveries and textures
 - Sound recording/editing and addition
-- Addition and implementation of weapons, stores
+- Research, addition and implementation of weapons, stores
 - 3D works (pilot model, weapons/stores, cockpit, exterior, misc)
 - RWR/RCS data research and update
-- Block-specific changes (including CCIP conversion of Block 40/42)
+- Block-specific changes: panel layouts, CCIP conversion of Block 40/42
 - MFD updates
 - Effects improvement
 - Systems tweaking
@@ -122,6 +122,7 @@ PH-JAKE
 - Fuel indicator updates
 - Block 50 left panel animations
 - Bug fixes and improvements
+- Improved checklists
 
 FGUK
 - Sounds
@@ -137,3 +138,6 @@ Reaper
 
 Onox
 - Support for onox-tanker
+
+Salmon
+- JMSDF fictional livery
