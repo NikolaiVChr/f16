@@ -278,12 +278,22 @@ Here's a brief list including the most common symbols and what they refer to:
             <text-4><![CDATA[
 MFDs (Multi Function Displays)
 page SMS: Clicking on button next to a station will select it. 
-          J-S will jettison the selected station.
-          If CAT is greater than 1, then you should set the flightcontrols to CAT III in config menu.
-page FCR: B-scope radar display. Horizontal is relative bearing to targets, vertical is distance.
+          J-S will jettison the selected station. Not all payload types can be jettisoned, same for racks.
+          If CAT is greater than 1, then you should set the flightcontrols to CAT III on left panel and opposite.
+page FCR  In CRM, SEA and GM if the display is sensor of interest (SOI) you can move a cursor around to find and lock hostiles.
+          To make a display SOI, use Shift-arrow keys on keyboard.
+          To move the cursor use arrow keys and 'l' or set that in the joystick config dialog.
+          CZ: Cursor zero will reset cursor position.
+          Notice: The radar when started up goes through a Built In Test (BIT) for a couple of minutes.
+          
+          (CRM/SEA): B-scope radar display. Horizontal is relative bearing to targets, vertical is distance.
           A4: How much azimuth the radar shall cover, A4 is max (120 degs).
           8B: How much vertically the radar shall cover, 8B is max (120 degs).
-          Notice: The radar when started up goes through a Built In Test (BIT) for a couple of minutes.
+          A small plus sign when something is lock is the point to aim for if you want to intercept the locked target.
+          At the top is two numbers. Target speed (kt) and closing speed (kt).
+          
+          (GM) C-scope radar display. Will only show ground targets and terrain. Might be heavy on your framerate.
+          SD/HD terrain detail. HD will scan slower.
 page HSD: Horizontal situation display. Shows route and radar echoes.
           DEP: Depressed ownship in display
           CEN: Centered ownship in display
@@ -453,6 +463,24 @@ This value must be from 1111 to 2888.
             ]]></text-9>
             <text-10><![CDATA[
 DOGFIGHT MODE
+Using the FCR cursor to lock up an hostile while you are in turnfight can be next to impossible.
+So you can press 'd' to toggle dogfight mode.
+
+THIS WILL HAPPEN WHEN ENTERING DOGFIGHT MODE
+Radar will be force limited to 10nm range and 20x30 degs field for locking (CRM mode, ACM submode). It can still track up to 120 degs.
+Rdar will autolock anything it sees. You can use key 'y' to select next target if more than one is in that small field.
+Radar will be set to standby, and have to be enabled if desired by 'r' key.
+HUD will be decluttered and orange peel arc will become visible.
+Cannon will be selected, but you can still cycle to other weapons.
+Countermeasure page will be displayed on DED.
+Left MFD will be set to FCR page.
+Right MFD will be set to WPN page.
+
+THIS WILL HAPPEN WHEN EXITING DOGFIGHT MODE
+Radar field and range will be set back to what it was when entering dogfight mode.
+
+ORANGE PEEL
+This is an arc showing in the HUD. The filled portion of the arc will always point towards the ground. When you pitch up the arc will cover less degrees, and pitch down it will cover more degrees. So full circle means you are headed straight down.
             ]]></text-10>
             <text-11><![CDATA[
 FAILURES, FAULTS, CAUTIONS and WARNINGS
