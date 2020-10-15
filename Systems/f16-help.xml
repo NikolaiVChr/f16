@@ -426,6 +426,46 @@ Then, use the up arrow on the ICP to start the HACK timer. The up arrow toggles 
             <text-10><![CDATA[
 FAILURES, FAULTS, CAUTIONS and WARNINGS
 
+MAIN INDICATORS
+Caution panel located just forward of the flightstick on right side of the cockpit.
+Pilot Fault List Display (PFLD) located just above the caution panel.
+Electrical caution panel located close to the throttle.
+WARN displayed blinking in the center of HUD
+Intercom voice saying 'Warning', 'Caution' or certain tones.
+Various warning lights on right eyebrow right of HUD.
+ALT GEAR handle, located a little infront of the throttle on left side.
+
+MAIN CONTROLS
+Master caution light/button, located on left eyebrow (just left of HUD on the edge of panel).
+F-ACK button, located on left eyebrow (just left of HUD on the edge of panel).
+CAUTION RESET, located on the electrical caution panel.
+WARN RESET switch, located on the ICP (the panel below the HUD).
+Menu Configuration panel repair button.
+
+Main/Elec Caution system
+The caution panel lights can light up at failures or various misconfigurations. When that happens, the master caution pushbutton will also ligth up. Press it to acknowledge the caution, except for ELEC SYS. It has its own caution reset button and master caution will continue to be lit until that is pressed.
+
+Fault system
+On the pilot fault list top it will either say nothing, ENG, AV or FLCS. Or more at once. ENG is engines fault(s), FLCS is flight control system fault(s), AV is aviation faults.
+It will show up to 3 faults at the same time, and if they are really serious warning will be issued on the HUD and by voice (to stop that click WARN RESET switch).
+To acknowledge the 3 shown fault, click F-ACK. If there are mroe faults than 3, it will then show the next 3 and so on.
+If all fault have been acknowledged and F-ACK is clicked again, all faults will return to the display.
+The display content can also be shown on the HUD, set the switch on the left side of the flightstick to PFL.
+The fault system is right now seperate from the Caution system. In the real jet they have some overlap, but that is not modeled.
+
+Failures in general
+Failures typically happens can hitting something at speed or being hit by a weapon with weapon discharge enabled.
+Can be repaired in the configuration menu, unless weapon discharge is enabled, in which case it can only be done while resting on gear on the ground.
+Selecting an airport from the menu to relocate to will also repair the aircraft.
+
+Specific fault: Gears
+If the gears will not extend due to missing hydraulic pressure, pull the ALT GEAR handle, to extend. This can only be done once.
+
+Specific caution: STORES CONFIG
+This means your CAT setting is not aligned to what payload you have mounted.
+
+Specific caution: SEAT NOT ARMED
+On the left side of the chair you can arm the ejection seat.
             ]]></text-10>
             <text-11><![CDATA[
 VARIANTS
