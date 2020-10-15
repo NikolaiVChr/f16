@@ -367,15 +367,19 @@ For the Fox 3 AIM-120 the same goes except for the last ~10nm there it goes into
 AIM-9 is fire and forget its whole flight. It can also be launched visually in BORE mode when radar is off, just place the target with in the big cross on the HUD and it will get an IR lock. This missle has greater range if it is cooled, that can be done on the MFD WPN page. Coolant fluid don't last for longer than 30 mins though, so do this some minutes before you expect a Within Visual Range fight.
 The trigger can be held for 2 second to fire AIM-9 or AIM-120 without a lock in MADDOG mode, where it will lock onto anyone it sees in its flightpath.
 
-TARGETPODS
-On the MFDs you can select TGP. This however only works if you have mounted one of the target-pods.
-Per default the target pod fixed looking at some offset from you aircraft bore attitude. However if you select something with the radar it will if the distance is not too large look at that. You will notice in the TGP view on the MFD that it is not very accurate. So after selecting a radar target, use the TGP buttons (LEFT;RIGHT;UP;DOWN) or the cursor controls (Arrow keys) to aim better and click LOCK or 'l'. This will now make released ordnance hit more accurate. There is also keys to ZOOM and switch from narrow to wide field of view.
+TARGETPOD
+On the MFDs you can select TGP. This however only works if you have mounted one of the target-pods and are airborne.
+Per default the target pod fixed looking at some offset from you aircraft bore attitude. However if you select something with the radar it will, if the distance is not too large, look at that. You will notice in the TGP view on the MFD that a radar lock is not very accurate. So after selecting a radar target, use the TGP buttons (LEFT;RIGHT;UP;DOWN) or the cursor controls (Arrow keys) to aim better and click LOCK or 'l'. This will now make released ordnance hit more accurate. There is also keys to ZOOM and switch from narrow to wide field of view.
             ]]></text-6>
             <text-7><![CDATA[
-CONTROLPANEL and CONFIG
+CONTROLPANELS and CONFIG
 You can find these in the FG menu (the last item).
 They contains various aircraft and experience settings.
 NOT ALL 3D CONTROLS ARE PRESENT IN THE CONTROLPANELS!
+
+PREPLANNING
+This menu item will bring up a dialog where you can load in threat circles for the MFD HSD page, input bullseye position, load lines for HSD (using GPX or fligthgears own route fileformat).
+You can also load kneeboards. For example kneeboards, look in the f16 folder under Kneeboards.
 
 MANUAL START
 See Menu->Help->Checklists
