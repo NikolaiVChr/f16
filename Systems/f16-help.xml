@@ -357,6 +357,13 @@ You can find these in the FG menu (the last item).
 They contains various aircraft and experience settings.
 NOT ALL 3D CONTROLS ARE PRESENT IN THE CONTROLPANELS!
 
+MANUAL START
+See Menu->Help->Checklists
+
+NOTE ON STARTING
+Starting engine requires pressure in one or both JFS accumulators. If they are both drained then you must go into menu configuration and recharge them if on ground.
+If in air keep gliding with EPU on and wait for accumulators to be charged. Remember EPU has only has hydrazine for 10 minutes of operation if gliding to slow for significant windmilling.
+
 BITCHING BETTY
 Thats the nickname of the annunciation voice. :)
 The control INTERCOM on left panel controls her volume.
