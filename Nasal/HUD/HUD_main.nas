@@ -1010,7 +1010,7 @@ append(obj.total, obj.speed_curr);
         obj.thermoGroup = obj.thermometerScaleGrp.createChild("group");
         obj.thermoXstart = 0.80*sx*0.695633;
         obj.thermoYstart = sy*0.39;
-        obj.thermoY100   = sy*0.015;
+        obj.thermoY100   = sy*0.03;
         obj.thermometerText2 = obj.thermometerScaleGrp.createChild("text")
                 .setText("2")
                 .setFontSize(8,1.1)
