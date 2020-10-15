@@ -129,6 +129,7 @@ FGUK
 
 Marsdolphin
 - Some liveries
+- Improvements to chat menu items
 
 Colin Geniet
 - RCS timer
