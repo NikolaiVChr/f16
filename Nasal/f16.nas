@@ -1507,7 +1507,7 @@ gui.showHelpDialog = func(path, toggle=0) {
       var w10 = tabbar.addChild("button");
       w10.set("pref-width", 64);
       w10.set("pref-height", 16);
-      w10.set("legend", "Failures");
+      w10.set("legend", "Dogfight");
       w10.set("default", 1);
       w10.set("key", "esc");
       w10.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-10'))");
@@ -1515,10 +1515,18 @@ gui.showHelpDialog = func(path, toggle=0) {
       var w11 = tabbar.addChild("button");
       w11.set("pref-width", 64);
       w11.set("pref-height", 16);
-      w11.set("legend", "Variants");
+      w11.set("legend", "Failures");
       w11.set("default", 1);
       w11.set("key", "esc");
       w11.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-11'))");
+      tabbar.addChild("empty").set("stretch", 1);
+      var w12 = tabbar.addChild("button");
+      w12.set("pref-width", 64);
+      w12.set("pref-height", 16);
+      w12.set("legend", "Variants");
+      w12.set("default", 1);
+      w12.set("key", "esc");
+      w12.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-11'))");
       tabbar.addChild("empty").set("stretch", 1);
     }
  

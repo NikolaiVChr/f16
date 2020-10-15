@@ -192,6 +192,10 @@ After you have mounted or dismounted ext fuel tank in the fuel and payload dialo
 HUD
 The speed in HUD is calibrated airspeed per default, and always when gear is commanded down. It can be switched in the control-panel.
 
+Text upper left side:
+  Current G force
+  * symbol, meaning the HUD is sensor of interest (SOI)
+
 Text left side:
   NAV or ARM depending on masterarm. But BRAKES if parking brakes is on, and F 15 G if flaps is deployed, F for flaps, 15 for 15 deg extended, and G for gears down.
   Mach number
@@ -341,7 +345,7 @@ Per default the target pod fixed looking at some offset from you aircraft bore a
 CONTROLPANEL and CONFIG
 You can find these in the FG menu (the last item).
 They contains various aircraft and experience settings.
-Once the cockpit controls is full 3D the menu aircraft settings will be removed.
+NOT ALL 3D CONTROLS ARE PRESENT IN THE CONTROLPANELS!
 
 BITCHING BETTY
 Thats the nickname of the annunciation voice. :)
@@ -367,13 +371,16 @@ Can switch off the ATTitude lines and/or the Flight Path Marker.
 HUD ALT
 RDR sets the altimeter scale to CARA whenever that is available.
 BARO sets the altimeter scale to barometric.
-AUTO sets the altimeter scale to CARA at low AGL and barometric at higher AGL.
+AUTO sets the altimeter scale to thermometer CARA at low AGL and barometric at higher AGL.
 
 HUD DED
 Will copy the DED panel onto the HUD.
 
 HUD PFL
 Will copy the Pilot Fault List Display onto the HUD.
+
+DRIFT C/O
+Drift cutoff will force flightpath marker and pitch ladder to stay in middle of HUD.
 
 BINGO
 The fuel level where the system and Betty will warn that the fuel is low.
@@ -445,6 +452,9 @@ Laser code on LASR page
 This value must be from 1111 to 2888.
             ]]></text-9>
             <text-10><![CDATA[
+DOGFIGHT MODE
+            ]]></text-10>
+            <text-11><![CDATA[
 FAILURES, FAULTS, CAUTIONS and WARNINGS
 
 MAIN INDICATORS
@@ -487,8 +497,8 @@ This means your CAT setting is not aligned to what payload you have mounted.
 
 Specific caution: SEAT NOT ARMED
 On the left side of the chair you can arm the ejection seat.
-            ]]></text-10>
-            <text-11><![CDATA[
+            ]]></text-11>
+            <text-12><![CDATA[
 VARIANTS
 - F-16E Block 60         : 19000/32500 lbf. Large horz. tail (mod. aero data).
 - F-16CJ Block 52        : 17800/29000 lbf. Large horz. tail (mod. aero data).
@@ -506,5 +516,5 @@ The engines vary not only in thrust, but also in fuel consumption. Furthermore t
 Different Blocks have different sets of cockpit panels, MFDs and HSI/EHSI, alongside other changes.
 Variants will also have different sets of liveries that can be selected.
 There is also small changes in tail for different variants with and without braking chute.
-            ]]></text-11>
+            ]]></text-12>
 </PropertyList>
