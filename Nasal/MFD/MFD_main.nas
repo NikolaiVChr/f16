@@ -754,6 +754,20 @@ var MFD_Device =
             .setStrokeLineWidth(3)
             .set("z-index",1)
             .setColor(colorBullseye);
+        svg.steerpoint = svg.p_RDR.createChild("path")
+            .moveTo(12,8)
+            .horiz(-24)
+            .vert(-8)
+            .horiz(8)
+            .vert(-8)
+            .horiz(8)
+            .vert(8)
+            .horiz(8)
+            .vert(8)
+            .setColorFill(colorBullseye)
+            .setStrokeLineWidth(1)
+            .set("z-index",1)
+            .setColor(colorBullseye);
         svg.bullOwnRing = svg.p_RDR.createChild("path")
             .moveTo(-15,0)
             .arcSmallCW(15,15, 0,  15*2, 0)
@@ -1232,6 +1246,23 @@ var MFD_Device =
             if (me.bullOn) {
                 me.root.bullseye.setTranslation(me.bullPos);
             }
+            me.steerActive = getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc");
+            if (me.steerActive) {
+                me.plan = flightplan();
+                if (me.plan.getPlanSize() > 0 and me.plan.current >= 0) {
+                    me.wp = me.plan.getWP(me.plan.current);
+                    me.wpC = geo.Coord.new();
+                    me.wpC.set_latlon(me.wp.lat,me.wp.lon);
+                    me.legBearing = geo.normdeg180(geo.aircraft_position().course_to(me.wpC)-noti.heading);#relative
+                    me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
+                    me.distPixels = me.legDistance*(482/awg_9.range_radar2);
+                    me.steerPos = [me.wdt*0.5*me.legBearing/60,-me.distPixels];
+                    me.root.steerpoint.setTranslation(me.steerPos);
+                } else {
+                    me.steerActive = 0;
+                }
+            }
+            me.root.steerpoint.setVisible(me.steerActive);
             
             me.desig_new = nil;
             me.gm_echoPos = {};
@@ -1310,7 +1341,7 @@ var MFD_Device =
                         me.azimuth = math.round(geo.normdeg180(noti.heading+contact.get_heading())*0.1)*10;
                         me.azSide = me.azimuth >= 0 ?"R":"L";
                         me.azimuth = me.azimuth >= 0?me.azimuth:-me.azimuth;
-                        me.lockInfo = sprintf("%3d%s       %3d        %4d   %+4d", me.azimuth, me.azSide, int(contact.get_heading()/10)*10, contact.get_Speed(), contact.get_closure_rate());
+                        me.lockInfo = sprintf("%3d%s       %3d        %4d   %+4d", me.azimuth, me.azSide, int(contact.get_heading()/10)*10, contact.get_Speed(), contact.get_closure_rate());# get_heading here should really be magnetic..
                         me.root.lockInfo.setText(me.lockInfo);
                         me.root.lockInfo.show();
                         me.root.lockGM.setTranslation(me.echoPos);
