@@ -242,7 +242,7 @@ Upper semicircle: new threat (750Hz tone)
 Full blinking circle: hostile launch (2000Hz tone)
 Hat above designation: Airborne
 
-Use Link 16 in menu to define your wingmen (up to 12), so they don't show up on RWR.
+Use Link 16 in menu to define your wingmen (up to 12), so they don't show up on RWR when there is other threats.
 
 For something to show up in the RWR at all these conditions must be met:
 1: Be a threat.
@@ -250,36 +250,44 @@ For something to show up in the RWR at all these conditions must be met:
 
 Notice that the RWR can sometimes pick up threat much further away than your radar is capable off.
 
+If someone is locking you up, you will also hear a buzz sound constantly, until you no longer are locked up, also if a wingman locks you up.
+Its normal procedure if you think a wingman has locked you up, to call out 'Buddy spike' over the comms. If he say he has not, then you know its perhaps a hostile lock.
+AIM-9 IR locks with radar off, will not give you any warning before launch.
+
 Here's a brief list including the most common symbols and what they refer to:
     - 16:   F-16
-    - 10:   A-10
     - 14:   F-14
     - 15:   F-15
-    - 18:   F/A-18
     - 37:   J-37 Viggen
     - 21:   MiG-21
-    - 27:   Su-27, J-11A
-    - 29:   MiG-29
     - 71:   SR-71
     - M2:   Mirage-2000
-    - EF:   Eurofighter
     - JA:   Jaguar
-    - TO:   Tornado
-    - RF:   Rafale (brsq)
-    - 35:   F-35
-    - S:    AWACS, GCI or Recon
     - 11:   SA-11 (BUK M2,SAM)
     - 20:   SA-20 (S-300, SAM)
     - SH:   Frigate/Carrier/Ship
     - 28:   Training scenario opponent
+    - 10:   A-10    
+    - 18:   F/A-18
+    - 27:   Su-27, J-11A
+    - 29:   MiG-29
+    - EF:   Eurofighter
+    - TO:   Tornado
+    - RF:   Rafale (brsq)
+    - 35:   F-35
+    - S:    AWACS, GCI or Recon
     - AI:   AI scenario
     - UK:   Unknown threat
             ]]></text-3>
             <text-4><![CDATA[
 MFDs (Multi Function Displays)
-page SMS: Clicking on button next to a station will select it. 
+
+The BRT and CON switches on the MFD mount corners can be used to adjust brightness and contrast. GAIN is only used in FCR GM mode.
+
+page SMS: Clicking on button (OBS) next to a station will select it. Each station has 2 or 3 lines of text, that details pylon mounted,
+          rack/rail mounted on pylon and weapon(s) mounted on the rack or directly on the pylon.
           J-S will jettison the selected station. Not all payload types can be jettisoned, same for racks.
-          If CAT is greater than 1, then you should set the flightcontrols to CAT III on left panel and opposite.
+          If CAT shows greater than 1, then you should set the flightcontrols to CAT III on left panel and opposite.
 page FCR  In CRM, SEA and GM if the display is sensor of interest (SOI) you can move a cursor around to find and lock hostiles.
           To make a display SOI, use Shift-arrow keys on keyboard.
           To move the cursor use arrow keys and 'l' or set that in the joystick config dialog.
@@ -294,7 +302,8 @@ page FCR  In CRM, SEA and GM if the display is sensor of interest (SOI) you can 
           
           (GM) C-scope radar display. Will only show ground targets and terrain. Might be heavy on your framerate.
           SD/HD terrain detail. HD will scan slower.
-page HSD: Horizontal situation display. Shows route and radar echoes.
+          GAIN switch on the MFD mount can be used to adjust how terrain is color mapped onto display.
+page HSD: Horizontal situation display. Shows route, wingmen and designated radar target.
           DEP: Depressed ownship in display
           CEN: Centered ownship in display
           CPL: Range will follow (approx) radar distance
@@ -316,6 +325,8 @@ Pitch: ALT HOLD: Hold current altitude
 Roll:  HDG SEL:  Hold current heading
        ATT HOLD: Hold current roll attitude
        STRG SEL: Follow route from Route Manager
+       
+For more detailed help, click the ? button in top right corner of the autopilot dialog in the menu.
             ]]></text-5>
             <text-6><![CDATA[
 AIMING THE CANNON
@@ -327,7 +338,8 @@ RELEASING ORDNANCE
 First mount some armament.
 Secondly make sure masterarm is enabled.
 Thirdly select the arm. (use 'w' key or click buttons 'A-A' or 'A-G' under HUD)
-Fourthly make sure target is selected (key 'y')
+Fourthly make sure a target is selected (key 'y'), unless you want to use unguided bombs, then a target is not needed.
+
 Bombs
   For GBU-12 and GBU-24 make sure laser is armed.
   Release mode can be set with WPN page, options are CCIP and CCRP.
@@ -339,17 +351,23 @@ Bombs
   RP (ripple release) can be set on WPN MFD page.
     The number is how many subseqential releases should be done.
     If RP is greater than 1, then you can also in same MFD page set distance in Feet between ripples.
-AIM-120/AIM-9
-  The trigger can be held for 2 second to fire it without a lock in MADDOG mode, where it will lock onto anyone it sees.
+
 AGM-154A JSOW (Joint Standoff Weapon)
    Long range guided glide bomb. Can be launched by either inputing GPS coordinates in the "Program Target" dialog for a desired spot or against a TOO (Target Of Opportunity) with a targeting pod lock (see section below). Operational range varies from 70NM max with GPS to about 34NM max with TGP lock.
    Optimal release envelopes are as follows:
         GPS lock - Release at or above FL420 with speed at or above M1.6 (70NM and closer).
         TGP lock (TOO) - Release at or above FL340 with speed at or above M1.3 (34NM and closer).
 
+A/A missiles
+These are AIM-7 (Fox 1), AIM-120 (Fox 3) and AIM-9 (Fox 2).
+The Fox 1 AIM-7 require you keep the target locked during its entire flight.
+For the Fox 3 AIM-120 the same goes except for the last ~10nm there it goes into fire'n'forget mode.
+AIM-9 is fire and forget its whole flight. It can also be launched visually in BORE mode when radar is off, just place the target with in the big cross on the HUD and it will get an IR lock. This missle has greater range if it is cooled, that can be done on the MFD WPN page. Coolant fluid don't last for longer than 30 mins though, so do this some minutes before you expect a Within Visual Range fight.
+The trigger can be held for 2 second to fire AIM-9 or AIM-120 without a lock in MADDOG mode, where it will lock onto anyone it sees in its flightpath.
+
 TARGETPODS
 On the MFDs you can select TGP. This however only works if you have mounted one of the target-pods.
-Per default the target pod fixed looking at some offset from you aircraft bore attitude. However if you select something with the radar it will if the distance is not too large look at that. You will notice in the TGP view on the MFD that it is not very accurate. So after selecting a radar target, use the TGP buttons (LEFT;RIGHT;UP;DOWN) to aim better and click LOCK. This will now make released ordnance hit more accurate. There is also keys to ZOOM and switch from narrow to wide field of view.
+Per default the target pod fixed looking at some offset from you aircraft bore attitude. However if you select something with the radar it will if the distance is not too large look at that. You will notice in the TGP view on the MFD that it is not very accurate. So after selecting a radar target, use the TGP buttons (LEFT;RIGHT;UP;DOWN) or the cursor controls (Arrow keys) to aim better and click LOCK or 'l'. This will now make released ordnance hit more accurate. There is also keys to ZOOM and switch from narrow to wide field of view.
             ]]></text-6>
             <text-7><![CDATA[
 CONTROLPANEL and CONFIG
