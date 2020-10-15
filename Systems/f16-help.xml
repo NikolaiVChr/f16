@@ -71,7 +71,7 @@
             </key>
             <key>
                 <name>Ctrl-w</name>
-                <desc>Look down on HSI</desc>
+                <desc>Look down on HSI/EHSI</desc>
             </key>
             <key>
                 <name>u/U</name>
@@ -107,16 +107,16 @@
             </key>
             <key>
                 <name>Shift + Arrow keys</name>
-                <desc>Display Management Switch</desc>
+                <desc>Display Management Switch (SOI)</desc>
             </key>
             <key>
                 <name>l</name>
                 <desc>Cursor designate</desc>
             </key>
-            <key>
+            <!--<key>
                 <name>i</name>
                 <desc>Select centermost radar contact</desc>
-            </key>
+            </key>-->
             <key>
                 <name>S</name>
                 <desc>Toggle smoke if installed</desc>
