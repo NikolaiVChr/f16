@@ -1307,7 +1307,10 @@ var MFD_Device =
                     }
                     if (me.desig or me.newL) {
                         me.lockAlt = sprintf("%02d", contact.get_altitude()*0.001);
-                        me.lockInfo = sprintf("%4d   %+4d", contact.get_Speed(), contact.get_closure_rate());
+                        me.azimuth = math.round(geo.normdeg180(noti.heading+contact.get_heading())*0.1)*10;
+                        me.azSide = me.azimuth >= 0 ?"R":"L";
+                        me.azimuth = me.azimuth >= 0?me.azimuth:-me.azimuth;
+                        me.lockInfo = sprintf("%3d%s       %3d        %4d   %+4d", me.azimuth, me.azSide, int(contact.get_heading()/10)*10, contact.get_Speed(), contact.get_closure_rate());
                         me.root.lockInfo.setText(me.lockInfo);
                         me.root.lockInfo.show();
                         me.root.lockGM.setTranslation(me.echoPos);
@@ -1332,7 +1335,10 @@ var MFD_Device =
                         #me.root.lock.hide();
                     } else {
                         me.lockAlt = sprintf("%02d", contact.get_altitude()*0.001);
-                        me.lockInfo = sprintf("%4d   %+4d", contact.get_Speed(), contact.get_closure_rate());
+                        me.azimuth = math.round(geo.normdeg180(noti.heading+contact.get_heading())*0.1)*10;
+                        me.azSide = me.azimuth >= 0 ?"R":"L";
+                        me.azimuth = me.azimuth >= 0?me.azimuth:-me.azimuth;
+                        me.lockInfo = sprintf("%3d%s       %3d        %4d   %+4d", me.azimuth, me.azSide, int(contact.get_heading()/10)*10, contact.get_Speed(), contact.get_closure_rate());
                         me.root.lockAlt.setText(me.lockAlt);
                         me.root.lockInfo.setText(me.lockInfo);
                         me.root.lockInfo.show();
