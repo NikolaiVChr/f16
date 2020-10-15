@@ -1802,7 +1802,7 @@ append(obj.total, obj.speed_curr);
 
         ];
         
-        #EEGS:
+        #EEGS: (other gun sights not made: lcos snap sslc)
         obj.eegsGroup = obj.centerOrigin.createChild("group");
         obj.funnelParts = 17;#number of segments in funnel sides. If increase, remember to increase all relevant vectors also.
         obj.eegsRightX = obj.makeVector(obj.funnelParts,0);
