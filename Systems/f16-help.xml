@@ -176,6 +176,7 @@ Do not operate below 200 KT with cat III stores, unless for landing or take-off.
 
 NIGHTTIME FLYING
 There is flood and instrument lights that can be turned up.
+Furthermore with ALS grapchics setting and higher shader setting there is also landing and taxi light.
 
 DRAGCHUTE
 Max recommended KIAS for deployment is 170. Key is o to deploy, and O to detach.
@@ -183,14 +184,14 @@ Not all variants have dragchute.
 
 FLYING IN MP
 Firstly be sure to use "Visible to 2017+", else others will not see everything working okay when they see your aircraft.
-For doing combat enable "MP Discharge messages". This might be considered spam of MP chat, so use it sparringly and only against opponents that have agreed to be fighting you.
+For doing combat enable "MP Discharge messages". This might be considered spam of MP chat, so use it sparringly and only against opponents that have agreed to be fighting you. With this option enabled you can take and deal damage to other aircraft that also has it enabled. It can only be enabled with wheels on ground.
 
 EXT FUEL TANKS
 After you have mounted or dismounted ext fuel tank in the fuel and payload dialog, you will have to close the dialog and reopen it to see that change proper, and to be able to set the level.
             ]]></text-1>
             <text-2><![CDATA[
 HUD
-The speed in HUD is calibrated airspeed per default, and always when gear is commanded down. It can be switched in the control-panel.
+The speed in HUD is calibrated airspeed per default, and always when gear is commanded down. It can be switched on the HUD control panel right of the fligthstick.
 
 Text upper left side:
   Current G force
@@ -201,7 +202,7 @@ Text left side:
   Mach number
   Max G-Force number achieved. Can be reset using WARN RESET switch located on the ICP (center control panel with the number buttons on it).
   Selected weapon.
-  FUEL if bingo fuel.
+  Blinking FUEL if bingo fuel.
   Direction and distance to you from bullseye.
 
 Text Right side:
@@ -213,7 +214,7 @@ Text Right side:
   Type of target if masterarm on.
 
 Text Center:
-  LIMIT if Vne exceeded.
+  LIMIT if Vne exceeded, becareful exceeding VNE has high chance of damaging the aircraft.
   NO RAD if the aircraft radar is off.
   FLY UP if collision with terrain is emminent.
   FUEL if bingo. This can be clicked away using WARN RESET switch located on the ICP (center control panel with the number buttons on it).
@@ -223,7 +224,8 @@ Text Bottom
   Here DED DATA will show if enabled. Or PFLD if that has been selected.
   
 Localizer in HUD
-  To enable localizer in HUD turn the mode knob on centerpanel left of the HSI.
+  HSI: To enable localizer in HUD turn the mode knob on centerpanel left of the HSI.
+  EHSI: To enable localizer in HUD click the 'M' knob on centerpanel EHSI.
   It can show both glidepath and ILS, with vertical and horizontal lines.
   If a line is centered on the FPM and segmented it means its invalid.
   If a line is not centered but segmented it means its valid but out of range.
