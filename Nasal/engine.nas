@@ -23,7 +23,8 @@ var accu_1_psi = accu_psi_max;
 var accu_2_psi = accu_psi_max;
 var accu_charge_allowed = 1;
 var jfs_spooling = 0;
-var jfs_spool_up_time_s = 30;
+var jfs_spool_up_time_s = 30;# 30s for 1 accu, 18s for both. 18s is compromise between JFS versions. Some are clocked to 8s only, some 30.
+var jfs_spool_up_time_2_s = 18;
 var jfs_spool_down_time_s = 17;
 var jfs_n_norm = 0;
 
@@ -54,7 +55,7 @@ var JFS = {
 			me.psi_for_start = 0;
 			if (me.start_switch == 1) {
 				if (accu_1_psi == accu_psi_max or accu_2_psi == accu_psi_max or (accu_1_psi >= accu_psi_both_max and accu_2_psi >= accu_psi_both_max)) {
-					me.psi_for_start = 1;
+					me.psi_for_start = (accu_1_psi >= accu_psi_both_max and accu_2_psi >= accu_psi_both_max)?2:1;
 				}
 				accu_1_psi = 0;
 				accu_2_psi = 0;
@@ -70,7 +71,7 @@ var JFS = {
 					#print("blow 2");
 				}
 			}
-			if (me.psi_for_start and jfs_spooling != 1) {
+			if (me.psi_for_start > 0 and jfs_spooling != 1) {
 				if (output_to_console) print("Start spooling JFS",timesincestart());
 				jfs_spooling = 1;
 			}
@@ -83,7 +84,7 @@ var JFS = {
 		}
 		
 		if (jfs_spooling == 1 and (jfs_n_norm < 0.4 or fuel.getValue() > 5)) {
-			jfs_n_norm += me.dt / jfs_spool_up_time_s;
+			jfs_n_norm += me.dt / (me.psi_for_start==2?jfs_spool_up_time_2_s:jfs_spool_up_time_s);
 		} elsif (jfs_spooling == 1) {
 			# no fuel to sustain rpm
 			if (output_to_console) print("Stop spooling JFS, too little fuel",timesincestart());
