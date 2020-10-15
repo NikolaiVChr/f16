@@ -68,6 +68,14 @@
                     </binding>
                 </mod-up>
             </mod-shift>
+            <mod-alt>
+           <desc>Look left</desc>
+               <binding>
+                <command>property-assign</command>
+                <property>/sim/current-view/goal-heading-offset-deg</property>
+                <property>/sim/view/config/left-direction-deg</property>
+               </binding>
+            </mod-alt>
             <mod-up>
                 <binding>
                     <command>property-assign</command>
@@ -100,6 +108,14 @@
                     </binding>
                 </mod-up>
             </mod-shift>
+            <mod-alt>
+               <desc>Look right</desc>
+               <binding>
+                <command>property-assign</command>
+                <property>/sim/current-view/goal-heading-offset-deg</property>
+                <property>/sim/view/config/right-direction-deg</property>
+               </binding>
+            </mod-alt>
             <mod-up>
                 <binding>
                     <command>property-assign</command>
@@ -132,6 +148,14 @@
                     </binding>
                 </mod-up>
             </mod-shift>
+            <mod-alt>
+               <desc>Look forward</desc>
+               <binding>
+                <command>property-assign</command>
+                <property>/sim/current-view/goal-heading-offset-deg</property>
+                <property>/sim/view/config/front-direction-deg</property>
+               </binding>
+            </mod-alt>
             <mod-up>
                 <binding>
                     <command>property-assign</command>
@@ -164,6 +188,14 @@
                     </binding>
                 </mod-up>
             </mod-shift>
+            <mod-alt>
+               <desc>Look backwards</desc>
+               <binding>
+                <command>property-assign</command>
+                <property>/sim/current-view/goal-heading-offset-deg</property>
+                <property>/sim/view/config/back-direction-deg</property>
+               </binding>
+            </mod-alt>
             <mod-up>
                 <binding>
                     <command>property-assign</command>
