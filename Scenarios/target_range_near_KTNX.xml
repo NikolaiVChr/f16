@@ -1,0 +1,253 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+  <scenario>
+    
+    <name>Tonopah target range KTNX</name>
+
+    <description>
+      The following scenario puts 17 target near KTNX.
+
+      Nikolai V. Chr.
+    </description>
+
+    <nasal>
+      <load>
+        <![CDATA[
+          var finish = 0;
+
+               
+          var loop2 = func () {
+              foreach( var tanker; props.globals.getNode("/ai/models",1).getChildren("ship") ) {
+                var lat = tanker.getNode("position/latitude-deg").getValue();
+                var lon = tanker.getNode("position/longitude-deg").getValue();
+                var node = tanker.getNode("position/altitude-ft", 1 );
+                var alt = geo.elevation(lat, lon);
+                node.setDoubleValue(alt==nil?0:alt*M2FT);
+              }
+              if (finish == 0) {
+                settimer(loop2, 5);
+                return;
+              }
+              print("Scenario proper unloaded.");
+          }
+          loop2();
+          print('Tonopah target range scenario load 17 targets: complete');
+        ]]>
+      </load>
+      <unload>
+        <![CDATA[
+          finish = 1;
+          print('Tonopah target range scenario unload script complete');
+          ]]>
+      </unload>
+    </nasal>
+
+    <entry>
+      <type>ship</type>
+      <model>Models/Military/humvee-pickup-odrab-low-poly.ac</model>
+      <name>Humvee1</name>
+      <latitude type="double">37.64</latitude>
+      <longitude type="double">-116.57</longitude>
+      <speed-ktas type="double">0</speed-ktas>
+      <rudder type="double">0</rudder>
+      <heading type="double">0</heading>
+      <altitude type="double">0</altitude>
+    </entry>
+
+    <entry>
+      <type>ship</type>
+      <model>Models/Military/humvee-pickup-odrab-low-poly.ac</model>
+      <name>Humvee2</name>
+      <latitude type="double">37.641</latitude>
+      <longitude type="double">-116.571</longitude>
+      <speed-ktas type="double">0</speed-ktas>
+      <rudder type="double">0</rudder>
+      <heading type="double">0</heading>
+      <altitude type="double">0</altitude>
+    </entry>
+
+    <entry>
+      <type>ship</type>
+      <model>Models/Buildings/factory.ac</model>
+      <name>Factory</name>
+      <latitude type="double">37.640</latitude>
+      <longitude type="double">-116.572</longitude>
+      <speed-ktas type="double">0</speed-ktas>
+      <rudder type="double">0</rudder>
+      <heading type="double">0</heading>
+      <altitude type="double">0</altitude>
+    </entry>
+    
+    <entry>
+      <type>ship</type>
+      <model>Scenery/Models/Military/us-hush-house-hangar-sand.xml</model>
+      <name>hush</name>
+      <latitude type="double">37.67</latitude>
+      <longitude type="double">-116.51</longitude>
+      <speed-ktas type="double">0</speed-ktas>
+      <rudder type="double">0</rudder>
+      <heading type="double">0</heading>
+      <altitude type="double">0</altitude>
+    </entry>
+    
+    <entry>
+      <type>ship</type>
+      <model>Scenery/Models/Military/usaf-water-tower-39m.xml</model>
+      <name>water</name>
+      <latitude type="double">37.63</latitude>
+      <longitude type="double">-116.57</longitude>
+      <speed-ktas type="double">0</speed-ktas>
+      <rudder type="double">0</rudder>
+      <heading type="double">0</heading>
+      <altitude type="double">0</altitude>
+    </entry>
+    
+    <entry>
+      <type>ship</type>
+      <model>Scenery/Models/Military/tower-usaf-40m.xml</model>
+      <name>twr40</name>
+      <latitude type="double">37.62</latitude>
+      <longitude type="double">-116.58</longitude>
+      <speed-ktas type="double">0</speed-ktas>
+      <rudder type="double">0</rudder>
+      <heading type="double">0</heading>
+      <altitude type="double">0</altitude>
+    </entry>
+    
+    <entry>
+      <type>ship</type>
+      <model>Scenery/Models/Military/TAB-VEE-C_Shelter.xml</model>
+      <name>tabvee</name>
+      <latitude type="double">37.61</latitude>
+      <longitude type="double">-116.55</longitude>
+      <speed-ktas type="double">0</speed-ktas>
+      <rudder type="double">0</rudder>
+      <heading type="double">0</heading>
+      <altitude type="double">0</altitude>
+    </entry>
+    
+    <entry>
+      <type>ship</type>
+      <model>Scenery/Models/Military/SPAF_Barracks_3.xml</model>
+      <name>barrack</name>
+      <latitude type="double">37.65</latitude>
+      <longitude type="double">-116.51</longitude>
+      <speed-ktas type="double">0</speed-ktas>
+      <rudder type="double">0</rudder>
+      <heading type="double">0</heading>
+      <altitude type="double">0</altitude>
+    </entry>
+    
+    <entry>
+      <type>ship</type>
+      <model>Scenery/Models/Military/SA-2_Van.xml</model>
+      <name>sa-2</name>
+      <latitude type="double">37.63</latitude>
+      <longitude type="double">-116.575</longitude>
+      <speed-ktas type="double">0</speed-ktas>
+      <rudder type="double">0</rudder>
+      <heading type="double">0</heading>
+      <altitude type="double">0</altitude>
+    </entry>
+    
+    <entry>
+      <type>ship</type>
+      <model>Scenery/Models/Military/radar-shelter-mil.xml</model>
+      <name>radshel</name>
+      <latitude type="double">37.68</latitude>
+      <longitude type="double">-116.54</longitude>
+      <speed-ktas type="double">0</speed-ktas>
+      <rudder type="double">0</rudder>
+      <heading type="double">0</heading>
+      <altitude type="double">0</altitude>
+    </entry>
+    
+    <entry>
+      <type>ship</type>
+      <model>Scenery/Models/Military/Radar_Avia.xml</model>
+      <name>avia</name>
+      <latitude type="double">37.67</latitude>
+      <longitude type="double">-116.54</longitude>
+      <speed-ktas type="double">0</speed-ktas>
+      <rudder type="double">0</rudder>
+      <heading type="double">0</heading>
+      <altitude type="double">0</altitude>
+    </entry>
+    
+    <entry>
+      <type>ship</type>
+      <model>Scenery/Models/Military/KOFF_Bldg594.xml</model>
+      <name>bldg</name>
+      <latitude type="double">37.65</latitude>
+      <longitude type="double">-116.56</longitude>
+      <speed-ktas type="double">0</speed-ktas>
+      <rudder type="double">0</rudder>
+      <heading type="double">0</heading>
+      <altitude type="double">0</altitude>
+    </entry>
+    
+    <entry>
+      <type>ship</type>
+      <model>Scenery/Models/Military/GenericStorageTank30m-sand.xml</model>
+      <name>stortank</name>
+      <latitude type="double">37.65</latitude>
+      <longitude type="double">-116.53</longitude>
+      <speed-ktas type="double">0</speed-ktas>
+      <rudder type="double">0</rudder>
+      <heading type="double">0</heading>
+      <altitude type="double">0</altitude>
+    </entry>
+    
+    <entry>
+      <type>ship</type>
+      <model>Scenery/Models/Military/Bloodhound.xml</model>
+      <name>hound</name>
+      <latitude type="double">37.63</latitude>
+      <longitude type="double">-116.59</longitude>
+      <speed-ktas type="double">0</speed-ktas>
+      <rudder type="double">0</rudder>
+      <heading type="double">0</heading>
+      <altitude type="double">0</altitude>
+    </entry>
+    
+    <entry>
+      <type>ship</type>
+      <model>Scenery/Models/Military/beacon-mil-nt.xml</model>
+      <name>beacon</name>
+      <latitude type="double">37.66</latitude>
+      <longitude type="double">-116.59</longitude>
+      <speed-ktas type="double">0</speed-ktas>
+      <rudder type="double">0</rudder>
+      <heading type="double">0</heading>
+      <altitude type="double">0</altitude>
+    </entry>
+    
+    <entry>
+      <type>ship</type>
+      <model>Scenery/Models/Military/BAK-12.xml</model>
+      <name>bak12</name>
+      <latitude type="double">37.61</latitude>
+      <longitude type="double">-116.51</longitude>
+      <speed-ktas type="double">0</speed-ktas>
+      <rudder type="double">0</rudder>
+      <heading type="double">0</heading>
+      <altitude type="double">0</altitude>
+    </entry>
+    
+    <entry>
+      <type>ship</type>
+      <model>Scenery/Models/Military/SPAF_Tower.xml</model>
+      <name>tower-s</name>
+      <latitude type="double">37.69</latitude>
+      <longitude type="double">-116.59</longitude>
+      <speed-ktas type="double">0</speed-ktas>
+      <rudder type="double">0</rudder>
+      <heading type="double">0</heading>
+      <altitude type="double">0</altitude>
+    </entry>
+
+  </scenario>
+
+</PropertyList>

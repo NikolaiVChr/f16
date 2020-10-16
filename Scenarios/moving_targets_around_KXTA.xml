@@ -1,0 +1,479 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+  <scenario>
+    
+    <name>Moving targets around KXTA</name>
+
+    <description>
+      The following scenario puts 14 planes in orbit over
+      KXTA.
+
+      Nikolai V. Chr.
+    </description>
+
+    <nasal>
+      <load>
+        <![CDATA[
+          var up = 1;
+          var finish = 0;
+
+          #foreach( var tanker; props.globals.getNode("/ai/models",1).getChildren("aircraft") ) {
+          # tanker.getNode("orientation/pitch-deg", 1 ).setDoubleValue(0);
+          #}
+
+          var loop = func () {
+            foreach( var tanker; props.globals.getNode("/ai/models",1).getChildren("aircraft") ) {
+                var callsign = tanker.getNode("callsign").getValue();
+                if( callsign == nil ) continue;
+                if( string.match(callsign,"Evading*") or string.match(callsign,"Slow-evading*")
+                    or string.match(callsign,"Fast-evading*") or string.match(callsign,"Very-fast-evading*")) {
+                    
+                    var nodemode = tanker.getNode("controls/flight/vertical-mode", 1);
+                    nodemode.setValue("alt");
+                    var nodealt = tanker.getNode("controls/flight/target-alt", 1);
+                  var node = tanker.getNode("position/altitude-ft", 1 );
+                  var alt = node.getValue();
+                  if(alt >= 15000) {
+                    nodealt.setValue(7400);
+                  } elsif (alt <= 7500) {
+                    nodealt.setValue(16000);
+                  } elsif (nodealt.getValue()==nil) {# or math.abs(nodealt.getValue()) != 35
+                    nodealt.setValue(16000);
+                  }
+                  #alt = alt + 10*up;
+                    #node.setDoubleValue(alt);
+                    
+                    if (rand()>0.75) {
+                      var nodemode2 = tanker.getNode("controls/flight/lateral-mode", 1);
+                      nodemode2.setValue("roll");
+                      var noderoll = tanker.getNode("controls/flight/target-roll", 1);
+                      noderoll.setValue(0+rand()*90);
+                    }
+                    tanker.getNode("rotors/main/blade[3]/position-deg", 1 ).setDoubleValue(rand());#chaff
+                    tanker.getNode("rotors/main/blade[3]/flap-deg", 1 ).setDoubleValue(rand());#flare
+                }
+              }
+              if (finish == 0) {
+                settimer(loop, 2);
+              }
+          }
+          var loop2 = func () {
+              foreach( var tanker; props.globals.getNode("/ai/models",1).getChildren("ship") ) {
+                var lat = tanker.getNode("position/latitude-deg").getValue();
+                var lon = tanker.getNode("position/longitude-deg").getValue();
+                var node = tanker.getNode("position/altitude-ft", 1 );
+                var alt = geo.elevation(lat, lon);
+                node.setDoubleValue(alt==nil?0:alt*M2FT+1.5);
+                var callsign = tanker.getNode("name").getValue();
+                if( callsign == "Factory" ) continue;
+                tanker.getNode("controls/tgt-speed-kts", 1).setDoubleValue(40); # hmm, this control seems to have changed in 2019.1?! Well works now.               
+              }
+              if (finish == 0) {
+                settimer(loop2, 0.05);
+                return;
+              }
+              print("Scenario proper unloaded.");
+              foreach( var tanker; props.globals.getNode("/ai/models",1).getChildren("ship") ) {
+                var callsign = tanker.getNode("name").getValue();
+                if( !string.match(callsign,"Humvee*") ) continue;
+                tanker.remove(); # hmm, shouldn't be needed,  but is :(              
+              }
+          }
+          loop();
+          loop2();
+            debug.dump('Moving targets scenario load script complete');
+        ]]>
+      </load>
+      <unload>
+        <![CDATA[
+          finish = 1;
+          
+          ]]>
+      </unload>
+    </nasal>
+
+    <entry>
+      <type>ship</type>
+      <model>Models/Military/humvee-pickup-odrab-low-poly.ac</model>
+      <name>Humvee1</name>
+      <latitude type="double">37.258</latitude>
+      <longitude type="double">-115.797</longitude>
+      <speed-ktas type="double">40</speed-ktas>
+      <rudder type="double">0.5</rudder>
+      <heading type="double">030</heading>
+      <altitude type="double">4750</altitude>
+    </entry>
+
+    <entry>
+      <type>ship</type>
+      <model>Models/Military/humvee-pickup-odrab-low-poly.ac</model>
+      <name>Humvee2</name>
+      <latitude type="double">37.258</latitude>
+      <longitude type="double">-115.797</longitude>
+      <speed-fps type="double">40</speed-fps>
+      <rudder type="double">0.25</rudder>
+      <heading type="double">020</heading>
+      <altitude type="double">4750</altitude>
+    </entry>
+
+    <entry>
+      <type>ship</type>
+      <model>Models/Military/humvee-pickup-odrab-low-poly.ac</model>
+      <name>Humvee3</name>
+      <latitude type="double">37.258</latitude>
+      <longitude type="double">-115.797</longitude>
+      <speed type="double">40</speed>
+      <rudder type="double">0.75</rudder>
+      <heading type="double">010</heading>
+      <altitude type="double">4750</altitude>
+    </entry>
+
+    <entry>
+      <type>ship</type>
+      <model>Models/Military/humvee-pickup-odrab-low-poly.ac</model>
+      <name>Humvee4</name>
+      <latitude type="double">37.258</latitude>
+      <longitude type="double">-115.797</longitude>
+      <speed-ktas type="double">40</speed-ktas>
+      <rudder type="double">1</rudder>
+      <heading type="double">000</heading>
+      <altitude type="double">4750</altitude>
+    </entry>
+
+    <entry>
+      <type>ship</type>
+      <model>Models/Buildings/factory.ac</model>
+      <name>Factory</name>
+      <latitude type="double">37.258</latitude>
+      <longitude type="double">-115.797</longitude>
+      <speed-ktas type="double">0</speed-ktas>
+      <rudder type="double">0</rudder>
+      <heading type="double">000</heading>
+      <altitude type="double">4750</altitude>
+    </entry>
+
+    <!--<pattern-length-nm>0</pattern-length-nm>-->
+
+    <entry>
+      <name>Tanker-1</name>
+      <callsign>Slow-evading-target</callsign>
+      <type>aircraft</type>
+      <class>jet_fighter</class>
+      <altitude-ft>15000</altitude-ft>
+      <speed-ktas>300</speed-ktas>
+      <bank>-90</bank>
+
+      <TACAN-channel-ID>041X</TACAN-channel-ID>
+      <model>AI/Aircraft/F-15/Models/F-15.xml</model>
+      <fallback-model-index>515</fallback-model-index>
+      <latitude>37.258</latitude>
+      <longitude>-115.797</longitude>
+      <altitude>15000</altitude>
+      <heading>020</heading>
+      <speed>300</speed>
+      <roll>-80</roll>
+    </entry>
+
+    <entry>
+      <name>Tanker-2</name>
+      <callsign>Slow-low-target</callsign>
+      <type>tanker</type>
+      <class>jet_fighter</class>
+      <TACAN-channel-ID>041X</TACAN-channel-ID>
+      <model>AI/Aircraft/f-14b/Models/f-14b.xml</model>
+      <fallback-model-index>514</fallback-model-index>
+      <latitude>37.258</latitude>
+      <longitude>-115.797</longitude>
+      <altitude>9000</altitude>
+      <heading>020</heading>
+      <speed>300</speed>
+      <roll>90</roll>
+    </entry>
+
+    <entry>
+      <name>Tanker-3</name>
+      <callsign>Slow-high-target</callsign>
+      <type>tanker</type>
+      <class>tanker</class>
+      <TACAN-channel-ID>041X</TACAN-channel-ID>
+      <model>AI/Aircraft/eurofighter/Models/typhoon.xml</model>
+      <fallback-model-index>503</fallback-model-index>
+      <latitude>37.258</latitude>
+      <longitude>-115.797</longitude>
+      <altitude>36000</altitude>
+      <heading>020</heading>
+      <speed>250</speed>
+      <roll>15</roll>
+    </entry>
+
+    <entry>
+      <name>Tanker-4</name>
+      <callsign>Evading-target</callsign>
+      <type>aircraft</type>
+      <class>jet_fighter</class>
+      <altitude-ft>15000</altitude-ft>
+      <speed-ktas>450</speed-ktas>
+      <bank>90</bank>
+
+      <TACAN-channel-ID>041X</TACAN-channel-ID>
+      <model>AI/Aircraft/f16/Models/f-16.xml</model>
+      <fallback-model-index>516</fallback-model-index>
+      <latitude>37.258</latitude>
+      <longitude>-115.797</longitude>
+      <altitude>15000</altitude>
+      <heading>020</heading>
+      <speed>450</speed>
+      <roll>80</roll>
+    </entry>
+
+    <entry>
+      <name>Tanker-5</name>
+      <callsign>Low-target</callsign>
+      <type>tanker</type>
+      <class>tanker</class>
+      <TACAN-channel-ID>041X</TACAN-channel-ID>
+      <model>AI/Aircraft/F-18/Models/F-18.xml</model>
+      <fallback-model-index>518</fallback-model-index>
+      <latitude>37.258</latitude>
+      <longitude>-115.797</longitude>
+      <altitude>9000</altitude>
+      <heading>020</heading>
+      <speed>450</speed>
+      <roll>-40</roll>
+    </entry>
+
+    <entry>
+      <name>Tanker-6</name>
+      <callsign>High-target</callsign>
+      <type>tanker</type>
+      <class>tanker</class>
+      <TACAN-channel-ID>041X</TACAN-channel-ID>
+      <model>AI/Aircraft/F-4/F-4.xml</model>
+      <fallback-model-index>519</fallback-model-index>
+      <latitude>37.258</latitude>
+      <longitude>-115.797</longitude>
+      <altitude>36000</altitude>
+      <heading>020</heading>
+      <speed>375</speed>
+      <roll>-80</roll>
+    </entry>
+
+    <entry>
+      <name>Tanker-7</name>
+      <callsign>Fast-target</callsign>
+      <type>tanker</type>
+      <class>tanker</class>
+      <TACAN-channel-ID>041X</TACAN-channel-ID>
+      <model>AI/Aircraft/JA37/Models/JA-37-lowpoly.xml</model>
+      <fallback-model-index>522</fallback-model-index>
+      <latitude>37.258</latitude>
+      <longitude>-115.797</longitude>
+      <altitude>20000</altitude>
+      <heading>020</heading>
+      <speed>650</speed>
+      <roll>-100</roll>
+    </entry>
+
+
+    <entry>
+      <note>Nellis stuff here:</note>
+      <name>Tanker-8</name>
+      <callsign>Fast-evading-target</callsign>
+      <type>aircraft</type>
+      <class>jet_fighter</class>
+      <altitude-ft>15000</altitude-ft>
+      <speed-ktas>650</speed-ktas>
+      <bank>-90</bank>
+
+      <TACAN-channel-ID>041X</TACAN-channel-ID>
+      <model>AI/Aircraft/MiG-21bis/Models/MiG-21bis.xml</model>
+      <fallback-model-index>521</fallback-model-index>
+      <latitude>36.858</latitude>
+      <longitude>-115.300</longitude>
+      <altitude>15000</altitude>
+      <heading>020</heading>
+      <speed>650</speed>
+      <roll>-90</roll>
+    </entry>
+
+    <entry>
+      <name>Tanker-9</name>
+      <callsign>Fast-low-target</callsign>
+      <type>tanker</type>
+      <class>tanker</class>
+      <TACAN-channel-ID>041X</TACAN-channel-ID>
+      <model>AI/Aircraft/T-38/Models/T38-model.xml</model>
+      <fallback-model-index>520</fallback-model-index>
+      <latitude>36.858</latitude>
+      <longitude>-115.300</longitude>
+      <altitude>9000</altitude>
+      <heading>020</heading>
+      <speed>650</speed>
+      <roll>30</roll>
+    </entry>
+
+    <entry>
+      <name>Tanker-10</name>
+      <callsign>Fast-high-target</callsign>
+      <type>tanker</type>
+      <class>tanker</class>
+      <TACAN-channel-ID>041X</TACAN-channel-ID>
+      <model>Models/Aircraft/F-15.xml</model>
+      <fallback-model-index>515</fallback-model-index>
+      <latitude>36.858</latitude>
+      <longitude>-115.300</longitude>
+      <altitude>36000</altitude>
+      <heading>020</heading>
+      <speed>500</speed>
+      <roll>15</roll>
+    </entry>
+
+    <entry>
+      <name>Tanker-11</name>
+      <callsign>Very-fast-evading-target</callsign>
+      <type>aircraft</type>
+      <class>jet_fighter</class>
+      <altitude-ft>15000</altitude-ft>
+      <speed-ktas>850</speed-ktas>
+      <bank>90</bank>
+
+      <TACAN-channel-ID>041X</TACAN-channel-ID>
+      <model>Models/Aircraft/F-15.xml</model>
+      <fallback-model-index>515</fallback-model-index>
+      <latitude>36.858</latitude>
+      <longitude>-115.300</longitude>
+      <altitude>15000</altitude>
+      <heading>020</heading>
+      <speed>850</speed>
+      <roll>90</roll>
+    </entry>
+
+    <entry>
+      <name>Tanker-12</name>
+      <callsign>Very-fast-low-target</callsign>
+      <type>tanker</type>
+      <class>tanker</class>
+      <TACAN-channel-ID>041X</TACAN-channel-ID>
+      <model>Models/Aircraft/F-15.xml</model>
+      <fallback-model-index>515</fallback-model-index>
+      <latitude>36.858</latitude>
+      <longitude>-115.300</longitude>
+      <altitude>9000</altitude>
+      <heading>020</heading>
+      <speed>750</speed>
+      <roll>-40</roll>
+    </entry>
+
+    <entry>
+      <name>Tanker-13</name>
+      <callsign>Very-fast-high-target</callsign>
+      <type>tanker</type>
+      <class>tanker</class>
+      <TACAN-channel-ID>041X</TACAN-channel-ID>
+      <model>Models/Aircraft/F-15.xml</model>
+      <fallback-model-index>515</fallback-model-index>
+      <latitude>36.858</latitude>
+      <longitude>-115.300</longitude>
+      <altitude>36000</altitude>
+      <heading>020</heading>
+      <speed>700</speed>
+      <roll>-80</roll>
+    </entry>
+
+    <entry>
+      <name>Tanker-14</name>
+      <callsign>Very-fast-target</callsign>
+      <type>tanker</type>
+      <class>tanker</class>
+      <TACAN-channel-ID>041X</TACAN-channel-ID>
+      <model>Models/Aircraft/F-15.xml</model>
+      <fallback-model-index>515</fallback-model-index>
+      <latitude>36.858</latitude>
+      <longitude>-115.300</longitude>
+      <altitude>20000</altitude>
+      <heading>020</heading>
+      <speed>900</speed>
+      <roll>-90</roll>
+    </entry>
+
+    <entry>
+      <name>Tanker-15</name>
+      <callsign>Target 20k</callsign>
+      <type>aircraft</type>
+      <class>jet_fighter</class>
+      <altitude-ft>20000</altitude-ft>
+      <speed-ktas>624</speed-ktas>
+      <bank>0</bank>
+      <TACAN-channel-ID>041X</TACAN-channel-ID>
+      <model>Models/Aircraft/F-15.xml</model>
+      <fallback-model-index>515</fallback-model-index>
+      <latitude>37.258</latitude>
+      <longitude>-115.797</longitude>
+      <altitude>20000</altitude>
+      <heading>000</heading>
+      <speed>624</speed>
+      <roll>0</roll>
+    </entry>
+
+    <entry>
+      <name>Tanker-16</name>
+      <callsign>Target 25k</callsign>
+      <type>aircraft</type>
+      <class>jet_fighter</class>
+      <altitude-ft>25000</altitude-ft>
+      <speed-ktas>613</speed-ktas>
+      <bank>0</bank>
+      <TACAN-channel-ID>041X</TACAN-channel-ID>
+      <model>Models/Aircraft/F-15.xml</model>
+      <fallback-model-index>515</fallback-model-index>
+      <latitude>37.258</latitude>
+      <longitude>-115.797</longitude>
+      <altitude>25000</altitude>
+      <heading>000</heading>
+      <speed>613</speed>
+      <roll>0</roll>
+    </entry>
+
+    <entry>
+      <name>Tanker-17</name>
+      <callsign>Target 30k</callsign>
+      <type>aircraft</type>
+      <class>jet_fighter</class>
+      <altitude-ft>30000</altitude-ft>
+      <speed-ktas>588</speed-ktas>
+      <bank>0</bank>
+      <TACAN-channel-ID>041X</TACAN-channel-ID>
+      <model>Models/Aircraft/F-15.xml</model>
+      <fallback-model-index>515</fallback-model-index>
+      <latitude>37.258</latitude>
+      <longitude>-115.797</longitude>
+      <altitude>30000</altitude>
+      <heading>000</heading>
+      <speed>588</speed>
+      <roll>0</roll>
+    </entry>
+
+    <entry>
+      <name>Tanker-18</name>
+      <callsign>Target 36k</callsign>
+      <type>aircraft</type>
+      <class>jet_fighter</class>
+      <altitude-ft>36000</altitude-ft>
+      <speed-ktas>585</speed-ktas>
+      <bank>0</bank>
+      <TACAN-channel-ID>041X</TACAN-channel-ID>
+      <model>Models/Aircraft/F-15.xml</model>
+      <fallback-model-index>515</fallback-model-index>
+      <latitude>37.258</latitude>
+      <longitude>-115.797</longitude>
+      <altitude>36000</altitude>
+      <heading>000</heading>
+      <speed>585</speed>
+      <roll>0</roll>
+    </entry>
+
+  </scenario>
+
+</PropertyList>
