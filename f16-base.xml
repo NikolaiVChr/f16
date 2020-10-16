@@ -1357,6 +1357,8 @@ value. 18000=standard US transition altitude -->
             <jfs-rpm-normalized type="double">0</jfs-rpm-normalized>
 			<sec-self-test type="bool">false</sec-self-test>
             <cutoff-release-lever type="bool">true</cutoff-release-lever>
+            <jfs-spool-up-start1-s type="double">12</jfs-spool-up-start1-s>
+            <jfs-spool-up-start2-s type="double">8</jfs-spool-up-start2-s>
         </engine>
         <ejected type="bool">false</ejected>
         <chute>

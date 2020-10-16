@@ -203,14 +203,7 @@
    </fcs>
   </jsbsim>
  </fdm>
- 
- <f16>
-    <engine>
-        <jfs-spool-up-start1-s type="double">12</jfs-spool-up-start1-s>
-        <jfs-spool-up-start2-s type="double">8</jfs-spool-up-start2-s>
-    </engine>
- </f16>
- 
+  
  <engines>
     <engine>
       <rated-mil-dry type="double">17000</rated-mil-dry>
