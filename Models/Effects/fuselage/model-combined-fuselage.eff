@@ -66,6 +66,29 @@ Modifications author: Nikolai V. Chr.
             </images>
             <filter>linear</filter>
           </texture>
+          
+        <grain-texture-enabled type="int">0</grain-texture-enabled>
+        <grain-magnification type="float">1</grain-magnification>
+        <texture n="7">
+            <image>Aircraft/f16/Models/Effects/fuselage/rust1.png</image>
+            <type>2d</type>
+            <filter>linear-mipmap-linear</filter> 
+            <wrap-s>repeat</wrap-s>
+            <wrap-t>repeat</wrap-t>
+            <internal-format>normalized</internal-format>
+        </texture>
+        
+        <dirt-enabled type="int">0</dirt-enabled>
+        <dirt-factor type="float">0.0</dirt-factor>
+        <dirt-color type="vec3d">0.5 0.8 0.9</dirt-color>
+        <texture n="4">
+            <image>Aircraft/f16/Models/Effects/fuselage/dirt.png</image>
+            <type>2d</type>
+            <filter>linear-mipmap-linear</filter> 
+            <wrap-s>repeat</wrap-s>
+            <wrap-t>repeat</wrap-t>
+            <internal-format>normalized</internal-format>
+        </texture>
 	</parameters>
 	<!--
 		Textures:
