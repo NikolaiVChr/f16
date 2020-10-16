@@ -2477,7 +2477,7 @@ var MFD_Device =
                     me.armtimer = sprintf("AD %.2fSEC",me.armtime);#arming delay
                     me.cool = getprop("controls/armament/dual")==1?"SGL":"PAIR";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "FAIL";
+                        me.ready = "MAL";
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
                         me.ready = "OFF";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING) {
@@ -2489,7 +2489,7 @@ var MFD_Device =
                     me.wpnType ="ground";
                     me.eegs = "A-G";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "FAIL";
+                        me.ready = "MAL";
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
                         me.ready = "OFF";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING) {
@@ -2502,7 +2502,7 @@ var MFD_Device =
                     me.eegs = "A-G";
                     me.drop = getprop("f16/stores/harm-mounted")?"HAD":"HAS";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "FAIL";
+                        me.ready = "MAL";
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
                         me.ready = "OFF";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING) {
@@ -2517,7 +2517,7 @@ var MFD_Device =
                     me.coolFrame = me.wpn.isCooling()==1?1:0;                    
                     me.drop = getprop("instrumentation/radar/radar-standby")==1?"BORE":"SLAV";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "FAIL";
+                        me.ready = "MAL";
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
                         me.ready = "OFF";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING) {
@@ -2530,7 +2530,7 @@ var MFD_Device =
                     me.drop = "SLAV";
                     me.eegs = "A-A";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "FAIL";
+                        me.ready = "MAL";
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
                         me.ready = "OFF";
                     } elsif (me.wpn.status == armament.MISSILE_STARTING) {
@@ -2542,7 +2542,7 @@ var MFD_Device =
                     me.wpnType ="gun";
                     me.eegs = "EEGS";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "FAIL";
+                        me.ready = "MAL";
                     } else {
                         me.ready = "RDY";
                     }
@@ -2550,7 +2550,7 @@ var MFD_Device =
                     me.wpnType ="rocket";
                     me.eegs = "A-G";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
-                        me.ready = "FAIL";
+                        me.ready = "MAL";
                     } else {
                         me.ready = "RDY";
                     }
