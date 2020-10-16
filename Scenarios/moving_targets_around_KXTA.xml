@@ -12,6 +12,8 @@
 
       Nikolai V. Chr.
     </description>
+    
+    <search-order>DATA_ONLY</search-order><!-- "DATA_ONLY", "PREFER_AI", "PREFER_DATA" -->
 
     <nasal>
       <load>
