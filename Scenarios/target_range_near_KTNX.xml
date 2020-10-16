@@ -27,12 +27,13 @@
                 node.setDoubleValue(alt==nil?0:alt*M2FT);
               }
               if (finish == 0) {
-                settimer(loop2, 5);
+                settimer(loop2, 20);
                 return;
               }
               print("Scenario proper unloaded.");
           }
           loop2();
+          finish = 1;
           print('Tonopah target range scenario load 17 targets: complete');
         ]]>
       </load>
@@ -47,7 +48,7 @@
     <entry>
       <type>ship</type>
       <model>Models/Military/humvee-pickup-odrab-low-poly.ac</model>
-      <name>Humvee1</name>
+      <name>trucke</name>
       <latitude type="double">37.64</latitude>
       <longitude type="double">-116.57</longitude>
       <speed-ktas type="double">0</speed-ktas>
@@ -59,7 +60,7 @@
     <entry>
       <type>ship</type>
       <model>Models/Military/humvee-pickup-odrab-low-poly.ac</model>
-      <name>Humvee2</name>
+      <name>wtruck</name>
       <latitude type="double">37.641</latitude>
       <longitude type="double">-116.571</longitude>
       <speed-ktas type="double">0</speed-ktas>
