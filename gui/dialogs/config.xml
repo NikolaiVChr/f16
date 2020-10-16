@@ -186,7 +186,7 @@
   <empty><stretch>1</stretch></empty>
 
     <checkbox>
-      <label>Connect Ground Power Unit</label>
+      <label>Connect -60 Ground Power Unit</label>
       <halign>left</halign>
       <property>fdm/jsbsim/elec/sources/external-pwr</property>
       <live>true</live>
@@ -243,7 +243,68 @@
     </checkbox>
   <text><halign>left</halign><label>Enabling this will display an Intel graphics-compatible HUD.</label></text>
   <text><halign>left</halign><label>This option will be auto-saved.</label></text>
-  </group>
+
+  <hrule/>
+
+  <text><label>Weathered effects (Experimental)</label></text>
+
+  <group>
+    <layout>hbox</layout>
+
+    <checkbox>
+      <label>Dirt:</label>
+      <halign>left</halign>
+      <property>f16/effects/dirt</property>
+      <live>true</live>
+        <binding>
+          <command>property-toggle</command>
+          <property>f16/effects/dirt</property>
+        </binding>
+    </checkbox>
+  
+  <slider>
+     <halign>left</halign>
+     <property>f16/effects/dirt-fac</property>
+     <min>0</min>
+     <max>1.0</max>
+     <step>0.05</step>
+     <live>true</live>
+     <vertical>false</vertical>
+     <pref-height>40</pref-height>
+     <pref-width>150</pref-width>
+     <binding>
+        <command>dialog-apply</command>
+     </binding>
+  </slider>
+
+  <checkbox>
+      <label>Rust:</label>
+      <halign>left</halign>
+      <property>f16/effects/rust</property>
+      <live>true</live>
+        <binding>
+          <command>property-toggle</command>
+          <property>f16/effects/rust</property>
+        </binding>
+  </checkbox>
+  
+  <slider>
+     <halign>left</halign>
+     <property>f16/effects/rust-mag</property>
+     <min>0</min>
+     <max>1</max>
+     <step>0.05</step>
+     <live>true</live>
+     <vertical>false</vertical>
+     <pref-height>40</pref-height>
+     <pref-width>150</pref-width>
+     <binding>
+        <command>dialog-apply</command>
+     </binding>
+  </slider>
+ </group>
+                
+ </group>
   
   <empty><stretch>1</stretch></empty>
 

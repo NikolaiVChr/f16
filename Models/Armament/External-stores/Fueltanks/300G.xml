@@ -7,9 +7,13 @@
       <parameters>
           <metallic type="float">0.80</metallic>
           <ambient-factor type="float">0.35</ambient-factor>
-          <rain-enabled type="int">0</rain-enabled>
+          <rain-enabled type="int">2</rain-enabled>
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
+          <grain-texture-enabled type="int"><use>f16/effects/rust</use></grain-texture-enabled>
+          <grain-magnification type="float"><use>f16/effects/rust-mag</use></grain-magnification>
+          <dirt-enabled type="int"><use>f16/effects/dirt</use></dirt-enabled>
+          <dirt-factor type="float"><use>f16/effects/dirt-fac</use></dirt-factor>
       </parameters>
       <object-name>fuel_tank300</object-name>
       <object-name>fillercap-300</object-name>

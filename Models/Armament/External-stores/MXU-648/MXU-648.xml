@@ -7,7 +7,7 @@
       <parameters>
           <metallic type="float">0.80</metallic>
           <ambient-factor type="float">0.35</ambient-factor>
-          <rain-enabled type="int">0</rain-enabled>
+          <rain-enabled type="int">2</rain-enabled>
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
       </parameters>
