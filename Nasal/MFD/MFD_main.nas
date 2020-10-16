@@ -1445,8 +1445,8 @@ var MFD_Device =
                             me.gmMax += 1;
                         }
                         #printf("GM radar scanning from from %d to %d ft", me.gmMin*M2FT, me.gmMax*M2FT);
-                        me.gmMintemp = 5000;
-                        me.gmMaxtemp = 300;
+                        me.gmMintemp = 8500;
+                        me.gmMaxtemp = -1;
                     }
                     me.echoPoss = nil;
                     if (me.gm_echoPos["e"~me.gmLine] != nil) {
@@ -1485,7 +1485,7 @@ var MFD_Device =
                                 # Terrain found and is not below radar field of regard
                                 me.terrain.set_latlon(me.terrainGeod.lat, me.terrainGeod.lon, me.terrainGeod.elevation);
                                 me.dist = me.terrain.direct_distance_to(me.beamSpot);#-1 is to avoid z-fighting distance
-                                if (me.dist < 25) {                                
+                                if (me.dist < getprop("instrumentation/radar/radar2-range")) {  # to fight presicion issues                              
                                     if (me.gmEle > me.gmMaxtemp) {
                                         me.gmMaxtemp = me.gmEle;
                                     }
