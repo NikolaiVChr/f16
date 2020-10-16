@@ -194,6 +194,13 @@
   </jsbsim>
  </fdm>
  
+ <f16>
+    <engine>
+        <jfs-spool-up-start1-s type="double">30</jfs-spool-up-start1-s>
+        <jfs-spool-up-start2-s type="double">20</jfs-spool-up-start2-s>
+    </engine>
+ </f16>
+ 
 <engines>
     <engine>
       <rated-mil-dry type="double">14670</rated-mil-dry>

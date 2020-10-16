@@ -168,7 +168,7 @@ var autostartelec = func {
   }
 
   # Wait for the JFS to spool up
-  autostart_watchdog.restart(45);
+  autostart_watchdog.restart(55);
   autostart_jfs.start();
 }
 
@@ -184,7 +184,7 @@ var autostartjfs = func {
   setprop("f16/engine/cutoff-release-lever",0);
 
   # Wait for the engine to spool up
-  autostart_watchdog.restart(25);
+  autostart_watchdog.restart(30);
   autostart_engine.start();
 }
 

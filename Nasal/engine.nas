@@ -23,8 +23,8 @@ var accu_1_psi = accu_psi_max;
 var accu_2_psi = accu_psi_max;
 var accu_charge_allowed = 1;
 var jfs_spooling = 0;
-var jfs_spool_up_time_s = 30;# 30s for 1 accu, 18s for both. 18s is compromise between JFS versions. Some are clocked to 8s only, some 30.
-var jfs_spool_up_time_2_s = 18;
+var jfs_spool_up_time_s = getprop("f16/engine/jfs-spool-up-start1-s");# 30s for 1 accu. Some are clocked to 8s only, some 30.
+var jfs_spool_up_time_2_s = getprop("f16/engine/jfs-spool-up-start2-s");
 var jfs_spool_down_time_s = 17;
 var jfs_n_norm = 0;
 

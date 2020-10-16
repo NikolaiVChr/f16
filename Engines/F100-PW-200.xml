@@ -6,10 +6,10 @@
   <bypassratio>     0.71 </bypassratio>
   <tsfc>            0.72 </tsfc>
   <atsfc>           2.1 </atsfc>
-  <n1spinup>        1.0 </n1spinup>
-  <n2spinup>        3.0 </n2spinup>
-  <n1startrate>     1.4 </n1startrate>
-  <n2startrate>     2.0 </n2startrate>
+  <n1spinup>        0.5 </n1spinup>
+  <n2spinup>        1.0 </n2spinup>
+  <n1startrate>     1.2 </n1startrate>
+  <n2startrate>     1.6 </n2startrate>
   <ignitionn1>      5.21</ignitionn1>
   <ignitionn2>     20.00</ignitionn2>
   <idlen1>         30.0 </idlen1>
