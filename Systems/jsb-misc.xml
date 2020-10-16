@@ -952,5 +952,21 @@
 		</fcs_function>
 		
 	</channel>
+  
+  <channel name="Readouts">
+    
+    <switch name="/engines/engine[0]/nozzle-pos-norm-switch">
+     <default value="/engines/engine[0]/nozzle-pos-norm-switch"/>
+     <test  logic="AND" value="/engines/engine[0]/nozzle-pos-norm">
+        elec/bus/emergency-ac-2 gt 100
+     </test>
+    </switch>
+    
+    <lag_filter name="/engines/engine[0]/nozzle-pos-norm-lag">
+        <input> /engines/engine[0]/nozzle-pos-norm-switch </input>
+        <c1> 10 </c1>
+    </lag_filter>
+    
+  </channel>
     
 </system>
