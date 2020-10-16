@@ -266,7 +266,7 @@
      <halign>left</halign>
      <property>f16/effects/dirt-fac</property>
      <min>0</min>
-     <max>1.0</max>
+     <max>0.75</max>
      <step>0.05</step>
      <live>true</live>
      <vertical>false</vertical>
