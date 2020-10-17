@@ -255,26 +255,30 @@ Localizer in HUD
             <text-3><![CDATA[
 RWR
 The round display above left MFD display is a Radar Warning Reciever.
+
 It works by sorting the threats to you.
+  Close to center       : high threat
+  Close to edge         : threat
+  Diamond               : highest threat
+  Upper semicircle      : new threat (750Hz tone)
+  Full blinking circle  : hostile launch (2000Hz tone)
+  Hat above designation : airborne
 
-Close to center: high threat
-Close to edge: threat
-Diamond: highest threat
-Upper semicircle: new threat (750Hz tone)
-Full blinking circle: hostile launch (2000Hz tone)
-Hat above designation: Airborne
-
-Use Link 16 in menu to define your wingmen (up to 12), so they don't show up on RWR when there is other threats.
+Use Link 16 in the menu to define your wingmen (up to 12), so they don't show up on RWR when there
+are other threats.
 
 For something to show up in the RWR at all these conditions must be met:
 1: Be a threat.
-2: Be picked up by your radar OR having an active radar pointed your way OR having transponder on and not be too far away.
+2: Be picked up by your radar, OR 
+   having an active radar pointed your way, OR
+   having transponder on and not be too far away.
 
-Notice that the RWR can sometimes pick up threat much further away than your radar is capable off.
+Notice that the RWR can sometimes pick up threats much further away than your radar is capable off.
 
-If someone is locking you up, you will also hear a buzz sound constantly, until you no longer are locked up, also if a wingman locks you up.
-Its normal procedure if you think a wingman has locked you up, to call out 'Buddy spike' over the comms. If he say he has not, then you know its perhaps a hostile lock.
-AIM-9 IR locks with radar off, will not give you any warning before launch.
+If someone is locking you up, you will also hear a buzz sound constantly, until you no longer are
+locked up, also if a wingman locks you up. It's normal procedure if you think a wingman has locked
+you up, to call out 'Buddy spike' over the comms. If he say he has not, then you know it's perhaps
+a hostile lock. AIM-9 IR locks with radar off, it will not give you any warning before launch.
 
 Here's a brief list including the most common symbols and what they refer to:
     - 16:   F-16
