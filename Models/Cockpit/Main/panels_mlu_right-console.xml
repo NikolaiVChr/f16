@@ -1430,6 +1430,50 @@
     </animation>
 
     <animation>
+        <object-name>NUCLEAR_CONSENT_10_1</object-name>
+        <object-name>suit-press-switch</object-name>
+        <type>select</type>
+        <condition>
+          <or>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>0</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>1</value>
+            </equals>
+          </or>
+        </condition>
+    </animation>
+
+    <animation>
+        <object-name>NUCLEAR_CONSENT_1</object-name>
+        <object-name>plain-switch</object-name>
+        <type>select</type>
+        <condition>
+          <or>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>3</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>4</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>5</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>6</value>
+            </equals>
+          </or>
+        </condition>
+    </animation>
+
+    <animation>
         <object-name>AVIONICS_PWR_B10_1</object-name>
         <type>select</type>
         <condition>
