@@ -547,24 +547,28 @@ The page can be found on the miscellaneous page list. The laser code must be fro
             ]]></text-9>
             <text-10><![CDATA[
 DOGFIGHT MODE
-Using the FCR cursor to lock up an hostile while you are in turnfight can be next to impossible.
-So you can press 'd' to toggle dogfight mode.
+Using the FCR cursor to lock up an hostile while you are in turnfight can be next to impossible. So
+you can press 'd' to toggle dogfight mode.
 
 THIS WILL HAPPEN WHEN ENTERING DOGFIGHT MODE
-Radar will be force limited to 10nm range and 20x30 degs field for locking (CRM mode, ACM submode). It can still track up to 120 degs.
-Rdar will autolock anything it sees. You can use key 'y' to select next target if more than one is in that small field.
-Radar will be set to standby, and have to be enabled if desired by 'r' key.
-HUD will be decluttered and orange peel arc will become visible.
-Cannon will be selected, but you can still cycle to other weapons.
-Countermeasure page will be displayed on DED.
-Left MFD will be set to FCR page.
-Right MFD will be set to WPN page.
+  Radar will be force limited to 10 NM range and 20x30 degs field for locking (CRM mode, ACM sub-
+    mode). It can still track up to 120 degs.
+  Radar will autolock anything it sees. You can use key 'y' to select next target if more than one
+    is in that small field.
+  Radar will be set to standby, and have to be enabled if desired by using the 'r' key.
+  HUD will be decluttered and orange peel arc will become visible.
+  Cannon will be selected, but you can still cycle to other weapons.
+  Countermeasure page will be displayed on the DED.
+  Left MFD will be set to FCR page.
+  Right MFD will be set to WPN page.
 
 THIS WILL HAPPEN WHEN EXITING DOGFIGHT MODE
-Radar field and range will be set back to what it was when entering dogfight mode.
+  Radar field and range will be set back to what it was when entering dogfight mode.
 
 ORANGE PEEL
-This is an arc showing in the HUD. The filled portion of the arc will always point towards the ground. When you pitch up the arc will cover less degrees, and pitch down it will cover more degrees. So full circle means you are headed straight down.
+This is an arc showing in the HUD. The filled portion of the arc will always point towards the 
+ground and the ends are parallel to the horizon. When you pitch up the arc will cover less degrees,
+and pitch down it will cover more degrees. So full circle means you are headed straight down.
             ]]></text-10>
             <text-11><![CDATA[
 FAILURES, FAULTS, CAUTIONS and WARNINGS
