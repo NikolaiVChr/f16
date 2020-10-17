@@ -507,40 +507,43 @@ Bring this up in the menu.
 Select a difficulty.
 Aim with the '+' bore symbol in HUD on a enemy for 1 second to score a kill.
 Friendly fire is off.
-Its meant to be use without using missiles to simulate gun fight, but if you find it hard we recommend you practice on setting 0 with AIM-9.
+Its meant to be use without using missiles to simulate gun fight, but if you find it hard
+we recommend you practice on setting 0 with AIM-9.
 Some of the settings will give you a wingman.
 To view the AI flying, switch to missile view and click the arrows in lower left corner.
             ]]></text-8>
             <text-9><![CDATA[
 DED
-The DED is the small display above the right color MFD or just right of the HUD.
-The ICP (the panel below the HUD) can control the DED.
-The DED can also be brought up on the HUD, set the switch on the left side of the flightstick to DED DATA.
+The DED is the small display above the right color MFD or just right of the HUD. The ICP (the panel
+below the HUD) can control the DED. The DED can also be brought up on the HUD, set the switch on the
+left side of the flightstick to DED DATA.
 
 FLIPPING PAGES
-There is 3 ways of accesing pages.
-The COMM pages can be accessed by depressing COM1 or COM2 on the ICP. Similar for IFF page.
-The primary set of pages is accessed only from the CNI page. That is the default DED page. To return to CNI page no matter which page you are on, flip the ICP switch to RTN. Notice that the numpad on the ICP has also letters on them, that are the pages that button will show when pressed in CNI page.
-The secondary set of pages is accessed by depressing LIST on the ICP. Then click on ICP numpad to select the page wanted.
+There are three ways of accessing pages. The COMM pages can be accessed by depressing COM1 or COM2 
+on the ICP. Similar for IFF page. The primary set of pages is accessed only from the CNI page. That
+is the default DED page. To return to the CNI page no matter which page you are on, flip the RTN-SEQ
+switch to RTN. Notice that the numpad on the ICP has also letters on them, these are the pages that
+button will show when pressed when on the CNI page. The secondary set of pages is accessed by
+depressing LIST on the ICP. Then click the number on the ICP numpad to select the page wanted.
+On the secondary page list depressing '0' brings up another miscellaneous page list.
 
 INPUTING VALUES
-On some pages, values can be input.
-A value that is selected and ready to be changed is shown with '*'' symbols around it. For example *1256*.
-If a page has more than 1 value that can be input, click on the small up-arrow just above the RTN-SEQ switch to go to next.
-If the input is letters, use '0' on ICP to cycle the value.
-If the input is numbers, use the numpad on ICP to enter the number, then depress ENTER.
+On some pages, values can be input. A value that is selected and ready to be changed is shown with
+'*' symbols around it, for example '*1256*'. If a page has more than one value that can be input,
+click on the small up-arrow just above the RTN-SEQ switch to go to the next input.
+If the input are letters, use '0' on ICP to cycle the value. If the input are numbers, use the
+numpad on the ICP to enter the number, then depress ENTR.
 
 HACK Timer on TIME page
 The DED has a built-in stopwatch. To access this, use key 6 ("TIME") on the ICP to select TIME page.
-Then, use the up arrow on the ICP to start the HACK timer. The up arrow toggles the timer while the down arrow resets it.
+Then use the up arrow button on the ICP to start the HACK timer. The up arrow buton toggles the
+timer while the down arrow button resets it.
 
 M3 and M4 on IFF page
-M3 is the civilian transponder.
-M4 is a military IFF transponder.
-The other modes are not implemented.
+M3 is the civilian transponder. M4 is a military IFF transponder. Other modes are not implemented.
 
 Laser code on LASR page
-This value must be from 1111 to 2888.
+The page can be found on the miscellaneous page list. The laser code must be from 1111 to 2888.
             ]]></text-9>
             <text-10><![CDATA[
 DOGFIGHT MODE
