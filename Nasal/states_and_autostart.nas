@@ -228,7 +228,7 @@ var autostartengine = func {
   setprop("f16/avionics/cmds-ch-switch",1);
   setprop("f16/avionics/cmds-fl-switch",1);
 
-  setprop("controls/lighting/ext-lighting-panel/form-knob", 0);
+  setprop("controls/lighting/ext-lighting-panel/form-knob", 1);
   setprop("controls/lighting/ext-lighting-panel/master", 1);
 
   setprop("controls/lighting/lighting-panel/console-flood-knob", 0.3);

@@ -17,7 +17,7 @@ Prohm "Rama" Snitwong
 Pensacola
 - Liveries
 
-Nikolai V. Chr. "Leto","Necolatis"
+Nikolai V. Chr. "Leto", "Necolatis"
 - F16 Blocks 10, 20 and YF-16 aerodynamics
 - Fly-by-wire system for all variants except simplified
 - Danish, Ghost Gray, Blue Bandit, 2xUAE, Croatian, Empire, Norwegian and prototype livery
@@ -44,9 +44,10 @@ J Maverick 16
 - GoPro views
 - Custom GUI and layout rework
 - Various fixes and improvements
-- Splashes
+- Splash screens
+- Thumbnails
 
-Jonathan Redpath (legoboyvdlp)
+Jonathan Redpath "legoboyvdlp"
 - Hydraulics
 - Cockpit work
 - MFD, DED improvements
@@ -69,18 +70,18 @@ Justin "pinto" Nicholson
 - Radar RCS system
 - Tacview recording
 
-Martien Van Der Plas
+Martien Van Der Plas "MV-DP"
 - 3D modeling/texturing for weapons, stores, racks, other
 
 Petar Jedvaj
 - Original F-16D 3D model
 
-Josh Davidson (Octal450)
+Josh Davidson "Octal450"
 - Autopilot
 - Electrical System
 - Improvements
 
-Fabien Barbier (5H1N0B1)
+Fabien Barbier "5H1N0B1"
 - Work on stores
 - Missile view
 - Radar work
@@ -89,22 +90,22 @@ Fabien Barbier (5H1N0B1)
 NC-687
 - New 3D side stick and central air vent
 
-Adam Barszczak (barszczisbad)
+Adam Barszczak "barszczisbad", "BARS1"
 - New side stick 3D improvement
 - Canvas MFD rework
 
-Gary Brown (N-SCOT)
+Gary Brown "thebroons", "N-SCOT"
 - Most liveries
 - ALE-50 3D model
-- Paintkit
+- F-16CJ Paintkit
 
 Thorsten Renk
 - Enhanced bomb effects at exploding.
 
-Timi (MrChillStorm)
+Timi "MrChillStorm"
 - Internal sound overhaul and rework
 
-Carsten Brueggmann (GEED)
+Carsten Brueggmann "GEED"
 - Sound creation and editing.
 
 Alan Teeder
@@ -123,9 +124,11 @@ PH-JAKE
 - Block 50 left panel animations
 - Bug fixes and improvements
 - Improved checklists
+- Help menu updates.
 
 FGUK
 - Sounds
+- Dual-rack 3D
 
 Marsdolphin
 - Some liveries
