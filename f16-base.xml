@@ -1392,7 +1392,7 @@ value. 18000=standard US transition altitude -->
             <rust type="bool">false</rust>
             <rust-mag type="double">0.3</rust-mag>
             <dirt type="bool">false</dirt>
-            <dirt-fac type="double">0.25</dirt-fac>
+            <dirt-fac type="double">0.2</dirt-fac>
         </effects>
         <vne-exceed type="double">0</vne-exceed>
         <crs-ils type="double">0.0</crs-ils>
