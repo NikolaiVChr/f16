@@ -308,37 +308,42 @@ Here's a brief list including the most common symbols and what they refer to:
             <text-4><![CDATA[
 MFDs (Multi Function Displays)
 
-The BRT and CON switches on the MFD mount corners can be used to adjust brightness and contrast. GAIN is only used in FCR GM mode.
+The BRT and CON switches on the MFD mount corners can be used to adjust brightness and contrast.
+GAIN is only used in FCR GM mode.
 
-page SMS: Clicking on button (OBS) next to a station will select it. Each station has 2 or 3 lines of text, that details pylon mounted,
-          rack/rail mounted on pylon and weapon(s) mounted on the rack or directly on the pylon.
-          J-S will jettison the selected station. Not all payload types can be jettisoned, same for racks.
-          If CAT shows greater than 1, then you should set the flightcontrols to CAT III on left panel and opposite.
-page FCR  In CRM, SEA and GM if the display is sensor of interest (SOI) you can move a cursor around to find and lock hostiles.
-          To make a display SOI, use Shift-arrow keys on keyboard.
+page SMS: Clicking on button (OBS) next to a station will select it. Each station has 2 or 3 lines
+          of text, that details pylon mounted, rack/rail mounted on pylon and weapon(s) mounted on
+          the rack or directly on the pylon. J-S will jettison the selected station. Not all payload
+          types can be jettisoned, same for racks. If CAT shows greater than 1, then you should set
+          the flightcontrols to CAT III on left panel and opposite.
+page FCR: In CRM, SEA and GM if the display is sensor of interest (SOI) you can move a cursor around
+          to find and lock hostiles. To make a display SOI, use Shift-arrow keys on keyboard.
           To move the cursor use arrow keys and 'l' or set that in the joystick config dialog.
           CZ: Cursor zero will reset cursor position.
-          Notice: The radar when started up goes through a Built In Test (BIT) for a couple of minutes.
+          Note: The radar when started up goes through a Built In Test (BIT) for a couple of minutes.
           
-          (CRM/SEA): B-scope radar display. Horizontal is relative bearing to targets, vertical is distance.
+          (CRM/SEA): B-scope radar display. Horizontal is relative bearing to targets,
+          vertical is distance.
           A4: How much azimuth the radar shall cover, A4 is max (120 degs).
           8B: How much vertically the radar shall cover, 8B is max (120 degs).
-          A small plus sign when something is lock is the point to aim for if you want to intercept the locked target.
-          At the top is two numbers. Target speed (kt) and closing speed (kt).
+          A small plus sign when something is lock is the point to aim for if you want to intercept
+          the locked target. At the top are two numbers. Target speed (kt) and closing speed (kt).
           
-          (GM) C-scope radar display. Will only show ground targets and terrain. Might be heavy on your framerate.
+          (GM): C-scope radar display. Will only show ground targets and terrain. Might be heavy on
+          your framerate.
           SD/HD terrain detail. HD will scan slower.
-          GAIN switch on the MFD mount can be used to adjust how terrain is color mapped onto display.
+          GAIN switch on the MFD mount can be used to adjust how terrain is color mapped onto
+          the display.
 page HSD: Horizontal situation display. Shows route, wingmen and designated radar target.
-          DEP: Depressed ownship in display
-          CEN: Centered ownship in display
-          CPL: Range will follow (approx) radar distance
+          DEP: Depressed ownship in display.
+          CEN: Centered ownship in display.
+          CPL: Range will follow (approx) radar distance.
           DCPL: Range can be set independently of radar range by clicking on the up/down arrows.
 page WPN: Details about current selected weapon(s).
 
-The Sensor of Interest (SOI) is selected using DMS (Shift + Arrow Key). DMS Forward selects HUD as SOI. DMS Aft 
-selects the left MFD as SOI, and further DMS Aft toggles between left / right MFD. The SOI may then be manipulated
-with the cursor (only enabled for FCR as of now).
+The Sensor of Interest (SOI) is selected using DMS (Shift + Arrow Key). DMS Forward selects HUD
+as SOI. DMS Aft selects the left MFD as SOI, and further DMS Aft toggles between left / right MFD.
+The SOI may then be manipulated with the cursor (only enabled for FCR as of now).
             ]]></text-4>
             <text-5><![CDATA[
 AUTOPILOT
