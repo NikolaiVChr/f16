@@ -347,7 +347,8 @@ The SOI may then be manipulated with the cursor (only enabled for FCR as of now)
             ]]></text-4>
             <text-5><![CDATA[
 AUTOPILOT
-Notice that even when A/P is enabled you can control the airplane with the stick. When you let go of stick A/P will recalculate from current situation.
+Notice that even when A/P is enabled you can control the airplane with the stick. When you let go
+of stick A/P will recalculate from current situation.
 
 The controls:
 Pitch: ALT HOLD: Hold current altitude
@@ -361,44 +362,63 @@ For more detailed help, click the ? button in top right corner of the autopilot 
             ]]></text-5>
             <text-6><![CDATA[
 AIMING THE CANNON
-Once you have selected cannon and masterarm switch is ON, a timer will start and after around 2 seconds you will get the EEGS funnel on the HUD.
-EEGS stands for Enhanced Envelope Gun Sight. Keep you targets wingtips so that they touch the sides of the funnel, and keep your aircraft attitude movement stable for around 1 second, then fire a burst. This will give you the best chance of hitting. The sides of the funnel is computed for a 35ft wingspan, so if you are aiming at a larger or smaller aircraft you need to compensate for that.
-The 35 ft wingspan can be changed on the MAN page in the DED.
+Once you have selected cannon and masterarm switch is ON, a timer will start and after around two
+seconds you will get the Enhanced Envelope Gun Sight (EEGS) funnel on the HUD. Keep you targets
+wingtips so that they touch the sides of the funnel, and keep your aircraft attitude movement stable
+for around one second, then fire a burst. This will give you the best chance of hitting.
+The sides of the funnel is computed for a 35 ft wingspan, so if you are aiming at a larger or
+smaller aircraft you need to compensate for that. The 35 ft wingspan can be changed on the MAN page
+in the DED.
 
 RELEASING ORDNANCE
-First mount some armament.
-Secondly make sure masterarm is enabled.
-Thirdly select the arm. (use 'w' key or click buttons 'A-A' or 'A-G' under HUD)
-Fourthly make sure a target is selected (key 'y'), unless you want to use unguided bombs, then a target is not needed.
+First mount some armament. Secondly make sure masterarm (key 'm') is enabled. Thirdly select the
+arm (use 'w' key or click buttons 'A-A' or 'A-G' under the HUD). Fourthly make sure a target is
+selected (key 'y'), unless you want to use unguided bombs, then a target is not needed.
 
 Bombs
   For GBU-12 and GBU-24 make sure laser is armed.
   Release mode can be set with WPN page, options are CCIP and CCRP.
-    CCRP: When getting close to target a vertical line will appear in HUD. Align flight path indicator on the line, when a small horizontal line on that line starts dropping down and reach another line then its time to release (key 'e' or 'trigger').
-    CCIP: A line from FPM to a round pipper is displayed when close enough to ground, manouvrer the pipper to be over the target and press trigger.
+    CCRP: When getting close to target a vertical line will appear in the HUD. Align flight path 
+      indicator on the line, when a small horizontal line on that line starts dropping down and
+      reaches another line then it's time to release (key 'e' or 'trigger').
+    CCIP: A line from FPM to a round pipper is displayed when close enough to the ground, manouver
+      the pipper to be over the target and release (key 'e' or 'trigger').
   SGL or PAIR mode can be set on WPN MFD page.
-    SGL: single release
+    SGL: single release.
     PAIR: double release.
   RP (ripple release) can be set on WPN MFD page.
-    The number is how many subseqential releases should be done.
-    If RP is greater than 1, then you can also in same MFD page set distance in Feet between ripples.
+    The number is how many subsequent releases should be done.
+    If RP is greater than 1, then you can also in same MFD page set distance in ft between releases.
 
 AGM-154A JSOW (Joint Standoff Weapon)
-   Long range guided glide bomb. Can be launched by either inputing GPS coordinates in the "Program Target" dialog for a desired spot or against a TOO (Target Of Opportunity) with a targeting pod lock (see section below). Operational range varies from 70NM max with GPS to about 34NM max with TGP lock.
+   Long range guided glide bomb. Can be launched by either inputing GPS coordinates in the
+   "Program Target" dialog for a desired spot, or against a TOO (Target Of Opportunity) with a
+   targeting pod (TGP) lock (see section below). Operational range varies from 70 NM max with GPS
+   to about 34 NM max with TGP lock.
    Optimal release envelopes are as follows:
-        GPS lock - Release at or above FL420 with speed at or above M1.6 (70NM and closer).
-        TGP lock (TOO) - Release at or above FL340 with speed at or above M1.3 (34NM and closer).
+     GPS lock - Release at or above FL420 with speed at or above M1.6 (70 NM and closer).
+     TGP lock (TOO) - Release at or above FL340 with speed at or above M1.3 (34 NM and closer).
 
 A/A missiles
 These are AIM-7 (Fox 1), AIM-120 (Fox 3) and AIM-9 (Fox 2).
-The Fox 1 AIM-7 require you keep the target locked during its entire flight.
-For the Fox 3 AIM-120 the same goes except for the last ~10nm there it goes into fire'n'forget mode.
-AIM-9 is fire and forget its whole flight. It can also be launched visually in BORE mode when radar is off, just place the target with in the big cross on the HUD and it will get an IR lock. This missle has greater range if it is cooled, that can be done on the MFD WPN page. Coolant fluid don't last for longer than 30 mins though, so do this some minutes before you expect a Within Visual Range fight.
-The trigger can be held for 2 second to fire AIM-9 or AIM-120 without a lock in MADDOG mode, where it will lock onto anyone it sees in its flightpath.
+The Fox 1 AIM-7 require you to keep the target locked during its entire flight.
+For the Fox 3 AIM-120 the same goes except for the last 10 NM, where it goes into fire'n'forget mode.
+AIM-9 is fire and forget its whole flight. It can also be launched visually in BORE mode when radar
+is off. Just place the target within the big cross on the HUD and it will get an IR lock.
+This missle has greater range if it is cooled, that can be done on the MFD WPN page. Coolant fluid
+don't last for longer than 30 mins though, so do this some minutes before you expect a "Within
+Visual Range" fight.
+The trigger can be held for 2 seconds to fire AIM-9 or AIM-120 without a lock in MADDOG mode, where
+it will lock onto anyone it sees in its flightpath.
 
-TARGETPOD
-On the MFDs you can select TGP. This however only works if you have mounted one of the target-pods and are airborne.
-Per default the target pod fixed looking at some offset from you aircraft bore attitude. However if you select something with the radar it will, if the distance is not too large, look at that. You will notice in the TGP view on the MFD that a radar lock is not very accurate. So after selecting a radar target, use the TGP buttons (LEFT;RIGHT;UP;DOWN) or the cursor controls (Arrow keys) to aim better and click LOCK or 'l'. This will now make released ordnance hit more accurate. There is also keys to ZOOM and switch from narrow to wide field of view.
+TARGETING POD
+On the MFDs you can select TGP. This however only works if you have mounted one of the targeting
+pods and are airborne. Per default the targeting pod is fixed looking at some offset from your
+aircraft bore attitude. However if you select something with the radar it will, if the distance is
+not too large, look at that. You will notice in the TGP view on the MFD that a radar lock is not
+very accurate. So after selecting a radar target, use the TGP buttons (LEFT, RIGHT, UP, DOWN) or
+the cursor controls (Arrow keys) to aim better and click LOCK or 'l'. This will now make released
+ordnance hit more accurate. There is also keys to ZOOM and switch from narrow to wide field of view.
             ]]></text-6>
             <text-7><![CDATA[
 CONTROLPANELS and CONFIG
