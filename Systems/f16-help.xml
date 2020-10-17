@@ -422,32 +422,34 @@ ordnance hit more accurate. There is also keys to ZOOM and switch from narrow to
             ]]></text-6>
             <text-7><![CDATA[
 CONTROLPANELS and CONFIG
-You can find these in the FG menu (the last item).
-They contains various aircraft and experience settings.
-NOT ALL 3D CONTROLS ARE PRESENT IN THE CONTROLPANELS!
+You can find these in the FG menu (the last item). They contain various aircraft and experience
+settings. Note that not all 3D controls are present in the control panels!
 
-PREPLANNING
-This menu item will bring up a dialog where you can load in threat circles for the MFD HSD page, input bullseye position, load lines for HSD (using GPX or fligthgears own route fileformat).
+MISSION PREPLANNING
+This menu item will bring up a dialog where you can load in threat circles for the MFD HSD page,
+input bullseye position, load lines for HSD (using GPX or fligthgears own route fileformat).
 You can also load kneeboards. For example kneeboards, look in the f16 folder under Kneeboards.
 
 MANUAL START
-See Menu->Help->Checklists
+See Menu->Help->Aircraft Checklists
 
 NOTE ON STARTING
-Starting engine requires pressure in one or both JFS accumulators. If they are both drained then you must go into menu configuration and recharge them if on ground.
-If in air keep gliding with EPU on and wait for accumulators to be charged. Remember EPU has only has hydrazine for 10 minutes of operation if gliding to slow for significant windmilling.
+Starting the engine requires pressure in one or both JFS accumulators. If they are both drained then
+you must go into menu configuration and recharge them if on the ground. If in the air keep gliding
+with the EPU on and wait for the accumulators to be charged. Remember the EPU has only hydrazine for
+10 minutes of operation if gliding too slow for significant windmilling.
 
 BITCHING BETTY
-Thats the nickname of the annunciation voice. :)
-The control INTERCOM on left panel controls her volume.
+That's the nickname of the annunciation voice. :) The control INTERCOM on left panel controls her
+volume.
 
 CARA ALOW
-Combined Altitude Radar Altimeter Automatic LOw altitude Warning.
-Is radar altitude warning from Betty when get below that. The CARA must have view of the ground for this to work.
+Combined Altitude Radar Altimeter Automatic LOw altitude Warning. This is a radar altitude warning
+from Betty when you get below that. The CARA must have view of the ground for this to work.
 
 MSL FLOOR
-Mean Sea Level altitude advisory Floor.
-Is when you want Betty to remind you to switch to/from QNH/standard baro pressure.
+Mean Sea Level altitude advisory Floor. This is when you want Betty to remind you to switch to/from
+QNH/standard baro pressure.
 
 HUD VELOCITY
 Can switch the HUD scale to show true or ground speed.
@@ -470,35 +472,34 @@ HUD PFL
 Will copy the Pilot Fault List Display onto the HUD.
 
 DRIFT C/O
-Drift cutoff will force flightpath marker and pitch ladder to stay in middle of HUD.
+Drift cutoff will force flightpath marker and pitch ladder to stay in the middle of the HUD.
 
 BINGO
 The fuel level where the system and Betty will warn that the fuel is low.
 
 EMER STORES JETTISON
-This will jettison all A/G ordnance and other payloads like fuel tanks that is not A/A. It will NOT jettison wingtips.
+This will jettison all A/G ordnance and other payloads like fuel tanks that is not A/A. It will NOT
+jettison wingtips.
 
 ALT FLAPS
-This will deploy flaps as if the gears were extended. They will still retract at higher speeds though.
+When set to extend this will deploy flaps as if the gear were extended. They will still retract at
+higher speeds though.
 
 HSI
-Is located at the bottom of the center console in some blocks.
-This can be used to navigate steerpoints if the knob to the left is in NAV mode.
-It can be used to navigate TACAN if the knob is in TCN mode.
-ILS if knob is set to ILS mode as well.
+The Horizontal Situation Indicator is located at the bottom of the center console in some blocks.
+Its mode is controlled by the knob on the left. In NAV mode this can be used to navigate steerpoints.
+In TCN mode to navigate TACAN, and in ILS mode it can be used to fly an ILS approach.
 
 EHSI
-Is located at the bottom of the center console in some blocks.
-Use the M button to switch mode.
-This can be used to navigate steerpoints if it is in NAV mode.
-It can be used to navigate TACAN if it is in TCN mode.
-And VOR/ADF if in VOR mode.
-PLS stand for Precision Landing System and in that mode it can use ILS.
-It stores the CRS between modes, PLS modes has their own and non PLS modes has their owns stored.
-The CRS knob (radial course) and the HDG knob (captains bars) can be turned faster by holding in SHIFT.
-It works mostly as a normal HSI.
-When the course deviation CDI is invalid it will be segmented line, and a red bar will appear.
-If the distance indicator is invalid then a red bar will appear above the NM distance.
+The Electronic Horizontal Situation Indicator is located at the bottom of the center console in some
+blocks. Use the M button to switch modes. This can be used to navigate steerpoints if it is in NAV
+mode. It can be used to navigate TACAN if it is in TCN mode, and VOR/ADF if in VOR mode. PLS stand
+for Precision Landing System and in that mode it can use ILS. 
+It stores the CRS between modes, PLS modes have their own and non-PLS modes have their own stored.
+The CRS knob (radial course) and the HDG knob (captains bars) can be turned faster by holding in
+Shift. It works mostly as a normal HSI. When the course deviation CDI is invalid it will be a
+segmented line, and a red bar will appear. If the distance indicator is invalid then a red bar will
+appear above the NM distance.
             ]]></text-7>
             <text-8><![CDATA[
 DOGFIGHT SCENARIO
