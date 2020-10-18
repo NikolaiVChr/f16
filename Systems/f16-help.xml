@@ -3,7 +3,7 @@
 <PropertyList>
             <key>
                 <name>q</name>
-                <desc>trigger flare release</desc>
+                <desc>Trigger flare release</desc>
             </key>
             <key>
                 <name>Ctrl-h</name>
@@ -63,11 +63,11 @@
             </key>
             <key>
                 <name>Ctrl-q</name>
-                <desc>Look down on displays</desc>
+                <desc>Look down on right MFD</desc>
             </key>
             <key>
                 <name>W</name>
-                <desc>Look down on RWR</desc>
+                <desc>Look down on left MFD + RWR</desc>
             </key>
             <key>
                 <name>Ctrl-w</name>
@@ -79,7 +79,7 @@
             </key>
             <key>
                 <name>m</name>
-                <desc>Masterarm</desc>
+                <desc>Masterarm toggle</desc>
             </key>
             <key>
                 <name>d</name>
@@ -119,15 +119,15 @@
             </key>-->
             <key>
                 <name>S</name>
-                <desc>Toggle smoke if installed</desc>
+                <desc>Toggle smoke (if installed)</desc>
             </key>
             <key>
-                <name>o (if variant support it)</name>
-                <desc>Deploy dragchute</desc>
+                <name>o</name>
+                <desc>Deploy dragchute (if variant supports it)</desc>
             </key>
             <key>
                 <name>O</name>
-                <desc>Release dragchute</desc>
+                <desc>Release dragchute (if variant supports it)</desc>
             </key>
             <key>
                 <name>F6</name>
