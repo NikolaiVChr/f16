@@ -11,7 +11,7 @@ MATERIAL "dark3" rgb 0.063 0.063 0.063  amb 0.3 0.3 0.3  emis 0 0 0  spec 0.176 
 MATERIAL "unlit" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0.5 0.5 0.5  shi 10  trans 0
 MATERIAL "Display" rgb 0 0 0  amb 0 0 0  emis 0 0 0  spec 0.5 0.5 0.5  shi 64  trans 0
 OBJECT world
-kids 30
+kids 31
 OBJECT group
 name "TWA_LEFT"
 kids 2
@@ -65480,6 +65480,26 @@ refs 4
 789 0.916667 0.1875
 790 0.902778 0.208333
 kids 0
+OBJECT poly
+name "GROWTH.000"
+data 7
+HMD.001
+texture "/Users/utente/Desktop/GitHub/Aircrafts/f16/Models/Cockpit/Textures/Block-panels/blck10-panels1.png"
+crease 30.000000
+numvert 4
+-0.02319 0.00555 0.26772
+-0.02319 0.00555 0.41472
+0.01512 0.00555 0.41472
+0.01512 0.00555 0.26772
+numsurf 1
+SURF 0x10
+mat 2
+refs 4
+1 0.133418 0.306799
+2 0.133418 0.20844
+3 0.525899 0.20844
+0 0.5259 0.306798
+kids 0
 OBJECT group
 name "HMD"
 kids 4
@@ -65541,18 +65561,18 @@ HMD.001
 texture "../Textures/panels-MLU-left_right-aux-consoles.png"
 crease 30.000000
 numvert 4
--0.02319 0.00555 0.26772
--0.02319 0.00555 0.41472
-0.01512 0.00555 0.41472
 0.01512 0.00555 0.26772
+0.01512 0.00555 0.41472
+-0.02319 0.00555 0.41472
+-0.02319 0.00555 0.26772
 numsurf 1
 SURF 0x10
 mat 2
 refs 4
-1 0.160171 0.295208
-2 0.160171 0.195603
-3 0.553705 0.195603
-0 0.553706 0.295207
+2 0.160171 0.295208
+1 0.160171 0.195603
+0 0.553705 0.195603
+3 0.553706 0.295207
 kids 0
 OBJECT poly
 name "SYMBOLOGY_INT_KNOB"

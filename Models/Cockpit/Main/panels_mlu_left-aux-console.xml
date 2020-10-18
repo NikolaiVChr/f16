@@ -56,6 +56,7 @@
         <object-name>gear_lever</object-name>
         <object-name>gear_lever_light</object-name>
         <object-name>e</object-name>
+        <object-name>GROWTH.000</object-name>
         <object-name>HMD_0</object-name>
         <object-name>HMD_1</object-name>
         <object-name>RF_switch</object-name>
@@ -94,6 +95,7 @@
         <object-name>EW_LEFT_1</object-name>
         <object-name>EW_LOCK</object-name>
         <object-name>TWA_LEFT_1</object-name>
+        <object-name>GROWTH.000</object-name>
         <object-name>HMD_1</object-name>
         <object-name>HMCS_1</object-name>
         <object-name>EW_RIGHT_1</object-name>
@@ -1218,6 +1220,27 @@
 
     <animation>
         <type>select</type>
+        <object-name>GROWTH.000</object-name>
+        <condition>
+            <or>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>0</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>1</value>
+            </equals>
+            <equals>
+                <property>sim/variant-id</property>
+                <value>3</value>
+            </equals>
+          </or>
+        </condition>
+    </animation>
+
+    <animation>
+        <type>select</type>
         <object-name>HMD_0</object-name>
         <object-name>HMD_1</object-name>
         <object-name>RF_switch</object-name>
@@ -1237,18 +1260,6 @@
         <object-name>HMCS_SYM_INT_KNOB</object-name>
         <condition>
           <or>
-            <equals>
-                <property>sim/variant-id</property>
-                <value>0</value>
-            </equals>
-            <equals>
-                <property>sim/variant-id</property>
-                <value>1</value>
-            </equals>
-            <equals>
-                <property>sim/variant-id</property>
-                <value>3</value>
-            </equals>
             <equals>
                 <property>sim/variant-id</property>
                 <value>4</value>
