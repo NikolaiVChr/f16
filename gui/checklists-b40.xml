@@ -1637,10 +1637,6 @@
                 <value>Check quantity</value>
             </item>
             <item>
-                <name>Approach speed</name>
-                <value>Notice computed approach speed in HUD</value>
-            </item>
-            <item>
                 <name>Landing light</name>
                 <value>ON</value>
             </item>
