@@ -625,13 +625,29 @@
                 </binding>
             </item>
             <item>
-                <name>Wait for RPM</name>
-                <value>N2 25%</value>
+                <name>Wait for JFS RUN light</name>
+                <value>LIT</value>
                 <condition>
-                    <greater-than>
+                    <equals>
+                        <property>f16/engine/jfs-full-speed</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <marker>
+                    <x-m>-4.3740</x-m>
+                    <y-m>-0.4580</y-m>
+                    <z-m>0.1520</z-m>
+                    <scale>1.0000</scale>
+                </marker>
+            </item>
+            <item>
+                <name>Wait for RPM</name>
+                <value>N2 20%</value>
+                <condition>
+                    <greater-than-equals>
                         <property>engines/engine[0]/n2</property>
-                        <value>25</value>
-                    </greater-than>
+                        <value>20</value>
+                    </greater-than-equals>
                 </condition>
                 <marker>
                     <x-m>-4.7200</x-m>
@@ -1676,34 +1692,147 @@
             <item>
                 <name>Speed</name>
                 <value>Fly initially at 300 KT</value>
+                <condition>
+                    <and>
+                        <greater-than>
+                            <property>fdm/jsbsim/velocities/vc-kts</property>
+                            <value>290</value>
+                        </greater-than>
+                        <less-than>
+                            <property>fdm/jsbsim/velocities/vc-kts</property>
+                            <value>310</value>
+                        </less-than>
+                    </and>
+                </condition>
+                <marker>
+                    <x-m>-4.5400</x-m>
+                    <y-m>-0.0500</y-m>
+                    <z-m>0.8200</z-m>
+                    <scale>1.0000</scale>
+                </marker>
             </item>
             <item>
                 <name>Throttle</name>
                 <value>Reduce</value>
+                <marker>
+                    <x-m>-4.2300</x-m>
+                    <y-m>-0.3700</y-m>
+                    <z-m>0.3200</z-m>
+                    <scale>4.5000</scale>
+                </marker>
             </item>
             <item>
                 <name>Speedbrakes</name>
                 <value>Enable as needed</value>
+                <marker>
+                    <x-m>-4.5730</x-m>
+                    <y-m>-0.4185</y-m>
+                    <z-m>0.2455</z-m>
+                    <scale>1.0000</scale>
+                </marker>
             </item>
             <item>
-                <name>Speed below 300 KT</name>
-                <value>Deploy gears</value>
+                <name>Speed</name>
+                <value>Below 300 KT</value>
+                <condition>
+                    <less-than>
+                        <property>fdm/jsbsim/velocities/vc-kts</property>
+                        <value>300</value>
+                    </less-than>
+                </condition>
+                <marker>
+                    <x-m>-4.5400</x-m>
+                    <y-m>-0.0500</y-m>
+                    <z-m>0.8200</z-m>
+                    <scale>1.0000</scale>
+                </marker>
             </item>
             <item>
-                <name>Slow down</name>
+                <name>LG handle</name>
+                <value>DN</value>
+                <condition>
+                    <equals>
+                        <property>controls/gear/gear-down</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <marker>
+                    <x-m>-4.6100</x-m>
+                    <y-m>-0.2700</y-m>
+                    <z-m>0.3100</z-m>
+                    <scale>4.0000</scale>
+                </marker>
+                <binding>
+                    <command>property-assign</command>
+                    <property>controls/gear/gear-down</property>
+                    <value>1</value>
+                </binding>
+            </item>
+            <item>
+                <name>WHEEL down light</name>
+                <value>Three green</value>
+                <condition>
+                    <equals>
+                        <property>gear/gear[0]/position-norm</property>
+                        <value>1</value>
+                    </equals>
+                    <equals>
+                        <property>gear/gear[1]/position-norm</property>
+                        <value>1</value>
+                    </equals>
+                    <equals>
+                        <property>gear/gear[2]/position-norm</property>
+                        <value>1</value>
+                    </equals>
+                </condition>
+                <marker>
+                    <x-m>-4.7070</x-m>
+                    <y-m>-0.3080</y-m>
+                    <z-m>0.3290</z-m>
+                    <scale>2.2670</scale>
+                </marker>
+            </item>
+            <item>
+                <name>AoA</name>
                 <value>Slow down till 11 to 13 AoA</value>
+                <condition>
+                    <and>
+                        <greater-than-equals>
+                            <property>/fdm/jsbsim/aero/alpha-deg</property>
+                            <value>11</value>
+                        </greater-than-equals>
+                        <less-than-equals>
+                            <property>/fdm/jsbsim/aero/alpha-deg</property>
+                            <value>13</value>
+                        </less-than-equals>
+                    </and>
+                </condition>
+                <marker>
+                    <x-m>-4.5690</x-m>
+                    <y-m>-0.0000</y-m>
+                    <z-m>0.7450</z-m>
+                    <scale>2.6000</scale>
+                </marker>
             </item>
             <item>
                 <name>Check speedbrakes</name>
                 <value>ON for final</value>
-            </item>
-            <item>
-                <name>At touchdown</name>
-                <value>Deploy dragchute as desired</value>
+                <marker>
+                    <x-m>-4.5730</x-m>
+                    <y-m>-0.4185</y-m>
+                    <z-m>0.2455</z-m>
+                    <scale>1.0000</scale>
+                </marker>
             </item>
             <item>
                 <name>At 100 KT</name>
                 <value>Put nosewheel on ground</value>
+                <condition>
+                    <less-than>
+                        <property>fdm/jsbsim/velocities/vc-kts</property>
+                        <value>100</value>
+                    </less-than>
+                </condition>
             </item>
             <item>
                 <name>Decelerate</name>
@@ -1716,6 +1845,12 @@
             <item>
                 <name>Speedbrakes</name>
                 <value>Closed</value>
+                <marker>
+                    <x-m>-4.5730</x-m>
+                    <y-m>-0.4185</y-m>
+                    <z-m>0.2455</z-m>
+                    <scale>1.0000</scale>
+                </marker>
                 <condition>
                     <equals>
                         <property>fdm/jsbsim/fcs/speedbrake-pos-norm</property>
@@ -1732,6 +1867,12 @@
                         <value>0</value>
                     </equals>
                 </condition>
+                <marker>
+                    <x-m>-4.4990</x-m>
+                    <y-m>-0.2210</y-m>
+                    <z-m>0.2905</z-m>
+                    <scale>3.4000</scale>
+                </marker>
                 <binding>
                     <command>property-assign</command>
                     <property>controls/seat/ejection-safety-lever</property>
@@ -1741,6 +1882,12 @@
             <item>
                 <name>LANDING TAXI lights</name>
                 <value>As required</value>
+                <marker>
+                    <x-m>-4.6210</x-m>
+                    <y-m>-0.3300</y-m>
+                    <z-m>0.2680</z-m>
+                    <scale>2.2350</scale>
+                </marker>
             </item>
             <item>
                 <name>Canopy handle</name>
@@ -1765,6 +1912,12 @@
                         <value>1</value>
                     </equals>
                 </condition>
+                <marker>
+                    <x-m>-4.2700</x-m>
+                    <y-m>-0.4800</y-m>
+                    <z-m>0.2300</z-m>
+                    <scale>2.0000</scale>
+                </marker>
                 <binding>
                     <command>property-assign</command>
                     <property>f16/engine/cutoff-release-lever</property>
@@ -1773,7 +1926,19 @@
             </item>
             <item>
                 <name>JFS RUN light</name>
-                <value>Check</value>
+                <value>UNLIT</value>
+                <condition>
+                    <equals>
+                        <property>f16/engine/jfs-full-speed</property>
+                        <value>0</value>
+                    </equals>
+                </condition>
+                <marker>
+                    <x-m>-4.3740</x-m>
+                    <y-m>-0.4580</y-m>
+                    <z-m>0.1520</z-m>
+                    <scale>1.0000</scale>
+                </marker>
             </item>
             <item>
                 <name>MAIN PWR switch</name>
@@ -1784,6 +1949,12 @@
                         <value>0</value>
                     </equals>
                 </condition>
+                <marker>
+                    <x-m>-4.1800</x-m>
+                    <y-m>-0.4600</y-m>
+                    <z-m>0.1400</z-m>
+                    <scale>1.0000</scale>
+                </marker>
                 <binding>
                     <command>property-assign</command>
                     <property>fdm/jsbsim/elec/switches/main-pwr</property>
