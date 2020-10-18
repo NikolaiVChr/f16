@@ -1453,10 +1453,16 @@
 
     <animation>
         <object-name>NUCLEAR_CONSENT_1</object-name>
+        <object-name>nuke-consent-cover</object-name>
+        <object-name>nuke-consent-switch</object-name>
         <object-name>plain-switch</object-name>
         <type>select</type>
         <condition>
           <or>
+          	<equals>
+                <property>sim/variant-id</property>
+                <value>2</value>
+            </equals>
             <equals>
                 <property>sim/variant-id</property>
                 <value>3</value>
