@@ -81,9 +81,11 @@
         <object-name>NUCLEAR_CONSENT</object-name>
         <object-name>NUCLEAR_CONSENT_0</object-name>
         <object-name>NUCLEAR_CONSENT_1</object-name>
+        <object-name>NUCLEAR_CONSENT_10_1</object-name>
         <object-name>nuke-consent-cover</object-name>
         <object-name>nuke-consent-switch</object-name>
         <object-name>plain-switch</object-name>
+        <object-name>suit-press-switch</object-name>
         <object-name>OXYGEN_REGULATOR</object-name>
         <object-name>PBG</object-name>
         <object-name>EM-NO-TE</object-name>
@@ -1325,6 +1327,7 @@
         <object-name>AIR_COND_1</object-name>
         <object-name>GROWTH.102_1</object-name>
         <object-name>NUCLEAR_CONSENT_1</object-name>
+        <object-name>NUCLEAR_CONSENT_10_1</object-name>
         <object-name>HUD_1</object-name>
         <object-name>HUD_50_1</object-name>
         <object-name>SNSR_PWR_1</object-name>
@@ -1350,6 +1353,7 @@
         <object-name>w_vah-switch</object-name>
         <object-name>voice-msg-switch</object-name>
         <object-name>plain-switch</object-name>
+        <object-name>suit-press-switch</object-name>
         <object-name>mms-switch</object-name>
         <object-name>mal-ind-lts-switch</object-name>
         <!-- these needs to be animated:-->
