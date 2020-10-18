@@ -32,13 +32,11 @@ var aerialRefueling = props.globals.getNode("controls/lighting/ext-lighting-pane
 
 
  var toggleAntiCollision = func {
-        if(master.getBoolValue()) { 
-                if(antiCollision.getBoolValue()) {
-                        antiCollision.setBoolValue(0);
-                } else {
-                        antiCollision.setBoolValue(1);
-                }       
-        }
+        if(antiCollision.getBoolValue()) {
+                antiCollision.setBoolValue(0);
+        } else {
+                antiCollision.setBoolValue(1);
+        }       
  }
 
 
