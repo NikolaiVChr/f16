@@ -103,6 +103,15 @@ var Station = {
 					} elsif (me.weaponName == "AIM-120") {
 						mf = func (struct) {
 							if (struct.dist_m != -1 and struct.dist_m*M2NM < 10 and struct.guidance == "inertial") {
+								screen.log.write("AIM-120: Pitbull", 1,1,0);
+								return {"guidance":"radar"};
+							}
+							return {};
+						};
+					} elsif (me.weaponName == "MICA-EM") {
+						mf = func (struct) {
+							if (struct.dist_m != -1 and struct.dist_m*M2NM < 12 and struct.guidance == "inertial") {
+								screen.log.write("MICA-EM: Pitbull", 1,1,0);
 								return {"guidance":"radar"};
 							}
 							return {};
