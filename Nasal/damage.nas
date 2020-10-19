@@ -8,7 +8,7 @@
 
 
 ############################ Config ######################################################################################
-var full_damage_dist_m = 3;# Can vary from aircraft to aircraft depending on how many failure modes it has.
+var full_damage_dist_m = 1.25;# Can vary from aircraft to aircraft depending on how many failure modes it has.
                            # Many modes (like Viggen) ought to have lower number like zero.
                            # Few modes (like F-14) ought to have larger number such as 3.
                            # For assets this should be average radius of the asset.
@@ -18,12 +18,15 @@ var hitable_by_air_munitions = 1;   # if anti-air can do damage
 var hitable_by_cannon = 1;          # if cannon can do damage
 #var hitable_by_ground_munitions = 1;# if anti-ground/marine can do damage
 var is_fleet = 0;  # Is really 7 ships, 3 of which has offensive missiles.
+var rwr_to_screen=0; # for aircraft that do not yet have proper RWR
+var tacview_supported=1; # For aircraft with tacview support
 ##########################################################################################################################
-
-var clamp = func(v, min, max) { v < min ? min : v > max ? max : v }
 
 var TRUE  = 1;
 var FALSE = 0;
+
+var hp = hp_max;
+setprop("sam/damage", math.max(0,100*hp/hp_max));#used in HUD
 
 var shells = {
     # [id,damage,(name)]
@@ -228,7 +231,7 @@ var DamageRecipient =
                 # todo:
                 #   animate missiles
                 #
-                if(getprop("payload/armament/msg") == 0) {
+                if(getprop("payload/armament/msg") == 0 and notification.RemoteCallsign != notification.Callsign) {
                   return emesary.Transmitter.ReceiptStatus_NotProcessed;
                 }
                 if (notification.Kind == 3) {
@@ -271,7 +274,7 @@ var DamageRecipient =
                       setprop("payload/armament/MLW-launcher", notification.Callsign);
                       setprop("payload/armament/MLW-count", getprop("payload/armament/MLW-count")+1);
                       var out = sprintf("Missile Launch Warning from %03d degrees.", bearing);
-                      screen.log.write(out, 1,1,0);# temporary till someone models a RWR in RIO seat
+                      if (rwr_to_screen) screen.log.write(out, 1,1,0);# temporary till someone models a RWR in RIO seat
                       print(out);
                       damageLog.push(sprintf("Missile Launch Warning from %03d degrees from %s.", bearing, notification.Callsign));
                     }
@@ -292,7 +295,7 @@ var DamageRecipient =
                 var appr = approached[notification.Callsign~notification.UniqueIdentity];
                 if (appr == nil or elapsed - appr > 450) {
                   damageLog.push(sprintf("Missile Approach Warning from %03d degrees from %s.", bearing, notification.Callsign));
-                  screen.log.write(sprintf("Missile Approach Warning from %03d degrees.", bearing), 1,1,0);# temporary till someone models a RWR in RIO seat
+                  if (rwr_to_screen) screen.log.write(sprintf("Missile Approach Warning from %03d degrees.", bearing), 1,1,0);# temporary till someone models a RWR in RIO seat
                   approached[notification.Callsign~notification.UniqueIdentity] = elapsed;
                 }
                 return emesary.Transmitter.ReceiptStatus_OK;
@@ -359,10 +362,10 @@ var DamageRecipient =
                             var maxDist = 0;# distance where the explosion dont hurt us anymore
                             var lbs = 0;
                             
-                            if (wh[2] == 0) {
+                            if (wh[2] == 1) {
                               lbs = wh[1];
                               maxDist = maxDamageDistFromWarhead(lbs);#3*sqrt(lbs)
-                            } elsif (hitable_by_air_munitions and wh[2] == 1) {
+                            } elsif (hitable_by_air_munitions and wh[2] == 0) {
                               lbs = wh[1];
                               maxDist = maxDamageDistFromWarhead(lbs);
                             } else {
@@ -456,7 +459,7 @@ damage_recipient = DamageRecipient.new("DamageRecipient");
 emesary.GlobalTransmitter.Register(damage_recipient);
 
 var maxDamageDistFromWarhead = func (lbs) {
-  # very simple
+  # Calc at what distance the warhead will do zero damage every time.
   var dist = 3*math.sqrt(lbs);
 
   return dist;
