@@ -20,6 +20,7 @@ var hitable_by_cannon = 1;          # if cannon can do damage
 var is_fleet = 0;  # Is really 7 ships, 3 of which has offensive missiles.
 var rwr_to_screen=0; # for aircraft that do not yet have proper RWR
 var tacview_supported=1; # For aircraft with tacview support
+var m28_auto=0; # only used by automats
 ##########################################################################################################################
 
 var TRUE  = 1;
@@ -291,12 +292,13 @@ var DamageRecipient =
                 setprop("payload/armament/MAW-bearing", bearing);
                 setprop("payload/armament/MAW-active", 1);# resets every 1 seconds
                 MAW_elapsed = elapsed;
-                printf("Missile Approach Warning from %03d degrees.", bearing);
                 var appr = approached[notification.Callsign~notification.UniqueIdentity];
                 if (appr == nil or elapsed - appr > 450) {
+                  printf("Missile Approach Warning from %03d degrees.", bearing);
                   damageLog.push(sprintf("Missile Approach Warning from %03d degrees from %s.", bearing, notification.Callsign));
                   if (rwr_to_screen) screen.log.write(sprintf("Missile Approach Warning from %03d degrees.", bearing), 1,1,0);# temporary till someone models a RWR in RIO seat
                   approached[notification.Callsign~notification.UniqueIdentity] = elapsed;
+                  if (m28_auto) mig28.engagedBy(notification.Callsign);
                 }
                 return emesary.Transmitter.ReceiptStatus_OK;
             }
@@ -317,6 +319,7 @@ var DamageRecipient =
                     callsign = size(callsign) < 8 ? callsign : left(callsign,7);
                     if (notification.RemoteCallsign == callsign and getprop("payload/armament/msg") == 1) {
                         #damage enabled and were getting hit
+                        if (m28_auto) mig28.engagedBy(notification.Callsign);
                         if (notification.SecondaryKind < 0 and hitable_by_cannon) {
                             # cannon hit
                             var probability = id2shell[-1*notification.SecondaryKind-1][1];

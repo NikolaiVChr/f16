@@ -3252,6 +3252,9 @@
                 <property>sim/current-view/internal</property>
                 <factor>1</factor>
             </volume>
+            <volume>
+                <property>f16/avionics/rwr-volume</property>
+            </volume>
         </rwr>        
         <rwr>
             <name>incoming</name>
@@ -3264,6 +3267,9 @@
             <volume>
                 <property>sim/current-view/internal</property>
                 <factor>1</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/rwr-volume</property>
             </volume>
         </rwr>
         
