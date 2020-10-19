@@ -20,6 +20,12 @@
         <MP-lon type="string">rotors/main/blade[1]/flap-deg</MP-lon>
         <MP-alt type="string">rotors/main/blade[2]/flap-deg</MP-alt>
         <gravity-dropping type="bool">false</gravity-dropping>
+        <MLW-bearing type="double">0</MLW-bearing>
+        <MLW-count type="int">0</MLW-count>
+        <MLW-launcher type="string"></MLW-launcher>
+        <MAW-bearing type="double">0</MAW-bearing>
+        <MAW-active type="bool">false</MAW-active>
+        <spike type="bool">false</spike>
         <station>
             <id-0-set type="string">Empty</id-0-set>
             <id-1-set type="string">Empty</id-1-set>
@@ -35,6 +41,7 @@
             <serviceable type="bool">true</serviceable><!-- why is this not auto created by failure system in 2018.3?? -->
         </fire-control>
         <aim-9>
+            <type-id type="int">57</type-id>
             <short-name type="string">A-9L</short-name>
             <long-name type="string">AIM-9L Sidewinder</long-name>
             <vol-search type="double">0.15</vol-search>
@@ -85,6 +92,7 @@
             <ready-time type="double">0.5</ready-time>
         </aim-9>
         <aim-120>
+            <type-id type="int">52</type-id>
             <short-name type="string">A120B</short-name>
             <long-name type="string">AIM-120B AMRAAM</long-name>
             <guidance type="string">inertial</guidance>
@@ -138,6 +146,7 @@
             <proportionality-constant type="double">5</proportionality-constant>--><!-- puts required Amraam acc. advantage down to 1.67 -->
         </aim-120>
         <aim-7>
+            <type-id type="int">55</type-id>
             <short-name type="string">A-7F</short-name>
             <long-name type="string">AIM-7F Sparrow</long-name>
             <guidance type="string">semi-radar</guidance>
@@ -179,6 +188,7 @@
             <drop-time type="double">0.5</drop-time>
         </aim-7>
         <mk-82> 
+            <type-id type="int">32</type-id>
             <short-name type="string">M82</short-name>
             <long-name type="string">MK-82 General Purpose Bomb</long-name>
             <fire-msg type="string">Bombs away</fire-msg>
@@ -221,6 +231,7 @@
             <ready-time type="double">0.5</ready-time>               
         </mk-82>
         <mk-83> 
+            <type-id type="int">33</type-id>
             <short-name type="string">M83</short-name>
             <long-name type="string">MK-83 General Purpose Bomb</long-name>
             <fire-msg type="string">Bombs away</fire-msg>
@@ -263,6 +274,7 @@
             <ready-time type="double">0.5</ready-time>
         </mk-83>
         <mk-84>
+            <type-id type="int">35</type-id>
             <short-name type="string">M84</short-name>
             <long-name type="string">MK-84 General Purpose Bomb</long-name>
             <fire-msg type="string">Bombs away</fire-msg>
@@ -313,6 +325,7 @@
             <ready-time type="double">0.5</ready-time>
         </mk-84>
         <gbu-12>
+            <type-id type="int">18</type-id>
             <short-name type="string">GB12</short-name>
             <long-name type="string">GBU-12 Paveway II</long-name>
             <fire-msg type="string">Bombs away</fire-msg>
@@ -363,6 +376,7 @@
             <ready-time type="double">0.5</ready-time>
         </gbu-12>
         <gbu-54>
+            <type-id type="int">21</type-id>
             <short-name type="string">GB54</short-name>
             <long-name type="string">GBU-54 Laser JDAM</long-name>
             <fire-msg type="string">Bombs away</fire-msg>
@@ -413,6 +427,7 @@
             <ready-time type="double">3.5</ready-time>
         </gbu-54>
         <gbu-31>
+            <type-id type="int">20</type-id>
             <short-name type="string">GB31</short-name>
             <long-name type="string">GBU-31 JDAM</long-name>
             <fire-msg type="string">Bombs away</fire-msg>
@@ -463,6 +478,7 @@
             <ready-time type="double">3.5</ready-time>
         </gbu-31>
         <gbu-24>
+            <type-id type="int">19</type-id>
             <short-name type="string">GB24</short-name>
             <long-name type="string">GBU-24 Paveway III</long-name>
             <fire-msg type="string">Bombs away</fire-msg>
@@ -513,6 +529,7 @@
             <ready-time type="double">0.5</ready-time>
         </gbu-24>
         <agm-65>
+            <type-id type="int">0</type-id>
             <short-name type="string">AG65B</short-name>
             <long-name type="string">AGM-65B Maverick</long-name>
             <vol-search type="double">0.00</vol-search>
@@ -547,6 +564,7 @@
             <ready-time type="double">0.25</ready-time>
         </agm-65>
         <agm-84>                    <!-- A variant: 0.85 mach cruise, E is calibrated to just under 1.00 -->
+            <type-id type="int">1</type-id>
             <short-name type="string">AG84</short-name>
             <long-name type="string">AGM-84D Harpoon</long-name>
             <vol-search type="double">0.00</vol-search>
@@ -581,6 +599,7 @@
             <ready-time type="double">25</ready-time> <!-- INS alignment -->
         </agm-84>
         <agm-88>
+            <type-id type="int">2</type-id>
             <short-name type="string">AG88</short-name>
             <long-name type="string">AGM-88B HARM</long-name>
             <vol-search type="double">0.00</vol-search>
@@ -618,6 +637,7 @@
             <ready-time type="double">0.25</ready-time>
         </agm-88>
         <agm-119>
+            <type-id type="int">4</type-id>
             <short-name type="string">AG119</short-name>
             <long-name type="string">AGM-119A Penguin MK3</long-name>
             <vol-search type="double">0.00</vol-search>
@@ -657,6 +677,7 @@
             <ready-time type="double">0.25</ready-time>
         </agm-119>
         <agm-154a>
+            <type-id type="int">5</type-id>
             <short-name type="string">AG154</short-name>
             <long-name type="string">AGM-154A-1 JSOW</long-name> <!-- Unitary warhead variant -->
             <fire-msg type="string">Greyhound</fire-msg><!--Pigs away-->
@@ -704,6 +725,7 @@
             <ejector-speed-fps type="double">5</ejector-speed-fps>
         </agm-154a>
         <agm-158>
+            <type-id type="int">6</type-id>
             <short-name type="string">AG158</short-name>
             <long-name type="string">AGM-158A JASSM</long-name>
             <fire-msg type="string">Greyhound</fire-msg>
@@ -751,6 +773,7 @@
             <ejector-speed-fps type="double">5</ejector-speed-fps>
         </agm-158>
         <cbu-87> 
+            <type-id type="int">12</type-id>
             <short-name type="string">CB87</short-name>
             <long-name type="string">CBU-87 Combined Effects Munition</long-name>
             <fire-msg type="string">Bombs away</fire-msg>
@@ -793,6 +816,7 @@
             <ejector-speed-fps type="double">10</ejector-speed-fps>
         </cbu-87>
         <cbu-105> 
+            <type-id type="int">13</type-id>
             <short-name type="string">CB105</short-name>
             <long-name type="string">CBU-105 Sensor Fuzed Weapon (WCMD)</long-name>
             <fire-msg type="string">Bombs away</fire-msg>
@@ -964,6 +988,7 @@
             <ejector-speed-fps type="double">15</ejector-speed-fps>
         </b61-12>
         <es>                   <!-- Ejection seat -->
+                <type-id type="int">93</type-id>
                 <vol-search type="double">0.075</vol-search>
                 <vol-track type="double">0.25</vol-track>
                 <vol-track-weak type="double">0.175</vol-track-weak>

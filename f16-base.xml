@@ -495,6 +495,13 @@
                             <command>dialog-show</command>
                             <dialog-name>tacview</dialog-name>
                         </binding>
+                    </item>
+                    <item>
+                        <label>Event Log</label>
+                        <binding>
+                            <command>dialog-show</command>
+                            <dialog-name>flightlog</dialog-name>
+                        </binding>
                     </item> 
                 </menu>
             </default>
@@ -1433,6 +1440,17 @@ value. 18000=standard US transition altitude -->
     </aircraft>
 
     <nasal>
+        <emesary>
+            <file>Aircraft/f16/Nasal/emesary.nas</file>
+        </emesary>
+        <emesary_mp_bridge>
+            <file>Aircraft/f16/Nasal/emesary_mp_bridge.nas</file>
+        </emesary_mp_bridge>
+        <notifications>
+            <file>Aircraft/f16/Nasal/ArmamentNotification.nas</file>
+            <file>Aircraft/f16/Nasal/M_frame_notification.nas</file>
+            <file>Aircraft/f16/Nasal/GeoBridgedTransmitter.nas</file>
+        </notifications>
         <hack>
             <file>Aircraft/f16/Nasal/hackCanvas.nas</file><!-- must be first -->
         </hack>
@@ -1460,9 +1478,6 @@ value. 18000=standard US transition altitude -->
         <radardist>
             <file>Aircraft/Instruments-3d/radardist/radardist.nas</file>
         </radardist>
-        <notifications>
-            <file>Aircraft/f16/Nasal/M_frame_notification.nas</file>
-        </notifications>
         <f16> 
             <file>Aircraft/f16/Nasal/exec.nas</file>
             <file>Aircraft/f16/Nasal/zoom-views.nas</file>

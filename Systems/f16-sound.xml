@@ -3127,7 +3127,7 @@
                 <property>f16/avionics/rwr-volume</property>
             </volume>
         </rwr>
-        <rwr>
+        <!--<rwr>
             <name>rwr-launch</name>
             <path>Aircraft/f16/Sounds/rwr-launch.wav</path>
             <mode>once</mode>
@@ -3200,7 +3200,7 @@
             <volume>
                 <property>f16/avionics/rwr-volume</property>
             </volume>
-        </rwr>
+        </rwr>-->
         <rwr>
             <name>rwr-spike</name>
             <path>Aircraft/f16/Sounds/rwr-lock-01.wav</path>
@@ -3221,15 +3221,52 @@
                     <property>sound/rwr-lck</property>
                     <value>1</value>
                 </equals>
+                <!--<equals> this one made in RWR, the other in damage.nas
+                    <property>payload/armament/spike</property>
+                    <value>1</value>
+                </equals>-->
             </condition>
             <volume>
                 <property>/sim/current-view/internal</property>
-                <factor>1.00</factor>
+                <factor>0.70</factor>
             </volume>
             <volume>
                 <property>f16/avionics/rwr-volume</property>
             </volume>
         </rwr>
+        
+        <rwr>
+            <name>launch</name>
+            <mode>single</mode>
+            <path>Aircraft/f16/Sounds/rwr-launch.wav</path>
+            <type>avionics</type>
+            <condition>
+                <not>
+                    <equals>
+                        <property>sound/rwr-launch</property>
+                        <value type="string"></value>
+                    </equals>
+                </not>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+            </volume>
+        </rwr>        
+        <rwr>
+            <name>incoming</name>
+            <mode>looped</mode>
+            <path>Aircraft/f16/Sounds/rwr-sam-launch.wav</path>
+            <type>avionics</type>
+            <condition>
+                <property>payload/armament/MAW-active</property>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+            </volume>
+        </rwr>
+        
         <radar-active>
             <name>radar-active</name>
             <mode>once</mode>

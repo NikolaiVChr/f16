@@ -50,7 +50,7 @@
 #   controls/armament/station[pylon+1]/offsets, where the position properties must be x-m, y-m and z-m. The type is just a string, the description is a string
 #   that is exposed in its radar properties under AI/models during flight. The function is for changing target, guidance or guidance-law during flight.
 # The mid flight function will be called often during flight with 1 parameter. The param is a hash like {time_s, dist_m, mach, weapon_position}, where the latter is a geo.Coord.
-#   It expects you to return a hash with any or none of these {guidance, guidanceLaw, target}.
+#   It expects you to return a hash with any or none of these {guidance, guidanceLaw, target, remote_yaw, remote_pitch}.
 # The model that is loaded and shown is located in the aircraft folder at the value of property payload/armament/models in a subfolder with same name as type.
 #   Inside the subfolder the xml file is called [lowercase type]-[pylon].xml
 # To start making the missile try to get a lock, call start(), the missile will then keep trying to get a lock on 'contact'.
@@ -60,6 +60,7 @@
 #   To then find out where it hit the ground check the impact report in AI/models. The impact report will contain warhead weight, but that will be zero if
 #   the weapon did not have time to arm before hitting ground.
 # To drop the munition, without arming it nor igniting its engine, call eject().
+# Remote guidance requires the use of midFlightFunction (see below) to transmit guidance parameters, in the remote_yaw and remote_pitch fields of the output.
 # 
 #
 # Limitations:
@@ -78,7 +79,6 @@
 # Lock on jam. (advanced feature)
 # After FG gets HLA: stop using MP chat for hit messages.
 # Allow firing only if certain conditions are met. Like not being inverted when firing ejected weapons.
-# Remote controlled guidance (advanced feature and probably not very practical in FG..yet)
 # Ground launched rails/tubes that rotate towards target before firing.
 # Sub munitions that have their own guidance/FDM. (advanced)
 # GPS guided munitions could have waypoints added.
@@ -109,6 +109,8 @@ var belowAir       = props.globals.getNode("velocities/wBody-fps");
 var HudReticleDev  = props.globals.getNode("payload/armament/hud/reticle-total-deviation", 1);#polar coords
 var HudReticleDeg  = props.globals.getNode("payload/armament/hud/reticle-total-angle", 1);
 var update_loop_time = 0.000;
+
+var fox2_unique_id = 0; # each missile needs to have a unique numeric ID
 
 var SIM_TIME = 0;
 var REAL_TIME = 1;
@@ -267,6 +269,8 @@ var AIM = {
 		m.direct_dist_m     = nil;
 		m.speed_m           = -1;
 
+		fox2_unique_id = fox2_unique_id + 1;
+        m.unique_id = fox2_unique_id;
 		m.nodeString = "payload/armament/"~m.type_lc~"/";
 		
 		m.tacviewID = 11000 + int(math.floor(rand()*10000));
@@ -278,6 +282,7 @@ var AIM = {
 		# name
 		m.typeLong              = getprop(m.nodeString~"long-name");                  # Longer name of the weapon
 		m.typeShort             = getprop(m.nodeString~"short-name");                 # Shorter name of the weapon
+		m.typeID                = getprop(m.nodeString~"type-id");                    # ID that match damage type
 		# detection and firing
 		m.max_fire_range_nm     = getprop(m.nodeString~"max-fire-range-nm");          # max range that the FCS allows firing
 		m.min_fire_range_nm     = getprop(m.nodeString~"min-fire-range-nm");          # it wont get solid lock before the target has this range
@@ -298,7 +303,7 @@ var AIM = {
         m.noCommonTarget        = getprop(m.nodeString~"no-common-target");           # bool. If true, target must be set directly on weapon.
 		# navigation, guiding and seekerhead
 		m.max_seeker_dev        = getprop(m.nodeString~"seeker-field-deg") / 2;       # missiles own seekers total FOV diameter.
-		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/laser/gps/vision/unguided/level/gyro-pitch/radiation/inertial
+		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/laser/gps/vision/unguided/level/gyro-pitch/radiation/inertial/remote/remote-stable
 		m.guidanceLaw           = getprop(m.nodeString~"navigation");                 # guidance-law: direct/PN/APN/PNxxyy/APNxxyy (use direct for gravity bombs, use PN for very old missiles, use APN for modern missiles, use PNxxyy/APNxxyy for surface to air where xx is degrees to aim above target, yy is seconds it will do that). GPN is APN for winged glidebombs.
 		m.pro_constant          = getprop(m.nodeString~"proportionality-constant");   # Constant for how sensitive proportional navigation is to target speed/acc. Normally between 3-6. [optional]
 		m.all_aspect            = getprop(m.nodeString~"all-aspect");                 # bool. set to false if missile only locks on reliably to rear of target aircraft
@@ -316,6 +321,7 @@ var AIM = {
 		m.force_lbf_1           = getprop(m.nodeString~"thrust-lbf-stage-1");         # stage 1 thrust [optional]
 		m.force_lbf_2           = getprop(m.nodeString~"thrust-lbf-stage-2");         # stage 2 thrust [optional]
 		m.stage_1_duration      = getprop(m.nodeString~"stage-1-duration-sec");       # stage 1 duration [optional]
+		m.stage_gap_duration    = getprop(m.nodeString~"stage-gap-duration-sec");     # gap duration between stage 1 and 2 [optional]
 		m.stage_2_duration      = getprop(m.nodeString~"stage-2-duration-sec");       # stage 2 duration [optional]
 		m.weight_fuel_lbm       = getprop(m.nodeString~"weight-fuel-lbm");            # fuel weight [optional]. If this property is not present, it won't lose weight as the fuel is used.
 		m.vector_thrust         = getprop(m.nodeString~"vector-thrust");              # Boolean. [optional]
@@ -327,7 +333,7 @@ var AIM = {
 		m.ref_area_sqft         = getprop(m.nodeString~"cross-section-sqft");         # normally is crosssection area of munition (without fins)
 		m.max_g                 = getprop(m.nodeString~"max-g");                      # max G-force the missile can pull at sealevel
 		m.min_speed_for_guiding = getprop(m.nodeString~"min-speed-for-guiding-mach"); # minimum speed before the missile steers, before it reaches this speed it will fly ballistic.
-		m.intoBore              = getprop(m.nodeString~"ignore-wind-at-release");     # Boolean. If true dropped weapons will ignore sideslip and AOA and start flying in aircraft bore direction.
+		m.intoBore              = getprop(m.nodeString~"ignore-wind-at-release");     # Boolean. If true dropped weapons will ignore sideslip and AOA and start flying in aircraft bore direction. Will always be the case if ejector speed is non zero.
 		m.lateralSpeed          = getprop(m.nodeString~"lateral-dps");                # Lateral speed in degrees per second. This is mostly for cosmetics.
 		# detonation
 		m.weight_whead_lbm      = getprop(m.nodeString~"weight-warhead-lbs");         # warhead weight
@@ -479,10 +485,10 @@ var AIM = {
         	m.vector_thrust = FALSE;
         }
         if (m.flareResistance == nil) {
-        	m.flareResistance = 0.95;
+        	m.flareResistance = 0.925;
         }
         if (m.chaffResistance == nil) {
-        	m.chaffResistance = 0.95;
+        	m.chaffResistance = 0.925;
         }
         if (m.guidanceLaw == nil) {
 			m.guidanceLaw = "APN";
@@ -551,6 +557,9 @@ var AIM = {
         if(m.advanced == nil) {
 			m.advanced = FALSE;
 		}
+		if(m.stage_gap_duration == nil) {
+			m.stage_gap_duration = 0;
+		}
 		if(m.noCommonTarget == nil) {
 			m.noCommonTarget = FALSE;
 		}
@@ -571,11 +580,13 @@ var AIM = {
 		m.mpLat          = getprop("payload/armament/MP-lat");# properties to be used for showing missile over MP.
 		m.mpLon          = getprop("payload/armament/MP-lon");
 		m.mpAlt          = getprop("payload/armament/MP-alt");
+		m.mpAltft        = getprop("payload/armament/MP-alt-ft");#used for anim of S-300 camera view: Follow
 		m.mpShow = FALSE;
-		if (m.mpLat != nil and m.mpLon != nil and m.mpAlt != nil) {
+		if (m.mpLat != nil and m.mpLon != nil and m.mpAlt != nil and m.mpAltft != nil) {
 			m.mpLat          = props.globals.getNode(m.mpLat, FALSE);
 			m.mpLon          = props.globals.getNode(m.mpLon, FALSE);
 			m.mpAlt          = props.globals.getNode(m.mpAlt, FALSE);
+			m.mpAltft        = props.globals.getNode(m.mpAltft, FALSE);
 			if (m.mpLat != nil and m.mpLon != nil and m.mpAlt != nil) {
 				m.mpShow = TRUE;
 			}
@@ -627,6 +638,7 @@ var AIM = {
 			print("Attempting to load "~id_model);
 		}
 		m.life_time = 0;
+		m.last_noti = -1;
 
 		# Create the AI position and orientation properties.
 		m.latN   = m.ai.getNode("position/latitude-deg", 1);
@@ -646,6 +658,8 @@ var AIM = {
 		m.before_last_t_coord = nil;
 		m.last_t_coord_accu        = m.t_coord;
 		m.before_last_t_coord_accu = nil;
+		m.remote_control_yaw     = 0;
+		m.remote_control_pitch   = 0;
 
 		m.speed_down_fps  = nil;
 		m.speed_east_fps  = nil;
@@ -699,6 +713,8 @@ var AIM = {
 		m.curr_deviation_h       = 0;
 		m.track_signal_e         = 0;
 		m.track_signal_h         = 0;
+		m.remote_control_yaw     = 0;
+		m.remote_control_pitch   = 0;
 
 		# cruise-missiles
 		m.nextGroundElevation = 0; # next Ground Elevation
@@ -770,7 +786,7 @@ var AIM = {
 		m.horz_closing_rate_fps = -1;
 		
 		m.usingTGPPoint = 0;
-
+		
 		m.standby();# these loops will run until released or deleted.
 
 		#for multithreading
@@ -803,6 +819,11 @@ var AIM = {
 				tacview.write("0,Event=Destroyed|"~me.tacviewID~"\n");
 				tacview.write("-"~me.tacviewID~"\n");
 				thread.unlock(tacview.mutexWrite);
+			}
+			if(getprop("payload/armament/msg")) {
+				thread.lock(mutexTimer);
+				append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [nil, -1, -1,0,me.typeID,"",me.unique_id,0,"", 0, 0, 0,1], 0]);
+				thread.unlock(mutexTimer);
 			}
 		} else {
 			delete(AIM.active, me.ID);
@@ -1253,6 +1274,7 @@ var AIM = {
 		me.force_lbf_1      = 0;
 		me.stage_2_duration = 0;
 		me.force_lbf_2      = 0;
+		me.stage_gap_duration = 0;
 		me.inert            = TRUE;
 		me.engineEnabled    = FALSE;
 		me.guidanceEnabled  = FALSE;
@@ -1665,6 +1687,9 @@ var AIM = {
 			me.printStats("Stage 1: %d lbf for %.1f seconds.", me.force_lbf_1, me.stage_1_duration);
 			if (stages > 1) {
 				me.printStats("Stage 2: %d lbf for %.1f seconds.", me.force_lbf_2, me.stage_2_duration);
+				if (me.stage_gap_duration > 0) {
+					me.printStats("Stage 1 to 2 time gap: %.1f seconds.", me.stage_gap_duration);
+				}
 			}
 			me.printStats("%s",vector);
 			if (!me.weight_fuel_lbm) {
@@ -1854,6 +1879,16 @@ var AIM = {
 					me.printStats("Target switch ignored, could not lock on %s",me.settings.target.get_Callsign());
 				}
 			}
+			if (contains(me.settings, "remote_yaw")) {
+				me.remote_control_yaw = me.settings.remote_yaw;
+			} else {
+				me.remote_control_yaw = 0;
+			}
+			if (contains(me.settings, "remote_pitch")) {
+				me.remote_control_pitch = me.settings.remote_pitch;
+			} else {
+				me.remote_control_pitch = 0;
+			}
 		}
 
 		if (me.hasGuided and me.maddog) {
@@ -1889,8 +1924,11 @@ var AIM = {
 		if (me.Tgt != nil and me.Tgt.isValid() == FALSE) {#TODO: verify that the following threaded code can handle invalid contact. As its read from property-tree, not mutex protected.
 			if (!(me.canSwitch and me.reaquire)) {
 				me.printStats(me.type~": Target went away, deleting missile.");
-				me.sendMessage(me.type~" missed "~me.callsign~": Target logged off.");
-				settimer(func me.del(),0);
+				#me.sendMessage(me.type~" missed "~me.callsign~": Target logged off.");
+				thread.lock(mutexTimer);
+				append(AIM.timerQueue, [me,me.del,[],0]);
+				append(AIM.timerQueue, [me,me.log,[me.callsign~" logged off. Deleting "~me.typeLong],0]);
+				thread.unlock(mutexTimer);
 				return;
 			} else {
 				me.Tgt = nil;
@@ -2008,10 +2046,10 @@ var AIM = {
 		if (me.speed_m > me.maxMach1 and me.life_time > me.drop_time and me.life_time <= (me.drop_time + me.stage_1_duration)) {
 			me.maxMach1 = me.speed_m;
 		}
-		if (me.speed_m > me.maxMach2 and me.life_time > (me.drop_time + me.stage_1_duration) and me.life_time <= (me.drop_time + me.stage_1_duration + me.stage_2_duration)) {
+		if (me.speed_m > me.maxMach2 and me.life_time > (me.drop_time + me.stage_1_duration) and me.life_time <= (me.drop_time + me.stage_1_duration + me.stage_gap_duration+me.stage_2_duration)) {
 			me.maxMach2 = me.speed_m;
 		}
-		if (me.maxMach3 == 0 and me.life_time > (me.drop_time + me.stage_1_duration + me.stage_2_duration)) {
+		if (me.maxMach3 == 0 and me.life_time > (me.drop_time + me.stage_1_duration + me.stage_gap_duration+me.stage_2_duration)) {
 			me.maxMach3 = me.speed_m;
 		}
 
@@ -2032,7 +2070,19 @@ var AIM = {
 		###################
 		#### Guidance.#####
 		###################
-		if (me.Tgt != nil and me.t_coord !=nil and me.free == FALSE and me.guidance != "unguided"
+		if (me.guidance == "remote" or me.guidance == "remote-stable") {
+			me.printGuide("Remote control");
+			if (me.guidance == "remote-stable") {
+				me.remoteControlStabilized();
+			} else {
+				me.remoteControl();
+			}
+			me.limitG();
+			me.pitch      += me.track_signal_e;
+			me.hdg	      += me.track_signal_h;
+			me.printGuideDetails("%04.1f deg elevation command done, new pitch: %04.1f deg", me.track_signal_e, me.pitch);
+			me.printGuideDetails("%05.1f deg bearing command done, new heading: %05.1f", me.last_track_h, me.hdg);
+		} elsif (me.Tgt != nil and me.t_coord !=nil and me.free == FALSE and me.guidance != "unguided"
 			and (me.rail == FALSE or me.rail_passed == TRUE) and me.guidanceEnabled) {
 				#
 				# Here we figure out how to guide, navigate and steer.
@@ -2302,9 +2352,13 @@ var AIM = {
 				me.sndDistance = 0;
 				me.elapsed_last = systime();
 				if (me.explodeSound == TRUE) {
-					me.sndPropagate();
+					thread.lock(mutexTimer);
+					append(AIM.timerQueue, [me,me.sndPropagate,[],0]);
+					thread.unlock(mutexTimer);
 				} else {
-					settimer( func me.del(), 10);
+					thread.lock(mutexTimer);
+					append(AIM.timerQueue, [me,me.del,[],10]);
+					thread.unlock(mutexTimer);
 				}
 				return;
 			}
@@ -2367,13 +2421,14 @@ var AIM = {
 
 
 		# consume fuel
-		if (me.life_time > (me.drop_time + me.stage_1_duration + me.stage_2_duration)) {
+		if (me.life_time > (me.drop_time + me.stage_1_duration + me.stage_gap_duration+me.stage_2_duration)) {
 			me.weight_current = me.weight_launch_lbm - me.weight_fuel_lbm;
-		} elsif (me.life_time > (me.drop_time + me.stage_1_duration)) {
+		} elsif (me.life_time > (me.drop_time + me.stage_1_duration+me.stage_gap_duration)) {
 			me.weight_current = me.weight_current - me.fuel_per_sec_2 * me.dt;
-		} elsif (me.life_time > me.drop_time) {
+		} elsif (me.life_time > me.drop_time and me.life_time < (me.drop_time + me.stage_1_duration)) {
 			me.weight_current = me.weight_current - me.fuel_per_sec_1 * me.dt;
 		}
+
 		#printf("weight %0.1f", me.weight_current);
 		me.mass = me.weight_current / slugs_to_lbm;
 
@@ -2382,7 +2437,7 @@ var AIM = {
 			me.eta = me.free == TRUE or me.horz_closing_rate_fps == -1?-1:(me["t_go"]!=nil?me.t_go:(me.dist_curr*M2FT)/me.horz_closing_rate_fps);
 			if (me.eta < 0) me.eta = -1;
 			me.hit = 50;# in percent
-			if (me.life_time > me.drop_time+me.stage_1_duration + me.gnd_launch?(me.stage_2_duration):0) {
+			if (me.life_time > me.drop_time+me.stage_1_duration + me.gnd_launch?(me.stage_2_duration + me.stage_gap_duration):0) {
 				# little less optimistic after reaching topspeed
 				if (me.selfdestruct_time-me.life_time < me.eta) {
 					# reduce alot if eta later than lifespan
@@ -2421,6 +2476,18 @@ var AIM = {
 				setprop("sam/hit"~me.ID,me.hit);
 			}
 		}
+		
+		me.noti_time = 1;
+		#if (me.dist_curr != nil and me.dist_curr != 0 and me.dist_curr*M2NM < 1) {
+		#	me.noti_time = 0.35;
+		#}
+        if (me.life_time - me.last_noti > me.noti_time and getprop("payload/armament/msg")) {
+            # notify in flight using Emesary.
+            me.last_noti = me.life_time;
+        	thread.lock(mutexTimer);
+			append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [me.latN.getValue(), me.lonN.getValue(), me.altN.getValue()*FT2M,me.guidance=="radar",me.typeID,me.type,me.unique_id,me.thrust_lbf>0,me.free or me.lostLOS or me.tooLowSpeed or me.flareLock or me.chaffLock?"":me.callsign, me.hdg, me.pitch, me.new_speed_fps], 0]);
+			thread.unlock(mutexTimer);
+        }
 
 		me.last_dt = me.dt;
 		
@@ -2564,11 +2631,11 @@ var AIM = {
 		#
 		me.thrust_lbf = 0;# pounds force (lbf)
 		if (me.engineEnabled) {
-			if (me.life_time > (me.drop_time + me.stage_1_duration + me.stage_2_duration)) {
+			if (me.life_time > (me.drop_time + me.stage_1_duration + me.stage_gap_duration + me.stage_2_duration)) {
 				me.thrust_lbf = 0;
-			} elsif (me.life_time > me.stage_1_duration + me.drop_time) {
+			} elsif (me.life_time > me.stage_1_duration + me.stage_gap_duration + me.drop_time) {
 				me.thrust_lbf = me.force_lbf_2;
-			} elsif (me.life_time > me.drop_time) {
+			} elsif (me.life_time > me.drop_time and me.life_time < me.drop_time+me.stage_1_duration) {
 				me.thrust_lbf = me.force_lbf_1;
 			}else {
 				me.thrust_lbf = 0;
@@ -2660,9 +2727,10 @@ var AIM = {
 					me.mpLat.setDoubleValue(me.coord.lat());
 					me.mpLon.setDoubleValue(me.coord.lon());
 					me.mpAlt.setDoubleValue(me.coord.alt());
+					me.mpAltft.setDoubleValue(me.coord.alt()*M2FT);
 				}
 			}
-		} elsif (me.first == TRUE and me.life_time > me.drop_time + me.stage_1_duration + me.stage_2_duration) {
+		} elsif (me.first == TRUE and me.life_time > me.drop_time + me.stage_1_duration + me.stage_gap_duration + me.stage_2_duration) {
 			# this weapon was reporting its position over MP, but now its fuel has used up. So allow for another to do that.
 			me.resetFirst();
 		}
@@ -2675,6 +2743,7 @@ var AIM = {
 			me.mpLat.setDoubleValue(0.0);
 			me.mpLon.setDoubleValue(0.0);
 			me.mpAlt.setDoubleValue(0.0);
+			me.mpAltft.setDoubleValue(0.0);
 		}
 	},
 
@@ -3304,7 +3373,7 @@ var AIM = {
 		#		me.rotate_token = TRUE;
 		#		me.printGuide("Is last turn, snap-up/PN takes it from here..")
 		#	}
-		} elsif (me.snapUp == TRUE and me.t_elev_deg > me.clamp(-80/me.speed_m,-30,-5) and me.dist_curr * M2NM > me.speed_m * 3
+		} elsif (me.snapUp == TRUE and me.t_elev_deg > me.clamp(-80/me.speed_m,-30,-5) and me.dist_curr * M2NM > me.speed_m * 6
 			 and me.t_elev_deg < me.loft_angle #and me.t_elev_deg > -7.5
 			 and me.dive_token == FALSE) {
 			# lofting: due to target is more than 10 miles out and we havent reached 
@@ -3323,7 +3392,7 @@ var AIM = {
 			}
 			me.cruise_or_loft = TRUE;
 		} elsif (me.snapUp == TRUE and me.coord.alt() > me.t_coord.alt() and me.last_cruise_or_loft == TRUE
-		         and me.t_elev_deg > me.clamp(-80/me.speed_m,-30,-5) and me.dist_curr * M2NM > me.speed_m * 3) {
+		         and me.t_elev_deg > me.clamp(-80/me.speed_m,-30,-5) and me.dist_curr * M2NM > me.speed_m * 5.5) {
 			# cruising: keeping altitude since target is below and more than -45 degs down
 
 			me.ratio = (g_fps * me.dt)/me.old_speed_fps;
@@ -3368,6 +3437,21 @@ var AIM = {
         me.track_signal_e = (me.keepPitch-me.pitch) * !me.free;
         me.track_signal_h = 0;
         me.printGuide("Gyro keeping %04.1f deg pitch. Current is %04.1f deg.", me.keepPitch, me.pitch);
+	},
+	
+	remoteControl: func () {
+		me.track_signal_e = me.remote_control_pitch * me.dt * !me.free;
+		me.track_signal_h = me.remote_control_yaw * me.dt * !me.free;
+		me.printGuide("Remote input: %04.1f deg/s pitch, %04.1f deg/s yaw.",
+		              me.remote_control_pitch, me.remote_control_yaw);
+	},
+
+	remoteControlStabilized: func () {
+		me.keepPitch += me.remote_control_pitch * me.dt;
+		me.track_signal_e = (me.keepPitch - me.pitch) * !me.free;
+		me.track_signal_h = me.remote_control_yaw * me.dt * !me.free;
+		me.printGuide("Remote input: %04.1f deg/s pitch, %04.1f deg/s yaw.",
+		              me.remote_control_pitch, me.remote_control_yaw);
 	},
 
 	APN: func () {
@@ -3632,6 +3716,9 @@ var AIM = {
             	me.event = "exploded";
             	if(me.life_time < me.arming_time) {
                 	me.event = "landed disarmed";
+                	thread.lock(mutexTimer);
+					append(AIM.timerQueue, [me,me.log,[me.typeLong~" landed disarmed."],0]);
+					thread.unlock(mutexTimer);
             	}
             	if (me.Tgt != nil and me.direct_dist_m == nil) {
             		# maddog might go here
@@ -3647,6 +3734,9 @@ var AIM = {
         	me.event = "exploded";
         	if(me.life_time < me.arming_time) {
             	me.event = "landed disarmed";
+            	thread.lock(mutexTimer);
+				append(AIM.timerQueue, [me,me.log,[me.typeLong~" landed disarmed."],0]);
+				thread.unlock(mutexTimer);
         	}
         	if (me.Tgt != nil and me.direct_dist_m == nil) {
         		# maddog might go here
@@ -3743,10 +3833,54 @@ var AIM = {
 			}
 			me.direct_dist_m = me.cur_dir_dist_m;
 		} elsif (me.life_time > me.selfdestruct_time) {
+			me.Tgt = nil; # make sure we dont in inertial mode with target go in and start checking distances.
 			me.explode("Selfdestructed.");
 		    return TRUE;
 		}
 		return FALSE;
+	},
+	
+	log: func (str) {
+		damageLog.push(str);
+	},
+	
+	notifyInFlight: func (lat,lon,alt,rdr,typeID,typ,unique,thrust,callsign, heading, pitch, speed, is_deleted=0) {
+		var msg = notifications.ArmamentInFlightNotification.new("mfly", unique, is_deleted?3:2, 21+typeID);
+        msg.Flags = rdr;#bit #0
+        if (thrust) {
+        	msg.Flags = bits.set(msg.Flags, 1);#bit #1
+        }
+        if (lat != nil) {
+        	msg.Position.set_latlon(lat,lon,alt);
+        } else {
+        	msg.Position.set_latlon(0,0,0);
+        }
+        msg.IsDistinct = !is_deleted;
+        msg.RemoteCallsign = callsign;
+        msg.UniqueIndex = unique;
+        msg.Pitch = pitch;
+        msg.Heading = heading;
+        msg.u_fps = speed;
+        notifications.geoBridgedTransmitter.NotifyAll(msg);
+#print("fox2.nas: transmit in flight");
+#f14.debugRecipient.Receive(msg);
+	},
+		
+	notifyHit: func (RelativeAltitude, Distance, callsign, Bearing, reason, typeID, type, self) {
+		var msg = notifications.ArmamentNotification.new("mhit", 4, 21+typeID);
+        msg.RelativeAltitude = RelativeAltitude;
+        msg.Bearing = Bearing;
+        msg.Distance = Distance;
+        msg.RemoteCallsign = callsign; # RJHTODO: maybe handle flares / chaff 
+        if (self) {
+        	# RJHTODO: we need to send the message to ourselves here, how to do that?
+        	msg.Callsign = callsign; # RJHTODO: maybe handle flares / chaff 
+        	damage.damage_recipient.Receive(msg);
+        }
+        notifications.hitBridgedTransmitter.NotifyAll(msg);
+        damage.damageLog.push(sprintf("You hit %s with %s at %.1f meters.",callsign, type, Distance));
+#print("fox2.nas: transmit hit to ",callsign,"  reason:",reason);
+#f14.debugRecipient.Receive(msg);
 	},
 
 	explode: func (reason, event = "exploded") {
@@ -3787,27 +3921,38 @@ var AIM = {
 		}
 		me.coord = explosion_coord;
 
+		thread.lock(mutexTimer);
+		append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [me.coord.lat(), me.coord.lon(), me.coord.alt(),0,me.typeID,me.type,me.unique_id,0,"", me.hdg, me.pitch, 0], 0]);
+		thread.unlock(mutexTimer);
 		var wh_mass = (event == "exploded" and !me.inert)?me.weight_whead_lbm:0;#will report 0 mass if did not have time to arm
-		settimer(func {impact_report(me.coord, wh_mass, "munition", me.type, me.new_speed_fps*FT2M);},0);# method sent back to main nasal thread.
+		
+		thread.lock(mutexTimer);
+		append(AIM.timerQueue, [me,impact_report,[me.coord, wh_mass, "munition", me.type, me.new_speed_fps*FT2M],0]);
+		thread.unlock(mutexTimer);
 
 		if (me.Tgt != nil and !me.Tgt.isVirtual() and !me.inert) {
 			var phrase = sprintf( me.type~" "~event~": %.1f", min_distance) ~ " meters from: " ~ (me.flareLock == FALSE?(me.chaffLock == FALSE?me.callsign:(me.callsign ~ "'s chaff")):me.callsign ~ "'s flare");
 			me.printStats("%s  Reason: %s time %.1f", phrase, reason, me.life_time);
-			if (min_distance < me.reportDist) {
-				me.sendMessage(phrase);
+			if (min_distance < me.reportDist and !me.flareLock and !me.chaffLock) {
+#				me.sendMessage(phrase);
+                    if(getprop("payload/armament/msg") and wh_mass > 0){
+						thread.lock(mutexTimer);
+						append(AIM.timerQueue, [AIM, AIM.notifyHit, [me.coord.alt() - me.t_coord.alt(),min_distance,me.callsign,me.coord.course_to(me.t_coord),reason,me.typeID, me.typeLong, 0], 0]);
+						thread.unlock(mutexTimer);
+                    }
 			} else {
-				me.sendMessage(me.type~" missed "~me.callsign~": "~reason);
+#				me.sendMessage(me.type~" missed "~me.callsign~": "~reason);
 			}
 		} elsif(!me.inert and me.Tgt == nil) {
 			var phrase = sprintf(me.type~" "~event);
 			me.printStats("%s  Reason: %s time %.1f", phrase, reason, me.life_time);
-			me.sendMessage(phrase);
+#			me.sendMessage(phrase);
 		}
-		if (me.multiHit and !me.inert) {
+		if (me.multiHit and !me.inert and wh_mass > 0) {
 			if (!me.multiExplosion(me.coord, event) and me.Tgt != nil and me.Tgt.isVirtual()) {
 				var phrase = sprintf(me.type~" "~event);
 				me.printStats("%s  Reason: %s time %.1f", phrase, reason, me.life_time);
-				me.sendMessage(phrase);
+#				me.sendMessage(phrase);
 			}
 		}
 		
@@ -3880,7 +4025,16 @@ var AIM = {
 			if (min_distance < me.reportDist and (me.Tgt == nil or me.testMe.getUnique() != me.Tgt.getUnique())) {
 				var phrase = sprintf("%s %s: %.1f meters from: %s", me.type,event, min_distance, me.testMe.get_Callsign());
 				me.printStats(phrase);
-				me.sendMessage(phrase);
+				#me.sendMessage(phrase);
+
+ 				if(getprop("payload/armament/msg")){
+ 					var cs = me.testMe.get_Callsign();
+ 					var cc = me.testMe.get_Coord();
+ 					thread.lock(mutexTimer);
+					append(AIM.timerQueue, [AIM, AIM.notifyHit, [explode_coord.alt() - cc.alt(),min_distance,cs,explode_coord.course_to(cc),"mhit1",me.typeID, me.typeLong,0], 0]);
+					thread.unlock(mutexTimer);
+				}
+
 				me.sendout = 1;
 			}
 		}
@@ -3892,7 +4046,10 @@ var AIM = {
 			cs = size(cs) < 8 ? cs : left(cs,7);
 			var phrase = sprintf("%s %s: %.1f meters from: %s", me.type,event, min_distance, cs);# if we mention ourself then we need to explicit add ourself as author.
 			me.printStats(phrase);
-			me.sendMessage(phrase);
+			#me.sendMessage(phrase);
+			thread.lock(mutexTimer);
+			append(AIM.timerQueue, [AIM, AIM.notifyHit, [explode_coord.alt() - geo.aircraft_position().alt(),min_distance,cs,explode_coord.course_to(geo.aircraft_position()),"mhit2",me.typeID, me.typeLong, 1], 0]);
+			thread.unlock(mutexTimer);
 			me.sendout = 1;
 		}
 		return me.sendout;
@@ -4249,7 +4406,24 @@ var AIM = {
 						me.goToLock();
 						return;
 					}
+				} elsif (DEBUG_SEARCH) {
+					# air target has speed
+					# fox1 is painted
+					# in range (max)
+					# in range (min)
+					# FOV
+					# in range (detect)
+					# Line of sight
+					me.printSearch("Lock failed %d %d %d %d %d %d %d",!(me.tagt.get_type() == AIR and me.tagt.get_Speed()<15),(me.guidance != "semi-radar" or me.is_painted(me.tagt) == TRUE),me.rng < me.max_fire_range_nm,me.rng > me.min_fire_range_nm,me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.fcs_fov, vector.Math),me.rng < me.detect_range_curr_nm,me.checkForView());
 				}
+			} elsif (DEBUG_SEARCH and me.slaveContact != nil) {
+				var tpe = me.slaveContact.get_type();
+				if (tpe==AIR) tpe="A";
+				elsif (tpe==SURFACE) tpe="G";
+				elsif (tpe==MARINE) tpe="M";
+				elsif (tpe==POINT) tpe="P";
+				else tpe ="?";
+				me.printSearch("Class check failed: %s (weapon: %s)", tpe, me.class);
 			}
 		} elsif (me.mode_slave == FALSE) {
 			me.slaveContacts = nil;
@@ -4747,27 +4921,35 @@ var AIM = {
 
 		me.explode_prop.setBoolValue(TRUE);
 		me.explode_angle_prop.setDoubleValue((rand() - 0.5) * 50);
-		settimer( func me.explode_prop.setBoolValue(FALSE), 0.5 );
-		settimer( func me.explode_smoke_prop.setBoolValue(TRUE), 0.5 );
-		settimer( func me.explode_smoke_prop.setBoolValue(FALSE), 3 );
+		thread.lock(mutexTimer);
+		append(AIM.timerQueue, [me, func me.explode_prop.setBoolValue(FALSE), [], 0.5]);
+		append(AIM.timerQueue, [me, func me.explode_smoke_prop.setBoolValue(TRUE), [], 0.5]);
+		append(AIM.timerQueue, [me, func me.explode_smoke_prop.setBoolValue(FALSE), [], 3]);
+		thread.unlock(mutexTimer);
 		if (info == nil or getprop("payload/armament/enable-craters") == nil or !getprop("payload/armament/enable-craters")) {return;};
-		settimer ( func {
+		thread.lock(mutexTimer);
+		append(AIM.timerQueue, [me, func {
 		 	if (info[1] == nil) {
-		       geo.put_model(getprop("payload/armament/models") ~ "bomb_hit_smoke.xml", me.coord.lat(), me.coord.lon());
+				#print ("Building hit..smoking");
+		       	geo.put_model(getprop("payload/armament/models") ~ "bomb_hit_smoke.xml", me.coord.lat(), me.coord.lon());
 		    } else if ((info[1] != nil) and (info[1].solid == 1)) {
 		        var crater_model = "";
-		       	
+
 		        if (me.weight_whead_lbm < 850 and (me.target_sea or me.target_gnd)) {
-		          crater_model = getprop("payload/armament/models") ~ "crater_small.xml";
+		          	crater_model = getprop("payload/armament/models") ~ "crater_small.xml";
+					#print("small crater");
 		        } elsif (me.target_sea or me.target_gnd) {
-		          crater_model = getprop("payload/armament/models") ~ "crater_big.xml";
+					#print("big crater");
+		          	crater_model = getprop("payload/armament/models") ~ "crater_big.xml";
 		        }
 		       
 		       	if (crater_model != "" and me.weight_whead_lbm > 150) {
 		            geo.put_model(crater_model, me.coord.lat(), me.coord.lon());
+					#print("put crater");
 		        }
 		    }
-        }, 0.5);
+        }, [], 0.5]);
+		thread.unlock(mutexTimer);
 	},
 
 	animate_dud: func {
@@ -4954,6 +5136,22 @@ var AIM = {
 			call(printf,arg);
 		}
 	},
+	
+	timerLoop: func {
+		thread.lock(mutexTimer);
+		var cmd = pop(AIM.timerQueue);
+		thread.unlock(mutexTimer);
+		if (cmd != nil) {
+			var err = [];
+			var tr = maketimer(cmd[3], cmd[0], func call(cmd[1], cmd[2], cmd[0], err = []));
+			tr.singleShot = 1;
+			tr.start();#lets hope the timer tr dont get garbage collected..
+			if (size(err)) {foreach(e;err) {print(e);}}
+		}
+		settimer(func AIM.timerLoop(),0);
+	},
+	
+	timerQueue: [],
 
 	active: {},
 	flying: {},
@@ -5059,6 +5257,7 @@ var deviation_normdeg = func(our_heading, target_bearing) {
 var spams = 0;
 var spamList = [];
 var mutexMsg = thread.newlock();
+var mutexTimer = thread.newlock();
 
 var defeatSpamFilter = func (str) {
   thread.lock(mutexMsg);
@@ -5093,3 +5292,4 @@ var spamLoop = func {
 }
 
 spamLoop();
+AIM.timerLoop();

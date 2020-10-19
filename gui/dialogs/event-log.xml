@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<PropertyList>
+	<name>flightlog</name>
+  	<modal>false</modal>
+  	<layout>vbox</layout>
+  	<draggable>true</draggable>
+    <resizable>true</resizable>
+
+    <group>
+		<layout>hbox</layout>
+		<empty><stretch>1</stretch></empty>
+
+		<text>
+			<label>Event log</label>
+		</text>
+
+		<empty><stretch>1</stretch></empty>
+
+		<button>
+			<pref-width>16</pref-width>
+			<pref-height>16</pref-height>
+			<legend></legend>
+			<default>1</default>
+			<keynum>27</keynum>
+			<border>2</border>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+		</button>
+	</group>
+	
+	<nasal>
+        <open>
+            <![CDATA[
+                setprop("sim/model/mig21/event-log", "Click refresh to see the event log..");
+            ]]>
+        </open>
+        <close>
+        	<![CDATA[
+                setprop("sim/model/mig21/event-log", "");
+            ]]>
+        </close>
+    </nasal>
+	
+	<button>
+		<!--<x>0</x>
+		<y>0</y>-->
+		<legend>Refresh</legend>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				var str = "";
+				if (getprop("velocities/groundspeed-kt") < 1) {
+				  var buffer = damage.damageLog.get_buffer();
+				  
+				  foreach(entry; buffer) {
+				      str = str~""~entry.time~" "~entry.message~"\n";
+				  }
+				} else {
+					str = "The aircraft must be still to read the event log.";
+				}
+				setprop("sim/model/mig21/event-log", str);
+			]]></script>
+		</binding>
+	</button>
+
+  	<text>
+	    <label>Log:</label>
+	</text>
+
+	<textbox>
+	    <!-- position -->
+	    <!--<x>100</x>
+	    <y>100</y>-->
+
+	    <!-- dimensions -->
+	    <pref-width>500</pref-width>
+		<pref-height>500</pref-height>
+
+	    <property>/sim/model/mig21/event-log</property>
+		<live>true</live>
+	    <slider>15</slider> <!--width for slider -->
+	    <wrap>false</wrap> <!-- don't wrap text; default: true -->
+	    <top-line>0</top-line> <!-- line to show at top, -ve numbers show last line -->
+	    <editable>false</editable> <!-- if the puLargeInput is supposed to be editable -->
+	</textbox>
+	
+</PropertyList>

@@ -193,6 +193,17 @@ RWRCanvas = {
                     .setStrokeLineWidth(rwr.stroke*1.2)
                     .setColor(colorG)
                     .hide();
+        rwr.symbol_maw = rwr.rootCenter.createChild("path")
+                    .moveTo(0,-font*1.2)
+                    .lineTo(font*0.2, -font*1.0)
+                    .vert(font*2)
+                    .horiz(-font*0.4)
+                    .vert(-font*2)
+                    .lineTo(0,-font*1.2)
+                    .setStrokeLineWidth(rwr.stroke*1.2)
+                    .setColor(colorG)
+                    .hide();
+                    
         
 #        rwr.symbol_16_air = setsize([],max_icons);
 #        for (var i = 0;i<max_icons;i+=1) {
@@ -511,6 +522,18 @@ RWRCanvas = {
         }
         setprop("sound/rwr-pri", me.prio);
         setprop("sound/rwr-unk", me.unk);
+        
+        if (getprop("payload/armament/MAW-active")) {
+          me.mawdegs = getprop("payload/armament/MAW-bearing");
+          me.dev = -geo.normdeg180(me.mawdegs-getprop("orientation/heading-deg"))+90;
+          me.x = math.cos(me.dev*D2R)*(me.inner_radius+me.outer_radius)*0.5;
+          me.y = -math.sin(me.dev*D2R)*(me.inner_radius+me.outer_radius)*0.5;
+          me.symbol_maw.setRotation(-(me.dev+90)*D2R);
+          me.symbol_maw.setTranslation(me.x, me.y);
+          me.symbol_maw.show();
+        } else {
+          me.symbol_maw.hide();
+        }
     },
 };
 
