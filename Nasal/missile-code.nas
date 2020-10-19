@@ -3873,8 +3873,8 @@ var AIM = {
         msg.Distance = Distance;
         msg.RemoteCallsign = callsign; # RJHTODO: maybe handle flares / chaff 
         if (self) {
-        	# RJHTODO: we need to send the message to ourselves here, how to do that?
-        	msg.Callsign = callsign; # RJHTODO: maybe handle flares / chaff 
+        	msg.Callsign = callsign;
+        	msg.FromIncomingBridge = 1;
         	damage.damage_recipient.Receive(msg);
         }
         notifications.hitBridgedTransmitter.NotifyAll(msg);
@@ -5142,11 +5142,9 @@ var AIM = {
 		var cmd = pop(AIM.timerQueue);
 		thread.unlock(mutexTimer);
 		if (cmd != nil) {
-			var err = [];
-			var tr = maketimer(cmd[3], cmd[0], func call(cmd[1], cmd[2], cmd[0], err = []));
+			var tr = maketimer(cmd[3], cmd[0], func {call(cmd[1], cmd[2], cmd[0], var err = []);if (size(err)) {foreach(e;err) {print(e);}}});
 			tr.singleShot = 1;
-			tr.start();#lets hope the timer tr dont get garbage collected..
-			if (size(err)) {foreach(e;err) {print(e);}}
+			tr.start();#lets hope the timer tr dont get garbage collected..			
 		}
 		settimer(func AIM.timerLoop(),0);
 	},
