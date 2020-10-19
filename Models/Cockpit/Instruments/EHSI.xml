@@ -1,4 +1,4 @@
-<PropertyList>
+﻿<PropertyList>
 
  <!-- Horizontal Situation Indicator -->
  
@@ -92,7 +92,7 @@
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>hdg</tooltip-id>
-                <label>HDG</label>
+                <label>Heading</label>
             </binding>
         </hovered>
     </animation>
@@ -140,7 +140,7 @@
             <binding>
                 <command>set-tooltip</command>
                 <tooltip-id>crs</tooltip-id>
-                <label>CRS</label>
+                <label>Course</label>
             </binding>
         </hovered>
     </animation>
