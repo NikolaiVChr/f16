@@ -4,150 +4,198 @@
 **
 *********
 
-
-
-LANDING
-No fixed landing speed, however a suggested approach speed will display in left side of HUD when gears is down and masterarm is off.
-A little AoA bracket will appear down in the HUD, keep the flight path indicator inside the bracket. The top of the bracket is 11 and bottom is 15 deg AoA.
-Notice that it can be hard to see the touchdown point when landing with that high AoA, raising the seat with key 'u' will help.
-If the runway is wet, icy or short use the dragchute (F5) and/or hook if the runway has cables.
-
 TAKE-OFF
-You can rotate around 150 KT when aircraft is light. Be somewhat gentle on the stick if you rotate early as you otherwise might tail-scrape.
+You can rotate around 150 kt when the aircraft is light. Be somewhat gentle on the stick if you
+rotate early, as you otherwise might tail-scrape.
+            
+LANDING
+There is no fixed landing speed. Landing is to be performed by controlling the Angle of Attack.
+A little AoA bracket will appear down in the HUD, keep the flight path indicator inside the bracket.
+The top of the bracket is 11 and bottom is 15 deg AoA, the optimum 13 deg AoA is in the middle.
+To help achieve and maintain that high AoA extend the speedbrakes. This also helps keeping a three
+degrees approach path. Notice that it can be hard to see the touchdown point when landing with that
+high AoA, raising the seat with key 'u' will help.
+If the runway is wet, icy or short use the dragchute (if installed, key 'o') or hook if the runway
+has arrestor cables.
 
 FBW
-The FBW in most variant will try to protect and escape the aircraft from deep stall, nose slide and spin. Also will reduce inertia-coupling when rolling fast at high AoA.
-However if the deep stall is very problemetic to escape, you can enable MPO (key 'del') which will allow you to semi override the FBW pitch control.
-With MPO enabled you can rock the aircraft up and down in bigger and bigger oscillations until the nose stays down and you have escaped the deep stall.
-For spins, we recommend letting go of stick and throttle back, and let the FBW save the aircraft.
-In the YF-16 to escape spins, apply rudder opposite of spin direction and ailerons into the spin direction while pitching down and throttle back. This will often get you into the deep stall where you will rock your way out of that.
-If you get close to ground in a departure use key 'F6' to eject.
+The FBW in most variant will try to protect and escape the aircraft from deep stall, nose slide
+and spin. Also will reduce inertia-coupling when rolling fast at high AoA. However if the deep stall
+is very problemetic to escape, you can enable MPO (key 'del') which will allow you to semi override
+the FBW pitch control. With MPO enabled you can rock the aircraft up and down in bigger and bigger
+oscillations until the nose stays down and you have escaped the deep stall. For spins, we recommend
+letting go of stick and throttle back, and let the FBW save the aircraft.
+In the YF-16 to escape spins, apply rudder opposite of spin direction and ailerons into the spin
+direction while pitching down and throttle back. This will often get you into the deep stall where
+you will rock your way out of that. If you get close to ground in a departure use key 'F6' to eject.
 
 LIMITS
 Do not exceed Mach 2.05 or 800 KCAS.
-Do not roll faster than 225 kt groundspeed for main landing gear tires, or 217 for nose wheel tire.
-Do not operate below 200 KT with cat III stores, unless for landing or take-off.
+Do not roll faster than 225 kt groundspeed for the main landing gear tires, or 217 kt for the nose
+wheel tire. 
+Do not operate below 200 kt with cat III stores, unless for landing or take-off.
 
 NIGHTTIME FLYING
-There is flood and instrument lights that can be turned up.
-If running ALS you can also go into filters and enable one of the night vision modes.
+There is flood and instrument lights that can be turned up. Furthermore with ALS grapchics setting
+and higher shader setting there is also landing and taxi light.
 
 DRAGCHUTE
-Max recommended KIAS for deployment is 170. Key is F5.
-Not all variants have dragchute.
+Maximum recommended speed for deployment is 170 KIAS. Keys are 'o' to deploy, and 'O' to detach.
+Note that not all variants have a dragchute.
 
 FLYING IN MP
-Firstly be sure to use "Visible to 2017+", else others will not see everything working okay when they see your aircraft.
-For doing combat enable "MP Discharge messages". This might be considered spam of MP chat, so use it sparringly and only against opponents that have agreed to be fighting you.
+Firstly be sure to use "Visible to 2017+", else others will not see everything working okay when
+they see your aircraft. For doing combat enable "MP Discharge messages". This might be considered
+spam of MP chat, so use it sparringly and only against opponents that have agreed to be fighting you.
+With this option enabled you can take and deal damage to other aircraft that also has it enabled.
+It can only be enabled with wheels on ground.
 
 EXT FUEL TANKS
-After you have mounted or dismounted ext fuel tank in the fuel and payload dialog, you will have to close the dialog and reopen it to see that change proper, and to be able to set the level.
+After you have mounted or dismounted an external fuel tank in the fuel and payload dialog, you will
+have to close the dialog and reopen it to see that change proper, and to be able to set the level.
 
 HUD
-The speed in HUD is calibrated airspeed per default, and always when gear is commanded down. It can be switched in the control-panel.
+The speed in the HUD is calibrated airspeed per default, and always when gear is commanded down.
+It can be switched on the HUD control panel right of the fligthstick.
+
+Text upper left side:
+  Current G force.
+  * symbol, meaning the HUD is sensor of interest (SOI).
 
 Text left side:
-  NAV or ARM depending on masterarm. But BRAKES if parking brakes is on, and F 15 G if flaps is deployed, F for flaps, 15 for 15 deg extended, and G for gears down.
-  Mach number
-  G-Force number.
-  Selected weapon or AoA if gears down.
-  FUEL if bingo fuel.
+  'NAV' or 'ARM' depending on masterarm. But 'BRAKES' if parking brakes are on, and 'F 20 G' if
+    gear is deployed, 'F' for flaps, '20' for 20 deg extended and 'G' for gears down.
+  Mach number.
+  Max G-Force number achieved. Can be reset using WARN RESET switch located on the ICP
+    (center control panel with the number buttons on it).
+  Selected weapon.
+  Blinking FUEL if bingo fuel.
+  Direction and distance to you from bullseye.
 
 Text Right side:
-  R XXXXX is the CARA radar altimeter altitude above ground.
+  AR XXXXX is the CARA radar altimeter altitude above ground.
   CARA ALOW.
-  B XX.X is  slant range to steerpoint. Callsign if masterarm.
+  B XX.X is slant range to steerpoint. Callsign if masterarm.
   ETA to next steerpoint. TA XX if masterarm on, XX stand for 1000s ft of target altitude.
-  023>2 means 23 NM to next steerpoint number 2. F034.2 if masterarm on, means 34.2 NM in slant range to target.
-  Type of target if masterarm on. Else can show TACAN/VOR if enabled.
+  023>2 means 23 NM to next steerpoint number 2. F034.2 if masterarm on, means 34.2 NM in slant
+    range to target.
+  Type of target if masterarm on.
 
 Text Center:
-  LIMIT if Vne exceeded.
+  LIMIT if Vne exceeded. Be careful, exceeding Vne has high chance of damaging the aircraft.
   NO RAD if the aircraft radar is off.
   FLY UP if collision with terrain is emminent.
+  FUEL if bingo. This can be clicked away using WARN RESET switch located on the ICP
+    (center control panel with the number buttons on it).
+  WARN if a serious flight control issue is detected. This can be clicked away using WARN RESET
+    switch located on the ICP (center control panel with the number buttons on it).
 
 Text Bottom
-  Here DED DATA will show if enabled.
+  Here DED DATA will be shown, if enabled. Or PFLD if that has been selected.
   
 Localizer in HUD
-To enable localizer in HUD turn the mode knob on centerpanel left of the HSI.
-It can show both glidepath and ILS, with vertical and horizontal lines.
-If a line is centered on the FPM and segmented it means its invalid.
-If a line is not centered but segmented it means its valid but out of range.
-If a line is not segmented, its in range and valid.
-Keep the lines centered on the FPM to aim for the localizer beams.
-
+  HSI: To enable localizer in HUD turn the mode knob on centerpanel left of the HSI.
+  EHSI: To enable localizer in HUD click the 'M' knob on centerpanel EHSI.
+  It can show both glidepath and ILS, with vertical and horizontal lines.
+  If a line is centered on the FPM and segmented it means it's invalid.
+  If a line is not centered but segmented it means it's valid but out of range.
+  If a line is not segmented, it's in range and valid.
+  Keep the lines centered on the FPM to aim for the localizer beams.
 
 RWR
 The round display above left MFD display is a Radar Warning Reciever.
+
 It works by sorting the threats to you.
+  Close to center       : high threat
+  Close to edge         : threat
+  Diamond               : highest threat
+  Upper semicircle      : new threat (750Hz tone)
+  Full blinking circle  : hostile launch (2000Hz tone)
+  Hat above designation : airborne
 
-Close to center: high threat
-Close to edge: threat
-Diamond: highest threat
-Upper semicircle: new threat (750Hz tone)
-Full blinking circle: hostile launch (2000Hz tone)
-Hat above designation: Airborne
-
-Use Link 16 in menu to define your wingmen (up to 12), so they don't show up on RWR.
+Use Link 16 in the menu to define your wingmen (up to 12), so they don't show up on RWR when there
+are other threats.
 
 For something to show up in the RWR at all these conditions must be met:
 1: Be a threat.
-2: Be picked up by your radar OR having an active radar pointed your way OR having transponder on and not be too far away.
+2: Be picked up by your radar, OR 
+   having an active radar pointed your way, OR
+   having transponder on and not be too far away.
 
-Notice that the RWR can sometimes pick up threat much further away than your radar is capable off.
+Notice that the RWR can sometimes pick up threats much further away than your radar is capable off.
+
+If someone is locking you up, you will also hear a buzz sound constantly, until you no longer are
+locked up, also if a wingman locks you up. It's normal procedure if you think a wingman has locked
+you up, to call out 'Buddy spike' over the comms. If he say he has not, then you know it's perhaps
+a hostile lock. AIM-9 IR locks with radar off, it will not give you any warning before launch.
 
 Here's a brief list including the most common symbols and what they refer to:
     - 16:   F-16
-    - 10:   A-10
     - 14:   F-14
     - 15:   F-15
-    - 18:   F/A-18
     - 37:   J-37 Viggen
     - 21:   MiG-21
-    - 27:   Su-27, J-11A
-    - 29:   MiG-29
     - 71:   SR-71
     - M2:   Mirage-2000
-    - EF:   Eurofighter
     - JA:   Jaguar
+    - 11:   SA-11 (BUK M2, SAM)
+    - 20:   SA-20 (S-300, SAM)
+    - SH:   Frigate/Carrier/Ship
+    - 28:   Training scenario opponent
+    - 10:   A-10    
+    - 18:   F/A-18
+    - 27:   Su-27, J-11A
+    - 29:   MiG-29
+    - EF:   Eurofighter
     - TO:   Tornado
     - RF:   Rafale (brsq)
     - 35:   F-35
     - S:    AWACS, GCI or Recon
-    - 11:   SA-11 (BUK M2,SAM)
-    - 20:   SA-20 (S-300, SAM)
-    - SH:   Frigate/Carrier/Ship
-    - 28:   Training scenario opponent
     - AI:   AI scenario
     - UK:   Unknown threat
 
 MFDs (Multi Function Displays)
-page SMS: Clicking on button next to a station will select it. 
-          J-S will jettison the selected station.
-          If CAT is greater than 1, then you should set the flightcontrols to CAT III in config menu.
-page CRM: B-scope radar display. Horizontal is relative bearing to targets, vertical is distance.
+
+The BRT and CON switches on the MFD mount corners can be used to adjust brightness and contrast.
+GAIN is only used in FCR GM mode.
+
+page SMS: Clicking on button (OBS) next to a station will select it. Each station has 2 or 3 lines
+          of text, that details pylon mounted, rack/rail mounted on pylon and weapon(s) mounted on
+          the rack or directly on the pylon. J-S will jettison the selected station. Not all payload
+          types can be jettisoned, same for racks. If CAT shows greater than 1, then you should set
+          the flightcontrols to CAT III on left panel and opposite.
+page FCR: In CRM, SEA and GM if the display is sensor of interest (SOI) you can move a cursor around
+          to find and lock hostiles. To make a display SOI, use Shift-arrow keys on keyboard.
+          To move the cursor use arrow keys and 'l' or set that in the joystick config dialog.
+          CZ: Cursor zero will reset cursor position.
+          Note: The radar when started up goes through a Built In Test (BIT) for a couple of minutes.
+          
+          (CRM/SEA): B-scope radar display. Horizontal is relative bearing to targets,
+          vertical is distance.
           A4: How much azimuth the radar shall cover, A4 is max (120 degs).
           8B: How much vertically the radar shall cover, 8B is max (120 degs).
-          Notice: The radar when started up goes through a Built In Test (BIT) for a couple of minutes.
-page HSD: Horizontal situation display. Shows route and radar echoes.
-          DEP: Depressed ownship in display
-          CEN: Centered ownship in display
-          CPL: Range will follow (approx) radar distance
+          A small plus sign when something is lock is the point to aim for if you want to intercept
+          the locked target. At the top are two numbers. Target speed (kt) and closing speed (kt).
+          
+          (GM): C-scope radar display. Will only show ground targets and terrain. Might be heavy on
+          your framerate.
+          SD/HD terrain detail. HD will scan slower.
+          GAIN switch on the MFD mount can be used to adjust how terrain is color mapped onto
+          the display.
+page HSD: Horizontal situation display. Shows route, wingmen and designated radar target.
+          DEP: Depressed ownship in display.
+          CEN: Centered ownship in display.
+          CPL: Range will follow (approx) radar distance.
           DCPL: Range can be set independently of radar range by clicking on the up/down arrows.
 page WPN: Details about current selected weapon(s).
 
-DED
-The DED is the small display above the right color MFD.
-Clicking on certain buttons on the ICP (the panel below the HUD) can bring up different pages.
-The DED can also be brought up on the HUD in the controlpanel.
-
-HACK Timer
-The DED has a built-in stopwatch. To access this, use key 6 ("TIME") on the ICP to select TIME page.
-Then, use the up arrow on the ICP to start the HACK timer. The up arrow toggles the timer while the down arrow resets it.
+The Sensor of Interest (SOI) is selected using DMS (Shift + Arrow Key). DMS Forward selects HUD
+as SOI. DMS Aft selects the left MFD as SOI, and further DMS Aft toggles between left / right MFD.
+The SOI may then be manipulated with the cursor (only enabled for FCR as of now).
 
 AUTOPILOT
-Notice that even when A/P is enabled you can control the airplane with the stick. When you let go of stick A/P will recalculate from current situation.
+Notice that even when A/P is enabled you can control the airplane with the stick. When you let go
+of stick A/P will recalculate from current situation.
 
 The controls:
 Pitch: ALT HOLD: Hold current altitude
@@ -156,54 +204,97 @@ Pitch: ALT HOLD: Hold current altitude
 Roll:  HDG SEL:  Hold current heading
        ATT HOLD: Hold current roll attitude
        STRG SEL: Follow route from Route Manager
+       
+For more detailed help, click the ? button in top right corner of the autopilot dialog in the menu.
 
 AIMING THE CANNON
-Once you have selected cannon and masterarm switch is ON, a timer will start and after around 2 seconds you will get the EEGS funnel on the HUD.
-EEGS stands for Enhanced Envelope Gun Sight. Keep you targets wingtips so that they touch the sides of the funnel, and keep your aircraft attitude movement stable for around 1 second, then fire a burst. This will give you the best chance of hitting. The sides of the funnel is computed for a 35ft wingspan, so if you are aiming at a larger or smaller aircraft you need to compensate for that.
+Once you have selected cannon and masterarm switch is ON, a timer will start and after around two
+seconds you will get the Enhanced Envelope Gun Sight (EEGS) funnel on the HUD. Keep you targets
+wingtips so that they touch the sides of the funnel, and keep your aircraft attitude movement stable
+for around one second, then fire a burst. This will give you the best chance of hitting.
+The sides of the funnel is computed for a 35 ft wingspan, so if you are aiming at a larger or
+smaller aircraft you need to compensate for that. The 35 ft wingspan can be changed on the MAN page
+in the DED.
 
 RELEASING ORDNANCE
-First mount some armament.
-Secondly make sure masterarm is enabled.
-Thirdly select the arm. (use 'w' key or click buttons 'A-A' or 'A-G' under HUD)
-Fourthly make sure target is selected (key 'y')
+First mount some armament. Secondly make sure masterarm (key 'm') is enabled. Thirdly select the
+arm (use 'w' key or click buttons 'A-A' or 'A-G' under the HUD). Fourthly make sure a target is
+selected (key 'y'), unless you want to use unguided bombs, then a target is not needed.
+
 Bombs
   For GBU-12 and GBU-24 make sure laser is armed.
   Release mode can be set with WPN page, options are CCIP and CCRP.
-    CCRP: When getting close to target a vertical line will appear in HUD. Align flight path indicator on the line, when a small horizontal line on that line starts dropping down and reach another line then its time to release (key 'e' or 'trigger').
-    CCIP: A line from FPM to a round pipper is displayed when close enough to ground, manouvrer the pipper to be over the target and press trigger.
+    CCRP: When getting close to target a vertical line will appear in the HUD. Align flight path 
+      indicator on the line, when a small horizontal line on that line starts dropping down and
+      reaches another line then it's time to release (key 'e' or 'trigger').
+    CCIP: A line from FPM to a round pipper is displayed when close enough to the ground, manouver
+      the pipper to be over the target and release (key 'e' or 'trigger').
   SGL or PAIR mode can be set on WPN MFD page.
-    SGL: single release
+    SGL: single release.
     PAIR: double release.
   RP (ripple release) can be set on WPN MFD page.
-    The number is how many subseqential releases should be done.
-    If RP is greater than 1, then you can also in same MFD page set distance in Feet between ripples.
-AIM120/AIM9
-  The trigger can be held for 2 second to fire it without a lock in MADDOG mode, where it will lock onto anyone it sees.
+    The number is how many subsequent releases should be done.
+    If RP is greater than 1, then you can also in same MFD page set distance in ft between releases.
+
 AGM-154A JSOW (Joint Standoff Weapon)
-   Long range guided glide bomb. Can be launched by either inputing GPS coordinates in the "Program Target" dialog for a desired spot or against a TOO (Target Of Opportunity) with a targeting pod lock (see section below). Operational range varies from 70NM max with GPS to about 34NM max with TGP lock.
+   Long range guided glide bomb. Can be launched by either inputing GPS coordinates in the
+   "Program Target" dialog for a desired spot, or against a TOO (Target Of Opportunity) with a
+   targeting pod (TGP) lock (see section below). Operational range varies from 70 NM max with GPS
+   to about 34 NM max with TGP lock.
    Optimal release envelopes are as follows:
-        GPS lock - Release at or above FL420 with speed at or above M1.6 (70NM and closer).
-        TGP lock (TOO) - Release at or above FL340 with speed at or above M1.3 (34NM and closer).
+     GPS lock - Release at or above FL420 with speed at or above M1.6 (70 NM and closer).
+     TGP lock (TOO) - Release at or above FL340 with speed at or above M1.3 (34 NM and closer).
 
-TARGETPODS
-On the MFDs you can select TGP. This however only works if you have mounted one of the target-pods.
-Per default the target pod fixed looking at some offset from you aircraft bore attitude. However if you select something with the radar it will if the distance is not too large look at that. You will notice in the TGP view on the MFD that it is not very accurate. So after selecting a radar target, use the TGP buttons (LEFT;RIGHT;UP;DOWN) to aim better and click LOCK. This will now make released ordnance hit more accurate. There is also keys to ZOOM and switch from narrow to wide field of view.
+A/A missiles
+These are AIM-7 (Fox 1), AIM-120 (Fox 3) and AIM-9 (Fox 2).
+The Fox 1 AIM-7 require you to keep the target locked during its entire flight.
+For the Fox 3 AIM-120 the same goes except for the last 10 NM, where it goes into fire'n'forget mode.
+AIM-9 is fire and forget its whole flight. It can also be launched visually in BORE mode when radar
+is off. Just place the target within the big cross on the HUD and it will get an IR lock.
+This missle has greater range if it is cooled, that can be done on the MFD WPN page. Coolant fluid
+don't last for longer than 30 mins though, so do this some minutes before you expect a "Within
+Visual Range" fight.
+The trigger can be held for 2 seconds to fire AIM-9 or AIM-120 without a lock in MADDOG mode, where
+it will lock onto anyone it sees in its flightpath.
 
-CONTROLPANEL and CONFIG
-You can find these in the FG menu (the last item).
-They contains various aircraft and experience settings.
-Once the cockpit controls is full 3D the menu aircraft settings will be removed.
+TARGETING POD
+On the MFDs you can select TGP. This however only works if you have mounted one of the targeting
+pods and are airborne. Per default the targeting pod is fixed looking at some offset from your
+aircraft bore attitude. However if you select something with the radar it will, if the distance is
+not too large, look at that. You will notice in the TGP view on the MFD that a radar lock is not
+very accurate. So after selecting a radar target, use the TGP buttons (LEFT, RIGHT, UP, DOWN) or
+the cursor controls (Arrow keys) to aim better and click LOCK or 'l'. This will now make released
+ordnance hit more accurate. There is also keys to ZOOM and switch from narrow to wide field of view.
+
+CONTROLPANELS and CONFIG
+You can find these in the FG menu (the last item). They contain various aircraft and experience
+settings. Note that not all 3D controls are present in the control panels!
+
+MISSION PREPLANNING
+This menu item will bring up a dialog where you can load in threat circles for the MFD HSD page,
+input bullseye position, load lines for HSD (using GPX or fligthgears own route fileformat).
+You can also load kneeboards. For example kneeboards, look in the f16 folder under Kneeboards.
+
+MANUAL START
+See Menu->Help->Aircraft Checklists
+
+NOTE ON STARTING
+Starting the engine requires pressure in one or both JFS accumulators. If they are both drained then
+you must go into menu configuration and recharge them if on the ground. If in the air keep gliding
+with the EPU on and wait for the accumulators to be charged. Remember the EPU has only hydrazine for
+10 minutes of operation if gliding too slow for significant windmilling.
 
 BITCHING BETTY
-Thats the nickname of the annunciation voice. :)
+That's the nickname of the annunciation voice. :) The control INTERCOM on left panel controls her
+volume.
 
 CARA ALOW
-Combined Altitude Radar Altimeter Automatic LOw altitude Warning.
-Is radar altitude warning from Betty when get below that. The CARA must have view of the ground for this to work.
+Combined Altitude Radar Altimeter Automatic LOw altitude Warning. This is a radar altitude warning
+from Betty when you get below that. The CARA must have view of the ground for this to work.
 
 MSL FLOOR
-Mean Sea Level altitude advisory Floor.
-Is when you want Betty to remind you to switch to/from QNH/standard baro pressure.
+Mean Sea Level altitude advisory Floor. This is when you want Betty to remind you to switch to/from
+QNH/standard baro pressure.
 
 HUD VELOCITY
 Can switch the HUD scale to show true or ground speed.
@@ -217,48 +308,183 @@ Can switch off the ATTitude lines and/or the Flight Path Marker.
 HUD ALT
 RDR sets the altimeter scale to CARA whenever that is available.
 BARO sets the altimeter scale to barometric.
-AUTO sets the altimeter scale to CARA at low AGL and barometric at higher AGL.
+AUTO sets the altimeter scale to thermometer CARA at low AGL and barometric at higher AGL.
 
 HUD DED
 Will copy the DED panel onto the HUD.
+
+HUD PFL
+Will copy the Pilot Fault List Display onto the HUD.
+
+DRIFT C/O
+Drift cutoff will force flightpath marker and pitch ladder to stay in the middle of the HUD.
 
 BINGO
 The fuel level where the system and Betty will warn that the fuel is low.
 
 EMER STORES JETTISON
-This will jettison all A/G ordnance and other payloads like fuel tanks that is not A/A. It will NOT jettison wingtips.
+This will jettison all A/G ordnance and other payloads like fuel tanks that is not A/A. It will NOT
+jettison wingtips.
 
 ALT FLAPS
-This will deploy flaps as if the gears were extended. They will still retract at higher speeds though.
+When set to extend this will deploy flaps as if the gear were extended. They will still retract at
+higher speeds though.
 
 HSI
-Is located at the bottom of the center console.
-This can be used to navigate steerpoints if the knob to the left is in NAV mode.
-It can be used to navigate TACAN if the knob is in TCN mode.
+The Horizontal Situation Indicator is located at the bottom of the center console in some blocks.
+Its mode is controlled by the knob on the left. In NAV mode this can be used to navigate steerpoints.
+In TCN mode to navigate TACAN, and in ILS mode it can be used to fly an ILS approach.
+
+EHSI
+The Electronic Horizontal Situation Indicator is located at the bottom of the center console in some
+blocks. Use the M button to switch modes. This can be used to navigate steerpoints if it is in NAV
+mode. It can be used to navigate TACAN if it is in TCN mode, and VOR/ADF if in VOR mode. PLS stand
+for Precision Landing System and in that mode it can use ILS. 
+It stores the CRS between modes, PLS modes have their own and non-PLS modes have their own stored.
+The CRS knob (radial course) and the HDG knob (captains bars) can be turned faster by holding in
+Shift. It works mostly as a normal HSI. When the course deviation CDI is invalid it will be a
+segmented line, and a red bar will appear. If the distance indicator is invalid then a red bar will
+appear above the NM distance.
 
 DOGFIGHT SCENARIO
 Bring this up in the menu.
 Select a difficulty.
 Aim with the '+' bore symbol in HUD on a enemy for 1 second to score a kill.
 Friendly fire is off.
-Its meant to be use without using missiles to simulate gun fight, but if you find it hard we recommend you practice on setting 0 with AIM-9.
+Its meant to be use without using missiles to simulate gun fight, but if you find it hard
+we recommend you practice on setting 0 with AIM-9.
 Some of the settings will give you a wingman.
 To view the AI flying, switch to missile view and click the arrows in lower left corner.
+
+DED
+The DED is the small display above the right color MFD or just right of the HUD. The ICP (the panel
+below the HUD) can control the DED. The DED can also be brought up on the HUD, set the switch on the
+left side of the flightstick to DED DATA.
+
+FLIPPING PAGES
+There are three ways of accessing pages. The COMM pages can be accessed by depressing COM1 or COM2 
+on the ICP. Similar for IFF page. The primary set of pages is accessed only from the CNI page. That
+is the default DED page. To return to the CNI page no matter which page you are on, flip the RTN-SEQ
+switch to RTN. Notice that the numpad on the ICP has also letters on them, these are the pages that
+button will show when pressed when on the CNI page. The secondary set of pages is accessed by
+depressing LIST on the ICP. Then click the number on the ICP numpad to select the page wanted.
+On the secondary page list depressing '0' brings up another miscellaneous page list.
+
+INPUTING VALUES
+On some pages, values can be input. A value that is selected and ready to be changed is shown with
+'*' symbols around it, for example '*1256*'. If a page has more than one value that can be input,
+click on the small up-arrow just above the RTN-SEQ switch to go to the next input.
+If the input are letters, use '0' on ICP to cycle the value. If the input are numbers, use the
+numpad on the ICP to enter the number, then depress ENTR.
+
+HACK Timer on TIME page
+The DED has a built-in stopwatch. To access this, use key 6 ("TIME") on the ICP to select TIME page.
+Then use the up arrow button on the ICP to start the HACK timer. The up arrow buton toggles the
+timer while the down arrow button resets it.
+
+M3 and M4 on IFF page
+M3 is the civilian transponder. M4 is a military IFF transponder. Other modes are not implemented.
+
+Laser code on LASR page
+The page can be found on the miscellaneous page list. The laser code must be from 1111 to 2888.
+
+DOGFIGHT MODE
+Using the FCR cursor to lock up an hostile while you are in turnfight can be next to impossible. So
+you can press 'd' to toggle dogfight mode.
+
+THIS WILL HAPPEN WHEN ENTERING DOGFIGHT MODE
+  Radar will be force limited to 10 NM range and 20x30 degs field for locking (CRM mode, ACM sub-
+    mode). It can still track up to 120 degs.
+  Radar will autolock anything it sees. You can use key 'y' to select next target if more than one
+    is in that small field.
+  Radar will be set to standby, and have to be enabled if desired by using the 'r' key.
+  HUD will be decluttered and orange peel arc will become visible.
+  Cannon will be selected, but you can still cycle to other weapons.
+  Countermeasure page will be displayed on the DED.
+  Left MFD will be set to FCR page.
+  Right MFD will be set to WPN page.
+
+THIS WILL HAPPEN WHEN EXITING DOGFIGHT MODE
+  Radar field and range will be set back to what it was when entering dogfight mode.
+
+ORANGE PEEL
+This is an arc showing in the HUD. The filled portion of the arc will always point towards the 
+ground and the ends are parallel to the horizon. When you pitch up the arc will cover less degrees,
+and pitch down it will cover more degrees. So full circle means you are headed straight down.
+
+FAILURES, FAULTS, CAUTIONS and WARNINGS
+
+MAIN INDICATORS
+The caution panel is located just forward of the flightstick on right side of the cockpit. The Pilot
+Fault List Display (PFLD) is located just above the caution panel. The electrical caution panel is
+located close to the throttle.
+Once a problem is detected the following indications may appear:
+  WARN displayed blinking in the center of the HUD.
+  Intercom voice saying 'Warning', 'Caution' or certain tones.
+  Various warning lights on right eyebrow right of HUD.
+
+MAIN CONTROLS
+To acknowledge a caution indication the following controls are available:
+Master caution light/button, located on left eyebrow (just left of the HUD on the edge of the panel).
+F-ACK button, located on left eyebrow (just left of the HUD on the edge of the panel).
+CAUTION RESET, located on the electrical caution panel.
+WARN RESET switch, located on the ICP (the panel below the HUD).
+Menu Configuration panel repair button.
+
+Main/Elec Caution system
+The caution panel lights can light up at failures or various misconfigurations. When that happens,
+the master caution pushbutton will also light up. Press it to acknowledge the caution, except for
+ELEC SYS. It has its own caution reset button and master caution will continue to be lit until that
+is pressed.
+
+Fault system
+On the pilot fault list top it will either say nothing, ENG, AV or FLCS. Or more at once. ENG is
+engines fault(s), FLCS is flight control system fault(s), AV is aviation faults. It will show up to
+three faults at the same time, and if they are really serious a warning will be issued on the HUD
+and by voice (to stop that click WARN RESET switch).
+To acknowledge the three shown faults, click F-ACK. If there are more than three faults, it will
+then show the next three and so on. If all faults have been acknowledged and F-ACK is clicked again,
+all faults will return to the display. The display content can also be shown on the HUD. To do that
+set the switch on the left side of the flightstick to PFL. The fault system right now is seperate
+from the Caution system. In the real jet they have some overlap, but that is not modeled.
+
+Failures in general
+Failures typically happens when hitting something at speed or being hit by a weapon with weapon
+discharge enabled. Failures can be repaired in the configuration menu, unless weapon discharge is
+enabled, in which case it can only be done while resting on gear on the ground. Selecting an airport
+from the menu to relocate to will also repair the aircraft.
+
+Specific fault: Gears
+If the gears will not extend due to missing hydraulic pressure, pull the ALT GEAR handle, to extend.
+The ALT GEAR handle is located a little infront of the throttle on left side. This can only be done
+once.
+
+Specific caution: STORES CONFIG
+This means your CAT setting is not aligned to what payload you have mounted. Consult the MFD, page
+SMS, to check what it should be.
+
+Specific caution: SEAT NOT ARMED
+On the left side of the chair you can arm the ejection seat.
 
 VARIANTS
 - F-16E Block 60         : 19000/32500 lbf. Large horz. tail (mod. aero data).
 - F-16CJ Block 52        : 17800/29000 lbf. Large horz. tail (mod. aero data).
 - F-16CJ Block 50        : 17000/29000 lbf. Large horz. tail (mod. aero data).
-- F-16CG Block 42        : 14670/23830 lbf. Large horz. tail (mod. aero data).
-- F-16CG Block 40        : 18330/28620 lbf. Large horz. tail (mod. aero data).
+- F-16CM Block 42 (CCIP) : 14670/23830 lbf. Large horz. tail (mod. aero data).
+- F-16CM Block 40 (CCIP) : 18330/28620 lbf. Large horz. tail (mod. aero data).
 - F-16C Block 32         : 14670/23830 lbf. Large horz. tail (mod. aero data).
 - F-16C Block 30         : 18330/28620 lbf. Large horz. tail (mod. aero data).
 - F-16AM Block 20 (MLU)  : 14670/23830 lbf. Small horz. tail (auth. aero data).
-- F-16A  Block 10        : 14670/23830 lbf. Small horz. tail (auth. aero data). Engine has auth. power curves.
-- YF-16                  : 14670/23830 lbf. The FBW in this variant has no spin, nose-slide or deep stall protection. Small horz. tail (auth. aero data). Engine has auth. power curves.
-- F-16 Simplified        : 17800/29000 lbf. The FBW can be switched off. Uses custom FBW made for FG and aero data is simplified version of the other other versions.
+- F-16A Block 10         : 14670/23830 lbf. Small horz. tail (auth. aero data). 
+                           Engine has authentic power curves.
+- YF-16                  : 14670/23830 lbf. Small horz. tail (auth. aero data). 
+                           Engine has authentic power curves. The FBW in this variant has no spin,
+                           nose-slide or deep stall protection.
+- F-16 Simplified        : 17800/29000 lbf. 
+                           The FBW can be switched off. Uses custom FBW made for FG and aero data.
+                           Is simplified version of the other versions.
 
-The engines vary not only in thrust, but also in fuel consumption. Furthermore they differ in empty weight.
-Different Blocks have different sets of cockpit panels, MFDs and HSI/EHSI, alongside other changes.
-Variants will also have different sets of liveries that can be selected.
-There is also small changes in tail for different variants with and without braking chute.
+The engines vary not only in thrust, but also in fuel consumption. Furthermore they differ in empty
+weight. Different Blocks have different sets of cockpit panels, MFDs and HSI/EHSI, alongside other
+changes. Variants will also have different sets of liveries that can be selected. There is also
+small changes in tail for different variants with and without braking chute.
