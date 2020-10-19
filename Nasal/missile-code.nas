@@ -281,7 +281,7 @@ var AIM = {
         m.unique_id = fox2_unique_id;
 		m.nodeString = "payload/armament/"~m.type_lc~"/";
 		
-		if (me.tacview_support) {
+		if (m.tacview_support) {
 			m.tacviewID = 11000 + int(math.floor(rand()*10000));
 		}
 
