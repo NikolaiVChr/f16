@@ -216,17 +216,17 @@ var cannon_load = func {
     }
 }
 
-# Counter-Air patrol (AIM-9, AIM-120, AIM-7)
-var a2a_cpatrol = func {
+# Air Defense (AIM-9, AIM-7)
+var a2a_adf = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.aim9WT);
-        pylon2.loadSet(pylonSets.aim120);
+        pylon2.loadSet(pylonSets.aim9);
         pylon3.loadSet(pylonSets.aim7);
         pylon4.loadSet(pylonSets.empty);
         pylon5.loadSet(pylonSets.fuel30);
         pylon6.loadSet(pylonSets.empty);
         pylon7.loadSet(pylonSets.aim7);
-        pylon8.loadSet(pylonSets.aim120);
+        pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim9WT);
         pylon10.loadSet(pylonSets.empty);
         pylon11.loadSet(pylonSets.empty);
