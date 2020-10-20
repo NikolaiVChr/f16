@@ -30,7 +30,7 @@ var geoBridgedTransmitter = emesary.Transmitter.new("geoOutgoingBridge");
 var geooutgoingBridge = emesary_mp_bridge.OutgoingMPBridge.new("f16mp.geo",geoRoutedNotifications, 18, "", geoBridgedTransmitter);
 
 # bridge should be tuned to be around 90% of the packet size full.
-
+geooutgoingBridge.TransmitFrequencySeconds = 0.75;
 geooutgoingBridge.MPStringMaxLen = 150;
 emesary_mp_bridge.IncomingMPBridge.startMPBridge(geoRoutedNotifications, 18, emesary.GlobalTransmitter);
 
@@ -39,7 +39,7 @@ emesary_mp_bridge.IncomingMPBridge.startMPBridge(geoRoutedNotifications, 18, eme
 var hitRoutedNotifications = [notifications.ArmamentNotification.new(),notifications.StaticNotification.new()];
 var hitBridgedTransmitter = emesary.Transmitter.new("armamentNotificationBridge");
 var hitoutgoingBridge = emesary_mp_bridge.OutgoingMPBridge.new("f16mp.hit",hitRoutedNotifications, 19, "", hitBridgedTransmitter);
-hitoutgoingBridge.TransmitFrequencySeconds = 2;
+hitoutgoingBridge.TransmitFrequencySeconds = 1.5;
 hitoutgoingBridge.MPStringMaxLen = 180;
 emesary_mp_bridge.IncomingMPBridge.startMPBridge(hitRoutedNotifications, 19, emesary.GlobalTransmitter);
 
