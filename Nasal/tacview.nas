@@ -84,7 +84,7 @@ var mainloop = func() {
     writeMyPlanePos();
     writeMyPlaneAttributes();
     foreach (var cx; awg_9.completeList) {
-        if (cx["propNode"] != nil and cx.propNode.getName() == "multiplayer" and getprop("sim/multiplay/txhost") == "mpserver.opredflag.com") {
+        if (cx["propNode"] != nil and cx.propNode.getName() == "multiplayer" and getprop("sim/multiplay/txhost") != "mpserver.opredflag.com") {
             continue;
         }
         var color = ",Color=Blue";
@@ -112,36 +112,36 @@ var mainloop = func() {
             
             write(cx.tacobj.tacviewID ~ ",T=");
             if (lon != cx.tacobj.lon) {
-                write(lon);
+                write(sprintf("%.6f",lon));
                 cx.tacobj.lon = lon;
             }
             write("|");
             if (lat != cx.tacobj.lat) {
-                write(lat);
+                write(sprintf("%.6f",lat));
                 cx.tacobj.lat = lat;
             }
             write("|");
             if (alt != cx.tacobj.alt) {
-                write(alt);
+                write(sprintf("%.1f",alt));
                 cx.tacobj.alt = alt;
             }
             write("|");
             if (roll != cx.tacobj.roll) {
-                write(roll);
+                write(sprintf("%.1f",roll));
                 cx.tacobj.roll = roll;
             }
             write("|");
             if (pitch != cx.tacobj.pitch) {
-                write(pitch);
+                write(sprintf("%.1f",pitch));
                 cx.tacobj.pitch = pitch;
             }
             write("|");
             if (heading != cx.tacobj.heading) {
-                write(heading);
+                write(sprintf("%.1f",heading));
                 cx.tacobj.heading = heading;
             }
             if (speed != cx.tacobj.speed) {
-                write(",TAS="~speed);
+                write(sprintf(",TAS=%.1f",speed));
                 cx.tacobj.speed = speed;
             }
             write("\n");
