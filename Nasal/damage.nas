@@ -445,16 +445,34 @@ var DamageRecipient =
                         var crater_model = getprop("payload/armament/models") ~ "crater_small.xml";
                         var static = geo.put_model(crater_model, notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.Heading);
                         if (static != nil) {
-                            statics["obj_"~notification.UniqueIdentity] = [static, notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.Heading];
+                            statics["obj_"~notification.UniqueIdentity] = [static, notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.Heading, notification.SecondaryKind];
                             #static is a PropertyNode inside /models
                         }
                     } elsif (notification.SecondaryKind == 1) {
                         var crater_model = getprop("payload/armament/models") ~ "crater_big.xml";
                         var static = geo.put_model(crater_model, notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.Heading);
                         if (static != nil) {
-                            statics["obj_"~notification.UniqueIdentity] = [static, notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.Heading];
+                            statics["obj_"~notification.UniqueIdentity] = [static, notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.Heading, notification.SecondaryKind];
+                        }
+                    } elsif (notification.SecondaryKind == 2) {
+                        var crater_model = getprop("payload/armament/models") ~ "bomb_hit_smoke.xml";
+                        var static = geo.put_model(crater_model, notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.Heading);
+                        if (static != nil) {
+                            statics["obj_"~notification.UniqueIdentity] = [static, notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.Heading, notification.SecondaryKind];
                         }
                     }
+                } elsif (notification.Kind == REQUEST_ALL and getprop("payload/armament/enable-craters") == 1) {
+                  # someone has requested all statics, lets send them out
+                  var kes = keys(statics);
+                  printf(notification.Callsign~" has requested all statics, sending %d to him/her.",size(kes));
+                  foreach(ke;kes) {
+                    var static = statics[ke];
+                    var msg = notifications.StaticNotification.new("stat", num(substr(ke,4)), CREATE, static[5]);
+                    msg.Position.set_latlon(static[1],static[2],static[3]);
+                    msg.IsDistinct = 0;
+                    msg.Heading = static[4];
+                    notifications.hitBridgedTransmitter.NotifyAll(msg);
+                  }
                 }
                 return emesary.Transmitter.ReceiptStatus_OK;
             }
@@ -468,9 +486,36 @@ var DamageRecipient =
 var CREATE = 1;
 var MOVE = 2;
 var DESTROY = 3;
-var IMPACT = 3;
+var IMPACT = 4;
+var REQUEST_ALL = 5;
 
 var statics = {};
+
+
+setlistener("sim/multiplay/online", func {
+  check_for_Request();
+},0,0);
+
+setlistener("payload/armament/msg", func {
+  check_for_Request();
+},0,0);
+
+var last_check = -65;
+
+var check_for_Request = func {
+  if (getprop("payload/armament/enable-craters") == 1 and getprop("sim/multiplay/online") and getprop("payload/armament/msg") and systime()-last_check > 60) {
+    last_check = systime();
+    var msg = notifications.StaticNotification.new("stat", int(rand()*15000000), REQUEST_ALL, 0);
+    msg.IsDistinct = 0;
+    msg.Heading = 0;
+    notifications.hitBridgedTransmitter.NotifyAll(msg);
+    #print("REQUEST_ALL");
+  } else {
+    #print("REQUEST_NONE");
+  }
+}
+
+settimer(check_for_Request, 60);# for aircraft like mig21 that starts with damage enabled
 
 damage_recipient = DamageRecipient.new("DamageRecipient");
 emesary.GlobalTransmitter.Register(damage_recipient);

@@ -155,8 +155,8 @@ var StaticNotification =
         var new_class = emesary.Notification.new("StaticNotification", _ident, StaticNotification_Id);
                                                        # _ident -> "stat"
         new_class.UniqueIdentity = _unique;            # random from 0 to 15000000 that identifies each static object
-        new_class.Kind = _kind;                        # 1=create, 2=move, 3=delete
-        new_class.SecondaryKind = _secondary_kind;     # 0 = small crater, 1 = big crater
+        new_class.Kind = _kind;                        # 1=create, 2=move, 3=delete, 4=request_all
+        new_class.SecondaryKind = _secondary_kind;     # 0 = small crater, 1 = big crater, 2 = smoke
         new_class.IsDistinct = 0;                      # keep it 0
         new_class.Callsign = nil;                      # populated automatically by the incoming bridge when routed
         
