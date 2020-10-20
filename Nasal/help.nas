@@ -197,14 +197,28 @@ gui.showHelpDialog = func(path, toggle=0) {
         w11.set("key", "esc");
         w11.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-11'))");
         #tabbar.addChild("empty").set("stretch", 1);
-      
+
         var w12 = tabbar.addChild("button");
         w12.set("pref-width", 64);
         w12.set("pref-height", 16);
-        w12.set("legend", "Variants");
+        w12.set("legend", "Tests");
         w12.set("default", 1);
         w12.set("key", "esc");
         w12.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-12'))");
+        tabbar.addChild("empty").set("stretch", 1);
+
+        tabbar = dialog[name].addChild("group");
+        tabbar.set("layout", "hbox");
+        tabbar.set("default-padding", 3);
+        tabbar.addChild("empty").set("stretch", 1);
+
+        var w13 = tabbar.addChild("button");
+        w13.set("pref-width", 64);
+        w13.set("pref-height", 16);
+        w13.set("legend", "Variants");
+        w13.set("default", 1);
+        w13.set("key", "esc");
+        w13.setBinding("nasal", "setprop('sim/help/text', getprop('sim/help/text-13'))");
         tabbar.addChild("empty").set("stretch", 1);
     }
  
