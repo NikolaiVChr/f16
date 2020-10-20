@@ -21,6 +21,7 @@ var is_fleet = 0;  # Is really 7 ships, 3 of which has offensive missiles.
 var rwr_to_screen=0; # for aircraft that do not yet have proper RWR
 var tacview_supported=1; # For aircraft with tacview support
 var m28_auto=0; # only used by automats
+var mlw_max=2.25; # 
 ##########################################################################################################################
 
 var TRUE  = 1;
@@ -261,8 +262,21 @@ var DamageRecipient =
                 var bearing = ownPos.course_to(notification.Position);
                 var radarOn = bits.test(notification.Flags, 0);
                 var thrustOn = bits.test(notification.Flags, 1);
+                var typ = id2warhead[notification.SecondaryKind-21];
                 
-                
+                if (tacview_supported and getprop("sim/multiplay/txhost") == "mpserver.opredflag.com") {
+                  if (tacview.starttime) {
+                    var typp = typ[4]=="pilot"?"Parachutist":typ[4];
+                    var extra = typp=="Parachutist"?"|0|0|0":"";
+                    var extra2 = typ[2]==0?",Type=Weapon+Missile":",Type=Weapon+Bomb";
+                    extra2 = typp=="Parachutist"?"":extra2;
+                    var color = radarOn?",Color=Red":",Color=Yellow";
+                    thread.lock(tacview.mutexWrite);
+                    tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
+                    tacview.write((21000-notification.UniqueIdentity)~",T="~notification.Position.lon()~"|"~notification.Position.lat()~"|"~notification.Position.alt()~extra~",Name="~typp~color~extra2~"\n");
+                    thread.unlock(tacview.mutexWrite);
+                  }
+                }
                 
                 # Missile launch warning:
                 if (thrustOn) {
@@ -270,7 +284,7 @@ var DamageRecipient =
                   if (launch == nil or elapsed - launch > 300) {
                     launch = elapsed;
                     launched[notification.Callsign~notification.UniqueIdentity] = launch;
-                    if (notification.Position.direct_distance_to(ownPos)*M2NM < 5) {
+                    if (notification.Position.direct_distance_to(ownPos)*M2NM < mlw_max) {
                       setprop("payload/armament/MLW-bearing", bearing);
                       setprop("payload/armament/MLW-launcher", notification.Callsign);
                       setprop("payload/armament/MLW-count", getprop("payload/armament/MLW-count")+1);
@@ -561,16 +575,26 @@ setlistener("/sim/signals/reinit", repairYasim);
 hp_f = [hp_max,hp_max,hp_max,hp_max,hp_max,hp_max,hp_max];
 
 var fail_fleet_systems = func (probability, factor) {
-  var no = 7;
-  while (no > 6 or hp_f[no] < 0) {
-    no = int(rand()*7);
-    if (hp_f[no] < 0) {
-      if (rand() > 0.9) {
-        armament.defeatSpamFilter("You shot one of our already sinking ships, you are just mean.");
-        hp_f[no] -= factor * probability*(0.75+rand()*0.25);# from 75 to 100% damage
-        print("HP["~no~"]: " ~ hp_f[no] ~ "/" ~ hp_max);
-        return;
-      }
+  
+  var sinking_ships = (hp_f[0]<0) + (hp_f[1]<0) + (hp_f[2]<0) + (hp_f[3]<0) + (hp_f[4]<0) + (hp_f[5]<0) + (hp_f[6]<0);
+  var hit_sinking = 0;
+  if (sinking_ships == 0) {
+    hit_sinking = 0;
+  } elsif (sinking_ships == 7) {
+    hit_sinking = 1;
+  } else {
+    hit_sinking = rand()<0.10;
+  }
+  if (hit_sinking) {
+    armament.defeatSpamFilter("You shot one of our already sinking ships, you are just mean.");
+    return;
+  }
+ 
+  var no = 0;
+  
+  for (no=0; no < 7; no+=1) {
+    if (hp_f[no] > 0) {
+      break;
     }
   }
   hp_f[no] -= factor * probability*(0.75+rand()*0.25);# from 75 to 100% damage
