@@ -3894,7 +3894,7 @@ var AIM = {
         notifications.hitBridgedTransmitter.NotifyAll(msg);
 #print("fox2.nas: transmit crater");
 #f14.debugRecipient.Receive(msg);
-		damage.statics["obj_"~uni] = [static, lat,lon,alt, heading];
+		damage.statics["obj_"~uni] = [static, lat,lon,alt, heading,big];
 	},
 		
 	notifyHit: func (RelativeAltitude, Distance, callsign, Bearing, reason, typeID, type, self) {
@@ -4967,7 +4967,10 @@ var AIM = {
 		append(AIM.timerQueue, [me, func {
 		 	if (info[1] == nil) {
 				#print ("Building hit..smoking");
-		       	geo.put_model(getprop("payload/armament/models") ~ "bomb_hit_smoke.xml", me.coord.lat(), me.coord.lon());
+		       	var static = geo.put_model(getprop("payload/armament/models") ~ "bomb_hit_smoke.xml", me.coord.lat(), me.coord.lon());
+		       	if(getprop("payload/armament/msg") and info[0] != nil) {
+					append(AIM.timerQueue, [AIM, AIM.notifyCrater, [me.coord.lat(), me.coord.lon(), info[0], 2, 0, static], 0]);
+				}
 		    } else if ((info[1] != nil) and (info[1].solid == 1)) {
 		        var crater_model = "";
 		        var siz = -1;
