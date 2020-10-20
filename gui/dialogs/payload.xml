@@ -132,7 +132,7 @@
         <text>
             <row>4</row>
             <col>0</col>
-            <label>Counter-Air Patrol</label>
+            <label>Air Defense</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>4</row>
@@ -140,7 +140,7 @@
             <legend>Mount</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_cpatrol();</script>
+                <script>pylons.a2a_adf();</script>
             </binding>
         </button>
 

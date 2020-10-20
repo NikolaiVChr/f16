@@ -65484,7 +65484,7 @@ OBJECT poly
 name "GROWTH.000"
 data 7
 HMD.001
-texture "/Users/utente/Desktop/GitHub/Aircrafts/f16/Models/Cockpit/Textures/Block-panels/blck10-panels1.png"
+texture "../Textures/Block-panels/blck10-panels1.png"
 crease 30.000000
 numvert 4
 -0.02319 0.00555 0.26772

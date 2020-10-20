@@ -346,6 +346,37 @@
         </action>
     </animation>
 
+    <!--animation>
+        <type>knob</type>
+        <object-name>deddata-switch</object-name>
+        <property>f16/avionics/hud-ded</property>
+        <factor>45</factor>
+        <offset-deg>-45</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.125163</x-m><y-m>0.439937</y-m><z-m>0.030422</z-m>
+        </center>
+        <axis>
+            <x>0</x><y>-1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hud-ded</property>
+                <factor>2</factor>
+                <min>0</min>
+                <max>2</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+        <condition>
+            <less-than-equals>
+                <property>sim/variant-id</property>
+                <value>3</value>
+            </less-than-equals>
+        </condition>
+    </animation-->
+
     <animation>
         <type>knob</type>
         <object-name>deddata-switch</object-name>
@@ -369,6 +400,23 @@
                 <wrap>false</wrap>
             </binding>
         </action>
+        <!--condition>
+            <greater-than-equals>
+                <property>sim/variant-id</property>
+                <value>4</value>
+            </greater-than-equals>
+        </condition-->
+    </animation>
+
+    <animation>
+        <object-name>GROWTH.KY58</object-name>
+        <type>select</type>
+        <condition>
+            <less-than>
+                <property>sim/variant-id</property>
+                <value>2</value>
+            </less-than>
+        </condition>
     </animation>
 
     <animation>
