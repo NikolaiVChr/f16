@@ -3859,7 +3859,7 @@ var AIM = {
 	},
 	
 	log: func (str) {
-		damageLog.push(str);
+		damage.damageLog.push(str);
 	},
 	
 	notifyInFlight: func (lat,lon,alt,rdr,typeID,typ,unique,thrust,callsign, heading, pitch, speed, is_deleted=0) {
