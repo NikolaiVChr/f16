@@ -1570,6 +1570,9 @@ value. 18000=standard US transition altitude -->
         <controls_f16>
             <file>Aircraft/f16/Nasal/controls_f16.nas</file>
         </controls_f16>
+        <help>
+            <file>Aircraft/f16/Nasal/help.nas</file>
+        </help>
     </nasal>
     
 </PropertyList>
