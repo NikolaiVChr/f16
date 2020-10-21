@@ -53,7 +53,7 @@
 			<command>nasal</command>
 			<script><![CDATA[
 				var str = "";
-				if (getprop("velocities/groundspeed-kt") < 1) {
+				if (getprop("velocities/groundspeed-kt") < 10) {
 				  var buffer = damage.damageLog.get_buffer();
 				  
 				  foreach(entry; buffer) {
