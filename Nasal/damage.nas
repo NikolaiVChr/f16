@@ -151,6 +151,7 @@ var warheads = {
     "S48N6":             [92,  330.00,0,0],# 48N6 from S-300pmu
     "pilot":             [93,    0.00,1,0],# ejected pilot
     "BETAB-500ShP":      [94, 1160.00,1,0],
+    "Flare":             [95,    0.00,0,0],
 };
 
 var id2warhead = [];
@@ -240,15 +241,29 @@ var DamageRecipient =
                 if (notification.Kind == 3) {
                   return emesary.Transmitter.ReceiptStatus_OK;
                 }
-                if (bits.test(notification.Flags, 1) or notification.SecondaryKind-21 == 93) {
+                
+                var elapsed = getprop("sim/time/elapsed-sec");
+                var ownPos = geo.aircraft_position();
+                var bearing = ownPos.course_to(notification.Position);
+                var radarOn = bits.test(notification.Flags, 0);
+                var thrustOn = bits.test(notification.Flags, 1);
+                var index = notification.SecondaryKind-21;
+                var typ = id2warhead[index];
+                
+                if (bits.test(notification.Flags, 1) or index == 93 or index == 95) {
                   # visualize missile smoke trail
                   if (notification.Kind == MOVE) {
                     var smoke = 1;
-                    if (notification.SecondaryKind-21 == 93) {
+                    if (index == 93) {
                       smoke = 0;
+                    } elsif (index == 95) {
+                      smoke = 3;
+                      if (notification.Position.distance_to(ownPos)*M2NM > 5) {
+                        return emesary.Transmitter.ReceiptStatus_OK;
+                      }
                     } else {
                       foreach(var black;heavy_smoke) {
-                        if (notification.SecondaryKind-21 == black) {
+                        if (index == black) {
                           smoke = 2;
                           break;
                         }
@@ -257,19 +272,16 @@ var DamageRecipient =
                     dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [systime(), notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.u_fps, notification.Heading, notification.Pitch,smoke];
                   } elsif (notification.Kind == DESTROY and dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] != nil) {
                     dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [0, 0, 0, 0, 0, 0, 0, 0];
-                  }
-                  return emesary.Transmitter.ReceiptStatus_OK;
+                  }                  
                 } else {
                   # not so efficient:
                   #dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [0, 0, 0, 0, 0, 0, 0, 0];
                 }
                 
-                var elapsed = getprop("sim/time/elapsed-sec");
-                var ownPos = geo.aircraft_position();
-                var bearing = ownPos.course_to(notification.Position);
-                var radarOn = bits.test(notification.Flags, 0);
-                var thrustOn = bits.test(notification.Flags, 1);
-                var typ = id2warhead[notification.SecondaryKind-21];
+                if (index == 95) {
+                  # consider showing it in tacview
+                  return emesary.Transmitter.ReceiptStatus_OK;
+                }
                 
                 if (tacview_supported and getprop("sim/multiplay/txhost") == "mpserver.opredflag.com") {
                   if (tacview.starttime) {
@@ -703,6 +715,8 @@ var reckon_create = func (kee, dyna, stime) {
     path = getprop("payload/armament/models") ~ "light_smoke.xml";
   } elsif (dyna[7] ==2) {
     path = getprop("payload/armament/models") ~ "heavy_smoke.xml";
+  } elsif (dyna[7] ==3) {
+    path = getprop("payload/armament/models") ~ "the-flare.xml";
   }
   var static = ModelManager.new(path, dyna[1],dyna[2],dyna[3]*M2FT,dyna[5],dyna[6],dyna[7]==0);#path,lat,lon,alt_m,heading,pitch
   if (static != nil) {
@@ -710,7 +724,7 @@ var reckon_create = func (kee, dyna, stime) {
     var entry = [kee, stime, static, dyna[4]];
     return entry;
   }
-  print("NOT FOUND: "~path);
+  print("NOT FOUND (Emesary): "~path);
   return nil;
 }
 
@@ -740,6 +754,60 @@ var reckon_delete = func (entry) {
 }
 
 dynamic_loop();
+
+var last_prop = 0;
+var last_release = 0;
+var flare_list = [];
+
+var animate_flare = func {
+  var stime = systime();
+  # old flares
+  var old_flares = [];
+  foreach(flare; flare_list) {
+    if (stime-flare[0] > 8) {
+      #print("Remove flare "~flare[5]);
+      continue;
+    }
+    flare = [flare[0], flare[1], flare[2], (flare[4]<50)?(flare[4]+0.75*9.83*0.5):(flare[4]-0.75*3), math.max(0,flare[3]-0.75*3), flare[5]];
+    flare[1].apply_course_distance(flare[2], 0.75*flare[4]);
+    flare[1].set_alt(flare[1].alt()-0.75*flare[3]);
+    
+    var msg = notifications.ArmamentInFlightNotification.new("mfly", flare[5], MOVE, 21+95);
+    msg.Flags = 0;
+    msg.Position = flare[1];
+    msg.IsDistinct = 1;
+    msg.RemoteCallsign = "";
+    msg.UniqueIndex = flare[5];
+    msg.Pitch = 0;
+    msg.Heading = 0;
+    msg.u_fps = 0;
+    notifications.geoBridgedTransmitter.NotifyAll(msg);
+    #print("Update flare "~flare[5]);
+    append(old_flares, flare);
+  }
+  flare_list = old_flares;
+  # new flare
+  var prop = getprop("rotors/main/blade[3]/flap-deg");
+  if (prop != nil and prop != 0 and prop != last_prop and stime-last_release > 1)  {
+    var flare = [stime, geo.aircraft_position(), getprop("orientation/heading-deg"),FT2M*getprop("velocities/speed-down-fps"),FT2M*math.sqrt(getprop("velocities/speed-north-fps")*getprop("velocities/speed-north-fps")+getprop("velocities/speed-east-fps")*getprop("velocities/speed-east-fps")), int(rand()*200)-100];
+    append(flare_list, flare);
+    var msg = notifications.ArmamentInFlightNotification.new("mfly", flare[5], MOVE, 21+95);
+    msg.Flags = 0;
+    msg.Position = flare[1];
+    msg.IsDistinct = 1;
+    msg.RemoteCallsign = "";
+    msg.UniqueIndex = flare[5];
+    msg.Pitch = 0;
+    msg.Heading = 0;
+    msg.u_fps = 0;
+    notifications.geoBridgedTransmitter.NotifyAll(msg);
+    last_release = stime;
+    #print("Adding flare "~flare[5]);
+  }
+  last_prop = prop;
+  settimer(animate_flare, 0.75);
+}
+animate_flare();
 
 setlistener("sim/multiplay/online", func {
   check_for_Request();
@@ -1054,7 +1122,7 @@ var printDamageLog = func {
 #TODO testing:
 
 var writeDamageLog = func {
-  var output_file = getprop("/sim/fg-home") ~ "/Export/emesary-war-combat-log.txt";
+  var output_file = getprop("/sim/fg-home") ~ "/Export/combat-log.txt";
   var buffer = damageLog.get_buffer();
   var str = "\n";
   foreach(entry; buffer) {
@@ -1069,10 +1137,9 @@ var writeDamageLog = func {
   file = io.open(output_file, "a");
   io.write(file, str);
   io.close(file);
-  settimer(writeDamageLog, 600);
 }
 
-settimer(writeDamageLog, 600);
+setlistener("sim/signals/exit", writeDamageLog, 0, 0);
 
 #screen.property_display.add("payload/armament/MAW-bearing");
 #screen.property_display.add("payload/armament/MAW-active");
