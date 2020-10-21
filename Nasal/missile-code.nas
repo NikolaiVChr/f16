@@ -682,7 +682,8 @@ var AIM = {
 		# The more variables here instead of declared locally, the better for performance.
 		# Due to garbage collector.
 		#
-
+		
+		m.noti_time = 1.5;#2xsend freq of emesary notifications
 
 		m.density_alt_diff   = 0;
 		m.max_g_current      = m.max_g;
@@ -2495,7 +2496,6 @@ var AIM = {
 			}
 		}
 		
-		me.noti_time = 1;
 		#if (me.dist_curr != nil and me.dist_curr != 0 and me.dist_curr*M2NM < 1) {
 		#	me.noti_time = 0.35;
 		#}
@@ -2503,7 +2503,7 @@ var AIM = {
             # notify in flight using Emesary.
             me.last_noti = me.life_time;
         	thread.lock(mutexTimer);
-			append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [me.latN.getValue(), me.lonN.getValue(), me.altN.getValue()*FT2M,me.guidance=="radar",me.typeID,me.type,me.unique_id,me.thrust_lbf>0,me.free or me.lostLOS or me.tooLowSpeed or me.flareLock or me.chaffLock?"":me.callsign, me.hdg, me.pitch, me.new_speed_fps], 0]);
+			append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [me.latN.getValue(), me.lonN.getValue(), me.altN.getValue()*FT2M,me.guidance=="radar",me.typeID,me.type,me.unique_id,me.thrust_lbf>0,(me.free or me.lostLOS or me.tooLowSpeed or me.flareLock or me.chaffLock)?"":me.callsign, me.hdg, me.pitch, me.new_speed_fps], 0]);
 			thread.unlock(mutexTimer);
         }
 
