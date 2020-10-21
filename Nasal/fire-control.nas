@@ -676,6 +676,7 @@ var FireControl = {
 					
 					me.gunTriggerTime = getprop("sim/time/elapsed-sec");
 				}
+				damage.damageLog.push("Cannon fired");
 				me.triggerTime = 0;
 			}
 		} elsif (getprop("controls/armament/trigger") < 1) {
