@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+    <path>parachutist.ac</path>
+    <offsets>
+      <x-m> 0.5</x-m>
+      <y-m> 0.000</y-m>
+      <z-m> 1.50</z-m>
+    </offsets>
+
+</PropertyList>

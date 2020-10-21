@@ -156,6 +156,7 @@ var warheads = {
 var id2warhead = [];
 var launched = {};# callsign: elapsed-sec
 var approached = {};# callsign: uniqueID
+var heavy_smoke = [61,62,92];
 
 var k = keys(warheads);
 
@@ -239,23 +240,29 @@ var DamageRecipient =
                 if (notification.Kind == 3) {
                   return emesary.Transmitter.ReceiptStatus_OK;
                 }
-                if (notification.SecondaryKind-21 == 93) {
-                  # ejection seat
+                if (bits.test(notification.Flags, 1) or notification.SecondaryKind-21 == 93) {
+                  # visualize missile smoke trail
+                  if (notification.Kind == MOVE) {
+                    var smoke = 1;
+                    if (notification.SecondaryKind-21 == 93) {
+                      smoke = 0;
+                    } else {
+                      foreach(var black;heavy_smoke) {
+                        if (notification.SecondaryKind-21 == black) {
+                          smoke = 2;
+                          break;
+                        }
+                      }
+                    }
+                    dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [systime(), notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.u_fps, notification.Heading, notification.Pitch,smoke];
+                  } elsif (notification.Kind == DESTROY and dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] != nil) {
+                    dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [0, 0, 0, 0, 0, 0, 0, 0];
+                  }
                   return emesary.Transmitter.ReceiptStatus_OK;
+                } else {
+                  # not so efficient:
+                  #dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [0, 0, 0, 0, 0, 0, 0, 0];
                 }
-                # craters now use their own notifiction
-                #if (notification.SecondaryKind == 200) {
-                #  if (notification.RemoteCallsign == "1" and getprop("payload/armament/enable-craters") == 1) {
-                #    var crater_model = getprop("payload/armament/models") ~ "crater_small.xml";
-                #    geo.put_model(crater_model, notification.Position.lat(), notification.Position.lon(), notification.Position.alt());
-                #  } elsif (notification.RemoteCallsign == "2" and getprop("payload/armament/enable-craters") == 1) {
-                #    var crater_model = getprop("payload/armament/models") ~ "crater_big.xml";
-                #    geo.put_model(crater_model, notification.Position.lat(), notification.Position.lon(), notification.Position.alt());
-                #  }
-                #  return emesary.Transmitter.ReceiptStatus_OK;
-                #}
-                
-                
                 
                 var elapsed = getprop("sim/time/elapsed-sec");
                 var ownPos = geo.aircraft_position();
@@ -404,7 +411,7 @@ var DamageRecipient =
 
                             var failed = fail_systems(probability, hp_max);
                             var percent = 100 * probability;
-                            printf("Took %.1f%% damage from %s missile at %0.1f meters. %s systems was hit", percent,type,dist,failed);
+                            printf("Took %.1f%% damage from %s at %0.1f meters. %s systems was hit", percent,type,dist,failed);
                             nearby_explosion();
                             
                             ####
@@ -490,7 +497,249 @@ var IMPACT = 4;
 var REQUEST_ALL = 5;
 
 var statics = {};
+var dynamics = {};
+var dynamic3d = [];
+var deadreckon_updatetime = 0.1;# 1/15 of missile send rate
+var time_before_delete = 2.5;# time since last notification before deleting
 
+var dynamic_loop = func {
+  var new_dynamic3d = [];
+  var stime = systime();
+  foreach (dynamic3d_entry ; dynamic3d) {
+    var dyna = dynamics[dynamic3d_entry[0]];
+    if (dyna != nil and stime-dyna[0] > time_before_delete) {
+      # OLD, DELETE ALL
+      delete(dynamics, dynamic3d_entry[0]);
+      reckon_delete(dynamic3d_entry);
+    } elsif (dyna != nil and dynamic3d_entry[1] < dyna[0]) {
+      # REFRESH INCOMING
+      # update pos and attitude
+      append(new_dynamic3d, reckon_update(dyna, dynamic3d_entry, stime));
+      delete(dynamics, dynamic3d_entry[0]);
+    } elsif (dyna == nil and stime-dynamic3d_entry[1] < time_before_delete) {
+      # BETWEEN UPDATES
+      # deadreckon
+      reckon_move(dynamic3d_entry, stime);
+      append(new_dynamic3d, dynamic3d_entry);
+    } else {
+      # OLD, DELETE ALL
+      reckon_delete(dynamic3d_entry);
+    }
+  }
+  dynamic3d = new_dynamic3d;
+  var kees = keys(dynamics);
+  foreach(kee; kees) {
+    var dyna = dynamics[kee];
+    if (stime-dyna[0] < time_before_delete) {
+      var new_entry = reckon_create(kee, dyna, stime);
+      if (new_entry !=nil) {
+        append(dynamic3d, new_entry);
+      }
+    }
+    delete(dynamics, kee);
+  }
+  settimer(dynamic_loop,deadreckon_updatetime);
+}
+
+var ModelManager = {
+    new: func (path,lat,lon,alt_ft,heading,pitch,para) {
+        var m = {parents:[ModelManager]};
+        var n = props.globals.getNode("models", 1);
+        var i = 0;
+        for (i = 0; 1==1; i += 1) {
+          if (n.getChild("model", i, 0) == nil) {
+            break;
+          }
+        }
+        m.model = n.getChild("model", i, 1);
+        
+        n = props.globals.getNode("sim/emesary-models", 1);
+        for (i = 0; 1==1; i += 1) {
+          if (n.getChild("dynamic", i, 0) == nil) {
+            break;
+          }
+        }
+        m.ai = n.getChild("dynamic", i, 1);
+        
+        m.model.getNode("path", 1).setValue(path);
+        
+        # Create the AI position and orientation properties.
+        m.lat   = m.ai.getNode("position/latitude-deg", 1);
+        m.lon   = m.ai.getNode("position/longitude-deg", 1);
+        m.alt_ft= m.ai.getNode("position/altitude-ft", 1);
+        m.heading= m.ai.getNode("orientation/true-heading-deg", 1);
+        m.pitch = m.ai.getNode("orientation/pitch-deg", 1);
+        m.roll  = m.ai.getNode("orientation/roll-deg", 1);
+        
+        m.lat.setDoubleValue(lat);
+        m.lon.setDoubleValue(lon);
+        m.alt_ft.setDoubleValue(alt_ft);
+        m.heading.setDoubleValue(heading);
+        m.pitch.setDoubleValue(para?0:pitch);
+        m.roll.setDoubleValue(0);
+        
+        m.vLat = lat;
+        m.vLon = lon;
+        m.vAlt_ft = alt_ft;
+        m.vHeading = heading;
+        m.vPitch = pitch;
+        #m.vRoll = 0;
+        m.pLat = m.vLat;
+        m.pLon = m.vLon;
+        m.pAlt_ft = m.vAlt_ft;
+        m.pHeading = m.vHeading;
+        m.pPitch = m.vPitch;
+        m.delayTime = 0;
+        
+        m.model.getNode("latitude-deg-prop", 1).setValue(m.lat.getPath());
+        m.model.getNode("longitude-deg-prop", 1).setValue(m.lon.getPath());
+        m.model.getNode("elevation-ft-prop", 1).setValue(m.alt_ft.getPath());
+        m.model.getNode("heading-deg-prop", 1).setValue(m.heading.getPath());
+        m.model.getNode("pitch-deg-prop", 1).setValue(m.pitch.getPath());
+        m.model.getNode("roll-deg-prop", 1).setValue(m.roll.getPath());
+        
+        m.coord = geo.Coord.new();
+        m.uBody_fps = 0;
+        me.last = [geo.Coord.new().set_latlon(lat,lon,alt_ft*FT2M).xyz(),systime()];
+        me.past = me.last;
+        me.frametime = 0;
+        
+        m.loadNode = m.model.getNode("load", 1);
+        
+        return m;
+    },
+    moveRealtime: func (uBody_fps, dt, factor) {
+        if (me.uBody_fps == 0) me.uBody_fps = uBody_fps;
+        me.slant_ft   = (me.uBody_fps < uBody_fps?me.uBody_fps:uBody_fps) * dt * factor;
+        me.uBody_fps  = uBody_fps;
+        me.alt_dist   = me.slant_ft*math.sin(me.vPitch*D2R);
+        me.horiz_dist = me.slant_ft*math.cos(me.vPitch*D2R);
+        
+        me.coord.set_latlon(me.vLat, me.vLon, (me.vAlt_ft+me.alt_dist) * FT2M);
+        
+        me.coord = me.coord.apply_course_distance(me.vHeading, me.horiz_dist*FT2M);
+                
+        me.latlon = me.coord.latlon();
+        
+        me.vLat    = me.latlon[0];
+        me.vLon    = me.latlon[1];
+        me.vAlt_ft = me.latlon[2]*M2FT;
+        
+        me.lat.setDoubleValue(me.vLat);
+        me.lon.setDoubleValue(me.vLon);
+        me.alt_ft.setDoubleValue(me.vAlt_ft);
+    },
+    moveDelayed: func (dt) {
+        if (me.frametime==0) return;
+        me.place();
+        me.xyz = me.interpolate(me.past[0],me.last[0], me.delayTime/me.frametime);
+        #print("% "~100*me.delayTime/me.frametime);
+        me.coord.set_xyz(me.xyz[0],me.xyz[1],me.xyz[2]);
+        me.latlon = me.coord.latlon();
+        me.lat.setDoubleValue(me.latlon[0]);
+        me.lon.setDoubleValue(me.latlon[1]);
+        me.alt_ft.setDoubleValue(me.latlon[2]*M2FT);
+        me.delayTime += dt;
+    },
+    interpolate: func (start, end, fraction) {
+        me.xx = (start[0]*(1-fraction)+end[0]*fraction);
+        me.yy = (start[1]*(1-fraction)+end[1]*fraction);
+        me.zz = (start[2]*(1-fraction)+end[2]*fraction);
+        return [me.xx,me.yy,me.zz];
+    },
+    place: func {
+      if (me.loadNode.getValue()==nil) {
+        me.loadNode.setBoolValue(1);
+        me.loadNode.setBoolValue(0);
+      }
+    },
+    translateDelayed: func (lat,lon,alt_ft,heading,pitch, para) {
+        me.heading.setDoubleValue(heading);
+        me.pitch.setDoubleValue(para?0:pitch);
+        
+        me.pLat = me.vLat;
+        me.pLon = me.vLon;
+        me.pAlt_ft = me.vAlt_ft;
+        me.pHeading = me.vHeading;
+        me.pPitch = me.vPitch;
+        
+        me.vLat = lat;
+        me.vLon = lon;
+        me.vAlt_ft = alt_ft;
+        me.vHeading = heading;
+        me.vPitch = pitch;
+        #me.vRoll = 0;
+        
+        me.past = me.last;
+        me.last = [geo.Coord.new().set_latlon(lat,lon,alt_ft*FT2M).xyz(),systime()];
+        me.delayTime = 0;
+        me.frametime = me.last[1]-me.past[1];
+    },
+    translateRealtime: func (lat,lon,alt_ft,heading,pitch, para) {
+        me.lat.setDoubleValue(lat);
+        me.lon.setDoubleValue(lon);
+        me.alt_ft.setDoubleValue(alt_ft);
+        me.heading.setDoubleValue(heading);
+        me.pitch.setDoubleValue(para?0:pitch);
+        #me.roll.setDoubleValue(0);
+                
+        me.vLat = lat;
+        me.vLon = lon;
+        me.vAlt_ft = alt_ft;
+        me.vHeading = heading;
+        me.vPitch = pitch;
+        #me.vRoll = 0;
+    },
+    del: func {
+      me.model.remove();
+      me.ai.remove();
+    },
+};
+
+var reckon_create = func (kee, dyna, stime) {
+  #print("ES create "~kee);
+  var path = getprop("payload/armament/models") ~ "parachutist.xml";
+  if (dyna[7]==1) {
+    path = getprop("payload/armament/models") ~ "light_smoke.xml";
+  } elsif (dyna[7] ==2) {
+    path = getprop("payload/armament/models") ~ "heavy_smoke.xml";
+  }
+  var static = ModelManager.new(path, dyna[1],dyna[2],dyna[3]*M2FT,dyna[5],dyna[6],dyna[7]==0);#path,lat,lon,alt_m,heading,pitch
+  if (static != nil) {
+    #static.place();
+    var entry = [kee, stime, static, dyna[4]];
+    return entry;
+  }
+  print("NOT FOUND: "~path);
+  return nil;
+}
+
+var reckon_update = func (dyna, entry, stime) {
+  #print("ES update");
+  var static = entry[2];
+  var dynami2 = [entry[0], stime, static, dyna[4]];
+  # translate
+  static.translateDelayed(dyna[1],dyna[2],dyna[3]*M2FT,dyna[5],dyna[6],dyna[7]==0);
+  static.moveDelayed(deadreckon_updatetime);
+  return dynami2;
+}
+
+var reckon_move = func (entry, stime) {
+  #print("ES move");
+  var static = entry[2];
+  var time_then = entry[1];
+  var time_now = stime;
+  # dead-reckon
+  #static.moveRealtime(entry[3] , time_now-time_then, entry[4]?0.25:0.5);
+  static.moveDelayed(deadreckon_updatetime);#time_now-time_then);
+}
+
+var reckon_delete = func (entry) {
+  #print("ES delete");
+  entry[2].del();
+}
+
+dynamic_loop();
 
 setlistener("sim/multiplay/online", func {
   check_for_Request();
