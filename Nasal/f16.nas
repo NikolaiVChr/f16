@@ -1017,7 +1017,14 @@ var hitmessage = func(typeOrd) {
   #print("inside hitmessage");
   var phrase = typeOrd ~ " hit: " ~ hit_callsign ~ ": " ~ hits_count ~ " hits";
   if (getprop("payload/armament/msg") == TRUE) {
-    armament.defeatSpamFilter(phrase);
+    #armament.defeatSpamFilter(phrase);
+    var msg = notifications.ArmamentNotification.new("mhit", 4, -1*(damage.shells[typeOrd][0]+1));
+            msg.RelativeAltitude = 0;
+            msg.Bearing = 0;
+            msg.Distance = hits_count;
+            msg.RemoteCallsign = hit_callsign;
+    notifications.hitBridgedTransmitter.NotifyAll(msg);
+    damage.damageLog.push("You hit "~hit_callsign~" with "~typeOrd~", "~hits_count~" times.");
   } else {
     setprop("/sim/messages/atc", phrase);
   }
