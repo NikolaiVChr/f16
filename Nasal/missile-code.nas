@@ -2786,7 +2786,7 @@ var AIM = {
             }
         }
         if (me.limitGs == TRUE and me.myG > me.max_g_current/2) {
-        	# Save the high performance manouving for later
+        	# Save the high performance maneuvering for later
         	me.track_signal_e = me.track_signal_e /2;
         }
 	},
@@ -5056,9 +5056,10 @@ var AIM = {
 		me.vector_now_x = s_fps;
 		me.vector_now_y = 0;
 
-		# subtract the vectors from each other
-		me.dv = math.sqrt((me.vector_now_x - me.vector_next_x)*(me.vector_now_x - me.vector_next_x)+(me.vector_now_y - me.vector_next_y)*(me.vector_now_y - me.vector_next_y));
-
+		# Delta velocity: subtract the vectors from each other and get the magnitude
+		me.dv = me.myMath.minus([me.vector_now_x,me.vector_now_y,0],[me.vector_next_x,me.vector_next_y,0]);
+		me.dv = me.myMath.magnitudeVector(me.dv);
+		
 		# calculate g-force
 		# dv/dt=a
 		me.g = (me.dv/dt) / g_fps;
@@ -5067,6 +5068,8 @@ var AIM = {
 	},
 
     max_G_Rotation: func(steering_e_deg, steering_h_deg, s_fps, dt, gMax) {
+    	# The missile desires to rotate a certain amount
+    	# This function will limit that steering to prevent it from exceeding the max G it should be able to do at this air density
 		me.guess = 1;
 		me.coef = 1;
 		me.lastgoodguess = 1;
