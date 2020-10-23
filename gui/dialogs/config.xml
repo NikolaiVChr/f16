@@ -266,7 +266,7 @@
      <halign>left</halign>
      <property>f16/effects/dirt-fac</property>
      <min>0</min>
-     <max>0.75</max>
+     <max>0.45</max>
      <step>0.05</step>
      <live>true</live>
      <vertical>false</vertical>
@@ -291,7 +291,7 @@
   <slider>
      <halign>left</halign>
      <property>f16/effects/rust-mag</property>
-     <min>0</min>
+     <min>0.1</min>
      <max>1</max>
      <step>0.05</step>
      <live>true</live>

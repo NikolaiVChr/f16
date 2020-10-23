@@ -80,7 +80,7 @@ Modifications author: Nikolai V. Chr.
         
         <dirt-enabled type="int">0</dirt-enabled>
         <dirt-factor type="float">0.0</dirt-factor>
-        <dirt-color type="vec3d">0.3 0.6 0.65</dirt-color>
+        <dirt-color type="vec3d">0.5 0.5 0.5</dirt-color>
         <texture n="4">
             <image>Aircraft/f16/Models/Effects/fuselage/dirt.png</image>
             <type>2d</type>
