@@ -5,7 +5,7 @@
 ####### License: GPL 2.0
 #######
 ####### Authors:
-#######  Alexis Bory, Fabien Barbier, Richard Harrison, Justin Nicholson, Nikolai V. Chr.
+#######  Alexis Bory, Fabien Barbier, Richard Harrison, Justin Nicholson, Nikolai V. Chr., Axel Paccalin
 ####### 
 ####### The file vector.nas needs to be available in namespace 'vector'.
 #######
