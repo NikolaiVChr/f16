@@ -7,7 +7,7 @@
 #
 
 
-############################ Config ######################################################################################
+############################ Config ########################################################################################
 var full_damage_dist_m = 1.25;# Can vary from aircraft to aircraft depending on how many failure modes it has.
                            # Many modes (like Viggen) ought to have lower number like zero.
                            # Few modes (like F-14) ought to have larger number such as 3.
@@ -22,7 +22,8 @@ var rwr_to_screen=0; # for aircraft that do not yet have proper RWR
 var tacview_supported=1; # For aircraft with tacview support
 var m28_auto=0; # only used by automats
 var mlw_max=2.25; # 
-##########################################################################################################################
+var auto_flare_caller = 0; # If damage.nas should detect flare releases, or if function is called from somewhere in aircraft
+############################################################################################################################
 
 var TRUE  = 1;
 var FALSE = 0;
@@ -218,7 +219,7 @@ var DamageRecipient =
 # This can replace MP chat for damage notifications 
 # and allow missile visibility globally (i.e. all suitable equipped models) have the possibility
 # to receive notifications from all other suitably equipped models.
-            if (notification.NotificationType == "ArmamentInFlightNotification") {
+            if (notification.NotificationType == "ArmamentInFlightNotification" or notification.NotificationType == "ObjectInFlightNotification") {
 #                print("recv(d1): ",notification.NotificationType, " ", notification.Ident, 
 #                      " UniqueIdentity=",notification.UniqueIdentity,
 #                      " Kind=",notification.Kind,
@@ -781,12 +782,10 @@ var flare_list = [];
 var flare_update_time = 0.75;
 var flare_duration = 8;
 var flare_terminal_speed = 50;#m/s
-var flare_horiz_deacc = 7;#m/s^2
 
 var animate_flare = func {
   # This detects own flares and send out notifications about their position every 0.75s
   if (!getprop("payload/armament/msg")) {
-    settimer(animate_flare, flare_update_time);
     return;
   }
   var stime = systime();
@@ -801,7 +800,7 @@ var animate_flare = func {
     flare[1].apply_course_distance(flare[2], flare_update_time*flare[4]);
     flare[1].set_alt(flare[1].alt()-0.75*flare[3]);
     
-    var msg = notifications.ArmamentInFlightNotification.new("mfly", flare[5], MOVE, 21+95);
+    var msg = notifications.ObjectInFlightNotification.new("ffly", flare[5], MOVE, 21+95);
     msg.Flags = 0;
     msg.Position = flare[1];
     msg.IsDistinct = 1;
@@ -810,13 +809,23 @@ var animate_flare = func {
     msg.Pitch = 0;
     msg.Heading = 0;
     msg.u_fps = 0;
-    notifications.geoBridgedTransmitter.NotifyAll(msg);
+    notifications.objectBridgedTransmitter.NotifyAll(msg);
     #print("Update flare "~flare[5]);
     append(old_flares, flare);
   }
   flare_list = old_flares;
+  
+  if(auto_flare_caller) {
+    auto_flare_released();
+  }
+}
+var flaretimer = maketimer(flare_update_time, animate_flare);
+flaretimer.start();
+
+var auto_flare_released = func {
   # new flare
   var prop = getprop("rotors/main/blade[3]/flap-deg");
+  var stime = systime();
   if (prop != nil and prop != 0 and prop != last_prop and stime-last_release > 1)  {
     var flare =[stime,
                 geo.aircraft_position(),
@@ -825,7 +834,7 @@ var animate_flare = func {
                 FT2M*math.sqrt(getprop("velocities/speed-north-fps")*getprop("velocities/speed-north-fps")+getprop("velocities/speed-east-fps")*getprop("velocities/speed-east-fps")),
                 int(rand()*200)-100];
     append(flare_list, flare);
-    var msg = notifications.ArmamentInFlightNotification.new("mfly", flare[5], MOVE, 21+95);
+    var msg = notifications.ObjectInFlightNotification.new("ffly", flare[5], MOVE, 21+95);
     msg.Flags = 0;
     msg.Position = flare[1];
     msg.IsDistinct = 1;
@@ -834,14 +843,35 @@ var animate_flare = func {
     msg.Pitch = 0;
     msg.Heading = 0;
     msg.u_fps = 0;
-    notifications.geoBridgedTransmitter.NotifyAll(msg);
+    notifications.objectBridgedTransmitter.NotifyAll(msg);
     last_release = stime;
     #print("Adding flare "~flare[5]);
   }
   last_prop = prop;
-  settimer(animate_flare, flare_update_time);
 }
-animate_flare();
+
+var flare_released = func {
+  # new flare
+    var stime = systime();
+    var flare =[stime,
+                geo.aircraft_position(),
+                getprop("orientation/heading-deg"),
+                FT2M*getprop("velocities/speed-down-fps"),
+                FT2M*math.sqrt(getprop("velocities/speed-north-fps")*getprop("velocities/speed-north-fps")+getprop("velocities/speed-east-fps")*getprop("velocities/speed-east-fps")),
+                int(rand()*200)-100];
+    append(flare_list, flare);
+    var msg = notifications.ObjectInFlightNotification.new("ffly", flare[5], MOVE, 21+95);
+    msg.Flags = 0;
+    msg.Position = flare[1];
+    msg.IsDistinct = 1;
+    msg.RemoteCallsign = "";
+    msg.UniqueIndex = flare[5];
+    msg.Pitch = 0;
+    msg.Heading = 0;
+    msg.u_fps = 0;
+    notifications.objectBridgedTransmitter.NotifyAll(msg);
+    #print("Adding flare "~flare[5]);
+}
 
 #==================================================================
 #                       Notification for getting craters

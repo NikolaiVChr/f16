@@ -248,6 +248,7 @@ var loop_flare = func {
             setprop("ai/submodels/submodel[0]/flare-release", TRUE);
             setprop("rotors/main/blade[3]/flap-deg", flareStart);
             setprop("rotors/main/blade[3]/position-deg", flareStart);
+            damage.flare_released();
         } else {
             # play the sound for out of flares
             setprop("ai/submodels/submodel[0]/flare-release-out-snd", TRUE);
