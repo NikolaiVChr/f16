@@ -3754,7 +3754,7 @@ var AIM = {
 			# (use xyz coord to avoid the strange behaviour of comparing geo coordinates).
 			for (var i=me.crc_frames_look_back; i >= 0; i-=1){
 				me.crc_coord[i]   = (i != 0) ? me.crc_coord[i-1]   : me.coord.xyz();
-				me.crc_t_coord[i] = (i != 0) ? me.crc_t_coord[i-1] : (me.inacc?me.Tgt.get_Coord(0):me.t_coord.xyz());
+				me.crc_t_coord[i] = (i != 0) ? me.crc_t_coord[i-1] : (me.inacc?me.Tgt.get_Coord(0).xyz():me.t_coord.xyz());
 				me.crc_range[i]   = (i != 0) ? me.crc_range[i-1]   : me.myMath.magnitudeVector(
 																		 me.myMath.minus(me.crc_coord[0], 
 																						 me.crc_t_coord[0]));
