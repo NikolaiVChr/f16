@@ -3,18 +3,26 @@
 <PropertyList>
 
  <path>Models/Effects/procedural_light.ac</path>
+ 
+ <animation>
+  <type>scale</type>
+  <object-name>procedural_light</object-name>
+  <x-offset>1000</x-offset>
+  <y-offset>1000</y-offset>
+  <z-offset>1000</z-offset>
+ </animation>
 
   <effect>
     <inherits-from>Effects/procedural-light</inherits-from>
     <object-name>procedural_light</object-name>
     <parameters>
         <light_color_base_r type="float">0.84</light_color_base_r>
-        <light_color_base_g type="float">0.75</light_color_base_g>
-        <light_color_base_b type="float">0.62</light_color_base_b>
+        <light_color_base_g type="float">0.55</light_color_base_g>
+        <light_color_base_b type="float">0.42</light_color_base_b>
         <light_color_center_r type="float">1.0</light_color_center_r>
-        <light_color_center_g type="float">1.0</light_color_center_g>
-        <light_color_center_b type="float">1.0</light_color_center_b>
-
+        <light_color_center_g type="float">0.9</light_color_center_g>
+        <light_color_center_b type="float">0.7</light_color_center_b>
+        <intensity_scale type="float">1.0</intensity_scale>
         <is_directional type="bool">false</is_directional>
         <is_strobe type="bool">false</is_strobe>
         <outer_gain type="float">1</outer_gain>
@@ -25,9 +33,9 @@
     <type>dist-scale</type>
     <object-name>procedural_light</object-name>
     <interpolation>
-      <entry><ind>0</ind><dep>7.5</dep></entry>
-      <entry><ind>3750</ind><dep>15.0</dep></entry>
-      <entry><ind>7500</ind><dep>30.0</dep></entry>
+      <entry><ind>0</ind><dep>0.0075</dep></entry>
+      <entry><ind>3750</ind><dep>0.5</dep></entry>
+      <entry><ind>10000</ind><dep>1</dep></entry>
     </interpolation>
   </animation>
 
