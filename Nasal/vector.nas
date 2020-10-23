@@ -1,8 +1,8 @@
 var Math = {
     #
-    # Author: Nikolai V. Chr.
+    # Authors: Nikolai V. Chr, Axel Paccalin.
     #
-    # Version 1.9
+    # Version 1.93
     #
     # When doing euler coords. to cartesian: +x = forw, +y = left,  +z = up.
     # FG struct. coords:                     +x = back, +y = right, +z = up.
@@ -244,6 +244,12 @@ var Math = {
     projVectorOnPlane: func (planeNormal, vector) {
       return me.minus(vector, me.product(me.dotProduct(vector,planeNormal)/math.pow(me.magnitudeVector(planeNormal),2), planeNormal));
     },
+    
+    # unary - vector
+    opposite: func (v){
+        # author: Paccalin
+        return [-v[0], -v[1], -v[2]];
+    },
 
     # vector a - vector b
     minus: func (a, b) {
@@ -281,6 +287,29 @@ var Math = {
         var L2 = [coordL2.x(), coordL2.y(), coordL2.z()];
         
         return me.magnitudeVector(me.crossProduct(me.minus(L2,L1), me.minus(L1,P)))/me.magnitudeVector(me.minus(L2,L1));
+    },
+    
+    # Orthogonal projection of a vector `vec` onto another `ref` !!can throw an exception if the referential vector is null!!.
+    orthogonalProjection: func(vec, ref){
+      # author: Paccalin
+      me.op_refMag = me.magnitudeVector(ref);
+      if(me.op_refMag == 0)
+        die("Orthogonal projection on a null vector referential");
+
+      return me.dotProduct(vec, ref) / me.op_refMag;
+    },
+
+    # Time at which two particles will be at shortest distance !!can throw an exception if the relative speed is null!!
+    particleShortestDistTime: func (orig1, speed1, orig2, speed2) {
+      # author: Paccalin
+      # Compute the origin of the second particle in a referential positionally centered on the first particle.
+      me.psdt_tgtOrig = me.minus(orig2, orig1);
+      # Compute the speed of the second particle in a referential inertially based on the first particle.
+      me.psdt_tgtSpeed = me.minus(speed2, speed1);
+
+      # Project the origin of the particle1 referential onto the line supported by the particle2 trajectory in 1 unit of time.
+      # And divide the result by the magnitude of the speed to have it normalized relative to the time.
+      return me.orthogonalProjection(me.opposite(me.psdt_tgtOrig), me.psdt_tgtSpeed) / me.magnitudeVector(me.psdt_tgtSpeed);
     },
 
 # rotation matrices
