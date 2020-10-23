@@ -3754,7 +3754,7 @@ var AIM = {
 			# (use xyz coord to avoid the strange behaviour of comparing geo coordinates).
 			for (var i=me.crc_frames_look_back; i >= 0; i-=1){
 				me.crc_coord[i]   = (i != 0) ? me.crc_coord[i-1]   : me.coord.xyz();
-				me.crc_t_coord[i] = (i != 0) ? me.crc_t_coord[i-1] : (me.inacc?me.tgt.get_Coord(0):me.t_coord.xyz());
+				me.crc_t_coord[i] = (i != 0) ? me.crc_t_coord[i-1] : (me.inacc?me.Tgt.get_Coord(0):me.t_coord.xyz());
 				me.crc_range[i]   = (i != 0) ? me.crc_range[i-1]   : me.myMath.magnitudeVector(
 																		 me.myMath.minus(me.crc_coord[0], 
 																						 me.crc_t_coord[0]));
@@ -3955,7 +3955,7 @@ var AIM = {
 				me.printStats("%s  time %.1f", phrase, me.life_time);
 				if(getprop("payload/armament/msg") and hitPrimaryTarget and wh_mass > 0){
 					thread.lock(mutexTimer);
-					append(AIM.timerQueue, [AIM, AIM.notifyHit, [coordinates.alt() - (me.inacc?me.tgt.get_Coord(0).alt():me.t_coord.alt()),range,me.callsign,coordinates.course_to(me.inacc?me.tgt.get_Coord(0):me.t_coord),reason,me.typeID, me.typeLong, 0], 0]);
+					append(AIM.timerQueue, [AIM, AIM.notifyHit, [coordinates.alt() - (me.inacc?me.Tgt.get_Coord(0).alt():me.t_coord.alt()),range,me.callsign,coordinates.course_to(me.inacc?me.Tgt.get_Coord(0):me.t_coord),reason,me.typeID, me.typeLong, 0], 0]);
 					thread.unlock(mutexTimer);
                 } else {
 	                thread.lock(mutexTimer);

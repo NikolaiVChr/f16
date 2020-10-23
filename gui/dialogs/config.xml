@@ -122,7 +122,7 @@
   <group>
     <layout>vbox</layout>
     <checkbox>
-      <label>Weapons MP discharge messages</label>
+      <label>MP damage</label>
       <halign>left</halign>
       <property>payload/armament/msg</property>
       <live>true</live>
@@ -136,7 +136,7 @@
       </binding>
     </checkbox>
   <text><halign>left</halign><label>Enable this feature on ground to let your weapons</label></text>
-  <text><halign>left</halign><label>and cannon fire messages be visible over MP.</label></text>
+  <text><halign>left</halign><label>and cannon do damage on MP servers.</label></text>
   <text><halign>left</halign><label>WARNING: You will be able to both inflict and receive</label></text>
   <text><halign>left</halign><label>damage from other compatible aircraft.</label></text>
   <text><halign>left</halign><label>Avoid using against players without mutual consent.</label></text>
