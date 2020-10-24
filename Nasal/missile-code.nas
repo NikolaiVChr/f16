@@ -3726,6 +3726,7 @@ var AIM = {
             		#me.direct_dist_m = me.coord.direct_distance_to(me.Tgt.get_Coord());
             	}
             	if ((me.Tgt != nil and me.direct_dist_m != nil) or me.Tgt == nil) {
+            		me.coord.set_alt(me.ground);
             		me.explode("Hit terrain.", me.coord, nil, me.event);
             		return TRUE;
             	}
@@ -3744,6 +3745,7 @@ var AIM = {
         		#me.direct_dist_m = me.coord.direct_distance_to(me.Tgt.get_Coord());
         	}
         	if ((me.Tgt != nil and me.direct_dist_m != nil) or me.Tgt == nil) {
+        		me.coord.set_alt(0);
         		me.explode("Hit terrain.", me.coord, nil, me.event);
         		return TRUE;
         	}
