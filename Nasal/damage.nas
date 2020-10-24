@@ -243,10 +243,7 @@ var DamageRecipient =
                 if(getprop("payload/armament/msg") == 0 and notification.RemoteCallsign != notification.Callsign) {
                   return emesary.Transmitter.ReceiptStatus_NotProcessed;
                 }
-                if (notification.Kind == 3) {
-                  return emesary.Transmitter.ReceiptStatus_OK;
-                }
-                
+                                
                 var elapsed = getprop("sim/time/elapsed-sec");
                 var ownPos = geo.aircraft_position();
                 var bearing = ownPos.course_to(notification.Position);
@@ -255,51 +252,64 @@ var DamageRecipient =
                 var index = notification.SecondaryKind-21;
                 var typ = id2warhead[index];
                 
-                if (bits.test(notification.Flags, 1) or index == 93 or index == 95) {
-                  # visualize missile smoke trail
-                  if (notification.Kind == MOVE) {
-                    var smoke = 1;
-                    if (index == 93) {
-                      smoke = 0;
-                    } elsif (index == 95) {
-                      smoke = 3;
-                      if (notification.Position.distance_to(ownPos)*M2NM > 5) {
-                        return emesary.Transmitter.ReceiptStatus_OK;
-                      }
-                    } else {
-                      foreach(var black;heavy_smoke) {
-                        if (index == black) {
-                          smoke = 2;
-                          break;
+                if (notification.Kind == MOVE) {
+                  if (thrustOn or index == 93 or index == 95) {
+                    # visualize missile smoke trail
+                    
+                      var smoke = 1;
+                      if (index == 93) {
+                        smoke = 0;
+                      } elsif (index == 95) {
+                        smoke = 3;
+                        if (notification.Position.distance_to(ownPos)*M2NM > 5) {
+                          return emesary.Transmitter.ReceiptStatus_OK;
+                        }
+                      } else {
+                        foreach(var black;heavy_smoke) {
+                          if (index == black) {
+                            smoke = 2;
+                            break;
+                          }
                         }
                       }
-                    }
-                    dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [systime(), notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.u_fps, notification.Heading, notification.Pitch,smoke];
-                  } elsif (notification.Kind == DESTROY and dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] != nil) {
-                    dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [0, 0, 0, 0, 0, 0, 0, 0];
-                  }                  
-                } else {
-                  # not so efficient:
-                  #dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [0, 0, 0, 0, 0, 0, 0, 0];
-                }
-                
-                if (index == 95) {
-                  # consider showing it in tacview
-                  return emesary.Transmitter.ReceiptStatus_OK;
+                      dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [systime(), notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.u_fps, notification.Heading, notification.Pitch,smoke];
+                    }                  
+                  } else {
+                    # the +1.5 is the update time that missiles send notifications out in
+                    dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [systime()-(time_before_delete-1.6), notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.u_fps, notification.Heading, notification.Pitch,-1]
+                  }
+                } elsif (notification.Kind == DESTROY) {
+                  dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [systime()-(time_before_delete-1.6), notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.u_fps, notification.Heading, notification.Pitch,-1]
                 }
                 
                 if (tacview_supported and getprop("sim/multiplay/txhost") == "mpserver.opredflag.com") {
                   if (tacview.starttime) {
-                    var typp = typ[4]=="pilot"?"Parachutist":typ[4];
-                    var extra = typp=="Parachutist"?"|0|0|0":"";
-                    var extra2 = typ[2]==0?",Type=Weapon+Missile":",Type=Weapon+Bomb";
-                    extra2 = typp=="Parachutist"?"":extra2;
-                    var color = radarOn?",Color=Red":",Color=Yellow";
-                    thread.lock(tacview.mutexWrite);
-                    tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
-                    tacview.write((21000-notification.UniqueIdentity)~",T="~notification.Position.lon()~"|"~notification.Position.lat()~"|"~notification.Position.alt()~extra~",Name="~typp~color~extra2~"\n");
-                    thread.unlock(tacview.mutexWrite);
+                    var tacID = left(md5(notification.Callsign~notification.UniqueIdentity),6);
+                    if (notification.Kind == DESTROY) {
+                      thread.lock(tacview.mutexWrite);
+                      tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
+                      tacview.write(tacID~",Visible=0\n-"~tacID~"\n");
+                      thread.unlock(tacview.mutexWrite);
+                    } else {
+                      var typp = typ[4]=="pilot"?"Parachutist":typ[4];
+                      var extra = typp=="Parachutist"?"|0|0|0":"";
+                      var extra2 = typ[2]==0?",Type=Weapon+Missile":",Type=Weapon+Bomb";
+                      extra2 = typp=="Parachutist"?"":extra2;
+                      var color = radarOn?",Color=Red":",Color=Yellow";
+                      thread.lock(tacview.mutexWrite);
+                      tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
+                      tacview.write(tacID~",T="~notification.Position.lon()~"|"~notification.Position.lat()~"|"~notification.Position.alt()~extra~",Name="~typp~color~extra2~"\n");
+                      thread.unlock(tacview.mutexWrite);
+                    }
                   }
+                }
+                
+                if (notification.Kind == DESTROY) {
+                  return emesary.Transmitter.ReceiptStatus_OK;
+                }
+                
+                if (index == 95 or index == 93) {
+                  return emesary.Transmitter.ReceiptStatus_OK;
                 }
                 
                 # Missile launch warning:
@@ -370,7 +380,7 @@ var DamageRecipient =
                                   damaged_sys = damaged_sys + failed;
                                 }
                                 printf("Took %.1f%% x %2d damage from %s! %s systems was hit.", probability*100, hit_count, typ, damaged_sys);
-                                damageLog.push(sprintf("%d %s impact from %s.", hit_count, typ, notification.Callsign));
+                                damageLog.push(sprintf("%s hit you with %d %s.", notification.Callsign, hit_count, typ));
                                 nearby_explosion();
                             }
                         } elsif (notification.SecondaryKind > 20) {
@@ -378,7 +388,6 @@ var DamageRecipient =
                             var dist     = notification.Distance;
                             var wh = id2warhead[notification.SecondaryKind - 21];
                             var type = wh[4];#test code
-                            damageLog.push(sprintf("%s impact at %.1f meters from %s.", type, dist, notification.Callsign));
                             if (wh[3] == 1) {
                                 # cluster munition
                                 var lbs = wh[1];
@@ -394,6 +403,7 @@ var DamageRecipient =
                                 var failed = fail_systems(probability, hp_max);
                                 var percent = 100 * probability;
                                 printf("Took %.1f%% damage from %s clusterbomb at %0.1f meters from bomblet. %s systems was hit", percent,type,distance,failed);
+                                damageLog.push(sprintf("%s hit you with %s bomblet, %.1f meters distance.", notification.Callsign, type, dist));
                                 nearby_explosion();
                                 return;
                             }
@@ -429,6 +439,7 @@ var DamageRecipient =
                             var failed = fail_systems(probability, hp_max);
                             var percent = 100 * probability;
                             printf("Took %.1f%% damage from %s at %0.1f meters. %s systems was hit", percent,type,dist,failed);
+                            damageLog.push(sprintf("%s hit you with %s, %.1f meters distance.", notification.Callsign, type, dist));
                             nearby_explosion();
                             
                             ####
@@ -793,12 +804,21 @@ var animate_flare = func {
   var old_flares = [];
   foreach(flare; flare_list) {
     if (stime-flare[0] > flare_duration) {
-      #print("Remove flare "~flare[5]);
+      var msg = notifications.ObjectInFlightNotification.new("ffly", flare[5], DESTROY, 21+95);
+      msg.Flags = 0;
+      msg.Position = flare[1];
+      msg.IsDistinct = 1;
+      msg.RemoteCallsign = "";
+      msg.UniqueIndex = flare[5];
+      msg.Pitch = 0;
+      msg.Heading = 0;
+      msg.u_fps = 0;
+      notifications.objectBridgedTransmitter.NotifyAll(msg);
       continue;
     }
-    flare = [flare[0], flare[1], flare[2], (flare[3]<flare_terminal_speed)?(flare[3]+flare_update_time*9.83*0.5):(flare[3]-flare_update_time*3), math.max(0,flare[4]-flare_update_time*7), flare[5]];
+    flare = [flare[0], flare[1], flare[2], (flare[3]<flare_terminal_speed)?(flare[3]+flare_update_time*9.83*0.5):(flare[3]-flare_update_time*3), math.max(0,flare[4]-flare_update_time*20), flare[5]];
     flare[1].apply_course_distance(flare[2], flare_update_time*flare[4]);
-    flare[1].set_alt(flare[1].alt()-0.75*flare[3]);
+    flare[1].set_alt(flare[1].alt()-flare_update_time*flare[3]);
     
     var msg = notifications.ObjectInFlightNotification.new("ffly", flare[5], MOVE, 21+95);
     msg.Flags = 0;
@@ -937,39 +957,41 @@ var fail_systems = func (probability, factor = 100) {#this factor needs tuning a
           if (rand() < probability) {
               FailureMgr.set_failure_level(failure_mode_id, 1);
               failed += 1;
-              if (failure_mode_id == "Engines/engine" and yasim_list == nil and getprop("sim/flight-model") == "yasim") {
-                # fail  yasim:
-                setprop("sim/model/uh1/state",0);
-                setprop("controls/engines/engine/magnetos", 0);
-                setprop("controls/engines/engine/cutoff", 1);
-                setprop("controls/engines/engine/on-fire", 1);
-                #set a listener so that if a restart is attempted, it'll fail.
-                yasim_list = setlistener("sim/model/uh1/state",func {setprop("sim/model/uh1/state",0);});
-                yasim_list2 = setlistener("controls/engines/engine/cutoff",func {setprop("controls/engines/engine/cutoff",1);});
-              }
-              if (failure_mode_id == "Engines/engine[1]" and yasim_list3 == nil and getprop("sim/flight-model") == "yasim") {
-                # fail  yasim:
-                setprop("controls/engines/engine[1]/magnetos", 0);
-                setprop("controls/engines/engine[1]/cutoff", 1);
-                setprop("controls/engines/engine[1]/on-fire", 1);
-                #set a listener so that if a restart is attempted, it'll fail.
-                yasim_list3 = setlistener("controls/engines/engine[1]/cutoff",func {setprop("controls/engines/engine[1]/cutoff",1);});
-              }
-              if (failure_mode_id == "Engines/engine[2]" and yasim_list4 == nil and getprop("sim/flight-model") == "yasim") {
-                # fail  yasim:
-                setprop("controls/engines/engine[2]/magnetos", 0);
-                setprop("controls/engines/engine[2]/cutoff", 1);
-                setprop("controls/engines/engine[2]/on-fire", 1);
-                #set a listener so that if a restart is attempted, it'll fail.
-                yasim_list4 = setlistener("controls/engines/engine[2]/cutoff",func {setprop("controls/engines/engine[2]/cutoff",1);});
-              }
-              if (failure_mode_id == "Engines/engine[3]" and yasim_list5 == nil and getprop("sim/flight-model") == "yasim") {
-                # fail  yasim:
-                setprop("controls/engines/engine[3]/magnetos", 0);
-                setprop("controls/engines/engine[3]/cutoff", 1);
-                setprop("controls/engines/engine[3]/on-fire", 1);
-                #set a listener so that if a restart is attempted, it'll fail.
-                yasim_list5 = setlistener("controls/engines/engine[3]/cutoff",func {setprop("controls/engines/engine[3]/cutoff",1);});
+              if (getprop("sim/flight-model") == "yasim") {
+                if (failure_mode_id == "Engines/engine" and yasim_list2 == nil) {
+                  # fail  yasim:
+                  setprop("sim/model/uh1/state",0);
+                  setprop("controls/engines/engine/magnetos", 0);
+                  setprop("controls/engines/engine/cutoff", 1);
+                  setprop("controls/engines/engine/on-fire", 1);
+                  #set a listener so that if a restart is attempted, it'll fail.
+                  yasim_list = setlistener("sim/model/uh1/state",func {setprop("sim/model/uh1/state",0);});
+                  yasim_list2 = setlistener("controls/engines/engine/cutoff",func {setprop("controls/engines/engine/cutoff",1);});
+                }
+                if (failure_mode_id == "Engines/engine[1]" and yasim_list3 == nil) {
+                  # fail  yasim:
+                  setprop("controls/engines/engine[1]/magnetos", 0);
+                  setprop("controls/engines/engine[1]/cutoff", 1);
+                  setprop("controls/engines/engine[1]/on-fire", 1);
+                  #set a listener so that if a restart is attempted, it'll fail.
+                  yasim_list3 = setlistener("controls/engines/engine[1]/cutoff",func {setprop("controls/engines/engine[1]/cutoff",1);});
+                }
+                if (failure_mode_id == "Engines/engine[2]" and yasim_list4 == nil) {
+                  # fail  yasim:
+                  setprop("controls/engines/engine[2]/magnetos", 0);
+                  setprop("controls/engines/engine[2]/cutoff", 1);
+                  setprop("controls/engines/engine[2]/on-fire", 1);
+                  #set a listener so that if a restart is attempted, it'll fail.
+                  yasim_list4 = setlistener("controls/engines/engine[2]/cutoff",func {setprop("controls/engines/engine[2]/cutoff",1);});
+                }
+                if (failure_mode_id == "Engines/engine[3]" and yasim_list5 == nil) {
+                  # fail  yasim:
+                  setprop("controls/engines/engine[3]/magnetos", 0);
+                  setprop("controls/engines/engine[3]/cutoff", 1);
+                  setprop("controls/engines/engine[3]/on-fire", 1);
+                  #set a listener so that if a restart is attempted, it'll fail.
+                  yasim_list5 = setlistener("controls/engines/engine[3]/cutoff",func {setprop("controls/engines/engine[3]/cutoff",1);});
+                }
               }
           }
       }
