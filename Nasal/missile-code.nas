@@ -969,7 +969,7 @@ var AIM = {
 		me.ccip_pitch = math.atan2(me.ccip_fps_z, me.ccip_fps_x);
         while (me.ccip_t <= maxFallTime_sec) {
 			me.ccip_t += me.ccip_dt;
-			
+			me.ccip_bomb.deploy = me.clamp(me.extrapolate(me.ccip_t, me.drop_time, me.drop_time+me.deploy_time,0,1),0,1);
 			# Apply drag
 			me.ccip_fps = math.sqrt(me.ccip_fps_x*me.ccip_fps_x+me.ccip_fps_z*me.ccip_fps_z);
 			if (me.ccip_fps==0) return nil;
