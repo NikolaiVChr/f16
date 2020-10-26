@@ -46,27 +46,28 @@ var shells = {
     "Mk3Z":              [6,0.100], # 30mm Jaguar
     "BK27 cannon":       [7,0.070], # 27mm
     "GSh-23":            [8,0.065], # 23mm
-    "M61A1 shell":       [9,0.050], # 20mm
+    "M61A1 shell":       [9,0.050], # 20mm F14, F15, F16
     "50 BMG":            [10,0.015], # 12.7mm (non-explosive)    
     "7.62":              [11,0.005], # 7.62mm (non-explosive)
     "Hydra-70":          [12,0.250], # F-16
     "SNEB":              [13,0.250], # Jaguar   
+    "DEFA 554":          [14,0.100], # 30mm Mirage
 };    
 
 # lbs of warheads is explosive+fragmentation+fuse, so total warhead mass.
 
 var warheads = {
     # [id,lbs,anti surface,cluster,(name)]
-    "AGM-65":            [0,  126.00,1,0],
-    "AGM-84":            [1,  488.00,1,0],
-    "AGM-88":            [2,  146.00,1,0],
-    "AGM65":             [3,  200.00,1,0],#deprecated
-    "AGM-119":           [4,  264.50,1,0],
-    "AGM-154A":          [5,  493.00,1,0],
-    "AGM-158":           [6, 1000.00,1,0],
-    "ALARM":             [7,  450.00,1,0],
-    "AM39-Exocet":       [8,  364.00,1,0], 
-    "AS-37-Martel":      [9,  330.00,1,0], 
+    "AGM-65":            [ 0,  126.00,1,0],
+    "AGM-84":            [ 1,  488.00,1,0],
+    "AGM-88":            [ 2,  146.00,1,0],
+    "MK-82SE":           [ 3,  192.00,1,0],# snake eye
+    "AGM-119":           [ 4,  264.50,1,0],
+    "AGM-154A":          [ 5,  493.00,1,0],
+    "AGM-158":           [ 6, 1000.00,1,0],
+    "ALARM":             [ 7,  450.00,1,0],
+    "AM39-Exocet":       [ 8,  364.00,1,0], 
+    "AS-37-Martel":      [ 9,  330.00,1,0], 
     "AS30L":             [10,  529.00,1,0],
     "BL755":             [11,  100.00,1,1],# 800lb bomblet warhead. Mix of armour piecing and HE. 100 due to need to be able to kill buk-m2.    
     "CBU-87":            [12,  100.00,1,1],# bomblet warhead. Mix of armour piecing and HE. 100 due to need to be able to kill buk-m2.    
@@ -124,10 +125,10 @@ var warheads = {
     "Majic":             [64,   26.45,0,0],
     "Matra MICA":        [65,   30.00,0,0],
     "Matra R550 Magic 2":[66,   27.00,0,0],
-    "MATRA-R530":        [67,   55.00,0,0],
-    "MatraMica":         [68,   30.00,0,0],
-    "MatraMicaIR":       [69,   30.00,0,0],
-    "MatraR550Magic2":   [70,   27.00,0,0],
+    "Matra R530":        [67,   55.00,0,0],
+    "MatraMica":         [68,   30.00,0,0],#deprecated
+    "MatraMicaIR":       [69,   30.00,0,0],#deprecated
+    "MatraR550Magic2":   [70,   27.00,0,0],#deprecated 
     "Meteor":            [71,   55.00,0,0],
     "MICA-EM":           [72,   30.00,0,0], 
     "MICA-IR":           [73,   30.00,0,0], 
@@ -240,6 +241,13 @@ var DamageRecipient =
                 # todo:
                 #   animate missiles
                 #
+                if (notification.NotificationType == "ObjectInFlightNotification") {
+                  notification.Pitch = 0;
+                  notification.Heading = 0;
+                  notification.u_fps = 0;
+                  notification.Flags = 0;
+                  notification.RemoteCallsign = "";
+                }
                 if(getprop("payload/armament/msg") == 0 and notification.RemoteCallsign != notification.Callsign) {
                   return emesary.Transmitter.ReceiptStatus_NotProcessed;
                 }
@@ -790,9 +798,20 @@ dynamic_loop();
 var last_prop = 0;
 var last_release = 0;
 var flare_list = [];
-var flare_update_time = 0.75;
+var flare_update_time = 0.4;
 var flare_duration = 8;
 var flare_terminal_speed = 50;#m/s
+var flares_max_process_per_loop = 4;
+
+var flare_sorter = func(a, b) {
+    if(a[0] < b[0]){
+        return -1; # A should before b in the returned vector
+    }elsif(a[0] == b[0]){
+        return 0; # A is equivalent to b 
+    }else{
+        return 1; # A should after b in the returned vector
+    }
+}
 
 var animate_flare = func {
   # This detects own flares and send out notifications about their position every 0.75s
@@ -802,42 +821,49 @@ var animate_flare = func {
   var stime = systime();
   # old flares
   var old_flares = [];
+  var flares_sent = 0;
+  flare_list = sort(flare_list, flare_sorter);
   foreach(flare; flare_list) {
-    if (stime-flare[0] > flare_duration) {
-      var msg = notifications.ObjectInFlightNotification.new("ffly", flare[5], DESTROY, 21+95);
+    if (stime-flare[1] > flare_duration) {
+      var msg = notifications.ObjectInFlightNotification.new("ffly", flare[6], DESTROY, 21+95);
       msg.Flags = 0;
-      msg.Position = flare[1];
+      msg.Position = flare[2];
       msg.IsDistinct = 1;
       msg.RemoteCallsign = "";
-      msg.UniqueIndex = flare[5];
+      msg.UniqueIndex = flare[6];
       msg.Pitch = 0;
       msg.Heading = 0;
       msg.u_fps = 0;
       notifications.objectBridgedTransmitter.NotifyAll(msg);
       continue;
     }
-    flare = [flare[0], flare[1], flare[2], (flare[3]<flare_terminal_speed)?(flare[3]+flare_update_time*9.83*0.5):(flare[3]-flare_update_time*3), math.max(0,flare[4]-flare_update_time*20), flare[5]];
-    flare[1].apply_course_distance(flare[2], flare_update_time*flare[4]);
-    flare[1].set_alt(flare[1].alt()-flare_update_time*flare[3]);
-    
-    var msg = notifications.ObjectInFlightNotification.new("ffly", flare[5], MOVE, 21+95);
-    msg.Flags = 0;
-    msg.Position = flare[1];
-    msg.IsDistinct = 1;
-    msg.RemoteCallsign = "";
-    msg.UniqueIndex = flare[5];
-    msg.Pitch = 0;
-    msg.Heading = 0;
-    msg.u_fps = 0;
-    notifications.objectBridgedTransmitter.NotifyAll(msg);
+    if (flares_sent < flares_max_process_per_loop) {
+      var flare_dt = stime-flare[0];
+      #       update_t,start_t, coord,    heading,  speed_down_mps,                                                                   , speed_horiz_mps,                  unique
+      flare = [stime, flare[1], flare[2], flare[3], (flare[4]<flare_terminal_speed)?(flare[4]+flare_dt*9.83*0.5):(flare[4]-flare_dt*3), math.max(0,flare[5]-flare_dt*20), flare[6]];
+      flare[2].apply_course_distance(flare[3], flare_dt*flare[5]);
+      flare[2].set_alt(flare[2].alt()-flare_dt*flare[4]);
+      
+      var msg = notifications.ObjectInFlightNotification.new("ffly", flare[6], MOVE, 21+95);
+      msg.Flags = 0;
+      msg.Position = flare[2];
+      msg.IsDistinct = 1;
+      msg.RemoteCallsign = "";
+      msg.UniqueIndex = flare[6];
+      msg.Pitch = 0;
+      msg.Heading = 0;
+      msg.u_fps = 0;
+      notifications.objectBridgedTransmitter.NotifyAll(msg);
+      flares_sent += 1;
+    }
     #print("Update flare "~flare[5]);
     append(old_flares, flare);
   }
   flare_list = old_flares;
-  
+  #print(flares_sent~" flares sent, out of "~size(flare_list));
   if(auto_flare_caller) {
     auto_flare_released();
-  }
+  }  
 }
 var flaretimer = maketimer(flare_update_time, animate_flare);
 flaretimer.start();
@@ -847,50 +873,36 @@ var auto_flare_released = func {
   var prop = getprop("rotors/main/blade[3]/flap-deg");
   var stime = systime();
   if (prop != nil and prop != 0 and prop != last_prop and stime-last_release > 1)  {
-    var flare =[stime,
-                geo.aircraft_position(),
-                getprop("orientation/heading-deg"),
-                FT2M*getprop("velocities/speed-down-fps"),
-                FT2M*math.sqrt(getprop("velocities/speed-north-fps")*getprop("velocities/speed-north-fps")+getprop("velocities/speed-east-fps")*getprop("velocities/speed-east-fps")),
-                int(rand()*200)-100];
-    append(flare_list, flare);
-    var msg = notifications.ObjectInFlightNotification.new("ffly", flare[5], MOVE, 21+95);
-    msg.Flags = 0;
-    msg.Position = flare[1];
-    msg.IsDistinct = 1;
-    msg.RemoteCallsign = "";
-    msg.UniqueIndex = flare[5];
-    msg.Pitch = 0;
-    msg.Heading = 0;
-    msg.u_fps = 0;
-    notifications.objectBridgedTransmitter.NotifyAll(msg);
+    flare_released();
     last_release = stime;
-    #print("Adding flare "~flare[5]);
   }
   last_prop = prop;
 }
 
 var flare_released = func {
-  # new flare
+    if (!getprop("payload/armament/msg")) {
+      return;
+    }
+    # new flare
     var stime = systime();
-    var flare =[stime,
+    var flare =[stime, stime,
                 geo.aircraft_position(),
                 getprop("orientation/heading-deg"),
                 FT2M*getprop("velocities/speed-down-fps"),
                 FT2M*math.sqrt(getprop("velocities/speed-north-fps")*getprop("velocities/speed-north-fps")+getprop("velocities/speed-east-fps")*getprop("velocities/speed-east-fps")),
                 int(rand()*200)-100];
     append(flare_list, flare);
-    var msg = notifications.ObjectInFlightNotification.new("ffly", flare[5], MOVE, 21+95);
+    var msg = notifications.ObjectInFlightNotification.new("ffly", flare[6], MOVE, 21+95);
     msg.Flags = 0;
-    msg.Position = flare[1];
+    msg.Position = flare[2];
     msg.IsDistinct = 1;
     msg.RemoteCallsign = "";
-    msg.UniqueIndex = flare[5];
+    msg.UniqueIndex = flare[6];
     msg.Pitch = 0;
     msg.Heading = 0;
     msg.u_fps = 0;
     notifications.objectBridgedTransmitter.NotifyAll(msg);
-    #print("Adding flare "~flare[5]);
+    #print("Adding flare "~flare[6]);
 }
 
 #==================================================================

@@ -225,14 +225,8 @@ var ObjectInFlightNotification =
         new_class.SecondaryKind = _secondary_kind;
         new_class.Position = geo.aircraft_position();
         new_class.UniqueIndex = 0;
-
-        new_class.Heading = 360;
-        new_class.Pitch = 90;
-        new_class.u_fps = 0;
         new_class.IsDistinct = 1;
         new_class.Callsign = nil; # populated automatically by the incoming bridge when routed
-        new_class.RemoteCallsign = ""; # associated remote callsign.
-        new_class.Flags = 0; # 8 bits for whatever.
         new_class.UniqueIdentity = _unique;
 
         new_class.GetBridgeMessageNotificationTypeKey = func {
@@ -253,27 +247,6 @@ var ObjectInFlightNotification =
              {
             getValue:func{return emesary.TransferByte.encode(new_class.SecondaryKind);},
             setValue:func(v,root,pos){var dv=emesary.TransferByte.decode(v,pos);new_class.SecondaryKind=dv.value;return dv},
-             },
-             {
-              #0..6696 fps (3967kts), mach 6.1 (SL) - factor 0.03703
-            getValue:func{return emesary.TransferFixedDouble.encode(new_class.u_fps-3348,1,1/0.03703);},
-            setValue:func(v,root,pos){var dv=emesary.TransferFixedDouble.decode(v,1,1/0.03703,pos);new_class.u_fps=dv.value+3348;return dv},
-             },
-             {
-            getValue:func{return emesary.TransferFixedDouble.encode(geo.normdeg180(new_class.Heading),1,1.54);},#1.0/0.65
-            setValue:func(v,root,pos){var dv=emesary.TransferFixedDouble.decode(v,1,1.54,pos);new_class.Heading=geo.normdeg(dv.value);return dv},
-             },
-             {
-            getValue:func{return emesary.TransferFixedDouble.encode(new_class.Pitch, 1, 1/1.38);},
-            setValue:func(v,root,pos){var dv=emesary.TransferFixedDouble.decode(v,1, 1/1.38, pos);new_class.Pitch=dv.value;return dv},
-             },
-             {
-            getValue:func{return emesary.TransferString.encode(new_class.RemoteCallsign);},
-            setValue:func(v,root,pos){var dv=emesary.TransferString.decode(v,pos);new_class.RemoteCallsign=dv.value;return dv},
-             },
-             {
-            getValue:func{return emesary.TransferByte.encode(new_class.Flags);},
-            setValue:func(v,root,pos){var dv=emesary.TransferByte.decode(v,pos);new_class.Flags=dv.value;return dv},
              },
              {
             getValue:func{return emesary.TransferByte.encode(new_class.UniqueIdentity);},

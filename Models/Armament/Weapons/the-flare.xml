@@ -33,9 +33,9 @@
     <type>dist-scale</type>
     <object-name>procedural_light</object-name>
     <interpolation>
-      <entry><ind>0</ind><dep>0.0075</dep></entry>
-      <entry><ind>3750</ind><dep>0.5</dep></entry>
-      <entry><ind>10000</ind><dep>1</dep></entry>
+      <entry><ind>0</ind>    <dep>0.0075</dep></entry>
+      <entry><ind>3750</ind> <dep>0.750</dep></entry>
+      <entry><ind>10000</ind><dep>1.000</dep></entry>
     </interpolation>
   </animation>
 

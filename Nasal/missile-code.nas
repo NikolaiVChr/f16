@@ -1285,6 +1285,7 @@ var AIM = {
 		me.stage_2_duration = 0;
 		me.force_lbf_2      = 0;
 		me.stage_gap_duration = 0;
+		me.drop_time        = 10000;
 		me.inert            = TRUE;
 		me.engineEnabled    = FALSE;
 		me.guidanceEnabled  = FALSE;
@@ -3716,9 +3717,9 @@ var AIM = {
             	me.event = "exploded";
             	if(me.life_time < me.arming_time) {
                 	me.event = "landed disarmed";
-                	thread.lock(mutexTimer);
-					append(AIM.timerQueue, [me,me.log,[me.typeLong~" landed disarmed."],0]);
-					thread.unlock(mutexTimer);
+                	#thread.lock(mutexTimer);
+					#append(AIM.timerQueue, [me,me.log,[me.typeLong~" landed disarmed."],0]);
+					#thread.unlock(mutexTimer);
             	}
             	if (me.Tgt != nil and me.direct_dist_m == nil) {
             		# maddog might go here
@@ -3735,9 +3736,9 @@ var AIM = {
         	me.event = "exploded";
         	if(me.life_time < me.arming_time) {
             	me.event = "landed disarmed";
-            	thread.lock(mutexTimer);
-				append(AIM.timerQueue, [me,me.log,[me.typeLong~" landed disarmed."],0]);
-				thread.unlock(mutexTimer);
+            	#thread.lock(mutexTimer);
+				#append(AIM.timerQueue, [me,me.log,[me.typeLong~" landed disarmed."],0]);
+				#thread.unlock(mutexTimer);
         	}
         	if (me.Tgt != nil and me.direct_dist_m == nil) {
         		# maddog might go here
@@ -3912,7 +3913,10 @@ var AIM = {
 	},
 
 	explode: func (reason, coordinates, range = nil, event = "exploded") {
-
+		var hitGround = 0;
+		if (reason == "Hit terrain.") {
+			hitGround = 1;
+		}
 		if (me.lock_on_sun) {
 			reason = "Locked onto sun.";
 		} elsif (me.flareLock) {
@@ -3975,8 +3979,8 @@ var AIM = {
 		}
 		
 		me.ai.getNode("valid", 1).setBoolValue(0);
-		if (event == "exploded" and !me.inert) {
-			me.animate_explosion();
+		if (event == "exploded" and !me.inert and wh_mass > 0) {
+			me.animate_explosion(hitGround);
 			me.explodeSound = TRUE;
 		} else {
 			me.animate_dud();
@@ -4866,7 +4870,7 @@ var AIM = {
 		me.deploy_prop = props.globals.initNode(deploy_path, 0, "DOUBLE", TRUE);
 	},
 
-	animate_explosion: func {
+	animate_explosion: func (hitGround) {
 		#
 		# a last position update to where the explosion happened:
 		#
@@ -4878,13 +4882,17 @@ var AIM = {
 		me.msl_prop.setBoolValue(FALSE);
 		me.smoke_prop.setBoolValue(FALSE);
 		var info = geodinfo(me.coord.lat(), me.coord.lon());
-
-		if (info == nil) {
-			me.explode_water_prop.setValue(FALSE);
-		} elsif (info[1] == nil) {
-			#print ("Building hit!");
-		} elsif (info[1].solid == 0) {
-		 	me.explode_water_prop.setValue(TRUE);
+		
+		if (hitGround) {
+			if (info == nil) {
+				me.explode_water_prop.setValue(FALSE);
+			} elsif (info[1] == nil) {
+				#print ("Building hit!");
+			} elsif (info[1].solid == 0) {
+			 	me.explode_water_prop.setValue(TRUE);
+			} else {
+				me.explode_water_prop.setValue(FALSE);
+			}
 		} else {
 			me.explode_water_prop.setValue(FALSE);
 		}
@@ -4898,7 +4906,7 @@ var AIM = {
 		append(AIM.timerQueue, [me, func me.explode_smoke_prop.setBoolValue(TRUE), [], 0.5]);
 		append(AIM.timerQueue, [me, func me.explode_smoke_prop.setBoolValue(FALSE), [], 3]);
 		thread.unlock(mutexTimer);
-		if (info == nil or getprop("payload/armament/enable-craters") == nil or !getprop("payload/armament/enable-craters")) {return;};
+		if (info == nil or !hitGround or getprop("payload/armament/enable-craters") == nil or !getprop("payload/armament/enable-craters")) {return;};
 		thread.lock(mutexTimer);
 		append(AIM.timerQueue, [me, func {
 		 	if (info[1] == nil) {
