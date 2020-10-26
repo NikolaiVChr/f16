@@ -6,7 +6,7 @@
  
  <animation>
       <object-name>Sphere</object-name>
-      <enable-hot type="bool">false</enable-hot>
+      <enable-hot type="bool">true</enable-hot>
   </animation>
  
       <particlesystem>
