@@ -410,6 +410,7 @@ var Recipient =
     },
 };
 
+
 #
 # Instantiate a Global Transmitter, this is a convenience and a known starting point. 
 # Generally most classes will use this transmitters, however other transmitters 
@@ -427,9 +428,9 @@ var BinaryAsciiTransfer =
          chr(1)~chr(2)~chr(3)~chr(4)~chr(5)~chr(6)~chr(7)~chr(8)
         ~chr(9)~chr(10)~chr(11)~chr(12)~chr(13)~chr(14)~chr(15)~chr(16)~chr(17)~chr(18)~chr(19)
         ~chr(20)~chr(21)~chr(22)~chr(23)~chr(24)~chr(25)~chr(26)~chr(27)~chr(28)~chr(29)
-        ~chr(30)~chr(31)~chr(34)
+        ~chr(30)~chr(31)                ~chr(34)
         ~"%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}"
-        ~chr(128)~chr(129)
+            ~chr(128)~chr(129)
         ~chr(130)~chr(131)~chr(132)~chr(133)~chr(134)~chr(135)~chr(136)~chr(137)~chr(138)~chr(139)
         ~chr(140)~chr(141)~chr(142)~chr(143)~chr(144)~chr(145)~chr(146)~chr(147)~chr(148)~chr(149)
         ~chr(150)~chr(151)~chr(152)~chr(153)~chr(154)~chr(155)~chr(156)~chr(157)~chr(158)~chr(159)
@@ -651,6 +652,7 @@ var TransferCoord =
     }
 };
 
+
 # genericEmesaryGlobalTransmitterTransmit  allowes to use the emesary.GlobalTransmitter via fgcommand
 # which in turn allows using it in XML bindings, e.g.
 #   <binding>
@@ -703,7 +705,7 @@ var genericEmesaryGlobalTransmitterTransmit  = func(node)
 };
 
 # Temporary bugfix -- FIXME
-# removecommand("emesary-transmit"); #in case of reload
+#removecommand("emesary-transmit"); #in case of reload
 addcommand("emesary-transmit", genericEmesaryGlobalTransmitterTransmit);
 
 #setprop("/sim/startup/terminal-ansi-colors",0);
