@@ -54,6 +54,7 @@ var dogfight = func {
         f16.f16_mfd.MFDr.p_WPN.setSelection(nil, f16.f16_mfd.MFDr.PFD.buttons[18], 18);
         f16.rdrModeGM = 0;
     } else {
+        awg_9.setupRanges();
         setprop("instrumentation/radar/radar2-range", getprop("instrumentation/radar/radar2-range-std"));
         setprop("instrumentation/radar/az-field", getprop("instrumentation/radar/az-field-std"));
         setprop("instrumentation/radar/ho-field", getprop("instrumentation/radar/ho-field-std"));
