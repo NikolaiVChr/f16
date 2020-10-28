@@ -103,7 +103,7 @@
             </key>
             <key>
                 <name>Arrow keys</name>
-                <desc>Slew cursor on CRM</desc>
+                <desc>Move cursor on radar (if SOI)</desc>
             </key>
             <key>
                 <name>Shift + Arrow keys</name>
