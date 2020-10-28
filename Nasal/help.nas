@@ -244,7 +244,8 @@ gui.showHelpDialog = func(path, toggle=0) {
         w.set("editable", 0);
         w.set("live", 1);
         w.set("property", node.getPath() ~ "/text");
-        w.setFont("FIXED_8x13");
+        # The graphics system doesn't always grok fonts like this(?) so we're stuck with default proportional font
+        #w.setFont("FIXED_8x13");
     } else {
         dialog[name].addChild("empty").set("pref-height", 8);
     }
