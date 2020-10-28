@@ -1441,12 +1441,12 @@ value. 18000=standard US transition altitude -->
     </aircraft>
 
     <nasal>
-        <emesary>
+        <!--emesary>
             <file>Aircraft/f16/Nasal/emesary.nas</file>
         </emesary>
         <emesary_mp_bridge>
             <file>Aircraft/f16/Nasal/emesary_mp_bridge.nas</file>
-        </emesary_mp_bridge>
+        </emesary_mp_bridge-->
         <notifications>
             <file>Aircraft/f16/Nasal/ArmamentNotification.nas</file>
             <file>Aircraft/f16/Nasal/M_frame_notification.nas</file>
