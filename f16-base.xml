@@ -1468,6 +1468,7 @@ value. 18000=standard US transition altitude -->
         </vector>
         <rcs>
             <file>Aircraft/f16/Nasal/rcs.nas</file><!-- must be before radar -->
+            <file>Aircraft/f16/Nasal/rcs_mand.nas</file><!-- must be before radar -->
         </rcs>
         <controls>
             <file>Aircraft/f16/Nasal/f16_controls.nas</file>
