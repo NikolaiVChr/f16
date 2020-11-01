@@ -3837,6 +3837,10 @@ var get_intercept = func(bearingToRunner, dist_m, runnerHeading, runnerSpeed, ch
     # from Leto
     # needs: bearingToRunner_deg, dist_m, runnerHeading_deg, runnerSpeed_mps, chaserSpeed_mps, chaserCoord
     #        dist_m > 0 and chaserSpeed > 0
+    
+    if (dist_m < 500) {
+        return nil;
+    }
 
     var trigAngle = 90-bearingToRunner;
     var RunnerPosition = [dist_m*math.cos(trigAngle*D2R), dist_m*math.sin(trigAngle*D2R),0];
