@@ -1,7 +1,7 @@
 # F-16 Fighting Falcon
 General Dynamics F-16 for [FlightGear](http://www.flightgear.org) flight simulator
 
-Current FGAddon version: **3.50**
+Current FGAddon version: **3.51**
 Suitable for: FlightGear **2020.3 and above.**
 
 ![Image](https://i.ibb.co/vV9SVfT/fgfs-20200508231145.png)
@@ -26,7 +26,7 @@ Includes the following Aircraft variants:
 - F-16 Simplified (a simpler FDM, yet still complex)
 
 Available liveries depend on chosen variant.
-Notice that the quality of liveries differ. Some liveries are fictional.
+Notice that the quality of liveries differ, with some being fictional.
 
 Beside from that, the variants also differ in engine specifics, FBW system, cockpit and aerodynamics. See manual.txt for further information.
 Weapons available and payload presets are mostly U.S. specific.
