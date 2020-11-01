@@ -1,5 +1,6 @@
 var rcs_oprf_database = {
     # This list contains the mandatory RCS frontal values for OPRF (anno 1997), feel free to add non-OPRF to your aircraft we don't care.
+    #REVISION: 2020/11/01
     "default":                  150,    #default value if target's model isn't listed
     "f-14b":                    12,     
     "F-14D":                    12,     
@@ -8,46 +9,53 @@ var rcs_oprf_database = {
     "F-15D":                    11,     #low end of sources
     "f15-bs":                   0.0001,
     "F-16":                     2,
-    "JA37-Viggen":              3,      
-    "AJ37-Viggen":              3,      
-    "AJS37-Viggen":             3,      
-    "JA37Di-Viggen":            3,
+    "JA37-Viggen":              3,      #close to actual
+    "AJ37-Viggen":              3,      #close to actual
+    "AJS37-Viggen":             3,      #close to actual
+    "JA37Di-Viggen":            3,      #close to actual
     "m2000-5":                  1,      
     "m2000-5B":                 1,
-    "m2000-5B-backseat":        0.0001,
-    "707":                      100,    
-    "707-TT":                   100,    
-    "EC-137D":                  110,    
+    "m2000-5B-backseat":        0.0001, 
     "B-1B":                     10,
     "Blackbird-SR71A":          0.25,
     "Blackbird-SR71B":          0.30,
     "Blackbird-SR71A-BigTail":  0.30,
     "MiG-21bis":                3.5,
     "MiG-21MF-75":              3.5,
-    "KC-137R":                  100,    
-    "KC-137R-RT":               100,    
-    "A-10":                     23.5, 
-    "KC-10A":                   100,    
-    "Typhoon":                  0.5,
-    "C-137R":                   100,    
-    "RC-137R":                  100,    
-    "EC-137R":                  110,    
+    "KC-137R":                  90,     #guess
+    "KC-137R-RT":               90,     #guess
+    "C-137R":                   85,     #guess
+    "RC-137R":                  95,     #guess
+    "EC-137R":                  100,    #guess
+    "E-8R":                     95,     #guess
+    "KC-10A":                   90,     #guess
+    "KC-10A-GE":                90,     #guess
+    "KC-30A":                   75,     #guess
+    "Voyager-KC":               75,     #guess
+    "707":                      85,     #guess
+    "707-TT":                   90,     #guess
+    "EC-137D":                  100,    #guess
     "c130":                     100,   
     "Jaguar-GR1":               6,
-    "Jaguar-GR3":               6,
     "A-10":                     23.5,
     "A-10-model":               23.5,
     "A-10-modelB":              23.5,
+    "Typhoon":                  0.5,
 # Drones:
-    "QF-4E":                    1,
-    "MQ-9":                     1,
+    "QF-4E":                    2,      #actual: 6
+    "MQ-9":                     0.75,   #guess
+    "MQ-9-2":                   0.75,   #guess
 # Helis:
     "SH-60J":                   30,      
     "UH-60J":                   30,     
     "uh1":                      30,     
     "212-TwinHuey":             25,     
     "412-Griffin":              25,     
-    "ch53e":                    20,     
+    "ch53e":                    20,
+    "Mil-Mi-8":                 30,     #guess, Hunter
+    "CH47":                     20,     #guess, Hunter
+    "mi24":                     25,     #guess, Hunter
+    "tigre":                    6,      #guess, Hunter
 # OPRF assets:
     "depot":                    170,
     "buk-m2":                   7,   
