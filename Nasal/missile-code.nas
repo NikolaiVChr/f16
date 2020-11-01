@@ -833,12 +833,10 @@ var AIM = {
 				}
 			}
 			if(getprop("payload/armament/msg")) {
-				print("del5");
 				thread.lock(mutexTimer);
 				#lat,lon,alt,rdar,typeID,typ,unique,thrustOn,callsign, heading, pitch, speed, is_deleted=0
 				append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [nil, -1, -1, 0, me.typeID, "delete()", me.unique_id, 0,"", 0, 0, 0, 1], -1]);
 				thread.unlock(mutexTimer);
-				print("del6");
 			}
 		} else {
 			delete(AIM.active, me.ID);
