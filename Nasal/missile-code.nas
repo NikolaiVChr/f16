@@ -110,7 +110,7 @@ var HudReticleDev  = props.globals.getNode("payload/armament/hud/reticle-total-d
 var HudReticleDeg  = props.globals.getNode("payload/armament/hud/reticle-total-angle", 1);
 var update_loop_time = 0.000;
 
-var fox2_unique_id = 0; # each missile needs to have a unique numeric ID
+var fox2_unique_id = -100; # each missile needs to have a unique numeric ID
 
 var SIM_TIME = 0;
 var REAL_TIME = 1;
@@ -276,7 +276,8 @@ var AIM = {
 		m.direct_dist_m     = nil;
 		m.speed_m           = -1;
 
-		fox2_unique_id = fox2_unique_id + 1;
+		fox2_unique_id += 1;
+		if (fox2_unique_id >100) fox2_unique_id = -100;
         m.unique_id = fox2_unique_id;
 		m.nodeString = "payload/armament/"~m.type_lc~"/";
 		
@@ -832,9 +833,12 @@ var AIM = {
 				}
 			}
 			if(getprop("payload/armament/msg")) {
+				print("del5");
 				thread.lock(mutexTimer);
-				append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [nil, -1, -1,0,me.typeID,"",me.unique_id,0,"", 0, 0, 0,1], -1]);
+				#lat,lon,alt,rdar,typeID,typ,unique,thrustOn,callsign, heading, pitch, speed, is_deleted=0
+				append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [nil, -1, -1, 0, me.typeID, "delete()", me.unique_id, 0,"", 0, 0, 0, 1], -1]);
 				thread.unlock(mutexTimer);
+				print("del6");
 			}
 		} else {
 			delete(AIM.active, me.ID);
@@ -1626,6 +1630,7 @@ var AIM = {
 		
 		me.printStats("****************************************************");
 		me.printStats("Stats for %s", me.typeLong);
+		me.printStats("Damage ID is %d, notification ID is %d, unique ID is %d", me.typeID, me.typeID+21,me.unique_id);
 		me.printStats("DETECTION AND FIRING:");
 		me.printStats("Fire range %.1f-%.1f NM", me.min_fire_range_nm, me.max_fire_range_nm);
 		me.printStats("Can be fired againts %s targets", classes);
@@ -2498,7 +2503,7 @@ var AIM = {
             me.last_noti = me.life_time;
         	thread.lock(mutexTimer);
         	var rdr = me.guidance=="radar";
-			append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [me.latN.getValue(), me.lonN.getValue(), me.altN.getValue()*FT2M,rdr,me.typeID,me.type,me.unique_id,me.thrust_lbf>0,(me.free or me.lostLOS or me.tooLowSpeed or me.flareLock or me.chaffLock)?"":me.callsign, me.hdg, me.pitch, me.new_speed_fps], -1]);
+			append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [me.latN.getValue(), me.lonN.getValue(), me.altN.getValue()*FT2M,rdr,me.typeID,me.type,me.unique_id,me.thrust_lbf>0,(me.free or me.lostLOS or me.tooLowSpeed or me.flareLock or me.chaffLock)?"":me.callsign, me.hdg, me.pitch, me.new_speed_fps, 0], -1]);
 			thread.unlock(mutexTimer);
         }
 
@@ -3880,7 +3885,7 @@ var AIM = {
 	
 	notifyInFlight: func (lat,lon,alt,rdar,typeID,typ,unique,thrustOn,callsign, heading, pitch, speed, is_deleted=0) {
 		## thrustON cannot be named 'thrust' as FG for some reason will then think its a function
-		var msg = notifications.ArmamentInFlightNotification.new("mfly", unique, is_deleted?3:2, 21+typeID);
+		var msg = notifications.ArmamentInFlightNotification.new("mfly"~typeID~unique~typ, unique, is_deleted?damage.DESTROY:damage.MOVE, 21+typeID);
         if (lat != nil) {
         	msg.Position.set_latlon(lat,lon,alt);
         } else {
@@ -3890,9 +3895,9 @@ var AIM = {
         if (thrustOn) {
         	msg.Flags = bits.set(msg.Flags, 1);#bit #1
         }
+        #print(typ~(is_deleted?" DESTROY ":" MOVE ")~typeof(lat));
         msg.IsDistinct = !is_deleted;
         msg.RemoteCallsign = callsign;
-        msg.UniqueIndex = unique;
         msg.Pitch = pitch;
         msg.Heading = heading;
         msg.u_fps = speed;
@@ -3948,7 +3953,7 @@ var AIM = {
 		
 		if(getprop("payload/armament/msg")) {
 			thread.lock(mutexTimer);
-			append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [me.coord.lat(), me.coord.lon(), me.coord.alt(),0,me.typeID,me.type,me.unique_id,0,"", me.hdg, me.pitch, 0], -1]);
+			append(AIM.timerQueue, [AIM, AIM.notifyInFlight, [me.coord.lat(), me.coord.lon(), me.coord.alt(),0,me.typeID,me.type,me.unique_id,0,"", me.hdg, me.pitch, 0, 0], -1]);
 			thread.unlock(mutexTimer);
 		}
 		
@@ -5200,11 +5205,11 @@ var AIM = {
 	timerCall: func (cmd) {
 		if (cmd != nil) {
 			if (cmd[3] == -1) {
-				call(cmd[1], cmd[2], cmd[0], cmd[0], var err = []);
+				call(cmd[1], cmd[2], cmd[0], nil, var err = []);
 				debug.printerror(err);
 			} else {
 				var code = "timer_"~rand();
-				var tr = maketimer(cmd[3], cmd[0], func {call(cmd[1], cmd[2], cmd[0], cmd[0], var err = []);debug.printerror(err);delete(AIM.timers, code);});
+				var tr = maketimer(cmd[3], cmd[0], func {call(cmd[1], cmd[2], cmd[0], nil, var err = []);debug.printerror(err);delete(AIM.timers, code);});
 				tr.singleShot = 1;
 				tr.start();
 				AIM.timers[code] = tr;
