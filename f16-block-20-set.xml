@@ -169,7 +169,7 @@
           <label>Payload presets</label>
           <binding>
             <command>dialog-show</command>
-            <dialog-name>payload</dialog-name>
+            <dialog-name>payload-b20</dialog-name>
           </binding>
       </item>
     </menu>
