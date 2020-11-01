@@ -577,15 +577,15 @@
             <seeker-field-deg type="int">180</seeker-field-deg>     
             <max-g type="int">5</max-g>
             <max-launch-g type="int">7</max-launch-g>               
-            <thrust-lbf-stage-1 type="double">660</thrust-lbf-stage-1>
+            <thrust-lbf-stage-1 type="double">660</thrust-lbf-stage-1><!-- SAC -->
             <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>
             <stage-1-duration-sec type="double">960</stage-1-duration-sec>
             <stage-2-duration-sec type="double">0.0</stage-2-duration-sec>
             <weight-launch-lbs type="double">1190</weight-launch-lbs>              <!--  -->
             <weight-warhead-lbs type="double">500</weight-warhead-lbs>            <!--  -->
-            <weight-fuel-lbm type="double"> 113 </weight-fuel-lbm>
-            <drag-coeff type="double">0.14</drag-coeff>
-            <cross-section-sqft type="double">0.994</cross-section-sqft>                             <!--  -->
+            <weight-fuel-lbm type="double"> 113 </weight-fuel-lbm><!-- SAC -->
+            <drag-coeff type="double">0.16</drag-coeff>
+            <cross-section-sqft type="double">0.994</cross-section-sqft>      <!-- SAC --> 
             <arming-time-sec type="double">5.0</arming-time-sec>          
             <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>
             <self-destruct-time-sec type="double">1000</self-destruct-time-sec>  
@@ -594,7 +594,7 @@
             <rail type="bool">false</rail>
             <max-report-distance type="double">125</max-report-distance>
             <class type="string">M</class>
-            <terrain-follow type="bool">true</terrain-follow>
+            <terrain-follow type="bool">false</terrain-follow><!-- seaskimming, not terrain following -->
             <fire-msg type="string">Bruiser</fire-msg>
             <ready-time type="double">25</ready-time> <!-- INS alignment -->
         </agm-84>
