@@ -25,11 +25,11 @@ Includes the following Aircraft variants:
 - F-16E Block 60
 - F-16 Simplified (a simpler FDM, yet still complex)
 
-Available liveries depend on chosen variant.
-Notice that the quality of liveries differ, with some being fictional.
 
-Beside from that, the variants also differ in engine specifics, FBW system, cockpit and aerodynamics. See manual.txt for further information.
-Weapons available and payload presets are mostly U.S. specific.
+Each Block has slight differences regarding engine specifics, FBW system, aerodynamics, cockpit layout, available liveries[1] and payloads[2].
+
+[1] Notice that the quality of liveries differ, with some being fictional.
+[2] Weapons available and payload presets are mostly U.S. specific.
 
 ![Image](https://i.ibb.co/X7mWV7D/fgfs-20200508202518.png)
 
