@@ -291,6 +291,9 @@ var getDLZ = func {
     return nil;
 }
 
+
+############## COMMON FOR ALL BLOCKS ##############
+
 # reload cannon only
 var cannon_load = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
@@ -355,6 +358,190 @@ var clean = func {
       screen.log.write(f16.msgB);
     }
 }
+
+# Airshow configuration (Smokewinder white)
+var airshow = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.smokeWL);
+        pylon2.loadSet(pylonSets.empty);
+        pylon3.loadSet(pylonSets.empty);
+        pylon4.loadSet(pylonSets.empty);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.empty);
+        pylon7.loadSet(pylonSets.empty);
+        pylon8.loadSet(pylonSets.empty);
+        pylon9.loadSet(pylonSets.smokeWR);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+############## BLOCK 10 ##############
+
+# Air Defense (AIM-9)
+var b10_a2a_adf = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim9WT);
+        pylon2.loadSet(pylonSets.aim9);
+        pylon3.loadSet(pylonSets.aim9);
+        pylon4.loadSet(pylonSets.empty);
+        pylon5.loadSet(pylonSets.fuel30);
+        pylon6.loadSet(pylonSets.empty);
+        pylon7.loadSet(pylonSets.aim9);
+        pylon8.loadSet(pylonSets.aim9);
+        pylon9.loadSet(pylonSets.aim9WT);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# Air Defense ER (AIM-9)
+var b10_a2a_adfer = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim9WT);
+        pylon2.loadSet(pylonSets.aim9);
+        pylon3.loadSet(pylonSets.aim9);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.aim9);
+        pylon8.loadSet(pylonSets.aim9);
+        pylon9.loadSet(pylonSets.aim9WT);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# Strike Light (MK-82, AIM-9)
+var b10_a2g_strike1 = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim9WT);
+        pylon2.loadSet(pylonSets.aim9);
+        pylon3.loadSet(pylonSets.m82);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.m82);
+        pylon8.loadSet(pylonSets.aim9);
+        pylon9.loadSet(pylonSets.aim9WT);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# Strike Heavy (MK-84, AIM-9)
+var b10_a2g_strike2 = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim9WT);
+        pylon2.loadSet(pylonSets.aim9);
+        pylon3.loadSet(pylonSets.m84);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.m84);
+        pylon8.loadSet(pylonSets.aim9);
+        pylon9.loadSet(pylonSets.aim9WT);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# Peacetime training configuration 1
+var b10_train1 = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.podACMIWT);
+        pylon2.loadSet(pylonSets.dumb1);
+        pylon3.loadSet(pylonSets.empty);
+        pylon4.loadSet(pylonSets.empty);
+        pylon5.loadSet(pylonSets.fuel30);
+        pylon6.loadSet(pylonSets.empty);
+        pylon7.loadSet(pylonSets.empty);
+        pylon8.loadSet(pylonSets.dumb1);
+        pylon9.loadSet(pylonSets.dumb2WT);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# Peacetime training configuration 2
+var b10_train2 = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.dumb2WT);
+        pylon2.loadSet(pylonSets.dumb1);
+        pylon3.loadSet(pylonSets.empty);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.empty);
+        pylon8.loadSet(pylonSets.podACMI);
+        pylon9.loadSet(pylonSets.dumb2WT);
+        pylon10.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# Ferry configuration 1 (2x 370gal, 300gal, MXU-648)
+var b10_ferry1 = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.dumb2WT);
+        pylon2.loadSet(pylonSets.empty);
+        pylon3.loadSet(pylonSets.podTrvl);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.fuel30);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.podTrvl);
+        pylon8.loadSet(pylonSets.empty);
+        pylon9.loadSet(pylonSets.dumb2WT);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# Ferry configuration 2 (2x 600gal, MXU-648)
+var b10_ferry2 = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.dumb1WT);
+        pylon2.loadSet(pylonSets.dumb1);
+        pylon3.loadSet(pylonSets.podTrvl);
+        pylon4.loadSet(pylonSets.fuel60L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel60R);
+        pylon7.loadSet(pylonSets.podTrvl);
+        pylon8.loadSet(pylonSets.dumb1);
+        pylon9.loadSet(pylonSets.dumb1WT);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+############## BLOCK 20 ##############
 
 # Air Defense (AIM-9, AIM-7)
 var a2a_adf = func {
@@ -990,26 +1177,6 @@ var train2 = func {
         pylon8.loadSet(pylonSets.dumb1);
         pylon9.loadSet(pylonSets.dumb3WT);
         pylon10.loadSet(pylonSets.podSAtp);
-        pylon11.loadSet(pylonSets.empty);
-        f16.reloadCannon();
-    } else {
-      screen.log.write(f16.msgB);
-    }
-}
-
-# Airshow configuration (Smokewinder white)
-var airshow = func {
-    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
-        pylon1.loadSet(pylonSets.smokeWL);
-        pylon2.loadSet(pylonSets.empty);
-        pylon3.loadSet(pylonSets.empty);
-        pylon4.loadSet(pylonSets.empty);
-        pylon5.loadSet(pylonSets.empty);
-        pylon6.loadSet(pylonSets.empty);
-        pylon7.loadSet(pylonSets.empty);
-        pylon8.loadSet(pylonSets.empty);
-        pylon9.loadSet(pylonSets.smokeWR);
-        pylon10.loadSet(pylonSets.empty);
         pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
