@@ -2094,6 +2094,8 @@ var AIM = {
 				me.printStats(me.type~": Not guiding (too low speed)");
 			}
 			me.tooLowSpeed = TRUE;
+		} else {
+			me.tooLowSpeed = FALSE;
 		}
 
 		if (me.guidance == "remote" or me.guidance == "remote-stable") {
@@ -2892,8 +2894,8 @@ var AIM = {
 		me.track_signal_e = me.raw_steer_signal_elev * !me.free * me.guiding;
 		me.track_signal_h = me.raw_steer_signal_head * !me.free * me.guiding;
 
-		me.printGuide("%04.1f deg elevate command desired", me.track_signal_e);
-		me.printGuide("%05.1f deg heading command desired", me.track_signal_h);
+		me.printGuideDetails("%04.1f deg elevate command desired", me.track_signal_e);
+		me.printGuideDetails("%05.1f deg heading command desired", me.track_signal_h);
 
 		# record some variables for next loop:
 		me.dist_last           = me.dist_curr;
@@ -3648,6 +3650,7 @@ var AIM = {
 					if (me.last_t_elev_norm_speed == nil) {
 						me.last_t_elev_norm_speed = me.t_LOS_elev_norm_speed;
 					}
+					
 
 					me.t_LOS_elev_norm_acc            = (me.t_LOS_elev_norm_speed - me.last_t_elev_norm_speed)/me.dt;
 					me.last_t_elev_norm_speed          = me.t_LOS_elev_norm_speed;
@@ -3882,8 +3885,8 @@ var AIM = {
 	},
 	
 	notifyInFlight: func (lat,lon,alt,rdar,typeID,typ,unique,thrustOn,callsign, heading, pitch, speed, is_deleted=0) {
-		## thrustON cannot be named 'thrust' as FG for some reason will then think its a function
-		var msg = notifications.ArmamentInFlightNotification.new("mfly"~typeID~unique~typ, unique, is_deleted?damage.DESTROY:damage.MOVE, 21+typeID);
+		## thrustON cannot be named 'thrust' as FG for some reason will then think its a function (probably fixed by the way call() now is used)
+		var msg = notifications.ArmamentInFlightNotification.new("mfly", unique, is_deleted?damage.DESTROY:damage.MOVE, 21+typeID);
         if (lat != nil) {
         	msg.Position.set_latlon(lat,lon,alt);
         } else {
@@ -3893,9 +3896,9 @@ var AIM = {
         if (thrustOn) {
         	msg.Flags = bits.set(msg.Flags, 1);#bit #1
         }
-        #print(typ~(is_deleted?" DESTROY ":" MOVE ")~typeof(lat));
         msg.IsDistinct = !is_deleted;
         msg.RemoteCallsign = callsign;
+        msg.UniqueIndex = ""~typeID~unique;
         msg.Pitch = pitch;
         msg.Heading = heading;
         msg.u_fps = speed;
