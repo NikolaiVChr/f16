@@ -619,36 +619,6 @@
             <colspan>6</colspan>
         </hrule>
 
-        <text>
-            <row>18</row>
-            <col>4</col>
-            <label>A/G Strategic Strike (Unguided)</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>18</row>
-            <col>5</col>
-            <legend>Mount</legend>
-            <binding>
-                <command>nasal</command>
-                <script>pylons.a2g_strat();</script>
-            </binding>
-        </button>
-
-         <text>
-            <row>20</row>
-            <col>4</col>
-            <label>A/G Tactical Strike (Guided)</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>20</row>
-            <col>5</col>
-            <legend>Mount</legend>
-            <binding>
-                <command>nasal</command>
-                <script>pylons.a2g_tact();</script>
-            </binding>
-        </button>
-
     </group>
 
     <empty><stretch>1</stretch></empty>
