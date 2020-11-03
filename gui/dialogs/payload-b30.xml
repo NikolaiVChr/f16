@@ -75,6 +75,16 @@
   <vrule/>
 
     <button>
+        <legend>Smokewinders</legend>
+        <binding>
+          <command>nasal</command>
+          <script>pylons.airshow();</script>
+        </binding>
+    </button>
+
+  <vrule/>
+
+    <button>
         <legend>Clean load</legend>
         <binding>
           <command>nasal</command>
@@ -225,21 +235,6 @@
             <binding>
                 <command>nasal</command>
                 <script>pylons.train2();</script>
-            </binding>
-        </button>
-
-        <text>
-            <row>16</row>
-            <col>0</col>
-            <label>Airshow (White smoke)</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>16</row>
-            <col>1</col>
-            <legend>Mount</legend>
-            <binding>
-                <command>nasal</command>
-                <script>pylons.airshow();</script>
             </binding>
         </button>
 

@@ -95,6 +95,15 @@
 
   <hrule/>
 
+  <group>
+    <layout>hbox</layout>
+    <text>
+        <label>A/A</label>
+    </text>
+  </group>
+
+  <hrule/>
+
     <group>
         <layout>table</layout>
         <text>

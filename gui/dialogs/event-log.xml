@@ -31,6 +31,8 @@
 			</binding>
 		</button>
 	</group>
+
+	<hrule/>
 	
 	<nasal>
         <open>
@@ -68,6 +70,7 @@
 	</button>
 
   	<text>
+  		<halign>left</halign>
 	    <label>Log:</label>
 	</text>
 

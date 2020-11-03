@@ -465,6 +465,10 @@ var a2a_dca = func {
 }
 
 ############################################
+################ COMMON A/G ################
+############################################
+
+############################################
 ################# BLOCK 10 #################
 ############################################
 
@@ -656,9 +660,109 @@ var b20_a2a_adf = func {
 ################# BLOCK 30 #################
 ############################################
 
+# SEAD "Wild Weasel" (AGM-88, 131 ECM pod)
+var b30_a2g_sead = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim120WT);
+        pylon2.loadSet(pylonSets.aim9);
+        pylon3.loadSet(pylonSets.a88);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.podEcm131);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.a88);
+        pylon8.loadSet(pylonSets.aim9);
+        pylon9.loadSet(pylonSets.aim120WT);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# SEAD/DEAD (CBU-87, ECM, 2 bags)
+var a2g_dead = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim120WT);
+        pylon2.loadSet(pylonSets.aim9);
+        pylon3.loadSet(pylonSets.c87);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.podEcm131);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.c87);
+        pylon8.loadSet(pylonSets.aim9);
+        pylon9.loadSet(pylonSets.aim120WT);
+        pylon10.loadSet(pylonSets.podLTgp);
+        pylon11.loadSet(pylonSets.podLNav);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
 ############################################
 ################ BLOCK 40/50 ###############
 ############################################
+
+# Peacetime training configuration 1
+var b40_train_aa = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.dumb3WT);
+        pylon2.loadSet(pylonSets.podACMI);
+        pylon3.loadSet(pylonSets.empty);
+        pylon4.loadSet(pylonSets.empty);
+        pylon5.loadSet(pylonSets.fuel30);
+        pylon6.loadSet(pylonSets.empty);
+        pylon7.loadSet(pylonSets.empty);
+        pylon8.loadSet(pylonSets.dumb1);
+        pylon9.loadSet(pylonSets.dumb3WT);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# Peacetime training configuration 2
+var b40_train_ag = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.dumb3WT);
+        pylon2.loadSet(pylonSets.podACMI);
+        pylon3.loadSet(pylonSets.empty);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.podEcm131);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.empty);
+        pylon8.loadSet(pylonSets.dumb1);
+        pylon9.loadSet(pylonSets.dumb3WT);
+        pylon10.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# Peacetime training configuration 2
+var b50_train_ag = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.dumb3WT);
+        pylon2.loadSet(pylonSets.podACMI);
+        pylon3.loadSet(pylonSets.empty);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.podEcm184);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.empty);
+        pylon8.loadSet(pylonSets.dumb1);
+        pylon9.loadSet(pylonSets.dumb3WT);
+        pylon10.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.podHarm);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
 
 ############################################
 ################# BLOCK 60 #################
@@ -1070,13 +1174,13 @@ var a2g_tact = func {
 var ferrycargo1 = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.dumb2WT);
-        pylon2.loadSet(pylonSets.dumb1);
+        pylon2.loadSet(pylonSets.empty);
         pylon3.loadSet(pylonSets.podTrvl);
         pylon4.loadSet(pylonSets.fuel37L);
         pylon5.loadSet(pylonSets.fuel30);
         pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.podTrvl);
-        pylon8.loadSet(pylonSets.dumb1);
+        pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.dumb2WT);
         pylon10.loadSet(pylonSets.empty);
         pylon11.loadSet(pylonSets.empty);
@@ -1090,13 +1194,13 @@ var ferrycargo1 = func {
 var ferrycargo2 = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.dumb3WT);
-        pylon2.loadSet(pylonSets.dumb1);
+        pylon2.loadSet(pylonSets.empty);
         pylon3.loadSet(pylonSets.podTrvl);
         pylon4.loadSet(pylonSets.fuel60L);
         pylon5.loadSet(pylonSets.empty);
         pylon6.loadSet(pylonSets.fuel60R);
         pylon7.loadSet(pylonSets.podTrvl);
-        pylon8.loadSet(pylonSets.dumb1);
+        pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.dumb3WT);
         pylon10.loadSet(pylonSets.empty);
         pylon11.loadSet(pylonSets.empty);
@@ -1140,66 +1244,6 @@ var train2 = func {
         pylon9.loadSet(pylonSets.dumb3WT);
         pylon10.loadSet(pylonSets.podSAtp);
         pylon11.loadSet(pylonSets.empty);
-        f16.reloadCannon();
-    } else {
-      screen.log.write(f16.msgB);
-    }
-}
-
-# Peacetime training configuration 1
-var b40_train_aa = func {
-    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
-        pylon1.loadSet(pylonSets.dumb3WT);
-        pylon2.loadSet(pylonSets.podACMI);
-        pylon3.loadSet(pylonSets.empty);
-        pylon4.loadSet(pylonSets.empty);
-        pylon5.loadSet(pylonSets.fuel30);
-        pylon6.loadSet(pylonSets.empty);
-        pylon7.loadSet(pylonSets.empty);
-        pylon8.loadSet(pylonSets.dumb1);
-        pylon9.loadSet(pylonSets.dumb3WT);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
-        f16.reloadCannon();
-    } else {
-      screen.log.write(f16.msgB);
-    }
-}
-
-# Peacetime training configuration 2
-var b40_train_ag = func {
-    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
-        pylon1.loadSet(pylonSets.dumb3WT);
-        pylon2.loadSet(pylonSets.podACMI);
-        pylon3.loadSet(pylonSets.empty);
-        pylon4.loadSet(pylonSets.fuel37L);
-        pylon5.loadSet(pylonSets.podEcm131);
-        pylon6.loadSet(pylonSets.fuel37R);
-        pylon7.loadSet(pylonSets.empty);
-        pylon8.loadSet(pylonSets.dumb1);
-        pylon9.loadSet(pylonSets.dumb3WT);
-        pylon10.loadSet(pylonSets.podSAtp);
-        pylon11.loadSet(pylonSets.empty);
-        f16.reloadCannon();
-    } else {
-      screen.log.write(f16.msgB);
-    }
-}
-
-# Peacetime training configuration 2
-var b50_train_ag = func {
-    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
-        pylon1.loadSet(pylonSets.dumb3WT);
-        pylon2.loadSet(pylonSets.podACMI);
-        pylon3.loadSet(pylonSets.empty);
-        pylon4.loadSet(pylonSets.fuel37L);
-        pylon5.loadSet(pylonSets.podEcm184);
-        pylon6.loadSet(pylonSets.fuel37R);
-        pylon7.loadSet(pylonSets.empty);
-        pylon8.loadSet(pylonSets.dumb1);
-        pylon9.loadSet(pylonSets.dumb3WT);
-        pylon10.loadSet(pylonSets.podSAtp);
-        pylon11.loadSet(pylonSets.podHarm);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
