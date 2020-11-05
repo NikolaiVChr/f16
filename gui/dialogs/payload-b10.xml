@@ -172,7 +172,7 @@
             <legend>Ferry Loadout (3 bags)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.b10_ferry1();</script>
+                <script>pylons.ferry1();</script>
             </binding>
         </button>
 
@@ -194,7 +194,7 @@
             <legend>Ferry Loadout (2 bags XL)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.b10_ferry2();</script>
+                <script>pylons.ferry2();</script>
             </binding>
         </button>
 

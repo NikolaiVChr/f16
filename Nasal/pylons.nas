@@ -466,7 +466,7 @@ var a2a_dca = func {
     }
 }
 
-# Ferry configuration 1 (2x 370gal, 300gal, MXU-648)
+# Ferry configuration 1 (3 bags, TRVL)
 var ferry1 = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.dumb2WT);
@@ -486,18 +486,18 @@ var ferry1 = func {
     }
 }
 
-# Ferry configuration 2 (2x 600gal, MXU-648)
+# Ferry configuration 2 (2 bags XL, TRVL)
 var ferry2 = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
-        pylon1.loadSet(pylonSets.dumb3WT);
-        pylon2.loadSet(pylonSets.empty);
+        pylon1.loadSet(pylonSets.dumb2WT);
+        pylon2.loadSet(pylonSets.dumb1);
         pylon3.loadSet(pylonSets.podTrvl);
         pylon4.loadSet(pylonSets.fuel60L);
         pylon5.loadSet(pylonSets.empty);
         pylon6.loadSet(pylonSets.fuel60R);
         pylon7.loadSet(pylonSets.podTrvl);
-        pylon8.loadSet(pylonSets.empty);
-        pylon9.loadSet(pylonSets.dumb3WT);
+        pylon8.loadSet(pylonSets.dumb1);
+        pylon9.loadSet(pylonSets.dumb2WT);
         pylon10.loadSet(pylonSets.empty);
         pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
@@ -678,7 +678,7 @@ var a2g_strat = func {
         pylon2.loadSet(pylonSets.aim120);
         pylon3.loadSet(pylonSets.b617);
         pylon4.loadSet(pylonSets.fuel60L);
-        pylon5.loadSet(pylonSets.podEcm184);
+        pylon5.loadSet(pylonSets.podEcm131);
         pylon6.loadSet(pylonSets.fuel60R);
         pylon7.loadSet(pylonSets.b617);
         pylon8.loadSet(pylonSets.aim120);
@@ -815,46 +815,6 @@ var b10_train_ag = func {
     }
 }
 
-# Ferry configuration 1 (3 bags, TRVL)
-var b10_ferry1 = func {
-    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
-        pylon1.loadSet(pylonSets.dumb2WT);
-        pylon2.loadSet(pylonSets.empty);
-        pylon3.loadSet(pylonSets.podTrvl);
-        pylon4.loadSet(pylonSets.fuel37L);
-        pylon5.loadSet(pylonSets.fuel30);
-        pylon6.loadSet(pylonSets.fuel37R);
-        pylon7.loadSet(pylonSets.podTrvl);
-        pylon8.loadSet(pylonSets.empty);
-        pylon9.loadSet(pylonSets.dumb2WT);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
-        f16.reloadCannon();
-    } else {
-      screen.log.write(f16.msgB);
-    }
-}
-
-# Ferry configuration 2 (2 bags XL, TRVL)
-var b10_ferry2 = func {
-    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
-        pylon1.loadSet(pylonSets.dumb1WT);
-        pylon2.loadSet(pylonSets.dumb1);
-        pylon3.loadSet(pylonSets.podTrvl);
-        pylon4.loadSet(pylonSets.fuel60L);
-        pylon5.loadSet(pylonSets.empty);
-        pylon6.loadSet(pylonSets.fuel60R);
-        pylon7.loadSet(pylonSets.podTrvl);
-        pylon8.loadSet(pylonSets.dumb1);
-        pylon9.loadSet(pylonSets.dumb1WT);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
-        f16.reloadCannon();
-    } else {
-      screen.log.write(f16.msgB);
-    }
-}
-
 ############################################
 ################# BLOCK 20 #################
 ############################################
@@ -954,6 +914,25 @@ var b30_a2g_dead = func {
         pylon5.loadSet(pylonSets.podEcm131);
         pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.c87);
+        pylon8.loadSet(pylonSets.aim9);
+        pylon9.loadSet(pylonSets.aim120WT);
+        pylon10.loadSet(pylonSets.podLTgp);
+        pylon11.loadSet(pylonSets.podLNav);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+var b30_a2s_antiship = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim120WT);
+        pylon2.loadSet(pylonSets.aim9);
+        pylon3.loadSet(pylonSets.a84);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.a84);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.podLTgp);
@@ -1075,7 +1054,7 @@ var b50_a2g_tact = func {
         pylon2.loadSet(pylonSets.aim9);
         pylon3.loadSet(pylonSets.b6112);
         pylon4.loadSet(pylonSets.fuel37L);
-        pylon5.loadSet(pylonSets.podEcm131);
+        pylon5.loadSet(pylonSets.podEcm184);
         pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.b6112);
         pylon8.loadSet(pylonSets.aim9);
