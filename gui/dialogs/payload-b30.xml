@@ -229,7 +229,7 @@
             <legend>A/G Training (2 bags)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.b40_train_ag();</script>
+                <script>pylons.b30_train_ag();</script>
             </binding>
         </button>
 
