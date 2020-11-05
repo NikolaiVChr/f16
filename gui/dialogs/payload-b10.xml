@@ -157,7 +157,7 @@
         <text>
             <row>2</row>
             <col>0</col>
-            <label>A/G Strike (Light, 2 bags)</label>
+            <label>A/G Strike (Light)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>2</row>
@@ -172,7 +172,7 @@
         <text>
             <row>2</row>
             <col>2</col>
-            <label>A/G Strike (Heavy, 2 bags)</label>
+            <label>A/G Strike (Heavy)</label>
         </text>
         <button><pref-width>45</pref-width><pref-height>20</pref-height>
             <row>2</row>

@@ -466,6 +466,46 @@ var a2a_dca = func {
     }
 }
 
+# Ferry configuration 1 (2x 370gal, 300gal, MXU-648)
+var ferry1 = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.dumb2WT);
+        pylon2.loadSet(pylonSets.empty);
+        pylon3.loadSet(pylonSets.podTrvl);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.fuel30);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.podTrvl);
+        pylon8.loadSet(pylonSets.empty);
+        pylon9.loadSet(pylonSets.dumb2WT);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# Ferry configuration 2 (2x 600gal, MXU-648)
+var ferry2 = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.dumb3WT);
+        pylon2.loadSet(pylonSets.empty);
+        pylon3.loadSet(pylonSets.podTrvl);
+        pylon4.loadSet(pylonSets.fuel60L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel60R);
+        pylon7.loadSet(pylonSets.podTrvl);
+        pylon8.loadSet(pylonSets.empty);
+        pylon9.loadSet(pylonSets.dumb3WT);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
 ############################################
 ################ COMMON A/G ################
 ############################################
@@ -516,9 +556,9 @@ var a2g_mk1 = func {
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim9);
         pylon3.loadSet(pylonSets.m82);
-        pylon4.loadSet(pylonSets.m82);
-        pylon5.loadSet(pylonSets.fuel30);
-        pylon6.loadSet(pylonSets.m82);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.m82);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
@@ -536,9 +576,9 @@ var a2g_mk2 = func {
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim9);
         pylon3.loadSet(pylonSets.m84);
-        pylon4.loadSet(pylonSets.m84);
-        pylon5.loadSet(pylonSets.fuel30);
-        pylon6.loadSet(pylonSets.m84);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.m84);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
@@ -611,6 +651,46 @@ var a2g_lgb1 = func {
     }
 }
 
+# A/G LBG Strike 2 (GBU-24)
+var a2g_lgb2 = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim120WT);
+        pylon2.loadSet(pylonSets.aim9);
+        pylon3.loadSet(pylonSets.g24);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.g24);
+        pylon8.loadSet(pylonSets.aim9);
+        pylon9.loadSet(pylonSets.aim120WT);
+        pylon10.loadSet(pylonSets.podLTgp);
+        pylon11.loadSet(pylonSets.podLNav);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# A/G Strategic Unguided Strike (B61-7)
+var a2g_strat = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim120WT);
+        pylon2.loadSet(pylonSets.aim120);
+        pylon3.loadSet(pylonSets.b617);
+        pylon4.loadSet(pylonSets.fuel60L);
+        pylon5.loadSet(pylonSets.podEcm184);
+        pylon6.loadSet(pylonSets.fuel60R);
+        pylon7.loadSet(pylonSets.b617);
+        pylon8.loadSet(pylonSets.aim120);
+        pylon9.loadSet(pylonSets.aim120WT);
+        pylon10.loadSet(pylonSets.podLTgp);
+        pylon11.loadSet(pylonSets.podLNav);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
 ############################################
 ################# BLOCK 10 #################
 ############################################
@@ -661,9 +741,9 @@ var b10_a2g_strike1 = func {
         pylon1.loadSet(pylonSets.aim9WT);
         pylon2.loadSet(pylonSets.aim9);
         pylon3.loadSet(pylonSets.m82);
-        pylon4.loadSet(pylonSets.fuel37L);
-        pylon5.loadSet(pylonSets.empty);
-        pylon6.loadSet(pylonSets.fuel37R);
+        pylon4.loadSet(pylonSets.m82);
+        pylon5.loadSet(pylonSets.fuel30);
+        pylon6.loadSet(pylonSets.m82);
         pylon7.loadSet(pylonSets.m82);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim9WT);
@@ -681,9 +761,9 @@ var b10_a2g_strike2 = func {
         pylon1.loadSet(pylonSets.aim9WT);
         pylon2.loadSet(pylonSets.aim9);
         pylon3.loadSet(pylonSets.m84);
-        pylon4.loadSet(pylonSets.fuel37L);
-        pylon5.loadSet(pylonSets.empty);
-        pylon6.loadSet(pylonSets.fuel37R);
+        pylon4.loadSet(pylonSets.m84);
+        pylon5.loadSet(pylonSets.fuel30);
+        pylon6.loadSet(pylonSets.m84);
         pylon7.loadSet(pylonSets.m84);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim9WT);
@@ -1233,7 +1313,6 @@ var a2g_dead = func {
     }
 }
 
-
 # A/G Stand-off Strike mode 1 (AGM-154A)
 var a2g_jsow = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
@@ -1268,66 +1347,6 @@ var a2g_jassm = func {
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.podSAtp);
         pylon11.loadSet(pylonSets.podHarm);
-        f16.reloadCannon();
-    } else {
-      screen.log.write(f16.msgB);
-    }
-}
-
-# A/G Strategic Unguided Strike (B61-7)
-var a2g_strat = func {
-    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
-        pylon1.loadSet(pylonSets.aim120WT);
-        pylon2.loadSet(pylonSets.aim120);
-        pylon3.loadSet(pylonSets.b617);
-        pylon4.loadSet(pylonSets.fuel60L);
-        pylon5.loadSet(pylonSets.podEcm184);
-        pylon6.loadSet(pylonSets.fuel60R);
-        pylon7.loadSet(pylonSets.b617);
-        pylon8.loadSet(pylonSets.aim120);
-        pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podLTgp);
-        pylon11.loadSet(pylonSets.podLNav);
-        f16.reloadCannon();
-    } else {
-      screen.log.write(f16.msgB);
-    }
-}
-
-# Ferry configuration 1 (2x 370gal, 300gal, MXU-648)
-var ferrycargo1 = func {
-    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
-        pylon1.loadSet(pylonSets.dumb2WT);
-        pylon2.loadSet(pylonSets.empty);
-        pylon3.loadSet(pylonSets.podTrvl);
-        pylon4.loadSet(pylonSets.fuel37L);
-        pylon5.loadSet(pylonSets.fuel30);
-        pylon6.loadSet(pylonSets.fuel37R);
-        pylon7.loadSet(pylonSets.podTrvl);
-        pylon8.loadSet(pylonSets.empty);
-        pylon9.loadSet(pylonSets.dumb2WT);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
-        f16.reloadCannon();
-    } else {
-      screen.log.write(f16.msgB);
-    }
-}
-
-# Ferry configuration 2 (2x 600gal, MXU-648)
-var ferrycargo2 = func {
-    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
-        pylon1.loadSet(pylonSets.dumb3WT);
-        pylon2.loadSet(pylonSets.empty);
-        pylon3.loadSet(pylonSets.podTrvl);
-        pylon4.loadSet(pylonSets.fuel60L);
-        pylon5.loadSet(pylonSets.empty);
-        pylon6.loadSet(pylonSets.fuel60R);
-        pylon7.loadSet(pylonSets.podTrvl);
-        pylon8.loadSet(pylonSets.empty);
-        pylon9.loadSet(pylonSets.dumb3WT);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
