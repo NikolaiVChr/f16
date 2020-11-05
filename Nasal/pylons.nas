@@ -1285,8 +1285,8 @@ var a2s_antiship = func {
         pylon7.loadSet(pylonSets.a84);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podLTgp);
-        pylon11.loadSet(pylonSets.podLNav);
+        pylon10.loadSet(pylonSets.podLite);
+        pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);

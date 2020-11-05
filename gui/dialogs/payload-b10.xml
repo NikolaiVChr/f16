@@ -16,7 +16,7 @@
     </empty>
     
     <text>
-      <label>Payload presets</label>
+      <label>Block 10 payload presets</label>
     </text>
     
     <empty>
@@ -97,15 +97,12 @@
 
     <group>
         <layout>table</layout>
-        <text>
+
+        <button>
+            <pref-width>200</pref-width><pref-height>23</pref-height>
             <row>0</row>
             <col>0</col>
-            <label>Air Defense</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>0</row>
-            <col>1</col>
-            <legend>Mount</legend>
+            <legend>Air Defense</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.b10_a2a_adf();</script>
@@ -118,15 +115,11 @@
             <colspan>6</colspan>
         </hrule>
 
-        <text>
+        <button>
+            <pref-width>200</pref-width><pref-height>23</pref-height>
             <row>0</row>
             <col>2</col>
-            <label>Air Defense (2 bags)</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>0</row>
-            <col>3</col>
-            <legend>Mount</legend>
+            <legend>Air Defense (2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.b10_a2a_adfer();</script>
@@ -139,90 +132,66 @@
             <colspan>6</colspan>
         </hrule>
 
-        <text>
+        <button>
+            <pref-width>200</pref-width><pref-height>23</pref-height>
             <row>0</row>
             <col>4</col>
-            <label>A/A Training</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>0</row>
-            <col>5</col>
-            <legend>Mount</legend>
+            <legend>A/A Training</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.b10_train_aa();</script>
             </binding>
         </button>
 
-        <text>
+        <button>
+            <pref-width>200</pref-width><pref-height>23</pref-height>
             <row>2</row>
             <col>0</col>
-            <label>A/G Strike (Light)</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>2</row>
-            <col>1</col>
-            <legend>Mount</legend>
+            <legend>A/G Strike (Light)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.b10_a2g_strike1();</script>
             </binding>
         </button>
 
-        <text>
+        <button>
+            <pref-width>200</pref-width><pref-height>23</pref-height>
             <row>2</row>
             <col>2</col>
-            <label>A/G Strike (Heavy)</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>2</row>
-            <col>3</col>
-            <legend>Mount</legend>
+            <legend>A/G Strike (Heavy)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.b10_a2g_strike2();</script>
             </binding>
         </button>
 
-        <text>
+        <button>
+            <pref-width>200</pref-width><pref-height>23</pref-height>
             <row>4</row>
             <col>0</col>
-            <label>Ferry Loadout (3 bags)</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>4</row>
-            <col>1</col>
-            <legend>Mount</legend>
+            <legend>Ferry Loadout (3 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.b10_ferry1();</script>
             </binding>
         </button>
 
-        <text>
+        <button>
+            <pref-width>200</pref-width><pref-height>23</pref-height>
             <row>2</row>
             <col>4</col>
-            <label>A/G Training (2 bags)</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>2</row>
-            <col>5</col>
-            <legend>Mount</legend>
+            <legend>A/G Training (2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.b10_train_ag();</script>
             </binding>
         </button>
 
-        <text>
+        <button>
+            <pref-width>200</pref-width><pref-height>23</pref-height>
             <row>4</row>
             <col>4</col>
-            <label>Ferry Loadout (2 bags XL)</label>
-        </text>
-        <button><pref-width>45</pref-width><pref-height>20</pref-height>
-            <row>4</row>
-            <col>5</col>
-            <legend>Mount</legend>
+            <legend>Ferry Loadout (2 bags XL)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.b10_ferry2();</script>
