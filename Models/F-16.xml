@@ -2468,7 +2468,7 @@
         <value>Empty</value>
       </equals>
     </not>
-    <not>
+    <!--not>
       <or>
      <equals>
         <property>payload/armament/station/id-2-set</property>
@@ -2503,7 +2503,7 @@
         <value>2 x LAU-68</value>
       </equals>
     </or>
-    </not>
+    </not-->
   </and>
   </condition>
  </animation>
@@ -2519,7 +2519,7 @@
         <value>Empty</value>
       </equals>
     </not>
-    <not>
+    <!--not>
       <or>
      <equals>
         <property>payload/armament/station/id-3-set</property>
@@ -2546,7 +2546,7 @@
         <value>2 x CBU-105</value>
       </equals>
     </or>
-    </not>
+    </not-->
   </and>
   </condition>
  </animation>
@@ -2562,7 +2562,7 @@
         <value>Empty</value>
       </equals>
     </not>
-    <not>
+    <!--not>
       <or>
      <equals>
         <property>payload/armament/station/id-5-set</property>
@@ -2589,7 +2589,7 @@
         <value>2 x CBU-105</value>
       </equals>
     </or>
-    </not>
+    </not-->
   </and>
   </condition>
  </animation>
@@ -2605,7 +2605,7 @@
         <value>Empty</value>
       </equals>
     </not>
-    <not>
+    <!--not>
       <or>
      <equals>
         <property>payload/armament/station/id-6-set</property>
@@ -2640,7 +2640,7 @@
         <value>2 x LAU-68</value>
       </equals>
     </or>
-    </not>
+    </not-->
   </and>
   </condition>
  </animation>
