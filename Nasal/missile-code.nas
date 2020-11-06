@@ -5,7 +5,7 @@
 ####### License: GPL 2.0
 #######
 ####### Authors:
-#######  Alexis Bory, Fabien Barbier, Richard Harrison, Justin Nicholson, Nikolai V. Chr., Axel Paccalin
+#######  Alexis Bory, Fabien Barbier, Richard Harrison, Justin Nicholson, Nikolai V. Chr., Axel Paccalin, Colin Geniet
 ####### 
 ####### The file vector.nas needs to be available in namespace 'vector'.
 #######
@@ -368,8 +368,8 @@ var AIM = {
         m.eject_speed           = getprop(m.nodeString~"ejector-speed-fps");          # Ordnance ejected by pylon with this speed. Default = 0. Optional. Ignored if on rail.
         m.guideWhileDrop        = getprop(m.nodeString~"guide-before-ignition");      # Can guide before engine ignition if speed is high enough.
         # counter-measures
-        m.chaffResistance       = getprop(m.nodeString~"chaff-resistance");           # Float 0-1. Amount of resistance to chaff. Default 0.950. [optional]
-        m.flareResistance       = getprop(m.nodeString~"flare-resistance");           # Float 0-1. Amount of resistance to flare. Default 0.950. [optional]
+        m.chaffResistance       = getprop(m.nodeString~"chaff-resistance");           # Float 0-1. Amount of resistance to chaff. Default 0.850. [optional]
+        m.flareResistance       = getprop(m.nodeString~"flare-resistance");           # Float 0-1. Amount of resistance to flare. Default 0.850. [optional]
         # data-link to launch platform
         m.data                  = getprop(m.nodeString~"telemetry");                  # Boolean. Data link back to aircraft when missile is flying. [optional]
         m.dlz_enabled           = getprop(m.nodeString~"DLZ");                        # Supports dynamic launch zone info. For now only works with A/A. [optional]
@@ -381,36 +381,12 @@ var AIM = {
 		m.wing_eff              = getprop(m.nodeString~"wing-efficiency-relative-to-an-elliptical-planform"); # 1
 		m.Cd_plume              = getprop(m.nodeString~"exhaust-plume-paracitic-drag-factor"); # 15/25
 
-        
-        m.mode_slave            = TRUE;# if slaved to command seeker directions from radar/helmet/cursor
-        m.mode_bore             = FALSE;# if locked to bore locks only
-        m.caged                 = TRUE;# if gyro is caged
-        m.uncage_auto           = TRUE;# will uncage when lock achieved
-        m.seeker_dir_heading    = 0;# where seeker is looking (before release)
-        m.seeker_dir_pitch      = 0;
-        m.command_dir_heading   = 0;# where seeker is commanded in slave mode to look
-        m.command_dir_pitch     = 0;
-        m.contacts              = [];# contacts that should be considered to lock onto. In slave it will only lock to the first.
-        m.warm                  = 1;# normalized warm/cold
-        m.ready_standby_time    = 0;# time when started from standby
-        m.cooling               = FALSE;
-        m.command_tgt           = TRUE;
-        m.patternDirY           = 1;
-        m.patternDirX           = 1;
-        m.pattern_last_time     = 0;
-        m.seeker_last_time      = 0;
-        m.seeker_elev           = 0;
-        m.seeker_head           = 0;
-        m.cooling_last_time     = 0;
-        m.cool_total_time       = 0;
-        m.patternPitchUp        = 2.5;
-		m.patternPitchDown      = -15;
-		m.patternYaw            = 8.5;
-
         if (m.detect_range_nm == nil) {
           # backwards compatibility
           m.detect_range_nm = m.max_fire_range_nm;
-        }
+        }        
+        m.detect_range_curr_nm = m.detect_range_nm;
+        
         if (m.max_seeker_dev == nil) {
         	m.max_seeker_dev = 15;
         }
@@ -418,7 +394,6 @@ var AIM = {
           m.beam_width_deg = 4;
         } 
         m.beam_width_deg *= 0.5;
-        m.detect_range_curr_nm = m.detect_range_nm;
 		
 		if (m.eject_speed == nil) {
           m.eject_speed = 0;
@@ -474,11 +449,6 @@ var AIM = {
         	m.terminal_dive_time = 4;
         }
         
-        # three variables used for trigonometry hit calc:
-		m.vApproch       = 1;
-        m.tpsApproch     = 0;
-        m.usedChance     = FALSE;
-
         if (m.weight_fuel_lbm == nil) {
 			m.weight_fuel_lbm = 0;
 		}
@@ -581,28 +551,6 @@ var AIM = {
 		m.weapon_model          = getprop("payload/armament/models")~m.weapon_model_type~"/"~m.type_lc~"-";
 		m.weapon_model2          = getprop("payload/armament/models")~m.weapon_model_type~"/"~m.type_lc;
 
-		m.mpLat          = getprop("payload/armament/MP-lat");# properties to be used for showing missile over MP.
-		m.mpLon          = getprop("payload/armament/MP-lon");
-		m.mpAlt          = getprop("payload/armament/MP-alt");
-		m.mpAltft        = getprop("payload/armament/MP-alt-ft");#used for anim of S-300 camera view: Follow
-		m.mpShow = FALSE;
-		if (m.mpLat != nil and m.mpLon != nil and m.mpAlt != nil and m.mpAltft != nil) {
-			m.mpLat          = props.globals.getNode(m.mpLat, FALSE);
-			m.mpLon          = props.globals.getNode(m.mpLon, FALSE);
-			m.mpAlt          = props.globals.getNode(m.mpAlt, FALSE);
-			m.mpAltft        = props.globals.getNode(m.mpAltft, FALSE);
-			if (m.mpLat != nil and m.mpLon != nil and m.mpAlt != nil) {
-				m.mpShow = TRUE;
-			}
-		}
-
-		m.elapsed_last          = 0;
-
-		m.target_air = find("A", m.class)==-1?FALSE:TRUE;
-		m.target_sea = find("M", m.class)==-1?FALSE:TRUE;#use M for marine, since S can be confused with surface.
-		m.target_gnd = find("G", m.class)==-1?FALSE:TRUE;
-		m.target_pnt = find("P", m.class)==-1?FALSE:TRUE;
-
 		# Find the next index for "models/model" and create property node.
 		# Find the next index for "ai/models/aim-9" and create property node.
 		# (M. Franz, see Nasal/tanker.nas)
@@ -651,6 +599,28 @@ var AIM = {
 		m.hdgN   = m.ai.getNode("orientation/true-heading-deg", 1);
 		m.pitchN = m.ai.getNode("orientation/pitch-deg", 1);
 		m.rollN  = m.ai.getNode("orientation/roll-deg", 1);
+		
+		m.mpLat          = getprop("payload/armament/MP-lat");# properties to be used for showing missile over MP.
+		m.mpLon          = getprop("payload/armament/MP-lon");
+		m.mpAlt          = getprop("payload/armament/MP-alt");
+		m.mpAltft        = getprop("payload/armament/MP-alt-ft");#used for anim of S-300 camera view: Follow
+		m.mpShow = FALSE;
+		if (m.mpLat != nil and m.mpLon != nil and m.mpAlt != nil and m.mpAltft != nil) {
+			m.mpLat          = props.globals.getNode(m.mpLat, FALSE);
+			m.mpLon          = props.globals.getNode(m.mpLon, FALSE);
+			m.mpAlt          = props.globals.getNode(m.mpAlt, FALSE);
+			m.mpAltft        = props.globals.getNode(m.mpAltft, FALSE);
+			if (m.mpLat != nil and m.mpLon != nil and m.mpAlt != nil) {
+				m.mpShow = TRUE;
+			}
+		}
+
+		m.elapsed_last          = 0;
+
+		m.target_air = find("A", m.class)==-1?FALSE:TRUE;
+		m.target_sea = find("M", m.class)==-1?FALSE:TRUE;#use M for marine, since S can be confused with surface.
+		m.target_gnd = find("G", m.class)==-1?FALSE:TRUE;
+		m.target_pnt = find("P", m.class)==-1?FALSE:TRUE;
 
 		m.ac      = nil;
 
@@ -681,6 +651,31 @@ var AIM = {
 		# The more variables here instead of declared locally, the better for performance.
 		# Due to garbage collector.
 		#
+		
+		m.mode_slave            = TRUE;# if slaved to command seeker directions from radar/helmet/cursor
+        m.mode_bore             = FALSE;# if locked to bore locks only
+        m.caged                 = TRUE;# if gyro is caged
+        m.uncage_auto           = TRUE;# will uncage when lock achieved
+        m.seeker_dir_heading    = 0;# where seeker is looking (before release)
+        m.seeker_dir_pitch      = 0;
+        m.command_dir_heading   = 0;# where seeker is commanded in slave mode to look
+        m.command_dir_pitch     = 0;
+        m.contacts              = [];# contacts that should be considered to lock onto. In slave it will only lock to the first.
+        m.warm                  = 1;# normalized warm/cold
+        m.ready_standby_time    = 0;# time when started from standby
+        m.cooling               = FALSE;
+        m.command_tgt           = TRUE;
+        m.patternDirY           = 1;
+        m.patternDirX           = 1;
+        m.pattern_last_time     = 0;
+        m.seeker_last_time      = 0;
+        m.seeker_elev           = 0;
+        m.seeker_head           = 0;
+        m.cooling_last_time     = 0;
+        m.cool_total_time       = 0;
+        m.patternPitchUp        = 2.5;
+		m.patternPitchDown      = -15;
+		m.patternYaw            = 8.5;
 		
 		m.noti_time = 1.5;#2xsend freq of emesary notifications
 
@@ -2343,11 +2338,6 @@ var AIM = {
  			if ( me.free == FALSE ) {
  				# check if the missile overloaded with G force.
 				me.g = me.steering_speed_G(me.hdg, me.pitch, me.track_signal_e, me.track_signal_h, me.old_speed_fps, me.dt);
-
-				if ( me.g > me.max_g_current and me.init_launch != 0) {
-					#me.free = TRUE;
-					me.printStats("%s: Missile attempted to pull too many G, would have broken. %d G", me.type, me.g);
-				}
 			} else {
 				me.g = 0;
 			}
@@ -2770,23 +2760,23 @@ var AIM = {
 		# Here will be set the max angle of pitch and the max angle of heading to avoid G overload
 		#
         me.myG = me.steering_speed_G(me.hdg, me.pitch, me.track_signal_e, me.track_signal_h, me.old_speed_fps, me.dt);
-        #printf("G1 %.2f", me.myG);
-        if(me.max_g_current < me.myG)
+
+        if(me.myG > me.max_g_current)
         {
-            me.MyCoef = me.max_G_Rotation(me.track_signal_e, me.track_signal_h, me.old_speed_fps, me.dt, me.max_g_current);
-            me.track_signal_e =  me.track_signal_e * me.MyCoef;
-            me.track_signal_h =  me.track_signal_h * me.MyCoef;
-            #me.printFlight(sprintf("G1 %.2f", myG));
+            me.MyCoef = me.overload_limiter(me.hdg, me.pitch, me.track_signal_e, me.track_signal_h, me.old_speed_fps, me.dt, me.max_g_current);
             
-            me.myG = me.steering_speed_G(me.hdg, me.pitch, me.track_signal_e, me.track_signal_h, me.old_speed_fps, me.dt);
-            #printf("G2 %.2f", me.myG);
+            me.track_signal_h =  me.MyCoef[0];
+            me.track_signal_e =  me.MyCoef[1];
+            
+            me.myGnew = me.steering_speed_G(me.hdg, me.pitch, me.track_signal_e, me.track_signal_h, me.old_speed_fps, me.dt);
             #me.printFlight(sprintf("G2 %.2f", myG)~sprintf(" - Coeff %.2f", MyCoef));
             if (me.limitGs == FALSE) {
-            	me.printFlight("%s: Missile pulling almost max G: %04.1f G", me.type, me.myG);
+            	me.printFlight("%s: Missile pulling approx max G: %06.3f/%06.3f (%06.3f)", me.type, me.myGnew, me.max_g_current, me.myG);
             }
+            me.myG = me.myGnew;
         }
         if (me.limitGs == TRUE and me.myG > me.max_g_current/2) {
-        	# Save the high performance maneuvering for later
+        	# Save the horiz high performance maneuvering for later
         	me.track_signal_e = me.track_signal_e /2;
         }
 	},
@@ -5062,8 +5052,52 @@ var AIM = {
 
 		return me.g;
 	},
+	
+	overload_limiter: func(meHeading, mePitch, steering_e_deg, steering_h_deg, s_fps, dt, gMax) {
+    	# The missile desires to rotate a certain amount
+    	# This function will limit that steering to prevent it from exceeding the max G it should be able to do at this air density
+    	
+    	if (gMax == 0 or (steering_e_deg == 0 and steering_h_deg == 0)) {
+    		return [0,0];
+    	}
+    	
+		# Get G number from steering (e, h) in deg, speed in ft/s.
+		me.meVector = me.myMath.eulerToCartesian3X(-meHeading, mePitch, 0);
+		me.meVectorN= me.myMath.normalize(me.meVector);
+		me.meVector = me.myMath.product(s_fps, me.meVectorN);#velocity vector now		
+		me.itVector = me.myMath.eulerToCartesian3X(-(meHeading+steering_h_deg), mePitch+steering_e_deg, 0);
+		me.itVectorN= me.myMath.normalize(me.itVector);
+		me.itVector = me.myMath.product(s_fps, me.itVectorN);#velocity vector if doing that steering
+			
+		# Delta lateral velocity
+		me.dvAcc = me.myMath.minus(me.itVector, me.meVector);
+		me.dv = me.myMath.projVectorOnPlane(me.meVectorN, me.dvAcc);		
+		me.dv = me.myMath.magnitudeVector(me.dv);
+		
+		# calculate g-force
+		# dv/dt=a
+		me.g_load = (me.dv/dt) / g_fps;
+		
+		me.exceed_g = gMax/me.g_load;
+		
+		if (me.exceed_g >= 1) {
+			return [steering_h_deg, steering_e_deg];
+		}
+		
+		# Now do something that works okay for small desired steerings, but fails for big steerings. Hence the 0.9 factor.
+		me.dvAcc9 = me.myMath.product(me.exceed_g*0.9, me.dvAcc);
+		me.itVector = me.myMath.plus(me.dvAcc9, me.meVector);
+		
+		me.euler = me.myMath.cartesianToEuler(me.itVector);
+		
+		if (me.euler[0] == nil) {
+			me.euler[0] = meHeading;
+		}
+		
+		return [geo.normdeg180(me.euler[0]-meHeading), me.euler[1]-mePitch];
+	},
 
-    max_G_Rotation: func(steering_e_deg, steering_h_deg, s_fps, dt, gMax) {
+    max_G_Rotation_old: func(steering_e_deg, steering_h_deg, s_fps, dt, gMax) {
     	# The missile desires to rotate a certain amount
     	# This function will limit that steering to prevent it from exceeding the max G it should be able to do at this air density
 		me.guess = 1;
