@@ -167,7 +167,7 @@
           <label>Payload presets</label>
           <binding>
             <command>dialog-show</command>
-            <dialog-name>payload-b40</dialog-name>
+            <dialog-name>payload-b50</dialog-name>
           </binding>
       </item>
       <item n="11">
