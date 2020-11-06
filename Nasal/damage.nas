@@ -69,12 +69,12 @@ var warheads = {
     "AGM-158":           [ 6, 1000.00,1,0],
     "ALARM":             [ 7,  450.00,1,0],
     "AM 39 Exocet":      [ 8,  364.00,1,0], 
-    "AS 37 Martel":      [ 9,  330.00,1,0], 
+    "AS 37 Martel":      [ 9,  330.00,1,0],# Also : AJ 168 Martel 
     "AS30L":             [10,  529.00,1,0],
     "BL755":             [11,  100.00,1,1],# 800lb bomblet warhead. Mix of armour piecing and HE. 100 due to need to be able to kill buk-m2.    
     "CBU-87":            [12,  100.00,1,1],# bomblet warhead. Mix of armour piecing and HE. 100 due to need to be able to kill buk-m2.    
     "CBU-105":           [13,  100.00,1,1],# bomblet warhead. Mix of armour piecing and HE. 100 due to need to be able to kill buk-m2.    
-    "AJ 168 Martel":     [14,  330.00,1,0],
+    "AS 37 Armat":       [14,  330.00,1,0],
     "FAB-100":           [15,   92.59,1,0],
     "FAB-250":           [16,  202.85,1,0],
     "FAB-500":           [17,  564.38,1,0],
@@ -551,7 +551,7 @@ var deadreckon_updatetime = 0.1;# 1/15 of missile send rate
 var time_before_delete = 2.5;# time since last notification before deleting
 
 var dynamic_loop = func {
-  # This keeps track of flying missiles/parachutes/flares and manages ModelManager.
+  # This keeps track of MP flying missiles/parachutes/flares and manages ModelManager.
   var new_dynamic3d = [];
   var stime = systime();
   foreach (dynamic3d_entry ; dynamic3d) {
@@ -747,7 +747,6 @@ var ModelManager = {
 };
 
 var reckon_create = func (kee, dyna, stime) {
-  #print("ES create "~kee);
   var path = getprop("payload/armament/models") ~ "parachutist.xml";
   if (dyna[7]==1) {
     path = getprop("payload/armament/models") ~ "light_smoke.xml";
@@ -755,10 +754,11 @@ var reckon_create = func (kee, dyna, stime) {
     path = getprop("payload/armament/models") ~ "heavy_smoke.xml";
   } elsif (dyna[7] ==3) {
     path = getprop("payload/armament/models") ~ "the-flare.xml";
+  } elsif (dyna[7] == -1) {
+    return nil;
   }
   var static = ModelManager.new(path, dyna[1],dyna[2],dyna[3]*M2FT,dyna[5],dyna[6],dyna[7]==0);#path,lat,lon,alt_m,heading,pitch
   if (static != nil) {
-    #static.place();
     var entry = [kee, stime, static, dyna[4]];
     return entry;
   }
@@ -767,7 +767,6 @@ var reckon_create = func (kee, dyna, stime) {
 }
 
 var reckon_update = func (dyna, entry, stime) {
-  #print("ES update");
   var static = entry[2];
   var dynami2 = [entry[0], stime, static, dyna[4]];
   # translate
@@ -777,7 +776,6 @@ var reckon_update = func (dyna, entry, stime) {
 }
 
 var reckon_move = func (entry, stime) {
-  #print("ES move");
   var static = entry[2];
   var time_then = entry[1];
   var time_now = stime;
@@ -787,7 +785,6 @@ var reckon_move = func (entry, stime) {
 }
 
 var reckon_delete = func (entry) {
-  #print("ES delete");
   entry[2].del();
 }
 
@@ -816,7 +813,7 @@ var flare_sorter = func(a, b) {
 }
 
 var animate_flare = func {
-  # This detects own flares and send out notifications about their position every 0.75s
+  # Send out notifications about own flare positions every 0.4s
   if (!getprop("payload/armament/msg")) {
     return;
   }
@@ -858,11 +855,9 @@ var animate_flare = func {
       notifications.objectBridgedTransmitter.NotifyAll(msg);
       flares_sent += 1;
     }
-    #print("Update flare "~flare[5]);
     append(old_flares, flare);
   }
   flare_list = old_flares;
-  #print(flares_sent~" flares sent, out of "~size(flare_list));
   if(auto_flare_caller) {
     auto_flare_released();
   }  
@@ -871,7 +866,7 @@ var flaretimer = maketimer(flare_update_time, animate_flare);
 flaretimer.start();
 
 var auto_flare_released = func {
-  # new flare
+  # This detects own flares releases
   var prop = getprop("rotors/main/blade[3]/flap-deg");
   var stime = systime();
   if (prop != nil and prop != 0 and prop != last_prop and stime-last_release > 1)  {
@@ -885,7 +880,7 @@ var flare_released = func {
     if (!getprop("payload/armament/msg")) {
       return;
     }
-    # new flare
+    # We released a flare. If you call this method manually, then make sure 'auto_flare_caller' is false.
     var stime = systime();
     var flare =[stime, stime,
                 geo.aircraft_position(),
@@ -904,7 +899,6 @@ var flare_released = func {
     msg.Heading = 0;
     msg.u_fps = 0;
     notifications.objectBridgedTransmitter.NotifyAll(msg);
-    #print("Adding flare "~flare[6]);
 }
 
 #==================================================================
@@ -929,9 +923,7 @@ var check_for_Request = func {
     msg.IsDistinct = 0;
     msg.Heading = 0;
     notifications.hitBridgedTransmitter.NotifyAll(msg);
-    #print("REQUEST_ALL");
   } else {
-    #print("REQUEST_NONE");
   }
 }
 
