@@ -69,12 +69,12 @@ var warheads = {
     "AGM-158":           [ 6, 1000.00,1,0],
     "ALARM":             [ 7,  450.00,1,0],
     "AM 39 Exocet":      [ 8,  364.00,1,0], 
-    "AS 37 Martel":      [ 9,  330.00,1,0], 
+    "AS 37 Martel":      [ 9,  330.00,1,0],# Also : AJ 168 Martel 
     "AS30L":             [10,  529.00,1,0],
     "BL755":             [11,  100.00,1,1],# 800lb bomblet warhead. Mix of armour piecing and HE. 100 due to need to be able to kill buk-m2.    
     "CBU-87":            [12,  100.00,1,1],# bomblet warhead. Mix of armour piecing and HE. 100 due to need to be able to kill buk-m2.    
     "CBU-105":           [13,  100.00,1,1],# bomblet warhead. Mix of armour piecing and HE. 100 due to need to be able to kill buk-m2.    
-    "AJ 168 Martel":     [14,  330.00,1,0],
+    "AS 37 Armat":       [14,  330.00,1,0],
     "FAB-100":           [15,   92.59,1,0],
     "FAB-250":           [16,  202.85,1,0],
     "FAB-500":           [17,  564.38,1,0],
