@@ -223,6 +223,17 @@
 
         <button>
             <pref-width>220</pref-width><pref-height>23</pref-height>
+            <row>16</row>
+            <col>0</col>
+            <legend>Test and Evaluation (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.b50_testev();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>220</pref-width><pref-height>23</pref-height>
             <row>0</row>
             <col>2</col>
             <legend>A/G Training (2 bags)</legend>

@@ -1147,6 +1147,26 @@ var b50_train_ag = func {
     }
 }
 
+# Legion Pod Test & Evaluation
+var b50_testev = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.dumb3WT);
+        pylon2.loadSet(pylonSets.dumb1);
+        pylon3.loadSet(pylonSets.empty);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.empty);
+        pylon8.loadSet(pylonSets.podACMI);
+        pylon9.loadSet(pylonSets.dumb3WT);
+        pylon10.loadSet(pylonSets.podIrst);
+        pylon11.loadSet(pylonSets.podHarm);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
 ############################################
 ################# BLOCK 60 #################
 ############################################
