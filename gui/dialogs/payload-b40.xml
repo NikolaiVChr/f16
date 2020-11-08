@@ -382,7 +382,7 @@
             <legend>A/G CAS (Light, 2 bags)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_caslt();</script>
+                <script>pylons.b40_a2g_caslt();</script>
             </binding>
         </button>
 
