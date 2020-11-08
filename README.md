@@ -15,7 +15,7 @@ Includes the following Aircraft variants:
 
 - YF-16 Prototype
 - F-16A Block 10
-- F-16AM Block 20 (MLU)
+- F-16AM Block 20 (MLU tape 4.3)
 - F-16C Block 30
 - F-16C Block 32
 - F-16CM Block 40 (CCIP)
@@ -29,7 +29,7 @@ Includes the following Aircraft variants:
 Each Block has slight differences regarding engine specifics, FBW system, aerodynamics, cockpit layout, available liveries[1] and payloads[2].
 
 [1] Notice that the quality of liveries differ, with some being fictional.
-[2] Weapons available and payload presets are mostly U.S. specific.
+[2] Weapons available and payload presets are mostly U.S./EU specific.
 
 ![Image](https://i.ibb.co/X7mWV7D/fgfs-20200508202518.png)
 
