@@ -222,7 +222,7 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 		pylon6set = [pylonSets.empty, pylonSets.fuel37R, pylonSets.fuel60R, pylonSets.g12x2, pylonSets.m82, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84];
 		pylon5set = [pylonSets.empty, pylonSets.fuel30, pylonSets.podEcm131, pylonSets.podEcm184, pylonSets.podTrvl];
 
-		fuselageRset = [pylonSets.empty, pylonSets.podHarm];
+		fuselageRset = [pylonSets.empty];
 	 	fuselageLset = [pylonSets.podSAtp];
 	 }
 
