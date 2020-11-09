@@ -335,8 +335,13 @@ var default = func {
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.dumb1WT);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -355,8 +360,13 @@ var clean = func {
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.empty);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -375,8 +385,13 @@ var airshow = func {
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.smokeWR);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -399,8 +414,13 @@ var a2a_cap = func {
         pylon7.loadSet(pylonSets.aim120);
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim9WT);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -419,8 +439,13 @@ var a2a_capext = func {
         pylon7.loadSet(pylonSets.aim9);
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -439,8 +464,13 @@ var a2a_super = func {
         pylon7.loadSet(pylonSets.aim120);
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -459,8 +489,13 @@ var a2a_superer = func {
         pylon7.loadSet(pylonSets.aim120);
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -479,8 +514,13 @@ var a2a_dca = func {
         pylon7.loadSet(pylonSets.aim9);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -499,8 +539,13 @@ var ferry1 = func {
         pylon7.loadSet(pylonSets.podTrvl);
         pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.dumb2WT);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -519,8 +564,13 @@ var ferry2 = func {
         pylon7.loadSet(pylonSets.podTrvl);
         pylon8.loadSet(pylonSets.dumb1);
         pylon9.loadSet(pylonSets.dumb2WT);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -543,8 +593,13 @@ var a2g_caslt = func {
         pylon7.loadSet(pylonSets.a65);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podLTgp);
-        pylon11.loadSet(pylonSets.podLNav);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.podLTgp);
+            pylon11.loadSet(pylonSets.podLNav);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -563,8 +618,13 @@ var a2g_cas = func {
         pylon7.loadSet(pylonSets.a65x3);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podLTgp);
-        pylon11.loadSet(pylonSets.podLNav);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.podLTgp);
+            pylon11.loadSet(pylonSets.podLNav);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -583,8 +643,13 @@ var a2g_mk1 = func {
         pylon7.loadSet(pylonSets.m82);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.empty);
+            pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -603,8 +668,13 @@ var a2g_mk2 = func {
         pylon7.loadSet(pylonSets.m84);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.empty);
+            pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -623,8 +693,13 @@ var a2g_cem = func {
         pylon7.loadSet(pylonSets.c87);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.empty);
+            pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -643,8 +718,13 @@ var a2g_hyd70 = func {
         pylon7.loadSet(pylonSets.hyd70h7);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.empty);
+            pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
         f16.reloadHydras();
     } else {
@@ -664,8 +744,13 @@ var a2g_lgb1 = func {
         pylon7.loadSet(pylonSets.g12x3);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podLTgp);
-        pylon11.loadSet(pylonSets.podLNav);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.podLTgp);
+            pylon11.loadSet(pylonSets.podLNav);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -684,8 +769,13 @@ var a2g_lgb2 = func {
         pylon7.loadSet(pylonSets.g24);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podLTgp);
-        pylon11.loadSet(pylonSets.podLNav);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.podLTgp);
+            pylon11.loadSet(pylonSets.podLNav);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -704,8 +794,13 @@ var a2g_sead = func {
         pylon7.loadSet(pylonSets.a88);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podSAtp);
-        pylon11.loadSet(pylonSets.podHarm);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.podSAtp);
+            pylon11.loadSet(pylonSets.podHarm);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -724,8 +819,13 @@ var a2g_dead = func {
         pylon7.loadSet(pylonSets.g12x3);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podSAtp);
-        pylon11.loadSet(pylonSets.podHarm);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.podSAtp);
+            pylon11.loadSet(pylonSets.podHarm);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -744,8 +844,13 @@ var a2g_gps = func {
         pylon7.loadSet(pylonSets.g31);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podLite);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.podLite);
+            pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -764,8 +869,13 @@ var a2s_antiship = func {
         pylon7.loadSet(pylonSets.a84);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podLite);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.podLite);
+            pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -804,8 +914,13 @@ var a2g_strat = func {
         pylon7.loadSet(pylonSets.b617);
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podLTgp);
-        pylon11.loadSet(pylonSets.podLNav);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.podLTgp);
+            pylon11.loadSet(pylonSets.podLNav);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -1105,7 +1220,7 @@ var b30_agrs_aa = func {
 }
 
 ############################################
-################ BLOCK 40/50 ###############
+############## BLOCK 40/50/60 ##############
 ############################################
 
 # A/G SFW (CBU-105)
@@ -1120,8 +1235,13 @@ var b40_a2g_sfw = func {
         pylon7.loadSet(pylonSets.c105);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podLite);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.podLite);
+            pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -1140,8 +1260,13 @@ var b40_a2g_gpslsr = func {
         pylon7.loadSet(pylonSets.g54);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podSAtp);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.podSAtp);
+            pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -1199,8 +1324,13 @@ var b40_a2g_caslt = func {
         pylon7.loadSet(pylonSets.a65);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podLite);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.podLite);
+            pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -1219,8 +1349,13 @@ var a2g_jsow = func {
         pylon7.loadSet(pylonSets.a154);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podLite);
-        pylon11.loadSet(pylonSets.podHarm);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.podLite);
+            pylon11.loadSet(pylonSets.podHarm);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -1279,8 +1414,13 @@ var b40_train_aa = func {
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.dumb1);
         pylon9.loadSet(pylonSets.dumb3WT);
-        pylon10.loadSet(pylonSets.empty);
-        pylon11.loadSet(pylonSets.empty);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.empty);
+            pylon11.loadSet(pylonSets.empty);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -1319,8 +1459,13 @@ var b50_train_ag = func {
         pylon7.loadSet(pylonSets.empty);
         pylon8.loadSet(pylonSets.dumb1);
         pylon9.loadSet(pylonSets.dumb3WT);
-        pylon10.loadSet(pylonSets.podSAtp);
-        pylon11.loadSet(pylonSets.podHarm);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	 pylon10.loadSet(pylonSets.podSAtp);
+             pylon11.loadSet(pylonSets.podHarm);
+        }
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -1346,11 +1491,6 @@ var b50_testev = func {
       screen.log.write(f16.msgB);
     }
 }
-
-############################################
-################# BLOCK 60 #################
-############################################
-
 
 var bore_loop = func {
     #enables firing of aim9 without radar.
