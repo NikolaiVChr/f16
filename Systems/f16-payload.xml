@@ -563,6 +563,41 @@
             <hit-everything-nearby type="bool">true</hit-everything-nearby>
             <ready-time type="double">0.25</ready-time>
         </agm-65>
+        <!--agm-65d>
+            <type-id type="int">0</type-id>
+            <short-name type="string">AG65D</short-name>
+            <long-name type="string">AGM-65D Maverick</long-name>
+            <vol-search type="double">0.00</vol-search>
+            <vol-track type="double">1.00</vol-track>
+            <guidance type="string">heat</guidance>
+            <navigation type="string">APN</navigation>                           
+            <all-aspect type="bool">true</all-aspect>
+            <max-fire-range-nm type="double">12</max-fire-range-nm>              <!- source ->
+            <FCS-field-deg type="int">25</FCS-field-deg>            
+            <seeker-field-deg type="int">180</seeker-field-deg>     
+            <seeker-angular-speed-dps type="double">30</seeker-angular-speed-dps><!- deg/sec guess->
+            <max-g type="int">25</max-g>
+            <max-launch-g type="int">7</max-launch-g>               
+            <thrust-lbf-stage-1 type="double">1200</thrust-lbf-stage-1>
+            <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>
+            <stage-1-duration-sec type="double">40</stage-1-duration-sec>
+            <stage-2-duration-sec type="double">0.0</stage-2-duration-sec>
+            <weight-launch-lbs type="double">484.5</weight-launch-lbs>              <!- source ->
+            <weight-warhead-lbs type="double">126</weight-warhead-lbs>            <!- source ->
+            <drag-coeff type="double">0.06</drag-coeff>
+            <cross-section-sqft type="double">3.14</cross-section-sqft>                             <!- source ->
+            <arming-time-sec type="double">1.0</arming-time-sec>          
+            <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>
+            <self-destruct-time-sec type="double">55</self-destruct-time-sec>  
+            <loft-altitude type="int">0</loft-altitude>
+            <min-fire-range-nm type="double">0.2</min-fire-range-nm>
+            <rail type="bool">false</rail>
+            <max-report-distance type="double">65</max-report-distance>
+            <class type="string">MGP</class>
+            <fire-msg type="string">Rifle</fire-msg>
+            <hit-everything-nearby type="bool">true</hit-everything-nearby>
+            <ready-time type="double">0.25</ready-time>
+        </agm-65d-->
         <agm-84>                    <!-- A variant: 0.85 mach cruise, E is calibrated to just under 1.00 -->
             <type-id type="int">1</type-id>
             <short-name type="string">AG84</short-name>
