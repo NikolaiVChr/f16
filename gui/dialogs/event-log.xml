@@ -90,5 +90,7 @@
 	    <top-line>0</top-line> <!-- line to show at top, -ve numbers show last line -->
 	    <editable>false</editable> <!-- if the puLargeInput is supposed to be editable -->
 	</textbox>
+
+	<empty><stretch>1</stretch></empty>
 	
 </PropertyList>
