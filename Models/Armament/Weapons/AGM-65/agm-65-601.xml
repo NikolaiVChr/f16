@@ -86,7 +86,7 @@
 
        <counter>
          <particles-per-sec>
-           <value>50</value>
+           <value>60</value>
            <spread>0</spread>
          </particles-per-sec>
        </counter>
@@ -99,10 +99,10 @@
          <red><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></red>
          <green><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></green>
          <blue><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
-             <alpha><value> 0.5 </value></alpha>
+             <alpha><value> 0.3 </value></alpha>
            </color>
            <size>
-             <value>1.0</value>
+             <value>0.8</value>
            </size>
          </start>
 
@@ -111,7 +111,7 @@
          <red><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></red>
          <green><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></green>
          <blue><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
-             <alpha><value> 0.1 </value></alpha>
+             <alpha><value> 0.05 </value></alpha>
            </color>
            <size>
              <value>6</value>

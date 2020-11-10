@@ -588,7 +588,7 @@
             <cross-section-sqft type="double">3.14</cross-section-sqft>                             <!- source ->
             <arming-time-sec type="double">1.0</arming-time-sec>          
             <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>
-            <self-destruct-time-sec type="double">55</self-destruct-time-sec>  
+            <self-destruct-time-sec type="double">105</self-destruct-time-sec>  	<!- source: max time of flight ->
             <loft-altitude type="int">0</loft-altitude>
             <min-fire-range-nm type="double">0.2</min-fire-range-nm>
             <rail type="bool">false</rail>
