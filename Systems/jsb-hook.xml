@@ -53,9 +53,9 @@
          <product>
            <sum>
             <property>systems/hook/tailhook-pos-deg</property>
-            <value>18</value>
+            <value>3.806</value>       <!-- -1 x tailhook-pos-min-deg -->
            </sum>
-           <value>0.016667</value>
+           <value>0.017490</value>     <!-- 1 / (tailhook-pos-max-deg - tailhook-pos-min-deg) --> 
          </product>
        </function>
        <output>gear/tailhook-pos-norm</output>
