@@ -42,6 +42,24 @@
       <object-name>Lens</object-name>
   </effect>
 
+  <model>
+    <name>flaminghot</name>
+    <path>agm-65-exhaust.xml</path>
+    <offsets>
+      <x-m>1.24</x-m>
+      <y-m>0</y-m>
+      <z-m>0</z-m>
+    </offsets>
+  </model>
+
+  <animation>
+      <type>select</type>
+      <object-name>flaminghot</object-name>
+      <condition>
+           <property>payload/armament/agm-65/flags/smoke-id-601</property>
+     </condition>
+  </animation>
+
     <particlesystem>
        <name>smoke</name>
        <texture>../smoke.png</texture>
@@ -60,7 +78,7 @@
        </placer>
 
        <offsets>
-          <x-m>1.90437</x-m>
+          <x-m>1.85</x-m>
           <y-m>0</y-m>
           <z-m>0</z-m>
        </offsets>
@@ -96,10 +114,10 @@
        <particle>
          <start>
            <color>
-         <red><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></red>
-         <green><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></green>
-         <blue><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
-             <alpha><value> 0.3 </value></alpha>
+         <red><expression><product><value>0.7</value><property>rendering/scene/diffuse/red</property></product></expression></red>
+         <green><expression><product><value>0.7</value><property>rendering/scene/diffuse/red</property></product></expression></green>
+         <blue><expression><product><value>0.7</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
+             <alpha><value> 0.35 </value></alpha>
            </color>
            <size>
              <value>0.8</value>
@@ -108,18 +126,18 @@
 
          <end>
            <color>
-         <red><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></red>
-         <green><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></green>
-         <blue><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
+         <red><expression><product><value>0.7</value><property>rendering/scene/diffuse/red</property></product></expression></red>
+         <green><expression><product><value>0.7</value><property>rendering/scene/diffuse/red</property></product></expression></green>
+         <blue><expression><product><value>0.7</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
              <alpha><value> 0.05 </value></alpha>
            </color>
            <size>
-             <value>6</value>
+             <value>8</value>
            </size>
          </end>
 
          <life-sec>
-           <value>30</value>
+           <value>25</value>
          </life-sec>
            
          <mass-kg>  0.5 </mass-kg>

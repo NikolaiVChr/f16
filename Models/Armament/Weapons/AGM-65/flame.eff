@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+  <name>flame</name>
+            <inherits-from>Effects/thrust-flame</inherits-from>
+            <object-name>Bounding_box</object-name>
+            <parameters>
+                <flame_color_low_r>0.933</flame_color_low_r>
+                <flame_color_low_g>0.3</flame_color_low_g>
+                <flame_color_low_b>0.075</flame_color_low_b>
+                <flame_color_high_r>0.98</flame_color_high_r>
+                <flame_color_high_g>0.98</flame_color_high_g>
+                <flame_color_high_b>0.73</flame_color_high_b>
+
+                <base_flame_r>0.98</base_flame_r>
+                <base_flame_g>0.98</base_flame_g>
+                <base_flame_b>0.73</base_flame_b>
+
+                <use_shocks type="int">1</use_shocks>
+                <shock_frequency>0.4</shock_frequency>
+                
+                <use_noise type="int">0</use_noise>          
+                <noise_strength type="float">0.5</noise_strength>
+                <noise_scale type="float">0.75</noise_scale>
+                
+                <deflection_coeff type="float">0</deflection_coeff>
+
+                <base_flame_density type="float">0.25</base_flame_density>
+                <thrust_density type="float">0.65</thrust_density>
+
+                <flame_radius_fraction type="float">0.5</flame_radius_fraction>
+                <thrust_collimation type="float">0.2</thrust_collimation>
+            </parameters>
+
+</PropertyList>
