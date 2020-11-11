@@ -63,8 +63,8 @@ var crgpd = stations.Dummy.new("MXU-648 Cargopod", "TRVL");
 var pylonSets = {
 	empty: {name: "Empty", pylon: nil, rack: nil, content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
 	mm20:  {name: "20mm Cannon", content: [cannon], fireOrder: [0], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-	hyd70h3:  {name: "2 x M151", pylon: "1 MAU", rack: "2 LAU-68", content: [hyd70lh3,hyd70rh3], fireOrder: [0,1], launcherDragArea: 0.007, launcherMass: 405.0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
-	hyd70h7:  {name: "2 x M151", pylon: "1 MAU", rack: "2 LAU-68", content: [hyd70lh7,hyd70rh7], fireOrder: [0,1], launcherDragArea: 0.007, launcherMass: 405.0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
+	hyd70h3:  {name: "2 x M151", pylon: "1 MAU", rack: "2 L68", content: [hyd70lh3,hyd70rh3], fireOrder: [0,1], launcherDragArea: 0.007, launcherMass: 405.0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
+	hyd70h7:  {name: "2 x M151", pylon: "1 MAU", rack: "2 L68", content: [hyd70lh7,hyd70rh7], fireOrder: [0,1], launcherDragArea: 0.007, launcherMass: 405.0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
 	a65x3:  {name: "3 x AGM-65", pylon: "1 MAU", rack: "1 L88", content: ["AGM-65", "AGM-65", "AGM-65"], fireOrder: [0,1,2], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
 	a65:  {name: "1 x AGM-65", pylon: "1 MAU", rack: "1 L117", content: ["AGM-65"], fireOrder: [0], launcherDragArea: 0, launcherMass: 1, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
 	a84:  {name: "1 x AGM-84", pylon: "1 MAU", rack: nil, content: ["AGM-84"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
