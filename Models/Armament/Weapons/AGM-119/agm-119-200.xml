@@ -37,6 +37,24 @@
       <property>payload/armament/agm-119/flags/msl-id-200</property>
     </condition>
   </animation>
+
+  <model>
+    <name>flaminghot</name>
+    <path>agm-119-exhaust.xml</path>
+    <offsets>
+      <x-m>1.59</x-m>
+      <y-m>0</y-m>
+      <z-m>0</z-m>
+    </offsets>
+  </model>
+  
+  <animation>
+      <type>select</type>
+      <object-name>flaminghot</object-name>
+      <condition>
+           <property>payload/armament/agm-119/flags/smoke-id-200</property>
+     </condition>
+  </animation>
 	
   <particlesystem>
        <name>smoke</name>
@@ -56,7 +74,7 @@
        </placer>
 
        <offsets>
-          <x-m>1.90437</x-m>
+          <x-m>1.90</x-m>
           <y-m>0</y-m>
           <z-m>0</z-m>
        </offsets>
@@ -82,7 +100,7 @@
 
        <counter>
          <particles-per-sec>
-           <value>50</value>
+           <value>60</value>
            <spread>0</spread>
          </particles-per-sec>
        </counter>
@@ -92,30 +110,30 @@
        <particle>
          <start>
            <color>
-             <red><value>   0.8 </value></red>
-             <green><value> 0.8 </value></green>
-             <blue><value>  0.8 </value></blue>
-             <alpha><value> 0.5 </value></alpha>
+             <red><value>   0.7 </value></red>
+             <green><value> 0.7 </value></green>
+             <blue><value>  0.7 </value></blue>
+             <alpha><value> 0.4 </value></alpha>
            </color>
            <size>
-             <value>1.0</value>
+             <value>0.8</value>
            </size>
          </start>
 
          <end>
            <color>
-             <red><value>   0.8 </value></red>
-             <green><value> 0.8 </value></green>
-             <blue><value>  0.8 </value></blue>
-             <alpha><value> 0.1 </value></alpha>
+             <red><value>   0.7 </value></red>
+             <green><value> 0.7 </value></green>
+             <blue><value>  0.7 </value></blue>
+             <alpha><value> 0.05 </value></alpha>
            </color>
            <size>
-             <value>6</value>
+             <value>8</value>
            </size>
          </end>
 
          <life-sec>
-           <value>30</value>
+           <value>25</value>
          </life-sec>
             
          <mass-kg>  0.5 </mass-kg>
