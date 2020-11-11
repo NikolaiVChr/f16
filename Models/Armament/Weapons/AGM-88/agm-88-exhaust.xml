@@ -16,7 +16,7 @@
     <animation>
       <type>scale</type>
       <object-name>Bounding_box</object-name>
-      <x-offset>2.3</x-offset>
+      <x-offset>2.4</x-offset>
       <y-offset>0.335</y-offset>
       <z-offset>0.335</z-offset>
     </animation>
