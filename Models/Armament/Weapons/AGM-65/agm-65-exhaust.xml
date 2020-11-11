@@ -22,7 +22,7 @@
     </animation>
       
       <effect>
-            <inherits-from>Aircraft/f16/Models/Armament/Weapons/AGM-65/flame</inherits-from>
+            <inherits-from>Aircraft/f16/Models/Armament/Weapons/AIM-120/flame</inherits-from>
             <object-name>Bounding_box</object-name>
        </effect>
        
