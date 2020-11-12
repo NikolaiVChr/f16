@@ -166,7 +166,11 @@
    <default>
     <menu n="101">
      <label>F-16C Block 30</label>
-      <item n="10">
+      <item n="12">
+          <label>--- Block options ---</label>
+          <enabled>false</enabled>
+        </item>
+      <item n="13">
           <label>Payload presets</label>
           <binding>
             <command>dialog-show</command>
