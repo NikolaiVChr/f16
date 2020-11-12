@@ -11,7 +11,7 @@
 		<empty><stretch>1</stretch></empty>
 
 		<text>
-			<label>Combat log</label>
+			<label>Combat event log</label>
 		</text>
 
 		<empty><stretch>1</stretch></empty>
@@ -37,7 +37,7 @@
 	<nasal>
         <open>
             <![CDATA[
-                setprop("sim/model/mig21/event-log", "Click refresh to see the event log..");
+                setprop("sim/model/mig21/event-log", "Click refresh to see the combat event log..");
             ]]>
         </open>
         <close>
@@ -50,6 +50,7 @@
 	<button>
 		<!--<x>0</x>
 		<y>0</y>-->
+		<halign>centre</halign>
 		<legend>Refresh</legend>
 		<binding>
 			<command>nasal</command>
@@ -62,7 +63,7 @@
 				      str = str~""~entry.time~" "~entry.message~"\n";
 				  }
 				} else {
-					str = "The aircraft must be still to read the event log.";
+					str = "The aircraft must be still to read the combat event log.";
 				}
 				setprop("sim/model/mig21/event-log", str);
 			]]></script>
@@ -71,7 +72,7 @@
 
   	<text>
   		<halign>left</halign>
-	    <label>Log:</label>
+	    <label>Event log:</label>
 	</text>
 
 	<textbox>
