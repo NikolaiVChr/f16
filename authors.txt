@@ -145,6 +145,7 @@ Onox
 
 Salmon
 - JMSDF fictional livery
+- ROKAF livery
 
 Axel Paccalin
 - Implemented recursive function to compute the closest range in the past frames.
