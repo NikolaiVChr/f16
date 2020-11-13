@@ -145,3 +145,4 @@ Onox
 
 Salmon
 - JMSDF fictional livery
+- ROKAF livery
