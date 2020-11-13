@@ -7,7 +7,7 @@ OBJECT poly
 name "AGM-65Back"
 data 11
 AGM-65-Back
-texture "AGM-65.png"
+texture "AGM-65B.png"
 crease 179.000000
 numvert 364
 1.245 -0.035003 0.060622
@@ -2468,7 +2468,7 @@ OBJECT poly
 name "AGM-65Mounts"
 data 13
 AGM-65-Mounts
-texture "AGM-65.png"
+texture "AGM-65B.png"
 crease 179.000000
 numvert 128
 -0.293445 0.141981 0.030723
@@ -4045,7 +4045,7 @@ OBJECT poly
 name "AGM-65Body"
 data 10
 AGM-65Body
-texture "AGM-65.png"
+texture "AGM-65B.png"
 crease 179.000000
 numvert 384
 -1.1064 0.151909 0
@@ -10651,7 +10651,7 @@ OBJECT poly
 name "AGM-65Wings"
 data 11
 AGM-65Wings
-texture "AGM-65.png"
+texture "AGM-65B.png"
 crease 179.000000
 numvert 76
 1.09051 0.100651 0.107722
@@ -11438,7 +11438,7 @@ OBJECT poly
 name "CamSphere"
 data 9
 CamSphere
-texture "AGM-65.png"
+texture "AGM-65B.png"
 crease 179.000000
 numvert 433
 -1.10032 0.101422 0.027176
@@ -16632,7 +16632,7 @@ OBJECT poly
 name "Lens"
 data 4
 Lens
-texture "AGM-65.png"
+texture "AGM-65B.png"
 crease 179.000000
 numvert 145
 -1.19665 -0.009166 -0.004109
