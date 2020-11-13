@@ -1232,8 +1232,8 @@
  <animation>
   <type>rotate</type>
   <object-name>ArresterHook</object-name>
-  <property>fdm/jsbsim/systems/hook/tailhook-cmd-norm</property>
-  <factor>45.0</factor>
+  <property>gear/tailhook/position-norm</property>
+  <factor>57.175</factor>              <!-- (tailhook-pos-max-deg - tailhook-pos-min-deg) --> 
   <center>
    <x-m>2.58</x-m>
    <y-m>0</y-m>
