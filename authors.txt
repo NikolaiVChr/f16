@@ -34,10 +34,10 @@ J Maverick 16
 - Addition and adaptation of liveries by Gary Brown
 - Liveries and textures
 - Sound recording/editing and addition
-- Research, addition and implementation of weapons, stores
+- Research, addition and implementation of weapons, stores, pods
 - 3D works (pilot model, weapons/stores, cockpit, exterior, misc)
 - RWR/RCS data research and update
-- Block-specific changes: panel layouts, CCIP conversion of Block 40/42
+- Block-specific changes: panel layouts, CCIP conversion of Block 40/42, stores availability
 - MFD updates
 - Effects improvement
 - Systems tweaking
@@ -146,3 +146,6 @@ Onox
 Salmon
 - JMSDF fictional livery
 - ROKAF livery
+
+Axel Paccalin
+- Implemented recursive function to compute the closest range in the past frames.
