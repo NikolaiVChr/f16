@@ -932,6 +932,7 @@
             <hit-everything-nearby type="bool">true</hit-everything-nearby>
         </lau-68-->
         <b61-7>
+            <!--type-id type="int">TBD</type-id-->
             <short-name type="string">B61-7</short-name>
             <long-name type="string">B61-7 Inert Training Body</long-name>
             <fire-msg type="string">Bombs away</fire-msg>
@@ -950,7 +951,7 @@
             <thrust-lbf-stage-2 type="double">0</thrust-lbf-stage-2>
             <stage-1-duration-sec type="double">0</stage-1-duration-sec>
             <stage-2-duration-sec type="double">0</stage-2-duration-sec>
-            <weight-launch-lbs type="double">700</weight-launch-lbs>
+            <weight-launch-lbs type="double">765</weight-launch-lbs> <!-- source -->
             <weight-warhead-lbs type="double">0</weight-warhead-lbs> <!-- Dummy version -->
             <weight-fuel-lbm type="double">0</weight-fuel-lbm>
             <drag-coeff type="double">0.125</drag-coeff>
@@ -978,6 +979,7 @@
             <ejector-speed-fps type="double">15</ejector-speed-fps>
         </b61-7>
         <b61-12>
+            <!--type-id type="int">TBD</type-id-->
             <short-name type="string">B61-12</short-name>
             <long-name type="string">B61-12 Test Flight Body</long-name>
             <fire-msg type="string">Bombs away</fire-msg>
@@ -996,7 +998,7 @@
             <thrust-lbf-stage-2 type="double">0</thrust-lbf-stage-2>
             <stage-1-duration-sec type="double">0</stage-1-duration-sec>
             <stage-2-duration-sec type="double">0</stage-2-duration-sec>
-            <weight-launch-lbs type="double">700</weight-launch-lbs>
+            <weight-launch-lbs type="double">755</weight-launch-lbs> <!-- source -->
             <weight-warhead-lbs type="double">0</weight-warhead-lbs> <!-- Dummy version -->
             <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
             <drag-coeff type="double">0.125</drag-coeff>
@@ -1066,6 +1068,6 @@
                 <long-name type="string">Project Gamma</long-name>
                 <short-name type="string">gamma</short-name>
                 <pitch-animation-disabled type="bool">true</pitch-animation-disabled>
-            </es>
+        </es>
     </armament>
 </PropertyList>

@@ -59,7 +59,7 @@
 
  <model>
   <name>Station5_B61-7</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/B61-7/B61-7.xml</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/B61/B61-7.xml</path>
   <offsets>
    <x-m>0.09</x-m>
    <y-m>0</y-m>
@@ -70,7 +70,7 @@
 
  <model>
   <name>Station5_B61-12</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/B61-12/B61-12.xml</path>
+  <path>Aircraft/f16/Models/Armament/Weapons/B61/B61-12.xml</path>
   <offsets>
    <x-m>0.09</x-m>
    <y-m>0</y-m>
