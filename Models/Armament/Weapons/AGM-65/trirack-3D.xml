@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+  
+<PropertyList> 
+
+    <path>Aircraft/f16/Models/Armament/Racks/trirack_small.xml</path>
+
+    <model>
+      <name>Station3_3xAGM-65D_left</name>
+      <path>Aircraft/f16/Models/Armament/Weapons/AGM-65/AGM-65D.xml</path>
+      <offsets>
+        <x-m>-0.335</x-m>
+        <y-m>-0.48</y-m>
+        <z-m>-0.18</z-m>
+        <pitch-deg>0</pitch-deg>
+        <roll-deg>00</roll-deg>
+      </offsets>
+    </model>
+
+    <model>
+      <name>Station3_3xAGM-65D_center</name>
+      <path>Aircraft/f16/Models/Armament/Weapons/AGM-65/AGM-65D.xml</path>
+      <offsets>
+        <x-m>-0.335</x-m>
+        <y-m>0</y-m>
+        <z-m>-0.55</z-m>
+        <pitch-deg>0</pitch-deg>
+      </offsets>
+    </model>
+
+    <model>
+      <name>Station3_3xAGM-65D_right</name>
+      <path>Aircraft/f16/Models/Armament/Weapons/AGM-65/AGM-65D.xml</path>
+      <offsets>
+        <x-m>-0.335</x-m>
+        <y-m>0.48</y-m>
+        <z-m>-0.18</z-m>
+        <pitch-deg>0</pitch-deg>
+        <roll-deg>00</roll-deg>
+      </offsets>
+    </model>
+
+    <animation>
+      <type>select</type>
+      <object-name>Station3_3xAGM-65D_left</object-name>
+      <condition><and>
+        <equals>
+          <property>payload/armament/station/id-2-type</property>
+          <value>AGM-65D</value>
+        </equals>
+        <greater-than>
+          <property>payload/armament/station/id-2-count</property>
+          <value>0</value>
+        </greater-than></and>
+      </condition>
+     </animation>
+
+     <animation>
+      <type>select</type>
+      <object-name>Station3_3xAGM-65D_right</object-name>
+      <condition>
+        <and>
+        <equals>
+          <property>payload/armament/station/id-2-type</property>
+          <value>AGM-65D</value>
+        </equals>
+        <greater-than>
+          <property>payload/armament/station/id-2-count</property>
+          <value>1</value>
+        </greater-than>
+      </and>
+      </condition>
+     </animation>
+
+     <animation>
+      <type>select</type>
+      <object-name>Station3_3xAGM-65D_center</object-name>
+      <condition><and>
+        <equals>
+          <property>payload/armament/station/id-2-type</property>
+          <value>AGM-65D</value>
+        </equals>
+        <greater-than>
+          <property>payload/armament/station/id-2-count</property>
+          <value>2</value>
+        </greater-than></and>
+      </condition>
+     </animation>
+
+</PropertyList> 

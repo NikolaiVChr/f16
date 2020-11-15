@@ -148,6 +148,28 @@
  </model>
 
  <model>
+  <name>Station3_3xAGM-65D</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-65/trirack-3D.xml</path>
+  <offsets>
+    <x-m>0.7</x-m>
+    <y-m>-2.879</y-m>
+    <z-m>-0.386</z-m>
+    <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station3_AGM-65D</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-65/AGM-65D.xml</path>
+  <offsets>
+   <x-m>0.625</x-m>
+   <y-m>-2.8799</y-m>
+   <z-m>-0.418</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
   <name>Station3_AGM-84</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AGM-84/AGM-84.xml</path>
   <offsets>
@@ -396,6 +418,28 @@
 <model>
   <name>Station7_AGM-65</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AGM-65/AGM-65B.xml</path>
+  <offsets>
+   <x-m>0.625</x-m>
+   <y-m>2.8799</y-m>
+   <z-m>-0.418</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+ <model>
+  <name>Station7_3xAGM-65D</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-65/trirack-7D.xml</path>
+  <offsets>
+    <x-m>0.7</x-m>
+    <y-m>2.879</y-m>
+    <z-m>-0.386</z-m>
+    <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+<model>
+  <name>Station7_AGM-65D</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/AGM-65/AGM-65D.xml</path>
   <offsets>
    <x-m>0.625</x-m>
    <y-m>2.8799</y-m>
