@@ -14,7 +14,7 @@
     <y-offset>2.99</y-offset><!-- feet -->
     <z-offset>0.15</z-offset>
     <pitch-offset>-89.0</pitch-offset>
-    <life>6</life>
+    <life>7</life>
     <buoyancy>8</buoyancy>
     <wind>true</wind>
     <weight>1</weight>

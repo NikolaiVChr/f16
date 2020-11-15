@@ -15,7 +15,8 @@
     <interpolation>
       <entry><ind>0</ind><dep>7.5</dep></entry>
       <entry><ind>3750</ind><dep>15.0</dep></entry>
-      <entry><ind>7500</ind><dep>30.0</dep></entry>
+      <entry><ind>5000</ind><dep>25.0</dep></entry>
+      <entry><ind>7500</ind><dep>40.0</dep></entry>
     </interpolation>
   </animation>
 
