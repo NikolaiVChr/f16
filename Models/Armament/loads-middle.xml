@@ -519,6 +519,36 @@
 
  <animation>
   <type>select</type>
+  <object-name>Station7_3xAGM-65D</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-6-set</property>
+      <value>3 x AGM-65D</value>
+    </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station7_AGM-65D</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-6-set</property>
+      <value>1 x AGM-65D</value>
+    </equals>
+    <equals>
+      <property>payload/armament/station/id-6-type</property>
+      <value>AGM-65D</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-6-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
   <object-name>Station7_AGM-84</object-name>
   <condition>
     <equals>
