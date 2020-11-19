@@ -3725,46 +3725,26 @@ var AIM = {
 	proximity_detection: func {
 
 		####Ground interaction
-        me.ground = geo.elevation(me.coord.lat(), me.coord.lon());
-        if(me.ground != nil) {
-            if(me.ground > me.coord.alt()) {
-            	me.event = "exploded";
-            	if(me.life_time < me.arming_time) {
-                	me.event = "landed disarmed";
-                	#thread.lock(mutexTimer);
-					#append(AIM.timerQueue, [me,me.log,[me.typeLong~" landed disarmed."],0]);
-					#thread.unlock(mutexTimer);
-            	}
-            	if (me.Tgt != nil and me.direct_dist_m == nil) {
-            		# maddog might go here
-            		me.Tgt = nil;
-            		#me.direct_dist_m = me.coord.direct_distance_to(me.Tgt.get_Coord());
-            	}
-            	if ((me.Tgt != nil and me.direct_dist_m != nil) or me.Tgt == nil) {
-            		me.coord.set_alt(me.ground);
-            		me.explode("Hit terrain.", me.coord, nil, me.event);
-            		return TRUE;
-            	}
-            }
-        } elsif(0 > me.coord.alt()) {
-        	me.event = "exploded";
-        	if(me.life_time < me.arming_time) {
-            	me.event = "landed disarmed";
-            	#thread.lock(mutexTimer);
+		me.ground = geo.elevation(me.coord.lat(), me.coord.lon()) or 0;
+		if(me.ground > me.coord.alt()) {
+			me.event = "exploded";
+			if(me.life_time < me.arming_time) {
+				me.event = "landed disarmed";
+				#thread.lock(mutexTimer);
 				#append(AIM.timerQueue, [me,me.log,[me.typeLong~" landed disarmed."],0]);
 				#thread.unlock(mutexTimer);
-        	}
-        	if (me.Tgt != nil and me.direct_dist_m == nil) {
-        		# maddog might go here
-        		me.Tgt = nil;
-        		#me.direct_dist_m = me.coord.direct_distance_to(me.Tgt.get_Coord());
-        	}
-        	if ((me.Tgt != nil and me.direct_dist_m != nil) or me.Tgt == nil) {
-        		me.coord.set_alt(0);
-        		me.explode("Hit terrain.", me.coord, nil, me.event);
-        		return TRUE;
-        	}
-        }
+			}
+			if (me.Tgt != nil and me.direct_dist_m == nil) {
+				# maddog might go here
+				me.Tgt = nil;
+				#me.direct_dist_m = me.coord.direct_distance_to(me.Tgt.get_Coord());
+			}
+			if ((me.Tgt != nil and me.direct_dist_m != nil) or me.Tgt == nil) {
+				me.coord.set_alt(me.ground);
+				me.explode("Hit terrain.", me.coord, me.direct_dist_m, me.event);
+				return TRUE;
+			}
+		}
 
 		if (me.Tgt != nil and me.t_coord != nil and me.guidance != "inertial") {
 			# Maintain an array of the coordinates of the missile and the tgt in the last 3 frames.
