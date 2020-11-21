@@ -555,7 +555,7 @@
             <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>
             <self-destruct-time-sec type="double">55</self-destruct-time-sec>  
             <loft-altitude type="int">0</loft-altitude>
-            <min-fire-range-nm type="double">0.2</min-fire-range-nm>
+            <min-fire-range-nm type="double">0.25</min-fire-range-nm>      <!-- source -->
             <rail type="bool">false</rail>
             <max-report-distance type="double">65</max-report-distance>
             <class type="string">MGP</class>
@@ -564,7 +564,7 @@
             <ready-time type="double">0.25</ready-time>
         </agm-65>
         <agm-65d>
-            <type-id type="int">58</type-id>
+            <type-id type="int">96</type-id>
             <short-name type="string">AG65D</short-name>
             <long-name type="string">AGM-65D Maverick</long-name>
             <vol-search type="double">0.00</vol-search>
@@ -590,7 +590,7 @@
             <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>
             <self-destruct-time-sec type="double">105</self-destruct-time-sec>  	<!-- source: max time of flight -->
             <loft-altitude type="int">0</loft-altitude>
-            <min-fire-range-nm type="double">0.2</min-fire-range-nm>
+            <min-fire-range-nm type="double">0.25</min-fire-range-nm>      <!-- source -->
             <rail type="bool">false</rail>
             <max-report-distance type="double">65</max-report-distance>
             <class type="string">MGP</class>

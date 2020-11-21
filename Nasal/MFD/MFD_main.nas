@@ -2485,7 +2485,7 @@ var MFD_Device =
                     } else {
                         me.ready = "RDY";
                     }
-                } elsif (me.wpn.type == "AGM-65" or me.wpn.type == "AGM-84" or me.wpn.type == "AGM-119" or me.wpn.type == "AGM-158") {
+                } elsif (me.wpn.type == "AGM-65" or me.wpn.type == "AGM-65D" or me.wpn.type == "AGM-84" or me.wpn.type == "AGM-119" or me.wpn.type == "AGM-158") {
                     me.wpnType ="ground";
                     me.eegs = "A-G";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
