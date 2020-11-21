@@ -54,7 +54,7 @@
 					<red><value>0.0</value></red>
 					<green><value>0.0</value></green>
 					<blue><value>0.0</value></blue>
-					<alpha><value>1</value></alpha>
+					<alpha><value>0.9</value></alpha>
 				</color>
 				<size>
 					<value>1.0</value>

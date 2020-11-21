@@ -335,7 +335,7 @@
             <pref-width>220</pref-width><pref-height>23</pref-height>
             <row>2</row>
             <col>4</col>
-            <legend>DEAD Strike (2 bags)</legend>
+            <legend>A/G DEAD (2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2g_dead();</script>
