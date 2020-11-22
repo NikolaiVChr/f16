@@ -591,7 +591,7 @@ var a2g_caslt = func {
         pylon4.loadSet(pylonSets.fuel37L);
         pylon5.loadSet(pylonSets.empty);
         pylon6.loadSet(pylonSets.fuel37R);
-        pylon7.loadSet(pylonSets.a65d;
+        pylon7.loadSet(pylonSets.a65d);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
         if (block == 6) {

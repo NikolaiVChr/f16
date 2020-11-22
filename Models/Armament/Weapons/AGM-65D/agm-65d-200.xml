@@ -117,7 +117,7 @@
          <red><expression><product><value>0.7</value><property>rendering/scene/diffuse/red</property></product></expression></red>
          <green><expression><product><value>0.7</value><property>rendering/scene/diffuse/red</property></product></expression></green>
          <blue><expression><product><value>0.7</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
-             <alpha><value> 0.35 </value></alpha>
+             <alpha><value> 0.30 </value></alpha>
            </color>
            <size>
              <value>0.8</value>
