@@ -1315,6 +1315,7 @@ value. 18000=standard US transition altitude -->
             <power-right-hdpt-warm type="double">0</power-right-hdpt-warm>
             <power-right-hdpt-warming type="bool">true</power-right-hdpt-warming>
             <le-flaps-switch type="bool">true</le-flaps-switch>
+            <trim-ap-disc-switch type="bool">false</trim-ap-disc-switch>
             <ins-knob type="int">0</ins-knob>            
             <ew-disp-switch type="bool">false</ew-disp-switch>
             <ew-rwr-switch type="bool">false</ew-rwr-switch>
