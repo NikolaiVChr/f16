@@ -363,17 +363,6 @@
             <pref-width>220</pref-width><pref-height>23</pref-height>
             <row>6</row>
             <col>4</col>
-            <legend>A/G CAS (Heavy, 2 bags)</legend>
-            <binding>
-                <command>nasal</command>
-                <script>pylons.a2g_cas();</script>
-            </binding>
-        </button>
-
-        <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
-            <row>8</row>
-            <col>4</col>
             <legend>A/G M151 Hydra rockets</legend>
             <binding>
                 <command>nasal</command>
@@ -383,7 +372,7 @@
 
         <button>
             <pref-width>220</pref-width><pref-height>23</pref-height>
-            <row>10</row>
+            <row>8</row>
             <col>4</col>
             <legend>A/G Anti-Ship (2 bags)</legend>
             <binding>
@@ -406,7 +395,7 @@
 
         <button>
             <pref-width>220</pref-width><pref-height>23</pref-height>
-            <row>12</row>
+            <row>10</row>
             <col>4</col>
             <legend>A/G JSOW Stand-off (2 bags)</legend>
             <binding>
