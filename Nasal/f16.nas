@@ -991,7 +991,7 @@ var impact_listener = func {
       var impactPos = geo.Coord.new().set_latlon(lat, lon, elev);
       var target = findmultiplayer(impactPos, 80);
 
-      if (distance != nil) {
+      if (target != nil) {
         var typeOrd = ballistic.getNode("name").getValue();
         if(target == hit_callsign) {
           # Previous impacts on same target
