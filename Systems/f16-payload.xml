@@ -576,6 +576,7 @@
             <FCS-field-deg type="int">25</FCS-field-deg>            
             <seeker-field-deg type="int">180</seeker-field-deg>     
             <seeker-angular-speed-dps type="double">30</seeker-angular-speed-dps> <!-- deg/sec guess-->
+            <lock-on-sun-deg type="double">4</lock-on-sun-deg>
             <max-g type="int">25</max-g>
             <max-launch-g type="int">7</max-launch-g>               
             <thrust-lbf-stage-1 type="double">1200</thrust-lbf-stage-1>

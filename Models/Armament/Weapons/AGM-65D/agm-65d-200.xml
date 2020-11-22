@@ -44,7 +44,7 @@
 
   <model>
     <name>flaminghot</name>
-    <path>agm-65-exhaust.xml</path>
+    <path>agm-65D-exhaust.xml</path>
     <offsets>
       <x-m>1.24</x-m>
       <y-m>0</y-m>
