@@ -1728,7 +1728,81 @@
            </binding>
         </decrease>
     </animation>
-	
+
+    <animation>
+        <type>knob</type>
+        <object-name>SW_TRIM_DISC</object-name>
+        <visible>true</visible>
+        <property>f16/avionics/trim-ap-disc-switch</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>false</repeatable>
+        <interval-sec>0.2</interval-sec>
+        <factor>40</factor>
+        <offset-deg>-20</offset-deg>
+        <center>
+            <x-m>0.47989</x-m>
+            <y-m>-0.3707</y-m>
+            <z-m>0.007677</z-m>
+        </center>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/avionics/trim-ap-disc-switch</property>
+                <value>0</value>
+            </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/avionics/trim-ap-disc-switch</property>
+                <value>1</value>
+            </binding>
+        </decrease>
+    </animation>
+
+    <animation>
+        <type>knob</type>
+        <object-name>SW_TRIM_DISC_50</object-name>
+        <visible>true</visible>
+        <property>f16/avionics/trim-ap-disc-switch</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>false</repeatable>
+        <interval-sec>0.2</interval-sec>
+        <factor>40</factor>
+        <offset-deg>-20</offset-deg>
+        <center>
+            <x-m>0.6269</x-m>
+            <y-m>-0.40845</y-m>
+            <z-m>0.007677</z-m>
+        </center>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/avionics/trim-ap-disc-switch</property>
+                <value>0</value>
+            </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/avionics/trim-ap-disc-switch</property>
+                <value>1</value>
+            </binding>
+        </decrease>
+    </animation>
+
   <!-- External Lighting Panel -->
 
 	<animation>
