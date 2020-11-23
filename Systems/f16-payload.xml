@@ -565,7 +565,7 @@
             <ready-time type="double">0.25</ready-time>
         </agm-65>
         <agm-65d>
-            <type-id type="int">96</type-id>
+            <type-id type="int">58</type-id>
             <short-name type="string">AG65D</short-name>
             <long-name type="string">AGM-65D Maverick</long-name>
             <vol-search type="double">0.00</vol-search>
