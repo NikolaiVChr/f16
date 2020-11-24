@@ -126,6 +126,17 @@
 </model>
 
 <model>
+  <name>Station3_1xCBU105</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/CBU-105/CBU-105.xml</path>
+  <offsets>
+    <x-m>0.61</x-m>
+   <y-m>-2.872</y-m>
+   <z-m>-0.485</z-m>
+   <pitch-deg>-3.35</pitch-deg>
+  </offsets>
+</model>
+
+<model>
   <name>Station3_3xAGM-65</name>
   <path>Aircraft/f16/Models/Armament/Weapons/AGM-65/trirack-3.xml</path>
   <offsets>
@@ -401,6 +412,17 @@
     <y-m>2.879</y-m>
     <z-m>-0.386</z-m>
     <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station7_1xCBU105</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/CBU-105/CBU-105.xml</path>
+  <offsets>
+    <x-m>0.61</x-m>
+   <y-m>2.872</y-m>
+   <z-m>-0.485</z-m>
+   <pitch-deg>-3.35</pitch-deg>
   </offsets>
 </model>
 
