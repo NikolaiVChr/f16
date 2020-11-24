@@ -162,7 +162,7 @@
           <property>sim/rendering/redout/new</property>
         </binding>
     </checkbox>
-  <text><halign>left</halign><label>Enable this to use a newer more capable G-suit.</label></text>
+  <text><halign>left</halign><label>Enable this to use a newer, more capable G-suit.</label></text>
   <text><halign>left</halign><label>Disabled means G-suit year 1979.</label></text>
 
   <hrule/>
