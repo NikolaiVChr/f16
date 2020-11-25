@@ -1302,7 +1302,62 @@
             </binding>
         </release>
     </animation>
-  
+
+    <animation>
+        <type>knob</type>
+        <object-name>SW_MASTER_FUEL</object-name>
+        <visible>true</visible>
+        <property>fdm/jsbsim/elec/switches/master-fuel</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <repeatable>true</repeatable>
+        <interval-sec>0.75</interval-sec>
+        <factor>40</factor>
+        <offset-deg>-40</offset-deg>
+        <center>
+            <x-m>0.55953</x-m>
+            <y-m>-0.51559</y-m>
+            <z-m>0.003823</z-m>
+        </center>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-assign</command>
+                <property>fdm/jsbsim/elec/switches/master-fuel</property>
+                <value>1</value>
+            </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-assign</command>
+                <property>fdm/jsbsim/elec/switches/master-fuel</property>
+                <value>0</value>
+            </binding>
+        </decrease>
+    </animation>
+
+    <animation>
+        <type>rotate</type>
+        <object-name>SW_MASTER_FUEL_COVER</object-name>
+        <property>fdm/jsbsim/elec/switches/master-fuel</property>
+        <factor>-40</factor>
+        <offset-deg>40</offset-deg>
+        <center>
+            <x-m>0.57898</x-m>
+            <y-m>-0.51488</y-m>
+            <z-m>0.010758</z-m>
+        </center>
+        <axis>
+            <x>0</x>
+            <y>1</y>
+            <z>0</z>
+        </axis>
+    </animation>
+
     <animation>
         <type>knob</type>
         <object-name>SW_AIR_REFUEL</object-name>
