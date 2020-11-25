@@ -169,17 +169,6 @@
   <object-name>Station4_CBU105</object-name>
   <condition>
     <equals>
-        <property>payload/armament/station/id-3-set</property>
-        <value>2 x CBU-105</value>
-      </equals>
-  </condition>
- </animation>
-
- <animation>
-  <type>select</type>
-  <object-name>Station4_1xCBU105</object-name>
-  <condition>
-    <equals>
       <property>payload/armament/station/id-3-type</property>
       <value>CBU-105</value>
     </equals>
@@ -381,16 +370,6 @@
  <animation>
   <type>select</type>
   <object-name>Station6_CBU105</object-name>
-  <condition>
-    <equals>
-        <property>payload/armament/station/id-5-set</property>
-        <value>2 x CBU-105</value>
-      </equals>
-  </condition>
- </animation>
- <animation>
-  <type>select</type>
-  <object-name>Station6_1xCBU105</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-5-type</property>

@@ -83,7 +83,7 @@ var pylonSets = {
     m84: {name: "1 x MK-84", pylon: "1 MAU", rack: nil, content: ["MK-84"], fireOrder: [0], launcherDragArea: 0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     m83:  {name: "2 x MK-83",  pylon: "1 MAU", rack: "1 BR57", content: ["MK-83","MK-83"], fireOrder: [0,1], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     c87:  {name: "2 x CBU-87", pylon: "1 MAU", rack: "1 BR57", content: ["CBU-87","CBU-87"], fireOrder: [0,1], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
-    c105:  {name: "2 x CBU-105", pylon: "1 MAU", rack: "1 BR57", content: ["CBU-105","CBU-105"], fireOrder: [0,1], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
+    c105:  {name: "1 x CBU-105", pylon: "1 MAU", rack: nil, content: ["CBU-105"], fireOrder: [0], launcherDragArea: 0.005, launcherMass: 10, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
 	dumb1:  {name: "CATM-9L", pylon: "1 MRL", content: [catm9], fireOrder: [], launcherDragArea: -0.025, launcherMass: 185, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	dumb1WT:  {name: "CATM-9L", pylon: "1 MRLW", content: [catm9], fireOrder: [], launcherDragArea: -0.0785, launcherMass: 185, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	dumb2: {name: "AN-T-17", pylon: "1 MRL", rack: nil, content: [ant17], fireOrder: [], launcherDragArea: -0.02, launcherMass: 185, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},

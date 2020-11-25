@@ -96,10 +96,10 @@
   <name>Station3_MK84</name>
   <path>Aircraft/f16/Models/Armament/Weapons/MK-84/MK-84.xml</path>
   <offsets>
-   <x-m>0.61</x-m>
-   <y-m>-2.872</y-m>
-   <z-m>-0.485</z-m>
-   <pitch-deg>-3.35</pitch-deg>
+   <x-m>0.55</x-m>
+   <y-m>-2.879</y-m>
+   <z-m>-0.48</z-m>
+   <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
 
@@ -116,23 +116,12 @@
 
 <model>
   <name>Station3_CBU105</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/CBU-105/duorack-3.xml</path>
-  <offsets>
-    <x-m>0.7</x-m>
-    <y-m>-2.879</y-m>
-    <z-m>-0.386</z-m>
-    <pitch-deg>-4.5</pitch-deg>
-  </offsets>
-</model>
-
-<model>
-  <name>Station3_1xCBU105</name>
   <path>Aircraft/f16/Models/Armament/Weapons/CBU-105/CBU-105.xml</path>
   <offsets>
-    <x-m>0.61</x-m>
-   <y-m>-2.872</y-m>
-   <z-m>-0.485</z-m>
-   <pitch-deg>-3.35</pitch-deg>
+   <x-m>0.55</x-m>
+   <y-m>-2.879</y-m>
+   <z-m>-0.458</z-m>
+   <pitch-deg>-4.5</pitch-deg>
   </offsets>
 </model>
 
@@ -240,9 +229,9 @@
   <path>Aircraft/f16/Models/Armament/Weapons/GBU-31/GBU-31.xml</path>
   <offsets>
    <x-m>0.725</x-m>
-   <y-m>-2.872</y-m>
-   <z-m>-0.52</z-m>
-   <pitch-deg>-3.35</pitch-deg>
+   <y-m>-2.879</y-m>
+   <z-m>-0.51</z-m>
+   <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
 
@@ -386,10 +375,10 @@
   <name>Station7_MK84</name>
   <path>Aircraft/f16/Models/Armament/Weapons/MK-84/MK-84.xml</path>
   <offsets>
-   <x-m>0.61</x-m>
-   <y-m>2.872</y-m>
-   <z-m>-0.485</z-m>
-   <pitch-deg>-3.35</pitch-deg>
+   <x-m>0.55</x-m>
+   <y-m>2.879</y-m>
+   <z-m>-0.48</z-m>
+   <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
 
@@ -406,23 +395,12 @@
 
 <model>
   <name>Station7_CBU105</name>
-  <path>Aircraft/f16/Models/Armament/Weapons/CBU-105/duorack-7.xml</path>
-  <offsets>
-    <x-m>0.7</x-m>
-    <y-m>2.879</y-m>
-    <z-m>-0.386</z-m>
-    <pitch-deg>-4.5</pitch-deg>
-  </offsets>
-</model>
-
-<model>
-  <name>Station7_1xCBU105</name>
   <path>Aircraft/f16/Models/Armament/Weapons/CBU-105/CBU-105.xml</path>
   <offsets>
-    <x-m>0.61</x-m>
-   <y-m>2.872</y-m>
-   <z-m>-0.485</z-m>
-   <pitch-deg>-3.35</pitch-deg>
+   <x-m>0.55</x-m>
+   <y-m>2.879</y-m>
+   <z-m>-0.458</z-m>
+   <pitch-deg>-4.5</pitch-deg>
   </offsets>
 </model>
 
@@ -541,9 +519,9 @@
   <path>Aircraft/f16/Models/Armament/Weapons/GBU-31/GBU-31.xml</path>
   <offsets>
    <x-m>0.725</x-m>
-   <y-m>2.872</y-m>
-   <z-m>-0.52</z-m>
-   <pitch-deg>-3.35</pitch-deg>
+   <y-m>2.879</y-m>
+   <z-m>-0.51</z-m>
+   <pitch-deg>-4.5</pitch-deg>
   </offsets>
  </model>
 
