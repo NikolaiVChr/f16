@@ -13,7 +13,6 @@
     <object-name>ejection-safety-lever</object-name>
     <action>
      <button>0</button>
-     <repeatable>true</repeatable>
      <binding>
       <command>nasal</command>
       <script>
