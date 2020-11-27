@@ -54,24 +54,45 @@ var fuelqty = func {
   setprop("/consumables/fuel/total-fuel-lbs-10000", int(fuel*0.0001)*10000);
 }
 
+# Fuel tank priority store
+var tank_priority = {};
+
+# Fuel master switch
+setlistener("fdm/jsbsim/elec/switches/master-fuel", func(masterNode) {
+    var master = masterNode.getValue();
+    var maxtank = 8;
+
+    if (master == 0) { # Off
+        for (var i=0;i<=maxtank;i+=1) {
+            tank_priority[i] = getprop("/fdm/jsbsim/propulsion/tank["~i~"]/priority");
+            setprop("/fdm/jsbsim/propulsion/tank["~i~"]/priority", 0);
+        }
+    } else {
+        for (var i=0;i<=maxtank;i+=1) {
+            setprop("/fdm/jsbsim/propulsion/tank["~i~"]/priority", tank_priority[i]);
+        }
+    }
+}, 0, 0);
 
 # Engine feed knob handler
 setlistener("f16/engine/feed", func(feedNode) {
     var feed = feedNode.getValue();
-    if (feed == 1) # NORM
-    {
-        setprop("/fdm/jsbsim/propulsion/tank[0]/priority", 5);
-        setprop("/fdm/jsbsim/propulsion/tank[3]/priority", 5);
+    var master = getprop("fdm/jsbsim/elec/switches/master-fuel");
+
+    if (feed == 1) { # NORM
+        tank_priority[0] = 5;
+        tank_priority[3] = 5;
+    } elsif (feed == 2) { # AFT
+        tank_priority[0] = 5;
+        tank_priority[3] = 1;
+    } elsif (feed == 3) { # FWD
+        tank_priority[0] = 1;
+        tank_priority[3] = 5;
     }
-    if (feed == 2) # AFT
-    {
-        setprop("/fdm/jsbsim/propulsion/tank[0]/priority", 5);
-        setprop("/fdm/jsbsim/propulsion/tank[3]/priority", 1);
-    }
-    if (feed == 3) # FWD
-    {
-        setprop("/fdm/jsbsim/propulsion/tank[0]/priority", 1);
-        setprop("/fdm/jsbsim/propulsion/tank[3]/priority", 5);
+
+    if (master) {
+        setprop("/fdm/jsbsim/propulsion/tank[0]/priority", tank_priority[0]);
+        setprop("/fdm/jsbsim/propulsion/tank[3]/priority", tank_priority[3]);
     }
 }, 0, 0);
 

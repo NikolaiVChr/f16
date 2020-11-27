@@ -838,6 +838,7 @@
                     <external-pwr type="bool">false</external-pwr>
                 </sources>
                 <switches>
+                    <master-fuel type="bool">1</master-fuel>
                     <epu type="int">0</epu>
                     <epu-cover type="int">1</epu-cover>
                     <epu-pin type="bool">1</epu-pin>

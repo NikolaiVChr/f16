@@ -102,7 +102,7 @@
  <animation>
         <type>knob</type>
         <object-name>HSI_course-knob</object-name>
-        <property>instrumentation/nav[0]/radials/selected-deg</property>
+        <property>instrumentation/nav[0]/radials/selected-deg-knob</property>
         <factor>1</factor>
         <offset-deg>0</offset-deg>
         <interval-sec>0.075</interval-sec>
@@ -122,7 +122,15 @@
                 <property>instrumentation/nav[0]/radials/selected-deg</property>
                 <step>1</step>
                 <min>0</min>
-                <max>360</max>                
+                <max>360</max>
+                <wrap>true</wrap>
+           </binding>
+            <binding>
+                <command>property-adjust</command>
+                <property>instrumentation/nav[0]/radials/selected-deg-knob</property>
+                <step>1</step>
+                <min>0</min>
+                <max>360</max>
                 <wrap>true</wrap>
            </binding>
         </increase>
@@ -132,7 +140,15 @@
                 <property>instrumentation/nav[0]/radials/selected-deg</property>
                 <step>-1</step>
                 <min>0</min>
-                <max>360</max>                
+                <max>360</max>
+                <wrap>true</wrap>
+           </binding>
+            <binding>
+                <command>property-adjust</command>
+                <property>instrumentation/nav[0]/radials/selected-deg-knob</property>
+                <step>-1</step>
+                <min>0</min>
+                <max>360</max>
                 <wrap>true</wrap>
            </binding>
         </decrease>
