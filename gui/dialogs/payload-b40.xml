@@ -98,7 +98,7 @@
     <group>
         <layout>table</layout>
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>0</row>
             <col>0</col>
             <legend>A/A Training</legend>
@@ -109,7 +109,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>2</row>
             <col>0</col>
             <legend>Combat Air Patrol</legend>
@@ -126,7 +126,7 @@
         </hrule>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>4</row>
             <col>0</col>
             <legend>Combat Air Patrol (2 bags)</legend>
@@ -143,7 +143,7 @@
         </hrule>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>6</row>
             <col>0</col>
             <legend>Air Defense</legend>
@@ -160,7 +160,7 @@
         </hrule>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>8</row>
             <col>0</col>
             <legend>Air Superiority</legend>
@@ -171,7 +171,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>10</row>
             <col>0</col>
             <legend>Air Superiority (2 bags)</legend>
@@ -188,7 +188,7 @@
         </hrule>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>12</row>
             <col>0</col>
             <legend>Defensive Counter Air</legend>
@@ -211,7 +211,7 @@
         </hrule>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>14</row>
             <col>0</col>
             <legend>Ferry Loadout (3 bags)</legend>
@@ -222,7 +222,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>16</row>
             <col>0</col>
             <legend>Ferry Loadout (2 bags XL)</legend>
@@ -233,7 +233,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>0</row>
             <col>2</col>
             <legend>A/G Training (2 bags)</legend>
@@ -244,7 +244,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>2</row>
             <col>2</col>
             <legend>A/G Unguided (Light, 2 bags)</legend>
@@ -255,7 +255,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>4</row>
             <col>2</col>
             <legend>A/G Unguided (Heavy, 2 bags)</legend>
@@ -266,7 +266,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>6</row>
             <col>2</col>
             <legend>A/G Cluster CEM (2 bags)</legend>
@@ -277,7 +277,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>8</row>
             <col>2</col>
             <legend>A/G Cluster SFW (WCMD, 2 bags)</legend>
@@ -288,7 +288,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>10</row>
             <col>2</col>
             <legend>A/G LGB (Paveway II, 2 bags)</legend>
@@ -299,7 +299,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>12</row>
             <col>2</col>
             <legend>A/G LGB (Paveway III, 2 bags)</legend>
@@ -310,7 +310,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>14</row>
             <col>2</col>
             <legend>A/G GPS (JDAM, 2 bags)</legend>
@@ -321,7 +321,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>16</row>
             <col>2</col>
             <legend>A/G GPS (L-JDAM, 2 bags)</legend>
@@ -332,7 +332,7 @@
         </button>
         
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>18</row>
             <col>2</col>
             <legend>A/G Strategic (Unguided, 2 bags XL)</legend>
@@ -343,10 +343,10 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>20</row>
             <col>2</col>
-            <legend>A/G Tactical (Guided, 2 bags)</legend>
+            <legend>Tactical Test and Evaluation (2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.b50_a2g_tact();</script>
@@ -354,7 +354,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>0</row>
             <col>4</col>
             <legend>SEAD "Wild Weasel" (2 bags)</legend>
@@ -365,7 +365,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>2</row>
             <col>4</col>
             <legend>A/G DEAD (2 bags)</legend>
@@ -376,7 +376,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>4</row>
             <col>4</col>
             <legend>A/G CAS (Light, 2 bags)</legend>
@@ -393,7 +393,7 @@
         </hrule>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>6</row>
             <col>4</col>
             <legend>A/G CAS (Heavy, 2 bags)</legend>
@@ -404,7 +404,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>8</row>
             <col>4</col>
             <legend>A/G M151 Hydra rockets</legend>
@@ -415,7 +415,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>10</row>
             <col>4</col>
             <legend>A/G Anti-Ship (2 bags)</legend>
@@ -426,7 +426,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>12</row>
             <col>4</col>
             <legend>A/G Anti-Ship</legend>
@@ -449,7 +449,7 @@
         </hrule>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>14</row>
             <col>4</col>
             <legend>A/G JASSM Stand-off (2 bags)</legend>
@@ -460,7 +460,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>16</row>
             <col>4</col>
             <legend>A/G JSOW Stand-off (2 bags)</legend>

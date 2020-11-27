@@ -99,7 +99,7 @@
         <layout>table</layout>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>0</row>
             <col>0</col>
             <legend>A/A Training</legend>
@@ -110,7 +110,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>0</row>
             <col>2</col>
             <legend>Air Superiority (IR)</legend>
@@ -127,7 +127,7 @@
         </hrule>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>0</row>
             <col>4</col>
             <legend>Air Superiority (IR, 2 bags)</legend>
@@ -144,7 +144,7 @@
         </hrule>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>2</row>
             <col>0</col>
             <legend>A/G Training (2 bags)</legend>
@@ -155,7 +155,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>2</row>
             <col>2</col>
             <legend>A/G Unguided (Light)</legend>
@@ -166,7 +166,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>2</row>
             <col>4</col>
             <legend>A/G Unguided (Heavy)</legend>
@@ -177,7 +177,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>4</row>
             <col>0</col>
             <legend>Ferry Loadout (3 bags)</legend>
@@ -188,7 +188,7 @@
         </button>
 
         <button>
-            <pref-width>220</pref-width><pref-height>23</pref-height>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>4</row>
             <col>4</col>
             <legend>Ferry Loadout (2 bags XL)</legend>

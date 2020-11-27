@@ -1375,15 +1375,15 @@ var a2g_jassm = func {
 # A/G Tactical Guided Strike (B61-12)
 var b50_a2g_tact = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
-        pylon1.loadSet(pylonSets.aim120WT);
-        pylon2.loadSet(pylonSets.aim9);
+        pylon1.loadSet(pylonSets.dumb3WT);
+        pylon2.loadSet(pylonSets.podACMI);
         pylon3.loadSet(pylonSets.b6112);
         pylon4.loadSet(pylonSets.fuel37L);
         pylon5.loadSet(pylonSets.podEcm184);
         pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.b6112);
-        pylon8.loadSet(pylonSets.aim9);
-        pylon9.loadSet(pylonSets.aim120WT);
+        pylon8.loadSet(pylonSets.dumb1);
+        pylon9.loadSet(pylonSets.dumb3WT);
         pylon10.loadSet(pylonSets.podSAtp);
         pylon11.loadSet(pylonSets.podHarm);
         f16.reloadCannon();
