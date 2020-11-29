@@ -732,7 +732,32 @@
             </binding>
         </hovered>
     </animation>
-    
+
+    <animation>
+        <type>knob</type>
+        <object-name>voice-msg-switch</object-name>
+        <property>f16/avionics/voice-msg-inhibit</property>
+        <factor>-50</factor>
+        <offset-deg>25</offset-deg>
+        <drag-direction>vertical</drag-direction>
+        <center>
+            <x-m>0.32588</x-m><z-m>0.01126</z-m><y-m>-0.31693</y-m>
+        </center>
+        <axis>
+            <x>0</x><y>-1</y><z>0</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/voice-msg-inhibit</property>
+                <factor>-1</factor>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+
     <animation>
         <type>knob</type>
         <object-name>mmc-switch</object-name>

@@ -3295,6 +3295,7 @@
             <type>avionics</type>
             <path>Aircraft/f16/Sounds/betty/chaff-flare.wav</path>
             <condition>
+                <not><property>f16/avionics/voice-msg-inhibit</property></not>
                 <not><property>gear/gear[2]/wow</property></not>
                 <property>ai/submodels/submodel[0]/flare-release-snd</property>
                 <greater-than>
@@ -3317,6 +3318,7 @@
             <type>avionics</type>
             <path>Aircraft/f16/Sounds/betty/chaff-flare-out.wav</path>
             <condition>
+                <not><property>f16/avionics/voice-msg-inhibit</property></not>
                 <not><property>gear/gear[2]/wow</property></not>
                 <property>ai/submodels/submodel[0]/flare-release-out-snd</property>
                 <greater-than>
@@ -3339,6 +3341,7 @@
             <mode>looped</mode>
             <type>avionics</type>
             <condition>
+                <not><property>f16/avionics/voice-msg-inhibit</property></not>
                 <property>controls/test/test-panel/mal-ind-lts</property>
                 <greater-than>
                   <property>fdm/jsbsim/elec/bus/batt-1</property>
@@ -3360,6 +3363,7 @@
             <mode>looped</mode>
             <type>avionics</type>
             <condition>
+                <not><property>f16/avionics/voice-msg-inhibit</property></not>
                 <not><property>gear/gear[2]/wow</property></not>
                 <and>
                     <greater-than>
@@ -3391,6 +3395,7 @@
             <mode>once</mode>
             <type>avionics</type>
             <condition>
+                <not><property>f16/avionics/voice-msg-inhibit</property></not>
                 <not><property>gear/gear[2]/wow</property></not>
                 <equals>
                     <property>f16/avionics/bingo</property>
@@ -3416,6 +3421,7 @@
             <mode>once</mode>
             <type>avionics</type>
             <condition>
+                <not><property>f16/avionics/voice-msg-inhibit</property></not>
                 <not><property>gear/gear[2]/wow</property></not>
                 <equals>
                     <property>gear/gear/position-norm</property>
@@ -3446,6 +3452,7 @@
             <mode>once</mode>
             <type>avionics</type>
             <condition>
+                <not><property>f16/avionics/voice-msg-inhibit</property></not>
                 <not><property>gear/gear[2]/wow</property></not>
                 <greater-than>
                     <property>instrumentation/altimeter/indicated-altitude-ft</property>
@@ -3471,6 +3478,7 @@
             <mode>once</mode>
             <type>avionics</type>
             <condition>
+                <not><property>f16/avionics/voice-msg-inhibit</property></not>
                 <not><property>gear/gear[2]/wow</property></not>
                 <greater-than>
                     <property>f16/settings/msl-floor</property>
@@ -3496,6 +3504,7 @@
             <type>avionics</type>
             <path>Aircraft/f16/Sounds/betty/caution.wav</path>
             <condition>
+                    <not><property>f16/avionics/voice-msg-inhibit</property></not>
                     <not><property>gear/gear[2]/wow</property></not>
                     <property>f16/avionics/caution/master</property>
                     <greater-than>
