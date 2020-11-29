@@ -333,7 +333,7 @@
             <max-fire-range-nm type="double">15 </max-fire-range-nm>
             <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
             <guidance type="string">laser</guidance>
-            <navigation type="string">APN</navigation>
+            <navigation type="string">PN</navigation>
             <loft-altitude type="int"> 0 </loft-altitude>
             <terrain-follow type="bool">false</terrain-follow>
             <FCS-field-deg type="int"> 200 </FCS-field-deg>
@@ -384,7 +384,7 @@
             <max-fire-range-nm type="double">15</max-fire-range-nm>
             <min-fire-range-nm type="double">0</min-fire-range-nm>
             <guidance type="string">gps</guidance>
-            <navigation type="string">APN</navigation>
+            <navigation type="string">PN</navigation>
             <loft-altitude type="int"> 0 </loft-altitude>
             <terrain-follow type="bool">false</terrain-follow>
             <FCS-field-deg type="int"> 200 </FCS-field-deg>
@@ -435,7 +435,7 @@
             <max-fire-range-nm type="double">15 </max-fire-range-nm>
             <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
             <guidance type="string">gps</guidance>
-            <navigation type="string">APN</navigation>
+            <navigation type="string">PN</navigation>
             <loft-altitude type="int"> 0 </loft-altitude>
             <terrain-follow type="bool">false</terrain-follow>
             <FCS-field-deg type="int"> 200 </FCS-field-deg>
@@ -486,7 +486,7 @@
             <max-fire-range-nm type="double">15 </max-fire-range-nm>
             <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
             <guidance type="string">laser</guidance>
-            <navigation type="string">APN</navigation>
+            <navigation type="string">PN</navigation>
             <loft-altitude type="int"> 0 </loft-altitude>
             <terrain-follow type="bool">false</terrain-follow>
             <FCS-field-deg type="int"> 200 </FCS-field-deg>
@@ -528,14 +528,14 @@
             <ejector-speed-fps type="double">5</ejector-speed-fps>
             <ready-time type="double">0.5</ready-time>
         </gbu-24>
-        <agm-65>
+        <agm-65b>
             <type-id type="int">0</type-id>
             <short-name type="string">AG65B</short-name>
             <long-name type="string">AGM-65B Maverick</long-name>
             <vol-search type="double">0.00</vol-search>
             <vol-track type="double">1.00</vol-track>
             <guidance type="string">vision</guidance>
-            <navigation type="string">APN</navigation>                           
+            <navigation type="string">PN</navigation>                           
             <all-aspect type="bool">true</all-aspect>
             <max-fire-range-nm type="double">12</max-fire-range-nm>              <!-- source -->
             <FCS-field-deg type="int">25</FCS-field-deg>            
@@ -549,20 +549,58 @@
             <stage-2-duration-sec type="double">0.0</stage-2-duration-sec>
             <weight-launch-lbs type="double">462</weight-launch-lbs>              <!-- source -->
             <weight-warhead-lbs type="double">126</weight-warhead-lbs>            <!-- source -->
+            <weight-fuel-lbm type="double"> 90 </weight-fuel-lbm>      <!-- guess -->
             <drag-coeff type="double">0.06</drag-coeff>
             <cross-section-sqft type="double">3.14</cross-section-sqft>                             <!-- source -->
             <arming-time-sec type="double">1.0</arming-time-sec>          
             <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>
             <self-destruct-time-sec type="double">55</self-destruct-time-sec>  
             <loft-altitude type="int">0</loft-altitude>
-            <min-fire-range-nm type="double">0.2</min-fire-range-nm>
+            <min-fire-range-nm type="double">0.5</min-fire-range-nm>      <!-- source -->
             <rail type="bool">false</rail>
             <max-report-distance type="double">65</max-report-distance>
             <class type="string">MGP</class>
             <fire-msg type="string">Rifle</fire-msg>
             <hit-everything-nearby type="bool">true</hit-everything-nearby>
             <ready-time type="double">0.25</ready-time>
-        </agm-65>
+        </agm-65b>
+        <agm-65d>
+            <type-id type="int">58</type-id>
+            <short-name type="string">AG65D</short-name>
+            <long-name type="string">AGM-65D Maverick</long-name>
+            <vol-search type="double">0.00</vol-search>
+            <vol-track type="double">1.00</vol-track>
+            <guidance type="string">heat</guidance>
+            <navigation type="string">PN</navigation>                           
+            <all-aspect type="bool">true</all-aspect>
+            <max-fire-range-nm type="double">12</max-fire-range-nm>              <!-- source -->
+            <FCS-field-deg type="int">25</FCS-field-deg>            
+            <seeker-field-deg type="int">180</seeker-field-deg>     
+            <seeker-angular-speed-dps type="double">30</seeker-angular-speed-dps> <!-- deg/sec guess-->
+            <lock-on-sun-deg type="double">4</lock-on-sun-deg>
+            <max-g type="int">25</max-g>
+            <max-launch-g type="int">7</max-launch-g>               
+            <thrust-lbf-stage-1 type="double">1200</thrust-lbf-stage-1>
+            <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>
+            <stage-1-duration-sec type="double">40</stage-1-duration-sec>
+            <stage-2-duration-sec type="double">0.0</stage-2-duration-sec>
+            <weight-launch-lbs type="double">484.5</weight-launch-lbs>              <!-- source -->
+            <weight-warhead-lbs type="double">126</weight-warhead-lbs>            <!-- source -->
+            <weight-fuel-lbm type="double"> 90 </weight-fuel-lbm>      <!-- guess -->
+            <drag-coeff type="double">0.06</drag-coeff>
+            <cross-section-sqft type="double">3.14</cross-section-sqft>                             <!-- source -->
+            <arming-time-sec type="double">1.0</arming-time-sec>          
+            <min-speed-for-guiding-mach type="double">0.5</min-speed-for-guiding-mach>
+            <self-destruct-time-sec type="double">105</self-destruct-time-sec>  	<!-- source: max time of flight -->
+            <loft-altitude type="int">0</loft-altitude>
+            <min-fire-range-nm type="double">0.5</min-fire-range-nm>      <!-- source -->
+            <rail type="bool">false</rail>
+            <max-report-distance type="double">65</max-report-distance>
+            <class type="string">MGP</class>
+            <fire-msg type="string">Rifle</fire-msg>
+            <hit-everything-nearby type="bool">true</hit-everything-nearby>
+            <ready-time type="double">0.25</ready-time>
+        </agm-65d>
         <agm-84>                    <!-- A variant: 0.85 mach cruise, E is calibrated to just under 1.00 -->
             <type-id type="int">1</type-id>
             <short-name type="string">AG84</short-name>
@@ -791,7 +829,7 @@
             <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
             <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
             <stage-2-duration-sec type="double"> 0 </stage-2-duration-sec>
-            <weight-launch-lbs type="double"> 950 </weight-launch-lbs>
+            <weight-launch-lbs type="double"> 950 </weight-launch-lbs>     <!-- source -->
             <weight-warhead-lbs type="double"> 128 </weight-warhead-lbs>
             <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
             <drag-coeff type="double"> 0.14 </drag-coeff>
@@ -824,7 +862,7 @@
             <max-fire-range-nm type="double">10</max-fire-range-nm>
             <min-fire-range-nm type="double">0</min-fire-range-nm>
             <guidance type="string">gps</guidance>
-            <navigation type="string">APN</navigation>
+            <navigation type="string">PN</navigation>
             <loft-altitude type="int"> 0 </loft-altitude>
             <terrain-follow type="bool">false</terrain-follow>
             <FCS-field-deg type="int"> 200 </FCS-field-deg>
@@ -835,7 +873,7 @@
             <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
             <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
             <stage-2-duration-sec type="double"> 0 </stage-2-duration-sec>
-            <weight-launch-lbs type="double"> 927 </weight-launch-lbs>
+            <weight-launch-lbs type="double"> 934 </weight-launch-lbs>     <!-- source -->
             <weight-warhead-lbs type="double"> 136 </weight-warhead-lbs>
             <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
             <drag-coeff type="double"> 0.14 </drag-coeff>
@@ -897,6 +935,7 @@
             <hit-everything-nearby type="bool">true</hit-everything-nearby>
         </lau-68-->
         <b61-7>
+            <!--type-id type="int">TBD</type-id-->
             <short-name type="string">B61-7</short-name>
             <long-name type="string">B61-7 Inert Training Body</long-name>
             <fire-msg type="string">Bombs away</fire-msg>
@@ -915,7 +954,7 @@
             <thrust-lbf-stage-2 type="double">0</thrust-lbf-stage-2>
             <stage-1-duration-sec type="double">0</stage-1-duration-sec>
             <stage-2-duration-sec type="double">0</stage-2-duration-sec>
-            <weight-launch-lbs type="double">700</weight-launch-lbs>
+            <weight-launch-lbs type="double">765</weight-launch-lbs> <!-- source -->
             <weight-warhead-lbs type="double">0</weight-warhead-lbs> <!-- Dummy version -->
             <weight-fuel-lbm type="double">0</weight-fuel-lbm>
             <drag-coeff type="double">0.125</drag-coeff>
@@ -943,6 +982,7 @@
             <ejector-speed-fps type="double">15</ejector-speed-fps>
         </b61-7>
         <b61-12>
+            <!--type-id type="int">TBD</type-id-->
             <short-name type="string">B61-12</short-name>
             <long-name type="string">B61-12 Test Flight Body</long-name>
             <fire-msg type="string">Bombs away</fire-msg>
@@ -950,7 +990,7 @@
             <max-fire-range-nm type="double">25</max-fire-range-nm>
             <min-fire-range-nm type="double">0</min-fire-range-nm>
             <guidance type="string">gps</guidance>
-            <navigation type="string">APN</navigation>
+            <navigation type="string">PN</navigation>
             <loft-altitude type="int"> 0 </loft-altitude>
             <terrain-follow type="bool">false</terrain-follow>
             <FCS-field-deg type="int">240</FCS-field-deg>
@@ -961,7 +1001,7 @@
             <thrust-lbf-stage-2 type="double">0</thrust-lbf-stage-2>
             <stage-1-duration-sec type="double">0</stage-1-duration-sec>
             <stage-2-duration-sec type="double">0</stage-2-duration-sec>
-            <weight-launch-lbs type="double">700</weight-launch-lbs>
+            <weight-launch-lbs type="double">755</weight-launch-lbs> <!-- source -->
             <weight-warhead-lbs type="double">0</weight-warhead-lbs> <!-- Dummy version -->
             <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
             <drag-coeff type="double">0.125</drag-coeff>
@@ -1031,6 +1071,6 @@
                 <long-name type="string">Project Gamma</long-name>
                 <short-name type="string">gamma</short-name>
                 <pitch-animation-disabled type="bool">true</pitch-animation-disabled>
-            </es>
+        </es>
     </armament>
 </PropertyList>

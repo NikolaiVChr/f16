@@ -57,26 +57,56 @@
 
  <animation>
   <type>select</type>
-  <object-name>Station3_3xAGM-65</object-name>
+  <object-name>Station3_3xAGM-65B</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-2-set</property>
-      <value>3 x AGM-65</value>
+      <value>3 x AGM-65B</value>
     </equals>
   </condition>
  </animation>
 
-  <animation>
+  <!--animation>
   <type>select</type>
-  <object-name>Station3_AGM-65</object-name>
+  <object-name>Station3_AGM-65B</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-2-set</property>
-      <value>1 x AGM-65</value>
+      <value>1 x AGM-65B</value>
     </equals>
     <equals>
       <property>payload/armament/station/id-2-type</property>
-      <value>AGM-65</value>
+      <value>AGM-65B</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-2-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation-->
+
+ <!--animation>
+  <type>select</type>
+  <object-name>Station3_3xAGM-65D</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-2-set</property>
+      <value>3 x AGM-65D</value>
+    </equals>
+  </condition>
+ </animation-->
+
+  <animation>
+  <type>select</type>
+  <object-name>Station3_AGM-65D</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-2-set</property>
+      <value>1 x AGM-65D</value>
+    </equals>
+    <equals>
+      <property>payload/armament/station/id-2-type</property>
+      <value>AGM-65D</value>
     </equals>
     <greater-than>
       <property>payload/armament/station/id-2-count</property>
@@ -235,9 +265,13 @@
   <object-name>Station3_CBU105</object-name>
   <condition>
     <equals>
-        <property>payload/armament/station/id-2-set</property>
-        <value>2 x CBU-105</value>
-      </equals>
+      <property>payload/armament/station/id-2-type</property>
+      <value>CBU-105</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-2-count</property>
+      <value>0</value>
+    </greater-than>
   </condition>
  </animation>
 
@@ -451,34 +485,69 @@
   <object-name>Station7_CBU105</object-name>
   <condition>
     <equals>
-        <property>payload/armament/station/id-6-set</property>
-        <value>2 x CBU-105</value>
-      </equals>
+      <property>payload/armament/station/id-6-type</property>
+      <value>CBU-105</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-6-count</property>
+      <value>0</value>
+    </greater-than>
   </condition>
  </animation>
 
+
  <animation>
   <type>select</type>
-  <object-name>Station7_3xAGM-65</object-name>
+  <object-name>Station7_3xAGM-65B</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-6-set</property>
-      <value>3 x AGM-65</value>
+      <value>3 x AGM-65B</value>
     </equals>
   </condition>
  </animation>
 
- <animation>
+ <!--animation>
   <type>select</type>
-  <object-name>Station7_AGM-65</object-name>
+  <object-name>Station7_AGM-65B</object-name>
   <condition>
     <equals>
       <property>payload/armament/station/id-6-set</property>
-      <value>1 x AGM-65</value>
+      <value>1 x AGM-65B</value>
     </equals>
     <equals>
       <property>payload/armament/station/id-6-type</property>
-      <value>AGM-65</value>
+      <value>AGM-65B</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-6-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation-->
+
+ <!--animation>
+  <type>select</type>
+  <object-name>Station7_3xAGM-65D</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-6-set</property>
+      <value>3 x AGM-65D</value>
+    </equals>
+  </condition>
+ </animation-->
+
+ <animation>
+  <type>select</type>
+  <object-name>Station7_AGM-65D</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-6-set</property>
+      <value>1 x AGM-65D</value>
+    </equals>
+    <equals>
+      <property>payload/armament/station/id-6-type</property>
+      <value>AGM-65D</value>
     </equals>
     <greater-than>
       <property>payload/armament/station/id-6-count</property>

@@ -2047,7 +2047,9 @@ append(obj.total, obj.speed_curr);
                         
                     } elsif (hdp.weapon_selected == "GBU-12") {
                         hdp.window9_txt = sprintf("%d GB12", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "AGM-65") {
+                    } elsif (hdp.weapon_selected == "AGM-65B") {
+                        hdp.window9_txt = sprintf("%d AG65", pylons.fcs.getAmmo());
+                    } elsif (hdp.weapon_selected == "AGM-65D") {
                         hdp.window9_txt = sprintf("%d AG65", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-84") {
                         hdp.window9_txt = sprintf("%d AG84", pylons.fcs.getAmmo());

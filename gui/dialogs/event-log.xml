@@ -11,7 +11,7 @@
 		<empty><stretch>1</stretch></empty>
 
 		<text>
-			<label>Event log</label>
+			<label>Combat event log</label>
 		</text>
 
 		<empty><stretch>1</stretch></empty>
@@ -31,11 +31,13 @@
 			</binding>
 		</button>
 	</group>
+
+	<hrule/>
 	
 	<nasal>
         <open>
             <![CDATA[
-                setprop("sim/model/mig21/event-log", "Click refresh to see the event log..");
+                setprop("sim/model/mig21/event-log", "Click refresh to see the combat event log..");
             ]]>
         </open>
         <close>
@@ -48,6 +50,7 @@
 	<button>
 		<!--<x>0</x>
 		<y>0</y>-->
+		<halign>centre</halign>
 		<legend>Refresh</legend>
 		<binding>
 			<command>nasal</command>
@@ -60,7 +63,7 @@
 				      str = str~""~entry.time~" "~entry.message~"\n";
 				  }
 				} else {
-					str = "The aircraft must be still to read the event log.";
+					str = "The aircraft must be still to read the combat event log.";
 				}
 				setprop("sim/model/mig21/event-log", str);
 			]]></script>
@@ -68,7 +71,8 @@
 	</button>
 
   	<text>
-	    <label>Log:</label>
+  		<halign>left</halign>
+	    <label>Event log:</label>
 	</text>
 
 	<textbox>
@@ -87,5 +91,7 @@
 	    <top-line>0</top-line> <!-- line to show at top, -ve numbers show last line -->
 	    <editable>false</editable> <!-- if the puLargeInput is supposed to be editable -->
 	</textbox>
+
+	<empty><stretch>1</stretch></empty>
 	
 </PropertyList>

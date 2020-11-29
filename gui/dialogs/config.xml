@@ -162,7 +162,7 @@
           <property>sim/rendering/redout/new</property>
         </binding>
     </checkbox>
-  <text><halign>left</halign><label>Enable this to use a newer more capable G-suit.</label></text>
+  <text><halign>left</halign><label>Enable this to use a newer, more capable G-suit.</label></text>
   <text><halign>left</halign><label>Disabled means G-suit year 1979.</label></text>
 
   <hrule/>
@@ -218,7 +218,7 @@
     <hrule/>
   
     <checkbox>
-      <label>Activate Auto ordnance view</label>
+      <label>Activate weapon-follow view</label>
       <halign>left</halign>
       <property>/controls/armament/automissileview</property>
       <live>true</live>
@@ -227,7 +227,7 @@
           <property>/controls/armament/automissileview</property>
         </binding>
     </checkbox>
-  <text><halign>left</halign><label>Will follow released weapon.</label></text>
+  <text><halign>left</halign><label>Will auto-switch when ordnance is released.</label></text>
 
   <hrule/>
   

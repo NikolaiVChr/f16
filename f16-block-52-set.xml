@@ -163,14 +163,18 @@
    <default>
     <menu n="101">
      <label>F-16CJ Block 52</label>
-        <item n="10">
+       <item n="12">
+          <label>--- Block options ---</label>
+          <enabled>false</enabled>
+        </item>
+        <item n="13">
           <label>Payload presets</label>
           <binding>
             <command>dialog-show</command>
-            <dialog-name>payload</dialog-name>
+            <dialog-name>payload-b50</dialog-name>
           </binding>
       </item>
-      <item n="11">
+      <item n="14">
           <label>Program target</label>
           <enabled type="bool">true</enabled>
           <name>programGPS</name>

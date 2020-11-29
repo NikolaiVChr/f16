@@ -4033,6 +4033,35 @@
             </volume>
         </lock-tone>
         <lock-tone>
+            <name>aim-65d-signal</name>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/betty/lock.wav</path>
+            <mode>once</mode>
+            <condition>
+                <property>payload/armament/agm-65d/sound-on-off</property>
+                <equals>
+                    <property>payload/armament/agm-65d/sound-volume</property>
+                    <value>1</value>
+                </equals>
+                <greater-than>
+                    <property>fdm/jsbsim/elec/bus/batt-1</property>
+                    <value>20</value>
+                </greater-than>
+            </condition>
+            <!--<pitch>
+                <factor>1.8</factor>
+                <max>2</max>
+            </pitch>-->
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
+            </volume>
+        </lock-tone>
+        <lock-tone>
             <name>aim-84-signal</name>
             <type>avionics</type>
             <path>Aircraft/f16/Sounds/betty/lock.wav</path>
@@ -4414,6 +4443,25 @@
             <mode>once</mode>
             <condition>
                 <property>payload/armament/agm-119/sound-fire-on-off</property>
+            </condition>
+            <reference-dist>25</reference-dist>
+            <max-dist>10000</max-dist>
+            <position>
+                <x>3.15986</x>
+                <y>-2.70311</y>
+                <z>-0.67645</z>
+            </position>
+            <volume>
+                <factor>0.65</factor>
+                <max>1</max>
+            </volume>
+        </missile1>
+        <missile1>
+            <name>missile7</name>
+            <path>Aircraft/f16/Sounds/missile.wav</path>
+            <mode>once</mode>
+            <condition>
+                <property>payload/armament/agm-65d/sound-fire-on-off</property>
             </condition>
             <reference-dist>25</reference-dist>
             <max-dist>10000</max-dist>

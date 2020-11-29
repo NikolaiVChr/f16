@@ -447,6 +447,10 @@
                         </binding>
                     </item>
                     <item>
+                        <label>--- Main ---</label>
+                        <enabled>false</enabled>
+                    </item>
+                    <item>
                         <label>Control Panel Left</label>
                         <name>controlPanel</name>
                         <binding>
@@ -463,11 +467,24 @@
                         </binding>
                       </item>
                       <item>
+                        <label>--- GUI Panels ---</label>
+                        <enabled>false</enabled>
+                      </item>
+                      <item>
                         <label>Link 16</label>
                         <name>link16</name>
                         <binding>
                           <command>dialog-show</command>
                           <dialog-name>link16</dialog-name>
+                        </binding>
+                    </item>
+                    <item>
+                        <label>Mission Preplanning</label>
+                        <enabled type="bool">true</enabled>
+                        <name>circles</name>
+                        <binding>
+                            <command>dialog-show</command>
+                            <dialog-name>circles</dialog-name>
                         </binding>
                     </item>
                     <item>
@@ -478,15 +495,10 @@
                             <command>dialog-show</command>
                             <dialog-name>scenario28</dialog-name>
                         </binding>
-                    </item> 
+                    </item>
                     <item>
-                        <label>Mission Preplanning</label>
-                        <enabled type="bool">true</enabled>
-                        <name>circles</name>
-                        <binding>
-                            <command>dialog-show</command>
-                            <dialog-name>circles</dialog-name>
-                        </binding>
+                        <label>--- Extra options ---</label>
+                        <enabled>false</enabled>
                     </item>
                     <item>
                         <label>Tacview Options</label>
@@ -498,12 +510,12 @@
                         </binding>
                     </item>
                     <item>
-                        <label>Event Log</label>
+                        <label>Combat event log</label>
                         <binding>
                             <command>dialog-show</command>
                             <dialog-name>flightlog</dialog-name>
                         </binding>
-                    </item> 
+                    </item>
                 </menu>
             </default>
         </menubar>

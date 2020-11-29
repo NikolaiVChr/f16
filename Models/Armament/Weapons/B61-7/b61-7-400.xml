@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+  <name>B61-7</name>
+  <path>B61-7.ac</path>
+
+  <animation>
+    <type>select</type>
+    <object-name>B61-7</object-name>
+    <object-name>B61-7_Hooks</object-name>
+    <object-name>B61-7_Wings</object-name>
+    <object-name>B61-7_Dragchute</object-name>
+    <condition>
+      <property>payload/armament/b61-7/flags/msl-id-400</property>
+    </condition>
+  </animation>
+
+  <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.90</metallic>
+          <ambient-factor type="float">0.0</ambient-factor>
+          <rain-enabled type="int">0</rain-enabled>
+          <ambient-correction type="float">0.00</ambient-correction>
+          <reflection-enabled type="int">1</reflection-enabled>
+          <reflection-correction type="float">-0.35</reflection-correction>
+      </parameters>
+    <object-name>B61-7</object-name>
+    <object-name>B61-7_Hooks</object-name>
+    <object-name>B61-7_Wings</object-name>
+  </effect>
+
+  <animation>
+  <type>select</type>
+  <object-name>B61-7_Dragchute</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/b61-7/flags/deploy-id-400</property>
+      <value>1</value>
+    </equals>
+  </condition>
+ </animation>
+
+  <animation>
+    <object-name>B61-7</object-name>
+    <object-name>B61-7_Hooks</object-name>
+    <object-name>B61-7_Wings</object-name>
+    <object-name>B61-7_Dragchute</object-name>
+      <enable-hot type="bool">false</enable-hot>
+  </animation>
+  
+</PropertyList>

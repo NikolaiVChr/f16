@@ -5,10 +5,10 @@
 
 <!-- this is the static non fired model on the aircraft -->
 
-	<path>AGM-65.ac</path>
+	<path>AGM-65B.ac</path>
 
   <effect>  
-    <inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>  
+    <inherits-from>Aircraft/f16/Models/Effects/glass/glassIR</inherits-from>
     <object-name>AGM-65Glass</object-name> 
   </effect>
 

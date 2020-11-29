@@ -259,6 +259,21 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   </condition>
  </animation>
 
+ <animation>
+  <type>select</type>
+  <object-name>Station11_SniperATP</object-name>
+  <condition>
+    <equals>
+      <property>payload/armament/station/id-11-type</property>
+      <value>AN/AAQ-33 Sniper ATP</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-11-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
 <animation>
   <type>select</type>
   <object-name>Podpylon_right</object-name>
@@ -289,9 +304,13 @@ to center pylon when it has "AN/ALQ-131 ECM Pod" active..
   <object-name>Podpylon_left</object-name>
   <condition>
     <equals>
+      <property>payload/armament/station/id-11-set</property>
+      <value>AN/AAQ-33 Sniper ATP</value>
+    </equals>
+    <!--equals>
       <value>1</value>
       <value>0</value>
-    </equals>
+    </equals-->
    <!--<or>
     <equals>
       <property>payload/armament/station/id-11-set</property>

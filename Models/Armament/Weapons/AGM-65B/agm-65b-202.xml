@@ -2,7 +2,7 @@
 
 <PropertyList>
 
-   <path>AGM-65.ac</path>
+   <path>AGM-65B.ac</path>
 
   <animation>
     <type>select</type>
@@ -16,7 +16,7 @@
       <object-name>AGM-65Back</object-name>
       <object-name>AGM-65Mounts</object-name>
     <condition>
-      <property>payload/armament/agm-65/flags/msl-id-200</property>
+      <property>payload/armament/agm-65b/flags/msl-id-202</property>
     </condition>
   </animation>
 
@@ -42,6 +42,24 @@
       <object-name>Lens</object-name>
   </effect>
 
+  <model>
+    <name>flaminghot</name>
+    <path>agm-65b-exhaust.xml</path>
+    <offsets>
+      <x-m>1.24</x-m>
+      <y-m>0</y-m>
+      <z-m>0</z-m>
+    </offsets>
+  </model>
+
+  <animation>
+      <type>select</type>
+      <object-name>flaminghot</object-name>
+      <condition>
+           <property>payload/armament/agm-65b/flags/smoke-id-202</property>
+     </condition>
+  </animation>
+
     <particlesystem>
        <name>smoke</name>
        <texture>../smoke.png</texture>
@@ -50,7 +68,7 @@
        <lighting type="bool">false</lighting>
 
        <condition>
-             <property>payload/armament/agm-65/flags/smoke-id-200</property>
+             <property>payload/armament/agm-65b/flags/smoke-id-202</property>
        </condition>
 
        <attach>world</attach>
@@ -60,7 +78,7 @@
        </placer>
 
        <offsets>
-          <x-m>1.90437</x-m>
+          <x-m>1.85</x-m>
           <y-m>0</y-m>
           <z-m>0</z-m>
        </offsets>
@@ -86,7 +104,7 @@
 
        <counter>
          <particles-per-sec>
-           <value>50</value>
+           <value>60</value>
            <spread>0</spread>
          </particles-per-sec>
        </counter>
@@ -96,30 +114,30 @@
        <particle>
          <start>
            <color>
-         <red><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></red>
-         <green><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></green>
-         <blue><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
-             <alpha><value> 0.5 </value></alpha>
+         <red><expression><product><value>0.7</value><property>rendering/scene/diffuse/red</property></product></expression></red>
+         <green><expression><product><value>0.7</value><property>rendering/scene/diffuse/red</property></product></expression></green>
+         <blue><expression><product><value>0.7</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
+             <alpha><value> 0.40 </value></alpha>
            </color>
            <size>
-             <value>1.0</value>
+             <value>0.8</value>
            </size>
          </start>
 
          <end>
            <color>
-         <red><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></red>
-         <green><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></green>
-         <blue><expression><product><value>0.8</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
-             <alpha><value> 0.1 </value></alpha>
+         <red><expression><product><value>0.7</value><property>rendering/scene/diffuse/red</property></product></expression></red>
+         <green><expression><product><value>0.7</value><property>rendering/scene/diffuse/red</property></product></expression></green>
+         <blue><expression><product><value>0.7</value><property>rendering/scene/diffuse/red</property></product></expression></blue>
+             <alpha><value> 0.05 </value></alpha>
            </color>
            <size>
-             <value>6</value>
+             <value>8</value>
            </size>
          </end>
 
          <life-sec>
-           <value>30</value>
+           <value>25</value>
          </life-sec>
            
          <mass-kg>  0.5 </mass-kg>
@@ -142,7 +160,7 @@
          <lighting type="bool">false</lighting>
 
          <condition>
-             <property>payload/armament/agm-65/flags/explode-id-200</property>
+             <property>payload/armament/agm-65b/flags/explode-id-202</property>
          </condition>
 
          <attach>world</attach>
@@ -228,7 +246,7 @@
          <lighting type="bool">false</lighting>
 
          <condition>
-             <property>payload/armament/agm-65/flags/explode-id-200</property>
+             <property>payload/armament/agm-65b/flags/explode-id-202</property>
          </condition>
 
          <attach>world</attach>
@@ -315,9 +333,9 @@
 
          <condition>
           <and>
-             <property>payload/armament/agm-65/flags/explode-id-200</property>
+             <property>payload/armament/agm-65b/flags/explode-id-202</property>
           <not>
-             <property>payload/armament/agm-65/flags/explode-water-id-200</property>
+             <property>payload/armament/agm-65b/flags/explode-water-id-202</property>
            </not>
           </and>
          </condition>
@@ -409,9 +427,9 @@
 
          <condition>
          <and>
-             <property>payload/armament/agm-65/flags/explode-smoke-id-200</property>
+             <property>payload/armament/agm-65b/flags/explode-smoke-id-202</property>
           <not>
-             <property>payload/armament/agm-65/flags/explode-water-id-200</property>
+             <property>payload/armament/agm-65b/flags/explode-water-id-202</property>
            </not>
           </and>
          </condition>
@@ -501,9 +519,9 @@
 
          <condition>
           <and>
-             <property>payload/armament/agm-65/flags/explode-id-200</property>
+             <property>payload/armament/agm-65b/flags/explode-id-202</property>
           <not>
-             <property>payload/armament/agm-65/flags/explode-water-id-200</property>
+             <property>payload/armament/agm-65b/flags/explode-water-id-202</property>
            </not>
           </and>
          </condition>
@@ -593,8 +611,8 @@
 
          <condition>
           <and>
-             <property>payload/armament/agm-65/flags/explode-id-200</property>
-             <property>payload/armament/agm-65/flags/explode-water-id-200</property>
+             <property>payload/armament/agm-65b/flags/explode-id-202</property>
+             <property>payload/armament/agm-65b/flags/explode-water-id-202</property>
           </and>
          </condition>
 
@@ -683,8 +701,8 @@
 
          <condition>
           <and>
-             <property>payload/armament/agm-65/flags/explode-smoke-id-200</property>
-             <property>payload/armament/agm-65/flags/explode-water-id-200</property>
+             <property>payload/armament/agm-65b/flags/explode-smoke-id-202</property>
+             <property>payload/armament/agm-65b/flags/explode-water-id-202</property>
           </and>
          </condition>
 
@@ -769,7 +787,7 @@
       <object-name>explosion-smoke-outer</object-name>
       <offset-deg>0</offset-deg>
         <factor>1</factor>
-        <property>payload/armament/agm-65/flags/explode-angle</property>      
+        <property>payload/armament/agm-65b/flags/explode-angle</property>      
         <center>
          <x-m>0</x-m>
           <y-m>0</y-m>

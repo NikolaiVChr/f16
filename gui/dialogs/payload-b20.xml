@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<PropertyList>
+  
+  <name>payload-b20</name>
+  <modal type="bool">false</modal>
+  <draggable>true</draggable>
+  <resizable>true</resizable>
+  <width>725</width>
+  <layout>vbox</layout>
+  
+  <group>
+    <layout>hbox</layout>
+    <empty>
+      <stretch>1</stretch>
+    </empty>
+    
+    <text>
+      <label>Block 20 payload presets</label>
+    </text>
+    
+    <empty>
+      <stretch>1</stretch>
+    </empty>
+    
+    <button>
+      <pref-width>16</pref-width>
+      <pref-height>16</pref-height>
+      <legend></legend>
+      
+      <default>1</default>
+      <keynum>27</keynum>
+      <border>2</border>
+      <binding>
+        <command>dialog-close</command>
+      </binding>
+      <binding>
+        <command>dialog-apply</command>
+      </binding>
+    </button>
+  </group>
+
+  <hrule/>
+
+  <group>
+    <layout>hbox</layout>
+    <button>
+        <legend>Default load</legend>
+        <binding>
+          <command>nasal</command>
+          <script>pylons.default();</script>
+        </binding>
+    </button>
+
+    <vrule/>
+
+    <button>
+        <legend>Refuel all tanks</legend>
+        <binding>
+          <command>nasal</command>
+          <script>pylons.refuel();</script>
+        </binding>
+    </button>
+
+    <vrule/>
+
+    <button>
+        <legend>Rearm 20mm cannon</legend>
+        <binding>
+          <command>nasal</command>
+          <script>pylons.cannon_load();</script>
+        </binding>
+    </button>
+
+  <vrule/>
+
+    <button>
+        <legend>Smokewinders</legend>
+        <binding>
+          <command>nasal</command>
+          <script>pylons.airshow();</script>
+        </binding>
+    </button>
+
+  <vrule/>
+
+    <button>
+        <legend>Clean load</legend>
+        <binding>
+          <command>nasal</command>
+          <script>pylons.clean();</script>
+        </binding>
+    </button>
+  </group>
+
+  <hrule/>
+
+    <group>
+        <layout>table</layout>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>0</row>
+            <col>0</col>
+            <legend>A/A Training</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.b20_train_aa();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>2</row>
+            <col>0</col>
+            <legend>Combat Air Patrol</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2a_cap();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>1</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>4</row>
+            <col>0</col>
+            <legend>Combat Air Patrol (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2a_capext();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>3</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>6</row>
+            <col>0</col>
+            <legend>Air Defense</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.b20_a2a_adf();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>5</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>8</row>
+            <col>0</col>
+            <legend>Air Superiority</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2a_super();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>10</row>
+            <col>0</col>
+            <legend>Air Superiority (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2a_superer();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>7</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>12</row>
+            <col>0</col>
+            <legend>Defensive Counter Air</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2a_dca();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>9</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
+
+        <hrule>
+            <row>11</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>14</row>
+            <col>0</col>
+            <legend>Ferry Loadout (3 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.ferry1();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>16</row>
+            <col>0</col>
+            <legend>Ferry Loadout (2 bags XL)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.ferry2();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>0</row>
+            <col>2</col>
+            <legend>A/G Training (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.b20_train_ag();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>2</row>
+            <col>2</col>
+            <legend>A/G Unguided (Light, 2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_mk1();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>4</row>
+            <col>2</col>
+            <legend>A/G Unguided (Heavy, 2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_mk2();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>6</row>
+            <col>2</col>
+            <legend>A/G Cluster CEM (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_cem();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>8</row>
+            <col>2</col>
+            <legend>A/G LGB (Paveway II, 2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_lgb1();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>10</row>
+            <col>2</col>
+            <legend>A/G LGB (Paveway III, 2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_lgb2();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>12</row>
+            <col>2</col>
+            <legend>A/G GPS (JDAM, 2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_gps();</script>
+            </binding>
+        </button>
+        
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>14</row>
+            <col>2</col>
+            <legend>A/G Strategic (Unguided, 2 bags XL)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_strat();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>0</row>
+            <col>4</col>
+            <legend>SEAD "Wild Weasel" (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_sead();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>2</row>
+            <col>4</col>
+            <legend>A/G DEAD (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_dead();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>4</row>
+            <col>4</col>
+            <legend>A/G CAS (Light, 2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_caslt();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>13</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>6</row>
+            <col>4</col>
+            <legend>A/G CAS (Heavy, 2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_cas();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>8</row>
+            <col>4</col>
+            <legend>A/G M151 Hydra rockets</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_hyd70();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>10</row>
+            <col>4</col>
+            <legend>A/G Anti-Ship (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2s_antiship();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>12</row>
+            <col>4</col>
+            <legend>A/G Anti-Ship</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2s_antiship2();</script>
+            </binding>
+        </button>
+
+        <hrule>
+            <row>15</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
+
+    </group>
+
+    <empty><stretch>1</stretch></empty>
+</PropertyList>
