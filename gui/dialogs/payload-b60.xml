@@ -397,7 +397,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>10</row>
             <col>4</col>
-            <legend>A/G JSOW Stand-off (2 bags)</legend>
+            <legend>A/G Stand-off (JSOW, 2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2g_jsow();</script>

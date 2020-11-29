@@ -60,7 +60,7 @@ var shells = {
 
 var warheads = {
     # [id,lbs,anti surface,cluster,(name)]
-    "AGM-65":            [ 0,  126.00,1,0],
+    "AGM-65B":           [ 0,  126.00,1,0],
     "AGM-84":            [ 1,  488.00,1,0],
     "AGM-88":            [ 2,  146.00,1,0],
     "MK-82SE":           [ 3,  192.00,1,0],# snake eye

@@ -528,7 +528,7 @@
             <ejector-speed-fps type="double">5</ejector-speed-fps>
             <ready-time type="double">0.5</ready-time>
         </gbu-24>
-        <agm-65>
+        <agm-65b>
             <type-id type="int">0</type-id>
             <short-name type="string">AG65B</short-name>
             <long-name type="string">AGM-65B Maverick</long-name>
@@ -563,7 +563,7 @@
             <fire-msg type="string">Rifle</fire-msg>
             <hit-everything-nearby type="bool">true</hit-everything-nearby>
             <ready-time type="double">0.25</ready-time>
-        </agm-65>
+        </agm-65b>
         <agm-65d>
             <type-id type="int">58</type-id>
             <short-name type="string">AG65D</short-name>

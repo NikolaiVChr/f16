@@ -474,7 +474,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>16</row>
             <col>4</col>
-            <legend>A/G JASSM Stand-off (2 bags)</legend>
+            <legend>A/G Stand-off (JASSM, 2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2g_jassm();</script>
@@ -485,7 +485,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>18</row>
             <col>4</col>
-            <legend>A/G JSOW Stand-off (2 bags)</legend>
+            <legend>A/G Stand-off (JSOW, 2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2g_jsow();</script>

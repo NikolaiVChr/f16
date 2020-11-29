@@ -5,8 +5,8 @@
     <path>Aircraft/f16/Models/Armament/Racks/trirack_small.xml</path>
 
     <model>
-      <name>Station7_3xAGM-65_left</name>
-      <path>Aircraft/f16/Models/Armament/Weapons/AGM-65/AGM-65B.xml</path>
+      <name>Station7_3xAGM-65B_left</name>
+      <path>Aircraft/f16/Models/Armament/Weapons/AGM-65B/AGM-65B.xml</path>
       <offsets>
         <x-m>-0.335</x-m>
         <y-m>-0.48</y-m>
@@ -17,8 +17,8 @@
     </model>
 
     <model>
-      <name>Station7_3xAGM-65_center</name>
-      <path>Aircraft/f16/Models/Armament/Weapons/AGM-65/AGM-65B.xml</path>
+      <name>Station7_3xAGM-65B_center</name>
+      <path>Aircraft/f16/Models/Armament/Weapons/AGM-65B/AGM-65B.xml</path>
       <offsets>
         <x-m>-0.335</x-m>
         <y-m>0</y-m>
@@ -28,8 +28,8 @@
     </model>
 
     <model>
-      <name>Station7_3xAGM-65_right</name>
-      <path>Aircraft/f16/Models/Armament/Weapons/AGM-65/AGM-65B.xml</path>
+      <name>Station7_3xAGM-65B_right</name>
+      <path>Aircraft/f16/Models/Armament/Weapons/AGM-65B/AGM-65B.xml</path>
       <offsets>
         <x-m>-0.335</x-m>
         <y-m>0.48</y-m>
@@ -41,11 +41,11 @@
 
     <animation>
       <type>select</type>
-      <object-name>Station7_3xAGM-65_left</object-name>
+      <object-name>Station7_3xAGM-65B_left</object-name>
       <condition><and>
         <equals>
           <property>payload/armament/station/id-6-type</property>
-          <value>AGM-65</value>
+          <value>AGM-65B</value>
         </equals>
         <greater-than>
           <property>payload/armament/station/id-6-count</property>
@@ -56,12 +56,12 @@
 
      <animation>
       <type>select</type>
-      <object-name>Station7_3xAGM-65_right</object-name>
+      <object-name>Station7_3xAGM-65B_right</object-name>
       <condition>
         <and>
         <equals>
           <property>payload/armament/station/id-6-type</property>
-          <value>AGM-65</value>
+          <value>AGM-65B</value>
         </equals>
         <greater-than>
           <property>payload/armament/station/id-6-count</property>
@@ -73,11 +73,11 @@
 
      <animation>
       <type>select</type>
-      <object-name>Station7_3xAGM-65_center</object-name>
+      <object-name>Station7_3xAGM-65B_center</object-name>
       <condition><and>
         <equals>
           <property>payload/armament/station/id-6-type</property>
-          <value>AGM-65</value>
+          <value>AGM-65B</value>
         </equals>
         <greater-than>
           <property>payload/armament/station/id-6-count</property>
