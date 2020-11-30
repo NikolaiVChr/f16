@@ -2311,7 +2311,7 @@
      <binding>
       <command>nasal</command>
       <script>
-                f16_switches.toggleMalIndLts();
+                f16_switches.toggleMalIndLtsBtn();
       </script>
      </binding>
     </action>
@@ -2320,7 +2320,7 @@
    <animation>
     <type>translate</type>
     <object-name>MAL_IND_LTS</object-name>
-    <property>controls/test/test-panel/mal-ind-lts</property>
+    <property>controls/test/test-panel/mal-ind-lts-btn</property>
     <factor>-0.0035</factor>
     <axis>
      <x>0</x>

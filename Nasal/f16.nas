@@ -488,9 +488,6 @@ var fast = {
     } else {
       setprop("instrumentation/radar/time-till-crash", 15);
     }
-    if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20) {#TODO: this hack should be done proper.
-        setprop("controls/test/test-panel/mal-ind-lts", 0);
-    }
     var spd_deg = getprop("fdm/jsbsim/fcs/speedbrake-pos-deg");
     var spd_anim = -35;#-35 = closed -165 = stripes -270 = dots
     if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20) {

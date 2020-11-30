@@ -923,6 +923,15 @@
 	
 	<channel name="Various" execrate="8">
 		
+		<switch name="elec/various/mal-ind-lts">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/test/test-panel/mal-ind-lts-btn eq 1
+				elec/bus/emergency-dc-1 ge 20
+			</test>
+			<output>/controls/test/test-panel/mal-ind-lts</output>
+		</switch>
+		
 		<switch name="elec/various/iff">
 			<default value="0"/>
 			<test logic="AND" value="1">
