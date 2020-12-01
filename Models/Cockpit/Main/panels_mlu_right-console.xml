@@ -345,37 +345,6 @@
         </action>
     </animation>
 
-    <!--animation>
-        <type>knob</type>
-        <object-name>deddata-switch</object-name>
-        <property>f16/avionics/hud-ded</property>
-        <factor>45</factor>
-        <offset-deg>-45</offset-deg>
-        <drag-direction>vertical</drag-direction>
-        <center>
-            <x-m>0.125163</x-m><y-m>0.439937</y-m><z-m>0.030422</z-m>
-        </center>
-        <axis>
-            <x>0</x><y>-1</y><z>0</z>
-        </axis>
-        <action>
-            <binding>
-                <command>property-adjust</command>
-                <property>f16/avionics/hud-ded</property>
-                <factor>2</factor>
-                <min>0</min>
-                <max>2</max>
-                <wrap>false</wrap>
-            </binding>
-        </action>
-        <condition>
-            <less-than-equals>
-                <property>sim/variant-id</property>
-                <value>3</value>
-            </less-than-equals>
-        </condition>
-    </animation-->
-
     <animation>
         <type>knob</type>
         <object-name>deddata-switch</object-name>
@@ -391,20 +360,20 @@
         </axis>
         <action>
             <binding>
-                <command>property-adjust</command>
-                <property>f16/avionics/hud-ded</property>
-                <factor>1</factor>
-                <min>0</min>
-                <max>2</max>
-                <wrap>false</wrap>
+                <command>nasal</command>
+                <script>
+                    <![CDATA[
+                    var dedData = props.globals.getNode("f16/avionics/hud-ded");
+                    var variantId = props.globals.getNode("sim/variant-id");
+                    var dedDataValue = dedData.getValue() + cmdarg().getNode('offset').getValue();
+                    if (dedDataValue < 0) dedDataValue = 0;
+                    elsif (dedDataValue == 1 and variantId.getValue() < 4) dedDataValue += cmdarg().getNode('offset').getValue();
+                    elsif (dedDataValue > 2) dedDataValue = 2;
+                    dedData.setValue(dedDataValue);
+                    ]]>
+                </script>
             </binding>
         </action>
-        <!--condition>
-            <greater-than-equals>
-                <property>sim/variant-id</property>
-                <value>4</value>
-            </greater-than-equals>
-        </condition-->
     </animation>
 
     <animation>
