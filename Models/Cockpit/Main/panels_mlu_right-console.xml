@@ -523,8 +523,7 @@
         <type>knob</type>
         <object-name>mal-ind-lts-switch</object-name>
         <property>f16/avionics/mal-ind-lts-brightness-switch</property>
-        <factor>60</factor>
-        <offset-deg>-30.0</offset-deg>
+        <factor>30</factor>
         <drag-direction>vertical</drag-direction>
         <center>
             <x-m>0.25394</x-m><y-m>0.46522</y-m><z-m>0.018706</z-m>
@@ -537,11 +536,18 @@
                 <command>property-adjust</command>
                 <property>f16/avionics/mal-ind-lts-brightness-switch</property>
                 <factor>1</factor>
-                <min>0</min>
+                <min>-1</min>
                 <max>1</max>
                 <wrap>false</wrap>
             </binding>
         </action>
+        <release>
+            <binding>
+                <command>property-assign</command>
+                <property>f16/avionics/mal-ind-lts-brightness-switch</property>
+                <value>0</value>
+            </binding>
+        </release>
     </animation>
     
     <animation>
