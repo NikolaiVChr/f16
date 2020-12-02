@@ -518,16 +518,21 @@
         <type>material</type>
         <object-name>gear_lever_light</object-name>
         <condition>
-          <greater-than-equals>
-                <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
-                <value>20</value>
-            </greater-than-equals>
-          <not>
-            <equals>
-                <property>controls/gear/gear-down</property>
-                <property>gear/gear[0]/position-norm</property>
-            </equals>
-          </not>
+            <or>
+                <and>
+                    <greater-than-equals>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                        <value>20</value>
+                    </greater-than-equals>
+                    <not>
+                        <equals>
+                            <property>controls/gear/gear-down</property>
+                            <property>gear/gear[0]/position-norm</property>
+                        </equals>
+                    </not>
+                </and>
+                <property>controls/test/test-panel/mal-ind-lts</property>
+            </or>
         </condition>
         <emission>
             <red>1</red>
