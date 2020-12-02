@@ -322,6 +322,17 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>18</row>
+            <col>2</col>
+            <legend>A/G LGB + GPS (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_lgbgps();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>0</row>
             <col>4</col>
             <legend>SEAD "Wild Weasel" (2 bags)</legend>
@@ -403,6 +414,12 @@
                 <script>pylons.a2g_jsow();</script>
             </binding>
         </button>
+
+        <hrule>
+            <row>17</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
 
     </group>
 

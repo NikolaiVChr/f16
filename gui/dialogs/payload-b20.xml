@@ -314,6 +314,17 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>14</row>
             <col>2</col>
+            <legend>A/G LGB + GPS (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_lgbgps();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>16</row>
+            <col>2</col>
             <legend>A/G Strategic (Unguided, 2 bags XL)</legend>
             <binding>
                 <command>nasal</command>
