@@ -527,7 +527,7 @@
         <offset-deg>-30.0</offset-deg>
         <drag-direction>vertical</drag-direction>
         <center>
-            <x-m>0.25494</x-m><y-m>0.46522</y-m><z-m>0.01455</z-m>
+            <x-m>0.25394</x-m><y-m>0.46522</y-m><z-m>0.018706</z-m>
         </center>
         <axis>
             <x>0</x><y>-1</y><z>0</z>
