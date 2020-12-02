@@ -913,8 +913,6 @@
   <object-name>horiz-l</object-name>
   <type>material</type>
   <condition>
-    <or>
-          <and>
             <greater-than>
               <property>fdm/jsbsim/elec/bus/batt-2</property>
               <value>20</value>
@@ -927,9 +925,6 @@
               <property>sim/failure-manager/controls/flight/elevator/serviceable</property>
               <value>1</value>
             </equals>
-          </and>
-          <property>controls/test/test-panel/mal-ind-lts</property>
-    </or>
   </condition>
   <emission>
    <red>1</red>
@@ -942,8 +937,6 @@
   <object-name>horiz-r</object-name>
   <type>material</type>
   <condition>
-    <or>
-          <and>
             <greater-than>
               <property>fdm/jsbsim/elec/bus/batt-2</property>
               <value>20</value>
@@ -956,9 +949,6 @@
               <property>sim/failure-manager/controls/flight/elevator/serviceable</property>
               <value>1</value>
             </equals>
-          </and>
-          <property>controls/test/test-panel/mal-ind-lts</property>
-    </or>
   </condition>
   <emission>
    <red>1</red>
@@ -971,8 +961,6 @@
   <object-name>flaperons-l</object-name>
   <type>material</type>
   <condition>
-    <or>
-          <and>
             <greater-than>
               <property>fdm/jsbsim/elec/bus/batt-2</property>
               <value>20</value>
@@ -985,9 +973,6 @@
               <property>sim/failure-manager/controls/flight/aileron/serviceable</property>
               <value>1</value>
             </equals>
-          </and>
-          <property>controls/test/test-panel/mal-ind-lts</property>
-    </or>
   </condition>
   <emission>
    <red>1</red>
@@ -1000,8 +985,6 @@
   <object-name>flaperons-r</object-name>
   <type>material</type>
   <condition>
-    <or>
-          <and>
             <greater-than>
               <property>fdm/jsbsim/elec/bus/batt-2</property>
               <value>20</value>
@@ -1014,9 +997,6 @@
               <property>sim/failure-manager/controls/flight/aileron/serviceable</property>
               <value>1</value>
             </equals>
-          </and>
-          <property>controls/test/test-panel/mal-ind-lts</property>
-    </or>
   </condition>
   <emission>
    <red>1</red>
@@ -1029,8 +1009,6 @@
   <object-name>rudder-dot</object-name>
   <type>material</type>
   <condition>
-    <or>
-          <and>
             <greater-than>
               <property>fdm/jsbsim/elec/bus/batt-2</property>
               <value>20</value>
@@ -1043,9 +1021,6 @@
               <property>sim/failure-manager/controls/flight/rudder/serviceable</property>
               <value>1</value>
             </equals>
-          </and>
-          <property>controls/test/test-panel/mal-ind-lts</property>
-    </or>
   </condition>
   <emission>
    <red>1</red>
