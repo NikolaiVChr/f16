@@ -132,7 +132,7 @@
             <legend>Combat Air Patrol (2 bags)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_capext();</script>
+                <script>pylons.b40_a2a_capext();</script>
             </binding>
         </button>
 
