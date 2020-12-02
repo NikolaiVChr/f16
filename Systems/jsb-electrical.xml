@@ -156,6 +156,7 @@
 				fcs/gear-wow eq 1
 				velocities/vg-fps lt 0.05
 			</test>
+			<output>elec/sources/external-pwr</output>
 		</switch>
 		
 		<pure_gain name="elec/sources/external-pwr-volt">
