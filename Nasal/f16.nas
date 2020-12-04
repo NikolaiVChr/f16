@@ -229,7 +229,8 @@ dynamic_view.register(func {me.default_plane();});
 var flareCount = -1;
 var flareStart = -1;
 
-var loop_flare = func {
+var medium_fast = {
+  loop: func {
     # Flare/chaff release
     if (getprop("ai/submodels/submodel[0]/flare-release-snd") == nil) {
         setprop("ai/submodels/submodel[0]/flare-release-snd", FALSE);
@@ -330,11 +331,11 @@ var loop_flare = func {
     setprop("f16/external", !getprop("sim/current-view/internal"));
     
     setprop("sim/multiplay/generic/float[19]",  getprop("controls/engines/engine/throttle"));
-    
-    
-      
-    settimer(loop_flare, 0.10);
+
+    settimer(func {me.loop()},LOOP_MEDIUM_FAST_RATE);
+  },
 };
+var LOOP_MEDIUM_FAST_RATE = 0.1;
 
 var medium = {
   loop: func {
@@ -1497,7 +1498,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     screen.log.write("Welcome to the "~getprop("sim/description")~", version "~getprop("sim/aircraft-version"), 1.0, 0.2, 0.2);
     
     hack.init();
-    loop_flare();
+    medium_fast.loop();
     slow.loop();
     #fx = flex.WingFlexer.new(1, 250, 25, 500, 0.375, "f16/wings/fuel-and-stores-kg","f16/wings/fuel-and-stores-kg","sim/systems/wingflexer/","f16/wings/lift-lbf");
     flexer();
