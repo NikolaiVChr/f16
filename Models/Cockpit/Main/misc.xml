@@ -638,5 +638,19 @@ light: ecm lamp off
             </or>
         </condition>
     </animation>
+
+    <animation>
+        <type>material</type>
+        <object-name>active-on</object-name>
+        <object-name>ecm-enbl-on</object-name>
+        <object-name>stby-on</object-name>
+        <emission>
+            <red>1</red>
+            <green>1</green>
+            <blue>1</blue>
+            <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
+        </emission>
+    </animation>
+
 </PropertyList>
 

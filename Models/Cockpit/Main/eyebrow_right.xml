@@ -113,4 +113,22 @@
   </condition>
  </animation>
 
+ <animation>
+  <type>material</type>
+  <object-name>canopy</object-name>
+  <object-name>eng_fire</object-name>
+  <object-name>flcs</object-name>
+  <object-name>dbu_on</object-name>
+  <object-name>unused</object-name>
+  <object-name>to_ldg_config</object-name>
+  <object-name>engine</object-name>
+  <object-name>hyd_oil_press</object-name>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+   <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
+  </emission>
+ </animation>
+
 </PropertyList>

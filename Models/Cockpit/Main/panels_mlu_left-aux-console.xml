@@ -221,6 +221,7 @@
             <red>1</red>
             <green>1</green>
             <blue>1</blue>
+            <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
         </emission>
  </animation>
 
@@ -252,6 +253,7 @@
             <red>1</red>
             <green>1</green>
             <blue>1</blue>
+            <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
         </emission>
  </animation>
 
@@ -283,6 +285,7 @@
             <red>1</red>
             <green>1</green>
             <blue>1</blue>
+            <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
         </emission>
  </animation>
 
@@ -538,6 +541,7 @@
             <red>1</red>
             <green>0</green>
             <blue>0</blue>
+            <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
         </emission>
     </animation>
  

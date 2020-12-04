@@ -122,6 +122,8 @@
    <red>0</red>
    <green>0.8</green>
    <blue>0</blue>
+   <!-- NOTE: Due to texture mapping (?) this is white, but emitting green. Therefore dimming doesn't work -->
+   <!-- factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop -->
   </emission>
  </animation>
 

@@ -53,22 +53,6 @@
  </animation>
  
  <animation>
-  <object-name>master_caution</object-name>
-  <type>material</type>
-  <condition>
-    <or>
-        <property>f16/avionics/caution/master</property>
-        <property>controls/test/test-panel/mal-ind-lts</property>
-    </or>
-  </condition>
-  <emission>
-   <red>1</red>
-   <green>1</green>
-   <blue>1</blue>
-  </emission>
- </animation>
- 
- <animation>
     <type>pick</type>
     <visible>true</visible>
     <object-name>iff</object-name>
@@ -122,5 +106,20 @@
      </binding>
     </action>
    </animation>
+
+ <animation>
+  <type>material</type>
+  <object-name>unused1</object-name>
+  <object-name>unused2</object-name>
+  <object-name>none</object-name>
+  <object-name>tf_fail</object-name>
+  <object-name>master_caution</object-name>
+  <emission>
+   <red>1</red>
+   <green>1</green>
+   <blue>1</blue>
+   <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
+  </emission>
+ </animation>
 
 </PropertyList>

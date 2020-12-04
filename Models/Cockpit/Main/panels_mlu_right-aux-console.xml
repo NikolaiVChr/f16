@@ -1190,13 +1190,45 @@
  
  
 
-  <animation>
-  <object-name>STORES_CONFIG_lit</object-name>
+ <animation>
   <type>material</type>
+  <object-name>----.001_lit</object-name>
+  <object-name>----.002_lit</object-name>
+  <object-name>----.003_lit</object-name>
+  <object-name>ADC_lit</object-name>
+  <object-name>AFT_FUEL_LOW_lit</object-name>
+  <object-name>AFT_NOT_ENGAGED_lit</object-name>
+  <object-name>ANTI_SKID_lit</object-name>
+  <object-name>AVIONICS_lit</object-name>
+  <object-name>BUC_lit</object-name>
+  <object-name>CABIN_PRESS_lit</object-name>
+  <object-name>C_ADC_lit</object-name>
+  <object-name>ECM_lit</object-name>
+  <object-name>EEC_lit</object-name>
+  <object-name>ELEC_SYS_lit</object-name>
+  <object-name>ENGINE_FAULT_lit</object-name>
+  <object-name>EQUIP_HOT_lit</object-name>
+  <object-name>FLT_CONT_SYS_lit</object-name>
+  <object-name>FUEL_OIL_HOT_lit</object-name>
+  <object-name>FWD_FUEL_LOW_lit</object-name>
+  <object-name>HOOK_lit</object-name>
+  <object-name>IFF_lit</object-name>
+  <object-name>INLET_ICING_lit</object-name>
+  <object-name>LE_FLAPS_lit</object-name>
+  <object-name>NUCLEAR_lit</object-name>
+  <object-name>NWS_FAIL_lit</object-name>
+  <object-name>OVERHEAT_lit</object-name>
+  <object-name>OXY_LOW_lit</object-name>
+  <object-name>PROBE_HEAT_lit</object-name>
+  <object-name>RADAR_ALT_lit</object-name>
+  <object-name>SEAT_NOT_ARMED_lit</object-name>
+  <object-name>SEC_lit</object-name>
+  <object-name>STORES_CONFIG_lit</object-name>
   <emission>
    <red>1</red>
    <green>1</green>
    <blue>1</blue>
+   <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
   </emission>
  </animation>
 
