@@ -325,6 +325,22 @@ var medium_fast = {
       setprop("controls/lighting/lighting-panel/console-primary", getprop("controls/lighting/lighting-panel/console-primary-knob"));
       setprop("controls/lighting/lighting-panel/pri-inst-pnl", getprop("controls/lighting/lighting-panel/pri-inst-pnl-knob"));
     }
+
+    # mal-ind-lts-brightness-switch: DIM (-1), BRT (1) or springloaded center (0)
+    # additional logic from T.O. 1F-16A-1, page 1-155.
+    if ((getprop("controls/lighting/lighting-panel/mal-ind-lts-brightness-switch") == -1) and
+        (getprop("controls/lighting/lighting-panel/pri-inst-pnl-knob") > 0))
+    {
+       setprop("controls/lighting/lighting-panel/mal-ind-lts-brightness", 0.5);
+    }
+
+    if ((getprop("controls/lighting/lighting-panel/console-flood-knob") == 1.0) or
+        (getprop("controls/lighting/lighting-panel/pri-inst-pnl-knob") == 0.0) or
+        (getprop("fdm/jsbsim/elec/bus/noness-dc") < 20) or
+        (getprop("controls/lighting/lighting-panel/mal-ind-lts-brightness-switch") == 1))
+    {
+       setprop("controls/lighting/lighting-panel/mal-ind-lts-brightness", 1.0);
+    }
     
     setprop("/instrumentation/nav[0]/volume", getprop("/f16/avionics/ils-volume")*getprop("sim/current-view/internal"));
 

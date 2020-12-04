@@ -674,6 +674,8 @@
                 <console-primary-knob type="double">0.0</console-primary-knob>
                 <console-primary type="double">0.0</console-primary>
                 <data-entry-display type="double">0.0</data-entry-display>
+                <mal-ind-lts-brightness type="double">1.0</mal-ind-lts-brightness>
+                <mal-ind-lts-brightness-switch type="int">0</mal-ind-lts-brightness-switch>
             </lighting-panel>
             <landing-light type="int">0</landing-light>
         </lighting>
