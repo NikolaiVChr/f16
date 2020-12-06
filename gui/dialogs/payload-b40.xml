@@ -177,7 +177,7 @@
             <legend>Air Superiority (2 bags)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_superer();</script>
+                <script>pylons.b40_a2a_superer();</script>
             </binding>
         </button>
 
