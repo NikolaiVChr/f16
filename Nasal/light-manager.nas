@@ -16,11 +16,13 @@ var als_on = props.globals.getNode("/sim/rendering/shaders/skydome");
 var alt_agl = props.globals.getNode("/position/altitude-agl-ft");
 var cur_alt = 0;
 
-var taxiLight = props.globals.getNode("sim/multiplay/generic/bool[46]", 1);
+var taxiLight    = props.globals.getNode("sim/multiplay/generic/bool[46]", 1);
 var landingLight = props.globals.getNode("sim/multiplay/generic/bool[47]", 1);
-var navLight     = props.globals.getNode("sim/multiplay/generic/bool[40]",1);
+var navLight     = props.globals.getNode("sim/multiplay/generic/bool[40]", 1);
+var formLight    = props.globals.getNode("sim/multiplay/generic/bool[41]", 1);
 
-var navLightBrt = props.globals.getNode("controls/lighting/ext-lighting-panel/wing-tail",1);
+var navLightBrt  = props.globals.getNode("controls/lighting/ext-lighting-panel/wing-tail",1);
+var formLightBrt = props.globals.getNode("controls/lighting/ext-lighting-panel/form-knob",1);
 
 var gearPos = props.globals.getNode("gear/gear[0]/position-norm", 1);
 var sceneLight = props.globals.getNode("rendering/scene/diffuse/red", 1);
@@ -43,6 +45,7 @@ var light_manager = {
 			ALS_light_spot.new(70, 0, -1, 0, 12, -7.0, 0.7, 0.7, 0.7, 0, 1),    #taxi
 			ALS_light_spot.new(1.60236, -4.55165, 0.012629, 0, 2, 0, 0.5, 0, 0, 0, 2),  #left
 			ALS_light_spot.new(1.60236,  4.55165, 0.012629, 0, 2, 0, 0, 0.5, 0, 0, 3),  #right
+			ALS_light_spot.new(-1.23466, 0 , -0.862066, 0, 2, 0, 0.5, 0.5, 0.5, 0, 4),  #belly
 		];
 
 		
@@ -87,14 +90,24 @@ var light_manager = {
               me.data_light[1].light_off();
           }
           
-          if(navLight.getValue() and alt_agl.getValue() < 20.0){
-              me.data_light[2].light_on();
-              me.data_light[3].light_on();
-              me.data_light[2].light_r = (navLightBrt.getValue() == -1 ? 0.3 : 0.7);
-              me.data_light[3].light_g = (navLightBrt.getValue() == -1 ? 0.3 : 0.7);
-          }else{
-              me.data_light[2].light_off();
-              me.data_light[3].light_off();
+          if(alt_agl.getValue() < 20.0){
+            if(navLight.getValue()){
+                me.data_light[2].light_on();
+                me.data_light[3].light_on();
+                me.data_light[2].light_r = (navLightBrt.getValue() == -1 ? 0.3 : 0.7);
+                me.data_light[3].light_g = (navLightBrt.getValue() == -1 ? 0.3 : 0.7);
+            }else{
+                me.data_light[2].light_off();
+                me.data_light[3].light_off();
+            }
+            if(formLight.getValue()){
+                me.data_light[4].light_on();
+                me.data_light[4].light_r = formLightBrt.getValue() / 3;
+                me.data_light[4].light_g = me.data_light[4].light_r;
+                me.data_light[4].light_b = me.data_light[4].light_r;
+            }else{
+                me.data_light[4].light_off();
+            }
           }
           
          #Updating each light position 
@@ -107,12 +120,14 @@ var light_manager = {
         me.data_light[1].light_off();
         me.data_light[2].light_off();
         me.data_light[3].light_off();
+        me.data_light[4].light_off();
       }
     } else {
       me.data_light[0].light_off();
       me.data_light[1].light_off();
       me.data_light[2].light_off();
       me.data_light[3].light_off();
+      me.data_light[4].light_off();
     }
 		
 		settimer ( func me.update(), 0.00);
@@ -249,8 +264,8 @@ var ALS_light_spot = {
           me.nd_ref_light_b.setValue(0);
           me.light_is_on = 0;
         }
-      } elsif (me.number == 2 or me.number == 3) {
-        #red/green nav light
+      } elsif (me.number == 2 or me.number == 3 or me.number == 4) {
+        #red/green nav light and belly light
         me.lightGPS = aircraftToCart({x:-me.light_xpos, y:me.light_ypos, z: -me.light_zpos});
         apos = geo.Coord.new().set_xyz(me.lightGPS.x,me.lightGPS.y,me.lightGPS.z);
         
