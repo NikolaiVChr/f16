@@ -283,6 +283,7 @@ setlistener("controls/lighting/ext-lighting-panel/pos-lights-flash", button2, ni
 setlistener("controls/lighting/ext-lighting-panel/wing-tail", button2, nil, 0);
 setlistener("controls/lighting/ext-lighting-panel/fuselage", button2, nil, 0);
 setlistener("controls/lighting/ext-lighting-panel/form-knob", click3, nil, 0);
+setlistener("controls/lighting/ext-lighting-panel/ar-knob", click3, nil, 0);
 setlistener("fdm/jsbsim/fcs/fly-by-wire/enable-cat-III", button2, nil, 0);
 setlistener("f16/fcs/switch-pitch-block20", button2, nil, 0);
 setlistener("f16/fcs/switch-roll-block20", button2, nil, 0);
