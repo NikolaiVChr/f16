@@ -898,41 +898,15 @@
 <!-- ===================== START LIGHTING =========================== -->
 
 <!-- start position lights -->
- 
+
  <animation>
-  <name>pos_lights_lit</name>
+  <type>select</type>
   <object-name>GreenPosLight1</object-name>
   <object-name>RedPosLight1</object-name>
   <object-name>WingRedPosLight</object-name>
   <object-name>WingGreenPosLight</object-name>
- </animation>
- 
- <animation>
-  <name>pos_lights_unlit</name>
-  <object-name>GreenPosLight2</object-name>
-  <object-name>RedPosLight2</object-name>
- </animation>
-
- <animation>
-  <name>pos_lights_flash</name>
-  <type>timed</type>
-  <object-name>pos_lights_unlit</object-name>
-  <object-name>pos_lights_lit</object-name>
-  <branch-duration-sec>1.0</branch-duration-sec>
- </animation>
-
- <animation>
-  <type>select</type>
-  <object-name>pos_lights_flash</object-name>
   <condition>
-    <not>
-    <property>/sim/rendering/shaders/skydome</property>
-  </not>
-  <property>/sim/rendering/shaders/skydome</property>
-   <equals>
-        <property>sim/multiplay/generic/bool[40]</property> 
-        <value>1</value>
-      </equals>
+   <property>false</property>
   </condition>
  </animation>
 

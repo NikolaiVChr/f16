@@ -15,9 +15,9 @@ MATERIAL "lightWhiteMat" rgb 0 0 0  amb 0 0 0  emis 0.977 0.977 0.977  spec 0 0 
 MATERIAL "glassInsideMat" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0 0 0  shi 12  trans 1
 MATERIAL "glassOutsideMat" rgb 1 0.88 0.5  amb 0 0 0  emis 0 0 0  spec 1 1 0.8  shi 128  trans 0.55
 MATERIAL "strut1Mat.000" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.502 0.502 0.502  shi 10  trans 0.008
-MATERIAL "lightGreen2Mat" rgb 0.227 0.38 0  amb 0.202 0.202 0.202  emis 0.333 0.333 0.333  spec 0.227 0.227 0.227  shi 17  trans 0
+MATERIAL "lightGreen2Mat" rgb 0.227 0.38 0  amb 0.2 0.8 0.2  emis 0 0 0  spec 0.227 0.227 0.227  shi 128  trans 0
 MATERIAL "hookMat" rgb 0.914 0.961 1  amb 0.962 0.962 0.962  emis 0.916 0.916 0.916  spec 0 0 0  shi 0  trans 0
-MATERIAL "lightRed2Mat" rgb 0.702 0.039 0  amb 0.247 0.247 0.247  emis 0.333 0.333 0.333  spec 0.227 0.227 0.227  shi 17  trans 0
+MATERIAL "lightRed2Mat" rgb 0.38 0.227 0  amb 0.8 0.2 0.2  emis 0 0 0  spec 0.227 0.227 0.227  shi 128  trans 0
 MATERIAL "flameMat" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.502 0.502 0.502  shi 10  trans 0.408
 MATERIAL "logoMat" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.502 0.502 0.502  shi 10  trans 0.365
 MATERIAL "Common" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0.1805 0.1805 0.1805  shi 1  trans 0
