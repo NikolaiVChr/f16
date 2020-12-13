@@ -21,7 +21,7 @@
  <animation>
   <type>scale</type>
   <object-name>procedural_light</object-name>
-  <property>sim/multiplay/generic/float[9]</property>
+  <property>sim/multiplay/generic/float[20]</property>
   <x-offset>0</x-offset>
   <y-offset>0</y-offset>
   <z-offset>0</z-offset>

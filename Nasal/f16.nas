@@ -577,27 +577,46 @@ var sendLightsToMp = func {
     setprop("sim/multiplay/generic/bool[47]",0);
   }
 
-  if ((wing == -1 or wing == 1) and master and ac_em_2 > 100 and (!getprop("sim/multiplay/generic/bool[40]") or !flash)) {
-    setprop("sim/multiplay/generic/bool[40]",1);#on/off for wingtip and inlet sides.
-    setprop("sim/multiplay/generic/float[9]",0.60+wing*0.40);#brightness for wingtip, back of tail and inlet sides.
-      if (dragChuteRoot) {
-        # tail light with dragchute
-        setprop("sim/multiplay/generic/bool[42]",1);
+  if (master and ac_em_2 > 100) {
+    if (wing != 0) { # wing lights become part of position lights
+      # The use of 'flash' in this expression causes the blinking of the posiiton lights at the speed of LOOP_MEDIUM_RATE
+      if (!(getprop("sim/multiplay/generic/bool[40]") and flash)) {
+        setprop("sim/multiplay/generic/bool[40]",1);#on/off for wingtip and inlet sides.
+        setprop("sim/multiplay/generic/float[9]",0.60+wing*0.40);#brightness for back of tail and inlet sides.
+        setprop("sim/multiplay/generic/float[20]",0.60+wing*0.40);#brightness for wingtips.
+        if (dragChuteRoot) {
+          # tail light with dragchute
+          setprop("sim/multiplay/generic/bool[42]",1);
+          setprop("sim/multiplay/generic/bool[43]",0);
+        } else {
+          # tail light without dragchute
+          setprop("sim/multiplay/generic/bool[42]",0);
+          setprop("sim/multiplay/generic/bool[43]",1);
+        }
       } else {
+        setprop("sim/multiplay/generic/bool[40]",0);
         setprop("sim/multiplay/generic/bool[42]",0);
-      }
-
-      if (!dragChuteRoot) {
-        # tail light without dragchute
-        setprop("sim/multiplay/generic/bool[43]",1);
-      } else {
         setprop("sim/multiplay/generic/bool[43]",0);
+        setprop("sim/multiplay/generic/float[9]",0.001);
+        setprop("sim/multiplay/generic/float[20]",0.001);
       }
+    } else { # wing lights become part of formation lights
+      setprop("sim/multiplay/generic/bool[40]",0);
+      setprop("sim/multiplay/generic/bool[42]",0);
+      setprop("sim/multiplay/generic/bool[43]",0);
+      setprop("sim/multiplay/generic/float[9]",0.001);
+      if (ac_non_ess_2 > 100) {
+        setprop("sim/multiplay/generic/float[20]",form);
+      } else {
+        setprop("sim/multiplay/generic/float[20]",0.001);
+      }
+    }
   } else {
     setprop("sim/multiplay/generic/bool[40]",0);
     setprop("sim/multiplay/generic/bool[42]",0);
     setprop("sim/multiplay/generic/bool[43]",0);
     setprop("sim/multiplay/generic/float[9]",0.001);
+    setprop("sim/multiplay/generic/float[20]",0.001);
   }
 
   if (form > 0 and master and ac_non_ess_2 > 100) {

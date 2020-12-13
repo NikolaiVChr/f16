@@ -952,8 +952,6 @@
 
   <animation>
     <type>select</type>
-    <object-name>posleft1</object-name>
-    <object-name>posright1</object-name>
     <object-name>posleft2</object-name>
     <object-name>posright2</object-name>
     <condition>

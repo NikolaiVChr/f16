@@ -96,6 +96,11 @@ var light_manager = {
                 me.data_light[3].light_on();
                 me.data_light[2].light_r = (navLightBrt.getValue() == -1 ? 0.3 : 0.7);
                 me.data_light[3].light_g = (navLightBrt.getValue() == -1 ? 0.3 : 0.7);
+            }elsif(formLight.getValue()){
+                me.data_light[2].light_on();
+                me.data_light[3].light_on();
+                me.data_light[2].light_r = formLightBrt.getValue() * 0.7;
+                me.data_light[3].light_g = formLightBrt.getValue() * 0.7;
             }else{
                 me.data_light[2].light_off();
                 me.data_light[3].light_off();
