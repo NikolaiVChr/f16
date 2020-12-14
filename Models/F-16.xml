@@ -986,6 +986,24 @@
         </offsets>   
  </model>
  <model>
+  <name>ar-flood</name>
+  <path>Aircraft/f16/Models/Effects/lights/ar-flood-light.xml</path>
+  <offsets>
+            <x-m> -2.05409 </x-m>
+            <y-m> 0 </y-m>
+            <z-m> 0.849391 </z-m>
+        </offsets>
+ </model>
+ <model>
+  <name>tailmounted-flood</name>
+  <path>Aircraft/f16/Models/Effects/lights/tailmounted-flood-light.xml</path>
+  <offsets>
+            <x-m> 4.17987 </x-m>
+            <y-m> 0 </y-m>
+            <z-m> 2.5925 </z-m>
+        </offsets>
+ </model>
+ <model>
   <name>tl</name>
   <path>Aircraft/f16/Models/Effects/lights/tail-light.xml</path> 
   <offsets>
@@ -1017,22 +1035,25 @@
     </condition>
   </animation>
   
-  <model>
-  <name>fll</name>
-  <path>Aircraft/f16/Models/Effects/lights/fuselage-flood-light.xml</path> 
-  <offsets>
-            <x-m> 4.17987 </x-m>
-            <y-m> 0 </y-m>
-            <z-m> 2.5925 </z-m>
-        </offsets>   
- </model>
+<animation>
+    <type>select</type>
+    <object-name>ar-flood</object-name>
+    <condition>
+      <!--<property>/sim/rendering/shaders/skydome</property>-->
+      <equals>
+        <property>sim/multiplay/generic/bool[49]</property>
+        <value>1</value>
+      </equals>
+    </condition>
+  </animation>
 
 <animation>
     <type>select</type>
-    <object-name>fll</object-name>
+    <object-name>tailmounted-flood</object-name>
     <condition>
+      <!--<property>/sim/rendering/shaders/skydome</property>-->
       <equals>
-        <property>sim/multiplay/generic/bool[48]</property> 
+        <property>sim/multiplay/generic/bool[49]</property>
         <value>1</value>
       </equals>
     </condition>

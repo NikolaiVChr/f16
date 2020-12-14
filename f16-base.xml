@@ -545,6 +545,7 @@
                 <bool n="46" type="bool">true</bool><!-- taxi light -->
                 <bool n="47" type="bool">true</bool><!-- landing light -->
                 <bool n="48" type="bool">true</bool><!-- fuselage flood light -->
+                <bool n="49" type="bool">true</bool><!-- ar flood and slipway light -->
                 <bool n="50" type="bool" alias="/instrumentation/gci/picture"/>
                 <bool n="51" type="bool" alias="/instrumentation/gci/bogeydope"/>
                 <bool n="52" type="bool" alias="/instrumentation/gci/cutoff"/>
@@ -569,6 +570,7 @@
                 <float n="17" type="double" alias="/orientation/alpha-deg"/>
                 <float n="19" type="double">0</float><!-- afterburner engine fire transperancy -->
                 <float n="20" type="double">0</float><!-- wing brightness -->
+                <float n="21" type="double">0</float><!-- ar slipway brightness -->
                 <short n="5" type="int" alias="/engines/engine[0]/n1"/>
                 <short n="6" type="int" alias="/engines/engine[0]/n2"/>
                 <short n="7" type="int">0</short><!-- turbine emission color from afterburner -->

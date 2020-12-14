@@ -548,7 +548,7 @@ var sendLightsToMp = func {
   var master = getprop("controls/lighting/ext-lighting-panel/master");#all ext. lights except for taxi and landing.
   var flash = getprop("controls/lighting/ext-lighting-panel/pos-lights-flash");#will flash all light controll by WingTail switch
   var wing = getprop("controls/lighting/ext-lighting-panel/wing-tail");#all red/green plus tail white. BRT (1)/off (0)/dim (-1)
-  var fuse = getprop("controls/lighting/ext-lighting-panel/fuselage");#white flood light mounted leading edge of tail
+  var fuse = getprop("controls/lighting/ext-lighting-panel/fuselage");#white flood lights mounted at base of tail
   var refuel = getprop("systems/refuel/serviceable");
   var form = getprop("controls/lighting/ext-lighting-panel/form-knob");#white formation lights on top and bottom
   var strobe = getprop("controls/lighting/ext-lighting-panel/anti-collision");#white flashing light at top of tail
@@ -627,14 +627,25 @@ var sendLightsToMp = func {
     setprop("sim/multiplay/generic/bool[41]",0);
     setprop("sim/multiplay/generic/float[8]",0.001);
   }
-  
+
+  if (master and refuel and ac_non_ess_2 > 100) {
+    # ar flood and slipway lights
+    setprop("sim/multiplay/generic/bool[49]",1);
+    # ar slipway light
+    if (ar > 0) {
+      setprop("sim/multiplay/generic/float[21]",ar);
+    } else {
+      setprop("sim/multiplay/generic/float[21]",0.001);
+    }
+  } else {
+    setprop("sim/multiplay/generic/bool[49]",0);
+    setprop("sim/multiplay/generic/float[21]",0.001);
+  }
+
   if ((fuse == -1 or fuse == 1) and master and ac_non_ess_2 > 100) {
     # fuselage flood
     setprop("sim/multiplay/generic/bool[48]",1);
     setprop("sim/multiplay/generic/float[15]",0.60+fuse*0.40);
-  } elsif (refuel and master and ac_non_ess_2 > 100) {
-    setprop("sim/multiplay/generic/bool[48]",1);
-    setprop("sim/multiplay/generic/float[15]",0.60+refuel*0.40);
   } else {
     setprop("sim/multiplay/generic/bool[48]",0);
     setprop("sim/multiplay/generic/float[15]",0.001);
