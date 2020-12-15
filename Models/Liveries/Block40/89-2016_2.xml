@@ -4,21 +4,21 @@
  <sim> 
   <model>
    <livery>
-    <name type="string">USAF 31FW, 16AF - 555FS AV "Friuli Region"</name>
+    <name type="string">USAF 31FW, 555FS - 16AF AV "Swamp"</name>
     <texture>Liveries/Block40/89-2016_2.png</texture>
     
     <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/yf/yf16-transp.png</texture>
+    <texture>Liveries/Block40/AV-016_Swamp.png</texture>
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/Block40/patch.16th_airforce.png</texture>
+      <texture>Liveries/Block40/patch.Swamp.png</texture>
   </livery-patch>
 
   <livery-pod>
-        <texture>Liveries/Block40/pod.16th_airforce.png</texture>
+        <texture>Liveries/Block40/pod.Swamp.png</texture>
   </livery-pod>
 
   <f16>

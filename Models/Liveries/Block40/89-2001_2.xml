@@ -4,7 +4,7 @@
  <sim> 
   <model>
    <livery>
-    <name type="string">USAF 31FW, 555FS AV "Wyvern"</name>
+    <name type="string">USAF 31FW, 510FS AV "Guardian Angel"</name>
     <texture>Liveries/Block40/89-2001_2.png</texture>
     
     <owner type="string">USAF</owner>
@@ -14,11 +14,11 @@
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/Block40/patch.triple_nickel.png</texture>
+      <texture>Liveries/Block40/patch.buzzards.png</texture>
   </livery-patch>
 
   <livery-pod>
-        <texture>Liveries/Block40/pod.triple_nickel.png</texture>
+        <texture>Liveries/Block40/pod.buzzards.png</texture>
   </livery-pod>
 
   <f16>
