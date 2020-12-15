@@ -1182,6 +1182,43 @@
   </offsets>
  </model>
 
+<!-- start fuselage lights -->
+
+  <model>
+    <name>fuselage-left-light</name>
+    <path>Aircraft/f16/Models/Effects/lights/fuselage-light.xml</path>
+    <offsets>
+      <x-m> 3.45 </x-m>
+      <y-m>-0.95 </y-m>
+      <z-m> 0.22 </z-m>
+    </offsets>
+  </model>
+
+  <model>
+    <name>fuselage-right-light</name>
+    <path>Aircraft/f16/Models/Effects/lights/fuselage-light.xml</path>
+    <offsets>
+      <x-m> 3.45 </x-m>
+      <y-m> 0.95 </y-m>
+      <z-m> 0.22 </z-m>
+    </offsets>
+  </model>
+
+  <animation>
+    <type>select</type>
+    <object-name>fuselage-left-light</object-name>
+    <object-name>fuselage-right-light</object-name>
+    <condition>
+      <!--<property>/sim/rendering/shaders/skydome</property>-->
+      <equals>
+        <property>sim/multiplay/generic/bool[48]</property>
+        <value>1</value>
+      </equals>
+    </condition>
+  </animation>
+
+<!-- end fuselage lights -->
+
 <!-- ===================== END LIGHTING =========================== -->
 
 <!-- fuselage animations -->

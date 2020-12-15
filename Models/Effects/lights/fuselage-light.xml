@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+  <path>/Models/Effects/procedural_light.ac</path>
+
+  <animation>
+    <type>noshadow</type>
+    <object-name>procedural_light</object-name>
+  </animation>
+
+ <animation>
+  <type>scale</type>
+  <object-name>procedural_light</object-name>
+  <property>sim/multiplay/generic/float[14]</property>
+  <x-offset>0.5</x-offset>
+  <y-offset>0.5</y-offset>
+  <z-offset>0.5</z-offset>
+ </animation>
+
+ <animation>
+  <type>scale</type>
+  <object-name>procedural_light</object-name>
+  <property>sim/multiplay/generic/float[15]</property>
+  <x-offset>0</x-offset>
+  <y-offset>0</y-offset>
+  <z-offset>0</z-offset>
+ </animation>
+
+ <animation>
+    <type>dist-scale</type>
+    <object-name>procedural_light</object-name>
+    <interpolation>
+      <entry><ind>0</ind><dep>1.0</dep></entry>
+      <entry><ind>1000</ind><dep>3.0</dep></entry>
+      <entry><ind>2500</ind><dep>6.0</dep></entry>
+      <entry><ind>5000</ind><dep>9.0</dep></entry>
+      <entry><ind>7500</ind><dep>12.0</dep></entry>
+    </interpolation>
+ </animation>
+
+
+
+  <effect>
+    <name>procedural-light-fuselage</name>
+    <inherits-from>Aircraft/f16/Models/Effects/lights/procedural-light-als-and-fixed-pipeline</inherits-from>
+    <object-name>procedural_light</object-name>
+    <parameters>
+        <light_color_base_r type="float">1.0</light_color_base_r>
+        <light_color_base_g type="float">1.0</light_color_base_g>
+        <light_color_base_b type="float">1.0</light_color_base_b>
+        <light_color_center_r type="float">1.0</light_color_center_r>
+        <light_color_center_g type="float">1.0</light_color_center_g>
+        <light_color_center_b type="float">1.0</light_color_center_b>
+        <intensity_scale type="float">1.0</intensity_scale>
+
+        <pointing_x type="float">0.0</pointing_x>
+        <pointing_y type="float">0.0</pointing_y>
+        <pointing_z type="float">-1.0</pointing_z>
+
+        <is_directional type="bool">true</is_directional>
+        <is_strobe type="bool">false</is_strobe>
+
+        <inner_angle type="float">0.35</inner_angle>
+        <outer_angle type="float">1.0</outer_angle>
+        <zero_angle type="float">0.99</zero_angle>
+        <outer_gain type="float">0.7</outer_gain>
+    </parameters>
+  </effect>
+
+</PropertyList>
