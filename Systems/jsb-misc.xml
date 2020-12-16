@@ -288,6 +288,19 @@
                             </quotient>
                         </min>
                     </product>
+                    <table><!-- add some extra while cranking -->
+                        <independentVar lookup="row">/engines/engine/n2</independentVar>
+                        <independentVar lookup="column">/engines/engine/cranking</independentVar>
+                        <tableData>
+                                 0    1
+                              0  0    0
+                             20  0  400
+                             50  0  400
+                             60  0  200
+                             70  0    0
+                            100  0    0
+                         </tableData>
+                    </table>
                 </sum>
             </function>
         </fcs_function>

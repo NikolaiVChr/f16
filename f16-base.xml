@@ -711,6 +711,7 @@
     </controls>
     <engines>
         <engine n="0">
+            <cranking type="bool">false</cranking>
             <running type="bool">true</running>
             <ftit-degc type="double">0</ftit-degc>
             <egt-degf type="double">0</egt-degf>
