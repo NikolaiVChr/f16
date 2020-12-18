@@ -516,6 +516,7 @@
       
       <object-name>CanopyFrame</object-name>
       <object-name>Rudder.001</object-name>
+      <object-name>Rudder.002</object-name>
       <object-name>Rudder.003</object-name>
       <object-name>Rudder.004</object-name>
       <object-name>Rudder.005</object-name>
@@ -2828,6 +2829,7 @@
   <object-name>RNLAF_Tailroot</object-name>
   <object-name>Rudder</object-name>
   <object-name>Rudder.001</object-name>
+  <object-name>Rudder.002</object-name>
   <object-name>Rudder.003</object-name>
   <object-name>Rudder.004</object-name>
   <object-name>Rudder.005</object-name>
@@ -2846,7 +2848,6 @@
   <object-name>FlashLightProtector</object-name>
   <object-name>FwdFormationLight</object-name>
   <object-name>Link16Antennas</object-name>
-  <object-name>Poly</object-name>
   <object-name>Poly.001</object-name>
   <object-name>Poly.002</object-name>
   <object-name>Turbine</object-name>-->

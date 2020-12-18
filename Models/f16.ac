@@ -42262,23 +42262,6 @@ refs 3
 4 -0.02 0.43
 kids 0
 OBJECT poly
-name "Poly"
-data 8
-Mesh.055
-crease 80.000000
-numvert 3
-5.03477 1.15181 -0.00177
-4.31473 1.15181 0.04312
-4.31416 1.15181 -0.04699
-numsurf 1
-SURF 0x10
-mat 3
-refs 3
-2 -0.14 -0.15
-0 -0.052 -0.04
-1 -0.139931 -0.15
-kids 0
-OBJECT poly
 name "Poly.001"
 data 8
 Mesh.075
@@ -86955,6 +86938,23 @@ refs 3
 1 -0.052 -0.04
 0 -0.052 -0.04
 2 -0.14 -0.15
+kids 0
+OBJECT poly
+name "Rudder.002"
+data 8
+Mesh.055
+crease 80.000000
+numvert 3
+5.03477 1.15181 -0.00177
+4.31473 1.15181 0.04312
+4.31416 1.15181 -0.04699
+numsurf 1
+SURF 0x10
+mat 3
+refs 3
+2 -0.14 -0.15
+0 -0.052 -0.04
+1 -0.139931 -0.15
 kids 0
 OBJECT poly
 name "Rudder.003"
