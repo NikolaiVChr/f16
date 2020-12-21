@@ -439,13 +439,24 @@
 		</input>
 		<checkbox>
 			<label>Display BE</label>
-			<halign>center</halign>
+			<halign>right</halign>
 			<live>true</live>
 			<property>f16/avionics/bulls-eye-defined</property>
 			<binding>
 				<command>dialog-apply</command>
 			</binding>
 		</checkbox>
+		<button>
+			<legend>Clear</legend>
+			<halign>center</halign>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					setprop("f16/avionics/bulls-eye-lat", 0);
+					setprop("f16/avionics/bulls-eye-lon", 0);
+				]]></script>
+			</binding>
+		</button>
 	</group>
 
 	<empty><stretch>1</stretch></empty>
