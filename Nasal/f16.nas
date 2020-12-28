@@ -671,6 +671,42 @@ var laser = func {
   }
 }
 
+var autopilot_inhibit = {
+  init: func {
+    setlistener("/systems/refuel/serviceable", me.evaluate, 0, 0);
+    setlistener("/controls/flight/flaps", me.evaluate, 0, 0);
+    setlistener("/controls/gear/gear-down", me.evaluate, 0, 0);
+    setlistener("/fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains", me.evaluate, 0, 0);
+    setlistener("/f16/avionics/trim-ap-disc-switch", me.evaluate, 0, 0);
+
+    me.evaluate();
+  },
+
+  evaluate: func {
+    if (
+      (getprop("/systems/refuel/serviceable")) or
+      (getprop("/controls/flight/flaps")) or
+      (getprop("/controls/gear/gear-down")) or
+      (getprop("/fdm/jsbsim/fcs/fly-by-wire/enable-standby-gains")) or
+      (getprop("/f16/avionics/trim-ap-disc-switch"))
+    )
+    {
+      setprop("/f16/fcs/autopilot-inhibit", 1);
+      setprop("/f16/fcs/autopilot-on", 0);
+      setprop("/f16/fcs/switch-pitch-block20", 0);
+    } else {
+      setprop("/f16/fcs/autopilot-inhibit", 0);
+    }
+  },
+
+  inhibit_check: func {
+    if (getprop("/f16/fcs/autopilot-inhibit") == 1) {
+      setprop("/f16/fcs/autopilot-on", 0);
+      setprop("/f16/fcs/switch-pitch-block20", 0);
+    }
+  },
+};
+
 var cockpit_temperature_control = {
   loop: func {
     ###########################################################
@@ -1564,6 +1600,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     fail.init();
     awg_9.loopDGFT();
     eng.JFS.init();
+    autopilot_inhibit.init();
     setup_custom_stick_bindings();
     setprop("consumables/fuel/tank[6]/capacity-gal_us",0);
     setprop("consumables/fuel/tank[7]/capacity-gal_us",0);

@@ -29,15 +29,18 @@
 			<default value="0"/>
 			<test logic="AND" value="/f16/fcs/switch-pitch-block20">
 				/sim/variant-id ge 4
+				/f16/fcs/autopilot-inhibit eq 0
 			</test>
 			<test logic="AND" value="-1">
 				/sim/variant-id lt 4
 				/f16/fcs/autopilot-on eq 1
+				/f16/fcs/autopilot-inhibit eq 0
 				/f16/fcs/switch-pitch-block15 eq 0
 			</test>
 			<test logic="AND" value="1">
 				/sim/variant-id lt 4
 				/f16/fcs/autopilot-on eq 1
+				/f16/fcs/autopilot-inhibit eq 0
 				/f16/fcs/switch-pitch-block15 eq 1
 			</test>
 		</switch>

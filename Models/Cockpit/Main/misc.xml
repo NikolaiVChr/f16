@@ -198,7 +198,14 @@ light: ecm lamp off
                 <wrap>false</wrap>
             </binding>
         </action>
+        <release>
+            <binding>
+                <command>nasal</command>
+                <script>f16.autopilot_inhibit.inhibit_check();</script>
+            </binding>
+        </release>
     </animation>
+
     <animation>
         <type>knob</type>
         <object-name>laser-arm-switch</object-name>
@@ -394,6 +401,12 @@ light: ecm lamp off
                 <wrap>false</wrap>
             </binding>
         </action>
+        <release>
+            <binding>
+                <command>nasal</command>
+                <script>f16.autopilot_inhibit.inhibit_check();</script>
+            </binding>
+        </release>
     </animation>
 
     <animation>
