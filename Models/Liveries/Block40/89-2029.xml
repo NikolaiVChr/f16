@@ -9,7 +9,7 @@
     <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/Block40/AV-029.png</texture>
+    <texture>Liveries/standard.logos.png</texture>
    </livery-logo>
 
    <livery-patch>
