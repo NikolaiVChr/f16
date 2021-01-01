@@ -3467,8 +3467,8 @@ var MFD_Device =
                 me.PFD.selectPage(me.p_HSD);
                 me.setSelection(me.PFD.buttons[1], me.PFD.buttons[16], 16);
             } else {
-                me.PFD.selectPage(me.p_SMS);
-                me.setSelection(me.PFD.buttons[1], me.PFD.buttons[17], 17);
+                me.PFD.selectPage(me.p_HSD);
+                me.setSelection(me.PFD.buttons[1], me.PFD.buttons[16], 16);
             }
         }
     },
