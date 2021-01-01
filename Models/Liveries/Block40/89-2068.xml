@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim> 
+  <model>
+   <livery>
+    <name type="string">USAF 31FW, 555FS AV "J-Mav16 CC"</name>
+    <texture>Liveries/Block40/89-2068.png</texture>
+    
+    <owner type="string">USAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/Block40/AV-068_Mav.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block40/patch.Mav.png</texture>
+  </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/Block40/pod.555_Mav.png</texture>
+  </livery-pod>
+
+  <f16>
+    <dragchute type="bool">false</dragchute>
+  </f16>
+  </model>
+ </sim>
+</PropertyList>
