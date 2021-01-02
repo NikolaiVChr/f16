@@ -571,9 +571,10 @@
                 <float n="19" type="double">0</float><!-- afterburner engine fire transperancy -->
                 <float n="20" type="double">0</float><!-- wing brightness -->
                 <float n="21" type="double">0</float><!-- ar slipway brightness -->
+                <float n="22" type="double">0</float><!-- turbine emission color from afterburner -->
                 <short n="5" type="int" alias="/engines/engine[0]/n1"/>
                 <short n="6" type="int" alias="/engines/engine[0]/n2"/>
-                <short n="7" type="int">0</short><!-- turbine emission color from afterburner -->
+                <short n="7" type="int">0</short><!-- old turbine emission color from afterburner -->
                 <string n="5" type="string">00--++00--Empty</string><!-- mp stores -->
                 <string n="4" type="string"></string><!-- string 4 used by IFF -->
                 <string n="6" type="string"></string><!-- string 6 used by radar lock RWR warning -->
