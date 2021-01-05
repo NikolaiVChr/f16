@@ -2295,6 +2295,12 @@ append(obj.total, obj.speed_curr);
                     continue;
                 }
                 me.callsign = "XX";
+                if (rdrMode == RADAR_MODE_SEA and me.u.get_type() != armament.MARINE) {
+                    continue;
+                }
+                if (rdrMode == RADAR_MODE_CRM and me.u.get_type() == armament.MARINE) {
+                    continue;
+                }
                 if (me.u.get_display()) {
                     if (me.u.Callsign != nil)
                       me.callsign = me.u.Callsign.getValue();
@@ -2302,7 +2308,7 @@ append(obj.total, obj.speed_curr);
 
                     if (me.u.ModelType != "")
                       me.model = me.u.ModelType;
-
+                    
                     if (me.target_idx < me.max_symbols or me.designatedDistanceFT == nil) {
                         me.echoPos = HudMath.getPosFromCoord(me.u.get_Coord(0));
                         #print(HudMath.dir_x);
