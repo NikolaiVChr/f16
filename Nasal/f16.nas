@@ -645,7 +645,7 @@ var sendLightsToMp = func {
   if ((fuse == -1 or fuse == 1) and master and ac_non_ess_2 > 100) {
     # fuselage flood
     setprop("sim/multiplay/generic/bool[48]",1);
-    setprop("sim/multiplay/generic/float[15]",0.60+fuse*0.40);
+    setprop("sim/multiplay/generic/float[15]",0.70+fuse*0.30);
   } else {
     setprop("sim/multiplay/generic/bool[48]",0);
     setprop("sim/multiplay/generic/float[15]",0.001);

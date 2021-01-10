@@ -1,9 +1,9 @@
 <!--
-The fuselage effect is a modified version of model-combined-deffered.
+The turbine effect is a modified version of model-combined-deffered.
 Modifications author: Nikolai V. Chr.
 -->
 <PropertyList>
-	<name>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</name>
+	<name>Aircraft/f16/Models/Effects/fuselage/model-combined-turbine</name>
 	<inherits-from>Effects/model-combined-deferred</inherits-from>
 	<parameters>
 		<!-- Wingflex -->
@@ -43,21 +43,16 @@ Modifications author: Nikolai V. Chr.
             <internal-format>normalized</internal-format>
 		</texture>
 		<lightmap-enabled type="int">0</lightmap-enabled>
-		<lightmap-factor n="0"><use>sim/multiplay/generic/float[15]</use></lightmap-factor>
-		<lightmap-color type="vec3d" n="0"> 0.7 0.66 0.61 </lightmap-color>
-		<lightmap-factor n="1"><use>sim/multiplay/generic/bool[49]</use></lightmap-factor>
-		<lightmap-color type="vec3d" n="1"> 1.0 0.94 0.87 </lightmap-color>
-		<lightmap-factor n="2">0.0</lightmap-factor>
-		<lightmap-color type="vec3d" n="2"> 0.0 0.0 0.0 </lightmap-color>
+		<lightmap-factor n="0"><use>sim/multiplay/generic/float[22]</use></lightmap-factor>
+		<lightmap-color type="vec3d" n="0"> 1.0 0.0 0.0 </lightmap-color>
+		<lightmap-factor n="1"><use>sim/multiplay/generic/float[22]</use></lightmap-factor>
+		<lightmap-color type="vec3d" n="1"> 0.0 0.8 0.0 </lightmap-color>
+		<lightmap-factor n="2"><use>sim/multiplay/generic/float[22]</use></lightmap-factor>
+		<lightmap-color type="vec3d" n="2"> 0.0 0.0 0.30 </lightmap-color>
 		<lightmap-factor n="3">0.0</lightmap-factor>
 		<lightmap-color type="vec3d" n="3"> 0.0 0.0 0.0 </lightmap-color>
 		<texture n="3">
-			<image>Aircraft/f16/Models/Effects/fuselage/f16-lightmap.png</image>
-			<type>2d</type>
-			<filter>linear-mipmap-linear</filter>
-			<wrap-s>clamp</wrap-s>
-			<wrap-t>clamp</wrap-t>
-			<internal-format>normalized</internal-format>
+			<type>white</type>
 		</texture>
 		<texture n="5">
             <type>cubemap</type>

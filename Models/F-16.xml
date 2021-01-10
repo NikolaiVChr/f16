@@ -447,6 +447,11 @@
 
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-wings</inherits-from>
+      <parameters>
+          <lightmap-enabled type="int">1</lightmap-enabled>
+          <lightmap-multi type="int">1</lightmap-multi>
+      </parameters>
+
       <object-name>RadarDomeTop</object-name>
       
       
@@ -502,7 +507,6 @@
       </parameters>
       <!-- fuselage -->
       
-      <object-name>Tail</object-name>
       <object-name>LeftLowerSpeedbrake</object-name>
       <object-name>RightLowerSpeedbrake</object-name>
       <object-name>RightUpperSpeedbrake</object-name>
@@ -511,17 +515,8 @@
       <object-name>LeftLowerHorizonTail</object-name>
       <object-name>RightUpperHorizonTail</object-name>
       <object-name>RightLowerHorizonTail</object-name>
-      <object-name>RNLAF_Tailroot</object-name>
-      <object-name>USAF_Tailroot</object-name>
       
       <object-name>CanopyFrame</object-name>
-      <object-name>Rudder.001</object-name>
-      <object-name>Rudder.002</object-name>
-      <object-name>Rudder.003</object-name>
-      <object-name>Rudder.004</object-name>
-      <object-name>Rudder.005</object-name>
-      <object-name>Rudder.006</object-name>
-      <object-name>Rudder</object-name>
       <object-name>VentralFins</object-name>
       <object-name>AirIntake</object-name>
       <object-name>InternalFrontGearDoor</object-name>
@@ -558,6 +553,37 @@
 
  <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
+      <parameters>
+          <metallic type="float">0.80</metallic>
+          <ambient-factor type="float">0.35</ambient-factor>
+          <rain-enabled type="int">2</rain-enabled>
+          <snow-enabled type="int">0</snow-enabled>
+          <reflection-enabled type="int">1</reflection-enabled>
+          <reflection-correction type="float">-0.45</reflection-correction>
+          <grain-texture-enabled type="int"><use>f16/effects/rust</use></grain-texture-enabled>
+          <grain-magnification type="float"><use>f16/effects/rust-mag</use></grain-magnification>
+          <dirt-enabled type="int"><use>f16/effects/dirt</use></dirt-enabled>
+          <dirt-factor type="float"><use>f16/effects/dirt-fac</use></dirt-factor>
+          <lightmap-enabled type="int">1</lightmap-enabled>
+          <lightmap-multi type="int">1</lightmap-multi>
+      </parameters>
+      <!-- tail -->
+
+      <object-name>Tail</object-name>
+      <object-name>RNLAF_Tailroot</object-name>
+      <object-name>USAF_Tailroot</object-name>
+
+      <object-name>Rudder.001</object-name>
+      <object-name>Rudder.002</object-name>
+      <object-name>Rudder.003</object-name>
+      <object-name>Rudder.004</object-name>
+      <object-name>Rudder.005</object-name>
+      <object-name>Rudder.006</object-name>
+      <object-name>Rudder</object-name>
+ </effect>
+
+ <effect>
+      <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-turbine</inherits-from>
       <parameters>
           <metallic type="float">1</metallic>
           <ambient-factor type="float">0.0</ambient-factor>
