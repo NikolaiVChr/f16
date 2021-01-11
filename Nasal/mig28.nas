@@ -125,17 +125,17 @@ var TopGun = {
 		if (me.blufor) {
 			screen.log.write(me.callsign~": Hey, I'll be your wingman.", 0.0, 1.0, 0.0);
 		} else {
-			if (me.callsign == "Lt.Endo") {
+			if (me.callsign == "1Lt.Elmo") {
 				screen.log.write(me.callsign~": I will go easy on you, try to stay on my six. Have fun.", 1.0, 1.0, 0.0);
-			} elsif (me.callsign == "Cpt.Tom") {
+			} elsif (me.callsign == "Cpt.Wild") {
 				screen.log.write(me.callsign~": Nice weather for a fair fight, lets go.", 1.0, 1.0, 0.0);
-			} elsif (me.callsign == "Maj.Rap") {
+			} elsif (me.callsign == "Maj.RED") {
 				screen.log.write(me.callsign~": Lets do this, don't make any mistakes.", 1.0, 1.0, 0.0);
-			} elsif (me.callsign == "Maj.Tom") {
+			} elsif (me.callsign == "Maj.SWAT") {
 				screen.log.write(me.callsign~": Fight is on!", 1.0, 1.0, 0.0);
-			} elsif (me.callsign == "Gn.Endo") {
+			} elsif (me.callsign == "Col.Snuff") {
 				screen.log.write(me.callsign~": This is the end-game..", 1.0, 1.0, 0.0);
-			} elsif (me.callsign == "Cpt.Rap") {
+			} elsif (me.callsign == "Cpt.Bloody") {
 				screen.log.write(me.callsign~": Lets do this.", 1.0, 1.0, 0.0);
 			}
 		}
@@ -303,7 +303,7 @@ var TopGun = {
 			me.a16Bearing = me.coord.course_to(me.a16Coord);
 			#me.a16BearingRate = me.filterBearing.filter(geo.normdeg180(me.a16Bearing-me.a16BearingOld),me.dt)/me.dt;
 			me.a16BearingRate = geo.normdeg180(me.a16Bearing-me.a16BearingOld)/me.dt;
-			#if (me.callsign=="Gn.Endo") printf("%.1f %.1f", geo.normdeg180(me.a16Bearing-me.a16BearingOld)/me.dt, me.a16BearingRate);
+			#if (me.callsign=="Col.Snuff") printf("%.1f %.1f", geo.normdeg180(me.a16Bearing-me.a16BearingOld)/me.dt, me.a16BearingRate);
 			me.a16ClockLast = me.a16Clock;
 			me.a16ClockOld = me.a16Clock;
 			me.a16Clock = geo.normdeg180(me.a16Bearing-me.heading);
@@ -1291,7 +1291,7 @@ var start = func (diff = 1) {
 		MAX_ROLL_SPEED = 25;
 		num_t = "0000";
 		ENDURANCE = 10;
-		tg1.callsign = "Lt.Endo";
+		tg1.callsign = "1Lt.Elmo";
 		tg2.callsign = "Lt.Ice";
 		setprop("link16/wingman-4", "Lt.Ice");
 		tg1.start([nil,tg2]);
@@ -1306,7 +1306,7 @@ var start = func (diff = 1) {
 		MAX_ROLL_SPEED = 25;
 		num_t = "0000";
 		ENDURANCE = 10;
-		tg1.callsign = "Lt.Endo";
+		tg1.callsign = "1Lt.Elmo";
 		tg1.start();
 		TopGun.runner = func {
 			tg1.decide();
@@ -1317,7 +1317,7 @@ var start = func (diff = 1) {
 		MAX_ROLL_SPEED = 25;
 		num_t = "0000";
 		ENDURANCE = 20;
-		tg1.callsign = "Cpt.Tom";
+		tg1.callsign = "Cpt.Wild";
 		tg1.start();
 		TopGun.runner = func {
 			tg1.decide();
@@ -1328,7 +1328,7 @@ var start = func (diff = 1) {
 		MAX_ROLL_SPEED = 30;
 		num_t = "-9999";
 		ENDURANCE = 30;
-		tg1.callsign = "Maj.Rap";
+		tg1.callsign = "Maj.RED";
 		tg1.start();
 		TopGun.runner = func {
 			tg1.decide();
@@ -1339,8 +1339,8 @@ var start = func (diff = 1) {
 		MAX_ROLL_SPEED = 25;
 		num_t = "0000";
 		ENDURANCE = 10;
-		tg1.callsign = "Cpt.Rap";
-		tg2.callsign = "Cpt.Tom";
+		tg1.callsign = "Cpt.Bloody";
+		tg2.callsign = "Cpt.Wild";
 		tg1.start();
 		tg2.start();
 		TopGun.runner = func {
@@ -1353,8 +1353,8 @@ var start = func (diff = 1) {
 		MAX_ROLL_SPEED = 30;
 		num_t = "-9999";
 		ENDURANCE = 15;
-		tg1.callsign = "Cpt.Rap";
-		tg2.callsign = "Maj.Tom";
+		tg1.callsign = "Cpt.Bloody";
+		tg2.callsign = "Maj.SWAT";
 		tg1.start();
 		tg2.start();
 		TopGun.runner = func {
@@ -1367,10 +1367,10 @@ var start = func (diff = 1) {
 		MAX_ROLL_SPEED = 30;
 		num_t = "-9999";
 		ENDURANCE = 30;
-		tg1.callsign = "Maj.Rap";
+		tg1.callsign = "Maj.RED";
 		tg2.callsign = "Maj.Ice";
-		tg3.callsign = "Maj.Tom";
-		tg4.callsign = "Gn.Endo";
+		tg3.callsign = "Maj.SWAT";
+		tg4.callsign = "Col.Snuff";
 		setprop("link16/wingman-4", "Maj.Ice");
 		tg1.start([nil,tg2]);
 		tg2.start([tg1,tg3,tg4]);
@@ -1388,10 +1388,10 @@ var start = func (diff = 1) {
 		MAX_ROLL_SPEED = 30;
 		num_t = "-9999";
 		ENDURANCE = 30;
-		tg1.callsign = "Maj.Rap";
+		tg1.callsign = "Maj.RED";
 		tg2.callsign = "Maj.Ice";
-		tg3.callsign = "Maj.Tom";
-		tg4.callsign = "Gn.Endo";
+		tg3.callsign = "Maj.SWAT";
+		tg4.callsign = "Col.Snuff";
 		tg1.start([tg4,tg2],0);
 		tg2.start([tg1,tg3],1);
 		tg3.start([tg4,tg2],0);
