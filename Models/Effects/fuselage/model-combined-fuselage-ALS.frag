@@ -10,16 +10,16 @@
 #version 120
 //#extension GL_ARB_gpu_shader5 : enable
 
-varying vec3    VBinormal;
-varying vec3    VNormal;
-varying vec3    VTangent;
-varying vec3    rawpos;
-varying vec3    reflVec;
-varying vec3    vViewVec;
-varying vec3    vertVec;
+varying	vec3 	VBinormal;
+varying	vec3 	VNormal;
+varying	vec3 	VTangent;
+varying	vec3 	rawpos;
+varying	vec3 	reflVec;
+varying	vec3 	vViewVec;
+varying vec3	vertVec;
 //varying vec3    lightDir;
 
-//varying   float   alpha;
+//varying	float	alpha;
 
 uniform sampler2D BaseTex;
 uniform sampler2D LightMapTex;
@@ -113,6 +113,9 @@ uniform vec3 dirt_b_color;
 
 varying vec3 upInView;
 
+float getShadowing();//Compositor
+vec3 getClusteredLightsContribution(vec3 p, vec3 n, vec3 texel);//Compositor
+
 float DotNoise2D(in vec2 coord, in float wavelength, in float fractionalMaxDotSize, in float dot_density);
 float Noise2D(in vec2 coord, in float wavelength);
 float shadow_func (in float x, in float y, in float noise, in float dist);
@@ -165,7 +168,7 @@ void main (void)
     vec3 shadedFogColor = vec3(0.55, 0.67, 0.88);
     vec3 moonLightColor = vec3 (0.095, 0.095, 0.15) * moonlight*moonlight;//can be 0.1 even when not in sky .. combineme
     moonLightColor = moonlight_perception(moonLightColor);
-    float alt = eye_alt;                    
+    float alt = eye_alt; 					
     float effective_scattering = min(scattering, cloud_self_shading);
 
 
@@ -214,9 +217,9 @@ void main (void)
     float fog_earthShade = 0.9 * smoothstep(terminator_width+ terminator, -terminator_width + terminator, fog_yprime_alt) + 0.1;
     float delta_z = hazeLayerAltitude - eye_alt;
 
-    
+	
     float ct = dot(normalize(up), normalize(vertVec));
-    vec3 relPos = (gl_ModelViewMatrixInverse * vec4 (vertVec,0.0)).xyz;     
+    vec3 relPos = (gl_ModelViewMatrixInverse * vec4 (vertVec,0.0)).xyz;		
 
     /// END geometry for light
 
@@ -260,37 +263,37 @@ void main (void)
         texel.rgb = mix(texel.rgb, grainTexel.rgb,  grainTexel.a );
     }
    else if (grain_texture_enabled == 2)
-    {
+	{
         grainTexel = texture2D(GrainTex, rawpos.xy * grain_magnification);
         texel.rgb = mix(texel.rgb, grainTexel.rgb,  grainTexel.a );
-    }
+	}
 
     /// END grain overlay
 
     /// BEGIN snowcover
-    
+	
     vec4 snow_texel = vec4 (0.95, 0.95, 0.95, 1.0);
 
     if (snow_enabled == 1)
-    {
-        float noise_1m = Noise2D(rawpos.xy, 1.0); 
+	{
+    	float noise_1m = Noise2D(rawpos.xy, 1.0); 
         float noise_5m = Noise2D(rawpos.xy, 5.0);
-            
-        float noise_term = 0.5 * (noise_5m - 0.5);
-        noise_term +=  0.5 * (noise_1m - 0.5);      
-        snow_texel.a = snow_texel.a * 0.2+0.8* smoothstep(0.2,0.8, 0.3 +noise_term + 0.5*snow_thickness_factor +0.0001*(relPos.z +eye_alt -snowlevel) );
+    		
+    	float noise_term = 0.5 * (noise_5m - 0.5);
+    	noise_term +=  0.5 * (noise_1m - 0.5);		
+    	snow_texel.a = snow_texel.a * 0.2+0.8* smoothstep(0.2,0.8, 0.3 +noise_term + 0.5*snow_thickness_factor +0.0001*(relPos.z +eye_alt -snowlevel) );
 
-        snow_texel.a *=  smoothstep(0.5, 0.7,dot(VNormal, up));
+    	snow_texel.a *=  smoothstep(0.5, 0.7,dot(VNormal, up));
 
-            
-        float noise_2000m = 0.0; 
-        float noise_10m = 0.0;
-            
+    		
+    	float noise_2000m = 0.0; 
+    	float noise_10m = 0.0;
+    		
 
-        texel.rgb = mix(texel.rgb, snow_texel.rgb, snow_texel.a* smoothstep(snowlevel, snowlevel+200.0,  1.0 * (relPos.z + eye_alt)+ (noise_2000m + 0.1 * noise_10m -0.55) *400.0));
-    }
-    
-    /// END snowcover
+    	texel.rgb = mix(texel.rgb, snow_texel.rgb, snow_texel.a* smoothstep(snowlevel, snowlevel+200.0,  1.0 * (relPos.z + eye_alt)+ (noise_2000m + 0.1 * noise_10m -0.55) *400.0));
+	}
+	
+	/// END snowcover
 
     vec3 reflVecN;
 
@@ -302,12 +305,12 @@ void main (void)
             nmap.a = 1.0;
         }
         N = nmap.rgb * 2.0 - 1.0;
-        // this is exact only for viewing under 90 degrees but much faster than the real solution
-        reflVecN = normalize (N.x * VTangent + N.y * VBinormal + N.z * reflVec);
+	    // this is exact only for viewing under 90 degrees but much faster than the real solution
+	    reflVecN = normalize (N.x * VTangent + N.y * VBinormal + N.z * reflVec);
         N = normalize(N.x * VTangent + N.y * VBinormal + N.z * VNormal);
     } else {
         N = normalize(VNormal);
-        reflVecN = reflVec;
+	    reflVecN = reflVec;
     }
     ///END bump
 
@@ -333,45 +336,48 @@ void main (void)
     }
     
     // try specular reflection of sky irradiance
+    
+    float shadowmap = getShadowing();
+    light_diffuse *= shadowmap;
 
     if (cloud_shadow_flag == 1) 
-    {
-        float cloud_shadow_factor = shadow_func(relPos.x, relPos.y, 1.0, dist);
-        cloud_shadow_factor =  1.0 - ((1.0 - cloud_shadow_factor) * (1.0 - smoothstep (-100.0, 100.0, vertex_alt - hazeLayerAltitude)));
-        light_diffuse = light_diffuse * cloud_shadow_factor;
-    }
+	{
+		float cloud_shadow_factor = shadow_func(relPos.x, relPos.y, 1.0, dist);
+		cloud_shadow_factor =  1.0 - ((1.0 - cloud_shadow_factor) * (1.0 - smoothstep (-100.0, 100.0, vertex_alt - hazeLayerAltitude)));
+		light_diffuse = light_diffuse * cloud_shadow_factor;
+	}
  
     vec3 secondary_light = vec3 (0.0,0.0,0.0);
 
     if (use_searchlight == 1)
-    {
-       secondary_light += searchlight();
-    }
+	{
+	   secondary_light += searchlight();
+	}
     if (use_landing_light == 1)
-    {
-       secondary_light += landing_light(landing_light1_offset, landing_light3_offset);
-    }
+	{
+	   secondary_light += landing_light(landing_light1_offset, landing_light3_offset);
+	}
     if (use_alt_landing_light == 1)
-    {
-       secondary_light += landing_light(landing_light2_offset, landing_light3_offset);
-    }
+	{
+	   secondary_light += landing_light(landing_light2_offset, landing_light3_offset);
+	}
 
 
     vec4 Diffuse  = light_diffuse * nDotVP;
-    Diffuse.rgb += secondary_light * light_distance_fading(dist);   
+    Diffuse.rgb += secondary_light * light_distance_fading(dist);	
     if (use_IR_vision)
-    {
-       Diffuse.rgb = max(Diffuse.rgb, vec3 (0.5, 0.5, 0.5));
-    }
+	{
+	   Diffuse.rgb = max(Diffuse.rgb, vec3 (0.5, 0.5, 0.5));
+	}
 
     ///BEGIN reflection correction by dirt
 
     float refl_d = 1.0;
 
     if ((dirt_enabled == 1) && (dirt_modulates_reflection == 1))
-    {
-       refl_d =  1.0 - (reflmap.r * dirt_r_factor  * (1.0 - dirt_reflection_factor));
-    }
+	{
+	   refl_d =  1.0 - (reflmap.r * dirt_r_factor  * (1.0 - dirt_reflection_factor));
+	}
 
     ///END reflection correction by dirt
 
@@ -387,7 +393,8 @@ void main (void)
     vec4 ambient_color = gl_FrontMaterial.ambient * (gl_LightSource[0].ambient * gl_LightSource[0].ambient+light_ambient*light_ambient) * 2 * ((1.0-ambient_factor)+occlusion.a*ambient_factor);//combineMe //light_ambient is only moonlight
     // gl_LightModel.ambient gl_LightSource[0].ambient light_ambient
     
-    vec4 color = Diffuse * gl_FrontMaterial.diffuse + ambient_color;
+    //vec4 color = Diffuse * gl_FrontMaterial.diffuse + ambient_color;//non-compositor
+    vec4 color = Diffuse * gl_FrontMaterial.diffuse + ambient_color;//Compositor
     color = clamp( color, 0.0, 1.0 );
 
     ////////////////////////////////////////////////////////////////////
@@ -408,10 +415,10 @@ void main (void)
             reflFactor = gl_FrontMaterial.shininess* 0.0078125 + transparency_offset;
         }
 
-        // enhance low angle reflection by a fresnel term
-        float fresnel_enhance = (1.0-smoothstep(0.0,0.4, dot(N,-normalize(vertVec)))) * refl_fresnel_factor;
+	    // enhance low angle reflection by a fresnel term
+	    float fresnel_enhance = (1.0-smoothstep(0.0,0.4, dot(N,-normalize(vertVec)))) * refl_fresnel_factor;
 
-        reflFactor+=fresnel_enhance;
+	    reflFactor+=fresnel_enhance;
 
         reflFactor = clamp(reflFactor, 0.0, 1.0);
 
@@ -457,27 +464,27 @@ void main (void)
     //////////////////////////////////////////////////////////////////////
 
     if (rain_enabled >0.0)
-    {
-        texel.rgb = texel.rgb * (1.0 - 0.6 * wetness);
-        float rain_factor = 0.0;
+	{
+    	texel.rgb = texel.rgb * (1.0 - 0.6 * wetness);
+    	float rain_factor = 0.0;
 
-        float rain_orientation = max(dot(VNormal, up),0.0);
+	    float rain_orientation = max(dot(VNormal, up),0.0);
 
-        if ((rain_norm > 0.0) && (rain_orientation > 0.0))
-        {
-            rain_factor += DotNoise2D(rawpos.xy, 0.2 ,0.5, rain_norm) * abs(sin(6.0*osg_SimulationTime));
-            rain_factor += DotNoise2D(rawpos.xy, 0.3 ,0.4, rain_norm) * abs(sin(6.0*osg_SimulationTime + 2.094));
-            rain_factor += DotNoise2D(rawpos.xy, 0.4 ,0.3, rain_norm)* abs(sin(6.0*osg_SimulationTime + 4.188));
-        }
+    	if ((rain_norm > 0.0) && (rain_orientation > 0.0))
+		{
+    		rain_factor += DotNoise2D(rawpos.xy, 0.2 ,0.5, rain_norm) * abs(sin(6.0*osg_SimulationTime));
+    		rain_factor += DotNoise2D(rawpos.xy, 0.3 ,0.4, rain_norm) * abs(sin(6.0*osg_SimulationTime + 2.094));
+    		rain_factor += DotNoise2D(rawpos.xy, 0.4 ,0.3, rain_norm)* abs(sin(6.0*osg_SimulationTime + 4.188));
+		}
 
-    
+	
 
-        // secondary reflection of sky irradiance in water film
-        float fresnelW =  ((0.8 * wetness) ) *  (1.0-smoothstep(0.0,0.4, dot(N,-normalize(vertVec)) * 1.0 - 0.2 * rain_factor * wetness));
-        float sky_factor = (1.0-ct*ct);
-        vec3 sky_light = vec3 (1.0,1.0,1.0) * length(light_diffuse.rgb) * (1.0-effective_scattering);
-        Specular.rgb += sky_factor * fresnelW  * sky_light;
-    }
+    	// secondary reflection of sky irradiance in water film
+    	float fresnelW =  ((0.8 * wetness) ) *  (1.0-smoothstep(0.0,0.4, dot(N,-normalize(vertVec)) * 1.0 - 0.2 * rain_factor * wetness));
+    	float sky_factor = (1.0-ct*ct);
+    	vec3 sky_light = vec3 (1.0,1.0,1.0) * length(light_diffuse.rgb) * (1.0-effective_scattering);
+    	Specular.rgb += sky_factor * fresnelW  * sky_light;
+	}
     /////////////////////////////////////////////////////////////////////
     //end WETNESS
     //////////////////////////////////////////////////////////////////////
@@ -495,7 +502,8 @@ void main (void)
     //color.a = alpha;//combineMe
     vec4 fragColor = vec4(color.rgb * mixedcolor.rgb, color.a);//CombineMe  + ambient_Correction.rgb
 
-    fragColor += Specular * nmap.a;
+    fragColor.rgb += Specular.rgb * nmap.a;
+    fragColor.rgb += getClusteredLightsContribution(vertVec, N, texel.rgb);
 
     //////////////////////////////////////////////////////////////////////
     // BEGIN lightmap
@@ -512,10 +520,10 @@ void main (void)
              //   lightmap_b_color * lightmapFactor.b +
              //   lightmap_a_color * lightmapFactor.a ;
 
-            lightmapcolor = lightmap_r_color * lightmapFactor.r;
-            lightmapcolor = addLights(lightmapcolor, lightmap_g_color * lightmapFactor.g);
-            lightmapcolor = addLights(lightmapcolor, lightmap_b_color * lightmapFactor.b);
-            lightmapcolor = addLights(lightmapcolor, lightmap_a_color * lightmapFactor.a);
+		lightmapcolor = lightmap_r_color * lightmapFactor.r;
+		lightmapcolor = addLights(lightmapcolor, lightmap_g_color * lightmapFactor.g);
+		lightmapcolor = addLights(lightmapcolor, lightmap_b_color * lightmapFactor.b);
+		lightmapcolor = addLights(lightmapcolor, lightmap_a_color * lightmapFactor.a);
 
 
         } else {
@@ -550,23 +558,23 @@ void main (void)
                 vAltitude = min(distance_in_layer,mvisibility) * ct;
                 delta_zv = delta_z - vAltitude;
                 }
-            else    // we may look through upper layer edge
+            else 	// we may look through upper layer edge
                 {
                 H = dist * ct;
                 if (H > delta_z) {distance_in_layer = dist/H * delta_z;}
                 else {distance_in_layer = dist;}
                 vAltitude = min(distance_in_layer,visibility) * ct;
-                delta_zv = delta_z - vAltitude; 
+                delta_zv = delta_z - vAltitude;	
                 }
             }
         else // we see the layer from above, delta_z < 0.0
-            {   
+            {	
             H = dist * -ct;
             if (H  < (-delta_z)) // we don't see into the layer at all, aloft visibility is the only fading
                 {
                 distance_in_layer = 0.0;
                 delta_zv = 0.0;
-                }       
+                }		
             else
                 {
                 vAltitude = H + delta_z;
@@ -604,8 +612,8 @@ void main (void)
 
     vec3 hazeColor = get_hazeColor(fog_lightArg);
 
-    float rShade = 1.0 - 0.9 * smoothstep(-terminator_width+ terminator, terminator_width + terminator, yprime_alt + 420000.0);
-    float lightIntensity = length(hazeColor * effective_scattering) * rShade;
+	float rShade = 1.0 - 0.9 * smoothstep(-terminator_width+ terminator, terminator_width + terminator, yprime_alt + 420000.0);
+	float lightIntensity = length(hazeColor * effective_scattering) * rShade;
 
     if (transmission<  1.0)
         {
@@ -639,45 +647,49 @@ void main (void)
         }
 
     if (use_IR_vision)
-    {
-    //hazeColor.rgb = max(hazeColor.rgb, vec3 (0.5, 0.5, 0.5));
-    }
+	{
+	//hazeColor.rgb = max(hazeColor.rgb, vec3 (0.5, 0.5, 0.5));
+	}
 
 
     /// END fog color
-    fragColor = clamp(fragColor, 0.0, 1.0);
+	fragColor = clamp(fragColor, 0.0, 1.0);
     hazeColor = clamp(hazeColor, 0.0, 1.0);
-
+    
     // gamma correction
     fragColor.rgb = pow(fragColor.rgb, gamma);
 
     ///BEGIN Rayleigh fog ///
 
-    // Rayleigh color shift due to out-scattering
-    float rayleigh_length = 0.5 * avisibility * (2.5 - 1.9 * air_pollution)/alt_factor(eye_alt, eye_alt+relPos.z);
-    float outscatter = 1.0-exp(-dist/rayleigh_length);
-    fragColor.rgb = rayleigh_out_shift(fragColor.rgb,outscatter);
+	// Rayleigh color shift due to out-scattering
+	float rayleigh_length = 0.5 * avisibility * (2.5 - 1.9 * air_pollution)/alt_factor(eye_alt, eye_alt+relPos.z);
+	float outscatter = 1.0-exp(-dist/rayleigh_length);
+	fragColor.rgb = rayleigh_out_shift(fragColor.rgb,outscatter);
 
-    vec3 rayleighColor = vec3 (0.17, 0.52, 0.87) * lightIntensity;
-    float rayleighStrength = rayleigh_in_func(dist, air_pollution, avisibility/max(lightIntensity,0.05), eye_alt, eye_alt + relPos.z);
-    fragColor.rgb = mix(fragColor.rgb, rayleighColor,rayleighStrength);
+	vec3 rayleighColor = vec3 (0.17, 0.52, 0.87) * lightIntensity;
+   	float rayleighStrength = rayleigh_in_func(dist, air_pollution, avisibility/max(lightIntensity,0.05), eye_alt, eye_alt + relPos.z);
+  	fragColor.rgb = mix(fragColor.rgb, rayleighColor,rayleighStrength);
 
     /// END Rayleigh fog
 
     // don't let the light fade out too rapidly
-    lightArg = (terminator + 200000.0)/100000.0;
-    float minLightIntensity = min(0.2,0.16 * lightArg + 0.5);
-    vec3 minLight = minLightIntensity * vec3 (0.2, 0.3, 0.4);
-    hazeColor *= eqColorFactor * fog_earthShade;
-    hazeColor.rgb = max(hazeColor.rgb, minLight.rgb);
+	lightArg = (terminator + 200000.0)/100000.0;
+	float minLightIntensity = min(0.2,0.16 * lightArg + 0.5);
+	vec3 minLight = minLightIntensity * vec3 (0.2, 0.3, 0.4);
+	hazeColor *= eqColorFactor * fog_earthShade;
+	hazeColor.rgb = max(hazeColor.rgb, minLight.rgb);
 
 
+    
+
+
+    
     
     fragColor.rgb = filter_combined(fragColor.rgb);
     fragColor.rgb = mix(hazeColor +secondary_light * fog_backscatter(mvisibility), fragColor.rgb,transmission);
     fragColor.rgb = max(gl_FrontMaterial.emission.rgb * texel.rgb, fragColor.rgb);
     fragColor.a = gl_FrontMaterial.diffuse.a * texel.a;//combineMe 
-    gl_FragColor = fragColor;
+    gl_FragColor = clamp(fragColor,0,1);
     
     // test stuff
     //float c = max(0,dot(up, N));

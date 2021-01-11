@@ -5,6 +5,8 @@
 varying	vec3	VNormal;
 varying vec3 	eyeVec;
 
+void setupShadows(vec4 eyeSpacePos);
+
 void main(void) {
 		vec4 ecPosition = gl_ModelViewMatrix * gl_Vertex;
 		eyeVec = ecPosition.xyz;
@@ -14,4 +16,6 @@ void main(void) {
 		gl_Position = ftransform();
 		gl_ClipVertex = ecPosition;
 		gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;
+		
+		setupShadows(ecPosition);
 }

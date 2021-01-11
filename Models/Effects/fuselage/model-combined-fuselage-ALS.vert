@@ -65,6 +65,7 @@ vec2 calc_deflection(float y){
 	vec2 returned = vec2 ( deflection, delta_y );
 	return returned;
 }
+void setupShadows(vec4 eyeSpacePos);//Compositor
 
 //////Fog Include///////////
 // uniform	int 	fogType;
@@ -121,11 +122,11 @@ void	rotationMatrixH(in float sinRz, in float cosRz, out mat4 rotmat)
 
 void	main(void)
 {
-	    upInView = upInViewSpace(latDeg,lonDeg);
+    upInView = upInViewSpace(latDeg,lonDeg);
+	
+	vec4 vertex = gl_Vertex;
 	    
-	    vec4 vertex = gl_Vertex;
-	    
-	    if ( wingflex == 1 ) {
+	if ( wingflex == 1 ) {
 			float x_factor = max((abs(vertex.x) - body_width),0);
 			float y_factor = max(vertex.y,0.0);
 			
@@ -155,7 +156,7 @@ void	main(void)
 				float tmp = (1-cos(rotation_rad2));
 				mat4 rotation_matrix = mat4(
 					pow(normal[0],2)*tmp+cos(rotation_rad2),			normal[1]*normal[0]*tmp-normal[2]*sin(rotation_rad2),	normal[2]*normal[0]*tmp+normal[1]*sin(rotation_rad2),	0.0,
-					normal[0]*normal[1]*tmp+normal[2]*sin(rotation_rad2),	pow(normal[1],2)*tmp+cos(rotation_rad2),			normal[2]*normal[1]*tmp-normal[0]*sin(rotation_rad2),	0.0,
+				normal[0]*normal[1]*tmp+normal[2]*sin(rotation_rad2),	pow(normal[1],2)*tmp+cos(rotation_rad2),			normal[2]*normal[1]*tmp-normal[0]*sin(rotation_rad2),	0.0,
 					normal[0]*normal[2]*tmp-normal[1]*sin(rotation_rad2),	normal[1]*normal[2]*tmp+normal[0]*sin(rotation_rad2),	pow(normal[2],2)*tmp+cos(rotation_rad2),			0.0,
 					0.0,							0.0,							0.0,							1.0
 					);
@@ -177,6 +178,7 @@ void	main(void)
 	    
 		rawpos = vertex.xyz;
 		vec4 ecPosition = gl_ModelViewMatrix * vertex;
+		
 		//fog_Func(fogType);
 
 		VNormal = normalize(gl_NormalMatrix * gl_Normal);
@@ -247,4 +249,6 @@ void	main(void)
 		
 		gl_Position = gl_ModelViewProjectionMatrix * vertex;//ftransform();
 		gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;
+		
+		setupShadows(ecPosition);//Compositor
 }

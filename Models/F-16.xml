@@ -361,11 +361,15 @@
           <snow-enabled type="int">0</snow-enabled>
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
-          <transparent type="int">1</transparent>
           <render-bin>
             <bin-number>111</bin-number>
             <bin-name>DepthSortedBin</bin-name>
           </render-bin>
+          <!--<blend>
+              <active>1</active>
+              <source-alpha>one-minus-src-alpha</source-alpha>
+              <destination>zero</destination>
+          </blend>-->
           <opaque type="int">0</opaque>
       </parameters>
       <!-- logos -->
