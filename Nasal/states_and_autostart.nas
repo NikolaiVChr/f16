@@ -234,8 +234,8 @@ var autostartengine = func {
 
   setprop("controls/lighting/lighting-panel/console-flood-knob", 0.3);
   setprop("controls/lighting/lighting-panel/pri-inst-pnl-knob", 0.5);
-  setprop("controls/lighting/lighting-panel/flood-inst-pnl-knob", 0.1);
-  setprop("controls/lighting/lighting-panel/console-primary-knob", 0.2);
+  setprop("controls/lighting/lighting-panel/flood-inst-pnl-knob", 0.2);
+  setprop("controls/lighting/lighting-panel/console-primary-knob", 0.3);
   setprop("controls/lighting/lighting-panel/data-entry-display", 1.0);
   
   setprop("controls/test/test-panel/oxy-test", 0);
