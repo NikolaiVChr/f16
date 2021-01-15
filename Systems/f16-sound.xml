@@ -4247,6 +4247,9 @@
                 <y>0.8</y>
                 <z>0.0</z>
             </position>
+            <volume>
+                <factor>0.75</factor>
+            </volume>
         </cannon>
         <hydra>
             <name>hydra70a</name>
