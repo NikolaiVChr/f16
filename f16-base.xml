@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PropertyList include="Systems/walker-include.xml">
     <sim>
-        <aircraft-version>3.51</aircraft-version>
+        <aircraft-version>3.54</aircraft-version>
         <minimum-fg-version>2020.3</minimum-fg-version>
         <!-- enable "parkpos=AVAILABLE" option for the F-16 -->
         <dimensions>
