@@ -1188,6 +1188,7 @@ append(obj.total, obj.speed_curr);
                  servStatic                : "systems/static/serviceable",
                  servPitot                 : "systems/pitot/serviceable",
                  warn                      : "f16/avionics/fault-warning",
+                 strf                      : "f16/avionics/strf",
                 };
 
         foreach (var name; keys(input)) {
@@ -1698,7 +1699,7 @@ append(obj.total, obj.speed_curr);
                                                      } elsif (obj.showmeCCIP) {
                                                         submode = "CCIP";
                                                      } elsif (obj.eegsLoop.isRunning) {
-                                                        submode = "EEGS";
+                                                        submode = hdp.strf?"STRF":"EEGS";
                                                      } elsif (hdp.submode == 1) {
                                                         submode = "BORE";
                                                      }
@@ -2289,6 +2290,7 @@ append(obj.total, obj.speed_curr);
             }
         }
         me.designatedDistanceFT = nil;
+        me.groundDistanceFT = nil;
         if (hdp["tgt_list"] != nil) {
             foreach ( me.u; hdp.tgt_list ) {
                 if (hdp.dgft and !(hdp.active_u != nil and hdp.active_u.Callsign != nil and me.u.Callsign != nil and me.u.Callsign.getValue() == hdp.active_u.Callsign.getValue())) {
@@ -2598,7 +2600,7 @@ append(obj.total, obj.speed_curr);
     },
     resetGunPos: func {
         me.gunPos   = [];
-        for(i = 0;i < me.funnelParts;i+=1){
+        for(i = 0;i < me.funnelParts*2;i+=1){
           var tmp = [];
           for(var myloopy = 0;myloopy <= i+1;myloopy+=1){
             append(tmp,nil);
@@ -2608,9 +2610,9 @@ append(obj.total, obj.speed_curr);
     },
     
     makeVector: func (siz,content) {
-        var vec = setsize([],siz);
+        var vec = setsize([],siz*2);
         var k = 0;
-        while(k<siz) {
+        while(k<siz*2) {
             vec[k] = content;
             k += 1;
         }
@@ -2857,7 +2859,7 @@ append(obj.total, obj.speed_curr);
     
     displayEEGS: func() {
         #note: this stuff is expensive like hell to compute, but..lets do it anyway.
-        
+        var strf = getprop("f16/avionics/strf");
         var st = systime();
         me.eegsMe.dt = st-me.lastTime;
         if (me.eegsMe.dt > me.averageDt*3) {
@@ -2879,45 +2881,95 @@ append(obj.total, obj.speed_curr);
             me.eegsMe.ac = geo.aircraft_position();
             me.eegsMe.allow = 1;
             me.drawEEGSPipper = 0;
-            for (var l = 0;l < me.funnelParts;l+=1) {
+            if(strf) {
+                me.groundDistanceFT = nil;
+                var l = 0;
+                for (l = 0;l < me.funnelParts*2;l+=1) {
+                    # compute display positions of funnel on hud
+                    var pos = me.gunPos[l][0];
+                    if (pos == nil) {
+                        me.eegsMe.allow = 0;
+                    } else {
+                        var ac  = me.gunPos[l][0][1];
+                        pos     = me.gunPos[l][0][0];
+                        var el = geo.elevation(pos.lat(),pos.lon());
+                        if (el == nil) {
+                            el = 0;
+                        }
+
+                        if (l != 0 and el > pos.alt()) {
+                            #var hitPos = geo.Coord.new(pos);
+                            #hitPos.set_alt(el);
+                            me.groundDistanceFT = (el-pos.alt())*M2FT;#ac.direct_distance_to(hitPos)*M2FT;
+                            l = l;
+                            break;
+                        }
+                    }
+                }
+
                 # compute display positions of funnel on hud
-                var pos = me.gunPos[l][l+1];
-                if (pos == nil) {
-                    me.eegsMe.allow = 0;
-                } else {
-                    var ac  = me.gunPos[l][l][1];
-                    pos     = me.gunPos[l][l][0];
-                    #me.eegsMe.u_dev_rad  = (90-awg_9.deviation_normdeg(me.eegsMe.hdg,   ac.course_to(pos)))  * D2R;
-                    #me.eegsMe.u_elev_rad = (90-awg_9.deviation_normdeg(me.eegsMe.pitch, math.atan2(pos.alt()-ac.alt(),ac.distance_to(pos))*R2D))  * D2R;
-                    #if (l==0) {
-                    #    #printf("prev %.2f alt %.2f our-pitch %.2f our-alt %.2f",math.atan2(pos.alt()-me.eegsMe.ac.alt(),pos.distance_to(me.eegsMe.ac))*R2D-me.eegsMe.pitch,pos.alt(),me.eegsMe.pitch, me.eegsMe.ac.alt());
-                    #    printf("seen bearing %.2f from heading %.2f", me.eegsMe.ac.course_to(pos[0]), me.eegsMe.hdg);
-                    #    printf("realdist=%d",pos[0].distance_to(me.eegsMe.ac));
-                        #pos.dump();
-                    #    print();
-                    #}
-                    #me.eegsMe.devs = me.develev_to_devroll(hdp, me.eegsMe.u_dev_rad, me.eegsMe.u_elev_rad);
-                    #me.eegsMe.combined_dev_deg    =  me.eegsMe.devs[0];
-                    #me.eegsMe.combined_dev_length =  me.eegsMe.devs[1];
-                    #me.eegsMe.xcS = me.sx/2                     + (me.pixelPerMeterX * me.eegsMe.combined_dev_length * math.sin(me.eegsMe.combined_dev_deg*D2R));
-                    #me.eegsMe.ycS = me.sy-me.texels_up_into_hud - (me.pixelPerMeterY * me.eegsMe.combined_dev_length * math.cos(me.eegsMe.combined_dev_deg*D2R));
-                    me.eegsMe.posTemp = HudMath.getPosFromCoord(pos,ac);
-                    me.eegsMe.shellPosDist[l] = ac.direct_distance_to(pos)*M2FT;
-                    me.eegsMe.shellPosX[l] = me.eegsMe.posTemp[0];#me.eegsMe.xcS;
-                    me.eegsMe.shellPosY[l] = me.eegsMe.posTemp[1];#me.eegsMe.ycS;
-                    
-                    if (me.designatedDistanceFT != nil and !me.drawEEGSPipper) {
-                      if (l != 0 and me.eegsMe.shellPosDist[l] >= me.designatedDistanceFT and me.eegsMe.shellPosDist[l]>me.eegsMe.shellPosDist[l-1]) {
-                        var highdist = me.eegsMe.shellPosDist[l];
-                        var lowdist = me.eegsMe.shellPosDist[l-1];
-                        me.eegsPipperX = HudMath.extrapolate(me.designatedDistanceFT,lowdist,highdist,me.eegsMe.shellPosX[l-1],me.eegsMe.shellPosX[l]);
-                        me.eegsPipperY = HudMath.extrapolate(me.designatedDistanceFT,lowdist,highdist,me.eegsMe.shellPosY[l-1],me.eegsMe.shellPosY[l]);
-                        me.drawEEGSPipper = 1;
-                      }
+                
+                if (me.eegsMe.allow and me.groundDistanceFT != nil) {
+                    for (var ll = l-1;ll <= l;ll+=1) {
+                        var ac  = me.gunPos[ll][0][1];
+                        var pos = me.gunPos[ll][0][0];
+
+                        me.eegsMe.posTemp = HudMath.getPosFromCoord(pos,ac);
+                        me.eegsMe.shellPosDist[ll] = ac.direct_distance_to(pos)*M2FT;
+                        me.eegsMe.shellPosX[ll] = me.eegsMe.posTemp[0];#me.eegsMe.xcS;
+                        me.eegsMe.shellPosY[ll] = me.eegsMe.posTemp[1];#me.eegsMe.ycS;
+                        
+                        if (l == ll) {
+                            var highdist = me.eegsMe.shellPosDist[ll];
+                            var lowdist = me.eegsMe.shellPosDist[ll-1];
+                            me.groundDistanceFT = math.sqrt(me.groundDistanceFT*me.groundDistanceFT+me.groundDistanceFT*me.groundDistanceFT);#we just assume attack angle of 45 degs
+                            me.eegsPipperX = HudMath.extrapolate(highdist-me.groundDistanceFT,lowdist,highdist,me.eegsMe.shellPosX[ll-1],me.eegsMe.shellPosX[ll]);
+                            me.eegsPipperY = HudMath.extrapolate(highdist-me.groundDistanceFT,lowdist,highdist,me.eegsMe.shellPosY[ll-1],me.eegsMe.shellPosY[ll]);
+                            me.drawEEGSPipper = 1;
+                        }
+                    }
+                }
+            } else {
+                for (var l = 0;l < me.funnelParts;l+=1) {
+                    # compute display positions of funnel on hud
+                    var pos = me.gunPos[l][l+1];
+                    if (pos == nil) {
+                        me.eegsMe.allow = 0;
+                    } else {
+                        var ac  = me.gunPos[l][l][1];
+                        pos     = me.gunPos[l][l][0];
+                        #me.eegsMe.u_dev_rad  = (90-awg_9.deviation_normdeg(me.eegsMe.hdg,   ac.course_to(pos)))  * D2R;
+                        #me.eegsMe.u_elev_rad = (90-awg_9.deviation_normdeg(me.eegsMe.pitch, math.atan2(pos.alt()-ac.alt(),ac.distance_to(pos))*R2D))  * D2R;
+                        #if (l==0) {
+                        #    #printf("prev %.2f alt %.2f our-pitch %.2f our-alt %.2f",math.atan2(pos.alt()-me.eegsMe.ac.alt(),pos.distance_to(me.eegsMe.ac))*R2D-me.eegsMe.pitch,pos.alt(),me.eegsMe.pitch, me.eegsMe.ac.alt());
+                        #    printf("seen bearing %.2f from heading %.2f", me.eegsMe.ac.course_to(pos[0]), me.eegsMe.hdg);
+                        #    printf("realdist=%d",pos[0].distance_to(me.eegsMe.ac));
+                            #pos.dump();
+                        #    print();
+                        #}
+                        #me.eegsMe.devs = me.develev_to_devroll(hdp, me.eegsMe.u_dev_rad, me.eegsMe.u_elev_rad);
+                        #me.eegsMe.combined_dev_deg    =  me.eegsMe.devs[0];
+                        #me.eegsMe.combined_dev_length =  me.eegsMe.devs[1];
+                        #me.eegsMe.xcS = me.sx/2                     + (me.pixelPerMeterX * me.eegsMe.combined_dev_length * math.sin(me.eegsMe.combined_dev_deg*D2R));
+                        #me.eegsMe.ycS = me.sy-me.texels_up_into_hud - (me.pixelPerMeterY * me.eegsMe.combined_dev_length * math.cos(me.eegsMe.combined_dev_deg*D2R));
+                        me.eegsMe.posTemp = HudMath.getPosFromCoord(pos,ac);
+                        me.eegsMe.shellPosDist[l] = ac.direct_distance_to(pos)*M2FT;
+                        me.eegsMe.shellPosX[l] = me.eegsMe.posTemp[0];#me.eegsMe.xcS;
+                        me.eegsMe.shellPosY[l] = me.eegsMe.posTemp[1];#me.eegsMe.ycS;
+                        
+                        if (me.designatedDistanceFT != nil and !me.drawEEGSPipper) {
+                          if (l != 0 and me.eegsMe.shellPosDist[l] >= me.designatedDistanceFT and me.eegsMe.shellPosDist[l]>me.eegsMe.shellPosDist[l-1]) {
+                            var highdist = me.eegsMe.shellPosDist[l];
+                            var lowdist = me.eegsMe.shellPosDist[l-1];
+                            me.eegsPipperX = HudMath.extrapolate(me.designatedDistanceFT,lowdist,highdist,me.eegsMe.shellPosX[l-1],me.eegsMe.shellPosX[l]);
+                            me.eegsPipperY = HudMath.extrapolate(me.designatedDistanceFT,lowdist,highdist,me.eegsMe.shellPosY[l-1],me.eegsMe.shellPosY[l]);
+                            me.drawEEGSPipper = 1;
+                          }
+                        }
                     }
                 }
             }
-            if (me.eegsMe.allow) {
+            if (me.eegsMe.allow and !strf) {
                 # draw the funnel
                 for (var k = 0;k<me.funnelParts;k+=1) {
                     var halfspan = math.atan2(getprop("f16/avionics/eegs-wingspan-ft")*0.5,me.eegsMe.shellPosDist[k])*R2D*me.texelPerDegreeX;#35ft average fighter wingspan
@@ -2948,6 +3000,23 @@ append(obj.total, obj.speed_curr);
                 }
                 me.eegsGroup.update();
             }
+            if (me.eegsMe.allow and strf) {
+                # draw the STRF pipper (T.O. GR1F-16CJ-34-1-1 page 1-442)
+                me.eegsGroup.removeAllChildren();
+                if (me.drawEEGSPipper) {
+                    var mr = 0.4 * 1.5;
+                    var pipperRadius = 15 * mr;
+                    me.eegsGroup.createChild("path")
+                        .moveTo(me.eegsPipperX-pipperRadius, me.eegsPipperY)
+                        .arcSmallCW(pipperRadius, pipperRadius, 0, pipperRadius*2, 0)
+                        .arcSmallCW(pipperRadius, pipperRadius, 0, -pipperRadius*2, 0)
+                        .moveTo(me.eegsPipperX-2*mr,me.eegsPipperY)
+                        .arcSmallCW(2*mr,2*mr, 0, 2*mr*2, 0)
+                        .arcSmallCW(2*mr,2*mr, 0, -2*mr*2, 0)
+                        .setColor(me.color);
+                }
+                me.eegsGroup.update();
+            }
             
             
             
@@ -2970,8 +3039,8 @@ append(obj.total, obj.speed_curr);
             #print("x,y");
             #printf("%d,%d",0,0);
             #print("-----");
-            
-            for (var j = 0;j < me.funnelParts;j+=1) {
+            var multi = strf?2:1;
+            for (var j = 0;j < me.funnelParts*multi;j+=1) {
                 
                 #calc new speed
                 me.eegsMe.Cd = drag(me.eegsMe.vel/ me.eegsMe.rs[1],0.193);#0.193=cd
