@@ -2373,6 +2373,13 @@ var MFD_Device =
                     if (me.wpnType == "fall") {
                         pylons.fcs.setDropMode(!pylons.fcs.getDropMode());
                     }
+                } elsif (eventi == 13) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    if (me.wpnType == "gun") {
+                        setprop("f16/avionics/strf", !getprop("f16/avionics/strf"));
+                    }
                 } elsif (eventi == 16) {
                     me.ppp.selectPage(me.my.p_HSD);
                     me.setSelection(me.ppp.buttons[18], me.ppp.buttons[16], 16);
@@ -2540,7 +2547,7 @@ var MFD_Device =
                     }
                 } elsif (me.wpn.type == "20mm Cannon") {
                     me.wpnType ="gun";
-                    me.eegs = "EEGS";
+                    me.eegs = getprop("f16/avionics/strf")?"STRF":"EEGS";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "MAL";
                     } else {

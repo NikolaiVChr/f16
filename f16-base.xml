@@ -1367,6 +1367,7 @@ value. 18000=standard US transition altitude -->
             <bingo type="int">0</bingo><!-- 0: No warn 1: warn 2: warn reset -->
             <fault-warning type="int">0</fault-warning><!-- 0: No warn 1: warn 2: warn reset -->
             <voice-msg-inhibit type="bool">false</voice-msg-inhibit>
+            <strf type="bool">false</strf>
         </avionics>
         <fcs>
             <stby-mode type="bool">false</stby-mode>
