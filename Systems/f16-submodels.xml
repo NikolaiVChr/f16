@@ -34,10 +34,18 @@
     <repeat>true</repeat>
     <delay>0.12</delay>
     <count>-1</count>
+    <randomness>
+        <azimuth> 0 </azimuth>
+        <elevation> 0 </elevation>
+        <cd>  0 </cd>
+        <life>  0 </life>
+    </randomness>
     <offsets>
         <x-m> -3.16</x-m>
         <y-m> -0.81</y-m>
         <z-m>  0.17</z-m>
+        <heading-deg>0</heading-deg>
+        <pitch-deg>0</pitch-deg>
     </offsets>
     <life>3.0</life>
     <wind>false</wind>
@@ -54,10 +62,18 @@
     <repeat>true</repeat>
     <delay>0.01</delay><!-- 6000 per min -->
     <count>-1</count>
+    <randomness>
+        <azimuth> 0 </azimuth>
+        <elevation> 0 </elevation>
+        <cd>  0 </cd>
+        <life>  0 </life>
+    </randomness>
     <offsets>
         <x-m> -3.16</x-m>
         <y-m> -0.81</y-m>
         <z-m>  0.17</z-m>
+        <heading-deg>0</heading-deg>
+        <pitch-deg>0</pitch-deg>
     </offsets>
     <life>10.0</life>
     <wind>false</wind>
