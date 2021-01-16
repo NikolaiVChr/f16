@@ -2881,6 +2881,7 @@ append(obj.total, obj.speed_curr);
             me.eegsMe.ac = geo.aircraft_position();
             me.eegsMe.allow = 1;
             me.drawEEGSPipper = 0;
+            me.strfRange = 10000;
             if(strf) {
                 me.groundDistanceFT = nil;
                 var l = 0;
@@ -2898,9 +2899,10 @@ append(obj.total, obj.speed_curr);
                         }
 
                         if (l != 0 and el > pos.alt()) {
-                            #var hitPos = geo.Coord.new(pos);
-                            #hitPos.set_alt(el);
+                            var hitPos = geo.Coord.new(pos);
+                            hitPos.set_alt(el);
                             me.groundDistanceFT = (el-pos.alt())*M2FT;#ac.direct_distance_to(hitPos)*M2FT;
+                            me.strfRange = hitPos.direct_distance_to(me.eegsMe.ac)*M2FT;
                             l = l;
                             break;
                         }
@@ -2919,10 +2921,10 @@ append(obj.total, obj.speed_curr);
                         me.eegsMe.shellPosX[ll] = me.eegsMe.posTemp[0];#me.eegsMe.xcS;
                         me.eegsMe.shellPosY[ll] = me.eegsMe.posTemp[1];#me.eegsMe.ycS;
                         
-                        if (l == ll) {
+                        if (l == ll and me.strfRange < 10000) {
                             var highdist = me.eegsMe.shellPosDist[ll];
                             var lowdist = me.eegsMe.shellPosDist[ll-1];
-                            me.groundDistanceFT = math.sqrt(me.groundDistanceFT*me.groundDistanceFT+me.groundDistanceFT*me.groundDistanceFT);#we just assume attack angle of 45 degs
+                            me.groundDistanceFT = math.sqrt(me.groundDistanceFT*me.groundDistanceFT+me.groundDistanceFT*me.groundDistanceFT);#we just assume impact angle of 45 degs
                             me.eegsPipperX = HudMath.extrapolate(highdist-me.groundDistanceFT,lowdist,highdist,me.eegsMe.shellPosX[ll-1],me.eegsMe.shellPosX[ll]);
                             me.eegsPipperY = HudMath.extrapolate(highdist-me.groundDistanceFT,lowdist,highdist,me.eegsMe.shellPosY[ll-1],me.eegsMe.shellPosY[ll]);
                             me.drawEEGSPipper = 1;
@@ -3006,14 +3008,27 @@ append(obj.total, obj.speed_curr);
                 if (me.drawEEGSPipper) {
                     var mr = 0.4 * 1.5;
                     var pipperRadius = 15 * mr;
-                    me.eegsGroup.createChild("path")
-                        .moveTo(me.eegsPipperX-pipperRadius, me.eegsPipperY)
-                        .arcSmallCW(pipperRadius, pipperRadius, 0, pipperRadius*2, 0)
-                        .arcSmallCW(pipperRadius, pipperRadius, 0, -pipperRadius*2, 0)
-                        .moveTo(me.eegsPipperX-2*mr,me.eegsPipperY)
-                        .arcSmallCW(2*mr,2*mr, 0, 2*mr*2, 0)
-                        .arcSmallCW(2*mr,2*mr, 0, -2*mr*2, 0)
-                        .setColor(me.color);
+                    if (me.strfRange <= 4000) {
+                        me.eegsGroup.createChild("path")
+                            .moveTo(me.eegsPipperX-pipperRadius, me.eegsPipperY-pipperRadius-1)
+                            .horiz(pipperRadius*2)
+                            .moveTo(me.eegsPipperX-pipperRadius, me.eegsPipperY)
+                            .arcSmallCW(pipperRadius, pipperRadius, 0, pipperRadius*2, 0)
+                            .arcSmallCW(pipperRadius, pipperRadius, 0, -pipperRadius*2, 0)
+                            .moveTo(me.eegsPipperX-2*mr,me.eegsPipperY)
+                            .arcSmallCW(2*mr,2*mr, 0, 2*mr*2, 0)
+                            .arcSmallCW(2*mr,2*mr, 0, -2*mr*2, 0)
+                            .setColor(me.color);
+                    } else {
+                        me.eegsGroup.createChild("path")
+                            .moveTo(me.eegsPipperX-pipperRadius, me.eegsPipperY)
+                            .arcSmallCW(pipperRadius, pipperRadius, 0, pipperRadius*2, 0)
+                            .arcSmallCW(pipperRadius, pipperRadius, 0, -pipperRadius*2, 0)
+                            .moveTo(me.eegsPipperX-2*mr,me.eegsPipperY)
+                            .arcSmallCW(2*mr,2*mr, 0, 2*mr*2, 0)
+                            .arcSmallCW(2*mr,2*mr, 0, -2*mr*2, 0)
+                            .setColor(me.color);
+                    }
                 }
                 me.eegsGroup.update();
             }
