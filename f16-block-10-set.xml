@@ -74,7 +74,7 @@
    <path archive="y">Aircraft/f16/Models/F-16.xml</path>
    <livery>
     <file type="string"/>
-    <name type="string">IAF 140 Sqn, "Golden Eagles"</name>
+    <name type="string">BAC 350 Sqn, FA-14 (1980)</name>
     <folder type="string">Aircraft/f16/Models/Liveries/Block10</folder>
    </livery>
    <MFD-color>
