@@ -4248,7 +4248,7 @@
                 <z>0.0</z>
             </position>
             <volume>
-                <factor>0.75</factor>
+                <factor>0.5</factor>
             </volume>
         </cannon>
         <hydra>
