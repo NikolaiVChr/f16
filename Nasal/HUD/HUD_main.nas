@@ -2996,7 +2996,6 @@ append(obj.total, obj.speed_curr);
                           .moveTo(me.eegsPipperX, me.eegsPipperY-radius)
                           .arcSmallCW(radius,radius,0,0,radius*2)
                           .arcSmallCW(radius,radius,0,0,-radius*2)
-                          .setStrokeLineWidth(4)
                           .setStrokeLineWidth(1)
                           .setColor(me.color);
                 }
@@ -3010,7 +3009,7 @@ append(obj.total, obj.speed_curr);
                     var pipperRadius = 15 * mr;
                     if (me.strfRange <= 4000) {
                         me.eegsGroup.createChild("path")
-                            .moveTo(me.eegsPipperX-pipperRadius, me.eegsPipperY-pipperRadius-1)
+                            .moveTo(me.eegsPipperX-pipperRadius, me.eegsPipperY-pipperRadius-2)
                             .horiz(pipperRadius*2)
                             .moveTo(me.eegsPipperX-pipperRadius, me.eegsPipperY)
                             .arcSmallCW(pipperRadius, pipperRadius, 0, pipperRadius*2, 0)
@@ -3018,6 +3017,7 @@ append(obj.total, obj.speed_curr);
                             .moveTo(me.eegsPipperX-2*mr,me.eegsPipperY)
                             .arcSmallCW(2*mr,2*mr, 0, 2*mr*2, 0)
                             .arcSmallCW(2*mr,2*mr, 0, -2*mr*2, 0)
+                            .setStrokeLineWidth(1)
                             .setColor(me.color);
                     } else {
                         me.eegsGroup.createChild("path")
@@ -3027,6 +3027,7 @@ append(obj.total, obj.speed_curr);
                             .moveTo(me.eegsPipperX-2*mr,me.eegsPipperY)
                             .arcSmallCW(2*mr,2*mr, 0, 2*mr*2, 0)
                             .arcSmallCW(2*mr,2*mr, 0, -2*mr*2, 0)
+                            .setStrokeLineWidth(1)
                             .setColor(me.color);
                     }
                 }
