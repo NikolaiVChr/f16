@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery> 
+    <name type="string">BAC 350 Sqn, FA-14 (1980)</name>
+    <texture>Liveries/Block10/78-0129.png</texture>
+    <owner type="string">BAC</owner>
+   </livery>
+
+   <livery-logo>
+    <texture>Liveries/standard.logos.color.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block10/patch.BAF_349.png</texture>
+   </livery-patch>
+
+   <livery-pod>
+     <texture>Liveries/Block10/pod.Clean.png</texture>
+   </livery-pod>
+
+   <f16>
+     <dragchute type="bool">false</dragchute>
+   </f16>
+  </model>
+ </sim>
+</PropertyList>

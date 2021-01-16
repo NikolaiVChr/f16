@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery> 
+    <name type="string">BAC 2 Sqn, FA-134 (1985)</name>
+    <texture>Liveries/Block20/90-0025.png</texture>
+    <owner type="string">BAC</owner>
+   </livery>
+
+   <livery-logo>
+    <texture>Liveries/standard.logos.color.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/patch.BAF_2.png</texture>
+   </livery-patch>
+
+  <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+  </livery-pod>
+
+   <f16>
+     <dragchute type="bool">true</dragchute>
+   </f16>
+  </model>
+ </sim>
+</PropertyList>
