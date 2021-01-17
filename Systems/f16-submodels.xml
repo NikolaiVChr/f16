@@ -48,6 +48,7 @@
         <pitch-deg>0</pitch-deg>
     </offsets>
     <life>3.0</life>
+    <aero-stabilised>false</aero-stabilised>
     <wind>false</wind>
     <weight>0.1</weight>
     <cd>0.193</cd>
@@ -77,6 +78,7 @@
     </offsets>
     <life>10.0</life>
     <wind>false</wind>
+    <aero-stabilised>false</aero-stabilised>
     <weight>0.1069</weight>
     <cd>0.193</cd>
     <eda>0.00136354</eda>
