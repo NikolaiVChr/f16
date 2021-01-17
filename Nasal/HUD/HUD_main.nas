@@ -2909,12 +2909,13 @@ append(obj.total, obj.speed_curr);
                     }
                 }
 
-                # compute display positions of funnel on hud
+                # compute display positions of pipper on hud
                 
                 if (me.eegsMe.allow and me.groundDistanceFT != nil) {
                     for (var ll = l-1;ll <= l;ll+=1) {
-                        var ac  = me.gunPos[ll][0][1];
-                        var pos = me.gunPos[ll][0][0];
+                        var ac    = me.gunPos[ll][0][1];
+                        var pos   = me.gunPos[ll][0][0];
+                        var pitch = me.gunPos[ll][0][2];
 
                         me.eegsMe.posTemp = HudMath.getPosFromCoord(pos,ac);
                         me.eegsMe.shellPosDist[ll] = ac.direct_distance_to(pos)*M2FT;
@@ -2924,7 +2925,8 @@ append(obj.total, obj.speed_curr);
                         if (l == ll and me.strfRange < 10000) {
                             var highdist = me.eegsMe.shellPosDist[ll];
                             var lowdist = me.eegsMe.shellPosDist[ll-1];
-                            me.groundDistanceFT = math.sqrt(me.groundDistanceFT*me.groundDistanceFT+me.groundDistanceFT*me.groundDistanceFT);#we just assume impact angle of 45 degs
+                            me.groundDistanceFT = me.groundDistanceFT/math.cos(90-pitch*D2R);
+                            #me.groundDistanceFT = math.sqrt(me.groundDistanceFT*me.groundDistanceFT+me.groundDistanceFT*me.groundDistanceFT);#we just assume impact angle of 45 degs
                             me.eegsPipperX = HudMath.extrapolate(highdist-me.groundDistanceFT,lowdist,highdist,me.eegsMe.shellPosX[ll-1],me.eegsMe.shellPosX[ll]);
                             me.eegsPipperY = HudMath.extrapolate(highdist-me.groundDistanceFT,lowdist,highdist,me.eegsMe.shellPosY[ll-1],me.eegsMe.shellPosY[ll]);
                             me.drawEEGSPipper = 1;
@@ -3046,8 +3048,8 @@ append(obj.total, obj.speed_curr);
             me.eegs_ac_east_fps  = getprop("velocities/speed-east-fps");
             me.eegs_ac_down_fps  = getprop("velocities/speed-down-fps");
             
-            me.eegs_sm_down_fps       = -math.sin(me.eegsMe.pitch * D2R) * 2041;
-            me.eegs_sm_horizontal_fps = math.cos(me.eegsMe.pitch * D2R) * 2041;
+            me.eegs_sm_down_fps       = -math.sin(me.eegsMe.pitch * D2R) * 3379;
+            me.eegs_sm_horizontal_fps = math.cos(me.eegsMe.pitch * D2R) * 3379;
             me.eegs_sm_north_fps      = math.cos(me.eegsMe.hdg * D2R) * me.eegs_sm_horizontal_fps;
             me.eegs_sm_east_fps       = math.sin(me.eegsMe.hdg * D2R) * me.eegs_sm_horizontal_fps;
 
@@ -3086,9 +3088,9 @@ append(obj.total, obj.speed_curr);
             for (var j = 0;j < me.funnelParts*multi;j+=1) {
                 
                 #calc new speed
-                me.eegsMe.Cd = drag(me.eegsMe.vel/ me.eegsMe.rs[1],0.193);#0.193=cd
+                me.eegsMe.Cd = drag(me.eegsMe.vel/ me.eegsMe.rs[1],0.09);#0.193=cd
                 me.eegsMe.q = 0.5 * me.eegsMe.rho * me.eegsMe.vel * me.eegsMe.vel;
-                me.eegsMe.deacc = (me.eegsMe.Cd * me.eegsMe.q * 0.00136354) / me.eegsMe.mass;#0.00136354=eda
+                me.eegsMe.deacc = (me.eegsMe.Cd * me.eegsMe.q * 0.00338158219) / me.eegsMe.mass;#0.00136354=eda
                 me.eegsMe.vel -= me.eegsMe.deacc * me.averageDt;
                 me.eegsMe.speed_down_fps       = -math.sin(me.eegsMe.pitch * D2R) * (me.eegsMe.vel);
                 me.eegsMe.speed_horizontal_fps = math.cos(me.eegsMe.pitch * D2R) * (me.eegsMe.vel);
@@ -3111,7 +3113,7 @@ append(obj.total, obj.speed_curr);
                 me.eegsMe.eegsPos.set_alt(me.eegsMe.altC);
                 
                 var old = me.gunPos[j];
-                me.gunPos[j] = [[geo.Coord.new(me.eegsMe.eegsPos),me.eegsMe.ac]];
+                me.gunPos[j] = [[geo.Coord.new(me.eegsMe.eegsPos),me.eegsMe.ac, me.eegsMe.pitch]];
                 for (var m = 0;m<j+1;m+=1) {
                     append(me.gunPos[j], old[m]);
                 } 

@@ -30,7 +30,7 @@
     <name>gun-pod</name>
     <model>Aircraft/f16/Models/Armament/Weapons/M61A1/tracer.xml</model>
     <trigger>fdm/jsbsim/fcs/guntrigger</trigger>
-    <speed>2041.0</speed>
+    <speed>3379.0</speed>
     <repeat>true</repeat>
     <delay>0.12</delay>
     <count>-1</count>
@@ -51,15 +51,15 @@
     <aero-stabilised>false</aero-stabilised>
     <wind>false</wind>
     <weight>0.1</weight>
-    <cd>0.193</cd>
-    <eda>0.00136354</eda>
+    <cd>0.09</cd>
+    <eda>0.00338158219</eda>
   </submodel>
 
   <submodel>
     <name>M61A1 shell</name>
     <model>Models/Geometry/null.ac</model>
     <trigger>fdm/jsbsim/fcs/guntrigger</trigger>
-    <speed>2041.0</speed><!-- ft/sec -->
+    <speed>3379.0</speed><!-- ft/sec -->
     <repeat>true</repeat>
     <delay>0.01</delay><!-- 6000 per min -->
     <count>-1</count>
@@ -80,8 +80,8 @@
     <wind>false</wind>
     <aero-stabilised>false</aero-stabilised>
     <weight>0.1069</weight>
-    <cd>0.193</cd>
-    <eda>0.00136354</eda>
+    <cd>0.09</cd>
+    <eda>0.00338158219</eda>
     <collision>true</collision>
     <collision-report>sim/ai/aircraft/collision/bullet</collision-report>
     <impact>true</impact>
