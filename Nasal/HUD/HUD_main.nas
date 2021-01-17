@@ -3039,7 +3039,34 @@ append(obj.total, obj.speed_curr);
             
             #calc shell positions
             
-            me.eegsMe.vel = getprop("velocities/uBody-fps")+2041;#2041 = speed
+            # speed = groundspeed vector + aircraftvector with shell speed for magnitude
+            # 
+
+            me.eegs_ac_north_fps = getprop("velocities/speed-north-fps");
+            me.eegs_ac_east_fps  = getprop("velocities/speed-east-fps");
+            me.eegs_ac_down_fps  = getprop("velocities/speed-down-fps");
+            
+            me.eegs_sm_down_fps       = -math.sin(me.eegsMe.pitch * D2R) * 2041;
+            me.eegs_sm_horizontal_fps = math.cos(me.eegsMe.pitch * D2R) * 2041;
+            me.eegs_sm_north_fps      = math.cos(me.eegsMe.hdg * D2R) * me.eegs_sm_horizontal_fps;
+            me.eegs_sm_east_fps       = math.sin(me.eegsMe.hdg * D2R) * me.eegs_sm_horizontal_fps;
+
+            me.eegs_north_fps = me.eegs_ac_north_fps + me.eegs_sm_north_fps;
+            me.eegs_east_fps  = me.eegs_ac_east_fps  + me.eegs_sm_east_fps;
+            me.eegs_down_fps  = me.eegs_ac_down_fps  + me.eegs_sm_down_fps;
+
+            me.eegs_horiz_fps = math.sqrt(me.eegs_north_fps*me.eegs_north_fps+me.eegs_east_fps*me.eegs_east_fps);
+            me.eegs_total_fps = math.sqrt(me.eegs_down_fps*me.eegs_down_fps+me.eegs_horiz_fps*me.eegs_horiz_fps);
+
+            me.eegs_hdging = geo.normdeg(math.atan2(me.eegs_east_fps,me.eegs_north_fps)*R2D);
+            me.eegs_ptch   = math.atan2(-me.eegs_down_fps, math.sqrt(me.eegs_east_fps*me.eegs_east_fps+me.eegs_north_fps*me.eegs_north_fps))*R2D;
+
+            if (me.eegs_total_fps > 1) {
+                me.eegsMe.hdg = me.eegs_hdging;
+                me.eegsMe.pitch = me.eegs_ptch;
+            }
+            
+            me.eegsMe.vel = me.eegs_total_fps;#getprop("velocities/uBody-fps")+2041;#2041 = speed
             
             #me.eegsMe.geodPos = aircraftToCart({x:3.16, y:-0.81, z: -0.17});#position of gun in aircraft (x and z inverted)
             #me.eegsMe.eegsPos.set_xyz(me.eegsMe.geodPos.x, me.eegsMe.geodPos.y, me.eegsMe.geodPos.z);
