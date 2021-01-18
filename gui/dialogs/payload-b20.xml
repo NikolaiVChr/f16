@@ -336,10 +336,10 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>0</row>
             <col>4</col>
-            <legend>SEAD "Wild Weasel" (2 bags)</legend>
+            <legend>A/G SEAD (2 bags)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_sead();</script>
+                <script>pylons.b20_a2g_sead();</script>
             </binding>
         </button>
 
@@ -350,7 +350,7 @@
             <legend>A/G DEAD (2 bags)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2g_dead();</script>
+                <script>pylons.b30_a2g_dead();</script>
             </binding>
         </button>
 
@@ -397,10 +397,10 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>10</row>
             <col>4</col>
-            <legend>A/G Anti-Ship (2 bags)</legend>
+            <legend>A/G Anti-Ship</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2s_antiship();</script>
+                <script>pylons.b20_a2s_antiship();</script>
             </binding>
         </button>
 
@@ -408,7 +408,18 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>12</row>
             <col>4</col>
-            <legend>A/G Anti-Ship</legend>
+            <legend>A/G Anti-Ship (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.b20_a2s_antishiper();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>14</row>
+            <col>4</col>
+            <legend>A/G Anti-Ship (Penguin)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2s_antiship2();</script>
