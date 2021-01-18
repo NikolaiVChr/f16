@@ -1070,7 +1070,7 @@ var b20_a2a_adf = func {
     }
 }
 
-# SEAD (AGM-88, 131 ECM pod)
+# SEAD (AGM-88, 184 ECM pod)
 var b20_a2g_sead = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.aim120WT);
@@ -1090,6 +1090,7 @@ var b20_a2g_sead = func {
     }
 }
 
+# A/S Anti-Ship (AGM-84)
 var b20_a2s_antiship = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.aim120WT);
@@ -1109,6 +1110,7 @@ var b20_a2s_antiship = func {
     }
 }
 
+# A/S Anti-Ship (AGM-84, 184 ECM pod)
 var b20_a2s_antishiper = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.aim120WT);
@@ -1187,7 +1189,6 @@ var b20_train_ag = func {
       screen.log.write(f16.msgB);
     }
 }
-
 
 ############################################
 ################# BLOCK 30 #################
@@ -1450,7 +1451,7 @@ var b40_a2g_caslt = func {
     }
 }
 
-# A/G GPS Strike (GBU-54)
+# CAS Mix (GBU-54, Hydra, 2 bags)
 var b40_a2g_casmix = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.aim120WT);
