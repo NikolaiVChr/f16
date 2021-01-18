@@ -418,6 +418,17 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>8</row>
             <col>4</col>
+            <legend>A/G CAS (Mix, 2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.b40_a2g_casmix();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>10</row>
+            <col>4</col>
             <legend>A/G M151 Hydra rockets</legend>
             <binding>
                 <command>nasal</command>
@@ -427,7 +438,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>10</row>
+            <row>12</row>
             <col>4</col>
             <legend>A/G Anti-Ship (2 bags)</legend>
             <binding>
@@ -436,25 +447,8 @@
             </binding>
         </button>
 
-        <button>
-            <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>12</row>
-            <col>4</col>
-            <legend>A/G Anti-Ship</legend>
-            <binding>
-                <command>nasal</command>
-                <script>pylons.a2s_antiship2();</script>
-            </binding>
-        </button>
-
         <hrule>
             <row>13</row>
-            <col>0</col>
-            <colspan>6</colspan>
-        </hrule>
-
-        <hrule>
-            <row>15</row>
             <col>0</col>
             <colspan>6</colspan>
         </hrule>
@@ -469,6 +463,12 @@
                 <script>pylons.a2g_jassm();</script>
             </binding>
         </button>
+
+        <hrule>
+            <row>15</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>

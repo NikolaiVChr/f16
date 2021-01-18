@@ -188,8 +188,8 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 		pylon8set = [pylonSets.empty, pylonSets.aim9, pylonSets.aim120, pylonSets.dumb1, pylonSets.podACMI];
 		pylon1set = [pylonSets.dumb1WT, pylonSets.dumb2WT, pylonSets.dumb3WT, pylonSets.aim9WT, pylonSets.aim120WT, pylonSets.podACMIWT, pylonSets.smokeRL, pylonSets.smokeGL, pylonSets.smokeBL, pylonSets.smokeWL];# wingtips are normally not empty, so CATM-9L dummy is loaded instead.
 		pylon9set = [pylonSets.dumb1WT, pylonSets.dumb2WT, pylonSets.dumb3WT, pylonSets.aim9WT, pylonSets.aim120WT, pylonSets.podACMIWT, pylonSets.smokeRR, pylonSets.smokeGR, pylonSets.smokeBR, pylonSets.smokeWR];# wingtips are normally not empty, so CATM-9L dummy is loaded instead.
-		pylon3set = [pylonSets.empty, pylonSets.hyd70h3, pylonSets.a158, pylonSets.a119, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x3, pylonSets.m84, pylonSets.m82, pylonSets.aim9, pylonSets.aim7, pylonSets.aim120];
-		pylon7set = [pylonSets.empty, pylonSets.hyd70h7, pylonSets.a158, pylonSets.a119, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x3, pylonSets.m84, pylonSets.m82, pylonSets.aim9, pylonSets.aim7, pylonSets.aim120];
+		pylon3set = [pylonSets.empty, pylonSets.hyd70h3, pylonSets.a158, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x3, pylonSets.m84, pylonSets.m82, pylonSets.aim9, pylonSets.aim7, pylonSets.aim120];
+		pylon7set = [pylonSets.empty, pylonSets.hyd70h7, pylonSets.a158, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x3, pylonSets.m84, pylonSets.m82, pylonSets.aim9, pylonSets.aim7, pylonSets.aim120];
 		pylon4set = [pylonSets.empty, pylonSets.fuel37L, pylonSets.fuel60L, pylonSets.g12x2, pylonSets.m82, pylonSets.a119, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84];
 		pylon6set = [pylonSets.empty, pylonSets.fuel37R, pylonSets.fuel60R, pylonSets.g12x2, pylonSets.m82, pylonSets.a119, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84];
 		pylon5set = [pylonSets.empty, pylonSets.fuel30, pylonSets.podEcm131, pylonSets.podEcm184, pylonSets.podTrvl, pylonSets.b617, pylonSets.b6112];
@@ -202,8 +202,8 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 		pylon8set = [pylonSets.empty, pylonSets.aim9, pylonSets.aim120, pylonSets.dumb1, pylonSets.podACMI];
 		pylon1set = [pylonSets.dumb1WT, pylonSets.dumb2WT, pylonSets.dumb3WT, pylonSets.aim9WT, pylonSets.aim120WT, pylonSets.podACMIWT, pylonSets.smokeRL, pylonSets.smokeGL, pylonSets.smokeBL, pylonSets.smokeWL];# wingtips are normally not empty, so CATM-9L dummy is loaded instead.
 		pylon9set = [pylonSets.dumb1WT, pylonSets.dumb2WT, pylonSets.dumb3WT, pylonSets.aim9WT, pylonSets.aim120WT, pylonSets.podACMIWT, pylonSets.smokeRR, pylonSets.smokeGR, pylonSets.smokeBR, pylonSets.smokeWR];# wingtips are normally not empty, so CATM-9L dummy is loaded instead.
-		pylon3set = [pylonSets.empty, pylonSets.hyd70h3, pylonSets.a158, pylonSets.a119, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x3, pylonSets.m84, pylonSets.m82, pylonSets.aim9, pylonSets.aim7, pylonSets.aim120];
-		pylon7set = [pylonSets.empty, pylonSets.hyd70h7, pylonSets.a158, pylonSets.a119, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x3, pylonSets.m84, pylonSets.m82, pylonSets.aim9, pylonSets.aim7, pylonSets.aim120];
+		pylon3set = [pylonSets.empty, pylonSets.hyd70h3, pylonSets.a158, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x3, pylonSets.m84, pylonSets.m82, pylonSets.aim9, pylonSets.aim7, pylonSets.aim120];
+		pylon7set = [pylonSets.empty, pylonSets.hyd70h7, pylonSets.a158, pylonSets.a154, pylonSets.a88, pylonSets.a84, pylonSets.a65b, pylonSets.a65d, pylonSets.c87, pylonSets.c105, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.g12x3, pylonSets.m84, pylonSets.m82, pylonSets.aim9, pylonSets.aim7, pylonSets.aim120];
 		pylon4set = [pylonSets.empty, pylonSets.fuel37L, pylonSets.fuel60L, pylonSets.g12x2, pylonSets.m82, pylonSets.a119, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84];
 		pylon6set = [pylonSets.empty, pylonSets.fuel37R, pylonSets.fuel60R, pylonSets.g12x2, pylonSets.m82, pylonSets.a119, pylonSets.a154, pylonSets.g54, pylonSets.g31, pylonSets.g24, pylonSets.c87, pylonSets.c105, pylonSets.m84];
 		pylon5set = [pylonSets.empty, pylonSets.fuel30, pylonSets.podEcm131, pylonSets.podEcm184, pylonSets.podTrvl, pylonSets.b617, pylonSets.b6112];
@@ -897,26 +897,6 @@ var a2s_antiship = func {
     }
 }
 
-# A/S Anti-Ship (AGM-119)
-var a2s_antiship2 = func {
-    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
-        pylon1.loadSet(pylonSets.aim120WT);
-        pylon2.loadSet(pylonSets.aim9);
-        pylon3.loadSet(pylonSets.a119);
-        pylon4.loadSet(pylonSets.a119);
-        pylon5.loadSet(pylonSets.fuel30);
-        pylon6.loadSet(pylonSets.a119);
-        pylon7.loadSet(pylonSets.a119);
-        pylon8.loadSet(pylonSets.aim9);
-        pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podSAtp);
-        pylon11.loadSet(pylonSets.empty);
-        f16.reloadCannon();
-    } else {
-      screen.log.write(f16.msgB);
-    }
-}
-
 # A/G Strategic Unguided Strike (B61-7)
 var a2g_strat = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
@@ -1090,6 +1070,84 @@ var b20_a2a_adf = func {
     }
 }
 
+# SEAD (AGM-88, 131 ECM pod)
+var b20_a2g_sead = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim120WT);
+        pylon2.loadSet(pylonSets.aim9);
+        pylon3.loadSet(pylonSets.a88);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.podEcm184);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.a88);
+        pylon8.loadSet(pylonSets.aim9);
+        pylon9.loadSet(pylonSets.aim120WT);
+        pylon10.loadSet(pylonSets.podHarm);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+var b20_a2s_antiship = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim120WT);
+        pylon2.loadSet(pylonSets.aim9);
+        pylon3.loadSet(pylonSets.a84);
+        pylon4.loadSet(pylonSets.empty);
+        pylon5.loadSet(pylonSets.fuel30);
+        pylon6.loadSet(pylonSets.empty);
+        pylon7.loadSet(pylonSets.a84);
+        pylon8.loadSet(pylonSets.aim9);
+        pylon9.loadSet(pylonSets.aim120WT);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+var b20_a2s_antishiper = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim120WT);
+        pylon2.loadSet(pylonSets.aim9);
+        pylon3.loadSet(pylonSets.a84);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.podEcm184);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.a84);
+        pylon8.loadSet(pylonSets.aim9);
+        pylon9.loadSet(pylonSets.aim120WT);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# A/S Anti-Ship (AGM-119)
+var a2s_antiship2 = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim120WT);
+        pylon2.loadSet(pylonSets.aim9);
+        pylon3.loadSet(pylonSets.a119);
+        pylon4.loadSet(pylonSets.a119);
+        pylon5.loadSet(pylonSets.fuel30);
+        pylon6.loadSet(pylonSets.a119);
+        pylon7.loadSet(pylonSets.a119);
+        pylon8.loadSet(pylonSets.aim9);
+        pylon9.loadSet(pylonSets.aim120WT);
+        pylon10.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
 # Peacetime training configuration 1
 var b20_train_aa = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
@@ -1186,8 +1244,8 @@ var b30_a2s_antiship = func {
         pylon7.loadSet(pylonSets.a84);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        pylon10.loadSet(pylonSets.podLTgp);
-        pylon11.loadSet(pylonSets.podLNav);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -1387,6 +1445,27 @@ var b40_a2g_caslt = func {
         pylon10.loadSet(pylonSets.podLite);
         pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# A/G GPS Strike (GBU-54)
+var b40_a2g_casmix = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim120WT);
+        pylon2.loadSet(pylonSets.empty);
+        pylon3.loadSet(pylonSets.g54);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.hyd70h7);
+        pylon8.loadSet(pylonSets.aim9);
+        pylon9.loadSet(pylonSets.aim120WT);
+        pylon10.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+        f16.reloadHydras();
     } else {
       screen.log.write(f16.msgB);
     }
