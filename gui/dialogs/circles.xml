@@ -521,6 +521,7 @@
     </group>
     <empty><stretch>1</stretch></empty>
     <text><label>Load .fgfp or .gpx route file to enable lines on HSD page.</label></text>
+    <text><label>Lines 1 is solid. Lines 2 is dashed.</label></text>
     
     <hrule/>
 
