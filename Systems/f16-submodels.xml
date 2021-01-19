@@ -63,7 +63,7 @@
     <weight>0.226</weight><!-- lbm -->
     <cd>0.09</cd>
     <eda>0.00338158219</eda><!-- sqft -->
-    <life>5.0</life>
+    <life>6.5</life> <!-- 3.61NM distance -->
     <repeat>true</repeat>
     <delay>0.01</delay><!-- 6000 per min -->
     <count>-1</count>
