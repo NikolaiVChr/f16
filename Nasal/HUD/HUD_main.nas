@@ -3048,7 +3048,7 @@ append(obj.total, obj.speed_curr);
             me.eegs_ac_east_fps  = getprop("velocities/speed-east-fps");
             me.eegs_ac_down_fps  = getprop("velocities/speed-down-fps");
             
-            me.eegs_sm_down_fps       = -math.sin(me.eegsMe.pitch * D2R) * 3379;
+            me.eegs_sm_down_fps       = -math.sin(me.eegsMe.pitch * D2R) * 3379;# 3379 = muzzle velocity
             me.eegs_sm_horizontal_fps = math.cos(me.eegsMe.pitch * D2R) * 3379;
             me.eegs_sm_north_fps      = math.cos(me.eegsMe.hdg * D2R) * me.eegs_sm_horizontal_fps;
             me.eegs_sm_east_fps       = math.sin(me.eegsMe.hdg * D2R) * me.eegs_sm_horizontal_fps;
@@ -3079,7 +3079,7 @@ append(obj.total, obj.speed_curr);
             
             me.eegsMe.rs = armament.AIM.rho_sndspeed(me.eegsMe.altC*M2FT);#simplified
             me.eegsMe.rho = me.eegsMe.rs[0];
-            me.eegsMe.mass =  0.1069/ armament.slugs_to_lbm;#0.1069=lbs
+            me.eegsMe.mass =  0.226/ armament.slugs_to_lbm;#0.1069=lbs
             
             #print("x,y");
             #printf("%d,%d",0,0);

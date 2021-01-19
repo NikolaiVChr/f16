@@ -50,7 +50,7 @@
     <life>3.0</life>
     <aero-stabilised>false</aero-stabilised>
     <wind>false</wind>
-    <weight>0.1</weight>
+    <weight>0.226</weight>
     <cd>0.09</cd>
     <eda>0.00338158219</eda>
   </submodel>
@@ -79,7 +79,7 @@
     <life>10.0</life>
     <wind>false</wind>
     <aero-stabilised>false</aero-stabilised>
-    <weight>0.1069</weight>
+    <weight>0.226</weight>
     <cd>0.09</cd>
     <eda>0.00338158219</eda>
     <collision>true</collision>
