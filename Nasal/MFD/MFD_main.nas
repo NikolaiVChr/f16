@@ -3183,7 +3183,15 @@ var MFD_Device =
                             }
                             me.legX = me.legRangePixels*math.sin(me.legBearing*D2R);
                             me.legY = -me.legRangePixels*math.cos(me.legBearing*D2R);
-                            if (me.prevX != nil) {
+                            if (me.prevX != nil and u == 0) {
+                                me.root.cone.createChild("path")
+                                    .moveTo(me.legX,me.legY)
+                                    .lineTo(me.prevX,me.prevY)
+                                    .setStrokeLineWidth(2)
+                                    .set("z-index",4)
+                                    .setColor(colorLines)
+                                    .update();
+                            } else if (me.prevX != nil and u == 1) {
                                 me.root.cone.createChild("path")
                                     .moveTo(me.legX,me.legY)
                                     .lineTo(me.prevX,me.prevY)
