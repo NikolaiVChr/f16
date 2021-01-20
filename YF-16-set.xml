@@ -70,6 +70,7 @@
    <livery>
     <file type="string"/>
     <name type="string">YF-16 Prototype</name>
+    <folder type="string">Aircraft/f16/Models/Liveries/yf</folder>
    </livery>
    <MFD-color>
     <text1><!--Main text color-->
