@@ -3,8 +3,8 @@
 <PropertyList>
 
 	<submodel>
-		<name>bullet splash</name>
-		<model>Aircraft/f16/Models/Armament/Weapons/M61A1/flack.xml</model>
+		<name>tracer hit</name>
+		<model>Aircraft/f16/Models/Armament/Weapons/M61A1/explosion.xml</model>
 		<speed>0</speed>
 		<repeat>false</repeat>
 		<delay>0</delay>
@@ -16,10 +16,10 @@
 		<pitch-offset>0</pitch-offset>
 		<eda>100</eda>
 		<wind>false</wind>
-		<buoyancy>32.1</buoyancy>
-                <aero-stabilised>false</aero-stabilised>
-                <fuse-range>0</fuse-range>
-		<life>2.5</life>
+		<buoyancy>0</buoyancy>
+        <aero-stabilised>false</aero-stabilised>
+        <fuse-range>0</fuse-range>
+		<life>0.5</life>
 	</submodel> 
 
 

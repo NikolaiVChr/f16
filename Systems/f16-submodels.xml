@@ -34,7 +34,7 @@
     <weight>0.226</weight><!-- lbm -->
     <cd>0.09</cd>
     <eda>0.00338158219</eda><!-- sqft -->
-    <life>3.0</life>
+    <life>5.0</life>
     <repeat>true</repeat>
     <delay>0.12</delay>
     <count>-1</count>
@@ -53,6 +53,11 @@
     </offsets>
     <aero-stabilised>false</aero-stabilised>
     <wind>false</wind>
+    <collision>true</collision>
+    <collision-report>sim/ai/aircraft/collision/tracer</collision-report>
+    <impact>true</impact>
+    <impact-reports>/ai/models/model-impact-tracer</impact-reports>
+    <submodel-path>Aircraft/f16/Models/Armament/Weapons/M61A1/tracer-submodel.xml</submodel-path>
   </submodel>
 
   <submodel>
@@ -63,7 +68,7 @@
     <weight>0.226</weight><!-- lbm -->
     <cd>0.09</cd>
     <eda>0.00338158219</eda><!-- sqft -->
-    <life>6.5</life> <!-- 3.61NM distance -->
+    <life>8.5</life>
     <repeat>true</repeat>
     <delay>0.01</delay><!-- 6000 per min -->
     <count>-1</count>
