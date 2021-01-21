@@ -88,7 +88,93 @@
   <path>Aircraft/f16/Models/Cockpit/Main/cockpit.xml</path>
 </model>
 
+<light>
+  <name>taxi-light</name>
+  <type>spot</type>
+  <position>
+    <x-m>-3.13064</x-m>
+    <y-m>0.307693</y-m>
+    <z-m>-1.23477</z-m>
+  </position>
+  <direction>
+    <pitch-deg>85</pitch-deg>
+    <roll-deg>0</roll-deg>
+    <heading-deg>0</heading-deg>
+  </direction>
+  <ambient>
+    <r>0.03</r>
+    <g>0.03</g>
+    <b>0.03</b>
+    <a>1</a>
+  </ambient>
+  <diffuse>
+    <r>0.95</r>
+    <g>0.9</g>
+    <b>0.9</b>
+    <a>1</a>
+  </diffuse>
+  <specular>
+    <r>0.95</r>
+    <g>0.9</g>
+    <b>0.9</b>
+    <a>1</a>
+  </specular>
+  <attenuation>
+    <c>0.05</c>
+    <l>0.00045</l>
+    <q>0.000075</q>
+  </attenuation>
+  <spot-exponent>30</spot-exponent>
+  <spot-cutoff>30</spot-cutoff>
+  <range-m>100</range-m>
+  <dim-factor>
+    <property>sim/multiplay/generic/bool[46]</property>
+  </dim-factor>
+</light>
 
+<light>
+  <name>land-light</name>
+  <type>spot</type>
+  <position>
+    <x-m>-3.13064</x-m>
+    <y-m>0.307693</y-m>
+    <z-m>-1.23477</z-m>
+  </position>
+  <direction>
+    <pitch-deg>79.86</pitch-deg>
+    <roll-deg>0</roll-deg>
+    <heading-deg>0</heading-deg>
+  </direction>
+  <ambient>
+    <r>0.03</r>
+    <g>0.03</g>
+    <b>0.03</b>
+    <a>1</a>
+  </ambient>
+  <diffuse>
+    <r>0.85</r>
+    <g>0.8</g>
+    <b>0.8</b>
+    <a>1</a>
+  </diffuse>
+  <specular>
+    <r>0.85</r>
+    <g>0.8</g>
+    <b>0.8</b>
+    <a>1</a>
+  </specular>
+  <attenuation>
+    <c>0.01</c>
+    <l>0.00045</l>
+    <q>0.000075</q>
+  </attenuation>
+  <spot-exponent>250</spot-exponent>
+  <spot-cutoff>5</spot-cutoff>
+  <range-m>500</range-m>
+  <dim-factor>
+    <property>sim/multiplay/generic/bool[47]</property>
+  </dim-factor>
+</light>
 
 <animation>
   <type>translate</type>
@@ -352,7 +438,7 @@
  </model>
 
 
-<effect>
+ <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>
       <parameters>
           <metallic type="float">0.80</metallic>
@@ -361,6 +447,7 @@
           <snow-enabled type="int">0</snow-enabled>
           <ambient-correction type="float">0.00</ambient-correction>
           <reflection-enabled type="int">0</reflection-enabled>
+          <transparent type="int">1</transparent>
           <render-bin>
             <bin-number>111</bin-number>
             <bin-name>DepthSortedBin</bin-name>
@@ -369,10 +456,9 @@
               <active>1</active>
               <source-alpha>one-minus-src-alpha</source-alpha>
               <destination>zero</destination>
-          </blend>-->
-          <opaque type="int">0</opaque>
+          </blend>
+          <opaque type="int">0</opaque>-->
       </parameters>
-      <!-- logos -->
       <object-name>VstabBandLeftAft</object-name>
       <object-name>VstabBandLeftFront</object-name>
       <object-name>VstabBandRightAft</object-name>
@@ -409,7 +495,7 @@
     <object-name>CanopyBackInside</object-name>
   </animation>
   
-  <animation>
+  <!--<animation>
     <type>select</type>
       <inherits-from>Effects/model-transparent</inherits-from>
       <condition>
@@ -418,7 +504,6 @@
           <value>0</value>
         </equals>
       </condition>
-      <!-- logos -->
       <object-name>WinglogoLeftTop</object-name>
       <object-name>WinglogoRightBottom</object-name>
       <object-name>WinglogoRightTop</object-name>
@@ -434,7 +519,7 @@
       <object-name>LogoPilotRight</object-name>
       <object-name>FuselageLogoRight</object-name>
       <object-name>FuselageLogoLeft</object-name>
-  </animation>
+  </animation>-->
   
   <effect>
       <inherits-from>Aircraft/f16/Models/Effects/fuselage/model-combined-fuselage</inherits-from>

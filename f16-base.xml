@@ -1592,9 +1592,9 @@ value. 18000=standard US transition altitude -->
         <iff>
             <file>Aircraft/f16/Nasal/iff.nas</file>
         </iff>
-        <lm>
+        <!--<lm>
             <file>Aircraft/f16/Nasal/light-manager.nas</file>
-        </lm>
+        </lm>-->
         <eng>
             <file>Aircraft/f16/Nasal/engine.nas</file>
         </eng>
