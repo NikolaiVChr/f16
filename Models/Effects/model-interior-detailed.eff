@@ -12,8 +12,8 @@
       <wrap-s>clamp</wrap-s>
       <wrap-t>clamp</wrap-t>
       <internal-format>normalized</internal-format>
-  <!--</texture>
-    <texture n="4">
+  </texture>
+    <!--<texture n="4">
     <type>cubemap</type>
     <images>
       <positive-x>Aircraft/Generic/Effects/CubeMaps/real.fair-sky/fair-sky_px.png</positive-x>
