@@ -164,13 +164,13 @@
     <a>1</a>
   </specular>
   <attenuation>
-    <c>0.04</c>
+    <c>1</c>
     <l>0.0000</l>
     <q>0.00000</q>
   </attenuation>
   <spot-exponent>1250</spot-exponent>
   <spot-cutoff>7.5</spot-cutoff>
-  <range-m>500</range-m>
+  <range-m>250</range-m>
   <dim-factor>
     <property>sim/multiplay/generic/bool[47]</property>
   </dim-factor>
