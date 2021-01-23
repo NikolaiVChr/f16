@@ -335,7 +335,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>0</row>
             <col>4</col>
-            <legend>SEAD "Wild Weasel" (2 bags)</legend>
+            <legend>A/G SEAD (2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2g_sead();</script>
