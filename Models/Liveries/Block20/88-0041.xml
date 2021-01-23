@@ -3,26 +3,27 @@
 <PropertyList>
  <sim>
   <model>
-   <livery>
-    <name type="string">BAC 31 Sqn, "Skull n Bones (TM16)"</name>
-    <texture>Liveries/Block20/80-3568.png</texture>
+   <livery> 
+    <name type="string">BAC 31 Sqn, "Rusty Tiger (TM19)"</name>
+    <texture>Liveries/Block20/88-0041.png</texture>
     <owner type="string">BAC</owner>
    </livery>
+
    <livery-logo>
     <texture>Liveries/standard.logos.color.png</texture>
    </livery-logo>
 
    <livery-patch>
       <texture>Liveries/Block20/patch.BAF_tiger.png</texture>
-  </livery-patch>
+   </livery-patch>
 
-  <livery-pod>
+    <livery-pod>
         <texture>Liveries/Block20/pod.white.png</texture>
     </livery-pod>
 
-  <f16>
+    <f16>
      <dragchute type="bool">true</dragchute>
-  </f16>
+    </f16>
   </model>
  </sim>
 </PropertyList>
