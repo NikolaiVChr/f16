@@ -361,7 +361,7 @@
             <legend>A/G DEAD (2 bags)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.b30_a2g_dead();</script>
+                <script>pylons.a2g_dead();</script>
             </binding>
         </button>
 
