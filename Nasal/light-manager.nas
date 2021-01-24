@@ -367,7 +367,7 @@ SelfContact = {
   
   getLightCoord: func {
     # this is much faster than calling geo.aircraft_position().
-      me.light = aircraftToCart({x:3.13064, y:0.307693, z: 1.23477});
+      me.light = aircraftToCart({x:-3.13064, y:0.307693, z:-1.23477});
       me.accoord = geo.Coord.new().set_xyz(me.light.x,me.light.y,me.light.z);
       return me.accoord;
   },
@@ -451,7 +451,7 @@ var FixedBeamRadar = {
 
 # example code
 var fix = FixedBeamRadar.new();
-fix.setBeamPitch(-10.14);#glideslope of -2.86 degs, AoA of 13 degs: -(13-2.86) = -10.14 degs
+fix.setBeamPitch(-14.43);#glideslope of -2.86 degs, AoA of 13 degs: -13+(-2.86/2) = -14.43 degs
 
 light_manager.init();
 
