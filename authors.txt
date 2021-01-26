@@ -152,3 +152,6 @@ Axel Paccalin
 
 Baptiste "Bat" Campion
 - Belgian AF livery pack
+
+Shaymo
+- Exterior and interior 3D model fixes
