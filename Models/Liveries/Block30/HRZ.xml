@@ -19,9 +19,10 @@
   <livery-pod>
         <texture>Liveries/Block30/pod.HRZ.png</texture>
   </livery-pod>
+
   <f16>
-            <dragchute type="bool">true</dragchute>
-        </f16>
+    <dragchute type="bool">true</dragchute>
+  </f16>
   </model>
  </sim>
 </PropertyList>
