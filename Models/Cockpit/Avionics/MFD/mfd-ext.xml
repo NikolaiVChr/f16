@@ -860,12 +860,12 @@
             <blue> 1</blue>
         </emission>
     </animation>
-    <effect>
+    <!--<effect>
         <inherits-from>Aircraft/f16/Models/Effects/displays/lcd</inherits-from>
         <parameters>
-            <inner-angle type="float">45</inner-angle><!-- 0-90, use 90 for LED or plasma display-->
-            <outer-angle type="float">60</outer-angle><!-- 0-90, but greater than inner -->
-            <black-angle type="float">80</black-angle><!-- 0-90, but greater than outer -->
+            <inner-angle type="float">45</inner-angle>
+            <outer-angle type="float">60</outer-angle>
+            <black-angle type="float">80</black-angle>
             <contrast><use>f16/avionics/mfd-l-con</use></contrast> 
             <rendering-hint>transparent</rendering-hint>
             <transparent>true</transparent>
@@ -874,17 +874,16 @@
                 <bin-name>RenderBin</bin-name>
             </render-bin>
             <use_filters>0</use_filters>
-            <!--<texture n="1">
-                <type>2d</type>
-                <filter>linear-mipmap-linear</filter>
-                <wrap-s>clamp</wrap-s>
-                <wrap-t>clamp</wrap-t>
-                <internal-format>normalized</internal-format>
-                <image>Aircraft/f16/Models/Effects/dust2.png</image>
-            </texture>-->
+        </parameters>
+        <object-name>MFDimage3</object-name>
+    </effect>-->
+    <effect>
+        <inherits-from>Effects/model-transparent</inherits-from>
+        <parameters>
         </parameters>
         <object-name>MFDimage3</object-name>
     </effect>
+    
 
     <effect>
         <inherits-from>Aircraft/f16/Models/Effects/flir/flir-mfd</inherits-from>
