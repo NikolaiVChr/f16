@@ -1131,14 +1131,18 @@ var MFD_Device =
             
             me.slew_x = getprop("controls/displays/target-management-switch-x[" ~ me.model_index ~ "]")*me.exp_modi;
             me.slew_y = -getprop("controls/displays/target-management-switch-y[" ~ me.model_index ~ "]")*me.exp_modi;
+
+            if (getprop("/sim/current-view/name") != "TGP") {
+                f16.resetSlew();
+            }
             
             #me.dt = math.min(noti.ElapsedSeconds - me.elapsed, 0.05);
             me.dt = noti.ElapsedSeconds - me.elapsed;
             
             if ((me.slew_x != 0 or me.slew_y != 0 or slew_c != 0) and (cursor_lock == -1 or cursor_lock == me.root.index) and getprop("/sim/current-view/name") != "TGP") {
                 cursor_destination = nil;
-                cursor_pos[0] += me.slew_x*125*me.dt;
-                cursor_pos[1] -= me.slew_y*125*me.dt;
+                cursor_pos[0] += me.slew_x*175;
+                cursor_pos[1] -= me.slew_y*175;
                 cursor_pos[0] = math.clamp(cursor_pos[0], -552*0.5*0.795, 552*0.5*0.795);
                 cursor_pos[1] = math.clamp(cursor_pos[1], -482, 0);
                 cursor_click = (slew_c and !me.slew_c_last)?me.root.index:-1;

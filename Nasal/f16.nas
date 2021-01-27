@@ -1497,8 +1497,8 @@ var SOI = int(rand() * 3)+1; # 1 to 3
 var MFDControlsNodes = {
 	dmsX: props.globals.getNode("controls/displays/display-management-switch-x"),
 	dmsY: props.globals.getNode("controls/displays/display-management-switch-y"),
-	tgtX: props.globals.getNode("controls/displays/cursor-slew-x"),
-	tgtY: props.globals.getNode("controls/displays/cursor-slew-y"),
+	tgtX: props.globals.getNode("controls/displays/cursor-slew-x-delta"),
+	tgtY: props.globals.getNode("controls/displays/cursor-slew-y-delta"),
 };
 
 setlistener("/controls/displays/display-management-switch-x", func() {
@@ -1506,10 +1506,15 @@ setlistener("/controls/displays/display-management-switch-x", func() {
 	if (MFDControlsNodes.dmsX.getValue() == 0) { return; }
 }, 0, 0);
 
-setlistener("controls/displays/cursor-slew-x", func() {
+setlistener("controls/displays/cursor-slew-x-delta", func() {
 	if (SOI == 1) { return; }
 	setprop("controls/displays/target-management-switch-x[" ~ (SOI - 2) ~ "]", MFDControlsNodes.tgtX.getValue());
 }, 0, 0);
+
+var resetSlew = func {
+  setprop("controls/displays/cursor-slew-x-delta",0);
+  setprop("controls/displays/cursor-slew-y-delta",0);
+}
 
 setlistener("controls/displays/display-management-switch-y", func() {
 	if (MFDControlsNodes.dmsX.getValue() != 0) { return; }
@@ -1527,7 +1532,7 @@ setlistener("controls/displays/display-management-switch-y", func() {
 	}
 }, 0, 0);
 
-setlistener("controls/displays/cursor-slew-y", func() {
+setlistener("controls/displays/cursor-slew-y-delta", func() {
 	if (SOI == 1) { return; }
 	setprop("controls/displays/target-management-switch-y[" ~ (SOI - 2) ~ "]", MFDControlsNodes.tgtY.getValue());
 }, 0, 0);
