@@ -578,7 +578,7 @@
             <max-fire-range-nm type="double">12</max-fire-range-nm>              <!-- source -->
             <FCS-field-deg type="int">25</FCS-field-deg>            
             <seeker-field-deg type="int">180</seeker-field-deg>     
-            <seeker-angular-speed-dps type="double">30</seeker-angular-speed-dps> <!-- deg/sec guess-->
+            <seeker-angular-speed-dps type="double">40</seeker-angular-speed-dps> <!-- deg/sec guess-->
             <lock-on-sun-deg type="double">4</lock-on-sun-deg>
             <max-g type="int">25</max-g>
             <max-launch-g type="int">7</max-launch-g>               
@@ -714,7 +714,7 @@
             <max-report-distance type="double">85</max-report-distance>
             <hit-everything-nearby type="bool">true</hit-everything-nearby>
             <terrain-follow type="bool">true</terrain-follow>
-            <seeker-angular-speed-dps type="double">40</seeker-angular-speed-dps>
+            <seeker-angular-speed-dps type="double">45</seeker-angular-speed-dps>
             <fire-msg type="string">Bruiser</fire-msg>
             <ready-time type="double">0.25</ready-time>
         </agm-119>
@@ -762,7 +762,7 @@
             <terminal-alt-factor type="double">2</terminal-alt-factor>
             <terminal-rise-time type="double">23.0</terminal-rise-time>
             <terminal-dive-time type="double">13.0</terminal-dive-time>
-            <seeker-angular-speed-dps type="double">45</seeker-angular-speed-dps>
+            <seeker-angular-speed-dps type="double">0</seeker-angular-speed-dps>
             <ready-time type="double">3.5</ready-time>
             <ejector-speed-fps type="double">5</ejector-speed-fps>
         </agm-154a>
@@ -810,7 +810,7 @@
             <terminal-alt-factor type="double">2</terminal-alt-factor>
             <terminal-rise-time type="double">15.0</terminal-rise-time>
             <terminal-dive-time type="double">9.0</terminal-dive-time>
-            <seeker-angular-speed-dps type="double">45</seeker-angular-speed-dps>
+            <seeker-angular-speed-dps type="double">0</seeker-angular-speed-dps>
             <ready-time type="double">3.5</ready-time>
             <ejector-speed-fps type="double">5</ejector-speed-fps>
         </agm-158>
