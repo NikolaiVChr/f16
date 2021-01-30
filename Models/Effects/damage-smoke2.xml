@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <PropertyList>
 	<particlesystem>
-		<name>damage-smoke</name>
+		<name>damage-smoke2</name>
 		<offsets>
-			<x-m>4.5</x-m>
-			<y-m>0</y-m>
-			<z-m>0</z-m>
+			<x-m>-2</x-m>
+			<y-m>0.5</y-m>
+			<z-m>-0.1</z-m>
 			<roll-deg>0</roll-deg>
 			<pitch-deg>0</pitch-deg>
 			<heading-deg>0</heading-deg>
@@ -51,30 +51,30 @@
 		<particle>
 			<start>
 				<color>
-					<red><value>0.1</value></red>
-					<green><value>0.1</value></green>
-					<blue><value>0.1</value></blue>
-					<alpha><value>0.8</value></alpha>
+					<red><value>0.25</value></red>
+					<green><value>0.25</value></green>
+					<blue><value>0.25</value></blue>
+					<alpha><value>0.5</value></alpha>
 				</color>
 				<size>
-					<value>1.0</value>
+					<value>0.5</value>
 				</size>
 			</start>
 			<end>
 				<color>
-					<red><value>0.1</value></red>
-					<green><value>0.1</value></green>
-					<blue><value>0.1</value></blue>
+					<red><value>0.25</value></red>
+					<green><value>0.25</value></green>
+					<blue><value>0.25</value></blue>
 					<alpha><value>0.0</value></alpha>
 				</color>
 				<size>
-					<value>20.0</value>
+					<value>7.5</value>
 				</size>
 			</end>
 			<life-sec>
-				<value>7.5</value>
+				<value>5.0</value>
 			</life-sec>
-			<mass-kg>0.025</mass-kg>
+			<mass-kg>0.05</mass-kg>
 			<radius-m>0.40</radius-m>
 		</particle>
 		<program>

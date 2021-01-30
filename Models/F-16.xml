@@ -289,6 +289,16 @@
  </model>
 
  <model>
+  <name>smoking2</name>
+  <path>Aircraft/f16/Models/Effects/damage-smoke2.xml</path>
+ </model>
+
+ <model>
+  <name>smoking3</name>
+  <path>Aircraft/f16/Models/Effects/damage-smoke3.xml</path>
+ </model>
+
+ <model>
     <path>Effects/contrail/trail.xml</path>
       <offsets>
         <x-m>10.0</x-m>
