@@ -3,11 +3,12 @@
 <PropertyList>
  <sim>
   <model>
-   <livery>
-    <name type="string">HAF 340 Mira, "Zeus Demo Team"</name>
-    <texture>Liveries/Block50/99-1523.png</texture>
+   <livery> 
+    <name type="string">HAF 340 Mira, #534</name>
+    <texture>Liveries/Block50/99-1534.png</texture>
     <owner type="string">HAF</owner>
    </livery>
+
    <livery-logo>
     <texture>Liveries/standard.logos.png</texture>
    </livery-logo>
@@ -18,11 +19,11 @@
 
   <livery-pod>
         <texture>Liveries/Block10/pod.white.png</texture>
-  </livery-pod>
+    </livery-pod>
 
-        <f16>
-            <dragchute type="bool">true</dragchute>
-        </f16>
+  <f16>
+    <dragchute type="bool">true</dragchute>
+  </f16>
   </model>
  </sim>
 </PropertyList>
