@@ -41,7 +41,7 @@ var light_manager = {
 		# lights ########
 		me.data_light = [
 			#light_xpos, light_ypos, light_zpos, light_dir, light_size, light_stretch, light_r, light_g, light_b, light_is_on, number
-			ALS_light_spot.new(10, 0, -1, 0, 0.35, -3.5, 0.7, 0.7, 0.7, 0, 0), #landing
+			ALS_light_spot.new(10, 0, -1, 0, 1.5, -2.7, 0.7, 0.7, 0.7, 0, 0),   #landing
 			ALS_light_spot.new(70, 0, -1, 0, 12, -7.0, 0.7, 0.7, 0.7, 0, 1),    #taxi
 			ALS_light_spot.new(1.60236, -4.55165, 0.012629, 0, 2, 0, 0.5, 0, 0, 0, 2),  #left
 			ALS_light_spot.new(1.60236,  4.55165, 0.012629, 0, 2, 0, 0, 0.5, 0, 0, 3),  #right
@@ -249,7 +249,7 @@ var ALS_light_spot = {
           #grab spot position
           apos = test[1];
           
-          # light intensity. fade fully out at 500m dist:
+          # light intensity. fade fully out at 750m dist:
           me.light_r = 0.8-0.8*math.clamp(test[0],0,750)/750;
           me.light_g = me.light_r;
           me.light_b = me.light_r;
@@ -262,7 +262,7 @@ var ALS_light_spot = {
           me.nd_ref_light_y.setValue(delta_y);
           me.nd_ref_light_z.setValue(delta_z);
           me.nd_ref_light_dir.setValue(heading);  # used to determine spot stretch direction
-          me.nd_ref_light_size.setValue(me.light_size*test[0]);#spot radius grows linear with distance
+          me.nd_ref_light_size.setValue(me.light_size*(((test[0]-3)/2)+3));#spot radius grows linear with distance
         } else {
           me.nd_ref_light_r.setValue(0);
           me.nd_ref_light_g.setValue(0);
@@ -367,7 +367,7 @@ SelfContact = {
   
   getLightCoord: func {
     # this is much faster than calling geo.aircraft_position().
-      me.light = aircraftToCart({x:-3.13064, y:0.307693, z:-1.23477});
+      me.light = aircraftToCart({x:3.13064, y:0.307693, z:1.15951});
       me.accoord = geo.Coord.new().set_xyz(me.light.x,me.light.y,me.light.z);
       return me.accoord;
   },
@@ -451,7 +451,10 @@ var FixedBeamRadar = {
 
 # example code
 var fix = FixedBeamRadar.new();
-fix.setBeamPitch(-14.43);#glideslope of -2.86 degs, AoA of 13 degs: -13+(-2.86/2) = -14.43 degs
+# AoA of 13 degs, Glideslope of -2.86 degs: Attitude = 13-2.86 = 10.14 degs
+# Aircraft FoV of -15 degs: FoV below horizon = -15+10.14 = -4.86 degs
+# Beam: -10.14+(-4.86/2) = -12.57
+fix.setBeamPitch(-12.57);
 
 light_manager.init();
 
