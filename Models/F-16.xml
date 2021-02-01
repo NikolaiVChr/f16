@@ -1864,8 +1864,8 @@
   <object-name>FrontUpperStrut</object-name>
   <object-name>FrontAftStrut</object-name>
   <property>gear/gear[0]/position-norm</property>
-  <factor>92</factor>
-  <offset-deg>-92</offset-deg>
+  <factor>112</factor>
+  <offset-deg>-112</offset-deg>
   <center>
    <x-m>-2.97</x-m>
    <y-m>0.0</y-m>
