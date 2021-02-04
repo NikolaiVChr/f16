@@ -870,12 +870,12 @@
             <systems>
                 <hook>
                     <tailhook-cmd-norm type="bool">false</tailhook-cmd-norm>
-                    <tailhook-length-ft type="double">4.537</tailhook-length-ft>
+                    <tailhook-length-ft type="double">4.2979</tailhook-length-ft><!-- 1.31m -->
                     <tailhook-pos-min-deg type="double">-3.806</tailhook-pos-min-deg>
                     <tailhook-pos-max-deg type="double">53.369</tailhook-pos-max-deg>
-                    <tailhook-offset-x-in type="double">100.669</tailhook-offset-x-in>
-                    <tailhook-offset-y-in type="double">0.0</tailhook-offset-y-in>
-                    <tailhook-offset-z-in type="double">-28.818</tailhook-offset-z-in>
+                    <tailhook-offset-x-in type="double">101.3622</tailhook-offset-x-in><!-- 2.5746m -->
+                    <tailhook-offset-y-in type="double">0.0</tailhook-offset-y-in><!-- 0m -->
+                    <tailhook-offset-z-in type="double">-29.2575</tailhook-offset-z-in><!-- -0.74314m -->
                     <tailhook-pos-deg type="double">-3.806</tailhook-pos-deg>
                 </hook>
                 <hydraulics>

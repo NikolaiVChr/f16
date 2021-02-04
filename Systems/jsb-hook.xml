@@ -3,9 +3,17 @@
 <system name="hook">
 
   <!--
+    Set these to the root hook position in the aircraft:
+        systems/hook/tailhook-offset-x-in
+        systems/hook/tailhook-offset-y-in
+        systems/hook/tailhook-offset-z-in
+    Set these also:
+        systems/hook/tailhook-length-ft
+        systems/hook/tailhook-pos-min-deg
+        systems/hook/tailhook-pos-max-deg
     Write to systems/hook/tailhook-release-cmd to release hook, but its also auto released when velocity is low.
     Write to systems/hook/force to set force in LBF
-    Write to systems/hook/tailhook-pos-norm to set position.
+    Write to systems/hook/tailhook-pos-norm to extend or retract.
         It is read by JSBSim together with systems/hook/tailhook-pos-min-deg and systems/hook/tailhook-pos-max-deg to get final pos in degrees
     Readonly: external_reactions/hook/magnitude to get force.
     Readonly: systems/hook/tailhook-pos-deg to get position
@@ -50,15 +58,20 @@
       </table>
      </scheduled_gain>
 
-     <pure_gain name="systems/hook/force">
+     <pure_gain name="systems/hook/hook-decel-force">
         <input>systems/hook/hook-decel-multiplier</input>
         <gain>inertia/weight-lbs</gain>
      </pure_gain>
 
-     <!--<summer name="systems/hook/force">
-        <input>systems/hook/hook-decel-force</input>
+     <pure_gain name="systems/hook/hook-thrust-force">
         <input>forces/fbx-prop-lbs</input>
-     </summer>-->
+        <gain>systems/hook/ready</gain>
+     </pure_gain>
+
+     <summer name="systems/hook/force">
+        <input>systems/hook/hook-decel-force</input>
+        <input>systems/hook/hook-thrust-force</input>
+     </summer>
 
   </channel>
 
@@ -79,7 +92,7 @@
                 <difference>
                     <property>systems/hook/tailhook-pos-max-deg</property>
                     <property>systems/hook/tailhook-pos-min-deg</property> 
-                <difference>
+                </difference>
             </quotient>
          </product>
        </function>
