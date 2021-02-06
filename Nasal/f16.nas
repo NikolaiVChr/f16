@@ -355,9 +355,7 @@ var LOOP_MEDIUM_FAST_RATE = 0.1;
 
 var medium = {
   loop: func {
-
-    setprop("fdm/jsbsim/systems/hook/tailhook-release-cmd", !getprop("fdm/jsbsim/systems/hook/tailhook-cmd-norm"));
-
+    
     # Store CAT:
     if (pylons.fcs != nil) {
       setprop("f16/stores-cat", pylons.fcs.getCategory());
