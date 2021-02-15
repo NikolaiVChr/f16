@@ -7,7 +7,7 @@ please see Docs/README.model-combined.eff for documentation
 	<inherits-from>Effects/model-combined-deferred</inherits-from>
 
 	<parameters>
-	<render-bin>
+		<render-bin>
 			<bin-number>111</bin-number>
 			<bin-name>RenderBin</bin-name>
 		</render-bin>
@@ -17,6 +17,10 @@ please see Docs/README.model-combined.eff for documentation
 	<technique n="0">
 	  <predicate>
 		<and>
+			<less-equal>
+			  <value type="float">2.0</value>
+			  <value type="float">0.0</value>
+			</less-equal>
 		  <property>/sim/rendering/shaders/quality-level</property>
 		  <property>/sim/rendering/shaders/model</property>
 		  <or>
