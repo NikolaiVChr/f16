@@ -641,11 +641,16 @@ var FireControl = {
 			printDebug("trigger propagating");
 			me.aim = me.getSelectedWeapon();
 			#printfDebug(" to %d",me.aim != nil);
-			if (me.aim != nil and me.aim.parents[0] == armament.AIM and (me.aim.status == armament.MISSILE_LOCK or me.aim.guidance=="unguided")) {
-				me.aim = me.fireAIM(me.selected[0],me.selected[1]);
+			if (me.aim != nil and me.aim.parents[0] == armament.AIM and me.aim.status != armament.MISSILE_LOCK and me.aim.guidance!="unguided" and !me.aim.loal) {
+				me.guidanceEnabled = 0;
+			} else {
+				me.guidanceEnabled = 1;
+			}
+			if (me.aim != nil and me.aim.parents[0] == armament.AIM and (me.aim.status == armament.MISSILE_LOCK or me.aim.guidance=="unguided" or me.aim.loal or !me.guidanceEnabled)) {
+				me.aim = me.fireAIM(me.selected[0],me.selected[1], me.guidanceEnabled);
 				if (me.selectedAdd != nil) {
 					foreach(me.seldual ; me.selectedAdd) {
-						me.fireAIM(me.seldual[0],me.seldual[1]);
+						me.fireAIM(me.seldual[0],me.seldual[1], me.guidanceEnabled);
 					}
 				}
 				me.nextWeapon(me.selectedType);
@@ -692,9 +697,10 @@ var FireControl = {
 		}
 	},
 	
-	fireAIM: func (p,w) {
+	fireAIM: func (p,w,g) {
 		# fire a weapon (that is a missile-code instance)
 		me.aim = me._getSpecificWeapon(p,w);
+		if (!g) me.aim.guidanceEnabled = 0;
 		me.lockedfire = me.aim.status == armament.MISSILE_LOCK;
 		me.aim = me.pylons[p].fireWeapon(w, getCompleteRadarTargetsList());
 		if (me.aim != nil) {
@@ -723,10 +729,10 @@ var FireControl = {
 		if (geo.aircraft_position().distance_to(me.rippleCoord) > me.rippleDist*(me.rippleThis-1)) {
 			me.aim = me.getSelectedWeapon();
 			if (me.aim != nil and me.aim.parents[0] == armament.AIM and (me.aim.status == armament.MISSILE_LOCK or me.aim.guidance=="unguided")) {
-				me.fireAIM(me.selected[0],me.selected[1]);
+				me.fireAIM(me.selected[0],me.selected[1],me.guidanceEnabled);
 				if (me.selectedAdd != nil) {
 					foreach(me.seldual ; me.selectedAdd) {
-						me.fireAIM(me.seldual[0],me.seldual[1]);
+						me.fireAIM(me.seldual[0],me.seldual[1],me.guidanceEnabled);
 					}
 				}
 				me.nextWeapon(me.selectedType);
