@@ -14,7 +14,7 @@ name "mount"
 data 10
 mount.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 72
 -1.00005 0.34252 1.33149
@@ -570,7 +570,7 @@ name "MFDButtonB1"
 data 16
 MFDButtonB1.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.99158 -0.06862 0.02866
@@ -630,7 +630,7 @@ name "MFDButtonB2"
 data 16
 MFDButtonB2.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.994 -0.05847 0.01173
@@ -690,7 +690,7 @@ name "MFDButtonB3"
 data 16
 MFDButtonB3.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.99158 -0.06862 -0.00529
@@ -750,7 +750,7 @@ name "MFDButtonB4"
 data 16
 MFDButtonB4.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.994 -0.05847 -0.0224
@@ -810,7 +810,7 @@ name "MFDButtonB5"
 data 16
 MFDButtonB5.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.99158 -0.06862 -0.03897
@@ -870,7 +870,7 @@ name "MFDButtonBrightness"
 data 24
 MFDButtonBrightness.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.99158 -0.05551 0.05928
@@ -930,7 +930,7 @@ name "MFDButtonCon"
 data 17
 MFDButtonCon.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.994 -0.04016 -0.0697
@@ -990,7 +990,7 @@ name "MFDButtonGain"
 data 18
 MFDButtonGain.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.994 0.05672 0.05928
@@ -1050,7 +1050,7 @@ name "MFDButtonL1"
 data 16
 MFDButtonL1.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.99158 0.02666 0.05915
@@ -1110,7 +1110,7 @@ name "MFDButtonL2"
 data 16
 MFDButtonL2.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.994 0.02131 0.05915
@@ -1170,7 +1170,7 @@ name "MFDButtonL3"
 data 16
 MFDButtonL3.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.99158 -0.00476 0.05915
@@ -1230,7 +1230,7 @@ name "MFDButtonL4"
 data 16
 MFDButtonL4.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.994 -0.00945 0.05915
@@ -1290,7 +1290,7 @@ name "MFDButtonL5"
 data 16
 MFDButtonL5.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.99158 -0.03525 0.05915
@@ -1350,7 +1350,7 @@ name "MFDButtonR1"
 data 16
 MFDButtonR1.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.994 0.03681 -0.06983
@@ -1410,7 +1410,7 @@ name "MFDButtonR2"
 data 16
 MFDButtonR2.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.99158 0.01116 -0.06983
@@ -1470,7 +1470,7 @@ name "MFDButtonR3"
 data 16
 MFDButtonR3.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.994 0.00539 -0.06983
@@ -1530,7 +1530,7 @@ name "MFDButtonR4"
 data 16
 MFDButtonR4.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.99158 -0.0196 -0.06983
@@ -1590,7 +1590,7 @@ name "MFDButtonR5"
 data 16
 MFDButtonR5.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.994 -0.0251 -0.06983
@@ -1650,7 +1650,7 @@ name "MFDButtonSym"
 data 17
 MFDButtonSym.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.99158 0.04136 -0.0697
@@ -1710,7 +1710,7 @@ name "MFDButtonT1"
 data 16
 MFDButtonT1.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.99158 0.05953 0.02875
@@ -1770,7 +1770,7 @@ name "MFDButtonT2"
 data 16
 MFDButtonT2.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.994 0.06968 0.01173
@@ -1830,7 +1830,7 @@ name "MFDButtonT3"
 data 16
 MFDButtonT3.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.99158 0.05953 -0.00529
@@ -1890,7 +1890,7 @@ name "MFDButtonT4"
 data 16
 MFDButtonT4.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.994 0.06968 -0.0224
@@ -1950,7 +1950,7 @@ name "MFDButtonT5"
 data 16
 MFDButtonT5.mesh
 crease 45.0
-texture "mfd-ext.png"
+texture "../../Textures/f16trans_misc.png"
 texrep 1 1
 numvert 8
 -0.99158 0.05953 -0.03897
