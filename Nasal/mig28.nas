@@ -587,9 +587,9 @@ var TopGun = {
 		me.view = getprop("sim/current-view/missile-view");
 		if (me.thinkLast != me.think) {
 			record[me.think] = record[me.think]+1;
-			if(getprop("sim/current-view/view-number")==8 and me.view != nil and find(me.callsign, me.view) != -1) {
-				screen.log.write(me.callsign~" now "~me.prt, 1.0, 0.0, 0.0);
-			}
+			#if(getprop("sim/current-view/view-number")==8 and me.view != nil and find(me.callsign, me.view) != -1) {
+			#	screen.log.write(me.callsign~" now "~me.prt, 1.0, 0.0, 0.0);
+			#}
 		}
 		me.thinkLast = me.think;
 		me.decisionTime = me.elapsed;

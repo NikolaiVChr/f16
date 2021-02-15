@@ -937,7 +937,7 @@ var MFD_Device =
                 } elsif (eventi == 19) {
                     if(getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
                         screen.log.write("Click BACK to get back to cockpit view",1,1,1);
-                        setprop("sim/current-view/view-number",12);
+                        switchTGP();
                     }
                 }
             }
@@ -1641,7 +1641,7 @@ var MFD_Device =
                 } elsif (eventi == 1) {
                     if(getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
                         screen.log.write("Click BACK to get back to cockpit view",1,1,1);
-                        setprop("sim/current-view/view-number",12);
+                        switchTGP();
                     }
                 } elsif (eventi == 2) {
                     me.ppp.selectPage(me.my.p_WPN);
@@ -2040,7 +2040,7 @@ var MFD_Device =
                 } elsif (eventi == 19) {
                     if(getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
                         screen.log.write("Click BACK to get back to cockpit view",1,1,1);
-                        setprop("sim/current-view/view-number",12);
+                        switchTGP();
                     }
                 }
 # Menu Id's
@@ -2392,7 +2392,7 @@ var MFD_Device =
                 } elsif (eventi == 19) {
                     if(getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
                         screen.log.write("Click BACK to get back to cockpit view",1,1,1);
-                        setprop("sim/current-view/view-number",12);
+                        switchTGP();
                     }
                 }
 # Menu Id's
@@ -2980,7 +2980,7 @@ var MFD_Device =
                 } elsif (eventi == 19) {
                     if(getprop("f16/stores/tgp-mounted") and !getprop("gear/gear/wow")) {
                         screen.log.write("Click BACK to get back to cockpit view",1,1,1);
-                        setprop("sim/current-view/view-number",12);
+                        switchTGP();
                     }
                 }
             }
@@ -3906,4 +3906,12 @@ var get_intercept = func(bearingToRunner, dist_m, runnerHeading, runnerSpeed, ch
     var interceptRelativeBearing = geo.normdeg180(interceptHeading-chaserHeading);
     
     return [timeToIntercept, interceptHeading, interceptCoord, interceptDist, interceptRelativeBearing];
+}
+
+var switchTGP = func {
+    if (getprop("sim/view[8]/name") == "Still View") {# sigh, what a hack..
+        setprop("sim/current-view/view-number",13);
+    } else {
+        setprop("sim/current-view/view-number",12);
+    }
 }
