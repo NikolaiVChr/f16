@@ -375,6 +375,16 @@
  </model>
 
  <model>
+  <name>smoking2</name>
+  <path>Aircraft/f16/Models/Effects/damage-smoke2.xml</path>
+ </model>
+
+ <model>
+  <name>smoking3</name>
+  <path>Aircraft/f16/Models/Effects/damage-smoke3.xml</path>
+ </model>
+
+ <model>
     <path>Effects/contrail/trail.xml</path>
       <offsets>
         <x-m>10.0</x-m>
@@ -1943,8 +1953,8 @@
   <object-name>FrontUpperStrut</object-name>
   <object-name>FrontAftStrut</object-name>
   <property>gear/gear[0]/position-norm</property>
-  <factor>92</factor>
-  <offset-deg>-92</offset-deg>
+  <factor>112</factor>
+  <offset-deg>-112</offset-deg>
   <center>
    <x-m>-2.97</x-m>
    <y-m>0.0</y-m>

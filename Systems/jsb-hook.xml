@@ -2,6 +2,26 @@
 
 <system name="hook">
 
+  <!--
+    Set these to the root hook position in the aircraft:
+        systems/hook/tailhook-offset-x-in
+        systems/hook/tailhook-offset-y-in
+        systems/hook/tailhook-offset-z-in
+    Set these also:
+        systems/hook/tailhook-length-ft
+        systems/hook/tailhook-pos-min-deg
+        systems/hook/tailhook-pos-max-deg
+    Write to systems/hook/tailhook-release-cmd to release hook, but its also auto released when velocity is low.
+    Write to systems/hook/force to set force in LBF
+    Write to systems/hook/tailhook-pos-norm to extend or retract.
+        It is read by JSBSim together with systems/hook/tailhook-pos-min-deg and systems/hook/tailhook-pos-max-deg to get final pos in degrees
+    Readonly: external_reactions/hook/magnitude to get force.
+    Readonly: systems/hook/tailhook-pos-deg to get position
+    Readonly: systems/hook/arrestor-wire-engaged-hook to check if engaged
+
+    Source: JSBSim.cxx
+  -->
+
   <channel name="Hook">
 
      <kinematic name="systems/hook/tailhook-control">
@@ -43,19 +63,37 @@
         <gain>inertia/weight-lbs</gain>
      </pure_gain>
 
+     <pure_gain name="systems/hook/hook-thrust-force">
+        <input>forces/fbx-prop-lbs</input>
+        <gain>systems/hook/ready</gain>
+     </pure_gain>
+
      <summer name="systems/hook/force">
         <input>systems/hook/hook-decel-force</input>
-        <input>forces/fbx-prop-lbs</input>
+        <input>systems/hook/hook-thrust-force</input>
      </summer>
+
+  </channel>
+
+  <channel name="Hook anim" execrate="8">
 
      <fcs_function name="systems/hook/animation-norm">
        <function>
          <product>
            <sum>
             <property>systems/hook/tailhook-pos-deg</property>
-            <value>3.806</value>       <!-- -1 x tailhook-pos-min-deg -->
+            <product>
+                <property>systems/hook/tailhook-pos-min-deg</property>
+                <value>-1</value>       
+            </product>
            </sum>
-           <value>0.017490</value>     <!-- 1 / (tailhook-pos-max-deg - tailhook-pos-min-deg) --> 
+           <quotient>
+                <value>1</value>
+                <difference>
+                    <property>systems/hook/tailhook-pos-max-deg</property>
+                    <property>systems/hook/tailhook-pos-min-deg</property> 
+                </difference>
+            </quotient>
          </product>
        </function>
        <output>gear/tailhook-pos-norm</output>

@@ -557,7 +557,9 @@
             <self-destruct-time-sec type="double">55</self-destruct-time-sec>  
             <loft-altitude type="int">0</loft-altitude>
             <min-fire-range-nm type="double">0.5</min-fire-range-nm>      <!-- source -->
-            <rail type="bool">false</rail>
+            <rail type="bool">true</rail>
+            <rail-length-m type="double">2.373</rail-length-m> <!-- LAU-88 Launcher -->
+            <rail-point-forward type="bool">true</rail-point-forward>
             <max-report-distance type="double">65</max-report-distance>
             <class type="string">MGP</class>
             <fire-msg type="string">Rifle</fire-msg>
@@ -576,7 +578,7 @@
             <max-fire-range-nm type="double">12</max-fire-range-nm>              <!-- source -->
             <FCS-field-deg type="int">25</FCS-field-deg>            
             <seeker-field-deg type="int">180</seeker-field-deg>     
-            <seeker-angular-speed-dps type="double">30</seeker-angular-speed-dps> <!-- deg/sec guess-->
+            <seeker-angular-speed-dps type="double">40</seeker-angular-speed-dps> <!-- deg/sec guess-->
             <lock-on-sun-deg type="double">4</lock-on-sun-deg>
             <max-g type="int">25</max-g>
             <max-launch-g type="int">7</max-launch-g>               
@@ -594,7 +596,9 @@
             <self-destruct-time-sec type="double">105</self-destruct-time-sec>  	<!-- source: max time of flight -->
             <loft-altitude type="int">0</loft-altitude>
             <min-fire-range-nm type="double">0.5</min-fire-range-nm>      <!-- source -->
-            <rail type="bool">false</rail>
+            <rail type="bool">true</rail>
+            <rail-length-m type="double">2.387</rail-length-m> <!-- LAU-117 Launcher -->
+            <rail-point-forward type="bool">true</rail-point-forward>
             <max-report-distance type="double">65</max-report-distance>
             <class type="string">MGP</class>
             <fire-msg type="string">Rifle</fire-msg>
@@ -710,14 +714,14 @@
             <max-report-distance type="double">85</max-report-distance>
             <hit-everything-nearby type="bool">true</hit-everything-nearby>
             <terrain-follow type="bool">true</terrain-follow>
-            <seeker-angular-speed-dps type="double">40</seeker-angular-speed-dps>
+            <seeker-angular-speed-dps type="double">45</seeker-angular-speed-dps>
             <fire-msg type="string">Bruiser</fire-msg>
             <ready-time type="double">0.25</ready-time>
         </agm-119>
         <agm-154a>
             <type-id type="int">5</type-id>
             <short-name type="string">AG154</short-name>
-            <long-name type="string">AGM-154A-1 JSOW</long-name> <!-- Unitary warhead variant -->
+            <long-name type="string">AGM-154A-1 JSOW</long-name> <!-- BLU-111 unitary warhead variant (FMS) -->
             <fire-msg type="string">Greyhound</fire-msg><!--Pigs away-->
             <class type="string">GMP</class>
             <max-fire-range-nm type="double">70</max-fire-range-nm>
@@ -729,7 +733,7 @@
             <FCS-field-deg type="int">100</FCS-field-deg>
             <seeker-field-deg type="int">200</seeker-field-deg>
             <reaquire type="bool">true</reaquire>
-            <switch-time-sec type="double">0.25</switch-time-sec>
+            <switch-time-sec type="double">0.5</switch-time-sec>
             <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed>
             <prowl-flight type="string">5</prowl-flight>
             <max-g type="double">3.0</max-g>
@@ -738,7 +742,7 @@
             <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>
             <stage-1-duration-sec type="double">0</stage-1-duration-sec>
             <stage-2-duration-sec type="double">0</stage-2-duration-sec>
-            <weight-launch-lbs type="double">1065</weight-launch-lbs>
+            <weight-launch-lbs type="double">1065</weight-launch-lbs> <!-- source -->
             <weight-warhead-lbs type="double">493</weight-warhead-lbs>
             <weight-fuel-lbm type="double">0</weight-fuel-lbm>
             <drag-coeff type="double">0.015</drag-coeff>
@@ -752,13 +756,13 @@
             <max-report-distance type="double">325</max-report-distance>
             <vol-search type="double">0.075</vol-search>
             <vol-track type="double">0.25</vol-track>
-            <drop-time type="double">3.0</drop-time>
+            <drop-time type="double">2.5</drop-time>
             <deploy-time type="double">2.0</deploy-time>
             <hit-everything-nearby type="bool">true</hit-everything-nearby>
             <terminal-alt-factor type="double">2</terminal-alt-factor>
             <terminal-rise-time type="double">23.0</terminal-rise-time>
             <terminal-dive-time type="double">13.0</terminal-dive-time>
-            <seeker-angular-speed-dps type="double">45</seeker-angular-speed-dps>
+            <seeker-angular-speed-dps type="double">0</seeker-angular-speed-dps>
             <ready-time type="double">3.5</ready-time>
             <ejector-speed-fps type="double">5</ejector-speed-fps>
         </agm-154a>
@@ -768,7 +772,7 @@
             <long-name type="string">AGM-158A JASSM</long-name>
             <fire-msg type="string">Greyhound</fire-msg>
             <class type="string">P</class>
-            <max-fire-range-nm type="double">155</max-fire-range-nm>  <!--real is 200, reduced for obvious reasons-->
+            <max-fire-range-nm type="double">160</max-fire-range-nm>  <!--real is 200, reduced for obvious reasons-->
             <min-fire-range-nm type="double">1.0</min-fire-range-nm>
             <guidance type="string">gps</guidance>
             <navigation type="string">APN</navigation>
@@ -782,17 +786,17 @@
             <prowl-flight type="string">5</prowl-flight>
             <max-g type="double">4</max-g>
             <max-launch-g type="int">7</max-launch-g>
-            <thrust-lbf-stage-1 type="double">680</thrust-lbf-stage-1>
+            <thrust-lbf-stage-1 type="double">680</thrust-lbf-stage-1> <!-- Teledyne J402-CA-100 -->
             <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>
             <stage-1-duration-sec type="double">2040</stage-1-duration-sec>
             <stage-2-duration-sec type="double">0.0</stage-2-duration-sec>
-            <weight-launch-lbs type="double">2150</weight-launch-lbs>
+            <weight-launch-lbs type="double">2150</weight-launch-lbs> <!-- source -->
             <weight-warhead-lbs type="double">1000</weight-warhead-lbs>
-            <weight-fuel-lbm type="double">450</weight-fuel-lbm>
+            <weight-fuel-lbm type="double">269</weight-fuel-lbm> <!-- source: approx 40 gal JP-10 -->
             <drag-coeff type="double">0.019</drag-coeff>
             <cross-section-sqft type="double">3.2332</cross-section-sqft>
             <arming-time-sec type="double">2.0</arming-time-sec>
-            <min-speed-for-guiding-mach type="double">0.3</min-speed-for-guiding-mach>
+            <min-speed-for-guiding-mach type="double">0.25</min-speed-for-guiding-mach>
             <self-destruct-time-sec type="double">2400</self-destruct-time-sec>
             <all-aspect type="bool">true</all-aspect>
             <rail type="bool">false</rail>
@@ -806,7 +810,7 @@
             <terminal-alt-factor type="double">2</terminal-alt-factor>
             <terminal-rise-time type="double">15.0</terminal-rise-time>
             <terminal-dive-time type="double">9.0</terminal-dive-time>
-            <seeker-angular-speed-dps type="double">45</seeker-angular-speed-dps>
+            <seeker-angular-speed-dps type="double">0</seeker-angular-speed-dps>
             <ready-time type="double">3.5</ready-time>
             <ejector-speed-fps type="double">5</ejector-speed-fps>
         </agm-158>

@@ -4,7 +4,7 @@
  <sim>
   <model>
    <livery>
-    <name type="string">BAC 31 Sqn, "Skull n Bones (Tiger Meet '16)"</name>
+    <name type="string">BAC 31 Sqn, "Skull n Bones (TM16)"</name>
     <texture>Liveries/Block20/80-3568.png</texture>
     <owner type="string">BAC</owner>
    </livery>
@@ -13,11 +13,11 @@
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/patch.default.png</texture>
+      <texture>Liveries/Block20/patch.BAF_tiger.png</texture>
   </livery-patch>
 
   <livery-pod>
-        <texture>Liveries/Block20/pod.white.png</texture>
+        <texture>Liveries/Block10/pod.white.png</texture>
     </livery-pod>
 
   <f16>

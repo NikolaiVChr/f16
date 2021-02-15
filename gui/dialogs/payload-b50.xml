@@ -236,7 +236,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>18</row>
             <col>0</col>
-            <legend>Test and Evaluation (2 bags)</legend>
+            <legend>IRST Test and Evaluation (2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.b50_testev();</script>
@@ -379,7 +379,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>0</row>
             <col>4</col>
-            <legend>SEAD "Wild Weasel" (2 bags)</legend>
+            <legend>A/G SEAD "Wild Weasel" (2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2g_sead();</script>
@@ -390,10 +390,10 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>2</row>
             <col>4</col>
-            <legend>SEAD/DEAD (2 bags)</legend>
+            <legend>A/G SEAD Dual (2 bags)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.b50_a2g_dead();</script>
+                <script>pylons.b50_a2g_sead2();</script>
             </binding>
         </button>
 
@@ -401,16 +401,38 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>4</row>
             <col>4</col>
-            <legend>SEAD Combo (2 bags)</legend>
+            <legend>A/G SEAD/DEAD (2 bags)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.b50_a2g_sead();</script>
+                <script>pylons.b50_a2g_sdead();</script>
             </binding>
         </button>
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>6</row>
+            <col>4</col>
+            <legend>A/G DEAD SFW (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.b50_a2g_dead1();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>8</row>
+            <col>4</col>
+            <legend>A/G DEAD LGB (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.b50_a2g_dead2();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>10</row>
             <col>4</col>
             <legend>A/G CAS (Light, 2 bags)</legend>
             <binding>
@@ -427,7 +449,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>8</row>
+            <row>12</row>
             <col>4</col>
             <legend>A/G CAS (Heavy, 2 bags)</legend>
             <binding>
@@ -438,7 +460,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>10</row>
+            <row>14</row>
             <col>4</col>
             <legend>A/G CAS (Mix, 2 bags)</legend>
             <binding>
@@ -449,7 +471,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>12</row>
+            <row>16</row>
             <col>4</col>
             <legend>A/G M151 Hydra rockets</legend>
             <binding>
@@ -460,7 +482,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>14</row>
+            <row>18</row>
             <col>4</col>
             <legend>A/G Anti-Ship (2 bags)</legend>
             <binding>
@@ -483,7 +505,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>16</row>
+            <row>20</row>
             <col>4</col>
             <legend>A/G Stand-off (JASSM, 2 bags)</legend>
             <binding>
@@ -494,7 +516,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>18</row>
+            <row>22</row>
             <col>4</col>
             <legend>A/G Stand-off (JSOW, 2 bags)</legend>
             <binding>

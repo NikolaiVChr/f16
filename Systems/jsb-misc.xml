@@ -981,5 +981,98 @@
     </lag_filter>
     
   </channel>
+
+  <channel name="Cursors" execrate="8">
+
+      <!-- Integrates cursor control, and allow the integrator to be reset from outside.
+          Displays can know how much the cursor moved between two updates by
+          reading this property then reseting it to 0. ~Colin (JA37)
+      -->
+
+      <fcs_function name="names/cursor/cursor-slew-x-delta-acc">
+        <function>
+          <sum>
+            <property>/controls/displays/cursor-slew-x-delta-acc</property>
+            <product>
+              <abs>
+                <property>/controls/displays/cursor-slew-x</property>
+              </abs>
+              <property>simulation/channel-dt</property>
+              <v>2</v>
+            </product>
+          </sum>
+        </function>
+        <output>/controls/displays/cursor-slew-x-delta-acc</output>
+        <clipto>
+            <min>   0 </min>
+            <max>   1 </max>
+        </clipto>
+      </fcs_function>
+
+      <switch name="names/cursor/cursor-slew-x-delta-acc-reset">
+         <default value="/controls/displays/cursor-slew-x-delta-acc"/>
+         <test  logic="AND" value="0">
+            /controls/displays/cursor-slew-x == 0
+         </test>
+         <output>/controls/displays/cursor-slew-x-delta-acc</output>
+      </switch>
+
+      <fcs_function name="names/cursor/cursor-slew-y-delta-acc">
+        <function>
+          <sum>
+            <property>/controls/displays/cursor-slew-y-delta-acc</property>
+            <product>
+              <abs>
+                <property>/controls/displays/cursor-slew-y</property>
+              </abs>
+              <property>simulation/channel-dt</property>
+              <v>2</v>
+            </product>
+          </sum>
+        </function>
+        <output>/controls/displays/cursor-slew-y-delta-acc</output>
+        <clipto>
+            <min>   0 </min>
+            <max>   1 </max>
+        </clipto>
+      </fcs_function>
+
+      <switch name="names/cursor/cursor-slew-y-delta-acc-reset">
+         <default value="/controls/displays/cursor-slew-y-delta-acc"/>
+         <test  logic="AND" value="0">
+            /controls/displays/cursor-slew-y == 0
+         </test>
+         <output>/controls/displays/cursor-slew-y-delta-acc</output>
+      </switch>
+
+      <fcs_function name="names/cursor/cursor-slew-x-delta">
+        <function>
+          <sum>
+            <property>/controls/displays/cursor-slew-x-delta</property>
+            <product>
+              <property>/controls/displays/cursor-slew-x-delta-acc</property>
+              <property>/controls/displays/cursor-slew-x</property>
+              <property>simulation/channel-dt</property>
+            </product>
+          </sum>
+        </function>
+        <output>/controls/displays/cursor-slew-x-delta</output>
+      </fcs_function>
+
+      <fcs_function name="names/cursor/cursor-slew-y-delta">
+        <function>
+          <sum>
+            <property>/controls/displays/cursor-slew-y-delta</property>
+            <product>
+              <property>/controls/displays/cursor-slew-y-delta-acc</property>
+              <property>/controls/displays/cursor-slew-y</property>
+              <property>simulation/channel-dt</property>
+            </product>
+          </sum>
+        </function>
+        <output>/controls/displays/cursor-slew-y-delta</output>
+      </fcs_function>
+
+  </channel>
     
 </system>

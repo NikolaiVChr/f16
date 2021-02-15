@@ -358,7 +358,18 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>2</row>
             <col>4</col>
-            <legend>A/G DEAD (2 bags)</legend>
+            <legend>A/G DEAD LGB (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_dead();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>4</row>
+            <col>4</col>
+            <legend>A/G DEAD CEM (2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.b30_a2g_dead();</script>
@@ -367,7 +378,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>4</row>
+            <row>6</row>
             <col>4</col>
             <legend>A/G CAS (Light, 2 bags)</legend>
             <binding>
@@ -384,7 +395,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>6</row>
+            <row>8</row>
             <col>4</col>
             <legend>A/G CAS (Heavy, 2 bags)</legend>
             <binding>
@@ -395,7 +406,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>8</row>
+            <row>10</row>
             <col>4</col>
             <legend>A/G M151 Hydra rockets</legend>
             <binding>
@@ -406,7 +417,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>10</row>
+            <row>12</row>
             <col>4</col>
             <legend>A/G Anti-Ship</legend>
             <binding>
@@ -417,7 +428,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>12</row>
+            <row>14</row>
             <col>4</col>
             <legend>A/G Anti-Ship (2 bags)</legend>
             <binding>
@@ -434,7 +445,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>14</row>
+            <row>16</row>
             <col>4</col>
             <legend>A/G Anti-Ship (Penguin)</legend>
             <binding>

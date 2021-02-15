@@ -4,7 +4,7 @@
  <sim>
   <model>
    <livery>
-    <name type="string">HAF, 340 Mira, "Zeus Demo Team"</name>
+    <name type="string">HAF 340 Mira, "Zeus Demo Team"</name>
     <texture>Liveries/Block50/99-1523.png</texture>
     <owner type="string">HAF</owner>
    </livery>
@@ -13,12 +13,12 @@
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/patch.default.png</texture>
-  </livery-patch>
+      <texture>Liveries/Block30/patch.Hellas.png</texture>
+   </livery-patch>
 
   <livery-pod>
-        <texture>Armament/External-stores/MXU-648.png</texture>
-    </livery-pod>
+        <texture>Liveries/Block10/pod.white.png</texture>
+  </livery-pod>
 
         <f16>
             <dragchute type="bool">true</dragchute>

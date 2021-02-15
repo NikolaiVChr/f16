@@ -106,7 +106,11 @@ var view_firing_missile = func(myMissile)
     var data = { node: myMissile.ai, callsign: myMissileName, root: myMissile.ai.getPath()};
 
     # We activate the AI view (on this aircraft it is the number 8)
-    setprop("/sim/current-view/view-number",8);
+    if (getprop("sim/view[8]/name") == "Still View") {# sigh, what a hack..
+        setprop("sim/current-view/view-number",9);
+    } else {
+        setprop("sim/current-view/view-number",8);
+    }
 
     # We feed the handler
     view.missile_view_handler.setup(data);

@@ -4,19 +4,22 @@
     <sim>
         <model> 
             <livery>
-                <name type="string">Vermont National Guard</name>
-                <texture type="string">Liveries/Block30/vermont.png</texture>
-                <owner type="string">USNG</owner>
+                <name type="string">Vermont ANG, "Stars and Stripes exhibit"</name>
+                <texture type="string">Liveries/Block10/79-0357.png</texture>
+                <owner type="string">ANG</owner>
             </livery>
             <livery-logo>
-                <texture>Liveries/standard.logos.png</texture>
+                <texture>Liveries/yf/yf16-transp.png</texture>
             </livery-logo>
+
             <livery-patch>
                 <texture>Liveries/patch.default.png</texture>
             </livery-patch>
+
             <livery-pod>
                 <texture>Armament/External-stores/MXU-648.png</texture>
             </livery-pod>
+
             <f16>
                 <dragchute type="bool">false</dragchute>
             </f16>

@@ -2998,25 +2998,6 @@
 
   </channel>
 
-  <channel name="Hook">
-
-   <kinematic name="fcs/hook-control">
-    <input>fcs/hook-engage</input>
-    <traverse>
-     <setting>
-      <position>0</position>
-      <time>0</time>
-     </setting>
-     <setting>
-      <position>1</position>
-      <time>2.5</time>
-     </setting>
-    </traverse>
-    <output>fcs/hook-pos-norm</output>
-   </kinematic>
-   
-  </channel>
-
   <channel name="Canopy">
 
    <switch name="fcs/canopy-trigger">

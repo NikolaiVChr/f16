@@ -3,7 +3,7 @@
 	<particlesystem>
 		<name>damage-smoke</name>
 		<offsets>
-			<x-m>0</x-m>
+			<x-m>4.5</x-m>
 			<y-m>0</y-m>
 			<z-m>0</z-m>
 			<roll-deg>0</roll-deg>
@@ -51,10 +51,10 @@
 		<particle>
 			<start>
 				<color>
-					<red><value>0.0</value></red>
-					<green><value>0.0</value></green>
-					<blue><value>0.0</value></blue>
-					<alpha><value>0.9</value></alpha>
+					<red><value>0.1</value></red>
+					<green><value>0.1</value></green>
+					<blue><value>0.1</value></blue>
+					<alpha><value>0.8</value></alpha>
 				</color>
 				<size>
 					<value>1.0</value>
@@ -62,9 +62,9 @@
 			</start>
 			<end>
 				<color>
-					<red><value>0.0</value></red>
-					<green><value>0.0</value></green>
-					<blue><value>0.0</value></blue>
+					<red><value>0.1</value></red>
+					<green><value>0.1</value></green>
+					<blue><value>0.1</value></blue>
 					<alpha><value>0.0</value></alpha>
 				</color>
 				<size>

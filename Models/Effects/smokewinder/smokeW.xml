@@ -33,12 +33,12 @@
         <spread>2.5</spread>
       </speed-mps>
       <rotation-speed>
-        <x-min-deg-sec>5</x-min-deg-sec>
-        <y-min-deg-sec>5</y-min-deg-sec>
-        <z-min-deg-sec>5</z-min-deg-sec>
-        <x-max-deg-sec>60</x-max-deg-sec>
-        <y-max-deg-sec>60</y-max-deg-sec>
-        <z-max-deg-sec>60</z-max-deg-sec>
+        <x-min-deg-sec>2</x-min-deg-sec>
+        <y-min-deg-sec>2</y-min-deg-sec>
+        <z-min-deg-sec>2</z-min-deg-sec>
+        <x-max-deg-sec>10</x-max-deg-sec>
+        <y-max-deg-sec>10</y-max-deg-sec>
+        <z-max-deg-sec>10</z-max-deg-sec>
       </rotation-speed>
     </shooter>
   
@@ -72,7 +72,7 @@
      <alpha>      <value>0.25</value>     </alpha>
     </color>
     <size>
-     <value>15</value>
+     <value>20</value>
     </size>
    </end>
    <life-sec>
