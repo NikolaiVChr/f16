@@ -22,6 +22,10 @@ var colorDot4 = [getprop("/sim/model/MFD-color/dot4/red"), getprop("/sim/model/M
 var colorBullseye = [getprop("/sim/model/MFD-color/bullseye/red"), getprop("/sim/model/MFD-color/bullseye/green"), getprop("/sim/model/MFD-color/bullseye/blue")];
 var colorBetxt = [getprop("/sim/model/MFD-color/betxt/red"), getprop("/sim/model/MFD-color/betxt/green"), getprop("/sim/model/MFD-color/betxt/blue")];
 
+var colorCubeRed = [255,0,0];
+var colorCubeGreen = [0,255,0];
+var colorCubeCyan = [0,255,255];
+
 var colorBackground = [0,0,0];
 if (getprop("sim/variant-id") == 2) {
     colorBackground = [0.01,0.01,0.07, 1];
@@ -422,7 +426,145 @@ var MFD_Device =
         }
         return el;
     },
-    
+
+    setupVoid: func (svg) {
+        svg.p_VOID = me.canvas.createGroup()
+            .set("z-index",0);
+
+        # ehm, Void, so nothing's here
+    },
+
+    addVoid: func {
+        var svg = {getElementById: func (id) {return me[id]},};
+        me.setupVoid(svg);
+        me.PFD.addVoidPage = func(svg, title, layer_id) {
+            var np = PFD_Page.new(svg, title, layer_id, me);
+            append(me.pages, np);
+            me.page_index[layer_id] = np;
+            np.setVisible(0);
+            return np;
+        };
+        me.p_VOID = me.PFD.addVoidPage(svg, "VOID", "p_VOID");
+        me.p_VOID.model_index = me.model_index;
+        me.p_VOID.root = svg;
+        me.p_VOID.ppp = me.PFD;
+        me.p_VOID.my = me;
+    },
+
+    setupGrid: func (svg) {
+        svg.p_GRID = me.canvas.createGroup()
+            .set("z-index",0);
+
+        svg.cross = svg.p_GRID.createChild("path")
+           .moveTo(1*0.795, 1)
+           .lineTo(550*0.795, 480)
+           .moveTo(550*0.795, 1)
+           .lineTo(1*0.795, 480)
+           .setColor(colorLines);
+
+        svg.div = svg.p_GRID.createChild("path")
+           .moveTo((1+(550/2))*0.795, 1)
+           .lineTo((1+(550/2))*0.795, 1+480)
+           .moveTo(1, 1+(480/2))
+           .lineTo(550*0.795, 1+(480/2))
+           .setColor(colorLines);
+
+        svg.block = svg.p_GRID.createChild("path")
+            .moveTo((552/2+30)*0.795, 0)
+            .lineTo(550*0.795, (482/2-30))
+            .moveTo(550*0.795, (482/2+30))
+            .lineTo((552/2+30)*0.795, 482)
+            .moveTo((552/2-30)*0.795, 482)
+            .lineTo(0, (482/2+30))
+            .moveTo(0, (482/2-30))
+            .lineTo((552/2-30)*0.795, 0)
+            .setColor(colorLines);
+
+        svg.box = svg.p_GRID.createChild("path")
+            .moveTo((552/3)*0.795, 482/3)
+            .lineTo((552/3)*0.795, 482*2/3)
+            .lineTo((552*2/3)*0.795, 482*2/3)
+            .lineTo((552*2/3)*0.795, 482/3)
+            .lineTo((552/3)*0.795, 482/3)
+            .setColor(colorLines);
+    },
+
+    addGrid: func {
+        var svg = {getElementById: func (id) {return me[id]},};
+        me.setupGrid(svg);
+        me.PFD.addGridPage = func(svg, title, layer_id) {
+            var np = PFD_Page.new(svg, title, layer_id, me);
+            append(me.pages, np);
+            me.page_index[layer_id] = np;
+            np.setVisible(0);
+            return np;
+        };
+        me.p_GRID = me.PFD.addGridPage(svg, "GRID", "p_GRID");
+        me.p_GRID.model_index = me.model_index;
+        me.p_GRID.root = svg;
+        me.p_GRID.ppp = me.PFD;
+        me.p_GRID.my = me;
+    },
+
+    setupCube: func (svg) {
+        svg.p_CUBE = me.canvas.createGroup()
+            .set("z-index",0)
+            .set("font","LiberationFonts/LiberationMono-Regular.ttf");
+
+        svg.lbl = svg.p_CUBE.createChild("path")
+            .rect(0,0,175,20)
+            .setTranslation((552/2-110)*0.795, 10-3)
+            .setColorFill(colorCubeCyan);
+
+        svg.txt = svg.p_CUBE.createChild("text")
+            .setTranslation((552/2)*0.795, 10)
+            .setText("BUILD-IN TEST")
+            .setAlignment("center-top")
+            .setFontSize(22, 1.0)
+            .setColor(colorBackground);
+
+        svg.rf = svg.p_CUBE.createChild("path")
+            .moveTo((552/2)*0.795, 482/2)
+            .lineTo((552/2)*0.795, 482/2-100)
+            .lineTo((552/2+100)*0.795, 482/2-100+50)
+            .lineTo((552/2+100)*0.795, 482/2+50)
+            .lineTo((552/2)*0.795, 482/2)
+            .setColorFill(colorCubeCyan);
+
+        svg.lf = svg.p_CUBE.createChild("path")
+            .moveTo((552/2)*0.795, 482/2)
+            .lineTo((552/2)*0.795, 482/2-100)
+            .lineTo((552/2-100)*0.795, 482/2-100+50)
+            .lineTo((552/2-100)*0.795, 482/2+50)
+            .lineTo((552/2)*0.795, 482/2)
+            .setColorFill(colorCubeRed);
+
+        svg.bf = svg.p_CUBE.createChild("path")
+            .moveTo((552/2)*0.795, 482/2)
+            .lineTo((552/2+100)*0.795, 482/2+50)
+            .lineTo((552/2)*0.795, 482/2+100)
+            .lineTo((552/2-100)*0.795, 482/2+50)
+            .lineTo((552/2)*0.795, 482/2)
+            .setColorFill(colorCubeGreen);
+    },
+
+    addCube: func {
+        var svg = {getElementById: func (id) {return me[id]},};
+        me.setupCube(svg);
+        me.PFD.addCubePage = func(svg, title, layer_id) {
+            var np = PFD_Page.new(svg, title, layer_id, me);
+            append(me.pages, np);
+            me.page_index[layer_id] = np;
+            np.setVisible(0);
+            return np;
+        };
+        me.p_CUBE = me.PFD.addCubePage(svg, "CUBE", "p_CUBE");
+        me.p_CUBE.model_index = me.model_index;
+        me.p_CUBE.root = svg;
+        me.p_CUBE.ppp = me.PFD;
+        me.p_CUBE.my = me;
+    },
+
     setupRadar: func (svg, index) {
         svg.p_RDR = me.canvas.createGroup()
                 .setTranslation(276*0.795,482)
@@ -3320,6 +3462,9 @@ var MFD_Device =
 
     addPages : func
     {   
+        me.addVoid();
+        me.addGrid();
+        me.addCube();
         me.addRadar();
         me.addSMS();
         me.addHSD();
@@ -3478,18 +3623,27 @@ var MFD_Device =
 
         me.mfd_button_pushed = 0;
         me.setupMenus();
-        if (me.model_element == "MFDimage1") {
-            me.PFD.selectPage(me.p_RDR);
-            me.setSelection(me.PFD.buttons[1], me.PFD.buttons[10], 10);
-        } else {
-            if (getprop("sim/variant-id") == 0) {
-                me.PFD.selectPage(me.p_HSD);
-                me.setSelection(me.PFD.buttons[1], me.PFD.buttons[16], 16);
-            } else {
-                me.PFD.selectPage(me.p_HSD);
-                me.setSelection(me.PFD.buttons[1], me.PFD.buttons[16], 16);
+        setlistener("/f16/avionics/power-mfd-bit", func(node) {
+            if (node.getValue() == 0) {
+                me.PFD.selectPage(me.p_VOID);
+                me.selectionBox.hide();
+            } elsif (node.getValue() == 1) {
+                me.PFD.selectPage(me.p_GRID);
+                me.selectionBox.hide();
+            } elsif (node.getValue() == 2) {
+                me.PFD.selectPage(me.p_CUBE);
+                me.selectionBox.hide();
+            } elsif (node.getValue() == 3) {
+                if (me.model_index == 0) {
+                    me.PFD.selectPage(me.p_RDR);
+                    me.setSelection(nil, me.PFD.buttons[10], 10);
+                } else {
+                    me.PFD.selectPage(me.p_HSD);
+                    me.setSelection(me.PFD.buttons[10], me.PFD.buttons[16], 16);
+                }
+                me.selectionBox.show();
             }
-        }
+        }, 1, 0);
     },
     
     setSelectionColor : func(text) {
@@ -3799,6 +3953,12 @@ var getMenuButton = func (pageName) {
     } else if (pageName == "WPN") {
         return 18;
     } elsif (pageName == "LIST") {
+        return nil;
+    } elsif (pageName == "VOID") {
+        return nil;
+    } elsif (pageName == "GRID") {
+        return nil;
+    } elsif (pageName == "CUBE") {
         return nil;
     } else {
         print("Make sure button assignment is set correctly in getMenuButton() in MFD_main.nas");

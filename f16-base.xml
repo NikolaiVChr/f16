@@ -1306,6 +1306,7 @@ value. 18000=standard US transition altitude -->
             <power-mmc type="bool">false</power-mmc>
             <power-st-sta type="bool">false</power-st-sta>
             <power-mfd type="bool">false</power-mfd>
+            <power-mfd-bit type="int">0</power-mfd-bit>
             <power-ufc type="bool">false</power-ufc>
             <power-gps type="bool">false</power-gps>
             <power-dl type="bool">false</power-dl>

@@ -133,7 +133,65 @@
                 <max>   1 </max>
             </clipto>
         </kinematic>
+
+        <switch name="/f16/avionics/power-mfd-warming">
+         <default value="0"/>
+         <test  logic="AND" value="1">
+           /f16/avionics/power-ufc-warm == 1
+           /f16/avionics/power-mfd == 1
+         </test>
+        </switch>
+
+        <actuator name="/f16/avionics/power-mfd-warm-act">
+            <input>/f16/avionics/power-mfd-warming</input>
+            <rate_limit sense="incr">0.25</rate_limit>
+            <rate_limit sense="decr">10.0</rate_limit>
+            <clipto>
+                <min>   0 </min>
+                <max>   1 </max>
+            </clipto>
+            <output>/f16/avionics/power-mfd-warm</output>
+        </actuator>
+
+        <switch name="/f16/avionics/power-mfd-monochrome">
+            <default value="0"/>
+            <test logic="OR" value="1">
+                /sim/variant-id == 0    <!-- YF-16 -->
+                /sim/variant-id == 1    <!-- Block 10 -->
+                /sim/variant-id == 3    <!-- Block 30/32 -->
+            </test>
+        </switch>
         
+        <switch name="/f16/avionics/power-mfd-bit">  <!-- 0=void, 1=grid, 2=cube, 3=on -->
+         <default value="0"/>
+         <!-- The color MFDs -->
+         <test logic="AND" value="0">
+           /f16/avionics/power-mfd-warm lt 0.2
+           /f16/avionics/power-mfd-monochrome == 0
+         </test>
+         <test logic="AND" value="1">
+           /f16/avionics/power-mfd-warm lt 0.6
+           /f16/avionics/power-mfd-monochrome == 0
+         </test>
+         <test logic="AND" value="2">
+           /f16/avionics/power-mfd-warm lt 1
+           /f16/avionics/power-mfd-monochrome == 0
+         </test>
+         <test logic="AND" value="3">
+           /f16/avionics/power-mfd-warm == 1
+           /f16/avionics/power-mfd-monochrome == 0
+         </test>
+         <!-- The monochrome MFDs -->
+         <test logic="AND" value="0">
+           /f16/avionics/power-mfd-warm lt 1
+           /f16/avionics/power-mfd-monochrome == 1
+         </test>
+         <test logic="AND" value="3">
+           /f16/avionics/power-mfd-warm == 1
+           /f16/avionics/power-mfd-monochrome == 1
+         </test>
+        </switch>
+
         <switch name="/f16/avionics/power-rdr-alt-warming">
          <default value="0"/>
          <test  logic="AND" value="2">
