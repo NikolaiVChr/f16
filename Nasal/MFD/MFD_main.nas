@@ -518,7 +518,7 @@ var MFD_Device =
 
         svg.txt = svg.p_CUBE.createChild("text")
             .setTranslation((552/2)*0.795, 10)
-            .setText("BUILD-IN TEST")
+            .setText("BUILT-IN TEST")
             .setAlignment("center-top")
             .setFontSize(22, 1.0)
             .setColor(colorBackground);
