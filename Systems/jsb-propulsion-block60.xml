@@ -114,7 +114,7 @@
   <tank type="FUEL"> <!-- Left External Tank -->
    <location unit="IN">
     <x> -16.5 </x>
-   <y> -80 </y>
+   <y> -64.129 </y>
    <z> -40 </z>
    </location>
    <capacity unit="LBS"> 3996 </capacity>
@@ -125,7 +125,7 @@
   <tank type="FUEL"> <!-- Right External Tank -->
    <location unit="IN">
     <x> -16.5 </x>
-   <y> 80 </y>
+   <y> 64.129 </y>
    <z> -40 </z>
    </location>
    <capacity unit="LBS"> 3996 </capacity>
