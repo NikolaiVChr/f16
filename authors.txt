@@ -154,6 +154,7 @@ Baptiste "Bat" Campion
 - Belgian AF livery pack
 - Hellenic AF livery pack
 - Portuguese AF liveries
+- USAF, USN Aggressors livery pack
 
 Shaymo
 - Exterior and interior 3D model fixes
