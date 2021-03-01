@@ -96,6 +96,27 @@ setlistener("f16/engine/feed", func(feedNode) {
     }
 }, 0, 0);
 
+# Fuel transfer switch
+setlistener("controls/fuel/external-transfer", func(transferNode) {
+    var transfer = transferNode.getValue();
+    var master = getprop("fdm/jsbsim/elec/switches/master-fuel");
+
+    if (transfer == 0) { # Ext wing first
+        tank_priority[6] = 2;
+        tank_priority[7] = 2;
+        tank_priority[8] = 3;
+    } else { # Norm
+        tank_priority[6] = 3;
+        tank_priority[7] = 3;
+        tank_priority[8] = 2;
+    }
+
+    if (master) {
+        setprop("/fdm/jsbsim/propulsion/tank[6]/priority", tank_priority[6]);
+        setprop("/fdm/jsbsim/propulsion/tank[7]/priority", tank_priority[7]);
+        setprop("/fdm/jsbsim/propulsion/tank[8]/priority", tank_priority[8]);
+    }
+}, 0, 0);
 
 var fuelDigits = func {
   var maxtank = 8;
