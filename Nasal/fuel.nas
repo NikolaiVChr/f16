@@ -55,12 +55,20 @@ var fuelqty = func {
 }
 
 # Fuel tank priority store
+var maxtank = 8;
 var tank_priority = {};
+
+var store_tank_prio = func {
+    for (var i=0;i<=maxtank;i+=1) {
+        tank_priority[i] = getprop("/fdm/jsbsim/propulsion/tank["~i~"]/priority");
+    }
+}
+
+store_tank_prio();
 
 # Fuel master switch
 setlistener("fdm/jsbsim/elec/switches/master-fuel", func(masterNode) {
     var master = masterNode.getValue();
-    var maxtank = 8;
 
     if (master == 0) { # Off
         for (var i=0;i<=maxtank;i+=1) {
@@ -72,7 +80,7 @@ setlistener("fdm/jsbsim/elec/switches/master-fuel", func(masterNode) {
             setprop("/fdm/jsbsim/propulsion/tank["~i~"]/priority", tank_priority[i]);
         }
     }
-}, 0, 0);
+}, 1, 0);
 
 # Engine feed knob handler
 setlistener("f16/engine/feed", func(feedNode) {
@@ -94,21 +102,27 @@ setlistener("f16/engine/feed", func(feedNode) {
         setprop("/fdm/jsbsim/propulsion/tank[0]/priority", tank_priority[0]);
         setprop("/fdm/jsbsim/propulsion/tank[3]/priority", tank_priority[3]);
     }
-}, 0, 0);
+}, 1, 0);
 
-# Fuel transfer switch
-setlistener("controls/fuel/external-transfer", func(transferNode) {
-    var transfer = transferNode.getValue();
+var set_ext_tank_prio = func {
+    var airsrc = getprop("controls/ventilation/airconditioning-source");
+    var transfer = getprop("controls/fuel/external-transfer");
     var master = getprop("fdm/jsbsim/elec/switches/master-fuel");
 
-    if (transfer == 0) { # Ext wing first
-        tank_priority[6] = 2;
-        tank_priority[7] = 2;
-        tank_priority[8] = 3;
+    if (airsrc == 0) { # Off
+        tank_priority[6] = 0;
+        tank_priority[7] = 0;
+        tank_priority[8] = 0;
     } else { # Norm
-        tank_priority[6] = 3;
-        tank_priority[7] = 3;
-        tank_priority[8] = 2;
+        if (transfer == 0) { # Ext wing first
+            tank_priority[6] = 2;
+            tank_priority[7] = 2;
+            tank_priority[8] = 3;
+        } else { # Norm
+            tank_priority[6] = 3;
+            tank_priority[7] = 3;
+            tank_priority[8] = 2;
+        }
     }
 
     if (master) {
@@ -116,6 +130,18 @@ setlistener("controls/fuel/external-transfer", func(transferNode) {
         setprop("/fdm/jsbsim/propulsion/tank[7]/priority", tank_priority[7]);
         setprop("/fdm/jsbsim/propulsion/tank[8]/priority", tank_priority[8]);
     }
+}
+
+set_ext_tank_prio();
+
+# Fuel transfer switch
+setlistener("controls/fuel/external-transfer", func {
+    set_ext_tank_prio();
+}, 0, 0);
+
+# Fuel tank pressurization
+setlistener("controls/ventilation/airconditioning-source", func {
+    set_ext_tank_prio();
 }, 0, 0);
 
 var fuelDigits = func {
