@@ -254,7 +254,7 @@ setlistener("controls/fuel/qty-selector", knob, nil, 0);
 setlistener("controls/displays/cursor-click", knob2, nil, 0);
 setlistener("controls/displays/display-management-switch-x", knob2, nil, 0);
 setlistener("controls/displays/display-management-switch-y", knob2, nil, 0);
-setlistener("fdm/jsbsim/elec/switches/master-fuel", click1, nil, 0);
+setlistener("fdm/jsbsim/elec/switches/master-fuel-cmd", click1, nil, 0);
 setlistener("controls/fuel/tank-inerting", button2, nil, 0);
 setlistener("f16/engine/feed", knob, nil, 0);
 setlistener("systems/refuel/serviceable", button2, nil, 0);

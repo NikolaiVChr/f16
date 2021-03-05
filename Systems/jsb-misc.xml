@@ -400,6 +400,18 @@
             <c1> 0.35 </c1>
         </lag_filter>
         
+        <actuator name="elec/switches/master-fuel-norm">
+            <input>elec/switches/master-fuel-cmd</input>
+            <rate_limit>0.25</rate_limit>
+        </actuator>
+
+        <switch name="elec/switches/master-fuel">
+            <default value="1"/>
+            <test value="0">
+                elec/switches/master-fuel-norm lt 0.5
+            </test>
+        </switch>
+
     </channel>
     
     
