@@ -4,23 +4,31 @@
 var fuelqty = func {
   var sel = getprop("controls/fuel/qty-selector");
   var fuel = getprop("/consumables/fuel/total-fuel-lbs");
-  var fuseFuel = getprop("consumables/fuel/tank[0]/level-lbs") + getprop("consumables/fuel/tank[3]/level-lbs") + getprop("consumables/fuel/tank[4]/level-lbs") + getprop("consumables/fuel/tank[5]/level-lbs");
+  var fwdFuel = getprop("consumables/fuel/tank[0]/level-lbs") + getprop("consumables/fuel/tank[4]/level-lbs");
+  var aftFuel = getprop("consumables/fuel/tank[3]/level-lbs") + getprop("consumables/fuel/tank[5]/level-lbs");
 
-  if (fuel<getprop("f16/settings/bingo") or (sel == 1 and fuseFuel<getprop("f16/settings/bingo"))) {
+  # Bingo fuel determination
+  if (fuel<getprop("f16/settings/bingo") or (sel == 1 and (fwdFuel+aftFuel)<getprop("f16/settings/bingo"))) {
     if (getprop("f16/avionics/bingo") == 0) {
       setprop("f16/avionics/bingo", 1);
     }
   } else {
     setprop("f16/avionics/bingo", 0);
   }
+
+  # Fuel system failure
   if (!getprop("consumables/fuel-tanks/serviceable")) {
     props.globals.getNode("fdm/jsbsim/propulsion/fuel_dump").setBoolValue(1);
   } else {
     props.globals.getNode("fdm/jsbsim/propulsion/fuel_dump").clearValue();
   }
+
+  # Power requirement check for following systems
   if (getprop("fdm/jsbsim/elec/bus/emergency-ac-2")<100) {
     return;
   }
+
+  # Fuel quantity indication
   if (sel == 0) {
     # test
     setprop("f16/fuel/hand-fwd", 2000);
@@ -28,8 +36,8 @@ var fuelqty = func {
     fuel = 6000;
   } elsif (sel == 1) {
     #norm
-    setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[0]/level-lbs") + getprop("consumables/fuel/tank[4]/level-lbs"));
-    setprop("f16/fuel/hand-aft", getprop("consumables/fuel/tank[3]/level-lbs") + getprop("consumables/fuel/tank[5]/level-lbs"));
+    setprop("f16/fuel/hand-fwd", fwdFuel);
+    setprop("f16/fuel/hand-aft", aftFuel);
   } elsif (sel == 2) {
     #reservoir tanks
     setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[4]/level-lbs"));
