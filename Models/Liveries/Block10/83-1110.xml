@@ -4,9 +4,9 @@
  <sim>
   <model>
    <livery> 
-    <name type="string">NASA Testbed, #N816NA</name>
-    <texture>Liveries/Block10/82-0976.png</texture>
-    <owner type="string">NASA</owner>
+    <name type="string">USAF 53FW, 82ATRS #QF-004</name>
+    <texture>Liveries/Block10/83-1110.png</texture>
+    <owner type="string">USAF</owner>
    </livery>
 
    <livery-logo>
@@ -14,11 +14,11 @@
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/patch.default.png</texture>
+      <texture>Liveries/Block20/patch.zombie.png</texture>
    </livery-patch>
 
    <livery-pod>
-     <texture>Liveries/Block10/pod.NASA.png</texture>
+        <texture>Armament/External-stores/MXU-648.png</texture>
    </livery-pod>
 
   <f16>
@@ -28,6 +28,6 @@
  </sim>
 
   <f16>
-     <ejected type="bool">false</ejected>
+     <ejected type="bool">true</ejected>
   </f16>
 </PropertyList>

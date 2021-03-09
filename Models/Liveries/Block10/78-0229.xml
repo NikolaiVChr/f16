@@ -25,4 +25,8 @@
   </f16>
   </model>
  </sim>
+
+  <f16>
+     <ejected type="bool">false</ejected>
+  </f16>
 </PropertyList>
