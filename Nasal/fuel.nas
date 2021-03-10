@@ -23,6 +23,33 @@ var fuelqty = func {
     props.globals.getNode("fdm/jsbsim/propulsion/fuel_dump").clearValue();
   }
 
+  # Automatic forward fuel transfer system
+  # Notes:
+  # - The fuel system diagram doesn't make it clear, assumed here that A-1 fuel is
+  #   transfered to the F-1 + F-2 combined tank.
+  # - This does not take into consideration any unusable fuel, but does try to prevent
+  #   'ghost fuel' from being created.
+  # - Transfer rate is unknown. The assumed value fits flight idle to AB burn rates.
+  if (getprop("fdm/jsbsim/elec/bus/emergency-dc-2") > 20 and sel == 1 and fwdFuel < 2800) {
+    if (fwdFuel - aftFuel < 300 and
+      getprop("consumables/fuel/tank[0]/level-norm") < 0.99 and
+      getprop("consumables/fuel/tank[3]/level-norm") > 0.01) {
+      # start fwd fuel transfer
+      setprop("/fdm/jsbsim/propulsion/tank[3]/external-flow-rate-pps", -1);  # from aft
+      setprop("/fdm/jsbsim/propulsion/tank[0]/external-flow-rate-pps", 1);   # to fwd
+    } elsif (fwdFuel - aftFuel > 450 or
+      getprop("consumables/fuel/tank[0]/level-norm") >= 0.99 or
+      getprop("consumables/fuel/tank[3]/level-norm") <= 0.01) {
+      # stop fwd fuel transfer, if any
+      setprop("/fdm/jsbsim/propulsion/tank[3]/external-flow-rate-pps", 0);
+      setprop("/fdm/jsbsim/propulsion/tank[0]/external-flow-rate-pps", 0);
+    }
+  } else {
+    # stop fwd fuel transfer, if any
+    setprop("/fdm/jsbsim/propulsion/tank[3]/external-flow-rate-pps", 0);
+    setprop("/fdm/jsbsim/propulsion/tank[0]/external-flow-rate-pps", 0);
+  }
+
   # Power requirement check for following systems
   if (getprop("fdm/jsbsim/elec/bus/emergency-ac-2")<100) {
     return;
