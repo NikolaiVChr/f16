@@ -144,11 +144,11 @@ var set_ext_tank_prio = func {
     var transfer = getprop("controls/fuel/external-transfer");
     var master = getprop("fdm/jsbsim/elec/switches/master-fuel");
 
-    if (airsrc == 0) { # Off
+    if (airsrc == 0 or airsrc == 3) { # OFF/RAM
         tank_priority[6] = 0;
         tank_priority[7] = 0;
         tank_priority[8] = 0;
-    } else { # Norm
+    } else { # NORM/DUMP
         if (transfer == 0) { # Ext wing first
             tank_priority[6] = 2;
             tank_priority[7] = 2;

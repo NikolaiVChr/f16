@@ -46,7 +46,7 @@
             </seat>
             <ventilation>
                 <airconditioning-enabled type="bool">true</airconditioning-enabled>
-                <airconditioning-source type="bool">true</airconditioning-source>
+                <airconditioning-source type="int">1</airconditioning-source>
             </ventilation>
         </controls>
         <engines>

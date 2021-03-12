@@ -790,6 +790,9 @@
 						<halign>left</halign>
 						
 						<text>
+							<label>DUMP</label>
+						</text>
+						<text>
 							<label>NORM</label>
 						</text>
 						<text>
@@ -800,10 +803,10 @@
 					
 					<slider>
 						<halign>left</halign>
-						<pref-height>50</pref-height>
+						<pref-height>75</pref-height>
 						<property>controls/ventilation/airconditioning-source</property>
 						<min>0</min>
-						<max>1</max>
+						<max>2</max>
 						<step>1</step>
 						<live>true</live>
 						<vertical>true</vertical>

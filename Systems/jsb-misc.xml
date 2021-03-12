@@ -368,38 +368,45 @@
             <c1> 0.35 </c1>
             <output>/engines/engine[0]/ftit-degc</output>
         </lag_filter>
+
+        <switch name="/f16/engine/ctl-sec">
+            <default value="0"/>
+            <test logic="OR" value="1">
+                /engines/engine/n2 lt 18
+                /f16/engine/sec-self-test eq 1
+            </test>
+        </switch>
         
         <fcs_function name="/f16/cockpit/pressure-ft-direct">
             <function>
                     <table>
                         <independentVar lookup="row">atmosphere/density-altitude</independentVar>
-                        <independentVar lookup="column">fcs/canopy-pos-norm</independentVar>
+                        <independentVar lookup="column">/controls/ventilation/airconditioning-source</independentVar>
                         <tableData>
-                                             0     1
-                               0             0     0
-                            8000          8000  8000
-                           23000          8000 23000
-                           30000         13000 30000
-                           40000         17000 40000
-                           60000         22000 60000
+                                             0     1     2
+                               0             0     0     0
+                            8000          8000  8000  8000
+                           23000         23000  8000 23000
+                           30000         30000 13000 30000
+                           40000         40000 17000 40000
+                           60000         60000 22000 60000
                         </tableData>
                     </table>
             </function>
         </fcs_function>
-		
-		<switch name="/f16/engine/ctl-sec">
-			<default value="0"/>
-			<test logic="OR" value="1">
-				/engines/engine/n2 lt 18
-				/f16/engine/sec-self-test eq 1
-			</test>
-		</switch>
-        
-        <lag_filter name="/f16/cockpit/pressure-ft">
+
+        <lag_filter name="/f16/cockpit/pressure-ft-filtered">
             <input> /f16/cockpit/pressure-ft-direct </input>
             <c1> 0.35 </c1>
         </lag_filter>
-        
+
+        <switch name="/f16/cockpit/pressure-ft">
+            <default value="/f16/cockpit/pressure-ft-filtered"/>
+            <test value="atmosphere/density-altitude">
+                /canopy/not-serviceable == 1
+            </test>
+        </switch>
+
         <actuator name="elec/switches/master-fuel-norm">
             <input>elec/switches/master-fuel-cmd</input>
             <rate_limit>0.25</rate_limit>
@@ -424,7 +431,7 @@
             <function>
                   <product>
                     <table>
-                        <independentVar lookup="row">/f16/cockpit/pressure-ft-direct</independentVar>
+                        <independentVar lookup="row">/f16/cockpit/pressure-ft</independentVar>
                         <tableData>
                               15000 29.86
                               20000 24.43

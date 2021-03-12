@@ -705,7 +705,7 @@
         <ventilation>
             <airconditioning-type type="int">0</airconditioning-type><!-- cold for 12s: -1 auto: 0 warm for 12s: 1 -->
             <airconditioning-enabled type="bool">false</airconditioning-enabled>
-            <airconditioning-source type="bool">false</airconditioning-source>
+            <airconditioning-source type="int">0</airconditioning-source>
             <airconditioning-temperature type="double">16.0</airconditioning-temperature>
             <windshield-hot-air-knob type="double">0.0</windshield-hot-air-knob>
         </ventilation>
