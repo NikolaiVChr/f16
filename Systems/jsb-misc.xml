@@ -377,35 +377,45 @@
             </test>
         </switch>
         
-        <fcs_function name="/f16/cockpit/pressure-ft-direct">
+        <fcs_function name="/f16/cockpit/pressure-ft-pressurized">
             <function>
-                    <table>
-                        <independentVar lookup="row">atmosphere/density-altitude</independentVar>
-                        <independentVar lookup="column">/controls/ventilation/airconditioning-source</independentVar>
-                        <tableData>
-                                             0     1     2
-                               0             0     0     0
-                            8000          8000  8000  8000
-                           23000         23000  8000 23000
-                           30000         30000 13000 30000
-                           40000         40000 17000 40000
-                           60000         60000 22000 60000
-                        </tableData>
-                    </table>
+                <table>
+                    <independentVar>atmosphere/density-altitude</independentVar>
+                    <tableData>
+                            0        0
+                         8000     8000
+                        23000     8000
+                        30000    13000
+                        40000    17000
+                        60000    22000
+                    </tableData>
+                </table>
             </function>
         </fcs_function>
 
-        <lag_filter name="/f16/cockpit/pressure-ft-filtered">
-            <input> /f16/cockpit/pressure-ft-direct </input>
-            <c1> 0.35 </c1>
-        </lag_filter>
-
-        <switch name="/f16/cockpit/pressure-ft">
-            <default value="/f16/cockpit/pressure-ft-filtered"/>
-            <test value="atmosphere/density-altitude">
-                /canopy/not-serviceable == 1
+        <switch name="/f16/cockpit/pressure-ft-selected">
+            <default value="atmosphere/density-altitude"/>
+            <test logic="AND" value="/f16/cockpit/pressure-ft-pressurized">
+                fcs/canopy-engage eq 0
+                fcs/canopy-pos-norm eq 0
+                /canopy/not-serviceable eq 0
+                /controls/ventilation/airconditioning-source eq 1
             </test>
         </switch>
+
+        <switch name="/f16/cockpit/pressure-ft-c">
+            <default value="0.35"/>
+            <test logic="OR" value="5.0">
+                fcs/canopy-engage eq 1
+                fcs/canopy-pos-norm ne 0
+                /canopy/not-serviceable eq 1
+            </test>
+        </switch>
+
+        <lag_filter name="/f16/cockpit/pressure-ft">
+            <input>/f16/cockpit/pressure-ft-selected</input>
+            <c1>/f16/cockpit/pressure-ft-c</c1>
+        </lag_filter>
 
         <actuator name="elec/switches/master-fuel-norm">
             <input>elec/switches/master-fuel-cmd</input>
