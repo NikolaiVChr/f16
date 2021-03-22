@@ -97,7 +97,7 @@ var Action = {
 };
 
 var EditableField = {
-	new: func(prop, stringFormat, maxSize) {
+	new: func(prop, stringFormat, maxSize, checkValue = nil) {
 		var editableField = {parents: [EditableField]};
 		editableField.text = getprop(prop);
 		editableField.prop = prop;
@@ -108,6 +108,7 @@ var EditableField = {
 		editableField.recallStatus = 0;
 		editableField.selected = 0;
 		editableField.listener = nil;
+		editableField.checkValue = checkValue;
 		editableField.init();
 		return editableField;
 	},
@@ -154,6 +155,11 @@ var EditableField = {
 		}
 	},
 	enter: func() {
+		if (me.checkValue != nil) {
+			if (me.checkValue(me.text) != 0) {
+				return;
+			}
+		}
 		me.recallStatus = 0;
 		me.lastText1 = "";
 		me.lastText2 = "";
@@ -420,6 +426,35 @@ var toggleableTransponder = {
 		me.value = me.valuesVector[me.index];
 	},
 };
+
+var checkValueTransponderCode = func(text) {
+	var codeDigits = split("", text);
+
+	for (var i = 0; i < 4; i = i + 1) {
+		var codeDigit = pop(codeDigits);
+		if (codeDigit > 7) {
+			return -1;
+		}
+	}
+
+	return 0;
+}
+
+var checkValueLaserCode = func(text) {
+	var codeDigits = split("", text);
+
+	for (var i = 0; i < 4; i = i + 1) {
+		var codeDigit = pop(codeDigits);
+		if (i == 0 and codeDigit > 2) {
+			return -1;
+		}
+		if (codeDigit < 1 or codeDigit > 8) {
+			return -1;
+		}
+	}
+
+	return 0;
+}
 
 var modeSelBull = func() { dataEntryDisplay.bullMode = !dataEntryDisplay.bullMode; };
 

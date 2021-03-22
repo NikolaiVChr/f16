@@ -7,9 +7,9 @@ var ilsCrsEF = EditableField.new("f16/crs-ils", "%3d", 3);
 var wingspanEF = EditableField.new("f16/avionics/eegs-wingspan-ft", "%3d", 3);
 var alowEF = EditableField.new("f16/settings/cara-alow", "%5d", 5);
 var mslFloorEF = EditableField.new("f16/settings/msl-floor", "%5d", 5);
-var laserCodeTgpEF = EditableField.new("f16/avionics/laser-code", "%4d", 4);
+var laserCodeTgpEF = EditableField.new("f16/avionics/laser-code", "%04d", 4, checkValueLaserCode);
 var iffEF = EditableField.new("instrumentation/iff/channel-selection", "%4d", 4);
-var transpEF = EditableField.new("instrumentation/transponder/id-code", "%4d", 4);
+var transpEF = EditableField.new("instrumentation/transponder/id-code", "%04d", 4, checkValueTransponderCode);
 var transpModeTF = toggleableTransponder.new([0, 1, 2, 3, 4, 5], "instrumentation/transponder/inputs/knob-mode");
 
 var pTACAN = EditableFieldPage.new(0, [tacanChanEF,tacanBandTF,ilsFrqEF,ilsCrsEF]);
@@ -634,7 +634,7 @@ var dataEntryDisplay = {
 	updateLaser: func() {
 		var code = getprop("f16/avionics/laser-code");
 		me.text[0] = sprintf("         LASER      %s   ",me.no);
-		me.text[1] = sprintf("   TGP CODE   %s     ",pLASR.vector[0].getText());#Need to set limit on legal numbers. Only 1111 to 2888 is valid codes.
+		me.text[1] = sprintf("   TGP CODE   %s     ",pLASR.vector[0].getText());
 		me.text[2] = sprintf("   LST CODE    %04d     ",code);
 		me.text[3] = sprintf("   A-G: CMBT  A-A: TRNG ");
 		me.text[4] = sprintf("   LASER ST TIME  16 SEC");
