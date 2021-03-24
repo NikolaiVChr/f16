@@ -937,6 +937,7 @@
 			<default value="0"/>
 			<test logic="AND" value="1">
 				elec/bus/emergency-dc-1 ge 20
+				/instrumentation/iff/activate eq 1
 			</test>
 			<output>/instrumentation/iff/power</output>
 		</switch>

@@ -9,6 +9,7 @@ var alowEF = EditableField.new("f16/settings/cara-alow", "%5d", 5);
 var mslFloorEF = EditableField.new("f16/settings/msl-floor", "%5d", 5);
 var laserCodeTgpEF = EditableField.new("f16/avionics/laser-code", "%04d", 4, checkValueLaserCode);
 var iffEF = EditableField.new("instrumentation/iff/channel-selection", "%4d", 4);
+var iffTF = toggleableIff.new([0, 1], "instrumentation/iff/activate");
 var transpEF = EditableField.new("instrumentation/transponder/id-code", "%04d", 4, checkValueTransponderCode);
 var transpModeTF = toggleableTransponder.new([0, 1, 2, 3, 4, 5], "instrumentation/transponder/inputs/knob-mode");
 
@@ -50,7 +51,7 @@ var pHARM  = EditableFieldPage.new(29);
 var pCNI   = EditableFieldPage.new(30);
 var pCOMM1 = EditableFieldPage.new(31);
 var pCOMM2 = EditableFieldPage.new(32);
-var pIFF   = EditableFieldPage.new(33, [transpEF,transpModeTF,iffEF]);
+var pIFF   = EditableFieldPage.new(33, [transpEF,transpModeTF,iffEF,iffTF]);
 
 var dataEntryDisplay = {
 	line1: nil,
@@ -748,7 +749,7 @@ var dataEntryDisplay = {
 		else pond = "----";
 		me.text[0] = sprintf("IFF        MAN          ");# Should have ON between IFF and MAN. But I moved it beside the channels, until we get more transponder/iff in cockpit.
 		me.text[1] = sprintf("M3    %s  %s         ", pIFF.vector[0].getText(), pIFF.vector[1].getText());
-		me.text[2] = sprintf("M4    %s   ON         ", pIFF.vector[2].getText());
+		me.text[2] = sprintf("M4    %s  %s         ", pIFF.vector[2].getText(), pIFF.vector[3].getText());
 		me.text[3] = sprintf("PILOT   %s",sign);
 		me.text[4] = sprintf("TYPE    %s",type);
 	},

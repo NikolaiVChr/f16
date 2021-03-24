@@ -1064,6 +1064,7 @@
             <channel_prop type="string">/instrumentation/iff/channel-selection</channel_prop>
             <power_prop type="string">/instrumentation/iff/power</power_prop>
             <power type="bool">true</power>
+            <activate type="bool">true</activate>
             <channel-selection type="int">1</channel-selection>
             <response type="bool">false</response>
         </iff>
