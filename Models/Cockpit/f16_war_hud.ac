@@ -6,7 +6,7 @@ MATERIAL "blackCasing" rgb 0.200 0.200 0.200  amb 0.100 0.100 0.100  emis 0.000 
 MATERIAL "greenLight" rgb 0.005 0.305 0.000  amb 0.800 0.800 0.800  emis 0.000 0.000 0.000  spec 0.500 0.500 0.500  shi 64 trans 0.000
 MATERIAL "transOptics" rgb 0.600 0.600 0.600  amb 0.800 0.800 0.800  emis 1.000 1.000 1.000  spec 0.000 0.000 0.000  shi 64 trans 1.000
 MATERIAL "Canvas" rgb 0.600 0.600 0.600  amb 0.000 0.000 0.000  emis 1.000 1.000 1.000  spec 0.000 0.000 0.000  shi 50 trans 0.000
-MATERIAL "blackFlipLid" rgb 0.000 0.000 0.000  amb 0.800 0.800 0.800  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 64 trans 0.000
+MATERIAL "blackFlipLid" rgb 0.200 0.200 0.200  amb 0.100 0.100 0.100  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 64 trans 0.000
 MATERIAL "metalScrew" rgb 0.099 0.099 0.099  amb 0.800 0.800 0.800  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 0 trans 0.000
 MATERIAL "turkyisePlague" rgb 0.000 0.017 0.007  amb 0.800 0.800 0.800  emis 0.000 0.000 0.000  spec 0.000 0.000 0.000  shi 0 trans 0.000
 OBJECT world
