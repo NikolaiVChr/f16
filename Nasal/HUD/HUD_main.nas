@@ -14,9 +14,28 @@ var pitch_factor = 14.85;#19.8;
 var pitch_factor_2 = pitch_factor * 180.0 / math.pi;
 var alt_range_factor = (9317-191) / 100000; # alt tape size and max value.
 var ias_range_factor = (694-191) / 1100;
+var use_war_hud = 1;
+var uv_x1 = 0;
+var uv_x2 = 0;
+var semi_width = 0.0;
+var uv_used = uv_x2-uv_x1;
+var tran_x = 0;
+var tran_y = 0;
 
 var F16_HUD = {
-    new : func (svgname, canvas_item, sx, sy, tran_x,tran_y){
+    map: func (value, leftMin, leftMax, rightMin, rightMax) {
+        # Figure out how 'wide' each range is
+        var leftSpan = leftMax - leftMin;
+        var rightSpan = rightMax - rightMin;
+
+        # Convert the left range into a 0-1 range (float)
+        var valueScaled = (value - leftMin) / leftSpan;
+
+        # Convert the 0-1 range into a value in the right range.
+        return rightMin + (valueScaled * rightSpan);
+    },
+
+    new : func (svgname, canvas_item, sx, sy){
         var obj = {parents : [F16_HUD] };
 
         obj.canvas= canvas.new({
@@ -27,8 +46,7 @@ var F16_HUD = {
                     "additive-blend": 1# bool
                     });  
 
-        obj.sy = sy;                        
-        obj.sx = sx*0.695633;
+        
         
         # Real HUD:
         #
@@ -36,9 +54,28 @@ var F16_HUD = {
         #
         # F16A: Total Field of View of the F-16 A/B PDU is 20deg but the Instantaneous FoV is only 9deg in elevation and 13.38deg in azimuth
         
-        
-        HudMath.init([-4.53759+0.013,-0.07814,0.85796+0.010], [-4.7148+0.013,0.07924,0.66213+0.010], [sx,sy], [0,1.0], [0.695633,0.0], 0);
-                          
+        if (use_war_hud and getprop("sim/variant-id") == 4) {
+            HudMath.init([-4.54553+0.013,-0.04674,0.84791+0.010], [-4.54553+0.013,0.04674,0.71547+0.010], [sx,sy], [0,1.0], [0.695633,0.0], 0);
+            uv_x1 = 0;
+            uv_x2 = 0.695633;
+            semi_width = 0.04674;
+            uv_used = uv_x2-uv_x1;
+            tran_x = 0;
+            #print(me.map(0,-0.092742, 0.347811, -0.05921, 0));
+            # -0.05921   x  0
+            # -0.092742  0  0.347811
+        } else {
+            HudMath.init([-4.53759+0.013,-0.07814,0.85796+0.010], [-4.7148+0.013,0.07924,0.66213+0.010], [sx,sy], [0,1.0], [0.695633,0.0], 0);
+            uv_x1 = 0;
+            uv_x2 = 0.695633;
+            semi_width = 0.07924;
+            uv_used = uv_x2-uv_x1;
+            tran_x = 0;
+        }
+
+        obj.sy = sy;                        
+        obj.sx = sx*uv_used;
+
         obj.canvas.addPlacement({"node": canvas_item});
         obj.canvas.setColorBackground(0.30, 1, 0.3, 0.00);
 
@@ -203,7 +240,7 @@ var F16_HUD = {
         obj.custom = obj.canvas.createGroup();
         obj.flyup = obj.svg.createChild("text")
                 .setText("FLYUP")
-                .setTranslation(sx*0.5*0.695633,sy*0.30)
+                .setTranslation(sx*0.5*uv_used,sy*0.30)
                 .setAlignment("center-center")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
@@ -211,7 +248,7 @@ var F16_HUD = {
         append(obj.total, obj.flyup);
         obj.stby = obj.svg.createChild("text")
                 .setText("NO RAD")
-                .setTranslation(sx*0.5*0.695633,sy*0.15)                
+                .setTranslation(sx*0.5*uv_used,sy*0.15)                
                 .setAlignment("center-top")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
@@ -226,7 +263,7 @@ var F16_HUD = {
 #                .setFont(HUD_FONT)
 #                .setFontSize(9, 1.1);
 #        obj.raltFrame = obj.svg.createChild("path")
-#                .moveTo(sx*1*0.695633-9,sy*0.45+5)
+#                .moveTo(sx*1*uv_x2-9,sy*0.45+5)
 #                .horiz(-41)
 #                .vert(-10)
 #                .horiz(41)
@@ -246,12 +283,12 @@ var F16_HUD = {
             
             
         obj.speed_indicator = obj.svg.createChild("path")
-                .moveTo(0.25*sx*0.695633,sy*0.245)
+                .moveTo(0.25*sx*uv_used,sy*0.245)
                 .horiz(7)
                 .setStrokeLineWidth(1)
                 .setColor(1,0,0);
         obj.alti_indicator = obj.svg.createChild("path")
-                .moveTo(0.75*sx*0.695633,sy*0.245)
+                .moveTo(0.75*sx*uv_used,sy*0.245)
                 .horiz(-7)
                 .setStrokeLineWidth(1)
                 .setColor(1,0,0);
@@ -261,7 +298,7 @@ var F16_HUD = {
         append(obj.total, obj.speed_indicator);
         obj.speed_type = obj.svg.createChild("text")
                 .setText("C")
-                .setTranslation(1+0.25*sx*0.695633,sy*0.24)
+                .setTranslation(1+0.25*sx*uv_used,sy*0.24)
                 .setAlignment("left-bottom")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
@@ -276,7 +313,7 @@ var F16_HUD = {
         append(obj.total, obj.soi_indicator);
         obj.alt_type = obj.svg.createChild("text")
                 .setText("R")
-                .setTranslation(-1+0.75*sx*0.695633,sy*0.24)
+                .setTranslation(-1+0.75*sx*uv_used,sy*0.24)
                 .setAlignment("right-bottom")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
@@ -292,8 +329,11 @@ var F16_HUD = {
                 .set("blend-destination-alpha","one-minus-src-alpha")
                 #.set("blend-destination","zero")
                 .set("src", "Aircraft/f16/Nasal/HUD/main_mask.png");
+        if (use_war_hud and getprop("sim/variant-id") == 4) {
+            obj.super_mask.hide();
+        }
         obj.speed_mask = obj.svg.createChild("image")
-                .setTranslation(-27+0.21*sx*0.695633,sy*0.245-6)
+                .setTranslation(-27+0.21*sx*uv_used,sy*0.245-6)
                 .set("z-index",10000)
                 #.set("blend-source-rgb","one")
                 #.set("blend-source-alpha","one")
@@ -304,12 +344,12 @@ var F16_HUD = {
                 .set("src", "Aircraft/f16/Nasal/HUD/speed_mask.png");
         obj.speed_frame = obj.svg.createChild("path")
                 .set("z-index",10001)
-                .moveTo(2+0.20*sx*0.695633,sy*0.245)
-                .lineTo(2+0.20*sx*0.695633-5,sy*0.245-6)
+                .moveTo(2+0.20*sx*uv_used,sy*0.245)
+                .lineTo(2+0.20*sx*uv_used-5,sy*0.245-6)
                 .horiz(-25)
                 .vert(12)
                 .horiz(25)
-                .lineTo(2+0.20*sx*0.695633,sy*0.245)
+                .lineTo(2+0.20*sx*uv_used,sy*0.245)
                 .setStrokeLineWidth(1)
                 .setColor(1,0,0);
                 append(obj.total, obj.speed_frame);
@@ -320,14 +360,14 @@ var F16_HUD = {
                 .set("blend-destination-rgb","one")
                 .set("blend-destination-alpha","one")
                 .setText("425")
-                .setTranslation(0.18*sx*0.695633,sy*0.245)
+                .setTranslation(0.18*sx*uv_used,sy*0.245)
                 .setAlignment("right-center")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(9, 1.1);
 append(obj.total, obj.speed_curr);
         obj.alt_mask = obj.svg.createChild("image")
-                .setTranslation(5+3+0.79*sx*0.695633-10,sy*0.245-6)
+                .setTranslation(5+3+0.79*sx*uv_used-10,sy*0.245-6)
                 .set("z-index",10000)
                 #.set("blend-source-rgb","one")
                 #.set("blend-source-alpha","one")
@@ -338,12 +378,12 @@ append(obj.total, obj.speed_curr);
                 .set("src", "Aircraft/f16/Nasal/HUD/alt_mask.png");
         obj.alt_frame = obj.svg.createChild("path")
                 .set("z-index",10001)
-                .moveTo(8-2+0.80*sx*0.695633-10,sy*0.245)
-                .lineTo(8-2+0.80*sx*0.695633+5-10,sy*0.245-6)
+                .moveTo(8-2+0.80*sx*uv_used-10,sy*0.245)
+                .lineTo(8-2+0.80*sx*uv_used+5-10,sy*0.245-6)
                 .horiz(28)
                 .vert(12)
                 .horiz(-28)
-                .lineTo(8-2+0.80*sx*0.695633-10,sy*0.245)
+                .lineTo(8-2+0.80*sx*uv_used-10,sy*0.245)
                 .setStrokeLineWidth(1)
                 .setColor(1,0,0);
                 append(obj.total, obj.alt_frame);
@@ -354,14 +394,14 @@ append(obj.total, obj.speed_curr);
                 .set("blend-destination-rgb","one")
                 .set("blend-destination-alpha","one")
                 .setText("88888")
-                .setTranslation(4+0.82*sx*0.695633-10,sy*0.245+3.5)
+                .setTranslation(4+0.82*sx*uv_used-10,sy*0.245+3.5)
                 .setAlignment("left-bottom-baseline")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(9, 1.1);
                 append(obj.total, obj.alt_curr);
         obj.head_mask = obj.svg.createChild("image")
-                .setTranslation(-10+0.5*sx*0.695633,sy*0.1-20)
+                .setTranslation(-10+0.5*sx*uv_used,sy*0.1-20)
                 .set("z-index",10000)
                 #.set("blend-source-rgb","one")
                 #.set("blend-source-alpha","one")
@@ -373,7 +413,7 @@ append(obj.total, obj.speed_curr);
                 #append(obj.total, obj.head_mask);
         obj.head_frame = obj.svg.createChild("path")
                 .set("z-index",10001)
-                .moveTo(10+0.50*sx*0.695633,sy*0.1-10)
+                .moveTo(10+0.50*sx*uv_used,sy*0.1-10)
                 .vert(-10)
                 .horiz(-20)
                 .vert(10)
@@ -388,7 +428,7 @@ append(obj.total, obj.speed_curr);
                 .set("blend-destination-rgb","one")
                 .set("blend-destination-alpha","one")
                 .setText("360")
-                .setTranslation(0.5*sx*0.695633,sy*0.1-12)
+                .setTranslation(0.5*sx*uv_used,sy*0.1-12)
                 .setAlignment("center-bottom")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
@@ -396,7 +436,7 @@ append(obj.total, obj.speed_curr);
                 append(obj.total, obj.head_curr);
         obj.ded0 = obj.svg.createChild("text")
                 .setText("")
-                .setTranslation(0.25*sx*0.695633,sy*0.75-20)
+                .setTranslation(0.25*sx*uv_used,sy*0.75-20)
                 .setAlignment("left-center")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
@@ -404,7 +444,7 @@ append(obj.total, obj.speed_curr);
                 append(obj.total, obj.ded0);
         obj.ded1 = obj.svg.createChild("text")
                 .setText("")
-                .setTranslation(0.25*sx*0.695633,sy*0.75-10)
+                .setTranslation(0.25*sx*uv_used,sy*0.75-10)
                 .setAlignment("left-center")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
@@ -412,7 +452,7 @@ append(obj.total, obj.speed_curr);
                 append(obj.total, obj.ded1);
         obj.ded2 = obj.svg.createChild("text")
                 .setText("")
-                .setTranslation(0.25*sx*0.695633,sy*0.75+0)
+                .setTranslation(0.25*sx*uv_used,sy*0.75+0)
                 .setAlignment("left-center")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
@@ -420,7 +460,7 @@ append(obj.total, obj.speed_curr);
                 append(obj.total, obj.ded2);
         obj.ded3 = obj.svg.createChild("text")
                 .setText("")
-                .setTranslation(0.25*sx*0.695633,sy*0.75+10)
+                .setTranslation(0.25*sx*uv_used,sy*0.75+10)
                 .setAlignment("left-center")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
@@ -428,28 +468,28 @@ append(obj.total, obj.speed_curr);
                 append(obj.total, obj.ded3);
         obj.ded4 = obj.svg.createChild("text")
                 .setText("")
-                .setTranslation(0.25*sx*0.695633,sy*0.75+20)
+                .setTranslation(0.25*sx*uv_used,sy*0.75+20)
                 .setAlignment("left-center")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
                 .setFontSize(9, 1.1);
                 append(obj.total, obj.ded4);
         obj.bombFallLine = obj.svg.createChild("path")
-                .moveTo(sx*0.5*0.695633,0)
+                .moveTo(sx*0.5*uv_used,0)
                 #.horiz(10)
                 .vert(400)
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0).hide();
                 append(obj.total, obj.bombFallLine);
         obj.solutionCue = obj.svg.createChild("path")#the moving line
-                .moveTo(sx*0.5*0.695633-5,0)
+                .moveTo(sx*0.5*uv_used-5,0)
                 .horiz(10)
                 .setStrokeLineWidth(2)
                 .set("z-index",10005)
                 .setColor(0,1,0);
                 append(obj.total, obj.solutionCue);
         obj.ccrpMarker = obj.svg.createChild("path")
-                .moveTo(sx*0.5*0.695633-10,sy*0.5)
+                .moveTo(sx*0.5*uv_used-10,sy*0.5)
                 .horiz(20)
                 .setStrokeLineWidth(1)
                 .setColor(0,1,0);
@@ -462,7 +502,7 @@ append(obj.total, obj.speed_curr);
             .arcSmallCW(262*mr,262*mr, 0, -262*mr*2, 0)
             .setStrokeLineWidth(1)
             .setColor(0,1,0).hide()
-            .setTranslation(sx*0.5*0.695633,sy*0.25+262*mr*0.5);
+            .setTranslation(sx*0.5*uv_used,sy*0.25+262*mr*0.5);
             append(obj.total, obj.ASEC262);
         obj.ASC = obj.svg.createChild("path")# (Attack Steering Cue (ASC))
             .moveTo(-8*mr,0)
@@ -477,7 +517,7 @@ append(obj.total, obj.speed_curr);
             .arcSmallCW(100*mr,100*mr, 0, -100*mr*2, 0)
             .setStrokeLineWidth(1)
             .setColor(0,1,0).hide()
-            .setTranslation(sx*0.5*0.695633,sy*0.25);
+            .setTranslation(sx*0.5*uv_used,sy*0.25);
             append(obj.total, obj.ASEC100);
         obj.ASEC120 = obj.svg.createChild("path")#rdlock
             .moveTo(-120*mr,0)
@@ -485,7 +525,7 @@ append(obj.total, obj.speed_curr);
             .arcSmallCW(120*mr,120*mr, 0, -120*mr*2, 0)
             .setStrokeLineWidth(1)
             .setColor(0,1,0).hide()
-            .setTranslation(sx*0.5*0.695633,sy*0.25);
+            .setTranslation(sx*0.5*uv_used,sy*0.25);
             append(obj.total, obj.ASEC120);
         obj.ASEC65 = obj.svg.createChild("path")#irlock
             .moveTo(-65*mr,0)
@@ -493,7 +533,7 @@ append(obj.total, obj.speed_curr);
             .arcSmallCW(65*mr,65*mr, 0, -65*mr*2, 0)
             .setStrokeLineWidth(1)
             .setColor(0,1,0).hide()
-            .setTranslation(sx*0.5*0.695633,sy*0.25);
+            .setTranslation(sx*0.5*uv_used,sy*0.25);
             append(obj.total, obj.ASEC65);
         obj.ASEC65Aspect  = obj.svg.createChild("path")#small triangle on ASEC that denotes aspect of target
             .moveTo(0,-65*mr)
@@ -504,7 +544,7 @@ append(obj.total, obj.speed_curr);
             .setColorFill(0,1,0)
             .setColor(0,1,0)
             #.set("z-index",10500)
-            .setTranslation(sx*0.5*0.695633,sy*0.25);
+            .setTranslation(sx*0.5*uv_used,sy*0.25);
             append(obj.total, obj.ASEC65Aspect);
         obj.ASEC120Aspect = obj.svg.createChild("path")
             .setCenter(0,0)
@@ -516,7 +556,7 @@ append(obj.total, obj.speed_curr);
             .setStrokeLineWidth(1)
             .setColor(0,1,0)
             #.set("z-index",10500)
-            .setTranslation(sx*0.5*0.695633,sy*0.25);
+            .setTranslation(sx*0.5*uv_used,sy*0.25);
             append(obj.total, obj.ASEC120Aspect);
         
         obj.VV.hide();
@@ -528,10 +568,10 @@ append(obj.total, obj.speed_curr);
         obj.power = getprop("f16/avionics/hud-power");
 
         obj.orangePeelGroup = obj.svg.createChild("group")
-                                     .setTranslation(sx*0.695633*0.5, sy*0.245);
+                                     .setTranslation(sx*uv_used*0.5, sy*0.245);
         append(obj.total, obj.orangePeelGroup);
 
-        obj.dlzX      = sx*0.695633*0.75-16;
+        obj.dlzX      = sx*uv_used*0.75-16;
         obj.dlzY      = sy*0.4;
         obj.dlzWidth  =  10;
         obj.dlzHeight = sy*0.25;
@@ -750,7 +790,7 @@ append(obj.total, obj.speed_curr);
             .setStrokeLineWidth(1)
             .setColor(0,1,0)
             .set("z-index",11000);
-            #.setTranslation(sx*0.5*0.695633,sy*0.25);
+            #.setTranslation(sx*0.5*uv_used,sy*0.25);
             append(obj.total, obj.VV);
         obj.localizer = obj.centerOrigin.createChild("group");
         
@@ -853,7 +893,7 @@ append(obj.total, obj.speed_curr);
         var pixelPerDegreeY = HudMath.getPixelPerDegreeAvg(5.0);#15.43724802231049;
         var pixelPerDegreeX = 16.70527172464148;
         var distance = pixelPerDegreeY * 5;
-        var minuss = 0.125*sx*0.695633;
+        var minuss = 0.125*sx*uv_used;
         var minuso = 20*mr;
         for(var i = 1; i <= 17; i += 1) # full drawn lines
           append(obj.total, obj.ladder_group.createChild("path")
@@ -998,17 +1038,17 @@ append(obj.total, obj.speed_curr);
 
         #Horizon line
         append(obj.total, obj.ladder_group.createChild("path")
-                         .moveTo(-0.50*sx*0.695633, 0)
-                         .horiz(0.50*sx*0.695633-20*mr)
+                         .moveTo(-0.50*sx*uv_used, 0)
+                         .horiz(0.50*sx*uv_used-20*mr)
                          .moveTo(20*mr, 0)
-                         .horiz(0.50*sx*0.695633-20*mr)
+                         .horiz(0.50*sx*uv_used-20*mr)
                          .setStrokeLineWidth(1)
                          .setColor(0,0,0));
         
         
         obj.thermometerScaleGrp = obj.svg.createChild("group");
         obj.thermoGroup = obj.thermometerScaleGrp.createChild("group");
-        obj.thermoXstart = 0.80*sx*0.695633;
+        obj.thermoXstart = 0.80*sx*uv_used;
         obj.thermoYstart = sy*0.39;
         obj.thermoY100   = sy*0.03;
         obj.thermometerText2 = obj.thermometerScaleGrp.createChild("text")
@@ -1621,13 +1661,13 @@ append(obj.total, obj.speed_curr);
                                             obj.heading_tape_position = (360-head)*54/10;
                                           if (hdp.gear_down) {
                                               obj.heading_tape_positionY = -10;
-                                              obj.head_curr.setTranslation(0.5*sx*0.695633,sy*0.1-12);
-                                              obj.head_mask.setTranslation(-10+0.5*sx*0.695633,sy*0.1-20);
+                                              obj.head_curr.setTranslation(0.5*sx*uv_used,sy*0.1-12);
+                                              obj.head_mask.setTranslation(-10+0.5*sx*uv_used,sy*0.1-20);
                                               obj.head_frame.setTranslation(0,0);
                                           } else {
                                               obj.heading_tape_positionY = 95;
-                                              obj.head_curr.setTranslation(0.5*sx*0.695633,sy*0.1-12+105);
-                                              obj.head_mask.setTranslation(-10+0.5*sx*0.695633,sy*0.1-20+105);
+                                              obj.head_curr.setTranslation(0.5*sx*uv_used,sy*0.1-12+105);
+                                              obj.head_mask.setTranslation(-10+0.5*sx*uv_used,sy*0.1-20+105);
                                               obj.head_frame.setTranslation(0,105);
                                           }
                                           if (hdp.servHead) {
@@ -1884,12 +1924,12 @@ append(obj.total, obj.speed_curr);
         
         me.Vy   =    hdp.current_view_x_offset_m;
             
-        me.pixelPerMeterX = (340*0.695633)/0.15848;
+        me.pixelPerMeterX = (340*uv_used)/(semi_width*2);
         me.pixelPerMeterY = 260/(me.Hz_t-me.Hz_b);
         
-        me.pixelside = me.pixelPerMeterX*me.Vy;
+        me.pixelside = me.pixelPerMeterX*me.Vy*(!(use_war_hud and getprop("sim/variant-id") == 4));
         
-        me.svg.setTranslation(me.pixelside, 0);
+        me.svg.setTranslation(me.pixelside+tran_x, 0);
         me.custom.setTranslation(me.pixelside, 0);
         me.centerOrigin.setTranslation(HudMath.getCenterOrigin()[0]+me.pixelside, HudMath.getCenterOrigin()[1]);
         me.custom.update();
@@ -1907,7 +1947,7 @@ append(obj.total, obj.speed_curr);
 
 # velocity vector
         #340,260
-        # 0.078135*2 = width of HUD  = 0.15627m
+        # semi_width*2 = width of HUD  = 0.15627m
         
         me.submode = 0;
         
@@ -1943,8 +1983,8 @@ append(obj.total, obj.speed_curr);
         }
         
 
-        # UV mapped to x: 0-0.695633
-        me.averageDegX = math.atan2(0.078135*1.0, me.Vx-me.Hx_m)*R2D;
+        # UV mapped to x: uv_x1 to uv_x2
+        me.averageDegX = math.atan2(semi_width*1.0, me.Vx-me.Hx_m)*R2D;
         me.averageDegY = math.atan2((me.Hz_t-me.Hz_b)*0.5, me.Vx-me.Hx_m)*R2D;
         me.texelPerDegreeX = me.pixelPerMeterX*(((me.Vx-me.Hx_m)*math.tan(me.averageDegX*D2R))/me.averageDegX);
         me.texelPerDegreeY = me.pixelPerMeterY*(((me.Vx-me.Hx_m)*math.tan(me.averageDegY*D2R))/me.averageDegY);
