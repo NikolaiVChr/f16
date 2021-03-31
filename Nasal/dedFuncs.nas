@@ -170,7 +170,7 @@ var EditableField = {
 			if (me.lastText1 == "" and me.lastText2 == "" and me.recallStatus == 0) {
 				return sprintf("*" ~ me.stringFormat ~ "*", me.text);
 			} else {
-				return sprintf(utf8.chstr("0xFB4F") ~ me.stringFormat ~ utf8.chstr("0xFB4F"), me.text);
+				return sprintf(utf8.chstr(0xFB75) ~ me.stringFormat ~ utf8.chstr(0xFB75), me.text);
 			}
 		} else {
 			return sprintf(" " ~ me.stringFormat ~ " ", me.text);

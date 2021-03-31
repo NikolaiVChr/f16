@@ -409,9 +409,9 @@ var dataEntryDisplay = {
 	
 	updateList: func() {
 		me.text[0] = sprintf("           LIST      %s ", me.no);
-		me.text[1] = sprintf(" "~utf8.chstr("0xFB4D")~"DEST "~utf8.chstr("0xFB4C")~"BNGO "~utf8.chstr("0xFB4B")~"VIP "~utf8.chstr("0xFB44")~"INTG ");
-		me.text[2] = sprintf(" "~utf8.chstr("0xFB4A")~"NAV  "~utf8.chstr("0xFB41")~"MAN  "~utf8.chstr("0xFB48")~"INS "~utf8.chstr("0xFB45")~"DLNK ");
-		me.text[3] = sprintf(" "~utf8.chstr("0xFB43")~"EWS  "~utf8.chstr("0xFB47")~"MODE "~utf8.chstr("0xFB46")~"VRP "~utf8.chstr("0xFB4E")~"MISC ");
+		me.text[1] = sprintf(" "~utf8.chstr(0xFB51)~"DEST "~utf8.chstr(0xFB52)~"BNGO "~utf8.chstr(0xFB53)~"VIP "~utf8.chstr(0xFB6B)~"INTG ");
+		me.text[2] = sprintf(" "~utf8.chstr(0xFB54)~"NAV  "~utf8.chstr(0xFB55)~"MAN  "~utf8.chstr(0xFB56)~"INS "~utf8.chstr(0xFB5E)~"DLNK ");
+		me.text[3] = sprintf(" "~utf8.chstr(0xFB57)~"EWS  "~utf8.chstr(0xFB58)~"MODE "~utf8.chstr(0xFB59)~"VRP "~utf8.chstr(0xFB50)~"MISC ");
 		me.text[4] = sprintf("                        ");
 	},
 	
@@ -577,9 +577,9 @@ var dataEntryDisplay = {
 	
 	updateMisc: func() {
 		me.text[0] = sprintf("           MISC      %s ", me.no);
-		me.text[1] = sprintf(" "~utf8.chstr("0xFB4D")~"CORR "~utf8.chstr("0xFB4C")~"MAGV "~utf8.chstr("0xFB4B")~"OFP "~utf8.chstr("0xFB44")~"HMCS");
-		me.text[2] = sprintf(" "~utf8.chstr("0xFB4A")~"INSM "~utf8.chstr("0xFB41")~"LASR "~utf8.chstr("0xFB48")~"GPS "~utf8.chstr("0xFB45")~" ");
-		me.text[3] = sprintf(" "~utf8.chstr("0xFB43")~"DRNG "~utf8.chstr("0xFB47")~"BULL "~utf8.chstr("0xFB46")~"WPT "~utf8.chstr("0xFB4E")~"HARM ");
+		me.text[1] = sprintf(" "~utf8.chstr(0xFB51)~"CORR "~utf8.chstr(0xFB52)~"MAGV "~utf8.chstr(0xFB53)~"OFP "~utf8.chstr(0xFB6B)~"HMCS");
+		me.text[2] = sprintf(" "~utf8.chstr(0xFB54)~"INSM "~utf8.chstr(0xFB55)~"LASR "~utf8.chstr(0xFB56)~"GPS "~utf8.chstr(0xFB5E)~" ");
+		me.text[3] = sprintf(" "~utf8.chstr(0xFB57)~"DRNG "~utf8.chstr(0xFB58)~"BULL "~utf8.chstr(0xFB59)~"WPT "~utf8.chstr(0xFB50)~"HARM ");
 		me.text[4] = sprintf("                        ");
 	},
 	
