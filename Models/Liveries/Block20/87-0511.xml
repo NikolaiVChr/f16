@@ -4,16 +4,16 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">RNLAF 313 Sqn, J-055 "TM10"</name>
-    <texture>Liveries/Block20/86-0055_2.png</texture>
+    <name type="string">RNLAF 322 Sqn, J-511</name>
+    <texture>Liveries/Block20/87-0511.png</texture>
     <owner type="string">RNLAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/Block20/E-602.png</texture>
+    <texture>Liveries/Block20/standard.rnlaf.logos.png</texture>
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/Block20/patch.rnlaf_313.png</texture>
+      <texture>Liveries/Block20/patch.RNLAF.png</texture>
   </livery-patch>
 
   <livery-pod>
