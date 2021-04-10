@@ -152,7 +152,7 @@ Axel Paccalin
 - Implemented recursive function to compute the closest range in the past frames.
 
 Baptiste "Bat" Campion
-- Belgian AF, Hellenic AF, PACAF-USN Aggressors, Dutch AF livery packs
+- Belgian AF, Hellenic AF, PACAF-USN Aggressors, Dutch AF, PACAF livery packs
 - Portuguese AF, QF-16, Turkish AF, Royal Moroccan AF liveries
 
 Shaymo

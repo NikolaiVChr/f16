@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim> 
+  <model>
+   <livery>
+    <name type="string">USAF 51FW, 36FS OS #130</name>
+    <texture>Liveries/Block40/89-2130.png</texture>
+    <owner type="string">USAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/Block40/standard.logos.black2.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block40/patch.51FW.png</texture>
+  </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/External-stores/MXU-648.png</texture>
+  </livery-pod>
+
+  <f16>
+    <dragchute type="bool">false</dragchute>
+  </f16>
+  </model>
+ </sim>
+</PropertyList>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim> 
+  <model>
+   <livery>
+    <name type="string">USAF 8FW, 80FS WP "Have Glass V"</name>
+    <texture>Liveries/Block40/88-0468.png</texture>
+    <owner type="string">USAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/Block40/standard.black.logos.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block40/patch.8thFW.png</texture>
+  </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/External-stores/MXU-648.png</texture>
+  </livery-pod>
+
+  <f16>
+    <dragchute type="bool">false</dragchute>
+  </f16>
+  </model>
+ </sim>
+</PropertyList>
