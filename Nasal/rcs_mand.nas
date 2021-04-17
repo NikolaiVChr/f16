@@ -1,6 +1,6 @@
 var rcs_oprf_database = {
     # This list contains the mandatory RCS frontal values for OPRF (anno 1997), feel free to add non-OPRF to your aircraft we don't care.
-    #REVISION: 2020/11/01
+    #REVISION: 2021/04/17
     "default":                  150,    #default value if target's model isn't listed
     "f-14b":                    12,     
     "F-14D":                    12,     
@@ -58,6 +58,7 @@ var rcs_oprf_database = {
     "tigre":                    6,      #guess, Hunter
 # OPRF assets:
     "depot":                    170,
+    "ZSU-23-4M":                3,
     "buk-m2":                   7,   
     "truck":                    1.5,
     "missile_frigate":          450, 
