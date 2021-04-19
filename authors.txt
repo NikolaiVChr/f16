@@ -136,6 +136,7 @@ Marsdolphin
 
 Colin Geniet
 - RCS timer
+- Updated cannon damage
 
 Reaper
 - 3D side stick updates for Block 10
@@ -151,9 +152,8 @@ Axel Paccalin
 - Implemented recursive function to compute the closest range in the past frames.
 
 Baptiste "Bat" Campion
-- Belgian AF livery pack
-- Hellenic AF livery pack
-- Portuguese AF liveries
+- Belgian AF, Hellenic AF, PACAF-USN Aggressors, Dutch AF, PACAF livery packs
+- Portuguese AF, QF-16, Turkish AF, Royal Moroccan AF liveries
 
 Shaymo
 - Exterior and interior 3D model fixes

@@ -128,7 +128,7 @@ var JFS = {
 		jfs_full.setBoolValue(jfs_n_norm == 1);
 		jfs_rpm_norm.setDoubleValue(jfs_n_norm);
 		
-		if (!cutoff_lever.getValue() and feed.getValue() > 0) {
+		if (!cutoff_lever.getValue() and (feed.getValue() > 0 or running.getValue())) {
 			cutoff.setValue(0);
 		} else {
 			cutoff.setValue(1);

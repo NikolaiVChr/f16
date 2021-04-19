@@ -7,9 +7,10 @@ var ilsCrsEF = EditableField.new("f16/crs-ils", "%3d", 3);
 var wingspanEF = EditableField.new("f16/avionics/eegs-wingspan-ft", "%3d", 3);
 var alowEF = EditableField.new("f16/settings/cara-alow", "%5d", 5);
 var mslFloorEF = EditableField.new("f16/settings/msl-floor", "%5d", 5);
-var laserCodeTgpEF = EditableField.new("f16/avionics/laser-code", "%4d", 4);
+var laserCodeTgpEF = EditableField.new("f16/avionics/laser-code", "%04d", 4, checkValueLaserCode);
 var iffEF = EditableField.new("instrumentation/iff/channel-selection", "%4d", 4);
-var transpEF = EditableField.new("instrumentation/transponder/id-code", "%4d", 4);
+var iffTF = toggleableIff.new([0, 1], "instrumentation/iff/activate");
+var transpEF = EditableField.new("instrumentation/transponder/id-code", "%04d", 4, checkValueTransponderCode);
 var transpModeTF = toggleableTransponder.new([0, 1, 2, 3, 4, 5], "instrumentation/transponder/inputs/knob-mode");
 
 var pTACAN = EditableFieldPage.new(0, [tacanChanEF,tacanBandTF,ilsFrqEF,ilsCrsEF]);
@@ -50,7 +51,7 @@ var pHARM  = EditableFieldPage.new(29);
 var pCNI   = EditableFieldPage.new(30);
 var pCOMM1 = EditableFieldPage.new(31);
 var pCOMM2 = EditableFieldPage.new(32);
-var pIFF   = EditableFieldPage.new(33, [transpEF,transpModeTF,iffEF]);
+var pIFF   = EditableFieldPage.new(33, [transpEF,transpModeTF,iffEF,iffTF]);
 
 var dataEntryDisplay = {
 	line1: nil,
@@ -408,9 +409,9 @@ var dataEntryDisplay = {
 	
 	updateList: func() {
 		me.text[0] = sprintf("           LIST      %s ", me.no);
-		me.text[1] = sprintf(" "~utf8.chstr("0xFB4D")~"DEST "~utf8.chstr("0xFB4C")~"BNGO "~utf8.chstr("0xFB4B")~"VIP "~utf8.chstr("0xFB44")~"INTG ");
-		me.text[2] = sprintf(" "~utf8.chstr("0xFB4A")~"NAV  "~utf8.chstr("0xFB41")~"MAN  "~utf8.chstr("0xFB48")~"INS "~utf8.chstr("0xFB45")~"DLNK ");
-		me.text[3] = sprintf(" "~utf8.chstr("0xFB43")~"EWS  "~utf8.chstr("0xFB47")~"MODE "~utf8.chstr("0xFB46")~"VRP "~utf8.chstr("0xFB4E")~"MISC ");
+		me.text[1] = sprintf(" "~utf8.chstr(0xFB51)~"DEST "~utf8.chstr(0xFB52)~"BNGO "~utf8.chstr(0xFB53)~"VIP "~utf8.chstr(0xFB6B)~"INTG ");
+		me.text[2] = sprintf(" "~utf8.chstr(0xFB54)~"NAV  "~utf8.chstr(0xFB55)~"MAN  "~utf8.chstr(0xFB56)~"INS "~utf8.chstr(0xFB5E)~"DLNK ");
+		me.text[3] = sprintf(" "~utf8.chstr(0xFB57)~"EWS  "~utf8.chstr(0xFB58)~"MODE "~utf8.chstr(0xFB59)~"VRP "~utf8.chstr(0xFB50)~"MISC ");
 		me.text[4] = sprintf("                        ");
 	},
 	
@@ -576,9 +577,9 @@ var dataEntryDisplay = {
 	
 	updateMisc: func() {
 		me.text[0] = sprintf("           MISC      %s ", me.no);
-		me.text[1] = sprintf(" "~utf8.chstr("0xFB4D")~"CORR "~utf8.chstr("0xFB4C")~"MAGV "~utf8.chstr("0xFB4B")~"OFP "~utf8.chstr("0xFB44")~"HMCS");
-		me.text[2] = sprintf(" "~utf8.chstr("0xFB4A")~"INSM "~utf8.chstr("0xFB41")~"LASR "~utf8.chstr("0xFB48")~"GPS "~utf8.chstr("0xFB45")~" ");
-		me.text[3] = sprintf(" "~utf8.chstr("0xFB43")~"DRNG "~utf8.chstr("0xFB47")~"BULL "~utf8.chstr("0xFB46")~"WPT "~utf8.chstr("0xFB4E")~"HARM ");
+		me.text[1] = sprintf(" "~utf8.chstr(0xFB51)~"CORR "~utf8.chstr(0xFB52)~"MAGV "~utf8.chstr(0xFB53)~"OFP "~utf8.chstr(0xFB6B)~"HMCS");
+		me.text[2] = sprintf(" "~utf8.chstr(0xFB54)~"INSM "~utf8.chstr(0xFB55)~"LASR "~utf8.chstr(0xFB56)~"GPS "~utf8.chstr(0xFB5E)~" ");
+		me.text[3] = sprintf(" "~utf8.chstr(0xFB57)~"DRNG "~utf8.chstr(0xFB58)~"BULL "~utf8.chstr(0xFB59)~"WPT "~utf8.chstr(0xFB50)~"HARM ");
 		me.text[4] = sprintf("                        ");
 	},
 	
@@ -634,7 +635,7 @@ var dataEntryDisplay = {
 	updateLaser: func() {
 		var code = getprop("f16/avionics/laser-code");
 		me.text[0] = sprintf("         LASER      %s   ",me.no);
-		me.text[1] = sprintf("   TGP CODE   %s     ",pLASR.vector[0].getText());#Need to set limit on legal numbers. Only 1111 to 2888 is valid codes.
+		me.text[1] = sprintf("   TGP CODE   %s     ",pLASR.vector[0].getText());
 		me.text[2] = sprintf("   LST CODE    %04d     ",code);
 		me.text[3] = sprintf("   A-G: CMBT  A-A: TRNG ");
 		me.text[4] = sprintf("   LASER ST TIME  16 SEC");
@@ -748,7 +749,7 @@ var dataEntryDisplay = {
 		else pond = "----";
 		me.text[0] = sprintf("IFF        MAN          ");# Should have ON between IFF and MAN. But I moved it beside the channels, until we get more transponder/iff in cockpit.
 		me.text[1] = sprintf("M3    %s  %s         ", pIFF.vector[0].getText(), pIFF.vector[1].getText());
-		me.text[2] = sprintf("M4    %s   ON         ", pIFF.vector[2].getText());
+		me.text[2] = sprintf("M4    %s  %s         ", pIFF.vector[2].getText(), pIFF.vector[3].getText());
 		me.text[3] = sprintf("PILOT   %s",sign);
 		me.text[4] = sprintf("TYPE    %s",type);
 	},

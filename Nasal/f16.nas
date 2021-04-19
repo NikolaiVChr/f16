@@ -1631,6 +1631,8 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
       #skip warmup if not cold and dark selected from launcher.
       setprop("/f16/avionics/power-fcr-warm", 1);
       setprop("/f16/avionics/power-rdr-alt-warm", 1);
+      setprop("/f16/avionics/power-ufc-warm", 1);
+      setprop("/f16/avionics/power-mfd-warm", 1);  # Can't force an actuator
     }
     setprop("/f16/cockpit/oxygen-liters", 5.0);
     setprop("f16/cockpit/hydrazine-minutes", 10);

@@ -1310,7 +1310,7 @@
         <type>knob</type>
         <object-name>SW_MASTER_FUEL</object-name>
         <visible>true</visible>
-        <property>fdm/jsbsim/elec/switches/master-fuel</property>
+        <property>fdm/jsbsim/elec/switches/master-fuel-cmd</property>
         <drag-direction>vertical</drag-direction>
         <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
         <repeatable>true</repeatable>
@@ -1330,14 +1330,14 @@
         <increase>
             <binding>
                 <command>property-assign</command>
-                <property>fdm/jsbsim/elec/switches/master-fuel</property>
+                <property>fdm/jsbsim/elec/switches/master-fuel-cmd</property>
                 <value>1</value>
             </binding>
         </increase>
         <decrease>
             <binding>
                 <command>property-assign</command>
-                <property>fdm/jsbsim/elec/switches/master-fuel</property>
+                <property>fdm/jsbsim/elec/switches/master-fuel-cmd</property>
                 <value>0</value>
             </binding>
         </decrease>
@@ -1346,7 +1346,7 @@
     <animation>
         <type>rotate</type>
         <object-name>SW_MASTER_FUEL_COVER</object-name>
-        <property>fdm/jsbsim/elec/switches/master-fuel</property>
+        <property>fdm/jsbsim/elec/switches/master-fuel-cmd</property>
         <factor>-40</factor>
         <offset-deg>40</offset-deg>
         <center>

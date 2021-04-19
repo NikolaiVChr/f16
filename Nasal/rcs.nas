@@ -18,7 +18,7 @@ var test = func (echoHeading, echoPitch, echoRoll, bearing, frontRCS) {
 
 var rcs_database = {
     parents: [rcs_oprf_database],
-	#REVISION: 2020/11/01
+	#REVISION: 2021/04/17
     "YF-16":                    5,      #higher because earlier blocks had larger RCS
     "F-16CJ":                   2,      #average
     "f16":                      2,      #average

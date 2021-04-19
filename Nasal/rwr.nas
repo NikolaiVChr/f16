@@ -216,7 +216,7 @@ RWRCanvas = {
 #                   .hide();
 #        }
 # Threat list ID:
-        #REVISION: 2020/11/01
+        #REVISION: 2021/04/17
         #OPRF Fleet
         rwr.AIRCRAFT_WARTHOG  = "10";
         rwr.AIRCRAFT_TOMCAT   = "14";
@@ -230,6 +230,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_JAGUAR   = "JA";
         rwr.AIRCRAFT_MIRAGE   = "M2";
         rwr.AIRCRAFT_SEARCH   = "S";
+        rwr.ASSET_AAA         = "A";
         rwr.ASSET_BUK         = "11";
         rwr.ASSET_GARGOYLE    = "20"; # Other namings for tracking and radar: BB, CS.
         rwr.ASSET_FRIGATE     = "SH";
@@ -294,6 +295,7 @@ RWRCanvas = {
                 "A-10":                     rwr.AIRCRAFT_WARTHOG,
                 "A-10-model":               rwr.AIRCRAFT_WARTHOG,
                 "Typhoon":                  rwr.AIRCRAFT_TYPHOON,
+                "ZSU-23-4M":                rwr.ASSET_AAA,
                 "buk-m2":                   rwr.ASSET_BUK,
                 "s-300":                    rwr.ASSET_GARGOYLE,
                 "missile_frigate":          rwr.ASSET_FRIGATE,

@@ -59,6 +59,8 @@
             <path>/f16/avionics/ils-volume</path>
             <path>/f16/avionics/rwr-volume</path>
             <path>/f16/avionics/intercom-volume</path>
+            <path>/f16/effects/dirt</path>
+            <path>/f16/effects/rust</path>
             <path>/environment/season</path>
         </aircraft-data>
         <tags>
@@ -705,7 +707,7 @@
         <ventilation>
             <airconditioning-type type="int">0</airconditioning-type><!-- cold for 12s: -1 auto: 0 warm for 12s: 1 -->
             <airconditioning-enabled type="bool">false</airconditioning-enabled>
-            <airconditioning-source type="bool">false</airconditioning-source>
+            <airconditioning-source type="int">0</airconditioning-source>
             <airconditioning-temperature type="double">16.0</airconditioning-temperature>
             <windshield-hot-air-knob type="double">0.0</windshield-hot-air-knob>
         </ventilation>
@@ -845,7 +847,7 @@
                     <external-pwr type="bool">false</external-pwr>
                 </sources>
                 <switches>
-                    <master-fuel type="bool">1</master-fuel>
+                    <master-fuel-cmd type="bool">1</master-fuel-cmd>
                     <epu type="int">0</epu>
                     <epu-cover type="int">1</epu-cover>
                     <epu-pin type="bool">1</epu-pin>
@@ -1064,6 +1066,7 @@
             <channel_prop type="string">/instrumentation/iff/channel-selection</channel_prop>
             <power_prop type="string">/instrumentation/iff/power</power_prop>
             <power type="bool">true</power>
+            <activate type="bool">true</activate>
             <channel-selection type="int">1</channel-selection>
             <response type="bool">false</response>
         </iff>
@@ -1306,6 +1309,7 @@ value. 18000=standard US transition altitude -->
             <power-mmc type="bool">false</power-mmc>
             <power-st-sta type="bool">false</power-st-sta>
             <power-mfd type="bool">false</power-mfd>
+            <power-mfd-bit type="int">0</power-mfd-bit>
             <power-ufc type="bool">false</power-ufc>
             <power-gps type="bool">false</power-gps>
             <power-dl type="bool">false</power-dl>

@@ -97,7 +97,7 @@ var Action = {
 };
 
 var EditableField = {
-	new: func(prop, stringFormat, maxSize) {
+	new: func(prop, stringFormat, maxSize, checkValue = nil) {
 		var editableField = {parents: [EditableField]};
 		editableField.text = getprop(prop);
 		editableField.prop = prop;
@@ -108,6 +108,7 @@ var EditableField = {
 		editableField.recallStatus = 0;
 		editableField.selected = 0;
 		editableField.listener = nil;
+		editableField.checkValue = checkValue;
 		editableField.init();
 		return editableField;
 	},
@@ -154,6 +155,11 @@ var EditableField = {
 		}
 	},
 	enter: func() {
+		if (me.checkValue != nil) {
+			if (me.checkValue(me.text) != 0) {
+				return;
+			}
+		}
 		me.recallStatus = 0;
 		me.lastText1 = "";
 		me.lastText2 = "";
@@ -164,7 +170,7 @@ var EditableField = {
 			if (me.lastText1 == "" and me.lastText2 == "" and me.recallStatus == 0) {
 				return sprintf("*" ~ me.stringFormat ~ "*", me.text);
 			} else {
-				return sprintf(utf8.chstr("0xFB4F") ~ me.stringFormat ~ utf8.chstr("0xFB4F"), me.text);
+				return sprintf(utf8.chstr(0xFB75) ~ me.stringFormat ~ utf8.chstr(0xFB75), me.text);
 			}
 		} else {
 			return sprintf(" " ~ me.stringFormat ~ " ", me.text);
@@ -420,6 +426,95 @@ var toggleableTransponder = {
 		me.value = me.valuesVector[me.index];
 	},
 };
+
+var toggleableIff = {
+	new: func(valuesVector, prop) {
+		var tF = {parents: [toggleableIff]};
+		tF.valuesVector = valuesVector;
+		tF.value = "";
+		tF.index = 0;
+		tF.prop = prop;
+		tF.selected = 0;
+		tF.text = "";
+		tF.lastText1 = "";
+		tF.lastText2 = "";
+		tF.recallStatus = 0;
+		tF.listener = nil;
+		tF.init();
+		return tF;
+	},
+	init: func() {
+		if (me.listener == nil) {
+			me.listener = setlistener(me.prop, func() {
+				me.updateText();
+			}, 0, 0);
+		}
+
+		for (var i = 0; i < size(me.valuesVector); i = i + 1) {
+			if (getprop(me.prop) == me.valuesVector[i]) {
+				me.value = me.valuesVector[i];
+				me.index = i;
+			}
+		}
+	},
+	append: func(letter) {
+		if (letter != "0") { return; }
+		me.index += 1;
+		if (me.index >= size(me.valuesVector)) {
+			me.index = 0;
+		}
+		setprop(me.prop, me.valuesVector[me.index]);
+	},
+	recall: func() {
+		return;
+	},
+	enter: func() {
+		return;
+	},
+	getText: func() {
+		me.stat = "OFF";
+		if (me.value == 1) {
+			me.stat = "ON";
+		}
+		if (me.selected) {
+			return "*" ~ me.stat ~ "*";
+		} else {
+			return " " ~ me.stat ~ " ";
+		}
+	},
+	updateText: func() {
+		me.value = me.valuesVector[me.index];
+	},
+};
+
+var checkValueTransponderCode = func(text) {
+	var codeDigits = split("", text);
+
+	for (var i = 0; i < 4; i = i + 1) {
+		var codeDigit = pop(codeDigits);
+		if (codeDigit > 7) {
+			return -1;
+		}
+	}
+
+	return 0;
+}
+
+var checkValueLaserCode = func(text) {
+	var codeDigits = split("", text);
+
+	for (var i = 0; i < 4; i = i + 1) {
+		var codeDigit = pop(codeDigits);
+		if (i == 0 and codeDigit > 2) {
+			return -1;
+		}
+		if (codeDigit < 1 or codeDigit > 8) {
+			return -1;
+		}
+	}
+
+	return 0;
+}
 
 var modeSelBull = func() { dataEntryDisplay.bullMode = !dataEntryDisplay.bullMode; };
 

@@ -121,7 +121,7 @@ var autostart = func {
     setprop("fdm/jsbsim/elec/switches/epu-pin",1);
   }
 
-  setprop("fdm/jsbsim/elec/switches/master-fuel",1);
+  setprop("fdm/jsbsim/elec/switches/master-fuel-cmd",1);
   setprop("f16/engine/feed",1);
   setprop("fdm/jsbsim/elec/switches/epu",1);
   setprop("fdm/jsbsim/elec/switches/epu-cover",0);

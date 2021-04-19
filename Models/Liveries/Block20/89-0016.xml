@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model> 
+   <livery>
+    <name type="string">RNLAF 313 Sqn, J-016</name>
+    <texture>Liveries/Block20/89-0016.png</texture>
+    <owner type="string">RNLAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/Block20/standard.rnlaf.logos.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block20/patch.rnlaf_313.png</texture>
+  </livery-patch>
+
+  <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+    </livery-pod>
+
+  <f16>
+     <dragchute type="bool">true</dragchute>
+  </f16>
+  </model>
+ </sim>
+</PropertyList>

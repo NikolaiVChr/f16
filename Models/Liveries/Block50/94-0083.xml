@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">TuAF 191 Filo, #0083</name>
+    <texture>Liveries/Block50/94-0083.png</texture>
+    <owner type="string">TuAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/Block50/turkish.logos.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block50/patch.turkey.png</texture>
+   </livery-patch>
+
+  <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+  </livery-pod>
+
+    <f16>
+        <dragchute type="bool">false</dragchute>
+    </f16>
+  </model>
+ </sim>
+</PropertyList>
