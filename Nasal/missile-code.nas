@@ -360,8 +360,9 @@ var AIM = {
 		# launching conditions
         m.rail                  = getprop(m.nodeString~"rail");                       # if the weapon is rail or tube fired set to true. If dropped 7ft before ignited set to false.
         m.rail_dist_m           = getprop(m.nodeString~"rail-length-m");              # length of tube/rail
-        m.rail_forward          = getprop(m.nodeString~"rail-point-forward");         # true for rail, false for rail/tube with a pitch
-        m.rail_pitch_deg        = getprop(m.nodeString~"rail-pitch-deg");             # Only used when rail is not forward. 90 for vertical tube.
+        m.rail_forward          = getprop(m.nodeString~"rail-point-forward");         # true for rail, false for rail/tube with a pitch/heading-deviation
+        m.rail_pitch_deg        = getprop(m.nodeString~"rail-pitch-deg");             # Only used when rail is not forward. 90 for vertical tube. Max 90, min -90.
+        m.rail_head_deg         = getprop(m.nodeString~"rail-heading-deg");           # Only used when rail is not forward. 90 for vertical tube.
         m.drop_time             = getprop(m.nodeString~"drop-time");                  # Time to fall before stage 1 thrust starts.
         m.deploy_time           = getprop(m.nodeString~"deploy-time");                # Time to deploy wings etc. Time starts when drop ends or rail passed.
         m.no_pitch              = getprop(m.nodeString~"pitch-animation-disabled");   # bool
@@ -401,6 +402,11 @@ var AIM = {
         
         if (m.rail_forward == TRUE) {
         	m.rail_pitch_deg = 0;
+        	m.rail_head_deg  = 0;
+        }
+
+        if (m.rail_head_deg == nil) {
+        	m.rail_head_deg  = 0;
         }
         
         if (m.guideWhileDrop == nil) {
@@ -1330,7 +1336,13 @@ var AIM = {
 
 		if (me.rail == TRUE) {
 			if (me.rail_forward == FALSE) {
-				ac_pitch = ac_pitch + me.rail_pitch_deg;
+				me.position_on_rail = 0;
+				me.railvec = vector.Math.eulerToCartesian3X(-me.rail_head_deg, me.rail_pitch_deg,0);
+				me.veccy = vector.Math.yawPitchRollVector(-OurHdg.getValue(),OurPitch.getValue(),OurRoll.getValue(),me.railvec);
+				me.carty = vector.Math.cartesianToEuler(me.veccy);
+				me.msl_pitch = me.carty[1];
+				me.defaultHeading = me.Tgt != nil?me.Tgt.get_bearing():0;#90 deg tubes align to target heading, else north
+				me.msl_hdg   = me.carty[0]==nil?me.defaultHeading:me.carty[0];
 			}
 		}
 
@@ -1347,15 +1359,8 @@ var AIM = {
 		var init_coord = nil;
 		if (me.rail == TRUE) {
 			if (me.rail_forward == FALSE) {
-				# polar pylon coords:
-				me.rail_dist_origin = math.sqrt(me.x*me.x+me.z*me.z);
-				if (me.rail_dist_origin == 0) {
-					me.rail_dist_origin = 0.00001;
-				}
-				me.rail_origin_angle_rad = math.acos(me.clamp(me.x/me.rail_dist_origin,-1,1))*(me.z<0?-1:1);
-				# since we cheat by rotating entire launcher, we must calculate new pylon positions after the rotation:
-				me.x = me.rail_dist_origin*math.cos(me.rail_origin_angle_rad+me.rail_pitch_deg*D2R);
-				me.z = me.rail_dist_origin*math.sin(me.rail_origin_angle_rad+me.rail_pitch_deg*D2R);
+				me.railBegin = [-me.x, -me.y, me.z];
+				me.railEnd   = vector.Math.plus(me.railBegin, vector.Math.product(me.rail_dist_m, me.railvec));
 			}
 		}
 		if (offsetMethod == TRUE and (me.rail == FALSE or me.rail_forward == TRUE)) {
@@ -1363,7 +1368,7 @@ var AIM = {
 			init_coord = geo.Coord.new();
 			init_coord.set_xyz(pos.x, pos.y, pos.z);
 		} else {
-			init_coord = me.getGPS(me.x, me.y, me.z, ac_pitch);
+			init_coord = me.getGPS(me.x, me.y, me.z, ac_pitch, ac_hdg);
 		}	
 
 
@@ -1374,9 +1379,9 @@ var AIM = {
 		me.latN.setDoubleValue(mlat);
 		me.lonN.setDoubleValue(mlon);
 		me.altN.setDoubleValue(malt);
-		me.hdgN.setDoubleValue(ac_hdg);
+		me.hdgN.setDoubleValue(me.msl_hdg);
 
-		me.pitchN.setDoubleValue(ac_pitch);
+		me.pitchN.setDoubleValue(me.msl_pitch);
 		me.rollN.setDoubleValue(0);
 
 		me.coord = geo.Coord.new(init_coord);
@@ -1415,6 +1420,7 @@ var AIM = {
 		me.speed_horizontal_fps = math.sqrt(me.speed_east_fps*me.speed_east_fps + me.speed_north_fps*me.speed_north_fps);
 		if (me.rail == TRUE) {
 			if (me.rail_forward == FALSE) {
+					# TODO: add side wind here too since rail can now have heading offset too.
 					me.u = noseAir.getValue();
 					me.w = -belowAir.getValue();
 					me.rail_speed_into_wind = me.u*math.cos(me.rail_pitch_deg*D2R)+me.w*math.sin(me.rail_pitch_deg*D2R);
@@ -1764,6 +1770,7 @@ var AIM = {
 				me.printStats("Launch direction is forward.");
 			} else {
 				me.printStats("Launch direction is %d degrees upward.", me.rail_pitch_deg);
+				me.printStats("                and %d degrees right.", me.rail_head_deg);
 			}
 		} else {
 			me.printStats("Weapon is dropped from launcher. Dropping for %.1f seconds.",me.drop_time);#todo
@@ -2198,13 +2205,13 @@ var AIM = {
 				me.pitch = OurPitch.getValue();
 				me.hdg = OurHdg.getValue();
 			} else {
-				me.pitch = OurPitch.getValue() + me.rail_pitch_deg;
-				if (me.Tgt != nil) {
-					me.hdg = me.Tgt.get_bearing();
-				} else {
-					me.hdg = OurHdg.getValue();
-				}
-			}			
+				me.railvec = vector.Math.eulerToCartesian3X(-me.rail_head_deg, me.rail_pitch_deg,0);
+				me.veccy = vector.Math.yawPitchRollVector(-OurHdg.getValue(),OurPitch.getValue(),OurRoll.getValue(),me.railvec);
+				me.carty = vector.Math.cartesianToEuler(me.veccy);
+				me.defaultHeading = me.Tgt != nil?me.Tgt.get_bearing():0;#90 deg tubes align to target heading, else north
+				me.pitch = me.carty[1];
+				me.hdg   = me.carty[0]==nil?me.defaultHeading:me.carty[0];
+			}
 
 			me.speed_on_rail = me.clamp(me.rail_speed_into_wind - me.opposing_wind, 0, 1000000);
 			#printf("Rail: ms_rail_fps=%d", me.speed_on_rail);
@@ -2214,7 +2221,8 @@ var AIM = {
 			if (me.rail_forward == TRUE) {
 				me.x = me.x - (me.movement_on_rail * FT2M);# negative cause positive is rear in body coordinates
 			} else {
-				me.x = me.x - (me.movement_on_rail * FT2M);
+				me.position_on_rail += math.max(0, me.movement_on_rail * FT2M);# only can move forward on rail.
+				me.railPos = myMath.alongVector(me.railBegin, me.railEnd, me.rail_dist_m, me.position_on_rail);
 			}
 		}
 
@@ -2237,8 +2245,7 @@ var AIM = {
 					me.coord = me.getGPS(me.x, me.y, me.z, OurPitch.getValue());
 				}
 			} else {
-				# kind of a hack, but work for static launcher
-				me.coord = me.getGPS(me.x, me.y, me.z, OurPitch.getValue()+me.rail_pitch_deg);
+				me.coord = me.getGPS(-me.railPos[0], -me.railPos[1], me.railPos[2], OurPitch.getValue(), OurHdg.getValue());
 			}
 			me.alt_ft = me.coord.alt() * M2FT;
 			# find its speed, for used in calc old speed
