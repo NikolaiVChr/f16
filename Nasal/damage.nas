@@ -298,7 +298,7 @@ var DamageRecipient =
                   dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [systime()-(time_before_delete-1.6), notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.u_fps, notification.Heading, notification.Pitch,-1]
                 }
                 
-                if (tacview_supported and getprop("sim/multiplay/txhost") == "mpserver.opredflag.com") {
+                if (tacview_supported and getprop("sim/multiplay/txhost") != "mpserver.opredflag.com") {
                   if (tacview.starttime) {
                     var tacID = left(md5(notification.Callsign~notification.UniqueIdentity),6);
                     if (notification.Kind == DESTROY) {
@@ -310,6 +310,7 @@ var DamageRecipient =
                       var typp = typ[4]=="pilot"?"Parachutist":typ[4];
                       var extra = typp=="Parachutist"?"|0|0|0":"";
                       var extra2 = typ[2]==0?",Type=Weapon+Missile":",Type=Weapon+Bomb";
+                      extra2 = typ[4]=="Flare"?",Type=Flare":extra2;
                       extra2 = typp=="Parachutist"?"":extra2;
                       var color = radarOn?",Color=Red":",Color=Yellow";
                       thread.lock(tacview.mutexWrite);
@@ -379,6 +380,27 @@ var DamageRecipient =
 #                    debug.dump(notification);
                     #
                     #
+                    if (tacview_supported and tacview.starttime and getprop("sim/multiplay/txhost") != "mpserver.opredflag.com") {
+                      var node = getCallsign(notification.RemoteCallsign);
+                      if (node != nil and notification.SecondaryKind > 20) {
+                        # its a warhead
+                        var wh = id2warhead[notification.SecondaryKind - 21];
+                        var lbs = wh[1];
+                        var hitCoord = geo.Coord.new();
+                        hitCoord.set_latlon(node.getNode("position/latitude-deg").getValue(), node.getNode("position/longitude-deg").getValue(), node.getNode("position/altitude-ft").getValue()*FT2M+notification.RelativeAltitude);
+                        if (notification.Distance > math.abs(notification.RelativeAltitude)) {#just a sanity check
+                          hitCoord = hitCoord.apply_course_distance(notification.Bearing, math.sqrt(notification.Distance*notification.Distance-notification.RelativeAltitude*notification.RelativeAltitude));
+                        }
+                        thread.lock(tacview.mutexWrite);
+                        tacview.writeExplosion(hitCoord.lat(),hitCoord.lon(),hitCoord.alt(), lbs*0.5);
+                        thread.unlock(tacview.mutexWrite);                      
+                      } elsif (node != nil and notification.SecondaryKind < 0) {
+                        # its a cannon or rocket
+                        thread.lock(tacview.mutexWrite);
+                        tacview.writeExplosion(node.getNode("position/latitude-deg").getValue(), node.getNode("position/longitude-deg").getValue(), node.getNode("position/altitude-ft").getValue()*FT2M, 5);
+                        thread.unlock(tacview.mutexWrite);                      
+                      }
+                    }
                     var callsign = getprop("sim/multiplay/callsign");
                     callsign = size(callsign) < 8 ? callsign : left(callsign,7);
                     if (notification.RemoteCallsign == callsign and getprop("payload/armament/msg") == 1) {
@@ -840,6 +862,7 @@ var animate_flare = func {
       msg.Heading = 0;
       msg.u_fps = 0;
       notifications.objectBridgedTransmitter.NotifyAll(msg);
+      recordOwnFlare(msg);
       continue;
     }
     if (flares_sent < flares_max_process_per_loop) {
@@ -859,6 +882,7 @@ var animate_flare = func {
       msg.Heading = 0;
       msg.u_fps = 0;
       notifications.objectBridgedTransmitter.NotifyAll(msg);
+      recordOwnFlare(msg);
       flares_sent += 1;
     }
     append(old_flares, flare);
@@ -905,6 +929,31 @@ var flare_released = func {
     msg.Heading = 0;
     msg.u_fps = 0;
     notifications.objectBridgedTransmitter.NotifyAll(msg);
+
+    recordOwnFlare(msg);
+}
+
+var recordOwnFlare = func (msg) {
+    if (tacview_supported) {
+      if (tacview.starttime) {
+        var tacID = left(md5("ownShip"~msg.UniqueIndex),6);
+        if (msg.Kind == DESTROY) {
+          thread.lock(tacview.mutexWrite);
+          tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
+          tacview.write(tacID~",Visible=0\n-"~tacID~"\n");
+          thread.unlock(tacview.mutexWrite);
+        } else {
+          var typp = "Flare";
+          var extra = "";
+          var extra2 = ",Type=Flare";
+          var color = ",Color=Yellow";
+          thread.lock(tacview.mutexWrite);
+          tacview.write("#" ~ (systime() - tacview.starttime)~"\n");
+          tacview.write(tacID~",T="~msg.Position.lon()~"|"~msg.Position.lat()~"|"~msg.Position.alt()~extra~",Name="~typp~color~extra2~"\n");
+          thread.unlock(tacview.mutexWrite);
+        }
+      }
+    }
 }
 
 #==================================================================

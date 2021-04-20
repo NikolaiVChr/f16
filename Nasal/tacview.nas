@@ -68,6 +68,8 @@ var stopwrite = func() {
     writetofile();
     starttime = 0;
     seen_ids = [];
+    explo_arr = [];
+    explosion_timeout_loop(1);
 }
 
 var mainloop = func() {
@@ -148,6 +150,7 @@ var mainloop = func() {
         }
         thread.unlock(mutexWrite);
     }
+    explosion_timeout_loop();
 }
 
 var writeMyPlanePos = func() {
@@ -174,6 +177,36 @@ var writeMyPlaneAttributes = func() {
     thread.unlock(mutexWrite);
 }
 
+explo = {
+    tacviewID: 0,
+    time: 0,
+};
+
+var explo_arr = [];
+
+# needs threadlocked before calling
+var writeExplosion = func(lat,lon,altm,rad) {
+    var e = {parents:[explo]};
+    e.tacviewID = 21000 + int(math.floor(rand()*20000));
+    e.time = systime();
+    append(explo_arr, e);
+    write("#" ~ (systime() - starttime)~"\n");
+    write(e.tacviewID ~",T="~lon~"|"~lat~"|"~altm~",Radius="~rad~",Type=Explosion\n");
+}
+
+var explosion_timeout_loop = func(all = 0) {
+    foreach(var e; explo_arr) {
+        if (e.time) {
+            if (systime() - e.time > 15 or all) {
+                thread.lock(mutexWrite);
+                write("#" ~ (systime() - starttime)~"\n");
+                write("-"~e.tacviewID);
+                thread.unlock(mutexWrite);
+                e.time = 0;
+            }
+        }
+    }
+}
 
 var write = func(str) {
     outstr = outstr ~ str;
