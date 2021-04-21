@@ -109,7 +109,7 @@ var SubSystem_RWR_APG = {
                 #me.show = me.show and awg_9.TerrainManager.IsVisible(me.u.propNode,notification);# seems awg_9 uses isbehindterrain for non terrain stuff, so we need to repeat check here.
                 if (me.show == 1) {
                     me.threat = 0;
-                    if (me.u.get_model() != "missile_frigate" and me.u.get_model() != "buk-m2" and me.u.get_model() != "s-300" and me.u.get_model() != "fleet") {
+                    if (me.u.get_model() != "missile_frigate" and me.u.get_model() != "buk-m2" and me.u.get_model() != "MIM104D" and me.u.get_model() != "s-300" and me.u.get_model() != "fleet") {
                         me.threat += ((180-me.dev)/180)*0.30;# most threat if I am in front of his nose
                         me.spd = (60-me.u.get_Speed())/60;
                         me.threat -= me.spd>0?me.spd:0;# if his speed is lower than 60kt then give him minus threat else positive
