@@ -1334,6 +1334,9 @@ var AIM = {
 		var ac_pitch = OurPitch.getValue();
 		var ac_hdg   = OurHdg.getValue();
 
+		me.msl_hdg = ac_hdg;
+		me.msl_pitch = ac_pitch;
+
 		if (me.rail == TRUE) {
 			if (me.rail_forward == FALSE) {
 				me.position_on_rail = 0;
