@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PropertyList>
+  <name>HUD adjustements</name>
+  <inherits-from>Effects/hud</inherits-from>
+
+  <parameters>
+	<hud-brightness><use>f16/avionics/hud-sym</use></hud-brightness>
+   	<glass-tint type="vec4d" n="0"> 0.75 1.0 0.55 1.0</glass-tint>
+  	<overlay-color type="vec3d" n="0"> 0.8 1.0 0.9</overlay-color>
+  	<!--<texture n="2">
+		<image>Aircraft/f16/Effects/hud-mask.png</image>
+		<type>2d</type>
+		<filter>linear-mipmap-linear</filter>
+		<wrap-s>repeat</wrap-s>
+		<wrap-t>repeat</wrap-t>
+		<internal-format>normalized</internal-format>
+	</texture>	-->
+  </parameters>
+
+<!--
+ </animation>
+  <parameters>
+   <brightness><use>f16/avionics/hud-brt</use></brightness>
+   <sample-res>0.0006</sample-res>
+   <sample-far>2.5</sample-far>
+  </parameters>
+
+  <technique n="1">
+		  <predicate>
+			<and>
+			  <equal>
+		        <float-property>/old</float-property>
+		        <value type="int">1</value>
+		        </equal>
+			</and>
+		  </predicate>
+		  <pass>
+			<lighting>true</lighting>
+			<depth>
+			  <write-mask type="bool">false</write-mask>
+			</depth>
+			<material>
+			  <active>
+				<use>material/active</use>
+			  </active>
+			  <ambient>
+				<use>material/ambient</use>
+			  </ambient>
+			  <diffuse>
+				<use>material/diffuse</use>
+			  </diffuse>
+			  <specular>
+				<use>material/specular</use>
+			  </specular>
+			  <emissive>
+				<use>material/emissive</use>
+			  </emissive>
+			  <shininess>
+				<use>material/shininess</use>
+			  </shininess>
+			  <color-mode>
+				<use>material/color-mode</use>
+			  </color-mode>
+			</material>
+			<blend>
+			  <active>
+				<use>blend/active</use>
+			  </active>
+			  <source>
+				<use>blend/source</use>
+			  </source>
+			  <destination>
+				<use>blend/destination</use>
+			  </destination>
+			</blend>
+			<shade-model>
+			  <use>shade-model</use>
+			</shade-model>
+			<cull-face>
+			  <use>cull-face</use>
+			</cull-face>
+			<render-bin>
+			  <bin-number>111</bin-number>
+			  <bin-name>DepthSortedBin</bin-name>
+			</render-bin>
+			<texture-unit>
+              <unit>0</unit>
+			  <active>
+				<use>texture[0]/active</use>
+			  </active>
+              <type>
+                <use>texture[0]/type</use>
+              </type>
+			  <image>
+				<use>texture[0]/image</use>
+			  </image>
+			  <filter>
+				<use>texture[0]/filter</use>
+			  </filter>
+			  <wrap-s>
+				<use>texture[0]/wrap-s</use>
+			  </wrap-s>
+			  <wrap-t>
+				<use>texture[0]/wrap-t</use>
+			  </wrap-t>
+			  	  <environment>
+					<mode>modulate</mode>
+				  </environment>
+				</texture-unit>
+				</pass>
+	</technique>-->
+</PropertyList>

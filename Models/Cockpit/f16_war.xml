@@ -11,7 +11,7 @@
   </offsets>
 
  <effect>
-  <inherits-from>Aircraft/f16/Models/Effects/adjustable-hud</inherits-from>
+  <inherits-from>Aircraft/f16/Models/Effects/adjustable-hud2</inherits-from>
   <object-name>HUDImage2</object-name>
   <parameters>
     <rnorm type="float">0.0</rnorm>
