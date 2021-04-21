@@ -66,6 +66,7 @@ var rcs_oprf_database = {
     "tower":                    60,       
     "gci":                      50,
     "s-300":                    17,
+    "MIM104D":                  17,
     "struct":                   170,   
     "rig":                      500,
     "point":                    120,

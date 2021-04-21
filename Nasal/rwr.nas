@@ -233,6 +233,7 @@ RWRCanvas = {
         rwr.ASSET_AAA         = "A";
         rwr.ASSET_BUK         = "11";
         rwr.ASSET_GARGOYLE    = "20"; # Other namings for tracking and radar: BB, CS.
+        rwr.ASSET_PAC2        = "P";
         rwr.ASSET_FRIGATE     = "SH";
         rwr.SCENARIO_OPPONENT = "28";
         #MISC
@@ -298,6 +299,7 @@ RWRCanvas = {
                 "ZSU-23-4M":                rwr.ASSET_AAA,
                 "buk-m2":                   rwr.ASSET_BUK,
                 "s-300":                    rwr.ASSET_GARGOYLE,
+                "MIM104D":                  rwr.ASSET_PAC2,
                 "missile_frigate":          rwr.ASSET_FRIGATE,
                 "frigate":                  rwr.ASSET_FRIGATE,
                 "fleet":                    rwr.ASSET_FRIGATE,
