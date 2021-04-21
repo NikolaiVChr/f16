@@ -4690,12 +4690,21 @@ var AIM = {
 
 			me.curr_deviation_e = deviation_normdeg(OurPitch.getValue(), me.Tgt.getElevation());
 			me.curr_deviation_h = deviation_normdeg(OurHdg.getValue(), me.Tgt.get_bearing());
-			if (!me.caged) {
+			if (!me.caged or (me.mode_slave and me.command_tgt)) {
 				me.seeker_elev_target = me.curr_deviation_e;
 				me.seeker_head_target = me.curr_deviation_h;
 				me.rotateTarget();
 				me.moveSeeker();
-			}			
+			} elsif (me.mode_bore) {
+				me.seeker_elev_target = 0;
+				me.seeker_head_target = 0;
+				me.moveSeeker();
+			} elsif (me.mode_slave and !me.command_tgt) {
+				me.seeker_elev_target = me.command_dir_pitch;
+				me.seeker_head_target = me.command_dir_heading;
+				me.moveSeeker();
+			}
+
 			me.seeker_elev_target = me.curr_deviation_e;
 			me.seeker_head_target = me.curr_deviation_h;
 			me.rotateTarget();
