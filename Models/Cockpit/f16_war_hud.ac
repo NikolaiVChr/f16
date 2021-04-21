@@ -1,5 +1,5 @@
 AC3Db
-MATERIAL "flipLidGlass" rgb 0.6 0.6 0.6  amb 0 0 0  emis 0 0 0  spec 0.5 0.5 0.5  shi 128  trans 0.9
+MATERIAL "flipLidGlass" rgb 0.6 0.6 0.6  amb 0 0 0  emis 0 0 0  spec 0.5 0.5 0.5  shi 128  trans 0.825
 MATERIAL "blackFlipLid" rgb 0.2 0.2 0.2  amb 0.1 0.1 0.1  emis 0 0 0  spec 0 0 0  shi 64  trans 0
 MATERIAL "hudGlassEdge" rgb 0.323 0.25 0.074  amb 0.5 0.5 0.5  emis 0 0 0  spec 0.145 0.145 0.145  shi 64  trans 0
 MATERIAL "greenLight" rgb 0.005 0.305 0  amb 0.8 0.8 0.8  emis 0 0 0  spec 0.5 0.5 0.5  shi 64  trans 0
