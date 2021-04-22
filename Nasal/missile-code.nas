@@ -2225,7 +2225,7 @@ var AIM = {
 				me.x = me.x - (me.movement_on_rail * FT2M);# negative cause positive is rear in body coordinates
 			} else {
 				me.position_on_rail += math.max(0, me.movement_on_rail * FT2M);# only can move forward on rail.
-				me.railPos = myMath.alongVector(me.railBegin, me.railEnd, me.rail_dist_m, me.position_on_rail);
+				me.railPos = me.myMath.alongVector(me.railBegin, me.railEnd, me.rail_dist_m, me.position_on_rail);
 			}
 		}
 

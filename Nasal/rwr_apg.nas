@@ -121,8 +121,12 @@ var SubSystem_RWR_APG = {
                     me.danger = 50;# within this range he is most dangerous
                     if (me.u.get_model() == "missile_frigate" or me.u.get_model() == "fleet" or me.u.get_model() == "s-300") {
                         me.danger = 75
-                    } elsif (me.u.get_model() == "buk-m2") {
+                    } elsif (me.u.get_model() == "buk-m2" or me.u.get_model() == "MIM104D") {
                         me.danger = 35;
+                    } elsif (me.u.get_model() == "MIM104D") {
+                        me.danger = 35;
+                    } elsif (me.u.get_model() == "ZSU-23-4M") {
+                        me.danger = 10;
                     }
                     me.threat += ((me.danger-me.rn)/me.danger)>0?((me.danger-me.rn)/me.danger)*0.60:0;# if inside danger zone then add threat, the closer the more.
                     me.clo = me.u.get_closure_rate();
