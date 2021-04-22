@@ -144,7 +144,8 @@ var Math = {
         me.horz  = math.sqrt(vector[0]*vector[0]+vector[1]*vector[1]);
         if (me.horz != 0) {
             me.pitch = math.atan2(vector[2],me.horz)*R2D;
-            me.hdg = math.asin(-vector[1]/me.horz)*R2D;
+            me.div = math.clamp(-vector[1]/me.horz, -1, 1);
+            me.hdg = math.asin(me.div)*R2D;
 
             if (vector[0] < 0) {
                 # south
