@@ -123,7 +123,10 @@
             <property>f16/avionics/c1-typ</property>
             <value type="string">11</value>
             <value type="string">20</value>
+            <value type="string">P</value>
             <value type="string">SH</value>
+            <value type="string">A</value>
+            <value type="string"></value>
             <binding>
                 <command>dialog-apply</command>
                 <object-name>typ1</object-name>
@@ -206,7 +209,10 @@
             <property>f16/avionics/c2-typ</property>
             <value type="string">11</value>
             <value type="string">20</value>
+            <value type="string">P</value>
             <value type="string">SH</value>
+            <value type="string">A</value>
+            <value type="string"></value>
             <binding>
                 <command>dialog-apply</command>
                 <object-name>typ2</object-name>
@@ -289,7 +295,10 @@
             <property>f16/avionics/c3-typ</property>
             <value type="string">11</value>
             <value type="string">20</value>
+            <value type="string">P</value>
             <value type="string">SH</value>
+            <value type="string">A</value>
+            <value type="string"></value>
             <binding>
                 <command>dialog-apply</command>
                 <object-name>typ3</object-name>
@@ -372,7 +381,10 @@
             <property>f16/avionics/c4-typ</property>
             <value type="string">11</value>
             <value type="string">20</value>
+            <value type="string">P</value>
             <value type="string">SH</value>
+            <value type="string">A</value>
+            <value type="string"></value>
             <binding>
                 <command>dialog-apply</command>
                 <object-name>typ4</object-name>
