@@ -126,7 +126,7 @@ var SubSystem_RWR_APG = {
                     } elsif (me.u.get_model() == "MIM104D") {
                         me.danger = 35;
                     } elsif (me.u.get_model() == "ZSU-23-4M") {
-                        me.danger = 15;
+                        me.danger = 10;
                     }
                     me.threat += ((me.danger-me.rn)/me.danger)>0?((me.danger-me.rn)/me.danger)*0.60:0;# if inside danger zone then add threat, the closer the more.
                     me.clo = me.u.get_closure_rate();
