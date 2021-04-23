@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+ <path>f16_war_hud.ac</path>
+ 
+ <offsets>
+   <x-m> 0.013</x-m>
+   <y-m> 0.000</y-m>
+   <z-m> 0.010</z-m>
+  </offsets>
+
+  <effect>
+  <inherits-from>Effects/model-transparent</inherits-from>
+  <object-name>BackGlass</object-name>
+  <object-name>HUDImage2</object-name>
+ </effect>
+
+</PropertyList>
