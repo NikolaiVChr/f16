@@ -616,7 +616,7 @@ var AIM = {
 			m.mpLon          = props.globals.getNode(m.mpLon, FALSE);
 			m.mpAlt          = props.globals.getNode(m.mpAlt, FALSE);
 			m.mpAltft        = props.globals.getNode(m.mpAltft, FALSE);
-			if (m.mpLat != nil and m.mpLon != nil and m.mpAlt != nil) {
+			if (m.mpLat != nil and m.mpLon != nil and m.mpAlt != nil and m.mpAltft != nil) {
 				m.mpShow = TRUE;
 			}
 		}
@@ -4920,7 +4920,7 @@ var AIM = {
 		thread.lock(mutexTimer);
 		append(AIM.timerQueue, [me, func me.explode_prop.setBoolValue(FALSE), [], 0.5]);
 		append(AIM.timerQueue, [me, func me.explode_smoke_prop.setBoolValue(TRUE), [], 0.5]);
-		append(AIM.timerQueue, [me, func me.explode_smoke_prop.setBoolValue(FALSE), [], 3]);
+		append(AIM.timerQueue, [me, func {me.explode_smoke_prop.setBoolValue(FALSE);if (me.first == TRUE and size(keys(AIM.flying))>1) {me.resetFirst();}}, [], 3]);
 		thread.unlock(mutexTimer);
 		if (info == nil or !hitGround or getprop("payload/armament/enable-craters") == nil or !getprop("payload/armament/enable-craters")) {return;};
 		thread.lock(mutexTimer);
