@@ -2538,7 +2538,7 @@ append(obj.total, obj.speed_curr);
                     .lineTo(me.dlzWidth, -me.dlzHeight+3)
                     .lineTo(0, -me.dlzHeight)
                     .setStrokeLineWidth(me.dlzLW)
-                    .setColor(0.3,1,0.3);
+                    .setColor(me.color);
             me.dlz2.update();
             me.dlz.show();
         }
