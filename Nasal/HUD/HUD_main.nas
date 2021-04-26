@@ -1741,7 +1741,7 @@ append(obj.total, obj.speed_curr);
                                                      } elsif (obj.showmeCCIP) {
                                                         submode = "CCIP";
                                                      } elsif (obj.eegsLoop.isRunning) {
-                                                        submode = hdp.strf or obj.hydra?"STRF":"EEGS";
+                                                        submode = obj.hydra?"A/G":(hdp.strf?"STRF":"EEGS");
                                                      } elsif (hdp.submode == 1) {
                                                         submode = "BORE";
                                                      }
