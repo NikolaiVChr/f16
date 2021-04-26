@@ -2699,7 +2699,7 @@ var MFD_Device =
                     } else {
                         me.ready = "RDY";
                     }
-                } elsif (me.wpn.type == "M151") {
+                } elsif (me.wpn.type == "LAU-68") {
                     me.wpnType ="rocket";
                     me.eegs = "A-G";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {

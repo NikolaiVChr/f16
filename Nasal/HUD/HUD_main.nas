@@ -2122,7 +2122,7 @@ append(obj.total, obj.speed_curr);
                         hdp.window9_txt = sprintf("%d CB87", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "CBU-105") {
                         hdp.window9_txt = sprintf("%d CB105", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "M151") {
+                    } elsif (hdp.weapon_selected == "LAU-68") {
                         hdp.window9_txt = sprintf("%d M151", pylons.fcs.getAmmo());
                         eegsShow = 1;
                         me.hydra = 1;
