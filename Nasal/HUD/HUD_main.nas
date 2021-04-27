@@ -3094,8 +3094,8 @@ append(obj.total, obj.speed_curr);
             me.eegs_ac_east_fps  = getprop("velocities/speed-east-fps");
             me.eegs_ac_down_fps  = getprop("velocities/speed-down-fps");
             
-            me.eegs_sm_down_fps       = -math.sin(me.eegsMe.pitch * D2R) * me.hydra?2000:3379;# 3379 = muzzle velocity
-            me.eegs_sm_horizontal_fps = math.cos(me.eegsMe.pitch * D2R) * me.hydra?2000:3379;
+            me.eegs_sm_down_fps       = -math.sin(me.eegsMe.pitch * D2R) * (me.hydra?2000:3379);# 3379 = muzzle velocity
+            me.eegs_sm_horizontal_fps = math.cos(me.eegsMe.pitch * D2R) * (me.hydra?2000:3379);
             me.eegs_sm_north_fps      = math.cos(me.eegsMe.hdg * D2R) * me.eegs_sm_horizontal_fps;
             me.eegs_sm_east_fps       = math.sin(me.eegsMe.hdg * D2R) * me.eegs_sm_horizontal_fps;
 
@@ -3125,7 +3125,7 @@ append(obj.total, obj.speed_curr);
             
             me.eegsMe.rs = armament.AIM.rho_sndspeed(me.eegsMe.altC*M2FT);#simplified
             me.eegsMe.rho = me.eegsMe.rs[0];
-            me.eegsMe.mass =  me.hydra?23.6:0.226/ armament.slugs_to_lbm;#0.1069=lbs
+            me.eegsMe.mass =  (me.hydra?23.6:0.226)/ armament.slugs_to_lbm;#0.1069=lbs
             
             #print("x,y");
             #printf("%d,%d",0,0);
@@ -3136,7 +3136,7 @@ append(obj.total, obj.speed_curr);
                 #calc new speed
                 me.eegsMe.Cd = drag(me.eegsMe.vel/ me.eegsMe.rs[1],me.hydra?0:0.09);#0.193=cd
                 me.eegsMe.q = 0.5 * me.eegsMe.rho * me.eegsMe.vel * me.eegsMe.vel;
-                me.eegsMe.deacc = (me.eegsMe.Cd * me.eegsMe.q * me.hydra?0.00136354:0.00338158219) / me.eegsMe.mass;#0.00136354=eda
+                me.eegsMe.deacc = (me.eegsMe.Cd * me.eegsMe.q * (me.hydra?0.00136354:0.00338158219)) / me.eegsMe.mass;#0.00136354=eda
                 me.eegsMe.vel -= me.eegsMe.deacc * me.averageDt;
                 me.eegsMe.speed_down_fps       = -math.sin(me.eegsMe.pitch * D2R) * (me.eegsMe.vel);
                 me.eegsMe.speed_horizontal_fps = math.cos(me.eegsMe.pitch * D2R) * (me.eegsMe.vel);
