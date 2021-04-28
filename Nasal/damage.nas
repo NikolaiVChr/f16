@@ -129,9 +129,9 @@ var warheads = {
     "Apache AP":         [60,  110.23,0,1],# Real mass of bomblet. (x 10). Anti runway.
     "KN-06":             [61,  315.00,0,0],
     "9M317":             [62,  145.00,0,0],
-    "GEM":               [63,  185.00,0,0],#MIM-104D
+    "GEM":               [63,  185.00,0,0],#MIM-104D 
     "R.550 Magic":       [64,   26.45,0,0],# also called majic
-    "d-0":               [65,   30.00,0,0],#deprecated
+    "5Ya23":             [65,  414.00,0,0],#Volga-M
     "R.550 Magic 2":     [66,   27.00,0,0],
     "R.530":             [67,   55.00,0,0],
     "d-a":               [68,   30.00,0,0],#deprecated
