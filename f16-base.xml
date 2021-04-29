@@ -1255,6 +1255,12 @@
 value. 18000=standard US transition altitude -->
             <cara-alow type="int">500</cara-alow><!-- Combined Altitude Radar Altimeter Automatic LOw altitude Warning -->
         </settings>
+        <ded>
+            <stpt-edit type="int">0</stpt-edit>
+            <stpt-rad type="int">0</stpt-rad>
+            <lat type="double">0.0</lat>
+            <lon type="double">0.0</lon>
+        </ded>
         <avionics>
 			<probe-heat-switch type="int">0</probe-heat-switch>
 			<probe-heat-light type="bool">false</probe-heat-light>
@@ -1295,10 +1301,10 @@ value. 18000=standard US transition altitude -->
             <c4-lat type="double">0</c4-lat>
             <c4-lon type="double">0</c4-lon>
             <c4-rad type="double">0</c4-rad>
-            <c1-typ type="string">11</c1-typ>
-            <c2-typ type="string">11</c2-typ>
-            <c3-typ type="string">11</c3-typ>
-            <c4-typ type="string">11</c4-typ>
+            <c1-typ type="string"></c1-typ>
+            <c2-typ type="string"></c2-typ>
+            <c3-typ type="string"></c3-typ>
+            <c4-typ type="string"></c4-typ>
             <bulls-eye-defined type="bool">true</bulls-eye-defined>
             <bulls-eye-lat type="double">37.20</bulls-eye-lat>
             <bulls-eye-lon type="double">-115.60</bulls-eye-lon>

@@ -12,11 +12,15 @@ var iffEF = EditableField.new("instrumentation/iff/channel-selection", "%4d", 4)
 var iffTF = toggleableIff.new([0, 1], "instrumentation/iff/activate");
 var transpEF = EditableField.new("instrumentation/transponder/id-code", "%04d", 4, checkValueTransponderCode);
 var transpModeTF = toggleableTransponder.new([0, 1, 2, 3, 4, 5], "instrumentation/transponder/inputs/knob-mode");
+var STPTlatFE = EditableLAT.new("f16/ded/lat", convertDegreeToStringLat);
+var STPTlonFE = EditableLON.new("f16/ded/lon", convertDegreeToStringLon);
+var STPTnumFE = EditableField.new("f16/ded/stpt-edit", "%3d", 3);
+var STPTradFE = EditableField.new("f16/ded/stpt-rad", "%2d", 2);
 
 var pTACAN = EditableFieldPage.new(0, [tacanChanEF,tacanBandTF,ilsFrqEF,ilsCrsEF]);
 var pALOW  = EditableFieldPage.new(1, [alowEF,mslFloorEF]);
 var pFACK  = EditableFieldPage.new(2);
-var pSTPT  = EditableFieldPage.new(3);
+var pSTPT  = EditableFieldPage.new(3, [STPTnumFE,STPTlatFE,STPTlonFE,STPTradFE]);
 var pCRUS  = EditableFieldPage.new(4);
 var pTIME  = EditableFieldPage.new(5);
 var pMARK  = EditableFieldPage.new(6);
@@ -52,6 +56,10 @@ var pCNI   = EditableFieldPage.new(30);
 var pCOMM1 = EditableFieldPage.new(31);
 var pCOMM2 = EditableFieldPage.new(32);
 var pIFF   = EditableFieldPage.new(33, [transpEF,transpModeTF,iffEF,iffTF]);
+
+var wp_num_lastA = nil;
+var wp_num_lastO = nil;
+var wp_num_lastR = nil;
 
 var dataEntryDisplay = {
 	line1: nil,
@@ -235,11 +243,12 @@ var dataEntryDisplay = {
 	updateStpt: func() {
 		var fp = flightplan();
 		var TOS = "--:--:--";
+		var alt = -1;
 		var lat = "";
 		var lon = "";
-		var alt = -1;
-		if (fp != nil) {
-			var wp = fp.currentWP();
+		var wp_num = getprop("f16/ded/stpt-edit");
+		if (fp != nil and wp_num != nil and wp_num < 100) {
+			var wp = fp.getWP(wp_num-1);
 			if (wp != nil and getprop("f16/avionics/power-mmc")) {
 				lat = convertDegreeToStringLat(wp.lat);
 				lon = convertDegreeToStringLon(wp.lon);
@@ -251,8 +260,8 @@ var dataEntryDisplay = {
 				var minute = getprop("sim/time/utc/minute");
 				var second = getprop("sim/time/utc/second");
 				var eta    = getprop("autopilot/route-manager/wp/eta");
-				if (eta == nil or getprop("autopilot/route-manager/wp/eta-seconds")>3600*24) {
-					#
+				if (fp.current != wp_num-1 or eta == nil or getprop("autopilot/route-manager/wp/eta-seconds")>3600*24) {
+					# no ETA calculated
 				} elsif (getprop("autopilot/route-manager/wp/eta-seconds")>3600) {
 					eta = split(":",eta);
 					minute += num(eta[1]);
@@ -287,13 +296,52 @@ var dataEntryDisplay = {
 					TOS = sprintf("%02d:%02d:%02d",hour,minute,second);   
 				}          
 			}
+			if (wp_num == fp.current) {
+				me.text[4] = sprintf("      TOS  %s",TOS);
+			} else {
+				me.text[4] = sprintf("      TOS  ");
+			}
+			me.text[3] = sprintf("     ELEV  % 5dFT",alt);
+			me.text[1] = sprintf("      LAT  %s", lat);
+			me.text[2] = sprintf("      LNG  %s", lon);
+		} elsif (wp_num != nil and wp_num < 304 and wp_num >= 300) {
+			# Threat circles 300 to 303
+			var circle = wp_num - 300 + 1;
+
+			if (wp_num_lastA != getprop("f16/avionics/c"~circle~"-lat")) {
+				setprop("f16/ded/lat", getprop("f16/avionics/c"~circle~"-lat"));
+			} else {
+				setprop("f16/avionics/c"~circle~"-lat", getprop("f16/ded/lat")); 
+			}
+			if (wp_num_lastO != getprop("f16/avionics/c"~circle~"-lon")) {
+				setprop("f16/ded/lon", getprop("f16/avionics/c"~circle~"-lon"));
+			} else {
+				setprop("f16/avionics/c"~circle~"-lon", getprop("f16/ded/lon")); 
+			}
+			if (wp_num_lastR != getprop("f16/avionics/c"~circle~"-rad")) {
+				setprop("f16/ded/stpt-rad", getprop("f16/avionics/c"~circle~"-rad"));
+			} else {
+				setprop("f16/avionics/c"~circle~"-rad", getprop("f16/ded/stpt-rad"));
+			}
+			
+			me.text[1] = sprintf("      LAT  %s", pSTPT.vector[1].getText());
+			me.text[2] = sprintf("      LNG  %s", pSTPT.vector[2].getText());
+			me.text[3] = sprintf("      RAD  %sNM", pSTPT.vector[3].getText());
+			me.text[4] = sprintf("      TOS  ");
+
+			wp_num_lastA = getprop("f16/avionics/c"~circle~"-lat");
+			wp_num_lastO = getprop("f16/avionics/c"~circle~"-lon");
+			wp_num_lastR = getprop("f16/avionics/c"~circle~"-rad");
+		} else {
+			me.text[3] = sprintf("     ELEV       FT");
+			me.text[4] = sprintf("      TOS  ");
+			me.text[1] = sprintf("      LAT  %s", lat);
+			me.text[2] = sprintf("      LNG  %s", lon);
 		}
-      
-		me.text[0] = sprintf("         STPT %s    AUTO",me.no);
-		me.text[1] = sprintf("      LAT  %s",lat);
-		me.text[2] = sprintf("      LNG  %s",lon);
-		me.text[3] = sprintf("     ELEV  % 5dFT",alt);
-		me.text[4] = sprintf("      TOS  %s",TOS);
+		me.text[0] = sprintf("         STPT %s  AUTO %s", pSTPT.vector[0].getText(), me.no);
+		
+
+		
 	},
 	
 	updateCrus: func() {
@@ -950,7 +998,9 @@ setlistener("f16/avionics/rtn-seq", func() {
 
 setlistener("f16/avionics/ded-up-down", func() {
 	if (size(dataEntryDisplay.page.vector) != 0) {
-		if (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 != "") {
+		if (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].parents[0] == EditableLAT or dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].parents[0] == EditableLON) {
+			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].reset();
+		} elsif (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 != "") {
 			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].recallStatus = 0;
 			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].text = dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2;
 			dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText1 = "";
