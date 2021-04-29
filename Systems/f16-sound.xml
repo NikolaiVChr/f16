@@ -4117,9 +4117,9 @@
             <path>Aircraft/f16/Sounds/betty/lock.wav</path>
             <mode>once</mode>
             <condition>
-                <property>payload/armament/agm-65/sound-on-off</property>
+                <property>payload/armament/agm-65b/sound-on-off</property>
                 <equals>
-                    <property>payload/armament/agm-65/sound-volume</property>
+                    <property>payload/armament/agm-65b/sound-volume</property>
                     <value>1</value>
                 </equals>
                 <greater-than>
@@ -4496,7 +4496,7 @@
             <path>Aircraft/f16/Sounds/missile.wav</path>
             <mode>once</mode>
             <condition>
-                <property>payload/armament/agm-65/sound-fire-on-off</property>
+                <property>payload/armament/agm-65b/sound-fire-on-off</property>
             </condition>
             <reference-dist>25</reference-dist>
             <max-dist>10000</max-dist>
