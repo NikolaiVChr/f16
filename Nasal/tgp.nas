@@ -464,8 +464,12 @@ var fast_loop = func {
             if (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil) {
                 var dist = flir_updater.click_coord_cam.direct_distance_to(geo.aircraft_position())*M2NM;
                 bott.setText(sprintf("%2.1f  CMBT  %04d",dist,lasercode));
+                lat.setText(ded.convertDegreeToStringLat(flir_updater.click_coord_cam.lat()));
+                lon.setText(ded.convertDegreeToStringLon(flir_updater.click_coord_cam.lon()));
             } else {
                 bott.setText(sprintf("      CMBT  %04d",lasercode));
+                lat.setText("");
+                lon.setText("");
             }
             if (getprop("f16/avionics/cara-on")) {
                 #1F-F16CJ-34-1 page 1-224
@@ -473,6 +477,9 @@ var fast_loop = func {
             } else {
                 ralt.setText("");
             }
+        } else {
+            lat.setText("");
+            lon.setText("");
         }
         if (!getprop("/aircraft/flir/target/auto-track") or flir_updater.click_coord_cam == nil) {
             setprop("sim/view[105]/heading-offset-deg", -getprop("sim/current-view/heading-offset-deg"));
@@ -687,6 +694,8 @@ var lock = nil;
 var zoom = nil;
 var bott = nil;
 var ralt = nil;
+var lat = nil;
+var lon = nil;
 var line9 = nil;
 var midl = nil;
 var ir = 1;
@@ -851,6 +860,20 @@ var callInit = func {
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("RALT")
         .setTranslation(256-25, 256*0.1);
+    lat = dedGroup.createChild("text")
+        .setFontSize(13, 1)
+        .setColor(color)
+        .setAlignment("left-center")
+        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
+        .setText("LAT")
+        .setTranslation(50, 256*0.2);
+    lon = dedGroup.createChild("text")
+        .setFontSize(13, 1)
+        .setColor(color)
+        .setAlignment("left-center")
+        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
+        .setText("LON")
+        .setTranslation(50, 256*0.25);
 
   cross = dedGroup.createChild("path")
             .moveTo(128,0)
