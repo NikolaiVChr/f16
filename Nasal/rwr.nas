@@ -216,7 +216,7 @@ RWRCanvas = {
 #                   .hide();
 #        }
 # Threat list ID:
-        #REVISION: 2021/04/17
+        #REVISION: 2021/04/29
         #OPRF Fleet
         rwr.AIRCRAFT_WARTHOG  = "10";
         rwr.AIRCRAFT_TOMCAT   = "14";
@@ -231,6 +231,7 @@ RWRCanvas = {
         rwr.AIRCRAFT_MIRAGE   = "M2";
         rwr.AIRCRAFT_SEARCH   = "S";
         rwr.ASSET_AAA         = "A";
+        rwr.ASSET_VOLGA       = "2";
         rwr.ASSET_BUK         = "11";
         rwr.ASSET_GARGOYLE    = "20"; # Other namings for tracking and radar: BB, CS.
         rwr.ASSET_PAC2        = "P";
@@ -297,6 +298,7 @@ RWRCanvas = {
                 "A-10-model":               rwr.AIRCRAFT_WARTHOG,
                 "Typhoon":                  rwr.AIRCRAFT_TYPHOON,
                 "ZSU-23-4M":                rwr.ASSET_AAA,
+                "S-75":                     rwr.ASSET_VOLGA,
                 "buk-m2":                   rwr.ASSET_BUK,
                 "s-300":                    rwr.ASSET_GARGOYLE,
                 "MIM104D":                  rwr.ASSET_PAC2,
@@ -481,7 +483,7 @@ RWRCanvas = {
                 me.symbol_priority.show();
                 me.prio = 1;
             }
-            if (!(me.typ == me.ASSET_GARGOYLE or me.typ == me.ASSET_AAA or me.typ == me.ASSET_BUK or me.typ == me.ASSET_PAC2 or me.typ == me.ASSET_FRIGATE) and me.contact[0].get_Speed()>60) {
+            if (!(me.typ == me.ASSET_GARGOYLE or me.typ == me.ASSET_AAA or me.typ == me.ASSET_VOLGA or me.typ == me.ASSET_BUK or me.typ == me.ASSET_PAC2 or me.typ == me.ASSET_FRIGATE) and me.contact[0].get_Speed()>60) {
                 #air-borne
                 me.symbol_hat[me.i].setTranslation(me.x,me.y);
                 me.symbol_hat[me.i].show();

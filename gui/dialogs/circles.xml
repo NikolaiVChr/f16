@@ -121,6 +121,7 @@
             <label>Type</label>
             <pref-width>60</pref-width>
             <property>f16/avionics/c1-typ</property>
+            <value type="string">2</value>
             <value type="string">11</value>
             <value type="string">20</value>
             <value type="string">P</value>
@@ -207,6 +208,7 @@
             <label>Type</label>
             <pref-width>60</pref-width>
             <property>f16/avionics/c2-typ</property>
+            <value type="string">2</value>
             <value type="string">11</value>
             <value type="string">20</value>
             <value type="string">P</value>
@@ -293,6 +295,7 @@
             <label>Type</label>
             <pref-width>60</pref-width>
             <property>f16/avionics/c3-typ</property>
+            <value type="string">2</value>
             <value type="string">11</value>
             <value type="string">20</value>
             <value type="string">P</value>
@@ -379,6 +382,7 @@
             <label>Type</label>
             <pref-width>60</pref-width>
             <property>f16/avionics/c4-typ</property>
+            <value type="string">2</value>
             <value type="string">11</value>
             <value type="string">20</value>
             <value type="string">P</value>

@@ -109,7 +109,7 @@ var SubSystem_RWR_APG = {
                 #me.show = me.show and awg_9.TerrainManager.IsVisible(me.u.propNode,notification);# seems awg_9 uses isbehindterrain for non terrain stuff, so we need to repeat check here.
                 if (me.show == 1) {
                     me.threat = 0;
-                    if (me.u.get_model() != "missile_frigate" and me.u.get_model() != "buk-m2" and me.u.get_model() != "MIM104D" and me.u.get_model() != "s-300" and me.u.get_model() != "fleet" and me.u.get_model() != "ZSU-23-4M") {
+                    if (me.u.get_model() != "missile_frigate" and me.u.get_model() != "S-75" and me.u.get_model() != "buk-m2" and me.u.get_model() != "MIM104D" and me.u.get_model() != "s-300" and me.u.get_model() != "fleet" and me.u.get_model() != "ZSU-23-4M") {
                         me.threat += ((180-me.dev)/180)*0.30;# most threat if I am in front of his nose
                         me.spd = (60-me.u.get_Speed())/60;
                         me.threat -= me.spd>0?me.spd:0;# if his speed is lower than 60kt then give him minus threat else positive
@@ -120,13 +120,13 @@ var SubSystem_RWR_APG = {
                     }
                     me.danger = 50;# within this range he is most dangerous
                     if (me.u.get_model() == "missile_frigate" or me.u.get_model() == "fleet" or me.u.get_model() == "s-300") {
-                        me.danger = 75
-                    } elsif (me.u.get_model() == "buk-m2" or me.u.get_model() == "MIM104D") {
+                        me.danger = 80;
+                    } elsif (me.u.get_model() == "buk-m2" or me.u.get_model() == "S-75") {
                         me.danger = 35;
                     } elsif (me.u.get_model() == "MIM104D") {
-                        me.danger = 35;
+                        me.danger = 45;
                     } elsif (me.u.get_model() == "ZSU-23-4M") {
-                        me.danger = 10;
+                        me.danger = 7.5;
                     }
                     me.threat += ((me.danger-me.rn)/me.danger)>0?((me.danger-me.rn)/me.danger)*0.60:0;# if inside danger zone then add threat, the closer the more.
                     me.clo = me.u.get_closure_rate();

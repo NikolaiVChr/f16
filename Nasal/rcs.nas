@@ -18,7 +18,7 @@ var test = func (echoHeading, echoPitch, echoRoll, bearing, frontRCS) {
 
 var rcs_database = {
     parents: [rcs_oprf_database],
-	#REVISION: 2021/04/17
+	#REVISION: 2021/04/29
     "YF-16":                    5,      #higher because earlier blocks had larger RCS
     "F-16CJ":                   2,      #average
     "f16":                      2,      #average
@@ -46,6 +46,7 @@ var rcs_database = {
     "MiG-25":                   30,    #guess
     "Su-25":                    7,     #guess
     "G91-R1B":                  6,     #guess
+    "Tu-160-Blackjack":         15,
     # Helis:
     "uh60_Blackhawk":           10,     #guess
     "AH-1W":                    7,      #guess
@@ -53,8 +54,11 @@ var rcs_database = {
     "rah-66":                   0.8,    #wild guess
     "Gazelle":                  7,      #guess
     "Westland_Gazelle":         7,      #guess
+    "AS532-Cougar":             9,      #guess
+    "Westland_SeaKing-HAR3":    10,     #guess
     "Lynx-HMA8":                8,      #guess
-    "Merlin-HM1":               16,     #guess
+    "Lynx_Wildcat":             8,      #guess
+    "Merlin-HM1":               14,     #guess
     "OH-58D":                   7,      #guess
     #Stealth
     "b2-spirit":                0.001,  #actual: 0.0001

@@ -1,6 +1,6 @@
 var rcs_oprf_database = {
     # This list contains the mandatory RCS frontal values for OPRF (anno 1997), feel free to add non-OPRF to your aircraft we don't care.
-    #REVISION: 2021/04/17
+    #REVISION: 2021/04/29
     "default":                  150,    #default value if target's model isn't listed
     "f-14b":                    12,     
     "F-14D":                    12,     
@@ -16,7 +16,7 @@ var rcs_oprf_database = {
     "m2000-5":                  1,      
     "m2000-5B":                 1,
     "m2000-5B-backseat":        0.0001, 
-    "B-1B":                     10,
+    "B-1B":                     1,      #previous was 10
     "Blackbird-SR71A":          0.25,
     "Blackbird-SR71B":          0.30,
     "Blackbird-SR71A-BigTail":  0.30,
@@ -35,7 +35,7 @@ var rcs_oprf_database = {
     "707":                      85,     #guess
     "707-TT":                   90,     #guess
     "EC-137D":                  100,    #guess
-    "c130":                     100,   
+    "c130":                     80,   
     "Jaguar-GR1":               6,
     "A-10":                     23.5,
     "A-10-model":               23.5,
@@ -59,6 +59,7 @@ var rcs_oprf_database = {
 # OPRF assets:
     "depot":                    170,
     "ZSU-23-4M":                3,
+    "S-75":                     13,
     "buk-m2":                   7,   
     "truck":                    1.5,
     "missile_frigate":          450, 
