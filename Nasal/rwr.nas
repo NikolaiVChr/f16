@@ -393,6 +393,7 @@ RWRCanvas = {
                 "ufo":                      rwr.AIRCRAFT_UFO,
                 "bluebird-osg":             rwr.AIRCRAFT_UFO,
                 "Vostok-1":                 rwr.AIRCRAFT_UFO,
+                "V-1":                      rwr.AIRCRAFT_UFO,
                 "SpaceShuttle":             rwr.AIRCRAFT_UFO,
                 "F-23C_BlackWidow-II":      rwr.AIRCRAFT_UFO,
         };
