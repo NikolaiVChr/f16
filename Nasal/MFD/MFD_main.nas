@@ -39,6 +39,8 @@ if (getprop("sim/variant-id") == 2) {
     colorBackground = [0.005,0.1,0.005, 1];
 }
 
+var slew_c = 0;
+
 var MFD_Station =
 {
     new : func (svg, ident)
@@ -3928,7 +3930,7 @@ var RADAR_MODE_GM  = 1;
 var RADAR_MODE_SEA = 2;
 var RADAR_MODE_GMS = 3;
 
-var slew_c = 0;
+
 
 setlistener("controls/displays/cursor-click", func {if (getprop("controls/displays/cursor-click")) {slew_c = 1;}});
 
