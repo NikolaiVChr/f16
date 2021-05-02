@@ -82,7 +82,7 @@ var Station = {
 					if (me.weaponName == "AGM-154A") {
 						mf = func (struct) {
 							if (struct.dist_m != -1 and struct.dist_m*M2NM < 4) {
-								return {"guidanceLaw":"PN"};
+								return {"guidanceLaw":"direct"};
 							}
 							return {};
 						};
