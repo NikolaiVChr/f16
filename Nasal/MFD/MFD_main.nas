@@ -1019,6 +1019,7 @@ var MFD_Device =
         me.p_RDR.setSelectionColor = me.setSelectionColor;
         me.p_RDR.resetColor = me.resetColor;
         me.p_RDR.setSelection = me.setSelection;
+        me.p_RDR.slew_c_last = slew_c;
         me.p_RDR.notifyButton = func (eventi) {
             if (eventi != nil) {
                 if (eventi == 0) {
