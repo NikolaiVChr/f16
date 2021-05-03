@@ -176,6 +176,15 @@
             <dialog-name>payload-b20</dialog-name>
           </binding>
       </item>
+      <item n="14">
+          <label>Program target</label>
+          <enabled type="bool">true</enabled>
+          <name>programGPS</name>
+          <binding>
+              <command>dialog-show</command>
+              <dialog-name>programGPS</dialog-name>
+          </binding>
+      </item>
     </menu>
    </default>
   </menubar>
