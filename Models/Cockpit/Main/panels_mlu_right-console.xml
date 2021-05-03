@@ -1307,15 +1307,15 @@
         </decrease>
     </animation>
 
-    <!--animation>
+    <animation>
         <type>knob</type>
         <object-name>plain-switch</object-name>
         <property>f16/avionics/plain-cipher</property>
-        <factor>50</factor>
-        <offset-deg>-25</offset-deg>
+        <factor>25</factor>
+        <offset-deg>0</offset-deg>
         <drag-direction>vertical</drag-direction>
         <center>
-            <x-m>0.206</x-m><y-m>-0.515</y-m><z-m>-0.023</z-m>
+            <x-m>0.206</x-m><y-m>-0.5155</y-m><z-m>-0.0225</z-m>
         </center>
         <axis>
             <x>0</x><y>-1</y><z>0</z>
@@ -1347,7 +1347,7 @@
                 <label>PLAIN Cipher</label>
             </binding>
         </hovered>
-    </animation-->
+    </animation>
     
     <animation>
     <type>rotate</type>
