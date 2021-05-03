@@ -1878,6 +1878,7 @@ var AIM = {
                                             seeker_fov:             me.max_seeker_dev, 
                                             weapon_pitch:             me.pitch, 
                                             weapon_heading:         me.hdg,
+                                            callsign:               me.callsign,
                                         });
 			if (me.settings["guidance"] != nil) {
 				me.guidance = me.settings.guidance;
@@ -1916,6 +1917,9 @@ var AIM = {
 				me.remote_control_pitch = me.settings.remote_pitch;
 			} else {
 				me.remote_control_pitch = 0;
+			}
+			if (me.settings["abort_midflight_function"] != nil) {
+				me.mfFunction = nil;
 			}
 		}
 
