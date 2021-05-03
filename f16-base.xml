@@ -1349,6 +1349,7 @@ value. 18000=standard US transition altitude -->
             <rwr-volume type="double">0.7</rwr-volume>
             <oxy-psi type="double">0.0</oxy-psi>
             <pbg-switch type="int">-1</pbg-switch>
+            <plain-cipher type="int">0</plain-cipher>
             <intercom-volume type="double">0.5</intercom-volume>
             <ils-volume type="double">0.10</ils-volume>
 			<tacan-receive-only type="bool">1</tacan-receive-only>
