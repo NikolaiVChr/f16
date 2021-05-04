@@ -82,21 +82,21 @@ var Station = {
 					if (me.weaponName == "AGM-154A") {
 						mf = func (struct) {
 							if (struct.dist_m != -1 and struct.dist_m*M2NM < 4) {
-								return {"guidanceLaw":"direct"};
+								return {"guidanceLaw":"direct","abort_midflight_function":1};
 							}
 							return {};
 						};
 					} elsif (me.weaponName == "AGM-158") {
 						mf = func (struct) {
 							if (struct.dist_m != -1 and struct.dist_m*M2NM < 7 and struct.guidance == "gps") {
-								return {"guidance":"vision","class":"GM","target":"nil","guidanceLaw":"PN"};
+								return {"guidance":"vision","class":"GM","target":"nil","guidanceLaw":"PN","abort_midflight_function":1};
 							}
 							return {};
 						};
 					} elsif (me.weaponName == "AIM-54") {
 						mf = func (struct) {
 							if (struct.dist_m != -1 and struct.dist_m*M2NM < 11 and struct.guidance == "semi-radar") {
-								return {"guidance":"radar"};
+								return {"guidance":"radar","abort_midflight_function":1};
 							}
 							return {};
 						};
@@ -104,7 +104,7 @@ var Station = {
 						mf = func (struct) {
 							if (struct.dist_m != -1 and struct.dist_m*M2NM < 10 and struct.guidance == "inertial") {
 								screen.log.write("AIM-120: Pitbull", 1,1,0);
-								return {"guidance":"radar"};
+								return {"guidance":"radar","abort_midflight_function":1};
 							}
 							return {};
 						};
@@ -112,7 +112,7 @@ var Station = {
 						mf = func (struct) {
 							if (struct.dist_m != -1 and struct.dist_m*M2NM < 12 and struct.guidance == "inertial") {
 								screen.log.write("MICA-EM: Pitbull", 1,1,0);
-								return {"guidance":"radar"};
+								return {"guidance":"radar","abort_midflight_function":1};
 							}
 							return {};
 						};

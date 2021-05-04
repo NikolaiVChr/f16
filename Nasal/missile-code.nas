@@ -1348,12 +1348,16 @@ var AIM = {
 		if (me.rail == TRUE) {
 			if (me.rail_forward == FALSE) {
 				me.position_on_rail = 0;
+				#if (me.rail_pitch_deg == 90 and me.Tgt != nil) {
+					# This only really works for surface launchers which is not rolled
+				#	me.rail_head_deg = me.Tgt.get_bearing()-OurHdg.getValue();
+				#}
 				me.railvec = vector.Math.eulerToCartesian3X(-me.rail_head_deg, me.rail_pitch_deg,0);
-				me.veccy = vector.Math.yawPitchRollVector(-OurHdg.getValue(),OurPitch.getValue(),OurRoll.getValue(),me.railvec);
+				me.veccy = vector.Math.yawPitchRollVector(-ac_hdg,ac_pitch,ac_roll,me.railvec);
 				me.carty = vector.Math.cartesianToEuler(me.veccy);
 				me.msl_pitch = me.carty[1];
 				me.defaultHeading = me.Tgt != nil?me.Tgt.get_bearing():0;#90 deg tubes align to target heading, else north
-				me.msl_hdg   = me.carty[0]==nil?me.defaultHeading:me.carty[0];
+				me.msl_hdg   = (me.carty[0]==nil or (ac_roll == 0 and me.rail_pitch_deg == 90))?me.defaultHeading:me.carty[0];
 			}
 		}
 
@@ -1387,14 +1391,7 @@ var AIM = {
 		var mlat = init_coord.lat();
 		var mlon = init_coord.lon();
 		var malt = init_coord.alt() * M2FT;
-		me.latN.setDoubleValue(mlat);
-		me.lonN.setDoubleValue(mlon);
-		me.altN.setDoubleValue(malt);
-		me.hdgN.setDoubleValue(me.msl_hdg);
-
-		me.pitchN.setDoubleValue(me.msl_pitch);
-		me.rollN.setDoubleValue(0);
-
+		
 		me.coord = geo.Coord.new(init_coord);
 		# Get target position.
 		if (me.Tgt != nil) {
@@ -1444,9 +1441,9 @@ var AIM = {
 			# to prevent the missile from falling up, we need to sometimes pitch it into wind:
 			#var t_spd = math.sqrt(me.speed_down_fps*me.speed_down_fps + h_spd*h_spd);
 			var wind_pitch = math.atan2(-me.speed_down_fps, me.speed_horizontal_fps) * R2D;
-			if (wind_pitch < ac_pitch) {
+			if (wind_pitch < me.msl_pitch) {
 				# super hack, and might temporary as missile leaves launch platform look stupid:
-				ac_pitch = wind_pitch;
+				me.msl_pitch = wind_pitch;
 				# this should really take place over a duration instead of instantanious.
 			}
 			if (me.speed_horizontal_fps != 0) {
@@ -1457,7 +1454,7 @@ var AIM = {
 				#
 				# what if heavy cross wind and fires level. Then it can fly maybe 10 degs offbore, and will likely lose its lock.
 				#
-				ac_hdg = geo.normdeg(math.atan2(me.speed_east_fps,me.speed_north_fps)*R2D);
+				msl_hdg = geo.normdeg(math.atan2(me.speed_east_fps,me.speed_north_fps)*R2D);
 			}
 		} elsif (me.eject_speed != 0) {
 			# add ejector speed down from belly:
@@ -1481,13 +1478,20 @@ var AIM = {
 			me.speed_down_fps = -me.init_rel_vec[2];
 			me.speed_east_fps = -me.init_rel_vec[1];
 			me.speed_north_fps = me.init_rel_vec[0];
-			ac_hdg = geo.normdeg(math.atan2(me.speed_east_fps,me.speed_north_fps)*R2D);
-			ac_pitch = math.atan2(-me.speed_down_fps, math.sqrt(me.speed_east_fps*me.speed_east_fps+me.speed_north_fps*me.speed_north_fps))*R2D;
+			me.msl_hdg   = geo.normdeg(math.atan2(me.speed_east_fps,me.speed_north_fps)*R2D);
+			me.msl_pitch = math.atan2(-me.speed_down_fps, math.sqrt(me.speed_east_fps*me.speed_east_fps+me.speed_north_fps*me.speed_north_fps))*R2D;
 		}
 
 		me.alt_ft = malt;
-		me.pitch = ac_pitch;
-		me.hdg = ac_hdg;
+		me.pitch = me.msl_pitch;
+		me.hdg = me.msl_hdg;
+
+		me.latN.setDoubleValue(mlat);
+		me.lonN.setDoubleValue(mlon);
+		me.altN.setDoubleValue(malt);
+		me.hdgN.setDoubleValue(me.msl_hdg);
+		me.pitchN.setDoubleValue(me.msl_pitch);
+		me.rollN.setDoubleValue(0);
 
 		me.keepPitch = me.pitch;
 
