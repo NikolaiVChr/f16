@@ -319,6 +319,7 @@ var AIM = {
 		m.max_seeker_dev        = getprop(m.nodeString~"seeker-field-deg") / 2;       # missiles own seekers total FOV diameter.
 		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/laser/gps/vision/unguided/level/gyro-pitch/radiation/inertial/remote/remote-stable
 		m.guidanceLaw           = getprop(m.nodeString~"navigation");                 # guidance-law: direct/PN/APN/PNxxyy/APNxxyy (use direct for gravity bombs, use PN for very old missiles, use APN for modern missiles, use PNxxyy/APNxxyy for surface to air where xx is degrees to aim above target, yy is seconds it will do that). GPN is APN for winged glidebombs.
+		m.guidanceLawHorizInit  = getprop(m.nodeString~"navigation-init-pure-15");    # Bool. Guide in horizontal plane using pure pursuit until target with 15 deg of nose, before switching to <navigation>
 		m.pro_constant          = getprop(m.nodeString~"proportionality-constant");   # Constant for how sensitive proportional navigation is to target speed/acc. Normally between 3-6. [optional]
 		m.all_aspect            = getprop(m.nodeString~"all-aspect");                 # bool. set to false if missile only locks on reliably to rear of target aircraft
 		m.angular_speed         = getprop(m.nodeString~"seeker-angular-speed-dps");   # only for heat/vision seeking missiles. Max angular speed that the target can move as seen from seeker, before seeker loses lock.
@@ -480,6 +481,9 @@ var AIM = {
         }
         if (m.guidanceLaw == nil) {
 			m.guidanceLaw = "APN";
+		}
+		if (m.guidanceLawHorizInit == nil) {
+			m.guidanceLawHorizInit = 0;
 		}
         if (m.pro_constant == nil) {
         	if (find("APN", m.guidanceLaw)!=-1) {
@@ -2889,6 +2893,10 @@ var AIM = {
 
 		me.curr_deviation_h = geo.normdeg180(me.curr_deviation_h);
 
+		if (math.abs(me.curr_deviation_h) < 15) {
+			me.guidanceLawHorizInit = 0;
+		}
+
 		me.checkForLOS();
 
 		me.checkForGuidance();
@@ -3624,6 +3632,11 @@ var AIM = {
 				me.raw_steer_signal_head  = me.dt*me.radians_lateral_per_sec*R2D;
 			}
 			#printf("horz acc = %.1f + %.1f", proportionality_constant*line_of_sight_rate_rps*horz_closing_rate_fps, proportionality_constant*t_LOS_norm_acc/2);
+
+			if (me.guidanceLawHorizInit) {
+				# pure horiz pursuit 
+				me.raw_steer_signal_head = me.curr_deviation_h;
+			}
 
 			# now translate that sideways acc to an angle:
 			
