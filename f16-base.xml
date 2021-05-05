@@ -30,18 +30,6 @@
             <path>/f16/avionics/bulls-eye-defined</path>
             <path>/f16/avionics/bulls-eye-lat</path>
             <path>/f16/avionics/bulls-eye-lon</path>
-            <path>/link16/wingman-1</path>
-            <path>/link16/wingman-2</path>
-            <path>/link16/wingman-3</path>
-            <!-- wingman #4 excluded on purpose -->
-            <path>/link16/wingman-5</path>
-            <path>/link16/wingman-6</path>
-            <path>/link16/wingman-7</path>
-            <path>/link16/wingman-8</path>
-            <path>/link16/wingman-9</path>
-            <path>/link16/wingman-10</path>
-            <path>/link16/wingman-11</path>
-            <path>/link16/wingman-12</path>
             <path>/f16/avionics/hud-basic</path>
             <path>/f16/avionics/gps-lat</path>
             <path>/f16/avionics/gps-lon</path>
@@ -580,6 +568,8 @@
                 <string n="5" type="string">00--++00--Empty</string><!-- mp stores -->
                 <string n="4" type="string"></string><!-- string 4 used by IFF -->
                 <string n="6" type="string"></string><!-- string 6 used by radar lock RWR warning -->
+                <string n="7" type="string"></string><!-- string 7 used by DLINK -->
+                <string n="8" type="string"></string><!-- string 8 used by DLINK -->
             </generic>
             <visibility-range-nm type="int">160</visibility-range-nm>
             <!--<chat-menu n="0" include="Aircraft/f16/Systems/f16-chat-menu-entries.xml"/> done in Nasal instead -->
@@ -1113,6 +1103,14 @@
         <hud>
             <serviceable type="bool">true</serviceable>
         </hud>
+        <datalink>
+            <channel type="string">87YZ</channel>
+            <power_prop type="string">f16/avionics/power-dl</power_prop>
+            <channel_prop type="string">instrumentation/datalink/channel</channel_prop>
+            <receive_period type="double">1</receive_period>
+            <channel_mp_string type="int">7</channel_mp_string>
+            <data_mp_string type="int">8</data_mp_string>
+        </datalink>
     </instrumentation>
     <environment>
         <aircraft-effects>
@@ -1192,18 +1190,7 @@
         </submodels>
     </ai>
     <link16>
-        <wingman-1 type="string"></wingman-1>
-        <wingman-2 type="string"></wingman-2>
-        <wingman-3 type="string"></wingman-3>
         <wingman-4 type="string"></wingman-4>
-        <wingman-5 type="string"></wingman-5>
-        <wingman-6 type="string"></wingman-6>
-        <wingman-7 type="string"></wingman-7>
-        <wingman-8 type="string"></wingman-8>
-        <wingman-9 type="string"></wingman-9>
-        <wingman-10 type="string"></wingman-10>
-        <wingman-11 type="string"></wingman-11>
-        <wingman-12 type="string"></wingman-12>
     </link16>
     <sound>
         <rwr-new type="int">-1</rwr-new>
@@ -1625,6 +1612,9 @@ value. 18000=standard US transition altitude -->
         <help>
             <file>Aircraft/f16/Nasal/help.nas</file>
         </help>
+        <datalink>
+            <file>Aircraft/f16/Nasal/datalink.nas</file>
+        </datalink>
     </nasal>
     
 </PropertyList>

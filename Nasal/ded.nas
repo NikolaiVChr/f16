@@ -592,9 +592,18 @@ var dataEntryDisplay = {
 	},
 	
 	updateDlnk: func() {
-		me.text[0] = sprintf("        DLNK           %s",me.no);
-		if (getprop("f16/avionics/power-dl")) {
+		
+		if (getprop("f16/avionics/power-dl") and 0) {
 			var last = 0;
+			var lnk = datalink.get_contacts();
+			foreach(callsignLN ; lnk) {
+				last += 1;
+				if (0) {
+
+				}
+			}
+			if (lnk != nil and lnk["iff"] == 2 and lnk["on_link"] == 1) {
+			}
 			if (getprop("link16/wingman-12")!="") last = 12;
 			elsif (getprop("link16/wingman-11")!="") last = 11;
 			elsif (getprop("link16/wingman-10")!="") last = 10;
@@ -609,13 +618,21 @@ var dataEntryDisplay = {
 			elsif (getprop("link16/wingman-1")!="") last = 1;
 			me.scroll += 0.25;
 			if (me.scroll >= last-3) me.scroll = 0;
-			var wingmen = [getprop("link16/wingman-1"),getprop("link16/wingman-2"),getprop("link16/wingman-3"),getprop("link16/wingman-4"),getprop("link16/wingman-5"),getprop("link16/wingman-6"),getprop("link16/wingman-7"),getprop("link16/wingman-8"),getprop("link16/wingman-9"),getprop("link16/wingman-10"),getprop("link16/wingman-11"),getprop("link16/wingman-12")];
+			
 			var used = subvec(wingmen,int(me.scroll),4);
 			me.text[1] = sprintf("#%d %7s      COMM VHF",int(me.scroll+1),used[0]);
 			me.text[2] = sprintf("#%d %7s      DATA 16K",int(me.scroll+2),used[1]);
 			me.text[3] = sprintf("#%d %7s      OWN  #0 ",int(me.scroll+3),used[2]);
 			me.text[4] = sprintf("#%d %7s      LAST #%d ",int(me.scroll+4),used[3],last);
+		} elsif (getprop("f16/avionics/power-dl")) {
+			me.scroll += 0.25;
+			me.text[0] = sprintf("     DLNK  CH %s  %s",getprop("instrumentation/datalink/channel"),me.no);
+			me.text[1] = sprintf("#%d %7s      COMM VHF",0,getprop("sim/multiplay/callsign"));
+			me.text[2] = sprintf("             DATA 16K");
+			me.text[3] = sprintf("             OWN  #0 ");
+			me.text[4] = sprintf("             LAST     ");
 		} else {
+			me.text[0] = sprintf("        DLNK           %s",me.no);
 			me.text[1] = sprintf("  NO DLINK DATA ");
 			me.text[2] = sprintf("                        ");
 			me.text[3] = sprintf("                        ");
@@ -788,8 +805,25 @@ var dataEntryDisplay = {
 			sign = target.get_Callsign();
 			type = target.get_model();
 		}
-		if (getprop("f16/avionics/power-dl") and sign != "" and (sign == getprop("link16/wingman-1") or sign == getprop("link16/wingman-2") or sign == getprop("link16/wingman-3") or sign == getprop("link16/wingman-4") or sign == getprop("link16/wingman-5") or sign == getprop("link16/wingman-6") or sign == getprop("link16/wingman-7") or sign == getprop("link16/wingman-8") or sign == getprop("link16/wingman-9") or sign == getprop("link16/wingman-10") or sign == getprop("link16/wingman-11") or sign == getprop("link16/wingman-12"))) {
+		var frnd = 0;
+		if (sign != nil) {
+			var lnk = datalink.get_contact(sign);
+			 if (lnk != nil and lnk["iff"] == 2 and lnk["on_link"] == 1) {
+			 	frnd = 2;
+			 }
+			 if (lnk != nil and lnk["on_link"] == 1) {
+			 	frnd = 1;
+			 }
+			 if (lnk != nil and lnk["iff"] == 2) {
+			 	frnd = 3;
+			 }
+		}
+		if (getprop("f16/avionics/power-dl") and frnd == 2) {
 			friend = "WINGMAN";
+		} elsif (getprop("f16/avionics/power-dl") and frnd == 1) {
+			friend = "DLINK";
+		} elsif (getprop("f16/avionics/power-dl") and frnd == 3) {
+			friend = "DL-FRND";
 		} elsif (sign != "") {
 			friend = "NO CONN";
 		}
@@ -798,7 +832,7 @@ var dataEntryDisplay = {
 		me.text[0] = sprintf("IFF        MAN          ");# Should have ON between IFF and MAN. But I moved it beside the channels, until we get more transponder/iff in cockpit.
 		me.text[1] = sprintf("M3    %s  %s         ", pIFF.vector[0].getText(), pIFF.vector[1].getText());
 		me.text[2] = sprintf("M4    %s  %s         ", pIFF.vector[2].getText(), pIFF.vector[3].getText());
-		me.text[3] = sprintf("PILOT   %s",sign);
+		me.text[3] = sprintf("%s  %s",sign,friend);
 		me.text[4] = sprintf("TYPE    %s",type);
 	},
 };

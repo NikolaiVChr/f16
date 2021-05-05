@@ -575,6 +575,7 @@ var MFD_Device =
         svg.maxB = 16;
         svg.index = index;
         svg.blep = setsize([],svg.maxB);
+        svg.lnk = setsize([],svg.maxB);
         svg.iff  = setsize([],svg.maxB);
         for (var i = 0;i<svg.maxB;i+=1) {
             svg.blep[i] = svg.p_RDR.createChild("path")
@@ -590,6 +591,17 @@ var MFD_Device =
                     .setColor(colorCircle3)
                     .set("z-index",1)
                     .setFontSize(22, 1.0);
+            svg.lnk[i] = svg.p_RDR.createChild("path")
+                            .moveTo(-10,-10)
+                            .vert(20)
+                            .horiz(20)
+                            .vert(-20)
+                            .horiz(-20)
+                            .moveTo(0,-10)
+                            .vert(-10)
+                            .setColor(colorDot1)
+                            .hide()
+                            .setStrokeLineWidth(3);
         }
         svg.rangUp = svg.p_RDR.createChild("path")
                     .moveTo(-276*0.775,-482*0.5-95-20.5)
@@ -1424,20 +1436,28 @@ var MFD_Device =
                 if (rdrMode == RADAR_MODE_CRM and contact.get_type() == armament.MARINE) {
                     continue;
                 }
-                if (contact.get_display() == 0) {
-                    continue;
-                }
                 me.distPixels = contact.get_range()*(482/awg_9.range_radar2);
                 if (me.distPixels > 485) {
                     continue;
                 }
                 me.cs = contact.get_Callsign();
-                me.blue = getprop("f16/avionics/power-dl") and (me.cs == getprop("link16/wingman-1") or me.cs == getprop("link16/wingman-2") or me.cs == getprop("link16/wingman-3") or me.cs == getprop("link16/wingman-4") or me.cs == getprop("link16/wingman-5") or me.cs == getprop("link16/wingman-6") or me.cs == getprop("link16/wingman-7") or me.cs == getprop("link16/wingman-8") or me.cs == getprop("link16/wingman-9") or me.cs == getprop("link16/wingman-10") or me.cs == getprop("link16/wingman-11") or me.cs == getprop("link16/wingman-12"));
+                me.lnk16 = datalink.get_contact(me.cs);
+                if (me.lnk16 != nil and me.lnk16["on_link"] == 1) {#and me.lnk16["iff"] == 2 
+                    me.blue = 1;
+                } elsif (me.cs == getprop("link16/wingman-4")) {
+                    me.blue = 1;
+                } else {
+                    me.blue = 0;
+                }
+                if (contact.get_display() == 0 and (!me.blue or contact.get_behind_terrain())) {
+                    continue;
+                }
                 if (!me.blue and me.DGFT and !(awg_9.active_u != nil and awg_9.active_u.Callsign != nil and me.cs != nil and me.cs == awg_9.active_u.Callsign.getValue())) {
                     continue;
                 }
                 me.desig = contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType);
                 me.iff = contact.getIff();
+                #   if (me.lnk16 != nil) print(me.cs," iff:",me.iff, " iff16:", me.lnk16["iff"]);
                 if (rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA) {
                     me.echoPos = [me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels];
                     me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
@@ -1453,12 +1473,27 @@ var MFD_Device =
                             me.root.iff[me.i].show();
                             me.root.iff[me.i].update();
                             me.root.blep[me.i].hide();
+                            me.root.lnk[me.i].hide();
+                        } elsif (me.blue) {
+                            me.root.lnk[me.i].setColor(me.blue?colorDot4:colorLine3);
+                            me.root.lnk[me.i].setTranslation(me.echoPos);
+                            me.root.lnk[me.i].setRotation(D2R*(contact.get_heading()-getprop("orientation/heading-deg")-geo.normdeg180(contact.get_relative_bearing())));
+                            me.root.lnk[me.i].show();
+                            me.root.lnk[me.i].update();
+                            me.root.iff[me.i].hide();
+                            me.root.blep[me.i].hide();
+                            if (cursor_click == me.root.index) {
+                                if (math.abs(cursor_pos[0] - me.echoPos[0]) < 10 and math.abs(cursor_pos[1] - me.echoPos[1]) < 11) {
+                                    me.desig_new = contact;
+                                }
+                            }
                         } else {
                             me.root.blep[me.i].setColor(me.blue?colorDot1:colorLine3);
                             me.root.blep[me.i].setTranslation(me.echoPos);
                             me.root.blep[me.i].show();
                             me.root.blep[me.i].update();
                             me.root.iff[me.i].hide();
+                            me.root.lnk[me.i].hide();
                             if (cursor_click == me.root.index) {
                                 if (math.abs(cursor_pos[0] - me.echoPos[0]) < 10 and math.abs(cursor_pos[1] - me.echoPos[1]) < 11) {
                                     me.desig_new = contact;
@@ -1698,6 +1733,7 @@ var MFD_Device =
             for (;me.i<me.root.maxB;me.i+=1) {
                 me.root.blep[me.i].hide();
                 me.root.iff[me.i].hide();
+                me.root.lnk[me.i].hide();
             }
             me.root.dlzArray = pylons.getDLZ();
             #me.dlzArray =[10,8,6,2,9];#test
@@ -2805,10 +2841,16 @@ var MFD_Device =
         svg.blep = setsize([],svg.maxB);
         for (var i = 0;i<svg.maxB;i+=1) {
             svg.blep[i] = svg.p_HSDc.createChild("path")
-                    .moveTo(0,0)
-                    .vert(4)
-                    .setStrokeLineWidth(4)
-                    .hide();
+                            .moveTo(-10,-10)
+                            .vert(20)
+                            .horiz(20)
+                            .vert(-20)
+                            .horiz(-20)
+                            .moveTo(0,-10)
+                            .vert(-10)
+                            .setColor(colorDot1)
+                            .hide()
+                            .setStrokeLineWidth(3);
         }
         svg.rangUp = svg.buttonView.createChild("path")
                     .moveTo(-276*0.795,-482*0.5-105-27.5)
@@ -3411,16 +3453,27 @@ var MFD_Device =
             
             foreach(contact; awg_9.tgts_list) {
                 me.cs = contact.get_Callsign();
-                me.blue = getprop("f16/avionics/power-dl") and (me.cs == getprop("link16/wingman-1") or me.cs == getprop("link16/wingman-2") or me.cs == getprop("link16/wingman-3") or me.cs == getprop("link16/wingman-4") or me.cs == getprop("link16/wingman-5") or me.cs == getprop("link16/wingman-6") or me.cs == getprop("link16/wingman-7") or me.cs == getprop("link16/wingman-8") or me.cs == getprop("link16/wingman-9") or me.cs == getprop("link16/wingman-10") or me.cs == getprop("link16/wingman-11") or me.cs == getprop("link16/wingman-12"));
+                me.lnk16 = datalink.get_contact(me.cs);
+                if (me.lnk16 != nil and me.lnk16["on_link"] == 1) {#  and me.lnk16["iff"] == 2
+                    me.blue = 1;
+                } elsif (me.cs == getprop("link16/wingman-4")) {
+                    me.blue = 1;
+                } else {
+                    me.blue = 0;
+                }
                 me.desig = contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType);
-                if (contact.get_display() == 0 or !(me.desig or me.blue)) {
+                if (!me.desig and !me.blue) {
+                    continue;
+                }
+                if (contact.get_display() == 0 and (!me.blue or contact.get_behind_terrain())) {
                     continue;
                 }
                 me.distPixels = (contact.get_range()/awg_9.range_radar2)*me.rdrRangePixels;
-
+                #    if (me.blue) print("through ",me.desig," LoS:",!contact.get_behind_terrain());
                 me.root.blep[me.i].setColor(me.blue?colorDot4:colorLine3);
                 me.root.blep[me.i].setTranslation(me.distPixels*math.sin(contact.get_relative_bearing()*D2R),-me.distPixels*math.cos(contact.get_relative_bearing()*D2R));
                 me.root.blep[me.i].show();
+                me.root.blep[me.i].setRotation((contact.get_heading()-getprop("orientation/heading-deg"))*D2R);
                 me.root.blep[me.i].update();
                 if (me.desig) {
                     me.rot = contact.get_heading();
