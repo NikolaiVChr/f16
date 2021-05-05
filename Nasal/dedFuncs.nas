@@ -605,44 +605,46 @@ var EditableLAT = {
 			} else {
 				txt ~= "S";
 			}
+		} else {
+			txt ~= " ";
 		}
 		txt ~= "  ";
 		if (me.value[1] != nil) {
 			txt ~= me.value[1];
 		} else {
-			txt ~= "0";
+			txt ~= " ";
 		}
 		if (me.value[2] != nil) {
 			txt ~= me.value[2];
 		} else {
-			txt ~= "0";
+			txt ~= " ";
 		}
 		txt ~= "\xc2\xb0";
 		if (me.value[3] != nil) {
 			txt ~= me.value[3];
 		} else {
-			txt ~= "0";
+			txt ~= " ";
 		}
 		if (me.value[4] != nil) {
 			txt ~= me.value[4];
 		} else {
-			txt ~= "0";
+			txt ~= " ";
 		}
 		txt ~= ".";
 		if (me.value[5] != nil) {
 			txt ~= me.value[5];
 		} else {
-			txt ~= "0";
+			txt ~= " ";
 		}
 		if (me.value[6] != nil) {
 			txt ~= me.value[6];
 		} else {
-			txt ~= "0";
+			txt ~= " ";
 		}
 		if (me.value[7] != nil) {
 			txt ~= me.value[7];
 		} else {
-			txt ~= "0";
+			txt ~= " ";
 		}
 		txt ~= "´";
 	},
@@ -782,49 +784,51 @@ var EditableLON = {
 			} else {
 				txt ~= "E";
 			}
+		} else {
+			txt ~= " ";
 		}
 		txt ~= " ";
 		if (me.value[1] != nil) {
 			txt ~= me.value[1];
 		} else {
-			txt ~= "0";
+			txt ~= " ";
 		}
 		if (me.value[2] != nil) {
 			txt ~= me.value[2];
 		} else {
-			txt ~= "0";
+			txt ~= " ";
 		}
 		if (me.value[3] != nil) {
 			txt ~= me.value[3];
 		} else {
-			txt ~= "0";
+			txt ~= " ";
 		}
 		txt ~= "\xc2\xb0";
 		if (me.value[4] != nil) {
 			txt ~= me.value[4];
 		} else {
-			txt ~= "0";
+			txt ~= " ";
 		}
 		if (me.value[5] != nil) {
 			txt ~= me.value[5];
 		} else {
-			txt ~= "0";
+			txt ~= " ";
 		}
 		txt ~= ".";
 		if (me.value[6] != nil) {
 			txt ~= me.value[6];
 		} else {
-			txt ~= "0";
+			txt ~= " ";
 		}
 		if (me.value[7] != nil) {
 			txt ~= me.value[7];
 		} else {
-			txt ~= "0";
+			txt ~= " ";
 		}
 		if (me.value[8] != nil) {
 			txt ~= me.value[8];
 		} else {
-			txt ~= "0";
+			txt ~= " ";
 		}
 		txt ~= "´";
 	},
