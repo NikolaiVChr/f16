@@ -9,7 +9,7 @@
                 <owner type="string">UAEAF</owner>
             </livery>
             <livery-logo>
-            <texture>Liveries/standard.logos.png</texture>
+            <texture>Liveries/standard.logos.black.png</texture>
            </livery-logo>
 
         <livery-patch>

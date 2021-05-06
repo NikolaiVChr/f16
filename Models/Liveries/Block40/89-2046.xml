@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 
 <PropertyList>
- <sim> 
+ <sim>
   <model>
    <livery>
-    <name type="string">USAF 51FW, 36FS OS #130</name>
-    <texture>Liveries/Block40/89-2130.png</texture>
+    <name type="string">USAF 31FW, 510FS AV "Have Glass V #046"</name>
+    <texture>Liveries/Block40/88-0535.png</texture>
     <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/standard.logos.black2.png</texture>
+    <texture>Liveries/Block40/AV-046.png</texture>
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/Block40/patch.51FW.png</texture>
+      <texture>Liveries/Block40/patch.buzzards.png</texture>
   </livery-patch>
 
   <livery-pod>
-        <texture>Liveries/External-stores/MXU-648.png</texture>
+        <texture>Liveries/Block40/pod.buzzards.png</texture>
   </livery-pod>
 
   <f16>

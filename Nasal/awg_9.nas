@@ -51,11 +51,17 @@ var knownShips = {
 };
 
 var knownSurface = {
+    "S-75":       nil,
     "buk-m2":       nil,
     "s-300":       nil,
     "depot":       nil,
+    "struct":       nil,
+    "point":       nil,
+    "rig":       nil,
     "truck":     nil,
     "tower":     nil,
+    "MIM104D":       nil,
+    "ZSU-23-4M":       nil,
 };
 
 var this_model = "f16";
@@ -576,6 +582,8 @@ var az_scan = func(notification) {
             var iffr = iff.interrogate(u.propNode);
             if (iffr) {
                 u.iff = myTime;
+            } else {
+                u.iff = -myTime;
             }
         }
 
@@ -1092,11 +1100,13 @@ var designate = func (new_u) {
         armament.contact = nil;
         active_u_callsign = nil;
         active_u = nil;
+        datalink.clear_data();
         return;
     }
     armament.contact = new_u;
     active_u_callsign = new_u.get_Callsign();
     active_u = new_u;
+    datalink.send_data([{"callsign":active_u_callsign, "iff":0}]);
 };
 
 var TerrainManager = {
@@ -1614,7 +1624,7 @@ var Target = {
         obj.deviationE = nil;
         obj.elevation = nil;
         obj.virtual = 0;
-        obj.iff = -1000;
+        obj.iff = 0;
         
         obj.tacobj = {parents: [tacview.tacobj]};
         obj.tacobj.tacviewID = left(md5(obj.unique),5);
@@ -1625,8 +1635,10 @@ var Target = {
 #
 # radar azimuth
     getIff: func {
-        if (getprop("sim/time/elapsed-sec")-me.iff < 3.5) {
+        if (me.iff > 0 and getprop("sim/time/elapsed-sec")-me.iff < 3.5) {
             return 1;
+        } elsif (me.iff < 0 and getprop("sim/time/elapsed-sec")+me.iff < 3.5) {
+            return -1;
         }
         return 0;
     },
@@ -2034,7 +2046,7 @@ var Target = {
     },
     isRadiating: func (coord) {
         me.rn = me.get_range();
-        if (me.get_model() != "gci" and me.get_model() != "buk-m2" and me.get_model() != "missile_frigate" and me.get_model() != "s-300" and me.get_type()!=MARINE) {
+        if (me.get_model() != "gci" and me.get_model() != "S-75" and me.get_model() != "buk-m2" and me.get_model() != "MIM104D" and me.get_model() != "missile_frigate" and me.get_model() != "s-300" and me.get_model() != "ZSU-23-4M" and me.get_type()!=MARINE) {
             me.bearingR = coord.course_to(me.get_Coord());
             me.headingR = me.get_heading();
             me.inv_bearingR =  me.bearingR+180;

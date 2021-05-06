@@ -3,18 +3,17 @@
 <PropertyList>
  <sim>
   <model>
-   <livery> 
-    <name type="string">USAF 52FW, 22FS SP</name>
-    <texture>Liveries/Block50/91-0351.png</texture>
-    
+   <livery>
+    <name type="string">USAF 35FW, 13FS WW #892</name>
+    <texture>Liveries/Block50/92-3892.png</texture>
     <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/Block50/SP-351.png</texture>
+    <texture>Liveries/standard.logos.black2.png</texture>
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/Block50/patch.redhot_fighters.png</texture>
+      <texture>Liveries/Block50/patch.misawa.png</texture>
    </livery-patch>
 
   <livery-pod>

@@ -74,7 +74,7 @@
 	<input>
 	  	<width>250</width>
 	  	<height>25</height>
-	  	<label>Altitude</label>
+	  	<label>Altitude (ft)</label>
 	  	<property>f16/avionics/gps-alt</property>
 	  	<live>true</live>
 	  	<halign>left</halign>

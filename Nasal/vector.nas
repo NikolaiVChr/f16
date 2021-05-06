@@ -2,7 +2,7 @@ var Math = {
     #
     # Authors: Nikolai V. Chr, Axel Paccalin.
     #
-    # Version 1.93
+    # Version 1.94
     #
     # When doing euler coords. to cartesian: +x = forw, +y = left,  +z = up.
     # FG struct. coords:                     +x = back, +y = right, +z = up.
@@ -12,6 +12,8 @@ var Math = {
     #
     # When doing euler angles (from pilots point of view):  yaw     = yaw left,  pitch = rotate up, roll = roll right.
     # FG rotations:                                         heading = yaw right, pitch = rotate up, roll = roll right.
+    #
+    # Cartesian is right-handed coord system.
     #
     clamp: func(v, min, max) { v < min ? min : v > max ? max : v },
 
@@ -57,7 +59,9 @@ var Math = {
 
     # length of vector
     magnitudeVector: func (a) {
-        return math.sqrt(math.pow(a[0],2)+math.pow(a[1],2)+math.pow(a[2],2));
+        me.mag = 1;
+        call(func {me.mag = math.sqrt(math.pow(a[0],2)+math.pow(a[1],2)+math.pow(a[2],2))},nil,nil,var err =[]);#strange bug in Nasal can sometimes mess up sqrt
+        return me.mag;
     },
 
     # dot product of 2 vectors
@@ -81,6 +85,20 @@ var Math = {
         me.yawM   = me.yawMatrix(yaw);
         me.rotation = me.multiplyMatrices(me.yawM, me.multiplyMatrices(me.pitchM, me.rollM));
         return me.multiplyMatrixWithVector(me.rotation, vector);
+    },
+
+    # rotate a vector. Order: yaw, pitch
+    yawPitchVector: func (yaw, pitch, vector) {
+        me.pitchM = me.pitchMatrix(pitch);
+        me.yawM   = me.yawMatrix(yaw);
+        me.rotation = me.multiplyMatrices(me.pitchM, me.yawM);
+        return me.multiplyMatrixWithVector(me.rotation, vector);
+    },
+
+    # rotate a vector. Order: pitch
+    pitchVector: func (pitch, vector) {
+        me.pitchM = me.pitchMatrix(pitch);
+        return me.multiplyMatrixWithVector(me.pitchM, vector);
     },
 
     # multiply 3x3 matrix with vector
@@ -107,10 +125,10 @@ var Math = {
 
     # matrix for pitching
     pitchMatrix: func (pitch) {
-        pitch = pitch * D2R;
-        return [math.cos(pitch),0,-math.sin(pitch),
+        pitch = -pitch * D2R;
+        return [math.cos(pitch),0,math.sin(pitch),
                 0,1,0,
-                math.sin(pitch),0,math.cos(pitch)];
+                -math.sin(pitch),0,math.cos(pitch)];
     },
 
     # matrix for yawing
@@ -126,7 +144,8 @@ var Math = {
         me.horz  = math.sqrt(vector[0]*vector[0]+vector[1]*vector[1]);
         if (me.horz != 0) {
             me.pitch = math.atan2(vector[2],me.horz)*R2D;
-            me.hdg = math.asin(-vector[1]/me.horz)*R2D;
+            me.div = math.clamp(-vector[1]/me.horz, -1, 1);
+            me.hdg = math.asin(me.div)*R2D;
 
             if (vector[0] < 0) {
                 # south
@@ -268,7 +287,7 @@ var Math = {
 
     # print vector to console
     format: func (v) {
-      return sprintf("(%.1f, %.1f, %.1f)",v[0],v[1],v[2]);
+      return sprintf("(%.2f, %.2f, %.2f)",v[0],v[1],v[2]);
     },
 
     # make vector length 1.0
@@ -287,6 +306,20 @@ var Math = {
         var L2 = [coordL2.x(), coordL2.y(), coordL2.z()];
         
         return me.magnitudeVector(me.crossProduct(me.minus(L2,L1), me.minus(L1,P)))/me.magnitudeVector(me.minus(L2,L1));
+    },
+
+    interpolateVector: func (start, end, fraction) {
+        me.xx = (start[0]*(1-fraction) +end[0]*fraction);
+        me.yy = (start[1]*(1-fraction) +end[1]*fraction);
+        me.zz = (start[2]*(1-fraction) +end[2]*fraction);
+
+        return [me.xx, me.yy, me.zz];
+    },
+
+    # move distance 'along' from start towards end. Total dist from start to end is dist.
+    alongVector: func (start, end, dist, along) {
+        me.fraction = along/dist;
+        return me.interpolateVector(start, end, me.fraction);
     },
     
     # Orthogonal projection of a vector `vec` onto another `ref` !!can throw an exception if the referential vector is null!!.
@@ -319,9 +352,9 @@ var Math = {
 #| 0 cos(roll) -sin(roll) |
 #| 0 sin(roll)  cos(roll) |
 #
-#| cos(pitch) 0 -sin(pitch) |
-#|     0      1      0      |
-#| sin(pitch) 0  cos(pitch) |
+#| cos(-pitch) 0  sin(-pitch) |
+#|     0       1       0      |
+#| -sin(-pitch) 0 cos(-pitch) |
 #
 #| cos(yaw) -sin(yaw) 0 |
 #| sin(yaw)  cos(yaw) 0 |

@@ -36,6 +36,32 @@
   </parameters>
  </effect>
 
+ <effect>
+  <inherits-from>Aircraft/f16/Models/Effects/adjustable-hud2</inherits-from><!-- yellow tint -->
+  <object-name>BackGlass</object-name>
+  <parameters>
+    <rnorm type="float">0.0</rnorm>
+    <gsnorm type="float">0.0</gsnorm>
+    <frost-level type="float">0.0</frost-level>
+    <surface-mapping-scheme type="int">1</surface-mapping-scheme>
+    <fog-level type="float">0.0</fog-level>
+    <use-wipers type="int">0</use-wipers>
+    <overlay-alpha type="float">0.5</overlay-alpha>
+    <overlay-glare type="float">0.5</overlay-glare>
+    <use-reflection type="int">0</use-reflection>
+    <reflection-strength type="float">1.0</reflection-strength>
+    <use-mask type="int">1</use-mask>
+    <use-overlay type="int">1</use-overlay>
+    <hud-brightness><use>f16/avionics/hud-sym</use></hud-brightness>
+    <rendering-hint>transparent</rendering-hint>
+    <transparent>true</transparent>
+    <render-bin>
+      <bin-number>111</bin-number>
+      <bin-name>DepthSortedBin</bin-name>
+    </render-bin>
+  </parameters>
+ </effect>
+
  <!--<animation>
   <object-name>HUDImage2</object-name>
   <type>material</type>

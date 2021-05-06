@@ -92,6 +92,11 @@
   <name>HUDc</name>
   <path>Aircraft/f16/Models/Cockpit/f16_war.xml</path>
  </model>
+
+ <model>
+  <name>HUDd</name>
+  <path>Aircraft/f16/Models/Cockpit/f16_war_basic.xml</path>
+ </model>
  
  <animation>
   <type>select</type>
@@ -127,6 +132,21 @@
   <type>select</type>
   <object-name>HUDc</object-name>
   <condition>
+          <not>
+              <property>f16/avionics/hud-basic</property>
+          </not>
+          <equals>
+              <property>sim/variant-id</property>
+              <value>4</value>
+          </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>HUDd</object-name>
+  <condition>
+          <property>f16/avionics/hud-basic</property>
           <equals>
               <property>sim/variant-id</property>
               <value>4</value>

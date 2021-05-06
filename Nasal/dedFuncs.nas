@@ -487,6 +487,364 @@ var toggleableIff = {
 	},
 };
 
+var EditableLAT = {
+	new: func(prop, convert) {
+		var editableField = {parents: [EditableLAT]};
+		editableField.convert = convert;# convert from value to prop
+		editableField.value   = [nil,nil,nil,nil,nil,nil,nil,nil];# list of letter/digits
+		editableField.entervalue   = getprop(prop);# convert from value to prop
+		editableField.prop = prop;      # prop set when press enter
+		editableField.index = 0;        # which decimal/letter is being edited
+		editableField.selected = 0;     # If the DED cursor is on this field
+		editableField.listener = nil;   # listen to the prop
+		editableField.maxDigits = 8;
+		editableField.editing = 0;
+		editableField.init();
+		return editableField;
+	},
+	init: func() {
+		if (me.listener == nil) {
+			me.listener = setlistener(me.prop, func() {
+				me.entervalue   = getprop(me.prop);
+				me.value   = [nil,nil,nil,nil,nil,nil,nil,nil];
+				me.editing = 0;
+				me.index = 0;
+			}, 0, 0);
+		}
+	},
+	append: func(letter) {
+		me.editing = 1;
+		#print("append "~letter);
+		if (me.index == 2 and letter != "0" and me.value[1] == "9") return;
+		if (me.index == 3 and (letter == "6" or letter == "7" or letter == "8" or letter == "9")) return;
+		if (me.index == 1 and letter == "9") {
+			if(me.value[2] != nil) me.value[2] = "0";
+			if(me.value[3] != nil) me.value[3] = "0";
+			if(me.value[4] != nil) me.value[4] = "0";
+			if(me.value[5] != nil) me.value[5] = "0";
+			if(me.value[6] != nil) me.value[6] = "0";
+			if(me.value[7] != nil) me.value[7] = "0";
+		}		
+		me.value[me.index] = num(letter);
+		me.index += 1;
+		if (me.index >= me.maxDigits) {
+			me.index = 0;
+		}
+	},
+	reset: func {
+		#stop editing and reset to before editing started
+		me.entervalue = getprop(me.prop);
+		me.value   = [nil,nil,nil,nil,nil,nil,nil,nil];
+		me.editing = 0;
+		me.index = 0;
+	},
+	recall: func() {
+		#delete last entry
+		if (!me.editing) return;
+		me.index -= 1;
+		if (me.index < 0) {
+			me.index = 7;
+		}
+		me.value[me.index] = nil;
+	},
+	enter: func() {
+		if (me.editing == 0) return;
+		me.entervalue = me.valueToLat();
+		me.editing = 0;
+		if (me.entervalue != nil) {
+			setprop(me.prop, me.entervalue);
+		} else {
+			me.entervalue = getprop(me.prop);
+		}
+	},
+	valueToLat: func {
+		var sign = 1;
+		if (me.value[0] != nil) {
+			if (me.value[0] != "2") {
+				sign = -1;
+			}
+		} else {
+			return 0;
+		}
+		var degs = 0;
+		if (me.value[1] != nil) {
+			degs = num(me.value[1])*10;
+		} else {
+			return 0;
+		}
+		if (me.value[2] != nil) {
+			degs += num(me.value[2]);
+		}
+		var min = 0;
+		if (me.value[3] != nil) {
+			min = num(me.value[3])*10;
+		}
+		if (me.value[4] != nil) {
+			min += num(me.value[4]);
+		}
+		if (me.value[5] != nil) {
+			min += num(me.value[5]*0.1);
+		}
+		if (me.value[6] != nil) {
+			min += num(me.value[6]*0.01);
+		}
+		if (me.value[7] != nil) {
+			min += num(me.value[7]*0.001);
+		}		
+		if(degs <= 90 and min<60) {
+		    return convertDegreeToDouble(degs,min,0)*sign;
+		} else {
+		    return nil;
+		}
+	},
+	getEditText: func {
+		var txt = "";
+		if (me.value[0] != nil) {
+			if (me.value[0] == "2") {
+				txt ~= "N";
+			} else {
+				txt ~= "S";
+			}
+		} else {
+			txt ~= " ";
+		}
+		txt ~= "  ";
+		if (me.value[1] != nil) {
+			txt ~= me.value[1];
+		} else {
+			txt ~= " ";
+		}
+		if (me.value[2] != nil) {
+			txt ~= me.value[2];
+		} else {
+			txt ~= " ";
+		}
+		txt ~= "\xc2\xb0";
+		if (me.value[3] != nil) {
+			txt ~= me.value[3];
+		} else {
+			txt ~= " ";
+		}
+		if (me.value[4] != nil) {
+			txt ~= me.value[4];
+		} else {
+			txt ~= " ";
+		}
+		txt ~= ".";
+		if (me.value[5] != nil) {
+			txt ~= me.value[5];
+		} else {
+			txt ~= " ";
+		}
+		if (me.value[6] != nil) {
+			txt ~= me.value[6];
+		} else {
+			txt ~= " ";
+		}
+		if (me.value[7] != nil) {
+			txt ~= me.value[7];
+		} else {
+			txt ~= " ";
+		}
+		txt ~= "´";
+	},
+	getText: func() {
+		if (me.selected) {
+			if (!me.editing) {
+				return "*"~me.convert(getprop(me.prop))~"*";
+			} else {
+				return utf8.chstr(0xFB75)~me.getEditText()~utf8.chstr(0xFB75);
+			}
+		} else {
+			return " "~me.convert(getprop(me.prop))~" ";
+		}
+	},
+};
+
+var EditableLON = {
+	new: func(prop, convert) {
+		var editableField = {parents: [EditableLON]};
+		editableField.convert = convert;# convert from value to prop
+		editableField.value   = [nil,nil,nil,nil,nil,nil,nil,nil,nil];# list of letter/digits
+		editableField.entervalue   = getprop(prop);# convert from value to prop
+		editableField.prop = prop;      # prop set when press enter
+		editableField.index = 0;        # which decimal/letter is being edited
+		editableField.selected = 0;     # If the DED cursor is on this field
+		editableField.listener = nil;   # listen to the prop
+		editableField.maxDigits = 9;
+		editableField.editing = 0;
+		editableField.init();
+		return editableField;
+	},
+	init: func() {
+		if (me.listener == nil) {
+			me.listener = setlistener(me.prop, func() {
+				me.entervalue   = getprop(me.prop);
+				me.value   = [nil,nil,nil,nil,nil,nil,nil,nil,nil];
+				me.editing = 0;
+				me.index = 0;
+			}, 0, 0);
+		}
+	},
+	append: func(letter) {
+		me.editing = 1;
+		#print("append "~letter);
+		if (me.index == 1 and letter != "0" and letter != "1") return;
+		if (me.index == 2 and letter == "8" and me.value[1] == "1") {
+			if(me.value[3] != nil) me.value[3] = "0";
+			if(me.value[4] != nil) me.value[4] = "0";
+			if(me.value[5] != nil) me.value[5] = "0";
+			if(me.value[6] != nil) me.value[6] = "0";
+			if(me.value[7] != nil) me.value[7] = "0";
+			if(me.value[8] != nil) me.value[8] = "0";
+		}		
+		if (me.index == 4 and (letter == "6" or letter == "7" or letter == "8" or letter == "9")) return;
+		if (me.index == 2 and letter == "9" and me.value[1] == "1") return;
+
+		me.value[me.index] = num(letter);
+		me.index += 1;
+		if (me.index >= me.maxDigits) {
+			me.index = 0;
+		}
+	},
+	reset: func {
+		#stop editing and reset to before editing started
+		me.entervalue = getprop(me.prop);
+		me.value   = [nil,nil,nil,nil,nil,nil,nil,nil,nil];
+		me.editing = 0;
+		me.index = 0;
+	},
+	recall: func() {
+		#delete last entry
+		if (!me.editing) return;
+		me.index -= 1;
+		if (me.index < 0) {
+			me.index = 7;
+		}
+		me.value[me.index] = nil;
+	},
+	enter: func() {
+		if (me.editing == 0) return;
+		me.entervalue = me.valueToLat();
+		me.editing = 0;
+		if (me.entervalue != nil) {
+			setprop(me.prop, me.entervalue);
+		} else {
+			me.entervalue = getprop(me.prop);
+		}
+	},
+	valueToLat: func {
+		var sign = -1;
+		if (me.value[0] != nil) {
+			if (me.value[0] != "4") {
+				sign = 1;
+			}
+		} else {
+			return 0;
+		}
+		var degs = 0;
+		if (me.value[1] != nil) {
+			degs = num(me.value[1])*100;
+		} else {
+			return 0;
+		}
+		if (me.value[2] != nil) {
+			degs += num(me.value[2])*10;
+		}
+		if (me.value[3] != nil) {
+			degs += num(me.value[3]);
+		}
+		var min = 0;
+		if (me.value[4] != nil) {
+			min = num(me.value[4])*10;
+		}
+		if (me.value[5] != nil) {
+			min += num(me.value[5]);
+		}
+		if (me.value[6] != nil) {
+			min += num(me.value[6]*0.1);
+		}
+		if (me.value[7] != nil) {
+			min += num(me.value[7]*0.01);
+		}
+		if (me.value[8] != nil) {
+			min += num(me.value[8]*0.001);
+		}		
+		if(degs <= 180 and min<60) {
+		    return convertDegreeToDouble(degs,min,0)*sign;
+		} else {
+		    return nil;
+		}
+	},
+	getEditText: func {
+		var txt = "";
+		if (me.value[0] != nil) {
+			if (me.value[0] == "4") {
+				txt ~= "W";
+			} else {
+				txt ~= "E";
+			}
+		} else {
+			txt ~= " ";
+		}
+		txt ~= " ";
+		if (me.value[1] != nil) {
+			txt ~= me.value[1];
+		} else {
+			txt ~= " ";
+		}
+		if (me.value[2] != nil) {
+			txt ~= me.value[2];
+		} else {
+			txt ~= " ";
+		}
+		if (me.value[3] != nil) {
+			txt ~= me.value[3];
+		} else {
+			txt ~= " ";
+		}
+		txt ~= "\xc2\xb0";
+		if (me.value[4] != nil) {
+			txt ~= me.value[4];
+		} else {
+			txt ~= " ";
+		}
+		if (me.value[5] != nil) {
+			txt ~= me.value[5];
+		} else {
+			txt ~= " ";
+		}
+		txt ~= ".";
+		if (me.value[6] != nil) {
+			txt ~= me.value[6];
+		} else {
+			txt ~= " ";
+		}
+		if (me.value[7] != nil) {
+			txt ~= me.value[7];
+		} else {
+			txt ~= " ";
+		}
+		if (me.value[8] != nil) {
+			txt ~= me.value[8];
+		} else {
+			txt ~= " ";
+		}
+		txt ~= "´";
+	},
+	getText: func() {
+		if (me.selected) {
+			if (!me.editing) {
+				return "*"~me.convert(getprop(me.prop))~"*";
+			} else {
+				return utf8.chstr(0xFB75)~me.getEditText()~utf8.chstr(0xFB75);
+			}
+		} else {
+			return " "~me.convert(getprop(me.prop))~" ";
+		}
+	},
+};
+
 var checkValueTransponderCode = func(text) {
 	var codeDigits = split("", text);
 

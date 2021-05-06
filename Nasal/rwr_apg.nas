@@ -21,18 +21,7 @@ var SubSystem_RWR_APG = {
         #print("RWR_APG: init");
         var obj = { parents: [SubSystem_RWR_APG]};
         input = {
-               link16_wingman_1: "link16/wingman-1",
-               link16_wingman_2: "link16/wingman-2",
-               link16_wingman_3: "link16/wingman-3",
                link16_wingman_4: "link16/wingman-4",
-               link16_wingman_5: "link16/wingman-5",
-               link16_wingman_6: "link16/wingman-6",
-               link16_wingman_7: "link16/wingman-7",
-               link16_wingman_8: "link16/wingman-8",
-               link16_wingman_9: "link16/wingman-9",
-               link16_wingman_10: "link16/wingman-10",
-               link16_wingman_11: "link16/wingman-11",
-               link16_wingman_12: "link16/wingman-12",
         };
 
         foreach (var name; keys(input)) {
@@ -79,7 +68,8 @@ var SubSystem_RWR_APG = {
                     me.act_lck = 1;
                 }
                 me.l16 = 0;
-                if (notification.link16_wingman_1 == me.cs or notification.link16_wingman_2 == me.cs or notification.link16_wingman_3 == me.cs or notification.link16_wingman_4 == me.cs or notification.link16_wingman_5 == me.cs or notification.link16_wingman_6 == me.cs or notification.link16_wingman_7 == me.cs or notification.link16_wingman_8 == me.cs or notification.link16_wingman_9 == me.cs or notification.link16_wingman_10 == me.cs or notification.link16_wingman_11 == me.cs or notification.link16_wingman_12 == me.cs or me.rn > 150) {
+                me.lnk16 = datalink.get_contact(me.cs);
+                if (me.lnk16 != nil and me.lnk16["on_link"] == 1 or me.rn > 150) {
                     me.l16 = 1;
                 }
                 me.bearing = geo.aircraft_position().course_to(me.u.get_Coord());
@@ -109,7 +99,7 @@ var SubSystem_RWR_APG = {
                 #me.show = me.show and awg_9.TerrainManager.IsVisible(me.u.propNode,notification);# seems awg_9 uses isbehindterrain for non terrain stuff, so we need to repeat check here.
                 if (me.show == 1) {
                     me.threat = 0;
-                    if (me.u.get_model() != "missile_frigate" and me.u.get_model() != "buk-m2" and me.u.get_model() != "s-300" and me.u.get_model() != "fleet") {
+                    if (me.u.get_model() != "missile_frigate" and me.u.get_model() != "S-75" and me.u.get_model() != "buk-m2" and me.u.get_model() != "MIM104D" and me.u.get_model() != "s-300" and me.u.get_model() != "fleet" and me.u.get_model() != "ZSU-23-4M") {
                         me.threat += ((180-me.dev)/180)*0.30;# most threat if I am in front of his nose
                         me.spd = (60-me.u.get_Speed())/60;
                         me.threat -= me.spd>0?me.spd:0;# if his speed is lower than 60kt then give him minus threat else positive
@@ -120,9 +110,13 @@ var SubSystem_RWR_APG = {
                     }
                     me.danger = 50;# within this range he is most dangerous
                     if (me.u.get_model() == "missile_frigate" or me.u.get_model() == "fleet" or me.u.get_model() == "s-300") {
-                        me.danger = 75
-                    } elsif (me.u.get_model() == "buk-m2") {
+                        me.danger = 80;
+                    } elsif (me.u.get_model() == "buk-m2" or me.u.get_model() == "S-75") {
                         me.danger = 35;
+                    } elsif (me.u.get_model() == "MIM104D") {
+                        me.danger = 45;
+                    } elsif (me.u.get_model() == "ZSU-23-4M") {
+                        me.danger = 7.5;
                     }
                     me.threat += ((me.danger-me.rn)/me.danger)>0?((me.danger-me.rn)/me.danger)*0.60:0;# if inside danger zone then add threat, the closer the more.
                     me.clo = me.u.get_closure_rate();

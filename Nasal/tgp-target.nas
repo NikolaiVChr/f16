@@ -12,9 +12,15 @@ var Mp = props.globals.getNode("ai/models");
 var MyActualview = props.globals.getNode("/sim/current-view/view-number");
 
 var listOfGroundOrShipVehicleModels = {
+                                        "ZSU-23-4M":1,
+                                        "S-75":1,
                                         "buk-m2":1, 
                                         "s-300":1,
-                                        "depot":1, 
+                                        "MIM104D":1,
+                                        "depot":1
+                                        "struct":1,
+                                        "point":1,
+                                        "rig":1,
                                         "truck":1, 
                                         "tower":1, 
                                         "germansemidetached1":1,

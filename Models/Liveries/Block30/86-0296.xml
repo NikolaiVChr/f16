@@ -4,8 +4,8 @@
  <sim> 
   <model>
    <livery>
-    <name type="string">USAF 51FW, 36FS OS #130</name>
-    <texture>Liveries/Block40/89-2130.png</texture>
+    <name type="string">USAF 162FW, 195FS AZ</name>
+    <texture>Liveries/Block30/86-0296.png</texture>
     <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
@@ -13,11 +13,11 @@
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/Block40/patch.51FW.png</texture>
+      <texture>Liveries/Block30/patch.arizona.png</texture>
   </livery-patch>
 
   <livery-pod>
-        <texture>Liveries/External-stores/MXU-648.png</texture>
+        <texture>Armament/External-stores/MXU-648.png</texture>
   </livery-pod>
 
   <f16>

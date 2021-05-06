@@ -39,3 +39,8 @@ var rtimer = maketimer(1.0, func {
 rtimer.start();
 
 aircraft.tyresmoke_system.new(0, 1, 2);
+
+# If these are not random then people who just fly might accidently be on same channel by mistake.
+# Or if they are previous day was fighting together with same channels, they should now have to intentionally setup, so not to enherit old fights values.
+setprop("instrumentation/iff/channel-selection", int(rand()*10000));
+setprop("instrumentation/datalink/channel", int(rand()*10000));

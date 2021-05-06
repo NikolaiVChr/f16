@@ -153,7 +153,10 @@ Axel Paccalin
 
 Baptiste "Bat" Campion
 - Belgian AF, Hellenic AF, PACAF-USN Aggressors, Dutch AF, PACAF livery packs
-- Portuguese AF, QF-16, Turkish AF, Royal Moroccan AF liveries
+- Portuguese AF, QF-16, Turkish AF, Royal Moroccan AF, Arizona ANG liveries
 
 Shaymo
 - Exterior and interior 3D model fixes
+
+Elon Musk
+- Wide Angle Raster HUD 3D work
