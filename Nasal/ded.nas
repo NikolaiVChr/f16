@@ -605,7 +605,7 @@ var dataEntryDisplay = {
 			var usedC = setsize([],4);
 			var j = 0;
 			var highest = 0;
-			for(var i = me.scroll; i < me.scroll+4;i+=1) {
+			for(var i = int(me.scroll); i < int(me.scroll)+4;i+=1) {
 				if (i < last) {
 					usedI[j] = sprintf("#%02d", idl[i]+1);
 					usedC[j] = csl[i];
@@ -627,13 +627,6 @@ var dataEntryDisplay = {
 			me.text[2] = sprintf("%s %7s       DATA 16K",usedI[1],usedC[1]);
 			me.text[3] = sprintf("%s %7s       OWN  #0 ",usedI[2],usedC[2]);
 			me.text[4] = sprintf("%s %7s       LAST #%d ",usedI[3],usedC[3],highest);
-		} elsif (getprop("f16/avionics/power-dl")) {
-			me.scroll += 0.25;
-			me.text[0] = sprintf("    DLNK  CH %s   %s",pDLNK.vector[0].getText(),me.no);
-			me.text[1] = sprintf("#%d %7s      COMM VHF",0,getprop("sim/multiplay/callsign"));
-			me.text[2] = sprintf("             DATA 16K");
-			me.text[3] = sprintf("             OWN  #0 ");
-			me.text[4] = sprintf("             LAST     ");
 		} else {
 			me.text[0] = sprintf("        DLNK           %s",me.no);
 			me.text[1] = sprintf("  NO DLINK DATA ");
