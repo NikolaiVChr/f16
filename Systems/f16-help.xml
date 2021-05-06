@@ -50,10 +50,6 @@
                 <desc>Toggles Radar Standby Mode</desc>
             </key>
             <key>
-                <name>Ctrl-t</name>
-                <desc>Cycle Transponder modes</desc>
-            </key>
-            <key>
                 <name>Ctrl-s</name>
                 <desc>Ignore selected MP pilots</desc>
             </key>
