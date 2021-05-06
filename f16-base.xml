@@ -460,12 +460,7 @@
                         <enabled>false</enabled>
                       </item>
                       <item>
-                        <label>Link 16</label>
-                        <name>link16</name>
-                        <binding>
-                          <command>dialog-show</command>
-                          <dialog-name>link16</dialog-name>
-                        </binding>
+                        <label> </label><!-- if you remove me, remember to update the menu numbers for all variant -set files -->
                     </item>
                     <item>
                         <label>Mission Preplanning</label>
