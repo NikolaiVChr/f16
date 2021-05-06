@@ -576,46 +576,54 @@ var MFD_Device =
         svg.index = index;
         svg.blep = setsize([],svg.maxB);
         svg.lnk = setsize([],svg.maxB);
+        svg.lnkT = setsize([],svg.maxB+1);
         svg.iff  = setsize([],svg.maxB);# friendly IFF response
         svg.iffU = setsize([],svg.maxB);# unknown IFF response
-        for (var i = 0;i<svg.maxB;i+=1) {
-            svg.blep[i] = svg.p_RDR.createChild("path")
-                    .moveTo(0,-3)
-                    .vert(7)
-                    .setStrokeLineWidth(7)
-                    .setStrokeLineCap("butt")
-                    .set("z-index",10)
-                    .hide();
-            svg.iff[i] = svg.p_RDR.createChild("path")
-                            .moveTo(-8,0)
-                            .arcSmallCW(8,8, 0,  8*2, 0)
-                            .arcSmallCW(8,8, 0, -8*2, 0)
-                            .setColor(colorCircle3)
-                            .hide()
-                            .set("z-index",1)
-                            .setStrokeLineWidth(3);
-            svg.iffU[i] = svg.p_RDR.createChild("path")
-                            .moveTo(-8,-8)
-                            .vert(16)
-                            .horiz(16)
-                            .vert(-16)
-                            .horiz(-16)
-                            .setColor(colorCircle2)
-                            .hide()
-                            .set("z-index",1)
-                            .setStrokeLineWidth(3);
-            svg.lnk[i] = svg.p_RDR.createChild("path")
-                            .moveTo(-10,-10)
-                            .vert(20)
-                            .horiz(20)
-                            .vert(-20)
-                            .horiz(-20)
-                            .moveTo(0,-10)
-                            .vert(-10)
-                            .setColor(colorDot1)
-                            .hide()
-                            .set("z-index",10)
-                            .setStrokeLineWidth(3);
+        for (var i = 0;i<=svg.maxB;i+=1) {
+            if (i<svg.maxB) {
+                svg.blep[i] = svg.p_RDR.createChild("path")
+                        .moveTo(0,-3)
+                        .vert(7)
+                        .setStrokeLineWidth(7)
+                        .setStrokeLineCap("butt")
+                        .set("z-index",10)
+                        .hide();
+                svg.iff[i] = svg.p_RDR.createChild("path")
+                                .moveTo(-8,0)
+                                .arcSmallCW(8,8, 0,  8*2, 0)
+                                .arcSmallCW(8,8, 0, -8*2, 0)
+                                .setColor(colorCircle3)
+                                .hide()
+                                .set("z-index",1)
+                                .setStrokeLineWidth(3);
+                svg.iffU[i] = svg.p_RDR.createChild("path")
+                                .moveTo(-8,-8)
+                                .vert(16)
+                                .horiz(16)
+                                .vert(-16)
+                                .horiz(-16)
+                                .setColor(colorCircle2)
+                                .hide()
+                                .set("z-index",1)
+                                .setStrokeLineWidth(3);
+                svg.lnk[i] = svg.p_RDR.createChild("path")
+                                .moveTo(-10,-10)
+                                .vert(20)
+                                .horiz(20)
+                                .vert(-20)
+                                .horiz(-20)
+                                .moveTo(0,-10)
+                                .vert(-10)
+                                .setColor(colorDot1)
+                                .hide()
+                                .set("z-index",10)
+                                .setStrokeLineWidth(3);
+            }
+            svg.lnkT[i] = svg.p_RDR.createChild("text")
+                .setAlignment("center-bottom")
+                .setColor(colorDot1)
+                .set("z-index",1)
+                .setFontSize(20, 1.0);
         }
         svg.rangUp = svg.p_RDR.createChild("path")
                     .moveTo(-276*0.775,-482*0.5-95-20.5)
@@ -1443,6 +1451,7 @@ var MFD_Device =
             me.gm_echoPos = {};
             me.ijk = 0;
             me.intercept = nil;
+            me.showDLT = 0;
             foreach(contact; awg_9.tgts_list) {
                 if (rdrMode == RADAR_MODE_SEA and contact.get_type() != armament.MARINE) {
                     continue;
@@ -1459,13 +1468,16 @@ var MFD_Device =
                 me.lnk16 = datalink.get_contact(me.cs);
                 if (me.lnk16 != nil and me.lnk16["on_link"] == 1) {#and me.lnk16["iff"] == 2 
                     me.blue = 1;
+                    me.blueIndex = getDLNIndex(me.cs);
                 } elsif (me.cs == getprop("link16/wingman-4")) {
                     me.blue = 1;
+                    me.blueIndex = 2;
                 } else {
                     me.blue = 0;
                 }
                 if (me.lnk16 != nil and me.lnk16["on_link"] == 0) {
                     me.lnkLock = 1;
+                    me.blueIndex = me.lnk16["from_index"]+1;
                 }
                 if (contact.get_display() == 0 and ((!me.blue and !me.lnkLock) or contact.get_behind_terrain())) {
                     continue;
@@ -1492,6 +1504,7 @@ var MFD_Device =
                             me.root.iff[me.i].update();
                             me.root.blep[me.i].hide();
                             me.root.lnk[me.i].hide();
+                            me.root.lnkT[me.i].hide();
                             me.root.iffU[me.i].hide();
                         } elsif (me.iff == -1) {
                             me.root.iffU[me.i].setTranslation(me.echoPos);
@@ -1499,8 +1512,13 @@ var MFD_Device =
                             me.root.iffU[me.i].update();
                             me.root.blep[me.i].hide();
                             me.root.lnk[me.i].hide();
+                            me.root.lnkT[me.i].hide();
                             me.root.iff[me.i].hide();
                         } elsif (me.blue or me.lnkLock) {
+                            me.root.lnkT[me.i].setColor(me.blue?colorDot4:colorCircle2);
+                            me.root.lnkT[me.i].setTranslation(me.echoPos[0],me.echoPos[1]-18);
+                            me.root.lnkT[me.i].setText(""~me.blueIndex);
+                            me.root.lnkT[me.i].show();
                             me.root.lnk[me.i].setColor(me.blue?colorDot4:colorCircle2);
                             me.root.lnk[me.i].setTranslation(me.echoPos);
                             me.root.lnk[me.i].setRotation(D2R*(contact.get_heading()-getprop("orientation/heading-deg")-geo.normdeg180(contact.get_relative_bearing())));
@@ -1522,6 +1540,7 @@ var MFD_Device =
                             me.root.iff[me.i].hide();
                             me.root.iffU[me.i].hide();
                             me.root.lnk[me.i].hide();
+                            me.root.lnkT[me.i].hide();
                             if (cursor_click == me.root.index) {
                                 if (math.abs(cursor_pos[0] - me.echoPos[0]) < 10 and math.abs(cursor_pos[1] - me.echoPos[1]) < 11) {
                                     me.desig_new = contact;
@@ -1603,6 +1622,11 @@ var MFD_Device =
                             me.root.lockFRot.show();
                             me.root.lockRot.hide();
                             me.root.lockFRot.update();
+                            me.root.lnkT[me.root.maxB].setColor(colorDot1);
+                            me.root.lnkT[me.root.maxB].setTranslation(me.echoPos[0],me.echoPos[1]-18);
+                            me.root.lnkT[me.root.maxB].setText(""~me.blueIndex);
+                            me.root.lnkT[me.root.maxB].show();
+                            me.showDLT = 1;
                         } else {
                             me.root.lockRot.setRotation(me.rot*D2R);
                             me.root.lockRot.show();
@@ -1622,6 +1646,7 @@ var MFD_Device =
                         if (me.i <= (me.root.maxB-1)) {
                             me.root.blep[me.i].hide();
                             me.root.lnk[me.i].hide();
+                            me.root.lnkT[me.i].hide();
                         }
                     }
                 }
@@ -1631,6 +1656,7 @@ var MFD_Device =
                     #break;
                 #}
             }
+            me.root.lnkT[me.root.maxB].setVisible(me.showDLT);
             
             if (me.intercept != nil) {
                 me.interceptCoord = me.intercept[2];
@@ -1764,6 +1790,7 @@ var MFD_Device =
                 me.root.iff[me.i].hide();
                 me.root.iffU[me.i].hide();
                 me.root.lnk[me.i].hide();
+                me.root.lnkT[me.i].hide();
             }
             me.root.dlzArray = pylons.getDLZ();
             #me.dlzArray =[10,8,6,2,9];#test
@@ -2869,6 +2896,7 @@ var MFD_Device =
 
         svg.maxB = 16;
         svg.blep = setsize([],svg.maxB);
+        svg.lnkT = setsize([],svg.maxB);
         for (var i = 0;i<svg.maxB;i+=1) {
             svg.blep[i] = svg.p_HSDc.createChild("path")
                             .moveTo(-10,-10)
@@ -2881,6 +2909,10 @@ var MFD_Device =
                             .setColor(colorDot1)
                             .hide()
                             .setStrokeLineWidth(3);
+            svg.lnkT[i] = svg.p_HSDc.createChild("text")
+                        .setAlignment("center-bottom")
+                        .set("z-index",10)
+                        .setFontSize(20, 1.0);
         }
         svg.rangUp = svg.buttonView.createChild("path")
                     .moveTo(-276*0.795,-482*0.5-105-27.5)
@@ -3485,15 +3517,18 @@ var MFD_Device =
                 me.cs = contact.get_Callsign();
                 me.lnk16 = datalink.get_contact(me.cs);
                 me.lnkLock = 0;
-                if (me.lnk16 != nil and me.lnk16["on_link"] == 1) {
+                if (me.lnk16 != nil and me.lnk16["on_link"] == 1) {#and me.lnk16["iff"] == 2 
                     me.blue = 1;
+                    me.blueIndex = getDLNIndex(me.cs);
                 } elsif (me.cs == getprop("link16/wingman-4")) {
                     me.blue = 1;
+                    me.blueIndex = 2;
                 } else {
                     me.blue = 0;
                 }
                 if (me.lnk16 != nil and me.lnk16["on_link"] == 0) {
                     me.lnkLock = 1;
+                    me.blueIndex = me.lnk16["from_index"]+1;
                 }
                 me.desig = contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType);
                 if (!me.desig and !me.blue and !me.lnkLock) {
@@ -3504,6 +3539,12 @@ var MFD_Device =
                 }
                 me.distPixels = (contact.get_range()/awg_9.range_radar2)*me.rdrRangePixels;
                 #    if (me.blue) print("through ",me.desig," LoS:",!contact.get_behind_terrain());
+
+                me.root.lnkT[me.i].setColor(me.blue?colorDot4:colorCircle2);
+                me.root.lnkT[me.i].setTranslation(me.distPixels*math.sin(contact.get_relative_bearing()*D2R),-me.distPixels*math.cos(contact.get_relative_bearing()*D2R)-18);
+                me.root.lnkT[me.i].setText(""~me.blueIndex);
+                me.root.lnkT[me.i].show();
+
                 me.root.blep[me.i].setColor(me.lnkLock?colorCircle2:(me.blue?colorDot4:colorLine3));
                 me.root.blep[me.i].setTranslation(me.distPixels*math.sin(contact.get_relative_bearing()*D2R),-me.distPixels*math.cos(contact.get_relative_bearing()*D2R));
                 me.root.blep[me.i].show();
@@ -3528,11 +3569,13 @@ var MFD_Device =
                             me.root.lockFRot.show();
                             me.root.lockRot.hide();
                             me.root.lockFRot.update();
+                            me.root.lnkT[me.i].setColor(colorDot1);
                         } else {
                             me.root.lockRot.setRotation(me.rot*D2R);
                             me.root.lockRot.show();
                             me.root.lockFRot.hide();
                             me.root.lockRot.update();
+                            me.root.lnkT[me.i].hide();
                         }
                         me.root.lock.show();
                         me.root.lock.update();
@@ -3546,6 +3589,7 @@ var MFD_Device =
             }
             for (;me.i<me.root.maxB;me.i+=1) {
                 me.root.blep[me.i].hide();
+                me.root.lnkT[me.i].hide();
             }
         };
     },
@@ -4164,4 +4208,18 @@ var switchTGP = func {
     } else {
         setprop("sim/current-view/view-number",12);
     }
+}
+
+
+var getDLNIndex = func (callsign) {
+    var csl = datalink.get_connected_callsigns();
+    var inl = datalink.get_connected_indices();
+    var count = 0;
+    foreach (cs ; csl) {
+        if (callsign == cs) {
+            return inl[count]+1;
+        }
+        count += 1;
+    }
+    return -1;
 }

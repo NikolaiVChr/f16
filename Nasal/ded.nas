@@ -594,37 +594,39 @@ var dataEntryDisplay = {
 	
 	updateDlnk: func() {
 		
-		if (getprop("f16/avionics/power-dl") and 0) {
-			var last = 0;
-			var lnk = datalink.get_contacts();
-			foreach(callsignLN ; lnk) {
-				last += 1;
-				if (0) {
-
-				}
-			}
-			if (lnk != nil and lnk["iff"] == 2 and lnk["on_link"] == 1) {
-			}
-			if (getprop("link16/wingman-12")!="") last = 12;
-			elsif (getprop("link16/wingman-11")!="") last = 11;
-			elsif (getprop("link16/wingman-10")!="") last = 10;
-			elsif (getprop("link16/wingman-9")!="") last = 9;
-			elsif (getprop("link16/wingman-8")!="") last = 8;
-			elsif (getprop("link16/wingman-7")!="") last = 7;
-			elsif (getprop("link16/wingman-6")!="") last = 6;
-			elsif (getprop("link16/wingman-5")!="") last = 5;
-			elsif (getprop("link16/wingman-4")!="") last = 4;
-			elsif (getprop("link16/wingman-3")!="") last = 3;
-			elsif (getprop("link16/wingman-2")!="") last = 2;
-			elsif (getprop("link16/wingman-1")!="") last = 1;
+		if (getprop("f16/avionics/power-dl")) {
+			var csl = datalink.get_connected_callsigns();
+			var idl = datalink.get_connected_indices();
+			var last = size(csl);
+			var list = setsize([],last);
 			me.scroll += 0.25;
 			if (me.scroll >= last-3) me.scroll = 0;
+			var usedI = setsize([],4);
+			var usedC = setsize([],4);
+			var j = 0;
+			var highest = 0;
+			for(var i = me.scroll; i < me.scroll+4;i+=1) {
+				if (i < last) {
+					usedI[j] = sprintf("#%02d", idl[i]+1);
+					usedC[j] = csl[i];
+					if (idl[i] > highest) highest = idl[i]+1;
+					while(size(usedC[j]) < 7) {
+						usedC[j] = usedC[j]~" ";
+					}
+				} else {
+					usedI[j] = "#  ";
+					usedC[j] = "       ";
+				}
+				j += 1;
+			}
+
+			#elsif (getprop("link16/wingman-4")!="") last = 4;			
 			
-			var used = subvec(wingmen,int(me.scroll),4);
-			me.text[1] = sprintf("#%d %7s      COMM VHF",int(me.scroll+1),used[0]);
-			me.text[2] = sprintf("#%d %7s      DATA 16K",int(me.scroll+2),used[1]);
-			me.text[3] = sprintf("#%d %7s      OWN  #0 ",int(me.scroll+3),used[2]);
-			me.text[4] = sprintf("#%d %7s      LAST #%d ",int(me.scroll+4),used[3],last);
+			me.text[0] = sprintf("    DLNK  CH %s   %s",pDLNK.vector[0].getText(),me.no);
+			me.text[1] = sprintf("%s %7s       COMM VHF",usedI[0],usedC[0]);
+			me.text[2] = sprintf("%s %7s       DATA 16K",usedI[1],usedC[1]);
+			me.text[3] = sprintf("%s %7s       OWN  #0 ",usedI[2],usedC[2]);
+			me.text[4] = sprintf("%s %7s       LAST #%d ",usedI[3],usedC[3],highest);
 		} elsif (getprop("f16/avionics/power-dl")) {
 			me.scroll += 0.25;
 			me.text[0] = sprintf("    DLNK  CH %s   %s",pDLNK.vector[0].getText(),me.no);
