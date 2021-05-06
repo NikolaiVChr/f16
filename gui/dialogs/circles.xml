@@ -477,41 +477,6 @@
 
 	<empty><stretch>1</stretch></empty>
 	<hrule/>
-
-	<text><halign>left</halign><label>IFF MODE 4 Channel</label></text>
-	<empty><stretch>1</stretch></empty>
-
-	<group>
-		<layout>hbox</layout>
-			   <input>
-				  <width>75</width>
-				  <height>25</height>
-				  <property>instrumentation/iff/channel-selection</property>
-				  <live>true</live>
-				  <halign>center</halign>
-			      	<binding>
-			           <command>dialog-apply</command>
-			      	</binding>
-			      	<color>
-	      				<red>0.44</red>
-						<green>0.55</green>
-						<blue>0.8</blue>
-	      			</color>
-			   </input>
-			   <button>
-				<legend>Clear</legend>
-				<halign>center</halign>
-				<binding>
-					<command>nasal</command>
-					<script><![CDATA[
-						setprop("instrumentation/iff/channel-selection", 0);
-					]]></script>
-				</binding>
-				</button>
-	</group>
-
-	<empty><stretch>1</stretch></empty>
-	<hrule/>
 	
 	<text>
         <label>DTU preloaded HSD Lines</label>
