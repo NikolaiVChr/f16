@@ -413,7 +413,8 @@ RWRCanvas = {
                 if (notification["rwrList"] != nil and size(notification.rwrList)>0)
                   me.parent_obj.update(notification.rwrList, "normal");
                 #else if (notification["rwrList16"] != nil)
-                #  me.parent_obj.update(notification.rwrList16, "link16");
+                else
+                  me.parent_obj.update([], "link16");
                 return emesary.Transmitter.ReceiptStatus_OK;
             }
             return emesary.Transmitter.ReceiptStatus_NotProcessed;
