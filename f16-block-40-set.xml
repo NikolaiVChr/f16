@@ -165,18 +165,18 @@
    <default>
     <menu n="101">
      <label>F-16CM Block 40</label>
-        <item n="12">
+        <item n="11">
           <label>--- Block options ---</label>
           <enabled>false</enabled>
         </item>
-        <item n="13">
+        <item n="12">
           <label>Payload presets</label>
           <binding>
             <command>dialog-show</command>
             <dialog-name>payload-b40</dialog-name>
           </binding>
       </item>
-      <item n="14">
+      <item n="13">
           <label>Program target</label>
           <enabled type="bool">true</enabled>
           <name>programGPS</name>

@@ -166,9 +166,13 @@ Do not operate below 200 kt with cat III stores, unless for landing or take-off.
 NIGHTTIME FLYING
 There is flood and instrument lights that can be turned up. Furthermore with ALS grapchics setting and higher shader setting there is also landing and taxi light.
 
+AIR TO AIR REFUELING
+Yuo can refuel with both AI or MP compatible tankers which operate a boom system. To perform aerial refueling set the AIR REFUEL switch to open (or press f) and get within the boom engagement zone of the tanker. 
+Notice that this will also change how the fly-by-wire reacts to your stick inputs, so that you can make minute corrections more easily when close to the tanker.
+
 DRAGCHUTE
 Maximum recommended speed for deployment is 170 KIAS. Keys are 'o' to deploy, and 'O' to detach.
-Note that not all variants have a dragchute.
+Note that not all variants have a dragchute as it depends on selected liveries.
 
 FLYING IN MP
 Firstly be sure to use "Visible to 2017+", else others will not see everything working okay when they see your aircraft. For doing combat enable "MP Discharge messages". This might be considered spam of MP chat, so use it sparringly and only against opponents that have agreed to be fighting you. With this option enabled you can take and deal damage to other aircraft that also has it enabled. It can only be enabled with wheels on ground.

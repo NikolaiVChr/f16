@@ -459,9 +459,6 @@
                         <label>--- GUI Panels ---</label>
                         <enabled>false</enabled>
                       </item>
-                      <item>
-                        <label> </label><!-- if you remove me, remember to update the menu numbers for all variant -set files -->
-                    </item>
                     <item>
                         <label>Mission Preplanning</label>
                         <enabled type="bool">true</enabled>
