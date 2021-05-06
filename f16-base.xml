@@ -42,7 +42,6 @@
             <path>/instrumentation/tacan/frequencies/selected-channel[2]</path>
             <path>/instrumentation/tacan/frequencies/selected-channel[3]</path>
             <path>/instrumentation/tacan/frequencies/selected-channel[4]</path>
-            <path>/instrumentation/iff/channel-selection</path>
             <path>/f16/avionics/msl-vol-knob</path>
             <path>/f16/avionics/ils-volume</path>
             <path>/f16/avionics/rwr-volume</path>
@@ -1104,7 +1103,7 @@
             <serviceable type="bool">true</serviceable>
         </hud>
         <datalink>
-            <channel type="string">87YZ</channel>
+            <channel type="int">42</channel>
             <power_prop type="string">f16/avionics/power-dl</power_prop>
             <channel_prop type="string">instrumentation/datalink/channel</channel_prop>
             <receive_period type="double">1</receive_period>
