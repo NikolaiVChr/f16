@@ -25,8 +25,7 @@ var rcs_database = {
     "Mig-29":                   6,      #guess
     "J-11A":                    15,     #same as Su-27
     "jaguar":                   6,      #guess
-    "Jaguar-GR3":               6,      #guess
-    "onox-tanker":              90,     #guess
+    "onox-tanker":              100,    #guess
     "EF2000":                   0.5,
     "brsq":                     1.5,    #average (multiple sources)
     "FA-18C_Hornet":            3.5,    #later Blocks have 1
