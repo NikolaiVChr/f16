@@ -83,7 +83,7 @@
                 <cmds-02-switch type="bool">true</cmds-02-switch>
                 <cmds-ch-switch type="bool">true</cmds-ch-switch>
                 <cmds-fl-switch type="bool">true</cmds-fl-switch>
-                <ew-mode-knob type="bool">true</ew-mode-knob>
+                <ew-mode-knob type="int">1</ew-mode-knob>
                 <pbg-switch type="int">0</pbg-switch>
             </avionics>
         </f16>

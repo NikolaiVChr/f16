@@ -60,6 +60,8 @@ var SubSystem_RWR_APG = {
             me.myCallsign = getprop("sim/multiplay/callsign");
             me.myCallsign = size(me.myCallsign) < 8 ? me.myCallsign : left(me.myCallsign,7);
             me.act_lck = 0;
+            me.autoFlare = 0;
+            me.closestThreat = 0;
             foreach(me.u;notification.completeList) {
                 me.cs = me.u.get_Callsign();
                 me.rn = me.u.get_range();
@@ -121,6 +123,7 @@ var SubSystem_RWR_APG = {
                     me.threat += ((me.danger-me.rn)/me.danger)>0?((me.danger-me.rn)/me.danger)*0.60:0;# if inside danger zone then add threat, the closer the more.
                     me.clo = me.u.get_closure_rate();
                     me.threat += me.clo>0?(me.clo/500)*0.10:0;# more closing speed means more threat.
+                    if (me.threat > me.closestThreat) me.closestThreat = me.threat;
                     if (me.threat > 1) me.threat = 1;
                     if (me.threat <= 0) continue;
     #                printf("%s threat:%.2f range:%d dev:%d", me.u.get_Callsign(),me.threat,me.u.get_range(),me.deviation);
@@ -134,6 +137,17 @@ var SubSystem_RWR_APG = {
                 }
             }
             setprop("sound/rwr-lck", me.act_lck);
+
+            me.launchClose = getprop("payload/armament/MLW-launcher") != "";
+            me.incoming = getprop("payload/armament/MAW-active");
+            me.spike = getprop("payload/armament/spike");
+            print("spike: ",me.spike,"  incoming: ",me.incoming, "  launch: ",me.launchClose);
+            me.autoFlare = me.spike?math.max(me.closestThreat*0.25,0.10):0;
+            print("AUT1: ",me.autoFlare);
+            me.autoFlare += me.launchClose * 0.85 + me.incoming * 0.85;
+            print("AUT2: ",me.autoFlare);
+
+            setprop("ai/submodels/submodel[0]/flare-auto-release-cmd", me.autoFlare * (getprop("ai/submodels/submodel[0]/count")>0));
     },
 };
 

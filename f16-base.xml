@@ -1179,6 +1179,7 @@
         <submodels>
             <submodel n="0">
                 <flare-release-cmd type="bool">false</flare-release-cmd>
+                <flare-auto-release-cmd type="double">0</flare-auto-release-cmd>
                 <flare-release type="bool">false</flare-release>
             </submodel>
         </submodels>
@@ -1321,7 +1322,7 @@ value. 18000=standard US transition altitude -->
             <ew-mws-switch type="bool">false</ew-mws-switch>
             <ew-jett-switch type="bool">false</ew-jett-switch>
             <ew-jmr-switch type="bool">false</ew-jmr-switch>
-            <ew-mode-knob type="bool">false</ew-mode-knob>
+            <ew-mode-knob type="int">0</ew-mode-knob>
             <cmds-01-switch type="bool">false</cmds-01-switch>
             <cmds-02-switch type="bool">false</cmds-02-switch>
             <cmds-ch-switch type="bool">false</cmds-ch-switch>

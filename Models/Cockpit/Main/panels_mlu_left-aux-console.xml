@@ -1063,7 +1063,7 @@
                 <property>f16/avionics/ew-mode-knob</property>
                 <factor>1</factor>
                 <min>0</min>
-                <max>1</max>
+                <max>2</max>
                 <wrap>false</wrap>
             </binding>
         </action>
@@ -1092,7 +1092,7 @@
                 <property>f16/avionics/ew-mode-knob</property>
                 <factor>1</factor>
                 <min>0</min>
-                <max>1</max>
+                <max>2</max>
                 <wrap>false</wrap>
             </binding>
         </action>

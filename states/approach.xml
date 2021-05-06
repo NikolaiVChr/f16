@@ -81,7 +81,7 @@
                 <ew-rwr-switch type="bool">true</ew-rwr-switch>
                 <ew-mws-switch type="bool">true</ew-mws-switch>
                 <ew-jmr-switch type="bool">true</ew-jmr-switch>
-                <ew-mode-knob type="bool">true</ew-mode-knob>
+                <ew-mode-knob type="int">1</ew-mode-knob>
                 <cmds-01-switch type="bool">true</cmds-01-switch>
                 <cmds-02-switch type="bool">true</cmds-02-switch>
                 <cmds-ch-switch type="bool">true</cmds-ch-switch>
