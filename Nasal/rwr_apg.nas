@@ -141,11 +141,11 @@ var SubSystem_RWR_APG = {
             me.launchClose = getprop("payload/armament/MLW-launcher") != "";
             me.incoming = getprop("payload/armament/MAW-active");
             me.spike = getprop("payload/armament/spike");
-            print("spike: ",me.spike,"  incoming: ",me.incoming, "  launch: ",me.launchClose);
+            #print("spike: ",me.spike,"  incoming: ",me.incoming, "  launch: ",me.launchClose);
             me.autoFlare = me.spike?math.max(me.closestThreat*0.25,0.10):0;
-            print("AUT1: ",me.autoFlare);
+            #print("AUT1: ",me.autoFlare);
             me.autoFlare += me.launchClose * 0.85 + me.incoming * 0.85;
-            print("AUT2: ",me.autoFlare);
+            #print("AUT2: ",me.autoFlare);
 
             setprop("ai/submodels/submodel[0]/flare-auto-release-cmd", me.autoFlare * (getprop("ai/submodels/submodel[0]/count")>0));
     },
