@@ -52,7 +52,7 @@ var IFF_FRIENDLY = 2;     # Friendly, because positive IFF identification.
 ### Properties
 
 var channel_mp_string = getprop("/instrumentation/datalink/channel_mp_string") or 7;
-var data_mp_string = getprop("/instrumentation/datalink/channel_mp_string") or 8;
+var data_mp_string = getprop("/instrumentation/datalink/data_mp_string") or 8;
 var receive_period = getprop("/instrumentation/datalink/receive_period") or 1;
 
 var channel_mp_path = "sim/multiplay/generic/string["~channel_mp_string~"]";
