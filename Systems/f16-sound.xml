@@ -3358,7 +3358,7 @@
         <rwr>
             <name>incoming</name>
             <mode>looped</mode>
-            <path>Aircraft/f16/Sounds/rwr-sam-launch.wav</path>
+            <path>Aircraft/f16/Sounds/betty/missile.wav</path><!-- as of MLU tape 3 -->
             <type>avionics</type>
             <condition>
                 <property>payload/armament/MAW-active</property>
