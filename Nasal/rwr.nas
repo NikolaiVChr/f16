@@ -409,12 +409,11 @@ RWRCanvas = {
             if (notification.NotificationType == "FrameNotification")
             {
                 #
-                # Link16 wingmen only visible when no other threats. So check the size of this list
-                # first and if populated use it.
+                # Link16 wingmen not visible
                 if (notification["rwrList"] != nil and size(notification.rwrList)>0)
                   me.parent_obj.update(notification.rwrList, "normal");
-                else if (notification["rwrList16"] != nil)
-                  me.parent_obj.update(notification.rwrList16, "link16");
+                #else if (notification["rwrList16"] != nil)
+                #  me.parent_obj.update(notification.rwrList16, "link16");
                 return emesary.Transmitter.ReceiptStatus_OK;
             }
             return emesary.Transmitter.ReceiptStatus_NotProcessed;

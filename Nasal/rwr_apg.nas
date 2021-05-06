@@ -68,7 +68,8 @@ var SubSystem_RWR_APG = {
                     me.act_lck = 1;
                 }
                 me.l16 = 0;
-                if (notification.link16_wingman_4 == me.cs or me.rn > 150) {
+                me.lnk16 = datalink.get_contact(me.cs);
+                if (me.lnk16 != nil and me.lnk16["on_link"] == 1 or me.rn > 150) {
                     me.l16 = 1;
                 }
                 me.bearing = geo.aircraft_position().course_to(me.u.get_Coord());
