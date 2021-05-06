@@ -16,6 +16,7 @@ var STPTlatFE = EditableLAT.new("f16/ded/lat", convertDegreeToStringLat);
 var STPTlonFE = EditableLON.new("f16/ded/lon", convertDegreeToStringLon);
 var STPTnumFE = EditableField.new("f16/ded/stpt-edit", "%3d", 3);
 var STPTradFE = EditableField.new("f16/ded/stpt-rad", "%2d", 2);
+var dlinkEF   = EditableField.new("instrumentation/datalink/channel", "%4d", 4);
 
 var pTACAN = EditableFieldPage.new(0, [tacanChanEF,tacanBandTF,ilsFrqEF,ilsCrsEF]);
 var pALOW  = EditableFieldPage.new(1, [alowEF,mslFloorEF]);
@@ -38,7 +39,7 @@ var pEWS   = EditableFieldPage.new(15);
 var pMODE  = EditableFieldPage.new(16);
 var pVRP   = EditableFieldPage.new(17);
 var pINTG  = EditableFieldPage.new(18);
-var pDLNK  = EditableFieldPage.new(19);
+var pDLNK  = EditableFieldPage.new(19, [dlinkEF]);
 
 var pMISC  = EditableFieldPage.new(201);
 var pCORR  = EditableFieldPage.new(20);
@@ -626,7 +627,7 @@ var dataEntryDisplay = {
 			me.text[4] = sprintf("#%d %7s      LAST #%d ",int(me.scroll+4),used[3],last);
 		} elsif (getprop("f16/avionics/power-dl")) {
 			me.scroll += 0.25;
-			me.text[0] = sprintf("     DLNK  CH %s  %s",getprop("instrumentation/datalink/channel"),me.no);
+			me.text[0] = sprintf("    DLNK  CH %s   %s",pDLNK.vector[0].getText(),me.no);
 			me.text[1] = sprintf("#%d %7s      COMM VHF",0,getprop("sim/multiplay/callsign"));
 			me.text[2] = sprintf("             DATA 16K");
 			me.text[3] = sprintf("             OWN  #0 ");
