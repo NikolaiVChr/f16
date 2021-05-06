@@ -1099,8 +1099,7 @@
             <power_prop type="string">f16/avionics/power-dl</power_prop>
             <channel_prop type="string">instrumentation/datalink/channel</channel_prop>
             <receive_period type="double">1</receive_period>
-            <channel_mp_string type="int">7</channel_mp_string>
-            <data_mp_string type="int">8</data_mp_string>
+            <!--identifier_prop type="string">instrumentation/datalink/ident</identifier_prop-->
         </datalink>
     </instrumentation>
     <environment>
