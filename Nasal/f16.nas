@@ -1647,3 +1647,10 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
  }, 0, 0);
 
 var chuteLoop = maketimer(0.05, chuteLoopFunc);
+
+# Wwitch to ext. view for short time to make sure to not get big stutter when switching in-flight.
+settimer(load_interior, 0.5, 1);
+view.setViewByIndex(1);
+var load_interior = func {
+    view.setViewByIndex(0);
+}
