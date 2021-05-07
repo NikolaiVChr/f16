@@ -11,25 +11,25 @@
         <aircraft-class type="string">mil-fighter</aircraft-class>
         <aircraft-operator />
         <aircraft-data>
-            <path>/f16/avionics/c1-lat</path>
-            <path>/f16/avionics/c1-lon</path>
-            <path>/f16/avionics/c1-rad</path>
-            <path>/f16/avionics/c2-lat</path>
-            <path>/f16/avionics/c2-lon</path>
-            <path>/f16/avionics/c2-rad</path>
-            <path>/f16/avionics/c3-lat</path>
-            <path>/f16/avionics/c3-lon</path>
-            <path>/f16/avionics/c3-rad</path>
-            <path>/f16/avionics/c4-lat</path>
-            <path>/f16/avionics/c4-lon</path>
-            <path>/f16/avionics/c4-rad</path>
-            <path>/f16/avionics/c1-typ</path>
-            <path>/f16/avionics/c2-typ</path>
-            <path>/f16/avionics/c3-typ</path>
-            <path>/f16/avionics/c4-typ</path>
-            <path>/f16/avionics/bulls-eye-defined</path>
-            <path>/f16/avionics/bulls-eye-lat</path>
-            <path>/f16/avionics/bulls-eye-lon</path>
+            <path>/f16/avionics/pilot-aid/c1-lat</path>
+            <path>/f16/avionics/pilot-aid/c1-lon</path>
+            <path>/f16/avionics/pilot-aid/c1-rad</path>
+            <path>/f16/avionics/pilot-aid/c2-lat</path>
+            <path>/f16/avionics/pilot-aid/c2-lon</path>
+            <path>/f16/avionics/pilot-aid/c2-rad</path>
+            <path>/f16/avionics/pilot-aid/c3-lat</path>
+            <path>/f16/avionics/pilot-aid/c3-lon</path>
+            <path>/f16/avionics/pilot-aid/c3-rad</path>
+            <path>/f16/avionics/pilot-aid/c4-lat</path>
+            <path>/f16/avionics/pilot-aid/c4-lon</path>
+            <path>/f16/avionics/pilot-aid/c4-rad</path>
+            <path>/f16/avionics/pilot-aid/c1-typ</path>
+            <path>/f16/avionics/pilot-aid/c2-typ</path>
+            <path>/f16/avionics/pilot-aid/c3-typ</path>
+            <path>/f16/avionics/pilot-aid/c4-typ</path>
+            <path>/f16/avionics/pilot-aid/bulls-eye-defined</path>
+            <path>/f16/avionics/pilot-aid/bulls-eye-lat</path>
+            <path>/f16/avionics/pilot-aid/bulls-eye-lon</path>
             <path>/f16/avionics/hud-basic</path>
             <path>/f16/avionics/gps-lat</path>
             <path>/f16/avionics/gps-lon</path>
@@ -1267,25 +1267,35 @@ value. 18000=standard US transition altitude -->
             <gps-lat type="double">36.858</gps-lat>
             <gps-lon type="double">-115.3</gps-lon>
             <gps-alt type="double">4870</gps-alt>
-            <c1-lat type="double">0</c1-lat>
-            <c1-lon type="double">0</c1-lon>
-            <c1-rad type="double">0</c1-rad>
-            <c2-lat type="double">0</c2-lat>
-            <c2-lon type="double">0</c2-lon>
-            <c2-rad type="double">0</c2-rad>
-            <c3-lat type="double">0</c3-lat>
-            <c3-lon type="double">0</c3-lon>
-            <c3-rad type="double">0</c3-rad>
-            <c4-lat type="double">0</c4-lat>
-            <c4-lon type="double">0</c4-lon>
-            <c4-rad type="double">0</c4-rad>
-            <c1-typ type="string"></c1-typ>
-            <c2-typ type="string"></c2-typ>
-            <c3-typ type="string"></c3-typ>
-            <c4-typ type="string"></c4-typ>
-            <bulls-eye-defined type="bool">true</bulls-eye-defined>
-            <bulls-eye-lat type="double">37.20</bulls-eye-lat>
-            <bulls-eye-lon type="double">-115.60</bulls-eye-lon>
+            <pilot-aid>
+                <c1-lat type="double">0</c1-lat>
+                <c1-lon type="double">0</c1-lon>
+                <c1-rad type="double">0</c1-rad>
+                <c2-lat type="double">0</c2-lat>
+                <c2-lon type="double">0</c2-lon>
+                <c2-rad type="double">0</c2-rad>
+                <c3-lat type="double">0</c3-lat>
+                <c3-lon type="double">0</c3-lon>
+                <c3-rad type="double">0</c3-rad>
+                <c4-lat type="double">0</c4-lat>
+                <c4-lon type="double">0</c4-lon>
+                <c4-rad type="double">0</c4-rad>
+                <c5-lat type="double">0</c5-lat>
+                <c5-lon type="double">0</c5-lon>
+                <c5-rad type="double">0</c5-rad>
+                <c6-lat type="double">0</c6-lat>
+                <c6-lon type="double">0</c6-lon>
+                <c6-rad type="double">0</c6-rad>
+                <c1-typ type="string"></c1-typ>
+                <c2-typ type="string"></c2-typ>
+                <c3-typ type="string"></c3-typ>
+                <c4-typ type="string"></c4-typ>
+                <c5-typ type="string"></c5-typ>
+                <c6-typ type="string"></c6-typ>
+                <bulls-eye-defined type="bool">true</bulls-eye-defined>
+                <bulls-eye-lat type="double">37.20</bulls-eye-lat>
+                <bulls-eye-lon type="double">-115.60</bulls-eye-lon>
+            </pilot-aid>
 			<rtn-seq type="int">0</rtn-seq>
 			<ded-up-down type="int">0</ded-up-down>
             <laser-code type="int">0000</laser-code>

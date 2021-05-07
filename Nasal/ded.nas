@@ -305,8 +305,8 @@ var dataEntryDisplay = {
 			me.text[3] = sprintf("     ELEV  % 5dFT",alt);
 			me.text[1] = sprintf("      LAT  %s", lat);
 			me.text[2] = sprintf("      LNG  %s", lon);
-		} elsif (wp_num != nil and wp_num < 304 and wp_num >= 300) {
-			# Threat circles 300 to 303
+		} elsif (wp_num != nil and wp_num < 306 and wp_num >= 300) {
+			# Threat circles 300 to 305
 			var circle = wp_num - 300 + 1;
 
 			if (wp_num_lastA != getprop("f16/avionics/c"~circle~"-lat")) {

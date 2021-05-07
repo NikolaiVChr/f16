@@ -425,7 +425,7 @@
 		  	<width>150</width>
 		  	<height>25</height>
 		  	<label>Lat</label>
-		  	<property>f16/avionics/bulls-eye-lat</property>
+		  	<property>f16/avionics/pilot-aid/bulls-eye-lat</property>
 		  	<live>true</live>
 		  	<halign>left</halign>
 	        <binding>
@@ -441,7 +441,7 @@
 		  	<width>150</width>
 		  	<height>25</height>
 		  	<label>Lon</label>
-		  	<property>f16/avionics/bulls-eye-lon</property>
+		  	<property>f16/avionics/pilot-aid/bulls-eye-lon</property>
 		  	<live>true</live>
 		  	<halign>left</halign>
 	        <binding>
@@ -457,7 +457,7 @@
 			<label>Display BE</label>
 			<halign>right</halign>
 			<live>true</live>
-			<property>f16/avionics/bulls-eye-defined</property>
+			<property>f16/avionics/pilot-aid/bulls-eye-defined</property>
 			<binding>
 				<command>dialog-apply</command>
 			</binding>
@@ -468,8 +468,8 @@
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
-					setprop("f16/avionics/bulls-eye-lat", 0);
-					setprop("f16/avionics/bulls-eye-lon", 0);
+					setprop("f16/avionics/pilot-aid/bulls-eye-lat", 0);
+					setprop("f16/avionics/pilot-aid/bulls-eye-lon", 0);
 				]]></script>
 			</binding>
 		</button>

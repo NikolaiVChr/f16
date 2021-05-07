@@ -1209,10 +1209,10 @@ var MFD_Device =
             }			
             
             
-            me.bullOn = getprop("f16/avionics/bulls-eye-defined") and ded.dataEntryDisplay.bullMode and rdrMode != RADAR_MODE_GM;
+            me.bullOn = getprop("f16/avionics/pilot-aid/bulls-eye-defined") and ded.dataEntryDisplay.bullMode and rdrMode != RADAR_MODE_GM;
             if (me.bullOn) {
-                me.bullLat = getprop("f16/avionics/bulls-eye-lat");
-                me.bullLon = getprop("f16/avionics/bulls-eye-lon");
+                me.bullLat = getprop("f16/avionics/pilot-aid/bulls-eye-lat");
+                me.bullLon = getprop("f16/avionics/pilot-aid/bulls-eye-lon");
                 me.bullCoord = geo.Coord.new().set_latlon(me.bullLat,me.bullLon);
                 me.ownCoord = geo.aircraft_position();
                 me.bullDirToMe = me.bullCoord.course_to(me.ownCoord);
@@ -3037,7 +3037,23 @@ var MFD_Device =
             .set("z-index",2)
             .hide()
             .setColor(colorCircle3);
-        
+        svg.c5 = svg.p_HSDc.createChild("path")
+            .moveTo(-50,0)
+            .arcSmallCW(50,50, 0,  50*2, 0)
+            .arcSmallCW(50,50, 0, -50*2, 0)
+            .setStrokeLineWidth(3)
+            .set("z-index",2)
+            .hide()
+            .setColor(colorCircle2);
+        svg.c6 = svg.p_HSDc.createChild("path")
+            .moveTo(-50,0)
+            .arcSmallCW(50,50, 0,  50*2, 0)
+            .arcSmallCW(50,50, 0, -50*2, 0)
+            .setStrokeLineWidth(3)
+            .set("z-index",2)
+            .hide()
+            .setColor(colorCircle3);
+
         svg.ct1 = svg.p_HSDc.createChild("text")
                 .setAlignment("center-center")
                 .setColor(colorCircle1)
@@ -3058,6 +3074,16 @@ var MFD_Device =
                 .setColor(colorCircle3)
                 .set("z-index",2)
                 .setFontSize(15, 1.0);        
+        svg.ct5 = svg.p_HSDc.createChild("text")
+                .setAlignment("center-center")
+                .setColor(colorCircle2)
+                .set("z-index",2)
+                .setFontSize(15, 1.0);
+        svg.ct6 = svg.p_HSDc.createChild("text")
+                .setAlignment("center-center")
+                .setColor(colorCircle3)
+                .set("z-index",2)
+                .setFontSize(15, 1.0);
         
         svg.bullseye = svg.p_HSDc.createChild("path")
             .moveTo(-25,0)
@@ -3304,10 +3330,10 @@ var MFD_Device =
                 me.root.rang.setText(""~MFD_Device.get_HSD_range_dep());
             }
 			
-            me.bullOn = getprop("f16/avionics/bulls-eye-defined") and ded.dataEntryDisplay.bullMode;
+            me.bullOn = getprop("f16/avionics/pilot-aid/bulls-eye-defined") and ded.dataEntryDisplay.bullMode;
             if (me.bullOn) {
-                me.bullLat = getprop("f16/avionics/bulls-eye-lat");
-                me.bullLon = getprop("f16/avionics/bulls-eye-lon");
+                me.bullLat = getprop("f16/avionics/pilot-aid/bulls-eye-lat");
+                me.bullLon = getprop("f16/avionics/pilot-aid/bulls-eye-lon");
                 me.bullCoord = geo.Coord.new().set_latlon(me.bullLat,me.bullLon);
                 me.ownCoord = geo.aircraft_position();
                 me.bullDirToMe = me.bullCoord.course_to(me.ownCoord);
@@ -3462,12 +3488,12 @@ var MFD_Device =
                 
                 me.root.cone.update();
                 
-                for (var l = 1; l<=4;l+=1) {
+                for (var l = 1; l<=6;l+=1) {
                     # threat circles
-                    me.la = getprop("f16/avionics/c"~l~"-lat");
-                    me.lo = getprop("f16/avionics/c"~l~"-lon");
-                    me.ra = getprop("f16/avionics/c"~l~"-rad");
-                    me.ty = getprop("f16/avionics/c"~l~"-typ");
+                    me.la = getprop("f16/avionics/pilot-aid/c"~l~"-lat");
+                    me.lo = getprop("f16/avionics/pilot-aid/c"~l~"-lon");
+                    me.ra = getprop("f16/avionics/pilot-aid/c"~l~"-rad");
+                    me.ty = getprop("f16/avionics/pilot-aid/c"~l~"-typ");
                     
                     if (l==1) {
                         me.ci = me.root.c1;
@@ -3481,6 +3507,12 @@ var MFD_Device =
                     } elsif (l==4) {
                         me.ci = me.root.c4;
                         me.cit = me.root.ct4;
+                    } elsif (l==5) {
+                        me.ci = me.root.c5;
+                        me.cit = me.root.ct5;
+                    } elsif (l==6) {
+                        me.ci = me.root.c6;
+                        me.cit = me.root.ct6;
                     }
                     
                     if (me.la != nil and me.lo != nil and me.ra != nil and me.ra > 0) {
