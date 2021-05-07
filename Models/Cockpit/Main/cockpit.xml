@@ -107,7 +107,7 @@
       </not>
       <not>
           <equals>
-              <property>sim/variant-id</property>
+              <property>sim/multiplay/generic/int[9]</property>
               <value>4</value>
           </equals>
       </not>
@@ -121,7 +121,7 @@
           <property>f16/avionics/hud-basic</property>
           <not>
               <equals>
-                  <property>sim/variant-id</property>
+                  <property>sim/multiplay/generic/int[9]</property>
                   <value>4</value>
               </equals>
           </not>
@@ -136,7 +136,7 @@
               <property>f16/avionics/hud-basic</property>
           </not>
           <equals>
-              <property>sim/variant-id</property>
+              <property>sim/multiplay/generic/int[9]</property>
               <value>4</value>
           </equals>
   </condition>
@@ -148,7 +148,7 @@
   <condition>
           <property>f16/avionics/hud-basic</property>
           <equals>
-              <property>sim/variant-id</property>
+              <property>sim/multiplay/generic/int[9]</property>
               <value>4</value>
           </equals>
   </condition>
