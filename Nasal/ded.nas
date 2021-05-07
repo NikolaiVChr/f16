@@ -310,19 +310,19 @@ var dataEntryDisplay = {
 			var circle = wp_num - 300 + 1;
 
 			if (wp_num_lastA != getprop("f16/avionics/c"~circle~"-lat")) {
-				setprop("f16/ded/lat", getprop("f16/avionics/c"~circle~"-lat"));
+				setprop("f16/ded/lat", getprop("f16/avionics/pilot-aid/c"~circle~"-lat"));
 			} else {
 				setprop("f16/avionics/c"~circle~"-lat", getprop("f16/ded/lat")); 
 			}
 			if (wp_num_lastO != getprop("f16/avionics/c"~circle~"-lon")) {
-				setprop("f16/ded/lon", getprop("f16/avionics/c"~circle~"-lon"));
+				setprop("f16/ded/lon", getprop("f16/avionics/pilot-aid/c"~circle~"-lon"));
 			} else {
 				setprop("f16/avionics/c"~circle~"-lon", getprop("f16/ded/lon")); 
 			}
 			if (wp_num_lastR != getprop("f16/avionics/c"~circle~"-rad")) {
-				setprop("f16/ded/stpt-rad", getprop("f16/avionics/c"~circle~"-rad"));
+				setprop("f16/ded/stpt-rad", getprop("f16/avionics/pilot-aid/c"~circle~"-rad"));
 			} else {
-				setprop("f16/avionics/c"~circle~"-rad", getprop("f16/ded/stpt-rad"));
+				setprop("f16/avionics/pilot-aid/c"~circle~"-rad", getprop("f16/ded/stpt-rad"));
 			}
 			
 			me.text[1] = sprintf("      LAT  %s", pSTPT.vector[1].getText());
@@ -330,9 +330,31 @@ var dataEntryDisplay = {
 			me.text[3] = sprintf("      RAD  %sNM", pSTPT.vector[3].getText());
 			me.text[4] = sprintf("      TOS  ");
 
-			wp_num_lastA = getprop("f16/avionics/c"~circle~"-lat");
-			wp_num_lastO = getprop("f16/avionics/c"~circle~"-lon");
-			wp_num_lastR = getprop("f16/avionics/c"~circle~"-rad");
+			wp_num_lastA = getprop("f16/avionics/pilot-aid/c"~circle~"-lat");
+			wp_num_lastO = getprop("f16/avionics/pilot-aid/c"~circle~"-lon");
+			wp_num_lastR = getprop("f16/avionics/pilot-aid/c"~circle~"-rad");
+		} elsif (wp_num != nil and wp_num == 500) {
+			# Bulleye 500
+
+			if (wp_num_lastA != getprop("f16/avionics/pilot-aid/bulls-eye-lat")) {
+				setprop("f16/ded/lat", getprop("f16/avionics/pilot-aid/bulls-eye-lat"));
+			} else {
+				setprop("f16/avionics/pilot-aid/bulls-eye-lat", getprop("f16/ded/lat")); 
+			}
+			if (wp_num_lastO != getprop("f16/avionics/pilot-aid/bulls-eye-lon")) {
+				setprop("f16/ded/lon", getprop("f16/avionics/pilot-aid/bulls-eye-lon"));
+			} else {
+				setprop("f16/avionics/pilot-aid/bulls-eye-lon", getprop("f16/ded/lon")); 
+			}
+			
+			me.text[1] = sprintf("      LAT  %s", pSTPT.vector[1].getText());
+			me.text[2] = sprintf("      LNG  %s", pSTPT.vector[2].getText());
+			me.text[3] = sprintf("             ");
+			me.text[4] = sprintf("      TOS  ");
+
+			wp_num_lastA = getprop("f16/avionics/pilot-aid/bulls-eye-lat");
+			wp_num_lastO = getprop("f16/avionics/pilot-aid/bulls-eye-lon");
+			setprop("f16/avionics/pilot-aid/bulls-eye-defined",1);
 		} else {
 			me.text[3] = sprintf("     ELEV       FT");
 			me.text[4] = sprintf("      TOS  ");
@@ -743,7 +765,7 @@ var dataEntryDisplay = {
 		} else {
 			me.text[0] = sprintf("       BULLSEYE         ");
 		}
-		me.text[1] = sprintf("       BULL 25     ");
+		me.text[1] = sprintf("       BULL 500    ");
 		me.text[2] = sprintf("                        ");
 		me.text[3] = sprintf("                        ");
 		me.text[4] = sprintf("                        ");
