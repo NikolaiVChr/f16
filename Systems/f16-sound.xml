@@ -3361,14 +3361,25 @@
             <path>Aircraft/f16/Sounds/betty/missile.wav</path><!-- as of MLU tape 3 -->
             <type>avionics</type>
             <condition>
+                <not><property>f16/avionics/voice-msg-inhibit</property></not>
+                <!--not><property>gear/gear[2]/wow</property></not-->
                 <property>payload/armament/MAW-active</property>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
             </condition>
             <volume>
                 <property>sim/current-view/internal</property>
                 <factor>1</factor>
             </volume>
             <volume>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
+            </volume>
+            <volume><!-- Is both a betty sound and a RWR sound -->
                 <property>f16/avionics/rwr-volume</property>
+                <factor>1</factor>
             </volume>
         </rwr>
         
