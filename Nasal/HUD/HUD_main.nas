@@ -2250,8 +2250,8 @@ append(obj.total, obj.speed_curr);
             } elsif (hdp.bingo) {
               hdp.window11_txt = "";
             } elsif (ded.dataEntryDisplay.bullMode) {
-				me.bullLat = getprop("f16/avionics/bulls-eye-lat");
-                me.bullLon = getprop("f16/avionics/bulls-eye-lon");
+				me.bullLat = getprop("f16/avionics/pilot-aid/bulls-eye-lat");
+                me.bullLon = getprop("f16/avionics/pilot-aid/bulls-eye-lon");
                 me.bullCoord = geo.Coord.new().set_latlon(me.bullLat,me.bullLon);
                 me.ownCoord = geo.aircraft_position();
                 me.bullDirToMe = me.bullCoord.course_to(me.ownCoord);
