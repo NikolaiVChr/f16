@@ -248,7 +248,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>2</row>
             <col>2</col>
-            <legend>A/G Unguided (Light, 2 bags)</legend>
+            <legend>A/G Unguided Light (2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2g_mk1();</script>
@@ -259,7 +259,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>4</row>
             <col>2</col>
-            <legend>A/G Unguided (Heavy, 2 bags)</legend>
+            <legend>A/G Unguided Heavy (2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2g_mk2();</script>
@@ -281,7 +281,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>8</row>
             <col>2</col>
-            <legend>A/G LGB (Paveway II, 2 bags)</legend>
+            <legend>A/G LGB Light (PW-II, 2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2g_lgb1();</script>

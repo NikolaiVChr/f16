@@ -104,7 +104,7 @@
             <legend>A/A Training</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.b40_train_aa();</script>
+                <script>pylons.b50_train_aa();</script>
             </binding>
         </button>
 
@@ -236,7 +236,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>2</row>
             <col>2</col>
-            <legend>A/G Unguided (Light, 2 bags)</legend>
+            <legend>A/G Unguided Light (2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2g_mk1();</script>
@@ -247,7 +247,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>4</row>
             <col>2</col>
-            <legend>A/G Unguided (Heavy, 2 bags)</legend>
+            <legend>A/G Unguided Heavy (2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2g_mk2();</script>
@@ -280,7 +280,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>10</row>
             <col>2</col>
-            <legend>A/G LGB (Paveway II, 2 bags)</legend>
+            <legend>A/G LGB Light (PW-II, 2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2g_lgb1();</script>
@@ -291,7 +291,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>12</row>
             <col>2</col>
-            <legend>A/G LGB (Paveway III, 2 bags)</legend>
+            <legend>A/G LGB Heavy (PW-III, 2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2g_lgb2();</script>
