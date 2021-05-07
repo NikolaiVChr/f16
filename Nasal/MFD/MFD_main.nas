@@ -3085,6 +3085,13 @@ var MFD_Device =
                 .set("z-index",2)
                 .setFontSize(15, 1.0);
         
+        svg.mark = svg.p_HSDc.createChild("text")
+                .setAlignment("center-center")
+                .setColor(colorText2)
+                .setText("X")
+                .set("z-index",2)
+                .setFontSize(18, 1.0);
+
         svg.bullseye = svg.p_HSDc.createChild("path")
             .moveTo(-25,0)
             .arcSmallCW(25,25, 0,  25*2, 0)
@@ -3487,6 +3494,30 @@ var MFD_Device =
                 }
                 
                 me.root.cone.update();
+
+                me.mlat = getprop("f16/avionics/pilot-aid/mark-lat");
+                me.mlon = getprop("f16/avionics/pilot-aid/mark-lon");
+                me.malt = getprop("f16/avionics/pilot-aid/mark-alt");
+
+                if (me.mlat != 0 and me.mlon != 0) {
+                    me.wpC = geo.Coord.new();
+                    me.wpC.set_latlon(me.mlat,me.mlon);
+                    me.legBearing = geo.aircraft_position().course_to(me.wpC)-getprop("orientation/heading-deg");#relative
+                    me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
+
+                    if (MFD_Device.get_HSD_centered()) {
+                        me.legRangePixels = me.root.mediumRadius*(me.legDistance/MFD_Device.get_HSD_range_cen());
+                    } else {
+                        me.legRangePixels = me.root.outerRadius*(me.legDistance/MFD_Device.get_HSD_range_dep());
+                    }
+                    
+                    me.legX = me.legRangePixels*math.sin(me.legBearing*D2R);
+                    me.legY = -me.legRangePixels*math.cos(me.legBearing*D2R);
+                    me.root.mark.setTranslation(me.legX,me.legY);
+                    me.root.mark.show();
+                } else {
+                    me.root.mark.hide();
+                }
                 
                 for (var l = 1; l<=6;l+=1) {
                     # threat circles

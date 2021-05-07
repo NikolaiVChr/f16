@@ -76,6 +76,7 @@ var dataEntryDisplay = {
 	scroll: 0,
 	scrollF: 0,
 	page: pCNI,
+	pageLast: pCNI,
 	init: func() {
 		me.canvasNode = canvas.new({
 			"name": "DED",
@@ -196,6 +197,8 @@ var dataEntryDisplay = {
 		me.line4.setText(me.text[3]);
 		me.line5.setText(me.text[4]);
 		
+		me.pageLast = me.page;
+
 		settimer(func() { me.update(); }, 0.25);
 	},
 	
@@ -248,6 +251,10 @@ var dataEntryDisplay = {
 		var lat = "";
 		var lon = "";
 		var wp_num = getprop("f16/ded/stpt-edit");
+		if (me.page != me.pageLast and fp != nil) {
+			# We just entered this page and have active route
+			wp_num = fp.current+1;
+		}
 		if (fp != nil and wp_num != nil and wp_num < 100) {
 			var wp = fp.getWP(wp_num-1);
 			if (wp != nil and getprop("f16/avionics/power-mmc")) {
@@ -436,9 +443,16 @@ var dataEntryDisplay = {
 	markMode: "OFLY",
 	markModeSelected: 1,
 	updateMark: func() {
-		lat = convertDegreeToStringLat(getprop("/position/latitude-deg"));
-		lon = convertDegreeToStringLon(getprop("/position/latitude-deg"));
-		alt = getprop("/position/altitude-ft") - getprop("/position/altitude-agl-ft");
+		me.markMode = "OFLY";
+		if (me.page != me.pageLast) {
+			# we just entered this page, lets store this mark
+			setprop("f16/avionics/pilot-aid/mark-lat", getprop("/position/latitude-deg"));
+			setprop("f16/avionics/pilot-aid/mark-lon", getprop("/position/longitude-deg"));
+			setprop("f16/avionics/pilot-aid/mark-alt", getprop("/position/altitude-ft"));
+		}
+		lat = convertDegreeToStringLat(getprop("f16/avionics/pilot-aid/mark-lat"));
+		lon = convertDegreeToStringLon(getprop("f16/avionics/pilot-aid/mark-lon"));
+		alt = getprop("f16/avionics/pilot-aid/mark-alt");
 		if (me.markModeSelected) {
 			me.text[0] = sprintf("         MARK *%s*    %s",me.markMode,me.no);
 		} else {

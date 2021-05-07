@@ -1268,6 +1268,9 @@ value. 18000=standard US transition altitude -->
             <gps-lon type="double">-115.3</gps-lon>
             <gps-alt type="double">4870</gps-alt>
             <pilot-aid>
+                <mark-lat type="double">0</mark-lat>
+                <mark-lon type="double">0</mark-lon>
+                <mark-alt type="double">0</mark-alt>
                 <c1-lat type="double">0</c1-lat>
                 <c1-lon type="double">0</c1-lon>
                 <c1-rad type="double">0</c1-rad>
