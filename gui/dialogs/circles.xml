@@ -71,7 +71,7 @@
 		  	<width>150</width>
 		  	<height>25</height>
 		  	<label>Lat</label>
-		  	<property>f16/avionics/c1-lat</property>
+		  	<property>f16/avionics/pilot-aid/c1-lat</property>
 		  	<live>true</live>
 		  	<halign>left</halign>
 	        <binding>
@@ -87,7 +87,7 @@
 		  	<width>150</width>
 		  	<height>25</height>
 		  	<label>Lon</label>
-		  	<property>f16/avionics/c1-lon</property>
+		  	<property>f16/avionics/pilot-aid/c1-lon</property>
 		  	<live>true</live>
 		  	<halign>left</halign>
 	        <binding>
@@ -103,7 +103,7 @@
 		  	<width>100</width>
 		  	<height>25</height>
 		  	<label>Radius</label>
-		  	<property>f16/avionics/c1-rad</property>
+		  	<property>f16/avionics/pilot-aid/c1-rad</property>
 		  	<live>true</live>
 		  	<halign>left</halign>
 	        <binding>
@@ -120,7 +120,7 @@
             <name>typ1</name>
             <label>Type</label>
             <pref-width>60</pref-width>
-            <property>f16/avionics/c1-typ</property>
+            <property>f16/avionics/pilot-aid/c1-typ</property>
             <value type="string"></value>
             <value type="string">2</value>
             <value type="string">11</value>
@@ -143,9 +143,9 @@
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
-					setprop("f16/avionics/c1-lat", 0);
-					setprop("f16/avionics/c1-lon", 0);
-					setprop("f16/avionics/c1-rad", 0);
+					setprop("f16/avionics/pilot-aid/c1-lat", 0);
+					setprop("f16/avionics/pilot-aid/c1-lon", 0);
+					setprop("f16/avionics/pilot-aid/c1-rad", 0);
 				]]></script>
 			</binding>
 		</button>
@@ -158,7 +158,7 @@
 		  	<width>150</width>
 		  	<height>25</height>
 		  	<label>Lat</label>
-		  	<property>f16/avionics/c2-lat</property>
+		  	<property>f16/avionics/pilot-aid/c2-lat</property>
 		  	<live>true</live>
 		  	<halign>left</halign>
 	        <binding>
@@ -174,7 +174,7 @@
 		  	<width>150</width>
 		  	<height>25</height>
 		  	<label>Lon</label>
-		  	<property>f16/avionics/c2-lon</property>
+		  	<property>f16/avionics/pilot-aid/c2-lon</property>
 		  	<live>true</live>
 		  	<halign>left</halign>
 	        <binding>
@@ -190,7 +190,7 @@
 		  	<width>100</width>
 		  	<height>25</height>
 		  	<label>Radius</label>
-		  	<property>f16/avionics/c2-rad</property>
+		  	<property>f16/avionics/pilot-aid/c2-rad</property>
 		  	<live>true</live>
 		  	<halign>left</halign>
 	        <binding>
@@ -207,7 +207,7 @@
             <name>typ2</name>
             <label>Type</label>
             <pref-width>60</pref-width>
-            <property>f16/avionics/c2-typ</property>
+            <property>f16/avionics/pilot-aid/c2-typ</property>
             <value type="string"></value>
             <value type="string">2</value>
             <value type="string">11</value>
@@ -230,9 +230,9 @@
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
-					setprop("f16/avionics/c2-lat", 0);
-					setprop("f16/avionics/c2-lon", 0);
-					setprop("f16/avionics/c2-rad", 0);
+					setprop("f16/avionics/pilot-aid/c2-lat", 0);
+					setprop("f16/avionics/pilot-aid/c2-lon", 0);
+					setprop("f16/avionics/pilot-aid/c2-rad", 0);
 				]]></script>
 			</binding>
 		</button>
@@ -245,7 +245,7 @@
 		  	<width>150</width>
 		  	<height>25</height>
 		  	<label>Lat</label>
-		  	<property>f16/avionics/c3-lat</property>
+		  	<property>f16/avionics/pilot-aid/c3-lat</property>
 		  	<live>true</live>
 		  	<halign>left</halign>
 	        <binding>
@@ -261,14 +261,14 @@
 		  	<width>150</width>
 		  	<height>25</height>
 		  	<label>Lon</label>
-		  	<property>f16/avionics/c3-lon</property>
+		  	<property>f16/avionics/pilot-aid/c3-lon</property>
 		  	<live>true</live>
 		  	<halign>left</halign>
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>0.5</red>
+	      		<red>1</red>
       			<green>1</green>
       			<blue>0.5</blue>
 	      	</color>
@@ -277,14 +277,14 @@
 		  	<width>100</width>
 		  	<height>25</height>
 		  	<label>Radius</label>
-		  	<property>f16/avionics/c3-rad</property>
+		  	<property>f16/avionics/pilot-aid/c3-rad</property>
 		  	<live>true</live>
 		  	<halign>left</halign>
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>0.5</red>
+	      		<red>1</red>
       			<green>1</green>
       			<blue>0.5</blue>
 	      	</color>
@@ -294,7 +294,7 @@
             <name>typ3</name>
             <label>Type</label>
             <pref-width>60</pref-width>
-            <property>f16/avionics/c3-typ</property>
+            <property>f16/avionics/pilot-aid/c3-typ</property>
             <value type="string"></value>
             <value type="string">2</value>
             <value type="string">11</value>
@@ -307,7 +307,7 @@
                 <object-name>typ3</object-name>
             </binding>
             <color>
-	      		<red>0.5</red>
+	      		<red>1</red>
       			<green>1</green>
       			<blue>0.5</blue>
 	      	</color>
@@ -317,9 +317,96 @@
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
-					setprop("f16/avionics/c3-lat", 0);
-					setprop("f16/avionics/c3-lon", 0);
-					setprop("f16/avionics/c3-rad", 0);
+					setprop("f16/avionics/pilot-aid/c3-lat", 0);
+					setprop("f16/avionics/pilot-aid/c3-lon", 0);
+					setprop("f16/avionics/pilot-aid/c3-rad", 0);
+				]]></script>
+			</binding>
+		</button>
+	</group>
+
+	<group>
+		<layout>hbox</layout>
+
+		<input>
+		  	<width>150</width>
+		  	<height>25</height>
+		  	<label>Lat</label>
+		  	<property>f16/avionics/pilot-aid/c5-lat</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<color>
+	      		<red>1</red>
+      			<green>1</green>
+      			<blue>0.5</blue>
+	      	</color>
+		</input>
+		<input>
+		  	<width>150</width>
+		  	<height>25</height>
+		  	<label>Lon</label>
+		  	<property>f16/avionics/pilot-aid/c5-lon</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<color>
+	      		<red>1</red>
+      			<green>1</green>
+      			<blue>0.5</blue>
+	      	</color>
+		</input>
+		<input>
+		  	<width>100</width>
+		  	<height>25</height>
+		  	<label>Radius</label>
+		  	<property>f16/avionics/pilot-aid/c5-rad</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<color>
+	      		<red>1</red>
+      			<green>1</green>
+      			<blue>0.5</blue>
+	      	</color>
+		</input>
+		<combo>
+            <halign>left</halign>
+            <name>typ5</name>
+            <label>Type</label>
+            <pref-width>60</pref-width>
+            <property>f16/avionics/pilot-aid/c5-typ</property>
+            <value type="string"></value>
+            <value type="string">2</value>
+            <value type="string">11</value>
+            <value type="string">20</value>
+            <value type="string">A</value>
+            <value type="string">P</value>
+            <value type="string">SH</value>
+            <binding>
+                <command>dialog-apply</command>
+                <object-name>typ5</object-name>
+            </binding>
+            <color>
+	      		<red>1</red>
+      			<green>1</green>
+      			<blue>0.5</blue>
+	      	</color>
+        </combo>
+		<button>
+			<legend>Clear</legend>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					setprop("f16/avionics/pilot-aid/c5-lat", 0);
+					setprop("f16/avionics/pilot-aid/c5-lon", 0);
+					setprop("f16/avionics/pilot-aid/c5-rad", 0);
 				]]></script>
 			</binding>
 		</button>
@@ -332,48 +419,48 @@
 		  	<width>150</width>
 		  	<height>25</height>
 		  	<label>Lat</label>
-		  	<property>f16/avionics/c4-lat</property>
+		  	<property>f16/avionics/pilot-aid/c4-lat</property>
 		  	<live>true</live>
 		  	<halign>left</halign>
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>0.5</red>
-      			<green>1</green>
-      			<blue>0.5</blue>
+	      		<red>0.4</red>
+      			<green>0.95</green>
+      			<blue>0.4</blue>
 	      	</color>
 		</input>
 		<input>
 		  	<width>150</width>
 		  	<height>25</height>
 		  	<label>Lon</label>
-		  	<property>f16/avionics/c4-lon</property>
+		  	<property>f16/avionics/pilot-aid/c4-lon</property>
 		  	<live>true</live>
 		  	<halign>left</halign>
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>0.5</red>
-      			<green>1</green>
-      			<blue>0.5</blue>
+	      		<red>0.4</red>
+      			<green>0.95</green>
+      			<blue>0.4</blue>
 	      	</color>
 		</input>
 		<input>
 		  	<width>100</width>
 		  	<height>25</height>
 		  	<label>Radius</label>
-		  	<property>f16/avionics/c4-rad</property>
+		  	<property>f16/avionics/pilot-aid/c4-rad</property>
 		  	<live>true</live>
 		  	<halign>left</halign>
 	        <binding>
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>0.5</red>
-      			<green>1</green>
-      			<blue>0.5</blue>
+	      		<red>0.4</red>
+      			<green>0.95</green>
+      			<blue>0.4</blue>
 	      	</color>
 		</input>
 		<combo>
@@ -381,7 +468,7 @@
             <name>typ4</name>
             <label>Type</label>
             <pref-width>60</pref-width>
-            <property>f16/avionics/c4-typ</property>
+            <property>f16/avionics/pilot-aid/c4-typ</property>
             <value type="string"></value>
             <value type="string">2</value>
             <value type="string">11</value>
@@ -394,9 +481,9 @@
                 <object-name>typ4</object-name>
             </binding>
             <color>
-	      		<red>0.5</red>
-      			<green>1</green>
-      			<blue>0.5</blue>
+	      		<red>0.4</red>
+      			<green>0.95</green>
+      			<blue>0.4</blue>
 	      	</color>
         </combo>
 		<button>
@@ -404,9 +491,96 @@
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
-					setprop("f16/avionics/c4-lat", 0);
-					setprop("f16/avionics/c4-lon", 0);
-					setprop("f16/avionics/c4-rad", 0);
+					setprop("f16/avionics/pilot-aid/c4-lat", 0);
+					setprop("f16/avionics/pilot-aid/c4-lon", 0);
+					setprop("f16/avionics/pilot-aid/c4-rad", 0);
+				]]></script>
+			</binding>
+		</button>
+	</group>
+
+	<group>
+		<layout>hbox</layout>
+
+		<input>
+		  	<width>150</width>
+		  	<height>25</height>
+		  	<label>Lat</label>
+		  	<property>f16/avionics/pilot-aid/c6-lat</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<color>
+	      		<red>0.4</red>
+      			<green>0.95</green>
+      			<blue>0.4</blue>
+	      	</color>
+		</input>
+		<input>
+		  	<width>150</width>
+		  	<height>25</height>
+		  	<label>Lon</label>
+		  	<property>f16/avionics/pilot-aid/c6-lon</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<color>
+	      		<red>0.4</red>
+      			<green>0.95</green>
+      			<blue>0.4</blue>
+	      	</color>
+		</input>
+		<input>
+		  	<width>100</width>
+		  	<height>25</height>
+		  	<label>Radius</label>
+		  	<property>f16/avionics/pilot-aid/c6-rad</property>
+		  	<live>true</live>
+		  	<halign>left</halign>
+	        <binding>
+	            <command>dialog-apply</command>
+	      	</binding>
+	      	<color>
+	      		<red>0.4</red>
+      			<green>0.95</green>
+      			<blue>0.4</blue>
+	      	</color>
+		</input>
+		<combo>
+            <halign>left</halign>
+            <name>typ6</name>
+            <label>Type</label>
+            <pref-width>60</pref-width>
+            <property>f16/avionics/pilot-aid/c6-typ</property>
+            <value type="string"></value>
+            <value type="string">2</value>
+            <value type="string">11</value>
+            <value type="string">20</value>
+            <value type="string">A</value>
+            <value type="string">P</value>
+            <value type="string">SH</value>
+            <binding>
+                <command>dialog-apply</command>
+                <object-name>typ6</object-name>
+            </binding>
+            <color>
+	      		<red>0.4</red>
+      			<green>0.95</green>
+      			<blue>0.4</blue>
+	      	</color>
+        </combo>
+		<button>
+			<legend>Clear</legend>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					setprop("f16/avionics/pilot-aid/c6-lat", 0);
+					setprop("f16/avionics/pilot-aid/c6-lon", 0);
+					setprop("f16/avionics/pilot-aid/c6-rad", 0);
 				]]></script>
 			</binding>
 		</button>

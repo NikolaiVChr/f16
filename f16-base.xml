@@ -23,10 +23,18 @@
             <path>/f16/avionics/pilot-aid/c4-lat</path>
             <path>/f16/avionics/pilot-aid/c4-lon</path>
             <path>/f16/avionics/pilot-aid/c4-rad</path>
+            <path>/f16/avionics/pilot-aid/c5-lat</path>
+            <path>/f16/avionics/pilot-aid/c5-lon</path>
+            <path>/f16/avionics/pilot-aid/c5-rad</path>
+            <path>/f16/avionics/pilot-aid/c6-lat</path>
+            <path>/f16/avionics/pilot-aid/c6-lon</path>
+            <path>/f16/avionics/pilot-aid/c6-rad</path>
             <path>/f16/avionics/pilot-aid/c1-typ</path>
             <path>/f16/avionics/pilot-aid/c2-typ</path>
             <path>/f16/avionics/pilot-aid/c3-typ</path>
             <path>/f16/avionics/pilot-aid/c4-typ</path>
+            <path>/f16/avionics/pilot-aid/c5-typ</path>
+            <path>/f16/avionics/pilot-aid/c6-typ</path>
             <path>/f16/avionics/pilot-aid/bulls-eye-defined</path>
             <path>/f16/avionics/pilot-aid/bulls-eye-lat</path>
             <path>/f16/avionics/pilot-aid/bulls-eye-lon</path>
