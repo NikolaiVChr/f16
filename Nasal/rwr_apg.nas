@@ -47,10 +47,12 @@ var SubSystem_RWR_APG = {
 
 		return obj;
 	},
+    heatDefense: 0,
     update : func(notification) {
             #printf("clist %d", size(notification.completeList));
             if (!getprop("instrumentation/rwr/serviceable") or getprop("f16/avionics/power-ufc-warm") != 1 or getprop("f16/avionics/ew-rwr-switch") != 1) {
                 setprop("sound/rwr-lck", 0);
+                setprop("ai/submodels/submodel[0]/flare-auto-release-cmd", 0);
                 return;
             }
             notification.rwrList16 = [];
@@ -62,6 +64,7 @@ var SubSystem_RWR_APG = {
             me.act_lck = 0;
             me.autoFlare = 0;
             me.closestThreat = 0;
+            me.elapsed = getprop("sim/time/elapsed-sec");
             foreach(me.u;notification.completeList) {
                 me.cs = me.u.get_Callsign();
                 me.rn = me.u.get_range();
@@ -100,6 +103,13 @@ var SubSystem_RWR_APG = {
                 #TODO: check if this is needed:
                 #me.show = me.show and awg_9.TerrainManager.IsVisible(me.u.propNode,notification);# seems awg_9 uses isbehindterrain for non terrain stuff, so we need to repeat check here.
                 if (me.show == 1) {
+                    if (me.dev < 30 and me.rn < 7) {
+                        # he is in position to fire heatseeker at me
+                        me.heatDefenseNow = me.elapsed + me.rn*1.5;
+                        if (me.heatDefenseNow > me.heatDefense) {
+                            me.heatDefense = me.heatDefenseNow;
+                        }
+                    }
                     me.threat = 0;
                     if (me.u.get_model() != "missile_frigate" and me.u.get_model() != "S-75" and me.u.get_model() != "buk-m2" and me.u.get_model() != "MIM104D" and me.u.get_model() != "s-300" and me.u.get_model() != "fleet" and me.u.get_model() != "ZSU-23-4M") {
                         me.threat += ((180-me.dev)/180)*0.30;# most threat if I am in front of his nose
@@ -139,15 +149,20 @@ var SubSystem_RWR_APG = {
             setprop("sound/rwr-lck", me.act_lck);
 
             me.launchClose = getprop("payload/armament/MLW-launcher") != "";
-            me.incoming = getprop("payload/armament/MAW-active");
+            me.incoming = getprop("payload/armament/MAW-active") or me.heatDefense > me.elapsed;
             me.spike = getprop("payload/armament/spike");
-            #print("spike: ",me.spike,"  incoming: ",me.incoming, "  launch: ",me.launchClose);
-            me.autoFlare = me.spike?math.max(me.closestThreat*0.25,0.10):0;
-            #print("AUT1: ",me.autoFlare);
+            me.autoFlare = me.spike?math.max(me.closestThreat*0.35,0.05):0;
+
+            #print("spike: ",me.spike,"  incoming: ",me.incoming, "  launch: ",me.launchClose,"  spikeResult:", me.autoFlare,"  aggresive:",me.launchClose * 0.85 + me.incoming * 0.85,"  total:",me.launchClose * 0.85 + me.incoming * 0.85+me.autoFlare);
+
             me.autoFlare += me.launchClose * 0.85 + me.incoming * 0.85;
-            #print("AUT2: ",me.autoFlare);
+
+            me.autoFlare *= 0.1*0.5;#0.1 being the update rate for flare dropping code.
 
             setprop("ai/submodels/submodel[0]/flare-auto-release-cmd", me.autoFlare * (getprop("ai/submodels/submodel[0]/count")>0));
+            if (me.autoFlare > 0.80 and rand()>0.99 and getprop("ai/submodels/submodel[0]/count") < 1) {
+                setprop("ai/submodels/submodel[0]/flare-release-out-snd", 1);
+            }
     },
 };
 
