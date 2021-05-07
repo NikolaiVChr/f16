@@ -1224,7 +1224,12 @@ var eject = func{
   if (getprop("f16/ejected")==1 or !getprop("controls/seat/ejection-safety-lever")) {
       return;
   }
+  view.setViewByIndex(1);
   setprop("f16/ejected",1);
+  settimer(eject2, 1.5);
+}
+
+var eject2 = func{
   setprop("canopy/not-serviceable", 1);
   var es = armament.AIM.new(10, "es","gamma", nil ,[-3.65,0,0.7]);
   #setprop("fdm/jsbsim/fcs/canopy/hinges/serviceable",0);
