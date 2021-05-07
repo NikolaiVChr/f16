@@ -3542,7 +3542,9 @@ var MFD_Device =
 
                 me.root.lnkT[me.i].setColor(me.blue?colorDot4:colorCircle2);
                 me.root.lnkT[me.i].setTranslation(me.distPixels*math.sin(contact.get_relative_bearing()*D2R),-me.distPixels*math.cos(contact.get_relative_bearing()*D2R)-18);
-                me.root.lnkT[me.i].setText(""~me.blueIndex);
+                if (me.blue) {
+                    me.root.lnkT[me.i].setText(""~me.blueIndex);
+                }
                 me.root.lnkT[me.i].show();
 
                 me.root.blep[me.i].setColor(me.lnkLock?colorCircle2:(me.blue?colorDot4:colorLine3));
