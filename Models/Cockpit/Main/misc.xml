@@ -114,38 +114,7 @@ light: ecm lamp off
         <object-name>autopilot-switch-base</object-name>
     </effect>
 
-    <!--<animation>
-        <type>material</type>
-        <object-name>block-15</object-name>
-        <object-name>block-50</object-name>
-        <object-name>alt-rel-button</object-name>
-        <object-name>autopilot-switch</object-name>
-        <object-name>laser-arm-switch</object-name>
-        <object-name>master-arm-switch</object-name>
-        <object-name>master-arm-cover</object-name>
-        <object-name>pitch-switch-b15</object-name>
-        <object-name>roll-switch-b15</object-name>
-        <object-name>quiet-switch</object-name>
-        <object-name>roll-hold-switch</object-name>
-        <object-name>pitch-hold-switch</object-name>
-        <object-name>stby-off</object-name>
-        <object-name>stby-on</object-name>
-        <object-name>active-on</object-name>
-        <object-name>active-off</object-name>
-        <object-name>adv-mode-button</object-name>
-        <object-name>autopilot-switch</object-name>
-        <condition>
-            <not>
-            <property>/sim/rendering/shaders/skydome</property>
-          </not>
-          </condition>
-        <emission>
-            <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
-            <red>0.45</red>
-            <green>0.34</green>
-            <blue>0.18</blue>
-        </emission>
-    </animation>-->
+
 
     <animation>
         <type>pick</type>
@@ -662,6 +631,32 @@ light: ecm lamp off
             <green>1</green>
             <blue>1</blue>
             <factor-prop>controls/lighting/lighting-panel/mal-ind-lts-brightness</factor-prop>
+        </emission>
+    </animation>
+
+    <!-- Non-ALS flood light. Must be at end of file: -->
+ <animation>
+        <type>material</type>
+        <object-name>MISC_1_block-50</object-name>
+        <object-name>MISC_1_block-15</object-name>
+        <object-name>ecm-enbl</object-name>
+        <object-name>switches</object-name>
+        <object-name>adv-mode-button</object-name>
+        <object-name>pitch-hold-switch</object-name>
+        <object-name>roll-hold-switch</object-name>
+        <object-name>pitch-switch-b15</object-name>
+        <object-name>roll-switch-b15</object-name>
+        <object-name>autopilot-switch-base</object-name>
+        <condition>
+            <not>
+            <property>/sim/rendering/shaders/skydome</property>
+          </not>
+          </condition>
+        <emission>
+            <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+            <red>0.45</red>
+            <green>0.34</green>
+            <blue>0.18</blue>
         </emission>
     </animation>
 

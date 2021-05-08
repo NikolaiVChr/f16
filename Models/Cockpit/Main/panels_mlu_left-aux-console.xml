@@ -154,6 +154,8 @@
         <object-name>FL_50_switch</object-name>
     </effect>
 
+
+
   <!--<animation>
         <type>material</type>
         <object-name>EW_LEFT_1</object-name>
@@ -1283,6 +1285,72 @@
             </equals>
           </or>
         </condition>
+    </animation>
+
+    <!-- Non-ALS flood light. Must be at end of file: -->
+ <animation>
+        <type>material</type>
+        <object-name>light-land-switch</object-name>
+        <object-name>light-land-switch.01</object-name>
+        <object-name>SW_STORES_CONFIG</object-name>
+        <object-name>SW_PARKING_BRAKE</object-name>
+        <object-name>SW_GND_JETT</object-name>
+        <object-name>SW_BRAKES_CHAN</object-name>
+        <object-name>gear_lever</object-name>
+        <object-name>JMR_switch</object-name>
+        <object-name>MWS_switch</object-name>
+        <object-name>RWR_switch</object-name>
+        <object-name>DISP_switch</object-name>
+        <object-name>RF_switch</object-name>
+        <object-name>JTSN_switch</object-name>
+        <object-name>DN-LOCK-REL</object-name>
+        <object-name>SW_HOOK</object-name>
+        <object-name>EMER_JETT</object-name>
+        <object-name>horn_silencer</object-name>
+        <object-name>MWS_50_switch</object-name>
+        <object-name>RWR_50_switch</object-name>
+        <object-name>JETT_50_switch</object-name>
+        <object-name>JMR_50_switch</object-name>
+        <object-name>01_50_switch</object-name>
+        <object-name>02_50_switch</object-name>
+        <object-name>CH_50_switch</object-name>
+        <object-name>FL_50_switch</object-name>
+        <object-name>EW_LEFT_1</object-name>
+        <object-name>EW_LOCK</object-name>
+        <object-name>TWA_LEFT_1</object-name>
+        <object-name>GROWTH.000</object-name>
+        <object-name>HMD_1</object-name>
+        <object-name>HMCS_1</object-name>
+        <object-name>EW_RIGHT_1</object-name>
+        <object-name>EW_KNOB_MODE</object-name>
+        <object-name>EW_BRT_KNOB</object-name>
+        <object-name>SYMBOLOGY_INT_KNOB</object-name>
+        <object-name>HMCS_SYM_INT_KNOB</object-name>
+        <object-name>GEAR</object-name>
+        <object-name>ALT_GEAR_1</object-name>
+        <object-name>SPEED_BRAKE_drum</object-name>
+        <object-name>ew-set1</object-name>
+        <object-name>ew-set2</object-name>
+        <object-name>ew-set3</object-name>
+        <object-name>ew-set4</object-name>
+        <object-name>ew-run</object-name>
+        <object-name>TWA_SEARCH</object-name>
+        <object-name>TWA_ACT-PWR</object-name>
+        <object-name>TWA_POWER</object-name>
+        <object-name>TWA_ALTITUDE</object-name>
+        <object-name>EW_RIGHT_50_1</object-name>
+        <object-name>MODE_50_knob</object-name>
+        <condition>
+            <not>
+            <property>/sim/rendering/shaders/skydome</property>
+          </not>
+          </condition>
+        <emission>
+            <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+            <red>0.45</red>
+            <green>0.34</green>
+            <blue>0.18</blue>
+        </emission>
     </animation>
 
 </PropertyList>

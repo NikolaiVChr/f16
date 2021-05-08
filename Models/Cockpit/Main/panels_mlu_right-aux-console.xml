@@ -258,6 +258,8 @@
         <object-name>LIQ_OXY_disk</object-name>
         <object-name>LIQ_OXY_needle</object-name>
 </effect>
+
+    
         
         
 
@@ -1271,5 +1273,33 @@
    <blue>0.3</blue>
   </emission>
  </animation>
+
+<!-- Non-ALS flood light. Must be at end of file: -->
+ <animation>
+        <type>material</type>
+        <object-name>HYD_PRESS_1</object-name>
+        <object-name>RIGHT_AUX_CONSOLE</object-name><!-- this dont show due to cockpit panel hides it I think -->
+        <object-name>CAB_PRESS_mount</object-name>
+        <object-name>CLOCK_mount</object-name>
+        <object-name>CLOCK_knob</object-name>
+        <object-name>CLOCK_button</object-name>
+        <object-name>FUEL.000</object-name>
+        <object-name>LIQ_OXY_cylinder</object-name>
+        <object-name>EPU_FUEL_cylinder</object-name>
+        <object-name>HYD_PRESS_A_cylinder</object-name>
+        <object-name>HYD_PRESS_B_cylinder</object-name>
+        <object-name>CAUTION_PANEL_1</object-name>
+        <condition>
+            <not>
+            <property>/sim/rendering/shaders/skydome</property>
+          </not>
+          </condition>
+        <emission>
+            <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+            <red>0.45</red>
+            <green>0.34</green>
+            <blue>0.18</blue>
+        </emission>
+    </animation>
 
 </PropertyList>
