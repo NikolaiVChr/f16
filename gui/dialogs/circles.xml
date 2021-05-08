@@ -606,9 +606,9 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>0.44</red>
+	      		<red>0.45</red>
 				<green>0.55</green>
-				<blue>0.8</blue>
+				<blue>0.85</blue>
 	      	</color>
 		</input>
 		<input>
@@ -622,9 +622,9 @@
 	            <command>dialog-apply</command>
 	      	</binding>
 	      	<color>
-	      		<red>0.44</red>
+	      		<red>0.45</red>
 				<green>0.55</green>
-				<blue>0.8</blue>
+				<blue>0.85</blue>
 	      	</color>
 		</input>
 		<checkbox>
@@ -647,6 +647,72 @@
 				]]></script>
 			</binding>
 		</button>
+	</group>
+
+	<empty><stretch>1</stretch></empty>
+	<hrule/>
+
+	<text><halign>left</halign><label>Combat ID and Tactical Data Link</label></text>
+	<empty><stretch>1</stretch></empty>
+
+	<group>
+		<layout>hbox</layout>
+			   <input>
+				  <width>75</width>
+				  <height>25</height>
+				  <label>IFF Channel</label>
+				  <property>instrumentation/iff/channel-selection</property>
+				  <live>true</live>
+				  <halign>center</halign>
+			      	<binding>
+			           <command>dialog-apply</command>
+			      	</binding>
+			      	<color>
+	      				<red>0.45</red>
+						<green>0.55</green>
+						<blue>0.85</blue>
+	      			</color>
+			   </input>
+			   <button>
+				<legend>Clear</legend>
+				<halign>center</halign>
+				<binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						setprop("instrumentation/iff/channel-selection", 0);
+					]]></script>
+				</binding>
+				</button>
+	</group>
+
+	<group>
+		<layout>hbox</layout>
+			   <input>
+				  <width>75</width>
+				  <height>25</height>
+				  <label>MIDS Channel</label>
+				  <property>instrumentation/datalink/channel</property>
+				  <live>true</live>
+				  <halign>center</halign>
+			      	<binding>
+			           <command>dialog-apply</command>
+			      	</binding>
+			      	<color>
+	      				<red>0.45</red>
+						<green>0.55</green>
+						<blue>0.85</blue>
+	      			</color>
+			   </input>
+			   <button>
+				<legend>Clear</legend>
+				<halign>center</halign>
+				<binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						setprop("instrumentation/datalink/channel", 0);
+					]]></script>
+				</binding>
+				</button>
 	</group>
 
 	<empty><stretch>1</stretch></empty>
