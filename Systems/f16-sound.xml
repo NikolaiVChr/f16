@@ -3506,7 +3506,7 @@
             <type>avionics</type>
             <condition>
                 <not><property>f16/avionics/voice-msg-inhibit</property></not>
-                <!--not><property>gear/gear[2]/wow</property></not-->
+                <not><property>gear/gear[2]/wow</property></not>
                 <equals>
                     <property>instrumentation/datalink/data</property>
                     <value>1</value>

@@ -841,7 +841,7 @@ var dataEntryDisplay = {
 		var frnd = 0;
 		if (sign != nil) {
 			var lnk = datalink.get_data(sign);
-			 if (lnk.on_link() == 1) {
+			 if (lnk != nil and lnk.on_link() == 1) {
 			 	frnd = 1;
 			 }
 		}
