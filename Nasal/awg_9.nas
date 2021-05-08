@@ -1100,13 +1100,17 @@ var designate = func (new_u) {
         armament.contact = nil;
         active_u_callsign = nil;
         active_u = nil;
-        datalink.clear_data();
+        if (f16.sending == nil) {
+            datalink.clear_data();
+        }
         return;
     }
     armament.contact = new_u;
     active_u_callsign = new_u.get_Callsign();
     active_u = new_u;
-    datalink.send_data([{"callsign":active_u_callsign, "iff":0}]);
+    if (f16.sending == nil) {
+        datalink.send_data({"contacts":[{"callsign":active_u_callsign,"iff":0}]});
+    }    
 };
 
 var TerrainManager = {

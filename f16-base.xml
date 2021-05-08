@@ -1103,6 +1103,7 @@
             <serviceable type="bool">true</serviceable>
         </hud>
         <datalink>
+            <data type="bool">false</data>
             <channel type="int">42</channel>
             <power_prop type="string">f16/avionics/power-dl</power_prop>
             <channel_prop type="string">instrumentation/datalink/channel</channel_prop>
@@ -1279,6 +1280,7 @@ value. 18000=standard US transition altitude -->
                 <mark-lat type="double">0</mark-lat>
                 <mark-lon type="double">0</mark-lon>
                 <mark-alt type="double">0</mark-alt>
+                <marked type="bool">false</marked>
                 <c1-lat type="double">0</c1-lat>
                 <c1-lon type="double">0</c1-lon>
                 <c1-rad type="double">0</c1-rad>
@@ -1514,6 +1516,9 @@ value. 18000=standard US transition altitude -->
         <radardist>
             <file>Aircraft/Instruments-3d/radardist/radardist.nas</file>
         </radardist>
+        <datalink>
+            <file>Aircraft/f16/Nasal/datalink.nas</file>
+        </datalink>
         <f16> 
             <file>Aircraft/f16/Nasal/exec.nas</file>
             <file>Aircraft/f16/Nasal/zoom-views.nas</file>
@@ -1624,9 +1629,6 @@ value. 18000=standard US transition altitude -->
         <help>
             <file>Aircraft/f16/Nasal/help.nas</file>
         </help>
-        <datalink>
-            <file>Aircraft/f16/Nasal/datalink.nas</file>
-        </datalink>
     </nasal>
     
 </PropertyList>

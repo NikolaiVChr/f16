@@ -1465,19 +1465,19 @@ var MFD_Device =
                 }
                 me.cs = contact.get_Callsign();
                 me.lnkLock = 0;
-                me.lnk16 = datalink.get_contact(me.cs);
-                if (me.lnk16 != nil and me.lnk16["on_link"] == 1) {#and me.lnk16["iff"] == 2 
+                me.lnk16 = datalink.get_data(me.cs);
+                if (me.lnk16 != nil and me.lnk16.on_link() == 1) {
                     me.blue = 1;
-                    me.blueIndex = getDLNIndex(me.cs);
+                    me.blueIndex = me.lnk16.index()+1;
                 } elsif (me.cs == getprop("link16/wingman-4")) {
                     me.blue = 1;
                     me.blueIndex = 2;
                 } else {
                     me.blue = 0;
                 }
-                if (me.lnk16 != nil and me.lnk16["on_link"] == 0) {
+                if (!me.blue and me.lnk16 != nil and me.lnk16.tracked() == 1) {
                     me.lnkLock = 1;
-                    me.blueIndex = me.lnk16["from_index"]+1;
+                    me.blueIndex = me.lnk16.tracked_by_index()+1;
                 }
                 if (contact.get_display() == 0 and ((!me.blue and !me.lnkLock) or contact.get_behind_terrain())) {
                     continue;
@@ -2941,6 +2941,12 @@ var MFD_Device =
                 .setAlignment("left-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
+        svg.markXmit = svg.buttonView.createChild("text")#DEP/CEN
+                .setTranslation(276*0.795, -482*0.5-5)
+                .setText("DL-M")
+                .setAlignment("right-center")
+                .setColor(colorText1)
+                .setFontSize(20, 1.0);
         svg.cpl = svg.buttonView.createChild("text")#CPL/DCPL
                 .setTranslation(-276*0.795, -482*0.5+55)
                 .setText("DCPL")
@@ -3257,6 +3263,12 @@ var MFD_Device =
                 } elsif (eventi == 3) {
                     MFD_Device.set_HSD_coupled(!MFD_Device.get_HSD_coupled());
                     me.root.cpl.setText(MFD_Device.get_HSD_coupled()==1?"CPL":"DCPL");
+                } elsif (eventi == 7 and getprop("f16/avionics/pilot-aid/marked") and f16.sending == nil) {
+                    var p = geo.Coord.new();
+                    p.set_latlon(getprop("f16/avionics/pilot-aid/mark-lat"),getprop("f16/avionics/pilot-aid/mark-lon"),getprop("f16/avionics/pilot-aid/mark-alt"));
+                    f16.sending = p;
+                    datalink.send_data({"point": f16.sending});
+                    settimer(func {f16.sending = nil;},7);
                 } elsif (eventi == 15) {
                     swap();
                 } elsif (eventi == 19) {
@@ -3279,6 +3291,7 @@ var MFD_Device =
 #  VSD HSD SMS SIT
         };
         me.p_HSD.update = func (noti) {
+            me.root.markXmit.setVisible(getprop("f16/avionics/pilot-aid/marked") and getprop("f16/avionics/power-dl"));
             me.root.conc.setRotation(-getprop("orientation/heading-deg")*D2R);
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
@@ -3578,20 +3591,20 @@ var MFD_Device =
             
             foreach(contact; awg_9.tgts_list) {
                 me.cs = contact.get_Callsign();
-                me.lnk16 = datalink.get_contact(me.cs);
                 me.lnkLock = 0;
-                if (me.lnk16 != nil and me.lnk16["on_link"] == 1) {#and me.lnk16["iff"] == 2 
+                me.lnk16 = datalink.get_data(me.cs);
+                if (me.lnk16 != nil and me.lnk16.on_link() == 1) {
                     me.blue = 1;
-                    me.blueIndex = getDLNIndex(me.cs);
+                    me.blueIndex = me.lnk16.index()+1;
                 } elsif (me.cs == getprop("link16/wingman-4")) {
                     me.blue = 1;
                     me.blueIndex = 2;
                 } else {
                     me.blue = 0;
                 }
-                if (me.lnk16 != nil and me.lnk16["on_link"] == 0) {
+                if (!me.blue and me.lnk16 != nil and me.lnk16.tracked() == 1) {
                     me.lnkLock = 1;
-                    me.blueIndex = me.lnk16["from_index"]+1;
+                    me.blueIndex = me.lnk16.tracked_by_index()+1;
                 }
                 me.desig = contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType);
                 if (!me.desig and !me.blue and !me.lnkLock) {
@@ -4275,16 +4288,3 @@ var switchTGP = func {
     }
 }
 
-
-var getDLNIndex = func (callsign) {
-    var csl = datalink.get_connected_callsigns();
-    var inl = datalink.get_connected_indices();
-    var count = 0;
-    foreach (cs ; csl) {
-        if (callsign == cs) {
-            return inl[count]+1;
-        }
-        count += 1;
-    }
-    return -1;
-}

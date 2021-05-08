@@ -449,6 +449,7 @@ var dataEntryDisplay = {
 			setprop("f16/avionics/pilot-aid/mark-lat", getprop("/position/latitude-deg"));
 			setprop("f16/avionics/pilot-aid/mark-lon", getprop("/position/longitude-deg"));
 			setprop("f16/avionics/pilot-aid/mark-alt", getprop("/position/altitude-ft"));
+			setprop("f16/avionics/pilot-aid/marked",1);
 		}
 		lat = convertDegreeToStringLat(getprop("f16/avionics/pilot-aid/mark-lat"));
 		lon = convertDegreeToStringLon(getprop("f16/avionics/pilot-aid/mark-lon"));
@@ -839,15 +840,9 @@ var dataEntryDisplay = {
 		}
 		var frnd = 0;
 		if (sign != nil) {
-			var lnk = datalink.get_contact(sign);
-			 if (lnk != nil and lnk["iff"] == 2 and lnk["on_link"] == 1) {
-			 	frnd = 2;
-			 }
-			 if (lnk != nil and lnk["on_link"] == 1) {
+			var lnk = datalink.get_data(sign);
+			 if (lnk.on_link() == 1) {
 			 	frnd = 1;
-			 }
-			 if (lnk != nil and lnk["iff"] == 2) {
-			 	frnd = 3;
 			 }
 		}
 		if (getprop("f16/avionics/power-dl") and frnd == 2) {
