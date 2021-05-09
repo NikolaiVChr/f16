@@ -1103,7 +1103,7 @@
             <serviceable type="bool">true</serviceable>
         </hud>
         <datalink>
-            <data type="bool">false</data>
+            <data type="int">0</data>
             <channel type="int">42</channel>
             <power_prop type="string">f16/avionics/power-dl</power_prop>
             <channel_prop type="string">instrumentation/datalink/channel</channel_prop>
@@ -1245,8 +1245,11 @@ value. 18000=standard US transition altitude -->
         <ded>
             <stpt-edit type="int">0</stpt-edit>
             <stpt-rad type="int">0</stpt-rad>
+            <stpt-color type="string">RED</stpt-color>
+            <stpt-type type="string"></stpt-type>
             <lat type="double">0.0</lat>
             <lon type="double">0.0</lon>
+            <alt type="int">0.0</alt>
         </ded>
         <avionics>
 			<probe-heat-switch type="int">0</probe-heat-switch>
@@ -1276,6 +1279,8 @@ value. 18000=standard US transition altitude -->
             <gps-lat type="double">36.858</gps-lat>
             <gps-lon type="double">-115.3</gps-lon>
             <gps-alt type="double">4870</gps-alt>
+            <stpt-from type="int">0</stpt-from>
+            <stpt-to type="int">0</stpt-to>
             <pilot-aid>
                 <mark-lat type="double">0</mark-lat>
                 <mark-lon type="double">0</mark-lon>
@@ -1497,6 +1502,9 @@ value. 18000=standard US transition altitude -->
         <aar>
             <file>Aircraft/Generic/aar.nas</file>
         </aar>
+        <steerpoints>
+            <file>Aircraft/f16/Nasal/steerpoints.nas</file>
+        </steerpoints>
         <damage>
             <file>Aircraft/f16/Nasal/damage.nas</file>
         </damage>

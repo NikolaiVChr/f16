@@ -16,12 +16,15 @@ var STPTlatFE = EditableLAT.new("f16/ded/lat", convertDegreeToStringLat);
 var STPTlonFE = EditableLON.new("f16/ded/lon", convertDegreeToStringLon);
 var STPTnumFE = EditableField.new("f16/ded/stpt-edit", "%3d", 3);
 var STPTradFE = EditableField.new("f16/ded/stpt-rad", "%2d", 2);
+var STPTaltFE = EditableField.new("f16/ded/alt", "%5d", 5);
+var STPTtypeTF = toggleableField.new(["", "2", "11", "20", "SH", "P"], "f16/ded/stpt-type");
+var STPTcolorTF = toggleableField.new(["RED", "YEL", "GRN"], "f16/ded/stpt-color");
 var dlinkEF   = EditableField.new("instrumentation/datalink/channel", "%4d", 4);
 
 var pTACAN = EditableFieldPage.new(0, [tacanChanEF,tacanBandTF,ilsFrqEF,ilsCrsEF]);
 var pALOW  = EditableFieldPage.new(1, [alowEF,mslFloorEF]);
 var pFACK  = EditableFieldPage.new(2);
-var pSTPT  = EditableFieldPage.new(3, [STPTnumFE,STPTlatFE,STPTlonFE,STPTradFE]);
+var pSTPT  = EditableFieldPage.new(3, [STPTnumFE,STPTlatFE,STPTlonFE,STPTradFE,STPTaltFE,STPTtypeTF,STPTcolorTF]);
 var pCRUS  = EditableFieldPage.new(4);
 var pTIME  = EditableFieldPage.new(5);
 var pMARK  = EditableFieldPage.new(6);
@@ -61,6 +64,9 @@ var pIFF   = EditableFieldPage.new(33, [transpEF,transpModeTF,iffEF,iffTF]);
 var wp_num_lastA = nil;
 var wp_num_lastO = nil;
 var wp_num_lastR = nil;
+var wp_num_lastC = nil;
+var wp_num_lastT = nil;
+var wp_num_curr = 0;
 
 var dataEntryDisplay = {
 	line1: nil,
@@ -258,6 +264,7 @@ var dataEntryDisplay = {
 		if (fp != nil and wp_num != nil and wp_num < 100) {
 			var wp = fp.getWP(wp_num-1);
 			if (wp != nil and getprop("f16/avionics/power-mmc")) {
+				wp_num_curr = wp_num;
 				lat = convertDegreeToStringLat(wp.lat);
 				lon = convertDegreeToStringLon(wp.lon);
 				alt = wp.alt_cstr;
@@ -303,6 +310,8 @@ var dataEntryDisplay = {
 					}
 					TOS = sprintf("%02d:%02d:%02d",hour,minute,second);   
 				}          
+			} else {
+				wp_num_curr = 0;
 			}
 			if (wp_num == fp.current) {
 				me.text[4] = sprintf("      TOS  %s",TOS);
@@ -314,32 +323,127 @@ var dataEntryDisplay = {
 			me.text[2] = sprintf("      LNG  %s", lon);
 		} elsif (wp_num != nil and wp_num < 306 and wp_num >= 300) {
 			# Threat circles 300 to 305
-			var circle = wp_num - 300 + 1;
+			var stpt = steerpoints.getNumber(wp_num);
+			if 	(stpt != nil) {
+				wp_num_curr = wp_num;
 
-			if (wp_num_lastA != getprop("f16/avionics/c"~circle~"-lat")) {
-				setprop("f16/ded/lat", getprop("f16/avionics/pilot-aid/c"~circle~"-lat"));
+				if (wp_num_lastA != stpt.lat) {
+					setprop("f16/ded/lat", stpt.lat);
+				} else {
+					stpt.lat = getprop("f16/ded/lat"); 
+				}
+				if (wp_num_lastO != stpt.lon) {
+					setprop("f16/ded/lon", stpt.lon);
+				} else {
+					stpt.lon = getprop("f16/ded/lon");
+				}
+				if (wp_num_lastR != stpt.radius) {
+					setprop("f16/ded/stpt-rad", stpt.radius);
+				} else {
+					stpt.radius = getprop("f16/ded/stpt-rad"); 
+				}
+				var colNum = wp_num_lastC=="RED"?0:(wp_num_lastC=="YEL"?1:2);
+				if (colNum != stpt.radius) {
+					setprop("f16/ded/stpt-color", stpt.color==0?"RED":(stpt.color==1?"YEL":"GRN"));
+				} else {
+					stpt.color = getprop("f16/ded/stpt-color")=="RED"?0:(getprop("f16/ded/stpt-color")=="YEL"?1:2);
+				}
+				if (wp_num_lastT != stpt.type) {
+					setprop("f16/ded/stpt-type", stpt.type);
+				} else {
+					stpt.type = getprop("f16/ded/stpt-type"); 
+				}
 			} else {
-				setprop("f16/avionics/c"~circle~"-lat", getprop("f16/ded/lat")); 
+				setprop("f16/ded/lat", 0);
+				setprop("f16/ded/lon", 0);
+				setprop("f16/ded/stpt-rad", 0);
+				setprop("f16/ded/stpt-type", "");
+				setprop("f16/ded/stpt-color", "RED");
+				wp_num_curr = 0;
 			}
-			if (wp_num_lastO != getprop("f16/avionics/c"~circle~"-lon")) {
-				setprop("f16/ded/lon", getprop("f16/avionics/pilot-aid/c"~circle~"-lon"));
-			} else {
-				setprop("f16/avionics/c"~circle~"-lon", getprop("f16/ded/lon")); 
-			}
-			if (wp_num_lastR != getprop("f16/avionics/c"~circle~"-rad")) {
-				setprop("f16/ded/stpt-rad", getprop("f16/avionics/pilot-aid/c"~circle~"-rad"));
-			} else {
-				setprop("f16/avionics/pilot-aid/c"~circle~"-rad", getprop("f16/ded/stpt-rad"));
-			}
-			
+				
 			me.text[1] = sprintf("      LAT  %s", pSTPT.vector[1].getText());
 			me.text[2] = sprintf("      LNG  %s", pSTPT.vector[2].getText());
 			me.text[3] = sprintf("      RAD  %sNM", pSTPT.vector[3].getText());
+			me.text[4] = sprintf("  COL  %s  TYPE  %s", pSTPT.vector[5].getText(), pSTPT.vector[4].getText());
+
+			if 	(stpt == nil and (getprop("f16/ded/stpt-rad")!=0 or getprop("f16/ded/lat") != 0 or getprop("f16/ded/lon") != 0 or getprop("f16/ded/stpt-type") != "" or getprop("f16/ded/stpt-color") != "RED")) {
+				stpt = steerpoints.STPT.new();
+				stpt.lat = getprop("f16/ded/lat");
+				stpt.lon = getprop("f16/ded/lon");
+				stpt.radius = getprop("f16/ded/stpt-rad");
+				stpt.type = getprop("f16/ded/stpt-type");
+				stpt.color = getprop("f16/ded/stpt-color")=="RED"?0:(getprop("f16/ded/stpt-color")=="YEL"?1:2);
+				steerpoints.setNumber(wp_num, stpt);
+			}
+
+			if 	(stpt != nil) {
+				wp_num_lastA = stpt.lat;
+				wp_num_lastO = stpt.lon;
+				wp_num_lastR = stpt.radius;
+				wp_num_lastC = stpt.color==0?"RED":(stpt.color==1?"YEL":"GRN");
+				wp_num_lastT = stpt.type;
+			} else {
+				wp_num_lastA = 0;
+				wp_num_lastO = 0;
+				wp_num_lastR = 0;
+				wp_num_lastC = "RED";
+				wp_num_lastT = "";
+			}
+		} elsif (wp_num != nil and ((wp_num < 405 and wp_num >= 400) or (wp_num < 455 and wp_num >= 450) or (wp_num == 500) or (wp_num == 555))) {
+			# Own markpoints, DLNK markpoints, WPN GPS and Bulls-eye
+			var stpt = steerpoints.getNumber(wp_num);
+			
+			if 	(stpt != nil) {
+				wp_num_curr = wp_num;
+				if (wp_num_lastA != stpt.lat) {
+					setprop("f16/ded/lat", stpt.lat);
+				} else {
+					stpt.lat = getprop("f16/ded/lat"); 
+				}
+				if (wp_num_lastO != stpt.lon) {
+					setprop("f16/ded/lon", stpt.lon);
+				} else {
+					stpt.lon = getprop("f16/ded/lon");
+				}
+				if (wp_num_lastR != stpt.alt) {
+					setprop("f16/ded/alt", stpt.alt);
+				} else {
+					stpt.alt = getprop("f16/ded/alt"); 
+				}
+			} else {
+				setprop("f16/ded/lat", 0);
+				setprop("f16/ded/lon", 0);
+				setprop("f16/ded/alt", 0);
+				wp_num_curr = 0;
+			}
+				
+			me.text[1] = sprintf("      LAT  %s", pSTPT.vector[1].getText());
+			me.text[2] = sprintf("      LNG  %s", pSTPT.vector[2].getText());
+			if (wp_num == 555) {
+				me.text[3] = sprintf("      ");
+			} else {
+				me.text[3] = sprintf("     ELEV  %sFT", pSTPT.vector[4].getText());
+			}
 			me.text[4] = sprintf("      TOS  ");
 
-			wp_num_lastA = getprop("f16/avionics/pilot-aid/c"~circle~"-lat");
-			wp_num_lastO = getprop("f16/avionics/pilot-aid/c"~circle~"-lon");
-			wp_num_lastR = getprop("f16/avionics/pilot-aid/c"~circle~"-rad");
+			if 	(stpt == nil and (getprop("f16/ded/alt")!=0 or getprop("f16/ded/lat") != 0 or getprop("f16/ded/lon") != 0)) {
+				stpt = steerpoints.STPT.new();
+				stpt.lat = getprop("f16/ded/lat");
+				stpt.lon = getprop("f16/ded/lon");
+				stpt.alt = getprop("f16/ded/alt");
+				steerpoints.setNumber(wp_num, stpt);
+			}
+
+			if 	(stpt != nil) {
+				wp_num_lastA = stpt.lat;
+				wp_num_lastO = stpt.lon;
+				wp_num_lastR = stpt.alt;
+			} else {
+				wp_num_lastA = 0;
+				wp_num_lastO = 0;
+				wp_num_lastR = 0;
+			}
 		} elsif (wp_num != nil and wp_num == 500) {
 			# Bulleye 500
 
@@ -367,6 +471,7 @@ var dataEntryDisplay = {
 			me.text[4] = sprintf("      TOS  ");
 			me.text[1] = sprintf("      LAT  %s", lat);
 			me.text[2] = sprintf("      LNG  %s", lon);
+			wp_num_curr = 0;
 		}
 		me.text[0] = sprintf("         STPT %s  AUTO %s", pSTPT.vector[0].getText(), me.no);
 		
@@ -444,16 +549,21 @@ var dataEntryDisplay = {
 	markModeSelected: 1,
 	updateMark: func() {
 		me.markMode = "OFLY";
+		me.markNo = 0;
 		if (me.page != me.pageLast) {
 			# we just entered this page, lets store this mark
-			setprop("f16/avionics/pilot-aid/mark-lat", getprop("/position/latitude-deg"));
-			setprop("f16/avionics/pilot-aid/mark-lon", getprop("/position/longitude-deg"));
-			setprop("f16/avionics/pilot-aid/mark-alt", getprop("/position/altitude-ft"));
-			setprop("f16/avionics/pilot-aid/marked",1);
+			me.markNo = steerpoints.markOFLY();
+			me.mark = steerpoints.getNumber(me.markNo);
+		} else {
+			me.markNo = steerpoints.ownMarkIndex+400;
+			me.mark = steerpoints.getNumber(me.markNo);
 		}
-		lat = convertDegreeToStringLat(getprop("f16/avionics/pilot-aid/mark-lat"));
-		lon = convertDegreeToStringLon(getprop("f16/avionics/pilot-aid/mark-lon"));
-		alt = getprop("f16/avionics/pilot-aid/mark-alt");
+		
+		wp_num_curr = me.markNo;
+
+		lat = convertDegreeToStringLat(me.mark.lat);
+		lon = convertDegreeToStringLon(me.mark.lon);
+		alt = me.mark.alt;
 		if (me.markModeSelected) {
 			me.text[0] = sprintf("         MARK *%s*    %s",me.markMode,me.no);
 		} else {
@@ -462,7 +572,7 @@ var dataEntryDisplay = {
 		me.text[1] = sprintf("      LAT  %s",lat);
 		me.text[2] = sprintf("      LNG  %s",lon);
 		me.text[3] = sprintf("     ELEV  % 5dFT",alt);
-		me.text[4] = sprintf("                 ");
+		me.text[4] = sprintf("        #  %03d", me.markNo);
 	},
 	
 	fixTakingMode: "OFLY",
@@ -780,10 +890,11 @@ var dataEntryDisplay = {
 		} else {
 			me.text[0] = sprintf("       BULLSEYE         ");
 		}
-		me.text[1] = sprintf("       BULL 500    ");
+		me.text[1] = sprintf("       BULL 555    ");
 		me.text[2] = sprintf("                        ");
 		me.text[3] = sprintf("                        ");
 		me.text[4] = sprintf("                        ");
+		wp_num_curr = 555;
 	}, 
 	
 	CNIshowWind: 0,
@@ -872,9 +983,6 @@ var Actions = {
 		toggleHack: Action.new(pTIME, toggleHack),
 		resetHack: Action.new(pTIME, resetHack),
 	},
-	Mark: {
-		mSel: Action.new(pMARK, modeSelMark),
-	},	
 	Fix: {
 		mSel: Action.new(pFIX, modeSelFix),
 	},	
@@ -888,6 +996,8 @@ var Actions = {
 	recall: Action.new(nil, dataEntryDisplay.page.recall),
 	stptNext: Action.new(nil, stptNext),
 	stptLast: Action.new(nil, stptLast),
+	wx: Action.new(-1, stptSend),
+	fud: Action.new(-1, stptCurr),
 };
 
 var Routers = {
@@ -959,11 +1069,13 @@ var ActionVectors = {
 	button7: [],
 	button8: [],
 	button9: [],
-	button0: [Actions.Bullseye.mSel,Actions.Tacan.mSel,Actions.Mark.mSel,Actions.Fix.mSel,Actions.Acal.mSel],
+	button0: [Actions.Bullseye.mSel,Actions.Tacan.mSel,Actions.Fix.mSel,Actions.Acal.mSel],
 	buttonup: [Actions.Time.toggleHack, Actions.stptNext],
 	buttondown: [Actions.Time.resetHack,  Actions.stptLast],
 	buttonEnter: [Actions.enter],
 	buttonRecall: [Actions.recall],
+	buttonWX: [Actions.wx],
+	buttonFUD: [Actions.fud],
 };
 
 var Buttons = {
@@ -985,6 +1097,8 @@ var Buttons = {
 	buttondown: Button.new(actionVec: ActionVectors.buttondown),
 	entr: Button.new(actionVec: ActionVectors.buttonEnter, routerVec: RouterVectors.buttonEnter),
 	rcl: Button.new(actionVec: ActionVectors.buttonRecall, routerVec: RouterVectors.buttonRecall),
+	wx: Button.new(actionVec: ActionVectors.buttonWX),
+	flirUD: Button.new(actionVec: ActionVectors.buttonFUD),
 };
 
 setlistener("f16/avionics/rtn-seq", func() {

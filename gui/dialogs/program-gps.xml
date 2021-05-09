@@ -8,6 +8,20 @@
     <!--<width>250</width>
     <height>250</height>-->
 
+    <nasal>
+        <open><![CDATA[
+				var s = steerpoints.getNumber(500);
+				if (s != nil) {
+					setprop("f16/avionics/gps-lat", s.lat);
+					setprop("f16/avionics/gps-lon", s.lon);
+					setprop("f16/avionics/gps-alt", s.alt);
+				}            
+        ]]></open>
+
+        <close><![CDATA[           
+        ]]></close>
+    </nasal>
+
     <group>
 		<layout>hbox</layout>
 		<empty><stretch>1</stretch></empty>
@@ -35,7 +49,7 @@
 	<hrule/>
 
   	<text>
-	    <label>Set coordinates for standoff GPS-guided munitions (JSOW, JASSM)</label>
+	    <label>STPT #500 for standoff GPS-guided munitions (JSOW, JASSM)</label>
 	    <height>25</height>
 	</text>
 
@@ -95,9 +109,11 @@
 		<binding>
 			<command>nasal</command>
 			<script><![CDATA[
-				var lat = getprop("f16/avionics/gps-lat");
-				var lon = getprop("f16/avionics/gps-lon");
-				var alt = getprop("f16/avionics/gps-alt")*FT2M;
+				var s = steerpoints.STPT.new();
+				s.lat = getprop("f16/avionics/gps-lat");
+				s.lon = getprop("f16/avionics/gps-lon");
+				s.alt = getprop("f16/avionics/gps-alt");
+				steerpoints.setNumber(500,s);
 				if (lat < 90 and lat > -90 and lon < 180 and lon > -180 and pylons.fcs != nil) {
 					var wp = pylons.fcs.getSelectedWeapon();
 					if (wp != nil and wp.parents[0] == armament.AIM and wp.target_pnt == 1 and wp.guidance=="gps") {
@@ -144,5 +160,37 @@
  </group>
 
  <empty><stretch>1</stretch></empty>
+
+ <input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>From STPT</label>
+	  	<property>f16/avionics/stpt-from</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+	</input>
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>to STPT</label>
+	  	<property>f16/avionics/stpt-to</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+	</input>
+	<button>
+		<legend>Copy STPT</legend>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				steerpoints.copy(getprop("f16/avionics/stpt-from"),getprop("f16/avionics/stpt-to"));
+			]]></script>
+		</binding>
+	</button>
 
 </PropertyList>

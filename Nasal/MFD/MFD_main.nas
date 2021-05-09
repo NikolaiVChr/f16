@@ -1208,11 +1208,11 @@ var MFD_Device =
                 me.root.hd.hide();
             }			
             
-            
-            me.bullOn = getprop("f16/avionics/pilot-aid/bulls-eye-defined") and ded.dataEntryDisplay.bullMode and rdrMode != RADAR_MODE_GM;
+            me.bullPt = steerpoints.getNumber(555);
+            me.bullOn = me.bullPt != nil and rdrMode != RADAR_MODE_GM;
             if (me.bullOn) {
-                me.bullLat = getprop("f16/avionics/pilot-aid/bulls-eye-lat");
-                me.bullLon = getprop("f16/avionics/pilot-aid/bulls-eye-lon");
+                me.bullLat = me.bullPt.lat;
+                me.bullLon = me.bullPt.lon;
                 me.bullCoord = geo.Coord.new().set_latlon(me.bullLat,me.bullLon);
                 me.ownCoord = geo.aircraft_position();
                 me.bullDirToMe = me.bullCoord.course_to(me.ownCoord);
@@ -1429,23 +1429,18 @@ var MFD_Device =
             if (me.bullOn) {
                 me.root.bullseye.setTranslation(me.bullPos);
             }
-            me.steerActive = getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc");
-            if (me.steerActive) {
-                me.plan = flightplan();
-                if (me.plan.getPlanSize() > 0 and me.plan.current >= 0) {
-                    me.wp = me.plan.getWP(me.plan.current);
-                    me.wpC = geo.Coord.new();
-                    me.wpC.set_latlon(me.wp.lat,me.wp.lon);
-                    me.legBearing = geo.normdeg180(geo.aircraft_position().course_to(me.wpC)-noti.heading);#relative
-                    me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
-                    me.distPixels = me.legDistance*(482/awg_9.range_radar2);
-                    me.steerPos = [me.wdt*0.5*me.legBearing/60,-me.distPixels];
-                    me.root.steerpoint.setTranslation(me.steerPos);
-                } else {
-                    me.steerActive = 0;
-                }
+            
+            if (steerpoints.getCurrentNumber() != 0) {
+                me.wpC = steerpoints.getCurrentCoord();
+                me.legBearing = geo.normdeg180(geo.aircraft_position().course_to(me.wpC)-noti.heading);#relative
+                me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
+                me.distPixels = me.legDistance*(482/awg_9.range_radar2);
+                me.steerPos = [me.wdt*0.5*me.legBearing/60,-me.distPixels];
+                me.root.steerpoint.setTranslation(me.steerPos);
+                me.root.steerpoint.setVisible(1);
+            } else {
+                me.root.steerpoint.setVisible(0);
             }
-            me.root.steerpoint.setVisible(me.steerActive);
             
             me.desig_new = nil;
             me.gm_echoPos = {};
@@ -2941,12 +2936,6 @@ var MFD_Device =
                 .setAlignment("left-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
-        svg.markXmit = svg.buttonView.createChild("text")#DEP/CEN
-                .setTranslation(276*0.795, -482*0.5-5)
-                .setText("DL-M")
-                .setAlignment("right-center")
-                .setColor(colorText1)
-                .setFontSize(20, 1.0);
         svg.cpl = svg.buttonView.createChild("text")#CPL/DCPL
                 .setTranslation(-276*0.795, -482*0.5+55)
                 .setText("DCPL")
@@ -3091,12 +3080,16 @@ var MFD_Device =
                 .set("z-index",2)
                 .setFontSize(15, 1.0);
         
-        svg.mark = svg.p_HSDc.createChild("text")
-                .setAlignment("center-center")
-                .setColor(colorText2)
-                .setText("X")
-                .set("z-index",2)
-                .setFontSize(18, 1.0);
+
+        svg.mark = setsize([],10);
+        for (var no = 0; no < 10; no += 1) {
+            svg.mark[no] = svg.p_HSDc.createChild("text")
+                    .setAlignment("center-center")
+                    .setColor(no<5?colorText2:colorCircle2)
+                    .setText("X")
+                    .set("z-index",2)
+                    .setFontSize(18, 1.0);
+        }
 
         svg.bullseye = svg.p_HSDc.createChild("path")
             .moveTo(-25,0)
@@ -3263,12 +3256,6 @@ var MFD_Device =
                 } elsif (eventi == 3) {
                     MFD_Device.set_HSD_coupled(!MFD_Device.get_HSD_coupled());
                     me.root.cpl.setText(MFD_Device.get_HSD_coupled()==1?"CPL":"DCPL");
-                } elsif (eventi == 7 and getprop("f16/avionics/pilot-aid/marked") and f16.sending == nil) {
-                    var p = geo.Coord.new();
-                    p.set_latlon(getprop("f16/avionics/pilot-aid/mark-lat"),getprop("f16/avionics/pilot-aid/mark-lon"),getprop("f16/avionics/pilot-aid/mark-alt"));
-                    f16.sending = p;
-                    datalink.send_data({"point": f16.sending});
-                    settimer(func {f16.sending = nil;},7);
                 } elsif (eventi == 15) {
                     swap();
                 } elsif (eventi == 19) {
@@ -3291,7 +3278,6 @@ var MFD_Device =
 #  VSD HSD SMS SIT
         };
         me.p_HSD.update = func (noti) {
-            me.root.markXmit.setVisible(getprop("f16/avionics/pilot-aid/marked") and getprop("f16/avionics/power-dl"));
             me.root.conc.setRotation(-getprop("orientation/heading-deg")*D2R);
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
@@ -3350,10 +3336,11 @@ var MFD_Device =
                 me.root.rang.setText(""~MFD_Device.get_HSD_range_dep());
             }
 			
-            me.bullOn = getprop("f16/avionics/pilot-aid/bulls-eye-defined") and ded.dataEntryDisplay.bullMode;
+            me.bullPt = steerpoints.getNumber(555);
+            me.bullOn = me.bullPt != nil;
             if (me.bullOn) {
-                me.bullLat = getprop("f16/avionics/pilot-aid/bulls-eye-lat");
-                me.bullLon = getprop("f16/avionics/pilot-aid/bulls-eye-lon");
+                me.bullLat = me.bullPt.lat;
+                me.bullLon = me.bullPt.lon;
                 me.bullCoord = geo.Coord.new().set_latlon(me.bullLat,me.bullLon);
                 me.ownCoord = geo.aircraft_position();
                 me.bullDirToMe = me.bullCoord.course_to(me.ownCoord);
@@ -3411,7 +3398,7 @@ var MFD_Device =
                         .setColor(colorLine1)
                         .update();
                 }
-                if (getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc")) {
+                if (steerpoints.isRouteActive()) {
                     me.plan = flightplan();
                     me.planSize = me.plan.getPlanSize();
                     me.prevX = nil;
@@ -3508,37 +3495,36 @@ var MFD_Device =
                 
                 me.root.cone.update();
 
-                me.mlat = getprop("f16/avionics/pilot-aid/mark-lat");
-                me.mlon = getprop("f16/avionics/pilot-aid/mark-lon");
-                me.malt = getprop("f16/avionics/pilot-aid/mark-alt");
-
-                if (me.mlat != 0 and me.mlon != 0) {
-                    me.wpC = geo.Coord.new();
-                    me.wpC.set_latlon(me.mlat,me.mlon);
-                    me.legBearing = geo.aircraft_position().course_to(me.wpC)-getprop("orientation/heading-deg");#relative
-                    me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
-
-                    if (MFD_Device.get_HSD_centered()) {
-                        me.legRangePixels = me.root.mediumRadius*(me.legDistance/MFD_Device.get_HSD_range_cen());
+                for (var mi = 0; mi < 10; mi+=1) {
+                    var mkpt = nil;
+                    if (mi<5) {
+                        mkpt = steerpoints.getNumber(400+mi);
                     } else {
-                        me.legRangePixels = me.root.outerRadius*(me.legDistance/MFD_Device.get_HSD_range_dep());
+                        mkpt = steerpoints.getNumber(450+mi-5);
                     }
-                    
-                    me.legX = me.legRangePixels*math.sin(me.legBearing*D2R);
-                    me.legY = -me.legRangePixels*math.cos(me.legBearing*D2R);
-                    me.root.mark.setTranslation(me.legX,me.legY);
-                    me.root.mark.show();
-                } else {
-                    me.root.mark.hide();
+                    if (mkpt == nil) {
+                        me.root.mark[mi].hide();
+                    } else {
+                        me.wpC = geo.Coord.new();
+                        me.wpC.set_latlon(mkpt.lat, mkpt.lon);
+                        me.legBearing = geo.aircraft_position().course_to(me.wpC)-getprop("orientation/heading-deg");#relative
+                        me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
+
+                        if (MFD_Device.get_HSD_centered()) {
+                            me.legRangePixels = me.root.mediumRadius*(me.legDistance/MFD_Device.get_HSD_range_cen());
+                        } else {
+                            me.legRangePixels = me.root.outerRadius*(me.legDistance/MFD_Device.get_HSD_range_dep());
+                        }
+                        
+                        me.legX = me.legRangePixels*math.sin(me.legBearing*D2R);
+                        me.legY = -me.legRangePixels*math.cos(me.legBearing*D2R);
+                        me.root.mark[mi].setTranslation(me.legX,me.legY);
+                        me.root.mark[mi].show();
+                    }
                 }
                 
                 for (var l = 1; l<=6;l+=1) {
                     # threat circles
-                    me.la = getprop("f16/avionics/pilot-aid/c"~l~"-lat");
-                    me.lo = getprop("f16/avionics/pilot-aid/c"~l~"-lon");
-                    me.ra = getprop("f16/avionics/pilot-aid/c"~l~"-rad");
-                    me.ty = getprop("f16/avionics/pilot-aid/c"~l~"-typ");
-                    
                     if (l==1) {
                         me.ci = me.root.c1;
                         me.cit = me.root.ct1;
@@ -3558,6 +3544,18 @@ var MFD_Device =
                         me.ci = me.root.c6;
                         me.cit = me.root.ct6;
                     }
+
+                    me.cnu = steerpoints.getNumber(300+l);
+                    if (cnu == nil) {
+                        me.ci.hide();
+                        me.cit.hide();
+                        continue;
+                    }
+                    me.la = cnu.lat;
+                    me.lo = cnu.lon;
+                    me.ra = cnu.radius;
+                    me.ty = cnu.type;
+                    me.co = cnu.color == 0?colorCircle1:(cnu.color == 1?colorCircle2:colorCircle3);
                     
                     if (me.la != nil and me.lo != nil and me.ra != nil and me.ra > 0) {
                         me.wpC = geo.Coord.new();
@@ -3578,9 +3576,11 @@ var MFD_Device =
                         me.ci.setTranslation(me.legX,me.legY);
                         me.ci.setScale(me.legScale);
                         me.ci.setStrokeLineWidth(1/me.legScale);
+                        me.ci.setColor(me.co);
                         me.ci.show();
                         me.cit.setText(me.ty);
                         me.cit.setTranslation(me.legX,me.legY);
+                        me.cit.setColor(me.co);
                         me.cit.show();
                     } else {
                         me.ci.hide();

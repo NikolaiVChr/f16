@@ -10,6 +10,12 @@
     
     <nasal>
         <open><![CDATA[
+			var s = steerpoints.getNumber(555);
+			if (s != nil) {
+				setprop("f16/avionics/pilot-aid/bulls-eye-lat", s.lat);
+				setprop("f16/avionics/pilot-aid/bulls-eye-lon", s.lon);
+			}            
+			
             var load_line1 = func(path) {
                 f16.loadLine(0,path.getValue());
             }
@@ -62,6 +68,7 @@
 	<hrule/>
 
 	<text><halign>left</halign><label>Input coordinates (Lat, Lon and Radius in NM) to display threat or friendly circled areas on HSD page.</label></text>
+	<text><halign>left</halign><label>Stored as STPT #300 to #305</label></text>
 	<empty><stretch>1</stretch></empty>
 
   	<group>
@@ -139,13 +146,17 @@
 	      	</color>
         </combo>
 		<button>
-			<legend>Clear</legend>
+			<legend>Apply</legend>
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
-					setprop("f16/avionics/pilot-aid/c1-lat", 0);
-					setprop("f16/avionics/pilot-aid/c1-lon", 0);
-					setprop("f16/avionics/pilot-aid/c1-rad", 0);
+					var s = steerpoints.STPT.new();
+					s.lat = getprop("f16/avionics/pilot-aid/c1-lat");
+					s.lon = getprop("f16/avionics/pilot-aid/c1-lon");
+					s.rad = getprop("f16/avionics/pilot-aid/c1-rad");
+					s.type= getprop("f16/avionics/pilot-aid/c1-typ");
+					s.color=0;
+					steerpoints.setNumber(300,s);
 				]]></script>
 			</binding>
 		</button>
@@ -225,17 +236,22 @@
 	      		<blue>0.5</blue>
 	      	</color>
         </combo>
-		<button>
-			<legend>Clear</legend>
+				<button>
+			<legend>Apply</legend>
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
-					setprop("f16/avionics/pilot-aid/c2-lat", 0);
-					setprop("f16/avionics/pilot-aid/c2-lon", 0);
-					setprop("f16/avionics/pilot-aid/c2-rad", 0);
+					var s = steerpoints.STPT.new();
+					s.lat = getprop("f16/avionics/pilot-aid/c2-lat");
+					s.lon = getprop("f16/avionics/pilot-aid/c2-lon");
+					s.rad = getprop("f16/avionics/pilot-aid/c2-rad");
+					s.type= getprop("f16/avionics/pilot-aid/c2-typ");
+					s.color=0;
+					steerpoints.setNumber(301,s);
 				]]></script>
 			</binding>
 		</button>
+
 	</group>
 	
 	<group>
@@ -313,16 +329,21 @@
 	      	</color>
         </combo>
 		<button>
-			<legend>Clear</legend>
+			<legend>Apply</legend>
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
-					setprop("f16/avionics/pilot-aid/c3-lat", 0);
-					setprop("f16/avionics/pilot-aid/c3-lon", 0);
-					setprop("f16/avionics/pilot-aid/c3-rad", 0);
+					var s = steerpoints.STPT.new();
+					s.lat = getprop("f16/avionics/pilot-aid/c3-lat");
+					s.lon = getprop("f16/avionics/pilot-aid/c3-lon");
+					s.rad = getprop("f16/avionics/pilot-aid/c3-rad");
+					s.type= getprop("f16/avionics/pilot-aid/c3-typ");
+					s.color=1;
+					steerpoints.setNumber(302,s);
 				]]></script>
 			</binding>
 		</button>
+
 	</group>
 
 	<group>
@@ -399,17 +420,22 @@
       			<blue>0.5</blue>
 	      	</color>
         </combo>
-		<button>
-			<legend>Clear</legend>
+				<button>
+			<legend>Apply</legend>
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
-					setprop("f16/avionics/pilot-aid/c5-lat", 0);
-					setprop("f16/avionics/pilot-aid/c5-lon", 0);
-					setprop("f16/avionics/pilot-aid/c5-rad", 0);
+					var s = steerpoints.STPT.new();
+					s.lat = getprop("f16/avionics/pilot-aid/c4-lat");
+					s.lon = getprop("f16/avionics/pilot-aid/c4-lon");
+					s.rad = getprop("f16/avionics/pilot-aid/c4-rad");
+					s.type= getprop("f16/avionics/pilot-aid/c4-typ");
+					s.color=2;
+					steerpoints.setNumber(303,s);
 				]]></script>
 			</binding>
 		</button>
+
 	</group>
 	
 	<group>
@@ -486,17 +512,22 @@
       			<blue>0.4</blue>
 	      	</color>
         </combo>
-		<button>
-			<legend>Clear</legend>
+				<button>
+			<legend>Apply</legend>
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
-					setprop("f16/avionics/pilot-aid/c4-lat", 0);
-					setprop("f16/avionics/pilot-aid/c4-lon", 0);
-					setprop("f16/avionics/pilot-aid/c4-rad", 0);
+					var s = steerpoints.STPT.new();
+					s.lat = getprop("f16/avionics/pilot-aid/c5-lat");
+					s.lon = getprop("f16/avionics/pilot-aid/c5-lon");
+					s.rad = getprop("f16/avionics/pilot-aid/c5-rad");
+					s.type= getprop("f16/avionics/pilot-aid/c5-typ");
+					s.color=1;
+					steerpoints.setNumber(304,s);
 				]]></script>
 			</binding>
 		</button>
+
 	</group>
 
 	<group>
@@ -574,22 +605,27 @@
 	      	</color>
         </combo>
 		<button>
-			<legend>Clear</legend>
+			<legend>Apply</legend>
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
-					setprop("f16/avionics/pilot-aid/c6-lat", 0);
-					setprop("f16/avionics/pilot-aid/c6-lon", 0);
-					setprop("f16/avionics/pilot-aid/c6-rad", 0);
+					var s = steerpoints.STPT.new();
+					s.lat = getprop("f16/avionics/pilot-aid/c6-lat");
+					s.lon = getprop("f16/avionics/pilot-aid/c6-lon");
+					s.rad = getprop("f16/avionics/pilot-aid/c6-rad");
+					s.type= getprop("f16/avionics/pilot-aid/c6-typ");
+					s.color=2;
+					steerpoints.setNumber(305,s);
 				]]></script>
 			</binding>
 		</button>
+
 	</group>
 
 	<empty><stretch>1</stretch></empty>
 	<hrule/>
 
-	<text><halign>left</halign><label>Bullseye designation</label></text>
+	<text><halign>left</halign><label>Bullseye designation, STPT #555</label></text>
 	<empty><stretch>1</stretch></empty>
 	
 	<group>
@@ -637,13 +673,14 @@
 			</binding>
 		</checkbox>
 		<button>
-			<legend>Clear</legend>
-			<halign>center</halign>
+			<legend>Apply</legend>
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
-					setprop("f16/avionics/pilot-aid/bulls-eye-lat", 0);
-					setprop("f16/avionics/pilot-aid/bulls-eye-lon", 0);
+					var s = steerpoints.STPT.new();
+					s.lat = getprop("f16/avionics/pilot-aid/bulls-eye-lat");
+					s.lon = getprop("f16/avionics/pilot-aid/bulls-eye-lon");
+					steerpoints.setNumber(555,s);
 				]]></script>
 			</binding>
 		</button>

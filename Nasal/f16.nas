@@ -1660,30 +1660,3 @@ var load_interior = func {
 }
 settimer(load_interior, 0.5, 1);
 view.setViewByIndex(1);
-
-
-var data = nil;
-var sending = nil;
-var dlink_loop = func {
-  foreach(contact; awg_9.tgts_list) {
-    if (!contact.get_behind_terrain() and contact.get_range() < 80) {
-      data = datalink.get_data(contact.get_Callsign());
-      if (data != nil  and data.on_link()) {
-        var p = data.point();
-        if (p != nil) {
-          sending = nil;
-          setprop("f16/avionics/pilot-aid/mark-lat", p.lat());
-          setprop("f16/avionics/pilot-aid/mark-lon", p.lon());
-          setprop("f16/avionics/pilot-aid/mark-alt", p.alt()*M2FT);
-          setprop("instrumentation/datalink/data",1);
-          setprop("f16/avionics/pilot-aid/marked",1);
-          settimer(func {setprop("instrumentation/datalink/data",0);}, 4);
-          return;
-        }
-      }
-    }
-  }
-}
-
-var dlnk_timer = maketimer(3.5, dlink_loop);
-dlnk_timer.start();

@@ -505,13 +505,13 @@ var fast_loop = func {
     if (armament.contactPoint == nil or !enable) {
         # no TGP lock
         if (armament.contact == nil and enable and masterMode) {# we do not check for get_display here since as long as something is selected we dont show steerpoint.
-            if (getprop("autopilot/route-manager/active") == 1 and getprop("f16/avionics/power-mmc") and getprop("autopilot/route-manager/current-wp") != nil and getprop("autopilot/route-manager/current-wp") > -1) {
+            if (steerpoints.getCurrentNumber() != 0) {
                 # TGP follow steerpoint
                 hiddenMode = AG;
-                var idx = getprop("autopilot/route-manager/current-wp");
-                var ele = getprop("autopilot/route-manager/route/wp["~idx~"]/altitude-ft");
-                var lat = getprop("autopilot/route-manager/route/wp["~idx~"]/latitude-deg");
-                var lon = getprop("autopilot/route-manager/route/wp["~idx~"]/longitude-deg");
+                var stpt = steerpoints.getCurrent();
+                var ele = stpt.alt;
+                var lat = stpt.lat;
+                var lon = stpt.lon;
                 if (ele == nil) {
                     ele = 0;
                 }

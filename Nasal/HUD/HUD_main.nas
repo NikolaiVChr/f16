@@ -1171,9 +1171,11 @@ append(obj.total, obj.speed_curr);
                  mach                      : "/instrumentation/airspeed-indicator/indicated-mach",
                  measured_altitude         : "/instrumentation/altimeter/indicated-altitude-ft",
                  pitch                     : "/orientation/pitch-deg",
-                 nav_range                 : "/autopilot/route-manager/wp/dist",
                  roll                      : "/orientation/roll-deg",
                  route_manager_active      : "/autopilot/route-manager/active",
+                 nav_range                 : "/autopilot/route-manager/wp/dist",
+                 wp_bearing_deg            : "autopilot/route-manager/wp/true-bearing-deg",
+                 wp0_eta                   : "autopilot/route-manager/wp[0]/eta",
                  route_manager_power       : "f16/avionics/power-mmc",
                  speed                     : "/fdm/jsbsim/velocities/vt-fps",
                  symbol_reject             : "/controls/HUD/sym-rej",
@@ -1196,11 +1198,9 @@ append(obj.total, obj.speed_curr);
                  time_until_crash          : "instrumentation/radar/time-till-crash",
                  vne                       : "f16/vne",
                  texUp                     : "f16/hud/texels-up",
-                 wp_bearing_deg            : "autopilot/route-manager/wp/true-bearing-deg",
                  bingo                     : "f16/avionics/bingo",
                  alow                      : "f16/settings/cara-alow",
                  altitude_agl_ft           : "position/altitude-agl-ft",
-                 wp0_eta                   : "autopilot/route-manager/wp[0]/eta",
                  approach_speed            : "fdm/jsbsim/systems/approach-speed",
                  standby                   : "instrumentation/radar/radar-standby",
                  elapsed                   : "sim/time/elapsed-sec",
@@ -1231,6 +1231,7 @@ append(obj.total, obj.speed_curr);
                  servPitot                 : "systems/pitot/serviceable",
                  warn                      : "f16/avionics/fault-warning",
                  strf                      : "f16/avionics/strf",
+                 data                      : "instrumentation/datalink/data",
                 };
 
         foreach (var name; keys(input)) {
@@ -1284,13 +1285,12 @@ append(obj.total, obj.speed_curr);
                                             obj.cciplow.hide();
                                           }
                                       }),
-            props.UpdateManager.FromHashList(["texUp","route_manager_active", "route_manager_power", "wp_bearing_deg", "heading","VV_x","VV_y", "dgft"], 0.01, func(hdp)
+            props.UpdateManager.FromHashList(["texUp", "heading","VV_x","VV_y", "dgft"], 0.01, func(hdp)
                                              {
                                                  # the Y position is still not accurate due to HUD being at an angle, but will have to do.
-                                                 if (hdp.route_manager_active and hdp.route_manager_power and !hdp.dgft) {
-                                                     obj.wpbear = hdp.wp_bearing_deg;
+                                                 if (steerpoints.getCurrentNumber() != 0 and !hdp.dgft) {
+                                                     obj.wpbear = steerpoints.getCurrentDirection()[0];
                                                      if (obj.wpbear!=nil) {
-                                
                                                          obj.wpbear=geo.normdeg180(obj.wpbear-hdp.heading);
                                                          obj.tadpoleX = HudMath.getCenterPosFromDegs(obj.wpbear,0)[0];
 
@@ -1679,7 +1679,7 @@ append(obj.total, obj.speed_curr);
                                           
                                       }
                                             ),
-            props.UpdateManager.FromHashList(["time_until_crash","vne","warn", "elapsed"], 0.05, func(hdp)
+            props.UpdateManager.FromHashList(["time_until_crash","vne","warn", "elapsed", "data"], 0.05, func(hdp)
                                              {
                                                  obj.ttc = hdp.time_until_crash;
                                                  if (obj.ttc != nil and obj.ttc>0 and obj.ttc<8) {
@@ -1694,6 +1694,9 @@ append(obj.total, obj.speed_curr);
                                                          obj.flyup.show();
                                                  } elsif (hdp.bingo == 1 and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
                                                          obj.flyup.setText("FUEL");
+                                                         obj.flyup.show();
+                                                 } elsif (hdp.data != 0) {
+                                                         obj.flyup.setText("DATA");
                                                          obj.flyup.show();
                                                  } else {
                                                          obj.flyup.hide();
@@ -1711,9 +1714,13 @@ append(obj.total, obj.speed_curr);
                                                 }
                                              }
                                             ),
-            props.UpdateManager.FromHashList(["standby"], 0.5, func(hdp)
+            props.UpdateManager.FromHashList(["standby", "data"], 0.5, func(hdp)
                                              {
-                                                 if (hdp.standby) {
+                                                 if (hdp.data != 0) {
+                                                     obj.stby.setText("MKPT"~sprintf("%03d",hdp.data));
+                                                     obj.stby.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud+7+75);
+                                                     obj.stby.show();
+                                                 } elsif (hdp.standby) {
                                                      obj.stby.setText("NO RAD");
                                                      obj.stby.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud+7);
                                                      obj.stby.show();
@@ -2169,17 +2176,15 @@ append(obj.total, obj.speed_curr);
             else # weapons not armed
             {
                 #me.window7.setVisible(0);
-                if (hdp.nav_range != nil) {
-                    me.plan = flightplan();
-                    me.planSize = me.plan.getPlanSize();
-                    if (me.plan.current != nil and me.plan.current >= 0 and me.plan.current < me.planSize) {
-                        hdp.window5_txt = sprintf("%d>%d", hdp.nav_range, me.plan.current+1);
-                    } else {
-                        hdp.window5_txt = "";
-                    }
-                    me.eta = hdp.wp0_eta;
-                    if (me.eta != nil and me.eta != "") {
-                        hdp.window4_txt = me.eta;
+                me.scurr = steerpoints.getCurrentNumber();
+                if (me.scurr != 0) {
+                    me.navRange = steerpoints.getCurrentRange();
+                    hdp.window5_txt = sprintf("%d>%d", me.navRange, me.scurr);
+                    me.etaS = steerpoints.getCurrentETA();
+                    if (me.etaS != nil) {
+                        me.etaM = int(me.etaS/60);
+                        me.etaS = me.etaS-me.etaM*60;
+                        hdp.window4_txt = sprintf("%02d:%02d",me.etaM,me.etaS);
                     } else {
                         hdp.window4_txt = "XX:XX";
                     }
@@ -2244,14 +2249,15 @@ append(obj.total, obj.speed_curr);
                 me.eegsLoop.stop();
             }
             
-
+            me.bullPt = steerpoints.getNumber(555);
+            me.bullOn = me.bullPt != nil;
             if (hdp.bingo and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
               hdp.window11_txt = "FUEL";
             } elsif (hdp.bingo) {
               hdp.window11_txt = "";
-            } elsif (ded.dataEntryDisplay.bullMode) {
-				me.bullLat = getprop("f16/avionics/pilot-aid/bulls-eye-lat");
-                me.bullLon = getprop("f16/avionics/pilot-aid/bulls-eye-lon");
+            } elsif (me.bullOn) {
+                me.bullLat = me.bullPt.lat;
+                me.bullLon = me.bullPt.lon;
                 me.bullCoord = geo.Coord.new().set_latlon(me.bullLat,me.bullLon);
                 me.ownCoord = geo.aircraft_position();
                 me.bullDirToMe = me.bullCoord.course_to(me.ownCoord);

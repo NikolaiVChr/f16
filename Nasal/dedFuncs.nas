@@ -87,7 +87,12 @@ var Action = {
 	run: func() {
 		# this is an ugly hack
 		if (dataEntryDisplay.page == pLIST or dataEntryDisplay.page == pMISC) { return -1; }
-
+		if (me.page == -1 and (dataEntryDisplay.page == pMARK or dataEntryDisplay.page == pSTPT or dataEntryDisplay.page == pBULL)) {
+			call(me.funcCallback, nil, dataEntryDisplay.page);
+		}
+		if (me.page == -1) {
+			return -1;
+		}
 		if (dataEntryDisplay.page == me.page or me.page == nil) {
 			call(me.funcCallback, nil, dataEntryDisplay.page);
 			return 1;
@@ -903,6 +908,19 @@ var stptLast = func() {
 		setprop("autopilot/route-manager/current-wp", wp);
     }
 };
+
+var stptSend = func {
+	if (wp_num_curr != 0) {
+		steerpoints.send(wp_num_curr);
+	}
+}
+
+var stptCurr = func {
+	if (wp_num_curr != 0) {
+		steerpoints.setCurrentNumber(wp_num_curr);
+		print("Switching active steerpoint to #"~wp_num_curr);
+	}
+}
 
 ## these methods taken from JA37:
 var convertDoubleToDegree = func (value) {

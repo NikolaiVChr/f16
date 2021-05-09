@@ -684,6 +684,44 @@
             </binding>
         </hovered>
     </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>wx</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.Buttons.wx.doAction();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-wx</tooltip-id>
+                <label>DLNK send</label>
+            </binding>
+        </hovered>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>flir_ud</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.Buttons.flirUD.doAction();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-UD</tooltip-id>
+                <label>Set as current steerpoint</label>
+            </binding>
+        </hovered>
+    </animation>
 	
     <animation>
         <type>select</type>
