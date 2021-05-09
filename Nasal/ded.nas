@@ -365,7 +365,7 @@ var dataEntryDisplay = {
 			me.text[1] = sprintf("      LAT  %s", pSTPT.vector[1].getText());
 			me.text[2] = sprintf("      LNG  %s", pSTPT.vector[2].getText());
 			me.text[3] = sprintf("      RAD  %sNM", pSTPT.vector[3].getText());
-			me.text[4] = sprintf("  COL  %s  TYPE  %s", pSTPT.vector[5].getText(), pSTPT.vector[4].getText());
+			me.text[4] = sprintf("  COL  %s  TYPE  %s", pSTPT.vector[6].getText(), pSTPT.vector[5].getText());
 
 			if 	(stpt == nil and (getprop("f16/ded/stpt-rad")!=0 or getprop("f16/ded/lat") != 0 or getprop("f16/ded/lon") != 0 or getprop("f16/ded/stpt-type") != "" or getprop("f16/ded/stpt-color") != "RED")) {
 				stpt = steerpoints.STPT.new();
@@ -1104,7 +1104,7 @@ var Buttons = {
 setlistener("f16/avionics/rtn-seq", func() {
 	if (getprop("f16/avionics/rtn-seq") == -1) {
 		if (size(dataEntryDisplay.page.vector) != 0) {
-			if (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 != "") {
+			if (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 != "") {#no such member
 				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].recallStatus = 0;
 				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].text = dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2;
 				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText1 = "";
