@@ -3507,10 +3507,10 @@
             <condition>
                 <not><property>f16/avionics/voice-msg-inhibit</property></not>
                 <not><property>gear/gear[2]/wow</property></not>
-                <equals>
+                <greater-than>
                     <property>instrumentation/datalink/data</property>
-                    <value>1</value>
-                </equals>
+                    <value>0</value>
+                </greater-than>
                 <greater-than>
                   <property>fdm/jsbsim/elec/bus/batt-1</property>
                   <value>20</value>

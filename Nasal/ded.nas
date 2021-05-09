@@ -1104,7 +1104,7 @@ var Buttons = {
 setlistener("f16/avionics/rtn-seq", func() {
 	if (getprop("f16/avionics/rtn-seq") == -1) {
 		if (size(dataEntryDisplay.page.vector) != 0) {
-			if (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 != "") {#no such member
+			if (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 != "") {#no such member, BULLp no send
 				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].recallStatus = 0;
 				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].text = dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2;
 				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText1 = "";
