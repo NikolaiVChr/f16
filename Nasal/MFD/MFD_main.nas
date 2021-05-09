@@ -3546,16 +3546,16 @@ var MFD_Device =
                     }
 
                     me.cnu = steerpoints.getNumber(300+l);
-                    if (cnu == nil) {
+                    if (me.cnu == nil) {
                         me.ci.hide();
                         me.cit.hide();
                         continue;
                     }
-                    me.la = cnu.lat;
-                    me.lo = cnu.lon;
-                    me.ra = cnu.radius;
-                    me.ty = cnu.type;
-                    me.co = cnu.color == 0?colorCircle1:(cnu.color == 1?colorCircle2:colorCircle3);
+                    me.la = me.cnu.lat;
+                    me.lo = me.cnu.lon;
+                    me.ra = me.cnu.radius;
+                    me.ty = me.cnu.type;
+                    me.co = me.cnu.color == 0?colorCircle1:(me.cnu.color == 1?colorCircle2:colorCircle3);
                     
                     if (me.la != nil and me.lo != nil and me.ra != nil and me.ra > 0) {
                         me.wpC = geo.Coord.new();
