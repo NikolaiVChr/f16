@@ -161,6 +161,8 @@
 
  <empty><stretch>1</stretch></empty>
 
+ <hrule/>
+
  <input>
 	  	<width>250</width>
 	  	<height>25</height>
@@ -192,5 +194,18 @@
 			]]></script>
 		</binding>
 	</button>
+
+	<text>
+	    <label>#000 to #099 reserved for route. #300 to 305 to threat circles.</label>
+	    <height>25</height>
+	</text>
+	<text>
+	    <label>#400 to #404 is own OFLY marks. #450 to 454 is DLNK marks.</label>
+	    <height>25</height>
+	</text>
+	<text>
+	    <label>#500 is WPN program GPS coords. #555 is bulls-eye.</label>
+	    <height>25</height>
+	</text>
 
 </PropertyList>
