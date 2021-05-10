@@ -1172,11 +1172,6 @@ append(obj.total, obj.speed_curr);
                  measured_altitude         : "/instrumentation/altimeter/indicated-altitude-ft",
                  pitch                     : "/orientation/pitch-deg",
                  roll                      : "/orientation/roll-deg",
-                 route_manager_active      : "/autopilot/route-manager/active",
-                 nav_range                 : "/autopilot/route-manager/wp/dist",
-                 wp_bearing_deg            : "autopilot/route-manager/wp/true-bearing-deg",
-                 wp0_eta                   : "autopilot/route-manager/wp[0]/eta",
-                 route_manager_power       : "f16/avionics/power-mmc",
                  speed                     : "/fdm/jsbsim/velocities/vt-fps",
                  symbol_reject             : "/controls/HUD/sym-rej",
                  target_display            : "/sim/model/f16/instrumentation/radar-awg-9/hud/target-display",
@@ -2182,9 +2177,15 @@ append(obj.total, obj.speed_curr);
                     hdp.window5_txt = sprintf("%d>%d", me.navRange, me.scurr);
                     me.etaS = steerpoints.getCurrentETA();
                     if (me.etaS != nil) {
+                        me.etaH = int(me.etaS/3600);
+                        me.etaS = me.etaS-me.etaH*3600;
                         me.etaM = int(me.etaS/60);
                         me.etaS = me.etaS-me.etaM*60;
-                        hdp.window4_txt = sprintf("%02d:%02d",me.etaM,me.etaS);
+                        if (me.etaH < 100) {
+                            hdp.window4_txt = sprintf("%02d:%02d",me.etaH,me.etaM);
+                        } else {
+                            hdp.window4_txt = "99:99";
+                        }
                     } else {
                         hdp.window4_txt = "XX:XX";
                     }
@@ -3212,21 +3213,7 @@ var F16HudRecipient =
 
             if (notification.NotificationType == "FrameNotification")
             {
-                if (notification.route_manager_active and notification.route_manager_power) {
-                    if (notification.nav_range != nil) {
-                        notification.hud_window5 = sprintf("%2d MIN",notification.nav_range);
-                    } else {
-                        notification.hud_window5 = "XXX";
-                    }
-
-                    if (notification.eta_s != nil)
-                      notification.hud_window5 = sprintf("%2d MIN",notification.eta_s/60);
-                    else
-                      notification.hud_window5 = "XX MIN";
-                } else {
-                    notification.nav_range = nil;
-                    notification.hud_window5 = "";
-                }
+                
                 me.HUDobj.update(notification);
                 return emesary.Transmitter.ReceiptStatus_OK;
             }
