@@ -262,6 +262,14 @@ var markOFLY = func {
 	addOwnMark(mark);
 }
 
+var markTGP = func (coord) {
+	var mark = STPT.new();
+	mark.lat = coord.lat();
+	mark.lon = coord.lon();
+	mark.alt = coord.alt()*M2FT;
+	return addOwnMark(mark);
+}
+
 var ownMarkIndex = 4;
 
 var addOwnMark = func (mark) {
