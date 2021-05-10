@@ -72,6 +72,28 @@ var getNumber = func (number) {
 	if (number >= 300) {
 		return stpt300[number-300];
 	}
+	if (number >= 200 and lines[1] != nil) {
+		var fp = lines[1];
+		var leg = fp.getWP(number-200);
+		var new = STPT.new();
+		new.lat = leg.lat;
+		new.lon = leg.lon;
+		if (leg.alt_cstr != nil) {
+			new.alt = leg.alt_cstr;
+		}
+		return new;
+	}
+	if (number >= 100 and lines[0] != nil) {
+		var fp = lines[0];
+		var leg = fp.getWP(number-100);
+		var new = STPT.new();
+		new.lat = leg.lat;
+		new.lon = leg.lon;
+		if (leg.alt_cstr != nil) {
+			new.alt = leg.alt_cstr;
+		}
+		return new;
+	}
 	if (number < 100 and isRouteActive()) {
 		var fp = flightplan();
 		var leg = fp.getWP(number-1);
@@ -114,7 +136,7 @@ var setNumber = func (number, stpt) {
 		stpt300[number-300] = stpt;
 		return 1;
 	}
-	if (number < 100 and isRouteActive()) {
+	if (number < 300) {
 		return 0;
 	}
 	return 0;
@@ -292,7 +314,7 @@ var _isValidNumber = func (number) {
 		return 1;
 	} elsif (number == 555) {
 		return 1;
-	} elsif (number >= 1 and number < 100) {
+	} elsif (number >= 1 and number < 300) {
 		return 1;
 	}
 	return 0;
@@ -319,6 +341,14 @@ var _isOccupiedNumber = func (number) {
 	}
 	if (number >= 300) {
 		return stpt300[number-300] != nil;
+	}
+	if (number < 300 and number >= 200 and lines[1] != nil) {
+		var fp = lines[1];
+		return fp.getPlanSize() > number-200;
+	}
+	if (number < 200 and number >= 100 and lines[0] != nil) {
+		var fp = lines[0];
+		return fp.getPlanSize() > number-100;
 	}
 	if (number < 100 and number > 0 and isRouteActive()) {
 		var fp = flightplan();
@@ -363,3 +393,15 @@ var dlink_loop = func {
 
 var dlnk_timer = maketimer(3.5, dlink_loop);
 dlnk_timer.start();
+
+
+var lines = [nil,nil];
+
+var loadLine = func  (no,path) {
+    printf("Attempting to load route %s to act as lines %d in HSD.", path, no);
+  
+    call(func {lines[no] = createFlightplan(path);}, nil, var err = []);
+    if (size(err) or lines[no] == nil) {
+        print(err[0]);
+    }
+};

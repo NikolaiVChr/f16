@@ -196,11 +196,15 @@
 	</button>
 
 	<text>
-	    <label>#000 to #099 reserved for route. #300 to 305 to threat circles.</label>
+	    <label>#000 to #099 is route (read-only).</label>
 	    <height>25</height>
 	</text>
 	<text>
-	    <label>#350 to #359 is for pilot mnemonics.</label>
+	    <label>#100 to #199 is HSD lines 1 (read-only). #200 to #299 is HSD lines 2 (read-only).</label>
+	    <height>25</height>
+	</text>
+	<text>
+	    <label>#300 to 305 is threat circles. #350 to #359 is for pilot mnemonics.</label>
 	    <height>25</height>
 	</text>
 	<text>

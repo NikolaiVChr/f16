@@ -390,8 +390,8 @@ var dataEntryDisplay = {
 				wp_num_lastC = "RED";
 				wp_num_lastT = "   ";
 			}
-		} elsif (wp_num != nil and ((wp_num < 405 and wp_num >= 400) or (wp_num < 455 and wp_num >= 450) or (wp_num == 500) or (wp_num == 555))) {
-			# Own markpoints, DLNK markpoints, WPN GPS and Bulls-eye
+		} elsif (wp_num != nil and ((wp_num < 405 and wp_num >= 400) or (wp_num < 455 and wp_num >= 450) or (wp_num < 300 and wp_num >= 100) or (wp_num == 500) or (wp_num == 555))) {
+			# Own markpoints, DLNK markpoints, HSD-lines, WPN GPS and Bulls-eye
 			var stpt = steerpoints.getNumber(wp_num);
 			
 			if 	(stpt != nil) {

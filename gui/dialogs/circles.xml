@@ -59,11 +59,11 @@
 			}
 			
             var load_line1 = func(path) {
-                f16.loadLine(0,path.getValue());
+                steerpoints.loadLine(0,path.getValue());
             }
             
             var load_line2 = func(path) {
-                f16.loadLine(1,path.getValue());
+                steerpoints.loadLine(1,path.getValue());
             }
 
             var defaultDirInFileSelector = getprop("/sim/fg-home") ~ "/Export";

@@ -3442,9 +3442,9 @@ var MFD_Device =
                 }
                 
                 for (var u = 0;u<2;u+=1) {
-                    if (lines[u] != nil) {
+                    if (steerpoints.lines[u] != nil) {
                         # lines
-                        me.plan = lines[u];
+                        me.plan = steerpoints.lines[u];
                         me.planSize = me.plan.getPlanSize();
                         me.prevX = nil;
                         me.prevY = nil;
@@ -4116,16 +4116,7 @@ var f16_mfd = F16MfdRecipient.new("F16-MFD");
 
 #emesary.GlobalTransmitter.Register(f16_mfd);
 
-var lines = [nil,nil];
 
-var loadLine = func  (no,path) {
-    printf("Attempting to load route %s to act as lines %d in HSD.", path, no);
-  
-    call(func {lines[no] = createFlightplan(path);}, nil, var err = []);
-    if (size(err) or lines[no] == nil) {
-        print(err[0]);
-    }
-};
 
 var uv = nil;
 var cursor_pos = [100,-100];
