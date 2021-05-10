@@ -10,7 +10,7 @@ var STPT = {# for non-route steerpoints
 	lon: 0,
 	lat: 0,
 	alt: 0,
-	type: "",
+	type: "   ",
 	radius: 10,
 	color: 0,
 	

@@ -241,7 +241,12 @@ var toggleableField = {
 		}
 	},
 	updateText: func() {
-		me.value = me.valuesVector[me.index];
+		for (var i = 0; i < size(me.valuesVector); i = i + 1) {
+			if (getprop(me.prop) == me.valuesVector[i]) {
+				me.value = me.valuesVector[i];
+				me.index = i;
+			}
+		}
 	},
 };
 

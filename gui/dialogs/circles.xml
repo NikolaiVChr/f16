@@ -19,42 +19,42 @@
 			if (s != nil) {
 				setprop("f16/avionics/pilot-aid/c1-lat", s.lat);
 				setprop("f16/avionics/pilot-aid/c1-lon", s.lon);
-				setprop("f16/avionics/pilot-aid/c1-rad", s.rad);
+				setprop("f16/avionics/pilot-aid/c1-rad", s.radius);
 				setprop("f16/avionics/pilot-aid/c1-typ", s.type);
 			}
 			s = steerpoints.getNumber(301);
 			if (s != nil) {
 				setprop("f16/avionics/pilot-aid/c2-lat", s.lat);
 				setprop("f16/avionics/pilot-aid/c2-lon", s.lon);
-				setprop("f16/avionics/pilot-aid/c2-rad", s.rad);
+				setprop("f16/avionics/pilot-aid/c2-rad", s.radius);
 				setprop("f16/avionics/pilot-aid/c2-typ", s.type);
 			}
 			s = steerpoints.getNumber(302);
 			if (s != nil) {
 				setprop("f16/avionics/pilot-aid/c3-lat", s.lat);
 				setprop("f16/avionics/pilot-aid/c3-lon", s.lon);
-				setprop("f16/avionics/pilot-aid/c3-rad", s.rad);
+				setprop("f16/avionics/pilot-aid/c3-rad", s.radius);
 				setprop("f16/avionics/pilot-aid/c3-typ", s.type);
 			}
 			s = steerpoints.getNumber(303);
 			if (s != nil) {
 				setprop("f16/avionics/pilot-aid/c4-lat", s.lat);
 				setprop("f16/avionics/pilot-aid/c4-lon", s.lon);
-				setprop("f16/avionics/pilot-aid/c4-rad", s.rad);
+				setprop("f16/avionics/pilot-aid/c4-rad", s.radius);
 				setprop("f16/avionics/pilot-aid/c4-typ", s.type);
 			}
 			s = steerpoints.getNumber(304);
 			if (s != nil) {
 				setprop("f16/avionics/pilot-aid/c5-lat", s.lat);
 				setprop("f16/avionics/pilot-aid/c5-lon", s.lon);
-				setprop("f16/avionics/pilot-aid/c5-rad", s.rad);
+				setprop("f16/avionics/pilot-aid/c5-rad", s.radius);
 				setprop("f16/avionics/pilot-aid/c5-typ", s.type);
 			}
 			s = steerpoints.getNumber(305);
 			if (s != nil) {
 				setprop("f16/avionics/pilot-aid/c6-lat", s.lat);
 				setprop("f16/avionics/pilot-aid/c6-lon", s.lon);
-				setprop("f16/avionics/pilot-aid/c6-rad", s.rad);
+				setprop("f16/avionics/pilot-aid/c6-rad", s.radius);
 				setprop("f16/avionics/pilot-aid/c6-typ", s.type);
 			}
 			
@@ -170,13 +170,13 @@
             <label>Type</label>
             <pref-width>60</pref-width>
             <property>f16/avionics/pilot-aid/c1-typ</property>
-            <value type="string"></value>
-            <value type="string">2</value>
-            <value type="string">11</value>
-            <value type="string">20</value>
-            <value type="string">A</value>
-            <value type="string">P</value>
-            <value type="string">SH</value>
+            <value type="string">   </value>
+            <value type="string"> 2 </value>
+            <value type="string"> 11</value>
+            <value type="string"> 20</value>
+            <value type="string">AAA</value>
+            <value type="string"> P </value>
+            <value type="string"> SH</value>
             <binding>
                 <command>dialog-apply</command>
                 <object-name>typ1</object-name>
@@ -195,7 +195,7 @@
 					var s = steerpoints.STPT.new();
 					s.lat = getprop("f16/avionics/pilot-aid/c1-lat");
 					s.lon = getprop("f16/avionics/pilot-aid/c1-lon");
-					s.rad = getprop("f16/avionics/pilot-aid/c1-rad");
+					s.radius = getprop("f16/avionics/pilot-aid/c1-rad");
 					s.type= getprop("f16/avionics/pilot-aid/c1-typ");
 					s.color=0;
 					steerpoints.setNumber(300,s);
@@ -261,13 +261,13 @@
             <label>Type</label>
             <pref-width>60</pref-width>
             <property>f16/avionics/pilot-aid/c2-typ</property>
-            <value type="string"></value>
-            <value type="string">2</value>
-            <value type="string">11</value>
-            <value type="string">20</value>
-            <value type="string">A</value>
-            <value type="string">P</value>
-            <value type="string">SH</value>
+            <value type="string">   </value>
+            <value type="string"> 2 </value>
+            <value type="string"> 11</value>
+            <value type="string"> 20</value>
+            <value type="string">AAA</value>
+            <value type="string"> P </value>
+            <value type="string"> SH</value>
             <binding>
                 <command>dialog-apply</command>
                 <object-name>typ2</object-name>
@@ -286,7 +286,7 @@
 					var s = steerpoints.STPT.new();
 					s.lat = getprop("f16/avionics/pilot-aid/c2-lat");
 					s.lon = getprop("f16/avionics/pilot-aid/c2-lon");
-					s.rad = getprop("f16/avionics/pilot-aid/c2-rad");
+					s.radius = getprop("f16/avionics/pilot-aid/c2-rad");
 					s.type= getprop("f16/avionics/pilot-aid/c2-typ");
 					s.color=0;
 					steerpoints.setNumber(301,s);
@@ -353,13 +353,13 @@
             <label>Type</label>
             <pref-width>60</pref-width>
             <property>f16/avionics/pilot-aid/c3-typ</property>
-            <value type="string"></value>
-            <value type="string">2</value>
-            <value type="string">11</value>
-            <value type="string">20</value>
-            <value type="string">A</value>
-            <value type="string">P</value>
-            <value type="string">SH</value>
+            <value type="string">   </value>
+            <value type="string"> 2 </value>
+            <value type="string"> 11</value>
+            <value type="string"> 20</value>
+            <value type="string">AAA</value>
+            <value type="string"> P </value>
+            <value type="string"> SH</value>
             <binding>
                 <command>dialog-apply</command>
                 <object-name>typ3</object-name>
@@ -378,7 +378,7 @@
 					var s = steerpoints.STPT.new();
 					s.lat = getprop("f16/avionics/pilot-aid/c3-lat");
 					s.lon = getprop("f16/avionics/pilot-aid/c3-lon");
-					s.rad = getprop("f16/avionics/pilot-aid/c3-rad");
+					s.radius = getprop("f16/avionics/pilot-aid/c3-rad");
 					s.type= getprop("f16/avionics/pilot-aid/c3-typ");
 					s.color=1;
 					steerpoints.setNumber(302,s);
@@ -445,13 +445,13 @@
             <label>Type</label>
             <pref-width>60</pref-width>
             <property>f16/avionics/pilot-aid/c5-typ</property>
-            <value type="string"></value>
-            <value type="string">2</value>
-            <value type="string">11</value>
-            <value type="string">20</value>
-            <value type="string">A</value>
-            <value type="string">P</value>
-            <value type="string">SH</value>
+            <value type="string">   </value>
+            <value type="string"> 2 </value>
+            <value type="string"> 11</value>
+            <value type="string"> 20</value>
+            <value type="string">AAA</value>
+            <value type="string"> P </value>
+            <value type="string"> SH</value>
             <binding>
                 <command>dialog-apply</command>
                 <object-name>typ5</object-name>
@@ -470,7 +470,7 @@
 					var s = steerpoints.STPT.new();
 					s.lat = getprop("f16/avionics/pilot-aid/c4-lat");
 					s.lon = getprop("f16/avionics/pilot-aid/c4-lon");
-					s.rad = getprop("f16/avionics/pilot-aid/c4-rad");
+					s.radius = getprop("f16/avionics/pilot-aid/c4-rad");
 					s.type= getprop("f16/avionics/pilot-aid/c4-typ");
 					s.color=2;
 					steerpoints.setNumber(303,s);
@@ -537,13 +537,13 @@
             <label>Type</label>
             <pref-width>60</pref-width>
             <property>f16/avionics/pilot-aid/c4-typ</property>
-            <value type="string"></value>
-            <value type="string">2</value>
-            <value type="string">11</value>
-            <value type="string">20</value>
-            <value type="string">A</value>
-            <value type="string">P</value>
-            <value type="string">SH</value>
+            <value type="string">   </value>
+            <value type="string"> 2 </value>
+            <value type="string"> 11</value>
+            <value type="string"> 20</value>
+            <value type="string">AAA</value>
+            <value type="string"> P </value>
+            <value type="string"> SH</value>
             <binding>
                 <command>dialog-apply</command>
                 <object-name>typ4</object-name>
@@ -562,7 +562,7 @@
 					var s = steerpoints.STPT.new();
 					s.lat = getprop("f16/avionics/pilot-aid/c5-lat");
 					s.lon = getprop("f16/avionics/pilot-aid/c5-lon");
-					s.rad = getprop("f16/avionics/pilot-aid/c5-rad");
+					s.radius = getprop("f16/avionics/pilot-aid/c5-rad");
 					s.type= getprop("f16/avionics/pilot-aid/c5-typ");
 					s.color=1;
 					steerpoints.setNumber(304,s);
@@ -629,13 +629,13 @@
             <label>Type</label>
             <pref-width>60</pref-width>
             <property>f16/avionics/pilot-aid/c6-typ</property>
-            <value type="string"></value>
-            <value type="string">2</value>
-            <value type="string">11</value>
-            <value type="string">20</value>
-            <value type="string">A</value>
-            <value type="string">P</value>
-            <value type="string">SH</value>
+            <value type="string">   </value>
+            <value type="string"> 2 </value>
+            <value type="string"> 11</value>
+            <value type="string"> 20</value>
+            <value type="string">AAA</value>
+            <value type="string"> P </value>
+            <value type="string"> SH</value>
             <binding>
                 <command>dialog-apply</command>
                 <object-name>typ6</object-name>
@@ -654,7 +654,7 @@
 					var s = steerpoints.STPT.new();
 					s.lat = getprop("f16/avionics/pilot-aid/c6-lat");
 					s.lon = getprop("f16/avionics/pilot-aid/c6-lon");
-					s.rad = getprop("f16/avionics/pilot-aid/c6-rad");
+					s.radius = getprop("f16/avionics/pilot-aid/c6-rad");
 					s.type= getprop("f16/avionics/pilot-aid/c6-typ");
 					s.color=2;
 					steerpoints.setNumber(305,s);

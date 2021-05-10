@@ -17,7 +17,7 @@ var STPTlonFE = EditableLON.new("f16/ded/lon", convertDegreeToStringLon);
 var STPTnumFE = EditableField.new("f16/ded/stpt-edit", "%3d", 3);
 var STPTradFE = EditableField.new("f16/ded/stpt-rad", "%2d", 2);
 var STPTaltFE = EditableField.new("f16/ded/alt", "%5d", 5);
-var STPTtypeTF = toggleableField.new(["", "2", "11", "20", "SH", "P"], "f16/ded/stpt-type");
+var STPTtypeTF = toggleableField.new(["   ", " 2 ", " 11", " 20", " SH", " P ", "AAA"], "f16/ded/stpt-type");
 var STPTcolorTF = toggleableField.new(["RED", "YEL", "GRN"], "f16/ded/stpt-color");
 var dlinkEF   = EditableField.new("instrumentation/datalink/channel", "%4d", 4);
 
@@ -343,7 +343,7 @@ var dataEntryDisplay = {
 					stpt.radius = getprop("f16/ded/stpt-rad"); 
 				}
 				var colNum = wp_num_lastC=="RED"?0:(wp_num_lastC=="YEL"?1:2);
-				if (colNum != stpt.radius) {
+				if (colNum != stpt.color) {
 					setprop("f16/ded/stpt-color", stpt.color==0?"RED":(stpt.color==1?"YEL":"GRN"));
 				} else {
 					stpt.color = getprop("f16/ded/stpt-color")=="RED"?0:(getprop("f16/ded/stpt-color")=="YEL"?1:2);
@@ -356,8 +356,8 @@ var dataEntryDisplay = {
 			} else {
 				setprop("f16/ded/lat", 0);
 				setprop("f16/ded/lon", 0);
-				setprop("f16/ded/stpt-rad", 0);
-				setprop("f16/ded/stpt-type", "");
+				setprop("f16/ded/stpt-rad", 10);
+				setprop("f16/ded/stpt-type", "   ");
 				setprop("f16/ded/stpt-color", "RED");
 				wp_num_curr = 0;
 			}
@@ -365,9 +365,9 @@ var dataEntryDisplay = {
 			me.text[1] = sprintf("      LAT  %s", pSTPT.vector[1].getText());
 			me.text[2] = sprintf("      LNG  %s", pSTPT.vector[2].getText());
 			me.text[3] = sprintf("      RAD  %sNM", pSTPT.vector[3].getText());
-			me.text[4] = sprintf("  COL  %s  TYPE  %s", pSTPT.vector[6].getText(), pSTPT.vector[5].getText());
+			me.text[4] = sprintf("  TYP  %s   COL  %s", pSTPT.vector[5].getText(), pSTPT.vector[6].getText());
 
-			if 	(stpt == nil and (getprop("f16/ded/stpt-rad")!=0 or getprop("f16/ded/lat") != 0 or getprop("f16/ded/lon") != 0 or getprop("f16/ded/stpt-type") != "" or getprop("f16/ded/stpt-color") != "RED")) {
+			if 	(stpt == nil and (getprop("f16/ded/lat") != 0 or getprop("f16/ded/lon") != 0)) {
 				stpt = steerpoints.STPT.new();
 				stpt.lat = getprop("f16/ded/lat");
 				stpt.lon = getprop("f16/ded/lon");
@@ -386,9 +386,9 @@ var dataEntryDisplay = {
 			} else {
 				wp_num_lastA = 0;
 				wp_num_lastO = 0;
-				wp_num_lastR = 0;
+				wp_num_lastR = 10;
 				wp_num_lastC = "RED";
-				wp_num_lastT = "";
+				wp_num_lastT = "   ";
 			}
 		} elsif (wp_num != nil and ((wp_num < 405 and wp_num >= 400) or (wp_num < 455 and wp_num >= 450) or (wp_num == 500) or (wp_num == 555))) {
 			# Own markpoints, DLNK markpoints, WPN GPS and Bulls-eye
