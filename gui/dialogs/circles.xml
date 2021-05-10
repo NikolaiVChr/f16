@@ -15,7 +15,7 @@
 				setprop("f16/avionics/pilot-aid/bulls-eye-lat", s.lat);
 				setprop("f16/avionics/pilot-aid/bulls-eye-lon", s.lon);
 			}            
-			
+
             var load_line1 = func(path) {
                 f16.loadLine(0,path.getValue());
             }
@@ -663,7 +663,7 @@
 				<blue>0.85</blue>
 	      	</color>
 		</input>
-		<checkbox>
+		<!--checkbox>
 			<label>Display BE</label>
 			<halign>right</halign>
 			<live>true</live>
@@ -671,7 +671,7 @@
 			<binding>
 				<command>dialog-apply</command>
 			</binding>
-		</checkbox>
+		</checkbox-->
 		<button>
 			<legend>Apply</legend>
 			<binding>
