@@ -14,8 +14,50 @@
 			if (s != nil) {
 				setprop("f16/avionics/pilot-aid/bulls-eye-lat", s.lat);
 				setprop("f16/avionics/pilot-aid/bulls-eye-lon", s.lon);
-			}            
-
+			}
+			s = steerpoints.getNumber(300);
+			if (s != nil) {
+				setprop("f16/avionics/pilot-aid/c1-lat", s.lat);
+				setprop("f16/avionics/pilot-aid/c1-lon", s.lon);
+				setprop("f16/avionics/pilot-aid/c1-rad", s.rad);
+				setprop("f16/avionics/pilot-aid/c1-typ", s.type);
+			}
+			s = steerpoints.getNumber(301);
+			if (s != nil) {
+				setprop("f16/avionics/pilot-aid/c2-lat", s.lat);
+				setprop("f16/avionics/pilot-aid/c2-lon", s.lon);
+				setprop("f16/avionics/pilot-aid/c2-rad", s.rad);
+				setprop("f16/avionics/pilot-aid/c2-typ", s.type);
+			}
+			s = steerpoints.getNumber(302);
+			if (s != nil) {
+				setprop("f16/avionics/pilot-aid/c3-lat", s.lat);
+				setprop("f16/avionics/pilot-aid/c3-lon", s.lon);
+				setprop("f16/avionics/pilot-aid/c3-rad", s.rad);
+				setprop("f16/avionics/pilot-aid/c3-typ", s.type);
+			}
+			s = steerpoints.getNumber(303);
+			if (s != nil) {
+				setprop("f16/avionics/pilot-aid/c4-lat", s.lat);
+				setprop("f16/avionics/pilot-aid/c4-lon", s.lon);
+				setprop("f16/avionics/pilot-aid/c4-rad", s.rad);
+				setprop("f16/avionics/pilot-aid/c4-typ", s.type);
+			}
+			s = steerpoints.getNumber(304);
+			if (s != nil) {
+				setprop("f16/avionics/pilot-aid/c5-lat", s.lat);
+				setprop("f16/avionics/pilot-aid/c5-lon", s.lon);
+				setprop("f16/avionics/pilot-aid/c5-rad", s.rad);
+				setprop("f16/avionics/pilot-aid/c5-typ", s.type);
+			}
+			s = steerpoints.getNumber(305);
+			if (s != nil) {
+				setprop("f16/avionics/pilot-aid/c6-lat", s.lat);
+				setprop("f16/avionics/pilot-aid/c6-lon", s.lon);
+				setprop("f16/avionics/pilot-aid/c6-rad", s.rad);
+				setprop("f16/avionics/pilot-aid/c6-typ", s.type);
+			}
+			
             var load_line1 = func(path) {
                 f16.loadLine(0,path.getValue());
             }
