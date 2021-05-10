@@ -923,7 +923,6 @@ var stptSend = func {
 var stptCurr = func {
 	if (wp_num_curr != 0) {
 		steerpoints.setCurrentNumber(wp_num_curr);
-		print("Switching active steerpoint to #"~wp_num_curr);
 	}
 }
 

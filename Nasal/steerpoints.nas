@@ -179,10 +179,12 @@ var setCurrentNumber = func (number) {
 		if (fp.getPlanSize() >= number) {
 			fp.current = number - 1;
 			current = nil;
+			print("Switching active steerpoint to #"~wp_num_curr);
 			return 1;
 		}
 	} elsif (_isOccupiedNumber(number)) {
 		current = number;
+		print("Switching active steerpoint to #"~wp_num_curr);
 		return 1;
 	}
 	return 0;
@@ -223,6 +225,7 @@ var copy = func (from, to) {
 	if (fStpt != nil and _isValidNumber(to)) {
 		var tStpt = fStpt.copy();
 		setNumber(to, tStpt);
+		print("Copying steerpoint #"~from~" to #"~to);
 	} else {
 		print("STPT copy unsuccesful.");
 	}
@@ -245,6 +248,7 @@ var send = func (number) {
 	    sending = p;
 	    datalink.send_data({"point": sending});
 	    settimer(func {sending = nil;},7);
+	    print("Sending steerpoint to #"~wp_num_curr~" to DLNK.");
 	    return 1;
 	}
 	return 0;
