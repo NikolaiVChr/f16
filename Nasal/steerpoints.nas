@@ -1,5 +1,6 @@
 
 var stpt300 = setsize([],6);#Threat circles
+var stpt350 = setsize([],10);#Generic
 var stpt400 = setsize([],5);#Markpoints Own
 var stpt450 = setsize([],5);#Markpoints DL
 var stpt500 = setsize([],1);#Weapon
@@ -65,6 +66,9 @@ var getNumber = func (number) {
 	if (number >= 400) {
 		return stpt400[number-400];
 	}
+	if (number >= 350) {
+		return stpt350[number-350];
+	}
 	if (number >= 300) {
 		return stpt300[number-300];
 	}
@@ -100,6 +104,10 @@ var setNumber = func (number, stpt) {
 	}
 	if (number >= 400) {
 		stpt400[number-400] = stpt;
+		return 1;
+	}
+	if (number >= 350) {
+		stpt350[number-350] = stpt;
 		return 1;
 	}
 	if (number >= 300) {
@@ -274,6 +282,8 @@ var applyToWPN = func {
 var _isValidNumber = func (number) {
 	if (number >= 300 and number <= 305) {
 		return 1;
+	} elsif (number >= 350 and number <= 359) {
+		return 1;
 	} elsif (number >= 400 and number <= 404) {
 		return 1;
 	} elsif (number >= 450 and number <= 454) {
@@ -303,6 +313,9 @@ var _isOccupiedNumber = func (number) {
 	}
 	if (number >= 400) {
 		return stpt400[number-400] != nil;
+	}
+	if (number >= 350) {
+		return stpt350[number-350] != nil;
 	}
 	if (number >= 300) {
 		return stpt300[number-300] != nil;

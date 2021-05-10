@@ -200,6 +200,10 @@
 	    <height>25</height>
 	</text>
 	<text>
+	    <label>#350 to #359 is for pilot mnemonics.</label>
+	    <height>25</height>
+	</text>
+	<text>
 	    <label>#400 to #404 is own OFLY marks. #450 to 454 is DLNK marks.</label>
 	    <height>25</height>
 	</text>
