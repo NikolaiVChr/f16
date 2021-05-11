@@ -265,60 +265,21 @@ var dataEntryDisplay = {
 		if (fp != nil and wp_num != nil and wp_num < 100) {
 			var wp = fp.getWP(wp_num-1);
 			if (wp != nil and getprop("f16/avionics/power-mmc")) {
-				wp_num_curr = wp_num;
+				
 				lat = convertDegreeToStringLat(wp.lat);
 				lon = convertDegreeToStringLon(wp.lon);
 				alt = wp.alt_cstr;
 				if (alt == nil) {
 					alt = -1;
 				}
-				var hour   = getprop("sim/time/utc/hour"); 
-				var minute = getprop("sim/time/utc/minute");
-				var second = getprop("sim/time/utc/second");
-				var eta    = getprop("autopilot/route-manager/wp/eta");
-				if (fp.current != wp_num-1 or eta == nil or getprop("autopilot/route-manager/wp/eta-seconds")>3600*24) {
-					# no ETA calculated
-				} elsif (getprop("autopilot/route-manager/wp/eta-seconds")>3600) {
-					eta = split(":",eta);
-					minute += num(eta[1]);
-					var addOver = 0;
-					if (minute > 59) {
-						addOver = 1;
-						minute -= 60;
-					}
-					hour += num(eta[0])+addOver;
-					while (hour > 23) {
-						hour -= 24;
-					}
-					TOS = sprintf("%02d:%02d:%02d",hour,minute,second);
-				} else {
-					eta = split(":",eta);
-					second += num(eta[1]);
-					var addOver = 0;
-					if (second > 59) {
-						addOver = 1;
-						second -= 60;
-					}
-					minute += num(eta[0])+addOver;
-					addOver = 0;
-					if (minute > 59) {
-						addOver = 1;
-						minute -= 60;
-					}
-					hour += addOver;
-					while (hour > 23) {
-						hour -= 24;
-					}
-					TOS = sprintf("%02d:%02d:%02d",hour,minute,second);   
-				}          
+				if (wp >= steerpoints.getCurrentNumber()) {
+					TOS = steerpoints.getNumberTOS(wp_num);
+				}
+				wp_num_curr = wp_num;
 			} else {
 				wp_num_curr = 0;
 			}
-			if (wp_num == fp.current) {
-				me.text[4] = sprintf("      TOS  %s",TOS);
-			} else {
-				me.text[4] = sprintf("      TOS  ");
-			}
+			me.text[4] = sprintf("      TOS  %s",TOS);
 			me.text[3] = sprintf("     ELEV  % 5dFT",alt);
 			me.text[1] = sprintf("      LAT  %s", lat);
 			me.text[2] = sprintf("      LNG  %s", lon);
@@ -430,11 +391,14 @@ var dataEntryDisplay = {
 			me.text[1] = sprintf("      LAT  %s", pSTPT.vector[1].getText());
 			me.text[2] = sprintf("      LNG  %s", pSTPT.vector[2].getText());
 			if (wp_num == 555) {
-				me.text[3] = sprintf("      ");
+				me.text[3] = sprintf("     ELEV  -1FT");
 			} else {
 				me.text[3] = sprintf("     ELEV  %sFT", pSTPT.vector[4].getText());
 			}
-			me.text[4] = sprintf("      TOS  ");
+			if (wp_num == steerpoints.getCurrentNumber()) {
+				TOS = steerpoints.getCurrentTOS();
+			}
+			me.text[4] = sprintf("      TOS  %s");
 
 			
 

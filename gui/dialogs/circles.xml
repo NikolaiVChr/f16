@@ -731,7 +731,7 @@
 	<empty><stretch>1</stretch></empty>
 	<hrule/>
 
-	<text><halign>left</halign><label>Combat ID and Tactical Data Link</label></text>
+	<text><halign>left</halign><label>Identification Friend and Foe and Tactical Data Link</label></text>
 	<empty><stretch>1</stretch></empty>
 
 	<group>
@@ -739,7 +739,7 @@
 			   <input>
 				  <width>75</width>
 				  <height>25</height>
-				  <label>IFF Channel</label>
+				  <label>IFF M4 Channel</label>
 				  <property>instrumentation/iff/channel-selection</property>
 				  <live>true</live>
 				  <halign>center</halign>
@@ -769,7 +769,7 @@
 			   <input>
 				  <width>75</width>
 				  <height>25</height>
-				  <label>MIDS Channel</label>
+				  <label>Datalink Channel</label>
 				  <property>instrumentation/datalink/channel</property>
 				  <live>true</live>
 				  <halign>center</halign>
