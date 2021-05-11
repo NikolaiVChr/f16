@@ -7,7 +7,8 @@ var stpt500 = setsize([],1);#Weapon
 var stpt555 = setsize([],1);#Bullseye
 var current = nil;#Current STPT number, nil for route/nothing.
 
-var STPT = {# for non-route steerpoints
+var STPT = {
+	# stored in the above vectors for non-route steerpoints
 	lon: 0,
 	lat: 0,
 	alt: 0,
@@ -37,6 +38,7 @@ var colorYellow = 1;
 var colorGreen = 2;
 
 var getCurrentNumber = func {
+	# Get current steerpoint. The first is #1. Return 0 for no current steerpoint.
 	if (current != nil) {
 		return current;
 	} elsif (isRouteActive()) {
@@ -47,6 +49,7 @@ var getCurrentNumber = func {
 }
 
 var getLastNumber = func {
+	# Get the steerpoint # for the final steerpoint in current route or for non-route get the current.
 	if (current != nil) {
 		return current;
 	} elsif (isRouteActive()) {
@@ -57,10 +60,12 @@ var getLastNumber = func {
 }
 
 var getCurrent = func {
+	# return current steerpoint or nil
 	return getNumber(current);
 }
 
 var getNumber = func (number) {
+	# Return a specific steerpoint, nil if none
 	if (!_isOccupiedNumber(number)) {
 		return nil;
 	}
@@ -119,6 +124,7 @@ var getNumber = func (number) {
 }
 
 var setNumber = func (number, stpt) {
+	# Store a non-route steerpoint in memory
 	if (!_isValidNumber(number)) {
 		return 0;
 	}
@@ -153,6 +159,7 @@ var setNumber = func (number, stpt) {
 }
 
 var getCurrentDirection = func {
+	# Get directions to current steerpoint or [nil,nil] for none.
 	if (getCurrentNumber() != 0) {
 		return [geo.aircraft_position().course_to(getCurrentCoord()), vector.Math.getPitch(geo.aircraft_position(), getCurrentCoord())];
 	} else {
@@ -161,12 +168,14 @@ var getCurrentDirection = func {
 }
 
 var getCurrentRange = func {
+	# Return range in nm to current steerpoint.
 	if (getCurrentNumber() == 0) return nil;
 	var s = getCurrentCoord();	
 	return s.distance_to(geo.aircraft_position())*M2NM;
 }
 
 var getCurrentETA = func {
+	# Return seconds till current steerpoint.
 	if (getCurrentNumber() == 0) return nil;
 	var gs = getprop("velocities/groundspeed-kt")*KT2MPS;
 	if (gs == 0) return nil;
@@ -178,12 +187,14 @@ var getCurrentETA = func {
 }
 
 var getCurrentCoord = func {
+	# returns current steerpoint as geo.Coord
 	var s = getNumber(getCurrentNumber());
 	if (s == nil) return nil;
 	return stpt2coord(s);
 }
 
 var setCurrentNumber = func (number) {
+	# Set current steerpoint number.
 	if (number < 100 and isRouteActive() and number > 0) {
 		var fp = flightplan();
 		if (fp.getPlanSize() >= number) {
@@ -201,6 +212,7 @@ var setCurrentNumber = func (number) {
 }
 
 var getLastRange = func {
+	# Get nm range to final steerpoint in current route or to current steerpoint for non-route.
 	if (getCurrentNumber() == 0) return nil;
 	if (current == nil) {
 		var dist_nm = steerpoints.getCurrentRange();
@@ -215,6 +227,7 @@ var getLastRange = func {
 }
 
 var getNumberRange = func (number) {
+	# Get range to specific steerpoint
 	if (getCurrentNumber() == 0) return nil;
 	if (current == nil and number >= getCurrentNumber()) {
 		var dist_nm = steerpoints.getCurrentRange();
@@ -230,27 +243,32 @@ var getNumberRange = func (number) {
 }
 
 var getLast = func {
+	# Return final steerpoint
 	if (getCurrentNumber() == 0) return nil;
 	return getNumber(getLastNumber());
 }
 
 var getNumberTOS = func (number) {
+	# get time in seconds till specific steerpoint.
 	if (getCurrentNumber() == 0) return nil;
 	var eta = getNumberETA(number);
 	return getTOS(eta);
 }
 
 var getCurrentTOS = func {
+	# Get string with time on station for current steerpoint
 	var eta = getCurrentETA();
 	return getTOS(eta);
 }
 
 var getLastTOS = func {
+	# Get string with time on station for final steerpoint
 	var eta = getLastETA();
 	return getTOS(eta);
 }
 
 var getTOS = func (eta) {
+	# Get string with time on station for a specific time in seconds
 	# eta is allowed to be nil
 	var TOS = "--:--:--";
 	if (getCurrentNumber() == 0) return TOS;
@@ -309,6 +327,7 @@ var addSeconds = func (add_secs, secs, mins, hours) {
 }
 
 var getLastETA = func {
+	# Get time in seconds till final steerpoint
 	if (getCurrentNumber() == 0) return nil;
 	var gs = getprop("velocities/groundspeed-kt")*KT2MPS;
 	if (gs == 0) return nil;
@@ -317,6 +336,7 @@ var getLastETA = func {
 }
 
 var getNumberETA = func (number) {
+	# Get time in seconds till specific steerpoint
 	if (getCurrentNumber() == 0) return nil;
 	var gs = getprop("velocities/groundspeed-kt")*KT2MPS;
 	if (gs == 0) return nil;
@@ -325,6 +345,7 @@ var getNumberETA = func (number) {
 }
 
 var next = func {
+	# Advance steerpoint
 	if (current != nil) return;
 	var active = isRouteActive();
     var wp = getprop("autopilot/route-manager/current-wp");
@@ -340,6 +361,7 @@ var next = func {
 }
 
 var prev = func {
+	# Decrease steerpoint
 	if (current != nil) return;
 	var active = isRouteActive();
     var wp = getprop("autopilot/route-manager/current-wp");
@@ -355,6 +377,7 @@ var prev = func {
 }
 
 var copy = func (from, to) {
+	# Copy steerpoint. Cannot copy TO route or lines steerpoints.
 	var fStpt = getNumber(from);
 	if (fStpt != nil and _isValidNumber(to)) {
 		var tStpt = fStpt.copy();
@@ -366,16 +389,19 @@ var copy = func (from, to) {
 }
 
 var sendCurrent = func {
+	# Send current steerpoint over DLNK
 	return send(getCurrentNumber());
 }
 
 var stpt2coord = func (stpt) {
+	# Convert steerpoint to geo.Coord
 	var p = geo.Coord.new();
     p.set_latlon(stpt.lat, stpt.lon, stpt.alt*FT2M);
     return p;
 }
 
 var send = func (number) {
+	# Send specific steerpoint over DLNK
 	var s = getNumber(number);
 	if (s != nil and sending == nil) {
 		var p = stpt2coord(s);
@@ -389,6 +415,7 @@ var send = func (number) {
 }
 
 var markOFLY = func {
+	# Create an OLFY markpoint
 	var mark = STPT.new();
 	mark.lat = getprop("/position/latitude-deg");
 	mark.lon = getprop("/position/longitude-deg");
@@ -397,6 +424,7 @@ var markOFLY = func {
 }
 
 var markTGP = func (coord) {
+	# Create a TGP markpoint
 	var mark = STPT.new();
 	mark.lat = coord.lat();
 	mark.lon = coord.lon();
@@ -407,6 +435,7 @@ var markTGP = func (coord) {
 var ownMarkIndex = 4;
 
 var addOwnMark = func (mark) {
+	# Store a mark
 	ownMarkIndex += 1;
 	if (ownMarkIndex > 4) ownMarkIndex = 0;
 	stpt400[ownMarkIndex] = mark;	
@@ -416,6 +445,7 @@ var addOwnMark = func (mark) {
 var dlMarkIndex = 4;
 
 var addDLMark = func (mark) {
+	# STore a DLNK mark
 	dlMarkIndex += 1;
 	if (dlMarkIndex > 4) dlMarkIndex = 0;
 	stpt450[dlMarkIndex] = mark;	
@@ -423,6 +453,7 @@ var addDLMark = func (mark) {
 }
 
 var applyToWPN = func {
+	# Apply WPN steerpoint to current weapon
 	var lat = getprop("f16/avionics/gps-lat");
 	var lon = getprop("f16/avionics/gps-lon");
 	var alt = getprop("f16/avionics/gps-alt")*FT2M;
@@ -448,6 +479,7 @@ var applyToWPN = func {
 }
 
 var _isValidNumber = func (number) {
+	# Is the number a valid possible steerpoint number?
 	if (number >= 300 and number <= 305) {
 		return 1;
 	} elsif (number >= 350 and number <= 359) {
@@ -467,6 +499,7 @@ var _isValidNumber = func (number) {
 }
 
 var _isOccupiedNumber = func (number) {
+	# Is a steerpoint stored at this memory address?
 	if (!_isValidNumber(number)) {
 		return 0;
 	}
