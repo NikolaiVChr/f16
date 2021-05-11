@@ -259,7 +259,7 @@ var dataEntryDisplay = {
 		var wp_num = getprop("f16/ded/stpt-edit");
 		if (me.page != me.pageLast and steerpoints.getCurrentNumber() != 0) {
 			# We just entered this page and have active route
-			wp_num = steerpoint.getCurrentNumber();
+			wp_num = steerpoints.getCurrentNumber();
 			setprop("f16/ded/stpt-edit", wp_num);
 		}
 		if (fp != nil and wp_num != nil and wp_num < 100) {
