@@ -10,15 +10,35 @@
 
     <nasal>
         <open><![CDATA[
-				var s = steerpoints.getNumber(500);
-				if (s != nil) {
-					setprop("f16/avionics/gps-lat", s.lat);
-					setprop("f16/avionics/gps-lon", s.lon);
-					setprop("f16/avionics/gps-alt", s.alt);
-				}            
+        	var s = steerpoints.getNumber(500);
+			if (s != nil) {
+				setprop("f16/avionics/gps-lat", s.lat);
+				setprop("f16/avionics/gps-lon", s.lon);
+				setprop("f16/avionics/gps-alt", s.alt);
+			}   
+
+            #var dlg = props.globals.getNode("/sim/gui/dialogs/route-manager", 1);
+            
+            var load_stpts = func(path) {
+                steerpoints.loadSTPTs(path.getValue());
+            }
+            var save_stpts = func(path) {
+                steerpoints.saveSTPTs(path.getValue());
+            }
+            
+            var defaultDirInFileSelector = getprop("/sim/fg-home") ~ "/Export";
+
+            var file_selector = gui.FileSelector.new(
+              callback: load_stpts, title: "Load data", button: "Load",
+              dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.f16dtc"]);
+            var save_selector = gui.FileSelector.new(
+              callback: save_stpts, title: "Save data", button: "Save",
+              dir: defaultDirInFileSelector, dotfiles: 1, file: "f16-stpt-iff-and-dl.f16dtc", pattern: ["*.f16dtc"]);
         ]]></open>
 
-        <close><![CDATA[           
+        <close><![CDATA[
+            file_selector.del();
+            save_selector.del();
         ]]></close>
     </nasal>
 
@@ -208,12 +228,34 @@
 	    <height>25</height>
 	</text>
 	<text>
-	    <label>#400 to #404 is own OFLY marks. #450 to 454 is DLNK marks.</label>
+	    <label>#400 to #404 is own OFLY/TGP marks. #450 to 454 is DLNK marks.</label>
 	    <height>25</height>
 	</text>
 	<text>
 	    <label>#500 is WPN program GPS coords. #555 is bulls-eye.</label>
 	    <height>25</height>
 	</text>
+
+	<hrule/>
+
+	<button>
+        <legend>Load DTC</legend>
+        <equal>true</equal>
+        <binding>
+            <command>nasal</command>
+            <script>file_selector.open()</script>
+        </binding>
+    </button>
+    <button>
+        <legend>Save DTC</legend>
+        <equal>true</equal>
+        <enable>
+        	<value>1</value>
+        </enable>
+        <binding>
+            <command>nasal</command>
+            <script>save_selector.open();</script>
+        </binding>
+    </button>
 
 </PropertyList>

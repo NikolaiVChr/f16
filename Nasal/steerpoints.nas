@@ -417,3 +417,145 @@ var loadLine = func  (no,path) {
         print(err[0]);
     }
 };
+
+var serialize = func() {
+  var ret = "";
+  var iter = 0;
+  foreach(key;stpt300) {
+  	if (key == nil) {
+		ret = ret~sprintf("STPT,%d,nil|",iter+300);
+  	} else {
+    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s|",iter+300,key.lat,key.lon,key.alt,key.radius,key.color,key.type);
+    }
+    iter += 1;
+  }
+  iter = 0;
+  foreach(key;stpt350) {
+  	if (key == nil) {
+  		ret = ret~sprintf("STPT,%d,nil|",iter+350);
+  	} else {
+    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s|",iter+350,key.lat,key.lon,key.alt,key.radius,key.color,key.type);
+    }
+    iter += 1;
+  }
+  iter = 0;
+  foreach(key;stpt400) {
+  	if (key == nil) {
+  		ret = ret~sprintf("STPT,%d,nil|",iter+400);
+  	} else {
+    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s|",iter+400,key.lat,key.lon,key.alt,key.radius,key.color,key.type);
+    }
+    iter += 1;
+  }
+  iter = 0;
+  foreach(key;stpt450) {
+  	if (key == nil) {
+  		ret = ret~sprintf("STPT,%d,nil|",iter+450);
+  	} else {
+    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s|",iter+450,key.lat,key.lon,key.alt,key.radius,key.color,key.type);
+    }
+    iter += 1;
+  }
+  iter = 0;
+  foreach(key;stpt500) {
+  	if (key == nil) {
+  		ret = ret~sprintf("STPT,%d,nil|",iter+500);
+  	} else {
+    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s|",iter+500,key.lat,key.lon,key.alt,key.radius,key.color,key.type);
+    }
+    iter += 1;
+  }
+  iter = 0;
+  foreach(key;stpt555) {
+  	if (key == nil) {
+  		ret = ret~sprintf("STPT,%d,nil|",iter+555);
+  	} else {
+    	ret = ret~sprintf("STPT,%d,%.6f,%.6f,%d,%d,%d,%s|",iter+555,key.lat,key.lon,key.alt,key.radius,key.color,key.type);
+    }
+    iter += 1;
+  }
+  ret = ret~sprintf("IFF,%d|",getprop("instrumentation/iff/channel-selection"));
+  ret = ret~sprintf("DATALINK,%d|",getprop("instrumentation/datalink/channel"));
+  return ret;
+}
+
+var unserialize = func(m) {
+  var stpts = split("|",m);
+  foreach(item;stpts) {
+    if (size(item)>5) {
+      var items = split(",", item);
+      var key = items[0];
+
+      if (key == "STPT") {
+      	var newST = nil;
+      	if (items[2]!="nil") {
+      		newST = STPT.new();
+      		newST.lat    = num(items[2]);
+      		newST.lon    = num(items[3]);
+      		newST.alt    = num(items[4]);
+      		newST.radius = num(items[5]);
+      		newST.color  = num(items[6]);
+      		newST.type   =     items[7];
+      	}
+      	var number = num(items[1]);
+      	if (number >= 555) {
+      		stpt555[number-555] = newST;
+
+      	} elsif (number >= 500) {
+      		stpt500[number-500] = newST;
+
+      	} elsif (number >= 450) {
+      		stpt450[number-450] = newST;
+
+      	} elsif (number >= 400) {
+      		stpt400[number-400] = newST;
+
+      	} elsif (number >= 350) {
+      		stpt350[number-350] = newST;
+
+      	} elsif (number >= 300) {
+      		stpt300[number-300] = newST;
+      	}
+
+      } elsif (key == "IFF") {
+      	setprop("instrumentation/iff/channel-selection", num(items[1]));
+      } elsif (key == "DATALINK") {
+      	setprop("instrumentation/datalink/channel", num(items[1]));
+      }
+    }
+  }
+}
+
+var saveSTPTs = func (path) {
+    var text = serialize();
+    var opn = nil;
+    call(func{opn = io.open(path,"w");},nil, var err = []);
+    if (size(err) or opn == nil) {
+      print("error open file for writing STPTs");
+      gui.showDialog("savefail");
+      return 0;
+    }
+    call(func{var text = io.write(opn,text);},nil, var err = []);
+    if (size(err)) {
+      print("error writing file with STPTs");
+      gui.showDialog("savefail");
+      io.close(opn);
+      return 0;
+    } else {
+      io.close(opn);
+      return 1;
+    }
+}
+
+var loadSTPTs = func (path) {
+    var text = nil;
+    call(func{text=io.readfile(path);},nil, var err = []);
+    if (size(err)) {
+      print("Loading STPTs failed.");
+      gui.showDialog("loadfail");
+    } elsif (text != nil) {
+      unserialize(text);
+    }
+}
+
+setprop("sim/fg-home-export", getprop("sim/fg-home")~"/Export");
