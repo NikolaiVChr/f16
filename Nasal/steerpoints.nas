@@ -204,6 +204,7 @@ var getLastRange = func {
 	if (getCurrentNumber() == 0) return nil;
 	if (current == nil) {
 		var dist_nm = steerpoints.getCurrentRange();
+		var stnum = getCurrentNumber();
 		for (var index = stnum; index < fp.getPlanSize(); index+=1) {
 			dist_nm += fp.getWP(index).leg_distance;
 		}
@@ -213,6 +214,21 @@ var getLastRange = func {
 	}
 }
 
+var getNumberRange = func (number) {
+	if (getCurrentNumber() == 0) return nil;
+	if (current == nil and number >= getCurrentNumber()) {
+		var dist_nm = steerpoints.getCurrentRange();
+		var stnum = getCurrentNumber();
+		for (var index = stnum; index < number-1; index+=1) {
+			dist_nm += flightplan().getWP(index).leg_distance;
+		}
+		return dist_nm;
+	} elsif (number == getCurrentNumber()) {
+		return steerpoints.getCurrentRange();
+	}
+	return nil;
+}
+
 var getLast = func {
 	if (getCurrentNumber() == 0) return nil;
 	return getNumber(getLastNumber());
@@ -220,7 +236,7 @@ var getLast = func {
 
 var getNumberTOS = func (number) {
 	if (getCurrentNumber() == 0) return nil;
-	var eta = getNumberETA();# Not made yet
+	var eta = getNumberETA(number);
 	return getTOS(eta);
 }
 
@@ -297,6 +313,14 @@ var getLastETA = func {
 	var gs = getprop("velocities/groundspeed-kt")*KT2MPS;
 	if (gs == 0) return nil;
 	var range = getLastRange()*NM2M;
+	return range/gs;
+}
+
+var getNumberETA = func (number) {
+	if (getCurrentNumber() == 0) return nil;
+	var gs = getprop("velocities/groundspeed-kt")*KT2MPS;
+	if (gs == 0) return nil;
+	var range = getNumberRange(number)*NM2M;
 	return range/gs;
 }
 
