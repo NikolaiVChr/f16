@@ -11,37 +11,7 @@
         <aircraft-class type="string">mil-fighter</aircraft-class>
         <aircraft-operator />
         <aircraft-data>
-            <path>/f16/avionics/pilot-aid/c1-lat</path>
-            <path>/f16/avionics/pilot-aid/c1-lon</path>
-            <path>/f16/avionics/pilot-aid/c1-rad</path>
-            <path>/f16/avionics/pilot-aid/c2-lat</path>
-            <path>/f16/avionics/pilot-aid/c2-lon</path>
-            <path>/f16/avionics/pilot-aid/c2-rad</path>
-            <path>/f16/avionics/pilot-aid/c3-lat</path>
-            <path>/f16/avionics/pilot-aid/c3-lon</path>
-            <path>/f16/avionics/pilot-aid/c3-rad</path>
-            <path>/f16/avionics/pilot-aid/c4-lat</path>
-            <path>/f16/avionics/pilot-aid/c4-lon</path>
-            <path>/f16/avionics/pilot-aid/c4-rad</path>
-            <path>/f16/avionics/pilot-aid/c5-lat</path>
-            <path>/f16/avionics/pilot-aid/c5-lon</path>
-            <path>/f16/avionics/pilot-aid/c5-rad</path>
-            <path>/f16/avionics/pilot-aid/c6-lat</path>
-            <path>/f16/avionics/pilot-aid/c6-lon</path>
-            <path>/f16/avionics/pilot-aid/c6-rad</path>
-            <path>/f16/avionics/pilot-aid/c1-typ</path>
-            <path>/f16/avionics/pilot-aid/c2-typ</path>
-            <path>/f16/avionics/pilot-aid/c3-typ</path>
-            <path>/f16/avionics/pilot-aid/c4-typ</path>
-            <path>/f16/avionics/pilot-aid/c5-typ</path>
-            <path>/f16/avionics/pilot-aid/c6-typ</path>
-            <path>/f16/avionics/pilot-aid/bulls-eye-defined</path>
-            <path>/f16/avionics/pilot-aid/bulls-eye-lat</path>
-            <path>/f16/avionics/pilot-aid/bulls-eye-lon</path>
             <path>/f16/avionics/hud-basic</path>
-            <path>/f16/avionics/gps-lat</path>
-            <path>/f16/avionics/gps-lon</path>
-            <path>/f16/avionics/gps-alt</path>
             <path>/instrumentation/transponder/inputs/digit[0]</path>
             <path>/instrumentation/transponder/inputs/digit[1]</path>
             <path>/instrumentation/transponder/inputs/digit[2]</path>
@@ -56,7 +26,6 @@
             <path>/f16/avionics/intercom-volume</path>
             <path>/f16/effects/dirt</path>
             <path>/f16/effects/rust</path>
-            <path>/environment/season</path>
         </aircraft-data>
         <tags>
             <tag>fighter</tag>

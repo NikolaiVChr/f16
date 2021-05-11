@@ -257,9 +257,9 @@ var dataEntryDisplay = {
 		var lat = "";
 		var lon = "";
 		var wp_num = getprop("f16/ded/stpt-edit");
-		if (me.page != me.pageLast and fp != nil) {
+		if (me.page != me.pageLast and steerpoint.getCurrentNumber() != 0) {
 			# We just entered this page and have active route
-			wp_num = fp.current+1;
+			wp_num = steerpoint.getCurrentNumber();
 			setprop("f16/ded/stpt-edit", wp_num);
 		}
 		if (fp != nil and wp_num != nil and wp_num < 100) {
@@ -354,6 +354,15 @@ var dataEntryDisplay = {
 				} else {
 					stpt.type = getprop("f16/ded/stpt-type"); 
 				}
+			} elsif (stpt == nil and (getprop("f16/ded/lat") != 0 or getprop("f16/ded/lon") != 0 or getprop("f16/ded/stpt-rad") != 10 or getprop("f16/ded/stpt-type") != "   " or getprop("f16/ded/stpt-color") != 0)) {
+				stpt = steerpoints.STPT.new();
+				stpt.lat = getprop("f16/ded/lat");
+				stpt.lon = getprop("f16/ded/lon");
+				stpt.radius = getprop("f16/ded/stpt-rad");
+				stpt.type = getprop("f16/ded/stpt-type");
+				stpt.color = getprop("f16/ded/stpt-color")=="RED"?0:(getprop("f16/ded/stpt-color")=="YEL"?1:2);
+				steerpoints.setNumber(wp_num, stpt);
+				wp_num_curr = wp_num;
 			} else {
 				setprop("f16/ded/lat", 0);
 				setprop("f16/ded/lon", 0);
@@ -368,15 +377,7 @@ var dataEntryDisplay = {
 			me.text[3] = sprintf("      RAD  %sNM", pSTPT.vector[3].getText());
 			me.text[4] = sprintf("  TYP  %s   COL  %s", pSTPT.vector[5].getText(), pSTPT.vector[6].getText());
 
-			if 	(stpt == nil and (getprop("f16/ded/lat") != 0 or getprop("f16/ded/lon") != 0)) {
-				stpt = steerpoints.STPT.new();
-				stpt.lat = getprop("f16/ded/lat");
-				stpt.lon = getprop("f16/ded/lon");
-				stpt.radius = getprop("f16/ded/stpt-rad");
-				stpt.type = getprop("f16/ded/stpt-type");
-				stpt.color = getprop("f16/ded/stpt-color")=="RED"?0:(getprop("f16/ded/stpt-color")=="YEL"?1:2);
-				steerpoints.setNumber(wp_num, stpt);
-			}
+			
 
 			if 	(stpt != nil) {
 				wp_num_lastA = stpt.lat;
@@ -412,6 +413,13 @@ var dataEntryDisplay = {
 				} else {
 					stpt.alt = getprop("f16/ded/alt"); 
 				}
+			} elsif (stpt == nil and (getprop("f16/ded/alt")!=0 or getprop("f16/ded/lat") != 0 or getprop("f16/ded/lon") != 0)) {
+				stpt = steerpoints.STPT.new();
+				stpt.lat = getprop("f16/ded/lat");
+				stpt.lon = getprop("f16/ded/lon");
+				stpt.alt = getprop("f16/ded/alt");
+				steerpoints.setNumber(wp_num, stpt);
+				wp_num_curr = wp_num;
 			} else {
 				setprop("f16/ded/lat", 0);
 				setprop("f16/ded/lon", 0);
@@ -428,13 +436,7 @@ var dataEntryDisplay = {
 			}
 			me.text[4] = sprintf("      TOS  ");
 
-			if 	(stpt == nil and (getprop("f16/ded/alt")!=0 or getprop("f16/ded/lat") != 0 or getprop("f16/ded/lon") != 0)) {
-				stpt = steerpoints.STPT.new();
-				stpt.lat = getprop("f16/ded/lat");
-				stpt.lon = getprop("f16/ded/lon");
-				stpt.alt = getprop("f16/ded/alt");
-				steerpoints.setNumber(wp_num, stpt);
-			}
+			
 
 			if 	(stpt != nil) {
 				wp_num_lastA = stpt.lat;
@@ -452,10 +454,7 @@ var dataEntryDisplay = {
 			me.text[2] = sprintf("      LNG  %s", lon);
 			wp_num_curr = 0;
 		}
-		me.text[0] = sprintf("         STPT %s  AUTO %s", pSTPT.vector[0].getText(), me.no);
-		
-
-		
+		me.text[0] = sprintf("         STPT %s  AUTO %s", pSTPT.vector[0].getText(), me.no);		
 	},
 	
 	updateCrus: func() {
