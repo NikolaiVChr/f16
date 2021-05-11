@@ -251,7 +251,6 @@ var dataEntryDisplay = {
 	},
 	
 	updateStpt: func() {
-		var fp = flightplan();
 		var TOS = "--:--:--";
 		var alt = -1;
 		var lat = "";
@@ -262,17 +261,16 @@ var dataEntryDisplay = {
 			wp_num = steerpoints.getCurrentNumber();
 			setprop("f16/ded/stpt-edit", wp_num);
 		}
-		if (fp != nil and wp_num != nil and wp_num < 100) {
-			var wp = fp.getWP(wp_num-1);
-			if (wp != nil and getprop("f16/avionics/power-mmc")) {
-				
+		if (wp_num != nil and wp_num < 100) {
+			var wp = steerpoints.getNumber(wp_num);
+			if (wp != nil) {				
 				lat = convertDegreeToStringLat(wp.lat);
 				lon = convertDegreeToStringLon(wp.lon);
-				alt = wp.alt_cstr;
+				alt = wp.alt;
 				if (alt == nil) {
 					alt = -1;
 				}
-				if (wp >= steerpoints.getCurrentNumber()) {
+				if (wp_num >= steerpoints.getCurrentNumber()) {
 					TOS = steerpoints.getNumberTOS(wp_num);
 				}
 				wp_num_curr = wp_num;
