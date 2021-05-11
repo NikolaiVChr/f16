@@ -856,6 +856,7 @@ var EditableLON = {
 };
 
 var checkValueTransponderCode = func(text) {
+	text = sprintf("%04d",text);
 	var codeDigits = split("", text);
 
 	for (var i = 0; i < 4; i = i + 1) {
