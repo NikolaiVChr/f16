@@ -257,7 +257,7 @@ var dataEntryDisplay = {
 		var lat = "";
 		var lon = "";
 		var wp_num = getprop("f16/ded/stpt-edit");
-		if (me.page != me.pageLast and steerpoint.getCurrentNumber() != 0) {
+		if (me.page != me.pageLast and steerpoints.getCurrentNumber() != 0) {
 			# We just entered this page and have active route
 			wp_num = steerpoint.getCurrentNumber();
 			setprop("f16/ded/stpt-edit", wp_num);
