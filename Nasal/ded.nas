@@ -398,7 +398,7 @@ var dataEntryDisplay = {
 			if (wp_num == steerpoints.getCurrentNumber()) {
 				TOS = steerpoints.getCurrentTOS();
 			}
-			me.text[4] = sprintf("      TOS  %s");
+			me.text[4] = sprintf("      TOS  %s", TOS);
 
 			
 
