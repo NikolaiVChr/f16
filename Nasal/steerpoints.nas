@@ -46,6 +46,16 @@ var getCurrentNumber = func {
 	return 0;
 }
 
+var getLastNumber = func {
+	if (current != nil) {
+		return current;
+	} elsif (isRouteActive()) {
+		var fp = flightplan();
+		return fp.getPlanSize();
+	}
+	return 0;
+}
+
 var getCurrent = func {
 	return getNumber(current);
 }
@@ -179,15 +189,115 @@ var setCurrentNumber = func (number) {
 		if (fp.getPlanSize() >= number) {
 			fp.current = number - 1;
 			current = nil;
-			print("Switching active steerpoint to #"~wp_num_curr);
+			print("Switching active steerpoint to #"~number);
 			return 1;
 		}
 	} elsif (_isOccupiedNumber(number)) {
 		current = number;
-		print("Switching active steerpoint to #"~wp_num_curr);
+		print("Switching active steerpoint to #"~number);
 		return 1;
 	}
 	return 0;
+}
+
+var getLastRange = func {
+	if (getCurrentNumber() == 0) return nil;
+	if (current == nil) {
+		var dist_nm = steerpoints.getCurrentRange();
+		for (var index = stnum; index < fp.getPlanSize(); index+=1) {
+			dist_nm += fp.getWP(index).leg_distance;
+		}
+		return dist_nm;
+	} else {
+		return steerpoints.getCurrentRange();
+	}
+}
+
+var getLast = func {
+	if (getCurrentNumber() == 0) return nil;
+	return getNumber(getLastNumber());
+}
+
+var getNumberTOS = func (number) {
+	if (getCurrentNumber() == 0) return nil;
+	var eta = getNumberETA();# Not made yet
+	return getTOS(eta);
+}
+
+var getCurrentTOS = func {
+	var eta = getCurrentETA();
+	return getTOS(eta);
+}
+
+var getLastTOS = func {
+	var eta = getLastETA();
+	return getTOS(eta);
+}
+
+var getTOS = func (eta) {
+	# eta is allowed to be nil
+	var TOS = "--:--:--";
+	if (getCurrentNumber() == 0) return TOS;
+
+	if (eta == nil or eta>3600*24) {
+		return TOS;
+	} else {
+		var hour   = getprop("sim/time/utc/hour"); 
+		var minute = getprop("sim/time/utc/minute");
+		var second = getprop("sim/time/utc/second");		
+		var final = addSeconds(eta,second,minute,hour);
+
+		TOS = sprintf("%02d:%02d:%02d",final[1],final[2],final[3]);
+	}      
+	return TOS;
+}
+
+var addSeconds = func (add_secs, secs, mins, hours) {
+	# Add some seconds to 24 hr clock
+
+	# the baseline:
+	var d = 0;
+	var h = hours;
+	var m = mins;
+	var s = secs;
+
+	# the added:
+	var H = int(add_secs/3600);
+    var S = add_secs-H*3600;
+    var M = int(S/60);
+    S = S-M*60;
+
+    s += S;
+    var addOver = 0;
+	while (s > 59) {
+		addOver += 1;
+		s -= 60;
+	}
+
+	m += M+addOver;
+	addOver = 0;
+	while (m > 59) {
+		addOver += 1;
+		m -= 60;
+	}
+
+	h += H+addOver;
+	while (h > 23) {
+		addOver += 1;
+		h -= 24;
+	}
+
+	d = addOver;
+
+    return [d,h,m,s];
+}
+
+var getLastETA = func {
+	if (getCurrentNumber() == 0) return nil;
+	var gs = getprop("velocities/groundspeed-kt")*KT2MPS;
+	if (gs == 0) return nil;
+	var range = getLastRange()*NM2M;
+	return range/gs;
 }
 
 var next = func {

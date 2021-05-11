@@ -128,11 +128,11 @@ var dataEntryDisplay = {
 	
 	no: "",
 	update: func() {
-		me.no = getprop("autopilot/route-manager/current-wp") + 1;
+		me.no = steerpoints.getCurrentNumber();
 		if (me.no == 0) {
 		  me.no = "";
 		} else {
-		  me.no = sprintf("%2d",me.no);
+		  me.no = sprintf("%3d",me.no);
 		}
 		
 		if (me.page == pTACAN) {
@@ -260,6 +260,7 @@ var dataEntryDisplay = {
 		if (me.page != me.pageLast and fp != nil) {
 			# We just entered this page and have active route
 			wp_num = fp.current+1;
+			setprop("f16/ded/stpt-edit", wp_num);
 		}
 		if (fp != nil and wp_num != nil and wp_num < 100) {
 			var wp = fp.getWP(wp_num-1);
@@ -444,28 +445,6 @@ var dataEntryDisplay = {
 				wp_num_lastO = 0;
 				wp_num_lastR = 0;
 			}
-		} elsif (wp_num != nil and wp_num == 500) {
-			# Bulleye 500
-
-			if (wp_num_lastA != getprop("f16/avionics/pilot-aid/bulls-eye-lat")) {
-				setprop("f16/ded/lat", getprop("f16/avionics/pilot-aid/bulls-eye-lat"));
-			} else {
-				setprop("f16/avionics/pilot-aid/bulls-eye-lat", getprop("f16/ded/lat")); 
-			}
-			if (wp_num_lastO != getprop("f16/avionics/pilot-aid/bulls-eye-lon")) {
-				setprop("f16/ded/lon", getprop("f16/avionics/pilot-aid/bulls-eye-lon"));
-			} else {
-				setprop("f16/avionics/pilot-aid/bulls-eye-lon", getprop("f16/ded/lon")); 
-			}
-			
-			me.text[1] = sprintf("      LAT  %s", pSTPT.vector[1].getText());
-			me.text[2] = sprintf("      LNG  %s", pSTPT.vector[2].getText());
-			me.text[3] = sprintf("             ");
-			me.text[4] = sprintf("      TOS  ");
-
-			wp_num_lastA = getprop("f16/avionics/pilot-aid/bulls-eye-lat");
-			wp_num_lastO = getprop("f16/avionics/pilot-aid/bulls-eye-lon");
-			setprop("f16/avionics/pilot-aid/bulls-eye-defined",1);
 		} else {
 			me.text[3] = sprintf("     ELEV       FT");
 			me.text[4] = sprintf("      TOS  ");
@@ -482,11 +461,12 @@ var dataEntryDisplay = {
 	updateCrus: func() {
 		# Source: F-16 A/B Mid-Life Update Production Tape M1: Pilot's guide to new to new capabilities & cockpit enhancements.
 		# The page is at the moment fixed at RNG.
-		# The steerpoint is currently fixed at last steerpoint.
+		# The steerpoint is currently fixed at last steerpoint, unless using a non route steerpoint.
 		var fuel   = "";
 		var fp = flightplan();
 		var maxS = "";
-		if (fp != nil) {
+		var stnum = steerpoints.getCurrentNumber();
+		if (fp != nil and stnum < 100) {
 			var max = fp.getPlanSize();
 			if (max > 0) {
 				maxS =""~max;
@@ -502,6 +482,23 @@ var dataEntryDisplay = {
 						} else {
 							fuel = "-99999LBS";
 						}
+					}
+				}
+			}
+		} elsif (stnum >= 100) {
+			var stpt = steerpoints.getCurrent();
+			maxS = ""~stnum;
+			var ete = steerpoints.getCurrentETA();
+			if (ete != nil and ete > 0) {
+				var pph = getprop("engines/engine[0]/fuel-flow_pph");
+				if (pph == nil) pph = 0;
+				var remain = getprop("consumables/fuel/total-fuel-lbs")-pph*(ete/3600);
+				fuel = sprintf("% 6dLBS",remain);
+				if (size(fuel)>9) {
+					if (remain > 0) {
+						fuel = "999999LBS";
+					} else {
+						fuel = "-99999LBS";
 					}
 				}
 			}
@@ -565,9 +562,9 @@ var dataEntryDisplay = {
 		lon = convertDegreeToStringLon(me.mark.lon);
 		alt = me.mark.alt;
 		if (me.markModeSelected) {
-			me.text[0] = sprintf("         MARK *%s*    %s",me.markMode,me.no);
+			me.text[0] = sprintf("         MARK *%s*   %s",me.markMode,me.no);
 		} else {
-			me.text[0] = sprintf("         MARK  %s     %s",me.markMode,me.no);
+			me.text[0] = sprintf("         MARK  %s    %s",me.markMode,me.no);
 		}
 		me.text[1] = sprintf("      LAT  %s",lat);
 		me.text[2] = sprintf("      LNG  %s",lon);
@@ -612,58 +609,16 @@ var dataEntryDisplay = {
 	},
 	
 	updateDest: func() {
-		var fp = flightplan();
-		var TOS = "--:--:--";
 		var lat = "";
 		var lon = "";
 		var alt = -1;
-		if (fp != nil) {
-			var wp = fp.destination;
-			if (wp != nil and getprop("f16/avionics/power-mmc")) {
-				lat = convertDegreeToStringLat(wp.lat);
-				lon = convertDegreeToStringLon(wp.lon);
-				alt = wp.elevation * M2FT;
-				var hour   = getprop("sim/time/utc/hour"); 
-				var minute = getprop("sim/time/utc/minute");
-				var second = getprop("sim/time/utc/second");
-				var eta    = getprop("autopilot/route-manager/wp/eta");
-				if (eta == nil or getprop("autopilot/route-manager/wp/eta-seconds")>3600*24) {
-					#
-				} elsif (getprop("autopilot/route-manager/wp/eta-seconds")>3600) {
-					eta = split(":",eta);
-					minute += num(eta[1]);
-					var addOver = 0;
-					if (minute > 59) {
-						addOver = 1;
-						minute -= 60;
-					}
-					hour += num(eta[0])+addOver;
-					while (hour > 23) {
-						hour -= 24;
-					}
-					TOS = sprintf("%02d:%02d:%02d",hour,minute,second);
-				} else {
-					eta = split(":",eta);
-					second += num(eta[1]);
-					var addOver = 0;
-					if (second > 59) {
-						addOver = 1;
-						second -= 60;
-					}
-					minute += num(eta[0])+addOver;
-					addOver = 0;
-					if (minute > 59) {
-						addOver = 1;
-						minute -= 60;
-					}
-					hour += addOver;
-					while (hour > 23) {
-						hour -= 24;
-					}
-					TOS = sprintf("%02d:%02d:%02d",hour,minute,second);   
-				}          
-			}
+		var st = steerpoints.getLast();
+		if (st != nil) {
+			lat = convertDegreeToStringLat(st.lat);
+			lon = convertDegreeToStringLon(st.lon);
+			alt = st.alt;
 		}
+		TOS = steerpoints.getLastTOS();
       
 		me.text[0] = sprintf("         DEST  DIR  %s",me.no);
 		me.text[1] = sprintf("      LAT  %s",lat);
