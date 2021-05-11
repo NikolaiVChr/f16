@@ -63,7 +63,7 @@ var iff_hash = {
 			me.int_systime = int(systime());
 			me.update_time = int(math.mod(me.int_systime,iff_refresh_rate));
 			me.time = me.int_systime - me.update_time;
-			node.hash.setValue(_calculate_hash(me.time, me.callsign, node.channel.getValue()));
+			node.hash.setValue(_calculate_hash(me.time, node.callsign.getValue(), node.channel.getValue()));
 		} else {
 			me.timer.stop();
 			node.hash.setValue("");
@@ -104,3 +104,4 @@ var new_hashing = iff_hash.new();
 new_hashing.loop();
 setlistener(node.channel,func(){new_hashing.loop();},nil,0);
 setlistener(node.power,func(){new_hashing.loop();},nil,0);
+setlistener(node.callsign,func(){new_hashing.loop();},nil,0);
