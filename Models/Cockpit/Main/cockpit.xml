@@ -78,6 +78,8 @@
         <object-name>screws</object-name>
     </effect>
 
+    
+
  <model>
   <name>HUDa</name>
   <path>Aircraft/f16/Models/Cockpit/hud.xml</path>
@@ -867,5 +869,40 @@
    <z-m>0.65</z-m>
   </offsets>
  </model>
+
+ <!-- Non-ALS flood light. Must be at end of file: -->
+ <animation>
+        <type>material</type>
+        <object-name>box_left</object-name>
+        <object-name>box_right</object-name>
+        <object-name>center-console</object-name>
+        <object-name>center_console</object-name>
+        <object-name>Centre</object-name>
+        <object-name>COCKPIT</object-name>
+        <object-name>cylinder.005</object-name>
+        <object-name>cylinder.006</object-name>
+        <object-name>floor</object-name>
+        <object-name>frontpart</object-name>
+        <object-name>Housing</object-name>
+        <object-name>object.002</object-name>
+        <object-name>object.003</object-name>
+        <object-name>object.005</object-name>
+        <object-name>object.006</object-name>
+        <object-name>object.007</object-name>
+        <object-name>PedalAdj</object-name>
+        <object-name>poly</object-name>
+        <object-name>screws</object-name>
+        <condition>
+            <not>
+            <property>/sim/rendering/shaders/skydome</property>
+          </not>
+          </condition>
+        <emission>
+            <factor-prop>controls/lighting/lighting-panel/flood-inst-pnl</factor-prop>
+            <red>0.45</red>
+            <green>0.34</green>
+            <blue>0.18</blue>
+        </emission>
+    </animation>
 
 </PropertyList>
