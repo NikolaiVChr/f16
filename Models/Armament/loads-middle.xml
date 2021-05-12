@@ -214,6 +214,17 @@
 
  <animation>
   <type>select</type>
+  <object-name>Station3_MK82AIR</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-2-set</property>
+        <value>3 x MK-82AIR</value>
+      </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
   <object-name>Station3_GBU54</object-name>
   <condition>
     <equals>
@@ -428,6 +439,17 @@
     <equals>
         <property>payload/armament/station/id-6-set</property>
         <value>3 x MK-82</value>
+      </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station7_MK82AIR</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-6-set</property>
+        <value>3 x MK-82AIR</value>
       </equals>
   </condition>
  </animation>

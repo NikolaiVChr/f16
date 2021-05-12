@@ -230,6 +230,50 @@
             <ejector-speed-fps type="double">20</ejector-speed-fps>
             <ready-time type="double">0.5</ready-time>               
         </mk-82>
+        <mk-82air> 
+            <type-id type="int">68</type-id>
+            <short-name type="string">M82A</short-name>
+            <long-name type="string">MK-82AIR GP Bomb, Air Inflatable Retarder</long-name>
+            <fire-msg type="string">Bombs away</fire-msg>
+            <class type="string">GMP</class>
+            <max-fire-range-nm type="double"> 8 </max-fire-range-nm>
+            <min-fire-range-nm type="double"> 0 </min-fire-range-nm>
+            <guidance type="string">unguided</guidance>
+            <navigation type="string">direct</navigation>
+            <loft-altitude type="int"> 0 </loft-altitude>
+            <terrain-follow type="bool">false</terrain-follow>
+            <FCS-field-deg type="int"> 240 </FCS-field-deg>
+            <seeker-field-deg type="int"> 360 </seeker-field-deg>
+            <max-g type="double"> 1.6 </max-g>
+            <thrust-lbf-stage-1 type="double"> 0 </thrust-lbf-stage-1>
+            <thrust-lbf-stage-2 type="double"> 0 </thrust-lbf-stage-2>
+            <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
+            <stage-2-duration-sec type="double"> 0 </stage-2-duration-sec>
+            <weight-launch-lbs type="double"> 533 </weight-launch-lbs> <!-- Weapons file 2004 -->
+            <weight-warhead-lbs type="double"> 190 </weight-warhead-lbs>
+            <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
+            <drag-coeff type="double"> 0.125 </drag-coeff>
+            <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
+            <arming-time-sec type="double"> 4 </arming-time-sec>
+            <min-speed-for-guiding-mach type="double"> 0 </min-speed-for-guiding-mach>
+            <self-destruct-time-sec type="double"> 10000 </self-destruct-time-sec>
+            <all-aspect type="bool">true</all-aspect>
+            <lock-on-sun-deg type="double"> 0 </lock-on-sun-deg>
+            <seeker-angular-speed-dps type="double"> 0 </seeker-angular-speed-dps>
+            <rail type="bool">false</rail>
+            <max-report-distance type="double"> 150 </max-report-distance>
+            <vol-search type="double"> 0.075 </vol-search>
+            <vol-track type="double"> 0.25 </vol-track>
+            <vol-track-weak type="double"> 0.175 </vol-track-weak>
+            <drop-time type="double">0.65</drop-time> <!-- Weapons file 2009 -->
+            <deploy-time type="double">1</deploy-time>
+            <lateral-dps type="double"> -10 </lateral-dps>
+            <max-pitch-deg type="double">-90</max-pitch-deg>
+            <hit-everything-nearby type="bool">true</hit-everything-nearby>
+            <ejector-speed-fps type="double">20</ejector-speed-fps>
+            <ready-time type="double">0.5</ready-time>
+            <delta-drag-coeff-deploy type="double">5.00</delta-drag-coeff-deploy> <!-- guess, need more data -->     
+        </mk-82air>
         <mk-83> 
             <type-id type="int">33</type-id>
             <short-name type="string">M83</short-name>
@@ -312,7 +356,7 @@
             <drop-time type="double">0.75</drop-time>
             <deploy-time type="double">1</deploy-time>
             <lateral-dps type="double"> 10 </lateral-dps>
-            <max-pitch-deg type="double">-45</max-pitch-deg>
+            <max-pitch-deg type="double">-90</max-pitch-deg>
             <hit-everything-nearby type="bool">true</hit-everything-nearby>
             <!-- the following 6 properties not used yet: -->
             <release-limit-mach type="double"> 1.2 </release-limit-mach>
@@ -856,7 +900,7 @@
             <drop-time type="double">0.75</drop-time>
             <deploy-time type="double">0.75</deploy-time>
             <lateral-dps type="double">-135</lateral-dps> <!-- -135 -->
-            <max-pitch-deg type="double">-45</max-pitch-deg>
+            <max-pitch-deg type="double">-90</max-pitch-deg>
             <hit-everything-nearby type="bool">true</hit-everything-nearby>
             <ready-time type="double">0.5</ready-time>
             <ejector-speed-fps type="double">10</ejector-speed-fps>
