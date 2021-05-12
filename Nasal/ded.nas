@@ -261,7 +261,7 @@ var dataEntryDisplay = {
 			wp_num = steerpoints.getCurrentNumber();
 			setprop("f16/ded/stpt-edit", wp_num);
 		}
-		if (wp_num != nil and wp_num < 100) {
+		if (wp_num != nil and (wp_num < 100 or (wp_num < 300 and wp_num >= 100))) {
 			var wp = steerpoints.getNumber(wp_num);
 			if (wp != nil) {				
 				lat = convertDegreeToStringLat(wp.lat);
@@ -270,7 +270,7 @@ var dataEntryDisplay = {
 				if (alt == nil) {
 					alt = -1;
 				}
-				if (wp_num >= steerpoints.getCurrentNumber()) {
+				if (wp_num < 100 and wp_num >= steerpoints.getCurrentNumber()) {
 					TOS = steerpoints.getNumberTOS(wp_num);
 				}
 				wp_num_curr = wp_num;
@@ -351,7 +351,7 @@ var dataEntryDisplay = {
 				wp_num_lastC = "RED";
 				wp_num_lastT = "   ";
 			}
-		} elsif (wp_num != nil and ((wp_num < 405 and wp_num >= 400) or (wp_num < 455 and wp_num >= 450) or (wp_num < 300 and wp_num >= 100) or (wp_num == 500) or (wp_num == 555))) {
+		} elsif (wp_num != nil and ((wp_num < 405 and wp_num >= 400) or (wp_num < 455 and wp_num >= 450) or (wp_num == 500) or (wp_num == 555))) {
 			# Own markpoints, DLNK markpoints, HSD-lines, WPN GPS and Bulls-eye
 			var stpt = steerpoints.getNumber(wp_num);
 			
@@ -416,7 +416,7 @@ var dataEntryDisplay = {
 			me.text[2] = sprintf("      LNG  %s", lon);
 			wp_num_curr = 0;
 		}
-		me.text[0] = sprintf("         STPT %s  AUTO %s", pSTPT.vector[0].getText(), me.no);		
+		me.text[0] = sprintf("      STPT %s  AUTO %s", pSTPT.vector[0].getText(), me.no);		
 	},
 	
 	updateCrus: func() {

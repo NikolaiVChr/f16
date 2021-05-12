@@ -418,7 +418,7 @@ var send = func (number) {
 	    sending = p;
 	    datalink.send_data({"point": sending});
 	    settimer(func {sending = nil;},7);
-	    print("Sending steerpoint to #"~wp_num_curr~" to DLNK.");
+	    print("Sending steerpoint to #"~number~" to DLNK.");
 	    return 1;
 	}
 	return 0;
