@@ -532,12 +532,12 @@ var fast_loop = func {
                 sp.set_latlon(lat,lon,ele);
                 flir_updater.click_coord_cam = sp;
                 setprop("/aircraft/flir/target/auto-track", 1);
-                if (callsign != lat~lon) {
+                if (callsign != "#"~steerpoints.getCurrentNumber()) {
                     # we switched steerpoint or from radar to steerpoint
                     flir_updater.offsetP = 0;
                     flir_updater.offsetH = 0;
                 }
-                callsign = lat~lon;
+                callsign = "#"~steerpoints.getCurrentNumber();
                 steerlock = 1;
                 steer = 1;
             } else {
@@ -633,7 +633,7 @@ var fast_loop = func {
         } elsif (lock_tgp) {
             midl.setText(sprintf("%s AREA  %s", gps?"GPS":(ir==1?"IR":"TV"), getprop("controls/armament/laser-arm-dmd")?"L":""));
         } elsif (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil and steerlock) {
-            midl.setText(sprintf("  STEER  %s", getprop("controls/armament/laser-arm-dmd")?"L":""));
+            midl.setText(sprintf("STPT %s  %s", "#"~steerpoints.getCurrentNumber(), getprop("controls/armament/laser-arm-dmd")?"L":""));
         } elsif (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil) {
             midl.setText(sprintf("  RADAR  %s", getprop("controls/armament/laser-arm-dmd")?"L":""));
         } else {
