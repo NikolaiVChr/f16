@@ -1,3 +1,6 @@
+#
+# F-16 Steerpoint/route/mark/bulls-eye system.
+#
 
 var stpt300 = setsize([],6);#Threat circles
 var stpt350 = setsize([],10);#Generic
@@ -57,11 +60,6 @@ var getLastNumber = func {
 		return fp.getPlanSize();
 	}
 	return 0;
-}
-
-var getCurrent = func {
-	# return current steerpoint or nil
-	return getNumber(current);
 }
 
 var getNumber = func (number) {
@@ -174,6 +172,13 @@ var getCurrentRange = func {
 	return s.distance_to(geo.aircraft_position())*M2NM;
 }
 
+var getCurrentSlantRange = func {
+	# Return slant range in nm to current steerpoint.
+	if (getCurrentNumber() == 0) return nil;
+	var s = getCurrentCoord();	
+	return s.direct_distance_to(geo.aircraft_position())*M2NM;
+}
+
 var getCurrentETA = func {
 	# Return seconds till current steerpoint.
 	if (getCurrentNumber() == 0) return nil;
@@ -209,6 +214,11 @@ var setCurrentNumber = func (number) {
 		return 1;
 	}
 	return 0;
+}
+
+var getCurrent = func {
+	# return current steerpoint or nil
+	return getNumber(current);
 }
 
 var getLastRange = func {
@@ -248,26 +258,44 @@ var getLast = func {
 	return getNumber(getLastNumber());
 }
 
+var getLastETA = func {
+	# Get time in seconds till final steerpoint
+	if (getCurrentNumber() == 0) return nil;
+	var gs = getprop("velocities/groundspeed-kt")*KT2MPS;
+	if (gs == 0) return nil;
+	var range = getLastRange()*NM2M;
+	return range/gs;
+}
+
+var getNumberETA = func (number) {
+	# Get time in seconds till specific steerpoint
+	if (getCurrentNumber() == 0) return nil;
+	var gs = getprop("velocities/groundspeed-kt")*KT2MPS;
+	if (gs == 0) return nil;
+	var range = getNumberRange(number)*NM2M;
+	return range/gs;
+}
+
 var getNumberTOS = func (number) {
-	# get time in seconds till specific steerpoint.
+	# Get string with time on station for specific steerpoint
 	if (getCurrentNumber() == 0) return nil;
 	var eta = getNumberETA(number);
-	return getTOS(eta);
+	return _getTOS(eta);
 }
 
 var getCurrentTOS = func {
 	# Get string with time on station for current steerpoint
 	var eta = getCurrentETA();
-	return getTOS(eta);
+	return _getTOS(eta);
 }
 
 var getLastTOS = func {
 	# Get string with time on station for final steerpoint
 	var eta = getLastETA();
-	return getTOS(eta);
+	return _getTOS(eta);
 }
 
-var getTOS = func (eta) {
+var _getTOS = func (eta) {
 	# Get string with time on station for a specific time in seconds
 	# eta is allowed to be nil
 	var TOS = "--:--:--";
@@ -324,24 +352,6 @@ var addSeconds = func (add_secs, secs, mins, hours) {
 	d = addOver;
 
     return [d,h,m,s];
-}
-
-var getLastETA = func {
-	# Get time in seconds till final steerpoint
-	if (getCurrentNumber() == 0) return nil;
-	var gs = getprop("velocities/groundspeed-kt")*KT2MPS;
-	if (gs == 0) return nil;
-	var range = getLastRange()*NM2M;
-	return range/gs;
-}
-
-var getNumberETA = func (number) {
-	# Get time in seconds till specific steerpoint
-	if (getCurrentNumber() == 0) return nil;
-	var gs = getprop("velocities/groundspeed-kt")*KT2MPS;
-	if (gs == 0) return nil;
-	var range = getNumberRange(number)*NM2M;
-	return range/gs;
 }
 
 var next = func {

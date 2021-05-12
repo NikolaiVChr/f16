@@ -152,12 +152,12 @@ var F16_HUD = {
 
 
         HUD_FONT = "LiberationFonts/LiberationMono-Bold.ttf";#"condensed.txf";  with condensed the FLYUP text was not displayed until minutes into flight, no clue why
-        obj.window1 = obj.get_text("window1", HUD_FONT,9,1.1);
+        obj.window1 = obj.get_text("window1", HUD_FONT,9,1.1).setTranslation(30,-65);
         obj.window2 = obj.get_text("window2", HUD_FONT,9,1.1);
         obj.window3 = obj.get_text("window3", HUD_FONT,9,1.1);
         obj.window4 = obj.get_text("window4", HUD_FONT,9,1.1);
         obj.window5 = obj.get_text("window5", HUD_FONT,9,1.1);
-        obj.window6 = obj.get_text("window6", HUD_FONT,9,1.1);
+        obj.window6 = obj.get_text("window6", HUD_FONT,9,1.1).setAlignment("center-bottom");
         obj.window7 = obj.get_text("window7", HUD_FONT,9,1.1);
         obj.window8 = obj.get_text("window8", HUD_FONT,9,1.1);
         obj.window9 = obj.get_text("window9", HUD_FONT,9,1.1);
@@ -1162,7 +1162,6 @@ append(obj.total, obj.speed_curr);
                  altitude_ft               : "/position/altitude-ft",
                  beta                      : "/orientation/side-slip-deg",
                  brake_parking             : "/controls/gear/brake-parking",
-                 eta_s                     : "/autopilot/route-manager/wp/eta-seconds",
                  flap_pos_deg              : "/fdm/jsbsim/fcs/flap-pos-deg",
                  gear_down                 : "/controls/gear/gear-down",
                  heading                   : "/orientation/heading-deg",
@@ -1631,15 +1630,6 @@ append(obj.total, obj.speed_curr);
                                             obj.speed_type.setText("G");
                                           }
                                       }),
-            props.UpdateManager.FromHashValue("range_rate", 0.01, func(range_rate)
-                                      {
-                                          if (range_rate != nil) {
-                                              obj.window1.setVisible(1);
-                                              obj.window1.setText("");
-                                          } else
-                                            obj.window1.setVisible(0);
-                                          }
-                                             ),
             props.UpdateManager.FromHashList(["Nz","nReset"], 0.1, func(hdp)
                                       {
                                           obj.window12.setText(sprintf("%.1f", hdp.Nz));
@@ -1844,6 +1834,15 @@ append(obj.total, obj.speed_curr);
                                             obj.window11.hide();
 
                                       }),
+            props.UpdateManager.FromHashValue("window1_txt", nil, func(txt)
+                                      {
+                                          if (txt != nil and txt != ""){
+                                              obj.window1.show();
+                                              obj.window1.setText(txt);
+                                          }
+                                          else
+                                            obj.window1.hide();
+                                    }),
 
         ];
         
@@ -1895,7 +1894,7 @@ append(obj.total, obj.speed_curr);
         if (me.initUpdate) {
             hdp.window1_txt = "1";
             hdp.window2_txt = "2";
-            hdp.window2_txt = "3";
+            hdp.window3_txt = "3";
             hdp.window4_txt = "4";
             hdp.window5_txt = "5";
             hdp.window6_txt = "6";
@@ -1940,14 +1939,7 @@ append(obj.total, obj.speed_curr);
         me.centerOrigin.update();
         me.svg.update();
         
-#Text windows on the HUD (F-16)
-#               1 
-#                   10 ALOW
-# 2 nav/arm         3 callsign
-# 7 mach            4 eta/altitude
-# 8 g               5 waypoint/slant range
-# 9 weap/aoa        6 type/tacan
-# 11 fuel
+
 
 # velocity vector
         #340,260
@@ -2015,6 +2007,8 @@ append(obj.total, obj.speed_curr);
 
         # part2. update display, first with the update managed items
         var showASC = 0;
+        me.ALOW_top = 0;
+        me.TA_text = "";
         if (1) {#hdp.FrameCount == 2 or me.initUpdate == 1) {
             hdp.window1_txt = "";
             hdp.window2_txt = "";
@@ -2047,6 +2041,7 @@ append(obj.total, obj.speed_curr);
                     if (hdp.weapon_selected == "20mm Cannon") {
                         hdp.window9_txt = sprintf("%3d", pylons.fcs.getAmmo());
                         eegsShow = 1;
+                        me.ALOW_top = 1;
                     } elsif (hdp.weapon_selected == "AIM-9") {
                         hdp.window9_txt = sprintf("%d SRM", pylons.fcs.getAmmo());#short range missile
                         if (hdp.weapn != nil) {
@@ -2058,6 +2053,7 @@ append(obj.total, obj.speed_curr);
                                 currASEC = nil;#[me.sx*0.5,me.sy*0.25];
                             }
                         }
+                        me.ALOW_top = 1;
                     } elsif (hdp.weapon_selected == "IRIS-T") {
                         hdp.window9_txt = sprintf("%d ASM", pylons.fcs.getAmmo());#short range missile
                         if (hdp.weapn != nil) {
@@ -2069,6 +2065,7 @@ append(obj.total, obj.speed_curr);
                                 currASEC = nil;#[me.sx*0.5,me.sy*0.25];
                             }
                         }
+                        me.ALOW_top = 1;
                     } elsif (hdp.weapon_selected == "AIM-120") {
                         hdp.window9_txt = sprintf("%d AMM", pylons.fcs.getAmmo());#adv. medium range missile
                         if (hdp.weapn != nil) {
@@ -2080,6 +2077,7 @@ append(obj.total, obj.speed_curr);
                                 currASEC = [me.sx*0.5,me.sy*0.25+262*mr*0.5];
                             }
                         }
+                        me.ALOW_top = 1;
                     } elsif (hdp.weapon_selected == "AIM-7") {
                         hdp.window9_txt = sprintf("%d MRM", pylons.fcs.getAmmo());#medium range missile
                         if (hdp.weapn != nil) {
@@ -2091,7 +2089,7 @@ append(obj.total, obj.speed_curr);
                                 currASEC = [me.sx*0.5,me.sy*0.25+262*mr*0.5];
                             }
                         }
-                        
+                        me.ALOW_top = 1;
                     } elsif (hdp.weapon_selected == "GBU-12") {
                         hdp.window9_txt = sprintf("%d GB12", pylons.fcs.getAmmo());
                     } elsif (hdp.weapon_selected == "AGM-65B") {
@@ -2140,9 +2138,9 @@ append(obj.total, obj.speed_curr);
                 if (hdp.active_u != nil)
                 {
                     if (hdp.active_u.Callsign != nil) {
-                        hdp.window3_txt = hdp.active_u.Callsign.getValue();
+                        hdp.window6_txt = hdp.active_u.Callsign.getValue();
                     } else {
-                        hdp.window3_txt = "";
+                        hdp.window6_txt = "";
                     }
 
     #        var w2 = sprintf("%-4d", hdp.active_u.get_closure_rate());
@@ -2152,29 +2150,50 @@ append(obj.total, obj.speed_curr);
     #these labels aren't correct - but we don't have a full simulation of the targetting and missiles so 
     #have no real idea on the details of how this works.
                     if (hdp.active_u.get_display() == 0) {
-                        hdp.window4_txt = "TA XX";
-                        hdp.window5_txt = "FXXX.X";#slant range
+                        me.TA_text = "TA XX";
+                        hdp.window3_txt = "FXXX.X";#slant range
                     } else {
-                        hdp.window4_txt = sprintf("TA%3d", hdp.active_u.get_altitude()*0.001);
-                        hdp.window5_txt = sprintf("F%05.1f", hdp.active_u.get_slant_range());#slant range
+                        me.TA_text = sprintf("TA%3d", hdp.active_u.get_altitude()*0.001);
+                        hdp.window3_txt = sprintf("F%05.1f", hdp.active_u.get_slant_range());#slant range
                     }
                     
-                    hdp.window6_txt = hdp.active_target_model;
+                    hdp.window6_txt ~= "/"~hdp.active_target_model;
+                    if (size(hdp.window6_txt)>14) {
+                        hdp.window6_txt = substr(hdp.window6_txt,0,14);
+                    }
                 }
                 else {
                     hdp.window3_txt = "";
-                    hdp.window4_txt = "";
-                    hdp.window5_txt = "";
                     hdp.window6_txt = "";
+                }
+                me.etaS = armament.AIM.getETA();
+                if (me.etaS != nil and me.etaS != -1) {
+                    me.etaH = int(me.etaS/3600);
+                    me.etaS = me.etaS-me.etaH*3600;
+                    me.etaM = int(me.etaS/60);
+                    me.etaS = me.etaS-me.etaM*60;
+                    if (me.etaH < 1) {
+                        hdp.window4_txt = sprintf("%03d:%02d",me.etaM,me.etaS);# 3 digits so pilot can tell it apart from time to steerpoint.
+                    } else {
+                        hdp.window4_txt = "XX:XX";
+                    }
+                } else {
+                    hdp.window4_txt = "";
+                }
+                me.scurr = steerpoints.getCurrentNumber();
+                if (me.scurr != 0) {
+                    me.navRange = steerpoints.getCurrentRange();
+                    hdp.window5_txt = sprintf("%d>%02d", me.navRange, me.scurr);# as per MLU tape 3 manual
+                } else {
+                    hdp.window5_txt = "";
                 }
             }
             else # weapons not armed
             {
-                #me.window7.setVisible(0);
                 me.scurr = steerpoints.getCurrentNumber();
                 if (me.scurr != 0) {
                     me.navRange = steerpoints.getCurrentRange();
-                    hdp.window5_txt = sprintf("%d>%d", me.navRange, me.scurr);
+                    hdp.window5_txt = sprintf("%d>%02d", me.navRange, me.scurr);# as per MLU tape 3 manual
                     me.etaS = steerpoints.getCurrentETA();
                     if (me.etaS != nil) {
                         me.etaH = int(me.etaS/3600);
@@ -2219,28 +2238,18 @@ append(obj.total, obj.speed_curr);
                 } else {
                     hdp.window6_txt = "";
                 }
-                var fp = flightplan();
+                
                 var slant = "";
-                if (fp != nil) {
-                    var wp = fp.currentWP();
-                    if (wp != nil) {
-                      slant = "B XXX";
-                      var lat = wp.lat;
-                      var lon = wp.lon;
-                      var alt = wp.alt_cstr;
-                      if (alt != nil) {
-                        var g = geo.Coord.new();
-                        g.set_latlon(lat,lon,alt*FT2M);
-                        var a = geo.aircraft_position();
-                        var r = a.direct_distance_to(g)*M2NM;
-                        if (r>= 1) {
-                            slant = sprintf("B %5.1f",r);#tenths of NM.
-                        } else {
-                            slant = sprintf("B %4.2f",r);#should really be hundreds of feet, but that will confuse everyone.
-                        }
-                      }
-                    }
+                
+                var r = steerpoints.getCurrentSlantRange();
+                if (r != nil) {
+                    if (r >= 1) {
+                        slant = sprintf("B %5.1f",r);#tenths of NM.
+                    } else {
+                        slant = sprintf("B %4.2f",r);#should really be hundreds of feet, but that will confuse everyone.
+                    }                      
                 }
+                
                 hdp.window3_txt = slant;
             }
             me.eegsGroup.setVisible(eegsShow);
@@ -2271,24 +2280,22 @@ append(obj.total, obj.speed_curr);
                 hdp.window11_txt = "";
 			}
 			
+            
             if (!hdp.cara) {
-                hdp.window10_txt = "AL";
+                me.alow_text = "AL";
             } elsif (hdp.alow<hdp.altitude_agl_ft or math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0 or hdp.gear_down) {
-                hdp.window10_txt = sprintf("AL%4d",hdp.alow);
+                me.alow_text = sprintf("AL%4d",hdp.alow);
             } else {
-                hdp.window10_txt = "";
+                me.alow_text = "";
             }
             
-
-            #if (hdp.window9_txt=="") {
-            #    me.alphaHUD = hdp.alpha;
-            #    if (hdp.gear_down) {
-            #        if (hdp.wow) {
-            #            me.alphaHUD = 0;
-            #        }
-            #    }
-            #    hdp.window9_txt = sprintf("AOA %d",me.alphaHUD);
-            #}
+            if (me.ALOW_top and me["altScaleMode"] != 2) {
+                hdp.window1_txt = me.alow_text;
+                hdp.window10_txt = me.TA_text;
+            } else {
+                hdp.window10_txt = me.alow_text;
+                hdp.window1_txt = "";
+            }
             
             hdp.window7_txt = sprintf("  %.2f",hdp.mach);
         }
@@ -2486,6 +2493,7 @@ append(obj.total, obj.speed_curr);
         me.locatorAngle.setVisible(me.locatorLineShow);
 
         if (hdp.dgft) {
+            me.ALOW_top = 1;
             me.peelDeg = 90-hdp.pitch;
             me.peelRadius = 0.25*me.sx;
             me.peelTickRadius = me.peelRadius+8;
@@ -2650,7 +2658,69 @@ append(obj.total, obj.speed_curr);
             update_item.update(hdp);
         }
         me.svg.show();
+        return;
+        me.window1.setText("window  1").show();        
+        me.window2.setText("window  2").show();
+        me.window3.setText("window  3").show();
+        me.window4.setText("window  4").show();
+        me.window5.setText("window  5").show();
+        me.window6.setText("window  6").show();
+        me.window7.setText("window  7").show();
+        me.window8.setText("window  8").show();
+        me.window9.setText("window  9").show();
+        me.window10.setText("window 10").show();
+        me.window11.setText("window 11").show();
+        me.window12.setText("window 12").show();# 
     },
+
+#  12
+#
+#     FG
+#
+#
+#  2      10
+#  7       3
+#  8       4
+#  9       5
+# 11       6
+
+#  5
+#
+#    REAL
+#
+#
+#   30    32
+#    3    37 
+#    4      26
+#   7       25
+#  8        10
+# 15        13
+# 35        14
+# 36       
+
+#Text windows on the HUD (FG F-16 May 11 2021)
+# 12 currG           1 not used 
+#                   10 ALOW
+# 2 mode             3 slant            / callsign
+# 7 mach             4 eta              / target angels
+# 8 maxG             5 waypoint         
+# 9 weap             6 not used
+# 11 fuel
+
+#Text windows on the HUD (FG F-16 rework)
+# 12 currG           1 ALOW-top
+#
+#                   10 ALOW             / target angels
+# 2 mode             3 slant            
+# 7 mach             4 eta              / time to go      TODO: CCRP: time to release / closure rate in kt: A/A guns
+# 8 maxG             5 waypoint         
+# 9 weap             6 callsign
+# 11 fuel
+#
+# TA replace ALOW in A-A ALOW:top
+# slant is F for radar computed, B for steerpoint, R for CARA, X XXX elsewise, empty for no target
+
+
     resetGunPos: func {
         me.gunPos   = [];
         for(i = 0;i < me.funnelParts*2;i+=1){

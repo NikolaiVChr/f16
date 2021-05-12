@@ -214,6 +214,7 @@ var contactPoint = nil;
 # isVirtual()     - Tells if the target is just a position, and should not be considered for damage.
 
 var AIM = {
+	lowestETA: nil,
 	#done
 	new : func (p, type = "AIM-9", sign = "Sidewinder", midFlightFunction = nil, nasalPosition = nil) {
 		if(AIM.active[p] != nil) {
@@ -854,6 +855,7 @@ var AIM = {
 		} else {
 			delete(AIM.active, me.ID);
 		}
+		AIM.setETA(nil);
 		me.SwSoundVol.setDoubleValue(0);
 	},
 
@@ -1969,6 +1971,7 @@ var AIM = {
 				append(AIM.timerQueue, [me,me.del,[],0]);
 				append(AIM.timerQueue, [me,me.log,[me.callsign~" logged off. Deleting "~me.typeLong],0]);
 				thread.unlock(mutexTimer);
+				AIM.setETA(nil);
 				return;
 			} else {
 				me.Tgt = nil;
@@ -2130,6 +2133,8 @@ var AIM = {
 			} else {
 				me.remoteControl();
 			}
+			AIM.setETA(nil);
+		    me.prevETA = nil;
 		} elsif (me.Tgt != nil and me.t_coord !=nil and me.free == FALSE and me.guidance != "unguided"
 			and (me.rail == FALSE or me.rail_passed == TRUE) and me.guidanceEnabled) {
 				#
@@ -2137,12 +2142,20 @@ var AIM = {
 				#
 				if (me.guidance == "level") {
 					me.level();
+					AIM.setETA(nil);
+			        me.prevETA = nil;
 				} elsif (me.guidance == "gyro-pitch") {
 					me.pitchGyro();
+					AIM.setETA(nil);
+			        me.prevETA = nil;
 				} else {
 					me.guide();
+					if (!me.guiding) {
+			            AIM.setETA(nil);
+			            me.prevETA = nil;
+			        }
 				}
-	            me.observing = me.guidance;
+	            me.observing = me.guidance;	            
 	    } elsif (me.guidance != "unguided" and (me.rail == FALSE or me.rail_passed == TRUE) and me.guidanceEnabled and me.free == FALSE and me.t_coord == nil
 	    		and (me.newTargetAssigned or (me.canSwitch and (me.fovLost or me.lostLOS or me.radLostLock or me.semiLostLock or me.heatLostLock) or (me.loal and me.maddog)))) {
 	    	# check for too low speed not performed on purpuse, difference between flying straight on A/P and making manouvres.
@@ -2163,12 +2176,16 @@ var AIM = {
 				me.track_signal_h = 0;
 			}
             me.observing = me.standbyFlight;
+            AIM.setETA(nil);
+            me.prevETA = nil;
 		} else {
 			me.observing = "unguided";
 			me.track_signal_e = 0;
 			me.track_signal_h = 0;
 			me.printGuide("Unguided");
 			#me.printGuideDetails(sprintf("not guiding %d %d %d %d %d",me.Tgt != nil,me.free == FALSE,me.guidance != "unguided",me.rail == FALSE,me.rail_passed == TRUE));
+			AIM.setETA(nil);
+			me.prevETA = nil;
 		}
 
 		if(me.tooLowSpeed) {
@@ -2398,6 +2415,7 @@ var AIM = {
 					append(AIM.timerQueue, [me,me.del,[],10]);
 					thread.unlock(mutexTimer);
 				}
+				AIM.setETA(nil);
 				return;
 			}
 		} else {
@@ -2472,6 +2490,7 @@ var AIM = {
 
 		# telemetry
 		if (me.data == TRUE) {
+			
 			me.eta = me.free == TRUE or me.horz_closing_rate_fps == -1?-1:(me["t_go"]!=nil?me.t_go:(me.dist_curr*M2FT)/me.horz_closing_rate_fps);
 			if (me.eta < 0) me.eta = -1;
 			me.hit = 50;# in percent
@@ -2513,6 +2532,15 @@ var AIM = {
 				setprop("sam/impact"~me.ID,me.eta);
 				setprop("sam/hit"~me.ID,me.hit);
 			}
+
+			if (me["prevETA"] != nil) {
+				if (me.prevETA < me.eta) {
+					# reset the lowest eta to allow it to increase.
+					AIM.setETA(nil);
+				}
+				AIM.setETA(me.eta, me["prevETA"]);
+			}
+			me.prevETA = me["eta"];
 		}
 		
 		#if (me.dist_curr != nil and me.dist_curr != 0 and me.dist_curr*M2NM < 1) {
@@ -5302,6 +5330,27 @@ var AIM = {
 
 	active: {},
 	flying: {},
+
+	setETA: func (eta, prev = -1) {
+		# Class method
+		thread.lock(mutexETA);
+		if (eta == -1 and prev == AIM.lowestETA) {
+			AIM.lowestETA = nil;
+		} elsif (eta == nil) {
+			AIM.lowestETA = nil;
+		} elsif (AIM.lowestETA == nil or eta < AIM.lowestETA and eta < 1800) {
+			AIM.lowestETA = eta;
+		}
+		thread.unlock(mutexETA);
+	},
+	getETA: func {
+		# Class method
+		var retur = 0;
+		thread.lock(mutexETA);
+		retur = AIM.lowestETA;
+		thread.unlock(mutexETA);
+		return retur;
+	},
 };
 var backtrace = func(desc = nil, dump_vars = 1, skip_level = 0, levels = 3) {
     var d = (desc == nil) ? "" : " '" ~ desc ~ "'";
@@ -5405,6 +5454,7 @@ var spams = 0;
 var spamList = [];
 var mutexMsg = thread.newlock();
 var mutexTimer = thread.newlock();
+var mutexETA = thread.newlock();
 
 var defeatSpamFilter = func (str) {
   thread.lock(mutexMsg);

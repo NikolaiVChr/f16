@@ -123,7 +123,7 @@
             <navigation type="string">PN</navigation>
             <class type="string">A</class>
             <fire-msg type="string">Fox 3</fire-msg>
-            <telemetry type="bool">false</telemetry>                <!-- enable for aim 120 to see datalink info -->
+            <telemetry type="bool">true</telemetry>                <!-- enable for aim 120 to see datalink info -->
             <DLZ type="bool">true</DLZ>
             <DLZ-optimal-alt-feet type="double">30000</DLZ-optimal-alt-feet>
             <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
@@ -425,6 +425,7 @@
             <require-lock-to-fire type="bool">false</require-lock-to-fire>
             <ejector-speed-fps type="double">20</ejector-speed-fps>
             <ready-time type="double">3.5</ready-time>
+            <telemetry type="bool">true</telemetry>
         </gbu-54>
         <gbu-31>
             <type-id type="int">20</type-id>
@@ -476,6 +477,7 @@
             <require-lock-to-fire type="bool">false</require-lock-to-fire>
             <ejector-speed-fps type="double">5</ejector-speed-fps>
             <ready-time type="double">3.5</ready-time>
+            <telemetry type="bool">true</telemetry>
         </gbu-31>
         <gbu-24>
             <type-id type="int">19</type-id>
@@ -765,6 +767,7 @@
             <seeker-angular-speed-dps type="double">0</seeker-angular-speed-dps>
             <ready-time type="double">3.5</ready-time>
             <ejector-speed-fps type="double">5</ejector-speed-fps>
+            <telemetry type="bool">true</telemetry>
         </agm-154a>
         <agm-158>
             <type-id type="int">6</type-id>
@@ -813,6 +816,7 @@
             <seeker-angular-speed-dps type="double">0</seeker-angular-speed-dps>
             <ready-time type="double">3.5</ready-time>
             <ejector-speed-fps type="double">5</ejector-speed-fps>
+            <telemetry type="bool">true</telemetry>
         </agm-158>
         <cbu-87> 
             <type-id type="int">12</type-id>
@@ -901,6 +905,7 @@
             <require-lock-to-fire type="bool">false</require-lock-to-fire>
             <ready-time type="double">3.5</ready-time>
             <ejector-speed-fps type="double">10</ejector-speed-fps>
+            <telemetry type="bool">true</telemetry>
         </cbu-105>
         <!--lau-68>
             <short-name type="string">LAU68</short-name>
