@@ -1270,6 +1270,7 @@ append(obj.total, obj.speed_curr);
                                           } else {
                                               hdp.CCIP_active = 0;
                                           }
+                                          hdp.timeToRelease = nil;
                                           hdp.CCRP_active = obj.CCRP(hdp);
                                           var lw = obj.CCIP(hdp);
                                           if (lw==-1) {
@@ -1728,7 +1729,7 @@ append(obj.total, obj.speed_curr);
                                                      obj.window2.setText(sprintf("  F %d%s",hdp.flap_pos_deg,obj.gd));
                                                  } elsif (hdp.master_arm) {
                                                      var submode = "";
-                                                     if (hdp.CCRP_active) {
+                                                     if (hdp.CCRP_active > 0) {
                                                         submode = "CCRP";
                                                      } elsif (obj.showmeCCIP) {
                                                         submode = "CCIP";
@@ -2169,7 +2170,17 @@ append(obj.total, obj.speed_curr);
                     hdp.window6_txt = "";
                 }
                 me.etaS = armament.AIM.getETA();
-                if (me.etaS != nil and me.etaS != -1) {
+                if (hdp["CCRP_active"] == 2 and me["timeToRelease"] != nil) {
+                    me.timeToReleaseH = int(me.timeToRelease/3600);
+                    me.timeToRelease = me.timeToRelease-me.timeToReleaseH*3600;
+                    me.timeToReleaseM = int(me.timeToRelease/60);
+                    me.timeToRelease = me.timeToRelease-me.timeToReleaseM*60;
+                    if (me.timeToReleaseH < 1) {
+                        hdp.window4_txt = sprintf("%03d:%02d",me.timeToReleaseM,me.timeToRelease);# 3 digits so pilot can tell it apart from time to steerpoint.
+                    } else {
+                        hdp.window4_txt = "XXX:XX";
+                    }
+                } elsif (me.etaS != nil and me.etaS != -1) {
                     me.etaH = int(me.etaS/3600);
                     me.etaS = me.etaS-me.etaH*3600;
                     me.etaM = int(me.etaS/60);
@@ -2177,7 +2188,7 @@ append(obj.total, obj.speed_curr);
                     if (me.etaH < 1) {
                         hdp.window4_txt = sprintf("%03d:%02d",me.etaM,me.etaS);# 3 digits so pilot can tell it apart from time to steerpoint.
                     } else {
-                        hdp.window4_txt = "XX:XX";
+                        hdp.window4_txt = "XXX:XX";
                     }
                 } else {
                     hdp.window4_txt = "";
@@ -2871,6 +2882,9 @@ append(obj.total, obj.speed_curr);
                     me.bombFallLine.hide();
                     return 0;
                 }
+                if (hdp.groundspeed_kt > 0) {
+                    me.timeToRelease = me.distCCRP/hdp.groundspeed_kt;
+                }
                 me.distCCRP/=4000;
                 if (me.distCCRP > 0.75) {
                     me.distCCRP = 0.75;
@@ -2881,7 +2895,7 @@ append(obj.total, obj.speed_curr);
                 me.bombFallLine.show();
                 me.ccrpMarker.show();
                 me.solutionCue.show();
-                return 1;
+                return math.abs(trgt.get_relative_bearing())<20?2:1;
             } else {
                 me.solutionCue.hide();
                 me.ccrpMarker.hide();
