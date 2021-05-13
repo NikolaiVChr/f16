@@ -218,7 +218,7 @@ var setCurrentNumber = func (number) {
 
 var getCurrent = func {
 	# return current steerpoint or nil
-	return getNumber(current);
+	return getNumber(getCurrentNumber());
 }
 
 var getLastRange = func {

@@ -17,7 +17,6 @@ var test = func (echoHeading, echoPitch, echoRoll, bearing, frontRCS) {
 };
 
 var rcs_database = {
-    parents: [rcs_oprf_database],
 	#REVISION: 2021/04/29
     "YF-16":                    5,      #higher because earlier blocks had larger RCS
     "F-16CJ":                   2,      #average
@@ -136,12 +135,15 @@ var isInRadarRange = func (contact, myRadarDistance_nm, myRadarStrength_rcs) {
 var targetRCSSignal = func(targetCoord, targetModel, targetHeading, targetPitch, targetRoll, myCoord, myRadarDistance_m, myRadarStrength_rcs = 5) {
     #print(targetModel);
     var target_front_rcs = nil;
-    if ( contains(rcs_database,targetModel) ) {
+    if ( contains(rcs_oprf_database,targetModel) ) {
+        target_front_rcs = rcs_oprf_database[targetModel];
+    } elsif ( contains(rcs_database,targetModel) ) {
         target_front_rcs = rcs_database[targetModel];
     } else {
         return 1;
         target_front_rcs = rcs_database["default"];
     }
+    #print(target_front_rcs," RCS from ", targetModel, " m:", myRadarDistance_m, " rcs:",myRadarStrength_rcs);
     var target_rcs = getRCS(targetCoord, targetHeading, targetPitch, targetRoll, myCoord, target_front_rcs);
     var target_distance = myCoord.direct_distance_to(targetCoord);
 
