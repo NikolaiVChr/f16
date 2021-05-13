@@ -272,7 +272,7 @@
             <hit-everything-nearby type="bool">true</hit-everything-nearby>
             <ejector-speed-fps type="double">20</ejector-speed-fps>
             <ready-time type="double">0.5</ready-time>
-            <delta-drag-coeff-deploy type="double">5.00</delta-drag-coeff-deploy> <!-- guess, need more data -->     
+            <delta-drag-coeff-deploy type="double">5.25</delta-drag-coeff-deploy> <!-- guess, need more data -->     
         </mk-82air>
         <mk-83> 
             <type-id type="int">33</type-id>
