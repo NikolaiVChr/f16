@@ -325,7 +325,7 @@ var list = func () {
         }
     } elsif (button == 10) {#MARK
         if (!lock_tgp or armament.contactPoint == nil) return;
-        line10.setText("#"~steerpoints.markTGP(armament.contactPoint));
+        line10.setText("#"~steerpoints.markTGP(armament.contactPoint.get_Coord()));
         settimer(func {line10.setText("MARK");}, 2.5);
     } elsif (button == 11) {#UP
         if (lock_tgp) return;
