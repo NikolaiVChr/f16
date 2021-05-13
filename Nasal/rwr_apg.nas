@@ -103,7 +103,7 @@ var SubSystem_RWR_APG = {
                 #TODO: check if this is needed:
                 #me.show = me.show and awg_9.TerrainManager.IsVisible(me.u.propNode,notification);# seems awg_9 uses isbehindterrain for non terrain stuff, so we need to repeat check here.
                 if (me.show == 1) {
-                    if (me.dev < 30 and me.rn < 7) {
+                    if (me.dev < 30 and me.rn < 7 and !me.l16) {
                         # he is in position to fire heatseeker at me
                         me.heatDefenseNow = me.elapsed + me.rn*1.5;
                         if (me.heatDefenseNow > me.heatDefense) {
@@ -133,7 +133,7 @@ var SubSystem_RWR_APG = {
                     me.threat += ((me.danger-me.rn)/me.danger)>0?((me.danger-me.rn)/me.danger)*0.60:0;# if inside danger zone then add threat, the closer the more.
                     me.clo = me.u.get_closure_rate();
                     me.threat += me.clo>0?(me.clo/500)*0.10:0;# more closing speed means more threat.
-                    if (me.threat > me.closestThreat) me.closestThreat = me.threat;
+                    if (me.threat > me.closestThreat and !me.l16) me.closestThreat = me.threat;
                     if (me.threat > 1) me.threat = 1;
                     if (me.threat <= 0) continue;
     #                printf("%s threat:%.2f range:%d dev:%d", me.u.get_Callsign(),me.threat,me.u.get_range(),me.deviation);
@@ -150,14 +150,14 @@ var SubSystem_RWR_APG = {
 
             me.launchClose = getprop("payload/armament/MLW-launcher") != "";
             me.incoming = getprop("payload/armament/MAW-active") or me.heatDefense > me.elapsed;
-            me.spike = getprop("payload/armament/spike");
-            me.autoFlare = me.spike?math.max(me.closestThreat*0.35,0.05):0;
+            me.spike = getprop("payload/armament/spike")*(getprop("ai/submodels/submodel[0]/count")>15);
+            me.autoFlare = me.spike?math.max(me.closestThreat*0.25,0.05):0;
 
             #print("spike: ",me.spike,"  incoming: ",me.incoming, "  launch: ",me.launchClose,"  spikeResult:", me.autoFlare,"  aggresive:",me.launchClose * 0.85 + me.incoming * 0.85,"  total:",me.launchClose * 0.85 + me.incoming * 0.85+me.autoFlare);
 
             me.autoFlare += me.launchClose * 0.85 + me.incoming * 0.85;
 
-            me.autoFlare *= 0.1 * 2 * !getprop("gear/gear[0]/wow");#0.1 being the update rate for flare dropping code.
+            me.autoFlare *= 0.1 * 2.5 * !getprop("gear/gear[0]/wow");#0.1 being the update rate for flare dropping code.
 
             setprop("ai/submodels/submodel[0]/flare-auto-release-cmd", me.autoFlare * (getprop("ai/submodels/submodel[0]/count")>0));
             if (me.autoFlare > 0.80 and rand()>0.99 and getprop("ai/submodels/submodel[0]/count") < 1) {
