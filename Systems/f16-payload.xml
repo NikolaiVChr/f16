@@ -207,7 +207,7 @@
             <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
             <stage-2-duration-sec type="double"> 0 </stage-2-duration-sec>
             <weight-launch-lbs type="double"> 500 </weight-launch-lbs>
-            <weight-warhead-lbs type="double"> 190 </weight-warhead-lbs>
+            <weight-warhead-lbs type="double"> 192 </weight-warhead-lbs>
             <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
             <drag-coeff type="double"> 0.125 </drag-coeff>
             <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
@@ -250,7 +250,7 @@
             <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
             <stage-2-duration-sec type="double"> 0 </stage-2-duration-sec>
             <weight-launch-lbs type="double"> 533 </weight-launch-lbs> <!-- Weapons file 2004 -->
-            <weight-warhead-lbs type="double"> 190 </weight-warhead-lbs>
+            <weight-warhead-lbs type="double"> 192 </weight-warhead-lbs>
             <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
             <drag-coeff type="double"> 0.125 </drag-coeff>
             <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
@@ -389,7 +389,7 @@
             <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
             <stage-2-duration-sec type="double"> 0 </stage-2-duration-sec>
             <weight-launch-lbs type="double"> 610 </weight-launch-lbs>
-            <weight-warhead-lbs type="double"> 190 </weight-warhead-lbs>
+            <weight-warhead-lbs type="double"> 192 </weight-warhead-lbs>
             <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
             <drag-coeff type="double"> 0.10 </drag-coeff>
             <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
@@ -440,7 +440,7 @@
             <stage-1-duration-sec type="double"> 0 </stage-1-duration-sec>
             <stage-2-duration-sec type="double"> 0 </stage-2-duration-sec>
             <weight-launch-lbs type="double">558</weight-launch-lbs>
-            <weight-warhead-lbs type="double">190</weight-warhead-lbs>
+            <weight-warhead-lbs type="double">192</weight-warhead-lbs>
             <weight-fuel-lbm type="double"> 0 </weight-fuel-lbm>
             <drag-coeff type="double"> 0.10 </drag-coeff>
             <cross-section-sqft type="double"> 0.63 </cross-section-sqft>
