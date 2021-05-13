@@ -79,6 +79,7 @@ var pylonSets = {
     g24: {name: "1 x GBU-24", pylon: "1 MAU", rack: nil, content: ["GBU-24"], fireOrder: [0], launcherDragArea: 0, launcherMass: 70, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     g12x3:  {name: "3 x GBU-12", pylon: "1 MAU", rack: "1 TER", content: ["GBU-12","GBU-12", "GBU-12"], fireOrder: [0,1,2], launcherDragArea: 0.005, launcherMass: 163, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0, category: 3},
 	g12x2:  {name: "2 x GBU-12", pylon: "1 MAU", rack: "1 BR57", content: ["GBU-12", "GBU-12"], fireOrder: [0,1], launcherDragArea: 0.005, launcherMass: 320, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0, category: 3},
+	g12:  {name: "1 x GBU-12", pylon: "1 MAU", rack: nil, content: ["GBU-12"], fireOrder: [0], launcherDragArea: 0.005, launcherMass: 70, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0, category: 3},
 	m82:  {name: "3 x MK-82", pylon: "1 MAU", rack: "1 TER", content: ["MK-82","MK-82","MK-82"], fireOrder: [0,1,2], launcherDragArea: 0.005, launcherMass: 163, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
 	m82air:  {name: "3 x MK-82AIR", pylon: "1 MAU", rack: "1 TER", content: ["MK-82AIR","MK-82AIR","MK-82AIR"], fireOrder: [0,1,2], launcherDragArea: 0.005, launcherMass: 163, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     m84: {name: "1 x MK-84", pylon: "1 MAU", rack: nil, content: ["MK-84"], fireOrder: [0], launcherDragArea: 0, launcherMass: 70, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
@@ -249,7 +250,7 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
     var pylons = [pylon1,pylon2,pylon3,pylon4,pylon5,pylon6,pylon7,pylon8,pylon9,pylonI,pylon10,pylon11];
 
     # The order in this line is the order key 'w' will cycle through the weapons:
-	fcs = fc.FireControl.new(pylons, [9,0,8,1,7,2,6,3,5,4], ["20mm Cannon","LAU-68","AIM-9","AIM-120","AIM-7","AGM-65B","AGM-65D","GBU-12","AGM-84","MK-82","MK-82AIR","AGM-88","GBU-31","GBU-24","MK-83","MK-84","AGM-158","CBU-87","CBU-105","AGM-154A","GBU-54","AGM-119"]);
+	fcs = fc.FireControl.new(pylons, [9,0,8,1,7,2,6,3,5,4], ["20mm Cannon","LAU-68","AIM-9","AIM-120","AIM-7","MK-82","MK-82AIR","MK-83","MK-84","GBU-12","GBU-24","GBU-31","GBU-54","AGM-65B","AGM-65D","AGM-84","AGM-88","AGM-119","AGM-154A","AGM-158","CBU-87","CBU-105"]);
 
 	var aimListener = func (obj) {
 		#If auto focus on missile is activated the we call the function
@@ -803,11 +804,11 @@ var a2g_dead = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim9);
-        pylon3.loadSet(pylonSets.g12x3);
+        pylon3.loadSet(pylonSets.g12);
         pylon4.loadSet(pylonSets.fuel37L);
         pylon5.loadSet(pylonSets.podEcm131);
         pylon6.loadSet(pylonSets.fuel37R);
-        pylon7.loadSet(pylonSets.g12x3);
+        pylon7.loadSet(pylonSets.g12);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
         if (block == 6) {
@@ -1477,11 +1478,11 @@ var b50_a2g_dead2 = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim120);
-        pylon3.loadSet(pylonSets.g12x3);
+        pylon3.loadSet(pylonSets.g12);
         pylon4.loadSet(pylonSets.fuel37L);
         pylon5.loadSet(pylonSets.podEcm184);
         pylon6.loadSet(pylonSets.fuel37R);
-        pylon7.loadSet(pylonSets.g12x3);
+        pylon7.loadSet(pylonSets.g12);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.podSAtp);
