@@ -2245,9 +2245,9 @@ var AIM = {
 				me.pitch = OurPitch.getValue();
 				me.hdg = OurHdg.getValue();
 			} else {
-				me.railvec = vector.Math.eulerToCartesian3X(-me.rail_head_deg, me.rail_pitch_deg,0);
-				me.veccy = vector.Math.yawPitchRollVector(-OurHdg.getValue(),OurPitch.getValue(),OurRoll.getValue(),me.railvec);
-				me.carty = vector.Math.cartesianToEuler(me.veccy);
+				me.railvec = me.myMath.eulerToCartesian3X(-me.rail_head_deg, me.rail_pitch_deg,0);
+				me.veccy = me.myMath.yawPitchRollVector(-OurHdg.getValue(),OurPitch.getValue(),OurRoll.getValue(),me.railvec);
+				me.carty = me.myMath.cartesianToEuler(me.veccy);
 				me.defaultHeading = me.Tgt != nil?me.Tgt.get_bearing():0;#90 deg tubes align to target heading, else north
 				me.pitch = me.carty[1];
 				me.hdg   = me.carty[0]==nil?me.defaultHeading:me.carty[0];

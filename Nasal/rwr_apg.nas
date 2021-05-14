@@ -103,7 +103,7 @@ var SubSystem_RWR_APG = {
                 #TODO: check if this is needed:
                 #me.show = me.show and awg_9.TerrainManager.IsVisible(me.u.propNode,notification);# seems awg_9 uses isbehindterrain for non terrain stuff, so we need to repeat check here.
                 if (me.show == 1) {
-                    if (me.dev < 30 and me.rn < 7 and !me.l16) {
+                    if (me.dev < 30 and me.rn < 7 and !me.l16 and me.u.get_Speed() > 60) {
                         # he is in position to fire heatseeker at me
                         me.heatDefenseNow = me.elapsed + me.rn*1.5;
                         if (me.heatDefenseNow > me.heatDefense) {
