@@ -1228,6 +1228,7 @@ value. 18000=standard US transition altitude -->
             <hud-drift type="int">1</hud-drift><!-- 2: drift c/o 0: reset -->
             <hud-flir-distance-min type="double">1.0</hud-flir-distance-min><!-- must be larger than zero -->
             <hud-flir-distance-max type="double">20.0</hud-flir-distance-max><!-- must be larger than min -->
+            <hud-flir-optimum type="bool">false</hud-flir-optimum>
             <hud-brt type="double">0.0</hud-brt>
             <hud-sym type="double">0.0</hud-sym>
             <hud-cont type="double">0.0</hud-cont>

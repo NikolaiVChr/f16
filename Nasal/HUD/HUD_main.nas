@@ -226,7 +226,7 @@ var F16_HUD = {
                 .setScale(256/flirImageReso,256/flirImageReso)
                 .set("z-index",10001);
         obj.scanY = 0;
-        obj.scans = flirImageReso/2;
+        obj.scans = flirImageReso/(getprop("f16/avionics/hud-flir-optimum")?4:2);
 
 #
 #
