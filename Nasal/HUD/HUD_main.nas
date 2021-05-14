@@ -224,7 +224,7 @@ var F16_HUD = {
         obj.flirPicHD = obj.svg.createChild("image")
                 .set("src", "Aircraft/f16/Nasal/HUD/flir"~imageReso~".png")
                 .setScale(256/imageReso,256/imageReso)
-                .set("z-index",0);
+                .set("z-index",10001);
         obj.scanY = 0;
         obj.scans = imageReso/2;
 
