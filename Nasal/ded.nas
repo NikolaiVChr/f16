@@ -657,7 +657,7 @@ var dataEntryDisplay = {
 	
 	updateDlnk: func() {
 		
-		if (getprop("f16/avionics/power-dl")) {
+		if (getprop("instrumentation/datalink/power")) {
 			var csl = datalink.get_connected_callsigns();
 			var idl = datalink.get_connected_indices();
 			var last = size(csl);
@@ -870,11 +870,11 @@ var dataEntryDisplay = {
 			 	frnd = 1;
 			 }
 		}
-		if (getprop("f16/avionics/power-dl") and frnd == 2) {
+		if (getprop("instrumentation/datalink/power") and frnd == 2) {
 			friend = "WINGMAN";
-		} elsif (getprop("f16/avionics/power-dl") and frnd == 1) {
+		} elsif (getprop("instrumentation/datalink/power") and frnd == 1) {
 			friend = "DLINK";
-		} elsif (getprop("f16/avionics/power-dl") and frnd == 3) {
+		} elsif (getprop("instrumentation/datalink/power") and frnd == 3) {
 			friend = "DL-FRND";
 		} elsif (sign != "") {
 			friend = "NO CONN";

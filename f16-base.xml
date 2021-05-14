@@ -1020,14 +1020,6 @@
             <display-lighting-intens type="double">0.4</display-lighting-intens>
             <symbology-lighting-intens type="double">1</symbology-lighting-intens>
         </rwr>
-        <iff>
-            <channel_prop type="string">/instrumentation/iff/channel-selection</channel_prop>
-            <power_prop type="string">/instrumentation/iff/power</power_prop>
-            <power type="bool">true</power>
-            <activate type="bool">true</activate>
-            <channel-selection type="int">1</channel-selection>
-            <response type="bool">false</response>
-        </iff>
         <ecm>
             <on-off type="bool">true</on-off>
         </ecm>
@@ -1071,10 +1063,19 @@
         <hud>
             <serviceable type="bool">true</serviceable>
         </hud>
+        <iff>
+            <channel_prop type="string">/instrumentation/iff/channel-selection</channel_prop>
+            <power_prop type="string">/instrumentation/iff/power</power_prop>
+            <power type="bool">false</power>
+            <activate type="bool">true</activate>
+            <channel-selection type="int">1</channel-selection>
+            <response type="bool">false</response>
+        </iff>
         <datalink>
             <data type="int">0</data>
+            <power type="bool">false</power>
             <channel type="int">42</channel>
-            <power_prop type="string">f16/avionics/power-dl</power_prop>
+            <power_prop type="string">/instrumentation/datalink/power</power_prop>
             <channel_prop type="string">instrumentation/datalink/channel</channel_prop>
             <receive_period type="double">1</receive_period>
             <!--identifier_prop type="string">instrumentation/datalink/ident</identifier_prop-->

@@ -941,6 +941,15 @@
 			</test>
 			<output>/instrumentation/iff/power</output>
 		</switch>
+
+		<switch name="elec/various/datalink">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				elec/bus/ess-dc ge 20
+				/f16/avionics/power-dl eq 1
+			</test>
+			<output>/instrumentation/datalink/power</output>
+		</switch>
 		
 		<switch name="elec/sources/batt-bus">
 			<default value="0"/>
