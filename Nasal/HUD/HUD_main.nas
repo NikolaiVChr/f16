@@ -2008,7 +2008,7 @@ append(obj.total, obj.speed_curr);
         me.yBore = flirImageReso-1-int((me.sy-me.texels_up_into_hud)/(256/flirImageReso));
         me.distMin = hdp.groundspeed_kt*getprop("f16/avionics/hud-flir-distance-min");
         me.distMax = hdp.groundspeed_kt*getprop("f16/avionics/hud-flir-distance-max");
-        me.gain = 1+getprop("f16/avionics/hud-cont")*1.5;
+        me.gain = 1+getprop("f16/avionics/hud-cont")*2.5;
         me.symb = getprop("f16/avionics/hud-depr-ret");
         if (me.symb > 0 and getprop("f16/stores/nav-mounted")==1 and getprop("f16/avionics/power-left-hdpt")==1 and me.color[3] != 0) {
             for(me.x = 0; me.x < flirImageReso; me.x += 1) {

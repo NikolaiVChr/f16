@@ -308,7 +308,7 @@
                 <command>property-adjust</command>
                 <property>f16/avionics/hud-cont</property>
                 <factor>1</factor>
-                <step>0.1</step>
+                <step>0.05</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
@@ -319,7 +319,7 @@
                 <command>property-adjust</command>
                 <property>f16/avionics/hud-cont</property>
                 <factor>1</factor>
-                <step>-0.1</step>
+                <step>-0.05</step>
                 <min>0</min>
                 <max>1</max>
                 <wrap>false</wrap>
