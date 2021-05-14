@@ -7,7 +7,7 @@
 # Richard Harrison (rjh@zaretto.com) 2016-07-01  - based on F-15 HUD
 # ---------------------------
 
-var imageReso = 16;
+var flirImageReso = 16;
 
 var ht_debug = 0;
 
@@ -222,11 +222,11 @@ var F16_HUD = {
 
 
         obj.flirPicHD = obj.svg.createChild("image")
-                .set("src", "Aircraft/f16/Nasal/HUD/flir"~imageReso~".png")
-                .setScale(256/imageReso,256/imageReso)
+                .set("src", "Aircraft/f16/Nasal/HUD/flir"~flirImageReso~".png")
+                .setScale(256/flirImageReso,256/flirImageReso)
                 .set("z-index",10001);
         obj.scanY = 0;
-        obj.scans = imageReso/2;
+        obj.scans = flirImageReso/2;
 
 #
 #
@@ -2004,38 +2004,37 @@ append(obj.total, obj.speed_curr);
 
         
         
-        var xBore = int(me.sx*0.5/(256/imageReso));
-        var yBore = imageReso-1-int((me.sy-me.texels_up_into_hud)/(256/imageReso));
-        var distMin = hdp.groundspeed_kt*getprop("f16/avionics/hud-flir-distance-min");
-        var distMax = hdp.groundspeed_kt*getprop("f16/avionics/hud-flir-distance-max");
-        var gain = 1+getprop("f16/avionics/hud-cont")*1.5;
-        var symb = getprop("f16/avionics/hud-depr-ret");
-        if (symb > 0 and getprop("f16/stores/nav-mounted")==1 and getprop("f16/stores/tgp-mounted")==1) {
-            for(var x = 0; x < imageReso; x += 1) {
-                var xDevi = (x-xBore)*(256/imageReso);
-                xDevi /= me.texelPerDegreeX;
-                for(var y = me.scanY; y < me.scanY+me.scans; y += 1) {
-                    var yDevi = (y-yBore)*(256/imageReso);
-                    yDevi /= me.texelPerDegreeY;
-                    var value = 0;
-                    var start = geo.viewer_position();
-                    var vecto = [math.cos(xDevi*D2R)*math.cos(yDevi*D2R),math.sin(-xDevi*D2R),math.sin(yDevi*D2R)];
+        me.xBore = int(me.sx*0.5/(256/flirImageReso));
+        me.yBore = flirImageReso-1-int((me.sy-me.texels_up_into_hud)/(256/flirImageReso));
+        me.distMin = hdp.groundspeed_kt*getprop("f16/avionics/hud-flir-distance-min");
+        me.distMax = hdp.groundspeed_kt*getprop("f16/avionics/hud-flir-distance-max");
+        me.gain = 1+getprop("f16/avionics/hud-cont")*1.5;
+        me.symb = getprop("f16/avionics/hud-depr-ret");
+        if (me.symb > 0 and getprop("f16/stores/nav-mounted")==1 and getprop("f16/stores/tgp-mounted")==1) {
+            for(me.x = 0; me.x < flirImageReso; me.x += 1) {
+                me.xDevi = (me.x-me.xBore)*(256/flirImageReso);
+                me.xDevi /= me.texelPerDegreeX;
+                for(me.y = me.scanY; me.y < me.scanY+me.scans; me.y += 1) {
+                    me.yDevi = (me.y-me.yBore)*(256/flirImageReso);
+                    me.yDevi /= me.texelPerDegreeY;
+                    me.value = 0;
+                    me.start = geo.viewer_position();
+                    me.vecto = [math.cos(me.xDevi*D2R)*math.cos(me.yDevi*D2R),math.sin(-me.xDevi*D2R),math.sin(me.yDevi*D2R)];
                     
-                    var direction = vector.Math.vectorToGeoVector(vector.Math.yawPitchRollVector(-getprop("orientation/heading-deg"),getprop("orientation/pitch-deg"),getprop("orientation/roll-deg"), vecto),start);
-                    var intercept = get_cart_ground_intersection({x:start.x(),y:start.y(),z:start.z()}, direction);
-                    if (intercept == nil) {
-                        value = 0;
+                    me.direction = vector.Math.vectorToGeoVector(vector.Math.yawPitchRollVector(-getprop("orientation/heading-deg"),getprop("orientation/pitch-deg"),getprop("orientation/roll-deg"), me.vecto),me.start);
+                    me.intercept = get_cart_ground_intersection({x:me.start.x(),y:me.start.y(),z:me.start.z()}, me.direction);
+                    if (me.intercept == nil) {
+                        me.value = 0;
                     } else {
-                        var terrain = geo.Coord.new();
-                        terrain.set_latlon(intercept.lat, intercept.lon ,intercept.elevation);
-                        value = math.min(1,((math.max(distMin-distMax, distMin-start.direct_distance_to(terrain))+(distMax-distMin))/distMax));
-                        #math.min(1,((math.max(-1500, 1000-start.direct_distance_to(terrain))+1500)/2500));
+                        me.terrain = geo.Coord.new();
+                        me.terrain.set_latlon(me.intercept.lat, me.intercept.lon ,me.intercept.elevation);
+                        me.value = math.min(1,((math.max(me.distMin-me.distMax, me.distMin-me.start.direct_distance_to(me.terrain))+(me.distMax-me.distMin))/me.distMax));
                     }
-                    me.flirPicHD.setPixel(x, y, [me.color[0],me.color[1],me.color[2],symb*math.pow(value, gain)]);
+                    me.flirPicHD.setPixel(me.x, me.y, [me.color[0],me.color[1],me.color[2],me.symb*math.pow(me.value, me.gain)]);
                 }
             }
-            me.scanY+=me.scans;if (me.scanY>imageReso-me.scans) me.scanY=0;
-            #me.flirPicHD.setPixel(int(me.sx*0.5/(256/imageReso)), imageReso-1-int((me.sy-me.texels_up_into_hud)/(256/imageReso)), [0,0,1,1]);
+            me.scanY+=me.scans;if (me.scanY>flirImageReso-me.scans) me.scanY=0;
+            #me.flirPicHD.setPixel(int(me.sx*0.5/(256/flirImageReso)), flirImageReso-1-int((me.sy-me.texels_up_into_hud)/(256/flirImageReso)), [0,0,1,1]); blue dot at bore
             me.flirPicHD.dirtyPixels();
             me.flirPicHD.show();
         } else {
