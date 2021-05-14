@@ -1,28 +1,29 @@
 #
 # Install: Include this code into an aircraft to make it damagable. (remember to add it to the -set file)
-#          for damage to be recognised, the property /payload/armament/msg must be 1
+#          if /payload/armament/spectator is 1 and damage off, missile trails, craters, flares,
+#          and missile warnings will be received, but not actual damage.
 #
-# Authors: Nikolai V. Chr., Pinto and Richard (with improvement by Onox)
+# Authors: Nikolai V. Chr., Pinto, Colin Geniet and Richard (with improvement by Onox)
 #
 #
 
 
 ############################ Config ########################################################################################
-var full_damage_dist_m = 1.25;# Can vary from aircraft to aircraft depending on how many failure modes it has.
+var full_damage_dist_m = getprop("payload/d-config/full_damage_dist_m");# Can vary from aircraft to aircraft depending on how many failure modes it has.
                            # Many modes (like Viggen) ought to have lower number like zero.
                            # Few modes (like F-14) ought to have larger number such as 3.
                            # For assets this should be average radius of the asset.
-var use_hitpoints_instead_of_failure_modes_bool = 0;# mainly used by assets that don't have failure modes.
-var hp_max = 80;# given a direct hit, how much pounds of warhead is needed to kill. Only used if hitpoints is enabled.
-var hitable_by_air_munitions = 1;   # if anti-air can do damage
-var hitable_by_cannon = 1;          # if cannon can do damage
+var use_hitpoints_instead_of_failure_modes_bool = getprop("payload/d-config/use_hitpoints_instead_of_failure_modes_bool");# bool. mainly used by assets that don't have failure modes.
+var hp_max = getprop("payload/d-config/hp_max");# given a direct hit, how much pounds of warhead is needed to kill. Only used if hitpoints is enabled.
+var hitable_by_air_munitions = getprop("payload/d-config/hitable_by_air_munitions");   # if anti-air can do damage
+var hitable_by_cannon = getprop("payload/d-config/hitable_by_cannon");          # if cannon can do damage
 #var hitable_by_ground_munitions = 1;# if anti-ground/marine can do damage
-var is_fleet = 0;  # Is really 7 ships, 3 of which has offensive missiles.
-var rwr_to_screen=0; # for aircraft that do not yet have proper RWR
-var tacview_supported=1; # For aircraft with tacview support
-var m28_auto=0; # only used by automats
-var mlw_max=2.25; # 
-var auto_flare_caller = 0; # If damage.nas should detect flare releases, or if function is called from somewhere in aircraft
+var is_fleet = getprop("payload/d-config/is_fleet");  # Is really 7 ships, 3 of which has offensive missiles.
+var rwr_to_screen=getprop("payload/d-config/rwr_to_screen"); # for aircraft that do not yet have proper RWR
+var tacview_supported=getprop("payload/d-config/tacview_supported"); # For aircraft with tacview support
+var m28_auto=getprop("payload/d-config/m28_auto"); # only used by automats
+var mlw_max=getprop("payload/d-config/mlw_max"); # 
+var auto_flare_caller = getprop("payload/d-config/auto_flare_caller"); # If damage.nas should detect flare releases, or if function is called from somewhere in aircraft
 ############################################################################################################################
 
 var TRUE  = 1;
@@ -167,7 +168,7 @@ var warheads = {
 var id2warhead = [];
 var launched = {};# callsign: elapsed-sec
 var approached = {};# callsign: uniqueID
-var heavy_smoke = [61,62,92];
+var heavy_smoke = [61,62,63,65,92];
 
 var k = keys(warheads);
 
@@ -256,7 +257,7 @@ var DamageRecipient =
                   notification.Flags = 0;
                   notification.RemoteCallsign = "";
                 }
-                if(getprop("payload/armament/msg") == 0 and notification.RemoteCallsign != notification.Callsign) {
+                if(getprop("payload/armament/msg") == 0 and getprop("payload/armament/spectator") != 1 and notification.RemoteCallsign != notification.Callsign) {
                   return emesary.Transmitter.ReceiptStatus_NotProcessed;
                 }
                                 
@@ -298,7 +299,7 @@ var DamageRecipient =
                   dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [systime()-(time_before_delete-1.6), notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.u_fps, notification.Heading, notification.Pitch,-1]
                 }
                 
-                if (tacview_supported and getprop("sim/multiplay/txhost") != "mpserver.opredflag.com") {
+                if (tacview_supported and getprop("sim/multiplay/txhost") == "mpserver.opredflag.com") {
                   if (tacview.starttime) {
                     var tacID = left(md5(notification.Callsign~notification.UniqueIdentity),6);
                     if (notification.Kind == DESTROY) {
@@ -381,7 +382,7 @@ var DamageRecipient =
                     #
                     #
                     if (tacview_supported and tacview.starttime and getprop("sim/multiplay/txhost") != "mpserver.opredflag.com") {
-                      var node = getCallsign(notification.RemoteCallsign);
+                    var node = getCallsign(notification.RemoteCallsign);
                       if (node != nil and notification.SecondaryKind > 20) {
                         # its a warhead
                         var wh = id2warhead[notification.SecondaryKind - 21];
@@ -510,7 +511,7 @@ var DamageRecipient =
                 return emesary.Transmitter.ReceiptStatus_OK;
             }
             if (notification.NotificationType == "StaticNotification") {
-                if(getprop("payload/armament/msg") == 0) {
+                if(getprop("payload/armament/msg") == 0 and getprop("payload/armament/spectator") != 1) {
                   return emesary.Transmitter.ReceiptStatus_NotProcessed;
                 }
                 if (notification.Kind == CREATE and getprop("payload/armament/enable-craters") == 1 and statics["obj_"~notification.UniqueIdentity] == nil) {
@@ -929,7 +930,6 @@ var flare_released = func {
     msg.Heading = 0;
     msg.u_fps = 0;
     notifications.objectBridgedTransmitter.NotifyAll(msg);
-
     recordOwnFlare(msg);
 }
 
@@ -968,11 +968,15 @@ setlistener("payload/armament/msg", func {
   check_for_Request();
 },0,0);
 
+setlistener("payload/armament/spectator", func {
+  check_for_Request();
+},0,0);
+
 var last_check = -65;
 
 var check_for_Request = func {
   # This sends out a notification to ask other aircraft for all craters
-  if (getprop("payload/armament/enable-craters") == 1 and getprop("sim/multiplay/online") and getprop("payload/armament/msg") and systime()-last_check > 60) {
+  if (getprop("payload/armament/enable-craters") == 1 and getprop("sim/multiplay/online") and (getprop("payload/armament/spectator") or getprop("payload/armament/msg")) and systime()-last_check > 60) {
     last_check = systime();
     var msg = notifications.StaticNotification.new("stat", int(rand()*15000000), REQUEST_ALL, 0);
     msg.IsDistinct = 0;

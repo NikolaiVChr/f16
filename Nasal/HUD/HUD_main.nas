@@ -2178,7 +2178,7 @@ append(obj.total, obj.speed_curr);
                     if (me.timeToReleaseH < 1) {
                         hdp.window4_txt = sprintf("%03d:%02d",me.timeToReleaseM,me.timeToRelease);# 3 digits so pilot can tell it apart from time to steerpoint.
                     } else {
-                        hdp.window4_txt = "XXX:XX";
+                        hdp.window4_txt = "XXX";
                     }
                 } elsif (me.etaS != nil and me.etaS != -1) {
                     me.etaH = int(me.etaS/3600);
@@ -2188,7 +2188,7 @@ append(obj.total, obj.speed_curr);
                     if (me.etaH < 1) {
                         hdp.window4_txt = sprintf("%03d:%02d",me.etaM,me.etaS);# 3 digits so pilot can tell it apart from time to steerpoint.
                     } else {
-                        hdp.window4_txt = "XXX:XX";
+                        hdp.window4_txt = "XXX";
                     }
                 } else {
                     hdp.window4_txt = "";
