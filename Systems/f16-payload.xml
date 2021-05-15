@@ -12,6 +12,7 @@
         <hitable_by_cannon type="bool">true</hitable_by_cannon>
         <is_fleet type="bool">false</is_fleet>
         <rwr_to_screen type="bool">false</rwr_to_screen>
+        <rwr_audio_extended type="bool">true</rwr_audio_extended>
         <tacview_supported type="bool">true</tacview_supported>
         <m28_auto type="bool">false</m28_auto>
         <mlw_max type="double">2.25</mlw_max>

@@ -20,6 +20,7 @@ var hitable_by_cannon = getprop("payload/d-config/hitable_by_cannon");          
 #var hitable_by_ground_munitions = 1;# if anti-ground/marine can do damage
 var is_fleet = getprop("payload/d-config/is_fleet");  # Is really 7 ships, 3 of which has offensive missiles.
 var rwr_to_screen=getprop("payload/d-config/rwr_to_screen"); # for aircraft that do not yet have proper RWR
+var rwr_audio_extended=getprop("payload/d-config/rwr_audio_extended"); # for aircraft that want seperate audio properties for different radar spikes.
 var tacview_supported=getprop("payload/d-config/tacview_supported"); # For aircraft with tacview support
 var m28_auto=getprop("payload/d-config/m28_auto"); # only used by automats
 var mlw_max=getprop("payload/d-config/mlw_max"); # 
@@ -164,6 +165,37 @@ var warheads = {
     "BETAB-500ShP":      [94, 1160.00,1,0],
     "Flare":             [95,    0.00,0,0],
 };
+
+var AIR_RADAR = "air";
+
+var radar_signatures = {
+                "f-14b":                    AIR_RADAR,
+                "F-14D":                    AIR_RADAR,
+                "F-15C":                    AIR_RADAR,
+                "F-15D":                    AIR_RADAR,
+                "F-16":                     AIR_RADAR,
+                "AJS37-Viggen":             AIR_RADAR,
+                "JA37Di-Viggen":            AIR_RADAR,
+                "m2000-5":                  AIR_RADAR,
+                "m2000-5B":                 AIR_RADAR,
+                "MiG-21bis":                AIR_RADAR,
+                "MiG-21MF-75":              AIR_RADAR,
+                "MiG-29":                   AIR_RADAR,
+                "SU-27":                    AIR_RADAR,
+                "EC-137R":                  AIR_RADAR,
+                "RC-137R":                  AIR_RADAR,
+                "E-8R":                     AIR_RADAR,
+                "EC-137D":                  AIR_RADAR,
+                "Mig-28":                   AIR_RADAR,
+                "ZSU-23-4M":                "gnd-23",
+                "S-75":                     "gnd-02",
+                "buk-m2":                   "gnd-11",
+                "s-300":                    "gnd-20",
+                "MIM104D":                  "gnd-p2",
+                "missile_frigate":          "gnd-nk",
+                "fleet":                    "gnd-nk",
+};
+
 
 var id2warhead = [];
 var launched = {};# callsign: elapsed-sec
@@ -1192,12 +1224,19 @@ var getCallsign = func (callsign) {
 
 var MAW_elapsed = 0;
 
+var radarSpikes = {};
+
+foreach (key ; keys(radar_signatures)) {
+  radarSpikes[radar_signatures[key]] = 0;
+}
+
 var processCallsigns = func () {
   callsign_struct = {};
   var players = props.globals.getNode("ai/models").getChildren();
   var myCallsign = getprop("sim/multiplay/callsign");
   myCallsign = size(myCallsign) < 8 ? myCallsign : left(myCallsign,7);
   var painted = 0;
+  var paint_list = [];
   foreach (var player; players) {
     if(player.getChild("valid") != nil and player.getChild("valid").getValue() == TRUE and player.getChild("callsign") != nil and player.getChild("callsign").getValue() != "" and player.getChild("callsign").getValue() != nil) {
       var callsign = player.getChild("callsign").getValue();
@@ -1205,14 +1244,49 @@ var processCallsigns = func () {
       var str6 = player.getNode("sim/multiplay/generic/string[6]");
       if (str6 != nil and str6.getValue() != nil and str6.getValue() != "" and size(""~str6.getValue())==4 and left(md5(myCallsign),4) == str6.getValue()) {
         painted = 1;
+        if (rwr_audio_extended) {
+          append(paint_list, getModel(player.getNode("sim/model/path")));
+        }
       }
     }
   }
-  setprop("payload/armament/spike", painted);
   if (getprop("sim/time/elapsed-sec")-MAW_elapsed > 1.1) {
       setprop("payload/armament/MAW-active", 0);# resets every 1.1 seconds without warning
   }
+
+  # spike handling:
+  setprop("payload/armament/spike", painted);
+  if (!rwr_audio_extended) return;
+  var roundSpike = rand();
+  foreach (var radarModel ; paint_list) {
+    var ref = radar_signatures[radarModel];
+    if (ref != nil) {
+      radarSpikes[ref] = roundSpike;
+    }
+  }
+  foreach(key ; keys(radarSpikes)) {
+    if (radarSpikes[key] == roundSpike) {
+      setprop("payload/armament/spike-"~key, 1);
+    } else {
+      setprop("payload/armament/spike-"~key, 0);
+    }
+  }
 }
+var remove_suffix = func(str, suffix) {
+  var len = size(suffix);
+  if (substr(str, -len) == suffix) return substr(str, 0, size(str) - len);
+  else return str;
+};
+var getModel = func (node) {
+  if (node == nil) return "";
+  var value = node.getValue();
+  if (value == nil or value == "") return "";
+  var model = split(".", split("/", value)[-1])[0];
+  model = remove_suffix(model, "-model");
+  model = remove_suffix(model, "-anim");
+  return model;
+}
+
 processCallsignsTimer = maketimer(1.5, processCallsigns);
 processCallsignsTimer.simulatedTime = 1;
 processCallsignsTimer.start();
@@ -1324,3 +1398,10 @@ setlistener("sim/signals/exit", writeDamageLog, 0, 0);
 #screen.property_display.add("payload/armament/MLW-count");
 #screen.property_display.add("payload/armament/MLW-launcher");
 #screen.property_display.add("payload/armament/spike");
+#screen.property_display.add("payload/armament/spike-air");
+#screen.property_display.add("payload/armament/spike-gnd-20");
+#screen.property_display.add("payload/armament/spike-gnd-02");
+#screen.property_display.add("payload/armament/spike-gnd-11");
+#screen.property_display.add("payload/armament/spike-gnd-23");
+#screen.property_display.add("payload/armament/spike-gnd-p2");
+#screen.property_display.add("payload/armament/spike-gnd-nk");
