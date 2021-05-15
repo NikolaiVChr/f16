@@ -1208,6 +1208,9 @@ var MFD_Device =
                 me.root.hd.hide();
             }			
             
+            #
+            # Bulls-eye info on FCR
+            #
             me.bullPt = steerpoints.getNumber(555);
             me.bullOn = me.bullPt != nil and rdrMode != RADAR_MODE_GM;
             if (me.bullOn) {
@@ -1416,6 +1419,10 @@ var MFD_Device =
             me.root.lockGM.hide();
             me.root.lockInfo.hide();
             
+
+            #
+            # Bulls-eye position on FCR
+            #
             if (me.bullOn) {
                 me.close = math.abs(cursor_pos[0] - me.bullPos[0]) < 25 and math.abs(cursor_pos[1] - me.bullPos[1]) < 25;
                 if (me.close and exp) {
@@ -1430,6 +1437,9 @@ var MFD_Device =
                 me.root.bullseye.setTranslation(me.bullPos);
             }
             
+            #
+            # Current steerpoint on FCR
+            #
             if (steerpoints.getCurrentNumber() != 0 and rdrMode != RADAR_MODE_GM) {
                 me.wpC = steerpoints.getCurrentCoord();
                 me.legBearing = geo.normdeg180(geo.aircraft_position().course_to(me.wpC)-noti.heading);#relative
@@ -1450,6 +1460,9 @@ var MFD_Device =
                 me.root.steerpoint.setVisible(0);
             }
             
+            #
+            # Radar echoes, targets and DLNK contacts on FCR
+            #
             me.desig_new = nil;
             me.gm_echoPos = {};
             me.ijk = 0;
@@ -1524,7 +1537,7 @@ var MFD_Device =
                             me.root.lnkT[me.i].show();
                             me.root.lnk[me.i].setColor(me.blue?colorDot4:colorCircle2);
                             me.root.lnk[me.i].setTranslation(me.echoPos);
-                            me.root.lnk[me.i].setRotation(D2R*(contact.get_heading()-getprop("orientation/heading-deg")-geo.normdeg180(contact.get_relative_bearing())));
+                            me.root.lnk[me.i].setRotation(D2R*22.5*math.round( geo.normdeg(contact.get_heading()-getprop("orientation/heading-deg")-geo.normdeg180(contact.get_relative_bearing()))/22.5 ));#Show rotation in increments of 22.5 deg
                             me.root.lnk[me.i].show();
                             me.root.lnk[me.i].update();
                             me.root.iff[me.i].hide();
@@ -1615,7 +1628,7 @@ var MFD_Device =
                         me.root.lockAlt.setText(me.lockAlt);
                         me.root.lockInfo.setText(me.lockInfo);
                         me.root.lockInfo.show();
-                        me.rot = me.rot-getprop("orientation/heading-deg")-geo.normdeg180(contact.get_relative_bearing());
+                        me.rot = 22.5*math.round( geo.normdeg(me.rot-getprop("orientation/heading-deg")-geo.normdeg180(contact.get_relative_bearing()))/22.5 );#Show rotation in increments of 22.5 deg
                         me.root.lock.setTranslation(me.echoPos);
                         #if (cursor_lock == -1) {
                             #cursor_pos = [276*0.795*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels];
@@ -1661,6 +1674,9 @@ var MFD_Device =
             }
             me.root.lnkT[me.root.maxB].setVisible(me.showDLT);
             
+            #
+            # Intercept steering point for designated target
+            #
             if (me.intercept != nil) {
                 me.interceptCoord = me.intercept[2];
                 me.interceptDist = me.intercept[3];
@@ -1672,6 +1688,9 @@ var MFD_Device =
                 me.root.interceptCross.setVisible(0);
             }
             
+            #
+            # Draw the ground radar
+            #
             if (getprop("sim/multiplay/generic/int[2]")!=1 and rdrMode == RADAR_MODE_GM) {
                 var vari = getprop("sim/variant-id");
                 me.mono = !(vari<2 or vari ==3);
@@ -1795,6 +1814,11 @@ var MFD_Device =
                 me.root.lnk[me.i].hide();
                 me.root.lnkT[me.i].hide();
             }
+
+
+            #
+            # The dynamic launch zone indicator on FCR
+            #
             me.root.dlzArray = pylons.getDLZ();
             #me.dlzArray =[10,8,6,2,9];#test
             if (me.root.dlzArray == nil or size(me.root.dlzArray) == 0 or rdrMode == RADAR_MODE_GM) {
@@ -3634,7 +3658,7 @@ var MFD_Device =
                 me.root.blep[me.i].setColor(me.lnkLock?colorCircle2:(me.blue?colorDot4:colorLine3));
                 me.root.blep[me.i].setTranslation(me.distPixels*math.sin(contact.get_relative_bearing()*D2R),-me.distPixels*math.cos(contact.get_relative_bearing()*D2R));
                 me.root.blep[me.i].show();
-                me.root.blep[me.i].setRotation((contact.get_heading()-getprop("orientation/heading-deg"))*D2R);
+                me.root.blep[me.i].setRotation(22.5*math.round( geo.normdeg((contact.get_heading()-getprop("orientation/heading-deg")))/22.5 )*D2R);#Show rotation in increments of 22.5 deg
                 me.root.blep[me.i].update();
                 if (me.desig) {
                     me.rot = contact.get_heading();
@@ -3647,7 +3671,7 @@ var MFD_Device =
                         me.lockInfo = sprintf("%4d   %+4d", contact.get_Speed(), contact.get_closure_rate());
                         me.root.lockInfo.setText(me.lockInfo);
                         me.root.lockInfo.show();
-                        me.rot = me.rot-getprop("orientation/heading-deg");
+                        me.rot = 22.5*math.round( geo.normdeg(me.rot-getprop("orientation/heading-deg"))/22.5 );#Show rotation in increments of 22.5 deg
                         me.root.lock.setTranslation(me.distPixels*math.sin(contact.get_relative_bearing()*D2R),-me.distPixels*math.cos(contact.get_relative_bearing()*D2R));
                         
                         if (me.blue) {
