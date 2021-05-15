@@ -1430,7 +1430,7 @@ var MFD_Device =
                 me.root.bullseye.setTranslation(me.bullPos);
             }
             
-            if (steerpoints.getCurrentNumber() != 0) {
+            if (steerpoints.getCurrentNumber() != 0 and rdrMode != RADAR_MODE_GM) {
                 me.wpC = steerpoints.getCurrentCoord();
                 me.legBearing = geo.normdeg180(geo.aircraft_position().course_to(me.wpC)-noti.heading);#relative
                 me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
