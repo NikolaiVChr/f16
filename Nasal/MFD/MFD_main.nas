@@ -1436,8 +1436,16 @@ var MFD_Device =
                 me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
                 me.distPixels = me.legDistance*(482/awg_9.range_radar2);
                 me.steerPos = [me.wdt*0.5*me.legBearing/60,-me.distPixels];
+                var vis = 1;
+                me.close = math.abs(cursor_pos[0] - me.steerPos[0]) < 25 and math.abs(cursor_pos[1] - me.steerPos[1]) < 25;
+                if (me.close and exp) {
+                    me.steerPos[0] = cursor_pos[0]+(me.steerPos[0] - cursor_pos[0])*4;
+                    me.steerPos[1] = cursor_pos[1]+(me.steerPos[1] - cursor_pos[1])*4;
+                } elsif (exp and math.abs(cursor_pos[0] - me.steerPos[0]) < 100 and math.abs(cursor_pos[1] - me.steerPos[1]) < 100) {
+                    vis = 0;
+                }
                 me.root.steerpoint.setTranslation(me.steerPos);
-                me.root.steerpoint.setVisible(1);
+                me.root.steerpoint.setVisible(vis);
             } else {
                 me.root.steerpoint.setVisible(0);
             }
