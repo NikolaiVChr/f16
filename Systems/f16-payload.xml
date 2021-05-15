@@ -1094,7 +1094,7 @@
             <require-lock-to-fire type="bool">true</require-lock-to-fire>
             <ejector-speed-fps type="double">15</ejector-speed-fps>
         </b61-12>
-        <es>                   <!-- Ejection seat -->
+        <es>                   <!-- Ejection seat ACES II. Source: A-DA-133 628 -->
                 <type-id type="int">93</type-id>
                 <vol-search type="double">0.075</vol-search>
                 <vol-track type="double">0.25</vol-track>
@@ -1107,11 +1107,11 @@
                 <seeker-field-deg type="int">54</seeker-field-deg>      
                 <max-g type="int">10</max-g>                            
                 <max-launch-g type="int">9</max-launch-g>      
-                <thrust-lbf-stage-1 type="double">1500</thrust-lbf-stage-1>
+                <thrust-lbf-stage-1 type="double">3300</thrust-lbf-stage-1>
                 <thrust-lbf-stage-2 type="double">0.0</thrust-lbf-stage-2>  
-                <stage-1-duration-sec type="double">1</stage-1-duration-sec>
+                <stage-1-duration-sec type="double">0.4</stage-1-duration-sec>
                 <stage-2-duration-sec type="double">0.0</stage-2-duration-sec>
-                <weight-launch-lbs type="double">300</weight-launch-lbs>
+                <weight-launch-lbs type="double">312</weight-launch-lbs>
                 <weight-warhead-lbs type="double">0.0</weight-warhead-lbs>  
                 <weight-fuel-lbm type="double">5.0</weight-fuel-lbm>        
                 <drag-coeff type="double">1.35</drag-coeff>                 
@@ -1119,7 +1119,7 @@
                 <cross-section-sqft type="double">2</cross-section-sqft>
                 <arming-time-sec type="double">0</arming-time-sec>    
                 <min-speed-for-guiding-mach type="double">0.8</min-speed-for-guiding-mach>
-                <self-destruct-time-sec type="double">5000</self-destruct-time-sec>       
+                <self-destruct-time-sec type="double">1000</self-destruct-time-sec>       
                 <seeker-angular-speed-dps type="double">10.0</seeker-angular-speed-dps>
                 <lock-on-sun-deg type="double">20</lock-on-sun-deg>       
                 <loft-altitude type="int">0</loft-altitude>
@@ -1129,13 +1129,13 @@
                 <rail-point-forward type="bool">false</rail-point-forward>
                 <rail-pitch-deg type="double">90</rail-pitch-deg>
                 <drop-time type="double">0</drop-time>
-                <deploy-time type="double">3.5</deploy-time>                            
+                <deploy-time type="double">2.0</deploy-time>                            
                 <inert type="bool">true</inert>                            
                 <lateral-dps type="int">2</lateral-dps>                            
                 <max-report-distance type="double">65</max-report-distance>
                 <class type="string">A</class>
                 <fire-msg type="string">weeeeee</fire-msg>
-                <long-name type="string">Project Gamma</long-name>
+                <long-name type="string">ACES II</long-name>
                 <short-name type="string">gamma</short-name>
                 <pitch-animation-disabled type="bool">true</pitch-animation-disabled>
         </es>

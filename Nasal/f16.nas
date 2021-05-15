@@ -1225,6 +1225,7 @@ var eject = func{
   if (getprop("f16/ejected")==1 or !getprop("controls/seat/ejection-safety-lever")) {
       return;
   }
+  # ACES II activation
   view.setViewByIndex(1);
   setprop("f16/ejected",1);
   settimer(eject2, 1.5);# this is to give the sim time to load the exterior view, so there is no stutter while seat fires and it gets stuck.
