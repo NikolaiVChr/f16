@@ -233,6 +233,17 @@
   <text><halign>left</halign><label>Will auto-switch when ordnance is released.</label></text>
 
   <hrule/>
+
+    <button>
+      <legend>Reset HUD Max G value</legend>
+      <binding>
+          <command>property-assign</command>
+          <property>f16/avionics/n-reset</property>
+          <value>1</value>
+      </binding>
+    </button>
+
+  <empty><stretch>1</stretch></empty>
   
     <checkbox>
       <label>Use alternative Head Up Display</label>

@@ -48,7 +48,7 @@
  </model>
  
 <model>
-  <name>Station3_GBU12</name>
+  <name>Station3_3xGBU12</name>
   <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/trirack-3.xml</path>
   <offsets>
     <x-m>0.7</x-m>
@@ -59,8 +59,30 @@
 </model>
 
 <model>
+  <name>Station3_GBU12</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/GBU-12.xml</path>
+  <offsets>
+   <x-m>0.13</x-m>
+   <y-m>-2.879</y-m>
+   <z-m>-0.434</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+<model>
   <name>Station3_MK82</name>
   <path>Aircraft/f16/Models/Armament/Weapons/MK-82/trirack-3.xml</path>
+  <offsets>
+    <x-m>0.7</x-m>
+    <y-m>-2.879</y-m>
+    <z-m>-0.386</z-m>
+    <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station3_MK82AIR</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-82AIR/trirack-3.xml</path>
   <offsets>
     <x-m>0.7</x-m>
     <y-m>-2.879</y-m>
@@ -328,7 +350,7 @@
  </model>
  
   <model>
-  <name>Station7_GBU12</name>
+  <name>Station7_3xGBU12</name>
   <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/trirack-7.xml</path>
   <offsets>
     <x-m>0.7</x-m>
@@ -339,8 +361,30 @@
 </model>
 
 <model>
+  <name>Station7_GBU12</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/GBU-12.xml</path>
+  <offsets>
+   <x-m>0.13</x-m>
+   <y-m>2.879</y-m>
+   <z-m>-0.434</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+<model>
   <name>Station7_MK82</name>
   <path>Aircraft/f16/Models/Armament/Weapons/MK-82/trirack-7.xml</path>
+  <offsets>
+    <x-m>0.7</x-m>
+    <y-m>2.879</y-m>
+    <z-m>-0.386</z-m>
+    <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+</model>
+
+<model>
+  <name>Station7_MK82AIR</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/MK-82AIR/trirack-7.xml</path>
   <offsets>
     <x-m>0.7</x-m>
     <y-m>2.879</y-m>

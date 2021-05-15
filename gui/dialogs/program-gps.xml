@@ -8,6 +8,40 @@
     <!--<width>250</width>
     <height>250</height>-->
 
+    <nasal>
+        <open><![CDATA[
+        	var s = steerpoints.getNumber(500);
+			if (s != nil) {
+				setprop("f16/avionics/gps-lat", s.lat);
+				setprop("f16/avionics/gps-lon", s.lon);
+				setprop("f16/avionics/gps-alt", s.alt);
+			}   
+
+            #var dlg = props.globals.getNode("/sim/gui/dialogs/route-manager", 1);
+            
+            var load_stpts = func(path) {
+                steerpoints.loadSTPTs(path.getValue());
+            }
+            var save_stpts = func(path) {
+                steerpoints.saveSTPTs(path.getValue());
+            }
+            
+            var defaultDirInFileSelector = getprop("/sim/fg-home") ~ "/Export";
+
+            var file_selector = gui.FileSelector.new(
+              callback: load_stpts, title: "Load data", button: "Load",
+              dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.f16dtc"]);
+            var save_selector = gui.FileSelector.new(
+              callback: save_stpts, title: "Save data", button: "Save",
+              dir: defaultDirInFileSelector, dotfiles: 1, file: "f16-stpt-iff-and-dl.f16dtc", pattern: ["*.f16dtc"]);
+        ]]></open>
+
+        <close><![CDATA[
+            file_selector.del();
+            save_selector.del();
+        ]]></close>
+    </nasal>
+
     <group>
 		<layout>hbox</layout>
 		<empty><stretch>1</stretch></empty>
@@ -35,7 +69,7 @@
 	<hrule/>
 
   	<text>
-	    <label>Set coordinates for standoff GPS-guided munitions (JSOW, JASSM)</label>
+	    <label>STPT #500 for standoff GPS-guided munitions (JSOW, JASSM)</label>
 	    <height>25</height>
 	</text>
 
@@ -95,14 +129,16 @@
 		<binding>
 			<command>nasal</command>
 			<script><![CDATA[
-				var lat = getprop("f16/avionics/gps-lat");
-				var lon = getprop("f16/avionics/gps-lon");
-				var alt = getprop("f16/avionics/gps-alt")*FT2M;
-				if (lat < 90 and lat > -90 and lon < 180 and lon > -180 and pylons.fcs != nil) {
+				var s = steerpoints.STPT.new();
+				s.lat = getprop("f16/avionics/gps-lat");
+				s.lon = getprop("f16/avionics/gps-lon");
+				s.alt = getprop("f16/avionics/gps-alt");
+				steerpoints.setNumber(500,s);
+				if (s.lat < 90 and s.lat > -90 and s.lon < 180 and s.lon > -180 and pylons.fcs != nil) {
 					var wp = pylons.fcs.getSelectedWeapon();
 					if (wp != nil and wp.parents[0] == armament.AIM and wp.target_pnt == 1 and wp.guidance=="gps") {
 						var coord = geo.Coord.new();
-						coord.set_latlon(lat,lon,alt);
+						coord.set_latlon(s.lat,s.lon,s.alt*FT2M);
 						var spot = fc.ContactTGP.new("GPS-Spot",coord,0);
 						armament.contactPoint = spot;
 						tgp.gps = 1;
@@ -144,5 +180,82 @@
  </group>
 
  <empty><stretch>1</stretch></empty>
+
+ <hrule/>
+
+ <input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>From STPT</label>
+	  	<property>f16/avionics/stpt-from</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+	</input>
+	<input>
+	  	<width>250</width>
+	  	<height>25</height>
+	  	<label>to STPT</label>
+	  	<property>f16/avionics/stpt-to</property>
+	  	<live>true</live>
+	  	<halign>left</halign>
+        <binding>
+            <command>dialog-apply</command>
+      	</binding>
+	</input>
+	<button>
+		<legend>Copy STPT</legend>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				steerpoints.copy(getprop("f16/avionics/stpt-from"),getprop("f16/avionics/stpt-to"));
+			]]></script>
+		</binding>
+	</button>
+
+	<text>
+	    <label>#000 to #099 is route (read-only).</label>
+	    <height>25</height>
+	</text>
+	<text>
+	    <label>#100 to #199 is HSD lines 1 (read-only). #200 to #299 is HSD lines 2 (read-only).</label>
+	    <height>25</height>
+	</text>
+	<text>
+	    <label>#300 to 305 is threat circles. #350 to #359 is for pilot mnemonics.</label>
+	    <height>25</height>
+	</text>
+	<text>
+	    <label>#400 to #404 is own OFLY/TGP marks. #450 to 454 is DLNK marks.</label>
+	    <height>25</height>
+	</text>
+	<text>
+	    <label>#500 is WPN program GPS coords. #555 is bulls-eye.</label>
+	    <height>25</height>
+	</text>
+
+	<hrule/>
+
+	<button>
+        <legend>Load DTC</legend>
+        <equal>true</equal>
+        <binding>
+            <command>nasal</command>
+            <script>file_selector.open()</script>
+        </binding>
+    </button>
+    <button>
+        <legend>Save DTC</legend>
+        <equal>true</equal>
+        <enable>
+        	<value>1</value>
+        </enable>
+        <binding>
+            <command>nasal</command>
+            <script>save_selector.open();</script>
+        </binding>
+    </button>
 
 </PropertyList>

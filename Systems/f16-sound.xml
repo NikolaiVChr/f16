@@ -3301,7 +3301,7 @@
             </volume>
         </rwr>-->
         <rwr>
-            <name>rwr-spike</name>
+            <name>rwr-spike-air</name>
             <path>Aircraft/f16/Sounds/rwr-lock-01.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
@@ -3317,13 +3317,183 @@
                     </greater-than>
                 </or>
                 <equals>
-                    <property>sound/rwr-lck</property>
+                    <property>payload/armament/spike-air</property>
                     <value>1</value>
                 </equals>
-                <!--<equals> this one made in RWR, the other in damage.nas
-                    <property>payload/armament/spike</property>
+            </condition>
+            <volume>
+                <property>/sim/current-view/internal</property>
+                <factor>0.70</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/rwr-volume</property>
+            </volume>
+        </rwr>
+        <rwr>
+            <name>rwr-spike-02</name>
+            <path>Aircraft/f16/Sounds/rwr/rwr-rf-otorsi.wav</path>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <condition>
+                <or>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                        <value>20</value>
+                    </greater-than>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                        <value>20</value>
+                    </greater-than>
+                </or>
+                <equals>
+                    <property>payload/armament/spike-gnd-02</property>
                     <value>1</value>
-                </equals>-->
+                </equals>
+            </condition>
+            <volume>
+                <property>/sim/current-view/internal</property>
+                <factor>0.70</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/rwr-volume</property>
+            </volume>
+        </rwr>
+        <rwr>
+            <name>rwr-spike-11</name>
+            <path>Aircraft/f16/Sounds/rwr/rwr-rf-demma.wav</path>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <condition>
+                <or>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                        <value>20</value>
+                    </greater-than>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                        <value>20</value>
+                    </greater-than>
+                </or>
+                <equals>
+                    <property>payload/armament/spike-gnd-11</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <volume>
+                <property>/sim/current-view/internal</property>
+                <factor>0.70</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/rwr-volume</property>
+            </volume>
+        </rwr>
+        <rwr>
+            <name>rwr-spike-20</name>
+            <path>Aircraft/f16/Sounds/rwr/rwr-rf-aggrit.wav</path>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <condition>
+                <or>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                        <value>20</value>
+                    </greater-than>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                        <value>20</value>
+                    </greater-than>
+                </or>
+                <equals>
+                    <property>payload/armament/spike-gnd-20</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <volume>
+                <property>/sim/current-view/internal</property>
+                <factor>0.70</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/rwr-volume</property>
+            </volume>
+        </rwr>
+        <rwr>
+            <name>rwr-spike-23</name>
+            <path>Aircraft/f16/Sounds/rwr/rwr-rf-shemx4.wav</path>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <condition>
+                <or>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                        <value>20</value>
+                    </greater-than>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                        <value>20</value>
+                    </greater-than>
+                </or>
+                <equals>
+                    <property>payload/armament/spike-gnd-23</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <volume>
+                <property>/sim/current-view/internal</property>
+                <factor>0.70</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/rwr-volume</property>
+            </volume>
+        </rwr>
+        <rwr>
+            <name>rwr-spike-p2</name>
+            <path>Aircraft/f16/Sounds/rwr/rwr-rf-sliph.wav</path>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <condition>
+                <or>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                        <value>20</value>
+                    </greater-than>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                        <value>20</value>
+                    </greater-than>
+                </or>
+                <equals>
+                    <property>payload/armament/spike-gnd-p2</property>
+                    <value>1</value>
+                </equals>
+            </condition>
+            <volume>
+                <property>/sim/current-view/internal</property>
+                <factor>0.70</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/rwr-volume</property>
+            </volume>
+        </rwr>
+        <rwr>
+            <name>rwr-spike-nk</name>
+            <path>Aircraft/f16/Sounds/rwr/rwr-rf-zheta.wav</path>
+            <mode>looped</mode>
+            <type>avionics</type>
+            <condition>
+                <or>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
+                        <value>20</value>
+                    </greater-than>
+                    <greater-than>
+                        <property>fdm/jsbsim/elec/bus/emergency-dc-2</property>
+                        <value>20</value>
+                    </greater-than>
+                </or>
+                <equals>
+                    <property>payload/armament/spike-gnd-nk</property>
+                    <value>1</value>
+                </equals>
             </condition>
             <volume>
                 <property>/sim/current-view/internal</property>
@@ -3361,14 +3531,25 @@
             <path>Aircraft/f16/Sounds/betty/missile.wav</path><!-- as of MLU tape 3 -->
             <type>avionics</type>
             <condition>
+                <not><property>f16/avionics/voice-msg-inhibit</property></not>
+                <!--not><property>gear/gear[2]/wow</property></not-->
                 <property>payload/armament/MAW-active</property>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
             </condition>
             <volume>
                 <property>sim/current-view/internal</property>
                 <factor>1</factor>
             </volume>
             <volume>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
+            </volume>
+            <volume><!-- Is both a betty sound and a RWR sound -->
                 <property>f16/avionics/rwr-volume</property>
+                <factor>1</factor>
             </volume>
         </rwr>
         
@@ -3474,6 +3655,32 @@
                         <value>8</value>
                     </less-than>
                 </and>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+            </volume>
+            <volume>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>1</factor>
+            </volume>
+        </betty>
+        <betty>
+            <name>data</name>
+            <path>Aircraft/f16/Sounds/betty/data.wav</path>
+            <mode>once</mode>
+            <type>avionics</type>
+            <condition>
+                <not><property>f16/avionics/voice-msg-inhibit</property></not>
+                <not><property>gear/gear[2]/wow</property></not>
+                <greater-than>
+                    <property>instrumentation/datalink/data</property>
+                    <value>0</value>
+                </greater-than>
                 <greater-than>
                   <property>fdm/jsbsim/elec/bus/batt-1</property>
                   <value>20</value>
@@ -4733,6 +4940,20 @@
             <path>Aircraft/f16/Sounds/gbu_release.wav</path>
             <condition>
                 <property>payload/armament/cbu-105/sound-fire-on-off</property>
+            </condition>
+            <volume>
+                <property>sim/current-view/internal</property>
+                <factor>1</factor>
+                <max>1</max>
+            </volume>
+        </bomb-release>
+        <bomb-release>
+            <name>bomb-release6</name>
+            <mode>once</mode>
+            <type>avionics</type>
+            <path>Aircraft/f16/Sounds/gbu_release.wav</path>
+            <condition>
+                <property>payload/armament/mk-82air/sound-fire-on-off</property>
             </condition>
             <volume>
                 <property>sim/current-view/internal</property>

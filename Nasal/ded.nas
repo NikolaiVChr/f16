@@ -16,12 +16,15 @@ var STPTlatFE = EditableLAT.new("f16/ded/lat", convertDegreeToStringLat);
 var STPTlonFE = EditableLON.new("f16/ded/lon", convertDegreeToStringLon);
 var STPTnumFE = EditableField.new("f16/ded/stpt-edit", "%3d", 3);
 var STPTradFE = EditableField.new("f16/ded/stpt-rad", "%2d", 2);
+var STPTaltFE = EditableField.new("f16/ded/alt", "%5d", 5);
+var STPTtypeTF = toggleableField.new(["   ", " 2 ", " 11", " 20", " SH", " P ", "AAA"], "f16/ded/stpt-type");
+var STPTcolorTF = toggleableField.new(["RED", "YEL", "GRN"], "f16/ded/stpt-color");
 var dlinkEF   = EditableField.new("instrumentation/datalink/channel", "%4d", 4);
 
 var pTACAN = EditableFieldPage.new(0, [tacanChanEF,tacanBandTF,ilsFrqEF,ilsCrsEF]);
 var pALOW  = EditableFieldPage.new(1, [alowEF,mslFloorEF]);
 var pFACK  = EditableFieldPage.new(2);
-var pSTPT  = EditableFieldPage.new(3, [STPTnumFE,STPTlatFE,STPTlonFE,STPTradFE]);
+var pSTPT  = EditableFieldPage.new(3, [STPTnumFE,STPTlatFE,STPTlonFE,STPTradFE,STPTaltFE,STPTtypeTF,STPTcolorTF]);
 var pCRUS  = EditableFieldPage.new(4);
 var pTIME  = EditableFieldPage.new(5);
 var pMARK  = EditableFieldPage.new(6);
@@ -61,6 +64,9 @@ var pIFF   = EditableFieldPage.new(33, [transpEF,transpModeTF,iffEF,iffTF]);
 var wp_num_lastA = nil;
 var wp_num_lastO = nil;
 var wp_num_lastR = nil;
+var wp_num_lastC = nil;
+var wp_num_lastT = nil;
+var wp_num_curr = 0;
 
 var dataEntryDisplay = {
 	line1: nil,
@@ -76,6 +82,7 @@ var dataEntryDisplay = {
 	scroll: 0,
 	scrollF: 0,
 	page: pCNI,
+	pageLast: pCNI,
 	init: func() {
 		me.canvasNode = canvas.new({
 			"name": "DED",
@@ -121,11 +128,11 @@ var dataEntryDisplay = {
 	
 	no: "",
 	update: func() {
-		me.no = getprop("autopilot/route-manager/current-wp") + 1;
+		me.no = steerpoints.getCurrentNumber();
 		if (me.no == 0) {
 		  me.no = "";
 		} else {
-		  me.no = sprintf("%2d",me.no);
+		  me.no = sprintf("%3d",me.no);
 		}
 		
 		if (me.page == pTACAN) {
@@ -196,6 +203,8 @@ var dataEntryDisplay = {
 		me.line4.setText(me.text[3]);
 		me.line5.setText(me.text[4]);
 		
+		me.pageLast = me.page;
+
 		settimer(func() { me.update(); }, 0.25);
 	},
 	
@@ -242,117 +251,183 @@ var dataEntryDisplay = {
 	},
 	
 	updateStpt: func() {
-		var fp = flightplan();
 		var TOS = "--:--:--";
 		var alt = -1;
 		var lat = "";
 		var lon = "";
 		var wp_num = getprop("f16/ded/stpt-edit");
-		if (fp != nil and wp_num != nil and wp_num < 100) {
-			var wp = fp.getWP(wp_num-1);
-			if (wp != nil and getprop("f16/avionics/power-mmc")) {
+		if (me.page != me.pageLast and steerpoints.getCurrentNumber() != 0) {
+			# We just entered this page and have active route
+			wp_num = steerpoints.getCurrentNumber();
+			setprop("f16/ded/stpt-edit", wp_num);
+		}
+		if (wp_num != nil and (wp_num < 100 or (wp_num < 300 and wp_num >= 100))) {
+			var wp = steerpoints.getNumber(wp_num);
+			if (wp != nil) {				
 				lat = convertDegreeToStringLat(wp.lat);
 				lon = convertDegreeToStringLon(wp.lon);
-				alt = wp.alt_cstr;
+				alt = wp.alt;
 				if (alt == nil) {
 					alt = -1;
 				}
-				var hour   = getprop("sim/time/utc/hour"); 
-				var minute = getprop("sim/time/utc/minute");
-				var second = getprop("sim/time/utc/second");
-				var eta    = getprop("autopilot/route-manager/wp/eta");
-				if (fp.current != wp_num-1 or eta == nil or getprop("autopilot/route-manager/wp/eta-seconds")>3600*24) {
-					# no ETA calculated
-				} elsif (getprop("autopilot/route-manager/wp/eta-seconds")>3600) {
-					eta = split(":",eta);
-					minute += num(eta[1]);
-					var addOver = 0;
-					if (minute > 59) {
-						addOver = 1;
-						minute -= 60;
-					}
-					hour += num(eta[0])+addOver;
-					while (hour > 23) {
-						hour -= 24;
-					}
-					TOS = sprintf("%02d:%02d:%02d",hour,minute,second);
-				} else {
-					eta = split(":",eta);
-					second += num(eta[1]);
-					var addOver = 0;
-					if (second > 59) {
-						addOver = 1;
-						second -= 60;
-					}
-					minute += num(eta[0])+addOver;
-					addOver = 0;
-					if (minute > 59) {
-						addOver = 1;
-						minute -= 60;
-					}
-					hour += addOver;
-					while (hour > 23) {
-						hour -= 24;
-					}
-					TOS = sprintf("%02d:%02d:%02d",hour,minute,second);   
-				}          
-			}
-			if (wp_num == fp.current) {
-				me.text[4] = sprintf("      TOS  %s",TOS);
+				if (wp_num < 100 and wp_num >= steerpoints.getCurrentNumber()) {
+					TOS = steerpoints.getNumberTOS(wp_num);
+				}
+				wp_num_curr = wp_num;
 			} else {
-				me.text[4] = sprintf("      TOS  ");
+				wp_num_curr = 0;
 			}
+			me.text[4] = sprintf("      TOS  %s",TOS);
 			me.text[3] = sprintf("     ELEV  % 5dFT",alt);
 			me.text[1] = sprintf("      LAT  %s", lat);
 			me.text[2] = sprintf("      LNG  %s", lon);
-		} elsif (wp_num != nil and wp_num < 304 and wp_num >= 300) {
-			# Threat circles 300 to 303
-			var circle = wp_num - 300 + 1;
+		} elsif (wp_num != nil and wp_num < 306 and wp_num >= 300) {
+			# Threat circles 300 to 305
+			var stpt = steerpoints.getNumber(wp_num);
+			if 	(stpt != nil) {
+				wp_num_curr = wp_num;
 
-			if (wp_num_lastA != getprop("f16/avionics/c"~circle~"-lat")) {
-				setprop("f16/ded/lat", getprop("f16/avionics/c"~circle~"-lat"));
+				if (wp_num_lastA != stpt.lat) {
+					setprop("f16/ded/lat", stpt.lat);
+				} else {
+					stpt.lat = getprop("f16/ded/lat"); 
+				}
+				if (wp_num_lastO != stpt.lon) {
+					setprop("f16/ded/lon", stpt.lon);
+				} else {
+					stpt.lon = getprop("f16/ded/lon");
+				}
+				if (wp_num_lastR != stpt.radius) {
+					setprop("f16/ded/stpt-rad", stpt.radius);
+				} else {
+					stpt.radius = getprop("f16/ded/stpt-rad"); 
+				}
+				var colNum = wp_num_lastC=="RED"?0:(wp_num_lastC=="YEL"?1:2);
+				if (colNum != stpt.color) {
+					setprop("f16/ded/stpt-color", stpt.color==0?"RED":(stpt.color==1?"YEL":"GRN"));
+				} else {
+					stpt.color = getprop("f16/ded/stpt-color")=="RED"?0:(getprop("f16/ded/stpt-color")=="YEL"?1:2);
+				}
+				if (wp_num_lastT != stpt.type) {
+					setprop("f16/ded/stpt-type", stpt.type);
+				} else {
+					stpt.type = getprop("f16/ded/stpt-type"); 
+				}
+			} elsif (stpt == nil and (getprop("f16/ded/lat") != 0 or getprop("f16/ded/lon") != 0 or getprop("f16/ded/stpt-rad") != 10 or getprop("f16/ded/stpt-type") != "   " or getprop("f16/ded/stpt-color") != 0)) {
+				stpt = steerpoints.STPT.new();
+				stpt.lat = getprop("f16/ded/lat");
+				stpt.lon = getprop("f16/ded/lon");
+				stpt.radius = getprop("f16/ded/stpt-rad");
+				stpt.type = getprop("f16/ded/stpt-type");
+				stpt.color = getprop("f16/ded/stpt-color")=="RED"?0:(getprop("f16/ded/stpt-color")=="YEL"?1:2);
+				steerpoints.setNumber(wp_num, stpt);
+				wp_num_curr = wp_num;
 			} else {
-				setprop("f16/avionics/c"~circle~"-lat", getprop("f16/ded/lat")); 
+				setprop("f16/ded/lat", 0);
+				setprop("f16/ded/lon", 0);
+				setprop("f16/ded/stpt-rad", 10);
+				setprop("f16/ded/stpt-type", "   ");
+				setprop("f16/ded/stpt-color", "RED");
+				wp_num_curr = 0;
 			}
-			if (wp_num_lastO != getprop("f16/avionics/c"~circle~"-lon")) {
-				setprop("f16/ded/lon", getprop("f16/avionics/c"~circle~"-lon"));
-			} else {
-				setprop("f16/avionics/c"~circle~"-lon", getprop("f16/ded/lon")); 
-			}
-			if (wp_num_lastR != getprop("f16/avionics/c"~circle~"-rad")) {
-				setprop("f16/ded/stpt-rad", getprop("f16/avionics/c"~circle~"-rad"));
-			} else {
-				setprop("f16/avionics/c"~circle~"-rad", getprop("f16/ded/stpt-rad"));
-			}
-			
+				
 			me.text[1] = sprintf("      LAT  %s", pSTPT.vector[1].getText());
 			me.text[2] = sprintf("      LNG  %s", pSTPT.vector[2].getText());
 			me.text[3] = sprintf("      RAD  %sNM", pSTPT.vector[3].getText());
-			me.text[4] = sprintf("      TOS  ");
+			me.text[4] = sprintf("  TYP  %s   COL  %s", pSTPT.vector[5].getText(), pSTPT.vector[6].getText());
 
-			wp_num_lastA = getprop("f16/avionics/c"~circle~"-lat");
-			wp_num_lastO = getprop("f16/avionics/c"~circle~"-lon");
-			wp_num_lastR = getprop("f16/avionics/c"~circle~"-rad");
+			
+
+			if 	(stpt != nil) {
+				wp_num_lastA = stpt.lat;
+				wp_num_lastO = stpt.lon;
+				wp_num_lastR = stpt.radius;
+				wp_num_lastC = stpt.color==0?"RED":(stpt.color==1?"YEL":"GRN");
+				wp_num_lastT = stpt.type;
+			} else {
+				wp_num_lastA = 0;
+				wp_num_lastO = 0;
+				wp_num_lastR = 10;
+				wp_num_lastC = "RED";
+				wp_num_lastT = "   ";
+			}
+		} elsif (wp_num != nil and ((wp_num < 405 and wp_num >= 400) or (wp_num < 455 and wp_num >= 450) or (wp_num == 500) or (wp_num == 555))) {
+			# Own markpoints, DLNK markpoints, HSD-lines, WPN GPS and Bulls-eye
+			var stpt = steerpoints.getNumber(wp_num);
+			
+			if 	(stpt != nil) {
+				wp_num_curr = wp_num;
+				if (wp_num_lastA != stpt.lat) {
+					setprop("f16/ded/lat", stpt.lat);
+				} else {
+					stpt.lat = getprop("f16/ded/lat"); 
+				}
+				if (wp_num_lastO != stpt.lon) {
+					setprop("f16/ded/lon", stpt.lon);
+				} else {
+					stpt.lon = getprop("f16/ded/lon");
+				}
+				if (wp_num_lastR != stpt.alt) {
+					setprop("f16/ded/alt", stpt.alt);
+				} else {
+					stpt.alt = getprop("f16/ded/alt"); 
+				}
+			} elsif (stpt == nil and (getprop("f16/ded/alt")!=0 or getprop("f16/ded/lat") != 0 or getprop("f16/ded/lon") != 0)) {
+				stpt = steerpoints.STPT.new();
+				stpt.lat = getprop("f16/ded/lat");
+				stpt.lon = getprop("f16/ded/lon");
+				stpt.alt = getprop("f16/ded/alt");
+				steerpoints.setNumber(wp_num, stpt);
+				wp_num_curr = wp_num;
+			} else {
+				setprop("f16/ded/lat", 0);
+				setprop("f16/ded/lon", 0);
+				setprop("f16/ded/alt", 0);
+				wp_num_curr = 0;
+			}
+				
+			me.text[1] = sprintf("      LAT  %s", pSTPT.vector[1].getText());
+			me.text[2] = sprintf("      LNG  %s", pSTPT.vector[2].getText());
+			if (wp_num == 555) {
+				me.text[3] = sprintf("     ELEV  -1FT");
+			} else {
+				me.text[3] = sprintf("     ELEV  %sFT", pSTPT.vector[4].getText());
+			}
+			if (wp_num == steerpoints.getCurrentNumber()) {
+				TOS = steerpoints.getCurrentTOS();
+			}
+			me.text[4] = sprintf("      TOS  %s", TOS);
+
+			
+
+			if 	(stpt != nil) {
+				wp_num_lastA = stpt.lat;
+				wp_num_lastO = stpt.lon;
+				wp_num_lastR = stpt.alt;
+			} else {
+				wp_num_lastA = 0;
+				wp_num_lastO = 0;
+				wp_num_lastR = 0;
+			}
 		} else {
 			me.text[3] = sprintf("     ELEV       FT");
 			me.text[4] = sprintf("      TOS  ");
 			me.text[1] = sprintf("      LAT  %s", lat);
 			me.text[2] = sprintf("      LNG  %s", lon);
+			wp_num_curr = 0;
 		}
-		me.text[0] = sprintf("         STPT %s  AUTO %s", pSTPT.vector[0].getText(), me.no);
-		
-
-		
+		me.text[0] = sprintf("      STPT %s  AUTO %s", pSTPT.vector[0].getText(), me.no);		
 	},
 	
 	updateCrus: func() {
 		# Source: F-16 A/B Mid-Life Update Production Tape M1: Pilot's guide to new to new capabilities & cockpit enhancements.
 		# The page is at the moment fixed at RNG.
-		# The steerpoint is currently fixed at last steerpoint.
+		# The steerpoint is currently fixed at last steerpoint, unless using a non route steerpoint.
 		var fuel   = "";
 		var fp = flightplan();
 		var maxS = "";
-		if (fp != nil) {
+		var stnum = steerpoints.getCurrentNumber();
+		if (fp != nil and stnum < 100) {
 			var max = fp.getPlanSize();
 			if (max > 0) {
 				maxS =""~max;
@@ -368,6 +443,23 @@ var dataEntryDisplay = {
 						} else {
 							fuel = "-99999LBS";
 						}
+					}
+				}
+			}
+		} elsif (stnum >= 100) {
+			var stpt = steerpoints.getCurrent();
+			maxS = ""~stnum;
+			var ete = steerpoints.getCurrentETA();
+			if (ete != nil and ete > 0) {
+				var pph = getprop("engines/engine[0]/fuel-flow_pph");
+				if (pph == nil) pph = 0;
+				var remain = getprop("consumables/fuel/total-fuel-lbs")-pph*(ete/3600);
+				fuel = sprintf("% 6dLBS",remain);
+				if (size(fuel)>9) {
+					if (remain > 0) {
+						fuel = "999999LBS";
+					} else {
+						fuel = "-99999LBS";
 					}
 				}
 			}
@@ -414,18 +506,31 @@ var dataEntryDisplay = {
 	markMode: "OFLY",
 	markModeSelected: 1,
 	updateMark: func() {
-		lat = convertDegreeToStringLat(getprop("/position/latitude-deg"));
-		lon = convertDegreeToStringLon(getprop("/position/latitude-deg"));
-		alt = getprop("/position/altitude-ft") - getprop("/position/altitude-agl-ft");
-		if (me.markModeSelected) {
-			me.text[0] = sprintf("         MARK *%s*    %s",me.markMode,me.no);
+		me.markMode = "OFLY";
+		me.markNo = 0;
+		if (me.page != me.pageLast) {
+			# we just entered this page, lets store this mark
+			me.markNo = steerpoints.markOFLY();
+			me.mark = steerpoints.getNumber(me.markNo);
 		} else {
-			me.text[0] = sprintf("         MARK  %s     %s",me.markMode,me.no);
+			me.markNo = steerpoints.ownMarkIndex+400;
+			me.mark = steerpoints.getNumber(me.markNo);
+		}
+		
+		wp_num_curr = me.markNo;
+
+		lat = convertDegreeToStringLat(me.mark.lat);
+		lon = convertDegreeToStringLon(me.mark.lon);
+		alt = me.mark.alt;
+		if (me.markModeSelected) {
+			me.text[0] = sprintf("         MARK *%s*   %s",me.markMode,me.no);
+		} else {
+			me.text[0] = sprintf("         MARK  %s    %s",me.markMode,me.no);
 		}
 		me.text[1] = sprintf("      LAT  %s",lat);
 		me.text[2] = sprintf("      LNG  %s",lon);
 		me.text[3] = sprintf("     ELEV  % 5dFT",alt);
-		me.text[4] = sprintf("                 ");
+		me.text[4] = sprintf("        #  %03d", me.markNo);
 	},
 	
 	fixTakingMode: "OFLY",
@@ -465,58 +570,16 @@ var dataEntryDisplay = {
 	},
 	
 	updateDest: func() {
-		var fp = flightplan();
-		var TOS = "--:--:--";
 		var lat = "";
 		var lon = "";
 		var alt = -1;
-		if (fp != nil) {
-			var wp = fp.destination;
-			if (wp != nil and getprop("f16/avionics/power-mmc")) {
-				lat = convertDegreeToStringLat(wp.lat);
-				lon = convertDegreeToStringLon(wp.lon);
-				alt = wp.elevation * M2FT;
-				var hour   = getprop("sim/time/utc/hour"); 
-				var minute = getprop("sim/time/utc/minute");
-				var second = getprop("sim/time/utc/second");
-				var eta    = getprop("autopilot/route-manager/wp/eta");
-				if (eta == nil or getprop("autopilot/route-manager/wp/eta-seconds")>3600*24) {
-					#
-				} elsif (getprop("autopilot/route-manager/wp/eta-seconds")>3600) {
-					eta = split(":",eta);
-					minute += num(eta[1]);
-					var addOver = 0;
-					if (minute > 59) {
-						addOver = 1;
-						minute -= 60;
-					}
-					hour += num(eta[0])+addOver;
-					while (hour > 23) {
-						hour -= 24;
-					}
-					TOS = sprintf("%02d:%02d:%02d",hour,minute,second);
-				} else {
-					eta = split(":",eta);
-					second += num(eta[1]);
-					var addOver = 0;
-					if (second > 59) {
-						addOver = 1;
-						second -= 60;
-					}
-					minute += num(eta[0])+addOver;
-					addOver = 0;
-					if (minute > 59) {
-						addOver = 1;
-						minute -= 60;
-					}
-					hour += addOver;
-					while (hour > 23) {
-						hour -= 24;
-					}
-					TOS = sprintf("%02d:%02d:%02d",hour,minute,second);   
-				}          
-			}
+		var st = steerpoints.getLast();
+		if (st != nil) {
+			lat = convertDegreeToStringLat(st.lat);
+			lon = convertDegreeToStringLon(st.lon);
+			alt = st.alt;
 		}
+		TOS = steerpoints.getLastTOS();
       
 		me.text[0] = sprintf("         DEST  DIR  %s",me.no);
 		me.text[1] = sprintf("      LAT  %s",lat);
@@ -576,7 +639,7 @@ var dataEntryDisplay = {
 		me.text[0] = sprintf("        EWS CONTROLS  %s",me.no);
 		me.text[1] = sprintf(" CH %3d     REQJAM   %s", flares, jammer);
 		me.text[2] = sprintf(" FL %3d     FDBK      ON", flares);
-		me.text[3] = sprintf(" MODE %s  REQCTR    ON", getprop("f16/avionics/ew-mode-knob") == 1 ? "MAN " : "OFF ");
+		me.text[3] = sprintf(" MODE %s  REQCTR    ON", getprop("f16/avionics/ew-mode-knob") == 1 ? "MAN " :( getprop("f16/avionics/ew-mode-knob") == 2?"AUT ":"OFF "));
 		me.text[4] = sprintf("            BINGO     ON");
 	},
 	
@@ -594,44 +657,39 @@ var dataEntryDisplay = {
 	
 	updateDlnk: func() {
 		
-		if (getprop("f16/avionics/power-dl") and 0) {
-			var last = 0;
-			var lnk = datalink.get_contacts();
-			foreach(callsignLN ; lnk) {
-				last += 1;
-				if (0) {
-
-				}
-			}
-			if (lnk != nil and lnk["iff"] == 2 and lnk["on_link"] == 1) {
-			}
-			if (getprop("link16/wingman-12")!="") last = 12;
-			elsif (getprop("link16/wingman-11")!="") last = 11;
-			elsif (getprop("link16/wingman-10")!="") last = 10;
-			elsif (getprop("link16/wingman-9")!="") last = 9;
-			elsif (getprop("link16/wingman-8")!="") last = 8;
-			elsif (getprop("link16/wingman-7")!="") last = 7;
-			elsif (getprop("link16/wingman-6")!="") last = 6;
-			elsif (getprop("link16/wingman-5")!="") last = 5;
-			elsif (getprop("link16/wingman-4")!="") last = 4;
-			elsif (getprop("link16/wingman-3")!="") last = 3;
-			elsif (getprop("link16/wingman-2")!="") last = 2;
-			elsif (getprop("link16/wingman-1")!="") last = 1;
+		if (getprop("instrumentation/datalink/power")) {
+			var csl = datalink.get_connected_callsigns();
+			var idl = datalink.get_connected_indices();
+			var last = size(csl);
+			var list = setsize([],last);
 			me.scroll += 0.25;
 			if (me.scroll >= last-3) me.scroll = 0;
+			var usedI = setsize([],4);
+			var usedC = setsize([],4);
+			var j = 0;
+			var highest = 0;
+			for(var i = int(me.scroll); i < int(me.scroll)+4;i+=1) {
+				if (i < last) {
+					usedI[j] = sprintf("#%02d", idl[i]+1);
+					usedC[j] = csl[i];
+					if (idl[i] > highest) highest = idl[i]+1;
+					while(size(usedC[j]) < 7) {
+						usedC[j] = usedC[j]~" ";
+					}
+				} else {
+					usedI[j] = "#  ";
+					usedC[j] = "       ";
+				}
+				j += 1;
+			}
+
+			#elsif (getprop("link16/wingman-4")!="") last = 4;			
 			
-			var used = subvec(wingmen,int(me.scroll),4);
-			me.text[1] = sprintf("#%d %7s      COMM VHF",int(me.scroll+1),used[0]);
-			me.text[2] = sprintf("#%d %7s      DATA 16K",int(me.scroll+2),used[1]);
-			me.text[3] = sprintf("#%d %7s      OWN  #0 ",int(me.scroll+3),used[2]);
-			me.text[4] = sprintf("#%d %7s      LAST #%d ",int(me.scroll+4),used[3],last);
-		} elsif (getprop("f16/avionics/power-dl")) {
-			me.scroll += 0.25;
 			me.text[0] = sprintf("    DLNK  CH %s   %s",pDLNK.vector[0].getText(),me.no);
-			me.text[1] = sprintf("#%d %7s      COMM VHF",0,getprop("sim/multiplay/callsign"));
-			me.text[2] = sprintf("             DATA 16K");
-			me.text[3] = sprintf("             OWN  #0 ");
-			me.text[4] = sprintf("             LAST     ");
+			me.text[1] = sprintf("%s %7s       COMM VHF",usedI[0],usedC[0]);
+			me.text[2] = sprintf("%s %7s       DATA 16K",usedI[1],usedC[1]);
+			me.text[3] = sprintf("%s %7s       OWN  #0 ",usedI[2],usedC[2]);
+			me.text[4] = sprintf("%s %7s       LAST #%d ",usedI[3],usedC[3],highest);
 		} else {
 			me.text[0] = sprintf("        DLNK           %s",me.no);
 			me.text[1] = sprintf("  NO DLINK DATA ");
@@ -748,21 +806,20 @@ var dataEntryDisplay = {
 		} else {
 			me.text[0] = sprintf("       BULLSEYE         ");
 		}
-		me.text[1] = sprintf("       BULL 25     ");
+		me.text[1] = sprintf("       BULL 555    ");
 		me.text[2] = sprintf("                        ");
 		me.text[3] = sprintf("                        ");
 		me.text[4] = sprintf("                        ");
+		wp_num_curr = 555;
 	}, 
 	
 	CNIshowWind: 0,
 	updateCNI: func() {
 		winddir = sprintf("%03d\xc2\xb0",getprop("environment/wind-from-heading-deg"));
 		windkts = sprintf("%03d",getprop("environment/wind-speed-kt"));
-		if (me.no != "") {
-			me.text[0] = sprintf("UHF   242.10    STPT %sA", me.no);
-		} else {
-			me.text[0] = sprintf("UHF   242.10    STPT %s", me.no);
-		}
+		
+		me.text[0] = sprintf("UHF   242.10    STPT %s", me.no);# removed the 'A' here, as MLU manuals don't show it.
+
 		if (me.CNIshowWind) {
 			me.text[1] = sprintf("                %s %s", winddir, windkts);
 		} else {
@@ -808,22 +865,16 @@ var dataEntryDisplay = {
 		}
 		var frnd = 0;
 		if (sign != nil) {
-			var lnk = datalink.get_contact(sign);
-			 if (lnk != nil and lnk["iff"] == 2 and lnk["on_link"] == 1) {
-			 	frnd = 2;
-			 }
-			 if (lnk != nil and lnk["on_link"] == 1) {
+			var lnk = datalink.get_data(sign);
+			 if (lnk != nil and lnk.on_link() == 1) {
 			 	frnd = 1;
 			 }
-			 if (lnk != nil and lnk["iff"] == 2) {
-			 	frnd = 3;
-			 }
 		}
-		if (getprop("f16/avionics/power-dl") and frnd == 2) {
+		if (getprop("instrumentation/datalink/power") and frnd == 2) {
 			friend = "WINGMAN";
-		} elsif (getprop("f16/avionics/power-dl") and frnd == 1) {
+		} elsif (getprop("instrumentation/datalink/power") and frnd == 1) {
 			friend = "DLINK";
-		} elsif (getprop("f16/avionics/power-dl") and frnd == 3) {
+		} elsif (getprop("instrumentation/datalink/power") and frnd == 3) {
 			friend = "DL-FRND";
 		} elsif (sign != "") {
 			friend = "NO CONN";
@@ -846,9 +897,6 @@ var Actions = {
 		toggleHack: Action.new(pTIME, toggleHack),
 		resetHack: Action.new(pTIME, resetHack),
 	},
-	Mark: {
-		mSel: Action.new(pMARK, modeSelMark),
-	},	
 	Fix: {
 		mSel: Action.new(pFIX, modeSelFix),
 	},	
@@ -862,6 +910,8 @@ var Actions = {
 	recall: Action.new(nil, dataEntryDisplay.page.recall),
 	stptNext: Action.new(nil, stptNext),
 	stptLast: Action.new(nil, stptLast),
+	wx: Action.new(-1, stptSend),
+	fud: Action.new(-1, stptCurr),
 };
 
 var Routers = {
@@ -933,11 +983,13 @@ var ActionVectors = {
 	button7: [],
 	button8: [],
 	button9: [],
-	button0: [Actions.Bullseye.mSel,Actions.Tacan.mSel,Actions.Mark.mSel,Actions.Fix.mSel,Actions.Acal.mSel],
+	button0: [Actions.Bullseye.mSel,Actions.Tacan.mSel,Actions.Fix.mSel,Actions.Acal.mSel],
 	buttonup: [Actions.Time.toggleHack, Actions.stptNext],
 	buttondown: [Actions.Time.resetHack,  Actions.stptLast],
 	buttonEnter: [Actions.enter],
 	buttonRecall: [Actions.recall],
+	buttonWX: [Actions.wx],
+	buttonFUD: [Actions.fud],
 };
 
 var Buttons = {
@@ -959,12 +1011,16 @@ var Buttons = {
 	buttondown: Button.new(actionVec: ActionVectors.buttondown),
 	entr: Button.new(actionVec: ActionVectors.buttonEnter, routerVec: RouterVectors.buttonEnter),
 	rcl: Button.new(actionVec: ActionVectors.buttonRecall, routerVec: RouterVectors.buttonRecall),
+	wx: Button.new(actionVec: ActionVectors.buttonWX),
+	flirUD: Button.new(actionVec: ActionVectors.buttonFUD),
 };
 
 setlistener("f16/avionics/rtn-seq", func() {
 	if (getprop("f16/avionics/rtn-seq") == -1) {
 		if (size(dataEntryDisplay.page.vector) != 0) {
-			if (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 != "") {
+			if (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].parents[0] == EditableLAT or dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].parents[0] == EditableLON) {
+				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].reset();
+			} elsif (dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2 != "") {
 				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].recallStatus = 0;
 				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].text = dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText2;
 				dataEntryDisplay.page.vector[dataEntryDisplay.page.selectedIndex()].lastText1 = "";

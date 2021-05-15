@@ -76,9 +76,10 @@
 	</text>
 
 	<textbox>
-	    <!-- position -->
-	    <!--<x>100</x>
-	    <y>100</y>-->
+	   	<!-- Makes window content resizable. -->
+        <halign>fill</halign>
+        <valign>fill</valign>
+        <stretch>true</stretch>
 
 	    <!-- dimensions -->
 	    <pref-width>500</pref-width>

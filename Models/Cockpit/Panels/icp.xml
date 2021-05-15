@@ -243,6 +243,89 @@
         </decrease>
     </animation>
 
+    <animation>
+        <type>knob</type>
+        <object-name>depr_ret</object-name>
+        <property>f16/avionics/hud-depr-ret</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <factor>-150</factor>
+        <offset-deg>0</offset-deg>
+        <center>
+            <x-m>  -0.00616 </x-m>
+            <y-m>  -0.07268 </y-m>
+            <z-m>   0.02306 </z-m>
+        </center>
+        <axis>
+            <x> 0.0 </x>
+            <y> 1.0 </y>
+            <z> 0.0 </z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hud-depr-ret</property>
+                <factor>1</factor>
+                <step>0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hud-depr-ret</property>
+                <factor>1</factor>
+                <step>-0.1</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </decrease>
+    </animation>
+
+    <animation>
+        <type>knob</type>
+        <object-name>cont</object-name>
+        <property>f16/avionics/hud-cont</property>
+        <drag-direction>vertical</drag-direction>
+        <drag-scale-px>10</drag-scale-px><!-- 10 is default -->
+        <factor>-150</factor>
+        <offset-deg>0</offset-deg>
+        <center>
+            <x-m>  -0.0062 </x-m>
+            <y-m>  -0.07268 </y-m>
+            <z-m>  -0.02396 </z-m>
+        </center>
+        <axis>
+            <x> 0.0 </x>
+            <y> 1.0 </y>
+            <z> 0.0 </z>
+        </axis>
+        <increase>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hud-cont</property>
+                <factor>1</factor>
+                <step>0.05</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </increase>
+        <decrease>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hud-cont</property>
+                <factor>1</factor>
+                <step>-0.05</step>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </decrease>
+    </animation>
     
     
     <!-- Cursor -->
@@ -681,6 +764,44 @@
                 <command>set-tooltip</command>
                 <tooltip-id>button-recall</tooltip-id>
                 <label>ENTER</label>
+            </binding>
+        </hovered>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>wx</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.Buttons.wx.doAction();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-wx</tooltip-id>
+                <label>DLNK send</label>
+            </binding>
+        </hovered>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>flir_ud</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.Buttons.flirUD.doAction();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-UD</tooltip-id>
+                <label>Set as current steerpoint</label>
             </binding>
         </hovered>
     </animation>

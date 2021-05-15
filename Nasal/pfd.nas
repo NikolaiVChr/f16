@@ -68,7 +68,7 @@ var scrollF = 0;
 var text = ["","","","",""];
 
 var loop_pfd = func {
-    var no = getprop("autopilot/route-manager/current-wp")+1;
+    var no = steerpoints.getCurrentNumber();
     if (no == 0) {
       no = "";
     } else {

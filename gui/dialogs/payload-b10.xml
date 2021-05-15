@@ -158,7 +158,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>2</row>
             <col>2</col>
-            <legend>A/G Unguided (Light)</legend>
+            <legend>A/G Unguided Light</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.b10_a2g_strike1();</script>
@@ -169,7 +169,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>2</row>
             <col>4</col>
-            <legend>A/G Unguided (Heavy)</legend>
+            <legend>A/G Unguided Heavy</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.b10_a2g_strike2();</script>

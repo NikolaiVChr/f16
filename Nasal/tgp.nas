@@ -323,6 +323,10 @@ var list = func () {
             interpolate("sim/current-view/pitch-offset-deg", -30, 2.5);
             interpolate("sim/current-view/heading-offset-deg", 0, 2.5);
         }
+    } elsif (button == 10) {#MARK
+        if (!lock_tgp or armament.contactPoint == nil) return;
+        line10.setText("#"~steerpoints.markTGP(armament.contactPoint.get_Coord()));
+        settimer(func {line10.setText("MARK");}, 2.5);
     } elsif (button == 11) {#UP
         if (lock_tgp) return;
         gps = 0;
@@ -389,6 +393,7 @@ var fast_loop = func {
             bott.setText("");
             ralt.setText("");
             line9.hide();
+            line10.hide();
             line3.setText("");
             cross.hide();
             enable = 0;
@@ -399,6 +404,7 @@ var fast_loop = func {
             bott.setText("");
             ralt.setText("");
             line9.hide();
+            line10.hide();
             line3.setText("");
             cross.hide();
             enable = 0;
@@ -414,6 +420,7 @@ var fast_loop = func {
             bott.setText(ttxt);
             ralt.setText("");
             line9.hide();
+            line10.hide();
             line3.setText(masterMode==0?"STBY":(hiddenMode==AG?"A-G":"A-A"));
             cross.hide();
             enable = 0;
@@ -423,6 +430,7 @@ var fast_loop = func {
             bott.setText("");
             ralt.setText("");
             line9.hide();
+            line10.hide();
             line3.setText("STBY");
             cross.hide();
             enable = 0;
@@ -505,13 +513,13 @@ var fast_loop = func {
     if (armament.contactPoint == nil or !enable) {
         # no TGP lock
         if (armament.contact == nil and enable and masterMode) {# we do not check for get_display here since as long as something is selected we dont show steerpoint.
-            if (getprop("autopilot/route-manager/active") == 1 and getprop("f16/avionics/power-mmc") and getprop("autopilot/route-manager/current-wp") != nil and getprop("autopilot/route-manager/current-wp") > -1) {
+            if (steerpoints.getCurrentNumber() != 0) {
                 # TGP follow steerpoint
                 hiddenMode = AG;
-                var idx = getprop("autopilot/route-manager/current-wp");
-                var ele = getprop("autopilot/route-manager/route/wp["~idx~"]/altitude-ft");
-                var lat = getprop("autopilot/route-manager/route/wp["~idx~"]/latitude-deg");
-                var lon = getprop("autopilot/route-manager/route/wp["~idx~"]/longitude-deg");
+                var stpt = steerpoints.getCurrent();
+                var ele = stpt.alt;
+                var lat = stpt.lat;
+                var lon = stpt.lon;
                 if (ele == nil) {
                     ele = 0;
                 }
@@ -524,12 +532,12 @@ var fast_loop = func {
                 sp.set_latlon(lat,lon,ele);
                 flir_updater.click_coord_cam = sp;
                 setprop("/aircraft/flir/target/auto-track", 1);
-                if (callsign != lat~lon) {
+                if (callsign != "#"~steerpoints.getCurrentNumber()) {
                     # we switched steerpoint or from radar to steerpoint
                     flir_updater.offsetP = 0;
                     flir_updater.offsetH = 0;
                 }
-                callsign = lat~lon;
+                callsign = "#"~steerpoints.getCurrentNumber();
                 steerlock = 1;
                 steer = 1;
             } else {
@@ -567,6 +575,7 @@ var fast_loop = func {
     } else {
         # TGP lock
         var vis = 1;
+        line10.show();
         gpss = armament.contactPoint.get_Callsign() == "GPS-Spot";# GPS-Spot only used by "program GPS dialog"
         if (armament.contactPoint.get_Callsign() != "TGP-Spot" and !gps and !gpss and !steer) {
             # we do not check for visibility if:
@@ -624,7 +633,7 @@ var fast_loop = func {
         } elsif (lock_tgp) {
             midl.setText(sprintf("%s AREA  %s", gps?"GPS":(ir==1?"IR":"TV"), getprop("controls/armament/laser-arm-dmd")?"L":""));
         } elsif (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil and steerlock) {
-            midl.setText(sprintf("  STEER  %s", getprop("controls/armament/laser-arm-dmd")?"L":""));
+            midl.setText(sprintf("STPT %s  %s", "#"~steerpoints.getCurrentNumber(), getprop("controls/armament/laser-arm-dmd")?"L":""));
         } elsif (getprop("/aircraft/flir/target/auto-track") and flir_updater.click_coord_cam != nil) {
             midl.setText(sprintf("  RADAR  %s", getprop("controls/armament/laser-arm-dmd")?"L":""));
         } else {
@@ -683,6 +692,7 @@ var line3 = nil;
 var line4 = nil;
 var line6 = nil;
 var line7 = nil;
+var line10 = nil;
 var line11 = nil;
 var line12 = nil;
 var line13 = nil;
@@ -734,7 +744,7 @@ var callInit = func {
         .setAlignment("left-center")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("LOCK")
-        .setTranslation(5, 256*0.20);
+        .setTranslation(5, 256*0.20);# 1
   line1box = dedGroup.createChild("path")
         .moveTo(0,-7)
         .vert(14)
@@ -751,28 +761,28 @@ var callInit = func {
         .setAlignment("left-center")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("ZOOM")
-        .setTranslation(5, 256*0.35);
+        .setTranslation(5, 256*0.35);# 2
   line3 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
         .setAlignment("left-center")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("STBY")
-        .setTranslation(5, 256*0.50);
+        .setTranslation(5, 256*0.50);# 3
   line4 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
         .setAlignment("left-center")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("")
-        .setTranslation(5, 256*0.65);
+        .setTranslation(5, 256*0.65);# 4
   line6 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
         .setAlignment("right-center")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("WHOT")
-        .setTranslation(256-5, 256*0.2);
+        .setTranslation(256-5, 256*0.2);# 6
   line7 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
@@ -780,7 +790,7 @@ var callInit = func {
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("XFER")
         .hide()
-        .setTranslation(256-5, 256*0.35);
+        .setTranslation(256-5, 256*0.35);# 7
   line9 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
@@ -788,49 +798,57 @@ var callInit = func {
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("CZ")
         .hide()
-        .setTranslation(256-5, 256*0.65);
+        .setTranslation(256-5, 256*0.65);# 9
+  line10 = dedGroup.createChild("text")
+        .setFontSize(13, 1)
+        .setColor(color)
+        .setAlignment("right-center")
+        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
+        .setText("MARK")
+        .hide()
+        .setTranslation(256-5, 256*0.8);# 10
   line11 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
         .setAlignment("center-top")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("UP")
-        .setTranslation(256*0.2, 5);
+        .setTranslation(256*0.2, 5);# 11
   line12 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
         .setAlignment("center-top")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("DOWN")
-        .setTranslation(256*0.35, 5);
+        .setTranslation(256*0.35, 5);# 12
   line13 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
         .setAlignment("center-top")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("WIDE")
-        .setTranslation(256*0.50, 5);
+        .setTranslation(256*0.50, 5);# 13
   line14 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
         .setAlignment("center-top")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("LEFT")
-        .setTranslation(256*0.65, 5);
+        .setTranslation(256*0.65, 5);# 14
   line15 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
         .setAlignment("center-top")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("RGHT")
-        .setTranslation(256*0.8, 5);
+        .setTranslation(256*0.8, 5);# 15
   line20 = dedGroup.createChild("text")
         .setFontSize(13, 1)
         .setColor(color)
         .setAlignment("center-bottom")
         .setFont("LiberationFonts/LiberationMono-Bold.ttf")
         .setText("BACK")
-        .setTranslation(256*0.8, 256-5);
+        .setTranslation(256*0.8, 256-5);# 20
 
     zoom = dedGroup.createChild("text")
         .setFontSize(13, 1)

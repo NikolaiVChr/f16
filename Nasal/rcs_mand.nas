@@ -1,76 +1,79 @@
 var rcs_oprf_database = {
-    # This list contains the mandatory RCS frontal values for OPRF (anno 1997), feel free to add non-OPRF to your aircraft we don't care.
-    #REVISION: 2021/04/29
+    #Revision MAY 05 2021
+    # This list contains the mandatory RCS frontal values for OPRF (anno 1997), feel free to add non-OPRF to your aircraft, we don't care.
     "default":                  150,    #default value if target's model isn't listed
     "f-14b":                    12,     
     "F-14D":                    12,     
-    "f-14b-bs":                 0.0001,   # low so it dont show up on radar
+    "f-14b-bs":                 0.0001, #low so it doesn't show up on radar
     "F-15C":                    10,     #low end of sources
     "F-15D":                    11,     #low end of sources
     "f15-bs":                   0.0001,
     "F-16":                     2,
-    "JA37-Viggen":              3,      #close to actual
-    "AJ37-Viggen":              3,      #close to actual
-    "AJS37-Viggen":             3,      #close to actual
-    "JA37Di-Viggen":            3,      #close to actual
+    "JA37-Viggen":              3,      
+    "AJ37-Viggen":              3,      #gone
+    "AJS37-Viggen":             3,      
+    "JA37Di-Viggen":            3,
     "m2000-5":                  1,      
     "m2000-5B":                 1,
-    "m2000-5B-backseat":        0.0001, 
-    "B-1B":                     1,      #previous was 10
+    "m2000-5B-backseat":        0.0001,
     "Blackbird-SR71A":          0.25,
     "Blackbird-SR71B":          0.30,
     "Blackbird-SR71A-BigTail":  0.30,
     "MiG-21bis":                3.5,
     "MiG-21MF-75":              3.5,
-    "KC-137R":                  90,     #guess
-    "KC-137R-RT":               90,     #guess
-    "C-137R":                   85,     #guess
-    "RC-137R":                  95,     #guess
-    "EC-137R":                  100,    #guess
-    "E-8R":                     95,     #guess
-    "KC-10A":                   90,     #guess
-    "KC-10A-GE":                90,     #guess
-    "KC-30A":                   75,     #guess
-    "Voyager-KC":               75,     #guess
-    "707":                      85,     #guess
-    "707-TT":                   90,     #guess
-    "EC-137D":                  100,    #guess
+    "Typhoon":                  0.5,
+    "B-1B":                     6,
+    "707":                      100,
+    "707-TT":                   100,
+    "EC-137D":                  110,
+    "KC-137R":                  100,
+    "KC-137R-RT":               100,
+    "C-137R":                   100,
+    "RC-137R":                  100,
+    "EC-137R":                  110,
+    "E-8R":                     100,
+    "KC-10A":                   90,
+    "KC-10A-GE":                90,
+    "KC-30A":                   75,
+    "Voyager-KC":               75,
     "c130":                     80,   
     "Jaguar-GR1":               6,
+    "Jaguar-GR3":               6,
     "A-10":                     23.5,
     "A-10-model":               23.5,
     "A-10-modelB":              23.5,
-    "Typhoon":                  0.5,
 # Drones:
-    "QF-4E":                    2,      #actual: 6
-    "MQ-9":                     0.75,   #guess
-    "MQ-9-2":                   0.75,   #guess
+    "QF-4E":                    1,
+    "MQ-9":                     1,
+    "MQ-9-2":                   1,
 # Helis:
-    "SH-60J":                   30,      
-    "UH-60J":                   30,     
-    "uh1":                      30,     
-    "212-TwinHuey":             25,     
-    "412-Griffin":              25,     
-    "ch53e":                    20,
-    "Mil-Mi-8":                 30,     #guess, Hunter
-    "CH47":                     20,     #guess, Hunter
+    "SH-60J":                   20,      
+    "UH-60J":                   20,     
+    "uh1":                      20,     
+    "212-TwinHuey":             19,     
+    "412-Griffin":              19,     
+    "ch53e":                    30,
+    "Mil-Mi-8":                 25,     #guess, Hunter
+    "CH47":                     25,     #guess, Hunter
     "mi24":                     25,     #guess, Hunter
     "tigre":                    6,      #guess, Hunter
 # OPRF assets:
-    "depot":                    170,
-    "ZSU-23-4M":                3,
-    "S-75":                     13,
-    "buk-m2":                   7,   
-    "truck":                    1.5,
+# Notice that the non-SEA of these have been very reduced to simulate hard to find in ground clutter
+    "depot":                    0.20,
+    "ZSU-23-4M":                0.04,
+    "buk-m2":                   0.08,
+    "S-75":                     0.12,
+    "s-300":                    0.16,
+    "MIM104D":                  0.15,
+    "truck":                    0.15,
     "missile_frigate":          450, 
-    "frigate":                  450,   
-    "tower":                    60,       
-    "gci":                      50,
-    "s-300":                    17,
-    "MIM104D":                  17,
-    "struct":                   170,   
+    "frigate":                  450,
+    "tower":                    0.25,   #gone
+    "gci":                      0.50,
+    "struct":                   0.20,   
     "rig":                      500,
-    "point":                    120,
+    "point":                    0.14,
+    "hunter":                   0.10,    #sea assets, Hunter
 # Automats:
     "MiG-29":                   6,
     "SU-27":                    15,

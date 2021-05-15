@@ -1646,10 +1646,9 @@
         </switch>
 
         <pure_gain name="fcs/fly-by-wire/roll/final">
-            <description>Is 0.12 in diagram, not 0.215. But then it wont roll up to 270 deg/s, but around 240 deg/s.
-                         Increasing this will make the roll a little more jerky though. DNU.</description>
+            <description></description>
             <input>fcs/fly-by-wire/roll/switch-elec</input>
-            <gain> 0.215 </gain>
+            <gain> 0.12 </gain>
             <clipto>
                 <min> -21.5 </min>
                 <max>  21.5 </max>

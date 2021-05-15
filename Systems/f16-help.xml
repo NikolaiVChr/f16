@@ -50,10 +50,6 @@
                 <desc>Toggles Radar Standby Mode</desc>
             </key>
             <key>
-                <name>Ctrl-t</name>
-                <desc>Cycle Transponder modes</desc>
-            </key>
-            <key>
                 <name>Ctrl-s</name>
                 <desc>Ignore selected MP pilots</desc>
             </key>
@@ -170,9 +166,13 @@ Do not operate below 200 kt with cat III stores, unless for landing or take-off.
 NIGHTTIME FLYING
 There is flood and instrument lights that can be turned up. Furthermore with ALS grapchics setting and higher shader setting there is also landing and taxi light.
 
+AIR TO AIR REFUELING
+Yuo can refuel with both AI or MP compatible tankers which operate a boom system. To perform aerial refueling set the AIR REFUEL switch to open (or press f) and get within the boom engagement zone of the tanker. 
+Notice that this will also change how the fly-by-wire reacts to your stick inputs, so that you can make minute corrections more easily when close to the tanker.
+
 DRAGCHUTE
 Maximum recommended speed for deployment is 170 KIAS. Keys are 'o' to deploy, and 'O' to detach.
-Note that not all variants have a dragchute.
+Note that not all variants have a dragchute as it depends on selected liveries.
 
 FLYING IN MP
 Firstly be sure to use "Visible to 2017+", else others will not see everything working okay when they see your aircraft. For doing combat enable "MP Discharge messages". This might be considered spam of MP chat, so use it sparringly and only against opponents that have agreed to be fighting you. With this option enabled you can take and deal damage to other aircraft that also has it enabled. It can only be enabled with wheels on ground.
@@ -247,28 +247,37 @@ Notice that the RWR can sometimes pick up threats much further away than your ra
 If someone is locking you up, you will also hear a buzz sound constantly, until you no longer are locked up, also if a wingman locks you up. It's normal procedure if you think a wingman has locked you up, to call out 'Buddy spike' over the comms. If he say he has not, then you know it's perhaps a hostile lock. AIM-9 IR locks with radar off, it will not give you any warning before launch.
 
 Here's a brief list including the most common symbols and what they refer to:
+AIRCRAFT
 - 16: F-16
+- 10: A-10
 - 14: F-14
 - 15: F-15
-- 37: J-37 Viggen
+- 18: F/A-18
 - 21: MiG-21
+- 27: Su-27, J-11A
+- 28: Training scenario opponent
+- 29: MiG-29
+- 35: F-35
+- 37: J-37 Viggen
 - 71: SR-71
+- EF: Eurofighter
+- F4: F-4
+- F5: F-5
+- HA: Harrier
+- JA: Jaguar 
 - M2: Mirage-2000
-- JA: Jaguar
+- RF: Rafale (brsq)
+- TO: Tornado
+
+ASSETS, OTHER
+- 2: SA-2 (S-75, SAM)
 - 11: SA-11 (BUK M2, SAM)
 - 20: SA-20 (S-300, SAM)
-- SH: Frigate/Carrier/Ship
-- 28: Training scenario opponent
-- 10: A-10    
-- 18: F/A-18
-- 27: Su-27, J-11A
-- 29: MiG-29
-- EF: Eurofighter
-- TO: Tornado
-- RF: Rafale (brsq)
-- 35: F-35
-- S: AWACS, GCI or Recon
+- A: Shilka (ZSU-23-4, Anti-Aircraft Artillery)
 - AI: AI scenario
+- P: Patriot (MIM-104D, SAM)
+- S: AWACS, GCI or Recon
+- SH: Frigate/Carrier/Ship
 - UK: Unknown threat
             ]]></text-3>
             <text-4><![CDATA[

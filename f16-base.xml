@@ -11,29 +11,7 @@
         <aircraft-class type="string">mil-fighter</aircraft-class>
         <aircraft-operator />
         <aircraft-data>
-            <path>/f16/avionics/c1-lat</path>
-            <path>/f16/avionics/c1-lon</path>
-            <path>/f16/avionics/c1-rad</path>
-            <path>/f16/avionics/c2-lat</path>
-            <path>/f16/avionics/c2-lon</path>
-            <path>/f16/avionics/c2-rad</path>
-            <path>/f16/avionics/c3-lat</path>
-            <path>/f16/avionics/c3-lon</path>
-            <path>/f16/avionics/c3-rad</path>
-            <path>/f16/avionics/c4-lat</path>
-            <path>/f16/avionics/c4-lon</path>
-            <path>/f16/avionics/c4-rad</path>
-            <path>/f16/avionics/c1-typ</path>
-            <path>/f16/avionics/c2-typ</path>
-            <path>/f16/avionics/c3-typ</path>
-            <path>/f16/avionics/c4-typ</path>
-            <path>/f16/avionics/bulls-eye-defined</path>
-            <path>/f16/avionics/bulls-eye-lat</path>
-            <path>/f16/avionics/bulls-eye-lon</path>
             <path>/f16/avionics/hud-basic</path>
-            <path>/f16/avionics/gps-lat</path>
-            <path>/f16/avionics/gps-lon</path>
-            <path>/f16/avionics/gps-alt</path>
             <path>/instrumentation/transponder/inputs/digit[0]</path>
             <path>/instrumentation/transponder/inputs/digit[1]</path>
             <path>/instrumentation/transponder/inputs/digit[2]</path>
@@ -48,7 +26,6 @@
             <path>/f16/avionics/intercom-volume</path>
             <path>/f16/effects/dirt</path>
             <path>/f16/effects/rust</path>
-            <path>/environment/season</path>
         </aircraft-data>
         <tags>
             <tag>fighter</tag>
@@ -459,9 +436,6 @@
                         <label>--- GUI Panels ---</label>
                         <enabled>false</enabled>
                       </item>
-                      <item>
-                        <label> </label><!-- if you remove me, remember to update the menu numbers for all variant -set files -->
-                    </item>
                     <item>
                         <label>Mission Preplanning</label>
                         <enabled type="bool">true</enabled>
@@ -1046,14 +1020,6 @@
             <display-lighting-intens type="double">0.4</display-lighting-intens>
             <symbology-lighting-intens type="double">1</symbology-lighting-intens>
         </rwr>
-        <iff>
-            <channel_prop type="string">/instrumentation/iff/channel-selection</channel_prop>
-            <power_prop type="string">/instrumentation/iff/power</power_prop>
-            <power type="bool">true</power>
-            <activate type="bool">true</activate>
-            <channel-selection type="int">1</channel-selection>
-            <response type="bool">false</response>
-        </iff>
         <ecm>
             <on-off type="bool">true</on-off>
         </ecm>
@@ -1097,13 +1063,22 @@
         <hud>
             <serviceable type="bool">true</serviceable>
         </hud>
+        <iff>
+            <channel_prop type="string">/instrumentation/iff/channel-selection</channel_prop>
+            <power_prop type="string">/instrumentation/iff/power</power_prop>
+            <power type="bool">false</power>
+            <activate type="bool">true</activate>
+            <channel-selection type="int">1</channel-selection>
+            <response type="bool">false</response>
+        </iff>
         <datalink>
+            <data type="int">0</data>
+            <power type="bool">false</power>
             <channel type="int">42</channel>
-            <power_prop type="string">f16/avionics/power-dl</power_prop>
+            <power_prop type="string">/instrumentation/datalink/power</power_prop>
             <channel_prop type="string">instrumentation/datalink/channel</channel_prop>
             <receive_period type="double">1</receive_period>
-            <channel_mp_string type="int">7</channel_mp_string>
-            <data_mp_string type="int">8</data_mp_string>
+            <!--identifier_prop type="string">instrumentation/datalink/ident</identifier_prop-->
         </datalink>
     </instrumentation>
     <environment>
@@ -1179,6 +1154,7 @@
         <submodels>
             <submodel n="0">
                 <flare-release-cmd type="bool">false</flare-release-cmd>
+                <flare-auto-release-cmd type="double">0</flare-auto-release-cmd>
                 <flare-release type="bool">false</flare-release>
             </submodel>
         </submodels>
@@ -1239,8 +1215,11 @@ value. 18000=standard US transition altitude -->
         <ded>
             <stpt-edit type="int">0</stpt-edit>
             <stpt-rad type="int">0</stpt-rad>
+            <stpt-color type="string">RED</stpt-color>
+            <stpt-type type="string">   </stpt-type>
             <lat type="double">0.0</lat>
             <lon type="double">0.0</lon>
+            <alt type="int">0.0</alt>
         </ded>
         <avionics>
 			<probe-heat-switch type="int">0</probe-heat-switch>
@@ -1248,8 +1227,13 @@ value. 18000=standard US transition altitude -->
             <dgft type="bool">false</dgft>
             <emer-jett-switch type="bool">false</emer-jett-switch>            
             <hud-drift type="int">1</hud-drift><!-- 2: drift c/o 0: reset -->
+            <hud-flir-distance-min type="double">1.0</hud-flir-distance-min><!-- must be larger than zero -->
+            <hud-flir-distance-max type="double">20.0</hud-flir-distance-max><!-- must be larger than min -->
+            <hud-flir-optimum type="bool">false</hud-flir-optimum>
             <hud-brt type="double">0.0</hud-brt>
             <hud-sym type="double">0.0</hud-sym>
+            <hud-cont type="double">0.0</hud-cont>
+            <hud-depr-ret type="double">0.0</hud-depr-ret>
             <rwr-int type="double">1.0</rwr-int>
             <mfd-l-brt type="double">1.0</mfd-l-brt>
             <mfd-l-con type="double">1.0</mfd-l-con>
@@ -1270,25 +1254,41 @@ value. 18000=standard US transition altitude -->
             <gps-lat type="double">36.858</gps-lat>
             <gps-lon type="double">-115.3</gps-lon>
             <gps-alt type="double">4870</gps-alt>
-            <c1-lat type="double">0</c1-lat>
-            <c1-lon type="double">0</c1-lon>
-            <c1-rad type="double">0</c1-rad>
-            <c2-lat type="double">0</c2-lat>
-            <c2-lon type="double">0</c2-lon>
-            <c2-rad type="double">0</c2-rad>
-            <c3-lat type="double">0</c3-lat>
-            <c3-lon type="double">0</c3-lon>
-            <c3-rad type="double">0</c3-rad>
-            <c4-lat type="double">0</c4-lat>
-            <c4-lon type="double">0</c4-lon>
-            <c4-rad type="double">0</c4-rad>
-            <c1-typ type="string"></c1-typ>
-            <c2-typ type="string"></c2-typ>
-            <c3-typ type="string"></c3-typ>
-            <c4-typ type="string"></c4-typ>
-            <bulls-eye-defined type="bool">true</bulls-eye-defined>
-            <bulls-eye-lat type="double">37.20</bulls-eye-lat>
-            <bulls-eye-lon type="double">-115.60</bulls-eye-lon>
+            <stpt-from type="int">0</stpt-from>
+            <stpt-to type="int">0</stpt-to>
+            <pilot-aid>
+                <mark-lat type="double">0</mark-lat>
+                <mark-lon type="double">0</mark-lon>
+                <mark-alt type="double">0</mark-alt>
+                <marked type="bool">false</marked>
+                <c1-lat type="double">0</c1-lat>
+                <c1-lon type="double">0</c1-lon>
+                <c1-rad type="double">0</c1-rad>
+                <c2-lat type="double">0</c2-lat>
+                <c2-lon type="double">0</c2-lon>
+                <c2-rad type="double">0</c2-rad>
+                <c3-lat type="double">0</c3-lat>
+                <c3-lon type="double">0</c3-lon>
+                <c3-rad type="double">0</c3-rad>
+                <c4-lat type="double">0</c4-lat>
+                <c4-lon type="double">0</c4-lon>
+                <c4-rad type="double">0</c4-rad>
+                <c5-lat type="double">0</c5-lat>
+                <c5-lon type="double">0</c5-lon>
+                <c5-rad type="double">0</c5-rad>
+                <c6-lat type="double">0</c6-lat>
+                <c6-lon type="double">0</c6-lon>
+                <c6-rad type="double">0</c6-rad>
+                <c1-typ type="string">   </c1-typ>
+                <c2-typ type="string">   </c2-typ>
+                <c3-typ type="string">   </c3-typ>
+                <c4-typ type="string">   </c4-typ>
+                <c5-typ type="string">   </c5-typ>
+                <c6-typ type="string">   </c6-typ>
+                <bulls-eye-defined type="bool">true</bulls-eye-defined>
+                <bulls-eye-lat type="double">37.20</bulls-eye-lat>
+                <bulls-eye-lon type="double">-115.60</bulls-eye-lon>
+            </pilot-aid>
 			<rtn-seq type="int">0</rtn-seq>
 			<ded-up-down type="int">0</ded-up-down>
             <laser-code type="int">0000</laser-code>
@@ -1321,7 +1321,7 @@ value. 18000=standard US transition altitude -->
             <ew-mws-switch type="bool">false</ew-mws-switch>
             <ew-jett-switch type="bool">false</ew-jett-switch>
             <ew-jmr-switch type="bool">false</ew-jmr-switch>
-            <ew-mode-knob type="bool">false</ew-mode-knob>
+            <ew-mode-knob type="int">0</ew-mode-knob>
             <cmds-01-switch type="bool">false</cmds-01-switch>
             <cmds-02-switch type="bool">false</cmds-02-switch>
             <cmds-ch-switch type="bool">false</cmds-ch-switch>
@@ -1477,6 +1477,9 @@ value. 18000=standard US transition altitude -->
         <aar>
             <file>Aircraft/Generic/aar.nas</file>
         </aar>
+        <steerpoints>
+            <file>Aircraft/f16/Nasal/steerpoints.nas</file>
+        </steerpoints>
         <damage>
             <file>Aircraft/f16/Nasal/damage.nas</file>
         </damage>
@@ -1496,6 +1499,9 @@ value. 18000=standard US transition altitude -->
         <radardist>
             <file>Aircraft/Instruments-3d/radardist/radardist.nas</file>
         </radardist>
+        <datalink>
+            <file>Aircraft/f16/Nasal/datalink.nas</file>
+        </datalink>
         <f16> 
             <file>Aircraft/f16/Nasal/exec.nas</file>
             <file>Aircraft/f16/Nasal/zoom-views.nas</file>
@@ -1606,9 +1612,6 @@ value. 18000=standard US transition altitude -->
         <help>
             <file>Aircraft/f16/Nasal/help.nas</file>
         </help>
-        <datalink>
-            <file>Aircraft/f16/Nasal/datalink.nas</file>
-        </datalink>
     </nasal>
     
 </PropertyList>

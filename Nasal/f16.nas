@@ -236,7 +236,10 @@ var medium_fast = {
         setprop("ai/submodels/submodel[0]/flare-release-snd", FALSE);
         setprop("ai/submodels/submodel[0]/flare-release-out-snd", FALSE);
     }
-    var flareOn = getprop("ai/submodels/submodel[0]/flare-release-cmd") and getprop("f16/avionics/ew-mode-knob");
+    var flareOn = getprop("ai/submodels/submodel[0]/flare-release-cmd") and getprop("f16/avionics/ew-mode-knob") == 1;
+    var flareOnA = getprop("ai/submodels/submodel[0]/flare-auto-release-cmd") > rand() and getprop("f16/avionics/ew-mode-knob") == 2 and getprop("ai/submodels/submodel[0]/flare-release-cmd") == 0;
+    flareOn = flareOn or flareOnA;
+    
     if (flareOn == TRUE and getprop("ai/submodels/submodel[0]/flare-release") == FALSE
             and getprop("ai/submodels/submodel[0]/flare-release-out-snd") == FALSE
             and getprop("ai/submodels/submodel[0]/flare-release-snd") == FALSE) {
@@ -1222,7 +1225,12 @@ var eject = func{
   if (getprop("f16/ejected")==1 or !getprop("controls/seat/ejection-safety-lever")) {
       return;
   }
+  view.setViewByIndex(1);
   setprop("f16/ejected",1);
+  settimer(eject2, 1.5);# this is to give the sim time to load the exterior view, so there is no stutter while seat fires and it gets stuck.
+}
+
+var eject2 = func{
   setprop("canopy/not-serviceable", 1);
   var es = armament.AIM.new(10, "es","gamma", nil ,[-3.65,0,0.7]);
   #setprop("fdm/jsbsim/fcs/canopy/hinges/serviceable",0);
@@ -1645,3 +1653,10 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
  }, 0, 0);
 
 var chuteLoop = maketimer(0.05, chuteLoopFunc);
+
+# Switch to ext. view for short time to make sure to not get big stutter when switching in-flight.
+var load_interior = func {
+    view.setViewByIndex(0);
+}
+settimer(load_interior, 0.5, 1);
+view.setViewByIndex(1);

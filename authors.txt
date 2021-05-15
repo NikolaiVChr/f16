@@ -137,6 +137,7 @@ Marsdolphin
 Colin Geniet
 - RCS timer
 - Updated cannon damage
+- Datalink
 
 Reaper
 - 3D side stick updates for Block 10
