@@ -1236,6 +1236,8 @@ append(obj.total, obj.speed_curr);
                  warn                      : "f16/avionics/fault-warning",
                  strf                      : "f16/avionics/strf",
                  data                      : "instrumentation/datalink/data",
+                 hmdH:                       "sim/current-view/heading-offset-deg",
+                 hmdP:                       "sim/current-view/pitch-offset-deg",
                 };
 
         foreach (var name; keys(input)) {

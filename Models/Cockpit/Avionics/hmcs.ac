@@ -1,0 +1,26 @@
+AC3Db
+MATERIAL "HMCSmat" rgb 0.000 0.000 0.000  amb 0.000 0.000 0.000  emis 1 1 1  spec 0.000 0.000 0.000  shi 128 trans 0.000
+OBJECT world
+name "Blender_exporter_v2.26__hmcs.ac"
+kids 1
+OBJECT poly
+name "canvasHMCS"
+data 8
+hmcsMesh
+crease 30.0
+texture "hmcs.png"
+texrep 1 1
+numvert 4
+-0.2 0.025 0.025
+-0.2 -0.025 0.025
+-0.2 0.025 -0.025
+-0.2 -0.025 -0.025
+numsurf 1
+SURF 0X0
+mat 0
+refs 4
+0 0 1
+1 0 0
+3 1 0
+2 1 1
+kids 0
