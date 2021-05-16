@@ -15,7 +15,6 @@ var flirImageReso = 16;
 
 var ht_debug = 0;
 
-var pitch_offset = 12;
 var pitch_factor = 14.85;#19.8;
 var pitch_factor_2 = pitch_factor * 180.0 / math.pi;
 var alt_range_factor = (9317-191) / 100000; # alt tape size and max value.
@@ -127,6 +126,13 @@ var F16_HMD = {
         obj.window5 = obj.svg.createChild("text")
                 .setText("05>07")
                 .setTranslation(800,700)
+                .setAlignment("right-bottom-baseline")
+                .setColor(0,1,0,1)
+                .setFont(HUD_FONT)
+                .setFontSize(fontSize, 1.1);
+        obj.window9 = obj.svg.createChild("text")
+                .setText("AMM9")
+                .setTranslation(240,630)
                 .setAlignment("right-bottom-baseline")
                 .setColor(0,1,0,1)
                 .setFont(HUD_FONT)
@@ -826,6 +832,16 @@ var F16_HMD = {
                                             obj.window3.hide();
 
                                       }),
+                        props.UpdateManager.FromHashValue("window9_txt", nil, func(txt)
+                                      {
+                                          if (txt != nil and txt != ""){
+                                              obj.window9.show();
+                                              obj.window9.setText(txt);
+                                          }
+                                          else
+                                            obj.window9.hide();
+
+                                      }),
 
         ];
         
@@ -886,15 +902,10 @@ var F16_HMD = {
             me.Vz   =    hdp.current_view_y_offset_m; # view Z position (0.94 meter per default)
             me.Vx   =    hdp.current_view_z_offset_m; # view X position (0.94 meter per default)
             
-
             me.bore_over_bottom = me.Vz - me.Hz_b;
             me.Hz_height        = me.Hz_t-me.Hz_b;
-            me.hozizon_line_offset_from_middle_in_svg = 0.1346; #horizline and radar echoes fraction up from middle
             me.frac_up_the_hud = me.bore_over_bottom / me.Hz_height;
             me.texels_up_into_hud = me.frac_up_the_hud * me.sy;#sy default is 260
-            me.texels_over_middle = me.texels_up_into_hud - me.sy/2;
-            pitch_offset = -me.texels_over_middle + me.hozizon_line_offset_from_middle_in_svg*me.sy;
-            setprop("f16/hud/texels-up",me.texels_up_into_hud);
         }
         
         me.Vy   =    hdp.current_view_x_offset_m;
@@ -1324,16 +1335,6 @@ var F16_HMD = {
                             if (me.tgt != nil) {
                                 me.tgt.setVisible(me.u.get_display());
                             }
-                            #me.u_dev_rad = (90-me.u.get_deviation(hdp.heading))  * D2R;
-                            #me.u_elev_rad = (90-me.u.get_total_elevation( hdp.pitch))  * D2R;
-                            #me.devs = me.develev_to_devroll(hdp, me.u_dev_rad, me.u_elev_rad);
-                            #me.combined_dev_deg = me.devs[0];
-                            #me.combined_dev_length =  me.devs[1];
-                            #me.clamped = me.devs[2];
-                            #me.yc = ht_yco + (ht_ycf * me.combined_dev_length * math.cos(me.combined_dev_deg*D2R));
-                            #me.xc = ht_xco + (ht_xcf * me.combined_dev_length * math.sin(me.combined_dev_deg*D2R));
-                            
-                            #me.clamped = me.yc > me.sy*0.5 or me.yc < -me.sy*0.5+me.hozizon_line_offset_from_middle_in_svg*me.sy or me.xc > me.sx *0.5 or me.xc < -me.sx*0.5; # outside HUD
                             me.clamped = math.abs(me.echoPos[0])>500 or math.abs(me.echoPos[1])>500;
 
                             if (me.clamped) {

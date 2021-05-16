@@ -1516,9 +1516,6 @@ value. 18000=standard US transition altitude -->
             <file>Aircraft/f16/Nasal/MFD/MFD_main.nas</file>
             <!--<file>Aircraft/f16/Nasal/blackout.nas</file>-->
         </f16>
-        <hmd> 
-            <file>Aircraft/f16/Nasal/HUD/hmdMath.nas</file>
-        </hmd>
         <start>
             <file>Aircraft/f16/Nasal/states_and_autostart.nas</file>
         </start>
