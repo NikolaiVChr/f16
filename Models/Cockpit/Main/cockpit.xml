@@ -79,7 +79,7 @@
     </effect>
 
  <model>
-  <name>HMCS</name>
+  <name>HMCS-</name>
   <path>Aircraft/f16/Models/Cockpit/Avionics/hmcs.xml</path>
   <offsets>
         <x-m>0</x-m>
@@ -90,7 +90,7 @@
 
 <animation>
   <type>translate</type>
-  <object-name>HMCS</object-name>
+  <object-name>HMCS-</object-name>
   <property>sim/current-view/x-offset-m</property>
   <offset-m>0.0</offset-m>
   <factor>1.0</factor>
@@ -102,7 +102,7 @@
  </animation>
  <animation>
   <type>translate</type>
-  <object-name>HMCS</object-name>
+  <object-name>HMCS-</object-name>
   <property>sim/current-view/y-offset-m</property>
   <offset-m>0.0</offset-m>
   <factor>1.0</factor>
@@ -114,7 +114,7 @@
  </animation>
  <animation>
   <type>translate</type>
-  <object-name>HMCS</object-name>
+  <object-name>HMCS-</object-name>
   <property>sim/current-view/z-offset-m</property>
   <offset-m>0.0</offset-m>
   <factor>1.0</factor>
@@ -127,7 +127,7 @@
 
  <animation>
   <type>rotate</type>
-  <object-name>HMCS</object-name>
+  <object-name>HMCS-</object-name>
   <property>sim/current-view/heading-offset-deg</property>
   <factor>1.0</factor>
   <center>
@@ -143,7 +143,7 @@
  </animation>
  <animation>
   <type>rotate</type>
-  <object-name>HMCS</object-name>
+  <object-name>HMCS-</object-name>
   <property>sim/current-view/pitch-offset-deg</property>
   <factor>1.0</factor>
   <center>
@@ -157,26 +157,6 @@
    <z>0.0</z>
   </axis>
  </animation>
- <!--animation>
-  <type>scale</type>
-  <object-name>HMCS</object-name>
-  <center>
-    <x-m>0</x-m>
-    <y-m>0</y-m>
-    <z-m>0</z-m>
-  </center>
-  <x-factor>0.0</x-factor>
-  <y-factor>0.0</y-factor>
-  <z-factor>0.0</z-factor>
-  <x-offset>0.1</x-offset>
-  <y-offset>0.1</y-offset>
-  <z-offset>0.1</z-offset>
-  <axis>
-   <x>1.0</x>
-   <y>1.0</y>
-   <z>1.0</z>
-  </axis>
- </animation-->
 
  <model>
   <name>HUDa</name>
