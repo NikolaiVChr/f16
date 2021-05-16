@@ -164,7 +164,7 @@ var F16_HMD = {
         obj.tgt_symbols =  setsize([],obj.max_symbols);
 
         
-        obj.custom = obj.canvas.createGroup();
+        obj.custom = obj.svg.createChild("group");
         obj.flyup = obj.svg.createChild("text")
                 .setText("FLYUP")
                 .setTranslation(sx*0.5*uv_used,sy*0.30)
@@ -395,7 +395,7 @@ var F16_HMD = {
         ############################## new center origin stuff that used hud math #################
         
         
-        obj.centerOrigin = obj.canvas.createGroup();
+        obj.centerOrigin = obj.svg.createChild("group");
         
         obj.flyupLeft    = obj.centerOrigin.createChild("path")
                             .lineTo(-50,-50)
@@ -1357,7 +1357,7 @@ var F16_HMD = {
                                         me.echoPos[1] = me.echoPos[1]/math.abs(me.scaleclamp);
                                     }
                                 }
-                                me.tgt.setStrokeDashArray([5,5]);
+                                me.tgt.setStrokeDashArray([7,7]);
                             } else {
                                 me.tgt.setStrokeDashArray([5]);
                             }
@@ -1373,7 +1373,7 @@ var F16_HMD = {
                                 #me.target_locked.setTranslation (me.xcS, me.ycS);
                                 me.target_locked.setTranslation (me.echoPos);
                                 if (me.clamped) {
-                                    me.target_locked.setStrokeDashArray([5,5]);
+                                    me.target_locked.setStrokeDashArray([7,7]);
                                 } else {
                                     me.target_locked.setStrokeDashArray([5]);
                                 }
@@ -1527,7 +1527,6 @@ var F16_HMD = {
         {
             update_item.update(hdp);
         }
-        me.svg.show();
         return;
         me.window1.setText("window  1").show();        
         me.window2.setText("window  2").show();
