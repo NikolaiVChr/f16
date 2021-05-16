@@ -61,7 +61,7 @@ var F16_HMD = {
         # F16A: Total Field of View of the F-16 A/B PDU is 20deg but the Instantaneous FoV is only 9deg in elevation and 13.38deg in azimuth
         
         
-        hmd.HudMath.init([-4.53759+0.013,-0.07814,0.85796+0.010], [-4.7148+0.013,0.07924,0.66213+0.010], [sx,sy], [0,1.0], [1.0,0.0], 0);
+        
         uv_x1 = 0;
         uv_x2 = 1;
         semi_width = 0.025;
@@ -91,8 +91,7 @@ var F16_HMD = {
             .arcSmallCW(500,500, 0, 500*2, 0)
             .arcSmallCW(500,500, 0, -500*2, 0)
             .setStrokeLineWidth(stroke1)
-            .setColor(0,0,1)
-            .hide();
+            .setColor(0,0,1);
 
         obj.hydra = 0;
 
@@ -143,7 +142,11 @@ var F16_HMD = {
         obj.total = [];        
         obj.scaling = [];      
         
+        append(obj.total, obj.window2);
+        append(obj.total, obj.window3);
+        append(obj.total, obj.window5);
         append(obj.total, obj.window12);
+        append(obj.total, obj.mainCircle);
         
         obj.color = [0,1,0];
 
@@ -386,8 +389,7 @@ var F16_HMD = {
         ############################## new center origin stuff that used hud math #################
         
         
-        obj.centerOrigin = obj.canvas.createGroup()
-                           .setTranslation(hmd.HudMath.getCenterOrigin());
+        obj.centerOrigin = obj.canvas.createGroup();
         
         obj.flyupLeft    = obj.centerOrigin.createChild("path")
                             .lineTo(-50,-50)
@@ -497,9 +499,7 @@ var F16_HMD = {
 
         
 
-        # pitch lines
-        var pixelPerDegreeY = hmd.HudMath.getPixelPerDegreeAvg(5.0);#15.43724802231049;
-        var pixelPerDegreeX = 16.70527172464148;
+        
         
         obj.hidingScales = 0;
         
@@ -861,7 +861,6 @@ var F16_HMD = {
         }
         me.svg.show();
 
-        hmd.HudMath.reCalc();
         
         if (hdp.nReset) {
             me.NzMax = 1.0;
@@ -1251,7 +1250,7 @@ var F16_HMD = {
         me.rdT = 0;
         me.irB = 0;
         #printf("%d %d %d %s",hdp.master_arm,pylons.fcs != nil,pylons.fcs.getAmmo(),hdp.weapon_selected);
-        if(hdp.master_arm and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
+        if(0 and hdp.master_arm and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
             hdp.weapon_selected = pylons.fcs.selectedType;
             if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
                 if (!pylons.fcs.isLock()) {
@@ -1309,7 +1308,7 @@ var F16_HMD = {
                       me.model = me.u.ModelType;
                     
                     if (me.target_idx < me.max_symbols or me.designatedDistanceFT == nil) {
-                        me.echoPos = me.getDevFromCoord(me.u.get_Coord(0), geo.viewer_position(),hdp.hmdH,hdp.hmdP,hdp);
+                        me.echoPos = f16.HudMath.getDevFromCoord(me.u.get_Coord(0), hdp.hmdH, hdp.hmdP, hdp, geo.viewer_position());
                         #print(me.echoPos[0],",",me.echoPos[1],"    ", hdp.hmdH, "," ,hdp.hmdP);
                         me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                         #print("    ",me.echoPos[0]);
@@ -1390,7 +1389,7 @@ var F16_HMD = {
                                         showASC = 1;
                                     }
                                 }
-                                if (pylons.fcs != nil and pylons.fcs.isLock()) {
+                                if (0 and pylons.fcs != nil and pylons.fcs.isLock()) {
                                     #me.target_locked.setRotation(45*D2R);
                                     if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7" or hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
                                         var aim = pylons.fcs.getSelectedWeapon();
@@ -1420,13 +1419,6 @@ var F16_HMD = {
                                     #me.target_locked.setRotation(0);
                                 }
                                 if (me.clamped) {
-                                    #me.locatorLine.setTranslation(me.sx/2,me.sy-me.texels_up_into_hud);
-                                    #me.locatorLine.setRotation(me.combined_dev_deg*D2R);
-                                    me.locatorLine.setTranslation(hmd.HudMath.getBorePos());
-                                    me.locatorLine.setRotation(hmd.HudMath.getPolarFromCenterPos(me.echoPos[0],me.echoPos[1])[0]);
-                                    me.dev_h_d = me.u.get_deviation(hdp.heading);
-                                    me.dev_e_d = me.u.get_total_elevation(hdp.pitch);
-                                    me.locatorAngle.setText(sprintf("%d", math.sqrt(me.dev_h_d*me.dev_h_d+me.dev_e_d*me.dev_e_d)));
                                     me.locatorLineShow = 0;
                                 }
                             } else {
@@ -1548,37 +1540,6 @@ var F16_HMD = {
         me.window10.setText("window 10").show();
         me.window11.setText("window 11").show();
         me.window12.setText("window 12").show();# 
-    },
-    getDevFromCoord: func (gpsCoord, aircraft, vh, vp, hdp) {
-        # return pos in canvas from center origin
-        if (aircraft== nil) {
-            me.crft = geo.viewer_position();
-        } else {
-            me.crft = aircraft;
-        }
-        me.ptch = vector.Math.getPitch(me.crft,gpsCoord);
-        me.dst  = me.crft.direct_distance_to(gpsCoord);
-        me.brng = me.crft.course_to(gpsCoord);
-        me.hrz  = math.cos(me.ptch*D2R)*me.dst;
-
-        var ym = vector.Math.yawMatrix(-vh);
-        var pm = vector.Math.pitchMatrix(-vp);
-        var vm = vector.Math.multiplyMatrices(pm, ym);
-        me.rollM  = vector.Math.rollMatrix(-hdp.roll);
-        me.pitchM = vector.Math.pitchMatrix(-hdp.pitch);
-        me.yawM   = vector.Math.yawMatrix(hdp.heading);
-        me.rotation = vector.Math.multiplyMatrices(me.rollM, vector.Math.multiplyMatrices(me.pitchM, me.yawM));
-        me.rotation = vector.Math.multiplyMatrices(vm, me.rotation);
-
-        me.vel_gx = math.cos(me.brng*D2R) *me.hrz;
-        me.vel_gy = -math.sin(me.brng*D2R) *me.hrz;
-        me.vel_gz = math.sin(me.ptch*D2R)*me.dst;
-        
-        var tv = vector.Math.normalize([me.vel_gx,me.vel_gy,me.vel_gz]);
-        var dv = vector.Math.multiplyMatrixWithVector(me.rotation, tv);
-        var angles = vector.Math.cartesianToEuler(dv);
-
-        return [angles[0]==nil?0:angles[0],angles[1]];
     },
 
 #  12
