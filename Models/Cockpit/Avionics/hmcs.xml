@@ -30,6 +30,7 @@
   </parameters>
  </effect>
 
+
     <animation>
         <type>select</type>
         <object-name>canvasHMCS</object-name>
