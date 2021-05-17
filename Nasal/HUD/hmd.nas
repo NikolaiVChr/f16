@@ -596,10 +596,10 @@ var F16_HMD = {
         # set the update list - using the update manager to improve the performance
         # of the HUD update - without this there was a drop of 20fps (when running at 60fps)
         obj.update_items = [
-            props.UpdateManager.FromHashList(["hud_serviceable", "hud_display", "hud_brightness", "hud_power"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
+            props.UpdateManager.FromHashList(["hud_serviceable", "hud_display", "hmcs_sym", "hud_power"], 0.1, func(hdp)#changed to 0.1, this function is VERY heavy to run.
                                       {
 # print("HUD hud_serviceable=", hdp.hud_serviceable," display=", hdp.hud_display, " brt=", hdp.hud_brightness, " power=", hdp.hud_power);
-
+                                            
                                           if (!hdp.hud_display or !hdp.hud_serviceable) {
                                             obj.color = [0.3,1,0.3,0];
                                             foreach(item;obj.total) {
@@ -607,8 +607,8 @@ var F16_HMD = {
                                             }
                                             obj.ASEC120Aspect.setColorFill(obj.color);
                                             obj.ASEC65Aspect.setColorFill(obj.color);
-                                          } elsif (hdp.hud_brightness != nil and hdp.hud_power != nil) {
-                                            obj.color = [0.3,1,0.3,hdp.hud_brightness * hdp.hud_power];
+                                          } elsif (hdp.hmcs_sym != nil and hdp.hud_power != nil) {
+                                            obj.color = [0.3,1,0.3,hdp.hmcs_sym * hdp.hud_power];
                                             foreach(item;obj.total) {
                                               item.setColor(obj.color);
                                             }
@@ -864,7 +864,7 @@ var F16_HMD = {
     #######################################################################################################
 
     update : func(hdp) {
-        if (getprop("f16/avionics/hmd-sym-int-knob") == 0 or hdp.view_number != 0) {
+        if (hdp.hmcs_sym == 0 or hdp.view_number != 0) {
             me.svg.hide();
             return;
         }

@@ -1243,6 +1243,7 @@ append(obj.total, obj.speed_curr);
                  data                      : "instrumentation/datalink/data",
                  hmdH:                       "sim/current-view/heading-offset-deg",
                  hmdP:                       "sim/current-view/pitch-offset-deg",
+                 hmcs_sym:                  "f16/avionics/hmd-sym-int-knob",
                 };
 
         foreach (var name; keys(input)) {
