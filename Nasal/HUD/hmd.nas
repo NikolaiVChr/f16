@@ -878,6 +878,7 @@ var F16_HMD = {
         }
         me.svg.show();
 
+        setprop("sim/rendering/als-filters/use-night-vision", 0);# NVG not allowed while using HMD
         
         if (hdp.nReset) {
             me.NzMax = 1.0;
@@ -1422,6 +1423,12 @@ var f16_hmd = nil;
 var HUDobj = nil;
 
 var main = func (module) {
+    var t = maketimer(1,main2);
+    t.singleShot = 1;
+    t.start();
+}
+
+var main2 = func () {
     f16_hmd = F16HMDRecipient.new("F16-HMD");
     HUDobj = f16_hmd.HUDobj;
     emesary.GlobalTransmitter.Register(f16_hmd);

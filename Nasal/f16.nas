@@ -1602,7 +1602,8 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     fast.loop();
     ehsi.init();
     tgp.callInit();
-    tgp.fast_loop();
+    tgp.flooptimer = maketimer(0,func tgp.fast_loop());
+    tgp.flooptimer.start();
     ded.dataEntryDisplay.init();
     ded.dataEntryDisplay.update();
     pfd.callInit();

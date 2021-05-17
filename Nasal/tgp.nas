@@ -379,13 +379,14 @@ setlistener("controls/displays/cursor-click", list);
 
 var fast_loop = func {
   var viewName = getprop("/sim/current-view/name"); 
-    
+
     if (viewName == "TGP" and (getprop("gear/gear/wow") or !getprop("f16/stores/tgp-mounted"))) {
         # deselect view back to pilot default
         masterMode = STBY;
         setprop("sim/current-view/view-number",0);
         setprop("sim/rendering/als-filters/use-IR-vision", 0);
         setprop("sim/view[105]/enabled", 0);
+
     } elsif (viewName == "TGP") {
         if (!getprop("f16/avionics/power-mfd") or getprop("f16/avionics/power-ufc-warm")!=1) {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
@@ -681,8 +682,10 @@ var fast_loop = func {
         }
     }
     dt_old = dt;
-    settimer(fast_loop,0);
 }
+
+var flooptimer = nil;# started from f16.nas
+
 var dt_old = 0;
 
 var line1 = nil;
