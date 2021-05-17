@@ -1251,6 +1251,64 @@
     </animation>
 
     <animation>
+        <type>knob</type>
+        <object-name>HMCS_SYM_INT_KNOB</object-name>
+        <property>f16/avionics/hmd-sym-int-knob</property>
+        <factor>270</factor>
+        <offset-deg>-140</offset-deg>
+        <drag-direction>horizontal</drag-direction>
+        <center>
+            <x-m>-0.002007</x-m>
+            <y-m>-0.340686</y-m>
+            <z-m>0.00189</z-m>
+        </center>
+        <axis>
+            <x>0</x>
+            <y>0</y>
+            <z>-1</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hmd-sym-int-knob</property>
+                <factor>0.05</factor>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+
+    <animation>
+        <type>knob</type>
+        <object-name>SYMBOLOGY_INT_KNOB</object-name>
+        <property>f16/avionics/hmd-sym-int-knob</property>
+        <factor>270</factor>
+        <offset-deg>-140</offset-deg>
+        <drag-direction>horizontal</drag-direction>
+        <center>
+            <x-m>-0.001971</x-m>
+            <y-m>-0.32754</y-m>
+            <z-m>0.00189</z-m>
+        </center>
+        <axis>
+            <x>0</x>
+            <y>0</y>
+            <z>-1</z>
+        </axis>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>f16/avionics/hmd-sym-int-knob</property>
+                <factor>0.05</factor>
+                <min>0</min>
+                <max>1</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+
+    <animation>
         <type>select</type>
         <object-name>HMD_0</object-name>
         <object-name>HMD_1</object-name>

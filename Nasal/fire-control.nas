@@ -1042,9 +1042,10 @@ var printfDebug = func {if (debug == 1) call(printf,arg);};
 
 
 # This is non-generic methods, please edit it to fit your radar setup:
+# List of weapons that can be ripple/dual dropped:
 var dualWeapons = ["MK-82","MK-82AIR","MK-83","MK-84","GBU-12","GBU-24","GBU-54","CBU-87","CBU-105","GBU-31","AGM-154A","B61-7","B61-12"];
 var getCompleteRadarTargetsList = func {
-	# A list of all MP/AI aircraft/ships/surface-targets around the aircraft.
+	# A list of all MP/AI aircraft/ships/surface-targets around the aircraft, including those that is outside radar line of sight etc..
 	return awg_9.completeList;
 }
 

@@ -78,7 +78,118 @@
         <object-name>screws</object-name>
     </effect>
 
-    
+ <model>
+  <name>HMCS-basic</name>
+  <path>Aircraft/f16/Models/Cockpit/Avionics/hmcs-basic.xml</path>
+  <offsets>
+        <x-m>0</x-m>
+        <y-m>0</y-m>
+        <z-m>0</z-m>
+  </offsets>
+ </model>
+
+ <model>
+  <name>HMCS-norm</name>
+  <path>Aircraft/f16/Models/Cockpit/Avionics/hmcs.xml</path>
+  <offsets>
+        <x-m>0</x-m>
+        <y-m>0</y-m>
+        <z-m>0</z-m>
+  </offsets>
+ </model>
+
+<animation>
+  <type>translate</type>
+  <object-name>HMCS-norm</object-name>
+  <object-name>HMCS-basic</object-name>
+  <property>sim/current-view/x-offset-m</property>
+  <offset-m>0.0</offset-m>
+  <factor>1.0</factor>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+ <animation>
+  <type>translate</type>
+  <object-name>HMCS-norm</object-name>
+  <object-name>HMCS-basic</object-name>
+  <property>sim/current-view/y-offset-m</property>
+  <offset-m>0.0</offset-m>
+  <factor>1.0</factor>
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>1</z>
+  </axis>
+ </animation>
+ <animation>
+  <type>translate</type>
+  <object-name>HMCS-norm</object-name>
+  <object-name>HMCS-basic</object-name>
+  <property>sim/current-view/z-offset-m</property>
+  <offset-m>0.0</offset-m>
+  <factor>1.0</factor>
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>HMCS-norm</object-name>
+  <object-name>HMCS-basic</object-name>
+  <property>sim/current-view/heading-offset-deg</property>
+  <factor>1.0</factor>
+  <center>
+   <x-m>0</x-m>
+    <y-m>0</y-m>
+    <z-m>0</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>0.0</y>
+   <z>1.0</z>
+  </axis>
+ </animation>
+ <animation>
+  <type>rotate</type>
+  <object-name>HMCS-norm</object-name>
+  <object-name>HMCS-basic</object-name>
+  <property>sim/current-view/pitch-offset-deg</property>
+  <factor>1.0</factor>
+  <center>
+   <x-m>0</x-m>
+    <y-m>0</y-m>
+    <z-m>0</z-m>
+  </center>
+  <axis>
+   <x>0.0</x>
+   <y>1.0</y>
+   <z>0.0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>HMCS-norm</object-name>
+  <condition>
+      <not>
+          <property>f16/avionics/hud-basic</property>
+      </not>
+  </condition>
+ </animation>
+ 
+  <animation>
+  <type>select</type>
+  <object-name>HMCS-basic</object-name>
+  <condition>
+          <property>f16/avionics/hud-basic</property>
+  </condition>
+ </animation>
 
  <model>
   <name>HUDa</name>

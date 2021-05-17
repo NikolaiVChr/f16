@@ -2,7 +2,7 @@
 #
 # Author: Nikolai V. Chr. (FPI location code adapted from Buccaneer aircraft)
 #
-# Version 1.07
+# Version 1.08
 #
 # License: GPL 2.0
 	
@@ -145,6 +145,39 @@ var HudMath = {
 	    
 	    return [me.pos[0], me.pos[1], me.dir_x,-me.dir_y];
 	},
+
+	getDevFromCoord: func (gpsCoord, viewh, viewp, hdp, aircraft=nil) {
+        # hdp is a hash containing pitch, roll, and true-heading of aircraft
+        # return pos in canvas from center origin
+        if (aircraft== nil) {
+            me.crft = geo.viewer_position();
+        } else {
+            me.crft = aircraft;
+        }
+        me.ptch = vector.Math.getPitch(me.crft, gpsCoord);
+        me.dst  = me.crft.direct_distance_to(gpsCoord);
+        me.brng = me.crft.course_to(gpsCoord);
+        me.hrz  = math.cos(me.ptch*D2R)*me.dst;
+
+        var ym = vector.Math.yawMatrix(-viewh);
+        var pm = vector.Math.pitchMatrix(-viewp);
+        var vm = vector.Math.multiplyMatrices(pm, ym);
+        me.rollM  = vector.Math.rollMatrix(-hdp.roll);
+        me.pitchM = vector.Math.pitchMatrix(-hdp.pitch);
+        me.yawM   = vector.Math.yawMatrix(hdp.heading);
+        me.rotation = vector.Math.multiplyMatrices(me.rollM, vector.Math.multiplyMatrices(me.pitchM, me.yawM));
+        me.rotation = vector.Math.multiplyMatrices(vm, me.rotation);
+
+        me.vel_gx = math.cos(me.brng*D2R) *me.hrz;
+        me.vel_gy = -math.sin(me.brng*D2R) *me.hrz;
+        me.vel_gz = math.sin(me.ptch*D2R)*me.dst;
+        
+        var tv = vector.Math.normalize([me.vel_gx,me.vel_gy,me.vel_gz]);
+        var dv = vector.Math.multiplyMatrixWithVector(me.rotation, tv);
+        var angles = vector.Math.cartesianToEuler(dv);
+
+        return [angles[0]==nil?0:angles[0],angles[1]];
+    },
 	
 	getPosFromDegs:  func (yaw_deg, pitch_deg) {
 		# return pos from bore

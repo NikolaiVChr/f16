@@ -353,7 +353,7 @@
                 </limits>
             </config>
         </view>
-        <view n="105">
+        <view n="105"><!-- if change this number, also change it in tgp.nas and mfd.nas -->
             <name>TGP</name>
             <enabled>false</enabled>
             <internal>true</internal>
@@ -1360,6 +1360,7 @@ value. 18000=standard US transition altitude -->
             <fault-warning type="int">0</fault-warning><!-- 0: No warn 1: warn 2: warn reset -->
             <voice-msg-inhibit type="bool">false</voice-msg-inhibit>
             <strf type="bool">false</strf>
+            <hmd-sym-int-knob type="double">0.0</hmd-sym-int-knob>
         </avionics>
         <fcs>
             <stby-mode type="bool">false</stby-mode>

@@ -185,6 +185,13 @@
               <dialog-name>programGPS</dialog-name>
           </binding>
       </item>
+      <!--item n="14">
+          <label>Reload HMD</label>
+          <binding>
+              <command>nasal-module-reload</command>
+              <module>f16_HMD</module>
+          </binding>
+      </item-->
     </menu>
    </default>
   </menubar>
