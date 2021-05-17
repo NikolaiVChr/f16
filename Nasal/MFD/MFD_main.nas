@@ -4304,10 +4304,6 @@ var get_intercept = func(bearingToRunner, dist_m, runnerHeading, runnerSpeed, ch
 }
 
 var switchTGP = func {
-    if (getprop("sim/view[8]/name") == "Still View") {# sigh, what a hack..
-        setprop("sim/current-view/view-number",13);
-    } else {
-        setprop("sim/current-view/view-number",12);
-    }
+    view.setViewByIndex(105);
 }
 
