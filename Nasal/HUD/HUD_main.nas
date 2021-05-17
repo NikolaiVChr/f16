@@ -8,6 +8,11 @@
 # ---------------------------
 
 var flirImageReso = 16;
+var transfer_dist = "";
+var transfer_mode = "";
+var transfer_arms = "";
+var transfer_g    = "";
+var transfer_stpt = "";
 
 var ht_debug = 0;
 
@@ -2730,6 +2735,11 @@ append(obj.total, obj.speed_curr);
             update_item.update(hdp);
         }
         me.svg.show();
+        transfer_stpt = hdp.window5_txt;
+        transfer_dist = hdp.window3_txt;
+        transfer_arms = hdp.window9_txt;
+        transfer_mode = hdp.window2_txt;
+        transfer_g    = hdp.window12_txt;
         return;
         me.window1.setText("window  1").show();        
         me.window2.setText("window  2").show();

@@ -713,6 +713,7 @@ var F16_HMD = {
                                           
                                           if (hd < 5) currLimit = 1.5;
                                           elsif (hd < 15) currLimit = -14;
+                                          elsif (hd < 30) currLimit = -30;
                                           else currLimit = -50;
                                           
                                           if (hdp.hmdP < currLimit) obj.off = 1;
@@ -863,7 +864,7 @@ var F16_HMD = {
     #######################################################################################################
 
     update : func(hdp) {
-        if (getprop("f16/avionics/hmd-sym-int-knob") == 0) {
+        if (getprop("f16/avionics/hmd-sym-int-knob") == 0 or hdp.view_number != 0) {
             me.svg.hide();
             return;
         }
@@ -940,27 +941,6 @@ var F16_HMD = {
         me.texelPerDegreeX = me.pixelPerMeterX*(((me.Vx-me.Hx_m)*math.tan(me.averageDegX*D2R))/me.averageDegX);
         me.texelPerDegreeY = me.pixelPerMeterY*(((me.Vx-me.Hx_m)*math.tan(me.averageDegY*D2R))/me.averageDegY);
 
-
-
-
-        if (hdp["active_u"] != nil) {
-            hdp.active_target_available = hdp.active_u != nil;
-            if (hdp.active_target_available) {
-                hdp.active_target_callsign = hdp.active_u.Callsign;
-                if (hdp.active_u.ModelType != "")
-                  hdp.active_target_model = hdp.active_u.ModelType;
-                else
-                  hdp.active_target_model = "XX";
-            }
-        } else {
-            hdp.active_target_available = 0;
-            hdp.active_target_callsign = "";
-            hdp.active_target_model = "XX";
-        }
-
-        hdp.fcs_available = pylons.fcs != nil;
-        hdp.weapon_selected = "";
-
         me.hydra = 0;
 
         # part2. update display, first with the update managed items
@@ -986,265 +966,8 @@ var F16_HMD = {
             me.ASEC120.hide();
             me.ASEC65.hide();
             var currASEC = nil;
-            
-            if(hdp.master_arm and pylons.fcs != nil)
-            {
-                hdp.weapon_selected = pylons.fcs.selectedType;
-                hdp.weapn = pylons.fcs.getSelectedWeapon();
-                
-                if (hdp.weapon_selected != nil)
-                {
-                    var mr = 0.4;
-                    if (hdp.weapon_selected == "20mm Cannon") {
-                        hdp.window9_txt = sprintf("%3d", pylons.fcs.getAmmo());
-                        eegsShow = 1;
-                        me.ALOW_top = 1;
-                    } elsif (hdp.weapon_selected == "AIM-9") {
-                        hdp.window9_txt = sprintf("%d SRM", pylons.fcs.getAmmo());#short range missile
-                        if (hdp.weapn != nil) {
-                            if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
-#                                me.ASEC65.show();
-                                currASEC = nil;#[me.sx*0.5,me.sy*0.25];
-                            } elsif (!hdp.standby) {
-#                                me.ASEC100.show();
-                                currASEC = nil;#[me.sx*0.5,me.sy*0.25];
-                            }
-                        }
-                        me.ALOW_top = 1;
-                    } elsif (hdp.weapon_selected == "IRIS-T") {
-                        hdp.window9_txt = sprintf("%d ASM", pylons.fcs.getAmmo());#short range missile
-                        if (hdp.weapn != nil) {
-                            if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
-#                                me.ASEC65.show();
-                                currASEC = nil;#[me.sx*0.5,me.sy*0.25];
-                            } elsif (!hdp.standby) {
-#                                me.ASEC100.show();
-                                currASEC = nil;#[me.sx*0.5,me.sy*0.25];
-                            }
-                        }
-                        me.ALOW_top = 1;
-                    } elsif (hdp.weapon_selected == "AIM-120") {
-                        hdp.window9_txt = sprintf("%d AMM", pylons.fcs.getAmmo());#adv. medium range missile
-                        if (hdp.weapn != nil) {
-                            if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
-#                                me.ASEC120.show();
-                                currASEC = [me.sx*0.5,me.sy*0.25];
-                            } elsif (!hdp.standby) {
-#                                me.ASEC262.show();
-                                currASEC = [me.sx*0.5,me.sy*0.25+262*mr*0.5];
-                            }
-                        }
-                        me.ALOW_top = 1;
-                    } elsif (hdp.weapon_selected == "AIM-7") {
-                        hdp.window9_txt = sprintf("%d MRM", pylons.fcs.getAmmo());#medium range missile
-                        if (hdp.weapn != nil) {
-                            if (hdp.weapn.status == armament.MISSILE_LOCK and !hdp.standby) {
-#                                me.ASEC120.show();
-                                currASEC = [me.sx*0.5,me.sy*0.25];
-                            } elsif (!hdp.standby) {
-#                                me.ASEC262.show();
-                                currASEC = [me.sx*0.5,me.sy*0.25+262*mr*0.5];
-                            }
-                        }
-                        me.ALOW_top = 1;
-                    } elsif (hdp.weapon_selected == "GBU-12") {
-                        hdp.window9_txt = sprintf("%d GB12", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "AGM-65B") {
-                        hdp.window9_txt = sprintf("%d AG65", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "AGM-65D") {
-                        hdp.window9_txt = sprintf("%d AG65", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "AGM-84") {
-                        hdp.window9_txt = sprintf("%d AG84", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "AGM-119") {
-                        hdp.window9_txt = sprintf("%d AG119", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "MK-82") {
-                        hdp.window9_txt = sprintf("%d B82", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "MK-82AIR") {
-                        hdp.window9_txt = sprintf("%d B82A", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "MK-83") {
-                        hdp.window9_txt = sprintf("%d B83", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "MK-84") {
-                        hdp.window9_txt = sprintf("%d B84", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "AGM-88") {
-                        hdp.window9_txt = sprintf("%d AG88", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "GBU-31") {
-                        hdp.window9_txt = sprintf("%d GB31", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "GBU-54") {
-                        hdp.window9_txt = sprintf("%d GB54", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "GBU-24") {
-                        hdp.window9_txt = sprintf("%d GB24", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "AGM-158") {
-                        hdp.window9_txt = sprintf("%d AG158", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "AGM-154A") {
-                        hdp.window9_txt = sprintf("%d AG154", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "CBU-87") {
-                        hdp.window9_txt = sprintf("%d CB87", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "CBU-105") {
-                        hdp.window9_txt = sprintf("%d CB105", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "LAU-68") {
-                        hdp.window9_txt = sprintf("%d M151", pylons.fcs.getAmmo());
-                        eegsShow = 1;
-                        me.hydra = 1;
-                    } elsif (hdp.weapon_selected == "B61-7") {
-                        hdp.window9_txt = sprintf("%d B617", pylons.fcs.getAmmo());
-                    } elsif (hdp.weapon_selected == "B61-12") {
-                        hdp.window9_txt = sprintf("%d B6112", pylons.fcs.getAmmo());
-                    } else hdp.window9_txt = "";
-                    
-                    
-                }
-                
-                if (hdp.active_u != nil)
-                {
-                    if (hdp.active_u.Callsign != nil) {
-                        hdp.window6_txt = hdp.active_u.Callsign.getValue();
-                    } else {
-                        hdp.window6_txt = "";
-                    }
-
-    #        var w2 = sprintf("%-4d", hdp.active_u.get_closure_rate());
-    #        w3_22 = sprintf("%3d-%1.1f %.5s %.4s",hdp.active_u.get_bearing(), hdp.active_u.get_range(), callsign, model);
-    #
-    #
-    #these labels aren't correct - but we don't have a full simulation of the targetting and missiles so 
-    #have no real idea on the details of how this works.
-                    if (hdp.active_u.get_display() == 0) {
-                        me.TA_text = "TA XX";
-                        hdp.window3_txt = "FXXX.X";#slant range
-                    } else {
-                        me.TA_text = sprintf("TA%3d", hdp.active_u.get_altitude()*0.001);
-                        hdp.window3_txt = sprintf("F%05.1f", hdp.active_u.get_slant_range());#slant range
-                    }
-                    
-                    hdp.window6_txt ~= "/"~hdp.active_target_model;
-                    if (size(hdp.window6_txt)>14) {
-                        hdp.window6_txt = substr(hdp.window6_txt,0,14);
-                    }
-                }
-                else {
-                    hdp.window3_txt = "";
-                    hdp.window6_txt = "";
-                }
-                me.etaS = armament.AIM.getETA();
-                if (hdp["CCRP_active"] == 2 and me["timeToRelease"] != nil) {
-                    me.timeToReleaseH = int(me.timeToRelease/3600);
-                    me.timeToRelease = me.timeToRelease-me.timeToReleaseH*3600;
-                    me.timeToReleaseM = int(me.timeToRelease/60);
-                    me.timeToRelease = me.timeToRelease-me.timeToReleaseM*60;
-                    if (me.timeToReleaseH < 1) {
-                        hdp.window4_txt = sprintf("%03d:%02d",me.timeToReleaseM,me.timeToRelease);# 3 digits so pilot can tell it apart from time to steerpoint.
-                    } else {
-                        hdp.window4_txt = "XXX";
-                    }
-                } elsif (me.etaS != nil and me.etaS != -1) {
-                    me.etaH = int(me.etaS/3600);
-                    me.etaS = me.etaS-me.etaH*3600;
-                    me.etaM = int(me.etaS/60);
-                    me.etaS = me.etaS-me.etaM*60;
-                    if (me.etaH < 1) {
-                        hdp.window4_txt = sprintf("%03d:%02d",me.etaM,me.etaS);# 3 digits so pilot can tell it apart from time to steerpoint.
-                    } else {
-                        hdp.window4_txt = "XXX";
-                    }
-                } else {
-                    hdp.window4_txt = "";
-                }
-                me.scurr = steerpoints.getCurrentNumber();
-                if (me.scurr != 0) {
-                    me.navRange = steerpoints.getCurrentRange();
-                    hdp.window5_txt = sprintf("%d>%02d", me.navRange, me.scurr);# as per MLU tape 3 manual
-                } else {
-                    hdp.window5_txt = "";
-                }
-            }
-            else # weapons not armed
-            {
-                me.scurr = steerpoints.getCurrentNumber();
-                if (me.scurr != 0) {
-                    me.navRange = steerpoints.getCurrentRange();
-                    hdp.window5_txt = sprintf("%d>%02d", me.navRange, me.scurr);# as per MLU tape 3 manual
-                    me.etaS = steerpoints.getCurrentETA();
-                    if (me.etaS != nil) {
-                        me.etaH = int(me.etaS/3600);
-                        me.etaS = me.etaS-me.etaH*3600;
-                        me.etaM = int(me.etaS/60);
-                        me.etaS = me.etaS-me.etaM*60;
-                        if (me.etaH < 100) {
-                            hdp.window4_txt = sprintf("%02d:%02d",me.etaH,me.etaM);
-                        } else {
-                            hdp.window4_txt = "99:99";
-                        }
-                    } else {
-                        hdp.window4_txt = "XX:XX";
-                    }
-                } else {
-                    hdp.window4_txt = "";
-                    hdp.window5_txt = "";
-                }
-                var knob = getprop("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob");
-                if (hdp.gear_down and !hdp.wow) {
-                    hdp.window6_txt = "";#sprintf("A%d", hdp.approach_speed);
-                } elsif (0 and (knob==0 or knob == 1) and getprop("instrumentation/tacan/in-range")) {
-                    # show tacan distance and mag heading. (not authentic like this, saw a paper on putting Tacan in hud, but not sure if it was done for F16)
-                    if (getprop("f16/avionics/tacan-receive-only")) {
-						var tcnDist = "   ";
-					} else {
-						var tcnDist = getprop("instrumentation/tacan/indicated-distance-nm");
-						if (tcnDist >= 10) {
-							# tacan can under right conditions be 3 digits
-							tcnDist = sprintf("%d", tcnDist);
-						} else {
-							tcnDist = sprintf("%.1f", tcnDist);
-						}
-					}
-                    hdp.window6_txt = sprintf("%s TCN%03d",tcnDist,geo.normdeg(hdp.headingMag+getprop("instrumentation/tacan/bearing-relative-deg")));
-                } elsif (0 and (knob==2 or knob == 3) and getprop("instrumentation/adf/in-range")) {
-                    # show adf mag heading.
-                    hdp.window6_txt = sprintf("ADF%03d",geo.normdeg(hdp.headingMag+getprop("instrumentation/adf/indicated-bearing-deg")));
-                } elsif (0 and (knob==2 or knob == 3) and getprop("instrumentation/nav[0]/in-range") and !getprop("instrumentation/nav[0]/nav-loc")) {
-                    # show vor mag heading.
-                    hdp.window6_txt = sprintf("VOR%03d",geo.normdeg(getprop("orientation/heading-deg")-getprop("orientation/heading-magnetic-deg")+getprop("instrumentation/nav[0]/radials/target-auto-hdg-deg")));
-                } else {
-                    hdp.window6_txt = "";
-                }
-                
-                var slant = "";
-                
-                var r = steerpoints.getCurrentSlantRange();
-                if (r != nil) {
-                    if (r >= 1) {
-                        slant = sprintf("B %5.1f",r);#tenths of NM.
-                    } else {
-                        slant = sprintf("B %4.2f",r);#should really be hundreds of feet, but that will confuse everyone.
-                    }                      
-                }
-                
-                hdp.window3_txt = slant;
-            }
-            
-            
-			
-            
-            if (!hdp.cara) {
-                me.alow_text = "AL";
-            } elsif (hdp.alow<hdp.altitude_agl_ft or math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0 or hdp.gear_down) {
-                me.alow_text = sprintf("AL%4d",hdp.alow);
-            } else {
-                me.alow_text = "";
-            }
-            
-            if (me.ALOW_top and me["altScaleMode"] != 2) {
-                hdp.window1_txt = me.alow_text;
-                hdp.window10_txt = me.TA_text;
-            } else {
-                hdp.window10_txt = me.alow_text;
-                hdp.window1_txt = "";
-            }
-            
-            hdp.window7_txt = sprintf("  %.2f",hdp.mach);
         }
-
-        
+                   
 
 
         me.locatorLineShow = 0;
@@ -1335,31 +1058,15 @@ var F16_HMD = {
                             if (me.tgt != nil) {
                                 me.tgt.setVisible(me.u.get_display());
                             }
-                            me.clamped = math.abs(me.echoPos[0])>500 or math.abs(me.echoPos[1])>500;
+                            me.clamped = math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]) > 500;
 
                             if (me.clamped) {
-                                if (math.abs(me.echoPos[0]) > 500) {
-                                    me.scaleclamp = me.echoPos[0]/500;
-                                    me.echoPos[0] = me.echoPos[0] > 500?500:-500;
-                                    me.echoPos[1] = me.echoPos[1]/math.abs(me.scaleclamp);
-                                    if (math.abs(me.echoPos[1]) > 500) {
-                                        me.scaleclamp = me.echoPos[1]/500;
-                                        me.echoPos[1] = me.echoPos[1] > 500?500:-500;
-                                        me.echoPos[0] = me.echoPos[0]/math.abs(me.scaleclamp);
-                                    }
-                                } elsif (math.abs(me.echoPos[1]) > 500) {
-                                    me.scaleclamp = me.echoPos[1]/500;
-                                    me.echoPos[1] = me.echoPos[1] > 500?500:-500;
-                                    me.echoPos[0] = me.echoPos[0]/math.abs(me.scaleclamp);
-                                    if (math.abs(me.echoPos[0]) > 500) {
-                                        me.scaleclamp = me.echoPos[0]/500;
-                                        me.echoPos[0] = me.echoPos[0] > 500?500:-500;
-                                        me.echoPos[1] = me.echoPos[1]/math.abs(me.scaleclamp);
-                                    }
-                                }
+                                me.clampAmount = 500/math.sqrt(me.echoPos[0]*me.echoPos[0]+me.echoPos[1]*me.echoPos[1]);
+                                me.echoPos[0] *= me.clampAmount;
+                                me.echoPos[1] *= me.clampAmount;
                                 me.tgt.setStrokeDashArray([7,7]);
                             } else {
-                                me.tgt.setStrokeDashArray([5]);
+                                me.tgt.setStrokeDashArray([1]);
                             }
                             
                             if (hdp.active_u != nil and hdp.active_u.Callsign != nil and me.u.Callsign != nil and me.u.Callsign.getValue() == hdp.active_u.Callsign.getValue()) {
@@ -1368,15 +1075,14 @@ var F16_HMD = {
                                 if (me.tgt != nil) {
                                     me.tgt.hide();
                                 }
-                                #me.xcS = me.sx/2                     + (me.pixelPerMeterX * me.combined_dev_length * math.sin(me.combined_dev_deg*D2R));
-                                #me.ycS = me.sy-me.texels_up_into_hud - (me.pixelPerMeterY * me.combined_dev_length * math.cos(me.combined_dev_deg*D2R));
-                                #me.target_locked.setTranslation (me.xcS, me.ycS);
+                                
                                 me.target_locked.setTranslation (me.echoPos);
                                 if (me.clamped) {
                                     me.target_locked.setStrokeDashArray([7,7]);
                                 } else {
-                                    me.target_locked.setStrokeDashArray([5]);
+                                    me.target_locked.setStrokeDashArray([1]);
                                 }
+                                me.target_locked.update();
                                 if (0 and currASEC != nil) {
                                     # disabled for now as it has issues
                                     me.cue = nil;
@@ -1522,6 +1228,12 @@ var F16_HMD = {
         me.initUpdate = 0;
 
         hdp.submode = me.submode;
+
+        hdp.window5_txt = f16.transfer_stpt;
+        hdp.window3_txt = f16.transfer_dist;
+        hdp.window9_txt = f16.transfer_arms;
+        hdp.window2_txt = f16.transfer_mode;
+        hdp.window12_txt = f16.transfer_g;
         
         foreach(var update_item; me.update_items)
         {

@@ -40,23 +40,6 @@
             </greater-than>
         </condition>
     </animation>
-
-  <!--animation>
-  <type>material</type>
-  <condition>
-    <greater-than>
-        <property>fdm/jsbsim/elec/bus/emergency-dc-1</property>
-        <value>20</value>
-    </greater-than>
-  </condition>
-  <object-name>canvasHMCS</object-name>
-  <emission>
-   <red>  1</red>
-   <green>1</green>
-   <blue> 1</blue>
-   <factor-prop>f16/avionics/hmd-sym-int-knob</factor-prop>
-  </emission>
- </animation-->
  
 
 </PropertyList>
