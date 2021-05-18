@@ -225,6 +225,7 @@ var getLastRange = func {
 	# Get nm range to final steerpoint in current route or to current steerpoint for non-route.
 	if (getCurrentNumber() == 0) return nil;
 	if (current == nil) {
+		var fp = flightplan();
 		var dist_nm = steerpoints.getCurrentRange();
 		var stnum = getCurrentNumber();
 		for (var index = stnum; index < fp.getPlanSize(); index+=1) {
