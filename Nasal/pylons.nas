@@ -648,6 +648,31 @@ var a2g_mk1 = func {
     }
 }
 
+# A/G Unguided Retarded: (MK-82AIR)
+var a2g_mkair = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim120WT);
+        pylon2.loadSet(pylonSets.aim9);
+        pylon3.loadSet(pylonSets.m82air);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.m82air);
+        pylon8.loadSet(pylonSets.aim9);
+        pylon9.loadSet(pylonSets.aim120WT);
+        if (block == 6) {
+        	pylon10.loadSet(pylonSets.empty);
+        	pylon11.loadSet(pylonSets.podSAtp);
+        } else {
+        	pylon10.loadSet(pylonSets.empty);
+            pylon11.loadSet(pylonSets.empty);
+        }
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
 # A/G Unguided 2 (MK-84)
 var a2g_mk2 = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
@@ -978,6 +1003,26 @@ var b10_a2g_strike1 = func {
         pylon5.loadSet(pylonSets.fuel30);
         pylon6.loadSet(pylonSets.m82);
         pylon7.loadSet(pylonSets.m82);
+        pylon8.loadSet(pylonSets.empty);
+        pylon9.loadSet(pylonSets.aim9WT);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# Strike Retarded (MK-82AIR, AIM-9, 1 bag)
+var b10_a2g_strikeair = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim9WT);
+        pylon2.loadSet(pylonSets.empty);
+        pylon3.loadSet(pylonSets.m82air);
+        pylon4.loadSet(pylonSets.m82air);
+        pylon5.loadSet(pylonSets.fuel30);
+        pylon6.loadSet(pylonSets.m82air);
+        pylon7.loadSet(pylonSets.m82air);
         pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.aim9WT);
         pylon10.loadSet(pylonSets.empty);
