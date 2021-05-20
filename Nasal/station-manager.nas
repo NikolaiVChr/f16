@@ -116,6 +116,13 @@ var Station = {
 							}
 							return {};
 						};
+					} elsif (me.weaponName == "AGM-84") {
+						mf = func (struct) {
+							if (struct.dist_m != -1 and struct.dist_m*M2NM < 5 and struct.guidance == "inertial") {
+								return {"guidance":"radar","abort_midflight_function":1};
+							}
+							return {};
+						};
 					}
 					
 					me.aim = armament.AIM.new(me.id*100+me.i, me.weaponName, "", mf, me.position);
