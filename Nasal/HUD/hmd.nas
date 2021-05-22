@@ -90,6 +90,7 @@ var F16_HMD = {
             .arcSmallCW(500,500, 0, 500*2, 0)
             .arcSmallCW(500,500, 0, -500*2, 0)
             .setStrokeLineWidth(stroke1)
+            .hide()
             .setColor(0,0,1);
 
         obj.hydra = 0;
