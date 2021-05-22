@@ -48,12 +48,13 @@
   <condition>
     <or>
       <and>
+        <!-- source: dash-1 1-70 -->
         <less-than>
           <property>controls/gear/gear-down</property>
           <value>1</value>
         </less-than>
         <less-than>
-          <property>position/altitude-agl-ft</property>
+          <property>fdm/jsbsim/atmosphere/density-altitude</property>
           <value>10000</value>
         </less-than>
         <less-than>
@@ -64,6 +65,10 @@
           <property>velocities/speed-down-fps</property>
           <value>4.17</value>
         </greater-than><!-- 250 fpm -->
+        <less-than>
+          <property>fdm/jsbsim/fcs/fly-by-wire/tef/tef-pos-norm</property>
+          <value>1</value><!-- 20 degs -->
+        </less-than>
     </and>
     <property>controls/test/test-panel/mal-ind-lts</property>
     </or>

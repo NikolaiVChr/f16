@@ -978,28 +978,28 @@
 
     </channel>
 	
-	<channel name="Betty">
+	<channel name="Aural tones" execrate="8">
 		<switch name="/f16/avionics/gear-horn-cancel">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/f16/avionics/gear-horn-cancel eq 1
 				/velocities/speed-down-fps ge 4.17
 				/velocities/airspeed-kt lt 190
-				/position/altitude-agl-ft lt 10000
+				atmosphere/density-altitude lt 10000
 				/gear/gear[0]/position-norm ne 1
 			</test>
 			<test logic="AND" value="1">
 				/f16/avionics/gear-horn-cancel eq 1
 				/velocities/speed-down-fps ge 4.17
 				/velocities/airspeed-kt lt 190
-				/position/altitude-agl-ft lt 10000
+				atmosphere/density-altitude lt 10000
 				/gear/gear[1]/position-norm ne 1
 			</test>
 			<test logic="AND" value="1">
 				/f16/avionics/gear-horn-cancel eq 1
 				/velocities/speed-down-fps ge 4.17
 				/velocities/airspeed-kt lt 190
-				/position/altitude-agl-ft lt 10000
+				atmosphere/density-altitude lt 10000
 				/gear/gear[2]/position-norm ne 1
 			</test>
 			<test logic="AND" value="1">
@@ -1008,6 +1008,7 @@
 		</switch>
 		
 		<switch name="/f16/avionics/gear-horn">
+            <description>Dash-1  1-70</description>
 			<default value="0"/>
 			<test logic="AND" value="0">
 				/f16/avionics/gear-horn-cancel eq 1
@@ -1015,23 +1016,147 @@
 			<test logic="AND" value="1">
 				/velocities/speed-down-fps ge 4.17
 				/velocities/airspeed-kt lt 190
-				/position/altitude-agl-ft lt 10000
+				atmosphere/density-altitude lt 10000
 				/gear/gear[0]/position-norm ne 1
 			</test>
 			<test logic="AND" value="1">
 				/velocities/speed-down-fps ge 4.17
 				/velocities/airspeed-kt lt 190
-				/position/altitude-agl-ft lt 10000
+				atmosphere/density-altitude lt 10000
 				/gear/gear[1]/position-norm ne 1
 			</test>
 			<test logic="AND" value="1">
 				/velocities/speed-down-fps ge 4.17
 				/velocities/airspeed-kt lt 190
-				/position/altitude-agl-ft lt 10000
+				atmosphere/density-altitude lt 10000
 				/gear/gear[2]/position-norm ne 1
 			</test>
 		</switch>
+
+        <fcs_function name="/f16/avionics/low-speed-warning-tone-schedule-hystLow">
+            <description>Dash 1  1-95
+                        Low hysteresis
+                         KIAS=7/3pitchDeg-30
+                         LIAS=-7/3pitchDeg+390
+                        High hysteresis
+                         KIAS=2pitchDeg+40
+                         KIAS=-2pitchDeg+400
+
+                        where pitchDeg goes from 0 to 180, 0 being level, 180 being level inverted level
+            </description>
+            <function>
+                <ifthen>
+                    <lt>
+                        <abs>
+                            <property>/orientation/roll-deg</property>
+                        </abs>
+                        <value>90</value>
+                    </lt>
+                    <sum>
+                        <product>
+                            <v>2.333333</v>
+                            <property>/orientation/pitch-deg</property>
+                        </product>
+                        <v>-30</v>
+                    </sum>
+                    <sum>
+                        <product>
+                            <v>-2.333333</v>
+                            <sum>
+                                <product>
+                                    <property>/orientation/pitch-deg</property>
+                                    <v>-1</v>
+                                </product>
+                                <v>180</v>
+                            </sum>
+                        </product>
+                        <v>390</v>
+                    </sum>
+                </ifthen>
+            </function>
+        </fcs_function>
+        <fcs_function name="/f16/avionics/low-speed-warning-tone-schedule-hystHigh">
+            <description>Dash 1  1-95
+                        Low hysteresis
+                         KIAS=7/3pitchDeg-30
+                         LIAS=-7/3pitchDeg+390
+                        High hysteresis
+                         KIAS=2pitchDeg+40
+                         KIAS=-2pitchDeg+400
+
+                         
+            </description>
+            <function>
+                <ifthen>
+                    <lt>
+                        <abs>
+                            <property>/orientation/roll-deg</property>
+                        </abs>
+                        <value>90</value>
+                    </lt>
+                    <sum>
+                        <product>
+                            <v>2</v>
+                            <property>/orientation/pitch-deg</property>
+                        </product>
+                        <v>40</v>
+                    </sum>
+                    <sum>
+                        <product>
+                            <v>-2</v>
+                            <sum>
+                                <product>
+                                    <property>/orientation/pitch-deg</property>
+                                    <v>-1</v>
+                                </product>
+                                <v>180</v>
+                            </sum>
+                        </product>
+                        <v>400</v>
+                    </sum>
+                </ifthen>
+            </function>
+        </fcs_function>
+
+        <switch name="/f16/avionics/low-speed-warning-tone-a">
+            <description>Dash-1  1-96 and AD-A145-469</description>
+            <default value="0"/>
+            <test  logic="AND" value="1">
+                /orientation/pitch-deg gt 45
+                /velocities/airspeed-kt lt /f16/avionics/low-speed-warning-tone-schedule-hystLow
+                /controls/flight/flaps == 0
+                /controls/gear/gear-down ne 1
+            </test>
+            <test  logic="AND" value="1">
+                /orientation/pitch-deg gt 45
+                /f16/avionics/low-speed-warning-tone-a == 1
+                /velocities/airspeed-kt lt /f16/avionics/low-speed-warning-tone-schedule-hystHigh
+                /controls/flight/flaps == 0
+                /controls/gear/gear-down ne 1
+            </test>
+        </switch>
+
+        <switch name="/f16/avionics/low-speed-to-config">
+            <description>AD-A145-469</description>
+            <default value="0"/>
+            <test  logic="OR" value="1">
+                fcs/fly-by-wire/tef/tef-pos-norm ne 0
+                /controls/gear/gear-down ne 0
+            </test>
+        </switch>
+
+        <switch name="/f16/avionics/low-speed-warning-tone-b">
+            <description>AD-A145-469</description>
+            <default value="0"/>
+            <test  logic="AND" value="1">
+                /orientation/alpha-deg gt 15
+                /f16/avionics/low-speed-to-config == 1
+            </test>
+        </switch>
+
 	</channel>
+
+
 	
 	<channel name="VVI">
 		

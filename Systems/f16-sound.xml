@@ -3039,28 +3039,6 @@
                 <max>1</max>
             </volume>
         </gamma>
-        <!--<boom>
-            <name>boom</name>
-            <path>Aircraft/f16/Sounds/Effects/Sonic-Boom.wav</path>
-            <mode>once</mode>
-            <condition>
-                <greater-than>
-                    <property>velocities/mach</property>
-                    <value>1.00</value>
-                </greater-than>
-            </condition>
-            <reference-dist>3000</reference-dist>
-            <max-dist>15000</max-dist>
-            <position>
-                <x>0.1</x>
-                <y>0.1</y>
-                <z>0.1</z>
-            </position>
-            <volume>
-                <property>f16/external</property>
-                <factor>1</factor>
-            </volume>
-        </boom>-->
         <gpu>
             <name>GPU_outside</name>
             <mode>looped</mode>
@@ -3829,29 +3807,6 @@
             </volume>
         </betty>
         <betty>
-            <name>gear horn</name>
-            <mode>looped</mode>
-            <type>avionics</type>
-            <path>Sounds/gear-hrn.wav</path>
-            <condition>
-                <not><property>gear/gear[2]/wow</property></not>
-                <property>/f16/avionics/gear-horn</property>
-                <greater-than>
-                  <property>fdm/jsbsim/elec/bus/batt-1</property>
-                  <value>20</value>
-                </greater-than>
-            </condition>
-            <delay-sec>1.5</delay-sec>
-            <volume>
-                <property>sim/current-view/internal</property>
-                <factor>1</factor>
-            </volume>
-            <volume>
-                <property>f16/avionics/intercom-volume</property>
-                <factor>0.5</factor>
-            </volume>
-        </betty>
-        <betty>
             <name>warning</name>
             <mode>looped</mode>
             <type>avionics</type>
@@ -3863,7 +3818,7 @@
                         <property>f16/avionics/fault-warning</property>
                         <value>1</value><!-- important it dont sound when this is 2 -->
                     </equals>
-                    <and><!-- TO LDG -->
+                    <and><!-- TO LDG betty warning -->
                         <less-than>
                           <property>gear/gear[0]/position-norm</property>
                           <value>1</value>
@@ -3877,7 +3832,7 @@
                           <value>1</value>
                         </less-than>
                         <less-than>
-                          <property>position/altitude-agl-ft</property>
+                          <property>fdm/jsbsim/atmosphere/density-altitude</property>
                           <value>10000</value>
                         </less-than>
                         <less-than>
@@ -3888,6 +3843,10 @@
                           <property>velocities/speed-down-fps</property>
                           <value>4.17</value>
                         </greater-than>
+                        <less-than>
+                          <property>fdm/jsbsim/fcs/fly-by-wire/tef/tef-pos-norm</property>
+                          <value>1</value><!-- 20 degs -->
+                        </less-than>
                     </and>
                     <and><!-- ENGINE -->
                         <greater-than>
@@ -4009,7 +3968,7 @@
                 <max>1</max>
             </volume>
         </boom-disc>
-        <stall>
+        <!--stall> what is source for this.. I forgot
             <name>stall fdm</name>
             <path>Aircraft/f16/Sounds/stall.wav</path>
             <mode>looped</mode>
@@ -4049,22 +4008,32 @@
                     </not>
                 </and>
             </condition>
-        </stall>
-        <!--stall>
-            <name>test</name>
-            <path>Aircraft/f16/Sounds/250hz-square-steady.wav</path>
+        </stall-->
+        <aural>
+            <name>LG warning horn</name>
             <mode>looped</mode>
             <type>avionics</type>
-            <property>sim/current-view/internal</property>
+            <path>Sounds/250hz-square.wav</path><!-- Source: Dash-1  1-70 and AD-A145-469. 250hz square tone in 1hz intervals. -->
+            <condition>
+                <not><property>gear/gear[2]/wow</property></not>
+                <property>/f16/avionics/gear-horn</property>
+                <greater-than>
+                  <property>fdm/jsbsim/elec/bus/batt-1</property>
+                  <value>20</value>
+                </greater-than>
+            </condition>
+            <delay-sec>1.5</delay-sec>
             <volume>
-                <property>a</property>
+                <property>sim/current-view/internal</property>
                 <factor>1</factor>
-                <offset>0.0</offset>
-                <type>log</type>
             </volume>
-        </stall-->
-        <stall>
-            <name>lowspeed auth</name>
+            <volume>
+                <property>f16/avionics/intercom-volume</property>
+                <factor>0.5</factor>
+            </volume>
+        </aural>
+        <aural>
+            <name>Low speed warning tone</name>
             <path>Aircraft/f16/Sounds/250hz-square-steady.wav</path>
             <mode>looped</mode>
             <type>avionics</type>
@@ -4083,7 +4052,8 @@
                     <property>gear/gear[0]/wow</property>
                 </not>
                 <or>
-                    <and>
+                    <!--and>
+                        source: forgot
                         <or>
                             <less-than>
                                 <property>controls/gear/gear-down</property>
@@ -4097,21 +4067,14 @@
                             <property>velocities/airspeed-kt</property>
                             <value>120</value>
                         </less-than>
+                    </and-->
+                    <and>
+                        <!-- source: Dash-1 1-95 and AD-A145-469 -->
+                        <property>f16/avionics/low-speed-warning-tone-a</property>
                     </and>
                     <and>
-                        <or>
-                            <not>
-                                <less-than>
-                                    <property>controls/gear/gear-down</property>
-                                    <value>1</value>
-                                </less-than>
-                            </not>
-                            <property>controls/flight/flaps</property>
-                        </or>
-                        <greater-than>
-                            <property>orientation/alpha-deg</property>
-                            <value>15</value>
-                        </greater-than>
+                        <!-- source: AD-A145-469 -->
+                        <property>f16/avionics/low-speed-warning-tone-b</property>
                     </and>
                 </or>
             </condition>
@@ -4119,8 +4082,8 @@
                 <property>sim/current-view/internal</property>
                 <factor>0.25</factor>
             </volume>
-        </stall>
-        <stall>
+        </aural>
+        <aural>
             <name>AoA 1hz auth</name>
             <path>Aircraft/f16/Sounds/800hz-square.wav</path>
             <mode>looped</mode>
@@ -4137,6 +4100,7 @@
                     </greater-than>
                 </or>
                 <and>
+                    <!-- source: forgot -->
                     <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
                     <less-than>
                         <property>controls/gear/gear-down</property>
@@ -4156,8 +4120,8 @@
                 <property>sim/current-view/internal</property>
                 <factor>0.25</factor>
             </volume>
-        </stall>
-        <stall>
+        </aural>
+        <aural>
             <name>AoA steady auth</name>
             <path>Aircraft/f16/Sounds/800hz-square-steady.wav</path>
             <mode>looped</mode>
@@ -4174,6 +4138,7 @@
                     </greater-than>
                 </or>
                 <and>
+                    <!-- source: forgot -->
                     <property>fdm/jsbsim/fcs/fly-by-wire/enable-cat-III</property>
                     <less-than>
                         <property>controls/gear/gear-down</property>
@@ -4189,7 +4154,7 @@
                 <property>sim/current-view/internal</property>
                 <factor>0.25</factor>
             </volume>
-        </stall>
+        </aural>
         
         
         
