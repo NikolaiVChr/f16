@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+		<window-width>400</window-width>
+		<window-height>400</window-height>
+		<window-x>1520</window-x>
+		<window-y>0</window-y>
+		<type>sview</type>
+		<name>step-dancer</name>
+
+		<step n="0">  <!-- Move to aircraft. -->
+	        <type>aircraft</type>
+	        <callsign></callsign>
+	    </step>
+  		
+  		<!-- Move to centre of aircraft. -->
+	    <step n="1">
+	        <type>move</type>
+	        <right>0</right>
+	        <up>-0.83</up>
+	        <forward>4.40</forward>
+	    </step>
+
+	    <!-- Force some direction values to zero. -->
+	    <!--step n="2">  
+	        <type>direction-multiply</type>
+	        <heading>1</heading> 
+	        <pitch>1</pitch> 
+	        <roll>1</roll> 
+	    </step-->
+
+	    <!--step n="3"> 
+	        <type>rotate</type>
+	        <heading>123</heading>
+	        <pitch>-10</pitch>
+	    </step>
+
+	    <step n="4"> 
+	        <type>move</type>
+	        <forward>-25</forward>
+	    </step-->
+</PropertyList>

@@ -1653,7 +1653,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     hmd.setFilePath(getprop("/sim/aircraft-dir")~"/Nasal/HUD");
     hmd.setMainFile("hmd.nas");
     hmd.load();
-    
+    setprop("sim/rendering/headshake/enabled",0);# This does not work very well in F-16. So this makes people have to enable it explicit to have it. Don't know why its forced on us by default.
     # debug:
     #
     #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/pitch-rate-lower-lag");
@@ -1670,3 +1670,8 @@ var load_interior = func {
 settimer(load_interior, 0.5, 1);
 view.setViewByIndex(1);
 
+#var stepNode = props.Node.new();
+#io.read_properties(getprop("/sim/fg-aircraft") ~ "/f16/sview/config.xml", stepNode);
+return;
+var stepNode = io.read_properties("Aircraft/f16/sview/config.xml");#
+fgcommand("view-new2020", stepNode);#
