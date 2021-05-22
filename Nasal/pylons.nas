@@ -1757,22 +1757,41 @@ var b50_testev = func {
 var bore_loop = func {
     #enables firing of aim9 without radar.
     bore = 0;
-    if (fcs != nil) {
+    if (fcs != nil and getprop("controls/armament/master-arm")) {
         var standby = getprop("instrumentation/radar/radar-standby");
         var aim = fcs.getSelectedWeapon();
         if (aim != nil and aim.type == "AIM-9") {
-            if (standby == 1) {
+        	var hmd_active = getprop("payload/armament/hmd-active");
+        	
+        	if (hmd_active==1 and aim.status < 1) {
+        		aim.setContacts(awg_9.completeList);
+        		var h = getprop("payload/armament/hmd-horiz-deg");
+        		var p = getprop("payload/armament/hmd-vert-deg");
+        		if (math.sqrt(h*h+p*p) < aim.fcs_fov) {
+                	aim.commandDir(h,p);
+                	bore = 2;
+            	} else {
+            		if (standby != 1) {
+		                aim.commandRadar();
+		                aim.setContacts([]);
+		            } else {
+		            	aim.setContacts(awg_9.completeList);
+		                aim.commandDir(0,-3.5);# the real is bored to -6 deg below real bore
+		                bore = 1;
+		            }
+            	}
+            } elsif (standby == 1) {
                 #aim.setBore(1);
                 aim.setContacts(awg_9.completeList);
                 aim.commandDir(0,-3.5);# the real is bored to -6 deg below real bore
                 bore = 1;
-            } else {
+            } elsif (aim.status != 1) {
                 aim.commandRadar();
                 aim.setContacts([]);
             }
         }
     }
-    settimer(bore_loop, 0.5);
+    settimer(bore_loop, 0.1);
 };
 var bore = 0;
 if (fcs!=nil) {

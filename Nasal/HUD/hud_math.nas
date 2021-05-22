@@ -2,7 +2,7 @@
 #
 # Author: Nikolai V. Chr. (FPI location code adapted from Buccaneer aircraft)
 #
-# Version 1.08
+# Version 1.09
 #
 # License: GPL 2.0
 	
@@ -174,6 +174,30 @@ var HudMath = {
         
         var tv = vector.Math.normalize([me.vel_gx,me.vel_gy,me.vel_gz]);
         var dv = vector.Math.multiplyMatrixWithVector(me.rotation, tv);
+        var angles = vector.Math.cartesianToEuler(dv);
+
+        return [angles[0]==nil?0:angles[0],angles[1]];
+    },
+
+    getDevFromHMD: func (heading, pitch, viewh, viewp, hdp, aircraft=nil) {
+        # hdp is a hash containing pitch, roll, and true-heading of aircraft
+        # return pos in canvas from center origin
+        if (aircraft== nil) {
+            me.crft = geo.viewer_position();
+        } else {
+            me.crft = aircraft;
+        }
+        
+        var ym = vector.Math.yawMatrix(-viewh);
+        var pm = vector.Math.pitchMatrix(-viewp);
+        var vm = vector.Math.multiplyMatrices(pm, ym);
+
+        me.vel_gx = math.cos(heading*D2R);
+        me.vel_gy = -math.sin(heading*D2R);
+        me.vel_gz = math.sin(pitch*D2R);
+        
+        var tv = [me.vel_gx,me.vel_gy,me.vel_gz];
+        var dv = vector.Math.multiplyMatrixWithVector(vm, tv);
         var angles = vector.Math.cartesianToEuler(dv);
 
         return [angles[0]==nil?0:angles[0],angles[1]];

@@ -467,10 +467,13 @@ var F16_HMD = {
             .setColor(0,1,0);
         append(obj.total, obj.irSearch);
         obj.irBore = obj.centerOrigin.createChild("path")
+#            .moveTo(-boxRadiusHalf*4,0)
+ #           .horiz(boxRadius*4)
+#            .moveTo(0,-boxRadiusHalf*6)
+#            .vert(boxRadius*6)
             .moveTo(-boxRadiusHalf*4,0)
-            .horiz(boxRadius*4)
-            .moveTo(0,-boxRadiusHalf*6)
-            .vert(boxRadius*6)
+            .arcSmallCW(boxRadiusHalf*4,boxRadius*4, 0, boxRadiusHalf*4*2, 0)
+            .arcSmallCW(boxRadiusHalf*4,boxRadius*4, 0, -boxRadiusHalf*4*2, 0)
             .setStrokeLineWidth(stroke1)
             .setColor(0,1,0);
         append(obj.total, obj.irBore);
@@ -867,6 +870,7 @@ var F16_HMD = {
     update : func(hdp) {
         if (hdp.hmcs_sym == 0 or hdp.view_number != 0) {
             me.svg.hide();
+            setprop("payload/armament/hmd-active", 0);
             return;
         }
         if (me.off and !me.initUpdate) {
@@ -875,8 +879,13 @@ var F16_HMD = {
             {
                 update_item.update(hdp);
             }
+            setprop("payload/armament/hmd-active", 0);
             return;
         }
+        setprop("payload/armament/hmd-active", 1);
+        setprop("payload/armament/hmd-horiz-deg", geo.normdeg180(-hdp.hmdH));
+        setprop("payload/armament/hmd-vert-deg", hdp.hmdP);
+
         me.svg.show();
 
         setprop("sim/rendering/als-filters/use-night-vision", 0);# NVG not allowed while using HMD
@@ -979,40 +988,49 @@ var F16_HMD = {
             
         me.target_locked.setVisible(0);
 
-        me.irL = 0;
-        me.irS = 0;
+        me.irL = 0;#IR lock
+        me.irS = 0;#IR medium circle
         me.rdL = 0;
-        me.irT = 0;
+        me.irT = 0;#IR triangle aspect indicator
         me.rdT = 0;
-        me.irB = 0;
+        me.irB = 0;#IR search bore
         #printf("%d %d %d %s",hdp.master_arm,pylons.fcs != nil,pylons.fcs.getAmmo(),hdp.weapon_selected);
-        if(0 and hdp.master_arm and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
+        if(hdp.master_arm and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
             hdp.weapon_selected = pylons.fcs.selectedType;
-            if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
+            if (0 and hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
                 if (!pylons.fcs.isLock()) {
                     me.radarLock.setTranslation(0, -me.sy*0.25+262*0.3*0.5);
                     me.rdL = 1;
                 }                
             } elsif (!pylons.fcs.isLock() and hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
-                if (pylons.bore) {
+                if (pylons.bore > 0) {
                     var aim = pylons.fcs.getSelectedWeapon();
                     if (aim != nil) {
-                        me.submode = 1;
-                        #var coords = aim.getSeekerInfo();
-                        #me.irSearch.setTranslation(hmd.HudMath.getCenterPosFromDegs(coords[0],coords[1]));
-                        me.irBore.setTranslation(hmd.HudMath.getCenterPosFromDegs(0,-3.5));
-                        me.irB = 1;
+                        #me.submode = 1;
+                        var coords = aim.getSeekerInfo();
+                        if (coords != nil) {
+                            me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], hdp.hmdH, hdp.hmdP, hdp, geo.viewer_position());
+                            me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
+                            me.echoPos[0] = (512/0.025)*(math.tan(me.echoPos[0]*D2R))*0.2;#0.2m from eye, 0.025 = 512
+                            me.echoPos[1] = -(512/0.025)*(math.tan(me.echoPos[1]*D2R))*0.2;#0.2m from eye, 0.025 = 512
+                            me.irBore.setTranslation(me.echoPos);
+                            me.irB = 1;
+                        }
                     }
                 } else {
-                    me.irS = 1;
-                    me.irSearch.setTranslation(0, -me.sy*0.25);
+                    me.irS = 0;
+                    #me.irSearch.setTranslation(0, -me.sy*0.25);
                 }
-            } elsif (pylons.fcs.isLock() and hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T" and pylons.bore) {
+            } elsif (pylons.fcs.isLock() and hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
                 var aim = pylons.fcs.getSelectedWeapon();
                 if (aim != nil) {
                     var coords = aim.getSeekerInfo();
                     if (coords != nil) {
-                        me.irLock.setTranslation(hmd.HudMath.getCenterPosFromDegs(coords[0],coords[1]));
+                        me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], hdp.hmdH, hdp.hmdP, hdp, geo.viewer_position());
+                        me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
+                        me.echoPos[0] = (512/0.025)*(math.tan(me.echoPos[0]*D2R))*0.2;#0.2m from eye, 0.025 = 512
+                        me.echoPos[1] = -(512/0.025)*(math.tan(me.echoPos[1]*D2R))*0.2;#0.2m from eye, 0.025 = 512
+                        me.irLock.setTranslation(me.echoPos);
                         me.irL = 1;
                     }
                 }
@@ -1214,9 +1232,9 @@ var F16_HMD = {
         }
 
         me.radarLock.setVisible(0 and me.rdL);
-        me.irSearch.setVisible(0 and me.irS);
-        me.irLock.setVisible(0 and me.irL);
-        me.irBore.setVisible(0 and me.irB);
+        me.irSearch.setVisible(me.irS);
+        me.irLock.setVisible(me.irL);
+        me.irBore.setVisible(me.irB);
         me.ASEC120Aspect.setVisible(0 and me.rdT);
         me.ASEC65Aspect.setVisible(0 and me.irT);
         me.radarLock.update();
