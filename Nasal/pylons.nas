@@ -1765,8 +1765,8 @@ var bore_loop = func {
         	
         	if (hmd_active==1 and aim.status < 1) {
         		aim.setContacts(awg_9.completeList);
-        		var h = getprop("payload/armament/hmd-horiz-deg");
-        		var p = getprop("payload/armament/hmd-vert-deg");
+        		var h = -geo.normdeg180(getprop("sim/current-view/heading-offset-deg"));
+                var p = getprop("sim/current-view/pitch-offset-deg");
         		if (math.sqrt(h*h+p*p) < aim.fcs_fov) {
                 	aim.commandDir(h,p);
                 	bore = 2;
