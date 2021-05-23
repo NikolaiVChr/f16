@@ -2027,7 +2027,7 @@ append(obj.total, obj.speed_curr);
                     me.yDevi /= me.texelPerDegreeY;
                     me.value = 0;
                     me.start = geo.viewer_position();
-                    me.vecto = [math.cos(me.xDevi*D2R)*math.cos(me.yDevi*D2R),math.sin(-me.xDevi*D2R),math.sin(me.yDevi*D2R)];
+                    me.vecto = [math.cos(me.xDevi*D2R)*math.cos(me.yDevi*D2R),math.sin(-me.xDevi*D2R)*math.cos(me.yDevi*D2R),math.sin(me.yDevi*D2R)];
                     
                     me.direction = vector.Math.vectorToGeoVector(vector.Math.yawPitchRollVector(-getprop("orientation/heading-deg"),getprop("orientation/pitch-deg"),getprop("orientation/roll-deg"), me.vecto),me.start);
                     me.intercept = get_cart_ground_intersection({x:me.start.x(),y:me.start.y(),z:me.start.z()}, me.direction);

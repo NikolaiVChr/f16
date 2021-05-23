@@ -155,9 +155,7 @@ var HudMath = {
             me.crft = aircraft;
         }
         me.ptch = vector.Math.getPitch(me.crft, gpsCoord);
-        me.dst  = me.crft.direct_distance_to(gpsCoord);
         me.brng = me.crft.course_to(gpsCoord);
-        me.hrz  = math.cos(me.ptch*D2R)*me.dst;
 
         var ym = vector.Math.yawMatrix(-viewh);
         var pm = vector.Math.pitchMatrix(-viewp);
@@ -168,11 +166,11 @@ var HudMath = {
         me.rotation = vector.Math.multiplyMatrices(me.rollM, vector.Math.multiplyMatrices(me.pitchM, me.yawM));
         me.rotation = vector.Math.multiplyMatrices(vm, me.rotation);
 
-        me.vel_gx = math.cos(me.brng*D2R) *me.hrz;
-        me.vel_gy = -math.sin(me.brng*D2R) *me.hrz;
-        me.vel_gz = math.sin(me.ptch*D2R)*me.dst;
+        me.coord_x = math.cos(me.brng*D2R)*math.cos(me.ptch*D2R);
+        me.coord_y = -math.sin(me.brng*D2R)*math.cos(me.ptch*D2R);
+        me.coord_z = math.sin(me.ptch*D2R);
         
-        var tv = vector.Math.normalize([me.vel_gx,me.vel_gy,me.vel_gz]);
+        var tv = [me.coord_x,me.coord_y,me.coord_z];
         var dv = vector.Math.multiplyMatrixWithVector(me.rotation, tv);
         var angles = vector.Math.cartesianToEuler(dv);
 
@@ -182,15 +180,15 @@ var HudMath = {
     getDevFromHMD: func (heading, pitch, viewh, viewp) {
         # return pos in canvas from center origin
         
-        var ym = vector.Math.yawMatrix(-viewh);
+        var ym = vector.Math.yawMatrix(viewh);
         var pm = vector.Math.pitchMatrix(-viewp);
         var vm = vector.Math.multiplyMatrices(pm, ym);
 
-        me.vel_gx = math.cos(heading*D2R);
-        me.vel_gy = -math.sin(heading*D2R);
-        me.vel_gz = math.sin(pitch*D2R);
+        me.target_x = math.cos(heading*D2R)*math.cos(pitch*D2R);
+        me.target_y = -math.sin(heading*D2R)*math.cos(pitch*D2R);
+        me.target_z = math.sin(pitch*D2R);
         
-        var tv = [me.vel_gx,me.vel_gy,me.vel_gz];
+        var tv = [me.target_x,me.target_y,me.target_z];
         var dv = vector.Math.multiplyMatrixWithVector(vm, tv);
         var angles = vector.Math.cartesianToEuler(dv);
 
