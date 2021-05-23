@@ -1009,7 +1009,7 @@ var F16_HMD = {
                         #me.submode = 1;
                         var coords = aim.getSeekerInfo();
                         if (coords != nil) {
-                            me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], hdp.hmdH, hdp.hmdP, hdp, geo.viewer_position());
+                            me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], hdp.hmdH, hdp.hmdP);
                             me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                             me.echoPos[0] = (512/0.025)*(math.tan(me.echoPos[0]*D2R))*0.2;#0.2m from eye, 0.025 = 512
                             me.echoPos[1] = -(512/0.025)*(math.tan(me.echoPos[1]*D2R))*0.2;#0.2m from eye, 0.025 = 512
@@ -1026,7 +1026,7 @@ var F16_HMD = {
                 if (aim != nil) {
                     var coords = aim.getSeekerInfo();
                     if (coords != nil) {
-                        me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], hdp.hmdH, hdp.hmdP, hdp, geo.viewer_position());
+                        me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], hdp.hmdH, hdp.hmdP);
                         me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                         me.echoPos[0] = (512/0.025)*(math.tan(me.echoPos[0]*D2R))*0.2;#0.2m from eye, 0.025 = 512
                         me.echoPos[1] = -(512/0.025)*(math.tan(me.echoPos[1]*D2R))*0.2;#0.2m from eye, 0.025 = 512

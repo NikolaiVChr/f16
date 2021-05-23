@@ -179,14 +179,8 @@ var HudMath = {
         return [angles[0]==nil?0:angles[0],angles[1]];
     },
 
-    getDevFromHMD: func (heading, pitch, viewh, viewp, hdp, aircraft=nil) {
-        # hdp is a hash containing pitch, roll, and true-heading of aircraft
+    getDevFromHMD: func (heading, pitch, viewh, viewp) {
         # return pos in canvas from center origin
-        if (aircraft== nil) {
-            me.crft = geo.viewer_position();
-        } else {
-            me.crft = aircraft;
-        }
         
         var ym = vector.Math.yawMatrix(-viewh);
         var pm = vector.Math.pitchMatrix(-viewp);
