@@ -1880,7 +1880,7 @@ var AIM = {
 		if(me.mfFunction != nil) {
 			#me.settings = me.mfFunction({time_s: me.life_time, dist_m: me.dist_curr_direct, mach: me.speed_m, weapon_position: me.coord});
 			me.settings = me.mfFunction({   time_s:                 me.life_time, 
-                                            dist_m:                 me.dist_curr_direct, 
+                                            dist_m:                 me.dist_curr_direct,
                                             mach:                     me.speed_m, 
                                             weapon_position:         me.coord, 
                                             guidance:                 me.guidance, 
@@ -1889,6 +1889,8 @@ var AIM = {
                                             weapon_pitch:             me.pitch, 
                                             weapon_heading:         me.hdg,
                                             callsign:               me.callsign,
+                                            deviation_deg:          me["fov_radial"],
+                                            hasTarget:              me["Tgt"] != nil,
                                         });
 			if (me.settings["guidance"] != nil) {
 				me.guidance = me.settings.guidance;
