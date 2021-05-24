@@ -2,7 +2,7 @@ var Math = {
     #
     # Authors: Nikolai V. Chr, Axel Paccalin.
     #
-    # Version 1.94
+    # Version 1.95
     #
     # When doing euler coords. to cartesian: +x = forw, +y = left,  +z = up.
     # FG struct. coords:                     +x = back, +y = right, +z = up.
@@ -55,6 +55,22 @@ var Math = {
         b = me.normalize(b);
         me.value = me.clamp((me.dotProduct(a,b)/me.magnitudeVector(a))/me.magnitudeVector(b),-1,1);#just to be safe in case some floating point error makes it out of bounds
         return R2D * math.acos(me.value);
+    },
+
+    # Rodrigues' rotation formula. Use unitVectorAxis as axis, and rotate around it.
+    rotateVectorAroundVector: func (a, unitVectorAxis, angle) {
+        return  me.plus(
+                    me.plus(
+                        me.product(math.cos(angle*D2R),a),
+                        me.product(math.sin(angle*D2R), me.crossProduct(unitVectorAxis,a))
+                    ),
+                    me.product((1-math.cos(angle*D2R))*me.dotProduct(unitVectorAxis,a), unitVectorAxis)
+                );
+    },
+
+    #Rotate a certain amound of degrees towards 'towardsMe'.
+    rotateVectorTowardsVector: func (a, towardsMe, angle) {
+        return me.rotateVectorAroundVector(a, me.normalize(me.crossProduct(a, towardsMe)), angle);
     },
 
     # length of vector

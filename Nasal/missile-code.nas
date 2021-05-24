@@ -4626,27 +4626,35 @@ var AIM = {
 		}
 		me.seeker_elapsed = getprop("sim/time/elapsed-sec");
 		if (me.seeker_last_time != 0) {
-			# This needs to be converted to linear algr. (for AIM-9X type heatseekers with HMCS) since higher off-bore pitches means it will move slower towards target.
 			me.seeker_time = me.seeker_elapsed - me.seeker_last_time;
-			me.seeker_elev_delta = me.seeker_elev_target - me.seeker_elev;
-			me.seeker_head_delta = me.seeker_head_target - me.seeker_head;
-			me.seeker_delta = me.clamp(math.sqrt(me.seeker_elev_delta*me.seeker_elev_delta+me.seeker_head_delta*me.seeker_head_delta),0.000001, 100000);
 			me.seeker_max_move = me.seeker_time*me.angular_speed;
-			if (me.seeker_delta < me.seeker_max_move) {
+			
+			# Build unit vector components for seeker and target location in aircraft frame:
+			me.target_x = math.cos(me.seeker_head_target*D2R)*math.cos(me.seeker_elev_target*D2R);
+	        me.target_y = -math.sin(me.seeker_head_target*D2R)*math.cos(me.seeker_elev_target*D2R);
+	        me.target_z = math.sin(me.seeker_elev_target*D2R);
+
+	        me.seeker_x = math.cos(me.seeker_head*D2R)*math.cos(me.seeker_elev*D2R);
+	        me.seeker_y = -math.sin(me.seeker_head*D2R)*math.cos(me.seeker_elev*D2R);
+	        me.seeker_z = math.sin(me.seeker_elev*D2R);
+
+	        me.seeker_reset = [1,0,0];
+
+	        me.ideal_seeker_deviation = vector.Math.angleBetweenVectors([me.seeker_x,me.seeker_y,me.seeker_z],[me.target_x,me.target_y,me.target_z]);
+	        me.ideal_total_seeker_deviation = vector.Math.angleBetweenVectors(me.seeker_reset, [me.target_x,me.target_y,me.target_z]);
+	        
+	        if (me.ideal_seeker_deviation > me.seeker_max_move) {
+				me.new_seeker_vector = vector.Math.rotateVectorTowardsVector([me.seeker_x,me.seeker_y,me.seeker_z],[me.target_x,me.target_y,me.target_z],me.seeker_max_move);				
+				me.new_seeker_deviation = vector.Math.angleBetweenVectors(me.seeker_reset, me.new_seeker_vector);
+
+				if (me.new_seeker_deviation < me.max_seeker_dev) {
+					me.new_seeker_pos = vector.Math.cartesianToEuler(me.new_seeker_vector);
+					me.seeker_head = me.new_seeker_pos[0]==nil?0:geo.normdeg180(me.new_seeker_pos[0]);
+					me.seeker_elev = me.new_seeker_pos[1];
+				}
+			} elsif (me.ideal_total_seeker_deviation < me.max_seeker_dev) {
 				me.seeker_elev = me.seeker_elev_target;
 				me.seeker_head = me.seeker_head_target;
-			} else {
-				me.seeker_reduce = me.clamp(me.seeker_max_move/me.seeker_delta,0,1);
-				me.seeker_elev_delta *= me.seeker_reduce;
-				me.seeker_head_delta *= me.seeker_reduce;
-				me.seeker_elev_n = me.seeker_elev+me.seeker_elev_delta;
-				me.seeker_head_n = me.seeker_head+me.seeker_head_delta;
-
-				if (math.sqrt(me.seeker_elev_n*me.seeker_elev_n+me.seeker_head_n*me.seeker_head_n) < me.max_seeker_dev) {
-					me.seeker_head = me.seeker_head_n;
-					me.seeker_elev = me.seeker_elev_n;
-					#me.printSearch("seeker moved");
-				}
 			}
 		}
 		me.seeker_last_time = me.seeker_elapsed;
