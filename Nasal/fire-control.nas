@@ -29,6 +29,7 @@ var FireControl = {
 		fc.WeaponNotification = VectorNotification.new("WeaponNotification");
 		fc.setupMFDObservers();
 		fc.dropMode = 0;          # 0=ccrp, 1 = ccip
+		fc.changeListener = nil;
 		setlistener("controls/armament/trigger",func{fc.trigger();fc.updateDual()},nil,0);
 		setlistener("controls/armament/master-arm",func{fc.updateCurrent()},nil,0);
 		setlistener("controls/armament/dual",func{fc.updateDual()},nil,0);
@@ -78,6 +79,11 @@ var FireControl = {
 			}
 		}
 		return me.cat;
+	},
+
+	setChangeListener: func (l) {
+		# install a listener in this station that get called when an armament.AIM weapon is released or selected pylon changed.
+		me.changeListener = l;
 	},
 
 	setupMFDObservers: func {
@@ -180,6 +186,7 @@ var FireControl = {
 		me.selectedAdd = nil;
 		me.selectedType = nil;
 		screen.log.write("Selected nothing", 0.5, 0.5, 1);
+		if (me.changeListener != nil) me.changeListener();
 	},
 
 	_isSelectedWeapon: func {
@@ -403,12 +410,13 @@ var FireControl = {
 		me.selectedType = nil;
 		me.selected = nil;
 		me.selectedAdd = nil;
+		if (me.changeListener != nil) me.changeListener();
 	},
 
 	updateAll: func {
 		# called from the stations when they change.
 		if (me.selectedType != nil) {
-			screen.log.write("Fire-control: deselecting "~me.selectedType, 0.5, 0.5, 1);
+			screen.log.write("Fire-control: deselecting "~me.selectedType, 1, 0.5, 0.5);
 		}
 		me.noWeapon();
 	},
@@ -509,6 +517,7 @@ var FireControl = {
 		if (me.selectedType != nil) {
 			me.nextWeapon(me.selectedType);
 		}
+		if (me.changeListener != nil) me.changeListener();
 	},
 
 	jettisonAll: func {
@@ -516,6 +525,7 @@ var FireControl = {
 		foreach (pyl;me.pylons) {
 			pyl.jettisonAll();
 		}
+		if (me.changeListener != nil) me.changeListener();
 	},
 
 	jettisonFuelAndAG: func (exclude = nil) {
@@ -533,6 +543,7 @@ var FireControl = {
 			}
 			pyl.jettisonAll();
 		}
+		if (me.changeListener != nil) me.changeListener();
 	},
 	
 	jettisonSpecificPylons: func (list, also_heat) {
@@ -550,6 +561,7 @@ var FireControl = {
 				pyl.jettisonAll();
 			}			
 		}
+		if (me.changeListener != nil) me.changeListener();
 	},
 	
 	jettisonAllButHeat: func (exclude = nil) {
@@ -567,6 +579,7 @@ var FireControl = {
 			}
 			pyl.jettisonAll();
 		}
+		if (me.changeListener != nil) me.changeListener();
 	},
 
 	jettisonFuel: func {
@@ -580,6 +593,7 @@ var FireControl = {
 			}
 			pyl.jettisonAll();
 		}
+		if (me.changeListener != nil) me.changeListener();
 	},
 
 	getSelectedPylonNumber: func {
@@ -593,13 +607,15 @@ var FireControl = {
 	selectWeapon: func (w) {
 		me.stopCurrent();
 		me.selectedType = w;
-		return me.nextWeapon(w);
+		var nw = me.nextWeapon(w);
+		return nw;
 	},
 	
 	selectNothing: func {
 		me.stopCurrent();
 		me.selectedType = nil;
 		me.selected = nil;
+		if (me.changeListener != nil) me.changeListener();
 	},
 	
 	selectPylon: func (p, w=nil) {
@@ -613,6 +629,7 @@ var FireControl = {
 				me.selected = [p, w];
 				me.selectedType = me.ws[w].type;
 				me.updateDual();
+				if (me.changeListener != nil) me.changeListener();
 				return;
 			} elsif (me.ws != nil and w == nil and size(me.ws) > 0) {
 				w = 0;
@@ -622,6 +639,7 @@ var FireControl = {
 						me.selected = [p, w];
 						me.selectedType = me.ws[w].type;
 						me.updateDual();
+						if (me.changeListener != nil) me.changeListener();
 						return;
 					}
 					w+=1;
@@ -711,6 +729,7 @@ var FireControl = {
 			#me.aim.sendMessage(me.aim.brevity~add);
 			damage.damageLog.push(me.aim.brevity~add);
 		}
+		if (me.changeListener != nil) me.changeListener();
 		return me.aim;
 	},
 	
@@ -769,6 +788,7 @@ var FireControl = {
 			if (me.aimNext != nil) {
 				me.aimNext.start();
 			}
+			if (me.changeListener != nil) me.changeListener();
 		}
 		return;
 	},
@@ -817,6 +837,7 @@ var FireControl = {
 				me.selectDualWeapons(type, me.duality);
 			}
 			me.updateCurrent();
+			if (me.changeListener != nil) me.changeListener();
 			return;
 		}
 	},
@@ -907,12 +928,14 @@ var FireControl = {
 				#me.updateCurrent();#TODO: think a bit more about this
 				me.wap = me.pylons[me.pylon].getWeapons()[me.indexWeapon];
 				#me.selectedType = me.wap.type;
+				if (me.changeListener != nil) me.changeListener();
 				return me.wap;
 			}
 		}
 		printDebug(" Next weapon not found");
 		me.selected = nil;
 		me.selectedAdd = nil;
+		if (me.changeListener != nil) me.changeListener();
 		return nil;
 	},
 
@@ -948,6 +971,15 @@ var FireControl = {
 		me.count = 0;
 		foreach (p;me.pylons) {
 			me.count += p.getAmmo(me.selectedType);
+		}
+		return me.count;
+	},
+
+	getAmmoOfType: func (type) {
+		# return ammo count of type
+		me.count = 0;
+		foreach (p;me.pylons) {
+			me.count += p.getAmmo(type);
 		}
 		return me.count;
 	},
@@ -1004,6 +1036,7 @@ var FireControl = {
 		me.selectedAdd = nil;
 		me.selectedType = nil;
 		printDebug("FC: nothing selected");
+		if (me.changeListener != nil) me.changeListener();
 	},
 
 	setPoint: func (c) {

@@ -36,14 +36,23 @@ var Station = {
 		p.currentSet = nil;
 		p.myListener = nil;#will be called when a stations loadout changes from outside.
 		p.AIMListener = nil;#will be called when a weapon is fired. argument=the weapon
+		p.JettListener = nil;#will be called when a weapon is fired. argument=the weapon
 		return p;
 	},
 
 	setAIMListener: func (f) {
+		# install a listener in this station that get called when an armament.AIM weapon is released (not jettisoned). The listener should have 1 argument: the AIM weapon.
 		me.AIMListener = f;
 	},
 
+	setJettListener: func (f) {
+		# install a listener in this station that get called when an armament.AIM weapon is jettisoned. The listener should have 1 argument: the AIM weapon.
+		me.JettListener = f;
+	},
+
 	getCategory: func {
+		# Get current category for this station. This is a concept, where category is a number and the higher the number,
+		# the more restrictions on the flight envelope should be applied. In U.S. this is from 1 (no restrictions) to 3 (restrictions, typically limits on G during rolling).
 		if (me.currentSet != nil and me.currentSet["category"] != nil) {
 			foreach(me.weapon ; me.weapons) {
 				if (me.weapon != nil) {
@@ -55,10 +64,12 @@ var Station = {
 	},
 
 	getCurrentName: func {
+		# Get name of this station.
 		return me.currentName;
 	},
 	
 	isActive: func {
+		# Returns if is active. This is for example used in F-14, where stations be individually enabled or disabled.
 		if (me.activeFunction != nil) {
 			return me.activeFunction();
 		}
@@ -66,6 +77,9 @@ var Station = {
 	},
 
 	loadSet: func (set) {
+		# This will load a set (which is a hash) onto the station.
+		# If any of the stores in the set is armament.AIM weapons, they will be created.
+		# After loading it will update mass for the station, update the payload GUI and set the FDM properties for drag, yaw and mass.
 		foreach(me.weapon ; me.weapons) {
 			if (me.weapon != nil) {
 				me.weapon.del();
@@ -89,7 +103,7 @@ var Station = {
 					} elsif (me.weaponName == "AGM-158") {
 						mf = func (struct) {
 							if (struct.dist_m != -1 and struct.dist_m*M2NM < 7 and struct.guidance == "gps") {
-								return {"guidance":"heat","class":"GM","target":"nil","guidanceLaw":"PN","abort_midflight_function":1};
+								return {"guidance":"vision","class":"GM","target":"nil","guidanceLaw":"PN","abort_midflight_function":1};
 							}
 							return {};
 						};
@@ -113,6 +127,13 @@ var Station = {
 							if (struct.dist_m != -1 and struct.dist_m*M2NM < 12 and struct.guidance == "inertial") {
 								screen.log.write("MICA-EM: Pitbull", 1,1,0);
 								return {"guidance":"radar","abort_midflight_function":1};
+							}
+							return {};
+						};
+					} elsif (me.weaponName == "MICA-IR") {
+						mf = func (struct) {
+							if (struct.dist_m != -1 and struct.dist_m*M2NM < 12 and struct.guidance == "inertial") {
+								return {"guidance":"heat","abort_midflight_function":1};
 							}
 							return {};
 						};
@@ -166,19 +187,24 @@ var Station = {
 	},
 
 	loadingSet: func (set) {
+		# Override this function. Gets called after a set is loaded, but before any mass, fdm, gui settings is applied.
 	},
 
 	setPylonListener: func (ml) {
+		# Installs a listener. The listener should implement the method updateAll() which will be called only when set is changed.
+		# Warning: is not called when stores are released, jettisoned or likewise.
 		me.myListener = ml;
 	},
 	
 	getMass: func {
+		# Return a vector with launcher/rack/pylon/tube mass and the combined mass of all stores mounted.
 		if (me["weaponsMass"] == nil) me.weaponsMass = 0;
 		return [me.weaponsMass, me.launcherMass];
 	},
 
 	calculateMass: func {
-		# do mass
+		# Calc the masses of this station.
+		# Is also sets the 3D model properties used to display the stores. (optional system)
 		me.totalMass = 0;
 		me.weaponsMass = 0;
 		me.singleName = "";#this is hack to show stores locally
@@ -209,13 +235,16 @@ var Station = {
 	},
 
 	calculateFDM: func {
+		# Override this and calculate yaw, drag and mass properties for FDM.
 	},
 
 	getWeapons: func {
+		# Returns a vector with all current stores. Elements in vector might be nil, meaning they have been jettisoned/released.
 		return me.weapons;
 	},
 
 	fireWeapon: func (index, contacts=nil) {
+		# Release a weapon.
 		if (index >= size(me.weapons) or index < 0) {
 			print("Pylon recieved illegal fire operation. No such weapon.");
 		} elsif (me.weapons[index] == nil) {
@@ -240,6 +269,7 @@ var Station = {
 	},
 
 	getAmmo: func (type = nil) {
+		# Get total ammo for this station. For missiles/bombs this is typically the numbers, for cannon submodel weapons it is the shell count.
 		me.ammo = 0;
 		foreach(me.weapon ; me.getWeapons()) {
 			if (me.weapon != nil and me.weapon.parents[0] == armament.AIM and (me.weapon.type == nil or me.weapon.type == type)) {
@@ -252,6 +282,7 @@ var Station = {
 	},
 
 	findSetFromName: func (name) {
+		# Return a set from the (optionally loaded) list of possible sets that can be mounted. Return nil, if its not in the list.
 		foreach (me.set; me.sets) {
 			if (me.set.name == name) {
 				return me.set;
@@ -261,6 +292,7 @@ var Station = {
 	},
 
 	vectorIndex: func (vec, item) {
+		# Internal used method, do not call me from outside.
 		me.i = 0;
 		foreach(test; vec) {
 			if (test == item) {
@@ -271,18 +303,19 @@ var Station = {
 		return -1;
 	},
 
-	setGUI: func {},
-	initGUI: func {},
-	jettisonAll: func {},
-	jettisonLauncher: func {},
-	getCurrentShortName: func {},
-	getCurrentSMSName: func {},
-	getCurrentPylon: func {},
-	getCurrentRack: func {},
+	# Methods to override:
+	setGUI: func {}, # Write to the payload GUI or any other GUI info on this station.
+	initGUI: func {},# Create the gui properties for this station.
+	jettisonAll: func {},# Jettison all stores on this station that are jettisonable.
+	jettisonLauncher: func {},# Jettison the launcher/rack/tube if it can be jettisoned.
+	getCurrentShortName: func {},# Get shortened name for this station.
+	getCurrentSMSName: func {},# Get short name for this station. Called from displays in the aircraft.
+	getCurrentPylon: func {},# Get the name of the pylon (the part of station attached to the aircraft).
+	getCurrentRack: func {},# Get the name of the rack/launcher (the part of station between the weapon and the pylon).
 };
 
 var InternalStation = {
-# simulates a fixed station, for example a cannon mounted inside the aircraft
+# simulates a fixed station, for example a for cannon mounted inside the aircraft
 # inherits from Station
 	new: func (name, id, sets, pointmassNode, operableFunction = nil) {
 		var s = Station.new(name, id, [0,0,0], sets, nil, pointmassNode, operableFunction, nil);
@@ -325,7 +358,7 @@ var Pylon = {
 	},
 
 	guiChanged: func {
-		#print("GUI changed");
+		# Called when the GUI for this station has changed (typically by user interaction to mount another set)
 		if(!me.changingGui) {
 			me.desiredSet = getprop(baseGui~"/weight["~me.guiID~"]/selected");
 			if (me.desiredSet != me.currentName) {
@@ -527,6 +560,9 @@ var Pylon = {
 			foreach(me.weapon ; me.getWeapons()) {
 				if (me.weapon != nil) {
 					me.weapon.eject();
+					if (me.JettListener != nil) {
+						me.JettListener(me.weapon);
+					}
 				}
 				append(me.tempWeapons, nil);
 			}
@@ -568,6 +604,212 @@ var Pylon = {
 		me.node_dragaera.setDoubleValue(me.totalDA);
 	},
 
+};
+
+var WPylon = {
+# inherits from station. Is a station that cannot hold droptanks. And it will not write to GUI or FDM directly.
+#                        Droptanks on this kind of station must be implemented in a parallel system.
+#                        It will however read from GUI if it is required to change set.
+#                        The GUI properties must be present and initialized.
+#						 The first set in the set list MUST be a set containing no stores.
+# Implements a pylon.
+#  missiles/bombs/rockets and methods to give them commands.
+#  sets jsbsim/yasim point mass and drag. Mass is combined of all missile-code instances + launcher mass. Same with drag.
+#  interacts with GUI payload dialog  ("2 x AIM9L", "1 x GBU-82"), auto-adjusts the name when munitions is fired/jettisoned.
+#  should be able to hold missile-code arms.
+#  handle propeties to show the correct models in 3D and over MP.
+#  electricity and other conditions..use operableFunction
+#  no loop, but lots of listeners.
+#
+# Attributes:
+#   missile-code instance(s) [each with a unique id number that corresponds to a 3D position]
+#   pylon id number
+#   jsb pointmass id number
+#   GUI payload id number
+#   shared position for 3D release (from xml?)
+#   possible sets that can be loaded ("2 x AIM9L", "1 x GBU-82") At loadtime, this can be many, so store in Nasal :(
+	new: func (name, id, position, sets, guiID, pointmassNode, dragareaNode, operableFunction = nil, activeFunction = nil) {
+		var p = Station.new(name, id, position, sets, guiID, pointmassNode, operableFunction, activeFunction);
+		p.parents = [WPylon, Station];
+		p.node_dragaera = dragareaNode;
+		
+		# these should not be called in parent.new(), as they are empty there.
+		p.initGUI();
+		p.loadSet(sets[0]);
+		return p;
+	},
+
+	guiChanged: func {
+		# Called when the GUI for this station has changed (typically by user interaction to mount another set)
+		if(!me.changingGui) {
+			me.desiredSet = getprop(baseGui~"/weight["~me.guiID~"]/selected");
+			if (me.desiredSet != me.currentName) {
+				me.set = me.findSetFromName(me.desiredSet);
+				if (me.set != nil) {
+					#print("GUI wants set: "~me.set.name);
+					me.loadSet(me.set);
+				} else {
+					#print("GUI wants unknown set. Thats okay.");
+					me.loadSet(me.sets[0]);
+				}
+			}
+			if(me.myListener != nil) {
+				me.myListener.updateAll();
+			}
+		}
+	},
+
+	initGUI: func {
+		if (me.guiListener != nil) {
+			removelistener(me.guiListener);
+		}
+		me.guiNode = props.globals.getNode(baseGui~"/weight["~me.guiID~"]");
+		me.i = 0;
+		me.guiListener = setlistener(baseGui~"/weight["~me.guiID~"]/selected", func me.guiChanged());
+	},
+	
+	setGUI: func {
+	},
+	
+	getCurrentPylon: func {
+		me.nameP = nil;
+		if(me.currentSet != nil and me.currentSet["pylon"] != nil) {
+			me.nameP = me.currentSet.pylon;
+		}
+		return me.nameP;
+	},
+	
+	getCurrentRack: func {
+		me.nameR = nil;
+		if(me.currentSet != nil and me.currentSet["rack"] != nil and me.launcherJettisoned == 0) {
+			me.nameR = me.currentSet.rack;
+		}
+		return me.nameR;
+	},
+
+	getCurrentShortName: func {
+		me.nameS = "";
+		if (me.currentSet.showLongTypeInsteadOfCount) {
+			foreach(me.wapny;me.weapons) {
+				if (me.wapny != nil) {
+					me.nameS = me.wapny.typeShort;
+				}
+			}
+		} else {
+			me.calcName = {};
+			foreach(me.weapon;me.weapons) {
+				if(me.weapon != nil) {
+					me.type = me.weapon.typeShort;
+					if (me.calcName[me.type]==nil) {
+						me.calcName[me.type]=1;
+					} else {
+						me.calcName[me.type] += 1;
+					}
+				}
+			}
+			foreach(key;keys(me.calcName)) {
+				me.nameS = me.nameS~", "~me.calcName[key]~"x"~key;
+			}
+			me.nameS = right(me.nameS, size(me.nameS)-2);#remove initial comma
+		}
+		if(me.nameS == "" and me.currentSet != nil and size(me.currentSet.content)!=0) {
+			me.nameS = nil;
+		} elsif (me.nameS == "" and me.currentSet != nil and size(me.currentSet.content)==0) {
+			me.nameS = me.currentSet.name;
+		}
+		if(me.nameS == "" or me.nameS == "Empty") {
+			me.nameS = nil;
+		}
+		return me.nameS;
+	},
+	
+	getCurrentSMSName: func {
+		me.nameS = "";
+		if (me.currentSet.showLongTypeInsteadOfCount) {
+			foreach(me.wapny;me.weapons) {
+				if (me.wapny != nil) {
+					me.nameS = me.wapny.typeShort;
+				}
+			}
+		} else {
+			me.calcName = {};
+			foreach(me.weapon;me.weapons) {
+				if(me.weapon != nil) {
+					me.type = me.weapon.typeShort;
+					if (me.calcName[me.type]==nil) {
+						me.calcName[me.type]=1;
+					} else {
+						me.calcName[me.type] += 1;
+					}
+				}
+			}
+			foreach(key;keys(me.calcName)) {
+				me.nameS = me.nameS~", "~me.calcName[key]~" "~key;
+			}
+			me.nameS = right(me.nameS, size(me.nameS)-2);#remove initial comma
+		}
+		if(me.nameS == "" and me.currentSet != nil and size(me.currentSet.content)!=0) {
+			me.nameS = nil;
+		} elsif (me.nameS == "" and me.currentSet != nil and size(me.currentSet.content)==0) {
+			me.nameS = me.currentSet.name;
+		}
+		if(me.nameS == "" or me.nameS == "Empty") {
+			me.nameS = nil;
+		}
+		return me.nameS;
+	},
+
+	jettisonAll: func {
+		# drops everything.
+		if (me.weaponJettisonable) {
+			me.tempWeapons = [];
+		
+			foreach(me.weapon ; me.getWeapons()) {
+				if (me.weapon != nil) {
+					me.weapon.eject();
+					if (me.JettListener != nil) {
+						me.JettListener(me.weapon);
+					}
+				}
+				append(me.tempWeapons, nil);
+			}
+			me.jettisonLauncher();
+			me.weapons = me.tempWeapons;
+			me.calculateMass();
+			me.calculateFDM();
+			me.setGUI();
+		}
+	},
+
+	jettisonLauncher: func {
+		if (me.launcherJettisonable) {
+			me.launcherMass = 0;
+			me.launcherDA   = 0;
+			me.launcherJettisoned = 1;
+		}
+	},
+	
+	loadingSet: func (set) {
+		# override this method to set custom attributes, before calculateFDM is ran after a set is loaded.
+		if (set != nil) {
+			me.launcherDA   = set.launcherDragArea;
+		} else {
+			me.launcherDA   = 0;
+		}
+	},
+
+	calculateFDM: func {
+		# override this method to set custom FDM attributes.
+		# do dragarea
+		me.totalDA = 0;
+		foreach(me.weapon;me.weapons) {
+			if (me.weapon != nil) {
+				me.totalDA += me.weapon.Cd_base*me.weapon.ref_area_sqft;
+			}
+		}
+		me.totalDA += me.launcherDA;
+		me.node_dragaera.setDoubleValue(me.totalDA);
+	},
 };
 
 var SubModelWeapon = {
