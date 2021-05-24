@@ -124,7 +124,10 @@ var Station = {
 						};
 					} elsif (me.weaponName == "MICA-EM") {
 						mf = func (struct) {
-							if (struct.dist_m != -1 and struct.dist_m*M2NM < 12 and struct.guidance == "inertial") {
+							if (struct.guidance == "inertial" and !struct.hasTarget) {
+								return {"guidance":"radar","abort_midflight_function":1};
+							}
+							if (struct.dist_m != -1 and struct.dist_m*M2NM < 12 and struct.guidance == "inertial" and struct.deviation_deg != nil and struct.deviation_deg < 70) {
 								screen.log.write("MICA-EM: Pitbull", 1,1,0);
 								return {"guidance":"radar","abort_midflight_function":1};
 							}
@@ -132,7 +135,10 @@ var Station = {
 						};
 					} elsif (me.weaponName == "MICA-IR") {
 						mf = func (struct) {
-							if (struct.dist_m != -1 and struct.dist_m*M2NM < 12 and struct.guidance == "inertial") {
+							if (struct.guidance == "inertial" and !struct.hasTarget) {
+								return {"guidance":"heat","abort_midflight_function":1};
+							}
+							if (struct.dist_m != -1 and struct.dist_m*M2NM < 12 and struct.guidance == "inertial" and struct.deviation_deg != nil and struct.deviation_deg < 70) {
 								return {"guidance":"heat","abort_midflight_function":1};
 							}
 							return {};

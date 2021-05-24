@@ -152,6 +152,7 @@ var F16_HMD = {
         append(obj.total, obj.window2);
         append(obj.total, obj.window3);
         append(obj.total, obj.window5);
+        append(obj.total, obj.window9);
         append(obj.total, obj.window12);
         append(obj.total, obj.mainCircle);
         
