@@ -4039,7 +4039,7 @@ var AIM = {
 	                thread.unlock(mutexTimer);
 	            }
 			}
-			if (me.multiHit and !me.multiExplosion(coordinates, event) and me.Tgt != nil and me.Tgt.isVirtual()) {
+			if (me.multiHit and !me.multiExplosion(coordinates, event, wh_mass) and me.Tgt != nil and me.Tgt.isVirtual()) {
 				phrase = sprintf(me.type~" "~event);
 				me.printStats("%s  Reason: %s time %.1f", phrase, reason, me.life_time);
                 thread.lock(mutexTimer);
@@ -4059,7 +4059,7 @@ var AIM = {
 		me.Tgt = nil;
 	},
 	
-	multiExplosion: func (explode_coord, event) {
+	multiExplosion: func (explode_coord, event, wh_mass) {
 		# hit everything that is nearby except for target itself.
 		me.sendout = 0;
 		foreach (me.testMe;me.contacts) {
@@ -4074,7 +4074,7 @@ var AIM = {
 				var phrase = sprintf("%s %s: %.1f meters from: %s", me.type,event, min_distance, me.testMe.get_Callsign());
 				me.printStats(phrase);
 
- 				if(getprop("payload/armament/msg")){
+ 				if(getprop("payload/armament/msg") and wh_mass > 0){
  					var cs = me.testMe.get_Callsign();
  					var cc = me.testMe.get_Coord();
  					thread.lock(mutexTimer);
@@ -4093,9 +4093,11 @@ var AIM = {
 			cs = size(cs) < 8 ? cs : left(cs,7);
 			var phrase = sprintf("%s %s: %.1f meters from: %s", me.type,event, min_distance, cs);# if we mention ourself then we need to explicit add ourself as author.
 			me.printStats(phrase);
-			thread.lock(mutexTimer);
-			append(AIM.timerQueue, [AIM, AIM.notifyHit, [explode_coord.alt() - geo.aircraft_position().alt(),min_distance,cs,explode_coord.course_to(geo.aircraft_position()),"mhit2",me.typeID, me.typeLong, 1], -1]);
-			thread.unlock(mutexTimer);
+			if (wh_mass > 0) {
+				thread.lock(mutexTimer);
+				append(AIM.timerQueue, [AIM, AIM.notifyHit, [explode_coord.alt() - geo.aircraft_position().alt(),min_distance,cs,explode_coord.course_to(geo.aircraft_position()),"mhit2",me.typeID, me.typeLong, 1], -1]);
+				thread.unlock(mutexTimer);
+			}
 			me.sendout = 1;
 		}
 		return me.sendout;
