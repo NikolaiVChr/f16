@@ -2203,8 +2203,8 @@ var AIM = {
 			me.pitch      += me.track_signal_e;
 			me.hdg        += me.track_signal_h;
 			me.pitch       = math.max(-90, math.min(90, me.pitch));
-			me.printGuideDetails("%04.1f deg elevation command done, new pitch: %04.1f deg", me.track_signal_e, me.pitch);
-			me.printGuideDetails("%05.1f deg bearing command done, new heading: %05.1f", me.last_track_h, me.hdg);
+			me.printGuideDetails("%04.1f deg pitch    command done, new pitch: %04.1f deg", me.track_signal_e, me.pitch);
+			me.printGuideDetails("%05.1f deg heading command done, new heading: %05.1f", me.last_track_h, me.hdg);
 		}
 
        	me.last_track_e = me.track_signal_e;
@@ -2914,12 +2914,14 @@ var AIM = {
 		#var (t_course, me.dist_curr) = courseAndDistance(me.coord, me.t_coord);
 		#me.dist_curr = me.dist_curr * NM2M;	
 
+		me.curr_deviation_h = geo.normdeg180(me.curr_deviation_h);
+
 		me.printFlightDetails("Elevation to target %05.2f degs, pitch deviation %05.2f degs, pitch %05.2f degs", me.t_elev_deg, me.curr_deviation_e, me.pitch);
 		me.printFlightDetails("Bearing to target %06.2f degs, heading deviation %06.2f degs, heading %06.2f degs", me.t_course, me.curr_deviation_h, me.hdg);
 		me.printFlightDetails("Altitude above launch platform = %07.1f ft", M2FT * (me.coord.alt()-me.ac.alt()));
 		me.printFlightDetails("Altitude. Target %07.1f. Missile %07.1f. Atan2 %04.1f degs", me.t_coord.alt()*M2FT, me.coord.alt()*M2FT, math.atan2( me.t_coord.alt()-me.coord.alt(), me.dist_curr ) * R2D);
 
-		me.curr_deviation_h = geo.normdeg180(me.curr_deviation_h);
+		
 
 		if (math.abs(me.curr_deviation_h) < 15) {
 			me.guidanceLawHorizInit = 0;
@@ -3194,19 +3196,23 @@ var AIM = {
 			#
 			# missile own movement is subtracted from this change due to seeker being on gyroscope
 			#
+			# This needs to be redone with linear algebra. The cos(t_elev_deg) is a feeble correction, helps though.
+			#
 			if (me.caged == FALSE) {
-				me.dve_dist = me.curr_deviation_e - me.last_deviation_e + me.last_track_e;
-				me.dvh_dist = me.curr_deviation_h - me.last_deviation_h + me.last_track_h;
+				me.dve_dist = math.cos(me.t_elev_deg*D2R)*(me.curr_deviation_e - me.last_deviation_e + me.last_track_e);
+				me.dvh_dist = geo.normdeg180(me.curr_deviation_h - me.last_deviation_h + me.last_track_h);
 			} else {
-				me.dve_dist = me.curr_deviation_e - me.last_deviation_e;
-				me.dvh_dist = me.curr_deviation_h - me.last_deviation_h;
+				me.dve_dist = math.cos(me.t_elev_deg*D2R)*(me.curr_deviation_e - me.last_deviation_e);
+				me.dvh_dist = geo.normdeg180(me.curr_deviation_h - me.last_deviation_h);
 			}
 			me.deviation_per_sec = math.sqrt(me.dve_dist*me.dve_dist+me.dvh_dist*me.dvh_dist)/me.dt;
-
+ 
 			if (me.deviation_per_sec > me.angular_speed) {
 				# lost lock due to angular speed limit
 				me.printStats("%s: %.1f deg/s too fast angular change for seeker head.", me.type, me.deviation_per_sec);
 				me.free = TRUE;
+			} else {
+				#me.printStatsDetails("%s: %.1f deg/s fine     angular change for seeker head.", me.type, me.deviation_per_sec);
 			}
 		}
 		me.last_deviation_e = me.curr_deviation_e;
