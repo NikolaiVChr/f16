@@ -331,7 +331,7 @@ var DamageRecipient =
                   dynamics["noti_"~notification.Callsign~"_"~notification.UniqueIdentity] = [systime()-(time_before_delete-1.6), notification.Position.lat(), notification.Position.lon(), notification.Position.alt(), notification.u_fps, notification.Heading, notification.Pitch,-1]
                 }
                 
-                if (tacview_supported and getprop("sim/multiplay/txhost") == "mpserver.opredflag.com") {
+                if (tacview_supported and getprop("sim/multiplay/txhost") != "mpserver.opredflag.com") {
                   if (tacview.starttime) {
                     var tacID = left(md5(notification.Callsign~notification.UniqueIdentity),6);
                     if (notification.Kind == DESTROY) {
