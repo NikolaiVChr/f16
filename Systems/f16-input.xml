@@ -246,6 +246,19 @@
                 </binding>
             </mod-up>
         </key>
+        <key n="76">
+            <name>L</name>
+            <desc>Toggle cage</desc>
+            <binding>
+                <command>nasal</command>
+                <script>
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    pylons.fcs.toggleCage();
+                </script>
+            </binding>
+        </key>      
         <key n="81">
             <name>Q</name>
             <desc>Reset view</desc>

@@ -109,6 +109,10 @@
                 <name>l</name>
                 <desc>Cursor designate</desc>
             </key>
+            <key>
+                <name>L</name>
+                <desc>Uncage/Cage</desc>
+            </key>
             <!--<key>
                 <name>i</name>
                 <desc>Select centermost radar contact</desc>

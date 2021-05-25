@@ -2453,6 +2453,13 @@ var MFD_Device =
                 .setAlignment("right-center")
                 .setColor(colorText1)
                 .setFontSize(20, 1.0);
+
+        #svg.td_bp = svg.p_WPN.createChild("text")
+        #        .setTranslation(276*0.795, -482*0.5+35)
+        #        .setText("TD")
+        #        .setAlignment("right-center")
+        #        .setColor(colorText1)
+        #        .setFontSize(20, 1.0);
                 
         svg.ripple = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5+70)
@@ -2608,6 +2615,10 @@ var MFD_Device =
                             rp = 1;
                         }
                         pylons.fcs.setRippleMode(rp);
+                    } elsif (me.wpnType == "heat") {
+                        var auto = pylons.fcs.isAutocage();
+                        auto = !auto;
+                        pylons.fcs.setAutocage(auto);
                     }
                 } elsif (eventi == 9) {
                     if (getprop("sim/variant-id") == 0) {
@@ -2711,6 +2722,7 @@ var MFD_Device =
             me.drop = "";
             me.showDist = 0;
             me.pre = "";
+            #me.td_bp = "TD";
             if (me.wpn != nil and me.pylon != nil and me.wpn["typeShort"] != nil) {
                 if (me.wpn.type == "MK-82" or me.wpn.type == "MK-82AIR" or me.wpn.type == "MK-83" or me.wpn.type == "MK-84" or me.wpn.type == "GBU-12" or me.wpn.type == "GBU-24" or me.wpn.type == "GBU-54" or me.wpn.type == "CBU-87" or me.wpn.type == "CBU-105" or me.wpn.type == "GBU-31" or me.wpn.type == "AGM-154A" or me.wpn.type == "B61-7" or me.wpn.type == "B61-12") {
                     me.wpnType ="fall";
@@ -2792,6 +2804,7 @@ var MFD_Device =
                     me.eegs = "A-A";
                     me.coolFrame = me.wpn.isCooling()==1?1:0;                    
                     me.drop = getprop("instrumentation/radar/radar-standby")==1?"BORE":"SLAV";
+                    me.ripple = pylons.fcs.isAutocage()?"TD":"BP";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "MAL";
                     } elsif (me.wpn.status < armament.MISSILE_STARTING) {
@@ -2862,6 +2875,8 @@ var MFD_Device =
             me.root.rangUpA.setVisible(me.upA);
             me.root.rangA.setText(me.armtimer);
             me.root.rangA.setVisible(me.upA or me.downA);
+            #me.root.td_bp.setText(me.td_bp);
+            #me.root.td_bp.setVisible(me.wpnType=="heat");
             
             me.root.distDownA.setVisible(me.downAd);
             me.root.distUpA.setVisible(me.upAd);
