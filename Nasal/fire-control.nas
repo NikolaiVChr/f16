@@ -56,6 +56,7 @@ var FireControl = {
 				}
 			}
 		}
+		return 1;
 	},
 
 	toggleCage: func () {
@@ -93,6 +94,7 @@ var FireControl = {
 				}
 			}
 		}
+		return 1;
 	},
 	
 	getDropMode: func {

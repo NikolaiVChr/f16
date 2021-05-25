@@ -699,7 +699,7 @@ append(obj.total, obj.speed_curr);
             .setStrokeLineWidth(1)
             .setColor(0,1,0);
         append(obj.total, obj.radarLock);
-        obj.irLock = obj.centerOrigin.createChild("path")
+        obj.irDiamond = obj.centerOrigin.createChild("path")
             .moveTo(-boxRadius,0)
             .lineTo(0,-boxRadius)
             .lineTo(boxRadius,0)
@@ -707,8 +707,8 @@ append(obj.total, obj.speed_curr);
             .lineTo(-boxRadius,0)
             .setStrokeLineWidth(1)
             .setColor(0,1,0);
-        append(obj.total, obj.irLock);
-        obj.irSearch = obj.centerOrigin.createChild("path")
+        append(obj.total, obj.irDiamond);
+        obj.irDiamondSmall = obj.centerOrigin.createChild("path")
             .moveTo(-boxRadiusHalf,0)
             .lineTo(0,-boxRadiusHalf)
             .lineTo(boxRadiusHalf,0)
@@ -716,15 +716,15 @@ append(obj.total, obj.speed_curr);
             .lineTo(-boxRadiusHalf,0)
             .setStrokeLineWidth(1)
             .setColor(0,1,0);
-        append(obj.total, obj.irSearch);
-        obj.irBore = obj.centerOrigin.createChild("path")
+        append(obj.total, obj.irDiamondSmall);
+        obj.irCross = obj.centerOrigin.createChild("path")
             .moveTo(-boxRadiusHalf*4,0)
             .horiz(boxRadius*4)
             .moveTo(0,-boxRadiusHalf*6)
             .vert(boxRadius*6)
             .setStrokeLineWidth(1)
             .setColor(0,1,0);
-        append(obj.total, obj.irBore);
+        append(obj.total, obj.irCross);
         obj.target_locked.hide();
         obj.target_locked = obj.centerOrigin.createChild("path")
             .moveTo(-boxRadius,-boxRadius)
@@ -2408,20 +2408,20 @@ append(obj.total, obj.speed_curr);
                     if (aim != nil) {
                         me.submode = 1;
                         #var coords = aim.getSeekerInfo();
-                        #me.irSearch.setTranslation(HudMath.getCenterPosFromDegs(coords[0],coords[1]));
-                        me.irBore.setTranslation(HudMath.getCenterPosFromDegs(0,-3.5));
+                        #me.irDiamondSmall.setTranslation(HudMath.getCenterPosFromDegs(coords[0],coords[1]));
+                        me.irCross.setTranslation(HudMath.getCenterPosFromDegs(0,-3.5));
                         me.irB = 1;
                     }
                 } elsif (pylons.bore != 2) {
                     me.irS = 1;
-                    me.irSearch.setTranslation(0, -me.sy*0.25);
+                    me.irDiamondSmall.setTranslation(0, -me.sy*0.25);
                 }
             } elsif (!pylons.fcs.isCaged() and hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
                 var aim = pylons.fcs.getSelectedWeapon();
                 if (aim != nil) {
                     var coords = aim.getSeekerInfo();
                     if (coords != nil) {
-                        me.irLock.setTranslation(HudMath.getCenterPosFromDegs(coords[0],coords[1]));
+                        me.irDiamond.setTranslation(HudMath.getCenterPosFromDegs(coords[0],coords[1]));
                         me.irL = 1;
                     }
                 }
@@ -2504,9 +2504,9 @@ append(obj.total, obj.speed_curr);
                                             var coords = aim.getSeekerInfo();
                                             if (coords != nil) {
                                                 me.seekPos = HudMath.getCenterPosFromDegs(coords[0],coords[1]);
-                                                #me.irLock.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
+                                                #me.irDiamond.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
                                                 #me.radarLock.setTranslation(me.sx/2+me.texelPerDegreeX*coords[0],me.sy-me.texels_up_into_hud-me.texelPerDegreeY*coords[1]);
-                                                me.irLock.setTranslation(me.seekPos);
+                                                me.irDiamond.setTranslation(me.seekPos);
                                                 me.radarLock.setTranslation(me.seekPos);
                                             }
                                         }
@@ -2517,7 +2517,7 @@ append(obj.total, obj.speed_curr);
                                         me.rdL = 1;
                                         me.rdT = 1;
                                     } elsif (hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
-                                        #me.irLock.setTranslation(me.xcS, me.ycS);
+                                        #me.irDiamond.setTranslation(me.xcS, me.ycS);
                                         me.ASEC65Aspect.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading+180));
                                         me.irL = 1;
                                         me.irT = 1;
@@ -2643,13 +2643,13 @@ append(obj.total, obj.speed_curr);
         }
 
         me.radarLock.setVisible(me.rdL);
-        me.irSearch.setVisible(me.irS);
-        me.irLock.setVisible(me.irL);
-        me.irBore.setVisible(me.irB);
+        me.irDiamondSmall.setVisible(me.irS);
+        me.irDiamond.setVisible(me.irL);
+        me.irCross.setVisible(me.irB);
         me.ASEC120Aspect.setVisible(me.rdT);
         me.ASEC65Aspect.setVisible(me.irT);
         me.radarLock.update();
-        me.irLock.update();
+        me.irDiamond.update();
 
         if (hdp.ded == 2 and !hdp.dgft) {
             me.ded0.setText(ded.dataEntryDisplay.text[0]);
