@@ -80,6 +80,7 @@
             <min-speed-for-guiding-mach type="double">0.8</min-speed-for-guiding-mach><!-- guess -->
             <self-destruct-time-sec type="double">43</self-destruct-time-sec>         <!-- guess -->
             <seeker-angular-speed-dps type="double">30</seeker-angular-speed-dps><!-- deg/sec guess-->
+            <rosette-radius-deg type="double">6</rosette-radius-deg>
             <lock-on-sun-deg type="double">5</lock-on-sun-deg>
             <loft-altitude type="int">0</loft-altitude>
             <min-fire-range-nm type="double">0.2</min-fire-range-nm>

@@ -333,6 +333,7 @@ var AIM = {
         m.terminal_alt_factor   = getprop(m.nodeString~"terminal-alt-factor");        # Float. Cruise alt multiplied by this factor determines how much is rise up in terminal. Default: 2
         m.terminal_rise_time    = getprop(m.nodeString~"terminal-rise-time");         # Float. Seconds before reaching target that cruise missile will start to rise up. Default: 6
         m.terminal_dive_time    = getprop(m.nodeString~"terminal-dive-time");         # Float. Seconds before reaching target that cruise missile will start to dive down. Default: 4
+        m.rosette_radius        = getprop(m.nodeString~"rosette-radius-deg");         # Float. Radius of uncaged rosette search pattern.
 		# engine
 		m.force_lbf_1           = getprop(m.nodeString~"thrust-lbf-stage-1");         # stage 1 thrust [optional]
 		m.force_lbf_2           = getprop(m.nodeString~"thrust-lbf-stage-2");         # stage 2 thrust [optional]
@@ -421,6 +422,10 @@ var AIM = {
         
         if (m.guideWhileDrop == nil) {
         	m.guideWhileDrop = 0;
+        }
+
+        if (m.rosette_radius == nil) {
+        	m.rosette_radius = 7.5;
         }
         
         if (m.ready_time == nil) {
@@ -684,8 +689,9 @@ var AIM = {
         m.ready_standby_time    = 0;# time when started from standby
         m.cooling               = FALSE;
         m.command_tgt           = TRUE;
-        m.patternDirY           = 1;
-        m.patternDirX           = 1;
+        #m.patternRosetteLine    = 1;
+        #m.patternRosetteAngle   = 0;
+        #m.patternRosettePos     = 0;
         m.pattern_last_time     = 0;
         m.seeker_last_time      = 0;
         m.seeker_elev           = 0;
@@ -4399,7 +4405,7 @@ var AIM = {
 			} else {
 				me.slaveContacts = me.contacts;
 			}
-			me.moveSeekerInHUDPattern();
+			me.moveSeekerInPattern();
 			foreach(me.slaveContact ; me.slaveContacts) {
 				if (me.checkForClass()) {
 					me.tagt = me.slaveContact;
@@ -4570,35 +4576,37 @@ var AIM = {
         me.seeker_elev_target = me.angles[1];
 	},
 
-	moveSeekerInFullPattern: func {
+	moveSeekerInPattern: func {
 		me.pattern_elapsed = getprop("sim/time/elapsed-sec");
 		if (me.pattern_last_time != 0) {
 			me.pattern_time = me.pattern_elapsed - me.pattern_last_time;
-
 			me.pattern_max_move = me.pattern_time*me.angular_speed;
-			me.pattern_move = me.clamp(me.beam_width_deg*1.75, 0, me.pattern_max_move);
-			me.seeker_head_n = me.seeker_head+me.pattern_move*me.patternDirX;
-			if (math.sqrt(me.seeker_elev*me.seeker_elev+me.seeker_head_n*me.seeker_head_n) > me.max_seeker_dev) {
-				me.patternDirX *= -1;
-				#print("dir change");
-				me.seeker_elev_n -= me.pattern_move*me.patternDirY;
-				if (me.seeker_elev_n < -me.max_seeker_dev) {
-					#print("from top");
-					me.patternDirY *= -1;
-					me.seeker_elev += me.pattern_move*me.patternDirY;
-					#me.seeker_elev = me.max_seeker_dev-me.beam_width_deg*0.5;
-				} else {
-					me.seeker_elev = me.seeker_elev_n;
-				}
-			} else {
-				me.seeker_head = me.seeker_head_n;
-			}
+			#me.patternRosettePos += me.patternRosetteLine*me.pattern_max_move;
+			#if (me.patternRosettePos > me.rosette_radius) {
+			#	me.patternRosettePos = me.rosette_radius - (me.patternRosettePos-me.rosette_radius);
+			#	me.patternRosetteLine *= -1;
+			#} elsif (me.patternRosettePos < -me.rosette_radius) {
+			#	me.patternRosettePos = - me.rosette_radius - (me.patternRosettePos+me.rosette_radius);
+			#	me.patternRosetteLine *= -1;
+			#}
+			#me.rosetteRotationSpeed = 7.5*me.angular_speed*math.abs(me.patternRosettePos);
+			#me.patternRosetteAngle = geo.normdeg(me.patternRosetteAngle+me.rosetteRotationSpeed*me.pattern_time);
+
+			#me.seeker_head = me.patternRosettePos*math.cos(me.patternRosetteAngle*D2R);
+			#me.seeker_elev = me.patternRosettePos*math.sin(me.patternRosetteAngle*D2R)-3;
+
+			me.f1 = me.angular_speed*0.23/me.rosette_radius;
+			me.f2 = me.f1*0.4;
+			me.seeker_head = 0.5*me.rosette_radius*(math.cos(me.f1*math.pi*2*me.pattern_elapsed)+math.cos(me.f2*math.pi*2*me.pattern_elapsed));
+			me.seeker_elev = 0.5*me.rosette_radius*(math.sin(me.f1*math.pi*2*me.pattern_elapsed)-math.sin(me.f2*math.pi*2*me.pattern_elapsed))-3;
+
 			me.computeSeekerPos();
 		}
 		me.pattern_last_time = me.pattern_elapsed;
 	},
 
 	moveSeekerInHUDPattern: func {
+		# Not used anymore
 		me.pattern_elapsed = getprop("sim/time/elapsed-sec");
 		if (me.seeker_elev < me.patternPitchDown or me.seeker_elev > me.patternPitchUp or math.abs(me.seeker_head) > me.patternYaw) {
 			me.reset_seeker();
