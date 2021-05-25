@@ -105,6 +105,7 @@
             <warm-detect-range-nm type="double">6.5</warm-detect-range-nm>
             <detect-range-nm type="double">9.7</detect-range-nm>            <!-- source: Standard missile Characteristics: 4.6 NM against M0.9 5G target -->
             <ready-time type="double">0.5</ready-time>
+            <proportionality-constant type="double">4</proportionality-constant> <!-- source AD-A272 984 -->
         </aim-9>
         <aim-9m>
             <type-id type="int">69</type-id>
@@ -125,7 +126,7 @@
             <stage-2-duration-sec type="double">0.0</stage-2-duration-sec>
             <weight-launch-lbs type="double">185.0</weight-launch-lbs>      <!-- source: CNATRA P-825 -->
             <weight-warhead-lbs type="double">20.8</weight-warhead-lbs>   
-            <weight-fuel-lbm type="double">60.4</weight-fuel-lbm>           
+            <weight-fuel-lbm type="double">60.0</weight-fuel-lbm>         <!-- source: dash-34 -->           
             <drag-coeff type="double">1.00</drag-coeff>                   <!-- The python program estimates 1.775 to hit targets at max 12.5nm -->
             <cross-section-sqft type="double">0.143</cross-section-sqft>  <!-- 5 inch diam -->
             <arming-time-sec type="double">1.4</arming-time-sec>          <!-- same as aim-9l -->
@@ -157,6 +158,7 @@
             <warm-detect-range-nm type="double">5.0</warm-detect-range-nm>
             <detect-range-nm type="double">12.5</detect-range-nm><!-- source: navair.navy.gov - Is really 18nm, but thats probably for big fat hot targets like bombers -->
             <ready-time type="double">0.5</ready-time>
+            <proportionality-constant type="double">4</proportionality-constant> <!-- source AD-A272 984 -->
         </aim-9m>
         <aim-120>
             <type-id type="int">52</type-id>
