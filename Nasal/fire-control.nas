@@ -40,7 +40,7 @@ var FireControl = {
 		foreach (var p;me.pylons) {
 			var ws = p.getWeapons();
 			foreach (var w;ws) {
-				if (w.parents[0] == armament.AIM and (w.guidance == "heat" and w.target_air)) {# or w.guidance=="vision"
+				if (w != nil and w.parents[0] == armament.AIM and (w.guidance == "heat" and w.target_air)) {# or w.guidance=="vision"
 					w.setCaged(cageIt);
 				}
 			}
@@ -51,7 +51,7 @@ var FireControl = {
 		foreach (var p;me.pylons) {
 			var ws = p.getWeapons();
 			foreach (var w;ws) {
-				if (w.parents[0] == armament.AIM and (w.guidance == "heat" and w.target_air)) {# or w.guidance=="vision"
+				if (w != nil and w.parents[0] == armament.AIM and (w.guidance == "heat" and w.target_air)) {# or w.guidance=="vision"
 					return w.isCaged();
 				}
 			}
@@ -63,7 +63,7 @@ var FireControl = {
 		foreach (var p;me.pylons) {
 			var ws = p.getWeapons();
 			foreach (var w;ws) {
-				if (w.parents[0] == armament.AIM and (w.guidance == "heat" and w.target_air)) {# or w.guidance=="vision"
+				if (w != nil and w.parents[0] == armament.AIM and (w.guidance == "heat" and w.target_air)) {# or w.guidance=="vision"
 					c = w.isCaged()?1:-1;
 					break;
 				}
@@ -77,7 +77,7 @@ var FireControl = {
 		foreach (var p;me.pylons) {
 			var ws = p.getWeapons();
 			foreach (var w;ws) {
-				if (w.parents[0] == armament.AIM and (w.guidance == "heat" and w.target_air)) {# or w.guidance=="vision"
+				if (w != nil and w.parents[0] == armament.AIM and (w.guidance == "heat" and w.target_air)) {# or w.guidance=="vision"
 					w.setAutoUncage(auto);
 				}
 			}
@@ -88,7 +88,7 @@ var FireControl = {
 		foreach (var p;me.pylons) {
 			var ws = p.getWeapons();
 			foreach (var w;ws) {
-				if (w.parents[0] == armament.AIM and (w.guidance == "heat" and w.target_air)) {# or w.guidance=="vision"
+				if (w != nil and w.parents[0] == armament.AIM and (w.guidance == "heat" and w.target_air)) {# or w.guidance=="vision"
 					return w.isAutoUncage();
 				}
 			}
