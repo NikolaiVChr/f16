@@ -450,14 +450,23 @@ var F16_HMD = {
             .setColor(0,1,0);
         append(obj.total, obj.radarLock);
         obj.irLock = obj.centerOrigin.createChild("path")
-            .moveTo(-boxRadius,0)
-            .lineTo(0,-boxRadius)
-            .lineTo(boxRadius,0)
-            .lineTo(0,boxRadius)
-            .lineTo(-boxRadius,0)
+            .moveTo(-boxRadius*1.5,0)
+            .lineTo(0,-boxRadius*1.5)
+            .lineTo(boxRadius*1.5,0)
+            .lineTo(0,boxRadius*1.5)
+            .lineTo(-boxRadius*1.5,0)
             .setStrokeLineWidth(stroke1)
             .setColor(0,1,0);
         append(obj.total, obj.irLock);
+        obj.irBore = obj.centerOrigin.createChild("path")
+            .moveTo(-boxRadius*0.75,0)
+            .lineTo(0,-boxRadius*0.75)
+            .lineTo(boxRadius*0.75,0)
+            .lineTo(0,boxRadius*0.75)
+            .lineTo(-boxRadius*0.75,0)
+            .setStrokeLineWidth(stroke1)
+            .setColor(0,1,0);
+        append(obj.total, obj.irBore);
         obj.irSearch = obj.centerOrigin.createChild("path")
             .moveTo(-boxRadiusHalf,0)
             .lineTo(0,-boxRadiusHalf)
@@ -467,7 +476,7 @@ var F16_HMD = {
             .setStrokeLineWidth(stroke1)
             .setColor(0,1,0);
         append(obj.total, obj.irSearch);
-        obj.irBore = obj.centerOrigin.createChild("path")
+        obj.rdrBore = obj.centerOrigin.createChild("path")
 #            .moveTo(-boxRadiusHalf*4,0)
  #           .horiz(boxRadius*4)
 #            .moveTo(0,-boxRadiusHalf*6)
@@ -476,8 +485,9 @@ var F16_HMD = {
             .arcSmallCW(boxRadiusHalf*4,boxRadius*4, 0, boxRadiusHalf*4*2, 0)
             .arcSmallCW(boxRadiusHalf*4,boxRadius*4, 0, -boxRadiusHalf*4*2, 0)
             .setStrokeLineWidth(stroke1)
+            .hide()
             .setColor(0,1,0);
-        append(obj.total, obj.irBore);
+        append(obj.total, obj.rdrBore);
         
         obj.target_locked = obj.centerOrigin.createChild("path")
             .moveTo(-boxRadius,-boxRadius)
@@ -1003,8 +1013,8 @@ var F16_HMD = {
                     me.radarLock.setTranslation(0, -me.sy*0.25+262*0.3*0.5);
                     me.rdL = 1;
                 }                
-            } elsif (!pylons.fcs.isLock() and hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
-                if (pylons.bore > 0) {
+            } elsif (pylons.fcs.isCaged() and hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
+                #if (pylons.bore > 0) {
                     var aim = pylons.fcs.getSelectedWeapon();
                     if (aim != nil) {
                         #me.submode = 1;
@@ -1018,11 +1028,11 @@ var F16_HMD = {
                             me.irB = 1;
                         }
                     }
-                } else {
-                    me.irS = 0;
+                #} else {
+                #    me.irS = 0;
                     #me.irSearch.setTranslation(0, -me.sy*0.25);
-                }
-            } elsif (pylons.fcs.isLock() and hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
+                #}
+            } elsif (!pylons.fcs.isCaged() and hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
                 var aim = pylons.fcs.getSelectedWeapon();
                 if (aim != nil) {
                     var coords = aim.getSeekerInfo();
