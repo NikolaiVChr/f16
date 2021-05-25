@@ -100,8 +100,8 @@
             <prowl-flight type="string">gyro-pitch</prowl-flight>
             <switch-time-sec type="double">5</switch-time-sec>
             <coolable type="bool">true</coolable>
-            <cool-time type="double">5</cool-time>
-            <cool-duration type="int">3600</cool-duration>                  <!-- sources: 2-3 hours. Reduced -->
+            <cool-time type="double">30</cool-time>                        <!-- source: OP 3353 for AIM-9D is 60s but nitrogen, so for this argon cooled; half -->
+            <cool-duration type="int">7200</cool-duration>                  <!-- source: OP 3353 for AIM-9D is ~2 hours. -->
             <warm-detect-range-nm type="double">6.5</warm-detect-range-nm>
             <detect-range-nm type="double">9.7</detect-range-nm>            <!-- source: Standard missile Characteristics: 4.6 NM against M0.9 5G target -->
             <ready-time type="double">0.5</ready-time>
@@ -153,8 +153,8 @@
             <prowl-flight type="string">gyro-pitch</prowl-flight>
             <switch-time-sec type="double">5</switch-time-sec>
             <coolable type="bool">true</coolable>
-            <cool-time type="double">5</cool-time>
-            <cool-duration type="int">3600</cool-duration>
+            <cool-time type="double">30</cool-time>                        <!-- source: OP 3353 for AIM-9D is 60s but nitrogen, so for this argon cooled; half -->
+            <cool-duration type="int">7200</cool-duration>                  <!-- source: OP 3353 for AIM-9D is ~2 hours. -->
             <warm-detect-range-nm type="double">5.0</warm-detect-range-nm>
             <detect-range-nm type="double">12.5</detect-range-nm><!-- source: navair.navy.gov - Is really 18nm, but thats probably for big fat hot targets like bombers -->
             <ready-time type="double">0.5</ready-time>
