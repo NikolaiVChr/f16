@@ -1763,7 +1763,7 @@ var bore_loop = func {
         if (aim != nil and aim.type == "AIM-9") {
         	var hmd_active = getprop("payload/armament/hmd-active");
         	
-        	if (hmd_active==1 and aim.status < 1) {
+        	if (hmd_active==1 and aim.status < 1 and awg_9.active_u == nil) {
         		aim.setContacts(awg_9.completeList);
         		var h = -geo.normdeg180(getprop("sim/current-view/heading-offset-deg"));
                 var p = getprop("sim/current-view/pitch-offset-deg");
@@ -1785,7 +1785,12 @@ var bore_loop = func {
                 aim.setContacts(awg_9.completeList);
                 aim.commandDir(0,-3.5);# the real is bored to -6 deg below real bore
                 bore = 1;
-            } elsif (aim.status != 1) {
+            } elsif (awg_9.active_u != nil and aim.status == armament.MISSILE_LOCK and aim.Tgt.getUnique() != awg_9.active_u.getUnique()) {
+            	# stop tracking target with IR and start try to lock up radar target
+            	aim.commandRadar();
+                aim.setContacts([]);
+                aim.Tgt = nil;
+            } elsif (aim.status != armament.MISSILE_LOCK) {
                 aim.commandRadar();
                 aim.setContacts([]);
             }
