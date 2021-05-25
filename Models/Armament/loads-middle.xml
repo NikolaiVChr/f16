@@ -203,7 +203,7 @@
   <condition>
     <equals>
         <property>payload/armament/station/id-2-set</property>
-        <value>GBU-12</value>
+        <value>1 x GBU-12</value>
     </equals>
     <equals>
       <property>payload/armament/station/id-2-type</property>
@@ -453,7 +453,7 @@
   <condition>
      <equals>
         <property>payload/armament/station/id-6-set</property>
-        <value>GBU-12</value>
+        <value>1 x GBU-12</value>
     </equals>
     <equals>
       <property>payload/armament/station/id-6-type</property>
