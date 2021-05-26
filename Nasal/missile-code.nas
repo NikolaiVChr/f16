@@ -338,7 +338,7 @@ var AIM = {
         m.terminal_rise_time    = getprop(m.nodeString~"terminal-rise-time");         # Float. Seconds before reaching target that cruise missile will start to rise up. Default: 6
         m.terminal_dive_time    = getprop(m.nodeString~"terminal-dive-time");         # Float. Seconds before reaching target that cruise missile will start to dive down. Default: 4
         m.rosette_radius        = getprop(m.nodeString~"rosette-radius-deg");         # Float. Radius of uncaged rosette search pattern. If 0 then disabled.
-        m.old_pattern           = getprop(m.nodeString~"nutate-double-d-instead-of-circle"); # Bool. For old AIM-9G/H. (maybe J don't know). AIM-9B/F/D does not support SEAM Scan at all (and also not manual cage/uncage or radar slaving) only bore mode, uncage happens at firing.
+        m.oldPattern           = getprop(m.nodeString~"nutate-double-d-instead-of-circle"); # Bool. For old AIM-9G/H. (maybe J don't know). AIM-9B/F/D does not support SEAM Scan at all (and also not manual cage/uncage or radar slaving) only bore mode, uncage happens at firing.
 		# engine
 		m.force_lbf_1           = getprop(m.nodeString~"thrust-lbf-stage-1");         # stage 1 thrust [optional]
 		m.force_lbf_2           = getprop(m.nodeString~"thrust-lbf-stage-2");         # stage 2 thrust [optional]
@@ -433,8 +433,8 @@ var AIM = {
         	m.rosette_radius = 7.5;
         }
 
-        if (m.old_pattern == nil) {
-        	m.old_pattern = 0;
+        if (m.oldPattern == nil) {
+        	m.oldPattern = 0;
         }
         
         if (m.ready_time == nil) {
