@@ -1148,11 +1148,19 @@ var AIM = {
     	me.mach_factor    = math.sin(me.abso*D2R);
     	
     	me.dlz_CS         = me.mach_factor*me.dlz_t_mach+me.dlz_o_mach;
+	    me.min_fire_nm = me.getCurrentMinFireRange(contact);
+    	me.dlz_opt   = me.clamp(me.max_fire_range_nm *0.3* (me.dlz_o_alt/me.dlz_opt_alt) + me.max_fire_range_nm *0.2* (me.dlz_t_alt/me.dlz_opt_alt) + me.max_fire_range_nm *0.5* (me.dlz_CS/me.dlz_opt_mach),me.min_fire_nm,me.max_fire_range_nm);
+    	me.dlz_nez   = me.clamp(me.dlz_opt * (me.dlz_tG/45), mme.min_fire_nm, me.dlz_opt);
+    	me.printStatsDetails("Dynamic Launch Zone reported (NM): Maximum=%04.1f Optimistic=%04.1f NEZ=%04.1f Minimum=%04.1f",me.max_fire_range_nm,me.dlz_opt,me.dlz_nez,me.min_fire_nm);
+    	return [me.max_fire_range_nm,me.dlz_opt,me.dlz_nez,me.min_fire_nm,geo.aircraft_position().direct_distance_to(me.contactCoord)*M2NM];
+	},
 
-    	me.dlz_opt   = me.clamp(me.max_fire_range_nm *0.3* (me.dlz_o_alt/me.dlz_opt_alt) + me.max_fire_range_nm *0.2* (me.dlz_t_alt/me.dlz_opt_alt) + me.max_fire_range_nm *0.5* (me.dlz_CS/me.dlz_opt_mach),me.min_fire_range_nm,me.max_fire_range_nm);
-    	me.dlz_nez   = me.clamp(me.dlz_opt * (me.dlz_tG/45), me.min_fire_range_nm, me.dlz_opt);
-    	me.printStatsDetails("Dynamic Launch Zone reported (NM): Maximum=%04.1f Optimistic=%04.1f NEZ=%04.1f Minimum=%04.1f",me.max_fire_range_nm,me.dlz_opt,me.dlz_nez,me.min_fire_range_nm);
-    	return [me.max_fire_range_nm,me.dlz_opt,me.dlz_nez,me.min_fire_range_nm,geo.aircraft_position().direct_distance_to(me.contactCoord)*M2NM];
+	getCurrentMinFireRange: func (target) {
+		if (target == nil) return me.min_fire_range_nm;
+		me.closing_speed_fps = me.Tgt.get_closure_rate()*KT2FPS;
+		me.rs = me.rho_sndspeed(ourAlt.getValue());
+		me.closing_speed_mach = me.closing_speed_fps / me.rs[1];
+		return math.max(me.min_fire_range_nm * (1+2*me.closing_speed_mach),me.min_fire_range_nm); # Source: NAVWEPS OP 3353
 	},
 	
 	getIdealFireSolution: func {
@@ -4233,7 +4241,7 @@ var AIM = {
 		# call this only before firing
 		if (!(me.tagt.get_type() == AIR and me.tagt.get_Speed()<15) and ((me.guidance != "semi-radar" or me.is_painted(me.tagt) == TRUE) and (me.guidance !="laser" or me.is_laser_painted(me.tagt) == TRUE))
 						and (me.guidance != "radiation" or me.is_radiating_aircraft(me.tagt) == TRUE)
-					    and me.rng < me.max_fire_range_nm and me.rng > me.min_fire_range_nm and me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.fcs_fov, vector.Math)
+					    and me.rng < me.max_fire_range_nm and me.rng > me.getCurrentMinFireRange(me.tagt) and me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.fcs_fov, vector.Math)
 					    and (me.rng < me.detect_range_curr_nm or (me.guidance != "radar" and me.guidance != "semi-radar" and me.guidance != "heat" and me.guidance != "vision" and me.guidance != "heat" and me.guidance != "radiation"))
 					    and (me.guidance != "heat" or (me.all_aspect == TRUE or me.rear_aspect(geo.aircraft_position(), me.tagt) == TRUE))
 					    and me.checkForView()) {
@@ -4466,7 +4474,7 @@ var AIM = {
 					# FOV
 					# in range (detect)
 					# Line of sight
-					me.printSearch("Lock failed %d %d %d %d %d %d %d",!(me.tagt.get_type() == AIR and me.tagt.get_Speed()<15),(me.guidance != "semi-radar" or me.is_painted(me.tagt) == TRUE),me.rng < me.max_fire_range_nm,me.rng > me.min_fire_range_nm,me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.fcs_fov, vector.Math),me.rng < me.detect_range_curr_nm,me.checkForView());
+					me.printSearch("Lock failed %d %d %d %d %d %d %d",!(me.tagt.get_type() == AIR and me.tagt.get_Speed()<15),(me.guidance != "semi-radar" or me.is_painted(me.tagt) == TRUE),me.rng < me.max_fire_range_nm,me.rng > me.getCurrentMinFireRange(me.tagt),me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.fcs_fov, vector.Math),me.rng < me.detect_range_curr_nm,me.checkForView());
 				}
 			} elsif (DEBUG_SEARCH and me.slaveContact != nil) {
 				var tpe = me.slaveContact.get_type();
@@ -4877,7 +4885,7 @@ var AIM = {
 		me.total_elev  = deviation_normdeg(OurPitch.getValue(), me.Tgt.getElevation()); # deg.
 		me.total_horiz = deviation_normdeg(OurHdg.getValue(), me.Tgt.get_bearing());    # deg.
 		# Check if in range and in the seeker FOV.
-		if (me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.fcs_fov, vector.Math) and me.Tgt.get_range() < me.max_fire_range_nm and me.Tgt.get_range() > me.min_fire_range_nm
+		if (me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.fcs_fov, vector.Math) and me.Tgt.get_range() < me.max_fire_range_nm and me.Tgt.get_range() > me.getCurrentMinFireRange(me.Tgt)
 			and (me.Tgt.get_range() < me.detect_range_curr_nm or (me.guidance != "radar" and me.guidance != "semi-radar" and me.guidance != "heat" and me.guidance != "vision" and me.guidance != "heat" and me.guidance != "radiation"))) {
 			return TRUE;
 		}
