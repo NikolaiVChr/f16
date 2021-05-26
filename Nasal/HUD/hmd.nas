@@ -1022,12 +1022,12 @@ var F16_HMD = {
                         if (coords != nil) {
                             me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], -hdp.hmdH, hdp.hmdP);
                             me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
-                            me.echoPos[0] = (512/0.025)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
+                            me.echoPos[0] = (512/0.025)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512 (should be 0.1385 from eye instead to be like real f16)
                             me.echoPos[1] = -(512/0.025)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
                             me.irBore.setTranslation(me.echoPos);
                             me.irB = 1;
-                        }
-                    }
+                        }#atan((0.025*500)/(0.2*512)) = radius_fg = atan(12.5/102.4) = 6.96 degs => 13.92 deg diam
+                    }#atan((0.025*500)/(x*512)) => 12.5/tan(10)*512 = x
                 #} else {
                 #    me.irS = 0;
                     #me.irSearch.setTranslation(0, -me.sy*0.25);
@@ -1040,7 +1040,7 @@ var F16_HMD = {
                         me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], -hdp.hmdH, hdp.hmdP);
                         me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                         me.echoPos[0] = (512/0.025)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
-                        me.echoPos[1] = -(512/0.025)*(math.tan(math.clamp(me.echoPos[1],-89,89*D2R))*0.2;#0.2m from eye, 0.025 = 512
+                        me.echoPos[1] = -(512/0.025)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
                         me.irLock.setTranslation(me.echoPos);
                         me.irL = 1;
                     }
@@ -1250,6 +1250,7 @@ var F16_HMD = {
         me.ASEC65Aspect.setVisible(0 and me.irT);
         me.radarLock.update();
         me.irLock.update();
+        me.irSearch.update();
 
         
 
