@@ -58,8 +58,8 @@
             <type-id type="int">57</type-id>
             <short-name type="string">A-9L</short-name>
             <long-name type="string">AIM-9L Sidewinder</long-name>
-            <vol-search type="double">0.15</vol-search>
-            <vol-track type="double">0.50</vol-track>
+            <vol-search type="double">0.25</vol-search>
+            <vol-track type="double">0.60</vol-track>
             <guidance type="string">heat</guidance>                       
             <navigation type="string">PN</navigation>
             <all-aspect type="bool">true</all-aspect>                     
@@ -80,7 +80,7 @@
             <min-speed-for-guiding-mach type="double">0.8</min-speed-for-guiding-mach><!-- Source: arboga robot museum report for AIM-9J -->
             <self-destruct-time-sec type="double">43</self-destruct-time-sec>         <!-- Source: arboga robot museum report for AIM-9J -->
             <seeker-angular-speed-dps type="double">19</seeker-angular-speed-dps> <!-- Source: arboga robot museum report: AIM-9J is 14, aim-9j southeast asia introduction: 12 for AIM-9E, increased for AIM-9L -->
-            <rosette-radius-deg type="double">4</rosette-radius-deg>
+            <rosette-radius-deg type="double">0</rosette-radius-deg>
             <lock-on-sun-deg type="double">5</lock-on-sun-deg>       <!-- AAM -->
             <loft-altitude type="int">0</loft-altitude>
             <min-fire-range-nm type="double">0.2</min-fire-range-nm>             <!-- A little more than aim-9m -->
@@ -111,8 +111,8 @@
             <type-id type="int">69</type-id>
             <short-name type="string">A-9M</short-name>
             <long-name type="string">AIM-9M Sidewinder</long-name>
-            <vol-search type="double">0.15</vol-search>
-            <vol-track type="double">0.50</vol-track>
+            <vol-search type="double">0.25</vol-search>
+            <vol-track type="double">0.60</vol-track>
             <guidance type="string">heat</guidance>                       
             <navigation type="string">PN</navigation>
             <all-aspect type="bool">true</all-aspect>                     
@@ -133,7 +133,7 @@
             <min-speed-for-guiding-mach type="double">0.8</min-speed-for-guiding-mach><!-- same as aim-9j -->
             <self-destruct-time-sec type="double">60</self-destruct-time-sec>         <!-- source: CNATRA P-825 -->
             <seeker-angular-speed-dps type="double">24</seeker-angular-speed-dps><!-- source: CNATRA P-825 -->
-            <rosette-radius-deg type="double">5</rosette-radius-deg>
+            <rosette-radius-deg type="double">0</rosette-radius-deg>
             <lock-on-sun-deg type="double">7.5</lock-on-sun-deg>                 
             <loft-altitude type="int">0</loft-altitude>
             <min-fire-range-nm type="double">0.16</min-fire-range-nm>   <!-- source: CNATRA P-825 -->

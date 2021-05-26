@@ -136,6 +136,10 @@ var SURFACE = 2;
 var ORDNANCE = 3;
 var POINT = 4;
 
+var PATTERN_CIRCLE = 0;
+var PATTERN_ROSETTE = 1;
+var PATTERN_DOUBLE_D = 2;
+
 # set these to print stuff to console:
 var DEBUG_STATS            = 0;#most basic stuff
 var DEBUG_FLIGHT           = 0;#for creating missiles sometimes good to have this on to see how it flies.
@@ -333,7 +337,7 @@ var AIM = {
         m.terminal_alt_factor   = getprop(m.nodeString~"terminal-alt-factor");        # Float. Cruise alt multiplied by this factor determines how much is rise up in terminal. Default: 2
         m.terminal_rise_time    = getprop(m.nodeString~"terminal-rise-time");         # Float. Seconds before reaching target that cruise missile will start to rise up. Default: 6
         m.terminal_dive_time    = getprop(m.nodeString~"terminal-dive-time");         # Float. Seconds before reaching target that cruise missile will start to dive down. Default: 4
-        m.rosette_radius        = getprop(m.nodeString~"rosette-radius-deg");         # Float. Radius of uncaged rosette search pattern.
+        m.rosette_radius        = getprop(m.nodeString~"rosette-radius-deg");         # Float. Radius of uncaged rosette search pattern. If 0 then disabled.
 		# engine
 		m.force_lbf_1           = getprop(m.nodeString~"thrust-lbf-stage-1");         # stage 1 thrust [optional]
 		m.force_lbf_2           = getprop(m.nodeString~"thrust-lbf-stage-2");         # stage 2 thrust [optional]
@@ -684,18 +688,18 @@ var AIM = {
         m.seeker_dir_pitch      = 0;
         m.command_dir_heading   = 0;# where seeker is commanded in slave mode to look
         m.command_dir_pitch     = 0;
+        m.uncage_idle_heading   = rand()*(2*m.max_seeker_dev)-m.max_seeker_dev;
+        m.uncage_idle_pitch     = rand()*(2*m.max_seeker_dev)-m.max_seeker_dev;
         m.contacts              = [];# contacts that should be considered to lock onto. In slave it will only lock to the first.
         m.warm                  = 1;# normalized warm/cold
         m.ready_standby_time    = 0;# time when started from standby
         m.cooling               = FALSE;
         m.command_tgt           = TRUE;
-        #m.patternRosetteLine    = 1;
-        #m.patternRosetteAngle   = 0;
-        #m.patternRosettePos     = 0;
         m.pattern_last_time     = 0;
         m.seeker_last_time      = 0;
         m.seeker_elev           = 0;
         m.seeker_head           = 0;
+        m.seam_scan                  = 0;
         m.cooling_last_time     = 0;
         m.cool_total_time       = 0;
         m.patternPitchUp        = 2.5;
@@ -1157,7 +1161,7 @@ var AIM = {
 
 	getCurrentMinFireRange: func (target) {
 		if (target == nil) return me.min_fire_range_nm;
-		me.closing_speed_fps = me.Tgt.get_closure_rate()*KT2FPS;
+		me.closing_speed_fps = target.get_closure_rate()*KT2FPS;
 		me.rs = me.rho_sndspeed(ourAlt.getValue());
 		me.closing_speed_mach = me.closing_speed_fps / me.rs[1];
 		return math.max(me.min_fire_range_nm * (1+2*me.closing_speed_mach),me.min_fire_range_nm); # Source: NAVWEPS OP 3353
@@ -1206,13 +1210,21 @@ var AIM = {
 		me.printCode("Slave command: heading %0.1f pitch %0.1f", heading_deg, pitch_deg);
 	},
 
-	commandRadar: func () {
+	commandRadar: func (idle_heading = 0, idle_elevation = 0) {
 		# command that radar is looking at a target, slave to that.
 		if (me.status == MISSILE_FLYING or me.mode_slave == FALSE) return;
-		me.command_dir_heading = nil;
-		me.command_dir_pitch   = nil;
+		me.command_dir_heading = idle_heading;
+		me.command_dir_pitch   = idle_elevation;
 		me.command_tgt = TRUE;
-		me.printCode("Slave command cheat");
+		me.printCode("Slave radar command");
+	},
+
+	setSEAMscan: func (xfov) {
+		me.seam_scan = xfov;
+	},
+
+	isSEAMscan: func {
+		return me.seam_scan;
 	},
 
 	getWarm: func () {
@@ -4234,6 +4246,9 @@ var AIM = {
 			}
 			me.cooling_last_time = me.cool_elapsed;
 			me.detect_range_curr_nm = me.extrapolate(me.warm, 0, 1, me.detect_range_nm, me.warm_detect_range_nm);
+			me.detect_range_curr_nm *= me.seam_scan?0.5:1;
+		} else {
+			me.detect_range_curr_nm = (me.seam_scan?0.5:1)*me.max_fire_range_nm;
 		}
 	},
 
@@ -4406,14 +4421,22 @@ var AIM = {
 		if(me.uncage_auto) {
 			me.caged = TRUE;
 		}
-		if (me.caged == FALSE) {
+		me.coolingSyst();
+		if (!me.caged) {
 			me.slaveContacts = nil;
 			if (size(me.contacts) == 0) {
 				me.slaveContacts = [me.getContact()];
 			} else {
 				me.slaveContacts = me.contacts;
 			}
-			me.moveSeekerInPattern();
+			if (me.rosette_radius != 0) {
+				# Only here for backwards compat. Uncaged and untracking it will not do a pattern, it will be horizon stabilized (TODO).
+				me.nutateSeeker(PATTERN_ROSETTE, me.rosette_radius, me.command_dir_heading, me.command_dir_pitch);
+			} else {
+				me.seeker_head_target = me.uncage_idle_heading+(rand()-0.5);
+				me.seeker_elev_target = me.uncage_idle_pitch+(rand()-0.5);
+				me.moveSeeker();
+			}
 			foreach(me.slaveContact ; me.slaveContacts) {
 				if (me.checkForClass()) {
 					me.tagt = me.slaveContact;
@@ -4422,12 +4445,12 @@ var AIM = {
 					me.total_horiz = deviation_normdeg(OurHdg.getValue(), me.tagt.get_bearing());    # deg.
 					# Check if in range and in the seeker FOV.
 					if (me.checkForLock()) {
-						me.printSearch("pattern-search ready for lock");
+						me.printSearch("uncaged-search ready for lock");
 						
 						me.convertGlobalToSeekerViewDirection(me.tagt.get_bearing(), me.tagt.getElevation(), OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
 						me.testSeeker();
 						if (me.inBeam) {
-							me.printSearch("pattern-search found a lock");
+							me.printSearch("uncaged-search found a lock");
 							me.goToLock();
 							return;
 						}
@@ -4437,7 +4460,6 @@ var AIM = {
 			me.Tgt = nil;
 			me.SwSoundVol.setDoubleValue(me.vol_search);
 			me.SwSoundOnOff.setBoolValue(TRUE);
-			me.coolingSyst();
 			settimer(func me.search(), 0.05);# this mode needs to be a bit faster.
 			return;
 		} elsif (me.mode_slave == TRUE and me.command_tgt == TRUE) {
@@ -4457,7 +4479,9 @@ var AIM = {
 				if (me.checkForLock()) {
 					me.printSearch("rdr-slave-search ready for lock");
 					me.convertGlobalToSeekerViewDirection(me.tagt.get_bearing(), me.tagt.getElevation(), OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
-					if (me.caged) {
+					if (me.seam_scan) {
+						me.nutateSeeker(PATTERN_CIRCLE, me.beam_width_deg*0.40, me.seeker_head_target, me.seeker_elev_target);
+					} else {
 						me.moveSeeker();
 					}
 					me.testSeeker();
@@ -4466,24 +4490,36 @@ var AIM = {
 						me.goToLock();
 						return;
 					}
-				} elsif (DEBUG_SEARCH) {
-					# air target has speed
-					# fox1 is painted
-					# in range (max)
-					# in range (min)
-					# FOV
-					# in range (detect)
-					# Line of sight
-					me.printSearch("Lock failed %d %d %d %d %d %d %d",!(me.tagt.get_type() == AIR and me.tagt.get_Speed()<15),(me.guidance != "semi-radar" or me.is_painted(me.tagt) == TRUE),me.rng < me.max_fire_range_nm,me.rng > me.getCurrentMinFireRange(me.tagt),me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.fcs_fov, vector.Math),me.rng < me.detect_range_curr_nm,me.checkForView());
+				} else {
+					# Radar locked, seekerhead nutates around a locked direction.
+					me.convertGlobalToSeekerViewDirection(me.tagt.get_bearing(), me.tagt.getElevation(), OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
+					me.nutateSeeker(PATTERN_CIRCLE, me.beam_width_deg*0.40, me.seeker_head_target, me.seeker_elev_target);
+					me.moveSeeker();
+					if (DEBUG_SEARCH) {
+						# air target has speed
+						# fox1 is painted
+						# in range (max)
+						# in range (min)
+						# FOV
+						# in range (detect)
+						# Line of sight
+						me.printSearch("Lock failed %d %d %d %d %d %d %d",!(me.tagt.get_type() == AIR and me.tagt.get_Speed()<15),(me.guidance != "semi-radar" or me.is_painted(me.tagt) == TRUE),me.rng < me.max_fire_range_nm,me.rng > me.getCurrentMinFireRange(me.tagt),me.FOV_check(OurHdg.getValue(),OurPitch.getValue(),me.total_horiz, me.total_elev, me.fcs_fov, vector.Math),me.rng < me.detect_range_curr_nm,me.checkForView());
+					}
 				}
-			} elsif (DEBUG_SEARCH and me.slaveContact != nil) {
-				var tpe = me.slaveContact.get_type();
-				if (tpe==AIR) tpe="A";
-				elsif (tpe==SURFACE) tpe="G";
-				elsif (tpe==MARINE) tpe="M";
-				elsif (tpe==POINT) tpe="P";
-				else tpe ="?";
-				me.printSearch("Class check failed: %s (weapon: %s)", tpe, me.class);
+			} else {
+				# Radar slaved, no valid designation, seekerhead jitters around a idle direction.
+				me.seeker_elev_target = me.command_dir_pitch+(rand()-0.5)*me.seam_scan;
+				me.seeker_head_target = me.command_dir_heading+(rand()-0.5)*me.seam_scan;
+				me.moveSeeker();
+				if (DEBUG_SEARCH and me.slaveContact != nil) {
+					var tpe = me.slaveContact.get_type();
+					if (tpe==AIR) tpe="A";
+					elsif (tpe==SURFACE) tpe="G";
+					elsif (tpe==MARINE) tpe="M";
+					elsif (tpe==POINT) tpe="P";
+					else tpe ="?";
+					me.printSearch("Class check failed: %s (weapon: %s)", tpe, me.class);
+				}
 			}
 		} elsif (me.mode_slave == FALSE) {
 			me.slaveContacts = nil;
@@ -4492,10 +4528,14 @@ var AIM = {
 			} else {
 				me.slaveContacts = me.contacts;
 			}
-			if (me.mode_bore == TRUE) {
-				me.seeker_elev_target = 0;
-				me.seeker_head_target = 0;
-				me.moveSeeker();
+			if (me.mode_bore) {
+				if (me.seam_scan) {
+					me.nutateSeeker(PATTERN_CIRCLE, me.beam_width_deg*0.40, 0, 0);
+				} else {
+					me.seeker_elev_target = 0;
+					me.seeker_head_target = 0;
+					me.moveSeeker();
+				}
 			}
 			foreach(me.slaveContact ; me.slaveContacts) {
 				if (me.checkForClass()) {
@@ -4523,10 +4563,12 @@ var AIM = {
 			} else {
 				me.slaveContacts = me.contacts;
 			}
-			if (me.caged) {
+			if (!me.seam_scan) {
 				me.seeker_elev_target = me.command_dir_pitch;
 				me.seeker_head_target = me.command_dir_heading;
 				me.moveSeeker();
+			} else {
+				me.nutateSeeker(PATTERN_CIRCLE, me.beam_width_deg*0.40, me.command_dir_heading, me.command_dir_pitch);
 			}
 			foreach(me.slaveContact ; me.slaveContacts) {
 				if (me.checkForClass()) {
@@ -4552,8 +4594,7 @@ var AIM = {
 		me.Tgt = nil;
 		me.SwSoundVol.setDoubleValue(me.vol_search);
 		me.SwSoundOnOff.setBoolValue(TRUE);
-		me.coolingSyst();
-		settimer(func me.search(), 0.1);
+		settimer(func me.search(), 0.05);
 	},
 
 	goToLock: func {
@@ -4584,87 +4625,59 @@ var AIM = {
         me.seeker_elev_target = me.angles[1];
 	},
 
-	moveSeekerInPattern: func {
-		me.pattern_elapsed = getprop("sim/time/elapsed-sec");
-		if (me.pattern_last_time != 0) {
-			me.pattern_time = me.pattern_elapsed - me.pattern_last_time;
-			me.pattern_max_move = me.pattern_time*me.angular_speed;
-			#me.patternRosettePos += me.patternRosetteLine*me.pattern_max_move;
-			#if (me.patternRosettePos > me.rosette_radius) {
-			#	me.patternRosettePos = me.rosette_radius - (me.patternRosettePos-me.rosette_radius);
-			#	me.patternRosetteLine *= -1;
-			#} elsif (me.patternRosettePos < -me.rosette_radius) {
-			#	me.patternRosettePos = - me.rosette_radius - (me.patternRosettePos+me.rosette_radius);
-			#	me.patternRosetteLine *= -1;
-			#}
-			#me.rosetteRotationSpeed = 7.5*me.angular_speed*math.abs(me.patternRosettePos);
-			#me.patternRosetteAngle = geo.normdeg(me.patternRosetteAngle+me.rosetteRotationSpeed*me.pattern_time);
-
-			#me.seeker_head = me.patternRosettePos*math.cos(me.patternRosetteAngle*D2R);
-			#me.seeker_elev = me.patternRosettePos*math.sin(me.patternRosetteAngle*D2R)-3;
-
-			me.f1 = me.angular_speed*0.23/me.rosette_radius;
-			me.f2 = me.f1*0.4;
-			me.seeker_head = 0.5*me.rosette_radius*(math.cos(me.f1*math.pi*2*me.pattern_elapsed)+math.cos(me.f2*math.pi*2*me.pattern_elapsed));
-			me.seeker_elev = 0.5*me.rosette_radius*(math.sin(me.f1*math.pi*2*me.pattern_elapsed)-math.sin(me.f2*math.pi*2*me.pattern_elapsed))-3;
-
-			me.computeSeekerPos();
-		}
-		me.pattern_last_time = me.pattern_elapsed;
-	},
-
-	moveSeekerInHUDPattern: func {
-		# Not used anymore
-		me.pattern_elapsed = getprop("sim/time/elapsed-sec");
-		if (me.seeker_elev < me.patternPitchDown or me.seeker_elev > me.patternPitchUp or math.abs(me.seeker_head) > me.patternYaw) {
-			me.reset_seeker();
-		} elsif (me.pattern_last_time != 0) {
-			me.pattern_time = me.pattern_elapsed - me.pattern_last_time;
-
-			me.pattern_max_move = me.pattern_time*me.angular_speed;
-			me.pattern_move = me.clamp(me.beam_width_deg*1.75, 0, me.pattern_max_move);
-			me.seeker_head_n = me.seeker_head+me.pattern_move*me.patternDirX;
-			if (math.abs(me.seeker_head_n) > me.patternYaw) {
-				me.patternDirX *= -1;
-				#print("dir change");
-				me.seeker_elev_n = me.seeker_elev+me.pattern_move*me.patternDirY;
-				if (me.seeker_elev_n < me.patternPitchDown or me.seeker_elev_n > me.patternPitchUp) {
-					#print("from top");
-					me.patternDirY *= -1;
-					me.seeker_elev += me.pattern_move*me.patternDirY;
-				} else {
-					me.seeker_elev = me.seeker_elev_n;
-				}
-			} else {
-				me.seeker_head = me.seeker_head_n;
+	nutateSeeker: func (pattern, radius, heading, pitch) {
+		me.pattern_elapsed = systime();
+		if (math.sqrt(math.pow(me.seeker_head-heading,2)+math.pow(me.seeker_elev-pitch,2))>radius*1.2) {
+			me.seeker_head_target = heading;
+			me.seeker_elev_target = pitch;
+			me.moveSeeker();
+		} else {
+			# TODO: check for seeker FOV here too
+			# TODO: proper high elevation math here too
+			if (pattern == PATTERN_ROSETTE) {
+				# rosette nutation
+				me.freq1 = me.angular_speed*0.23/radius;
+				me.freq2 = me.f1*0.4;
+				me.seeker_head = 0.5*radius*(math.cos(me.freq1*math.pi*2*me.pattern_elapsed)+math.cos(me.freq2*math.pi*2*me.pattern_elapsed))+heading;
+				me.seeker_elev = 0.5*radius*(math.sin(me.freq1*math.pi*2*me.pattern_elapsed)-math.sin(me.freq2*math.pi*2*me.pattern_elapsed))+pitch;
+			} elsif (pattern == PATTERN_CIRCLE) {
+				# Standard nutation (CCW)
+				me.freq = math.min(me.angular_speed/(2*math.pi*radius), 2.0);
+				me.seeker_head = radius*math.cos(me.freq*math.pi*2*me.pattern_elapsed)+heading;
+				me.seeker_elev =-radius*math.sin(me.freq*math.pi*2*me.pattern_elapsed)+pitch;
+			} elsif (pattern == PATTERN_DOUBLE_D) {
+				#not implemented yet. Is used by older AIM-9.
 			}
-			me.computeSeekerPos();
 		}
-		me.pattern_last_time = me.pattern_elapsed;
+		me.computeSeekerPos();
 	},
 
 	moveSeeker: func {
+		# Build unit vector components for seeker and target location in aircraft frame:
+		me.target_x = math.cos(me.seeker_head_target*D2R)*math.cos(me.seeker_elev_target*D2R);
+        me.target_y = -math.sin(me.seeker_head_target*D2R)*math.cos(me.seeker_elev_target*D2R);
+        me.target_z = math.sin(me.seeker_elev_target*D2R);
+
+        me.seeker_reset = [1,0,0];
+
 		if (me.guidance != "heat" and me.guidance != "vision") {
-			me.seeker_elev = me.seeker_elev_target;
-			me.seeker_head = me.seeker_head_target;
+			me.new_seeker_deviation = vector.Math.angleBetweenVectors(me.seeker_reset, [me.target_x,me.target_y,me.target_z]);
+			if (me.new_seeker_deviation < me.max_seeker_dev) {
+				me.seeker_elev = me.seeker_elev_target;
+				me.seeker_head = me.seeker_head_target;
+			}
 			me.computeSeekerPos();
 			return;
 		}
-		me.seeker_elapsed = getprop("sim/time/elapsed-sec");
+		me.seeker_elapsed = systime();
 		if (me.seeker_last_time != 0) {
 			me.seeker_time = me.seeker_elapsed - me.seeker_last_time;
 			me.seeker_max_move = me.seeker_time*me.angular_speed;
 			
 			# Build unit vector components for seeker and target location in aircraft frame:
-			me.target_x = math.cos(me.seeker_head_target*D2R)*math.cos(me.seeker_elev_target*D2R);
-	        me.target_y = -math.sin(me.seeker_head_target*D2R)*math.cos(me.seeker_elev_target*D2R);
-	        me.target_z = math.sin(me.seeker_elev_target*D2R);
-
-	        me.seeker_x = math.cos(me.seeker_head*D2R)*math.cos(me.seeker_elev*D2R);
+		    me.seeker_x = math.cos(me.seeker_head*D2R)*math.cos(me.seeker_elev*D2R);
 	        me.seeker_y = -math.sin(me.seeker_head*D2R)*math.cos(me.seeker_elev*D2R);
 	        me.seeker_z = math.sin(me.seeker_elev*D2R);
-
-	        me.seeker_reset = [1,0,0];
 
 	        me.ideal_seeker_deviation = vector.Math.angleBetweenVectors([me.seeker_x,me.seeker_y,me.seeker_z],[me.target_x,me.target_y,me.target_z]);
 	        me.ideal_total_seeker_deviation = vector.Math.angleBetweenVectors(me.seeker_reset, [me.target_x,me.target_y,me.target_z]);
@@ -4777,7 +4790,7 @@ var AIM = {
 		if(me.uncage_auto) {
 			me.caged = FALSE;
 		}
-
+		me.coolingSyst();
 		me.computeSeekerPos();
 		if (me.status != MISSILE_STANDBY ) {#TODO: should this also check for starting up?
 			me.in_view = me.check_t_in_fov();
@@ -4793,15 +4806,23 @@ var AIM = {
 				# Notice: seeker_xxxx_target is used both for denoting where seeker should move towards and where the target is. In this case its both:
 				me.moveSeeker();
 			} elsif (me.mode_bore) {
-				me.seeker_elev_target = 0;
-				me.seeker_head_target = 0;
-				# Notice: seeker_xxxx_target is used both for denoting where seeker should move towards and where the target is. In this case its the former:
-				me.moveSeeker();
+				if (me.seam_scan) {
+					me.nutateSeeker(PATTERN_CIRCLE, me.beam_width_deg*0.40, 0,0);
+				} else {
+					me.seeker_elev_target = 0;
+					me.seeker_head_target = 0;
+					# Notice: seeker_xxxx_target is used both for denoting where seeker should move towards and where the target is. In this case its the former:
+					me.moveSeeker();
+				}
 			} elsif (me.mode_slave and !me.command_tgt) {
-				me.seeker_elev_target = me.command_dir_pitch;
-				me.seeker_head_target = me.command_dir_heading;
-				# Notice: seeker_xxxx_target is used both for denoting where seeker should move towards and where the target is. In this case its the former:
-				me.moveSeeker();
+				if (me.seam_scan) {
+					me.nutateSeeker(PATTERN_CIRCLE, me.beam_width_deg*0.40, me.command_dir_heading, me.command_dir_pitch);
+				} else {
+					me.seeker_elev_target = me.command_dir_pitch;
+					me.seeker_head_target = me.command_dir_heading;
+					# Notice: seeker_xxxx_target is used both for denoting where seeker should move towards and where the target is. In this case its the former:
+					me.moveSeeker();
+				}
 			}
 
 			# Notice: seeker_xxxx_target is used both for denoting where seeker should move towards and where the target is. In this case its the latter:
@@ -4833,7 +4854,7 @@ var AIM = {
 				me.return_to_search();
 				return;
 			}
-			me.coolingSyst();
+			
 			settimer(func me.update_lock(), deltaSec.getValue()==0?0.5:0.1);
 			return;
 		}

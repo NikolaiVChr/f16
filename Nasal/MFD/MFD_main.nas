@@ -2653,6 +2653,13 @@ var MFD_Device =
                     if (me.wpnType == "fall") {
                         pylons.fcs.setDropMode(!pylons.fcs.getDropMode());
                     }
+                } elsif (eventi == 12) {
+                    if (getprop("sim/variant-id") == 0) {
+                        return;
+                    }
+                    if (me.wpnType == "heat") {
+                        pylons.fcs.toggleXfov();
+                    }
                 } elsif (eventi == 13) {
                     if (getprop("sim/variant-id") == 0) {
                         return;
@@ -2802,6 +2809,7 @@ var MFD_Device =
                     me.wpnType ="heat";
                     me.cool = me.wpn.getWarm()==0?"COOL":"WARM";
                     me.eegs = "A-A";
+                    me.pre = pylons.fcs.isXfov()?"SCAN":"SPOT";
                     me.coolFrame = me.wpn.isCooling()==1?1:0;                    
                     me.drop = getprop("instrumentation/radar/radar-standby")==1?"BORE":"SLAV";
                     me.ripple = pylons.fcs.isAutocage()?"TD":"BP";

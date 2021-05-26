@@ -57,13 +57,13 @@ var rtExec_loop = func
         frame_inc = 0.10;#8.3
     } elsif (notifications.frameNotification.frame_rate_worst < 20) {
         frame_inc = 0.075;#12.5
-    } elsif (notifications.frameNotification.frame_rate_worst < 25) {
+    } elsif (notifications.frameNotification.frame_rate_worst < 40) {
         frame_inc = 0.05;#14.3
     } else {
         frame_inc = 0.05;#20.0
     }
     if (frame_inc != cur_frame_inc) {
-#        print("[EMEXEC]: Adjust frequency to ",1/frame_inc);
+        #print("[EMEXEC]: Adjust frequency to ",1/frame_inc);
         cur_frame_inc = frame_inc;
     }
     #execTimer.restart(cur_frame_inc);

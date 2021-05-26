@@ -96,6 +96,44 @@ var FireControl = {
 		}
 		return 1;
 	},
+
+	setXfov: func (xfov) {
+		foreach (var p;me.pylons) {
+			var ws = p.getWeapons();
+			foreach (var w;ws) {
+				if (w != nil and w.parents[0] == armament.AIM and (w.guidance == "heat" and w.target_air)) {# or w.guidance=="vision"
+					w.setSEAMscan(xfov);
+				}
+			}
+		}
+	},
+
+	isXfov: func () {
+		foreach (var p;me.pylons) {
+			var ws = p.getWeapons();
+			foreach (var w;ws) {
+				if (w != nil and w.parents[0] == armament.AIM and (w.guidance == "heat" and w.target_air)) {# or w.guidance=="vision"
+					return w.isSEAMscan();
+				}
+			}
+		}
+		return 0;
+	},
+
+	toggleXfov: func () {
+		var x = 0;
+		foreach (var p;me.pylons) {
+			var ws = p.getWeapons();
+			foreach (var w;ws) {
+				if (w != nil and w.parents[0] == armament.AIM and (w.guidance == "heat" and w.target_air)) {# or w.guidance=="vision"
+					x = w.isSEAMscan()?1:-1;
+					break;
+				}
+			}
+			if (x != 0) break;
+		}
+		if (x != 0) me.setXfov(x==-1?1:0);
+	},
 	
 	getDropMode: func {
 		#0=ccrp, 1 = ccip
