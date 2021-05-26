@@ -1772,26 +1772,26 @@ var bore_loop = func {
                 	bore = 2;
             	} else {
             		if (standby != 1) {
-		                aim.commandRadar();
+		                aim.commandRadar(0,-4);
 		                aim.setContacts([]);
 		            } else {
 		            	aim.setContacts(awg_9.completeList);
-		                aim.commandDir(0,-3.5);# the real is bored to -6 deg below real bore
+		                aim.commandDir(0,-4);# the real is bored to -6 deg below real bore
 		                bore = 1;
 		            }
             	}
             } elsif (standby == 1) {
                 #aim.setBore(1);
                 aim.setContacts(awg_9.completeList);
-                aim.commandDir(0,-3.5);# the real is bored to -6 deg below real bore
+                aim.commandDir(0,-4);# the real is bored to -6 deg below real bore
                 bore = 1;
             } elsif (awg_9.active_u != nil and aim.status == armament.MISSILE_LOCK and aim.Tgt.getUnique() != awg_9.active_u.getUnique()) {
             	# stop tracking target with IR and start try to lock up radar target
-            	aim.commandRadar();
+            	aim.commandRadar(0,-4);
                 aim.setContacts([]);
                 aim.Tgt = nil;
             } elsif (aim.status != armament.MISSILE_LOCK) {
-                aim.commandRadar();
+                aim.commandRadar(0,-4);
                 aim.setContacts([]);
             }
         }
