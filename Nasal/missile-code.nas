@@ -338,7 +338,7 @@ var AIM = {
         m.terminal_rise_time    = getprop(m.nodeString~"terminal-rise-time");         # Float. Seconds before reaching target that cruise missile will start to rise up. Default: 6
         m.terminal_dive_time    = getprop(m.nodeString~"terminal-dive-time");         # Float. Seconds before reaching target that cruise missile will start to dive down. Default: 4
         m.rosette_radius        = getprop(m.nodeString~"rosette-radius-deg");         # Float. Radius of uncaged rosette search pattern. If 0 then disabled.
-        m.old_pattern           = getprop(m.nodeString~"nutate-double-d-instead-of-circle"); # Bool. For old AIM-9G/H. (maybe J don't know). AIM-9B/F/D does not support SEAM Scan at all (and also not manual cage/uncage).
+        m.old_pattern           = getprop(m.nodeString~"nutate-double-d-instead-of-circle"); # Bool. For old AIM-9G/H. (maybe J don't know). AIM-9B/F/D does not support SEAM Scan at all (and also not manual cage/uncage or radar slaving) only bore mode, uncage happens at firing.
 		# engine
 		m.force_lbf_1           = getprop(m.nodeString~"thrust-lbf-stage-1");         # stage 1 thrust [optional]
 		m.force_lbf_2           = getprop(m.nodeString~"thrust-lbf-stage-2");         # stage 2 thrust [optional]
@@ -1159,7 +1159,7 @@ var AIM = {
     	me.dlz_CS         = me.mach_factor*me.dlz_t_mach+me.dlz_o_mach;
 	    me.min_fire_nm = me.getCurrentMinFireRange(contact);
     	me.dlz_opt   = me.clamp(me.max_fire_range_nm *0.3* (me.dlz_o_alt/me.dlz_opt_alt) + me.max_fire_range_nm *0.2* (me.dlz_t_alt/me.dlz_opt_alt) + me.max_fire_range_nm *0.5* (me.dlz_CS/me.dlz_opt_mach),me.min_fire_nm,me.max_fire_range_nm);
-    	me.dlz_nez   = me.clamp(me.dlz_opt * (me.dlz_tG/45), mme.min_fire_nm, me.dlz_opt);
+    	me.dlz_nez   = me.clamp(me.dlz_opt * (me.dlz_tG/45), me.min_fire_nm, me.dlz_opt);
     	me.printStatsDetails("Dynamic Launch Zone reported (NM): Maximum=%04.1f Optimistic=%04.1f NEZ=%04.1f Minimum=%04.1f",me.max_fire_range_nm,me.dlz_opt,me.dlz_nez,me.min_fire_nm);
     	return [me.max_fire_range_nm,me.dlz_opt,me.dlz_nez,me.min_fire_nm,geo.aircraft_position().direct_distance_to(me.contactCoord)*M2NM];
 	},
