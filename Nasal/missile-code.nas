@@ -338,6 +338,7 @@ var AIM = {
         m.terminal_rise_time    = getprop(m.nodeString~"terminal-rise-time");         # Float. Seconds before reaching target that cruise missile will start to rise up. Default: 6
         m.terminal_dive_time    = getprop(m.nodeString~"terminal-dive-time");         # Float. Seconds before reaching target that cruise missile will start to dive down. Default: 4
         m.rosette_radius        = getprop(m.nodeString~"rosette-radius-deg");         # Float. Radius of uncaged rosette search pattern. If 0 then disabled.
+        m.old_pattern           = getprop(m.nodeString~"nutate-double-d-instead-of-circle"); # Bool. For old AIM-9G/H. (maybe J don't know). AIM-9B/F/D does not support SEAM Scan at all (and also not manual cage/uncage).
 		# engine
 		m.force_lbf_1           = getprop(m.nodeString~"thrust-lbf-stage-1");         # stage 1 thrust [optional]
 		m.force_lbf_2           = getprop(m.nodeString~"thrust-lbf-stage-2");         # stage 2 thrust [optional]
@@ -430,6 +431,10 @@ var AIM = {
 
         if (m.rosette_radius == nil) {
         	m.rosette_radius = 7.5;
+        }
+
+        if (m.old_pattern == nil) {
+        	m.old_pattern = 0;
         }
         
         if (m.ready_time == nil) {
@@ -4246,9 +4251,9 @@ var AIM = {
 			}
 			me.cooling_last_time = me.cool_elapsed;
 			me.detect_range_curr_nm = me.extrapolate(me.warm, 0, 1, me.detect_range_nm, me.warm_detect_range_nm);
-			me.detect_range_curr_nm *= me.seam_scan?0.5:1;
+			#me.detect_range_curr_nm *= me.seam_scan?0.5:1; # source for this is not credible.
 		} else {
-			me.detect_range_curr_nm = (me.seam_scan?0.5:1)*me.max_fire_range_nm;
+			#me.detect_range_curr_nm = (me.seam_scan?0.5:1)*me.max_fire_range_nm; # no credible source for this
 		}
 	},
 
@@ -4480,7 +4485,7 @@ var AIM = {
 					me.printSearch("rdr-slave-search ready for lock");
 					me.convertGlobalToSeekerViewDirection(me.tagt.get_bearing(), me.tagt.getElevation(), OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
 					if (me.seam_scan) {
-						me.nutateSeeker(PATTERN_CIRCLE, me.beam_width_deg*0.40, me.seeker_head_target, me.seeker_elev_target);
+						me.nutateSeeker(me.oldPattern?PATTERN_DOUBLE_D:PATTERN_CIRCLE, me.beam_width_deg*0.40, me.seeker_head_target, me.seeker_elev_target);
 					} else {
 						me.moveSeeker();
 					}
@@ -4493,7 +4498,7 @@ var AIM = {
 				} else {
 					# Radar locked, seekerhead nutates around a locked direction.
 					me.convertGlobalToSeekerViewDirection(me.tagt.get_bearing(), me.tagt.getElevation(), OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
-					me.nutateSeeker(PATTERN_CIRCLE, me.beam_width_deg*0.40, me.seeker_head_target, me.seeker_elev_target);
+					me.nutateSeeker(me.oldPattern?PATTERN_DOUBLE_D:PATTERN_CIRCLE, me.beam_width_deg*0.40, me.seeker_head_target, me.seeker_elev_target);
 					me.moveSeeker();
 					if (DEBUG_SEARCH) {
 						# air target has speed
@@ -4530,7 +4535,7 @@ var AIM = {
 			}
 			if (me.mode_bore) {
 				if (me.seam_scan) {
-					me.nutateSeeker(PATTERN_CIRCLE, me.beam_width_deg*0.40, 0, 0);
+					me.nutateSeeker(me.oldPattern?PATTERN_DOUBLE_D:PATTERN_CIRCLE, me.beam_width_deg*0.40, 0, 0);
 				} else {
 					me.seeker_elev_target = 0;
 					me.seeker_head_target = 0;
@@ -4568,7 +4573,7 @@ var AIM = {
 				me.seeker_head_target = me.command_dir_heading;
 				me.moveSeeker();
 			} else {
-				me.nutateSeeker(PATTERN_CIRCLE, me.beam_width_deg*0.40, me.command_dir_heading, me.command_dir_pitch);
+				me.nutateSeeker(me.oldPattern?PATTERN_DOUBLE_D:PATTERN_CIRCLE, me.beam_width_deg*0.40, me.command_dir_heading, me.command_dir_pitch);
 			}
 			foreach(me.slaveContact ; me.slaveContacts) {
 				if (me.checkForClass()) {
@@ -4627,6 +4632,7 @@ var AIM = {
 
 	nutateSeeker: func (pattern, radius, heading, pitch) {
 		me.pattern_elapsed = systime();
+		if (pattern == PATTERN_DOUBLE_D) radius = me.beam_width_deg*0.5;
 		if (math.sqrt(math.pow(me.seeker_head-heading,2)+math.pow(me.seeker_elev-pitch,2))>radius*1.2) {
 			me.seeker_head_target = heading;
 			me.seeker_elev_target = pitch;
@@ -4646,7 +4652,22 @@ var AIM = {
 				me.seeker_head = radius*math.cos(me.freq*math.pi*2*me.pattern_elapsed)+heading;
 				me.seeker_elev =-radius*math.sin(me.freq*math.pi*2*me.pattern_elapsed)+pitch;
 			} elsif (pattern == PATTERN_DOUBLE_D) {
-				#not implemented yet. Is used by older AIM-9.
+				# Is used by older AIM-9G/AIM-9H. 4 hz. 2.5 deg radius.
+				me.freq = 4.0;
+				me.doubleDmod = math.mod(me.pattern_elapsed,4);
+				if (me.doubleDmod >= 0 and me.doubleDmod < 1) {
+					me.seeker_head = radius*math.cos(math.pi*me.doubleDmod)+heading;
+					me.seeker_elev =-radius*math.sin(math.pi*me.doubleDmod)+pitch;
+				} elsif (me.doubleDmod >= 1 and me.doubleDmod < 2) {
+					me.seeker_head = 2*radius*(me.doubleDmod-1)-radius+heading;
+					me.seeker_elev = pitch;
+				} elsif (me.doubleDmod >= 2 and me.doubleDmod < 3) {
+					me.seeker_head = radius*math.cos(math.pi*(me.doubleDmod-2))+heading;
+					me.seeker_elev = radius*math.sin(math.pi*(me.doubleDmod-2))+pitch;
+				} elsif (me.doubleDmod >= 3) {
+					me.seeker_head = (2*radius*(me.doubleDmod-3)-radius)+heading;
+					me.seeker_elev = pitch;
+				}
 			}
 		}
 		me.computeSeekerPos();
