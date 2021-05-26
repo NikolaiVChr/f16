@@ -4642,7 +4642,7 @@ var AIM = {
 				me.seeker_elev = 0.5*radius*(math.sin(me.freq1*math.pi*2*me.pattern_elapsed)-math.sin(me.freq2*math.pi*2*me.pattern_elapsed))+pitch;
 			} elsif (pattern == PATTERN_CIRCLE) {
 				# Standard nutation (CCW)
-				me.freq = math.min(me.angular_speed/(2*math.pi*radius), 2.0);
+				me.freq = math.min(me.angular_speed/(2*math.pi*radius), 1.0);# source for 1 hz: NAVAIR 01 245FDB-1T
 				me.seeker_head = radius*math.cos(me.freq*math.pi*2*me.pattern_elapsed)+heading;
 				me.seeker_elev =-radius*math.sin(me.freq*math.pi*2*me.pattern_elapsed)+pitch;
 			} elsif (pattern == PATTERN_DOUBLE_D) {
