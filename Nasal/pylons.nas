@@ -1796,6 +1796,11 @@ var bore_loop = func {
             }
         }
     }
+    #if (fcs.isXfov()) {# growl type 1 and 2
+    #	setprop("payload/armament/growl-type", 0);
+    #} else {
+    #	setprop("payload/armament/growl-type", 1);
+    #}
     settimer(bore_loop, 0.1);
 };
 var bore = 0;
