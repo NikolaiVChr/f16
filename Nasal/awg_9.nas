@@ -1903,23 +1903,6 @@ var Target = {
         else
             print("NO TAS ",me.type," ",me.get_range(),me.Model, me.get_Callsign());
         return 0;
-#
-# this is the old way of calculating closure; it's wrong because this isn't what it actually is in
-# radar terms.
-		var dt = ElapsedSec.getValue() - me.TimeLast.getValue();
-		var rng = me.Range.getValue();
-		var lrng = me.RangeLast.getValue();
-		if ( debug.isnan(rng) or debug.isnan(lrng)) {
-			print("####### get_closure_rate(): rng or lrng = nan ########");
-			me.ClosureRate.setValue(0);
-			me.RangeLast.setValue(0);
-			return(0);
-		}
-		var t_distance = lrng - rng;
-		var	cr = (dt > 0) ? t_distance/dt*3600 : 0;
-		me.ClosureRate.setValue(cr);
-		me.RangeLast.setValue(rng);
-		return(cr);
 	},
     isValid: func () {
       var valid = me.Valid.getValue();
