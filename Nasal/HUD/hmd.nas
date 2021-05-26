@@ -1022,8 +1022,8 @@ var F16_HMD = {
                         if (coords != nil) {
                             me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], -hdp.hmdH, hdp.hmdP);
                             me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
-                            me.echoPos[0] = (512/0.025)*(math.tan(me.echoPos[0]*D2R))*0.2;#0.2m from eye, 0.025 = 512
-                            me.echoPos[1] = -(512/0.025)*(math.tan(me.echoPos[1]*D2R))*0.2;#0.2m from eye, 0.025 = 512
+                            me.echoPos[0] = (512/0.025)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
+                            me.echoPos[1] = -(512/0.025)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
                             me.irBore.setTranslation(me.echoPos);
                             me.irB = 1;
                         }
@@ -1039,8 +1039,8 @@ var F16_HMD = {
                     if (coords != nil) {
                         me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], -hdp.hmdH, hdp.hmdP);
                         me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
-                        me.echoPos[0] = (512/0.025)*(math.tan(me.echoPos[0]*D2R))*0.2;#0.2m from eye, 0.025 = 512
-                        me.echoPos[1] = -(512/0.025)*(math.tan(me.echoPos[1]*D2R))*0.2;#0.2m from eye, 0.025 = 512
+                        me.echoPos[0] = (512/0.025)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
+                        me.echoPos[1] = -(512/0.025)*(math.tan(math.clamp(me.echoPos[1],-89,89*D2R))*0.2;#0.2m from eye, 0.025 = 512
                         me.irLock.setTranslation(me.echoPos);
                         me.irL = 1;
                     }
@@ -1077,8 +1077,8 @@ var F16_HMD = {
                         #print(me.echoPos[0],",",me.echoPos[1],"    ", hdp.hmdH, "," ,hdp.hmdP);
                         me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                         #print("    ",me.echoPos[0]);
-                        me.echoPos[0] = (512/0.025)*(math.tan(me.echoPos[0]*D2R))*0.2;#0.2m from eye, 0.025 = 512
-                        me.echoPos[1] = -(512/0.025)*(math.tan(me.echoPos[1]*D2R))*0.2;#0.2m from eye, 0.025 = 512
+                        me.echoPos[0] = (512/0.025)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
+                        me.echoPos[1] = -(512/0.025)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
                         
                         if (me.target_idx < me.max_symbols) {
                             me.tgt = me.tgt_symbols[me.target_idx];
