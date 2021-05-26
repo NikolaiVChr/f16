@@ -2409,12 +2409,23 @@ append(obj.total, obj.speed_curr);
                         me.submode = 1;
                         #var coords = aim.getSeekerInfo();
                         #me.irDiamondSmall.setTranslation(HudMath.getCenterPosFromDegs(coords[0],coords[1]));
-                        me.irCross.setTranslation(HudMath.getCenterPosFromDegs(0,-3.5));
+                        me.irCross.setTranslation(HudMath.getCenterPosFromDegs(0,-4));
                         me.irB = 1;
+                        var coords = aim.getSeekerInfo();
+                        if (coords != nil) {
+                            me.irDiamondSmall.setTranslation(HudMath.getCenterPosFromDegs(coords[0],coords[1]));
+                            me.irS = 1;
+                        }
                     }
                 } elsif (pylons.bore != 2) {
-                    me.irS = 1;
-                    me.irDiamondSmall.setTranslation(0, -me.sy*0.25);
+                    var aim = pylons.fcs.getSelectedWeapon();
+                    if (aim != nil) {
+                        var coords = aim.getSeekerInfo();
+                        if (coords != nil) {
+                            me.irDiamondSmall.setTranslation(HudMath.getCenterPosFromDegs(coords[0],coords[1]));
+                            me.irS = 1;
+                        }
+                    }
                 }
             } elsif (!pylons.fcs.isCaged() and hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
                 var aim = pylons.fcs.getSelectedWeapon();
@@ -2650,6 +2661,8 @@ append(obj.total, obj.speed_curr);
         me.ASEC65Aspect.setVisible(me.irT);
         me.radarLock.update();
         me.irDiamond.update();
+        me.irDiamondSmall.update();
+
 
         if (hdp.ded == 2 and !hdp.dgft) {
             me.ded0.setText(ded.dataEntryDisplay.text[0]);
