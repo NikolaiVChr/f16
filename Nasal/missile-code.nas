@@ -1688,7 +1688,7 @@ var AIM = {
 		me.printStats("Pilot will call out %s when firing.",me.brevity);
 		me.printStats("Launch platform detection field of view is +-%d degrees.",me.fcs_fov);
 		if (me.guidance =="heat") {
-			me.printStats("Seekerhead beam width is %.1f degrees diameter.",me.beam_width_deg);
+			me.printStats("Seekerhead beam width is %.1f degrees radius.",me.beam_width_deg);
 		}
 		me.printStats("Weapons takes %.1f seconds to get ready.",me.ready_time);
 		me.printStats("Cooling supported: %s",cooling);
@@ -4632,7 +4632,7 @@ var AIM = {
 
 	nutateSeeker: func (pattern, radius, heading, pitch) {
 		me.pattern_elapsed = systime();
-		if (pattern == PATTERN_DOUBLE_D) radius = me.beam_width_deg*0.5;
+		if (pattern == PATTERN_DOUBLE_D) radius = me.beam_width_deg;
 		if (math.sqrt(math.pow(me.seeker_head-heading,2)+math.pow(me.seeker_elev-pitch,2))>radius*1.2) {
 			me.seeker_head_target = heading;
 			me.seeker_elev_target = pitch;

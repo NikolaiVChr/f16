@@ -2530,7 +2530,7 @@ append(obj.total, obj.speed_curr);
                                     } elsif (hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
                                         #me.irDiamond.setTranslation(me.xcS, me.ycS);
                                         me.ASEC65Aspect.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading+180));
-                                        me.irL = 1;
+                                        #me.irL = 1;
                                         me.irT = 1;
                                     }
                                 } else {
@@ -2618,7 +2618,7 @@ append(obj.total, obj.speed_curr);
                 me.dlzClo.setTranslation(0,-me.dlzArray[4]/me.dlzArray[0]*me.dlzHeight);
                 me.dlzClo.setText(sprintf("%+d ",hdp.active_u.get_closure_rate()));
                 if (pylons.fcs.isLock() and me.dlzArray[4] < me.dlzArray[2] and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
-                    me.irL = 0;
+                    #me.irL = 0;
                     me.rdL = 0;
                 }
                 if (pylons.fcs.isLock()) {
