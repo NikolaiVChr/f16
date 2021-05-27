@@ -1457,13 +1457,38 @@ value. 18000=standard US transition altitude -->
         </flir> 
     </aircraft>
 
+        <!--logging>
+      <log>
+       <filename>C:/Users/Nikolai/AppData/Roaming/flightgear.org/Export/trail_test_flightlog.csv</filename>
+       <enabled>true</enabled>
+       <interval-ms>25</interval-ms>
+       <delimiter>,</delimiter>
+       <entry>
+        <enabled>true</enabled>
+        <title>alt</title>
+        <property>logging/missile/altitude-ft</property>
+       </entry>
+       <entry>
+        <enabled>true</enabled>
+        <title>heading</title>
+        <property>logging/missile/heading-deg</property>
+       </entry>
+       <entry>
+        <enabled>true</enabled>
+        <title>pitch</title>
+        <property>logging/missile/pitch-deg</property>
+       </entry>
+   </log>
+
+       <missile>
+            <altitude-ft type="double">0.0</altitude-ft>
+            <heading-deg type="double">0.0</heading-deg>
+            <pitch-deg type="double">0.0</pitch-deg>
+        </missile>
+
+    </logging-->
+
     <nasal>
-        <!--emesary>
-            <file>Aircraft/f16/Nasal/emesary.nas</file>
-        </emesary>
-        <emesary_mp_bridge>
-            <file>Aircraft/f16/Nasal/emesary_mp_bridge.nas</file>
-        </emesary_mp_bridge-->
         <notifications>
             <file>Aircraft/f16/Nasal/ArmamentNotification.nas</file>
             <file>Aircraft/f16/Nasal/M_frame_notification.nas</file>
@@ -1509,7 +1534,6 @@ value. 18000=standard US transition altitude -->
             <file>Aircraft/f16/Nasal/f16.nas</file>
             <file>Aircraft/f16/Nasal/liveries.nas</file>
             <file>Aircraft/f16/Nasal/rain.nas</file>
-            <!--<file>Aircraft/f16/Nasal/vapor-lighting.nas</file>-->
             <file>Aircraft/f16/Nasal/mfd.nas</file>
             <file>Aircraft/f16/Nasal/HUD/hud_math.nas</file>
             <file>Aircraft/f16/Nasal/HUD/HUD_main.nas</file>
@@ -1583,9 +1607,6 @@ value. 18000=standard US transition altitude -->
         <fail>
           <file>Aircraft/f16/Nasal/failures.nas</file>
         </fail>
-        <!--<tgpTarget>
-          <file>Aircraft/f16/Nasal/tgp-target.nas</file>
-        </tgpTarget>-->
         <gci>
             <file>Aircraft/f16/Nasal/gci-listener.nas</file>
         </gci>
@@ -1614,5 +1635,6 @@ value. 18000=standard US transition altitude -->
             <file>Aircraft/f16/Nasal/help.nas</file>
         </help>
     </nasal>
-    
+
+   
 </PropertyList>
