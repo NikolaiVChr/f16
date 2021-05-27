@@ -78,9 +78,12 @@
             <cross-section-sqft type="double">0.143</cross-section-sqft>  
             <arming-time-sec type="double">1.4</arming-time-sec>          <!-- Source: arboga robot museum report for AIM-9J -->
             <min-speed-for-guiding-mach type="double">0.8</min-speed-for-guiding-mach><!-- Source: arboga robot museum report for AIM-9J -->
-            <self-destruct-time-sec type="double">43</self-destruct-time-sec>         <!-- Source: arboga robot museum report for AIM-9J -->
+            <self-destruct-time-sec type="double">51</self-destruct-time-sec>         <!-- Source: arboga robot museum report for AIM-9J is 43. AIM-9M is 60. So something in between. -->
             <seeker-angular-speed-dps type="double">19</seeker-angular-speed-dps> <!-- Source: arboga robot museum report: AIM-9J is 14, aim-9j southeast asia introduction: 12 for AIM-9E, increased for AIM-9L -->
             <rosette-radius-deg type="double">0</rosette-radius-deg>
+            <sw-expanded-acquisition-mode type="bool">true</sw-expanded-acquisition-mode>
+            <nutate-double-d-instead-of-circle type="bool">false</nutate-double-d-instead-of-circle>
+            <seeker-filter type="double">2.5</seeker-filter>
             <lock-on-sun-deg type="double">5</lock-on-sun-deg>       <!-- AAM -->
             <loft-altitude type="int">0</loft-altitude>
             <min-fire-range-nm type="double">0.2</min-fire-range-nm>             <!-- A little more than aim-9m -->
@@ -134,6 +137,9 @@
             <self-destruct-time-sec type="double">60</self-destruct-time-sec>         <!-- source: CNATRA P-825 -->
             <seeker-angular-speed-dps type="double">24</seeker-angular-speed-dps><!-- source: CNATRA P-825 -->
             <rosette-radius-deg type="double">0</rosette-radius-deg>
+            <sw-expanded-acquisition-mode type="bool">true</sw-expanded-acquisition-mode>
+            <nutate-double-d-instead-of-circle type="bool">false</nutate-double-d-instead-of-circle>
+            <seeker-filter type="double">2</seeker-filter>
             <lock-on-sun-deg type="double">7.5</lock-on-sun-deg>                 
             <loft-altitude type="int">0</loft-altitude>
             <min-fire-range-nm type="double">0.16</min-fire-range-nm>   <!-- source: CNATRA P-825 -->
