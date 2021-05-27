@@ -85,7 +85,7 @@
 
 	   <counter>
 	     <particles-per-sec>
-	       <value>150</value>
+	       <value>250</value>
 	       <spread>0</spread>
 	     </particles-per-sec>
 	   </counter>
@@ -147,7 +147,10 @@
       <type>select</type>
       <object-name>flaminghot</object-name>
       <condition>
-           <property>payload/armament/aim-9/flags/smoke-id-700</property>
+           <and>
+           <property>payload/armament/aim-9/flags/smoke-id-0</property>
+           <property>/sim/rendering/shaders/skydome</property>
+       </and>
      </condition>
     </animation>
 
