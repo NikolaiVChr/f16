@@ -468,11 +468,11 @@ var F16_HMD = {
             .setColor(0,1,0);
         append(obj.total, obj.irBore);
         obj.irSearch = obj.centerOrigin.createChild("path")
-            .moveTo(-boxRadiusHalf,0)
-            .lineTo(0,-boxRadiusHalf)
-            .lineTo(boxRadiusHalf,0)
-            .lineTo(0,boxRadiusHalf)
-            .lineTo(-boxRadiusHalf,0)
+            .moveTo(-boxRadiusHalf*0.75,0)
+            .lineTo(0,-boxRadiusHalf*0.75)
+            .lineTo(boxRadiusHalf*0.75,0)
+            .lineTo(0,boxRadiusHalf*0.75)
+            .lineTo(-boxRadiusHalf*0.75,0)
             .setStrokeLineWidth(stroke1)
             .setColor(0,1,0);
         append(obj.total, obj.irSearch);
