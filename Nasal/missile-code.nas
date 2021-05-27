@@ -1244,6 +1244,11 @@ var AIM = {
 		me.printCode("Slave radar command. Idle: heading %0.1f pitch %0.1f", idle_heading, idle_elevation);
 	},
 
+	isRadarSlaved: func {
+		if (me.status == MISSILE_FLYING) return 0;
+		return me.slave_to_radar;
+	},
+
 	setSEAMscan: func (xfov) {
 		if (!me.seam_support or me.status == MISSILE_FLYING) return;
 		me.seam_scan = xfov;
