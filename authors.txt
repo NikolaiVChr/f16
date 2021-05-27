@@ -150,10 +150,10 @@ Niall "Salmon" Roe
 - ROKAF livery
 
 Axel Paccalin
-- Implemented recursive function to compute the closest range in the past frames.
+- Recursive function to compute the closest range in the past frames
 
 Baptiste "Bat" Campion
-- Belgian AF, Hellenic AF, PACAF-USN Aggressors, Dutch AF, PACAF livery packs
+- Belgian AF, Hellenic AF, PACAF-USN Aggressors, Dutch AF, PACAF, AFRC Makos livery packs
 - Portuguese AF, QF-16, Turkish AF, Royal Moroccan AF, Arizona ANG liveries
 
 Shaymo
