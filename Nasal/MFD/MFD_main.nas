@@ -1828,6 +1828,9 @@ var MFD_Device =
                 me.root.dlz2.removeAllChildren();
                 me.root.dlzArrow.setTranslation(0,-me.root.dlzArray[4]/me.root.dlzArray[0]*me.root.dlzHeight);
                 me.root.dlzGeom = me.root.dlz2.createChild("path")
+                        .moveTo(me.root.dlzWidth, 0)
+                        .horiz(-me.root.dlzWidth)
+                        .lineTo(0, -me.root.dlzArray[3]/me.root.dlzArray[0]*me.root.dlzHeight)
                         .moveTo(0, -me.root.dlzArray[3]/me.root.dlzArray[0]*me.root.dlzHeight)
                         .lineTo(0, -me.root.dlzArray[2]/me.root.dlzArray[0]*me.root.dlzHeight)
                         .lineTo(me.root.dlzWidth, -me.root.dlzArray[2]/me.root.dlzArray[0]*me.root.dlzHeight)
@@ -2811,7 +2814,7 @@ var MFD_Device =
                     me.eegs = "A-A";
                     me.pre = pylons.fcs.isXfov()?"SCAN":"SPOT";
                     me.coolFrame = me.wpn.isCooling()==1?1:0;                    
-                    me.drop = getprop("instrumentation/radar/radar-standby")==1?"BORE":"SLAV";
+                    me.drop = pylons.bore>0?"BORE":"SLAV";
                     me.ripple = pylons.fcs.isAutocage()?"TD":"BP";
                     if (me.pylon.operableFunction != nil and !me.pylon.operableFunction()) {
                         me.ready = "MAL";

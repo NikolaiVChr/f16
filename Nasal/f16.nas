@@ -306,10 +306,11 @@ var medium_fast = {
     }
     setprop("/sim/multiplay/visibility-range-nm", 160);
     if (getprop("payload/armament/es/flags/deploy-id-10")!= nil) {
+      # ejection chute force
       setprop("f16/force", 7-5*getprop("payload/armament/es/flags/deploy-id-10"));
-      } else {
-        setprop("f16/force", 7);
-      }
+    } else {
+      setprop("f16/force", 7);
+    }
 
     if (getprop("fdm/jsbsim/elec/bus/noness-ac-2")<100) {
       setprop("controls/lighting/lighting-panel/flood-inst-pnl", 0);

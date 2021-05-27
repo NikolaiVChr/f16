@@ -1008,33 +1008,25 @@ var F16_HMD = {
         #printf("%d %d %d %s",hdp.master_arm,pylons.fcs != nil,pylons.fcs.getAmmo(),hdp.weapon_selected);
         if(hdp.master_arm and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
             hdp.weapon_selected = pylons.fcs.selectedType;
+            var aim = pylons.fcs.getSelectedWeapon();
             if (0 and hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
                 if (!pylons.fcs.isLock()) {
                     me.radarLock.setTranslation(0, -me.sy*0.25+262*0.3*0.5);
                     me.rdL = 1;
                 }                
-            } elsif (pylons.fcs.isCaged() and hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
-                #if (pylons.bore > 0) {
-                    var aim = pylons.fcs.getSelectedWeapon();
-                    if (aim != nil) {
-                        #me.submode = 1;
-                        var coords = aim.getSeekerInfo();
-                        if (coords != nil) {
-                            me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], -hdp.hmdH, hdp.hmdP);
-                            me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
-                            me.echoPos[0] = (512/0.025)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512 (should be 0.1385 from eye instead to be like real f16)
-                            me.echoPos[1] = -(512/0.025)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
-                            me.irBore.setTranslation(me.echoPos);
-                            me.irB = 1;
-                        }#atan((0.025*500)/(0.2*512)) = radius_fg = atan(12.5/102.4) = 6.96 degs => 13.92 deg diam
-                    }#atan((0.025*500)/(x*512)) => 12.5/tan(10)*512 = x
-                #} else {
-                #    me.irS = 0;
-                    #me.irSearch.setTranslation(0, -me.sy*0.25);
-                #}
-            } elsif (!pylons.fcs.isCaged() and hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
-                var aim = pylons.fcs.getSelectedWeapon();
-                if (aim != nil) {
+            } elsif (hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
+                if (aim != nil and aim.isCaged()) {
+                    var coords = aim.getSeekerInfo();
+                    if (coords != nil) {
+                        me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], -hdp.hmdH, hdp.hmdP);
+                        me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
+                        me.echoPos[0] = (512/0.025)*(math.tan(math.clamp(me.echoPos[0],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512 (should be 0.1385 from eye instead to be like real f16)
+                        me.echoPos[1] = -(512/0.025)*(math.tan(math.clamp(me.echoPos[1],-89,89)*D2R))*0.2;#0.2m from eye, 0.025 = 512
+                        me.irBore.setTranslation(me.echoPos);
+                        me.irB = 1;
+                    }#atan((0.025*500)/(0.2*512)) = radius_fg = atan(12.5/102.4) = 6.96 degs => 13.92 deg diam
+                    #atan((0.025*500)/(x*512)) => 12.5/tan(10)*512 = x
+                } elsif (aim != nil) {
                     var coords = aim.getSeekerInfo();
                     if (coords != nil) {
                         me.echoPos = f16.HudMath.getDevFromHMD(coords[0], coords[1], -hdp.hmdH, hdp.hmdP);
@@ -1225,6 +1217,9 @@ var F16_HMD = {
                 me.dlzClo.setText("");
             }
             me.dlzGeom = me.dlz2.createChild("path")
+                    .moveTo(me.dlzWidth, 0)
+                    .horiz(-me.dlzWidth)
+                    .lineTo(0, -me.dlzArray[3]/me.dlzArray[0]*me.dlzHeight)
                     .moveTo(0, -me.dlzArray[3]/me.dlzArray[0]*me.dlzHeight)
                     .lineTo(0, -me.dlzArray[2]/me.dlzArray[0]*me.dlzHeight)
                     .lineTo(me.dlzWidth, -me.dlzArray[2]/me.dlzArray[0]*me.dlzHeight)
