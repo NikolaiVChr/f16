@@ -769,7 +769,7 @@
 			   <input>
 				  <width>75</width>
 				  <height>25</height>
-				  <label>Datalink Channel</label>
+				  <label>Link-16 Channel</label>
 				  <property>instrumentation/datalink/channel</property>
 				  <live>true</live>
 				  <halign>center</halign>
