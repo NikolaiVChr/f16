@@ -149,7 +149,8 @@ var DEBUG_SEARCH           = 0;
 var DEBUG_CODE             = 0;
 
 var g_fps        = 9.80665 * M2FT;
-var slugs_to_lbm = 32.1740485564;
+var SLUGS2LBM = 32.1740485564;
+var LBM2SLUGS = 1/SLUGS2LBM;
 var const_e      = 2.71828183;
 
 var first_in_air = FALSE;# first missile is in the air, other missiles should not write to MP.
@@ -214,6 +215,7 @@ var contactPoint = nil;
 # isLaserPainted()     - Tells if this target is still being tracked by the launch platform, only used by laser guided ordnance.
 # isRadiating(coord) - Tell if anti-radiation missile is hit by radiation from target. coord is the weapon position.
 # isVirtual()     - Tells if the target is just a position, and should not be considered for damage.
+# get_closure_rate()  -  closure rate in kt
 
 var AIM = {
 	lowestETA: nil,
@@ -314,6 +316,7 @@ var AIM = {
         m.radarX                = getprop(m.nodeString~"FCS-x");                      # Where in the aircraft (model xml coords) the radar is located.
 		m.radarY                = getprop(m.nodeString~"FCS-y");                      #    This is handy for SAMs with radar on a mast.
 		m.radarZ                = getprop(m.nodeString~"FCS-z");                      #    In future I will add direction to it also, for now its center gimbal is along -x axis.
+		m.expand_min            = getprop(m.nodeString~"expand-min-fire-range");      # Bool. Default false. If min fire range should expand with closing rate. Mainly use this for A/A missiles.
 		# navigation, guiding and seekerhead
 		m.max_seeker_dev        = getprop(m.nodeString~"seeker-field-deg") / 2;       # missiles own seekers total FOV diameter.
 		m.guidance              = getprop(m.nodeString~"guidance");                   # heat/radar/semi-radar/laser/gps/vision/unguided/level/gyro-pitch/radiation/inertial/remote/remote-stable
@@ -410,6 +413,10 @@ var AIM = {
         if (m.rail_forward == TRUE) {
         	m.rail_pitch_deg = 0;
         	m.rail_head_deg  = 0;
+        }
+
+        if (m.expand_min == nil) {
+        	m.expand_min = 0;
         }
 
         if (m.rail_head_deg == nil) {
@@ -761,8 +768,8 @@ var AIM = {
 		m.prevTarget   = nil;
 		m.prevGuidance = nil;
 		m.keepPitch    = 0;
-		m.horz_closing_rate_fps = 0;
-		m.vert_closing_rate_fps = 0;
+		m.horz_closing_rate_fps = -1;
+		m.vert_closing_rate_fps = -1;
 		m.usingTGPPoint = 0;
 
 		#
@@ -938,7 +945,7 @@ var AIM = {
         me.ccrp_rs = me.rho_sndspeed(me.ccrp_dens-(me.ccrp_agl/2)*M2FT);
         me.ccrp_rho = me.ccrp_rs[0];
         me.ccrp_Cd = me.drag(me.ccrp_mach);
-        me.ccrp_mass = me.weight_launch_lbm / slugs_to_lbm;
+        me.ccrp_mass = me.weight_launch_lbm * LBM2SLUGS;
         me.ccrp_q = 0.5 * me.ccrp_rho * me.ccrp_fps_z * me.ccrp_fps_z;
         me.ccrp_deacc = (me.ccrp_Cd * me.ccrp_q * me.ref_area_sqft) / me.ccrp_mass;
 
@@ -1010,7 +1017,7 @@ var AIM = {
 
         me.ccip_rs = me.ccip_bomb.rho_sndspeed(getprop("sim/flight-model") == "jsb"?me.ccip_dens:me.ccip_altC*M2FT);
         me.ccip_rho = me.ccip_rs[0];
-        me.ccip_mass = me.ccip_bomb.weight_launch_lbm / armament.slugs_to_lbm;
+        me.ccip_mass = me.ccip_bomb.weight_launch_lbm * LBM2SLUGS;
 
         me.ccipPos = geo.Coord.new(geo.aircraft_position());
         
@@ -1111,7 +1118,7 @@ var AIM = {
         me.ccip_rs = me.ccip_bomb.rho_sndspeed(me.ccip_dens-(me.ccip_agl/2)*M2FT);
         me.ccip_rho = me.ccip_rs[0];
         me.ccip_Cd = me.ccip_bomb.drag(me.ccip_mach);
-        me.ccip_mass = me.ccip_bomb.weight_launch_lbm / armament.slugs_to_lbm;
+        me.ccip_mass = me.ccip_bomb.weight_launch_lbm * LBM2SLUGS;
         me.ccip_q = 0.5 * me.ccip_rho * me.ccip_fps_z * me.ccip_fps_z;
         me.ccip_deacc = (me.ccip_Cd * me.ccip_q * me.ccip_bomb.ref_area_sqft) / me.ccip_mass;
 
@@ -1185,7 +1192,7 @@ var AIM = {
 	},
 
 	getCurrentMinFireRange: func (target) {
-		if (target == nil) return me.min_fire_range_nm;
+		if (target == nil or !me.expand_min) return me.min_fire_range_nm;
 		me.closing_speed_fps = target.get_closure_rate()*KT2FPS;
 		me.rs = me.rho_sndspeed(ourAlt.getValue());
 		me.closing_speed_mach = me.closing_speed_fps / me.rs[1];
@@ -1563,7 +1570,7 @@ var AIM = {
 		me.printStats("Launch %s at %s.", me.type, me.callsign);
 
 		me.weight_current = me.weight_launch_lbm;
-		me.mass = me.weight_launch_lbm / slugs_to_lbm;
+		me.mass = me.weight_launch_lbm * LBM2SLUGS;
 
 		# find the fuel consumption - lbm/sec
 		var impulse1 = me.force_lbf_1 * me.stage_1_duration; # lbf*s
@@ -2066,7 +2073,6 @@ var AIM = {
 			# we were paused so we use last dt
 			me.dt = me.dt_old;
 		}
-		
 		#if (me.dt < 0.025) {
 			# dont update too fast..
 		#	continue;
@@ -2519,7 +2525,7 @@ var AIM = {
 		}
 
 		#printf("weight %0.1f", me.weight_current);
-		me.mass = me.weight_current / slugs_to_lbm;
+		me.mass = me.weight_current * LBM2SLUGS;
 
 		# telemetry
 		if (me.data == TRUE) {
@@ -5440,7 +5446,7 @@ var impact_report = func(pos, mass, string, name, speed_mps) {
 	impact.getNode("impact/latitude-deg", 1).setDoubleValue(pos.lat());
 	impact.getNode("impact/longitude-deg", 1).setDoubleValue(pos.lon());
 	impact.getNode("warhead-lbm", 1).setDoubleValue(mass);
-	impact.getNode("mass-slug", 1).setDoubleValue(mass/slugs_to_lbm);
+	impact.getNode("mass-slug", 1).setDoubleValue(mass * LBM2SLUGS);
 	impact.getNode("impact/speed-mps", 1).setDoubleValue(speed_mps);
 	#impact.getNode("speed-mps", 1).setValue(speed_mps);
 	impact.getNode("valid", 1).setBoolValue(1);

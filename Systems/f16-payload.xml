@@ -87,6 +87,7 @@
             <lock-on-sun-deg type="double">5</lock-on-sun-deg>       <!-- AAM -->
             <loft-altitude type="int">0</loft-altitude>
             <min-fire-range-nm type="double">0.2</min-fire-range-nm>             <!-- A little more than aim-9m -->
+            <expand-min-fire-range type="bool">true</expand-min-fire-range>
             <rail type="bool">true</rail>
             <rail-length-m type="double">2.667</rail-length-m><!-- 16S210 AIM-9 Missile Launcher -->
             <rail-point-forward type="bool">true</rail-point-forward>
@@ -143,6 +144,7 @@
             <lock-on-sun-deg type="double">7.5</lock-on-sun-deg>                 
             <loft-altitude type="int">0</loft-altitude>
             <min-fire-range-nm type="double">0.16</min-fire-range-nm>   <!-- source: CNATRA P-825 -->
+            <expand-min-fire-range type="bool">true</expand-min-fire-range>
             <rail type="bool">true</rail>
             <rail-length-m type="double">2.667</rail-length-m><!-- 16S210 AIM-9 Missile Launcher -->
             <rail-point-forward type="bool">true</rail-point-forward>
@@ -229,6 +231,7 @@
             <vol-track type="double">1.00</vol-track>
             <max-fire-range-nm type="int">22</max-fire-range-nm><!-- authentic 21.5 for 2m2 RCS -->
             <min-fire-range-nm type="double">0.16</min-fire-range-nm>
+            <expand-min-fire-range type="bool">true</expand-min-fire-range>
             <FCS-field-deg type="int">25</FCS-field-deg>
             <seeker-field-deg type="int">110</seeker-field-deg>
             <max-g type="int">20</max-g>
