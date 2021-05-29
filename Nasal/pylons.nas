@@ -311,6 +311,7 @@ var cannon_load = func {
 # refill tanks
 var refuel = func {
 	if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+		damage.damageLog.push("All tank refueled");
 		setprop("consumables/fuel/tank[0]/level-norm", 1);
 		setprop("consumables/fuel/tank[1]/level-norm", 1);
 		setprop("consumables/fuel/tank[2]/level-norm", 1);
@@ -328,6 +329,7 @@ var refuel = func {
 # Default configuration
 var default = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    	damage.damageLog.push("Default loadout mounted");
         pylon1.loadSet(pylonSets.dumb1WT);# F16 never has nothing on wingtips unless its fired off, its aerodynamics is designed to work better with something there.
         pylon2.loadSet(pylonSets.empty);
         pylon3.loadSet(pylonSets.empty);
@@ -353,6 +355,7 @@ var default = func {
 # Clean configuration
 var clean = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    	damage.damageLog.push("Clean loadout mounted");
         pylon1.loadSet(pylonSets.empty);
         pylon2.loadSet(pylonSets.empty);
         pylon3.loadSet(pylonSets.empty);
@@ -378,6 +381,7 @@ var clean = func {
 # Airshow configuration (Smokewinder white)
 var airshow = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    	damage.damageLog.push("Airshow loadout mounted");
         pylon1.loadSet(pylonSets.smokeWL);
         pylon2.loadSet(pylonSets.empty);
         pylon3.loadSet(pylonSets.empty);
@@ -407,6 +411,7 @@ var airshow = func {
 # CAP (AIM-9, AIM-120)
 var a2a_cap = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    	damage.damageLog.push("Combat air patrol loadout mounted");
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim9);
         pylon3.loadSet(pylonSets.aim120);
@@ -432,6 +437,7 @@ var a2a_cap = func {
 # CAP (AIM-9, AIM-120, 2 bags)
 var a2a_capext = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    	damage.damageLog.push("Combat air patrol extended loadout mounted");
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim9);
         pylon3.loadSet(pylonSets.aim120);
@@ -452,6 +458,7 @@ var a2a_capext = func {
 # Air Superiority (AIM-120, 1 bag)
 var a2a_super = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    	damage.damageLog.push("Air superiority loadout mounted");
     	pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim120);
         pylon3.loadSet(pylonSets.aim120);
@@ -477,6 +484,7 @@ var a2a_super = func {
 # Air Superiority (AIM-120, 2 bags)
 var a2a_superer = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    	damage.damageLog.push("Air superiority (ext. range) loadout mounted");
     	pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim120);
         pylon3.loadSet(pylonSets.aim120);
@@ -502,6 +510,7 @@ var a2a_superer = func {
 # DCA (AIM-9, AIM-120)
 var a2a_dca = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    	damage.damageLog.push("Defensive counter-air loadout mounted");
         pylon1.loadSet(pylonSets.aim120WT);
         pylon2.loadSet(pylonSets.aim9);
         pylon3.loadSet(pylonSets.aim9);
@@ -527,6 +536,7 @@ var a2a_dca = func {
 # Ferry configuration 1 (3 bags, TRVL)
 var ferry1 = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    	damage.damageLog.push("Ferry 1 loadout mounted");
         pylon1.loadSet(pylonSets.dumb2WT);
         pylon2.loadSet(pylonSets.empty);
         pylon3.loadSet(pylonSets.podTrvl);
@@ -552,6 +562,7 @@ var ferry1 = func {
 # Ferry configuration 2 (2 bags XL, TRVL)
 var ferry2 = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    	damage.damageLog.push("Ferry 2 loadout mounted");
         pylon1.loadSet(pylonSets.dumb2WT);
         pylon2.loadSet(pylonSets.dumb1);
         pylon3.loadSet(pylonSets.podTrvl);
