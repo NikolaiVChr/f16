@@ -337,7 +337,7 @@ var AIM = {
         m.rosette_radius        = getprop(m.nodeString~"rosette-radius-deg");         # Float. Radius of uncaged rosette search pattern. If 0 then disabled.
 		m.seam_support          = getprop(m.nodeString~"sw-expanded-acquisition-mode");# Bool. Default true. SEAM support. False for old heatseekers like AIM-9B/F/D/E and RB24. Supports then only static commandDir mode, uncage happens at firing. No radar slaving, no SEAM scan, no manual cage/uncage.
         m.oldPattern            = getprop(m.nodeString~"nutate-double-d-instead-of-circle"); # Bool. For old SEAM missiles like AIM-9G/H. (maybe J also, don't know).
-        m.seeker_filter         = getprop(m.nodeString~"seeker-filter");              # Float: Ability to filter out background noise. Examples aim9x: 1 aim9m: 2 aim9l: 2.5 aim9j: 3 aim9b 4 etc etc.
+        m.seeker_filter         = getprop(m.nodeString~"seeker-filter");              # Float: Ability to filter out background noise. Typically between 1 to 2 for IR.
 		# engine
 		m.force_lbf_1           = getprop(m.nodeString~"thrust-lbf-stage-1");         # stage 1 thrust [optional]
 		m.force_lbf_2           = getprop(m.nodeString~"thrust-lbf-stage-2");         # stage 2 thrust [optional]
@@ -390,7 +390,8 @@ var AIM = {
 		m.advanced              = getprop(m.nodeString~"advanced");                   # bool. Use advanced drag and guidance-laws.
 		m.a_ratio               = getprop(m.nodeString~"wing-aspect-ratio");          # 1.5
 		m.wing_eff              = getprop(m.nodeString~"wing-efficiency-relative-to-an-elliptical-planform"); # 1
-		m.Cd_plume              = getprop(m.nodeString~"exhaust-plume-paracitic-drag-factor"); # 15/25
+		m.Cd_plume              = getprop(m.nodeString~"exhaust-plume-parasitic-drag-factor"); # Default 1. For AIM-120 paper suggest around 0.6. It will reduce drag during burn.
+		
 
         if (m.cold_detect_range_nm == nil) {
           # backwards compatibility
@@ -471,6 +472,10 @@ var AIM = {
 
         if(m.Cd_delta == nil) {
         	m.Cd_delta = 0;
+        }
+
+        if (m.Cd_plume == nil) {
+        	m.Cd_plume = 1.0;
         }
 
         if(m.canSwitch == nil) {
@@ -2702,6 +2707,7 @@ var AIM = {
 			me.Cd0 = me["thrust_lbf"] != nil and me.thrust_lbf>0?me.Cd0*me.Cd_plume:me.Cd0;
 		} else {
 			me.Cdi = 0;
+			me.Cd0 = me["thrust_lbf"] != nil and me.thrust_lbf>0?me.Cd0*me.Cd_plume:me.Cd0 # only enabled for some missiles, else Cd_plume == 1
 		}
 
 		return me.Cd0+me.Cdi;
@@ -3575,23 +3581,6 @@ var AIM = {
 			# augmented proportional navigation for heading #
 			#################################################
 
-			if (me["noise"]==nil or me["last"] == nil) {
-				me.noise = 1;
-				me.last = 0;
-				me.next = 0.10;
-				me.seed = rand()*me.seeker_filter;
-			}
-			if (me.life_time > 6) {
-				me.noise = 1;
-			} elsif (me.seeker_filter > 0 and me.guidance != "gps" and me.life_time-me.last > me.next) {
-				# PN noise. TODO: The other laws also.
-				me.sign = me.seed>0.85?(rand()>0.75?-1:1):1;
-				me.noise = (1+me.seeker_filter)*rand();
-				me.noise = me.sign*(me.noise + 1);
-				me.last = me.life_time;
-				me.next = me.seeker_filter*0.10*rand()+0.10;
-			}
-
 			if (me.guidanceLaw == "direct") {
 				# pure pursuit 
 				me.raw_steer_signal_head = me.curr_deviation_h;
@@ -3615,6 +3604,24 @@ var AIM = {
 			} else {
 				me.apn = 0;
 				me.gpn = 1;
+			}
+
+			if (me["noise"]==nil or me["last"] == nil) {
+				me.noise = 1;
+				me.last = 0;
+				me.next = 0.10;
+				me.seed = rand()*me.seeker_filter;
+			}
+			if (me.life_time > 6) {
+				me.noise = 1;
+			} elsif (me.seeker_filter > 0 and me.guidance != "gps" and me.life_time-me.last > me.next) {
+				# PN noise.
+				me.sign = me.seed>0.85?(rand()>0.75?-1:1):1;
+				me.opnNoiseReduct = me.apn == -1?0.5:1;
+				me.noise = (1+me.seeker_filter*me.opnNoiseReduct)*rand();
+				me.noise = me.sign*(me.noise + 1);          # the noise factor
+				me.last = me.life_time;
+				me.next = me.seeker_filter*0.15*rand();# duration for this noise factor, till a new is computed.
 			}
 			
 			me.horz_closing_rate_fps = ((me.dist_last - me.dist_curr)*M2FT)/me.dt+me.horz_closing_rate_fps;#clamped due to cruise missiles that can fly slower than target.
@@ -3701,7 +3708,7 @@ var AIM = {
 				# Original Proportional navigation.
 				# Rearranging the equations gives Pure proportional navigation, which show that this law
 				# does not take missile alpha into account, and is therefore not very good in real life.
-				me.radians_lateral_per_sec     = me.pro_constant*me.line_of_sight_rate_rps;
+				me.radians_lateral_per_sec     = me.pro_constant*me.line_of_sight_rate_rps*me.noise;
 				me.raw_steer_signal_head  = me.dt*me.radians_lateral_per_sec*R2D;
 			}
 			#printf("horz acc = %.1f + %.1f", proportionality_constant*line_of_sight_rate_rps*horz_closing_rate_fps, proportionality_constant*t_LOS_norm_acc/2);
@@ -3772,7 +3779,7 @@ var AIM = {
 						me.raw_steer_signal_elev  = R2D*me.commanded_upwards_vector_length_fps/me.velocity_vector_length_fps;
 					} elsif (me.apn == 0) {
 						# PN (constant best at 3)
-						# Proportional navigation.
+						# Generalized Proportional Navigation.
 						me.toBody = math.cos(me.curr_deviation_e*D2R);#convert perpendicular LOS acc. to perpendicular body acc.
 						if (me.toBody==0) me.toBody=0.00001;
 						me.acc_upwards_fps2 = me.pro_constant*me.line_of_sight_rate_up_rps*math.abs(me.vert_closing_rate_fps)*me.noise;
@@ -3785,7 +3792,7 @@ var AIM = {
 						# Original Proportional navigation.
 						# Rearranging the equations gives Pure proportional navigation, which show that this law
 						# does not take missile alpha into account, and is therefore not very good in real life.
-						me.radians_up_per_sec     = me.pro_constant*me.line_of_sight_rate_up_rps;
+						me.radians_up_per_sec     = me.pro_constant*me.line_of_sight_rate_up_rps*me.noise;
 						me.raw_steer_signal_elev  = me.dt*me.radians_up_per_sec*R2D;
 					}
 
