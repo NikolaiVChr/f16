@@ -3293,7 +3293,7 @@ append(obj.total, obj.speed_curr);
             
             me.eegsMe.rs = armament.AIM.rho_sndspeed(me.eegsMe.altC*M2FT);#simplified
             me.eegsMe.rho = me.eegsMe.rs[0];
-            me.eegsMe.mass =  (me.hydra?23.6:0.226)/ armament.slugs_to_lbm;#0.1069=lbs
+            me.eegsMe.mass =  (me.hydra?23.6:0.226) * armament.LBM2SLUGS;#0.1069=lbs
             
             #print("x,y");
             #printf("%d,%d",0,0);
