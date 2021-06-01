@@ -79,11 +79,11 @@
             <arming-time-sec type="double">1.4</arming-time-sec>          <!-- Source: arboga robot museum report for AIM-9J -->
             <min-speed-for-guiding-mach type="double">0.8</min-speed-for-guiding-mach><!-- Source: arboga robot museum report for AIM-9J -->
             <self-destruct-time-sec type="double">51</self-destruct-time-sec>         <!-- Source: arboga robot museum report for AIM-9J is 43. AIM-9M is 60. So something in between. -->
-            <seeker-angular-speed-dps type="double">19</seeker-angular-speed-dps> <!-- Source: arboga robot museum report: AIM-9J is 14, aim-9j southeast asia introduction: 12 for AIM-9E, increased for AIM-9L -->
+            <seeker-angular-speed-dps type="double">19</seeker-angular-speed-dps> <!-- Source: arboga robot museum report: AIM-9J is 14, aim-9j southeast asia introduction: 12 for AIM-9E, increased for AIM-9L, but less than aim9m -->
             <rosette-radius-deg type="double">0</rosette-radius-deg>
             <sw-expanded-acquisition-mode type="bool">true</sw-expanded-acquisition-mode>
             <nutate-double-d-instead-of-circle type="bool">false</nutate-double-d-instead-of-circle>
-            <seeker-filter type="double">1.5</seeker-filter>
+            <seeker-filter type="double">1.4</seeker-filter>
             <lock-on-sun-deg type="double">5</lock-on-sun-deg>       <!-- AAM -->
             <loft-altitude type="int">0</loft-altitude>
             <min-fire-range-nm type="double">0.2</min-fire-range-nm>             <!-- A little more than aim-9m -->
@@ -98,9 +98,9 @@
             <DLZ-optimal-alt-feet type="double">25000</DLZ-optimal-alt-feet>
             <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
             <seeker-beam-width-deg type="double">4</seeker-beam-width-deg>
-            <reaquire type="bool">true</reaquire>
-            <lock-on-after-launch type="bool">true</lock-on-after-launch>
-            <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed>
+            <reaquire type="bool">false</reaquire>
+            <lock-on-after-launch type="bool">false</lock-on-after-launch>
+            <auto-switch-target-allowed type="bool">false</auto-switch-target-allowed>
             <prowl-flight type="string">gyro-pitch</prowl-flight>
             <switch-time-sec type="double">5</switch-time-sec>
             <coolable type="bool">true</coolable>
@@ -109,7 +109,10 @@
             <warm-detect-range-nm type="double">6.5</warm-detect-range-nm>
             <detect-range-nm type="double">9.7</detect-range-nm>            <!-- source: Standard missile Characteristics 1974: 4.6 NM against M0.9 5G target -->
             <ready-time type="double">0.5</ready-time>
-            <proportionality-constant type="double">4</proportionality-constant> <!-- source AD-A272 984 -->
+            <proportionality-constant type="double">3</proportionality-constant> <!-- source for 4: AD-A272 984 -->
+            <simplified-induced-drag type="bool">false</simplified-induced-drag>
+            <wing-aspect-ratio type="double">8</wing-aspect-ratio>
+            <wing-efficiency-relative-to-an-elliptical-planform type="double">0.85</wing-efficiency-relative-to-an-elliptical-planform>
         </aim-9>
         <aim-9m>
             <type-id type="int">69</type-id>
@@ -155,9 +158,9 @@
             <DLZ-optimal-alt-feet type="double">25000</DLZ-optimal-alt-feet>
             <DLZ-optimal-closing-mach type="double">2.0</DLZ-optimal-closing-mach>
             <seeker-beam-width-deg type="double">3.5</seeker-beam-width-deg><!-- source: CNATRA P-825 -->
-            <reaquire type="bool">true</reaquire>
-            <lock-on-after-launch type="bool">true</lock-on-after-launch>
-            <auto-switch-target-allowed type="bool">true</auto-switch-target-allowed>
+            <reaquire type="bool">false</reaquire>
+            <lock-on-after-launch type="bool">false</lock-on-after-launch>
+            <auto-switch-target-allowed type="bool">false</auto-switch-target-allowed>
             <prowl-flight type="string">gyro-pitch</prowl-flight>
             <switch-time-sec type="double">5</switch-time-sec>
             <coolable type="bool">true</coolable>
@@ -166,7 +169,10 @@
             <warm-detect-range-nm type="double">5.0</warm-detect-range-nm>
             <detect-range-nm type="double">12.5</detect-range-nm><!-- source: navair.navy.gov - Is really 18nm, but thats probably for big fat hot targets like bombers -->
             <ready-time type="double">0.5</ready-time>
-            <proportionality-constant type="double">4</proportionality-constant> <!-- source AD-A272 984 -->
+            <proportionality-constant type="double">3</proportionality-constant> <!-- source for 4: AD-A272 984 -->
+            <simplified-induced-drag type="bool">false</simplified-induced-drag>
+            <wing-aspect-ratio type="double">8</wing-aspect-ratio>
+            <wing-efficiency-relative-to-an-elliptical-planform type="double">0.85</wing-efficiency-relative-to-an-elliptical-planform>
         </aim-9m>
         <aim-120>
             <type-id type="int">52</type-id>
@@ -214,12 +220,8 @@
             <prowl-flight type="string">gyro-pitch</prowl-flight>
             <switch-time-sec type="double">5</switch-time-sec>
 
-            <!-- do NOT enable this: -->
-            <!-- More correct induced drag and PN, plus plume drag. Will make it acc. and bleed speed differently and guide differently. -->
-            <!--<advanced type="bool">true</advanced>
-            <wing-aspect-ratio type="double">1.72</wing-aspect-ratio>
-            <wing-efficiency-relative-to-an-elliptical-planform type="double">0.872</wing-efficiency-relative-to-an-elliptical-planform>
-            <exhaust-plume-paracitic-drag-factor type="double">0.6</exhaust-plume-paracitic-drag-factor>
+            
+            <!--exhaust-plume-parasitic-drag-factor type="double">0.6</exhaust-plume-paracitic-drag-factor>
             <proportionality-constant type="double">5</proportionality-constant>--><!-- puts required Amraam acc. advantage down to 1.67 -->
         </aim-120>
         <aim-7>
