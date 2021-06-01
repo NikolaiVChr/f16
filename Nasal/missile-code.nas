@@ -1731,43 +1731,62 @@ var AIM = {
 			me.printStats("Takes %.1f seconds to scan FoV, while flying, for new target.", me.switchTime);
 		}
 		me.printStats("NAVIGATION AND GUIDANCE:");
-		me.printStats("Weapon field of view is +-%d degrees.",me.max_seeker_dev);
-		me.printStats("Is %s guided. %s",me.guidance,asp);
-		if (me.loal or (me.canSwitch and me.reaquire)) {
-			me.printStats("When looking for target it is navigating by %s.", me.standbyFlight);
-		}
-		me.printStats("Guidance law: %s",nav);
-		if (nav2 != "") {
-			me.printStats(nav2);
-		}
-		me.printStats("Will attempt to reaquire target if its lost: %s",rea);
-		if (me.guidance=="heat" or me.guidance=="vision") {
-			me.printStats("Seeker is able to track targets moving in its FoV at %.1f degrees per second.",me.angular_speed);
-		}
-		if (me.guidance=="heat") {
-			me.printStats("Seeker will lock on sun if it is within %.1f degrees.",me.sun_lock);
-		}
-		if (me.loft_alt>10000) {
-			me.printStats("Weapon will max snap up to %d feet altitude.",me.loft_alt);
-		} elsif (me.loft_alt<10000 and me.loft_alt!=0) {
-			if (me.target_sea) {
-				if (me.follow) {
-					me.printStats("Weapon will follow terrain keeping %d AGL feet.",me.loft_alt);
-				} else {
-					me.printStats("Weapon will sea skim at %d AGL feet.",me.loft_alt);
-				}
-			} else {
-				me.printStats("Weapon will follow terrain keeping %d AGL feet.",me.loft_alt);
-			}
-		} else {
-			me.printStats("Weapon will not snap up, follow terrain or sea skim.");
-		}
 		if (!me.guidanceEnabled) {
 			me.printStats("All guidance has been disabled, the weapon will not guide.");
-		}
-		me.printStats("After propulsion ends, it will max steer up to %d degree pitch.",me.maxPitch);
-		if(me.Tgt == nil) {
-			me.printStats("Note: Ordnance was released with no lock or destination target.");
+		} else {
+			me.printStats("Weapon field of view is +-%d degrees.",me.max_seeker_dev);
+			me.printStats("Is %s guided. %s",me.guidance,asp);
+			if (me.loal or (me.canSwitch and me.reaquire)) {
+				me.printStats("When looking for target it is navigating by %s.", me.standbyFlight);
+			}
+			me.printStats("Guidance law: %s",nav);
+			if (nav2 != "") {
+				me.printStats(nav2);
+			}
+			me.printStats("Will attempt to reaquire target if its lost: %s",rea);
+			if (me.guidance=="heat" or me.guidance=="vision") {
+				me.printStats("Seeker is able to track targets moving in its FoV at %.1f degrees per second.",me.angular_speed);
+			}
+			if (me.guidance=="heat") {
+				me.printStats("Seeker will lock on sun if it is within %.1f degrees.",me.sun_lock);
+			}
+			if (me.loft_alt>10000) {
+				me.printStats("Weapon will max snap up to %d feet altitude.",me.loft_alt);
+			} elsif (me.loft_alt<10000 and me.loft_alt!=0) {
+				if (me.target_sea) {
+					if (me.follow) {
+						me.printStats("Weapon will follow terrain keeping %d AGL feet.",me.loft_alt);
+					} else {
+						me.printStats("Weapon will sea skim at %d AGL feet.",me.loft_alt);
+					}
+				} else {
+					me.printStats("Weapon will follow terrain keeping %d AGL feet.",me.loft_alt);
+				}
+			} else {
+				me.printStats("Weapon will not snap up, follow terrain or sea skim.");
+			}
+			
+			me.printStats("After propulsion ends, it will max steer up to %d degree pitch.",me.maxPitch);
+			if(me.Tgt == nil) {
+				me.printStats("Note: Ordnance was released with no lock or destination target.");
+			}
+			me.printStats("Seekerheads ability to filter out background noise is %.2f, where 0 is perfect and 3 is not so good.", me.seeker_filter);
+			me.printStats("Exhaust plume will reduce drag by %d percent.", (1-me.Cd_plume)*100);
+			if (me.rosette_radius > 0) {
+				me.printStats("When uncaged and not tracking, seekerhead will do rosette pattern, with %.1f deg radius.", me.rosette_radius);
+			} else {
+				me.printStats("When uncaged and not tracking, seekerhead will not do anything useful.");
+			}
+			if (me.seam_support) {
+				me.printStats("The missile support manual cage/uncage and radar slaving, and possibly auto-uncaging.");
+				if (me.oldPattern) {
+					me.printStats("If nutation is enabled, the seekerhead will do a double-D pattern.");
+				} else {
+					me.printStats("If nutation is enabled, the seekerhead will do a circle pattern.");
+				}
+			} else {
+				me.printStats("The missile does not support manual cage/uncage or radar slaving.");
+			}
 		}
 		if (stages > 0) {
 			me.printStats("PROPULSION:");
@@ -1831,6 +1850,11 @@ var AIM = {
 		me.printStats("Will explode if target range is increasing and within %d meters of target.",me.reportDist);
 		if (me.inert) {
 			me.printStats("Warhead is inert though and will not detonate.");
+		}
+		if (me.simple_drag) {
+			me.printStats("Simplified induced drag will be used to determine speed bleed due to G's");
+		} else {
+			me.printStats("To determine speed bleed due to G's wing aspect ratio is %.1f and wing effeciancy is %.2f.",me.wing_aspect_ratio,me.wing_eff);
 		}
 		me.printStats("LAUNCH CONDITIONS:");
 		if (me.rail) {
