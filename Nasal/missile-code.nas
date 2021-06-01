@@ -3249,14 +3249,22 @@ var AIM = {
 			me.deviation_per_sec = me.angleSeekerToTarget/me.dt;
 			
 			if (me.deviation_per_sec > me.angular_speed) {
-				# lost lock due to angular speed limit
-				me.printStats("%s: %4.1f deg/s too fast angular change for seeker head. %5.2fnm to target.", me.type, me.deviation_per_sec, me.dist_curr_direct*M2NM);
-				me.free = TRUE;
+				if (me.angleSeekerToTarget < me.beam_width_deg) {
+					me.max_seekertrack    = me.angular_speed * me.dt;
+					me.localVectorSeeker  = me.myMath.rotateVectorTowardsVector(me.localVectorSeeker, me.localVectorTarget, me.max_seekertrack);
+					me.printStatsDetails("%s: %4.1f deg/s too fast angular change for seeker head. %5.2fnm to target. Target still in beam though: %4.2f/%4.2f degs.", me.type, me.deviation_per_sec, me.dist_curr_direct*M2NM, me.angleSeekerToTarget-me.max_seekertrack, me.beam_width_deg);
+				} else {
+					# lost lock due to angular speed limit could not keep target in beam
+					me.printStats("%s: %4.1f deg/s too fast angular change for seeker head to keep target in beam. %5.2fnm to target.", me.type, me.deviation_per_sec, me.dist_curr_direct*M2NM);
+					me.free = TRUE;
+				}
 			} else {
+				me.localVectorSeeker  = me.localVectorTarget;
 				me.printStatsDetails("%s: %4.1f deg/s fine     angular change for seeker head. %5.2fnm to target.", me.type, me.deviation_per_sec, me.dist_curr_direct*M2NM);
 			}
+		} else {
+			me.localVectorSeeker  = me.localVectorTarget;
 		}
-		me.localVectorSeeker  = me.localVectorTarget;
 		me.prevTarget = me.Tgt;
 		me.counter_last = me.counter;# since we use dt as time passed since last we were in this function, we need to be sure only 1 loop has passed.
 	},
