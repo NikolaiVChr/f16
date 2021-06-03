@@ -840,7 +840,7 @@ var az_scan = func(notification) {
     if (active_u != nil and !containsV(tgts_list, active_u)) {
         designate(nil);
     }
-    if (active_u != nil and active_u.get_display() and getprop("controls/armament/master-arm") and active_u_callsign != nil and active_u_callsign != "") {
+    if (active_u != nil and active_u.get_display() and getprop("controls/armament/master-arm-switch") != 0 and active_u_callsign != nil and active_u_callsign != "") {
         setprop("sim/multiplay/generic/string[6]", left(md5(active_u_callsign), 4));
     } else {
         setprop("sim/multiplay/generic/string[6]", "");

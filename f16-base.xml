@@ -581,6 +581,7 @@
             <master-arm-cover-open type="bool">false</master-arm-cover-open>
             <trigger type="bool">false</trigger>
             <dual type="int">1</dual>
+            <master-arm-switch type="int">0</master-arm-switch>
         </armament>
       
         <fuel>

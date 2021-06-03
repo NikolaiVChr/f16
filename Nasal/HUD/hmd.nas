@@ -554,7 +554,7 @@ var F16_HMD = {
                  current_view_x_offset_m   : "sim/current-view/x-offset-m",
                  current_view_y_offset_m   : "sim/current-view/y-offset-m",
                  current_view_z_offset_m   : "sim/current-view/z-offset-m",
-                 master_arm                : "controls/armament/master-arm",
+                 master_arm                : "controls/armament/master-arm-switch",
                  groundspeed_kt            : "velocities/groundspeed-kt",
                  density_altitude          : "fdm/jsbsim/atmosphere/density-altitude",
                  speed_down_fps            : "velocities/speed-down-fps",
@@ -630,20 +630,6 @@ var F16_HMD = {
                                             obj.ASEC120Aspect.setColorFill(obj.color);
                                             obj.ASEC65Aspect.setColorFill(obj.color);
                                           }
-                                      }),
-            props.UpdateManager.FromHashList(["master_arm", "altitude_ft", "roll", "groundspeed_kt", "density_altitude", "mach", "speed_down_fps", "speed_east_fps", "speed_north_fps"], 0.01, func(hdp)
-                                      {
-                                          if (hdp.fcs_available) {
-                                            if (pylons.fcs.getDropMode() == 1) {
-                                                hdp.CCIP_active = 1;
-                                            } else {
-                                                hdp.CCIP_active = 0;
-                                            }
-                                          } else {
-                                              hdp.CCIP_active = 0;
-                                          }
-                                          hdp.timeToRelease = nil;
-                                          hdp.CCRP_active = 0;
                                       }),
             props.UpdateManager.FromHashList(["texUp","gear_down"], 0.01, func(val)
                                              {
@@ -788,47 +774,7 @@ var F16_HMD = {
                                                  obj.stby.update();
                                              }
                                             ),
-            props.UpdateManager.FromHashList(["brake_parking", "gear_down", "flap_pos_deg", "CCRP_active", "master_arm","submode","VV_x","DGFT"], 0.1, func(hdp)
-                                             {
-                                                 if (hdp.brake_parking) {
-                                                     obj.window2.setVisible(1);
-                                                     obj.window2.setText("  BRAKES");
-                                                 } elsif (hdp.flap_pos_deg > 0 or hdp.gear_down) {
-                                                     obj.window2.setVisible(1);
-                                                     obj.gd = "";
-                                                     if (hdp.gear_down)
-                                                       obj.gd = " G";
-                                                     obj.window2.setText(sprintf("  F %d%s",hdp.flap_pos_deg,obj.gd));
-                                                 } elsif (hdp.master_arm) {
-                                                     var submode = "";
-                                                     if (hdp.CCRP_active > 0) {
-                                                        submode = "CCRP";
-                                                     } elsif (obj.showmeCCIP) {
-                                                        submode = "CCIP";
-                                                     #} elsif (obj.eegsLoop.isRunning) {
-                                                     #   submode = obj.hydra?"CCIP":(hdp.strf?"STRF":"EEGS");
-                                                     } elsif (hdp.submode == 1) {
-                                                        submode = "BORE";
-                                                     }
-                                                     var dgft = hdp.dgft?"DGFT ":"";
-                                                     obj.window2.setText("  ARM "~dgft~submode);
-                                                     obj.window2.setVisible(1);
-                                                 } elsif (hdp.rotary == 0 or hdp.rotary == 3) {
-                                                     obj.window2.setText("  ILS");
-                                                     obj.window2.setVisible(1);
-                                                 } else {
-                                                    if (hdp.ins_knob==3) {
-                                                        obj.window2.setText("  NAV");
-                                                    } elsif (hdp.ins_knob==2 or hdp.ins_knob==4) {
-                                                        obj.window2.setText("  ALIGN");
-                                                    } else {
-                                                        obj.window2.setText(" ");
-                                                    }
-                                                     obj.window2.setVisible(1);
-                                                 }
-                                             }
-                                            ),
-                        props.UpdateManager.FromHashValue("window5_txt", nil, func(txt)
+                                    props.UpdateManager.FromHashValue("window5_txt", nil, func(txt)
                                       {
                                           if (txt != nil and txt != ""){
                                               obj.window5.show();
@@ -1006,7 +952,7 @@ var F16_HMD = {
         me.rdT = 0;
         me.irB = 0;#IR search bore
         #printf("%d %d %d %s",hdp.master_arm,pylons.fcs != nil,pylons.fcs.getAmmo(),hdp.weapon_selected);
-        if(hdp.master_arm and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
+        if(hdp.master_arm != 0 and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
             hdp.weapon_selected = pylons.fcs.selectedType;
             var aim = pylons.fcs.getSelectedWeapon();
             if (0 and hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
@@ -1258,7 +1204,7 @@ var F16_HMD = {
 
         hdp.window5_txt = f16.transfer_stpt;
         hdp.window3_txt = f16.transfer_dist;
-        hdp.window9_txt = f16.transfer_arms;
+        hdp.window9_txt = f16.transfer_arms~(f16.transfer_arms==""?"":"-V");
         hdp.window2_txt = f16.transfer_mode;
         hdp.window12_txt = f16.transfer_g;
         

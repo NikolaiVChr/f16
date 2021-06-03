@@ -1,5 +1,8 @@
 var TRUE=1;
 var FALSE=0;
+var ARM_SIM = -1;
+var ARM_OFF = 0;# these 3 are needed by fire-control.
+var ARM_ARM = 1;
 
 var fcs = nil;
 var pylon1 = nil;
@@ -16,7 +19,7 @@ var pylon10 = nil;
 var pylon11 = nil;
 
 var block = getprop("/sim/variant-id");
-var cannon = stations.SubModelWeapon.new("20mm Cannon", 0.254, 510, [2], [1,3], props.globals.getNode("fdm/jsbsim/fcs/guntrigger",1), 0, func{return getprop("fdm/jsbsim/elec/bus/emergency-dc-2")>=20 and getprop("fdm/jsbsim/elec/bus/emergency-ac-2")>=100 and getprop("fdm/jsbsim/systems/hydraulics/sysb-psi")>=2000 and getprop("payload/armament/fire-control/serviceable");},0);
+var cannon = stations.SubModelWeapon.new("20mm Cannon", 0.254, 510, [2], [1,3], props.globals.getNode("fdm/jsbsim/fcs/guntrigger",1), 0, func{return getprop("fdm/jsbsim/elec/bus/emergency-dc-2")>=20 and getprop("fdm/jsbsim/elec/bus/emergency-ac-2")>=100 and getprop("fdm/jsbsim/systems/hydraulics/sysb-psi")>=2000 and getprop("payload/armament/fire-control/serviceable") and getprop("controls/armament/master-arm") == 1;},0);
 cannon.typeShort = "GUN";
 cannon.brevity = "Guns guns";
 var hyd70lh3 = stations.SubModelWeapon.new("LAU-68", 23.6, 7, [4], [], props.globals.getNode("fdm/jsbsim/fcs/hydra3ltrigger",1), 1, func{return getprop("payload/armament/fire-control/serviceable");},1);
@@ -282,7 +285,7 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 }
 #print("** Pylon & fire control system started. **");
 var getDLZ = func {
-    if (fcs != nil and getprop("controls/armament/master-arm") == 1) {
+    if (fcs != nil and getprop("controls/armament/master-arm-switch") != 0) {
         var w = fcs.getSelectedWeapon();
         if (w!=nil and w.parents[0] == armament.AIM) {
             var result = w.getDLZ(1);
@@ -1768,7 +1771,7 @@ var b50_testev = func {
 var bore_loop = func {
     #enables firing of aim9 without radar.
     bore = 0;
-    if (fcs != nil and getprop("controls/armament/master-arm")) {
+    if (fcs != nil and getprop("controls/armament/master-arm-switch") != 0) {
         var standby = getprop("instrumentation/radar/radar-standby");
         var aim = fcs.getSelectedWeapon();
         if (aim != nil and aim.type == "AIM-9") {

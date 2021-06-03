@@ -31,7 +31,8 @@ var FireControl = {
 		fc.dropMode = 0;          # 0=ccrp, 1 = ccip
 		fc.changeListener = nil;
 		setlistener("controls/armament/trigger",func{fc.trigger();fc.updateDual()},nil,0);
-		setlistener("controls/armament/master-arm",func{fc.updateCurrent()},nil,0);
+		#setlistener("controls/armament/master-arm",func{fc.updateCurrent()},nil,0);
+		setlistener("controls/armament/master-arm-switch",func{fc.masterArmSwitch()},nil,0);
 		setlistener("controls/armament/dual",func{fc.updateDual()},nil,0);
 		return fc;
 	},
@@ -892,10 +893,19 @@ var FireControl = {
 		return;
 	},
 
+	masterArmSwitch: func () {
+		if (getprop("controls/armament/master-arm-switch") == pylons.ARM_ARM) {
+			setprop("controls/armament/master-arm", 1);
+		} else {
+			setprop("controls/armament/master-arm", 0);
+		}
+		me.updateCurrent();
+	},
+
 	updateCurrent: func {
 		# will start/stop current weapons depending on masterarm
 		# will also update mass (for cannon mainly)
-		if (getprop("controls/armament/master-arm")==1 and me.selected != nil) {
+		if (getprop("controls/armament/master-arm-switch")!=pylons.ARM_OFF and me.selected != nil) {
 			me.sweaps = me.getSelectedWeapons();
 			if (me.sweaps != nil) {
 				foreach(me.sweap ; me.sweaps) {
@@ -903,7 +913,7 @@ var FireControl = {
 #					print("starting a weapon");
 				}
 			}
-		} elsif (getprop("controls/armament/master-arm")==0 and me.selected != nil) {
+		} elsif (getprop("controls/armament/master-arm-switch")==pylons.ARM_OFF and me.selected != nil) {
 			me.sweaps = me.getSelectedWeapons();
 			if (me.sweaps != nil) {
 				foreach(me.sweap ; me.sweaps) {
@@ -914,7 +924,7 @@ var FireControl = {
 		if (me.selected == nil) {
 			return;
 		}
-		printDebug("FC: Masterarm "~getprop("controls/armament/master-arm"));
+		printDebug("FC: Masterarm "~getprop("controls/armament/master-arm-switch"));
 		
 		me.pylons[me.selected[0]].calculateMass();#kind of a hack to get cannon ammo changed.
 	},

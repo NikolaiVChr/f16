@@ -98,7 +98,7 @@ var MFD_Station =
                 if (weapon_mode == 1)
                 {
                     sel = getprop(sel_node);
-                    if (sel and master_arm)
+                    if (sel and master_arm == 1)
                         mode = "RDY";
                 }
                 else mode = "SRM";
@@ -109,7 +109,7 @@ var MFD_Station =
                 if (weapon_mode == 2)
                 {
                     sel = getprop(sel_node);
-                    if (sel and master_arm)
+                    if (sel and master_arm == 1)
                         mode = "RDY";
                 }
                 else mode = "MRM";
@@ -120,7 +120,7 @@ var MFD_Station =
                 if (weapon_mode == 2)
                 {
                     sel = getprop(sel_node);
-                    if (sel and master_arm)
+                    if (sel and master_arm == 1)
                         mode = "RDY";
                 }
                 else mode = "MRM";
@@ -2869,7 +2869,7 @@ var MFD_Device =
                     me.myammo = ""~me.myammo;
                 }
                 me.root.weap.setText(me.myammo~me.wpn.typeShort);
-                if (!getprop("controls/armament/master-arm")) {
+                if (getprop("controls/armament/master-arm") != 1) {
                     me.ready = "";#TODO: ?
                 }
             } else {

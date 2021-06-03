@@ -1194,7 +1194,7 @@ append(obj.total, obj.speed_curr);
                  current_view_x_offset_m   : "sim/current-view/x-offset-m",
                  current_view_y_offset_m   : "sim/current-view/y-offset-m",
                  current_view_z_offset_m   : "sim/current-view/z-offset-m",
-                 master_arm                : "controls/armament/master-arm",
+                 master_arm                : "controls/armament/master-arm-switch",
                  groundspeed_kt            : "velocities/groundspeed-kt",
                  density_altitude          : "fdm/jsbsim/atmosphere/density-altitude",
                  speed_down_fps            : "velocities/speed-down-fps",
@@ -1745,7 +1745,7 @@ append(obj.total, obj.speed_curr);
                                                      if (hdp.gear_down)
                                                        obj.gd = " G";
                                                      obj.window2.setText(sprintf("  F %d%s",hdp.flap_pos_deg,obj.gd));
-                                                 } elsif (hdp.master_arm) {
+                                                 } elsif (hdp.master_arm != 0) {
                                                      var submode = "";
                                                      if (hdp.CCRP_active > 0) {
                                                         submode = "CCRP";
@@ -1757,7 +1757,8 @@ append(obj.total, obj.speed_curr);
                                                         submode = "BORE";
                                                      }
                                                      var dgft = hdp.dgft?"DGFT ":"";
-                                                     obj.window2.setText("  ARM "~dgft~submode);
+                                                     var armmode = hdp.master_arm==1?"  ARM ":"  SIM ";
+                                                     obj.window2.setText(armmode~dgft~submode);
                                                      obj.window2.setVisible(1);
                                                  } elsif (hdp.rotary == 0 or hdp.rotary == 3) {
                                                      obj.window2.setText("  ILS");
@@ -2096,7 +2097,7 @@ append(obj.total, obj.speed_curr);
             var eegsShow = 0;
             var currASEC = nil;
             
-            if(hdp.master_arm and pylons.fcs != nil)
+            if(hdp.master_arm != 0 and pylons.fcs != nil)
             {
                 hdp.weapon_selected = pylons.fcs.selectedType;
                 hdp.weapn = pylons.fcs.getSelectedWeapon();
@@ -2395,7 +2396,7 @@ append(obj.total, obj.speed_curr);
         me.rdT = 0;
         me.irB = 0;
         #printf("%d %d %d %s",hdp.master_arm,pylons.fcs != nil,pylons.fcs.getAmmo(),hdp.weapon_selected);
-        if(hdp.master_arm and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
+        if(hdp.master_arm != 0 and pylons.fcs != nil and pylons.fcs.getAmmo() > 0) {
             hdp.weapon_selected = pylons.fcs.selectedType;
             var aim = pylons.fcs.getSelectedWeapon();
             if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
@@ -2930,7 +2931,7 @@ append(obj.total, obj.speed_curr);
     },
 
     CCRP: func(hdp) {
-        if (hdp.fcs_available and hdp.master_arm ==1) {
+        if (hdp.fcs_available and hdp.master_arm != 0) {
             var trgt = armament.contactPoint;
             if(trgt == nil and hdp.active_u != nil) {
                 trgt = hdp.active_u;
@@ -2990,7 +2991,7 @@ append(obj.total, obj.speed_curr);
         me.showPipperCross = 0;
         me.showmeCCIP = 0;
         if(hdp.CCIP_active) {
-            if (hdp.fcs_available and hdp.master_arm ==1) {
+            if (hdp.fcs_available and hdp.master_arm != 0) {
                 var selW = pylons.fcs.getSelectedWeapon();
                 if (selW != nil and (selW.type=="MK-82" or selW.type=="MK-82AIR" or selW.type=="MK-83" or selW.type=="MK-84" or selW.type=="GBU-12" or selW.type=="GBU-31" or selW.type=="GBU-54" or selW.type=="GBU-24" or selW.type=="CBU-87" or selW.type=="CBU-105" or selW.type=="B61-12")) {
                     me.showmeCCIP = 1;

@@ -223,7 +223,7 @@ light: ecm lamp off
             	</equals>
             </or>
         </condition>
-        <property>controls/armament/master-arm</property>
+        <property>controls/armament/master-arm-switch</property>
         <factor>45</factor>
         <drag-direction>vertical</drag-direction>
         <axis>
@@ -232,9 +232,9 @@ light: ecm lamp off
         <action>
             <binding>
                 <command>property-adjust</command>
-                <property>controls/armament/master-arm</property>
+                <property>controls/armament/master-arm-switch</property>
                 <factor>1</factor>
-                <min>0</min>
+                <min>-1</min>
                 <max>1</max>
                 <wrap>false</wrap>
             </binding>
@@ -301,7 +301,7 @@ light: ecm lamp off
         <object-name>master-arm-cover</object-name>
         <condition>
             <equals>
-                <property>controls/armament/master-arm</property>
+                <property>controls/armament/master-arm-switch</property>
                 <value>0</value>
             </equals>
         </condition>

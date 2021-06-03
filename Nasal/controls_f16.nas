@@ -79,12 +79,17 @@ var radar_standby = func {
 
 var masterarm = func {
 	var variantID = getprop("/sim/variant-id");
-    if ((variantID == 0 or variantID == 1 or variantID == 3) and getprop("controls/armament/master-arm") == 0 and getprop("controls/armament/master-arm-cover-open") == 0) {
+    if ((variantID == 0 or variantID == 1 or variantID == 3) and getprop("controls/armament/master-arm-switch") == 0 and getprop("controls/armament/master-arm-cover-open") == 0) {
         setprop("controls/armament/master-arm-cover-open",1);
         screen.log.write("Master-arm cover open.", 0.5, 0.5, 1);
     } else {
-        setprop("controls/armament/master-arm",!getprop("controls/armament/master-arm"));
-        screen.log.write("Master-arm "~(getprop("controls/armament/master-arm")==0?"OFF":"ON"), 0.5, 0.5, 1);
+        var now = getprop("controls/armament/master-arm-switch");
+        now += 1;
+        if (now > 1) {
+            now = -1;
+        }
+        setprop("controls/armament/master-arm-switch", now);
+        screen.log.write("Master-arm "~(getprop("controls/armament/master-arm-switch")==0?"OFF":(getprop("controls/armament/master-arm-switch")==1?"ON":"SIM")), 0.5, 0.5, 1);
     }
 }
 
