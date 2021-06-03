@@ -244,13 +244,13 @@ var AIM = {
 		m.free              = 0; # 0 = status fired with lock, 1 = status fired but having lost lock.
 		m.prop              = AcModel.getNode("armament/"~m.type_lc~"/").getChild("msl", 0, 1);
 		m.SwSoundOnOff      = AcModel.getNode("armament/"~m.type_lc~"/sound-on-off",1);
-		m.SwSoundFireOnOff  = AcModel.getNode("armament/"~m.type_lc~"/sound-fire-on-off",1);
+		m.launchSoundProp  = AcModel.getNode("armament/"~m.type_lc~"/sound-fire-on-off",1);
         m.SwSoundVol        = AcModel.getNode("armament/"~m.type_lc~"/sound-volume",1);
         if (m.SwSoundOnOff.getValue() == nil) {
         	m.SwSoundOnOff.setBoolValue(0);
         }
-        if (m.SwSoundFireOnOff.getValue() == nil) {
-        	m.SwSoundFireOnOff.setBoolValue(0);
+        if (m.launchSoundProp.getValue() == nil) {
+        	m.launchSoundProp.setBoolValue(0);
         }
         if (m.SwSoundVol.getValue() == nil) {
         	m.SwSoundVol.setDoubleValue(0);
@@ -347,7 +347,7 @@ var AIM = {
 		m.stage_2_duration      = getprop(m.nodeString~"stage-2-duration-sec");       # stage 2 duration [optional]
 		m.weight_fuel_lbm       = getprop(m.nodeString~"weight-fuel-lbm");            # fuel weight [optional]. If this property is not present, it won't lose weight as the fuel is used.
 		m.vector_thrust         = getprop(m.nodeString~"vector-thrust");              # Boolean. This will make less drag due to high G turns while engine is running. [optional]
-		m.engineEnabled         = getprop(m.nodeString~"engine-enabled");             # Boolean. If engine will start when launched. [optional]
+		m.engineEnabled         = getprop(m.nodeString~"engine-enabled");             # Boolean. If engine will start at all. [optional]
 		# aerodynamic
 		m.weight_launch_lbm     = getprop(m.nodeString~"weight-launch-lbs");          # total weight of armament, including fuel and warhead.
 		m.Cd_base               = getprop(m.nodeString~"drag-coeff");                 # drag coefficient
@@ -527,14 +527,21 @@ var AIM = {
         if (m.pro_constant == nil) {
         	m.pro_constant = 3;
         }
-        if (m.force_lbf_1 == nil or m.force_lbf_1 == 0) {
+        if (m.force_lbf_1 == nil) {
         	m.force_lbf_1 = 0;
-        	m.stage_1_duration = 0;
         }
-        if (m.force_lbf_2 == nil or m.force_lbf_2 == 0) {
+        if (m.force_lbf_2 == nil) {
         	m.force_lbf_2 = 0;
-        	m.stage_2_duration = 0;
         }
+        if(m.stage_gap_duration == nil) {
+			m.stage_gap_duration = 0;
+		}
+		if(m.stage_1_duration == nil) {
+			m.stage_1_duration = 0;
+		}
+		if(m.stage_2_duration == nil) {
+			m.stage_2_duration = 0;
+		}
 		if (m.destruct_when_free == nil) {
 			m.destruct_when_free = FALSE;
 		}
@@ -549,7 +556,7 @@ var AIM = {
 			# drop distance in time
 			m.drop_time = 0;
 		} elsif (m.drop_time == nil) {
-			m.drop_time = math.sqrt(2*7/g_fps);# time to fall 7 ft to clear aircraft
+			m.drop_time = 0.5;
 		}
 		if (m.deploy_time == nil) {
 			m.deploy_time = 0.3;
@@ -583,9 +590,6 @@ var AIM = {
         }
 		if(m.simple_drag == nil) {
 			m.simple_drag = 1;
-		}
-		if(m.stage_gap_duration == nil) {
-			m.stage_gap_duration = 0;
 		}
 		if(m.noCommonTarget == nil) {
 			m.noCommonTarget = FALSE;
@@ -727,14 +731,10 @@ var AIM = {
 		#
 		# Simulation
 		#
-		m.paused             = 0;
-		m.dt                 = 0;
-		m.elapsed_last       = 0;
 		m.last_dt            = 0;
-		m.counter_last = -2;
-		m.counter      = 0;
-		m.life_time = 0;
-		
+		m.counter_last       = -2;
+		m.counter            = 0;
+		m.life_time          = 0;
 
 		#
 		# Fuse
@@ -784,6 +784,7 @@ var AIM = {
 		m.horz_closing_rate_fps = -1;
 		m.vert_closing_rate_fps = -1;
 		m.usingTGPPoint = 0;
+		m.rotate_token = 0;
 
 		#
 		# Terrain following
@@ -857,10 +858,8 @@ var AIM = {
 		# Sound
 		#
 		m.SwSoundOnOff.setBoolValue(FALSE);
-		#m.SwSoundFireOnOff.setBoolValue(FALSE);
 		m.SwSoundVol.setDoubleValue(m.vol_search);
-		#me.trackWeak = 1;
-		m.pendingSound = -1;
+		m.pendingLaunchSound = -1;
 		m.explodeSound = TRUE;
 
 		
@@ -1367,6 +1366,10 @@ var AIM = {
 	release: func(vect=nil) {
 		# Release missile/bomb from its pylon/rail/tube and send it away.
 		#
+		me.release = nil;# no calling this method twice
+		me.elapsed_last = systime();
+		me.status = MISSILE_FLYING;
+
 		if (vect!= nil) {
 			
 			# sets a vector of contacts the weapons will try to lock onto
@@ -1376,14 +1379,12 @@ var AIM = {
 		} else {
 			me.contacts = [];
 		}
-		if(!me.engineEnabled) {
-			me.SwSoundFireOnOff.setBoolValue(FALSE);
-			me.pendingSound = -1;
-		} else {
-			me.SwSoundFireOnOff.setBoolValue(FALSE);
-			me.pendingSound = 2;
+		me.launchSoundProp.setBoolValue(FALSE);
+		
+		if (me.engineEnabled and me.stage_1_duration > 0 and me.force_lbf_1 > 0 and me.drop_time < 1.75) {
+			me.pendingLaunchSound = me.drop_time;
 		}
-		me.status = MISSILE_FLYING;
+
 		me.flyID = rand();
 		AIM.flying[me.flyID] = me;
 		delete(AIM.active, me.ID);
@@ -1556,18 +1557,6 @@ var AIM = {
 
 		# setup lofting and cruising
 		me.snapUp = me.loft_alt > 10000;
-		me.rotate_token = FALSE;
-		#if (me.Tgt != nil and me.snapUp == TRUE) {
-			#var dst = me.coord.distance_to(me.Tgt.get_Coord()) * M2NM;
-			#
-			#f(x) = y1 + ((x - x1) / (x2 - x1)) * (y2 - y1)
-#				me.loft_alt = me.loft_alt - ((me.max_fire_range_nm - 10) - (dst - 10))*500; original code
-#				me.loft_alt = 0+((dst-38)/(me.max_fire_range_nm-38))*(me.loft_alt-36000);   originally for phoenix missile
-#			me.loft_alt = 0+((dst-10)/(me.max_fire_range_nm-10))*(me.loft_alt-0);           also doesn't really work
-#			me.loft_alt = me.clamp(me.loft_alt, 0, 200000);
-			#me.printGuide(sprintf("Loft to max %5d ft.", me.loft_alt));
-		#}
-
 
 		me.SwSoundVol.setDoubleValue(0);
 		#me.trackWeak = 1;
@@ -1622,9 +1611,10 @@ var AIM = {
 			thread.semup(me.frameToggle);
 		}
 		me.frameLoop = maketimer(0, frameTrigger);
+		me.frameLoop.simulatedTime = 1;# Prevents paused sim from triggering update
 		me.frameLoop.start();
 		spawn(me.flight, me)();
-#		me.ai.getNode("valid").setBoolValue(1);
+#		me.ai.getNode("valid").setBoolValue(1); is now done at end of first flight update.
 	},
 
 	################################################## DO NOT EXTERNALLY CALL ANYTHING BELOW THIS LINE ###################################
@@ -1872,14 +1862,6 @@ var AIM = {
 				me.printStats("In drop it will already start guiding if speed is high enough.");
 			}
 		}
-		if (me.guidance == "heat" or me.guidance == "radar" or me.guidance == "semi-radar") {
-			me.printStats("COUNTER-MEASURES:");
-			if (me.guidance == "radar" or me.guidance == "semi-radar") {
-				me.printStats("Resistance to chaff is %d%%.",me.chaffResistance*100);
-			} elsif (me.guidance == "heat") {
-				me.printStats("Resistance to flares is %d%%.",me.flareResistance*100);
-			}
-		}
 		if (me.intoBore or me.eject_speed != 0) {
 			me.printStats("Weapon will be unaffected by airstream when released.");
 		} else {
@@ -1888,7 +1870,14 @@ var AIM = {
 		if (!me.rail and me.eject_speed != 0) {
 			me.printStats("Weapon will be ejected at %.1f feet/sec.",me.eject_speed);
 		}
-		
+		if (me.guidance == "heat" or me.guidance == "radar" or me.guidance == "semi-radar") {
+			me.printStats("COUNTER-MEASURES:");
+			if (me.guidance == "radar" or me.guidance == "semi-radar") {
+				me.printStats("Resistance to chaff is %d%%.",me.chaffResistance*100);
+			} elsif (me.guidance == "heat") {
+				me.printStats("Resistance to flares is %d%%.",me.flareResistance*100);
+			}
+		}		
 		me.printStats("MISC:");
 		if (me.data) {
 			me.printStats("Will transmit telemetry data back to launch platform.");
@@ -1945,10 +1934,25 @@ var AIM = {
 		#
 		#############################################################################################################
 		me.counter += 1;#main counter for which number of loop we are in.
-		me.pendingSound -= 1;
-		if(me.pendingSound == 0) {
-			me.SwSoundFireOnOff.setBoolValue(TRUE);
+
+		if (me.pendingLaunchSound > -1 and me.life_time >= me.pendingLaunchSound and me.counter >= 5) {
+			# For some reason, sound needs some time to see that the property is false, so we let counter go to 5 before we set it to true.
+			me.launchSoundProp.setBoolValue(1);
+			me.pendingLaunchSound = -1;
 		}
+
+		me.elapsed = systime();
+		
+		me.dt = (me.elapsed - me.elapsed_last)*speedUp.getValue();
+		me.elapsed_last = me.elapsed;
+
+		if(me.dt <= 0 or me.dt > 0.4) {
+			# Negative can happen if OS adjust clock while we are flying.
+			# Large dt can happen when pausing the sim or with heavy stuttering.
+			continue;# back to while() loop and wait for semaphore up.
+		}
+
+		me.life_time += me.dt;
 
 		me.handleMidFlightFunc();
 		
@@ -2017,52 +2021,6 @@ var AIM = {
 				me.printStats("Laser spot ignored, could not lock on %s",me.settings.target.get_Callsign());
 			}
 		}
-		me.dt = deltaSec.getValue();#TODO: time since last time nasal timers were called
-		if (me.dt == 0) {
-			#FG is likely paused
-			me.paused = 1;
-			me.elapsed_last = systime();
-			continue;
-		}
-		#if just called from release() then dt is almost 0 (cannot be zero as we use it to divide with)
-		# It can also not be too small, then the missile will lag behind aircraft and seem to be fired from behind the aircraft.
-		#dt = dt/2;
-		me.elapsed = systime();
-		if (me.paused == 1) {
-			# sim has been unpaused lets make sure dt becomes very small to let elapsed time catch up.
-			
-			# this pause detection system does not work anymore, since we now only get called when not paused.
-			
-			me.paused = 0;
-			#me.elapsed_last = me.elapsed-0.02;
-		}
-		me.init_launch = 0;
-		me.dt_old = me.dt;
-		if (me.elapsed_last != 0) {
-			#if (getprop("sim/speed-up") == 1) {
-				
-				me.dt = (me.elapsed - me.elapsed_last)*speedUp.getValue();
-				
-			#} else {
-			#	dt = getprop("sim/time/delta-sec")*getprop("sim/speed-up");
-			#}
-			me.init_launch = 1;
-			if(me.dt <= 0) {
-				# to prevent pow floating point error in line:cdm = 0.2965 * math.pow(me.speed_m, -1.1506) + me.cd;
-				# could happen if the OS adjusts the clock backwards
-				me.dt = 0.00001;
-			}
-		}
-		if (me.dt > 0.5 and speedUp.getValue() == 1) {
-			# we were paused so we use last dt
-			me.dt = me.dt_old;
-		}
-		#if (me.dt < 0.025) {
-			# dont update too fast..
-		#	continue;
-		#}
-		me.elapsed_last = me.elapsed;
-		me.life_time += me.dt;
 
 		if (me.rail == FALSE) {
 			me.deploy = me.clamp(me.extrapolate(me.life_time, me.drop_time, me.drop_time+me.deploy_time,0,1),0,1);
@@ -2422,7 +2380,7 @@ var AIM = {
 				# We exploded, and start the sound propagation towards the plane
 				me.sndSpeed = me.sound_fps;
 				me.sndDistance = 0;
-				me.elapsed_last = systime();
+				me.elapsed_last_snd = systime();
 				if (me.explodeSound == TRUE) {
 					thread.lock(mutexTimer);
 					append(AIM.timerQueue, [me,me.sndPropagate,[],0]);
@@ -2570,9 +2528,19 @@ var AIM = {
 		
 		me.prevGuidance = me.guidance;
 		
-		if (me.init_launch == 0) {
+		if (me.counter > -1) {
+			# TODO: Why is this placed so late? Don't remember.
 			me.ai.getNode("valid").setBoolValue(1);
-		}		
+		}
+		#############################################################################################################
+		#
+		#
+		#
+		#                                                              MAIN FLIGHT LOOP END
+		#
+		#
+		#
+		#############################################################################################################		
 	  }
 	},
 
@@ -5141,10 +5109,10 @@ var AIM = {
 		}
 		#dt = update_loop_time;
 		var elapsed = systime();
-		if (me.elapsed_last != 0) {
-			dt = (elapsed - me.elapsed_last) * speedUp.getValue();
+		if (me.elapsed_last_snd != 0) {
+			dt = (elapsed - me.elapsed_last_snd) * speedUp.getValue();
 		}
-		me.elapsed_last = elapsed;
+		me.elapsed_last_snd = elapsed;
 
 		me.ac = geo.aircraft_position();
 		var distance = me.coord.direct_distance_to(me.ac);
