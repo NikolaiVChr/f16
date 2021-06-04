@@ -2,7 +2,7 @@ var Math = {
     #
     # Authors: Nikolai V. Chr, Axel Paccalin.
     #
-    # Version 1.96
+    # Version 1.97
     #
     # When doing euler coords. to cartesian: +x = forw, +y = left,  +z = up.
     # FG struct. coords:                     +x = back, +y = right, +z = up.
@@ -278,6 +278,11 @@ var Math = {
     # supply a normal to the plane, and a vector. The vector will be projected onto the plane, and that projection is returned as a vector.
     projVectorOnPlane: func (planeNormal, vector) {
       return me.minus(vector, me.product(me.dotProduct(vector,planeNormal)/math.pow(me.magnitudeVector(planeNormal),2), planeNormal));
+    },
+
+    # Project a onto ontoMe.
+    projVectorOnVector: func (a, ontoMe) {
+      return me.product(me.dotProduct(a,ontoMe)/me.dotProduct(ontoMe,ontoMe), ontoMe);
     },
     
     # unary - vector
