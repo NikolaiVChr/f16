@@ -151,7 +151,6 @@ var DEBUG_CODE             = 0;
 var g_fps        = 9.80665 * M2FT;
 var SLUGS2LBM = 32.1740485564;
 var LBM2SLUGS = 1/SLUGS2LBM;
-var const_e      = 2.71828183;
 var slugs_to_lbm = SLUGS2LBM;# since various aircraft use this from outside missile, leaving it for backwards compat.
 
 var first_in_air = FALSE;# first missile is in the air, other missiles should not write to MP.
@@ -355,7 +354,7 @@ var AIM = {
 		m.ref_area_sqft         = getprop(m.nodeString~"cross-section-sqft");         # normally is crosssection area of munition (without fins)
 		m.max_g                 = getprop(m.nodeString~"max-g");                      # max G-force the missile can pull at sealevel (if vector thrust enabled, this will be auto reduced at engine burnout)
 		m.min_speed_for_guiding = getprop(m.nodeString~"min-speed-for-guiding-mach"); # minimum speed before the missile steers, before it reaches this speed it will fly ballistic.
-		m.intoBore              = getprop(m.nodeString~"ignore-wind-at-release");     # Boolean. If true dropped weapons will ignore sideslip and AOA and start flying in aircraft bore direction. Will always be the case if ejector speed is non zero.
+		m.intoBore              = getprop(m.nodeString~"ignore-wind-at-release");     # Boolean. Default false. If true dropped weapons will ignore sideslip and AOA and start flying in aircraft bore direction. Will always be the case if ejector speed is non zero.
 		m.lateralSpeed          = getprop(m.nodeString~"lateral-dps");                # Lateral speed in degrees per second. This is mostly for cosmetics.
 		# detonation
 		m.weight_whead_lbm      = getprop(m.nodeString~"weight-warhead-lbs");         # warhead total mass. Includes scapnel, expanding rods etc etc.
@@ -376,7 +375,7 @@ var AIM = {
         m.rail_head_deg         = getprop(m.nodeString~"rail-heading-deg");           # Only used when rail is not forward. 90 for vertical tube.
         m.drop_time             = getprop(m.nodeString~"drop-time");                  # Time to fall before stage 1 thrust starts.
         m.deploy_time           = getprop(m.nodeString~"deploy-time");                # Time to deploy wings etc. Time starts when drop ends or rail passed.
-        m.no_pitch              = getprop(m.nodeString~"pitch-animation-disabled");   # bool
+        m.no_pitch              = getprop(m.nodeString~"pitch-animation-disabled");   # Bool. Default false. Set to true for ejection seats.
         m.eject_speed           = getprop(m.nodeString~"ejector-speed-fps");          # Ordnance ejected by pylon with this speed. Default = 0. Optional. Ignored if on rail.
         m.guideWhileDrop        = getprop(m.nodeString~"guide-before-ignition");      # Can guide before engine ignition if speed is high enough.
         # counter-measures
@@ -1246,6 +1245,7 @@ var AIM = {
 		# Before launch: for heatseekers in bore or unslaved mode
 		# do NOT call this after launch
 		# see also release(vect)
+		if (me.status == MISSILE_FLYING) return;
 		me.contacts = vect;
 	},
 
@@ -1489,11 +1489,11 @@ var AIM = {
 					me.rail_speed_into_wind = me.u*math.cos(me.rail_pitch_deg*D2R)+me.w*math.sin(me.rail_pitch_deg*D2R);
 			} else {
 				# rail is pointing forward
-				me.rail_speed_into_wind = getprop("velocities/uBody-fps");# wind from nose
+				me.rail_speed_into_wind = noseAir.getValue();
 				#printf("Rail: ac_fps=%d uBody_fps=%d", math.sqrt(me.speed_down_fps*me.speed_down_fps+math.pow(math.sqrt(me.speed_east_fps*me.speed_east_fps+me.speed_north_fps*me.speed_north_fps),2)), me.rail_speed_into_wind);
 			}
 		} elsif (me.intoBore == FALSE and me.eject_speed == 0) {
-			# to prevent the missile from falling up, we need to sometimes pitch it into wind:
+			# to prevent the missile to appear falling up, we need to sometimes pitch it into wind:
 			#var t_spd = math.sqrt(me.speed_down_fps*me.speed_down_fps + h_spd*h_spd);
 			var wind_pitch = math.atan2(-me.speed_down_fps, me.speed_horizontal_fps) * R2D;
 			if (wind_pitch < me.msl_pitch) {
@@ -1691,6 +1691,9 @@ var AIM = {
 		me.printStats("Damage ID is %d, notification ID is %d, unique ID is %d", me.typeID, me.typeID+21,me.unique_id);
 		me.printStats("DETECTION AND FIRING:");
 		me.printStats("Fire range %.1f-%.1f NM", me.min_fire_range_nm, me.max_fire_range_nm);
+		if (me.expand_min) {
+			me.printStats("Min fire range will expand with closing rate.");
+		}		
 		me.printStats("Can be fired againts %s targets", classes);
 		me.printStats("Pilot will call out %s when firing.",me.brevity);
 		me.printStats("Launch platform detection field of view is +-%d degrees.",me.fcs_fov);
@@ -1719,6 +1722,14 @@ var AIM = {
 		}
 		if (me.loal or (me.canSwitch and me.reaquire)) {
 			me.printStats("Takes %.1f seconds to scan FoV, while flying, for new target.", me.switchTime);
+		}
+		if (me.radarOrigin) {
+			me.printStats("Radar in launch vehicle is located inside vehicle at origin.");
+		} else {
+			me.printStats("Radar in launch vehicle is located inside vehicle coord system at position %.2f,%.2f,%.2f meters.", me.radarX, me.radarY, me.radarZ);
+		}
+		if (me.noCommonTarget) {
+			me.printStats("This weapon can not use armament.contact as target, it must be set explicit [setContacts(contacts) or release(contacts)] instead.");
 		}
 		me.printStats("NAVIGATION AND GUIDANCE:");
 		if (!me.guidanceEnabled) {
@@ -2313,7 +2324,7 @@ var AIM = {
 		me.latN.setDoubleValue(me.coord.lat());
 		me.lonN.setDoubleValue(me.coord.lon());
 		me.altN.setDoubleValue(me.alt_ft);
-		if (!no_pitch or (me.rail == TRUE and me.rail_passed == FALSE)) {
+		if (!me.no_pitch or (me.rail == TRUE and me.rail_passed == FALSE)) {
 			me.pitchN.setDoubleValue(me.pitch);
 		} else {
 			# for ejection seat
@@ -3269,7 +3280,7 @@ var AIM = {
 			return;
 		}
 		me.loft_angle = 15;# notice Shinobi used 26.5651 degs, but Raider1 found a source saying 10-20 degs.
-		me.cruise_or_loft = FALSE;
+		me.cruise_or_loft = FALSE;# If true then this method handles the vertical component of guiding.
 		me.time_before_snap_up = me.drop_time * 3;
 		me.limitGs = FALSE;
 		
@@ -3374,34 +3385,23 @@ var AIM = {
 
 	            me.loft_alt_curr = me.loft_alt;
 	            if (me.Tgt != nil and me.dist_curr < me.old_speed_fps * me.terminal_rise_time * FT2M and me.dist_curr > me.old_speed_fps * me.terminal_dive_time * FT2M) {
-	            	# the missile lofts a bit at the end to avoid APN to slam it into ground before target is reached.
+	            	# the missile lofts a bit at the end to avoid PN to slam it into ground before target is reached.
 	            	# end here is between 2.5-4 seconds
 	            	me.loft_alt_curr = me.loft_alt*me.terminal_alt_factor;
 	            }
 	            if (me.Tgt == nil or me.dist_curr > me.old_speed_fps * me.terminal_dive_time * FT2M) {# need to give the missile time to do final navigation
-	                # it's 1 or 2 seconds for this kinds of missiles...
+	                # Here we do the actual steering over terrain
 	                me.t_alt_delta_ft = (me.loft_alt_curr + me.Daground - me.alt_ft);
 	                me.printGuideDetails("var t_alt_delta_m : "~me.t_alt_delta_ft*FT2M);
 	                if(me.loft_alt_curr + me.Daground > me.alt_ft) {
-	                    # 200 is for a very short reaction to terrain
 	                    me.printGuideDetails("Moving up");
 	                    me.raw_steer_signal_elev = -me.pitch + math.atan2(me.t_alt_delta_ft, me.old_speed_fps * me.dt * 5) * R2D;
 	                } else {
-	                    # that means a dive angle of 22.5° (a bit less 
-	                    # coz me.alt is in feet) (I let this alt in feet on purpose (more this figure is low, more the future pitch is high)
 	                    me.printGuideDetails("Moving down");
-	                    me.slope = me.clamp(me.t_alt_delta_ft / 300, -7.5, 0);# the lower the desired alt is, the steeper the slope.
+	                    me.slope = me.clamp(me.t_alt_delta_ft / 300, -7.5, 0);# the lower the desired alt is, the steeper the slope, but not steeper than 7.5
 	                    me.raw_steer_signal_elev = -me.pitch + me.clamp(math.atan2(me.t_alt_delta_ft, me.old_speed_fps * me.dt * 5) * R2D, me.slope, 0);
 	                }
 	                me.cruise_or_loft = TRUE;
-	            } elsif (me.dist_curr > 500) {
-	                # we put 9 feets up the target to avoid ground at the
-	                # last minute...
-	                me.printGuideDetails("less than 1000 m to target");
-	                #me.raw_steer_signal_elev = -me.pitch + math.atan2(t_alt_delta_m + 100, me.dist_curr) * R2D;
-	                #me.cruise_or_loft = 1;
-	            } else {
-	            	me.printGuideDetails("less than 500 m to target");
 	            }
 	            if (me.cruise_or_loft == TRUE) {
 	            	me.printGuideDetails(" pitch "~me.pitch~" + me.raw_steer_signal_elev "~me.raw_steer_signal_elev);
@@ -3464,14 +3464,6 @@ var AIM = {
 	                    me.raw_steer_signal_elev = -me.pitch + me.clamp(math.atan2(me.t_alt_delta_ft, me.old_speed_fps * me.dt * 5) * R2D, me.slope, 0);
 	                }
 	                me.cruise_or_loft = TRUE;
-	            } elsif (me.dist_curr > 500) {
-	                # we put 9 feets up the target to avoid ground at the
-	                # last minute...
-	                me.printGuideDetails("less than 1000 m to target");
-	                #me.raw_steer_signal_elev = -me.pitch + math.atan2(t_alt_delta_m + 100, me.dist_curr) * R2D;
-	                #me.cruise_or_loft = 1;
-	            } else {
-	            	me.printGuideDetails("less than 500 m to target");
 	            }
 	            if (me.cruise_or_loft == TRUE) {
 	            	me.printGuideDetails(" pitch "~me.pitch~" + me.raw_steer_signal_elev "~me.raw_steer_signal_elev);
@@ -5119,7 +5111,7 @@ var AIM = {
 
 		me.sndDistance = me.sndDistance + (me.sndSpeed * dt) * FT2M;
 		if(me.sndDistance > distance) {
-			var volume = math.pow(2.71828,(-.00025*(distance-1000)));
+			var volume = math.pow(math.e,(-.00025*(distance-1000)));
 			me.printStats(me.type~": Explosion heard "~distance~"m vol:"~volume);
 			me.explode_sound_vol_prop.setDoubleValue(volume);
 			me.explode_sound_prop.setBoolValue(1);
@@ -5270,7 +5262,7 @@ var AIM = {
 		} elsif ( 36152 < altitude and altitude < 82345 ) {
 			# lower stratosphere
 			me.T = -70;
-			me.p = 473.1 * math.pow( const_e , 1.73 - (0.000048 * altitude) );
+			me.p = 473.1 * math.pow( math.e , 1.73 - (0.000048 * altitude) );
 		} else {
 			# upper stratosphere
 			me.T = -205.05 + (0.00164 * altitude);
