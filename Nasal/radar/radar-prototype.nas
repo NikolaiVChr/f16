@@ -851,7 +851,7 @@ TerrainChecker = {
 
 		tc.use_doppler = use_doppler;
 		tc.doppler_speed_kt = doppler_speed_kt;
-
+		tc.inClutter = 0;
 		tc.vector_aicontacts = [];
 		tc.timer          = maketimer(rate, tc, func tc.scan());
 
@@ -879,7 +879,9 @@ TerrainChecker = {
 			return;
 		}
 		me.contact = me.vector_aicontacts[me.index];
-        me.contact.setVisible(me.fastTerrainCheck(me.contact));
+		me.terrResult = me.fastTerrainCheck(me.contact);
+        me.contact.setVisible(me.terrResult > 0);
+        me.inClutter = me.terrResult < 2;
         me.checkClutter(me.contact);
         me.index += 1;
         if (me.index > size(me.vector_aicontacts)-1) {
@@ -911,8 +913,9 @@ TerrainChecker = {
 	},
 	
 	isInClutter: func(ac_coord, t_coord, t_node) {
+		return me.inClutter;
 	    me.myPitch = vector.Math.getPitch(ac_coord, t_coord);
-	    me.GroundNotBehind = 1; # sky is behind the target (this don't work on a valley)
+	    me.skyBehind = 1; # sky is behind the target (this don't work on a valley)
 	    if(me.myPitch < 0) {
 	        # the aircraft is below us, the ground could be behind it
 	        # Based on earth curve. Do not work with mountains
@@ -920,11 +923,11 @@ TerrainChecker = {
 	        # If the earth was flat. Then the script will compare this distance to the horizon distance
 	        # If our distance is greater than horizon, then sky behind
 	        # If not, we cannot see the target unless we have a doppler radar
-	        me.distHorizon = ac_coord.alt() / math.tan(abs(me.myPitch * D2R)) * M2NM;
-	        me.horizon = me.get_horizon(ac_coord.alt()*M2FT, t_node);
-	        me.GroundNotBehind = (me.distHorizon > me.horizon);
+	        me.distHorizon_nm = (c_coord.alt() / math.tan(-me.myPitch * D2R)) * M2NM;
+	        me.horizon_nm = me.get_horizon(ac_coord.alt()*M2FT, t_node);
+	        me.skyBehind = (me.distHorizon_nm > me.horizon_nm);
 	    }
-	    return !me.GroundNotBehind;
+	    return !me.skyBehind;
 	},
 
 	get_horizon: func(own_alt_ft, t_node) {
@@ -944,27 +947,29 @@ TerrainChecker = {
 	},
 	
 	getTargetSpeedRelativeToClutter: func (contact) {
-		me.my_spd = self.getSpeedVector();
-		me.tgt_vel    = vector.Math.product(contact.getSpeed()*KT2MPS, vector.Math.normalize(vector.Math.eulerToCartesian3X(-contact.getHeading(), contact.getPitch(), contact.getRoll())));
-		me.ground_vel = vector.Math.product(-1, me.my_spd);
-		me.tgt_vel_rel = vector.Math.minus(me.tgt_vel, me.ground_vel);
-		me.viewPlane = vector.Math.normalize(vector.Math.eulerToCartesian2(-self.getCoord().course_to(contact.getCoord()), vector.Math.getPitch(self.getCoord(), contact.getCoord())));
-		return vector.Math.magnitudeVector(vector.Math.projVectorOnPlane(me.viewPlane, me.tgt_vel_rel))*MPS2KT;
+		me.vectorOwnshipSpeed   = self.getSpeedVector();
+		me.vectorTargetSpeed    = vector.Math.product(contact.getSpeed()*KT2MPS, vector.Math.normalize(vector.Math.eulerToCartesian3X(-contact.getHeading(), contact.getPitch(), contact.getRoll())));
+		me.vectorClutterSpeed   = vector.Math.product(-1, me.vectorOwnshipSpeed);
+		me.vectorOfTargetSpeedRelativeToClutter = vector.Math.minus(me.vectorTargetSpeed, me.vectorClutterSpeed);
+		me.vectorToTarget       = vector.Math.eulerToCartesian3X(-contact.getBearing(), contact.getDeviationPitch(), 0);
+		me.vectorOfTargetSpeedRelativeToClutterSeenFromRadar = vector.Math.projVectorOnVector(me.vectorOfTargetSpeedRelativeToClutter, me.vectorToTarget);
+		return vector.Math.magnitudeVector(me.vectorOfTargetSpeedRelativeToClutterSeenFromRadar)*MPS2KT;
 	},
 	
 	fastTerrainCheck: func (contact) {
 		me.myOwnPos = self.getCoord();
-		me.SelectCoord = contact.getCoord();
-		me.itsAlt = math.abs(me.SelectCoord.alt())<0.001?0:me.SelectCoord.alt();
-	    me.maxDist = me.myOwnPos.direct_distance_to(me.SelectCoord);
+		me.targetCoord = contact.getCoord();
+	    me.maxDist = me.myOwnPos.direct_distance_to(me.targetCoord);
 	    
-	    if (me.maxDist*0.001 > 3.57*(math.sqrt(math.max(0,me.myOwnPos.alt()))+math.sqrt(math.max(0,me.SelectCoord.alt())))) {
+	    #call(func {
+	    if (me.maxDist*0.001 > 3.57*(math.sqrt(math.max(0,me.myOwnPos.alt()))+math.sqrt(math.max(0,me.targetCoord.alt())))) {
 	    	# behind earth curvature
-	    	return FALSE;
+	    	return 0;
 	    }
-	    if(me.myOwnPos.alt() > 8900 and me.SelectCoord.alt() > 8900) {
-			# both higher than mt. everest, so not need to check further.
-			return TRUE;
+	    #}, nil, nil, var err =[]);# The call check is to guard against bad alt numbers sent over MP, but maybe max(0 is enough..
+	    if(me.myOwnPos.alt() > 8900 and me.targetCoord.alt() > 8900) {
+			# both higher than mt. everest, so not need to check further. (in reality due to earth curvature this is not true, but what would be the odds..)
+			return 2;
 	    }
 	    return me.slowTerrainCheck();
 	},
@@ -972,12 +977,12 @@ TerrainChecker = {
 	slowTerrainCheck: func () {
 	    
 		me.xyz = {"x":me.myOwnPos.x(),                  "y":me.myOwnPos.y(),                 "z":me.myOwnPos.z()};
-		me.dir = {"x":me.SelectCoord.x()-me.myOwnPos.x(),  "y":me.SelectCoord.y()-me.myOwnPos.y(), "z":me.SelectCoord.z()-me.myOwnPos.z()};
+		me.dir = {"x":me.targetCoord.x()-me.myOwnPos.x(),  "y":me.targetCoord.y()-me.myOwnPos.y(), "z":me.targetCoord.z()-me.myOwnPos.z()};
 
 		# Check for terrain between own aircraft and other:
 		me.v = get_cart_ground_intersection(me.xyz, me.dir);
 		if (me.v == nil) {
-			return TRUE;
+			return 2;
 			#printf("No terrain, planes has clear view of each other");
 		} else {
 			me.terrain = geo.Coord.new();
@@ -986,10 +991,10 @@ TerrainChecker = {
 			me.terrainDist = me.myOwnPos.direct_distance_to(me.terrain);
 			if (me.terrainDist < me.maxDist - 1) {
 		 		#print("terrain found between the planes");
-		 		return FALSE;
+		 		return 0;
 			} else {
-		  		return TRUE;
-		  		#print("The planes has clear view of each other");
+		  		return 1;
+		  		#print("The planes has clear view of each other, with clutter in background");
 			}
 		}
 	},
