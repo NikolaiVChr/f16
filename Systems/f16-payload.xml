@@ -105,7 +105,7 @@
             <switch-time-sec type="double">5</switch-time-sec>
             <coolable type="bool">true</coolable>
             <cool-time type="double">30</cool-time><!-- source: F-15 Armament Handbook say to start 25 seconds before launch of AIM-9L. OP 3353 for AIM-9D is 60s but nitrogen, this is argon cooled though. -->
-            <cool-duration type="int">7200</cool-duration>                  <!-- source: OP 3353 for AIM-9D is ~2 hours. -->
+            <cool-duration type="int">5400</cool-duration>                  <!-- source: OP 3353 for AIM-9D is ~2 hours. GR1F-16CJ-34-1-1 page 1-402 say 1.5h average for aim9m and 9l -->
             <warm-detect-range-nm type="double">6.5</warm-detect-range-nm>
             <detect-range-nm type="double">9.7</detect-range-nm>            <!-- source: Standard missile Characteristics 1974: 4.6 NM against M0.9 5G target -->
             <ready-time type="double">0.5</ready-time>
@@ -165,7 +165,7 @@
             <switch-time-sec type="double">5</switch-time-sec>
             <coolable type="bool">true</coolable>
             <cool-time type="double">30</cool-time>                        <!-- source: OP 3353 for AIM-9D is 60s but nitrogen, so for this argon cooled; half -->
-            <cool-duration type="int">7200</cool-duration>                  <!-- source: OP 3353 for AIM-9D is ~2 hours. -->
+            <cool-duration type="int">5400</cool-duration>                  <!-- source: OP 3353 for AIM-9D is ~2 hours.  GR1F-16CJ-34-1-1 page 1-402 say 1.5h average for aim9m and 9l -->
             <warm-detect-range-nm type="double">5.0</warm-detect-range-nm>
             <detect-range-nm type="double">12.5</detect-range-nm><!-- source: navair.navy.gov - Is really 18nm, but thats probably for big fat hot targets like bombers -->
             <ready-time type="double">0.5</ready-time>
@@ -183,20 +183,20 @@
             <vol-track type="double">1.00</vol-track>
             <max-fire-range-nm type="int">38.8</max-fire-range-nm>
             <min-fire-range-nm type="double">0.35</min-fire-range-nm>
-            <FCS-field-deg type="int">30</FCS-field-deg>
+            <FCS-field-deg type="int">50</FCS-field-deg>                      <!-- At least 35 x 2 according to MLU Tape 3 document, but what variant is it? -->
             <seeker-field-deg type="int">135</seeker-field-deg>
             <max-g type="int">30</max-g>
-            <thrust-lbf-stage-1 type="double">2700</thrust-lbf-stage-1>                <!-- guess -->
-            <thrust-lbf-stage-2 type="double">280</thrust-lbf-stage-2>                <!-- guess -->
-            <stage-1-duration-sec type="double">10.0</stage-1-duration-sec>                <!-- guess -->
-            <stage-2-duration-sec type="double">18.0</stage-2-duration-sec>                <!-- guess -->
+            <thrust-lbf-stage-1 type="double">2700</thrust-lbf-stage-1>                <!-- The python program -->
+            <thrust-lbf-stage-2 type="double">280</thrust-lbf-stage-2>                <!-- The python program -->
+            <stage-1-duration-sec type="double">10.0</stage-1-duration-sec>                <!-- The python program -->
+            <stage-2-duration-sec type="double">18.0</stage-2-duration-sec>                <!-- The python program -->
             <self-destruct-time-sec type="double">110</self-destruct-time-sec>                <!-- guess -->
             <weight-launch-lbs>291</weight-launch-lbs>
             <weight-warhead-lbs>44</weight-warhead-lbs>
             <weight-fuel-lbm type="double">130</weight-fuel-lbm>
-            <drag-coeff type="double">0.3</drag-coeff>
+            <drag-coeff type="double">0.3</drag-coeff>                                  <!-- The python program -->
             <cross-section-sqft type="double">0.2739</cross-section-sqft>
-            <loft-altitude>0</loft-altitude>                <!-- in stage 1 it will attempt to climb to this altitude -->
+            <loft-altitude>0</loft-altitude>                
             <min-speed-for-guiding-mach type="double">0.6</min-speed-for-guiding-mach>
             <max-report-distance type="double">65</max-report-distance>
             <arming-time-sec type="double">1.6</arming-time-sec>
@@ -219,10 +219,6 @@
             <auto-switch-target-allowed type="bool">false</auto-switch-target-allowed>
             <prowl-flight type="string">gyro-pitch</prowl-flight>
             <switch-time-sec type="double">5</switch-time-sec>
-
-            
-            <!--exhaust-plume-parasitic-drag-factor type="double">0.6</exhaust-plume-paracitic-drag-factor>
-            <proportionality-constant type="double">5</proportionality-constant>--><!-- puts required Amraam acc. advantage down to 1.67 -->
         </aim-120>
         <aim-7>
             <type-id type="int">55</type-id>
