@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PropertyList include="Systems/walker-include.xml">
+    <autopilot>
+        <settings>
+            <icao-aircraft-category type="string">D</icao-aircraft-category>
+        </settings>
+    </autopilot>
     <sim>
         <aircraft-version>3.55</aircraft-version>
         <minimum-fg-version>2020.3</minimum-fg-version>
@@ -947,6 +952,10 @@
             <indicated-altitude-ft type="double">0</indicated-altitude-ft>
         </altimeter>
         <gps>
+            <mode type="string">obs</mode><!-- dto, obs or leg -->
+            <config>
+                <follow-leg-track-to-fix type="bool">false</follow-leg-track-to-fix>
+            </config>
             <indicated-vertical-speed type="double">0</indicated-vertical-speed>
         </gps>
         <radar>
@@ -1635,6 +1644,9 @@ value. 18000=standard US transition altitude -->
         <help>
             <file>Aircraft/f16/Nasal/help.nas</file>
         </help>
+        <!--rp>
+            <file>Aircraft/f16/Nasal/radar/radar-prototype.nas</file>
+        </rp-->
     </nasal>
 
    
