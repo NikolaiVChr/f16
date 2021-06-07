@@ -3016,7 +3016,7 @@
         </boom-contact>
         <gamma>
             <name>Ejection</name>
-            <path>Aircraft/f16/Sounds/missile.wav</path>
+            <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
             <condition>
                 <property>payload/armament/es/sound-fire-on-off</property>
@@ -3506,7 +3506,7 @@
         <rwr>
             <name>incoming</name>
             <mode>looped</mode>
-            <path>Aircraft/f16/Sounds/betty/missile.wav</path><!-- as of MLU tape 3 -->
+            <path>Aircraft/f16/Sounds/betty/aim-launch.wav</path><!-- as of MLU tape 3 -->
             <type>avionics</type>
             <condition>
                 <not><property>f16/avionics/voice-msg-inhibit</property></not>
@@ -4609,7 +4609,7 @@
         </hydra>
         <missile1>
             <name>missile0</name>
-            <path>Aircraft/f16/Sounds/missile.wav</path>
+            <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
             <condition>
                 <property>payload/armament/aim-7/sound-fire-on-off</property>
@@ -4628,7 +4628,7 @@
         </missile1>
         <missile1>
             <name>missile1</name>
-            <path>Aircraft/f16/Sounds/missile.wav</path>
+            <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
             <condition>
                 <property>payload/armament/aim-120/sound-fire-on-off</property>
@@ -4647,7 +4647,7 @@
         </missile1>
         <missile1>
             <name>missile2</name>
-            <path>Aircraft/f16/Sounds/missile.wav</path>
+            <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
             <condition>
                 <property>payload/armament/aim-9/sound-fire-on-off</property>
@@ -4666,7 +4666,7 @@
         </missile1>
         <missile1>
             <name>missile3</name>
-            <path>Aircraft/f16/Sounds/missile.wav</path>
+            <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
             <condition>
                 <property>payload/armament/agm-65b/sound-fire-on-off</property>
@@ -4685,7 +4685,7 @@
         </missile1>
         <missile1>
             <name>missile4</name>
-            <path>Aircraft/f16/Sounds/missile.wav</path>
+            <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
             <condition>
                 <property>payload/armament/agm-88/sound-fire-on-off</property>
@@ -4742,7 +4742,7 @@
         </missile1>
         <missile1>
             <name>missile7</name>
-            <path>Aircraft/f16/Sounds/missile.wav</path>
+            <path>Aircraft/f16/Sounds/aim-launch.wav</path>
             <mode>once</mode>
             <condition>
                 <property>payload/armament/agm-65d/sound-fire-on-off</property>
