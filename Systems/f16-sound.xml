@@ -3506,7 +3506,7 @@
         <rwr>
             <name>incoming</name>
             <mode>looped</mode>
-            <path>Aircraft/f16/Sounds/betty/aim-launch.wav</path><!-- as of MLU tape 3 -->
+            <path>Aircraft/f16/Sounds/betty/missile.wav</path><!-- as of MLU tape 3 -->
             <type>avionics</type>
             <condition>
                 <not><property>f16/avionics/voice-msg-inhibit</property></not>
