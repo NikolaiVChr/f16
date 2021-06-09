@@ -635,6 +635,10 @@ AIContact = {
 		#return me.devStored[0];
 	},
 
+	getCartesianInFoRFrozen: func {
+		return [me.devStored[9], me.devStored[10]];
+	},
+
 	getHeadingFrozen: func (override=0) {
 		if (me.azi or override) {
 			#return me.headingFrozen;
@@ -765,6 +769,7 @@ NoseRadar = {
 	},
 
 	scanFOR: func (elev, yaw, elev_radius, yaw_radius, dist_m) {
+		if (!me.enabled) return;
 		#iterate:
 		# check direct distance
 		# check field of regard
@@ -815,14 +820,15 @@ NoseRadar = {
 				continue;
 			}
 
-			contact.storeDeviation([me.dev[0],me.dev[1],me.rng,contact.getCoord(),contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation()]);
+			contact.storeDeviation([me.dev[0],me.dev[1],me.rng,contact.getCoord(),contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), -me.pc_y/(me.w/2), me.pc_z/(me.h/2)]);
 			append(me.vector_aicontacts_for, contact);
 		}		
 		emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV(me.vector_aicontacts_for));
 		#print("In Field of Regard: "~size(me.vector_aicontacts_for));
 	},
 
-	scanSingleContact: func (contact) {
+	scanSingleContact: func (contact) {# TODO: rework this method
+		if (!me.enabled) return;
 		# called on demand
 		me.vector_aicontacts_for = [];
 		me.dev = contact.getDeviation();
@@ -1092,26 +1098,26 @@ var RadarMode = {
 			# (re)calculate pattern as vectors.
 			me.currentPattern = [];
 			if (me.bars == 1) {
-				foreach (var eulerNorm ; me.bar1Pattern) {
-					me.localDir = vector.Math.eulerToCartesian3X(-eulerNorm[0]*me.az-me.azimuthTilt, eulerNorm[1]*me.radar.instantFoVradius*me.barHeight, 0);
+				foreach (me.eulerNorm ; me.bar1Pattern) {
+					me.localDir = vector.Math.eulerToCartesian3X(-me.eulerNorm[0]*me.az-me.azimuthTilt, me.eulerNorm[1]*me.radar.instantFoVradius*me.barHeight, 0);
 					me.localDir = vector.Math.pitchVector(tilt, me.localDir);
 					append(me.currentPattern, me.localDir);
 				}
 			} elsif (me.bars == 2) {
-				foreach (var eulerNorm ; me.bar2Pattern) {
-					me.localDir = vector.Math.eulerToCartesian3X(-eulerNorm[0]*me.az-me.azimuthTilt, eulerNorm[1]*me.radar.instantFoVradius*me.barHeight, 0);
+				foreach (me.eulerNorm ; me.bar2Pattern) {
+					me.localDir = vector.Math.eulerToCartesian3X(-me.eulerNorm[0]*me.az-me.azimuthTilt, me.eulerNorm[1]*me.radar.instantFoVradius*me.barHeight, 0);
 					me.localDir = vector.Math.pitchVector(tilt, me.localDir);
 					append(me.currentPattern, me.localDir);
 				}
 			}elsif (me.bars == 3) {
-				foreach (var eulerNorm ; me.bar3Pattern) {
-					me.localDir = vector.Math.eulerToCartesian3X(-eulerNorm[0]*me.az-me.azimuthTilt, eulerNorm[1]*me.radar.instantFoVradius*me.barHeight, 0);
+				foreach (me.eulerNorm ; me.bar3Pattern) {
+					me.localDir = vector.Math.eulerToCartesian3X(-me.eulerNorm[0]*me.az-me.azimuthTilt, me.eulerNorm[1]*me.radar.instantFoVradius*me.barHeight, 0);
 					me.localDir = vector.Math.pitchVector(tilt, me.localDir);
 					append(me.currentPattern, me.localDir);
 				}
 			}elsif (me.bars == 4) {
-				foreach (var eulerNorm ; me.bar4Pattern) {
-					me.localDir = vector.Math.eulerToCartesian3X(-eulerNorm[0]*me.az-me.azimuthTilt, eulerNorm[1]*me.radar.instantFoVradius*me.barHeight, 0);
+				foreach (me.eulerNorm ; me.bar4Pattern) {
+					me.localDir = vector.Math.eulerToCartesian3X(-me.eulerNorm[0]*me.az-me.azimuthTilt, me.eulerNorm[1]*me.radar.instantFoVradius*me.barHeight, 0);
 					me.localDir = vector.Math.pitchVector(tilt, me.localDir);
 					append(me.currentPattern, me.localDir);
 				}
@@ -1213,13 +1219,13 @@ var F16TWSMode = {
 				me.undesignate();
 				return;
 			}
-			me.azimuthTilt = me.priorityTarget.getDeviation()[0];
+			me.azimuthTilt = me.priorityTarget.getDeviationHeadingFrozen();
 			me.radar.tiltOverride = 1;
-			me.radar.tilt = me.priorityTarget.getDeviation()[1];
+			me.radar.tilt = me.priorityTarget.getDeviationPitchFrozen();
 			if (me.prioRange_nm < 0.40 * me.getRange()) {
-				me.decreaseRange();
+				me._decreaseRange();
 			} elsif (me.prioRange_nm > 0.90 * me.getRange()) {
-				me.increaseRange();
+				me._increaseRange();
 			} elsif (me.prioRange_nm < 3) {
 				# auto go to STT when target is very close
 				me.designate(me.priorityTarget);
@@ -1228,7 +1234,9 @@ var F16TWSMode = {
 			me.radar.tiltOverride = 0;
 			me.undesignate();
 		}
-		if (me.azimuthTilt > me.radar.fieldOfRegardMaxAz-me.az) {
+		if (me.az == 60) {
+			me.azimuthTilt = 0;
+		} elsif (me.azimuthTilt > me.radar.fieldOfRegardMaxAz-me.az) {
 			me.azimuthTilt = me.radar.fieldOfRegardMaxAz-me.az;
 		} elsif (me.azimuthTilt < -me.radar.fieldOfRegardMaxAz+me.az) {
 			me.azimuthTilt = -me.radar.fieldOfRegardMaxAz+me.az;
@@ -1239,6 +1247,13 @@ var F16TWSMode = {
 	},
 	increaseRange: func {
 		if (me.priorityTarget != nil) return 0;
+		me._increaseRange();
+	},
+	decreaseRange: func {
+		if (me.priorityTarget != nil) return 0;
+		me._decreaseRange();
+	},
+	_increaseRange: func {
 		me.range*=2;
 		if (me.range>me.maxRange) {
 			me.range*=0.5;
@@ -1246,8 +1261,7 @@ var F16TWSMode = {
 		}
 		return 1;
 	},
-	decreaseRange: func {
-		if (me.priorityTarget != nil) return 0;
+	_decreaseRange: func {
 		me.range *= 0.5;
 		if (me.range < me.minRange) {
 			me.range *= 2;
@@ -1421,9 +1435,9 @@ var F16RWSSAMMode = {
 				me.undesignate();
 				return;
 			}
-			me.azimuthTilt = me.priorityTarget.getDeviation()[0];
+			me.azimuthTilt = me.priorityTarget.getDeviationHeadingFrozen();
 			me.radar.tiltOverride = 1;
-			me.radar.tilt = me.priorityTarget.getDeviation()[1];
+			me.radar.tilt = me.priorityTarget.getDeviationPitchFrozen();
 			if (me.prioRange_nm < 0.40 * me.getRange()) {
 				me._decreaseRange();
 			} elsif (me.prioRange_nm > 0.90 * me.getRange()) {
@@ -1436,7 +1450,9 @@ var F16RWSSAMMode = {
 			me.radar.tiltOverride = 0;
 			me.undesignate();
 		}
-		if (me.azimuthTilt > me.radar.fieldOfRegardMaxAz-me.az) {
+		if (me.az == 60) {
+			me.azimuthTilt = 0;
+		} elsif (me.azimuthTilt > me.radar.fieldOfRegardMaxAz-me.az) {
 			me.azimuthTilt = me.radar.fieldOfRegardMaxAz-me.az;
 		} elsif (me.azimuthTilt < -me.radar.fieldOfRegardMaxAz+me.az) {
 			me.azimuthTilt = -me.radar.fieldOfRegardMaxAz+me.az;
@@ -1514,9 +1530,9 @@ var F16STTMode = {
 	},
 	preStep: func {
 		if (me.priorityTarget != nil) {
-			me.azimuthTilt = me.priorityTarget.getDeviation()[0];
+			me.azimuthTilt = me.priorityTarget.getDeviationHeadingFrozen();
 			me.radar.tiltOverride = 1;
-			me.radar.tilt = me.priorityTarget.getDeviation()[1];
+			me.radar.tilt = me.priorityTarget.getDeviationPitchFrozen();
 			if (!me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, me.priorityTarget)) {
 				me.priorityTarget = nil;
 				me.undesignate();
@@ -1599,6 +1615,7 @@ var APG68 = {
 	positionX: 0,# euler direction
 	positionY: 0,
 	positionDirection: [1,0,0],# vector direction
+	positionCart: [0,0,0,0],
 	vector_aicontacts_for: [],# vector of contacts found in field of regard
 	vector_aicontacts_bleps: [],# vector of not timed out bleps
 	timer: nil,
@@ -1633,8 +1650,8 @@ var APG68 = {
 	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
 	    };
 		emesary.GlobalTransmitter.Register(rdr.ActiveDiscRadarRecipient);
-		rdr.timer = maketimer(0.05, rdr, func rdr.loop());
-		rdr.timerSlow = maketimer(0.5, rdr, func rdr.loopSlow());
+		rdr.timer = maketimer(scanInterval, rdr, func rdr.loop());
+		rdr.timerSlow = maketimer(0.75, rdr, func rdr.loopSlow());
 		rdr.timerSlow.start();
 		rdr.timer.start();
     	return rdr;
@@ -1716,7 +1733,7 @@ var APG68 = {
 	getRange: func {
 		return me.currentMode.getRange();
 	},
-	setAntennae: func (x, y) {
+	setAntennae2: func (x, y) {
 		me.positionX = x;
 		me.positionY = y;
 		me.positionDirection = vector.Math.eulerToCartesian3X(-x, y, 0);
@@ -1725,7 +1742,10 @@ var APG68 = {
 		me.eulerDir = vector.Math.cartesianToEuler(dir);
 		me.positionX = me.eulerDir[0]==nil?0:geo.normdeg180(me.eulerDir[0]);
 		me.positionY = me.eulerDir[1];
-		me.positionDirection = dir;
+		me.positionDirection = vector.Math.normalize(dir);
+		me.posAZDeg = -90+R2D*math.acos(vector.Math.normalize(vector.Math.projVectorOnPlane([0,0,1],me.positionDirection))[1]);
+		me.posElDeg = R2D*math.asin(vector.Math.normalize(vector.Math.projVectorOnPlane([0,1,0],me.positionDirection))[2]);
+		me.positionCart = [me.posAZDeg/me.fieldOfRegardMaxAz, me.posElDeg/me.fieldOfRegardMaxElev,me.posAZDeg,me.posElDeg];
 	},
 	loop: func {
 		if (me.enabled) {
@@ -1843,6 +1863,7 @@ var APG68 = {
     },
 };
 
+var scanInterval = 0.05;
 var rwsMode = F16RWSMode.new(F16RWSSAMMode.new(F16STTMode.new()));
 var lrsMode = F16LRSMode.new(F16LRSSAMMode.new(F16STTMode.new()));
 var twsMode = F16TWSMode.new(F16STTMode.new());
@@ -2124,14 +2145,15 @@ RadarViewPPI = {
 						.setStrokeLineWidth(1)
 	      	  		.hide();
 
-		var mt = maketimer(0.05,func me.loop());
+		var mt = maketimer(scanInterval,func me.loop());
         mt.start();
 		return me;
 	},
 
 	loop: func {
 		if (!enable) {return;}
-		me.sweep.setRotation(exampleRadar.positionX*D2R);
+		me.sweep.setRotation(exampleRadar.positionCart[2]*D2R);
+		me.sweep.update();
 		if (exampleRadar.showAZ()) {
 			me.sweepA.show();
 			me.sweepB.show();
@@ -2158,7 +2180,7 @@ RadarViewPPI = {
 					me.rot = contact.getHeadingFrozen();
 					if (me.rot == nil) {
 						#can happen in transition between TWS to RWS
-						if (me.i<20) me.lock[me.i].hide();
+						me.lock[me.i].hide();
 					} else {
 						me.rot = me.rot-getprop("orientation/heading-deg");
 						me.lock[me.i].setRotation(me.rot*D2R);
@@ -2262,8 +2284,8 @@ RadarViewBScope = {
 					.setStrokeLineWidth(2)
 	      	  		.hide();
         }
-        me.lock = setsize([],200);
-        for (var i = 0;i<200;i+=1) {
+        me.lock = setsize([],20);
+        for (var i = 0;i<20;i+=1) {
         	me.lock[i] = me.rootCenterBleps.createChild("path")
 						.moveTo(-5,-5)
 							.vert(10)
@@ -2275,27 +2297,23 @@ RadarViewBScope = {
 							.setStrokeLineWidth(1)
 	      	  		.hide();
         }
-        me.select = setsize([],200);
-        for (var i = 0;i<200;i+=1) {
-        	me.select[i] = me.rootCenterBleps.createChild("path")
-						.moveTo(-7,-7)
-						.vert(14)
-						.horiz(14)
-						.vert(-14)
-						.horiz(-14)
-						.setColor([0.5,0,1])
+        me.select = me.rootCenterBleps.createChild("path")
+						.moveTo(-8, 0)
+			            .arcSmallCW(8, 8, 0, 8*2, 0)
+			            .arcSmallCW(8, 8, 0, -8*2, 0)
+						.setColor([1,1,0])
 						.setStrokeLineWidth(1)
 	      	  		.hide();
-        }
 
-		var mt = maketimer(0.05,func me.loop());
+		var mt = maketimer(scanInterval,func me.loop());
         mt.start();
 		return me;
 	},
 
 	loop: func {
 		if (!enable) {return;}
-		me.sweep.setTranslation(128*exampleRadar.positionX/60,0);
+		me.sweep.setTranslation(128*exampleRadar.positionCart[0],0);
+		me.sweep.update();
 		if (exampleRadar.showAZ()) {
 			me.sweepA.show();
 			me.sweepB.show();
@@ -2308,6 +2326,7 @@ RadarViewBScope = {
 		me.elapsed = getprop("sim/time/elapsed-sec");
 		#me.rootCenterBleps.removeAllChildren();
 		me.i=0;
+		me.bug = 0;
 		foreach(contact; exampleRadar.vector_aicontacts_bleps) {
 			if (me.elapsed - contact.blepTime < exampleRadar.currentMode.timeToKeepBleps) {
 				me.distPixels = contact.getRangeFrozen()*(256/(exampleRadar.getRange()*NM2M));
@@ -2316,7 +2335,7 @@ RadarViewBScope = {
 				me.blep[me.i].setTranslation(128*contact.getDeviationHeadingFrozen()/60,-me.distPixels);
 				me.blep[me.i].show();
 				me.blep[me.i].update();
-				if (contact.isInfoExtended()) {
+				if (contact.isInfoExtended() and me.i < 20) {
 					me.rot = contact.getHeadingFrozen();
 					if (me.rot == nil) {
 						#can happen in transition between TWS to RWS
@@ -2330,14 +2349,13 @@ RadarViewBScope = {
 						me.lock[me.i].update();
 					}
 				} else {
-					me.lock[me.i].hide();
+					if (me.i<20) me.lock[me.i].hide();
 				}
-				if (0 and exampleRadar.containsVector(exampleRadar.follow, contact)) {
-					me.select[me.i].setTranslation(128*contact.getDeviationHeadingFrozen()/60,-me.distPixels);
-					me.select[me.i].show();
-					me.select[me.i].update();
-				} else {
-					me.select[me.i].hide();
+				if (contact.equals(exampleRadar.getPriorityTarget())) {
+					me.select.setTranslation(128*contact.getDeviationHeadingFrozen()/60,-me.distPixels);
+					me.select.show();
+					me.select.update();
+					me.bug = 1;
 				}
 				me.i += 1;
 				if (me.i > 199) break;
@@ -2345,9 +2363,9 @@ RadarViewBScope = {
 		}
 		for (;me.i<200;me.i+=1) {
 			me.blep[me.i].hide();
-			me.lock[me.i].hide();
-			me.select[me.i].hide();
+			if (me.i < 20) me.lock[me.i].hide();
 		}
+		if (!me.bug) me.select.hide();
 		
 		var a = 0;
 		if (exampleRadar.getAzimuthRadius() < 20) {
@@ -2444,15 +2462,17 @@ RadarViewCScope = {
         }
 		
 
-		var mt = maketimer(0.05,func me.loop());
+		var mt = maketimer(scanInterval,func me.loop());
         mt.start();
 		return me;
 	},
 
 	loop: func {
 		if (!enable) return;
-		me.sweep.setTranslation(128*exampleRadar.positionX/60,0);
-		me.sweep2.setTranslation(0, -128*(exampleRadar.positionY)/60);
+		me.sweep.setTranslation(128*exampleRadar.positionCart[0],0);
+		me.sweep2.setTranslation(0, -128*exampleRadar.positionCart[1]);
+		me.sweep.update();
+		me.sweep2.update();
 		me.elapsed = getprop("sim/time/elapsed-sec");
 		#me.rootCenterBleps.removeAllChildren();
 		#me.rootCenterBleps.createChild("path")# thsi will show where the disc is pointed for debug purposes.
@@ -2466,19 +2486,19 @@ RadarViewCScope = {
 		foreach(contact; exampleRadar.vector_aicontacts_bleps) {
 			if (me.elapsed - contact.blepTime < exampleRadar.currentMode.timeToKeepBleps) {
 				me.blep[me.i].setColor(1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps,1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps,1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps);
-				me.blep[me.i].setTranslation(128*contact.getDeviationHeadingFrozen()/60,-128*contact.getDeviationPitchFrozen()/60);
+				me.blep[me.i].setTranslation(128*contact.getCartesianInFoRFrozen()[0],-128*contact.getCartesianInFoRFrozen()[1]);
 				me.blep[me.i].show();
 				me.blep[me.i].update();
 				if (0 and exampleRadar.containsVector(exampleRadar.locks, contact)) {
 					me.lock[me.i].setColor(exampleRadar.lock == HARD?[1,0,0]:[1,1,0]);
-					me.lock[me.i].setTranslation(128*contact.getDeviationHeadingFrozen()/60,-128*contact.getDeviationPitchFrozen()/60);
+					me.lock[me.i].setTranslation(128*contact.getCartesianInFoRFrozen()[0],-128*contact.getCartesianInFoRFrozen()[1]);
 					me.lock[me.i].show();
 					me.lock[me.i].update();
 				} else {
 					me.lock[me.i].hide();
 				}
 				if (0 and exampleRadar.containsVector(exampleRadar.follow, contact)) {
-					me.select[me.i].setTranslation(128*contact.getDeviationHeadingFrozen()/60,-128*contact.getDeviationPitchFrozen()/60);
+					me.select[me.i].setTranslation(128*contact.getCartesianInFoRFrozen()[0],-128*contact.getCartesianInFoRFrozen()[1]);
 					me.select[me.i].show();
 					me.select[me.i].update();
 				} else {
@@ -2528,7 +2548,7 @@ RadarViewAScope = {
 					.setColor(1,1,1));
 		}
 		me.values = setsize([], 256);
-		var mt = maketimer(0.05,func me.loop());
+		var mt = maketimer(scanInterval,func me.loop());
         mt.start();
 		return me;
 	},
@@ -2544,7 +2564,7 @@ RadarViewAScope = {
 				me.range = contact.getRangeDirectFrozen();
 				if (me.range==0) me.range=1;
 				me.distPixels = 2/math.pow(me.range/contact.strength,2);
-				me.index = int(256*(contact.getDeviationHeadingFrozen()+60)/120);
+				me.index = int(256*(contact.getCartesianInFoRFrozen()[0]+1)*0.5);
 				if (me.index<=255 and me.index>= 0) {
 					me.values[me.index] += me.distPixels;
 					if (me.index+1<=255)
@@ -3118,11 +3138,22 @@ var buttonWindow = func {
 		else button26.setText("RDR ON");
 	});
 	myLayout2.addItem(button26);
+	button27 = canvas.gui.widgets.Button.new(root, canvas.style, {})
+		.setText("Nose ON")
+		.setFixedSize(75, 20);
+	button27.listen("clicked", func {
+		nose.enabled = !nose.enabled;
+		if (nose.enabled == 0) button27.setText("Nose OFF");
+		else button27.setText("Nose ON");
+	});
+	myLayout2.addItem(button27);
 };
 var button23 = nil;
 var button24 = nil;
 var button25 = nil;
 var button26 = nil;
+var button27 = nil;
+var button28 = nil;
 
 
 
