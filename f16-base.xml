@@ -1644,9 +1644,6 @@ value. 18000=standard US transition altitude -->
         <help>
             <file>Aircraft/f16/Nasal/help.nas</file>
         </help>
-        <!--rp>
-            <file>Aircraft/f16/Nasal/radar/radar-prototype.nas</file>
-        </rp-->
     </nasal>
 
    

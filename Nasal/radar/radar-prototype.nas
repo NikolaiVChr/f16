@@ -21,6 +21,7 @@
 # v6.1 Added doppler readings to contact, they are still not used in the example radars though.
 # v6.2 Better behind terrain detection. And some minor bugfixes and refactoring.
 # v6.3 June 4th 2021 - Use picking for check if in clutter. And rewrote notching code.
+# v7.0 June 9th 2021 - Rewrote Discradar as APG-68 as example, with 3 modes. Relies less on math that only works near horizon.
 #
 #
 # RCS check done in ActiveDiscRadar at detection time, so about every 5-10 seconds per contact.
@@ -106,10 +107,12 @@ AIToNasal = {
 		me.AINotification = VectorNotification.new("AINotification");
 		me.AINotification.updateV(me.vector_aicontacts);
 
-		setlistener("/ai/models/model-added", func me.callReadTree());
-		setlistener("/ai/models/model-removed", func me.callReadTree());
+		me.l1 = setlistener("/ai/models/model-added", func me.callReadTree());
+		me.l2 = setlistener("/ai/models/model-removed", func me.callReadTree());
 		me.loop = maketimer(300, me, func me.callReadTree());
 		me.loop.start();
+		me.callReadTree();
+		return me;
 	},
 
 	callReadTree: func {
@@ -228,7 +231,9 @@ AIToNasal = {
 	nextReadTreeFrame: func {
 		me.vector_raw_index += 1;
         if (me.vector_raw_index < size(me.vector_raw)) {
-        	settimer(func me.readTreeFrame(),0);
+        	var mt = maketimer(0,func me.readTreeFrame());
+        	mt.singleShot = 1;
+        	mt.start();
         } else {
         	me.updateVector();
         	me.scanInProgress = 0;
@@ -300,6 +305,10 @@ AIToNasal = {
 			}
 		}
 		return nil;
+	},
+	del: func {
+		call(func removelistener(me.l1),nil,nil,var err = []);
+		call(func removelistener(me.l2),nil,nil,var err = []);
 	},
 };
 
@@ -400,7 +409,7 @@ AIContact = {
 		c.id = ident;
 
 		# active radar:
-		c.blepTime = 0;
+		c.blepTime = -1000;
 		c.coordFrozen = geo.Coord.new();
 
     	return c;
@@ -442,7 +451,7 @@ AIContact = {
 	},
 
 	equals: func (item) {
-		if (item.prop.getName() == me.prop.getName() and item.type == me.type and item.model == me.model and item.callsign == me.callsign) {
+		if (item != nil and item.prop.getName() == me.prop.getName() and item.type == me.type and item.model == me.model and item.callsign == me.callsign) {
 			return TRUE;
 		}
 		return FALSE;
@@ -527,7 +536,11 @@ AIContact = {
 		# returns [bearingDev, elevationDev, distDirect, coord]
 		me.getCoord();
 		me.acCoord = self.getCoord();
-		return [geo.normdeg180(me.acCoord.course_to(me.coord)-self.getHeading()), vector.Math.getPitch(me.acCoord, me.coord) - self.getPitch(),me.acCoord.direct_distance_to(me.coord),me.coord];
+		me.globalToTarget = vector.Math.eulerToCartesian3X(-me.acCoord.course_to(me.coord), vector.Math.getPitch(me.acCoord, me.coord), 0);
+		me.localToTarget = vector.Math.rollPitchYawVector(0, -self.getPitch(), self.getHeading(), me.globalToTarget);
+		me.euler = vector.Math.cartesianToEuler(me.localToTarget);
+
+		return [geo.normdeg180(me.euler[0] ==nil?0:me.euler[0]), me.euler[1], me.acCoord.direct_distance_to(me.coord), me.coord];
 	},
 
 	isTransponderEnable: func {
@@ -587,10 +600,11 @@ AIContact = {
 		return me.threatStored;
 	},
 
-	blep: func (time, azimuth, strength, lock) {
+	blep: func (time, searchInfo, strength, lock) {
+		# azimuth: dist, groundtrack, deviations, speed, closing-rate
 		me.blepTime = time;
 		#me.headingFrozen = me.getHeading();
-		me.azi = azimuth;# If azimuth is available (only lock and TWS gives it)
+		me.azi = searchInfo[1];# If groundtrack is available
 		me.strength = strength;#rcs
 		#if (lock) {
 		#	me.d = me.getDeviation();
@@ -819,6 +833,9 @@ NoseRadar = {
 		emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV(me.vector_aicontacts_for));
 		#print("In Field of Regard: "~size(me.vector_aicontacts_for));
 	},
+	del: func {
+        emesary.GlobalTransmitter.DeRegister(me.NoseRadarRecipient);
+    },
 };
 
 
@@ -875,6 +892,9 @@ OmniRadar = {
 		emesary.GlobalTransmitter.NotifyAll(me.OmniNotification.updateV(me.vector_aicontacts_for));
 		#print("In omni Field: "~size(me.vector_aicontacts_for));
 	},
+	del: func {
+        emesary.GlobalTransmitter.DeRegister(me.OmniRadarRecipient);
+    },
 };
 
 
@@ -998,408 +1018,39 @@ TerrainChecker = {
 			}
 		}
 	},
+	del: func {
+        emesary.GlobalTransmitter.DeRegister(me.TerrainCheckerRecipient);
+    },
 };
 
 
 
 
-var NONE = 0;
-var SOFT = 1;#TWS mode only. Gives so much info that some missiles like Amraam can actually be fired. Unlike real lock, opponent wont know he is locked. Shorter range than real lock.
-var HARD = 2;#real lock. Opponent RWR will go off. Sparrow missile needs this kind of lock.
-
-var max_soft_locks = 8;
-var time_to_keep_bleps = 6;# ActiveDiscRadar keeps the bleps for this duration
-var time_to_fadeout_bleps = 5;# Used by the display that draws the bleps
-var time_till_lose_lock_hard = 1.0;
-var time_till_lose_lock_soft = 4.5;
-var sam_radius_deg = 15;# in SAM mode it will scan the sky +- this number of degrees.
-var myRadarDistance_m = 74000;
-var myRadarStrength_rcs = 3.2;
-var ext_info_rcs_factor = 0.65;# in TWS ext info only given if the signal times this factor is visible
-var max_lock_range_nm = 40;
-
-#air scan modes:
-var TRACK_WHILE_SCAN = 2;# Gives velocity, angle, azimuth and range. Multiple soft locks. Short range. Fast.
-#var SINGLE_TARGET_TRACK = 4;# focus on a contact. hard lock. Good for identification. Mid range.
-var RANGE_WHILE_SEARCH = 1;# Gives range/angle info. Long range. Narrow bars.
-#var SITUATION_AWARENESS_MODE = 3;# submode of RWS/TWS. A contact can be followed/selected while scan still being done that can show other bleps nearby.
-#var VELOCITY_SEARCH = 0;# gives positive closure rate. Long range.
 
 
 
-var ActiveDiscRadar = {
-# inherits from Radar
-# will check range, field of view/regard, ground occlusion and FCS.
-# will also scan a field. And move that scan field as appropiate for scan mode.
-# do not use directly, inherit and instance it.
-# fast loop
-#
-# Attributes:
-#   contact selection(s) of type Contact
-#   soft/hard lock
-#   painted (is the hard lock) of type Contact
-	new: func () {
-		var ar = {parents: [ActiveDiscRadar, Radar]};
-		ar.timer          = maketimer(1, ar, func ar.loop());
-		ar.lock           = NONE;# NONE, SOFT, HARD
-		ar.locks          = [];# vector of current locks
-		ar.follow         = [];# main SAM lock
-		ar.vector_aicontacts_for = [];# vector of contacts found in field of regard
-		ar.vector_aicontacts_bleps = [];# vector of not timed out bleps
-		ar.scanMode       = RANGE_WHILE_SEARCH;
-		ar.scanType       = AIR;# not used yet
-		ar.directionX     = 1;# 1 for left to right, -1 for right to left current antenea movement
-		ar.patternBar     = 0;# current bar index being scanned
-		ar.barOffset      = 0;# offset all bars up or down.
 
-		# these should be init in the actual radar:
-		ar.discSpeed_dps  = 1;# radar disc movement speed
-		ar.fovRadius_deg  = 1;# radius of square that the radar can detect where its currently pointed.
-		ar.calcLoop();
-		ar.calcBars();
-		ar.pattern        = [-1,1,[0]];# bar field left, bar field right, vector of bars 0=-4 7=+4
-		ar.pattern_move   = [-1,1,[0]];# temp pattern to move on when lock/SAM
-		ar.forDist_m      = 1;#current radar range setting.
-		
-		
-		ar.posE           = ar.bars[ar.pattern[2][ar.patternBar]];# current disc position vertical
-		ar.posH           = ar.pattern[0];# current disc position horizontal
 
-		ar.lockX = 1;# for hard locks these are 1 or -1 depending on where in relation to the lock thats being scanned.
-		ar.lockY = 1;
-		ar.posHLast = ar.posH;
-		ar.skipLoop = 0;
 
-		# emesary
-		ar.SliceNotification = SliceNotification.new();
-		ar.ContactNotification = VectorNotification.new("ContactNotification");
-		ar.ActiveDiscRadarRecipient = emesary.Recipient.new("ActiveDiscRadarRecipient");
-		ar.ActiveDiscRadarRecipient.radar = ar;
-		ar.ActiveDiscRadarRecipient.Receive = func(notification) {
-	        if (notification.NotificationType == "FORNotification") {
-	        	#printf("DiscRadar recv: %s", notification.NotificationType);
-	            if (me.radar.enabled == 1) {
-	    		    me.radar.vector_aicontacts_for = notification.vector;
-	    		    me.radar.forWasScanned();
-	    	    }
-	            return emesary.Transmitter.ReceiptStatus_OK;
-	        }
-	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
-	    };
-		emesary.GlobalTransmitter.Register(ar.ActiveDiscRadarRecipient);
-		ar.timer.start();
-    	return ar;
-	},
+################
 
-	calcBars: func {
-		# must be called each time fovRadius_deg is changed.
-		# the elevation bars is stacked on top of each other. from bar -4 to bar +8.
-		# override this method for radar with different number of bars.
-		me.bars           = [-me.fovRadius_deg*7,-me.fovRadius_deg*5,-me.fovRadius_deg*3,-me.fovRadius_deg,me.fovRadius_deg,me.fovRadius_deg*3,me.fovRadius_deg*5,me.fovRadius_deg*7];
-	},
 
-	calcLoop: func {
-		# must be called each time fovRadius_deg or discSpeed_dps is changed.
-		# to simplify and for performance, we move the disc one beam width in each loop,
-		# therefore the loop time must be calibrated to that.
-		# If FPS is so low it cannot keep up, it will start scanning 2 beam widths at a time.
-		# this also means the time to scan a bar migth vary a bit depending on framerate. Is this acceptable?
-		# Maybe not, but can always build a smarter system that scan beamwidth*X, where X depend on FPS.
-		
-		# 1 second to do 1 bar:
-		me.loopSpeed      = 1/(me.discSpeed_dps/(me.fovRadius_deg*2));
-		me.timer.restart(me.loopSpeed);
-		#print("loop: "~me.loopSpeed);
-	},
+######                        MODES
 
-	loop: func {
-		if (!me.skipLoop and me.enabled) {#skipping loop while we wait for notification from NoseRadar. (I know its synchronious now, but it might change)
-			#me.calcPattern();# must tell if pattern was changed  commented, as I dont remember what this line was supposed to do.
-			me.moveDisc();
-			me.scanFOV();
-			if (me.lock == HARD) {
-				me.purgeLock(time_till_lose_lock_hard);
-			} else {
-				me.purgeLocks(time_till_lose_lock_soft);
-			}
-		}
-	},
 
-	forWasScanned: func {
-		# this method was originally called every time a full scan of all bars was done, now its every time we receive a new bar to scan from NoseRadar.
-		#ok, lets clean up old bleps:
-		me.vector_aicontacts_bleps_tmp = [];
-		me.elapsed = getprop("sim/time/elapsed-sec");
-		foreach(contact ; me.vector_aicontacts_bleps) {
-			if (me.elapsed - contact.blepTime < time_to_keep_bleps) {
-				append(me.vector_aicontacts_bleps_tmp, contact);
-			}
-		}
-		me.vector_aicontacts_bleps = me.vector_aicontacts_bleps_tmp;
-		if (size(me.follow) > 0 and !me.containsVector(me.vector_aicontacts_bleps, me.follow[0])) {
-			# clean up old follow/SAM that hasn't been detected for a while.
-			me.follow = [];
-		}
-		me.skipLoop = 0;
-		me.scanFOV();#since we already have moved radar disc to new bar, we need this extra scan otherwise the disc will move and we will miss the start of the bar.
-		# it also mean that as long as notifications is sent and recieved synhronious from NoseRadar, scanFov will be called twice for no reason,
-		# since the first time there will be nothing to detect.
-	},
-
-	purgeLocks: func (time) {
-		me.locks_tmp = [];
-		me.elapsed = getprop("sim/time/elapsed-sec");
-		foreach(contact ; me.locks) {
-			if (me.elapsed - contact.blepTime < time and contact.isInfoExtended() == 1) {
-				append(me.locks_tmp, contact);
-			}
-		}
-		me.locks = me.locks_tmp;
-		if (size(me.locks) == 0) {
-			me.lock = NONE;
-		}
-		if (size(me.follow) > 0 and !me.containsVector(me.vector_aicontacts_bleps, me.follow[0])) {
-			me.follow = [];
-		}
-	},
-
-	purgeLock: func (time) {
-		if (size(me.locks) == 1) {
-			me.elapsed = getprop("sim/time/elapsed-sec");
-			if (me.elapsed - me.locks[0].blepTime > time) {
-				me.locks = [];
-				me.lock = NONE;
-				me.follow = [];
-			} elsif (me.locks[0].getRangeDirect()*M2NM > max_lock_range_nm) {
-				me.locks = [];
-				me.lock = NONE;
-			}
-		} elsif (size(me.locks) == 0) {
-			me.lock = NONE;
-		}
-	},
-	
-	moveDisc: func {
-		# move the FOV inside the FOR
-		#me.acPitch = getprop("orientation/pitch-deg");
-		me.reset = 0;
-		me.step = 1;
-		me.pattern_move = [me.pattern[0],me.pattern[1],me.pattern[2]];# we move on a temp pattern, so we can revert to normal scan mode, after lock/follow.
-		if (size(me.follow) > 0 and me.lock != HARD) {
-			# scan follows selection (SAM)
-			me.pattern_move[0] = me.follow[0].getDeviationHeadingFrozen()-sam_radius_deg;
-			me.pattern_move[1] = me.follow[0].getDeviationHeadingFrozen()+sam_radius_deg;
-			if (me.pattern_move[0] < -me.forRadius_deg) {
-				me.pattern_move[0] = -me.forRadius_deg;
-			}
-			if (me.pattern_move[1] > me.forRadius_deg) {
-				me.pattern_move[1] = me.forRadius_deg;
-			}
-		}
-		if (me.lock != HARD) {
-			# Normal scan
-			me.reverted = 0;
-			if (getprop("sim/time/delta-sec") > me.loopSpeed*1.5) {
-				# hack for slow FPS
-				me.step = 2;
-			}		
-			me.posH_new  = me.posH+me.directionX*me.fovRadius_deg*2*me.step;
-			me.polarDist = math.sqrt(me.posH_new*me.posH_new+me.posE*me.posE);
-			if (me.polarDist > me.forRadius_deg or (me.directionX==1 and me.posH_new > me.pattern_move[1]) or (me.directionX==-1 and me.posH_new < me.pattern_move[0])) {
-				me.patternBar +=1;
-				me.checkBarValid();
-				me.nextBar();
-				me.skipLoop = 1;
-				emesary.GlobalTransmitter.NotifyAll(me.SliceNotification.slice(me.posE-me.fovRadius_deg,me.posE+me.fovRadius_deg, me.pattern_move[0],me.pattern_move[1],me.forDist_m));
-			} else {
-				me.posH = me.posH_new;
-			}
-		} else {
-			# lock scan
-			me.posH_n = me.locks[0].getDeviationHeadingFrozen()+me.lockX*me.fovRadius_deg*0.5;
-			me.posE_n = me.locks[0].getDeviationPitchFrozen()+me.lockY*me.fovRadius_deg*0.5;
-			if (me.forRadius_deg >= math.sqrt(me.posH_n*me.posH_n+me.posE_n*me.posE_n)) {
-				me.posH = me.posH_n;
-				me.posE = me.posE_n;
-			}
-			me.lockX *= -1;
-			if (me.lockX == -1) {
-				me.lockY *= -1;
-				me.sendLockNotification();
-			}
-		}
-		#printf("scanning %04.1f, %04.1f", me.posH, me.posE);
-	},
-
-	sendLockNotification: func {
-		# this will update the lock unless its deviation angle rate is very very high, in which case we might lose the lock.
-		emesary.GlobalTransmitter.NotifyAll(me.ContactNotification.updateV(me.locks));
-		#emesary.GlobalTransmitter.NotifyAll(me.SliceNotification.slice(me.locks[0].getDeviationPitchFrozen()-me.fovRadius_deg*1.5,me.locks[0].getDeviationPitchFrozen()+me.fovRadius_deg*1.5, me.locks[0].getDeviationHeadingFrozen()-me.fovRadius_deg*1.5,me.locks[0].getDeviationHeadingFrozen()+me.fovRadius_deg*1.5,me.forDist_m));
-	},
-
-	checkBarValid: func {
-		if (me.patternBar > size(me.pattern_move[2])-1) {
-			me.patternBar = 0;
-			me.reset = 1;# not used anymore
-		}
-	},
-
-	nextBar: func {
-		me.directionX *= -1;
-		me.reverted = !me.reverted;
-		me.posE = me.bars[me.pattern_move[2][me.patternBar]]+me.barOffset*me.fovRadius_deg*2;
-		if (me.directionX == 1) {
-			me.posH = me.pattern_move[0]+me.fovRadius_deg;
-		} else {
-			me.posH = me.pattern_move[1]-me.fovRadius_deg;
-		}
-		me.polarDist = math.sqrt(me.posH*me.posH+me.posE*me.posE);
-		if (me.polarDist > me.forRadius_deg) {
-			me.posH = -math.cos(math.asin(clamp(me.posE/me.pattern_move[1],-1,1)))*me.pattern_move[1]*me.directionX+me.directionX*me.fovRadius_deg;# disc set at beginning of new bar.
-			if (me.posH < me.pattern_move[0] or me.posH > me.pattern_move[1]) {
-				# we are so high or low on the circle and the bar is so small that there is no room to do this bar, so we skip to next.
-				me.patternBar +=1;
-				me.checkBarValid();
-				me.nextBar();
-			}
-		}
-	},
-
-	scanFOV: func {
-		#iterate:
-		# check sensor field of view
-		# check Terrain
-		# check Doppler
-		# due to FG Nasal update rate, we consider FOV square.
-		# only detect 1 contact, even if more are present.
-		foreach(contact ; me.vector_aicontacts_for) {
-			me.dev = contact.getDeviationStored();
-			me.contactPosH = me.dev[0];
-			me.contactPosE = me.dev[1];
-			if (me.contactPosE < me.posE+me.fovRadius_deg and me.contactPosE > me.posE-me.fovRadius_deg and (me.lock != HARD or me.forDist_m > me.dev[2])) {# since we don't get updates from NoseRadar while having lock, we need to check the range.
-				# in correct elevation for detection
-				me.doDouble = me.step == 2 and me.reverted == 0 and me.lock != HARD;
-				if (!me.doDouble and me.contactPosH < me.posH+me.fovRadius_deg and me.contactPosH > me.posH-me.fovRadius_deg) {
-					# detected
-					if (me.registerBlep(contact)) {#print("detect-1 "~contact.callsign);
-						break;# for AESA radar we should not break
-					}
-				} elsif (me.doDouble and me.directionX == 1 and me.contactPosH < me.posH+me.fovRadius_deg and me.contactPosH > me.posHLast+me.fovRadius_deg) {
-					# detected
-					if (me.registerBlep(contact)) {#print("detect-2 "~contact.callsign);
-						break;# for AESA radar we should not break
-					}
-				} elsif (me.doDouble and me.directionX == -1 and me.contactPosH < me.posHLast-me.fovRadius_deg and me.contactPosH > me.posH-me.fovRadius_deg) {
-					# detected
-					if (me.registerBlep(contact)) {#print("detect-2 "~contact.callsign);
-						break;# for AESA radar we should not break
-					}
-				}
-			}
-		}
-		me.posHLast = me.posH;
-	},
-
-	registerBlep: func (contact) {
-		me.strength = me.targetRCSSignal(self.getCoord(), me.dev[3], contact.model, contact.getHeadingFrozen(1), contact.getPitchFrozen(1), contact.getRollFrozen(1),myRadarDistance_m,myRadarStrength_rcs);
-		#TODO: check Terrain, Doppler here.
-		if (me.strength > me.dev[2]) {
-			me.extInfo = (me.scanMode == TRACK_WHILE_SCAN and me.strength*ext_info_rcs_factor > me.dev[2] and size(me.locks)<max_soft_locks) or me.lock == HARD;
-			contact.blep(getprop("sim/time/elapsed-sec"), me.extInfo, me.strength, me.lock==HARD);
-			if (me.lock != HARD) {
-				if (!me.containsVector(me.vector_aicontacts_bleps, contact)) {
-					append(me.vector_aicontacts_bleps, contact);
-				}
-				if (me.extInfo and !me.containsVector(me.locks, contact)) {
-					append(me.locks, contact);
-					me.lock = SOFT;
-				}
-			}
-			return 1;
-		}
-		return 0;
-	},
-
-	targetRCSSignal: func(aircraftCoord, targetCoord, targetModel, targetHeading, targetPitch, targetRoll, myRadarDistance_m = 74000, myRadarStrength_rcs = 3.2) {
-		#
-		# test method. Belongs in rcs.nas.
-		#
-	    #print(targetModel);
-	    me.target_front_rcs = nil;
-	    if ( contains(rcs.rcs_database,targetModel) ) {
-	        me.target_front_rcs = rcs.rcs_database[targetModel];
-	    } else {
-	        #return 1;
-	        me.target_front_rcs = 5;#rcs.rcs_database["default"];# hardcode defaults to 5 to test with KXTA target scenario. TODO: change.
-	    }
-	    me.target_rcs = rcs.getRCS(targetCoord, targetHeading, targetPitch, targetRoll, aircraftCoord, me.target_front_rcs);
-
-	    # standard formula
-	    return myRadarDistance_m/math.pow(myRadarStrength_rcs/me.target_rcs, 1/4);
-	},
-	
-	containsVector: func (vec, item) {
-		foreach(test; vec) {
-			if (test == item) {
-				return TRUE;
-			}
-		}
-		return FALSE;
-	},
-
-	vectorIndex: func (vec, item) {
-		me.i = 0;
-		foreach(test; vec) {
-			if (test == item) {
-				return me.i;
-			}
-			me.i += 1;
-		}
-		return -1;
-	},
-};
-
+################
 
 
 var RadarMode = {
+	azimuthTilt: 0,
 	radar: nil,
-	shortName: "",
-	longName: "",
-	superMode: nil,
-	increaseRange: func {},
-	decreaseRange: func {},
-	setRange: func {},
-	getRange: func {},
-	leaveMode: func {},
-};
-
-var F16TWSMode = {
-	radar: nil,
-	shortName: "TWS",
-	longName: "",
-	superMode: nil,
-	discSpeed_dps: 100,
-	increaseRange: func {},
-	decreaseRange: func {},
-	setRange: func {},
-	getRange: func {},
-	leaveMode: func {},
-};
-
-var F16RWSMode = {
-	radar: nil,
-	shortName: "RWS",
-	longName: "Range While Search",
-	superMode: nil,
-	maxRange: 160,
-	minRange: 10,
 	range: 40,
 	az: 60,
 	bars: 4,
 	lastTilt: nil,
 	lastBars: nil,
 	lastAz: nil,
-	discSpeed_dps: 100,
+	lastAzimuthTilt: nil,
 	barHeight: 1,# multiple of instantFoV
 	bar1Pattern: [[-1,0],[1,0]],
 	bar2Pattern: [[-1,-0.5],[1,-0.5],[1,0.5],[-1,0.5]],
@@ -1407,76 +1058,60 @@ var F16RWSMode = {
 	bar4Pattern: [[1,-1.5],[1,1.5],[-1,1.5],[-1,0.5],[1,0.5],[1,-0.5],[-1,-0.5],[-1,-1.5]],
 	currentPattern: [],
 	nextPatternNode: 0,
-	new: func (radar = nil) {
-		var mode = {parents: [F16RWSMode, RadarMode]};
-		mode.radar = radar;
-		return mode;
+	timeToKeepBleps: 5,
+	shortName: "",
+	longName: "",
+	superMode: nil,
+	minimumTimePerReturn: 1.25,
+	showAZ: func {
+		return me.az != 60;
 	},
-	increaseRange: func {
-		me.range*=2;
-		if (me.range>me.maxRange) {
-			me.range*=0.5;
-			return 0;
+	setRange: func {},
+	getRange: func {},
+	leaveMode: func {},
+	setDeviation: func (dev_tilt_deg) {
+		if (me.az == 60) {
+			dev_tilt_deg = 0;
 		}
-		return 1;
-	},
-	decreaseRange: func {
-		me.range *= 0.5;
-		if (me.range < me.minRange) {
-			me.range *= 2;
-			return 0;
+		me.azimuthTilt = dev_tilt_deg;
+		if (me.azimuthTilt > me.radar.fieldOfRegardMaxAz-me.az) {
+			me.azimuthTilt = me.radar.fieldOfRegardMaxAz-me.az;
+		} elsif (me.azimuthTilt < -me.radar.fieldOfRegardMaxAz+me.az) {
+			me.azimuthTilt = -me.radar.fieldOfRegardMaxAz+me.az;
 		}
-		return 1;
 	},
-	setRange: func (range) {
-		me.testMulti = 160/range;
-		if (me.testMulti < 1 or me.testMulti > 16 or int(me.testMulti) != me.testMulti) {
-			return 0;
-		}
-		me.range = range;
-		return 1;
+	getDeviation: func {
+		return me.azimuthTilt;
 	},
-	getRange: func {
-		return me.range;
-	},
-	cycleAZ: func {
-		if (me.az == 10) me.az = 30;
-		elsif (me.az == 30) me.az = 60;
-		elsif (me.az == 60) me.az = 10;
-	},
-	cycleBars: func {
-		me.bars += 1;
-		if (me.bars == 5) me.bars = 1;
-		me.nextPatternNode = 0;
-	},
-	leaveMode: func {
-		return 0;
+	getPriority: func {
+		return me["priorityTarget"];
 	},
 	step: func (dt, tilt) {
-		if (tilt != me.lastTilt or me.bars != me.lastBars or me.az != me.lastAz) {
+		me.preStep();
+		if (tilt != me.lastTilt or me.bars != me.lastBars or me.az != me.lastAz or me.azimuthTilt != me.lastAzimuthTilt) {
 			# (re)calculate pattern as vectors.
 			me.currentPattern = [];
 			if (me.bars == 1) {
 				foreach (var eulerNorm ; me.bar1Pattern) {
-					me.localDir = vector.Math.eulerToCartesian3X(eulerNorm[0]*me.az, eulerNorm[1]*me.radar.instantFoVradius*me.barHeight, 0);
+					me.localDir = vector.Math.eulerToCartesian3X(-eulerNorm[0]*me.az-me.azimuthTilt, eulerNorm[1]*me.radar.instantFoVradius*me.barHeight, 0);
 					me.localDir = vector.Math.pitchVector(tilt, me.localDir);
 					append(me.currentPattern, me.localDir);
 				}
 			} elsif (me.bars == 2) {
 				foreach (var eulerNorm ; me.bar2Pattern) {
-					me.localDir = vector.Math.eulerToCartesian3X(eulerNorm[0]*me.az, eulerNorm[1]*me.radar.instantFoVradius*me.barHeight, 0);
+					me.localDir = vector.Math.eulerToCartesian3X(-eulerNorm[0]*me.az-me.azimuthTilt, eulerNorm[1]*me.radar.instantFoVradius*me.barHeight, 0);
 					me.localDir = vector.Math.pitchVector(tilt, me.localDir);
 					append(me.currentPattern, me.localDir);
 				}
 			}elsif (me.bars == 3) {
 				foreach (var eulerNorm ; me.bar3Pattern) {
-					me.localDir = vector.Math.eulerToCartesian3X(eulerNorm[0]*me.az, eulerNorm[1]*me.radar.instantFoVradius*me.barHeight, 0);
+					me.localDir = vector.Math.eulerToCartesian3X(-eulerNorm[0]*me.az-me.azimuthTilt, eulerNorm[1]*me.radar.instantFoVradius*me.barHeight, 0);
 					me.localDir = vector.Math.pitchVector(tilt, me.localDir);
 					append(me.currentPattern, me.localDir);
 				}
 			}elsif (me.bars == 4) {
 				foreach (var eulerNorm ; me.bar4Pattern) {
-					me.localDir = vector.Math.eulerToCartesian3X(eulerNorm[0]*me.az, eulerNorm[1]*me.radar.instantFoVradius*me.barHeight, 0);
+					me.localDir = vector.Math.eulerToCartesian3X(-eulerNorm[0]*me.az-me.azimuthTilt, eulerNorm[1]*me.radar.instantFoVradius*me.barHeight, 0);
 					me.localDir = vector.Math.pitchVector(tilt, me.localDir);
 					append(me.currentPattern, me.localDir);
 				}
@@ -1484,6 +1119,7 @@ var F16RWSMode = {
 			me.lastTilt = tilt;
 			me.lastBars = me.bars;
 			me.lastAz = me.az;
+			me.lastAzimuthTilt = me.azimuthTilt;
 		}
 		me.maxMove = math.min(me.radar.instantFoVradius, me.discSpeed_dps*dt);
 		me.currentPos = me.radar.positionDirection;
@@ -1500,32 +1136,447 @@ var F16RWSMode = {
 		me.radar.setAntennae(me.newPos);
 		return 0;
 	},
+	getRange: func {
+		return me.range;
+	},
+	designatePriority: func (contact) {
+		me.designate(contact);
+	},
+	cycleDesignate: func {},
+	testContact: func (contact) {},
 };
 
-var F16SAMMode = {
+var F16TWSMode = {
 	radar: nil,
-	shortName: "SAM",
-	longName: "",
+	shortName: "TWS",
+	longName: "Track While Scan",
 	superMode: nil,
-	discSpeed_dps: 100,
-	increaseRange: func {},
-	decreaseRange: func {},
-	setRange: func {},
-	getRange: func {},
+	subMode: nil,
+	maxRange: 80,
+	minRange: 10,
+	discSpeed_dps: 70,
+	timeToKeepBleps: 13,# TODO
+	maxScanIntervalForTrack: 6.5,#authentic for TWS
+	priorityTarget: nil,
+	currentTracked: 0,
+	maxTracked: 10,
+	bars: 3,# default is less due to need 2 scans of target to get groundtrack
+	new: func (subMode, radar = nil) {
+		var mode = {parents: [F16TWSMode, RadarMode]};
+		mode.radar = radar;
+		mode.subMode = subMode;
+		subMode.superMode = mode;
+		return mode;
+	},
+	setRange: func (range) {
+		me.testMulti = 160/range;
+		if (me.testMulti < 1 or me.testMulti > 16 or int(me.testMulti) != me.testMulti) {
+			return 0;
+		}
+		me.range = math.min(me.maxRange, range);
+		return 1;
+	},
+	cycleAZ: func {
+		if (me.az == 10) me.az = 25;
+		elsif (me.az == 25) {me.az = 60; me.azimuthTilt = 0;}
+		elsif (me.az == 60) me.az = 10;
+	},
+	cycleBars: func {
+		me.bars += 1;
+		if (me.bars == 5) me.bars = 2;# bars:1 not available in TWS
+		me.nextPatternNode = 0;
+	},
+	designate: func (designate_contact) {
+		if (designate_contact != nil and designate_contact.equals(me.priorityTarget)) {
+			me.radar.currentMode = me.subMode;
+			me.subMode.priorityTarget = designate_contact;
+			me.subMode.radar = me.radar;# find some smarter way of setting it.
+		} else {
+			me.priorityTarget = designate_contact;
+		}
+	},
+	designatePriority: func (contact) {
+		me.priorityTarget = contact;
+	},
+	getPriority: func {
+		return me.priorityTarget;
+	},
+	undesignate: func {
+		me.priorityTarget = nil;
+	},
+	preStep: func {
+		if (me.priorityTarget != nil) {
+			me.prioRange_nm = me.priorityTarget.getRangeDirect()*M2NM;
+			if (me.radar.elapsed - me.priorityTarget.blepTime > me.maxScanIntervalForTrack) {
+				me.priorityTarget = nil;
+				me.radar.tiltOverride = 0;
+				me.undesignate();
+				return;
+			}
+			me.azimuthTilt = me.priorityTarget.getDeviation()[0];
+			me.radar.tiltOverride = 1;
+			me.radar.tilt = me.priorityTarget.getDeviation()[1];
+			if (me.prioRange_nm < 0.40 * me.getRange()) {
+				me.decreaseRange();
+			} elsif (me.prioRange_nm > 0.90 * me.getRange()) {
+				me.increaseRange();
+			} elsif (me.prioRange_nm < 3) {
+				# auto go to STT when target is very close
+				me.designate(me.priorityTarget);
+			}
+		} else {
+			me.radar.tiltOverride = 0;
+			me.undesignate();
+		}
+		if (me.azimuthTilt > me.radar.fieldOfRegardMaxAz-me.az) {
+			me.azimuthTilt = me.radar.fieldOfRegardMaxAz-me.az;
+		} elsif (me.azimuthTilt < -me.radar.fieldOfRegardMaxAz+me.az) {
+			me.azimuthTilt = -me.radar.fieldOfRegardMaxAz+me.az;
+		}
+	},
+	leaveMode: func {
+		me.priorityTarget = nil;
+	},
+	increaseRange: func {
+		if (me.priorityTarget != nil) return 0;
+		me.range*=2;
+		if (me.range>me.maxRange) {
+			me.range*=0.5;
+			return 0;
+		}
+		return 1;
+	},
+	decreaseRange: func {
+		if (me.priorityTarget != nil) return 0;
+		me.range *= 0.5;
+		if (me.range < me.minRange) {
+			me.range *= 2;
+			return 0;
+		}
+		return 1;
+	},
+	getSearchInfo: func (contact) {
+		# dist, groundtrack, deviations, speed, closing-rate
+
+		if (me.currentTracked < me.maxTracked and ((me.radar.elapsed - contact.blepTime) < me.maxScanIntervalForTrack)) {
+			#print(me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, contact),"   ",me.radar.elapsed - contact.blepTime);
+			if (!contact.isInfoExtended()) me.currentTracked += 1;
+			return [1,1,1,0,0];
+		} elsif (contact.isInfoExtended()) {
+			me.currentTracked -= 1;
+		}
+		return [1,0,1,0,0];
+	},
+	testContact: func (contact) {
+		if (me.radar.elapsed - contact.blepTime > me.maxScanIntervalForTrack and contact.azi == 1) {
+			contact.azi = 0;
+			me.currentTracked -= 1;
+		}
+	},
+	cycleDesignate: func {
+		if (!size(me.radar.vector_aicontacts_bleps)) {
+			me.priorityTarget = nil;
+			return;
+		}
+		if (me.priorityTarget == nil) {
+			me.testIndex = -1;
+		} else {
+			me.testIndex = me.radar.vectorIndex(me.radar.vector_aicontacts_bleps, me.priorityTarget);
+		}
+		for(me.i = me.testIndex+1;me.i<size(me.radar.vector_aicontacts_bleps);me.i+=1) {
+			if (me.radar.vector_aicontacts_bleps[me.i].isInfoExtended()) {
+				me.priorityTarget = me.radar.vector_aicontacts_bleps[me.i];
+				return;
+			}
+		}
+		for(me.i = 0;me.i<=me.testIndex;me.i+=1) {
+			if (me.radar.vector_aicontacts_bleps[me.i].isInfoExtended()) {
+				me.priorityTarget = me.radar.vector_aicontacts_bleps[me.i];
+				return;
+			}
+		}
+	},
+};
+
+var F16RWSMode = {
+	radar: nil,
+	shortName: "RWS",
+	longName: "Range While Search",
+	superMode: nil,
+	subMode: nil,
+	maxRange: 160,
+	minRange: 10,
+	discSpeed_dps: 65,#authentic for RWS
+	new: func (subMode, radar = nil) {
+		var mode = {parents: [F16RWSMode, RadarMode]};
+		mode.radar = radar;
+		mode.subMode = subMode;
+		subMode.superMode = mode;
+		return mode;
+	},
+	setRange: func (range) {
+		me.testMulti = 160/range;
+		if (me.testMulti < 1 or me.testMulti > 16 or int(me.testMulti) != me.testMulti) {
+			return 0;
+		}
+		me.range = range;
+		return 1;
+	},
+	cycleAZ: func {
+		if (me.az == 10) me.az = 30;
+		elsif (me.az == 30) {me.az = 60; me.azimuthTilt = 0;}
+		elsif (me.az == 60) me.az = 10;
+	},
+	cycleBars: func {
+		me.bars += 1;
+		if (me.bars == 3) me.bars = 4;# 3 is only for TWS
+		elsif (me.bars == 5) me.bars = 1;
+		me.nextPatternNode = 0;
+	},
+	designate: func (designate_contact) {
+		me.radar.currentMode = me.subMode;
+		me.subMode.priorityTarget = designate_contact;
+		me.subMode.radar = me.radar;# find some smarter way of setting it.
+	},
+	undesignate: func {},
+	preStep: func {},
 	leaveMode: func {},
+	increaseRange: func {
+		me.range*=2;
+		if (me.range>me.maxRange) {
+			me.range*=0.5;
+			return 0;
+		}
+		return 1;
+	},
+	decreaseRange: func {
+		me.range *= 0.5;
+		if (me.range < me.minRange) {
+			me.range *= 2;
+			return 0;
+		}
+		return 1;
+	},
+	getSearchInfo: func (contact) {
+		# dist, groundtrack, deviations, speed, closing-rate
+		return [1,0,1,0,0];
+	},
+};
+
+var F16LRSMode = {
+	shortName: "LRS",
+	longName: "Long Range Search",
+	discSpeed_dps: 45,
+	new: func (subMode, radar = nil) {
+		var mode = {parents: [F16LRSMode, F16RWSMode, RadarMode]};
+		mode.radar = radar;
+		mode.subMode = subMode;
+		subMode.superMode = mode;
+		return mode;
+	},
+};
+
+var F16LRSSAMMode = {
+	shortName: "LRS-SAM",
+	longName: "Long Range Search - Situational Awareness Mode",
+	discSpeed_dps: 45,
+	new: func (subMode = nil, radar = nil) {
+		var mode = {parents: [F16LRSSAMMode, F16RWSSAMMode, RadarMode]};
+		mode.radar = radar;
+		mode.subMode = subMode;
+		if (subMode != nil) {
+			subMode.superMode = mode;
+			subMode.radar = radar;
+		}
+		return mode;
+	},
+};
+
+var F16RWSSAMMode = {
+	radar: nil,
+	shortName: "RWS-SAM",
+	longName: "Range While Search - Situational Awareness Mode",
+	superMode: nil,
+	discSpeed_dps: 65,
+	maxRange: 160,
+	minRange: 10,
+	priorityTarget: nil,
+	new: func (subMode = nil, radar = nil) {
+		var mode = {parents: [F16RWSSAMMode, RadarMode]};
+		mode.radar = radar;
+		mode.subMode = subMode;
+		if (subMode != nil) {
+			subMode.superMode = mode;
+			subMode.radar = radar;
+		}
+		return mode;
+	},
+	preStep: func {
+		if (me.priorityTarget != nil) {
+			# azimuth width is autocalculated in F16 AUTO-SAM:
+			me.prioRange_nm = me.priorityTarget.getRangeDirect()*M2NM;
+			me.az = math.min(60,18 + 2.066667*me.prioRange_nm - 0.02222222*me.prioRange_nm*me.prioRange_nm);
+			if (!me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, me.priorityTarget)) {
+				me.priorityTarget = nil;
+				me.undesignate();
+				return;
+			}
+			me.azimuthTilt = me.priorityTarget.getDeviation()[0];
+			me.radar.tiltOverride = 1;
+			me.radar.tilt = me.priorityTarget.getDeviation()[1];
+			if (me.prioRange_nm < 0.40 * me.getRange()) {
+				me._decreaseRange();
+			} elsif (me.prioRange_nm > 0.90 * me.getRange()) {
+				me._increaseRange();
+			} elsif (me.prioRange_nm < 3) {
+				# auto go to STT when target is very close
+				me.designate(me.priorityTarget);
+			}
+		} else {
+			me.radar.tiltOverride = 0;
+			me.undesignate();
+		}
+		if (me.azimuthTilt > me.radar.fieldOfRegardMaxAz-me.az) {
+			me.azimuthTilt = me.radar.fieldOfRegardMaxAz-me.az;
+		} elsif (me.azimuthTilt < -me.radar.fieldOfRegardMaxAz+me.az) {
+			me.azimuthTilt = -me.radar.fieldOfRegardMaxAz+me.az;
+		}
+	},
+	undesignate: func {
+		me.priorityTarget = nil;
+		me.radar.currentMode = me.superMode;
+	},
+	designate: func (designate_contact) {
+		me.radar.currentMode = me.subMode;
+		me.subMode.priorityTarget = designate_contact;
+		me.subMode.radar = me.radar;# find some smarter way of setting it.
+	},
+	cycleBars: func {
+		me.bars += 1;
+		if (me.bars == 3) me.bars = 4;# 3 is only for TWS
+		elsif (me.bars == 5) me.bars = 1;
+		me.nextPatternNode = 0;
+	},
+	cycleAZ: func {},
+	increaseRange: func {# Range is auto-set in RWS-SAM
+	},
+	decreaseRange: func {# Range is auto-set in RWS-SAM
+	},
+	_increaseRange: func {
+		me.range*=2;
+		if (me.range>me.maxRange) {
+			me.range*=0.5;
+			return 0;
+		}
+		return 1;
+	},
+	_decreaseRange: func {
+		me.range *= 0.5;
+		if (me.range < me.minRange) {
+			me.range *= 2;
+			return 0;
+		}
+		return 1;
+	},
+	setRange: func {# Range is auto-set in RWS-SAM
+	},
+	leaveMode: func {
+		me.priorityTarget = nil;
+	},
+	getSearchInfo: func (contact) {
+		# dist, groundtrack, deviations, speed, closing-rate
+		if (me.priorityTarget != nil and contact.equals(me.priorityTarget)) {
+			return [1,1,1,1,0];
+		}
+		return [1,0,1,0,0];
+	},
 };
 
 var F16STTMode = {
 	radar: nil,
 	shortName: "STT",
-	longName: "",
+	longName: "Single Target Track",
 	superMode: nil,
-	discSpeed_dps: 100,
-	increaseRange: func {},
-	decreaseRange: func {},
-	setRange: func (range_nm) {},
-	getRange: func {},
-	leaveMode: func {},
+	discSpeed_dps: 50,
+	maxRange: 160,
+	minRange: 10,
+	priorityTarget: nil,
+	az: 4,
+	bars: 2,
+	minimumTimePerReturn: 0.5,
+	new: func (radar = nil) {
+		var mode = {parents: [F16STTMode, RadarMode]};
+		mode.radar = radar;
+		return mode;
+	},
+	showAZ: func {
+		return 0;
+	},
+	preStep: func {
+		if (me.priorityTarget != nil) {
+			me.azimuthTilt = me.priorityTarget.getDeviation()[0];
+			me.radar.tiltOverride = 1;
+			me.radar.tilt = me.priorityTarget.getDeviation()[1];
+			if (!me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, me.priorityTarget)) {
+				me.priorityTarget = nil;
+				me.undesignate();
+				return;
+			} elsif (me.azimuthTilt > me.radar.fieldOfRegardMaxAz-me.az) {
+				me.azimuthTilt = me.radar.fieldOfRegardMaxAz-me.az;
+			} elsif (me.azimuthTilt < -me.radar.fieldOfRegardMaxAz+me.az) {
+				me.azimuthTilt = -me.radar.fieldOfRegardMaxAz+me.az;
+			}
+			if (me.priorityTarget.getRangeDirect()*M2NM < 0.40 * me.getRange()) {
+				me._decreaseRange();
+			}
+			if (me.priorityTarget.getRangeDirect()*M2NM > 0.90 * me.getRange()) {
+				me._increaseRange();
+			}
+		} else {
+			me.radar.tiltOverride = 0;
+			me.undesignate();
+		}
+	},
+	undesignate: func {
+		me.radar.currentMode = me.superMode;
+		me.superMode.priorityTarget = me.priorityTarget;
+		me.priorityTarget = nil;
+	},
+	designate: func {},
+	cycleBars: func {},
+	cycleAZ: func {},
+	increaseRange: func {# Range is auto-set in STT
+	},
+	decreaseRange: func {# Range is auto-set in STT
+	},
+	_increaseRange: func {
+		me.range*=2;
+		if (me.range>me.maxRange) {
+			me.range*=0.5;
+			return 0;
+		}
+		return 1;
+	},
+	_decreaseRange: func {
+		me.range *= 0.5;
+		if (me.range < me.minRange) {
+			me.range *= 2;
+			return 0;
+		}
+		return 1;
+	},
+	setRange: func {# Range is auto-set in RWS-SAM
+	},
+	leaveMode: func {
+		me.priorityTarget = nil;
+	},
+	getSearchInfo: func (contact) {
+		# dist, groundtrack, deviations, speed, closing-rate
+		if (me.priorityTarget != nil and contact.equals(me.priorityTarget)) {
+			return [1,1,1,1,1];
+		}
+		return nil;
+	},
 };
 
 var FOR_ROUND  = 0;
@@ -1533,12 +1584,16 @@ var FOR_SQUARE = 1;
 
 var APG68 = {
 	fieldOfRegardType: FOR_SQUARE,
+	fieldOfRegardMaxAz: 60,
+	fieldOfRegardMaxElev: 60,
 	currentMode: nil, # vector of cascading modes ending with current submode
+	currentModeIndex: 1,# default is RWS which is the second in the list
 	mainModes: [],
-	instantFoVradius: 3.6,
+	instantFoVradius: 3.90,#average of horiz/vert radius
 	rcsRefDistance: 70,
 	rcsRefValue: 3.2,
 	tilt: 0,
+	tiltOverride: 0,# when enabled by a mode: the mode can set the tilt, and it will not be read from property (TODO)
 	maxTilt: 50,
 	maxTilt: -50,
 	positionX: 0,# euler direction
@@ -1548,6 +1603,7 @@ var APG68 = {
 	vector_aicontacts_bleps: [],# vector of not timed out bleps
 	timer: nil,
 	timerSlow: nil,
+	elapsed: getprop("sim/time/elapsed-sec"),
 	lastElapsed: getprop("sim/time/elapsed-sec"),
 	new: func (main_modes, current_mode) {
 		var rdr = {parents: [APG68, Radar]};
@@ -1569,7 +1625,7 @@ var APG68 = {
 	        	#printf("DiscRadar recv: %s", notification.NotificationType);
 	            if (rdr.enabled == 1) {
 	    		    rdr.vector_aicontacts_for = notification.vector;
-	    		    #me.forWasScanned();
+	    		    rdr.purgeBleps();
 	    		    #print("size(rdr.vector_aicontacts_for)=",size(rdr.vector_aicontacts_for));
 	    	    }
 	            return emesary.Transmitter.ReceiptStatus_OK;
@@ -1578,7 +1634,7 @@ var APG68 = {
 	    };
 		emesary.GlobalTransmitter.Register(rdr.ActiveDiscRadarRecipient);
 		rdr.timer = maketimer(0.05, rdr, func rdr.loop());
-		rdr.timerSlow = maketimer(0.25, rdr, func rdr.loopSlow());
+		rdr.timerSlow = maketimer(0.5, rdr, func rdr.loopSlow());
 		rdr.timerSlow.start();
 		rdr.timer.start();
     	return rdr;
@@ -1589,12 +1645,42 @@ var APG68 = {
 	decreaseRange: func {
 		me.currentMode.decreaseRange();
 	},
-	designate: func (designate_contact) {},
-	undesignate: func {},
-	cycleDesignate: func {},
-	cycleMode: func {},
+	designate: func (designate_contact) {
+		me.currentMode.designate(designate_contact);
+	},
+	designateRandom: func {
+		if (size(me.vector_aicontacts_bleps)>0) {
+			me.designate(me.vector_aicontacts_bleps[size(me.vector_aicontacts_bleps)-1]);
+		}
+	},
+	undesignate: func {
+		me.currentMode.undesignate();
+	},
+	getPriorityTarget: func {
+		return me.currentMode.getPriority();
+	},
+	cycleDesignate: func {
+		me.currentMode.cycleDesignate();
+	},
+	cycleMode: func {
+		me.currentModeIndex += 1;
+		if (me.currentModeIndex >= size(me.mainModes)) {
+			me.currentModeIndex = 0;
+		}
+		me.newMode = me.mainModes[me.currentModeIndex];
+		me.newMode.setRange(me.currentMode.getRange());
+		me.oldMode = me.currentMode;
+		me.currentMode = me.newMode;
+		if (me.oldMode["priorityTarget"] != nil) {
+			me.newMode.designatePriority(me.oldMode.priorityTarget);
+		}
+		me.oldMode.leaveMode();
+	},
 	cycleAZ: func {
 		me.currentMode.cycleAZ();
+	},
+	showAZ: func {
+		me.currentMode.showAZ();
 	},
 	cycleBars: func {
 		me.currentMode.cycleBars();
@@ -1609,6 +1695,15 @@ var APG68 = {
 	getElevation: func {
 		return me.tilt;
 	},
+	setDeviation: func (dev_tilt_deg) {
+		if (me.getAzimuthRadius() == me.fieldOfRegardMaxAz) {
+			dev_tilt_deg = 0;
+		}
+		me.currentMode.setDeviation(dev_tilt_deg);
+	},
+	getDeviation: func {
+		return me.currentMode.getDeviation();
+	},
 	getBars: func {
 		return me.currentMode.bars;
 	},
@@ -1620,6 +1715,17 @@ var APG68 = {
 	},
 	getRange: func {
 		return me.currentMode.getRange();
+	},
+	setAntennae: func (x, y) {
+		me.positionX = x;
+		me.positionY = y;
+		me.positionDirection = vector.Math.eulerToCartesian3X(-x, y, 0);
+	},
+	setAntennae: func (dir) {
+		me.eulerDir = vector.Math.cartesianToEuler(dir);
+		me.positionX = me.eulerDir[0]==nil?0:geo.normdeg180(me.eulerDir[0]);
+		me.positionY = me.eulerDir[1];
+		me.positionDirection = dir;
 	},
 	loop: func {
 		if (me.enabled) {
@@ -1635,21 +1741,13 @@ var APG68 = {
 		}
 	},
 	loopSlow: func {
-		emesary.GlobalTransmitter.NotifyAll(me.SliceNotification.slice(self.getPitch(), self.getHeading(), 60, 60, me.getRange()*NM2M));
-	},
-	setAntennae: func (x, y) {
-		me.positionX = x;
-		me.positionY = y;
-		me.positionDirection = vector.Math.eulerToCartesian3X(-x, y, 0);
-	},
-	setAntennae: func (dir) {
-		me.eulerDir = vector.Math.cartesianToEuler(dir);
-		me.positionX = me.eulerDir[0]==nil?0:geo.normdeg180(me.eulerDir[0]);
-		me.positionY = me.eulerDir[1];
-		me.positionDirection = dir;
+		if (me.enabled) {
+			emesary.GlobalTransmitter.NotifyAll(me.SliceNotification.slice(self.getPitch(), self.getHeading(), 60, 60, me.getRange()*NM2M));
+		}
 	},
 	scanFOV: func {
 		foreach(contact ; me.vector_aicontacts_for) {
+			if (me.elapsed - contact.blepTime < me.currentMode.minimumTimePerReturn) continue;
 			me.dev = contact.getDeviationStored();
 			#print("Bearing ",me.dev[7],", Pitch ",me.dev[8]);
 			me.globalToTarget = vector.Math.eulerToCartesian3X(-me.dev[7],me.dev[8],0);
@@ -1659,23 +1757,40 @@ var APG68 = {
 			me.beamDeviation = vector.Math.angleBetweenVectors(me.positionDirection, me.localToTarget);
 			#print("me.beamDeviation ", me.beamDeviation);
 			if (me.beamDeviation < me.instantFoVradius) {
-				me.registerBlep(contact);
-				print("REGISTER BLEP");
+				me.registerBlep(contact, me.dev);
+				#print("REGISTER BLEP");
+				# TODO consider to return here, so that each instant FoV max gets 1 target.
 			}
 		}
 	},
-	registerBlep: func (contact) {
-		me.strength = me.targetRCSSignal(self.getCoord(), me.dev[3], contact.model, contact.getHeadingFrozen(1), contact.getPitchFrozen(1), contact.getRollFrozen(1),myRadarDistance_m,myRadarStrength_rcs);
+	registerBlep: func (contact, dev) {
+		me.strength = me.targetRCSSignal(self.getCoord(), dev[3], contact.model, contact.getHeadingFrozen(1), contact.getPitchFrozen(1), contact.getRollFrozen(1),me.rcsRefDistance*NM2M,me.rcsRefValue);
 		#TODO: check Terrain, Doppler here.
-		if (me.strength > me.dev[2]) {
-			me.extInfo = 0;# if the scan gives heading info etc..
-			contact.blep(getprop("sim/time/elapsed-sec"), me.extInfo, me.strength, 0);
-			if (!me.containsVector(me.vector_aicontacts_bleps, contact)) {
+		if (me.strength > dev[2]) {
+			me.extInfo = me.currentMode.getSearchInfo(contact);# if the scan gives heading info etc..
+			if (me.extInfo == nil) {
+				contact.azi = 0;#HACK for STT
+				return 0;
+			}
+			contact.blep(me.elapsed, me.extInfo, me.strength, 0);
+			if (!me.containsVectorContact(me.vector_aicontacts_bleps, contact)) {
 				append(me.vector_aicontacts_bleps, contact);
 			}
 			return 1;
 		}
 		return 0;
+	},
+	purgeBleps: func {
+		#ok, lets clean up old bleps:
+		me.vector_aicontacts_bleps_tmp = [];
+		me.elapsed = getprop("sim/time/elapsed-sec");
+		foreach(contact ; me.vector_aicontacts_bleps) {
+			if (me.elapsed - contact.blepTime < me.currentMode.timeToKeepBleps) {
+				append(me.vector_aicontacts_bleps_tmp, contact);
+				me.currentMode.testContact(contact);# TODO: do this smarter
+			}
+		}
+		me.vector_aicontacts_bleps = me.vector_aicontacts_bleps_tmp;
 	},
 	targetRCSSignal: func(aircraftCoord, targetCoord, targetModel, targetHeading, targetPitch, targetRoll, myRadarDistance_m = 74000, myRadarStrength_rcs = 3.2) {
 		#
@@ -1704,6 +1819,15 @@ var APG68 = {
 		return FALSE;
 	},
 
+	containsVectorContact: func (vec, item) {
+		foreach(test; vec) {
+			if (test.equals(item)) {
+				return 1;
+			}
+		}
+		return 0;
+	},
+
 	vectorIndex: func (vec, item) {
 		me.i = 0;
 		foreach(test; vec) {
@@ -1714,10 +1838,15 @@ var APG68 = {
 		}
 		return -1;
 	},
+	del: func {
+        emesary.GlobalTransmitter.DeRegister(me.ActiveDiscRadarRecipient);
+    },
 };
 
-var rwsMode = F16RWSMode.new();
-var exampleRadar = APG68.new([rwsMode], rwsMode);
+var rwsMode = F16RWSMode.new(F16RWSSAMMode.new(F16STTMode.new()));
+var lrsMode = F16LRSMode.new(F16LRSSAMMode.new(F16STTMode.new()));
+var twsMode = F16TWSMode.new(F16STTMode.new());
+var exampleRadar = APG68.new([lrsMode,rwsMode,twsMode], rwsMode);
 
 
 
@@ -1835,6 +1964,9 @@ var RWR = {
 			append(me.vector_aicontacts_threats, [contact,me.threatInv]);# how about a setThreat on contact instead of this crap?
 		}
 	},
+	del: func {
+        emesary.GlobalTransmitter.DeRegister(me.RWRRecipient);
+    },
 };
 
 
@@ -1922,12 +2054,12 @@ RadarViewPPI = {
 #   link to Radar
 #   link to FireControl
 	new: func {
-		var window = canvas.Window.new([256, 256],"dialog")
+		me.window = canvas.Window.new([256, 256],"dialog")
 				.set('x', 256)
 				.set('y', 350)
                 .set('title', "Radar PPI");
-		var root = window.getCanvas(1).createGroup();
-		window.getCanvas(1).setColorBackground(0,0,0);
+		var root = me.window.getCanvas(1).createGroup();
+		me.window.getCanvas(1).setColorBackground(0,0,0);
 		me.rootCenter = root.createChild("group")
 				.setTranslation(128,256);
 		me.rootCenterBleps = root.createChild("group")
@@ -1971,8 +2103,8 @@ RadarViewPPI = {
 					.setStrokeLineWidth(2)
 	      	  		.hide();
         }
-        me.lock = setsize([],200);
-        for (var i = 0;i<200;i+=1) {
+        me.lock = setsize([],20);
+        for (var i = 0;i<20;i+=1) {
         	me.lock[i] = me.rootCenterBleps.createChild("path")
 						.moveTo(-5,-5)
 							.vert(10)
@@ -1984,30 +2116,27 @@ RadarViewPPI = {
 							.setStrokeLineWidth(1)
 	      	  		.hide();
         }
-        me.select = setsize([],200);
-        for (var i = 0;i<200;i+=1) {
-        	me.select[i] = me.rootCenterBleps.createChild("path")
-						.moveTo(-7,-7)
-						.vert(14)
-						.horiz(14)
-						.vert(-14)
-						.horiz(-14)
-						.setColor([0.5,0,1])
+        	me.select = me.rootCenterBleps.createChild("path")
+						.moveTo(-8, 0)
+			            .arcSmallCW(8, 8, 0, 8*2, 0)
+			            .arcSmallCW(8, 8, 0, -8*2, 0)
+						.setColor([1,1,0])
 						.setStrokeLineWidth(1)
 	      	  		.hide();
-        }
 
-		me.loop();
+		var mt = maketimer(0.05,func me.loop());
+        mt.start();
+		return me;
 	},
 
 	loop: func {
-		if (!enable) {settimer(func me.loop(), 0.3); return;}
+		if (!enable) {return;}
 		me.sweep.setRotation(exampleRadar.positionX*D2R);
-		if (0 and exampleRadar.lock!=HARD) {
+		if (exampleRadar.showAZ()) {
 			me.sweepA.show();
 			me.sweepB.show();
-			me.sweepA.setRotation(exampleRadar.pattern_move[0]*D2R);
-			me.sweepB.setRotation(exampleRadar.pattern_move[1]*D2R);
+			me.sweepA.setRotation((exampleRadar.currentMode.azimuthTilt-exampleRadar.currentMode.az)*D2R);
+			me.sweepB.setRotation((exampleRadar.currentMode.azimuthTilt+exampleRadar.currentMode.az)*D2R);
 		} else {
 			me.sweepA.hide();
 			me.sweepB.hide();
@@ -2015,37 +2144,37 @@ RadarViewPPI = {
 		me.elapsed = getprop("sim/time/elapsed-sec");
 		#me.rootCenterBleps.removeAllChildren();
 		me.i = 0;
+		me.bug = 0;
 		foreach(contact; exampleRadar.vector_aicontacts_bleps) {
-			if (me.elapsed - contact.blepTime < 5) {
+			if (me.elapsed - contact.blepTime < exampleRadar.currentMode.timeToKeepBleps) {
 				me.distPixels = contact.getRangeFrozen()*(me.sweepDistance/(exampleRadar.getRange()*NM2M));
 
-				me.blep[me.i].setColor(1-(me.elapsed - contact.blepTime)/time_to_fadeout_bleps,1-(me.elapsed - contact.blepTime)/time_to_fadeout_bleps,1-(me.elapsed - contact.blepTime)/time_to_fadeout_bleps);
+				me.blep[me.i].setColor(1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps,1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps,1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps);
 				me.blep[me.i].setTranslation(-me.distPixels*math.cos(contact.getDeviationHeadingFrozen()*D2R+math.pi/2),-me.distPixels*math.sin(contact.getDeviationHeadingFrozen()*D2R+math.pi/2));
 				me.blep[me.i].show();
 				me.blep[me.i].update();
 					
-				if (0 and exampleRadar.containsVector(exampleRadar.locks, contact)) {
+				if (contact.isInfoExtended() and me.i<20) {
 					me.rot = contact.getHeadingFrozen();
 					if (me.rot == nil) {
 						#can happen in transition between TWS to RWS
-						me.lock[me.i].hide();
+						if (me.i<20) me.lock[me.i].hide();
 					} else {
 						me.rot = me.rot-getprop("orientation/heading-deg");
 						me.lock[me.i].setRotation(me.rot*D2R);
-						me.lock[me.i].setColor(exampleRadar.lock == HARD?[1,0,0]:[1,1,0]);
+						me.lock[me.i].setColor([1,1,0]);
 						me.lock[me.i].setTranslation(-me.distPixels*math.cos(contact.getDeviationHeadingFrozen()*D2R+math.pi/2),-me.distPixels*math.sin(contact.getDeviationHeadingFrozen()*D2R+math.pi/2));
 						me.lock[me.i].show();
 						me.lock[me.i].update();
 					}
 				} else {
-					me.lock[me.i].hide();
+					if (me.i<20) me.lock[me.i].hide();
 				}
-				if (0 and exampleRadar.containsVector(exampleRadar.follow, contact)) {
-					me.select[me.i].setTranslation(-me.distPixels*math.cos(contact.getDeviationHeadingFrozen()*D2R+math.pi/2),-me.distPixels*math.sin(contact.getDeviationHeadingFrozen()*D2R+math.pi/2));
-					me.select[me.i].show();
-					me.select[me.i].update();
-				} else {
-					me.select[me.i].hide();
+				if (contact.equals(exampleRadar.getPriorityTarget())) {
+					me.select.setTranslation(-me.distPixels*math.cos(contact.getDeviationHeadingFrozen()*D2R+math.pi/2),-me.distPixels*math.sin(contact.getDeviationHeadingFrozen()*D2R+math.pi/2));
+					me.select.show();
+					me.select.update();
+					me.bug = 1;
 				}
 				me.i += 1;
 				if (me.i > 199) break;
@@ -2053,9 +2182,9 @@ RadarViewPPI = {
 		}
 		for (;me.i<200;me.i+=1) {
 			me.blep[me.i].hide();
-			me.lock[me.i].hide();
-			me.select[me.i].hide();
+			if (me.i<20) me.lock[me.i].hide();
 		}
+		if (!me.bug) me.select.hide();
 		if (0 and exampleRadar.patternBar<size(exampleRadar.pattern[2])) {
 			# the if is due to just after changing bars and before radar loop has run, patternBar can be out of bounds of pattern.
 			me.text.setText(sprintf("Bar %+d    Range %d NM", exampleRadar.pattern[2][exampleRadar.patternBar]<4?exampleRadar.pattern[2][exampleRadar.patternBar]-4:exampleRadar.pattern[2][exampleRadar.patternBar]-3,exampleRadar.forDist_m*M2NM));
@@ -2066,9 +2195,18 @@ RadarViewPPI = {
 			me.md = me.md~"-SAM";
 		}
 		#me.text2.setText(sprintf("Lock=%d (%s)  %s", size(exampleRadar.locks), exampleRadar.lock==NONE?"NONE":exampleRadar.lock==SOFT?"SOFT":"HARD",me.md));
-		#me.text3.setText(sprintf("Select: %s", size(exampleRadar.follow)>0?exampleRadar.follow[0].callsign:""));
-		settimer(func me.loop(), 0.05);
+		me.text2.setText(sprintf("Mode: %s",me.md));
+		me.prioName = exampleRadar.getPriorityTarget();
+		if (me.prioName != nil) {
+			me.text3.setText(sprintf("Priority target: %s", me.prioName.callsign));
+		} else {
+			me.text3.setText("");
+		}
 	},
+	del: func {
+		me.window.del();
+        #emesary.GlobalTransmitter.DeRegister(f16_hmd);
+    },
 };
 
 RadarViewBScope = {
@@ -2080,11 +2218,11 @@ RadarViewBScope = {
 #   link to Radar
 #   link to FireControl
 	new: func {
-		var window = canvas.Window.new([256, 256],"dialog")
+		me.window = canvas.Window.new([256, 256],"dialog")
 				.set('x', 550)
                 .set('title', "Radar B-Scope");
-		var root = window.getCanvas(1).createGroup();
-		window.getCanvas(1).setColorBackground(0,0,0);
+		var root = me.window.getCanvas(1).createGroup();
+		me.window.getCanvas(1).setColorBackground(0,0,0);
 		me.rootCenter = root.createChild("group")
 				.setTranslation(128,256);
 		me.rootCenterBleps = root.createChild("group")
@@ -2150,17 +2288,19 @@ RadarViewBScope = {
 	      	  		.hide();
         }
 
-		me.loop();
+		var mt = maketimer(0.05,func me.loop());
+        mt.start();
+		return me;
 	},
 
 	loop: func {
-		if (!enable) {settimer(func me.loop(), 0.3); return;}
+		if (!enable) {return;}
 		me.sweep.setTranslation(128*exampleRadar.positionX/60,0);
-		if (0 and exampleRadar.lock!=HARD) {
+		if (exampleRadar.showAZ()) {
 			me.sweepA.show();
 			me.sweepB.show();
-			me.sweepA.setTranslation(128*exampleRadar.pattern_move[0]/60,0);
-			me.sweepB.setTranslation(128*exampleRadar.pattern_move[1]/60,0);
+			me.sweepA.setTranslation(128*(exampleRadar.currentMode.azimuthTilt-exampleRadar.currentMode.az)/60,0);
+			me.sweepB.setTranslation(128*(exampleRadar.currentMode.azimuthTilt+exampleRadar.currentMode.az)/60,0);
 		} else {
 			me.sweepA.hide();
 			me.sweepB.hide();
@@ -2169,14 +2309,14 @@ RadarViewBScope = {
 		#me.rootCenterBleps.removeAllChildren();
 		me.i=0;
 		foreach(contact; exampleRadar.vector_aicontacts_bleps) {
-			if (me.elapsed - contact.blepTime < 5) {
-				me.distPixels = contact.getRangeFrozen()*(256/exampleRadar.getRange()*NM2M);
+			if (me.elapsed - contact.blepTime < exampleRadar.currentMode.timeToKeepBleps) {
+				me.distPixels = contact.getRangeFrozen()*(256/(exampleRadar.getRange()*NM2M));
 
-				me.blep[me.i].setColor(1-(me.elapsed - contact.blepTime)/time_to_fadeout_bleps,1-(me.elapsed - contact.blepTime)/time_to_fadeout_bleps,1-(me.elapsed - contact.blepTime)/time_to_fadeout_bleps);
+				me.blep[me.i].setColor(1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps,1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps,1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps);
 				me.blep[me.i].setTranslation(128*contact.getDeviationHeadingFrozen()/60,-me.distPixels);
 				me.blep[me.i].show();
 				me.blep[me.i].update();
-				if (0 and exampleRadar.containsVector(exampleRadar.locks, contact)) {
+				if (contact.isInfoExtended()) {
 					me.rot = contact.getHeadingFrozen();
 					if (me.rot == nil) {
 						#can happen in transition between TWS to RWS
@@ -2184,7 +2324,7 @@ RadarViewBScope = {
 					} else {
 						me.rot = me.rot-getprop("orientation/heading-deg")-contact.getDeviationHeadingFrozen();
 						me.lock[me.i].setRotation(me.rot*D2R);
-						me.lock[me.i].setColor(exampleRadar.lock == HARD?[1,0,0]:[1,1,0]);
+						me.lock[me.i].setColor([1,1,0]);
 						me.lock[me.i].setTranslation(128*contact.getDeviationHeadingFrozen()/60,-me.distPixels);
 						me.lock[me.i].show();
 						me.lock[me.i].update();
@@ -2210,20 +2350,27 @@ RadarViewBScope = {
 		}
 		
 		var a = 0;
-		if (exampleRadar.getAzimuthRadius() == 10) {
+		if (exampleRadar.getAzimuthRadius() < 20) {
 			a = 1;
-		} elsif (exampleRadar.getAzimuthRadius() == 25) {
+		} elsif (exampleRadar.getAzimuthRadius() < 30) {
 			a = 2;
-		} elsif (exampleRadar.getAzimuthRadius() == 30) {
+		} elsif (exampleRadar.getAzimuthRadius() < 40) {
 			a = 3;
-		} elsif (exampleRadar.getAzimuthRadius() == 60) {
+		} elsif (exampleRadar.getAzimuthRadius() < 50) {
+			a = 4;
+		} elsif (exampleRadar.getAzimuthRadius() < 60) {
+			a = 5;
+		} elsif (exampleRadar.getAzimuthRadius() < 70) {
 			a = 6;
 		}
 		var b = exampleRadar.getBars();
 		me.b.setText("B"~b);
 		me.a.setText("A"~a);
-		settimer(func me.loop(), 0.05);
 	},
+	del: func {
+		me.window.del();
+        #emesary.GlobalTransmitter.DeRegister(f16_hmd);
+    },
 };
 
 RadarViewCScope = {
@@ -2235,11 +2382,11 @@ RadarViewCScope = {
 #   link to Radar
 #   link to FireControl
 	new: func {
-		var window = canvas.Window.new([256, 256],"dialog")
+		me.window = canvas.Window.new([256, 256],"dialog")
 				.set('x', 825)
                 .set('title', "Radar C-Scope");
-		var root = window.getCanvas(1).createGroup();
-		window.getCanvas(1).setColorBackground(0,0,0);
+		var root = me.window.getCanvas(1).createGroup();
+		me.window.getCanvas(1).setColorBackground(0,0,0);
 		me.rootCenter = root.createChild("group")
 				.setTranslation(128,256);
 		me.rootCenter2 = root.createChild("group")
@@ -2297,11 +2444,13 @@ RadarViewCScope = {
         }
 		
 
-		me.loop();
+		var mt = maketimer(0.05,func me.loop());
+        mt.start();
+		return me;
 	},
 
 	loop: func {
-		if (!enable) {settimer(func me.loop(), 0.3); return;}
+		if (!enable) return;
 		me.sweep.setTranslation(128*exampleRadar.positionX/60,0);
 		me.sweep2.setTranslation(0, -128*(exampleRadar.positionY)/60);
 		me.elapsed = getprop("sim/time/elapsed-sec");
@@ -2315,8 +2464,8 @@ RadarViewCScope = {
 		#			.update();
 		me.i = 0;
 		foreach(contact; exampleRadar.vector_aicontacts_bleps) {
-			if (me.elapsed - contact.blepTime < 5) {
-				me.blep[me.i].setColor(1-(me.elapsed - contact.blepTime)/time_to_fadeout_bleps,1-(me.elapsed - contact.blepTime)/time_to_fadeout_bleps,1-(me.elapsed - contact.blepTime)/time_to_fadeout_bleps);
+			if (me.elapsed - contact.blepTime < exampleRadar.currentMode.timeToKeepBleps) {
+				me.blep[me.i].setColor(1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps,1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps,1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps);
 				me.blep[me.i].setTranslation(128*contact.getDeviationHeadingFrozen()/60,-128*contact.getDeviationPitchFrozen()/60);
 				me.blep[me.i].show();
 				me.blep[me.i].update();
@@ -2344,10 +2493,11 @@ RadarViewCScope = {
 			me.lock[me.i].hide();
 			me.select[me.i].hide();
 		}
-		
-
-		settimer(func me.loop(), 0.05);
 	},
+	del: func {
+		me.window.del();
+        #emesary.GlobalTransmitter.DeRegister(f16_hmd);
+    },
 };
 
 
@@ -2361,12 +2511,12 @@ RadarViewAScope = {
 #   link to FireControl
 	new: func {
 		
-		var window = canvas.Window.new([256, 256],"dialog")
+		me.window = canvas.Window.new([256, 256],"dialog")
 				.set('x', 825)
 				.set('y', 350)
                 .set('title', "Radar A-Scope");
-		var root = window.getCanvas(1).createGroup();
-		window.getCanvas(1).setColorBackground(0,0,0);
+		var root = me.window.getCanvas(1).createGroup();
+		me.window.getCanvas(1).setColorBackground(0,0,0);
 		me.rootCenter = root.createChild("group")
 				.setTranslation(0,250);
 		me.line = [];
@@ -2378,17 +2528,19 @@ RadarViewAScope = {
 					.setColor(1,1,1));
 		}
 		me.values = setsize([], 256);
-		me.loop();
+		var mt = maketimer(0.05,func me.loop());
+        mt.start();
+		return me;
 	},
 
 	loop: func {
-		if (!enable) {settimer(func me.loop(), 0.3); return;}
+		if (!enable) return;
 		for (var i = 0;i<256;i+=1) {
 			me.values[i] = 0;
 		}
 		me.elapsed = getprop("sim/time/elapsed-sec");
 		foreach(contact; exampleRadar.vector_aicontacts_bleps) {
-			if (me.elapsed - contact.blepTime < 5) {
+			if (me.elapsed - contact.blepTime < exampleRadar.currentMode.timeToKeepBleps) {
 				me.range = contact.getRangeDirectFrozen();
 				if (me.range==0) me.range=1;
 				me.distPixels = 2/math.pow(me.range/contact.strength,2);
@@ -2409,8 +2561,12 @@ RadarViewAScope = {
 		for (var i = 0;i<256;i+=1) {
 			me.line[i].setTranslation(i,-clamp(me.values[i],0,256));
 		}
-		settimer(func me.loop(), exampleRadar.loopSpeed);
+		
 	},
+	del: func {
+		me.window.del();
+        #emesary.GlobalTransmitter.DeRegister(f16_hmd);
+    },
 };
 
 RWRCanvas = {
@@ -2769,305 +2925,41 @@ RWRCanvas = {
 			me.symbol_new[me.newt].hide();
 		}
 	},
+	del: func {
+	},
 };
 
 RWRView = {
 	new: func {
 		var diameter = 256;
-		var window = canvas.Window.new([diameter, diameter],"dialog")
+		me.window = canvas.Window.new([diameter, diameter],"dialog")
 				.set('x', 550)
 				.set('y', 350)
                 .set('title', "RWR");
-		var root = window.getCanvas(1).createGroup();
-		window.getCanvas(1).setColorBackground(0,0.2,0);
+		var root = me.window.getCanvas(1).createGroup();
+		me.window.getCanvas(1).setColorBackground(0,0.2,0);
 		me.rwr = RWRCanvas.new(root, [diameter/2,diameter/2], diameter);
-		me.loop();
+		var mt = maketimer(1,func me.loop());
+        mt.start();
+		return me;
 	},
 
 	loop: func {
-		if (!enableRWRs) {settimer(func me.loop(), 0.3); return;}
+		if (!enableRWRs) return;
 		
 		
 		me.rwr.update(exampleRWR.vector_aicontacts_threats);
 
-		settimer(func me.loop(), 1);
+		
+	},
+	del: func {
+		me.rwr.del();
+		me.window.del();
 	},
 };
 
 
-ExampleRadar = {
-# test radar
-	new: func () {
-		var vr = ActiveDiscRadar.new();
-		append(vr.parents, ExampleRadar);
-		vr.discSpeed_dps  = 120;
-		vr.fovRadius_deg  = 3.6;
-		vr.calcLoop();
-		vr.calcBars();
-		vr.pattern        = [-60,60,[1,2,3,4,5,6]];#6/8 bars
-		vr.forDist_m      = 32*NM2M;#range setting
-		vr.forRadius_deg  = 60;
-		vr.posE           = vr.bars[vr.pattern[2][vr.patternBar]];
-		vr.posH           = vr.pattern[0];
-    	return vr;
-	},
 
-	more: func {
-		#test method
-		me.forDist_m      *= 2;
-	},
-
-	less: func {
-		#test method
-		me.forDist_m      *= 0.5;
-	},
-
-	rwsHigh: func {
-		#test method
-		me.pattern        = [-60,60,[4,5,6,7]];#4/8 bars
-		me.directionX     = 1;
-		me.patternBar     = 0;
-		me.posE           = me.bars[me.pattern[2][me.patternBar]];
-		me.posH           = me.pattern[0];
-		me.scanMode       = RANGE_WHILE_SEARCH;
-		me.discSpeed_dps  = 120;
-		me.lock = NONE;
-		me.locks = [];
-		me.calcLoop();
-		me.follow = [];
-	},
-
-	rws120: func {
-		#test method
-		me.pattern        = [-60,60,[1,2,3,4,5,6]];#6/8 bars
-		me.directionX     = 1;
-		me.patternBar     = 0;
-		me.posE           = me.bars[me.pattern[2][me.patternBar]];
-		me.posH           = me.pattern[0];
-		me.scanMode       = RANGE_WHILE_SEARCH;
-		me.discSpeed_dps  = 120;
-		me.lock = NONE;
-		me.locks = [];
-		me.calcLoop();
-		#me.follow = [];
-	},
-
-	sam: func {
-		#test method
-		if (size(me.follow)>0 and me.lock != HARD) {
-			# toggle SAM off
-			me.follow = [];
-		} elsif(me.lock == HARD) {
-			if (size(me.locks) > 0) {
-				me.follow = [me.locks[0]];
-				if(me.scanMode == TRACK_WHILE_SCAN) {
-					me.lock = SOFT;
-				} else {
-					me.lock = NONE;
-					me.locks = [];
-				}				
-			}
-		} elsif(me.scanMode == RANGE_WHILE_SEARCH) {
-			if (size(me.vector_aicontacts_bleps) > 0) {
-				me.lock = NONE;
-				me.locks = [];
-				me.follow = [me.vector_aicontacts_bleps[0]];
-			}
-		} elsif(me.scanMode == TRACK_WHILE_SCAN) {
-			if (size(me.locks) > 0) {
-				me.lock = SOFT;
-				me.follow = [me.locks[0]];
-			}
-		}		 
-	},
-
-	next: func {
-		if (size(me.follow) == 1 and size(me.locks) > 0 and me.lock != HARD) {
-			me.index = me.vectorIndex(me.locks, me.follow[0]);
-			if (me.index == -1) {
-				me.follow = [me.locks[0]];
-			} else {
-				if (me.index+1 > size(me.locks)-1) {
-					me.follow = [];
-				} else {
-					me.follow = [me.locks[me.index+1]];
-				}
-			}
-		} elsif (size(me.follow) == 1 and size(me.vector_aicontacts_bleps) > 0) {
-			me.index = me.vectorIndex(me.vector_aicontacts_bleps, me.follow[0]);
-			if (me.index == -1) {
-				me.follow = [me.vector_aicontacts_bleps[0]];
-			} else {
-				if (me.index+1 > size(me.vector_aicontacts_bleps)-1) {
-					me.follow = [];
-				} else {
-					me.follow = [me.vector_aicontacts_bleps[me.index+1]];
-				}
-			}
-		}
-	},
-
-	tws15: func {
-		#test method
-		me.pattern        = [-7.5,7.5,[1,2,3,4,5,6]];#6/8 bars
-		me.directionX     = 1;
-		me.patternBar     = 0;
-		me.posE           = me.bars[me.pattern[2][me.patternBar]];
-		me.posH           = me.pattern[0];
-		me.scanMode       = TRACK_WHILE_SCAN;
-		me.discSpeed_dps  = 60;
-		me.calcLoop();
-		me.lock = NONE;
-		#me.follow = [];
-	},
-
-	tws30: func {
-		#test method
-		me.pattern        = [-15,15,[2,3,4,5]];#4/8 bars
-		me.directionX     = 1;
-		me.patternBar     = 0;
-		me.posE           = me.bars[me.pattern[2][me.patternBar]];
-		me.posH           = me.pattern[0];
-		me.scanMode       = TRACK_WHILE_SCAN;
-		me.discSpeed_dps  = 60;
-		me.calcLoop();
-		me.lock = NONE;
-		#me.follow = [];
-	},
-
-	tws60: func {
-		#test method
-		me.pattern        = [-30,30,[3,4]];#2/8 bars
-		me.directionX     = 1;
-		me.patternBar     = 0;
-		me.posE           = me.bars[me.pattern[2][me.patternBar]];
-		me.posH           = me.pattern[0];
-		me.scanMode       = TRACK_WHILE_SCAN;
-		me.discSpeed_dps  = 60;
-		me.calcLoop();
-		me.lock = NONE;
-		#me.follow = [];
-	},
-
-	b1: func {
-		me.pattern[2] = [4];
-	},
-
-	b2: func {
-		me.pattern[2] = [3,4];
-	},
-
-	b4: func {
-		me.pattern[2] = [2,3,4,5];
-	},
-
-	b6: func {
-		me.pattern[2] = [1,2,3,4,5,6];
-	},
-
-	b8: func {
-		me.pattern[2] = [0,1,2,3,4,5,6,7];
-	},
-
-	a2: func {
-		me.pattern[0] = -15;
-		me.pattern[1] =  15;
-	},
-
-	a3: func {
-		me.pattern[0] = -30;
-		me.pattern[1] =  30;
-	},
-
-	a4: func {
-		me.pattern[0] = -60;
-		me.pattern[1] =  60;
-	},
-
-	a1: func {
-		me.pattern[0] = -7.5;
-		me.pattern[1] =  7.5;
-	},
-
-	left: func {
-		#test method
-		var zero = me.pattern[0]-15;
-		if (zero >= -me.forRadius_deg) {
-			me.pattern[0] = zero;
-			me.pattern[1] = me.pattern[1]-15;
-		}
-	},
-
-	right: func {
-		#test method
-		var one = me.pattern[1]+15;
-		if (one <= me.forRadius_deg) {
-			me.pattern[1] = one;
-			me.pattern[0] = me.pattern[0]+15;
-		}
-	},
-
-	up: func {
-		#test method
-		me.barOffset += 1;
-		if (me.barOffset > 4) {
-			me.barOffset = 4;
-		}
-	},
-
-	down: func {
-		#test method
-		me.barOffset -= 1;
-		if (me.barOffset < -4) {
-			me.barOffset = -4;
-		}
-	},
-
-	level: func {
-		#test method
-		me.barOffset = 0;
-	},
-
-	lockRandom: func {
-		#test method
-
-		# hard lock
-		if (size(me.follow)>0) {
-			# choose same lock as being followed with SAM
-			if (me.follow[0].getRangeDirectFrozen() < max_lock_range_nm*NM2M) {
-				me.locks = [me.follow[0]];
-				me.lock = HARD;
-				me.vector_aicontacts_for = [me.follow[0]];
-				#me.devLock = lck.getDeviation();#since we have no cursor we need to cheat a bit here.
-				#me.posH = me.devLock[0];
-				#me.posE = me.devLock[1];
-				me.sendLockNotificationInit();
-				#me.scanFOV();# this call migth not be neccesary..
-			}
-		} elsif (size(me.vector_aicontacts_bleps)>0) {
-			# random chosen lock in range
-			foreach (lck ; me.vector_aicontacts_bleps) {
-				if (lck.getRangeDirectFrozen() < max_lock_range_nm*NM2M) {
-					me.locks = [lck];
-					me.follow = [lck];
-					me.lock = HARD;
-					me.vector_aicontacts_for = [lck];
-					#me.devLock = lck.getDeviation();
-					#me.posH = me.devLock[0];
-					#me.posE = me.devLock[1];
-					me.sendLockNotificationInit();
-					#me.scanFOV();# this call migth not be neccesary..
-					break;
-				}
-			}
-		}
-	},
-
-	sendLockNotificationInit: func {
-		# this will update the lock if it hasn't moved too much since we last detected it.
-		emesary.GlobalTransmitter.NotifyAll(me.SliceNotification.slice(me.locks[0].getDeviationPitchFrozen()-me.fovRadius_deg*5,me.locks[0].getDeviationPitchFrozen()+me.fovRadius_deg*5, me.locks[0].getDeviationHeadingFrozen()-me.fovRadius_deg*5,me.locks[0].getDeviationHeadingFrozen()+me.fovRadius_deg*5,me.forDist_m));
-	},
-};
 
 
 
@@ -3106,17 +2998,17 @@ var buttonWindow = func {
 	});
 	myLayout.addItem(button1);
 	var button5 = canvas.gui.widgets.Button.new(root, canvas.style, {})
-		.setText("?Left")
+		.setText("Left")
 		.setFixedSize(75, 25);
 	button5.listen("clicked", func {
-		exampleRadar.left();
+		exampleRadar.setDeviation(exampleRadar.getDeviation()-10);
 	});
 	myLayout.addItem(button5);
 	var button6 = canvas.gui.widgets.Button.new(root, canvas.style, {})
-		.setText("?Right")
+		.setText("Right")
 		.setFixedSize(75, 25);
 	button6.listen("clicked", func {
-		exampleRadar.right();
+		exampleRadar.setDeviation(exampleRadar.getDeviation()+10);
 	});
 	myLayout.addItem(button6);
 	var button7 = canvas.gui.widgets.Button.new(root, canvas.style, {})
@@ -3134,24 +3026,24 @@ var buttonWindow = func {
 	});
 	myLayout.addItem(button8);
 	var button9 = canvas.gui.widgets.Button.new(root, canvas.style, {})
-		.setText("?Lock")
+		.setText("Designate")
 		.setFixedSize(75, 25);
 	button9.listen("clicked", func {
-		exampleRadar.lockRandom();
+		exampleRadar.designateRandom();
 	});
 	myLayout.addItem(button9);
 	var button10 = canvas.gui.widgets.Button.new(root, canvas.style, {})
-		.setText("?Select|SAM")
-		.setFixedSize(75, 25);
+		.setText("Un-designate")
+		.setFixedSize(90, 25);
 	button10.listen("clicked", func {
-		exampleRadar.sam();
+		exampleRadar.undesignate();
 	});
 	myLayout.addItem(button10);
 	var button11 = canvas.gui.widgets.Button.new(root, canvas.style, {})
-		.setText("?Next")
-		.setFixedSize(75, 25);
+		.setText("Cycle priority")
+		.setFixedSize(90, 25);
 	button11.listen("clicked", func {
-		exampleRadar.next();
+		exampleRadar.cycleDesignate();
 	});
 	myLayout.addItem(button11);
 	var button12 = canvas.gui.widgets.Button.new(root, canvas.style, {})
@@ -3231,20 +3123,102 @@ var button23 = nil;
 var button24 = nil;
 var button25 = nil;
 var button26 = nil;
-AIToNasal.new();
-var nose = NoseRadar.new(15000,60,5);
-var omni = OmniRadar.new(0.25, 150, 55);
-var terrain = TerrainChecker.new(0.10, 1, 60);
-#var exampleRadar = ExampleRadar.new();
-var exampleRWR   = RWR.new();
-RadarViewPPI.new();
-RadarViewBScope.new();
-RadarViewCScope.new();
-#RadarViewAScope.new();
-RWRView.new();
-buttonWindow();
+
+
+
+var baser = nil;
+var nose = nil;
+var omni = nil;
+var terrain = nil;
+var exampleRWR   = nil;
+var displayPPI = nil;
+var displayB = nil;
+var displayC = nil;
+var displayA = nil;
+var displayRWR = nil;
+
 
 
 #var fix = FixedBeamRadar.new();
 #fix.setBeamPitch(-2.5);
 #settimer(func {print("beam: "~fix.testForDistance());},15);# will fail if no terrain found :)
+
+var main = func (module) {
+	baser = AIToNasal.new();
+	nose = NoseRadar.new(15000,60,5);
+	omni = OmniRadar.new(0.25, 150, 55);
+	terrain = TerrainChecker.new(0.10, 1, 60);
+	displayPPI = RadarViewPPI.new();
+	displayB = RadarViewBScope.new();
+	displayC = RadarViewCScope.new();
+	displayA = RadarViewAScope.new();
+	#exampleRWR   = RWR.new();
+	#displayRWR = RWRView.new();
+    buttonWindow();
+}
+
+var unload = func {
+    if (exampleRadar != nil) {
+        exampleRadar.del();
+        exampleRadar = nil;
+    }
+    if (nose != nil) {
+        nose.del();
+        nose = nil;
+    }
+    if (omni != nil) {
+        omni.del();
+        omni = nil;
+    }
+    if (displayRWR != nil) {
+        displayRWR.del();
+        displayRWR = nil;
+    }
+    if (displayPPI != nil) {
+        displayPPI.del();
+        displayPPI = nil;
+    }
+    if (displayB != nil) {
+        displayB.del();
+        displayB = nil;
+    }
+    if (displayA != nil) {
+        displayA.del();
+        displayA = nil;
+    }
+    if (displayC != nil) {
+        displayC.del();
+        displayC = nil;
+    }
+    if (terrain != nil) {
+        terrain.del();
+        terrain = nil;
+    }
+    if (exampleRWR != nil) {
+        exampleRWR.del();
+        exampleRWR = nil;
+    }
+    if (window != nil) {
+        window.del();
+        window = nil;
+    }
+    if (baser != nil) {
+        baser.del();
+        baser = nil;
+    }
+    AIToNasal = nil;
+	NoseRadar = nil;
+	OmniRadar = nil;
+	TerrainChecker = nil;
+	RWR = nil;
+	RadarViewPPI = nil;
+	RadarViewBScope = nil;
+	RadarViewCScope = nil;
+	RadarViewAScope = nil;
+	RWRView = nil;
+}
+
+
+# isPainted in contacts
+# LRS should scan further
+# Cannot use degrees as cartesian for deviations of antenae and contacts in displays
