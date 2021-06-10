@@ -635,7 +635,7 @@ AIContact = {
 		#return me.devStored[0];
 	},
 
-	getCartesianInFoRFrozen: func {
+	getCartesianInFoRFrozen: func {# TODO: this is broken, fix it or stop using this method..
 		return [me.devStored[9], me.devStored[10]];
 	},
 
@@ -1038,6 +1038,26 @@ TerrainChecker = {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ################
 
 
@@ -1073,9 +1093,11 @@ var RadarMode = {
 	minimumTimePerReturn: 1.25,
 	rcsFactor: 1,
 	rollAntennae: 0,
-	showBars: 1,
 	showAZ: func {
 		return me.az != 60;
+	},
+	showBars: func {
+		return 1;
 	},
 	setRange: func {},
 	getRange: func {},
@@ -1093,6 +1115,12 @@ var RadarMode = {
 	},
 	getDeviation: func {
 		return me.azimuthTilt;
+	},
+	getBars: func {
+		return me.bars;
+	},
+	getAz: func {
+		return me.az;
 	},
 	getPriority: func {
 		return me["priorityTarget"];
@@ -1155,11 +1183,10 @@ var F16ACM20Mode = {
 	minRange: 10,
 	discSpeed_dps: 84.6,
 	rcsFactor: 0.9,
-	timeToKeepBleps: 13,# TODO
+	timeToKeepBleps: 1,# TODO
 	bars: 4,
 	az: 15,
 	rollAntennae: 1,
-	showBars: 0,
 	new: func (subMode, radar = nil) {
 		var mode = {parents: [F16ACM20Mode, RadarMode]};
 		mode.radar = radar;
@@ -1167,6 +1194,9 @@ var F16ACM20Mode = {
 		mode.subMode.superMode = mode;
 		mode.subMode.shortName = mode.shortName;
 		return mode;
+	},
+	showBars: func {
+		return 0;
 	},
 	setDeviation: func (dev_tilt_deg) {
 	},
@@ -1226,13 +1256,11 @@ var F16ACM60Mode = {
 	minRange: 10,
 	discSpeed_dps: 84.6,
 	rcsFactor: 0.9,
-	timeToKeepBleps: 13,# TODO
 	bars: 1,
 	barHeight: 1.0/3.9,# multiple of instantFoV (in this case 1 deg)
 	az: 5,
 	rollAntennae: 1,
 	barPattern:  [ [[-0.6,-5],[0.0,-5],[0.0, 51],[0.6,51],[0.6,-5],[0.0,-5],[0.0,51],[-0.6,51]], ],
-	showBars: 0,
 	new: func (subMode, radar = nil) {
 		var mode = {parents: [F16ACM60Mode, F16ACM20Mode, RadarMode]};
 		mode.radar = radar;
@@ -1244,6 +1272,57 @@ var F16ACM60Mode = {
 	preStep: func {
 		me.radar.tilt = 0;
 		me.radar.tiltOverride = 1;
+	},
+};
+
+var F16ACMBoreMode = {
+	radar: nil,
+	rootName: "ACM",
+	shortName: "BORE",
+	longName: "Air Combat Mode Bore",
+	bars: 1,
+	barHeight: 1.0,# multiple of instantFoV (in this case 1 deg)
+	az: 0,
+	rollAntennae: 1,
+	barPattern:  [ [[0.0,-1]], ],
+	new: func (subMode, radar = nil) {
+		var mode = {parents: [F16ACMBoreMode, F16ACM20Mode, RadarMode]};
+		mode.radar = radar;
+		mode.subMode = subMode;
+		mode.subMode.superMode = mode;
+		mode.subMode.shortName = mode.shortName;
+		return mode;
+	},
+	preStep: func {
+		me.radar.tilt = 0;
+		me.radar.tiltOverride = 1;
+	},
+	step: func (dt, tilt) {
+		me.preStep();
+		# (re)calculate pattern as vectors.
+		me.currentPattern = [];
+		foreach (me.eulerNorm ; me.barPattern[me.bars-1]) {
+			me.localDir = vector.Math.eulerToCartesian3X(-me.eulerNorm[0]*me.az-me.azimuthTilt, me.eulerNorm[1]*me.radar.instantFoVradius*me.barHeight, 0);
+			me.localDir = vector.Math.pitchVector(tilt, me.localDir);
+			if (me.rollAntennae) {
+				me.localDir = vector.Math.yawPitchRollVector(0, self.getPitch(), self.getRoll(), me.localDir);
+			}
+			append(me.currentPattern, me.localDir);
+		}
+		me.maxMove = math.min(me.radar.instantFoVradius, me.discSpeed_dps*dt);
+		me.currentPos = me.radar.positionDirection;
+		me.angleToNextNode = vector.Math.angleBetweenVectors(me.currentPos, me.nextPatternNode == -1?me.localDir:me.currentPattern[me.nextPatternNode]);
+		if (me.angleToNextNode < me.maxMove) {
+			me.radar.setAntennae(me.nextPatternNode == -1?me.localDir:me.currentPattern[me.nextPatternNode]);
+			me.nextPatternNode += 1;
+			if (me.nextPatternNode >= size(me.currentPattern)) {
+				me.nextPatternNode = (me.scanPriorityEveryFrame and me.priorityTarget!=nil)?-1:0;
+			}
+			return 0;
+		}
+		me.newPos = vector.Math.rotateVectorTowardsVector(me.currentPos, me.nextPatternNode == -1?me.localDir:me.currentPattern[me.nextPatternNode], me.maxMove);
+		me.radar.setAntennae(me.newPos);
+		return 0;
 	},
 };
 
@@ -1492,7 +1571,7 @@ var F16LRSMode = {
 };
 
 var F16LRSSAMMode = {
-	shortName: "LRS-SAM",
+	shortName: "LRS",
 	longName: "Long Range Search - Situational Awareness Mode",
 	discSpeed_dps: 45,
 	rcsFactor: 1,
@@ -1511,7 +1590,7 @@ var F16LRSSAMMode = {
 
 var F16RWSSAMMode = {
 	radar: nil,
-	shortName: "RWS-SAM",
+	shortName: "RWS",
 	longName: "Range While Search - Situational Awareness Mode",
 	superMode: nil,
 	discSpeed_dps: 65,
@@ -1633,6 +1712,15 @@ var F16STTMode = {
 	},
 	showAZ: func {
 		return 0;
+	},
+	showBars: func {
+		return me.superMode.showBars();
+	},
+	getBars: func {
+		return me.superMode.getBars();
+	},
+	getAz: func {
+		return me.superMode.getAz();
 	},
 	preStep: func {
 		if (me.priorityTarget != nil) {
@@ -1870,10 +1958,10 @@ var APG68 = {
 		return me.currentMode.getDeviation();
 	},
 	getBars: func {
-		return me.currentMode.bars;
+		return me.currentMode.getBars();
 	},
 	getAzimuthRadius: func {
-		return me.currentMode.az;
+		return me.currentMode.getAz();
 	},
 	getMode: func {
 		return me.currentMode.shortName;
@@ -2017,7 +2105,8 @@ var lrsMode = F16LRSMode.new(F16LRSSAMMode.new(F16STTMode.new()));
 var twsMode = F16TWSMode.new(F16STTMode.new());
 var acm20Mode = F16ACM20Mode.new(F16ACMSTTMode.new());
 var acm60Mode = F16ACM60Mode.new(F16ACMSTTMode.new());
-var exampleRadar = APG68.new([rwsMode,twsMode,lrsMode],[acm20Mode,acm60Mode]);
+var acmBoreMode = F16ACMBoreMode.new(F16ACMSTTMode.new());
+var exampleRadar = APG68.new([rwsMode,twsMode,lrsMode],[acm20Mode,acm60Mode,acmBoreMode]);
 
 
 
@@ -2361,7 +2450,8 @@ RadarViewPPI = {
 			# the if is due to just after changing bars and before radar loop has run, patternBar can be out of bounds of pattern.
 			me.text.setText(sprintf("Bar %+d    Range %d NM", exampleRadar.pattern[2][exampleRadar.patternBar]<4?exampleRadar.pattern[2][exampleRadar.patternBar]-4:exampleRadar.pattern[2][exampleRadar.patternBar]-3,exampleRadar.forDist_m*M2NM));
 		}
-		me.text.setText(sprintf("           Range %d NM", exampleRadar.getRange()));
+		#me.text.setText(sprintf("           Range %d NM", exampleRadar.getRange()));
+		me.text.setText("");
 		me.md = exampleRadar.currentMode.longName;
 		#me.text2.setText(sprintf("Lock=%d (%s)  %s", size(exampleRadar.locks), exampleRadar.lock==NONE?"NONE":exampleRadar.lock==SOFT?"SOFT":"HARD",me.md));
 		me.text2.setText(me.md);
@@ -2543,7 +2633,7 @@ RadarViewBScope = {
 		} elsif (exampleRadar.getAzimuthRadius() < 70) {
 			a = 6;
 		}
-		if (exampleRadar.currentMode.showBars) {
+		if (exampleRadar.currentMode.showBars()) {
 			var b = exampleRadar.getBars();
 			me.b.setText("B"~b);
 		} else {
@@ -2655,19 +2745,19 @@ RadarViewCScope = {
 		foreach(contact; exampleRadar.vector_aicontacts_bleps) {
 			if (me.elapsed - contact.blepTime < exampleRadar.currentMode.timeToKeepBleps) {
 				me.blep[me.i].setColor(1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps,1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps,1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps);
-				me.blep[me.i].setTranslation(128*contact.getCartesianInFoRFrozen()[0],-128*contact.getCartesianInFoRFrozen()[1]);
+				me.blep[me.i].setTranslation(128*contact.getDeviationHeadingFrozen()/60,-128*contact.getDeviationPitchFrozen()/60);
 				me.blep[me.i].show();
 				me.blep[me.i].update();
 				if (0 and exampleRadar.containsVector(exampleRadar.locks, contact)) {
 					me.lock[me.i].setColor(exampleRadar.lock == HARD?[1,0,0]:[1,1,0]);
-					me.lock[me.i].setTranslation(128*contact.getCartesianInFoRFrozen()[0],-128*contact.getCartesianInFoRFrozen()[1]);
+					me.lock[me.i].setTranslation(128*contact.getDeviationHeadingFrozen()/60,-128*contact.getDeviationPitchFrozen()/60);
 					me.lock[me.i].show();
 					me.lock[me.i].update();
 				} else {
 					me.lock[me.i].hide();
 				}
 				if (0 and exampleRadar.containsVector(exampleRadar.follow, contact)) {
-					me.select[me.i].setTranslation(128*contact.getCartesianInFoRFrozen()[0],-128*contact.getCartesianInFoRFrozen()[1]);
+					me.select[me.i].setTranslation(128*getDeviationHeadingFrozen()/60,-128*contact.getDeviationPitchFrozen()/60);
 					me.select[me.i].show();
 					me.select[me.i].update();
 				} else {
@@ -3425,9 +3515,13 @@ var unload = func {
 	RWRView = nil;
 }
 
+# BUGS:
+#
+# exampleRadar.positionCart vs. contact.getCartesianInFoRFrozen()  At least one is not correct! ACM60
+#
 # IMPROVEMENTS:
 #
-# LRS should scan further
+#
 #
 # FEATURES:
 #
@@ -3437,6 +3531,5 @@ var unload = func {
 # send spike
 # subclass for missiles
 # completelist for bombs
-# ACM modes
 # GM modes
 # terrain checks
