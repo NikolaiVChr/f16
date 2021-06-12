@@ -58,6 +58,7 @@ var knownSurface = {
     "struct":       nil,
     "point":       nil,
     "rig":       nil,
+    "gci":       nil,
     "truck":     nil,
     "tower":     nil,
     "MIM104D":       nil,
