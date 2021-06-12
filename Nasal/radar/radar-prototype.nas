@@ -46,7 +46,7 @@ var MARINE = 1;
 var SURFACE = 2;
 var ORDNANCE = 3;
 
-var GEO = 0;
+var ECEF = 0;
 var GPS = 1;
 
 var FALSE = 0;
@@ -186,7 +186,7 @@ AIToNasal = {
 		    me.pos_type = GPS;
 		    me.aircraftPos = geo.Coord.new().set_latlon(me.lat.getValue(), me.lon.getValue(), me.alt.getValue()*FT2M);
 	    } else {
-	    	me.pos_type = GEO;
+	    	me.pos_type = ECEF;
 	    	me.aircraftPos = geo.Coord.new().set_xyz(me.x.getValue(), me.y.getValue(), me.z.getValue());
 	    }
 	    
@@ -407,6 +407,8 @@ AIContact = {
 		c.inClutter = 0;
 		c.hiddenFromDoppler = 0;
 		c.id = ident;
+		c.bleps = [];
+		c.lastRegisterWasTrack = 0;
 
 		# active radar:
 		c.blepTime = -1000;
@@ -458,7 +460,7 @@ AIContact = {
 	},
 
 	getCoord: func {
-		if (me.pos_type = GEO) {
+		if (me.pos_type = ECEF) {
 	    	me.coord = geo.Coord.new().set_xyz(me.x.getValue(), me.y.getValue(), me.z.getValue());
 	    	return me.coord;
 	    } else {
@@ -578,14 +580,106 @@ AIContact = {
 		me.hiddenFromDoppler = dopp;
 	},
 
+	getModel: func {
+		return me.model;
+	},
+
+	#
+	#
+	#
+	#        BLEP  methods:
+	#
+	#
+	#
+
+	blep: func (time, searchInfo, strength) {
+		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
+		# blep: time, rcs_strength, dist, heading, deviations vector, speed, closing-rate, altitude
+		var newBlep = [];
+		var value = 0;
+		me.getCoord();
+		var ownship = self.getCoord();
+		append(newBlep, time);
+		append(newBlep, strength);
+		if (searchInfo[0]) {
+			value = ownship.direct_distance_to(me.coord);
+			append(newBlep, value);
+		} else {
+			append(newBlep, nil);
+		}
+		if (searchInfo[1]) {
+			value = me.getHeading();
+			append(newBlep, value);
+			me.lastRegisterWasTrack = 1;
+		} else {
+			append(newBlep, nil);
+			me.lastRegisterWasTrack = 0;
+		}
+		if (searchInfo[2]) {
+			value = [me.getDeviationHeading(), me.getDeviationPitch()];
+			append(newBlep, value);
+		} else {
+			append(newBlep, nil);
+		}
+		if (searchInfo[3]) {
+			value = me.getSpeed();#kt
+			append(newBlep, value);
+		} else {
+			append(newBlep, nil);
+		}
+		if (searchInfo[4]) {
+			var bearing = ownship.course_to(me.coord);
+			var rbearing = bearing+180;
+			var ownship_spd = self.getSpeed() * math.cos( -(bearing - self.getHeading()) * D2R);
+            var target_spd  = me.getSpeed()   * math.cos( -(rbearing - me.getHeading()) * D2R);
+			value = ownship_spd + target_spd;
+			append(newBlep, value);
+		} else {
+			append(newBlep, nil);
+		}
+		if (searchInfo[5]) {
+			value = me.coord.alt()*M2FT;
+			append(newBlep, value);
+		} else {
+			append(newBlep, nil);
+		}
+		append(me.bleps, newBlep);
+	},
+
+	getBleps: func {
+		# get the frozen info needed for displays
+		# blep: time, rcs_strength, dist, heading, deviations vector, speed, closing-rate, altitude
+		return me.bleps;
+	},
+
+	setBleps: func (bleps_cleaned) {
+		# call this after pruning the bleps
+		me.bleps = bleps_cleaned;
+	},
+
+	hasTrackInfo: func {
+		# convinience method
+		if (size(me.bleps)) {
+			if (me.bleps[size(me.bleps)-1][3] != nil) {
+				return 1;
+			}
+		}
+		return 0;
+	},
+
+	hadTrackInfo: func {
+		# convinience method
+		return me.lastRegisterWasTrack;
+	},
+
 	storeDeviation: func (dev) {
 		# [bearingDev, elevationDev, distDirect, coord, heading, pitch, roll]
-		# should really be a hash instead of vector
+		# should really be a hash instead of vector?
 		me.devStored = dev;
 	},
 	
 	getDeviationStored: func {
-		# get the frozen info needed for radar
+		# get the frozen info needed for noseradar/radar
 		return me.devStored;
 	},
 
@@ -600,29 +694,52 @@ AIContact = {
 		return me.threatStored;
 	},
 
-	blep: func (time, searchInfo, strength, lock) {
-		# azimuth: dist, groundtrack, deviations, speed, closing-rate
-		me.blepTime = time;
-		#me.headingFrozen = me.getHeading();
-		me.azi = searchInfo[1];# If groundtrack is available
-		me.strength = strength;#rcs
-		#if (lock) {
-		#	me.d = me.getDeviation();
-		#	me.storeDeviation([me.d[0], me.d[1], me.d[2], me.coord, me.getHeading(), me.getPitch(), me.getRoll()]);
-		#}
-		me.coordFrozen = me.devStored[3]; #me.getCoord(); this is just cause Im am too lazy to change methods.
+	#
+	# convinience methods for last registered blep:
+	#
+
+	getLastDirection: func {
+		
+		if (size(me.bleps)) {
+			#if (me.bleps[size(me.bleps)-1][4] != nil) {
+				return me.bleps[size(me.bleps)-1][4];
+			#}
+		}
+		return nil;
 	},
 
-	# in the radars, only call methods below this line:
-
-	isInfoExtended: func {
-		# If this contact is either locked or picked up by TWS (at medium range), return true.
-		#
-		# extended means the following should be available to display in cockpit: (beside the deviation angles and range)
-		# heading, velocity, pitch
-		#
-		return me.azi;
+	getLastRangeDirect: func {
+		if (size(me.bleps)) {
+			#if (me.bleps[size(me.bleps)-1][4] != nil) {
+				return me.bleps[size(me.bleps)-1][2];
+			#}
+		}
+		return nil;
 	},
+
+	getLastAltitude: func {
+		if (size(me.bleps)) {
+			#if (me.bleps[size(me.bleps)-1][4] != nil) {
+				return me.bleps[size(me.bleps)-1][7];
+			#}
+		}
+		return nil;
+	},
+
+	getLastBlepTime: func {
+		if (size(me.bleps)) {
+			#if (me.bleps[size(me.bleps)-1][4] != nil) {
+				return me.bleps[size(me.bleps)-1][0];
+			#}
+		}
+		return -1000;
+	},	
+
+
+
+
+
+	# The following remaining methods is being deprecated:
 
 	getDeviationPitchFrozen: func {
 		me.pitched = vector.Math.getPitch(self.getCoord(), me.coordFrozen);
@@ -684,9 +801,6 @@ AIContact = {
 		return me.devStored[11];
 	},
 
-	getModel: func {
-		return me.model;
-	}
 };
 
 
@@ -1096,14 +1210,15 @@ var RadarMode = {
 	barPatternMax: [0, 1,  1.5,  3],
 	nextPatternNode: 0,
 	scanPriorityEveryFrame: 0,
-	timeToKeepBleps: 5,
+	timeToKeepBleps: 13,
 	rootName: "CRM",
 	shortName: "",
 	longName: "",
 	superMode: nil,
 	minimumTimePerReturn: 1.25,
 	rcsFactor: 1,
-	lastFrameStart: 0,
+	lastFrameStart: -1,
+	lastFrameDuration: 5,
 	showAZ: func {
 		return me.az != 60;
 	},
@@ -1128,7 +1243,6 @@ var RadarMode = {
 		}
 		return 1;
 	},
-	leaveMode: func {},
 	setDeviation: func (dev_tilt_deg) {
 		if (me.az == 60) {
 			dev_tilt_deg = 0;
@@ -1180,6 +1294,7 @@ var RadarMode = {
 			me.currentPattern = [];
 			foreach (me.eulerNorm ; me.barPattern[me.bars-1]) {
 				me.localDir = vector.Math.yawPitchVector(-me.eulerNorm[0]*me.az-me.azimuthTilt, me.eulerNorm[1]*me.radar.instantFoVradius*me.barHeight+tilt+me.gimbalTiltOffset, [1,0,0]);
+				#print("Step sweep: ", -me.eulerNorm[0]*me.az-me.azimuthTilt);
 				append(me.currentPattern, me.localDir);
 			}
 			me.lastTilt = tilt;
@@ -1196,15 +1311,25 @@ var RadarMode = {
 			me.nextPatternNode += 1;
 			if (me.nextPatternNode >= size(me.currentPattern)) {
 				me.nextPatternNode = (me.scanPriorityEveryFrame and me.priorityTarget!=nil)?-1:0;
-				
-				#print("frame ",me.radar.elapsed-me.lastFrameStart);
-				#me.lastFrameStart = me.radar.elapsed;
+				me.calcBlepKeepTime();
 			}
 			return dt-me.angleToNextNode/me.discSpeed_dps;
 		}
 		me.newPos = vector.Math.rotateVectorTowardsVector(me.currentPos, me.nextPatternNode == -1?me.localDir:me.currentPattern[me.nextPatternNode], me.maxMove);
 		me.radar.setAntennae(me.newPos);
 		return 0;
+	},
+	calcBlepKeepTime: func {
+		#print("frame ",me.radar.elapsed-me.lastFrameStart);
+		if (me.lastFrameStart != -1) {
+			me.lastFrameDuration = me.radar.elapsed - me.lastFrameStart;
+			me.timeToKeepBleps = me.radar.framesToKeepBleps*me.lastFrameDuration;
+		}
+		me.lastFrameStart = me.radar.elapsed;
+	},
+	leaveMode: func {
+		me.lastFrameStart = -1;
+		me.timeToKeepBleps = 13;
 	},
 	getRange: func {
 		return me.range;
@@ -1214,7 +1339,87 @@ var RadarMode = {
 	},
 	cycleDesignate: func {},
 	testContact: func (contact) {},
+	prunedContact: func (c) {
+	},
+};#                                    END Radar Mode class
+
+
+var F16RWSMode = {
+	radar: nil,
+	shortName: "RWS",
+	longName: "Range While Search",
+	superMode: nil,
+	subMode: nil,
+	maxRange: 160,
+	discSpeed_dps: 65,#authentic for RWS
+	rcsFactor: 0.9,
+	new: func (subMode, radar = nil) {
+		var mode = {parents: [F16RWSMode, RadarMode]};
+		mode.radar = radar;
+		mode.subMode = subMode;
+		subMode.superMode = mode;
+		subMode.shortName = mode.shortName;
+		return mode;
+	},
+	setRange: func (range) {
+		me.testMulti = 160/range;
+		if (me.testMulti < 1 or me.testMulti > 16 or int(me.testMulti) != me.testMulti) {
+			return 0;
+		}
+		me.range = range;
+		return 1;
+	},
+	cycleAZ: func {
+		if (me.az == 10) me.az = 30;
+		elsif (me.az == 30) {me.az = 60; me.azimuthTilt = 0;}
+		elsif (me.az == 60) me.az = 10;
+	},
+	cycleBars: func {
+		me.bars += 1;
+		if (me.bars == 3) me.bars = 4;# 3 is only for TWS
+		elsif (me.bars == 5) me.bars = 1;
+		me.nextPatternNode = 0;
+	},
+	designate: func (designate_contact) {
+		me.radar.currentMode = me.subMode;
+		me.subMode.priorityTarget = designate_contact;
+		me.subMode.radar = me.radar;# find some smarter way of setting it.
+	},
+	undesignate: func {},
+	preStep: func {
+		me.radar.tiltOverride = 0;
+	},
+	increaseRange: func {
+		me._increaseRange();
+	},
+	decreaseRange: func {
+		me._decreaseRange();
+	},
+	getSearchInfo: func (contact) {
+		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
+		return [1,0,1,0,0,1];
+	},
 };
+
+var F16LRSMode = {
+	shortName: "LRS",
+	longName: "Long Range Search",
+	discSpeed_dps: 45,
+	rcsFactor: 1,
+	new: func (subMode, radar = nil) {
+		var mode = {parents: [F16LRSMode, F16RWSMode, RadarMode]};
+		mode.radar = radar;
+		mode.subMode = subMode;
+		subMode.superMode = mode;
+		subMode.shortName = mode.shortName;
+		return mode;
+	},
+};
+
+
+#
+#                        ACM Modes
+#
 
 var F16ACMMode = {#TODO
 	radar: nil,
@@ -1265,8 +1470,7 @@ var F16ACMMode = {#TODO
 			if (me.nextPatternNode >= size(me.currentPattern)) {
 				me.nextPatternNode = (me.scanPriorityEveryFrame and me.priorityTarget!=nil)?-1:0;
 				
-				#print("frame ",me.radar.elapsed-me.lastFrameStart);
-				#me.lastFrameStart = me.radar.elapsed;
+				
 			}
 			return dt-me.angleToNextNode/me.discSpeed_dps;
 		}
@@ -1306,8 +1510,6 @@ var F16ACMMode = {#TODO
 		me.radar.tilt = -3;
 		me.radar.tiltOverride = 1;
 	},
-	leaveMode: func {
-	},
 	increaseRange: func {
 		return 0;
 	},
@@ -1315,9 +1517,9 @@ var F16ACMMode = {#TODO
 		return 0;
 	},
 	getSearchInfo: func (contact) {
-		# dist, groundtrack, deviations, speed, closing-rate
+		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
 		me.designate(contact);
-		return [1,1,1,1,1];
+		return [1,1,1,1,1,1];
 	},
 	testContact: func (contact) {
 	},
@@ -1378,8 +1580,6 @@ var F16ACM20Mode = {
 		me.radar.tilt = -3;
 		me.radar.tiltOverride = 1;
 	},
-	leaveMode: func {
-	},
 	increaseRange: func {
 		return 0;
 	},
@@ -1387,9 +1587,9 @@ var F16ACM20Mode = {
 		return 0;
 	},
 	getSearchInfo: func (contact) {
-		# dist, groundtrack, deviations, speed, closing-rate
+		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
 		me.designate(contact);
-		return [1,1,1,1,1];
+		return [1,1,1,1,1,1];
 	},
 	testContact: func (contact) {
 	},
@@ -1465,6 +1665,10 @@ var F16ACMBoreMode = {
 	},
 };
 
+#
+#                        Soft track Modes
+#
+
 var F16TWSMode = {
 	radar: nil,
 	shortName: "TWS",
@@ -1475,7 +1679,7 @@ var F16TWSMode = {
 	discSpeed_dps: 50, # source: https://www.youtube.com/watch?v=Aq5HXTGUHGI
 	rcsFactor: 0.9,
 	timeToKeepBleps: 13,# TODO
-	maxScanIntervalForTrack: 6.5,#authentic for TWS
+	maxScanIntervalForTrack: 6.5,# authentic for TWS
 	priorityTarget: nil,
 	currentTracked: 0,
 	maxTracked: 10,
@@ -1528,16 +1732,25 @@ var F16TWSMode = {
 	},
 	preStep: func {
 		if (me.priorityTarget != nil) {
-			me.prioRange_nm = me.priorityTarget.getRangeDirect()*M2NM;
-			if (me.radar.elapsed - me.priorityTarget.blepTime > me.maxScanIntervalForTrack) {
+			me.prioRange_nm = me.priorityTarget.getLastRangeDirect()*M2NM;
+			if (me.radar.elapsed - me.priorityTarget.getLastBlepTime() > me.maxScanIntervalForTrack) {
 				me.priorityTarget = nil;
 				me.radar.tiltOverride = 0;
 				me.undesignate();
 				return;
 			}
-			me.azimuthTilt = me.priorityTarget.getDeviationHeadingFrozen();
-			me.radar.tiltOverride = 1;
-			me.radar.tilt = me.priorityTarget.getDeviationPitchFrozen();
+			me.lastDev = me.priorityTarget.getLastDirection();
+			if (me.lastDev != nil) {
+				me.azimuthTilt = me.lastDev[0];
+				me.radar.tiltOverride = 1;
+				me.radar.tilt = me.lastDev[1];
+			} else {
+				
+				me.priorityTarget = nil;
+				me.radar.tiltOverride = 0;
+				me.undesignate();
+				return;
+			}
 			if (me.prioRange_nm < 0.40 * me.getRange()) {
 				me._decreaseRange();
 			} elsif (me.prioRange_nm > 0.90 * me.getRange()) {
@@ -1558,8 +1771,13 @@ var F16TWSMode = {
 			me.azimuthTilt = -me.radar.fieldOfRegardMaxAz+me.az;
 		}
 	},
+	calcBlepKeepTime: func {
+		# NOP
+	},
 	leaveMode: func {
 		me.priorityTarget = nil;
+		me.lastFrameStart = -1;
+		me.timeToKeepBleps=13;
 	},
 	increaseRange: func {
 		if (me.priorityTarget != nil) return 0;
@@ -1570,23 +1788,31 @@ var F16TWSMode = {
 		me._decreaseRange();
 	},
 	getSearchInfo: func (contact) {
-		# dist, groundtrack, deviations, speed, closing-rate
+		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
 		#print(me.currentTracked,"   ",(me.radar.elapsed - contact.blepTime));
-		if (me.currentTracked < me.maxTracked and ((me.radar.elapsed - contact.blepTime) < me.maxScanIntervalForTrack)) {
-			#print("  TWICE");
+		me.sizeBleps = size(contact.getBleps());
+		if (me.sizeBleps and me.currentTracked < me.maxTracked and ((me.radar.elapsed - contact.getBleps()[me.sizeBleps-1][0]) < me.maxScanIntervalForTrack)) {
+			#print("  TWICE    ",me.radar.elapsed);
 			#print(me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, contact),"   ",me.radar.elapsed - contact.blepTime);
-			if (!contact.isInfoExtended()) me.currentTracked += 1;
-			return [1,1,1,0,0];
-		} elsif (contact.isInfoExtended()) {
+			
+			if (!me.sizeBleps or !contact.hadTrackInfo()) me.currentTracked += 1;
+			return [1,1,1,1,0,1];
+		} elsif (me.sizeBleps and contact.hadTrackInfo()) {
 			me.currentTracked -= 1;
 		}
-		return [1,0,1,0,0];
+		#print("  ONCE    ",me.currentTracked);
+		return [1,0,1,0,0,1];
+	},
+	prunedContact: func (c) {
+		if (c.hadTrackInfo()) {
+			me.currentTracked -= 1;
+		}
 	},
 	testContact: func (contact) {
-		if (me.radar.elapsed - contact.blepTime > me.maxScanIntervalForTrack and contact.azi == 1) {
-			contact.azi = 0;
-			me.currentTracked -= 1;
-		}
+		#if (me.radar.elapsed - contact.getLastBlepTime() > me.maxScanIntervalForTrack and contact.azi == 1) {
+		#	contact.azi = 0;
+		#	me.currentTracked -= 1;
+		#}
 	},
 	cycleDesignate: func {
 		if (!size(me.radar.vector_aicontacts_bleps)) {
@@ -1599,90 +1825,17 @@ var F16TWSMode = {
 			me.testIndex = me.radar.vectorIndex(me.radar.vector_aicontacts_bleps, me.priorityTarget);
 		}
 		for(me.i = me.testIndex+1;me.i<size(me.radar.vector_aicontacts_bleps);me.i+=1) {
-			if (me.radar.vector_aicontacts_bleps[me.i].isInfoExtended()) {
+			if (me.radar.vector_aicontacts_bleps[me.i].hasTrackInfo()) {
 				me.priorityTarget = me.radar.vector_aicontacts_bleps[me.i];
 				return;
 			}
 		}
 		for(me.i = 0;me.i<=me.testIndex;me.i+=1) {
-			if (me.radar.vector_aicontacts_bleps[me.i].isInfoExtended()) {
+			if (me.radar.vector_aicontacts_bleps[me.i].hasTrackInfo()) {
 				me.priorityTarget = me.radar.vector_aicontacts_bleps[me.i];
 				return;
 			}
 		}
-	},
-};
-
-var F16RWSMode = {
-	radar: nil,
-	shortName: "RWS",
-	longName: "Range While Search",
-	superMode: nil,
-	subMode: nil,
-	maxRange: 160,
-	discSpeed_dps: 65,#authentic for RWS
-	rcsFactor: 0.9,
-	new: func (subMode, radar = nil) {
-		var mode = {parents: [F16RWSMode, RadarMode]};
-		mode.radar = radar;
-		mode.subMode = subMode;
-		subMode.superMode = mode;
-		subMode.shortName = mode.shortName;
-		return mode;
-	},
-	setRange: func (range) {
-		me.testMulti = 160/range;
-		if (me.testMulti < 1 or me.testMulti > 16 or int(me.testMulti) != me.testMulti) {
-			return 0;
-		}
-		me.range = range;
-		return 1;
-	},
-	cycleAZ: func {
-		if (me.az == 10) me.az = 30;
-		elsif (me.az == 30) {me.az = 60; me.azimuthTilt = 0;}
-		elsif (me.az == 60) me.az = 10;
-	},
-	cycleBars: func {
-		me.bars += 1;
-		if (me.bars == 3) me.bars = 4;# 3 is only for TWS
-		elsif (me.bars == 5) me.bars = 1;
-		me.nextPatternNode = 0;
-	},
-	designate: func (designate_contact) {
-		me.radar.currentMode = me.subMode;
-		me.subMode.priorityTarget = designate_contact;
-		me.subMode.radar = me.radar;# find some smarter way of setting it.
-	},
-	undesignate: func {},
-	preStep: func {
-		me.radar.tiltOverride = 0;
-	},
-	leaveMode: func {},
-	increaseRange: func {
-		me._increaseRange();
-	},
-	decreaseRange: func {
-		me._decreaseRange();
-	},
-	getSearchInfo: func (contact) {
-		# dist, groundtrack, deviations, speed, closing-rate
-		return [1,0,1,0,0];
-	},
-};
-
-var F16LRSMode = {
-	shortName: "LRS",
-	longName: "Long Range Search",
-	discSpeed_dps: 45,
-	rcsFactor: 1,
-	new: func (subMode, radar = nil) {
-		var mode = {parents: [F16LRSMode, F16RWSMode, RadarMode]};
-		mode.radar = radar;
-		mode.subMode = subMode;
-		subMode.superMode = mode;
-		subMode.shortName = mode.shortName;
-		return mode;
 	},
 };
 
@@ -1702,6 +1855,9 @@ var F16LRSSAMMode = {
 		}
 		return mode;
 	},
+	calcSAMwidth: func {
+		return math.min(60,18 + 1.5*me.prioRange_nm - 0.02222222*me.prioRange_nm*me.prioRange_nm);
+	},
 };
 
 var F16RWSSAMMode = {
@@ -1713,6 +1869,7 @@ var F16RWSSAMMode = {
 	rcsFactor: 0.9,
 	maxRange: 160,
 	priorityTarget: nil,
+	bars: 2,
 	new: func (subMode = nil, radar = nil) {
 		var mode = {parents: [F16RWSSAMMode, RadarMode]};
 		mode.radar = radar;
@@ -1724,20 +1881,32 @@ var F16RWSSAMMode = {
 		}
 		return mode;
 	},
+	calcSAMwidth: func {
+		return math.min(60,18 + 2.066667*me.prioRange_nm - 0.02222222*me.prioRange_nm*me.prioRange_nm);
+	},
 	preStep: func {
 		if (me.priorityTarget != nil) {
 			# azimuth width is autocalculated in F16 AUTO-SAM:
 			me.prioRange_nm = me.priorityTarget.getRangeDirect()*M2NM;
-			me.az = math.min(60,18 + 2.066667*me.prioRange_nm - 0.02222222*me.prioRange_nm*me.prioRange_nm);
+			me.az = me.calcSAMwidth();
 			if (!me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, me.priorityTarget)) {
 				me.priorityTarget = nil;
 				me.radar.tiltOverride = 0;
 				me.undesignate();
 				return;
 			}
-			me.azimuthTilt = me.priorityTarget.getDeviationHeadingFrozen();
-			me.radar.tiltOverride = 1;
-			me.radar.tilt = me.priorityTarget.getDeviationPitchFrozen();
+			me.lastDev = me.priorityTarget.getLastDirection();
+			if (me.lastDev != nil) {
+				me.azimuthTilt = me.lastDev[0];
+				me.radar.tiltOverride = 1;
+				me.radar.tilt = me.lastDev[1];
+			} else {
+				
+				me.priorityTarget = nil;
+				me.radar.tiltOverride = 0;
+				me.undesignate();
+				return;
+			}
 			if (me.prioRange_nm < 0.40 * me.getRange()) {
 				me._decreaseRange();
 			} elsif (me.prioRange_nm > 0.90 * me.getRange()) {
@@ -1782,15 +1951,21 @@ var F16RWSSAMMode = {
 	},
 	leaveMode: func {
 		me.priorityTarget = nil;
+		me.lastFrameStart = -1;
+		me.timeToKeepBleps = 13;
 	},
 	getSearchInfo: func (contact) {
-		# dist, groundtrack, deviations, speed, closing-rate
+		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
 		if (me.priorityTarget != nil and contact.equals(me.priorityTarget)) {
-			return [1,1,1,1,0];
+			return [1,1,1,1,0,1];
 		}
-		return [1,0,1,0,0];
+		return [1,0,1,0,0,1];
 	},
 };
+
+#
+#                        STT Modes
+#
 
 var F16STTMode = {
 	radar: nil,
@@ -1804,6 +1979,7 @@ var F16STTMode = {
 	az: 4,
 	bars: 2,
 	minimumTimePerReturn: 0.25,
+	timeToKeepBleps: 5,
 	new: func (radar = nil) {
 		var mode = {parents: [F16STTMode, RadarMode]};
 		mode.radar = radar;
@@ -1823,11 +1999,21 @@ var F16STTMode = {
 	},
 	preStep: func {
 		if (me.priorityTarget != nil) {
-			me.azimuthTilt = me.priorityTarget.getDeviationHeadingFrozen();
-			me.radar.tiltOverride = 1;
-			me.radar.tilt = me.priorityTarget.getDeviationPitchFrozen();
+			me.lastDev = me.priorityTarget.getLastDirection();
+			if (me.lastDev != nil) {
+				me.azimuthTilt = me.lastDev[0];
+				me.radar.tiltOverride = 1;
+				me.radar.tilt = me.lastDev[1];
+			} else {
+				
+				me.priorityTarget = nil;
+				me.radar.tiltOverride = 0;
+				me.undesignate();
+				return;
+			}
 			if (!me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, me.priorityTarget)) {
 				me.priorityTarget = nil;
+				me.radar.tiltOverride = 0;
 				me.undesignate();
 				return;
 			} elsif (me.azimuthTilt > me.radar.fieldOfRegardMaxAz-me.az) {
@@ -1860,13 +2046,18 @@ var F16STTMode = {
 	},
 	setRange: func {# Range is auto-set in STT
 	},
+	calcBlepKeepTime: func {
+		# Don't calc this in this class
+	},
 	leaveMode: func {
 		me.priorityTarget = nil;
+		me.lastFrameStart = -1;
+		me.timeToKeepBleps = 13;
 	},
 	getSearchInfo: func (contact) {
-		# dist, groundtrack, deviations, speed, closing-rate
+		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
 		if (me.priorityTarget != nil and contact.equals(me.priorityTarget)) {
-			return [1,1,1,1,1];
+			return [1,1,1,1,1,1];
 		}
 		return nil;
 	},
@@ -1897,6 +2088,7 @@ var APG68 = {
 	instantFoVradius: 3.90,#average of horiz/vert radius
 	rcsRefDistance: 70,
 	rcsRefValue: 3.2,
+	framesToKeepBleps: 3,
 	tilt: 0,
 	tiltKnob: 0,
 	tiltOverride: 0,# when enabled by a mode: the mode can set the tilt, and it will not be read from property (TODO)
@@ -2074,7 +2266,7 @@ var APG68 = {
 	},
 	scanFOV: func {
 		foreach(contact ; me.vector_aicontacts_for) {
-			if (me.elapsed - contact.blepTime < me.currentMode.minimumTimePerReturn) continue;
+			if (me.elapsed - contact.getLastBlepTime() < me.currentMode.minimumTimePerReturn) continue;
 			me.dev = contact.getDeviationStored();
 			#print("Bearing ",me.dev[7],", Pitch ",me.dev[8]);
 			if (me.horizonStabilized) {
@@ -2101,12 +2293,12 @@ var APG68 = {
 		me.maxDistVisible = me.currentMode.rcsFactor * me.targetRCSSignal(self.getCoord(), dev[3], contact.model, contact.getHeadingFrozen(1), contact.getPitchFrozen(1), contact.getRollFrozen(1),me.rcsRefDistance*NM2M,me.rcsRefValue);
 		#TODO: check Terrain, Doppler here.
 		if (me.maxDistVisible > dev[2]) {
+			#TerrainChecker
 			me.extInfo = me.currentMode.getSearchInfo(contact);# if the scan gives heading info etc..
 			if (me.extInfo == nil) {
-				contact.azi = 0;#HACK for STT
 				return 0;
 			}
-			contact.blep(me.elapsed, me.extInfo, me.maxDistVisible, 0);
+			contact.blep(me.elapsed, me.extInfo, me.maxDistVisible);
 			if (!me.containsVectorContact(me.vector_aicontacts_bleps, contact)) {
 				append(me.vector_aicontacts_bleps, contact);
 			}
@@ -2119,9 +2311,18 @@ var APG68 = {
 		me.vector_aicontacts_bleps_tmp = [];
 		me.elapsed = getprop("sim/time/elapsed-sec");
 		foreach(contact ; me.vector_aicontacts_bleps) {
-			if (me.elapsed - contact.blepTime < me.currentMode.timeToKeepBleps) {
+			me.bleps_cleaned = [];
+			foreach (me.blep;contact.getBleps()) {
+				if (me.elapsed - me.blep[0] < me.currentMode.timeToKeepBleps) {
+					append(me.bleps_cleaned, me.blep);
+				}	
+			}
+			contact.setBleps(me.bleps_cleaned);
+			if (size(me.bleps_cleaned)) {
 				append(me.vector_aicontacts_bleps_tmp, contact);
 				me.currentMode.testContact(contact);# TODO: do this smarter
+			} else {
+				me.currentMode.prunedContact(contact);
 			}
 		}
 		#print("Purged ", size(me.vector_aicontacts_bleps) - size(me.vector_aicontacts_bleps_tmp), " bleps   remains:",size(me.vector_aicontacts_bleps_tmp), " orig ",size(me.vector_aicontacts_bleps));
@@ -2186,6 +2387,31 @@ var acm20Mode = F16ACM20Mode.new(F16ACMSTTMode.new());
 var acm60Mode = F16ACM60Mode.new(F16ACMSTTMode.new());
 var acmBoreMode = F16ACMBoreMode.new(F16ACMSTTMode.new());
 var exampleRadar = APG68.new([rwsMode,twsMode,lrsMode],[acm20Mode,acm60Mode,acmBoreMode]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2490,63 +2716,63 @@ RadarViewPPI = {
 		#me.rootCenterBleps.removeAllChildren();
 		me.i = 0;
 		me.bug = 0;
+		me.track = 0;
+		me.ii = 0;
 		foreach(contact; exampleRadar.vector_aicontacts_bleps) {
-			if (me.elapsed - contact.blepTime < exampleRadar.currentMode.timeToKeepBleps) {
-				me.distPixels = contact.getRangeFrozen()*(me.sweepDistance/(exampleRadar.getRange()*NM2M));
-
-				me.blep[me.i].setColor(1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps,1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps,1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps);
-				me.blep[me.i].setTranslation(-me.distPixels*math.cos(contact.getDeviationHeadingFrozen()*D2R+math.pi/2),-me.distPixels*math.sin(contact.getDeviationHeadingFrozen()*D2R+math.pi/2));
-				me.blep[me.i].show();
-				me.blep[me.i].update();
-					
-				if (contact.isInfoExtended() and me.i<20) {
-					me.rot = contact.getHeadingFrozen();
-					if (me.rot == nil) {
-						#can happen in transition between TWS to RWS
-						me.lock[me.i].hide();
-					} else {
-						me.rot = me.rot-getprop("orientation/heading-deg");
-						me.lock[me.i].setRotation(me.rot*D2R);
-						me.lock[me.i].setColor([1,1,0]);
-						me.lock[me.i].setTranslation(-me.distPixels*math.cos(contact.getDeviationHeadingFrozen()*D2R+math.pi/2),-me.distPixels*math.sin(contact.getDeviationHeadingFrozen()*D2R+math.pi/2));
-						me.lock[me.i].show();
-						me.lock[me.i].update();
-					}
-				} else {
-					if (me.i<20) me.lock[me.i].hide();
+			foreach(me.bleppy; contact.getBleps()) {
+				# blep: time, rcs_strength, dist, heading, deviations vector, speed, closing-rate, altitude
+				if (me.elapsed - me.bleppy[0] < exampleRadar.currentMode.timeToKeepBleps) {
+					me.distPixels = me.bleppy[2]*(me.sweepDistance/(exampleRadar.getRange()*NM2M));
+					me.color = math.pow(1-(me.elapsed - me.bleppy[0])/exampleRadar.currentMode.timeToKeepBleps, 2.2);
+					me.blep[me.i].setColor(me.color,me.color,me.color);
+					me.blep[me.i].setTranslation(-me.distPixels*math.cos(me.bleppy[4][0]*D2R+math.pi/2),-me.distPixels*math.sin(me.bleppy[4][0]*D2R+math.pi/2));
+					me.blep[me.i].show();
+					me.blep[me.i].update();
+					me.i += 1;
+					if (me.i > 199) break;
 				}
-				if (contact.equals(exampleRadar.getPriorityTarget())) {
-					me.select.setTranslation(-me.distPixels*math.cos(contact.getDeviationHeadingFrozen()*D2R+math.pi/2),-me.distPixels*math.sin(contact.getDeviationHeadingFrozen()*D2R+math.pi/2));
-					me.select.show();
-					me.select.update();
-					me.bug = 1;
-				}
-				me.i += 1;
-				if (me.i > 199) break;
 			}
+			me.sizeBleps = size(contact.getBleps());
+			if (me.sizeBleps and me.ii < 20) {
+				me.bleppy = contact.getBleps()[me.sizeBleps-1];
+				if (me.bleppy[3] != nil) {
+					me.rot = me.bleppy[3];
+					me.rot = me.rot-self.getHeading();
+					me.lock[me.ii].setRotation(me.rot*D2R);
+					me.lock[me.ii].setColor([1,1,0]);
+					me.lock[me.ii].setTranslation(-me.distPixels*math.cos(me.bleppy[4][0]*D2R+math.pi/2),-me.distPixels*math.sin(me.bleppy[4][0]*D2R+math.pi/2));
+					me.lock[me.ii].show();
+					me.lock[me.ii].update();
+					me.ii += 1;
+				}
+			}
+			if (contact.equals(exampleRadar.getPriorityTarget()) and me.sizeBleps) {
+				me.bleppy = contact.getBleps()[me.sizeBleps-1];
+				me.select.setTranslation(-me.distPixels*math.cos(me.bleppy[4][0]*D2R+math.pi/2),-me.distPixels*math.sin(me.bleppy[4][0]*D2R+math.pi/2));
+				me.select.show();
+				me.select.update();
+				me.bug = 1;
+			}
+			if (me.i > 199) break;
 		}
 		for (;me.i<200;me.i+=1) {
 			me.blep[me.i].hide();
-			if (me.i<20) me.lock[me.i].hide();
+		}
+		for (;me.ii<20;me.ii+=1) {
+			me.lock[me.ii].hide();
 		}
 		if (!me.bug) me.select.hide();
-		if (0 and exampleRadar.patternBar<size(exampleRadar.pattern[2])) {
-			# the if is due to just after changing bars and before radar loop has run, patternBar can be out of bounds of pattern.
-			me.text.setText(sprintf("Bar %+d    Range %d NM", exampleRadar.pattern[2][exampleRadar.patternBar]<4?exampleRadar.pattern[2][exampleRadar.patternBar]-4:exampleRadar.pattern[2][exampleRadar.patternBar]-3,exampleRadar.forDist_m*M2NM));
-		}
-		#me.text.setText(sprintf("           Range %d NM", exampleRadar.getRange()));
 		if (exampleRadar.tiltOverride) {
 			me.text.setText("Antennae elevation knob override");
 		} else {
 			me.text.setText(sprintf("Antennae elevation knob: %d degs", exampleRadar.getTilt()));
 		}
 		me.md = exampleRadar.currentMode.longName;
-		#me.text2.setText(sprintf("Lock=%d (%s)  %s", size(exampleRadar.locks), exampleRadar.lock==NONE?"NONE":exampleRadar.lock==SOFT?"SOFT":"HARD",me.md));
 		me.text2.setText(me.md);
 		me.prioName = exampleRadar.getPriorityTarget();
 		if (me.prioName != nil) {
 			me.text3.setText(sprintf("Priority: %s", me.prioName.callsign));
-			me.text4.setText(sprintf("Range: %2d  Angels: %2d", me.prioName.getRangeDirectFrozen()*M2NM, math.round(me.prioName.getAltitudeFrozen()*0.001)));
+			me.text4.setText(sprintf("Range: %2d  Angels: %2d", me.prioName.getLastRangeDirect()*M2NM, math.round(me.prioName.getLastAltitude()*0.001)));
 		} else {
 			me.text3.setText("");
 			me.text4.setText("");
@@ -2576,9 +2802,18 @@ RadarViewBScope = {
 				.setTranslation(128,256);
 		me.rootCenterBleps = root.createChild("group")
 				.setTranslation(128,256);
-		me.sweep = me.rootCenter.createChild("path")
+		me.sweepAz = me.rootCenter.createChild("path")
 				.moveTo(0,0)
-				.vert(-256)
+				.vert(-10)
+				.moveTo(-5,-10)
+				.horiz(10)
+				.setStrokeLineWidth(2.5)
+				.setColor(1,1,1);
+		me.sweepBa = me.rootCenter.createChild("path")
+				.moveTo(-128,-128)
+				.horiz(10)
+				.moveTo(-118,-123)
+				.vert(-10)
 				.setStrokeLineWidth(2.5)
 				.setColor(1,1,1);
 		me.sweepA = me.rootCenter.createChild("path")
@@ -2627,17 +2862,19 @@ RadarViewBScope = {
 	      	  		.hide();
         }
         me.lock = setsize([],20);
+        me.lockv = setsize([],20);
         for (var i = 0;i<20;i+=1) {
-        	me.lock[i] = me.rootCenterBleps.createChild("path")
-						.moveTo(-5,-5)
-							.vert(10)
-							.horiz(10)
-							.vert(-10)
-							.horiz(-10)
-							.moveTo(0,-5)
-							.vert(-5)
-							.setStrokeLineWidth(1)
-	      	  		.hide();
+        	me.lock[i] = me.rootCenterBleps.createChild("group");
+        		  me.lock[i].createChild("path")
+							.moveTo(-7,4)
+							.horiz(14)
+							.lineTo(0,-8)
+							.lineTo(-7,4)
+							.setStrokeLineWidth(1);
+			me.lockv[i] = me.lock[i].createChild("path")
+							.lineTo(0,-10)
+							.setTranslation(0,-8)
+							.setStrokeLineWidth(1);
         }
         me.select = me.rootCenterBleps.createChild("path")
 						.moveTo(-8, 0)
@@ -2654,8 +2891,10 @@ RadarViewBScope = {
 
 	loop: func {
 		if (!enable) {return;}
-		me.sweep.setTranslation(128*exampleRadar.positionCart[0],0);
-		me.sweep.update();
+		me.sweepAz.setTranslation(128*exampleRadar.positionCart[0],0);
+		me.sweepBa.setTranslation(0,-128*exampleRadar.positionCart[1]);
+		me.sweepAz.update();
+		me.sweepBa.update();
 		if (exampleRadar.showAZ()) {
 			me.sweepA.show();
 			me.sweepB.show();
@@ -2666,46 +2905,58 @@ RadarViewBScope = {
 			me.sweepB.hide();
 		}
 		me.elapsed = getprop("sim/time/elapsed-sec");
-		#me.rootCenterBleps.removeAllChildren();
-		me.i=0;
+		me.i = 0;
 		me.bug = 0;
+		me.track = 0;
+		me.ii = 0;
 		foreach(contact; exampleRadar.vector_aicontacts_bleps) {
-			if (me.elapsed - contact.blepTime < exampleRadar.currentMode.timeToKeepBleps) {
-				me.distPixels = contact.getRangeFrozen()*(256/(exampleRadar.getRange()*NM2M));
-
-				me.blep[me.i].setColor(1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps,1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps,1-(me.elapsed - contact.blepTime)/exampleRadar.currentMode.timeToKeepBleps);
-				me.blep[me.i].setTranslation(128*contact.getDeviationHeadingFrozen()/60,-me.distPixels);
-				me.blep[me.i].show();
-				me.blep[me.i].update();
-				if (contact.isInfoExtended() and me.i < 20) {
-					me.rot = contact.getHeadingFrozen();
-					if (me.rot == nil) {
-						#can happen in transition between TWS to RWS
-						me.lock[me.i].hide();
-					} else {
-						me.rot = me.rot-getprop("orientation/heading-deg")-contact.getDeviationHeadingFrozen();
-						me.lock[me.i].setRotation(me.rot*D2R);
-						me.lock[me.i].setColor([1,1,0]);
-						me.lock[me.i].setTranslation(128*contact.getDeviationHeadingFrozen()/60,-me.distPixels);
-						me.lock[me.i].show();
-						me.lock[me.i].update();
-					}
-				} else {
-					if (me.i<20) me.lock[me.i].hide();
+			foreach(me.bleppy; contact.getBleps()) {
+				# blep: time, rcs_strength, dist, heading, deviations vector, speed, closing-rate, altitude
+				if (me.elapsed - me.bleppy[0] < exampleRadar.currentMode.timeToKeepBleps) {
+					me.distPixels = me.bleppy[2]*(256/(exampleRadar.getRange()*NM2M));
+					me.color = math.pow(1-(me.elapsed - me.bleppy[0])/exampleRadar.currentMode.timeToKeepBleps, 2.2);
+					me.blep[me.i].setColor(me.color,me.color,me.color);
+					me.blep[me.i].setTranslation(128*me.bleppy[4][0]/60,-me.distPixels);
+					me.blep[me.i].show();
+					me.blep[me.i].update();
+					me.i += 1;
+					if (me.i > 199) break;
 				}
-				if (contact.equals(exampleRadar.getPriorityTarget())) {
-					me.select.setTranslation(128*contact.getDeviationHeadingFrozen()/60,-me.distPixels);
-					me.select.show();
-					me.select.update();
-					me.bug = 1;
-				}
-				me.i += 1;
-				if (me.i > 199) break;
 			}
+			me.sizeBleps = size(contact.getBleps());
+			if (me.sizeBleps and me.ii < 20) {
+				me.bleppy = contact.getBleps()[me.sizeBleps-1];
+				if (me.bleppy[3] != nil and me.elapsed - me.bleppy[0] < exampleRadar.currentMode.timeToKeepBleps) {
+					me.rot = me.bleppy[3]-self.getHeading()-me.bleppy[4][0];
+					me.lock[me.ii].setRotation(me.rot*D2R);
+					me.lock[me.ii].setColor([1,1,0]);
+					me.lock[me.ii].setTranslation(128*me.bleppy[4][0]/60,-me.distPixels);
+					me.lock[me.ii].show();
+					if (me.bleppy[5] != nil and me.bleppy[5] > 0) {
+						me.lockv[me.ii].setScale(1,me.bleppy[5]*0.0025);
+						me.lockv[me.ii].update();
+						me.lockv[me.ii].show();
+					} else {
+						me.lockv[me.ii].hide();
+					}
+					me.lock[me.ii].update();
+					me.ii += 1;
+				}
+			}
+			if (contact.equals(exampleRadar.getPriorityTarget()) and me.sizeBleps) {
+				me.bleppy = contact.getBleps()[me.sizeBleps-1];
+				me.select.setTranslation(128*me.bleppy[4][0]/60,-me.distPixels);
+				me.select.show();
+				me.select.update();
+				me.bug = 1;
+			}
+			if (me.i > 199) break;
 		}
 		for (;me.i<200;me.i+=1) {
 			me.blep[me.i].hide();
-			if (me.i < 20) me.lock[me.i].hide();
+		}
+		for (;me.ii<20;me.ii+=1) {
+			me.lock[me.ii].hide();
 		}
 		if (!me.bug) me.select.hide();
 		
@@ -3537,8 +3788,8 @@ var main = func (module) {
 	terrain = TerrainChecker.new(0.10, 1, 60);
 	displayPPI = RadarViewPPI.new();
 	displayB = RadarViewBScope.new();
-	displayC = RadarViewCScope.new();
-	displayA = RadarViewAScope.new();
+	#displayC = RadarViewCScope.new();
+	#displayA = RadarViewAScope.new();
 	#exampleRWR   = RWR.new();
 	#displayRWR = RWRView.new();
     buttonWindow();
@@ -3608,10 +3859,15 @@ var unload = func {
 # BUGS:
 #
 # exampleRadar.positionCart vs. contact.getCartesianInFoRFrozen()  At least one is not correct! ACM60
+# PPI sweep in acm60 moves slightly
+# ACM-STT sweep not where target is
 #
 # IMPROVEMENTS:
 #
-# Max roll before no longer roll stabilized CRM.
+# Max roll before no longer roll stabilized CRM. (mig21 too)
+# Multi bleps (Have a storedDev for each blep)
+# Cursor
+# Less property calls in noseradar (instead registerblep does it.) Only register whats needed to detect it in noseradar.
 #
 #
 # FEATURES:

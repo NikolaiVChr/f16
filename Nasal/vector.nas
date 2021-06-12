@@ -111,6 +111,14 @@ var Math = {
         return me.multiplyMatrixWithVector(me.rotation, vector);
     },
 
+    # rotate a vector. Order: pitch, yaw
+    pitchYawVector: func (pitch, yaw, vector) {
+        me.pitchM = me.pitchMatrix(pitch);
+        me.yawM   = me.yawMatrix(yaw);
+        me.rotation = me.multiplyMatrices(me.yawM, me.pitchM);
+        return me.multiplyMatrixWithVector(me.rotation, vector);
+    },
+
     # rotate a vector. Order: pitch
     pitchVector: func (pitch, vector) {
         me.pitchM = me.pitchMatrix(pitch);
