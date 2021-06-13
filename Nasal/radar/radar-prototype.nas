@@ -1810,7 +1810,7 @@ var F16TWSMode = {
 	preStep: func {
 		if (me.priorityTarget != nil) {
 			me.prioRange_nm = me.priorityTarget.getLastRangeDirect()*M2NM;
-			if (me.radar.elapsed - me.priorityTarget.getLastBlepTime() > me.maxScanIntervalForTrack) {
+			if (me.radar.elapsed - me.priorityTarget.getLastBlepTime() > me.timeToKeepBleps) {
 				me.priorityTarget = nil;
 				me.radar.tiltOverride = 0;
 				me.undesignate();
@@ -1908,16 +1908,16 @@ var F16TWSMode = {
 			me.testIndex = me.radar.vectorIndex(me.radar.vector_aicontacts_bleps, me.priorityTarget);
 		}
 		for(me.i = me.testIndex+1;me.i<size(me.radar.vector_aicontacts_bleps);me.i+=1) {
-			if (me.radar.vector_aicontacts_bleps[me.i].hadTrackInfo()) {
+			#if (me.radar.vector_aicontacts_bleps[me.i].hadTrackInfo()) {
 				me.priorityTarget = me.radar.vector_aicontacts_bleps[me.i];
 				return;
-			}
+			#}
 		}
 		for(me.i = 0;me.i<=me.testIndex;me.i+=1) {
-			if (me.radar.vector_aicontacts_bleps[me.i].hadTrackInfo()) {
+			#if (me.radar.vector_aicontacts_bleps[me.i].hadTrackInfo()) {
 				me.priorityTarget = me.radar.vector_aicontacts_bleps[me.i];
 				return;
-			}
+			#}
 		}
 	},
 };
@@ -2525,14 +2525,18 @@ var APG68 = {
 			if (me.currentMode.shortName != "TWS") {
 				me.designate(me.vector_aicontacts_bleps[size(me.vector_aicontacts_bleps)-1]);
 			} else {
-				if (me.currentMode.priorityTarget != nil) me.designate(me.currentMode.priorityTarget);
-				else {
+				if (me.currentMode.priorityTarget != nil) {
+					me.designate(me.currentMode.priorityTarget);
+					return;
+				} else {
 					foreach(c;me.vector_aicontacts_bleps) {
 						if (c.hadTrackInfo() and getprop("sim/time/elapsed-sec")-c.getLastBlepTime() < F16TWSMode.maxScanIntervalForTrack) {
 							me.designate(c);
+							return;
 						}
 					}
 				}
+				me.designate(me.vector_aicontacts_bleps[size(me.vector_aicontacts_bleps)-1]);
 			}
 		}
 	},
@@ -3369,7 +3373,7 @@ RadarViewBScope = {
 					} else {
 						me.lockt[me.ii].setText("");
 					}
-					me.lock[me.ii].setVisible(exampleRadar.currentMode.longName != "Track While Scan" or (me.elapsed - me.bleppy[0] < exampleRadar.currentMode.maxScanIntervalForTrack) or (math.mod(me.elapsed,0.50)<0.25));
+					me.lock[me.ii].setVisible(exampleRadar.currentMode.longName != "Track While Scan" or (me.elapsed - me.bleppy[0] < exampleRadar.currentMode.maxScanIntervalForTrack));
 					me.lock[me.ii].update();
 					me.ii += 1;
 				}
@@ -3377,7 +3381,7 @@ RadarViewBScope = {
 			if (contact.equals(exampleRadar.getPriorityTarget()) and me.sizeBleps) {
 				me.bleppy = contact.getBleps()[me.sizeBleps-1];
 				me.select.setTranslation(128*me.bleppy[4][0]/60,-me.distPixels);
-				me.select.show();
+				me.select.setVisible(exampleRadar.currentMode.longName != "Track While Scan" or (me.elapsed - me.bleppy[0] < 8) or (math.mod(me.elapsed,0.50)<0.25));
 				me.select.update();
 				me.bug = 1;
 			}
