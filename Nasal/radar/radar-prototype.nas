@@ -1766,9 +1766,16 @@ var F16TWSMode = {
 		return mode;
 	},
 	cycleAZ: func {
-		if (me.az == 10) me.az = 25;
-		elsif (me.az == 25) {me.az = 60; me.azimuthTilt = 0;}
-		elsif (me.az == 60) me.az = 10;
+		if (me.az == 10) {
+			me.az = 25;
+		} elsif (me.az == 25 and me.priorityTarget == nil) {
+			me.az = 60;
+			me.azimuthTilt = 0;
+		} elsif (me.az == 25) {
+			me.az = 10;
+		} elsif (me.az == 60) {
+			me.az = 10;
+		}
 	},
 	cycleBars: func {
 		me.bars += 1;
@@ -1779,14 +1786,20 @@ var F16TWSMode = {
 		if (designate_contact != nil and designate_contact.equals(me.priorityTarget)) {
 			me.radar.setCurrentMode(me.subMode, designate_contact);
 			me.subMode.radar = me.radar;# find some smarter way of setting it.
-		} else {
-			print("cycle ",designate_contact.callsign," equals: ",designate_contact.equals(me.priorityTarget));
+		} elsif (designate_contact != nil) {
+			#print("cycle ",designate_contact.callsign," equals: ",designate_contact.equals(me.priorityTarget));
 			me.priorityTarget = designate_contact;
+			if (me.az == 60) me.az = 25;# With a target of interest (TOI), AZ is not allowed to be 60
+		} else {
+			me.priorityTarget = nil;
 		}
 	},
 	designatePriority: func (contact) {
 		me.priorityTarget = contact;
-		#if (contact != nil) me.azimuthTilt = contact.getDeviationHeadingFrozen();# incase we are not in 60 degs az lets us center az on priority.
+		if (contact != nil and me.az == 60) {
+			# With a target of interest (TOI), AZ is not allowed to be 60
+			me.az = 25;
+		}
 	},
 	getPriority: func {
 		return me.priorityTarget;

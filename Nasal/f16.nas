@@ -1657,9 +1657,9 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     #-- load RP as reloadable module
     var rp = modules.Module.new("f16_RP"); # Module name
     rp.setDebug(0); # 0=(mostly) silent; 1=print setlistener and maketimer calls to console; 2=print also each listener hit, be very careful with this! 
-    rp.setFilePath(getprop("/sim/aircraft-dir")~"/Nasal/radar");
-    rp.setMainFile("radar-prototype.nas");
-    #rp.load();
+    rp.setFilePath(getprop("/sim/aircraft-dir")~"/Nasal/radar");#
+    rp.setMainFile("radar-prototype.nas");#
+    #rp.load();#
     setprop("sim/rendering/headshake/enabled",0);# This does not work very well in F-16. So this makes people have to enable it explicit to have it. Don't know why its forced on us by default.
     # debug:
     #
