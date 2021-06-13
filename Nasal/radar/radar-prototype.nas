@@ -121,7 +121,7 @@ AIToNasal = {
 # will send notification when some is updated (emesary?)
 # listeners for adding/removing AI nodes.
 # very slow loop (5 min)
-# updates AIContacts, does not replace them. (yes will make slower, but solves many issues. Can divide workload over 2 frames.)
+# updates AIContacts, does not replace them. (yes will make slower, but solves many issues. Can divide workload over frames.)
 #
 # Attributes:
 #   fullContactVector of AIContacts
@@ -282,9 +282,9 @@ AIToNasal = {
         } elsif (me.name_prop == "groundvehicle") {
         	return SURFACE;
         } elsif (model != nil and contains(knownSurface, model)) {
-			return MARINE;
-		} elsif (model != nil and contains(knownShips, model)) {
 			return SURFACE;
+		} elsif (model != nil and contains(knownShips, model)) {
+			return MARINE;
         } elsif (speed_kt != nil and speed_kt > 60) {
         	return AIR;# to be determined later by doppler in Radar
         } elsif (alt_ft < 3.0) {
@@ -1015,8 +1015,8 @@ NoseRadar = {
 				continue;
 			}
 			# TODO: clean this up. Only what is needed for testing against instant FoV and RCS should be in here:
-			#                       localdev, localpitch, range_m, coord, heading, pitch, roll, bearing, elevation, frustum_norm_y, frustum_norm_z, alt_ft
-			contact.storeDeviation([me.dev[0],me.dev[1],me.rng,contact.getCoord(),contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), -me.pc_y/(me.w/2), me.pc_z/(me.h/2), me.crd.alt()*M2FT]);
+			#                       localdev, localpitch, range_m, coord, heading, pitch, roll, bearing, elevation, frustum_norm_y, frustum_norm_z, alt_ft, speed
+			contact.storeDeviation([me.dev[0],me.dev[1],me.rng,contact.getCoord(),contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), -me.pc_y/(me.w/2), me.pc_z/(me.h/2), me.crd.alt()*M2FT, contact.getSpeed()]);
 			append(me.vector_aicontacts_for, contact);
 		}		
 		emesary.GlobalTransmitter.NotifyAll(me.FORNotification.updateV(me.vector_aicontacts_for));
@@ -1539,7 +1539,7 @@ var F16LRSMode = {
 #                          
 var F16SeaMode = {
 	rootName: "SEA",
-	shortName: "AUTO",
+	shortName: "MAN",
 	longName: "Sea Navigation Mode",
 	discSpeed_dps: 55,
 	maxRange: 80,
@@ -1596,6 +1596,60 @@ var F16SeaMode = {
 	},
 	enterMode: func {
 		me.radar.purgeAllBleps();
+	},
+};
+
+
+#   ██████  ███    ███ 
+#  ██       ████  ████ 
+#  ██   ███ ██ ████ ██ 
+#  ██    ██ ██  ██  ██ 
+#   ██████  ██      ██ 
+#                      
+#                      
+var F16GMMode = {
+	rootName: "GM",
+	shortName: "MAN",
+	longName: "Ground Map",
+	detectAIR: 0,
+	detectSURFACE: 1,
+	detectMARINE: 0,
+	new: func (subMode, radar = nil) {
+		var mode = {parents: [F16GMMode, F16SeaMode, RadarMode]};
+		mode.radar = radar;
+		mode.subMode = subMode;
+		subMode.superMode = mode;
+		subMode.shortName = mode.shortName;
+		return mode;
+	},
+};
+
+
+#   ██████  ███    ███ ████████ 
+#  ██       ████  ████    ██    
+#  ██   ███ ██ ████ ██    ██    
+#  ██    ██ ██  ██  ██    ██    
+#   ██████  ██      ██    ██    
+#                               
+#                               
+var F16GMTMode = {
+	rootName: "GMT",
+	shortName: "MAN",
+	longName: "Ground Moving Target",
+	maxRange: 40,
+	new: func (subMode, radar = nil) {
+		var mode = {parents: [F16GMTMode, F16GMMode, F16SeaMode, RadarMode]};
+		mode.radar = radar;
+		mode.subMode = subMode;
+		subMode.superMode = mode;
+		subMode.shortName = mode.shortName;
+		return mode;
+	},
+	getSearchInfo: func (contact) {
+		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
+		me.devGMT = contact.getDeviationStored();
+		if (me.devGMT[12] < 10) return nil;# A gain knob decide this. (should it be radial speed instead?)
+		return [1,0,1,1,0,1];
 	},
 };
 
@@ -2368,7 +2422,7 @@ var APG68 = {
 	currentMode: nil, # vector of cascading modes ending with current submode
 	currentModeIndex: 0,
 	rootMode: 0,# 0: CRM  1: ACM
-	mainModes: [[],[],[]],
+	mainModes: [[],[],[],[],[]],
 	instantFoVradius: 3.90,#average of horiz/vert radius
 	rcsRefDistance: 70,
 	rcsRefValue: 3.2,
@@ -2387,12 +2441,14 @@ var APG68 = {
 	timerSlow: nil,
 	elapsed: getprop("sim/time/elapsed-sec"),
 	lastElapsed: getprop("sim/time/elapsed-sec"),
-	new: func (crm_modes, acm_modes, sea_modes) {
+	new: func (crm_modes, acm_modes, sea_modes, gm_mode, gmt_mode) {
 		var rdr = {parents: [APG68, Radar]};
 
 		rdr.mainModes[0] = crm_modes;
 		rdr.mainModes[1] = acm_modes;
 		rdr.mainModes[2] = sea_modes;
+		rdr.mainModes[3] = gm_mode;
+		rdr.mainModes[4] = gmt_mode;
 		
 		foreach (mode ; crm_modes) {
 			# this needs to be set on submodes also...hmmm
@@ -2406,6 +2462,8 @@ var APG68 = {
 			# this needs to be set on submodes also...hmmm
 			mode.radar = rdr;
 		}
+		gm_mode[0].radar = rdr;
+		gmt_mode[0].radar = rdr;
 
 		rdr.setCurrentMode(rdr.mainModes[0][0], nil);
 
@@ -2698,7 +2756,9 @@ var acm20Mode = F16ACM20Mode.new(F16ACMSTTMode.new());
 var acm60Mode = F16ACM60Mode.new(F16ACMSTTMode.new());
 var acmBoreMode = F16ACMBoreMode.new(F16ACMSTTMode.new());
 var seaMode = F16SeaMode.new(F16FTTMode.new()); 
-var exampleRadar = APG68.new([rwsMode,twsMode,lrsMode,vsrMode],[acm20Mode,acm60Mode,acmBoreMode],[seaMode]);
+var gmMode = F16GMMode.new(F16FTTMode.new());
+var gmtMode = F16GMTMode.new(F16FTTMode.new());
+var exampleRadar = APG68.new([rwsMode,twsMode,lrsMode,vsrMode],[acm20Mode,acm60Mode,acmBoreMode],[seaMode],[gmMode],[gmtMode]);
 
 
 
