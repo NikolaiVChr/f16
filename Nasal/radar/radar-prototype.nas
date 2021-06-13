@@ -23,6 +23,8 @@
 # v6.3 June 4th 2021 - Use picking for check if in clutter. And rewrote notching code.
 # v7.0 June 9th 2021 - Rewrote Discradar as APG-68 as example, with 3 modes. Relies less on math that only works near horizon.
 # v7.1 June 10th 2021 - Added more modes and rootMode vs mainModes (still plus submodes)
+# v7.2 June 12th 2021 - Added support for multibleps per contact, and enabled terrain and type checks in APG68.
+#                       Added ANSI art to be able to quicker navigate this file.
 #
 # RCS check done in ActiveDiscRadar at detection time, so about every 5-10 seconds per contact.
 #      Faster for locks since its important to lose lock if it turns nose to us suddenly and can no longer be seen.
@@ -91,18 +93,29 @@ var VectorNotification = {
 var SliceNotification = {
     new: func() {
         var new_class = emesary.Notification.new("SliceNotification", rand());
-        new_class.slice = func (elev, yaw, elev_radius, yaw_radius, dist_m) {
+        new_class.slice = func (elev, yaw, elev_radius, yaw_radius, dist_m, fa, fg, fs) {
 	    	me.elev = elev;
 	    	me.yaw = yaw;
 	    	me.elev_radius = elev_radius;
 	    	me.yaw_radius = yaw_radius;
 	    	me.dist_m = dist_m;
+	    	me.fa = fa;
+	    	me.fg = fg;
+	    	me.fs = fs;
 	    	return me;
 	    };
         return new_class;
     },
 };
 
+
+#  ███    ███  ██████  ██████  ███████ ██          ██████   █████  ██████  ███████ ███████ ██████  
+#  ████  ████ ██    ██ ██   ██ ██      ██          ██   ██ ██   ██ ██   ██ ██      ██      ██   ██ 
+#  ██ ████ ██ ██    ██ ██   ██ █████   ██          ██████  ███████ ██████  ███████ █████   ██████  
+#  ██  ██  ██ ██    ██ ██   ██ ██      ██          ██      ██   ██ ██   ██      ██ ██      ██   ██ 
+#  ██      ██  ██████  ██████  ███████ ███████     ██      ██   ██ ██   ██ ███████ ███████ ██   ██ 
+#                                                                                                  
+#                                                                                                  
 AIToNasal = {
 # convert AI property tree to Nasal vector
 # will send notification when some is updated (emesary?)
@@ -113,6 +126,7 @@ AIToNasal = {
 # Attributes:
 #   fullContactVector of AIContacts
 #   index keys for fast locating: callsign, model-path??
+	enabled: 1,
 	new: func {
 		me.prop_AIModels = props.globals.getNode("ai/models");
 		me.vector_aicontacts = [];
@@ -131,6 +145,7 @@ AIToNasal = {
 	},
 
 	callReadTree: func {
+		if(!me.enabled) return;
 		#print("NR: listenr called");
 		if (!me.scanInProgress) {
 			me.scanInProgress = 1;
@@ -346,6 +361,14 @@ Contact = {
 };
 
 
+
+#   ██████  ██     ██ ███    ██ ███████ ██   ██ ██ ██████  
+#  ██    ██ ██     ██ ████   ██ ██      ██   ██ ██ ██   ██ 
+#  ██    ██ ██  █  ██ ██ ██  ██ ███████ ███████ ██ ██████  
+#  ██    ██ ██ ███ ██ ██  ██ ██      ██ ██   ██ ██ ██      
+#   ██████   ███ ███  ██   ████ ███████ ██   ██ ██ ██      
+#                                                          
+#                                                          
 SelfContact = {
 # Ownship info
 # 
@@ -408,6 +431,14 @@ SelfContact = {
 var self = SelfContact.new();
 
 
+
+#   ██████  ██████  ███    ██ ████████  █████   ██████ ████████ 
+#  ██      ██    ██ ████   ██    ██    ██   ██ ██         ██    
+#  ██      ██    ██ ██ ██  ██    ██    ███████ ██         ██    
+#  ██      ██    ██ ██  ██ ██    ██    ██   ██ ██         ██    
+#   ██████  ██████  ██   ████    ██    ██   ██  ██████    ██    
+#                                                               
+#                                                               
 AIContact = {
 # Attributes:
 #   replaceNode() [in AI tree]
@@ -641,7 +672,7 @@ AIContact = {
 			me.lastRegisterWasTrack = 0;
 		}
 		if (searchInfo[2]) {
-			value = [me.getDeviationHeading(), me.getDeviationPitch()];
+			value = [me.getDeviationHeading(), me.getDeviationPitch(), me.getBearing(), me.getElevation()];
 			append(newBlep, value);
 		} else {
 			append(newBlep, nil);
@@ -695,6 +726,11 @@ AIContact = {
 	hadTrackInfo: func {
 		# convinience method
 		return me.lastRegisterWasTrack;
+	},
+
+	ignoreTrackInfo: func {
+		# convinience method
+		me.lastRegisterWasTrack = 0;
 	},
 
 	storeDeviation: func (dev) {
@@ -873,16 +909,21 @@ Radar = {
 	enabled: TRUE,
 };
 
+
+#  ██████   █████  ██████  ████████ ██ ████████ ██  ██████  ███    ██ 
+#  ██   ██ ██   ██ ██   ██    ██    ██    ██    ██ ██    ██ ████   ██ 
+#  ██████  ███████ ██████     ██    ██    ██    ██ ██    ██ ██ ██  ██ 
+#  ██      ██   ██ ██   ██    ██    ██    ██    ██ ██    ██ ██  ██ ██ 
+#  ██      ██   ██ ██   ██    ██    ██    ██    ██  ██████  ██   ████ 
+#                                                                     
+#                                                                     
 NoseRadar = {
 	# I partition the sky into the field of regard and preserve the contacts in that field for it to be scanned by ActiveDiscRadar or similar
-	new: func (range_m, radius, rate) {
+	new: func () {
 		var nr = {parents: [NoseRadar, Radar]};
 
-		nr.forRadius_deg  = radius;
-		nr.forDist_m      = range_m;#range setting
 		nr.vector_aicontacts = [];
 		nr.vector_aicontacts_for = [];
-		#nr.timer          = maketimer(rate, nr, func nr.scanFOR());
 
 		nr.NoseRadarRecipient = emesary.Recipient.new("NoseRadarRecipient");
 		nr.NoseRadarRecipient.radar = nr;
@@ -896,7 +937,7 @@ NoseRadar = {
 	        } elsif (notification.NotificationType == "SliceNotification") {
 	        	#printf("NoseRadar recv: %s", notification.NotificationType);
 	            if (me.radar.enabled == 1) {
-	    		    me.radar.scanFOR(notification.elev, notification.yaw, notification.elev_radius, notification.yaw_radius, notification.dist_m);
+	    		    me.radar.scanFOR(notification.elev, notification.yaw, notification.elev_radius, notification.yaw_radius, notification.dist_m, notification.fa, notification.fg, notification.fs);
 	    	    }
 	            return emesary.Transmitter.ReceiptStatus_OK;
 	        } elsif (notification.NotificationType == "ContactNotification") {
@@ -915,7 +956,7 @@ NoseRadar = {
 		return nr;
 	},
 
-	scanFOR: func (elev, yaw, elev_radius, yaw_radius, dist_m) {
+	scanFOR: func (elev, yaw, elev_radius, yaw_radius, dist_m, filter_air, filter_gnd, filter_sea) {
 		if (!me.enabled) return;
 		#iterate:
 		# check direct distance
@@ -940,9 +981,16 @@ NoseRadar = {
 
 		me.vector_aicontacts_for = [];
 		foreach(contact ; me.vector_aicontacts) {
-			if (!contact.isVisible()) {  # moved to nose radar
+			var theType = contact.getType();
+			if (filter_air and theType == AIR) continue;
+			if (filter_gnd and theType == SURFACE) continue;
+			if (filter_sea and theType == MARINE) continue;
+			if (theType == ORDNANCE) continue;
+
+			if (!contact.isVisible()) {  # moved to nose radar. TODO: WHy double it in discradar? hmm, dont matter so much, its lightning fast
 				continue;
 			}
+
 			me.dev = contact.getDeviation();
 			me.rng = contact.getRangeDirect();
 			if (me.rng > dist_m) {
@@ -966,6 +1014,7 @@ NoseRadar = {
 				#print("not Y in for");
 				continue;
 			}
+			# TODO: clean this up. Only what is needed for testing against instant FoV and RCS should be in here:
 			#                       localdev, localpitch, range_m, coord, heading, pitch, roll, bearing, elevation, frustum_norm_y, frustum_norm_z, alt_ft
 			contact.storeDeviation([me.dev[0],me.dev[1],me.rng,contact.getCoord(),contact.getHeading(), contact.getPitch(), contact.getRoll(), contact.getBearing(), contact.getElevation(), -me.pc_y/(me.w/2), me.pc_z/(me.h/2), me.crd.alt()*M2FT]);
 			append(me.vector_aicontacts_for, contact);
@@ -993,6 +1042,14 @@ NoseRadar = {
 
 
 
+
+#   ██████  ███    ███ ███    ██ ██ 
+#  ██    ██ ████  ████ ████   ██ ██ 
+#  ██    ██ ██ ████ ██ ██ ██  ██ ██ 
+#  ██    ██ ██  ██  ██ ██  ██ ██ ██ 
+#   ██████  ██      ██ ██   ████ ██ 
+#                                   
+#                                   
 OmniRadar = {
 	# I check the sky 360 deg for anything potentially detectable by a passive radar system.
 	new: func (rate, max_dist_nm, tp_dist_nm) {
@@ -1053,6 +1110,14 @@ OmniRadar = {
 
 
 
+
+#  ████████ ███████ ██████  ██████   █████  ██ ███    ██ 
+#     ██    ██      ██   ██ ██   ██ ██   ██ ██ ████   ██ 
+#     ██    █████   ██████  ██████  ███████ ██ ██ ██  ██ 
+#     ██    ██      ██   ██ ██   ██ ██   ██ ██ ██  ██ ██ 
+#     ██    ███████ ██   ██ ██   ██ ██   ██ ██ ██   ████ 
+#                                                        
+#                                                        
 TerrainChecker = {
 	new: func (rate, use_doppler, doppler_speed_kt=50) {
 		var tc = {parents: [TerrainChecker]};
@@ -1206,15 +1271,14 @@ TerrainChecker = {
 
 
 
-################
 
-
-######                        MODES
-
-
-################
-
-
+#  ███    ███  ██████  ██████  ███████ ███████ 
+#  ████  ████ ██    ██ ██   ██ ██      ██      
+#  ██ ████ ██ ██    ██ ██   ██ █████   ███████ 
+#  ██  ██  ██ ██    ██ ██   ██ ██           ██ 
+#  ██      ██  ██████  ██████  ███████ ███████ 
+#                                              
+#                                              
 var RadarMode = {
 	azimuthTilt: 0,
 	radar: nil,
@@ -1260,7 +1324,8 @@ var RadarMode = {
 			return 0;
 		}
 		me.range = math.min(me.maxRange, range);
-		return 1;
+		me.range = math.max(me.minRange, range);
+		return range == me.range;
 	},
 	_increaseRange: func {
 		me.range*=2;
@@ -1381,6 +1446,14 @@ var RadarMode = {
 };#                                    END Radar Mode class
 
 
+
+#  ██████  ██     ██ ███████ 
+#  ██   ██ ██     ██ ██      
+#  ██████  ██  █  ██ ███████ 
+#  ██   ██ ██ ███ ██      ██ 
+#  ██   ██  ███ ███  ███████ 
+#                            
+#                            
 var F16RWSMode = {
 	radar: nil,
 	shortName: "RWS",
@@ -1433,6 +1506,14 @@ var F16RWSMode = {
 	},
 };
 
+
+#  ██      ██████  ███████ 
+#  ██      ██   ██ ██      
+#  ██      ██████  ███████ 
+#  ██      ██   ██      ██ 
+#  ███████ ██   ██ ███████ 
+#                          
+#                          
 var F16LRSMode = {
 	shortName: "LRS",
 	longName: "Long Range Search",
@@ -1448,6 +1529,14 @@ var F16LRSMode = {
 	},
 };
 
+
+#  ███████ ███████  █████  
+#  ██      ██      ██   ██ 
+#  ███████ █████   ███████ 
+#       ██ ██      ██   ██ 
+#  ███████ ███████ ██   ██ 
+#                          
+#                          
 var F16SeaMode = {
 	rootName: "SEA",
 	shortName: "AUTO",
@@ -1510,6 +1599,14 @@ var F16SeaMode = {
 	},
 };
 
+
+#  ██    ██ ███████ ██████  
+#  ██    ██ ██      ██   ██ 
+#  ██    ██ ███████ ██████  
+#   ██  ██       ██ ██   ██ 
+#    ████   ███████ ██   ██ 
+#                           
+#                           
 var F16VSMode = {
 	shortName: "VSR",
 	longName: "Velocity Search",
@@ -1546,6 +1643,7 @@ var F16VSMode = {
 		# NOP
 	},
 	preStep: func {
+		me.radar.tiltOverride = 0;
 		if (me.az == 60) {
 			me.azimuthTilt = 0;
 		} elsif (me.azimuthTilt > me.radar.fieldOfRegardMaxAz-me.az) {
@@ -1579,6 +1677,16 @@ var F16VSMode = {
 #                        Soft track Modes
 #
 
+
+
+
+#  ████████ ██     ██ ███████ 
+#     ██    ██     ██ ██      
+#     ██    ██  █  ██ ███████ 
+#     ██    ██ ███ ██      ██ 
+#     ██     ███ ███  ███████ 
+#                             
+#                             
 var F16TWSMode = {
 	radar: nil,
 	shortName: "TWS",
@@ -1618,6 +1726,7 @@ var F16TWSMode = {
 			me.radar.setCurrentMode(me.subMode, designate_contact);
 			me.subMode.radar = me.radar;# find some smarter way of setting it.
 		} else {
+			print("cycle ",designate_contact.callsign," equals: ",designate_contact.equals(me.priorityTarget));
 			me.priorityTarget = designate_contact;
 		}
 	},
@@ -1642,9 +1751,9 @@ var F16TWSMode = {
 			}
 			me.lastDev = me.priorityTarget.getLastDirection();
 			if (me.lastDev != nil) {
-				me.azimuthTilt = me.lastDev[0];
+				me.azimuthTilt = me.lastDev[2]-self.getHeading();
 				me.radar.tiltOverride = 1;
-				me.radar.tilt = me.lastDev[1];
+				me.radar.tilt = me.lastDev[3];
 			} else {
 				
 				me.priorityTarget = nil;
@@ -1675,6 +1784,12 @@ var F16TWSMode = {
 	frameCompleted: func {
 		# NOP
 	},
+	enterMode: func {
+		me.currentTracked = 0;
+		foreach(c;me.radar.vector_aicontacts_bleps) {
+			c.ignoreTrackInfo();# Kind of a hack to make it give out false info. Bypasses hadTrackInfo() but not hasTrackInfo().
+		}
+	},
 	leaveMode: func {
 		me.priorityTarget = nil;
 		me.lastFrameStart = -1;
@@ -1691,15 +1806,14 @@ var F16TWSMode = {
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
 		#print(me.currentTracked,"   ",(me.radar.elapsed - contact.blepTime));
-		me.sizeBleps = size(contact.getBleps());
-		if (me.sizeBleps and me.currentTracked < me.maxTracked and ((me.radar.elapsed - contact.getBleps()[me.sizeBleps-1][0]) < me.maxScanIntervalForTrack)) {
+		if (me.currentTracked < me.maxTracked and ((me.radar.elapsed - contact.getLastBlepTime()) < me.maxScanIntervalForTrack)) {
 			#print("  TWICE    ",me.radar.elapsed);
-			#print(me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, contact),"   ",me.radar.elapsed - contact.blepTime);
-			
-			if (!me.sizeBleps or !contact.hadTrackInfo()) me.currentTracked += 1;
+			#print(me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, contact),"   ",me.radar.elapsed - contact.blepTime);			
+			if (!contact.hadTrackInfo()) me.currentTracked += 1;
 			return [1,1,1,1,0,1];
-		} elsif (me.sizeBleps and contact.hadTrackInfo()) {
+		} elsif (contact.hadTrackInfo()) {
 			me.currentTracked -= 1;
+			me.currentTracked=math.max(0,me.currentTracked);
 		}
 		#print("  ONCE    ",me.currentTracked);
 		return [1,0,1,0,0,1];
@@ -1707,6 +1821,7 @@ var F16TWSMode = {
 	prunedContact: func (c) {
 		if (c.hadTrackInfo()) {
 			me.currentTracked -= 1;
+			me.currentTracked=math.max(0,me.currentTracked);
 		}
 	},
 	testContact: func (contact) {
@@ -1726,13 +1841,13 @@ var F16TWSMode = {
 			me.testIndex = me.radar.vectorIndex(me.radar.vector_aicontacts_bleps, me.priorityTarget);
 		}
 		for(me.i = me.testIndex+1;me.i<size(me.radar.vector_aicontacts_bleps);me.i+=1) {
-			if (me.radar.vector_aicontacts_bleps[me.i].hasTrackInfo()) {
+			if (me.radar.vector_aicontacts_bleps[me.i].hadTrackInfo()) {
 				me.priorityTarget = me.radar.vector_aicontacts_bleps[me.i];
 				return;
 			}
 		}
 		for(me.i = 0;me.i<=me.testIndex;me.i+=1) {
-			if (me.radar.vector_aicontacts_bleps[me.i].hasTrackInfo()) {
+			if (me.radar.vector_aicontacts_bleps[me.i].hadTrackInfo()) {
 				me.priorityTarget = me.radar.vector_aicontacts_bleps[me.i];
 				return;
 			}
@@ -1740,6 +1855,15 @@ var F16TWSMode = {
 	},
 };
 
+
+
+#  ██      ██████  ███████       ███████  █████  ███    ███ 
+#  ██      ██   ██ ██            ██      ██   ██ ████  ████ 
+#  ██      ██████  ███████ █████ ███████ ███████ ██ ████ ██ 
+#  ██      ██   ██      ██            ██ ██   ██ ██  ██  ██ 
+#  ███████ ██   ██ ███████       ███████ ██   ██ ██      ██ 
+#                                                           
+#                                                           
 var F16LRSSAMMode = {
 	shortName: "LRS",
 	longName: "Long Range Search - Situational Awareness Mode",
@@ -1761,6 +1885,17 @@ var F16LRSSAMMode = {
 	},
 };
 
+
+
+
+
+#  ██████  ██     ██ ███████       ███████  █████  ███    ███ 
+#  ██   ██ ██     ██ ██            ██      ██   ██ ████  ████ 
+#  ██████  ██  █  ██ ███████ █████ ███████ ███████ ██ ████ ██ 
+#  ██   ██ ██ ███ ██      ██            ██ ██   ██ ██  ██  ██ 
+#  ██   ██  ███ ███  ███████       ███████ ██   ██ ██      ██ 
+#                                                             
+#                                                             
 var F16RWSSAMMode = {
 	radar: nil,
 	shortName: "RWS",
@@ -1798,9 +1933,9 @@ var F16RWSSAMMode = {
 			}
 			me.lastDev = me.priorityTarget.getLastDirection();
 			if (me.lastDev != nil) {
-				me.azimuthTilt = me.lastDev[0];
+				me.azimuthTilt = me.lastDev[2]-self.getHeading();
 				me.radar.tiltOverride = 1;
-				me.radar.tilt = me.lastDev[1];
+				me.radar.tilt = me.lastDev[3];
 			} else {
 				
 				me.priorityTarget = nil;
@@ -1868,9 +2003,15 @@ var F16RWSSAMMode = {
 };
 
 
-#
-#                        ACM Modes
-#
+
+#   █████   ██████ ███    ███ 
+#  ██   ██ ██      ████  ████ 
+#  ███████ ██      ██ ████ ██ 
+#  ██   ██ ██      ██  ██  ██ 
+#  ██   ██  ██████ ██      ██ 
+#                             
+#                             
+
 
 var F16ACMMode = {#TODO
 	radar: nil,
@@ -1879,12 +2020,13 @@ var F16ACMMode = {#TODO
 	longName: "Air Combat Mode Standby",
 	superMode: nil,
 	subMode: nil,
+	range: 10,
 	maxRange: 10,
 	discSpeed_dps: 84.6,
 	rcsFactor: 0.9,
-	timeToKeepBleps: 1,# TODO
-	bars: 4,
-	az: 15,
+	timeToKeepBleps: 1,
+	bars: 1,
+	az: 1,
 	new: func (subMode, radar = nil) {
 		var mode = {parents: [F16ACMMode, RadarMode]};
 		mode.radar = radar;
@@ -1893,61 +2035,14 @@ var F16ACMMode = {#TODO
 		mode.subMode.shortName = mode.shortName;
 		return mode;
 	},
-	step: func (dt, tilt) {
-		me.radar.horizonStabilized = 0;
-		me.preStep();
-		if (me.nextPatternNode == -1 and me.priorityTarget != nil) {
-			me.localDir = vector.Math.eulerToCartesian3X(-me.priorityTarget.getDeviationHeadingFrozen(), me.priorityTarget.getDeviationPitchFrozen(), 0);
-		} elsif (me.nextPatternNode == -1) {
-			me.nextPatternNode == 0;
-		} elsif (tilt != me.lastTilt or me.bars != me.lastBars or me.az != me.lastAz or me.azimuthTilt != me.lastAzimuthTilt) {
-			# (re)calculate pattern as vectors.
-			me.currentPattern = [];
-			foreach (me.eulerNorm ; me.barPattern[me.bars-1]) {
-				me.localDir = vector.Math.yawPitchVector(-me.eulerNorm[0]*me.az-me.azimuthTilt, me.eulerNorm[1]*me.radar.instantFoVradius*me.barHeight+tilt, [1,0,0]);
-				append(me.currentPattern, me.localDir);
-			}
-			me.lastTilt = tilt;
-			me.lastBars = me.bars;
-			me.lastAz = me.az;
-			me.lastAzimuthTilt = me.azimuthTilt;
-		}
-		me.maxMove = math.min(me.radar.instantFoVradius*0.8, me.discSpeed_dps*dt);
-		me.currentPos = me.radar.positionDirection;
-		me.angleToNextNode = vector.Math.angleBetweenVectors(me.currentPos, me.nextPatternNode == -1?me.localDir:me.currentPattern[me.nextPatternNode]);
-		if (me.angleToNextNode < me.maxMove) {
-			me.radar.setAntennae(me.nextPatternNode == -1?me.localDir:me.currentPattern[me.nextPatternNode]);
-			me.nextPatternNode += 1;
-			if (me.nextPatternNode >= size(me.currentPattern)) {
-				me.nextPatternNode = (me.scanPriorityEveryFrame and me.priorityTarget!=nil)?-1:0;
-				
-				
-			}
-			return dt-me.angleToNextNode/me.discSpeed_dps;
-		}
-		me.newPos = vector.Math.rotateVectorTowardsVector(me.currentPos, me.nextPatternNode == -1?me.localDir:me.currentPattern[me.nextPatternNode], me.maxMove);
-		me.radar.setAntennae(me.newPos);
-		return 0;
-	},
 	showBars: func {
 		return 0;
 	},
 	setDeviation: func (dev_tilt_deg) {
 	},
-	setRange: func (range) {
-		me.range = 10;
-		me.testMulti = 160/range;
-		if (me.testMulti < 1 or me.testMulti > 1 or int(me.testMulti) != me.testMulti) {
-			return 0;
-		}		
-		return 1;
-	},
 	cycleAZ: func {	},
 	cycleBars: func { },
 	designate: func (designate_contact) {
-		if (designate_contact == nil) return;
-		me.radar.setCurrentMode(me.subMode, designate_contact);
-		me.subMode.radar = me.radar;
 	},
 	designatePriority: func (contact) {
 
@@ -1958,8 +2053,6 @@ var F16ACMMode = {#TODO
 	undesignate: func {
 	},
 	preStep: func {
-		me.radar.tilt = -3;
-		me.radar.tiltOverride = 1;
 	},
 	increaseRange: func {
 		return 0;
@@ -1969,8 +2062,7 @@ var F16ACMMode = {#TODO
 	},
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
-		me.designate(contact);
-		return [1,1,1,1,1,1];
+		return nil;
 	},
 	testContact: func (contact) {
 	},
@@ -1985,6 +2077,7 @@ var F16ACM20Mode = {
 	longName: "Air Combat Mode 30x20",
 	superMode: nil,
 	subMode: nil,
+	range: 10,
 	maxRange: 10,
 	discSpeed_dps: 84.6,
 	rcsFactor: 0.9,
@@ -2003,14 +2096,6 @@ var F16ACM20Mode = {
 		return 0;
 	},
 	setDeviation: func (dev_tilt_deg) {
-	},
-	setRange: func (range) {
-		me.range = 10;
-		me.testMulti = 160/range;
-		if (me.testMulti < 1 or me.testMulti > 1 or int(me.testMulti) != me.testMulti) {
-			return 0;
-		}		
-		return 1;
 	},
 	cycleAZ: func {	},
 	cycleBars: func { },
@@ -2118,10 +2203,14 @@ var F16ACMBoreMode = {
 
 
 
-#
-#                        STT Modes
-#
 
+#  ███████ ████████ ████████ 
+#  ██         ██       ██    
+#  ███████    ██       ██    
+#       ██    ██       ██    
+#  ███████    ██       ██    
+#                            
+#                            
 var F16STTMode = {
 	radar: nil,
 	shortName: "STT",
@@ -2131,9 +2220,9 @@ var F16STTMode = {
 	rcsFactor: 1,
 	maxRange: 160,
 	priorityTarget: nil,
-	az: 4,
+	az: 3.5,
 	bars: 2,
-	minimumTimePerReturn: 0.25,
+	minimumTimePerReturn: 0.15,
 	timeToKeepBleps: 5,
 	new: func (radar = nil) {
 		var mode = {parents: [F16STTMode, RadarMode]};
@@ -2156,11 +2245,10 @@ var F16STTMode = {
 		if (me.priorityTarget != nil) {
 			me.lastDev = me.priorityTarget.getLastDirection();
 			if (me.lastDev != nil) {
-				me.azimuthTilt = me.lastDev[0];
+				me.azimuthTilt = me.lastDev[2]-self.getHeading();
 				me.radar.tiltOverride = 1;
-				me.radar.tilt = me.lastDev[1];
-			} else {
-				
+				me.radar.tilt = me.lastDev[3];
+			} else {				
 				me.priorityTarget = nil;
 				me.radar.tiltOverride = 0;
 				me.undesignate();
@@ -2251,6 +2339,28 @@ var F16FTTMode = {
 var FOR_ROUND  = 0;# TODO: be able to ask noseradar for round field of regard.
 var FOR_SQUARE = 1;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#   █████  ██████   ██████         ██████   █████  
+#  ██   ██ ██   ██ ██             ██       ██   ██ 
+#  ███████ ██████  ██   ███ █████ ███████   █████  
+#  ██   ██ ██      ██    ██       ██    ██ ██   ██ 
+#  ██   ██ ██       ██████         ██████   █████  
+#                                                  
+#                                                  
 var APG68 = {
 	fieldOfRegardType: FOR_SQUARE,
 	fieldOfRegardMaxAz: 60,
@@ -2344,9 +2454,12 @@ var APG68 = {
 			if (me.currentMode.shortName != "TWS") {
 				me.designate(me.vector_aicontacts_bleps[size(me.vector_aicontacts_bleps)-1]);
 			} else {
-				foreach(c;me.vector_aicontacts_bleps) {
-					if (c.hadTrackInfo() and getprop("sim/time/elapsed-sec")-c.getLastBlepTime() < F16TWSMode.maxScanIntervalForTrack) {
-						me.designate(c);
+				if (me.currentMode.priorityTarget != nil) me.designate(me.currentMode.priorityTarget);
+				else {
+					foreach(c;me.vector_aicontacts_bleps) {
+						if (c.hadTrackInfo() and getprop("sim/time/elapsed-sec")-c.getLastBlepTime() < F16TWSMode.maxScanIntervalForTrack) {
+							me.designate(c);
+						}
 					}
 				}
 			}
@@ -2449,16 +2562,12 @@ var APG68 = {
 	},
 	loopSlow: func {
 		if (me.enabled) {
-			emesary.GlobalTransmitter.NotifyAll(me.SliceNotification.slice(self.getPitch(), self.getHeading(), me.fieldOfRegardMaxElev, me.fieldOfRegardMaxAz, me.getRange()*NM2M));
+			emesary.GlobalTransmitter.NotifyAll(me.SliceNotification.slice(self.getPitch(), self.getHeading(), me.fieldOfRegardMaxElev, me.fieldOfRegardMaxAz, me.getRange()*NM2M, !me.currentMode.detectAIR, !me.currentMode.detectSURFACE, !me.currentMode.detectMARINE));
 		}
 	},
 	scanFOV: func {
 		foreach(contact ; me.vector_aicontacts_for) {
-			if (me.elapsed - contact.getLastBlepTime() < me.currentMode.minimumTimePerReturn) continue;
-			if (contact.getType() == AIR and !me.currentMode.detectAIR) continue;
-			if (contact.getType() == SURFACE and !me.currentMode.detectSURFACE) continue;
-			if (contact.getType() == MARINE and !me.currentMode.detectMARINE) continue;
-			if (contact.getType() == ORDNANCE) continue;
+			if (me.elapsed - contact.getLastBlepTime() < me.currentMode.minimumTimePerReturn) continue;# To prevent double detecting in overlapping beams
 
 			me.dev = contact.getDeviationStored();
 			#print("Bearing ",me.dev[7],", Pitch ",me.dev[8]);
@@ -2488,7 +2597,6 @@ var APG68 = {
 		me.maxDistVisible = me.currentMode.rcsFactor * me.targetRCSSignal(self.getCoord(), dev[3], contact.model, contact.getHeadingFrozen(1), contact.getPitchFrozen(1), contact.getRollFrozen(1),me.rcsRefDistance*NM2M,me.rcsRefValue);
 
 		if (me.maxDistVisible > dev[2]) {
-			#TerrainChecker
 			me.extInfo = me.currentMode.getSearchInfo(contact);# if the scan gives heading info etc..
 			if (me.extInfo == nil) {
 				return 0;
@@ -2814,6 +2922,14 @@ var clamp = func(v, min, max) { v < min ? min : v > max ? max : v }
 
 
 
+
+#  ██████  ██████  ██ 
+#  ██   ██ ██   ██ ██ 
+#  ██████  ██████  ██ 
+#  ██      ██      ██ 
+#  ██      ██      ██ 
+#                     
+#                     
 RadarViewPPI = {
 # implements radar/RWR display on CRT/MFD
 # also slew cursor to select contacts.
@@ -2944,7 +3060,7 @@ RadarViewPPI = {
 				}
 			}
 			me.sizeBleps = size(contact.getBleps());
-			if (me.sizeBleps and me.ii < 20) {
+			if (me.sizeBleps and me.ii < 20 and contact.hadTrackInfo()) {
 				me.bleppy = contact.getBleps()[me.sizeBleps-1];
 				if (me.bleppy[3] != nil) {
 					me.rot = me.bleppy[3];
@@ -2983,7 +3099,9 @@ RadarViewPPI = {
 		me.prioName = exampleRadar.getPriorityTarget();
 		if (me.prioName != nil) {
 			me.text3.setText(sprintf("Priority: %s", me.prioName.callsign));
-			me.text4.setText(sprintf("Range: %2d  Angels: %2d", me.prioName.getLastRangeDirect()*M2NM, math.round(me.prioName.getLastAltitude()*0.001)));
+			if (me.prioName.getLastRangeDirect() != nil and me.prioName.getLastAltitude() != nil) {
+				me.text4.setText(sprintf("Range: %2d  Angels: %2d", me.prioName.getLastRangeDirect()*M2NM, math.round(me.prioName.getLastAltitude()*0.001)));
+			}
 		} else {
 			me.text3.setText("");
 			me.text4.setText("");
@@ -2995,6 +3113,14 @@ RadarViewPPI = {
     },
 };
 
+
+#  ██████        ███████  ██████  ██████  ██████  ███████ 
+#  ██   ██       ██      ██      ██    ██ ██   ██ ██      
+#  ██████  █████ ███████ ██      ██    ██ ██████  █████   
+#  ██   ██            ██ ██      ██    ██ ██      ██      
+#  ██████        ███████  ██████  ██████  ██      ███████ 
+#                                                         
+#                                                         
 RadarViewBScope = {
 # implements radar/RWR display on CRT/MFD
 # also slew cursor to select contacts.
@@ -3151,10 +3277,10 @@ RadarViewBScope = {
 				}
 			}
 			me.sizeBleps = size(contact.getBleps());
-			if (me.sizeBleps and me.ii < 20) {
+			if (me.sizeBleps and me.ii < 20 and contact.hadTrackInfo()) {
 				me.bleppy = contact.getBleps()[me.sizeBleps-1];
 				if (me.bleppy[3] != nil and me.elapsed - me.bleppy[0] < exampleRadar.currentMode.timeToKeepBleps) {
-					me.rot = me.bleppy[3]-self.getHeading()-me.bleppy[4][0];
+					me.rot = 22.5*math.round((me.bleppy[3]-self.getHeading()-me.bleppy[4][0])/22.5);
 					me.locky[me.ii].setRotation(me.rot*D2R);
 					me.lock[me.ii].setTranslation(128*me.bleppy[4][0]/60,-me.distPixels);
 					if (me.bleppy[5] != nil and me.bleppy[5] > 0) {
@@ -3223,6 +3349,14 @@ RadarViewBScope = {
     },
 };
 
+
+#   ██████       ███████  ██████  ██████  ██████  ███████ 
+#  ██            ██      ██      ██    ██ ██   ██ ██      
+#  ██      █████ ███████ ██      ██    ██ ██████  █████   
+#  ██                 ██ ██      ██    ██ ██      ██      
+#   ██████       ███████  ██████  ██████  ██      ███████ 
+#                                                         
+#                                                         
 RadarViewCScope = {
 # implements radar/RWR display on CRT/MFD
 # also slew cursor to select contacts.
@@ -3353,6 +3487,14 @@ RadarViewCScope = {
 };
 
 
+
+#   █████        ███████  ██████  ██████  ██████  ███████ 
+#  ██   ██       ██      ██      ██    ██ ██   ██ ██      
+#  ███████ █████ ███████ ██      ██    ██ ██████  █████   
+#  ██   ██            ██ ██      ██    ██ ██      ██      
+#  ██   ██       ███████  ██████  ██████  ██      ███████ 
+#                                                         
+#                                                         
 RadarViewAScope = {
 # implements radar/RWR display on CRT/MFD
 # also slew cursor to select contacts.
@@ -3950,24 +4092,24 @@ var buttonWindow = func {
 		else button23.setText("Scr ON");
 	});
 	myLayout2.addItem(button23);
-	button24 = canvas.gui.widgets.Button.new(root, canvas.style, {})
-		.setText("RWRsc ON")
-		.setFixedSize(75, 20);
-	button24.listen("clicked", func {
-		enableRWRs = !enableRWRs;
-		if (enableRWRs == 0) button24.setText("RWRsc OFF");
-		else button24.setText("RWRsc ON");
-	});
-	myLayout2.addItem(button24);
-	button25 = canvas.gui.widgets.Button.new(root, canvas.style, {})
-		.setText("RWR ON")
-		.setFixedSize(75, 20);
-	button25.listen("clicked", func {
-		enableRWR = !enableRWR;
-		if (enableRWR == 0) button25.setText("RWR OFF");
-		else button25.setText("RWR ON");
-	});
-	myLayout2.addItem(button25);
+	#button24 = canvas.gui.widgets.Button.new(root, canvas.style, {})
+	#	.setText("RWRsc ON")
+	#	.setFixedSize(75, 20);
+	#button24.listen("clicked", func {
+	#	enableRWRs = !enableRWRs;
+	#	if (enableRWRs == 0) button24.setText("RWRsc OFF");
+	#	else button24.setText("RWRsc ON");
+	#});
+	#myLayout2.addItem(button24);
+	#button25 = canvas.gui.widgets.Button.new(root, canvas.style, {})
+	#	.setText("RWR ON")
+	#	.setFixedSize(75, 20);
+	#button25.listen("clicked", func {
+	#	enableRWR = !enableRWR;
+	#	if (enableRWR == 0) button25.setText("RWR OFF");
+	#	else button25.setText("RWR ON");
+	#});
+	#myLayout2.addItem(button25);
 	button26 = canvas.gui.widgets.Button.new(root, canvas.style, {})
 		.setText("RDR ON")
 		.setFixedSize(75, 20);
@@ -3986,6 +4128,15 @@ var buttonWindow = func {
 		else button27.setText("Nose ON");
 	});
 	myLayout2.addItem(button27);
+	button28 = canvas.gui.widgets.Button.new(root, canvas.style, {})
+		.setText("Parser ON")
+		.setFixedSize(75, 20);
+	button28.listen("clicked", func {
+		baser.enabled = !baser.enabled;
+		if (baser.enabled == 0) button28.setText("Parser OFF");
+		else button28.setText("Parser ON");
+	});
+	myLayout2.addItem(button28);
 };
 var button23 = nil;
 var button24 = nil;
@@ -4015,7 +4166,7 @@ var displayRWR = nil;
 
 var main = func (module) {
 	baser = AIToNasal.new();
-	nose = NoseRadar.new(15000,60,5);
+	nose = NoseRadar.new();
 	omni = OmniRadar.new(0.25, 150, 55);
 	terrain = TerrainChecker.new(0.10, 1, 60);
 	displayPPI = RadarViewPPI.new();
@@ -4095,12 +4246,11 @@ var unload = func {
 # IMPROVEMENTS:
 #
 # Max roll before no longer roll stabilized CRM. (mig21 too)
-# Cursor
+# Cursor stuff
 #
 #
 # FEATURES:
 #
-# surface vs. AIR
 # isPainted in contacts
 # inaccuracy in GM
 # send spike
