@@ -220,12 +220,7 @@ AIToNasal = {
 	    	me.aircraftPos = geo.Coord.new().set_xyz(me.x.getValue(), me.y.getValue(), me.z.getValue());
 	    }
 	    
-	    me.alt = me.aircraftPos.alt()*M2FT;
 	    
-	    me.prop_speed = me.prop_ai.getNode("velocities/true-airspeed-kt");
-	    me.prop_ord   = me.prop_ai.getNode("missile");
-
-	    me.type = me.determineType(me.name_prop, me.prop_ord, me.alt, me.model, me.prop_speed==nil?nil:me.prop_speed.getValue());
         
         #append(me.vector_aicontacts_raw, me.aicontact);
         me.callsign = me.prop_ai.getNode("callsign");
@@ -240,20 +235,44 @@ AIToNasal = {
         } else {
         	me.id = me.id.getValue();
         }
+        me.ainame = me.prop_ai.getNode("name");
+        if (me.ainame == nil) {
+        	me.ainame = "";
+        } else {
+        	me.ainame = me.ainame.getValue();
+        }
+        me.subid = me.prop_ai.getNode("subID");
+        if (me.subid == nil) {
+        	me.subid = "0";
+        } else {
+        	me.subid = me.subid.getValue();
+        }
+        me.aitype = me.prop_ai.getNode("type");
+        if (me.aitype == nil) {
+        	me.aitype = "";
+        } else {
+        	me.aitype = me.aitype.getValue();
+        }
+        me.sign = me.prop_ai.getNode("sign");
+        if (me.sign == nil) {
+        	me.sign = "";
+        } else {
+        	me.sign = me.sign.getValue();
+        }
 
         #AIcontact needs 2 calls to work. new() [cheap] and init() [expensive]. Only new is called here, updateVector will do init():
-        me.aicontact = AIContact.new(me.prop_ai, me.type, me.model, me.callsign, me.pos_type, me.id);
+        me.aicontact = AIContact.new(me.prop_ai, me.model, me.callsign, me.pos_type, me.id, me.ainame, me.subid, me.aitype, me.sign);
 
-        me.sign = sprintf("%s%04d",me.callsign,me.id);
+        me.usign = sprintf("%s%04d",me.callsign,me.id);
         #me.signLookup = me.lookupCallsignRaw[me.sign];
         #if (me.signLookup == nil) {
-        	me.signLookup = [me.aicontact];
+        	me.usignLookup = [me.aicontact];
         #} else {
         #	append(me.signLookup, me.aicontact);
         #}
         #me.lookupCallsignRaw[me.sign] = me.signLookup;
         
-        me.updateVectorFrame(me.sign,me.signLookup);
+        me.updateVectorFrame(me.usign,me.usignLookup);
         
         me.nextReadTreeFrame();
 	},
@@ -270,28 +289,7 @@ AIToNasal = {
         }
     },
 	
-	determineType: func (prop_name, ordnance, alt_ft, model, speed_kt) {
-		# determine type. Unsure if this should be done here, or in Radar.
-	    #   For here: PRO better performance. CON might change in between calls to reread tree, and dont have doppler to determine air from ground.
-        if (prop_name == "carrier") {
-        	return MARINE;
-        } elsif (prop_name == "aircraft" or prop_name == "Mig-28") {
-        	return AIR;
-        } elsif (ordnance != nil) {
-        	return ORDNANCE;
-        } elsif (me.name_prop == "groundvehicle") {
-        	return SURFACE;
-        } elsif (model != nil and contains(knownSurface, model)) {
-			return SURFACE;
-		} elsif (model != nil and contains(knownShips, model)) {
-			return MARINE;
-        } elsif (speed_kt != nil and speed_kt > 60) {
-        	return AIR;# to be determined later by doppler in Radar
-        } elsif (alt_ft < 3.0) {
-        	return MARINE;
-        }
-        return SURFACE;
-	},
+	
 
 	remove_suffix: func(s, x) {
 	      me.len = size(x);
@@ -442,21 +440,23 @@ var self = SelfContact.new();
 AIContact = {
 # Attributes:
 #   replaceNode() [in AI tree]
-	new: func (prop, type, model, callsign, pos_type, ident) {
+	new: func (prop, model, callsign, pos_type, ident, ainame, subid, aitype, sign) {
 		var c = {parents: [AIContact, Contact]};
 
 		# general:
 		c.prop     = prop;
-		c.type     = type;#TODO: this should be updated dynamically
 		c.model    = model;
 		c.callsign = callsign;
 		c.pos_type = pos_type;
 		c.needInit = 1;
-		c.azi      = 0;
 		c.visible  = 1;
 		c.inClutter = 0;
 		c.hiddenFromDoppler = 0;
 		c.id = ident;
+		c.ainame = ainame;
+		c.subid = subid;
+		c.aitype = aitype;
+		c.sign = sign;
 		c.bleps = [];
 		c.lastRegisterWasTrack = 0;
 
@@ -477,6 +477,7 @@ AIContact = {
 		me.pos     = me.prop.getNode("position");
 		me.ori     = me.prop.getNode("orientation");
 		me.vel     = me.prop.getNode("velocities");
+		me.miss    = me.prop.getNode("missile");
 		me.x       = me.pos.getNode("global-x");
     	me.y       = me.pos.getNode("global-y");
     	me.z       = me.pos.getNode("global-z");
@@ -489,24 +490,25 @@ AIContact = {
     	me.speed   = me.vel.getNode("true-airspeed-kt");
     	me.tp      = me.prop.getNode("instrumentation/transponder/transmitted-id");
     	me.rdr     = me.prop.getNode("sim/multiplay/generic/int[2]");
-    	    	
+
+	    me.type    = me.determineType(me.prop.getName(), me.miss, me.alt.getValue(), me.model, me.speed==nil?nil:me.speed.getValue());
 	},
 
 	update: func (newC) {
 		if (me.prop.getPath() != newC.prop.getPath()) {
 			me.prop = newC.prop;
 			me.needInit = 1;
+			print("hmm "~newC.callsign);
 		}
-		me.type = newC.type;
 		me.model = newC.model;
 		me.callsign = newC.callsign;
 	},
 
 	equals: func (item) {
-		if (item != nil and item.prop.getName() == me.prop.getName() and item.type == me.type and item.model == me.model and item.callsign == me.callsign) {
-			return TRUE;
+		if (item != nil and item.callsign == me.callsign and item.model == me.model and item.ainame == me.ainame and item.sign == me.sign and item.aitype == me.aitype and item.subid == me.subid) {
+			return 1;
 		}
-		return FALSE;
+		return 0;
 	},
 
 	getCoord: func {
@@ -522,9 +524,37 @@ AIContact = {
 	    }	
 	},
 
+	determineType: func (prop_name, ordnance, alt_ft, model, speed_kt) {
+		# determine type. Only done at init. getType() will check if AIR has landed or taken off and will change it accordingly.
+	    # 
+        if (prop_name == "carrier") {
+        	return MARINE;
+        } elsif (prop_name == "aircraft" or prop_name == "Mig-28") {
+        	return AIR;
+        } elsif (ordnance != nil) {
+        	return ORDNANCE;
+        } elsif (prop_name == "groundvehicle") {
+        	return SURFACE;
+        } elsif (model != nil and contains(knownSurface, model)) {
+			return SURFACE;
+		} elsif (model != nil and contains(knownShips, model)) {
+			return MARINE;
+        } elsif (speed_kt != nil and speed_kt > 60) {
+        	return AIR;# can later switch from AIR to SURFACE or opposite
+        }
+        if(alt_ft < 5.0) {
+	        me.getCoord();
+	        me.geod = geodinfo(me.coord.lat(),me.coord.lon());
+        	if (me.geod == nil or (me.geod[1] != nil and !me.geod[1].solid)) {# if geod[1] is nil, its a building.
+        		return MARINE;
+        	}
+        }
+        return SURFACE;
+	},
+
 	getType: func {
 		if (me.type == AIR and me.getSpeed() < 60) me.type = SURFACE;
-		if (me.type == SURFACE and me.getSpeed() > 60) me.type = AIR;
+		elsif (me.type != ORDNANCE and me.getSpeed() > 60) me.type = AIR;
 		return me.type;
 	},
 	
@@ -1283,7 +1313,7 @@ var RadarMode = {
 	azimuthTilt: 0,
 	radar: nil,
 	range: 40,
-	minRange: 10,
+	minRange: 5, # MLU T1
 	az: 60,
 	bars: 4,
 	lastTilt: nil,
@@ -1320,7 +1350,7 @@ var RadarMode = {
 	},
 	setRange: func (range) {
 		me.testMulti = 160/range;
-		if (me.testMulti < 1 or me.testMulti > 16 or int(me.testMulti) != me.testMulti) {
+		if (int(me.testMulti) != me.testMulti) {#me.testMulti < 1 or me.testMulti > 32 or 
 			return 0;
 		}
 		me.range = math.min(me.maxRange, range);
@@ -1370,7 +1400,7 @@ var RadarMode = {
 		me.radar.horizonStabilized = 1;
 		me.preStep();
 		
-		# figure out if we reach the gimbal limit, and if so, keep within it:
+		# figure out if we reach the gimbal limit, and if so, keep all bars within it:
 		me.min = me.barPatternMin[me.bars-1]*me.barHeight*me.radar.instantFoVradius+tilt;# This is the min/max we desire.
 		me.max = me.barPatternMax[me.bars-1]*me.barHeight*me.radar.instantFoVradius+tilt;
  		me.actualMin = self.getPitch()-me.radar.fieldOfRegardMaxElev;
@@ -1423,7 +1453,7 @@ var RadarMode = {
 		#print("frame ",me.radar.elapsed-me.lastFrameStart);
 		if (me.lastFrameStart != -1) {
 			me.lastFrameDuration = me.radar.elapsed - me.lastFrameStart;
-			me.timeToKeepBleps = me.radar.framesToKeepBleps*me.lastFrameDuration;
+			me.timeToKeepBleps = me.radar.targetHistory*me.lastFrameDuration;
 		}
 		me.lastFrameStart = me.radar.elapsed;
 	},
@@ -1517,6 +1547,7 @@ var F16RWSMode = {
 var F16LRSMode = {
 	shortName: "LRS",
 	longName: "Long Range Search",
+	range: 160,
 	discSpeed_dps: 45,
 	rcsFactor: 1,
 	new: func (subMode, radar = nil) {
@@ -1554,6 +1585,7 @@ var F16SeaMode = {
 		mode.subMode = subMode;
 		subMode.superMode = mode;
 		subMode.shortName = mode.shortName;
+		subMode.rootName = mode.rootName;
 		return mode;
 	},
 	preStep: func {
@@ -1620,6 +1652,7 @@ var F16GMMode = {
 		mode.subMode = subMode;
 		subMode.superMode = mode;
 		subMode.shortName = mode.shortName;
+		subMode.rootName = mode.rootName;
 		return mode;
 	},
 };
@@ -1643,6 +1676,7 @@ var F16GMTMode = {
 		mode.subMode = subMode;
 		subMode.superMode = mode;
 		subMode.shortName = mode.shortName;
+		subMode.rootName = mode.rootName;
 		return mode;
 	},
 	getSearchInfo: func (contact) {
@@ -1664,6 +1698,7 @@ var F16GMTMode = {
 var F16VSMode = {
 	shortName: "VSR",
 	longName: "Velocity Search",
+	range: 160,
 	discSpeed_dps: 45,
 	discSpeed_alert_dps: 45,
 	discSpeed_confirm_dps: 100,
@@ -1683,6 +1718,11 @@ var F16VSMode = {
 		} elsif (me.discSpeed_dps == me.discSpeed_confirm_dps) {
 			me.discSpeed_dps = me.discSpeed_alert_dps;
 		}
+		if (me.lastFrameStart != -1) {
+			me.lastFrameDuration = me.radar.elapsed - me.lastFrameStart;
+			me.timeToKeepBleps = me.radar.targetHistory*me.lastFrameDuration;
+		}
+		me.lastFrameStart = me.radar.elapsed;
 	},
 	designate: func (designate_contact) {
 		if (designate_contact == nil) return;
@@ -1727,10 +1767,6 @@ var F16VSMode = {
 
 
 
-#
-#                        Soft track Modes
-#
-
 
 
 
@@ -1753,7 +1789,7 @@ var F16TWSMode = {
 	timeToKeepBleps: 13,# TODO
 	maxScanIntervalForTrack: 6.5,# authentic for TWS
 	priorityTarget: nil,
-	currentTracked: 0,
+	currentTracked: [],
 	maxTracked: 10,
 	az: 25,# slow scan, so default is 25 to get those double taps in there.
 	bars: 3,# default is less due to need 2 scans of target to get groundtrack
@@ -1849,10 +1885,13 @@ var F16TWSMode = {
 		}
 	},
 	frameCompleted: func {
-		# NOP
+		if (me.lastFrameStart != -1) {
+			me.lastFrameDuration = me.radar.elapsed - me.lastFrameStart;
+		}
+		me.lastFrameStart = me.radar.elapsed;
 	},
 	enterMode: func {
-		me.currentTracked = 0;
+		me.currentTracked = [];
 		foreach(c;me.radar.vector_aicontacts_bleps) {
 			c.ignoreTrackInfo();# Kind of a hack to make it give out false info. Bypasses hadTrackInfo() but not hasTrackInfo().
 		}
@@ -1873,22 +1912,35 @@ var F16TWSMode = {
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
 		#print(me.currentTracked,"   ",(me.radar.elapsed - contact.blepTime));
-		if (me.currentTracked < me.maxTracked and ((me.radar.elapsed - contact.getLastBlepTime()) < me.maxScanIntervalForTrack)) {
+		if (size(me.currentTracked) < me.maxTracked and ((me.radar.elapsed - contact.getLastBlepTime()) < me.maxScanIntervalForTrack)) {
 			#print("  TWICE    ",me.radar.elapsed);
 			#print(me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, contact),"   ",me.radar.elapsed - contact.blepTime);			
-			if (!contact.hadTrackInfo()) me.currentTracked += 1;
+			if (!me.radar.containsVectorContact(me.currentTracked, contact)) append(me.currentTracked, contact);
 			return [1,1,1,1,0,1];
-		} elsif (contact.hadTrackInfo()) {
-			me.currentTracked -= 1;
-			me.currentTracked=math.max(0,me.currentTracked);
+		} elsif (me.radar.containsVectorContact(me.currentTracked, contact)) {
+			me.tmp = [];
+			foreach (me.cc ; me.currentTracked) {
+				if(!me.cc.equals(contact)) {
+					append(me.tmp, me.cc);
+				}
+			}
+			me.currentTracked = me.tmp;
 		}
 		#print("  ONCE    ",me.currentTracked);
 		return [1,0,1,0,0,1];
 	},
 	prunedContact: func (c) {
 		if (c.hadTrackInfo()) {
-			me.currentTracked -= 1;
-			me.currentTracked=math.max(0,me.currentTracked);
+			me.del = me.radar.containsVectorContact(me.currentTracked, c);
+			if (me.del) {
+				me.tmp = [];
+				foreach (me.cc ; me.currentTracked) {
+					if(!me.cc.equals(c)) {
+						append(me.tmp, me.cc);
+					}
+				}
+				me.currentTracked = me.tmp;
+			}
 		}
 	},
 	testContact: func (contact) {
@@ -2078,8 +2130,6 @@ var F16RWSSAMMode = {
 #  ██   ██  ██████ ██      ██ 
 #                             
 #                             
-
-
 var F16ACMMode = {#TODO
 	radar: nil,
 	rootName: "ACM",
@@ -2260,6 +2310,7 @@ var F16ACMBoreMode = {
 		me.angleToNextNode = vector.Math.angleBetweenVectors(me.currentPos, me.localDir);
 		if (me.angleToNextNode < me.maxMove) {
 			me.radar.setAntennae(me.localDir);
+			me.lastFrameDuration = 0;
 			return 0;
 		}
 		me.newPos = vector.Math.rotateVectorTowardsVector(me.currentPos, me.localDir, me.maxMove);
@@ -2360,7 +2411,10 @@ var F16STTMode = {
 	setRange: func {# Range is auto-set in STT
 	},
 	frameCompleted: func {
-		# Don't calc this in this class
+		if (me.lastFrameStart != -1) {
+			me.lastFrameDuration = me.radar.elapsed - me.lastFrameStart;
+		}
+		me.lastFrameStart = me.radar.elapsed;
 	},
 	leaveMode: func {
 		me.priorityTarget = nil;
@@ -2387,10 +2441,18 @@ var F16ACMSTTMode = {
 	},
 };
 
+
+#  ███████ ████████ ████████ 
+#  ██         ██       ██    
+#  █████      ██       ██    
+#  ██         ██       ██    
+#  ██         ██       ██    
+#                            
+#                            
 var F16FTTMode = {
-	rootName: "SEA",
+	rootName: "",
 	shortName: "FTT",
-	longName: "Sea Navigation Mode - Fixed Target Track",
+	longName: "Fixed Target Track",
 	maxRange: 80,
 	detectAIR: 0,
 	detectSURFACE: 0,
@@ -2434,12 +2496,12 @@ var APG68 = {
 	fieldOfRegardMaxElev: 60,
 	currentMode: nil, # vector of cascading modes ending with current submode
 	currentModeIndex: 0,
-	rootMode: 0,# 0: CRM  1: ACM
-	mainModes: [[],[],[],[],[]],
+	rootMode: 0,# 0: CRM  1: ACM 2: SEA 3: GM 4: GMT
+	mainModes: nil,
 	instantFoVradius: 3.90,#average of horiz/vert radius
 	rcsRefDistance: 70,
 	rcsRefValue: 3.2,
-	framesToKeepBleps: 3,
+	targetHistory: 3,# Not used in TWS
 	tilt: 0,
 	tiltKnob: 0,
 	tiltOverride: 0,# when enabled by a mode: the mode can set the tilt, and it will not be read from property (TODO)
@@ -2454,29 +2516,17 @@ var APG68 = {
 	timerSlow: nil,
 	elapsed: getprop("sim/time/elapsed-sec"),
 	lastElapsed: getprop("sim/time/elapsed-sec"),
-	new: func (crm_modes, acm_modes, sea_modes, gm_mode, gmt_mode) {
+	new: func (mainModes) {
 		var rdr = {parents: [APG68, Radar]};
 
-		rdr.mainModes[0] = crm_modes;
-		rdr.mainModes[1] = acm_modes;
-		rdr.mainModes[2] = sea_modes;
-		rdr.mainModes[3] = gm_mode;
-		rdr.mainModes[4] = gmt_mode;
+		rdr.mainModes = mainModes;
 		
-		foreach (mode ; crm_modes) {
-			# this needs to be set on submodes also...hmmm
-			mode.radar = rdr;
+		foreach (modes ; mainModes) {
+			foreach (mode ; modes) {
+				# this needs to be set on submodes also...hmmm
+				mode.radar = rdr;
+			}
 		}
-		foreach (mode ; acm_modes) {
-			# this needs to be set on submodes also...hmmm
-			mode.radar = rdr;
-		}
-		foreach (mode ; sea_modes) {
-			# this needs to be set on submodes also...hmmm
-			mode.radar = rdr;
-		}
-		gm_mode[0].radar = rdr;
-		gmt_mode[0].radar = rdr;
 
 		rdr.setCurrentMode(rdr.mainModes[0][0], nil);
 
@@ -2669,7 +2719,7 @@ var APG68 = {
 	registerBlep: func (contact, dev, doppler_check = 1) {
 		if (!contact.isVisible()) return 0;
 		if (doppler_check and contact.isHiddenFromDoppler()) return 0;
-		me.maxDistVisible = me.currentMode.rcsFactor * me.targetRCSSignal(self.getCoord(), dev[3], contact.model, contact.getHeadingFrozen(1), contact.getPitchFrozen(1), contact.getRollFrozen(1),me.rcsRefDistance*NM2M,me.rcsRefValue);
+		me.maxDistVisible = me.currentMode.rcsFactor * me.targetRCSSignal(self.getCoord(), dev[3], contact.model, dev[4], dev[5], dev[6],me.rcsRefDistance*NM2M,me.rcsRefValue);
 
 		if (me.maxDistVisible > dev[2]) {
 			me.extInfo = me.currentMode.getSearchInfo(contact);# if the scan gives heading info etc..
@@ -2775,7 +2825,7 @@ var acmBoreMode = F16ACMBoreMode.new(F16ACMSTTMode.new());
 var seaMode = F16SeaMode.new(F16FTTMode.new()); 
 var gmMode = F16GMMode.new(F16FTTMode.new());
 var gmtMode = F16GMTMode.new(F16FTTMode.new());
-var exampleRadar = APG68.new([rwsMode,twsMode,lrsMode,vsrMode],[acm20Mode,acm60Mode,acmBoreMode],[seaMode],[gmMode],[gmtMode]);
+var exampleRadar = APG68.new([[rwsMode,twsMode,lrsMode,vsrMode],[acm20Mode,acm60Mode,acmBoreMode],[seaMode],[gmMode],[gmtMode]]);
 
 
 
@@ -3061,6 +3111,16 @@ RadarViewPPI = {
       	  .setFontSize(10, 1.0)
       	  .setTranslation(0,45)
 	      .setColor(1, 1, 1);
+	    me.text5 = root.createChild("text")
+	      .setAlignment("left-top")
+      	  .setFontSize(10, 1.0)
+      	  .setTranslation(0,60)
+	      .setColor(1, 1, 1);
+	    me.text6 = root.createChild("text")
+	      .setAlignment("left-top")
+      	  .setFontSize(10, 1.0)
+      	  .setTranslation(0,75)
+	      .setColor(1, 1, 1);
 
 	    me.blep = setsize([],200);
         for (var i = 0;i<200;i+=1) {
@@ -3182,6 +3242,14 @@ RadarViewPPI = {
 		} else {
 			me.text3.setText("");
 			me.text4.setText("");
+		}
+		me.text5.setText("Frame time "~sprintf("%.1f",math.round(10*exampleRadar.currentMode.lastFrameDuration)*0.1)~" seconds");
+		if (exampleRadar.currentMode.longName == "Track While Scan") {
+			me.text6.setText("Tracking " ~size(exampleRadar.currentMode.currentTracked));
+		} elsif (exampleRadar.currentMode.shortName != "STT" and exampleRadar.currentMode.shortName != "FTT") {
+			me.text6.setText("Target history " ~ exampleRadar.targetHistory);
+		} else {
+			me.text6.setText("");
 		}
 	},
 	del: func {
