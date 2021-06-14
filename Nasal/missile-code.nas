@@ -200,8 +200,6 @@ var contactPoint = nil;
 # get_Callsign()
 # get_range()
 # get_Coord()
-# get_Latitude()
-# get_Longitude()
 # get_altitude()
 # get_Pitch()
 # get_Speed()

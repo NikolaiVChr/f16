@@ -47,12 +47,17 @@ var AIR = 0;
 var MARINE = 1;
 var SURFACE = 2;
 var ORDNANCE = 3;
+var POINT    = 4;
 
 var ECEF = 0;
 var GPS = 1;
 
 var FALSE = 0;
 var TRUE = 1;
+
+var flareProp = "rotors/main/blade[3]/flap-deg";
+var chaffProp = "rotors/main/blade[3]/position-deg";
+var laserOn = nil;# set this to a prop
 
 var knownShips = {
     "missile_frigate":       nil,
@@ -478,6 +483,7 @@ AIContact = {
 		me.ori     = me.prop.getNode("orientation");
 		me.vel     = me.prop.getNode("velocities");
 		me.miss    = me.prop.getNode("missile");
+		me.valid   = me.prop.getNode("valid");
 		me.x       = me.pos.getNode("global-x");
     	me.y       = me.pos.getNode("global-y");
     	me.z       = me.pos.getNode("global-z");
@@ -488,6 +494,9 @@ AIContact = {
     	me.pitch   = me.ori.getNode("pitch-deg");
     	me.roll    = me.ori.getNode("roll-deg");
     	me.speed   = me.vel.getNode("true-airspeed-kt");
+    	me.uBody   = me.vel.getNode("uBody-fps");
+    	me.vBody   = me.vel.getNode("vBody-fps");
+    	me.wBody   = me.vel.getNode("wBody-fps");
     	me.tp      = me.prop.getNode("instrumentation/transponder/transmitted-id");
     	me.rdr     = me.prop.getNode("sim/multiplay/generic/int[2]");
 
@@ -824,74 +833,140 @@ AIContact = {
 			#}
 		}
 		return -1000;
-	},	
+	},
 
-
-
-
+	getLastClosureRate: func {
+		if (size(me.bleps)) {
+			#if (me.bleps[size(me.bleps)-1][4] != nil) {
+				return me.bleps[size(me.bleps)-1][6];
+			#}
+		}
+		return 0;
+	},
 
 	# The following remaining methods is being deprecated:
-
-	getDeviationPitchFrozen: func {
-		me.pitched = vector.Math.getPitch(self.getCoord(), me.coordFrozen);
-		return me.pitched - self.getPitch();
-		#return me.devStored[1];
-	},
-
-	getElevationFrozen: func {
-		return vector.Math.getPitch(self.getCoord(), me.coordFrozen);
-	},
-
-	getDeviationHeadingFrozen: func {#is really bearing, should be renamed.
-		return self.getCoord().course_to(me.coordFrozen)-self.getHeading();
-		#return me.devStored[0];
-	},
-
+	
 	getCartesianInFoRFrozen: func {# TODO: this is broken, fix it or stop using this method..
 		return [me.devStored[9], me.devStored[10]];
 	},
 
-	getHeadingFrozen: func (override=0) {
-		if (me.azi or override) {
-			#return me.headingFrozen;
-			return me.devStored[4];
-		} else {
-			return nil;
+
+#  ██     ██ ███████  █████  ██████   ██████  ███    ██     ███    ███ ███████ ████████ ██   ██  ██████  ██████  ███████ 
+#  ██     ██ ██      ██   ██ ██   ██ ██    ██ ████   ██     ████  ████ ██         ██    ██   ██ ██    ██ ██   ██ ██      
+#  ██  █  ██ █████   ███████ ██████  ██    ██ ██ ██  ██     ██ ████ ██ █████      ██    ███████ ██    ██ ██   ██ ███████ 
+#  ██ ███ ██ ██      ██   ██ ██      ██    ██ ██  ██ ██     ██  ██  ██ ██         ██    ██   ██ ██    ██ ██   ██      ██ 
+#   ███ ███  ███████ ██   ██ ██       ██████  ██   ████     ██      ██ ███████    ██    ██   ██  ██████  ██████  ███████ 
+#                                                                                                                        
+#                                                                                                                        
+
+	get_type: func {
+		me.getType();
+	},
+	getUnique: func {
+		return me.callsign ~ me.model ~ me.ainame ~ me.sign ~ me.aitype ~ me.subid ~ me.prop.getName()) {
+	},
+	isValid: func {
+		me.valid.getValue();
+	},
+	get_bearing: func {
+		me.getBearing();
+	},
+	get_Callsign: func {
+		if (me.callsign != "") {
+			return me.callsign;
 		}
-	},
-
-	getPitchFrozen: func (override=0) {
-		if (me.azi or override) {
-			#return me.headingFrozen;
-			return me.devStored[5];
-		} else {
-			return nil;
+		if (me.ainame != "") {
+			return me.ainame;
 		}
-	},
-
-	getRollFrozen: func (override=0) {
-		if (me.azi or override) {
-			#return me.headingFrozen;
-			return me.devStored[6];
-		} else {
-			return nil;
+		if (me.model != "") {
+			return me.model;
 		}
+		return me.aitype;
 	},
-
-	getRangeDirectFrozen: func {# meters
-		return self.getCoord().direct_distance_to(me.coordFrozen);
-		#return me.devStored[2];
+	get_range: func {
+		me.getRange()*M2NM;
 	},
-
-	getRangeFrozen: func {# meters
-		return self.getCoord().distance_to(me.coordFrozen);
-		#return me.devStored[3];
+	get_Coord: func {
+		me.getCoord();
 	},
-
-	getAltitudeFrozen: func {
-		return me.devStored[11];
+	get_Pitch: func {
+		me.getPitch();
 	},
-
+	get_altitude: func {
+		me.alt.getValue();
+	},
+	get_Speed: func {
+		me.getSpeed();
+	},
+	get_heading: func {
+		me.getHeading();
+	},
+	get_uBody: func {
+		var body = nil;
+		if (me.uBody != nil) {
+			body = me.uBody.getValue();
+		}
+		if(body == nil) {
+			body = me.get_Speed()*KT2FPS;
+		}
+		return body;
+	},
+	get_vBody: func {
+		if (me.vBody == nil) return 0;
+		me.vBody.getValue();
+	},
+	get_wBody: func {
+		if (me.wBody == nil) return 0;
+		me.wBody.getValue();
+	},
+	getFlareNode: func {
+		if (me["flareProp"] == nil) {
+			me.flareProp = me.prop.getNode(flareProp, 0);
+		}
+		if (me.flareProp != nil) {
+			return me.flareProp.getValue();
+		}
+		return 0;
+	},
+	getChaffNode: func {
+		if (me["chaffProp"] == nil) {
+			me.chaffProp = me.prop.getNode(chaffProp, 0);
+		}
+		if (me.chaffProp != nil) {
+			return me.chaffProp.getValue();
+		}
+		return 0;
+	},
+	isPainted: func {
+		return getprop("sim/time/elapsed-sec")- getLastBlepTime < 0.75;
+	},
+	isLaserPainted: func {
+		if (!laserOn.getValue()) return 0;
+		if (me.getType() = POINT) return 1;
+		return me.isPainted();
+	},
+	isRadiating: func {
+		me.rn = me.get_range();
+        if (me.get_model() != "gci" and me.get_model() != "S-75" and me.get_model() != "buk-m2" and me.get_model() != "MIM104D" and me.get_model() != "missile_frigate" and me.get_model() != "s-300" and me.get_model() != "ZSU-23-4M" and me.get_type()!=MARINE) {
+            me.bearingR = coord.course_to(me.get_Coord());
+            me.headingR = me.get_heading();
+            me.inv_bearingR =  me.bearingR+180;
+            me.deviationRd = me.inv_bearingR - me.headingR;
+        } else {
+            me.deviationRd = 0;
+        }
+        if (me.rn < 70 and ((me.rdr != nil and me.rdr.getValue()!=1) or me.rdr == nil) and math.abs(geo.normdeg180(me.deviationRd)) < 60) {
+            # our radar is active and pointed at coord.
+            return 1;
+        }
+        return 0;
+	},
+	isVirtual: func {
+		return 0;
+	},
+	get_closure_rate: func {
+		me.getLastClosureRate();
+	},
 };
 
 
@@ -1416,7 +1491,18 @@ var RadarMode = {
  		}
 
 		if (me.nextPatternNode == -1 and me.priorityTarget != nil) {
-			me.localDir = vector.Math.eulerToCartesian3X(-me.priorityTarget.getDeviationHeadingFrozen(), me.priorityTarget.getDeviationPitchFrozen(), 0);
+			me.lastDev = me.priorityTarget.getLastDirection();
+			if (me.lastDev != nil) {
+				me.azimuthTilt = me.lastDev[2]-self.getHeading();
+				me.radar.tiltOverride = 1;
+				me.radar.tilt = me.lastDev[3];
+				me.localDir = vector.Math.yawPitchVector(-me.azimuthTilt, me.radar.tilt, [1,0,0]);
+			} else {				
+				me.priorityTarget = nil;
+				me.radar.tiltOverride = 0;
+				me.undesignate();
+				me.nextPatternNode == 0;
+			}			
 		} elsif (me.nextPatternNode == -1) {
 			me.nextPatternNode == 0;
 		} elsif (tilt != me.lastTilt or me.bars != me.lastBars or me.az != me.lastAz or me.azimuthTilt != me.lastAzimuthTilt or me.gimbalTiltOffset != 0) {
@@ -1703,7 +1789,7 @@ var F16VSMode = {
 	discSpeed_alert_dps: 45,
 	discSpeed_confirm_dps: 100,
 	maxScanIntervalForVelocity: 6,
-	rcsFactor: 1.1,
+	rcsFactor: 1.15,
 	new: func (subMode, radar = nil) {
 		var mode = {parents: [F16VSMode, F16LRSMode, F16RWSMode, RadarMode]};
 		mode.radar = radar;
@@ -3338,9 +3424,10 @@ RadarViewBScope = {
 	    me.blep = setsize([],200);
         for (var i = 0;i<200;i+=1) {
         	me.blep[i] = me.rootCenterBleps.createChild("path")
-					.moveTo(0,0)
-					.vert(2)
-					.setStrokeLineWidth(2)
+					.moveTo(0,-1)
+					.vert(3)
+					.setStrokeLineWidth(3)
+					.setStrokeLineCap("butt")
 	      	  		.hide();
         }
         me.lock = setsize([],20);
@@ -4310,6 +4397,7 @@ var displayRWR = nil;
 #settimer(func {print("beam: "~fix.testForDistance());},15);# will fail if no terrain found :)
 
 var main = func (module) {
+	laserOn = props.globals.getNode("controls/armament/laser-arm-dmd",1);
 	baser = AIToNasal.new();
 	nose = NoseRadar.new();
 	omni = OmniRadar.new(0.25, 150, 55);
