@@ -1738,13 +1738,13 @@ append(obj.total, obj.speed_curr);
                                              {
                                                  if (hdp.brake_parking) {
                                                      obj.window2.setVisible(1);
-                                                     obj.window2.setText("  BRAKES");
+                                                     hdp.window2_txt = "  BRAKES";
                                                  } elsif (hdp.flap_pos_deg > 0 or hdp.gear_down) {
                                                      obj.window2.setVisible(1);
                                                      obj.gd = "";
                                                      if (hdp.gear_down)
                                                        obj.gd = " G";
-                                                     obj.window2.setText(sprintf("  F %d%s",hdp.flap_pos_deg,obj.gd));
+                                                     hdp.window2_txt = sprintf("  F %d%s",hdp.flap_pos_deg,obj.gd);
                                                  } elsif (hdp.master_arm != 0) {
                                                      var submode = "";
                                                      if (hdp.CCRP_active > 0) {
@@ -1758,19 +1758,20 @@ append(obj.total, obj.speed_curr);
                                                      }
                                                      var dgft = hdp.dgft?"DGFT ":"";
                                                      var armmode = hdp.master_arm==1?"  ARM ":"  SIM ";
-                                                     obj.window2.setText(armmode~dgft~submode);
+                                                     hdp.window2_txt = armmode~dgft~submode;
                                                      obj.window2.setVisible(1);
                                                  } elsif (hdp.rotary == 0 or hdp.rotary == 3) {
-                                                     obj.window2.setText("  ILS");
+                                                     hdp.window2_txt = "  ILS";
                                                      obj.window2.setVisible(1);
                                                  } else {
                                                     if (hdp.ins_knob==3) {
-                                                        obj.window2.setText("  NAV");
+                                                        hdp.window2_txt = "  NAV";
                                                     } elsif (hdp.ins_knob==2 or hdp.ins_knob==4) {
-                                                        obj.window2.setText("  ALIGN");
+                                                        hdp.window2_txt = "  ALIGN";
                                                     } else {
-                                                        obj.window2.setText(" ");
+                                                        hdp.window2_txt = " ";
                                                     }
+                                                    obj.window2.setText(hdp.window2_txt);
                                                      obj.window2.setVisible(1);
                                                  }
                                              }
