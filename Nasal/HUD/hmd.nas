@@ -794,6 +794,16 @@ var F16_HMD = {
                                             obj.window3.hide();
 
                                       }),
+                        props.UpdateManager.FromHashValue("window2_txt", nil, func(txt)
+                                      {
+                                          if (txt != nil and txt != ""){
+                                              obj.window2.show();
+                                              obj.window2.setText(txt);
+                                          }
+                                          else
+                                            obj.window2.hide();
+
+                                      }),
                         props.UpdateManager.FromHashValue("window9_txt", nil, func(txt)
                                       {
                                           if (txt != nil and txt != ""){
