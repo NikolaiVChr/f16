@@ -196,6 +196,8 @@ var RadarMode = {
 	cursorNm: 20,
 	upperAngle: 10,
 	lowerAngle: 10,
+	EXPsupport: 0,#if support zoom
+	EXPsearch: 1,# if zoom should include search targets
 	showAZ: func {
 		return me.az != 60;
 	},
@@ -386,6 +388,8 @@ var F16RWSMode = {
 	maxRange: 160,
 	discSpeed_dps: 65,#authentic for RWS
 	rcsFactor: 0.9,
+	EXPsupport: 1,#if support zoom
+	EXPsearch: 1,# if zoom should include search targets
 	new: func (subMode, radar = nil) {
 		var mode = {parents: [F16RWSMode, RadarMode]};
 		mode.radar = radar;
@@ -703,6 +707,8 @@ var F16TWSMode = {
 	maxTracked: 10,
 	az: 25,# slow scan, so default is 25 to get those double taps in there.
 	bars: 3,# default is less due to need 2 scans of target to get groundtrack
+	EXPsupport: 1,#if support zoom
+	EXPsearch: 0,# if zoom should include search targets
 	new: func (subMode, radar = nil) {
 		var mode = {parents: [F16TWSMode, RadarMode]};
 		mode.radar = radar;
@@ -1680,7 +1686,17 @@ var APG68 = {
 		}
 	},
 	scanFOV: func {
+		me.doIFF = getprop("instrumentation/radar/iff");
+    	setprop("instrumentation/radar/iff",0);
 		foreach(contact ; me.vector_aicontacts_for) {
+			if (me.doIFF == 1) {
+	            me.iffr = iff.interrogate(contact.prop);
+	            if (me.iffr) {
+	                u.iff = me.elapsed;
+	            } else {
+	                u.iff = -me.elapsed;
+	            }
+	        }
 			if (me.elapsed - contact.getLastBlepTime() < me.currentMode.minimumTimePerReturn) continue;# To prevent double detecting in overlapping beams
 
 			me.dev = contact.getDeviationStored();

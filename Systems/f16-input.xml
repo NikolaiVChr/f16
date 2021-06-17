@@ -654,7 +654,7 @@
             <desc>Target deselect</desc>
             <binding>
                 <command>nasal</command>
-                <script>radar_system.apg68Radar.designate(nil);</script>
+                <script>radar_system.apg68Radar.undesignate();</script>
             </binding>
         </key>
         <key n="82">
