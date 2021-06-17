@@ -1737,10 +1737,8 @@ append(obj.total, obj.speed_curr);
             props.UpdateManager.FromHashList(["brake_parking", "gear_down", "flap_pos_deg", "CCRP_active", "master_arm","submode","VV_x","DGFT"], 0.1, func(hdp)
                                              {
                                                  if (hdp.brake_parking) {
-                                                     obj.window2.setVisible(1);
                                                      hdp.window2_txt = "  BRAKES";
                                                  } elsif (hdp.flap_pos_deg > 0 or hdp.gear_down) {
-                                                     obj.window2.setVisible(1);
                                                      obj.gd = "";
                                                      if (hdp.gear_down)
                                                        obj.gd = " G";
@@ -1759,10 +1757,8 @@ append(obj.total, obj.speed_curr);
                                                      var dgft = hdp.dgft?"DGFT ":"";
                                                      var armmode = hdp.master_arm==1?"  ARM ":"  SIM ";
                                                      hdp.window2_txt = armmode~dgft~submode;
-                                                     obj.window2.setVisible(1);
                                                  } elsif (hdp.rotary == 0 or hdp.rotary == 3) {
                                                      hdp.window2_txt = "  ILS";
-                                                     obj.window2.setVisible(1);
                                                  } else {
                                                     if (hdp.ins_knob==3) {
                                                         hdp.window2_txt = "  NAV";
@@ -1771,9 +1767,9 @@ append(obj.total, obj.speed_curr);
                                                     } else {
                                                         hdp.window2_txt = " ";
                                                     }
-                                                    obj.window2.setText(hdp.window2_txt);
-                                                     obj.window2.setVisible(1);
                                                  }
+                                                 obj.window2.setText(hdp.window2_txt);
+                                                 obj.window2.setVisible(1);
                                              }
                                             ),
             props.UpdateManager.FromHashValue("window3_txt", nil, func(txt)
