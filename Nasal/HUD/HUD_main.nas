@@ -1734,7 +1734,7 @@ append(obj.total, obj.speed_curr);
                                                  obj.stby.update();
                                              }
                                             ),
-            props.UpdateManager.FromHashList(["brake_parking", "gear_down", "flap_pos_deg", "CCRP_active", "master_arm","submode","VV_x","DGFT"], 0.1, func(hdp)
+            props.UpdateManager.FromHashList(["brake_parking", "gear_down", "flap_pos_deg", "CCRP_active", "master_arm","submode","VV_x","DGFT","rotary"], 0.1, func(hdp)
                                              {
                                                  if (hdp.brake_parking) {
                                                      hdp.window2_txt = "  BRAKES";
