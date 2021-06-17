@@ -114,7 +114,7 @@ var wasInRadarRange = func (contact, myRadarDistance_nm, myRadarStrength_rcs) {
 var isInRadarRange = func (contact, myRadarDistance_nm, myRadarStrength_rcs) {
     if (contact != nil and contact.get_Coord() != nil) {
         var value = 1;
-        call(func {value = targetRCSSignal(contact.get_Coord(), contact.get_model(), contact.get_heading(), contact.get_Pitch(), contact.get_Roll(), geo.aircraft_position(), myRadarDistance_nm*NM2M, myRadarStrength_rcs)},nil, var err = []);
+        call(func {value = targetRCSSignal(contact.get_Coord(), contact.getModel(), contact.get_heading(), contact.get_Pitch(), contact.get_Roll(), geo.aircraft_position(), myRadarDistance_nm*NM2M, myRadarStrength_rcs)},nil, var err = []);
         if (size(err)) {
             foreach(line;err) {
                 print(line);

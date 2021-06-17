@@ -1299,7 +1299,7 @@ var main = func (module) {
 	#displayA = RadarViewAScope.new();
 	#exampleRWR   = RWR.new();
 	#displayRWR = RWRView.new();
-    buttonWindow();
+    #buttonWindow();
 }
 
 var unload = func {

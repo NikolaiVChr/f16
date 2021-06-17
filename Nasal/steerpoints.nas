@@ -558,8 +558,8 @@ var data = nil;
 var sending = nil;
 var dlink_loop = func {
   if (getprop("instrumentation/datalink/data") != 0) return;
-  foreach(contact; awg_9.tgts_list) {
-    if (!contact.get_behind_terrain() and contact.get_range() < 80) {
+  foreach(contact; radar_system.getCompleteList()) {
+    if (contact.isVisible() and contact.get_range() < 80) {
       data = datalink.get_data(contact.get_Callsign());
       if (data != nil  and data.on_link()) {
         var p = data.point();

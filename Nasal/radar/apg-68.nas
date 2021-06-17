@@ -1613,6 +1613,18 @@ var APG68 = {
 		new_mode.designatePriority(priority);
 		new_mode.enterMode();
 	},
+	setRootMode: func (mode_number, priority = nil) {
+		me.rootMode = mode_number;
+		if (me.rootMode >= size(me.mainModes)) {
+			me.rootMode = 0;
+		}
+		me.currentModeIndex = 0;
+		me.newMode = me.mainModes[me.rootMode][me.currentModeIndex];
+		#me.newMode.setRange(me.currentMode.getRange());
+		me.oldMode = me.currentMode;
+		me.setCurrentMode(me.newMode, priority);
+		me.oldMode.leaveMode();
+	},
 	getRange: func {
 		return me.currentMode.getRange();
 	},

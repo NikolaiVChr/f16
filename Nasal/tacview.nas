@@ -96,7 +96,7 @@ var mainloop = func() {
         thread.lock(mutexWrite);
         if (find_in_array(seen_ids, cx.tacobj.tacviewID) == -1) {
             append(seen_ids, cx.tacobj.tacviewID);
-            var model_is = cx.get_model();
+            var model_is = cx.getModel();
             if (model_is=="Mig-28") {
                 model_is = "F-16C";
                 color=",Color=Red";
@@ -161,8 +161,8 @@ var writeMyPlanePos = func() {
 
 var writeMyPlaneAttributes = func() {
     var tgt = "";
-    if(awg_9.active_u != nil) {
-        tgt= ",FocusedTarget="~awg_9.active_u.tacobj.tacviewID;
+    if(radar_system.apg68Radar.getPriorityTarget() != nil) {
+        tgt= ",FocusedTarget="~radar_system.apg68Radar.getPriorityTarget().tacobj.tacviewID;
     }
     var rmode = ",RadarMode=1";
     if (getprop("sim/multiplay/generic/int[2]")) {

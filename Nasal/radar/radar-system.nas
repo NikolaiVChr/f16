@@ -534,7 +534,7 @@ AIContact = {
 
 	    if (enable_tacobject) {
 		    me.tacobj = {parents: [tacview.tacobj]};
-	        me.tacobj.tacviewID = left(md5(obj.getUnique()),5);
+	        me.tacobj.tacviewID = left(md5(me.getUnique()),5);
 	        me.tacobj.valid = 1;
 	    }
 	},

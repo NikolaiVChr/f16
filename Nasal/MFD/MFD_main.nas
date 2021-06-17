@@ -373,7 +373,7 @@ var MFD_Device =
         var pres = canvas.parsesvg(obj.PFDsvg, "Nasal/MFD/MFD.svg");
         obj.PFDsvg.set("z-index",1000);
         #me.get_element(obj.PFDsvg, "layer2").set("z-index",1000000);
-        var selectionBoxGroup = dev_canvas.createGroup().set("z-index",900);
+        var selectionBoxGroup = dev_canvas.createGroup().set("z-index",0);
         obj.selectionBox = selectionBoxGroup.createChild("path")
             .rect(0,0,35,20)
             .setColorFill(colorText1)
@@ -570,17 +570,22 @@ var MFD_Device =
     setupRadar: func (svg, index) {
         svg.p_RDR = me.canvas.createGroup()
                 .setTranslation(276*0.795,482)
-                .set("z-index",0)
+                .set("z-index",1)
                 .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,482 , 0.795 is for UV map
-        svg.maxB = 16;
+        svg.maxB = 150;
+        svg.maxT =  15;
         svg.index = index;
         svg.blep = setsize([],svg.maxB);
-        svg.lnk = setsize([],svg.maxB);
-        svg.lnkT = setsize([],svg.maxB+1);
-        svg.iff  = setsize([],svg.maxB);# friendly IFF response
-        svg.iffU = setsize([],svg.maxB);# unknown IFF response
-        for (var i = 0;i<=svg.maxB;i+=1) {
-            if (i<svg.maxB) {
+        svg.blepTriangle = setsize([],svg.maxT);
+        svg.blepTriangleVel = setsize([],svg.maxT);
+        svg.blepTriangleVelLine = setsize([],svg.maxT);
+        svg.blepTriangleText = setsize([],svg.maxT);
+        svg.blepTrianglePaths = setsize([],svg.maxT);
+        svg.lnk = setsize([],svg.maxT);
+        svg.lnkT = setsize([],svg.maxT+1);
+        svg.iff  = setsize([],svg.maxT);# friendly IFF response
+        svg.iffU = setsize([],svg.maxT);# unknown IFF response
+        for (var i = 0;i<svg.maxB;i+=1) {
                 svg.blep[i] = svg.p_RDR.createChild("path")
                         .moveTo(0,-3)
                         .vert(7)
@@ -588,6 +593,29 @@ var MFD_Device =
                         .setStrokeLineCap("butt")
                         .set("z-index",10)
                         .hide();
+        }
+        for (var i = 0;i<svg.maxT;i+=1) {
+                svg.blepTriangle[i] = svg.p_RDR.createChild("group")
+                                .set("z-index",11);
+                svg.blepTriangleVel[i] = svg.blepTriangle[i].createChild("group");
+                svg.blepTriangleText[i] = svg.blepTriangle[i].createChild("text")
+                                .setAlignment("center-top")
+                                .setFontSize(20, 1.0)
+                                .setTranslation(0,20)
+                                .setColor(1, 1, 1);
+                svg.blepTriangleVelLine[i] = svg.blepTriangleVel[i].createChild("path")
+                                .lineTo(0,-10)
+                                .setTranslation(0,-16)
+                                .setStrokeLineWidth(2)
+                                .setColor(colorCircle2);
+                svg.blepTrianglePaths[i] = svg.blepTriangle[i].createChild("path")
+                                .moveTo(-14,8)
+                                .horiz(28)
+                                .lineTo(0,-16)
+                                .lineTo(-14,8)
+                                .setColor(colorCircle2)
+                                .set("z-index",10)
+                                .setStrokeLineWidth(2);
                 svg.iff[i] = svg.p_RDR.createChild("path")
                                 .moveTo(-8,0)
                                 .arcSmallCW(8,8, 0,  8*2, 0)
@@ -618,7 +646,7 @@ var MFD_Device =
                                 .hide()
                                 .set("z-index",10)
                                 .setStrokeLineWidth(3);
-            }
+                
             svg.lnkT[i] = svg.p_RDR.createChild("text")
                 .setAlignment("center-bottom")
                 .setColor(colorDot1)
@@ -683,10 +711,17 @@ var MFD_Device =
                 .set("z-index",1)
                 .setFontSize(20, 1.0);
         svg.mod = svg.p_RDR.createChild("text")
+                .setTranslation(276*0.795*-0.71, -482*0.5-215)
+                .setText("CRM")
+                .setAlignment("top-center")
+                .setColor([0,1,1])
+                .set("z-index",20000)
+                .setFontSize(20, 1.0);
+        svg.M  = svg.p_RDR.createChild("text")
                 .setTranslation(-276*0.795+10, -482*0.5+125+10)
-                .setText("")
+                .setText("M")
                 .setAlignment("left-center")
-                .setColor([0,0,0])
+                .setColor([0,0,1])
                 .set("z-index",2)
                 .setFontSize(20, 1.0);
         svg.modBox = svg.p_RDR.createChild("path")
@@ -704,6 +739,14 @@ var MFD_Device =
                     .vert(-13)
                     .moveTo(-276*0.795-8,-38)
                     .horiz(15)
+                    .setStrokeLineWidth(5)
+                    .set("z-index",1)
+                    .setColor(colorLine1);
+        svg.ant_side = svg.p_RDR.createChild("path")
+                    .moveTo(-276*0.795+40,-482*0.5)
+                    .horiz(-13)
+                    .moveTo(-276*0.795+40,-482*0.5-7)
+                    .vert(14)
                     .setStrokeLineWidth(5)
                     .set("z-index",1)
                     .setColor(colorLine1);
@@ -1059,13 +1102,18 @@ var MFD_Device =
         me.p_RDR.notifyButton = func (eventi) {
             if (eventi != nil) {
                 if (eventi == 0) {
-                    awg_9.range_control(1);
+                    radar_system.apg68Radar.increaseRange();
                 } elsif (eventi == 1) {
-                    awg_9.range_control(-1);
+                    radar_system.apg68Radar.decreaseRange();
                 } elsif (eventi == 10) {
-                    me.ppp.selectPage(me.my.p_LIST);
+                    if (me["DGFT"]) return;
+                    me.ppp.selectPage(me.my.r_LIST);
                     me.resetColor(me.ppp.buttons[10]);
                     me.selectionBox.hide();
+                } elsif (eventi == 4) {
+                    #me.ppp.selectPage(me.my.rm_LIST);
+                    #me.resetColor(me.ppp.buttons[4]);
+                    #me.selectionBox.hide();
                 } elsif (eventi == 17) {
                     me.ppp.selectPage(me.my.p_SMS);
                     me.setSelection(me.ppp.buttons[10], me.ppp.buttons[17], 17);
@@ -1077,35 +1125,17 @@ var MFD_Device =
                 } elsif (eventi == 16) {
                     me.ppp.selectPage(me.my.p_HSD);
                     me.setSelection(me.ppp.buttons[10], me.ppp.buttons[16], 16);
+                } elsif (eventi == 13) {
+                    me.ppp.selectPage(me.my.rm_LIST);
+                    me.setSelection(me.ppp.buttons[10], me.ppp.buttons[13], 13);
                 } elsif (eventi == 12) {
                     me.pressEXP = 1;
+                } elsif (eventi == 11) {
+                    radar_system.apg68Radar.cycleMode();
                 } elsif (eventi == 2) {
-                    if (getprop("f16/avionics/dgft")) return;
-                    var az = getprop("instrumentation/radar/az-field");
-                    if(az==120)
-                        az = 15;
-                    elsif(az==15)
-                        az = 30;
-                    elsif(az==30)
-                        az = 60;
-                    else
-                        az = 120;
-                    setprop("instrumentation/radar/az-field", az);
+                    radar_system.apg68Radar.cycleAZ();
                 } elsif (eventi == 3) {
-                    if (getprop("f16/avionics/dgft")) return;
-                    var ho = getprop("instrumentation/radar/ho-field");
-                    if(ho==120)
-                        ho = 15;
-                    elsif(ho==15 or ho == 20)
-                        ho = 30;
-                    elsif(ho==30)
-                        ho = 60;
-                    else
-                        ho = 120;
-                    setprop("instrumentation/radar/ho-field", ho);
-                } elsif (eventi == 4) {
-                    if (getprop("f16/avionics/dgft")) return;
-                    setprop("instrumentation/radar/mode-switch", 1);
+                    radar_system.apg68Radar.cycleBars();
                 } elsif (eventi == 8) {
                     cursorZero();
                 } elsif (eventi == 9) {
@@ -1132,7 +1162,17 @@ var MFD_Device =
 #   15  16  17  18  19
 #  VSD HSD SMS SIT
         };
+
+
+#  ██████   █████  ██████   █████  ██████      ██    ██ ██████  ██████   █████  ████████ ███████ 
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██    ██ ██   ██ ██   ██ ██   ██    ██    ██      
+#  ██████  ███████ ██   ██ ███████ ██████      ██    ██ ██████  ██   ██ ███████    ██    █████   
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██    ██ ██      ██   ██ ██   ██    ██    ██      
+#  ██   ██ ██   ██ ██████  ██   ██ ██   ██      ██████  ██      ██████  ██   ██    ██    ███████ 
+#                                                                                                
+#                                                                                                
         me.p_RDR.update = func (noti) {
+
             me.DGFT = getprop("f16/avionics/dgft");
 			if (f16.SOI == 3 and me.model_index == 1) {
 				me.root.notSOI.hide();
@@ -1145,7 +1185,7 @@ var MFD_Device =
             me.ver = num(split(".", getprop("sim/version/flightgear"))[0]) >= 2020;
             
             me.modeSw = getprop("instrumentation/radar/mode-switch");            
-            if (me.DGFT) {
+            if (1 or me.DGFT) {
                 rdrMode = RADAR_MODE_CRM;
             } elsif (me.modeSw == 1) {
                 if (rdrMode == RADAR_MODE_CRM) {
@@ -1199,14 +1239,16 @@ var MFD_Device =
                 me.root.sp.hide();
                 me.root.hd.hide();
             } else {
-                me.root.mod.setText("CRM");
-                me.root.mod.setColor(colorText1);
+                me.root.acm.setText(radar_system.apg68Radar.currentMode.shortName);
+                me.root.acm.setColor(colorText1);
+                me.root.mod.setText(radar_system.apg68Radar.currentMode.rootName);
+                me.root.mod.setColor(0,0,0);
                 me.root.modBox.hide();
                 me.root.gmPicHD.hide();
                 me.root.gmPicSD.hide();
                 me.root.sp.hide();
                 me.root.hd.hide();
-            }			
+            }
             
             #
             # Bulls-eye info on FCR
@@ -1238,7 +1280,7 @@ var MFD_Device =
             me.root.bullOwnDir.setVisible(me.bullOn);
             me.root.bullOwnDist.setVisible(me.bullOn);
             
-            if (rdrMode == RADAR_MODE_GM or me.DGFT) {
+            if (rdrMode == RADAR_MODE_GM or me.DGFT or radar_system.apg68Radar.rootMode != 0) {
                 exp = 0;
                 me.root.norm.hide();
             } elsif (me.pressEXP) {
@@ -1255,31 +1297,26 @@ var MFD_Device =
                 me.root.norm.setText("NORM");
             }
             me.root.exp.setVisible(exp);
-            me.root.acm.setVisible(me.DGFT);
+            me.root.acm.setVisible(1);
             me.root.horiz.setRotation(-getprop("orientation/roll-deg")*D2R);
-            me.time = getprop("sim/time/elapsed-sec");
-            me.az = getprop("instrumentation/radar/az-field");
             if ((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA)) {
                 me.root.distl.show();
             } else {
                 me.root.distl.hide();
             }
-            if (getprop("sim/multiplay/generic/int[2]")!=1) {
-                if (!me.DGFT or awg_9.active_u == nil) {
-                    var plc = me.time*0.5/(me.az/120)-int(me.time*0.5/(me.az/120));
-                    if (plc<me.plc) {
-                        me.fwd = !me.fwd;
-                    }
-                    me.plc = plc;
-                    
+            if (radar_system.apg68Radar.enabled) {
+                if (1) {
                     if ((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA)) {
-                        me.root.ant_bottom.setTranslation(me.wdt*0.5-(me.az/120)*me.wdt*0.5+(me.az/120)*me.wdt*math.abs(me.fwd-me.plc),0);
+                        me.root.ant_bottom.setTranslation(me.wdt*0.5+radar_system.apg68Radar.positionCart[0]*me.wdt*0.5,0);
+                        me.root.ant_side.setTranslation(0,-radar_system.apg68Radar.positionCart[1]*482*0.5);
                     } else {
                         me.root.ant_bottom.setTranslation(-256+(me.gmLine+1)*(me.rdrModeHDGM?4:8)+276*0.795,0);
                     }
                     me.root.ant_bottom.show();
+                    me.root.ant_side.show();
                 } else {
                     me.root.ant_bottom.hide();
+                    me.root.ant_side.hide();
                 }                
                 me.root.silent.hide();
             } elsif (getprop("/f16/avionics/power-fcr-bit") == 2) {
@@ -1365,9 +1402,11 @@ var MFD_Device =
             }
             me.elapsed = noti.ElapsedSeconds;
             me.root.cursor.setTranslation(cursor_pos);
+            radar_system.apg68Radar.setCursorDeviation(cursor_pos[0]*60/(me.wdt*0.5));
+            radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(482/radar_system.apg68Radar.getRange()));
             if (me.bullOn) {
                 me.cursorDev   = cursor_pos[0]*60/(me.wdt*0.5);
-                me.cursorDist  = -NM2M*cursor_pos[1]/(482/awg_9.range_radar2);
+                me.cursorDist  = -NM2M*cursor_pos[1]/(482/radar_system.apg68Radar.getRange());
                 me.ownCoord.apply_course_distance(noti.heading+me.cursorDev, me.cursorDist);
                 me.cursorBullDist = me.ownCoord.distance_to(me.bullCoord);
                 me.cursorBullCrs  = me.bullCoord.course_to(me.ownCoord);
@@ -1377,44 +1416,38 @@ var MFD_Device =
             
             
             
-            me.root.az1.setVisible((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA) and (!me.DGFT or awg_9.active_u == nil));
-            me.root.az2.setVisible((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA) and (!me.DGFT or awg_9.active_u == nil));
-            me.root.bars.setVisible((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA));
+            me.root.az1.setVisible((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA) and (radar_system.apg68Radar.showAZ()));
+            me.root.az2.setVisible((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA) and (radar_system.apg68Radar.showAZ()));
+            me.root.bars.setVisible((rdrMode == RADAR_MODE_CRM and radar_system.apg68Radar.currentMode.showBars()));
             me.root.az.setVisible((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA));
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
-            me.root.rang.setText(sprintf("%d",getprop("instrumentation/radar/radar2-range")));
+            me.root.rang.setText(sprintf("%d",radar_system.apg68Radar.getRange()));
             
             me.i=0;
-            
-            me.ho = getprop("instrumentation/radar/ho-field");
-            
-            me.azt = "";
-            me.hot = "";
-            if (me.az==15) {
-                me.azt = "A\n1";
-            } elsif (me.az==30) {
-                me.azt = "A\n2";
-            } elsif (me.az==60) {
-                me.azt = "A\n3";
-            } else {
-                me.azt = "A\n4";
+                        
+            var a = 0;
+            if (radar_system.apg68Radar.getAzimuthRadius() < 20) {
+                a = 1;
+            } elsif (radar_system.apg68Radar.getAzimuthRadius() < 30) {
+                a = 2;
+            } elsif (radar_system.apg68Radar.getAzimuthRadius() < 40) {
+                a = 3;
+            } elsif (radar_system.apg68Radar.getAzimuthRadius() < 50) {
+                a = 4;
+            } elsif (radar_system.apg68Radar.getAzimuthRadius() < 60) {
+                a = 5;
+            } elsif (radar_system.apg68Radar.getAzimuthRadius() < 70) {
+                a = 6;
             }
-            me.root.az.setText(me.azt);
-            if (me.ho==15) {
-                me.hot = "2\nB";
-            } elsif (me.ho==20) {
-                me.hot = "3\nB";#DGFT mode
-            } elsif (me.ho==30) {
-                me.hot = "4\nB";
-            } elsif (me.ho==60) {
-                me.hot = "6\nB";
-            } else {
-                me.hot = "8\nB";
-            }
-            me.root.bars.setText(me.hot);
-            me.root.az1.setTranslation(-(me.az/120)*me.wdt*0.5,0);
-            me.root.az2.setTranslation((me.az/120)*me.wdt*0.5,0);
+            me.root.az.setText("A"~a);
+            #if (radar_system.apg68Radar.showBars()) {
+                me.root.bars.setText(radar_system.apg68Radar.getBars()~"B");
+            #} else {
+            #    me.root.bars.setText("");
+            #}
+            me.root.az1.setTranslation((radar_system.apg68Radar.currentMode.azimuthTilt-radar_system.apg68Radar.currentMode.az)*me.wdt*0.5/60,0);
+            me.root.az2.setTranslation((radar_system.apg68Radar.currentMode.azimuthTilt+radar_system.apg68Radar.currentMode.az)*me.wdt*0.5/60,0);
             me.root.lock.hide();
             me.root.lockGM.hide();
             me.root.lockInfo.hide();
@@ -1459,26 +1492,83 @@ var MFD_Device =
             } else {
                 me.root.steerpoint.setVisible(0);
             }
+
             
-            #
-            # Radar echoes, targets and DLNK contacts on FCR
-            #
+
+#  ██████   █████  ██████   █████  ██████      ██████  ██      ███████ ██████  ███████ 
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██   ██ ██      ██      ██   ██ ██      
+#  ██████  ███████ ██   ██ ███████ ██████      ██████  ██      █████   ██████  ███████ 
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██   ██ ██      ██      ██           ██ 
+#  ██   ██ ██   ██ ██████  ██   ██ ██   ██     ██████  ███████ ███████ ██      ███████ 
+#                                                                                      
+#                                                                                      
             me.desig_new = nil;
             me.gm_echoPos = {};
             me.ijk = 0;
             me.intercept = nil;
             me.showDLT = 0;
-            foreach(contact; awg_9.tgts_list) {
-                if (rdrMode == RADAR_MODE_SEA and contact.get_type() != armament.MARINE) {
-                    continue;
+            me.prio = radar_system.apg68Radar.getPriorityTarget();
+            me.tracks = [];
+            me.elapsed = getprop("sim/time/elapsed-sec");
+            me.i = 0;
+            me.ii = 0;
+            foreach(contact; radar_system.apg68Radar.getActiveBleps()) {
+                me.bleps = contact.getBleps();
+                foreach(me.bleppy ; me.bleps) {
+                    if (me.i < me.root.maxB and me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.timeToKeepBleps and (me.bleppy[2] != nil or (me.bleppy[6] != nil and me.bleppy[6]>0))) {
+                        if (me.bleppy[6] != nil and radar_system.apg68Radar.currentMode.longName == "Velocity Search") {
+                            me.distPixels = me.bleppy[6]*(482/(1000));
+                        } elsif (me.bleppy[2] != nil) {
+                            me.distPixels = me.bleppy[2]*(482/(radar_system.apg68Radar.getRange()*NM2M));
+                        } else {
+                            continue;
+                        }
+                        me.echoPos = [me.wdt*0.5*geo.normdeg180(me.bleppy[4][0])/60,-me.distPixels];
+                        me.color = math.pow(1-(me.elapsed - me.bleppy[0])/radar_system.apg68Radar.currentMode.timeToKeepBleps, 2.2);
+                        me.root.blep[me.i].setTranslation(me.echoPos);
+                        me.root.blep[me.i].setColor(me.color,me.color,me.color);
+                        me.root.blep[me.i].show();
+                        me.root.blep[me.i].update();
+                        me.i += 1;
+                    }
                 }
-                if (rdrMode == RADAR_MODE_CRM and contact.get_type() == armament.MARINE) {
-                    continue;
-                }
-                me.distPixels = contact.get_range()*(482/awg_9.range_radar2);
-                if (me.distPixels > 485) {
-                    continue;
-                }
+                me.sizeBleps = size(me.bleps);
+                if (me.sizeBleps and me.ii < me.root.maxT and contact.hadTrackInfo()) {
+                    me.bleppy = me.bleps[me.sizeBleps-1];
+                    if (me.bleppy[3] != nil and me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
+                        me.rot = 22.5*math.round((me.bleppy[3]-radar_system.self.getHeading()-me.bleppy[4][0])/22.5);
+                        me.root.blepTrianglePaths[me.ii].setRotation(me.rot*D2R);
+                        me.root.blepTriangle[me.ii].setTranslation(me.wdt*0.5*geo.normdeg180(me.bleppy[4][0])/60,-me.distPixels);
+                        if (me.bleppy[5] != nil and me.bleppy[5] > 0) {
+                            me.root.blepTriangleVelLine[me.ii].setScale(1,me.bleppy[5]*0.0045);
+                            me.root.blepTriangleVel[me.ii].setRotation(me.rot*D2R);
+                            me.root.blepTriangleVel[me.ii].update();
+                            me.root.blepTriangleVel[me.ii].show();
+                        } else {
+                            me.root.blepTriangleVel[me.ii].hide();
+                        }
+                        if (me.bleppy[7] != nil) {
+                            me.root.blepTriangleText[me.ii].setText(""~math.round(me.bleppy[7]*0.001));
+                        } else {
+                            me.root.blepTriangleText[me.ii].setText("");
+                        }
+                        me.root.blepTriangle[me.ii].setVisible(radar_system.apg68Radar.currentMode.longName != "Track While Scan" or (me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.maxScanIntervalForTrack));
+                        me.root.blepTriangle[me.ii].update();
+                        me.ii += 1;
+                    }
+                }                
+            }
+            for (;me.i < me.root.maxB;me.i+=1) {
+                me.root.blep[me.i].hide();
+            }
+            for (;me.ii < me.root.maxT;me.ii+=1) {
+                me.root.blepTriangle[me.ii].hide();
+            }
+            return;
+
+
+            foreach(contact; radar_system.apg68Radar.getActiveBleps()) {
+
                 me.cs = contact.get_Callsign();
                 me.lnkLock = 0;
                 me.lnk16 = datalink.get_data(me.cs);
@@ -1495,15 +1585,8 @@ var MFD_Device =
                     me.lnkLock = 1;
                     me.blueIndex = me.lnk16.tracked_by_index()+1;
                 }
-                if (contact.get_display() == 0 and ((!me.blue and !me.lnkLock) or contact.get_behind_terrain())) {
-                    continue;
-                }
-                if (!me.blue and me.DGFT and !(awg_9.active_u != nil and awg_9.active_u.Callsign != nil and me.cs != nil and me.cs == awg_9.active_u.Callsign.getValue())) {
-                    continue;
-                }
-                me.desig = contact==awg_9.active_u or (awg_9.active_u != nil and contact.get_Callsign() == awg_9.active_u.get_Callsign() and contact.ModelType==awg_9.active_u.ModelType);
-                me.iff = contact.getIff();
-                #   if (me.lnk16 != nil) print(me.cs," iff:",me.iff, " iff16:", me.lnk16["iff"]);
+                me.desig = contact.equals(me.prio);
+                me.iff = 0;#contact.getIff();#TODO
                 if (rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA) {
                     me.echoPos = [me.wdt*0.5*geo.normdeg180(contact.get_relative_bearing())/60,-me.distPixels];
                     me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
@@ -1848,13 +1931,13 @@ var MFD_Device =
                 me.root.dlz.show();
             }
             
-            if (getprop("instrumentation/radar/radar2-range") == 5) {
+            if (radar_system.apg68Radar.getRange() == radar_system.apg68Radar.currentMode.minRange) {
                 me.root.rangDown.hide();
             } else {
                 me.root.rangDown.show();
             }
             
-            if (getprop("instrumentation/radar/radar2-range") == 160) {
+            if (radar_system.apg68Radar.getRange() == radar_system.apg68Radar.currentMode.maxRange) {
                 me.root.rangUp.hide();
             } else {
                 me.root.rangUp.show();
@@ -1930,6 +2013,156 @@ var MFD_Device =
         };
         me.p_LIST.update = func (noti) {
             
+        };
+    },
+
+    setupRList: func(svg) {
+        svg.r_LIST = me.canvas.createGroup()
+            .set("z-index",0)
+            .setTranslation(276*0.795,482)
+            .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,482 , 0.795 is for UV map
+    },
+    addRList: func {
+        var svg = {getElementById: func (id) {return me[id]},};
+        me.setupRList(svg);
+        me.PFD.addRListPage = func(svg, title, layer_id) {   
+            var np = PFD_Page.new(svg, title, layer_id, me);
+            append(me.pages, np);
+            me.page_index[layer_id] = np;
+            np.setVisible(0);
+            return np;
+        };
+        me.r_LIST = me.PFD.addListPage(svg, "RLIST", "r_LIST");
+        me.r_LIST.root = svg;
+        me.r_LIST.wdt = 552*0.795;
+        me.r_LIST.fwd = 0;
+        me.r_LIST.plc = 0;
+        me.r_LIST.ppp = me.PFD;
+        me.r_LIST.my = me;
+        me.r_LIST.selectionBox = me.selectionBox;
+        me.r_LIST.setSelectionColor = me.setSelectionColor;
+        me.r_LIST.resetColor = me.resetColor;
+        me.r_LIST.setSelection = me.setSelection;
+        me.r_LIST.notifyButton = func (eventi) {
+            if (eventi != nil) {
+                
+# Menu Id's
+#  CRM
+#   10  11  12  13  14
+# 0                    5            
+# 1                    6            
+# 2                    7            
+# 3                    8            
+# 4                    9            
+#   15  16  17  18  19
+#  VSD HSD SMS SIT
+                if (eventi == 0) {
+                    radar_system.apg68Radar.setRootMode(0);
+                    me.ppp.selectPage(me.my.p_RDR);
+                    me.selectionBox.show();
+                    me.setSelection(nil, me.ppp.buttons[10], 10);
+                } elsif (eventi == 1) {
+                    radar_system.apg68Radar.setRootMode(1,radar_system.apg68Radar.getPriorityTarget());
+                    me.ppp.selectPage(me.my.p_RDR);
+                    me.selectionBox.show();
+                    me.setSelection(nil, me.ppp.buttons[10], 10);
+                } elsif (eventi == 2) {
+                    radar_system.apg68Radar.setRootMode(2);
+                    me.ppp.selectPage(me.my.p_RDR);
+                    me.selectionBox.show();
+                    me.setSelection(nil, me.ppp.buttons[10], 10);
+                } elsif (eventi == 3) {
+                    radar_system.apg68Radar.setRootMode(3);
+                    me.ppp.selectPage(me.my.p_RDR);
+                    me.selectionBox.show();
+                    me.setSelection(nil, me.ppp.buttons[10], 10);
+                } elsif (eventi == 4) {
+                    radar_system.apg68Radar.setRootMode(4);
+                    me.ppp.selectPage(me.my.p_RDR);
+                    me.selectionBox.show();
+                    me.setSelection(nil, me.ppp.buttons[10], 10);
+                } elsif (eventi == 15) {
+                    swap();
+                }
+            }
+        };
+        me.r_LIST.update = func (noti) {
+            
+        };
+    },
+
+    setupRMList: func(svg) {
+        svg.rm_LIST = me.canvas.createGroup()
+            .set("z-index",0)
+            .setTranslation(276*0.795,482)
+            .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,482 , 0.795 is for UV map
+
+        svg.rm_LIST.tgtHis = svg.rm_LIST.createChild("text")
+                .setTranslation(-276*0.775, -482*0.5+10)
+                .setText("TGT HIS 3")
+                .setAlignment("left-center")
+                .setColor(colorText1)
+                .set("z-index",1)
+                .setFontSize(20, 1.0);
+        return;
+        svg.rm_LIST.M = svg.rm_LIST.createChild("text")
+                .setTranslation(-276*0.775, -482*0.5+75)
+                .setText("FCR")
+                .setAlignment("left-center")
+                .setColor(colorText1)
+                .set("z-index",1)
+                .setFontSize(20, 1.0);
+    },
+    addRMList: func {
+        var svg = {getElementById: func (id) {return me[id]},};
+        me.setupRMList(svg);
+        me.PFD.addRListPage = func(svg, title, layer_id) {   
+            var np = PFD_Page.new(svg, title, layer_id, me);
+            append(me.pages, np);
+            me.page_index[layer_id] = np;
+            np.setVisible(0);
+            return np;
+        };
+        me.rm_LIST = me.PFD.addListPage(svg, "RMLIST", "rm_LIST");
+        me.rm_LIST.root = svg;
+        me.rm_LIST.wdt = 552*0.795;
+        me.rm_LIST.fwd = 0;
+        me.rm_LIST.plc = 0;
+        me.rm_LIST.ppp = me.PFD;
+        me.rm_LIST.my = me;
+        me.rm_LIST.selectionBox = me.selectionBox;
+        me.rm_LIST.setSelectionColor = me.setSelectionColor;
+        me.rm_LIST.resetColor = me.resetColor;
+        me.rm_LIST.setSelection = me.setSelection;
+        me.rm_LIST.notifyButton = func (eventi) {
+            if (eventi != nil) {
+                
+# Menu Id's
+#  CRM
+#   10  11  12  13  14
+# 0                    5            
+# 1                    6            
+# 2                    7            
+# 3                    8            
+# 4                    9            
+#   15  16  17  18  19
+#  VSD HSD SMS SIT
+                if (eventi == 2) {
+                    radar_system.apg68Radar.targetHistory += 1;
+                    if (radar_system.apg68Radar.targetHistory > 4) {
+                        radar_system.apg68Radar.targetHistory = 1;
+                    }
+                } elsif (eventi == 13) {
+                    me.ppp.selectPage(me.my.p_RDR);
+                    me.setSelection(me.ppp.buttons[13], me.ppp.buttons[10], 10);
+                    me.selectionBox.show();
+                } elsif (eventi == 15) {
+                    swap();
+                }
+            }
+        };
+        me.rm_LIST.update = func (noti) {
+            me.root.rm_LIST.tgtHis.setText("TGT HIS\n"~radar_system.apg68Radar.targetHistory);
         };
     },
     
@@ -3336,6 +3569,7 @@ var MFD_Device =
 #  VSD HSD SMS SIT
         };
         me.p_HSD.update = func (noti) {
+            return;
             me.root.conc.setRotation(-getprop("orientation/heading-deg")*D2R);
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
                 return;
@@ -3740,6 +3974,8 @@ var MFD_Device =
         me.addHSD();
         me.addWPN();
         me.addList();
+        me.addRList();
+        me.addRMList();
         me.p1_1 = me.PFD.addPage("Aircraft Menu", "p1_1");
 
         me.p1_1.update = func(notification)
@@ -3935,12 +4171,19 @@ var MFD_Device =
     setSelection: func(curPage, nextPage, nextPageIndex) {
         if (nextPageIndex == 10) {
             me.selectionBox.setTranslation(65,7);
+            me.selectionBox.setScale(1,1);
+        } else if (nextPageIndex == 13) {
+            me.selectionBox.setTranslation(272,7);
+            me.selectionBox.setScale(1.43,1);#CTNL is 4 letters
         } else if (nextPageIndex == 16) {
             me.selectionBox.setTranslation(135,450);
+            me.selectionBox.setScale(1,1);
         } else if (nextPageIndex == 17) {
              me.selectionBox.setTranslation(208,450);
+             me.selectionBox.setScale(1,1);
         } else if (nextPageIndex == 18) {
             me.selectionBox.setTranslation(272,450);
+            me.selectionBox.setScale(1,1);
         } else {
             print("Make sure buttons are correctly set in setSelection() in MFD_main.nas");
             return;
@@ -3976,7 +4219,8 @@ var MFD_Device =
 #        me.p1_1.addMenuItem(12, "HSD", me.p_HSD);
 
         #me.p_RDR.addMenuItem(18, "SIT", me.pjitds_1);
-        me.p_RDR.addMenuItem(10, "FCR", me.p_LIST); #selectionColored
+        me.p_RDR.addMenuItem(13, "CNTL", me.rm_LIST); #selectionColored
+        me.p_RDR.addMenuItem(10, "", me.r_LIST); #selectionColored
         me.p_RDR.addMenuItem(15, "SWAP", nil);
         me.p_RDR.addMenuItem(16, "HSD", me.p_HSD);
         me.p_RDR.addMenuItem(17, "SMS", me.p_SMS);
@@ -4032,6 +4276,16 @@ var MFD_Device =
         me.p_LIST.addMenuItem(7, "DTE", nil);
         me.p_LIST.addMenuItem(8, "TEST", nil);
         me.p_LIST.addMenuItem(9, "FLCS", nil);
+
+        me.r_LIST.addMenuItem(0, "CRM", nil);
+        me.r_LIST.addMenuItem(1, "ACM", nil);
+        me.r_LIST.addMenuItem(2, "SEA", nil);
+        me.r_LIST.addMenuItem(3, "GM", nil);
+        me.r_LIST.addMenuItem(4, "GMT", nil);
+
+        me.rm_LIST.addMenuItem(13, "CNTL", me.p_RDR);
+
+
 #        me.p_SMS.addMenuItem(16, "TIM", me.p1_1);
 
 #        me.p1_2.addMenuItem(0, "VSD", me.p_VSD);

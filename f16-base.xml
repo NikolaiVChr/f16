@@ -652,6 +652,9 @@
         <seat>
             <ejection-safety-lever type="bool">false</ejection-safety-lever>
         </seat>
+        <radar>
+            <antennae-knob type="double">0</antennae-knob>
+        </radar>
         <test>
             <avtr-test type="bool">false</avtr-test>
             <test-panel>
@@ -1556,12 +1559,12 @@ value. 18000=standard US transition altitude -->
         <rwrs>
             <file>Aircraft/f16/Nasal/rwr.nas</file>
         </rwrs>
-        <awg_9>
+        <!--awg_9>
             <file>Aircraft/f16/Nasal/awg_9.nas</file>
-        </awg_9>
-        <rwr_apg>
+        </awg_9-->
+        <!--rwr_apg>
             <file>Aircraft/f16/Nasal/rwr_apg.nas</file>
-        </rwr_apg>
+        </rwr_apg-->
         <f16_chronograph>
             <file>Aircraft/f16/Nasal/chronograph.nas</file>
         </f16_chronograph>
@@ -1644,6 +1647,11 @@ value. 18000=standard US transition altitude -->
         <help>
             <file>Aircraft/f16/Nasal/help.nas</file>
         </help>
+        <radar_system>
+            <file>Aircraft/f16/Nasal/radar/radar-system.nas</file>
+            <file>Aircraft/f16/Nasal/radar/apg-68.nas</file>
+            <file>Aircraft/f16/Nasal/radar/f16-radar-test.nas</file>
+        </radar_system>
     </nasal>
 
    
