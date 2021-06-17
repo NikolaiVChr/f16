@@ -1521,7 +1521,8 @@ var MFD_Device =
                 }
                 me.blueBearing = geo.normdeg180(contact.getDeviationHeading());
                 if (me.iff == 0 and contact.blue == 1 and contact.isVisible() and contact.getRange()*M2NM < 80 and me.iii < me.root.maxT and math.abs(me.blueBearing) < 60) {
-                    me.echoPos = [me.wdt*0.5*geo.normdeg180(me.bleppy[4][0])/60,-me.distPixels];
+                    me.distPixels = contact.get_range()*(482/(radar_system.apg68Radar.getRange()));
+                    me.echoPos = [me.wdt*0.5*geo.normdeg180(me.blueBearing)/60,-me.distPixels];
                     me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
                     if (me.close and exp) {
                         me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
@@ -1572,6 +1573,7 @@ var MFD_Device =
                     }
                     me.iii += 1;
                 } elsif (me.iff != 0 and contact.blue == 1 and contact.isVisible() and me.iiii < me.root.maxT and math.abs(me.blueBearing) < 60) {
+                    me.distPixels = contact.get_range()*(482/(radar_system.apg68Radar.getRange()));
                     me.echoPos = [me.wdt*0.5*geo.normdeg180(me.blueBearing)/60,-me.distPixels];
                     me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
                     if (me.close and exp) {
