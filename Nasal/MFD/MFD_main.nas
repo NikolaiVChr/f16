@@ -821,7 +821,7 @@ var MFD_Device =
                 .setStrokeLineWidth(2);
             
         svg.lockInfo = svg.p_RDR.createChild("text")
-                .setTranslation(276*0.795*0.8, -482*0.9)
+                .setTranslation(276*0.795*0.85, -482*0.9)
                 .setAlignment("right-center")
                 .setColor(colorLine3)
                 .set("z-index",1)
@@ -1439,7 +1439,7 @@ var MFD_Device =
             me.root.az2.setTranslation((radar_system.apg68Radar.currentMode.azimuthTilt+radar_system.apg68Radar.currentMode.az)*me.wdt*0.5/60,0);
             #me.root.lock.hide();
             me.root.lockGM.hide();
-            me.root.lockInfo.hide();
+            
             
 
             #
@@ -1557,25 +1557,25 @@ var MFD_Device =
                         me.root.selection.setTranslation(me.echoPos);
                         me.root.selection.setColor(colorDot4);
                         if (contact.getLastHeading() != nil) {
-                            me.azimuth = math.round(geo.normdeg180(radar_system.self.getHeading()+contact.getLastHeading())*0.1)*10;
+                            me.azimuth = math.round(geo.normdeg180(contact.get_bearing()-contact.getLastHeading())*0.1)*10;
                             if (me.azimuth == 180 or me.azimuth == 0) {
                                 me.azSide = " ";
                             } else {
-                                me.azSide = me.azimuth >= 0 ?"R":"L";
+                                me.azSide = me.azimuth > 0 ?"L":"R";
                             }
-                            me.azimuth = sprintf("%3d%s", me.azimuth >= 0?me.azimuth:-me.azimuth, me.azSide);
+                            me.azimuth = sprintf("%3d%s", math.abs(me.azimuth), me.azSide);
                             me.heady = sprintf("%3d", int(contact.getLastHeading()/10)*10);
                         } else {
                             me.azimuth = "    ";
                             me.heady = "   ";
                         }
-                        if (contact.getLastClosureRate() != nil) {
-                            me.clos = sprintf("%+4d",contact.getLastClosureRate());
+                        if (contact.getLastClosureRate() != 0) {
+                            me.clos = sprintf("%+4d",math.round(contact.getLastClosureRate()*0.1)*10);
                         } else {
                             me.clos = "     ";
                         }
 
-                        me.lockInfo = sprintf("%s       %s        %4d   %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
+                        me.lockInfo = sprintf("%s     %s        %4d   %sK", me.azimuth, me.heady, contact.get_Speed(), me.clos);
                         me.root.lockInfo.setText(me.lockInfo);
                         me.lockInfo = 1;
                     }
@@ -1643,25 +1643,25 @@ var MFD_Device =
                             me.root.selection.setTranslation(me.echoPos);
                             me.root.selection.setColor(colorCircle2);
                             if (contact.getLastHeading() != nil) {
-                                me.azimuth = math.round(geo.normdeg180(radar_system.self.getHeading()+contact.getLastHeading())*0.1)*10;
+                                me.azimuth = math.round(geo.normdeg180(contact.get_bearing()-contact.getLastHeading())*0.1)*10;
                                 if (me.azimuth == 180 or me.azimuth == 0) {
                                     me.azSide = " ";
                                 } else {
-                                    me.azSide = me.azimuth >= 0 ?"R":"L";
+                                    me.azSide = me.azimuth > 0 ?"L":"R";
                                 }
-                                me.azimuth = sprintf("%3d%s", me.azimuth >= 0?me.azimuth:-me.azimuth, me.azSide);
+                                me.azimuth = sprintf("%3d%s", math.abs(me.azimuth), me.azSide);
                                 me.heady = sprintf("%3d", int(contact.getLastHeading()/10)*10);
                             } else {
                                 me.azimuth = "    ";
                                 me.heady = "   ";
                             }
-                            if (contact.getLastClosureRate() != nil) {
-                                me.clos = sprintf("%+4d",contact.getLastClosureRate());
+                            if (contact.getLastClosureRate() != 0) {
+                                me.clos = sprintf("%+4d",math.round(contact.getLastClosureRate()*0.1)*10);
                             } else {
                                 me.clos = "     ";
                             }
 
-                            me.lockInfo = sprintf("%s       %s        %4d   %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
+                            me.lockInfo = sprintf("%s     %s        %4d   %sK", me.azimuth, me.heady, contact.get_Speed(), me.clos);
                             me.root.lockInfo.setText(me.lockInfo);
                             me.lockInfo = 1;
                         }
@@ -1711,25 +1711,25 @@ var MFD_Device =
                             me.root.selection.setTranslation(me.echoPos);
                             me.root.selection.setColor(me.color);
                             if (contact.getLastHeading() != nil) {
-                                me.azimuth = math.round(geo.normdeg180(radar_system.self.getHeading()+contact.getLastHeading())*0.1)*10;
+                                me.azimuth = math.round(geo.normdeg180(contact.get_bearing()-contact.getLastHeading())*0.1)*10;
                                 if (me.azimuth == 180 or me.azimuth == 0) {
                                     me.azSide = " ";
                                 } else {
-                                    me.azSide = me.azimuth >= 0 ?"R":"L";
+                                    me.azSide = me.azimuth > 0 ?"L":"R";
                                 }
-                                me.azimuth = sprintf("%3d%s", me.azimuth >= 0?me.azimuth:-me.azimuth, me.azSide);
+                                me.azimuth = sprintf("%3d%s", math.abs(me.azimuth), me.azSide);
                                 me.heady = sprintf("%3d", int(contact.getLastHeading()/10)*10);
                             } else {
                                 me.azimuth = "    ";
                                 me.heady = "   ";
                             }
-                            if (contact.getLastClosureRate() != nil) {
-                                me.clos = sprintf("%+4d",contact.getLastClosureRate());
+                            if (contact.getLastClosureRate() != 0) {
+                                me.clos = sprintf("%+4d",math.round(contact.getLastClosureRate()*0.1)*10);
                             } else {
                                 me.clos = "     ";
                             }
 
-                            me.lockInfo = sprintf("%s       %s        %4d   %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
+                            me.lockInfo = sprintf("%s     %s        %4d   %sK", me.azimuth, me.heady, contact.get_Speed(), me.clos);
                             me.root.lockInfo.setText(me.lockInfo);
                             me.lockInfo = 1;
                         }
@@ -1787,7 +1787,7 @@ var MFD_Device =
                     me.intercept = get_intercept(radar_system.apg68Radar.getPriorityTarget().get_bearing(),
                      radar_system.apg68Radar.getPriorityTarget().get_range()*NM2M, me.lastHead,
                       radar_system.apg68Radar.getPriorityTarget().get_Speed()*KT2MPS,
-                       getprop("velocities/groundspeed-kt")*KT2MPS, geo.aircraft_position(), getprop("orientation/heading-deg"));
+                       getprop("velocities/groundspeed-kt")*KT2MPS, geo.aircraft_position(), radar_system.self.getHeading());
                 }
             }
             if (me.intercept != nil) {

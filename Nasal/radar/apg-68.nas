@@ -1883,7 +1883,6 @@ var getCompleteList = func {
 #   nil exception in TWS!!!
 #   TWS blinking like in test
 #   HSD radar arc CW vs. CCW
-#   lockInof in b-scope is wrong/not updated. And speed need a K.
 #
 # TODO:
 #   MFD HSD

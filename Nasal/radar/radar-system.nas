@@ -1549,7 +1549,6 @@ var getRadarRange = func (model) {
 #
 # Cloud/rain/snow interference. (for clouds will only really work with 3D clouds, as their positions is in property-tree, then can give them radius depending on type and do intersect test.)
 # Use geodinfo to check clutter amount for GM radar. If static no need to check again.
-# Make POINT for TGP using just lat/lon.
 # Tacview attr. in contact
 #
 # STEAL:
