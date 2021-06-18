@@ -199,7 +199,7 @@ var RadarMode = {
 	EXPsupport: 0,#if support zoom
 	EXPsearch: 1,# if zoom should include search targets
 	showAZ: func {
-		return me.az != 60;
+		return 1;#me.az != 60; # hmm, does the blue lines at edge of b-scope look messy? If this return false, then they are also not shown in PPI.
 	},
 	showBars: func {
 		return 1;
@@ -758,7 +758,7 @@ var F16TWSMode = {
 	preStep: func {
 	 	me.azimuthTilt = me.cursorAz;
 		if (me.priorityTarget != nil) {
-			me.prioRange_nm = me.priorityTarget.getLastRangeDirect()*M2NM;
+			me.prioRange_nm = me.priorityTarget.getLastRangeDirect()*M2NM;#TODO: nil exception here
 			if (me.radar.elapsed - me.priorityTarget.getLastBlepTime() > me.timeToKeepBleps) {
 				me.priorityTarget = nil;
 				me.radar.tiltOverride = 0;
@@ -848,6 +848,9 @@ var F16TWSMode = {
 		return [1,0,1,0,0,1];
 	},
 	prunedContact: func (c) {
+		if (c.equals(me.priorityTarget)) {
+			me.priorityTarget = nil;# this might have fixed the nil exception
+		}
 		if (c.hadTrackInfo()) {
 			me.del = me.radar.containsVectorContact(me.currentTracked, c);
 			if (me.del) {
@@ -924,7 +927,8 @@ var F16RWSSAMMode = {
 		return mode;
 	},
 	calcSAMwidth: func {
-		return math.min(60,18 + 2.066667*me.prioRange_nm - 0.02222222*me.prioRange_nm*me.prioRange_nm);
+		if (me.prioRange_nm<30) return math.min(60,18 + 2.066667*me.prioRange_nm - 0.02222222*me.prioRange_nm*me.prioRange_nm);
+		else return 60;
 	},
 	preStep: func {
 		me.azimuthTilt = me.cursorAz;
@@ -1045,7 +1049,8 @@ var F16LRSSAMMode = {
 		return mode;
 	},
 	calcSAMwidth: func {
-		return math.min(60,18 + 1.5*me.prioRange_nm - 0.02222222*me.prioRange_nm*me.prioRange_nm);
+		if (me.prioRange_nm<42) return math.min(60,18 + 1.4*me.prioRange_nm - 0.01*me.prioRange_nm*me.prioRange_nm);
+		else return 60;
 	},
 };
 
@@ -1843,8 +1848,8 @@ var antennae_knob_prop = props.globals.getNode("controls/radar/antennae-knob",1)
 
 # start generic radar system
 var baser = AIToNasal.new();
-var nose = NoseRadar.new();
-var omni = OmniRadar.new(0.5, 150, 55);
+var partitioner = NoseRadar.new();
+var omni = OmniRadar.new(1.0, 150, 55);
 var terrain = TerrainChecker.new(0.10, 1, 60);
 
 # start specific radar system
@@ -1865,7 +1870,7 @@ var f16_rwr = RWR.new();
 
 
 var getCompleteList = func {
-	return baser.vector_aicontacts;
+	return partitioner.vector_aicontacts;# Important not to use parser data here, as that one gets rebuilt from time to time. Hence we use partitioner instead.
 }
 
 
@@ -1875,9 +1880,14 @@ var getCompleteList = func {
 # BUGS:
 #   TWS undesignate goes back to SAM, which auto-switches to STT due to less than 3 nm
 #   Clicking A-G should set GM
-#   
+#   nil exception in TWS!!!
+#   TWS blinking like in test
+#   HSD radar arc CW vs. CCW
+#   lockInof in b-scope is wrong/not updated. And speed need a K.
 #
 # TODO:
 #   MFD HSD
 #   GM tilt angles
+#   Check that RWR uses stored bearing for display.
+#   DLINK check should happen like terrain-checker. Then dont need to use completelist so much.
 #

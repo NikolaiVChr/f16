@@ -866,6 +866,13 @@ AIContact = {
 		return nil;
 	},	
 
+	getLastSpeed: func {
+		if (size(me.bleps)) {
+			return me.bleps[size(me.bleps)-1][5];
+		}
+		return nil;
+	},	
+
 	getLastDirection: func {
 		
 		if (size(me.bleps)) {
