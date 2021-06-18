@@ -204,6 +204,9 @@ var RadarMode = {
 	showBars: func {
 		return 1;
 	},
+	showRangeOptions: func {
+		return 1;
+	},
 	setCursorDeviation: func (cursor_az) {
 		me.cursorAz = cursor_az;
 	},
@@ -735,13 +738,9 @@ var F16TWSMode = {
 		me.nextPatternNode = 0;
 	},
 	designate: func (designate_contact) {
-		if (designate_contact != nil and designate_contact.equals(me.priorityTarget)) {
+		if (designate_contact != nil) {
 			me.radar.setCurrentMode(me.subMode, designate_contact);
 			me.subMode.radar = me.radar;# find some smarter way of setting it.
-		} elsif (designate_contact != nil) {
-			#print("cycle ",designate_contact.callsign," equals: ",designate_contact.equals(me.priorityTarget));
-			me.priorityTarget = designate_contact;
-			if (me.az == 60) me.az = 25;# With a target of interest (TOI), AZ is not allowed to be 60
 		} else {
 			me.priorityTarget = nil;
 		}
@@ -985,8 +984,12 @@ var F16RWSSAMMode = {
 	},
 	designate: func (designate_contact) {
 		if (designate_contact == nil) return;
-		me.radar.setCurrentMode(me.subMode, designate_contact);
-		me.subMode.radar = me.radar;# find some smarter way of setting it.
+		if (designate_contact.equals(me.priorityTarget)) {
+			me.radar.setCurrentMode(me.subMode, designate_contact);
+			me.subMode.radar = me.radar;# find some smarter way of setting it.
+		} else {
+			me.priorityTarget = designate_contact;
+		}
 	},
 	designatePriority: func (contact) {
 		me.priorityTarget = contact;
@@ -999,8 +1002,10 @@ var F16RWSSAMMode = {
 	},
 	cycleAZ: func {},
 	increaseRange: func {# Range is auto-set in RWS-SAM
+		return 0;
 	},
 	decreaseRange: func {# Range is auto-set in RWS-SAM
+		return 0;
 	},
 	setRange: func {# Range is auto-set in RWS-SAM
 	},
@@ -1280,6 +1285,9 @@ var F16STTMode = {
 	showBars: func {
 		return me.superMode.showBars();
 	},
+	showRangeOptions: func {
+		return 0;
+	},
 	getBars: func {
 		return me.superMode.getBars();
 	},
@@ -1332,8 +1340,10 @@ var F16STTMode = {
 	cycleBars: func {},
 	cycleAZ: func {},
 	increaseRange: func {# Range is auto-set in STT
+		return 0;
 	},
 	decreaseRange: func {# Range is auto-set in STT
+		return 0;
 	},
 	setRange: func {# Range is auto-set in STT
 	},
@@ -1598,7 +1608,14 @@ var APG68 = {
 		return me.currentMode.getCursorDeviation();
 	},
 	setCursorDistance: func (nm) {
-		return me.currentMode.setCursorDistance(nm);
+		# Return if the cursor should be distance zeroed.
+		if (nm < me.getRange()*0.05) {
+			return me.decreaseRange();
+		} elsif (nm > me.getRange()*0.95) {
+			return me.increaseRange();
+		}
+		me.currentMode.setCursorDistance(nm);
+		return 0;
 	},
 	getCursorAltitudeLimits: func {
 		return me.currentMode.getCursorAltitudeLimits();

@@ -622,7 +622,7 @@ var MFD_Device =
                                 .arcSmallCW(8,8, 0, -8*2, 0)
                                 .setColor(colorCircle3)
                                 .hide()
-                                .set("z-index",1)
+                                .set("z-index",12)
                                 .setStrokeLineWidth(3);
                 svg.iffU[i] = svg.p_RDR.createChild("path")
                                 .moveTo(-8,-8)
@@ -632,7 +632,7 @@ var MFD_Device =
                                 .horiz(-16)
                                 .setColor(colorCircle2)
                                 .hide()
-                                .set("z-index",1)
+                                .set("z-index",12)
                                 .setStrokeLineWidth(3);
                 svg.lnk[i] = svg.p_RDR.createChild("path")
                                 .moveTo(-10,-10)
@@ -644,7 +644,7 @@ var MFD_Device =
                                 .vert(-10)
                                 .setColor(colorDot1)
                                 .hide()
-                                .set("z-index",10)
+                                .set("z-index",11)
                                 .setStrokeLineWidth(3);
                 
             svg.lnkT[i] = svg.p_RDR.createChild("text")
@@ -809,6 +809,7 @@ var MFD_Device =
                 .arcSmallCW(16, 16, 0, 16*2, 0)
                 .arcSmallCW(16, 16, 0, -16*2, 0)
                 .setColor(colorDot1)
+                .set("z-index",12)
                 .setStrokeLineWidth(2);
             
         svg.lockInfo = svg.p_RDR.createChild("text")
@@ -824,7 +825,7 @@ var MFD_Device =
                             .moveTo(0,-10)
                             .vert(20)
                             .setColor(colorCircle2)
-                            .set("z-index",20)
+                            .set("z-index",14)
                             .setStrokeLineWidth(2);
                             
         svg.lockGM = svg.p_RDR.createChild("path")
@@ -859,13 +860,13 @@ var MFD_Device =
            .moveTo(0, 0)
            .lineTo(0, -482)
            .setColor(colorLine1)
-           .set("z-index",1)
+           .set("z-index",13)
            .setStrokeLineWidth(2);
         svg.az2 = svg.p_RDR.createChild("path")
            .moveTo(0, 0)
            .lineTo(0, -482)
            .setColor(colorLine1)
-           .set("z-index",1)
+           .set("z-index",13)
            .setStrokeLineWidth(2);
         svg.horiz = svg.p_RDR.createChild("path")
            .moveTo(-276*0.795*0.5, -482*0.5)
@@ -878,20 +879,20 @@ var MFD_Device =
            .horiz(-276*0.795*0.4)
            .setCenter(0, -482*0.5)
            .setColor(colorLine2)
-           .set("z-index",11)
+           .set("z-index",15)
            .setStrokeLineWidth(3);
         svg.silent = svg.p_RDR.createChild("text")
            .setTranslation(0, -482*0.25)
            .setAlignment("center-center")
            .setText("SILENT")
-           .set("z-index",12)
+           .set("z-index",16)
            .setFontSize(18, 1.0)
            .setColor(colorText2);
         svg.bitText = svg.p_RDR.createChild("text")
            .setTranslation(0, -482*0.75)
            .setAlignment("center-center")
            .setText("    VERSION C021-IPOO-MRO3258674  ")
-           .set("z-index",12)
+           .set("z-index",16)
            .setFontSize(18, 1.0)
            .setColor(colorText2);
 		   
@@ -899,7 +900,7 @@ var MFD_Device =
            .setTranslation(0, -482*0.55)
            .setAlignment("center-center")
            .setText("NOT SOI")
-           .set("z-index",12)
+           .set("z-index",16)
 		   .hide()
            .setFontSize(18, 1.0)
            .setColor(colorText2);
@@ -936,6 +937,7 @@ var MFD_Device =
                     .vert(18)
                     .setStrokeLineWidth(2.0)
                     .setColor(colorLine3)
+                    .set("z-index",12)
                     .set("z-index",1000);
         
         svg.bullseye = svg.p_RDR.createChild("path")
@@ -1377,9 +1379,12 @@ var MFD_Device =
                 }
             }
             me.elapsed = noti.ElapsedSeconds;
-            me.root.cursor.setTranslation(cursor_pos);
             radar_system.apg68Radar.setCursorDeviation(cursor_pos[0]*60/(me.wdt*0.5));
-            radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(482/radar_system.apg68Radar.getRange()));
+            if (radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(482/radar_system.apg68Radar.getRange()))) {
+                # the cursor was Y centered due to changing range
+                cursor_pos[1] = -482*0.5;
+            }
+            me.root.cursor.setTranslation(cursor_pos);
             if (me.bullOn) {
                 me.cursorDev   = cursor_pos[0]*60/(me.wdt*0.5);
                 me.cursorDist  = -NM2M*cursor_pos[1]/(482/radar_system.apg68Radar.getRange());
@@ -1833,13 +1838,13 @@ var MFD_Device =
                 me.root.dlz.show();
             }
             
-            if (radar_system.apg68Radar.getRange() == radar_system.apg68Radar.currentMode.minRange) {
+            if (radar_system.apg68Radar.getRange() == radar_system.apg68Radar.currentMode.minRange or !radar_system.apg68Radar.currentMode.showRangeOptions()) {
                 me.root.rangDown.hide();
             } else {
                 me.root.rangDown.show();
             }
             
-            if (radar_system.apg68Radar.getRange() == radar_system.apg68Radar.currentMode.maxRange) {
+            if (radar_system.apg68Radar.getRange() == radar_system.apg68Radar.currentMode.maxRange or !radar_system.apg68Radar.currentMode.showRangeOptions()) {
                 me.root.rangUp.hide();
             } else {
                 me.root.rangUp.show();
