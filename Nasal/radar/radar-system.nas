@@ -986,6 +986,9 @@ AIContact = {
 	get_heading: func {
 		me.getHeading();
 	},
+	get_Roll: func {
+		return me.getRoll();
+	},
 	get_uBody: func {
 		var body = nil;
 		if (me.uBody != nil) {
@@ -1011,7 +1014,7 @@ AIContact = {
 		if (me.flareProp != nil) {
 			return me.flareProp.getValue();
 		}
-		return 0;
+		return nil;
 	},
 	getChaffNode: func {
 		if (me["chaffProp"] == nil) {
@@ -1020,10 +1023,10 @@ AIContact = {
 		if (me.chaffProp != nil) {
 			return me.chaffProp.getValue();
 		}
-		return 0;
+		return nil;
 	},
 	isPainted: func {
-		return elapsedProp.getValue()- getLastBlepTime < 0.75;
+		return elapsedProp.getValue()- me.getLastBlepTime() < 0.75;
 	},
 	isLaserPainted: func {
 		if (!laserOn.getValue()) return 0;

@@ -548,7 +548,7 @@ var fast_loop = func {
                 steer = 0;
                 callsign = nil;
             }
-        } elsif (armament.contact != nil and armament.contact.get_display() and enable and masterMode) {
+        } elsif (armament.contact != nil and armament.contact.isVisible() and enable and masterMode) {
             # TGP follow radar lock
             flir_updater.click_coord_cam = armament.contact.get_Coord();
             setprop("/aircraft/flir/target/auto-track", 1);

@@ -803,13 +803,13 @@ var MFD_Device =
                     .setColor(colorLine1);
         }
         
-        svg.selection = svg.p_RDR.createChild("group").set("z-index",1);
+        svg.selection = svg.p_RDR.createChild("group")
+                .set("z-index",12);
         svg.selectionPath = svg.selection.createChild("path")
                 .moveTo(-16, 0)
                 .arcSmallCW(16, 16, 0, 16*2, 0)
                 .arcSmallCW(16, 16, 0, -16*2, 0)
                 .setColor(colorDot1)
-                .set("z-index",12)
                 .setStrokeLineWidth(2);
             
         svg.lockInfo = svg.p_RDR.createChild("text")

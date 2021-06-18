@@ -2465,12 +2465,18 @@ append(obj.total, obj.speed_curr);
                                 }
                             }
                         }
-                        if (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7") {
-                            me.ASEC120Aspect.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading+180));
+                        me.asp = radar_system.apg68Radar.getPriorityTarget();
+                        if (me.asp != nil) {
+                            me.lastH = me.asp.getLastHeading();
+                        } else {
+                            me.lastH = nil;
+                        }
+                        if (me.lastH != nil and (hdp.weapon_selected == "AIM-120" or hdp.weapon_selected == "AIM-7")) {
+                            me.ASEC120Aspect.setRotation(D2R*(me.lastH-hdp.heading+180));
                             me.rdL = 1;
                             me.rdT = 1;
-                        } elsif (hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T") {
-                            me.ASEC65Aspect.setRotation(D2R*(hdp.active_u.get_heading()-hdp.heading+180));
+                        } elsif (me.lastH != nil and (hdp.weapon_selected == "AIM-9" or hdp.weapon_selected == "IRIS-T")) {
+                            me.ASEC65Aspect.setRotation(D2R*(me.lastH-hdp.heading+180));
                             me.irT = 1;
                         }
                     } else {
@@ -2545,9 +2551,15 @@ append(obj.total, obj.speed_curr);
             #printf("%d %d %d %d %d",me.dlzArray[0],me.dlzArray[1],me.dlzArray[2],me.dlzArray[3],me.dlzArray[4]);
             me.dlz2.removeAllChildren();
             me.dlzArrow.setTranslation(0,-me.dlzArray[4]/me.dlzArray[0]*me.dlzHeight);
-            if (hdp.active_u != nil) {
+            me.dlzPrio = radar_system.apg68Radar.getPriorityTarget();
+            if (me.dlzPrio != nil) {
+                me.dlzClos = me.dlzPrio.getLastClosureRate();
+            } else {
+                me.dlzClos = nil;
+            }
+            if (me.dlzClos != nil) {
                 me.dlzClo.setTranslation(0,-me.dlzArray[4]/me.dlzArray[0]*me.dlzHeight);
-                me.dlzClo.setText(sprintf("%+d ",hdp.active_u.get_closure_rate()));
+                me.dlzClo.setText(sprintf("%+d ",me.dlzClos));
                 if (pylons.fcs.isLock() and me.dlzArray[4] < me.dlzArray[2] and math.mod(int(4*(hdp.elapsed-int(hdp.elapsed))),2)>0) {
                     #me.irL = 0;
                     me.rdL = 0;

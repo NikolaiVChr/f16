@@ -368,9 +368,6 @@ var RadarMode = {
 	testContact: func (contact) {},
 	prunedContact: func (c) {
 	},
-	getPriorityTarget: func {
-		return nil;
-	}
 };#                                    END Radar Mode class
 
 
@@ -837,7 +834,7 @@ var F16TWSMode = {
 			#print("  TWICE    ",me.radar.elapsed);
 			#print(me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, contact),"   ",me.radar.elapsed - contact.blepTime);			
 			if (!me.radar.containsVectorContact(me.currentTracked, contact)) append(me.currentTracked, contact);
-			return [1,1,1,1,0,1];
+			return [1,1,1,1,1,1];
 		} elsif (me.radar.containsVectorContact(me.currentTracked, contact)) {
 			me.tmp = [];
 			foreach (me.cc ; me.currentTracked) {
@@ -1399,9 +1396,6 @@ var F16FTTMode = {
 		mode.radar = radar;
 		return mode;
 	},
-	getPriorityTarget: func {
-		return me.priorityTarget;
-	},
 };
 
 var F16GMFTTMode = {
@@ -1410,7 +1404,7 @@ var F16GMFTTMode = {
 		mode.radar = radar;
 		return mode;
 	},
-	getPriorityTarget: func {
+	getPriority: func {
 		if (me.priorityTarget == nil or (rand() > 0.95 and me.priorityTarget.getSpeed() < 11)) {
 			return me.priorityTarget;
 		} else {
@@ -1681,8 +1675,7 @@ var APG68 = {
 	},
 	loopMedium: func {
 		if (me.enabled) {
-			if (test_stage) return;
-			me.focus = me.currentMode.getPriorityTarget();
+			me.focus = me.getPriorityTarget();
 			if (me.focus != nil and me.currentMode["painter"] == 1) {
 				sttSend.setValue(left(md5(me.focus.callsign), 4));
 			} else {
@@ -1881,12 +1874,10 @@ var getCompleteList = func {
 
 # BUGS:
 #   TWS undesignate goes back to SAM, which auto-switches to STT due to less than 3 nm
-#   No RWR
 #   Clicking A-G should set GM
+#   
 #
 # TODO:
-#   MFD
-#   RWR
+#   MFD HSD
 #   GM tilt angles
 #
-var test_stage = 0;
