@@ -1525,264 +1525,28 @@ var MFD_Device =
             me.ii = 0;
             me.iii = 0;
             me.iiii = 0;
-            foreach(contact; radar_system.getCompleteList()) {
-                if (contact["iff"] != nil) {
-                    if (contact.iff > 0 and me.elpased-contact.iff < 3.5) {
-                        me.iff = 1;
-                    } elsif (me.iff < 0 and me.elpased+contact.iff < 3.5) {
-                        me.iff = -1;
-                    }
-                    me.iff = 0;
-                } else {
-                    me.iff = 0;
+
+            me.randoo = rand();
+
+            if (getprop("instrumentation/datalink/power")) {
+                foreach(contact; vector_aicontacts_links) {
+                    me.paintDL(contact);
+                    if (contact.blue == 1) contact.randoo = me.randoo;
                 }
-                me.cs = contact.get_Callsign();
-                me.lnkLock = 0;
-                me.lnk16 = datalink.get_data(me.cs);
-                if (me.lnk16 != nil and me.lnk16.on_link() == 1) {
-                    contact.blue = 1;
-                    contact.blueIndex = me.lnk16.index()+1;
-                } elsif (me.cs == getprop("link16/wingman-4")) {
-                    contact.blue = 1;
-                    contact.blueIndex = 2;
-                } else {
+            }
+            if (radar_system.apg68Radar.enabled) {
+                foreach(contact; radar_system.apg68Radar.getActiveBleps()) {
+                    if (contact["randoo"] == me.randoo) continue;
+
+                    me.cs = contact.get_Callsign();
                     contact.blue = 0;
-                }
-                if (!contact.blue and me.lnk16 != nil and me.lnk16.tracked() == 1) {
-                    contact.blue = 2;
-                    contact.blueIndex = me.lnk16.tracked_by_index()+1;
-                }
-                me.blueBearing = geo.normdeg180(contact.getDeviationHeading());
-                if (me.iff == 0 and contact.blue == 1 and contact.isVisible() and contact.getRange()*M2NM < 80 and me.iii < me.root.maxT and math.abs(me.blueBearing) < 60) {
-                    me.distPixels = contact.get_range()*(482/(radar_system.apg68Radar.getRange()));
-                    me.echoPos = [me.wdt*0.5*geo.normdeg180(me.blueBearing)/60,-me.distPixels];
-                    me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
-                    if (me.close and exp) {
-                        me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
-                        me.echoPos[1] = cursor_pos[1]+(me.echoPos[1] - cursor_pos[1])*4;
-                    } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
-                        continue;
-                    }
-                    me.root.lnkT[me.iii].setColor(colorDot4);
-                    me.root.lnkT[me.iii].setTranslation(me.echoPos[0],me.echoPos[1]-18);
-                    me.root.lnkT[me.iii].setText(""~contact.blueIndex);
-                    me.root.lnkT[me.iii].show();
-                    me.root.lnk[me.iii].setColor(colorDot4);
-                    me.root.lnk[me.iii].setTranslation(me.echoPos);
-                    me.root.lnk[me.iii].setRotation(D2R*22.5*math.round( geo.normdeg(contact.get_heading()-getprop("orientation/heading-deg")-me.blueBearing)/22.5 ));#Show rotation in increments of 22.5 deg
-                    me.root.lnk[me.iii].show();
-                    me.root.lnk[me.iii].update();
-                    if (radar_system.apg68Radar.getPriorityTarget() == contact) {
-                        me.selectShow = 1;
-                        me.root.selection.setTranslation(me.echoPos);
-                        me.root.selection.setColor(colorDot4);
-                        if (contact.getLastHeading() != nil) {
-                            me.azimuth = math.round(geo.normdeg180(contact.get_bearing()-contact.getLastHeading())*0.1)*10;
-                            if (me.azimuth == 180 or me.azimuth == 0) {
-                                me.azSide = " ";
-                            } else {
-                                me.azSide = me.azimuth > 0 ?"L":"R";
-                            }
-                            me.azimuth = sprintf("%3d%s", math.abs(me.azimuth), me.azSide);
-                            me.heady = sprintf("%3d", int(contact.getLastHeading()/10)*10);
-                        } else {
-                            me.azimuth = "    ";
-                            me.heady = "   ";
-                        }
-                        if (contact.getLastClosureRate() != 0) {
-                            me.clos = sprintf("%+4dK",math.round(contact.getLastClosureRate()*0.1)*10);
-                        } else {
-                            me.clos = "      ";
-                        }
-
-                        me.lockInfo = sprintf("%s     %s        %4d   %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
-                        me.root.lockInfo.setText(me.lockInfo);
-                        me.lockInfo = 1;
-                    }
-                    if (cursor_click == me.root.index) {
-                        if (math.abs(cursor_pos[0] - me.echoPos[0]) < 10 and math.abs(cursor_pos[1] - me.echoPos[1]) < 11) {
-                            me.desig_new = contact;
-                        }
-                    }
-                    me.iii += 1;
-                } elsif (me.iff != 0 and contact.blue == 1 and contact.isVisible() and me.iiii < me.root.maxT and math.abs(me.blueBearing) < 60) {
-                    me.distPixels = contact.get_range()*(482/(radar_system.apg68Radar.getRange()));
-                    me.echoPos = [me.wdt*0.5*geo.normdeg180(me.blueBearing)/60,-me.distPixels];
-                    me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
-                    if (me.close and exp) {
-                        me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
-                        me.echoPos[1] = cursor_pos[1]+(me.echoPos[1] - cursor_pos[1])*4;
-                    } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
-                        continue;
-                    }
-                    me.path = me.iff == -1?me.iffU[me.iiii]:me.iff[me.iiii];
-                    me.pathHide = me.iff == 1?me.iffU[me.iiii]:me.iff[me.iiii];
-                    me.pathHide.hide();
-                    me.path.setTranslation(me.echoPos[0],me.echoPos[1]-18);
-                    me.path.show();
-
-                    me.iiii += 1;
+                    contact.blueIndex = -1;
+                    me.paintRdr(contact);
+                    contact.randoo = me.randoo;
                 }
             }
-            foreach(contact; radar_system.apg68Radar.getActiveBleps()) {
-                if (contact["iff"] != nil) {
-                    if (contact.iff > 0 and me.elpased-contact.iff < 3.5) {
-                        me.iff = 1;
-                    } elsif (me.iff < 0 and me.elpased+contact.iff < 3.5) {
-                        me.iff = -1;
-                    }
-                    me.iff = 0;
-                } else {
-                    me.iff = 0;
-                }
-                me.bleps = contact.getBleps();
-                foreach(me.bleppy ; me.bleps) {
-                    if (me.i < me.root.maxB and me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.timeToKeepBleps and (me.bleppy[2] != nil or (me.bleppy[6] != nil and me.bleppy[6]>0))) {
-                        if (me.bleppy[6] != nil and radar_system.apg68Radar.currentMode.longName == "Velocity Search") {
-                            me.distPixels = me.bleppy[6]*(482/(1000));
-                        } elsif (me.bleppy[2] != nil) {
-                            me.distPixels = me.bleppy[2]*(482/(radar_system.apg68Radar.getRange()*NM2M));
-                        } else {
-                            continue;
-                        }
-                        me.echoPos = [me.wdt*0.5*geo.normdeg180(me.bleppy[4][0])/60,-me.distPixels];
-                        me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
-                        if (radar_system.apg68Radar.currentMode.EXPsearch and me.close and exp) {
-                            me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
-                            me.echoPos[1] = cursor_pos[1]+(me.echoPos[1] - cursor_pos[1])*4;
-                        } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
-                            continue;
-                        }
-                        me.color = math.pow(1-(me.elapsed - me.bleppy[0])/radar_system.apg68Radar.currentMode.timeToKeepBleps, 2.2);
-                        me.root.blep[me.i].setTranslation(me.echoPos);
-                        me.root.blep[me.i].setColor(me.color,me.color,me.color);
-                        me.root.blep[me.i].show();
-                        me.root.blep[me.i].update();
-                        if (radar_system.apg68Radar.getPriorityTarget() == contact) {
-                            me.selectShow = radar_system.apg68Radar.currentMode.longName != "Track While Scan" or (me.elapsed - contact.getLastBlepTime() < 8) or (math.mod(me.elapsed,0.50)<0.25);
-                            me.root.selection.setTranslation(me.echoPos);
-                            me.root.selection.setColor(colorCircle2);
-                            if (contact.getLastHeading() != nil) {
-                                me.azimuth = math.round(geo.normdeg180(contact.get_bearing()-contact.getLastHeading())*0.1)*10;
-                                if (me.azimuth == 180 or me.azimuth == 0) {
-                                    me.azSide = " ";
-                                } else {
-                                    me.azSide = me.azimuth > 0 ?"L":"R";
-                                }
-                                me.azimuth = sprintf("%3d%s", math.abs(me.azimuth), me.azSide);
-                                me.heady = sprintf("%3d", int(contact.getLastHeading()/10)*10);
-                            } else {
-                                me.azimuth = "    ";
-                                me.heady = "   ";
-                            }
-                            if (contact.getLastClosureRate() != 0) {
-                                me.clos = sprintf("%+4dK",math.round(contact.getLastClosureRate()*0.1)*10);
-                            } else {
-                                me.clos = "      ";
-                            }
 
-                            me.lockInfo = sprintf("%s     %s        %4d   %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
-                            me.root.lockInfo.setText(me.lockInfo);
-                            me.lockInfo = 1;
-                        }
-                        if (cursor_click == me.root.index and (me.elapsed - me.bleppy[0]) < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
-                            if (math.abs(cursor_pos[0] - me.echoPos[0]) < 10 and math.abs(cursor_pos[1] - me.echoPos[1]) < 11) {
-                                me.desig_new = contact;
-                            }
-                        }
-                        me.i += 1;
-                    }
-                }
-                me.sizeBleps = size(me.bleps);
-                if (contact["blue"] != 1 and me.sizeBleps and me.ii < me.root.maxT and contact.hadTrackInfo() and me.iff == 0) {
-                    me.bleppy = me.bleps[me.sizeBleps-1];
-                    if (me.bleppy[3] != nil and me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
-                        me.color = contact["blue"] == 2?colorCircle1:colorCircle2;
-                        me.rot = 22.5*math.round((me.bleppy[3]-radar_system.self.getHeading()-me.bleppy[4][0])/22.5);
-                        me.root.blepTrianglePaths[me.ii].setRotation(me.rot*D2R);
-                        me.root.blepTrianglePaths[me.ii].setColor(me.color);
-                        me.echoPos = [me.wdt*0.5*geo.normdeg180(me.bleppy[4][0])/60,-me.distPixels];
-                        me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
-                        if (me.close and exp) {
-                            me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
-                            me.echoPos[1] = cursor_pos[1]+(me.echoPos[1] - cursor_pos[1])*4;
-                        } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
-                            continue;
-                        }
-                        me.root.blepTriangle[me.ii].setTranslation(me.echoPos);
-                        if (me.bleppy[5] != nil and me.bleppy[5] > 0) {
-                            me.root.blepTriangleVelLine[me.ii].setScale(1,me.bleppy[5]*0.0045);
-                            me.root.blepTriangleVelLine[me.ii].setColor(me.color);
-                            me.root.blepTriangleVel[me.ii].setRotation(me.rot*D2R);
-                            me.root.blepTriangleVel[me.ii].update();
-                            me.root.blepTriangleVel[me.ii].show();
-                        } else {
-                            me.root.blepTriangleVel[me.ii].hide();
-                        }
-                        if (me.bleppy[7] != nil) {
-                            me.root.blepTriangleText[me.ii].setText(""~math.round(me.bleppy[7]*0.001));
-                        } else {
-                            me.root.blepTriangleText[me.ii].setText("");
-                        }
-                        me.blinkShow = radar_system.apg68Radar.currentMode.longName != "Track While Scan" or (me.elapsed - contact.getLastBlepTime() < 8) or (math.mod(me.elapsed,0.50)<0.25);
-                        if (radar_system.apg68Radar.getPriorityTarget() == contact) {
-                            me.selectShow = me.blinkShow;
-                            me.root.blepTriangle[me.ii].setVisible(me.selectShow);
-                            me.root.selection.setTranslation(me.echoPos);
-                            me.root.selection.setColor(me.color);
-                            if (contact.getLastHeading() != nil) {
-                                me.azimuth = math.round(geo.normdeg180(contact.get_bearing()-contact.getLastHeading())*0.1)*10;
-                                if (me.azimuth == 180 or me.azimuth == 0) {
-                                    me.azSide = " ";
-                                } else {
-                                    me.azSide = me.azimuth > 0 ?"L":"R";
-                                }
-                                me.azimuth = sprintf("%3d%s", math.abs(me.azimuth), me.azSide);
-                                me.heady = sprintf("%3d", int(contact.getLastHeading()/10)*10);
-                            } else {
-                                me.azimuth = "    ";
-                                me.heady = "   ";
-                            }
-                            if (contact.getLastClosureRate() != 0) {
-                                me.clos = sprintf("%+4dK",math.round(contact.getLastClosureRate()*0.1)*10);
-                            } else {
-                                me.clos = "      ";
-                            }
 
-                            me.lockInfo = sprintf("%s     %s        %4d    %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
-                            me.root.lockInfo.setText(me.lockInfo);
-                            me.lockInfo = 1;
-                        }
-                        me.root.blepTriangle[me.ii].setVisible(me.blinkShow);
-                        me.root.blepTriangle[me.ii].update();
-                        if (cursor_click == me.root.index) {
-                            if (math.abs(cursor_pos[0] - me.echoPos[0]) < 10 and math.abs(cursor_pos[1] - me.echoPos[1]) < 11) {
-                                me.desig_new = contact;
-                            }
-                        }
-
-                        me.ii += 1;
-                    }
-                } elsif (me.iff != 0 and contact["blue"] != 1 and contact.isVisible() and me.iiii < me.root.maxT and me.sizeBleps) {
-                    me.bleppy = me.bleps[me.sizeBleps-1];
-                    if (me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
-                        me.echoPos = [me.wdt*0.5*geo.normdeg180(me.bleppy[4][0])/60,-me.distPixels];
-                        me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
-                        if (me.close and exp) {
-                            me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
-                            me.echoPos[1] = cursor_pos[1]+(me.echoPos[1] - cursor_pos[1])*4;
-                        } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
-                            continue;
-                        }
-                        me.path = me.iff == -1?me.iffU[me.iiii]:me.iff[me.iiii];
-                        me.pathHide = me.iff == 1?me.iffU[me.iiii]:me.iff[me.iiii];
-                        me.pathHide.hide();
-                        me.path.setTranslation(me.echoPos[0],me.echoPos[1]-18);
-                        me.path.show();
-                        me.iiii += 1;
-                    }
-                }
-            }
             me.root.selection.setVisible(me.selectShow);
             me.root.lockInfo.setVisible(me.lockInfo);
             for (;me.i < me.root.maxB;me.i+=1) {
@@ -1956,7 +1720,7 @@ var MFD_Device =
                             me.root.lockRot.hide();
                             me.root.lockFRot.update();
                             me.root.lnkT[me.root.maxB].setColor(colorDot1);
-                            me.root.lnkT[me.root.maxB].setTranslation(me.echoPos[0],me.echoPos[1]-18);
+                            me.root.lnkT[me.root.maxB].setTranslation(me.echoPos[0],me.echoPos[1]-25);
                             me.root.lnkT[me.root.maxB].setText(""~me.blueIndex);
                             me.root.lnkT[me.root.maxB].show();
                             me.showDLT = 1;
@@ -2105,6 +1869,258 @@ var MFD_Device =
                 }
             }
             
+        };
+
+
+#  ██████   █████  ██ ███    ██ ████████     ██████  ██████  ██████      ██████  ██      ███████ ██████  ███████ 
+#  ██   ██ ██   ██ ██ ████   ██    ██        ██   ██ ██   ██ ██   ██     ██   ██ ██      ██      ██   ██ ██      
+#  ██████  ███████ ██ ██ ██  ██    ██        ██████  ██   ██ ██████      ██████  ██      █████   ██████  ███████ 
+#  ██      ██   ██ ██ ██  ██ ██    ██        ██   ██ ██   ██ ██   ██     ██   ██ ██      ██      ██           ██ 
+#  ██      ██   ██ ██ ██   ████    ██        ██   ██ ██████  ██   ██     ██████  ███████ ███████ ██      ███████ 
+#                                                                                                                
+#                                                                                                                
+        me.p_RDR.paintDL = func (contact) {
+            if (contact["iff"] != nil) {
+                if (contact.iff > 0 and me.elpased-contact.iff < 3.5) {
+                    me.iff = 1;
+                } elsif (me.iff < 0 and me.elpased+contact.iff < 3.5) {
+                    me.iff = -1;
+                }
+                me.iff = 0;
+            } else {
+                me.iff = 0;
+            }
+
+            me.blueBearing = geo.normdeg180(contact.getDeviationHeading());
+            if (me.iff == 0 and contact.blue == 1 and contact.isVisible() and contact.getRange()*M2NM < 80 and me.iii < me.root.maxT and math.abs(me.blueBearing) < 60) {
+                me.distPixels = contact.get_range()*(482/(radar_system.apg68Radar.getRange()));
+                me.echoPos = [me.wdt*0.5*geo.normdeg180(me.blueBearing)/60,-me.distPixels];
+                me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
+                if (me.close and exp) {
+                    me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
+                    me.echoPos[1] = cursor_pos[1]+(me.echoPos[1] - cursor_pos[1])*4;
+                } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
+                    return;
+                }
+                me.root.lnkT[me.iii].setColor(colorDot4);
+                me.root.lnkT[me.iii].setTranslation(me.echoPos[0],me.echoPos[1]-25);
+                me.root.lnkT[me.iii].setText(""~contact.blueIndex);
+                me.root.lnkT[me.iii].show();
+                me.root.lnk[me.iii].setColor(colorDot4);
+                me.root.lnk[me.iii].setTranslation(me.echoPos);
+                me.root.lnk[me.iii].setRotation(D2R*22.5*math.round( geo.normdeg(contact.get_heading()-getprop("orientation/heading-deg")-me.blueBearing)/22.5 ));#Show rotation in increments of 22.5 deg
+                me.root.lnk[me.iii].show();
+                me.root.lnk[me.iii].update();
+                if (radar_system.apg68Radar.getPriorityTarget() == contact) {
+                    me.selectShow = 1;
+                    me.root.selection.setTranslation(me.echoPos);
+                    me.root.selection.setColor(colorDot4);
+                    if (contact.getLastHeading() != nil) {
+                        me.azimuth = math.round(geo.normdeg180(contact.get_bearing()-contact.getLastHeading())*0.1)*10;
+                        if (me.azimuth == 180 or me.azimuth == 0) {
+                            me.azSide = " ";
+                        } else {
+                            me.azSide = me.azimuth > 0 ?"L":"R";
+                        }
+                        me.azimuth = sprintf("%3d%s", math.abs(me.azimuth), me.azSide);
+                        me.heady = sprintf("%3d", int(contact.getLastHeading()/10)*10);
+                    } else {
+                        me.azimuth = "    ";
+                        me.heady = "   ";
+                    }
+                    if (contact.getLastClosureRate() != 0) {
+                        me.clos = sprintf("%+4dK",math.round(contact.getLastClosureRate()*0.1)*10);
+                    } else {
+                        me.clos = "      ";
+                    }
+
+                    me.lockInfo = sprintf("%s     %s        %4d   %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
+                    me.root.lockInfo.setText(me.lockInfo);
+                    me.lockInfo = 1;
+                }
+                if (cursor_click == me.root.index) {
+                    if (math.abs(cursor_pos[0] - me.echoPos[0]) < 10 and math.abs(cursor_pos[1] - me.echoPos[1]) < 11) {
+                        me.desig_new = contact;
+                    }
+                }
+                me.iii += 1;
+            } elsif (me.iff != 0 and contact.blue == 1 and contact.isVisible() and me.iiii < me.root.maxT and math.abs(me.blueBearing) < 60) {
+                me.distPixels = contact.get_range()*(482/(radar_system.apg68Radar.getRange()));
+                me.echoPos = [me.wdt*0.5*geo.normdeg180(me.blueBearing)/60,-me.distPixels];
+                me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
+                if (me.close and exp) {
+                    me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
+                    me.echoPos[1] = cursor_pos[1]+(me.echoPos[1] - cursor_pos[1])*4;
+                } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
+                    return;
+                }
+                me.path = me.iff == -1?me.iffU[me.iiii]:me.iff[me.iiii];
+                me.pathHide = me.iff == 1?me.iffU[me.iiii]:me.iff[me.iiii];
+                me.pathHide.hide();
+                me.path.setTranslation(me.echoPos[0],me.echoPos[1]-18);
+                me.path.show();
+
+                me.iiii += 1;
+            }
+        };
+        me.p_RDR.paintRdr = func (contact) {
+            if (contact["iff"] != nil) {
+                if (contact.iff > 0 and me.elpased-contact.iff < 3.5) {
+                    me.iff = 1;
+                } elsif (me.iff < 0 and me.elpased+contact.iff < 3.5) {
+                    me.iff = -1;
+                }
+                me.iff = 0;
+            } else {
+                me.iff = 0;
+            }
+            me.bleps = contact.getBleps();
+            foreach(me.bleppy ; me.bleps) {
+                if (me.i < me.root.maxB and me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.timeToKeepBleps and (me.bleppy[2] != nil or (me.bleppy[6] != nil and me.bleppy[6]>0))) {
+                    if (me.bleppy[6] != nil and radar_system.apg68Radar.currentMode.longName == "Velocity Search") {
+                        me.distPixels = me.bleppy[6]*(482/(1000));
+                    } elsif (me.bleppy[2] != nil) {
+                        me.distPixels = me.bleppy[2]*(482/(radar_system.apg68Radar.getRange()*NM2M));
+                    } else {
+                        return;
+                    }
+                    me.echoPos = [me.wdt*0.5*geo.normdeg180(me.bleppy[4][0])/60,-me.distPixels];
+                    me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
+                    if (radar_system.apg68Radar.currentMode.EXPsearch and me.close and exp) {
+                        me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
+                        me.echoPos[1] = cursor_pos[1]+(me.echoPos[1] - cursor_pos[1])*4;
+                    } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
+                        return;
+                    }
+                    me.color = math.pow(1-(me.elapsed - me.bleppy[0])/radar_system.apg68Radar.currentMode.timeToKeepBleps, 2.2);
+                    me.root.blep[me.i].setTranslation(me.echoPos);
+                    me.root.blep[me.i].setColor(me.color,me.color,me.color);
+                    me.root.blep[me.i].show();
+                    me.root.blep[me.i].update();
+                    if (radar_system.apg68Radar.getPriorityTarget() == contact) {
+                        me.selectShow = radar_system.apg68Radar.currentMode.longName != "Track While Scan" or (me.elapsed - contact.getLastBlepTime() < 8) or (math.mod(me.elapsed,0.50)<0.25);
+                        me.root.selection.setTranslation(me.echoPos);
+                        me.root.selection.setColor(colorCircle2);
+                        if (contact.getLastHeading() != nil) {
+                            me.azimuth = math.round(geo.normdeg180(contact.get_bearing()-contact.getLastHeading())*0.1)*10;
+                            if (me.azimuth == 180 or me.azimuth == 0) {
+                                me.azSide = " ";
+                            } else {
+                                me.azSide = me.azimuth > 0 ?"L":"R";
+                            }
+                            me.azimuth = sprintf("%3d%s", math.abs(me.azimuth), me.azSide);
+                            me.heady = sprintf("%3d", int(contact.getLastHeading()/10)*10);
+                        } else {
+                            me.azimuth = "    ";
+                            me.heady = "   ";
+                        }
+                        if (contact.getLastClosureRate() != 0) {
+                            me.clos = sprintf("%+4dK",math.round(contact.getLastClosureRate()*0.1)*10);
+                        } else {
+                            me.clos = "      ";
+                        }
+
+                        me.lockInfo = sprintf("%s     %s        %4d   %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
+                        me.root.lockInfo.setText(me.lockInfo);
+                        me.lockInfo = 1;
+                    }
+                    if (cursor_click == me.root.index and (me.elapsed - me.bleppy[0]) < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
+                        if (math.abs(cursor_pos[0] - me.echoPos[0]) < 10 and math.abs(cursor_pos[1] - me.echoPos[1]) < 11) {
+                            me.desig_new = contact;
+                        }
+                    }
+                    me.i += 1;
+                }
+            }
+            me.sizeBleps = size(me.bleps);
+            if (contact["blue"] != 1 and me.sizeBleps and me.ii < me.root.maxT and contact.hadTrackInfo() and me.iff == 0) {
+                me.bleppy = me.bleps[me.sizeBleps-1];
+                if (me.bleppy[3] != nil and me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
+                    me.color = contact["blue"] == 2?colorCircle1:colorCircle2;
+                    me.rot = 22.5*math.round((me.bleppy[3]-radar_system.self.getHeading()-me.bleppy[4][0])/22.5);
+                    me.root.blepTrianglePaths[me.ii].setRotation(me.rot*D2R);
+                    me.root.blepTrianglePaths[me.ii].setColor(me.color);
+                    me.echoPos = [me.wdt*0.5*geo.normdeg180(me.bleppy[4][0])/60,-me.distPixels];
+                    me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
+                    if (me.close and exp) {
+                        me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
+                        me.echoPos[1] = cursor_pos[1]+(me.echoPos[1] - cursor_pos[1])*4;
+                    } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
+                        return;
+                    }
+                    me.root.blepTriangle[me.ii].setTranslation(me.echoPos);
+                    if (me.bleppy[5] != nil and me.bleppy[5] > 0) {
+                        me.root.blepTriangleVelLine[me.ii].setScale(1,me.bleppy[5]*0.0045);
+                        me.root.blepTriangleVelLine[me.ii].setColor(me.color);
+                        me.root.blepTriangleVel[me.ii].setRotation(me.rot*D2R);
+                        me.root.blepTriangleVel[me.ii].update();
+                        me.root.blepTriangleVel[me.ii].show();
+                    } else {
+                        me.root.blepTriangleVel[me.ii].hide();
+                    }
+                    if (me.bleppy[7] != nil) {
+                        me.root.blepTriangleText[me.ii].setText(""~math.round(me.bleppy[7]*0.001));
+                    } else {
+                        me.root.blepTriangleText[me.ii].setText("");
+                    }
+                    me.blinkShow = radar_system.apg68Radar.currentMode.longName != "Track While Scan" or (me.elapsed - contact.getLastBlepTime() < 8) or (math.mod(me.elapsed,0.50)<0.25);
+                    if (radar_system.apg68Radar.getPriorityTarget() == contact) {
+                        me.selectShow = me.blinkShow;
+                        me.root.blepTriangle[me.ii].setVisible(me.selectShow);
+                        me.root.selection.setTranslation(me.echoPos);
+                        me.root.selection.setColor(me.color);
+                        if (contact.getLastHeading() != nil) {
+                            me.azimuth = math.round(geo.normdeg180(contact.get_bearing()-contact.getLastHeading())*0.1)*10;
+                            if (me.azimuth == 180 or me.azimuth == 0) {
+                                me.azSide = " ";
+                            } else {
+                                me.azSide = me.azimuth > 0 ?"L":"R";
+                            }
+                            me.azimuth = sprintf("%3d%s", math.abs(me.azimuth), me.azSide);
+                            me.heady = sprintf("%3d", int(contact.getLastHeading()/10)*10);
+                        } else {
+                            me.azimuth = "    ";
+                            me.heady = "   ";
+                        }
+                        if (contact.getLastClosureRate() != 0) {
+                            me.clos = sprintf("%+4dK",math.round(contact.getLastClosureRate()*0.1)*10);
+                        } else {
+                            me.clos = "      ";
+                        }
+
+                        me.lockInfo = sprintf("%s     %s        %4d    %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
+                        me.root.lockInfo.setText(me.lockInfo);
+                        me.lockInfo = 1;
+                    }
+                    me.root.blepTriangle[me.ii].setVisible(me.blinkShow);
+                    me.root.blepTriangle[me.ii].update();
+                    if (cursor_click == me.root.index) {
+                        if (math.abs(cursor_pos[0] - me.echoPos[0]) < 10 and math.abs(cursor_pos[1] - me.echoPos[1]) < 11) {
+                            me.desig_new = contact;
+                        }
+                    }
+
+                    me.ii += 1;
+                }
+            } elsif (me.iff != 0 and contact["blue"] != 1 and contact.isVisible() and me.iiii < me.root.maxT and me.sizeBleps) {
+                me.bleppy = me.bleps[me.sizeBleps-1];
+                if (me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
+                    me.echoPos = [me.wdt*0.5*geo.normdeg180(me.bleppy[4][0])/60,-me.distPixels];
+                    me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
+                    if (me.close and exp) {
+                        me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
+                        me.echoPos[1] = cursor_pos[1]+(me.echoPos[1] - cursor_pos[1])*4;
+                    } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
+                        return;
+                    }
+                    me.path = me.iff == -1?me.iffU[me.iiii]:me.iff[me.iiii];
+                    me.pathHide = me.iff == 1?me.iffU[me.iiii]:me.iff[me.iiii];
+                    me.pathHide.hide();
+                    me.path.setTranslation(me.echoPos[0],me.echoPos[1]-18);
+                    me.path.show();
+                    me.iiii += 1;
+                }
+            }            
         };
     },
 
@@ -4061,96 +4077,31 @@ var MFD_Device =
                 me.i = 0;#triangles
                 me.ii = 0;#dlink
                 me.selected = 0;
-                if (radar_system.apg68Radar.enabled) {# TODO: Allow DLINK stuff even though radar is off
-                    foreach(contact; radar_system.getCompleteList()) {
-                        me.cs = contact.get_Callsign();
-                        me.lnkLock = 0;
-                        me.lnk16 = datalink.get_data(me.cs);
-                        if (me.lnk16 != nil and me.lnk16.on_link() == 1) {
-                            me.blue = 1;
-                            me.blueIndex = me.lnk16.index()+1;
-                        } elsif (me.cs == getprop("link16/wingman-4")) {
-                            me.blue = 1;
-                            me.blueIndex = 2;
-                        } else {
-                            me.blue = 0;
-                        }
-                        if (!me.blue and me.lnk16 != nil and me.lnk16.tracked() == 1) {
-                            me.blue = 2;
-                            me.blueIndex = me.lnk16.tracked_by_index()+1;
-                        }
-                        if (!contact.isVisible() and !me.blue and !me.lnkLock) {
-                            continue;
-                        }
-                        me.desig = contact.equals(me.rdrprio);
-                        me.hasTrack = contact.hasTrackInfo();
-                        if (!me.hasTrack and !me.blue and !me.lnkLock) {
-                            continue;
-                        }
-                        me.color = me.blue == 1?colorDot4:(me.blue == 2?colorCircle1:colorCircle2);
-                        if (me.blue or me.lnkLock) {
-                            me.c_rng = contact.getRange()*M2NM;
-                            me.c_rbe = contact.getDeviationHeading();
-                            me.c_hea = contact.getHeading();
-                            me.c_alt = contact.get_altitude();
-                            me.c_spd = contact.getSpeed();
-                        } else {
-                            me.c_rng = contact.getLastRangeDirect()*M2NM;
-                            me.c_rbe = contact.getLastDirection()[0];
-                            me.c_hea = contact.getLastHeading();
-                            me.c_alt = contact.getLastAltitude();
-                            me.c_spd = contact.getLastSpeed();
-                        }
+                
+                me.rando = rand();
 
-
-                        me.distPixels = (me.c_rng/me.rdrrng)*me.rdrRangePixels;
-                        #    if (me.blue) print("through ",me.desig," LoS:",!contact.get_behind_terrain());
-
-                        me.root.lnkT[me.i].setColor(me.color);
-                        me.root.lnkT[me.i].setTranslation(me.distPixels*math.sin(me.c_rbe*D2R),-me.distPixels*math.cos(me.c_rbe*D2R)-18);
-                        if (me.blue > 0) {
-                            me.root.lnkT[me.ii].setText(""~me.blueIndex);
-                            me.root.lnkT[me.ii].show();
-                        }
-
-                        me.rot = 22.5*math.round( geo.normdeg((me.c_hea-me.selfHeading))/22.5 )*D2R;#Show rotation in increments of 22.5 deg
-                        me.trans = [me.distPixels*math.sin(me.c_rbe*D2R),-me.distPixels*math.cos(me.c_rbe*D2R)];
-
-                        if (me.blue != 1 and me.i < me.root.maxB) {
-                            me.root.blepTrianglePaths[me.i].setColor(me.color);
-                            me.root.blepTriangle[me.i].setTranslation(me.trans);
-                            me.root.blepTriangle[me.i].show();
-                            me.root.blepTrianglePaths[me.i].setRotation(me.rot);
-                            me.root.blepTriangleVel[me.i].setRotation(me.rot);
-                            me.root.blepTriangleVelLine[me.i].setScale(1,me.c_spd*0.0045);
-                            me.lockAlt = sprintf("%02d", math.round(me.c_alt*0.001));
-                            me.root.blepTriangleText[me.i].setText(me.lockAlt);
-                            me.i += 1;
-                            if (me.blue == 2) {
-                                me.root.lnkT[me.ii].setColor(me.color);
-                                me.root.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-20);
-                                me.root.lnk[me.ii].hide();
-                                me.root.lnkT[me.ii].show();
-                                me.ii += 1;
-                            }
-                        } elsif (me.blue == 1 and me.ii < me.root.maxB) {
-                            me.root.lnk[me.ii].setColor(me.color);
-                            me.root.lnk[me.ii].setTranslation(me.trans);
-                            me.root.lnk[me.ii].setRotation(me.rot);
-                            me.root.lnkT[me.ii].setColor(me.color);
-                            me.root.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-20);
-                            me.root.lnk[me.ii].show();
-                            me.root.lnkT[me.ii].show();
-                            me.ii += 1;
-                        }
-
-                        if (me.desig) {
-                            me.root.selection.setTranslation(me.trans);
-                            me.root.selection.setColor(me.color);
-                            me.selected = 1;
-                        }
+                if (getprop("instrumentation/datalink/power")) {
+                    foreach(contact; vector_aicontacts_links) {
+                        me.blue = contact.blue;
+                        me.blueIndex = contact.blueIndex;
+                        me.paintBlep(contact);
+                        contact.rando = me.rando;
                     }
                 }
+                if (radar_system.apg68Radar.enabled) {
+                    foreach(contact; radar_system.apg68Radar.getActiveBleps()) {
+                        if (contact["rando"] == me.rando) continue;
+                        
+                        me.cs = contact.get_Callsign();
+                        
+                        me.blue = 0;
+                        me.blueIndex = -1;
+
+                        me.paintBlep(contact);
+                        contact.rando = me.rando;
+                    }
+                }
+                
                 for (;me.i<me.root.maxB;me.i+=1) {
                     me.root.blepTriangle[me.i].hide();
                 }
@@ -4162,7 +4113,76 @@ var MFD_Device =
             }
             if (noti.FrameCount == 3) me.up = !me.up;
         };
+        me.p_HSD.paintBlep = func (contact) {
+            if (!contact.isVisible() and me.blue == 0) {
+                return;
+            }
+            me.desig = contact.equals(me.rdrprio);
+            me.hasTrack = contact.hasTrackInfo();
+            if (!me.hasTrack and me.blue == 0) {
+                return;
+            }
+            me.color = me.blue == 1?colorDot4:(me.blue == 2?colorCircle1:colorCircle2);
+            if (me.blue != 0) {
+                me.c_rng = contact.getRange()*M2NM;
+                me.c_rbe = contact.getDeviationHeading();
+                me.c_hea = contact.getHeading();
+                me.c_alt = contact.get_altitude();
+                me.c_spd = contact.getSpeed();
+            } else {
+                me.c_rng = contact.getLastRangeDirect()*M2NM;
+                me.c_rbe = contact.getLastDirection()[0];
+                me.c_hea = contact.getLastHeading();
+                me.c_alt = contact.getLastAltitude();
+                me.c_spd = contact.getLastSpeed();
+            }
+
+
+            me.distPixels = (me.c_rng/me.rdrrng)*me.rdrRangePixels;
+            #    if (me.blue) print("through ",me.desig," LoS:",!contact.get_behind_terrain());
+
+
+            me.rot = 22.5*math.round( geo.normdeg((me.c_hea-me.selfHeading))/22.5 )*D2R;#Show rotation in increments of 22.5 deg
+            me.trans = [me.distPixels*math.sin(me.c_rbe*D2R),-me.distPixels*math.cos(me.c_rbe*D2R)];
+
+            if (me.blue != 1 and me.i < me.root.maxB) {
+                me.root.blepTrianglePaths[me.i].setColor(me.color);
+                me.root.blepTriangle[me.i].setTranslation(me.trans);
+                me.root.blepTriangle[me.i].show();
+                me.root.blepTrianglePaths[me.i].setRotation(me.rot);
+                me.root.blepTriangleVel[me.i].setRotation(me.rot);
+                me.root.blepTriangleVelLine[me.i].setScale(1,me.c_spd*0.0045);
+                me.lockAlt = sprintf("%02d", math.round(me.c_alt*0.001));
+                me.root.blepTriangleText[me.i].setText(me.lockAlt);
+                me.i += 1;
+                if (me.blue == 2) {
+                    me.root.lnkT[me.ii].setColor(me.color);
+                    me.root.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-25);
+                    me.root.lnkT[me.ii].setText(""~me.blueIndex);
+                    me.root.lnk[me.ii].hide();
+                    me.root.lnkT[me.ii].show();
+                    me.ii += 1;
+                }
+            } elsif (me.blue == 1 and me.ii < me.root.maxB) {
+                me.root.lnk[me.ii].setColor(me.color);
+                me.root.lnk[me.ii].setTranslation(me.trans);
+                me.root.lnk[me.ii].setRotation(me.rot);
+                me.root.lnkT[me.ii].setColor(me.color);
+                me.root.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-25);
+                me.root.lnkT[me.ii].setText(""~me.blueIndex);
+                me.root.lnk[me.ii].show();
+                me.root.lnkT[me.ii].show();
+                me.ii += 1;
+            }
+
+            if (me.desig) {
+                me.root.selection.setTranslation(me.trans);
+                me.root.selection.setColor(me.color);
+                me.selected = 1;
+            }
+        };
     },
+
 
     addPages : func
     {   
@@ -4787,3 +4807,19 @@ var switchTGP = func {
     view.setViewByIndex(105);
 }
 
+var vector_aicontacts_links = [];
+var DLRecipient = emesary.Recipient.new("DLRecipient");
+var startDLListener = func {    
+    DLRecipient.radar = radar_system.dlnkRadar;
+    DLRecipient.Receive = func(notification) {
+        if (notification.NotificationType == "DatalinkNotification") {
+            #printf("DL recv: %s", notification.NotificationType);
+            if (me.radar.enabled == 1) {
+                vector_aicontacts_links = notification.vector;
+            }
+            return emesary.Transmitter.ReceiptStatus_OK;
+        }
+        return emesary.Transmitter.ReceiptStatus_NotProcessed;
+    };
+    emesary.GlobalTransmitter.Register(DLRecipient);
+}

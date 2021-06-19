@@ -1660,6 +1660,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     #
     #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/pitch-rate-lower-lag");
     #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/bias-final");
+    startDLListener();
   }
  }, 0, 0);
 

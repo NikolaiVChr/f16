@@ -147,6 +147,78 @@ var RWR = {
 
 
 
+#  ██████   █████  ████████  █████  ██      ██ ███    ██ ██   ██ 
+#  ██   ██ ██   ██    ██    ██   ██ ██      ██ ████   ██ ██  ██  
+#  ██   ██ ███████    ██    ███████ ██      ██ ██ ██  ██ █████   
+#  ██   ██ ██   ██    ██    ██   ██ ██      ██ ██  ██ ██ ██  ██  
+#  ██████  ██   ██    ██    ██   ██ ███████ ██ ██   ████ ██   ██ 
+#                                                                
+#                                                                
+DatalinkRadar = {
+	# I check the sky 360 deg for anything on datalink
+	# This class is only semi generic!
+	new: func (rate, max_dist_nm) {
+		var dlnk = {parents: [DatalinkRadar, Radar]};
+		
+		dlnk.max_dist_nm = max_dist_nm;
+		
+		dlnk.vector_aicontacts = [];
+		dlnk.vector_aicontacts_for = [];
+		dlnk.timer          = maketimer(rate, dlnk, func dlnk.scan());
+
+		dlnk.DatalinkRadarRecipient = emesary.Recipient.new("DatalinkRadarRecipient");
+		dlnk.DatalinkRadarRecipient.radar = dlnk;
+		dlnk.DatalinkRadarRecipient.Receive = func(notification) {
+	        if (notification.NotificationType == "AINotification") {
+	        	#printf("NoseRadar recv: %s", notification.NotificationType);
+	            if (me.radar.enabled == 1) {
+	    		    me.radar.vector_aicontacts = notification.vector;
+	    	    }
+	            return emesary.Transmitter.ReceiptStatus_OK;
+	        }
+	        return emesary.Transmitter.ReceiptStatus_NotProcessed;
+	    };
+		emesary.GlobalTransmitter.Register(dlnk.DatalinkRadarRecipient);
+		dlnk.DatalinkNotification = VectorNotification.new("DatalinkNotification");
+		dlnk.DatalinkNotification.updateV(dlnk.vector_aicontacts_for);
+		dlnk.timer.start();
+		return omni;
+	},
+
+	scan: func () {
+		if (!me.enabled) return;
+		me.vector_aicontacts_for = [];
+		foreach(contact ; me.vector_aicontacts) {
+			me.cs = contact.get_Callsign();
+
+            me.lnk = datalink.get_data(me.cs);
+            if (me.lnk != nil and me.lnk.on_link() == 1) {
+                me.blue = 1;
+                me.blueIndex = me.lnk.index()+1;
+            } elsif (me.cs == getprop("link16/wingman-4")) {
+                me.blue = 1;
+                me.blueIndex = 2;
+            } else {
+            	me.blue = 0;
+                me.blueIndex = -1;
+            }
+            if (!me.blue and me.lnk != nil and me.lnk.tracked() == 1) {
+                me.blue = 2;
+                me.blueIndex = me.lnk.tracked_by_index()+1;
+            }
+
+            if (me.blue ==1 or me.blue ==2) {
+            	contact.blue = me.blue;
+            	contact.blueIndex = me.blueIndex;
+				append(me.vector_aicontacts_for, contact);
+			}
+		}
+		emesary.GlobalTransmitter.NotifyAll(me.DatalinkNotification.updateV(me.vector_aicontacts_for));
+	},
+	del: func {
+        emesary.GlobalTransmitter.DeRegister(me.DatalinkRadarRecipient);
+    },
+};
 
 
 
@@ -1273,8 +1345,8 @@ var F16STTMode = {
 	priorityTarget: nil,
 	az: 3.5,
 	bars: 2,
-	minimumTimePerReturn: 0.15,
-	timeToKeepBleps: 5,
+	minimumTimePerReturn: 0.20,
+	timeToKeepBleps: 7,
 	painter: 1,
 	new: func (radar = nil) {
 		var mode = {parents: [F16STTMode, RadarMode]};
@@ -1367,6 +1439,9 @@ var F16STTMode = {
 		}
 		return nil;
 	},
+	getCursorAltitudeLimits: func {
+		return nil;
+	},
 };
 
 var F16ACMSTTMode = {
@@ -1390,7 +1465,7 @@ var F16MultiSTTMode = {
 		return mode;
 	},
 	undesignate: func {
-		if (me.priorityTarget.getRangeDirect()*M2NM < 3) {
+		if (me.priorityTarget != nil and me.priorityTarget.getRangeDirect()*M2NM < 3) {
 			me.priorityTarget = nil;
 		}
 		me.radar.setCurrentMode(me.superMode, me.priorityTarget);
@@ -1700,10 +1775,16 @@ var APG68 = {
 	loopMedium: func {
 		if (me.enabled) {
 			me.focus = me.getPriorityTarget();
-			if (me.focus != nil and me.currentMode["painter"] == 1) {
+			if (me.focus != nil and me.currentMode["painter"] == 1 and me.focus.callsign != nil) {
 				sttSend.setValue(left(md5(me.focus.callsign), 4));
+				if (steerpoints.sending == nil) {
+			        datalink.send_data({"contacts":[{"callsign":me.focus.callsign,"iff":0}]});
+			    }
 			} else {
 				sttSend.setValue("");
+				if (steerpoints.sending == nil) {
+		            datalink.clear_data();
+		        }
 			}
 			armament.contact = me.focus;
 			stbySend.setIntValue(0);
@@ -1711,8 +1792,12 @@ var APG68 = {
 			armament.contact = nil;
 			sttSend.setValue("");
 			stbySend.setIntValue(1);
+			if (steerpoints.sending == nil) {
+	            datalink.clear_data();
+	        }
 		}
 	},
+
 	loopSlow: func {
 		if (me.enabled) {
 			# 1.414 = cos(45 degs)
@@ -1870,6 +1955,7 @@ var baser = AIToNasal.new();
 var partitioner = NoseRadar.new();
 var omni = OmniRadar.new(1.0, 150, 55);
 var terrain = TerrainChecker.new(0.10, 1, 60);
+var dlnkRadar = DatalinkRadar.new(30, 80);
 
 # start specific radar system
 var rwsMode = F16RWSMode.new(F16RWSSAMMode.new(F16MultiSTTMode.new()));
@@ -1903,5 +1989,4 @@ var getCompleteList = func {
 #
 # TODO:
 #   GM tilt angles
-#   DLINK check should happen like terrain-checker. Then dont need to use completelist so much.
 #

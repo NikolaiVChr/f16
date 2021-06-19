@@ -624,6 +624,10 @@
                 <property>controls/radar/antennae-knob</property>
                 <value>0</value>
             </binding>
+            <binding>
+                <command>nasal</command>
+                <script>screen.log.write("Antennae knob at "~(getprop("controls/radar/antennae-knob")*60));</script>
+            </binding>
         </key>
         <key n="105">
             <name>i</name>
@@ -636,6 +640,10 @@
                 <max>1</max>
                 <wrap>false</wrap>
             </binding>
+            <binding>
+                <command>nasal</command>
+                <script>screen.log.write("Antennae knob at "~(getprop("controls/radar/antennae-knob")*60));</script>
+            </binding>
         </key>
         <key n="73">
             <name>I</name>
@@ -647,6 +655,10 @@
                 <min>-1</min>
                 <max>1</max>
                 <wrap>false</wrap>
+            </binding>
+            <binding>
+                <command>nasal</command>
+                <script>screen.log.write("Antennae knob at "~(getprop("controls/radar/antennae-knob")*60));</script>
             </binding>
         </key>
         <key n="25">
