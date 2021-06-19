@@ -118,7 +118,7 @@ var RWR = {
                 if (me.threat > 1) me.threat = 1;
                 if (me.threat <= 0) continue;
 #                printf("%s threat:%.2f range:%d dev:%d", me.u.get_Callsign(),me.threat,me.u.get_range(),me.deviation);
-                append(me.vector_aicontacts_threats,[me.u,me.threat]);
+                append(me.vector_aicontacts_threats,[me.u,me.threat, me.threatDB[5]]);
             } else {
 #                printf("%s ----", me.u.get_Callsign());
             }
@@ -1380,6 +1380,25 @@ var F16ACMSTTMode = {
 	},
 };
 
+var F16MultiSTTMode = {
+	rootName: "CRM",
+	shortName: "STT",
+	longName: "Multisearch - Single Target Track",
+	new: func (radar = nil) {
+		var mode = {parents: [F16MultiSTTMode, F16STTMode, RadarMode]};
+		mode.radar = radar;
+		return mode;
+	},
+	undesignate: func {
+		if (me.priorityTarget.getRangeDirect()*M2NM < 3) {
+			me.priorityTarget = nil;
+		}
+		me.radar.setCurrentMode(me.superMode, me.priorityTarget);
+		me.priorityTarget = nil;
+		#var log = caller(1); foreach (l;log) print(l);
+	},
+};
+
 
 #  ███████ ████████ ████████ 
 #  ██         ██       ██    
@@ -1853,9 +1872,9 @@ var omni = OmniRadar.new(1.0, 150, 55);
 var terrain = TerrainChecker.new(0.10, 1, 60);
 
 # start specific radar system
-var rwsMode = F16RWSMode.new(F16RWSSAMMode.new(F16STTMode.new()));
-var twsMode = F16TWSMode.new(F16STTMode.new());
-var lrsMode = F16LRSMode.new(F16LRSSAMMode.new(F16STTMode.new()));
+var rwsMode = F16RWSMode.new(F16RWSSAMMode.new(F16MultiSTTMode.new()));
+var twsMode = F16TWSMode.new(F16MultiSTTMode.new());
+var lrsMode = F16LRSMode.new(F16LRSSAMMode.new(F16MultiSTTMode.new()));
 var vsrMode = F16VSMode.new(F16STTMode.new()); 
 var acm20Mode = F16ACM20Mode.new(F16ACMSTTMode.new());
 var acm60Mode = F16ACM60Mode.new(F16ACMSTTMode.new());
@@ -1878,13 +1897,11 @@ var getCompleteList = func {
 
 
 # BUGS:
-#   TWS undesignate goes back to SAM, which auto-switches to STT due to less than 3 nm
 #   Clicking A-G should set GM
 #   nil exception in TWS!!!
 #   HSD radar arc CW vs. CCW
 #
 # TODO:
 #   GM tilt angles
-#   Check that RWR uses stored bearing for display.
 #   DLINK check should happen like terrain-checker. Then dont need to use completelist so much.
 #

@@ -3842,9 +3842,9 @@ var MFD_Device =
                 me.root.cone.removeAllChildren();
                 if (radar_system.apg68Radar.enabled) {
                     if (radar_system.apg68Radar.showAZ()) {
-                        me.radarX1 = me.rdrRangePixels*math.cos((90-me.az-radar_system.apg68Radar.getDeviation())*D2R);
+                        me.radarX1 =  me.rdrRangePixels*math.cos((90-me.az-radar_system.apg68Radar.getDeviation())*D2R);
                         me.radarY1 = -me.rdrRangePixels*math.sin((90-me.az-radar_system.apg68Radar.getDeviation())*D2R);
-                        me.radarX2 = me.rdrRangePixels*math.cos((90+me.az-radar_system.apg68Radar.getDeviation())*D2R);
+                        me.radarX2 =  me.rdrRangePixels*math.cos((90+me.az-radar_system.apg68Radar.getDeviation())*D2R);
                         me.radarY2 = -me.rdrRangePixels*math.sin((90+me.az-radar_system.apg68Radar.getDeviation())*D2R);
                         me.cone = me.root.cone.createChild("path")
                                     .moveTo(0,0)
