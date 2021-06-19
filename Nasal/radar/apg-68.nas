@@ -1018,7 +1018,7 @@ var F16RWSSAMMode = {
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
 		if (me.priorityTarget != nil and contact.equals(me.priorityTarget)) {
-			return [1,1,1,1,0,1];
+			return [1,1,1,1,1,1];
 		}
 		return [1,0,1,0,0,1];
 	},
@@ -1881,11 +1881,9 @@ var getCompleteList = func {
 #   TWS undesignate goes back to SAM, which auto-switches to STT due to less than 3 nm
 #   Clicking A-G should set GM
 #   nil exception in TWS!!!
-#   TWS blinking like in test
 #   HSD radar arc CW vs. CCW
 #
 # TODO:
-#   MFD HSD
 #   GM tilt angles
 #   Check that RWR uses stored bearing for display.
 #   DLINK check should happen like terrain-checker. Then dont need to use completelist so much.

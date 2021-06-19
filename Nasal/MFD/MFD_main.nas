@@ -938,15 +938,26 @@ var MFD_Device =
                     .set("z-index",1)
                     .hide();
         
-        svg.cursor = svg.p_RDR.createChild("path")
+        svg.cursor = svg.p_RDR.createChild("group").set("z-index",1000);
+                svg.cursor.createChild("path")
                     .moveTo(-8,-9)
                     .vert(18)
                     .moveTo(8,-9)
                     .vert(18)
                     .setStrokeLineWidth(2.0)
-                    .setColor(colorLine3)
-                    .set("z-index",12)
-                    .set("z-index",1000);
+                    .setColor(colorLine3);
+        svg.cursor_1 = svg.cursor.createChild("text")
+                .setTranslation(10,-5)
+                .setText("37")
+                .setAlignment("left-bottom")
+                .setColor(colorLine3)
+                .setFontSize(18, 1.0);
+        svg.cursor_2 = svg.cursor.createChild("text")
+                .setTranslation(10, 5)
+                .setText("12")
+                .setAlignment("left-top")
+                .setColor(colorLine3)
+                .setFontSize(18, 1.0);
         
         svg.bullseye = svg.p_RDR.createChild("path")
             .moveTo(-25,0)
@@ -1393,6 +1404,15 @@ var MFD_Device =
                 cursor_pos[1] = -482*0.5;
             }
             me.root.cursor.setTranslation(cursor_pos);
+            me.alimits = radar_system.apg68Radar.getCursorAltitudeLimits();
+            if (me.alimits != nil) {
+                me.root.cursor_1.setText(sprintf("% 2d",math.round(me.alimits[0]*0.001)));
+                me.root.cursor_2.setText(sprintf("% 2d",math.round(me.alimits[1]*0.001)));
+            } else {
+                print("nil limits");
+                me.root.cursor_1.setText("");
+                me.root.cursor_2.setText("");
+            }
             if (me.bullOn) {
                 me.cursorDev   = cursor_pos[0]*60/(me.wdt*0.5);
                 me.cursorDist  = -NM2M*cursor_pos[1]/(482/radar_system.apg68Radar.getRange());
@@ -1570,12 +1590,12 @@ var MFD_Device =
                             me.heady = "   ";
                         }
                         if (contact.getLastClosureRate() != 0) {
-                            me.clos = sprintf("%+4d",math.round(contact.getLastClosureRate()*0.1)*10);
+                            me.clos = sprintf("%+4dK",math.round(contact.getLastClosureRate()*0.1)*10);
                         } else {
-                            me.clos = "     ";
+                            me.clos = "      ";
                         }
 
-                        me.lockInfo = sprintf("%s     %s        %4d   %sK", me.azimuth, me.heady, contact.get_Speed(), me.clos);
+                        me.lockInfo = sprintf("%s     %s        %4d   %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
                         me.root.lockInfo.setText(me.lockInfo);
                         me.lockInfo = 1;
                     }
@@ -1639,7 +1659,7 @@ var MFD_Device =
                         me.root.blep[me.i].show();
                         me.root.blep[me.i].update();
                         if (radar_system.apg68Radar.getPriorityTarget() == contact) {
-                            me.selectShow = 1;
+                            me.selectShow = radar_system.apg68Radar.currentMode.longName != "Track While Scan" or (me.elapsed - contact.getLastBlepTime() < 8) or (math.mod(me.elapsed,0.50)<0.25);
                             me.root.selection.setTranslation(me.echoPos);
                             me.root.selection.setColor(colorCircle2);
                             if (contact.getLastHeading() != nil) {
@@ -1656,12 +1676,12 @@ var MFD_Device =
                                 me.heady = "   ";
                             }
                             if (contact.getLastClosureRate() != 0) {
-                                me.clos = sprintf("%+4d",math.round(contact.getLastClosureRate()*0.1)*10);
+                                me.clos = sprintf("%+4dK",math.round(contact.getLastClosureRate()*0.1)*10);
                             } else {
-                                me.clos = "     ";
+                                me.clos = "      ";
                             }
 
-                            me.lockInfo = sprintf("%s     %s        %4d   %sK", me.azimuth, me.heady, contact.get_Speed(), me.clos);
+                            me.lockInfo = sprintf("%s     %s        %4d   %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
                             me.root.lockInfo.setText(me.lockInfo);
                             me.lockInfo = 1;
                         }
@@ -1704,10 +1724,10 @@ var MFD_Device =
                         } else {
                             me.root.blepTriangleText[me.ii].setText("");
                         }
-                        me.root.blepTriangle[me.ii].setVisible(radar_system.apg68Radar.currentMode.longName != "Track While Scan" or (me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.maxScanIntervalForTrack));
-                        me.root.blepTriangle[me.ii].update();
+                        me.blinkShow = radar_system.apg68Radar.currentMode.longName != "Track While Scan" or (me.elapsed - contact.getLastBlepTime() < 8) or (math.mod(me.elapsed,0.50)<0.25);
                         if (radar_system.apg68Radar.getPriorityTarget() == contact) {
-                            me.selectShow = 1;
+                            me.selectShow = me.blinkShow;
+                            me.root.blepTriangle[me.ii].setVisible(me.selectShow);
                             me.root.selection.setTranslation(me.echoPos);
                             me.root.selection.setColor(me.color);
                             if (contact.getLastHeading() != nil) {
@@ -1724,15 +1744,17 @@ var MFD_Device =
                                 me.heady = "   ";
                             }
                             if (contact.getLastClosureRate() != 0) {
-                                me.clos = sprintf("%+4d",math.round(contact.getLastClosureRate()*0.1)*10);
+                                me.clos = sprintf("%+4dK",math.round(contact.getLastClosureRate()*0.1)*10);
                             } else {
-                                me.clos = "     ";
+                                me.clos = "      ";
                             }
 
-                            me.lockInfo = sprintf("%s     %s        %4d   %sK", me.azimuth, me.heady, contact.get_Speed(), me.clos);
+                            me.lockInfo = sprintf("%s     %s        %4d    %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
                             me.root.lockInfo.setText(me.lockInfo);
                             me.lockInfo = 1;
                         }
+                        me.root.blepTriangle[me.ii].setVisible(me.blinkShow);
+                        me.root.blepTriangle[me.ii].update();
                         if (cursor_click == me.root.index) {
                             if (math.abs(cursor_pos[0] - me.echoPos[0]) < 10 and math.abs(cursor_pos[1] - me.echoPos[1]) < 11) {
                                 me.desig_new = contact;
