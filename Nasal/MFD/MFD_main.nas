@@ -6,21 +6,40 @@
 
 #for debug: setprop ("/sim/startup/terminal-ansi-colors",0);
 
+# OBS text
 var colorText1 = [getprop("/sim/model/MFD-color/text1/red"), getprop("/sim/model/MFD-color/text1/green"), getprop("/sim/model/MFD-color/text1/blue")];
+
+# Info text
 var colorText2 = [getprop("/sim/model/MFD-color/text2/red"), getprop("/sim/model/MFD-color/text2/green"), getprop("/sim/model/MFD-color/text2/blue")];
+
+# red threat circles
 var colorCircle1 = [getprop("/sim/model/MFD-color/circle1/red"), getprop("/sim/model/MFD-color/circle1/green"), getprop("/sim/model/MFD-color/circle1/blue")];
+
+# yellow threat circles
 var colorCircle2 = [getprop("/sim/model/MFD-color/circle2/red"), getprop("/sim/model/MFD-color/circle2/green"), getprop("/sim/model/MFD-color/circle2/blue")];
+
+# green threat circles
 var colorCircle3 = [getprop("/sim/model/MFD-color/circle3/red"), getprop("/sim/model/MFD-color/circle3/green"), getprop("/sim/model/MFD-color/circle3/blue")];
+
+# Not used
+var colorDot1 = [getprop("/sim/model/MFD-color/dot1/red"), getprop("/sim/model/MFD-color/dot1/green"), getprop("/sim/model/MFD-color/dot1/blue")];
+
+# Datalink wingman
+var colorDot4 = [getprop("/sim/model/MFD-color/dot4/red"), getprop("/sim/model/MFD-color/dot4/green"), getprop("/sim/model/MFD-color/dot4/blue")];
+
+# Bullseye and STPT symbol on FCR
+var colorBullseye = [getprop("/sim/model/MFD-color/bullseye/red"), getprop("/sim/model/MFD-color/bullseye/green"), getprop("/sim/model/MFD-color/bullseye/blue")];
+
+# Bulleye direction to ownship text
+var colorBetxt = [getprop("/sim/model/MFD-color/betxt/red"), getprop("/sim/model/MFD-color/betxt/green"), getprop("/sim/model/MFD-color/betxt/blue")];
+
 var colorLine1 = [getprop("/sim/model/MFD-color/line1/red"), getprop("/sim/model/MFD-color/line1/green"), getprop("/sim/model/MFD-color/line1/blue")];
 var colorLine2 = [getprop("/sim/model/MFD-color/line2/red"), getprop("/sim/model/MFD-color/line2/green"), getprop("/sim/model/MFD-color/line2/blue")];
 var colorLine3 = [getprop("/sim/model/MFD-color/line3/red"), getprop("/sim/model/MFD-color/line3/green"), getprop("/sim/model/MFD-color/line3/blue")];
 var colorLine4 = [getprop("/sim/model/MFD-color/line4/red"), getprop("/sim/model/MFD-color/line4/green"), getprop("/sim/model/MFD-color/line4/blue")];
 var colorLine5 = [getprop("/sim/model/MFD-color/line5/red"), getprop("/sim/model/MFD-color/line5/green"), getprop("/sim/model/MFD-color/line5/blue")];
 var colorLines = [getprop("/sim/model/MFD-color/lines/red"), getprop("/sim/model/MFD-color/lines/green"), getprop("/sim/model/MFD-color/lines/blue")];
-var colorDot1 = [getprop("/sim/model/MFD-color/dot1/red"), getprop("/sim/model/MFD-color/dot1/green"), getprop("/sim/model/MFD-color/dot1/blue")];
-var colorDot4 = [getprop("/sim/model/MFD-color/dot4/red"), getprop("/sim/model/MFD-color/dot4/green"), getprop("/sim/model/MFD-color/dot4/blue")];
-var colorBullseye = [getprop("/sim/model/MFD-color/bullseye/red"), getprop("/sim/model/MFD-color/bullseye/green"), getprop("/sim/model/MFD-color/bullseye/blue")];
-var colorBetxt = [getprop("/sim/model/MFD-color/betxt/red"), getprop("/sim/model/MFD-color/betxt/green"), getprop("/sim/model/MFD-color/betxt/blue")];
+
 
 var colorCubeRed = [255,0,0];
 var colorCubeGreen = [0,255,0];
@@ -1544,19 +1563,23 @@ var MFD_Device =
 
             me.randoo = rand();
 
-            if (getprop("instrumentation/datalink/power")) {
+            if (getprop("instrumentation/datalink/power") and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName and radar_system.apg68Radar.currentMode["painter"] != 1) {
                 foreach(contact; vector_aicontacts_links) {
+                    if (contact["blue"] != 1) continue;
                     me.paintDL(contact);
-                    if (contact.blue == 1) contact.randoo = me.randoo;
+                    contact.randoo = me.randoo;
                 }
             }
             if (radar_system.apg68Radar.enabled) {
                 foreach(contact; radar_system.apg68Radar.getActiveBleps()) {
                     if (contact["randoo"] == me.randoo) continue;
 
-                    me.cs = contact.get_Callsign();
-                    contact.blue = 0;
-                    contact.blueIndex = -1;
+                    me.paintRdr(contact);
+                    contact.randoo = me.randoo;
+                }
+            }
+            if (getprop("instrumentation/datalink/power") and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName and radar_system.apg68Radar.currentMode["painter"] != 1) {
+                foreach(contact; vector_aicontacts_links) {
                     me.paintRdr(contact);
                     contact.randoo = me.randoo;
                 }
@@ -1896,6 +1919,7 @@ var MFD_Device =
 #                                                                                                                
 #                                                                                                                
         me.p_RDR.paintDL = func (contact) {
+            if (contact.blue != 1) return;
             if (contact["iff"] != nil) {
                 if (contact.iff > 0 and me.elpased-contact.iff < 3.5) {
                     me.iff = 1;
@@ -1908,7 +1932,7 @@ var MFD_Device =
             }
 
             me.blueBearing = geo.normdeg180(contact.getDeviationHeading());
-            if (me.iff == 0 and contact.blue == 1 and contact.isVisible() and contact.getRange()*M2NM < 80 and me.iii < me.root.maxT and math.abs(me.blueBearing) < 60) {
+            if (me.iff == 0 and contact.isVisible() and contact.getRange()*M2NM < 80 and me.iii < me.root.maxT and math.abs(me.blueBearing) < 60) {
                 me.distPixels = contact.get_range()*(482/(radar_system.apg68Radar.getRange()));
                 me.echoPos = [me.wdt*0.5*geo.normdeg180(me.blueBearing)/60,-me.distPixels];
                 me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
@@ -1939,7 +1963,7 @@ var MFD_Device =
                     }
                 }
                 me.iii += 1;
-            } elsif (me.iff != 0 and contact.blue == 1 and contact.isVisible() and me.iiii < me.root.maxT and math.abs(me.blueBearing) < 60) {
+            } elsif (me.iff != 0 and contact.isVisible() and me.iiii < me.root.maxT and math.abs(me.blueBearing) < 60) {
                 me.distPixels = contact.get_range()*(482/(radar_system.apg68Radar.getRange()));
                 me.echoPos = [me.wdt*0.5*geo.normdeg180(me.blueBearing)/60,-me.distPixels];
                 me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
@@ -1996,13 +2020,13 @@ var MFD_Device =
             }
             me.bleps = contact.getBleps();
             foreach(me.bleppy ; me.bleps) {
-                if (me.i < me.root.maxB and me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.timeToKeepBleps and (me.bleppy[2] != nil or (me.bleppy[6] != nil and me.bleppy[6]>0))) {
+                if (me.i < me.root.maxB and me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.timeToKeepBleps and me.bleppy[4] != nil and (me.bleppy[2] != nil or (me.bleppy[6] != nil and me.bleppy[6]>0))) {
                     if (me.bleppy[6] != nil and radar_system.apg68Radar.currentMode.longName == radar_system.vsrMode.longName) {
                         me.distPixels = me.bleppy[6]*(482/(1000));
                     } elsif (me.bleppy[2] != nil) {
                         me.distPixels = me.bleppy[2]*(482/(radar_system.apg68Radar.getRange()*NM2M));
                     } else {
-                        return;
+                        continue;
                     }
                     me.echoPos = [me.wdt*0.5*geo.normdeg180(me.bleppy[4][0])/60,-me.distPixels];
                     me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
@@ -2010,7 +2034,7 @@ var MFD_Device =
                         me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
                         me.echoPos[1] = cursor_pos[1]+(me.echoPos[1] - cursor_pos[1])*4;
                     } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
-                        return;
+                        continue;
                     }
                     me.color = math.pow(1-(me.elapsed - me.bleppy[0])/radar_system.apg68Radar.currentMode.timeToKeepBleps, 2.2);
                     me.root.blep[me.i].setTranslation(me.echoPos);
@@ -2033,14 +2057,26 @@ var MFD_Device =
                 }
             }
             me.sizeBleps = size(me.bleps);
-            if (contact["blue"] != 1 and me.sizeBleps and me.ii < me.root.maxT and contact.hadTrackInfo() and me.iff == 0) {
+            if (contact["blue"] != 1 and me.sizeBleps and me.ii < me.root.maxT and (contact.hadTrackInfo() or contact["blue"] == 2) and me.iff == 0 and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName) {
+                # Paint bleps with tracks
                 me.bleppy = me.bleps[me.sizeBleps-1];
-                if (me.bleppy[3] != nil and me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
+                if ((me.bleppy[3] != nil and me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.timeToKeepBleps) or contact["blue"] == 2) {
                     me.color = contact["blue"] == 2?colorCircle1:colorCircle2;
-                    me.rot = 22.5*math.round((me.bleppy[3]-radar_system.self.getHeading()-me.bleppy[4][0])/22.5);
+                    if (contact["blue"] == 2) {
+                        me.c_heading    = contact.getHeading();                  
+                        me.c_devheading = contact.getDeviationHeading();
+                        me.c_speed      = contact.getSpeed();
+                        me.c_alt        = contact.getAltitude();
+                    } else {
+                        me.c_heading    = me.bleppy[3];         
+                        me.c_devheading = me.bleppy[4][0];# if [3] is non-nil then this is never nil
+                        me.c_speed      = me.bleppy[5];
+                        me.c_alt        = me.bleppy[7];
+                    }
+                    me.rot = 22.5*math.round((me.c_heading-radar_system.self.getHeading()-me.c_devheading)/22.5);
                     me.root.blepTrianglePaths[me.ii].setRotation(me.rot*D2R);
                     me.root.blepTrianglePaths[me.ii].setColor(me.color);
-                    me.echoPos = [me.wdt*0.5*geo.normdeg180(me.bleppy[4][0])/60,-me.distPixels];
+                    me.echoPos = [me.wdt*0.5*geo.normdeg180(me.c_devheading)/60,-me.distPixels];
                     me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
                     if (me.close and exp) {
                         me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
@@ -2048,9 +2084,16 @@ var MFD_Device =
                     } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
                         return;
                     }
+                    if (contact["blue"] == 2 and me.iii < me.root.maxT) {
+                        me.root.lnkT[me.iii].setColor(me.color);
+                        me.root.lnkT[me.iii].setTranslation(me.echoPos[0],me.echoPos[1]-25);
+                        me.root.lnkT[me.iii].setText(""~contact.blueIndex);
+                        me.root.lnkT[me.iii].show();
+                        me.iii += 1;
+                    }
                     me.root.blepTriangle[me.ii].setTranslation(me.echoPos);
-                    if (me.bleppy[5] != nil and me.bleppy[5] > 0) {
-                        me.root.blepTriangleVelLine[me.ii].setScale(1,me.bleppy[5]*0.0045);
+                    if (me.c_speed != nil and me.c_speed > 0) {
+                        me.root.blepTriangleVelLine[me.ii].setScale(1,me.c_speed*0.0045);
                         me.root.blepTriangleVelLine[me.ii].setColor(me.color);
                         me.root.blepTriangleVel[me.ii].setRotation(me.rot*D2R);
                         me.root.blepTriangleVel[me.ii].update();
@@ -2058,8 +2101,8 @@ var MFD_Device =
                     } else {
                         me.root.blepTriangleVel[me.ii].hide();
                     }
-                    if (me.bleppy[7] != nil) {
-                        me.root.blepTriangleText[me.ii].setText(""~math.round(me.bleppy[7]*0.001));
+                    if (me.c_alt != nil) {
+                        me.root.blepTriangleText[me.ii].setText(""~math.round(me.c_alt*0.001));
                     } else {
                         me.root.blepTriangleText[me.ii].setText("");
                     }
@@ -2082,7 +2125,8 @@ var MFD_Device =
 
                     me.ii += 1;
                 }
-            } elsif (me.iff != 0 and contact["blue"] != 1 and contact.isVisible() and me.iiii < me.root.maxT and me.sizeBleps) {
+            } elsif (me.iff != 0 and contact["blue"] != 1 and contact.isVisible() and me.iiii < me.root.maxT and me.sizeBleps and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName) {
+                # Paint IFF symbols
                 me.bleppy = me.bleps[me.sizeBleps-1];
                 if (me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
                     me.echoPos = [me.wdt*0.5*geo.normdeg180(me.bleppy[4][0])/60,-me.distPixels];
@@ -2375,6 +2419,14 @@ var MFD_Device =
         };
     },
     
+
+#  ███████ ███    ███ ███████     ███████ ███████ ████████ ██    ██ ██████  
+#  ██      ████  ████ ██          ██      ██         ██    ██    ██ ██   ██ 
+#  ███████ ██ ████ ██ ███████     ███████ █████      ██    ██    ██ ██████  
+#       ██ ██  ██  ██      ██          ██ ██         ██    ██    ██ ██      
+#  ███████ ██      ██ ███████     ███████ ███████    ██     ██████  ██      
+#                                                                           
+#                                                                           
     setupSMS: func (svg) {
         svg.p_SMS = me.canvas.createGroup()
                 .set("z-index",0)
@@ -4129,14 +4181,11 @@ var MFD_Device =
                 if (radar_system.apg68Radar.enabled) {
                     foreach(contact; radar_system.apg68Radar.getActiveBleps()) {
                         if (contact["rando"] == me.rando) continue;
-                        
-                        me.cs = contact.get_Callsign();
-                        
+                                                
                         me.blue = 0;
                         me.blueIndex = -1;
 
                         me.paintBlep(contact);
-                        contact.rando = me.rando;
                     }
                 }
                 
@@ -4152,7 +4201,7 @@ var MFD_Device =
             if (noti.FrameCount == 3) me.up = !me.up;
         };
         me.p_HSD.paintBlep = func (contact) {
-            if (!contact.isVisible() and me.blue == 0) {
+            if (!contact.isVisible() and me.blue != 2) {
                 return;
             }
             me.desig = contact.equals(me.rdrprio);
@@ -4190,6 +4239,7 @@ var MFD_Device =
                 me.root.blepTrianglePaths[me.i].setRotation(me.rot);
                 me.root.blepTriangleVel[me.i].setRotation(me.rot);
                 me.root.blepTriangleVelLine[me.i].setScale(1,me.c_spd*0.0045);
+                me.root.blepTriangleVelLine[me.i].setColor(me.color);
                 me.lockAlt = sprintf("%02d", math.round(me.c_alt*0.001));
                 me.root.blepTriangleText[me.i].setText(me.lockAlt);
                 me.i += 1;

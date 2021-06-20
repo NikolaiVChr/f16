@@ -671,6 +671,13 @@ AIContact = {
 		return me.roll.getValue();
 	},
 
+	getAltitude: func {
+		if (me.alt == nil) {
+			return 0;
+		}
+		return me.alt.getValue();
+	},
+
 	getHeading: func {
 		if (me.heading == nil) {
 			return 0;

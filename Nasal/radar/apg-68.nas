@@ -161,7 +161,7 @@ DatalinkRadar = {
 		var dlnk = {parents: [DatalinkRadar, Radar]};
 		
 		dlnk.max_dist_nm = max_dist_nm;
-		
+		dlnk.index = 0;
 		dlnk.vector_aicontacts = [];
 		dlnk.vector_aicontacts_for = [];
 		dlnk.timer          = maketimer(rate, dlnk, func dlnk.scan());
@@ -173,6 +173,7 @@ DatalinkRadar = {
 	        	#printf("NoseRadar recv: %s", notification.NotificationType);
 	            if (me.radar.enabled == 1) {
 	    		    me.radar.vector_aicontacts = notification.vector;
+	    		    me.radar.index = 0;
 	    	    }
 	            return emesary.Transmitter.ReceiptStatus_OK;
 	        }
@@ -187,34 +188,59 @@ DatalinkRadar = {
 
 	scan: func () {
 		if (!me.enabled) return;
-		me.vector_aicontacts_for = [];
-		foreach(contact ; me.vector_aicontacts) {
-			if (contact.getRangeDirect()*M2NM > me.max_dist_nm) continue;
-			me.cs = contact.get_Callsign();
-
-            me.lnk = datalink.get_data(me.cs);
-            if (me.lnk != nil and me.lnk.on_link() == 1) {
-                me.blue = 1;
-                me.blueIndex = me.lnk.index()+1;
-            } elsif (me.cs == getprop("link16/wingman-4")) {
-                me.blue = 1;
-                me.blueIndex = 2;
-            } else {
-            	me.blue = 0;
-                me.blueIndex = -1;
-            }
-            if (!me.blue and me.lnk != nil and me.lnk.tracked() == 1) {
-                me.blue = 2;
-                me.blueIndex = me.lnk.tracked_by_index()+1;
-            }
-
-            if (me.blue ==1 or me.blue ==2) {
-            	contact.blue = me.blue;
-            	contact.blueIndex = me.blueIndex;
-				append(me.vector_aicontacts_for, contact);
-			}
+		
+		#this loop is really fast. But we only check 1 contact per call
+		if (me.index >= size(me.vector_aicontacts)) {
+			# will happen if there is no contacts
+			me.index = 0;
+			return;
 		}
-		emesary.GlobalTransmitter.NotifyAll(me.DatalinkNotification.updateV(me.vector_aicontacts_for));
+		me.contact = me.vector_aicontacts[me.index];
+		me.wasBlue = me.contact["blue"];
+		if (me.wasBlue == nil) me.wasBlue = 0;
+
+		if (me.contact.getRangeDirect()*M2NM > me.max_dist_nm) {me.index += 1;return;}
+		me.cs = me.contact.get_Callsign();
+
+        me.lnk = datalink.get_data(me.cs);
+        if (me.lnk != nil and me.lnk.on_link() == 1) {
+            me.blue = 1;
+            me.blueIndex = me.lnk.index()+1;
+        } elsif (me.cs == getprop("link16/wingman-4")) {
+            me.blue = 1;
+            me.blueIndex = 2;
+        } else {
+        	me.blue = 0;
+            me.blueIndex = -1;
+        }
+        if (!me.blue and me.lnk != nil and me.lnk.tracked() == 1) {
+            me.blue = 2;
+            me.blueIndex = me.lnk.tracked_by_index()+1;
+        }
+
+        if (me.blue ==1 or me.blue ==2) {
+        	me.contact.blue = me.blue;
+        	me.contact.blueIndex = me.blueIndex;
+			if (!apg68Radar.containsVectorContact(me.vector_aicontacts_for, me.contact)) {
+				append(me.vector_aicontacts_for, me.contact);
+				emesary.GlobalTransmitter.NotifyAll(me.DatalinkNotification.updateV(me.vector_aicontacts_for));
+			}
+		} elsif (me.wasBlue > 0) {
+			me.contact.blue = me.blue;
+			me.new_vector_aicontacts_for = [];
+			foreach (me.c ; me.vector_aicontacts_for) {
+				if (!me.c.equals(me.contact)) {
+					append(me.new_vector_aicontacts_for, me.contact);
+				}
+			}
+			me.vector_aicontacts_for = me.new_vector_aicontacts_for;
+		}
+		me.index += 1;
+        if (me.index > size(me.vector_aicontacts)-1) {
+        	me.index = 0;
+        	emesary.GlobalTransmitter.NotifyAll(me.DatalinkNotification.updateV(me.vector_aicontacts_for));
+        } else {
+        }
 	},
 	del: func {
         emesary.GlobalTransmitter.DeRegister(me.DatalinkRadarRecipient);
@@ -686,7 +712,7 @@ var F16VSMode = {
 	discSpeed_dps: 45,
 	discSpeed_alert_dps: 45,
 	discSpeed_confirm_dps: 100,
-	maxScanIntervalForVelocity: 6,
+	maxScanIntervalForVelocity: 12,
 	rcsFactor: 1.15,
 	new: func (subMode, radar = nil) {
 		var mode = {parents: [F16VSMode, F16LRSMode, F16RWSMode, RadarMode]};
@@ -697,16 +723,17 @@ var F16VSMode = {
 		return mode;
 	},
 	frameCompleted: func {
+		if (me.lastFrameStart != -1 and me.discSpeed_dps == me.discSpeed_alert_dps) {
+			# Its max around 11.5 secs for alert scan
+			me.lastFrameDuration = me.radar.elapsed - me.lastFrameStart;
+			me.timeToKeepBleps = me.radar.targetHistory*me.lastFrameDuration;
+		}
+		me.lastFrameStart = me.radar.elapsed;
 		if (me.discSpeed_dps == me.discSpeed_alert_dps) {
 			me.discSpeed_dps = me.discSpeed_confirm_dps;
 		} elsif (me.discSpeed_dps == me.discSpeed_confirm_dps) {
 			me.discSpeed_dps = me.discSpeed_alert_dps;
 		}
-		if (me.lastFrameStart != -1) {
-			me.lastFrameDuration = me.radar.elapsed - me.lastFrameStart;
-			me.timeToKeepBleps = me.radar.targetHistory*me.lastFrameDuration;
-		}
-		me.lastFrameStart = me.radar.elapsed;
 	},
 	designate: func (designate_contact) {
 		if (designate_contact == nil) return;
@@ -742,12 +769,15 @@ var F16VSMode = {
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
 		#print(me.currentTracked,"   ",(me.radar.elapsed - contact.blepTime));
-		if (((me.radar.elapsed - contact.getLastBlepTime()) < me.maxScanIntervalForVelocity)) {
+		if (((me.radar.elapsed - contact.getLastBlepTime()) < me.maxScanIntervalForVelocity) and contact.getLastClosureRate() > 0) {
 			#print("VELOCITY");
 			return [0,0,1,1,1,0];
 		}
 		#print("  EMPTY");
-		return [0,0,0,0,0,0];
+		return [0,0,0,0,1,0];
+	},
+	getCursorAltitudeLimits: func {
+		return nil;
 	},
 };
 
@@ -899,6 +929,10 @@ var F16TWSMode = {
 	decreaseRange: func {
 		if (me.priorityTarget != nil) return 0;
 		me._decreaseRange();
+	},
+	showRangeOptions: func {
+		if (me.priorityTarget != nil) return 0;
+		return 1;
 	},
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
@@ -1094,6 +1128,9 @@ var F16RWSSAMMode = {
 			return [1,1,1,1,1,1];
 		}
 		return [1,0,1,0,0,1];
+	},
+	showRangeOptions: func {
+		return 0;
 	},
 };
 
@@ -1776,8 +1813,9 @@ var APG68 = {
 	loopMedium: func {
 		if (me.enabled) {
 			me.focus = me.getPriorityTarget();
-			if (me.focus != nil and me.currentMode["painter"] == 1 and me.focus.callsign != nil) {
-				sttSend.setValue(left(md5(me.focus.callsign), 4));
+			if (me.focus != nil and me.focus.callsign != "") {
+				if (me.currentMode["painter"] == 1) sttSend.setValue(left(md5(me.focus.callsign), 4));
+				else sttSend.setValue("");
 				if (steerpoints.sending == nil) {
 			        datalink.send_data({"contacts":[{"callsign":me.focus.callsign,"iff":0}]});
 			    }
@@ -1956,7 +1994,7 @@ var baser = AIToNasal.new();
 var partitioner = NoseRadar.new();
 var omni = OmniRadar.new(1.0, 150, 55);
 var terrain = TerrainChecker.new(0.10, 1, 60);# 0.05 or 0.10 is fine here
-var dlnkRadar = DatalinkRadar.new(3, 80);# 3 seconds because cannot be too slow for DLINK targets
+var dlnkRadar = DatalinkRadar.new(0.03, 90);# 3 seconds because cannot be too slow for DLINK targets
 
 # start specific radar system
 var rwsMode = F16RWSMode.new(F16RWSSAMMode.new(F16MultiSTTMode.new()));
@@ -1987,7 +2025,8 @@ var getCompleteList = func {
 #   Clicking A-G should set GM
 #   nil exception in TWS!!!
 #   HSD radar arc CW vs. CCW
-#   lockinfo is magnetic heading
+#   VSR switch speed at each bar
+#   DLINK target does not show up on HSD even though in cone, visible and range.
 #
 # TODO:
 #   GM tilt angles
