@@ -60,306 +60,7 @@ if (getprop("sim/variant-id") == 2) {
 
 var slew_c = 0;
 
-var MFD_Station =
-{
-    new : func (svg, ident)
-    {
-        var obj = {parents : [MFD_Station] };
 
-        obj.status = svg.getElementById("PACS_L_"~ident);
-        if (obj.status == nil)
-            print("Failed to load PACS_L_"~ident);
-
-        obj.label = svg.getElementById("PACS_V_"~ident);
-        if (obj.label == nil)
-            print("Failed to load PACS_V_"~ident);
-
-        obj.selected = svg.getElementById("PACS_R_"~ident);
-        if (obj.selected == nil)
-            print("Failed to load PACS_R_"~ident);
-
-        obj.selected1 = svg.getElementById("PACS_R1_"~ident);
-        if (obj.selected1 == nil)
-            print("Failed to load PACS_R1_"~ident);
-
-        obj.prop = "payload/weight["~ident~"]";
-        obj.ident = ident;
-
-        obj.menuLayer = svg.getElementById("layer2");
-        obj.menuLayer.setColor(colorText1);
-
-#        setlistener(obj.prop~"/selected", func(v)
-#                    {
-    #                    obj.update();
-#                    });
-        setlistener("sim/model/f16/controls/armament/weapons-updated", func
-                    {
-                        obj.update();
-                    });
-
-        return obj;
-    },
-
-    update: func(notification)
-    {
-        var weapon_mode = notification.weapon_mode;
-        var na = getprop(me.prop~"/selected");
-        var sel = 0;
-        var mode = "STBY";
-        var sel_node = "sim/model/f16/systems/external-loads/station["~me.ident~"]/selected";
-        var master_arm=getprop("sim/model/f16/controls/armament/master-arm-switch");
-
-        if (na != nil and na != "none")
-        {
-            if (na == "AIM-9")
-            {
-                na = "9L";
-                if (weapon_mode == 1)
-                {
-                    sel = getprop(sel_node);
-                    if (sel and master_arm == 1)
-                        mode = "RDY";
-                }
-                else mode = "SRM";
-            }
-            elsif (na == "AIM-120") 
-            {
-                na = "120A";
-                if (weapon_mode == 2)
-                {
-                    sel = getprop(sel_node);
-                    if (sel and master_arm == 1)
-                        mode = "RDY";
-                }
-                else mode = "MRM";
-            }
-            elsif (na == "AIM-7") 
-            {
-                na = "7M";
-                if (weapon_mode == 2)
-                {
-                    sel = getprop(sel_node);
-                    if (sel and master_arm == 1)
-                        mode = "RDY";
-                }
-                else mode = "MRM";
-            }
-            me.status.setText(mode);
-            me.label.setText(na);
-
-            me.selected1.setVisible(sel);
-            if (mode == "RDY")
-            {
-                me.selected.setVisible(sel);
-                me.status.setColor(colorCircle3);
-            }
-            else
-            {
-                me.selected.setVisible(0);
-                me.status.setColor(colorText1);
-            }
-        }
-        else
-        {
-            me.status.setText("");
-            me.label.setText("");
-            me.selected.setVisible(0);
-            me.selected1.setVisible(0);
-        }
-    },
-};
-# aircraft.f16_mfd.MFD.canvas._node.setValues({
-#                            "name": "F-15 HUD",
-#                            "size": [1024,1024], 
-#                            "view": [572,512],                       
-#                            "mipmapping": 1  
-#   });
-#         aircraft.f16_mfd.MFD.PFDsvg.setTranslation (0.0, 17.0);
-var PFD_VSD =
-{
-#
-# Instantiate parameters:
-# 1. pfd_device (instance of PFD_Device)
-# 2. instrument display ident (e.g. mfd-map, or mfd-map-left mfd-map-right for multiple displays)
-#    (this is used to map to the property tree)
-# 3. layer_id: main layer  in the SVG
-# 4. nd_group_ident : group (usually within the main layer) to place the NavDisplay
-# 5. switches - used to connect the property tree to the nav display. see the canvas nav display
-#    documentation
-    new : func (pfd_device, title, instrument_ident, layer_id)
-    {
-        var obj = pfd_device.addPage(title, layer_id);
-
-        obj.pfd_device = pfd_device;
-
-        obj.window1 = obj.svg.getElementById("window-1");
-        obj.window1.setFont("condensed.txf").setFontSize(12, 1.2);
-        obj.window2 = obj.svg.getElementById("window-2");
-        obj.window2.setFont("condensed.txf").setFontSize(12, 1.2);
-        obj.window3 = obj.svg.getElementById("window-3");
-        obj.window3.setFont("condensed.txf").setFontSize(12, 1.2);
-        obj.window4 = obj.svg.getElementById("window-4");
-        obj.window4.setFont("condensed.txf").setFontSize(12, 1.2);
-        obj.acue = obj.svg.getElementById("ACUE");
-        obj.acue.setFont("condensed.txf").setFontSize(12, 1.2);
-        obj.acue.setText ("A");
-        obj.acue.setVisible(0);
-        obj.ecue = obj.svg.getElementById("ECUE");
-        obj.ecue.setFont("condensed.txf").setFontSize(12, 1.2);
-        obj.ecue.setText ("E");
-        obj.ecue.setVisible(0);
-        obj.morhcue = obj.svg.getElementById("MORHCUE");
-        obj.morhcue.setFont("condensed.txf").setFontSize(12, 1.2);
-        obj.morhcue.setText ("mh");
-        obj.morhcue.setVisible(0);
-        obj.max_symbols = 10;
-        obj.tgt_symbols =  setsize([], obj.max_symbols);
-        obj.horizon_line = obj.svg.getElementById("horizon_line");
-        obj.nofire_cross =  obj.svg.getElementById("nofire_cross");
-        obj.target_circle = obj.svg.getElementById("target_circle");
-        for (var i = 0; i < obj.max_symbols; i += 1)
-        {
-            var name = "target_friendly_"~i;
-            var tgt = obj.svg.getElementById(name);
-            if (tgt != nil)
-            {
-                obj.tgt_symbols[i] = tgt;
-                tgt.setVisible(0);
-            }
-        }
-
-        obj.vsd_on = 1;
-        #
-        # Method overrides
-        #-----------------------------------------------
-        # Called when the page goes on display - need to delay initialization of the NavDisplay until later (it fails
-        # if done too early).
-        # NOTE: This causes a display "wobble" the first time on display as resizing happens. I've seen similar things
-        #       happen on real avionics (when switched on) so it's not necessarily unrealistic -)
-        obj.ondisplay = func
-        {
-        };
-
-        obj.update = func(notification)
-        {
-        if(!me.vsd_on or notification.FrameCount == 0  or notification.FrameCount == 2)
-            return;
-
-        var pitch = notification.pitch;
-        var roll = notification.roll;
-        var alt = notification.altitude_ft;
-        var roll_rad = -roll*3.14159/180.0;
-        var heading = notification.heading;
-        var pitch_offset = 12;
-        var pitch_factor = 1.98;
-
-
-        me.horizon_line.setTranslation (0.0, pitch * pitch_factor+pitch_offset);                                           
-        me.horizon_line.setRotation (roll_rad);
-
-        if (notification.target_display)
-        {   
-#       window3.setText (sprintf("%s: %3.1f", getprop("sim/model/f15/instrumentation/radar-awg-9/hud/target"), getprop("sim/model/f15/instrumentation/radar-awg-9/hud/distance")));
-            me.nofire_cross.setVisible(1);
-            me.target_circle.setVisible(1);
-        }
-        else
-        {
-#       window3.setText ("");
-            me.nofire_cross.setVisible(0);
-            me.target_circle.setVisible(0);
-        }
-        var w1 = "     VS BST   MEM  ";
-
-        var target_idx=1;
-        me.window4.setText (sprintf("%3d", notification.radar_range));
-        var w3_22="";
-        var w3_7 = sprintf("T %d",notification.vc_kts);
-        var w2 = "";
-        var designated = 0;
-        var has_seen_active = 0;
-        foreach( u; awg_9.tgts_list ) 
-        {
-            designated = 0;
-            if (u.get_display() == 0) {
-                continue;
-            }
-            var callsign = "XX";
-            if (u.Callsign != nil)
-                callsign = u.Callsign.getValue();
-            var model = "XX";
-            if (u.ModelType != "")
-                model = u.ModelType;
-            if (target_idx < me.max_symbols or has_seen_active == 0)
-            {
-                if (target_idx < me.max_symbols)
-                    tgt = me.tgt_symbols[target_idx];
-                else
-                    tgt = me.tgt_symbols[0];
-                if (tgt != nil)
-                {
-#                    if (u.airbone and !designated)
-#                    if (target_idx == 0)
-#                    if (awg_9.nearest_u != nil and awg_9.nearest_u.Callsign != nil and u.Callsign.getValue() == awg_9.nearest_u.Callsign.getValue())
-                    if (awg_9.active_u != nil and awg_9.active_u.Callsign != nil and u.Callsign.getValue() == awg_9.active_u.Callsign.getValue())
-#if (u == awg_9.active_u)
-                    {
-                        has_seen_active = 1;
-                        designated = 1;
-                        #tgt.setVisible(0);
-                        tgt = me.tgt_symbols[0];
-#                    w2 = sprintf("%-4d", u.get_closure_rate());
-#                    w3_22 = sprintf("%3d-%1.1f %.5s %.4s",u.get_bearing(), u.get_range(), callsign, model);
-#                    var aspect = u.get_reciprocal_bearing()/10;
-#                   w1 = sprintf("%4d %2d%s %2d %d", u.get_TAS(), aspect, aspect < 180 ? "r" : "l", u.get_heading(), u.get_altitude());
-                    } elsif (target_idx >= me.max_symbols) {
-                        continue;
-                    }
-                    #tgt.setVisible(u.get_display());
-                    var xc = u.get_deviation(heading);
-                    var yc = -u.get_total_elevation(pitch);
-                    tgt.setVisible(1);
-                    tgt.setTranslation (xc*1.55, yc*1.85);
-                }
-            }
-            if (!designated)
-                target_idx = target_idx+1;
-        }
-        if (awg_9.active_u != nil and awg_9.active_u.get_display()==1)
-        {
-            if (awg_9.active_u.Callsign != nil)
-                callsign = awg_9.active_u.Callsign.getValue();
-
-            var model = "XX";
-            if (awg_9.active_u.ModelType != "")
-                model = awg_9.active_u.ModelType;
-
-            w2 = sprintf("%-4d", awg_9.active_u.get_closure_rate());
-            w3_22 = sprintf("%3d-%1.1f %.5s %.4s",awg_9.active_u.get_bearing(), awg_9.active_u.get_range(), callsign, model);
-            var aspect = awg_9.active_u.get_reciprocal_bearing()/10;
-            w1 = sprintf("%4d %2d%s %2d %d", awg_9.active_u.get_TAS(), aspect, aspect < 180 ? "r" : "l", awg_9.active_u.get_heading(), awg_9.active_u.get_altitude());
-        }
-        me.window1.setText(w1);
-        me.window2.setText(w2);
-#    window3.setText(sprintf("G%3.0f %3s-%4s%s %s %s",
-        me.window3.setText(sprintf("G%3.0f %s %s",
-                                   notification.groundspeed_kt,
-                                   w3_7 , 
-                                   w3_22));
-        for(var nv = target_idx; nv < me.max_symbols;nv += 1)
-        {
-            tgt = me.tgt_symbols[nv];
-            if (tgt != nil)
-            {
-                tgt.setVisible(0);
-            }
-        }
-        if(!has_seen_active)
-            me.tgt_symbols[0].hide();
-        };        
-        return obj;
-    },
-};
 
 var MFD_Device =
 {
@@ -448,6 +149,14 @@ var MFD_Device =
         return el;
     },
 
+
+#  ██    ██  ██████  ██ ██████  
+#  ██    ██ ██    ██ ██ ██   ██ 
+#  ██    ██ ██    ██ ██ ██   ██ 
+#   ██  ██  ██    ██ ██ ██   ██ 
+#    ████    ██████  ██ ██████  
+#                               
+#                               
     setupVoid: func (svg) {
         svg.p_VOID = me.canvas.createGroup()
             .set("z-index",0);
@@ -472,6 +181,14 @@ var MFD_Device =
         me.p_VOID.my = me;
     },
 
+
+#   ██████  ██████  ██ ██████  
+#  ██       ██   ██ ██ ██   ██ 
+#  ██   ███ ██████  ██ ██   ██ 
+#  ██    ██ ██   ██ ██ ██   ██ 
+#   ██████  ██   ██ ██ ██████  
+#                              
+#                              
     setupGrid: func (svg) {
         svg.p_GRID = me.canvas.createGroup()
             .set("z-index",0);
@@ -527,6 +244,14 @@ var MFD_Device =
         me.p_GRID.my = me;
     },
 
+
+#   ██████ ██    ██ ██████  ███████ 
+#  ██      ██    ██ ██   ██ ██      
+#  ██      ██    ██ ██████  █████   
+#  ██      ██    ██ ██   ██ ██      
+#   ██████  ██████  ██████  ███████ 
+#                                   
+#                                   
     setupCube: func (svg) {
         svg.p_CUBE = me.canvas.createGroup()
             .set("z-index",0)
@@ -1563,7 +1288,7 @@ var MFD_Device =
 
             me.randoo = rand();
 
-            if (getprop("instrumentation/datalink/power") and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName and radar_system.apg68Radar.currentMode["painter"] != 1) {
+            if (radar_system.datalink_power.getBoolValue() and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName and radar_system.apg68Radar.currentMode["painter"] != 1) {
                 foreach(contact; vector_aicontacts_links) {
                     if (contact["blue"] != 1) continue;
                     me.paintDL(contact);
@@ -1578,7 +1303,7 @@ var MFD_Device =
                     contact.randoo = me.randoo;
                 }
             }
-            if (getprop("instrumentation/datalink/power") and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName and radar_system.apg68Radar.currentMode["painter"] != 1) {
+            if (radar_system.datalink_power.getBoolValue() and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName and radar_system.apg68Radar.currentMode["painter"] != 1) {
                 foreach(contact; vector_aicontacts_links) {
                     me.paintRdr(contact);
                     contact.randoo = me.randoo;
@@ -4170,7 +3895,7 @@ var MFD_Device =
                 
                 me.rando = rand();
 
-                if (getprop("instrumentation/datalink/power")) {
+                if (radar_system.datalink_power.getBoolValue()) {
                     foreach(contact; vector_aicontacts_links) {
                         me.blue = contact.blue;
                         me.blueIndex = contact.blueIndex;
@@ -4272,6 +3997,14 @@ var MFD_Device =
     },
 
 
+
+#   █████  ██████  ██████      ██████   █████   ██████  ███████ ███████ 
+#  ██   ██ ██   ██ ██   ██     ██   ██ ██   ██ ██       ██      ██      
+#  ███████ ██   ██ ██   ██     ██████  ███████ ██   ███ █████   ███████ 
+#  ██   ██ ██   ██ ██   ██     ██      ██   ██ ██    ██ ██           ██ 
+#  ██   ██ ██████  ██████      ██      ██   ██  ██████  ███████ ███████ 
+#                                                                       
+#                                                                       
     addPages : func
     {   
         me.addVoid();
@@ -4284,97 +4017,7 @@ var MFD_Device =
         me.addList();
         me.addRList();
         me.addRMList();
-        me.p1_1 = me.PFD.addPage("Aircraft Menu", "p1_1");
-
-        me.p1_1.update = func(notification)
-        {
-            var sec = getprop("instrumentation/clock/indicated-sec");
-            me.page1_1.time.setText(getprop("sim/time/gmt-string")~"Z");
-            var cdt = getprop("sim/time/gmt");
-
-            if (cdt != nil)
-                me.page1_1.date.setText(substr(cdt,5,2)~"/"~substr(cdt,8,2)~"/"~substr(cdt,2,2)~"Z");
-        };
-
-        me.p1_1 = me.PFD.addPage("Aircraft Menu", "p1_1");
-        me.p1_2 = me.PFD.addPage("Top Level PACS Menu", "p1_2");
-        me.p1_3 = me.PFD.addPage("PACS Menu", "p1_3");
-        me.p_VSD = PFD_VSD.new(me.PFD,"VSD", "VSD0", "p_VSD");
-
-        me.p1_3.S0 = MFD_Station.new(me.PFDsvg, 0);
-        #1 droptank
-        me.p1_3.S2 = MFD_Station.new(me.PFDsvg, 2);
-        me.p1_3.S3 = MFD_Station.new(me.PFDsvg, 3);
-        me.p1_3.S4 = MFD_Station.new(me.PFDsvg, 4);
-        #5 droptank
-        me.p1_3.S6 = MFD_Station.new(me.PFDsvg, 6);
-        me.p1_3.S7 = MFD_Station.new(me.PFDsvg, 7);
-        me.p1_3.S8 = MFD_Station.new(me.PFDsvg, 8);
-        #9 droptank
-        me.p1_3.S10 = MFD_Station.new(me.PFDsvg, 10);
-
-        #if (me.model_element == "MFDimage1") {
-        #    me.pjitds_1 =  PFD_NavDisplay.new(me.PFD,"Situation", "mfd-sit-1", "pjitds_1", "jtids_main");
-        #} else {
-        #    me.pjitds_1 =  PFD_NavDisplay.new(me.PFD,"Situation", "mfd-sit-2", "pjitds_1", "jtids_main");
-        #}
-        # use the radar range as the ND range.
-
-        me.p_spin_recovery = me.PFD.addPage("Spin recovery", "p_spin_recovery");
-        me.p_spin_recovery.cur_page = nil;
-
-        me.p1_1.date = me.PFDsvg.getElementById("p1_1_date");
-        me.p1_1.time = me.PFDsvg.getElementById("p1_1_time");
-
-        me.p_spin_recovery.p_spin_cas = me.PFDsvg.getElementById("p_spin_cas");
-        me.p_spin_recovery.p_spin_alt = me.PFDsvg.getElementById("p_spin_alt");
-        me.p_spin_recovery.p_spin_alpha = me.PFDsvg.getElementById("p_spin_alpha");
-        me.p_spin_recovery.p_spin_stick_left  = me.PFDsvg.getElementById("p_spin_stick_left");
-        me.p_spin_recovery.p_spin_stick_right  = me.PFDsvg.getElementById("p_spin_stick_right");
-        me.p_spin_recovery.update = func
-        {
-            me.p_spin_alpha.setText(sprintf("%d", getprop ("orientation/alpha-indicated-deg")));
-            me.p_spin_alt.setText(sprintf("%5d", getprop ("instrumentation/altimeter/indicated-altitude-ft")));
-            me.p_spin_cas.setText(sprintf("%3d", getprop ("instrumentation/airspeed-indicator/indicated-speed-kt")));
-
-            if (math.abs(getprop("fdm/jsbsim/velocities/r-rad_sec")) > 0.52631578947368421052631578947368 
-                or math.abs(getprop("fdm/jsbsim/velocities/p-rad_sec")) > 0.022)
-            {
-                me.p_spin_stick_left.setVisible(1);
-                me.p_spin_stick_right.setVisible(0);
-            }
-            else
-            {
-                me.p_spin_stick_left.setVisible(0);
-                me.p_spin_stick_right.setVisible(1);
-            }
-        };
-
-        #
-        # Page 1 is the time display
-        me.p1_1.update = func(notification)
-        {
-            me.time.setText(notification.gmt_string~"Z");
-            var cdt = notification.gmt;
-
-            if (cdt != nil)
-                me.date.setText(substr(cdt,5,2)~"/"~substr(cdt,8,2)~"/"~substr(cdt,2,2)~"Z");
-        };
-
-        #
-        # armament page gun rounds is implemented a little differently as the menu item (1) changes to show
-        # the contents of the magazine.
-        me.p1_3.gun_rounds = me.p1_3.addMenuItem(1, sprintf("HIGH\n%dM",getprop("sim/model/f16/systems/gun/rounds")), me.p1_3);
-
-        setlistener("sim/model/f16/systems/gun/rounds", func(v)
-                    {
-                        if (v != nil) {
-                            me.p1_3.gun_rounds.title = sprintf("HIGH\n%dM",v.getValue());
-                            me.PFD.updateMenus();
-                        }
-                    }
-            );
-        me.PFD.selectPage(me.p1_1);
+       
         me.mfd_button_pushed = 0;
         # Connect the buttons - using the provided model index to get the right ones from the model binding
         setlistener("controls/MFD["~me.model_index~"]/button-pressed", func(v)
@@ -4409,31 +4052,7 @@ var MFD_Device =
                     }
             );
 
-#
-# Connect the radar range to the nav display range. 
-        var range_val = getprop("instrumentation/radar/radar2-range");
-        if (range_val == nil)
-          range_val=50;
-
-        setprop("instrumentation/mfd-sit/inputs/range-nm", range_val);
-        setlistener("instrumentation/radar/radar2-range", 
-            func(v)
-            {
-                setprop("instrumentation/mfd-sit/inputs/range-nm", v.getValue());
-            });
-#
-# Mode switch is day/night/off. we just do on/off
-        setlistener("controls/MFD["~me.model_index~"]/mode", func(v)
-            {
-                if (v != nil)
-                {
-                    me.PFD.mfd_mode = v.getValue();
-#    if (!mfd_mode)
-#        me.MFDcanvas.setVisible(0);
-#    else
-#        mr.MFDcanvas.setVisible(1);
-                }
-            });
+        
 
         me.mfd_button_pushed = 0;
         me.setupMenus();
@@ -4500,6 +4119,14 @@ var MFD_Device =
         me.resetColor(curPage);
     },
 
+
+#  ███    ███ ███████ ███    ██ ██    ██ ███████ 
+#  ████  ████ ██      ████   ██ ██    ██ ██      
+#  ██ ████ ██ █████   ██ ██  ██ ██    ██ ███████ 
+#  ██  ██  ██ ██      ██  ██ ██ ██    ██      ██ 
+#  ██      ██ ███████ ██   ████  ██████  ███████ 
+#                                                
+#                                                
     # Add the menus to each page. 
     setupMenus : func
     {
@@ -4516,15 +4143,6 @@ var MFD_Device =
 #  VSD HSD SMS SIT
 
         me.mfd_spin_reset_time = 0;
-
-        #me.p1_1.addMenuItem(0, "ARMT", me.p1_2);
-#        me.p1_1.addMenuItem(1, "VSD", me.p_VSD);
-#        me.p1_1.addMenuItem(2, "SIT", me.pjitds_1);
-        #me.p1_1.addMenuItem(3, "WPN", me.p1_2);
-        #me.p1_1.addMenuItem(4, "DTM", me.p1_2);
-#        me.p1_1.addMenuItem(10, "FCR", me.p_RDR);
-#        me.p1_1.addMenuItem(11, "SMS", me.p_SMS);
-#        me.p1_1.addMenuItem(12, "HSD", me.p_HSD);
 
         #me.p_RDR.addMenuItem(18, "SIT", me.pjitds_1);
         me.p_RDR.addMenuItem(13, "CNTL", me.rm_LIST); #selectionColored
@@ -4594,46 +4212,6 @@ var MFD_Device =
         me.rm_LIST.addMenuItem(13, "CNTL", me.p_RDR);
 
 
-#        me.p_SMS.addMenuItem(16, "TIM", me.p1_1);
-
-#        me.p1_2.addMenuItem(0, "VSD", me.p_VSD);
-        #me.p1_2.addMenuItem(1, "A/A", me.p1_3);
-        #me.p1_2.addMenuItem(2, "A/G", me.p1_3);
-        #me.p1_2.addMenuItem(3, "CBT JETT", me.p1_3);
-        #me.p1_2.addMenuItem(4, "WPN LOAD", me.p1_3);
-#        me.p1_2.addMenuItem(9, "M", me.p1_1);
-#        me.p1_2.addMenuItem(10, "FCR", me.p_RDR);
-#        me.p1_2.addMenuItem(12, "HSD", me.p_HSD);
-
-
- #       me.p1_3.addMenuItem(2, "SIT", me.pjitds_1);
-        #me.p1_3.addMenuItem(3, "A/G", me.p1_3);
-        #me.p1_3.addMenuItem(4, "2/2", me.p1_3);
-        #me.p1_3.addMenuItem(8, "TM\nPWR", me.p1_3);
-#        me.p1_3.addMenuItem(9, "M", me.p1_1);
-        #me.p1_3.addMenuItem(10, "PYLON", me.p1_3);
-        #me.p1_3.addMenuItem(12, "FUEL", me.p1_3);
-        #me.p1_3.addMenuItem(14, "PYLON", me.p1_3);
-        #me.p1_3.addMenuItem(15, "MODE S", me.p1_3);
- #       me.p1_3.addMenuItem(10, "FCR", me.p_RDR);
- #       me.p1_3.addMenuItem(12, "HSD", me.p_HSD);
-
-#        me.pjitds_1.addMenuItem(9, "M", me.p1_1);
-        #me.pjitds_1.addMenuItem(0, "ARMT", me.p1_2);
-        #me.pjitds_1.addMenuItem(15, "VSD", me.p_VSD);
-        #me.pjitds_1.addMenuItem(10, "FCR", me.p_RDR);
-        #me.pjitds_1.addMenuItem(16, "HSD", me.p_HSD);
-        #me.pjitds_1.addMenuItem(17, "SMS", me.p_SMS);
-        #me.pjitds_1.addMenuItem(19, "TGP", nil);
-
-        #me.p_VSD.addMenuItem(0, "ARMT", me.p1_2);
-        #me.p_VSD.addMenuItem(18, "SIT", me.pjitds_1);
-#        me.p_VSD.addMenuItem(4, "M", me.p1_1);
-#        me.p_VSD.addMenuItem(9, "M", me.p1_1);
-        #me.p_VSD.addMenuItem(10, "FCR", me.p_RDR);
-        #me.p_VSD.addMenuItem(17, "SMS", me.p_SMS);
-        #me.p_VSD.addMenuItem(16, "HSD", me.p_HSD);
-        #me.p_VSD.addMenuItem(19, "TGP", nil);
         
         me.setFontSizeMFDEdgeButton(0, 18);
         me.setFontSizeMFDEdgeButton(1, 18);
