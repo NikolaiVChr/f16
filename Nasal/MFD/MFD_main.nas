@@ -683,65 +683,8 @@ var MFD_Device =
                     .setStrokeLineWidth(3)
                     .set("z-index",1)
                     .setColor(colorText1);
-        svg.az = svg.p_RDR.createChild("text")
-                .setTranslation(-276*0.775, -482*0.5+10)
-                .setText("A4")
-                .setAlignment("left-center")
-                .setColor(colorText1)
-                .set("z-index",1)
-                .setFontSize(20, 1.0);
-        svg.sp = svg.p_RDR.createChild("text")
-                .setTranslation(276*0.775, -482*0.5+10)
-                .setText("S\nP")
-                .setAlignment("right-center")
-                .setColor(colorText1)
-                .set("z-index",1)
-                .setFontSize(20, 1.0);
-        svg.cz = svg.p_RDR.createChild("text")
-                .setTranslation(276*0.775, -482*0.5+55+10)
-                .setText("C\nZ")
-                .setAlignment("right-center")
-                .setColor(colorText1)
-                .set("z-index",1)
-                .setFontSize(20, 1.0);
-        svg.hd = svg.p_RDR.createChild("text")
-                .setTranslation(276*0.775, -482*0.5+125+10)
-                .setText("H\nD")
-                .setAlignment("right-center")
-                .setColor(colorText1)
-                .set("z-index",1)
-                .setFontSize(20, 1.0);
-        svg.bars = svg.p_RDR.createChild("text")
-                .setTranslation(-276*0.775, -482*0.5+75)
-                .setText("8B")
-                .setAlignment("left-center")
-                .setColor(colorText1)
-                .set("z-index",1)
-                .setFontSize(20, 1.0);
-        svg.mod = svg.p_RDR.createChild("text")
-                .setTranslation(276*0.795*-0.71, -482*0.5-215)
-                .setText("CRM")
-                .setAlignment("top-center")
-                .setColor(colorText1)
-                .set("z-index",20000)
-                .setFontSize(20, 1.0);
-        svg.M  = svg.p_RDR.createChild("text")
-                .setTranslation(-276*0.795+10, -482*0.5+125+10)
-                .setText("M")
-                .setAlignment("left-center")
-                .setColor(colorText1)
-                .set("z-index",2)
-                .setFontSize(20, 1.0);
-        svg.modBox = svg.p_RDR.createChild("path")
-                .setTranslation(-276*0.795, -482*0.5+125)
-                .moveTo(5,0)
-                .horiz(35)
-                .vert(20)
-                .horiz(-35)
-                .vert(-20)
-                .setColorFill(colorText1)                
-                .setColor(colorText1)
-                .set("z-index",1);
+        
+        
         svg.ant_bottom = svg.p_RDR.createChild("path")
                     .moveTo(-276*0.795,-25)
                     .vert(-13)
@@ -912,7 +855,19 @@ var MFD_Device =
 		   .hide()
            .setFontSize(18, 1.0)
            .setColor(colorText2);
+        svg.exp = svg.p_RDR.createChild("path")
+            .moveTo(-100,-100)
+            .vert(200)
+            .horiz(200)
+            .vert(-200)
+            .horiz(-200)
+            .setStrokeLineWidth(2.0)
+            .setColor(colorLine4)
+            .set("z-index",1)
+            .hide();
+
            
+        # OBS 13
         svg.norm = svg.p_RDR.createChild("text")
                 .setTranslation(276*0.795*0.0, -482*0.5-225)
                 .setText("NORM")
@@ -920,6 +875,7 @@ var MFD_Device =
                 .setColor(colorText1)
                 .set("z-index",1)
                 .setFontSize(18, 1.0);
+        # OBS 12
         svg.acm = svg.p_RDR.createChild("text")
                 .setTranslation(276*0.795*-0.30, -482*0.5-225)
                 .setText("ACM")
@@ -927,16 +883,72 @@ var MFD_Device =
                 .setColor(colorText1)
                 .hide()
                 .setFontSize(18, 1.0);
-        svg.exp = svg.p_RDR.createChild("path")
-                    .moveTo(-100,-100)
-                    .vert(200)
-                    .horiz(200)
-                    .vert(-200)
-                    .horiz(-200)
-                    .setStrokeLineWidth(2.0)
-                    .setColor(colorLine4)
-                    .set("z-index",1)
-                    .hide();
+        # OBS 9
+        svg.cz = svg.p_RDR.createChild("text")
+                .setTranslation(276*0.775, -482*0.5+55+10)
+                .setText("C\nZ")
+                .setAlignment("right-center")
+                .setColor(colorText1)
+                .set("z-index",1)
+                .setFontSize(20, 1.0);
+        # OBS 10
+        svg.hd = svg.p_RDR.createChild("text")
+                .setTranslation(276*0.775, -482*0.5+125+10)
+                .setText("H\nD")
+                .setAlignment("right-center")
+                .setColor(colorText1)
+                .set("z-index",1)
+                .setFontSize(20, 1.0);
+        # OBS 4
+        svg.bars = svg.p_RDR.createChild("text")
+                .setTranslation(-276*0.775, -482*0.5+75)
+                .setText("8B")
+                .setAlignment("left-center")
+                .setColor(colorText1)
+                .set("z-index",1)
+                .setFontSize(20, 1.0);
+        # OBS 3
+        svg.az = svg.p_RDR.createChild("text")
+                .setTranslation(-276*0.775, -482*0.5+10)
+                .setText("A4")
+                .setAlignment("left-center")
+                .setColor(colorText1)
+                .set("z-index",1)
+                .setFontSize(20, 1.0);
+        # OBS 8
+        svg.sp = svg.p_RDR.createChild("text")
+                .setTranslation(276*0.775, -482*0.5+10)
+                .setText("S\nP")
+                .setAlignment("right-center")
+                .setColor(colorText1)
+                .set("z-index",1)
+                .setFontSize(20, 1.0);
+        # OBS 11
+        svg.mod = svg.p_RDR.createChild("text")
+                .setTranslation(276*0.795*-0.71, -482*0.5-215)
+                .setText("CRM")
+                .setAlignment("top-center")
+                .setColor(colorText1)
+                .set("z-index",20000)
+                .setFontSize(20, 1.0);
+        # OBS 5
+        svg.M  = svg.p_RDR.createChild("text")
+                .setTranslation(-276*0.795+10, -482*0.5+125+10)
+                .setText("M")
+                .setAlignment("left-center")
+                .setColor(colorText1)
+                .set("z-index",2)
+                .setFontSize(20, 1.0);
+        svg.modBox = svg.p_RDR.createChild("path")
+                .setTranslation(-276*0.795, -482*0.5+125)
+                .moveTo(5,0)
+                .horiz(35)
+                .vert(20)
+                .horiz(-35)
+                .vert(-20)
+                .setColorFill(colorText1)                
+                .setColor(colorText1)
+                .set("z-index",1);
         
         svg.cursor = svg.p_RDR.createChild("group").set("z-index",1000);
                 svg.cursor.createChild("path")
@@ -1414,7 +1426,6 @@ var MFD_Device =
                 me.root.cursor_1.setText(sprintf("% 2d",math.round(me.alimits[0]*0.001)));
                 me.root.cursor_2.setText(sprintf("% 2d",math.round(me.alimits[1]*0.001)));
             } else {
-                print("nil limits");
                 me.root.cursor_1.setText("");
                 me.root.cursor_2.setText("");
             }
@@ -1920,28 +1931,7 @@ var MFD_Device =
                     me.selectShow = 1;
                     me.root.selection.setTranslation(me.echoPos);
                     me.root.selection.setColor(colorDot4);
-                    if (contact.getLastHeading() != nil) {
-                        me.azimuth = math.round(geo.normdeg180(contact.get_bearing()-contact.getLastHeading())*0.1)*10;
-                        if (me.azimuth == 180 or me.azimuth == 0) {
-                            me.azSide = " ";
-                        } else {
-                            me.azSide = me.azimuth > 0 ?"L":"R";
-                        }
-                        me.azimuth = sprintf("%3d%s", math.abs(me.azimuth), me.azSide);
-                        me.heady = sprintf("%3d", int(contact.getLastHeading()/10)*10);
-                    } else {
-                        me.azimuth = "    ";
-                        me.heady = "   ";
-                    }
-                    if (contact.getLastClosureRate() != 0) {
-                        me.clos = sprintf("%+4dK",math.round(contact.getLastClosureRate()*0.1)*10);
-                    } else {
-                        me.clos = "      ";
-                    }
-
-                    me.lockInfo = sprintf("%s     %s        %4d   %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
-                    me.root.lockInfo.setText(me.lockInfo);
-                    me.lockInfo = 1;
+                    me.printInfo(contact);
                 }
                 if (cursor_click == me.root.index) {
                     if (math.abs(cursor_pos[0] - me.echoPos[0]) < 10 and math.abs(cursor_pos[1] - me.echoPos[1]) < 11) {
@@ -1967,6 +1957,31 @@ var MFD_Device =
 
                 me.iiii += 1;
             }
+        };
+        me.p_RDR.printInfo = func (contact) {
+            if (contact.getLastHeading() != nil) {
+                me.azimuth = math.round(geo.normdeg180(contact.get_bearing()-contact.getLastHeading())*0.1)*10;
+                if (me.azimuth == 180 or me.azimuth == 0) {
+                    me.azSide = " ";
+                } else {
+                    me.azSide = me.azimuth > 0 ?"L":"R";
+                }
+                me.azimuth = sprintf("%3d%s", math.abs(me.azimuth), me.azSide);
+                me.magn = geo.normdeg(contact.getLastHeading()+radar_system.self.getHeadingMag()-radar_system.self.getHeading());
+                me.heady = sprintf("%3d", int(me.magn/10)*10);
+            } else {
+                me.azimuth = "    ";
+                me.heady = "   ";
+            }
+            if (contact.getLastClosureRate() != 0) {
+                me.clos = sprintf("%+4dK",math.round(contact.getLastClosureRate()*0.1)*10);
+            } else {
+                me.clos = "      ";
+            }
+
+            me.lockInfo = sprintf("%s     %s        %4d   %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
+            me.root.lockInfo.setText(me.lockInfo);
+            me.lockInfo = 1;
         };
         me.p_RDR.paintRdr = func (contact) {
             if (contact["iff"] != nil) {
@@ -2006,27 +2021,7 @@ var MFD_Device =
                         me.selectShow = radar_system.apg68Radar.currentMode.longName != radar_system.twsMode.longName or (me.elapsed - contact.getLastBlepTime() < 8) or (math.mod(me.elapsed,0.50)<0.25);
                         me.root.selection.setTranslation(me.echoPos);
                         me.root.selection.setColor(colorCircle2);
-                        if (contact.getLastHeading() != nil) {
-                            me.azimuth = math.round(geo.normdeg180(contact.get_bearing()-contact.getLastHeading())*0.1)*10;
-                            if (me.azimuth == 180 or me.azimuth == 0) {
-                                me.azSide = " ";
-                            } else {
-                                me.azSide = me.azimuth > 0 ?"L":"R";
-                            }
-                            me.azimuth = sprintf("%3d%s", math.abs(me.azimuth), me.azSide);
-                            me.heady = sprintf("%3d", int(contact.getLastHeading()/10)*10);
-                        } else {
-                            me.azimuth = "    ";
-                            me.heady = "   ";
-                        }
-                        if (contact.getLastClosureRate() != 0) {
-                            me.clos = sprintf("%+4dK",math.round(contact.getLastClosureRate()*0.1)*10);
-                        } else {
-                            me.clos = "      ";
-                        }
-
-                        me.lockInfo = sprintf("%s     %s        %4d   %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
-                        me.root.lockInfo.setText(me.lockInfo);
+                        me.printInfo(contact);
                         me.lockInfo = 1;
                     }
                     if (cursor_click == me.root.index and (me.elapsed - me.bleppy[0]) < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
@@ -2074,27 +2069,7 @@ var MFD_Device =
                         me.root.blepTriangle[me.ii].setVisible(me.selectShow);
                         me.root.selection.setTranslation(me.echoPos);
                         me.root.selection.setColor(me.color);
-                        if (contact.getLastHeading() != nil) {
-                            me.azimuth = math.round(geo.normdeg180(contact.get_bearing()-contact.getLastHeading())*0.1)*10;
-                            if (me.azimuth == 180 or me.azimuth == 0) {
-                                me.azSide = " ";
-                            } else {
-                                me.azSide = me.azimuth > 0 ?"L":"R";
-                            }
-                            me.azimuth = sprintf("%3d%s", math.abs(me.azimuth), me.azSide);
-                            me.heady = sprintf("%3d", int(contact.getLastHeading()/10)*10);
-                        } else {
-                            me.azimuth = "    ";
-                            me.heady = "   ";
-                        }
-                        if (contact.getLastClosureRate() != 0) {
-                            me.clos = sprintf("%+4dK",math.round(contact.getLastClosureRate()*0.1)*10);
-                        } else {
-                            me.clos = "      ";
-                        }
-
-                        me.lockInfo = sprintf("%s     %s        %4d    %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
-                        me.root.lockInfo.setText(me.lockInfo);
+                        me.printInfo(contact);
                         me.lockInfo = 1;
                     }
                     me.root.blepTriangle[me.ii].setVisible(me.blinkShow);
@@ -2200,11 +2175,23 @@ var MFD_Device =
         };
     },
 
+
+                                                                          
+
+#  ██████   █████  ██████   █████  ██████      ███    ███  ██████  ██████  ███████     ██      ██ ███████ ████████ 
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ████  ████ ██    ██ ██   ██ ██          ██      ██ ██         ██    
+#  ██████  ███████ ██   ██ ███████ ██████      ██ ████ ██ ██    ██ ██   ██ █████       ██      ██ ███████    ██    
+#  ██   ██ ██   ██ ██   ██ ██   ██ ██   ██     ██  ██  ██ ██    ██ ██   ██ ██          ██      ██      ██    ██    
+#  ██   ██ ██   ██ ██████  ██   ██ ██   ██     ██      ██  ██████  ██████  ███████     ███████ ██ ███████    ██    
+#                                                                                                                  
+#                                                                                                                  
     setupRList: func(svg) {
         svg.r_LIST = me.canvas.createGroup()
-            .set("z-index",0)
+            .set("z-index",1)
             .setTranslation(276*0.795,482)
             .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,482 , 0.795 is for UV map
+
+        
     },
     addRList: func {
         var svg = {getElementById: func (id) {return me[id]},};
@@ -2216,7 +2203,7 @@ var MFD_Device =
             np.setVisible(0);
             return np;
         };
-        me.r_LIST = me.PFD.addListPage(svg, "RLIST", "r_LIST");
+        me.r_LIST = me.PFD.addListPage(svg, "Radar Mode", "r_LIST");
         me.r_LIST.root = svg;
         me.r_LIST.wdt = 552*0.795;
         me.r_LIST.fwd = 0;
@@ -2275,16 +2262,41 @@ var MFD_Device =
         };
     },
 
+
+
+#   ██████ ███    ██ ████████ ██          ██████   █████   ██████  ███████ 
+#  ██      ████   ██    ██    ██          ██   ██ ██   ██ ██       ██      
+#  ██      ██ ██  ██    ██    ██          ██████  ███████ ██   ███ █████   
+#  ██      ██  ██ ██    ██    ██          ██      ██   ██ ██    ██ ██      
+#   ██████ ██   ████    ██    ███████     ██      ██   ██  ██████  ███████ 
+#                                                                          
+#
     setupRMList: func(svg) {
         svg.rm_LIST = me.canvas.createGroup()
-            .set("z-index",0)
+            .set("z-index",1)
             .setTranslation(276*0.795,482)
             .set("font","LiberationFonts/LiberationMono-Regular.ttf");#552,482 , 0.795 is for UV map
 
-        svg.rm_LIST.tgtHis = svg.rm_LIST.createChild("text")
+        svg.tgtHis = svg.rm_LIST.createChild("text")
                 .setTranslation(-276*0.775, -482*0.5+10)
                 .setText("TGT HIS 3")
                 .setAlignment("left-center")
+                .setColor(colorText1)
+                .set("z-index",1)
+                .setFontSize(20, 1.0);
+
+        # OBS 6
+        svg.obs6 = svg.rm_LIST.createChild("text")
+                .setTranslation(276*0.795, -482*0.5-135)
+                .setText("OBS 6")
+                .setAlignment("right-center")
+                .setColor(colorText1)
+                .setFontSize(20, 1.0);
+        # OBS 8
+        svg.obs8 = svg.rm_LIST.createChild("text")
+                .setTranslation(276*0.775, -482*0.5+10)
+                .setText("OBS 8")
+                .setAlignment("right-center")
                 .setColor(colorText1)
                 .set("z-index",1)
                 .setFontSize(20, 1.0);
@@ -2307,13 +2319,15 @@ var MFD_Device =
             np.setVisible(0);
             return np;
         };
-        me.rm_LIST = me.PFD.addListPage(svg, "RMLIST", "rm_LIST");
+        me.rm_LIST = me.PFD.addListPage(svg, "Radar CNTL", "rm_LIST");
         me.rm_LIST.root = svg;
         me.rm_LIST.wdt = 552*0.795;
         me.rm_LIST.fwd = 0;
         me.rm_LIST.plc = 0;
         me.rm_LIST.ppp = me.PFD;
         me.rm_LIST.my = me;
+        me.rm_LIST.band = 0;
+        me.rm_LIST.chan = 2;
         me.rm_LIST.selectionBox = me.selectionBox;
         me.rm_LIST.setSelectionColor = me.setSelectionColor;
         me.rm_LIST.resetColor = me.resetColor;
@@ -2336,6 +2350,11 @@ var MFD_Device =
                     if (radar_system.apg68Radar.targetHistory > 4) {
                         radar_system.apg68Radar.targetHistory = 1;
                     }
+                } elsif (eventi == 5) {
+                    me.chan += 1;
+                    if (me.chan > 4) me.chan = 1;
+                } elsif (eventi == 7) {
+                    me.band = !me.band;
                 } elsif (eventi == 13) {
                     me.ppp.selectPage(me.my.p_RDR);
                     me.setSelection(me.ppp.buttons[13], me.ppp.buttons[10], 10);
@@ -2346,7 +2365,13 @@ var MFD_Device =
             }
         };
         me.rm_LIST.update = func (noti) {
-            me.root.rm_LIST.tgtHis.setText("TGT HIS\n"~radar_system.apg68Radar.targetHistory);
+            me.root.tgtHis.setText("TGT HIS\n"~radar_system.apg68Radar.targetHistory);
+            if (me.band == 0) {
+                me.root.obs8.setText("BAND\nNARO");
+            } else {
+                me.root.obs8.setText("BAND\nWIDE");
+            }
+            me.root.obs6.setText("CHAN\n"~me.chan);
         };
     },
     
@@ -2831,6 +2856,14 @@ var MFD_Device =
         };
     },
     
+
+#  ██     ██ ██████  ███    ██     ███████ ███████ ████████ ██    ██ ██████  
+#  ██     ██ ██   ██ ████   ██     ██      ██         ██    ██    ██ ██   ██ 
+#  ██  █  ██ ██████  ██ ██  ██     ███████ █████      ██    ██    ██ ██████  
+#  ██ ███ ██ ██      ██  ██ ██          ██ ██         ██    ██    ██ ██      
+#   ███ ███  ██      ██   ████     ███████ ███████    ██     ██████  ██      
+#                                                                            
+#                                                                            
     setupWPN: func (svg) {
         svg.p_WPN = me.canvas.createGroup()
                 .set("z-index",0)
@@ -2859,7 +2892,7 @@ var MFD_Device =
                 .setAlignment("center-top")
                 .setColor(colorText1)
                 .setFontSize(18, 1.0);       
-        
+        # OBS 6
         svg.weap = svg.p_WPN.createChild("text")
                 .setTranslation(276*0.795, -482*0.5-135)
                 .setText("")

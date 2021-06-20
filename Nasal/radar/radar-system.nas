@@ -410,6 +410,7 @@ SelfContact = {
 	init: func {
 		# read all properties and store them for fast lookup.
     	me.acHeading  = props.globals.getNode("orientation/heading-deg");
+    	me.acHeadingMag = props.globals.getNode("orientation/heading-magnetic-deg");
     	me.acPitch    = props.globals.getNode("orientation/pitch-deg");
     	me.acRoll     = props.globals.getNode("orientation/roll-deg");
     	me.acalt      = props.globals.getNode("position/altitude-ft");
@@ -445,6 +446,10 @@ SelfContact = {
 	
 	getHeading: func {
 		return me.acHeading.getValue();
+	},
+
+	getHeadingMag: func {
+		return me.acHeadingMag.getValue();
 	},
 	
 	getPitch: func {

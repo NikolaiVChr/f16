@@ -1987,6 +1987,7 @@ var getCompleteList = func {
 #   Clicking A-G should set GM
 #   nil exception in TWS!!!
 #   HSD radar arc CW vs. CCW
+#   lockinfo is magnetic heading
 #
 # TODO:
 #   GM tilt angles
