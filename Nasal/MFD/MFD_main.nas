@@ -1295,8 +1295,13 @@ var MFD_Device =
             }
             me.root.exp.setVisible(exp);
             me.root.acm.setVisible(1);
-            me.root.horiz.setRotation(-getprop("orientation/roll-deg")*D2R);
+            me.root.horiz.setRotation(-radar_system.self.getRoll()*D2R);
             if ((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA)) {
+                if (radar_system.apg68Radar.currentMode.longName == radar_system.vsrMode.longName) {
+                    me.root.distl.setScale(-1,1);
+                } else {
+                    me.root.distl.setScale(1,1);
+                }
                 me.root.distl.show();
             } else {
                 me.root.distl.hide();
@@ -1977,7 +1982,7 @@ var MFD_Device =
             me.bleps = contact.getBleps();
             foreach(me.bleppy ; me.bleps) {
                 if (me.i < me.root.maxB and me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.timeToKeepBleps and (me.bleppy[2] != nil or (me.bleppy[6] != nil and me.bleppy[6]>0))) {
-                    if (me.bleppy[6] != nil and radar_system.apg68Radar.currentMode.longName == "Velocity Search") {
+                    if (me.bleppy[6] != nil and radar_system.apg68Radar.currentMode.longName == radar_system.vsrMode.longName) {
                         me.distPixels = me.bleppy[6]*(482/(1000));
                     } elsif (me.bleppy[2] != nil) {
                         me.distPixels = me.bleppy[2]*(482/(radar_system.apg68Radar.getRange()*NM2M));
@@ -1998,7 +2003,7 @@ var MFD_Device =
                     me.root.blep[me.i].show();
                     me.root.blep[me.i].update();
                     if (radar_system.apg68Radar.getPriorityTarget() == contact) {
-                        me.selectShow = radar_system.apg68Radar.currentMode.longName != "Track While Scan" or (me.elapsed - contact.getLastBlepTime() < 8) or (math.mod(me.elapsed,0.50)<0.25);
+                        me.selectShow = radar_system.apg68Radar.currentMode.longName != radar_system.twsMode.longName or (me.elapsed - contact.getLastBlepTime() < 8) or (math.mod(me.elapsed,0.50)<0.25);
                         me.root.selection.setTranslation(me.echoPos);
                         me.root.selection.setColor(colorCircle2);
                         if (contact.getLastHeading() != nil) {

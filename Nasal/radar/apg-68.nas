@@ -189,6 +189,7 @@ DatalinkRadar = {
 		if (!me.enabled) return;
 		me.vector_aicontacts_for = [];
 		foreach(contact ; me.vector_aicontacts) {
+			if (contact.getRangeDirect()*M2NM > me.max_dist_nm) continue;
 			me.cs = contact.get_Callsign();
 
             me.lnk = datalink.get_data(me.cs);
@@ -1942,7 +1943,7 @@ var APG68 = {
     },
 };
 
-var scanInterval = 0.05;
+var scanInterval = 0.05;# 20hz for main radar
 
 
 laserOn = props.globals.getNode("controls/armament/laser-arm-dmd",1);#don't put 'var' keyword in front of this.
@@ -1954,8 +1955,8 @@ var antennae_knob_prop = props.globals.getNode("controls/radar/antennae-knob",1)
 var baser = AIToNasal.new();
 var partitioner = NoseRadar.new();
 var omni = OmniRadar.new(1.0, 150, 55);
-var terrain = TerrainChecker.new(0.10, 1, 60);
-var dlnkRadar = DatalinkRadar.new(30, 80);
+var terrain = TerrainChecker.new(0.10, 1, 60);# 0.05 or 0.10 is fine here
+var dlnkRadar = DatalinkRadar.new(3, 80);# 3 seconds because cannot be too slow for DLINK targets
 
 # start specific radar system
 var rwsMode = F16RWSMode.new(F16RWSSAMMode.new(F16MultiSTTMode.new()));
