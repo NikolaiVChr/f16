@@ -1985,8 +1985,9 @@ var scanInterval = 0.05;# 20hz for main radar
 
 
 laserOn = props.globals.getNode("controls/armament/laser-arm-dmd",1);#don't put 'var' keyword in front of this.
+var datalink_power = props.globals.getNode("instrumentation/datalink/power",0);
 enable_tacobject = 1;
-var antennae_knob_prop = props.globals.getNode("controls/radar/antennae-knob",1);
+var antennae_knob_prop = props.globals.getNode("controls/radar/antennae-knob",0);
 
 
 # start generic radar system
@@ -2022,12 +2023,10 @@ var getCompleteList = func {
 
 
 # BUGS:
-#   Clicking A-G should set GM
-#   nil exception in TWS!!!
 #   HSD radar arc CW vs. CCW
-#   VSR switch speed at each bar
-#   DLINK target does not show up on HSD even though in cone, visible and range.
 #
 # TODO:
-#   GM tilt angles
+#   GM tilt angles (needs serious thinking)
+#   Clicking A-G should set GM
+#   VSR switch speed at each bar instead of each frame
 #
