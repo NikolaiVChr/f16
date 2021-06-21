@@ -626,7 +626,7 @@
             </binding>
             <binding>
                 <command>nasal</command>
-                <script>screen.log.write("Antennae knob at "~(getprop("controls/radar/antennae-knob")*60));</script>
+                <script>screen.log.write(sprintf("Antennae knob at %+d degrees",getprop("controls/radar/antennae-knob")*60));</script>
             </binding>
         </key>
         <key n="105">
@@ -642,7 +642,7 @@
             </binding>
             <binding>
                 <command>nasal</command>
-                <script>screen.log.write("Antennae knob at "~(getprop("controls/radar/antennae-knob")*60));</script>
+                <script>screen.log.write(sprintf("Antennae knob at %+d degrees",getprop("controls/radar/antennae-knob")*60));</script>
             </binding>
         </key>
         <key n="73">
@@ -658,7 +658,7 @@
             </binding>
             <binding>
                 <command>nasal</command>
-                <script>screen.log.write("Antennae knob at "~(getprop("controls/radar/antennae-knob")*60));</script>
+                <script>screen.log.write(sprintf("Antennae knob at %+d degrees",getprop("controls/radar/antennae-knob")*60));</script>
             </binding>
         </key>
         <key n="25">

@@ -1244,6 +1244,9 @@ var MFD_Device =
             #
             if (steerpoints.getCurrentNumber() != 0 and rdrMode != RADAR_MODE_GM) {
                 me.wpC = steerpoints.getCurrentCoord();
+                if (me.wpC == nil) {
+                    printf("Error occured in FCR steerpoint system: STPT:%d WAYP:%d NUM:%d",steerpoints.getCurrentNumber(),getprop("autopilot/route-manager/current-wp"),getprop("autopilot/route-manager/route/num"));
+                }
                 me.legBearing = geo.normdeg180(geo.aircraft_position().course_to(me.wpC)-noti.heading);#relative
                 me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
                 me.distPixels = me.legDistance*(482/radar_system.apg68Radar.getRange());
