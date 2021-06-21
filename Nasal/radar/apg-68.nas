@@ -1054,6 +1054,7 @@ var F16SeaMode = {
 		me.radar.setCurrentMode(me.subMode, designate_contact);
 		me.subMode.radar = me.radar;# find some smarter way of setting it.
 	},
+	undesignate: func {},
 	designatePriority: func (contact) {
 	},
 	enterMode: func {
@@ -2038,6 +2039,8 @@ var getCompleteList = func {
 
 # BUGS:
 #   HSD radar arc CW vs. CCW
+#   Logoboy no position in ai/model
+#   Rudolf steerpoint error
 #
 # TODO:
 #   GM tilt angles (needs serious thinking)
