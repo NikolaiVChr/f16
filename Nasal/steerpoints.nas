@@ -550,7 +550,7 @@ var _isOccupiedNumber = func (number) {
 
 
 var isRouteActive = func {
-	return getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc") and getprop("autopilot/route-manager/current-wp") != nil and getprop("autopilot/route-manager/current-wp") > -1;
+	return getprop("autopilot/route-manager/active") and getprop("f16/avionics/power-mmc") and getprop("autopilot/route-manager/current-wp") != nil and getprop("autopilot/route-manager/current-wp") > -1 and getprop("autopilot/route-manager/route/num") != nil and getprop("autopilot/route-manager/current-wp") < getprop("autopilot/route-manager/route/num");
 }
 
 
