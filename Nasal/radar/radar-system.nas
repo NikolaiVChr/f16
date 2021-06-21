@@ -208,7 +208,7 @@ AIToNasal = {
 		
 		me.prop_ai = me.vector_raw[me.vector_raw_index];
 		me.prop_valid = me.prop_ai.getNode("valid");
-		if (me.prop_valid == nil or !me.prop_valid.getValue() or me.prop_ai.getNode("impact") != nil) {
+		if (me.prop_valid == nil or !me.prop_valid.getValue() or me.prop_ai.getNode("impact") != nil or me.prop_ai.getName() == "ballistic" or me.prop_ai.getName() == "munition") {
 			# its either not a valid entity or its a impact report.
             me.nextReadTreeFrame();
 		    return;
