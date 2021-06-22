@@ -2039,8 +2039,6 @@ var getCompleteList = func {
 
 # BUGS:
 #   HSD radar arc CW vs. CCW
-#   Logoboy no position in ai/model
-#   Rudolf steerpoint error
 #
 # TODO:
 #   GM tilt angles (needs serious thinking)

@@ -24,6 +24,9 @@ var colorCircle3 = [getprop("/sim/model/MFD-color/circle3/red"), getprop("/sim/m
 # Not used
 var colorDot1 = [getprop("/sim/model/MFD-color/dot1/red"), getprop("/sim/model/MFD-color/dot1/green"), getprop("/sim/model/MFD-color/dot1/blue")];
 
+# White/green radar search targets
+var colorDot2 = [getprop("/sim/model/MFD-color/dot2/red"), getprop("/sim/model/MFD-color/dot2/green"), getprop("/sim/model/MFD-color/dot2/blue")];
+
 # Datalink wingman
 var colorDot4 = [getprop("/sim/model/MFD-color/dot4/red"), getprop("/sim/model/MFD-color/dot4/green"), getprop("/sim/model/MFD-color/dot4/blue")];
 
@@ -1766,7 +1769,7 @@ var MFD_Device =
                     }
                     me.color = math.pow(1-(me.elapsed - me.bleppy[0])/radar_system.apg68Radar.currentMode.timeToKeepBleps, 2.2);
                     me.root.blep[me.i].setTranslation(me.echoPos);
-                    me.root.blep[me.i].setColor(me.color,me.color,me.color);
+                    me.root.blep[me.i].setColor(colorDot2[0]*me.color+colorBackground[0]*(1-me.color), colorDot2[1]*me.color+colorBackground[1]*(1-me.color), colorDot2[2]*me.color+colorBackground[2]*(1-me.color));
                     me.root.blep[me.i].show();
                     me.root.blep[me.i].update();
                     if (radar_system.apg68Radar.getPriorityTarget() == contact) {
