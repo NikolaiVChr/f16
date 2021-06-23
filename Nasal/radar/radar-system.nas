@@ -57,55 +57,7 @@ var TRUE = 1;
 
 
 
-var knownShips = {
-    "missile_frigate":       nil,
-    "frigate":       nil,
-    "fleet":       nil,
-    "USS-LakeChamplain":     nil,
-    "USS-NORMANDY":     nil,
-    "USS-OliverPerry":     nil,
-    "USS-SanAntonio":     nil,
-};
 
-var knownSurface = {
-    "S-75":       nil,
-    "buk-m2":       nil,
-    "s-300":       nil,
-    "depot":       nil,
-    "struct":       nil,
-    "point":       nil,
-    "rig":       nil,
-    "gci":       nil,
-    "truck":     nil,
-    "tower":     nil,
-    "MIM104D":       nil,
-    "ZSU-23-4M":       nil,
-};
-
-var knownHelis = {
-    "SH-60J":                  nil,
-    "UH-60J":                     nil,
-    "uh1":                     nil,
-    "212-TwinHuey":              nil,
-    "412-Griffin":               nil,
-    "ch53e":                     nil,
-    "Mil-Mi-8":                  nil,
-    "CH47":                     nil,
-    "mi24":                     nil,
-    "tigre":                     nil,
-    "uh60_Blackhawk":             nil,
-    "AH-1W":                       nil,
-    "WAH-64_Apache":               nil,
-    "rah-66":                      nil,
-    "Gazelle":                     nil,
-    "Westland_Gazelle":          nil,
-    "AS532-Cougar":               nil,
-    "Westland_SeaKing-HAR3":      nil,
-    "Lynx-HMA8":                  nil,
-    "Lynx_Wildcat":               nil,
-    "Merlin-HM1":             nil,
-    "OH-58D":                   nil,
-};
 
 var VectorNotification = {
     new: func(type) {
@@ -606,11 +558,11 @@ AIContact = {
         	return ORDNANCE;
         } elsif (prop_name == "groundvehicle") {
         	return SURFACE;
-        } elsif (model != nil and contains(knownSurface, model)) {
+        } elsif (model != nil and isKnownSurface(model)) {
 			return SURFACE;
-		} elsif (model != nil and contains(knownShips, model)) {
+		} elsif (model != nil and isKnownShip(model)) {
 			return MARINE;
-		} elsif (model != nil and contains(knownHelis, model) and speed_kt != nil and speed_kt > 10) {
+		} elsif (model != nil and isKnownHeli(model) and speed_kt != nil and speed_kt > 10) {
 			return AIR;
         } elsif (speed_kt != nil and speed_kt > 60) {
         	return AIR;# can later switch from AIR to SURFACE or opposite
@@ -626,9 +578,9 @@ AIContact = {
 	},
 
 	getType: func {
-		if (me.type == AIR and (me.getSpeed() < 60 and !(contains(knownHelis, me.model) and me.get_Speed() > 10))) me.type = SURFACE;
+		if (me.type == AIR and (me.getSpeed() < 60 and !(isKnownHeli(me.model) and me.get_Speed() > 10))) me.type = SURFACE;
 		elsif (me.type != ORDNANCE and me.getSpeed() > 60) me.type = AIR;
-		elsif (me.type == SURFACE and me.get_Speed() > 10 and contains(knownHelis, me.model)) me.type = AIR;
+		elsif (me.type == SURFACE and me.get_Speed() > 10 and isKnownHeli(me.model)) me.type = AIR;
 		return me.type;
 	},
 	
@@ -1548,7 +1500,67 @@ var getRadarRange = func (model) {
 	return 70;
 }
 
+var isKnownShip = func (model) {
+	contains(knownShips, model);
+}
 
+var isKnownSurface = func (model) {
+	contains(knownSurface, model);
+}
+
+var isKnownHeli = func (model) {
+	contains(knownHelis, model);
+}
+
+var knownShips = {
+    "missile_frigate":       nil,
+    "frigate":       nil,
+    "fleet":       nil,
+    "USS-LakeChamplain":     nil,
+    "USS-NORMANDY":     nil,
+    "USS-OliverPerry":     nil,
+    "USS-SanAntonio":     nil,
+};
+
+var knownSurface = {
+    "S-75":       nil,
+    "buk-m2":       nil,
+    "s-300":       nil,
+    "depot":       nil,
+    "struct":       nil,
+    "point":       nil,
+    "rig":       nil,
+    "gci":       nil,
+    "truck":     nil,
+    "tower":     nil,
+    "MIM104D":       nil,
+    "ZSU-23-4M":       nil,
+};
+
+var knownHelis = {
+    "SH-60J":                  nil,
+    "UH-60J":                     nil,
+    "uh1":                     nil,
+    "212-TwinHuey":              nil,
+    "412-Griffin":               nil,
+    "ch53e":                     nil,
+    "Mil-Mi-8":                  nil,
+    "CH47":                     nil,
+    "mi24":                     nil,
+    "tigre":                     nil,
+    "uh60_Blackhawk":             nil,
+    "AH-1W":                       nil,
+    "WAH-64_Apache":               nil,
+    "rah-66":                      nil,
+    "Gazelle":                     nil,
+    "Westland_Gazelle":          nil,
+    "AS532-Cougar":               nil,
+    "Westland_SeaKing-HAR3":      nil,
+    "Lynx-HMA8":                  nil,
+    "Lynx_Wildcat":               nil,
+    "Merlin-HM1":             nil,
+    "OH-58D":                   nil,
+};
 
 
 # BUGS:

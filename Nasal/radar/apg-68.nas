@@ -755,8 +755,11 @@ var RadarMode = {
 			return 0;
 		}
 		me.range = math.min(me.maxRange, range);
-		me.range = math.max(me.minRange, range);
+		me.range = math.max(me.minRange, me.range);
 		return range == me.range;
+	},
+	getRange: func {
+		return me.range;
 	},
 	_increaseRange: func {
 		me.range*=2;
@@ -878,9 +881,6 @@ var RadarMode = {
 	},
 	enterMode: func {
 		# Warning: This gets called BEFORE previous mode's leaveMode()
-	},
-	getRange: func {
-		return me.range;
 	},
 	designatePriority: func (contact) {},
 	cycleDesignate: func {},
@@ -1711,6 +1711,9 @@ var F16ACM20Mode = {
 	testContact: func (contact) {
 	},
 	cycleDesignate: func {
+	},
+	getCursorAltitudeLimits: func {
+		return nil;
 	},
 };
 
