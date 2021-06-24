@@ -430,6 +430,7 @@ var APG68 = {
 		return 0;
 	},
 	getCursorAltitudeLimits: func {
+		if (!me.enabled) return nil;
 		return me.currentMode.getCursorAltitudeLimits();
 	},	
 	getBars: func {
@@ -1659,6 +1660,7 @@ var F16ACM20Mode = {
 	superMode: nil,
 	subMode: nil,
 	range: 10,
+	minRange: 10,
 	maxRange: 10,
 	discSpeed_dps: 84.6,
 	rcsFactor: 0.9,
@@ -2042,6 +2044,7 @@ var getCompleteList = func {
 
 # BUGS:
 #   HSD radar arc CW vs. CCW
+#   MFD OBS colors on b50
 #
 # TODO:
 #   GM tilt angles (needs serious thinking)
