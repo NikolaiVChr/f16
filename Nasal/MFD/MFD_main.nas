@@ -95,7 +95,8 @@ var MFD_Device =
         obj.PFDsvg = dev_canvas.createGroup();
         var pres = canvas.parsesvg(obj.PFDsvg, "Nasal/MFD/MFD.svg");
         obj.PFDsvg.set("z-index",1000);
-        #me.get_element(obj.PFDsvg, "layer2").set("z-index",1000000);
+        
+        me.get_element(obj.PFDsvg, "layer2").setColor(colorText1);
         var selectionBoxGroup = dev_canvas.createGroup().set("z-index",0);
         obj.selectionBox = selectionBoxGroup.createChild("path")
             .rect(0,0,35,20)
