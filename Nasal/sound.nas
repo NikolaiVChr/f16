@@ -377,5 +377,6 @@ setlistener("controls/flight/alt-rel-button", button2, nil, 0);
 setlistener("f16/avionics/rtn-seq", click3, nil, 0);
 setlistener("f16/avionics/ded-up-down", click3, nil, 0);
 setlistener("f16/avionics/plain-cipher", click1, nil, 0);
+setlistener("f16/avionics/hmd-sym-int-knob", click3, nil, 0);
 # valid methods: button, button2, knob, knob2, clamp0, click3, lift_cover
 #                click1, click2, doubleClick, doubleClick2, scroll
