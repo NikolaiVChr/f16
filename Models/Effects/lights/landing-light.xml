@@ -26,6 +26,8 @@
       <entry><ind>0</ind><dep>2.0</dep></entry>
       <entry><ind>3750</ind><dep>12.0</dep></entry>
       <entry><ind>7500</ind><dep>24.0</dep></entry>
+      <entry><ind>11250</ind><dep>36.0</dep></entry>
+      <entry><ind>15000</ind><dep>48.0</dep></entry>
     </interpolation>
   </animation>
 </PropertyList>
