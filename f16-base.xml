@@ -381,6 +381,7 @@
                 <enabled type="bool" userarchive="y">true</enabled>
                 <new type="bool">false</new>
                 <parameters>
+                    <locked-by-airframe type="bool">true</locked-by-airframe>
                     <blackout-onset-g type="double">5</blackout-onset-g>
                     <blackout-complete-g type="double">9</blackout-complete-g>
                     <onset-blackout-sec type="double">300</onset-blackout-sec>
