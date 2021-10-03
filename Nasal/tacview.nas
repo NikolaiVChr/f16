@@ -86,7 +86,7 @@ var mainloop = func() {
     writeMyPlanePos();
     writeMyPlaneAttributes();
     foreach (var cx; radar_system.getCompleteList()) {
-        if (cx["propNode"] != nil and cx.propNode.getName() == "multiplayer" and getprop("sim/multiplay/txhost") == "mpserver.opredflag.com") {
+        if (cx["prop"] != nil and cx.prop.getName() == "multiplayer" and getprop("sim/multiplay/txhost") == "mpserver.opredflag.com") {
             continue;
         }
         var color = ",Color=Blue";
@@ -104,9 +104,10 @@ var mainloop = func() {
             write(cx.tacobj.tacviewID ~ ",Name="~ model_is~ ",CallSign=" ~ cx.get_Callsign() ~color~"\n")
         }
         if (cx.tacobj.valid) {
-            lon = cx.get_Longitude();
-            lat = cx.get_Latitude();
-            alt = cx.get_altitude() * FT2M;
+            var cxC = cx.getCoord();
+            lon = cxC.lon();
+            lat = cxC.lat();
+            alt = cxC.alt();
             roll = cx.get_Roll();
             pitch = cx.get_Pitch();
             heading = cx.get_heading();
