@@ -982,19 +982,19 @@ AIContact = {
 		if (me["flareProp"] == nil) {
 			me.flareProp = me.prop.getNode(flareProp, 0);
 		}
-		if (me.flareProp != nil) {
-			return me.flareProp.getValue();
-		}
-		return nil;
+		#if (me.flareProp != nil) {
+		#	return me.flareProp.getValue();
+		#}
+		return me.flareProp;
 	},
 	getChaffNode: func {
 		if (me["chaffProp"] == nil) {
 			me.chaffProp = me.prop.getNode(chaffProp, 0);
 		}
-		if (me.chaffProp != nil) {
-			return me.chaffProp.getValue();
-		}
-		return nil;
+		#if (me.chaffProp != nil) {
+		#	return me.chaffProp.getValue();
+		#}
+		return me.chaffProp;
 	},
 	isPainted: func {
 		return elapsedProp.getValue()- me.getLastBlepTime() < 0.75;
@@ -1482,7 +1482,7 @@ var laserOn = nil;# set this to a prop
 var sttSend = props.globals.getNode("sim/multiplay/generic/string[6]", 1);
 var stbySend = props.globals.getNode("sim/multiplay/generic/int[2]", 1);
 var elapsedProp = props.globals.getNode("sim/time/elapsed-sec", 0);
-var enable_tacobject = 0;
+var enable_tacobject = 1;
 
 var isOmniRadiating = func {
 	# Override this method in your aircraft to do this in another way
