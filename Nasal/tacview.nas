@@ -85,7 +85,7 @@ var mainloop = func() {
     thread.unlock(mutexWrite);
     writeMyPlanePos();
     writeMyPlaneAttributes();
-    foreach (var cx; awg_9.completeList) {
+    foreach (var cx; radar_system.getCompleteList()) {
         if (cx["propNode"] != nil and cx.propNode.getName() == "multiplayer" and getprop("sim/multiplay/txhost") == "mpserver.opredflag.com") {
             continue;
         }
