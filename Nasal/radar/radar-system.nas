@@ -536,17 +536,17 @@ AIContact = {
 		me.virt.elevpick = geo.elevation(me.coord.lat(),me.coord.lon());
 		if (spheric_dist_m != 0 and me.virt.elevpick != nil) me.coord.set_alt(me.virt.elevpick);
 		me.virt.coord = me.coord;
-		virt.getCoord = func {
+		me.virt.getCoord = func {
 			return me.coord;
 		};
-		virt.isVirtual = func {
+		me.virt.isVirtual = func {
 			return 1;
 		};
-		virt.getType = func {
+		me.virt.getType = func {
 			return POINT;
 		};
 		me.virt.callsign = "Near "~me.get_Callsign();
-		return virt;
+		return me.virt;
 	},
 
 	determineType: func (prop_name, ordnance, alt_ft, model, speed_kt) {
