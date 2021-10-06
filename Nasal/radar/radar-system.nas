@@ -514,12 +514,14 @@ AIContact = {
 	},
 
 	getCoord: func {
-		if (me.pos_type = ECEF) {
+		if (me.pos_type == ECEF) {
 	    	me.coord = geo.Coord.new().set_xyz(me.x.getValue(), me.y.getValue(), me.z.getValue());
 	    	return me.coord;
 	    } else {
 	    	if(me.alt == nil or me.lat == nil or me.lon == nil) {
-		      	return geo.Coord.new();
+		      	me.coord = geo.Coord.new();
+		      	print("RadarSystem getCoord() returning center of earth! :(");
+		      	return me.coord;
 		    }
 		    me.coord = geo.Coord.new().set_latlon(me.lat.getValue(), me.lon.getValue(), me.alt.getValue()*FT2M);
 		    return me.coord;
@@ -718,33 +720,33 @@ AIContact = {
 		var value = 0;
 		me.getCoord();
 		var ownship = self.getCoord();
-		append(newBlep, time);
-		append(newBlep, strength);
+		append(newBlep, time);#0
+		append(newBlep, strength);#1
 		if (searchInfo[0]) {
 			value = ownship.direct_distance_to(me.coord);
-			append(newBlep, value);
+			append(newBlep, value);#2
 		} else {
-			append(newBlep, nil);
+			append(newBlep, nil);#2
 		}
 		if (searchInfo[1]) {
 			value = me.getHeading();
-			append(newBlep, value);
+			append(newBlep, value);#3
 			me.lastRegisterWasTrack = 1;
 		} else {
-			append(newBlep, nil);
+			append(newBlep, nil);#3
 			me.lastRegisterWasTrack = 0;
 		}
 		if (searchInfo[2]) {
 			value = [me.getDeviationHeading(), me.getDeviationPitch(), me.getBearing(), me.getElevation()];
-			append(newBlep, value);
+			append(newBlep, value);#4
 		} else {
-			append(newBlep, nil);
+			append(newBlep, nil);#4
 		}
 		if (searchInfo[3]) {
 			value = me.getSpeed();#kt
-			append(newBlep, value);
+			append(newBlep, value);#5
 		} else {
-			append(newBlep, nil);
+			append(newBlep, nil);#5
 		}
 		if (searchInfo[4]) {
 			var bearing = ownship.course_to(me.coord);
@@ -752,18 +754,18 @@ AIContact = {
 			var ownship_spd = self.getSpeed() * math.cos( -(bearing - self.getHeading()) * D2R);
             var target_spd  = me.getSpeed()   * math.cos( -(rbearing - me.getHeading()) * D2R);
 			value = ownship_spd + target_spd;
-			append(newBlep, value);
+			append(newBlep, value);#6
 		} else {
-			append(newBlep, nil);
+			append(newBlep, nil);#6
 		}
 		if (searchInfo[5]) {
 			value = me.coord.alt()*M2FT;
-			append(newBlep, value);
+			append(newBlep, value);#7
 		} else {
-			append(newBlep, nil);
+			append(newBlep, nil);#7
 		}
-		append(newBlep, me.coord);
-		append(me.bleps, newBlep);
+		append(newBlep, me.coord);#8
+		append(me.bleps, newBlep);#9
 	},
 
 	getBleps: func {
