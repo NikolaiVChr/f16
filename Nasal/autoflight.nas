@@ -26,9 +26,11 @@ var apLoop = maketimer(1, func {
 			if (turn_dist_nm < 0.25) {
 				turn_dist_nm = 0.25;
 			}
-			if (turn_dist_nm < 10) {
-				setprop("/autopilot/route-manager/advance", turn_dist_nm);
+			if (turn_dist_nm > 5) {
+				turn_dist_nm = 5;
 			}
+
+			setprop("/autopilot/route-manager/advance", turn_dist_nm);
 			
 			if (getprop("/autopilot/route-manager/wp/dist") <= turn_dist_nm) {
 				setprop("/autopilot/route-manager/current-wp", getprop("/autopilot/route-manager/current-wp") + 1);
