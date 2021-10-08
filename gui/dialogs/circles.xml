@@ -109,6 +109,35 @@
 
 	<hrule/>
 
+	<text><halign>left</halign><label>Data Transfer Cartridge settings</label></text>
+	<empty><stretch>1</stretch></empty>
+
+	<group>
+		<layout>hbox</layout>
+		<button>
+	        <legend>Load DTC</legend>
+	        <equal>true</equal>
+	        <binding>
+	            <command>nasal</command>
+	            <script>file_selector.open()</script>
+	        </binding>
+	    </button>
+	    <button>
+	        <legend>Save DTC</legend>
+	        <equal>true</equal>
+	        <enable>
+	        	<value>1</value>
+	        </enable>
+	        <binding>
+	            <command>nasal</command>
+	            <script>save_selector.open();</script>
+	        </binding>
+	    </button>
+	</group>
+
+	<empty><stretch>1</stretch></empty>
+	<hrule/>
+
 	<text><halign>left</halign><label>Input coordinates (Lat, Lon and Radius in NM) to display threat or friendly circled areas on HSD page.</label></text>
 	<text><halign>left</halign><label>Stored as STPT #300 to #305</label></text>
 	<empty><stretch>1</stretch></empty>
