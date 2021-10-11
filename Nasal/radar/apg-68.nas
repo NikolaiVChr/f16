@@ -588,7 +588,7 @@ var APG68 = {
 			foreach (me.blep;contact.getBleps()) {
 				if (me.elapsed - me.blep[0] < me.currentMode.timeToKeepBleps) {
 					append(me.bleps_cleaned, me.blep);
-				}	
+				}
 			}
 			contact.setBleps(me.bleps_cleaned);
 			if (size(me.bleps_cleaned)) {
@@ -1465,7 +1465,7 @@ var F16RWSSAMMode = {
 			# azimuth width is autocalculated in F16 AUTO-SAM:
 			me.prioRange_nm = me.priorityTarget.getRangeDirect()*M2NM;
 			me.az = me.calcSAMwidth();
-			if (!me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, me.priorityTarget)) {
+			if (!size(me.priorityTarget.getBleps()) or !me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, me.priorityTarget)) {
 				me.priorityTarget = nil;
 				me.radar.tiltOverride = 0;
 				me.undesignate();
@@ -1845,7 +1845,7 @@ var F16STTMode = {
 				me.undesignate();
 				return;
 			}
-			if (!me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, me.priorityTarget)) {
+			if (!size(me.priorityTarget.getBleps()) or !me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, me.priorityTarget)) {
 				me.priorityTarget = nil;
 				me.radar.tiltOverride = 0;
 				me.undesignate();

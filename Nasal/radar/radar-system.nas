@@ -56,7 +56,7 @@ var FALSE = 0;
 var TRUE = 1;
 
 
-
+var emptyCoord = geo.Coord.new().set_xyz(0,0,0);
 
 
 var VectorNotification = {
@@ -519,7 +519,7 @@ AIContact = {
 	    	return me.coord;
 	    } else {
 	    	if(me.alt == nil or me.lat == nil or me.lon == nil) {
-		      	me.coord = geo.Coord.new();
+		      	me.coord = emptyCoord;
 		      	print("RadarSystem getCoord() returning center of earth! :(");
 		      	return me.coord;
 		    }
@@ -871,7 +871,7 @@ AIContact = {
 		if (size(me.bleps)) {
 			return me.bleps[size(me.bleps)-1][8];
 		}
-		return geo.Coord.new();
+		return nil;
 	},
 
 	getLastBlepTime: func {
