@@ -798,6 +798,15 @@ var RadarMode = {
 	getAz: func {
 		return me.az;
 	},
+	constrainAzimuth: func () {
+		if (me.az == 60) {
+			me.azimuthTilt = 0;
+		} elsif (me.azimuthTilt > me.radar.fieldOfRegardMaxAz-me.az) {
+			me.azimuthTilt = me.radar.fieldOfRegardMaxAz-me.az;
+		} elsif (me.azimuthTilt < -me.radar.fieldOfRegardMaxAz+me.az) {
+			me.azimuthTilt = -me.radar.fieldOfRegardMaxAz+me.az;
+		}
+	}
 	getPriority: func {
 		return me["priorityTarget"];
 	},
@@ -1283,13 +1292,13 @@ var F16TWSMode = {
 	preStep: func {
 	 	me.azimuthTilt = me.cursorAz;
 		if (me.priorityTarget != nil) {
-			me.prioRange_nm = me.priorityTarget.getLastRangeDirect()*M2NM;#TODO: nil exception here
-			if (me.radar.elapsed - me.priorityTarget.getLastBlepTime() > me.timeToKeepBleps) {
+			if (!size(me.priorityTarget.getBleps()) or !me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, me.priorityTarget) or me.radar.elapsed - me.priorityTarget.getLastBlepTime() > me.timeToKeepBleps) {
 				me.priorityTarget = nil;
 				me.radar.tiltOverride = 0;
 				me.undesignate();
 				return;
 			}
+			me.prioRange_nm = me.priorityTarget.getLastRangeDirect()*M2NM;
 			me.lastDev = me.priorityTarget.getLastDirection();
 			if (me.lastDev != nil) {
 				me.centerTilt = me.lastDev[2]-self.getHeading();
@@ -1319,13 +1328,7 @@ var F16TWSMode = {
 			me.radar.tiltOverride = 0;
 			me.undesignate();
 		}
-		if (me.az == 60) {
-			me.azimuthTilt = 0;
-		} elsif (me.azimuthTilt > me.radar.fieldOfRegardMaxAz-me.az) {
-			me.azimuthTilt = me.radar.fieldOfRegardMaxAz-me.az;
-		} elsif (me.azimuthTilt < -me.radar.fieldOfRegardMaxAz+me.az) {
-			me.azimuthTilt = -me.radar.fieldOfRegardMaxAz+me.az;
-		}
+		me.constrainAzimuth();
 	},
 	frameCompleted: func {
 		if (me.lastFrameStart != -1) {
@@ -1463,14 +1466,14 @@ var F16RWSSAMMode = {
 		me.azimuthTilt = me.cursorAz;
 		if (me.priorityTarget != nil) {
 			# azimuth width is autocalculated in F16 AUTO-SAM:
-			me.prioRange_nm = me.priorityTarget.getRangeDirect()*M2NM;
-			me.az = me.calcSAMwidth();
 			if (!size(me.priorityTarget.getBleps()) or !me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, me.priorityTarget)) {
 				me.priorityTarget = nil;
 				me.radar.tiltOverride = 0;
 				me.undesignate();
 				return;
 			}
+			me.prioRange_nm = me.priorityTarget.getRangeDirect()*M2NM;
+			me.az = me.calcSAMwidth();
 			me.lastDev = me.priorityTarget.getLastDirection();
 			if (me.lastDev != nil) {
 				if (math.abs(me.azimuthTilt - (me.lastDev[2]-self.getHeading())) > me.az) {
@@ -1500,13 +1503,7 @@ var F16RWSSAMMode = {
 			me.scanPriorityEveryFrame = 0;
 			me.undesignate();
 		}
-		if (me.az == 60) {
-			me.azimuthTilt = 0;
-		} elsif (me.azimuthTilt > me.radar.fieldOfRegardMaxAz-me.az) {
-			me.azimuthTilt = me.radar.fieldOfRegardMaxAz-me.az;
-		} elsif (me.azimuthTilt < -me.radar.fieldOfRegardMaxAz+me.az) {
-			me.azimuthTilt = -me.radar.fieldOfRegardMaxAz+me.az;
-		}
+		me.constrainAzimuth();
 	},
 	undesignate: func {
 		me.priorityTarget = nil;
