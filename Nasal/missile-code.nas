@@ -1343,6 +1343,9 @@ var AIM = {
 	},
 
 	eject: func () {
+		if (me.stage_1_duration == 0 or me.force_lbf_1 == 0) {
+			me.pendingLaunchSound = 0;
+		}
 		me.stage_1_duration = 0;
 		me.force_lbf_1      = 0;
 		me.stage_2_duration = 0;
@@ -1381,6 +1384,8 @@ var AIM = {
 		
 		if (me.engineEnabled and me.stage_1_duration > 0 and me.force_lbf_1 > 0 and me.drop_time < 1.75) {
 			me.pendingLaunchSound = me.drop_time;
+		} elsif (me.drop_time != 10000 and (!me.engineEnabled or me.stage_1_duration == 0 or me.force_lbf_1 == 0)) {
+			me.pendingLaunchSound = 0;
 		}
 
 		me.flyID = rand();
