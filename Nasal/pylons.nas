@@ -78,6 +78,7 @@ var pylonSets = {
     b617: {name: "1 x B61-7", pylon: "1 MAU", rack: nil, content: ["B61-7"], fireOrder: [0], launcherDragArea: 0, launcherMass: 70, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     b6112: {name: "1 x B61-12", pylon: "1 MAU", rack: nil, content: ["B61-12"], fireOrder: [0], launcherDragArea: 0, launcherMass: 70, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     g54: {name: "2 x GBU-54", pylon: "1 MAU", rack: "1 BR57", content: ["GBU-54","GBU-54"], fireOrder: [0,1], launcherDragArea: 0.005, launcherMass: 320, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
+    g54x1:  {name: "1 x GBU-54", pylon: "1 MAU", rack: nil, content: ["GBU-54"], fireOrder: [0], launcherDragArea: 0.005, launcherMass: 70, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0, category: 3},
     g31: {name: "1 x GBU-31", pylon: "1 MAU", rack: nil, content: ["GBU-31"], fireOrder: [0], launcherDragArea: 0, launcherMass: 70, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     g24: {name: "1 x GBU-24", pylon: "1 MAU", rack: nil, content: ["GBU-24"], fireOrder: [0], launcherDragArea: 0, launcherMass: 70, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 3},
     g12x3:  {name: "3 x GBU-12", pylon: "1 MAU", rack: "1 TER", content: ["GBU-12","GBU-12", "GBU-12"], fireOrder: [0,1,2], launcherDragArea: 0.005, launcherMass: 163, launcherJettisonable: 1, showLongTypeInsteadOfCount: 0, category: 3},
@@ -567,13 +568,13 @@ var ferry2 = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
     	damage.damageLog.push("Ferry 2 loadout mounted");
         pylon1.loadSet(pylonSets.dumb2WT);
-        pylon2.loadSet(pylonSets.dumb1);
+        pylon2.loadSet(pylonSets.empty);
         pylon3.loadSet(pylonSets.podTrvl);
         pylon4.loadSet(pylonSets.fuel60L);
         pylon5.loadSet(pylonSets.empty);
         pylon6.loadSet(pylonSets.fuel60R);
         pylon7.loadSet(pylonSets.podTrvl);
-        pylon8.loadSet(pylonSets.dumb1);
+        pylon8.loadSet(pylonSets.empty);
         pylon9.loadSet(pylonSets.dumb2WT);
         if (block == 6) {
         	pylon10.loadSet(pylonSets.empty);
@@ -900,13 +901,8 @@ var a2g_lgbgps = func {
         pylon7.loadSet(pylonSets.g12x3);
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
-        if (block == 6) {
-        	pylon10.loadSet(pylonSets.empty);
-        	pylon11.loadSet(pylonSets.podSAtp);
-        } else {
-        	pylon10.loadSet(pylonSets.podLite);
-            pylon11.loadSet(pylonSets.empty);
-        }
+        pylon10.loadSet(pylonSets.podLite);
+        pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
@@ -1144,6 +1140,26 @@ var b20_a2a_qra = func {
         pylon8.loadSet(pylonSets.aim9);
         pylon9.loadSet(pylonSets.aim120WT);
         pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# A/G LGB + GPS Strike (GBU-12, GBU-54)
+var b20_a2g_lgbgps = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim120WT);
+        pylon2.loadSet(pylonSets.aim9);
+        pylon3.loadSet(pylonSets.g12);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.g54x1);
+        pylon8.loadSet(pylonSets.aim9);
+        pylon9.loadSet(pylonSets.aim120WT);
+        pylon10.loadSet(pylonSets.podSAtp);
         pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
     } else {
@@ -1588,6 +1604,26 @@ var b40_a2g_casmix = func {
         pylon11.loadSet(pylonSets.empty);
         f16.reloadCannon();
         f16.reloadHydras();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# CAS Dual (GBU-12, AGM-65D)
+var b40_a2g_casduo = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.aim120WT);
+        pylon2.loadSet(pylonSets.empty);
+        pylon3.loadSet(pylonSets.g12);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
+        pylon7.loadSet(pylonSets.a65d);
+        pylon8.loadSet(pylonSets.empty);
+        pylon9.loadSet(pylonSets.aim120WT);
+        pylon10.loadSet(pylonSets.podSAtp);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
     } else {
       screen.log.write(f16.msgB);
     }

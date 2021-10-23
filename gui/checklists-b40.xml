@@ -907,8 +907,9 @@
                     <scale>1.0000</scale>
                 </marker>
                 <binding>
-                    <command>nasal</command>
-                    <script>f16_switches.toggleMalIndLts()</script>
+                    <command>property-assign</command>
+                    <property>controls/test/test-panel/mal-ind-lts-btn</property>
+                    <value>1</value>
                 </binding>
             </item>
             <item>
@@ -942,7 +943,7 @@
                 </marker>
                 <binding>
                     <command>property-assign</command>
-                    <property>controls/test/test-panel/mal-ind-lts</property>
+                    <property>controls/test/test-panel/mal-ind-lts-btn</property>
                     <value>0</value>
                 </binding>
             </item>

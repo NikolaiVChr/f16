@@ -236,31 +236,6 @@
 	    <height>25</height>
 	</text>
 
-	<hrule/>
-
-	<group>
-		<layout>hbox</layout>
-		<button>
-	        <legend>Load DTC</legend>
-	        <equal>true</equal>
-	        <binding>
-	            <command>nasal</command>
-	            <script>file_selector.open()</script>
-	        </binding>
-	    </button>
-	    <button>
-	        <legend>Save DTC</legend>
-	        <equal>true</equal>
-	        <enable>
-	        	<value>1</value>
-	        </enable>
-	        <binding>
-	            <command>nasal</command>
-	            <script>save_selector.open();</script>
-	        </binding>
-	    </button>
-	</group>
-
 	<empty><stretch>1</stretch></empty>
 
 </PropertyList>

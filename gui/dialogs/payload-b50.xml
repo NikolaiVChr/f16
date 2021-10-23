@@ -269,6 +269,17 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>4</row>
             <col>2</col>
+            <legend>A/G Unguided Retarded (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_mkair();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>6</row>
+            <col>2</col>
             <legend>A/G Unguided Heavy (2 bags)</legend>
             <binding>
                 <command>nasal</command>
@@ -278,7 +289,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>6</row>
+            <row>8</row>
             <col>2</col>
             <legend>A/G Cluster CEM (2 bags)</legend>
             <binding>
@@ -289,7 +300,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>8</row>
+            <row>10</row>
             <col>2</col>
             <legend>A/G Cluster SFW (WCMD, 2 bags)</legend>
             <binding>
@@ -300,7 +311,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>10</row>
+            <row>12</row>
             <col>2</col>
             <legend>A/G LGB Light (PW-II, 2 bags)</legend>
             <binding>
@@ -311,7 +322,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>12</row>
+            <row>14</row>
             <col>2</col>
             <legend>A/G LGB Heavy (PW-III, 2 bags)</legend>
             <binding>
@@ -322,7 +333,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>14</row>
+            <row>16</row>
             <col>2</col>
             <legend>A/G GPS (JDAM, 2 bags)</legend>
             <binding>
@@ -333,7 +344,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>16</row>
+            <row>18</row>
             <col>2</col>
             <legend>A/G GPS (L-JDAM, 2 bags)</legend>
             <binding>
@@ -344,7 +355,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>18</row>
+            <row>20</row>
             <col>2</col>
             <legend>A/G LGB + GPS (2 bags)</legend>
             <binding>
@@ -355,7 +366,7 @@
         
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>20</row>
+            <row>22</row>
             <col>2</col>
             <legend>A/G Strategic (Unguided, 2 bags XL)</legend>
             <binding>
@@ -366,7 +377,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>22</row>
+            <row>24</row>
             <col>2</col>
             <legend>Tactical Test and Evaluation (2 bags)</legend>
             <binding>
@@ -539,6 +550,12 @@
 
         <hrule>
             <row>21</row>
+            <col>0</col>
+            <colspan>6</colspan>
+        </hrule>
+
+        <hrule>
+            <row>23</row>
             <col>0</col>
             <colspan>6</colspan>
         </hrule>

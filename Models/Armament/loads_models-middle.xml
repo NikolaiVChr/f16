@@ -104,6 +104,17 @@
 </model>
 
 <model>
+  <name>Station3_1xGBU54</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-54/GBU-54.xml</path>
+  <offsets>
+   <x-m>0.525</x-m>
+   <y-m>-2.879</y-m>
+   <z-m>-0.398</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
+
+<model>
   <name>Station3_MK83</name>
   <path>Aircraft/f16/Models/Armament/Weapons/MK-83/duorack-3.xml</path>
   <offsets>
@@ -403,6 +414,17 @@
     <pitch-deg>-4.5</pitch-deg>
   </offsets>
 </model>
+
+<model>
+  <name>Station7_1xGBU54</name>
+  <path>Aircraft/f16/Models/Armament/Weapons/GBU-54/GBU-54.xml</path>
+  <offsets>
+   <x-m>0.525</x-m>
+   <y-m>2.879</y-m>
+   <z-m>-0.398</z-m>
+   <pitch-deg>-4.5</pitch-deg>
+  </offsets>
+ </model>
 
 <model>
   <name>Station7_MK83</name>

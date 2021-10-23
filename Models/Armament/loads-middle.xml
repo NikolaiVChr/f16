@@ -251,6 +251,25 @@
 
  <animation>
   <type>select</type>
+  <object-name>Station3_1xGBU54</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-2-set</property>
+        <value>1 x GBU-54</value>
+    </equals>
+    <equals>
+      <property>payload/armament/station/id-2-type</property>
+      <value>GBU-54</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-2-count</property>
+      <value>0</value>
+    </greater-than>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
   <object-name>Station3_MK83</object-name>
   <condition>
     <equals>
@@ -496,6 +515,25 @@
         <property>payload/armament/station/id-6-set</property>
         <value>2 x GBU-54</value>
       </equals>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Station7_1xGBU54</object-name>
+  <condition>
+    <equals>
+        <property>payload/armament/station/id-6-set</property>
+        <value>1 x GBU-54</value>
+    </equals>
+    <equals>
+      <property>payload/armament/station/id-6-type</property>
+      <value>GBU-54</value>
+    </equals>
+    <greater-than>
+      <property>payload/armament/station/id-6-count</property>
+      <value>0</value>
+    </greater-than>
   </condition>
  </animation>
 

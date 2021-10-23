@@ -31,6 +31,7 @@
             <path>/f16/avionics/intercom-volume</path>
             <path>/f16/effects/dirt</path>
             <path>/f16/effects/rust</path>
+            <path>/environment/season</path>
         </aircraft-data>
         <tags>
             <tag>fighter</tag>
