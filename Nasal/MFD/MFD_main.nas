@@ -3581,24 +3581,24 @@ var MFD_Device =
                     }
                 }
                 
-                for (var l = 1; l<=6;l+=1) {
+                for (var l = 0; l<6;l+=1) {
                     # threat circles
-                    if (l==1) {
+                    if (l==0) {
                         me.ci = me.root.c1;
                         me.cit = me.root.ct1;
-                    } elsif (l==2) {
+                    } elsif (l==1) {
                         me.ci = me.root.c2;
                         me.cit = me.root.ct2;
-                    } elsif (l==3) {
+                    } elsif (l==2) {
                         me.ci = me.root.c3;
                         me.cit = me.root.ct3;
-                    } elsif (l==4) {
+                    } elsif (l==3) {
                         me.ci = me.root.c4;
                         me.cit = me.root.ct4;
-                    } elsif (l==5) {
+                    } elsif (l==4) {
                         me.ci = me.root.c5;
                         me.cit = me.root.ct5;
-                    } elsif (l==6) {
+                    } elsif (l==5) {
                         me.ci = me.root.c6;
                         me.cit = me.root.ct6;
                     }
