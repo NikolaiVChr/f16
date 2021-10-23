@@ -84,10 +84,10 @@
               callback: load_line2, title: "Load Lines 2", button: "Load",
               dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.gpx","*.fgfp"]);
 
-             var file_selector = gui.FileSelector.new(
+             var file_selector_dtc = gui.FileSelector.new(
               callback: load_stpts, title: "Load data", button: "Load",
               dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.f16dtc"]);
-            var save_selector = gui.FileSelector.new(
+            var save_selector_dtc = gui.FileSelector.new(
               callback: save_stpts, title: "Save data", button: "Save",
               dir: defaultDirInFileSelector, dotfiles: 1, file: "f16-stpt-iff-and-dl.f16dtc", pattern: ["*.f16dtc"]);
             
@@ -96,8 +96,8 @@
         <close><![CDATA[
             file_selector_1.del();            
             file_selector_2.del();            
-            file_selector.del();            
-            save_selector.del();
+            file_selector_dtc.del();            
+            save_selector_dtc.del();
         ]]></close>
     </nasal>
 
@@ -137,7 +137,7 @@
 	        <equal>true</equal>
 	        <binding>
 	            <command>nasal</command>
-	            <script>file_selector.open()</script>
+	            <script>file_selector_dtc.open()</script>
 	        </binding>
 	    </button>
 	    <button>
@@ -148,7 +148,7 @@
 	        </enable>
 	        <binding>
 	            <command>nasal</command>
-	            <script>save_selector.open();</script>
+	            <script>save_selector_dtc.open();</script>
 	        </binding>
 	    </button>
 	</group>
