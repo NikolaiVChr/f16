@@ -4,20 +4,20 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">USAF 31FW, 510FS AV HGV #046</name>
-    <texture>Liveries/Block40/89-2046.png</texture>
+    <name type="string">USAF 149FW, 198FS SA "25th Anniversary"</name>
+    <texture>Liveries/Block30/86-0331.png</texture>
     <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/standard.white.logos.png</texture>
+    <texture>Liveries/standard.logos.color.png</texture>
    </livery-logo>
 
-   <livery-patch>
-            <texture>Liveries/Block40/patch.buzzards.png</texture>
+    <livery-patch>
+        <texture>Liveries/patch.texas.png</texture>
     </livery-patch>
 
     <livery-pod>
-        <texture>Liveries/Block40/pod.buzzards.png</texture>
+        <texture>Armament/External-stores/MXU-648.png</texture>
     </livery-pod>
 
     <f16>

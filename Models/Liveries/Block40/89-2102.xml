@@ -4,8 +4,8 @@
  <sim>
   <model> 
    <livery>
-    <name type="string">USAF 31FW, 510FS AV HGV #046</name>
-    <texture>Liveries/Block40/89-2046.png</texture>
+    <name type="string">USAF 31FW, 510FS AV HGV #102</name>
+    <texture>Liveries/Block40/89-2102.png</texture>
     <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
@@ -19,7 +19,7 @@
     <livery-pod>
         <texture>Liveries/Block40/pod.buzzards.png</texture>
     </livery-pod>
-
+    
     <f16>
         <dragchute type="bool">false</dragchute>
     </f16>

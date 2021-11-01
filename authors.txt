@@ -153,8 +153,8 @@ Axel Paccalin
 - Recursive function to compute the closest range in the past frames
 
 Baptiste "Bat" Campion
-- Belgian AF, Hellenic AF, PACAF-USN Aggressors, Dutch AF, PACAF, AFRC Makos livery packs
-- Portuguese AF, QF-16, Turkish AF, Royal Moroccan AF, Arizona ANG, DC ANG liveries
+- Belgian AF, Hellenic AF, PACAF-USN Aggressors, Dutch AF, PACAF, AFRC Makos, 31FW HGV livery packs
+- Portuguese AF, QF-16, Turkish AF, Royal Moroccan AF, Arizona ANG, DC ANG, Texas ANG, Alabama ANG, 89-2068 Special,  liveries
 
 Shaymo
 - Exterior and interior 3D model fixes
