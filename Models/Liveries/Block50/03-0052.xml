@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim> 
+  <model>
+   <livery>
+    <name type="string">PolAF 6.ELT, "2015 Demo #4052"</name>
+    <texture>Liveries/Block50/03-0052.png</texture>
+    <owner type="string">PolAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/standard.logos.black.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/patch.default.png</texture>
+  </livery-patch>
+
+  <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+    </livery-pod>
+
+        <f16>
+            <dragchute type="bool">true</dragchute>
+        </f16>
+  </model>
+ </sim>
+</PropertyList>
