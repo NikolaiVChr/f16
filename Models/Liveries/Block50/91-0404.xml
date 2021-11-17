@@ -4,16 +4,16 @@
  <sim>
   <model>
    <livery>
-    <name type="string">USAF 53TEG, 422TES OT "Have Glass V"</name>
-    <texture>Liveries/Block50/91-0374.png</texture>
+    <name type="string">USAF 53TEG, 422TES OT HGV #404</name>
+    <texture>Liveries/Block50/91-0404.png</texture>
     <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/Block50/OT-374.png</texture>
+    <texture>Liveries/standard.white.logos.png</texture>
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/patch.default.png</texture>
+      <texture>Liveries/Block50/patch.422TES.png</texture>
    </livery-patch>
 
   <livery-pod>
