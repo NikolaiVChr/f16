@@ -5,7 +5,7 @@
   <model>
    <livery>
     <name type="string">YF-16 Prototype</name>
-    <texture>Liveries/yf/yf16.png</texture>
+    <texture>Liveries/yf/75-0745.png</texture>
     
     <owner type="string">USAF</owner>
    </livery>
