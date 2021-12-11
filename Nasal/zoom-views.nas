@@ -8,11 +8,9 @@ var max_dist = 0;
 var canChangeZOffset = 0;
 var decStep = -2.5;
 var incStep = 2.5;
-var viewName = "XX";
 
 var fovZoom = func(d) {
-	viewName = getprop("/sim/current-view/name");
-	canChangeZOffset = getprop("/sim/current-view/type") == "lookat" and viewName != "Tower View" and viewName != "Fly-By View" and viewName != "Chase View" and viewName != "Chase View Without Yaw" and viewName != "Walk View" and viewName != "Missile View";
+	canChangeZOffset = getprop("/sim/current-view/name") == "Helicopter View";
 	
 	if (getprop("/sim/current-view/z-offset-m") <= -50) {
 		decStep = -5;

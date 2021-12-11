@@ -1,5 +1,5 @@
 # General Dynamics F-16 Autoflight System
-# Copyright (c) 2019 Josh Davidson (Octal450)
+# Copyright (c) 2021 Josh Davidson (Octal450)
 
 setprop("/autopilot/route-manager/advance", 1);
 
