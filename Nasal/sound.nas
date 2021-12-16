@@ -247,7 +247,7 @@ setlistener("instrumentation/radar/radar-standby", button2, nil, 0);
 setlistener("instrumentation/altimeter/setting-inhg", click3, nil, 0);
 setlistener("sim/model/f16/instrumentation/airspeed-indicator/safe-speed-limit-bug", click3, nil, 0);
 setlistener("controls/fuel/external-transfer", click2, nil, 0);
-setlistener("instrumentation/heading-indicator-fg/offset-deg", click3, nil, 0);
+setlistener("instrumentation/heading-indicator/heading-bug-deg", click3, nil, 0);
 setlistener("instrumentation/nav[0]/radials/selected-deg", click3, nil, 0);
 setlistener("sim/model/f16/controls/navigation/instrument-mode-panel/mode/rotary-switch-knob", knob, nil, 0);
 setlistener("controls/fuel/qty-selector", knob, nil, 0);
