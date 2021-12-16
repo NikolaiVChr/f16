@@ -223,10 +223,9 @@
 			</function>
 		</fcs_function>
 		
-		<pure_gain name="autoflight/roll/heading/pi-v">
+		<pure_gain name="autoflight/roll/heading/target-roll-deg">
 			<input>autoflight/roll/heading-error-deg</input>
 			<gain>autoflight/roll/heading/gain</gain>
-			<output>autoflight/roll/heading/pi</output>
 			<clipto>
 				<min>-autoflight/roll/max-bank-deg</min>
 				<max>autoflight/roll/max-bank-deg</max>
@@ -358,7 +357,7 @@
 		
 		<switch name="autoflight/roll/target-roll-deg">
 			<default value="/orientation/roll-deg"/>
-			<test logic="AND" value="autoflight/roll/heading/pi">
+			<test logic="AND" value="autoflight/roll/heading/target-roll-deg">
 				autoflight/output/roll-master eq 1
 				autoflight/switch-roll ne 0
 			</test>
