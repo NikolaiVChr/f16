@@ -82,7 +82,7 @@
 			</text>
 			<text>
 				<halign>left</halign>
-				<label>HDG SEL: Holds the current heading</label>
+				<label>HDG SEL: Holds the heading selected on the HSI</label>
 			</text>
 			<text>
 				<halign>left</halign>
@@ -150,7 +150,7 @@
 			</text>
 			<text>
 				<halign>left</halign>
-				<label>HDG SEL: Holds the current heading</label>
+				<label>HDG SEL: Holds the heading selected on the HSI</label>
 			</text>
 			<text>
 				<halign>left</halign>

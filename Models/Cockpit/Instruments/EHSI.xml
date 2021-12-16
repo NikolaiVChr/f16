@@ -91,8 +91,10 @@
         <hovered>
             <binding>
                 <command>set-tooltip</command>
-                <tooltip-id>hdg</tooltip-id>
-                <label>Heading</label>
+				<tooltip-id>ehsi-hdg</tooltip-id>
+				<mapping>heading</mapping>
+				<label>Heading Bug: %3d</label>
+				<property>instrumentation/heading-indicator/heading-bug-deg</property>
             </binding>
         </hovered>
     </animation>
@@ -155,8 +157,10 @@
         <hovered>
             <binding>
                 <command>set-tooltip</command>
-                <tooltip-id>crs</tooltip-id>
-                <label>Course</label>
+				<tooltip-id>ehsi-hdg</tooltip-id>
+				<mapping>heading</mapping>
+				<label>Course: %3d</label>
+				<property>instrumentation/nav[0]/radials/selected-deg</property>
             </binding>
         </hovered>
     </animation>
