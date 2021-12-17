@@ -1251,7 +1251,7 @@ var a2s_antiship2 = func {
 var b20_train_aa = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.dumb3WT);
-        pylon2.loadSet(pylonSets.podACMI);
+        pylon2.loadSet(pylonSets.dumb1);
         pylon3.loadSet(pylonSets.empty);
         pylon4.loadSet(pylonSets.empty);
         pylon5.loadSet(pylonSets.fuel30);
