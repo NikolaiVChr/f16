@@ -6,9 +6,9 @@
    <livery>
     <name type="string">USAF 31FW, 510FS AV "Guardian Angel"</name>
     <texture>Liveries/Block40/89-2001_2.png</texture>
-    
     <owner type="string">USAF</owner>
    </livery>
+   
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>
    </livery-logo>

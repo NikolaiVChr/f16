@@ -6,9 +6,9 @@
    <livery>
     <name type="string">USAF 31FW, 555FS AV HGV #425</name>
     <texture>Liveries/Block40/88-0425.png</texture>
-    
     <owner type="string">USAF</owner>
    </livery>
+   
    <livery-logo>
     <texture>Liveries/standard.white.logos.png</texture>
    </livery-logo>

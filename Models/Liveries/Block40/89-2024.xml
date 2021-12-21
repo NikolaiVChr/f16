@@ -6,9 +6,9 @@
    <livery>
     <name type="string">USAF 31FW, 555FS AV "BARS1"</name>
     <texture>Liveries/Block40/89-2024.png</texture>
-    
     <owner type="string">USAF</owner>
    </livery>
+   
    <livery-logo>
     <texture>Liveries/Block40/AV-024_BARS1.png</texture>
    </livery-logo>

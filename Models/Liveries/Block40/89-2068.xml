@@ -6,9 +6,9 @@
    <livery>
     <name type="string">USAF 31FW, 555FS AV "J-Mav16 CC"</name>
     <texture>Liveries/Block40/89-2068.png</texture>
-    
     <owner type="string">USAF</owner>
    </livery>
+   
    <livery-logo>
     <texture>Liveries/Block40/AV-068_Mav.png</texture>
    </livery-logo>
