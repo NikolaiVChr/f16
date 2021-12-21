@@ -713,9 +713,9 @@ AIContact = {
 	#
 	#
 
-	blep: func (time, searchInfo, strength) {
+	blep: func (time, searchInfo, strength, stt) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
-		# blep: time, rcs_strength, dist, heading, deviations vector, speed, closing-rate, altitude, coord
+		# blep: time, rcs_strength, dist, heading, deviations vector, speed, closing-rate, altitude, coord, stt
 		var newBlep = [];
 		var value = 0;
 		me.getCoord();
@@ -765,7 +765,8 @@ AIContact = {
 			append(newBlep, nil);#7
 		}
 		append(newBlep, me.coord);#8
-		append(me.bleps, newBlep);#9
+		append(newBlep, stt);#9
+		append(me.bleps, newBlep);
 	},
 
 	getBleps: func {
@@ -791,6 +792,14 @@ AIContact = {
 			if (me.bleps[size(me.bleps)-1][3] != nil) {
 				return 1;
 			}
+		}
+		return 0;
+	},
+
+	hasSTT: func {
+		# convinience method
+		if (size(me.bleps)) {
+			return me.bleps[size(me.bleps)-1][9];
 		}
 		return 0;
 	},
@@ -1012,7 +1021,8 @@ AIContact = {
 		return me.chaffProp;
 	},
 	isPainted: func {
-		return elapsedProp.getValue()- me.getLastBlepTime() < 0.75;
+		# Only when single-target-track
+		return me.hasSTT() and elapsedProp.getValue() - me.getLastBlepTime() < 0.75;
 	},
 	isLaserPainted: func {
 		if (!laserOn.getValue()) return 0;

@@ -496,7 +496,7 @@ var APG68 = {
 		if (me.enabled) {
 			me.focus = me.getPriorityTarget();
 			if (me.focus != nil and me.focus.callsign != "") {
-				if (me.currentMode["painter"] == 1) sttSend.setValue(left(md5(me.focus.callsign), 4));
+				if (me.currentMode.painter) sttSend.setValue(left(md5(me.focus.callsign), 4));
 				else sttSend.setValue("");
 				if (steerpoints.sending == nil) {
 			        datalink.send_data({"contacts":[{"callsign":me.focus.callsign,"iff":0}]});
@@ -553,7 +553,7 @@ var APG68 = {
 			me.beamDeviation = vector.Math.angleBetweenVectors(me.positionDirection, me.localToTarget);
 			#print("me.beamDeviation ", me.beamDeviation);
 			if (me.beamDeviation < me.instantFoVradius) {
-				me.registerBlep(contact, me.dev);
+				me.registerBlep(contact, me.dev, me.currentMode.painter);
 				#print("REGISTER BLEP");
 
 				# Return here, so that each instant FoV max gets 1 target:
@@ -561,7 +561,7 @@ var APG68 = {
 			}
 		}
 	},
-	registerBlep: func (contact, dev, doppler_check = 1) {
+	registerBlep: func (contact, dev, stt, doppler_check = 1) {
 		if (!contact.isVisible()) return 0;
 		if (doppler_check and contact.isHiddenFromDoppler()) return 0;
 		me.maxDistVisible = me.currentMode.rcsFactor * me.targetRCSSignal(self.getCoord(), dev[3], contact.model, dev[4], dev[5], dev[6],me.rcsRefDistance*NM2M,me.rcsRefValue);
@@ -571,7 +571,7 @@ var APG68 = {
 			if (me.extInfo == nil) {
 				return 0;
 			}
-			contact.blep(me.elapsed, me.extInfo, me.maxDistVisible);
+			contact.blep(me.elapsed, me.extInfo, me.maxDistVisible, stt);
 			if (!me.containsVectorContact(me.vector_aicontacts_bleps, contact)) {
 				append(me.vector_aicontacts_bleps, contact);
 			}
@@ -718,6 +718,7 @@ var RadarMode = {
 	lowerAngle: 10,
 	EXPsupport: 0,#if support zoom
 	EXPsearch: 1,# if zoom should include search targets
+	painter: 0,
 	showAZ: func {
 		return 1;#me.az != 60; # hmm, does the blue lines at edge of b-scope look messy? If this return false, then they are also not shown in PPI.
 	},
@@ -806,7 +807,7 @@ var RadarMode = {
 		} elsif (me.azimuthTilt < -me.radar.fieldOfRegardMaxAz+me.az) {
 			me.azimuthTilt = -me.radar.fieldOfRegardMaxAz+me.az;
 		}
-	}
+	},
 	getPriority: func {
 		return me["priorityTarget"];
 	},
@@ -1170,7 +1171,7 @@ var F16VSMode = {
 		if (designate_contact == nil) return;
 		me.radar.setCurrentMode(me.subMode, designate_contact);
 		me.subMode.radar = me.radar;# find some smarter way of setting it.
-		me.radar.registerBlep(designate_contact, designate_contact.getDeviationStored());
+		me.radar.registerBlep(designate_contact, designate_contact.getDeviationStored(), 0);
 	},
 	designatePriority: func {
 		# NOP

@@ -4849,8 +4849,8 @@ var AIM = {
 			# Notice: seeker_xxxx_target is used both for denoting where seeker should move towards and where the target is. In this case its the latter:
 			me.convertGlobalToSeekerViewDirection(me.Tgt.get_bearing(), me.Tgt.getElevation(), OurHdg.getValue(), OurPitch.getValue(), OurRoll.getValue());
 			me.testSeeker();
-			if (!me.inBeam) {
-				me.printSearch("out of beam");
+			if (!me.inBeam or (me.guidance == "semi-radar" and !me.is_painted(me.Tgt))) {
+				me.printSearch("out of beam or no beam for fox 1");
 				me.status = MISSILE_SEARCH;
 				me.Tgt = nil;
 				me.SwSoundOnOff.setBoolValue(TRUE);
