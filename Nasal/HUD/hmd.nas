@@ -1007,7 +1007,7 @@ var F16_HMD = {
               me.model = me.u.getModel();
             me.lastCoord = me.u.getLastCoord();
             if ((me.target_idx < me.max_symbols or me.designatedDistanceFT == nil) and me.lastCoord != nil and me.lastCoord.is_defined()) {
-                me.echoPos = f16.HudMath.getDevFromCoord(, hdp.hmdH, hdp.hmdP, hdp, geo.viewer_position());
+                me.echoPos = f16.HudMath.getDevFromCoord(me.lastCoord, hdp.hmdH, hdp.hmdP, hdp, geo.viewer_position());
                 #print(me.echoPos[0],",",me.echoPos[1],"    ", hdp.hmdH, "," ,hdp.hmdP);
                 me.echoPos[0] = geo.normdeg180(me.echoPos[0]);
                 #print("    ",me.echoPos[0]);
