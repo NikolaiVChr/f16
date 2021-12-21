@@ -1760,7 +1760,7 @@ var MFD_Device =
                     } else {
                         continue;
                     }
-                    me.echoPos = [me.wdt*0.5*geo.normdeg180(me.bleppy[4][0])/60,-me.distPixels];
+                    me.echoPos = [me.wdt*0.5*geo.normdeg180(contact.getDeviationOfBlep(me.bleppy))/60,-me.distPixels];
                     me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
                     if (radar_system.apg68Radar.currentMode.EXPsearch and me.close and exp) {
                         me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
@@ -1801,7 +1801,7 @@ var MFD_Device =
                         me.c_alt        = contact.getAltitude();
                     } else {
                         me.c_heading    = me.bleppy[3];         
-                        me.c_devheading = me.bleppy[4][0];# if [3] is non-nil then this is never nil
+                        me.c_devheading = contact.getDeviationOfBlep(me.bleppy);
                         me.c_speed      = me.bleppy[5];
                         me.c_alt        = me.bleppy[7];
                     }
@@ -1861,7 +1861,7 @@ var MFD_Device =
                 # Paint IFF symbols
                 me.bleppy = me.bleps[me.sizeBleps-1];
                 if (me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
-                    me.echoPos = [me.wdt*0.5*geo.normdeg180(me.bleppy[4][0])/60,-me.distPixels];
+                    me.echoPos = [me.wdt*0.5*geo.normdeg180(contact.getDeviationOfBlep(me.bleppy))/60,-me.distPixels];
                     me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
                     if (me.close and exp) {
                         me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
@@ -3950,7 +3950,7 @@ var MFD_Device =
                 me.c_spd = contact.getSpeed();
             } else {
                 me.c_rng = contact.getLastRangeDirect()*M2NM;
-                me.c_rbe = contact.getLastDirection()[0];
+                me.c_rbe = contact.getDeviationOfBlep(contact.getLastBlep()); #contact.getLastDirection()[0];
                 me.c_hea = contact.getLastHeading();
                 me.c_alt = contact.getLastAltitude();
                 me.c_spd = contact.getLastSpeed();

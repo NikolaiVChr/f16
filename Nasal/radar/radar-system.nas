@@ -774,6 +774,12 @@ AIContact = {
 		return me.bleps;
 	},
 
+	getLastBlep: func {
+		# get the frozen info needed for displays
+		# TODO: check this is safe always where used
+		return me.bleps[size(me.bleps)-1];
+	},
+
 	setBleps: func (bleps_cleaned) {
 		# call this after pruning the bleps
 		me.bleps = bleps_cleaned;
@@ -808,6 +814,13 @@ AIContact = {
 	getDeviationStored: func {
 		# get the frozen info needed for noseradar/radar
 		return me.devStored;
+	},
+
+	getDeviationOfBlep: func (bleepy) {
+		# TODO: make bleps a class
+		me.blepCoord = bleepy[8];
+		me.blepHeading = self.getCoord().course_to(me.blepCoord);
+		return me.blepHeading-self.getHeading();
 	},
 
 	storeThreat: func (threat) {
