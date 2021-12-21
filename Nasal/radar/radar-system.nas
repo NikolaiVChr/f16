@@ -48,6 +48,7 @@ var MARINE = 1;
 var SURFACE = 2;
 var ORDNANCE = 3;
 var POINT    = 4;
+var TERRASUNK = 5; # Terrain not loaded underneath this, most likely a MARINE, but might be a SURFACE.
 
 var ECEF = 0;
 var GPS = 1;
@@ -561,7 +562,9 @@ AIContact = {
     	me.tp      = me.prop.getNode("instrumentation/transponder/transmitted-id");
     	me.rdr     = me.prop.getNode("sim/multiplay/generic/int[2]");
 
-	    me.type    = me.determineType(me.prop.getName(), me.miss, me.alt.getValue(), me.model, me.speed==nil?nil:me.speed.getValue());
+	    me.type    = me.determineType(me.prop.getName(), me.miss, me.getCoord().alt()*M2FT, me.model, me.speed==nil?nil:me.speed.getValue());
+
+	    #print((me.getCoord().alt()*M2FT)~": "~me.get_Callsign()~" / "~me.model~" is type "~me.type);
 
 	    if (enable_tacobject) {
 		    me.tacobj = {parents: [tacview.tacobj]};
@@ -574,7 +577,7 @@ AIContact = {
 		if (me.prop.getPath() != newC.prop.getPath()) {
 			me.prop = newC.prop;
 			me.needInit = 1;
-			print("hmm "~newC.callsign);
+			print("hmm "~newC.callsign);# TODO: find out why I made this print() and why it outputs for AIM-120 (might have to do with pausing)
 		}
 		me.model = newC.model;
 		me.callsign = newC.callsign;
@@ -646,7 +649,9 @@ AIContact = {
         if(alt_ft < 5.0) {
 	        me.getCoord();
 	        me.geod = geodinfo(me.coord.lat(),me.coord.lon());
-        	if (me.geod == nil or (me.geod[1] != nil and !me.geod[1].solid)) {# if geod[1] is nil, its a building.
+        	if (me.geod == nil) {
+        		return TERRASUNK;
+        	} elsif (me.geod[1] != nil and !me.geod[1].solid) {# if geod[1] is nil, its a building.
         		return MARINE;
         	}
         }
@@ -654,6 +659,9 @@ AIContact = {
 	},
 
 	getType: func {
+		if(me.type == TERRASUNK) {
+			me.type = me.determineType(me.prop.getName(), me.miss, me.getCoord().alt()*M2FT, me.model, me.speed==nil?nil:me.speed.getValue());
+		}
 		if (me.type == AIR and (me.getSpeed() < 60 and !(isKnownHeli(me.model) and me.get_Speed() > 10))) me.type = SURFACE;
 		elsif (me.type != ORDNANCE and me.getSpeed() > 60) me.type = AIR;
 		elsif (me.type == SURFACE and me.get_Speed() > 10 and isKnownHeli(me.model)) me.type = AIR;
@@ -1241,6 +1249,7 @@ NoseRadar = {
 			if (filter_air and theType == AIR) continue;
 			if (filter_gnd and theType == SURFACE) continue;
 			if (filter_sea and theType == MARINE) continue;
+			if (filter_sea and theType == TERRASUNK) continue;
 			if (theType == ORDNANCE) continue;
 
 			if (!contact.isVisible()) {  # moved to nose radar. TODO: WHy double it in discradar? hmm, dont matter so much, its lightning fast
