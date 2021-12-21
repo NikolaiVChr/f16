@@ -421,6 +421,80 @@ var self = SelfContact.new();
 
 
 
+
+
+
+#  ██████  ██      ███████ ██████  
+#  ██   ██ ██      ██      ██   ██ 
+#  ██████  ██      █████   ██████  
+#  ██   ██ ██      ██      ██      
+#  ██████  ███████ ███████ ██      
+#                                  
+#                                  
+Blep = {
+	new: func (valueVector) {
+		var b = {parents: [Blep]};
+		b.values = valueVector;
+		return b;
+	},
+
+	hasTrackInfo: func {
+		return me.values[3] != nil;
+	},
+
+	hasSTT: func {
+		return me.values[9];
+	},
+
+	getAZDeviation: func {
+		me.blepCoord = me.values[8];
+		me.blepHeading = self.getCoord().course_to(me.blepCoord);
+		return me.blepHeading-self.getHeading();
+	},
+
+	getHeading: func {
+		return me.values[3];
+	},
+
+	getStrength: func {
+		# RCS
+		return me.values[1];
+	},
+
+	getSpeed: func {
+		return me.values[5];
+	},	
+
+	getDirection: func {
+		# Should not be used
+		return me.values[4];
+	},
+
+	getRangeDirect: func {
+		# Meters
+		return me.values[2];
+	},
+
+	getAltitude: func {
+		# Feet
+		return me.values[7];
+	},
+
+	getCoord: func {
+		return me.values[8];
+	},
+
+	getBlepTime: func {
+		return me.values[0];
+	},
+
+	getClosureRate: func {
+		me.clr = me.values[6];
+		return me.clr==nil?0:me.clr;
+	},
+};
+
+
 #   ██████  ██████  ███    ██ ████████  █████   ██████ ████████ 
 #  ██      ██    ██ ████   ██    ██    ██   ██ ██         ██    
 #  ██      ██    ██ ██ ██  ██    ██    ███████ ██         ██    
@@ -716,37 +790,37 @@ AIContact = {
 	blep: func (time, searchInfo, strength, stt) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
 		# blep: time, rcs_strength, dist, heading, deviations vector, speed, closing-rate, altitude, coord, stt
-		var newBlep = [];
+		var newArray = [];
 		var value = 0;
 		me.getCoord();
 		var ownship = self.getCoord();
-		append(newBlep, time);#0
-		append(newBlep, strength);#1
+		append(newArray, time);#0
+		append(newArray, strength);#1
 		if (searchInfo[0]) {
 			value = ownship.direct_distance_to(me.coord);
-			append(newBlep, value);#2
+			append(newArray, value);#2
 		} else {
-			append(newBlep, nil);#2
+			append(newArray, nil);#2
 		}
 		if (searchInfo[1]) {
 			value = me.getHeading();
-			append(newBlep, value);#3
+			append(newArray, value);#3
 			me.lastRegisterWasTrack = 1;
 		} else {
-			append(newBlep, nil);#3
+			append(newArray, nil);#3
 			me.lastRegisterWasTrack = 0;
 		}
 		if (searchInfo[2]) {
 			value = [me.getDeviationHeading(), me.getDeviationPitch(), me.getBearing(), me.getElevation()];
-			append(newBlep, value);#4
+			append(newArray, value);#4
 		} else {
-			append(newBlep, nil);#4
+			append(newArray, nil);#4
 		}
 		if (searchInfo[3]) {
 			value = me.getSpeed();#kt
-			append(newBlep, value);#5
+			append(newArray, value);#5
 		} else {
-			append(newBlep, nil);#5
+			append(newArray, nil);#5
 		}
 		if (searchInfo[4]) {
 			var bearing = ownship.course_to(me.coord);
@@ -754,19 +828,19 @@ AIContact = {
 			var ownship_spd = self.getSpeed() * math.cos( -(bearing - self.getHeading()) * D2R);
             var target_spd  = me.getSpeed()   * math.cos( -(rbearing - me.getHeading()) * D2R);
 			value = ownship_spd + target_spd;
-			append(newBlep, value);#6
+			append(newArray, value);#6
 		} else {
-			append(newBlep, nil);#6
+			append(newArray, nil);#6
 		}
 		if (searchInfo[5]) {
 			value = me.coord.alt()*M2FT;
-			append(newBlep, value);#7
+			append(newArray, value);#7
 		} else {
-			append(newBlep, nil);#7
+			append(newArray, nil);#7
 		}
-		append(newBlep, me.coord);#8
-		append(newBlep, stt);#9
-		append(me.bleps, newBlep);
+		append(newArray, me.coord);#8
+		append(newArray, stt);#9
+		append(me.bleps, Blep.new(newArray));
 	},
 
 	getBleps: func {
@@ -789,7 +863,7 @@ AIContact = {
 	hasTrackInfo: func {
 		# convinience method
 		if (size(me.bleps)) {
-			if (me.bleps[size(me.bleps)-1][3] != nil) {
+			if (me.bleps[size(me.bleps)-1].hasTrackInfo()) {
 				return 1;
 			}
 		}
@@ -799,7 +873,7 @@ AIContact = {
 	hasSTT: func {
 		# convinience method
 		if (size(me.bleps)) {
-			return me.bleps[size(me.bleps)-1][9];
+			return me.bleps[size(me.bleps)-1].hasSTT();
 		}
 		return 0;
 	},
@@ -825,13 +899,6 @@ AIContact = {
 		return me.devStored;
 	},
 
-	getDeviationOfBlep: func (bleepy) {
-		# TODO: make bleps a class
-		me.blepCoord = bleepy[8];
-		me.blepHeading = self.getCoord().course_to(me.blepCoord);
-		return me.blepHeading-self.getHeading();
-	},
-
 	storeThreat: func (threat) {
 		# [bearing,heading,coord,transponder,radar,devheading]
 		# should really be a hash instead of vector
@@ -849,23 +916,23 @@ AIContact = {
 
 	getLastHeading: func {
 		if (size(me.bleps)) {
-			return me.bleps[size(me.bleps)-1][3];
+			return me.bleps[size(me.bleps)-1].getHeading();
 		}
 		return nil;
 	},	
 
 	getLastSpeed: func {
 		if (size(me.bleps)) {
-			return me.bleps[size(me.bleps)-1][5];
+			return me.bleps[size(me.bleps)-1].getSpeed();
 		}
 		return nil;
 	},	
 
 	getLastDirection: func {
-		
+		# Should not be used
 		if (size(me.bleps)) {
 			#if (me.bleps[size(me.bleps)-1][4] != nil) {
-				return me.bleps[size(me.bleps)-1][4];
+				return me.bleps[size(me.bleps)-1].getDirection();
 			#}
 		}
 		return nil;
@@ -874,7 +941,7 @@ AIContact = {
 	getLastRangeDirect: func {
 		if (size(me.bleps)) {
 			#if (me.bleps[size(me.bleps)-1][4] != nil) {
-				return me.bleps[size(me.bleps)-1][2];
+				return me.bleps[size(me.bleps)-1].getRangeDirect();
 			#}
 		}
 		return nil;
@@ -883,7 +950,7 @@ AIContact = {
 	getLastAltitude: func {
 		if (size(me.bleps)) {
 			#if (me.bleps[size(me.bleps)-1][4] != nil) {
-				return me.bleps[size(me.bleps)-1][7];
+				return me.bleps[size(me.bleps)-1].getAltitude();
 			#}
 		}
 		return nil;
@@ -891,7 +958,7 @@ AIContact = {
 
 	getLastCoord: func {
 		if (size(me.bleps)) {
-			return me.bleps[size(me.bleps)-1][8];
+			return me.bleps[size(me.bleps)-1].getCoord();
 		}
 		return nil;
 	},
@@ -899,7 +966,7 @@ AIContact = {
 	getLastBlepTime: func {
 		if (size(me.bleps)) {
 			#if (me.bleps[size(me.bleps)-1][4] != nil) {
-				return me.bleps[size(me.bleps)-1][0];
+				return me.bleps[size(me.bleps)-1].getBlepTime();
 			#}
 		}
 		return -1000;
@@ -908,7 +975,7 @@ AIContact = {
 	getLastClosureRate: func {
 		if (size(me.bleps)) {
 			#if (me.bleps[size(me.bleps)-1][4] != nil) {
-				me.clr = me.bleps[size(me.bleps)-1][6];
+				me.clr = me.bleps[size(me.bleps)-1].getClosureRate();
 				return me.clr==nil?0:me.clr;
 			#}
 		}

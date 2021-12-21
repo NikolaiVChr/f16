@@ -1752,15 +1752,15 @@ var MFD_Device =
             }
             me.bleps = contact.getBleps();
             foreach(me.bleppy ; me.bleps) {
-                if (me.i < me.root.maxB and me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.timeToKeepBleps and me.bleppy[4] != nil and (me.bleppy[2] != nil or (me.bleppy[6] != nil and me.bleppy[6]>0))) {
-                    if (me.bleppy[6] != nil and radar_system.apg68Radar.currentMode.longName == radar_system.vsrMode.longName) {
-                        me.distPixels = me.bleppy[6]*(482/(1000));
-                    } elsif (me.bleppy[2] != nil) {
-                        me.distPixels = me.bleppy[2]*(482/(radar_system.apg68Radar.getRange()*NM2M));
+                if (me.i < me.root.maxB and me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToKeepBleps and me.bleppy.getDirection() != nil and (me.bleppy.getRangeDirect() != nil or (me.bleppy.getClosureRate() != nil and me.bleppy.getClosureRate()>0))) {
+                    if (me.bleppy.getClosureRate() != nil and radar_system.apg68Radar.currentMode.longName == radar_system.vsrMode.longName) {
+                        me.distPixels = math.min(950, me.bleppy.getClosureRate())*(482/(1000));
+                    } elsif (me.bleppy.getRangeDirect() != nil) {
+                        me.distPixels = me.bleppy.getRangeDirect()*(482/(radar_system.apg68Radar.getRange()*NM2M));
                     } else {
                         continue;
                     }
-                    me.echoPos = [me.wdt*0.5*geo.normdeg180(contact.getDeviationOfBlep(me.bleppy))/60,-me.distPixels];
+                    me.echoPos = [me.wdt*0.5*geo.normdeg180(me.bleppy.getAZDeviation())/60,-me.distPixels];
                     me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
                     if (radar_system.apg68Radar.currentMode.EXPsearch and me.close and exp) {
                         me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
@@ -1768,7 +1768,7 @@ var MFD_Device =
                     } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
                         continue;
                     }
-                    me.color = math.pow(1-(me.elapsed - me.bleppy[0])/radar_system.apg68Radar.currentMode.timeToKeepBleps, 2.2);
+                    me.color = math.pow(1-(me.elapsed - me.bleppy.getBlepTime())/radar_system.apg68Radar.currentMode.timeToKeepBleps, 2.2);
                     me.root.blep[me.i].setTranslation(me.echoPos);
                     me.root.blep[me.i].setColor(colorDot2[0]*me.color+colorBackground[0]*(1-me.color), colorDot2[1]*me.color+colorBackground[1]*(1-me.color), colorDot2[2]*me.color+colorBackground[2]*(1-me.color));
                     me.root.blep[me.i].show();
@@ -1780,7 +1780,7 @@ var MFD_Device =
                         me.printInfo(contact);
                         me.lockInfo = 1;
                     }
-                    if (cursor_click == me.root.index and (me.elapsed - me.bleppy[0]) < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
+                    if (cursor_click == me.root.index and (me.elapsed - me.bleppy.getBlepTime()) < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
                         if (math.abs(cursor_pos[0] - me.echoPos[0]) < 10 and math.abs(cursor_pos[1] - me.echoPos[1]) < 11) {
                             me.desig_new = contact;
                         }
@@ -1792,7 +1792,7 @@ var MFD_Device =
             if (contact["blue"] != 1 and me.sizeBleps and me.ii < me.root.maxT and (contact.hadTrackInfo() or contact["blue"] == 2) and me.iff == 0 and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName) {
                 # Paint bleps with tracks
                 me.bleppy = me.bleps[me.sizeBleps-1];
-                if ((me.bleppy[3] != nil and me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.timeToKeepBleps) or contact["blue"] == 2) {
+                if ((me.bleppy.hasTrackInfo() and me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToKeepBleps) or contact["blue"] == 2) {
                     me.color = contact["blue"] == 2?colorCircle1:colorCircle2;
                     if (contact["blue"] == 2) {
                         me.c_heading    = contact.getHeading();                  
@@ -1800,10 +1800,10 @@ var MFD_Device =
                         me.c_speed      = contact.getSpeed();
                         me.c_alt        = contact.getAltitude();
                     } else {
-                        me.c_heading    = me.bleppy[3];         
-                        me.c_devheading = contact.getDeviationOfBlep(me.bleppy);
-                        me.c_speed      = me.bleppy[5];
-                        me.c_alt        = me.bleppy[7];
+                        me.c_heading    = me.bleppy.getHeading();         
+                        me.c_devheading = me.bleppy.getAZDeviation();
+                        me.c_speed      = me.bleppy.getSpeed();
+                        me.c_alt        = me.bleppy.getAltitude();
                     }
                     me.rot = 22.5*math.round((me.c_heading-radar_system.self.getHeading()-me.c_devheading)/22.5);
                     me.root.blepTrianglePaths[me.ii].setRotation(me.rot*D2R);
@@ -1860,8 +1860,8 @@ var MFD_Device =
             } elsif (me.iff != 0 and contact["blue"] != 1 and contact.isVisible() and me.iiii < me.root.maxT and me.sizeBleps and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName) {
                 # Paint IFF symbols
                 me.bleppy = me.bleps[me.sizeBleps-1];
-                if (me.elapsed - me.bleppy[0] < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
-                    me.echoPos = [me.wdt*0.5*geo.normdeg180(contact.getDeviationOfBlep(me.bleppy))/60,-me.distPixels];
+                if (me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
+                    me.echoPos = [me.wdt*0.5*geo.normdeg180(me.bleppy.getAZDeviation())/60,-me.distPixels];
                     me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
                     if (me.close and exp) {
                         me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
@@ -3949,11 +3949,13 @@ var MFD_Device =
                 me.c_alt = contact.get_altitude();
                 me.c_spd = contact.getSpeed();
             } else {
-                me.c_rng = contact.getLastRangeDirect()*M2NM;
-                me.c_rbe = contact.getDeviationOfBlep(contact.getLastBlep()); #contact.getLastDirection()[0];
-                me.c_hea = contact.getLastHeading();
-                me.c_alt = contact.getLastAltitude();
-                me.c_spd = contact.getLastSpeed();
+                me.lastBlep = contact.getLastBlep();
+                
+                me.c_rng = me.lastBlep.getRangeDirect()*M2NM;
+                me.c_rbe = me.lastBlep.getAZDeviation();
+                me.c_hea = me.lastBlep.getHeading();
+                me.c_alt = me.lastBlep.getAltitude();
+                me.c_spd = me.lastBlep.getSpeed();
             }
 
 

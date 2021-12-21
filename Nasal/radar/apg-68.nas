@@ -586,7 +586,7 @@ var APG68 = {
 		foreach(contact ; me.vector_aicontacts_bleps) {
 			me.bleps_cleaned = [];
 			foreach (me.blep;contact.getBleps()) {
-				if (me.elapsed - me.blep[0] < me.currentMode.timeToKeepBleps) {
+				if (me.elapsed - me.blep.getBlepTime() < me.currentMode.timeToKeepBleps) {
 					append(me.bleps_cleaned, me.blep);
 				}
 			}
