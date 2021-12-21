@@ -946,6 +946,16 @@ AIContact = {
 		return nil;
 	},
 
+	getLastAZDeviation: func {
+		# Should not be used
+		if (size(me.bleps)) {
+			#if (me.bleps[size(me.bleps)-1][4] != nil) {
+				return me.bleps[size(me.bleps)-1].getAZDeviation();
+			#}
+		}
+		return nil;
+	},
+
 	getLastRangeDirect: func {
 		if (size(me.bleps)) {
 			#if (me.bleps[size(me.bleps)-1][4] != nil) {

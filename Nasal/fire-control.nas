@@ -1313,6 +1313,10 @@ var ContactTGP = {
         return geo.normdeg180(me.get_bearing()-getprop("orientation/heading-deg"));
 	},
 
+	getLastAZDeviation : func() {
+        return geo.normdeg180(me.get_bearing()-getprop("orientation/heading-deg"));
+	},
+
   get_altitude: func(){
       #Return Alt in feet
       return me.coord.alt()*M2FT;
