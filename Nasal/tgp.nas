@@ -289,17 +289,14 @@ var list = func () {
             var terrain = geo.Coord.new();
             terrain.set_latlon(terrainGeod.lat, terrainGeod.lon, terrainGeod.elevation);
             var ut = nil;
-            foreach (u ; awg_9.completeList) {
-                if (terrain.direct_distance_to(u.get_Coord(0))<45) {
+            foreach (u ; radar_system.getCompleteList()) {
+                if (terrain.direct_distance_to(u.get_Coord())<45) {
                     ut = u;
                     break;
                 }
             }
             if (ut!=nil) {
-                var contact = awg_9.Target.new(ut.propNode);
-                contact.setClass(awg_9.POINT);
-                contact.setVirtual(1);
-                contact.unique = rand();
+                var contact = ut.getNearbyVirtualContact(0);
                 armament.contactPoint = contact;
             } else {
                 armament.contactPoint = fc.ContactTGP.new("TGP-Spot",terrain,1);
@@ -551,7 +548,7 @@ var fast_loop = func {
                 steer = 0;
                 callsign = nil;
             }
-        } elsif (armament.contact != nil and armament.contact.get_display() and enable and masterMode) {
+        } elsif (armament.contact != nil and armament.contact.isVisible() and enable and masterMode) {
             # TGP follow radar lock
             flir_updater.click_coord_cam = armament.contact.get_Coord();
             setprop("/aircraft/flir/target/auto-track", 1);
@@ -583,7 +580,8 @@ var fast_loop = func {
             # - following steerpoint
             # - a GPS coord has been entered manually by "program GPS dialog"
             follow = 1;
-            vis = awg_9.TerrainManager.IsVisible(armament.contactPoint.propNode, nil);
+            vis = radar_system.terrain.fastTerrainCheck(armament.contactPoint);
+            if (vis > 0) vis = 1;
         }
         if (!vis or !masterMode) {
             setprop("/aircraft/flir/target/auto-track", 0);

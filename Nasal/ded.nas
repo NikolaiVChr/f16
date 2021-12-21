@@ -855,13 +855,13 @@ var dataEntryDisplay = {
 	},
 	
 	updateIFF: func() {
-		var target = awg_9.active_u;
+		var target = radar_system.apg68Radar.getPriorityTarget();
 		var sign = "";
 		var type = "";
 		var friend = "";
 		if (target != nil) {
 			sign = target.get_Callsign();
-			type = target.get_model();
+			type = target.getModel();
 		}
 		var frnd = 0;
 		if (sign != nil) {

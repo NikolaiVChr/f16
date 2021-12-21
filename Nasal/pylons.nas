@@ -290,7 +290,7 @@ var getDLZ = func {
         var w = fcs.getSelectedWeapon();
         if (w!=nil and w.parents[0] == armament.AIM) {
             var result = w.getDLZ(1);
-            if (result != nil and size(result) == 5 and result[4]<result[0]*1.5 and armament.contact != nil and armament.contact.get_display()) {
+            if (result != nil and size(result) == 5 and result[4]<result[0]*1.5 and armament.contact != nil and armament.contact.isVisible()) {
                 #target is within 150% of max weapon fire range.
         	    return result;
             }
@@ -1813,8 +1813,8 @@ var bore_loop = func {
         if (aim != nil and aim.type == "AIM-9") {
         	var hmd_active = getprop("payload/armament/hmd-active");
         	
-        	if (hmd_active==1 and aim.status < 1 and awg_9.active_u == nil) {
-        		aim.setContacts(awg_9.completeList);
+        	if (hmd_active==1 and aim.status < 1 and radar_system.apg68Radar.getPriorityTarget() == nil) {
+        		aim.setContacts(radar_system.getCompleteList());
         		var h = -geo.normdeg180(getprop("sim/current-view/heading-offset-deg"));
                 var p = getprop("sim/current-view/pitch-offset-deg");
         		if (math.sqrt(h*h+p*p) < aim.fcs_fov) {
@@ -1825,17 +1825,17 @@ var bore_loop = func {
 		                aim.commandRadar(0,-4);
 		                aim.setContacts([]);
 		            } else {
-		            	aim.setContacts(awg_9.completeList);
+		            	aim.setContacts(radar_system.getCompleteList());
 		                aim.commandDir(0,-4);# the real is bored to -6 deg below real bore
 		                bore = 1;
 		            }
             	}
             } elsif (standby == 1) {
                 #aim.setBore(1);
-                aim.setContacts(awg_9.completeList);
+                aim.setContacts(radar_system.getCompleteList());
                 aim.commandDir(0,-4);# the real is bored to -6 deg below real bore
                 bore = 1;
-            } elsif (awg_9.active_u != nil and aim.status == armament.MISSILE_LOCK and aim.Tgt.getUnique() != awg_9.active_u.getUnique()) {
+            } elsif (radar_system.apg68Radar.getPriorityTarget() != nil and aim.status == armament.MISSILE_LOCK and aim.Tgt.getUnique() != radar_system.apg68Radar.getPriorityTarget().getUnique()) {
             	# stop tracking target with IR and start try to lock up radar target
             	aim.commandRadar(0,-4);
                 aim.setContacts([]);
