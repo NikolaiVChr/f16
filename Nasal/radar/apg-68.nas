@@ -1944,24 +1944,27 @@ var F16MultiSTTMode = {
 #  ██         ██       ██    
 #                            
 #                            
-var F16FTTMode = {
+var F16SEAFTTMode = {
 	rootName: "",
 	shortName: "FTT",
-	longName: "Fixed Target Track",
+	longName: "SEA Mode - Fixed Target Track",
 	maxRange: 80,
 	detectAIR: 0,
 	detectSURFACE: 0,
 	detectMARINE: 1,
 	new: func (radar = nil) {
-		var mode = {parents: [F16FTTMode, F16STTMode, RadarMode]};
+		var mode = {parents: [F16SEAFTTMode, F16STTMode, RadarMode]};
 		mode.radar = radar;
 		return mode;
 	},
 };
 
 var F16GMFTTMode = {
+	longName: "Ground Map Mode - Fixed Target Track",
+	detectSURFACE: 1,
+	detectMARINE: 0,
 	new: func (radar = nil) {
-		var mode = {parents: [F16GMFTTMode, F16FTTMode, F16STTMode, RadarMode]};
+		var mode = {parents: [F16GMFTTMode, F16SEAFTTMode, F16STTMode, RadarMode]};
 		mode.radar = radar;
 		return mode;
 	},
@@ -1975,8 +1978,11 @@ var F16GMFTTMode = {
 };
 
 var F16GMTFTTMode = {
+	longName: "Ground Moving Target - Fixed Target Track",
+	detectSURFACE: 1,
+	detectMARINE: 0,
 	new: func (radar = nil) {
-		var mode = {parents: [F16GMTFTTMode, F16FTTMode, F16STTMode, RadarMode]};
+		var mode = {parents: [F16GMTFTTMode, F16SEAFTTMode, F16STTMode, RadarMode]};
 		mode.radar = radar;
 		return mode;
 	},
@@ -2023,7 +2029,7 @@ var vsrMode = F16VSMode.new(F16STTMode.new());
 var acm20Mode = F16ACM20Mode.new(F16ACMSTTMode.new());
 var acm60Mode = F16ACM60Mode.new(F16ACMSTTMode.new());
 var acmBoreMode = F16ACMBoreMode.new(F16ACMSTTMode.new());
-var seaMode = F16SeaMode.new(F16FTTMode.new()); 
+var seaMode = F16SeaMode.new(F16SEAFTTMode.new()); 
 var gmMode = F16GMMode.new(F16GMFTTMode.new());
 var gmtMode = F16GMTMode.new(F16GMTFTTMode.new());
 var apg68Radar = APG68.new([[rwsMode,twsMode,lrsMode,vsrMode],[acm20Mode,acm60Mode,acmBoreMode],[seaMode],[gmMode],[gmtMode]]);
