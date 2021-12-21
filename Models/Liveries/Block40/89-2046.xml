@@ -2,27 +2,27 @@
 
 <PropertyList>
  <sim>
-  <model>
+  <model> 
    <livery>
-    <name type="string">USAF 31FW, 510FS AV "Have Glass V #046"</name>
-    <texture>Liveries/Block40/88-0535.png</texture>
+    <name type="string">USAF 31FW, 510FS AV HGV #046</name>
+    <texture>Liveries/Block40/89-2046.png</texture>
     <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/Block40/AV-046.png</texture>
+    <texture>Liveries/standard.white.logos.png</texture>
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/Block40/patch.buzzards.png</texture>
-  </livery-patch>
+            <texture>Liveries/Block40/patch.buzzards.png</texture>
+    </livery-patch>
 
-  <livery-pod>
+    <livery-pod>
         <texture>Liveries/Block40/pod.buzzards.png</texture>
-  </livery-pod>
+    </livery-pod>
 
-  <f16>
-    <dragchute type="bool">false</dragchute>
-  </f16>
+    <f16>
+        <dragchute type="bool">false</dragchute>
+    </f16>
   </model>
  </sim>
 </PropertyList>

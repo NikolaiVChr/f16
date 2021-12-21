@@ -54,7 +54,7 @@
  <animation>
         <type>knob</type>
         <object-name>HSI_hdg-knob</object-name>
-        <property>instrumentation/heading-indicator-fg/offset-deg</property>
+        <property>instrumentation/heading-indicator/heading-bug-deg</property>
         <factor>1</factor>
         <offset-deg>0</offset-deg>
         <interval-sec>0.075</interval-sec>
@@ -71,7 +71,7 @@
         <increase>
             <binding>
                 <command>property-adjust</command>
-                <property>instrumentation/heading-indicator-fg/offset-deg</property>
+                <property>instrumentation/heading-indicator/heading-bug-deg</property>
                 <step>1</step>
                 <min>0</min>
                 <max>360</max>
@@ -81,7 +81,7 @@
         <decrease>
             <binding>
                 <command>property-adjust</command>
-                <property>instrumentation/heading-indicator-fg/offset-deg</property>
+                <property>instrumentation/heading-indicator/heading-bug-deg</property>
                 <step>-1</step>
                 <min>0</min>
                 <max>360</max>                
@@ -91,8 +91,10 @@
         <hovered>
             <binding>
                 <command>set-tooltip</command>
-                <tooltip-id>hdg</tooltip-id>
-                <label>Heading</label>
+				<tooltip-id>ehsi-hdg</tooltip-id>
+				<mapping>heading</mapping>
+				<label>Heading Bug: %3d</label>
+				<property>instrumentation/heading-indicator/heading-bug-deg</property>
             </binding>
         </hovered>
     </animation>
@@ -155,8 +157,10 @@
         <hovered>
             <binding>
                 <command>set-tooltip</command>
-                <tooltip-id>crs</tooltip-id>
-                <label>Course</label>
+				<tooltip-id>ehsi-hdg</tooltip-id>
+				<mapping>heading</mapping>
+				<label>Course: %3d</label>
+				<property>instrumentation/nav[0]/radials/selected-deg</property>
             </binding>
         </hovered>
     </animation>

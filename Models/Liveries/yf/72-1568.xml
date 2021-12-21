@@ -4,16 +4,16 @@
     <sim>
         <model>
             <livery>
-                <name type="string">USAF #568 "Ghost Gray" (concept)</name>
-                <texture>Liveries/Block50/GhostGray.png</texture> 
+                <name type="string">USAF Testbed #568 "Combat Gray"</name>
+                <texture>Liveries/yf/72-1568.png</texture> 
                 <owner type="string">USAF</owner>
             </livery>
             <livery-logo>
-                <texture>Liveries/standard.logos.png</texture>
+                <texture>Liveries/standard.logos.black.png</texture>
             </livery-logo>
 
         <livery-patch>
-        <texture>Liveries/patch.default.png</texture>
+            <texture>Liveries/patch.default.png</texture>
         </livery-patch>
 
         <livery-pod>

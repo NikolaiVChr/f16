@@ -66,6 +66,15 @@
                 steerpoints.loadLine(1,path.getValue());
             }
 
+            #var dlg = props.globals.getNode("/sim/gui/dialogs/route-manager", 1);
+            
+            var load_stpts = func(path) {
+                steerpoints.loadSTPTs(path.getValue());
+            }
+            var save_stpts = func(path) {
+                steerpoints.saveSTPTs(path.getValue());
+            }
+
             var defaultDirInFileSelector = getprop("/sim/fg-home") ~ "/Export";
 
             var file_selector_1 = gui.FileSelector.new(
@@ -74,12 +83,21 @@
             var file_selector_2 = gui.FileSelector.new(
               callback: load_line2, title: "Load Lines 2", button: "Load",
               dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.gpx","*.fgfp"]);
+
+             var file_selector_dtc = gui.FileSelector.new(
+              callback: load_stpts, title: "Load data", button: "Load",
+              dir: defaultDirInFileSelector, dotfiles: 1, pattern: ["*.f16dtc"]);
+            var save_selector_dtc = gui.FileSelector.new(
+              callback: save_stpts, title: "Save data", button: "Save",
+              dir: defaultDirInFileSelector, dotfiles: 1, file: "f16-stpt-iff-and-dl.f16dtc", pattern: ["*.f16dtc"]);
             
         ]]></open>
 
         <close><![CDATA[
             file_selector_1.del();            
             file_selector_2.del();            
+            file_selector_dtc.del();            
+            save_selector_dtc.del();
         ]]></close>
     </nasal>
 
@@ -107,6 +125,35 @@
 		</button>
 	</group>
 
+	<hrule/>
+
+	<text><halign>left</halign><label>Data Transfer Cartridge settings</label></text>
+	<empty><stretch>1</stretch></empty>
+
+	<group>
+		<layout>hbox</layout>
+		<button>
+	        <legend>Load DTC</legend>
+	        <equal>true</equal>
+	        <binding>
+	            <command>nasal</command>
+	            <script>file_selector_dtc.open()</script>
+	        </binding>
+	    </button>
+	    <button>
+	        <legend>Save DTC</legend>
+	        <equal>true</equal>
+	        <enable>
+	        	<value>1</value>
+	        </enable>
+	        <binding>
+	            <command>nasal</command>
+	            <script>save_selector_dtc.open();</script>
+	        </binding>
+	    </button>
+	</group>
+
+	<empty><stretch>1</stretch></empty>
 	<hrule/>
 
 	<text><halign>left</halign><label>Input coordinates (Lat, Lon and Radius in NM) to display threat or friendly circled areas on HSD page.</label></text>

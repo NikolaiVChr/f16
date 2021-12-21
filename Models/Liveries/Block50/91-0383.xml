@@ -2,25 +2,24 @@
 
 <PropertyList>
  <sim>
-  <model>
+  <model> 
    <livery>
-    <name type="string">USAF 53TEG, 422TES OT "Have Glass V"</name>
-    <texture>Liveries/Block50/91-0374.png</texture>
+    <name type="string">USAF 412TW, 416FLTS ED "Flagship"</name>
+    <texture>Liveries/Block50/91-0383.png</texture>
     <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/Block50/OT-374.png</texture>
+    <texture>Liveries/standard.logos.black2.png</texture>
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/patch.default.png</texture>
-   </livery-patch>
+            <texture>Liveries/Block50/patch.412TW.png</texture>
+    </livery-patch>
 
-  <livery-pod>
+    <livery-pod>
         <texture>Armament/External-stores/MXU-648.png</texture>
-  </livery-pod>
-
-        <f16>
+    </livery-pod>
+    <f16>
             <dragchute type="bool">false</dragchute>
         </f16>
   </model>

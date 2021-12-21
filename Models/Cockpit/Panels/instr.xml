@@ -115,7 +115,7 @@
    <interval-sec>0.2</interval-sec>
    <binding>
     <command>property-adjust</command>
-    <property>instrumentation/heading-indicator-fg/offset-deg</property> FIXME !!!
+    <property>instrumentation/heading-indicator/heading-bug-deg</property> FIXME !!!
     <step>-1</step>
     <min>-180</min>
     <max>180</max>
@@ -135,7 +135,7 @@
    <interval-sec>0.2</interval-sec>
    <binding>
     <command>property-adjust</command>
-    <property>instrumentation/heading-indicator-fg/offset-deg</property> FIXME !!!
+    <property>instrumentation/heading-indicator/heading-bug-deg</property> FIXME !!!
     <step>1</step>
     <min>-180</min>
     <max>180</max>

@@ -1,7 +1,7 @@
 # F-16 Fighting Falcon
 General Dynamics F-16 for [FlightGear](http://www.flightgear.org) flight simulator
 
-Current FGAddon version: **3.54**
+Current FGAddon version: **3.55**
 Suitable for: FlightGear **2020.3.x**
 
 ![Image](https://i.ibb.co/vV9SVfT/fgfs-20200508231145.png)

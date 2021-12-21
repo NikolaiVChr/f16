@@ -259,6 +259,17 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>4</row>
             <col>2</col>
+            <legend>A/G Unguided Retarded (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.a2g_mkair();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>6</row>
+            <col>2</col>
             <legend>A/G Unguided Heavy (2 bags)</legend>
             <binding>
                 <command>nasal</command>
@@ -268,7 +279,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>6</row>
+            <row>8</row>
             <col>2</col>
             <legend>A/G Cluster CEM (2 bags)</legend>
             <binding>
@@ -279,7 +290,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>8</row>
+            <row>10</row>
             <col>2</col>
             <legend>A/G LGB Light (PW-II, 2 bags)</legend>
             <binding>
@@ -290,7 +301,7 @@
         
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>10</row>
+            <row>12</row>
             <col>2</col>
             <legend>A/G Strategic (Unguided, 2 bags XL)</legend>
             <binding>

@@ -2,14 +2,14 @@
 
 <PropertyList>
  <sim>
-  <model>
+  <model> 
    <livery>
-    <name type="string">USAF 31FW, 555FS AV "Have Glass V"</name>
+    <name type="string">USAF 31FW, 555FS AV HGV #535</name>
     <texture>Liveries/Block40/88-0535.png</texture>
     <owner type="string">USAF</owner>
    </livery>
    <livery-logo>
-    <texture>Liveries/Block40/AV-535.png</texture>
+    <texture>Liveries/standard.white.logos.png</texture>
    </livery-logo>
 
    <livery-patch>

@@ -31,6 +31,7 @@
             <path>/f16/avionics/intercom-volume</path>
             <path>/f16/effects/dirt</path>
             <path>/f16/effects/rust</path>
+            <path>/environment/season</path>
         </aircraft-data>
         <tags>
             <tag>fighter</tag>
@@ -381,6 +382,7 @@
                 <enabled type="bool" userarchive="y">true</enabled>
                 <new type="bool">false</new>
                 <parameters>
+                    <locked-by-airframe type="bool">true</locked-by-airframe>
                     <blackout-onset-g type="double">5</blackout-onset-g>
                     <blackout-complete-g type="double">9</blackout-complete-g>
                     <onset-blackout-sec type="double">300</onset-blackout-sec>
@@ -1046,12 +1048,10 @@
             </frequencies>
         </nav>
         <heading-indicator>
+            <heading-bug-deg type="double">0</heading-bug-deg>
             <offset-deg type="double">0</offset-deg>
             <use-mag-in-hud type="bool">true</use-mag-in-hud><!-- as per manual the HUD shows magnetic -->
         </heading-indicator>
-        <heading-indicator-fg>
-            <offset-deg type="double">0</offset-deg>
-        </heading-indicator-fg>
         <dme n="1">
             <serviceable type="bool">true</serviceable>
             <frequencies>

@@ -190,6 +190,17 @@
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>4</row>
+            <col>2</col>
+            <legend>A/G Unguided Retarded</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.b10_a2g_strikeair();</script>
+            </binding>
+        </button>
+
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>4</row>
             <col>4</col>
             <legend>Ferry Loadout (2 bags XL)</legend>
             <binding>

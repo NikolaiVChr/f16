@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model>
+   <livery>
+    <name type="string">USAF 53TEG, 422TES OT HGV #404</name>
+    <texture>Liveries/Block50/91-0404.png</texture>
+    <owner type="string">USAF</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/standard.white.logos.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block50/patch.422TES.png</texture>
+   </livery-patch>
+
+  <livery-pod>
+        <texture>Armament/External-stores/MXU-648.png</texture>
+  </livery-pod>
+
+        <f16>
+            <dragchute type="bool">false</dragchute>
+        </f16>
+  </model>
+ </sim>
+</PropertyList>
