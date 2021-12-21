@@ -8,6 +8,7 @@
     <texture>Liveries/Block40/89-2048.png</texture>
     <owner type="string">USAF</owner>
    </livery>
+   
    <livery-logo>
     <texture>Liveries/standard.logos.red.png</texture>
    </livery-logo>

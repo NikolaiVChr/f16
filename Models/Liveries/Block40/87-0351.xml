@@ -6,9 +6,9 @@
    <livery>
     <name type="string">USAF 31FW, 555FS AV "31OSS Flagship"</name>
     <texture>Liveries/Block40/87-0351.png</texture>
-    
     <owner type="string">USAF</owner>
    </livery>
+   
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>
    </livery-logo>

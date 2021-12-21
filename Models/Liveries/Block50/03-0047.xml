@@ -4,7 +4,7 @@
  <sim> 
   <model>
    <livery>
-    <name type="string">PolAF 31.BLT, "100th anniversary #4047"</name>
+    <name type="string">PolAF 31.BLT, "100th anniversary"</name>
     <texture>Liveries/Block50/03-0047.png</texture>
     <owner type="string">PolAF</owner>
    </livery>

@@ -6,9 +6,9 @@
    <livery>
     <name type="string">USAF 31FW, 555FS - 16AF AV "Swamp Bandade"</name>
     <texture>Liveries/Block40/89-2016_2.png</texture>
-    
     <owner type="string">USAF</owner>
    </livery>
+   
    <livery-logo>
     <texture>Liveries/Block40/AV-016_Swamp.png</texture>
    </livery-logo>

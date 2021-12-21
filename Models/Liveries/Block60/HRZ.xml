@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <sim>
+  <model> 
+   <livery>
+    <name type="string">HRZ #140, "Kokos" (fictional)</name>
+    <texture>Liveries/Block60/HRZ.png</texture>
+    <owner type="string">HRZ</owner>
+   </livery>
+   <livery-logo>
+    <texture>Liveries/standard.logos.black.png</texture>
+   </livery-logo>
+
+   <livery-patch>
+      <texture>Liveries/Block60/patch.HRZ.png</texture>
+   </livery-patch>
+
+  <livery-pod>
+        <texture>Liveries/Block60/pod.HRZ.png</texture>
+  </livery-pod>
+
+  <f16>
+    <dragchute type="bool">true</dragchute>
+  </f16>
+  </model>
+ </sim>
+</PropertyList>

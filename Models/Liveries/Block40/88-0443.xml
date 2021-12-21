@@ -6,11 +6,11 @@
    <livery>
     <name type="string">USAF 31FW, 510FS AV "Pordenone"</name>
     <texture>Liveries/Block40/88-0443.png</texture>
-    
     <owner type="string">USAF</owner>
    </livery>
+   
    <livery-logo>
-    <texture>Liveries/standard.logos.png</texture>
+    <texture>Liveries/standard.logos.black2.png</texture>
    </livery-logo>
 
    <livery-patch>

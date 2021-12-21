@@ -4,11 +4,11 @@
  <sim> 
   <model>
    <livery>
-    <name type="string">USAF 31FW, 31OG - 555FS AV "America's Jet"</name>
+    <name type="string">USAF 31FW, 555FS - 31OG AV "America's Jet"</name>
     <texture>Liveries/Block40/89-2137_2.png</texture>
-    
     <owner type="string">USAF</owner>
    </livery>
+   
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>
    </livery-logo>

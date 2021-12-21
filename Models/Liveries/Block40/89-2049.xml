@@ -6,9 +6,9 @@
    <livery>
     <name type="string">USAF 31FW, 510FS AV "USAFE Markings"</name>
     <texture>Liveries/Block40/89-2049.png</texture>
-    
     <owner type="string">USAF</owner>
    </livery>
+   
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>
    </livery-logo>
@@ -18,7 +18,7 @@
   </livery-patch>
 
   <livery-pod>
-        <texture>Liveries/Block40/pod.usafe.png</texture>
+        <texture>Liveries/Block40/pod.buzzards.png</texture>
   </livery-pod>
 
   <f16>

@@ -6,9 +6,9 @@
    <livery>
     <name type="string">USAF 31FW, 555FS AV "Talons"</name>
     <texture>Liveries/Block40/87-0359.png</texture>
-    
     <owner type="string">USAF</owner>
    </livery>
+   
    <livery-logo>
     <texture>Liveries/Block40/AV-359_Talons.png</texture>
    </livery-logo>
