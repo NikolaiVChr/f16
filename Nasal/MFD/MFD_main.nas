@@ -1685,9 +1685,9 @@ var MFD_Device =
         me.p_RDR.paintDL = func (contact) {
             if (contact.blue != 1) return;
             if (contact["iff"] != nil) {
-                if (contact.iff > 0 and me.elpased-contact.iff < 3.5) {
+                if (contact.iff > 0 and me.elapsed-contact.iff < 3.5) {
                     me.iff = 1;
-                } elsif (me.iff < 0 and me.elpased+contact.iff < 3.5) {
+                } elsif (contact.iff < 0 and me.elapsed+contact.iff < 3.5) {
                     me.iff = -1;
                 } else {
                     me.iff = 0;

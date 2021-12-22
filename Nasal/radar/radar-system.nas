@@ -574,6 +574,7 @@ AIContact = {
     	me.wBody   = me.vel.getNode("wBody-fps");
     	me.tp      = me.prop.getNode("instrumentation/transponder/transmitted-id");
     	me.rdr     = me.prop.getNode("sim/multiplay/generic/int[2]");
+    	call(func {me.dlinkNode = me.prop.getNode(datalink.mp_path)},nil,nil,var err = []);# call method because radar might be used in aircraft without datalink
 
 	    me.type    = me.determineType(me.prop.getName(), me.miss, me.getCoord().alt()*M2FT, me.model, me.speed==nil?nil:me.speed.getValue());
 
@@ -1060,6 +1061,10 @@ AIContact = {
 		return me.callsign ~ me.model ~ me.ainame ~ me.sign ~ me.aitype ~ me.subid ~ me.prop.getName();
 	},
 	isValid: func {
+		if (!me.valid.getValue() and me["dlinkNode"] != nil) {
+			# This will make sure when a MP pilot switches aircraft type that the new does not inherit the datalink setting from the prev. type
+			me.dlinkNode.clearValue();
+		}
 		me.valid.getValue();
 	},
 	get_bearing: func {
