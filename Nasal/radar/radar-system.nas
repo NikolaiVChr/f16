@@ -538,6 +538,7 @@ AIContact = {
 		c.bleps = [];
 		c.lastRegisterWasTrack = 0;
 		c.virt = nil;
+		c.virtTGP = nil;
 		c.iff = 0;
 
 		# active radar:
@@ -609,7 +610,7 @@ AIContact = {
 		if (item == nil) {
 			return 0;
 		}
-		if (item == me or item == me.virt) {
+		if (item == me or item == me.virt or item == me.virtTGP) {
 			return 1;
 		}
 		return 0;
@@ -631,6 +632,7 @@ AIContact = {
 	},
 
 	getNearbyVirtualContact: func (spheric_dist_m) {
+		# This is for inaccurate radar locking of surface targets with TGP.
 		if (me.virt != nil) return me.virt;
 		me.virt = {parents: [me]};
 		me.getCoord();
@@ -649,6 +651,27 @@ AIContact = {
 		};
 		me.virt.callsign = "Near "~me.get_Callsign();
 		return me.virt;
+	},
+
+	getNearbyVirtualTGPContact: func (spheric_dist_m) {
+		# Dont remember why the TGP prefers a virtual target when it IR LOCK a target. But it does.
+		me.virtTGP = {parents: [me]};
+		me.getCoord();
+		me.coord.set_xyz(me.coord.x()+rand()*spheric_dist_m*2-spheric_dist_m,me.coord.y()+rand()*spheric_dist_m*2-spheric_dist_m,me.coord.z()+rand()*spheric_dist_m*2-spheric_dist_m);
+		me.virtTGP.elevpick = geo.elevation(me.coord.lat(),me.coord.lon());
+		if (spheric_dist_m != 0 and me.virtTGP.elevpick != nil) me.coord.set_alt(me.virtTGP.elevpick+1);# TODO: Not convinced this is the place for the 1m offset
+		me.virtTGP.coord = me.coord;
+		me.virtTGP.getCoord = func {
+			return me.coord;
+		};
+		me.virtTGP.isVirtual = func {
+			return 1;
+		};
+		me.virtTGP.getType = func {
+			return POINT;
+		};
+		me.virtTGP.callsign = "On "~me.get_Callsign();
+		return me.virtTGP;
 	},
 
 	determineType: func (prop_name, ordnance, alt_ft, model, speed_kt) {

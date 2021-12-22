@@ -3808,9 +3808,9 @@ var MFD_Device =
                         me.radarY2 = -me.rdrRangePixels*math.sin((90+me.az-radar_system.apg68Radar.getDeviation())*D2R);
                         me.cone = me.root.cone.createChild("path")
                                     .moveTo(0,0)
-                                    .lineTo(me.radarX1,me.radarY1)
+                                    .lineTo(me.radarX1,me.radarY1)#right
                                     .moveTo(0,0)
-                                    .lineTo(me.radarX2,me.radarY2)
+                                    .lineTo(me.radarX2,me.radarY2)#left
                                     .arcSmallCW(me.rdrRangePixels,me.rdrRangePixels, 0, me.radarX1-me.radarX2, me.radarY1-me.radarY2)
                                     .setStrokeLineWidth(2)
                                     .set("z-index",5)
