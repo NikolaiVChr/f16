@@ -744,7 +744,7 @@ var RadarMode = {
 	EXPsearch: 1,# if zoom should include search targets
 	painter: 0,
 	showAZ: func {
-		return 1;#me.az != 60; # hmm, does the blue lines at edge of b-scope look messy? If this return false, then they are also not shown in PPI.
+		return me.az != 60; # hmm, does the blue lines at edge of b-scope look messy? If this return false, then they are also not shown in PPI.
 	},
 	showBars: func {
 		return 1;
@@ -1079,6 +1079,9 @@ var F16SeaMode = {
 	},
 	showBars: func {
 		return 0;
+	},
+	showAZ: func {
+		return 1;
 	},
 	increaseRange: func {
 		me._increaseRange();
@@ -1582,6 +1585,9 @@ var F16RWSSAMMode = {
 	showRangeOptions: func {
 		return 0;
 	},
+	showAZ: func {
+		return 1;
+	},
 };
 
 
@@ -1607,6 +1613,9 @@ var F16LRSSAMMode = {
 			subMode.shortName = mode.shortName;
 		}
 		return mode;
+	},
+	showAZ: func {
+		return 1;
 	},
 	calcSAMwidth: func {
 		if (me.prioRange_nm<42) return math.min(60,18 + 1.4*me.prioRange_nm - 0.01*me.prioRange_nm*me.prioRange_nm);
