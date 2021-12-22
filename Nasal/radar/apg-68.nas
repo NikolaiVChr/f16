@@ -1402,12 +1402,16 @@ var F16TWSMode = {
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
 		#print(me.currentTracked,"   ",(me.radar.elapsed - contact.blepTime));
-		if (size(me.currentTracked) < me.maxTracked and ((me.radar.elapsed - contact.getLastBlepTime()) < me.maxScanIntervalForTrack)) {
+		me.scanInterval = (me.radar.elapsed - contact.getLastBlepTime()) < me.maxScanIntervalForTrack;
+		me.isInCurrent = me.radar.containsVectorContact(me.currentTracked, contact);
+		if (size(me.currentTracked) < me.maxTracked and me.scanInterval) {
 			#print("  TWICE    ",me.radar.elapsed);
 			#print(me.radar.containsVectorContact(me.radar.vector_aicontacts_bleps, contact),"   ",me.radar.elapsed - contact.blepTime);			
-			if (!me.radar.containsVectorContact(me.currentTracked, contact)) append(me.currentTracked, contact);
+			if (!me.isInCurrent) append(me.currentTracked, contact);
 			return [1,1,1,1,1,1];
-		} elsif (me.radar.containsVectorContact(me.currentTracked, contact)) {
+		} elsif (me.isInCurrent and me.scanInterval) {
+			return [1,1,1,1,1,1];
+		} elsif (me.isInCurrent) {
 			me.tmp = [];
 			foreach (me.cc ; me.currentTracked) {
 				if(!me.cc.equals(contact)) {
