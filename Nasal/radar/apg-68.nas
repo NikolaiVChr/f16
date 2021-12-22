@@ -568,6 +568,7 @@ var APG68 = {
 
 		if (me.maxDistVisible > dev[2]) {
 			me.extInfo = me.currentMode.getSearchInfo(contact);# if the scan gives heading info etc..
+
 			if (me.extInfo == nil) {
 				return 0;
 			}
@@ -1832,11 +1833,11 @@ var F16STTMode = {
 	},
 	preStep: func {
 		if (me.priorityTarget != nil) {
-			me.lastDev = me.priorityTarget.getLastDirection();
-			if (me.lastDev != nil) {
-				me.azimuthTilt = me.lastDev[2]-self.getHeading();
-				me.radar.tiltOverride = 1;
-				me.radar.tilt = me.lastDev[3];
+			me.lastBlep = me.priorityTarget.getLastBlep();
+			if (me.lastBlep != nil) {
+				me.azimuthTilt = me.lastBlep.getAZDeviation();
+				me.radar.tiltOverride = 1;# tilt knob ignored
+				me.radar.tilt = me.lastBlep.getElev(); # tilt here is in relation to horizon
 			} else {				
 				me.priorityTarget = nil;
 				me.radar.tiltOverride = 0;

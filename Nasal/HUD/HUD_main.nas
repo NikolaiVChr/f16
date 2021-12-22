@@ -2486,12 +2486,12 @@ append(obj.total, obj.speed_curr);
                             #me.target_locked.setRotation(0);
                         }
                         me.dr = me.u.getLastAZDeviation();
-                        me.drE = me.u.getLastDirection();
+                        me.drE = me.u.getLastElevDeviation();
                         if (me.clamped and me.dr != nil and me.drE != nil) {
                             me.locatorLine.setTranslation(HudMath.getBorePos());
                             me.locatorLine.setRotation(HudMath.getPolarFromCenterPos(me.echoPos[0],me.echoPos[1])[0]);
                             me.dev_h_d = me.dr;
-                            me.dev_e_d = me.drE[3]-hdp.pitch;
+                            me.dev_e_d = me.drE;
                             me.locatorAngle.setText(sprintf("%d", math.sqrt(me.dev_h_d*me.dev_h_d+me.dev_e_d*me.dev_e_d)));
                             me.locatorLineShow = 1;
                         }
@@ -2924,6 +2924,12 @@ append(obj.total, obj.speed_curr);
                     me.distCCRP = 0.75;
                 }
                 me.ldr = trgt.getLastAZDeviation();
+                if (me.ldr == nil) {
+                    me.solutionCue.hide();
+                    me.ccrpMarker.hide();
+                    me.bombFallLine.hide();
+                    return 0;
+                }
                 me.bombFallLine.setTranslation(me.ldr*me.texelPerDegreeX,0);
                 me.ccrpMarker.setTranslation(me.ldr*me.texelPerDegreeX,0);
                 me.solutionCue.setTranslation(me.ldr*me.texelPerDegreeX,me.sy*0.5-me.sy*0.5*me.distCCRP);

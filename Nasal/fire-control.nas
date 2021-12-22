@@ -1314,7 +1314,7 @@ var ContactTGP = {
 	},
 
 	getLastAZDeviation : func() {
-        return geo.normdeg180(me.get_bearing()-getprop("orientation/heading-deg"));
+        return me.get_relative_bearing();
 	},
 
   get_altitude: func(){

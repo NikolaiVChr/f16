@@ -448,9 +448,21 @@ Blep = {
 	},
 
 	getAZDeviation: func {
-		me.blepCoord = me.values[8];
+		me.blepCoord = me.getCoord();
 		me.blepHeading = self.getCoord().course_to(me.blepCoord);
-		return me.blepHeading-self.getHeading();
+		return geo.normdeg180(me.blepHeading-self.getHeading());
+	},
+
+	getElevDeviation: func {
+		me.blepCoord = me.getCoord();
+		me.blepPitch = vector.Math.getPitch(self.getCoord(), me.blepCoord);
+		return me.blepPitch - self.getPitch();
+	},
+
+	getElev: func {
+		me.blepCoord = me.getCoord();
+		me.blepPitch = vector.Math.getPitch(self.getCoord(), me.blepCoord);
+		return me.blepPitch;
 	},
 
 	getHeading: func {
@@ -590,6 +602,17 @@ AIContact = {
 		return 0;
 	},
 
+	equalsFast: func (item) {
+		# same instance or same virtual
+		if (item == nil) {
+			return 0;
+		}
+		if (item == me or item == me.virt) {
+			return 1;
+		}
+		return 0;
+	},
+
 	getCoord: func {
 		if (me.pos_type == ECEF) {
 	    	me.coord = geo.Coord.new().set_xyz(me.x.getValue(), me.y.getValue(), me.z.getValue());
@@ -611,7 +634,7 @@ AIContact = {
 		me.getCoord();
 		me.coord.set_xyz(me.coord.x()+rand()*spheric_dist_m*2-spheric_dist_m,me.coord.y()+rand()*spheric_dist_m*2-spheric_dist_m,me.coord.z()+rand()*spheric_dist_m*2-spheric_dist_m);
 		me.virt.elevpick = geo.elevation(me.coord.lat(),me.coord.lon());
-		if (spheric_dist_m != 0 and me.virt.elevpick != nil) me.coord.set_alt(me.virt.elevpick);
+		if (spheric_dist_m != 0 and me.virt.elevpick != nil) me.coord.set_alt(me.virt.elevpick+1);# TODO: Not convinced this is the place for the 1m offset
 		me.virt.coord = me.coord;
 		me.virt.getCoord = func {
 			return me.coord;
@@ -860,6 +883,7 @@ AIContact = {
 	getLastBlep: func {
 		# get the frozen info needed for displays
 		# TODO: check this is safe always where used
+		if (!size(me.bleps)) return nil;
 		return me.bleps[size(me.bleps)-1];
 	},
 
@@ -947,11 +971,15 @@ AIContact = {
 	},
 
 	getLastAZDeviation: func {
-		# Should not be used
 		if (size(me.bleps)) {
-			#if (me.bleps[size(me.bleps)-1][4] != nil) {
-				return me.bleps[size(me.bleps)-1].getAZDeviation();
-			#}
+			return me.bleps[size(me.bleps)-1].getAZDeviation();
+		}
+		return nil;
+	},
+
+	getLastElevDeviation: func {
+		if (size(me.bleps)) {
+			return me.bleps[size(me.bleps)-1].getElevDeviation();
 		}
 		return nil;
 	},

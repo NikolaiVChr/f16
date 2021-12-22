@@ -1310,15 +1310,15 @@ var MFD_Device =
                     contact.randoo = me.randoo;
                 }
             }
-            if (radar_system.datalink_power.getBoolValue() and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName and radar_system.apg68Radar.currentMode["painter"] != 1) {
+            if (radar_system.datalink_power.getBoolValue() and radar_system.apg68Radar.currentMode.longName != radar_system.vsrMode.longName and !radar_system.apg68Radar.currentMode.painter) {
                 foreach(contact; vector_aicontacts_links) {
                     me.paintRdr(contact);
                     contact.randoo = me.randoo;
                 }
             }
 
-
             me.root.selection.setVisible(me.selectShow);
+            me.root.selection.update();
             me.root.lockInfo.setVisible(me.lockInfo);
             for (;me.i < me.root.maxB;me.i+=1) {
                 me.root.blep[me.i].hide();
@@ -1683,7 +1683,7 @@ var MFD_Device =
                 me.root.lnk[me.iii].setRotation(D2R*22.5*math.round( geo.normdeg(contact.get_heading()-getprop("orientation/heading-deg")-me.blueBearing)/22.5 ));#Show rotation in increments of 22.5 deg
                 me.root.lnk[me.iii].show();
                 me.root.lnk[me.iii].update();
-                if (radar_system.apg68Radar.getPriorityTarget() == contact) {
+                if (contact.equalsFast(radar_system.apg68Radar.getPriorityTarget())) {
                     me.selectShow = 1;
                     me.root.selection.setTranslation(me.echoPos);
                     me.root.selection.setColor(colorDot4);
@@ -1735,8 +1735,9 @@ var MFD_Device =
                 me.clos = "      ";
             }
 
-            me.lockInfo = sprintf("%s     %s        %4d   %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
-            me.root.lockInfo.setText(me.lockInfo);
+            me.lockInfoText = sprintf("%s     %s        %4d   %s", me.azimuth, me.heady, contact.get_Speed(), me.clos);
+
+            me.root.lockInfo.setText(me.lockInfoText);
             me.lockInfo = 1;
         };
         me.p_RDR.paintRdr = func (contact) {
@@ -1773,7 +1774,7 @@ var MFD_Device =
                     me.root.blep[me.i].setColor(colorDot2[0]*me.color+colorBackground[0]*(1-me.color), colorDot2[1]*me.color+colorBackground[1]*(1-me.color), colorDot2[2]*me.color+colorBackground[2]*(1-me.color));
                     me.root.blep[me.i].show();
                     me.root.blep[me.i].update();
-                    if (radar_system.apg68Radar.getPriorityTarget() == contact) {
+                    if (contact.equalsFast(radar_system.apg68Radar.getPriorityTarget()) and me.bleppy == me.bleps[size(me.bleps)-1]) {
                         me.selectShow = radar_system.apg68Radar.currentMode.longName != radar_system.twsMode.longName or (me.elapsed - contact.getLastBlepTime() < 8) or (math.mod(me.elapsed,0.50)<0.25);
                         me.root.selection.setTranslation(me.echoPos);
                         me.root.selection.setColor(colorCircle2);
@@ -1838,8 +1839,8 @@ var MFD_Device =
                     } else {
                         me.root.blepTriangleText[me.ii].setText("");
                     }
-                    me.blinkShow = radar_system.apg68Radar.currentMode.longName != "Track While Scan" or (me.elapsed - contact.getLastBlepTime() < 8) or (math.mod(me.elapsed,0.50)<0.25);
-                    if (radar_system.apg68Radar.getPriorityTarget() == contact) {
+                    me.blinkShow = radar_system.apg68Radar.currentMode.longName != radar_system.twsMode.longName or (me.elapsed - contact.getLastBlepTime() < 8) or (math.mod(me.elapsed,0.50)<0.25);
+                    if (contact.equalsFast(radar_system.apg68Radar.getPriorityTarget())) {
                         me.selectShow = me.blinkShow;
                         me.root.blepTriangle[me.ii].setVisible(me.selectShow);
                         me.root.selection.setTranslation(me.echoPos);
@@ -3950,7 +3951,7 @@ var MFD_Device =
                 me.c_spd = contact.getSpeed();
             } else {
                 me.lastBlep = contact.getLastBlep();
-                
+
                 me.c_rng = me.lastBlep.getRangeDirect()*M2NM;
                 me.c_rbe = me.lastBlep.getAZDeviation();
                 me.c_hea = me.lastBlep.getHeading();
