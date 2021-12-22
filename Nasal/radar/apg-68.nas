@@ -861,11 +861,11 @@ var RadarMode = {
  		}
  		me.azimuthTiltIntern = me.azimuthTilt;
 		if (me.nextPatternNode == -1 and me.priorityTarget != nil) {
-			me.lastDev = me.priorityTarget.getLastDirection();
-			if (me.lastDev != nil) {
-				me.azimuthTiltIntern = me.lastDev[2]-self.getHeading();
+			me.lastBlep = me.priorityTarget.getLastBlep();
+			if (me.lastBlep != nil) {
+				me.azimuthTiltIntern = me.lastBlep.getAZDeviation();
 				me.radar.tiltOverride = 1;
-				me.radar.tilt = me.lastDev[3];
+				me.radar.tilt = me.lastBlep.getElev();
 				me.localDir = vector.Math.yawPitchVector(-me.azimuthTiltIntern, me.radar.tilt, [1,0,0]);
 			} else {
 				me.priorityTarget = nil;
@@ -1339,16 +1339,16 @@ var F16TWSMode = {
 				return;
 			}
 			me.prioRange_nm = me.priorityTarget.getLastRangeDirect()*M2NM;
-			me.lastDev = me.priorityTarget.getLastDirection();
-			if (me.lastDev != nil) {
-				me.centerTilt = me.lastDev[2]-self.getHeading();
+			me.lastBlep = me.priorityTarget.getLastBlep();
+			if (me.lastBlep != nil) {
+				me.centerTilt = me.lastBlep.getAZDeviation();
 				if (me.centerTilt > me.azimuthTilt+me.az) {
 					me.azimuthTilt = me.centerTilt-me.az;
 				} elsif (me.centerTilt < me.azimuthTilt-me.az) {
 					me.azimuthTilt = me.centerTilt+me.az;
 				}
 				me.radar.tiltOverride = 1;
-				me.radar.tilt = me.lastDev[3];
+				me.radar.tilt = me.lastBlep.getElev();
 			} else {
 				
 				me.priorityTarget = nil;
@@ -1514,15 +1514,15 @@ var F16RWSSAMMode = {
 			}
 			me.prioRange_nm = me.priorityTarget.getRangeDirect()*M2NM;
 			me.az = me.calcSAMwidth();
-			me.lastDev = me.priorityTarget.getLastDirection();
-			if (me.lastDev != nil) {
-				if (math.abs(me.azimuthTilt - (me.lastDev[2]-self.getHeading())) > me.az) {
+			me.lastBlep = me.priorityTarget.getLastBlep();
+			if (me.lastBlep != nil) {
+				if (math.abs(me.azimuthTilt - (me.lastBlep.getAZDeviation())) > me.az) {
 					me.scanPriorityEveryFrame = 1;
 				} else {
 					me.scanPriorityEveryFrame = 0;
 				}
 				me.radar.tiltOverride = 1;
-				me.radar.tilt = me.lastDev[3];
+				me.radar.tilt = me.lastBlep.getElev();
 			} else {
 				
 				me.priorityTarget = nil;
