@@ -707,10 +707,22 @@ var MFD_Device =
                     .setStrokeLineWidth(2.0)
                     .setColor(colorLine3);
         svg.cursorGm = svg.cursor.createChild("path")
-                    .moveTo(0,-10)
-                    .vert(20)
-                    .moveTo(-10,0)
-                    .horiz(20)
+                    .moveTo(50, 5)
+                    .vert(-10)
+                    .moveTo(-50, 5)
+                    .vert(-10)
+                    .moveTo(5,50)
+                    .horiz(-10)
+                    .moveTo(5,-50)
+                    .horiz(-10)
+                    .moveTo(0, 11)
+                    .vert(500)
+                    .moveTo(0, -11)
+                    .vert(-500)
+                    .moveTo(11,0)
+                    .horiz(500)
+                    .moveTo(-11,0)
+                    .horiz(-500)
                     .setStrokeLineWidth(2.0)
                     .setColor(colorLine3);
         svg.cursor_1 = svg.cursor.createChild("text")
@@ -1184,7 +1196,7 @@ var MFD_Device =
             }
             me.root.cursor.setTranslation(cursor_pos);
             me.alimits = radar_system.apg68Radar.getCursorAltitudeLimits();
-            if (me.alimits != nil) {
+            if (me.alimits != nil and radar_system.apg68Radar.currentMode.detectAIR) {
                 me.root.cursor_1.setText(sprintf("% 2d",math.round(me.alimits[0]*0.001)));
                 me.root.cursor_2.setText(sprintf("% 2d",math.round(me.alimits[1]*0.001)));
             } else {
