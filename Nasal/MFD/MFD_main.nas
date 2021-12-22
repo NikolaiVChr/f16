@@ -1043,6 +1043,13 @@ var MFD_Device =
             me.root.bullOwnRing.setVisible(me.bullOn);
             me.root.bullOwnDir.setVisible(me.bullOn);
             me.root.bullOwnDist.setVisible(me.bullOn);
+
+            if (systime() - iff.last_interogate < 3.5) {
+                # IFF ongoing
+                me.root.M.setText("M4");
+            } else {
+                me.root.M.setText("M");
+            }
             
             if (rdrMode == RADAR_MODE_GM or me.DGFT or radar_system.apg68Radar.rootMode != 0 or !radar_system.apg68Radar.currentMode.EXPsupport) {
                 exp = 0;
@@ -1670,8 +1677,9 @@ var MFD_Device =
                     me.iff = 1;
                 } elsif (me.iff < 0 and me.elpased+contact.iff < 3.5) {
                     me.iff = -1;
+                } else {
+                    me.iff = 0;
                 }
-                me.iff = 0;
             } else {
                 me.iff = 0;
             }
@@ -1721,8 +1729,8 @@ var MFD_Device =
                 } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
                     return;
                 }
-                me.path = me.iff == -1?me.iffU[me.iiii]:me.iff[me.iiii];
-                me.pathHide = me.iff == 1?me.iffU[me.iiii]:me.iff[me.iiii];
+                me.path = me.iff == -1?me.root.iffU[me.iiii]:me.root.iff[me.iiii];
+                me.pathHide = me.iff == 1?me.root.iffU[me.iiii]:me.root.iff[me.iiii];
                 me.pathHide.hide();
                 me.path.setTranslation(me.echoPos[0],me.echoPos[1]-18);
                 me.path.show();
@@ -1758,12 +1766,13 @@ var MFD_Device =
         };
         me.p_RDR.paintRdr = func (contact) {
             if (contact["iff"] != nil) {
-                if (contact.iff > 0 and me.elpased-contact.iff < 3.5) {
+                if (contact.iff > 0 and me.elapsed-contact.iff < 3.5) {
                     me.iff = 1;
-                } elsif (me.iff < 0 and me.elpased+contact.iff < 3.5) {
+                } elsif (contact.iff < 0 and me.elapsed+contact.iff < 3.5) {
                     me.iff = -1;
+                } else {
+                    me.iff = 0;
                 }
-                me.iff = 0;
             } else {
                 me.iff = 0;
             }
@@ -1893,8 +1902,8 @@ var MFD_Device =
                     } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
                         return;
                     }
-                    me.path = me.iff == -1?me.iffU[me.iiii]:me.iff[me.iiii];
-                    me.pathHide = me.iff == 1?me.iffU[me.iiii]:me.iff[me.iiii];
+                    me.path = me.iff == -1?me.root.iffU[me.iiii]:me.root.iff[me.iiii];
+                    me.pathHide = me.iff == 1?me.root.iffU[me.iiii]:me.root.iff[me.iiii];
                     me.pathHide.hide();
                     me.path.setTranslation(me.echoPos[0],me.echoPos[1]-18);
                     me.path.show();

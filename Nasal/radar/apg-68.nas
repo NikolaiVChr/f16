@@ -528,13 +528,14 @@ var APG68 = {
 	scanFOV: func {
 		me.doIFF = getprop("instrumentation/radar/iff");
     	setprop("instrumentation/radar/iff",0);
+    	if (me.doIFF) iff.last_interogate = systime();
 		foreach(contact ; me.vector_aicontacts_for) {
 			if (me.doIFF == 1) {
 	            me.iffr = iff.interrogate(contact.prop);
 	            if (me.iffr) {
-	                u.iff = me.elapsed;
+	                contact.iff = me.elapsed;
 	            } else {
-	                u.iff = -me.elapsed;
+	                contact.iff = -me.elapsed;
 	            }
 	        }
 			if (me.elapsed - contact.getLastBlepTime() < me.currentMode.minimumTimePerReturn) continue;# To prevent double detecting in overlapping beams

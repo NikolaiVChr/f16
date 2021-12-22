@@ -538,6 +538,7 @@ AIContact = {
 		c.bleps = [];
 		c.lastRegisterWasTrack = 0;
 		c.virt = nil;
+		c.iff = 0;
 
 		# active radar:
 		c.blepTime = -1000;
