@@ -385,6 +385,26 @@ var APG68 = {
 		me.setCurrentMode(me.newMode, me.oldMode["priorityTarget"]);
 		me.oldMode.leaveMode();
 	},
+	setAGMode: func {
+		if (me.rootMode != 3) {
+			me.rootMode = 3;
+			me.oldMode = me.currentMode;
+			me.currentModeIndex = 0;
+			me.newMode = me.mainModes[me.rootMode][me.currentModeIndex];
+			me.setCurrentMode(me.newMode, me.oldMode["priorityTarget"]);
+			me.oldMode.leaveMode();
+		}
+	},
+	setAAMode: func {
+		if (me.rootMode != 0) {
+			me.rootMode = 0;
+			me.oldMode = me.currentMode;
+			me.currentModeIndex = 0;
+			me.newMode = me.mainModes[me.rootMode][me.currentModeIndex];
+			me.setCurrentMode(me.newMode, me.oldMode["priorityTarget"]);
+			me.oldMode.leaveMode();
+		}
+	},
 	cycleRootMode: func {
 		me.rootMode += 1;
 		if (me.rootMode >= size(me.mainModes)) {
