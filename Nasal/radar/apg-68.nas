@@ -423,6 +423,9 @@ var APG68 = {
 	showAZ: func {
 		me.currentMode.showAZ();
 	},
+	showAZinHSD: func {
+		me.currentMode.showAZinHSD();
+	},
 	cycleBars: func {
 		me.currentMode.cycleBars();
 	},
@@ -745,6 +748,9 @@ var RadarMode = {
 	painter: 0,
 	showAZ: func {
 		return me.az != 60; # hmm, does the blue lines at edge of b-scope look messy? If this return false, then they are also not shown in PPI.
+	},
+	showAZinHSD: func {
+		return 1;
 	},
 	showBars: func {
 		return 1;
@@ -1657,6 +1663,9 @@ var F16ACMMode = {#TODO
 	showBars: func {
 		return 0;
 	},
+	showAZinHSD: func {
+		return 0;
+	},
 	setDeviation: func (dev_tilt_deg) {
 	},
 	cycleAZ: func {	},
@@ -1713,6 +1722,9 @@ var F16ACM20Mode = {
 		return mode;
 	},
 	showBars: func {
+		return 0;
+	},
+	showAZinHSD: func {
 		return 0;
 	},
 	setDeviation: func (dev_tilt_deg) {

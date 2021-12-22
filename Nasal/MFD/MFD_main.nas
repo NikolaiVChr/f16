@@ -3801,7 +3801,7 @@ var MFD_Device =
             if (noti.FrameCount == 1) {
                 me.root.cone.removeAllChildren();
                 if (radar_system.apg68Radar.enabled) {
-                    if (radar_system.apg68Radar.showAZ()) {
+                    if (radar_system.apg68Radar.showAZinHSD()) {
                         me.radarX1 =  me.rdrRangePixels*math.cos((90-me.az-radar_system.apg68Radar.getDeviation())*D2R);
                         me.radarY1 = -me.rdrRangePixels*math.sin((90-me.az-radar_system.apg68Radar.getDeviation())*D2R);
                         me.radarX2 =  me.rdrRangePixels*math.cos((90+me.az-radar_system.apg68Radar.getDeviation())*D2R);
