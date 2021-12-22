@@ -699,11 +699,18 @@ var MFD_Device =
                 .set("z-index",1);
         
         svg.cursor = svg.p_RDR.createChild("group").set("z-index",1000);
-                svg.cursor.createChild("path")
+        svg.cursorAir = svg.cursor.createChild("path")
                     .moveTo(-8,-9)
                     .vert(18)
                     .moveTo(8,-9)
                     .vert(18)
+                    .setStrokeLineWidth(2.0)
+                    .setColor(colorLine3);
+        svg.cursorGm = svg.cursor.createChild("path")
+                    .moveTo(0,-10)
+                    .vert(20)
+                    .moveTo(-10,0)
+                    .horiz(20)
                     .setStrokeLineWidth(2.0)
                     .setColor(colorLine3);
         svg.cursor_1 = svg.cursor.createChild("text")
@@ -1177,6 +1184,9 @@ var MFD_Device =
                 me.root.cursor_1.setText("");
                 me.root.cursor_2.setText("");
             }
+            me.root.cursorAir.setVisible(radar_system.apg68Radar.currentMode.detectAIR);
+            me.root.cursorGm.setVisible(!radar_system.apg68Radar.currentMode.detectAIR);
+
             if (me.bullOn) {
                 me.cursorDev   = cursor_pos[0]*60/(me.wdt*0.5);
                 me.cursorDist  = -NM2M*cursor_pos[1]/(482/radar_system.apg68Radar.getRange());
@@ -1222,7 +1232,7 @@ var MFD_Device =
             me.root.az1.setTranslation((radar_system.apg68Radar.currentMode.azimuthTilt-radar_system.apg68Radar.currentMode.az)*me.wdt*0.5/60,0);
             me.root.az2.setTranslation((radar_system.apg68Radar.currentMode.azimuthTilt+radar_system.apg68Radar.currentMode.az)*me.wdt*0.5/60,0);
             #me.root.lock.hide();
-            me.root.lockGM.hide();
+            #me.root.lockGM.hide();
             
             
 
@@ -1279,7 +1289,7 @@ var MFD_Device =
 #                                                                                      
 #                                                                                      
             me.desig_new = nil;
-            me.gm_echoPos = {};
+            #me.gm_echoPos = {};
             me.ijk = 0;
             me.intercept = nil;
             me.showDLT = 0;
@@ -1287,6 +1297,7 @@ var MFD_Device =
             me.tracks = [];
             me.elapsed = getprop("sim/time/elapsed-sec");
             me.selectShow = 0;
+            me.selectShowGM = 0;
             me.lockInfo = 0;
             me.i = 0;
             me.ii = 0;
@@ -1319,6 +1330,8 @@ var MFD_Device =
 
             me.root.selection.setVisible(me.selectShow);
             me.root.selection.update();
+            me.root.lockGM.setVisible(me.selectShowGM);
+            me.root.lockGM.update();
             me.root.lockInfo.setVisible(me.lockInfo);
             for (;me.i < me.root.maxB;me.i+=1) {
                 me.root.blep[me.i].hide();
@@ -1339,7 +1352,7 @@ var MFD_Device =
             #
             if (radar_system.apg68Radar.getPriorityTarget() != nil) {
                 me.lastHead = radar_system.apg68Radar.getPriorityTarget().getLastHeading();
-                if (me.lastHead != nil) {
+                if (me.lastHead != nil and radar_system.apg68Radar.getPriorityTarget().getType() == radar_system.AIR) {
                     # we cheat a bit here with getting current properties:
                     me.intercept = get_intercept(radar_system.apg68Radar.getPriorityTarget().get_bearing(),
                      radar_system.apg68Radar.getPriorityTarget().get_range()*NM2M, me.lastHead,
@@ -1684,9 +1697,12 @@ var MFD_Device =
                 me.root.lnk[me.iii].show();
                 me.root.lnk[me.iii].update();
                 if (contact.equalsFast(radar_system.apg68Radar.getPriorityTarget())) {
-                    me.selectShow = 1;
+                    me.selectShow = contact.getType() == radar_system.AIR;
+                    me.selectShowGM = !me.selectShow;
                     me.root.selection.setTranslation(me.echoPos);
                     me.root.selection.setColor(colorDot4);
+                    me.root.lockGM.setTranslation(me.echoPos);
+                    me.root.lockGM.setColor(colorDot4);
                     me.printInfo(contact);
                 }
                 if (cursor_click == me.root.index) {
@@ -1775,9 +1791,13 @@ var MFD_Device =
                     me.root.blep[me.i].show();
                     me.root.blep[me.i].update();
                     if (contact.equalsFast(radar_system.apg68Radar.getPriorityTarget()) and me.bleppy == me.bleps[size(me.bleps)-1]) {
-                        me.selectShow = radar_system.apg68Radar.currentMode.longName != radar_system.twsMode.longName or (me.elapsed - contact.getLastBlepTime() < 8) or (math.mod(me.elapsed,0.50)<0.25);
+                        me.selectShowTemp = radar_system.apg68Radar.currentMode.longName != radar_system.twsMode.longName or (me.elapsed - contact.getLastBlepTime() < 8) or (math.mod(me.elapsed,0.50)<0.25);
+                        me.selectShow = me.selectShowTemp and contact.getType() == radar_system.AIR;
+                        me.selectShowGM = me.selectShowTemp and contact.getType() != radar_system.AIR;
                         me.root.selection.setTranslation(me.echoPos);
                         me.root.selection.setColor(colorCircle2);
+                        me.root.lockGM.setTranslation(me.echoPos);
+                        me.root.lockGM.setColor(colorCircle2);
                         me.printInfo(contact);
                         me.lockInfo = 1;
                     }
@@ -1841,14 +1861,17 @@ var MFD_Device =
                     }
                     me.blinkShow = radar_system.apg68Radar.currentMode.longName != radar_system.twsMode.longName or (me.elapsed - contact.getLastBlepTime() < 8) or (math.mod(me.elapsed,0.50)<0.25);
                     if (contact.equalsFast(radar_system.apg68Radar.getPriorityTarget())) {
-                        me.selectShow = me.blinkShow;
+                        me.selectShow = me.blinkShow and contact.getType() == radar_system.AIR;
+                        me.selectShowGM = me.blinkShow and contact.getType() != radar_system.AIR;
                         me.root.blepTriangle[me.ii].setVisible(me.selectShow);
                         me.root.selection.setTranslation(me.echoPos);
                         me.root.selection.setColor(me.color);
+                        me.root.lockGM.setTranslation(me.echoPos);
+                        me.root.lockGM.setColor(me.color);
                         me.printInfo(contact);
                         me.lockInfo = 1;
                     }
-                    me.root.blepTriangle[me.ii].setVisible(me.blinkShow);
+                    me.root.blepTriangle[me.ii].setVisible(me.blinkShow and contact.getType() == radar_system.AIR);
                     me.root.blepTriangle[me.ii].update();
                     if (cursor_click == me.root.index) {
                         if (math.abs(cursor_pos[0] - me.echoPos[0]) < 10 and math.abs(cursor_pos[1] - me.echoPos[1]) < 11) {
