@@ -802,25 +802,25 @@ var MFD_Device =
                 .set("z-index",1)
                 .setFontSize(18, 1.0);
 
-        # canvas: 552,482
+        # canvas: 552*0.795,482
         svg.rangeRingLow = svg.p_RDR.createChild("path")
-            .moveTo(-482*0.25,0)
-            .arcSmallCW(482*0.25,482*0.25, 0,  482*0.5, 0)
-            .arcSmallCW(482*0.25,482*0.25, 0, -482*0.5, 0)
+            .moveTo(-552*0.795*0.25,0)
+            .arcSmallCW(552*0.795*0.25,482*0.25, 0,  552*0.795*0.5, 0)
+            .arcSmallCW(552*0.795*0.25,482*0.25, 0, -552*0.795*0.5, 0)
             .setStrokeLineWidth(2)
             .set("z-index",1)
             .setColor(colorLines);
         svg.rangeRingMid = svg.p_RDR.createChild("path")
-            .moveTo(-482*0.5,0)
-            .arcSmallCW(482*0.5,482*0.5, 0,  482, 0)
-            .arcSmallCW(482*0.5,482*0.5, 0, -482, 0)
+            .moveTo(-552*0.795*0.5,0)
+            .arcSmallCW(552*0.795*0.5,482*0.5, 0,  552*0.795, 0)
+            .arcSmallCW(552*0.795*0.5,482*0.5, 0, -552*0.795, 0)
             .setStrokeLineWidth(2)
             .set("z-index",1)
             .setColor(colorLines);
         svg.rangeRingHigh = svg.p_RDR.createChild("path")
-            .moveTo(-482*0.75,0)
-            .arcSmallCW(482*0.75,482*0.75, 0,  482*1.5, 0)
-            .arcSmallCW(482*0.75,482*0.75, 0, -482*1.5, 0)
+            .moveTo(-552*0.795*0.75,0)
+            .arcSmallCW(552*0.795*0.75,482*0.75, 0,  552*0.795*1.5, 0)
+            .arcSmallCW(552*0.795*0.75,482*0.75, 0, -552*0.795*1.5, 0)
             .setStrokeLineWidth(2)
             .set("z-index",1)
             .setColor(colorLines);
@@ -1078,7 +1078,7 @@ var MFD_Device =
                 me.root.bullOwnRing.setRotation(me.meToBull);
                 me.bullDistToMe = me.bullCoord.distance_to(me.ownCoord)*M2NM;
                 me.distPixels = me.bullDistToMe*(482/radar_system.apg68Radar.getRange());
-                me.bullPos = [me.wdt*0.5*geo.normdeg180(me.meToBull*R2D)/60,-me.distPixels];
+                me.bullPos = me.calcPos(me.wdt, geo.normdeg180(me.meToBull*R2D), me.distPixels);
                 
                 me.bullDirToMe = sprintf("%03d", me.bullDirToMe);
                 if (me.bullDistToMe > 100) {
@@ -1226,10 +1226,23 @@ var MFD_Device =
                 }
             }
             me.elapsed = noti.ElapsedSeconds;
-            radar_system.apg68Radar.setCursorDeviation(cursor_pos[0]*60/(me.wdt*0.5));
-            if (radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(482/radar_system.apg68Radar.getRange()))) {
-                # the cursor was Y centered due to changing range
-                cursor_pos[1] = -482*0.5;
+
+            if (radar_system.apg68Radar.currentMode.detectAIR) {
+                radar_system.apg68Radar.setCursorDeviation(cursor_pos[0]*60/(me.wdt*0.5));
+
+                if (radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(482/radar_system.apg68Radar.getRange()))) {
+                    # the cursor was Y centered due to changing range
+                    cursor_pos[1] = -482*0.5;
+                }
+            } else {
+                radar_system.apg68Radar.setCursorDeviation(-math.atan2(-cursor_pos[0]/(482), -cursor_pos[1]/482)*R2D);
+
+                # The real range not used since its only for giving cursor limits (not used in GM) and we want linear switching range:
+                #  if (radar_system.apg68Radar.setCursorDistance((math.sqrt(cursor_pos[0]*cursor_pos[0]+cursor_pos[1]*cursor_pos[1])/(482/radar_system.apg68Radar.getRange())))) {
+                if (radar_system.apg68Radar.setCursorDistance(-cursor_pos[1]/(482/radar_system.apg68Radar.getRange()))) {
+                    # the cursor was Y centered due to changing range
+                    cursor_pos[1] = -482*0.5;
+                }
             }
             me.root.cursor.setTranslation(cursor_pos);
             me.alimits = radar_system.apg68Radar.getCursorAltitudeLimits();
@@ -1244,8 +1257,14 @@ var MFD_Device =
             me.root.cursorGm.setVisible(!radar_system.apg68Radar.currentMode.detectAIR);
 
             if (me.bullOn) {
-                me.cursorDev   = cursor_pos[0]*60/(me.wdt*0.5);
-                me.cursorDist  = -NM2M*cursor_pos[1]/(482/radar_system.apg68Radar.getRange());
+                if (radar_system.apg68Radar.currentMode.detectAIR) {
+                    me.cursorDev   = cursor_pos[0]*60/(me.wdt*0.5);
+                    me.cursorDist  = -NM2M*cursor_pos[1]/(482/radar_system.apg68Radar.getRange());
+                } else {
+                    # TODO: verify this is correct:
+                    me.cursorDev   = -math.atan2(-cursor_pos[0]/(482), -cursor_pos[1]/482)*R2D;
+                    me.cursorDist  = NM2M*(math.sqrt(cursor_pos[0]*cursor_pos[0]+cursor_pos[1]*cursor_pos[1])/(482/radar_system.apg68Radar.getRange()));
+                }
                 me.ownCoord.apply_course_distance(noti.heading+me.cursorDev, me.cursorDist);
                 me.cursorBullDist = me.ownCoord.distance_to(me.bullCoord);
                 me.cursorBullCrs  = me.bullCoord.course_to(me.ownCoord);
@@ -1255,8 +1274,8 @@ var MFD_Device =
             
             
             
-            me.root.az1.setVisible((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA) and (radar_system.apg68Radar.showAZ()));
-            me.root.az2.setVisible((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA) and (radar_system.apg68Radar.showAZ()));
+            me.root.az1.setVisible(radar_system.apg68Radar.showAZ());
+            me.root.az2.setVisible(radar_system.apg68Radar.showAZ());
             me.root.bars.setVisible((rdrMode == RADAR_MODE_CRM and radar_system.apg68Radar.currentMode.showBars()));
             me.root.az.setVisible((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA));
             if (noti.FrameCount != 1 and noti.FrameCount != 3)
@@ -1285,8 +1304,19 @@ var MFD_Device =
             #} else {
             #    me.root.bars.setText("");
             #}
-            me.root.az1.setTranslation((radar_system.apg68Radar.currentMode.azimuthTilt-radar_system.apg68Radar.currentMode.az)*me.wdt*0.5/60,0);
-            me.root.az2.setTranslation((radar_system.apg68Radar.currentMode.azimuthTilt+radar_system.apg68Radar.currentMode.az)*me.wdt*0.5/60,0);
+            if (radar_system.apg68Radar.currentMode.detectAIR) {
+                me.root.az1.setTranslation((radar_system.apg68Radar.currentMode.azimuthTilt-radar_system.apg68Radar.currentMode.az)*me.wdt*0.5/60,0);
+                me.root.az2.setTranslation((radar_system.apg68Radar.currentMode.azimuthTilt+radar_system.apg68Radar.currentMode.az)*me.wdt*0.5/60,0);
+                me.root.az1.setRotation(0);
+                me.root.az2.setRotation(0);
+            } else {
+                me.root.az1.setTranslation(0, 0);
+                me.root.az2.setTranslation(0, 0);
+                var angle2 = D2R*(radar_system.apg68Radar.currentMode.azimuthTilt+radar_system.apg68Radar.currentMode.az);
+                var angle1 = D2R*(radar_system.apg68Radar.currentMode.azimuthTilt-radar_system.apg68Radar.currentMode.az);
+                me.root.az1.setRotation(angle2);
+                me.root.az2.setRotation(angle1);
+            }
             #me.root.lock.hide();
             #me.root.lockGM.hide();
             
@@ -1320,7 +1350,7 @@ var MFD_Device =
                 me.legBearing = geo.normdeg180(geo.aircraft_position().course_to(me.wpC)-noti.heading);#relative
                 me.legDistance = geo.aircraft_position().distance_to(me.wpC)*M2NM;
                 me.distPixels = me.legDistance*(482/radar_system.apg68Radar.getRange());
-                me.steerPos = [me.wdt*0.5*me.legBearing/60,-me.distPixels];
+                me.steerPos = me.calcPos(me.wdt, me.legBearing, me.distPixels);
                 var vis = 1;
                 me.close = math.abs(cursor_pos[0] - me.steerPos[0]) < 25 and math.abs(cursor_pos[1] - me.steerPos[1]) < 25;
                 if (me.close and exp) {
@@ -1736,7 +1766,7 @@ var MFD_Device =
             me.blueBearing = geo.normdeg180(contact.getDeviationHeading());
             if (me.iff == 0 and contact.isVisible() and contact.getRange()*M2NM < 80 and me.iii < me.root.maxT and math.abs(me.blueBearing) < 60) {
                 me.distPixels = contact.get_range()*(482/(radar_system.apg68Radar.getRange()));
-                me.echoPos = [me.wdt*0.5*geo.normdeg180(me.blueBearing)/60,-me.distPixels];
+                me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.blueBearing), me.distPixels);
                 me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
                 if (me.close and exp) {
                     me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
@@ -1770,7 +1800,7 @@ var MFD_Device =
                 me.iii += 1;
             } elsif (me.iff != 0 and contact.isVisible() and me.iiii < me.root.maxT and math.abs(me.blueBearing) < 60) {
                 me.distPixels = contact.get_range()*(482/(radar_system.apg68Radar.getRange()));
-                me.echoPos = [me.wdt*0.5*geo.normdeg180(me.blueBearing)/60,-me.distPixels];
+                me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.blueBearing), me.distPixels);
                 me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
                 if (me.close and exp) {
                     me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
@@ -1786,6 +1816,16 @@ var MFD_Device =
 
                 me.iiii += 1;
             }
+        };
+        me.p_RDR.calcPos = func (width, dev, distPixels) {
+            if (radar_system.apg68Radar.currentMode.detectAIR) {
+                # B-Scope
+                me.echoPosition = [width*0.5*dev/60,-distPixels];
+            } else {
+                # PPI-Scope
+                me.echoPosition = [(552*0.795)*(distPixels/482)*math.sin(D2R*dev), -distPixels*math.cos(D2R*dev)];
+            }
+            return me.echoPosition;
         };
         me.p_RDR.printInfo = func (contact) {
             if (contact.getLastHeading() != nil) {
@@ -1835,7 +1875,7 @@ var MFD_Device =
                     } else {
                         continue;
                     }
-                    me.echoPos = [me.wdt*0.5*geo.normdeg180(me.bleppy.getAZDeviation())/60,-me.distPixels];
+                    me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.bleppy.getAZDeviation()), me.distPixels);
                     me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
                     if (radar_system.apg68Radar.currentMode.EXPsearch and me.close and exp) {
                         me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
@@ -1887,7 +1927,7 @@ var MFD_Device =
                     me.rot = 22.5*math.round((me.c_heading-radar_system.self.getHeading()-me.c_devheading)/22.5);
                     me.root.blepTrianglePaths[me.ii].setRotation(me.rot*D2R);
                     me.root.blepTrianglePaths[me.ii].setColor(me.color);
-                    me.echoPos = [me.wdt*0.5*geo.normdeg180(me.c_devheading)/60,-me.distPixels];
+                    me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.c_devheading), me.distPixels);
                     me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
                     if (me.close and exp) {
                         me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
@@ -1943,7 +1983,7 @@ var MFD_Device =
                 # Paint IFF symbols
                 me.bleppy = me.bleps[me.sizeBleps-1];
                 if (me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
-                    me.echoPos = [me.wdt*0.5*geo.normdeg180(me.bleppy.getAZDeviation())/60,-me.distPixels];
+                    me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.bleppy.getAZDeviation()), me.distPixels);
                     me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
                     if (me.close and exp) {
                         me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
