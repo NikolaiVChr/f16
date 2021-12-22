@@ -473,7 +473,7 @@ var applyToWPN = func {
 		if (wp != nil and wp.parents[0] == armament.AIM and wp.target_pnt == 1 and wp.guidance=="gps") {
 			var coord = geo.Coord.new();
 			coord.set_latlon(lat,lon,alt);
-			var spot = fc.ContactTGP.new("GPS-Spot",coord,0);
+			var spot = radar_system.ContactTGP.new("GPS-Spot",coord,0);
 			armament.contactPoint = spot;
 			tgp.gps = 1;
 			if (getprop("f16/stores/tgp-mounted") and 0) {

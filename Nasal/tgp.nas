@@ -299,7 +299,7 @@ var list = func () {
                 var contact = ut.getNearbyVirtualContact(0);
                 armament.contactPoint = contact;
             } else {
-                armament.contactPoint = fc.ContactTGP.new("TGP-Spot",terrain,1);
+                armament.contactPoint = radar_system.ContactTGP.new("TGP-Spot",terrain,1);
             }
             #flir_updater.click_coord_cam = terrain;
             #setprop("/aircraft/flir/target/auto-track", 1);
