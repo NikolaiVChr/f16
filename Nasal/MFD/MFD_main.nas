@@ -801,6 +801,29 @@ var MFD_Device =
                 .setText("12")
                 .set("z-index",1)
                 .setFontSize(18, 1.0);
+
+        # canvas: 552,482
+        svg.rangeRingLow = svg.p_RDR.createChild("path")
+            .moveTo(-482*0.25,0)
+            .arcSmallCW(482*0.25,482*0.25, 0,  482*0.5, 0)
+            .arcSmallCW(482*0.25,482*0.25, 0, -482*0.5, 0)
+            .setStrokeLineWidth(2)
+            .set("z-index",1)
+            .setColor(colorLines);
+        svg.rangeRingMid = svg.p_RDR.createChild("path")
+            .moveTo(-482*0.5,0)
+            .arcSmallCW(482*0.5,482*0.5, 0,  482, 0)
+            .arcSmallCW(482*0.5,482*0.5, 0, -482, 0)
+            .setStrokeLineWidth(2)
+            .set("z-index",1)
+            .setColor(colorLines);
+        svg.rangeRingHigh = svg.p_RDR.createChild("path")
+            .moveTo(-482*0.75,0)
+            .arcSmallCW(482*0.75,482*0.75, 0,  482*1.5, 0)
+            .arcSmallCW(482*0.75,482*0.75, 0, -482*1.5, 0)
+            .setStrokeLineWidth(2)
+            .set("z-index",1)
+            .setColor(colorLines);
         
         #svg.gmPicG = svg.p_RDR.createChild("group");
         #if (index == 0) {
@@ -1022,8 +1045,22 @@ var MFD_Device =
                 me.root.modBox.hide();
                 me.root.gmPicHD.hide();
                 me.root.gmPicSD.hide();
-                me.root.sp.hide();
                 me.root.hd.hide();
+            }
+
+            #
+            # GM range rings
+            #
+            if (!radar_system.apg68Radar.currentMode.detectAIR) {
+                me.root.sp.show();
+                me.root.rangeRingHigh.setVisible(radar_system.apg68Radar.getRange()>10);
+                me.root.rangeRingMid.setVisible(radar_system.apg68Radar.getRange()>5);
+                me.root.rangeRingLow.setVisible(radar_system.apg68Radar.getRange()>10);
+            } else {
+                me.root.sp.hide();
+                me.root.rangeRingHigh.hide();
+                me.root.rangeRingMid.hide();
+                me.root.rangeRingLow.hide();
             }
             
             #
