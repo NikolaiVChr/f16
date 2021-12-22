@@ -707,21 +707,21 @@ var RadarMode = {
 	azimuthTilt: 0,
 	radar: nil,
 	range: 40,
-	minRange: 5, # MLU T1
+	minRange: 5, # MLU T1 .. should we make this 10 for block 10/30/YF? TODO
 	az: 60,
 	bars: 4,
 	lastTilt: nil,
 	lastBars: nil,
 	lastAz: nil,
 	lastAzimuthTilt: nil,
-	barHeight: 0.95,# multiple of instantFoV
+	barHeight: 0.95,# multiple of instantFoVradius
 	barPattern:  [ [[-1,0],[1,0]],
 	               [[-1,-1],[1,-1],[1,1],[-1,1]],
-	               [[-1,0],[1,0],[1,1.5],[-1,1.5],[-1,0],[1,0],[1,-1.5],[-1,-1.5]],
+	               [[-1,0],[1,0],[1,2],[-1,2],[-1,0],[1,0],[1,-2],[-1,-2]],
 	               [[1,-3],[1,3],[-1,3],[-1,1],[1,1],[1,-1],[-1,-1],[-1,-3]] ],
 	currentPattern: [],
-	barPatternMin: [0,-1, -1.5, -3],
-	barPatternMax: [0, 1,  1.5,  3],
+	barPatternMin: [0,-1, -2, -3],
+	barPatternMax: [0, 1,  2,  3],
 	nextPatternNode: 0,
 	scanPriorityEveryFrame: 0,
 	timeToKeepBleps: 13,
@@ -1041,6 +1041,13 @@ var F16SeaMode = {
 	detectAIR: 0,
 	detectSURFACE: 0,
 	detectMARINE: 1,
+	barPattern:  [ [[-1,-1],[1,-1]], # The SURFACE/SEA pattern is centered so pattern is almost entirely under horizon
+	               [[-1,-3],[1,-3],[1,-1],[-1,-1]],
+	               [[-1,-3],[1,-3],[1,-1],[-1,-1],[-1,-3],[1,-3],[1,-5],[-1,-5]],
+	               [[1,-7],[1,-1],[-1,-1],[-1,-3],[1,-3],[1,-5],[-1,-5],[-1,-7]] ],
+	barPatternMin: [-1, -3, -5, -7],
+	barPatternMax: [-1, -1, -1, -1],
+
 	new: func (subMode, radar = nil) {
 		var mode = {parents: [F16SeaMode, RadarMode]};
 		mode.radar = radar;
@@ -1051,8 +1058,7 @@ var F16SeaMode = {
 		return mode;
 	},
 	preStep: func {
-		me.radar.tiltOverride = 1;
-		me.radar.tilt = -10;# TODO: find info on this
+		me.radar.tiltOverride = 0;
 		var dev_tilt_deg = me.cursorAz;
 		if (me.az == 60) {
 			dev_tilt_deg = 0;
@@ -2257,10 +2263,7 @@ var getCompleteList = func {
 
 # BUGS:
 #   HSD radar arc CW vs. CCW
-#   MFD OBS colors on b50
 #
 # TODO:
-#   GM tilt angles (needs serious thinking)
-#   Clicking A-G should set GM
 #   VSR switch speed at each bar instead of each frame
 #
