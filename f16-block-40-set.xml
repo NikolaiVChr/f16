@@ -44,6 +44,12 @@
       <tag>f-16</tag>
     </tags>
 
+  <view n="0">
+    <config>
+        <y-offset-m>0.8525</y-offset-m><!-- to be able to see borecross in WideAngle HUD, this is 1 cm lower than other blocks -->
+    </config>
+  </view>
+
   <startup>
    <splash-texture>Aircraft/f16/f16-splash.png</splash-texture>
   </startup>

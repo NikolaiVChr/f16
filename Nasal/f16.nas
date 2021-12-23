@@ -163,13 +163,13 @@ var resetView = func () {
   interpolate("sim/current-view/pitch-offset-deg", getprop("sim/current-view/config/pitch-offset-deg"),0.66);
   interpolate("sim/current-view/roll-offset-deg", getprop("sim/current-view/config/roll-offset-deg"),0.66);
   
-  if (getprop("sim/current-view/view-number") == 0) {
-    interpolate("sim/current-view/x-offset-m", 0, 1); 
-    interpolate("sim/current-view/y-offset-m", 0.86, 1); 
-    interpolate("sim/current-view/z-offset-m", -4.015, 1);
-  } else {
-    interpolate("sim/current-view/x-offset-m", 0, 1);
-  }
+  #if (getprop("sim/current-view/view-number") == 0) {
+    interpolate("sim/current-view/x-offset-m", getprop("sim/view["~getprop("sim/current-view/view-number-raw")~"]/config/x-offset-m"), 1); 
+    interpolate("sim/current-view/y-offset-m", getprop("sim/view["~getprop("sim/current-view/view-number-raw")~"]/config/y-offset-m"), 1); 
+    interpolate("sim/current-view/z-offset-m", getprop("sim/view["~getprop("sim/current-view/view-number-raw")~"]/config/z-offset-m"), 1);
+  #} else {
+  #  interpolate("sim/current-view/x-offset-m", 0, 1);
+  #}
 }
 
 var HDDView = func () {
