@@ -800,7 +800,7 @@
         <hovered>
             <binding>
                 <command>set-tooltip</command>
-                <tooltip-id>button-plrt</tooltip-id>
+                <tooltip-id>button-wx</tooltip-id>
                 <label>DLNK send</label>
             </binding>
         </hovered>

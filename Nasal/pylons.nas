@@ -1350,17 +1350,37 @@ var b30_a2s_antiship = func {
     }
 }
 
+# Peacetime training configuration 1
+var b30_train_aa = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.dumb2WT);
+        pylon2.loadSet(pylonSets.podACMI);
+        pylon3.loadSet(pylonSets.empty);
+        pylon4.loadSet(pylonSets.empty);
+        pylon5.loadSet(pylonSets.fuel30);
+        pylon6.loadSet(pylonSets.empty);
+        pylon7.loadSet(pylonSets.empty);
+        pylon8.loadSet(pylonSets.dumb1);
+        pylon9.loadSet(pylonSets.dumb2WT);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
 # Peacetime training configuration
 var b30_train_ag = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.dumb3WT);
-        pylon2.loadSet(pylonSets.podACMI);
+        pylon2.loadSet(pylonSets.dumb1);
         pylon3.loadSet(pylonSets.empty);
         pylon4.loadSet(pylonSets.fuel37L);
         pylon5.loadSet(pylonSets.podEcm131);
         pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.empty);
-        pylon8.loadSet(pylonSets.dumb1);
+        pylon8.loadSet(pylonSets.podACMI);
         pylon9.loadSet(pylonSets.dumb3WT);
         pylon10.loadSet(pylonSets.podLTgp);
         pylon11.loadSet(pylonSets.podLNav);
