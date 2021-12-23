@@ -296,7 +296,7 @@ var list = func () {
                 }
             }
             if (ut!=nil) {
-                var contact = ut.getNearbyVirtualTGPContact(0);
+                var contact = ut.getNearbyVirtualTGPContact();
                 armament.contactPoint = contact;
             } else {
                 armament.contactPoint = radar_system.ContactTGP.new("TGP-Spot",terrain,1);

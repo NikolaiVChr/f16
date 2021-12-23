@@ -1892,7 +1892,7 @@ var F16STTMode = {
 				me.azimuthTilt = me.lastBlep.getAZDeviation();
 				me.radar.tiltOverride = 1;# tilt knob ignored
 				me.radar.tilt = me.lastBlep.getElev(); # tilt here is in relation to horizon
-			} else {				
+			} else {
 				me.priorityTarget = nil;
 				me.radar.tiltOverride = 0;
 				me.undesignate();
@@ -1947,7 +1947,7 @@ var F16STTMode = {
 	leaveMode: func {
 		me.priorityTarget = nil;
 		me.lastFrameStart = -1;
-		me.timeToKeepBleps = 13;
+		me.timeToKeepBleps = 13;# TODO: Why ?
 	},
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude

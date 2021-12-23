@@ -638,7 +638,7 @@ AIContact = {
 		me.getCoord();
 		me.coord.set_xyz(me.coord.x()+rand()*spheric_dist_m*2-spheric_dist_m,me.coord.y()+rand()*spheric_dist_m*2-spheric_dist_m,me.coord.z()+rand()*spheric_dist_m*2-spheric_dist_m);
 		me.virt.elevpick = geo.elevation(me.coord.lat(),me.coord.lon());
-		if (spheric_dist_m != 0 and me.virt.elevpick != nil) me.coord.set_alt(me.virt.elevpick+1);# TODO: Not convinced this is the place for the 1m offset
+		if (spheric_dist_m != 0 and me.virt.elevpick != nil) me.coord.set_alt(me.virt.elevpick+1);# TODO: Not convinced this is the place for the 1m offset since both missiles and radar subtract 1m from targetdistance, but for slanted picking with undulations its still good idea to not place it at the base.
 		me.virt.coord = me.coord;
 		me.virt.getCoord = func {
 			return me.coord;
@@ -653,15 +653,13 @@ AIContact = {
 		return me.virt;
 	},
 
-	getNearbyVirtualTGPContact: func (spheric_dist_m) {
-		# Dont remember why the TGP prefers a virtual target when it IR LOCK a target. But it does.
+	getNearbyVirtualTGPContact: func () {
+		# Dont remember why the TGP prefers a virtual target when it IR LOCK a target (which it will follow). But it does.
+		if (me.virtTGP != nil) return me.virtTGP;
 		me.virtTGP = {parents: [me]};
-		me.getCoord();
-		me.coord.set_xyz(me.coord.x()+rand()*spheric_dist_m*2-spheric_dist_m,me.coord.y()+rand()*spheric_dist_m*2-spheric_dist_m,me.coord.z()+rand()*spheric_dist_m*2-spheric_dist_m);
-		me.virtTGP.elevpick = geo.elevation(me.coord.lat(),me.coord.lon());
-		if (spheric_dist_m != 0 and me.virtTGP.elevpick != nil) me.coord.set_alt(me.virtTGP.elevpick+1);# TODO: Not convinced this is the place for the 1m offset
-		me.virtTGP.coord = me.coord;
 		me.virtTGP.getCoord = func {
+			me.parents[0].getCoord();
+			me.coord.set_alt(me.coord.alt()+1);
 			return me.coord;
 		};
 		me.virtTGP.isVirtual = func {

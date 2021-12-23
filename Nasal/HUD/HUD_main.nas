@@ -2409,11 +2409,11 @@ append(obj.total, obj.speed_curr);
         }
         me.designatedDistanceFT = nil;
         me.groundDistanceFT = nil;
-        if (radar_system.apg68Radar.getPriorityTarget() != nil) {
-            me.u = radar_system.apg68Radar.getPriorityTarget();
+        me.u = radar_system.apg68Radar.getPriorityTarget();
+        if (me.u != nil) {            
             me.lastCoord = me.u.getLastCoord();
             if (me.lastCoord == nil) {
-                print("HUD lastCoord has no valid bleps! ("~radar_system.apg68Radar.currentMode.longName~")");
+                print("HUD lastCoord has no valid bleps! ("~radar_system.apg68Radar.currentMode.longName~") ["~size(me.u.getBleps())~" bleps]");
                 radar_system.apg68Radar.undesignate();
             } elsif (!me.lastCoord.is_defined()) {
                 print("HUD lastCoord not defined!");
