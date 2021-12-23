@@ -1374,13 +1374,13 @@ var b30_train_aa = func {
 var b30_train_ag = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
         pylon1.loadSet(pylonSets.dumb3WT);
-        pylon2.loadSet(pylonSets.dumb1);
+        pylon2.loadSet(pylonSets.podACMI);
         pylon3.loadSet(pylonSets.empty);
         pylon4.loadSet(pylonSets.fuel37L);
         pylon5.loadSet(pylonSets.podEcm131);
         pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.empty);
-        pylon8.loadSet(pylonSets.podACMI);
+        pylon8.loadSet(pylonSets.dumb1);
         pylon9.loadSet(pylonSets.dumb3WT);
         pylon10.loadSet(pylonSets.podLTgp);
         pylon11.loadSet(pylonSets.podLNav);
