@@ -855,7 +855,7 @@ var a2g_dead = func {
         	pylon10.loadSet(pylonSets.empty);
         	pylon11.loadSet(pylonSets.podSAtp);
         } else {
-        	pylon10.loadSet(pylonSets.podLite);
+        	pylon10.loadSet(pylonSets.podSAtp);
             pylon11.loadSet(pylonSets.podHarm);
         }
         f16.reloadCannon();
@@ -1645,7 +1645,7 @@ var a2g_jsow = func {
         	pylon10.loadSet(pylonSets.empty);
         	pylon11.loadSet(pylonSets.podSAtp);
         } else {
-        	pylon10.loadSet(pylonSets.podLite);
+        	pylon10.loadSet(pylonSets.podSAtp);
             pylon11.loadSet(pylonSets.podHarm);
         }
         f16.reloadCannon();

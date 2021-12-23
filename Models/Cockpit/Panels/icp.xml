@@ -789,6 +789,25 @@
 
     <animation>
         <type>pick</type>
+        <object-name>plrt</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>nasal</command>
+                <script>ded.Buttons.wx.doAction();</script>
+            </binding>
+        </action>
+        <hovered>
+            <binding>
+                <command>set-tooltip</command>
+                <tooltip-id>button-plrt</tooltip-id>
+                <label>DLNK send</label>
+            </binding>
+        </hovered>
+    </animation>
+
+    <animation>
+        <type>pick</type>
         <object-name>flir_ud</object-name>
         <action>
             <button>0</button>
