@@ -289,14 +289,7 @@ var F16_HUD = {
 #                .hide()
 #                .setColor(0,1,0);
 #              append(obj.total, obj.raltFrame);
-        obj.boreSymbol = obj.svg.createChild("path")
-                .moveTo(-5,0)
-                .horiz(10)
-                .moveTo(0,-5)
-                .vert(10)
-                .setStrokeLineWidth(1)
-                .setColor(0,1,0);
-            append(obj.total, obj.boreSymbol);
+        
             
             
         obj.speed_indicator = obj.svg.createChild("path")
@@ -736,7 +729,15 @@ append(obj.total, obj.speed_curr);
             .hide()
             .setColor(0,1,0);
         append(obj.total, obj.target_locked);
-        obj.locatorAngle = obj.svg.createChild("text")
+        obj.boreSymbol = obj.centerOrigin.createChild("path")
+                .moveTo(-5,0)
+                .horiz(10)
+                .moveTo(0,-5)
+                .vert(10)
+                .setStrokeLineWidth(1)
+                .setColor(0,1,0);
+        append(obj.total, obj.boreSymbol);
+        obj.locatorAngle = obj.centerOrigin.createChild("text")
                 .setText("0")
                 .setAlignment("right-center")
                 .setColor(0,1,0,1)
@@ -1329,10 +1330,10 @@ append(obj.total, obj.speed_curr);
                                                  if (val.gear_down) {
                                                      obj.boreSymbol.hide();
                                                  } else {
-                                                     obj.boreSymbol.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud);
+                                                     obj.boreSymbol.setTranslation(HudMath.getBorePos());
                                                      #obj.eegsGroup.setTranslation(obj.sx/2,obj.sy-obj.texels_up_into_hud);
                                                      #printf("bore %d,%d",obj.sx/2,obj.sy-obj.texels_up_into_hud);
-                                                     obj.locatorAngle.setTranslation(obj.sx/2-10,obj.sy-obj.texels_up_into_hud);
+                                                     obj.locatorAngle.setTranslation(HudMath.getBorePos()[0]-10, HudMath.getBorePos()[1]);
                                                      obj.boreSymbol.show();
                                                  }
                                                  obj.oldBore.hide();
@@ -3003,7 +3004,7 @@ append(obj.total, obj.speed_curr);
 
                         if(me.showme == TRUE) {
                             me.pipperLine.removeAllChildren();
-                            me.bPos = [hdp.VV_x,hdp.VV_y]; #HudMath.getBorePos(); 
+                            me.bPos = [hdp.VV_x,hdp.VV_y]; #HudMath.getBorePosSlanted(); 
                             me.llx  = me.pos_x-me.bPos[0];
                             me.lly  = me.pos_y-me.bPos[1];
                             me.ll = math.sqrt(me.llx*me.llx+me.lly*me.lly);
