@@ -1305,6 +1305,9 @@ var F16TWSMode = {
 	},
 	cycleBars: func {
 		me.bars += 1;
+		if (me.priorityTarget != nil and me.bars > 3) {
+			me.bars = 2;
+		}
 		if (me.bars == 5) me.bars = 2;# bars:1 not available in TWS
 		me.nextPatternNode = 0;
 	},
@@ -1318,9 +1321,11 @@ var F16TWSMode = {
 	},
 	designatePriority: func (contact) {
 		me.priorityTarget = contact;
-		if (contact != nil and me.az == 60) {
+		if (contact != nil) {
 			# With a target of interest (TOI), AZ is not allowed to be 60
-			me.az = 25;
+			# Source MLU Tape 1:
+			me.bars = math.min(3, me.bars);
+			me.az = math.min(25, me.az);
 		}
 	},
 	getPriority: func {
@@ -1364,6 +1369,9 @@ var F16TWSMode = {
 				# auto go to STT when target is very close
 				me.designate(me.priorityTarget);
 			}
+			# Source MLU Tape 1:
+			me.bars = math.min(3, me.bars);
+			me.az = math.min(25, me.az);
 		} else {
 			me.radar.tiltOverride = 0;
 			me.undesignate();
@@ -1947,7 +1955,7 @@ var F16STTMode = {
 	leaveMode: func {
 		me.priorityTarget = nil;
 		me.lastFrameStart = -1;
-		me.timeToKeepBleps = 13;# TODO: Why ?
+		me.timeToKeepBleps = 7;# TODO: Why ?
 	},
 	getSearchInfo: func (contact) {
 		# searchInfo:               dist, groundtrack, deviations, speed, closing-rate, altitude
