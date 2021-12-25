@@ -88,7 +88,7 @@ var SubSystem_RWR_APG = {
                     me.show = 0;#behind terrain (does this terrain check happen often enough??)
                 } elsif (me.u.get_display()) {
                     me.show = 1;#in radar cone
-                } elsif(me.u.get_model()=="AI" and me.rn < 55) {
+                } elsif(me.u.getModel()=="AI" and me.rn < 55) {
                     me.show = 1;#non MP always has transponder on.
                 } elsif (me.trAct != nil and me.trAct.getValue() != nil and me.trAct.getValue() != -9999 and me.rn < 55) {
                   # transponder on
@@ -111,23 +111,23 @@ var SubSystem_RWR_APG = {
                         }
                     }
                     me.threat = 0;
-                    if (me.u.get_model() != "missile_frigate" and me.u.get_model() != "S-75" and me.u.get_model() != "buk-m2" and me.u.get_model() != "MIM104D" and me.u.get_model() != "s-300" and me.u.get_model() != "fleet" and me.u.get_model() != "ZSU-23-4M") {
+                    if (me.u.getModel() != "missile_frigate" and me.u.getModel() != "S-75" and me.u.getModel() != "buk-m2" and me.u.getModel() != "MIM104D" and me.u.getModel() != "s-300" and me.u.getModel() != "fleet" and me.u.getModel() != "ZSU-23-4M") {
                         me.threat += ((180-me.dev)/180)*0.30;# most threat if I am in front of his nose
                         me.spd = (60-me.u.get_Speed())/60;
                         me.threat -= me.spd>0?me.spd:0;# if his speed is lower than 60kt then give him minus threat else positive
-                    } elsif (me.u.get_model == "missile_frigate" or me.u.get_model() == "fleet") {
+                    } elsif (me.u.getModel == "missile_frigate" or me.u.getModel() == "fleet") {
                         me.threat += 0.30;
                     } else {
                         me.threat += 0.30;
                     }
                     me.danger = 50;# within this range he is most dangerous
-                    if (me.u.get_model() == "missile_frigate" or me.u.get_model() == "fleet" or me.u.get_model() == "s-300") {
+                    if (me.u.getModel() == "missile_frigate" or me.u.getModel() == "fleet" or me.u.getModel() == "s-300") {
                         me.danger = 80;
-                    } elsif (me.u.get_model() == "buk-m2" or me.u.get_model() == "S-75") {
+                    } elsif (me.u.getModel() == "buk-m2" or me.u.getModel() == "S-75") {
                         me.danger = 35;
-                    } elsif (me.u.get_model() == "MIM104D") {
+                    } elsif (me.u.getModel() == "MIM104D") {
                         me.danger = 45;
-                    } elsif (me.u.get_model() == "ZSU-23-4M") {
+                    } elsif (me.u.getModel() == "ZSU-23-4M") {
                         me.danger = 7.5;
                     }
                     me.threat += ((me.danger-me.rn)/me.danger)>0?((me.danger-me.rn)/me.danger)*0.60:0;# if inside danger zone then add threat, the closer the more.

@@ -409,15 +409,9 @@ RWRCanvas = {
 
         rwr.recipient.Receive = func(notification)
         {
-            if (notification.NotificationType == "FrameNotification")
+            if (notification.NotificationType == "FrameNotification" and notification.FrameCount == 2)
             {
-                #
-                # Link16 wingmen not visible
-                if (notification["rwrList"] != nil and size(notification.rwrList)>0)
-                  me.parent_obj.update(notification.rwrList, "normal");
-                #else if (notification["rwrList16"] != nil)
-                else
-                  me.parent_obj.update([], "link16");
+                me.parent_obj.update(radar_system.f16_rwr.vector_aicontacts_threats, "normal");
                 return emesary.Transmitter.ReceiptStatus_OK;
             }
             return emesary.Transmitter.ReceiptStatus_NotProcessed;
@@ -453,7 +447,7 @@ RWRCanvas = {
         me.newsound = 0;
         me.unk = 0;
         foreach(me.contact; me.sortedlist) {
-            me.typ=me.lookupType[me.contact[0].get_model()];
+            me.typ=me.lookupType[me.contact[0].getModel()];
             if (me.i > me.max_icons-1) {
                 break;
             }
@@ -462,7 +456,7 @@ RWRCanvas = {
                 continue;
                 me.unk = 1;                
             }
-            #print("show "~me.i~" "~me.typ~" "~contact[0].get_model()~"  "~contact[1]);
+            #print("show "~me.i~" "~me.typ~" "~contact[0].getModel()~"  "~contact[1]);
             me.threat = me.contact[1];#print(me.threat);
             
             if (me.threat > 0.5 and me.typ != me.AIRCRAFT_UNKNOWN and me.typ != me.ASSET_AI) {
@@ -475,7 +469,7 @@ RWRCanvas = {
             if (me.contact[0].get_range() > 150) {
                 continue;
             }
-            me.dev = -geo.normdeg180(me.contact[0].get_bearing()-getprop("orientation/heading-deg"))+90;
+            me.dev = -me.contact[2]+90;
             me.x = math.cos(me.dev*D2R)*me.threat;
             me.y = -math.sin(me.dev*D2R)*me.threat;
             me.texts[me.i].setTranslation(me.x,me.y);
@@ -502,7 +496,7 @@ RWRCanvas = {
             }
             me.popupNew = me.elapsed;
             foreach(me.old; me.shownList) {
-                if(me.old[0].getUnique()==me.contact[0].getUnique()) {
+                if(me.old[0].equals(me.contact[0])) {
                     me.popupNew = me.old[1];
                     break;
                 }
@@ -570,5 +564,5 @@ RWRCanvas = {
                 cv.setColorBackground(0.01, 0.105, 0);
                 };
                 var root = cv.createGroup();
-                rwr = RWRCanvas.new("RWRCanvas", root, [diam/2,diam/2],diam);
+                var rwr = RWRCanvas.new("RWRCanvas", root, [diam/2,diam/2],diam);
 

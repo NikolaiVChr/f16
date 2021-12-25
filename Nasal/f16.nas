@@ -163,13 +163,13 @@ var resetView = func () {
   interpolate("sim/current-view/pitch-offset-deg", getprop("sim/current-view/config/pitch-offset-deg"),0.66);
   interpolate("sim/current-view/roll-offset-deg", getprop("sim/current-view/config/roll-offset-deg"),0.66);
   
-  if (getprop("sim/current-view/view-number") == 0) {
-    interpolate("sim/current-view/x-offset-m", 0, 1); 
-    interpolate("sim/current-view/y-offset-m", 0.86, 1); 
-    interpolate("sim/current-view/z-offset-m", -4.015, 1);
-  } else {
-    interpolate("sim/current-view/x-offset-m", 0, 1);
-  }
+  #if (getprop("sim/current-view/view-number") == 0) {
+    interpolate("sim/current-view/x-offset-m", getprop("sim/view["~getprop("sim/current-view/view-number-raw")~"]/config/x-offset-m"), 1); 
+    interpolate("sim/current-view/y-offset-m", getprop("sim/view["~getprop("sim/current-view/view-number-raw")~"]/config/y-offset-m"), 1); 
+    interpolate("sim/current-view/z-offset-m", getprop("sim/view["~getprop("sim/current-view/view-number-raw")~"]/config/z-offset-m"), 1);
+  #} else {
+  #  interpolate("sim/current-view/x-offset-m", 0, 1);
+  #}
 }
 
 var HDDView = func () {
@@ -444,11 +444,6 @@ var LOOP_MEDIUM_RATE = 0.5;
 
 var slow = {
   loop: func {
-    #var valid = 0;
-    #if (awg_9.active_u != nil) {
-    #  valid = iff.interrogate(awg_9.active_u.propNode);
-    #}
-    #setprop("instrumentation/iff/response", valid);
     if (getprop("fdm/jsbsim/elec/bus/emergency-dc-1")<20 and getprop("fdm/jsbsim/elec/bus/emergency-dc-2")<20) {
       setprop("sound/rwr-new", -1);#prevent sound from going off whenever it gets elec
     }
@@ -1614,7 +1609,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     mps.loop();
     start.enableViews();
     fail.init();
-    awg_9.loopDGFT();
+    #awg_9.loopDGFT();
     eng.JFS.init();
     autopilot_inhibit.init();
     setup_custom_stick_bindings();
@@ -1628,7 +1623,7 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     if (getprop("f16/disable-custom-view") != 1) view.manager.register("Cockpit View", pilot_view_limiter);
     emesary.GlobalTransmitter.Register(f16_mfd);
     emesary.GlobalTransmitter.Register(f16_hud);
-    emesary.GlobalTransmitter.Register(awg_9.aircraft_radar);
+    #emesary.GlobalTransmitter.Register(awg_9.aircraft_radar);
     #execTimer.start();
     rtExec_loop();
     
@@ -1655,16 +1650,17 @@ var main_init_listener = setlistener("sim/signals/fdm-initialized", func {
     hmd.setMainFile("hmd.nas");
     hmd.load();
     #-- load RP as reloadable module
-    var rp = modules.Module.new("f16_RP"); # Module name
-    rp.setDebug(0); # 0=(mostly) silent; 1=print setlistener and maketimer calls to console; 2=print also each listener hit, be very careful with this! 
-    rp.setFilePath(getprop("/sim/aircraft-dir")~"/Nasal/radar");#
-    rp.setMainFile("radar-system.nas");#
+    #var rp = modules.Module.new("f16_RP"); # Module name
+    #rp.setDebug(0); # 0=(mostly) silent; 1=print setlistener and maketimer calls to console; 2=print also each listener hit, be very careful with this! 
+    #rp.setFilePath(getprop("/sim/aircraft-dir")~"/Nasal/radar");#
+    #rp.setMainFile("radar-prototype.nas");#
     #rp.load();#
     setprop("sim/rendering/headshake/enabled",0);# This does not work very well in F-16. So this makes people have to enable it explicit to have it. Don't know why its forced on us by default.
     # debug:
     #
     #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/pitch-rate-lower-lag");
     #screen.property_display.add("fdm/jsbsim/fcs/fly-by-wire/pitch/bias-final");
+    startDLListener();
   }
  }, 0, 0);
 
