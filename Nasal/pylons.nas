@@ -855,7 +855,7 @@ var a2g_dead = func {
         	pylon10.loadSet(pylonSets.empty);
         	pylon11.loadSet(pylonSets.podSAtp);
         } else {
-        	pylon10.loadSet(pylonSets.podLite);
+        	pylon10.loadSet(pylonSets.podSAtp);
             pylon11.loadSet(pylonSets.podHarm);
         }
         f16.reloadCannon();
@@ -1350,6 +1350,26 @@ var b30_a2s_antiship = func {
     }
 }
 
+# Peacetime training configuration 1
+var b30_train_aa = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+        pylon1.loadSet(pylonSets.dumb2WT);
+        pylon2.loadSet(pylonSets.podACMI);
+        pylon3.loadSet(pylonSets.empty);
+        pylon4.loadSet(pylonSets.empty);
+        pylon5.loadSet(pylonSets.fuel30);
+        pylon6.loadSet(pylonSets.empty);
+        pylon7.loadSet(pylonSets.empty);
+        pylon8.loadSet(pylonSets.dumb1);
+        pylon9.loadSet(pylonSets.dumb2WT);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.empty);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
 # Peacetime training configuration
 var b30_train_ag = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
@@ -1645,7 +1665,7 @@ var a2g_jsow = func {
         	pylon10.loadSet(pylonSets.empty);
         	pylon11.loadSet(pylonSets.podSAtp);
         } else {
-        	pylon10.loadSet(pylonSets.podLite);
+        	pylon10.loadSet(pylonSets.podSAtp);
             pylon11.loadSet(pylonSets.podHarm);
         }
         f16.reloadCannon();

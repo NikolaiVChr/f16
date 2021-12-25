@@ -8,12 +8,13 @@
     <texture>Liveries/Block50/03-0052.png</texture>
     <owner type="string">PolAF</owner>
    </livery>
+   
    <livery-logo>
     <texture>Liveries/standard.logos.black.png</texture>
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/patch.default.png</texture>
+      <texture>Liveries/Block50/patch.polaf.png</texture>
   </livery-patch>
 
   <livery-pod>

@@ -105,7 +105,7 @@
             <legend>A/A Training</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.b40_train_aa();</script>
+                <script>pylons.b30_train_aa();</script>
             </binding>
         </button>
 

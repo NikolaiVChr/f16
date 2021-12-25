@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 
 <PropertyList>
- <sim>
+ <sim> 
   <model>
-   <livery> 
-    <name type="string">USAF, Thunderbirds No. 2</name>
-    <texture>Liveries/Block50/92-3881.png</texture>
-    
+   <livery>
+    <name type="string">USAF ADS, Thunderbirds #1</name>
+    <texture>Liveries/Block50/93-0553.png</texture>
     <owner type="string">USAF</owner>
    </livery>
+   
    <livery-logo>
     <texture>Liveries/yf/yf16-transp.png</texture>
    </livery-logo>
@@ -18,7 +18,7 @@
   </livery-patch>
 
   <livery-pod>
-        <texture>Armament/External-stores/MXU-648.png</texture>
+        <texture>Liveries/Block10/pod.white.png</texture>
     </livery-pod>
 
         <f16>
