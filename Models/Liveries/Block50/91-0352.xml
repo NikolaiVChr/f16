@@ -23,6 +23,7 @@
 
         <f16>
             <dragchute type="bool">false</dragchute>
+            <cft type="bool">false</cft>
         </f16>
   </model>
  </sim>
