@@ -144,4 +144,15 @@
    <type>JP-8</type>
    <priority> 2 </priority>
   </tank>
+  <tank type="FUEL"> <!-- CFT -->
+   <location unit="IN">
+   <x> 8.5 </x>
+   <y> 0 </y>
+   <z> 8.0 </z>
+   </location>
+   <capacity unit="LBS"> 3050 </capacity>
+   <contents unit="LBS"> 0 </contents>
+   <type>JP-8</type>
+   <priority> 2 </priority>
+  </tank>
  </propulsion>

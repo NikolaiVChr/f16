@@ -109,6 +109,8 @@
         <model>
             <fallback-model-index type="int">516</fallback-model-index>
             <f16>
+                <cft type="bool">false</cft><!-- liveries set this to enable CFT tanks on b50+ -->
+                <cft-tanks-3d type="bool">false</cft-tanks-3d><!-- use this for 3D of CFT -->
                 <AIM-9L type="bool">true</AIM-9L>
                 <CATM-9L type="bool">false</CATM-9L>
                 <AIM-9_smokewinders type="bool">false</AIM-9_smokewinders>
@@ -729,6 +731,12 @@
                 <capacity-gal_us type="double">0</capacity-gal_us>
                 <level-norm type="double">0</level-norm>
             </tank>
+            <tank n="9">
+                <name>Not attached</name>
+                <selected type="bool">false</selected>
+                <capacity-gal_us type="double">0</capacity-gal_us>
+                <level-norm type="double">0</level-norm>
+            </tank>
             <total-fuel-lbs-1 type="double">0</total-fuel-lbs-1>
             <total-fuel-lbs-10 type="double">0</total-fuel-lbs-10>
             <total-fuel-lbs-100 type="double">0</total-fuel-lbs-100>
@@ -837,6 +845,7 @@
                 <pointmass-dragarea-sqft type="double" n="9">0</pointmass-dragarea-sqft>
                 <pointmass-dragarea-sqft type="double" n="11">0</pointmass-dragarea-sqft>
                 <pointmass-dragarea-sqft type="double" n="12">0</pointmass-dragarea-sqft>
+                <pointmass-dragarea-sqft type="double" n="13">0</pointmass-dragarea-sqft>
             </inertia>
             <systems>
                 <hook>

@@ -34,6 +34,8 @@ hyd70lh7.brevity = "Rockets away";
 var hyd70rh7 = stations.SubModelWeapon.new("LAU-68", 23.6, 7, [7], [], props.globals.getNode("fdm/jsbsim/fcs/hydra7rtrigger",1), 1, func{return getprop("payload/armament/fire-control/serviceable");},1);
 hyd70rh7.typeShort = "M151";
 hyd70rh7.brevity = "Rockets away";
+var fuelTankCFT = nil;
+if (getprop("sim/variant-id")>=5) fuelTankCFT = stations.FuelTank.new("Conformant Fuel Tanks", "CFT450", 9, 450, "sim/model/f16/cft-tanks-3d");
 var fuelTankCenter = stations.FuelTank.new("Center 300 Gal Tank", "TK300", 8, 300, "sim/model/f16/ventraltank");
 var fuelTank370Left = stations.FuelTank.new("Left 370 Gal Tank", "TK370", 6, 370, "sim/model/f16/wingtankL");
 var fuelTank370Right = stations.FuelTank.new("Right 370 Gal Tank", "TK370", 7, 370, "sim/model/f16/wingtankR");
@@ -126,6 +128,10 @@ var pylonSets = {
     podACMIWT: {name: "AN/ASQ-T50(V)2 ACMI Pod", pylon: "1 MRLW", content: [acmi], fireOrder: [0], launcherDragArea: -0.0785, launcherMass: 234, launcherJettisonable: 0, weaponJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 };
 
+if (getprop("sim/variant-id")>=5) {
+	pylonSets.cft450 = {name: fuelTankCFT.type, pylon: "Hardmount", rack: nil, content: [fuelTankCFT], fireOrder: [0], launcherDragArea: 0.18, launcherMass: 462, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1};
+}
+
 if (getprop("sim/model/f16/wingmounts") != 0) {
 	# all variants except YF-16 get store options:
 
@@ -143,6 +149,7 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 	var pylon5set = nil;
 	var fuselageRset = nil;
 	var fuselageLset = nil;
+	var pylonCFT = nil;
 
 	# HTS can be carried on both left and right side.
 	# Sniper, LITENING, IRST only on right	
@@ -245,7 +252,8 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 	pylon8 = stations.Pylon.new("Right Outer Wing Pylon", 7, [0.082, 3.95167,-0.25696], pylon8set, 9, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[8]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[8]",1),func{return getprop("payload/armament/fire-control/serviceable") and getprop("fdm/jsbsim/elec/bus/ess-dc")>20;},func{return getprop("f16/avionics/power-st-sta");});
 	pylon9 = stations.Pylon.new("Right Wingtip Pylon",    8, [0.082, 4.79412, 0.01109], pylon9set,10, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[9]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[9]",1),func{return getprop("payload/armament/fire-control/serviceable") and getprop("fdm/jsbsim/elec/bus/ess-dc")>20;},func{return getprop("f16/avionics/power-st-sta");});
 	pylonI = stations.InternalStation.new("Internal gun mount", 9, [pylonSets.mm20], props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[10]",1));
-	
+	pylonCFT = stations.FixedStation.new("Conformal Fuel Mount",    12, [pylonSets.empty],props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[13]",1), props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[13]",1));
+
 	pylon1.forceRail = 1;# set the missiles mounted on this pylon on a rail.
 	pylon2.forceRail = 1;
 	pylon8.forceRail = 1;
@@ -284,7 +292,15 @@ if (getprop("sim/model/f16/wingmounts") != 0) {
 	pylon1 = stations.Pylon.new("Left Wingtip Pylon", 0, [0,0,0], wingtipSet1yf, 0, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[1]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[1]",1));
 	pylon9 = stations.Pylon.new("Right Wingtip Pylon", 8, [0,0,0], wingtipSet9yf, 1, props.globals.getNode("fdm/jsbsim/inertia/pointmass-weight-lbs[9]",1),props.globals.getNode("fdm/jsbsim/inertia/pointmass-dragarea-sqft[9]",1));
 }
+
+
 #print("** Pylon & fire control system started. **");
+
+##########################################################
+#################        DLZ             #################
+##########################################################
+
+
 var getDLZ = func {
     if (fcs != nil and getprop("controls/armament/master-arm-switch") != 0) {
         var w = fcs.getSelectedWeapon();
@@ -298,6 +314,36 @@ var getDLZ = func {
     }
     return nil;
 }
+
+##########################################################
+#################        CFT             #################
+##########################################################
+
+var cftMounted = 0;
+
+var detectCFT = func {
+	removelistener(cftListener);
+	var cft = props.getNode("sim/model/f16/cft");
+	mountCFT(cft);
+	setlistener("sim/model/f16/cft", mountCFT);
+};
+
+var mountCFT = func (mounted) {
+	var cft = mounted.getBoolValue();
+	if (cft and !cftMounted) {
+		#print("Mounting CFT");
+		pylonCFT.loadSet(pylonSets.cft450);
+		#fuelTankCFT.mount(pylonCFT);
+		cftMounted = 1;
+	} elsif (!cft and cftMounted) {
+		#print("Taking off CFT");
+		pylonCFT.loadSet(pylonSets.empty);
+		#fuelTankCFT.del();
+		cftMounted = 0;
+	}
+};
+
+var cftListener = setlistener("sim/signals/fdm-initialized", detectCFT);
 
 ##########################################################
 ################# COMMON FOR ALL PRESETS #################

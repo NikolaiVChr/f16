@@ -130,4 +130,13 @@
    </location>
   </pointmass>
 
+  <pointmass name="hardpoint-cft">
+   <weight unit="LBS"> 0 </weight>
+   <location name="POINTMASS" unit="IN">
+   <x> 8.5 </x>
+   <y> 0 </y>
+   <z> 8.0 </z>
+   </location>
+  </pointmass>
+
  </mass_balance>

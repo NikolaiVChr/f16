@@ -79,7 +79,8 @@ var fuelqty = func {
     setprop("f16/fuel/hand-aft", getprop("consumables/fuel/tank[6]/level-lbs"));
   } elsif (sel == 5) {
     # ext center
-    setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[8]/level-lbs"));
+    var lvlcft = getprop("consumables/fuel/tank[9]/level-lbs");
+    setprop("f16/fuel/hand-fwd", getprop("consumables/fuel/tank[8]/level-lbs")+(lvlcft!=nil?lvlcft:0));
     setprop("f16/fuel/hand-aft", 0);
   }
   setprop("/consumables/fuel/total-fuel-lbs-1",     int(fuel       )     -int(fuel*0.1)*10);
@@ -90,7 +91,7 @@ var fuelqty = func {
 }
 
 # Fuel tank priority store
-var maxtank = 8;
+var maxtank = getprop("sim/variant-id")>=5?9:8;
 var tank_priority = {};
 
 var store_tank_prio = func {
@@ -148,15 +149,18 @@ var set_ext_tank_prio = func {
         tank_priority[6] = 0;
         tank_priority[7] = 0;
         tank_priority[8] = 0;
+        if (maxtank == 9) tank_priority[9] = 0;
     } else { # NORM/DUMP
         if (transfer == 0) { # Ext wing first
             tank_priority[6] = 2;
             tank_priority[7] = 2;
             tank_priority[8] = 3;
+            if (maxtank == 9) tank_priority[9] = 3;
         } else { # Norm
             tank_priority[6] = 3;
             tank_priority[7] = 3;
             tank_priority[8] = 2;
+            if (maxtank == 9) tank_priority[9] = 2;
         }
     }
 
@@ -164,6 +168,7 @@ var set_ext_tank_prio = func {
         setprop("/fdm/jsbsim/propulsion/tank[6]/priority", tank_priority[6]);
         setprop("/fdm/jsbsim/propulsion/tank[7]/priority", tank_priority[7]);
         setprop("/fdm/jsbsim/propulsion/tank[8]/priority", tank_priority[8]);
+        if (maxtank == 9) setprop("/fdm/jsbsim/propulsion/tank[9]/priority", tank_priority[9]);
     }
 }
 
@@ -180,7 +185,6 @@ setlistener("controls/ventilation/airconditioning-source", func {
 }, 0, 0);
 
 var fuelDigits = func {
-  var maxtank = 8;
   for (var i=0;i<=maxtank;i+=1) {
     var fuel = getprop("consumables/fuel/tank["~i~"]/level-lbs"); 
     fuel = roundabout(fuel);
