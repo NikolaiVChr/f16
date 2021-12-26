@@ -266,6 +266,27 @@
  </animation>
 
  <model>
+  <name>irst</name>
+  <path>Aircraft/f16/Models/irst-b60.ac</path>
+  <offsets>
+        <x-m>0</x-m>
+        <y-m>0</y-m>
+        <z-m>0</z-m>
+  </offsets>
+ </model> 
+
+ <animation>
+  <type>select</type>
+  <object-name>irst</object-name>
+  <condition>
+                <equals>
+                    <property>sim/variant-id</property>
+                    <value>6</value>
+                </equals>
+  </condition>
+ </animation>
+
+ <model>
   <name>ex</name>
   <path>Aircraft/f16/Models/Effects/explosion.xml</path>
  </model>
@@ -526,6 +547,8 @@
       <object-name>RightUpperHorizonTail</object-name>
       <object-name>RightLowerHorizonTail</object-name>
       
+      <object-name>irst</object-name>
+
       <object-name>CanopyFrame</object-name>
       <object-name>VentralFins</object-name>
       <object-name>AirIntake</object-name>
@@ -2888,6 +2911,7 @@
   <object-name>Poly.002</object-name>
   <object-name>Turbine</object-name>-->
   <object-name>Fuselage</object-name>
+  <object-name>irst</object-name>
   <!--<object-name>FrontTire</object-name>
   <object-name>LeftMainTire</object-name>
   <object-name>RightMainTire</object-name>-->

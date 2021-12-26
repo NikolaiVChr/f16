@@ -1,5 +1,5 @@
 AC3Db
-MATERIAL "fuselage2Mat.001" rgb 1.000 1.000 1.000  amb 0.800 0.800 0.800  emis 0.000 0.000 0.000  spec 0.795 0.795 0.795  shi 64 trans 0.000
+MATERIAL "fuselage" rgb 1.000 1.000 1.000  amb 1.000 1.000 1.000  emis 0.000 0.000 0.000  spec 0.735 0.815 0.835  shi 60 trans 0.000
 OBJECT world
 name "Blender_exporter_v3.3__CFT.ac"
 kids 1
