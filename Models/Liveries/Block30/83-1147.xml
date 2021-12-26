@@ -3,25 +3,26 @@
 <PropertyList>
  <sim>
   <model>
-   <livery>
-    <name type="string">USAF 147FW, 111FS EF "90th anniversary"</name>
-    <texture>Liveries/Block30/84-1393.png</texture>
+   <livery> 
+    <name type="string">USAF 147FW, 111FS EF "Wing Flagship"</name>
+    <texture>Liveries/Block30/83-1147.png</texture>
     <owner type="string">USAF</owner>
    </livery>
+
    <livery-logo>
-    <texture>Liveries/yf/yf16-transp.png</texture>
+    <texture>Liveries/standard.logos.black2.png</texture>
    </livery-logo>
 
    <livery-patch>
       <texture>Liveries/Block30/patch.111fs.png</texture>
-  </livery-patch>
+   </livery-patch>
 
   <livery-pod>
         <texture>Armament/External-stores/MXU-648.png</texture>
-  </livery-pod>
-  
+    </livery-pod>
+
    <f16>
-       <dragchute type="bool">false</dragchute>
+     <dragchute type="bool">false</dragchute>
    </f16>
   </model>
  </sim>
