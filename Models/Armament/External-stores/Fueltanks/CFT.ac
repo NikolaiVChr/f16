@@ -8,7 +8,7 @@ name "CFT"
 data 9
 Plane.002
 crease 40.0
-texture "PolAF4.png"
+texture "../../../texture.png"
 numvert 418
 -2.47786 0.57953 -0.9379
 -2.69522 0.54865 -0.84339
