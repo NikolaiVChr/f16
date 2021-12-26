@@ -745,6 +745,7 @@ var RadarMode = {
 	lowerAngle: 10,
 	EXPsupport: 0,#if support zoom
 	EXPsearch: 1,# if zoom should include search targets
+	EXPfixedAim: 0,# If map underneath should move instead of cursor when slewing
 	painter: 0,
 	showAZ: func {
 		return me.az != 60; # hmm, does the blue lines at edge of b-scope look messy? If this return false, then they are also not shown in PPI.
@@ -1053,7 +1054,8 @@ var F16SeaMode = {
 	               [[1,-7],[1,-1],[-1,-1],[-1,-3],[1,-3],[1,-5],[-1,-5],[-1,-7]] ],
 	barPatternMin: [-1, -3, -5, -7],
 	barPatternMax: [-1, -1, -1, -1],
-
+	EXPsupport: 1,
+	EXPfixedAim: 1,
 	new: func (subMode, radar = nil) {
 		var mode = {parents: [F16SeaMode, RadarMode]};
 		mode.radar = radar;
@@ -1085,6 +1087,18 @@ var F16SeaMode = {
 	},
 	showBars: func {
 		return 0;
+	},
+	getEXPsize: func {
+		# return nm of zoom width
+		if (me.getRange() == 10) {
+			return 3.5;
+		} elsif (me.getRange() == 20) {
+			return 7;
+		} elsif (me.getRange() == 40) {
+			return 14;
+		} elsif (me.getRange() == 80) {
+			return 21;
+		}
 	},
 	showAZ: func {
 		return 1;
