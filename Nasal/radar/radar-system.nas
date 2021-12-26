@@ -649,7 +649,7 @@ AIContact = {
 		me.virt.getType = func {
 			return POINT;
 		};
-		me.virt.callsign = "Near "~me.get_Callsign();
+		#me.virt.callsign = me.get_Callsign();
 		return me.virt;
 	},
 
