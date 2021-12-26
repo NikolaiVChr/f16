@@ -101,10 +101,10 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>0</row>
             <col>0</col>
-            <legend>A/A Training</legend>
+            <legend>A/A Training (CFT)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.b50_train_aa();</script>
+                <script>pylons.b60_train_aa();</script>
             </binding>
         </button>
 
@@ -112,10 +112,10 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>2</row>
             <col>0</col>
-            <legend>Combat Air Patrol</legend>
+            <legend>Combat Air Patrol (CFT)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_cap();</script>
+                <script>pylons.b60_a2a_cap();</script>
             </binding>
         </button>
 
@@ -129,10 +129,10 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>4</row>
             <col>0</col>
-            <legend>Combat Air Patrol (2 bags)</legend>
+            <legend>Combat Air Patrol (CFT + 1 bag)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.b40_a2a_capext();</script>
+                <script>pylons.b60_a2a_capext();</script>
             </binding>
         </button>
 
@@ -152,10 +152,10 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>6</row>
             <col>0</col>
-            <legend>Air Superiority</legend>
+            <legend>Air Superiority (CFT)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_super();</script>
+                <script>pylons.b60_a2a_super();</script>
             </binding>
         </button>
 
@@ -163,10 +163,10 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>8</row>
             <col>0</col>
-            <legend>Air Superiority (2 bags)</legend>
+            <legend>Air Superiority (CFT + 1 bag)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_superer();</script>
+                <script>pylons.b60_a2a_superer();</script>
             </binding>
         </button>
 
@@ -180,10 +180,10 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>10</row>
             <col>0</col>
-            <legend>Defensive Counter Air</legend>
+            <legend>Defensive Counter Air (CFT)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.a2a_dca();</script>
+                <script>pylons.b60_a2a_dca();</script>
             </binding>
         </button>
 
@@ -203,7 +203,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>12</row>
             <col>0</col>
-            <legend>Ferry Loadout (3 bags)</legend>
+            <legend>Ferry Loadout (CFT + 3 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.ferry1();</script>
@@ -214,7 +214,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>14</row>
             <col>0</col>
-            <legend>Ferry Loadout (2 bags XL)</legend>
+            <legend>Ferry Loadout (CFT + 2 bags XL)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.ferry2();</script>
@@ -225,10 +225,10 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>0</row>
             <col>2</col>
-            <legend>A/G Training (2 bags)</legend>
+            <legend>A/G Training (CFT + 1 bag)</legend>
             <binding>
                 <command>nasal</command>
-                <script>pylons.b50_train_ag();</script>
+                <script>pylons.b60_train_ag();</script>
             </binding>
         </button>
 

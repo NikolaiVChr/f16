@@ -163,4 +163,6 @@ Elon Musk
 - Wide Angle Raster HUD 3D work
 
 Pilot2938
-- Polish AF livery pack, AF Thunderbirds #1
+- Polish AF livery pack
+- AF Thunderbirds #1, 111FS liveries
+- CFT 3D model
