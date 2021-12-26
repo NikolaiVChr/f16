@@ -371,6 +371,7 @@ var refuel = func {
 		if (getprop("consumables/fuel/tank[6]/name") != "Not attached") setprop("consumables/fuel/tank[6]/level-norm", 1);
 		if (getprop("consumables/fuel/tank[7]/name") != "Not attached") setprop("consumables/fuel/tank[7]/level-norm", 1);
 		if (getprop("consumables/fuel/tank[8]/name") != "Not attached") setprop("consumables/fuel/tank[8]/level-norm", 1);
+		if (getprop("consumables/fuel/tank[9]/name") != "Not attached") setprop("consumables/fuel/tank[9]/level-norm", 1);
 	} else {
       screen.log.write(f16.msgC);
     }
