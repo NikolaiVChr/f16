@@ -13,16 +13,15 @@
    </livery-logo>
 
    <livery-patch>
-      <texture>Liveries/Block30/patch.111fs.png</texture>
+      <texture>Liveries/patch.default.png</texture>
   </livery-patch>
 
   <livery-pod>
         <texture>Armament/External-stores/MXU-648.png</texture>
   </livery-pod>
-  
    <f16>
-       <dragchute type="bool">false</dragchute>
-   </f16>
+            <dragchute type="bool">false</dragchute>
+        </f16>
   </model>
  </sim>
 </PropertyList>
