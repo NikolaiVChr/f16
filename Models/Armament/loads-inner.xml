@@ -7,6 +7,16 @@
       <path>Aircraft/f16/Models/Armament/loads_models-inner.xml</path>
     </model>
 
+<animation>
+  <type>select</type>
+  <object-name>CFTTanks</object-name>
+  <condition>
+    <equals>
+      <property>sim/model/f16/cft</property>
+      <value>1</value>
+    </equals>
+  </condition>
+ </animation>
  
 <!--  ===========================================================================================================-->
 <!--  ================================================= id-3   ==================================================-->
