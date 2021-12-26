@@ -707,14 +707,6 @@ var MFD_Device =
                     .setStrokeLineWidth(2.0)
                     .setColor(colorLine3);
         svg.cursorGm = svg.cursor.createChild("path")
-                    .moveTo(50, 5)
-                    .vert(-10)
-                    .moveTo(-50, 5)
-                    .vert(-10)
-                    .moveTo(5,50)
-                    .horiz(-10)
-                    .moveTo(5,-50)
-                    .horiz(-10)
                     .moveTo(0, 11)
                     .vert(500)
                     .moveTo(0, -11)
@@ -723,6 +715,17 @@ var MFD_Device =
                     .horiz(500)
                     .moveTo(-11,0)
                     .horiz(-500)
+                    .setStrokeLineWidth(2.0)
+                    .setColor(colorLine3);
+        svg.cursorGmTicks = svg.cursor.createChild("path")
+                    .moveTo(50, 5)
+                    .vert(-10)
+                    .moveTo(-50, 5)
+                    .vert(-10)
+                    .moveTo(5,50)
+                    .horiz(-10)
+                    .moveTo(5,-50)
+                    .horiz(-10)
                     .setStrokeLineWidth(2.0)
                     .setColor(colorLine3);
         svg.cursor_1 = svg.cursor.createChild("text")
@@ -1051,7 +1054,7 @@ var MFD_Device =
             #
             # GM range rings
             #
-            if (!radar_system.apg68Radar.currentMode.detectAIR) {
+            if (!radar_system.apg68Radar.currentMode.detectAIR and !exp) {
                 me.root.sp.show();
                 me.root.rangeRingHigh.setVisible(radar_system.apg68Radar.getRange()>10);
                 me.root.rangeRingMid.setVisible(radar_system.apg68Radar.getRange()>5);
@@ -1100,7 +1103,7 @@ var MFD_Device =
                 me.root.M.setText("M");
             }
             
-            if (rdrMode == RADAR_MODE_GM or me.DGFT or radar_system.apg68Radar.rootMode != 0 or !radar_system.apg68Radar.currentMode.EXPsupport) {
+            if (rdrMode == RADAR_MODE_GM or me.DGFT or !radar_system.apg68Radar.currentMode.EXPsupport or (radar_system.apg68Radar.getPriorityTarget() != nil and radar_system.apg68Radar.currentMode.EXPfixedAim)) {
                 exp = 0;
                 me.root.norm.hide();
             } elsif (me.pressEXP) {
@@ -1116,7 +1119,8 @@ var MFD_Device =
             } else {
                 me.root.norm.setText("NORM");
             }
-            me.root.exp.setVisible(exp);
+            me.exp_zoom = exp;# should really be the only variable for this
+            me.root.exp.setVisible(exp and !radar_system.apg68Radar.currentMode.EXPfixedAim);
             me.root.acm.setVisible(1);
             me.root.horiz.setRotation(-radar_system.self.getRoll()*D2R);
             if ((rdrMode == RADAR_MODE_CRM or rdrMode == RADAR_MODE_SEA)) {
@@ -1171,7 +1175,7 @@ var MFD_Device =
                 }
                 uv = nil;
             }
-            me.exp_modi = exp?0.25:1;
+            me.exp_modi = exp?(radar_system.apg68Radar.currentMode.EXPfixedAim?0.20:0.25):1.00;# slow down cursor movement when in zoom mode
             
             me.slew_x = getprop("controls/displays/target-management-switch-x[" ~ me.model_index ~ "]")*me.exp_modi;
             me.slew_y = -getprop("controls/displays/target-management-switch-y[" ~ me.model_index ~ "]")*me.exp_modi;
@@ -1244,7 +1248,16 @@ var MFD_Device =
                     cursor_pos[1] = -482*0.5;
                 }
             }
-            me.root.cursor.setTranslation(cursor_pos);
+            me.fixedEXPwidth = nil;
+            var pixelPerNM = nil;
+            
+            if (!exp or !radar_system.apg68Radar.currentMode.EXPfixedAim) {
+                me.root.cursor.setTranslation(cursor_pos);
+            } else {
+                me.root.cursor.setTranslation([0,-241]);
+                me.fixedEXPwidth = radar_system.apg68Radar.currentMode.getEXPsize();
+                pixelPerNM = 482/radar_system.apg68Radar.getRange();
+            }
             me.alimits = radar_system.apg68Radar.getCursorAltitudeLimits();
             if (me.alimits != nil and radar_system.apg68Radar.currentMode.detectAIR) {
                 me.root.cursor_1.setText(sprintf("% 2d",math.round(me.alimits[0]*0.001)));
@@ -1255,6 +1268,7 @@ var MFD_Device =
             }
             me.root.cursorAir.setVisible(radar_system.apg68Radar.currentMode.detectAIR);
             me.root.cursorGm.setVisible(!radar_system.apg68Radar.currentMode.detectAIR);
+            me.root.cursorGmTicks.setVisible(!radar_system.apg68Radar.currentMode.detectAIR and !exp);
 
             if (me.bullOn) {
                 if (radar_system.apg68Radar.currentMode.detectAIR) {
@@ -1321,16 +1335,19 @@ var MFD_Device =
             #me.root.lockGM.hide();
             
             
+            # The distance in pixels from cursor that stuff should be zoomed
+            if (me.fixedEXPwidth != nil) {
+                me.closeDef = pixelPerNM*me.fixedEXPwidth*0.5;
+            } else {
+                me.closeDef = 25; # pixels
+            }
 
             #
             # Bulls-eye position on FCR
             #
-            if (me.bullOn) {
-                me.close = math.abs(cursor_pos[0] - me.bullPos[0]) < 25 and math.abs(cursor_pos[1] - me.bullPos[1]) < 25;
-                if (me.close and exp) {
-                    me.bullPos[0] = cursor_pos[0]+(me.bullPos[0] - cursor_pos[0])*4;
-                    me.bullPos[1] = cursor_pos[1]+(me.bullPos[1] - cursor_pos[1])*4;
-                } elsif (exp and math.abs(cursor_pos[0] - me.bullPos[0]) < 100 and math.abs(cursor_pos[1] - me.bullPos[1]) < 100) {
+            if (me.bullOn) {                
+                me.bullPos = me.calcEXPPos(me.bullPos);
+                if (me.bullPos == nil) {
                     me.bullOn = 0;
                 }
             }
@@ -1352,11 +1369,8 @@ var MFD_Device =
                 me.distPixels = me.legDistance*(482/radar_system.apg68Radar.getRange());
                 me.steerPos = me.calcPos(me.wdt, me.legBearing, me.distPixels);
                 var vis = 1;
-                me.close = math.abs(cursor_pos[0] - me.steerPos[0]) < 25 and math.abs(cursor_pos[1] - me.steerPos[1]) < 25;
-                if (me.close and exp) {
-                    me.steerPos[0] = cursor_pos[0]+(me.steerPos[0] - cursor_pos[0])*4;
-                    me.steerPos[1] = cursor_pos[1]+(me.steerPos[1] - cursor_pos[1])*4;
-                } elsif (exp and math.abs(cursor_pos[0] - me.steerPos[0]) < 100 and math.abs(cursor_pos[1] - me.steerPos[1]) < 100) {
+                me.steerPos = me.calcEXPPos(me.steerPos);
+                if (me.bullPos == nil) {
                     vis = 0;
                 }
                 me.root.steerpoint.setTranslation(me.steerPos);
@@ -1767,11 +1781,8 @@ var MFD_Device =
             if (me.iff == 0 and contact.isVisible() and contact.getRange()*M2NM < 80 and me.iii < me.root.maxT and math.abs(me.blueBearing) < 60) {
                 me.distPixels = contact.get_range()*(482/(radar_system.apg68Radar.getRange()));
                 me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.blueBearing), me.distPixels);
-                me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
-                if (me.close and exp) {
-                    me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
-                    me.echoPos[1] = cursor_pos[1]+(me.echoPos[1] - cursor_pos[1])*4;
-                } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
+                me.echoPos = me.calcEXPPos(me.echoPos);
+                if (me.echoPos == nil) {
                     return;
                 }
                 me.root.lnkT[me.iii].setColor(colorDot4);
@@ -1792,20 +1803,13 @@ var MFD_Device =
                     me.root.lockGM.setColor(colorDot4);
                     me.printInfo(contact);
                 }
-                if (cursor_click == me.root.index) {
-                    if (math.abs(cursor_pos[0] - me.echoPos[0]) < 10 and math.abs(cursor_pos[1] - me.echoPos[1]) < 11) {
-                        me.desig_new = contact;
-                    }
-                }
+                me.calcClick(contact, me.echoPos);
                 me.iii += 1;
             } elsif (me.iff != 0 and contact.isVisible() and me.iiii < me.root.maxT and math.abs(me.blueBearing) < 60) {
                 me.distPixels = contact.get_range()*(482/(radar_system.apg68Radar.getRange()));
                 me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.blueBearing), me.distPixels);
-                me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
-                if (me.close and exp) {
-                    me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
-                    me.echoPos[1] = cursor_pos[1]+(me.echoPos[1] - cursor_pos[1])*4;
-                } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
+                me.echoPos = me.calcEXPPos(me.echoPos);
+                if (me.echoPos == nil) {
                     return;
                 }
                 me.path = me.iff == -1?me.root.iffU[me.iiii]:me.root.iff[me.iiii];
@@ -1826,6 +1830,34 @@ var MFD_Device =
                 me.echoPosition = [(552*0.795)*(distPixels/482)*math.sin(D2R*dev), -distPixels*math.cos(D2R*dev)];
             }
             return me.echoPosition;
+        };
+        me.p_RDR.calcEXPPos = func (itemPos) {
+            # Calculate the position taking EXP zoom into account
+            var returnPos = itemPos;
+            var cursorCentre = [0,-241];
+            me.close = math.abs(cursor_pos[0] - itemPos[0]) < me.closeDef and math.abs(cursor_pos[1] - itemPos[1]) < me.closeDef;
+            if (me.close and me.exp_zoom) {
+                if (me.fixedEXPwidth != nil) {
+                    # EXP with fixed cursor
+                    returnPos[0] = cursorCentre[0]+math.abs(cursorCentre[1])*(itemPos[0] - cursor_pos[0])/me.closeDef;
+                    returnPos[1] = cursorCentre[1]+math.abs(cursorCentre[1])*(itemPos[1] - cursor_pos[1])/me.closeDef;
+                } else {
+                    # EXP with moving cursor
+                    returnPos[0] = cursor_pos[0]+(itemPos[0] - cursor_pos[0])*4;
+                    returnPos[1] = cursor_pos[1]+(itemPos[1] - cursor_pos[1])*4;
+                }
+            } elsif (me.exp_zoom and (me.fixedEXPwidth != nil or math.abs(cursor_pos[0] - itemPos[0]) < 100 and math.abs(cursor_pos[1] - itemPos[1]) < 100)) {
+                returnPos = nil;
+            }
+            return returnPos;
+        };
+        me.p_RDR.calcClick = func (contact, echoPos) {
+            if (cursor_click == me.root.index) {
+                var cursor_posi = !me.exp_zoom or me.fixedEXPwidth == nil?cursor_pos:[0,-241];
+                if (math.abs(cursor_posi[0] - echoPos[0]) < 10 and math.abs(cursor_posi[1] - echoPos[1]) < 11) {
+                    me.desig_new = contact;
+                }
+            }
         };
         me.p_RDR.printInfo = func (contact) {
             if (contact.getLastHeading() != nil) {
@@ -1876,11 +1908,8 @@ var MFD_Device =
                         continue;
                     }
                     me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.bleppy.getAZDeviation()), me.distPixels);
-                    me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
-                    if (radar_system.apg68Radar.currentMode.EXPsearch and me.close and exp) {
-                        me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
-                        me.echoPos[1] = cursor_pos[1]+(me.echoPos[1] - cursor_pos[1])*4;
-                    } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
+                    me.echoPos = me.calcEXPPos(me.echoPos);
+                    if (me.echoPos == nil) {
                         continue;
                     }
                     me.color = math.pow(1-(me.elapsed - me.bleppy.getBlepTime())/radar_system.apg68Radar.currentMode.timeToKeepBleps, 2.2);
@@ -1899,10 +1928,8 @@ var MFD_Device =
                         me.printInfo(contact);
                         me.lockInfo = 1;
                     }
-                    if (cursor_click == me.root.index and (me.elapsed - me.bleppy.getBlepTime()) < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
-                        if (math.abs(cursor_pos[0] - me.echoPos[0]) < 10 and math.abs(cursor_pos[1] - me.echoPos[1]) < 11) {
-                            me.desig_new = contact;
-                        }
+                    if (me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
+                        me.calcClick(contact, me.echoPos);
                     }
                     me.i += 1;
                 }
@@ -1928,11 +1955,8 @@ var MFD_Device =
                     me.root.blepTrianglePaths[me.ii].setRotation(me.rot*D2R);
                     me.root.blepTrianglePaths[me.ii].setColor(me.color);
                     me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.c_devheading), me.distPixels);
-                    me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
-                    if (me.close and exp) {
-                        me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
-                        me.echoPos[1] = cursor_pos[1]+(me.echoPos[1] - cursor_pos[1])*4;
-                    } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
+                    me.echoPos = me.calcEXPPos(me.echoPos);
+                    if (me.echoPos == nil) {
                         return;
                     }
                     if (contact["blue"] == 2 and me.iii < me.root.maxT) {
@@ -1971,11 +1995,7 @@ var MFD_Device =
                     }
                     me.root.blepTriangle[me.ii].setVisible(me.blinkShow and contact.getType() == radar_system.AIR);
                     me.root.blepTriangle[me.ii].update();
-                    if (cursor_click == me.root.index) {
-                        if (math.abs(cursor_pos[0] - me.echoPos[0]) < 10 and math.abs(cursor_pos[1] - me.echoPos[1]) < 11) {
-                            me.desig_new = contact;
-                        }
-                    }
+                    me.calcClick(contact, me.echoPos);
 
                     me.ii += 1;
                 }
@@ -1984,11 +2004,8 @@ var MFD_Device =
                 me.bleppy = me.bleps[me.sizeBleps-1];
                 if (me.elapsed - me.bleppy.getBlepTime() < radar_system.apg68Radar.currentMode.timeToKeepBleps) {
                     me.echoPos = me.calcPos(me.wdt, geo.normdeg180(me.bleppy.getAZDeviation()), me.distPixels);
-                    me.close = math.abs(cursor_pos[0] - me.echoPos[0]) < 25 and math.abs(cursor_pos[1] - me.echoPos[1]) < 25;
-                    if (me.close and exp) {
-                        me.echoPos[0] = cursor_pos[0]+(me.echoPos[0] - cursor_pos[0])*4;
-                        me.echoPos[1] = cursor_pos[1]+(me.echoPos[1] - cursor_pos[1])*4;
-                    } elsif (exp and math.abs(cursor_pos[0] - me.echoPos[0]) < 100 and math.abs(cursor_pos[1] - me.echoPos[1]) < 100) {
+                    me.echoPos = me.calcEXPPos(me.echoPos);
+                    if (me.echoPos == nil) {
                         return;
                     }
                     me.path = me.iff == -1?me.root.iffU[me.iiii]:me.root.iff[me.iiii];
