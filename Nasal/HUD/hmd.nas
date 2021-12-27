@@ -1421,12 +1421,15 @@ var drag = func (Mach, _cd) {
 };
 
 var isDropping = 0;
+var dropTimer = nil;
 
 var dropping = func {
     if (getprop("payload/armament/gravity-dropping")) {
         isDropping = 1;
     } else {
-        settimer(func {isDropping = 0;}, 1.0);
+        dropTimer = maketimer(1.0, func {isDropping = 0;});
+        dropTimer.singleShot = 1;
+        dropTimer.start();
     }
 }
 
