@@ -1227,6 +1227,7 @@
             <front-on type="bool">true</front-on>
             <front-off type="bool">false</front-off>
             <helmet-damping type="double">0.325</helmet-damping>
+            <acm-lock type="bool">false</acm-lock>
         </sound>
         <settings>
             <bingo type="int">1500</bingo>

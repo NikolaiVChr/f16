@@ -2488,7 +2488,7 @@ append(obj.total, obj.speed_curr);
                         }
                         me.dr = me.u.getLastAZDeviation();
                         me.drE = me.u.getLastElevDeviation();
-                        if (me.clamped and me.dr != nil and me.drE != nil) {
+                        if (me.clamped and me.dr != nil and me.drE != nil and math.sqrt(me.dev_h_d*me.dev_h_d+me.dev_e_d*me.dev_e_d) < 80) {
                             me.locatorLine.setTranslation(HudMath.getBorePos());
                             me.locatorLine.setRotation(HudMath.getPolarFromCenterPos(me.echoPos[0],me.echoPos[1])[0]);
                             me.dev_h_d = me.dr;

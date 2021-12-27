@@ -1758,7 +1758,11 @@ var F16ACM20Mode = {
 	cycleAZ: func {	},
 	cycleBars: func { },
 	designate: func (designate_contact) {
-		if (designate_contact == nil) return;
+		if (designate_contact == nil) {
+			acmLockSound.setBoolValue(0);
+			return;
+		}
+		acmLockSound.setBoolValue(1);
 		me.radar.setCurrentMode(me.subMode, designate_contact);
 		me.subMode.radar = me.radar;
 	},
@@ -1991,6 +1995,15 @@ var F16ACMSTTMode = {
 		var mode = {parents: [F16ACMSTTMode, F16STTMode, RadarMode]};
 		mode.radar = radar;
 		return mode;
+	},
+	designatePriority: func (prio) {
+		me.priorityTarget = prio;
+		if (prio != nil) acmLockSound.setBoolValue(1);
+	},
+	undesignate: func {
+		me.radar.setCurrentMode(me.superMode, me.priorityTarget);
+		me.priorityTarget = nil;
+		acmLockSound.setBoolValue(0);
 	},
 };
 
@@ -2296,7 +2309,7 @@ var gmMode = F16GMMode.new(F16GMFTTMode.new());
 var gmtMode = F16GMTMode.new(F16GMTFTTMode.new());
 var apg68Radar = APG68.new([[rwsMode,twsMode,lrsMode,vsrMode],[acm20Mode,acm60Mode,acmBoreMode],[seaMode],[gmMode],[gmtMode]]);
 var f16_rwr = RWR.new();
-
+var acmLockSound = props.globals.getNode("f16/sound/acm-lock");
 
 
 
