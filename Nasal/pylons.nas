@@ -1881,7 +1881,7 @@ var b60_a2a_capext = func {
     }
 }
 
-# Air Superiority (AIM-120, 1 bag)
+# Air Superiority (AIM-120)
 var b60_a2a_super = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
     	damage.damageLog.push("Air superiority loadout mounted");
@@ -1902,7 +1902,7 @@ var b60_a2a_super = func {
     }
 }
 
-# Air Superiority (AIM-120, 2 bags)
+# Air Superiority (AIM-120, 1 bag)
 var b60_a2a_superer = func {
     if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
     	damage.damageLog.push("Air superiority (ext. range) loadout mounted");
@@ -1912,6 +1912,27 @@ var b60_a2a_superer = func {
         pylon4.loadSet(pylonSets.empty);
         pylon5.loadSet(pylonSets.fuel30);
         pylon6.loadSet(pylonSets.empty);
+        pylon7.loadSet(pylonSets.aim120);
+        pylon8.loadSet(pylonSets.aim120);
+        pylon9.loadSet(pylonSets.aim120WT);
+        pylon10.loadSet(pylonSets.empty);
+        pylon11.loadSet(pylonSets.podSAtp);
+        f16.reloadCannon();
+    } else {
+      screen.log.write(f16.msgB);
+    }
+}
+
+# Air Superiority (AIM-120, 2 bags)
+var b60_a2a_superer2 = func {
+    if (fcs != nil and (getprop("payload/armament/msg") == FALSE or getprop("fdm/jsbsim/gear/unit[0]/WOW"))) {
+    	damage.damageLog.push("Air superiority (ext. range) loadout mounted");
+    	pylon1.loadSet(pylonSets.aim120WT);
+        pylon2.loadSet(pylonSets.aim120);
+        pylon3.loadSet(pylonSets.aim120);
+        pylon4.loadSet(pylonSets.fuel37L);
+        pylon5.loadSet(pylonSets.empty);
+        pylon6.loadSet(pylonSets.fuel37R);
         pylon7.loadSet(pylonSets.aim120);
         pylon8.loadSet(pylonSets.aim120);
         pylon9.loadSet(pylonSets.aim120WT);

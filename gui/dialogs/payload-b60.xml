@@ -170,6 +170,17 @@
             </binding>
         </button>
 
+        <button>
+            <pref-width>225</pref-width><pref-height>23</pref-height>
+            <row>10</row>
+            <col>0</col>
+            <legend>Air Superiority (2 bags)</legend>
+            <binding>
+                <command>nasal</command>
+                <script>pylons.b60_a2a_superer2();</script>
+            </binding>
+        </button>
+
         <hrule>
             <row>7</row>
             <col>0</col>
@@ -178,7 +189,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>10</row>
+            <row>12</row>
             <col>0</col>
             <legend>Defensive Counter Air (CFT)</legend>
             <binding>
@@ -201,7 +212,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>12</row>
+            <row>14</row>
             <col>0</col>
             <legend>Ferry Loadout (3 bags)</legend>
             <binding>
@@ -212,7 +223,7 @@
 
         <button>
             <pref-width>225</pref-width><pref-height>23</pref-height>
-            <row>14</row>
+            <row>16</row>
             <col>0</col>
             <legend>Ferry Loadout (2 bags XL)</legend>
             <binding>
