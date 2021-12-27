@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!-- General Dynamics F-16 Autoflight System -->
-<!-- (c) 2018 Josh Davidson (Octal450) -->
+<!-- (c) 2021 Josh Davidson (Octal450) -->
 
 <PropertyList>
 
@@ -56,9 +56,9 @@
 	<group>
 		<visible>
 			<less-than>
-                <property>sim/variant-id</property>
-                <value>4</value>
-            </less-than>
+				<property>sim/variant-id</property>
+				<value>4</value>
+			</less-than>
 		</visible>
 		<row>2</row>
 		<col>0</col>
@@ -273,6 +273,97 @@
 		
 		</group>
 		
+	</group>
+	
+	<hrule>
+		<row>3</row>
+		<col>0</col>
+	</hrule>
+	
+	<group>
+		<row>4</row>
+		<col>0</col>
+		<layout>table</layout>
+		
+		<text>
+			<row>0</row>
+			<col>0</col>
+			<label>HDG:</label>
+		</text>
+		
+		<button>
+			<row>0</row>
+			<col>1</col>
+			<pref-width>25</pref-width>
+			<pref-height>25</pref-height>
+			<legend>&lt;&lt;</legend>
+			<binding>
+				<command>property-adjust</command>
+				<property>/instrumentation/heading-indicator/heading-bug-deg</property>
+				<min>1</min>
+				<max>361</max>
+				<step>-10</step>
+				<wrap>true</wrap>
+			</binding>
+		</button>
+		<button>
+			<row>0</row>
+			<col>2</col>
+			<pref-width>25</pref-width>
+			<pref-height>25</pref-height>
+			<legend>&lt;</legend>
+			<binding>
+				<command>property-adjust</command>
+				<property>/instrumentation/heading-indicator/heading-bug-deg</property>
+				<min>1</min>
+				<max>361</max>
+				<step>-1</step>
+				<wrap>true</wrap>
+			</binding>
+		</button>
+
+		<input>
+			<row>0</row>
+			<col>3</col>
+			<pref-width>40</pref-width>
+			<property>/instrumentation/heading-indicator/heading-bug-deg</property>
+			<live>true</live>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+		</input>
+		
+		<button>
+			<row>0</row>
+			<col>4</col>
+			<pref-width>25</pref-width>
+			<pref-height>25</pref-height>
+			<legend>&gt;</legend>
+			<binding>
+				<command>property-adjust</command>
+				<property>/instrumentation/heading-indicator/heading-bug-deg</property>
+				<min>1</min>
+				<max>361</max>
+				<step>1</step>
+				<wrap>true</wrap>
+			</binding>
+		</button>
+		<button>
+			<row>0</row>
+			<col>5</col>
+			<halign>left</halign>
+			<pref-width>25</pref-width>
+			<pref-height>25</pref-height>
+			<legend>&gt;&gt;</legend>
+			<binding>
+				<command>property-adjust</command>
+				<property>/instrumentation/heading-indicator/heading-bug-deg</property>
+				<min>1</min>
+				<max>361</max>
+				<step>10</step>
+				<wrap>true</wrap>
+			</binding>
+		</button>
 	</group>
 
 </PropertyList>
