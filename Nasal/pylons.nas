@@ -35,7 +35,10 @@ var hyd70rh7 = stations.SubModelWeapon.new("LAU-68", 23.6, 7, [7], [], props.glo
 hyd70rh7.typeShort = "M151";
 hyd70rh7.brevity = "Rockets away";
 var fuelTankCFT = nil;
-if (getprop("sim/variant-id")>=5) fuelTankCFT = stations.FuelTank.new("Conformant Fuel Tanks", "CFT450", 9, 450, "sim/model/f16/cft-tanks-3d");
+if (getprop("sim/variant-id")>=5) {
+	fuelTankCFT = stations.FuelTank.new("Conformant Fuel Tanks", "CFT450", 9, 450, "sim/model/f16/cft-tanks-3d");
+	fuelTankCFT.del();
+}
 var fuelTankCenter = stations.FuelTank.new("Center 300 Gal Tank", "TK300", 8, 300, "sim/model/f16/ventraltank");
 var fuelTank370Left = stations.FuelTank.new("Left 370 Gal Tank", "TK370", 6, 370, "sim/model/f16/wingtankL");
 var fuelTank370Right = stations.FuelTank.new("Right 370 Gal Tank", "TK370", 7, 370, "sim/model/f16/wingtankR");
