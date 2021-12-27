@@ -1888,7 +1888,7 @@ var F16STTMode = {
 	priorityTarget: nil,
 	az: APG68.instantFoVradius,
 	bars: 2,
-	minimumTimePerReturn: 0.20,
+	minimumTimePerReturn: 0.10,
 	timeToKeepBleps: 7,
 	painter: 1,
 	new: func (radar = nil) {
@@ -2042,6 +2042,7 @@ var F16SEAFTTMode = {
 	detectAIR: 0,
 	detectSURFACE: 0,
 	detectMARINE: 1,
+	minimumTimePerReturn: 0.20,
 	new: func (radar = nil) {
 		var mode = {parents: [F16SEAFTTMode, F16STTMode, RadarMode]};
 		mode.radar = radar;
