@@ -484,7 +484,7 @@
             <pref-width>225</pref-width><pref-height>23</pref-height>
             <row>16</row>
             <col>4</col>
-            <legend>A/G M151 Hydra rockets</legend>
+            <legend>A/G M151 rockets (2 bags)</legend>
             <binding>
                 <command>nasal</command>
                 <script>pylons.a2g_hyd70();</script>
