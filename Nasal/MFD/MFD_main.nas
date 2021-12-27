@@ -1372,8 +1372,9 @@ var MFD_Device =
                 me.steerPos = me.calcEXPPos(me.steerPos);
                 if (me.steerPos == nil) {
                     vis = 0;
+                } else {
+                    me.root.steerpoint.setTranslation(me.steerPos);
                 }
-                me.root.steerpoint.setTranslation(me.steerPos);
                 me.root.steerpoint.setVisible(vis);
             } else {
                 me.root.steerpoint.setVisible(0);
