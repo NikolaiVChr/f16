@@ -63,7 +63,8 @@ if (getprop("sim/variant-id") == 2) {
 
 var slew_c = 0;
 
-
+var pullup_cue_0 = nil;
+var pullup_cue_1 = nil;
 
 var MFD_Device =
 {
@@ -90,6 +91,25 @@ var MFD_Device =
         dev_canvas.addPlacement({"node": model_element});
         dev_canvas.setColorBackground(colorBackground);
         
+        if (model_index == 0) {
+            pullup_cue_0 = obj.canvas.createGroup().set("z-index", 20000);
+            pullup_cue_0.createChild("path")
+               .moveTo(0, 0)
+               .lineTo(552*0.795, 482)
+               .moveTo(0, 482)
+               .lineTo(552*0.795, 0)
+               .setStrokeLineWidth(3)
+               .setColor(colorCircle1);
+        } elsif (model_index == 1) {
+            pullup_cue_1 = obj.canvas.createGroup().set("z-index", 20000);
+            pullup_cue_1.createChild("path")
+               .moveTo(0, 0)
+               .lineTo(552*0.795, 482)
+               .moveTo(0, 482)
+               .lineTo(552*0.795, 0)
+               .setStrokeLineWidth(3)
+               .setColor(colorCircle1);
+        }
         
         # Create a group for the parsed elements
         obj.PFDsvg = dev_canvas.createGroup();
@@ -4460,10 +4480,21 @@ var F16MfdRecipient =
 #
 #
 # temporary code (2016.3.x) until MFD_Generic.nas is updated in FGData (2016.4.x)
+var flyupTime = 0;
+var flyupVis = 0;
 PFD_Device.update = func(notification=nil)
     {
-        if (me.current_page != nil)
+        if (me.current_page != nil) {
             me.current_page.update(notification);
+            flyupTime = getprop("instrumentation/radar/time-till-crash");
+            if (me.current_page != "GRID" and me.current_page != "CUBE" and me.current_page != "VOID" and flyupTime != nil and flyupTime > 0 and flyupTime < 8) {
+                flyupVis = math.mod(getprop("sim/time/elapsed-sec"), 0.50) < 0.25;
+            } else {
+                flyupVis = 0;
+            }
+            pullup_cue_0.setVisible(flyupVis);
+            pullup_cue_1.setVisible(flyupVis);
+        }
     };
 
 #F16MfdRecipient.new("BAe-F16b-MFD");
