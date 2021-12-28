@@ -1262,6 +1262,16 @@ var MFD_Device =
             if (me.alimits != nil and radar_system.apg68Radar.currentMode.detectAIR) {
                 me.root.cursor_1.setText(sprintf("% 2d",math.round(me.alimits[0]*0.001)));
                 me.root.cursor_2.setText(sprintf("% 2d",math.round(me.alimits[1]*0.001)));
+                if (me.alimits[0] >= 0) {
+                    me.root.cursor_1.setColor(colorLine3);
+                } else {
+                    me.root.cursor_1.setColor(colorCircle1);
+                }
+                if (me.alimits[1] >= 0) {
+                    me.root.cursor_2.setColor(colorLine3);
+                } else {
+                    me.root.cursor_2.setColor(colorCircle1);
+                }
             } else {
                 me.root.cursor_1.setText("");
                 me.root.cursor_2.setText("");
