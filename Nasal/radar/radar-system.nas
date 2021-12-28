@@ -659,7 +659,7 @@ AIContact = {
 		me.virtTGP = {parents: [me]};
 		me.virtTGP.getCoord = func {
 			me.parents[0].getCoord();
-			me.coord.set_alt(me.coord.alt()+1);
+			me.coord.set_alt(me.coord.alt()+0.0);
 			return me.coord;
 		};
 		me.virtTGP.isVirtual = func {
