@@ -4147,7 +4147,7 @@ var MFD_Device =
                 me.lockAlt = sprintf("%02d", math.round(me.c_alt*0.001));
                 me.root.blepTriangleText[me.i].setText(me.lockAlt);
                 me.i += 1;
-                if (me.blue == 2) {
+                if (me.blue == 2 and me.ii < me.root.maxB) {
                     me.root.lnkT[me.ii].setColor(me.color);
                     me.root.lnkT[me.ii].setTranslation(me.trans[0],me.trans[1]-25);
                     me.root.lnkT[me.ii].setText(""~me.blueIndex);
