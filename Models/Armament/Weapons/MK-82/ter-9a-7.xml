@@ -50,7 +50,7 @@
         <type>rotate</type>
         <object-name>Station7_MK82_left</object-name>
         <factor>0</factor>
-        <offset-deg>22.5</offset-deg>
+        <offset-deg>-50</offset-deg>
         <center>
           <x-m>-0.35</x-m>
           <y-m>-0.250</y-m>
@@ -67,7 +67,7 @@
         <type>rotate</type>
         <object-name>Station7_MK82_right</object-name>
         <factor>0</factor>
-        <offset-deg>-22.5</offset-deg>
+        <offset-deg>50</offset-deg>
         <center>
           <x-m>-0.35</x-m>
           <y-m>0.250</y-m>

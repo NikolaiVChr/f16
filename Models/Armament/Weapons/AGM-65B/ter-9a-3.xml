@@ -12,35 +12,35 @@
     </offsets>
 
     <model>
-      <name>Station7_GBU12_left</name>
-      <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/GBU-12.xml</path>
+      <name>Station3_AGM65B_left</name>
+      <path>Aircraft/f16/Models/Armament/Weapons/AGM-65B/AGM-65B.xml</path>
       <offsets>
         <x-m>-0.35</x-m>
-        <y-m>-0.250</y-m>
-        <z-m>-0.050</z-m>
+        <y-m>-0.300</y-m>
+        <z-m>-0.075</z-m>
         <pitch-deg>0</pitch-deg>
         <roll-deg>00</roll-deg>
       </offsets>
     </model>
 
     <model>
-      <name>Station7_GBU12_center</name>
-      <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/GBU-12.xml</path>
+      <name>Station3_AGM65B_center</name>
+      <path>Aircraft/f16/Models/Armament/Weapons/AGM-65B/AGM-65B.xml</path>
       <offsets>
         <x-m>-0.35</x-m>
         <y-m>0</y-m>
-        <z-m>-0.350</z-m>
+        <z-m>-0.375</z-m>
         <pitch-deg>0</pitch-deg>
       </offsets>
     </model>
 
     <model>
-      <name>Station7_GBU12_right</name>
-      <path>Aircraft/f16/Models/Armament/Weapons/GBU-12/GBU-12.xml</path>
+      <name>Station3_AGM65B_right</name>
+      <path>Aircraft/f16/Models/Armament/Weapons/AGM-65B/AGM-65B.xml</path>
       <offsets>
         <x-m>-0.35</x-m>
-        <y-m>0.250</y-m>
-        <z-m>-0.050</z-m>
+        <y-m>0.300</y-m>
+        <z-m>-0.075</z-m>
         <pitch-deg>0</pitch-deg>
         <roll-deg>00</roll-deg>
       </offsets>
@@ -48,13 +48,13 @@
 
     <animation>
         <type>rotate</type>
-        <object-name>Station7_GBU12_left</object-name>
+        <object-name>Station3_AGM65B_left</object-name>
         <factor>0</factor>
         <offset-deg>-50</offset-deg>
         <center>
           <x-m>-0.35</x-m>
-          <y-m>-0.250</y-m>
-          <z-m>-0.050</z-m>
+          <y-m>-0.300</y-m>
+          <z-m>-0.075</z-m>
         </center>
         <axis>
           <x>1</x>
@@ -65,13 +65,13 @@
 
     <animation>
         <type>rotate</type>
-        <object-name>Station7_GBU12_right</object-name>
+        <object-name>Station3_AGM65B_right</object-name>
         <factor>0</factor>
         <offset-deg>50</offset-deg>
         <center>
           <x-m>-0.35</x-m>
-          <y-m>0.250</y-m>
-          <z-m>-0.050</z-m>
+          <y-m>0.300</y-m>
+          <z-m>-0.075</z-m>
         </center>
         <axis>
           <x>1</x>
@@ -82,14 +82,14 @@
 
     <animation>
       <type>select</type>
-      <object-name>Station7_GBU12_left</object-name>
+      <object-name>Station3_AGM65B_left</object-name>
       <condition><and>
         <equals>
-          <property>payload/armament/station/id-6-type</property>
-          <value>GBU-12</value>
+          <property>payload/armament/station/id-2-type</property>
+          <value>AGM-65B</value>
         </equals>
         <greater-than>
-          <property>payload/armament/station/id-6-count</property>
+          <property>payload/armament/station/id-2-count</property>
           <value>0</value>
         </greater-than></and>
       </condition>
@@ -97,15 +97,15 @@
 
      <animation>
       <type>select</type>
-      <object-name>Station7_GBU12_right</object-name>
+      <object-name>Station3_AGM65B_right</object-name>
       <condition>
         <and>
         <equals>
-          <property>payload/armament/station/id-6-type</property>
-          <value>GBU-12</value>
+          <property>payload/armament/station/id-2-type</property>
+          <value>AGM-65B</value>
         </equals>
         <greater-than>
-          <property>payload/armament/station/id-6-count</property>
+          <property>payload/armament/station/id-2-count</property>
           <value>1</value>
         </greater-than>
       </and>
@@ -114,14 +114,14 @@
 
      <animation>
       <type>select</type>
-      <object-name>Station7_GBU12_center</object-name>
+      <object-name>Station3_AGM65B_center</object-name>
       <condition><and>
         <equals>
-          <property>payload/armament/station/id-6-type</property>
-          <value>GBU-12</value>
+          <property>payload/armament/station/id-2-type</property>
+          <value>AGM-65B</value>
         </equals>
         <greater-than>
-          <property>payload/armament/station/id-6-count</property>
+          <property>payload/armament/station/id-2-count</property>
           <value>2</value>
         </greater-than></and>
       </condition>

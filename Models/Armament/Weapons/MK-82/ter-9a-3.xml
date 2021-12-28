@@ -12,7 +12,7 @@
     </offsets>
 
     <model>
-      <name>Station7_MK82_left</name>
+      <name>Station3_MK82_left</name>
       <path>Aircraft/f16/Models/Armament/Weapons/MK-82/MK-82.xml</path>
       <offsets>
         <x-m>-0.35</x-m>
@@ -24,7 +24,7 @@
     </model>
 
     <model>
-      <name>Station7_MK82_center</name>
+      <name>Station3_MK82_center</name>
       <path>Aircraft/f16/Models/Armament/Weapons/MK-82/MK-82.xml</path>
       <offsets>
         <x-m>-0.35</x-m>
@@ -35,7 +35,7 @@
     </model>
 
     <model>
-      <name>Station7_MK82_right</name>
+      <name>Station3_MK82_right</name>
       <path>Aircraft/f16/Models/Armament/Weapons/MK-82/MK-82.xml</path>
       <offsets>
         <x-m>-0.35</x-m>
@@ -48,9 +48,9 @@
 
     <animation>
         <type>rotate</type>
-        <object-name>Station7_MK82_left</object-name>
+        <object-name>Station3_MK82_left</object-name>
         <factor>0</factor>
-        <offset-deg>22.5</offset-deg>
+        <offset-deg>-50</offset-deg>
         <center>
           <x-m>-0.35</x-m>
           <y-m>-0.250</y-m>
@@ -65,9 +65,9 @@
 
     <animation>
         <type>rotate</type>
-        <object-name>Station7_MK82_right</object-name>
+        <object-name>Station3_MK82_right</object-name>
         <factor>0</factor>
-        <offset-deg>-22.5</offset-deg>
+        <offset-deg>50</offset-deg>
         <center>
           <x-m>-0.35</x-m>
           <y-m>0.250</y-m>
@@ -82,7 +82,7 @@
 
     <animation>
       <type>select</type>
-      <object-name>Station7_MK82_left</object-name>
+      <object-name>Station3_MK82_left</object-name>
       <condition><and>
         <equals>
           <property>payload/armament/station/id-2-type</property>
@@ -97,7 +97,7 @@
 
      <animation>
       <type>select</type>
-      <object-name>Station7_MK82_right</object-name>
+      <object-name>Station3_MK82_right</object-name>
       <condition>
         <and>
         <equals>
@@ -114,7 +114,7 @@
 
      <animation>
       <type>select</type>
-      <object-name>Station7_MK82_center</object-name>
+      <object-name>Station3_MK82_center</object-name>
       <condition><and>
         <equals>
           <property>payload/armament/station/id-2-type</property>
