@@ -373,6 +373,8 @@ setlistener("controls/MFD[2]/button-pressed", list);
 setlistener("controls/displays/cursor-click", list);
 
 
+var flyupTime = 0;
+var flyupVis = 0;
 
 var fast_loop = func {
   var viewName = getprop("/sim/current-view/name"); 
@@ -383,7 +385,7 @@ var fast_loop = func {
         setprop("sim/current-view/view-number",0);
         setprop("sim/rendering/als-filters/use-IR-vision", 0);
         setprop("sim/view[105]/enabled", 0);
-
+        pullup_cue_3.setVisible(0);
     } elsif (viewName == "TGP") {
         if (!getprop("f16/avionics/power-mfd") or getprop("f16/avionics/power-ufc-warm")!=1) {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
@@ -396,6 +398,7 @@ var fast_loop = func {
             cross.hide();
             enable = 0;
             masterMode = STBY;
+            pullup_cue_3.setVisible(0);
         } elsif (getprop("f16/avionics/power-right-hdpt") == 0 or getprop("fdm/jsbsim/elec/bus/ess-dc") <=20) {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
             midl.setText("      OFF     ");
@@ -407,6 +410,7 @@ var fast_loop = func {
             cross.hide();
             enable = 0;
             masterMode = STBY;
+            pullup_cue_3.setVisible(0);
         } elsif (getprop("f16/avionics/power-right-hdpt-warm") < 1) {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
             
@@ -422,6 +426,7 @@ var fast_loop = func {
             line3.setText(masterMode==0?"STBY":(hiddenMode==AG?"A-G":"A-A"));
             cross.hide();
             enable = 0;
+            pullup_cue_3.setVisible(0);
         } elsif (masterMode == STBY) {
             canvasMFDext.setColorBackground(0.00, 0.00, 0.00, 1.00);
             midl.setText("   STANDBY   ");
@@ -432,11 +437,25 @@ var fast_loop = func {
             line3.setText("STBY");
             cross.hide();
             enable = 0;
+            flyupTime = getprop("instrumentation/radar/time-till-crash");
+            if (flyupTime != nil and flyupTime > 0 and flyupTime < 8) {
+                flyupVis = math.mod(getprop("sim/time/elapsed-sec"), 0.50) < 0.25;
+            } else {
+                flyupVis = 0;
+            }
+            pullup_cue_3.setVisible(flyupVis);
         } else {
             canvasMFDext.setColorBackground(1.00, 1.00, 1.00, 0.00);
             line3.setText(hiddenMode==AG?"A-G":"A-A");
             cross.show();
             enable = 1;
+            flyupTime = getprop("instrumentation/radar/time-till-crash");
+            if (flyupTime != nil and flyupTime > 0 and flyupTime < 8) {
+                flyupVis = math.mod(getprop("sim/time/elapsed-sec"), 0.50) < 0.25;
+            } else {
+                flyupVis = 0;
+            }
+            pullup_cue_3.setVisible(flyupVis);
         }
         
         # FLIR TGP stuff:
@@ -723,6 +742,7 @@ var AG = 1;
 var AA = 2;
 var masterMode = STBY;
 var hiddenMode = AG;
+var pullup_cue_3 = nil;
 
 var canvasMFDext = nil;
 var callInit = func {
@@ -916,7 +936,14 @@ var callInit = func {
             .setTranslation(128,128)
             .setStrokeLineWidth(1)
             .setColor(getprop("/sim/model/MFD-color/text1/red"),getprop("/sim/model/MFD-color/text1/green"),getprop("/sim/model/MFD-color/text1/blue"));
-};
 
-#callInit();
-#fast_loop();
+    pullup_cue_3 = canvasMFDext.createGroup().set("z-index", 20000);
+    pullup_cue_3.createChild("path")
+               .moveTo(0, 0)
+               .lineTo(256, 256)
+               .moveTo(0, 256)
+               .lineTo(256, 0)
+               .setStrokeLineWidth(3)
+               .hide()
+               .setColor([getprop("/sim/model/MFD-color/circle1/red"), getprop("/sim/model/MFD-color/circle1/green"), getprop("/sim/model/MFD-color/circle1/blue")]);
+};
