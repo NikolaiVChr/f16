@@ -82,9 +82,9 @@ var crgpd = stations.Dummy.new("MXU-648 Cargopod", "TRVL");
 #
 # To give an idea of dragarea numbers:
 #
-# A/A missile:     0.05 to 0.10  (okay good aero shape)
-# Clean aircraft: 14.67          (somewhat good aerodynamic shape)
-# MK-84:           0.224         (very good aerodynamic shape)
+# A/A missile:     0.05 to 0.10  (small and okay good aero shape)
+# Clean aircraft: 14.67          (big and somewhat good aerodynamic shape)
+# MK-84:           0.224         (medium size and very good aerodynamic shape)
 #
 var pylonSets = {
 	empty: {name: "Empty", pylon: nil, rack: nil, content: [], fireOrder: [], launcherDragArea: 0.0, launcherMass: 0, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},
@@ -126,11 +126,11 @@ var pylonSets = {
 	smokeBR: {name: "Smokewinder Blue", pylon: "1 MRLW", content: [smokewinderBlue9], fireOrder: [0], launcherDragArea: 0, launcherMass: 293, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	smokeWL: {name: "Smokewinder White", pylon: "1 MRLW",  content: [smokewinderWhite1], fireOrder: [0], launcherDragArea: 0, launcherMass: 293, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
 	smokeWR: {name: "Smokewinder White", pylon: "1 MRLW", content: [smokewinderWhite9], fireOrder: [0], launcherDragArea: 0, launcherMass: 293, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1},
-	fuel30:  {name: fuelTankCenter.type, pylon: "1 MAU", rack: nil, content: [fuelTankCenter], fireOrder: [0], launcherDragArea: 0.18, launcherMass: 462, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 1},
+	fuel30:  {name: fuelTankCenter.type, pylon: "1 MAU", rack: nil, content: [fuelTankCenter], fireOrder: [0], launcherDragArea: 0.25, launcherMass: 462, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 1},
 	fuel37L: {name: fuelTank370Left.type, pylon: "1 MAU", rack: nil, content: [fuelTank370Left], fireOrder: [0], launcherDragArea: 0.35, launcherMass: 601, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 2},
 	fuel37R: {name: fuelTank370Right.type, pylon: "1 MAU", rack: nil, content: [fuelTank370Right], fireOrder: [0], launcherDragArea: 0.35, launcherMass: 601, launcherJettisonable: 1, showLongTypeInsteadOfCount: 1, category: 2},
-	fuel60L: {name: fuelTank600Left.type, pylon: "1 MAU", rack: nil, content: [fuelTank600Left], fireOrder: [0], launcherDragArea: 0.40, launcherMass: 469, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 3},
-	fuel60R: {name: fuelTank600Right.type, pylon: "1 MAU", rack: nil, content: [fuelTank600Right], fireOrder: [0], launcherDragArea: 0.40, launcherMass: 469, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 3},
+	fuel60L: {name: fuelTank600Left.type, pylon: "1 MAU", rack: nil, content: [fuelTank600Left], fireOrder: [0], launcherDragArea: 0.50, launcherMass: 469, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 3},
+	fuel60R: {name: fuelTank600Right.type, pylon: "1 MAU", rack: nil, content: [fuelTank600Right], fireOrder: [0], launcherDragArea: 0.50, launcherMass: 469, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 3},
 	aim9WT:  {name: "1 x AIM-9", pylon: "1 MRLW", content: ["AIM-9"], fireOrder: [0], launcherDragArea: -0.07865, launcherMass: 90, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#wingtip
 	aim9:    {name: "1 x AIM-9", pylon: "1 MRL", content: ["AIM-9"], fireOrder: [0], launcherDragArea: 0.025, launcherMass: 90, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#non wingtip
 	aim120:  {name: "1 x AIM-120", pylon: "1 MRL", content: ["AIM-120"], fireOrder: [0], launcherDragArea: 0.025, launcherMass: 90, launcherJettisonable: 0, showLongTypeInsteadOfCount: 0, category: 1},#non wingtip
@@ -150,7 +150,7 @@ var pylonSets = {
 };
 
 if (getprop("sim/variant-id")>=5) {
-	pylonSets.cft450 = {name: fuelTankCFT.type, pylon: "Hardmount", rack: nil, content: [fuelTankCFT], fireOrder: [0], launcherDragArea: 0.18, launcherMass: 462, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1};
+	pylonSets.cft450 = {name: fuelTankCFT.type, pylon: "Hardmount", rack: nil, content: [fuelTankCFT], fireOrder: [0], launcherDragArea: 0.40, launcherMass: 462, launcherJettisonable: 0, showLongTypeInsteadOfCount: 1, category: 1};
 }
 
 if (getprop("sim/model/f16/wingmounts") != 0) {
